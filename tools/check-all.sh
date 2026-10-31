@@ -18,6 +18,7 @@ python3 -W ignore tools/build-webs.py | tail -1
 python3 -W ignore tools/build-speech.py | tail -1
 python3 -W ignore tools/build-erhua.py | tail -1
 python3 -W ignore tools/build-exam.py | tail -1
+python3 -W ignore tools/build-preview.py "$DATASET" | tail -1
 
 echo "== 1b. sync merge and gist round-trip"
 node tools/test-sync.js | tail -1

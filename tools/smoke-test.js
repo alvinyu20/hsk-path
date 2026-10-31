@@ -30,8 +30,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 (async () => {
   await new Promise(r => server.listen(0, r));
   const url = 'http://127.0.0.1:' + server.address().port + '/';
-  const browser = await chromium.launch();
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, acceptDownloads: true });
+  const browser = await chromium.launch({ args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'] });
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, acceptDownloads: true, permissions: ['microphone'] });
   // A fake text-to-speech with the kinds of voices an iPhone lists, so the voice picker can be tested without a phone.
   await ctx.addInitScript((erhua) => {
     try { if (erhua && localStorage.getItem('shanlu-erhua') === null) localStorage.setItem('shanlu-erhua', 'on'); } catch (e) {}
@@ -619,6 +619,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const n = aiCalls.length;
     const reply = n === 1 ? { reply: { zh: '你好！你想喝什么？', en: 'Hello! What do you want to drink?' }, feedback: { level: 'ok', better: '', why: '' }, suggest: { zh: '我想喝茶。', en: 'I want to drink tea.' } }
       : n === 2 ? { reply: { zh: '好的，你想去公园吗？', en: 'Okay, do you want to go to the park?' }, feedback: { level: 'fix', better: '我想喝茶。', why: 'Add 想 to say you would like something.' }, suggest: n === 2 ? { zh: '我想去学校。', en: 'I want to go to school.' } : undefined }
+      : n === 3 ? { reply: { zh: '很好！你想喝咖啡吗？', en: 'Very good! Would you like coffee?' }, feedback: { level: 'ok', better: '', why: '' } }
       : { reply: { zh: '很好！', en: 'Very good!' }, feedback: { level: 'ok', better: '', why: '' } };
     return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ content: [{ type: 'text', text: 'Here you go: ' + JSON.stringify(reply) }] }) });
   });
@@ -664,7 +665,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const second = await page.locator('.msgs').innerText();
   check(second.includes('我想喝茶') && second.includes('A more natural way') && second.includes('Add 想'), 'the correction of your line is shown under it');
   check(second.includes('Matches the suggested reply'), 'saying the suggested reply is recognised as a match');
-  check(second.includes('Not in the HSK 1 list: 公 园') || second.includes('Not in the HSK 1 list: 园') || second.includes('Not in the HSK 1 list'), 'words outside HSK 1 in a reply are flagged');
+  check(second.includes('so no pinyin') && second.includes('公') && !second.includes('Not in this site\'s HSK 1 or HSK 2 lists, so no pinyin: 想'), 'words outside the HSK 1 and HSK 2 lists in a reply are flagged');
   check(aiCalls[1].body.messages.length >= 3 && aiCalls[1].body.messages[aiCalls[1].body.messages.length - 1].content === '我想喝茶', 'the conversation so far is sent along');
   const exported = await page.evaluate(() => { window.shanlu.persistNow(); return JSON.stringify(JSON.parse(localStorage.getItem('shanlu-progress-v1'))); });
   check(!exported.includes('sk-ant-test'), 'the key is not in the saved progress (so not in the export or the sync)');
@@ -674,11 +675,82 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForFunction(() => window.shanlu.state.aim.length >= 5 && !window.shanlu.state.aiBusy);
   const third = await page.locator('.msgs').innerText();
   check(third.includes('Not the same as the suggestion') && third.includes('我想去学校。') && third.includes('商'), 'a reply that differs from the suggestion shows what was suggested and where it differs');
+  check(third.includes('咖啡') && third.includes('HSK 2 preview') && third.includes('kāfēi = coffee') && third.includes('Nǐ xiǎng hē kāfēi'), 'an HSK 2 word in a reply is allowed and comes with pinyin and English');
+  check(!third.split('\n').some(l => l.includes('so no pinyin') && l.includes('咖')), 'an HSK 2 word is not flagged as outside the lists');
+  check(aiCalls[0].body.system.includes('咖啡') && aiCalls[0].body.system.includes('HSK 2'), 'the instructions allow a few HSK 2 words and list them');
   aiMode2 = 'bad-key';
   await page.fill('input[aria-label="Your reply"]', '你好');
   await page.locator('.ai-in button', { hasText: 'Send' }).click();
   await page.waitForFunction(() => window.shanlu.state.aiErr);
   check((await text()).includes('API key was rejected'), 'a rejected key is explained');
+  // Alibaba Qwen: chat and voice recogniser, against a fake Alibaba API
+  const aliCalls = [];
+  let aliChatN = 0;
+  const aliHandler = async (r) => {
+    const req = r.request();
+    const cors = { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' };
+    if (req.method() === 'OPTIONS') return r.fulfill({ status: 204, headers: cors });
+    const body = JSON.parse(req.postData());
+    aliCalls.push({ url: req.url(), headers: req.headers(), body });
+    if (body.model === 'qwen3-asr-flash') return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { role: 'assistant', content: '我想喝茶' } }] }) });
+    const last = body.messages[body.messages.length - 1].content;
+    if (last === 'Reply with the single word OK.') return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { role: 'assistant', content: 'OK' } }] }) });
+    aliChatN++;
+    const reply = aliChatN === 1 ? { reply: { zh: '你好！你想去哪儿？', en: 'Hello! Where do you want to go?' }, feedback: { level: 'ok', better: '', why: '' }, suggest: { zh: '我想去学校。', en: 'I want to go to school.' } }
+      : { reply: { zh: '好的。', en: 'Okay.' }, feedback: { level: 'ok', better: '', why: '' } };
+    return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { role: 'assistant', content: JSON.stringify(reply) } }] }) });
+  };
+  await ctx.route('https://dashscope-intl.aliyuncs.com/**', aliHandler);
+  await ctx.route('https://testws1.ap-southeast-1.maas.aliyuncs.com/**', aliHandler);
+  await page.locator('.modeseg button', { hasText: 'Practice script' }).click();
+  await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.locator('button', { hasText: /^Qwen \(Alibaba\)/ }).click();
+  check((await text()).includes('Key Management') && !(await text()).includes('console.anthropic.com and add'), 'the Qwen tab shows the Alibaba steps instead of the Claude ones');
+  await page.fill('input[aria-label="Alibaba API key"]', 'sk-ali-test');
+  await page.locator('button', { hasText: /^Save$/ }).click();
+  check((await text()).includes('A key is saved on this device') && (await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-ai')).ali.key === 'sk-ali-test')), 'the Alibaba key is saved on this device');
+  check((await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-ai')).key)) === 'sk-ant-test', 'saving the Alibaba key leaves the Claude key alone');
+  check((await text()).includes('Claude (Anthropic) · in use') && !(await text()).includes('Qwen (Alibaba) · in use'), 'saving a second key does not switch services: Claude stays in use');
+  await page.locator('button', { hasText: 'Use Qwen for conversation' }).click();
+  check((await text()).includes('Qwen (Alibaba) · in use'), 'Use Qwen for conversation switches to Qwen and marks it in use');
+  await page.locator('button', { hasText: 'Test connection' }).click();
+  await page.waitForFunction(() => /Voice recogniser: working/.test(document.body.innerText), null, { timeout: 5000 });
+  check((await text()).includes('Chat model (qwen-flash): working.'), 'Test connection reports the chat model and the voice recogniser');
+  const testCall = aliCalls.find(c => c.body.model === 'qwen3-asr-flash');
+  check(testCall && testCall.headers['authorization'] === 'Bearer sk-ali-test' && testCall.url.startsWith('https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions') && testCall.body.messages[0].content[0].input_audio.data.startsWith('data:audio/wav;base64,UklGR'), 'the recogniser request carries the key and a WAV clip to the Singapore endpoint');
+  await nav('Speak');
+  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
+  await page.waitForFunction(() => window.shanlu.state.aim.length >= 1 && !window.shanlu.state.aiBusy);
+  const ali1 = await page.locator('.msgs').innerText();
+  check(ali1.includes('你好！你想去哪儿？') && ali1.includes('Nǐ hǎo! Nǐ xiǎng qù nǎr?') || ali1.includes('Nǐ xiǎng qù nǎlǐ'), 'Qwen opens the conversation, with pinyin from the site\'s own word list');
+  const chatCall = aliCalls.find(c => c.body.model === 'qwen-flash' && c.body.messages[0].role === 'system');
+  check(chatCall && chatCall.headers['authorization'] === 'Bearer sk-ali-test' && chatCall.body.messages[0].content.includes('咖啡') && chatCall.body.response_format && chatCall.body.response_format.type === 'json_object', 'the Qwen request has the instructions as a system message, the key, and asks for JSON');
+  check((await page.locator('.chat-t span').innerText()).includes('Qwen'), 'the chat header says Qwen is answering');
+  check(await page.locator('.ai-dock button', { hasText: 'Suggest a reply' }).count() === 1, 'Qwen replies also come with a suggested reply');
+  // voice: record from the (fake) microphone, send to Alibaba's recogniser, the text lands in the box
+  await page.locator('.modeseg button', { hasText: 'Practice script' }).click();
+  await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.locator('button', { hasText: /^Alibaba Qwen3-ASR/ }).click();
+  await nav('Speak');
+  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
+  await page.fill('input[aria-label="Your reply"]', '');
+  const asrBefore = aliCalls.filter(c => c.body.model === 'qwen3-asr-flash').length;
+  await page.locator('.ai-tools button', { hasText: 'Speak' }).click();
+  await page.waitForFunction(() => window.shanlu.state.aiListen === true, null, { timeout: 5000 });
+  check((await page.locator('.ai-tools').innerText()).includes('Listening'), 'recording shows that it is listening');
+  await page.waitForTimeout(1200);
+  await page.locator('.ai-tools button', { hasText: 'Listening' }).click();
+  await page.waitForFunction(() => window.shanlu.state.aiInput === '我想喝茶', null, { timeout: 8000 });
+  const asrCalls = aliCalls.filter(c => c.body.model === 'qwen3-asr-flash');
+  check(asrCalls.length === asrBefore + 1 && asrCalls[asrCalls.length - 1].body.messages[0].content[0].input_audio.data.length > 2000, 'recording is sent to Alibaba as a WAV clip and the words land in the box');
+  const wavHead = Buffer.from(asrCalls[asrCalls.length - 1].body.messages[0].content[0].input_audio.data.split(',')[1].slice(0, 64), 'base64').toString('latin1');
+  check(wavHead.startsWith('RIFF') && wavHead.slice(8, 12) === 'WAVE', 'the clip is a real WAV file');
+  // a workspace ID changes the web address
+  await page.evaluate(() => { const app = window.shanlu; app.setState({ aliWsInput:'testws1', aliKeyInput:'' }); app.aliSaveKey(); });
+  await page.evaluate(() => window.shanlu.aliTest());
+  check(aliCalls.some(c => c.url.startsWith('https://testws1.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1/chat/completions')), 'a workspace ID switches to the workspace web address');
+  await page.evaluate(() => { const app = window.shanlu; app.setState({ aliWsInput:'' }); app.aliSaveKey(); app.setProvider('anthropic'); app.setAsr('browser'); });
+  check((await page.evaluate(() => window.shanlu.state.aiProvider)) === 'anthropic', 'you can switch back to Claude');
   await page.locator('.modeseg button', { hasText: 'Practice script' }).click();
   await page.locator('button', { hasText: 'Settings' }).first().click();
   await page.locator('button', { hasText: 'Remove the key' }).click();

@@ -124,7 +124,13 @@
     </section>
     <section class="card" style="margin-bottom:20px">
       <h2 class="h2">AI conversation (optional)</h2>
-      <p class="muted" style="margin:6px 0 0;font-size:16px">Speaking practice with a real conversation partner: you speak or type, Mingming answers in simple Chinese and tells you what was not natural. It uses the Claude API, which is billed separately from a Claude.ai subscription: create a key at console.anthropic.com and add some credit there. Each message costs only a small fraction of a cent on the cheaper model, but I could not look up current prices from here, so check them on that site.</p>
+      <p class="muted" style="margin:6px 0 0;font-size:16px">Speaking practice with a real conversation partner: you speak or type, Mingming answers in simple Chinese, may use a little HSK 2 as a preview (with pinyin and English), and tells you what was not natural. Pick the service that writes Mingming's lines. You can save a key for both and switch any time.</p>
+      <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{provOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
+      </div>
+      <sc-if value="{{provAnthropic}}" hint-placeholder-val="{{ true }}">
+      <sc-if value="{{aiCanUse}}" hint-placeholder-val="{{ false }}"><div style="margin-top:12px"><button class="btn pri" onClick="{{useAnth}}">Use Claude for conversation</button></div></sc-if>
+      <p class="muted" style="margin:12px 0 0;font-size:16px">Claude is billed separately from a Claude.ai subscription: create a key at console.anthropic.com and add some credit there. Each message costs only a small fraction of a cent on the cheaper model, but I could not look up current prices from here, so check them on that site.</p>
       <p class="muted" style="margin:10px 0 0;font-size:14.5px">The key is stored on this device only. It is sent straight from your browser to Anthropic and is not synced or exported. Anyone who can use this browser can use the key, so set a spending limit on the key's account.</p>
       <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
         <sc-for list="{{aiModelOpts}}" as="m" hint-placeholder-count="2"><button class="fc2 {{m.cls}}" onClick="{{m.fn}}">{{m.label}}</button></sc-for>
@@ -138,6 +144,39 @@
       <sc-if value="{{aiSet}}" hint-placeholder-val="{{ false }}">
         <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span class="muted">A key is saved on this device.</span><button class="btn" onClick="{{aiRemoveKey}}">Remove the key</button></div>
       </sc-if>
+      </sc-if>
+      <sc-if value="{{provAlibaba}}" hint-placeholder-val="{{ false }}">
+        <p class="muted" style="margin:12px 0 0;font-size:16px">Qwen runs on Alibaba Cloud Model Studio. The same key can also make a stronger voice recogniser for Mandarin (below). New accounts get a free quota. Use the International edition (Singapore).</p>
+        <ol class="muted" style="margin:10px 0 0;padding-left:20px;font-size:15.5px;line-height:1.6">
+          <li>Make an account at alibabacloud.com and open Model Studio in the <b>Singapore</b> region. Agree to the terms to switch it on.</li>
+          <li>In Key Management (Singapore), press Create API Key (Default workspace) and copy it.</li>
+          <li>Paste it below and press Save, then Test connection. The workspace ID is optional: leave it empty unless the test says it is needed.</li>
+        </ol>
+        <p class="muted" style="margin:10px 0 0;font-size:14.5px">The key is stored on this device only and sent straight from your browser to Alibaba. It is not synced or exported. In Model Studio, turn on "Free quota only" so nothing is billed when the free quota runs out.</p>
+        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <input class="wsearch" style="margin:0;flex:1 1 260px;min-width:0" type="password" autocomplete="off" placeholder="Paste the Alibaba API key" value="{{aliKeyInput}}" onInput="{{onAliKeyInput}}" aria-label="Alibaba API key">
+        </div>
+        <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <input class="wsearch" style="margin:0;flex:1 1 200px;min-width:0" type="text" autocomplete="off" placeholder="Workspace ID (optional)" value="{{aliWsInput}}" onInput="{{onAliWsInput}}" aria-label="Alibaba workspace ID">
+          <input class="wsearch" style="margin:0;flex:1 1 200px;min-width:0" type="text" autocomplete="off" placeholder="Model name" value="{{aliModelInput}}" onInput="{{onAliModelInput}}" aria-label="Qwen model name">
+        </div>
+        <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{aliModelOpts}}" as="m" hint-placeholder-count="2"><button class="fc2 {{m.cls}}" onClick="{{m.fn}}">{{m.label}}</button></sc-for>
+        </div>
+        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <button class="btn pri" onClick="{{aliSaveKey}}">Save</button>
+          <button class="btn" onClick="{{aliTest}}">{{aliTestLabel}}</button>
+          <sc-if value="{{aliSet}}" hint-placeholder-val="{{ false }}"><span class="muted">A key is saved on this device.</span><button class="btn" onClick="{{aliRemoveKey}}">Remove the key</button></sc-if>
+          <sc-if value="{{aliCanUse}}" hint-placeholder-val="{{ false }}"><button class="btn pri" onClick="{{useAli}}">Use Qwen for conversation</button></sc-if>
+        </div>
+        <p class="muted" style="margin:10px 0 0;font-size:14.5px">Model names change over time. If Alibaba says the model does not exist, type the current name from the Model Studio model list.</p>
+      </sc-if>
+      <h3 style="margin:18px 0 0;font-size:17px">What hears your voice</h3>
+      <p class="muted" style="margin:6px 0 0;font-size:15.5px">The browser's own recogniser is free but can miss normal-speed Mandarin. Alibaba's Qwen3-ASR is built for Chinese. It records you, sends the clip to Alibaba, and fills the box a moment after you stop.</p>
+      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{asrOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
+      </div>
+      <sc-if value="{{hasAliNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aliNote}}</div></sc-if>
       <sc-if value="{{hasAiNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aiNote}}</div></sc-if>
     </section>
     <section class="card">
@@ -610,7 +649,7 @@
     <sc-if value="{{aiNoKey}}" hint-placeholder-val="{{ false }}">
     <section class="card" style="grid-column:1/-1">
       <h2 class="h2">Talk with Mingming</h2>
-      <p class="muted" style="margin:6px 0 0;font-size:16px">Mingming is an AI that plays the other person in a conversation, answers you in simple Chinese and tells you when something you said was not natural. It needs an API key from Anthropic, which you add once in Settings. The key stays on this device.</p>
+      <p class="muted" style="margin:6px 0 0;font-size:16px">Mingming is an AI that plays the other person in a conversation, answers you in simple Chinese and tells you when something you said was not natural. It needs an API key from Anthropic (Claude) or Alibaba (Qwen), which you add once in Settings. The key stays on this device.</p>
       <button class="btn pri" style="margin-top:16px" onClick="{{goVoice}}">Open Settings</button>
     </section>
     </sc-if>
@@ -640,6 +679,7 @@
               </sc-if>
             </div>
             <sc-if value="{{m.hasOutside}}" hint-placeholder-val="{{ false }}"><div class="note">{{m.outsideText}}</div></sc-if>
+            <sc-if value="{{m.hasPv}}" hint-placeholder-val="{{ false }}"><div class="note pv">{{m.pvText}}</div></sc-if>
             <sc-if value="{{m.hasOk}}" hint-placeholder-val="{{ false }}"><div class="note good">Sounds natural.</div></sc-if>
             <sc-if value="{{m.cmpGood}}" hint-placeholder-val="{{ false }}"><div class="note good">Matches the suggested reply. If you said it out loud, the microphone heard exactly these characters, a good sign for your tones.</div></sc-if>
             <sc-if value="{{m.cmpBad}}" hint-placeholder-val="{{ false }}"><div class="note fix"><b>Not the same as the suggestion.</b> <span class="zh">{{m.cmpBadHead}}</span><br>{{m.cmpBadDetail}}</div></sc-if>
@@ -1308,6 +1348,7 @@
 <script src="data/hsk1-listen.js"></script>
 <script src="data/hsk1-exam.js"></script>
 <script src="data/hsk1-erhua.js"></script>
+<script src="data/hsk2-preview.js"></script>
 <script src="sync.js"></script>
 <script src="erhua.js"></script>
 <script src="app.js"></script>

@@ -1,0 +1,202 @@
+# zh	pinyin	English   (HSK 2 "preview" words the AI conversation may use; pinyin is checked against the dataset by tools/build-preview.py)
+啊	a	ah, oh (soft sentence ending)
+爱好	àihào	hobby; to like
+白色	báisè	white
+班	bān	class (group of students)
+帮	bāng	to help
+帮忙	bāngmáng	to help, to do a favor
+包	bāo	bag; to wrap
+本子	běnzi	notebook
+比	bǐ	to compare; than
+笔	bǐ	pen
+别	bié	don't
+不错	búcuò	not bad, pretty good
+不好意思	bùhǎoyìsi	sorry; embarrassed
+车站	chēzhàn	station (bus or train)
+出	chū	to go out, to come out
+出国	chūguó	to go abroad
+出来	chūlái	to come out
+出门	chūmén	to go out, to leave home
+出去	chūqù	to go out
+床	chuáng	bed
+词	cí	word
+次	cì	time (as in "three times")
+从	cóng	from
+从小	cóngxiǎo	since childhood
+错	cuò	wrong
+打	dǎ	to hit; to play (a ball game)
+打车	dǎchē	to take a taxi
+打开	dǎkāi	to open
+但	dàn	but
+但是	dànshì	but
+地	de	-ly (turns a word into an adverb)
+地铁	dìtiě	subway
+得	de	(after a verb) how well, e.g. 说得好; děi = must
+等	děng	to wait
+懂	dǒng	to understand
+动	dòng	to move
+饭馆	fànguǎn	restaurant
+飞	fēi	to fly
+高	gāo	tall; high
+高中	gāozhōng	senior high school
+告诉	gàosu	to tell
+个子	gèzi	height (of a person)
+跟	gēn	with; to follow
+公交车	gōngjiāochē	bus
+过	guò	to pass; (after a verb) have done it before
+过来	guòlai	to come over
+过年	guònián	to celebrate the New Year
+过去	guòqu	to go over; (guòqù) the past
+还是	háishi	or; still
+黑色	hēisè	black
+红茶	hóngchá	black tea (literally "red tea")
+红色	hóngsè	red
+后面	hòumian	behind, the back
+花	huā	flower; to spend
+画	huà	to draw; a picture
+坏	huài	bad; broken
+回来	huílai	to come back
+回去	huíqu	to go back
+机场	jīchǎng	airport
+机票	jīpiào	plane ticket
+间	jiān	(measure word for rooms)
+记得	jìde	to remember
+教	jiāo	to teach
+教室	jiàoshì	classroom
+介绍	jièshào	to introduce
+近	jìn	near
+进	jìn	to enter
+进来	jìnlái	to come in
+进去	jìnqù	to go in
+经常	jīngcháng	often
+酒店	jiǔdiàn	hotel
+就	jiù	then; just; only
+咖啡	kāfēi	coffee
+开始	kāishǐ	to begin
+开学	kāixué	school starts
+考	kǎo	to take (an exam)
+考试	kǎoshì	exam; to take an exam
+可能	kěnéng	maybe; possible
+裤子	kùzi	trousers
+快	kuài	fast; soon
+快乐	kuàilè	happy
+快要	kuàiyào	about to
+篮球	lánqiú	basketball
+累	lèi	tired
+离	lí	away from (distance)
+里面	lǐmiàn	inside
+楼	lóu	building; floor
+路	lù	road
+路上	lùshang	on the way
+旅游	lǚyóu	to travel; tourism
+绿茶	lǜchá	green tea
+绿色	lǜsè	green
+慢	màn	slow
+没意思	méiyìsi	boring
+每	měi	every
+门	mén	door
+门口	ménkǒu	doorway, entrance
+门票	ménpiào	admission ticket
+面	miàn	side; surface; noodles
+名	míng	name
+拿	ná	to take, to hold
+那么	nàme	so; like that
+那样	nàyàng	like that
+奶茶	nǎichá	milk tea
+奶奶	nǎinai	grandma (father's mother)
+男孩	nánhái	boy
+男孩儿	nánháir	boy
+女孩	nǚhái	girl
+女孩儿	nǚháir	girl
+鸟	niǎo	bird
+旁边	pángbiān	beside
+跑	pǎo	to run
+跑步	pǎobù	to run, to jog
+票	piào	ticket
+妻子	qīzi	wife
+起来	qǐlai	to stand up; (after a verb) to start
+前面	qiánmiàn	in front
+晴	qíng	sunny
+球	qiú	ball
+让	ràng	to let; to make
+肉	ròu	meat
+商场	shāngchǎng	shopping mall
+上来	shànglái	to come up
+上面	shàngmiàn	above, on top
+上去	shàngqù	to go up
+上网	shàngwǎng	to go online
+身体	shēntǐ	body; health
+生日	shēngrì	birthday
+时	shí	time, when
+事情	shìqing	matter, thing
+手	shǒu	hand
+手表	shǒubiǎo	watch
+书包	shūbāo	schoolbag
+舒服	shūfu	comfortable
+送	sòng	to give (a gift); to see off
+虽然	suīrán	although
+所以	suǒyǐ	so, therefore
+疼	téng	to hurt; painful
+踢	tī	to kick; to play (football)
+题	tí	question, problem (in a test)
+条	tiáo	(measure word for long things, e.g. fish)
+跳舞	tiàowǔ	to dance
+头	tóu	head
+外国	wàiguó	foreign country
+外面	wàimiàn	outside
+完	wán	to finish
+万	wàn	ten thousand
+网上	wǎngshàng	online
+往	wǎng	toward
+忘	wàng	to forget
+为什么	wèishénme	why
+位	wèi	(polite measure word for people)
+希望	xīwàng	to hope; hope
+洗	xǐ	to wash
+洗手间	xǐshǒujiān	restroom
+下来	xiàlai	to come down
+下面	xiàmiàn	below, under
+下去	xiàqù	to go down
+小孩	xiǎohái	child
+小孩儿	xiǎoháir	child
+小时候	xiǎoshíhou	when (I) was little
+笑	xiào	to laugh, to smile
+姓	xìng	surname; to be surnamed
+姓名	xìngmíng	full name
+颜色	yánsè	color
+眼睛	yǎnjing	eye
+药	yào	medicine
+药店	yàodiàn	pharmacy
+爷爷	yéye	grandpa (father's father)
+一会	yíhuì	a moment
+一会儿	yíhuìr	a moment
+一起	yìqǐ	together
+已经	yǐjīng	already
+意思	yìsi	meaning
+因为	yīnwèi	because
+阴	yīn	cloudy
+游	yóu	to swim
+游泳	yóuyǒng	to swim; swimming
+有时	yǒushí	sometimes
+有意思	yǒuyìsi	interesting
+右	yòu	right
+右边	yòubian	right side
+鱼	yú	fish
+远	yuǎn	far
+运动	yùndòng	sport; to exercise
+站	zhàn	station; to stand
+长	cháng	long
+丈夫	zhàngfu	husband
+这么	zhème	so; this much
+这样	zhèyàng	like this
+着	zhe	(shows an ongoing state)
+正	zhèng	just; exactly
+周	zhōu	week
+准备	zhǔnbèi	to prepare
+自己	zìjǐ	oneself
+走	zǒu	to walk; to go
+走路	zǒulù	to walk
+足球	zúqiú	football (soccer)
+最	zuì	most
+左	zuǒ	left
+左边	zuǒbian	left side
