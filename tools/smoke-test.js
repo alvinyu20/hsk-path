@@ -51,7 +51,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', e => errors.push('pageerror: ' + e.message));
-  page.on('console', m => { if (m.type() === 'error' && !/fonts\.(googleapis|gstatic)|net::ERR/.test(m.text())) errors.push('console: ' + m.text()); });
+  page.on('console', m => { if (m.type() === 'error' && !/fonts\.(googleapis|gstatic)|net::ERR|status of 401/.test(m.text())) errors.push('console: ' + m.text()); });
   page.on('dialog', d => d.accept());
 
   const shot = async (name) => { if (shots) await page.screenshot({ path: path.join(shots, name + '.png'), fullPage: true }); };
@@ -378,7 +378,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
   // Chinese voice picker
   const lastSpoken = () => page.evaluate(() => window.__spoken[window.__spoken.length - 1] || null);
-  await page.locator('button', { hasText: 'Voice and 儿 style' }).first().click();
+  await page.locator('button', { hasText: 'Settings' }).first().click();
   await page.waitForTimeout(100);
   const vt = await text();
   check(vt.includes('Lili (Premium)') && vt.includes('Tingting') && vt.includes('Meijia'), 'voice screen lists the Mandarin voices');
@@ -400,7 +400,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.reload();
   await page.waitForSelector('.app');
   check(await page.evaluate(() => window.shanlu.state.voiceId === 'com.apple.voice.compact.zh-CN.Tingting'), 'the chosen voice survives a reload');
-  await page.locator('button', { hasText: 'Voice and 儿 style' }).first().click();
+  await page.locator('button', { hasText: 'Settings' }).first().click();
   await page.locator('button', { hasText: 'Use automatic' }).click();
   await page.evaluate(() => window.shanlu.say('你好', 'x'));
   sp = await lastSpoken();
@@ -430,14 +430,14 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   if (!erhuaMode) check(leftovers.every(okLeft) && leftovers.length === 3, 'plain mode leaves no 儿 ending in the content (only the "child" character is left)' + (leftovers.every(okLeft) ? '' : ': ' + leftovers.filter(l => !okLeft(l)).slice(0, 3).join(' | ')));
   const myKey = erhuaMode ? '面条儿' : '面条', otherKey = erhuaMode ? '面条' : '面条儿';
   await page.evaluate((k) => { const ws = Object.assign({}, window.shanlu.state.ws); ws[k] = { see: { s: 7, l: 0 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }; window.shanlu.setState({ ws }); window.shanlu.persistNow(); }, myKey);
-  await page.locator('button', { hasText: 'Voice and 儿 style' }).first().click();
+  await page.locator('button', { hasText: 'Settings' }).first().click();
   check((await text()).includes(erhuaMode ? 'Now: 儿 endings are on' : 'Now: plain forms'), 'the voice and 儿 screen says which style is on');
   await Promise.all([page.waitForNavigation(), page.locator('button', { hasText: erhuaMode ? 'Switch to plain forms' : 'Switch to 儿 endings' }).click()]);
   await page.waitForSelector('.app');
   const flipped = await page.evaluate((a) => ({ n: window.HSK1_WORDS.length, has: window.HSK1_WORDS.some(w => w.zh === a), s: window.shanlu.state.ws[a] && window.shanlu.state.ws[a].see.s, gone: window.shanlu.state.ws[a === '面条' ? '面条儿' : '面条'] === undefined }), otherKey);
   check(flipped.n === (erhuaMode ? 297 : 300) && flipped.has, 'switching flips the word list (' + flipped.n + ' words)');
   check(flipped.s === 7, 'progress on a renamed word carries over when the style switches (' + myKey + ' to ' + otherKey + ')');
-  await page.locator('button', { hasText: 'Voice and 儿 style' }).first().click();
+  await page.locator('button', { hasText: 'Settings' }).first().click();
   await Promise.all([page.waitForNavigation(), page.locator('button', { hasText: erhuaMode ? 'Switch to 儿 endings' : 'Switch to plain forms' }).click()]);
   await page.waitForSelector('.app');
   const back = await page.evaluate((a) => ({ n: window.HSK1_WORDS.length, s: window.shanlu.state.ws[a] && window.shanlu.state.ws[a].see.s }), myKey);
@@ -455,6 +455,56 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     return { a, b, rq: app.state.rq.slice() };
   });
   check(timeCheck.rq.includes(timeCheck.a) && !timeCheck.rq.includes(timeCheck.b), 'a word becomes due as real days pass (reviewed 3 days ago is due, just now is not)');
+
+  // sync across devices, against a fake GitHub (two separate browsers sharing one gist)
+  const S2 = require('../sync.js');
+  const fakeGists = {}; let gistN = 0;
+  const route = async (r) => {
+    const req = r.request(); const u = new URL(req.url()); const method = req.method(); const j = (o, st) => r.fulfill({ status: st || 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify(o) });
+    if (method === 'OPTIONS') return r.fulfill({ status: 204, headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' } });
+    if ((req.headers()['authorization'] || '') !== 'Bearer ghp_test') return j({ message: 'Bad credentials' }, 401);
+    if (method === 'GET' && u.pathname === '/gists') return j(Object.keys(fakeGists).map(id => ({ id, files: fakeGists[id] })));
+    if (method === 'POST' && u.pathname === '/gists') { const b = JSON.parse(req.postData()); const id = 'g' + (++gistN); fakeGists[id] = { [S2.FILE]: { content: b.files[S2.FILE].content } }; return j({ id }, 201); }
+    const m = u.pathname.match(/^\/gists\/(\w+)$/);
+    if (m && method === 'GET') return fakeGists[m[1]] ? j({ id: m[1], files: fakeGists[m[1]] }) : j({}, 404);
+    if (m && method === 'PATCH') { fakeGists[m[1]][S2.FILE].content = JSON.parse(req.postData()).files[S2.FILE].content; return j({}); }
+    return j({}, 500);
+  };
+  await ctx.route('https://api.github.com/**', route);
+  await page.locator('button', { hasText: 'Settings' }).first().click();
+  check((await text()).includes('Sync across devices') && (await page.locator('input[aria-label="GitHub token"]').count()) === 1, 'settings has a sync card with a token box');
+  await page.fill('input[aria-label="GitHub token"]', 'nope');
+  await page.locator('button', { hasText: 'Connect' }).click();
+  await page.waitForFunction(() => !window.shanlu.state.syncBusy && window.shanlu.state.syncMsg);
+  check((await text()).includes('rejected the token'), 'a wrong token is explained, not silent');
+  await page.locator('button', { hasText: 'Disconnect this device' }).click();
+  await page.fill('input[aria-label="GitHub token"]', 'ghp_test');
+  await page.evaluate(() => { const ws = JSON.parse(JSON.stringify(window.shanlu.state.ws)); ws['你好'] = { see: { s: 9, l: 0, t: Date.now() }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }; window.shanlu.setState({ ws, xp: 777 }); });
+  await page.locator('button', { hasText: 'Connect' }).click();
+  await page.waitForFunction(() => !window.shanlu.state.syncBusy && window.shanlu.state.syncMsg);
+  check((await text()).includes('private GitHub gist') && Object.keys(fakeGists).length === 1, 'connecting creates one private gist');
+  check(!JSON.stringify(fakeGists).includes('ghp_test'), 'the token is not written into the gist');
+  // device two: a fresh browser
+  const ctx2 = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  await ctx2.route('https://api.github.com/**', route);
+  const p2 = await ctx2.newPage();
+  await p2.goto(url); await p2.waitForSelector('.app');
+  check(await p2.evaluate(() => window.shanlu.state.xp === 0), 'a second browser starts with nothing');
+  await p2.locator('button', { hasText: 'Settings' }).first().click();
+  await p2.fill('input[aria-label="GitHub token"]', 'ghp_test');
+  await p2.locator('button', { hasText: 'Connect' }).click();
+  await p2.waitForFunction(() => !window.shanlu.state.syncBusy && window.shanlu.state.syncMsg);
+  const got = await p2.evaluate(() => ({ xp: window.shanlu.state.xp, s: window.shanlu.state.ws['你好'].see.s }));
+  check(got.xp === 777 && got.s === 9, 'the second browser gets the first one\'s progress after connecting');
+  await p2.evaluate(() => { const ws = JSON.parse(JSON.stringify(window.shanlu.state.ws)); ws['谢谢'] = { see: { s: 4, l: 0, t: Date.now() }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }; window.shanlu.setState({ ws }); });
+  await p2.locator('button', { hasText: 'Sync now' }).click();
+  await p2.waitForFunction(() => !window.shanlu.state.syncBusy);
+  await page.locator('button', { hasText: 'Sync now' }).click();
+  await page.waitForFunction(() => !window.shanlu.state.syncBusy);
+  check(await page.evaluate(() => window.shanlu.state.ws['谢谢'].see.s === 4 && window.shanlu.state.ws['你好'].see.s === 9), 'work done on the second browser reaches the first after a sync');
+  await ctx2.close();
+  await page.locator('button', { hasText: 'Disconnect this device' }).click();
+  await page.locator('button', { hasText: 'Back to home' }).click();
 
   // export
   const dl = page.waitForEvent('download');

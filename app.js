@@ -4,6 +4,10 @@
  */
 (function () {
   // "儿 endings" switch (see erhua.js). Plain forms are the default; the setting is read here, before any content is used.
+  const SYNC_STORE = 'shanlu-sync';   // { token, gist, at } lives only on this device, never in the exported progress file
+  let SYNCCFG = {};
+  try { SYNCCFG = JSON.parse(localStorage.getItem(SYNC_STORE)) || {}; } catch (e) {}
+  const saveSyncCfg = () => { try { localStorage.setItem(SYNC_STORE, JSON.stringify(SYNCCFG)); } catch (e) {} };
   const ERHUA_KEY = 'shanlu-erhua';
   let ERHUA_ON = false;
   try { ERHUA_ON = localStorage.getItem(ERHUA_KEY) === 'on'; } catch (e) {}
@@ -105,7 +109,7 @@
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{},
+      wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0,
       playing:null, noVoice:false
@@ -274,6 +278,7 @@
       this.persistSoon();
     }
     persistSoon() {
+      this.syncLater();
       clearTimeout(this.saveTimer);
       this.saveTimer = setTimeout(() => this.persistNow(), 250);
     }
@@ -308,6 +313,46 @@
       this.later(() => { if (this.state.playing === key) this.setState({ playing:null }); }, 1400);
     };
     goVoice = () => this.go('voice');
+
+    // ----- sync across devices (a private GitHub gist; see sync.js) -----
+    syncTimer = null;
+    syncLater = () => {
+      if (!SYNCCFG.token || this.noSync) return;
+      clearTimeout(this.syncTimer);
+      this.syncTimer = setTimeout(() => this.syncNow(false), 30000);
+    };
+    syncNow = async (manual) => {
+      const S0 = this.state;
+      if (!SYNCCFG.token || S0.syncBusy || !window.ShanluSync) return;
+      this.noSync = true;
+      this.setState({ syncBusy:true, syncMsg:manual ? 'Syncing…' : S0.syncMsg });
+      this.noSync = false;
+      try {
+        this.persistNow();
+        const r = await window.ShanluSync.round({ token:SYNCCFG.token, gistId:SYNCCFG.gist || null, state:this.state });
+        let next = rollDay(Object.assign({}, this.state, r.merged));
+        carryOverErhua(next);
+        const patch = window.ShanluSync.pick(next);
+        patch.rq = (patch.rq || []).filter(z => BANK[z]);
+        SYNCCFG.gist = r.gistId; SYNCCFG.at = Date.now(); saveSyncCfg();
+        this.noSync = true;
+        this.setState(Object.assign(patch, { syncBusy:false, syncAt:SYNCCFG.at, syncBad:false, syncMsg:r.created ? 'Connected. Your progress is now saved in a private GitHub gist.' : 'Synced.' }));
+        this.noSync = false;
+        this.persistNow();
+      } catch (e) {
+        this.noSync = true;
+        this.setState({ syncBusy:false, syncBad:true, syncMsg:(e && e.message) || 'Sync failed.' });
+        this.noSync = false;
+      }
+    };
+    syncConnect = () => {
+      const t = (this.state.syncInput || '').trim();
+      if (!t) { this.setState({ syncBad:true, syncMsg:'Paste the token first.' }); return; }
+      SYNCCFG = { token:t, gist:'', at:0 }; saveSyncCfg();
+      this.setState({ syncOn:true, syncInput:'', syncMsg:'', syncBad:false });
+      this.syncNow(true);
+    };
+    syncDisconnect = () => { SYNCCFG = {}; saveSyncCfg(); clearTimeout(this.syncTimer); this.setState({ syncOn:false, syncAt:0, syncMsg:'This device is disconnected. Your progress here is kept.', syncBad:false }); };
     toggleErhua = () => {
       this.persistNow();
       try { localStorage.setItem(ERHUA_KEY, ERHUA_ON ? 'off' : 'on'); } catch (e) {}
@@ -653,7 +698,7 @@
         web:['Word webs', 'Learn new words next to the words you already know.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
         listen:['Listening lab', 'Train your ear for how people really talk, not just how lessons sound.'],
-        voice:['Voice and 儿 style', 'Choose the voice that reads Chinese aloud, and whether words like 这儿 keep their northern 儿 ending.'],
+        voice:['Settings', 'Sync your progress between devices, choose the voice that reads Chinese aloud, and how 儿 endings are shown.'],
         quiz:S.qmode === 'grammar' ? ['Grammar practice', LESSONS[S.glesson].title] : ['HSK 1 test', 'Take your time. Wrong answers show you why.']
       };
       const tt = titles[S.screen];
@@ -1044,6 +1089,10 @@
         // footer
         exportData:this.exportData, importData:this.importData, resetAll:this.resetAll, goVoice:this.goVoice,
         ...this.voiceVals(),
+        syncOn:S.syncOn, syncOff:!S.syncOn, syncBusy:S.syncBusy, syncMsg:S.syncMsg, hasSyncMsg:!!S.syncMsg, syncMsgCls:S.syncBad ? 'bad' : 'good',
+        syncInput:S.syncInput, onSyncInput:(e) => this.setState({ syncInput:e.target.value }), syncConnect:this.syncConnect, syncNow:() => this.syncNow(true), syncDisconnect:this.syncDisconnect,
+        syncAtText:S.syncAt ? 'Last synced ' + new Date(S.syncAt).toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }) + '.' : 'Not synced yet.',
+        syncTokenUrl:'https://github.com/settings/tokens/new?scopes=gist&description=Shanlu%20progress',
         erhuaOn:ERHUA_ON, erhuaOff:!ERHUA_ON, erhuaAvailable:!!ERHUA, toggleErhua:this.toggleErhua,
         erhuaNow:ERHUA_ON ? 'Now: 儿 endings are on (exam style).' : 'Now: plain forms, no 儿 endings.',
         erhuaBtn:ERHUA_ON ? 'Switch to plain forms' : 'Switch to 儿 endings',
@@ -1058,7 +1107,8 @@
   window.shanlu = app;
 
   window.addEventListener('pagehide', () => app.persistNow());
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') app.persistNow(); else app._schedule(); });
+  if (SYNCCFG.token) setTimeout(() => app.syncNow(false), 1200);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') app.persistNow(); else { app._schedule(); if (SYNCCFG.token) app.syncNow(false); } });
   const fileInput = document.getElementById('import-file');
   if (fileInput) {
     fileInput.addEventListener('change', () => {

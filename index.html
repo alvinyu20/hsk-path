@@ -98,6 +98,30 @@
   <!-- VOICE -->
   <sc-if value="{{isVoice}}" hint-placeholder-val="{{ false }}">
   <div class="vscreen">
+    <section class="card" style="margin-bottom:20px">
+      <h2 class="h2">Sync across devices</h2>
+      <sc-if value="{{syncOff}}" hint-placeholder-val="{{ true }}">
+        <p class="muted" style="margin:6px 0 0;font-size:16px">Your progress is saved in this browser only. To use the same progress on your phone and your computer, keep one private copy in a GitHub gist. You do this once per device.</p>
+        <ol class="muted" style="margin:10px 0 0;padding-left:20px;font-size:15.5px;line-height:1.6">
+          <li>Open <a href="{{syncTokenUrl}}" target="_blank" rel="noopener">this GitHub page</a> (sign in if asked). It makes a classic token with only the gist permission. Pick an expiry you are comfortable with, then press Generate token.</li>
+          <li>Copy the token (it starts with ghp_) and paste it below.</li>
+          <li>Press Connect. Do the same on your other devices with the same token.</li>
+        </ol>
+        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <input class="wsearch" type="password" autocomplete="off" placeholder="Paste the token" value="{{syncInput}}" onInput="{{onSyncInput}}" style="flex:1 1 220px;min-width:0" aria-label="GitHub token">
+          <button class="btn pri" onClick="{{syncConnect}}">Connect</button>
+        </div>
+        <p class="muted" style="margin:10px 0 0;font-size:14.5px">The token is kept on this device only, never in your exported progress. It can only read and write gists. You can delete it any time at github.com/settings/tokens.</p>
+      </sc-if>
+      <sc-if value="{{syncOn}}" hint-placeholder-val="{{ false }}">
+        <p class="muted" style="margin:6px 0 0;font-size:16px">{{syncAtText}} Progress syncs when you open the site, when you come back to the tab, and shortly after you study.</p>
+        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <button class="btn pri" onClick="{{syncNow}}">Sync now</button>
+          <button class="btn" onClick="{{syncDisconnect}}">Disconnect this device</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{hasSyncMsg}}" hint-placeholder-val="{{ false }}"><div class="banner {{syncMsgCls}}" style="margin-top:14px" role="status">{{syncMsg}}</div></sc-if>
+    </section>
     <section class="card">
       <h2 class="h2">Chinese voice</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">{{voiceIntro}}</p>
@@ -1082,7 +1106,7 @@
   <footer class="foot">
     <p>The Chinese on this site is checked by AI against a community HSK word list and has not been reviewed by a teacher yet. If something looks wrong, use "Report a mistake" next to it.</p>
     <div class="foot-act">
-      <button class="linkbtn" onClick="{{goVoice}}">Voice and 儿 style</button>
+      <button class="linkbtn" onClick="{{goVoice}}">Settings</button>
       <button class="linkbtn" onClick="{{exportData}}">Export progress</button>
       <button class="linkbtn" onClick="{{importData}}">Import progress</button>
       <button class="linkbtn" onClick="{{resetAll}}">Reset progress</button>
@@ -1100,6 +1124,7 @@
 <script src="data/hsk1-speak.js"></script>
 <script src="data/hsk1-listen.js"></script>
 <script src="data/hsk1-erhua.js"></script>
+<script src="sync.js"></script>
 <script src="erhua.js"></script>
 <script src="app.js"></script>
 </body>
