@@ -89,20 +89,21 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
   // Word webs
   await nav('Word webs');
-  check((await text()).includes('0 of 5 new words today'), 'word webs open with a daily limit of 5');
-  await page.locator('button', { hasText: 'Add to my words' }).first().click();
-  await page.waitForTimeout(100);
-  check((await text()).includes('1 of 5 new words today'), 'adding a word counts it');
-  for (let i = 0; i < 4; i++) { await page.locator('button', { hasText: 'Add to my words' }).first().click(); await page.waitForTimeout(60); }
-  check((await text()).includes('5 of 5 new words today'), 'five words added');
-  check((await text()).includes('That is 5 new words for today'), 'daily cap note shows');
-  check((await page.locator('button', { hasText: 'Add to my words' }).count()) === 0, 'no add buttons after the cap');
-  await page.locator('[aria-label="New words per day"] button', { hasText: /^8$/ }).click();
+  check((await text()).includes('0 new words today') && !/\d+ of \d+ new words today/.test(await text()), 'word webs open with no daily limit');
+  for (let i = 0; i < 6; i++) { await page.locator('button', { hasText: 'Add to my words' }).first().click(); await page.waitForTimeout(50); }
+  check((await text()).includes('6 new words today'), 'six words added with no limit in the way');
+  check((await page.locator('button', { hasText: 'Add to my words' }).count()) > 0, 'add buttons are still there after six words');
+  await page.locator('[aria-label="New words per day"] button', { hasText: /^5$/ }).click();
   await page.waitForTimeout(80);
-  check((await page.locator('button', { hasText: 'Add to my words' }).count()) > 0, 'raising the daily limit brings the add buttons back');
-  await page.locator('button', { hasText: 'Add to my words' }).first().click();
-  await page.waitForTimeout(60);
-  check((await text()).includes('6 of 8 new words today'), 'the new daily limit is used');
+  check((await text()).includes('You have reached your limit of 5') && (await page.locator('button', { hasText: 'Add to my words' }).count()) === 0, 'choosing a limit of 5 stops further adds');
+  await page.locator('[aria-label="New words per day"] button', { hasText: 'No limit' }).click();
+  await page.waitForTimeout(80);
+  check((await page.locator('button', { hasText: 'Add to my words' }).count()) > 0, 'choosing "No limit" brings the add buttons back');
+  const before = await page.evaluate(() => Object.keys(window.shanlu.state.wlearned).length);
+  await page.locator('button', { hasText: /^Add all \d+ new word/ }).first().click();
+  await page.waitForTimeout(80);
+  const after = await page.evaluate(() => Object.keys(window.shanlu.state.wlearned).length);
+  check(after > before + 1, 'Add all adds the rest of a shared-character group (' + before + ' to ' + after + ')');
   check((await page.locator('[aria-label="Pick a character"] button').count()) >= 20, 'many shared-character groups are available');
   await shot('02-webs');
   await page.locator('[aria-label="Pick a character"] button', { hasText: '饭' }).click();
@@ -118,6 +119,10 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForTimeout(80);
   check((await page.locator('.tgrid .tc').count()) >= 20, 'a topic lists its words');
   check(/\d+ of \d+ started/.test(await text()), 'a topic shows how many of its words you started');
+  await page.locator('button', { hasText: /^Add all \d+ new word/ }).first().click();
+  await page.waitForTimeout(100);
+  const tp = (await text()).match(/(\d+) of (\d+) started/);
+  check(tp && tp[1] === tp[2], 'Add all on a topic starts every word in it (' + (tp ? tp[0] : 'no progress text') + ')');
   await shot('03-topics');
   await page.locator('button', { hasText: 'Shared character' }).click();
   await page.locator('.opts .opt').first().click();
@@ -155,6 +160,17 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.waitForTimeout(80);
   }
   check((await text()).includes('words reviewed'), 'review finishes');
+  // make 100 words due and check that reviews continue in rounds
+  await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).slice(0, 100).forEach(zh => { ws[zh].see = { s:1, l:5 }; }); app.setState({ ws, rq:[], rcomplete:false }); });
+  await nav('Review words');
+  check((await text()).includes('More words are due') && (await text()).includes('Review 30 more'), 'when more than a round is due, review offers the next 30');
+  await page.locator('button', { hasText: 'Review 30 more' }).click();
+  await page.waitForTimeout(100);
+  check((await page.evaluate(() => window.shanlu.state.rq.length)) === 30, 'a review round has 30 cards');
+  await page.evaluate(() => { window.shanlu.setState({ rq:[], rcomplete:true }); });
+  await page.waitForTimeout(100);
+  check((await page.locator('button', { hasText: /^Review \d+ more$/ }).count()) === 1, 'the finished-round screen offers more while words are still due');
+  await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).forEach(zh => { if (ws[zh].see.s === 1 && ws[zh].see.l === 5) ws[zh].see = { s:30, l:0 }; }); app.setState({ ws, rq:[], rcomplete:false }); });
 
   // Listening lab
   await nav('Listening lab');
@@ -247,6 +263,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await shot('13-home-after');
 
   // persistence
+  await nav('Word webs');
+  await page.locator('[aria-label="New words per day"] button', { hasText: /^10$/ }).click();
   await page.waitForTimeout(400);
   await page.reload();
   await page.waitForSelector('.app');
@@ -256,7 +274,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await nav('Speak');
   check((await page.locator('.scn.done').count()) >= 2, 'finished speaking scripts survive a reload');
   await nav('Word webs');
-  check((await text()).includes('of 8 new words today'), 'the daily limit setting survives a reload');
+  check(/of 10 new words today/.test(await text()), 'a chosen daily limit survives a reload');
   await nav('My words');
   check(!(await text()).includes('0 words started'), 'word progress survives a reload');
 

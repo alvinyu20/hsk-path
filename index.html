@@ -277,6 +277,14 @@
         <div class="res-act"><button class="btn pri big" onClick="{{goWeb}}">Go to Word webs</button></div>
       </div>
     </sc-if>
+    <sc-if value="{{moreDue}}" hint-placeholder-val="{{ false }}">
+      <div class="res">
+        <div class="stamp zh" aria-hidden="true">词</div>
+        <h2 class="res-h">More words are due</h2>
+        <p class="res-p">{{dueLeftText}} Reviewing them now keeps them from fading. Reviews come in rounds of 30.</p>
+        <div class="res-act"><button class="btn pri big" onClick="{{reviewMore}}">{{moreDueText}}</button></div>
+      </div>
+    </sc-if>
     <sc-if value="{{caughtUp}}" hint-placeholder-val="{{ false }}">
       <div class="res">
         <div class="stamp zh" aria-hidden="true">好</div>
@@ -301,7 +309,8 @@
         </div>
         <span class="res-gain">+{{rxp}} XP added to your climb</span>
         <div class="res-act">
-          <button class="btn pri big" onClick="{{goTest}}">Test these words</button>
+          <sc-if value="{{hasMoreDue}}" hint-placeholder-val="{{ false }}"><button class="btn pri big" onClick="{{reviewMore}}">{{moreDueText}}</button></sc-if>
+          <button class="btn big" onClick="{{goTest}}">Test these words</button>
           <button class="btn big" onClick="{{goHome}}">Back to home</button>
         </div>
       </div>
@@ -516,7 +525,7 @@
       <sc-for list="{{capOpts}}" as="c" hint-placeholder-count="4"><button class="fc2 {{c.cls}}" onClick="{{c.fn}}">{{c.label}}</button></sc-for>
     </div>
     <p class="muted" style="margin:0;max-width:66ch">Each new word shows up next to words you already know. Close synonyms stay apart so they don't blur together. Try to recall a word before you reveal it, even if you guess wrong.</p>
-    <sc-if value="{{capNote}}" hint-placeholder-val="{{ false }}"><p class="capnote">That is {{capCount}} new words for today. More would crowd out the ones you just met, so the rest wait until tomorrow. You can change the daily number above.</p></sc-if>
+    <sc-if value="{{capNote}}" hint-placeholder-val="{{ false }}"><p class="capnote">You have reached your limit of {{capCount}} new words for today. The rest wait until tomorrow. Choose "No limit" above to keep going.</p></sc-if>
 
     <sc-if value="{{isWChar}}" hint-placeholder-val="{{ true }}">
       <div class="hubrow">
@@ -528,6 +537,7 @@
           <div class="pickrow" role="group" aria-label="Pick a character">
             <sc-for list="{{hubOpts}}" as="h" hint-placeholder-count="3"><button class="zh fc2 {{h.cls}}" style="font-size:20px" onClick="{{h.fn}}">{{h.zh}}</button></sc-for>
           </div>
+          <sc-if value="{{hubHasNew}}" hint-placeholder-val="{{ true }}"><button class="btn" style="min-height:40px;padding:0 16px;font-size:15px;align-self:flex-start" onClick="{{hubAddAll}}">{{hubAddAllText}}</button></sc-if>
           <div class="seg2" role="group" aria-label="Meanings">
             <button class="{{quizOffCls}}" onClick="{{setQuizOff}}">Meanings</button>
             <button class="{{quizOnCls}}" onClick="{{setQuizOn}}">Quiz me</button>
@@ -632,7 +642,7 @@
       <div class="pickrow" role="group" aria-label="Topic">
         <sc-for list="{{topicOpts}}" as="t" hint-placeholder-count="2"><button class="fc2 {{t.cls}}" onClick="{{t.fn}}">{{t.label}}</button></sc-for>
       </div>
-      <div class="muted">{{topicProgress}}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><span class="muted">{{topicProgress}}</span><sc-if value="{{topicHasNew}}" hint-placeholder-val="{{ true }}"><button class="btn" style="min-height:40px;padding:0 16px;font-size:15px" onClick="{{topicAddAll}}">{{topicAddAllText}}</button></sc-if></div>
       <div class="tgrid">
         <sc-for list="{{topicChips}}" as="c" hint-placeholder-count="7">
           <div class="tc {{c.cls}}">

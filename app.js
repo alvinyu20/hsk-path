@@ -17,7 +17,9 @@
   };
 
   // ---------- word memory model (simplified FSRS-style) ----------
-  const NEW_CAP_OPTIONS = [3, 5, 8, 10];
+  const LIMIT_OPTIONS = [5, 10, 20, 0];            // 0 = no limit (the default)
+  const REVIEW_CHUNK = 30;                          // cards per review round; "Review more" continues until nothing is due
+  const limitOf = (S) => (S.nlimit > 0 ? S.nlimit : Infinity);
   const DIMS = ['see', 'hear', 'prod'];
   const retr = (d) => (d.s > 0 ? Math.pow(1 + (19 / 81) * d.l / d.s, -0.5) : 0);
   const mast = (d) => (d.s > 0 ? Math.min(100, 100 * Math.log(1 + d.s) / Math.log(91)) : 0);
@@ -68,7 +70,7 @@
     const rows = Object.keys(ws).map(zh => ({ zh, info:winfo(ws[zh], 0) })).filter(r => r.info.started);
     rows.sort((a, b) => a.info.recallN - b.info.recallN);
     if (anyway) return rows.slice(0, 5).map(r => r.zh);
-    return rows.filter(r => r.info.dueN <= 0).slice(0, 10).map(r => r.zh);
+    return rows.filter(r => r.info.dueN <= 0).slice(0, REVIEW_CHUNK).map(r => r.zh);
   };
 
   // ---------- dates, saving, daily reset ----------
@@ -76,7 +78,7 @@
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
-  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'ncap', 'clipBest', 'misses', 'testHistory', 'ws',
+  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'clipBest', 'misses', 'testHistory', 'ws',
     'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint'];
 
   function freshState() {
@@ -85,7 +87,7 @@
     return {
       screen:'home', sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       xp:0, dayXp:0, dayMin:0, streak:0, lastActive:'', activity:{}, day:'',
-      gres:{}, sres:{}, ncap:5, glesson:0, sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
+      gres:{}, sres:{}, nlimit:0, glesson:0, sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
       qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
@@ -360,31 +362,54 @@
     };
     learnWord = (zh) => {
       const S = this.state;
-      if (S.wlearned[zh] || Object.keys(S.wlearned).length >= S.ncap) return;
+      if (S.wlearned[zh] || Object.keys(S.wlearned).length >= limitOf(S)) return;
       const cur = S.ws[zh];
       const ws = Object.assign({}, S.ws);
       ws[zh] = { see:{ s:0.5, l:0 }, hear:cur.hear, prod:cur.prod };
       const wl = Object.assign({}, S.wlearned); wl[zh] = true;
       const patch = { ws, wlearned:wl, xp:S.xp + 3, dayXp:S.dayXp + 3 };
-      if (Object.keys(wl).length >= Math.min(4, S.ncap) && !S.webCredited) { patch.webCredited = true; patch.dayMin = S.dayMin + 5; }
+      if (Object.keys(wl).length >= Math.min(4, limitOf(S)) && !S.webCredited) { patch.webCredited = true; patch.dayMin = S.dayMin + 5; }
       this.setState(patch);
     };
     rateWeb = (zh, ok) => {
       const S = this.state;
       if (S.wrated[zh]) return;
       const wasNew = wMastery(S.ws[zh]) === 0;
-      if (wasNew && !S.wlearned[zh] && Object.keys(S.wlearned).length >= S.ncap) return;
+      if (wasNew && !S.wlearned[zh] && Object.keys(S.wlearned).length >= limitOf(S)) return;
       const res = this.applyRating(zh, ok ? 'good' : 'again', ['see']);
       const wr = Object.assign({}, S.wrated); wr[zh] = true;
       const wd = Object.assign({}, S.wdelta); wd[zh] = { from:res.from, to:res.to };
       const patch = { ws:res.ws, wrated:wr, wdelta:wd, xp:S.xp + (ok ? 3 : 1), dayXp:S.dayXp + (ok ? 3 : 1) };
       if (wasNew) {
         const wl = Object.assign({}, S.wlearned); wl[zh] = true; patch.wlearned = wl;
-        if (Object.keys(wl).length >= Math.min(4, S.ncap) && !S.webCredited) { patch.webCredited = true; patch.dayMin = S.dayMin + 5; }
+        if (Object.keys(wl).length >= Math.min(4, limitOf(S)) && !S.webCredited) { patch.webCredited = true; patch.dayMin = S.dayMin + 5; }
       }
       this.setState(patch);
     };
-    setCap = (n) => { this.setState({ ncap:n }); };
+    setLimit = (n) => { this.setState({ nlimit:n }); };
+    // Adds every still-new word in a list (a shared-character group or a topic), up to the daily limit if one is set.
+    learnMany = (list) => {
+      const S = this.state;
+      const lim = limitOf(S);
+      const wl = Object.assign({}, S.wlearned);
+      const ws = Object.assign({}, S.ws);
+      let n = 0;
+      list.forEach(zh => {
+        if (wl[zh] || wMastery(ws[zh]) > 0 || Object.keys(wl).length >= lim) return;
+        ws[zh] = { see:{ s:0.5, l:0 }, hear:ws[zh].hear, prod:ws[zh].prod };
+        wl[zh] = true;
+        n++;
+      });
+      if (!n) return;
+      const patch = { ws, wlearned:wl, xp:S.xp + 3 * n, dayXp:S.dayXp + 3 * n };
+      if (Object.keys(wl).length >= Math.min(4, lim) && !S.webCredited) { patch.webCredited = true; patch.dayMin = S.dayMin + 5; }
+      this.setState(patch);
+    };
+    reviewMore = () => {
+      const q = buildQueue(this.state.ws, false);
+      if (!q.length) return;
+      this.setState({ rq:q, rtotal:q.length, rdone:0, rxp:0, rcomplete:false, rflip:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null });
+    };
     revealWord = (zh) => { const r = Object.assign({}, this.state.wreveal); r[zh] = true; this.setState({ wreveal:r }); };
     gapPick = (zh) => {
       const S = this.state;
@@ -539,7 +564,7 @@
       const reviewMin = Math.max(2, Math.min(6, Math.round(Math.max(S.rtotal, dueNow) * 0.5)));
       const nextLesson = Math.max(0, LESSONS.findIndex(L => (S.gres[L.id] || 0) < 80));
       const nextScn = Math.max(0, SCEN.findIndex(sc => !S.sres[sc.id]));
-      const learnN = Math.min(4, S.ncap);
+      const learnN = Math.min(4, limitOf(S));
       const pool = [
         { glyph:'联', title:'Learn ' + learnN + ' new words with their relatives', meta:'Word webs', min:5, done:S.webCredited, to:'web' },
         { glyph:'词', title:'Review ' + Math.max(S.rtotal, dueNow) + ' word' + (Math.max(S.rtotal, dueNow) === 1 ? '' : 's'), meta:'Words that are due', min:reviewMin, done:S.rcomplete, to:'review', show:S.rcomplete || dueNow > 0 },
@@ -640,7 +665,7 @@
 
       // word webs and word memory
       const webCount = Object.keys(S.wlearned).length;
-      const capReached = webCount >= S.ncap;
+      const capReached = webCount >= limitOf(S);
       const mini = (zh) => winfo(S.ws[zh], 0);
       const dlt = (zh) => { const d = S.wdelta[zh]; return d ? { hasDelta:true, deltaText:'Mastery ' + d.from + '% → ' + d.to + '%', deltaCls:d.to >= d.from ? 'up' : 'down' } : { hasDelta:false, deltaText:'', deltaCls:'' }; };
       const cardOf = (w, hubZh) => {
@@ -701,7 +726,10 @@
       });
       const topicStarted = topicNow.words.filter(zh => mini(zh).started).length;
       const topicOpts = TOPICS.map((t, i) => ({ label:t.name, cls:S.wtopic === i ? 'on' : '', fn:() => this.setState({ wtopic:i }) }));
-      const capOpts = NEW_CAP_OPTIONS.map(n => ({ label:String(n), cls:S.ncap === n ? 'on' : '', fn:() => this.setCap(n) }));
+      const capOpts = LIMIT_OPTIONS.map(n => ({ label:n === 0 ? 'No limit' : String(n), cls:S.nlimit === n ? 'on' : '', fn:() => this.setLimit(n) }));
+      const hubNew = hubNow.words.filter(w => mini(w.zh).lv === 'new' && !S.wlearned[w.zh]).length;
+      const topicNew = topicNow.words.filter(zh => mini(zh).lv === 'new' && !S.wlearned[zh]).length;
+      const dueLeft = BANK_KEYS.filter(zh => { const i = winfo(S.ws[zh], 0); return i.started && i.dueN <= 0; }).length;
 
       // my words
       const rowsAll = BANK_KEYS.map(zh => Object.assign({ zh, py:BANK[zh].py, en:BANK[zh].en, pc:pc('w' + zh), play:() => this.say(zh, 'w' + zh) }, winfo(S.ws[zh], S.woff)));
@@ -782,7 +810,11 @@
         setWChar:() => this.setState({ wmode:'char' }), setWOpp:() => this.setState({ wmode:'opp' }), setWTopic:() => this.setState({ wmode:'topic' }),
         quizOffCls:S.wquiz ? '' : 'on', quizOnCls:S.wquiz ? 'on' : '',
         setQuizOff:() => this.setState({ wquiz:false }), setQuizOn:() => this.setState({ wquiz:true }),
-        webCountText:webCount + ' of ' + S.ncap + ' new words today', capNote:capReached, capCount:S.ncap, capOpts, topicProgress:topicStarted + ' of ' + topicNow.words.length + ' started',
+        webCountText:limitOf(S) === Infinity ? webCount + ' new words today' : webCount + ' of ' + S.nlimit + ' new words today', capNote:capReached, capCount:S.nlimit, capOpts,
+        hubHasNew:hubNew > 0 && !capReached, hubAddAllText:'Add all ' + hubNew + ' new word' + (hubNew === 1 ? '' : 's'), hubAddAll:() => this.learnMany(hubNow.words.map(w => w.zh)),
+        topicHasNew:topicNew > 0 && !capReached, topicAddAllText:'Add all ' + topicNew + ' new word' + (topicNew === 1 ? '' : 's'), topicAddAll:() => this.learnMany(topicNow.words),
+        moreDue:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft > 0, hasMoreDue:dueLeft > 0, reviewMore:this.reviewMore,
+        moreDueText:'Review ' + Math.min(REVIEW_CHUNK, dueLeft) + ' more', dueLeftText:dueLeft + ' word' + (dueLeft === 1 ? ' is' : 's are') + ' still due.', topicProgress:topicStarted + ' of ' + topicNow.words.length + ' started',
         hubCards, hubOpts, hubZh:hubNow.hub, hubPy:hubNow.py, hubEn:hubNow.en,
         fillEn:gapNow.en, fillZh:gapNow.zh, gapOpts, gapDone, gapOptsCls:gapDone ? 'locked' : '', fillLine, gapNext:this.gapNext,
         fillReport:report('Which word fits?', gapNow.zh + ' = ' + gapNow.ans + ' / ' + gapNow.en),
@@ -846,7 +878,7 @@
         inReview:!S.rcomplete && S.rq.length > 0, rcomplete:S.rcomplete, rdone:S.rdone, rtotal:S.rtotal, rxp:S.rxp, rcounts:S.rcounts,
         rPct:(S.rtotal ? Math.round(S.rdone / S.rtotal * 100) : 0) + '%',
         emptyNew:!S.rcomplete && S.rq.length === 0 && startedCount === 0,
-        caughtUp:!S.rcomplete && S.rq.length === 0 && startedCount > 0, nextDueText, practiceAnyway:this.practiceAnyway,
+        caughtUp:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft === 0, nextDueText, practiceAnyway:this.practiceAnyway,
         card, flip:this.flip, rflip:S.rflip, flipCls:S.rflip ? 'flip' : '', flipLabel:S.rflip ? 'Flip the card back' : 'Show the answer',
         cardAnim:S.rstep % 2 === 0 ? 'ea' : 'eb', showAnswerBtn:!S.rflip, rates,
         playWord:() => this.say(rw.zh, 'word'), playWordCls:pc('word') ? 'ink' : '',
