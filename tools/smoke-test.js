@@ -107,6 +107,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForSelector('.app');
   check((await text()).includes('Welcome back'), 'home loads');
   check((await page.locator('.side').innerText()).includes('0-day streak'), 'fresh state starts at a 0-day streak');
+  // Home: the trail comes first, then today and the level exam
+  check(await page.evaluate(() => { const h = document.querySelector('.home'); return !!h && h.firstElementChild.querySelector('.trail') !== null; }), 'the trail is the first thing on Home');
+  check(await page.locator('.rg').count() === 4 && await page.locator('.task2').count() >= 1, 'Home shows four skill rings and the Today list');
   // The ascent: trail, mist and stairs views of the same progress
   const ws0 = await page.evaluate(() => JSON.stringify(window.shanlu.state.ws));
   check((await text()).toLowerCase().includes('next cairn') && (await text()).includes('10 words to go'), 'the ascent opens on the trail: ten words to the first cairn on a fresh start');
@@ -156,6 +159,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   for (let i = 0; i < 6; i++) { await page.locator('button', { hasText: 'Add to my words' }).first().click(); await page.waitForTimeout(50); }
   check((await text()).includes('6 new words today'), 'six words added with no limit in the way');
   check((await page.locator('button', { hasText: 'Add to my words' }).count()) > 0, 'add buttons are still there after six words');
+  if (!(await page.locator('[aria-label="New words per day"]').count())) await page.locator('.capbtn').click();
   await page.locator('[aria-label="New words per day"] button', { hasText: /^5$/ }).click();
   await page.waitForTimeout(80);
   check((await text()).includes('You have reached your limit of 5') && (await page.locator('button', { hasText: 'Add to my words' }).count()) === 0, 'choosing a limit of 5 stops further adds');
@@ -255,18 +259,19 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
   // My words
   await nav('My words');
-  check((await text()).includes(WORD_COUNT + ' HSK 1 words'), 'my words lists all ' + WORD_COUNT + ' words');
-  check((await page.locator('.wrow').count()) === 40, 'my words shows the first 40 rows');
+  check((await text()).includes(WORD_COUNT + ' words'), 'my words lists all ' + WORD_COUNT + ' words');
+  check((await page.locator('.wr2').count()) === 40, 'my words shows the first 40 rows');
+  check(await page.locator('.wr2 .wr2-dots i').count() === 200, 'each word row has a five-dot strength meter');
+  check(await page.locator('.capbtn').count() === 0, 'the new-words-per-day controls are not on My words');
   await page.locator('button', { hasText: 'Show 40 more' }).click();
-  check((await page.locator('.wrow').count()) === 80, 'show more adds 40 rows');
+  check((await page.locator('.wr2').count()) === 80, 'show more adds 40 rows');
   await page.fill('.wsearch', 'tea');
   await page.waitForTimeout(100);
-  check((await page.locator('.wrow').first().innerText()).includes('茶'), 'search by English finds 茶 first');
+  check((await page.locator('.wr2').first().innerText()).includes('茶'), 'search by English finds 茶 first');
   await page.fill('.wsearch', 'xiexie');
   await page.waitForTimeout(100);
-  check((await page.locator('.wrow').first().innerText()).includes('谢谢'), 'search by pinyin without tone marks works');
+  check((await page.locator('.wr2').first().innerText()).includes('谢谢'), 'search by pinyin without tone marks works');
   await page.fill('.wsearch', '');
-  await page.locator('button', { hasText: 'In 1 month' }).click();
   await shot('04-mywords');
 
   // Review
@@ -324,7 +329,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('.gl .gp').nth(3).click();
   check((await text()).includes('Yes/no questions with 吗'), 'choosing a lesson opens it');
   check((await text()).includes('你想喝茶吗'), 'the 吗 lesson teaches the offer with 想');
-  await page.locator('button', { hasText: 'Practise this lesson' }).click();
+  check(await page.locator('.lesson .expl p').count() >= 2 && (await page.locator('.lesson').innerText()).toLowerCase().includes('the full explanation'), 'the full grammar explanation is shown by default');
+  check(await page.locator('.lesson .formula .fchip').count() >= 2 && await page.locator('.ex2').count() >= 3, 'a lesson shows its formula and example cards');
+  await page.locator('button', { hasText: 'Practise this lesson' }).first().click();
   await page.waitForTimeout(100);
   // a wrong answer first: feedback should say so and the combo resets
   await answer(false);
@@ -345,7 +352,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   // pass every question of another lesson (all question types appear across lessons)
   for (const idx of [0, 4, 14, 20]) {
     await page.locator('.gl .gp').nth(idx).click();
-    await page.locator('button', { hasText: 'Practise this lesson' }).click();
+    await page.locator('button', { hasText: 'Practise this lesson' }).first().click();
     await page.waitForTimeout(80);
     const total = await runQuiz(true);
     check((await text()).includes(total + '/' + total), 'lesson ' + (idx + 1) + ' scores ' + total + '/' + total + ' with right answers');
@@ -487,6 +494,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
   // persistence
   await nav('Word webs');
+  if (!(await page.locator('[aria-label="New words per day"]').count())) await page.locator('.capbtn').click();
   await page.locator('[aria-label="New words per day"] button', { hasText: /^10$/ }).click();
   await page.waitForTimeout(400);
   await page.reload();

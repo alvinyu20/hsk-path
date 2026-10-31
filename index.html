@@ -223,78 +223,7 @@
 
   <!-- HOME -->
   <sc-if value="{{isHome}}" hint-placeholder-val="{{ true }}">
-  <div class="hgrid">
-    <section class="card">
-      <div class="today-h">
-        <div class="ring">
-          <svg viewBox="0 0 110 110" aria-hidden="true">
-            <circle class="ring-bg" cx="55" cy="55" r="46"></circle>
-            <circle class="ring-fg" cx="55" cy="55" r="46" transform="rotate(-90 55 55)" style="stroke-dasharray: {{ringDash}}"></circle>
-          </svg>
-          <div class="ring-t"><b>{{dayMin}}</b><span>of {{mins}} min</span></div>
-        </div>
-        <div>
-          <h2 class="h2">Today's climb</h2>
-          <p class="muted" style="margin:6px 0 0;font-size:16px">{{todayLine}}</p>
-        </div>
-      </div>
-      <div class="goalrow">
-        <span class="muted">Daily time goal</span>
-        <div class="seg2" role="group" aria-label="Daily time goal">
-          <sc-for list="{{minOpts}}" as="o" hint-placeholder-count="4"><button class="{{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
-        </div>
-      </div>
-      <div class="tasks">
-        <sc-for list="{{tasks}}" as="t" hint-placeholder-count="3">
-          <div class="task {{t.cls}}">
-            <div class="task-ico zh">{{t.glyph}}</div>
-            <div class="task-m">
-              <div class="task-t">{{t.title}}</div>
-              <div class="task-s">{{t.meta}}</div>
-            </div>
-            <sc-if value="{{t.open}}" hint-placeholder-val="{{ true }}">
-              <span class="xpc">{{t.xp}}</span>
-              <button class="btn ink" onClick="{{t.go}}">Start</button>
-            </sc-if>
-            <sc-if value="{{t.done}}" hint-placeholder-val="{{ false }}">
-              <span class="xpc">Done</span>
-            </sc-if>
-          </div>
-        </sc-for>
-      </div>
-      <p class="plan-note">{{planNote}}</p>
-    </section>
-
-    <section class="card">
-      <h2 class="h2">HSK 1 checkpoint</h2>
-      <p class="cp-note">Reach 80% in all four skills to unlock the checkpoint.</p>
-      <div class="skills">
-        <sc-for list="{{skills}}" as="s" hint-placeholder-count="4">
-          <div>
-            <div class="skill-h">{{s.label}}<span>{{s.detail}}</span></div>
-            <div class="track"><div class="fill" style="width: {{s.w}}"></div><div class="m80"></div></div>
-          </div>
-        </sc-for>
-      </div>
-      <div class="skill-h">Words by memory strength<span>{{wmTotal}} of {{wordTarget}}</span></div>
-      <div class="stack">
-        <i class="s1" style="width: {{wMastered}}"></i><i class="s2" style="width: {{wFamiliar}}"></i><i class="s3" style="width: {{wLearning}}"></i>
-      </div>
-      <div class="legend">
-        <span><i class="s1"></i>{{wm.mastered}} mastered</span>
-        <span><i class="s2"></i>{{wm.familiar}} familiar</span>
-        <span><i class="s3"></i>{{wm.learning}} learning</span>
-      </div>
-      <button class="btn" style="margin-top:14px;min-height:42px" onClick="{{goWords}}">See every word</button>
-      <div style="margin-top:22px">
-        <button class="btn big" onClick="{{goExam}}">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>
-          See the HSK 1 level exam
-        </button>
-      </div>
-    </section>
-  </div>
-
+  <div class="home">
   <section>
     <div class="asc-h">
       <div>
@@ -318,15 +247,18 @@
       <div class="trail">
         <div class="trail-d">
           <img class="trail-img" src="{{trailD.src}}" alt="{{trailD.alt}}" width="1124" height="380">
+          <button class="btn pri big trail-go" onClick="{{trailCta}}">{{trailCtaText}}</button>
           <sc-for list="{{trailD.labels}}" as="l" hint-placeholder-count="4">
             <div class="apill {{l.kind}} {{l.cls}}" style="left: {{l.left}}; top: {{l.top}}"><b>{{l.text}}</b><sc-if value="{{l.hasSub}}" hint-placeholder-val="{{ true }}"><span>{{l.sub}}</span></sc-if></div>
           </sc-for>
         </div>
         <div class="trail-p">
-          <img class="trail-img" src="{{trailP.src}}" alt="{{trailP.alt}}" width="342" height="470">
-          <sc-for list="{{trailP.labels}}" as="l" hint-placeholder-count="4">
-            <div class="apill {{l.kind}} {{l.cls}}" style="left: {{l.left}}; top: {{l.top}}"><b>{{l.text}}</b><sc-if value="{{l.hasSub}}" hint-placeholder-val="{{ true }}"><span>{{l.sub}}</span></sc-if></div>
-          </sc-for>
+          <div class="trail-pin">
+            <img class="trail-img" src="{{trailP.src}}" alt="{{trailP.alt}}" width="342" height="470">
+            <sc-for list="{{trailP.labels}}" as="l" hint-placeholder-count="4">
+              <div class="apill {{l.kind}} {{l.cls}}" style="left: {{l.left}}; top: {{l.top}}"><b>{{l.text}}</b><sc-if value="{{l.hasSub}}" hint-placeholder-val="{{ true }}"><span>{{l.sub}}</span></sc-if></div>
+            </sc-for>
+          </div>
         </div>
       </div>
       <div class="astats">
@@ -340,12 +272,6 @@
           <div class="astat-k fire"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3.2 5 5.2 5 10a5 5 0 0 1-10 0c0-2 .9-3.2 2-4.2 0 2 .9 3 2 3 0-3-1-6 1-8.8z"/></svg>Campfire</div>
           <div class="astat-v">{{fireBig}}</div>
           <div class="astat-s">{{fireSub}}</div>
-        </div>
-        <div class="astat">
-          <div class="astat-k"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>Today</div>
-          <div class="astat-v">{{todayBig}}</div>
-          <div class="astat-s">{{todaySub}}</div>
-          <div class="abar jade"><i style="width: {{todayPct}}"></i></div>
         </div>
       </div>
       <button class="btn pri big trail-cta" onClick="{{trailCta}}">{{trailCtaText}}</button>
@@ -391,6 +317,52 @@
     <p class="asc-note">{{sysNote}}</p>
     </sc-if>
   </section>
+  <div class="hgrid2">
+    <section class="card">
+      <div class="today-top"><h2 class="h2">Today</h2><span class="muted">{{todayShort}}</span></div>
+      <div class="abar jade" style="margin:10px 0 8px"><i style="width: {{todayPct}}"></i></div>
+      <div class="tasks2">
+        <sc-for list="{{tasks}}" as="t" hint-placeholder-count="3">
+          <div class="task2 {{t.cls}}">
+            <div class="task2-ico zh">{{t.glyph}}</div>
+            <div class="task-m">
+              <div class="task-t">{{t.title}}</div>
+              <div class="task-s">{{t.meta}}</div>
+            </div>
+            <sc-if value="{{t.open}}" hint-placeholder-val="{{ true }}">
+              <span class="xpc">{{t.xp}}</span>
+              <button class="btn ink" onClick="{{t.go}}">Start</button>
+            </sc-if>
+            <sc-if value="{{t.done}}" hint-placeholder-val="{{ false }}"><span class="xpc">Done</span></sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div class="goalrow" style="margin:14px 0 0">
+        <span class="muted">Daily goal</span>
+        <div class="seg2" role="group" aria-label="Daily time goal">
+          <sc-for list="{{minOpts}}" as="o" hint-placeholder-count="4"><button class="{{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="h2">HSK 1 level exam</h2>
+      <p class="cp-note">Reach 80% in all four skills to unlock it.</p>
+      <div class="rings">
+        <sc-for list="{{skills}}" as="s" hint-placeholder-count="4">
+          <div class="rg">
+            <svg viewBox="0 0 56 56" role="img" aria-label="{{s.label}} {{s.pctN}} percent"><circle class="rg-bg" cx="28" cy="28" r="22"></circle><circle class="rg-fg" cx="28" cy="28" r="22" transform="rotate(-90 28 28)" style="stroke-dasharray: {{s.dash}}"></circle></svg>
+            <div><b>{{s.label}}</b><span>{{s.detail}}</span></div>
+          </div>
+        </sc-for>
+      </div>
+      <button class="btn big" style="margin-top:18px" onClick="{{goExam}}">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>
+        See the HSK 1 level exam
+      </button>
+    </section>
+  </div>
+  </div>
   </sc-if>
 
   <!-- REVIEW -->
@@ -549,33 +521,41 @@
   <!-- GRAMMAR -->
   <sc-if value="{{isGrammar}}" hint-placeholder-val="{{ false }}">
   <div class="gram">
-    <div class="gl">
+    <button type="button" class="gpick" onClick="{{toggleGramPick}}" aria-expanded="{{gramPickOpen}}"><span>{{lesson.pickLabel}}</span><span aria-hidden="true">▾</span></button>
+    <div class="gl {{gramListCls}}">
       <div class="kick" style="padding:0 14px 8px">HSK 1 grammar lessons</div>
       <sc-for list="{{lessonList}}" as="p" hint-placeholder-count="9">
         <button type="button" class="gp {{p.cls}}" onClick="{{p.fn}}"><span class="gn">{{p.n}}</span><span class="gt">{{p.title}}</span><span class="soon">{{p.tag}}</span></button>
       </sc-for>
     </div>
     <div class="lesson">
-      <section class="card">
-        <div class="kick">{{lesson.kick}}</div>
-        <h2 class="h2" style="font-size:30px;margin:6px 0 18px">{{lesson.title}}</h2>
-        <div class="formula">
-          <sc-for list="{{lesson.formula}}" as="f" hint-placeholder-count="3"><sc-if value="{{f.hasSep}}" hint-placeholder-val="{{ true }}"><span>{{f.sep}}</span></sc-if><span class="fchip {{f.cls}}">{{f.t}}</span></sc-for>
+      <div class="les-top">
+        <div>
+          <div class="kick">{{lesson.kick}}</div>
+          <h2 class="h2" style="font-size:30px;margin:6px 0 0">{{lesson.title}}</h2>
         </div>
-        <div class="expl">
+        <div class="les-act"><button class="btn pri big" onClick="{{startGrammar}}">Practise this lesson</button><span class="muted">{{lesson.count}} · {{lesson.best}}</span></div>
+      </div>
+      <div class="formula">
+        <sc-for list="{{lesson.formula}}" as="f" hint-placeholder-count="3"><sc-if value="{{f.hasSep}}" hint-placeholder-val="{{ true }}"><span>{{f.sep}}</span></sc-if><span class="fchip {{f.cls}}">{{f.t}}</span></sc-for>
+      </div>
+      <section class="card">
+        <div class="kick">The full explanation</div>
+        <div class="expl" style="margin-top:10px">
           <sc-for list="{{lesson.explain}}" as="x" hint-placeholder-count="3"><p>{{x.t}}</p></sc-for>
         </div>
-        <div style="margin-top:22px">
-          <sc-for list="{{lesson.examples}}" as="e" hint-placeholder-count="3">
-            <div class="ex">
-              <div class="ex-m"><div class="zh">{{e.zh}}</div><div class="py">{{e.py}}</div><div>{{e.en}}</div><a class="report" href="{{e.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a></div>
-              <button class="spk {{e.pc}}" aria-label="Hear this sentence" onClick="{{e.play}}">
-                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
-              </button>
-            </div>
-          </sc-for>
-        </div>
       </section>
+      <div class="exlist">
+        <div class="kick">Examples</div>
+        <sc-for list="{{lesson.examples}}" as="e" hint-placeholder-count="3">
+          <div class="ex2">
+            <div class="ex-m"><div class="zh">{{e.zh}}</div><div class="py">{{e.py}}</div><div class="muted">{{e.en}}</div><a class="report" href="{{e.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a></div>
+            <button class="spk {{e.pc}}" aria-label="Hear this sentence" onClick="{{e.play}}">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+            </button>
+          </div>
+        </sc-for>
+      </div>
       <sc-if value="{{lesson.hasMistakes}}" hint-placeholder-val="{{ true }}">
         <div class="warnbox">
           <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 21.5 20h-19z"/><path d="M12 10v4.5M12 17.2v.1"/></svg>
@@ -584,14 +564,11 @@
           </div>
         </div>
       </sc-if>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-        <button class="btn pri big" onClick="{{startGrammar}}">Practise this lesson</button>
-        <span class="muted">{{lesson.count}} · {{lesson.best}}</span>
-      </div>
       <div class="muted" style="font-size:14.5px">{{lesson.covers}}. Written and checked by AI, not yet reviewed by a teacher. <a class="report" href="{{lesson.reportUrl}}" target="_blank" rel="noopener">Report a mistake in this lesson</a></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <sc-if value="{{lesson.hasPrev}}" hint-placeholder-val="{{ true }}"><button class="btn" onClick="{{lesson.prev}}">Previous lesson</button></sc-if>
         <sc-if value="{{lesson.hasNext}}" hint-placeholder-val="{{ true }}"><button class="btn" onClick="{{lesson.next}}">Next lesson</button></sc-if>
+        <button class="btn pri" onClick="{{startGrammar}}">Practise this lesson</button>
       </div>
     </div>
   </div>
@@ -803,12 +780,14 @@
         <button class="{{wOppCls}}" onClick="{{setWOpp}}">Opposites</button>
         <button class="{{wTopicCls}}" onClick="{{setWTopic}}">Topics</button>
       </div>
-      <span class="chip familiar">{{webCountText}}</span>
+      <button type="button" class="chip familiar capbtn" onClick="{{toggleCapOpen}}">{{webCountText}} <span aria-hidden="true">▾</span></button>
     </div>
+    <sc-if value="{{webCapOpen}}" hint-placeholder-val="{{ false }}">
     <div class="pickrow" role="group" aria-label="New words per day"><span class="muted">New words per day</span>
       <sc-for list="{{capOpts}}" as="c" hint-placeholder-count="4"><button class="fc2 {{c.cls}}" onClick="{{c.fn}}">{{c.label}}</button></sc-for>
     </div>
-    <p class="muted" style="margin:0;max-width:66ch">Each new word shows up next to words you already know. Close synonyms stay apart so they don't blur together. Try to recall a word before you reveal it, even if you guess wrong.</p>
+    </sc-if>
+    <p class="muted" style="margin:0;max-width:66ch">New words appear next to words you already know. Try to recall a word before you reveal it, even if you guess wrong.</p>
     <sc-if value="{{capNote}}" hint-placeholder-val="{{ false }}"><p class="capnote">You have reached your limit of {{capCount}} new words for today. The rest wait until tomorrow. Choose "No limit" above to keep going.</p></sc-if>
 
     <sc-if value="{{isWChar}}" hint-placeholder-val="{{ true }}">
@@ -970,54 +949,37 @@
   <!-- MY WORDS -->
   <sc-if value="{{isWords}}" hint-placeholder-val="{{ false }}">
   <div class="wlist">
-    <section class="card">
-      <div class="wsum-h">
-        <div>
-          <h2 class="h2">{{bankCount}} HSK 1 words</h2>
-          <p class="muted" style="margin:4px 0 0;font-size:15.5px;max-width:60ch">Each bar shows how well you know a word. It grows when you recall the word and drops when you miss it. Read, hear and recall are tracked separately.</p>
+    <section class="card wsum">
+      <div class="wsum-l">
+        <h2 class="h2">{{bankCount}} words</h2>
+        <div class="stack" style="margin:12px 0 10px">
+          <sc-for list="{{levelSegs}}" as="g" hint-placeholder-count="5"><i class="{{g.cls}}" style="width: {{g.w}}"></i></sc-for>
         </div>
-        <div>
-          <div class="kick" style="margin-bottom:6px">Preview the forgetting curve</div>
-          <div class="seg2" role="group" aria-label="Preview time">
-            <sc-for list="{{timeOpts}}" as="t" hint-placeholder-count="3"><button class="{{t.cls}}" onClick="{{t.fn}}">{{t.label}}</button></sc-for>
-          </div>
-        </div>
+        <p class="muted" style="margin:0;font-size:15px">{{wordsSumLine}}</p>
       </div>
-      <div class="stack">
-        <sc-for list="{{levelSegs}}" as="g" hint-placeholder-count="5"><i class="{{g.cls}}" style="width: {{g.w}}"></i></sc-for>
-      </div>
-      <div class="fchips">
+      <button class="btn pri big" onClick="{{wordsReviewGo}}">{{wordsReviewText}}</button>
+    </section>
+    <div class="wtools">
+      <input class="inp wsearch" type="search" value="{{wq}}" placeholder="Search words" autocomplete="off" aria-label="Search words" onInput="{{onWSearch}}">
+      <div class="fchips2">
         <sc-for list="{{filters}}" as="f" hint-placeholder-count="6"><button class="fc2 {{f.cls}}" onClick="{{f.fn}}">{{f.label}} <b>{{f.n}}</b></button></sc-for>
       </div>
-      <input class="inp wsearch" type="search" value="{{wq}}" placeholder="Search by character, pinyin or English" autocomplete="off" aria-label="Search words" onInput="{{onWSearch}}">
-    </section>
+    </div>
     <div class="wl-bar">
       <span class="muted">Sort by</span>
       <div class="seg2" role="group" aria-label="Sort words">
         <sc-for list="{{sortOpts}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
       </div>
     </div>
-    <div class="wrows">
+    <div class="wrows2">
       <sc-for list="{{rows}}" as="r" hint-placeholder-count="8">
-        <section class="wrow">
-          <div class="wr-w">
-            <div class="wr-zh zh">{{r.zh}}</div>
-            <div style="flex:1;min-width:0"><div class="wc-py">{{r.py}}</div><div class="muted">{{r.en}}</div></div>
-            <button class="spk {{r.pc}}" aria-label="Hear this word" onClick="{{r.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
-          </div>
-          <div class="wr-m">
-            <div class="mbar">
-              <div class="mbar-h"><span>{{r.mLabel}}</span><b>{{r.mPct}}</b></div>
-              <div class="track sm"><div class="fill {{r.mCls}}" style="width: {{r.mW}}"></div><i class="tk" style="left:30%"></i><i class="tk" style="left:55%"></i><i class="tk" style="left:80%"></i></div>
-              <div class="mbar-s"><span>{{r.recallText}}</span><span class="{{r.dueCls}}">{{r.due}}</span></div>
-            </div>
-          </div>
-          <div class="wr-d">
-            <div class="dim"><span>Read</span><div class="track xs"><div class="fill" style="width: {{r.dSee}}"></div></div></div>
-            <div class="dim"><span>Hear</span><div class="track xs"><div class="fill" style="width: {{r.dHear}}"></div></div></div>
-            <div class="dim"><span>Recall</span><div class="track xs"><div class="fill" style="width: {{r.dProd}}"></div></div></div>
-          </div>
-        </section>
+        <div class="wr2">
+          <div class="wr2-zh zh">{{r.zh}}</div>
+          <div class="wr2-m"><div class="wc-py">{{r.py}}</div><div class="muted">{{r.en}}</div></div>
+          <div class="wr2-dots" role="img" aria-label="{{r.mLabel}}"><sc-for list="{{r.dots}}" as="d" hint-placeholder-count="5"><i class="{{d.cls}}"></i></sc-for></div>
+          <div class="wr2-due {{r.dueCls}}">{{r.due}}</div>
+          <button class="spk {{r.pc}}" aria-label="Hear this word" onClick="{{r.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+        </div>
       </sc-for>
     </div>
     <sc-if value="{{noRows}}" hint-placeholder-val="{{ false }}"><p class="muted">No words match. Try a different search or filter.</p></sc-if>
