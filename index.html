@@ -144,6 +144,9 @@
       <h2 class="h2">Chinese voice</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">{{voiceIntro}}</p>
       <p class="muted" style="margin:10px 0 0;font-size:15.5px">On iPhone, download an Enhanced or Premium voice in Settings, Accessibility, Read &amp; Speak, Voices (it is called Spoken Content on older versions), then come back here and tap Refresh. Voices named Siri may not be offered to websites at all. If a voice you downloaded is missing from this list, your browser is not passing it on to websites.</p>
+      <div style="margin:16px 0 0;font-weight:600">Speaking speed</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{speedOpts}}" as="o" hint-placeholder-count="4"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for></div>
+      <p class="muted" style="margin:8px 0 0;font-size:15px">{{speedNote}}</p>
       <div class="vlist">
         <div class="vrow {{autoCls}}">
           <div><b>{{autoName}}</b><span>Picks the highest-quality Mandarin voice, then prefers mainland over Taiwan</span></div>

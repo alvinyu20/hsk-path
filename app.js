@@ -102,7 +102,7 @@
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
-  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'voiceId', 'clipBest', 'misses', 'testHistory', 'ws',
+  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'voiceId', 'speed', 'clipBest', 'misses', 'testHistory', 'ws',
     'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays'];
 
   function freshState() {
@@ -111,7 +111,7 @@
     return {
       screen:'home', sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       xp:0, dayXp:0, dayMin:0, streak:0, lastActive:'', activity:{}, day:'',
-      gres:{}, sres:{}, nlimit:0, voiceId:'', vtick:0, vall:false, glesson:0, sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
+      gres:{}, sres:{}, nlimit:0, voiceId:'', speed:1, vtick:0, vall:false, glesson:0, sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
       qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
@@ -479,7 +479,7 @@
           if (allVoices().length && !zh) this.setState({ noVoice:true });
           this.speakWhenReady((ss) => {
             const u = new SpeechSynthesisUtterance(text);
-            u.lang = zh ? zh.lang : 'zh-CN'; u.rate = rate || 0.85;
+            u.lang = zh ? zh.lang : 'zh-CN'; u.rate = rate || this.state.speed || 1;
             if (zh) u.voice = zh;
             ss.speak(u);
           });
@@ -522,7 +522,7 @@
         if (!window.speechSynthesis) return;
         const zh = pickVoice(this.state.voiceId);
         this.speakWhenReady((ss) => {
-          lines.forEach(l => { const u = new SpeechSynthesisUtterance(l.text); u.lang = zh ? zh.lang : 'zh-CN'; u.rate = 0.85; u.pitch = l.pitch || 1; if (zh) u.voice = zh; ss.speak(u); });
+          lines.forEach(l => { const u = new SpeechSynthesisUtterance(l.text); u.lang = zh ? zh.lang : 'zh-CN'; u.rate = this.state.speed || 1; u.pitch = l.pitch || 1; if (zh) u.voice = zh; ss.speak(u); });
         });
       } catch (e) {}
       const ms = lines.reduce((n, l) => n + l.text.length * 330 + 500, 0);
@@ -1057,7 +1057,7 @@
         return {
           name:v.name, cls:on ? 'on' : '',
           meta:v.lang + ' · ' + QUALITY_LABEL[voiceQuality(v)] + (v.localService ? '' : ' · online'),
-          play:() => this.say(VOICE_SAMPLE, 'v:' + v.voiceURI, 0.85, v), playCls:S.playing === 'v:' + v.voiceURI ? 'on' : '',
+          play:() => this.say(VOICE_SAMPLE, 'v:' + v.voiceURI, undefined, v), playCls:S.playing === 'v:' + v.voiceURI ? 'on' : '',
           use:() => this.setVoice(v.voiceURI), useLabel:on ? 'In use' : 'Use this voice', useCls:on ? 'on' : ''
         };
       });
@@ -1066,11 +1066,13 @@
       if (!all.length) intro = 'Your browser has not listed any voices yet. If you just downloaded one, tap Refresh.';
       else if (!ranked.length) intro = 'Your browser lists ' + all.length + ' voices, but none of them is Mandarin Chinese, so audio on this site may be silent or in the wrong language.';
       else intro = 'Your browser lists ' + all.length + ' voices, ' + ranked.length + ' of them Mandarin. Unless you pick one, the site uses the best-sounding Mandarin voice it can find.';
+      const speedOpts = [['Slow', 0.75], ['Relaxed', 0.9], ['Normal', 1], ['Quick', 1.15]].map(o => ({ label:o[0], cls:(S.speed || 1) === o[1] ? 'on' : '', fn:() => { this.setState({ speed:o[1] }); this.say(VOICE_SAMPLE, 'v:speed', o[1]); } }));
       return {
+        speedOpts, speedNote:'Audio on this site plays at the voice\'s normal pace. Pick Slow or Relaxed if you want it slower. The Listening lab has its own speed buttons.',
         voiceIntro:intro, voiceRows:rows, hasVoices:rows.length > 0,
         autoCls:manual ? '' : 'on', autoLabel:manual ? 'Use automatic' : 'In use',
         autoName:chosen ? 'Automatic: ' + chosen.name : 'Automatic',
-        autoPlay:() => this.say(VOICE_SAMPLE, 'v:auto', 0.85), autoPlayCls:S.playing === 'v:auto' ? 'on' : '',
+        autoPlay:() => this.say(VOICE_SAMPLE, 'v:auto'), autoPlayCls:S.playing === 'v:auto' ? 'on' : '',
         useAuto:() => this.setVoice(''), refreshVoices:this.refreshVoices,
         showAllVoices:S.vall, allVoicesBtn:S.vall ? 'Hide the full list' : 'Show every voice the browser reports (' + all.length + ')',
         toggleAllVoices:this.toggleAllVoices, everyVoice:everything
@@ -1444,7 +1446,7 @@
         checkDict:this.checkDict, nextClip:this.nextClip,
         dSummary:hits + ' of ' + clip.words.length + ' words', clipEn:clip.en, notes:clip.notes.map(t => ({ t })),
         clipReport:report('Listening clip ' + (S.dclip + 1), clip.zh + ' / ' + clip.en + ' / ' + clip.notes.join(' | ')),
-        clearPlay:() => this.say(clip.zh, 'clear', 0.7), naturalPlay:() => this.say(clip.zh, 'nat', 1.25),
+        clearPlay:() => this.say(clip.zh, 'clear', 0.7), naturalPlay:() => this.say(clip.zh, 'nat', 1.1),
         clearCls:pc('clear') ? 'ink' : '', natCls:pc('nat') ? 'ink' : '',
         hasMissed:missed.length > 0, missedList:missed.map(w => w.py + ' ' + w.zh).join(', '),
         toneOpts, playTone:this.playTone, tonePlayCls:pc('tone'),

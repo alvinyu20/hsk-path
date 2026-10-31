@@ -44,7 +44,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
       mk('Daniel', 'en-GB', 'com.apple.voice.compact.en-GB.Daniel')
     ];
     window.__spoken = [];
-    const ss = { getVoices: () => voices, cancel() {}, speak(u) { window.__spoken.push({ text: u.text, voice: u.voice && u.voice.voiceURI, lang: u.lang }); }, onvoiceschanged: null };
+    const ss = { getVoices: () => voices, cancel() {}, speak(u) { window.__spoken.push({ text: u.text, voice: u.voice && u.voice.voiceURI, lang: u.lang, rate: u.rate }); }, onvoiceschanged: null };
     Object.defineProperty(window, 'speechSynthesis', { value: ss, configurable: true });
     window.SpeechSynthesisUtterance = function (t) { this.text = t; };
     // a fake microphone: it "hears" 我想喝茶
@@ -476,6 +476,13 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('button', { hasText: /^Play$/ }).first().click();
   let sp = await lastSpoken();
   check(sp && sp.voice === 'com.apple.voice.premium.zh-CN.Lili' && sp.lang === 'zh-CN', 'automatic plays with the Premium voice and its own language tag');
+  check(sp.rate === 1, 'audio plays at the voice\'s normal speed by default');
+  await page.locator('button', { hasText: /^Slow$/ }).click();
+  sp = await lastSpoken();
+  check(sp.rate === 0.75 && (await page.evaluate(() => window.shanlu.state.speed)) === 0.75, 'the Slow speed setting slows the audio and is remembered');
+  await page.locator('button', { hasText: /^Normal$/ }).click();
+  sp = await lastSpoken();
+  check(sp.rate === 1, 'Normal puts the speed back');
   await page.locator('.vrow', { hasText: 'Tingting' }).locator('button', { hasText: /^Play$/ }).click();
   sp = await lastSpoken();
   check(sp && sp.voice === 'com.apple.voice.compact.zh-CN.Tingting', 'a sample plays with the voice you tapped');
