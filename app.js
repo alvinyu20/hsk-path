@@ -3,6 +3,13 @@
  * Content comes from data/hsk1.js. The page template is in index.html and rendered by runtime.js.
  */
 (function () {
+  // "儿 endings" switch (see erhua.js). Plain forms are the default; the setting is read here, before any content is used.
+  const ERHUA_KEY = 'shanlu-erhua';
+  let ERHUA_ON = false;
+  try { ERHUA_ON = localStorage.getItem(ERHUA_KEY) === 'on'; } catch (e) {}
+  const ERHUA = window.ShanluErhua && window.HSK1_ERHUA ? window.ShanluErhua.make(window.HSK1_ERHUA) : null;
+  if (ERHUA && !ERHUA_ON) ERHUA.apply(window);
+
   const WORDS = window.HSK1_WORDS;
   const LESSONS = window.HSK1_GRAMMAR.lessons;
   const { hubs:HUBS, opps:OPPS, topics:TOPICS } = window.HSK1_WEBS;
@@ -39,7 +46,8 @@
 
   const BANK = {};
   const EX = {};
-  WORDS.forEach(w => { BANK[w.zh] = { zh:w.zh, py:w.py, en:w.en, pos:w.pos }; EX[w.zh] = w.ex; });
+  const NOTE = {};   // optional short teaching note per word (content/words-*.tsv, 6th column)
+  WORDS.forEach(w => { BANK[w.zh] = { zh:w.zh, py:w.py, en:w.en, pos:w.pos }; EX[w.zh] = w.ex; NOTE[w.zh] = w.note || ''; });
   const CLIP_PY = {};
   CLIPS.forEach(c => c.words.forEach(w => { CLIP_PY[w.zh] = w.py; }));
   const BANK_KEYS = Object.keys(BANK);
@@ -112,9 +120,29 @@
     });
   }
 
+  // When the 儿 switch changes, the words that are renamed (面条儿 <-> 面条, 一点儿 <-> 一点 ...) keep their progress.
+  // The three 儿 words that already have their own plain twin on the list (这儿/这里 ...) are separate words and are not merged.
+  function carryOverErhua(S) {
+    if (!ERHUA) return;
+    const blank = (w) => !w || ['see', 'hear', 'prod'].every(k => !w[k] || !(w[k].s > 0));
+    const maps = ['wlearned', 'wrated', 'wreveal', 'wdelta', 'wex', 'misses'];
+    ERHUA.pairs.filter(p => !p.twin).forEach(p => {
+      const f = ERHUA_ON ? p.plain : p.official;
+      const t = ERHUA_ON ? p.official : p.plain;
+      if (S.ws && S.ws[f] && blank(S.ws[t])) { S.ws[t] = S.ws[f]; delete S.ws[f]; }
+      maps.forEach(m => { if (S[m] && S[m][f] !== undefined && S[m][t] === undefined) { S[m][t] = S[m][f]; delete S[m][f]; } });
+      if (Array.isArray(S.rq)) S.rq = S.rq.map(z => (z === f ? t : z)).filter((z, i, arr) => arr.indexOf(z) === i);
+    });
+    // anything still pointing at a word that is not in this mode's list (the dropped twins) is left out of today's lists
+    if (Array.isArray(S.rq)) S.rq = S.rq.filter(z => BANK[z]);
+    if (S.wlearned) Object.keys(S.wlearned).forEach(z => { if (!BANK[z]) delete S.wlearned[z]; });
+    if (S.rlast && !BANK[S.rlast.zh]) S.rlast = null;
+  }
+
   function mergeSaved(base, saved) {
     if (!saved || typeof saved !== 'object') return base;
     PERSIST.forEach(k => { if (saved[k] !== undefined && saved[k] !== null) base[k] = saved[k]; });
+    carryOverErhua(base);
     Object.keys(BANK).forEach(zh => { if (!base.ws[zh]) base.ws[zh] = blankWord(); });
     if (!Array.isArray(base.clipBest) || base.clipBest.length !== CLIPS.length) base.clipBest = CLIPS.map((_, i) => (saved.clipBest && saved.clipBest[i]) || 0);
     return base;
@@ -275,6 +303,11 @@
       this.later(() => { if (this.state.playing === key) this.setState({ playing:null }); }, 1400);
     };
     goVoice = () => this.go('voice');
+    toggleErhua = () => {
+      this.persistNow();
+      try { localStorage.setItem(ERHUA_KEY, ERHUA_ON ? 'off' : 'on'); } catch (e) {}
+      try { location.reload(); } catch (e) {}
+    };
     setVoice = (id) => { this.setState({ voiceId:id }); };
     refreshVoices = () => { this.setState({ vtick:this.state.vtick + 1 }); };
     toggleAllVoices = () => { this.setState({ vall:!this.state.vall }); };
@@ -613,7 +646,7 @@
         web:['Word webs', 'Learn new words next to the words you already know.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
         listen:['Listening lab', 'Train your ear for how people really talk, not just how lessons sound.'],
-        voice:['Chinese voice', 'Choose the voice that reads Chinese aloud.'],
+        voice:['Voice and 儿 style', 'Choose the voice that reads Chinese aloud, and whether words like 这儿 keep their northern 儿 ending.'],
         quiz:S.qmode === 'grammar' ? ['Grammar practice', LESSONS[S.glesson].title] : ['HSK 1 test', 'Take your time. Wrong answers show you why.']
       };
       const tt = titles[S.screen];
@@ -667,7 +700,7 @@
       const rw = BANK[rzh];
       const rex = EX[rzh];
       const cinfo = winfo(S.ws[rzh], 0);
-      const card = Object.assign({ zh:rw.zh, py:rw.py, en:rw.en, stage:cinfo.chipCls, stageLabel:cinfo.mLabel, sizeCls:rw.zh.length > 1 ? 'two' : '', exZh:rex.zh, exPy:rex.py, exEn:rex.en, reportUrl:report('Review card for ' + rw.zh, rex.zh + ' (' + rex.py + ') ' + rex.en) }, cinfo);
+      const card = Object.assign({ zh:rw.zh, py:rw.py, en:rw.en, stage:cinfo.chipCls, stageLabel:cinfo.mLabel, sizeCls:rw.zh.length > 1 ? 'two' : '', exZh:rex.zh, exPy:rex.py, exEn:rex.en, hasNote:!!NOTE[rzh], note:NOTE[rzh] || '', reportUrl:report('Review card for ' + rw.zh, rex.zh + ' (' + rex.py + ') ' + rex.en) }, cinfo);
       const rates = [
         { key:'again', label:'Again', cls:'again' },
         { key:'hard', label:'Hard', cls:'' },
@@ -743,7 +776,7 @@
         const e = exOf(zh);
         const open = avail && !!S.wex[zh];
         return { hasExBtn:avail && !!e.zh, exOpen:open, exLabel:open ? 'Hide example' : 'Show example', exToggle:() => this.toggleEx(zh),
-          exZh:e.zh, exPy:e.py, exEn:e.en, exPlay:() => this.say(e.zh, 'x' + zh), exPc:pc('x' + zh) };
+          exZh:e.zh, exPy:e.py, exEn:e.en, exPlay:() => this.say(e.zh, 'x' + zh), exPc:pc('x' + zh), hasExNote:!!NOTE[zh], exNote:NOTE[zh] || '' };
       };
       const dlt = (zh) => { const d = S.wdelta[zh]; return d ? { hasDelta:true, deltaText:'Mastery ' + d.from + '% → ' + d.to + '%', deltaCls:d.to >= d.from ? 'up' : 'down' } : { hasDelta:false, deltaText:'', deltaCls:'' }; };
       const cardOf = (w, hubZh) => {
@@ -868,7 +901,7 @@
         cls:S.tpick === null ? '' : (i === S.tidx ? 'right' : (i === S.tpick ? 'wrong' : '')),
         fn:() => this.pickTone(i)
       }));
-      const weak = Object.keys(S.misses).map(zh => ({ zh, n:S.misses[zh] })).sort((a, b) => b.n - a.n).slice(0, 3)
+      const weak = Object.keys(S.misses).filter(zh => BANK[zh]).map(zh => ({ zh, n:S.misses[zh] })).sort((a, b) => b.n - a.n).slice(0, 3)
         .map(x => ({ t:x.zh + ' ' + (CLIP_PY[x.zh] || ''), d:'Missed ' + x.n + (x.n === 1 ? ' time' : ' times') + ' in dictation' }));
       const phrases = PHRASES.map((p, i) => ({ zh:p.zh, py:p.py, en:p.en, pc:pc('ph' + i), play:() => this.say(p.zh, 'ph' + i) }));
 
@@ -1002,6 +1035,9 @@
         // footer
         exportData:this.exportData, importData:this.importData, resetAll:this.resetAll, goVoice:this.goVoice,
         ...this.voiceVals(),
+        erhuaOn:ERHUA_ON, erhuaOff:!ERHUA_ON, erhuaAvailable:!!ERHUA, toggleErhua:this.toggleErhua,
+        erhuaNow:ERHUA_ON ? 'Now: 儿 endings are on (exam style).' : 'Now: plain forms, no 儿 endings.',
+        erhuaBtn:ERHUA_ON ? 'Switch to plain forms' : 'Switch to 儿 endings',
         repoUrl:'https://github.com/' + REPO
       };
     }

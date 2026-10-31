@@ -1,0 +1,12 @@
+# Words the HSK 1 list prints with a northern 儿 ending (erhua). Used by the "儿 endings" switch.
+# columns: official form, plain form, official pinyin, plain pinyin, twin
+#   twin = yes: the plain form is ALSO its own word on the official list, so in plain mode the 儿 word is dropped, not renamed.
+#   twin = no : the plain form is not on the list; in plain mode the word is renamed (its progress is carried over).
+# 儿子 and 女儿 are NOT here: in those words 儿 means "child" and is part of the word.
+面条儿	面条	miàntiáor	miàntiáo	no
+一点儿	一点	yìdiǎnr	yìdiǎn	no
+有点儿	有点	yǒudiǎnr	yǒudiǎn	no
+好玩儿	好玩	hǎowánr	hǎowán	no
+这儿	这里	zhèr	zhèli	yes
+那儿	那里	nàr	nàli	yes
+哪儿	哪里	nǎr	nǎli	yes

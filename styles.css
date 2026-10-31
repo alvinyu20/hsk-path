@@ -483,8 +483,9 @@ button.scn:hover .scn-m{text-decoration:underline}
 
 /* example sentence under a word */
 .exbtn{align-self:flex-start;padding:4px 0}
-.exbox{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:14px;background:var(--bg);border:1px solid var(--line);width:100%;min-width:0}
-.exbox-t{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.exbox-zh{font-size:24px;line-height:1.35}
+.wexbox{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:14px;background:var(--bg);border:1px solid var(--line);width:100%;min-width:0}
+.wexbox-t{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.wexbox-zh{font-size:24px;line-height:1.35}
 .exboth{gap:12px}
 @media (max-width:560px){.exboth{flex-direction:column}}
+.exnote{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);color:var(--muted);font-size:15px;line-height:1.5}

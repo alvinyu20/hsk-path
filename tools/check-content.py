@@ -475,6 +475,7 @@ def main():
     ap.add_argument('--dataset', default='')
     ap.add_argument('--selftest', action='store_true')
     ap.add_argument('--quiet', action='store_true', help='only print ERRORs and the summary')
+    ap.add_argument('--plain', action='store_true', help='the sentences were dumped with the 儿 endings switched off: plain forms (面条, 这里 ...) count as official words')
     a = ap.parse_args()
     if a.selftest:
         sys.exit(1 if selftest() else 0)
@@ -491,6 +492,10 @@ def main():
                 waivers.append((p[0], p[1], p[2]))
 
     allowed, higher = load_vocab(a.dataset, a.level, os.path.join(ROOT, 'content'))
+    if a.plain:
+        for line in open(os.path.join(ROOT, 'content', 'erhua.tsv'), encoding='utf-8'):
+            if line.strip() and not line.startswith('#'):
+                allowed.add(line.split('\t')[1])
     allowed_chars = {c for w in allowed for c in w}
     gwords = load_words_for_gloss(a.level)
     syn = {}

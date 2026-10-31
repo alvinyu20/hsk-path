@@ -8,7 +8,10 @@ const path = require('path');
 const { chromium } = require('playwright');
 
 const root = path.join(__dirname, '..');
-const shots = process.argv[2] || null;
+// Default run: plain forms (no 儿 endings), which is what the site ships with. `--erhua` runs everything again in exam style (儿 endings on).
+const erhuaMode = process.argv.includes('--erhua');
+const WORD_COUNT = erhuaMode ? 300 : 297;
+const shots = process.argv.slice(2).find(a => !a.startsWith('--')) || null;
 if (shots) fs.mkdirSync(shots, { recursive: true });
 const types = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css', '.json':'application/json', '.svg':'image/svg+xml' };
 
@@ -30,7 +33,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, acceptDownloads: true });
   // A fake text-to-speech with the kinds of voices an iPhone lists, so the voice picker can be tested without a phone.
-  await ctx.addInitScript(() => {
+  await ctx.addInitScript((erhua) => {
+    try { if (erhua && localStorage.getItem('shanlu-erhua') === null) localStorage.setItem('shanlu-erhua', 'on'); } catch (e) {}
     const mk = (name, lang, uri, local) => ({ name, lang, voiceURI: uri, localService: local !== false, default: false });
     const voices = [
       mk('Sinji', 'zh-HK', 'com.apple.voice.compact.zh-HK.Sinji'),
@@ -43,7 +47,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const ss = { getVoices: () => voices, cancel() {}, speak(u) { window.__spoken.push({ text: u.text, voice: u.voice && u.voice.voiceURI, lang: u.lang }); }, onvoiceschanged: null };
     Object.defineProperty(window, 'speechSynthesis', { value: ss, configurable: true });
     window.SpeechSynthesisUtterance = function (t) { this.text = t; };
-  });
+  }, erhuaMode);
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', e => errors.push('pageerror: ' + e.message));
@@ -94,7 +98,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForSelector('.app');
   check((await text()).includes('Welcome back'), 'home loads');
   check((await page.locator('.side').innerText()).includes('0-day streak'), 'fresh state starts at a 0-day streak');
-  check(await page.evaluate(() => window.HSK1_WORDS.length === 300 && window.HSK1_WORDS.every(w => w.ex && w.ex.zh && w.py && w.en)), 'all 300 words are loaded with a gloss, pinyin and an example');
+  check(await page.evaluate((N) => window.HSK1_WORDS.length === N && window.HSK1_WORDS.every(w => w.ex && w.ex.zh && w.py && w.en), WORD_COUNT), 'all ' + WORD_COUNT + ' words are loaded with a gloss, pinyin and an example');
   await shot('01-home');
 
   // Tests are blocked until words are started
@@ -130,7 +134,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('.wc').first().locator('button', { hasText: 'Show example' }).click();
   await page.waitForTimeout(60);
   check((await page.locator('.wc').first().innerText()).includes(firstEx), 'Show example reveals the word\'s example sentence (' + firstCardWord + ': ' + firstEx + ')');
-  check((await page.locator('.wc').first().locator('.exbox .spk').count()) === 1, 'the example sentence has a play button');
+  check((await page.locator('.wc').first().locator('.wexbox .spk').count()) === 1, 'the example sentence has a play button');
   await page.locator('.wc').first().locator('button', { hasText: 'Hide example' }).click();
   await page.waitForTimeout(60);
   check(!(await page.locator('.wc').first().innerText()).includes(firstEx), 'Hide example puts it away again');
@@ -191,9 +195,18 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const gapStable = await page.evaluate(async () => { const a = [...document.querySelectorAll('.opts .opt')].map(e => e.innerText).join('|'); window.shanlu.setState({ xp: window.shanlu.state.xp }); await new Promise(r => setTimeout(r, 60)); return a === [...document.querySelectorAll('.opts .opt')].map(e => e.innerText).join('|'); });
   check(gapStable, 'the option order stays put when the page redraws');
 
+  // a word can carry a short note (汉语 and 中文 do)
+  await page.evaluate(() => window.shanlu.setState({ screen: 'web', wmode: 'topic', wtopic: window.HSK1_WEBS.topics.findIndex(t => t.words.indexOf('汉语') >= 0), wquiz: false }));
+  await page.waitForTimeout(80);
+  const noteCard = page.locator('.tc', { hasText: '中文' }).first();
+  await noteCard.locator('button', { hasText: 'Show example' }).click();
+  await page.waitForTimeout(60);
+  check((await noteCard.innerText()).includes('everyday word'), 'the 中文 card shows its note under the example');
+  check(!(await page.locator('.tc', { hasText: '茶' }).first().innerText().catch(() => '')).includes('everyday word'), 'other words have no note');
+
   // My words
   await nav('My words');
-  check((await text()).includes('300 HSK 1 words'), 'my words lists all 300 words');
+  check((await text()).includes(WORD_COUNT + ' HSK 1 words'), 'my words lists all ' + WORD_COUNT + ' words');
   check((await page.locator('.wrow').count()) === 40, 'my words shows the first 40 rows');
   await page.locator('button', { hasText: 'Show 40 more' }).click();
   check((await page.locator('.wrow').count()) === 80, 'show more adds 40 rows');
@@ -343,7 +356,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
   // Chinese voice picker
   const lastSpoken = () => page.evaluate(() => window.__spoken[window.__spoken.length - 1] || null);
-  await page.locator('button', { hasText: 'Chinese voice' }).first().click();
+  await page.locator('button', { hasText: 'Voice and 儿 style' }).first().click();
   await page.waitForTimeout(100);
   const vt = await text();
   check(vt.includes('Lili (Premium)') && vt.includes('Tingting') && vt.includes('Meijia'), 'voice screen lists the Mandarin voices');
@@ -365,7 +378,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.reload();
   await page.waitForSelector('.app');
   check(await page.evaluate(() => window.shanlu.state.voiceId === 'com.apple.voice.compact.zh-CN.Tingting'), 'the chosen voice survives a reload');
-  await page.locator('button', { hasText: 'Chinese voice' }).first().click();
+  await page.locator('button', { hasText: 'Voice and 儿 style' }).first().click();
   await page.locator('button', { hasText: 'Use automatic' }).click();
   await page.evaluate(() => window.shanlu.say('你好', 'x'));
   sp = await lastSpoken();
@@ -374,6 +387,39 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await text()).includes('Sinji · zh-HK'), 'the full voice list shows every voice the browser reports');
   await shot('21-voice');
   await page.locator('button', { hasText: 'Back to home' }).click();
+
+  // 儿 endings switch
+  const OFFICIAL_ER = ['面条儿', '一点儿', '有点儿', '好玩儿', '这儿', '那儿', '哪儿'];
+  const modeNow = await page.evaluate((er) => ({ words: window.HSK1_WORDS.map(w => w.zh), er }), OFFICIAL_ER);
+  if (erhuaMode) check(OFFICIAL_ER.every(z => modeNow.words.includes(z)), 'exam style keeps all seven 儿 words');
+  else check(!OFFICIAL_ER.some(z => modeNow.words.includes(z)) && modeNow.words.includes('面条') && modeNow.words.includes('哪里'), 'plain mode has no 儿 words and uses 面条 and 哪里');
+  // In plain mode the only 儿 left should be the real character 儿 "child" (儿子, 女儿 and their notes), plus typed answers that still accept the 儿 form.
+  const leftovers = await page.evaluate(() => {
+    const out = [];
+    const walk = (v, where) => {
+      if (typeof v === 'string') { if (/儿/.test(v.replace(/女儿|儿子/g, ''))) out.push(where + ': ' + v); }
+      else if (Array.isArray(v)) { if (!/\.accepts$/.test(where)) v.forEach((x, i) => walk(x, where + '[' + i + ']')); }
+      else if (v && typeof v === 'object') Object.keys(v).forEach(k => walk(v[k], where + '.' + k));
+    };
+    ['HSK1_WORDS', 'HSK1_GRAMMAR', 'HSK1_WEBS', 'HSK1_SPEAK', 'HSK1_LISTEN'].forEach(k => walk(window[k], k));
+    return out;
+  });
+  const okLeft = (l) => /parts\[\d\]\[0\]: 儿$/.test(l) || /opps\[\d+\]\.note: Son and daughter/.test(l);
+  if (!erhuaMode) check(leftovers.every(okLeft) && leftovers.length === 3, 'plain mode leaves no 儿 ending in the content (only the "child" character is left)' + (leftovers.every(okLeft) ? '' : ': ' + leftovers.filter(l => !okLeft(l)).slice(0, 3).join(' | ')));
+  const myKey = erhuaMode ? '面条儿' : '面条', otherKey = erhuaMode ? '面条' : '面条儿';
+  await page.evaluate((k) => { const ws = Object.assign({}, window.shanlu.state.ws); ws[k] = { see: { s: 7, l: 0 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }; window.shanlu.setState({ ws }); window.shanlu.persistNow(); }, myKey);
+  await page.locator('button', { hasText: 'Voice and 儿 style' }).first().click();
+  check((await text()).includes(erhuaMode ? 'Now: 儿 endings are on' : 'Now: plain forms'), 'the voice and 儿 screen says which style is on');
+  await Promise.all([page.waitForNavigation(), page.locator('button', { hasText: erhuaMode ? 'Switch to plain forms' : 'Switch to 儿 endings' }).click()]);
+  await page.waitForSelector('.app');
+  const flipped = await page.evaluate((a) => ({ n: window.HSK1_WORDS.length, has: window.HSK1_WORDS.some(w => w.zh === a), s: window.shanlu.state.ws[a] && window.shanlu.state.ws[a].see.s, gone: window.shanlu.state.ws[a === '面条' ? '面条儿' : '面条'] === undefined }), otherKey);
+  check(flipped.n === (erhuaMode ? 297 : 300) && flipped.has, 'switching flips the word list (' + flipped.n + ' words)');
+  check(flipped.s === 7, 'progress on a renamed word carries over when the style switches (' + myKey + ' to ' + otherKey + ')');
+  await page.locator('button', { hasText: 'Voice and 儿 style' }).first().click();
+  await Promise.all([page.waitForNavigation(), page.locator('button', { hasText: erhuaMode ? 'Switch to 儿 endings' : 'Switch to plain forms' }).click()]);
+  await page.waitForSelector('.app');
+  const back = await page.evaluate((a) => ({ n: window.HSK1_WORDS.length, s: window.shanlu.state.ws[a] && window.shanlu.state.ws[a].see.s }), myKey);
+  check(back.n === WORD_COUNT && back.s === 7, 'switching back restores the list and the progress');
 
   // export
   const dl = page.waitForEvent('download');

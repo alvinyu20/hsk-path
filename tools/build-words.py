@@ -53,9 +53,9 @@ def main():
     words = []
     for path in sorted(glob.glob(os.path.join(C, 'words-*.tsv'))):
         for n, p in read_tsv(path):
-            if len(p) != 5 or any(not x.strip() for x in p):
-                sys.exit('%s line %d: expected 5 filled columns, got %r' % (os.path.basename(path), n, p))
-            words.append(dict(zh=p[0], pos=p[1], en=p[2], ex_zh=p[3], ex_en=p[4]))
+            if len(p) not in (5, 6) or any(not x.strip() for x in p[:5]):
+                sys.exit('%s line %d: expected 5 filled columns plus an optional note, got %r' % (os.path.basename(path), n, p))
+            words.append(dict(zh=p[0], pos=p[1], en=p[2], ex_zh=p[3], ex_en=p[4], note=(p[5].strip() if len(p) > 5 else '')))
 
     have = [w['zh'] for w in words]
     missing = [w for w in official if w not in have]
@@ -70,7 +70,10 @@ def main():
         w['py'] = eng.word_py(w['zh'])
         py, toks = eng.sentence(w['ex_zh'])
         ex = dict(zh=w['ex_zh'], py=py, en=w['ex_en'], toks=toks)
-        lines.append(json.dumps(dict(zh=w['zh'], py=w['py'], pos=w['pos'], en=w['en'], ex=ex), ensure_ascii=False))
+        entry = dict(zh=w['zh'], py=w['py'], pos=w['pos'], en=w['en'], ex=ex)
+        if w['note']:
+            entry['note'] = w['note']
+        lines.append(json.dumps(entry, ensure_ascii=False))
 
     out_path = os.path.join(ROOT, 'data', 'hsk1-words.js')
     with open(out_path, 'w', encoding='utf-8') as f:

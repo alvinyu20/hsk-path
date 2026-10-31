@@ -54,6 +54,10 @@ Known false alarms go in `content/check-waivers.tsv`, each with a reason. Questi
 - A sentence can have correct words and correct grammar and still say the wrong thing. Only comparing the meaning catches that.
 - When an explanation says "never" or "always", look for a counter-example. (Example: 不要 is not only a command; it can be a firm "I don't want to", so the lesson teaches 不想 as the safe form.)
 
+- Rewriting words in bulk is dangerous. The "plain" version of the content (no 儿 endings) is made by swapping 7 words, but the notes said things like "这儿 / 这里" and "在哪儿 or 在哪里", which a blind swap turns into "这里 / 这里". So the swap collapses those patterns, one note about 儿 itself is replaced by hand (`content/erhua-overrides.tsv`), the 儿 word of a pair that already has a plain twin is dropped instead of renamed, and every changed line is listed in `review/HSK1-plain-forms.md` to be read. The checks run on the plain version exactly as the learner sees it.
+- 汉语 and 中文 are not "spoken" and "written". The characters hint at it (语 speech, 文 writing) but in modern use both mean "Chinese (the language)" and are mostly interchangeable; 中文 is the more everyday word and is also used for speaking, 汉语 sounds a bit more formal. Both words carry a note saying so (reported by the learner, 30 Oct 2026, who guessed the split; the sources checked say it does not hold).
+- If an example box can show an extra note, give it its own CSS class. A new `.exbox` class silently restyled the review card.
+
 ## Review log
 
 ### 30 Oct 2026, HSK 1 (300 words, 26 grammar lessons)

@@ -18,8 +18,8 @@
 书	n	book	这是我的书。	This is my book.
 字	n	character, written word	这个字我不认识。	I don't know this character.
 汉字	n	Chinese character	我在学习汉字。	I am learning Chinese characters.
-汉语	n	Chinese (the language)	你的汉语很好。	Your Chinese is very good.
-中文	n	Chinese (the language)	你会写中文吗？	Can you write Chinese?
+汉语	n	Chinese (the language)	你的汉语很好。	Your Chinese is very good.	汉语 and 中文 both mean 'Chinese (the language)', and you can use either one for speaking: 我会说汉语 and 我会说中文 are both natural. 汉语 sounds a little more formal, like a school subject: 汉语课. The HSK itself is short for Hànyǔ Shuǐpíng Kǎoshì.
+中文	n	Chinese (the language)	你会写中文吗？	Can you write Chinese?	中文 is the everyday word for 'Chinese', for speaking and for writing: 我会说中文, 我会写中文. 汉语 means the same. The 文 in 中文 comes from 'writing', but that does not mean 中文 is only written: you do not have to switch words between speaking and writing.
 名字	n	name	你叫什么名字？	What is your name?
 课	n	class, lesson	今天上午有汉语课。	There is a Chinese class this morning.
 问题	n	question, problem	我有一个问题。	I have a question.

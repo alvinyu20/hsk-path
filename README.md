@@ -17,6 +17,10 @@ Live site (once GitHub Pages is switched on): https://alvinyu20.github.io/hsk-pa
 | Speaking | 8 scripted conversations you say out loud |
 | Tests | built from the words you have started, mixing meaning, listening, pinyin, fill-in and word-order questions |
 
+**儿 endings.** The official HSK 1 list prints seven words with a northern 儿 ending (面条儿, 一点儿, 有点儿, 好玩儿, 这儿, 那儿, 哪儿). The site uses the plain forms by default (面条, 一点, 有点, 好玩, 这里, 那里, 哪里); "Voice and 儿 style" in the footer switches to the exam-style forms. The table is `content/erhua.tsv`, the rewrite is `erhua.js`, and `tools/erhua-diff.js` lists every line that changes (`review/HSK1-plain-forms.md`).
+
+**Word notes.** A word row can have an optional sixth column, a short note shown under "Show example" (汉语 and 中文 have one).
+
 **Not built yet:** AI conversation and pronunciation feedback (speaking is a script, with no scoring), the level exam itself, and sync across devices (use Export / Import progress in the footer).
 
 ## Accuracy
@@ -58,6 +62,8 @@ Then open http://localhost:8000. Progress is saved in your browser (localStorage
    ```
    This rebuilds `data/`, checks every sentence (level, pinyin, Chinese against English), regenerates the review packet and clicks through the site in a browser.
 3. Commit `content/`, `data/` and `review/` together.
+
+Every sentence is checked twice, once with the 儿 endings and once without, and the browser test runs in both styles.
 
 ## Credits
 

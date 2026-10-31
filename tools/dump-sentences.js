@@ -2,16 +2,19 @@
 /* Collects every Chinese sentence the learner will see, with its pinyin and English, into one JSON list.
  * tools/check-content.py reads this list, so all content goes through the same checks, wherever it lives.
  *
- * Usage: node tools/dump-sentences.js [level] > /tmp/sentences.json
+ * Usage: node tools/dump-sentences.js [level] [--plain] > /tmp/sentences.json   (--plain: with the 儿 endings switched off, see erhua.js)
  * To add a new kind of content, add a few lines below. Every item needs: where, zh, py, en.
  */
 const fs = require('fs');
 const path = require('path');
 global.window = {};
-const level = process.argv[2] || '1';
+const level = process.argv.slice(2).find(x => /^\d+$/.test(x)) || '1';
+const plain = process.argv.includes('--plain');   // dump what the learner sees with the 儿 endings switched off
 const dir = path.join(__dirname, '..', 'data');
 const files = fs.readdirSync(dir).filter(f => new RegExp('^hsk' + level + '(-.*)?\\.js$').test(f));
 files.forEach(f => require(path.join(dir, f)));
+
+if (plain) { const E = require(path.join(__dirname, '..', 'erhua.js')); E.make(window.HSK1_ERHUA).apply(window); }
 
 const N = 'HSK' + level;
 const H = window[N] || {};
@@ -22,6 +25,7 @@ const add = (where, zh, py, en, extra) => { if (zh) out.push(Object.assign({ whe
 
 WORDS.forEach(w => add('word:' + w.zh, w.ex.zh, w.ex.py, w.ex.en, { word: w.zh }));
 WORDS.forEach(w => add('wordform:' + w.zh, w.zh, w.py, '', { levelOnly: false }));
+WORDS.forEach(w => (w.note ? (w.note.match(/[\u4e00-\u9fff]+/g) || []) : []).forEach((t, j) => add('word-note:' + w.zh + '.' + j, t, '', '', { levelOnly: true })));
 const WEBS = window[N + '_WEBS'] || null;
 const SPEAK = window[N + '_SPEAK'] || null;
 const LISTEN = window[N + '_LISTEN'] || null;
