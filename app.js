@@ -118,7 +118,7 @@
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:!!AICFG.key, aiModel:AICFG.model || 'claude-haiku-5-5', aiKeyInput:'', aiNote:'', aiMode:false, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
+      wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:!!AICFG.key, aiModel:AICFG.model || 'claude-haiku-5-5', aiKeyInput:'', aiNote:'', aiMode:false, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0,
       playing:null, noVoice:false
@@ -255,6 +255,27 @@
     return line.replace(/(^|[.?!] )([a-zà-ž])/g, (m, p, c) => p + c.toUpperCase());
   };
   const aiOutside = (toks) => { const seen = {}; const out = []; toks.forEach(t => { if (t.cjk && !t.ok && !seen[t.t]) { seen[t.t] = true; out.push(t.t); } }); return out; };
+  // The recogniser offers several guesses for what it heard. Prefer the one made only of HSK 1 characters and closest to the suggested
+  // reply (if one is showing); otherwise keep its own first choice. The other guesses are returned so they can be offered.
+  const lcsRatio = (a, b) => {
+    const x = Array.from(a), y = Array.from(b); if (!x.length || !y.length) return 0;
+    const m = Array.from({ length:x.length + 1 }, () => new Array(y.length + 1).fill(0));
+    for (let i = 1; i <= x.length; i++) for (let j = 1; j <= y.length; j++) m[i][j] = x[i - 1] === y[j - 1] ? m[i - 1][j - 1] + 1 : Math.max(m[i - 1][j], m[i][j - 1]);
+    return m[x.length][y.length] / Math.max(x.length, y.length);
+  };
+  const aiBestGuess = (res, hint) => {
+    const cands = [];
+    for (let i = 0; i < res.length; i++) { const t = String(res[i].transcript || '').trim(); if (t && !cands.some(c => c.text === t)) cands.push({ text:t, conf:res[i].confidence || 0, rank:i }); }
+    if (!cands.length) return { text:'', others:[] };
+    const plain = (t) => t.replace(/[\s，。？！、,.?!]/g, '');
+    cands.forEach(c => {
+      const chars = Array.from(plain(c.text)); const cjk = chars.filter(ch => /[\u4e00-\u9fff]/.test(ch));
+      const vocab = cjk.length ? cjk.filter(ch => CHARSET[ch]).length / cjk.length : 0;
+      c.score = (c.rank === 0 ? 0.25 : 0) + vocab + (hint ? lcsRatio(plain(hint), plain(c.text)) : 0) + 0.3 * c.conf;
+    });
+    const best = cands.reduce((a, b) => (b.score > a.score + 0.15 ? b : a), cands[0]);
+    return { text:best.text, others:cands.filter(c => c !== best).slice(0, 3).map(c => c.text) };
+  };
   // Checking a spoken or typed reply against the suggested one. The microphone returns characters, not sounds, so this can only say
   // whether the same characters came back: a wrong tone often turns into a different character, but it is not a pronunciation score.
   const stripTone = (py) => String(py).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -563,25 +584,48 @@
       const hist = [{ role:'user', content:'(Start the conversation with a short greeting and your first question.)' }];
       shown.forEach(m => { if (m.who === 'ai') hist.push({ role:'assistant', content:m.raw }); else hist.push({ role:'user', content:m.zh }); });
       const days = Object.assign({}, S.aiDays); const t = ymd(new Date()); days[t] = (days[t] || 0) + 1;
-      const patch = { aim:shown, aiInput:'', aiDays:days, xp:S.xp + 2, dayXp:S.dayXp + 2 };
+      const patch = { aim:shown, aiInput:'', aiAlts:[], aiDays:days, xp:S.xp + 2, dayXp:S.dayXp + 2 };
       if (days[t] >= 4 && !S.spokeToday) { patch.spokeToday = true; patch.dayMin = S.dayMin + 6; }
       this.setState(patch);
       this.aiAsk(hist.slice(-13), S.aiScn, shown);
     };
+    // Listening. Built to cope with normal speed: it keeps listening through short pauses (the default stops at the first one), shows the words
+    // as they come in, asks the recogniser for several guesses and prefers the guess made only of HSK 1 characters that fits the suggested
+    // reply, and lets you tap another guess if it still heard it wrong.
     aiMic = () => {
       const SR = window.webkitSpeechRecognition || window.SpeechRecognition;
       if (!SR) return;
       if (this.state.aiListen) { try { this.recog && this.recog.stop(); } catch (e) {} return; }
+      const lastM = this.state.aim[this.state.aim.length - 1];
+      const hint = lastM && lastM.who === 'ai' && lastM.sug && lastM.sug.open ? lastM.sug.zh : '';
+      let silence = null, cap = null, heard = false;
       try {
         const r = new SR(); this.recog = r;
-        r.lang = 'zh-CN'; r.interimResults = false; r.maxAlternatives = 1;
-        r.onresult = (e) => { const t = e.results && e.results[0] && e.results[0][0] ? e.results[0][0].transcript : ''; this.setState({ aiInput:t, aiListen:false }); };
-        r.onerror = () => { this.setState({ aiListen:false, aiErr:'The microphone did not work. Check the browser permission, or type instead.' }); };
-        r.onend = () => { this.setState({ aiListen:false }); };
-        this.setState({ aiListen:true, aiErr:'' });
+        r.lang = 'zh-CN'; r.continuous = true; r.interimResults = true; r.maxAlternatives = 5;
+        const done = () => { clearTimeout(silence); clearTimeout(cap); try { r.stop(); } catch (e) {} };
+        r.onresult = (e) => {
+          heard = true;
+          let fin = '', interim = '', alts = [], finals = 0;
+          for (let i = 0; i < e.results.length; i++) {
+            const res = e.results[i];
+            if (res.isFinal) { const c = aiBestGuess(res, hint); fin += c.text; finals++; alts = c.others; } else if (res[0]) interim += res[0].transcript;
+          }
+          this.setState({ aiInput:fin + interim, aiAlts:finals === 1 && !interim ? alts : [] });
+          clearTimeout(silence); silence = setTimeout(done, interim ? 3000 : 1800);   // stop on its own after a natural pause
+        };
+        r.onerror = (ev) => {
+          clearTimeout(silence); clearTimeout(cap);
+          const err = ev && ev.error;
+          if (err === 'no-speech' || err === 'aborted') { this.setState({ aiListen:false }); return; }
+          this.setState({ aiListen:false, aiErr:'The microphone did not work. Check the browser permission, or type instead.' });
+        };
+        r.onend = () => { clearTimeout(silence); clearTimeout(cap); this.setState({ aiListen:false }); };
+        this.setState({ aiListen:true, aiErr:'', aiAlts:[] });
         r.start();
+        cap = setTimeout(done, 20000);
       } catch (e) { this.setState({ aiListen:false, aiErr:'The microphone could not start. Type instead.' }); }
     };
+    aiPickAlt = (t) => { this.setState({ aiInput:t, aiAlts:[] }); };
     aiShowSug = () => { const a = this.state.aim.slice(); const i = a.length - 1; if (i < 0 || !a[i].sug) return; a[i] = Object.assign({}, a[i], { sug:Object.assign({}, a[i].sug, { open:true }) }); this.setState({ aim:a }); };
     aiUseSug = () => { const a = this.state.aim; const m = a[a.length - 1]; if (m && m.sug) this.setState({ aiInput:m.sug.zh }); };
     aiSimpler = () => { this.setState({ aiInput:'请再说一遍，慢一点。' }); this.aiSend(); };
@@ -926,7 +970,7 @@
       const sg = lastM && lastM.who === 'ai' && lastM.sug && !S.aiBusy ? lastM.sug : null;
       return {
         sugClosed:!!sg && !sg.open, sugOpen:!!sg && sg.open, sugZh:sg ? sg.zh : '', sugPy:sg ? sg.py : '', sugEn:sg ? sg.en : '',
-        sugShow:this.aiShowSug, sugUse:this.aiUseSug, sugPc:S.playing === 'sug' ? 'on' : '', sugPlay:() => sg && this.say(sg.zh, 'sug'),
+        hasAlts:S.aiAlts.length > 0, altList:S.aiAlts.map(t => ({ t, fn:() => this.aiPickAlt(t) })), sugShow:this.aiShowSug, sugUse:this.aiUseSug, sugPc:S.playing === 'sug' ? 'on' : '', sugPlay:() => sg && this.say(sg.zh, 'sug'),
         scriptMode:!S.aiMode, aiModeOn:S.aiMode, scriptCls:S.aiMode ? '' : 'on', aiCls:S.aiMode ? 'on' : '',
         setScript:() => this.setAiMode(false), setAi:() => this.setAiMode(true),
         aiNoKey:S.aiMode && !S.aiOn, aiReady:S.aiMode && S.aiOn, aiMsgs:msgs, aiBusy:S.aiBusy, aiErr:S.aiErr, hasAiErr:!!S.aiErr,

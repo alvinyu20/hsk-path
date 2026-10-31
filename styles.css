@@ -601,3 +601,5 @@ button.scn:hover .scn-m{text-decoration:underline}
 .sug-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0}
 .sug-row .zh{font-size:22px}
 .sug-t{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:14px}
+.alts{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14.5px}
+.alts .chip{height:38px;padding:0 14px;font-size:17px;border:0;cursor:pointer}

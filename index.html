@@ -662,12 +662,13 @@
           <input class="wsearch" style="margin:0;max-width:none" type="text" lang="zh" autocomplete="off" placeholder="Type Chinese, or tap Speak" value="{{aiInput}}" onInput="{{onAiInput}}" onKeyDown="{{onAiKey}}" aria-label="Your reply">
           <button class="btn pri" onClick="{{aiSend}}">Send</button>
         </div>
+        <sc-if value="{{hasAlts}}" hint-placeholder-val="{{ false }}"><div class="alts"><span class="muted">Heard it differently? Tap what you said:</span><sc-for list="{{altList}}" as="a" hint-placeholder-count="2"><button type="button" class="chip" onClick="{{a.fn}}"><span class="zh">{{a.t}}</span></button></sc-for></div></sc-if>
         <div class="ai-tools">
           <sc-if value="{{aiHasMic}}" hint-placeholder-val="{{ true }}"><button class="btn {{aiMicCls}}" onClick="{{aiMic}}">{{aiMicLabel}}</button></sc-if>
           <button class="linkbtn" onClick="{{aiSimpler}}">Say it slower or again</button>
         </div>
         <sc-if value="{{aiNoMic}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0;font-size:14.5px">This browser has no speech input for websites. On an iPhone, tap the microphone key on your keyboard to dictate Chinese into the box (add the Chinese keyboard first), or try the site in Safari.</p></sc-if>
-        <p class="muted" style="margin:0;font-size:14.5px">What the microphone hears lands in the box: check it, fix it if needed, then press Send. Pinyin comes from this site's own word list. The AI can make mistakes too.</p>
+        <p class="muted" style="margin:0;font-size:14.5px">Tap Speak and talk at a normal pace: it keeps listening through short pauses and stops by itself after a moment (or tap again to stop). What it hears lands in the box: check it, fix it if needed, then press Send. Pinyin comes from this site's own word list. The AI can make mistakes too.</p>
       </div>
     </section>
     <div class="sidep">

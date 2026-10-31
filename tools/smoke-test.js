@@ -48,7 +48,14 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     Object.defineProperty(window, 'speechSynthesis', { value: ss, configurable: true });
     window.SpeechSynthesisUtterance = function (t) { this.text = t; };
     // a fake microphone: it "hears" 我想喝茶
-    window.webkitSpeechRecognition = function () { this.start = () => { setTimeout(() => { if (this.onresult) this.onresult({ results: [[{ transcript: '我想喝茶' }]] }); if (this.onend) this.onend(); }, 10); }; this.stop = () => {}; };
+    window.__micAlts = ['我想喝茶'];
+    window.__micOpts = null;
+    window.webkitSpeechRecognition = function () {
+      this.start = () => { window.__micOpts = { continuous: this.continuous, interim: this.interimResults, alts: this.maxAlternatives, lang: this.lang };
+        setTimeout(() => { const res = Object.assign(window.__micAlts.map((t, i) => ({ transcript: t, confidence: 0.9 - i * 0.2 })), { isFinal: true });
+          if (this.onresult) this.onresult({ results: [res] }); }, 10); };
+      this.stop = () => { setTimeout(() => { if (this.onend) this.onend(); }, 5); };
+    };
   }, erhuaMode);
   const page = await ctx.newPage();
   const errors = [];
@@ -628,6 +635,19 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('.ai-tools button', { hasText: 'Speak' }).click();
   await page.waitForFunction(() => window.shanlu.state.aiInput === '我想喝茶');
   check((await page.inputValue('input[aria-label="Your reply"]')) === '我想喝茶', 'the microphone puts what it heard in the box to check');
+  const mo = await page.evaluate(() => window.__micOpts);
+  check(mo && mo.continuous === true && mo.interim === true && mo.alts >= 3 && mo.lang === 'zh-CN', 'the microphone keeps listening through pauses, shows words as they come and asks for several guesses');
+  await page.waitForFunction(() => !window.shanlu.state.aiListen, null, { timeout: 5000 });
+  // the recogniser's first guess is wrong, a later guess is made of HSK 1 characters and matches the suggested reply: that one is chosen, the other is offered
+  await page.evaluate(() => { window.__micAlts = ['我想和察', '我想喝茶', '我想喝查']; });
+  await page.locator('.ai-tools button', { hasText: 'Speak' }).click();
+  await page.waitForFunction(() => window.shanlu.state.aiInput === '我想喝茶');
+  check((await page.locator('.alts').innerText()).includes('我想和察'), 'the other guesses can be tapped if the microphone still heard it wrong');
+  await page.locator('.alts button', { hasText: '我想和察' }).click();
+  check((await page.inputValue('input[aria-label="Your reply"]')) === '我想和察', 'tapping another guess puts it in the box');
+  await page.evaluate(() => { window.__micAlts = ['我想喝茶']; });
+  await page.locator('.ai-tools button', { hasText: 'Speak' }).click();
+  await page.waitForFunction(() => window.shanlu.state.aiInput === '我想喝茶');
   await page.locator('.ai-in button', { hasText: 'Send' }).click();
   await page.waitForFunction(() => window.shanlu.state.aim.length >= 3 && !window.shanlu.state.aiBusy);
   const second = await page.locator('.msgs').innerText();
