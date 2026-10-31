@@ -43,21 +43,21 @@
   "q": [
    {
     "t": "order",
-    "zh": "我们去吃饭吧。",
-    "en": "Let's go and eat.",
+    "zh": "我们回家吧。",
+    "en": "Let's go home.",
     "explain": "吧 at the end makes it a suggestion."
    },
    {
     "t": "cloze",
-    "zh": "我很好，你呢？",
-    "en": "I am fine, and you?",
+    "zh": "我很忙，你呢？",
+    "en": "I am busy, and you?",
     "blank": "呢",
-    "explain": "呢 asks 'and you?'"
+    "explain": "呢 asks \"and you?\""
    },
    {
     "t": "cloze",
-    "zh": "你的手机呢？",
-    "en": "Where is your phone?",
+    "zh": "我的书呢？",
+    "en": "Where is my book?",
     "blank": "呢",
     "explain": "Thing + 呢 asks where it is."
    },
@@ -75,9 +75,9 @@
    },
    {
     "t": "order",
-    "zh": "你没事吧？",
-    "en": "Are you all right?",
-    "explain": "吧 checks an assumption."
+    "zh": "他在家吧？",
+    "en": "He is at home, right?",
+    "explain": "吧 checks something you think is true."
    }
   ]
  },
@@ -126,35 +126,35 @@
   "q": [
    {
     "t": "order",
-    "zh": "爸爸在做饭。",
-    "en": "Dad is cooking.",
-    "explain": "在 + verb is 'in the middle of'."
+    "zh": "姐姐在看书。",
+    "en": "My older sister is reading.",
+    "explain": "在 before the verb says it is happening now."
    },
    {
     "t": "cloze",
-    "zh": "他正在看电视。",
-    "en": "He is watching TV right now.",
+    "zh": "弟弟正在睡觉。",
+    "en": "My younger brother is sleeping right now.",
     "blank": "正在",
-    "explain": "正在 stresses 'right now'."
+    "explain": "正在 stresses that it is happening right now."
    },
    {
     "t": "cloze",
-    "zh": "哥哥正在看书呢。",
-    "en": "My older brother is reading right now.",
+    "zh": "妈妈在做饭呢。",
+    "en": "Mom is cooking.",
     "blank": "呢",
-    "explain": "呢 can finish an in-progress sentence."
+    "explain": "呢 at the end makes it sound lively."
    },
    {
     "t": "mc",
-    "prompt": "Which sentence says: Dad is cooking?",
+    "prompt": "Which sentence says: Mom is watching TV right now?",
     "options": [
-     "爸爸在家。",
-     "爸爸在做饭。"
+     "妈妈正在看电视。",
+     "妈妈看电视正在。"
     ],
-    "correct": 1,
-    "zh": "爸爸在做饭。",
-    "en": "Dad is cooking.",
-    "explain": "在 + verb is in progress. 爸爸在家 only says he is at home."
+    "correct": 0,
+    "zh": "妈妈正在看电视。",
+    "en": "Mom is watching TV right now.",
+    "explain": "正在 goes before the verb."
    },
    {
     "t": "order",
@@ -212,28 +212,28 @@
   "q": [
    {
     "t": "order",
-    "zh": "我买了一本书。",
-    "en": "I bought a book.",
+    "zh": "我吃了两个包子。",
+    "en": "I ate two buns.",
     "explain": "了 goes right after the verb."
    },
    {
     "t": "cloze",
-    "zh": "我买了一本书。",
-    "en": "I bought a book.",
+    "zh": "他买了一个手机。",
+    "en": "He bought a phone.",
     "blank": "了",
-    "explain": "了 marks a finished action."
+    "explain": "了 after the verb says the action is done."
    },
    {
     "t": "mc",
-    "prompt": "Which sentence says: I did not buy a book?",
+    "prompt": "Which sentence says: I did not drink water?",
     "options": [
-     "我没买了书。",
-     "我没买书。"
+     "我没喝了水。",
+     "我没喝水。"
     ],
     "correct": 1,
-    "zh": "我没买书。",
-    "en": "I did not buy a book.",
-    "explain": "With 没, drop 了."
+    "zh": "我没喝水。",
+    "en": "I did not drink water.",
+    "explain": "With 没, drop the 了."
    },
    {
     "t": "mc",
@@ -249,10 +249,10 @@
    },
    {
     "t": "cloze",
-    "zh": "你吃饭了吗？",
-    "en": "Have you eaten?",
+    "zh": "你买书了吗？",
+    "en": "Did you buy the book?",
     "blank": "吗",
-    "explain": "了 + 吗 asks whether it happened."
+    "explain": "Statement + 吗 makes a yes/no question."
    }
   ]
  },
@@ -299,41 +299,41 @@
   "q": [
    {
     "t": "order",
-    "zh": "天冷了。",
-    "en": "It has turned cold.",
-    "explain": "了 at the end shows a change."
+    "zh": "孩子大了。",
+    "en": "The child has grown up.",
+    "explain": "了 at the end says something has changed."
    },
    {
     "t": "cloze",
-    "zh": "下雨了！",
-    "en": "It is raining now!",
+    "zh": "我会说汉语了。",
+    "en": "I can speak Chinese now.",
     "blank": "了",
-    "explain": "了 marks the new situation."
+    "explain": "了 at the end says the situation has changed: before you could not, now you can."
    },
    {
     "t": "mc",
-    "prompt": "Which sentence says: It has turned cold?",
+    "prompt": "Which sentence says: It is hot (a plain description)?",
     "options": [
-     "天冷了。",
-     "天很冷。"
+     "天热了。",
+     "天很热。"
     ],
-    "correct": 0,
-    "zh": "天冷了。",
-    "en": "It has turned cold.",
-    "explain": "了 shows it just changed. 天很冷 only describes how it is."
+    "correct": 1,
+    "zh": "天很热。",
+    "en": "It is hot.",
+    "explain": "Without a change, use 很 + adjective. 了 says it has changed."
    },
    {
     "t": "cloze",
-    "zh": "他病了。",
-    "en": "He has gotten sick.",
+    "zh": "我女儿五岁了。",
+    "en": "My daughter is five now.",
     "blank": "了",
-    "explain": "了 shows he has become ill."
+    "explain": "了 with an age says she has reached that age."
    },
    {
     "t": "order",
-    "zh": "现在八点了。",
-    "en": "It is eight o'clock now.",
-    "explain": "了 at the end: it has just become eight."
+    "zh": "天气冷了。",
+    "en": "The weather has turned cold.",
+    "explain": "了 at the end says the weather has changed."
    }
   ]
  },
@@ -386,17 +386,17 @@
    },
    {
     "t": "cloze",
-    "zh": "我和他是同学。",
-    "en": "He and I are classmates.",
+    "zh": "爸爸和妈妈在家。",
+    "en": "Dad and Mom are at home.",
     "blank": "和",
-    "explain": "和 joins the two people."
+    "explain": "和 joins two nouns."
    },
    {
     "t": "cloze",
-    "zh": "他对我很好。",
-    "en": "He is very nice to me.",
+    "zh": "老师对我们很好。",
+    "en": "The teacher is very nice to us.",
     "blank": "对",
-    "explain": "对 + person means 'toward'."
+    "explain": "对 + person + adjective says how someone treats a person."
    },
    {
     "t": "mc",
@@ -412,9 +412,9 @@
    },
    {
     "t": "order",
-    "zh": "我和爸爸都喜欢看书。",
-    "en": "Dad and I both like reading.",
-    "explain": "和 joins the nouns, then 都 comes before the verb."
+    "zh": "我和哥哥去学校。",
+    "en": "My older brother and I go to school.",
+    "explain": "和 joins the two people before the verb."
    }
   ]
  },
@@ -461,22 +461,22 @@
   "q": [
    {
     "t": "order",
-    "zh": "我去商店买水果。",
-    "en": "I go to the shop to buy fruit.",
-    "explain": "去 first, then the reason."
+    "zh": "我去学校学习汉语。",
+    "en": "I go to school to study Chinese.",
+    "explain": "Action 1 (去学校), then action 2 (学习汉语)."
    },
    {
     "t": "order",
-    "zh": "爸爸开车去公司。",
-    "en": "Dad drives to work.",
-    "explain": "How you go comes first."
+    "zh": "妈妈坐出租车去医院。",
+    "en": "Mom takes a taxi to the hospital.",
+    "explain": "How you go comes first, then where you go."
    },
    {
     "t": "cloze",
-    "zh": "爸爸给小明一本书。",
-    "en": "Dad gives Xiaoming a book.",
+    "zh": "我给你一杯茶。",
+    "en": "I give you a cup of tea.",
     "blank": "给",
-    "explain": "给 + person + thing."
+    "explain": "给 + person + thing means \"give someone something\"."
    },
    {
     "t": "order",
@@ -486,15 +486,15 @@
    },
    {
     "t": "mc",
-    "prompt": "Which sentence says: I call my mom?",
+    "prompt": "Which sentence says: I call my teacher?",
     "options": [
-     "我打电话妈妈。",
-     "我给妈妈打电话。"
+     "我打电话老师。",
+     "我给老师打电话。"
     ],
     "correct": 1,
-    "zh": "我给妈妈打电话。",
-    "en": "I call my mom.",
-    "explain": "给 + person goes before the verb."
+    "zh": "我给老师打电话。",
+    "en": "I call my teacher.",
+    "explain": "给 + person goes before 打电话."
    }
   ]
  },
@@ -541,9 +541,9 @@
   "q": [
    {
     "t": "order",
-    "zh": "请问，学校在哪儿？",
-    "en": "Excuse me, where is the school?",
-    "explain": "请问 opens the question."
+    "zh": "请问，你叫什么名字？",
+    "en": "Excuse me, what is your name?",
+    "explain": "请问 is a polite way to start a question."
    },
    {
     "t": "cloze",
@@ -554,10 +554,10 @@
    },
    {
     "t": "cloze",
-    "zh": "我想休息一下。",
-    "en": "I want to rest for a bit.",
+    "zh": "我想看一下。",
+    "en": "I want to take a look.",
     "blank": "一下",
-    "explain": "一下 goes after the verb."
+    "explain": "Verb + 一下 means \"a little, a quick one\"."
    },
    {
     "t": "mc",
@@ -573,10 +573,10 @@
    },
    {
     "t": "cloze",
-    "zh": "喂，你好！",
-    "en": "Hello! (answering the phone)",
+    "zh": "喂，小明在家吗？",
+    "en": "Hello, is Xiaoming at home?",
     "blank": "喂",
-    "explain": "喂 is how you answer the phone."
+    "explain": "喂 is how you say hello on the phone."
    }
   ]
  },
@@ -620,35 +620,35 @@
   "q": [
    {
     "t": "order",
-    "zh": "我想买一些水果。",
-    "en": "I want to buy some fruit.",
-    "explain": "一些 goes before the noun."
+    "zh": "我想喝一点儿水。",
+    "en": "I want to drink a little water.",
+    "explain": "一点儿 + noun means \"a little\"."
    },
    {
     "t": "cloze",
-    "zh": "我会说一点儿汉语。",
-    "en": "I can speak a little Chinese.",
-    "blank": "一点儿",
-    "explain": "一点儿 means 'a little' of something."
+    "zh": "桌子上有一些书。",
+    "en": "There are some books on the table.",
+    "blank": "一些",
+    "explain": "一些 + noun means \"some\"."
    },
    {
     "t": "cloze",
-    "zh": "今天有点儿冷。",
-    "en": "It is a bit cold today.",
+    "zh": "这个菜有点儿贵。",
+    "en": "This dish is a bit expensive.",
     "blank": "有点儿",
-    "explain": "有点儿 goes before an adjective."
+    "explain": "有点儿 goes before an adjective, often with a slightly negative feeling."
    },
    {
     "t": "mc",
-    "prompt": "Which sentence says: It is a bit cold today?",
+    "prompt": "Which sentence says: I am a bit cold?",
     "options": [
-     "今天一点儿冷。",
-     "今天有点儿冷。"
+     "我一点儿冷。",
+     "我有点儿冷。"
     ],
     "correct": 1,
-    "zh": "今天有点儿冷。",
-    "en": "It is a bit cold today.",
-    "explain": "Use 有点儿 before an adjective."
+    "zh": "我有点儿冷。",
+    "en": "I am a bit cold.",
+    "explain": "Before an adjective use 有点儿, not 一点儿."
    },
    {
     "t": "order",

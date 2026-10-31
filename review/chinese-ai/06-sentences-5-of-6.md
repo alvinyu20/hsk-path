@@ -227,14 +227,14 @@ Sentences (Chinese / English):
 207. 哥哥吃鸡蛋。  /  My older brother eats eggs.
 208. 我们学习汉语。  /  We study Chinese.
 209. 爸爸晚上在家工作。  /  Dad works at home in the evening.
-210. 我在家吃饭。  /  I eat at home.
-211. 她不是老师。  /  She is not a teacher.
-212. 他很高兴。  /  He is very happy.
-213. 这个房间不大。  /  This room is not big.
-214. 他喜欢茶吗？  /  Does he like tea?
-215. 你想喝水吗？  /  Would you like some water?
-216. 他是你的老师吗？  /  Is he your teacher?
-217. 她是你的朋友吗？  /  Is she your friend?
-218. 小明今天没上学。  /  Xiaoming did not go to school today.
-219. 我没有钱。  /  I have no money.
-220. 不要在这里说话！  /  Don't talk here!
+210. 妈妈中午在家做饭。  /  Mom cooks at home at noon.
+211. 妹妹看电视。  /  My younger sister watches TV.
+212. 我在家吃饭。  /  I eat at home.
+213. 她不是老师。  /  She is not a teacher.
+214. 他是我哥哥。  /  He is my older brother.
+215. 他很高兴。  /  He is very happy.
+216. 这个房间不大。  /  This room is not big.
+217. 这个菜太好吃了！  /  This dish is so tasty!
+218. 我妈妈很忙。  /  My mom is very busy.
+219. 这个苹果真好吃！  /  This apple is really tasty!
+220. 他家有点小。  /  His home is a bit small.

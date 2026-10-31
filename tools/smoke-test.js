@@ -239,28 +239,32 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   // Review
   await nav('Review words');
   check((await text()).toLowerCase().includes('all caught up'), 'review shows caught up when nothing is due');
-  await page.locator('button', { hasText: 'Practice the 5 weakest anyway' }).click();
+  await page.locator('button', { hasText: 'Practice all my words anyway' }).click();
   await page.waitForTimeout(100);
+  const practiceN = await page.evaluate(() => window.shanlu.state.rq.length);
+  check(practiceN === (await page.evaluate(() => Object.keys(window.shanlu.state.ws).filter(zh => window.shanlu.state.ws[zh].see.s > 0 || window.shanlu.state.ws[zh].see.l > 0).length)) && practiceN >= 5, 'practising anyway offers every started word, not just five');
   await shot('05-review-front');
   await page.locator('button', { hasText: 'Show answer' }).click();
   await page.waitForTimeout(800);
   await shot('06-review-back');
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < practiceN + 3 && !(await text()).includes('words reviewed'); i++) {
     if (!(await page.locator('.rates .rate').count())) await page.locator('button', { hasText: 'Show answer' }).click();
     await page.locator('.rates .rate').nth(2).click();
-    await page.waitForTimeout(80);
+    await page.waitForTimeout(60);
   }
   check((await text()).includes('words reviewed'), 'review finishes');
-  // make 100 words due and check that reviews continue in rounds
-  await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).slice(0, 100).forEach(zh => { ws[zh].see = { s:1, l:5 }; }); app.setState({ ws, rq:[], rcomplete:false }); });
+  // make 100 words due: there is no cap, all 100 are in one round, in a jumbled order
+  await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).slice(0, 100).forEach(zh => { ws[zh].see = { s:1, l:5 }; }); app.setState({ ws, rq:[], rcomplete:false }); window.__listOrder = Object.keys(ws).slice(0, 100); });
   await nav('Review words');
-  check((await text()).includes('More words are due') && (await text()).includes('Review 30 more'), 'when more than a round is due, review offers the next 30');
-  await page.locator('button', { hasText: 'Review 30 more' }).click();
+  check((await text()).includes('More words are due') && (await text()).includes('Review 100 words'), 'all due words are offered in one round, with no limit');
+  await page.locator('button', { hasText: 'Review 100 words' }).click();
   await page.waitForTimeout(100);
-  check((await page.evaluate(() => window.shanlu.state.rq.length)) === 30, 'a review round has 30 cards');
+  const rq = await page.evaluate(() => window.shanlu.state.rq.slice());
+  check(rq.length === 100, 'a review round holds every due word (100), not just 30');
+  const inListOrder = await page.evaluate(() => { const q = window.shanlu.state.rq.slice(0, 20); const idx = q.map(z => window.__listOrder.indexOf(z)); return idx.every((v, i) => i === 0 || v > idx[i - 1]); });
+  check(!inListOrder, 'the words come in a jumbled order, not in word-list order');
   await page.evaluate(() => { window.shanlu.setState({ rq:[], rcomplete:true }); });
   await page.waitForTimeout(100);
-  check((await page.locator('button', { hasText: /^Review \d+ more$/ }).count()) === 1, 'the finished-round screen offers more while words are still due');
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).forEach(zh => { if (ws[zh].see.s === 1 && ws[zh].see.l === 5) ws[zh].see = { s:30, l:0 }; }); app.setState({ ws, rq:[], rcomplete:false }); });
 
   // Listening lab

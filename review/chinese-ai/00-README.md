@@ -11,7 +11,7 @@ Each file asks the model to report **problems only**, so the answers stay short.
 | 04-sentences-3-of-6.md | 220 example, exercise and script sentences |
 | 05-sentences-4-of-6.md | 220 example, exercise and script sentences |
 | 06-sentences-5-of-6.md | 220 example, exercise and script sentences |
-| 07-sentences-6-of-6.md | 51 example, exercise and script sentences |
+| 07-sentences-6-of-6.md | 128 example, exercise and script sentences |
 | 08-exam.md | the mock exam sentences and picture questions |
 
 The 13 questions from before are in review/ask-a-chinese-ai.md (already answered).

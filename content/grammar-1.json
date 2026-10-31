@@ -47,9 +47,9 @@
   "q": [
    {
     "t": "order",
-    "zh": "爸爸晚上在家工作。",
-    "en": "Dad works at home in the evening.",
-    "explain": "Subject, then time, then place, then the verb."
+    "zh": "妈妈中午在家做饭。",
+    "en": "Mom cooks at home at noon.",
+    "explain": "Who does it, when, where, then what: 妈妈 + 中午 + 在家 + 做饭."
    },
    {
     "t": "order",
@@ -59,10 +59,10 @@
    },
    {
     "t": "cloze",
-    "zh": "我们学习汉语。",
-    "en": "We study Chinese.",
-    "blank": "学习",
-    "explain": "The verb goes between the subject and the object."
+    "zh": "妹妹看电视。",
+    "en": "My younger sister watches TV.",
+    "blank": "看",
+    "explain": "The verb comes before the thing: 看 + 电视."
    },
    {
     "t": "mc",
@@ -136,10 +136,10 @@
    },
    {
     "t": "cloze",
-    "zh": "他是我的朋友。",
-    "en": "He is my friend.",
+    "zh": "他是我哥哥。",
+    "en": "He is my older brother.",
     "blank": "是",
-    "explain": "是 links two nouns."
+    "explain": "是 links the two nouns: A 是 B."
    },
    {
     "t": "mc",
@@ -155,9 +155,9 @@
    },
    {
     "t": "order",
-    "zh": "你是中国人吗？",
-    "en": "Are you Chinese?",
-    "explain": "Say the statement, then add 吗 at the end."
+    "zh": "你是学生吗？",
+    "en": "Are you a student?",
+    "explain": "A 是 B, then 吗 at the end makes it a question."
    },
    {
     "t": "cloze",
@@ -216,8 +216,8 @@
   "q": [
    {
     "t": "order",
-    "zh": "今天太冷了！",
-    "en": "It is so cold today!",
+    "zh": "这个菜太好吃了！",
+    "en": "This dish is so tasty!",
     "explain": "太 goes before the adjective and 了 comes at the end."
    },
    {
@@ -229,27 +229,27 @@
    },
    {
     "t": "mc",
-    "prompt": "Which sentence says: This room is not big?",
+    "prompt": "Which sentence says: My mom is very busy?",
     "options": [
-     "这个房间是不大。",
-     "这个房间不大。"
+     "我妈妈是很忙。",
+     "我妈妈很忙。"
     ],
     "correct": 1,
-    "zh": "这个房间不大。",
-    "en": "This room is not big.",
-    "explain": "不 goes straight before the adjective. No 是."
+    "zh": "我妈妈很忙。",
+    "en": "My mom is very busy.",
+    "explain": "With an adjective you use 很, not 是."
    },
    {
     "t": "cloze",
-    "zh": "你的衣服真漂亮！",
-    "en": "Your clothes are really pretty!",
+    "zh": "这个苹果真好吃！",
+    "en": "This apple is really tasty!",
     "blank": "真",
-    "explain": "真 means 'really' and goes before the adjective."
+    "explain": "真 means \"really\" and goes before the adjective."
    },
    {
     "t": "order",
-    "zh": "我今天有点儿忙。",
-    "en": "I am a bit busy today.",
+    "zh": "他家有点儿小。",
+    "en": "His home is a bit small.",
     "explain": "有点儿 goes before the adjective."
    }
   ]
@@ -389,38 +389,38 @@
   "q": [
    {
     "t": "order",
-    "zh": "你家在哪儿？",
-    "en": "Where is your home?",
-    "explain": "哪儿 sits where the answer (a place) would go."
+    "zh": "你在哪儿学习？",
+    "en": "Where do you study?",
+    "explain": "The question word takes the place of the answer: 在 + 哪儿."
    },
    {
     "t": "cloze",
-    "zh": "这个多少钱？",
-    "en": "How much is this?",
+    "zh": "这个杯子多少钱？",
+    "en": "How much is this cup?",
     "blank": "多少",
-    "explain": "多少 asks about amounts like prices."
+    "explain": "多少钱 asks the price."
    },
    {
     "t": "cloze",
-    "zh": "你家有几口人？",
-    "en": "How many people are in your family?",
+    "zh": "你有几个朋友？",
+    "en": "How many friends do you have?",
     "blank": "几",
-    "explain": "几 is followed by a measure word."
+    "explain": "几 asks about a small number, and needs a measure word: 几个."
    },
    {
     "t": "cloze",
-    "zh": "今天天气怎么样？",
-    "en": "How is the weather today?",
-    "blank": "怎么样",
-    "explain": "怎么样 asks how something is."
+    "zh": "你们的老师是谁？",
+    "en": "Who is your teacher?",
+    "blank": "谁",
+    "explain": "谁 asks \"who\"."
    },
    {
     "t": "spot",
-    "zh": "你想吃什么？",
-    "en": "What do you want to eat?",
-    "wrong": "你想吃什么吗？",
+    "zh": "他是谁？",
+    "en": "Who is he?",
+    "wrong": "他是谁吗？",
     "remove": "吗",
-    "explain": "什么 already asks the question."
+    "explain": "谁 already asks the question, so 吗 is not needed."
    }
   ]
  },
@@ -466,35 +466,35 @@
   "q": [
    {
     "t": "order",
-    "zh": "我没有钱。",
-    "en": "I don't have any money.",
-    "explain": "没有 is the negative of 有."
+    "zh": "我没有哥哥。",
+    "en": "I don't have an older brother.",
+    "explain": "没 is the negative of 有: 没有."
    },
    {
     "t": "cloze",
-    "zh": "我不是老师。",
-    "en": "I am not a teacher.",
+    "zh": "我不喝茶。",
+    "en": "I don't drink tea.",
     "blank": "不",
-    "explain": "不 negates 是."
+    "explain": "不 goes before the verb."
    },
    {
     "t": "mc",
-    "prompt": "Which sentence says: I have no money?",
+    "prompt": "Which sentence says: I don't have a cat?",
     "options": [
-     "我不有钱。",
-     "我没有钱。"
+     "我不有猫。",
+     "我没有猫。"
     ],
     "correct": 1,
-    "zh": "我没有钱。",
-    "en": "I have no money.",
-    "explain": "有 is negated with 没, never 不."
+    "zh": "我没有猫。",
+    "en": "I don't have a cat.",
+    "explain": "The negative of 有 is 没有, never 不有."
    },
    {
     "t": "cloze",
-    "zh": "小明今天没上学。",
-    "en": "Xiaoming did not go to school today.",
+    "zh": "他今天没来。",
+    "en": "He did not come today.",
     "blank": "没",
-    "explain": "没 says it did not happen."
+    "explain": "没 says something did not happen."
    },
    {
     "t": "mc",
@@ -557,8 +557,8 @@
    },
    {
     "t": "cloze",
-    "zh": "我没有手机。",
-    "en": "I don't have a phone.",
+    "zh": "我没有姐姐。",
+    "en": "I don't have an older sister.",
     "blank": "没有",
     "explain": "没有 is the negative of 有."
    },
@@ -583,9 +583,9 @@
    },
    {
     "t": "order",
-    "zh": "你有时间吗？",
-    "en": "Do you have time?",
-    "explain": "Statement + 吗."
+    "zh": "她有一个女儿。",
+    "en": "She has a daughter.",
+    "explain": "Owner + 有 + number + measure word + thing."
    }
   ]
  },
@@ -642,17 +642,17 @@
    },
    {
     "t": "cloze",
-    "zh": "我们都是学生。",
-    "en": "We are all students.",
-    "blank": "我们",
-    "explain": "我们 means 'we'."
+    "zh": "他们都是老师。",
+    "en": "They are all teachers.",
+    "blank": "他们",
+    "explain": "们 makes 他 plural: 他们."
    },
    {
     "t": "cloze",
-    "zh": "老师，您好！",
-    "en": "Hello, teacher!",
+    "zh": "您是老师吗？",
+    "en": "Are you a teacher?",
     "blank": "您",
-    "explain": "您 is the polite 'you'."
+    "explain": "您 is the polite \"you\"."
    },
    {
     "t": "mc",
@@ -668,15 +668,15 @@
    },
    {
     "t": "mc",
-    "prompt": "Which sentence says: Hello, everyone!",
+    "prompt": "Which sentence says: She is my younger sister (one person)?",
     "options": [
-     "大家好！",
-     "大家们好！"
+     "她们是我妹妹。",
+     "她是我妹妹。"
     ],
-    "correct": 0,
-    "zh": "大家好！",
-    "en": "Hello, everyone!",
-    "explain": "大家 already means 'everyone'."
+    "correct": 1,
+    "zh": "她是我妹妹。",
+    "en": "She is my younger sister.",
+    "explain": "她 is one person; 她们 would be \"they\"."
    }
   ]
  },
@@ -723,22 +723,22 @@
   "q": [
    {
     "t": "order",
-    "zh": "这是我妈妈的手机。",
-    "en": "This is my mother's phone.",
+    "zh": "这是爸爸的车。",
+    "en": "This is Dad's car.",
     "explain": "Owner + 的 + thing."
    },
    {
     "t": "cloze",
-    "zh": "这是我的书。",
-    "en": "This is my book.",
+    "zh": "这是你的手机吗？",
+    "en": "Is this your phone?",
     "blank": "的",
     "explain": "的 links the owner and the thing."
    },
    {
     "t": "order",
-    "zh": "这是很好吃的米饭。",
-    "en": "This is very tasty rice.",
-    "explain": "The describing phrase goes before 的 and the noun."
+    "zh": "她是我的好朋友。",
+    "en": "She is my good friend.",
+    "explain": "我 + 的 + 好朋友: owner + 的 + description."
    },
    {
     "t": "mc",
@@ -754,10 +754,10 @@
    },
    {
     "t": "cloze",
-    "zh": "这是我妈妈的手机。",
-    "en": "This is my mother's phone.",
-    "blank": "妈妈",
-    "explain": "The owner goes before 的."
+    "zh": "那是我老师的杯子。",
+    "en": "That is my teacher's cup.",
+    "blank": "老师",
+    "explain": "Owner + 的 + thing: the owner here is 老师."
    }
   ]
  }

@@ -34,7 +34,6 @@
 
   // ---------- word memory model (simplified FSRS-style) ----------
   const LIMIT_OPTIONS = [5, 10, 20, 0];            // 0 = no limit (the default)
-  const REVIEW_CHUNK = 30;                          // cards per review round; "Review more" continues until nothing is due
   const limitOf = (S) => (S.nlimit > 0 ? S.nlimit : Infinity);
   const DIMS = ['see', 'hear', 'prod'];
   // Real elapsed time: every dimension remembers when it was last reviewed (t, in ms). Older saves had only a fixed `l`, which never grew.
@@ -89,12 +88,13 @@
     };
   };
 
-  // Review queue: words that are due, weakest recall first. "anyway" gives the five weakest started words.
+  // Review queue: every word that is due, with no cap. The weakest words tend to come first, but the order is jumbled (a random nudge
+  // on each word's recall) so words that were learned together do not come back in list order. "anyway" is every started word.
   const buildQueue = (ws, anyway) => {
     const rows = Object.keys(ws).map(zh => ({ zh, info:winfo(ws[zh], 0) })).filter(r => r.info.started);
-    rows.sort((a, b) => a.info.recallN - b.info.recallN);
-    if (anyway) return rows.slice(0, 5).map(r => r.zh);
-    return rows.filter(r => r.info.dueN <= 0).slice(0, REVIEW_CHUNK).map(r => r.zh);
+    rows.forEach(r => { r.key = r.info.recallN + Math.random() * 30; });
+    rows.sort((a, b) => a.key - b.key);
+    return (anyway ? rows : rows.filter(r => r.info.dueN <= 0)).map(r => r.zh);
   };
 
   // ---------- dates, saving, daily reset ----------
@@ -1408,7 +1408,7 @@
         hubHasNew:hubNew > 0 && !capReached, hubAddAllText:'Add all ' + hubNew + ' new word' + (hubNew === 1 ? '' : 's'), hubAddAll:() => this.learnMany(hubNow.words.map(w => w.zh)),
         topicHasNew:topicNew > 0 && !capReached, topicAddAllText:'Add all ' + topicNew + ' new word' + (topicNew === 1 ? '' : 's'), topicAddAll:() => this.learnMany(topicNow.words),
         moreDue:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft > 0, hasMoreDue:dueLeft > 0, reviewMore:this.reviewMore,
-        moreDueText:'Review ' + Math.min(REVIEW_CHUNK, dueLeft) + ' more', dueLeftText:dueLeft + ' word' + (dueLeft === 1 ? ' is' : 's are') + ' still due.', topicProgress:topicStarted + ' of ' + topicNow.words.length + ' started',
+        moreDueText:'Review ' + dueLeft + ' word' + (dueLeft === 1 ? '' : 's'), dueLeftText:dueLeft + ' word' + (dueLeft === 1 ? ' is' : 's are') + ' still due.', topicProgress:topicStarted + ' of ' + topicNow.words.length + ' started',
         hubCards, hubOpts, hubZh:hubNow.hub, hubPy:hubNow.py, hubEn:hubNow.en,
         fillEn:gapNow.en, fillZh:gapNow.zh, gapOpts, gapDone, gapOptsCls:gapDone ? 'locked' : '', fillLine, gapNext:this.gapNext,
         fillReport:report('Which word fits?', gapNow.zh + ' = ' + gapNow.ans + ' / ' + gapNow.en),

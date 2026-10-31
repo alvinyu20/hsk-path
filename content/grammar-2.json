@@ -48,16 +48,16 @@
   "q": [
    {
     "t": "order",
-    "zh": "我想买一件新衣服。",
-    "en": "I want to buy a new item of clothing.",
-    "explain": "Number + 件 + clothing."
+    "zh": "我想买一本书。",
+    "en": "I want to buy a book.",
+    "explain": "Number + measure word + noun: 一 + 本 + 书."
    },
    {
     "t": "cloze",
-    "zh": "我有两本书。",
-    "en": "I have two books.",
-    "blank": "本",
-    "explain": "本 is the measure word for books."
+    "zh": "我有三个杯子。",
+    "en": "I have three cups.",
+    "blank": "个",
+    "explain": "Number + 个 + noun."
    },
    {
     "t": "mc",
@@ -136,30 +136,30 @@
   "q": [
    {
     "t": "order",
-    "zh": "这个包子一块半。",
-    "en": "This bun is one and a half yuan.",
-    "explain": "块 + 半 means one and a half yuan."
+    "zh": "这个杯子五块钱。",
+    "en": "This cup is five yuan.",
+    "explain": "Number + 块 + 钱 says the price."
    },
    {
     "t": "cloze",
-    "zh": "我有两个朋友。",
-    "en": "I have two friends.",
+    "zh": "我有两个哥哥。",
+    "en": "I have two older brothers.",
     "blank": "两",
-    "explain": "Before a measure word, two is 两."
+    "explain": "Before a measure word, say 两 (not 二) for \"two\"."
    },
    {
     "t": "cloze",
-    "zh": "他八岁。",
-    "en": "He is eight years old.",
+    "zh": "她今年二十岁。",
+    "en": "She is twenty years old this year.",
     "blank": "岁",
-    "explain": "岁 is used for age. There is no 是."
+    "explain": "Age uses 岁 after the number."
    },
    {
     "t": "cloze",
-    "zh": "今天是我学汉语的第一天。",
-    "en": "Today is my first day of learning Chinese.",
+    "zh": "他是我的第一个老师。",
+    "en": "He is my first teacher.",
     "blank": "第",
-    "explain": "第 makes ordinal numbers."
+    "explain": "第 + number makes \"first, second, third…\"."
    },
    {
     "t": "mc",
@@ -225,9 +225,9 @@
   "q": [
    {
     "t": "order",
-    "zh": "我七点起床。",
-    "en": "I get up at seven o'clock.",
-    "explain": "The time comes before the verb."
+    "zh": "我们八点上课。",
+    "en": "We have class at eight o'clock.",
+    "explain": "The time goes before the verb."
    },
    {
     "t": "cloze",
@@ -238,10 +238,10 @@
    },
    {
     "t": "cloze",
-    "zh": "今天星期几？",
-    "en": "What day of the week is it today?",
+    "zh": "明天星期五。",
+    "en": "Tomorrow is Friday.",
     "blank": "星期",
-    "explain": "星期 + 几 asks the weekday."
+    "explain": "星期 + number gives the day of the week."
    },
    {
     "t": "mc",
@@ -257,14 +257,14 @@
    },
    {
     "t": "mc",
-    "prompt": "Which sentence says: Today is October 30th?",
+    "prompt": "Which sentence says: Today is November 5th?",
     "options": [
-     "今天是三十号十月。",
-     "今天是十月三十号。"
+     "今天是五号十一月。",
+     "今天是十一月五号。"
     ],
     "correct": 1,
-    "zh": "今天是十月三十号。",
-    "en": "Today is October 30th.",
+    "zh": "今天是十一月五号。",
+    "en": "Today is November 5th.",
     "explain": "Dates go from big to small: month, then day."
    }
   ]
@@ -316,17 +316,17 @@
    },
    {
     "t": "cloze",
-    "zh": "他们在家吃饭。",
-    "en": "They eat at home.",
+    "zh": "妈妈在家做饭。",
+    "en": "Mom cooks at home.",
     "blank": "在",
-    "explain": "在 means 'at'."
+    "explain": "在 + place goes before the verb."
    },
    {
     "t": "cloze",
-    "zh": "你在哪儿工作？",
-    "en": "Where do you work?",
+    "zh": "你的书在哪儿？",
+    "en": "Where is your book?",
     "blank": "哪儿",
-    "explain": "哪儿 asks where."
+    "explain": "哪儿 asks where something is."
    },
    {
     "t": "order",
@@ -397,41 +397,41 @@
   "q": [
    {
     "t": "order",
-    "zh": "杯子里有水。",
-    "en": "There is water in the cup.",
-    "explain": "Place + 有 + thing."
+    "zh": "狗在我家外边。",
+    "en": "The dog is outside my home.",
+    "explain": "Thing + 在 + place + position."
    },
    {
     "t": "cloze",
-    "zh": "书在桌子上。",
-    "en": "The book is on the table.",
+    "zh": "手机在椅子上。",
+    "en": "The phone is on the chair.",
     "blank": "上",
-    "explain": "上 goes after the noun."
+    "explain": "上 after the noun means \"on\"."
    },
    {
     "t": "mc",
-    "prompt": "Which sentence says: There is a book on the table?",
+    "prompt": "Which sentence says: There is a cat in the room?",
     "options": [
-     "桌子上在一本书。",
-     "桌子上有一本书。"
+     "房间里在一只猫。",
+     "房间里有一只猫。"
     ],
     "correct": 1,
-    "zh": "桌子上有一本书。",
-    "en": "There is a book on the table.",
-    "explain": "'There is' uses 有."
+    "zh": "房间里有一只猫。",
+    "en": "There is a cat in the room.",
+    "explain": "To say something exists in a place, use place + 有 + thing."
    },
    {
     "t": "cloze",
-    "zh": "我家外边是一家商店。",
-    "en": "Outside my home there is a shop.",
+    "zh": "桌子上是我的手机。",
+    "en": "On the table is my phone.",
     "blank": "是",
-    "explain": "Place + 是 + thing names what is there."
+    "explain": "Place + 是 + thing says what is there."
    },
    {
     "t": "order",
-    "zh": "学校在那边。",
-    "en": "The school is over there.",
-    "explain": "Thing + 在 + place."
+    "zh": "你妈妈在外边。",
+    "en": "Your mom is outside.",
+    "explain": "Thing + 在 + position."
    }
   ]
  },
@@ -487,36 +487,36 @@
    },
    {
     "t": "mc",
-    "prompt": "Which sentence offers someone tea: 'Would you like some tea?'",
+    "prompt": "Which sentence says: I want to eat rice?",
     "options": [
-     "你喝茶吗？",
-     "你想喝茶吗？"
+     "我想吃米饭。",
+     "我吃想米饭。"
     ],
-    "correct": 1,
-    "zh": "你想喝茶吗？",
-    "en": "Would you like some tea?",
-    "explain": "你喝茶吗？ asks whether you drink tea. 想 makes it an offer."
+    "correct": 0,
+    "zh": "我想吃米饭。",
+    "en": "I want to eat rice.",
+    "explain": "想 goes before the verb."
    },
    {
     "t": "cloze",
-    "zh": "你想喝什么？",
-    "en": "What would you like to drink?",
+    "zh": "你想去哪儿？",
+    "en": "Where do you want to go?",
     "blank": "想",
-    "explain": "想 + verb asks what someone would like."
+    "explain": "想 + verb says what you would like to do."
    },
    {
     "t": "cloze",
-    "zh": "我要一个包子。",
-    "en": "I'll have a bun.",
+    "zh": "我要一杯水。",
+    "en": "I would like a glass of water.",
     "blank": "要",
-    "explain": "要 + noun is how you order."
+    "explain": "要 + thing is a direct way to ask for something."
    },
    {
     "t": "cloze",
-    "zh": "我不想吃东西。",
-    "en": "I don't want anything to eat.",
+    "zh": "我不想去学校。",
+    "en": "I don't want to go to school.",
     "blank": "不",
-    "explain": "不 goes in front of 想."
+    "explain": "Put 不 before 想 to say you don't want to."
    }
   ]
  },
@@ -562,23 +562,23 @@
   "q": [
    {
     "t": "order",
-    "zh": "我可以坐这儿吗？",
-    "en": "May I sit here?",
-    "explain": "可以 asks for permission."
+    "zh": "他会做饭吗？",
+    "en": "Can he cook?",
+    "explain": "会 goes before the verb, and 吗 makes it a question."
    },
    {
     "t": "cloze",
-    "zh": "你会开车吗？",
-    "en": "Can you drive?",
+    "zh": "妹妹会写汉字。",
+    "en": "My younger sister can write Chinese characters.",
     "blank": "会",
-    "explain": "会 is for skills you learned."
+    "explain": "会 says you have learned how to do something."
    },
    {
     "t": "cloze",
-    "zh": "你明天能来吗？",
-    "en": "Can you come tomorrow?",
+    "zh": "我今天不能去。",
+    "en": "I can't go today.",
     "blank": "能",
-    "explain": "能 is for being able to, because the situation allows it."
+    "explain": "不能 says it is not possible or not allowed for you now."
    },
    {
     "t": "mc",
@@ -594,10 +594,10 @@
    },
    {
     "t": "cloze",
-    "zh": "我可以坐这儿吗？",
-    "en": "May I sit here?",
+    "zh": "我可以在这儿看书吗？",
+    "en": "May I read here?",
     "blank": "可以",
-    "explain": "可以 is for permission."
+    "explain": "可以 asks for permission."
    }
   ]
  },
@@ -654,14 +654,14 @@
   "q": [
    {
     "t": "order",
-    "zh": "爸爸是老师，妈妈也是老师。",
-    "en": "Dad is a teacher, and Mom is a teacher too.",
-    "explain": "也 goes before the second 是."
+    "zh": "哥哥喜欢看书，姐姐也喜欢看书。",
+    "en": "My older brother likes reading, and my older sister likes it too.",
+    "explain": "也 goes right before the verb of the second part."
    },
    {
     "t": "cloze",
-    "zh": "我也是学生。",
-    "en": "I am a student too.",
+    "zh": "我哥哥也喜欢茶。",
+    "en": "My older brother likes tea too.",
     "blank": "也",
     "explain": "也 goes before the verb."
    },
@@ -686,10 +686,10 @@
    },
    {
     "t": "cloze",
-    "zh": "你还想吃什么？",
-    "en": "What else would you like to eat?",
+    "zh": "你还要什么？",
+    "en": "What else do you want?",
     "blank": "还",
-    "explain": "还 means 'else' here."
+    "explain": "还 adds \"else, also, still\"."
    }
   ]
  },
@@ -740,36 +740,36 @@
    },
    {
     "t": "cloze",
-    "zh": "你去不去学校？",
-    "en": "Are you going to school?",
+    "zh": "你喝不喝茶？",
+    "en": "Do you drink tea?",
     "blank": "不",
-    "explain": "不 sits between the two verbs."
+    "explain": "Verb + 不 + verb makes a yes/no question."
    },
    {
     "t": "mc",
-    "prompt": "Which sentence asks: Do you have a phone?",
+    "prompt": "Which sentence asks: Is he a doctor?",
     "options": [
-     "你有不有手机？",
-     "你有没有手机？"
+     "他是不是医生？",
+     "他是不医生？"
     ],
-    "correct": 1,
-    "zh": "你有没有手机？",
-    "en": "Do you have a phone?",
-    "explain": "有 uses 没: 有没有."
+    "correct": 0,
+    "zh": "他是不是医生？",
+    "en": "Is he a doctor?",
+    "explain": "The A-not-A form repeats the whole verb: 是不是."
    },
    {
     "t": "spot",
-    "zh": "你去不去学校？",
-    "en": "Are you going to school?",
-    "wrong": "你去不去学校吗？",
+    "zh": "你要不要茶？",
+    "en": "Do you want tea?",
+    "wrong": "你要不要茶吗？",
     "remove": "吗",
-    "explain": "The A-not-A form already makes the question."
+    "explain": "The A-not-A form already makes the question, so 吗 is not needed."
    },
    {
     "t": "order",
-    "zh": "她是不是你们的老师？",
-    "en": "Is she your teacher?",
-    "explain": "是不是 goes in the middle."
+    "zh": "你想不想喝茶？",
+    "en": "Do you want to drink tea?",
+    "explain": "Repeat the verb 想: 想不想."
    }
   ]
  }
