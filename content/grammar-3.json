@@ -1,130 +1,661 @@
 [
-{"id":"bane","title":"吧 and 呢","covers":[26],
- "formula":["Sentence","*吧 / 呢"],
- "explain":["吧 softens a sentence. After a suggestion it means 'let's' or 'how about': 我们去吃饭吧。 It also makes a request gentle: 你喝水吧 (Have some water).",
-  "吧 can also check what you already think is true, like 'right?': 你没事吧？ (You are all right, aren't you?)",
-  "呢 asks 'and what about…?' by bouncing a question back: 我很好，你呢？ (I am fine, and you?)",
-  "呢 can also ask where something is: 你的手机呢？ (Where is your phone?)"],
- "examples":[{"zh":"我们去吃饭吧。","en":"Let's go and eat."},{"zh":"你喝水吧。","en":"Have some water."},{"zh":"我很好，你呢？","en":"I am fine, and you?"},{"zh":"你的手机呢？","en":"Where is your phone?"},{"zh":"你没事吧？","en":"Are you all right?"}],
- "mistakes":["Use 吗 when you really want a yes/no answer. 吧 suggests or checks, 吗 asks."],
- "q":[
-  {"t":"order","zh":"我们去吃饭吧。","en":"Let's go and eat.","explain":"吧 at the end makes it a suggestion."},
-  {"t":"cloze","zh":"我很好，你呢？","en":"I am fine, and you?","blank":"呢","explain":"呢 asks 'and you?'"},
-  {"t":"cloze","zh":"你的手机呢？","en":"Where is your phone?","blank":"呢","explain":"Thing + 呢 asks where it is."},
-  {"t":"mc","prompt":"Which sentence says: Let's go to school?","options":["我们去学校呢。","我们去学校吧。"],"correct":1,"zh":"我们去学校吧。","en":"Let's go to school.","explain":"吧 makes the suggestion."},
-  {"t":"order","zh":"你没事吧？","en":"Are you all right?","explain":"吧 checks an assumption."}
- ]},
-
-{"id":"prog","title":"在, 正在 and 呢: happening now","covers":[17,64,65,66],
- "formula":["Subject","*在 / 正在","Verb","*呢"],
- "explain":["Put 在 or 正在 before a verb to say it is happening right now: 爸爸在做饭。他正在看电视。",
-  "呢 at the end is optional and sounds lively: 他正在看书呢。 You can even use 呢 alone: 小明睡觉呢。",
-  "Be careful: 在 + place means 'at' (我在家), and 在 + verb means 'in the middle of' (我在看书).",
-  "For habits, use the plain verb: 我早上喝茶 (I drink tea in the morning)."],
- "examples":[{"zh":"爸爸在做饭，妈妈在看书。","en":"Dad is cooking and Mom is reading."},{"zh":"他正在看电视。","en":"He is watching TV right now."},{"zh":"哥哥正在看书呢。","en":"My older brother is reading right now."},{"zh":"小明睡觉呢。","en":"Xiaoming is sleeping."}],
- "mistakes":["For a habit, do not use 在: 我早上喝茶, not 我在早上喝茶."],
- "q":[
-  {"t":"order","zh":"爸爸在做饭。","en":"Dad is cooking.","explain":"在 + verb is 'in the middle of'."},
-  {"t":"cloze","zh":"他正在看电视。","en":"He is watching TV right now.","blank":"正在","explain":"正在 stresses 'right now'."},
-  {"t":"cloze","zh":"哥哥正在看书呢。","en":"My older brother is reading right now.","blank":"呢","explain":"呢 can finish an in-progress sentence."},
-  {"t":"mc","prompt":"Which sentence says: Dad is cooking?","options":["爸爸在家。","爸爸在做饭。"],"correct":1,"zh":"爸爸在做饭。","en":"Dad is cooking.","explain":"在 + verb is in progress. 爸爸在家 only says he is at home."},
-  {"t":"order","zh":"他们正在上课。","en":"They are having class right now.","explain":"正在 goes before the verb."}
- ]},
-
-{"id":"le1","title":"了 after a verb: it's done","covers":[25,62],
- "formula":["Subject","Verb + *了","Amount + Object"],
- "explain":["了 right after a verb says the action is finished: 我买了一本书。 (I bought a book.)",
-  "It is not a past-tense marker. It marks 'completed'. Do not use it for habits (我早上喝茶, not 我早上喝了茶) or for plain facts about a state (我昨天在家).",
-  "A short sentence like 我买了书 can sound unfinished. Add an amount or a describing word: 我买了一本书, 妈妈喝了一杯茶. Or put 了 at the end: 我买书了。",
-  "To say it did not happen, use 没(有) and drop 了: 我没买书。",
-  "Ask with 吗: 你吃饭了吗？"],
- "examples":[{"zh":"我买了一本书。","en":"I bought a book."},{"zh":"妈妈喝了一杯茶。","en":"Mom drank a cup of tea."},{"zh":"我看见他了。","en":"I saw him."},{"zh":"我没买书。","en":"I did not buy a book."},{"zh":"你吃饭了吗？","en":"Have you eaten?"}],
- "mistakes":["Do not add 了 to habits: 我早上喝茶 (not 我早上喝了茶).","Do not keep 了 in the negative: 我没买书 (not 我没买了书)."],
- "q":[
-  {"t":"order","zh":"我买了一本书。","en":"I bought a book.","explain":"了 goes right after the verb."},
-  {"t":"cloze","zh":"我买了一本书。","en":"I bought a book.","blank":"了","explain":"了 marks a finished action."},
-  {"t":"mc","prompt":"Which sentence says: I did not buy a book?","options":["我没买了书。","我没买书。"],"correct":1,"zh":"我没买书。","en":"I did not buy a book.","explain":"With 没, drop 了."},
-  {"t":"mc","prompt":"Which sentence says: I drink tea in the morning (my habit)?","options":["我早上喝茶。","我早上喝了茶。"],"correct":0,"zh":"我早上喝茶。","en":"I drink tea in the morning.","explain":"A habit does not take 了."},
-  {"t":"cloze","zh":"你吃饭了吗？","en":"Have you eaten?","blank":"吗","explain":"了 + 吗 asks whether it happened."}
- ]},
-
-{"id":"le2","title":"了 at the end: something has changed","covers":[63,45],
- "formula":["Situation","*了"],
- "explain":["了 at the end of a sentence says 'now it is like this': a change or a new situation. 天冷了 means 'It has turned cold'. 下雨了 means 'It is raining now'. 我八岁了 means 'I am eight now'.",
-  "A sentence like this does not need a subject: 下雨了！ 下课了！",
-  "Compare 今天很冷 (a plain fact, it is cold today) with 天冷了 (news: it has turned cold).",
-  "太…了 is a separate pattern: 太好了！ (That is great!)"],
- "examples":[{"zh":"天冷了。","en":"It has turned cold."},{"zh":"下雨了！","en":"It is raining now!"},{"zh":"现在八点了。","en":"It is eight o'clock now."},{"zh":"他病了。","en":"He has fallen ill."},{"zh":"下课了，我们去吃饭。","en":"Class is over, let's go and eat."}],
- "mistakes":[],
- "q":[
-  {"t":"order","zh":"天冷了。","en":"It has turned cold.","explain":"了 at the end shows a change."},
-  {"t":"cloze","zh":"下雨了！","en":"It is raining now!","blank":"了","explain":"了 marks the new situation."},
-  {"t":"mc","prompt":"Which sentence says: It has turned cold?","options":["天冷了。","天很冷。"],"correct":0,"zh":"天冷了。","en":"It has turned cold.","explain":"了 shows it just changed. 天很冷 only describes how it is."},
-  {"t":"cloze","zh":"他病了。","en":"He has fallen ill.","blank":"了","explain":"了 shows he has become ill."},
-  {"t":"order","zh":"现在八点了。","en":"It is eight o'clock now.","explain":"了 at the end: it has just become eight."}
- ]},
-
-{"id":"hedui","title":"和 and 对","covers":[22,23,28],
- "formula":["A","*和","B"],
- "explain":["和 joins nouns and pronouns, like 'and': 我和爸爸, 老师和学生。 To link two whole sentences, use a comma instead.",
-  "With 都, put 都 after the whole group: 我和他都是学生。",
-  "对 + person + verb means 'to / toward someone': 他对我很好。我对他说：'你好！'",
-  "对 also means 'right, correct': 对，我是学生。"],
- "examples":[{"zh":"我和他是同学。","en":"He and I are classmates."},{"zh":"我和爸爸都喜欢看书。","en":"Dad and I both like reading."},{"zh":"他对我很好。","en":"He is very nice to me."},{"zh":"对，我是学生。","en":"Yes, that's right, I am a student."}],
- "mistakes":["都 comes after the group: 我和他都是学生, not 我都和他是学生."],
- "q":[
-  {"t":"order","zh":"老师和学生都很高兴。","en":"The teacher and the students are all very happy.","explain":"都 comes after 老师和学生."},
-  {"t":"cloze","zh":"我和他是同学。","en":"He and I are classmates.","blank":"和","explain":"和 joins the two people."},
-  {"t":"cloze","zh":"他对我很好。","en":"He is very nice to me.","blank":"对","explain":"对 + person means 'toward'."},
-  {"t":"mc","prompt":"Which sentence says: He and I are both students?","options":["我都和他是学生。","我和他都是学生。"],"correct":1,"zh":"我和他都是学生。","en":"He and I are both students.","explain":"都 goes after the whole group."},
-  {"t":"order","zh":"我和爸爸都喜欢看书。","en":"Dad and I both like reading.","explain":"和 joins the nouns, then 都 comes before the verb."}
- ]},
-
-{"id":"seq","title":"Two actions in a row, and giving","covers":[56,57,58],
- "formula":["Subject","Action 1","Action 2"],
- "explain":["Chinese lines up verbs in the order they happen: 我去商店买水果 means 'I go to the shop to buy fruit'. The second action is the purpose of the first.",
-  "Sometimes the first action is how you do the second: 爸爸开车去公司 (Dad drives to work), 我坐火车回家 (I take the train home).",
-  "Giving and asking can take two objects, the person first: 爸爸给小明一本书 (Dad gives Xiaoming a book). 我问老师一个问题 (I ask the teacher a question).",
-  "给 + person before a verb means 'for / to someone': 我给妈妈打电话 (I call my mom)."],
- "examples":[{"zh":"我去商店买水果。","en":"I go to the shop to buy fruit."},{"zh":"爸爸开车去公司。","en":"Dad drives to work."},{"zh":"爸爸给小明一本书。","en":"Dad gives Xiaoming a book."},{"zh":"我给妈妈打电话。","en":"I call my mom."}],
- "mistakes":["Keep the order of events: 我去商店买水果, not 我买水果去商店."],
- "q":[
-  {"t":"order","zh":"我去商店买水果。","en":"I go to the shop to buy fruit.","explain":"去 first, then the reason."},
-  {"t":"order","zh":"爸爸开车去公司。","en":"Dad drives to work.","explain":"How you go comes first."},
-  {"t":"cloze","zh":"爸爸给小明一本书。","en":"Dad gives Xiaoming a book.","blank":"给","explain":"给 + person + thing."},
-  {"t":"order","zh":"我问老师一个问题。","en":"I ask the teacher a question.","explain":"问 + person + thing."},
-  {"t":"mc","prompt":"Which sentence says: I call my mom?","options":["我打电话妈妈。","我给妈妈打电话。"],"correct":1,"zh":"我给妈妈打电话。","en":"I call my mom.","explain":"给 + person goes before the verb."}
- ]},
-
-{"id":"request","title":"请, 一下 and 喂","covers":[50,41,7,27],
- "formula":["*请","Verb"],
- "explain":["请 + verb means 'please': 请坐。请喝茶。 请问 means 'may I ask…?' and opens a question: 请问，学校在哪儿？",
-  "Verb + 一下 means 'for a moment' or 'a little': 我问一下老师。我想休息一下。 It also makes a request softer.",
-  "喂 is how you answer or start a phone call: 喂，你好！ 喂，请问小明在家吗？",
-  "Some verbs already include an object (睡觉, 上课, 说话). Put 了 after the whole word: 他们上课了。 When another action follows, 了 may move inside: 下了课，我们去吃饭。"],
- "examples":[{"zh":"请喝茶。","en":"Please have some tea."},{"zh":"请问，学校在哪儿？","en":"Excuse me, where is the school?"},{"zh":"我想休息一下。","en":"I want to rest for a bit."},{"zh":"喂，你好！","en":"Hello! (answering the phone)"}],
- "mistakes":["请 comes before the verb: 请坐, not 坐请."],
- "q":[
-  {"t":"order","zh":"请问，学校在哪儿？","en":"Excuse me, where is the school?","explain":"请问 opens the question."},
-  {"t":"cloze","zh":"请坐。","en":"Please sit down.","blank":"请","explain":"请 + verb is 'please'."},
-  {"t":"cloze","zh":"我想休息一下。","en":"I want to rest for a bit.","blank":"一下","explain":"一下 goes after the verb."},
-  {"t":"mc","prompt":"Which sentence says: I'll just ask the teacher?","options":["我一下问老师。","我问一下老师。"],"correct":1,"zh":"我问一下老师。","en":"I'll just ask the teacher.","explain":"一下 goes right after the verb."},
-  {"t":"cloze","zh":"喂，你好！","en":"Hello! (answering the phone)","blank":"喂","explain":"喂 is how you answer the phone."}
- ]},
-
-{"id":"some","title":"Some and a little: 一些, 一点儿, 有些, 有的, 有点儿","covers":[15],
- "formula":["*一些 / 一点儿","Noun"],
- "explain":["一些 means 'some' or 'a few' and goes before a noun: 我想买一些水果。",
-  "一点儿 means 'a little' or 'a bit' of something: 我会说一点儿汉语。",
-  "有些 and 有的 mean 'some (of them)' and start a sentence about part of a group: 有些学生不喜欢读书。有的人喜欢喝茶，有的人喜欢喝牛奶。",
-  "有点儿 is different. It goes before an adjective and means 'a bit', often about something you do not like: 今天有点儿冷。"],
- "examples":[{"zh":"我想买一些水果。","en":"I want to buy some fruit."},{"zh":"我会说一点儿汉语。","en":"I can speak a little Chinese."},{"zh":"有些学生不喜欢读书。","en":"Some students don't like studying."},{"zh":"今天有点儿冷。","en":"It is a bit cold today."}],
- "mistakes":["有点儿 goes before an adjective: 今天有点儿冷. Say 我会说一点儿汉语 for 'a little Chinese'."],
- "q":[
-  {"t":"order","zh":"我想买一些水果。","en":"I want to buy some fruit.","explain":"一些 goes before the noun."},
-  {"t":"cloze","zh":"我会说一点儿汉语。","en":"I can speak a little Chinese.","blank":"一点儿","explain":"一点儿 means 'a little' of something."},
-  {"t":"cloze","zh":"今天有点儿冷。","en":"It is a bit cold today.","blank":"有点儿","explain":"有点儿 goes before an adjective."},
-  {"t":"mc","prompt":"Which sentence says: It is a bit cold today?","options":["今天一点儿冷。","今天有点儿冷。"],"correct":1,"zh":"今天有点儿冷。","en":"It is a bit cold today.","explain":"Use 有点儿 before an adjective."},
-  {"t":"order","zh":"有的人喜欢喝茶。","en":"Some people like drinking tea.","explain":"有的 + noun starts a statement about part of a group."}
- ]}
+ {
+  "id": "bane",
+  "title": "吧 and 呢",
+  "covers": [
+   26
+  ],
+  "formula": [
+   "Sentence",
+   "*吧 / 呢"
+  ],
+  "explain": [
+   "吧 softens a sentence. After a suggestion it means 'let's' or 'how about': 我们去吃饭吧。 It also makes a polite invitation gentler: 请坐吧 (Please, have a seat).",
+   "吧 can also check what you already think is true, like 'right?': 你没事吧？ (You are all right, aren't you?)",
+   "呢 asks 'and what about…?' by bouncing a question back: 我很好，你呢？ (I am fine, and you?)",
+   "呢 can also ask where something is: 你的手机呢？ (Where is your phone?)"
+  ],
+  "examples": [
+   {
+    "zh": "我们去吃饭吧。",
+    "en": "Let's go and eat."
+   },
+   {
+    "zh": "请坐吧。",
+    "en": "Please, have a seat."
+   },
+   {
+    "zh": "我很好，你呢？",
+    "en": "I am fine, and you?"
+   },
+   {
+    "zh": "你的手机呢？",
+    "en": "Where is your phone?"
+   },
+   {
+    "zh": "你没事吧？",
+    "en": "Are you all right?"
+   }
+  ],
+  "mistakes": [
+   "Use 吗 when you really want a yes/no answer. 吧 suggests or checks, 吗 asks."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我们去吃饭吧。",
+    "en": "Let's go and eat.",
+    "explain": "吧 at the end makes it a suggestion."
+   },
+   {
+    "t": "cloze",
+    "zh": "我很好，你呢？",
+    "en": "I am fine, and you?",
+    "blank": "呢",
+    "explain": "呢 asks 'and you?'"
+   },
+   {
+    "t": "cloze",
+    "zh": "你的手机呢？",
+    "en": "Where is your phone?",
+    "blank": "呢",
+    "explain": "Thing + 呢 asks where it is."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Let's go to school?",
+    "options": [
+     "我们去学校呢。",
+     "我们去学校吧。"
+    ],
+    "correct": 1,
+    "zh": "我们去学校吧。",
+    "en": "Let's go to school.",
+    "explain": "吧 makes the suggestion."
+   },
+   {
+    "t": "order",
+    "zh": "你没事吧？",
+    "en": "Are you all right?",
+    "explain": "吧 checks an assumption."
+   }
+  ]
+ },
+ {
+  "id": "prog",
+  "title": "在, 正在 and 呢: happening now",
+  "covers": [
+   17,
+   64,
+   65,
+   66
+  ],
+  "formula": [
+   "Subject",
+   "*在 / 正在",
+   "Verb",
+   "*呢"
+  ],
+  "explain": [
+   "Put 在 or 正在 before a verb to say it is happening right now: 爸爸在做饭。他正在看电视。",
+   "呢 at the end is optional and sounds lively: 他正在看书呢。 You can even use 呢 alone: 小明睡觉呢。",
+   "Be careful: 在 + place means 'at' (我在家), and 在 + verb means 'in the middle of' (我在看书).",
+   "For habits, use the plain verb: 我早上喝茶 (I drink tea in the morning). Putting 在 in front, 我在喝茶, changes the meaning to 'right now'."
+  ],
+  "examples": [
+   {
+    "zh": "爸爸在做饭，妈妈在看书。",
+    "en": "Dad is cooking and Mom is reading."
+   },
+   {
+    "zh": "他正在看电视。",
+    "en": "He is watching TV right now."
+   },
+   {
+    "zh": "哥哥正在看书呢。",
+    "en": "My older brother is reading right now."
+   },
+   {
+    "zh": "小明睡觉呢。",
+    "en": "Xiaoming is sleeping."
+   }
+  ],
+  "mistakes": [
+   "For a habit, use the plain verb: 我早上喝茶. 我在喝茶 would mean 'I am drinking tea right now'."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "爸爸在做饭。",
+    "en": "Dad is cooking.",
+    "explain": "在 + verb is 'in the middle of'."
+   },
+   {
+    "t": "cloze",
+    "zh": "他正在看电视。",
+    "en": "He is watching TV right now.",
+    "blank": "正在",
+    "explain": "正在 stresses 'right now'."
+   },
+   {
+    "t": "cloze",
+    "zh": "哥哥正在看书呢。",
+    "en": "My older brother is reading right now.",
+    "blank": "呢",
+    "explain": "呢 can finish an in-progress sentence."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Dad is cooking?",
+    "options": [
+     "爸爸在家。",
+     "爸爸在做饭。"
+    ],
+    "correct": 1,
+    "zh": "爸爸在做饭。",
+    "en": "Dad is cooking.",
+    "explain": "在 + verb is in progress. 爸爸在家 only says he is at home."
+   },
+   {
+    "t": "order",
+    "zh": "他们正在上课。",
+    "en": "They are having class right now.",
+    "explain": "正在 goes before the verb."
+   }
+  ]
+ },
+ {
+  "id": "le1",
+  "title": "了 after a verb: it's done",
+  "covers": [
+   25,
+   62
+  ],
+  "formula": [
+   "Subject",
+   "Verb + *了",
+   "Amount + Object"
+  ],
+  "explain": [
+   "了 right after a verb says the action is finished: 我买了一本书。 (I bought a book.)",
+   "It is not a past-tense marker. It marks 'completed'. Do not use it for habits (我早上喝茶, not 我早上喝了茶), although one particular morning is fine (我今天早上喝了茶), or for plain facts about a state (我昨天在家).",
+   "A short sentence like 我买了书 can sound unfinished. Add an amount or a describing word: 我买了一本书, 妈妈喝了一杯茶. Or put 了 at the end: 我买书了。",
+   "To say it did not happen, use 没(有) and drop 了: 我没买书。",
+   "Ask with 吗: 你吃饭了吗？"
+  ],
+  "examples": [
+   {
+    "zh": "我买了一本书。",
+    "en": "I bought a book."
+   },
+   {
+    "zh": "妈妈喝了一杯茶。",
+    "en": "Mom drank a cup of tea."
+   },
+   {
+    "zh": "我看见他了。",
+    "en": "I saw him."
+   },
+   {
+    "zh": "我没买书。",
+    "en": "I did not buy a book."
+   },
+   {
+    "zh": "你吃饭了吗？",
+    "en": "Have you eaten?"
+   }
+  ],
+  "mistakes": [
+   "Do not add 了 to habits: 我早上喝茶 (not 我早上喝了茶). For one particular morning, 了 is fine: 我今天早上喝了茶.",
+   "Do not keep 了 in the negative: 我没买书 (not 我没买了书)."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我买了一本书。",
+    "en": "I bought a book.",
+    "explain": "了 goes right after the verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "我买了一本书。",
+    "en": "I bought a book.",
+    "blank": "了",
+    "explain": "了 marks a finished action."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I did not buy a book?",
+    "options": [
+     "我没买了书。",
+     "我没买书。"
+    ],
+    "correct": 1,
+    "zh": "我没买书。",
+    "en": "I did not buy a book.",
+    "explain": "With 没, drop 了."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I drink tea in the morning (my habit)?",
+    "options": [
+     "我早上喝茶。",
+     "我早上喝了茶。"
+    ],
+    "correct": 0,
+    "zh": "我早上喝茶。",
+    "en": "I drink tea in the morning.",
+    "explain": "A habit does not take 了."
+   },
+   {
+    "t": "cloze",
+    "zh": "你吃饭了吗？",
+    "en": "Have you eaten?",
+    "blank": "吗",
+    "explain": "了 + 吗 asks whether it happened."
+   }
+  ]
+ },
+ {
+  "id": "le2",
+  "title": "了 at the end: something has changed",
+  "covers": [
+   63,
+   45
+  ],
+  "formula": [
+   "Situation",
+   "*了"
+  ],
+  "explain": [
+   "了 at the end of a sentence says 'now it is like this': a change or a new situation. 天冷了 means 'It has turned cold'. 下雨了 means 'It is raining now'. 我八岁了 means 'I am eight now'.",
+   "A sentence like this does not need a subject: 下雨了！ 下课了！",
+   "Compare 今天很冷 (a plain fact, it is cold today) with 天冷了 (news: it has turned cold).",
+   "太…了 is a separate pattern: 太好了！ (That is great!)"
+  ],
+  "examples": [
+   {
+    "zh": "天冷了。",
+    "en": "It has turned cold."
+   },
+   {
+    "zh": "下雨了！",
+    "en": "It is raining now!"
+   },
+   {
+    "zh": "现在八点了。",
+    "en": "It is eight o'clock now."
+   },
+   {
+    "zh": "他病了。",
+    "en": "He has fallen ill."
+   },
+   {
+    "zh": "下课了，我们去吃饭。",
+    "en": "Class is over, let's go and eat."
+   }
+  ],
+  "mistakes": [],
+  "q": [
+   {
+    "t": "order",
+    "zh": "天冷了。",
+    "en": "It has turned cold.",
+    "explain": "了 at the end shows a change."
+   },
+   {
+    "t": "cloze",
+    "zh": "下雨了！",
+    "en": "It is raining now!",
+    "blank": "了",
+    "explain": "了 marks the new situation."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: It has turned cold?",
+    "options": [
+     "天冷了。",
+     "天很冷。"
+    ],
+    "correct": 0,
+    "zh": "天冷了。",
+    "en": "It has turned cold.",
+    "explain": "了 shows it just changed. 天很冷 only describes how it is."
+   },
+   {
+    "t": "cloze",
+    "zh": "他病了。",
+    "en": "He has fallen ill.",
+    "blank": "了",
+    "explain": "了 shows he has become ill."
+   },
+   {
+    "t": "order",
+    "zh": "现在八点了。",
+    "en": "It is eight o'clock now.",
+    "explain": "了 at the end: it has just become eight."
+   }
+  ]
+ },
+ {
+  "id": "hedui",
+  "title": "和 and 对",
+  "covers": [
+   22,
+   23,
+   28
+  ],
+  "formula": [
+   "A",
+   "*和",
+   "B"
+  ],
+  "explain": [
+   "和 joins nouns and pronouns, like 'and': 我和爸爸, 老师和学生。 To link two whole sentences, use a comma instead.",
+   "With 都, put 都 after the whole group: 我和他都是学生。",
+   "对 + person + verb means 'to / toward someone': 他对我很好。我对他说：'你好！'",
+   "对 also means 'right, correct': 对，我是学生。"
+  ],
+  "examples": [
+   {
+    "zh": "我和他是同学。",
+    "en": "He and I are classmates."
+   },
+   {
+    "zh": "我和爸爸都喜欢看书。",
+    "en": "Dad and I both like reading."
+   },
+   {
+    "zh": "他对我很好。",
+    "en": "He is very nice to me."
+   },
+   {
+    "zh": "对，我是学生。",
+    "en": "Yes, that's right, I am a student."
+   }
+  ],
+  "mistakes": [
+   "都 comes after the group: 我和他都是学生, not 我都和他是学生."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "老师和学生都很高兴。",
+    "en": "The teacher and the students are all very happy.",
+    "explain": "都 comes after 老师和学生."
+   },
+   {
+    "t": "cloze",
+    "zh": "我和他是同学。",
+    "en": "He and I are classmates.",
+    "blank": "和",
+    "explain": "和 joins the two people."
+   },
+   {
+    "t": "cloze",
+    "zh": "他对我很好。",
+    "en": "He is very nice to me.",
+    "blank": "对",
+    "explain": "对 + person means 'toward'."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He and I are both students?",
+    "options": [
+     "我都和他是学生。",
+     "我和他都是学生。"
+    ],
+    "correct": 1,
+    "zh": "我和他都是学生。",
+    "en": "He and I are both students.",
+    "explain": "都 goes after the whole group."
+   },
+   {
+    "t": "order",
+    "zh": "我和爸爸都喜欢看书。",
+    "en": "Dad and I both like reading.",
+    "explain": "和 joins the nouns, then 都 comes before the verb."
+   }
+  ]
+ },
+ {
+  "id": "seq",
+  "title": "Two actions in a row, and giving",
+  "covers": [
+   56,
+   57,
+   58
+  ],
+  "formula": [
+   "Subject",
+   "Action 1",
+   "Action 2"
+  ],
+  "explain": [
+   "Chinese lines up verbs in the order they happen: 我去商店买水果 means 'I go to the shop to buy fruit'. The second action is the purpose of the first.",
+   "Sometimes the first action is how you do the second: 爸爸开车去公司 (Dad drives to work), 我坐火车回家 (I take the train home).",
+   "Giving and asking can take two objects, the person first: 爸爸给小明一本书 (Dad gives Xiaoming a book). 我问老师一个问题 (I ask the teacher a question).",
+   "给 + person before a verb means 'for / to someone': 我给妈妈打电话 (I call my mom)."
+  ],
+  "examples": [
+   {
+    "zh": "我去商店买水果。",
+    "en": "I go to the shop to buy fruit."
+   },
+   {
+    "zh": "爸爸开车去公司。",
+    "en": "Dad drives to work."
+   },
+   {
+    "zh": "爸爸给小明一本书。",
+    "en": "Dad gives Xiaoming a book."
+   },
+   {
+    "zh": "我给妈妈打电话。",
+    "en": "I call my mom."
+   }
+  ],
+  "mistakes": [
+   "Keep the order of events: 我去商店买水果, not 我买水果去商店."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我去商店买水果。",
+    "en": "I go to the shop to buy fruit.",
+    "explain": "去 first, then the reason."
+   },
+   {
+    "t": "order",
+    "zh": "爸爸开车去公司。",
+    "en": "Dad drives to work.",
+    "explain": "How you go comes first."
+   },
+   {
+    "t": "cloze",
+    "zh": "爸爸给小明一本书。",
+    "en": "Dad gives Xiaoming a book.",
+    "blank": "给",
+    "explain": "给 + person + thing."
+   },
+   {
+    "t": "order",
+    "zh": "我问老师一个问题。",
+    "en": "I ask the teacher a question.",
+    "explain": "问 + person + thing."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I call my mom?",
+    "options": [
+     "我打电话妈妈。",
+     "我给妈妈打电话。"
+    ],
+    "correct": 1,
+    "zh": "我给妈妈打电话。",
+    "en": "I call my mom.",
+    "explain": "给 + person goes before the verb."
+   }
+  ]
+ },
+ {
+  "id": "request",
+  "title": "请, 一下 and 喂",
+  "covers": [
+   50,
+   41,
+   7,
+   27
+  ],
+  "formula": [
+   "*请",
+   "Verb"
+  ],
+  "explain": [
+   "请 + verb means 'please': 请坐。请喝茶。 请问 means 'may I ask…?' and opens a question: 请问，学校在哪儿？",
+   "Verb + 一下 means 'for a moment' or 'a little': 我问一下老师。我想休息一下。 It also makes a request softer.",
+   "喂 is how you answer or start a phone call: 喂，你好！ 喂，请问小明在家吗？",
+   "Some verbs already include an object (睡觉, 上课, 说话). Put 了 after the whole word: 他们上课了。 When another action follows, 了 may move inside: 下了课，我们去吃饭。"
+  ],
+  "examples": [
+   {
+    "zh": "请喝茶。",
+    "en": "Please have some tea."
+   },
+   {
+    "zh": "请问，学校在哪儿？",
+    "en": "Excuse me, where is the school?"
+   },
+   {
+    "zh": "我想休息一下。",
+    "en": "I want to rest for a bit."
+   },
+   {
+    "zh": "喂，你好！",
+    "en": "Hello! (answering the phone)"
+   }
+  ],
+  "mistakes": [
+   "请 comes before the verb: 请坐, not 坐请."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "请问，学校在哪儿？",
+    "en": "Excuse me, where is the school?",
+    "explain": "请问 opens the question."
+   },
+   {
+    "t": "cloze",
+    "zh": "请坐。",
+    "en": "Please sit down.",
+    "blank": "请",
+    "explain": "请 + verb is 'please'."
+   },
+   {
+    "t": "cloze",
+    "zh": "我想休息一下。",
+    "en": "I want to rest for a bit.",
+    "blank": "一下",
+    "explain": "一下 goes after the verb."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I'll just ask the teacher?",
+    "options": [
+     "我一下问老师。",
+     "我问一下老师。"
+    ],
+    "correct": 1,
+    "zh": "我问一下老师。",
+    "en": "I'll just ask the teacher.",
+    "explain": "一下 goes right after the verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "喂，你好！",
+    "en": "Hello! (answering the phone)",
+    "blank": "喂",
+    "explain": "喂 is how you answer the phone."
+   }
+  ]
+ },
+ {
+  "id": "some",
+  "title": "Some and a little: 一些, 一点儿, 有些, 有的, 有点儿",
+  "covers": [
+   15
+  ],
+  "formula": [
+   "*一些 / 一点儿",
+   "Noun"
+  ],
+  "explain": [
+   "一些 means 'some' or 'a few' and goes before a noun: 我想买一些水果。",
+   "一点儿 means 'a little' or 'a bit' of something: 我会说一点儿汉语。",
+   "有些 and 有的 mean 'some (of them)' and start a sentence about part of a group: 有些学生不喜欢读书。有的人喜欢喝茶，有的人喜欢喝牛奶。",
+   "有点儿 is different. It goes before an adjective and means 'a bit', often about something you do not like: 今天有点儿冷。"
+  ],
+  "examples": [
+   {
+    "zh": "我想买一些水果。",
+    "en": "I want to buy some fruit."
+   },
+   {
+    "zh": "我会说一点儿汉语。",
+    "en": "I can speak a little Chinese."
+   },
+   {
+    "zh": "有些学生不喜欢读书。",
+    "en": "Some students don't like studying."
+   },
+   {
+    "zh": "今天有点儿冷。",
+    "en": "It is a bit cold today."
+   }
+  ],
+  "mistakes": [
+   "有点儿 goes before an adjective: 今天有点儿冷. Say 我会说一点儿汉语 for 'a little Chinese'."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我想买一些水果。",
+    "en": "I want to buy some fruit.",
+    "explain": "一些 goes before the noun."
+   },
+   {
+    "t": "cloze",
+    "zh": "我会说一点儿汉语。",
+    "en": "I can speak a little Chinese.",
+    "blank": "一点儿",
+    "explain": "一点儿 means 'a little' of something."
+   },
+   {
+    "t": "cloze",
+    "zh": "今天有点儿冷。",
+    "en": "It is a bit cold today.",
+    "blank": "有点儿",
+    "explain": "有点儿 goes before an adjective."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: It is a bit cold today?",
+    "options": [
+     "今天一点儿冷。",
+     "今天有点儿冷。"
+    ],
+    "correct": 1,
+    "zh": "今天有点儿冷。",
+    "en": "It is a bit cold today.",
+    "explain": "Use 有点儿 before an adjective."
+   },
+   {
+    "t": "order",
+    "zh": "有的人喜欢喝茶。",
+    "en": "Some people like drinking tea.",
+    "explain": "有的 + noun starts a statement about part of a group."
+   }
+  ]
+ }
 ]

@@ -25,7 +25,7 @@ Sentences (Chinese / English):
 5. 你有没有手机？  /  Do you have a phone?
 6. 这里有三个学生。  /  There are three students here.
 7. 我妈妈在家。  /  My mom is at home.
-8. 这是很好吃的面条。  /  These are very tasty noodles.
+8. 这是很好吃的米饭。  /  This is very tasty rice.
 9. 这是我的。  /  This is mine.
 10. 这个人是我的朋友。  /  This person is my friend.
 11. 我想喝一杯茶。  /  I would like a cup of tea.
@@ -46,7 +46,7 @@ Sentences (Chinese / English):
 26. 你去不去学校？  /  Are you going to school?
 27. 你喜欢不喜欢茶？  /  Do you like tea?
 28. 你是不是学生？  /  Are you a student?
-29. 你喝水吧。  /  Have some water.
+29. 请坐吧。  /  Please, have a seat.
 30. 你的手机呢？  /  Where is your phone?
 31. 我们去学校吧。  /  Let's go to school.
 32. 爸爸在做饭，妈妈在看书。  /  Dad is cooking and Mom is reading.

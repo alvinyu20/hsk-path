@@ -19,7 +19,7 @@ If a batch has no problems, answer "No problems found".
 ### Lesson 1: Word order: who does what
 - Chinese sentences follow the same basic order as English: subject, verb, object. 我喝茶 means 'I drink tea'.
 - Verbs never change. There is no past-tense ending, no plural and no 'he drinks' form. 我喝, 他喝 and 我们喝 all use the same 喝.
-- Words that say when and where come before the verb, not after it. 我昨天在家 means 'I was at home yesterday'. 爸爸晚上在家工作 means 'Dad works at home in the evening'. Time usually comes first, then place.
+- Words that say when and where normally come before the verb, not after it. 我昨天在家 means 'I was at home yesterday'. 爸爸晚上在家工作 means 'Dad works at home in the evening'. Time usually comes first, then place. (There are a few exceptions you will meet later, such as 我住在学校 and how long something lasted, 我住了三天.)
 - (common mistake) Do not put the place or the time after the verb the way English does. Say 我在家吃饭 (I eat at home), not 我吃饭在家.
 - example: 我喝茶。 / I drink tea.
 - example: 哥哥吃鸡蛋。 / My older brother eats eggs.
@@ -28,9 +28,9 @@ If a batch has no problems, answer "No problems found".
 
 ### Lesson 2: 是: A is B
 - 是 links two nouns: 他是我的朋友 means 'He is my friend'. 我是学生 means 'I am a student'. It works like 'is / am / are' with nouns.
-- Do not use 是 before an adjective. Say 她很漂亮, not 她是很漂亮 (see the lesson on describing things).
+- In a plain statement, do not put 是 before an adjective. Say 她很漂亮, not 她是很漂亮 (see the lesson on describing things). Later you will meet 是 with an adjective for emphasis, but do not use it for plain description.
 - To say no, put 不 in front: 我不是老师。 To ask a yes/no question, add 吗: 你是学生吗？
-- (common mistake) Do not put 是 before an adjective: 今天很冷 is right, 今天是很冷 is wrong.
+- (common mistake) In a plain statement do not put 是 before an adjective: 今天很冷 is the normal way, 今天是很冷 is not.
 - example: 我是学生。 / I am a student.
 - example: 他是我的朋友。 / He is my friend.
 - example: 她不是老师。 / She is not a teacher.
@@ -41,7 +41,7 @@ If a batch has no problems, answer "No problems found".
 - Usually 很 goes before the adjective. In a plain statement it often means just 'is' rather than a strong 'very': 她很忙. A bare adjective with nothing in front, like 她忙, sounds like a comparison ('she is busy, but others are not').
 - For stronger feeling use 非常 (very, extremely), 真 (really) or 太…了 (too, so): 今天太冷了！ 有点儿 means 'a bit' and is often used for something you do not like: 今天有点儿冷.
 - To say not, put 不 before the adjective and leave out 很: 这个房间不大。
-- (common mistake) Do not use 是 with an adjective: 她很漂亮, not 她是很漂亮.
+- (common mistake) For plain description do not use 是 with an adjective: 她很漂亮, not 她是很漂亮.
 - (common mistake) 太…了 can mean 'too' (太贵了, too expensive) or 'so / how' (太好了！ That is great!).
 - example: 今天很冷。 / It is very cold today.
 - example: 这个房间不大。 / This room is not big.
@@ -53,7 +53,7 @@ If a batch has no problems, answer "No problems found".
 - Say a normal statement and add 吗 at the end: 你是学生吗？ The word order does not change.
 - Answer with the verb: 你喝茶吗？ — 喝。 or 不喝。 For 是 questions, answer 是 or 不是.
 - A plain verb + 吗 question asks about a fact or a habit. 你喝茶吗？ means 'Do you drink tea?' It is not an offer. To offer something or ask what someone would like, use 想: 你想喝茶吗？ (see the lesson on 想 and 要).
-- Do not use 吗 together with a question word: say 你叫什么名字？ (not 你叫什么名字吗？).
+- Do not use 吗 in a question that is already asked by a question word: say 你叫什么名字？ (not 你叫什么名字吗？). (A question word hidden inside a bigger sentence can still take 吗: 你知道他在哪里吗？ means 'Do you know where he is?')
 - (common mistake) If 什么, 谁 or 哪儿 is already asking the question, leave 吗 off.
 - (common mistake) 你喝茶吗？ asks whether you drink tea in general. To offer tea, say 你想喝茶吗？
 - example: 你是老师吗？ / Are you a teacher?
@@ -64,7 +64,7 @@ If a batch has no problems, answer "No problems found".
 ### Lesson 5: Question words: 什么, 谁, 哪儿, 几, 多少, 怎么
 - The question word goes where the answer would go. 你吃什么？ is answered with 我吃米饭. 她是谁？ is answered with 她是我的老师.
 - Common ones: 什么 (what), 谁 (who), 哪儿 or 哪里 (where), 哪 + measure word (which: 哪个, 哪本书), 几 (how many, small numbers, with a measure word), 多少 (how many, how much), 怎么 (how: 这个字怎么读), 怎么样 (how about it, how is it), 什么时候 (when).
-- Do not add 吗 to these questions.
+- Do not add 吗 to these questions when the question word is the thing being asked.
 - (common mistake) Use 几 for small numbers and put a measure word after it (几口人, 几岁). Use 多少 for bigger or unknown amounts, like 多少钱.
 - example: 你想吃什么？ / What do you want to eat?
 - example: 她是谁？ / Who is she?
@@ -110,15 +110,15 @@ If a batch has no problems, answer "No problems found".
 - example: 大家好！ / Hello, everyone!
 
 ### Lesson 9: 的: belonging and describing
-- 的 links an owner or a describing phrase to a noun: 我妈妈的手机 means 'my mom's phone'. 好吃的面条儿 means 'tasty noodles'.
-- With family and close groups, 的 is usually left out: 我妈妈, 我家, 我们学校. For things, use it: 我的书, 我的手机.
+- 的 links an owner or a describing phrase to a noun: 我妈妈的手机 means 'my mom's phone'. 好吃的米饭 means 'tasty rice'.
+- With family and close groups, 的 is usually left out: 我妈妈, 我家, 我们学校. For things, 的 is the normal choice: 我的书, 我的手机. (In casual speech it is sometimes dropped.)
 - The noun can be dropped when it is clear: 这是我的。 means 'This is mine.'
-- A short adjective often joins the noun directly: 新手机 (a new phone). With 很 or a longer phrase, add 的: 很好吃的面条儿 (very tasty noodles).
+- A short adjective often joins the noun directly: 新手机 (a new phone). With 很 or a longer phrase, add 的: 很好吃的米饭 (very tasty rice).
 - (common mistake) 我的妈妈 is not wrong, but in everyday speech people say 我妈妈.
 - example: 这是我的书。 / This is my book.
 - example: 这是我妈妈的手机。 / This is my mother's phone.
 - example: 我妈妈在家。 / My mom is at home.
-- example: 这是很好吃的面条儿。 / These are very tasty noodles.
+- example: 这是很好吃的米饭。 / This is very tasty rice.
 
 ### Lesson 10: 这, 那 and measure words
 - 这 means this and 那 means that. Before a noun they need a measure word: 这个人 (this person), 那本书 (that book). 这个 and 那个 can also stand alone: 我喜欢这个。 Plurals are 这些 and 那些. Places are 这儿 / 这里 (here) and 那儿 / 那里 (there).
@@ -148,10 +148,10 @@ If a batch has no problems, answer "No problems found".
 ### Lesson 12: Time, dates and days
 - Clock time is number + 点 (o'clock), then + 分 (minutes) or 半 (half): 七点, 八点零五分, 七点半. Say 两点 for 2 o'clock.
 - Dates go from big to small: year, month, day. Say 月 and 号 (spoken) or 日 (written): 十月三十号. Weekdays are 星期 + number: 星期一 to 星期六. Sunday is 星期天 or 星期日. Ask with 几: 今天星期几？ 现在几点？
-- Time words go before the verb, either right after the subject or at the start of the sentence: 我七点起床 or 七点我起床. Not after the verb.
+- A point in time goes before the verb, either right after the subject or at the start of the sentence: 我七点起床 or 七点我起床. Not after the verb. (How long something lasted is different and comes after the verb: 我住了三天.)
 - A time or date does not need a verb: 现在七点半。 With 是 it also works: 现在是八点零五分。
 - (common mistake) Say 两点 for 2 o'clock, not 二点.
-- (common mistake) Time goes before the verb: 我七点起床, not 我起床七点.
+- (common mistake) A point in time goes before the verb: 我七点起床, not 我起床七点.
 - example: 我七点起床。 / I get up at seven o'clock.
 - example: 现在是八点零五分。 / It is 8:05 now.
 - example: 今天是十月三十号。 / Today is October 30th.
@@ -159,7 +159,7 @@ If a batch has no problems, answer "No problems found".
 - example: 我星期天在家。 / I am at home on Sunday.
 
 ### Lesson 13: 在: where something happens
-- 在 means 'at / in'. 在 + place goes before the verb: 我在家吃饭 means 'I eat at home'.
+- 在 means 'at / in'. 在 + place usually goes before the verb: 我在家吃饭 means 'I eat at home'. (A few verbs take it after, like 住在学校 'live at school'.)
 - 在 can also be a verb, 'to be at': 我在家。他不在学校。
 - Ask where with 在哪儿 or 在哪里: 你在哪儿工作？
 - (common mistake) The place goes before the verb: 我在家吃饭, not 我吃饭在家.
@@ -230,13 +230,13 @@ If a batch has no problems, answer "No problems found".
 - example: 你喜欢不喜欢茶？ / Do you like tea?
 
 ### Lesson 19: 吧 and 呢
-- 吧 softens a sentence. After a suggestion it means 'let's' or 'how about': 我们去吃饭吧。 It also makes a request gentle: 你喝水吧 (Have some water).
+- 吧 softens a sentence. After a suggestion it means 'let's' or 'how about': 我们去吃饭吧。 It also makes a polite invitation gentler: 请坐吧 (Please, have a seat).
 - 吧 can also check what you already think is true, like 'right?': 你没事吧？ (You are all right, aren't you?)
 - 呢 asks 'and what about…?' by bouncing a question back: 我很好，你呢？ (I am fine, and you?)
 - 呢 can also ask where something is: 你的手机呢？ (Where is your phone?)
 - (common mistake) Use 吗 when you really want a yes/no answer. 吧 suggests or checks, 吗 asks.
 - example: 我们去吃饭吧。 / Let's go and eat.
-- example: 你喝水吧。 / Have some water.
+- example: 请坐吧。 / Please, have a seat.
 - example: 我很好，你呢？ / I am fine, and you?
 - example: 你的手机呢？ / Where is your phone?
 - example: 你没事吧？ / Are you all right?
@@ -245,8 +245,8 @@ If a batch has no problems, answer "No problems found".
 - Put 在 or 正在 before a verb to say it is happening right now: 爸爸在做饭。他正在看电视。
 - 呢 at the end is optional and sounds lively: 他正在看书呢。 You can even use 呢 alone: 小明睡觉呢。
 - Be careful: 在 + place means 'at' (我在家), and 在 + verb means 'in the middle of' (我在看书).
-- For habits, use the plain verb: 我早上喝茶 (I drink tea in the morning).
-- (common mistake) For a habit, do not use 在: 我早上喝茶, not 我在早上喝茶.
+- For habits, use the plain verb: 我早上喝茶 (I drink tea in the morning). Putting 在 in front, 我在喝茶, changes the meaning to 'right now'.
+- (common mistake) For a habit, use the plain verb: 我早上喝茶. 我在喝茶 would mean 'I am drinking tea right now'.
 - example: 爸爸在做饭，妈妈在看书。 / Dad is cooking and Mom is reading.
 - example: 他正在看电视。 / He is watching TV right now.
 - example: 哥哥正在看书呢。 / My older brother is reading right now.
@@ -254,11 +254,11 @@ If a batch has no problems, answer "No problems found".
 
 ### Lesson 21: 了 after a verb: it's done
 - 了 right after a verb says the action is finished: 我买了一本书。 (I bought a book.)
-- It is not a past-tense marker. It marks 'completed'. Do not use it for habits (我早上喝茶, not 我早上喝了茶) or for plain facts about a state (我昨天在家).
+- It is not a past-tense marker. It marks 'completed'. Do not use it for habits (我早上喝茶, not 我早上喝了茶), although one particular morning is fine (我今天早上喝了茶), or for plain facts about a state (我昨天在家).
 - A short sentence like 我买了书 can sound unfinished. Add an amount or a describing word: 我买了一本书, 妈妈喝了一杯茶. Or put 了 at the end: 我买书了。
 - To say it did not happen, use 没(有) and drop 了: 我没买书。
 - Ask with 吗: 你吃饭了吗？
-- (common mistake) Do not add 了 to habits: 我早上喝茶 (not 我早上喝了茶).
+- (common mistake) Do not add 了 to habits: 我早上喝茶 (not 我早上喝了茶). For one particular morning, 了 is fine: 我今天早上喝了茶.
 - (common mistake) Do not keep 了 in the negative: 我没买书 (not 我没买了书).
 - example: 我买了一本书。 / I bought a book.
 - example: 妈妈喝了一杯茶。 / Mom drank a cup of tea.

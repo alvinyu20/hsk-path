@@ -193,7 +193,7 @@
   "explain": [
    "Clock time is number + 点 (o'clock), then + 分 (minutes) or 半 (half): 七点, 八点零五分, 七点半. Say 两点 for 2 o'clock.",
    "Dates go from big to small: year, month, day. Say 月 and 号 (spoken) or 日 (written): 十月三十号. Weekdays are 星期 + number: 星期一 to 星期六. Sunday is 星期天 or 星期日. Ask with 几: 今天星期几？ 现在几点？",
-   "Time words go before the verb, either right after the subject or at the start of the sentence: 我七点起床 or 七点我起床. Not after the verb.",
+   "A point in time goes before the verb, either right after the subject or at the start of the sentence: 我七点起床 or 七点我起床. Not after the verb. (How long something lasted is different and comes after the verb: 我住了三天.)",
    "A time or date does not need a verb: 现在七点半。 With 是 it also works: 现在是八点零五分。"
   ],
   "examples": [
@@ -220,7 +220,7 @@
   ],
   "mistakes": [
    "Say 两点 for 2 o'clock, not 二点.",
-   "Time goes before the verb: 我七点起床, not 我起床七点."
+   "A point in time goes before the verb: 我七点起床, not 我起床七点."
   ],
   "q": [
    {
@@ -282,7 +282,7 @@
    "Verb"
   ],
   "explain": [
-   "在 means 'at / in'. 在 + place goes before the verb: 我在家吃饭 means 'I eat at home'.",
+   "在 means 'at / in'. 在 + place usually goes before the verb: 我在家吃饭 means 'I eat at home'. (A few verbs take it after, like 住在学校 'live at school'.)",
    "在 can also be a verb, 'to be at': 我在家。他不在学校。",
    "Ask where with 在哪儿 or 在哪里: 你在哪儿工作？"
   ],
