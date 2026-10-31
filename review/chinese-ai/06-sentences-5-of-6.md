@@ -212,7 +212,7 @@ Sentences (Chinese / English):
 192. 你好！今天天气怎么样？  /  Hello! How is the weather today?
 193. 对，太冷了！你想喝热茶吗？  /  Yes, it is so cold! Would you like some hot tea?
 194. 你喜欢冷的天气吗？  /  Do you like cold weather?
-195. 我也是！明天天气很好。  /  Me too! The weather is very nice tomorrow.
+195. 我也是！明天天气很好。  /  Me too! The weather will be very nice tomorrow.
 196. 今天很冷，也下雨了。  /  It is very cold today, and it is raining too.
 197. 好，我想喝热茶，谢谢。  /  Yes, I'd like some hot tea, thank you.
 198. 我不太喜欢冷的天气，我喜欢热的天气。  /  I don't like cold weather much. I like hot weather.

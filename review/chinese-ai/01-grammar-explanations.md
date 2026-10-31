@@ -275,7 +275,7 @@ If a batch has no problems, answer "No problems found".
 - example: 天冷了。 / It has turned cold.
 - example: 下雨了！ / It is raining now!
 - example: 现在八点了。 / It is eight o'clock now.
-- example: 他病了。 / He has fallen ill.
+- example: 他病了。 / He has gotten sick.
 - example: 下课了，我们去吃饭。 / Class is over, let's go and eat.
 
 ### Lesson 23: 和 and 对

@@ -97,7 +97,7 @@
   "ai":[{"zh":"你好！今天天气怎么样？","en":"Hello! How is the weather today?"},
         {"zh":"对，太冷了！你想喝热茶吗？","en":"Yes, it is so cold! Would you like some hot tea?"},
         {"zh":"你喜欢冷的天气吗？","en":"Do you like cold weather?"},
-        {"zh":"我也是！明天天气很好。","en":"Me too! The weather is very nice tomorrow."},
+        {"zh":"我也是！明天天气很好。","en":"Me too! The weather will be very nice tomorrow."},
         {"zh":"明天见！","en":"See you tomorrow!"}],
   "you":[{"zh":"今天很冷，也下雨了。","en":"It is very cold today, and it is raining too."},
          {"zh":"好，我想喝热茶，谢谢。","en":"Yes, I'd like some hot tea, thank you."},

@@ -12,3 +12,5 @@ word:哥哥	我哥哥是大学生。	Fine? (checking family-term style: 我哥�
 word:些	买些水果吧。	Is 买些水果吧 natural as a standalone suggestion?
 word:日	今天是五月一日。	Is 一日 the right spoken form here, or 一号? (written/formal vs spoken)
 word:雪	今天下雪了。	I mean "it has started snowing / it is snowing today". Is 今天下雪了 natural for that, and does it risk reading as "it snowed earlier today"?
+word:对	你是对的。	Is 你是对的 natural in speech, or do people say 你说得对 / 你对?
+word:房间	房间里有一个电视。	Is 一个电视 fine in speech, or should it be 一台电视?

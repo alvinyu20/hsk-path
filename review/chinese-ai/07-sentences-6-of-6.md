@@ -58,7 +58,7 @@ Sentences (Chinese / English):
 38. 我没买书。  /  I did not buy a book.
 39. 下雨了！  /  It is raining now!
 40. 现在八点了。  /  It is eight o'clock now.
-41. 他病了。  /  He has fallen ill.
+41. 他病了。  /  He has gotten sick.
 42. 我和爸爸都喜欢看书。  /  Dad and I both like reading.
 43. 对，我是学生。  /  Yes, that's right, I am a student.
 44. 老师和学生都很高兴。  /  The teacher and the students are all very happy.

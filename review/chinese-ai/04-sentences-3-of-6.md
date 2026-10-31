@@ -33,7 +33,7 @@ Sentences (Chinese / English):
 13. 我下个月去中国。  /  I am going to China next month.
 14. 今天是六月三十日。  /  Today is June 30.
 15. 他六月五日去中国。  /  He is going to China on June 5.
-16. 这个月的一日是星期天。  /  The first of this month is a Sunday.
+16. 十月三十一日是星期六。  /  October 31st is a Saturday.
 17. 一年有三百六十五天。  /  A year has 365 days.
 18. 我学汉语学了三年了。  /  I have been learning Chinese for three years.
 19. 他去年去了中国。  /  He went to China last year.
@@ -92,7 +92,7 @@ Sentences (Chinese / English):
 72. 那边有一家商店。  /  There is a shop over there.
 73. 那边的人是谁？  /  Who are the people over there?
 74. 请到那边坐。  /  Please go sit over there.
-75. 你家在哪个学校？  /  Which school is your home near?
+75. 你在哪个学校学习？  /  Which school do you study at?
 76. 你想看哪本书？  /  Which book do you want to read?
 77. 哪个是你的杯子？  /  Which one is your cup?
 78. 你想买哪个？  /  Which one do you want to buy?
@@ -175,24 +175,24 @@ Sentences (Chinese / English):
 155. 请不要看电视。  /  Please do not watch TV.
 156. 谢谢！不客气。  /  Thanks! You are welcome.
 157. 他说谢谢，我说不客气。  /  He says thanks, and I say you are welcome.
-158. 你不客气，我很高兴。  /  You are welcome, and I am glad.
+158. 不客气，我很高兴。  /  You are welcome, I am glad to help.
 159. 对不起，我不会说汉语。  /  Sorry, I cannot speak Chinese.
 160. 对不起，我来晚了。  /  Sorry, I am late.
 161. 对不起！没关系。  /  Sorry! It does not matter.
 162. 没关系，我们再来。  /  It does not matter. Let's come again.
 163. 没关系，我们明天再来。  /  It does not matter. We will come again tomorrow.
 164. 再见，明天见！  /  Goodbye, see you tomorrow!
-165. 我们再见吧。  /  Let's say goodbye.
+165. 明天再见！  /  See you again tomorrow!
 166. 谢谢老师。  /  Thanks, teacher.
 167. 谢谢你给我茶。  /  Thank you for giving me tea.
 168. 老师，你好！  /  Hello, teacher!
-169. 大家好，你好吗？  /  Hello everyone, how are you?
+169. 你好！你是新同学吗？  /  Hello! Are you a new classmate?
 170. 喂，你好！  /  Hello! (on the phone)
 171. 喂，你是谁？  /  Hello, who are you?
 172. 喂，你在家吗？  /  Hello, are you at home?
 173. 没事，我很好。  /  It's nothing, I am fine.
 174. 没事，请坐。  /  No problem, please sit down.
-175. 我请你吃饭。  /  I invite you to a meal.
+175. 我请你吃饭。  /  I invite you to a meal, my treat.
 176. 请问，医院在哪里？  /  Excuse me, where is the hospital?
 177. 请问，你叫什么名字？  /  Excuse me, what is your name?
 178. 请问，这个多少钱？  /  Excuse me, how much is this?

@@ -167,7 +167,7 @@ Sentences (Chinese / English):
 147. 女士，您想喝茶吗？  /  Madam, would you like some tea?
 148. 他是男老师。  /  He is a male teacher.
 149. 我们学校女学生很多。  /  There are many female students at our school.
-150. 小朋友，你几岁？  /  Little friend, how old are you?
+150. 小朋友，你几岁？  /  Hey, little one, how old are you?
 151. 她有男朋友吗？  /  Does she have a boyfriend?
 152. 他有女朋友。  /  He has a girlfriend.
 153. 他是中学生。  /  He is a middle-school student.
@@ -224,7 +224,7 @@ Sentences (Chinese / English):
 204. 她喜欢唱歌。  /  She likes singing.
 205. 请坐。  /  Please sit down.
 206. 他穿新衣服。  /  He is wearing new clothes.
-207. 弟弟在房间里睡。  /  My younger brother is sleeping in his room.
+207. 弟弟在房间里睡觉。  /  My younger brother is sleeping in his room.
 208. 我晚上十点睡觉。  /  I go to bed at ten in the evening.
 209. 我早上七点起床。  /  I get up at seven in the morning.
 210. 我想休息一下。  /  I want to rest for a bit.

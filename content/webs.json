@@ -78,7 +78,7 @@
   "gaps":[{"en":"He is my friend.","zh":"他是我的___。","ans":"朋友","opts":["朋友","男朋友","女朋友","小朋友"]},
           {"en":"Does she have a boyfriend?","zh":"她有___吗？","ans":"男朋友","opts":["男朋友","女朋友","朋友","小朋友"]},
           {"en":"He has a girlfriend.","zh":"他有___。","ans":"女朋友","opts":["女朋友","男朋友","朋友","小朋友"]},
-          {"en":"Little friend, how old are you?","zh":"___，你几岁？","ans":"小朋友","opts":["小朋友","男朋友","女朋友","朋友"]}]},
+          {"en":"Hey, little one, how old are you?","zh":"___，你几岁？","ans":"小朋友","opts":["小朋友","男朋友","女朋友","朋友"]}]},
  {"hub":"小","py":"xiǎo","en":"small, little","words":[
    ["小学","小","small","学","school"],["小学生","小学","primary school","生","student"],["小时","小","small","时","time"],["小朋友","小","little","朋友","friend"]],
   "gaps":[{"en":"I study for two hours.","zh":"我学习两个___。","ans":"小时","opts":["小时","小学","小学生","小朋友"]},

@@ -25,7 +25,7 @@ Sentences (Chinese / English):
 5. 这个男的是谁？  /  Who is this man?
 6. 她是女的。  /  She is female.
 7. 那个女的是我的老师。  /  That woman is my teacher.
-8. 小朋友，你叫什么名字？  /  Little one, what is your name?
+8. 小朋友，你叫什么名字？  /  Hey, little one, what is your name?
 9. 这些小朋友都很高兴。  /  These children are all very happy.
 10. 小朋友们在玩。  /  The children are playing.
 11. 她有一个男朋友。  /  She has a boyfriend.
@@ -87,7 +87,7 @@ Sentences (Chinese / English):
 67. 他在外边。  /  He is outside.
 68. 他不在家，在外边。  /  He is not at home. He is outside.
 69. 外国人也想学汉语。  /  Foreigners also want to learn Chinese.
-70. 我家外有一只狗。  /  There is a dog outside my home.
+70. 我家外边有一只狗。  /  There is a dog outside my home.
 71. 书在桌子里。  /  The book is in the desk.
 72. 我家里有四口人。  /  There are four people in my family.
 73. 你想上大学吗？  /  Do you want to go to university?
@@ -116,11 +116,11 @@ Sentences (Chinese / English):
 96. 他喝茶，不喝水。  /  He drinks tea, not water.
 97. 你喝什么？  /  What are you drinking?
 98. 我想看电影。  /  I want to watch a movie.
-99. 请看，那是我的猫。  /  Please look, that is my cat.
+99. 看，那是我的猫！  /  Look, that is my cat!
 100. 她在看书。  /  She is reading a book.
 101. 我喜欢听歌。  /  I like to listen to songs.
 102. 请听我说。  /  Please listen to me.
-103. 他在听电话里的人说话。  /  He is listening to the person on the phone.
+103. 我在听老师说话。  /  I am listening to the teacher speak.
 104. 他会说汉语。  /  He can speak Chinese.
 105. 你说什么？  /  What are you saying?
 106. 我在读书。  /  I am reading.
@@ -142,7 +142,7 @@ Sentences (Chinese / English):
 122. 你找谁？  /  Who are you looking for?
 123. 他在找书。  /  He is looking for a book.
 124. 我想问你一个问题。  /  I want to ask you a question.
-125. 请问一下。  /  Let me ask a question.
+125. 请问一下，学校在哪里？  /  Excuse me, where is the school?
 126. 他问我今天去不去。  /  He asks me whether I am going today.
 127. 我叫小明。  /  My name is Xiaoming.
 128. 请叫医生。  /  Please call the doctor.
@@ -151,14 +151,14 @@ Sentences (Chinese / English):
 131. 我家住在商店后边。  /  My family lives behind the shop.
 132. 我想去玩。  /  I want to go and have fun.
 133. 我弟弟喜欢玩电脑。  /  My younger brother likes to play on the computer.
-134. 请你唱一个歌。  /  Please sing a song.
+134. 我喜欢唱歌。  /  I like singing.
 135. 他喜欢唱歌。  /  He likes to sing.
 136. 你想坐这里吗？  /  Do you want to sit here?
 137. 我想穿这件衣服。  /  I want to wear this item of clothing.
 138. 她今天穿一件新衣服。  /  She is wearing a new item of clothing today.
 139. 你穿什么？  /  What are you wearing?
 140. 他在房间里睡。  /  He sleeps in the room.
-141. 孩子在睡。  /  The child is sleeping.
+141. 孩子在睡觉。  /  The child is sleeping.
 142. 我想睡。  /  I want to sleep.
 143. 我十点睡觉。  /  I go to bed at ten.
 144. 他在睡觉。  /  He is sleeping.
@@ -184,7 +184,7 @@ Sentences (Chinese / English):
 164. 他学习很好。  /  He studies well.
 165. 你在学习什么？  /  What are you studying?
 166. 我在医院工作。  /  I work at a hospital.
-167. 他的工作很忙。  /  His job is very busy.
+167. 他的工作很忙。  /  His work is very busy.
 168. 你在哪里工作？  /  Where do you work?
 169. 请不要说话。  /  Please do not talk.
 170. 他在和朋友说话。  /  He is talking with a friend.
@@ -227,8 +227,8 @@ Sentences (Chinese / English):
 207. 这个歌很好听。  /  This song is very nice to listen to.
 208. 她的名字很好听。  /  Her name sounds nice.
 209. 你说汉语很好听。  /  Your Chinese sounds very nice.
-210. 这个电脑很好玩。  /  This computer is a lot of fun.
-211. 我们去玩，好玩吗？  /  We are going out to play. Is it fun?
+210. 那里很好玩。  /  It is a lot of fun there.
+211. 学汉语好玩吗？  /  Is learning Chinese fun?
 212. 这个很好玩，你想玩吗？  /  This is a lot of fun. Do you want to play?
 213. 这个电影很好看。  /  This movie is very good.
 214. 她穿这件衣服很好看。  /  She looks good in this item of clothing.

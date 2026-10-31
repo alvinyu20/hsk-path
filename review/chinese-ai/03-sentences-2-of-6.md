@@ -129,16 +129,16 @@ Sentences (Chinese / English):
 109. 我有两千块钱。  /  I have 2000 yuan.
 110. 这本书一百零五块。  /  This book costs 105 yuan.
 111. 这个手机五千零五十块。  /  This mobile phone costs 5050 yuan.
-112. 我有零个苹果。  /  I have zero apples.
+112. 学校有一百零五个学生。  /  There are 105 students at the school.
 113. 现在是三点半。  /  It is half past three now.
 114. 我们学了半个小时。  /  We studied for half an hour.
 115. 请给我半杯水。  /  Please give me half a glass of water.
 116. 我是第一个学生。  /  I am the first student.
-117. 你是第几个？  /  What number are you?
+117. 你是第几个？  /  Which number are you (in the order)?
 118. 你是第一个来的人。  /  You are the first person to come.
 119. 苹果我吃了一半。  /  I ate half of the apple.
 120. 这一半是你的。  /  This half is yours.
-121. 学生一半是女的。  /  Half of the students are female.
+121. 一半学生是女的。  /  Half of the students are female.
 122. 桌子上有一些书。  /  There are some books on the table.
 123. 他有一些中国朋友。  /  He has some Chinese friends.
 124. 我想要这些。  /  I want these.
@@ -160,7 +160,7 @@ Sentences (Chinese / English):
 140. 今天的事很多。  /  There is a lot to do today.
 141. 商店里的人很少。  /  There are very few people in the shop.
 142. 今天的学生很少。  /  There are few students today.
-143. 我的钱不多也不少。  /  I have neither much nor little money.
+143. 我的钱不多也不少。  /  I have neither a lot of money nor a little.
 144. 你们学校有多少学生？  /  How many students are there in your school?
 145. 这个手机多少钱？  /  How much is this mobile phone?
 146. 你想买几个？  /  How many do you want to buy?
@@ -216,7 +216,7 @@ Sentences (Chinese / English):
 196. 今年我想去中国。  /  I want to go to China this year.
 197. 她今年在大学学习。  /  She is studying at university this year.
 198. 明年我想学汉语。  /  Next year I want to learn Chinese.
-199. 他明年去大学。  /  He is going to university next year.
+199. 他明年去大学学习。  /  He is going to study at university next year.
 200. 我们明年在这里住。  /  We will live here next year.
 201. 去年我在中国。  /  Last year I was in China.
 202. 去年的衣服太小了。  /  Last year's clothes are too small.

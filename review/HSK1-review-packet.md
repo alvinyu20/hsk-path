@@ -24,6 +24,8 @@ This packet holds all the Chinese on the Shanlu study site for HSK 1 (the 300-wo
 11. **买些水果吧。** (word:些): Is 买些水果吧 natural as a standalone suggestion?
 12. **今天是五月一日。** (word:日): Is 一日 the right spoken form here, or 一号? (written/formal vs spoken)
 13. **今天下雪了。** (word:雪): I mean "it has started snowing / it is snowing today". Is 今天下雪了 natural for that, and does it risk reading as "it snowed earlier today"?
+14. **你是对的。** (word:对): Is 你是对的 natural in speech, or do people say 你说得对 / 你对?
+15. **房间里有一个电视。** (word:房间): Is 一个电视 fine in speech, or should it be 一台电视?
 
 ## 2. Grammar lessons (26)
 
@@ -460,7 +462,7 @@ Examples:
 - 天冷了。  Tiān lěng le.  — It has turned cold.
 - 下雨了！  Xiàyǔ le!  — It is raining now!
 - 现在八点了。  Xiànzài bā diǎn le.  — It is eight o'clock now.
-- 他病了。  Tā bìng le.  — He has fallen ill.
+- 他病了。  Tā bìng le.  — He has gotten sick.
 - 下课了，我们去吃饭。  Xiàkè le, wǒmen qù chī fàn.  — Class is over, let's go and eat.
 
 ### 23. 和 and 对
@@ -633,7 +635,7 @@ Examples:
 - Learner: 好，我想喝热茶，谢谢。  — Yes, I'd like some hot tea, thank you.
 - Speaker: 你喜欢冷的天气吗？  — Do you like cold weather?
 - Learner: 我不太喜欢冷的天气，我喜欢热的天气。  — I don't like cold weather much. I like hot weather.
-- Speaker: 我也是！明天天气很好。  — Me too! The weather is very nice tomorrow.
+- Speaker: 我也是！明天天气很好。  — Me too! The weather will be very nice tomorrow.
 - Learner: 太好了！明天见！  — Great! See you tomorrow!
 - Speaker: 明天见！  — See you tomorrow!
 
@@ -1095,7 +1097,7 @@ Examples:
 | 女士 | nǚshì | madam, lady | 女士，您想喝茶吗？ | Nǚshì, nín xiǎng hē chá ma? | Madam, would you like some tea? |
 | 男 | nán | male | 他是男老师。 | Tā shì nán lǎoshī. | He is a male teacher. |
 | 女 | nǚ | female | 我们学校女学生很多。 | Wǒmen xuéxiào nǚ xuésheng hěn duō. | There are many female students at our school. |
-| 小朋友 | xiǎopéngyou | child (a friendly word for a young child) | 小朋友，你几岁？ | Xiǎopéngyou, nǐ jǐ suì? | Little friend, how old are you? |
+| 小朋友 | xiǎopéngyou | child (a friendly word for a young child) | 小朋友，你几岁？ | Xiǎopéngyou, nǐ jǐ suì? | Hey, little one, how old are you? |
 | 男朋友 | nánpéngyou | boyfriend | 她有男朋友吗？ | Tā yǒu nánpéngyou ma? | Does she have a boyfriend? |
 | 女朋友 | nǚpéngyou | girlfriend | 他有女朋友。 | Tā yǒu nǚpéngyou. | He has a girlfriend. |
 | 中学生 | zhōngxuéshēng | middle- or high-school student | 他是中学生。 | Tā shì zhōngxuéshēng. | He is a middle-school student. |
@@ -1152,7 +1154,7 @@ Examples:
 | 唱 | chàng | to sing | 她喜欢唱歌。 | Tā xǐhuan chàng gē. | She likes singing. |
 | 坐 | zuò | to sit; to travel by | 请坐。 | Qǐng zuò. | Please sit down. |
 | 穿 | chuān | to wear | 他穿新衣服。 | Tā chuān xīn yīfu. | He is wearing new clothes. |
-| 睡 | shuì | to sleep | 弟弟在房间里睡。 | Dìdi zài fángjiān lǐ shuì. | My younger brother is sleeping in his room. |
+| 睡 | shuì | to sleep | 弟弟在房间里睡觉。 | Dìdi zài fángjiān lǐ shuìjiào. | My younger brother is sleeping in his room. |
 | 睡觉 | shuìjiào | to go to bed, to sleep | 我晚上十点睡觉。 | Wǒ wǎnshang shí diǎn shuìjiào. | I go to bed at ten in the evening. |
 | 起床 | qǐchuáng | to get up | 我早上七点起床。 | Wǒ zǎoshang qī diǎn qǐchuáng. | I get up at seven in the morning. |
 | 休息 | xiūxi | to rest | 我想休息一下。 | Wǒ xiǎng xiūxi yíxià. | I want to rest for a bit. |

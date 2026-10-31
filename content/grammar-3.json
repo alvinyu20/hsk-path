@@ -288,7 +288,7 @@
    },
    {
     "zh": "他病了。",
-    "en": "He has fallen ill."
+    "en": "He has gotten sick."
    },
    {
     "zh": "下课了，我们去吃饭。",
@@ -325,7 +325,7 @@
    {
     "t": "cloze",
     "zh": "他病了。",
-    "en": "He has fallen ill.",
+    "en": "He has gotten sick.",
     "blank": "了",
     "explain": "了 shows he has become ill."
    },

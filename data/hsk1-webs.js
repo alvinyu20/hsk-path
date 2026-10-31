@@ -1562,7 +1562,7 @@ window.HSK1_WEBS = {
      ]
     },
     {
-     "en": "Little friend, how old are you?",
+     "en": "Hey, little one, how old are you?",
      "zh": "___，你几岁？",
      "ans": "小朋友",
      "opts": [

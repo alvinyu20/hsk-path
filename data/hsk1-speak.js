@@ -667,7 +667,7 @@ window.HSK1_SPEAK = {
     {
      "zh": "我也是！明天天气很好。",
      "py": "Wǒ yě shì! Míngtiān tiānqì hěn hǎo.",
-     "en": "Me too! The weather is very nice tomorrow."
+     "en": "Me too! The weather will be very nice tomorrow."
     },
     {
      "zh": "明天见！",
