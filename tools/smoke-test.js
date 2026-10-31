@@ -348,7 +348,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const chat1 = await page.locator('.msgs').innerText();
   check(!chat1.includes(firstAi[0]) && chat1.includes('Listen to Mingming'), 'with everything hidden the chat shows no Chinese or English, only the sound button');
   await page.locator('button', { hasText: 'I said it' }).click();
-  await page.waitForTimeout(60);
+  await page.waitForTimeout(500);   // desktop audio waits a moment for the sound card to wake
   const lastSaid = await page.evaluate(() => window.__spoken[window.__spoken.length - 1]);
   check(lastSaid && lastSaid.text === firstAi[1], 'in listen-only mode Mingming\'s next line plays by itself');
   await page.locator('.chat-h .seg2 button', { hasText: 'Characters' }).click();
@@ -396,7 +396,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await text()).includes('Listening') && (await text()).includes('Question 1 of 20') && /\d+:\d\d/.test(await page.locator('.ex-timer').innerText()), 'the exam shows the section, the question number and a timer');
   const spokenBefore = await page.evaluate(() => window.__spoken.length);
   await page.locator('.ex-play button').click();
+  await page.waitForTimeout(500);
   await page.locator('.ex-play button').click();
+  await page.waitForTimeout(500);
   const spokenTwo = await page.evaluate(() => window.__spoken.length);
   await page.locator('.ex-play button').click({ force: true });
   check((await page.evaluate(() => window.__spoken.length)) === spokenTwo, 'a third play does nothing');
@@ -457,7 +459,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
 
   // Chinese voice picker
-  const lastSpoken = () => page.evaluate(() => window.__spoken[window.__spoken.length - 1] || null);
+  const lastSpoken = async () => { await page.waitForTimeout(500); return page.evaluate(() => window.__spoken[window.__spoken.length - 1] || null); };
   await page.locator('button', { hasText: 'Settings' }).first().click();
   await page.waitForTimeout(100);
   const vt = await text();
@@ -597,8 +599,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     aiCalls.push({ headers: req.headers(), body });
     if (aiMode2 === 'bad-key') return r.fulfill({ status: 401, headers: cors, contentType: 'application/json', body: '{}' });
     const n = aiCalls.length;
-    const reply = n === 1 ? { reply: { zh: '你好！你想喝什么？', en: 'Hello! What do you want to drink?' }, feedback: { level: 'ok', better: '', why: '' } }
-      : n === 2 ? { reply: { zh: '好的，你想去公园吗？', en: 'Okay, do you want to go to the park?' }, feedback: { level: 'fix', better: '我想喝茶。', why: 'Add 想 to say you would like something.' } }
+    const reply = n === 1 ? { reply: { zh: '你好！你想喝什么？', en: 'Hello! What do you want to drink?' }, feedback: { level: 'ok', better: '', why: '' }, suggest: { zh: '我想喝茶。', en: 'I want to drink tea.' } }
+      : n === 2 ? { reply: { zh: '好的，你想去公园吗？', en: 'Okay, do you want to go to the park?' }, feedback: { level: 'fix', better: '我想喝茶。', why: 'Add 想 to say you would like something.' }, suggest: n === 2 ? { zh: '我想去学校。', en: 'I want to go to school.' } : undefined }
       : { reply: { zh: '很好！', en: 'Very good!' }, feedback: { level: 'ok', better: '', why: '' } };
     return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ content: [{ type: 'text', text: 'Here you go: ' + JSON.stringify(reply) }] }) });
   });
@@ -614,7 +616,15 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(first.includes('你好！你想喝什么？') && first.includes('Nǐ hǎo! Nǐ xiǎng hē shénme?'), 'Mingming opens the conversation, with pinyin from the site\'s own word list');
   check(aiCalls[0].headers['x-api-key'] === 'sk-ant-test' && aiCalls[0].headers['anthropic-dangerous-direct-browser-access'] === 'true' && /^claude-/.test(aiCalls[0].body.model), 'the request carries the key and a Claude model name');
   check(aiCalls[0].body.system.includes('米饭') && aiCalls[0].body.system.includes('HSK 1'), 'the instructions hold the HSK 1 word list');
+  await page.waitForTimeout(500);
   check((await page.evaluate(() => window.__spoken[window.__spoken.length - 1].text)) === '你好！你想喝什么？', 'Mingming\'s reply is spoken aloud');
+  check(await page.locator('.ai-dock button', { hasText: 'Suggest a reply' }).count() === 1 && !(await page.locator('.ai-dock').innerText()).includes('Wǒ xiǎng hē chá'), 'a suggested reply is offered but not shown until you ask');
+  await page.locator('.ai-dock button', { hasText: 'Suggest a reply' }).click();
+  const sugTxt = await page.locator('.ai-dock').innerText();
+  check(sugTxt.includes('我想喝茶。') && sugTxt.includes('Wǒ xiǎng hē chá.') && sugTxt.includes('I want to drink tea.'), 'the suggested reply shows characters, pinyin with tone marks and English');
+  await page.locator('button[aria-label="Hear the suggested reply"]').click();
+  await page.waitForTimeout(500);
+  check((await page.evaluate(() => window.__spoken[window.__spoken.length - 1].text)) === '我想喝茶。', 'the suggested reply can be played');
   await page.locator('.ai-tools button', { hasText: 'Speak' }).click();
   await page.waitForFunction(() => window.shanlu.state.aiInput === '我想喝茶');
   check((await page.inputValue('input[aria-label="Your reply"]')) === '我想喝茶', 'the microphone puts what it heard in the box to check');
@@ -622,10 +632,17 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForFunction(() => window.shanlu.state.aim.length >= 3 && !window.shanlu.state.aiBusy);
   const second = await page.locator('.msgs').innerText();
   check(second.includes('我想喝茶') && second.includes('A more natural way') && second.includes('Add 想'), 'the correction of your line is shown under it');
+  check(second.includes('Matches the suggested reply'), 'saying the suggested reply is recognised as a match');
   check(second.includes('Not in the HSK 1 list: 公 园') || second.includes('Not in the HSK 1 list: 园') || second.includes('Not in the HSK 1 list'), 'words outside HSK 1 in a reply are flagged');
   check(aiCalls[1].body.messages.length >= 3 && aiCalls[1].body.messages[aiCalls[1].body.messages.length - 1].content === '我想喝茶', 'the conversation so far is sent along');
   const exported = await page.evaluate(() => { window.shanlu.persistNow(); return JSON.stringify(JSON.parse(localStorage.getItem('shanlu-progress-v1'))); });
   check(!exported.includes('sk-ant-test'), 'the key is not in the saved progress (so not in the export or the sync)');
+  await page.locator('.ai-dock button', { hasText: 'Suggest a reply' }).click();
+  await page.fill('input[aria-label="Your reply"]', '我想去商店');
+  await page.locator('.ai-in button', { hasText: 'Send' }).click();
+  await page.waitForFunction(() => window.shanlu.state.aim.length >= 5 && !window.shanlu.state.aiBusy);
+  const third = await page.locator('.msgs').innerText();
+  check(third.includes('Not the same as the suggestion') && third.includes('我想去学校。') && third.includes('商'), 'a reply that differs from the suggestion shows what was suggested and where it differs');
   aiMode2 = 'bad-key';
   await page.fill('input[aria-label="Your reply"]', '你好');
   await page.locator('.ai-in button', { hasText: 'Send' }).click();

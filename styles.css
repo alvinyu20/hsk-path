@@ -593,3 +593,11 @@ button.scn:hover .scn-m{text-decoration:underline}
 .btn.on{background:var(--seal);color:var(--on-seal)}
 .note.fix{background:var(--amber-soft);color:var(--ink)}
 .note.good{color:var(--jade)}
+
+/* suggested reply in Talk with AI */
+.sugbox{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sugbox.open{display:block;background:var(--jade-soft);border-radius:14px;padding:10px 14px}
+.sug-h{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--jade)}
+.sug-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0}
+.sug-row .zh{font-size:22px}
+.sug-t{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:14px}

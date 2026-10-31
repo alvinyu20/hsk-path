@@ -255,20 +255,34 @@
     return line.replace(/(^|[.?!] )([a-zà-ž])/g, (m, p, c) => p + c.toUpperCase());
   };
   const aiOutside = (toks) => { const seen = {}; const out = []; toks.forEach(t => { if (t.cjk && !t.ok && !seen[t.t]) { seen[t.t] = true; out.push(t.t); } }); return out; };
+  // Checking a spoken or typed reply against the suggested one. The microphone returns characters, not sounds, so this can only say
+  // whether the same characters came back: a wrong tone often turns into a different character, but it is not a pronunciation score.
+  const stripTone = (py) => String(py).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const charPy = (ch) => { const t = segHsk(ch)[0]; return t && t.cjk && t.ok && t.py ? t.py : ''; };
+  const aiCompare = (sugZh, sugPy, said) => {
+    const strip = (x) => Array.from(String(x).replace(/[\s，。？！、,.?!]/g, ''));
+    const a = strip(sugZh), b = strip(said);
+    const out = { same:a.join('') === b.join(''), sugZh, sugPy, diffs:[], lens:null };
+    if (out.same) return out;
+    if (a.length === b.length) a.forEach((c, i) => { if (c !== b[i]) { const pe = charPy(c), pg = charPy(b[i]); out.diffs.push({ exp:c, got:b[i], pe, pg, tone:!!(pe && pg && stripTone(pe) === stripTone(pg)) }); } });
+    else out.lens = { exp:a.length, got:b.length };
+    return out;
+  };
   const aiSystem = (scn) => [
     'You are Mingming (明明), a friendly Mandarin conversation partner for an adult English-speaking beginner who is studying for HSK 1.',
     'Speak Simplified Chinese using ONLY words from this HSK 1 word list (plus punctuation and numbers): ' + BANK_KEYS.join(' ') + '.',
-    'If you need a word that is not in the list, say it another way with listed words. Never write pinyin in the Chinese. Keep every reply to one or two short sentences (about 15 characters or fewer in total) and ask at most one simple question, so the learner can answer.',
+    'If you need a word that is not in the list, say it another way with listed words. Never write pinyin in the Chinese. When you say your own name, say 我叫明明 (the standard way to give a name), not 我是明明. Keep every reply to one or two short sentences (about 15 characters or fewer in total) and ask at most one simple question, so the learner can answer.',
     scn ? 'Role-play setting: ' + scn.title + '. Goals for the learner: ' + scn.goals.join('; ') + '. Stay in this setting and play the other person.' : 'Free chat: pick an everyday topic (food, family, school, weather, plans) and keep it simple.',
     'After each learner message, also judge it. Say "ok" if it is natural and understandable Mandarin. Say "fix" if it has a grammar, word choice or naturalness problem: then give the corrected sentence in Chinese (HSK 1 words only) and a one-sentence reason in simple English. Do not nitpick: only fix real problems. If the learner writes English, give "fix" with the Chinese they could say. The learner message may come from speech recognition and contain wrong characters: if it does not make sense, ask them to say it again as the reply.',
-    'Answer with ONLY a JSON object, no other text: {"reply":{"zh":"<your Chinese>","en":"<English translation>"},"feedback":{"level":"ok"|"fix","better":"<corrected Chinese or empty>","why":"<short English reason or empty>"}}. For the very first message of a conversation, set feedback to {"level":"ok","better":"","why":""}.'
+    'Answer with ONLY a JSON object, no other text: {"reply":{"zh":"<your Chinese>","en":"<English translation>"},"feedback":{"level":"ok"|"fix","better":"<corrected Chinese or empty>","why":"<short English reason or empty>"},"suggest":{"zh":"<suggested learner reply>","en":"<English>"}}. For the very first message of a conversation, set feedback to {"level":"ok","better":"","why":""}.',
+    'Also always add "suggest":{"zh":"<one natural, short reply (about 12 characters or fewer) the learner could say next to answer you, HSK 1 words only, no pinyin>","en":"<its English meaning>"} so a beginner who is stuck can see what to say. Use 我叫… when giving a name.'
   ].join('\n');
   const aiParse = (text) => {
     const i = text.indexOf('{'), j = text.lastIndexOf('}');
     if (i < 0 || j < i) throw new Error('The reply was not in the expected format.');
     const o = JSON.parse(text.slice(i, j + 1));
     if (!o.reply || typeof o.reply.zh !== 'string') throw new Error('The reply was not in the expected format.');
-    return { zh:o.reply.zh, en:o.reply.en || '', fb:o.feedback && o.feedback.level === 'fix' ? { better:o.feedback.better || '', why:o.feedback.why || '' } : null };
+    return { zh:o.reply.zh, en:o.reply.en || '', sug:o.suggest && typeof o.suggest.zh === 'string' && o.suggest.zh.trim() ? { zh:o.suggest.zh.trim(), en:o.suggest.en || '' } : null, fb:o.feedback && o.feedback.level === 'fix' ? { better:o.feedback.better || '', why:o.feedback.why || '' } : null };
   };
   async function aiCall(history, scn) {
     let res;
@@ -406,17 +420,48 @@
     };
 
     // audio (the browser's own text-to-speech; needs a click)
+    // Desktop Chrome can clip the first fraction of a second of speech: the sound card or Bluetooth speaker is asleep and wakes
+    // after the speech has started. So: wake the output with an almost silent sound, and wait a moment if it had been idle.
+    // Also, Chrome sometimes drops or clips a speak() that comes straight after cancel(), so that gets a short gap too.
+    audioCtx = null; lastWake = 0; sayTok = 0;
+    wakeAudio = () => {
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return 0;
+        if (!this.audioCtx) this.audioCtx = new AC();
+        const ctx = this.audioCtx;
+        if (ctx.state === 'suspended') ctx.resume();
+        const warm = Date.now() - this.lastWake < 5000;
+        const len = Math.floor(ctx.sampleRate * 2);
+        const buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
+        for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * 0.0005;   // about -66 dB: not audible, but not digital silence
+        const src = ctx.createBufferSource(); src.buffer = buf; src.connect(ctx.destination); src.start();
+        this.lastWake = Date.now();
+        return warm ? 0 : 250;
+      } catch (e) { return 0; }
+    };
+    // run doSpeak(ss) once the audio is ready; a newer request replaces one that is still waiting
+    speakWhenReady = (doSpeak) => {
+      const ss = window.speechSynthesis; if (!ss) return;
+      const tok = ++this.sayTok;
+      // phones are left exactly as they were: they do not clip, and iPhone only allows speech started right inside a tap
+      let desktop = false; try { desktop = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches); } catch (e) {}
+      if (!desktop) { try { ss.cancel(); } catch (e) {} doSpeak(ss); return; }
+      let wait = this.wakeAudio();
+      try { if (ss.speaking || ss.pending) { ss.cancel(); wait = Math.max(wait, 60); } } catch (e) {}
+      if (!wait) { doSpeak(ss); return; }
+      setTimeout(() => { if (tok === this.sayTok) { try { doSpeak(ss); } catch (e) {} } }, wait);
+    };
     say = (text, key, rate, voice) => {
       try {
-        const ss = window.speechSynthesis;
-        if (ss) {
+        if (window.speechSynthesis) {
           const zh = voice || pickVoice(this.state.voiceId);
           if (allVoices().length && !zh) this.setState({ noVoice:true });
-          ss.cancel();
-          const u = new SpeechSynthesisUtterance(text);
-          u.lang = zh ? zh.lang : 'zh-CN'; u.rate = rate || 0.85;
-          if (zh) u.voice = zh;
-          ss.speak(u);
+          this.speakWhenReady((ss) => {
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = zh ? zh.lang : 'zh-CN'; u.rate = rate || 0.85;
+            if (zh) u.voice = zh;
+            ss.speak(u);
+          });
         } else {
           this.setState({ noVoice:true });
         }
@@ -453,10 +498,11 @@
     // several lines in a row (a conversation); the second voice is pitched higher where the browser allows it
     speakLines = (lines, key) => {
       try {
-        const ss = window.speechSynthesis; if (!ss) return;
+        if (!window.speechSynthesis) return;
         const zh = pickVoice(this.state.voiceId);
-        ss.cancel();
-        lines.forEach(l => { const u = new SpeechSynthesisUtterance(l.text); u.lang = zh ? zh.lang : 'zh-CN'; u.rate = 0.85; u.pitch = l.pitch || 1; if (zh) u.voice = zh; ss.speak(u); });
+        this.speakWhenReady((ss) => {
+          lines.forEach(l => { const u = new SpeechSynthesisUtterance(l.text); u.lang = zh ? zh.lang : 'zh-CN'; u.rate = 0.85; u.pitch = l.pitch || 1; if (zh) u.voice = zh; ss.speak(u); });
+        });
       } catch (e) {}
       const ms = lines.reduce((n, l) => n + l.text.length * 330 + 500, 0);
       this.setState({ playing:key });
@@ -495,7 +541,9 @@
       try {
         const out = await aiCall(history, scnIdx >= 0 ? SCEN[scnIdx] : null);
         const p = out.parsed; const toks = segHsk(p.zh);
-        const msg = { who:'ai', zh:p.zh, en:p.en, py:aiPinyin(toks), outside:aiOutside(toks), raw:out.raw };
+        let sug = null;
+        if (p.sug) { const st = segHsk(p.sug.zh); if (!aiOutside(st).length && aiPinyin(st)) sug = { zh:p.sug.zh, en:p.sug.en, py:aiPinyin(st), open:false }; }   // only suggest what the site can show with pinyin
+        const msg = { who:'ai', zh:p.zh, en:p.en, py:aiPinyin(toks), outside:aiOutside(toks), raw:out.raw, sug };
         const next = shown.slice();
         const last = next[next.length - 1];
         if (last && last.who === 'me') next[next.length - 1] = Object.assign({}, last, { judged:true, fb:p.fb });   // the judgement is about the learner's last line
@@ -508,7 +556,9 @@
       if (!text || S.aiBusy || !S.aiOn) return;
       try { if (window.speechSynthesis) window.speechSynthesis.speak(new SpeechSynthesisUtterance('')); } catch (e) {}   // lets the reply play on iPhone
       const toks = segHsk(text);
-      const me = { who:'me', zh:text, en:'', py:aiPinyin(toks), outside:aiOutside(toks) };
+      const lastAi = S.aim[S.aim.length - 1];
+      const cmp = lastAi && lastAi.who === 'ai' && lastAi.sug && lastAi.sug.open ? aiCompare(lastAi.sug.zh, lastAi.sug.py, text) : null;
+      const me = { who:'me', zh:text, en:'', py:aiPinyin(toks), outside:aiOutside(toks), cmp };
       const shown = S.aim.concat([me]);
       const hist = [{ role:'user', content:'(Start the conversation with a short greeting and your first question.)' }];
       shown.forEach(m => { if (m.who === 'ai') hist.push({ role:'assistant', content:m.raw }); else hist.push({ role:'user', content:m.zh }); });
@@ -532,6 +582,8 @@
         r.start();
       } catch (e) { this.setState({ aiListen:false, aiErr:'The microphone could not start. Type instead.' }); }
     };
+    aiShowSug = () => { const a = this.state.aim.slice(); const i = a.length - 1; if (i < 0 || !a[i].sug) return; a[i] = Object.assign({}, a[i], { sug:Object.assign({}, a[i].sug, { open:true }) }); this.setState({ aim:a }); };
+    aiUseSug = () => { const a = this.state.aim; const m = a[a.length - 1]; if (m && m.sug) this.setState({ aiInput:m.sug.zh }); };
     aiSimpler = () => { this.setState({ aiInput:'请再说一遍，慢一点。' }); this.aiSend(); };
     aiSaveKey = () => {
       const k = (this.state.aiKeyInput || '').trim();
@@ -864,10 +916,17 @@
         who:m.who, isAi:m.who === 'ai', zh:m.zh, py:m.py, en:m.en, showZh:S.szh, showPy:S.spy && !!m.py, showEn:S.sen && !!m.en && m.who === 'ai',
         quiet, quietText:m.who === 'ai' ? 'Listen to Mingming' : 'You said it', pc:S.playing === 'aim' + k ? 'on' : '', play:() => this.say(m.zh, 'aim' + k),
         hasOutside:m.outside.length > 0, outsideText:'Not in the HSK 1 list: ' + m.outside.join(' '),
-        hasFb:!!m.fb, fbBetter:m.fb ? m.fb.better : '', fbWhy:m.fb ? m.fb.why : '', hasOk:m.who === 'me' && !!m.judged && !m.fb
+        hasFb:!!m.fb, fbBetter:m.fb ? m.fb.better : '', fbWhy:m.fb ? m.fb.why : '', hasOk:m.who === 'me' && !!m.judged && !m.fb,
+        cmpGood:!!(m.cmp && m.cmp.same), cmpBad:!!(m.cmp && !m.cmp.same),
+        cmpBadHead:m.cmp && !m.cmp.same ? 'Suggested: ' + m.cmp.sugZh + ' (' + m.cmp.sugPy + ')' : '',
+        cmpBadDetail:m.cmp && !m.cmp.same ? (m.cmp.lens ? 'The suggestion has ' + m.cmp.lens.exp + ' characters and you had ' + m.cmp.lens.got + '.' : m.cmp.diffs.map(d => d.exp + (d.pe ? ' (' + d.pe + ')' : '') + ' → you: ' + d.got + (d.pg ? ' (' + d.pg + ')' : '') + (d.tone ? ' · same sound, different tone' : '')).join('  ·  ')) : ''
       }));
       const hasMic = !!(window.webkitSpeechRecognition || window.SpeechRecognition);
+      const lastM = S.aim[S.aim.length - 1];
+      const sg = lastM && lastM.who === 'ai' && lastM.sug && !S.aiBusy ? lastM.sug : null;
       return {
+        sugClosed:!!sg && !sg.open, sugOpen:!!sg && sg.open, sugZh:sg ? sg.zh : '', sugPy:sg ? sg.py : '', sugEn:sg ? sg.en : '',
+        sugShow:this.aiShowSug, sugUse:this.aiUseSug, sugPc:S.playing === 'sug' ? 'on' : '', sugPlay:() => sg && this.say(sg.zh, 'sug'),
         scriptMode:!S.aiMode, aiModeOn:S.aiMode, scriptCls:S.aiMode ? '' : 'on', aiCls:S.aiMode ? 'on' : '',
         setScript:() => this.setAiMode(false), setAi:() => this.setAiMode(true),
         aiNoKey:S.aiMode && !S.aiOn, aiReady:S.aiMode && S.aiOn, aiMsgs:msgs, aiBusy:S.aiBusy, aiErr:S.aiErr, hasAiErr:!!S.aiErr,

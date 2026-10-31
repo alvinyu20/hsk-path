@@ -638,6 +638,8 @@
             </div>
             <sc-if value="{{m.hasOutside}}" hint-placeholder-val="{{ false }}"><div class="note">{{m.outsideText}}</div></sc-if>
             <sc-if value="{{m.hasOk}}" hint-placeholder-val="{{ false }}"><div class="note good">Sounds natural.</div></sc-if>
+            <sc-if value="{{m.cmpGood}}" hint-placeholder-val="{{ false }}"><div class="note good">Matches the suggested reply. If you said it out loud, the microphone heard exactly these characters, a good sign for your tones.</div></sc-if>
+            <sc-if value="{{m.cmpBad}}" hint-placeholder-val="{{ false }}"><div class="note fix"><b>Not the same as the suggestion.</b> <span class="zh">{{m.cmpBadHead}}</span><br>{{m.cmpBadDetail}}</div></sc-if>
             <sc-if value="{{m.hasFb}}" hint-placeholder-val="{{ false }}"><div class="note fix"><b>A more natural way:</b> <span class="zh">{{m.fbBetter}}</span><br>{{m.fbWhy}}</div></sc-if>
           </div>
         </sc-for>
@@ -645,6 +647,17 @@
       </div>
       <sc-if value="{{hasAiErr}}" hint-placeholder-val="{{ false }}"><div class="banner bad" role="alert" style="margin:0 16px 12px">{{aiErr}}</div></sc-if>
       <div class="dock ai-dock">
+        <sc-if value="{{sugClosed}}" hint-placeholder-val="{{ true }}"><div class="sugbox"><button class="btn" onClick="{{sugShow}}">Suggest a reply</button><span class="muted">Try it yourself first, then peek. Then say it and press Send to be checked.</span></div></sc-if>
+        <sc-if value="{{sugOpen}}" hint-placeholder-val="{{ false }}">
+          <div class="sugbox open">
+            <div class="sug-h">Suggested reply</div>
+            <div class="sug-row">
+              <div><div class="zh">{{sugZh}}</div><div class="py">{{sugPy}}</div><div class="en">{{sugEn}}</div></div>
+              <button class="spk {{sugPc}}" aria-label="Hear the suggested reply" onClick="{{sugPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+            </div>
+            <div class="sug-t"><button class="linkbtn" onClick="{{sugUse}}">Put it in the box</button><span class="muted">Better: tap Speak and say it. The microphone hears characters, not tones directly, so this is a check, not a pronunciation score.</span></div>
+          </div>
+        </sc-if>
         <div class="ai-in">
           <input class="wsearch" style="margin:0;max-width:none" type="text" lang="zh" autocomplete="off" placeholder="Type Chinese, or tap Speak" value="{{aiInput}}" onInput="{{onAiInput}}" onKeyDown="{{onAiKey}}" aria-label="Your reply">
           <button class="btn pri" onClick="{{aiSend}}">Send</button>
