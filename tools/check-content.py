@@ -185,8 +185,8 @@ def meaning_checks(zh, en):
         s, st, ed = m.group(0), m.start(), m.end()
         before = zc[st - 1] if st > 0 else ''
         after = zc[ed] if ed < len(zc) else ''
-        if before == '第':
-            continue
+        if before in '第期' and before:
+            continue   # 第一, 星期五: ordinals and weekdays are not counted
         if after in '月号日点' and after:
             continue
         if after == '分' and not zc[ed:ed + 2] == '分钟':

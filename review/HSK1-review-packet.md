@@ -287,7 +287,7 @@ Examples:
 
 Pattern: Thing + 在 + Place
 
-- 上 (on), 下 (under), 里 (inside), 外 (outside), 前 (in front) and 后 (behind) go after the noun: 桌子上, 房间里, 学校前. Add 边 for 'side': 外边, 这边, 那边.
+- 上 (on) and 里 (inside) go right after the noun: 桌子上, 房间里. For under, outside, in front and behind, add 边 (side): 桌子下边, 房间外边, 学校前边, 学校后边. 这边 and 那边 work the same way.
 - Thing + 在 + place says where the thing is: 书在桌子上。
 - Place + 有 + thing says what is there: 桌子上有一本书。
 - Place + 是 + thing identifies what is there: 我家外边是一家商店 (What is outside my home is a shop). 有 only says that something exists there.
@@ -897,8 +897,8 @@ Examples:
 - 来 / 去: 来 comes toward the speaker, 去 goes away from them.
 - 买 / 卖: Same sound shape, different tones: 买 mǎi (buy, third tone) and 卖 mài (sell, fourth tone).
 - 上 / 下: 上 is up or on, 下 is down or under. They also start and end things: 上班 and 下班, 上课 and 下课.
-- 前 / 后: Front and back. Both come after the noun: 学校前, 学校后.
-- 里 / 外: Inside and outside. Both come after the noun: 房间里, 房间外.
+- 前 / 后: Front and back. Add 边 after the noun: 学校前边, 学校后边.
+- 里 / 外: Inside and outside. 里 goes right after the noun, 外 takes 边: 房间里, 房间外边.
 - 男 / 女: They build words too: 男朋友 and 女朋友, 女儿, 女士.
 - 早 / 晚: Early and late. They are also in 早上 / 晚上 and 早饭 / 晚饭.
 - 上班 / 下班: 上 starts it, 下 finishes it.
@@ -1024,15 +1024,15 @@ Examples:
 | 那些 | nàxiē | those | 那些苹果很好吃。 | Nàxiē píngguǒ hěn hǎochī. | Those apples are tasty. |
 | 这儿 | zhèr | here | 我在这儿。 | Wǒ zài zhèr. | I am here. |
 | 那儿 | nàr | there | 你在那儿做什么？ | Nǐ zài nàr zuò shénme? | What are you doing there? |
-| 这里 | zhèli | here | 这里有很多人。 | Zhèli yǒu hěn duō rén. | There are a lot of people here. |
-| 那里 | nàli | there | 那里有一家商店。 | Nàli yǒu yì jiā shāngdiàn. | There is a shop over there. |
+| 这里 | zhèlǐ | here | 这里有很多人。 | Zhèlǐ yǒu hěn duō rén. | There are a lot of people here. |
+| 那里 | nàlǐ | there | 那里有一家商店。 | Nàlǐ yǒu yì jiā shāngdiàn. | There is a shop over there. |
 | 这边 | zhèbiān | this side, over here | 请到这边来。 | Qǐng dào zhèbiān lái. | Please come over here. |
 | 那边 | nàbiān | that side, over there | 学校在那边。 | Xuéxiào zài nàbiān. | The school is over there. |
 | 哪 | nǎ | which | 你要哪本书？ | Nǐ yào nǎ běn shū? | Which book do you want? |
 | 哪个 | nǎge | which one | 你喜欢哪个？ | Nǐ xǐhuan nǎge? | Which one do you like? |
 | 哪些 | nǎxiē | which ones | 哪些书是你的？ | Nǎxiē shū shì nǐ de? | Which books are yours? |
 | 哪儿 | nǎr | where | 你家在哪儿？ | Nǐ jiā zài nǎr? | Where is your home? |
-| 哪里 | nǎli | where | 你在哪里学习汉语？ | Nǐ zài nǎli xuéxí Hànyǔ? | Where do you study Chinese? |
+| 哪里 | nǎlǐ | where | 你在哪里学习汉语？ | Nǐ zài nǎlǐ xuéxí Hànyǔ? | Where do you study Chinese? |
 | 谁 | shéi | who | 她是谁？ | Tā shì shéi? | Who is she? |
 | 什么 | shénme | what | 你想吃什么？ | Nǐ xiǎng chī shénme? | What do you want to eat? |
 | 怎么 | zěnme | how, why | 这个字怎么读？ | Zhège zì zěnme dú? | How do you read this character? |
@@ -1117,12 +1117,12 @@ Examples:
 | 店 | diàn | shop, store | 这家店的包子很好吃。 | Zhè jiā diàn de bāozi hěn hǎochī. | The buns at this shop are very tasty. |
 | 房间 | fángjiān | room | 我的房间很小。 | Wǒ de fángjiān hěn xiǎo. | My room is very small. |
 | 外边 | wàibian | outside | 外边在下雨。 | Wàibian zài xiàyǔ. | It is raining outside. |
-| 外 | wài | outside | 他不在房间里，在房间外。 | Tā bú zài fángjiān lǐ, zài fángjiān wài. | He is not in the room, he is outside it. |
+| 外 | wài | outside | 他不在房间里，在房间外边。 | Tā bú zài fángjiān lǐ, zài fángjiān wàibian. | He is not in the room, he is outside it. |
 | 里 | lǐ | inside | 杯子里有水。 | Bēizi lǐ yǒu shuǐ. | There is water in the cup. |
 | 上 | shàng | on, above (also: to go up) | 书在桌子上。 | Shū zài zhuōzi shàng. | The book is on the table. |
-| 下 | xià | under, below (also: to go down) | 猫在桌子下。 | Māo zài zhuōzi xià. | The cat is under the table. |
-| 前 | qián | front, before | 商店在学校前。 | Shāngdiàn zài xuéxiào qián. | The shop is in front of the school. |
-| 后 | hòu | back, behind, after | 医院在学校后。 | Yīyuàn zài xuéxiào hòu. | The hospital is behind the school. |
+| 下 | xià | under, below (also: to go down) | 猫在桌子下边。 | Māo zài zhuōzi xià biān. | The cat is under the table. |
+| 前 | qián | front, before | 商店在学校前边。 | Shāngdiàn zài xuéxiào qián biān. | The shop is in front of the school. |
+| 后 | hòu | back, behind, after | 医院在学校后边。 | Yīyuàn zài xuéxiào hòu biān. | The hospital is behind the school. |
 | 边 | biān | side (as in 这边, 那边) | 我家在学校那边。 | Wǒ jiā zài xuéxiào nàbiān. | My home is over by the school. |
 | 是 | shì | to be | 你是中国人吗？ | Nǐ shì Zhōngguó rén ma? | Are you Chinese? |
 | 有 | yǒu | to have; there is | 桌子上有一本书。 | Zhuōzi shàng yǒu yì běn shū. | There is a book on the table. |
@@ -1180,7 +1180,7 @@ Examples:
 | 好 | hǎo | good, fine | 我很好，谢谢。 | Wǒ hěn hǎo, xièxie. | I am fine, thank you. |
 | 好吃 | hǎochī | tasty | 这个包子很好吃。 | Zhège bāozi hěn hǎochī. | This bun is very tasty. |
 | 好听 | hǎotīng | nice to listen to | 她唱歌很好听。 | Tā chàng gē hěn hǎotīng. | Her singing sounds lovely. |
-| 好玩儿 | hǎowánr | fun | 中国很好玩儿。 | Zhōngguó hěn hǎowánr. | China is a lot of fun. |
+| 好玩儿 | hǎowánr | fun | 玩电脑很好玩儿。 | Wán diànnǎo hěn hǎowánr. | Playing on the computer is a lot of fun. |
 | 好看 | hǎokàn | good-looking; (of a film or book) good | 这件衣服很好看。 | Zhè jiàn yīfu hěn hǎokàn. | This piece of clothing looks very nice. |
 | 漂亮 | piàoliang | pretty | 她很漂亮。 | Tā hěn piàoliang. | She is very pretty. |
 | 新 | xīn | new | 我有一个新手机。 | Wǒ yǒu yí ge xīn shǒujī. | I have a new phone. |
@@ -1227,7 +1227,7 @@ Examples:
 | 电脑 | diànnǎo | computer | 这是我的电脑。 | Zhè shì wǒ de diànnǎo. | This is my computer. |
 | 电视 | diànshì | television | 我晚上看电视。 | Wǒ wǎnshang kàn diànshì. | I watch TV in the evening. |
 | 电影 | diànyǐng | movie | 我喜欢看电影。 | Wǒ xǐhuan kàn diànyǐng. | I like watching movies. |
-| 电话 | diànhuà | phone; phone number | 你的电话是多少？ | Nǐ de diànhuà shì duōshǎo? | What is your phone number? |
+| 电话 | diànhuà | phone, telephone | 电话在桌子上。 | Diànhuà zài zhuōzi shàng. | The phone is on the table. |
 | 电影院 | diànyǐngyuàn | cinema | 我们去电影院看电影。 | Wǒmen qù diànyǐngyuàn kàn diànyǐng. | We are going to the cinema to watch a movie. |
 | 飞机 | fēijī | plane | 我坐飞机去中国。 | Wǒ zuò fēijī qù Zhōngguó. | I take a plane to China. |
 | 火车 | huǒchē | train | 他坐火车回家。 | Tā zuò huǒchē huí jiā. | He takes the train home. |
@@ -1237,6 +1237,6 @@ Examples:
 | 猫 | māo | cat | 我的猫很大。 | Wǒ de māo hěn dà. | My cat is very big. |
 | 天气 | tiānqì | weather | 今天天气很好。 | Jīntiān tiānqì hěn hǎo. | The weather is very nice today. |
 | 雨 | yǔ | rain | 外边的雨很大。 | Wàibian de yǔ hěn dà. | The rain outside is heavy. |
-| 雪 | xuě | snow | 今天下雪了。 | Jīntiān xià xuě le. | It is snowing today. |
+| 雪 | xuě | snow | 外边下雪了。 | Wàibian xià xuě le. | It has started to snow outside. |
 | 病 | bìng | illness (also: to be ill) | 他病了。 | Tā bìng le. | He is ill. |
 | 歌 | gē | song | 你喜欢听歌吗？ | Nǐ xǐhuan tīng gē ma? | Do you like listening to songs? |

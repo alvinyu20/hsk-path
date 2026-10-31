@@ -64,6 +64,20 @@ def main():
     if missing or extra or dups:
         sys.exit('word list does not match the official 300: missing=%s extra=%s dups=%s' % (missing, extra, dups))
 
+    # extra example sentences (content/examples-*.tsv: word, Chinese, English)
+    extras = {}
+    for path in sorted(glob.glob(os.path.join(C, 'examples-*.tsv'))):
+        for n, p in read_tsv(path):
+            if p[0].startswith('#'):
+                continue
+            if len(p) != 3 or any(not x.strip() for x in p):
+                sys.exit('%s line %d: expected word, Chinese, English, got %r' % (os.path.basename(path), n, p))
+            if p[0] not in have:
+                sys.exit('%s line %d: %r is not one of the 300 words' % (os.path.basename(path), n, p[0]))
+            if p[0] not in p[1]:
+                sys.exit('%s line %d: the sentence %r does not contain the word %r' % (os.path.basename(path), n, p[1], p[0]))
+            extras.setdefault(p[0], []).append(p)
+
     eng = Engine(official)
     lines = []
     for w in words:
@@ -71,6 +85,16 @@ def main():
         py, toks = eng.sentence(w['ex_zh'])
         ex = dict(zh=w['ex_zh'], py=py, en=w['ex_en'], toks=toks)
         entry = dict(zh=w['zh'], py=w['py'], pos=w['pos'], en=w['en'], ex=ex)
+        more = []
+        seen = {w['ex_zh']}
+        for _, zh, en in extras.get(w['zh'], []):
+            if zh in seen:
+                continue
+            seen.add(zh)
+            py2, toks2 = eng.sentence(zh)
+            more.append(dict(zh=zh, py=py2, en=en, toks=toks2))
+        if more:
+            entry['more'] = more
         if w['note']:
             entry['note'] = w['note']
         lines.append(json.dumps(entry, ensure_ascii=False))

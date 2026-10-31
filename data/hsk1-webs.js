@@ -1127,8 +1127,8 @@ window.HSK1_WEBS = {
      ]
     },
     {
-     "en": "China is a lot of fun.",
-     "zh": "中国很___。",
+     "en": "Playing on the computer is a lot of fun.",
+     "zh": "玩电脑很___。",
      "ans": "好玩儿",
      "opts": [
       "好玩儿",
@@ -2617,12 +2617,12 @@ window.HSK1_WEBS = {
   {
    "a": "前",
    "b": "后",
-   "note": "Front and back. Both come after the noun: 学校前, 学校后."
+   "note": "Front and back. Add 边 after the noun: 学校前边, 学校后边."
   },
   {
    "a": "里",
    "b": "外",
-   "note": "Inside and outside. Both come after the noun: 房间里, 房间外."
+   "note": "Inside and outside. 里 goes right after the noun, 外 takes 边: 房间里, 房间外边."
   },
   {
    "a": "男",

@@ -24,6 +24,7 @@ const out = [];
 const add = (where, zh, py, en, extra) => { if (zh) out.push(Object.assign({ where, zh, py: py || '', en: en || '' }, extra || {})); };
 
 WORDS.forEach(w => add('word:' + w.zh, w.ex.zh, w.ex.py, w.ex.en, { word: w.zh }));
+WORDS.forEach(w => (w.more || []).forEach((e, i) => add('word-extra:' + w.zh + ':' + (i + 1), e.zh, e.py, e.en, { word: w.zh })));
 WORDS.forEach(w => add('wordform:' + w.zh, w.zh, w.py, '', { levelOnly: false }));
 WORDS.forEach(w => (w.note ? (w.note.match(/[\u4e00-\u9fff]+/g) || []) : []).forEach((t, j) => add('word-note:' + w.zh + '.' + j, t, '', '', { levelOnly: true })));
 const WEBS = window[N + '_WEBS'] || null;

@@ -58,6 +58,6 @@
 星期天	time	Sunday	星期天我在家。	I am at home on Sunday.
 星期日	time	Sunday (a little more formal)	我星期日不工作。	I don't work on Sunday.
 月	n	month	现在是十月。	It is October now.
-日	n	day of the month (written)	今天是五月一日。	Today is May 1st.
+日	n	day of the month (written)	今天是五月一日。	Today is May 1st.	日 is the written way to say the day of the month (十月三十日, on a calendar or in writing). In speech people almost always say 号: 今天是十月三十号.
 年	n	year	一年有十二个月。	A year has twelve months.
 天	n	day (also: sky)	我学习汉语三天了。	I have been studying Chinese for three days.

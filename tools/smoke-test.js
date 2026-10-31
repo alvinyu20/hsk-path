@@ -101,6 +101,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(await page.evaluate((N) => window.HSK1_WORDS.length === N && window.HSK1_WORDS.every(w => w.ex && w.ex.zh && w.py && w.en), WORD_COUNT), 'all ' + WORD_COUNT + ' words are loaded with a gloss, pinyin and an example');
   await shot('01-home');
 
+  check(await page.evaluate(() => window.HSK1_WORDS.every(w => (w.more || []).length >= 2)), 'every word has at least two extra example sentences');
+
   // Tests are blocked until words are started
   await nav('Tests');
   check((await text()).includes('Add at least three words'), 'test is blocked until you have started words');
@@ -135,6 +137,11 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForTimeout(60);
   check((await page.locator('.wc').first().innerText()).includes(firstEx), 'Show example reveals the word\'s example sentence (' + firstCardWord + ': ' + firstEx + ')');
   check((await page.locator('.wc').first().locator('.wexbox .spk').count()) === 1, 'the example sentence has a play button');
+  const more0 = await page.evaluate((zh) => { const m = window.HSK1_WORDS.find(w => w.zh === zh).more || []; return m.length ? m[0].zh : null; }, firstCardWord);
+  check(!!more0, 'every word has more than one example sentence (' + firstCardWord + ')');
+  await page.locator('.wc').first().locator('button', { hasText: 'Another example' }).click();
+  await page.waitForTimeout(60);
+  check((await page.locator('.wc').first().innerText()).includes(more0) && (await page.locator('.wc').first().innerText()).includes('2 of'), 'Another example shows the next sentence for the word');
   await page.locator('.wc').first().locator('button', { hasText: 'Hide example' }).click();
   await page.waitForTimeout(60);
   check(!(await page.locator('.wc').first().innerText()).includes(firstEx), 'Hide example puts it away again');

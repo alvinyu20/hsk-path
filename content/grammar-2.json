@@ -1,146 +1,775 @@
 [
-{"id":"measure","title":"这, 那 and measure words","covers":[10,12,13,32],
- "formula":["这 / 那","Number","*Measure word","Noun"],
- "explain":["这 means this and 那 means that. Before a noun they need a measure word: 这个人 (this person), 那本书 (that book). 这个 and 那个 can also stand alone: 我喜欢这个。 Plurals are 这些 and 那些. Places are 这儿 / 这里 (here) and 那儿 / 那里 (there).",
-  "Chinese counts with a measure word between the number and the noun: 三个苹果, 两本书. The all-purpose one is 个.",
-  "Some nouns want a specific one: 本 for books, 件 for clothes (and for matters), 只 (zhī) for small animals, 口 for people in a family, 家 for shops and companies, 块 or 元 for money, and 杯 for cups of drinks.",
-  "Ask how many with 几 + measure word: 你有几本书？"],
- "examples":[{"zh":"这个人是我的朋友。","en":"This person is my friend."},{"zh":"我有两本书。","en":"I have two books."},{"zh":"我想买一件新衣服。","en":"I want to buy a new piece of clothing."},{"zh":"我家有四口人。","en":"There are four people in my family."},{"zh":"我想喝一杯茶。","en":"I would like a cup of tea."}],
- "mistakes":["Use the right measure word: 三本书, not 三个书. Use 个 only when no special one fits."],
- "q":[
-  {"t":"order","zh":"我想买一件新衣服。","en":"I want to buy a new piece of clothing.","explain":"Number + 件 + clothing."},
-  {"t":"cloze","zh":"我有两本书。","en":"I have two books.","blank":"本","explain":"本 is the measure word for books."},
-  {"t":"mc","prompt":"Which sentence says: I have a cat?","options":["我有一个猫。","我有一只猫。"],"correct":1,"zh":"我有一只猫。","en":"I have a cat.","explain":"Small animals take 只."},
-  {"t":"cloze","zh":"他家有三口人。","en":"There are three people in his family.","blank":"口","explain":"口 counts the members of a family."},
-  {"t":"cloze","zh":"你有几本书？","en":"How many books do you have?","blank":"几","explain":"几 + measure word asks how many."}
- ]},
-
-{"id":"num","title":"Numbers, 两, money, age and 第","covers":[11,36,67,68,14],
- "formula":["Number","Measure word / unit"],
- "explain":["一 二 三 四 五 六 七 八 九 十. Then 十一 (11), 二十 (20), 二十一 (21). 一百 is 100 and 一百零五 is 105 (零 fills the gap). 一千 is 1,000.",
-  "There are two words for two: 二 for counting, numbers and dates (二十, 二月), and 两 before a measure word (两个, 两本书).",
-  "半 means half: 一半 (half of it). Money uses 块 (spoken) or 元 (written), often with 钱: 三块钱, 三十元. One and a half yuan is 一块半.",
-  "第 makes an ordinal number: 第一天 means 'the first day'.",
-  "Age uses 岁 and needs no 是: 我八岁。"],
- "examples":[{"zh":"这个手机三千块。","en":"This phone is 3,000 yuan."},{"zh":"我有两个朋友。","en":"I have two friends."},{"zh":"他八岁。","en":"He is eight years old."},{"zh":"这个包子一块半。","en":"This bun is one and a half yuan."},{"zh":"今天是我学汉语的第一天。","en":"Today is my first day of learning Chinese."}],
- "mistakes":["Say 两个人, not 二个人. But 二 is right in numbers and dates: 二十, 二月二号."],
- "q":[
-  {"t":"order","zh":"这个包子一块半。","en":"This bun is one and a half yuan.","explain":"块 + 半 means one and a half yuan."},
-  {"t":"cloze","zh":"我有两个朋友。","en":"I have two friends.","blank":"两","explain":"Before a measure word, two is 两."},
-  {"t":"cloze","zh":"他八岁。","en":"He is eight years old.","blank":"岁","explain":"岁 is used for age. There is no 是."},
-  {"t":"cloze","zh":"今天是我学汉语的第一天。","en":"Today is my first day of learning Chinese.","blank":"第","explain":"第 makes ordinal numbers."},
-  {"t":"mc","prompt":"Which sentence says: I want to buy two apples?","options":["我想买二个苹果。","我想买两个苹果。"],"correct":1,"zh":"我想买两个苹果。","en":"I want to buy two apples.","explain":"Use 两 before a measure word."}
- ]},
-
-{"id":"time","title":"Time, dates and days","covers":[14,40,44,69,70],
- "formula":["Subject","Time","Verb"],
- "explain":["Clock time is number + 点 (o'clock), then + 分 (minutes) or 半 (half): 七点, 八点零五分, 七点半. Say 两点 for 2 o'clock.",
-  "Dates go from big to small: year, month, day. Say 月 and 号 (spoken) or 日 (written): 十月三十号. Weekdays are 星期 + number: 星期一 to 星期六. Sunday is 星期天 or 星期日. Ask with 几: 今天星期几？ 现在几点？",
-  "Time words go before the verb, either right after the subject or at the start of the sentence: 我七点起床 or 七点我起床. Not after the verb.",
-  "A time or date does not need a verb: 现在七点半。 With 是 it also works: 现在是八点零五分。"],
- "examples":[{"zh":"我七点起床。","en":"I get up at seven o'clock."},{"zh":"现在是八点零五分。","en":"It is 8:05 now."},{"zh":"今天是十月三十号。","en":"Today is October 30th."},{"zh":"今天星期几？","en":"What day of the week is it today?"},{"zh":"我星期天在家。","en":"I am at home on Sunday."}],
- "mistakes":["Say 两点 for 2 o'clock, not 二点.","Time goes before the verb: 我七点起床, not 我起床七点."],
- "q":[
-  {"t":"order","zh":"我七点起床。","en":"I get up at seven o'clock.","explain":"The time comes before the verb."},
-  {"t":"cloze","zh":"现在几点？","en":"What time is it now?","blank":"几","explain":"几点 asks for the hour."},
-  {"t":"cloze","zh":"今天星期几？","en":"What day of the week is it today?","blank":"星期","explain":"星期 + 几 asks the weekday."},
-  {"t":"mc","prompt":"Which sentence says: It is 2 o'clock?","options":["现在二点。","现在两点。"],"correct":1,"zh":"现在两点。","en":"It is two o'clock now.","explain":"Use 两点 for 2 o'clock."},
-  {"t":"mc","prompt":"Which sentence says: Today is October 30th?","options":["今天是三十号十月。","今天是十月三十号。"],"correct":1,"zh":"今天是十月三十号。","en":"Today is October 30th.","explain":"Dates go from big to small: month, then day."}
- ]},
-
-{"id":"zai","title":"在: where something happens","covers":[21,33],
- "formula":["Subject","*在 + Place","Verb"],
- "explain":["在 means 'at / in'. 在 + place goes before the verb: 我在家吃饭 means 'I eat at home'.",
-  "在 can also be a verb, 'to be at': 我在家。他不在学校。",
-  "Ask where with 在哪儿 or 在哪里: 你在哪儿工作？"],
- "examples":[{"zh":"我在家。","en":"I am at home."},{"zh":"他们在家吃饭。","en":"They eat at home."},{"zh":"你在哪儿工作？","en":"Where do you work?"},{"zh":"我在学校学习汉语。","en":"I study Chinese at school."}],
- "mistakes":["The place goes before the verb: 我在家吃饭, not 我吃饭在家."],
- "q":[
-  {"t":"order","zh":"我们在饭店吃饭。","en":"We eat at a restaurant.","explain":"在 + place comes before the verb."},
-  {"t":"cloze","zh":"他们在家吃饭。","en":"They eat at home.","blank":"在","explain":"在 means 'at'."},
-  {"t":"cloze","zh":"你在哪儿工作？","en":"Where do you work?","blank":"哪儿","explain":"哪儿 asks where."},
-  {"t":"order","zh":"他不在家。","en":"He is not at home.","explain":"不 goes before 在."},
-  {"t":"mc","prompt":"Which sentence says: I study at school?","options":["我学习在学校。","我在学校学习。"],"correct":1,"zh":"我在学校学习。","en":"I study at school.","explain":"The place comes before the verb."}
- ]},
-
-{"id":"loc","title":"Positions and where things are","covers":[3,34,2,54,55],
- "formula":["Thing","*在","Place"],
- "explain":["上 (on), 下 (under), 里 (inside), 外 (outside), 前 (in front) and 后 (behind) go after the noun: 桌子上, 房间里, 学校前. Add 边 for 'side': 外边, 这边, 那边.",
-  "Thing + 在 + place says where the thing is: 书在桌子上。",
-  "Place + 有 + thing says what is there: 桌子上有一本书。",
-  "Place + 是 + thing identifies what is there: 我家外边是一家商店 (What is outside my home is a shop). 有 only says that something exists there."],
- "examples":[{"zh":"书在桌子上。","en":"The book is on the table."},{"zh":"杯子里有水。","en":"There is water in the cup."},{"zh":"桌子上有一本书。","en":"There is a book on the table."},{"zh":"我家外边是一家商店。","en":"Outside my home there is a shop."},{"zh":"学校在那边。","en":"The school is over there."}],
- "mistakes":["Do not use 在 for 'there is': 桌子上有一本书, not 桌子上在一本书."],
- "q":[
-  {"t":"order","zh":"杯子里有水。","en":"There is water in the cup.","explain":"Place + 有 + thing."},
-  {"t":"cloze","zh":"书在桌子上。","en":"The book is on the table.","blank":"上","explain":"上 goes after the noun."},
-  {"t":"mc","prompt":"Which sentence says: There is a book on the table?","options":["桌子上在一本书。","桌子上有一本书。"],"correct":1,"zh":"桌子上有一本书。","en":"There is a book on the table.","explain":"'There is' uses 有."},
-  {"t":"cloze","zh":"我家外边是一家商店。","en":"Outside my home there is a shop.","blank":"是","explain":"Place + 是 + thing names what is there."},
-  {"t":"order","zh":"学校在那边。","en":"The school is over there.","explain":"Thing + 在 + place."}
- ]},
-
-{"id":"want","title":"想 and 要: wanting and offering","covers":[5],
- "formula":["Subject","*想 / 要","Verb"],
- "explain":["想 + verb means 'want to' or 'would like to': 我想喝茶。 It is soft and polite, so it is the word to use when you offer or ask what someone wants: 你想喝茶吗？ (Would you like some tea?) 你想吃什么？ (What would you like to eat?)",
-  "要 also means 'want', but it is more direct. It works with a noun, which is how you order or buy: 我要一个包子。 With a verb: 我要休息。",
-  "A plain verb question is not an offer. 你喝茶吗？ means 'Do you drink tea?' and asks about a habit. To ask 'Would you like tea?', add 想: 你想喝茶吗？",
-  "The negative of 想 is 不想: 我不想吃。 不要 is 'don't!' or a firm refusal."],
- "examples":[{"zh":"我想去中国。","en":"I want to go to China."},{"zh":"你想喝什么？","en":"What would you like to drink?"},{"zh":"你想喝茶吗？","en":"Would you like some tea?"},{"zh":"我要一个包子。","en":"I'll have a bun."},{"zh":"我不想吃东西。","en":"I don't want anything to eat."}],
- "mistakes":["你喝茶吗？ is not an offer. It asks whether you drink tea. Offer with 你想喝茶吗？","不想 is 'do not want to'. 不要 is 'don't!'"],
- "q":[
-  {"t":"order","zh":"你想喝热茶吗？","en":"Would you like hot tea?","explain":"想 turns the question into an offer."},
-  {"t":"mc","prompt":"Which sentence offers someone tea: 'Would you like some tea?'","options":["你喝茶吗？","你想喝茶吗？"],"correct":1,"zh":"你想喝茶吗？","en":"Would you like some tea?","explain":"你喝茶吗？ asks whether you drink tea. 想 makes it an offer."},
-  {"t":"cloze","zh":"你想喝什么？","en":"What would you like to drink?","blank":"想","explain":"想 + verb asks what someone would like."},
-  {"t":"cloze","zh":"我要一个包子。","en":"I'll have a bun.","blank":"要","explain":"要 + noun is how you order."},
-  {"t":"cloze","zh":"我不想吃东西。","en":"I don't want anything to eat.","blank":"不","explain":"不 goes in front of 想."}
- ]},
-
-{"id":"modal","title":"会, 能, 可以: can","covers":[4,6],
- "formula":["Subject","*会 / 能 / 可以","Verb"],
- "explain":["会: you know how to, a skill you learned. 我会做饭。你会开车吗？",
-  "能: you are able to, or the situation allows it. 我明天能来。你能来吗？",
-  "可以: you are allowed to. It is how you ask for permission: 我可以坐这儿吗？ To say yes, answer 可以.",
-  "They overlap: 能 is also used to ask permission. The negatives are 不会 (don't know how), 不能 (can't) and 不可以 (not allowed)."],
- "examples":[{"zh":"我会说一点儿汉语。","en":"I can speak a little Chinese."},{"zh":"你会开车吗？","en":"Can you drive?"},{"zh":"你明天能来吗？","en":"Can you come tomorrow?"},{"zh":"我可以坐这儿吗？","en":"May I sit here?"}],
- "mistakes":["Do not use 会 to ask permission: 我可以坐这儿吗？, not 我会坐这儿吗？"],
- "q":[
-  {"t":"order","zh":"我可以坐这儿吗？","en":"May I sit here?","explain":"可以 asks for permission."},
-  {"t":"cloze","zh":"你会开车吗？","en":"Can you drive?","blank":"会","explain":"会 is for skills you learned."},
-  {"t":"cloze","zh":"你明天能来吗？","en":"Can you come tomorrow?","blank":"能","explain":"能 is for being able to, because the situation allows it."},
-  {"t":"mc","prompt":"Which sentence asks: Can you speak Chinese? (a skill)","options":["你可以说汉语吗？","你会说汉语吗？"],"correct":1,"zh":"你会说汉语吗？","en":"Can you speak Chinese?","explain":"会 is for a learned skill. 可以 would ask whether you are allowed to."},
-  {"t":"cloze","zh":"我可以坐这儿吗？","en":"May I sit here?","blank":"可以","explain":"可以 is for permission."}
- ]},
-
-{"id":"adv","title":"都, 也, 还, 再 and joining sentences","covers":[16,18,19,59,60,61],
- "formula":["Subject","*都 / 也 / 还 / 再","Verb"],
- "explain":["These adverbs go after the subject and before the verb or adjective: 我们都是学生。我也是学生。",
-  "都 means all or both: 我们都很好。 With 不, it means none of us: 我们都不喝茶。",
-  "也 means also or too. It goes before 不: 我也不是学生 means 'I am not a student either'. 我也是 means 'Me too'. Do not put 也 at the end of a sentence.",
-  "还 means also, else or still: 你还想吃什么？ (What else would you like to eat?)",
-  "再 means again, for something that has not happened yet: 明天再来。",
-  "Two short sentences can sit side by side with a comma and no 'and': 爸爸是老师，妈妈也是老师。"],
- "examples":[{"zh":"我们都是学生。","en":"We are all students."},{"zh":"我也是学生。","en":"I am a student too."},{"zh":"你还想吃什么？","en":"What else would you like to eat?"},{"zh":"明天再来。","en":"Come again tomorrow."},{"zh":"爸爸是老师，妈妈也是老师。","en":"Dad is a teacher, and Mom is a teacher too."}],
- "mistakes":["也 goes before the verb: 我也喜欢茶, not 我喜欢茶也.","都 goes after the subject: 他们都在学校, not 都他们在学校."],
- "q":[
-  {"t":"order","zh":"爸爸是老师，妈妈也是老师。","en":"Dad is a teacher, and Mom is a teacher too.","explain":"也 goes before the second 是."},
-  {"t":"cloze","zh":"我也是学生。","en":"I am a student too.","blank":"也","explain":"也 goes before the verb."},
-  {"t":"cloze","zh":"我们都很好。","en":"We are all fine.","blank":"都","explain":"都 goes after the subject."},
-  {"t":"mc","prompt":"Which sentence says: I like tea too?","options":["我喜欢茶也。","我也喜欢茶。"],"correct":1,"zh":"我也喜欢茶。","en":"I like tea too.","explain":"也 comes before the verb, never at the end."},
-  {"t":"cloze","zh":"你还想吃什么？","en":"What else would you like to eat?","blank":"还","explain":"还 means 'else' here."}
- ]},
-
-{"id":"anota","title":"A-not-A questions","covers":[49],
- "formula":["Subject","*Verb + 不 + Verb","Object"],
- "explain":["Another way to ask a yes/no question: say the verb, then 不, then the verb again. 你是不是老师？ 你去不去学校？ (Are you going to school or not?)",
-  "For 有, use 没: 你有没有手机？",
-  "Do not add 吗 to an A-not-A question."],
- "examples":[{"zh":"她是不是你们的老师？","en":"Is she your teacher?"},{"zh":"你去不去学校？","en":"Are you going to school?"},{"zh":"你有没有手机？","en":"Do you have a phone?"},{"zh":"你喜欢不喜欢茶？","en":"Do you like tea?"}],
- "mistakes":["No 吗 here: 你去不去？, not 你去不去吗？"],
- "q":[
-  {"t":"order","zh":"你是不是学生？","en":"Are you a student?","explain":"Verb + 不 + verb."},
-  {"t":"cloze","zh":"你去不去学校？","en":"Are you going to school?","blank":"不","explain":"不 sits between the two verbs."},
-  {"t":"mc","prompt":"Which sentence asks: Do you have a phone?","options":["你有不有手机？","你有没有手机？"],"correct":1,"zh":"你有没有手机？","en":"Do you have a phone?","explain":"有 uses 没: 有没有."},
-  {"t":"spot","zh":"你去不去学校？","en":"Are you going to school?","wrong":"你去不去学校吗？","remove":"吗","explain":"The A-not-A form already makes the question."},
-  {"t":"order","zh":"她是不是你们的老师？","en":"Is she your teacher?","explain":"是不是 goes in the middle."}
- ]}
+ {
+  "id": "measure",
+  "title": "这, 那 and measure words",
+  "covers": [
+   10,
+   12,
+   13,
+   32
+  ],
+  "formula": [
+   "这 / 那",
+   "Number",
+   "*Measure word",
+   "Noun"
+  ],
+  "explain": [
+   "这 means this and 那 means that. Before a noun they need a measure word: 这个人 (this person), 那本书 (that book). 这个 and 那个 can also stand alone: 我喜欢这个。 Plurals are 这些 and 那些. Places are 这儿 / 这里 (here) and 那儿 / 那里 (there).",
+   "Chinese counts with a measure word between the number and the noun: 三个苹果, 两本书. The all-purpose one is 个.",
+   "Some nouns want a specific one: 本 for books, 件 for clothes (and for matters), 只 (zhī) for small animals, 口 for people in a family, 家 for shops and companies, 块 or 元 for money, and 杯 for cups of drinks.",
+   "Ask how many with 几 + measure word: 你有几本书？"
+  ],
+  "examples": [
+   {
+    "zh": "这个人是我的朋友。",
+    "en": "This person is my friend."
+   },
+   {
+    "zh": "我有两本书。",
+    "en": "I have two books."
+   },
+   {
+    "zh": "我想买一件新衣服。",
+    "en": "I want to buy a new piece of clothing."
+   },
+   {
+    "zh": "我家有四口人。",
+    "en": "There are four people in my family."
+   },
+   {
+    "zh": "我想喝一杯茶。",
+    "en": "I would like a cup of tea."
+   }
+  ],
+  "mistakes": [
+   "Use the right measure word: 三本书, not 三个书. Use 个 only when no special one fits."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我想买一件新衣服。",
+    "en": "I want to buy a new piece of clothing.",
+    "explain": "Number + 件 + clothing."
+   },
+   {
+    "t": "cloze",
+    "zh": "我有两本书。",
+    "en": "I have two books.",
+    "blank": "本",
+    "explain": "本 is the measure word for books."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I have a cat?",
+    "options": [
+     "我有一个猫。",
+     "我有一只猫。"
+    ],
+    "correct": 1,
+    "zh": "我有一只猫。",
+    "en": "I have a cat.",
+    "explain": "Small animals take 只."
+   },
+   {
+    "t": "cloze",
+    "zh": "他家有三口人。",
+    "en": "There are three people in his family.",
+    "blank": "口",
+    "explain": "口 counts the members of a family."
+   },
+   {
+    "t": "cloze",
+    "zh": "你有几本书？",
+    "en": "How many books do you have?",
+    "blank": "几",
+    "explain": "几 + measure word asks how many."
+   }
+  ]
+ },
+ {
+  "id": "num",
+  "title": "Numbers, 两, money, age and 第",
+  "covers": [
+   11,
+   36,
+   67,
+   68,
+   14
+  ],
+  "formula": [
+   "Number",
+   "Measure word / unit"
+  ],
+  "explain": [
+   "一 二 三 四 五 六 七 八 九 十. Then 十一 (11), 二十 (20), 二十一 (21). 一百 is 100 and 一百零五 is 105 (零 fills the gap). 一千 is 1,000.",
+   "There are two words for two: 二 for counting, numbers and dates (二十, 二月), and 两 before a measure word (两个, 两本书).",
+   "半 means half: 一半 (half of it). Money uses 块 (spoken) or 元 (written), often with 钱: 三块钱, 三十元. One and a half yuan is 一块半.",
+   "第 makes an ordinal number: 第一天 means 'the first day'.",
+   "Age uses 岁 and needs no 是: 我八岁。"
+  ],
+  "examples": [
+   {
+    "zh": "这个手机三千块。",
+    "en": "This phone is 3,000 yuan."
+   },
+   {
+    "zh": "我有两个朋友。",
+    "en": "I have two friends."
+   },
+   {
+    "zh": "他八岁。",
+    "en": "He is eight years old."
+   },
+   {
+    "zh": "这个包子一块半。",
+    "en": "This bun is one and a half yuan."
+   },
+   {
+    "zh": "今天是我学汉语的第一天。",
+    "en": "Today is my first day of learning Chinese."
+   }
+  ],
+  "mistakes": [
+   "Say 两个人, not 二个人. But 二 is right in numbers and dates: 二十, 二月二号."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "这个包子一块半。",
+    "en": "This bun is one and a half yuan.",
+    "explain": "块 + 半 means one and a half yuan."
+   },
+   {
+    "t": "cloze",
+    "zh": "我有两个朋友。",
+    "en": "I have two friends.",
+    "blank": "两",
+    "explain": "Before a measure word, two is 两."
+   },
+   {
+    "t": "cloze",
+    "zh": "他八岁。",
+    "en": "He is eight years old.",
+    "blank": "岁",
+    "explain": "岁 is used for age. There is no 是."
+   },
+   {
+    "t": "cloze",
+    "zh": "今天是我学汉语的第一天。",
+    "en": "Today is my first day of learning Chinese.",
+    "blank": "第",
+    "explain": "第 makes ordinal numbers."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I want to buy two apples?",
+    "options": [
+     "我想买二个苹果。",
+     "我想买两个苹果。"
+    ],
+    "correct": 1,
+    "zh": "我想买两个苹果。",
+    "en": "I want to buy two apples.",
+    "explain": "Use 两 before a measure word."
+   }
+  ]
+ },
+ {
+  "id": "time",
+  "title": "Time, dates and days",
+  "covers": [
+   14,
+   40,
+   44,
+   69,
+   70
+  ],
+  "formula": [
+   "Subject",
+   "Time",
+   "Verb"
+  ],
+  "explain": [
+   "Clock time is number + 点 (o'clock), then + 分 (minutes) or 半 (half): 七点, 八点零五分, 七点半. Say 两点 for 2 o'clock.",
+   "Dates go from big to small: year, month, day. Say 月 and 号 (spoken) or 日 (written): 十月三十号. Weekdays are 星期 + number: 星期一 to 星期六. Sunday is 星期天 or 星期日. Ask with 几: 今天星期几？ 现在几点？",
+   "Time words go before the verb, either right after the subject or at the start of the sentence: 我七点起床 or 七点我起床. Not after the verb.",
+   "A time or date does not need a verb: 现在七点半。 With 是 it also works: 现在是八点零五分。"
+  ],
+  "examples": [
+   {
+    "zh": "我七点起床。",
+    "en": "I get up at seven o'clock."
+   },
+   {
+    "zh": "现在是八点零五分。",
+    "en": "It is 8:05 now."
+   },
+   {
+    "zh": "今天是十月三十号。",
+    "en": "Today is October 30th."
+   },
+   {
+    "zh": "今天星期几？",
+    "en": "What day of the week is it today?"
+   },
+   {
+    "zh": "我星期天在家。",
+    "en": "I am at home on Sunday."
+   }
+  ],
+  "mistakes": [
+   "Say 两点 for 2 o'clock, not 二点.",
+   "Time goes before the verb: 我七点起床, not 我起床七点."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我七点起床。",
+    "en": "I get up at seven o'clock.",
+    "explain": "The time comes before the verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "现在几点？",
+    "en": "What time is it now?",
+    "blank": "几",
+    "explain": "几点 asks for the hour."
+   },
+   {
+    "t": "cloze",
+    "zh": "今天星期几？",
+    "en": "What day of the week is it today?",
+    "blank": "星期",
+    "explain": "星期 + 几 asks the weekday."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: It is 2 o'clock?",
+    "options": [
+     "现在二点。",
+     "现在两点。"
+    ],
+    "correct": 1,
+    "zh": "现在两点。",
+    "en": "It is two o'clock now.",
+    "explain": "Use 两点 for 2 o'clock."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Today is October 30th?",
+    "options": [
+     "今天是三十号十月。",
+     "今天是十月三十号。"
+    ],
+    "correct": 1,
+    "zh": "今天是十月三十号。",
+    "en": "Today is October 30th.",
+    "explain": "Dates go from big to small: month, then day."
+   }
+  ]
+ },
+ {
+  "id": "zai",
+  "title": "在: where something happens",
+  "covers": [
+   21,
+   33
+  ],
+  "formula": [
+   "Subject",
+   "*在 + Place",
+   "Verb"
+  ],
+  "explain": [
+   "在 means 'at / in'. 在 + place goes before the verb: 我在家吃饭 means 'I eat at home'.",
+   "在 can also be a verb, 'to be at': 我在家。他不在学校。",
+   "Ask where with 在哪儿 or 在哪里: 你在哪儿工作？"
+  ],
+  "examples": [
+   {
+    "zh": "我在家。",
+    "en": "I am at home."
+   },
+   {
+    "zh": "他们在家吃饭。",
+    "en": "They eat at home."
+   },
+   {
+    "zh": "你在哪儿工作？",
+    "en": "Where do you work?"
+   },
+   {
+    "zh": "我在学校学习汉语。",
+    "en": "I study Chinese at school."
+   }
+  ],
+  "mistakes": [
+   "The place goes before the verb: 我在家吃饭, not 我吃饭在家."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我们在饭店吃饭。",
+    "en": "We eat at a restaurant.",
+    "explain": "在 + place comes before the verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "他们在家吃饭。",
+    "en": "They eat at home.",
+    "blank": "在",
+    "explain": "在 means 'at'."
+   },
+   {
+    "t": "cloze",
+    "zh": "你在哪儿工作？",
+    "en": "Where do you work?",
+    "blank": "哪儿",
+    "explain": "哪儿 asks where."
+   },
+   {
+    "t": "order",
+    "zh": "他不在家。",
+    "en": "He is not at home.",
+    "explain": "不 goes before 在."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I study at school?",
+    "options": [
+     "我学习在学校。",
+     "我在学校学习。"
+    ],
+    "correct": 1,
+    "zh": "我在学校学习。",
+    "en": "I study at school.",
+    "explain": "The place comes before the verb."
+   }
+  ]
+ },
+ {
+  "id": "loc",
+  "title": "Positions and where things are",
+  "covers": [
+   3,
+   34,
+   2,
+   54,
+   55
+  ],
+  "formula": [
+   "Thing",
+   "*在",
+   "Place"
+  ],
+  "explain": [
+   "上 (on) and 里 (inside) go right after the noun: 桌子上, 房间里. For under, outside, in front and behind, add 边 (side): 桌子下边, 房间外边, 学校前边, 学校后边. 这边 and 那边 work the same way.",
+   "Thing + 在 + place says where the thing is: 书在桌子上。",
+   "Place + 有 + thing says what is there: 桌子上有一本书。",
+   "Place + 是 + thing identifies what is there: 我家外边是一家商店 (What is outside my home is a shop). 有 only says that something exists there."
+  ],
+  "examples": [
+   {
+    "zh": "书在桌子上。",
+    "en": "The book is on the table."
+   },
+   {
+    "zh": "杯子里有水。",
+    "en": "There is water in the cup."
+   },
+   {
+    "zh": "桌子上有一本书。",
+    "en": "There is a book on the table."
+   },
+   {
+    "zh": "我家外边是一家商店。",
+    "en": "Outside my home there is a shop."
+   },
+   {
+    "zh": "学校在那边。",
+    "en": "The school is over there."
+   }
+  ],
+  "mistakes": [
+   "Do not use 在 for 'there is': 桌子上有一本书, not 桌子上在一本书."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "杯子里有水。",
+    "en": "There is water in the cup.",
+    "explain": "Place + 有 + thing."
+   },
+   {
+    "t": "cloze",
+    "zh": "书在桌子上。",
+    "en": "The book is on the table.",
+    "blank": "上",
+    "explain": "上 goes after the noun."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: There is a book on the table?",
+    "options": [
+     "桌子上在一本书。",
+     "桌子上有一本书。"
+    ],
+    "correct": 1,
+    "zh": "桌子上有一本书。",
+    "en": "There is a book on the table.",
+    "explain": "'There is' uses 有."
+   },
+   {
+    "t": "cloze",
+    "zh": "我家外边是一家商店。",
+    "en": "Outside my home there is a shop.",
+    "blank": "是",
+    "explain": "Place + 是 + thing names what is there."
+   },
+   {
+    "t": "order",
+    "zh": "学校在那边。",
+    "en": "The school is over there.",
+    "explain": "Thing + 在 + place."
+   }
+  ]
+ },
+ {
+  "id": "want",
+  "title": "想 and 要: wanting and offering",
+  "covers": [
+   5
+  ],
+  "formula": [
+   "Subject",
+   "*想 / 要",
+   "Verb"
+  ],
+  "explain": [
+   "想 + verb means 'want to' or 'would like to': 我想喝茶。 It is soft and polite, so it is the word to use when you offer or ask what someone wants: 你想喝茶吗？ (Would you like some tea?) 你想吃什么？ (What would you like to eat?)",
+   "要 also means 'want', but it is more direct. It works with a noun, which is how you order or buy: 我要一个包子。 With a verb: 我要休息。",
+   "A plain verb question is not an offer. 你喝茶吗？ means 'Do you drink tea?' and asks about a habit. To ask 'Would you like tea?', add 想: 你想喝茶吗？",
+   "The negative of 想 is 不想: 我不想吃。 不要 is 'don't!' or a firm refusal."
+  ],
+  "examples": [
+   {
+    "zh": "我想去中国。",
+    "en": "I want to go to China."
+   },
+   {
+    "zh": "你想喝什么？",
+    "en": "What would you like to drink?"
+   },
+   {
+    "zh": "你想喝茶吗？",
+    "en": "Would you like some tea?"
+   },
+   {
+    "zh": "我要一个包子。",
+    "en": "I'll have a bun."
+   },
+   {
+    "zh": "我不想吃东西。",
+    "en": "I don't want anything to eat."
+   }
+  ],
+  "mistakes": [
+   "你喝茶吗？ is not an offer. It asks whether you drink tea. Offer with 你想喝茶吗？",
+   "不想 is 'do not want to'. 不要 is 'don't!'"
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "你想喝热茶吗？",
+    "en": "Would you like hot tea?",
+    "explain": "想 turns the question into an offer."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence offers someone tea: 'Would you like some tea?'",
+    "options": [
+     "你喝茶吗？",
+     "你想喝茶吗？"
+    ],
+    "correct": 1,
+    "zh": "你想喝茶吗？",
+    "en": "Would you like some tea?",
+    "explain": "你喝茶吗？ asks whether you drink tea. 想 makes it an offer."
+   },
+   {
+    "t": "cloze",
+    "zh": "你想喝什么？",
+    "en": "What would you like to drink?",
+    "blank": "想",
+    "explain": "想 + verb asks what someone would like."
+   },
+   {
+    "t": "cloze",
+    "zh": "我要一个包子。",
+    "en": "I'll have a bun.",
+    "blank": "要",
+    "explain": "要 + noun is how you order."
+   },
+   {
+    "t": "cloze",
+    "zh": "我不想吃东西。",
+    "en": "I don't want anything to eat.",
+    "blank": "不",
+    "explain": "不 goes in front of 想."
+   }
+  ]
+ },
+ {
+  "id": "modal",
+  "title": "会, 能, 可以: can",
+  "covers": [
+   4,
+   6
+  ],
+  "formula": [
+   "Subject",
+   "*会 / 能 / 可以",
+   "Verb"
+  ],
+  "explain": [
+   "会: you know how to, a skill you learned. 我会做饭。你会开车吗？",
+   "能: you are able to, or the situation allows it. 我明天能来。你能来吗？",
+   "可以: you are allowed to. It is how you ask for permission: 我可以坐这儿吗？ To say yes, answer 可以.",
+   "They overlap: 能 is also used to ask permission. The negatives are 不会 (don't know how), 不能 (can't) and 不可以 (not allowed)."
+  ],
+  "examples": [
+   {
+    "zh": "我会说一点儿汉语。",
+    "en": "I can speak a little Chinese."
+   },
+   {
+    "zh": "你会开车吗？",
+    "en": "Can you drive?"
+   },
+   {
+    "zh": "你明天能来吗？",
+    "en": "Can you come tomorrow?"
+   },
+   {
+    "zh": "我可以坐这儿吗？",
+    "en": "May I sit here?"
+   }
+  ],
+  "mistakes": [
+   "Do not use 会 to ask permission: 我可以坐这儿吗？, not 我会坐这儿吗？"
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我可以坐这儿吗？",
+    "en": "May I sit here?",
+    "explain": "可以 asks for permission."
+   },
+   {
+    "t": "cloze",
+    "zh": "你会开车吗？",
+    "en": "Can you drive?",
+    "blank": "会",
+    "explain": "会 is for skills you learned."
+   },
+   {
+    "t": "cloze",
+    "zh": "你明天能来吗？",
+    "en": "Can you come tomorrow?",
+    "blank": "能",
+    "explain": "能 is for being able to, because the situation allows it."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence asks: Can you speak Chinese? (a skill)",
+    "options": [
+     "你可以说汉语吗？",
+     "你会说汉语吗？"
+    ],
+    "correct": 1,
+    "zh": "你会说汉语吗？",
+    "en": "Can you speak Chinese?",
+    "explain": "会 is for a learned skill. 可以 would ask whether you are allowed to."
+   },
+   {
+    "t": "cloze",
+    "zh": "我可以坐这儿吗？",
+    "en": "May I sit here?",
+    "blank": "可以",
+    "explain": "可以 is for permission."
+   }
+  ]
+ },
+ {
+  "id": "adv",
+  "title": "都, 也, 还, 再 and joining sentences",
+  "covers": [
+   16,
+   18,
+   19,
+   59,
+   60,
+   61
+  ],
+  "formula": [
+   "Subject",
+   "*都 / 也 / 还 / 再",
+   "Verb"
+  ],
+  "explain": [
+   "These adverbs go after the subject and before the verb or adjective: 我们都是学生。我也是学生。",
+   "都 means all or both: 我们都很好。 With 不, it means none of us: 我们都不喝茶。",
+   "也 means also or too. It goes before 不: 我也不是学生 means 'I am not a student either'. 我也是 means 'Me too'. Do not put 也 at the end of a sentence.",
+   "还 means also, else or still: 你还想吃什么？ (What else would you like to eat?)",
+   "再 means again, for something that has not happened yet: 明天再来。",
+   "Two short sentences can sit side by side with a comma and no 'and': 爸爸是老师，妈妈也是老师。"
+  ],
+  "examples": [
+   {
+    "zh": "我们都是学生。",
+    "en": "We are all students."
+   },
+   {
+    "zh": "我也是学生。",
+    "en": "I am a student too."
+   },
+   {
+    "zh": "你还想吃什么？",
+    "en": "What else would you like to eat?"
+   },
+   {
+    "zh": "明天再来。",
+    "en": "Come again tomorrow."
+   },
+   {
+    "zh": "爸爸是老师，妈妈也是老师。",
+    "en": "Dad is a teacher, and Mom is a teacher too."
+   }
+  ],
+  "mistakes": [
+   "也 goes before the verb: 我也喜欢茶, not 我喜欢茶也.",
+   "都 goes after the subject: 他们都在学校, not 都他们在学校."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "爸爸是老师，妈妈也是老师。",
+    "en": "Dad is a teacher, and Mom is a teacher too.",
+    "explain": "也 goes before the second 是."
+   },
+   {
+    "t": "cloze",
+    "zh": "我也是学生。",
+    "en": "I am a student too.",
+    "blank": "也",
+    "explain": "也 goes before the verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "我们都很好。",
+    "en": "We are all fine.",
+    "blank": "都",
+    "explain": "都 goes after the subject."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I like tea too?",
+    "options": [
+     "我喜欢茶也。",
+     "我也喜欢茶。"
+    ],
+    "correct": 1,
+    "zh": "我也喜欢茶。",
+    "en": "I like tea too.",
+    "explain": "也 comes before the verb, never at the end."
+   },
+   {
+    "t": "cloze",
+    "zh": "你还想吃什么？",
+    "en": "What else would you like to eat?",
+    "blank": "还",
+    "explain": "还 means 'else' here."
+   }
+  ]
+ },
+ {
+  "id": "anota",
+  "title": "A-not-A questions",
+  "covers": [
+   49
+  ],
+  "formula": [
+   "Subject",
+   "*Verb + 不 + Verb",
+   "Object"
+  ],
+  "explain": [
+   "Another way to ask a yes/no question: say the verb, then 不, then the verb again. 你是不是老师？ 你去不去学校？ (Are you going to school or not?)",
+   "For 有, use 没: 你有没有手机？",
+   "Do not add 吗 to an A-not-A question."
+  ],
+  "examples": [
+   {
+    "zh": "她是不是你们的老师？",
+    "en": "Is she your teacher?"
+   },
+   {
+    "zh": "你去不去学校？",
+    "en": "Are you going to school?"
+   },
+   {
+    "zh": "你有没有手机？",
+    "en": "Do you have a phone?"
+   },
+   {
+    "zh": "你喜欢不喜欢茶？",
+    "en": "Do you like tea?"
+   }
+  ],
+  "mistakes": [
+   "No 吗 here: 你去不去？, not 你去不去吗？"
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "你是不是学生？",
+    "en": "Are you a student?",
+    "explain": "Verb + 不 + verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "你去不去学校？",
+    "en": "Are you going to school?",
+    "blank": "不",
+    "explain": "不 sits between the two verbs."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence asks: Do you have a phone?",
+    "options": [
+     "你有不有手机？",
+     "你有没有手机？"
+    ],
+    "correct": 1,
+    "zh": "你有没有手机？",
+    "en": "Do you have a phone?",
+    "explain": "有 uses 没: 有没有."
+   },
+   {
+    "t": "spot",
+    "zh": "你去不去学校？",
+    "en": "Are you going to school?",
+    "wrong": "你去不去学校吗？",
+    "remove": "吗",
+    "explain": "The A-not-A form already makes the question."
+   },
+   {
+    "t": "order",
+    "zh": "她是不是你们的老师？",
+    "en": "Is she your teacher?",
+    "explain": "是不是 goes in the middle."
+   }
+  ]
+ }
 ]

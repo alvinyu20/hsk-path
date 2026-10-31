@@ -33,21 +33,21 @@ window.HSK1_ERHUA = {
    "official": "这儿",
    "plain": "这里",
    "officialPy": "zhèr",
-   "plainPy": "zhèli",
+   "plainPy": "zhèlǐ",
    "twin": true
   },
   {
    "official": "那儿",
    "plain": "那里",
    "officialPy": "nàr",
-   "plainPy": "nàli",
+   "plainPy": "nàlǐ",
    "twin": true
   },
   {
    "official": "哪儿",
    "plain": "哪里",
    "officialPy": "nǎr",
-   "plainPy": "nǎli",
+   "plainPy": "nǎlǐ",
    "twin": true
   }
  ],

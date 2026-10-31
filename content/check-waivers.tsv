@@ -8,3 +8,8 @@ scenario:plan:you1	meaning	Chinese drops the subject: 好，几点去？ is natu
 scenario:plan:you2	meaning	可以 here is "that works / okay", and the subject "we" is dropped in Chinese
 wordform:只	pinyin	只 has two readings, zhī (measure word) and zhǐ (only); the entry shows both
 word:雪	meaning	了 here marks a change of state (it has started snowing); "it is snowing today" is the natural English
+word-extra:只:2	pinyin	只 after 两 is the measure word zhī (a cat is counted with 只); pypinyin misreads it as zhǐ "only"
+word-extra:知道:2	meaning	你知道他在哪里吗 is a yes/no question about a hidden question (do you know WHERE he is); 哪里 is embedded, so 吗 is correct
+word-extra:事:3	meaning	你有什么事吗 uses 什么 as "something/anything", so 吗 is correct (Is there anything you need?)
+word-extra:问题:2	meaning	你有什么问题吗 uses 什么 as "any", so 吗 is correct (Do you have any questions?)
+word-extra:猫:1	pinyin	只 after 两 is the measure word zhī; pypinyin misreads it as zhǐ "only"
