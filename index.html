@@ -299,13 +299,77 @@
     <div class="asc-h">
       <div>
         <h2 class="h2">The ascent</h2>
-        <p class="muted" style="margin:4px 0 0;font-size:16px">Pass each checkpoint to climb to the next level.</p>
+        <p class="muted" style="margin:4px 0 0;font-size:16px">{{ascSub}}</p>
       </div>
-      <div class="seg2" role="group" aria-label="HSK version">
-        <button class="{{sys2Cls}}" onClick="{{setSys2}}">HSK 2.0 · 6 levels</button>
-        <button class="{{sys3Cls}}" onClick="{{setSys3}}">HSK 3.0 · 9 levels</button>
+      <div class="seg2" role="group" aria-label="How to show the ascent">
+        <button class="{{ascTrailCls}}" onClick="{{setAscTrail}}">Trail</button>
+        <button class="{{ascMistCls}}" onClick="{{setAscMist}}">Mist</button>
+        <button class="{{ascStairsCls}}" onClick="{{setAscStairs}}">Stairs</button>
       </div>
     </div>
+    <sc-if value="{{ascHasSys}}" hint-placeholder-val="{{ true }}">
+      <div class="asc-sys"><div class="seg2" role="group" aria-label="HSK version">
+        <button class="{{sys2Cls}}" onClick="{{setSys2}}">HSK 2.0 · 6 levels</button>
+        <button class="{{sys3Cls}}" onClick="{{setSys3}}">HSK 3.0 · 9 levels</button>
+      </div></div>
+    </sc-if>
+
+    <sc-if value="{{ascTrail}}" hint-placeholder-val="{{ true }}">
+      <div class="trail">
+        <div class="trail-d">
+          <img class="trail-img" src="{{trailD.src}}" alt="{{trailD.alt}}" width="1124" height="380">
+          <sc-for list="{{trailD.labels}}" as="l" hint-placeholder-count="4">
+            <div class="apill {{l.kind}} {{l.cls}}" style="left: {{l.left}}; top: {{l.top}}"><b>{{l.text}}</b><sc-if value="{{l.hasSub}}" hint-placeholder-val="{{ true }}"><span>{{l.sub}}</span></sc-if></div>
+          </sc-for>
+        </div>
+        <div class="trail-p">
+          <img class="trail-img" src="{{trailP.src}}" alt="{{trailP.alt}}" width="342" height="470">
+          <sc-for list="{{trailP.labels}}" as="l" hint-placeholder-count="4">
+            <div class="apill {{l.kind}} {{l.cls}}" style="left: {{l.left}}; top: {{l.top}}"><b>{{l.text}}</b><sc-if value="{{l.hasSub}}" hint-placeholder-val="{{ true }}"><span>{{l.sub}}</span></sc-if></div>
+          </sc-for>
+        </div>
+      </div>
+      <div class="astats">
+        <div class="astat first">
+          <div class="astat-k"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4M6 5h11l-2.5 3.5L17 12H6"/></svg>Next cairn</div>
+          <div class="astat-v">{{cairnBig}}</div>
+          <div class="astat-s">{{cairnSub}}</div>
+          <div class="abar"><i style="width: {{cairnPct}}"></i></div>
+        </div>
+        <div class="astat">
+          <div class="astat-k fire"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3.2 5 5.2 5 10a5 5 0 0 1-10 0c0-2 .9-3.2 2-4.2 0 2 .9 3 2 3 0-3-1-6 1-8.8z"/></svg>Campfire</div>
+          <div class="astat-v">{{fireBig}}</div>
+          <div class="astat-s">{{fireSub}}</div>
+        </div>
+        <div class="astat">
+          <div class="astat-k"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>Today</div>
+          <div class="astat-v">{{todayBig}}</div>
+          <div class="astat-s">{{todaySub}}</div>
+          <div class="abar jade"><i style="width: {{todayPct}}"></i></div>
+        </div>
+      </div>
+      <button class="btn pri big trail-cta" onClick="{{trailCta}}">{{trailCtaText}}</button>
+      <p class="asc-note">{{trailNote}}</p>
+    </sc-if>
+
+    <sc-if value="{{ascMist}}" hint-placeholder-val="{{ false }}">
+      <div class="mist-top">
+        <div class="mist-sum"><span class="mseal" aria-hidden="true">熟</span><div><b>{{mistClearText}}</b><span>mountains with no mist left</span></div></div>
+        <sc-if value="{{mistHasNear}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{mistNearGo}}">{{mistNearText}}</button></sc-if>
+      </div>
+      <div class="mist">
+        <sc-for list="{{mistTiles}}" as="t" hint-placeholder-count="8">
+          <button type="button" class="mtile {{t.cls}}" onClick="{{t.go}}">
+            <span class="mart"><img src="{{t.art}}" alt="" width="212" height="84"><sc-if value="{{t.clear}}" hint-placeholder-val="{{ false }}"><span class="mseal mseal-on" aria-hidden="true">熟</span></sc-if><sc-if value="{{t.near}}" hint-placeholder-val="{{ false }}"><span class="mnear">{{t.nearText}}</span></sc-if></span>
+            <span class="mname">{{t.name}}</span>
+            <span class="mcount">{{t.count}}</span>
+          </button>
+        </sc-for>
+      </div>
+      <p class="asc-note">{{mistNote}}</p>
+    </sc-if>
+
+    <sc-if value="{{ascStairs}}" hint-placeholder-val="{{ false }}">
     <div class="stairs">
       <sc-for list="{{stairs}}" as="s" hint-placeholder-count="6">
         <div class="step">
@@ -325,6 +389,7 @@
       </sc-for>
     </div>
     <p class="asc-note">{{sysNote}}</p>
+    </sc-if>
   </section>
   </sc-if>
 
@@ -1349,6 +1414,7 @@
 <script src="data/hsk1-exam.js"></script>
 <script src="data/hsk1-erhua.js"></script>
 <script src="data/hsk2-preview.js"></script>
+<script src="ascent.js"></script>
 <script src="sync.js"></script>
 <script src="erhua.js"></script>
 <script src="app.js"></script>

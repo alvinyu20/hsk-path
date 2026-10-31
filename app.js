@@ -110,7 +110,7 @@
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
-  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'voiceId', 'speed', 'clipBest', 'misses', 'testHistory', 'ws',
+  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'misses', 'testHistory', 'ws',
     'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays'];
 
   function freshState() {
@@ -119,7 +119,7 @@
     return {
       screen:'home', sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       xp:0, dayXp:0, dayMin:0, streak:0, lastActive:'', activity:{}, day:'',
-      gres:{}, sres:{}, nlimit:0, voiceId:'', speed:1, vtick:0, vall:false, glesson:0, sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
+      gres:{}, sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', vtick:0, vall:false, glesson:0, sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
       qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
@@ -1336,6 +1336,39 @@
         fillH:i === 0 ? overall + '%' : '0%', status:i === 0 ? overall + '% done' : (i <= 2 ? 'In review' : 'Locked')
       }));
 
+      // the ascent: trail and mist views (art in ascent.js)
+      const AS = window.ShanluAscent;
+      const ascDark = S.theme === 'dark';
+      const ascV = ['trail', 'mist', 'stairs'].includes(S.ascView) ? S.ascView : 'trail';
+      const apct = (v, tot) => (v / tot * 100).toFixed(2) + '%';
+      const asLabels = (t) => t.labels.map(l => ({ left:apct(l.x, t.w), top:apct(l.y, t.h), cls:l.center ? 'c' : '', kind:l.kind, text:l.text, sub:l.sub, hasSub:!!l.sub }));
+      const totalW = bankKeys.length;
+      const trD = AS.trail({ started:startedCount, total:totalW, levels:sd.levels, dark:ascDark });
+      const trP = AS.phoneTrail({ started:startedCount, total:totalW, levels:sd.levels, dark:ascDark });
+      const youLabel = (t) => ({ left:apct(t.you.x, t.w), top:apct(t.you.y, t.h), cls:t === trD ? 'c' : '', kind:'you', text:'You are here', sub:startedCount + ' word' + (startedCount === 1 ? '' : 's') + ' kept', hasSub:true });
+      const trailAlt = 'Mountain trail: ' + startedCount + ' of ' + totalW + ' words learned on the way to the HSK 1 level exam';
+      const nextM = AS.nextMilestone(startedCount, totalW);
+      const toGo = nextM - startedCount;
+      const prevM = [0].concat(AS.MILESTONES).filter(m => m < nextM).pop();
+      const allStarted = startedCount >= totalW;
+      const studiedToday = S.lastActive === today;
+      const minsLeft = Math.max(0, S.mins - S.dayMin);
+      const ascCta = dueNow > 0 ? { text:'Climb: review ' + dueNow + ' due word' + (dueNow === 1 ? '' : 's'), to:'review' }
+        : (minsLeft > 0 ? { text:'Climb for ' + minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's'), to:'web' } : { text:'Learn new words', to:'web' });
+      // mist: one mountain per Word web topic; the mist thins as its words are learned
+      const tinfo = TOPICS.map((t, i) => {
+        const got = t.words.filter(zh => S.ws[zh] && winfo(S.ws[zh], 0).started).length;
+        const tot = t.words.length;
+        return { i, name:t.name, got, tot, clear:got === tot, near:got > 0 && got < tot && tot - got <= 3 };
+      });
+      const mistClear = tinfo.filter(t => t.clear).length;
+      const openTopic = (i) => { this.go('web'); this.setState({ wmode:'topic', wtopic:i }); };
+      const nearBest = tinfo.filter(t => t.got > 0 && !t.clear).sort((a, b) => (a.tot - a.got) - (b.tot - b.got) || a.i - b.i)[0];
+      const mistTiles = tinfo.map(t => ({
+        name:t.name, count:t.got + ' of ' + t.tot + ' words' + (t.clear ? ' · clear' : ''), clear:t.clear, near:t.near, nearText:(t.tot - t.got) + ' to clear',
+        cls:t.near ? 'near' : '', art:AS.mist({ frac:t.got / t.tot, idx:t.i, dark:ascDark, w:212, h:84 }), go:() => openTopic(t.i)
+      }));
+
       // review
       const rzh = S.rq.length ? S.rq[0] : bankKeys[0];
       const rw = BANK[rzh];
@@ -1632,6 +1665,21 @@
         ringDash, todayLine:titles.home[1], tasks, minOpts, planNote, dayMin:S.dayMin, mins:S.mins, skills, wordTarget:bankKeys.length, wmTotal:startedCount, wm,
         wMastered:(wm.mastered / bankKeys.length * 100).toFixed(1) + '%', wFamiliar:(wm.familiar / bankKeys.length * 100).toFixed(1) + '%', wLearning:(wm.learning / bankKeys.length * 100).toFixed(1) + '%',
         stairs, sysNote:sd.note,
+        ascTrail:ascV === 'trail', ascMist:ascV === 'mist', ascStairs:ascV === 'stairs', ascHasSys:ascV !== 'mist',
+        ascTrailCls:ascV === 'trail' ? 'on' : '', ascMistCls:ascV === 'mist' ? 'on' : '', ascStairsCls:ascV === 'stairs' ? 'on' : '',
+        setAscTrail:() => this.setState({ ascView:'trail' }), setAscMist:() => this.setState({ ascView:'mist' }), setAscStairs:() => this.setState({ ascView:'stairs' }),
+        ascSub:ascV === 'trail' ? 'Every word you learn is a step up the trail.' : (ascV === 'mist' ? 'Every word you learn thins the mist over its mountain.' : 'Pass each checkpoint to climb to the next level.'),
+        trailD:{ src:trD.src, alt:trailAlt, labels:asLabels(trD).concat([youLabel(trD)]) }, trailP:{ src:trP.src, alt:trailAlt, labels:asLabels(trP).concat(trP.hideYou ? [] : [youLabel(trP)]) },
+        cairnBig:allStarted ? 'All ' + totalW + ' started' : toGo + ' word' + (toGo === 1 ? '' : 's') + ' to go',
+        cairnSub:allStarted ? 'Take the level exam when you feel ready.' : startedCount + ' of ' + nextM + '. A few cards and it is yours.', cairnPct:(allStarted ? 100 : Math.round((startedCount - prevM) / (nextM - prevM) * 100)) + '%',
+        fireBig:streakShown > 0 ? streakShown + ' day' + (streakShown === 1 ? '' : 's') + ' lit' : 'Not lit yet',
+        fireSub:studiedToday ? 'Lit for today. Come back tomorrow to keep it.' : (streakShown > 0 ? 'Study today and it burns brighter tomorrow.' : 'Study today to light it.'),
+        todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed. Anything else is a bonus.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
+        trailCta:() => this.go(ascCta.to), trailCtaText:ascCta.text,
+        trailNote:'Camps are placed by level, not to scale. The climb counts words you have started; grammar, listening and speaking count towards the level exam.',
+        mistClearText:mistClear + ' of ' + TOPICS.length + ' clear', mistTiles, mistHasNear:!!nearBest,
+        mistNearText:nearBest ? 'Finish ' + nearBest.name + ' (' + (nearBest.tot - nearBest.got) + ' to go)' : '', mistNearGo:() => nearBest && openTopic(nearBest.i),
+        mistNote:'A mountain is clear when you have started every word in its Word web topic.',
         sys2Cls:S.sys === '2.0' ? 'on' : '', sys3Cls:S.sys === '3.0' ? 'on' : '',
         setSys2:() => this.setState({ sys:'2.0' }), setSys3:() => this.setState({ sys:'3.0' }),
 

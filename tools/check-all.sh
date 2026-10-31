@@ -23,6 +23,8 @@ python3 -W ignore tools/build-preview.py "$DATASET" | tail -1
 echo "== 1b. sync merge and gist round-trip"
 node tools/test-sync.js | tail -1
 
+node tools/test-ascent.js | tail -1
+
 echo "== 2. the meaning rules must still catch the known past mistakes"
 python3 tools/check-content.py --selftest
 
