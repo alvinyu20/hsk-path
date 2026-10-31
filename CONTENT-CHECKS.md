@@ -63,6 +63,17 @@ Known false alarms go in `content/check-waivers.tsv`, each with a reason. Questi
 - Example sentences multiply the surface for mistakes. All ~800 extras go through the same checker, and the false alarms are either fixed or waived with a reason (check-waivers.tsv); nothing is waived silently.
 - Picture questions need an unambiguous answer. Grouped parts (matching five items to six pictures or five answers) use fixed, hand-checked sets rather than random combinations, because a random mix can make two answers fit one blank.
 - A review pack for a Chinese AI is generated from what the learner actually sees (plain style): review/chinese-ai/.
+- **The pinyin check accepts any reading a dictionary lists for a character.** So 长 (cháng, "long") was shown as zhǎng, 教 (jiāo, "to teach") as jiào, and the particles 得, 地 and 过 as dé, dì and guò, and every check passed (found 31 Oct 2026, while preparing the HSK 2 review packs). Fixes: `content/pinyin-overrides.tsv` (what the site shows); `content/pinyin-reviewed.tsv` (tells the checker that for these characters pypinyin's usual reading is not the taught one, so both readings are accepted); a self-test that fails if the shown readings regress; and a scan that compares every token's reading with the context reading from pypinyin and lists the differences for a human to read (the differences that remain are neutral tones and 一/不 changes, by design). Read the list again for every new level.
+- Neutral tones: the site follows the dictionary (爷爷 yéye, 还是 háishi, 回来 huílai); a Chinese AI should say whether a beginner should see them.
+
+## HSK 2 (added 31 Oct 2026)
+
+HSK 2 is a separate level (`content/l2/`, tools run with `LEVEL=2`). The level checker allows words from HSK 1 and HSK 2 only. What is different from HSK 1:
+- **Words: 197 of the official 200.** The open dataset tags 197 words as new at level 2; three could not be identified (listed as a question in `review/chinese-ai-hsk2/01-word-list.md`). Glosses, example sentences (three per word) and notes were written by AI.
+- **Grammar outline is my own, not the official list** (`content/l2/grammar-outline.txt`, 33 points). It is based on the grammar of the HSK 2 words and the Chinese Grammar Wiki's HSK 2 list (79 points, written for the older test). The official numbered outline for band 2 was not available. `tools/build-grammar.py` fails if any of the 33 points is not covered by a lesson.
+- **Waivers.** 87 findings of the meaning checks were waived with a reason each (mostly 了 and 要 in the "about to" and "already" patterns, numbers like 两万, past-time context words, a few idioms). They are in `content/check-waivers.tsv`.
+- **Not built:** listening clips, practice scripts, mock exam.
+- Nothing has been read by a person who reads Chinese. `tools/make-ai-review-pack-l2.py` builds the packs for that (`review/chinese-ai-hsk2/`).
 
 ## Review log
 

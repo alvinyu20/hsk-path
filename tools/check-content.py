@@ -369,15 +369,30 @@ def split_display(py, exp):
     return res
 
 
-def pinyin_check(zh, py):
-    if not py:
-        return []
-    chars = [c for c in zh if c not in PUNCT_ZH and not c.isspace()]
+def load_reviewed():
+    out = {}
+    p = os.path.join(ROOT, 'content', 'pinyin-reviewed.tsv')
+    if os.path.exists(p):
+        for line in open(p, encoding='utf-8'):
+            if line.strip() and not line.startswith('#'):
+                f = line.rstrip('\n').split('\t')
+                if len(f) >= 2:
+                    out[f[0]] = f[1]
+    return out
+
+
+REVIEWED = load_reviewed()
+
+
+def _pinyin_variant(chars, py, pick):
+    """One reading of the sentence from pypinyin; `pick` maps a position to the reviewed reading for that character."""
     zc = ''.join(chars)
     exp = lazy_pinyin(zc, style=Style.TONE3, v_to_u=False, neutral_tone_with_five=True)
-    exp_syl = [re.sub(r'\d', '', s).replace('ü', 'v') for s in exp]
+    for k, r in pick.items():
+        exp[k] = r
+    exp_syl = [re.sub(r'\d', '', x).replace('ü', 'v') for x in exp]
     exp_syl = ['shei' if chars[k] == '谁' else x for k, x in enumerate(exp_syl)]
-    exp_tone = [int(re.findall(r'\d', s)[0]) if re.findall(r'\d', s) else 0 for s in exp]
+    exp_tone = [int(re.findall(r'\d', x)[0]) if re.findall(r'\d', x) else 0 for x in exp]
     exp_tone = [0 if t == 5 else t for t in exp_tone]
     disp = split_display(py, exp_syl)
     if disp is None:
@@ -391,6 +406,27 @@ def pinyin_check(zh, py):
             continue
         out.append(('WARN', 'pinyin', 'tone differs at %s: shown %s, pypinyin %s' % (ch, t, et)))
     return out
+
+
+def pinyin_check(zh, py):
+    if not py:
+        return []
+    chars = [c for c in zh if c not in PUNCT_ZH and not c.isspace()]
+    best = _pinyin_variant(chars, py, {})
+    if not best:
+        return best
+    # Characters with a reviewed reading (content/pinyin-reviewed.tsv) may be shown with either reading; take the reading that fits.
+    spots = [k for k, c in enumerate(chars) if c in REVIEWED]
+    if spots and len(spots) <= 6:
+        import itertools
+        for choice in itertools.product([False, True], repeat=len(spots)):
+            pick = {k: REVIEWED[chars[k]] for k, use in zip(spots, choice) if use}
+            res = _pinyin_variant(chars, py, pick)
+            if (len(res), any(f[0] == 'ERROR' for f in res)) < (len(best), any(f[0] == 'ERROR' for f in best)):
+                best = res
+            if not best:
+                break
+    return best
 
 
 # ---------------------------------------------------------------- gloss coverage
@@ -463,6 +499,19 @@ def selftest():
         if found:
             print('SELFTEST FAIL: false alarm:', zh, '/', en, found)
             fails += 1
+    # Words whose most common reading in the dictionary is NOT the one that goes with the meaning taught. The pinyin check accepts any
+    # reading a dictionary lists, so these slipped through once (31 Oct 2026): 长 showed zhǎng for "long", 教 jiào for "to teach".
+    READINGS = [('长', 'cháng'), ('教', 'jiāo'), ('地', 'de'), ('得', 'de'), ('过', 'guo'), ('着', 'zhe'), ('一会儿', 'yíhuìr'), ('还是', 'háishi')]
+    try:
+        from pinyin_engine import Engine
+        eng = Engine([w for w, _ in READINGS])
+        for w, py in READINGS:
+            if eng.word_py(w) != py:
+                print('SELFTEST FAIL: %s should be read %s but the engine gives %s' % (w, py, eng.word_py(w)))
+                fails += 1
+    except Exception as e:
+        print('SELFTEST FAIL: could not test readings:', e)
+        fails += 1
     print('selftest: %s' % ('FAILED (%d)' % fails if fails else 'ok'))
     return fails
 

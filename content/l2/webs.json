@@ -1,0 +1,1641 @@
+{
+ "hubs": [
+  {
+   "hub": "来",
+   "py": "lái",
+   "en": "to come (toward the speaker)",
+   "words": [
+    [
+     "出来",
+     "出",
+     "out",
+     "来",
+     "come"
+    ],
+    [
+     "过来",
+     "过",
+     "over",
+     "来",
+     "come"
+    ],
+    [
+     "回来",
+     "回",
+     "back",
+     "来",
+     "come"
+    ],
+    [
+     "进来",
+     "进",
+     "in",
+     "来",
+     "come"
+    ],
+    [
+     "起来",
+     "起",
+     "up",
+     "来",
+     "come"
+    ],
+    [
+     "上来",
+     "上",
+     "up",
+     "来",
+     "come"
+    ],
+    [
+     "下来",
+     "下",
+     "down",
+     "来",
+     "come"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "外面很冷，请___。",
+     "en": "It is cold outside; please come in.",
+     "ans": "进来",
+     "opts": [
+      "进来",
+      "出来",
+      "起来",
+      "下去"
+     ]
+    },
+    {
+     "zh": "我明天去旅游，后天___。",
+     "en": "I am going on a trip tomorrow and will be back the day after.",
+     "ans": "回来",
+     "opts": [
+      "回来",
+      "起来",
+      "过来",
+      "上去"
+     ]
+    },
+    {
+     "zh": "你___一下，我给你看我的新手表。",
+     "en": "Come over for a moment and I will show you my new watch.",
+     "ans": "过来",
+     "opts": [
+      "过来",
+      "起来",
+      "回去",
+      "出去"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "去",
+   "py": "qù",
+   "en": "to go (away from the speaker)",
+   "words": [
+    [
+     "出去",
+     "出",
+     "out",
+     "去",
+     "go"
+    ],
+    [
+     "过去",
+     "过",
+     "over",
+     "去",
+     "go"
+    ],
+    [
+     "回去",
+     "回",
+     "back",
+     "去",
+     "go"
+    ],
+    [
+     "进去",
+     "进",
+     "in",
+     "去",
+     "go"
+    ],
+    [
+     "上去",
+     "上",
+     "up",
+     "去",
+     "go"
+    ],
+    [
+     "下去",
+     "下",
+     "down",
+     "去",
+     "go"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "他在教室里面，你___吧。",
+     "en": "He is inside the classroom, so you go in.",
+     "ans": "进去",
+     "opts": [
+      "进去",
+      "回去",
+      "上去",
+      "出来"
+     ]
+    },
+    {
+     "zh": "太晚了，我要___了。",
+     "en": "It is too late; I have to go back.",
+     "ans": "回去",
+     "opts": [
+      "回去",
+      "进去",
+      "上去",
+      "出来"
+     ]
+    },
+    {
+     "zh": "你住在三楼，我___找你。",
+     "en": "You live on the third floor, so I will go up to find you.",
+     "ans": "上去",
+     "opts": [
+      "上去",
+      "下来",
+      "回来",
+      "出来"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "面",
+   "py": "miàn",
+   "en": "side; surface",
+   "words": [
+    [
+     "前面",
+     "前",
+     "front",
+     "面",
+     "side"
+    ],
+    [
+     "后面",
+     "后",
+     "back",
+     "面",
+     "side"
+    ],
+    [
+     "里面",
+     "里",
+     "inside",
+     "面",
+     "side"
+    ],
+    [
+     "外面",
+     "外",
+     "outside",
+     "面",
+     "side"
+    ],
+    [
+     "上面",
+     "上",
+     "above",
+     "面",
+     "side"
+    ],
+    [
+     "下面",
+     "下",
+     "below",
+     "面",
+     "side"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "外面很冷，教室___很热。",
+     "en": "It is cold outside, but it is hot inside the classroom.",
+     "ans": "里面",
+     "opts": [
+      "里面",
+      "外面",
+      "上面",
+      "下面"
+     ]
+    },
+    {
+     "zh": "鸟在上面飞，我们在___看。",
+     "en": "The birds are flying above, and we are watching from below.",
+     "ans": "下面",
+     "opts": [
+      "下面",
+      "里面",
+      "后面",
+      "前面"
+     ]
+    },
+    {
+     "zh": "他站在我___。",
+     "en": "He is standing in front of me.",
+     "ans": "前面",
+     "opts": [
+      "前面",
+      "后面",
+      "里面",
+      "下面"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "色",
+   "py": "sè",
+   "en": "colour",
+   "words": [
+    [
+     "白色",
+     "白",
+     "white",
+     "色",
+     "colour"
+    ],
+    [
+     "黑色",
+     "黑",
+     "black",
+     "色",
+     "colour"
+    ],
+    [
+     "红色",
+     "红",
+     "red",
+     "色",
+     "colour"
+    ],
+    [
+     "绿色",
+     "绿",
+     "green",
+     "色",
+     "colour"
+    ],
+    [
+     "颜色",
+     "颜",
+     "colour, face",
+     "色",
+     "colour"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "你喜欢什么___？",
+     "en": "What colour do you like?",
+     "ans": "颜色",
+     "opts": [
+      "颜色",
+      "红色",
+      "绿色",
+      "白色"
+     ]
+    },
+    {
+     "zh": "我的新书包是___的。",
+     "en": "My new schoolbag is black.",
+     "ans": "黑色",
+     "opts": [
+      "黑色",
+      "白色",
+      "红色",
+      "绿色"
+     ]
+    },
+    {
+     "zh": "她今天穿了一条___的裤子。",
+     "en": "She wore a pair of white trousers today.",
+     "ans": "白色",
+     "opts": [
+      "白色",
+      "黑色",
+      "红色",
+      "颜色"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "子",
+   "py": "zi",
+   "en": "(a noun ending)",
+   "words": [
+    [
+     "本子",
+     "本",
+     "book",
+     "子",
+     "(noun ending)"
+    ],
+    [
+     "个子",
+     "个",
+     "individual",
+     "子",
+     "(noun ending)"
+    ],
+    [
+     "裤子",
+     "裤",
+     "trousers",
+     "子",
+     "(noun ending)"
+    ],
+    [
+     "妻子",
+     "妻",
+     "wife",
+     "子",
+     "(noun ending)"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我的___很高，我喜欢打篮球。",
+     "en": "I am tall, and I like playing basketball.",
+     "ans": "个子",
+     "opts": [
+      "个子",
+      "本子",
+      "裤子",
+      "妻子"
+     ]
+    },
+    {
+     "zh": "我的___在书包里面。",
+     "en": "My notebook is in my schoolbag.",
+     "ans": "本子",
+     "opts": [
+      "本子",
+      "个子",
+      "裤子",
+      "妻子"
+     ]
+    },
+    {
+     "zh": "他的___是我的老师。",
+     "en": "His wife is my teacher.",
+     "ans": "妻子",
+     "opts": [
+      "妻子",
+      "本子",
+      "个子",
+      "裤子"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "意思",
+   "py": "yìsi",
+   "en": "meaning; interest",
+   "words": [
+    [
+     "意思",
+     "意",
+     "idea",
+     "思",
+     "thought"
+    ],
+    [
+     "有意思",
+     "有",
+     "have",
+     "意思",
+     "meaning"
+    ],
+    [
+     "没意思",
+     "没",
+     "not have",
+     "意思",
+     "meaning"
+    ],
+    [
+     "不好意思",
+     "不好",
+     "not good",
+     "意思",
+     "meaning"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "这个电影很___，我想再看一次。",
+     "en": "This movie is very interesting; I want to watch it again.",
+     "ans": "有意思",
+     "opts": [
+      "有意思",
+      "没意思",
+      "意思",
+      "不好意思"
+     ]
+    },
+    {
+     "zh": "这个词是什么___？",
+     "en": "What does this word mean?",
+     "ans": "意思",
+     "opts": [
+      "意思",
+      "有意思",
+      "没意思",
+      "不好意思"
+     ]
+    },
+    {
+     "zh": "___，我来晚了。",
+     "en": "Sorry, I am late.",
+     "ans": "不好意思",
+     "opts": [
+      "不好意思",
+      "没意思",
+      "有意思",
+      "意思"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "门",
+   "py": "mén",
+   "en": "door; gate",
+   "words": [
+    [
+     "出门",
+     "出",
+     "go out",
+     "门",
+     "door"
+    ],
+    [
+     "门口",
+     "门",
+     "door",
+     "口",
+     "opening"
+    ],
+    [
+     "门票",
+     "门",
+     "gate",
+     "票",
+     "ticket"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "今天太冷了，我不想___。",
+     "en": "It is too cold today and I do not want to go out.",
+     "ans": "出门",
+     "opts": [
+      "出门",
+      "进来",
+      "回来",
+      "起来"
+     ]
+    },
+    {
+     "zh": "我在教室___等你。",
+     "en": "I will wait for you at the classroom door.",
+     "ans": "门口",
+     "opts": [
+      "门口",
+      "门票",
+      "出门",
+      "里面"
+     ]
+    },
+    {
+     "zh": "这个商场的___多少钱？",
+     "en": "How much is a ticket for this place?",
+     "ans": "门票",
+     "opts": [
+      "门票",
+      "机票",
+      "门口",
+      "出门"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "车",
+   "py": "chē",
+   "en": "vehicle; car",
+   "words": [
+    [
+     "车站",
+     "车",
+     "vehicle",
+     "站",
+     "stop"
+    ],
+    [
+     "打车",
+     "打",
+     "hail",
+     "车",
+     "car"
+    ],
+    [
+     "公交车",
+     "公交",
+     "public transit",
+     "车",
+     "vehicle"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "请问，___在哪儿？",
+     "en": "Excuse me, where is the station?",
+     "ans": "车站",
+     "opts": [
+      "车站",
+      "机场",
+      "酒店",
+      "药店"
+     ]
+    },
+    {
+     "zh": "这里太远了，我们___去吧。",
+     "en": "It is too far from here; let us take a taxi.",
+     "ans": "打车",
+     "opts": [
+      "打车",
+      "走路",
+      "跑步",
+      "游泳"
+     ]
+    },
+    {
+     "zh": "我每天坐___去学校。",
+     "en": "I take the bus to school every day.",
+     "ans": "公交车",
+     "opts": [
+      "公交车",
+      "地铁",
+      "机场",
+      "车站"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "小",
+   "py": "xiǎo",
+   "en": "small; little",
+   "words": [
+    [
+     "从小",
+     "从",
+     "from",
+     "小",
+     "little"
+    ],
+    [
+     "小孩",
+     "小",
+     "little",
+     "孩",
+     "child"
+    ],
+    [
+     "小时候",
+     "小",
+     "little",
+     "时候",
+     "time"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "___，我家在学校旁边。",
+     "en": "When I was little, my home was next to a school.",
+     "ans": "小时候",
+     "opts": [
+      "小时候",
+      "从小",
+      "小孩",
+      "一会儿"
+     ]
+    },
+    {
+     "zh": "她___喜欢画画。",
+     "en": "She has liked drawing since she was little.",
+     "ans": "从小",
+     "opts": [
+      "从小",
+      "小孩",
+      "经常",
+      "已经"
+     ]
+    },
+    {
+     "zh": "那个___在笑。",
+     "en": "That child is laughing.",
+     "ans": "小孩",
+     "opts": [
+      "小孩",
+      "小时候",
+      "从小",
+      "一会儿"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "开",
+   "py": "kāi",
+   "en": "to open; to start",
+   "words": [
+    [
+     "打开",
+     "打",
+     "hit; do",
+     "开",
+     "open"
+    ],
+    [
+     "开始",
+     "开",
+     "open",
+     "始",
+     "begin"
+    ],
+    [
+     "开学",
+     "开",
+     "open",
+     "学",
+     "school"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "请___门。",
+     "en": "Please open the door.",
+     "ans": "打开",
+     "opts": [
+      "打开",
+      "开始",
+      "开学",
+      "门口"
+     ]
+    },
+    {
+     "zh": "我们八点___上课。",
+     "en": "We start class at eight.",
+     "ans": "开始",
+     "opts": [
+      "开始",
+      "打开",
+      "开学",
+      "出门"
+     ]
+    },
+    {
+     "zh": "下个星期___，我要准备书包。",
+     "en": "School starts next week and I need to get my schoolbag ready.",
+     "ans": "开学",
+     "opts": [
+      "开学",
+      "开始",
+      "打开",
+      "门口"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "茶",
+   "py": "chá",
+   "en": "tea",
+   "words": [
+    [
+     "红茶",
+     "红",
+     "red",
+     "茶",
+     "tea"
+    ],
+    [
+     "绿茶",
+     "绿",
+     "green",
+     "茶",
+     "tea"
+    ],
+    [
+     "奶茶",
+     "奶",
+     "milk",
+     "茶",
+     "tea"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我想喝一杯___。",
+     "en": "I would like a cup of black tea.",
+     "ans": "红茶",
+     "opts": [
+      "红茶",
+      "绿茶",
+      "奶茶",
+      "咖啡"
+     ]
+    },
+    {
+     "zh": "我不喝咖啡，我喝___。",
+     "en": "I do not drink coffee; I drink green tea.",
+     "ans": "绿茶",
+     "opts": [
+      "绿茶",
+      "红茶",
+      "奶茶",
+      "咖啡"
+     ]
+    },
+    {
+     "zh": "她最喜欢喝___。",
+     "en": "She likes drinking milk tea best.",
+     "ans": "奶茶",
+     "opts": [
+      "奶茶",
+      "红茶",
+      "绿茶",
+      "咖啡"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "孩",
+   "py": "hái",
+   "en": "child",
+   "words": [
+    [
+     "男孩",
+     "男",
+     "male",
+     "孩",
+     "child"
+    ],
+    [
+     "女孩",
+     "女",
+     "female",
+     "孩",
+     "child"
+    ],
+    [
+     "小孩",
+     "小",
+     "little",
+     "孩",
+     "child"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "那个___是我弟弟。",
+     "en": "That boy is my younger brother.",
+     "ans": "男孩",
+     "opts": [
+      "男孩",
+      "女孩",
+      "小孩",
+      "妻子"
+     ]
+    },
+    {
+     "zh": "那个___是我妹妹的朋友。",
+     "en": "That girl is my younger sister’s friend.",
+     "ans": "女孩",
+     "opts": [
+      "女孩",
+      "男孩",
+      "小孩",
+      "妻子"
+     ]
+    },
+    {
+     "zh": "这个___今年五岁。",
+     "en": "This child is five years old this year.",
+     "ans": "小孩",
+     "opts": [
+      "小孩",
+      "男孩",
+      "女孩",
+      "丈夫"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "边",
+   "py": "biān",
+   "en": "side",
+   "words": [
+    [
+     "旁边",
+     "旁",
+     "beside",
+     "边",
+     "side"
+    ],
+    [
+     "左边",
+     "左",
+     "left",
+     "边",
+     "side"
+    ],
+    [
+     "右边",
+     "右",
+     "right",
+     "边",
+     "side"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "洗手间在___。",
+     "en": "The restroom is on the left.",
+     "ans": "左边",
+     "opts": [
+      "左边",
+      "右边",
+      "旁边",
+      "里面"
+     ]
+    },
+    {
+     "zh": "药店在我家___。",
+     "en": "The pharmacy is next to my home.",
+     "ans": "旁边",
+     "opts": [
+      "旁边",
+      "左边",
+      "右边",
+      "外面"
+     ]
+    },
+    {
+     "zh": "学校在饭馆的___。",
+     "en": "The school is on the right of the restaurant.",
+     "ans": "右边",
+     "opts": [
+      "右边",
+      "左边",
+      "旁边",
+      "前面"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "下",
+   "py": "xià",
+   "en": "down; below",
+   "words": [
+    [
+     "下来",
+     "下",
+     "down",
+     "来",
+     "come"
+    ],
+    [
+     "下面",
+     "下",
+     "below",
+     "面",
+     "side"
+    ],
+    [
+     "下去",
+     "下",
+     "down",
+     "去",
+     "go"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "你___，我们一起吃饭。",
+     "en": "Come down and we will eat together.",
+     "ans": "下来",
+     "opts": [
+      "下来",
+      "下面",
+      "下去",
+      "上来"
+     ]
+    },
+    {
+     "zh": "书在桌子的___。",
+     "en": "The book is under the table.",
+     "ans": "下面",
+     "opts": [
+      "下面",
+      "下来",
+      "下去",
+      "上面"
+     ]
+    },
+    {
+     "zh": "那里很高，我不想___。",
+     "en": "It is very high there, so I do not want to go down.",
+     "ans": "下去",
+     "opts": [
+      "下去",
+      "下来",
+      "下面",
+      "上去"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "上",
+   "py": "shàng",
+   "en": "up; on",
+   "words": [
+    [
+     "路上",
+     "路",
+     "road",
+     "上",
+     "on"
+    ],
+    [
+     "上来",
+     "上",
+     "up",
+     "来",
+     "come"
+    ],
+    [
+     "上面",
+     "上",
+     "above",
+     "面",
+     "side"
+    ],
+    [
+     "上去",
+     "上",
+     "up",
+     "去",
+     "go"
+    ],
+    [
+     "上网",
+     "上",
+     "go onto",
+     "网",
+     "internet"
+    ],
+    [
+     "网上",
+     "网",
+     "internet",
+     "上",
+     "on"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我在___买了一块手表。",
+     "en": "I bought a watch online.",
+     "ans": "网上",
+     "opts": [
+      "网上",
+      "路上",
+      "上面",
+      "上去"
+     ]
+    },
+    {
+     "zh": "我每天晚上___看电影。",
+     "en": "I go online and watch movies every evening.",
+     "ans": "上网",
+     "opts": [
+      "上网",
+      "上来",
+      "上去",
+      "网上"
+     ]
+    },
+    {
+     "zh": "我在___给你打电话。",
+     "en": "I will call you on the way.",
+     "ans": "路上",
+     "opts": [
+      "路上",
+      "网上",
+      "上面",
+      "上去"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "出",
+   "py": "chū",
+   "en": "out; to go out",
+   "words": [
+    [
+     "出国",
+     "出",
+     "go out",
+     "国",
+     "country"
+    ],
+    [
+     "出来",
+     "出",
+     "out",
+     "来",
+     "come"
+    ],
+    [
+     "出门",
+     "出",
+     "go out",
+     "门",
+     "door"
+    ],
+    [
+     "出去",
+     "出",
+     "out",
+     "去",
+     "go"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我想明年___旅游。",
+     "en": "I want to travel abroad next year.",
+     "ans": "出国",
+     "opts": [
+      "出国",
+      "出门",
+      "出来",
+      "出去"
+     ]
+    },
+    {
+     "zh": "他从教室___了。",
+     "en": "He came out of the classroom.",
+     "ans": "出来",
+     "opts": [
+      "出来",
+      "进去",
+      "回去",
+      "上来"
+     ]
+    },
+    {
+     "zh": "今天是晴天，我们___玩吧。",
+     "en": "Today is sunny; let us go out and play.",
+     "ans": "出去",
+     "opts": [
+      "出去",
+      "进来",
+      "回来",
+      "起来"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "过",
+   "py": "guò",
+   "en": "to pass; to cross; to spend (time)",
+   "words": [
+    [
+     "过来",
+     "过",
+     "over",
+     "来",
+     "come"
+    ],
+    [
+     "过年",
+     "过",
+     "spend",
+     "年",
+     "year"
+    ],
+    [
+     "过去",
+     "过",
+     "over",
+     "去",
+     "go"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "你___一下，我有事情告诉你。",
+     "en": "Come over for a moment; I have something to tell you.",
+     "ans": "过来",
+     "opts": [
+      "过来",
+      "过去",
+      "过年",
+      "回来"
+     ]
+    },
+    {
+     "zh": "我们家每年都一起___。",
+     "en": "Our family celebrates the New Year together every year.",
+     "ans": "过年",
+     "opts": [
+      "过年",
+      "过来",
+      "过去",
+      "出国"
+     ]
+    },
+    {
+     "zh": "他在那边，你___吧。",
+     "en": "He is over there, so you go over.",
+     "ans": "过去",
+     "opts": [
+      "过去",
+      "过来",
+      "过年",
+      "回来"
+     ]
+    }
+   ]
+  }
+ ],
+ "opps": [
+  {
+   "a": "左",
+   "b": "右",
+   "note": "Add 边 to each to say a side: 左边, 右边."
+  },
+  {
+   "a": "前面",
+   "b": "后面",
+   "note": "Both end in 面 (side): 前面 is in front, 后面 is behind."
+  },
+  {
+   "a": "里面",
+   "b": "外面",
+   "note": "Same 面 pattern: 里面 is inside, 外面 is outside."
+  },
+  {
+   "a": "上面",
+   "b": "下面",
+   "note": "Same 面 pattern again: 上面 is above, 下面 is below."
+  },
+  {
+   "a": "远",
+   "b": "近",
+   "note": "Both go with 离: 学校离我家很近, 机场离这里很远."
+  },
+  {
+   "a": "快",
+   "b": "慢",
+   "note": "Both describe speed: 很快, 很慢. 快 also means soon, as in 快要."
+  },
+  {
+   "a": "进",
+   "b": "出",
+   "note": "Add 来 or 去 for direction: 进来, 进去, 出来, 出去."
+  },
+  {
+   "a": "回来",
+   "b": "回去",
+   "note": "来 means toward the speaker and 去 means away: 回来 come back, 回去 go back."
+  },
+  {
+   "a": "上来",
+   "b": "下来",
+   "note": "Both end in 来: moving toward the speaker, upward or downward."
+  },
+  {
+   "a": "男孩",
+   "b": "女孩",
+   "note": "Both end in 孩 (child): boy and girl."
+  },
+  {
+   "a": "丈夫",
+   "b": "妻子",
+   "note": "A married couple: 丈夫 is the husband, 妻子 is the wife."
+  },
+  {
+   "a": "爷爷",
+   "b": "奶奶",
+   "note": "Your father’s father and your father’s mother."
+  },
+  {
+   "a": "晴",
+   "b": "阴",
+   "note": "Both describe the sky: 晴天 is sunny, 阴天 is overcast."
+  },
+  {
+   "a": "红茶",
+   "b": "绿茶",
+   "note": "Chinese calls it 红茶 (red tea); English calls it black tea."
+  },
+  {
+   "a": "记得",
+   "b": "忘",
+   "note": "记得 is to remember and 忘 is to forget; 忘 usually comes with 了: 忘了."
+  },
+  {
+   "a": "开始",
+   "b": "完",
+   "note": "开始 is to begin and 完 is to finish."
+  }
+ ],
+ "topics": [
+  {
+   "name": "Getting around",
+   "to": "review",
+   "cta": "Review these words",
+   "sentence": {
+    "zh": "我们坐地铁去机场，路上很快。",
+    "en": "We take the subway to the airport; it is fast on the way."
+   },
+   "words": [
+    "车站",
+    "机场",
+    "地铁",
+    "公交车",
+    "打车",
+    "路",
+    "路上",
+    "站",
+    "离",
+    "近",
+    "远",
+    "往",
+    "走路",
+    "出国",
+    "旅游",
+    "票",
+    "机票",
+    "门票",
+    "酒店",
+    "外国"
+   ]
+  },
+  {
+   "name": "Where things are",
+   "to": "review",
+   "cta": "Review these words",
+   "sentence": {
+    "zh": "洗手间在左边，药店在右边。",
+    "en": "The restroom is on the left and the pharmacy is on the right."
+   },
+   "words": [
+    "左",
+    "右",
+    "左边",
+    "右边",
+    "前面",
+    "后面",
+    "里面",
+    "外面",
+    "上面",
+    "下面",
+    "旁边",
+    "面",
+    "门",
+    "门口",
+    "楼",
+    "洗手间",
+    "教室",
+    "商场",
+    "饭馆",
+    "药店"
+   ]
+  },
+  {
+   "name": "Coming and going",
+   "to": "review",
+   "cta": "Review these words",
+   "sentence": {
+    "zh": "请进来，我们一起出去吧。",
+    "en": "Please come in; let us go out together."
+   },
+   "words": [
+    "进",
+    "出",
+    "进来",
+    "进去",
+    "出来",
+    "出去",
+    "回来",
+    "回去",
+    "上来",
+    "上去",
+    "下来",
+    "下去",
+    "过来",
+    "过去",
+    "起来",
+    "走",
+    "跑",
+    "拿",
+    "送",
+    "出门",
+    "跑步",
+    "打开"
+   ]
+  },
+  {
+   "name": "Family and people",
+   "to": "review",
+   "cta": "Review these words",
+   "sentence": {
+    "zh": "这位是我爷爷，那位是我奶奶。",
+    "en": "This is my grandfather, and that is my grandmother."
+   },
+   "words": [
+    "爷爷",
+    "奶奶",
+    "妻子",
+    "丈夫",
+    "男孩",
+    "女孩",
+    "小孩",
+    "班",
+    "姓",
+    "姓名",
+    "名",
+    "位",
+    "自己",
+    "介绍"
+   ]
+  },
+  {
+   "name": "School and study",
+   "to": "review",
+   "cta": "Review these words",
+   "sentence": {
+    "zh": "明天开学，我准备好书包和本子了。",
+    "en": "School starts tomorrow, and I have my schoolbag and notebook ready."
+   },
+   "words": [
+    "词",
+    "题",
+    "考",
+    "考试",
+    "教",
+    "懂",
+    "记得",
+    "忘",
+    "笔",
+    "本子",
+    "书包",
+    "开学",
+    "高中",
+    "准备",
+    "意思",
+    "告诉",
+    "帮",
+    "帮忙",
+    "等",
+    "完",
+    "错",
+    "开始",
+    "事情"
+   ]
+  },
+  {
+   "name": "Body and health",
+   "to": "review",
+   "cta": "Review these words",
+   "sentence": {
+    "zh": "我头疼，身体不舒服。",
+    "en": "My head hurts and I do not feel well."
+   },
+   "words": [
+    "身体",
+    "头",
+    "手",
+    "眼睛",
+    "疼",
+    "药",
+    "个子",
+    "舒服",
+    "累",
+    "洗",
+    "高"
+   ]
+  },
+  {
+   "name": "Colors and things",
+   "to": "review",
+   "cta": "Review these words",
+   "sentence": {
+    "zh": "我喜欢红色的花和绿色的包。",
+    "en": "I like red flowers and a green bag."
+   },
+   "words": [
+    "颜色",
+    "白色",
+    "黑色",
+    "红色",
+    "绿色",
+    "花",
+    "画",
+    "鸟",
+    "球",
+    "手表",
+    "裤子",
+    "包",
+    "床"
+   ]
+  },
+  {
+   "name": "Food and drink",
+   "to": "review",
+   "cta": "Review these words",
+   "sentence": {
+    "zh": "我想喝一杯咖啡，吃一点儿鱼。",
+    "en": "I want a cup of coffee and a little fish."
+   },
+   "words": [
+    "红茶",
+    "绿茶",
+    "奶茶",
+    "咖啡",
+    "肉",
+    "鱼",
+    "饭馆",
+    "面"
+   ]
+  },
+  {
+   "name": "Sports and fun",
+   "to": "review",
+   "cta": "Review these words",
+   "sentence": {
+    "zh": "我的爱好是游泳和踢足球。",
+    "en": "My hobbies are swimming and playing soccer."
+   },
+   "words": [
+    "篮球",
+    "足球",
+    "跑步",
+    "踢",
+    "打",
+    "游",
+    "游泳",
+    "跳舞",
+    "运动",
+    "爱好",
+    "上网",
+    "网上",
+    "旅游",
+    "笑",
+    "飞",
+    "动"
+   ]
+  },
+  {
+   "name": "Weather and time",
+   "to": "review",
+   "cta": "Review these words",
+   "sentence": {
+    "zh": "今天是晴天，我们已经出门了。",
+    "en": "Today is a sunny day, and we have already gone out."
+   },
+   "words": [
+    "晴",
+    "阴",
+    "周",
+    "生日",
+    "过年",
+    "时",
+    "小时候",
+    "一会儿",
+    "已经",
+    "经常",
+    "有时",
+    "每",
+    "正",
+    "快",
+    "快要",
+    "从小",
+    "从",
+    "就",
+    "让"
+   ]
+  },
+  {
+   "name": "Describing things",
+   "to": "review",
+   "cta": "Review these words",
+   "sentence": {
+    "zh": "这个电影很有意思，不错。",
+    "en": "This movie is very interesting, not bad."
+   },
+   "words": [
+    "高",
+    "坏",
+    "快乐",
+    "不错",
+    "没意思",
+    "有意思",
+    "慢",
+    "长",
+    "可能",
+    "最",
+    "比",
+    "那么",
+    "这么",
+    "那样",
+    "这样",
+    "快",
+    "舒服"
+   ]
+  },
+  {
+   "name": "Connecting words",
+   "to": "grammar",
+   "cta": "Practise with grammar lessons",
+   "sentence": {
+    "zh": "因为下雨，所以我们在家看电影。",
+    "en": "Because it is raining, we watch a movie at home."
+   },
+   "words": [
+    "但",
+    "但是",
+    "因为",
+    "所以",
+    "虽然",
+    "还是",
+    "跟",
+    "从",
+    "让",
+    "别",
+    "为什么",
+    "就",
+    "啊",
+    "地",
+    "得",
+    "着",
+    "过",
+    "不好意思",
+    "希望",
+    "可能",
+    "一起",
+    "自己"
+   ]
+  },
+  {
+   "name": "Numbers and counting",
+   "to": "review",
+   "cta": "Review these words",
+   "sentence": {
+    "zh": "我去过三次中国，买了一条红色的裤子。",
+    "en": "I have been to China three times and bought a pair of red trousers."
+   },
+   "words": [
+    "万",
+    "次",
+    "条",
+    "间",
+    "位",
+    "名",
+    "包",
+    "周"
+   ]
+  }
+ ]
+}

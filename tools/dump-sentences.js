@@ -14,7 +14,7 @@ const dir = path.join(__dirname, '..', 'data');
 const files = fs.readdirSync(dir).filter(f => new RegExp('^hsk' + level + '(-.*)?\\.js$').test(f));
 files.forEach(f => require(path.join(dir, f)));
 
-if (plain) { const E = require(path.join(__dirname, '..', 'erhua.js')); E.make(window.HSK1_ERHUA).apply(window); }
+if (plain && level === '1') { const E = require(path.join(__dirname, '..', 'erhua.js')); E.make(window.HSK1_ERHUA).apply(window); }
 
 const N = 'HSK' + level;
 const H = window[N] || {};

@@ -30,10 +30,10 @@ function fakeGithub() {
     const path = url.replace('https://api.github.com', ''); const method = opt.method; calls.push(method + ' ' + path);
     if ((opt.headers.Authorization || '') !== 'Bearer good') return { ok: false, status: 401, json: async () => ({}) };
     if (method === 'GET' && path.startsWith('/gists?')) return { ok: true, status: 200, json: async () => Object.keys(gists).map(id => ({ id, files: gists[id].files })) };
-    if (method === 'POST' && path === '/gists') { const id = 'g' + (++n); const body = JSON.parse(opt.body); if (body.public !== false) throw new Error('gist must be secret'); gists[id] = { files: { [S.FILE]: { content: body.files[S.FILE].content } } }; return { ok: true, status: 201, json: async () => ({ id }) }; }
+    if (method === 'POST' && path === '/gists') { const id = 'g' + (++n); const body = JSON.parse(opt.body); if (body.public !== false) throw new Error('gist must be secret'); gists[id] = { files: {} }; Object.keys(body.files).forEach(nm => { gists[id].files[nm] = { content: body.files[nm].content }; }); return { ok: true, status: 201, json: async () => ({ id }) }; }
     const m = path.match(/^\/gists\/(\w+)$/);
     if (m && method === 'GET') return gists[m[1]] ? { ok: true, status: 200, json: async () => ({ id: m[1], files: gists[m[1]].files }) } : { ok: false, status: 404, json: async () => ({}) };
-    if (m && method === 'PATCH') { gists[m[1]].files[S.FILE].content = JSON.parse(opt.body).files[S.FILE].content; return { ok: true, status: 200, json: async () => ({}) }; }
+    if (m && method === 'PATCH') { const fl = JSON.parse(opt.body).files; Object.keys(fl).forEach(nm => { gists[m[1]].files[nm] = { content: fl[nm].content }; }); return { ok: true, status: 200, json: async () => ({}) }; }
     return { ok: false, status: 500, json: async () => ({}) };
   };
   return { fetchFn, gists, calls };
@@ -54,6 +54,27 @@ function fakeGithub() {
   gh.gists[r.gistId] && delete gh.gists[r.gistId];
   r = await S.round({ token: 'good', gistId: 'g1', state: a, fetch: gh.fetchFn });
   check(r.created, 'if the gist was deleted, a new one is made');
+  // each level keeps its own file in the same gist
+  const l2a = { ws: { 机场: { see: { s: 3, l: 0, t: 300 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } } }, xp: 10 };
+  const l2b = { ws: { 地铁: { see: { s: 2, l: 0, t: 400 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } } }, xp: 20 };
+  const f2 = S.fileFor(2);
+  check(S.fileFor(1) === S.FILE && f2 !== S.FILE && /hsk2/.test(f2), 'HSK 1 keeps the original file name and HSK 2 has its own');
+  const gh2 = fakeGithub();
+  r = await S.round({ token: 'good', state: a, fetch: gh2.fetchFn, file: S.fileFor(1) });
+  const gid = r.gistId;
+  const l1Before = gh2.gists[gid].files[S.FILE].content;
+  r = await S.round({ token: 'good', state: l2a, fetch: gh2.fetchFn, file: f2 });
+  check(!r.created && r.gistId === gid && gh2.gists[gid].files[f2], 'HSK 2 finds the HSK 1 gist and adds its own file to it');
+  check(gh2.gists[gid].files[S.FILE].content === l1Before, 'syncing HSK 2 leaves the HSK 1 file untouched');
+  r = await S.round({ token: 'good', state: l2b, fetch: gh2.fetchFn, file: f2 });
+  check(S.same(r.merged.ws, S.merge(l2a, l2b).ws) && r.merged.ws['机场'] && r.merged.ws['地铁'], 'a second device merges HSK 2 progress through its own file');
+  r = await S.round({ token: 'good', state: b, fetch: gh2.fetchFn, file: S.fileFor(1) });
+  check(!r.merged.ws['机场'] && S.same(r.merged, S.merge(a, b)), 'HSK 1 sync does not pick up HSK 2 words');
+  const gh3 = fakeGithub();
+  r = await S.round({ token: 'good', state: l2a, fetch: gh3.fetchFn, file: f2 });
+  const gid3 = r.gistId;
+  r = await S.round({ token: 'good', state: a, fetch: gh3.fetchFn, file: S.fileFor(1) });
+  check(!r.created && r.gistId === gid3 && gh3.gists[gid3].files[S.FILE] && gh3.gists[gid3].files[f2], 'if HSK 2 syncs first, HSK 1 later joins the same gist');
   console.log(failures ? failures + ' check(s) failed' : 'all sync checks passed');
   process.exit(failures ? 1 : 0);
 })();

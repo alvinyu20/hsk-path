@@ -1,0 +1,719 @@
+[
+ {
+  "id": "bi",
+  "title": "Comparing: 比, 没有, 最, 这么 and 那么",
+  "covers": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "formula": [
+   "A",
+   "*比",
+   "B",
+   "Adjective"
+  ],
+  "explain": [
+   "To say A is more than B, put 比 between them and the adjective after: 他比我高 means 'He is taller than me'. Do not add 很 before the adjective in a 比 sentence.",
+   "To say how much more, put the amount after the adjective: 他比我大三岁 'He is three years older than me'; 这个比那个好一点 'This one is a bit better than that one'; 他比我高多了 'He is much taller than me'.",
+   "To say A is not as ... as B, use 没有: 我没有他高 'I am not as tall as he is'. Add 那么 to say 'so': 我没有他那么高.",
+   "最 means 'most': 我最喜欢茶 'I like tea most'. 这么 and 那么 mean 'so': 这么贵 'so expensive' (this much, about something near), 那么远 'so far' (that much, about something farther away)."
+  ],
+  "examples": [
+   {
+    "zh": "他比我高。",
+    "en": "He is taller than me."
+   },
+   {
+    "zh": "哥哥比我大三岁。",
+    "en": "My older brother is three years older than me."
+   },
+   {
+    "zh": "我没有他那么高。",
+    "en": "I am not as tall as he is."
+   },
+   {
+    "zh": "我最喜欢踢足球。",
+    "en": "I like playing soccer most."
+   }
+  ],
+  "mistakes": [
+   "Do not put 很 (or 非常, 太) in a 比 sentence. Say 他比我高, not 他比我很高."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "姐姐比我高。",
+    "en": "My older sister is taller than me.",
+    "explain": "A + 比 + B + adjective."
+   },
+   {
+    "t": "order",
+    "zh": "今天比昨天冷。",
+    "en": "Today is colder than yesterday.",
+    "explain": "比 goes between the two things you compare."
+   },
+   {
+    "t": "cloze",
+    "zh": "我没有他高。",
+    "en": "I am not as tall as him.",
+    "blank": "没有",
+    "explain": "没有 says A is not as ... as B."
+   },
+   {
+    "t": "spot",
+    "zh": "妹妹比我高。",
+    "en": "My younger sister is taller than me.",
+    "wrong": "妹妹比我很高。",
+    "remove": "很",
+    "explain": "Do not put 很 in a 比 sentence."
+   },
+   {
+    "t": "order",
+    "zh": "我最喜欢这个手表。",
+    "en": "I like this watch best.",
+    "explain": "最 goes before the verb 喜欢."
+   }
+  ]
+ },
+ {
+  "id": "li",
+  "title": "Distance and direction: 离, 从…到… and 往",
+  "covers": [
+   6,
+   7,
+   8
+  ],
+  "formula": [
+   "Place A",
+   "*离",
+   "Place B",
+   "很远 / 很近"
+  ],
+  "explain": [
+   "离 measures the distance between two places. Put it between them and finish with 远 or 近: 学校离我家很近 'The school is close to my home'. Add 很 before 近 or 远, or 不 for the negative: 不远.",
+   "从…到… means 'from … to …', for places and for times: 从我家到学校 'from my home to school'; 从八点到十点 'from eight to ten'. 从 on its own says where something starts: 我从学校回来 'I come back from school'.",
+   "往 means 'toward' and is used for directions: 往左走 'go to the left', 往前走 'go forward'."
+  ],
+  "examples": [
+   {
+    "zh": "学校离我家很近。",
+    "en": "The school is close to my home."
+   },
+   {
+    "zh": "机场离这里很远。",
+    "en": "The airport is far from here."
+   },
+   {
+    "zh": "我从家走路到学校。",
+    "en": "I walk from home to school."
+   },
+   {
+    "zh": "请往左走，洗手间在右边。",
+    "en": "Please go left; the restroom is on the right."
+   }
+  ],
+  "mistakes": [
+   "Keep the pattern place + 离 + place + 很远. Do not say 学校很远我家, the way English says 'the school is far from my home'."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "商店离我家不远。",
+    "en": "The shop is not far from my home.",
+    "explain": "离 sits between the two places, then 不远."
+   },
+   {
+    "t": "order",
+    "zh": "我们往右走。",
+    "en": "We walk to the right.",
+    "explain": "往 + direction + 走."
+   },
+   {
+    "t": "cloze",
+    "zh": "我家离学校很近。",
+    "en": "My home is close to school.",
+    "blank": "离",
+    "explain": "离 goes between the two places."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I work from Monday to Friday?",
+    "options": [
+     "我从星期一到星期五上班。",
+     "我离星期一到星期五上班。"
+    ],
+    "correct": 0,
+    "zh": "我从星期一到星期五上班。",
+    "en": "I work from Monday to Friday.",
+    "explain": "从…到… gives the start and the end."
+   },
+   {
+    "t": "cloze",
+    "zh": "我从八点工作到五点。",
+    "en": "I work from eight to five.",
+    "blank": "从",
+    "explain": "从 marks the start, 到 marks the end."
+   }
+  ]
+ },
+ {
+  "id": "dao",
+  "title": "到 and 在 after a verb",
+  "covers": [
+   9,
+   10
+  ],
+  "formula": [
+   "Subject",
+   "Verb",
+   "*到 / 在",
+   "Place"
+  ],
+  "explain": [
+   "到 before a place means 'arrive at' or 'go to': 我们到机场了 'We have arrived at the airport'. 他每天八点到学校 'He gets to school at eight every day'.",
+   "Most verbs keep 在 + place before the verb (我在家吃饭), but a few verbs take 在 + place after them to say where the person ends up: 我住在学校旁边 'I live next to the school'; 她站在门口 'She is standing at the door'. Common ones are 住, 坐 and 站.",
+   "Compare 我在这里工作 (the working happens here) and 我住在这里 (I live here)."
+  ],
+  "examples": [
+   {
+    "zh": "我们到机场了。",
+    "en": "We have arrived at the airport."
+   },
+   {
+    "zh": "他每天八点到学校。",
+    "en": "He gets to school at eight every day."
+   },
+   {
+    "zh": "我住在学校旁边。",
+    "en": "I live next to the school."
+   },
+   {
+    "zh": "她站在门口等你。",
+    "en": "She is standing at the door waiting for you."
+   }
+  ],
+  "mistakes": [
+   "Most verbs keep 在 + place before the verb: 我在学校学习, not 我学习在学校. Only a few verbs such as 住, 坐 and 站 take 在 + place after them."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我住在医院旁边。",
+    "en": "I live next to the hospital.",
+    "explain": "住 + 在 + place: 在 comes right after 住."
+   },
+   {
+    "t": "order",
+    "zh": "她们坐在教室里。",
+    "en": "They are sitting in the classroom.",
+    "explain": "坐 + 在 + place."
+   },
+   {
+    "t": "cloze",
+    "zh": "妈妈六点到家了。",
+    "en": "Mom got home at six.",
+    "blank": "到",
+    "explain": "到 + place means to arrive at."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Grandma lives at my home?",
+    "options": [
+     "奶奶住在我家。",
+     "奶奶住我家。"
+    ],
+    "correct": 0,
+    "zh": "奶奶住在我家。",
+    "en": "Grandma lives at my home.",
+    "explain": "After 住 you need 在 before the place."
+   },
+   {
+    "t": "spot",
+    "zh": "他到学校了。",
+    "en": "He has arrived at school.",
+    "wrong": "他到在学校了。",
+    "remove": "在",
+    "explain": "到 already means arrive at; do not add 在."
+   }
+  ]
+ },
+ {
+  "id": "guo",
+  "title": "过: have done it before",
+  "covers": [
+   11
+  ],
+  "formula": [
+   "Subject",
+   "Verb",
+   "*过",
+   "Object"
+  ],
+  "explain": [
+   "Put 过 after a verb to say you have done it at least once in your life: 我去过中国 'I have been to China'. This 过 is pronounced guo with a light tone, and the verb does not change.",
+   "To say you have never done it, use 没 + verb + 过: 我没吃过这个 'I have never eaten this'. Do not use 不. To ask, add 吗: 你去过中国吗？",
+   "Compare 了 and 过: 我去了中国 says the trip happened; 我去过中国 says it is part of your experience. To say how many times, put it after 过: 我去过三次中国."
+  ],
+  "examples": [
+   {
+    "zh": "我去过中国。",
+    "en": "I have been to China."
+   },
+   {
+    "zh": "你喝过红茶吗？",
+    "en": "Have you ever drunk black tea?"
+   },
+   {
+    "zh": "我没学过游泳。",
+    "en": "I have never learned to swim."
+   },
+   {
+    "zh": "他看过这个电影两次。",
+    "en": "He has seen this movie twice."
+   }
+  ],
+  "mistakes": [
+   "Do not use 不 with 过. 我不去过中国 is wrong; say 我没去过中国 (I have never been to China)."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我吃过鱼。",
+    "en": "I have eaten fish.",
+    "explain": "Verb + 过 shows you have done it before."
+   },
+   {
+    "t": "order",
+    "zh": "他没去过外国。",
+    "en": "He has never been abroad.",
+    "explain": "没 + verb + 过."
+   },
+   {
+    "t": "cloze",
+    "zh": "你看过这个电影吗？",
+    "en": "Have you seen this movie?",
+    "blank": "过",
+    "explain": "过 goes straight after the verb."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I have never drunk coffee?",
+    "options": [
+     "我没喝过咖啡。",
+     "我不喝过咖啡。"
+    ],
+    "correct": 0,
+    "zh": "我没喝过咖啡。",
+    "en": "I have never drunk coffee.",
+    "explain": "Use 没, not 不, with 过."
+   },
+   {
+    "t": "order",
+    "zh": "你学过汉语吗？",
+    "en": "Have you studied Chinese before?",
+    "explain": "Verb + 过, then 吗 for the question."
+   }
+  ]
+ },
+ {
+  "id": "zhe",
+  "title": "着: a state that continues",
+  "covers": [
+   12
+  ],
+  "formula": [
+   "Subject",
+   "Verb",
+   "*着",
+   "(Object)"
+  ],
+  "explain": [
+   "Put 着 after a verb to describe a state that is still there: 门开着 'The door is open'; 他站着，我坐着 'He is standing and I am sitting'. It shows how things are right now.",
+   "着 can also link two actions: the first, with 着, shows how the second is done. 他笑着说话 'He talks with a smile'; 弟弟坐着看电视 'My younger brother watches TV sitting down'.",
+   "To say it is not in that state, drop 着 and use 没: 门没开 'The door is not open'. For an action in progress use 在 or 正在 (他在跑步 'He is running'); 着 describes a state, like 门开着."
+  ],
+  "examples": [
+   {
+    "zh": "门开着。",
+    "en": "The door is open."
+   },
+   {
+    "zh": "他站着，我坐着。",
+    "en": "He is standing and I am sitting."
+   },
+   {
+    "zh": "手机开着。",
+    "en": "The phone is on."
+   },
+   {
+    "zh": "他笑着说话。",
+    "en": "He talks with a smile."
+   }
+  ],
+  "mistakes": [
+   "着 describes a state, not an action in progress. For 'is running' say 他在跑步, and use 着 for things like 门开着."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "门口站着一个男孩。",
+    "en": "A boy is standing at the door.",
+    "explain": "Place + verb + 着 + who or what is there."
+   },
+   {
+    "t": "order",
+    "zh": "手机开着。",
+    "en": "The phone is on.",
+    "explain": "Verb + 着 keeps the state."
+   },
+   {
+    "t": "cloze",
+    "zh": "他笑着说话。",
+    "en": "He talks with a smile.",
+    "blank": "着",
+    "explain": "着 sits right after the first verb."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: The restaurant door is open?",
+    "options": [
+     "饭馆的门开着。",
+     "饭馆的门开了着。"
+    ],
+    "correct": 0,
+    "zh": "饭馆的门开着。",
+    "en": "The restaurant door is open.",
+    "explain": "Do not put 了 and 着 together on the same verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "弟弟坐着看电视。",
+    "en": "My younger brother watches TV sitting down.",
+    "blank": "着",
+    "explain": "着 shows how he watches."
+   }
+  ]
+ },
+ {
+  "id": "yao",
+  "title": "快要 and 就要: something is about to happen",
+  "covers": [
+   13
+  ],
+  "formula": [
+   "Subject",
+   "*快要 / 就要",
+   "Verb",
+   "*了"
+  ],
+  "explain": [
+   "快要…了, 就要…了 and 要…了 all mean 'is about to': 快要下雨了 'It is about to rain'; 我们要出门了 'We are about to go out'. The 了 at the end is needed.",
+   "快 on its own also works: 快下雨了.",
+   "With a time word, use 就要, not 快要: 他明天就要走了 'He is leaving tomorrow'; 后天就要考试了 'The exam is the day after tomorrow'."
+  ],
+  "examples": [
+   {
+    "zh": "快要下雨了。",
+    "en": "It is about to rain."
+   },
+   {
+    "zh": "我们要出门了。",
+    "en": "We are about to go out."
+   },
+   {
+    "zh": "他明天就要走了。",
+    "en": "He is leaving tomorrow."
+   },
+   {
+    "zh": "快要考试了，我要准备。",
+    "en": "The exam is coming up, so I need to get ready."
+   }
+  ],
+  "mistakes": [
+   "Do not put a specific time before 快要. 明天快要考试了 is wrong; say 明天就要考试了."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "车快要来了。",
+    "en": "The bus is about to come.",
+    "explain": "快要 + verb + 了."
+   },
+   {
+    "t": "order",
+    "zh": "老师就要进来了。",
+    "en": "The teacher is about to come in.",
+    "explain": "就要 + verb + 了."
+   },
+   {
+    "t": "cloze",
+    "zh": "爸爸后天就要回来了。",
+    "en": "Dad is coming back the day after tomorrow.",
+    "blank": "就",
+    "explain": "With a time word (后天) use 就要."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence is correct?",
+    "options": [
+     "后天快要考试了。",
+     "后天就要考试了。"
+    ],
+    "correct": 1,
+    "zh": "后天就要考试了。",
+    "en": "The exam is the day after tomorrow.",
+    "explain": "快要 cannot follow a specific time; 就要 can."
+   },
+   {
+    "t": "cloze",
+    "zh": "饭快要好了。",
+    "en": "Dinner is almost ready.",
+    "blank": "好",
+    "explain": "快要 + adjective + 了 also works."
+   }
+  ]
+ },
+ {
+  "id": "yijing",
+  "title": "已经…了 and 就: already, and sooner than expected",
+  "covers": [
+   14,
+   15
+  ],
+  "formula": [
+   "Subject",
+   "*已经",
+   "Verb",
+   "*了"
+  ],
+  "explain": [
+   "已经…了 means 'already': 我已经吃饭了 'I have already eaten'. 已经 goes before the verb and 了 comes at the end (or right after the verb).",
+   "就 before a verb can mean 'as early as' or 'right away': 我五点就起床了 'I got up as early as five'; 他八点就到了 'He was already there by eight'. Use 就 when something is earlier or quicker than you expected.",
+   "就 can also mean 'then, in that case': 你累了，就休息吧 'If you are tired, rest then'."
+  ],
+  "examples": [
+   {
+    "zh": "我已经吃饭了。",
+    "en": "I have already eaten."
+   },
+   {
+    "zh": "他已经走了。",
+    "en": "He has already left."
+   },
+   {
+    "zh": "我五点就起床了。",
+    "en": "I got up as early as five."
+   },
+   {
+    "zh": "你累了，就休息吧。",
+    "en": "If you are tired, then rest."
+   }
+  ],
+  "mistakes": [
+   "Do not use 已经 with something that has not happened. For 'not yet' say 还没: 我还没吃饭 'I have not eaten yet', not 我已经没吃饭."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "她已经回家了。",
+    "en": "She has already gone home.",
+    "explain": "已经 goes before the verb, 了 at the end."
+   },
+   {
+    "t": "order",
+    "zh": "我们八点就到学校了。",
+    "en": "We were at school by eight.",
+    "explain": "就 goes before the verb and shows it was early."
+   },
+   {
+    "t": "cloze",
+    "zh": "弟弟已经吃饭了。",
+    "en": "My younger brother has already eaten.",
+    "blank": "已经",
+    "explain": "已经 + verb + 了."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I have not eaten yet?",
+    "options": [
+     "我还没吃饭。",
+     "我已经没吃饭。"
+    ],
+    "correct": 0,
+    "zh": "我还没吃饭。",
+    "en": "I have not eaten yet.",
+    "explain": "Use 还没 for not yet; 已经 does not go with 没."
+   },
+   {
+    "t": "cloze",
+    "zh": "他五点就起床了，真早。",
+    "en": "He got up as early as five, so early.",
+    "blank": "就",
+    "explain": "就 shows it happened earlier than expected."
+   }
+  ]
+ },
+ {
+  "id": "rang",
+  "title": "让 and 别: letting, asking and telling not to",
+  "covers": [
+   16,
+   22
+  ],
+  "formula": [
+   "Subject",
+   "*让",
+   "Someone",
+   "Verb"
+  ],
+  "explain": [
+   "让 means 'to let' or 'to ask someone to': 他让我等一会儿 'He asked me to wait a moment'; 妈妈让我早点睡觉 'Mom tells me to go to bed early'. The person comes right after 让.",
+   "让 can also mean 'to make': 这个电影让我很高兴 'This movie made me happy'.",
+   "别 + verb tells someone not to do something: 别走 'Do not go'; 别说话 'Do not talk'. 别…了 asks someone to stop: 别笑了 'Stop laughing'. 别 means the same as 不要 but is more common in speech."
+  ],
+  "examples": [
+   {
+    "zh": "妈妈让我早点睡觉。",
+    "en": "Mom tells me to go to bed early."
+   },
+   {
+    "zh": "他让我等一会儿。",
+    "en": "He asked me to wait a moment."
+   },
+   {
+    "zh": "这个电影让我很高兴。",
+    "en": "This movie makes me happy."
+   },
+   {
+    "zh": "别走，再坐一会儿。",
+    "en": "Do not go; sit a little longer."
+   }
+  ],
+  "mistakes": [
+   "Do not leave out the person after 让. You need 让 + who + what: 妈妈让我早点睡觉."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "老师让我们进来。",
+    "en": "The teacher asked us to come in.",
+    "explain": "让 + who + what."
+   },
+   {
+    "t": "order",
+    "zh": "别在这里打电话。",
+    "en": "Do not make phone calls here.",
+    "explain": "别 + verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "爸爸让我去买药。",
+    "en": "Dad asks me to go and buy medicine.",
+    "blank": "让",
+    "explain": "让 + who + what."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Do not go in?",
+    "options": [
+     "别进去。",
+     "没进去。"
+    ],
+    "correct": 0,
+    "zh": "别进去。",
+    "en": "Do not go in.",
+    "explain": "别 tells someone not to; 没 says it did not happen."
+   },
+   {
+    "t": "cloze",
+    "zh": "你别说了，我很忙。",
+    "en": "Stop talking, I am busy.",
+    "blank": "说",
+    "explain": "别…了 asks someone to stop."
+   }
+  ]
+ },
+ {
+  "id": "yinwei",
+  "title": "因为…所以… and 虽然…但是…",
+  "covers": [
+   17,
+   18
+  ],
+  "formula": [
+   "*因为",
+   "Reason",
+   "*所以",
+   "Result"
+  ],
+  "explain": [
+   "因为 gives the reason and 所以 gives the result: 因为下雨，所以我们在家看电影 'Because it is raining, we watch a movie at home'. In English you use only one of 'because' and 'so'; Chinese can use both. You can also drop either: 因为下雨，我们在家 and 下雨，所以我们在家 are both fine.",
+   "虽然 'although' and 但是 'but' come as a pair too: 虽然很累，但是我很高兴 'Although I am tired, I am happy'. English does not say 'although … but', and Chinese needs a 'but' word (但是, or just 但) in the second part.",
+   "为什么 asks for the reason: 你为什么不去？ 'Why are you not going?' The answer starts with 因为."
+  ],
+  "examples": [
+   {
+    "zh": "因为下雨，所以我们在家看电影。",
+    "en": "Because it is raining, we watch a movie at home."
+   },
+   {
+    "zh": "因为今天很冷，所以我不想出门。",
+    "en": "Because it is cold today, I do not want to go out."
+   },
+   {
+    "zh": "虽然这个很贵，但是很好。",
+    "en": "Although this one is expensive, it is good."
+   },
+   {
+    "zh": "你为什么不去？",
+    "en": "Why are you not going?"
+   }
+  ],
+  "mistakes": [
+   "After 虽然, add a 'but' word (但是 or 但) in the second part, the way Chinese does: 虽然很累，但是很高兴."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "因为太晚了，所以我回家了。",
+    "en": "Because it was too late, I went home.",
+    "explain": "因为 gives the reason, 所以 the result."
+   },
+   {
+    "t": "order",
+    "zh": "虽然很远，但是我走路去。",
+    "en": "Although it is far, I walk there.",
+    "explain": "虽然 pairs with 但是."
+   },
+   {
+    "t": "cloze",
+    "zh": "因为下雨，所以我不去。",
+    "en": "Because it is raining, I am not going.",
+    "blank": "因为",
+    "explain": "因为 introduces the reason."
+   },
+   {
+    "t": "cloze",
+    "zh": "虽然他很小，但是他懂很多。",
+    "en": "Although he is young, he understands a lot.",
+    "blank": "但是",
+    "explain": "虽然 is answered by 但是."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Although it is cold, I am happy?",
+    "options": [
+     "虽然很冷，但是我很高兴。",
+     "虽然很冷，因为我很高兴。"
+    ],
+    "correct": 0,
+    "zh": "虽然很冷，但是我很高兴。",
+    "en": "Although it is cold, I am happy.",
+    "explain": "虽然 pairs with 但是, not 因为."
+   }
+  ]
+ }
+]

@@ -1,0 +1,8 @@
+# Characters where pypinyin's usual reading is NOT the one that goes with the meaning taught on this site.
+# The pinyin check normally compares the shown pinyin with pypinyin. For these characters it also accepts the reading below.
+# char	reading (tone as a number, 5 = neutral)	reason
+长	chang2	"long" (cháng); pypinyin's default zhǎng means "to grow, chief"
+教	jiao1	the verb "to teach" (jiāo); pypinyin's default jiào is for 教室, 教育
+地	de5	the particle after an adverb (高兴地说); dì is only inside words like 地铁
+得	de5	the particle after a verb (说得好); dé is only inside words like 获得
+过	guo5	the experience particle (去过); guò is the verb and is inside 过来, 过去, 过年

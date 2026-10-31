@@ -27,13 +27,33 @@
   const ERHUA = window.ShanluErhua && window.HSK1_ERHUA ? window.ShanluErhua.make(window.HSK1_ERHUA) : null;
   if (ERHUA && !ERHUA_ON) ERHUA.apply(window);
 
-  const WORDS = window.HSK1_WORDS;
-  const LESSONS = window.HSK1_GRAMMAR.lessons;
-  const { hubs:HUBS, opps:OPPS, topics:TOPICS } = window.HSK1_WEBS;
-  const { clips:CLIPS, tones:TONES } = window.HSK1_LISTEN;
-  const { scenarios:SCEN, phrases:PHRASES } = window.HSK1_SPEAK;
+  // Which level this page shows. level.js sets it (saved in this browser; switching reloads the page). Each level keeps its own progress.
+  const LV = window.SHANLU_LEVEL || 1;
+  const LVN = 'HSK ' + LV;
+  const LV_DATA = (name) => window['HSK' + LV + '_' + name];
+  const WORDS = LV_DATA('WORDS');
+  const LESSONS = LV_DATA('GRAMMAR').lessons;
+  const { hubs:HUBS, opps:OPPS, topics:TOPICS } = LV_DATA('WEBS');
+  // Listening lab, practice scripts and the mock exam exist for HSK 1 only so far; at HSK 2 those parts are switched off.
+  const { clips:CLIPS, tones:TONES } = LV === 1 ? window.HSK1_LISTEN : { clips:[], tones:[] };
+  const { scenarios:SCEN, phrases:PHRASES } = LV === 1 ? window.HSK1_SPEAK : { scenarios:[], phrases:[] };
+  const HAS_LISTEN = CLIPS.length > 0;
+  const HAS_SCRIPTS = SCEN.length > 0;
+  // Talk-with-AI settings for levels without practice scripts: role-play settings only (nothing is scored)
+  const AI_SCN_L2 = [
+    { id:'cafe', title:'Ordering at a café', sub:'Drinks, snacks, paying', goals:['Order a drink and something to eat', 'Say what you like or do not like', 'Ask how much it is'] },
+    { id:'way', title:'Asking the way', sub:'Left, right, near, far', goals:['Ask where a place is', 'Understand left, right and straight on', 'Say how you will get there'] },
+    { id:'trip', title:'Planning a trip', sub:'Where, when, how to go', goals:['Say where you want to go and when', 'Say how you will travel (train, taxi, plane)', 'Talk about who is going with you'] },
+    { id:'doctor', title:'Not feeling well', sub:'Body, medicine, rest', goals:['Say what hurts', 'Say how long you have felt ill', 'Understand simple advice'] },
+    { id:'hobby', title:'Hobbies and sports', sub:'What you do for fun', goals:['Say what you like to do', 'Say how often you do it', 'Ask about the other person’s hobbies'] },
+    { id:'family', title:'Family and friends', sub:'People you know', goals:['Talk about family members', 'Say what they do', 'Say something about a friend'] }
+  ];
+  const AISCN = HAS_SCRIPTS ? SCEN : AI_SCN_L2;
+  // stand-ins so the screens that are switched off still render without errors
+  const NO_SC = { id:'', glyph:'', title:'', sub:'', goals:[], words:[], ai:[{ zh:'', py:'', en:'' }], you:[{ zh:'', py:'', en:'' }] };
+  const NO_CLIP = { zh:'', py:'', en:'', words:[], notes:[] };
   const REPO = 'alvinyu20/hsk-path';
-  const KEY = 'shanlu-progress-v1';
+  const KEY = LV === 1 ? 'shanlu-progress-v1' : 'shanlu-progress-v1-l' + LV;
 
   const SYS = {
     '2.0': { levels:[['1', '150'], ['2', '300'], ['3', '600'], ['4', '1,200'], ['5', '2,500'], ['6', '5,000']], note:'Six separate level exams. Word totals are cumulative.' },
@@ -126,7 +146,7 @@
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:false, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
+      wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0,
       playing:null, noVoice:false
@@ -241,22 +261,27 @@
   }
 
   // ---------- talking with an AI (bring-your-own-key, straight from the browser) ----------
+  // every word the conversation may use: this level's words, plus the earlier levels' words (at HSK 2 that is HSK 1 too)
+  const KB = {};
+  if (LV > 1 && window.HSK1_WORDS) window.HSK1_WORDS.forEach(w => { KB[w.zh] = { py:w.py, en:w.en }; });
+  WORDS.forEach(w => { KB[w.zh] = { py:w.py, en:w.en }; });
+  const KB_KEYS = Object.keys(KB);
   const CHARSET = {};
-  BANK_KEYS.forEach(k => k.split('').forEach(ch => { CHARSET[ch] = true; }));
+  KB_KEYS.forEach(k => k.split('').forEach(ch => { CHARSET[ch] = true; }));
   // HSK 2 words (the 2025 syllabus) the conversation may use as a one-level-up preview; pinyin is checked in tools/build-preview.py
-  const PV = window.HSK2_PREVIEW || {};
+  const PV = LV === 1 ? (window.HSK2_PREVIEW || {}) : {};
   // the other spelling of a 儿 word (the 儿 form when the site shows plain forms, or the reverse) is fine too: the model may use either
   const ERH_ALT = {};
-  if (window.HSK1_ERHUA) window.HSK1_ERHUA.pairs.forEach(pr => { [[pr.official, pr.officialPy], [pr.plain, pr.plainPy]].forEach(x => { if (!BANK[x[0]] && x[1]) ERH_ALT[x[0]] = x[1]; }); });
-  const MAXW = Math.max(BANK_KEYS.reduce((n, k) => Math.max(n, k.length), 1), Object.keys(PV).reduce((n, k) => Math.max(n, k.length), 1), Object.keys(ERH_ALT).reduce((n, k) => Math.max(n, k.length), 1));
-  // split a Chinese reply into HSK 1 words, so pinyin comes from our own checked word list and outside words can be flagged
+  if (window.HSK1_ERHUA) window.HSK1_ERHUA.pairs.forEach(pr => { [[pr.official, pr.officialPy], [pr.plain, pr.plainPy]].forEach(x => { if (!KB[x[0]] && x[1]) ERH_ALT[x[0]] = x[1]; }); });
+  const MAXW = Math.max(KB_KEYS.reduce((n, k) => Math.max(n, k.length), 1), Object.keys(PV).reduce((n, k) => Math.max(n, k.length), 1), Object.keys(ERH_ALT).reduce((n, k) => Math.max(n, k.length), 1));
+  // split a Chinese reply into known words, so pinyin comes from our own checked word list and outside words can be flagged
   const segHsk = (text) => {
     const out = [];
     for (let i = 0; i < text.length;) {
       let hit = null;
-      for (let n = Math.min(MAXW, text.length - i); n >= 1; n--) { const w = text.substr(i, n); if (BANK[w] || ERH_ALT[w] || PV[w]) { hit = w; break; } }
-      if (hit && !BANK[hit] && ERH_ALT[hit]) { out.push({ t:hit, py:ERH_ALT[hit], cjk:true, ok:true }); i += hit.length; continue; }
-      if (hit && BANK[hit]) { out.push({ t:hit, py:BANK[hit].py.split('/')[0].trim(), cjk:true, ok:true }); i += hit.length; continue; }
+      for (let n = Math.min(MAXW, text.length - i); n >= 1; n--) { const w = text.substr(i, n); if (KB[w] || ERH_ALT[w] || PV[w]) { hit = w; break; } }
+      if (hit && !KB[hit] && ERH_ALT[hit]) { out.push({ t:hit, py:ERH_ALT[hit], cjk:true, ok:true }); i += hit.length; continue; }
+      if (hit && KB[hit]) { out.push({ t:hit, py:KB[hit].py.split('/')[0].trim(), cjk:true, ok:true }); i += hit.length; continue; }
       if (hit) { out.push({ t:hit, py:PV[hit][0], en:PV[hit][1], cjk:true, ok:true, pv:true }); i += hit.length; continue; }
       const ch = text[i]; const cjk = /[\u4e00-\u9fff]/.test(ch);
       out.push({ t:ch, py:'', cjk, ok:!cjk || !!CHARSET[ch] });
@@ -306,16 +331,19 @@
     else out.lens = { exp:a.length, got:b.length };
     return out;
   };
-  const aiSystem = (scn) => [
-    'You are Mingming (明明), a friendly Mandarin conversation partner for an adult English-speaking beginner who is studying for HSK 1 and is happy to see a little HSK 2 as a preview.',
-    'Speak Simplified Chinese. Use mainly words from this HSK 1 word list (plus punctuation and numbers): ' + BANK_KEYS.join(' ') + '.',
-    'You may also use a few words from this HSK 2 list as a gentle preview, at most one or two in a reply, when they make the conversation more natural and realistic or let you cover more everyday situations (cafés, travel, directions, hobbies, health): ' + Object.keys(PV).join(' ') + '. Never use a word that is on neither list.',
-    'If you need a word that is on neither list, say it another way with listed words. Never write pinyin in the Chinese. When you say your own name, say 我叫明明 (the standard way to give a name), not 我是明明. Keep every reply to one or two short sentences (about 15 characters or fewer in total) and ask at most one simple question, so the learner can answer.',
-    scn ? 'Role-play setting: ' + scn.title + '. Goals for the learner: ' + scn.goals.join('; ') + '. Stay in this setting and play the other person.' : 'Free chat: pick an everyday topic (food, family, school, weather, plans) and keep it simple.',
-    'After each learner message, also judge it. Say "ok" if it is natural and understandable Mandarin. Say "fix" if it has a grammar, word choice or naturalness problem: then give the corrected sentence in Chinese (HSK 1 words, or an HSK 2 word if it really helps) and a one-sentence reason in simple English. Using an HSK 2 word is never a mistake. Do not nitpick: only fix real problems. If the learner writes English, give "fix" with the Chinese they could say. The learner message may come from speech recognition and contain wrong characters: if it does not make sense, ask them to say it again as the reply.',
-    'Answer with ONLY a JSON object, no other text: {"reply":{"zh":"<your Chinese>","en":"<English translation>"},"feedback":{"level":"ok"|"fix","better":"<corrected Chinese or empty>","why":"<short English reason or empty>"},"suggest":{"zh":"<suggested learner reply>","en":"<English>"}}. For the very first message of a conversation, set feedback to {"level":"ok","better":"","why":""}.',
-    'Also always add "suggest":{"zh":"<one natural, short reply (about 12 characters or fewer) the learner could say next to answer you, HSK 1 words or at most one HSK 2 word, no pinyin>","en":"<its English meaning>"} so a beginner who is stuck can see what to say. Use 我叫… when giving a name.'
-  ].join('\n');
+  const aiSystem = (scn) => {
+    const up = LV === 1;   // at HSK 1 a little HSK 2 is allowed as a preview; at HSK 2 the words are HSK 1 and HSK 2 and nothing above
+    return [
+      'You are Mingming (明明), a friendly Mandarin conversation partner for an adult English-speaking beginner who is studying for ' + LVN + (up ? ' and is happy to see a little HSK 2 as a preview.' : ' (HSK 1 words are known too).'),
+      'Speak Simplified Chinese. Use mainly words from this ' + (up ? 'HSK 1' : 'HSK 1 and HSK 2') + ' word list (plus punctuation and numbers): ' + KB_KEYS.join(' ') + '.',
+      up ? 'You may also use a few words from this HSK 2 list as a gentle preview, at most one or two in a reply, when they make the conversation more natural and realistic or let you cover more everyday situations (cafés, travel, directions, hobbies, health): ' + Object.keys(PV).join(' ') + '. Never use a word that is on neither list.' : 'Never use a word that is not on the list.',
+      'If you need a word that is ' + (up ? 'on neither list' : 'not on the list') + ', say it another way with listed words. Never write pinyin in the Chinese. When you say your own name, say 我叫明明 (the standard way to give a name), not 我是明明. Keep every reply to one or two short sentences (about 15 characters or fewer in total) and ask at most one simple question, so the learner can answer.',
+      scn ? 'Role-play setting: ' + scn.title + '. Goals for the learner: ' + scn.goals.join('; ') + '. Stay in this setting and play the other person.' : 'Free chat: pick an everyday topic (food, family, school, weather, plans) and keep it simple.',
+      'After each learner message, also judge it. Say "ok" if it is natural and understandable Mandarin. Say "fix" if it has a grammar, word choice or naturalness problem: then give the corrected sentence in Chinese (' + (up ? 'HSK 1 words, or an HSK 2 word if it really helps' : 'HSK 1 or HSK 2 words') + ') and a one-sentence reason in simple English. ' + (up ? 'Using an HSK 2 word is never a mistake. ' : '') + 'Do not nitpick: only fix real problems. If the learner writes English, give "fix" with the Chinese they could say. The learner message may come from speech recognition and contain wrong characters: if it does not make sense, ask them to say it again as the reply.',
+      'Answer with ONLY a JSON object, no other text: {"reply":{"zh":"<your Chinese>","en":"<English translation>"},"feedback":{"level":"ok"|"fix","better":"<corrected Chinese or empty>","why":"<short English reason or empty>"},"suggest":{"zh":"<suggested learner reply>","en":"<English>"}}. For the very first message of a conversation, set feedback to {"level":"ok","better":"","why":""}.',
+      'Also always add "suggest":{"zh":"<one natural, short reply (about 12 characters or fewer) the learner could say next to answer you, ' + (up ? 'HSK 1 words or at most one HSK 2 word' : 'HSK 1 or HSK 2 words') + ', no pinyin>","en":"<its English meaning>"} so a beginner who is stuck can see what to say. Use 我叫… when giving a name.'
+    ].join('\n');
+  };
   const aiParse = (text) => {
     const i = text.indexOf('{'), j = text.lastIndexOf('}');
     if (i < 0 || j < i) throw new Error('The reply was not in the expected format.');
@@ -401,7 +429,7 @@
 
   // ---------- the HSK 1 mock exam ----------
   // Layout follows the official HSK 1 sample papers: 4 listening parts and 4 reading parts, 5 questions each, listening played twice.
-  const EXAMBANK = window.HSK1_EXAM || null;
+  const EXAMBANK = LV === 1 ? (window.HSK1_EXAM || null) : null;
   const EXAM_MIN = { listening:15, reading:20 };
   const PART = {
     L1:{ sec:'listening', n:1, inst:'Listen. Does the picture match what you hear?' },
@@ -514,6 +542,7 @@
 
     go = (screen) => {
       this.setState({ screen }); try { window.scrollTo(0, 0); } catch (e) {}
+      if (screen === 'speak' && !HAS_SCRIPTS) { const S = this.state; if (S.aiOn && !S.aim.length && !S.aiBusy) this.aiStart(S.aiScn); }   // no scripts at this level: go straight to the AI conversation
       // on phones the tab bar scrolls sideways: keep the current tab in view
       setTimeout(() => { try { const bar = document.querySelector('.navs'); const on = bar && bar.querySelector('.nav.on'); if (on) bar.scrollLeft = on.offsetLeft - (bar.clientWidth - on.offsetWidth) / 2; } catch (e) {} }, 60);
     };
@@ -638,7 +667,7 @@
     aiAsk = async (history, scnIdx, shown) => {
       this.setState({ aiBusy:true, aiErr:'' });
       try {
-        const out = await aiCall(history, scnIdx >= 0 ? SCEN[scnIdx] : null);
+        const out = await aiCall(history, scnIdx >= 0 ? AISCN[scnIdx] : null);
         const p = out.parsed; const toks = segHsk(p.zh);
         let sug = null;
         if (p.sug) { const st = segHsk(p.sug.zh); if (!aiOutside(st).length && aiPinyin(st)) sug = { zh:p.sug.zh, en:p.sug.en, py:aiPinyin(st), open:false }; }   // only suggest what the site can show with pinyin
@@ -813,7 +842,7 @@
       this.noSync = false;
       try {
         this.persistNow();
-        const r = await window.ShanluSync.round({ token:SYNCCFG.token, gistId:SYNCCFG.gist || null, state:this.state });
+        const r = await window.ShanluSync.round({ token:SYNCCFG.token, gistId:SYNCCFG.gist || null, state:this.state, file:window.ShanluSync.fileFor(LV) });
         let next = rollDay(Object.assign({}, this.state, r.merged));
         carryOverErhua(next);
         const patch = window.ShanluSync.pick(next);
@@ -940,7 +969,7 @@
     // ----- speaking practice: a scripted conversation you say out loud yourself -----
     sayIt = () => {
       const S = this.state;
-      const sc = SCEN[S.sidx];
+      const sc = SCEN[S.sidx] || NO_SC;
       const total = sc.you.length;
       if (S.sturn >= total) return;
       const t = S.sturn + 1;
@@ -1085,10 +1114,10 @@
         this.persistNow();
         const out = {};
         PERSIST.forEach(k => { out[k] = this.state[k]; });
-        const blob = new Blob([JSON.stringify({ app:'shanlu', version:1, saved:new Date().toISOString(), data:out }, null, 2)], { type:'application/json' });
+        const blob = new Blob([JSON.stringify({ app:'shanlu', version:1, level:LV, saved:new Date().toISOString(), data:out }, null, 2)], { type:'application/json' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = 'shanlu-progress-' + ymd(new Date()) + '.json';
+        a.download = 'shanlu-progress-' + (LV === 1 ? '' : 'hsk' + LV + '-') + ymd(new Date()) + '.json';
         document.body.appendChild(a); a.click(); a.remove();
       } catch (e) {}
     };
@@ -1098,6 +1127,7 @@
         const obj = JSON.parse(text);
         const data = obj && obj.data;
         if (!data || typeof data !== 'object' || !data.ws) throw new Error('not a progress file');
+        if ((obj.level || 1) !== LV) { window.alert('That file is HSK ' + (obj.level || 1) + ' progress, but this page is on ' + LVN + '. Switch level first, then import it.'); return; }
         const merged = mergeSaved(Object.assign({}, this.state), data);
         this.setState(rollDay(merged));
         this.persistNow();
@@ -1109,10 +1139,17 @@
         window.location.reload();
       }
     };
+    switchLevel = (n) => {
+      if (n === LV) return;
+      this.persistNow();
+      try { localStorage.setItem('shanlu-level', String(n)); } catch (e) {}
+      window.location.reload();
+    };
     toggleTheme = () => { this.setState({ theme:this.state.theme === 'dark' ? 'light' : 'dark' }); };
 
     aiVals() {
       const S = this.state;
+      const aiEff = S.aiMode || !HAS_SCRIPTS;   // without practice scripts, Speak is the AI conversation only
       const quiet = !S.szh && !S.spy && !S.sen;
       const msgs = S.aim.map((m, k) => ({
         who:m.who, isAi:m.who === 'ai', zh:m.zh, py:m.py, en:m.en, showZh:S.szh, showPy:S.spy && !!m.py, showEn:S.sen && !!m.en && m.who === 'ai',
@@ -1130,12 +1167,12 @@
       return {
         sugClosed:!!sg && !sg.open, sugOpen:!!sg && sg.open, sugZh:sg ? sg.zh : '', sugPy:sg ? sg.py : '', sugEn:sg ? sg.en : '',
         hasAlts:S.aiAlts.length > 0, altList:S.aiAlts.map(t => ({ t, fn:() => this.aiPickAlt(t) })), sugShow:this.aiShowSug, sugUse:this.aiUseSug, sugPc:S.playing === 'sug' ? 'on' : '', sugPlay:() => sg && this.say(sg.zh, 'sug'),
-        scriptMode:!S.aiMode, aiModeOn:S.aiMode, scriptCls:S.aiMode ? '' : 'on', aiCls:S.aiMode ? 'on' : '',
+        scriptMode:!aiEff, aiModeOn:aiEff, scriptCls:aiEff ? '' : 'on', aiCls:aiEff ? 'on' : '', hasModeSwitch:HAS_SCRIPTS,
         setScript:() => this.setAiMode(false), setAi:() => this.setAiMode(true),
-        aiNoKey:S.aiMode && !S.aiOn, aiReady:S.aiMode && S.aiOn, aiMsgs:msgs, aiBusy:S.aiBusy, aiErr:S.aiErr, hasAiErr:!!S.aiErr,
+        aiNoKey:aiEff && !S.aiOn, aiReady:aiEff && S.aiOn, aiMsgs:msgs, aiBusy:S.aiBusy, aiErr:S.aiErr, hasAiErr:!!S.aiErr,
         aiInput:S.aiInput, onAiInput:(e) => this.setState({ aiInput:e.target.value }), onAiKey:(e) => { if (e.key === 'Enter') this.aiSend(); },
         aiSend:this.aiSend, aiMic:this.aiMic, aiHasMic:hasMic, aiNoMic:!hasMic, aiMicLabel:S.asrBusy ? 'Transcribing…' : (S.aiListen ? 'Listening… tap to stop' : 'Speak'), aiMicCls:S.aiListen ? 'on' : '',
-        aiScnList:[{ title:'Free chat', sub:'Anything simple', cls:S.aiScn === -1 ? 'cur' : '', fn:() => this.aiStart(-1) }].concat(SCEN.map((x, i) => ({ title:x.title, sub:x.sub, cls:S.aiScn === i ? 'cur' : '', fn:() => this.aiStart(i) }))),
+        aiScnList:[{ title:'Free chat', sub:'Anything simple', cls:S.aiScn === -1 ? 'cur' : '', fn:() => this.aiStart(-1) }].concat(AISCN.map((x, i) => ({ title:x.title, sub:x.sub, cls:S.aiScn === i ? 'cur' : '', fn:() => this.aiStart(i) }))),
         aiToday:(S.aiDays[ymd(new Date())] || 0) + ' messages today · ' + (S.aiProvider === 'alibaba' ? 'Qwen' : 'Claude'), aiSimpler:this.aiSimpler,
         aiSet:!!AICFG.key, aiUnset:!AICFG.key, aiKeyInput:S.aiKeyInput, onAiKeyInput:(e) => this.setState({ aiKeyInput:e.target.value }), aiSaveKey:this.aiSaveKey, aiRemoveKey:this.aiRemoveKey,
         aiModelOpts:AI_MODELS.map(m => ({ label:m[1], cls:S.aiModel === m[0] ? 'on' : '', fn:() => this.aiSetModel(m[0]) })), aiNote:S.aiNote, hasAiNote:!!S.aiNote,
@@ -1263,10 +1300,11 @@
       const gramPct = Math.round(gramPassed / LESSONS.length * 100);
       const testReady = BANK_KEYS.filter(zh => DIMS.some(k => S.ws[zh][k].s > 0)).length >= 3;
       const clipsTried = S.clipBest.filter(x => x > 0).length;
-      const listenPct = Math.round(S.clipBest.reduce((a, b) => a + b, 0) / CLIPS.length * 100);
+      const listenPct = HAS_LISTEN ? Math.round(S.clipBest.reduce((a, b) => a + b, 0) / CLIPS.length * 100) : 0;
       const spkDone = SCEN.filter(sc => S.sres[sc.id]).length;
-      const spkPct = Math.round(spkDone / SCEN.length * 100);
-      const overall = Math.round((vocabPct + gramPct + listenPct + spkPct) / 4);
+      const spkPct = HAS_SCRIPTS ? Math.round(spkDone / SCEN.length * 100) : 0;
+      const pctParts = [vocabPct, gramPct].concat(HAS_LISTEN ? [listenPct] : []).concat(HAS_SCRIPTS ? [spkPct] : []);
+      const overall = Math.round(pctParts.reduce((a, b) => a + b, 0) / pctParts.length);
       const wm = {
         mastered:infos.filter(i => i.lv === 'mastered').length,
         familiar:infos.filter(i => i.lv === 'familiar' || i.lv === 'strong').length,
@@ -1280,15 +1318,15 @@
       const titles = {
         home:['Welcome back', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
         review:['Review words', 'Words that are due, based on how well you remember them.'],
-        testlobby:['HSK 1 test', 'Mixed questions from the words you have started, so you are recalling words, not just recognizing them.'],
-        grammar:['Grammar', LESSONS.length + ' lessons that cover the HSK 1 grammar outline, one at a time.'],
-        speak:['Speaking practice', 'Say a short conversation out loud.'],
-        exam:['HSK 1 level exam', 'Pass every section to climb to HSK 2.'],
+        testlobby:[LVN + ' test', 'Mixed questions from the words you have started, so you are recalling words, not just recognizing them.'],
+        grammar:['Grammar', LV === 1 ? LESSONS.length + ' lessons that cover the HSK 1 grammar outline, one at a time.' : LESSONS.length + ' lessons on the grammar of the ' + LVN + ' words, one at a time.'],
+        speak:['Speaking practice', HAS_SCRIPTS ? 'Say a short conversation out loud.' : 'Talk with Mingming, the AI conversation partner.'],
+        exam:[LVN + ' level exam', LV === 1 ? 'Pass every section to climb to HSK 2.' : 'Not built yet for ' + LVN + '.'],
         web:['Word webs', 'Learn new words next to the words you already know.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
-        listen:['Listening lab', 'Train your ear for how people really talk, not just how lessons sound.'],
-        voice:['Settings', 'Sync your progress between devices, choose the voice that reads Chinese aloud, and how 儿 endings are shown.'],
-        quiz:S.qmode === 'grammar' ? ['Grammar practice', LESSONS[S.glesson].title] : ['HSK 1 test', 'Take your time. Wrong answers show you why.']
+        listen:['Listening lab', HAS_LISTEN ? 'Train your ear for how people really talk, not just how lessons sound.' : 'Not built yet for ' + LVN + '.'],
+        voice:['Settings', LV === 1 ? 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud, and how 儿 endings are shown.' : 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud.'],
+        quiz:S.qmode === 'grammar' ? ['Grammar practice', LESSONS[S.glesson].title] : [LVN + ' test', 'Take your time. Wrong answers show you why.']
       };
       const tt = titles[S.screen];
 
@@ -1312,10 +1350,10 @@
       const pool = [
         { glyph:'联', title:'Learn ' + learnN + ' new words with their relatives', meta:'Word webs', min:5, done:S.webCredited, to:'web' },
         { glyph:'词', title:'Review ' + Math.max(S.rtotal, dueNow) + ' word' + (Math.max(S.rtotal, dueNow) === 1 ? '' : 's'), meta:'Words that are due', min:reviewMin, done:S.rcomplete, to:'review', show:S.rcomplete || dueNow > 0 },
-        { glyph:'听', title:'Listening drill', meta:'Dictation with a speed ladder', min:4, done:S.ldone, to:'listen' },
-        { glyph:'说', title:'Say: ' + SCEN[nextScn].title, meta:'Practice script, ' + SCEN[nextScn].you.length + ' turns', min:6, done:S.spokeToday, to:'speak', pre:() => this.setState({ sidx:nextScn, sturn:0, sdone:false }) },
+        { glyph:'听', title:'Listening drill', meta:'Dictation with a speed ladder', min:4, done:S.ldone, to:'listen', show:HAS_LISTEN },
+        { glyph:'说', title:'Say: ' + (SCEN[nextScn] || NO_SC).title, meta:'Practice script, ' + (SCEN[nextScn] || NO_SC).you.length + ' turns', min:6, done:S.spokeToday, to:'speak', show:HAS_SCRIPTS, pre:() => this.setState({ sidx:nextScn, sturn:0, sdone:false }) },
         { glyph:'语', title:'Grammar: ' + LESSONS[nextLesson].title, meta:LESSONS[nextLesson].q.length + ' exercises', min:4, done:S.gdone, to:'grammar', pre:() => this.setState({ glesson:nextLesson }) },
-        { glyph:'测', title:'HSK 1 test', meta:'Mixed questions from your words', min:3, done:S.tdone, to:'testlobby', show:testReady }
+        { glyph:'测', title:LVN + ' test', meta:'Mixed questions from your words', min:3, done:S.tdone, to:'testlobby', show:testReady }
       ].filter(t => t.show !== false);
       let planned = 0;
       const plan = [];
@@ -1325,13 +1363,13 @@
       const planNote = planned + ' of ' + S.mins + ' minutes planned. A longer goal adds more to the list.';
       const skills = [
         { label:'Vocabulary', detail:startedCount + ' of ' + bankKeys.length + ' words started', w:vocabPct + '%' },
-        { label:'Grammar', detail:gramPassed + ' of ' + LESSONS.length + ' lessons passed', w:gramPct + '%' },
-        { label:'Listening', detail:clipsTried + ' of ' + CLIPS.length + ' clips tried', w:listenPct + '%' },
-        { label:'Speaking', detail:spkDone + ' of ' + SCEN.length + ' scripts done', w:spkPct + '%' }
-      ];
+        { label:'Grammar', detail:gramPassed + ' of ' + LESSONS.length + ' lessons passed', w:gramPct + '%' }
+      ].concat(HAS_LISTEN ? [{ label:'Listening', detail:clipsTried + ' of ' + CLIPS.length + ' clips tried', w:listenPct + '%' }] : [])
+        .concat(HAS_SCRIPTS ? [{ label:'Speaking', detail:spkDone + ' of ' + SCEN.length + ' scripts done', w:spkPct + '%' }] : []);
       skills.forEach(k => { const n = parseInt(k.w, 10) || 0; k.pctN = n; k.dash = (n / 100 * 138.23).toFixed(1) + ' 138.23'; });
-      const lvN = sd.levels.length;
-      const stairs = sd.levels.map((lv, i) => ({
+      const lvList = sd.levels.slice(LV - 1);   // this level first, then the ones above it
+      const lvN = lvList.length;
+      const stairs = lvList.map((lv, i) => ({
         label:'HSK ' + lv[0], words:lv[1] ? lv[1] + ' words' : 'Advanced', h:(172 + i * (lvN > 7 ? 24 : 32)) + 'px',
         cls:i === 0 ? 'cur' : 'lock', isCur:i === 0, isLock:i !== 0,
         fillH:i === 0 ? overall + '%' : '0%', status:i === 0 ? overall + '% done' : (i <= 2 ? 'In review' : 'Locked')
@@ -1344,10 +1382,10 @@
       const apct = (v, tot) => (v / tot * 100).toFixed(2) + '%';
       const asLabels = (t) => t.labels.map(l => ({ left:apct(l.x, t.w), top:apct(l.y, t.h), cls:l.center ? 'c' : '', kind:l.kind, text:l.text, sub:l.sub, hasSub:!!l.sub }));
       const totalW = bankKeys.length;
-      const trD = AS.trail({ started:startedCount, total:totalW, levels:sd.levels, dark:ascDark });
-      const trP = AS.phoneTrail({ started:startedCount, total:totalW, levels:sd.levels, dark:ascDark });
+      const trD = AS.trail({ started:startedCount, total:totalW, levels:lvList, dark:ascDark });
+      const trP = AS.phoneTrail({ started:startedCount, total:totalW, levels:lvList, dark:ascDark });
       const youLabel = (t) => ({ left:apct(t.you.x, t.w), top:apct(t.you.y, t.h), cls:t === trD ? 'c' : '', kind:'you', text:'You are here', sub:startedCount + ' word' + (startedCount === 1 ? '' : 's') + ' kept', hasSub:true });
-      const trailAlt = 'Mountain trail: ' + startedCount + ' of ' + totalW + ' words learned on the way to the HSK 1 level exam';
+      const trailAlt = 'Mountain trail: ' + startedCount + ' of ' + totalW + ' words learned on the way to the ' + LVN + ' level exam';
       const nextM = AS.nextMilestone(startedCount, totalW);
       const toGo = nextM - startedCount;
       const prevM = [0].concat(AS.MILESTONES).filter(m => m < nextM).pop();
@@ -1428,7 +1466,7 @@
       const resGain = S.qmode === 'grammar' ? (acc >= 80 ? 'Lesson passed' : 'Not passed yet (80% needed)') : 'Test saved to your history';
 
       // speak (practice script)
-      const sc = SCEN[S.sidx];
+      const sc = SCEN[S.sidx] || NO_SC;
       const turns = sc.you.length;
       const msgs = [];
       const listenOnly = !S.szh && !S.spy && !S.sen;   // everything hidden: just listen
@@ -1564,12 +1602,12 @@
       };
 
       // shadowing
-      const shClip = CLIPS[S.dclip];
+      const shClip = CLIPS[S.dclip] || NO_CLIP;
       const shDone = S.shround >= 3;
       const shHelps = ['Read along and say it right after you hear it.', 'Same again, with characters only.', 'Now with no text. Say it from what you hear.', 'All three rounds done. Try the same clip again tomorrow.'];
 
       // listening lab
-      const clip = CLIPS[S.dclip];
+      const clip = CLIPS[S.dclip] || NO_CLIP;
       const wordsView = clip.words.map((w, i) => ({ py:S.dreveal >= 1 ? w.py : '', zh:S.dreveal >= 2 ? w.zh : '·', cls:S.dchecked ? (S.dmarks[i] ? 'ok' : 'miss') : '' }));
       const hits = S.dmarks.filter(m => m).length;
       const missed = clip.words.filter((w, i) => S.dchecked && !S.dmarks[i]);
@@ -1597,7 +1635,7 @@
         focusCls:(S.exm && (S.exm.stage === 'run' || S.exm.stage === 'break') && S.screen === 'exam') || (S.screen === 'quiz' && !S.qdone) ? 'focus' : '',
         themeCls:dark ? 't-dark' : 't-light', themeLabel:dark ? 'Switch to light' : 'Switch to dark', toggleTheme:this.toggleTheme,
         noVoice:S.noVoice, week,
-        gapLine, examParts, navExam:navCls('exam'), goExam:() => this.go('exam'), isExam:S.screen === 'exam',
+        gapLine, examParts, navExam:navCls('exam'), goExam:() => this.go('exam'), isExam:S.screen === 'exam' && !!EXAMBANK, isExamNA:S.screen === 'exam' && !EXAMBANK,
 
         // word webs and word memory
         navWeb:navCls('web'), goWeb:() => this.go('web'), isWeb:S.screen === 'web',
@@ -1633,7 +1671,7 @@
         shadowGo:this.shadowGo, shadowNext:this.shadowNext,
 
         // listening lab
-        navListen:navCls('listen'), goListen:() => this.go('listen'), isListen:S.screen === 'listen',
+        navListen:navCls('listen'), goListen:() => this.go('listen'), isListen:S.screen === 'listen' && HAS_LISTEN, isListenNA:S.screen === 'listen' && !HAS_LISTEN,
         isDict:S.lmode === 'dict', isTone:S.lmode === 'tone',
         lDictCls:S.lmode === 'dict' ? 'on' : '', lToneCls:S.lmode === 'tone' ? 'on' : '',
         setDict:() => this.setState({ lmode:'dict' }), setTone:() => this.setState({ lmode:'tone' }),
@@ -1664,6 +1702,11 @@
         navHome:navCls('home'), navReview:navCls('review'), navTest:navCls('testlobby'), navGrammar:navCls('grammar'), navSpeak:navCls('speak'),
         goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
         hasDue:S.rq.length > 0 && !S.rcomplete, dueCount:S.rq.length,
+        lvName:LVN, lvIs1:LV === 1, lvIs2:LV !== 1, hasExamCard:!!EXAMBANK, noExamCard:!EXAMBANK,
+        examCardTitle:EXAMBANK ? LVN + ' level exam' : LVN + ' progress', examCardNote:EXAMBANK ? 'Reach 80% in all four skills to unlock it.' : 'The ' + LVN + ' level exam, listening lab and practice scripts are not built yet. These rings show the parts that are.',
+        examBtnText:'See the ' + LVN + ' level exam',
+        lvOpts:[1, 2].map(n => ({ label:'HSK ' + n, cls:LV === n ? 'on' : '', fn:() => this.switchLevel(n) })),
+        lvNote:'You are studying ' + LVN + '. Each level keeps its own progress on this device and its own copy when you sync. ' + (LV === 1 ? 'HSK 1 has everything: words, word webs, grammar, listening lab, practice scripts, AI conversation and the mock exam.' : 'HSK 2 has words, word webs, grammar, tests and the AI conversation. The listening lab, practice scripts and mock exam are not built for HSK 2 yet.'),
         isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
 
         // home
@@ -1683,7 +1726,7 @@
         fireSub:studiedToday ? 'Lit for today. Come back tomorrow to keep it.' : (streakShown > 0 ? 'Study today and it burns brighter tomorrow.' : 'Study today to light it.'),
         todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed. Anything else is a bonus.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
         trailCta:() => this.go(ascCta.to), trailCtaText:ascCta.text,
-        trailNote:'Camps are placed by level, not to scale. The climb counts words you have started; grammar, listening and speaking count towards the level exam.',
+        trailNote:LV === 1 ? 'Camps are placed by level, not to scale. The climb counts words you have started; grammar, listening and speaking count towards the level exam.' : 'Camps are placed by level, not to scale. The climb counts the ' + LVN + ' words you have started. There is no ' + LVN + ' exam on this site yet.',
         mistClearText:mistClear + ' of ' + TOPICS.length + ' clear', mistTiles, mistHasNear:!!nearBest,
         mistNearText:nearBest ? 'Finish ' + nearBest.name + ' (' + (nearBest.tot - nearBest.got) + ' to go)' : '', mistNearGo:() => nearBest && openTopic(nearBest.i),
         mistNote:'A mountain is clear when you have started every word in its Word web topic.',
@@ -1741,7 +1784,7 @@
         syncInput:S.syncInput, onSyncInput:(e) => this.setState({ syncInput:e.target.value }), syncConnect:this.syncConnect, syncNow:() => this.syncNow(true), syncDisconnect:this.syncDisconnect,
         syncAtText:S.syncAt ? 'Last synced ' + new Date(S.syncAt).toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }) + '.' : 'Not synced yet.',
         syncTokenUrl:'https://github.com/settings/tokens/new?scopes=gist&description=Shanlu%20progress',
-        erhuaOn:ERHUA_ON, erhuaOff:!ERHUA_ON, erhuaAvailable:!!ERHUA, toggleErhua:this.toggleErhua,
+        erhuaOn:ERHUA_ON, erhuaOff:!ERHUA_ON, erhuaAvailable:!!ERHUA && LV === 1, toggleErhua:this.toggleErhua,
         erhuaNow:ERHUA_ON ? 'Now: 儿 endings are on (exam style).' : 'Now: plain forms, no 儿 endings.',
         erhuaBtn:ERHUA_ON ? 'Switch to plain forms' : 'Switch to 儿 endings',
         repoUrl:'https://github.com/' + REPO

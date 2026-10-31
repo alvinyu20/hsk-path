@@ -9,7 +9,8 @@
   // progress that is merged between devices; device preferences (theme, voice, hint switches, daily goal, new-word limit) stay local
   const SYNC_KEYS = ['xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'clipBest', 'misses', 'testHistory', 'ws',
     'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone', 'exams', 'aiDays'];
-  const FILE = 'shanlu-progress.json';
+  const FILE = 'shanlu-progress.json';   // HSK 1 progress (the original file name)
+  const fileFor = (level) => (level > 1 ? 'shanlu-progress-hsk' + level + '.json' : FILE);   // each level keeps its own file in the same gist
   const DESCRIPTION = 'Shanlu study progress (private; do not delete)';
 
   const isObj = (x) => x && typeof x === 'object' && !Array.isArray(x);
@@ -88,7 +89,8 @@
   const same = (a, b) => canon(a) === canon(b);
 
   // ---- GitHub gist transport (fetch is passed in so tests can fake it) ----
-  function gistApi(token, fetchFn) {
+  function gistApi(token, fetchFn, file) {
+    const NAME = file || FILE;
     const f = fetchFn || (typeof fetch !== 'undefined' ? fetch.bind(typeof self !== 'undefined' ? self : undefined) : null);
     const headers = () => ({ 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' });
     async function call(method, path, body) {
@@ -105,30 +107,30 @@
       async find() {
         for (let page = 1; page <= 5; page++) {
           const list = await call('GET', '/gists?per_page=100&page=' + page);
-          const hit = list.find(g => g.files && g.files[FILE]);
+          const hit = list.find(g => g.files && Object.keys(g.files).some(n => /^shanlu-progress/.test(n)));   // the same gist holds every level's file
           if (hit) return hit.id;
           if (list.length < 100) break;
         }
         return null;
       },
       async create(payload) {
-        const g = await call('POST', '/gists', { description: DESCRIPTION, public: false, files: { [FILE]: { content: JSON.stringify(payload) } } });
+        const g = await call('POST', '/gists', { description: DESCRIPTION, public: false, files: { [NAME]: { content: JSON.stringify(payload) } } });
         return g.id;
       },
       async read(id) {
         const g = await call('GET', '/gists/' + id);
-        const file = g.files && g.files[FILE];
+        const file = g.files && g.files[NAME];
         if (!file) return null;
         if (file.truncated) throw Object.assign(new Error('The saved progress is too large to read.'), { kind: 'http' });
         try { return JSON.parse(file.content); } catch (e) { return null; }
       },
-      async write(id, payload) { await call('PATCH', '/gists/' + id, { files: { [FILE]: { content: JSON.stringify(payload) } } }); }
+      async write(id, payload) { await call('PATCH', '/gists/' + id, { files: { [NAME]: { content: JSON.stringify(payload) } } }); }
     };
   }
 
   // One round: find or create the gist, read it, merge, write back if the merge added something. Returns { merged, wrote, gistId }.
   async function round(opts) {
-    const api = gistApi(opts.token, opts.fetch);
+    const api = gistApi(opts.token, opts.fetch, opts.file);
     const local = pick(opts.state);
     let id = opts.gistId || null;
     if (!id) id = await api.find();
@@ -146,5 +148,5 @@
     return { merged, wrote, gistId: id, created: false };
   }
 
-  return { SYNC_KEYS, FILE, DESCRIPTION, merge, pick, round, gistApi, mergeWs, same };
+  return { SYNC_KEYS, FILE, fileFor, DESCRIPTION, merge, pick, round, gistApi, mergeWs, same };
 });

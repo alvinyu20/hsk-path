@@ -15,3 +15,62 @@ word-extra:问题:2	meaning	你有什么问题吗 uses 什么 as "any", so 吗 i
 word-extra:猫:1	pinyin	只 after 两 is the measure word zhī; pypinyin misreads it as zhǐ "only"
 exam:L3:0.3	pinyin	只 after 两 is the measure word zhī; pypinyin misreads it as zhǐ "only"
 exam:L3:2.3	meaning	在 + 打电话 is "am on the phone / am making a call"; the English describes the same ongoing state
+word:不错	meaning	不错 means "good, not bad": its 不 is part of the word, so the English has no separate negative
+word-extra:不错	meaning	不错 means "good, not bad": its 不 is part of the word, so the English has no separate negative
+word:没意思	meaning	没意思 is a fixed word for "boring": its 没 is part of the word
+word-extra:没意思	meaning	没意思 is a fixed word for "boring": its 没 is part of the word
+word:万	meaning	万 means ten thousand: the English spells the number in words, which the checker reads as 1000 and 10
+word-extra:万	meaning	万 means ten thousand: the English spells the number in words, which the checker reads as 1000 and 10
+word-extra:准备	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word-extra:出去	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word-extra:别	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word-extra:坏	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word-extra:奶奶	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word-extra:忘	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word-extra:意思	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word-extra:懂	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word-extra:所以	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word-extra:记得	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word-extra:走	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word-extra:不好意思:1	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word:公交车	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word:可能	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word:坏	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word:忘	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word:错	meaning	sentence-final 了 marks a finished action or a change of state ("any more", "now", "has become"); the English shows it with tense or wording the checker does not read
+word-extra:快要	meaning	要 inside 快要 / 要…了 / 出门要… means "about to" or "should", which the English expresses as "about to" or "wear"
+word:快要	meaning	要 inside 快要 / 要…了 / 出门要… means "about to" or "should", which the English expresses as "about to" or "wear"
+word:出门	meaning	要 inside 快要 / 要…了 / 出门要… means "about to" or "should", which the English expresses as "about to" or "wear"
+word-extra:出门	meaning	要 inside 快要 / 要…了 / 出门要… means "about to" or "should", which the English expresses as "about to" or "wear"
+word:从小	meaning	the Chinese marks past time with a time word (从小, 小时候, 时) or by context; Chinese verbs have no tense, so the English past tense is correct
+word-extra:从小	meaning	the Chinese marks past time with a time word (从小, 小时候, 时) or by context; Chinese verbs have no tense, so the English past tense is correct
+word:小时候	meaning	the Chinese marks past time with a time word (从小, 小时候, 时) or by context; Chinese verbs have no tense, so the English past tense is correct
+word-extra:小时候	meaning	the Chinese marks past time with a time word (从小, 小时候, 时) or by context; Chinese verbs have no tense, so the English past tense is correct
+word-extra:时	meaning	the Chinese marks past time with a time word (从小, 小时候, 时) or by context; Chinese verbs have no tense, so the English past tense is correct
+word-extra:次	meaning	the Chinese marks past time with a time word (从小, 小时候, 时) or by context; Chinese verbs have no tense, so the English past tense is correct
+word-extra:得	meaning	the Chinese marks past time with a time word (从小, 小时候, 时) or by context; Chinese verbs have no tense, so the English past tense is correct
+word-extra:考	meaning	the Chinese marks past time with a time word (从小, 小时候, 时) or by context; Chinese verbs have no tense, so the English past tense is correct
+word-extra:起来	meaning	the Chinese marks past time with a time word (从小, 小时候, 时) or by context; Chinese verbs have no tense, so the English past tense is correct
+word:让	meaning	the Chinese marks past time with a time word (从小, 小时候, 时) or by context; Chinese verbs have no tense, so the English past tense is correct
+word-extra:正	meaning	the Chinese marks past time with a time word (从小, 小时候, 时) or by context; Chinese verbs have no tense, so the English past tense is correct
+word:地	meaning	the Chinese marks past time with a time word (从小, 小时候, 时) or by context; Chinese verbs have no tense, so the English past tense is correct
+word-extra:不好意思:2	meaning	the Chinese marks past time with a time word (从小, 小时候, 时) or by context; Chinese verbs have no tense, so the English past tense is correct
+word-extra:姓:2	meaning	an embedded question ("do you know what her surname is") takes 吗, so 吗 with 什么 is correct here
+word-extra:白色:1	meaning	件 goes with 衣服 later in the sentence: 一件白色的衣服 is correct
+word:这样	meaning	这样可以吗 asks "is this okay?": 可以 means okay here
+word:地	style	the sentence ends with a closing quotation mark, which is correct
+hub-gap:小:0	meaning	小时候 ("when I was little") is itself the past time word; Chinese verbs have no tense, so the English past tense is correct
+hub-gap:小:1	meaning	从小 ("since I was little") marks past time with the verb 喜欢 still true now; "has liked" is the correct English
+hub-gap:色:2	meaning	穿了 describes a completed action, and "wore" is the matching English past; the checker only looks for -ed endings
+lesson:guo:example3	meaning	两次 means twice: the 2 is carried by "twice"
+lesson:mw:exercise5	meaning	两万 is 20,000: 两 is the spoken form of 2, so "twenty thousand" is the correct translation
+lesson:rang:exercise5	meaning	别…了 is a command to stop and 别 is a negative word; "Stop talking" says the same without "not"
+lesson:rang:example1	meaning	一会儿 contains 会 but means "a moment"; the English past tense is natural for reported speech (让 has no tense in Chinese)
+lesson:rang:example3	meaning	一会儿 contains 会 but means "a while"
+lesson:rang:exercise1	meaning	让 has no tense in Chinese; "asked" is the natural English for this reported request
+lesson:rang:exercise5	meaning	别…了 means "stop doing it"; the 了 is part of the pattern and the English imperative covers it
+lesson:result:example3	meaning	听不懂 is a potential complement: 不 between verb and complement means "cannot"
+lesson:result:exercise4	meaning	听不懂 is a potential complement: 不 between verb and complement means "cannot"
+lesson:yao:exercise3	meaning	后天 means "the day after tomorrow", so "tomorrow" in the English is part of that phrase
+lesson:yao:exercise4	meaning	后天 means "the day after tomorrow", so "tomorrow" in the English is part of that phrase
+lesson:yao	meaning	快要/就要/要…了 is the "about to" pattern: 要 and 了 are part of it and the English "is about to" translates both

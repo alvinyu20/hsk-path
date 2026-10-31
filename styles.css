@@ -723,3 +723,9 @@ button.scn:hover .scn-m{text-decoration:underline}
   .les-act .btn{width:100%;justify-content:center}
 }
 .wr2-m{padding-right:6px}
+
+/* level switch (HSK 1 / HSK 2) in the header */
+.stats{align-items:center;flex-wrap:wrap}
+.lvseg{padding:3px}
+.lvseg button{min-height:34px;padding:0 14px;font-size:14.5px}
+@media (max-width:720px){ .lvseg button{padding:0 11px;min-height:32px;font-size:14px} }
