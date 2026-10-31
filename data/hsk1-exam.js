@@ -289,7 +289,7 @@ window.HSK1_EXAM = {
    "py": "Jīntiān hěn lěng.",
    "en": "It is very cold today.",
    "opts": [
-    "❄️",
+    "🥶",
     "☀️",
     "🌧️"
    ]
@@ -498,7 +498,7 @@ window.HSK1_EXAM = {
     "🚕",
     "🥟",
     "📖",
-    "🚗",
+    "✈️",
     "🎬",
     "🍎"
    ],
@@ -558,15 +558,15 @@ window.HSK1_EXAM = {
      "say": [
       {
        "s": "男",
-       "zh": "你会开车吗？",
-       "py": "Nǐ huì kāichē ma?",
-       "en": "Can you drive?"
+       "zh": "你怎么去中国？",
+       "py": "Nǐ zěnme qù Zhōngguó?",
+       "en": "How are you going to China?"
       },
       {
        "s": "女",
-       "zh": "我会开车。",
-       "py": "Wǒ huì kāichē.",
-       "en": "Yes, I can drive."
+       "zh": "我坐飞机。",
+       "py": "Wǒ zuò fēijī.",
+       "en": "I am going by plane."
       }
      ],
      "ans": 3
@@ -581,8 +581,8 @@ window.HSK1_EXAM = {
       },
       {
        "s": "男",
-       "zh": "好，我们去。",
-       "py": "Hǎo, wǒmen qù.",
+       "zh": "好，我们去吧。",
+       "py": "Hǎo, wǒmen qù ba.",
        "en": "Okay, let's go."
       }
      ],
@@ -950,9 +950,9 @@ window.HSK1_EXAM = {
     }
    ],
    "q": {
-    "zh": "她的工作是什么？",
-    "py": "Tā de gōngzuò shì shénme?",
-    "en": "What is her job?"
+    "zh": "她做什么工作？",
+    "py": "Tā zuò shénme gōngzuò?",
+    "en": "What does she do for work?"
    },
    "opts": [
     {
@@ -1162,7 +1162,7 @@ window.HSK1_EXAM = {
    "q": {
     "zh": "妈妈在哪里？",
     "py": "Māma zài nǎlǐ?",
-    "en": "Where is the mom?"
+    "en": "Where is Mom?"
    },
    "opts": [
     {
@@ -1304,7 +1304,7 @@ window.HSK1_EXAM = {
    "opts": [
     "📖",
     "🍳",
-    "❄️",
+    "🥶",
     "🚆",
     "🍎🍎🍎",
     "🐶"
@@ -1325,7 +1325,7 @@ window.HSK1_EXAM = {
     {
      "zh": "明天很冷。",
      "py": "Míngtiān hěn lěng.",
-     "en": "It is very cold tomorrow.",
+     "en": "It is going to be very cold tomorrow.",
      "ans": 2
     },
     {
@@ -1423,9 +1423,9 @@ window.HSK1_EXAM = {
      "en": "It is very cold today."
     },
     {
-     "zh": "会，我会说一点儿。",
-     "py": "Huì, wǒ huì shuō yìdiǎnr.",
-     "en": "Yes, I can speak a little."
+     "zh": "会，我会说一点儿汉语。",
+     "py": "Huì, wǒ huì shuō yìdiǎnr Hànyǔ.",
+     "en": "Yes, I can speak a little Chinese."
     },
     {
      "zh": "我坐火车。",
@@ -1571,7 +1571,7 @@ window.HSK1_EXAM = {
      "zh": "我想买一___衣服。",
      "full": "我想买一件衣服。",
      "py": "Wǒ xiǎng mǎi yí jiàn yīfu.",
-     "en": "I want to buy a piece of clothing.",
+     "en": "I want to buy some clothes.",
      "ans": 2
     },
     {

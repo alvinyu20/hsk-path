@@ -129,7 +129,7 @@
    "今天很冷。",
    "It is very cold today.",
    [
-    "❄️",
+    "🥶",
     "☀️",
     "🌧️"
    ]
@@ -318,7 +318,7 @@
     "🚕",
     "🥟",
     "📖",
-    "🚗",
+    "✈️",
     "🎬",
     "🍎"
    ],
@@ -372,13 +372,13 @@
      "say": [
       {
        "s": "男",
-       "zh": "你会开车吗？",
-       "en": "Can you drive?"
+       "zh": "你怎么去中国？",
+       "en": "How are you going to China?"
       },
       {
        "s": "女",
-       "zh": "我会开车。",
-       "en": "Yes, I can drive."
+       "zh": "我坐飞机。",
+       "en": "I am going by plane."
       }
      ],
      "ans": 3
@@ -392,7 +392,7 @@
       },
       {
        "s": "男",
-       "zh": "好，我们去。",
+       "zh": "好，我们去吧。",
        "en": "Okay, let's go."
       }
      ],
@@ -664,8 +664,8 @@
     }
    ],
    "q": {
-    "zh": "她的工作是什么？",
-    "en": "What is her job?"
+    "zh": "她做什么工作？",
+    "en": "What does she do for work?"
    },
    "opts": [
     "老师",
@@ -803,7 +803,7 @@
    ],
    "q": {
     "zh": "妈妈在哪里？",
-    "en": "Where is the mom?"
+    "en": "Where is Mom?"
    },
    "opts": [
     "在家",
@@ -1024,7 +1024,7 @@
    "opts": [
     "📖",
     "🍳",
-    "❄️",
+    "🥶",
     "🚆",
     "🍎🍎🍎",
     "🐶"
@@ -1042,7 +1042,7 @@
     },
     {
      "zh": "明天很冷。",
-     "en": "It is very cold tomorrow.",
+     "en": "It is going to be very cold tomorrow.",
      "ans": 2
     },
     {
@@ -1105,7 +1105,7 @@
     "五块钱。",
     "我是中国人。",
     "今天很冷。",
-    "会，我会说一点儿。",
+    "会，我会说一点儿汉语。",
     "我坐火车。"
    ],
    "items": [
@@ -1131,7 +1131,7 @@
      "zh": "你会说汉语吗？",
      "en": "Can you speak Chinese?",
      "ans": 3,
-     "aen": "Yes, I can speak a little."
+     "aen": "Yes, I can speak a little Chinese."
     },
     {
      "zh": "你怎么去学校？",
@@ -1205,7 +1205,7 @@
     },
     {
      "zh": "我想买一___衣服。",
-     "en": "I want to buy a piece of clothing.",
+     "en": "I want to buy some clothes.",
      "ans": 2
     },
     {

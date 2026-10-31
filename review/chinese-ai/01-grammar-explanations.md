@@ -223,6 +223,7 @@ If a batch has no problems, answer "No problems found".
 - Another way to ask a yes/no question: say the verb, then 不, then the verb again. 你是不是老师？ 你去不去学校？ (Are you going to school or not?)
 - For 有, use 没: 你有没有手机？
 - Do not add 吗 to an A-not-A question.
+- With two-syllable verbs the first verb is often shortened in speech: 你喜欢不喜欢茶？ can also be 你喜不喜欢茶？, and 你认识不认识他？ can be 你认不认识他？ Both are fine.
 - (common mistake) No 吗 here: 你去不去？, not 你去不去吗？
 - example: 她是不是你们的老师？ / Is she your teacher?
 - example: 你去不去学校？ / Are you going to school?
