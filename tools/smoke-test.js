@@ -329,6 +329,28 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await page.locator('.scn.done').count()) >= 2, 'finished scripts are marked done');
   await shot('11-speak');
 
+  // listen only: hide characters, pinyin and English
+  await page.locator('.scn').nth(2).click();
+  const firstAi = await page.evaluate(() => window.HSK1_SPEAK.scenarios[2].ai.map(x => x.zh));
+  const chat0 = await page.locator('.msgs').innerText();
+  check(chat0.includes(firstAi[0]), 'speaking shows the characters by default');
+  for (const b of ['Characters', 'Pinyin', 'English']) await page.locator('.chat-h .seg2 button', { hasText: b }).click();
+  await page.waitForTimeout(60);
+  const chat1 = await page.locator('.msgs').innerText();
+  check(!chat1.includes(firstAi[0]) && chat1.includes('Listen to Mingming'), 'with everything hidden the chat shows no Chinese or English, only the sound button');
+  await page.locator('button', { hasText: 'I said it' }).click();
+  await page.waitForTimeout(60);
+  const lastSaid = await page.evaluate(() => window.__spoken[window.__spoken.length - 1]);
+  check(lastSaid && lastSaid.text === firstAi[1], 'in listen-only mode Mingming\'s next line plays by itself');
+  await page.locator('.chat-h .seg2 button', { hasText: 'Characters' }).click();
+  check((await page.locator('.msgs').innerText()).includes(firstAi[0]), 'Characters brings the Chinese back');
+  await page.reload();
+  await page.waitForSelector('.app');
+  await nav('Speak');
+  check(!(await page.locator('.chat-h .seg2 button', { hasText: 'Pinyin' }).getAttribute('class') || '').includes('on'), 'the hidden pinyin and English stay hidden after a reload');
+  await page.locator('.chat-h .seg2 button', { hasText: 'Pinyin' }).click();
+  await page.locator('.chat-h .seg2 button', { hasText: 'English' }).click();
+
   // Exam + home
   await nav('Level exam');
   await shot('12-exam');

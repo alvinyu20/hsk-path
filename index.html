@@ -457,6 +457,7 @@
         <div class="av zh" aria-hidden="true">明</div>
         <div class="chat-t"><b>Mingming</b><span>{{chatTitle}} · HSK 1 vocabulary only</span></div>
         <div class="seg2" role="group" aria-label="Show on screen">
+          <button class="{{zhCls}}" onClick="{{toggleZh}}">Characters</button>
           <button class="{{pyCls}}" onClick="{{togglePy}}">Pinyin</button>
           <button class="{{enCls}}" onClick="{{toggleEn}}">English</button>
         </div>
@@ -467,7 +468,8 @@
           <div class="mrow {{m.who}}">
             <div class="bub {{m.who}}">
               <div>
-                <div class="zh">{{m.zh}}</div>
+                <sc-if value="{{m.showZh}}" hint-placeholder-val="{{ true }}"><div class="zh">{{m.zh}}</div></sc-if>
+                <sc-if value="{{m.quiet}}" hint-placeholder-val="{{ false }}"><div class="muted-b">{{m.quietText}}</div></sc-if>
                 <sc-if value="{{m.showPy}}" hint-placeholder-val="{{ true }}"><div class="py">{{m.py}}</div></sc-if>
                 <sc-if value="{{m.showEn}}" hint-placeholder-val="{{ true }}"><div class="en">{{m.en}}</div></sc-if>
               </div>
