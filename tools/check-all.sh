@@ -36,6 +36,7 @@ python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-plain.json --leve
 echo "== 4. regenerate the teacher review packet and the list of everything that changes in plain style"
 node tools/make-review-packet.js
 node tools/erhua-diff.js > review/HSK1-plain-forms.md
+python3 tools/make-ai-review-pack.py /tmp/shanlu-sentences-plain.json
 
 if [ "$2" != "--no-browser" ]; then
   echo "== 5. click through every screen in a real browser"

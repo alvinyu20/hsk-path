@@ -17,6 +17,12 @@ Live site (once GitHub Pages is switched on): https://alvinyu20.github.io/hsk-pa
 | Speaking | 8 scripted conversations you say out loud |
 | Tests | built from the words you have started, mixing meaning, listening, pinyin, fill-in and word-order questions |
 
+**Study tools.** Every word has at least three example sentences (word cards cycle through them, reviews show a different one each day, tests pick one at random). A real-time review scheduler (each skill remembers when it was last reviewed). A mock exam built like the official HSK 1 sample papers (20 listening + 20 reading questions, timed, scored by section and part, drawn from a bank of 123 questions). Speaking practice has a listen-only mode and an optional AI conversation (see below). Phone layout with a bottom tab bar; keyboard shortcuts (review: Space, 1-4; exam: arrows, A-F).
+
+**Sync.** Settings → Sync across devices keeps one private copy of your progress in a GitHub gist (paste a classic token with only the gist permission on each device). The merge is order-independent: per word and skill the most recent review wins. Not tested against the real GitHub API from the build machine, only against a fake one.
+
+**AI conversation.** Settings → AI conversation: paste an Anthropic API key (stored on the device only) and "Talk with AI" appears in Speak. The reply is limited to the HSK 1 word list by instruction, pinyin comes from the site's own list, words outside the list are flagged, and your line is judged ("a more natural way: ..."). Microphone input uses the browser's speech recognition where it exists (Chrome on desktop and Android, Safari); it is not available in Chrome on iPhone as far as I know, where keyboard dictation works.
+
 **儿 endings.** The official HSK 1 list prints seven words with a northern 儿 ending (面条儿, 一点儿, 有点儿, 好玩儿, 这儿, 那儿, 哪儿). The site uses the plain forms by default (面条, 一点, 有点, 好玩, 这里, 那里, 哪里); "Voice and 儿 style" in the footer switches to the exam-style forms. The table is `content/erhua.tsv`, the rewrite is `erhua.js`, and `tools/erhua-diff.js` lists every line that changes (`review/HSK1-plain-forms.md`).
 
 **Word notes.** A word row can have an optional sixth column, a short note shown under "Show example" (汉语 and 中文 have one).

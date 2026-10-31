@@ -58,6 +58,12 @@ Known false alarms go in `content/check-waivers.tsv`, each with a reason. Questi
 - 汉语 and 中文 are not "spoken" and "written". The characters hint at it (语 speech, 文 writing) but in modern use both mean "Chinese (the language)" and are mostly interchangeable; 中文 is the more everyday word and is also used for speaking, 汉语 sounds a bit more formal. Both words carry a note saying so (reported by the learner, 30 Oct 2026, who guessed the split; the sources checked say it does not hold).
 - If an example box can show an extra note, give it its own CSS class. A new `.exbox` class silently restyled the review card.
 
+- A scheduler that never looks at the clock never schedules anything. The first version stored "days since review" as a fixed number, so reviewed words never came due. Each skill now stores the time of its last review and the days are computed from the clock; the browser test sets a word reviewed three days ago and checks it is due.
+- Two Chinese AIs (Qwen, DeepSeek) agreed that a bare 前, 后, 下 or 外 after a noun (学校前, 桌子下) is not natural. A lesson I wrote had taught it. Everything now uses 前边, 后边, 下边, 外边. Single-character localizers were a trap created by the HSK 1 word limit: the natural form (前面) needs a character that is not on the list.
+- Example sentences multiply the surface for mistakes. All ~800 extras go through the same checker, and the false alarms are either fixed or waived with a reason (check-waivers.tsv); nothing is waived silently.
+- Picture questions need an unambiguous answer. Grouped parts (matching five items to six pictures or five answers) use fixed, hand-checked sets rather than random combinations, because a random mix can make two answers fit one blank.
+- A review pack for a Chinese AI is generated from what the learner actually sees (plain style): review/chinese-ai/.
+
 ## Review log
 
 ### 30 Oct 2026, HSK 1 (300 words, 26 grammar lessons)

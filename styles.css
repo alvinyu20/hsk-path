@@ -583,3 +583,13 @@ button.scn:hover .scn-m{text-decoration:underline}
   .ex-opt{font-size:20px}
 }
 .ex-pal{align-content:flex-start;row-gap:6px;column-gap:6px}
+
+/* AI conversation */
+.modeseg{align-self:flex-start;margin-bottom:16px}
+.ai-dock{display:flex;flex-direction:column;gap:10px;padding:14px 16px}
+.ai-in{display:flex;gap:10px}
+.ai-in input{flex:1;min-width:0}
+.ai-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.btn.on{background:var(--seal);color:var(--on-seal)}
+.note.fix{background:var(--amber-soft);color:var(--ink)}
+.note.good{color:var(--jade)}

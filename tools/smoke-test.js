@@ -47,6 +47,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const ss = { getVoices: () => voices, cancel() {}, speak(u) { window.__spoken.push({ text: u.text, voice: u.voice && u.voice.voiceURI, lang: u.lang }); }, onvoiceschanged: null };
     Object.defineProperty(window, 'speechSynthesis', { value: ss, configurable: true });
     window.SpeechSynthesisUtterance = function (t) { this.text = t; };
+    // a fake microphone: it "hears" 我想喝茶
+    window.webkitSpeechRecognition = function () { this.start = () => { setTimeout(() => { if (this.onresult) this.onresult({ results: [[{ transcript: '我想喝茶' }]] }); if (this.onend) this.onend(); }, 10); }; this.stop = () => {}; };
   }, erhuaMode);
   const page = await ctx.newPage();
   const errors = [];
@@ -582,6 +584,57 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(await page.evaluate(() => window.shanlu.state.ws['谢谢'].see.s === 4 && window.shanlu.state.ws['你好'].see.s === 9), 'work done on the second browser reaches the first after a sync');
   await ctx2.close();
   await page.locator('button', { hasText: 'Disconnect this device' }).click();
+  await page.locator('button', { hasText: 'Back to home' }).click();
+
+  // AI conversation, against a fake Anthropic API
+  const aiCalls = [];
+  let aiMode2 = 'ok';
+  await ctx.route('https://api.anthropic.com/**', async (r) => {
+    const req = r.request();
+    const cors = { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' };
+    if (req.method() === 'OPTIONS') return r.fulfill({ status: 204, headers: cors });
+    const body = JSON.parse(req.postData());
+    aiCalls.push({ headers: req.headers(), body });
+    if (aiMode2 === 'bad-key') return r.fulfill({ status: 401, headers: cors, contentType: 'application/json', body: '{}' });
+    const n = aiCalls.length;
+    const reply = n === 1 ? { reply: { zh: '你好！你想喝什么？', en: 'Hello! What do you want to drink?' }, feedback: { level: 'ok', better: '', why: '' } }
+      : n === 2 ? { reply: { zh: '好的，你想去公园吗？', en: 'Okay, do you want to go to the park?' }, feedback: { level: 'fix', better: '我想喝茶。', why: 'Add 想 to say you would like something.' } }
+      : { reply: { zh: '很好！', en: 'Very good!' }, feedback: { level: 'ok', better: '', why: '' } };
+    return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ content: [{ type: 'text', text: 'Here you go: ' + JSON.stringify(reply) }] }) });
+  });
+  await page.locator('button', { hasText: 'Settings' }).first().click();
+  check((await text()).includes('AI conversation (optional)'), 'settings has an AI conversation card');
+  await page.fill('input[aria-label="Anthropic API key"]', 'sk-ant-test');
+  await page.locator('button', { hasText: 'Save key' }).click();
+  check((await text()).includes('Saved on this device') && (await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-ai')).key === 'sk-ant-test')), 'the key is saved on this device');
+  await nav('Speak');
+  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
+  await page.waitForFunction(() => window.shanlu.state.aim.length >= 1 && !window.shanlu.state.aiBusy);
+  const first = await page.locator('.msgs').innerText();
+  check(first.includes('你好！你想喝什么？') && first.includes('Nǐ hǎo! Nǐ xiǎng hē shénme?'), 'Mingming opens the conversation, with pinyin from the site\'s own word list');
+  check(aiCalls[0].headers['x-api-key'] === 'sk-ant-test' && aiCalls[0].headers['anthropic-dangerous-direct-browser-access'] === 'true' && /^claude-/.test(aiCalls[0].body.model), 'the request carries the key and a Claude model name');
+  check(aiCalls[0].body.system.includes('米饭') && aiCalls[0].body.system.includes('HSK 1'), 'the instructions hold the HSK 1 word list');
+  check((await page.evaluate(() => window.__spoken[window.__spoken.length - 1].text)) === '你好！你想喝什么？', 'Mingming\'s reply is spoken aloud');
+  await page.locator('.ai-tools button', { hasText: 'Speak' }).click();
+  await page.waitForFunction(() => window.shanlu.state.aiInput === '我想喝茶');
+  check((await page.inputValue('input[aria-label="Your reply"]')) === '我想喝茶', 'the microphone puts what it heard in the box to check');
+  await page.locator('.ai-in button', { hasText: 'Send' }).click();
+  await page.waitForFunction(() => window.shanlu.state.aim.length >= 3 && !window.shanlu.state.aiBusy);
+  const second = await page.locator('.msgs').innerText();
+  check(second.includes('我想喝茶') && second.includes('A more natural way') && second.includes('Add 想'), 'the correction of your line is shown under it');
+  check(second.includes('Not in the HSK 1 list: 公 园') || second.includes('Not in the HSK 1 list: 园') || second.includes('Not in the HSK 1 list'), 'words outside HSK 1 in a reply are flagged');
+  check(aiCalls[1].body.messages.length >= 3 && aiCalls[1].body.messages[aiCalls[1].body.messages.length - 1].content === '我想喝茶', 'the conversation so far is sent along');
+  const exported = await page.evaluate(() => { window.shanlu.persistNow(); return JSON.stringify(JSON.parse(localStorage.getItem('shanlu-progress-v1'))); });
+  check(!exported.includes('sk-ant-test'), 'the key is not in the saved progress (so not in the export or the sync)');
+  aiMode2 = 'bad-key';
+  await page.fill('input[aria-label="Your reply"]', '你好');
+  await page.locator('.ai-in button', { hasText: 'Send' }).click();
+  await page.waitForFunction(() => window.shanlu.state.aiErr);
+  check((await text()).includes('API key was rejected'), 'a rejected key is explained');
+  await page.locator('.modeseg button', { hasText: 'Practice script' }).click();
+  await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.locator('button', { hasText: 'Remove the key' }).click();
+  check(!(await page.evaluate(() => localStorage.getItem('shanlu-ai') && JSON.parse(localStorage.getItem('shanlu-ai')).key)), 'the key can be removed');
   await page.locator('button', { hasText: 'Back to home' }).click();
 
   // export

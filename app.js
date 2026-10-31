@@ -4,6 +4,11 @@
  */
 (function () {
   // "儿 endings" switch (see erhua.js). Plain forms are the default; the setting is read here, before any content is used.
+  const AI_STORE = 'shanlu-ai';   // { key, model } lives only on this device
+  let AICFG = {};
+  try { AICFG = JSON.parse(localStorage.getItem(AI_STORE)) || {}; } catch (e) {}
+  const saveAiCfg = () => { try { localStorage.setItem(AI_STORE, JSON.stringify(AICFG)); } catch (e) {} };
+  const AI_MODELS = [['claude-haiku-5-5', 'Haiku 5.5: fastest and cheapest'], ['claude-sonnet-5-5', 'Sonnet 5.5: smarter, costs more']];
   const SYNC_STORE = 'shanlu-sync';   // { token, gist, at } lives only on this device, never in the exported progress file
   let SYNCCFG = {};
   try { SYNCCFG = JSON.parse(localStorage.getItem(SYNC_STORE)) || {}; } catch (e) {}
@@ -98,7 +103,7 @@
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
   const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'voiceId', 'clipBest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays'];
 
   function freshState() {
     let dark = false;
@@ -113,7 +118,7 @@
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
+      wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:!!AICFG.key, aiModel:AICFG.model || 'claude-haiku-5-5', aiKeyInput:'', aiNote:'', aiMode:false, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0,
       playing:null, noVoice:false
@@ -225,6 +230,60 @@
       if (kind === 'order' && ex.toks.length >= 3 && ex.toks.length <= 8) return orderQ(ex.toks, { kicker:'Build it', prompt:'Put the words in order: ' + ex.en, reveal:ex.zh, explain:ex.py });
       return mcQ(zh);
     });
+  }
+
+  // ---------- talking with an AI (bring-your-own-key, straight from the browser) ----------
+  const CHARSET = {};
+  BANK_KEYS.forEach(k => k.split('').forEach(ch => { CHARSET[ch] = true; }));
+  const MAXW = BANK_KEYS.reduce((n, k) => Math.max(n, k.length), 1);
+  // split a Chinese reply into HSK 1 words, so pinyin comes from our own checked word list and outside words can be flagged
+  const segHsk = (text) => {
+    const out = [];
+    for (let i = 0; i < text.length;) {
+      let hit = null;
+      for (let n = Math.min(MAXW, text.length - i); n >= 1; n--) { const w = text.substr(i, n); if (BANK[w]) { hit = w; break; } }
+      if (hit) { out.push({ t:hit, py:BANK[hit].py.split('/')[0].trim(), cjk:true, ok:true }); i += hit.length; continue; }
+      const ch = text[i]; const cjk = /[\u4e00-\u9fff]/.test(ch);
+      out.push({ t:ch, py:'', cjk, ok:!cjk || !!CHARSET[ch] });
+      i++;
+    }
+    return out;
+  };
+  const aiPinyin = (toks) => {
+    if (toks.some(t => t.cjk && !t.py)) return '';
+    const line = toks.map(t => (t.cjk ? t.py : t.t.replace('。', '.').replace('，', ',').replace('？', '?').replace('！', '!'))).join(' ').replace(/ ([,.?!])/g, '$1').replace(/\s+/g, ' ').trim();
+    return line.replace(/(^|[.?!] )([a-zà-ž])/g, (m, p, c) => p + c.toUpperCase());
+  };
+  const aiOutside = (toks) => { const seen = {}; const out = []; toks.forEach(t => { if (t.cjk && !t.ok && !seen[t.t]) { seen[t.t] = true; out.push(t.t); } }); return out; };
+  const aiSystem = (scn) => [
+    'You are Mingming (明明), a friendly Mandarin conversation partner for an adult English-speaking beginner who is studying for HSK 1.',
+    'Speak Simplified Chinese using ONLY words from this HSK 1 word list (plus punctuation and numbers): ' + BANK_KEYS.join(' ') + '.',
+    'If you need a word that is not in the list, say it another way with listed words. Never write pinyin in the Chinese. Keep every reply to one or two short sentences (about 15 characters or fewer in total) and ask at most one simple question, so the learner can answer.',
+    scn ? 'Role-play setting: ' + scn.title + '. Goals for the learner: ' + scn.goals.join('; ') + '. Stay in this setting and play the other person.' : 'Free chat: pick an everyday topic (food, family, school, weather, plans) and keep it simple.',
+    'After each learner message, also judge it. Say "ok" if it is natural and understandable Mandarin. Say "fix" if it has a grammar, word choice or naturalness problem: then give the corrected sentence in Chinese (HSK 1 words only) and a one-sentence reason in simple English. Do not nitpick: only fix real problems. If the learner writes English, give "fix" with the Chinese they could say. The learner message may come from speech recognition and contain wrong characters: if it does not make sense, ask them to say it again as the reply.',
+    'Answer with ONLY a JSON object, no other text: {"reply":{"zh":"<your Chinese>","en":"<English translation>"},"feedback":{"level":"ok"|"fix","better":"<corrected Chinese or empty>","why":"<short English reason or empty>"}}. For the very first message of a conversation, set feedback to {"level":"ok","better":"","why":""}.'
+  ].join('\n');
+  const aiParse = (text) => {
+    const i = text.indexOf('{'), j = text.lastIndexOf('}');
+    if (i < 0 || j < i) throw new Error('The reply was not in the expected format.');
+    const o = JSON.parse(text.slice(i, j + 1));
+    if (!o.reply || typeof o.reply.zh !== 'string') throw new Error('The reply was not in the expected format.');
+    return { zh:o.reply.zh, en:o.reply.en || '', fb:o.feedback && o.feedback.level === 'fix' ? { better:o.feedback.better || '', why:o.feedback.why || '' } : null };
+  };
+  async function aiCall(history, scn) {
+    let res;
+    try {
+      res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST',
+        headers:{ 'x-api-key':AICFG.key, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true', 'content-type':'application/json' },
+        body:JSON.stringify({ model:AICFG.model || 'claude-haiku-5-5', max_tokens:600, system:aiSystem(scn), messages:history }) });
+    } catch (e) { throw new Error('Could not reach the AI service. Check your connection.'); }
+    if (res.status === 401) throw new Error('The API key was rejected. Check it in Settings.');
+    if (res.status === 429) throw new Error('Too many requests right now. Wait a moment and try again.');
+    if (res.status === 400 || res.status === 402 || res.status === 403) throw new Error('The AI service refused the request (often: no credits on the API account).');
+    if (!res.ok) throw new Error('The AI service had a problem (' + res.status + ').');
+    const data = await res.json();
+    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
+    return { raw:text, parsed:aiParse(text) };
   }
 
   // ---------- the HSK 1 mock exam ----------
@@ -427,6 +486,61 @@
     };
     exContinue = () => { const m = this.state.exm; if (m) this.exBegin({ mode:'full', sec:'reading', results:m.results }); };
     exClose = () => { clearInterval(this.exTimer); this.setState({ exm:null }); try { window.scrollTo(0, 0); } catch (e) {} };
+
+    // ----- talk with AI -----
+    setAiMode = (on) => { this.setState({ aiMode:on }); if (on && this.state.aiOn && !this.state.aim.length) this.aiStart(this.state.aiScn); };
+    aiStart = (scnIdx) => { this.setState({ aiScn:scnIdx, aim:[], aiErr:'', aiInput:'' }); this.aiAsk([{ role:'user', content:'(Start the conversation with a short greeting and your first question.)' }], scnIdx, []); };
+    aiAsk = async (history, scnIdx, shown) => {
+      this.setState({ aiBusy:true, aiErr:'' });
+      try {
+        const out = await aiCall(history, scnIdx >= 0 ? SCEN[scnIdx] : null);
+        const p = out.parsed; const toks = segHsk(p.zh);
+        const msg = { who:'ai', zh:p.zh, en:p.en, py:aiPinyin(toks), outside:aiOutside(toks), raw:out.raw };
+        const next = shown.slice();
+        const last = next[next.length - 1];
+        if (last && last.who === 'me') next[next.length - 1] = Object.assign({}, last, { judged:true, fb:p.fb });   // the judgement is about the learner's last line
+        this.setState({ aim:next.concat([msg]), aiBusy:false });
+        this.say(p.zh, 'aim' + next.length);
+      } catch (e) { this.setState({ aiBusy:false, aiErr:(e && e.message) || 'Something went wrong.' }); }
+    };
+    aiSend = () => {
+      const S = this.state; const text = (S.aiInput || '').trim();
+      if (!text || S.aiBusy || !S.aiOn) return;
+      try { if (window.speechSynthesis) window.speechSynthesis.speak(new SpeechSynthesisUtterance('')); } catch (e) {}   // lets the reply play on iPhone
+      const toks = segHsk(text);
+      const me = { who:'me', zh:text, en:'', py:aiPinyin(toks), outside:aiOutside(toks) };
+      const shown = S.aim.concat([me]);
+      const hist = [{ role:'user', content:'(Start the conversation with a short greeting and your first question.)' }];
+      shown.forEach(m => { if (m.who === 'ai') hist.push({ role:'assistant', content:m.raw }); else hist.push({ role:'user', content:m.zh }); });
+      const days = Object.assign({}, S.aiDays); const t = ymd(new Date()); days[t] = (days[t] || 0) + 1;
+      const patch = { aim:shown, aiInput:'', aiDays:days, xp:S.xp + 2, dayXp:S.dayXp + 2 };
+      if (days[t] >= 4 && !S.spokeToday) { patch.spokeToday = true; patch.dayMin = S.dayMin + 6; }
+      this.setState(patch);
+      this.aiAsk(hist.slice(-13), S.aiScn, shown);
+    };
+    aiMic = () => {
+      const SR = window.webkitSpeechRecognition || window.SpeechRecognition;
+      if (!SR) return;
+      if (this.state.aiListen) { try { this.recog && this.recog.stop(); } catch (e) {} return; }
+      try {
+        const r = new SR(); this.recog = r;
+        r.lang = 'zh-CN'; r.interimResults = false; r.maxAlternatives = 1;
+        r.onresult = (e) => { const t = e.results && e.results[0] && e.results[0][0] ? e.results[0][0].transcript : ''; this.setState({ aiInput:t, aiListen:false }); };
+        r.onerror = () => { this.setState({ aiListen:false, aiErr:'The microphone did not work. Check the browser permission, or type instead.' }); };
+        r.onend = () => { this.setState({ aiListen:false }); };
+        this.setState({ aiListen:true, aiErr:'' });
+        r.start();
+      } catch (e) { this.setState({ aiListen:false, aiErr:'The microphone could not start. Type instead.' }); }
+    };
+    aiSimpler = () => { this.setState({ aiInput:'请再说一遍，慢一点。' }); this.aiSend(); };
+    aiSaveKey = () => {
+      const k = (this.state.aiKeyInput || '').trim();
+      if (!k) { this.setState({ aiNote:'Paste your API key first.' }); return; }
+      AICFG.key = k; AICFG.model = this.state.aiModel; saveAiCfg();
+      this.setState({ aiOn:true, aiKeyInput:'', aiNote:'Saved on this device.' });
+    };
+    aiRemoveKey = () => { AICFG = {}; saveAiCfg(); this.setState({ aiOn:false, aiNote:'The key was removed from this device.', aim:[] }); };
+    aiSetModel = (m) => { AICFG.model = m; if (AICFG.key) saveAiCfg(); this.setState({ aiModel:m }); };
 
     goVoice = () => this.go('voice');
 
@@ -742,6 +856,29 @@
       }
     };
     toggleTheme = () => { this.setState({ theme:this.state.theme === 'dark' ? 'light' : 'dark' }); };
+
+    aiVals() {
+      const S = this.state;
+      const quiet = !S.szh && !S.spy && !S.sen;
+      const msgs = S.aim.map((m, k) => ({
+        who:m.who, isAi:m.who === 'ai', zh:m.zh, py:m.py, en:m.en, showZh:S.szh, showPy:S.spy && !!m.py, showEn:S.sen && !!m.en && m.who === 'ai',
+        quiet, quietText:m.who === 'ai' ? 'Listen to Mingming' : 'You said it', pc:S.playing === 'aim' + k ? 'on' : '', play:() => this.say(m.zh, 'aim' + k),
+        hasOutside:m.outside.length > 0, outsideText:'Not in the HSK 1 list: ' + m.outside.join(' '),
+        hasFb:!!m.fb, fbBetter:m.fb ? m.fb.better : '', fbWhy:m.fb ? m.fb.why : '', hasOk:m.who === 'me' && !!m.judged && !m.fb
+      }));
+      const hasMic = !!(window.webkitSpeechRecognition || window.SpeechRecognition);
+      return {
+        scriptMode:!S.aiMode, aiModeOn:S.aiMode, scriptCls:S.aiMode ? '' : 'on', aiCls:S.aiMode ? 'on' : '',
+        setScript:() => this.setAiMode(false), setAi:() => this.setAiMode(true),
+        aiNoKey:S.aiMode && !S.aiOn, aiReady:S.aiMode && S.aiOn, aiMsgs:msgs, aiBusy:S.aiBusy, aiErr:S.aiErr, hasAiErr:!!S.aiErr,
+        aiInput:S.aiInput, onAiInput:(e) => this.setState({ aiInput:e.target.value }), onAiKey:(e) => { if (e.key === 'Enter') this.aiSend(); },
+        aiSend:this.aiSend, aiMic:this.aiMic, aiHasMic:hasMic, aiNoMic:!hasMic, aiMicLabel:S.aiListen ? 'Listening… tap to stop' : 'Speak', aiMicCls:S.aiListen ? 'on' : '',
+        aiScnList:[{ title:'Free chat', sub:'Anything simple', cls:S.aiScn === -1 ? 'cur' : '', fn:() => this.aiStart(-1) }].concat(SCEN.map((x, i) => ({ title:x.title, sub:x.sub, cls:S.aiScn === i ? 'cur' : '', fn:() => this.aiStart(i) }))),
+        aiToday:(S.aiDays[ymd(new Date())] || 0) + ' messages today', aiSimpler:this.aiSimpler,
+        aiSet:S.aiOn, aiUnset:!S.aiOn, aiKeyInput:S.aiKeyInput, onAiKeyInput:(e) => this.setState({ aiKeyInput:e.target.value }), aiSaveKey:this.aiSaveKey, aiRemoveKey:this.aiRemoveKey,
+        aiModelOpts:AI_MODELS.map(m => ({ label:m[1], cls:S.aiModel === m[0] ? 'on' : '', fn:() => this.aiSetModel(m[0]) })), aiNote:S.aiNote, hasAiNote:!!S.aiNote
+      };
+    }
 
     examVals() {
       const S = this.state, m = S.exm;
@@ -1272,6 +1409,7 @@
         exportData:this.exportData, importData:this.importData, resetAll:this.resetAll, goVoice:this.goVoice,
         ...this.voiceVals(),
         ...this.examVals(),
+        ...this.aiVals(),
         syncOn:S.syncOn, syncOff:!S.syncOn, syncBusy:S.syncBusy, syncMsg:S.syncMsg, hasSyncMsg:!!S.syncMsg, syncMsgCls:S.syncBad ? 'bad' : 'good',
         syncInput:S.syncInput, onSyncInput:(e) => this.setState({ syncInput:e.target.value }), syncConnect:this.syncConnect, syncNow:() => this.syncNow(true), syncDisconnect:this.syncDisconnect,
         syncAtText:S.syncAt ? 'Last synced ' + new Date(S.syncAt).toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }) + '.' : 'Not synced yet.',

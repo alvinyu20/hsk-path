@@ -122,6 +122,24 @@
       </sc-if>
       <sc-if value="{{hasSyncMsg}}" hint-placeholder-val="{{ false }}"><div class="banner {{syncMsgCls}}" style="margin-top:14px" role="status">{{syncMsg}}</div></sc-if>
     </section>
+    <section class="card" style="margin-bottom:20px">
+      <h2 class="h2">AI conversation (optional)</h2>
+      <p class="muted" style="margin:6px 0 0;font-size:16px">Speaking practice with a real conversation partner: you speak or type, Mingming answers in simple Chinese and tells you what was not natural. It uses the Claude API, which is billed separately from a Claude.ai subscription: create a key at console.anthropic.com and add some credit there. Each message costs only a small fraction of a cent on the cheaper model, but I could not look up current prices from here, so check them on that site.</p>
+      <p class="muted" style="margin:10px 0 0;font-size:14.5px">The key is stored on this device only. It is sent straight from your browser to Anthropic and is not synced or exported. Anyone who can use this browser can use the key, so set a spending limit on the key's account.</p>
+      <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{aiModelOpts}}" as="m" hint-placeholder-count="2"><button class="fc2 {{m.cls}}" onClick="{{m.fn}}">{{m.label}}</button></sc-for>
+      </div>
+      <sc-if value="{{aiUnset}}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <input class="wsearch" style="margin:0;flex:1 1 220px;min-width:0" type="password" autocomplete="off" placeholder="Paste the API key" value="{{aiKeyInput}}" onInput="{{onAiKeyInput}}" aria-label="Anthropic API key">
+          <button class="btn pri" onClick="{{aiSaveKey}}">Save key</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{aiSet}}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span class="muted">A key is saved on this device.</span><button class="btn" onClick="{{aiRemoveKey}}">Remove the key</button></div>
+      </sc-if>
+      <sc-if value="{{hasAiNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aiNote}}</div></sc-if>
+    </section>
     <section class="card">
       <h2 class="h2">Chinese voice</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">{{voiceIntro}}</p>
@@ -474,6 +492,11 @@
 
   <!-- SPEAK -->
   <sc-if value="{{isSpeak}}" hint-placeholder-val="{{ false }}">
+  <div class="seg2 modeseg" role="group" aria-label="Practice mode">
+    <button class="{{scriptCls}}" onClick="{{setScript}}">Practice script</button>
+    <button class="{{aiCls}}" onClick="{{setAi}}">Talk with AI</button>
+  </div>
+  <sc-if value="{{scriptMode}}" hint-placeholder-val="{{ true }}">
   <div class="speak">
     <div class="banner">Preview: this is a practice script. You say your lines out loud yourself. AI conversation and pronunciation feedback are not built yet.</div>
     <section class="chat">
@@ -577,6 +600,76 @@
       </section>
     </div>
   </div>
+  </sc-if>
+
+  <sc-if value="{{aiModeOn}}" hint-placeholder-val="{{ false }}">
+  <div class="speak">
+    <sc-if value="{{aiNoKey}}" hint-placeholder-val="{{ false }}">
+    <section class="card" style="grid-column:1/-1">
+      <h2 class="h2">Talk with Mingming</h2>
+      <p class="muted" style="margin:6px 0 0;font-size:16px">Mingming is an AI that plays the other person in a conversation, answers you in simple Chinese and tells you when something you said was not natural. It needs an API key from Anthropic, which you add once in Settings. The key stays on this device.</p>
+      <button class="btn pri" style="margin-top:16px" onClick="{{goVoice}}">Open Settings</button>
+    </section>
+    </sc-if>
+    <sc-if value="{{aiReady}}" hint-placeholder-val="{{ false }}">
+    <section class="chat">
+      <div class="chat-h">
+        <div class="av zh" aria-hidden="true">明</div>
+        <div class="chat-t"><b>Mingming</b><span>AI conversation · {{aiToday}}</span></div>
+        <div class="seg2" role="group" aria-label="Show on screen">
+          <button class="{{zhCls}}" onClick="{{toggleZh}}">Characters</button>
+          <button class="{{pyCls}}" onClick="{{togglePy}}">Pinyin</button>
+          <button class="{{enCls}}" onClick="{{toggleEn}}">English</button>
+        </div>
+      </div>
+      <div class="msgs">
+        <sc-for list="{{aiMsgs}}" as="m" hint-placeholder-count="3">
+          <div class="mrow {{m.who}}">
+            <div class="bub {{m.who}}">
+              <div>
+                <sc-if value="{{m.showZh}}" hint-placeholder-val="{{ true }}"><div class="zh">{{m.zh}}</div></sc-if>
+                <sc-if value="{{m.quiet}}" hint-placeholder-val="{{ false }}"><div class="muted-b">{{m.quietText}}</div></sc-if>
+                <sc-if value="{{m.showPy}}" hint-placeholder-val="{{ true }}"><div class="py">{{m.py}}</div></sc-if>
+                <sc-if value="{{m.showEn}}" hint-placeholder-val="{{ true }}"><div class="en">{{m.en}}</div></sc-if>
+              </div>
+              <sc-if value="{{m.isAi}}" hint-placeholder-val="{{ true }}">
+                <button class="spk {{m.pc}}" aria-label="Hear this line" onClick="{{m.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+              </sc-if>
+            </div>
+            <sc-if value="{{m.hasOutside}}" hint-placeholder-val="{{ false }}"><div class="note">{{m.outsideText}}</div></sc-if>
+            <sc-if value="{{m.hasOk}}" hint-placeholder-val="{{ false }}"><div class="note good">Sounds natural.</div></sc-if>
+            <sc-if value="{{m.hasFb}}" hint-placeholder-val="{{ false }}"><div class="note fix"><b>A more natural way:</b> <span class="zh">{{m.fbBetter}}</span><br>{{m.fbWhy}}</div></sc-if>
+          </div>
+        </sc-for>
+        <sc-if value="{{aiBusy}}" hint-placeholder-val="{{ false }}"><div class="dots" aria-label="Mingming is replying"><i></i><i></i><i></i></div></sc-if>
+      </div>
+      <sc-if value="{{hasAiErr}}" hint-placeholder-val="{{ false }}"><div class="banner bad" role="alert" style="margin:0 16px 12px">{{aiErr}}</div></sc-if>
+      <div class="dock ai-dock">
+        <div class="ai-in">
+          <input class="wsearch" style="margin:0;max-width:none" type="text" lang="zh" autocomplete="off" placeholder="Type Chinese, or tap Speak" value="{{aiInput}}" onInput="{{onAiInput}}" onKeyDown="{{onAiKey}}" aria-label="Your reply">
+          <button class="btn pri" onClick="{{aiSend}}">Send</button>
+        </div>
+        <div class="ai-tools">
+          <sc-if value="{{aiHasMic}}" hint-placeholder-val="{{ true }}"><button class="btn {{aiMicCls}}" onClick="{{aiMic}}">{{aiMicLabel}}</button></sc-if>
+          <button class="linkbtn" onClick="{{aiSimpler}}">Say it slower or again</button>
+        </div>
+        <sc-if value="{{aiNoMic}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0;font-size:14.5px">This browser has no speech input for websites. On an iPhone, tap the microphone key on your keyboard to dictate Chinese into the box (add the Chinese keyboard first), or try the site in Safari.</p></sc-if>
+        <p class="muted" style="margin:0;font-size:14.5px">What the microphone hears lands in the box: check it, fix it if needed, then press Send. Pinyin comes from this site's own word list. The AI can make mistakes too.</p>
+      </div>
+    </section>
+    <div class="sidep">
+      <section class="card">
+        <h2 class="h2">Pick a situation</h2>
+        <div style="margin-top:8px">
+          <sc-for list="{{aiScnList}}" as="s" hint-placeholder-count="4">
+            <button type="button" class="scn {{s.cls}}" onClick="{{s.fn}}"><div class="scn-m">{{s.title}}<span>{{s.sub}}</span></div></button>
+          </sc-for>
+        </div>
+      </section>
+    </div>
+    </sc-if>
+  </div>
+  </sc-if>
   </sc-if>
 
   <!-- WORD WEBS -->
