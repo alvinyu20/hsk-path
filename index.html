@@ -93,7 +93,38 @@
       <span class="pill"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.2 6.3L21 12l-6.8 2.7L12 21l-2.2-6.3L3 12l6.8-2.7z"/></svg>{{xpText}} XP</span>
     </div>
   </header>
-  <sc-if value="{{noVoice}}" hint-placeholder-val="{{ false }}"><div class="banner">This browser does not report a Chinese voice, so audio may be silent or sound wrong. Try Chrome or Safari, or check your device's text-to-speech language settings.</div></sc-if>
+  <sc-if value="{{noVoice}}" hint-placeholder-val="{{ false }}"><div class="banner">This browser does not report a Chinese voice, so audio may be silent or sound wrong. Try Chrome or Safari, or check your device's text-to-speech language settings. <button class="linkbtn" onClick="{{goVoice}}">Open voice settings</button></div></sc-if>
+
+  <!-- VOICE -->
+  <sc-if value="{{isVoice}}" hint-placeholder-val="{{ false }}">
+  <div class="vscreen">
+    <section class="card">
+      <h2 class="h2">Chinese voice</h2>
+      <p class="muted" style="margin:6px 0 0;font-size:16px">{{voiceIntro}}</p>
+      <p class="muted" style="margin:10px 0 0;font-size:15.5px">On iPhone, download an Enhanced or Premium voice in Settings, Accessibility, Read &amp; Speak, Voices (it is called Spoken Content on older versions), then come back here and tap Refresh. Voices named Siri may not be offered to websites at all. If a voice you downloaded is missing from this list, your browser is not passing it on to websites.</p>
+      <div class="vlist">
+        <div class="vrow {{autoCls}}">
+          <div><b>{{autoName}}</b><span>Picks the highest-quality Mandarin voice, then prefers mainland over Taiwan</span></div>
+          <div class="vact"><button class="fc2 {{autoPlayCls}}" onClick="{{autoPlay}}">Play</button><button class="fc2 {{autoCls}}" onClick="{{useAuto}}">{{autoLabel}}</button></div>
+        </div>
+        <sc-for list="{{voiceRows}}" as="v" hint-placeholder-count="3">
+          <div class="vrow {{v.cls}}">
+            <div><b>{{v.name}}</b><span>{{v.meta}}</span></div>
+            <div class="vact"><button class="fc2 {{v.playCls}}" onClick="{{v.play}}">Play</button><button class="fc2 {{v.useCls}}" onClick="{{v.use}}">{{v.useLabel}}</button></div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+        <button class="btn pri" onClick="{{refreshVoices}}">Refresh</button>
+        <button class="btn" onClick="{{goHome}}">Back to home</button>
+        <button class="linkbtn" onClick="{{toggleAllVoices}}">{{allVoicesBtn}}</button>
+      </div>
+      <sc-if value="{{showAllVoices}}" hint-placeholder-val="{{ false }}">
+        <ul class="vall"><sc-for list="{{everyVoice}}" as="e" hint-placeholder-count="3"><li>{{e.line}}</li></sc-for></ul>
+      </sc-if>
+    </section>
+  </div>
+  </sc-if>
 
   <!-- HOME -->
   <sc-if value="{{isHome}}" hint-placeholder-val="{{ true }}">
@@ -558,6 +589,8 @@
                 <span class="plus">+</span>
                 <span class="part {{w.p2cls}}"><b class="zh">{{w.p2c}}</b>{{w.p2n}}</span>
               </div>
+              <sc-if value="{{w.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" onClick="{{w.exToggle}}">{{w.exLabel}}</button></sc-if>
+              <sc-if value="{{w.exOpen}}" hint-placeholder-val="{{ false }}"><div class="exbox"><div class="exbox-t"><div class="zh exbox-zh">{{w.exZh}}</div><button class="spk {{w.exPc}}" aria-label="Hear the example sentence" onClick="{{w.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{w.exPy}}</div><div>{{w.exEn}}</div></div></sc-if>
               <div class="mbar">
                 <div class="mbar-h"><span>{{w.mLabel}}</span><b>{{w.mPct}}</b></div>
                 <div class="track sm"><div class="fill {{w.mCls}}" style="width: {{w.mW}}"></div><i class="tk" style="left:30%"></i><i class="tk" style="left:55%"></i><i class="tk" style="left:80%"></i></div>
@@ -626,8 +659,18 @@
               </sc-if>
             </div>
             <div class="muted">{{o.note}}</div>
+            <sc-if value="{{o.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" onClick="{{o.exToggle}}">{{o.exLabel}}</button></sc-if>
+            <sc-if value="{{o.exOpen}}" hint-placeholder-val="{{ false }}">
+              <div class="opair exboth"><div class="exbox"><div class="exbox-t"><div class="zh exbox-zh">{{o.aExZh}}</div><button class="spk {{o.aExPc}}" aria-label="Hear the example sentence" onClick="{{o.aExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.aExPy}}</div><div>{{o.aExEn}}</div></div><div class="exbox"><div class="exbox-t"><div class="zh exbox-zh">{{o.bExZh}}</div><button class="spk {{o.bExPc}}" aria-label="Hear the example sentence" onClick="{{o.bExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.bExPy}}</div><div>{{o.bExEn}}</div></div></div>
+            </sc-if>
             <a class="report" href="{{o.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
-            <sc-if value="{{o.canAdd}}" hint-placeholder-val="{{ false }}"><button class="btn pri" style="align-self:flex-start" onClick="{{o.learn}}">Add to my words</button></sc-if>
+            <sc-if value="{{o.hasAdd}}" hint-placeholder-val="{{ false }}">
+              <div class="rrow">
+                <sc-if value="{{o.canAddBoth}}" hint-placeholder-val="{{ false }}"><button class="btn pri" onClick="{{o.learnBoth}}">Add both words</button></sc-if>
+                <sc-if value="{{o.canAddA}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{o.learnA}}">Add {{o.azh}}</button></sc-if>
+                <sc-if value="{{o.canAdd}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{o.learn}}">Add {{o.bzh}}</button></sc-if>
+              </div>
+            </sc-if>
             <sc-if value="{{o.canRate}}" hint-placeholder-val="{{ false }}">
               <div class="rrow"><button class="btn pri" onClick="{{o.knew}}">I knew it</button><button class="btn" onClick="{{o.missed}}">I missed it</button></div>
             </sc-if>
@@ -651,6 +694,8 @@
               <span class="wc-py" style="font-size:17px">{{c.py}}</span>
               <span>{{c.en}}</span>
             </button>
+            <sc-if value="{{c.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" onClick="{{c.exToggle}}">{{c.exLabel}}</button></sc-if>
+            <sc-if value="{{c.exOpen}}" hint-placeholder-val="{{ false }}"><div class="exbox"><div class="exbox-t"><div class="zh exbox-zh">{{c.exZh}}</div><button class="spk {{c.exPc}}" aria-label="Hear the example sentence" onClick="{{c.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{c.exPy}}</div><div>{{c.exEn}}</div></div></sc-if>
             <div class="mbar" style="width:100%"><div class="mbar-h"><span>{{c.mLabel}}</span><b>{{c.mPct}}</b></div><div class="track sm"><div class="fill {{c.mCls}}" style="width: {{c.mW}}"></div></div></div>
             <sc-if value="{{c.canAdd}}" hint-placeholder-val="{{ false }}"><button class="btn" style="min-height:40px;padding:0 16px;font-size:15px" onClick="{{c.learn}}">Add to my words</button></sc-if>
             <sc-if value="{{c.capHit}}" hint-placeholder-val="{{ false }}"><span class="muted" style="font-size:14px">Waits until tomorrow</span></sc-if>
@@ -1023,6 +1068,7 @@
   <footer class="foot">
     <p>The Chinese on this site is checked by AI against a community HSK word list and has not been reviewed by a teacher yet. If something looks wrong, use "Report a mistake" next to it.</p>
     <div class="foot-act">
+      <button class="linkbtn" onClick="{{goVoice}}">Chinese voice</button>
       <button class="linkbtn" onClick="{{exportData}}">Export progress</button>
       <button class="linkbtn" onClick="{{importData}}">Import progress</button>
       <button class="linkbtn" onClick="{{resetAll}}">Reset progress</button>

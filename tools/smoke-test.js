@@ -29,6 +29,21 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const url = 'http://127.0.0.1:' + server.address().port + '/';
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, acceptDownloads: true });
+  // A fake text-to-speech with the kinds of voices an iPhone lists, so the voice picker can be tested without a phone.
+  await ctx.addInitScript(() => {
+    const mk = (name, lang, uri, local) => ({ name, lang, voiceURI: uri, localService: local !== false, default: false });
+    const voices = [
+      mk('Sinji', 'zh-HK', 'com.apple.voice.compact.zh-HK.Sinji'),
+      mk('Meijia', 'zh-TW', 'com.apple.voice.compact.zh-TW.Meijia'),
+      mk('Tingting', 'zh-CN', 'com.apple.voice.compact.zh-CN.Tingting'),
+      mk('Lili (Premium)', 'zh-CN', 'com.apple.voice.premium.zh-CN.Lili'),
+      mk('Daniel', 'en-GB', 'com.apple.voice.compact.en-GB.Daniel')
+    ];
+    window.__spoken = [];
+    const ss = { getVoices: () => voices, cancel() {}, speak(u) { window.__spoken.push({ text: u.text, voice: u.voice && u.voice.voiceURI, lang: u.lang }); }, onvoiceschanged: null };
+    Object.defineProperty(window, 'speechSynthesis', { value: ss, configurable: true });
+    window.SpeechSynthesisUtterance = function (t) { this.text = t; };
+  });
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', e => errors.push('pageerror: ' + e.message));
@@ -108,16 +123,49 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await shot('02-webs');
   await page.locator('[aria-label="Pick a character"] button', { hasText: '饭' }).click();
   check((await text()).includes('米饭'), 'switching the shared character shows its words');
+  // Show example: a word's own sentence, on demand
+  const firstCardWord = (await page.locator('.wc .wc-zh').first().innerText()).trim();
+  const firstEx = await page.evaluate((zh) => window.HSK1_WORDS.find(w => w.zh === zh).ex.zh, firstCardWord);
+  check(!(await page.locator('.wc').first().innerText()).includes(firstEx), 'a word card does not show its example sentence until asked');
+  await page.locator('.wc').first().locator('button', { hasText: 'Show example' }).click();
+  await page.waitForTimeout(60);
+  check((await page.locator('.wc').first().innerText()).includes(firstEx), 'Show example reveals the word\'s example sentence (' + firstCardWord + ': ' + firstEx + ')');
+  check((await page.locator('.wc').first().locator('.exbox .spk').count()) === 1, 'the example sentence has a play button');
+  await page.locator('.wc').first().locator('button', { hasText: 'Hide example' }).click();
+  await page.waitForTimeout(60);
+  check(!(await page.locator('.wc').first().innerText()).includes(firstEx), 'Hide example puts it away again');
   await page.locator('button', { hasText: 'Quiz me' }).click();
+  check((await page.locator('button', { hasText: 'Show example' }).count()) === 0, 'in quiz mode the example stays hidden until the meaning is revealed');
   await page.locator('button', { hasText: 'Reveal meaning' }).first().click();
   await page.locator('button', { hasText: 'Add to my words' }).first().click().catch(() => {});
   await page.locator('button', { hasText: 'Opposites' }).click();
   await page.locator('button', { hasText: 'Reveal' }).first().click();
   check((await page.locator('.orow').count()) >= 20, 'opposite pairs are listed');
+  const pair = await page.evaluate(() => window.HSK1_WEBS.opps[0]);
+  const opBefore = await page.evaluate((p) => ({ a: !!window.shanlu.state.wlearned[p.a], b: !!window.shanlu.state.wlearned[p.b] }), pair);
+  check(!opBefore.a && !opBefore.b, 'the first opposite pair starts out not added (' + pair.a + ' / ' + pair.b + ')');
+  const rowText = await page.locator('.orow').first().innerText();
+  check(rowText.includes('Add both words') && rowText.includes('Add ' + pair.a) && rowText.includes('Add ' + pair.b), 'a revealed opposite pair offers both words and "Add both"');
+  await page.locator('.orow').first().locator('button', { hasText: 'Add both words' }).click();
+  await page.waitForTimeout(60);
+  const opAfter = await page.evaluate((p) => ({ a: !!window.shanlu.state.wlearned[p.a], b: !!window.shanlu.state.wlearned[p.b] }), pair);
+  check(opAfter.a && opAfter.b, 'Add both starts the left and the right word of an opposite pair');
+  check(!(await page.locator('.orow').first().innerText()).includes('Add both words'), 'no add buttons are left once both words are started');
+  const exA = await page.evaluate((p) => window.HSK1_WORDS.find(w => w.zh === p.a).ex.zh, pair);
+  const exB = await page.evaluate((p) => window.HSK1_WORDS.find(w => w.zh === p.b).ex.zh, pair);
+  await page.locator('.orow').first().locator('button', { hasText: 'Show examples' }).click();
+  await page.waitForTimeout(60);
+  const oText = await page.locator('.orow').first().innerText();
+  check(oText.includes(exA) && oText.includes(exB), 'an opposite pair can show an example for both words');
   await page.locator('button', { hasText: 'Topics' }).click();
   await page.locator('[aria-label="Topic"] button', { hasText: 'At school' }).click();
   await page.waitForTimeout(80);
   check((await page.locator('.tgrid .tc').count()) >= 20, 'a topic lists its words');
+  const tcWord = (await page.locator('.tc .tc-zh').first().innerText()).trim();
+  const tcEx = await page.evaluate((zh) => window.HSK1_WORDS.find(w => w.zh === zh).ex.zh, tcWord);
+  await page.locator('.tc').first().locator('button', { hasText: 'Show example' }).click();
+  await page.waitForTimeout(60);
+  check((await page.locator('.tc').first().innerText()).includes(tcEx), 'a topic card can show its word\'s example sentence (' + tcWord + ': ' + tcEx + ')');
   check(/\d+ of \d+ started/.test(await text()), 'a topic shows how many of its words you started');
   await page.locator('button', { hasText: /^Add all \d+ new word/ }).first().click();
   await page.waitForTimeout(100);
@@ -128,6 +176,20 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('.opts .opt').first().click();
   await page.waitForTimeout(100);
   check((await text()).includes('Next sentence'), 'fill-the-gap gives feedback');
+
+  // "Which word fits?" must not always put the right answer first
+  const gapPositions = [];
+  for (let k = 0; k < 40; k++) {
+    const hubIdx = k % 20, qIdx = Math.floor(k / 20);
+    await page.evaluate(([h, q]) => window.shanlu.setState({ whub: h, gfq: q, gfpick: null }), [hubIdx, qIdx]);
+    await page.waitForTimeout(25);
+    const labels = await page.locator('.opts .opt').allInnerTexts();
+    const ans = await page.evaluate(([h, q]) => window.HSK1_WEBS.hubs[h].gaps[q].ans, [hubIdx, qIdx]);
+    gapPositions.push(labels.findIndex(t => t.split(/\s/)[0] === ans));
+  }
+  check(!gapPositions.includes(-1) && new Set(gapPositions).size >= 3 && gapPositions.filter(x => x === 0).length <= 20, 'the right answer is not always the first option (positions ' + gapPositions.join('') + ')');
+  const gapStable = await page.evaluate(async () => { const a = [...document.querySelectorAll('.opts .opt')].map(e => e.innerText).join('|'); window.shanlu.setState({ xp: window.shanlu.state.xp }); await new Promise(r => setTimeout(r, 60)); return a === [...document.querySelectorAll('.opts .opt')].map(e => e.innerText).join('|'); });
+  check(gapStable, 'the option order stays put when the page redraws');
 
   // My words
   await nav('My words');
@@ -277,6 +339,41 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(/of 10 new words today/.test(await text()), 'a chosen daily limit survives a reload');
   await nav('My words');
   check(!(await text()).includes('0 words started'), 'word progress survives a reload');
+
+
+  // Chinese voice picker
+  const lastSpoken = () => page.evaluate(() => window.__spoken[window.__spoken.length - 1] || null);
+  await page.locator('button', { hasText: 'Chinese voice' }).first().click();
+  await page.waitForTimeout(100);
+  const vt = await text();
+  check(vt.includes('Lili (Premium)') && vt.includes('Tingting') && vt.includes('Meijia'), 'voice screen lists the Mandarin voices');
+  check(!vt.includes('Sinji') && !vt.includes('Daniel'), 'Cantonese and English voices are left out of the list');
+  check(vt.includes('Automatic: Lili (Premium)'), 'automatic picks the Premium mainland voice over compact ones');
+  await page.locator('button', { hasText: /^Play$/ }).first().click();
+  let sp = await lastSpoken();
+  check(sp && sp.voice === 'com.apple.voice.premium.zh-CN.Lili' && sp.lang === 'zh-CN', 'automatic plays with the Premium voice and its own language tag');
+  await page.locator('.vrow', { hasText: 'Tingting' }).locator('button', { hasText: /^Play$/ }).click();
+  sp = await lastSpoken();
+  check(sp && sp.voice === 'com.apple.voice.compact.zh-CN.Tingting', 'a sample plays with the voice you tapped');
+  check(await page.evaluate(() => window.shanlu.state.voiceId === ''), 'playing a sample does not change the chosen voice');
+  await page.locator('.vrow', { hasText: 'Tingting' }).locator('button', { hasText: 'Use this voice' }).click();
+  await page.waitForTimeout(80);
+  check((await page.locator('.vrow.on').innerText()).includes('Tingting'), 'the chosen voice is marked in use');
+  await page.evaluate(() => window.shanlu.say('你好', 'x'));
+  sp = await lastSpoken();
+  check(sp && sp.voice === 'com.apple.voice.compact.zh-CN.Tingting', 'the rest of the site now speaks with the chosen voice');
+  await page.reload();
+  await page.waitForSelector('.app');
+  check(await page.evaluate(() => window.shanlu.state.voiceId === 'com.apple.voice.compact.zh-CN.Tingting'), 'the chosen voice survives a reload');
+  await page.locator('button', { hasText: 'Chinese voice' }).first().click();
+  await page.locator('button', { hasText: 'Use automatic' }).click();
+  await page.evaluate(() => window.shanlu.say('你好', 'x'));
+  sp = await lastSpoken();
+  check(sp && sp.voice === 'com.apple.voice.premium.zh-CN.Lili', 'going back to automatic uses the Premium voice again');
+  await page.locator('button', { hasText: /Show every voice/ }).click();
+  check((await text()).includes('Sinji · zh-HK'), 'the full voice list shows every voice the browser reports');
+  await shot('21-voice');
+  await page.locator('button', { hasText: 'Back to home' }).click();
 
   // export
   const dl = page.waitForEvent('download');

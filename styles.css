@@ -470,3 +470,21 @@ button.scn:hover .scn-m{text-decoration:underline}
 .expl p{margin:14px 0 0;font-size:17px;line-height:1.55;max-width:68ch}
 .wsearch{margin-top:16px;width:100%;max-width:420px}
 @media (max-width:600px){.gl{max-height:none}}
+
+/* voice picker */
+.vscreen{max-width:760px}
+.vlist{display:grid;gap:10px;margin-top:18px}
+.vrow{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--line);border-radius:16px}
+.vrow.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.vrow b{display:block;font-size:16.5px}
+.vrow span{color:var(--muted);font-size:14.5px}
+.vact{display:flex;gap:8px;flex-wrap:wrap}
+.vall{margin:14px 0 0;padding-left:20px;color:var(--muted);font-size:14.5px;line-height:1.6}
+
+/* example sentence under a word */
+.exbtn{align-self:flex-start;padding:4px 0}
+.exbox{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:14px;background:var(--bg);border:1px solid var(--line);width:100%;min-width:0}
+.exbox-t{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.exbox-zh{font-size:24px;line-height:1.35}
+.exboth{gap:12px}
+@media (max-width:560px){.exboth{flex-direction:column}}

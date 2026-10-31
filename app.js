@@ -78,7 +78,7 @@
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
-  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'clipBest', 'misses', 'testHistory', 'ws',
+  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'voiceId', 'clipBest', 'misses', 'testHistory', 'ws',
     'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint'];
 
   function freshState() {
@@ -87,14 +87,14 @@
     return {
       screen:'home', sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       xp:0, dayXp:0, dayMin:0, streak:0, lastActive:'', activity:{}, day:'',
-      gres:{}, sres:{}, nlimit:0, glesson:0, sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
+      gres:{}, sres:{}, nlimit:0, voiceId:'', vtick:0, vall:false, glesson:0, sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
       qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{},
+      wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{},
       lmode:'dict', dclip:0, dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0,
       playing:null, noVoice:false
@@ -185,6 +185,40 @@
     });
   }
 
+  // ---------- Chinese voice (the browser's own text-to-speech) ----------
+  // The old code used the first Chinese voice the browser listed, which on a phone is often a basic one
+  // (or a Cantonese or Taiwan one) even when a better voice is installed. Now: Mandarin voices only, best quality first,
+  // and the learner can pick one by hand.
+  const VOICE_SAMPLE = '你好，很高兴认识你。';
+  const QUALITY_LABEL = ['Compact', 'Standard', 'Enhanced', 'Premium'];
+  const allVoices = () => { try { return (window.speechSynthesis && window.speechSynthesis.getVoices()) || []; } catch (e) { return []; } };
+  const voiceLang = (v) => String(v.lang || '').replace('_', '-').toLowerCase();
+  // Mandarin-capable voices. Cantonese (zh-HK, yue) is left out because it is a different language.
+  const isMandarinVoice = (v) => /^(zh|cmn)/.test(voiceLang(v)) && !/^(zh-hk|zh-yue|yue)/.test(voiceLang(v));
+  // iPhone and Mac voices carry "premium", "enhanced" or "compact" in their id or name; other platforms mostly do not say.
+  const voiceQuality = (v) => {
+    const id = String(v.voiceURI || '') + ' ' + String(v.name || '');
+    if (/premium/i.test(id)) return 3;
+    if (/enhanced|neural|natural/i.test(id)) return 2;
+    if (/compact/i.test(id)) return 0;
+    return 1;
+  };
+  const voiceRegion = (v) => (/^(zh-cn|zh-hans|cmn-cn|cmn-hans|zh-sg)/.test(voiceLang(v)) ? 2 : 1);
+  const rankedVoices = () => allVoices().filter(isMandarinVoice).sort((a, b) =>
+    voiceQuality(b) - voiceQuality(a) || voiceRegion(b) - voiceRegion(a) || String(a.name).localeCompare(String(b.name)));
+  const pickVoice = (id) => (id && rankedVoices().find(v => v.voiceURI === id)) || rankedVoices()[0] || null;
+
+  // The "Which word fits?" options are authored with the answer first, so they must be shuffled when shown.
+  // The order is fixed for a question within one page load (so it does not jump around when you tap), and differs between visits.
+  const GAP_SEED = Math.floor(Math.random() * 1e9);
+  const seededShuffle = (arr, seed) => {
+    const a = arr.slice();
+    let t = seed >>> 0;
+    const rnd = () => { t = (t + 0x6D2B79F5) >>> 0; let r = Math.imul(t ^ (t >>> 15), 1 | t); r ^= r + Math.imul(r ^ (r >>> 7), 61 | r); return ((r ^ (r >>> 14)) >>> 0) / 4294967296; };
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); const x = a[i]; a[i] = a[j]; a[j] = x; }
+    return a;
+  };
+
   class Component extends DCLogic {
     state = loadState();
     timers = [];
@@ -222,16 +256,15 @@
     go = (screen) => { this.setState({ screen }); try { window.scrollTo(0, 0); } catch (e) {} };
 
     // audio (the browser's own text-to-speech; needs a click)
-    say = (text, key, rate) => {
+    say = (text, key, rate, voice) => {
       try {
         const ss = window.speechSynthesis;
         if (ss) {
-          const voices = ss.getVoices();
-          const zh = voices.find(v => /^zh/i.test(v.lang));
-          if (voices.length && !zh) this.setState({ noVoice:true });
+          const zh = voice || pickVoice(this.state.voiceId);
+          if (allVoices().length && !zh) this.setState({ noVoice:true });
           ss.cancel();
           const u = new SpeechSynthesisUtterance(text);
-          u.lang = 'zh-CN'; u.rate = rate || 0.85;
+          u.lang = zh ? zh.lang : 'zh-CN'; u.rate = rate || 0.85;
           if (zh) u.voice = zh;
           ss.speak(u);
         } else {
@@ -241,6 +274,10 @@
       this.setState({ playing:key });
       this.later(() => { if (this.state.playing === key) this.setState({ playing:null }); }, 1400);
     };
+    goVoice = () => this.go('voice');
+    setVoice = (id) => { this.setState({ voiceId:id }); };
+    refreshVoices = () => { this.setState({ vtick:this.state.vtick + 1 }); };
+    toggleAllVoices = () => { this.setState({ vall:!this.state.vall }); };
 
     // ----- review -----
     flip = () => { this.setState({ rflip:!this.state.rflip }); };
@@ -410,6 +447,7 @@
       if (!q.length) return;
       this.setState({ rq:q, rtotal:q.length, rdone:0, rxp:0, rcomplete:false, rflip:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null });
     };
+    toggleEx = (key) => { const x = Object.assign({}, this.state.wex); x[key] = !x[key]; this.setState({ wex:x }); };
     revealWord = (zh) => { const r = Object.assign({}, this.state.wreveal); r[zh] = true; this.setState({ wreveal:r }); };
     gapPick = (zh) => {
       const S = this.state;
@@ -503,6 +541,37 @@
     };
     toggleTheme = () => { this.setState({ theme:this.state.theme === 'dark' ? 'light' : 'dark' }); };
 
+    voiceVals() {
+      const S = this.state;
+      const all = allVoices();
+      const ranked = rankedVoices();
+      const chosen = pickVoice(S.voiceId);
+      const manual = !!S.voiceId && ranked.some(v => v.voiceURI === S.voiceId);
+      const rows = ranked.map(v => {
+        const on = !!chosen && manual && v.voiceURI === chosen.voiceURI;
+        return {
+          name:v.name, cls:on ? 'on' : '',
+          meta:v.lang + ' · ' + QUALITY_LABEL[voiceQuality(v)] + (v.localService ? '' : ' · online'),
+          play:() => this.say(VOICE_SAMPLE, 'v:' + v.voiceURI, 0.85, v), playCls:S.playing === 'v:' + v.voiceURI ? 'on' : '',
+          use:() => this.setVoice(v.voiceURI), useLabel:on ? 'In use' : 'Use this voice', useCls:on ? 'on' : ''
+        };
+      });
+      const everything = all.map(v => ({ line:v.name + ' · ' + v.lang + (v.localService ? '' : ' · online') }));
+      let intro;
+      if (!all.length) intro = 'Your browser has not listed any voices yet. If you just downloaded one, tap Refresh.';
+      else if (!ranked.length) intro = 'Your browser lists ' + all.length + ' voices, but none of them is Mandarin Chinese, so audio on this site may be silent or in the wrong language.';
+      else intro = 'Your browser lists ' + all.length + ' voices, ' + ranked.length + ' of them Mandarin. Unless you pick one, the site uses the best-sounding Mandarin voice it can find.';
+      return {
+        voiceIntro:intro, voiceRows:rows, hasVoices:rows.length > 0,
+        autoCls:manual ? '' : 'on', autoLabel:manual ? 'Use automatic' : 'In use',
+        autoName:chosen ? 'Automatic: ' + chosen.name : 'Automatic',
+        autoPlay:() => this.say(VOICE_SAMPLE, 'v:auto', 0.85), autoPlayCls:S.playing === 'v:auto' ? 'on' : '',
+        useAuto:() => this.setVoice(''), refreshVoices:this.refreshVoices,
+        showAllVoices:S.vall, allVoicesBtn:S.vall ? 'Hide the full list' : 'Show every voice the browser reports (' + all.length + ')',
+        toggleAllVoices:this.toggleAllVoices, everyVoice:everything
+      };
+    }
+
     renderVals() {
       this.state = rollDay(this.state);
       const S = this.state;
@@ -544,6 +613,7 @@
         web:['Word webs', 'Learn new words next to the words you already know.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
         listen:['Listening lab', 'Train your ear for how people really talk, not just how lessons sound.'],
+        voice:['Chinese voice', 'Choose the voice that reads Chinese aloud.'],
         quiz:S.qmode === 'grammar' ? ['Grammar practice', LESSONS[S.glesson].title] : ['HSK 1 test', 'Take your time. Wrong answers show you why.']
       };
       const tt = titles[S.screen];
@@ -667,6 +737,14 @@
       const webCount = Object.keys(S.wlearned).length;
       const capReached = webCount >= limitOf(S);
       const mini = (zh) => winfo(S.ws[zh], 0);
+      // "Show example": the word's own example sentence (the same checked sentences used in My words and the tests)
+      const exOf = (zh) => { const e = EX[zh]; return e ? { zh:e.zh, py:e.py, en:e.en } : { zh:'', py:'', en:'' }; };
+      const exFor = (zh, avail) => {
+        const e = exOf(zh);
+        const open = avail && !!S.wex[zh];
+        return { hasExBtn:avail && !!e.zh, exOpen:open, exLabel:open ? 'Hide example' : 'Show example', exToggle:() => this.toggleEx(zh),
+          exZh:e.zh, exPy:e.py, exEn:e.en, exPlay:() => this.say(e.zh, 'x' + zh), exPc:pc('x' + zh) };
+      };
       const dlt = (zh) => { const d = S.wdelta[zh]; return d ? { hasDelta:true, deltaText:'Mastery ' + d.from + '% → ' + d.to + '%', deltaCls:d.to >= d.from ? 'up' : 'down' } : { hasDelta:false, deltaText:'', deltaCls:'' }; };
       const cardOf = (w, hubZh) => {
         const b = BANK[w.zh];
@@ -687,14 +765,14 @@
           reveal:() => this.revealWord(w.zh), learn:() => this.learnWord(w.zh),
           knew:() => this.rateWeb(w.zh, true), missed:() => this.rateWeb(w.zh, false),
           reportUrl:report('Word web card', w.zh + ' (' + b.py + ') ' + b.en + '; parts ' + w.parts.map(p => p[0] + '=' + p[1]).join(', '))
-        }, info, dlt(w.zh));
+        }, info, dlt(w.zh), exFor(w.zh, revealed));
       };
       const hubNow = HUBS[S.whub];
       const hubCards = hubNow.words.map(w => cardOf(w, hubNow.hub));
       const hubOpts = HUBS.map((h, i) => ({ zh:h.hub, cls:S.whub === i ? 'on' : '', fn:() => this.setState({ whub:i, gfq:0, gfpick:null }) }));
       const gapNow = hubNow.gaps[S.gfq % hubNow.gaps.length];
       const gapDone = S.gfpick !== null;
-      const gapOpts = gapNow.opts.map(zh => ({ zh, py:BANK[zh].py, cls:!gapDone ? '' : (zh === gapNow.ans ? 'right' : (zh === S.gfpick ? 'wrong' : '')), fn:() => this.gapPick(zh) }));
+      const gapOpts = seededShuffle(gapNow.opts, GAP_SEED + S.whub * 131 + (S.gfq % hubNow.gaps.length) * 17).map(zh => ({ zh, py:BANK[zh].py, cls:!gapDone ? '' : (zh === gapNow.ans ? 'right' : (zh === S.gfpick ? 'wrong' : '')), fn:() => this.gapPick(zh) }));
       const fillLine = !gapDone ? '' : (S.gfpick === gapNow.ans ? 'Right. ' : 'Not quite. ') + gapNow.ans + ' (' + BANK[gapNow.ans].py + ') means ' + BANK[gapNow.ans].en + '.';
       const oppRows = OPPS.map(o => {
         const A = BANK[o.a];
@@ -711,6 +789,12 @@
           playA:() => this.say(A.zh, 'w' + A.zh), playB:() => this.say(B.zh, 'w' + B.zh),
           reveal:() => this.revealWord(B.zh),
           canAdd:rev && bNew && !capReached, canRate:rev && !bNew && !rated, capHit:rev && bNew && capReached && !rated,
+          hasExBtn:rev, exOpen:rev && !!S.wex[A.zh + B.zh], exLabel:(rev && S.wex[A.zh + B.zh]) ? 'Hide examples' : 'Show examples', exToggle:() => this.toggleEx(A.zh + B.zh),
+          aExZh:exOf(A.zh).zh, aExPy:exOf(A.zh).py, aExEn:exOf(A.zh).en, bExZh:exOf(B.zh).zh, bExPy:exOf(B.zh).py, bExEn:exOf(B.zh).en,
+          aExPlay:() => this.say(exOf(A.zh).zh, 'x' + A.zh), bExPlay:() => this.say(exOf(B.zh).zh, 'x' + B.zh), aExPc:pc('x' + A.zh), bExPc:pc('x' + B.zh),
+          canAddA:ia.lv === 'new' && !capReached, hasAdd:(ia.lv === 'new' || (rev && bNew)) && !capReached,
+          canAddBoth:rev && ia.lv === 'new' && bNew && !capReached && (limitOf(S) - webCount >= 2),
+          learnA:() => this.learnWord(A.zh), learnBoth:() => this.learnMany([A.zh, B.zh]),
           learn:() => this.learnWord(B.zh), knew:() => this.rateWeb(B.zh, true), missed:() => this.rateWeb(B.zh, false),
           aLabel:ia.mLabel, aPct:ia.mPct, aW:ia.mW, aBar:ia.mCls, bLabel:ib.mLabel, bPct:ib.mPct, bW:ib.mW, bBar:ib.mCls, bCls:bNew ? 'new' : 'ok',
           reportUrl:report('Opposites pair', A.zh + ' / ' + B.zh + ': ' + o.note)
@@ -722,7 +806,7 @@
         const info = mini(zh);
         const isNew = info.lv === 'new';
         return Object.assign({ zh, py:b.py, en:b.en, cls:isNew ? 'new' : 'ok', canAdd:isNew && !capReached, capHit:isNew && capReached,
-          play:() => this.say(zh, 'w' + zh), learn:() => this.learnWord(zh) }, info);
+          play:() => this.say(zh, 'w' + zh), learn:() => this.learnWord(zh) }, info, exFor(zh, true));
       });
       const topicStarted = topicNow.words.filter(zh => mini(zh).started).length;
       const topicOpts = TOPICS.map((t, i) => ({ label:t.name, cls:S.wtopic === i ? 'on' : '', fn:() => this.setState({ wtopic:i }) }));
@@ -865,7 +949,7 @@
         navHome:navCls('home'), navReview:navCls('review'), navTest:navCls('testlobby'), navGrammar:navCls('grammar'), navSpeak:navCls('speak'),
         goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
         hasDue:S.rq.length > 0 && !S.rcomplete, dueCount:S.rq.length,
-        isHome:S.screen === 'home', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
+        isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
 
         // home
         ringDash, todayLine:titles.home[1], tasks, minOpts, planNote, dayMin:S.dayMin, mins:S.mins, skills, wordTarget:bankKeys.length, wmTotal:startedCount, wm,
@@ -916,7 +1000,8 @@
         again:() => this.startQuiz(S.qmode),
 
         // footer
-        exportData:this.exportData, importData:this.importData, resetAll:this.resetAll,
+        exportData:this.exportData, importData:this.importData, resetAll:this.resetAll, goVoice:this.goVoice,
+        ...this.voiceVals(),
         repoUrl:'https://github.com/' + REPO
       };
     }
@@ -939,5 +1024,5 @@
       reader.readAsText(f);
     });
   }
-  try { if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = () => {}; } catch (e) {}
+  try { if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = () => { app.setState({ vtick:app.state.vtick + 1 }); }; } catch (e) {}
 })();
