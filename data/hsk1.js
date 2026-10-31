@@ -36,15 +36,15 @@ window.HSK1 = (function () {
   // Scripted café conversation (practice script, no analysis)
   const AI = [
     { zh:'你好！你想喝什么？', py:'Nǐ hǎo! Nǐ xiǎng hē shénme?', en:'Hello! What would you like to drink?' },
-    { zh:'好的。你喝热茶吗？', py:'Hǎo de. Nǐ hē rè chá ma?', en:'Okay. Do you want hot tea?' },
-    { zh:'好的。你吃东西吗？', py:'Hǎo de. Nǐ chī dōngxi ma?', en:'Okay. Will you eat anything?' },
+    { zh:'好的。你想喝热茶吗？', py:'Hǎo de. Nǐ xiǎng hē rè chá ma?', en:'Okay. Would you like hot tea?' },
+    { zh:'好的。你想吃东西吗？', py:'Hǎo de. Nǐ xiǎng chī dōngxi ma?', en:'Okay. Would you like something to eat?' },
     { zh:'好。十块钱。', py:'Hǎo. Shí kuài qián.', en:'Okay. Ten yuan.' },
     { zh:'不客气！再见！', py:'Bú kèqi! Zàijiàn!', en:"You're welcome! Goodbye!" }
   ];
   const YOU = [
     { zh:'我想喝茶。', py:'Wǒ xiǎng hē chá.', en:'I would like some tea.' },
-    { zh:'是的，我喝热茶。', py:'Shì de, wǒ hē rè chá.', en:'Yes, I will have hot tea.' },
-    { zh:'我不吃东西，谢谢。', py:'Wǒ bù chī dōngxi, xièxie.', en:"I won't eat anything, thanks." },
+    { zh:'是的，我想喝热茶。', py:'Shì de, wǒ xiǎng hē rè chá.', en:"Yes, I'd like hot tea." },
+    { zh:'我不想吃东西，谢谢。', py:'Wǒ bù xiǎng chī dōngxi, xièxie.', en:"I don't want anything to eat, thanks." },
     { zh:'好的，谢谢！', py:'Hǎo de, xièxie!', en:'Okay, thank you!' }
   ];
   const SPEAK_GOALS = ['Order a drink', 'Answer a question about it', 'Politely turn down food', 'Pay and say thanks'];
