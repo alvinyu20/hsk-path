@@ -28,7 +28,10 @@
   const REVIEW_CHUNK = 30;                          // cards per review round; "Review more" continues until nothing is due
   const limitOf = (S) => (S.nlimit > 0 ? S.nlimit : Infinity);
   const DIMS = ['see', 'hear', 'prod'];
-  const retr = (d) => (d.s > 0 ? Math.pow(1 + (19 / 81) * d.l / d.s, -0.5) : 0);
+  // Real elapsed time: every dimension remembers when it was last reviewed (t, in ms). Older saves had only a fixed `l`, which never grew.
+  const DAY_MS = 864e5;
+  const lOf = (d) => (d.t ? Math.max(0, (Date.now() - d.t) / DAY_MS) : (d.l || 0));
+  const retr = (d, off) => (d.s > 0 ? Math.pow(1 + (19 / 81) * (lOf(d) + (off || 0)) / d.s, -0.5) : 0);
   const mast = (d) => (d.s > 0 ? Math.min(100, 100 * Math.log(1 + d.s) / Math.log(91)) : 0);
   const wMastery = (w) => Math.round(DIMS.reduce((a, k) => a + mast(w[k]), 0) / 3);
   const levelOf = (m) => (m <= 0 ? 'new' : m < 30 ? 'learning' : m < 55 ? 'familiar' : m < 80 ? 'strong' : 'mastered');
@@ -40,7 +43,7 @@
     else if (r === 'hard') s = s > 0 ? Math.max(0.8, s * 1.25) : 1;
     else if (r === 'good') s = s > 0 ? s * (1.6 + 1.4 * (1 - R)) : 1.5;
     else s = s > 0 ? s * (2.2 + 1.8 * (1 - R)) : 3;
-    return { s, l:0 };
+    return { s, l:0, t:Date.now() };
   };
   const fmtInterval = (s) => (s < 1 ? 'Today' : s < 1.5 ? 'Tomorrow' : s < 45 ? 'In ' + Math.round(s) + ' days' : 'In ' + Math.round(s / 30) + ' months');
 
@@ -60,8 +63,8 @@
     const started = DIMS.filter(k => w[k].s > 0);
     const m = wMastery(w);
     const lv = levelOf(m);
-    const recall = started.length ? Math.round(100 * started.reduce((a, k) => a + retr({ s:w[k].s, l:w[k].l + off }), 0) / started.length) : 0;
-    const dueN = started.length ? Math.min.apply(null, started.map(k => w[k].s - w[k].l - off)) : 9999;
+    const recall = started.length ? Math.round(100 * started.reduce((a, k) => a + retr(w[k], off), 0) / started.length) : 0;
+    const dueN = started.length ? Math.min.apply(null, started.map(k => w[k].s - lOf(w[k]) - off)) : 9999;
     let due = 'Not started';
     if (started.length) due = dueN <= 0 ? 'Due now' : (dueN < 1.5 ? 'Due tomorrow' : (dueN < 60 ? 'Due in ' + Math.round(dueN) + ' days' : 'Due in ' + Math.round(dueN / 30) + ' months'));
     return {
@@ -143,6 +146,8 @@
     if (!saved || typeof saved !== 'object') return base;
     PERSIST.forEach(k => { if (saved[k] !== undefined && saved[k] !== null) base[k] = saved[k]; });
     carryOverErhua(base);
+    // older saves: a started word with no timestamp is treated as reviewed now, so nothing is suddenly overdue
+    if (base.ws) Object.keys(base.ws).forEach(z => DIMS.forEach(k => { const d = base.ws[z] && base.ws[z][k]; if (d && d.s > 0 && !d.t) d.t = Date.now() - (d.l || 0) * DAY_MS; }));
     Object.keys(BANK).forEach(zh => { if (!base.ws[zh]) base.ws[zh] = blankWord(); });
     if (!Array.isArray(base.clipBest) || base.clipBest.length !== CLIPS.length) base.clipBest = CLIPS.map((_, i) => (saved.clipBest && saved.clipBest[i]) || 0);
     return base;
@@ -437,7 +442,7 @@
       if (S.wlearned[zh] || Object.keys(S.wlearned).length >= limitOf(S)) return;
       const cur = S.ws[zh];
       const ws = Object.assign({}, S.ws);
-      ws[zh] = { see:{ s:0.5, l:0 }, hear:cur.hear, prod:cur.prod };
+      ws[zh] = { see:{ s:0.5, l:0, t:Date.now() }, hear:cur.hear, prod:cur.prod };
       const wl = Object.assign({}, S.wlearned); wl[zh] = true;
       const patch = { ws, wlearned:wl, xp:S.xp + 3, dayXp:S.dayXp + 3 };
       if (Object.keys(wl).length >= Math.min(4, limitOf(S)) && !S.webCredited) { patch.webCredited = true; patch.dayMin = S.dayMin + 5; }
@@ -468,7 +473,7 @@
       let n = 0;
       list.forEach(zh => {
         if (wl[zh] || wMastery(ws[zh]) > 0 || Object.keys(wl).length >= lim) return;
-        ws[zh] = { see:{ s:0.5, l:0 }, hear:ws[zh].hear, prod:ws[zh].prod };
+        ws[zh] = { see:{ s:0.5, l:0, t:Date.now() }, hear:ws[zh].hear, prod:ws[zh].prod };
         wl[zh] = true;
         n++;
       });

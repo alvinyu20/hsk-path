@@ -443,6 +443,19 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const back = await page.evaluate((a) => ({ n: window.HSK1_WORDS.length, s: window.shanlu.state.ws[a] && window.shanlu.state.ws[a].see.s }), myKey);
   check(back.n === WORD_COUNT && back.s === 7, 'switching back restores the list and the progress');
 
+  // real time: a word reviewed 3 days ago with a 1.5-day interval is due; one reviewed just now is not
+  const timeCheck = await page.evaluate(() => {
+    const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws));
+    const keys = Object.keys(ws); const a = keys[10], b = keys[11];
+    keys.forEach(z => { ws[z] = { see: { s: 0, l: 0 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }; });
+    ws[a].see = { s: 1.5, l: 0, t: Date.now() - 3 * 864e5 };
+    ws[b].see = { s: 1.5, l: 0, t: Date.now() };
+    app.setState({ ws, rq: [], rcomplete: false });
+    app.reviewMore();
+    return { a, b, rq: app.state.rq.slice() };
+  });
+  check(timeCheck.rq.includes(timeCheck.a) && !timeCheck.rq.includes(timeCheck.b), 'a word becomes due as real days pass (reviewed 3 days ago is due, just now is not)');
+
   // export
   const dl = page.waitForEvent('download');
   await page.locator('button', { hasText: 'Export progress' }).click();
