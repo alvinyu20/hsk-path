@@ -1116,7 +1116,7 @@ window.HSK1_WEBS = {
      ]
     },
     {
-     "en": "This piece of clothing looks very nice.",
+     "en": "This item of clothing looks very nice.",
      "zh": "这件衣服很___。",
      "ans": "好看",
      "opts": [
@@ -2398,7 +2398,7 @@ window.HSK1_WEBS = {
      ]
     },
     {
-     "en": "This piece of clothing looks very nice.",
+     "en": "This item of clothing looks very nice.",
      "zh": "这件衣服很___。",
      "ans": "好看",
      "opts": [
@@ -2839,8 +2839,8 @@ window.HSK1_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我想买一些水果，多少钱？",
-    "py": "Wǒ xiǎng mǎi yìxiē shuǐguǒ, duōshǎo qián?",
+    "zh": "我想买一些水果。多少钱？",
+    "py": "Wǒ xiǎng mǎi yìxiē shuǐguǒ. Duōshǎo qián?",
     "en": "I want to buy some fruit. How much is it?"
    },
    "words": [
@@ -3023,7 +3023,7 @@ window.HSK1_WEBS = {
    "sentence": {
     "zh": "这件衣服很贵，那件很便宜。",
     "py": "Zhè jiàn yīfu hěn guì, nà jiàn hěn piányi.",
-    "en": "This piece of clothing is expensive, and that one is cheap."
+    "en": "This item of clothing is expensive, and that one is cheap."
    },
    "words": [
     "买",

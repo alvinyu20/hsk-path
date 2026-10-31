@@ -3,7 +3,7 @@
 大	你家大吗？	Is your home big?
 小	我的房间很小。	My room is very small.
 小	这只猫很小。	This cat is very small.
-小	这件衣服太小了。	This piece of clothing is too small.
+小	这件衣服太小了。	This item of clothing is too small.
 好	今天天气很好。	The weather is very good today.
 好	你好吗？	How are you?
 好	你的字很好。	Your handwriting is good.
@@ -18,12 +18,12 @@
 好玩儿	这个很好玩儿，你想玩吗？	This is a lot of fun. Do you want to play?
 好看	这个电影很好看。	This movie is very good.
 好看	这本书很好看。	This book is very good.
-好看	她穿这件衣服很好看。	She looks good in this piece of clothing.
+好看	她穿这件衣服很好看。	She looks good in this item of clothing.
 漂亮	她很漂亮。	She is very pretty.
-漂亮	这件衣服很漂亮。	This piece of clothing is very pretty.
+漂亮	这件衣服很漂亮。	This item of clothing is very pretty.
 漂亮	你的家很漂亮。	Your home is very pretty.
 新	这是我的新手机。	This is my new mobile phone.
-新	他有一件新衣服。	He has a new piece of clothing.
+新	他有一件新衣服。	He has a new item of clothing.
 新	新书在桌子上。	The new book is on the table.
 高兴	我今天很高兴。	I am very happy today.
 高兴	见到你，我很高兴。	I am glad to meet you.
@@ -31,7 +31,7 @@
 忙	我今天很忙。	I am very busy today.
 忙	爸爸工作很忙。	Dad is very busy at work.
 忙	你忙吗？	Are you busy?
-贵	这件衣服太贵了。	This piece of clothing is too expensive.
+贵	这件衣服太贵了。	This item of clothing is too expensive.
 贵	这个商店的东西很贵。	The things in this shop are expensive.
 贵	这本书不贵。	This book is not expensive.
 便宜	这个很便宜。	This is very cheap.
@@ -102,7 +102,7 @@
 面条儿	你想吃米饭还是面条儿？	Do you want to eat rice or noodles?
 面包	我早上吃面包。	I eat bread in the morning.
 面包	这个面包很好吃。	This bread is very tasty.
-面包	我想买一个面包。	I want to buy a loaf of bread.
+面包	我想买一个面包。	I want to buy some bread.
 包子	我想吃包子。	I want to eat buns.
 包子	这个包子很好吃。	This bun is very tasty.
 包子	早上我吃两个包子。	In the morning I eat two buns.
@@ -121,14 +121,14 @@
 牛奶	我早上喝牛奶。	I drink milk in the morning.
 牛奶	请给我一杯牛奶。	Please give me a glass of milk.
 牛奶	你想喝牛奶还是茶？	Do you want to drink milk or tea?
-午饭	我们中午吃午饭。	We eat lunch at noon.
+午饭	我们十二点吃午饭。	We eat lunch at twelve.
 午饭	你吃午饭了吗？	Have you eaten lunch?
 午饭	我在学校吃午饭。	I eat lunch at school.
 早饭	我七点吃早饭。	I eat breakfast at seven.
 早饭	你吃早饭了吗？	Have you eaten breakfast?
 早饭	他不吃早饭。	He does not eat breakfast.
 晚饭	我六点吃晚饭。	I eat dinner at six.
-晚饭	你想吃什么晚饭？	What do you want for dinner?
+晚饭	你晚饭想吃什么？	What do you want for dinner?
 晚饭	我们在家吃晚饭。	We eat dinner at home.
 杯子	桌子上有一个杯子。	There is a cup on the table.
 杯子	这个杯子很漂亮。	This cup is very pretty.
@@ -139,8 +139,8 @@
 椅子	请坐在椅子上。	Please sit on the chair.
 椅子	这个椅子很新。	This chair is very new.
 椅子	椅子在桌子前边。	The chair is in front of the table.
-衣服	这件衣服很漂亮。	This piece of clothing is very pretty.
-衣服	我想买一件新衣服。	I want to buy a new piece of clothing.
+衣服	这件衣服很漂亮。	This item of clothing is very pretty.
+衣服	我想买一件新衣服。	I want to buy a new item of clothing.
 衣服	你的衣服真好看。	Your clothes look really nice.
 手机	我的手机在桌子上。	My mobile phone is on the table.
 手机	这个手机很新。	This mobile phone is very new.
@@ -170,7 +170,7 @@
 出租车	出租车在学校前边。	The taxi is in front of the school.
 出租车	你想坐出租车吗？	Do you want to take a taxi?
 车	这个车很大。	This car is very big.
-车	我家有一个车。	My family has a car.
+车	我家有车。	My family has a car.
 车	车在学校前边。	The car is in front of the school.
 狗	我家有一只狗。	My family has a dog.
 狗	这只狗很小。	This dog is very small.
@@ -182,13 +182,13 @@
 天气	明天天气怎么样？	How will the weather be tomorrow?
 天气	这里的天气很冷。	The weather here is very cold.
 雨	外边下大雨了。	It is raining hard outside.
-雨	今天有雨。	It is rainy today.
-雨	明天有雨吗？	Will there be rain tomorrow?
+雨	雨很大。	The rain is heavy.
+雨	我不喜欢雨。	I do not like rain.
 雪	今天的雪很大。	The snow is heavy today.
 雪	我想看雪。	I want to see snow.
 雪	这里的雪很多。	There is a lot of snow here.
-病	我女儿的病不大。	My daughter's illness is not serious.
-病	他有病，想去医院。	He is sick and wants to go to the hospital.
+病	我的病好了。	I have recovered from my illness.
+病	你的病好了吗？	Have you recovered from your illness?
 病	医生说我没有病。	The doctor says I am not sick.
 歌	我喜欢听中文歌。	I like to listen to Chinese songs.
 歌	这个歌很好听。	This song is very nice to listen to.

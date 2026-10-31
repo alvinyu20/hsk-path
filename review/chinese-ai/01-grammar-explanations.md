@@ -128,7 +128,7 @@ If a batch has no problems, answer "No problems found".
 - (common mistake) Use the right measure word: 三本书, not 三个书. Use 个 only when no special one fits.
 - example: 这个人是我的朋友。 / This person is my friend.
 - example: 我有两本书。 / I have two books.
-- example: 我想买一件新衣服。 / I want to buy a new piece of clothing.
+- example: 我想买一件新衣服。 / I want to buy a new item of clothing.
 - example: 我家有四口人。 / There are four people in my family.
 - example: 我想喝一杯茶。 / I would like a cup of tea.
 

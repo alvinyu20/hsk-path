@@ -31,7 +31,7 @@
    },
    {
     "zh": "我想买一件新衣服。",
-    "en": "I want to buy a new piece of clothing."
+    "en": "I want to buy a new item of clothing."
    },
    {
     "zh": "我家有四口人。",
@@ -49,7 +49,7 @@
    {
     "t": "order",
     "zh": "我想买一件新衣服。",
-    "en": "I want to buy a new piece of clothing.",
+    "en": "I want to buy a new item of clothing.",
     "explain": "Number + 件 + clothing."
    },
    {

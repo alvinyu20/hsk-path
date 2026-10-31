@@ -154,8 +154,8 @@ Sentences (Chinese / English):
 134. 请你唱一个歌。  /  Please sing a song.
 135. 他喜欢唱歌。  /  He likes to sing.
 136. 你想坐这里吗？  /  Do you want to sit here?
-137. 我想穿这件衣服。  /  I want to wear this piece of clothing.
-138. 她今天穿一件新衣服。  /  She is wearing a new piece of clothing today.
+137. 我想穿这件衣服。  /  I want to wear this item of clothing.
+138. 她今天穿一件新衣服。  /  She is wearing a new item of clothing today.
 139. 你穿什么？  /  What are you wearing?
 140. 他在房间里睡。  /  He sleeps in the room.
 141. 孩子在睡。  /  The child is sleeping.
@@ -220,7 +220,7 @@ Sentences (Chinese / English):
 200. 我的房间不大。  /  My room is not big.
 201. 你家大吗？  /  Is your home big?
 202. 这只猫很小。  /  This cat is very small.
-203. 这件衣服太小了。  /  This piece of clothing is too small.
+203. 这件衣服太小了。  /  This item of clothing is too small.
 204. 你的字很好。  /  Your handwriting is good.
 205. 你做的饭很好吃。  /  The meal you cook is very tasty.
 206. 这家饭店的包子很好吃。  /  The buns at this restaurant are very tasty.
@@ -231,10 +231,10 @@ Sentences (Chinese / English):
 211. 我们去玩，好玩吗？  /  We are going out to play. Is it fun?
 212. 这个很好玩，你想玩吗？  /  This is a lot of fun. Do you want to play?
 213. 这个电影很好看。  /  This movie is very good.
-214. 她穿这件衣服很好看。  /  She looks good in this piece of clothing.
-215. 这件衣服很漂亮。  /  This piece of clothing is very pretty.
+214. 她穿这件衣服很好看。  /  She looks good in this item of clothing.
+215. 这件衣服很漂亮。  /  This item of clothing is very pretty.
 216. 你的家很漂亮。  /  Your home is very pretty.
 217. 这是我的新手机。  /  This is my new mobile phone.
-218. 他有一件新衣服。  /  He has a new piece of clothing.
+218. 他有一件新衣服。  /  He has a new item of clothing.
 219. 新书在桌子上。  /  The new book is on the table.
 220. 我今天很高兴。  /  I am very happy today.

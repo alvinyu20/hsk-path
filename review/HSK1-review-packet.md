@@ -219,7 +219,7 @@ Examples:
 
 - 这个人是我的朋友。  Zhège rén shì wǒ de péngyou.  — This person is my friend.
 - 我有两本书。  Wǒ yǒu liǎng běn shū.  — I have two books.
-- 我想买一件新衣服。  Wǒ xiǎng mǎi yí jiàn xīn yīfu.  — I want to buy a new piece of clothing.
+- 我想买一件新衣服。  Wǒ xiǎng mǎi yí jiàn xīn yīfu.  — I want to buy a new item of clothing.
 - 我家有四口人。  Wǒ jiā yǒu sì kǒu rén.  — There are four people in my family.
 - 我想喝一杯茶。  Wǒ xiǎng hē yì bēi chá.  — I would like a cup of tea.
 
@@ -557,7 +557,7 @@ Examples:
 
 - Speaker: 你好！你叫什么名字？  — Hello! What is your name?
 - Learner: 你好，我叫小明。  — Hello, my name is Xiaoming.
-- Speaker: 认识你，我很高兴。你在哪儿工作？  — Nice to meet you, I am very glad. Where do you work?
+- Speaker: 认识你，我很高兴。你在哪儿工作？  — I am very glad to meet you. Where do you work?
 - Learner: 我在公司工作。你呢？  — I work at a company. And you?
 - Speaker: 我是医生。你喜欢你的工作吗？  — I am a doctor. Do you like your work?
 - Learner: 我很喜欢。我也喜欢学习汉语。  — I like it a lot. I also like studying Chinese.
@@ -568,7 +568,7 @@ Examples:
 ### Ask the price
 
 - Speaker: 你好！你想买什么？  — Hello! What would you like to buy?
-- Learner: 我想买一件衣服。  — I want to buy a piece of clothing.
+- Learner: 我想买一件衣服。  — I want to buy an item of clothing.
 - Speaker: 这件很好看，一百块。  — This one looks very nice. It is 100 yuan.
 - Learner: 太贵了。有便宜的吗？  — That is too expensive. Is there a cheaper one?
 - Speaker: 这件八十块。  — This one is 80 yuan.
@@ -583,7 +583,7 @@ Examples:
 - Learner: 请问，医院在哪儿？  — Excuse me, where is the hospital?
 - Speaker: 医院在学校那边。  — The hospital is over by the school.
 - Learner: 我可以坐出租车去吗？  — Can I take a taxi there?
-- Speaker: 可以。你坐出租车吧。  — You can. Take a taxi.
+- Speaker: 可以。你坐出租车吧。  — Yes, you can. Take a taxi.
 - Learner: 好，谢谢你！  — Okay, thank you!
 - Speaker: 不客气！再见！  — You're welcome! Goodbye!
 - Learner: 再见！  — Goodbye!
@@ -615,7 +615,7 @@ Examples:
 
 ### Make a phone call
 
-- Speaker: 喂，你好！你是谁？  — Hello, hi! Who are you?
+- Speaker: 喂，你好！你是谁？  — Hello! Who are you?
 - Learner: 喂，我是小明。你妈妈在家吗？  — Hello, I am Xiaoming. Is your mom at home?
 - Speaker: 她不在家，她在公司工作。  — She is not at home. She is at work.
 - Learner: 她几点下班？  — What time does she finish work?
@@ -631,8 +631,8 @@ Examples:
 - Learner: 今天很冷，也下雨了。  — It is very cold today, and it is raining too.
 - Speaker: 对，太冷了！你想喝热茶吗？  — Yes, it is so cold! Would you like some hot tea?
 - Learner: 好，我想喝热茶，谢谢。  — Yes, I'd like some hot tea, thank you.
-- Speaker: 你喜欢冷天吗？  — Do you like cold weather?
-- Learner: 我不太喜欢冷天，我喜欢热天。  — I don't like cold weather much. I like hot weather.
+- Speaker: 你喜欢冷的天气吗？  — Do you like cold weather?
+- Learner: 我不太喜欢冷的天气，我喜欢热的天气。  — I don't like cold weather much. I like hot weather.
 - Speaker: 我也是！明天天气很好。  — Me too! The weather is very nice tomorrow.
 - Learner: 太好了！明天见！  — Great! See you tomorrow!
 - Speaker: 明天见！  — See you tomorrow!
@@ -921,13 +921,13 @@ Examples:
 - Who: pronouns: 我们都是学生，他们是老师。  Wǒmen dōu shì xuésheng, tāmen shì lǎoshī.  — We are all students, and they are teachers.
 - This, that, which, where: 这是我的书，那是你的书。  Zhè shì wǒ de shū, nà shì nǐ de shū.  — This is my book, and that is your book.
 - Numbers: 这个手机三千零五十块。  Zhège shǒujī sān qiān líng wǔshí kuài.  — This phone is 3,050 yuan.
-- Amounts and measure words: 我想买一些水果，多少钱？  Wǒ xiǎng mǎi yìxiē shuǐguǒ, duōshǎo qián?  — I want to buy some fruit. How much is it?
+- Amounts and measure words: 我想买一些水果。多少钱？  Wǒ xiǎng mǎi yìxiē shuǐguǒ. Duōshǎo qián?  — I want to buy some fruit. How much is it?
 - Time of day: 我早上七点起床，晚上十点睡觉。  Wǒ zǎoshang qī diǎn qǐchuáng, wǎnshang shí diǎn shuìjiào.  — I get up at seven in the morning and go to bed at ten in the evening.
 - Days and dates: 今天是星期天，我在家。  Jīntiān shì xīngqītiān, wǒ zài jiā.  — Today is Sunday, and I am at home.
 - At school: 学生在学校学习汉语。  Xuésheng zài xuéxiào xuéxí Hànyǔ.  — The students study Chinese at school.
 - Work and places: 我爸爸在公司工作，我妈妈在医院工作。  Wǒ bàba zài gōngsī gōngzuò, wǒ māma zài yīyuàn gōngzuò.  — My dad works at a company and my mom works at a hospital.
 - Food and drink: 我想喝水，不想吃米饭。  Wǒ xiǎng hē shuǐ, bù xiǎng chī mǐfàn.  — I want to drink water, and I don't want to eat rice.
-- Shopping and money: 这件衣服很贵，那件很便宜。  Zhè jiàn yīfu hěn guì, nà jiàn hěn piányi.  — This piece of clothing is expensive, and that one is cheap.
+- Shopping and money: 这件衣服很贵，那件很便宜。  Zhè jiàn yīfu hěn guì, nà jiàn hěn piányi.  — This item of clothing is expensive, and that one is cheap.
 - At home: 我的手机在桌子上，电脑在房间里。  Wǒ de shǒujī zài zhuōzi shàng, diànnǎo zài fángjiān lǐ.  — My phone is on the table and my computer is in the room.
 - Getting around: 我坐出租车去学校，他坐火车回家。  Wǒ zuò chūzūchē qù xuéxiào, tā zuò huǒchē huí jiā.  — I take a taxi to school and he takes the train home.
 - Weather: 今天下雨，天气很冷。  Jīntiān xiàyǔ, tiānqì hěn lěng.  — It is raining today and the weather is cold.
@@ -952,7 +952,7 @@ Examples:
 | 八 | bā | eight | 他八岁。 | Tā bā suì. | He is eight years old. |
 | 九 | jiǔ | nine | 我九点上课。 | Wǒ jiǔ diǎn shàngkè. | I have class at nine. |
 | 十 | shí | ten | 十个苹果多少钱？ | Shí ge píngguǒ duōshǎo qián? | How much are ten apples? |
-| 百 | bǎi | hundred | 这件衣服一百块。 | Zhè jiàn yīfu yì bǎi kuài. | This piece of clothing is 100 yuan. |
+| 百 | bǎi | hundred | 这件衣服一百块。 | Zhè jiàn yīfu yì bǎi kuài. | This item of clothing is 100 yuan. |
 | 千 | qiān | thousand | 这个手机三千块。 | Zhège shǒujī sān qiān kuài. | This phone is 3,000 yuan. |
 | 零 | líng | zero (also used inside numbers, like 105) | 现在是八点零五分。 | Xiànzài shì bā diǎn líng wǔ fēn. | It is 8:05 now. |
 | 半 | bàn | half | 现在七点半。 | Xiànzài qī diǎn bàn. | It is half past seven now. |
@@ -970,7 +970,7 @@ Examples:
 | 几 | jǐ | how many (for small numbers) | 你家有几口人？ | Nǐ jiā yǒu jǐ kǒu rén? | How many people are in your family? |
 | 个 | gè | general measure word | 我想买三个苹果。 | Wǒ xiǎng mǎi sān ge píngguǒ. | I want to buy three apples. |
 | 本 | běn | measure word for books | 我有两本书。 | Wǒ yǒu liǎng běn shū. | I have two books. |
-| 件 | jiàn | measure word for clothes and for matters | 我想买一件新衣服。 | Wǒ xiǎng mǎi yí jiàn xīn yīfu. | I want to buy a new piece of clothing. |
+| 件 | jiàn | measure word for clothes and for matters | 我想买一件新衣服。 | Wǒ xiǎng mǎi yí jiàn xīn yīfu. | I want to buy a new item of clothing. |
 | 口 | kǒu | measure word for family members (also: mouth) | 我家有四口人。 | Wǒ jiā yǒu sì kǒu rén. | There are four people in my family. |
 | 块 | kuài | yuan (the spoken word for money) | 一个苹果三块钱。 | Yí ge píngguǒ sān kuài qián. | One apple costs three yuan. |
 | 元 | yuán | yuan (the written word for money) | 这本书三十元。 | Zhè běn shū sānshí yuán. | This book is 30 yuan. |
@@ -1182,12 +1182,12 @@ Examples:
 | 好吃 | hǎochī | tasty | 这个包子很好吃。 | Zhège bāozi hěn hǎochī. | This bun is very tasty. |
 | 好听 | hǎotīng | nice to listen to | 她唱歌很好听。 | Tā chàng gē hěn hǎotīng. | Her singing sounds lovely. |
 | 好玩儿 | hǎowánr | fun | 玩电脑很好玩儿。 | Wán diànnǎo hěn hǎowánr. | Playing on the computer is a lot of fun. |
-| 好看 | hǎokàn | good-looking; (of a film or book) good | 这件衣服很好看。 | Zhè jiàn yīfu hěn hǎokàn. | This piece of clothing looks very nice. |
+| 好看 | hǎokàn | good-looking; (of a film or book) good | 这件衣服很好看。 | Zhè jiàn yīfu hěn hǎokàn. | This item of clothing looks very nice. |
 | 漂亮 | piàoliang | pretty | 她很漂亮。 | Tā hěn piàoliang. | She is very pretty. |
 | 新 | xīn | new | 我有一个新手机。 | Wǒ yǒu yí ge xīn shǒujī. | I have a new phone. |
-| 高兴 | gāoxìng | happy, glad | 认识你，我很高兴。 | Rènshi nǐ, wǒ hěn gāoxìng. | Nice to meet you, I am very happy. |
+| 高兴 | gāoxìng | happy, glad | 认识你，我很高兴。 | Rènshi nǐ, wǒ hěn gāoxìng. | I am very happy to meet you. |
 | 忙 | máng | busy | 我今天很忙。 | Wǒ jīntiān hěn máng. | I am very busy today. |
-| 贵 | guì | expensive | 这件衣服很贵。 | Zhè jiàn yīfu hěn guì. | This piece of clothing is expensive. |
+| 贵 | guì | expensive | 这件衣服很贵。 | Zhè jiàn yīfu hěn guì. | This item of clothing is expensive. |
 | 便宜 | piányi | cheap | 这个杯子很便宜。 | Zhège bēizi hěn piányi. | This cup is cheap. |
 | 早 | zǎo | early | 明天我六点起床，很早。 | Míngtiān wǒ liù diǎn qǐchuáng, hěn zǎo. | I get up at six tomorrow, which is very early. |
 | 晚 | wǎn | late | 今天太晚了，我想睡觉。 | Jīntiān tài wǎn le, wǒ xiǎng shuìjiào. | It is too late today, I want to sleep. |

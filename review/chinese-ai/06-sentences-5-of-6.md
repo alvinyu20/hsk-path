@@ -63,7 +63,7 @@ Sentences (Chinese / English):
 43. 这个饭店的面条很好吃。  /  The noodles at this restaurant are very tasty.
 44. 你想吃米饭还是面条？  /  Do you want to eat rice or noodles?
 45. 这个面包很好吃。  /  This bread is very tasty.
-46. 我想买一个面包。  /  I want to buy a loaf of bread.
+46. 我想买一个面包。  /  I want to buy some bread.
 47. 我想吃包子。  /  I want to eat buns.
 48. 早上我吃两个包子。  /  In the morning I eat two buns.
 49. 我喜欢吃饺子。  /  I like to eat dumplings.
@@ -77,13 +77,13 @@ Sentences (Chinese / English):
 57. 你想买什么水果？  /  What fruit do you want to buy?
 58. 请给我一杯牛奶。  /  Please give me a glass of milk.
 59. 你想喝牛奶还是茶？  /  Do you want to drink milk or tea?
-60. 我们中午吃午饭。  /  We eat lunch at noon.
+60. 我们十二点吃午饭。  /  We eat lunch at twelve.
 61. 你吃午饭了吗？  /  Have you eaten lunch?
 62. 我在学校吃午饭。  /  I eat lunch at school.
 63. 你吃早饭了吗？  /  Have you eaten breakfast?
 64. 他不吃早饭。  /  He does not eat breakfast.
 65. 我六点吃晚饭。  /  I eat dinner at six.
-66. 你想吃什么晚饭？  /  What do you want for dinner?
+66. 你晚饭想吃什么？  /  What do you want for dinner?
 67. 我们在家吃晚饭。  /  We eat dinner at home.
 68. 这个杯子很漂亮。  /  This cup is very pretty.
 69. 杯子里有茶。  /  There is tea in the cup.
@@ -110,7 +110,7 @@ Sentences (Chinese / English):
 90. 出租车在学校前边。  /  The taxi is in front of the school.
 91. 你想坐出租车吗？  /  Do you want to take a taxi?
 92. 这个车很大。  /  This car is very big.
-93. 我家有一个车。  /  My family has a car.
+93. 我家有车。  /  My family has a car.
 94. 车在学校前边。  /  The car is in front of the school.
 95. 我家有一只狗。  /  My family has a dog.
 96. 这只狗很小。  /  This dog is very small.
@@ -121,13 +121,13 @@ Sentences (Chinese / English):
 101. 明天天气怎么样？  /  How will the weather be tomorrow?
 102. 这里的天气很冷。  /  The weather here is very cold.
 103. 外边下大雨了。  /  It is raining hard outside.
-104. 今天有雨。  /  It is rainy today.
-105. 明天有雨吗？  /  Will there be rain tomorrow?
+104. 雨很大。  /  The rain is heavy.
+105. 我不喜欢雨。  /  I do not like rain.
 106. 今天的雪很大。  /  The snow is heavy today.
 107. 我想看雪。  /  I want to see snow.
 108. 这里的雪很多。  /  There is a lot of snow here.
-109. 我女儿的病不大。  /  My daughter's illness is not serious.
-110. 他有病，想去医院。  /  He is sick and wants to go to the hospital.
+109. 我的病好了。  /  I have recovered from my illness.
+110. 你的病好了吗？  /  Have you recovered from your illness?
 111. 医生说我没有病。  /  The doctor says I am not sick.
 112. 我喜欢听中文歌。  /  I like to listen to Chinese songs.
 113. 她会唱很多歌。  /  She can sing a lot of songs.
@@ -143,13 +143,13 @@ Sentences (Chinese / English):
 123. 我们都是学生，他们是老师。  /  We are all students, and they are teachers.
 124. 这是我的书，那是你的书。  /  This is my book, and that is your book.
 125. 这个手机三千零五十块。  /  This phone is 3,050 yuan.
-126. 我想买一些水果，多少钱？  /  I want to buy some fruit. How much is it?
+126. 我想买一些水果。多少钱？  /  I want to buy some fruit. How much is it?
 127. 我早上七点起床，晚上十点睡觉。  /  I get up at seven in the morning and go to bed at ten in the evening.
 128. 今天是星期天，我在家。  /  Today is Sunday, and I am at home.
 129. 学生在学校学习汉语。  /  The students study Chinese at school.
 130. 我爸爸在公司工作，我妈妈在医院工作。  /  My dad works at a company and my mom works at a hospital.
 131. 我想喝水，不想吃米饭。  /  I want to drink water, and I don't want to eat rice.
-132. 这件衣服很贵，那件很便宜。  /  This piece of clothing is expensive, and that one is cheap.
+132. 这件衣服很贵，那件很便宜。  /  This item of clothing is expensive, and that one is cheap.
 133. 我的手机在桌子上，电脑在房间里。  /  My phone is on the table and my computer is in the room.
 134. 我坐出租车去学校，他坐火车回家。  /  I take a taxi to school and he takes the train home.
 135. 今天下雨，天气很冷。  /  It is raining today and the weather is cold.
@@ -168,7 +168,7 @@ Sentences (Chinese / English):
 148. 我不想吃东西，谢谢。  /  I don't want anything to eat, thanks.
 149. 好的，谢谢！  /  Okay, thank you!
 150. 你好！你叫什么名字？  /  Hello! What is your name?
-151. 认识你，我很高兴。你在哪里工作？  /  Nice to meet you, I am very glad. Where do you work?
+151. 认识你，我很高兴。你在哪里工作？  /  I am very glad to meet you. Where do you work?
 152. 我是医生。你喜欢你的工作吗？  /  I am a doctor. Do you like your work?
 153. 你的汉语很好！  /  Your Chinese is very good!
 154. 再见！  /  Goodbye!
@@ -184,7 +184,7 @@ Sentences (Chinese / English):
 164. 谢谢，再见！  /  Thank you, goodbye!
 165. 你好！你想去哪里？  /  Hello! Where would you like to go?
 166. 医院在学校那边。  /  The hospital is over by the school.
-167. 可以。你坐出租车吧。  /  You can. Take a taxi.
+167. 可以。你坐出租车吧。  /  Yes, you can. Take a taxi.
 168. 我可以坐出租车去吗？  /  Can I take a taxi there?
 169. 好，谢谢你！  /  Okay, thank you!
 170. 你好！你家有几口人？  /  Hello! How many people are in your family?
@@ -203,7 +203,7 @@ Sentences (Chinese / English):
 183. 好，几点去？  /  Good, what time shall we go?
 184. 可以。在哪里见？  /  That works. Where shall we meet?
 185. 好，明天见！  /  Okay, see you tomorrow!
-186. 喂，你好！你是谁？  /  Hello, hi! Who are you?
+186. 喂，你好！你是谁？  /  Hello! Who are you?
 187. 她不在家，她在公司工作。  /  She is not at home. She is at work.
 188. 她六点下班。  /  She finishes work at six.
 189. 喂，我是小明。你妈妈在家吗？  /  Hello, I am Xiaoming. Is your mom at home?
@@ -211,11 +211,11 @@ Sentences (Chinese / English):
 191. 好，我六点再打电话。谢谢！  /  Okay, I'll call again at six. Thank you!
 192. 你好！今天天气怎么样？  /  Hello! How is the weather today?
 193. 对，太冷了！你想喝热茶吗？  /  Yes, it is so cold! Would you like some hot tea?
-194. 你喜欢冷天吗？  /  Do you like cold weather?
+194. 你喜欢冷的天气吗？  /  Do you like cold weather?
 195. 我也是！明天天气很好。  /  Me too! The weather is very nice tomorrow.
 196. 今天很冷，也下雨了。  /  It is very cold today, and it is raining too.
 197. 好，我想喝热茶，谢谢。  /  Yes, I'd like some hot tea, thank you.
-198. 我不太喜欢冷天，我喜欢热天。  /  I don't like cold weather much. I like hot weather.
+198. 我不太喜欢冷的天气，我喜欢热的天气。  /  I don't like cold weather much. I like hot weather.
 199. 太好了！明天见！  /  Great! See you tomorrow!
 200. 请说慢一点。  /  Please speak a little slower.
 201. 请再说一遍。  /  Please say it one more time.

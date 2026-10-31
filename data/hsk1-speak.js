@@ -135,7 +135,7 @@ window.HSK1_SPEAK = {
     {
      "zh": "认识你，我很高兴。你在哪儿工作？",
      "py": "Rènshi nǐ, wǒ hěn gāoxìng. Nǐ zài nǎr gōngzuò?",
-     "en": "Nice to meet you, I am very glad. Where do you work?"
+     "en": "I am very glad to meet you. Where do you work?"
     },
     {
      "zh": "我是医生。你喜欢你的工作吗？",
@@ -244,7 +244,7 @@ window.HSK1_SPEAK = {
     {
      "zh": "我想买一件衣服。",
      "py": "Wǒ xiǎng mǎi yí jiàn yīfu.",
-     "en": "I want to buy a piece of clothing."
+     "en": "I want to buy an item of clothing."
     },
     {
      "zh": "太贵了。有便宜的吗？",
@@ -314,7 +314,7 @@ window.HSK1_SPEAK = {
     {
      "zh": "可以。你坐出租车吧。",
      "py": "Kěyǐ. Nǐ zuò chūzūchē ba.",
-     "en": "You can. Take a taxi."
+     "en": "Yes, you can. Take a taxi."
     },
     {
      "zh": "不客气！再见！",
@@ -565,7 +565,7 @@ window.HSK1_SPEAK = {
     {
      "zh": "喂，你好！你是谁？",
      "py": "Wèi, nǐ hǎo! Nǐ shì shéi?",
-     "en": "Hello, hi! Who are you?"
+     "en": "Hello! Who are you?"
     },
     {
      "zh": "她不在家，她在公司工作。",
@@ -660,8 +660,8 @@ window.HSK1_SPEAK = {
      "en": "Yes, it is so cold! Would you like some hot tea?"
     },
     {
-     "zh": "你喜欢冷天吗？",
-     "py": "Nǐ xǐhuan lěng tiān ma?",
+     "zh": "你喜欢冷的天气吗？",
+     "py": "Nǐ xǐhuan lěng de tiānqì ma?",
      "en": "Do you like cold weather?"
     },
     {
@@ -687,8 +687,8 @@ window.HSK1_SPEAK = {
      "en": "Yes, I'd like some hot tea, thank you."
     },
     {
-     "zh": "我不太喜欢冷天，我喜欢热天。",
-     "py": "Wǒ bú tài xǐhuan lěng tiān, wǒ xǐhuan rè tiān.",
+     "zh": "我不太喜欢冷的天气，我喜欢热的天气。",
+     "py": "Wǒ bú tài xǐhuan lěng de tiānqì, wǒ xǐhuan rè de tiānqì.",
      "en": "I don't like cold weather much. I like hot weather."
     },
     {

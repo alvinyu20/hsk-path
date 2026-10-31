@@ -34,12 +34,12 @@ Sentences (Chinese / English):
 14. 这个包子很好吃。  /  This bun is very tasty.
 15. 她唱歌很好听。  /  Her singing sounds lovely.
 16. 玩电脑很好玩。  /  Playing on the computer is a lot of fun.
-17. 这件衣服很好看。  /  This piece of clothing looks very nice.
+17. 这件衣服很好看。  /  This item of clothing looks very nice.
 18. 她很漂亮。  /  She is very pretty.
 19. 我有一个新手机。  /  I have a new phone.
-20. 认识你，我很高兴。  /  Nice to meet you, I am very happy.
+20. 认识你，我很高兴。  /  I am very happy to meet you.
 21. 我今天很忙。  /  I am very busy today.
-22. 这件衣服很贵。  /  This piece of clothing is expensive.
+22. 这件衣服很贵。  /  This item of clothing is expensive.
 23. 这个杯子很便宜。  /  This cup is cheap.
 24. 明天我六点起床，很早。  /  I get up at six tomorrow, which is very early.
 25. 今天太晚了，我想睡觉。  /  It is too late today, I want to sleep.
@@ -169,8 +169,8 @@ Sentences (Chinese / English):
 149. 我有三本书。  /  I have three books.
 150. 这本书很好看。  /  This book is very good.
 151. 你想买哪本？  /  Which one do you want to buy?
-152. 我想买一件衣服。  /  I want to buy a piece of clothing.
-153. 这件衣服太贵了。  /  This piece of clothing is too expensive.
+152. 我想买一件衣服。  /  I want to buy an item of clothing.
+153. 这件衣服太贵了。  /  This item of clothing is too expensive.
 154. 我有一件事想问你。  /  I have something I want to ask you.
 155. 我家有五口人。  /  There are five people in my family.
 156. 他们家只有三口人。  /  Their family has only three people.
@@ -179,7 +179,7 @@ Sentences (Chinese / English):
 159. 我只有十块钱。  /  I have only ten yuan.
 160. 这本书是二十元。  /  This book is twenty yuan.
 161. 一杯水两元。  /  A cup of water is two yuan.
-162. 这件衣服一百元。  /  This piece of clothing is one hundred yuan.
+162. 这件衣服一百元。  /  This item of clothing is one hundred yuan.
 163. 我家有一只猫。  /  My family has a cat.
 164. 她有两只猫。  /  She has two cats.
 165. 桌子下有一只猫。  /  There is a cat under the table.

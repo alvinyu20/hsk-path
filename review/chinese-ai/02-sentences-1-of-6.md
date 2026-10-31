@@ -29,7 +29,7 @@ Sentences (Chinese / English):
 9. 他八岁。  /  He is eight years old.
 10. 我九点上课。  /  I have class at nine.
 11. 十个苹果多少钱？  /  How much are ten apples?
-12. 这件衣服一百块。  /  This piece of clothing is 100 yuan.
+12. 这件衣服一百块。  /  This item of clothing is 100 yuan.
 13. 这个手机三千块。  /  This phone is 3,000 yuan.
 14. 现在是八点零五分。  /  It is 8:05 now.
 15. 现在七点半。  /  It is half past seven now.
@@ -47,7 +47,7 @@ Sentences (Chinese / English):
 27. 你家有几口人？  /  How many people are in your family?
 28. 我想买三个苹果。  /  I want to buy three apples.
 29. 我有两本书。  /  I have two books.
-30. 我想买一件新衣服。  /  I want to buy a new piece of clothing.
+30. 我想买一件新衣服。  /  I want to buy a new item of clothing.
 31. 我家有四口人。  /  There are four people in my family.
 32. 一个苹果三块钱。  /  One apple costs three yuan.
 33. 这本书三十元。  /  This book is 30 yuan.
