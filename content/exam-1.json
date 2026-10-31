@@ -1,0 +1,1296 @@
+{
+ "L1": [
+  [
+   "📞",
+   "打电话",
+   "to make a phone call",
+   true
+  ],
+  [
+   "🍚",
+   "吃米饭",
+   "to eat rice",
+   true
+  ],
+  [
+   "🌧️",
+   "下雨了",
+   "It is raining.",
+   true
+  ],
+  [
+   "📖",
+   "看书",
+   "to read a book",
+   true
+  ],
+  [
+   "🚗",
+   "开车",
+   "to drive",
+   true
+  ],
+  [
+   "😴",
+   "睡觉",
+   "to sleep",
+   true
+  ],
+  [
+   "📺",
+   "看电视",
+   "to watch TV",
+   true
+  ],
+  [
+   "✈️",
+   "坐飞机",
+   "to travel by plane",
+   true
+  ],
+  [
+   "🍞",
+   "吃米饭",
+   "to eat rice",
+   false
+  ],
+  [
+   "🐶",
+   "一只猫",
+   "a cat",
+   false
+  ],
+  [
+   "🏥",
+   "在学校",
+   "at school",
+   false
+  ],
+  [
+   "🎤",
+   "看电影",
+   "to watch a movie",
+   false
+  ],
+  [
+   "☀️",
+   "下雨了",
+   "It is raining.",
+   false
+  ],
+  [
+   "🚆",
+   "开车",
+   "to drive",
+   false
+  ],
+  [
+   "🍎",
+   "买衣服",
+   "to buy clothes",
+   false
+  ],
+  [
+   "💧",
+   "喝茶",
+   "to drink tea",
+   false
+  ]
+ ],
+ "L2": [
+  [
+   "我想吃米饭。",
+   "I want to eat rice.",
+   [
+    "🍚",
+    "🍞",
+    "🍎"
+   ]
+  ],
+  [
+   "她在看书。",
+   "She is reading a book.",
+   [
+    "📖",
+    "📺",
+    "🎤"
+   ]
+  ],
+  [
+   "他在打电话。",
+   "He is making a phone call.",
+   [
+    "📞",
+    "💻",
+    "📖"
+   ]
+  ],
+  [
+   "今天很冷。",
+   "It is very cold today.",
+   [
+    "❄️",
+    "☀️",
+    "🌧️"
+   ]
+  ],
+  [
+   "我家有一只狗。",
+   "My family has a dog.",
+   [
+    "🐶",
+    "🐱",
+    "🚗"
+   ]
+  ],
+  [
+   "我坐火车去学校。",
+   "I take the train to school.",
+   [
+    "🚆",
+    "✈️",
+    "🚗"
+   ]
+  ],
+  [
+   "现在九点。",
+   "It is nine o'clock now.",
+   [
+    "🕘",
+    "🕛",
+    "🕔"
+   ]
+  ],
+  [
+   "她在医院工作。",
+   "She works at a hospital.",
+   [
+    "🏥",
+    "🏫",
+    "🏪"
+   ]
+  ],
+  [
+   "我想买衣服。",
+   "I want to buy clothes.",
+   [
+    "👕",
+    "📱",
+    "🍎"
+   ]
+  ],
+  [
+   "他在唱歌。",
+   "He is singing.",
+   [
+    "🎤",
+    "📺",
+    "📖"
+   ]
+  ],
+  [
+   "明天会下雨。",
+   "It will rain tomorrow.",
+   [
+    "🌧️",
+    "☀️",
+    "❄️"
+   ]
+  ],
+  [
+   "妈妈在做饭。",
+   "Mom is cooking.",
+   [
+    "🍳",
+    "💻",
+    "📺"
+   ]
+  ],
+  [
+   "我喜欢喝牛奶。",
+   "I like to drink milk.",
+   [
+    "🥛",
+    "🍵",
+    "💧"
+   ]
+  ],
+  [
+   "我有三个苹果。",
+   "I have three apples.",
+   [
+    "🍎🍎🍎",
+    "🍎",
+    "🍎🍎"
+   ]
+  ]
+ ],
+ "L3": [
+  {
+   "opts": [
+    "🍵",
+    "📱",
+    "🏥",
+    "🐱🐱",
+    "🌧️",
+    "🎬"
+   ],
+   "items": [
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你想喝什么？",
+       "en": "What do you want to drink?"
+      },
+      {
+       "s": "女",
+       "zh": "我想喝茶。",
+       "en": "I want to drink tea."
+      }
+     ],
+     "ans": 0
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "你看见我的手机了吗？",
+       "en": "Have you seen my mobile phone?"
+      },
+      {
+       "s": "男",
+       "zh": "在桌子上。",
+       "en": "It is on the table."
+      }
+     ],
+     "ans": 1
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你今天去哪里？",
+       "en": "Where are you going today?"
+      },
+      {
+       "s": "女",
+       "zh": "我去医院。",
+       "en": "I am going to the hospital."
+      }
+     ],
+     "ans": 2
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "你家有猫吗？",
+       "en": "Do you have a cat at home?"
+      },
+      {
+       "s": "男",
+       "zh": "有，我有两只猫。",
+       "en": "Yes, I have two cats."
+      }
+     ],
+     "ans": 3
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "今天天气怎么样？",
+       "en": "How is the weather today?"
+      },
+      {
+       "s": "女",
+       "zh": "下雨了，很冷。",
+       "en": "It is raining, and it is very cold."
+      }
+     ],
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "🚕",
+    "🥟",
+    "📖",
+    "🚗",
+    "🎬",
+    "🍎"
+   ],
+   "items": [
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "你怎么去学校？",
+       "en": "How do you get to school?"
+      },
+      {
+       "s": "男",
+       "zh": "我坐出租车。",
+       "en": "I take a taxi."
+      }
+     ],
+     "ans": 0
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你想吃什么？",
+       "en": "What do you want to eat?"
+      },
+      {
+       "s": "女",
+       "zh": "我想吃饺子。",
+       "en": "I want to eat dumplings."
+      }
+     ],
+     "ans": 1
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "你在做什么？",
+       "en": "What are you doing?"
+      },
+      {
+       "s": "男",
+       "zh": "我在看书。",
+       "en": "I am reading a book."
+      }
+     ],
+     "ans": 2
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你会开车吗？",
+       "en": "Can you drive?"
+      },
+      {
+       "s": "女",
+       "zh": "我会开车。",
+       "en": "Yes, I can drive."
+      }
+     ],
+     "ans": 3
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "我们去看电影吧。",
+       "en": "Let's go see a movie."
+      },
+      {
+       "s": "男",
+       "zh": "好，我们去。",
+       "en": "Okay, let's go."
+      }
+     ],
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "🏫",
+    "🥛",
+    "💻",
+    "📞",
+    "👕",
+    "🍵"
+   ],
+   "items": [
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你在哪里学习？",
+       "en": "Where do you study?"
+      },
+      {
+       "s": "女",
+       "zh": "我在学校学习。",
+       "en": "I study at school."
+      }
+     ],
+     "ans": 0
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "你想喝什么？",
+       "en": "What do you want to drink?"
+      },
+      {
+       "s": "男",
+       "zh": "我想喝牛奶。",
+       "en": "I want to drink milk."
+      }
+     ],
+     "ans": 1
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你在做什么？",
+       "en": "What are you doing?"
+      },
+      {
+       "s": "女",
+       "zh": "我在玩电脑。",
+       "en": "I am playing on the computer."
+      }
+     ],
+     "ans": 2
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "喂，你在家吗？",
+       "en": "Hello, are you at home?"
+      },
+      {
+       "s": "男",
+       "zh": "在，我在打电话。",
+       "en": "Yes, I am on the phone."
+      }
+     ],
+     "ans": 3
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你想买什么？",
+       "en": "What do you want to buy?"
+      },
+      {
+       "s": "女",
+       "zh": "我想买衣服。",
+       "en": "I want to buy clothes."
+      }
+     ],
+     "ans": 4
+    }
+   ]
+  }
+ ],
+ "L4": [
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你几点上班？",
+     "en": "What time do you go to work?"
+    },
+    {
+     "s": "男",
+     "zh": "我八点上班。",
+     "en": "I go to work at eight."
+    }
+   ],
+   "q": {
+    "zh": "他几点上班？",
+    "en": "What time does he go to work?"
+   },
+   "opts": [
+    "八点",
+    "七点",
+    "九点"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你家有几口人？",
+     "en": "How many people are in your family?"
+    },
+    {
+     "s": "女",
+     "zh": "我家有四口人。",
+     "en": "There are four people in my family."
+    }
+   ],
+   "q": {
+    "zh": "她家有几口人？",
+    "en": "How many people are in her family?"
+   },
+   "opts": [
+    "四口人",
+    "三口人",
+    "五口人"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你在哪里工作？",
+     "en": "Where do you work?"
+    },
+    {
+     "s": "男",
+     "zh": "我在医院工作。",
+     "en": "I work at a hospital."
+    }
+   ],
+   "q": {
+    "zh": "他在哪里工作？",
+    "en": "Where does he work?"
+   },
+   "opts": [
+    "医院",
+    "学校",
+    "商店"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你想喝什么？",
+     "en": "What do you want to drink?"
+    },
+    {
+     "s": "女",
+     "zh": "我想喝牛奶。",
+     "en": "I want to drink milk."
+    }
+   ],
+   "q": {
+    "zh": "她想喝什么？",
+    "en": "What does she want to drink?"
+   },
+   "opts": [
+    "牛奶",
+    "茶",
+    "水"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "今天几号？",
+     "en": "What is the date today?"
+    },
+    {
+     "s": "男",
+     "zh": "今天十号。",
+     "en": "Today is the tenth."
+    }
+   ],
+   "q": {
+    "zh": "今天几号？",
+    "en": "What is the date today?"
+   },
+   "opts": [
+    "十号",
+    "八号",
+    "十二号"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你怎么去公司？",
+     "en": "How do you get to the company?"
+    },
+    {
+     "s": "女",
+     "zh": "我坐火车。",
+     "en": "I take the train."
+    }
+   ],
+   "q": {
+    "zh": "她怎么去公司？",
+    "en": "How does she get to the company?"
+   },
+   "opts": [
+    "坐火车",
+    "开车",
+    "坐飞机"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "这个多少钱？",
+     "en": "How much is this?"
+    },
+    {
+     "s": "男",
+     "zh": "五十块。",
+     "en": "Fifty yuan."
+    }
+   ],
+   "q": {
+    "zh": "这个多少钱？",
+    "en": "How much is this?"
+   },
+   "opts": [
+    "五十块",
+    "五块",
+    "十五块"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你是学生吗？",
+     "en": "Are you a student?"
+    },
+    {
+     "s": "女",
+     "zh": "不是，我是老师。",
+     "en": "No, I am a teacher."
+    }
+   ],
+   "q": {
+    "zh": "她的工作是什么？",
+    "en": "What is her job?"
+   },
+   "opts": [
+    "老师",
+    "学生",
+    "医生"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你明天去哪里？",
+     "en": "Where are you going tomorrow?"
+    },
+    {
+     "s": "男",
+     "zh": "我去学校。",
+     "en": "I am going to school."
+    }
+   ],
+   "q": {
+    "zh": "他明天去哪里？",
+    "en": "Where is he going tomorrow?"
+   },
+   "opts": [
+    "学校",
+    "商店",
+    "医院"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "现在几点？",
+     "en": "What time is it now?"
+    },
+    {
+     "s": "女",
+     "zh": "现在两点半。",
+     "en": "It is half past two now."
+    }
+   ],
+   "q": {
+    "zh": "现在几点？",
+    "en": "What time is it now?"
+   },
+   "opts": [
+    "两点半",
+    "两点",
+    "三点半"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你喜欢什么？",
+     "en": "What do you like?"
+    },
+    {
+     "s": "男",
+     "zh": "我喜欢看电影。",
+     "en": "I like to watch movies."
+    }
+   ],
+   "q": {
+    "zh": "他喜欢什么？",
+    "en": "What does he like?"
+   },
+   "opts": [
+    "看电影",
+    "看书",
+    "看电视"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你有几个孩子？",
+     "en": "How many children do you have?"
+    },
+    {
+     "s": "女",
+     "zh": "我有两个孩子。",
+     "en": "I have two children."
+    }
+   ],
+   "q": {
+    "zh": "她有几个孩子？",
+    "en": "How many children does she have?"
+   },
+   "opts": [
+    "两个",
+    "一个",
+    "三个"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你想吃面包吗？",
+     "en": "Do you want to eat bread?"
+    },
+    {
+     "s": "男",
+     "zh": "不想，我想吃米饭。",
+     "en": "No, I want to eat rice."
+    }
+   ],
+   "q": {
+    "zh": "男的想吃什么？",
+    "en": "What does the man want to eat?"
+   },
+   "opts": [
+    "米饭",
+    "面包",
+    "鸡蛋"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你妈妈在哪里？",
+     "en": "Where is your mom?"
+    },
+    {
+     "s": "女",
+     "zh": "她在家。",
+     "en": "She is at home."
+    }
+   ],
+   "q": {
+    "zh": "妈妈在哪里？",
+    "en": "Where is the mom?"
+   },
+   "opts": [
+    "在家",
+    "在学校",
+    "在医院"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你今天忙吗？",
+     "en": "Are you busy today?"
+    },
+    {
+     "s": "男",
+     "zh": "我今天很忙，没有时间。",
+     "en": "I am very busy today. I do not have time."
+    }
+   ],
+   "q": {
+    "zh": "男的今天怎么样？",
+    "en": "How is the man today?"
+   },
+   "opts": [
+    "很忙",
+    "很高兴",
+    "很冷"
+   ]
+  }
+ ],
+ "R1": [
+  [
+   "🍎",
+   "苹果",
+   "apple",
+   true
+  ],
+  [
+   "🐶",
+   "狗",
+   "dog",
+   true
+  ],
+  [
+   "🏫",
+   "学校",
+   "school",
+   true
+  ],
+  [
+   "🚆",
+   "火车",
+   "train",
+   true
+  ],
+  [
+   "📱",
+   "手机",
+   "mobile phone",
+   true
+  ],
+  [
+   "🥛",
+   "牛奶",
+   "milk",
+   true
+  ],
+  [
+   "📺",
+   "电视",
+   "television",
+   true
+  ],
+  [
+   "🏥",
+   "医院",
+   "hospital",
+   true
+  ],
+  [
+   "👕",
+   "衣服",
+   "clothes",
+   true
+  ],
+  [
+   "🍵",
+   "茶",
+   "tea",
+   true
+  ],
+  [
+   "🍞",
+   "苹果",
+   "apple",
+   false
+  ],
+  [
+   "🐱",
+   "狗",
+   "dog",
+   false
+  ],
+  [
+   "🏪",
+   "学校",
+   "school",
+   false
+  ],
+  [
+   "✈️",
+   "火车",
+   "train",
+   false
+  ],
+  [
+   "💻",
+   "手机",
+   "mobile phone",
+   false
+  ],
+  [
+   "🍵",
+   "牛奶",
+   "milk",
+   false
+  ],
+  [
+   "📖",
+   "电视",
+   "television",
+   false
+  ],
+  [
+   "🎤",
+   "医院",
+   "hospital",
+   false
+  ]
+ ],
+ "R2": [
+  {
+   "opts": [
+    "🍵",
+    "📺",
+    "🌧️",
+    "🐱",
+    "🏥",
+    "🚗"
+   ],
+   "items": [
+    {
+     "zh": "我想喝茶。",
+     "en": "I want to drink tea.",
+     "ans": 0
+    },
+    {
+     "zh": "她在看电视。",
+     "en": "She is watching TV.",
+     "ans": 1
+    },
+    {
+     "zh": "今天下雨了。",
+     "en": "It is raining today.",
+     "ans": 2
+    },
+    {
+     "zh": "我家有一只猫。",
+     "en": "My family has a cat.",
+     "ans": 3
+    },
+    {
+     "zh": "我们去医院。",
+     "en": "We are going to the hospital.",
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "📞",
+    "🍚",
+    "🎤",
+    "🚗",
+    "👕",
+    "🍎"
+   ],
+   "items": [
+    {
+     "zh": "他在打电话。",
+     "en": "He is making a phone call.",
+     "ans": 0
+    },
+    {
+     "zh": "我想吃米饭。",
+     "en": "I want to eat rice.",
+     "ans": 1
+    },
+    {
+     "zh": "她在唱歌。",
+     "en": "She is singing.",
+     "ans": 2
+    },
+    {
+     "zh": "爸爸开车去公司。",
+     "en": "Dad drives to the company.",
+     "ans": 3
+    },
+    {
+     "zh": "我想买衣服。",
+     "en": "I want to buy clothes.",
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "📖",
+    "🍳",
+    "❄️",
+    "🚆",
+    "🍎🍎🍎",
+    "🐶"
+   ],
+   "items": [
+    {
+     "zh": "我在看书。",
+     "en": "I am reading a book.",
+     "ans": 0
+    },
+    {
+     "zh": "妈妈在做饭。",
+     "en": "Mom is cooking.",
+     "ans": 1
+    },
+    {
+     "zh": "明天很冷。",
+     "en": "It is very cold tomorrow.",
+     "ans": 2
+    },
+    {
+     "zh": "我坐火车去学校。",
+     "en": "I take the train to school.",
+     "ans": 3
+    },
+    {
+     "zh": "我有三个苹果。",
+     "en": "I have three apples.",
+     "ans": 4
+    }
+   ]
+  }
+ ],
+ "R3": [
+  {
+   "opts": [
+    "我叫小明。",
+    "我家有四口人。",
+    "现在九点。",
+    "我想喝茶。",
+    "我在医院工作。"
+   ],
+   "items": [
+    {
+     "zh": "你叫什么名字？",
+     "en": "What is your name?",
+     "ans": 0,
+     "aen": "My name is Xiaoming."
+    },
+    {
+     "zh": "你家有几口人？",
+     "en": "How many people are in your family?",
+     "ans": 1,
+     "aen": "There are four people in my family."
+    },
+    {
+     "zh": "现在几点？",
+     "en": "What time is it now?",
+     "ans": 2,
+     "aen": "It is nine o'clock now."
+    },
+    {
+     "zh": "你想喝什么？",
+     "en": "What do you want to drink?",
+     "ans": 3,
+     "aen": "I want to drink tea."
+    },
+    {
+     "zh": "你在哪里工作？",
+     "en": "Where do you work?",
+     "ans": 4,
+     "aen": "I work at a hospital."
+    }
+   ]
+  },
+  {
+   "opts": [
+    "五块钱。",
+    "我是中国人。",
+    "今天很冷。",
+    "会，我会说一点儿。",
+    "我坐火车。"
+   ],
+   "items": [
+    {
+     "zh": "这个多少钱？",
+     "en": "How much is this?",
+     "ans": 0,
+     "aen": "Five yuan."
+    },
+    {
+     "zh": "你是哪国人？",
+     "en": "Which country are you from?",
+     "ans": 1,
+     "aen": "I am Chinese."
+    },
+    {
+     "zh": "今天天气怎么样？",
+     "en": "How is the weather today?",
+     "ans": 2,
+     "aen": "It is very cold today."
+    },
+    {
+     "zh": "你会说汉语吗？",
+     "en": "Can you speak Chinese?",
+     "ans": 3,
+     "aen": "Yes, I can speak a little."
+    },
+    {
+     "zh": "你怎么去学校？",
+     "en": "How do you get to school?",
+     "ans": 4,
+     "aen": "I take the train."
+    }
+   ]
+  },
+  {
+   "opts": [
+    "我很忙。",
+    "我有两个孩子。",
+    "我想吃面包。",
+    "我喜欢看电影。",
+    "今天十号。"
+   ],
+   "items": [
+    {
+     "zh": "你今天忙吗？",
+     "en": "Are you busy today?",
+     "ans": 0,
+     "aen": "I am very busy."
+    },
+    {
+     "zh": "你有几个孩子？",
+     "en": "How many children do you have?",
+     "ans": 1,
+     "aen": "I have two children."
+    },
+    {
+     "zh": "你想吃什么？",
+     "en": "What do you want to eat?",
+     "ans": 2,
+     "aen": "I want to eat bread."
+    },
+    {
+     "zh": "你喜欢什么？",
+     "en": "What do you like?",
+     "ans": 3,
+     "aen": "I like to watch movies."
+    },
+    {
+     "zh": "今天几号？",
+     "en": "What is the date today?",
+     "ans": 4,
+     "aen": "Today is the tenth."
+    }
+   ]
+  }
+ ],
+ "R4": [
+  {
+   "opts": [
+    "只",
+    "杯",
+    "件",
+    "本",
+    "块"
+   ],
+   "items": [
+    {
+     "zh": "我有一___猫。",
+     "en": "I have a cat.",
+     "ans": 0
+    },
+    {
+     "zh": "请给我一___水。",
+     "en": "Please give me a glass of water.",
+     "ans": 1
+    },
+    {
+     "zh": "我想买一___衣服。",
+     "en": "I want to buy a piece of clothing.",
+     "ans": 2
+    },
+    {
+     "zh": "这___书很好看。",
+     "en": "This book is very good.",
+     "ans": 3
+    },
+    {
+     "zh": "这个手机三千___。",
+     "en": "This mobile phone is 3000 yuan.",
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "喝",
+    "看",
+    "说",
+    "打",
+    "吃"
+   ],
+   "items": [
+    {
+     "zh": "我想___茶。",
+     "en": "I want to drink tea.",
+     "ans": 0
+    },
+    {
+     "zh": "他在___电视。",
+     "en": "He is watching TV.",
+     "ans": 1
+    },
+    {
+     "zh": "请___汉语。",
+     "en": "Please speak Chinese.",
+     "ans": 2
+    },
+    {
+     "zh": "她在___电话。",
+     "en": "She is making a phone call.",
+     "ans": 3
+    },
+    {
+     "zh": "我想___米饭。",
+     "en": "I want to eat rice.",
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "什么",
+    "几",
+    "哪里",
+    "谁",
+    "多少"
+   ],
+   "items": [
+    {
+     "zh": "你想吃___？",
+     "en": "What do you want to eat?",
+     "ans": 0
+    },
+    {
+     "zh": "现在___点了？",
+     "en": "What time is it now?",
+     "ans": 1
+    },
+    {
+     "zh": "你在___工作？",
+     "en": "Where do you work?",
+     "ans": 2
+    },
+    {
+     "zh": "他是___？",
+     "en": "Who is he?",
+     "ans": 3
+    },
+    {
+     "zh": "这个___钱？",
+     "en": "How much is this?",
+     "ans": 4
+    }
+   ]
+  }
+ ]
+}

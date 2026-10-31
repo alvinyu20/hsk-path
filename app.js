@@ -98,7 +98,7 @@
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
   const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'voiceId', 'clipBest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams'];
 
   function freshState() {
     let dark = false;
@@ -113,7 +113,7 @@
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
+      wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0,
       playing:null, noVoice:false
@@ -227,6 +227,50 @@
     });
   }
 
+  // ---------- the HSK 1 mock exam ----------
+  // Layout follows the official HSK 1 sample papers: 4 listening parts and 4 reading parts, 5 questions each, listening played twice.
+  const EXAMBANK = window.HSK1_EXAM || null;
+  const EXAM_MIN = { listening:15, reading:20 };
+  const PART = {
+    L1:{ sec:'listening', n:1, inst:'Listen. Does the picture match what you hear?' },
+    L2:{ sec:'listening', n:2, inst:'Listen to the sentence. Choose the picture that matches.' },
+    L3:{ sec:'listening', n:3, inst:'Listen to the short conversation. Choose the picture it is about.' },
+    L4:{ sec:'listening', n:4, inst:'Listen to the conversation and the question. Choose the answer.' },
+    R1:{ sec:'reading', n:1, inst:'Does the picture match the words?' },
+    R2:{ sec:'reading', n:2, inst:'Choose the picture that matches the sentence.' },
+    R3:{ sec:'reading', n:3, inst:'Choose the answer to the question.' },
+    R4:{ sec:'reading', n:4, inst:'Choose the word that fills the blank.' }
+  };
+  const LETTERS = 'ABCDEF';
+  const pickN = (arr, n) => shuffleArr(arr).slice(0, n);
+  function shuffleArr(arr) { const x = arr.slice(); for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = x[i]; x[i] = x[j]; x[j] = t; } return x; }
+  // five true/false items with at least two of each
+  const pickTF = (bank) => { const t = shuffleArr(bank.filter(e => e.ok)), f = shuffleArr(bank.filter(e => !e.ok)); const rest = shuffleArr(t.slice(2).concat(f.slice(2))); return shuffleArr(t.slice(0, 2).concat(f.slice(0, 2), rest.slice(0, 1))); };
+  const audioOf = (lines) => lines.map(l => ({ text:l.zh, pitch:l.s === '女' ? 1.25 : l.s === '男' ? 0.8 : 1 }));
+  const examQs = (sec) => {
+    const out = [];
+    const add = (part, q) => { out.push(Object.assign({ part, id:part + '-' + out.length, sec:PART[part].sec }, q)); };
+    const E = EXAMBANK;
+    if (sec === 'listening') {
+      pickTF(E.L1).forEach(e => add('L1', { kind:'tf', pic:e.pic, audio:[{ text:e.zh }], ans:e.ok ? 'T' : 'F', opts:[{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }], rev:{ zh:e.zh, py:e.py, en:e.en, pic:e.pic }, right:e.ok ? 'It matches' : 'It does not match' }));
+      pickN(E.L2, 5).forEach(e => { const order = shuffleArr([0, 1, 2]); const opts = order.map((k, j) => ({ v:j, label:e.opts[k], emoji:true })); add('L2', { kind:'pic', audio:[{ text:e.zh }], opts, ans:order.indexOf(0), rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.opts[0] }); });
+      const s3 = E.L3[Math.floor(Math.random() * E.L3.length)];
+      shuffleArr(s3.items).forEach(it => add('L3', { kind:'match', audio:audioOf(it.say), opts:s3.opts.map((p, k) => ({ v:k, label:p, emoji:true })), ans:it.ans, rev:{ zh:it.say.map(l => l.zh).join(' '), py:it.say.map(l => l.py).join(' '), en:it.say.map(l => l.en).join(' ') }, right:s3.opts[it.ans] }));
+      pickN(E.L4, 5).forEach(e => { const order = shuffleArr([0, 1, 2]); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add('L4', { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:{ zh:e.say.map(l => l.zh).join(' ') + ' ' + e.q.zh, py:e.say.map(l => l.py).join(' ') + ' ' + e.q.py, en:e.say.map(l => l.en).join(' ') + ' ' + e.q.en }, right:e.opts[0].zh }); });
+    } else {
+      pickTF(E.R1).forEach(e => add('R1', { kind:'tf', pic:e.pic, text:e.zh, ans:e.ok ? 'T' : 'F', opts:[{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }], rev:{ zh:e.zh, py:e.py, en:e.en, pic:e.pic }, right:e.ok ? 'It matches' : 'It does not match' }));
+      const s2 = E.R2[Math.floor(Math.random() * E.R2.length)];
+      shuffleArr(s2.items).forEach(it => add('R2', { kind:'match', text:it.zh, opts:s2.opts.map((p, k) => ({ v:k, label:p, emoji:true })), ans:it.ans, rev:{ zh:it.zh, py:it.py, en:it.en }, right:s2.opts[it.ans] }));
+      const s3 = E.R3[Math.floor(Math.random() * E.R3.length)];
+      const p3 = shuffleArr([0, 1, 2, 3, 4]);
+      s3.items.forEach(it => add('R3', { kind:'match', text:it.zh, opts:p3.map((k, j) => ({ v:j, label:s3.opts[k].zh })), ans:p3.indexOf(it.ans), rev:{ zh:it.zh + ' ' + s3.opts[it.ans].zh, py:it.py + ' ' + s3.opts[it.ans].py, en:it.en + ' ' + s3.opts[it.ans].en }, right:s3.opts[it.ans].zh }));
+      const s4 = E.R4[Math.floor(Math.random() * E.R4.length)];
+      const p4 = shuffleArr([0, 1, 2, 3, 4]);
+      s4.items.forEach(it => add('R4', { kind:'match', text:it.zh, opts:p4.map((k, j) => ({ v:j, label:s4.opts[k].zh })), ans:p4.indexOf(it.ans), rev:{ zh:it.full, py:it.py, en:it.en }, right:s4.opts[it.ans].zh }));
+    }
+    return out;
+  };
+
   // ---------- Chinese voice (the browser's own text-to-speech) ----------
   // The old code used the first Chinese voice the browser listed, which on a phone is often a basic one
   // (or a Cantonese or Taiwan one) even when a better voice is installed. Now: Mandarin voices only, best quality first,
@@ -296,7 +340,11 @@
     }
     later(fn, ms) { const id = setTimeout(fn, ms); this.timers.push(id); }
 
-    go = (screen) => { this.setState({ screen }); try { window.scrollTo(0, 0); } catch (e) {} };
+    go = (screen) => {
+      this.setState({ screen }); try { window.scrollTo(0, 0); } catch (e) {}
+      // on phones the tab bar scrolls sideways: keep the current tab in view
+      setTimeout(() => { try { const bar = document.querySelector('.navs'); const on = bar && bar.querySelector('.nav.on'); if (on) bar.scrollLeft = on.offsetLeft - (bar.clientWidth - on.offsetWidth) / 2; } catch (e) {} }, 60);
+    };
 
     // audio (the browser's own text-to-speech; needs a click)
     say = (text, key, rate, voice) => {
@@ -317,6 +365,69 @@
       this.setState({ playing:key });
       this.later(() => { if (this.state.playing === key) this.setState({ playing:null }); }, 1400);
     };
+    // ----- the mock exam -----
+    exTimer = null;
+    examDraw = (sec) => examQs(sec);   // used by the browser test
+    startExam = (mode) => { if (!EXAMBANK) return; this.exBegin({ mode, sec:mode === 'reading' ? 'reading' : 'listening', results:{} }); };
+    exBegin = (base) => {
+      const exm = Object.assign({}, base, { stage:'run', qs:examQs(base.sec), ans:{}, i:0, plays:{}, confirm:false, endAt:Date.now() + EXAM_MIN[base.sec] * 60000 });
+      clearInterval(this.exTimer);
+      this.exTimer = setInterval(() => {
+        const m = this.state.exm;
+        if (!m || m.stage !== 'run') { clearInterval(this.exTimer); return; }
+        if (Date.now() >= m.endAt) this.exSubmit(true); else this._schedule();
+      }, 1000);
+      try { window.scrollTo(0, 0); } catch (e) {}
+      this.setState({ exm, screen:'exam' });
+    };
+    exPatch = (patch) => { const m = this.state.exm; if (m) this.setState({ exm:Object.assign({}, m, patch) }); };
+    exPick = (v) => { const m = this.state.exm; if (!m || m.stage !== 'run') return; const ans = Object.assign({}, m.ans); ans[m.qs[m.i].id] = v; this.exPatch({ ans, confirm:false }); };
+    exGo = (i) => { const m = this.state.exm; if (!m) return; try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {} this.exPatch({ i:Math.max(0, Math.min(m.qs.length - 1, i)), confirm:false }); };
+    exPlay = () => {
+      const m = this.state.exm; if (!m) return;
+      const q = m.qs[m.i]; if (!q.audio) return;
+      const used = m.plays[q.id] || 0; if (used >= 2) return;
+      const plays = Object.assign({}, m.plays); plays[q.id] = used + 1;
+      this.exPatch({ plays });
+      this.speakLines(q.audio, 'exq');
+    };
+    // several lines in a row (a conversation); the second voice is pitched higher where the browser allows it
+    speakLines = (lines, key) => {
+      try {
+        const ss = window.speechSynthesis; if (!ss) return;
+        const zh = pickVoice(this.state.voiceId);
+        ss.cancel();
+        lines.forEach(l => { const u = new SpeechSynthesisUtterance(l.text); u.lang = zh ? zh.lang : 'zh-CN'; u.rate = 0.85; u.pitch = l.pitch || 1; if (zh) u.voice = zh; ss.speak(u); });
+      } catch (e) {}
+      const ms = lines.reduce((n, l) => n + l.text.length * 330 + 500, 0);
+      this.setState({ playing:key });
+      this.later(() => { if (this.state.playing === key) this.setState({ playing:null }); }, ms);
+    };
+    exSubmit = (auto) => {
+      const m = this.state.exm; if (!m || m.stage !== 'run') return;
+      const open = m.qs.filter(q => m.ans[q.id] === undefined).length;
+      if (!auto && open > 0 && !m.confirm) { this.exPatch({ confirm:true }); return; }
+      clearInterval(this.exTimer);
+      try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+      const byPart = {};
+      const wrong = [];
+      let correct = 0;
+      m.qs.forEach((q, n) => {
+        byPart[q.part] = byPart[q.part] || { c:0, t:0 };
+        byPart[q.part].t += 1;
+        if (m.ans[q.id] === q.ans) { correct += 1; byPart[q.part].c += 1; } else wrong.push({ n:n + 1, q, yours:m.ans[q.id] });
+      });
+      const res = { sec:m.sec, correct, total:m.qs.length, byPart, wrong, auto:!!auto };
+      const results = Object.assign({}, m.results); results[m.sec] = res;
+      if (m.mode === 'full' && m.sec === 'listening') { this.exPatch({ stage:'break', results }); return; }
+      const entry = { at:Date.now(), mode:m.mode, l:results.listening ? results.listening.correct : null, r:results.reading ? results.reading.correct : null };
+      const day = ymd(new Date());
+      this.setState({ exm:Object.assign({}, m, { stage:'result', results }), exams:this.state.exams.concat([entry]).slice(-20), dayMin:this.state.dayMin + (m.mode === 'full' ? 30 : 15), xp:this.state.xp + Math.round(correct * 2), dayXp:this.state.dayXp + Math.round(correct * 2) });
+      try { window.scrollTo(0, 0); } catch (e) {}
+    };
+    exContinue = () => { const m = this.state.exm; if (m) this.exBegin({ mode:'full', sec:'reading', results:m.results }); };
+    exClose = () => { clearInterval(this.exTimer); this.setState({ exm:null }); try { window.scrollTo(0, 0); } catch (e) {} };
+
     goVoice = () => this.go('voice');
 
     // ----- sync across devices (a private GitHub gist; see sync.js) -----
@@ -631,6 +742,69 @@
       }
     };
     toggleTheme = () => { this.setState({ theme:this.state.theme === 'dark' ? 'light' : 'dark' }); };
+
+    examVals() {
+      const S = this.state, m = S.exm;
+      const secName = (s) => (s === 'listening' ? 'Listening' : 'Reading');
+      const hist = (S.exams || []).slice(-5).reverse().map(h => {
+        const pts = ((h.l || 0) + (h.r || 0)) * 5;
+        const what = h.mode === 'full' ? 'Full exam' : secName(h.mode);
+        const parts = [];
+        if (h.l !== null && h.l !== undefined) parts.push('Listening ' + h.l + '/20');
+        if (h.r !== null && h.r !== undefined) parts.push('Reading ' + h.r + '/20');
+        return { text:new Date(h.at).toLocaleDateString('en-US', { month:'short', day:'numeric' }) + ' · ' + what, score:h.mode === 'full' ? pts + ' / 200' : parts.join(' '), detail:h.mode === 'full' ? parts.join(' · ') : '' };
+      });
+      const v = {
+        examAvailable:!!EXAMBANK, exHome:!m, exRun:!!m && m.stage === 'run', exBreak:!!m && m.stage === 'break', exResult:!!m && m.stage === 'result',
+        startFull:() => this.startExam('full'), startListening:() => this.startExam('listening'), startReading:() => this.startExam('reading'),
+        histRows:hist, hasHist:hist.length > 0, noHist:hist.length === 0, exClose:this.exClose, exContinue:this.exContinue
+      };
+      if (!m) return v;
+      if (m.stage === 'break') {
+        const l = m.results.listening;
+        v.exBreakText = 'Listening finished: ' + l.correct + ' of ' + l.total + ' right. Next is Reading: 20 questions, ' + EXAM_MIN.reading + ' minutes. Take a breath first.';
+      }
+      if (m.stage === 'run') {
+        const q = m.qs[m.i];
+        const left = Math.max(0, m.endAt - Date.now());
+        const used = m.plays[q.id] || 0;
+        const chosen = m.ans[q.id];
+        const taken = {};
+        if (q.kind === 'match') m.qs.forEach(o => { if (o.part === q.part && o.id !== q.id && m.ans[o.id] !== undefined) taken[m.ans[o.id]] = true; });
+        Object.assign(v, {
+          exSection:secName(m.sec) + ' · Part ' + PART[q.part].n, exInst:PART[q.part].inst, exN:m.i + 1, exTotal:m.qs.length,
+          exTimer:Math.floor(left / 60000) + ':' + pad(Math.floor(left / 1000) % 60), exTimerCls:left < 60000 ? 'warn' : '',
+          exListen:!!q.audio, exPlaysLeft:2 - used, exCanPlay:used < 2, exPlayDis:used < 2 ? 'false' : 'true', exPlayCls:S.playing === 'exq' ? 'on' : '', exPlay:this.exPlay,
+          exHasPic:!!q.pic, exPic:q.pic || '', exHasText:!!q.text, exText:q.text || '',
+          exOpts:q.opts.map((o, k) => ({ letter:q.kind === 'tf' ? '' : LETTERS[k], label:o.label, emo:!!o.emoji, big:(q.kind === 'pic' || o.emoji) ? 'true' : '',
+            cls:(chosen === o.v ? 'on ' : '') + (taken[o.v] ? 'used ' : ''), pick:() => this.exPick(o.v) })),
+          exOptsCls:'k-' + q.kind, exPal:m.qs.map((o, k) => ({ n:k + 1, cls:(k === m.i ? 'cur ' : '') + (m.ans[o.id] !== undefined ? 'done' : ''), go:() => this.exGo(k) })),
+          exPrev:() => this.exGo(m.i - 1), exNext:() => this.exGo(m.i + 1), exCanPrev:m.i > 0, exCanNext:m.i < m.qs.length - 1,
+          exSubmit:() => this.exSubmit(false), exSubmitLabel:'Submit ' + secName(m.sec).toLowerCase(), exOpen:m.qs.filter(o => m.ans[o.id] === undefined).length,
+          hasConfirm:!!m.confirm, exConfirmMsg:m.qs.filter(o => m.ans[o.id] === undefined).length + ' question(s) are unanswered. Press submit again to finish anyway.'
+        });
+      }
+      if (m.stage === 'result') {
+        const secs = ['listening', 'reading'].filter(s => m.results[s]).map(s => {
+          const r = m.results[s]; const pct = Math.round(100 * r.correct / r.total);
+          return { name:secName(s), text:r.correct + ' of ' + r.total, pts:r.correct * 5 + ' / 100', pct:pct + '%', ok:pct >= 80, cls:pct >= 80 ? 'good' : 'low', auto:r.auto,
+            parts:Object.keys(r.byPart).map(p => ({ name:'Part ' + PART[p].n, score:r.byPart[p].c + ' / ' + r.byPart[p].t, cls:r.byPart[p].c === r.byPart[p].t ? 'good' : '' })) };
+        });
+        const total = ['listening', 'reading'].reduce((n, s) => n + (m.results[s] ? m.results[s].correct * 5 : 0), 0);
+        const seal = secs.length > 0 && secs.every(s => s.ok);
+        const wrong = [];
+        ['listening', 'reading'].forEach(s => { if (m.results[s]) m.results[s].wrong.forEach(w => wrong.push(w)); });
+        Object.assign(v, {
+          exSecs:secs, exFull:m.mode === 'full', exSingle:m.mode !== 'full', exTotal200:total + ' / 200', exPassReal:total >= 120,
+          exVerdict:m.mode === 'full' ? (total >= 120 ? 'At or above 120 of 200, the pass mark of the official HSK 1 test.' : 'Below 120 of 200, the pass mark of the official HSK 1 test.') : 'One section only. The official pass mark is on the total of both sections.',
+          exSeal:seal, exNoSeal:!seal, exSealText:seal ? 'You reached 80% in every section you took. That is this site\'s bar for the HSK 1 seal.' : 'The seal here needs 80% in every section. Review the questions below and try again.',
+          exWrong:wrong.map(w => ({ n:w.n, part:'Part ' + PART[w.q.part].n, zh:w.q.rev.zh, py:w.q.rev.py, en:w.q.rev.en, pic:w.q.rev.pic || '', hasPic:!!w.q.rev.pic,
+            right:w.q.right, yours:w.yours === undefined ? 'No answer' : (w.q.opts.find(o => o.v === w.yours) || { label:'' }).label })), hasWrong:wrong.length > 0, perfect:wrong.length === 0,
+          exAgain:() => this.startExam(m.mode)
+        });
+      }
+      return v;
+    }
 
     voiceVals() {
       const S = this.state;
@@ -975,6 +1149,7 @@
       ];
 
       return {
+        focusCls:(S.exm && (S.exm.stage === 'run' || S.exm.stage === 'break') && S.screen === 'exam') || (S.screen === 'quiz' && !S.qdone) ? 'focus' : '',
         themeCls:dark ? 't-dark' : 't-light', themeLabel:dark ? 'Switch to light' : 'Switch to dark', toggleTheme:this.toggleTheme,
         noVoice:S.noVoice, week,
         gapLine, examParts, navExam:navCls('exam'), goExam:() => this.go('exam'), isExam:S.screen === 'exam',
@@ -1096,6 +1271,7 @@
         // footer
         exportData:this.exportData, importData:this.importData, resetAll:this.resetAll, goVoice:this.goVoice,
         ...this.voiceVals(),
+        ...this.examVals(),
         syncOn:S.syncOn, syncOff:!S.syncOn, syncBusy:S.syncBusy, syncMsg:S.syncMsg, hasSyncMsg:!!S.syncMsg, syncMsgCls:S.syncBad ? 'bad' : 'good',
         syncInput:S.syncInput, onSyncInput:(e) => this.setState({ syncInput:e.target.value }), syncConnect:this.syncConnect, syncNow:() => this.syncNow(true), syncDisconnect:this.syncDisconnect,
         syncAtText:S.syncAt ? 'Last synced ' + new Date(S.syncAt).toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }) + '.' : 'Not synced yet.',
@@ -1113,6 +1289,24 @@
   const app = DCMount(root, tpl, Component);
   window.shanlu = app;
 
+  // keyboard: Space flips a review card, 1-4 rate it; in the exam, arrows move and A-F or 1-6 choose
+  document.addEventListener('keydown', (e) => {
+    const t = e.target; if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    const S = app.state;
+    if (S.screen === 'review' && S.rq.length && !S.rcomplete) {
+      if ((e.key === ' ' || e.key === 'Enter') && !S.rflip) { e.preventDefault(); app.flip(); }
+      else if (S.rflip && '1234'.indexOf(e.key) >= 0 && e.key) { app.rate(['again', 'hard', 'good', 'easy'][Number(e.key) - 1]); }
+    } else if (S.screen === 'exam' && S.exm && S.exm.stage === 'run') {
+      const m = S.exm;
+      if (e.key === 'ArrowRight') { e.preventDefault(); app.exGo(m.i + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); app.exGo(m.i - 1); }
+      else {
+        const q = m.qs[m.i]; const k = /^[a-fA-F]$/.test(e.key) ? 'abcdef'.indexOf(e.key.toLowerCase()) : (/^[1-6]$/.test(e.key) ? Number(e.key) - 1 : -1);
+        if (k >= 0 && k < q.opts.length) app.exPick(q.opts[k].v);
+      }
+    }
+  });
   window.addEventListener('pagehide', () => app.persistNow());
   if (SYNCCFG.token) setTimeout(() => app.syncNow(false), 1200);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') app.persistNow(); else { app._schedule(); if (SYNCCFG.token) app.syncNow(false); } });

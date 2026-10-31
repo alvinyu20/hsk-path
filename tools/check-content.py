@@ -522,7 +522,8 @@ def main():
                 found.append(('ERROR', 'level', 'unknown or out-of-list character: %s' % w))
         if en and not it.get('levelOnly'):
             found += meaning_checks(zh, en)
-            found += style_checks(zh, en)
+            if not it.get('fragment'):
+                found += style_checks(zh, en)   # phrases (打电话, 苹果) are not sentences
         if not it.get('levelOnly'):
             found += pinyin_check(zh, py)
         # gloss coverage

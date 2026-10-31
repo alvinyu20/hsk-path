@@ -83,6 +83,7 @@
         win.HSK1_SPEAK.scenarios.forEach(s => { s.words = uniq(s.words, w => w.zh); });
       }
       if (win.HSK1_LISTEN) win.HSK1_LISTEN = walk(win.HSK1_LISTEN);
+      if (win.HSK1_EXAM) win.HSK1_EXAM = walk(win.HSK1_EXAM);
       if (win.HSK1_WEBS) {
         // the 儿 word of a twin pair is dropped, so the plain twin keeps its own entry (and its own character parts)
         const w0 = JSON.parse(JSON.stringify(win.HSK1_WEBS));

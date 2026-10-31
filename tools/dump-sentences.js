@@ -49,6 +49,16 @@ if (LISTEN) {
     c.notes.forEach((n, j) => cjkRunsAll(n).forEach((t, k) => add('clip:' + i + ':note' + j + '.' + k, t, '', '', { levelOnly: true })));
   });
 }
+const EXAM = window[N + '_EXAM'] || null;
+if (EXAM) {
+  ['L1', 'R1'].forEach(p => EXAM[p].forEach((e, i) => add('exam:' + p + ':' + i, e.zh, e.py, e.en, { fragment: true })));
+  EXAM.L2.forEach((e, i) => add('exam:L2:' + i, e.zh, e.py, e.en));
+  EXAM.L3.forEach((s, a) => s.items.forEach((it, i) => it.say.forEach((l, k) => add('exam:L3:' + a + '.' + i + '.' + k, l.zh, l.py, l.en))));
+  EXAM.L4.forEach((e, i) => { e.say.forEach((l, k) => add('exam:L4:' + i + '.' + k, l.zh, l.py, l.en)); add('exam:L4:' + i + ':question', e.q.zh, e.q.py, e.q.en); e.opts.forEach((o, k) => add('exam:L4:' + i + ':option' + k, o.zh, o.py, '', { levelOnly: true })); });
+  EXAM.R2.forEach((s, a) => s.items.forEach((it, i) => add('exam:R2:' + a + '.' + i, it.zh, it.py, it.en)));
+  EXAM.R3.forEach((s, a) => s.items.forEach((it, i) => { add('exam:R3:' + a + '.' + i + ':question', it.zh, it.py, it.en); add('exam:R3:' + a + '.' + i + ':answer', s.opts[it.ans].zh, s.opts[it.ans].py, s.opts[it.ans].en); }));
+  EXAM.R4.forEach((s, a) => s.items.forEach((it, i) => add('exam:R4:' + a + '.' + i, it.full, it.py, it.en)));
+}
 if (GRAM) {
   const cjkRuns = (txt) => (txt || '').match(/[\u4e00-\u9fff]+/g) || [];
   GRAM.lessons.forEach(L => {

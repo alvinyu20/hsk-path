@@ -358,6 +358,77 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('.chat-h .seg2 button', { hasText: 'Pinyin' }).click();
   await page.locator('.chat-h .seg2 button', { hasText: 'English' }).click();
 
+  // Mock exam: the bank, the draw, and a full sitting
+  const drawCheck = await page.evaluate(() => {
+    const bad = []; const app = window.shanlu;
+    for (let t = 0; t < 60; t++) ['listening', 'reading'].forEach(sec => {
+      const qs = app.examDraw(sec);
+      if (qs.length !== 20) bad.push(sec + ' has ' + qs.length + ' questions');
+      const ids = new Set(qs.map(q => q.id)); if (ids.size !== 20) bad.push('duplicate question ids');
+      const parts = {}; qs.forEach(q => { parts[q.part] = (parts[q.part] || 0) + 1; });
+      if (Object.keys(parts).length !== 4 || Object.values(parts).some(n => n !== 5)) bad.push('parts are not 4 x 5: ' + JSON.stringify(parts));
+      qs.forEach(q => {
+        const vals = q.opts.map(o => o.v);
+        if (!vals.includes(q.ans)) bad.push(q.id + ': the answer is not one of the options');
+        if (new Set(q.opts.map(o => o.label)).size !== q.opts.length) bad.push(q.id + ': two options look the same');
+      });
+      ['L3', 'R2', 'R3', 'R4'].forEach(p => { const g = qs.filter(q => q.part === p); if (g.length && new Set(g.map(q => q.ans)).size !== 5) bad.push(p + ': two questions share an answer'); });
+      ['L1', 'R1'].forEach(p => { const g = qs.filter(q => q.part === p); const t = g.filter(q => q.ans === 'T').length; if (g.length && (t < 2 || t > 3)) bad.push(p + ': true/false balance ' + t); });
+    });
+    return bad.slice(0, 5);
+  });
+  check(drawCheck.length === 0, '60 random exams are well formed: 20 + 20 questions, 4 parts of 5, one right answer each' + (drawCheck.length ? ' ' + drawCheck.join('; ') : ''));
+  await nav('Level exam');
+  check((await text()).includes('HSK 1 mock exam') && (await page.locator('button', { hasText: 'Start the full exam' }).count()) === 1, 'the exam page offers the full exam');
+  const answerAll = async (right) => {
+    const total = await page.evaluate(() => window.shanlu.state.exm.qs.length);
+    for (let i = 0; i < total; i++) {
+      const q = await page.evaluate(() => { const m = window.shanlu.state.exm; const q = m.qs[m.i]; return { ans: q.ans, vals: q.opts.map(o => o.v) }; });
+      let target = q.vals.indexOf(q.ans);
+      if (!right) target = (target + 1) % q.vals.length;
+      await page.locator('.ex-opt').nth(target).click();
+      if (i < total - 1) await page.locator('.ex-nav button', { hasText: 'Next' }).click();
+    }
+  };
+  await page.locator('button', { hasText: 'Start the full exam' }).click();
+  check((await text()).includes('Listening') && (await text()).includes('Question 1 of 20') && /\d+:\d\d/.test(await page.locator('.ex-timer').innerText()), 'the exam shows the section, the question number and a timer');
+  const spokenBefore = await page.evaluate(() => window.__spoken.length);
+  await page.locator('.ex-play button').click();
+  await page.locator('.ex-play button').click();
+  const spokenTwo = await page.evaluate(() => window.__spoken.length);
+  await page.locator('.ex-play button').click({ force: true });
+  check((await page.evaluate(() => window.__spoken.length)) === spokenTwo, 'a third play does nothing');
+  const spokenAfter = await page.evaluate(() => window.__spoken.length);
+  check(spokenAfter - spokenBefore >= 2 && (await text()).includes('0 plays left'), 'a listening clip can be played twice, then no more');
+  await answerAll(true);
+  await page.locator('button', { hasText: 'Submit listening' }).click();
+  await page.waitForTimeout(80);
+  check((await text()).includes('Listening is done') && (await text()).includes('20 of 20'), 'finishing the listening section of the full exam shows a break with the score');
+  await page.locator('button', { hasText: 'Start Reading' }).click();
+  check((await text()).includes('Reading') && (await text()).includes('Question 1 of 20'), 'the full exam goes on to reading');
+  await answerAll(true);
+  // make the last five wrong: go back and change them
+  for (let k = 15; k < 20; k++) {
+    await page.locator('.ex-pal button', { hasText: new RegExp('^' + (k + 1) + '$') }).click();
+    const q = await page.evaluate(() => { const m = window.shanlu.state.exm; const q = m.qs[m.i]; return { ans: q.ans, vals: q.opts.map(o => o.v) }; });
+    await page.locator('.ex-opt').nth((q.vals.indexOf(q.ans) + 1) % q.vals.length).click();
+  }
+  await page.locator('button', { hasText: 'Submit reading' }).click();
+  await page.waitForTimeout(100);
+  const rt = await text();
+  check(rt.includes('Your result') && rt.includes('175 / 200'), 'the result adds up: 20 + 15 right is 175 of 200');
+  check(rt.includes('At or above 120') && !rt.includes('seal earned'), 'a pass on points but no seal when a section is under 80%');
+  check((await page.locator('.exw').count()) === 5, 'the review lists the 5 missed questions');
+  await shot('22-exam-result');
+  await page.locator('button', { hasText: 'Back to the exam page' }).click();
+  check((await text()).includes('Full exam') && (await text()).includes('175 / 200'), 'the attempt appears in the exam history');
+  await page.locator('button', { hasText: 'Reading only' }).click();
+  await page.locator('button', { hasText: 'Submit reading' }).click();
+  check((await text()).includes('20 question(s) are unanswered'), 'submitting with unanswered questions asks first');
+  await page.locator('button', { hasText: 'Submit reading' }).click();
+  check((await text()).includes('0 of 20') && (await text()).includes('One section only'), 'a section on its own is scored on its own');
+  await page.locator('button', { hasText: 'Back to the exam page' }).click();
+
   // Exam + home
   await nav('Level exam');
   await shot('12-exam');

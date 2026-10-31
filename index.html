@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23C2362B'/%3E%3Ctext x='32' y='47' font-size='40' text-anchor='middle' fill='white' font-family='serif'%3E山%3C/text%3E%3C/svg%3E">
@@ -17,7 +17,7 @@
 <input type="file" id="import-file" accept="application/json,.json" hidden>
 <template id="app-template">
 
-<div class="app {{themeCls}}">
+<div class="app {{themeCls}} {{focusCls}}">
 
 <aside class="side">
   <div class="brand">
@@ -956,51 +956,124 @@
 
   <!-- LEVEL EXAM -->
   <sc-if value="{{isExam}}" hint-placeholder-val="{{ false }}">
+  <sc-if value="{{exHome}}" hint-placeholder-val="{{ true }}">
   <div class="lob">
     <section class="card">
-      <h2 class="h2">What's in the exam</h2>
-      <p class="muted" style="margin:4px 0 14px;font-size:15.5px">About 46 minutes in one sitting. No hints, no pinyin help, no flashcards.</p>
+      <h2 class="h2">HSK 1 mock exam</h2>
+      <p class="muted" style="margin:4px 0 14px;font-size:15.5px">Built like the official HSK 1 sample papers: 20 listening and 20 reading questions in four parts each, about 35 minutes. No hints and no pinyin while you answer. Each exam is drawn from a bank of 120+ questions, so it is different every time.</p>
       <div class="fmt">
-        <sc-for list="{{examParts}}" as="p" hint-placeholder-count="4">
-          <div class="fmt-r">
-            <div class="fmt-g zh" aria-hidden="true">{{p.glyph}}</div>
-            <div style="flex:1;min-width:0">
-              <div class="fmt-t">{{p.name}}</div>
-              <div class="fmt-d">{{p.detail}}</div>
-              <div class="fmt-d">{{p.note}}</div>
-            </div>
-            <span class="chip">{{p.state}}</span>
-          </div>
-        </sc-for>
+        <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">听</div><div style="flex:1;min-width:0"><div class="fmt-t">Listening · 20 questions · 15 min</div><div class="fmt-d">Part 1: does the picture match? Part 2: pick the picture for a sentence. Part 3: match five conversations to pictures. Part 4: a conversation, a question, three answers. Each clip can be played twice.</div></div></div>
+        <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">读</div><div style="flex:1;min-width:0"><div class="fmt-t">Reading · 20 questions · 20 min</div><div class="fmt-d">Part 1: does the picture match the words? Part 2: match five sentences to pictures. Part 3: match five questions to answers. Part 4: fill five blanks from a word list.</div></div></div>
       </div>
-      <p class="plan-note">Handwriting is left out on purpose. Higher levels add a translation section.</p>
+      <p class="plan-note">The real test has pictures; here emoji stand in for them. The official 2025 test is said to have 20 listening questions (about 12 minutes of audio) and 20 reading questions (20 minutes); the part-by-part layout above is from the official sample papers and I could not confirm every detail of the 2025 version. Listening gets 15 minutes here because you press play yourself.</p>
+      <sc-if value="{{examAvailable}}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:18px">
+        <button class="btn pri big" onClick="{{startFull}}">Start the full exam</button>
+        <button class="btn big" onClick="{{startListening}}">Listening only</button>
+        <button class="btn big" onClick="{{startReading}}">Reading only</button>
+      </div>
+      </sc-if>
     </section>
     <section class="card">
-      <h2 class="h2">Unlock the exam</h2>
-      <p class="banner" style="margin:10px 0 12px">Preview: the exam itself is still being built.</p>
-      <p class="cp-note">Pass the checkpoint first: 80% in every skill. Then you need 80% in every exam section to climb.</p>
-      <div class="skills">
-        <sc-for list="{{skills}}" as="s" hint-placeholder-count="4">
-          <div>
-            <div class="skill-h">{{s.label}}<span>{{s.detail}}</span></div>
-            <div class="track"><div class="fill" style="width: {{s.w}}"></div><div class="m80"></div></div>
+      <h2 class="h2">How it is scored</h2>
+      <p class="muted" style="margin:6px 0 0;font-size:15.5px">Each question is worth 5 points, so each section is out of 100 and the total out of 200. The official HSK 1 pass mark is 120 of 200 (I am not sure whether the 2025 version changed it). This site's HSK 1 seal is stricter: 80% in every section.</p>
+      <h2 class="h2" style="margin-top:22px">Your last attempts</h2>
+      <sc-if value="{{hasHist}}" hint-placeholder-val="{{ false }}">
+        <div class="exhist"><sc-for list="{{histRows}}" as="r" hint-placeholder-count="3"><div class="exh-r"><div><b>{{r.text}}</b><span>{{r.detail}}</span></div><div class="exh-s">{{r.score}}</div></div></sc-for></div>
+      </sc-if>
+      <sc-if value="{{noHist}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:8px 0 0">No attempts yet.</p></sc-if>
+    </section>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{exRun}}" hint-placeholder-val="{{ false }}">
+  <div class="exrun">
+    <div class="ex-top">
+      <div class="ex-sec"><span>{{exSection}}</span><b>Question {{exN}} of {{exTotal}}</b></div>
+      <div class="ex-timer {{exTimerCls}}" role="timer" aria-label="Time left">{{exTimer}}</div>
+    </div>
+    <section class="card ex-card">
+      <p class="ex-inst">{{exInst}}</p>
+      <sc-if value="{{exListen}}" hint-placeholder-val="{{ false }}">
+        <div class="ex-play">
+          <button class="btn pri big {{exPlayCls}}" onClick="{{exPlay}}" aria-disabled="{{exPlayDis}}">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+            Play
+          </button>
+          <span class="muted">{{exPlaysLeft}} plays left</span>
+        </div>
+      </sc-if>
+      <sc-if value="{{exHasPic}}" hint-placeholder-val="{{ false }}"><div class="ex-pic" aria-hidden="true">{{exPic}}</div></sc-if>
+      <sc-if value="{{exHasText}}" hint-placeholder-val="{{ false }}"><div class="zh ex-text">{{exText}}</div></sc-if>
+      <div class="ex-opts {{exOptsCls}}" role="group" aria-label="Answers">
+        <sc-for list="{{exOpts}}" as="o" hint-placeholder-count="3">
+          <button class="ex-opt {{o.cls}}" onClick="{{o.pick}}"><b>{{o.letter}}</b><span class="{{o.big}}">{{o.label}}</span></button>
+        </sc-for>
+      </div>
+    </section>
+    <div class="ex-nav">
+      <div class="ex-pal" role="group" aria-label="Questions"><sc-for list="{{exPal}}" as="p" hint-placeholder-count="20"><button class="{{p.cls}}" onClick="{{p.go}}">{{p.n}}</button></sc-for></div>
+      <div class="ex-btns"><button class="btn" onClick="{{exPrev}}">Back</button><button class="btn pri" onClick="{{exNext}}">Next</button></div>
+    </div>
+    <sc-if value="{{hasConfirm}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">{{exConfirmMsg}}</div></sc-if>
+    <div><button class="btn pri" onClick="{{exSubmit}}">{{exSubmitLabel}}</button></div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{exBreak}}" hint-placeholder-val="{{ false }}">
+  <div class="lob">
+    <section class="card">
+      <h2 class="h2">Listening is done</h2>
+      <p class="muted" style="margin:6px 0 16px;font-size:16px">{{exBreakText}}</p>
+      <button class="btn pri big" onClick="{{exContinue}}">Start Reading</button>
+    </section>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{exResult}}" hint-placeholder-val="{{ false }}">
+  <div class="exres">
+    <section class="card">
+      <h2 class="h2">Your result</h2>
+      <sc-if value="{{exFull}}" hint-placeholder-val="{{ true }}">
+        <div class="ex-total"><b>{{exTotal200}}</b><span>{{exVerdict}}</span></div>
+      </sc-if>
+      <sc-if value="{{exSingle}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:6px 0 12px">{{exVerdict}}</p></sc-if>
+      <div class="ex-secs">
+        <sc-for list="{{exSecs}}" as="s" hint-placeholder-count="2">
+          <div class="ex-sc {{s.cls}}"><div class="ex-sc-h"><b>{{s.name}}</b><span>{{s.text}} right · {{s.pts}}</span></div>
+            <div class="ex-sc-p">{{s.pct}}</div>
+            <div class="ex-parts"><sc-for list="{{s.parts}}" as="p" hint-placeholder-count="4"><span class="chip {{p.cls}}">{{p.name}} {{p.score}}</span></sc-for></div>
           </div>
         </sc-for>
       </div>
-      <p class="muted" style="margin:0 0 20px">{{gapLine}}</p>
-      <div style="display:flex;flex-wrap:wrap;gap:12px">
-        <button class="btn big dis" aria-disabled="true">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>
-          Start the HSK 1 exam
-        </button>
-        <button class="btn big" onClick="{{startTest}}">Try a sample section</button>
-      </div>
-      <div class="reward">
-        <div class="stamp zh" style="width:56px;height:56px;font-size:34px;border-radius:10px;animation:none" aria-hidden="true">一</div>
-        <div><b>Pass to earn the HSK 1 seal.</b><div class="muted" style="font-size:15px">It opens HSK 2. If you miss a section, review what you got wrong, then retake it.</div></div>
+      <sc-if value="{{exSeal}}" hint-placeholder-val="{{ false }}"><div class="reward"><div class="stamp zh" style="width:56px;height:56px;font-size:34px;border-radius:10px;animation:none" aria-hidden="true">一</div><div><b>HSK 1 seal earned.</b><div class="muted" style="font-size:15px">{{exSealText}}</div></div></div></sc-if>
+      <sc-if value="{{exNoSeal}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:14px 0 0">{{exSealText}}</p></sc-if>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:18px">
+        <button class="btn pri" onClick="{{exAgain}}">Try another exam</button>
+        <button class="btn" onClick="{{exClose}}">Back to the exam page</button>
       </div>
     </section>
+    <sc-if value="{{hasWrong}}" hint-placeholder-val="{{ false }}">
+    <section class="card">
+      <h2 class="h2">What to review</h2>
+      <p class="muted" style="margin:4px 0 12px;font-size:15.5px">Every question you missed, with the text of what you heard or read.</p>
+      <div class="ex-wrong">
+        <sc-for list="{{exWrong}}" as="w" hint-placeholder-count="3">
+          <div class="exw">
+            <div class="exw-h"><b>Question {{w.n}}</b><span>{{w.part}}</span></div>
+            <sc-if value="{{w.hasPic}}" hint-placeholder-val="{{ false }}"><div class="exw-pic" aria-hidden="true">{{w.pic}}</div></sc-if>
+            <div class="zh exw-zh">{{w.zh}}</div>
+            <div class="py">{{w.py}}</div>
+            <div>{{w.en}}</div>
+            <div class="exw-a"><span class="good">Right answer: {{w.right}}</span><span class="bad">You chose: {{w.yours}}</span></div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+    </sc-if>
+    <sc-if value="{{perfect}}" hint-placeholder-val="{{ false }}"><section class="card"><h2 class="h2">No mistakes</h2><p class="muted" style="margin:6px 0 0">Every question was right.</p></section></sc-if>
   </div>
+  </sc-if>
   </sc-if>
 
   <!-- QUIZ (tests and grammar practice) -->
@@ -1123,6 +1196,7 @@
 <script src="data/hsk1-webs.js"></script>
 <script src="data/hsk1-speak.js"></script>
 <script src="data/hsk1-listen.js"></script>
+<script src="data/hsk1-exam.js"></script>
 <script src="data/hsk1-erhua.js"></script>
 <script src="sync.js"></script>
 <script src="erhua.js"></script>

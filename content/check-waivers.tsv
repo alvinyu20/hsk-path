@@ -13,3 +13,5 @@ word-extra:知道:2	meaning	你知道他在哪里吗 is a yes/no question about 
 word-extra:事:3	meaning	你有什么事吗 uses 什么 as "something/anything", so 吗 is correct (Is there anything you need?)
 word-extra:问题:2	meaning	你有什么问题吗 uses 什么 as "any", so 吗 is correct (Do you have any questions?)
 word-extra:猫:1	pinyin	只 after 两 is the measure word zhī; pypinyin misreads it as zhǐ "only"
+exam:L3:0.3	pinyin	只 after 两 is the measure word zhī; pypinyin misreads it as zhǐ "only"
+exam:L3:2.3	meaning	在 + 打电话 is "am on the phone / am making a call"; the English describes the same ongoing state
