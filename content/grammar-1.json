@@ -1,0 +1,142 @@
+[
+{"id":"order","title":"Word order: who does what","covers":[30,31,35,37,38,40,42,46],
+ "formula":["Subject","Time / Place","Verb","Object"],
+ "explain":["Chinese sentences follow the same basic order as English: subject, verb, object. 我喝茶 means 'I drink tea'.",
+  "Verbs never change. There is no past-tense ending, no plural and no 'he drinks' form. 我喝, 他喝 and 我们喝 all use the same 喝.",
+  "Words that say when and where come before the verb, not after it. 我昨天在家 means 'I was at home yesterday'. 爸爸晚上在家工作 means 'Dad works at home in the evening'. Time usually comes first, then place."],
+ "examples":[{"zh":"我喝茶。","en":"I drink tea."},{"zh":"哥哥吃鸡蛋。","en":"My older brother eats eggs."},{"zh":"我们学习汉语。","en":"We study Chinese."},{"zh":"爸爸晚上在家工作。","en":"Dad works at home in the evening."}],
+ "mistakes":["Do not put the place or the time after the verb the way English does. Say 我在家吃饭 (I eat at home), not 我吃饭在家."],
+ "q":[
+  {"t":"order","zh":"爸爸晚上在家工作。","en":"Dad works at home in the evening.","explain":"Subject, then time, then place, then the verb."},
+  {"t":"order","zh":"我们明天去学校。","en":"We are going to school tomorrow.","explain":"The time word 明天 comes before the verb 去."},
+  {"t":"cloze","zh":"我们学习汉语。","en":"We study Chinese.","blank":"学习","explain":"The verb goes between the subject and the object."},
+  {"t":"mc","prompt":"Which sentence is correct?","options":["我吃饭在家。","我在家吃饭。"],"correct":1,"zh":"我在家吃饭。","en":"I eat at home.","explain":"Place words go before the verb: 在家 comes before 吃饭."},
+  {"t":"mc","prompt":"Which sentence says: I study Chinese at school?","options":["我学习汉语在学校。","我在学校学习汉语。"],"correct":1,"zh":"我在学校学习汉语。","en":"I study Chinese at school.","explain":"Where you do it (在学校) comes before the verb."}
+ ]},
+
+{"id":"shi","title":"是: A is B","covers":[52],
+ "formula":["A","*是","B"],
+ "explain":["是 links two nouns: 他是我的朋友 means 'He is my friend'. 我是学生 means 'I am a student'. It works like 'is / am / are' with nouns.",
+  "Do not use 是 before an adjective. Say 她很漂亮, not 她是很漂亮 (see the lesson on describing things).",
+  "To say no, put 不 in front: 我不是老师。 To ask a yes/no question, add 吗: 你是学生吗？"],
+ "examples":[{"zh":"我是学生。","en":"I am a student."},{"zh":"他是我的朋友。","en":"He is my friend."},{"zh":"她不是老师。","en":"She is not a teacher."},{"zh":"你是中国人吗？","en":"Are you Chinese?"}],
+ "mistakes":["Do not put 是 before an adjective: 今天很冷 is right, 今天是很冷 is wrong."],
+ "q":[
+  {"t":"order","zh":"她是我的同学。","en":"She is my classmate.","explain":"A + 是 + B."},
+  {"t":"cloze","zh":"他是我的朋友。","en":"He is my friend.","blank":"是","explain":"是 links two nouns."},
+  {"t":"mc","prompt":"Which sentence is correct?","options":["他是很高兴。","他很高兴。"],"correct":1,"zh":"他很高兴。","en":"He is very happy.","explain":"Adjectives do not take 是."},
+  {"t":"order","zh":"你是中国人吗？","en":"Are you Chinese?","explain":"Say the statement, then add 吗 at the end."},
+  {"t":"cloze","zh":"我不是老师。","en":"I am not a teacher.","blank":"不","explain":"不 goes in front of 是."}
+ ]},
+
+{"id":"adj","title":"Describing things: 很, 太, 真, 非常, 有点儿","covers":[15,43,51],
+ "formula":["Subject","Degree word","Adjective"],
+ "explain":["An adjective can be the whole predicate. There is no 是: 今天很冷 means 'It is cold today'.",
+  "Usually 很 goes before the adjective. In a plain statement it often means just 'is' rather than a strong 'very': 她很忙. A bare adjective with nothing in front, like 她忙, sounds like a comparison ('she is busy, but others are not').",
+  "For stronger feeling use 非常 (very, extremely), 真 (really) or 太…了 (too, so): 今天太冷了！ 有点儿 means 'a bit' and is often used for something you do not like: 今天有点儿冷.",
+  "To say not, put 不 before the adjective and leave out 很: 这个房间不大。"],
+ "examples":[{"zh":"今天很冷。","en":"It is very cold today."},{"zh":"这个房间不大。","en":"This room is not big."},{"zh":"你的衣服真漂亮！","en":"Your clothes are really pretty!"},{"zh":"今天太冷了！","en":"It is so cold today!"},{"zh":"我今天有点儿忙。","en":"I am a bit busy today."}],
+ "mistakes":["Do not use 是 with an adjective: 她很漂亮, not 她是很漂亮.","太…了 can mean 'too' (太贵了, too expensive) or 'so / how' (太好了！ That is great!)."],
+ "q":[
+  {"t":"order","zh":"今天太冷了！","en":"It is so cold today!","explain":"太 goes before the adjective and 了 comes at the end."},
+  {"t":"cloze","zh":"我今天很忙。","en":"I am very busy today.","blank":"很","explain":"很 links the subject and the adjective."},
+  {"t":"mc","prompt":"Which sentence says: This room is not big?","options":["这个房间是不大。","这个房间不大。"],"correct":1,"zh":"这个房间不大。","en":"This room is not big.","explain":"不 goes straight before the adjective. No 是."},
+  {"t":"cloze","zh":"你的衣服真漂亮！","en":"Your clothes are really pretty!","blank":"真","explain":"真 means 'really' and goes before the adjective."},
+  {"t":"order","zh":"我今天有点儿忙。","en":"I am a bit busy today.","explain":"有点儿 goes before the adjective."}
+ ]},
+
+{"id":"ma","title":"Yes/no questions with 吗","covers":[26,47],
+ "formula":["Statement","*吗","=Yes/no question"],
+ "explain":["Say a normal statement and add 吗 at the end: 你是学生吗？ The word order does not change.",
+  "Answer with the verb: 你喝茶吗？ — 喝。 or 不喝。 For 是 questions, answer 是 or 不是.",
+  "A plain verb + 吗 question asks about a fact or a habit. 你喝茶吗？ means 'Do you drink tea?' It is not an offer. To offer something or ask what someone would like, use 想: 你想喝茶吗？ (see the lesson on 想 and 要).",
+  "Do not use 吗 together with a question word: say 你叫什么名字？ (not 你叫什么名字吗？)."],
+ "examples":[{"zh":"你是老师吗？","en":"Are you a teacher?"},{"zh":"他喜欢茶吗？","en":"Does he like tea?"},{"zh":"你想喝水吗？","en":"Would you like some water?"},{"zh":"你认识他吗？","en":"Do you know him?"}],
+ "mistakes":["If 什么, 谁 or 哪儿 is already asking the question, leave 吗 off.","你喝茶吗？ asks whether you drink tea in general. To offer tea, say 你想喝茶吗？"],
+ "q":[
+  {"t":"order","zh":"你喜欢茶吗？","en":"Do you like tea?","explain":"Say the statement, then add 吗 at the end."},
+  {"t":"spot","zh":"你叫什么名字？","en":"What is your name?","wrong":"你叫什么名字吗？","remove":"吗","explain":"什么 already asks the question, so 吗 is not needed."},
+  {"t":"cloze","zh":"他是你的老师吗？","en":"Is he your teacher?","blank":"吗","explain":"吗 turns a statement into a yes/no question."},
+  {"t":"order","zh":"她是你的朋友吗？","en":"Is she your friend?","explain":"Statement order stays the same. 吗 goes last."},
+  {"t":"mc","prompt":"Which sentence offers someone tea: 'Would you like some tea?'","options":["你喝茶吗？","你想喝茶吗？"],"correct":1,"zh":"你想喝茶吗？","en":"Would you like some tea?","explain":"你喝茶吗？ only asks whether you drink tea. 想 makes it an offer."}
+ ]},
+
+{"id":"qword","title":"Question words: 什么, 谁, 哪儿, 几, 多少, 怎么","covers":[8,48],
+ "formula":["Subject","Verb","*Question word"],
+ "explain":["The question word goes where the answer would go. 你吃什么？ is answered with 我吃米饭. 她是谁？ is answered with 她是我的老师.",
+  "Common ones: 什么 (what), 谁 (who), 哪儿 or 哪里 (where), 哪 + measure word (which: 哪个, 哪本书), 几 (how many, small numbers, with a measure word), 多少 (how many, how much), 怎么 (how: 这个字怎么读), 怎么样 (how about it, how is it), 什么时候 (when).",
+  "Do not add 吗 to these questions."],
+ "examples":[{"zh":"你想吃什么？","en":"What do you want to eat?"},{"zh":"她是谁？","en":"Who is she?"},{"zh":"你家在哪儿？","en":"Where is your home?"},{"zh":"你家有几口人？","en":"How many people are in your family?"},{"zh":"这个多少钱？","en":"How much is this?"},{"zh":"这个字怎么读？","en":"How do you read this character?"},{"zh":"今天天气怎么样？","en":"How is the weather today?"}],
+ "mistakes":["Use 几 for small numbers and put a measure word after it (几口人, 几岁). Use 多少 for bigger or unknown amounts, like 多少钱."],
+ "q":[
+  {"t":"order","zh":"你家在哪儿？","en":"Where is your home?","explain":"哪儿 sits where the answer (a place) would go."},
+  {"t":"cloze","zh":"这个多少钱？","en":"How much is this?","blank":"多少","explain":"多少 asks about amounts like prices."},
+  {"t":"cloze","zh":"你家有几口人？","en":"How many people are in your family?","blank":"几","explain":"几 is followed by a measure word."},
+  {"t":"cloze","zh":"今天天气怎么样？","en":"How is the weather today?","blank":"怎么样","explain":"怎么样 asks how something is."},
+  {"t":"spot","zh":"你想吃什么？","en":"What do you want to eat?","wrong":"你想吃什么吗？","remove":"吗","explain":"什么 already asks the question."}
+ ]},
+
+{"id":"neg","title":"Saying no: 不, 没(有), 不要","covers":[20],
+ "formula":["Subject","*不 / 没","Verb"],
+ "explain":["不 negates most things: 是, adjectives, habits, plans and wanting. 我不是老师。我不喝茶。这个不大。",
+  "没(有) negates 有 and things that did not happen: 我没有钱。小明今天没上学。Never say 不有. 'Have' is always negated with 没.",
+  "不要 is a command, 'don't!': 不要说话！ It can also be a firm refusal. For a plain 'I don't want to', 不想 is the safe choice: 我不想吃。",
+  "Tone change: 不 is said bú before a fourth-tone syllable. 不是 is bú shì, and 不要 is búyào."],
+ "examples":[{"zh":"我不是老师。","en":"I am not a teacher."},{"zh":"我没有钱。","en":"I don't have any money."},{"zh":"小明今天没上学。","en":"Xiaoming did not go to school today."},{"zh":"不要在这儿说话。","en":"Don't talk here."}],
+ "mistakes":["Do not say 我不有钱. 'Have' is negated with 没: 我没有钱.","不要 is 'don't!'. For 'I don't want to', say 我不想…"],
+ "q":[
+  {"t":"order","zh":"我没有钱。","en":"I don't have any money.","explain":"没有 is the negative of 有."},
+  {"t":"cloze","zh":"我不是老师。","en":"I am not a teacher.","blank":"不","explain":"不 negates 是."},
+  {"t":"mc","prompt":"Which sentence says: I have no money?","options":["我不有钱。","我没有钱。"],"correct":1,"zh":"我没有钱。","en":"I have no money.","explain":"有 is negated with 没, never 不."},
+  {"t":"cloze","zh":"小明今天没上学。","en":"Xiaoming did not go to school today.","blank":"没","explain":"没 says it did not happen."},
+  {"t":"mc","prompt":"Which sentence says: Don't talk here!","options":["不想在这儿说话！","不要在这儿说话！"],"correct":1,"zh":"不要在这儿说话！","en":"Don't talk here!","explain":"不要 is the command 'don't'. 不想 would mean 'do not want to'."}
+ ]},
+
+{"id":"you","title":"有: having something","covers":[53],
+ "formula":["Subject","*有","Thing"],
+ "explain":["有 means 'to have': 我有一个哥哥。我有两本书。",
+  "The negative is 没有, never 不有: 我没有手机。",
+  "Ask with 吗, or with 有没有: 你有手机吗？ or 你有没有手机？",
+  "有 is also used for 'there is / there are'. See the lesson on places and positions."],
+ "examples":[{"zh":"我有一个哥哥。","en":"I have an older brother."},{"zh":"我没有手机。","en":"I don't have a phone."},{"zh":"你有时间吗？","en":"Do you have time?"},{"zh":"她有没有男朋友？","en":"Does she have a boyfriend?"}],
+ "mistakes":["Do not add 吗 to 有没有: say 你有没有手机？ or 你有手机吗？, not both."],
+ "q":[
+  {"t":"order","zh":"他有两个朋友。","en":"He has two friends.","explain":"Subject + 有 + amount + thing."},
+  {"t":"cloze","zh":"我没有手机。","en":"I don't have a phone.","blank":"没有","explain":"没有 is the negative of 有."},
+  {"t":"cloze","zh":"你有手机吗？","en":"Do you have a phone?","blank":"有","explain":"有 means to have."},
+  {"t":"mc","prompt":"Which sentence is correct?","options":["你有没有手机吗？","你有没有手机？"],"correct":1,"zh":"你有没有手机？","en":"Do you have a phone?","explain":"有没有 already makes the question, so there is no 吗."},
+  {"t":"order","zh":"你有时间吗？","en":"Do you have time?","explain":"Statement + 吗."}
+ ]},
+
+{"id":"pron","title":"Pronouns and 们","covers":[9,2,1],
+ "formula":["Pronoun","*们","=Plural"],
+ "explain":["我 I, 你 you, 他 he, 她 she, 它 it. Plurals: 我们 we, 你们 you (more than one), 他们 they (people, or a mixed group), 她们 they (all women), 它们 they (things or animals). He, she and it all sound like tā.",
+  "您 is a polite 'you' for one person: 老师，您好！ 大家 means 'everyone'.",
+  "们 makes plurals for people: 同学们, 孩子们. Do not use 们 after a number: 三个学生, not 三个学生们.",
+  "小 in front of a name makes it friendly, like 小明."],
+ "examples":[{"zh":"我们都是学生。","en":"We are all students."},{"zh":"他们在学校。","en":"They are at school."},{"zh":"老师，您好！","en":"Hello, teacher!"},{"zh":"同学们好！","en":"Hello, classmates!"},{"zh":"大家好！","en":"Hello, everyone!"}],
+ "mistakes":["Do not add 们 after a number: 三个学生 is right."],
+ "q":[
+  {"t":"order","zh":"她们是我的同学。","en":"They are my classmates.","explain":"她们 is 'they' for women."},
+  {"t":"cloze","zh":"我们都是学生。","en":"We are all students.","blank":"我们","explain":"我们 means 'we'."},
+  {"t":"cloze","zh":"老师，您好！","en":"Hello, teacher!","blank":"您","explain":"您 is the polite 'you'."},
+  {"t":"mc","prompt":"Which sentence is correct?","options":["这里有三个学生们。","这里有三个学生。"],"correct":1,"zh":"这里有三个学生。","en":"There are three students here.","explain":"After a number, 们 is not used."},
+  {"t":"mc","prompt":"Which sentence says: Hello, everyone!","options":["大家好！","大家们好！"],"correct":0,"zh":"大家好！","en":"Hello, everyone!","explain":"大家 already means 'everyone'."}
+ ]},
+
+{"id":"de","title":"的: belonging and describing","covers":[24,29,39],
+ "formula":["Owner or description","*的","Noun"],
+ "explain":["的 links an owner or a describing phrase to a noun: 我妈妈的手机 means 'my mom's phone'. 好吃的面条儿 means 'tasty noodles'.",
+  "With family and close groups, 的 is usually left out: 我妈妈, 我家, 我们学校. For things, use it: 我的书, 我的手机.",
+  "The noun can be dropped when it is clear: 这是我的。 means 'This is mine.'",
+  "A short adjective often joins the noun directly: 新手机 (a new phone). With 很 or a longer phrase, add 的: 很好吃的面条儿 (very tasty noodles)."],
+ "examples":[{"zh":"这是我的书。","en":"This is my book."},{"zh":"这是我妈妈的手机。","en":"This is my mother's phone."},{"zh":"我妈妈在家。","en":"My mom is at home."},{"zh":"这是很好吃的面条儿。","en":"These are very tasty noodles."}],
+ "mistakes":["我的妈妈 is not wrong, but in everyday speech people say 我妈妈."],
+ "q":[
+  {"t":"order","zh":"这是我妈妈的手机。","en":"This is my mother's phone.","explain":"Owner + 的 + thing."},
+  {"t":"cloze","zh":"这是我的书。","en":"This is my book.","blank":"的","explain":"的 links the owner and the thing."},
+  {"t":"order","zh":"这是很好吃的面条儿。","en":"These are very tasty noodles.","explain":"The describing phrase goes before 的 and the noun."},
+  {"t":"mc","prompt":"Which sentence says: This is mine?","options":["这是我。","这是我的。"],"correct":1,"zh":"这是我的。","en":"This is mine.","explain":"我的 is 'mine'. 这是我 would mean 'This is me'."},
+  {"t":"cloze","zh":"这是我妈妈的手机。","en":"This is my mother's phone.","blank":"妈妈","explain":"The owner goes before 的."}
+ ]}
+]

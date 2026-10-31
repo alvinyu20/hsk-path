@@ -453,3 +453,20 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--jade);outline-o
 .gp.cur .soon{color:var(--bg)}
 body{background:#EDF0EC}
 @media (prefers-color-scheme:dark){body{background:#0E1920}}
+
+/* data-driven lists (added for the full HSK 1 build) */
+.pickrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.pickrow .muted{margin-right:4px}
+button.gp,button.scn{width:100%;border:0;background:transparent;text-align:left;font:inherit;color:inherit;cursor:pointer}
+button.gp{color:var(--muted)}
+button.gp:hover{background:var(--panel2)}
+button.gp.cur{color:var(--bg)}
+button.gp.cur:hover{background:var(--ink)}
+button.gp.done{color:var(--ink)}
+button.gp.done.cur{color:var(--bg)}
+button.scn:hover .scn-m{text-decoration:underline}
+.gp .gt{flex:1;min-width:0;line-height:1.25}
+.gl{max-height:78vh;overflow-y:auto}
+.expl p{margin:14px 0 0;font-size:17px;line-height:1.55;max-width:68ch}
+.wsearch{margin-top:16px;width:100%;max-width:420px}
+@media (max-width:600px){.gl{max-height:none}}

@@ -3,8 +3,11 @@
  * Content comes from data/hsk1.js. The page template is in index.html and rendered by runtime.js.
  */
 (function () {
-  const H = window.HSK1;
-  const { TEST_Q, GRAM_Q, GRAM_POINTS, GRAM_EX, AI, YOU, SPEAK_GOALS, SPEAK_WORDS, SPEAK_SCENARIOS, PHRASES, CLIPS, TONES, HUBS, OPPS, TOPICS, EXTRA_WORDS, EX } = H;
+  const WORDS = window.HSK1_WORDS;
+  const LESSONS = window.HSK1_GRAMMAR.lessons;
+  const { hubs:HUBS, opps:OPPS, topics:TOPICS } = window.HSK1_WEBS;
+  const { clips:CLIPS, tones:TONES } = window.HSK1_LISTEN;
+  const { scenarios:SCEN, phrases:PHRASES } = window.HSK1_SPEAK;
   const REPO = 'alvinyu20/hsk-path';
   const KEY = 'shanlu-progress-v1';
 
@@ -14,7 +17,7 @@
   };
 
   // ---------- word memory model (simplified FSRS-style) ----------
-  const NEW_CAP = 5;
+  const NEW_CAP_OPTIONS = [3, 5, 8, 10];
   const DIMS = ['see', 'hear', 'prod'];
   const retr = (d) => (d.s > 0 ? Math.pow(1 + (19 / 81) * d.l / d.s, -0.5) : 0);
   const mast = (d) => (d.s > 0 ? Math.min(100, 100 * Math.log(1 + d.s) / Math.log(91)) : 0);
@@ -33,13 +36,11 @@
   const fmtInterval = (s) => (s < 1 ? 'Today' : s < 1.5 ? 'Tomorrow' : s < 45 ? 'In ' + Math.round(s) + ' days' : 'In ' + Math.round(s / 30) + ' months');
 
   const BANK = {};
-  const addBank = (zh, py, en) => { if (!BANK[zh]) BANK[zh] = { zh, py, en }; };
-  HUBS.forEach(h => h.words.forEach(w => addBank(w.zh, w.py, w.en)));
-  OPPS.forEach(o => { addBank(o.a.zh, o.a.py, o.a.en); addBank(o.b.zh, o.b.py, o.b.en); });
-  TOPICS.forEach(t => t.words.forEach(w => addBank(w.zh, w.py, w.en)));
-  EXTRA_WORDS.forEach(w => addBank(w.zh, w.py, w.en));
+  const EX = {};
+  WORDS.forEach(w => { BANK[w.zh] = { zh:w.zh, py:w.py, en:w.en, pos:w.pos }; EX[w.zh] = w.ex; });
   const CLIP_PY = {};
   CLIPS.forEach(c => c.words.forEach(w => { CLIP_PY[w.zh] = w.py; }));
+  const BANK_KEYS = Object.keys(BANK);
 
   const blankDim = () => ({ s:0, l:0 });
   const blankWord = () => ({ see:blankDim(), hear:blankDim(), prod:blankDim() });
@@ -75,7 +76,7 @@
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
-  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'pg', 'clipBest', 'misses', 'testHistory', 'ps', 'ws',
+  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'ncap', 'clipBest', 'misses', 'testHistory', 'ws',
     'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint'];
 
   function freshState() {
@@ -84,7 +85,7 @@
     return {
       screen:'home', sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       xp:0, dayXp:0, dayMin:0, streak:0, lastActive:'', activity:{}, day:'',
-      pg:0, ps:0, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
+      gres:{}, sres:{}, ncap:5, glesson:0, sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
       qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
@@ -125,6 +126,62 @@
 
   const report = (where, text) => 'https://github.com/' + REPO + '/issues/new?title=' + encodeURIComponent('Content mistake: ' + text) +
     '&body=' + encodeURIComponent('Where: ' + where + '\nText: ' + text + '\n\nWhat is wrong:\n\nWhat it should say:\n');
+
+  // ---------- building quiz questions ----------
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
+  const toneless = (py) => py.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z]/g, '').toLowerCase();
+  const pinyinAccepts = (py, zh) => {
+    const out = [zh];
+    py.split('/').forEach(v => { const t = toneless(v); if (t) { out.push(t); if (/r$/.test(t) && /儿/.test(zh)) out.push(t.replace(/r$/, 'er')); } });
+    return out.filter((x, i, a) => a.indexOf(x) === i);
+  };
+  const ORDER_IDS = 'abcd';
+  const orderQ = (toks, base) => {
+    let p;
+    let tries = 0;
+    do { p = shuffle(toks.map((_, i) => i)); tries++; } while (toks.length > 1 && p.every((v, i) => v === i) && tries < 12);
+    return Object.assign({}, base, { type:'order', toks, tiles:p.map(i => toks[i]), seq:toks.map((_, j) => p.indexOf(j)) });
+  };
+  function prepGrammar(L) {
+    return L.q.map(q => {
+      const base = { kicker:q.kicker, prompt:q.prompt, reveal:q.reveal, explain:q.explain };
+      if (q.type === 'order') return orderQ(q.toks, base);
+      if (q.type === 'cloze') return Object.assign(base, { type:'cloze', big:q.big, sub:q.sub, placeholder:q.placeholder, accepts:q.accepts });
+      if (q.type === 'spot') return Object.assign(base, { type:'spot', tokens:q.tokens, punct:q.punct, spot:q.spot });
+      const opts = shuffle(q.options.map(o => o.label));
+      return Object.assign(base, { type:'mc', options:opts.map((label, i) => ({ id:ORDER_IDS[i], label })), correct:ORDER_IDS[opts.indexOf(q.reveal)] });
+    });
+  }
+  function buildTest(S) {
+    const pool = BANK_KEYS.filter(zh => DIMS.some(k => S.ws[zh][k].s > 0));
+    if (pool.length < 3) return [];
+    const n = Math.min(10, Math.max(5, pool.length));
+    const ranked = pool.map(zh => ({ zh, r:winfo(S.ws[zh], 0).recallN + Math.random() * 25 })).sort((a, b) => a.r - b.r).map(x => x.zh);
+    const picks = [];
+    for (let i = 0; i < n; i++) picks.push(ranked[i % ranked.length]);
+    const kinds = ['mc', 'listen', 'type', 'cloze', 'order'];
+    const offset = Math.floor(Math.random() * kinds.length);
+    const others = (zh, k) => {
+      const w = BANK[zh];
+      const same = shuffle(BANK_KEYS.filter(z => z !== zh && BANK[z].pos === w.pos && BANK[z].en !== w.en));
+      const rest = shuffle(BANK_KEYS.filter(z => z !== zh && BANK[z].pos !== w.pos && BANK[z].en !== w.en));
+      return same.concat(rest).slice(0, k);
+    };
+    const choiceOptions = (zh, labelOf) => {
+      const opts = shuffle([zh].concat(others(zh, 3))).map((z, i) => ({ id:ORDER_IDS[i], label:labelOf(z), zh:z }));
+      return { options:opts.map(o => ({ id:o.id, label:o.label })), correct:opts.find(o => o.zh === zh).id };
+    };
+    const mcQ = (zh) => Object.assign({ type:'mc', kicker:'Meaning', prompt:'What does this word mean?', big:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:EX[zh].zh + ' ' + EX[zh].py + ' (' + EX[zh].en + ')', word:zh, dim:'see' }, choiceOptions(zh, z => BANK[z].en));
+    return picks.map((zh, i) => {
+      const kind = kinds[(i + offset) % kinds.length];
+      const ex = EX[zh];
+      if (kind === 'listen') return Object.assign({ type:'listen', kicker:'Listen', prompt:'Which word did you hear?', audio:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:ex.zh + ' ' + ex.py + ' (' + ex.en + ')', word:zh, dim:'hear' }, choiceOptions(zh, z => z));
+      if (kind === 'type') return { type:'type', kicker:'Type it', prompt:'Type the pinyin for this word', big:zh, placeholder:'Pinyin, for example shui', accepts:pinyinAccepts(BANK[zh].py, ''), reveal:BANK[zh].py + ' · ' + BANK[zh].en, explain:'Tone marks are optional for now. Example: ' + ex.zh + ' ' + ex.py, word:zh, dim:'prod' };
+      if (kind === 'cloze' && ex.toks.indexOf(zh) >= 0 && ex.zh.split(zh).length === 2) return { type:'cloze', kicker:'Fill it', prompt:'Type the missing word', big:ex.zh.replace(zh, '___'), sub:ex.en, placeholder:'Pinyin or character', accepts:pinyinAccepts(BANK[zh].py, zh), reveal:zh + ' · ' + BANK[zh].py, explain:ex.py, word:zh, dim:'prod' };
+      if (kind === 'order' && ex.toks.length >= 3 && ex.toks.length <= 8) return orderQ(ex.toks, { kicker:'Build it', prompt:'Put the words in order: ' + ex.en, reveal:ex.zh, explain:ex.py });
+      return mcQ(zh);
+    });
+  }
 
   class Component extends DCLogic {
     state = loadState();
@@ -209,15 +266,20 @@
     };
 
     // ----- quiz engine (tests and grammar practice) -----
-    qs = () => (this.state.qmode === 'grammar' ? GRAM_Q : TEST_Q);
-    curQ = () => this.qs()[this.state.qi];
-    startQuiz = (mode) => {
+    quizQs = [];
+    qs = () => this.quizQs;
+    curQ = () => this.quizQs[this.state.qi] || this.quizQs[0];
+    startQuiz = (mode, lessonIdx) => {
+      const list = mode === 'grammar' ? prepGrammar(LESSONS[lessonIdx === undefined ? this.state.glesson : lessonIdx]) : buildTest(this.state);
+      if (!list.length) return;
+      this.quizQs = list;
       this.setState({ screen:'quiz', qmode:mode, qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false });
       try { window.scrollTo(0, 0); } catch (e) {}
     };
     norm = (s) => (s || '').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[0-9\s.,!?]/g, '');
     canCheck = () => {
       const S = this.state; const q = this.curQ();
+      if (!q) return false;
       if (q.type === 'type' || q.type === 'cloze') return this.norm(S.qtyped).length > 0;
       if (q.type === 'order') return S.qpicked.length === q.tiles.length;
       return S.qchoice !== null;
@@ -229,22 +291,34 @@
       let ok = false;
       if (q.type === 'type' || q.type === 'cloze') ok = q.accepts.indexOf(this.norm(S.qtyped)) >= 0;
       else if (q.type === 'listen' || q.type === 'mc') ok = S.qchoice === q.correct;
-      else if (q.type === 'order') ok = S.qpicked.join(',') === q.seq.join(',');
+      else if (q.type === 'order') ok = S.qpicked.map(id => q.tiles[id]).join('|') === q.toks.join('|');
       else if (q.type === 'spot') ok = S.qchoice === q.spot;
       const gain = ok ? 10 + Math.min(S.qcombo, 4) * 2 : 0;
       const combo = ok ? S.qcombo + 1 : 0;
       const res = S.qres.slice(); res[S.qi] = ok;
-      this.setState({ qchecked:true, qcorrect:ok, qscore:S.qscore + (ok ? 1 : 0), qcombo:combo, qbest:Math.max(S.qbest, combo), qxp:S.qxp + gain, qgain:gain, qres:res, xp:S.xp + gain, dayXp:S.dayXp + gain });
+      const patch = { qchecked:true, qcorrect:ok, qscore:S.qscore + (ok ? 1 : 0), qcombo:combo, qbest:Math.max(S.qbest, combo), qxp:S.qxp + gain, qgain:gain, qres:res, xp:S.xp + gain, dayXp:S.dayXp + gain };
+      if (q.word && q.dim && S.ws[q.word]) {
+        const cur = S.ws[q.word];
+        const ws = Object.assign({}, S.ws);
+        ws[q.word] = { see:cur.see, hear:cur.hear, prod:cur.prod };
+        ws[q.word][q.dim] = bump(cur[q.dim], ok ? 'good' : 'again');
+        patch.ws = ws;
+      }
+      this.setState(patch);
     };
     next = () => {
       const S = this.state;
-      if (S.qi + 1 >= this.qs().length) {
+      const total = this.quizQs.length;
+      if (S.qi + 1 >= total) {
         const patch = { qdone:true };
+        const pct = Math.round(S.qscore / total * 100);
         if (S.qmode === 'test') {
-          const hist = S.testHistory.concat([{ date:new Date().toLocaleDateString('en-US', { month:'short', day:'numeric' }), score:Math.round(S.qscore / this.qs().length * 100) }]).slice(-5);
+          const hist = S.testHistory.concat([{ date:new Date().toLocaleDateString('en-US', { month:'short', day:'numeric' }), score:pct }]).slice(-5);
           patch.testHistory = hist; patch.tdone = true; patch.dayMin = S.dayMin + (S.tdone ? 0 : 3);
         } else {
-          patch.pg = 1; patch.gdone = true; patch.dayMin = S.dayMin + (S.gdone ? 0 : 4);
+          const L = LESSONS[S.glesson];
+          const gres = Object.assign({}, S.gres); gres[L.id] = Math.max(gres[L.id] || 0, pct);
+          patch.gres = gres; patch.gdone = true; patch.dayMin = S.dayMin + (S.gdone ? 0 : 4);
         }
         this.setState(patch);
       } else {
@@ -255,17 +329,25 @@
     pick = (id) => { const S = this.state; if (S.qchecked || S.qpicked.indexOf(id) >= 0) return; this.setState({ qpicked:S.qpicked.concat([id]) }); };
     unpick = (id) => { const S = this.state; if (S.qchecked) return; this.setState({ qpicked:S.qpicked.filter(x => x !== id) }); };
     exitQuiz = () => { this.setState({ screen:this.state.qmode === 'grammar' ? 'grammar' : 'testlobby', qdone:false }); };
+    pickLesson = (i) => { this.setState({ glesson:i }); try { window.scrollTo(0, 0); } catch (e) {} };
 
     // ----- speaking practice: a scripted conversation you say out loud yourself -----
     sayIt = () => {
       const S = this.state;
-      if (S.sturn >= 4) return;
+      const sc = SCEN[S.sidx];
+      const total = sc.you.length;
+      if (S.sturn >= total) return;
       const t = S.sturn + 1;
       const patch = { sturn:t };
-      if (t >= 4) { patch.sdone = true; patch.ps = 1; patch.xp = S.xp + 10; patch.dayXp = S.dayXp + 10; patch.dayMin = S.dayMin + (S.spokeToday ? 0 : 6); patch.spokeToday = true; }
+      if (t >= total) {
+        const sres = Object.assign({}, S.sres); sres[sc.id] = true;
+        patch.sdone = true; patch.sres = sres; patch.xp = S.xp + 10; patch.dayXp = S.dayXp + 10;
+        patch.dayMin = S.dayMin + (S.spokeToday ? 0 : 6); patch.spokeToday = true;
+      }
       this.setState(patch);
     };
     resetSpeak = () => { this.setState({ sturn:0, sdone:false }); };
+    pickScenario = (i) => { this.setState({ sidx:i, sturn:0, sdone:false }); };
 
     // ----- word webs and word memory -----
     applyRating = (zh, r, dims) => {
@@ -278,30 +360,31 @@
     };
     learnWord = (zh) => {
       const S = this.state;
-      if (S.wlearned[zh] || Object.keys(S.wlearned).length >= NEW_CAP) return;
+      if (S.wlearned[zh] || Object.keys(S.wlearned).length >= S.ncap) return;
       const cur = S.ws[zh];
       const ws = Object.assign({}, S.ws);
       ws[zh] = { see:{ s:0.5, l:0 }, hear:cur.hear, prod:cur.prod };
       const wl = Object.assign({}, S.wlearned); wl[zh] = true;
       const patch = { ws, wlearned:wl, xp:S.xp + 3, dayXp:S.dayXp + 3 };
-      if (Object.keys(wl).length >= 4 && !S.webCredited) { patch.webCredited = true; patch.dayMin = S.dayMin + 5; }
+      if (Object.keys(wl).length >= Math.min(4, S.ncap) && !S.webCredited) { patch.webCredited = true; patch.dayMin = S.dayMin + 5; }
       this.setState(patch);
     };
     rateWeb = (zh, ok) => {
       const S = this.state;
       if (S.wrated[zh]) return;
       const wasNew = wMastery(S.ws[zh]) === 0;
-      if (wasNew && !S.wlearned[zh] && Object.keys(S.wlearned).length >= NEW_CAP) return;
+      if (wasNew && !S.wlearned[zh] && Object.keys(S.wlearned).length >= S.ncap) return;
       const res = this.applyRating(zh, ok ? 'good' : 'again', ['see']);
       const wr = Object.assign({}, S.wrated); wr[zh] = true;
       const wd = Object.assign({}, S.wdelta); wd[zh] = { from:res.from, to:res.to };
       const patch = { ws:res.ws, wrated:wr, wdelta:wd, xp:S.xp + (ok ? 3 : 1), dayXp:S.dayXp + (ok ? 3 : 1) };
       if (wasNew) {
         const wl = Object.assign({}, S.wlearned); wl[zh] = true; patch.wlearned = wl;
-        if (Object.keys(wl).length >= 4 && !S.webCredited) { patch.webCredited = true; patch.dayMin = S.dayMin + 5; }
+        if (Object.keys(wl).length >= Math.min(4, S.ncap) && !S.webCredited) { patch.webCredited = true; patch.dayMin = S.dayMin + 5; }
       }
       this.setState(patch);
     };
+    setCap = (n) => { this.setState({ ncap:n }); };
     revealWord = (zh) => { const r = Object.assign({}, this.state.wreveal); r[zh] = true; this.setState({ wreveal:r }); };
     gapPick = (zh) => {
       const S = this.state;
@@ -408,10 +491,13 @@
       const infos = bankKeys.map(zh => winfo(S.ws[zh], 0));
       const startedCount = infos.filter(i => i.started).length;
       const vocabPct = Math.round(infos.reduce((a, i) => a + i.m, 0) / bankKeys.length);
-      const gramPct = S.pg * 100;
+      const gramPassed = LESSONS.filter(L => (S.gres[L.id] || 0) >= 80).length;
+      const gramPct = Math.round(gramPassed / LESSONS.length * 100);
+      const testReady = BANK_KEYS.filter(zh => DIMS.some(k => S.ws[zh][k].s > 0)).length >= 3;
       const clipsTried = S.clipBest.filter(x => x > 0).length;
       const listenPct = Math.round(S.clipBest.reduce((a, b) => a + b, 0) / CLIPS.length * 100);
-      const spkPct = S.ps * 100;
+      const spkDone = SCEN.filter(sc => S.sres[sc.id]).length;
+      const spkPct = Math.round(spkDone / SCEN.length * 100);
       const overall = Math.round((vocabPct + gramPct + listenPct + spkPct) / 4);
       const wm = {
         mastered:infos.filter(i => i.lv === 'mastered').length,
@@ -426,14 +512,14 @@
       const titles = {
         home:['Welcome back', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
         review:['Review words', 'Words that are due, based on how well you remember them.'],
-        testlobby:['HSK 1 test', 'Five mixed questions, so you are recalling words, not just recognizing them.'],
-        grammar:['Grammar', 'What you should know at HSK 1, one point at a time.'],
-        speak:['Speaking practice', 'Say a short café conversation out loud.'],
+        testlobby:['HSK 1 test', 'Mixed questions from the words you have started, so you are recalling words, not just recognizing them.'],
+        grammar:['Grammar', LESSONS.length + ' lessons that cover the HSK 1 grammar outline, one at a time.'],
+        speak:['Speaking practice', 'Say a short conversation out loud.'],
         exam:['HSK 1 level exam', 'Pass every section to climb to HSK 2.'],
         web:['Word webs', 'Learn new words next to the words you already know.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
         listen:['Listening lab', 'Train your ear for how people really talk, not just how lessons sound.'],
-        quiz:S.qmode === 'grammar' ? ['Grammar practice', 'Yes/no questions with 吗'] : ['HSK 1 test', 'Take your time. Wrong answers show you why.']
+        quiz:S.qmode === 'grammar' ? ['Grammar practice', LESSONS[S.glesson].title] : ['HSK 1 test', 'Take your time. Wrong answers show you why.']
       };
       const tt = titles[S.screen];
 
@@ -451,25 +537,28 @@
       const ringDash = (Math.min(S.dayMin / S.mins, 1) * C).toFixed(1) + 'px ' + C.toFixed(1) + 'px';
       const dueNow = S.rq.length;
       const reviewMin = Math.max(2, Math.min(6, Math.round(Math.max(S.rtotal, dueNow) * 0.5)));
+      const nextLesson = Math.max(0, LESSONS.findIndex(L => (S.gres[L.id] || 0) < 80));
+      const nextScn = Math.max(0, SCEN.findIndex(sc => !S.sres[sc.id]));
+      const learnN = Math.min(4, S.ncap);
       const pool = [
-        { glyph:'联', title:'Learn 4 new words with their relatives', meta:'Word webs', min:5, done:S.webCredited, to:'web' },
+        { glyph:'联', title:'Learn ' + learnN + ' new words with their relatives', meta:'Word webs', min:5, done:S.webCredited, to:'web' },
         { glyph:'词', title:'Review ' + Math.max(S.rtotal, dueNow) + ' word' + (Math.max(S.rtotal, dueNow) === 1 ? '' : 's'), meta:'Words that are due', min:reviewMin, done:S.rcomplete, to:'review', show:S.rcomplete || dueNow > 0 },
         { glyph:'听', title:'Listening drill', meta:'Dictation with a speed ladder', min:4, done:S.ldone, to:'listen' },
-        { glyph:'说', title:'Say the café conversation', meta:'Practice script, 5 turns', min:6, done:S.spokeToday, to:'speak' },
-        { glyph:'语', title:'Grammar: yes/no questions with 吗', meta:'4 exercises', min:4, done:S.gdone, to:'grammar' },
-        { glyph:'测', title:'HSK 1 test', meta:'5 mixed questions', min:3, done:S.tdone, to:'testlobby' }
+        { glyph:'说', title:'Say: ' + SCEN[nextScn].title, meta:'Practice script, ' + SCEN[nextScn].you.length + ' turns', min:6, done:S.spokeToday, to:'speak', pre:() => this.setState({ sidx:nextScn, sturn:0, sdone:false }) },
+        { glyph:'语', title:'Grammar: ' + LESSONS[nextLesson].title, meta:LESSONS[nextLesson].q.length + ' exercises', min:4, done:S.gdone, to:'grammar', pre:() => this.setState({ glesson:nextLesson }) },
+        { glyph:'测', title:'HSK 1 test', meta:'Mixed questions from your words', min:3, done:S.tdone, to:'testlobby', show:testReady }
       ].filter(t => t.show !== false);
       let planned = 0;
       const plan = [];
       pool.forEach(t => { if (planned + t.min <= S.mins) { plan.push(t); planned += t.min; } });
-      const tasks = plan.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, xp:t.min + ' min', done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:() => this.go(t.to) }));
+      const tasks = plan.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, xp:t.min + ' min', done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:() => { if (t.pre) t.pre(); this.go(t.to); } }));
       const minOpts = [10, 20, 30, 45].map(m => ({ label:m + ' min', cls:S.mins === m ? 'on' : '', fn:() => this.setState({ mins:m }) }));
       const planNote = planned + ' of ' + S.mins + ' minutes planned. A longer goal adds more to the list.';
       const skills = [
         { label:'Vocabulary', detail:startedCount + ' of ' + bankKeys.length + ' words started', w:vocabPct + '%' },
-        { label:'Grammar', detail:S.pg + ' of 1 lesson ready', w:gramPct + '%' },
+        { label:'Grammar', detail:gramPassed + ' of ' + LESSONS.length + ' lessons passed', w:gramPct + '%' },
         { label:'Listening', detail:clipsTried + ' of ' + CLIPS.length + ' clips tried', w:listenPct + '%' },
-        { label:'Speaking', detail:S.ps + ' of 1 scenario ready', w:spkPct + '%' }
+        { label:'Speaking', detail:spkDone + ' of ' + SCEN.length + ' scripts done', w:spkPct + '%' }
       ];
       const lvN = sd.levels.length;
       const stairs = sd.levels.map((lv, i) => ({
@@ -497,7 +586,7 @@
       }
 
       // quiz
-      const qs = this.qs();
+      const qs = this.quizQs.length ? this.quizQs : [{ type:'mc', kicker:'', prompt:'', options:[], correct:'', reveal:'', explain:'' }];
       const q0 = qs[Math.min(S.qi, qs.length - 1)];
       const isTyped = q0.type === 'type' || q0.type === 'cloze';
       const isListen = q0.type === 'listen';
@@ -531,34 +620,37 @@
       const acc = Math.round(S.qscore / total * 100);
       const resTitle = acc >= 80 ? 'Strong run' : acc >= 60 ? 'Solid work' : 'Good start';
       const resSub = S.qmode === 'grammar'
-        ? 'Grammar practice is done for this lesson. Misses are the ones to revisit.'
+        ? (acc >= 80 ? 'Lesson passed. It now counts toward your grammar progress.' : 'You need 80% to pass a lesson. Read the explanation again and have another go.')
         : 'Your score is saved to the list of recent tests.';
-      const resGain = S.qmode === 'grammar' ? 'Grammar lesson counted toward your checkpoint' : 'Test saved to your history';
+      const resGain = S.qmode === 'grammar' ? (acc >= 80 ? 'Lesson passed' : 'Not passed yet (80% needed)') : 'Test saved to your history';
 
       // speak (practice script)
+      const sc = SCEN[S.sidx];
+      const turns = sc.you.length;
       const msgs = [];
-      for (let k = 0; k <= 4; k++) {
-        if (S.sturn >= k) msgs.push({ who:'ai', isAi:true, zh:AI[k].zh, py:AI[k].py, en:AI[k].en, showPy:S.spy, showEn:S.sen, hasNote:false, note:'', noteCls:'', pc:pc('ai' + k), play:() => this.say(AI[k].zh, 'ai' + k) });
-        if (k < 4 && S.sturn > k) msgs.push({ who:'me', isAi:false, zh:YOU[k].zh, py:YOU[k].py, en:YOU[k].en, showPy:S.spy, showEn:S.sen, hasNote:false, note:'', noteCls:'', pc:'', play:() => {} });
+      for (let k = 0; k <= turns; k++) {
+        if (S.sturn >= k) msgs.push({ who:'ai', isAi:true, zh:sc.ai[k].zh, py:sc.ai[k].py, en:sc.ai[k].en, showPy:S.spy, showEn:S.sen, hasNote:false, note:'', noteCls:'', pc:pc('ai' + k), play:() => this.say(sc.ai[k].zh, 'ai' + k) });
+        if (k < turns && S.sturn > k) msgs.push({ who:'me', isAi:false, zh:sc.you[k].zh, py:sc.you[k].py, en:sc.you[k].en, showPy:S.spy, showEn:S.sen, hasNote:false, note:'', noteCls:'', pc:'', play:() => {} });
       }
-      const canTalk = S.sturn < 4;
-      const target = YOU[Math.min(S.sturn, 3)];
-      const goals = SPEAK_GOALS.map((g, i) => ({ t:g, cls:S.sturn >= i + 1 ? 'ok' : '' }));
-      const wchips = SPEAK_WORDS.map(x => ({ zh:x[0], py:x[1], play:() => this.say(x[0], 'w' + x[0]) }));
-      const scenarios = SPEAK_SCENARIOS.map(s => ({ glyph:s.glyph, title:s.title, sub:s.sub, state:s.ready ? (S.sdone ? 'Done' : 'Now') : 'Soon', cls:s.ready ? (S.sdone ? 'done' : 'cur') : '' }));
+      const canTalk = S.sturn < turns;
+      const target = sc.you[Math.min(S.sturn, turns - 1)];
+      const goals = sc.goals.map((g, i) => ({ t:g, cls:S.sturn >= i + 1 ? 'ok' : '' }));
+      const wchips = sc.words.map(x => ({ zh:x.zh, py:x.py, play:() => this.say(x.zh, 'w' + x.zh) }));
+      const scenarios = SCEN.map((x, i) => ({ glyph:x.glyph, title:x.title, sub:x.sub, state:S.sres[x.id] ? 'Done' : (i === S.sidx ? 'Now' : 'Open'), cls:(S.sres[x.id] ? 'done ' : '') + (i === S.sidx ? 'cur' : ''), fn:() => this.pickScenario(i) }));
 
       // word webs and word memory
       const webCount = Object.keys(S.wlearned).length;
-      const capReached = webCount >= NEW_CAP;
+      const capReached = webCount >= S.ncap;
       const mini = (zh) => winfo(S.ws[zh], 0);
       const dlt = (zh) => { const d = S.wdelta[zh]; return d ? { hasDelta:true, deltaText:'Mastery ' + d.from + '% → ' + d.to + '%', deltaCls:d.to >= d.from ? 'up' : 'down' } : { hasDelta:false, deltaText:'', deltaCls:'' }; };
       const cardOf = (w, hubZh) => {
+        const b = BANK[w.zh];
         const info = mini(w.zh);
         const isNew = info.lv === 'new';
         const revealed = !S.wquiz || !!S.wreveal[w.zh];
         const rated = !!S.wrated[w.zh];
         return Object.assign({
-          zh:w.zh, py:w.py, en:w.en,
+          zh:w.zh, py:b.py, en:b.en,
           cls:isNew ? 'new' : 'ok', status:info.mLabel,
           showEn:revealed, canReveal:!revealed,
           canRate:S.wquiz && revealed && !rated && !(isNew && capReached),
@@ -569,7 +661,7 @@
           pc:pc('w' + w.zh), play:() => this.say(w.zh, 'w' + w.zh),
           reveal:() => this.revealWord(w.zh), learn:() => this.learnWord(w.zh),
           knew:() => this.rateWeb(w.zh, true), missed:() => this.rateWeb(w.zh, false),
-          reportUrl:report('Word web card', w.zh + ' (' + w.py + ') ' + w.en + '; parts ' + w.parts.map(p => p[0] + '=' + p[1]).join(', '))
+          reportUrl:report('Word web card', w.zh + ' (' + b.py + ') ' + b.en + '; parts ' + w.parts.map(p => p[0] + '=' + p[1]).join(', '))
         }, info, dlt(w.zh));
       };
       const hubNow = HUBS[S.whub];
@@ -577,47 +669,75 @@
       const hubOpts = HUBS.map((h, i) => ({ zh:h.hub, cls:S.whub === i ? 'on' : '', fn:() => this.setState({ whub:i, gfq:0, gfpick:null }) }));
       const gapNow = hubNow.gaps[S.gfq % hubNow.gaps.length];
       const gapDone = S.gfpick !== null;
-      const gapOpts = hubNow.words.map(w => ({ zh:w.zh, py:w.py, cls:!gapDone ? '' : (w.zh === gapNow.ans ? 'right' : (w.zh === S.gfpick ? 'wrong' : '')), fn:() => this.gapPick(w.zh) }));
+      const gapOpts = gapNow.opts.map(zh => ({ zh, py:BANK[zh].py, cls:!gapDone ? '' : (zh === gapNow.ans ? 'right' : (zh === S.gfpick ? 'wrong' : '')), fn:() => this.gapPick(zh) }));
       const fillLine = !gapDone ? '' : (S.gfpick === gapNow.ans ? 'Right. ' : 'Not quite. ') + gapNow.ans + ' (' + BANK[gapNow.ans].py + ') means ' + BANK[gapNow.ans].en + '.';
       const oppRows = OPPS.map(o => {
-        const ia = mini(o.a.zh);
-        const ib = mini(o.b.zh);
-        const rev = !!S.wreveal[o.b.zh];
+        const A = BANK[o.a];
+        const B = BANK[o.b];
+        const ia = mini(o.a);
+        const ib = mini(o.b);
+        const rev = !!S.wreveal[o.b];
         const bNew = ib.lv === 'new';
-        const rated = !!S.wrated[o.b.zh];
+        const rated = !!S.wrated[o.b];
         return Object.assign({
-          azh:o.a.zh, apy:o.a.py, aen:o.a.en, bzh:o.b.zh, bpy:o.b.py, ben:o.b.en, note:o.note,
-          revealed:rev, hidden:!rev, hint:'The opposite of ' + o.a.en,
-          aPc:pc('w' + o.a.zh), bPc:pc('w' + o.b.zh),
-          playA:() => this.say(o.a.zh, 'w' + o.a.zh), playB:() => this.say(o.b.zh, 'w' + o.b.zh),
-          reveal:() => this.revealWord(o.b.zh),
+          azh:A.zh, apy:A.py, aen:A.en, bzh:B.zh, bpy:B.py, ben:B.en, note:o.note,
+          revealed:rev, hidden:!rev, hint:'The opposite of ' + A.en,
+          aPc:pc('w' + A.zh), bPc:pc('w' + B.zh),
+          playA:() => this.say(A.zh, 'w' + A.zh), playB:() => this.say(B.zh, 'w' + B.zh),
+          reveal:() => this.revealWord(B.zh),
           canAdd:rev && bNew && !capReached, canRate:rev && !bNew && !rated, capHit:rev && bNew && capReached && !rated,
-          learn:() => this.learnWord(o.b.zh), knew:() => this.rateWeb(o.b.zh, true), missed:() => this.rateWeb(o.b.zh, false),
+          learn:() => this.learnWord(B.zh), knew:() => this.rateWeb(B.zh, true), missed:() => this.rateWeb(B.zh, false),
           aLabel:ia.mLabel, aPct:ia.mPct, aW:ia.mW, aBar:ia.mCls, bLabel:ib.mLabel, bPct:ib.mPct, bW:ib.mW, bBar:ib.mCls, bCls:bNew ? 'new' : 'ok',
-          reportUrl:report('Opposites pair', o.a.zh + ' / ' + o.b.zh + ': ' + o.note)
-        }, dlt(o.b.zh));
+          reportUrl:report('Opposites pair', A.zh + ' / ' + B.zh + ': ' + o.note)
+        }, dlt(B.zh));
       });
       const topicNow = TOPICS[S.wtopic];
-      const topicChips = topicNow.words.map(w => {
-        const info = mini(w.zh);
+      const topicChips = topicNow.words.map(zh => {
+        const b = BANK[zh];
+        const info = mini(zh);
         const isNew = info.lv === 'new';
-        return Object.assign({ zh:w.zh, py:w.py, en:w.en, cls:isNew ? 'new' : 'ok', canAdd:isNew && !capReached, capHit:isNew && capReached,
-          play:() => this.say(w.zh, 'w' + w.zh), learn:() => this.learnWord(w.zh) }, info);
+        return Object.assign({ zh, py:b.py, en:b.en, cls:isNew ? 'new' : 'ok', canAdd:isNew && !capReached, capHit:isNew && capReached,
+          play:() => this.say(zh, 'w' + zh), learn:() => this.learnWord(zh) }, info);
       });
+      const topicStarted = topicNow.words.filter(zh => mini(zh).started).length;
       const topicOpts = TOPICS.map((t, i) => ({ label:t.name, cls:S.wtopic === i ? 'on' : '', fn:() => this.setState({ wtopic:i }) }));
+      const capOpts = NEW_CAP_OPTIONS.map(n => ({ label:String(n), cls:S.ncap === n ? 'on' : '', fn:() => this.setCap(n) }));
 
       // my words
-      const rowsAll = bankKeys.map(zh => Object.assign({ zh, py:BANK[zh].py, en:BANK[zh].en, pc:pc('w' + zh), play:() => this.say(zh, 'w' + zh) }, winfo(S.ws[zh], S.woff)));
+      const rowsAll = BANK_KEYS.map(zh => Object.assign({ zh, py:BANK[zh].py, en:BANK[zh].en, pc:pc('w' + zh), play:() => this.say(zh, 'w' + zh) }, winfo(S.ws[zh], S.woff)));
       const lvKeys = ['new', 'learning', 'familiar', 'strong', 'mastered'];
       const lvCount = {};
       lvKeys.forEach(k => { lvCount[k] = rowsAll.filter(r => r.lv === k).length; });
       const filters = [{ key:'all', label:'All', n:rowsAll.length }].concat(lvKeys.map(k => ({ key:k, label:LEVEL_LABEL[k], n:lvCount[k] })))
-        .map(f => ({ label:f.label, n:f.n, cls:S.wfilter === f.key ? 'on' : '', fn:() => this.setState({ wfilter:f.key }) }));
+        .map(f => ({ label:f.label, n:f.n, cls:S.wfilter === f.key ? 'on' : '', fn:() => this.setState({ wfilter:f.key, wshow:40 }) }));
       const levelSegs = lvKeys.map(k => ({ cls:'lv-' + k, w:(lvCount[k] / rowsAll.length * 100).toFixed(1) + '%' }));
       const sorters = { weak:(a, b) => a.recallN - b.recallN, due:(a, b) => a.dueN - b.dueN, strong:(a, b) => b.m - a.m };
-      const rowsShown = rowsAll.filter(r => S.wfilter === 'all' || r.lv === S.wfilter).sort(sorters[S.wsort]);
+      const qWords = S.wq.trim().toLowerCase();
+      const qPlain = toneless(qWords);
+      const matchRow = (r) => !qWords || r.zh.indexOf(qWords) >= 0 || r.en.toLowerCase().indexOf(qWords) >= 0 || (qPlain.length > 0 && toneless(r.py).indexOf(qPlain) >= 0);
+      // exact matches (the character itself, or the whole English gloss) come first, then the chosen sort order
+      const matchRank = (r) => (!qWords ? 0 : (r.zh === qWords || r.en.toLowerCase() === qWords || r.en.toLowerCase().split(/[,;(]\s*/)[0].trim() === qWords ? 0 : 1));
+      const rowsFiltered = rowsAll.filter(r => (S.wfilter === 'all' || r.lv === S.wfilter) && matchRow(r)).sort((a, b) => matchRank(a) - matchRank(b) || sorters[S.wsort](a, b));
+      const rowsShown = rowsFiltered.slice(0, S.wshow);
+      const moreCount = rowsFiltered.length - rowsShown.length;
       const sortOpts = [['weak', 'Weakest first'], ['due', 'Due soonest'], ['strong', 'Strongest first']].map(x => ({ label:x[1], cls:S.wsort === x[0] ? 'on' : '', fn:() => this.setState({ wsort:x[0] }) }));
       const timeOpts = [[0, 'Today'], [7, 'In 1 week'], [30, 'In 1 month']].map(x => ({ label:x[1], cls:S.woff === x[0] ? 'on' : '', fn:() => this.setState({ woff:x[0] }) }));
+
+      // grammar
+      const lessonList = LESSONS.map((l, i) => { const best = S.gres[l.id]; const passed = (best || 0) >= 80; return { n:i + 1, title:l.title, cls:(i === S.glesson ? 'cur ' : '') + (passed ? 'done' : ''), tag:best === undefined ? '' : (passed ? best + '%' : best + '%'), fn:() => this.pickLesson(i) }; });
+      const L = LESSONS[S.glesson];
+      const lessonBest = S.gres[L.id];
+      const lesson = {
+        kick:'Lesson ' + (S.glesson + 1) + ' of ' + LESSONS.length, title:L.title,
+        formula:L.formula.map(f => ({ t:f.t, cls:(f.k ? 'k ' : '') + (f.z ? 'zh' : ''), sep:f.sep, hasSep:f.sep !== '' })),
+        explain:L.explain.map(t => ({ t })), hasMistakes:L.mistakes.length > 0, mistakes:L.mistakes.map(t => ({ t })),
+        examples:L.examples.map((e, i) => ({ zh:e.zh, py:e.py, en:e.en, pc:pc('g' + i), play:() => this.say(e.zh, 'g' + i), reportUrl:report('Grammar lesson: ' + L.title, e.zh + ' (' + e.py + ') ' + e.en) })),
+        count:L.q.length + ' exercises · about ' + Math.max(2, Math.round(L.q.length * 0.7)) + ' minutes',
+        covers:'Official grammar outline points: ' + L.covers.join(', '),
+        reportUrl:report('Grammar lesson: ' + L.title, 'the explanation or examples'),
+        best:lessonBest === undefined ? 'Not tried yet' : (lessonBest >= 80 ? 'Passed with ' + lessonBest + '%' : 'Best so far: ' + lessonBest + '% (80% to pass)'),
+        hasPrev:S.glesson > 0, hasNext:S.glesson < LESSONS.length - 1, prev:() => this.pickLesson(S.glesson - 1), next:() => this.pickLesson(S.glesson + 1)
+      };
 
       // shadowing
       const shClip = CLIPS[S.dclip];
@@ -662,7 +782,7 @@
         setWChar:() => this.setState({ wmode:'char' }), setWOpp:() => this.setState({ wmode:'opp' }), setWTopic:() => this.setState({ wmode:'topic' }),
         quizOffCls:S.wquiz ? '' : 'on', quizOnCls:S.wquiz ? 'on' : '',
         setQuizOff:() => this.setState({ wquiz:false }), setQuizOn:() => this.setState({ wquiz:true }),
-        webCountText:webCount + ' of ' + NEW_CAP + ' new words today', capNote:capReached,
+        webCountText:webCount + ' of ' + S.ncap + ' new words today', capNote:capReached, capCount:S.ncap, capOpts, topicProgress:topicStarted + ' of ' + topicNow.words.length + ' started',
         hubCards, hubOpts, hubZh:hubNow.hub, hubPy:hubNow.py, hubEn:hubNow.en,
         fillEn:gapNow.en, fillZh:gapNow.zh, gapOpts, gapDone, gapOptsCls:gapDone ? 'locked' : '', fillLine, gapNext:this.gapNext,
         fillReport:report('Which word fits?', gapNow.zh + ' = ' + gapNow.ans + ' / ' + gapNow.en),
@@ -670,12 +790,13 @@
         tsReport:report('Topic sentence', topicNow.sentence.zh + ' ' + topicNow.sentence.en),
         topicCta:topicNow.cta, goTopic:() => this.go(topicNow.to),
         hasRlast:!!S.rlast, rlastText:S.rlast ? S.rlast.zh + ': mastery ' + S.rlast.from + '% → ' + S.rlast.to + '%' : '', rlastCls:S.rlast && S.rlast.to < S.rlast.from ? 'down' : 'up',
-        bankCount:rowsAll.length, filters, levelSegs, sortOpts, timeOpts, rows:rowsShown,
+        bankCount:rowsAll.length, filters, levelSegs, sortOpts, timeOpts, rows:rowsShown, hasMoreWords:moreCount > 0, moreWordsText:'Show 40 more (' + moreCount + ' left)', showMoreWords:() => this.setState({ wshow:S.wshow + 40 }),
+        wq:S.wq, onWSearch:(e) => this.setState({ wq:e.target.value, wshow:40 }), noRows:rowsShown.length === 0,
 
         // shadowing
         isShadow:S.lmode === 'shadow', lShadowCls:S.lmode === 'shadow' ? 'on' : '', setShadow:() => this.setState({ lmode:'shadow' }),
         shNow:Math.min(S.shround + 1, 3), shTitle:'Clip ' + (S.dclip + 1) + ' of ' + CLIPS.length, shHelp:shHelps[S.shround],
-        shZh:shClip.zh, shPy:shClip.words.map(x => x.py).join(' '),
+        shZh:shClip.zh, shPy:shClip.py,
         shShowZh:S.shround < 2 || shDone, shShowPy:S.shround === 0 || shDone, shHidden:S.shround === 2,
         shCanGo:!shDone, shDone, shGoLabel:'I said it',
         shadowGo:this.shadowGo, shadowNext:this.shadowNext,
@@ -732,17 +853,17 @@
         playEx:() => this.say(rex.zh, 'ex'), playExCls:pc('ex') ? 'ink' : '',
 
         // lobby
-        startTest:() => this.startQuiz('test'),
+        startTest:() => this.startQuiz('test'), testReady, testBlocked:!testReady,
+        testInfo:(Math.min(10, Math.max(5, BANK_KEYS.filter(zh => DIMS.some(k => S.ws[zh][k].s > 0)).length))) + ' questions · about 4 minutes',
         recent:S.testHistory.map((r, i, a) => ({ date:r.date, score:r.score, h:Math.round(r.score * 1.4) + 'px', cls:i === a.length - 1 ? 'last' : '' })),
         hasRecent:S.testHistory.length > 0, noRecent:S.testHistory.length === 0,
 
         // grammar
-        points:GRAM_POINTS.map((p, i) => ({ n:i + 1, title:p[0], cls:p[1], tag:p[2] })),
-        examples:GRAM_EX.map((e, i) => ({ zh:e.zh, py:e.py, en:e.en, pc:pc('g' + i), play:() => this.say(e.zh, 'g' + i), reportUrl:report('Grammar lesson: 吗 questions', e.zh + ' (' + e.py + ') ' + e.en) })),
+        lessonList, lesson,
         startGrammar:() => this.startQuiz('grammar'),
 
         // speak
-        msgs, typing:false, canTalk, sdone:S.sdone, target, goals, wchips, scenarios,
+        msgs, typing:false, canTalk, sdone:S.sdone, target, goals, wchips, scenarios, chatGlyph:sc.glyph, chatTitle:sc.title, chatSub:sc.sub, turnsText:turns + ' turns',
         shint:S.shint, noHint:!S.shint, toggleHint:() => this.setState({ shint:!this.state.shint }),
         pyCls:S.spy ? 'on' : '', enCls:S.sen ? 'on' : '',
         togglePy:() => this.setState({ spy:!this.state.spy }), toggleEn:() => this.setState({ sen:!this.state.sen }),

@@ -1,0 +1,10 @@
+# where-prefix	rule	reason   (known false alarms; every line needs a reason)
+phrase:0	level	慢 (HSK 2) is kept on purpose: "please speak slowly" is a survival phrase a beginner needs from day one
+phrase:1	level	遍 (HSK 3) is kept on purpose: "please say it again" is a survival phrase a beginner needs from day one
+word:对	gloss	the sense "toward (someone)" is shown by "to me"; "to" is too short for the gloss check
+word:少	meaning	今天来的人很少 is natural without 了: a plain statement of fact about today, English happens to use the past tense
+word:日	gloss	"May 1st" shows the day of the month; the check cannot match "1st"
+scenario:plan:you1	meaning	Chinese drops the subject: 好，几点去？ is naturally "what time shall we go?"
+scenario:plan:you2	meaning	可以 here is "that works / okay", and the subject "we" is dropped in Chinese
+wordform:只	pinyin	只 has two readings, zhī (measure word) and zhǐ (only); the entry shows both
+word:雪	meaning	了 here marks a change of state (it has started snowing); "it is snowing today" is the natural English

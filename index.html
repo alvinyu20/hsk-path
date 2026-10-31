@@ -319,10 +319,16 @@
         <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">组</div><div><div class="fmt-t">Build it</div><div class="fmt-d">Put words in order to make a correct sentence.</div></div></div>
         <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">填</div><div><div class="fmt-t">Fill it</div><div class="fmt-d">Type the missing word in a sentence.</div></div></div>
       </div>
-      <div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-        <button class="btn pri big" onClick="{{startTest}}">Start the test</button>
-        <span class="muted">5 questions · about 3 minutes</span>
-      </div>
+      <sc-if value="{{testReady}}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+          <button class="btn pri big" onClick="{{startTest}}">Start the test</button>
+          <span class="muted">{{testInfo}}</span>
+        </div>
+      </sc-if>
+      <sc-if value="{{testBlocked}}" hint-placeholder-val="{{ false }}">
+        <div class="banner" style="margin-top:22px">The test is built from words you have started, so it can ask fair questions. Add at least three words in Word webs first, then come back.</div>
+        <button class="btn pri" style="margin-top:14px" onClick="{{goWeb}}">Go to Word webs</button>
+      </sc-if>
     </section>
     <section class="card">
       <h2 class="h2">Your last five tests</h2>
@@ -343,20 +349,23 @@
   <sc-if value="{{isGrammar}}" hint-placeholder-val="{{ false }}">
   <div class="gram">
     <div class="gl">
-      <div class="kick" style="padding:0 14px 8px">HSK 1 grammar points</div>
-      <sc-for list="{{points}}" as="p" hint-placeholder-count="9">
-        <div class="gp {{p.cls}}"><span class="gn">{{p.n}}</span>{{p.title}}<span class="soon">{{p.tag}}</span></div>
+      <div class="kick" style="padding:0 14px 8px">HSK 1 grammar lessons</div>
+      <sc-for list="{{lessonList}}" as="p" hint-placeholder-count="9">
+        <button type="button" class="gp {{p.cls}}" onClick="{{p.fn}}"><span class="gn">{{p.n}}</span><span class="gt">{{p.title}}</span><span class="soon">{{p.tag}}</span></button>
       </sc-for>
     </div>
     <div class="lesson">
       <section class="card">
-        <div class="kick">Lesson 1 of 9 planned</div>
-        <h2 class="h2" style="font-size:30px;margin:6px 0 18px">Yes/no questions with <span class="zh">吗</span></h2>
+        <div class="kick">{{lesson.kick}}</div>
+        <h2 class="h2" style="font-size:30px;margin:6px 0 18px">{{lesson.title}}</h2>
         <div class="formula">
-          <span class="fchip">Statement</span><span>+</span><span class="fchip k zh">吗</span><span>=</span><span class="fchip">Yes/no question</span>
+          <sc-for list="{{lesson.formula}}" as="f" hint-placeholder-count="3"><sc-if value="{{f.hasSep}}" hint-placeholder-val="{{ true }}"><span>{{f.sep}}</span></sc-if><span class="fchip {{f.cls}}">{{f.t}}</span></sc-for>
+        </div>
+        <div class="expl">
+          <sc-for list="{{lesson.explain}}" as="x" hint-placeholder-count="3"><p>{{x.t}}</p></sc-for>
         </div>
         <div style="margin-top:22px">
-          <sc-for list="{{examples}}" as="e" hint-placeholder-count="3">
+          <sc-for list="{{lesson.examples}}" as="e" hint-placeholder-count="3">
             <div class="ex">
               <div class="ex-m"><div class="zh">{{e.zh}}</div><div class="py">{{e.py}}</div><div>{{e.en}}</div><a class="report" href="{{e.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a></div>
               <button class="spk {{e.pc}}" aria-label="Hear this sentence" onClick="{{e.play}}">
@@ -366,13 +375,22 @@
           </sc-for>
         </div>
       </section>
-      <div class="warnbox">
-        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 21.5 20h-19z"/><path d="M12 10v4.5M12 17.2v.1"/></svg>
-        <div><b>Common mistake.</b> If <span class="zh">什么</span> or <span class="zh">谁</span> is asking a question (what, who), leave <span class="zh">吗</span> off. Later you will see <span class="zh">什么</span> used to mean "something", and then <span class="zh">吗</span> is fine.</div>
-      </div>
+      <sc-if value="{{lesson.hasMistakes}}" hint-placeholder-val="{{ true }}">
+        <div class="warnbox">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 21.5 20h-19z"/><path d="M12 10v4.5M12 17.2v.1"/></svg>
+          <div><b>Common mistakes</b>
+            <sc-for list="{{lesson.mistakes}}" as="m" hint-placeholder-count="1"><div style="margin-top:6px">{{m.t}}</div></sc-for>
+          </div>
+        </div>
+      </sc-if>
       <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-        <button class="btn pri big" onClick="{{startGrammar}}">Practice this point</button>
-        <span class="muted">4 exercises · about 3 minutes</span>
+        <button class="btn pri big" onClick="{{startGrammar}}">Practise this lesson</button>
+        <span class="muted">{{lesson.count}} · {{lesson.best}}</span>
+      </div>
+      <div class="muted" style="font-size:14.5px">{{lesson.covers}}. Written and checked by AI, not yet reviewed by a teacher. <a class="report" href="{{lesson.reportUrl}}" target="_blank" rel="noopener">Report a mistake in this lesson</a></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <sc-if value="{{lesson.hasPrev}}" hint-placeholder-val="{{ true }}"><button class="btn" onClick="{{lesson.prev}}">Previous lesson</button></sc-if>
+        <sc-if value="{{lesson.hasNext}}" hint-placeholder-val="{{ true }}"><button class="btn" onClick="{{lesson.next}}">Next lesson</button></sc-if>
       </div>
     </div>
   </div>
@@ -385,7 +403,7 @@
     <section class="chat">
       <div class="chat-h">
         <div class="av zh" aria-hidden="true">明</div>
-        <div class="chat-t"><b>Mingming</b><span>Café barista · HSK 1 vocabulary only</span></div>
+        <div class="chat-t"><b>Mingming</b><span>{{chatTitle}} · HSK 1 vocabulary only</span></div>
         <div class="seg2" role="group" aria-label="Show on screen">
           <button class="{{pyCls}}" onClick="{{togglePy}}">Pinyin</button>
           <button class="{{enCls}}" onClick="{{toggleEn}}">English</button>
@@ -471,11 +489,11 @@
         <h2 class="h2">HSK 1 scenarios</h2>
         <div style="margin-top:8px">
           <sc-for list="{{scenarios}}" as="s" hint-placeholder-count="4">
-            <div class="scn {{s.cls}}">
+            <button type="button" class="scn {{s.cls}}" onClick="{{s.fn}}">
               <div class="scn-g zh" aria-hidden="true">{{s.glyph}}</div>
               <div class="scn-m">{{s.title}}<span>{{s.sub}}</span></div>
               <span class="scn-s">{{s.state}}</span>
-            </div>
+            </button>
           </sc-for>
         </div>
       </section>
@@ -494,8 +512,11 @@
       </div>
       <span class="chip familiar">{{webCountText}}</span>
     </div>
+    <div class="pickrow" role="group" aria-label="New words per day"><span class="muted">New words per day</span>
+      <sc-for list="{{capOpts}}" as="c" hint-placeholder-count="4"><button class="fc2 {{c.cls}}" onClick="{{c.fn}}">{{c.label}}</button></sc-for>
+    </div>
     <p class="muted" style="margin:0;max-width:66ch">Each new word shows up next to words you already know. Close synonyms stay apart so they don't blur together. Try to recall a word before you reveal it, even if you guess wrong.</p>
-    <sc-if value="{{capNote}}" hint-placeholder-val="{{ false }}"><p class="capnote">That is five new words for today. More would crowd out the ones you just met, so the rest wait until tomorrow.</p></sc-if>
+    <sc-if value="{{capNote}}" hint-placeholder-val="{{ false }}"><p class="capnote">That is {{capCount}} new words for today. More would crowd out the ones you just met, so the rest wait until tomorrow. You can change the daily number above.</p></sc-if>
 
     <sc-if value="{{isWChar}}" hint-placeholder-val="{{ true }}">
       <div class="hubrow">
@@ -504,8 +525,8 @@
           <div class="hub-zh zh">{{hubZh}}</div>
           <div class="hub-py">{{hubPy}}</div>
           <div class="muted" style="margin-bottom:6px">{{hubEn}}</div>
-          <div class="seg2" role="group" aria-label="Pick a character">
-            <sc-for list="{{hubOpts}}" as="h" hint-placeholder-count="3"><button class="zh {{h.cls}}" style="font-size:20px" onClick="{{h.fn}}">{{h.zh}}</button></sc-for>
+          <div class="pickrow" role="group" aria-label="Pick a character">
+            <sc-for list="{{hubOpts}}" as="h" hint-placeholder-count="3"><button class="zh fc2 {{h.cls}}" style="font-size:20px" onClick="{{h.fn}}">{{h.zh}}</button></sc-for>
           </div>
           <div class="seg2" role="group" aria-label="Meanings">
             <button class="{{quizOffCls}}" onClick="{{setQuizOff}}">Meanings</button>
@@ -608,9 +629,10 @@
     </sc-if>
 
     <sc-if value="{{isWTopic}}" hint-placeholder-val="{{ false }}">
-      <div class="seg2" role="group" aria-label="Topic" style="align-self:flex-start">
-        <sc-for list="{{topicOpts}}" as="t" hint-placeholder-count="2"><button class="{{t.cls}}" onClick="{{t.fn}}">{{t.label}}</button></sc-for>
+      <div class="pickrow" role="group" aria-label="Topic">
+        <sc-for list="{{topicOpts}}" as="t" hint-placeholder-count="2"><button class="fc2 {{t.cls}}" onClick="{{t.fn}}">{{t.label}}</button></sc-for>
       </div>
+      <div class="muted">{{topicProgress}}</div>
       <div class="tgrid">
         <sc-for list="{{topicChips}}" as="c" hint-placeholder-count="7">
           <div class="tc {{c.cls}}">
@@ -643,7 +665,7 @@
     <section class="card">
       <div class="wsum-h">
         <div>
-          <h2 class="h2">{{bankCount}} words in this preview</h2>
+          <h2 class="h2">{{bankCount}} HSK 1 words</h2>
           <p class="muted" style="margin:4px 0 0;font-size:15.5px;max-width:60ch">Each bar shows how well you know a word. It grows when you recall the word and drops when you miss it. Read, hear and recall are tracked separately.</p>
         </div>
         <div>
@@ -659,6 +681,7 @@
       <div class="fchips">
         <sc-for list="{{filters}}" as="f" hint-placeholder-count="6"><button class="fc2 {{f.cls}}" onClick="{{f.fn}}">{{f.label}} <b>{{f.n}}</b></button></sc-for>
       </div>
+      <input class="inp wsearch" type="search" value="{{wq}}" placeholder="Search by character, pinyin or English" autocomplete="off" aria-label="Search words" onInput="{{onWSearch}}">
     </section>
     <div class="wl-bar">
       <span class="muted">Sort by</span>
@@ -689,6 +712,8 @@
         </section>
       </sc-for>
     </div>
+    <sc-if value="{{noRows}}" hint-placeholder-val="{{ false }}"><p class="muted">No words match. Try a different search or filter.</p></sc-if>
+    <sc-if value="{{hasMoreWords}}" hint-placeholder-val="{{ false }}"><button class="btn" style="align-self:center" onClick="{{showMoreWords}}">{{moreWordsText}}</button></sc-if>
   </div>
   </sc-if>
 
@@ -999,7 +1024,11 @@
 </template>
 <script src="vendor/morphdom-umd.min.js"></script>
 <script src="runtime.js"></script>
-<script src="data/hsk1.js"></script>
+<script src="data/hsk1-words.js"></script>
+<script src="data/hsk1-grammar.js"></script>
+<script src="data/hsk1-webs.js"></script>
+<script src="data/hsk1-speak.js"></script>
+<script src="data/hsk1-listen.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
