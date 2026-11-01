@@ -196,7 +196,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await page.locator('button', { hasText: 'Show example' }).count()) === 0, 'in quiz mode the example stays hidden until the meaning is revealed');
   await page.locator('button', { hasText: 'Reveal meaning' }).first().click();
   await page.locator('button', { hasText: 'Add to my words' }).first().click().catch(() => {});
-  await page.locator('button', { hasText: 'Opposites' }).click();
+  await page.locator('button', { hasText: 'Pairs' }).click();
   await page.locator('button', { hasText: 'Reveal' }).first().click();
   check((await page.locator('.orow').count()) >= 20, 'opposite pairs are listed');
   const pair = await page.evaluate(() => window.HSK1_WEBS.opps[0]);

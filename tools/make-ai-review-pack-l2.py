@@ -118,7 +118,7 @@ for h in webs['hubs']:
     for x in h['words']:
         w.append('- %s = %s (%s) + %s (%s)' % (x['zh'], x['parts'][0][0], x['parts'][0][1], x['parts'][1][0], x['parts'][1][1]))
     w.append('')
-w.append('### Opposite pairs')
+w.append('### Pairs and opposites')
 for o in webs['opps']:
     w.append('- %s / %s: %s' % (o['a'], o['b'], o['note']))
 w.append('')
@@ -127,7 +127,7 @@ for t in webs['topics']:
     w.append('- %s: %s' % (t['name'], ' '.join(t['words'])))
 name = '%02d-word-webs.md' % (len(batches) + 3)
 write(name, '' + HEAD.replace('检查下面的内容', '检查下面的“词网”内容（字的意思、反义词、主题分组）')
-      + 'Also check: is each part meaning (for example 出 = out, 过 = over, 子 = noun ending, 么 left out) right and not misleading? Does each opposite-pair note say something true? Is any word grouped in a topic where it does not belong?\n\n' + '\n'.join(w) + '\n')
+      + 'Also check: is each part meaning (for example 出 = out, 过 = cross, 子 = noun ending, 么 left out) right and not misleading? Does each opposite-pair note say something true? Is any word grouped in a topic where it does not belong?\n\n' + '\n'.join(w) + '\n')
 files.append((name, 'character meanings inside words, the opposite pairs and notes, the topic groups'))
 
 # 4b. the mock exam

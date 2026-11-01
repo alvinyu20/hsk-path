@@ -1572,7 +1572,7 @@
         const rated = !!S.wrated[o.b];
         return Object.assign({
           azh:A.zh, apy:A.py, aen:A.en, bzh:B.zh, bpy:B.py, ben:B.en, note:o.note,
-          revealed:rev, hidden:!rev, hint:'The opposite of ' + A.en,
+          revealed:rev, hidden:!rev, hint:(o.pair ? 'The partner of ' : 'The opposite of ') + A.en,
           aPc:pc('w' + A.zh), bPc:pc('w' + B.zh),
           playA:() => this.say(A.zh, 'w' + A.zh), playB:() => this.say(B.zh, 'w' + B.zh),
           reveal:() => this.revealWord(B.zh),
@@ -1585,7 +1585,7 @@
           learnA:() => this.learnWord(A.zh), learnBoth:() => this.learnMany([A.zh, B.zh]),
           learn:() => this.learnWord(B.zh), knew:() => this.rateWeb(B.zh, true), missed:() => this.rateWeb(B.zh, false),
           aLabel:ia.mLabel, aPct:ia.mPct, aW:ia.mW, aBar:ia.mCls, bLabel:ib.mLabel, bPct:ib.mPct, bW:ib.mW, bBar:ib.mCls, bCls:bNew ? 'new' : 'ok',
-          reportUrl:report('Opposites pair', A.zh + ' / ' + B.zh + ': ' + o.note)
+          reportUrl:report('Pairs and opposites', A.zh + ' / ' + B.zh + ': ' + o.note)
         }, dlt(B.zh));
       });
       const topicNow = TOPICS[S.wtopic];

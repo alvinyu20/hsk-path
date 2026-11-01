@@ -130,13 +130,13 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForTimeout(80);
   const added = await page.evaluate(() => Object.keys(window.shanlu.state.wlearned));
   check(added.length === 7 && added.every(z => /来/.test(z)), 'Add all starts the seven 来 words (' + added.join(' ') + ')');
-  await page.locator('button', { hasText: 'Opposites' }).click();
+  await page.locator('button', { hasText: 'Pairs' }).click();
   await page.waitForTimeout(80);
   check((await text()).includes('左') && (await text()).includes('右'), 'opposite pairs include 左 and 右');
   await page.locator('button', { hasText: 'Topics' }).click();
   await page.waitForTimeout(80);
   const topicN = await page.evaluate(() => window.HSK2_WEBS.topics.length);
-  check(topicN === 13 && (await text()).includes('Getting around'), 'the topics screen lists the 13 HSK 2 topics');
+  check(topicN === 14 && (await text()).includes('Getting around'), 'the topics screen lists the 14 HSK 2 topics');
   check(await page.evaluate(() => window.HSK2_WEBS.hubs.every(h => h.gaps.every(g => g.opts.includes(g.ans)))), 'every fill-in gap has its answer among its options');
 
   // ---- review and My words

@@ -11,7 +11,7 @@ Live site (once GitHub Pages is switched on): https://alvinyu20.github.io/hsk-pa
 | | HSK 1 | HSK 2 |
 |---|---|---|
 | Words | all 300 of band 1 (297 on the site, see 儿 below), each with a meaning and three example sentences using only HSK 1 words | 197 of the 200 new band 2 words (the open dataset lists 197; three could not be identified), each with a meaning and three example sentences using only HSK 1 and HSK 2 words |
-| Word webs | 25 shared-character groups, 23 opposite pairs, 20 topics | 17 groups, 16 opposite pairs, 13 topics (every word is in a topic) |
+| Word webs | 25 shared-character groups, 23 opposite pairs, 20 topics | 17 groups, 16 pairs and opposites, 14 topics (every word is in a topic) |
 | Grammar | 26 lessons covering all 70 points of the band 1 grammar outline, 130 exercises | 19 lessons, 95 exercises. The points are **not** the official numbered list: they are chosen from the grammar of the HSK 2 words and the Chinese Grammar Wiki's HSK 2 list (`content/l2/grammar-outline.txt`, 36 points) |
 | Listening | 24 clips with dictation, shadowing and a tone trainer | 24 clips with dictation, shadowing and the same tone trainer |
 | Speaking | 8 scripted conversations you say out loud | 8 scripted conversations you say out loud |

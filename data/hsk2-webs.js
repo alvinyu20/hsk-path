@@ -25,7 +25,7 @@ window.HSK2_WEBS = {
      "parts": [
       [
        "过",
-       "over"
+       "cross"
       ],
       [
        "来",
@@ -64,7 +64,7 @@ window.HSK2_WEBS = {
      "parts": [
       [
        "起",
-       "up"
+       "rise"
       ],
       [
        "来",
@@ -158,7 +158,7 @@ window.HSK2_WEBS = {
      "parts": [
       [
        "过",
-       "over"
+       "cross"
       ],
       [
        "去",
@@ -258,7 +258,7 @@ window.HSK2_WEBS = {
   {
    "hub": "面",
    "py": "miàn",
-   "en": "side; surface",
+   "en": "side; surface (a place ending)",
    "words": [
     {
      "zh": "前面",
@@ -437,7 +437,7 @@ window.HSK2_WEBS = {
      "parts": [
       [
        "颜",
-       "colour, face"
+       "colour (only in 颜色)"
       ],
       [
        "色",
@@ -505,7 +505,7 @@ window.HSK2_WEBS = {
      "parts": [
       [
        "个",
-       "individual"
+       "(no separate meaning here)"
       ],
       [
        "子",
@@ -579,7 +579,7 @@ window.HSK2_WEBS = {
   {
    "hub": "意思",
    "py": "yìsi",
-   "en": "meaning; interest",
+   "en": "meaning (有意思 = interesting)",
    "words": [
     {
      "zh": "意思",
@@ -603,7 +603,7 @@ window.HSK2_WEBS = {
       ],
       [
        "意思",
-       "meaning"
+       "interest"
       ]
      ]
     },
@@ -616,7 +616,7 @@ window.HSK2_WEBS = {
       ],
       [
        "意思",
-       "meaning"
+       "interest"
       ]
      ]
     },
@@ -629,7 +629,7 @@ window.HSK2_WEBS = {
       ],
       [
        "意思",
-       "meaning"
+       "(set phrase: sorry)"
       ]
      ]
     }
@@ -774,7 +774,7 @@ window.HSK2_WEBS = {
      "parts": [
       [
        "打",
-       "hail"
+       "take"
       ],
       [
        "车",
@@ -923,7 +923,7 @@ window.HSK2_WEBS = {
      "parts": [
       [
        "打",
-       "hit; do"
+       "do"
       ],
       [
        "开",
@@ -936,7 +936,7 @@ window.HSK2_WEBS = {
      "parts": [
       [
        "开",
-       "open"
+       "start"
       ],
       [
        "始",
@@ -949,7 +949,7 @@ window.HSK2_WEBS = {
      "parts": [
       [
        "开",
-       "open"
+       "start"
       ],
       [
        "学",
@@ -1384,7 +1384,7 @@ window.HSK2_WEBS = {
       ],
       [
        "网",
-       "internet"
+       "net"
       ]
      ]
     },
@@ -1393,7 +1393,7 @@ window.HSK2_WEBS = {
      "parts": [
       [
        "网",
-       "internet"
+       "net"
       ],
       [
        "上",
@@ -1542,7 +1542,7 @@ window.HSK2_WEBS = {
      "parts": [
       [
        "过",
-       "over"
+       "cross"
       ],
       [
        "来",
@@ -1559,7 +1559,7 @@ window.HSK2_WEBS = {
       ],
       [
        "年",
-       "year"
+       "New Year"
       ]
      ]
     },
@@ -1568,7 +1568,7 @@ window.HSK2_WEBS = {
      "parts": [
       [
        "过",
-       "over"
+       "cross"
       ],
       [
        "去",
@@ -1663,17 +1663,20 @@ window.HSK2_WEBS = {
   {
    "a": "男孩儿",
    "b": "女孩儿",
-   "note": "Both end in 孩 (child): boy and girl."
+   "note": "Both contain 孩 (child): boy and girl.",
+   "pair": true
   },
   {
    "a": "丈夫",
    "b": "妻子",
-   "note": "A married couple: 丈夫 is the husband, 妻子 is the wife."
+   "note": "A married couple: 丈夫 is the husband, 妻子 is the wife.",
+   "pair": true
   },
   {
    "a": "爷爷",
    "b": "奶奶",
-   "note": "Your father’s father and your father’s mother."
+   "note": "Your father’s father and your father’s mother.",
+   "pair": true
   },
   {
    "a": "晴",
@@ -1683,12 +1686,13 @@ window.HSK2_WEBS = {
   {
    "a": "红茶",
    "b": "绿茶",
-   "note": "Chinese calls it 红茶 (red tea); English calls it black tea."
+   "note": "Chinese calls it 红茶 (red tea); English calls it black tea. 绿茶 is green tea.",
+   "pair": true
   },
   {
    "a": "记得",
    "b": "忘",
-   "note": "记得 is to remember and 忘 is to forget; 忘 usually comes with 了: 忘了."
+   "note": "记得 is to remember and 忘 is to forget; 忘 is often followed by 了: 忘了."
   },
   {
    "a": "开始",
@@ -1788,11 +1792,35 @@ window.HSK2_WEBS = {
     "起来",
     "走",
     "跑",
+    "出门"
+   ]
+  },
+  {
+   "name": "Doing and saying",
+   "to": "review",
+   "cta": "Review these words",
+   "sentence": {
+    "zh": "请你帮我一下，我想告诉你一件事。",
+    "py": "Qǐng nǐ bāng wǒ yíxià, wǒ xiǎng gàosu nǐ yí jiàn shì.",
+    "en": "Please help me for a moment; I want to tell you something."
+   },
+   "words": [
     "拿",
     "送",
-    "出门",
-    "跑步",
-    "打开"
+    "打开",
+    "洗",
+    "笑",
+    "飞",
+    "动",
+    "帮",
+    "帮忙",
+    "等",
+    "告诉",
+    "介绍",
+    "不好意思",
+    "开始",
+    "完",
+    "事情"
    ]
   },
   {
@@ -1812,13 +1840,8 @@ window.HSK2_WEBS = {
     "男孩儿",
     "女孩儿",
     "小孩儿",
-    "班",
     "姓",
-    "姓名",
-    "名",
-    "位",
-    "自己",
-    "介绍"
+    "姓名"
    ]
   },
   {
@@ -1846,14 +1869,8 @@ window.HSK2_WEBS = {
     "高中",
     "准备",
     "意思",
-    "告诉",
-    "帮",
-    "帮忙",
-    "等",
-    "完",
     "错",
-    "开始",
-    "事情"
+    "班"
    ]
   },
   {
@@ -1875,12 +1892,11 @@ window.HSK2_WEBS = {
     "个子",
     "舒服",
     "累",
-    "洗",
     "高"
    ]
   },
   {
-   "name": "Colors and things",
+   "name": "Colors, animals and things",
    "to": "review",
    "cta": "Review these words",
    "sentence": {
@@ -1920,12 +1936,11 @@ window.HSK2_WEBS = {
     "咖啡",
     "肉",
     "鱼",
-    "饭馆",
     "面"
    ]
   },
   {
-   "name": "Sports and fun",
+   "name": "Sports, hobbies and fun",
    "to": "review",
    "cta": "Review these words",
    "sentence": {
@@ -1946,14 +1961,11 @@ window.HSK2_WEBS = {
     "爱好",
     "上网",
     "网上",
-    "旅游",
-    "笑",
-    "飞",
-    "动"
+    "旅游"
    ]
   },
   {
-   "name": "Weather and time",
+   "name": "Weather, time and how often",
    "to": "review",
    "cta": "Review these words",
    "sentence": {
@@ -1975,12 +1987,9 @@ window.HSK2_WEBS = {
     "有时",
     "每",
     "正",
-    "快",
     "快要",
     "从小",
-    "从",
-    "就",
-    "让"
+    "就"
    ]
   },
   {
@@ -2001,19 +2010,12 @@ window.HSK2_WEBS = {
     "有意思",
     "慢",
     "长",
-    "可能",
-    "最",
-    "比",
-    "那么",
-    "这么",
-    "那样",
-    "这样",
     "快",
     "舒服"
    ]
   },
   {
-   "name": "Connecting words",
+   "name": "Grammar words",
    "to": "grammar",
    "cta": "Practise with grammar lessons",
    "sentence": {
@@ -2039,15 +2041,20 @@ window.HSK2_WEBS = {
     "得",
     "着",
     "过",
-    "不好意思",
     "希望",
     "可能",
     "一起",
-    "自己"
+    "自己",
+    "最",
+    "比",
+    "那么",
+    "这么",
+    "那样",
+    "这样"
    ]
   },
   {
-   "name": "Numbers and counting",
+   "name": "Numbers and measure words",
    "to": "review",
    "cta": "Review these words",
    "sentence": {
@@ -2061,9 +2068,7 @@ window.HSK2_WEBS = {
     "条",
     "间",
     "位",
-    "名",
-    "包",
-    "周"
+    "名"
    ]
   }
  ]

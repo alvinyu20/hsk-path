@@ -63,7 +63,7 @@ def main():
     for o in src['opps']:
         if o['a'] not in ow or o['b'] not in ow:
             die('opposites: %s / %s not both HSK 1 words' % (o['a'], o['b']))
-        opps.append(dict(a=o['a'], b=o['b'], note=o['note']))
+        opps.append(dict(a=o['a'], b=o['b'], note=o['note'], **({'pair': True} if o.get('pair') else {})))
 
     topics, seen = [], set()
     for t in src['topics']:
