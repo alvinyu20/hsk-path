@@ -38,8 +38,8 @@
   ],
   [
    "✈️",
-   "我们去机场。",
-   "We are going to the airport.",
+   "我们坐飞机去中国。",
+   "We are flying to China.",
    1
   ],
   [
@@ -140,8 +140,8 @@
   ],
   [
    "🎂",
-   "今天是她的考试。",
-   "Today is her exam.",
+   "今天她有考试。",
+   "She has an exam today.",
    0
   ]
  ],
@@ -471,8 +471,8 @@
       },
       {
        "s": "女",
-       "zh": "想，我想去外国。",
-       "en": "Yes, I want to go abroad."
+       "zh": "想，我想出国旅游。",
+       "en": "Yes, I want to travel abroad."
       }
      ],
      "ans": 3
@@ -782,7 +782,7 @@
     {
      "s": "男",
      "zh": "在前面，往左走。",
-     "en": "Up ahead, turn left."
+     "en": "It is up ahead; go left."
     }
    ],
    "q": {
@@ -850,8 +850,8 @@
     },
     {
      "s": "女",
-     "zh": "是阴天，可能会下雨。",
-     "en": "It is overcast and may rain."
+     "zh": "今天阴天，可能会下雨。",
+     "en": "It is overcast today and may rain."
     }
    ],
    "q": {
@@ -920,7 +920,7 @@
     {
      "s": "男",
      "zh": "打车吧，太远了。",
-     "en": "A taxi; it is too far."
+     "en": "Let us take a taxi; it is too far."
     }
    ],
    "q": {
@@ -1231,13 +1231,13 @@
     },
     {
      "s": "男",
-     "zh": "四口人，爸爸妈妈和一个妹妹。",
-     "en": "Four: my parents and a younger sister."
+     "zh": "四口人，爸爸、妈妈、妹妹和我。",
+     "en": "Four: my father, my mother, my younger sister and me."
     },
     {
      "s": "女",
      "zh": "你妹妹多大了？",
-     "en": "How old is your sister?"
+     "en": "How old is your younger sister?"
     },
     {
      "s": "男",
@@ -1247,7 +1247,7 @@
    ],
    "q": {
     "zh": "他妹妹多大？",
-    "en": "How old is his sister?"
+    "en": "How old is his younger sister?"
    },
    "opts": [
     "十岁",
@@ -1275,7 +1275,7 @@
     {
      "s": "女",
      "zh": "你看，在书的下面。",
-     "en": "You see, it is under the book."
+     "en": "Look, it is under the book."
     }
    ],
    "q": {
@@ -1390,7 +1390,7 @@
      "ans": 2
     },
     {
-     "zh": "我想去外国旅游。",
+     "zh": "我想出国旅游。",
      "en": "I want to travel abroad.",
      "ans": 3
     },

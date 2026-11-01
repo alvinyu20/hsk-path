@@ -56,9 +56,9 @@ window.HSK2_EXAM = {
   },
   {
    "pic": "✈️",
-   "zh": "我们去机场。",
-   "py": "Wǒmen qù jīchǎng.",
-   "en": "We are going to the airport.",
+   "zh": "我们坐飞机去中国。",
+   "py": "Wǒmen zuò fēijī qù Zhōngguó.",
+   "en": "We are flying to China.",
    "ok": true
   },
   {
@@ -175,9 +175,9 @@ window.HSK2_EXAM = {
   },
   {
    "pic": "🎂",
-   "zh": "今天是她的考试。",
-   "py": "Jīntiān shì tā de kǎoshì.",
-   "en": "Today is her exam.",
+   "zh": "今天她有考试。",
+   "py": "Jīntiān tā yǒu kǎoshì.",
+   "en": "She has an exam today.",
    "ok": false
   }
  ],
@@ -544,9 +544,9 @@ window.HSK2_EXAM = {
       },
       {
        "s": "女",
-       "zh": "想，我想去外国。",
-       "py": "Xiǎng, wǒ xiǎng qù wàiguó.",
-       "en": "Yes, I want to go abroad."
+       "zh": "想，我想出国旅游。",
+       "py": "Xiǎng, wǒ xiǎng chūguó lǚyóu.",
+       "en": "Yes, I want to travel abroad."
       }
      ],
      "ans": 3
@@ -685,8 +685,8 @@ window.HSK2_EXAM = {
      "ans": 2
     },
     {
-     "zh": "我想去外国旅游。",
-     "py": "Wǒ xiǎng qù wàiguó lǚyóu.",
+     "zh": "我想出国旅游。",
+     "py": "Wǒ xiǎng chūguó lǚyóu.",
      "en": "I want to travel abroad.",
      "ans": 3
     },
@@ -1132,7 +1132,7 @@ window.HSK2_EXAM = {
      "s": "男",
      "zh": "在前面，往左走。",
      "py": "Zài qiánmiàn, wǎng zuǒ zǒu.",
-     "en": "Up ahead, turn left."
+     "en": "It is up ahead; go left."
     }
    ],
    "q": {
@@ -1235,9 +1235,9 @@ window.HSK2_EXAM = {
     },
     {
      "s": "女",
-     "zh": "是阴天，可能会下雨。",
-     "py": "Shì yīn tiān, kěnéng huì xiàyǔ.",
-     "en": "It is overcast and may rain."
+     "zh": "今天阴天，可能会下雨。",
+     "py": "Jīntiān yīn tiān, kěnéng huì xiàyǔ.",
+     "en": "It is overcast today and may rain."
     }
    ],
    "q": {
@@ -1342,7 +1342,7 @@ window.HSK2_EXAM = {
      "s": "男",
      "zh": "打车吧，太远了。",
      "py": "Dǎchē ba, tài yuǎn le.",
-     "en": "A taxi; it is too far."
+     "en": "Let us take a taxi; it is too far."
     }
    ],
    "q": {
@@ -1788,15 +1788,15 @@ window.HSK2_EXAM = {
     },
     {
      "s": "男",
-     "zh": "四口人，爸爸妈妈和一个妹妹。",
-     "py": "Sì kǒu rén, bàba māma hé yí ge mèimei.",
-     "en": "Four: my parents and a younger sister."
+     "zh": "四口人，爸爸、妈妈、妹妹和我。",
+     "py": "Sì kǒu rén, bàba, māma, mèimei hé wǒ.",
+     "en": "Four: my father, my mother, my younger sister and me."
     },
     {
      "s": "女",
      "zh": "你妹妹多大了？",
      "py": "Nǐ mèimei duō dà le?",
-     "en": "How old is your sister?"
+     "en": "How old is your younger sister?"
     },
     {
      "s": "男",
@@ -1808,7 +1808,7 @@ window.HSK2_EXAM = {
    "q": {
     "zh": "他妹妹多大？",
     "py": "Tā mèimei duō dà?",
-    "en": "How old is his sister?"
+    "en": "How old is his younger sister?"
    },
    "opts": [
     {
@@ -1849,7 +1849,7 @@ window.HSK2_EXAM = {
      "s": "女",
      "zh": "你看，在书的下面。",
      "py": "Nǐ kàn, zài shū de xiàmiàn.",
-     "en": "You see, it is under the book."
+     "en": "Look, it is under the book."
     }
    ],
    "q": {

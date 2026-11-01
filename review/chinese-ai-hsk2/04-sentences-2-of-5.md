@@ -182,7 +182,7 @@ Sentences (Chinese / English):
 168. 我的眼睛有点疼。  /  My eyes hurt a bit.
 169. 这个小孩的眼睛很漂亮。  /  This child's eyes are pretty.
 170. 我的手疼。  /  My hand hurts.
-171. 我今天头很疼。  /  I have a bad headache today.
+171. 我今天头很疼。  /  My head hurts a lot today.
 172. 这个药很好。  /  This medicine is good.
 173. 他生病了，要吃药。  /  He is sick and needs to take medicine.
 174. 我弟弟个子不高。  /  My younger brother is not tall.

@@ -214,21 +214,21 @@ Sentences (Chinese / English):
 200. 我们坐地铁去机场，很快就到。  /  We take the subway to the airport; we get there quickly.
 201. 洗手间在左边，药店在右边。  /  The restroom is on the left and the pharmacy is on the right.
 202. 请进来，我们一起出去吧。  /  Please come in; let us go out together.
-203. 这位是我爷爷，那位是我奶奶。  /  This is my grandfather, and that is my grandmother.
-204. 明天开学，我准备好书包和本子了。  /  School starts tomorrow, and I have my schoolbag and notebook ready.
-205. 我头疼，身体不舒服。  /  My head hurts and I do not feel well.
-206. 我喜欢红色的花和绿色的包。  /  I like red flowers and a green bag.
-207. 我想喝一杯咖啡，吃一点鱼。  /  I want a cup of coffee and a little fish.
-208. 我的爱好是游泳和踢足球。  /  My hobbies are swimming and playing soccer.
-209. 今天是晴天，我们已经出门了。  /  Today is a sunny day, and we have already gone out.
-210. 这个电影很有意思，不错。  /  This movie is very interesting, not bad.
-211. 因为下雨，所以我们在家看电影。  /  Because it is raining, we watch a movie at home.
-212. 我去过三次中国，买了一条红色的裤子。  /  I have been to China three times and bought a pair of red trousers.
-213. 你好！我能帮你吗？  /  Hello! Can I help you?
-214. 往前走，车站在学校旁边。  /  Go straight ahead. The station is next to the school.
-215. 不远，走路十分钟。  /  Not far, ten minutes on foot.
-216. 好。请往前走，别往右走。  /  Good. Please go straight ahead; do not turn right.
-217. 不客气！再见！  /  You are welcome! Goodbye!
-218. 离这里远吗？  /  Is it far from here?
-219. 好的，我走路去。  /  Okay, I will walk.
-220. 好的，谢谢你！  /  Okay, thank you!
+203. 请你帮我一下，我想告诉你一件事。  /  Please help me for a moment; I want to tell you something.
+204. 这位是我爷爷，那位是我奶奶。  /  This is my grandfather, and that is my grandmother.
+205. 明天开学，我准备好书包和本子了。  /  School starts tomorrow, and I have my schoolbag and notebook ready.
+206. 我头疼，身体不舒服。  /  My head hurts and I do not feel well.
+207. 我喜欢红色的花和绿色的包。  /  I like red flowers and a green bag.
+208. 我想喝一杯咖啡，吃一点鱼。  /  I want a cup of coffee and a little fish.
+209. 我的爱好是游泳和踢足球。  /  My hobbies are swimming and playing soccer.
+210. 今天是晴天，我们已经出门了。  /  Today is a sunny day, and we have already gone out.
+211. 这个电影很有意思，不错。  /  This movie is very interesting, not bad.
+212. 因为下雨，所以我们在家看电影。  /  Because it is raining, we watch a movie at home.
+213. 我去过三次中国，买了一条红色的裤子。  /  I have been to China three times and bought a pair of red trousers.
+214. 你好！我能帮你吗？  /  Hello! Can I help you?
+215. 往前走，车站在学校旁边。  /  Go straight ahead. The station is next to the school.
+216. 不远，走路十分钟。  /  Not far, ten minutes on foot.
+217. 好。请往前走，别往右走。  /  Good. Please go straight ahead; do not turn right.
+218. 不客气！再见！  /  You are welcome! Goodbye!
+219. 离这里远吗？  /  Is it far from here?
+220. 好的，我走路去。  /  Okay, I will walk.

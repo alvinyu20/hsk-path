@@ -20,7 +20,7 @@ Sentences and dialogues:
 4. 我喜欢打篮球。  /  I like playing basketball.
 5. 我坐地铁去学校。  /  I take the subway to school.
 6. 我坐公交车去学校。  /  I take the bus to school.
-7. 我们去机场。  /  We are going to the airport.
+7. 我们坐飞机去中国。  /  We are flying to China.
 8. 我们去商场。  /  We are going to the mall.
 9. 我喜欢吃鱼。  /  I like eating fish.
 10. 我喜欢吃肉。  /  I like eating meat.
@@ -35,7 +35,7 @@ Sentences and dialogues:
 19. 我在学校学习。  /  I study at school.
 20. 我在医院工作。  /  I work at a hospital.
 21. 今天是她的生日。  /  Today is her birthday.
-22. 今天是她的考试。  /  Today is her exam.
+22. 今天她有考试。  /  She has an exam today.
 23. 你喜欢什么运动？  /  What sport do you like?
 24. 我最喜欢游泳。  /  I like swimming most.
 25. 你怎么去机场？  /  How do you get to the airport?
@@ -70,7 +70,7 @@ Sentences and dialogues:
 54. 我每天上网。  /  I go online every day.
 55. 现在几点？  /  What time is it now?
 56. 你想去旅游吗？  /  Do you want to travel?
-57. 想，我想去外国。  /  Yes, I want to go abroad.
+57. 想，我想出国旅游。  /  Yes, I want to travel abroad.
 58. 你在哪里学习？  /  Where do you study?
 59. 你明天去哪里？  /  Where are you going tomorrow?
 60. 我去机场。  /  I am going to the airport.
@@ -104,7 +104,7 @@ Sentences and dialogues:
 88. 我想去看电影。  /  I want to see a movie.
 89. 她明天想做什么？  /  What does she want to do tomorrow?
 90. 请问，洗手间在哪里？  /  Excuse me, where is the restroom?
-91. 在前面，往左走。  /  Up ahead, turn left.
+91. 在前面，往左走。  /  It is up ahead; go left.
 92. 洗手间在哪边？  /  Which side is the restroom on?
 93. 你的手表真漂亮！  /  Your watch is so nice!
 94. 谢谢，这是我哥哥送我的。  /  Thanks, my older brother gave it to me.
@@ -112,7 +112,7 @@ Sentences and dialogues:
 96. 你会游泳吗？  /  Can you swim?
 97. 会，我从小就会。  /  Yes, I have been able to since I was little.
 98. 他会游泳吗？  /  Can he swim?
-99. 是阴天，可能会下雨。  /  It is overcast and may rain.
+99. 今天阴天，可能会下雨。  /  It is overcast today and may rain.
 100. 你们几点开始上课？  /  What time does your class start?
 101. 八点半。  /  Half past eight.
 102. 几点开始上课？  /  What time does class start?
@@ -120,7 +120,7 @@ Sentences and dialogues:
 104. 我没有她高。  /  I am not as tall as she is.
 105. 谁高？  /  Who is taller?
 106. 你想坐公交车还是打车？  /  Would you like to take the bus or a taxi?
-107. 打车吧，太远了。  /  A taxi; it is too far.
+107. 打车吧，太远了。  /  Let us take a taxi; it is too far.
 108. 他想怎么去？  /  How does he want to go?
 109. 你每天都跑步吗？  /  Do you run every day?
 110. 不，我有时跑步。  /  No, I run sometimes.
@@ -164,14 +164,14 @@ Sentences and dialogues:
 148. 下次坐地铁吧。  /  Take the subway next time.
 149. 他怎么来的？  /  How did he come?
 150. 你家有几口人？  /  How many people are in your family?
-151. 四口人，爸爸妈妈和一个妹妹。  /  Four: my parents and a younger sister.
-152. 你妹妹多大了？  /  How old is your sister?
+151. 四口人，爸爸、妈妈、妹妹和我。  /  Four: my father, my mother, my younger sister and me.
+152. 你妹妹多大了？  /  How old is your younger sister?
 153. 她今年十岁。  /  She is ten this year.
-154. 他妹妹多大？  /  How old is his sister?
+154. 他妹妹多大？  /  How old is his younger sister?
 155. 你的手机在哪里？  /  Where is your phone?
 156. 在桌子上面。  /  On the table.
 157. 我没有看到。  /  I do not see it.
-158. 你看，在书的下面。  /  You see, it is under the book.
+158. 你看，在书的下面。  /  Look, it is under the book.
 159. 手机在哪里？  /  Where is the phone?
 160. 他们在踢足球。  /  They are playing soccer.
 161. 今天是我的生日。  /  Today is my birthday.
@@ -181,7 +181,7 @@ Sentences and dialogues:
 165. 我头疼，要吃药。  /  I have a headache and need to take medicine.
 166. 这条裤子很大。  /  These trousers are very big.
 167. 他每天上网。  /  He goes online every day.
-168. 我想去外国旅游。  /  I want to travel abroad.
+168. 我想出国旅游。  /  I want to travel abroad.
 169. 他比我高。  /  He is taller than me.
 170. 学校离我家很近。  /  The school is close to my home.
 171. 我从八点工作到五点。  /  I work from eight to five.
@@ -233,20 +233,21 @@ Sentences and dialogues:
 217. 你为什么没去上课？  /  Why did you not go to class?
 218. 因为我生病了。  /  Because I was ill.
 219. 两百块。  /  Two hundred yuan.
-220. 你的生日是几月几号？  /  When is your birthday?
-221. 你会跳舞吗？  /  Can you dance?
-222. 会，我从小就跳舞。  /  Yes, I have danced since I was little.
-223. 谁教你汉语？  /  Who teaches you Chinese?
-224. 我的朋友教我。  /  My friend teaches me.
-225. 你想吃面还是吃米饭？  /  Do you want noodles or rice?
-226. 我想吃米饭。  /  I would like rice.
-227. 你头疼吗？  /  Does your head hurt?
-228. 不疼了，谢谢。  /  It does not hurt any more, thanks.
-229. 你有手表吗？  /  Do you have a watch?
-230. 有，这是我的新手表。  /  Yes, this is my new watch.
-231. 你累不累？  /  Are you tired?
-232. 有点累。  /  A little tired.
-233. 有，我们一起去吧。  /  Yes, let us go together.
+220. 在前面，往左走。  /  Up ahead, turn left.
+221. 你的生日是几月几号？  /  When is your birthday?
+222. 你会跳舞吗？  /  Can you dance?
+223. 会，我从小就跳舞。  /  Yes, I have danced since I was little.
+224. 谁教你汉语？  /  Who teaches you Chinese?
+225. 我的朋友教我。  /  My friend teaches me.
+226. 你想吃面还是吃米饭？  /  Do you want noodles or rice?
+227. 我想吃米饭。  /  I would like rice.
+228. 你头疼吗？  /  Does your head hurt?
+229. 不疼了，谢谢。  /  It does not hurt any more, thanks.
+230. 你有手表吗？  /  Do you have a watch?
+231. 有，这是我的新手表。  /  Yes, this is my new watch.
+232. 你累不累？  /  Are you tired?
+233. 有点累。  /  A little tired.
+234. 有，我们一起去吧。  /  Yes, let us go together.
 
 Picture and pair items (emoji stand in for pictures; the first picture named is the intended answer):
 
@@ -256,7 +257,7 @@ Picture and pair items (emoji stand in for pictures; the first picture named is 
 听力第1部分：图片 ⚽ ＋ 句子“我喜欢打篮球。” → 不相符
 听力第1部分：图片 🚇 ＋ 句子“我坐地铁去学校。” → 相符
 听力第1部分：图片 🚇 ＋ 句子“我坐公交车去学校。” → 不相符
-听力第1部分：图片 ✈️ ＋ 句子“我们去机场。” → 相符
+听力第1部分：图片 ✈️ ＋ 句子“我们坐飞机去中国。” → 相符
 听力第1部分：图片 ✈️ ＋ 句子“我们去商场。” → 不相符
 听力第1部分：图片 🐟 ＋ 句子“我喜欢吃鱼。” → 相符
 听力第1部分：图片 🐟 ＋ 句子“我喜欢吃肉。” → 不相符
@@ -273,7 +274,7 @@ Picture and pair items (emoji stand in for pictures; the first picture named is 
 听力第1部分：图片 ☀️ ＋ 句子“今天是晴天。” → 相符
 听力第1部分：图片 ☀️ ＋ 句子“今天下雨了。” → 不相符
 听力第1部分：图片 🎂 ＋ 句子“今天是她的生日。” → 相符
-听力第1部分：图片 🎂 ＋ 句子“今天是她的考试。” → 不相符
+听力第1部分：图片 🎂 ＋ 句子“今天她有考试。” → 不相符
 听力第2部分：对话“你喜欢什么运动？ 我最喜欢游泳。” → 正确图片 🏊 （这一组的图片：🏊 🚇 🏥 🎂 🌧️ 📱）
 听力第2部分：对话“你怎么去机场？ 我坐地铁去。” → 正确图片 🚇 （这一组的图片：🏊 🚇 🏥 🎂 🌧️ 📱）
 听力第2部分：对话“你怎么了？ 我头疼，我要去医院。” → 正确图片 🏥 （这一组的图片：🏊 🚇 🏥 🎂 🌧️ 📱）
@@ -292,7 +293,7 @@ Picture and pair items (emoji stand in for pictures; the first picture named is 
 听力第2部分：对话“你在做什么？ 我在打电话。” → 正确图片 📞 （这一组的图片：📞 💻 🕐 🧳 🏫 🍎）
 听力第2部分：对话“你每天做什么？ 我每天上网。” → 正确图片 💻 （这一组的图片：📞 💻 🕐 🧳 🏫 🍎）
 听力第2部分：对话“现在几点？ 现在一点。” → 正确图片 🕐 （这一组的图片：📞 💻 🕐 🧳 🏫 🍎）
-听力第2部分：对话“你想去旅游吗？ 想，我想去外国。” → 正确图片 🧳 （这一组的图片：📞 💻 🕐 🧳 🏫 🍎）
+听力第2部分：对话“你想去旅游吗？ 想，我想出国旅游。” → 正确图片 🧳 （这一组的图片：📞 💻 🕐 🧳 🏫 🍎）
 听力第2部分：对话“你在哪儿学习？ 我在学校学习。” → 正确图片 🏫 （这一组的图片：📞 💻 🕐 🧳 🏫 🍎）
 阅读第1部分：句子“我最喜欢游泳。” → 正确图片 🏊 （这一组的图片：🏊 ⚽ 🚇 🎂 🌧️ 📱）
 阅读第1部分：句子“他们在踢足球。” → 正确图片 ⚽ （这一组的图片：🏊 ⚽ 🚇 🎂 🌧️ 📱）
@@ -307,7 +308,7 @@ Picture and pair items (emoji stand in for pictures; the first picture named is 
 阅读第1部分：句子“我在打电话。” → 正确图片 📞 （这一组的图片：📞 💻 🕐 🧳 🎤 🛏️）
 阅读第1部分：句子“他每天上网。” → 正确图片 💻 （这一组的图片：📞 💻 🕐 🧳 🎤 🛏️）
 阅读第1部分：句子“现在一点。” → 正确图片 🕐 （这一组的图片：📞 💻 🕐 🧳 🎤 🛏️）
-阅读第1部分：句子“我想去外国旅游。” → 正确图片 🧳 （这一组的图片：📞 💻 🕐 🧳 🎤 🛏️）
+阅读第1部分：句子“我想出国旅游。” → 正确图片 🧳 （这一组的图片：📞 💻 🕐 🧳 🎤 🛏️）
 阅读第1部分：句子“她在唱歌。” → 正确图片 🎤 （这一组的图片：📞 💻 🕐 🧳 🎤 🛏️）
 阅读第3部分：“他比我大三岁。” 和 “我比他小三岁。” → 意思相同
 阅读第3部分：“我没有他高。” 和 “他比我高。” → 意思相同

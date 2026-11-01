@@ -12,22 +12,23 @@ If a part has no problems, answer "No problems found".
 
 Sentences (Chinese / English):
 
-1. 她是和朋友一起来的。  /  She came together with her friends.
-2. 我不是打车来的。  /  I did not come by taxi.
-3. 他可能不在家。  /  He may not be at home.
-4. 我希望明天是晴天。  /  I hope tomorrow is sunny.
-5. 我准备明年出国旅游。  /  I plan to travel abroad next year.
-6. 他可能在睡觉。  /  He might be sleeping.
-7. 我准备明天去买药。  /  I plan to go and buy medicine tomorrow.
-8. 我希望你喜欢这个手表。  /  I hope you like this watch.
-9. 今天可能会下雨。  /  It might rain today.
-10. 他可能不来。  /  He might not come.
-11. 你今年多大了？  /  How old are you this year?
-12. 下雨的时候，我们在家看电影。  /  When it rains, we watch movies at home.
-13. 再想想，好吗？  /  Think about it some more, okay?
-14. 请你问问老师。  /  Please ask the teacher.
-15. 你家离学校有多远？  /  How far is your home from school?
-16. 他有多高？  /  How tall is he?
-17. 吃饭的时候，别看手机。  /  Do not look at your phone when eating.
-18. 车站离这里有多远？  /  How far is the station from here?
-19. 再想想吧。  /  Think about it again.
+1. 他是在这里学汉语的。  /  It was here that he learned Chinese.
+2. 她是和朋友一起来的。  /  She came together with her friends.
+3. 我不是打车来的。  /  I did not come by taxi.
+4. 他可能不在家。  /  He may not be at home.
+5. 我希望明天是晴天。  /  I hope tomorrow is sunny.
+6. 我准备明年出国旅游。  /  I plan to travel abroad next year.
+7. 他可能在睡觉。  /  He might be sleeping.
+8. 我准备明天去买药。  /  I plan to go and buy medicine tomorrow.
+9. 我希望你喜欢这个手表。  /  I hope you like this watch.
+10. 今天可能会下雨。  /  It might rain today.
+11. 他可能不来。  /  He might not come.
+12. 你今年多大了？  /  How old are you this year?
+13. 下雨的时候，我们在家看电影。  /  When it rains, we watch movies at home.
+14. 再想想，好吗？  /  Think about it some more, okay?
+15. 请你问问老师。  /  Please ask the teacher.
+16. 你家离学校有多远？  /  How far is your home from school?
+17. 他有多高？  /  How tall is he?
+18. 吃饭的时候，别看手机。  /  Do not look at your phone when eating.
+19. 车站离这里有多远？  /  How far is the station from here?
+20. 再想想吧。  /  Think about it again.
