@@ -49,12 +49,37 @@ window.HSK1_ERHUA = {
    "officialPy": "nǎr",
    "plainPy": "nǎlǐ",
    "twin": true
+  },
+  {
+   "official": "男孩儿",
+   "plain": "男孩",
+   "officialPy": "nánháir",
+   "plainPy": "nánhái",
+   "twin": false
+  },
+  {
+   "official": "女孩儿",
+   "plain": "女孩",
+   "officialPy": "nǚháir",
+   "plainPy": "nǚhái",
+   "twin": false
+  },
+  {
+   "official": "小孩儿",
+   "plain": "小孩",
+   "officialPy": "xiǎoháir",
+   "plainPy": "xiǎohái",
+   "twin": false
   }
  ],
  "overrides": [
   {
    "from": "哪儿 nǎr is one beat: the 儿 merges into the syllable.",
    "to": "哪里 nǎli: the 里 is short and light, like a quick second beat."
+  },
+  {
+   "from": "孩儿",
+   "to": "孩"
   }
  ]
 };

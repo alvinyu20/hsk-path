@@ -739,8 +739,8 @@ window.HSK2_WEBS = {
      ]
     },
     {
-     "en": "How much is a ticket for this place?",
-     "zh": "这个商场的___多少钱？",
+     "en": "How much is a ticket here?",
+     "zh": "这里的___多少钱？",
      "ans": "门票",
      "opts": [
       "门票",
@@ -851,14 +851,14 @@ window.HSK2_WEBS = {
      ]
     },
     {
-     "zh": "小孩",
+     "zh": "小孩儿",
      "parts": [
       [
        "小",
        "little"
       ],
       [
-       "孩",
+       "孩儿",
        "child"
       ]
      ]
@@ -885,7 +885,7 @@ window.HSK2_WEBS = {
      "opts": [
       "小时候",
       "从小",
-      "小孩",
+      "小孩儿",
       "一会儿"
      ]
     },
@@ -895,7 +895,7 @@ window.HSK2_WEBS = {
      "ans": "从小",
      "opts": [
       "从小",
-      "小孩",
+      "小孩儿",
       "经常",
       "已经"
      ]
@@ -903,9 +903,9 @@ window.HSK2_WEBS = {
     {
      "en": "That child is laughing.",
      "zh": "那个___在笑。",
-     "ans": "小孩",
+     "ans": "小孩儿",
      "opts": [
-      "小孩",
+      "小孩儿",
       "小时候",
       "从小",
       "一会儿"
@@ -983,7 +983,7 @@ window.HSK2_WEBS = {
     },
     {
      "en": "School starts next week and I need to get my schoolbag ready.",
-     "zh": "下个星期___，我要准备书包。",
+     "zh": "下个星期___，我要准备好书包。",
      "ans": "开学",
      "opts": [
       "开学",
@@ -1081,40 +1081,40 @@ window.HSK2_WEBS = {
    "en": "child",
    "words": [
     {
-     "zh": "男孩",
+     "zh": "男孩儿",
      "parts": [
       [
        "男",
        "male"
       ],
       [
-       "孩",
+       "孩儿",
        "child"
       ]
      ]
     },
     {
-     "zh": "女孩",
+     "zh": "女孩儿",
      "parts": [
       [
        "女",
        "female"
       ],
       [
-       "孩",
+       "孩儿",
        "child"
       ]
      ]
     },
     {
-     "zh": "小孩",
+     "zh": "小孩儿",
      "parts": [
       [
        "小",
        "little"
       ],
       [
-       "孩",
+       "孩儿",
        "child"
       ]
      ]
@@ -1124,33 +1124,33 @@ window.HSK2_WEBS = {
     {
      "en": "That boy is my younger brother.",
      "zh": "那个___是我弟弟。",
-     "ans": "男孩",
+     "ans": "男孩儿",
      "opts": [
-      "男孩",
-      "女孩",
-      "小孩",
+      "男孩儿",
+      "女孩儿",
+      "小孩儿",
       "妻子"
      ]
     },
     {
      "en": "That girl is my younger sister’s friend.",
      "zh": "那个___是我妹妹的朋友。",
-     "ans": "女孩",
+     "ans": "女孩儿",
      "opts": [
-      "女孩",
-      "男孩",
-      "小孩",
+      "女孩儿",
+      "男孩儿",
+      "小孩儿",
       "妻子"
      ]
     },
     {
      "en": "This child is five years old this year.",
      "zh": "这个___今年五岁。",
-     "ans": "小孩",
+     "ans": "小孩儿",
      "opts": [
-      "小孩",
-      "男孩",
-      "女孩",
+      "小孩儿",
+      "男孩儿",
+      "女孩儿",
       "丈夫"
      ]
     }
@@ -1661,8 +1661,8 @@ window.HSK2_WEBS = {
    "note": "Both end in 来: moving toward the speaker, upward or downward."
   },
   {
-   "a": "男孩",
-   "b": "女孩",
+   "a": "男孩儿",
+   "b": "女孩儿",
    "note": "Both end in 孩 (child): boy and girl."
   },
   {
@@ -1702,9 +1702,9 @@ window.HSK2_WEBS = {
    "to": "review",
    "cta": "Review these words",
    "sentence": {
-    "zh": "我们坐地铁去机场，路上很快。",
-    "py": "Wǒmen zuò dìtiě qù jīchǎng, lùshang hěn kuài.",
-    "en": "We take the subway to the airport; it is fast on the way."
+    "zh": "我们坐地铁去机场，很快就到。",
+    "py": "Wǒmen zuò dìtiě qù jīchǎng, hěn kuài jiù dào.",
+    "en": "We take the subway to the airport; we get there quickly."
    },
    "words": [
     "车站",
@@ -1809,9 +1809,9 @@ window.HSK2_WEBS = {
     "奶奶",
     "妻子",
     "丈夫",
-    "男孩",
-    "女孩",
-    "小孩",
+    "男孩儿",
+    "女孩儿",
+    "小孩儿",
     "班",
     "姓",
     "姓名",

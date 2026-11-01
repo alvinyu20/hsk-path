@@ -19,7 +19,7 @@
    "To say A is more than B, put 比 between them and the adjective after: 他比我高 means 'He is taller than me'. Do not add 很 before the adjective in a 比 sentence.",
    "To say how much more, put the amount after the adjective: 他比我大三岁 'He is three years older than me'; 这个比那个好一点 'This one is a bit better than that one'; 他比我高多了 'He is much taller than me'.",
    "To say A is not as ... as B, use 没有: 我没有他高 'I am not as tall as he is'. Add 那么 to say 'so': 我没有他那么高.",
-   "最 means 'most': 我最喜欢茶 'I like tea most'. 这么 and 那么 mean 'so': 这么贵 'so expensive' (this much, about something near), 那么远 'so far' (that much, about something farther away)."
+   "最 means 'most': 我最喜欢喝茶 'I like drinking tea best'. 这么 and 那么 both mean 'so': 这么贵 'so expensive', 那么远 'so far'. 这么 usually points at what is here or happening now, and 那么 at something farther away or already mentioned, but you will hear both in many sentences."
   ],
   "examples": [
    {
@@ -116,7 +116,7 @@
    }
   ],
   "mistakes": [
-   "Keep the pattern place + 离 + place + 很远. Do not say 学校很远我家, the way English says 'the school is far from my home'."
+   "Keep the pattern place + 离 + place + 远 or 近 (很远, 很近, 不远 all work). Do not say 学校很远我家, the way English says 'the school is far from my home'."
   ],
   "q": [
    {
@@ -173,7 +173,7 @@
    "Place"
   ],
   "explain": [
-   "到 before a place means 'arrive at' or 'go to': 我们到机场了 'We have arrived at the airport'. 他每天八点到学校 'He gets to school at eight every day'.",
+   "到 before a place means 'arrive at' or 'get to': 我们到机场了 'We have arrived at the airport'. 他每天八点到学校 'He gets to school at eight every day'.",
    "Most verbs keep 在 + place before the verb (我在家吃饭), but a few verbs take 在 + place after them to say where the person ends up: 我住在学校旁边 'I live next to the school'; 她站在门口 'She is standing at the door'. Common ones are 住, 坐 and 站.",
    "Compare 我在这里工作 (the working happens here) and 我住在这里 (I live here)."
   ],
@@ -255,7 +255,7 @@
   "explain": [
    "Put 过 after a verb to say you have done it at least once in your life: 我去过中国 'I have been to China'. This 过 is pronounced guo with a light tone, and the verb does not change.",
    "To say you have never done it, use 没 + verb + 过: 我没吃过这个 'I have never eaten this'. Do not use 不. To ask, add 吗: 你去过中国吗？",
-   "Compare 了 and 过: 我去了中国 says the trip happened; 我去过中国 says it is part of your experience. To say how many times, put it after 过: 我去过三次中国."
+   "Compare 了 and 过: 我去了中国 says the trip happened; 我去过中国 says it is part of your experience. To say how many times, put it after 过 (我去过三次中国) or after the place (我去过中国三次); both orders are common."
   ],
   "examples": [
    {
@@ -271,8 +271,8 @@
     "en": "I have never learned to swim."
    },
    {
-    "zh": "他看过这个电影两次。",
-    "en": "He has seen this movie twice."
+    "zh": "这个电影我看过两次。",
+    "en": "I have seen this movie twice."
    }
   ],
   "mistakes": [
@@ -333,7 +333,7 @@
   "explain": [
    "Put 着 after a verb to describe a state that is still there: 门开着 'The door is open'; 他站着，我坐着 'He is standing and I am sitting'. It shows how things are right now.",
    "着 can also link two actions: the first, with 着, shows how the second is done. 他笑着说话 'He talks with a smile'; 弟弟坐着看电视 'My younger brother watches TV sitting down'.",
-   "To say it is not in that state, drop 着 and use 没: 门没开 'The door is not open'. For an action in progress use 在 or 正在 (他在跑步 'He is running'); 着 describes a state, like 门开着."
+   "To say it is not in that state, put 没 before the verb: 门没开 'The door is not open'. Some verbs keep 着 in the negative (他没站着 'He is not standing'), so learn it with each verb. For an action in progress use 在 or 正在 (他在跑步 'He is running'); 着 describes a state, like 门开着."
   ],
   "examples": [
    {
@@ -359,7 +359,7 @@
   "q": [
    {
     "t": "order",
-    "zh": "门口站着一个男孩。",
+    "zh": "门口站着一个男孩儿。",
     "en": "A boy is standing at the door.",
     "explain": "Place + verb + 着 + who or what is there."
    },
@@ -428,7 +428,7 @@
     "en": "He is leaving tomorrow."
    },
    {
-    "zh": "快要考试了，我要准备。",
+    "zh": "快要考试了，我要准备一下。",
     "en": "The exam is coming up, so I need to get ready."
    }
   ],
@@ -550,7 +550,7 @@
    {
     "t": "cloze",
     "zh": "他五点就起床了，真早。",
-    "en": "He got up as early as five, so early.",
+    "en": "He got up as early as five; that is really early.",
     "blank": "就",
     "explain": "就 shows it happened earlier than expected."
    }
@@ -651,7 +651,7 @@
   ],
   "explain": [
    "因为 gives the reason and 所以 gives the result: 因为下雨，所以我们在家看电影 'Because it is raining, we watch a movie at home'. In English you use only one of 'because' and 'so'; Chinese can use both. You can also drop either: 因为下雨，我们在家 and 下雨，所以我们在家 are both fine.",
-   "虽然 'although' and 但是 'but' come as a pair too: 虽然很累，但是我很高兴 'Although I am tired, I am happy'. English does not say 'although … but', and Chinese needs a 'but' word (但是, or just 但) in the second part.",
+   "虽然 'although' and 但是 'but' come as a pair too: 虽然很累，但是我很高兴 'Although I am tired, I am happy'. English does not say 'although … but', and in Chinese the second part normally has a 'but' word (但是, or just 但). Leaving it out is possible in speech but sounds less complete, so learn the pair.",
    "为什么 asks for the reason: 你为什么不去？ 'Why are you not going?' The answer starts with 因为."
   ],
   "examples": [
@@ -673,7 +673,7 @@
    }
   ],
   "mistakes": [
-   "After 虽然, add a 'but' word (但是 or 但) in the second part, the way Chinese does: 虽然很累，但是很高兴."
+   "After 虽然, the second part normally has a 'but' word (但是 or 但): 虽然很累，但是很高兴. Without it the sentence sounds less complete."
   ],
   "q": [
    {

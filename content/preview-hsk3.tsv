@@ -1,0 +1,483 @@
+# zh	pinyin	English   (HSK 3 "preview" words the AI conversation may use at HSK 2; pinyin is checked against the dataset by tools/build-preview.py 3)
+# Made from the open dataset's newest-syllabus level-3 words; glosses shortened or rewritten by AI where the dictionary's first sense was not the HSK sense. NOT reviewed by a teacher. Words whose sense I was not sure of are left out.
+阿姨	āyí	aunt (polite word for a woman)
+矮	ǎi	low; short (in length)
+爱人	àiren	husband or wife
+安静	ānjìng	quiet; peaceful
+安全	ānquán	safe; secure; safety; security
+把	bǎ	(puts the object before the verb)
+班级	bānjí	class (at school)
+搬	bān	to move
+搬家	bānjiā	to move house; to relocate; to remove (sth)
+办	bàn	to do; to manage
+办法	bànfǎ	means; method
+办公室	bàngōngshì	office; business premises
+半天	bàntiān	half a day; a long time
+帮助	bāngzhù	to help
+饱	bǎo	to eat till full; satisfied
+报纸	bàozhǐ	newspaper; newsprint
+北	běi	north
+北方	běifāng	the north
+被	bèi	(passive: "by")
+比较	bǐjiào	rather, fairly; to compare
+比如	bǐrú	for example; for instance
+比赛	bǐsài	competition (sports etc); match
+笔记	bǐjì	notes
+笔记本	bǐjìběn	notebook; laptop
+必须	bìxū	to have to; must
+变	biàn	to change; to become different
+变成	biànchéng	to change into; to turn into
+变化	biànhuà	change
+遍	biàn	time (a whole action, start to end)
+表演	biǎoyǎn	to perform; a show
+别的	biéde	else; other
+别人	biéren	other people; others; other person
+宾馆	bīnguǎn	guesthouse; lodge
+冰	bīng	ice
+冰箱	bīngxiāng	icebox; freezer cabinet
+病人	bìngrén	sick person; patient
+不但	bùdàn	not only (... but also ...)
+不见	bùjiàn	not to see; not to meet
+不久	bùjiǔ	not long (after); before too long
+不同	bùtóng	different; distinct
+不行	bùxíng	won't do; be out of the question
+不用	bùyòng	need not
+才	cái	only then; not until
+菜单	càidān	menu
+参加	cānjiā	to participate; to take part
+草	cǎo	grass; straw
+草地	cǎodì	lawn; meadow
+层	céng	floor, storey; layer
+查	chá	to check, to look up
+差	chà	poor; to lack
+差不多	chàbuduō	almost; nearly
+尝	cháng	to taste, to try
+常	cháng	often
+常常	chángcháng	frequently; often
+常见	chángjiàn	commonly seen; common
+常用	chángyòng	in common usage
+衬衫	chènshān	shirt; blouse
+成绩	chéngjì	achievement; performance records
+城市	chéngshì	city; town
+迟到	chídào	to arrive late
+出发	chūfā	to set off; to start (on a journey)
+出生	chūshēng	to be born
+出院	chūyuàn	to leave hospital
+初中	chūzhōng	junior high school
+除了	chúle	besides; apart from (... also...)
+船	chuán	boat; vessel
+春天	chūntiān	spring (season)
+词典	cídiǎn	dictionary
+聪明	cōngming	intelligent; clever
+打扫	dǎsǎo	to clean; to sweep
+打算	dǎsuàn	to plan; a plan
+大概	dàgài	probably; roughly
+大人	dàren	adult; grownup
+大小	dàxiǎo	size
+大熊猫	dàxióngmāo	giant panda
+大衣	dàyī	overcoat; topcoat
+带	dài	to bring, to take along
+担心	dānxīn	anxious; worried
+蛋糕	dàngāo	cake
+当然	dāngrán	only natural; as it should be
+到处	dàochù	everywhere
+地点	dìdiǎn	place; site
+地方	dìfang	place
+地图	dìtú	map
+的话	dehuà	if (follows the condition)
+得到	dédào	to get; to obtain
+得分	défēn	to score
+灯	dēng	lamp; light
+电	diàn	lightning; electricity
+电梯	diàntī	elevator; escalator
+丢	diū	to lose; to put aside
+东	dōng	east
+东北	dōngběi	northeast
+东方	dōngfāng	the East
+东南	dōngnán	southeast
+冬天	dōngtiān	winter
+懂得	dǒngde	to understand, to know
+动物	dòngwù	animal
+动物园	dòngwùyuán	zoo
+短	duǎn	short; brief
+短裤	duǎnkù	short pants; shorts
+段	duàn	section, stretch (of time)
+锻炼	duànliàn	to exercise, to work out
+对话	duìhuà	conversation
+饿	è	to be hungry; hungry
+而且	érqiě	and also; moreover
+耳朵	ěrduo	ear; handle (on a cup)
+耳机	ěrjī	headphones; earphones
+发	fā	to send out
+发烧	fāshāo	to have a fever
+发生	fāshēng	to happen; to occur; to take place; to break out
+发现	fāxiàn	to notice; to become aware of
+发展	fāzhǎn	to develop; development
+方便	fāngbiàn	convenient; suitable
+方便面	fāngbiànmiàn	instant noodles
+方法	fāngfǎ	method; way
+方向	fāngxiàng	direction; orientation
+房子	fángzi	house; building (single- or two-story)
+放	fàng	to put; to place
+放假	fàngjià	to have a holiday or vacation
+放心	fàngxīn	to feel relieved; to feel reassured
+放学	fàngxué	to dismiss students at the end of the school day
+分开	fēnkāi	to separate; to part
+风	fēng	wind; news
+封	fēng	(for letters)
+服务	fúwù	service
+附近	fùjìn	nearby; neighboring
+复习	fùxí	to review; revision
+夫妻	fūqī	husband and wife; married couple
+该	gāi	should; ought to
+感到	gǎndào	to feel; to sense; to perceive
+感冒	gǎnmào	to catch cold; (common) cold
+感兴趣	gǎnxìngqù	to be interested
+干净	gānjìng	clean; neat
+刚	gāng	just now, only just
+刚才	gāngcái	just now; a moment ago
+刚刚	gānggang	just recently; just a moment ago
+高铁	gāotiě	high speed rail
+根据	gēnjù	according to; based on
+更	gèng	even more
+工作日	gōngzuòrì	workday; working day
+公斤	gōngjīn	kilogram (kg)
+公园	gōngyuán	park (for public recreation)
+故事	gùshì	story
+刮	guā	to blow (wind)
+关	guān	to close, to turn off
+关机	guānjī	to turn off (a machine or device)
+关系	guānxi	relationship
+关心	guānxīn	to be concerned about; to care about
+关于	guānyú	pertaining to; concerning
+关注	guānzhù	to pay attention to; to follow sth closely
+国家	guójiā	country; nation; state
+过节	guòjié	to celebrate a festival; after the celebrations
+海	hǎi	ocean; sea
+害怕	hàipà	to be afraid; to be scared
+好多	hǎoduō	many; quite a lot
+好久	hǎojiǔ	quite a while
+好像	hǎoxiàng	to seem; as if
+号码	hàomǎ	number
+合适	héshì	suitable; fitting
+河	hé	river
+黑板	hēibǎn	blackboard
+后来	hòulái	afterwards, later
+后年	hòunián	the year after next
+后天	hòutiān	the day after tomorrow
+护照	hùzhào	passport
+花园	huāyuán	garden
+画家	huàjiā	painter
+环境	huánjìng	environment; circumstances
+换	huàn	to exchange; to change (clothes etc)
+欢迎	huānyíng	to welcome; welcome
+黄色	huángsè	yellow
+回答	huídá	to reply; to answer; reply; answer
+会议	huìyì	meeting; conference
+或	huò	maybe; perhaps
+或者	huòzhě	or; possibly; maybe; perhaps
+机会	jīhuì	opportunity; chance
+鸡	jī	fowl; chicken
+极	jí	extremely
+急	jí	urgent; pressing
+几乎	jīhū	almost
+记	jì	to record; to note
+季	jì	season
+季节	jìjié	time; season
+加	jiā	to add
+假期	jiàqī	vacation
+坚持	jiānchí	to persevere with; to persist in
+检查	jiǎnchá	inspection; to examine
+简单	jiǎndān	simple; not complicated
+见面	jiànmiàn	to meet; to see each other
+健康	jiànkāng	health; healthy
+讲	jiǎng	to speak; to explain
+角	jiǎo	angle; corner
+脚	jiǎo	foot; leg (of an animal or an object)
+接	jiē	to pick up, to meet; to answer (a call)
+街	jiē	street
+节	jié	festival; section (of a class)
+节目	jiémù	program; item (on a program)
+节日	jiérì	holiday; festival
+结婚	jiéhūn	to marry; to get married
+结束	jiéshù	termination; to finish
+解决	jiějué	to solve; to resolve; to settle
+借	jiè	to lend; to borrow
+姐妹	jiěmèi	sisters; siblings
+斤	jīn	jin (half a kilo)
+经过	jīngguò	to pass; to go through
+经理	jīnglǐ	manager; director
+久	jiǔ	for a long time
+酒	jiǔ	alcohol, wine
+旧	jiù	old; opposite: new 新
+句	jù	(for sentences)
+句子	jùzi	sentence
+决定	juédìng	to decide (to do something); to resolve
+卡	kǎ	card
+开花	kāihuā	to bloom; to blossom; to flower
+开会	kāihuì	to hold a meeting; to attend a meeting
+开机	kāijī	to start an engine; to boot up (a computer)
+开心	kāixīn	to feel happy; to rejoice
+看来	kànlai	apparently; it seems that
+可爱	kěài	adorable; cute
+可是	kěshì	but; however; (used for emphasis) indeed
+渴	kě	thirsty
+刻	kè	quarter of an hour
+客人	kèrén	visitor; guest
+课本	kèběn	textbook
+课文	kèwén	text
+空调	kōngtiáo	air conditioning; air conditioner
+哭	kū	to cry; to weep
+筷子	kuàizi	chopsticks
+矿泉水	kuàngquánshuǐ	mineral water
+来自	láizì	to come from (a place); From: (in email header)
+蓝	lán	blue; indigo plant
+老	lǎo	old; (friendly prefix, as in 老师)
+老人	lǎorén	old man or woman; the elderly
+了解	liǎojiě	to understand, to know about
+离开	líkāi	to depart; to leave
+礼物	lǐwù	gift; present
+历史	lìshǐ	history
+脸	liǎn	face
+练	liàn	to practice; to train
+练习	liànxí	to practice; exercise
+凉快	liángkuai	nice and cold; pleasantly cool
+辆	liàng	(for cars and bicycles)
+聊	liáo	to chat
+聊天儿	liáotiānr	to chat; to gossip
+邻居	línjū	neighbor; next door
+留学	liúxué	to study abroad
+留学生	liúxuéshēng	student studying abroad
+楼梯	lóutī	stair; staircase
+路边	lùbiān	curb; roadside; wayside
+路口	lùkǒu	crossing; intersection (of roads)
+马	mǎ	horse; horse or cavalry piece in Chinese chess
+马路	mǎlù	street; road
+马上	mǎshàng	at once; right away
+满意	mǎnyì	satisfied; pleased
+毛	máo	(money: a tenth of a yuan)
+米	mǐ	meter
+面前	miànqián	in front of; facing
+名单	míngdān	list of names
+名人	míngrén	personage; celebrity
+明白	míngbai	to understand; clear
+男人	nánrén	a man; a male
+男生	nánshēng	schoolboy; male student
+南	nán	south
+南方	nánfāng	south; the southern part of the country
+难	nán	difficult
+难过	nánguò	to feel sad; to feel unwell
+难看	nánkàn	ugly; unsightly
+难题	nántí	difficult problem
+难听	nántīng	unpleasant to hear; coarse
+年级	niánjí	grade; year (in school, college etc)
+年轻	niánqīng	young
+牛	niú	ox; cow
+努力	nǔlì	to make an effort; to try hard; to strive
+女人	nǚrén	woman
+女生	nǚshēng	schoolgirl; female student
+爬	pá	to crawl; to climb
+怕	pà	to be afraid; to fear
+拍照	pāizhào	to take a picture
+盘子	pánzi	tray; plate
+胖	pàng	fat
+啤酒	píjiǔ	beer (loanword)
+平时	píngshí	ordinarily; in normal times
+瓶子	píngzi	bottle
+其实	qíshí	actually; in fact; really
+其他	qítā	other; (sth or sb) else
+奇怪	qíguài	strange; odd
+骑	qí	to ride (a bike or horse)
+起	qǐ	to rise; to raise
+起飞	qǐfēi	(of an aircraft) to take off
+汽车	qìchē	car; automobile
+铅笔	qiānbǐ	(lead) pencil
+前年	qiánnián	the year before last
+前天	qiántiān	the day before yesterday
+清楚	qīngchu	clear
+请假	qǐngjià	to request leave of absence
+请客	qǐngkè	to give a dinner party; to entertain guests
+秋天	qiūtiān	autumn
+球场	qiúchǎng	stadium; sports ground
+裙子	qúnzi	skirt
+然后	ránhòu	then; after that; afterwards
+热情	rèqíng	warm, friendly
+认得	rènde	to recognize (a person or character)
+认为	rènwéi	to believe; to think; to consider; to feel
+认真	rènzhēn	conscientious; earnest
+容易	róngyì	easy; straightforward; likely; liable to; apt to
+如果	rúguǒ	if; in case
+伞	sǎn	umbrella; parasol
+扫	sǎo	to sweep
+沙发	shāfā	sofa (loanword)
+山	shān	mountain; hill
+上衣	shàngyī	jacket; upper outer garment
+勺子	sháozi	scoop; ladle
+身边	shēnbiān	by one's side
+身高	shēngāo	(a person's) height
+生活	shēnghuó	life; to live
+生气	shēngqì	to get angry; to take offense
+声	shēng	sound
+声音	shēngyīn	voice; sound
+世界	shìjiè	world
+市	shì	city
+试	shì	to test; to try
+室	shì	room (as in 办公室)
+收	shōu	to receive, to collect
+收到	shōudào	to receive
+受	shòu	to receive, to suffer
+受到	shòudào	to receive
+瘦	shòu	thin; to lose weight
+叔叔	shūshu	father's younger brother; uncle
+树	shù	tree
+数学	shùxué	mathematics; mathematical
+刷	shuā	to brush; to paint
+双	shuāng	pair (of shoes, chopsticks)
+水平	shuǐpíng	level (of achievement etc); standard
+司机	sījī	chauffeur; driver
+四季	sìjì	four seasons, namely: spring 春, summer 夏, autumn 秋 and winter 冬
+太阳	tàiyang	sun
+糖	táng	sugar; sweets
+特别	tèbié	special; especially
+提高	tígāo	to raise; to increase
+体育	tǐyù	sports; physical education
+体育馆	tǐyùguǎn	gym; gymnasium
+甜	tián	sweet
+跳	tiào	to jump; to hop
+听说	tīngshuō	to hear (sth said); one hears (that)
+挺	tǐng	quite, rather
+同事	tóngshì	colleague; co-worker
+同意	tóngyì	to agree; to consent
+头发	tóufa	hair (on the head)
+突然	tūrán	sudden; abrupt; unexpected
+图书馆	túshūguǎn	library
+腿	tuǐ	leg
+外地	wàidì	another place (outside your own city)
+外卖	wàimài	takeaway food; food delivery
+外语	wàiyǔ	foreign language
+完成	wánchéng	to complete; to accomplish
+晚点	wǎndiǎn	(of trains etc) late; delayed
+晚会	wǎnhuì	evening party
+碗	wǎn	bowl; cup
+网球	wǎngqiú	tennis; tennis ball
+网站	wǎngzhàn	website; network station
+忘记	wàngjì	to forget
+卫生间	wèishēngjiān	bathroom; toilet
+为了	wèile	for; for the purpose of; in order to
+文化	wénhuà	culture; civilization
+屋子	wūzi	house; room
+习惯	xíguàn	habit; custom
+洗衣机	xǐyījī	washing machine; washer
+洗澡	xǐzǎo	to bathe; to take a shower
+喜爱	xǐài	to like; to love
+西	xī	west
+西北	xīběi	northwest
+西方	xīfāng	the West
+西瓜	xīguā	watermelon
+西南	xīnán	southwest
+夏天	xiàtiān	summer
+先	xiān	first, before
+相机	xiàngjī	camera
+相信	xiāngxìn	to be convinced (that sth is true); to believe; to accept sth as true
+香蕉	xiāngjiāo	banana
+箱子	xiāngzi	suitcase; chest
+向	xiàng	toward
+像	xiàng	to look like; like
+小区	xiǎoqū	neighborhood; district
+小心	xiǎoxīn	to be careful; to take care
+校园	xiàoyuán	campus
+校长	xiàozhǎng	(college, university) president; headmaster
+鞋	xié	shoe
+心里	xīnli	in the heart, in the mind
+新年	xīnnián	New Year
+新闻	xīnwén	news
+新鲜	xīnxiān	fresh (experience, food etc); freshness
+信	xìn	letter; mail
+信用卡	xìnyòngkǎ	credit card
+行	xíng	OK, will do
+行李	xíngli	luggage
+兴趣	xìngqù	interest (desire to know about sth)
+休假	xiūjià	to go on vacation; to have a holiday; to take leave
+需要	xūyào	to need; to want; to demand; to require; needs
+选	xuǎn	to choose; to pick
+选择	xuǎnzé	to select; to pick
+学期	xuéqī	term; semester
+牙	yá	tooth; ivory
+牙刷	yáshuā	toothbrush
+羊	yáng	sheep; goat
+养	yǎng	to raise (animals); to bring up (children)
+要求	yāoqiú	to request; to require
+页	yè	page
+一般	yìbān	ordinary; generally
+一边	yìbiān	at the same time (一边…一边…)
+一定	yídìng	certainly, must
+一共	yígòng	altogether
+一块儿	yíkuàir	together
+一样	yíyàng	the same
+一直	yìzhí	all along; straight
+以后	yǐhòu	after; later
+以前	yǐqián	before; formerly
+以上	yǐshàng	that level or higher; that amount or more
+以外	yǐwài	apart from; other than
+以为	yǐwéi	to think (wrongly), to assume
+以下	yǐxià	that level or lower; that amount or less
+音乐	yīnyuè	music
+银行	yínháng	bank
+银行卡	yínhángkǎ	bank card; ATM card
+饮料	yǐnliào	drink; beverage
+应该	yīnggāi	ought to; should
+影响	yǐngxiǎng	influence; effect
+用	yòng	to use; to employ
+邮件	yóujiàn	mail; post
+邮箱	yóuxiāng	mailbox; post office box
+游客	yóukè	traveler; tourist
+游戏	yóuxì	game; to play
+有关	yǒuguān	to have sth to do with; to relate to
+有名	yǒumíng	famous; well-known
+有用	yǒuyòng	useful
+又	yòu	again, also
+羽毛球	yǔmáoqiú	shuttlecock; badminton
+雨衣	yǔyī	raincoat
+语言	yǔyán	language
+遇到	yùdào	to meet; to run into; to come across
+遇见	yùjiàn	to meet
+愿意	yuànyì	to wish; to want
+月亮	yuèliang	the moon
+越	yuè	more and more (越…越…)
+运动会	yùndònghuì	sports competition
+运动员	yùndòngyuán	athlete
+咱们	zánmen	we or us (including both the speaker and the person(s) spoken to)
+脏	zāng	dirty
+怎么办	zěnmebàn	what's to be done
+怎样	zěnyàng	how; what kind
+张	zhāng	(for flat things: paper, tickets)
+照顾	zhàogu	to take care of; to show consideration
+照片	zhàopiàn	photograph; picture
+照相	zhàoxiàng	to take a photograph
+着急	zháojí	to worry; to feel anxious
+直到	zhídào	until
+只能	zhǐnéng	can only; obliged to do sth
+只是	zhǐshì	merely; only; just; nothing but; simply
+只要	zhǐyào	if only; so long as
+只有	zhǐyǒu	only have ...; there is only ...
+纸	zhǐ	paper
+中间	zhōngjiān	the middle; the inside
+终于	zhōngyú	at last; in the end
+种	zhǒng	kind, type
+重要	zhòngyào	important; significant
+周末	zhōumò	weekend
+主要	zhǔyào	main; principal
+住院	zhùyuàn	to be in hospital; to be hospitalized
+注意	zhùyì	to take note of; to pay attention to
+字典	zìdiǎn	Chinese character dictionary
+自行车	zìxíngchē	bicycle; bike
+总	zǒng	always; in total
+总是	zǒngshì	always
+嘴	zuǐ	mouth; beak
+最好	zuìhǎo	had better; best
+最后	zuìhòu	final; last
+最近	zuìjìn	recently; soon
+作业	zuòyè	school assignment; homework
+做客	zuòkè	to be a guest or visitor
+聊天	liáotiān	to chat
+一块	yíkuài	together

@@ -6,6 +6,7 @@ the app draws one exam of 40 questions from it. Run:  python3 tools/build-exam.p
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pinyin_engine import Engine
+import levelcfg
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 C = os.path.join(ROOT, 'content')
@@ -15,9 +16,9 @@ def die(m):
     sys.exit('build-exam: ' + m)
 
 
-official = [l.strip() for l in open(os.path.join(C, 'hsk1-official-300.txt'), encoding='utf-8') if l.strip()]
-eng = Engine(official)
-src = json.load(open(os.path.join(C, 'exam-1.json'), encoding='utf-8'))
+LV = levelcfg.LEVEL
+eng = Engine(levelcfg.known())
+src = json.load(open(os.path.join(levelcfg.CONTENT, 'exam-%d.json' % LV), encoding='utf-8'))
 
 
 def py(zh):
@@ -28,63 +29,124 @@ def say(lines):
     return [dict(s=l['s'], zh=l['zh'], py=py(l['zh']), en=l['en']) for l in lines]
 
 
-out = {}
-# L1 / R1: picture + phrase, true or false
-for part in ('L1', 'R1'):
-    items = []
-    for pic, zh, en, ok in src[part]:
-        items.append(dict(pic=pic, zh=zh, py=py(zh), en=en, ok=bool(ok)))
-    if sum(1 for i in items if i['ok']) < 5 or sum(1 for i in items if not i['ok']) < 5:
-        die(part + ' needs at least 5 true and 5 false items')
-    out[part] = items
-# L2: sentence, three pictures (first is the answer)
-out['L2'] = []
-for zh, en, opts in src['L2']:
-    if len(opts) != 3 or len(set(opts)) != 3:
-        die('L2 needs 3 different pictures: ' + zh)
-    out['L2'].append(dict(zh=zh, py=py(zh), en=en, opts=opts))
-# L3: sets of five dialogues and six pictures
-out['L3'] = []
-for s in src['L3']:
-    if len(s['opts']) != 6 or len(set(s['opts'])) != 6 or sorted(i['ans'] for i in s['items']) != [0, 1, 2, 3, 4]:
-        die('L3 set must have 6 different pictures and five items answering pictures 0-4 once each')
-    out['L3'].append(dict(opts=s['opts'], items=[dict(say=say(i['say']), ans=i['ans']) for i in s['items']]))
-# L4: dialogue, question, three written answers (first is right)
-out['L4'] = []
-for i in src['L4']:
-    if len(i['opts']) != 3 or len(set(i['opts'])) != 3:
-        die('L4 needs 3 different options: ' + i['q']['zh'])
-    out['L4'].append(dict(say=say(i['say']), q=dict(zh=i['q']['zh'], py=py(i['q']['zh']), en=i['q']['en']), opts=[dict(zh=o, py=py(o)) for o in i['opts']]))
-# R2: sentences matched to pictures
-out['R2'] = []
-for s in src['R2']:
-    if len(s['opts']) != 6 or len(set(s['opts'])) != 6 or sorted(i['ans'] for i in s['items']) != [0, 1, 2, 3, 4]:
-        die('R2 set must have 6 different pictures and five items answering pictures 0-4 once each')
-    out['R2'].append(dict(opts=s['opts'], items=[dict(zh=i['zh'], py=py(i['zh']), en=i['en'], ans=i['ans']) for i in s['items']]))
-# R3: questions matched to answers
-out['R3'] = []
-for s in src['R3']:
-    if len(s['opts']) != 5 or sorted(i['ans'] for i in s['items']) != [0, 1, 2, 3, 4]:
-        die('R3 set must have 5 answers matched once each')
-    out['R3'].append(dict(opts=[dict(zh=o, py=py(o), en=s['items'][k]['aen']) for k, o in enumerate(s['opts'])],
-                          items=[dict(zh=i['zh'], py=py(i['zh']), en=i['en'], ans=i['ans']) for i in s['items']]))
-# R4: sentence completion with five words
-out['R4'] = []
-for s in src['R4']:
-    if len(s['opts']) != 5 or sorted(i['ans'] for i in s['items']) != [0, 1, 2, 3, 4]:
-        die('R4 set must use each of the five words once')
-    items = []
-    for i in s['items']:
-        word = s['opts'][i['ans']]
-        if '___' not in i['zh']:
-            die('R4 sentence needs a blank: ' + i['zh'])
-        items.append(dict(zh=i['zh'], full=i['zh'].replace('___', word), py=py(i['zh'].replace('___', word)), en=i['en'], ans=i['ans']))
-    out['R4'].append(dict(opts=[dict(zh=o, py=eng.word_py(o)) for o in s['opts']], items=items))
+def build_l1():
+    out = {}
+    # L1 / R1: picture + phrase, true or false
+    for part in ('L1', 'R1'):
+        items = []
+        for pic, zh, en, ok in src[part]:
+            items.append(dict(pic=pic, zh=zh, py=py(zh), en=en, ok=bool(ok)))
+        if sum(1 for i in items if i['ok']) < 5 or sum(1 for i in items if not i['ok']) < 5:
+            die(part + ' needs at least 5 true and 5 false items')
+        out[part] = items
+    # L2: sentence, three pictures (first is the answer)
+    out['L2'] = []
+    for zh, en, opts in src['L2']:
+        if len(opts) != 3 or len(set(opts)) != 3:
+            die('L2 needs 3 different pictures: ' + zh)
+        out['L2'].append(dict(zh=zh, py=py(zh), en=en, opts=opts))
+    # L3: sets of five dialogues and six pictures
+    out['L3'] = []
+    for s in src['L3']:
+        if len(s['opts']) != 6 or len(set(s['opts'])) != 6 or sorted(i['ans'] for i in s['items']) != [0, 1, 2, 3, 4]:
+            die('L3 set must have 6 different pictures and five items answering pictures 0-4 once each')
+        out['L3'].append(dict(opts=s['opts'], items=[dict(say=say(i['say']), ans=i['ans']) for i in s['items']]))
+    # L4: dialogue, question, three written answers (first is right)
+    out['L4'] = []
+    for i in src['L4']:
+        if len(i['opts']) != 3 or len(set(i['opts'])) != 3:
+            die('L4 needs 3 different options: ' + i['q']['zh'])
+        out['L4'].append(dict(say=say(i['say']), q=dict(zh=i['q']['zh'], py=py(i['q']['zh']), en=i['q']['en']), opts=[dict(zh=o, py=py(o)) for o in i['opts']]))
+    # R2: sentences matched to pictures
+    out['R2'] = []
+    for s in src['R2']:
+        if len(s['opts']) != 6 or len(set(s['opts'])) != 6 or sorted(i['ans'] for i in s['items']) != [0, 1, 2, 3, 4]:
+            die('R2 set must have 6 different pictures and five items answering pictures 0-4 once each')
+        out['R2'].append(dict(opts=s['opts'], items=[dict(zh=i['zh'], py=py(i['zh']), en=i['en'], ans=i['ans']) for i in s['items']]))
+    # R3: questions matched to answers
+    out['R3'] = []
+    for s in src['R3']:
+        if len(s['opts']) != 5 or sorted(i['ans'] for i in s['items']) != [0, 1, 2, 3, 4]:
+            die('R3 set must have 5 answers matched once each')
+        out['R3'].append(dict(opts=[dict(zh=o, py=py(o), en=s['items'][k]['aen']) for k, o in enumerate(s['opts'])],
+                              items=[dict(zh=i['zh'], py=py(i['zh']), en=i['en'], ans=i['ans']) for i in s['items']]))
+    # R4: sentence completion with five words
+    out['R4'] = []
+    for s in src['R4']:
+        if len(s['opts']) != 5 or sorted(i['ans'] for i in s['items']) != [0, 1, 2, 3, 4]:
+            die('R4 set must use each of the five words once')
+        items = []
+        for i in s['items']:
+            word = s['opts'][i['ans']]
+            if '___' not in i['zh']:
+                die('R4 sentence needs a blank: ' + i['zh'])
+            items.append(dict(zh=i['zh'], full=i['zh'].replace('___', word), py=py(i['zh'].replace('___', word)), en=i['en'], ans=i['ans']))
+        out['R4'].append(dict(opts=[dict(zh=o, py=eng.word_py(o)) for o in s['opts']], items=items))
 
-meta = dict(listening=dict(questions=20, minutes=15), reading=dict(questions=20, minutes=20))
-with open(os.path.join(ROOT, 'data', 'hsk1-exam.js'), 'w', encoding='utf-8') as f:
-    f.write('/* HSK 1 mock exam question bank for Shanlu. GENERATED by tools/build-exam.py from content/exam-1.json. Do not edit by hand.\n')
-    f.write(' * Modelled on the official HSK 1 sample papers (4 listening and 4 reading parts, 5 questions each). Pictures are emoji. AI-written, not reviewed by a teacher. */\n')
-    f.write('window.HSK1_EXAM = ' + json.dumps(dict(meta=meta, **out), ensure_ascii=False, indent=1) + ';\n')
-n = len(out['L1']) + len(out['L2']) + sum(len(s['items']) for s in out['L3']) + len(out['L4']) + len(out['R1']) + sum(len(s['items']) for s in out['R2']) + sum(len(s['items']) for s in out['R3']) + sum(len(s['items']) for s in out['R4'])
-print('wrote data/hsk1-exam.js: %d questions in the bank' % n)
+    meta = dict(listening=dict(questions=20, minutes=15), reading=dict(questions=20, minutes=20))
+    with open(os.path.join(ROOT, 'data', 'hsk1-exam.js'), 'w', encoding='utf-8') as f:
+        f.write('/* HSK 1 mock exam question bank for Shanlu. GENERATED by tools/build-exam.py from content/exam-1.json. Do not edit by hand.\n')
+        f.write(' * Modelled on the official HSK 1 sample papers (4 listening and 4 reading parts, 5 questions each). Pictures are emoji. AI-written, not reviewed by a teacher. */\n')
+        f.write('window.HSK1_EXAM = ' + json.dumps(dict(meta=meta, **out), ensure_ascii=False, indent=1) + ';\n')
+    n = len(out['L1']) + len(out['L2']) + sum(len(s['items']) for s in out['L3']) + len(out['L4']) + len(out['R1']) + sum(len(s['items']) for s in out['R2']) + sum(len(s['items']) for s in out['R3']) + sum(len(s['items']) for s in out['R4'])
+    print('wrote data/hsk1-exam.js: %d questions in the bank' % n)
+
+
+def build_l2():
+    out = {}
+    out['L1'] = []
+    for pic, zh, en, ok in src['L1']:
+        out['L1'].append(dict(pic=pic, zh=zh, py=py(zh), en=en, ok=bool(ok)))
+    if sum(1 for i in out['L1'] if i['ok']) < 6 or sum(1 for i in out['L1'] if not i['ok']) < 6:
+        die('L1 needs at least 6 true and 6 false items')
+    for part in ('L2', 'R1'):
+        out[part] = []
+        for st in src[part]:
+            if len(st['opts']) != 6 or len(set(st['opts'])) != 6 or sorted(i['ans'] for i in st['items']) != [0, 1, 2, 3, 4]:
+                die(part + ' set must have 6 different pictures and five items answering pictures 0-4 once each')
+            if part == 'L2':
+                out[part].append(dict(opts=st['opts'], items=[dict(say=say(i['say']), ans=i['ans']) for i in st['items']]))
+            else:
+                out[part].append(dict(opts=st['opts'], items=[dict(zh=i['zh'], py=py(i['zh']), en=i['en'], ans=i['ans']) for i in st['items']]))
+    for part, nlines in (('L3', 2), ('L4', 4)):
+        out[part] = []
+        for i in src[part]:
+            if len(i['opts']) != 3 or len(set(i['opts'])) != 3 or len(i['say']) != nlines:
+                die('%s needs %d lines and 3 different options: %s' % (part, nlines, i['q']['zh']))
+            out[part].append(dict(say=say(i['say']), q=dict(zh=i['q']['zh'], py=py(i['q']['zh']), en=i['q']['en']), opts=[dict(zh=o, py=py(o)) for o in i['opts']]))
+    out['R2'] = []
+    for st in src['R2']:
+        if len(st['opts']) != 6 or len(set(st['opts'])) != 6 or sorted(i['ans'] for i in st['items']) != [0, 1, 2, 3, 4]:
+            die('R2 set must have 6 words and five blanks, each with a different answer')
+        items = []
+        for i in st['items']:
+            word = st['opts'][i['ans']]
+            if i['zh'].count('___') != 1:
+                die('R2 sentence needs exactly one blank: ' + i['zh'])
+            full = i['zh'].replace('___', word)
+            items.append(dict(zh=i['zh'], full=full, py=py(full), en=i['en'], ans=i['ans']))
+        out['R2'].append(dict(opts=[dict(zh=o, py=eng.word_py(o)) for o in st['opts']], items=items))
+    out['R3'] = []
+    for a, b, aen, ben, same in src['R3']:
+        out['R3'].append(dict(a=dict(zh=a, py=py(a), en=aen), b=dict(zh=b, py=py(b), en=ben), same=bool(same)))
+    if sum(1 for i in out['R3'] if i['same']) < 4 or sum(1 for i in out['R3'] if not i['same']) < 4:
+        die('R3 needs at least 4 pairs of each kind')
+    out['R4'] = []
+    for st in src['R4']:
+        if len(st['opts']) != 5 or sorted(i['ans'] for i in st['items']) != [0, 1, 2, 3, 4]:
+            die('R4 set must match five answers once each')
+        out['R4'].append(dict(opts=[dict(zh=o, py=py(o), en=st['items'][k]['aen']) for k, o in enumerate(st['opts'])],
+                              items=[dict(zh=i['zh'], py=py(i['zh']), en=i['en'], ans=i['ans']) for i in st['items']]))
+    meta = dict(listening=dict(questions=35, minutes=25), reading=dict(questions=25, minutes=22))
+    n = len(out['L1']) + sum(len(x['items']) for x in out['L2']) + len(out['L3']) + len(out['L4']) + sum(len(x['items']) for x in out['R1']) + sum(len(x['items']) for x in out['R2']) + len(out['R3']) + sum(len(x['items']) for x in out['R4'])
+    with open(levelcfg.data_path('exam'), 'w', encoding='utf-8') as f:
+        f.write('/* HSK 2 mock exam question bank for Shanlu. GENERATED by tools/build-exam.py from content/l2/exam-2.json. Do not edit by hand.\n')
+        f.write(' * Modelled on the HSK 2 sample papers of the 2012 (HSK 2.0) test: listening 10 + 10 + 10 + 5, reading 5 + 5 + 5 + 10. The layout of the 2025 test was not available to me. Pictures are emoji. AI-written, not reviewed by a teacher. */\n')
+        f.write('window.HSK2_EXAM = ' + json.dumps(dict(meta=meta, **out), ensure_ascii=False, indent=1) + ';\n')
+    print('wrote data/hsk2-exam.js: %d questions in the bank' % n)
+
+
+if LV == 1:
+    build_l1()
+else:
+    build_l2()

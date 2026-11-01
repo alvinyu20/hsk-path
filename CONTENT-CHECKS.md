@@ -68,11 +68,13 @@ Known false alarms go in `content/check-waivers.tsv`, each with a reason. Questi
 
 ## HSK 2 (added 31 Oct 2026)
 
-HSK 2 is a separate level (`content/l2/`, tools run with `LEVEL=2`). The level checker allows words from HSK 1 and HSK 2 only. What is different from HSK 1:
-- **Words: 197 of the official 200.** The open dataset tags 197 words as new at level 2; three could not be identified (listed as a question in `review/chinese-ai-hsk2/01-word-list.md`). Glosses, example sentences (three per word) and notes were written by AI.
-- **Grammar outline is my own, not the official list** (`content/l2/grammar-outline.txt`, 33 points). It is based on the grammar of the HSK 2 words and the Chinese Grammar Wiki's HSK 2 list (79 points, written for the older test). The official numbered outline for band 2 was not available. `tools/build-grammar.py` fails if any of the 33 points is not covered by a lesson.
-- **Waivers.** 87 findings of the meaning checks were waived with a reason each (mostly 了 and 要 in the "about to" and "already" patterns, numbers like 两万, past-time context words, a few idioms). They are in `content/check-waivers.tsv`.
-- **Not built:** listening clips, practice scripts, mock exam.
+HSK 2 is a separate level (`content/l2/`, tools run with `LEVEL=2`). The level checker allows words from HSK 1 and HSK 2 only; every check runs in both the 儿 style and the plain style. What is different from HSK 1:
+- **Words: 197 of the official 200.** The open dataset tags 197 words as new at level 2; the three others could not be identified. DeepSeek and Qwen were asked and named different words (and Qwen's answer doubted itself), so the list was not changed on their say-so. Glosses, example sentences (three per word) and notes were written by AI.
+- **Grammar outline is my own, not the official list** (`content/l2/grammar-outline.txt`, 36 points). It is based on the grammar of the HSK 2 words and the Chinese Grammar Wiki's HSK 2 list (79 points, written for the older test). The official numbered outline for band 2 was not available. `tools/build-grammar.py` fails if any point is not covered by a lesson. DeepSeek and Qwen reviewed the 18 first lessons; what they agreed on was applied, and a lesson on 多 questions, …的时候 and doubled verbs was added.
+- **Mock exam layout** follows the HSK 2 sample papers of the 2012 test (listening 10 + 10 + 10 + 5, reading 5 + 5 + 5 + 10, pass mark 120 of 200). I could not find the layout of the 2025 band 2 exam. Pictures are emoji; every picture set was written to have one answer per picture, but emoji can be ambiguous (the exam pack in `review/chinese-ai-hsk2/` asks a Chinese AI to look for that).
+- **Waivers.** 130 findings of the meaning checks were waived with a reason each (mostly 了 and 要 in the "about to" and "already" patterns, numbers like 两万 and prices, past-time context words, a few idioms). They are in `content/check-waivers.tsv`.
+- **Neutral tones.** Words are shown with the dictionary's neutral tones (爷爷 yéye, 还是 háishi), but the direction compounds (回来, 回去, 上来, 下来, 起来 ...) all show their full tones so there is one rule. 一会儿 is shown with the tone change (yíhuìr), like 一起 yìqǐ at HSK 1.
+- **HSK 3 preview words** for the AI conversation at HSK 2 come from the dataset's level-3 words (481 of 487; six whose sense I was unsure of were left out).
 - Nothing has been read by a person who reads Chinese. `tools/make-ai-review-pack-l2.py` builds the packs for that (`review/chinese-ai-hsk2/`).
 
 ## Review log

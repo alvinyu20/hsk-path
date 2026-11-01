@@ -84,9 +84,10 @@
       }
       if (win.HSK1_LISTEN) win.HSK1_LISTEN = walk(win.HSK1_LISTEN);
       if (win.HSK1_EXAM) win.HSK1_EXAM = walk(win.HSK1_EXAM);
-      if (win.HSK1_WEBS) {
+      const webs = (name) => {
+        if (!win[name]) return;
         // the 儿 word of a twin pair is dropped, so the plain twin keeps its own entry (and its own character parts)
-        const w0 = JSON.parse(JSON.stringify(win.HSK1_WEBS));
+        const w0 = JSON.parse(JSON.stringify(win[name]));
         w0.hubs.forEach(h => { h.words = h.words.filter(x => twins.indexOf(x.zh) < 0); });
         w0.topics.forEach(t => { t.words = t.words.filter(z => twins.indexOf(z) < 0); });
         const w = walk(w0);
@@ -96,8 +97,16 @@
         });
         w.topics.forEach(t => { t.words = uniq(t.words); });
         w.opps = uniq(w.opps, o => o.a + '|' + o.b);
-        win.HSK1_WEBS = w;
+        win[name] = w;
+      };
+      webs('HSK1_WEBS');
+      // HSK 2 data (same table: the official level-2 list prints 男孩儿, 女孩儿, 小孩儿 and 一会儿)
+      ['HSK2_WORDS', 'HSK2_GRAMMAR', 'HSK2_LISTEN', 'HSK2_EXAM'].forEach(k => { if (win[k]) win[k] = walk(win[k]); });
+      if (win.HSK2_SPEAK) {
+        win.HSK2_SPEAK = walk(win.HSK2_SPEAK);
+        win.HSK2_SPEAK.scenarios.forEach(s => { s.words = uniq(s.words, w => w.zh); });
       }
+      webs('HSK2_WEBS');
       return twins;
     }
     return { apply, zh, py, toPlain, twins, pairs };

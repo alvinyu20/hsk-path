@@ -52,9 +52,9 @@ B. For each word, is the pinyin right for the meaning given? I fixed 长 (cháng
 C. Neutral tones: I show the dictionary neutral tones for 爷爷 yéye, 奶奶 nǎinai, 丈夫 zhàngfu, 眼睛 yǎnjing, 告诉 gàosu, 事情 shìqing, 还是 háishi, 回来 huílai, 回去 huíqu, 下来 xiàlai, 起来 qǐlai, but 上来 shànglái, 进来 jìnlái, 出来 chūlái, 过来 guòlái without them. Is that how you would teach them to a beginner? What is the usual reading of each?
 D. 一会儿 is shown as yíhuìr (with the tone change). Is that right, or should a beginner see yīhuìr?
 E. Glosses I am least sure of: 名 (measure word for people, formal), 面 (side; noodles), 花 (flower; the "to spend" meaning is not taught), 打 (hit; play a ball game; make a call), 就 (then; just; as early as), 着, 地, 得, 过 (particles), 红茶 (black tea), 爱好 (hobby), 啊, 时 (time; when), 位, 间, 条, 万, 快 (fast; soon), 长 (long), 还是 (or; still), 让, 可能, 正, 周, 每, 自己. Is each gloss correct and the most useful first meaning for a beginner? Which important common meaning is missing?
-F. 一会儿 keeps its 儿 but 男孩, 女孩, 小孩 are written without one. Is that how you would write them in plain Mandarin text? Does 一会儿 sound unnatural without 儿? The open dataset I use lists 男孩儿, 女孩儿, 小孩儿 (with 儿) and 一会儿; does the official list print them that way, and could that explain part of the 200 vs 197 difference?
+F. The site writes 男孩, 女孩, 小孩 without 儿 by default (and with 儿, as the official list prints them, when a switch is on), but 一会儿 always keeps its 儿. Is that how you would write them in plain Mandarin text? Does 一会 without 儿 sound unnatural?
 """
-write('01-word-list.md', '# HSK 2 word list and glosses (197 words)\n\nCopy everything below the line.\n\n---\n\n' + HEAD.replace('检查下面的内容', '检查下面的 HSK 2 词表（拼音、词性、英文解释）') + 'Words (word | pinyin | part of speech | English):\n\n' + '\n'.join(lines) + '\n' + ask)
+write('01-word-list.md', '' + HEAD.replace('检查下面的内容', '检查下面的 HSK 2 词表（拼音、词性、英文解释）') + 'Words (word | pinyin | part of speech | English):\n\n' + '\n'.join(lines) + '\n' + ask)
 files.append(('01-word-list.md', 'the 197 words: pinyin, glosses, the three missing words, neutral tones'))
 
 # 2. grammar lessons
@@ -89,8 +89,7 @@ Specific claims to check (these are the ones I am least sure of; please say righ
 15. 条, 位, 间, 次: "一条鱼", "一位老师", "这间教室", "请再说一次".
 16. Missing grammar: below is my own list of 33 grammar points for HSK 2 (the official numbered list was not available to me). Which important HSK 2 grammar points are missing? Which of mine belong to HSK 3 instead? If you know the official HSK 3.0 level-2 grammar outline (November 2025 syllabus), say which of its points I do not cover.
 """ + '\n'.join('   %d. %s' % (i, o) for i, o in enumerate(outline, 1)) + '\n'
-write('02-grammar-explanations.md', '# HSK 2 grammar lessons (%d lessons)\n\nCopy everything below the line. For these, also check every "always" / "never" claim for counter-examples.\n\n---\n\n' % len(lessons)
-      + HEAD.replace('检查下面的内容', '检查下面的语法课（解释、常见错误、例句）') + 'Lessons:\n\n' + '\n'.join(g) + claims)
+write('02-grammar-explanations.md', '' + HEAD.replace('检查下面的内容', '检查下面的语法课（解释、常见错误、例句）') + 'Lessons:\n\n' + '\n'.join(g) + claims)
 files.append(('02-grammar-explanations.md', 'the %d grammar lessons and the claims I am least sure of, plus the grammar outline question' % len(lessons)))
 
 # 3. sentences in batches (everything with Chinese and English that the learner sees)
@@ -108,7 +107,7 @@ BATCH = 220
 batches = [sent[i:i + BATCH] for i in range(0, len(sent), BATCH)]
 for n, b in enumerate(batches, 1):
     name = '%02d-sentences-%d-of-%d.md' % (n + 2, n, len(batches))
-    write(name, '# Sentences, batch %d of %d (%d sentences)\n\nCopy everything below the line.\n\n---\n\n' % (n, len(batches), len(b)) + HEAD.replace('检查下面的内容', '检查下面的句子') + 'Sentences (Chinese / English):\n\n' + '\n'.join('%d. %s  /  %s' % (i + 1, zh, en) for i, (zh, en) in enumerate(b)) + '\n')
+    write(name, '' + HEAD.replace('检查下面的内容', '检查下面的句子') + 'Sentences (Chinese / English):\n\n' + '\n'.join('%d. %s  /  %s' % (i + 1, zh, en) for i, (zh, en) in enumerate(b)) + '\n')
     files.append((name, '%d example, exercise and fill-in sentences' % len(b)))
 
 # 4. word webs
@@ -127,13 +126,36 @@ w.append('### Topics (words grouped for learning)')
 for t in webs['topics']:
     w.append('- %s: %s' % (t['name'], ' '.join(t['words'])))
 name = '%02d-word-webs.md' % (len(batches) + 3)
-write(name, '# Word webs: character meanings, opposite pairs, topics\n\nCopy everything below the line.\n\n---\n\n'
-      + HEAD.replace('检查下面的内容', '检查下面的“词网”内容（字的意思、反义词、主题分组）')
+write(name, '' + HEAD.replace('检查下面的内容', '检查下面的“词网”内容（字的意思、反义词、主题分组）')
       + 'Also check: is each part meaning (for example 出 = out, 过 = over, 子 = noun ending, 么 left out) right and not misleading? Does each opposite-pair note say something true? Is any word grouped in a topic where it does not belong?\n\n' + '\n'.join(w) + '\n')
 files.append((name, 'character meanings inside words, the opposite pairs and notes, the topic groups'))
 
+# 4b. the mock exam
+ex = []
+seenx = set()
+for it in items:
+    if it['where'].startswith('exam:') and it.get('en') and not it.get('levelOnly'):
+        l = '%s  /  %s' % (it['zh'].strip(), it['en'].strip())
+        if l not in seenx:
+            seenx.add(l); ex.append(l)
+bank = json.load(open(os.path.join(ROOT, 'content', 'l2', 'exam-2.json'), encoding='utf-8'))
+pic = []
+for pc, zh, en, ok in bank['L1']:
+    pic.append('听力第1部分：图片 %s ＋ 句子“%s” → %s' % (pc, zh, '相符' if ok else '不相符'))
+for st in bank['L2']:
+    for i in st['items']:
+        pic.append('听力第2部分：对话“%s” → 正确图片 %s （这一组的图片：%s）' % (' '.join(l['zh'] for l in i['say']), st['opts'][i['ans']], ' '.join(st['opts'])))
+for st in bank['R1']:
+    for i in st['items']:
+        pic.append('阅读第1部分：句子“%s” → 正确图片 %s （这一组的图片：%s）' % (i['zh'], st['opts'][i['ans']], ' '.join(st['opts'])))
+for a, b, aen, ben, same in bank['R3']:
+    pic.append('阅读第3部分：“%s” 和 “%s” → %s' % (a, b, '意思相同' if same else '意思不同'))
+name = '%02d-exam.md' % (len(batches) + 4)
+write(name, HEAD.replace('检查下面的内容', '检查下面的考试题（句子、对话和图片配对题）') + 'Besides the usual checks, please say whether any picture question is AMBIGUOUS (two pictures could fit, or an emoji does not clearly show the meaning), and whether every "same meaning / different meaning" pair in reading part 3 is really the same or different.\n\nSentences and dialogues:\n\n' + '\n'.join('%d. %s' % (i + 1, l) for i, l in enumerate(ex)) + '\n\nPicture and pair items (emoji stand in for pictures; the first picture named is the intended answer):\n\n' + '\n'.join(pic) + '\n')
+files.append((name, 'the mock exam: sentences, dialogues, picture matches and same-meaning pairs'))
+
 # 5. questions for Alibaba
-name = '%02d-questions-for-alibaba.md' % (len(batches) + 4)
+name = '%02d-questions-for-alibaba.md' % (len(batches) + 5)
 write(name, """# Questions to settle about the Alibaba (Qwen) connection
 
 These are about Alibaba's service, not about Chinese. Ask Alibaba Cloud's documentation, their support chat, or Qwen itself (Qwen may not know current details, so check any answer against the Model Studio documentation).
@@ -152,7 +174,7 @@ files.append((name, 'practical questions for Alibaba support or documentation (n
 
 readme = """# Review packs for a Chinese AI model: HSK 2
 
-Open DeepSeek (chat.deepseek.com) and/or Qwen Chat (chat.qwen.ai), start a **new chat for each file**, paste everything below the line, and paste the answer back to Claude.
+Each file is ready to UPLOAD (they are too long to paste): open DeepSeek (chat.deepseek.com) and/or Qwen Chat (chat.qwen.ai), start a **new chat for each file**, attach the file, and send this message: "Please read the attached file and do what it asks." Then paste the answer back to Claude.
 Each file asks the model to report **problems only**, so the answers stay short. Where two models disagree, that item goes to a human teacher.
 Nothing on the HSK 2 side has been checked by a person who reads Chinese; these packs are how that gets done.
 

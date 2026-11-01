@@ -21,8 +21,12 @@ case "$MODE" in
     LEVEL=2 python3 -W ignore tools/build-words.py | tail -1
     LEVEL=2 python3 -W ignore tools/build-grammar.py | tail -1
     LEVEL=2 python3 -W ignore tools/build-webs.py | tail -1
-    node tools/dump-sentences.js 2 --plain > /tmp/shanlu-sentences-l2.json
-    python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l2.json --level 2 --dataset "$DATASET" --plain
+    LEVEL=2 python3 -W ignore tools/build-speech.py | tail -1
+    LEVEL=2 python3 -W ignore tools/build-exam.py | tail -1
+    node tools/dump-sentences.js 2 > /tmp/shanlu-sentences-l2.json
+    python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l2.json --level 2 --dataset "$DATASET"
+    node tools/dump-sentences.js 2 --plain > /tmp/shanlu-sentences-l2-plain.json
+    python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l2-plain.json --level 2 --dataset "$DATASET" --plain
     NODE_PATH="$(npm root -g)" node tools/smoke-test-l2.js ;;
   full) sh tools/check-all.sh "$DATASET" ;;
   *) echo "usage: check-quick.sh content|ui|l2|full [dataset]"; exit 2 ;;

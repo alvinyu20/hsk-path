@@ -25,6 +25,7 @@ const server = http.createServer((req, res) => {
 });
 
 let failures = 0;
+const window_level_still_1 = (n) => n === 1;
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };
 
 (async () => {
@@ -482,6 +483,26 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await text()).includes('20 question(s) are unanswered'), 'submitting with unanswered questions asks first');
   await page.locator('button', { hasText: 'Submit reading' }).click();
   check((await text()).includes('0 of 20') && (await text()).includes('One section only'), 'a section on its own is scored on its own');
+  await page.locator('button', { hasText: 'Back to the exam page' }).click();
+
+  // The lock: HSK 2 stays closed until a full exam is passed with 80% in both sections
+  check((await page.locator('.lvseg button', { hasText: 'HSK 2' }).innerText()).includes('🔒'), 'HSK 2 shows a lock before the exam is passed');
+  check(await page.evaluate(() => !JSON.parse(localStorage.getItem('shanlu-passed') || '{}')[1]), 'a full exam with a section under 80% does not open HSK 2');
+  await page.locator('.lvseg button', { hasText: 'HSK 2' }).click();
+  check((await text()).includes('HSK 2 is locked') && window_level_still_1(await page.evaluate(() => window.SHANLU_LEVEL)), 'pressing the locked HSK 2 explains how to open it and stays on HSK 1');
+  await page.locator('button', { hasText: 'Go to the HSK 1 exam' }).click();
+  check((await text()).includes('HSK 1 mock exam'), 'the lock message leads to the exam');
+  await page.locator('button', { hasText: 'Start the full exam' }).click();
+  await answerAll(true);
+  await page.locator('button', { hasText: 'Submit listening' }).click();
+  await page.locator('button', { hasText: 'Start Reading' }).click();
+  await answerAll(true);
+  await page.locator('button', { hasText: 'Submit reading' }).click();
+  await page.waitForTimeout(100);
+  const pt = await text();
+  check(pt.includes('seal earned') && pt.includes('HSK 2 is now open') && pt.includes('200 / 200'), 'a perfect full exam earns the seal and says HSK 2 is open');
+  check(await page.evaluate(() => !!JSON.parse(localStorage.getItem('shanlu-passed') || '{}')[1]), 'the pass is remembered');
+  check(!(await page.locator('.lvseg button', { hasText: 'HSK 2' }).innerText()).includes('🔒'), 'the lock on HSK 2 is gone');
   await page.locator('button', { hasText: 'Back to the exam page' }).click();
 
   // Exam + home

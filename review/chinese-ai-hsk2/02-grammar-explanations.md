@@ -1,9 +1,3 @@
-# HSK 2 grammar lessons (18 lessons)
-
-Copy everything below the line. For these, also check every "always" / "never" claim for counter-examples.
-
----
-
 你好！我正在做一个 HSK 2 学习网站（学习者已学过 HSK 1 的约 300 个词，现在学 HSK 2 的 200 个新词，总共约 500 个词）。请你以中国母语者和汉语老师的身份，检查下面的语法课（解释、常见错误、例句）。
 **只报告有问题的地方**，不要夸奖，也不要重复没问题的内容。对每个问题，请写：编号 / 原文 / 哪里不好（简单中文，再加一句英文）/ 更自然的说法（只用 HSK 1 和 HSK 2 的词）。
 需要特别注意：1) 不自然或不地道的说法；2) 语法错误；3) 英文翻译和中文意思不一致；4) 书面语被当成口语教；5) 对 HSK 2 来说太难的词；6) 多音字的拼音是否正确。
@@ -22,7 +16,7 @@ Lessons:
 - To say A is more than B, put 比 between them and the adjective after: 他比我高 means 'He is taller than me'. Do not add 很 before the adjective in a 比 sentence.
 - To say how much more, put the amount after the adjective: 他比我大三岁 'He is three years older than me'; 这个比那个好一点 'This one is a bit better than that one'; 他比我高多了 'He is much taller than me'.
 - To say A is not as ... as B, use 没有: 我没有他高 'I am not as tall as he is'. Add 那么 to say 'so': 我没有他那么高.
-- 最 means 'most': 我最喜欢茶 'I like tea most'. 这么 and 那么 mean 'so': 这么贵 'so expensive' (this much, about something near), 那么远 'so far' (that much, about something farther away).
+- 最 means 'most': 我最喜欢喝茶 'I like drinking tea best'. 这么 and 那么 both mean 'so': 这么贵 'so expensive', 那么远 'so far'. 这么 usually points at what is here or happening now, and 那么 at something farther away or already mentioned, but you will hear both in many sentences.
 - (common mistake) Do not put 很 (or 非常, 太) in a 比 sentence. Say 他比我高, not 他比我很高.
 - example: 他比我高。 / He is taller than me.
 - example: 哥哥比我大三岁。 / My older brother is three years older than me.
@@ -33,14 +27,14 @@ Lessons:
 - 离 measures the distance between two places. Put it between them and finish with 远 or 近: 学校离我家很近 'The school is close to my home'. Add 很 before 近 or 远, or 不 for the negative: 不远.
 - 从…到… means 'from … to …', for places and for times: 从我家到学校 'from my home to school'; 从八点到十点 'from eight to ten'. 从 on its own says where something starts: 我从学校回来 'I come back from school'.
 - 往 means 'toward' and is used for directions: 往左走 'go to the left', 往前走 'go forward'.
-- (common mistake) Keep the pattern place + 离 + place + 很远. Do not say 学校很远我家, the way English says 'the school is far from my home'.
+- (common mistake) Keep the pattern place + 离 + place + 远 or 近 (很远, 很近, 不远 all work). Do not say 学校很远我家, the way English says 'the school is far from my home'.
 - example: 学校离我家很近。 / The school is close to my home.
 - example: 机场离这里很远。 / The airport is far from here.
 - example: 我从家走路到学校。 / I walk from home to school.
 - example: 请往左走，洗手间在右边。 / Please go left; the restroom is on the right.
 
 ### Lesson 3: 到 and 在 after a verb
-- 到 before a place means 'arrive at' or 'go to': 我们到机场了 'We have arrived at the airport'. 他每天八点到学校 'He gets to school at eight every day'.
+- 到 before a place means 'arrive at' or 'get to': 我们到机场了 'We have arrived at the airport'. 他每天八点到学校 'He gets to school at eight every day'.
 - Most verbs keep 在 + place before the verb (我在家吃饭), but a few verbs take 在 + place after them to say where the person ends up: 我住在学校旁边 'I live next to the school'; 她站在门口 'She is standing at the door'. Common ones are 住, 坐 and 站.
 - Compare 我在这里工作 (the working happens here) and 我住在这里 (I live here).
 - (common mistake) Most verbs keep 在 + place before the verb: 我在学校学习, not 我学习在学校. Only a few verbs such as 住, 坐 and 站 take 在 + place after them.
@@ -52,17 +46,17 @@ Lessons:
 ### Lesson 4: 过: have done it before
 - Put 过 after a verb to say you have done it at least once in your life: 我去过中国 'I have been to China'. This 过 is pronounced guo with a light tone, and the verb does not change.
 - To say you have never done it, use 没 + verb + 过: 我没吃过这个 'I have never eaten this'. Do not use 不. To ask, add 吗: 你去过中国吗？
-- Compare 了 and 过: 我去了中国 says the trip happened; 我去过中国 says it is part of your experience. To say how many times, put it after 过: 我去过三次中国.
+- Compare 了 and 过: 我去了中国 says the trip happened; 我去过中国 says it is part of your experience. To say how many times, put it after 过 (我去过三次中国) or after the place (我去过中国三次); both orders are common.
 - (common mistake) Do not use 不 with 过. 我不去过中国 is wrong; say 我没去过中国 (I have never been to China).
 - example: 我去过中国。 / I have been to China.
 - example: 你喝过红茶吗？ / Have you ever drunk black tea?
 - example: 我没学过游泳。 / I have never learned to swim.
-- example: 他看过这个电影两次。 / He has seen this movie twice.
+- example: 这个电影我看过两次。 / I have seen this movie twice.
 
 ### Lesson 5: 着: a state that continues
 - Put 着 after a verb to describe a state that is still there: 门开着 'The door is open'; 他站着，我坐着 'He is standing and I am sitting'. It shows how things are right now.
 - 着 can also link two actions: the first, with 着, shows how the second is done. 他笑着说话 'He talks with a smile'; 弟弟坐着看电视 'My younger brother watches TV sitting down'.
-- To say it is not in that state, drop 着 and use 没: 门没开 'The door is not open'. For an action in progress use 在 or 正在 (他在跑步 'He is running'); 着 describes a state, like 门开着.
+- To say it is not in that state, put 没 before the verb: 门没开 'The door is not open'. Some verbs keep 着 in the negative (他没站着 'He is not standing'), so learn it with each verb. For an action in progress use 在 or 正在 (他在跑步 'He is running'); 着 describes a state, like 门开着.
 - (common mistake) 着 describes a state, not an action in progress. For 'is running' say 他在跑步, and use 着 for things like 门开着.
 - example: 门开着。 / The door is open.
 - example: 他站着，我坐着。 / He is standing and I am sitting.
@@ -77,7 +71,7 @@ Lessons:
 - example: 快要下雨了。 / It is about to rain.
 - example: 我们要出门了。 / We are about to go out.
 - example: 他明天就要走了。 / He is leaving tomorrow.
-- example: 快要考试了，我要准备。 / The exam is coming up, so I need to get ready.
+- example: 快要考试了，我要准备一下。 / The exam is coming up, so I need to get ready.
 
 ### Lesson 7: 已经…了 and 就: already, and sooner than expected
 - 已经…了 means 'already': 我已经吃饭了 'I have already eaten'. 已经 goes before the verb and 了 comes at the end (or right after the verb).
@@ -101,9 +95,9 @@ Lessons:
 
 ### Lesson 9: 因为…所以… and 虽然…但是…
 - 因为 gives the reason and 所以 gives the result: 因为下雨，所以我们在家看电影 'Because it is raining, we watch a movie at home'. In English you use only one of 'because' and 'so'; Chinese can use both. You can also drop either: 因为下雨，我们在家 and 下雨，所以我们在家 are both fine.
-- 虽然 'although' and 但是 'but' come as a pair too: 虽然很累，但是我很高兴 'Although I am tired, I am happy'. English does not say 'although … but', and Chinese needs a 'but' word (但是, or just 但) in the second part.
+- 虽然 'although' and 但是 'but' come as a pair too: 虽然很累，但是我很高兴 'Although I am tired, I am happy'. English does not say 'although … but', and in Chinese the second part normally has a 'but' word (但是, or just 但). Leaving it out is possible in speech but sounds less complete, so learn the pair.
 - 为什么 asks for the reason: 你为什么不去？ 'Why are you not going?' The answer starts with 因为.
-- (common mistake) After 虽然, add a 'but' word (但是 or 但) in the second part, the way Chinese does: 虽然很累，但是很高兴.
+- (common mistake) After 虽然, the second part normally has a 'but' word (但是 or 但): 虽然很累，但是很高兴. Without it the sentence sounds less complete.
 - example: 因为下雨，所以我们在家看电影。 / Because it is raining, we watch a movie at home.
 - example: 因为今天很冷，所以我不想出门。 / Because it is cold today, I do not want to go out.
 - example: 虽然这个很贵，但是很好。 / Although this one is expensive, it is good.
@@ -124,7 +118,7 @@ Lessons:
 - If the verb has an object, say the object first: 她汉语说得很好 'She speaks Chinese very well' (or repeat the verb: 她说汉语说得很好).
 - 地 goes before a verb to say how: adjective + 地 + verb. 高兴地说 'say happily'; 弟弟高兴地跑回家 'My younger brother ran home happily'.
 - The three words 的, 得 and 地 all sound like de. 的 comes before a noun, 地 comes before a verb, and 得 comes after a verb.
-- (common mistake) Do not leave out 得. 他跑很快 is not standard; say 他跑得很快.
+- (common mistake) Do not leave out 得. 他跑很快 is heard in casual speech but is not standard; say 他跑得很快.
 - example: 他跑得很快。 / He runs very fast.
 - example: 她汉语说得很好。 / She speaks Chinese very well.
 - example: 我们昨天玩得很高兴。 / We had a great time yesterday.
@@ -133,8 +127,8 @@ Lessons:
 ### Lesson 12: 每, 经常, 有时 and 什么都
 - 每 means 'every': 每天 'every day', 每个人 'everyone', 每次 'every time'. After 每 the sentence usually has 都: 每个人都喜欢 'Everyone likes it'; 我每天都喝茶 'I drink tea every day'.
 - How often: 经常 'often' and 有时 'sometimes' go before the verb: 我经常看电影 'I often watch movies'; 我有时坐地铁，有时打车 'Sometimes I take the subway, sometimes a taxi'.
-- A question word + 都 means 'everything, everyone, everywhere': 我什么都喜欢吃 'I like eating everything'. With a negative it means 'nothing at all': 我什么都不想吃 'I do not want to eat anything'; 谁都 'everyone'; 哪儿都 'everywhere'.
-- (common mistake) After 每 + noun, add 都 before the verb: 每个人都喜欢. After 什么 meaning 'everything' add 都 (or 也): 我什么都吃.
+- A question word + 都 means 'everything, everyone, everywhere': 我什么都喜欢吃 'I like eating everything'. With a negative it means 'nothing at all': 我什么都不想吃 'I do not want to eat anything' (here 也 also works: 我什么也不想吃); 谁都 'everyone'; 哪儿都 'everywhere'.
+- (common mistake) After 每 + noun, add 都 before the verb: 每个人都喜欢. After 什么 meaning 'everything' add 都: 我什么都吃. (In a positive sentence 也 does not work there.)
 - example: 每天早上我都喝一杯茶。 / Every morning I drink a cup of tea.
 - example: 他经常去商场。 / He often goes to the mall.
 - example: 我有时坐地铁，有时打车。 / Sometimes I take the subway, sometimes a taxi.
@@ -194,12 +188,22 @@ Lessons:
 ### Lesson 18: 可能, 希望 and 准备
 - 可能 means 'maybe, might': 他可能在家 'He might be at home'; 明天可能下雨 'It may rain tomorrow'. For 'might not' put 不 after 可能: 他可能不来. 不可能 means 'impossible'.
 - 希望 means 'to hope' and is followed by a whole sentence: 我希望明天是晴天 'I hope tomorrow is sunny'; 希望你喜欢 'I hope you like it'.
-- 准备 means 'to get ready' or 'to plan to': 我准备明年去外国旅游 'I plan to travel abroad next year'; 我在准备考试 'I am preparing for the exam'.
+- 准备 means 'to get ready' or 'to plan to': 我准备明年出国旅游 'I plan to travel abroad next year'; 我在准备考试 'I am preparing for the exam'.
 - (common mistake) Do not use 不可能 for 'might not'. 不可能 means 'it cannot be'. For 'might not' say 可能不: 他可能不来.
 - example: 他可能不在家。 / He may not be at home.
 - example: 明天可能下雨。 / It may rain tomorrow.
 - example: 我希望明天是晴天。 / I hope tomorrow is sunny.
-- example: 我准备明年去外国旅游。 / I plan to travel abroad next year.
+- example: 我准备明年出国旅游。 / I plan to travel abroad next year.
+
+### Lesson 19: 多 questions, …的时候 and doubled verbs
+- 多 + adjective asks 'how …?' about size, age, height or distance: 你多大了？ 'How old are you?'; 他有多高？ 'How tall is he?'; 学校离这里有多远？ 'How far is the school from here?' Use the 'big' side of the pair: 多高 (you do not ask how short), 多远 (not 多近).
+- …的时候 means 'when …': put it after the clause, and put the whole time phrase before the main verb: 吃饭的时候，别看手机 'Do not look at your phone when eating'; 我小的时候，住在中国 'When I was little, I lived in China'.
+- Doubling a verb makes an action short and light, like 'have a look' or 'take a moment to': 看看, 听听, 想想, 问问, 走走. 你看看这个 'Have a look at this'; 我们出去走走吧 'Let us go out for a walk'. The second syllable is light.
+- (common mistake) Do not ask with the 'small' word. Ask 多远 (how far), not 多近.
+- example: 你今年多大了？ / How old are you this year?
+- example: 下雨的时候，我们在家看电影。 / When it rains, we watch movies at home.
+- example: 再想想，好吗？ / Think about it some more, okay?
+- example: 请你问问老师。 / Please ask the teacher.
 
 Specific claims to check (these are the ones I am least sure of; please say right or wrong with a counter-example if wrong):
 1. 比: "他比我高多了" and "这个比那个好一点" are fine, and a 比 sentence cannot take 很. Is 没有 + 那么 the normal way to say "not as ... as"?
@@ -251,3 +255,6 @@ Specific claims to check (these are the ones I am least sure of; please say righ
    31. 可能 / 希望 / 准备
    32. 条 / 位 / 间 (new measure words)
    33. 万 and 多 (big numbers, more than)
+   34. 多 + adjective questions (多大, 多高, 多远)
+   35. …的时候 (when …)
+   36. doubled verbs (看看, 想想, 走走)

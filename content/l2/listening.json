@@ -1,0 +1,218 @@
+{
+ "clips": [
+  {
+   "zh": "请问，洗手间在前面吗？",
+   "en": "Excuse me, is the restroom up ahead?",
+   "notes": [
+    "洗手间: 洗 xǐ and 手 shǒu are both third tone, so 洗 rises: xí shǒujiān.",
+    "吗 at the end is light and short."
+   ]
+  },
+  {
+   "zh": "我坐地铁去机场。",
+   "en": "I take the subway to the airport.",
+   "notes": [
+    "地铁 dìtiě: a falling tone, then a third tone that dips.",
+    "机场 jīchǎng: the ch is the curled-tongue sound."
+   ]
+  },
+  {
+   "zh": "学校离我家很近。",
+   "en": "The school is close to my home.",
+   "notes": [
+    "学校 xuéxiào: a rise, then a fall.",
+    "近 jìn (close) and 进 jìn (enter) sound the same; the sentence tells you which one it is."
+   ]
+  },
+  {
+   "zh": "他每天早上都跑步。",
+   "en": "He runs every morning.",
+   "notes": [
+    "每天 měitiān: 每 is a third tone before a first tone, so it only dips.",
+    "都 dōu is high and flat, and sits before the verb: 都跑步."
+   ]
+  },
+  {
+   "zh": "我最喜欢踢足球。",
+   "en": "I like playing soccer most.",
+   "notes": [
+    "踢足球: 踢 tī is high and flat, 足 zú and 球 qiú both rise.",
+    "喜欢 xǐhuan: 欢 is light."
+   ]
+  },
+  {
+   "zh": "他比我高，但是我跑得很快。",
+   "en": "He is taller than me, but I run fast.",
+   "notes": [
+    "比我 bǐ wǒ: two third tones in a row, so 比 rises: bí wǒ.",
+    "跑得很快 pǎo de hěn kuài: 得 is just a light de."
+   ]
+  },
+  {
+   "zh": "因为下雨，所以我们在家看电影。",
+   "en": "Because it is raining, we watch a movie at home.",
+   "notes": [
+    "所以 suǒyǐ: two third tones, so 所 rises: suóyǐ.",
+    "因为 and 所以 come as a pair: when you hear one, listen for the other."
+   ]
+  },
+  {
+   "zh": "你想喝红茶还是绿茶？",
+   "en": "Do you want black tea or green tea?",
+   "notes": [
+    "你想 nǐ xiǎng: two third tones, so 你 rises: ní xiǎng.",
+    "红茶 hóngchá is \"red tea\" in Chinese; English calls it black tea."
+   ]
+  },
+  {
+   "zh": "我去过两次中国。",
+   "en": "I have been to China twice.",
+   "notes": [
+    "去过 qùguo: 过 is light when it shows an experience.",
+    "两次 liǎng cì: with a measure word, \"two\" is 两 liǎng, not 二 èr."
+   ]
+  },
+  {
+   "zh": "请你告诉我你的名字。",
+   "en": "Please tell me your name.",
+   "notes": [
+    "请你 qǐng nǐ: two third tones, so 请 rises: qíng nǐ.",
+    "告诉 gàosu: 诉 is light."
+   ]
+  },
+  {
+   "zh": "她教我们汉语。",
+   "en": "She teaches us Chinese.",
+   "notes": [
+    "教 jiāo (to teach) is high and flat; 叫 jiào (to be called) falls. They are easy to mix up.",
+    "们 in 我们 is light."
+   ]
+  },
+  {
+   "zh": "门开着，请进来。",
+   "en": "The door is open; please come in.",
+   "notes": [
+    "开着 kāizhe: 着 is light here.",
+    "进来 jìnlái: 进 falls, 来 rises."
+   ]
+  },
+  {
+   "zh": "我已经吃完饭了。",
+   "en": "I have already finished eating.",
+   "notes": [
+    "已经 yǐjīng: 已 is a third tone before a first tone, so it only dips.",
+    "了 at the end is light; it shows the eating is finished."
+   ]
+  },
+  {
+   "zh": "别走，再坐一会儿。",
+   "en": "Do not go; sit a little longer.",
+   "notes": [
+    "别 bié (do not) rises; 比 bǐ (than) dips.",
+    "一会儿 yíhuìr: 一 changes to yí before the fourth tone 会."
+   ]
+  },
+  {
+   "zh": "老师让我们别说话。",
+   "en": "The teacher asks us not to talk.",
+   "notes": [
+    "老师 lǎoshī: 老 is a third tone before a first tone, so it only dips.",
+    "别说话 bié shuōhuà: rising, high, then falling."
+   ]
+  },
+  {
+   "zh": "这个电影很有意思。",
+   "en": "This movie is very interesting.",
+   "notes": [
+    "很有 hěn yǒu: two third tones, so 很 rises: hén yǒu.",
+    "意思 yìsi: 思 is light."
+   ]
+  },
+  {
+   "zh": "我的手机在桌子上面。",
+   "en": "My phone is on the table.",
+   "notes": [
+    "手机 shǒujī: 手 is a third tone before a first tone, so it only dips.",
+    "桌子 zhuōzi: 子 is light."
+   ]
+  },
+  {
+   "zh": "我不想出国，我想在家休息。",
+   "en": "I do not want to go abroad; I want to rest at home.",
+   "notes": [
+    "不想 bù xiǎng: 不 stays fourth tone before a third tone; it changes only before another fourth tone.",
+    "出国 chūguó: high and flat, then rising."
+   ]
+  },
+  {
+   "zh": "他个子很高，打篮球打得很好。",
+   "en": "He is tall and plays basketball very well.",
+   "notes": [
+    "个子 gèzi: 子 is light.",
+    "打篮球 dǎ lánqiú: 打 dips, 篮 and 球 both rise."
+   ]
+  },
+  {
+   "zh": "从我家到车站走路要十分钟。",
+   "en": "It takes ten minutes to walk from my home to the station.",
+   "notes": [
+    "车站 chēzhàn: both the ch and the zh are curled-tongue sounds.",
+    "从…到… means from … to …: you hear 从 first and 到 later."
+   ]
+  },
+  {
+   "zh": "他经常和朋友一起去游泳。",
+   "en": "He often goes swimming with friends.",
+   "notes": [
+    "一起 yìqǐ: 一 is yì before the third tone 起.",
+    "朋友 péngyou: 友 is light."
+   ]
+  },
+  {
+   "zh": "今天是晴天，我们出去玩吧。",
+   "en": "Today is sunny; let us go out and play.",
+   "notes": [
+    "晴天 qíngtiān: a rise, then high and flat.",
+    "吧 at the end is light and invites agreement."
+   ]
+  },
+  {
+   "zh": "虽然很累，但是我很高兴。",
+   "en": "Although I am tired, I am happy.",
+   "notes": [
+    "虽然 suīrán: 虽 is high and flat, 然 rises.",
+    "但是 dànshì: both syllables fall."
+   ]
+  },
+  {
+   "zh": "他可能不在家，你给他打电话吧。",
+   "en": "He may not be at home; you should call him.",
+   "notes": [
+    "可能 kěnéng: 可 is a third tone before a rising tone, so it only dips.",
+    "打电话 dǎ diànhuà: 打 dips, then two falling tones."
+   ]
+  }
+ ],
+ "tones": [
+  {
+   "zh": "妈",
+   "py": "mā",
+   "label": "High and flat"
+  },
+  {
+   "zh": "麻",
+   "py": "má",
+   "label": "Rising"
+  },
+  {
+   "zh": "马",
+   "py": "mǎ",
+   "label": "Dips, then rises"
+  },
+  {
+   "zh": "骂",
+   "py": "mà",
+   "label": "Falling"
+  }
+ ]
+}

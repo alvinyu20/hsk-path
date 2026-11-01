@@ -10,3 +10,7 @@
 这儿	这里	zhèr	zhèlǐ	yes
 那儿	那里	nàr	nàlǐ	yes
 哪儿	哪里	nǎr	nǎlǐ	yes
+# HSK 2 (the official level-2 list prints these with 儿 too). 一会儿 is NOT here: it keeps its 儿 in both styles (a Chinese AI said 一会 is not natural).
+男孩儿	男孩	nánháir	nánhái	no
+女孩儿	女孩	nǚháir	nǚhái	no
+小孩儿	小孩	xiǎoháir	xiǎohái	no

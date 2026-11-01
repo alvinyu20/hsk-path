@@ -26,6 +26,8 @@ This packet holds all the Chinese on the Shanlu study site for HSK 1 (the 300-wo
 13. **今天下雪了。** (word:雪): I mean "it has started snowing / it is snowing today". Is 今天下雪了 natural for that, and does it risk reading as "it snowed earlier today"?
 14. **你是对的。** (word:对): Is 你是对的 natural in speech, or do people say 你说得对 / 你对?
 15. **房间里有一个电视。** (word:房间): Is 一个电视 fine in speech, or should it be 一台电视?
+16. **我上学时，爸爸送我。** (word:时): Does 我上学时 mean "when I go to school (every day)" or "when I was a student"? Qwen says it leans to the second; is 我去上学的时候 clearer?
+17. **我今天头很疼。** (word:疼): Is 我很疼 (no body part) odd? Qwen says yes; I replaced it with a headache sentence to be safe.
 
 ## 2. Grammar lessons (26)
 

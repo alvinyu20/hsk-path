@@ -1,9 +1,3 @@
-# Sentences, batch 2 of 4 (220 sentences)
-
-Copy everything below the line.
-
----
-
 你好！我正在做一个 HSK 2 学习网站（学习者已学过 HSK 1 的约 300 个词，现在学 HSK 2 的 200 个新词，总共约 500 个词）。请你以中国母语者和汉语老师的身份，检查下面的句子。
 **只报告有问题的地方**，不要夸奖，也不要重复没问题的内容。对每个问题，请写：编号 / 原文 / 哪里不好（简单中文，再加一句英文）/ 更自然的说法（只用 HSK 1 和 HSK 2 的词）。
 需要特别注意：1) 不自然或不地道的说法；2) 语法错误；3) 英文翻译和中文意思不一致；4) 书面语被当成口语教；5) 对 HSK 2 来说太难的词；6) 多音字的拼音是否正确。
@@ -18,11 +12,11 @@ If a part has no problems, answer "No problems found".
 
 Sentences (Chinese / English):
 
-1. 这个门票有点儿贵。  /  This ticket is a bit expensive.
+1. 这个门票有点贵。  /  This ticket is a bit expensive.
 2. 火车票很贵。  /  A train ticket is expensive.
 3. 我没有票。  /  I do not have a ticket.
 4. 机票比火车票贵。  /  A plane ticket is more expensive than a train ticket.
-5. 你的机票在哪儿？  /  Where is your plane ticket?
+5. 你的机票在哪里？  /  Where is your plane ticket?
 6. 你想出国吗？  /  Do you want to go abroad?
 7. 爸爸经常出国工作。  /  Dad often goes abroad for work.
 8. 他去中国旅游了。  /  He went to China to travel.
@@ -43,10 +37,10 @@ Sentences (Chinese / English):
 23. 这里有洗手间吗？  /  Is there a restroom here?
 24. 请往右走。  /  Please go to the right.
 25. 你往左看。  /  Look to the left.
-26. 机场离这儿远吗？  /  Is the airport far from here?
+26. 机场离这里远吗？  /  Is the airport far from here?
 27. 学校离车站不远。  /  The school is not far from the station.
 28. 商店很近，走路五分钟。  /  The shop is near; it is five minutes on foot.
-29. 这儿离医院近吗？  /  Is it close to the hospital here?
+29. 这里离医院近吗？  /  Is it close to the hospital here?
 30. 你家远不远？  /  Is your home far?
 31. 去机场不太远。  /  It is not too far to the airport.
 32. 往左看，那是学校。  /  Look left, that is the school.
@@ -92,7 +86,7 @@ Sentences (Chinese / English):
 72. 他从楼下上来了。  /  He came up from downstairs.
 73. 请上来坐。  /  Please come up and sit.
 74. 他上去看看。  /  He is going up to take a look.
-75. 你上去吧，我在这儿等你。  /  You go up; I will wait for you here.
+75. 你上去吧，我在这里等你。  /  You go up; I will wait for you here.
 76. 他从楼上下来了。  /  He came down from upstairs.
 77. 你下来吃饭吧。  /  Come down and eat.
 78. 他下去买东西了。  /  He went down to buy things.
@@ -104,11 +98,11 @@ Sentences (Chinese / English):
 84. 请你站起来。  /  Please stand up.
 85. 我今天六点起来。  /  I got up at six today.
 86. 他走了。  /  He left.
-87. 你走吧。  /  You go ahead.
+87. 你走吧。  /  You can go now.
 88. 走路二十分钟。  /  It is a twenty-minute walk.
 89. 你走路还是坐车？  /  Do you walk or take a car?
 90. 小狗在外面跑。  /  The little dog is running outside.
-91. 别跑，慢一点儿。  /  Do not run; slow down a bit.
+91. 别跑，慢一点。  /  Do not run; slow down a bit.
 92. 他喜欢跑步。  /  He likes running.
 93. 我们一起去跑步吧。  /  Let us go jogging together.
 94. 请拿一下这个。  /  Please hold this for a moment.
@@ -157,18 +151,18 @@ Sentences (Chinese / English):
 137. 他的书包在椅子上。  /  His schoolbag is on the chair.
 138. 开学了，我很高兴。  /  School has started, and I am happy.
 139. 你什么时候开学？  /  When does your school start?
-140. 我哥哥在高中学习。  /  My older brother studies in senior high.
-141. 高中很忙。  /  Senior high is busy.
+140. 我哥哥在高中学习。  /  My older brother studies in senior high school.
+141. 上高中很忙。  /  Going to senior high school is busy.
 142. 他是一名医生。  /  He is a doctor.
 143. 她是我们学校的一名老师。  /  She is a teacher at our school.
 144. 他姓什么？  /  What is his surname?
 145. 你知道她姓什么吗？  /  Do you know her surname?
 146. 你的姓名是什么？  /  What is your full name?
 147. 这里写你的姓名。  /  Write your full name here.
-148. 我来介绍一下，这是我朋友。  /  Let me introduce you: this is my friend.
+148. 我来介绍一下，这是我朋友。  /  Let me make an introduction: this is my friend.
 149. 他给我们介绍了他的家人。  /  He introduced his family to us.
 150. 他告诉我明天不上课。  /  He told me there is no class tomorrow.
-151. 我告诉你一个事。  /  I will tell you something.
+151. 我告诉你一件事。  /  I will tell you something.
 152. 我帮你拿书包。  /  I will help you carry your schoolbag.
 153. 谁能帮我？  /  Who can help me?
 154. 他经常帮忙做饭。  /  He often helps with the cooking.
@@ -182,13 +176,13 @@ Sentences (Chinese / English):
 162. 你的身体怎么样？  /  How is your health?
 163. 身体不舒服，我想休息。  /  I do not feel well; I want to rest.
 164. 他的头很大。  /  His head is big.
-165. 我的头有点儿疼。  /  My head hurts a bit.
+165. 我的头有点疼。  /  My head hurts a bit.
 166. 我的手很冷。  /  My hands are very cold.
 167. 他手里有一本书。  /  He has a book in his hand.
-168. 我的眼睛有点儿疼。  /  My eyes hurt a bit.
+168. 我的眼睛有点疼。  /  My eyes hurt a bit.
 169. 这个小孩的眼睛很漂亮。  /  This child's eyes are pretty.
 170. 我的手疼。  /  My hand hurts.
-171. 我很疼。  /  I am in a lot of pain.
+171. 我今天头很疼。  /  I have a bad headache today.
 172. 这个药很好。  /  This medicine is good.
 173. 他生病了，要吃药。  /  He is sick and needs to take medicine.
 174. 我弟弟个子不高。  /  My younger brother is not tall.
@@ -196,45 +190,45 @@ Sentences (Chinese / English):
 176. 我今天不太舒服。  /  I do not feel very well today.
 177. 你舒服吗？  /  Are you comfortable?
 178. 你累不累？  /  Are you tired?
-179. 工作了一天，他有点儿累。  /  After a day of work, he is a bit tired.
+179. 工作了一天，他有点累。  /  After a day of work, he is a bit tired.
 180. 他还在床上。  /  He is still in bed.
 181. 这个床很舒服。  /  This bed is comfortable.
 182. 我买了一些花。  /  I bought some flowers.
 183. 妈妈喜欢花。  /  Mom likes flowers.
-184. 我想画一只猫。  /  I want to draw a cat.
-185. 这是谁的画？  /  Whose painting is this?
-186. 这只鸟很小。  /  This bird is small.
-187. 鸟在天上飞。  /  The bird flies in the sky.
-188. 我们去玩球吧。  /  Let us go play ball.
-189. 球在椅子下面。  /  The ball is under the chair.
-190. 你的手表很漂亮。  /  Your watch is very pretty.
-191. 现在几点？看一下手表。  /  What time is it now? Look at the watch.
-192. 我想买一条新裤子。  /  I want to buy a new pair of trousers.
-193. 他的裤子是黑色的。  /  His trousers are black.
-194. 她买了一个新包。  /  She bought a new bag.
-195. 我们包饺子吧。  /  Let us wrap dumplings.
-196. 这个颜色很漂亮。  /  This color is pretty.
-197. 这件衣服的颜色很漂亮。  /  The color of this garment is beautiful.
-198. 他有一件白色的衣服。  /  He has a white garment.
-199. 白色的猫是我的。  /  The white cat is mine.
-200. 他穿着黑色的裤子。  /  He is wearing black trousers.
-201. 黑色的狗在门口。  /  The black dog is at the door.
-202. 红色很漂亮。  /  Red is pretty.
-203. 我想买红色的包。  /  I want to buy a red bag.
-204. 我喜欢绿色。  /  I like green.
-205. 他有一个绿色的包。  /  He has a green bag.
-206. 你喝红茶还是绿茶？  /  Do you drink black tea or green tea?
-207. 红茶有点儿热。  /  The black tea is a bit hot.
-208. 这个绿茶很贵。  /  This green tea is expensive.
-209. 爸爸每天喝绿茶。  /  Dad drinks green tea every day.
-210. 她喜欢喝奶茶。  /  She likes milk tea.
-211. 这杯奶茶是你的吗？  /  Is this cup of milk tea yours?
-212. 你想喝咖啡还是茶？  /  Do you want coffee or tea?
-213. 咖啡太热了。  /  The coffee is too hot.
-214. 你想吃什么肉？  /  What meat do you want to eat?
-215. 这个肉很好吃。  /  This meat is delicious.
-216. 这个鱼很大。  /  This fish is big.
-217. 爸爸买了一条鱼。  /  Dad bought a fish.
-218. 是啊，我也喜欢。  /  Yes, I like it too.
-219. 你快来啊！  /  Come on, hurry up!
-220. 我的爱好是看电影。  /  My hobby is watching movies.
+184. 我花了两百块买这个手表。  /  I spent two hundred yuan on this watch.
+185. 我想画一只猫。  /  I want to draw a cat.
+186. 这是谁的画？  /  Whose painting is this?
+187. 这只鸟很小。  /  This bird is small.
+188. 鸟在天上飞。  /  The bird flies in the sky.
+189. 我们去打球吧。  /  Let us go play ball.
+190. 球在椅子下面。  /  The ball is under the chair.
+191. 你的手表很漂亮。  /  Your watch is very pretty.
+192. 现在几点？看一下手表。  /  What time is it now? Look at the watch.
+193. 我想买一条新裤子。  /  I want to buy a new pair of trousers.
+194. 他的裤子是黑色的。  /  His trousers are black.
+195. 她买了一个新包。  /  She bought a new bag.
+196. 我们包饺子吧。  /  Let us make dumplings.
+197. 这个颜色很漂亮。  /  This color is pretty.
+198. 这件衣服的颜色很漂亮。  /  This piece of clothing has a beautiful color.
+199. 他有一件白色的衣服。  /  He has a white piece of clothing.
+200. 白色的猫是我的。  /  The white cat is mine.
+201. 他穿着黑色的裤子。  /  He is wearing black trousers.
+202. 黑色的狗在门口。  /  The black dog is at the door.
+203. 红色很漂亮。  /  Red is pretty.
+204. 我想买红色的包。  /  I want to buy a red bag.
+205. 我喜欢绿色。  /  I like green.
+206. 他有一个绿色的包。  /  He has a green bag.
+207. 你喝红茶还是绿茶？  /  Do you drink black tea or green tea?
+208. 红茶有点热。  /  The black tea is a bit hot.
+209. 这个绿茶很贵。  /  This green tea is expensive.
+210. 爸爸每天喝绿茶。  /  Dad drinks green tea every day.
+211. 她喜欢喝奶茶。  /  She likes milk tea.
+212. 这杯奶茶是你的吗？  /  Is this cup of milk tea yours?
+213. 你想喝咖啡还是茶？  /  Do you want coffee or tea?
+214. 咖啡太热了。  /  The coffee is too hot.
+215. 你想吃什么肉？  /  What meat do you want to eat?
+216. 这个肉很好吃。  /  This meat is delicious.
+217. 这个鱼很大。  /  This fish is big.
+218. 爸爸买了一条鱼。  /  Dad bought a fish.
+219. 是啊，我也喜欢。  /  Yes, I like it too.
+220. 你快来啊！  /  Come on, hurry up!

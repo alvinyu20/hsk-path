@@ -1,0 +1,1805 @@
+{
+ "L1": [
+  [
+   "🏊",
+   "他在游泳。",
+   "He is swimming.",
+   1
+  ],
+  [
+   "🏊",
+   "他在跑步。",
+   "He is running.",
+   0
+  ],
+  [
+   "⚽",
+   "我喜欢踢足球。",
+   "I like playing soccer.",
+   1
+  ],
+  [
+   "⚽",
+   "我喜欢打篮球。",
+   "I like playing basketball.",
+   0
+  ],
+  [
+   "🚇",
+   "我坐地铁去学校。",
+   "I take the subway to school.",
+   1
+  ],
+  [
+   "🚇",
+   "我坐公交车去学校。",
+   "I take the bus to school.",
+   0
+  ],
+  [
+   "✈️",
+   "我们去机场。",
+   "We are going to the airport.",
+   1
+  ],
+  [
+   "✈️",
+   "我们去商场。",
+   "We are going to the mall.",
+   0
+  ],
+  [
+   "🐟",
+   "我喜欢吃鱼。",
+   "I like eating fish.",
+   1
+  ],
+  [
+   "🐟",
+   "我喜欢吃肉。",
+   "I like eating meat.",
+   0
+  ],
+  [
+   "🌧️",
+   "今天下雨了。",
+   "It is raining today.",
+   1
+  ],
+  [
+   "🌧️",
+   "今天是晴天。",
+   "Today is sunny.",
+   0
+  ],
+  [
+   "💃",
+   "她在跳舞。",
+   "She is dancing.",
+   1
+  ],
+  [
+   "💃",
+   "她在唱歌。",
+   "She is singing.",
+   0
+  ],
+  [
+   "💊",
+   "我头疼，我要吃药。",
+   "I have a headache and need to take medicine.",
+   1
+  ],
+  [
+   "💊",
+   "我头疼，我要睡觉。",
+   "I have a headache and want to sleep.",
+   0
+  ],
+  [
+   "🕐",
+   "现在一点。",
+   "It is one o'clock now.",
+   1
+  ],
+  [
+   "🕐",
+   "现在两点。",
+   "It is two o'clock now.",
+   0
+  ],
+  [
+   "🏫",
+   "我在学校学习。",
+   "I study at school.",
+   1
+  ],
+  [
+   "🏫",
+   "我在医院工作。",
+   "I work at a hospital.",
+   0
+  ],
+  [
+   "☀️",
+   "今天是晴天。",
+   "Today is sunny.",
+   1
+  ],
+  [
+   "☀️",
+   "今天下雨了。",
+   "It is raining today.",
+   0
+  ],
+  [
+   "🎂",
+   "今天是她的生日。",
+   "Today is her birthday.",
+   1
+  ],
+  [
+   "🎂",
+   "今天是她的考试。",
+   "Today is her exam.",
+   0
+  ]
+ ],
+ "L2": [
+  {
+   "opts": [
+    "🏊",
+    "🚇",
+    "🏥",
+    "🎂",
+    "🌧️",
+    "📱"
+   ],
+   "items": [
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你喜欢什么运动？",
+       "en": "What sport do you like?"
+      },
+      {
+       "s": "女",
+       "zh": "我最喜欢游泳。",
+       "en": "I like swimming most."
+      }
+     ],
+     "ans": 0
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "你怎么去机场？",
+       "en": "How do you get to the airport?"
+      },
+      {
+       "s": "男",
+       "zh": "我坐地铁去。",
+       "en": "I take the subway."
+      }
+     ],
+     "ans": 1
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你怎么了？",
+       "en": "What is wrong with you?"
+      },
+      {
+       "s": "女",
+       "zh": "我头疼，我要去医院。",
+       "en": "I have a headache; I have to go to the hospital."
+      }
+     ],
+     "ans": 2
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "生日快乐！",
+       "en": "Happy birthday!"
+      },
+      {
+       "s": "男",
+       "zh": "谢谢你！",
+       "en": "Thank you!"
+      }
+     ],
+     "ans": 3
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "外面怎么样？",
+       "en": "How is it outside?"
+      },
+      {
+       "s": "女",
+       "zh": "在下雨，别出去了。",
+       "en": "It is raining; do not go out."
+      }
+     ],
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "⚽",
+    "🍜",
+    "🛒",
+    "🚌",
+    "📚",
+    "🐶"
+   ],
+   "items": [
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "明天你做什么？",
+       "en": "What are you doing tomorrow?"
+      },
+      {
+       "s": "男",
+       "zh": "我去踢足球。",
+       "en": "I am going to play soccer."
+      }
+     ],
+     "ans": 0
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你想吃什么？",
+       "en": "What would you like to eat?"
+      },
+      {
+       "s": "女",
+       "zh": "我想吃面。",
+       "en": "I would like noodles."
+      }
+     ],
+     "ans": 1
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "你去哪儿？",
+       "en": "Where are you going?"
+      },
+      {
+       "s": "男",
+       "zh": "我去商场买裤子。",
+       "en": "I am going to the mall to buy trousers."
+      }
+     ],
+     "ans": 2
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你怎么去学校？",
+       "en": "How do you get to school?"
+      },
+      {
+       "s": "女",
+       "zh": "我坐公交车。",
+       "en": "I take the bus."
+      }
+     ],
+     "ans": 3
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "你在做什么？",
+       "en": "What are you doing?"
+      },
+      {
+       "s": "男",
+       "zh": "我在看书。",
+       "en": "I am reading."
+      }
+     ],
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "✈️",
+    "🎤",
+    "🐟",
+    "🌞",
+    "👖",
+    "🛏️"
+   ],
+   "items": [
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你坐什么去中国？",
+       "en": "How are you going to China?"
+      },
+      {
+       "s": "女",
+       "zh": "我坐飞机去。",
+       "en": "I am going by plane."
+      }
+     ],
+     "ans": 0
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "你喜欢做什么？",
+       "en": "What do you like doing?"
+      },
+      {
+       "s": "男",
+       "zh": "我喜欢唱歌。",
+       "en": "I like singing."
+      }
+     ],
+     "ans": 1
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你想吃什么？",
+       "en": "What would you like to eat?"
+      },
+      {
+       "s": "女",
+       "zh": "我想吃鱼。",
+       "en": "I would like fish."
+      }
+     ],
+     "ans": 2
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "今天天气怎么样？",
+       "en": "How is the weather today?"
+      },
+      {
+       "s": "男",
+       "zh": "今天是晴天。",
+       "en": "It is sunny today."
+      }
+     ],
+     "ans": 3
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "这条裤子多少钱？",
+       "en": "How much are these trousers?"
+      },
+      {
+       "s": "女",
+       "zh": "一百块。",
+       "en": "One hundred yuan."
+      }
+     ],
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "📞",
+    "💻",
+    "🕐",
+    "🧳",
+    "🏫",
+    "🍎"
+   ],
+   "items": [
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "你在做什么？",
+       "en": "What are you doing?"
+      },
+      {
+       "s": "男",
+       "zh": "我在打电话。",
+       "en": "I am making a phone call."
+      }
+     ],
+     "ans": 0
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你每天做什么？",
+       "en": "What do you do every day?"
+      },
+      {
+       "s": "女",
+       "zh": "我每天上网。",
+       "en": "I go online every day."
+      }
+     ],
+     "ans": 1
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "现在几点？",
+       "en": "What time is it now?"
+      },
+      {
+       "s": "男",
+       "zh": "现在一点。",
+       "en": "It is one o'clock now."
+      }
+     ],
+     "ans": 2
+    },
+    {
+     "say": [
+      {
+       "s": "男",
+       "zh": "你想去旅游吗？",
+       "en": "Do you want to travel?"
+      },
+      {
+       "s": "女",
+       "zh": "想，我想去外国。",
+       "en": "Yes, I want to go abroad."
+      }
+     ],
+     "ans": 3
+    },
+    {
+     "say": [
+      {
+       "s": "女",
+       "zh": "你在哪儿学习？",
+       "en": "Where do you study?"
+      },
+      {
+       "s": "男",
+       "zh": "我在学校学习。",
+       "en": "I study at school."
+      }
+     ],
+     "ans": 4
+    }
+   ]
+  }
+ ],
+ "L3": [
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你明天去哪儿？",
+     "en": "Where are you going tomorrow?"
+    },
+    {
+     "s": "男",
+     "zh": "我去机场。",
+     "en": "I am going to the airport."
+    }
+   ],
+   "q": {
+    "zh": "他明天去哪儿？",
+    "en": "Where is he going tomorrow?"
+   },
+   "opts": [
+    "机场",
+    "学校",
+    "商场"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你想喝什么？",
+     "en": "What would you like to drink?"
+    },
+    {
+     "s": "女",
+     "zh": "我想喝红茶。",
+     "en": "I would like black tea."
+    }
+   ],
+   "q": {
+    "zh": "她想喝什么？",
+    "en": "What does she want to drink?"
+   },
+   "opts": [
+    "红茶",
+    "咖啡",
+    "绿茶"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你今天怎么没去学校？",
+     "en": "Why did you not go to school today?"
+    },
+    {
+     "s": "男",
+     "zh": "我头疼。",
+     "en": "I have a headache."
+    }
+   ],
+   "q": {
+    "zh": "他怎么了？",
+    "en": "What is wrong with him?"
+   },
+   "opts": [
+    "头疼",
+    "累了",
+    "太忙"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "这条裤子多少钱？",
+     "en": "How much are these trousers?"
+    },
+    {
+     "s": "女",
+     "zh": "一百五十块。",
+     "en": "One hundred and fifty yuan."
+    }
+   ],
+   "q": {
+    "zh": "裤子多少钱？",
+    "en": "How much are the trousers?"
+   },
+   "opts": [
+    "一百五十块",
+    "一百块",
+    "十五块"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你家离学校远吗？",
+     "en": "Is your home far from school?"
+    },
+    {
+     "s": "男",
+     "zh": "不远，走路十分钟。",
+     "en": "Not far, ten minutes on foot."
+    }
+   ],
+   "q": {
+    "zh": "他怎么去学校？",
+    "en": "How does he get to school?"
+   },
+   "opts": [
+    "走路",
+    "坐地铁",
+    "打车"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你喜欢什么运动？",
+     "en": "What sport do you like?"
+    },
+    {
+     "s": "女",
+     "zh": "我最喜欢游泳。",
+     "en": "I like swimming most."
+    }
+   ],
+   "q": {
+    "zh": "她最喜欢什么运动？",
+    "en": "What sport does she like most?"
+   },
+   "opts": [
+    "游泳",
+    "跑步",
+    "踢足球"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "现在几点？",
+     "en": "What time is it now?"
+    },
+    {
+     "s": "男",
+     "zh": "现在七点五十五分。",
+     "en": "It is five to eight now."
+    }
+   ],
+   "q": {
+    "zh": "现在几点？",
+    "en": "What time is it?"
+   },
+   "opts": [
+    "七点五十五分",
+    "八点五分",
+    "七点十五分"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你什么时候过生日？",
+     "en": "When is your birthday?"
+    },
+    {
+     "s": "女",
+     "zh": "十月八号。",
+     "en": "The eighth of October."
+    }
+   ],
+   "q": {
+    "zh": "她的生日是几月几号？",
+    "en": "When is her birthday?"
+   },
+   "opts": [
+    "十月八号",
+    "八月十号",
+    "十月十八号"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "他在哪儿？",
+     "en": "Where is he?"
+    },
+    {
+     "s": "男",
+     "zh": "他在教室里面。",
+     "en": "He is in the classroom."
+    }
+   ],
+   "q": {
+    "zh": "他在哪儿？",
+    "en": "Where is he?"
+   },
+   "opts": [
+    "在教室里面",
+    "在教室外面",
+    "在洗手间"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你去过中国吗？",
+     "en": "Have you been to China?"
+    },
+    {
+     "s": "女",
+     "zh": "去过两次。",
+     "en": "Twice."
+    }
+   ],
+   "q": {
+    "zh": "她去过几次中国？",
+    "en": "How many times has she been to China?"
+   },
+   "opts": [
+    "两次",
+    "三次",
+    "一次"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你为什么不吃饭？",
+     "en": "Why are you not eating?"
+    },
+    {
+     "s": "男",
+     "zh": "因为我不舒服。",
+     "en": "Because I do not feel well."
+    }
+   ],
+   "q": {
+    "zh": "他为什么不吃饭？",
+    "en": "Why is he not eating?"
+   },
+   "opts": [
+    "他不舒服",
+    "他不想吃肉",
+    "他在上课"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "明天你想做什么？",
+     "en": "What do you want to do tomorrow?"
+    },
+    {
+     "s": "女",
+     "zh": "我想去看电影。",
+     "en": "I want to see a movie."
+    }
+   ],
+   "q": {
+    "zh": "她明天想做什么？",
+    "en": "What does she want to do tomorrow?"
+   },
+   "opts": [
+    "看电影",
+    "去旅游",
+    "跑步"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "请问，洗手间在哪儿？",
+     "en": "Excuse me, where is the restroom?"
+    },
+    {
+     "s": "男",
+     "zh": "在前面，往左走。",
+     "en": "Up ahead, turn left."
+    }
+   ],
+   "q": {
+    "zh": "洗手间在哪边？",
+    "en": "Which side is the restroom on?"
+   },
+   "opts": [
+    "左边",
+    "右边",
+    "后面"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你的手表真漂亮！",
+     "en": "Your watch is so nice!"
+    },
+    {
+     "s": "女",
+     "zh": "谢谢，这是我哥哥送我的。",
+     "en": "Thanks, my older brother gave it to me."
+    }
+   ],
+   "q": {
+    "zh": "谁送她手表？",
+    "en": "Who gave her the watch?"
+   },
+   "opts": [
+    "她哥哥",
+    "她爸爸",
+    "她朋友"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你会游泳吗？",
+     "en": "Can you swim?"
+    },
+    {
+     "s": "男",
+     "zh": "会，我从小就会。",
+     "en": "Yes, I have been able to since I was little."
+    }
+   ],
+   "q": {
+    "zh": "他会游泳吗？",
+    "en": "Can he swim?"
+   },
+   "opts": [
+    "会",
+    "不会",
+    "还不会"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "今天天气怎么样？",
+     "en": "How is the weather today?"
+    },
+    {
+     "s": "女",
+     "zh": "是阴天，可能会下雨。",
+     "en": "It is overcast and may rain."
+    }
+   ],
+   "q": {
+    "zh": "今天天气怎么样？",
+    "en": "How is the weather today?"
+   },
+   "opts": [
+    "阴天",
+    "晴天",
+    "下雨了"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你们几点开始上课？",
+     "en": "What time does your class start?"
+    },
+    {
+     "s": "男",
+     "zh": "八点半。",
+     "en": "Half past eight."
+    }
+   ],
+   "q": {
+    "zh": "几点开始上课？",
+    "en": "What time does class start?"
+   },
+   "opts": [
+    "八点半",
+    "八点",
+    "九点半"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你比你姐姐高吗？",
+     "en": "Are you taller than your older sister?"
+    },
+    {
+     "s": "女",
+     "zh": "我没有她高。",
+     "en": "I am not as tall as she is."
+    }
+   ],
+   "q": {
+    "zh": "谁高？",
+    "en": "Who is taller?"
+   },
+   "opts": [
+    "她姐姐",
+    "她自己",
+    "她妹妹"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你想坐公交车还是打车？",
+     "en": "Would you like to take the bus or a taxi?"
+    },
+    {
+     "s": "男",
+     "zh": "打车吧，太远了。",
+     "en": "A taxi; it is too far."
+    }
+   ],
+   "q": {
+    "zh": "他想怎么去？",
+    "en": "How does he want to go?"
+   },
+   "opts": [
+    "打车",
+    "坐公交车",
+    "走路"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你每天都跑步吗？",
+     "en": "Do you run every day?"
+    },
+    {
+     "s": "女",
+     "zh": "不，我有时跑步。",
+     "en": "No, I run sometimes."
+    }
+   ],
+   "q": {
+    "zh": "她经常跑步吗？",
+    "en": "Does she run often?"
+   },
+   "opts": [
+    "不经常",
+    "每天跑",
+    "不喜欢跑步"
+   ]
+  }
+ ],
+ "L4": [
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "喂，你在哪儿？",
+     "en": "Hello, where are you?"
+    },
+    {
+     "s": "男",
+     "zh": "我在车站。",
+     "en": "I am at the station."
+    },
+    {
+     "s": "女",
+     "zh": "你什么时候回来？",
+     "en": "When will you be back?"
+    },
+    {
+     "s": "男",
+     "zh": "我六点回来。",
+     "en": "I will be back at six."
+    }
+   ],
+   "q": {
+    "zh": "他几点回来？",
+    "en": "What time will he be back?"
+   },
+   "opts": [
+    "六点",
+    "五点",
+    "七点"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你想喝什么？",
+     "en": "What would you like to drink?"
+    },
+    {
+     "s": "女",
+     "zh": "有咖啡吗？",
+     "en": "Do you have coffee?"
+    },
+    {
+     "s": "男",
+     "zh": "有，你想喝热的还是冷的？",
+     "en": "Yes. Do you want it hot or cold?"
+    },
+    {
+     "s": "女",
+     "zh": "冷的，谢谢。",
+     "en": "Cold, thanks."
+    }
+   ],
+   "q": {
+    "zh": "她想喝什么？",
+    "en": "What does she want to drink?"
+   },
+   "opts": [
+    "冷咖啡",
+    "热咖啡",
+    "冷红茶"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你的头还疼吗？",
+     "en": "Does your head still hurt?"
+    },
+    {
+     "s": "男",
+     "zh": "不疼了，我吃药了。",
+     "en": "No, I took medicine."
+    },
+    {
+     "s": "女",
+     "zh": "你要多休息。",
+     "en": "You need to rest more."
+    },
+    {
+     "s": "男",
+     "zh": "好的，我今天不去上班。",
+     "en": "Okay, I will not go to work today."
+    }
+   ],
+   "q": {
+    "zh": "他今天做什么？",
+    "en": "What will he do today?"
+   },
+   "opts": [
+    "在家休息",
+    "去上班",
+    "去医院"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "我们去哪儿吃饭？",
+     "en": "Where shall we eat?"
+    },
+    {
+     "s": "女",
+     "zh": "我想去那个饭馆。",
+     "en": "I want to go to that restaurant."
+    },
+    {
+     "s": "男",
+     "zh": "那个饭馆远不远？",
+     "en": "Is that restaurant far?"
+    },
+    {
+     "s": "女",
+     "zh": "不远，就在学校旁边。",
+     "en": "Not far, it is right next to the school."
+    }
+   ],
+   "q": {
+    "zh": "饭馆在哪儿？",
+    "en": "Where is the restaurant?"
+   },
+   "opts": [
+    "学校旁边",
+    "车站旁边",
+    "酒店里面"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你喜欢跳舞吗？",
+     "en": "Do you like dancing?"
+    },
+    {
+     "s": "男",
+     "zh": "喜欢，但是我不会跳舞。",
+     "en": "Yes, but I cannot dance."
+    },
+    {
+     "s": "女",
+     "zh": "没关系，我教你。",
+     "en": "It does not matter, I will teach you."
+    },
+    {
+     "s": "男",
+     "zh": "太好了，谢谢！",
+     "en": "Great, thank you!"
+    }
+   ],
+   "q": {
+    "zh": "谁教谁跳舞？",
+    "en": "Who will teach whom to dance?"
+   },
+   "opts": [
+    "她教他",
+    "他教她",
+    "老师教他们"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "明天你有时间吗？",
+     "en": "Do you have time tomorrow?"
+    },
+    {
+     "s": "女",
+     "zh": "有，什么事？",
+     "en": "Yes, what is it?"
+    },
+    {
+     "s": "男",
+     "zh": "我想请你看电影。",
+     "en": "I would like to invite you to a movie."
+    },
+    {
+     "s": "女",
+     "zh": "好啊，几点？",
+     "en": "Sure, what time?"
+    }
+   ],
+   "q": {
+    "zh": "他们要做什么？",
+    "en": "What are they going to do?"
+   },
+   "opts": [
+    "看电影",
+    "打篮球",
+    "吃饭"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你怎么这么早？",
+     "en": "Why are you so early?"
+    },
+    {
+     "s": "男",
+     "zh": "因为今天有考试。",
+     "en": "Because there is an exam today."
+    },
+    {
+     "s": "女",
+     "zh": "你准备好了吗？",
+     "en": "Are you ready?"
+    },
+    {
+     "s": "男",
+     "zh": "还没有，我再看一会儿书。",
+     "en": "Not yet, I will read for a little longer."
+    }
+   ],
+   "q": {
+    "zh": "他在做什么？",
+    "en": "What is he doing?"
+   },
+   "opts": [
+    "准备考试",
+    "等朋友",
+    "打电话"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "对不起，我来晚了。",
+     "en": "Sorry, I am late."
+    },
+    {
+     "s": "女",
+     "zh": "没关系，你怎么来的？",
+     "en": "It is fine. How did you come?"
+    },
+    {
+     "s": "男",
+     "zh": "我坐公交车来的，路上车很多。",
+     "en": "I came by bus; there were many cars on the road."
+    },
+    {
+     "s": "女",
+     "zh": "下次坐地铁吧。",
+     "en": "Take the subway next time."
+    }
+   ],
+   "q": {
+    "zh": "他怎么来的？",
+    "en": "How did he come?"
+   },
+   "opts": [
+    "坐公交车",
+    "坐地铁",
+    "打车"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你家有几口人？",
+     "en": "How many people are in your family?"
+    },
+    {
+     "s": "男",
+     "zh": "四口人，爸爸妈妈和一个妹妹。",
+     "en": "Four: my parents and a younger sister."
+    },
+    {
+     "s": "女",
+     "zh": "你妹妹多大了？",
+     "en": "How old is your sister?"
+    },
+    {
+     "s": "男",
+     "zh": "她今年十岁。",
+     "en": "She is ten this year."
+    }
+   ],
+   "q": {
+    "zh": "他妹妹多大？",
+    "en": "How old is his sister?"
+   },
+   "opts": [
+    "十岁",
+    "八岁",
+    "二十岁"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你的手机在哪儿？",
+     "en": "Where is your phone?"
+    },
+    {
+     "s": "女",
+     "zh": "在桌子上面。",
+     "en": "On the table."
+    },
+    {
+     "s": "男",
+     "zh": "我没有看到。",
+     "en": "I do not see it."
+    },
+    {
+     "s": "女",
+     "zh": "你看，在书的下面。",
+     "en": "You see, it is under the book."
+    }
+   ],
+   "q": {
+    "zh": "手机在哪儿？",
+    "en": "Where is the phone?"
+   },
+   "opts": [
+    "书下面",
+    "桌子下面",
+    "书包里面"
+   ]
+  }
+ ],
+ "R1": [
+  {
+   "opts": [
+    "🏊",
+    "⚽",
+    "🚇",
+    "🎂",
+    "🌧️",
+    "📱"
+   ],
+   "items": [
+    {
+     "zh": "我最喜欢游泳。",
+     "en": "I like swimming most.",
+     "ans": 0
+    },
+    {
+     "zh": "他们在踢足球。",
+     "en": "They are playing soccer.",
+     "ans": 1
+    },
+    {
+     "zh": "我坐地铁去学校。",
+     "en": "I take the subway to school.",
+     "ans": 2
+    },
+    {
+     "zh": "今天是我的生日。",
+     "en": "Today is my birthday.",
+     "ans": 3
+    },
+    {
+     "zh": "外面在下雨。",
+     "en": "It is raining outside.",
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "✈️",
+    "🐟",
+    "💊",
+    "🌞",
+    "👖",
+    "🏥"
+   ],
+   "items": [
+    {
+     "zh": "我们坐飞机去中国。",
+     "en": "We are going to China by plane.",
+     "ans": 0
+    },
+    {
+     "zh": "我想吃鱼。",
+     "en": "I want to eat fish.",
+     "ans": 1
+    },
+    {
+     "zh": "我头疼，要吃药。",
+     "en": "I have a headache and need to take medicine.",
+     "ans": 2
+    },
+    {
+     "zh": "今天是晴天。",
+     "en": "Today is sunny.",
+     "ans": 3
+    },
+    {
+     "zh": "这条裤子很大。",
+     "en": "These trousers are very big.",
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "📞",
+    "💻",
+    "🕐",
+    "🧳",
+    "🎤",
+    "🛏️"
+   ],
+   "items": [
+    {
+     "zh": "我在打电话。",
+     "en": "I am making a phone call.",
+     "ans": 0
+    },
+    {
+     "zh": "他每天上网。",
+     "en": "He goes online every day.",
+     "ans": 1
+    },
+    {
+     "zh": "现在一点。",
+     "en": "It is one o'clock now.",
+     "ans": 2
+    },
+    {
+     "zh": "我想去外国旅游。",
+     "en": "I want to travel abroad.",
+     "ans": 3
+    },
+    {
+     "zh": "她在唱歌。",
+     "en": "She is singing.",
+     "ans": 4
+    }
+   ]
+  }
+ ],
+ "R2": [
+  {
+   "opts": [
+    "比",
+    "离",
+    "从",
+    "往",
+    "跟",
+    "给"
+   ],
+   "items": [
+    {
+     "zh": "他___我高。",
+     "en": "He is taller than me.",
+     "ans": 0
+    },
+    {
+     "zh": "学校___我家很近。",
+     "en": "The school is close to my home.",
+     "ans": 1
+    },
+    {
+     "zh": "我___八点工作到五点。",
+     "en": "I work from eight to five.",
+     "ans": 2
+    },
+    {
+     "zh": "请___前走。",
+     "en": "Please go straight ahead.",
+     "ans": 3
+    },
+    {
+     "zh": "我___朋友一起去旅游。",
+     "en": "I travel with a friend.",
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "已经",
+    "正在",
+    "最",
+    "经常",
+    "就要",
+    "一起"
+   ],
+   "items": [
+    {
+     "zh": "我___吃饭了，你呢？",
+     "en": "I have already eaten. And you?",
+     "ans": 0
+    },
+    {
+     "zh": "他___看电视，请等一下。",
+     "en": "He is watching TV; please wait a moment.",
+     "ans": 1
+    },
+    {
+     "zh": "我___喜欢踢足球。",
+     "en": "I like playing soccer most.",
+     "ans": 2
+    },
+    {
+     "zh": "他___去游泳，每个星期两次。",
+     "en": "He often goes swimming, twice a week.",
+     "ans": 3
+    },
+    {
+     "zh": "我们___到机场了。",
+     "en": "We are about to arrive at the airport.",
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "因为",
+    "所以",
+    "但是",
+    "还是",
+    "可能",
+    "自己"
+   ],
+   "items": [
+    {
+     "zh": "___今天下雨，我不去了。",
+     "en": "Because it is raining today, I am not going.",
+     "ans": 0
+    },
+    {
+     "zh": "他生病了，___没去上课。",
+     "en": "He is ill, so he did not go to class.",
+     "ans": 1
+    },
+    {
+     "zh": "我想去，___我没有时间。",
+     "en": "I want to go, but I have no time.",
+     "ans": 2
+    },
+    {
+     "zh": "你喝茶___咖啡？",
+     "en": "Do you drink tea or coffee?",
+     "ans": 3
+    },
+    {
+     "zh": "他___不在家，你打电话吧。",
+     "en": "He may not be at home; you should call him.",
+     "ans": 4
+    }
+   ]
+  }
+ ],
+ "R3": [
+  [
+   "他比我大三岁。",
+   "我比他小三岁。",
+   "He is three years older than me.",
+   "I am three years younger than him.",
+   1
+  ],
+  [
+   "我没有他高。",
+   "他比我高。",
+   "I am not as tall as he is.",
+   "He is taller than me.",
+   1
+  ],
+  [
+   "学校离我家很近。",
+   "我家离学校不远。",
+   "The school is close to my home.",
+   "My home is not far from the school.",
+   1
+  ],
+  [
+   "我想买这条裤子。",
+   "我要买这条裤子。",
+   "I want to buy these trousers.",
+   "I will buy these trousers.",
+   1
+  ],
+  [
+   "我很喜欢踢足球。",
+   "踢足球是我的爱好。",
+   "I like playing soccer very much.",
+   "Playing soccer is my hobby.",
+   1
+  ],
+  [
+   "他已经走了。",
+   "他不在这里了。",
+   "He has already left.",
+   "He is not here any more.",
+   1
+  ],
+  [
+   "我家在学校后面。",
+   "学校在我家前面。",
+   "My home is behind the school.",
+   "The school is in front of my home.",
+   1
+  ],
+  [
+   "他跑得比她快。",
+   "她跑得没有他快。",
+   "He runs faster than she does.",
+   "She does not run as fast as he does.",
+   1
+  ],
+  [
+   "医院在车站左边。",
+   "车站在医院右边。",
+   "The hospital is to the left of the station.",
+   "The station is to the right of the hospital.",
+   1
+  ],
+  [
+   "他比我高。",
+   "我比他高。",
+   "He is taller than me.",
+   "I am taller than him.",
+   0
+  ],
+  [
+   "我没去过中国。",
+   "我去过中国。",
+   "I have never been to China.",
+   "I have been to China.",
+   0
+  ],
+  [
+   "这个电影很有意思。",
+   "这个电影没意思。",
+   "This movie is very interesting.",
+   "This movie is boring.",
+   0
+  ],
+  [
+   "我准备明年出国。",
+   "我已经出国了。",
+   "I plan to go abroad next year.",
+   "I have already gone abroad.",
+   0
+  ],
+  [
+   "他快要走了。",
+   "他已经走了。",
+   "He is about to leave.",
+   "He has already left.",
+   0
+  ],
+  [
+   "我每天都跑步。",
+   "我有时跑步。",
+   "I run every day.",
+   "I sometimes run.",
+   0
+  ],
+  [
+   "她唱得很好。",
+   "她唱得不好。",
+   "She sings very well.",
+   "She does not sing well.",
+   0
+  ],
+  [
+   "我只有一个哥哥。",
+   "我有两个哥哥。",
+   "I have only one older brother.",
+   "I have two older brothers.",
+   0
+  ]
+ ],
+ "R4": [
+  {
+   "opts": [
+    "我叫小明。",
+    "去过一次。",
+    "不远，走路十分钟。",
+    "我想喝红茶。",
+    "因为我生病了。"
+   ],
+   "items": [
+    {
+     "zh": "你叫什么名字？",
+     "en": "What is your name?",
+     "ans": 0,
+     "aen": "My name is Xiaoming."
+    },
+    {
+     "zh": "你去过中国吗？",
+     "en": "Have you been to China?",
+     "ans": 1,
+     "aen": "Once."
+    },
+    {
+     "zh": "你家离学校远吗？",
+     "en": "Is your home far from school?",
+     "ans": 2,
+     "aen": "Not far, ten minutes on foot."
+    },
+    {
+     "zh": "你想喝什么？",
+     "en": "What would you like to drink?",
+     "ans": 3,
+     "aen": "I would like black tea."
+    },
+    {
+     "zh": "你为什么没去上课？",
+     "en": "Why did you not go to class?",
+     "ans": 4,
+     "aen": "Because I was ill."
+    }
+   ]
+  },
+  {
+   "opts": [
+    "我在看书。",
+    "我最喜欢游泳。",
+    "今天是晴天。",
+    "我坐地铁去。",
+    "两百块。"
+   ],
+   "items": [
+    {
+     "zh": "你在做什么？",
+     "en": "What are you doing?",
+     "ans": 0,
+     "aen": "I am reading."
+    },
+    {
+     "zh": "你喜欢什么运动？",
+     "en": "What sport do you like?",
+     "ans": 1,
+     "aen": "I like swimming most."
+    },
+    {
+     "zh": "今天天气怎么样？",
+     "en": "How is the weather today?",
+     "ans": 2,
+     "aen": "Today is sunny."
+    },
+    {
+     "zh": "你怎么去机场？",
+     "en": "How do you get to the airport?",
+     "ans": 3,
+     "aen": "I take the subway."
+    },
+    {
+     "zh": "这条裤子多少钱？",
+     "en": "How much are these trousers?",
+     "ans": 4,
+     "aen": "Two hundred yuan."
+    }
+   ]
+  },
+  {
+   "opts": [
+    "在前面，往左走。",
+    "十月八号。",
+    "会，我从小就跳舞。",
+    "八点半。",
+    "我的朋友教我。"
+   ],
+   "items": [
+    {
+     "zh": "请问，洗手间在哪儿？",
+     "en": "Excuse me, where is the restroom?",
+     "ans": 0,
+     "aen": "Up ahead, turn left."
+    },
+    {
+     "zh": "你的生日是几月几号？",
+     "en": "When is your birthday?",
+     "ans": 1,
+     "aen": "The eighth of October."
+    },
+    {
+     "zh": "你会跳舞吗？",
+     "en": "Can you dance?",
+     "ans": 2,
+     "aen": "Yes, I have danced since I was little."
+    },
+    {
+     "zh": "你们几点开始上课？",
+     "en": "What time does your class start?",
+     "ans": 3,
+     "aen": "Half past eight."
+    },
+    {
+     "zh": "谁教你汉语？",
+     "en": "Who teaches you Chinese?",
+     "ans": 4,
+     "aen": "My friend teaches me."
+    }
+   ]
+  },
+  {
+   "opts": [
+    "我想吃米饭。",
+    "不疼了，谢谢。",
+    "有，这是我的新手表。",
+    "有点儿累。",
+    "有，我们一起去吧。"
+   ],
+   "items": [
+    {
+     "zh": "你想吃面还是吃米饭？",
+     "en": "Do you want noodles or rice?",
+     "ans": 0,
+     "aen": "I would like rice."
+    },
+    {
+     "zh": "你头疼吗？",
+     "en": "Does your head hurt?",
+     "ans": 1,
+     "aen": "It does not hurt any more, thanks."
+    },
+    {
+     "zh": "你有手表吗？",
+     "en": "Do you have a watch?",
+     "ans": 2,
+     "aen": "Yes, this is my new watch."
+    },
+    {
+     "zh": "你累不累？",
+     "en": "Are you tired?",
+     "ans": 3,
+     "aen": "A little tired."
+    },
+    {
+     "zh": "明天你有时间吗？",
+     "en": "Do you have time tomorrow?",
+     "ans": 4,
+     "aen": "Yes, let us go together."
+    }
+   ]
+  }
+ ]
+}

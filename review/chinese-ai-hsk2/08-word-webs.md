@@ -1,9 +1,3 @@
-# Word webs: character meanings, opposite pairs, topics
-
-Copy everything below the line.
-
----
-
 你好！我正在做一个 HSK 2 学习网站（学习者已学过 HSK 1 的约 300 个词，现在学 HSK 2 的 200 个新词，总共约 500 个词）。请你以中国母语者和汉语老师的身份，检查下面的“词网”内容（字的意思、反义词、主题分组）。
 **只报告有问题的地方**，不要夸奖，也不要重复没问题的内容。对每个问题，请写：编号 / 原文 / 哪里不好（简单中文，再加一句英文）/ 更自然的说法（只用 HSK 1 和 HSK 2 的词）。
 需要特别注意：1) 不自然或不地道的说法；2) 语法错误；3) 英文翻译和中文意思不一致；4) 书面语被当成口语教；5) 对 HSK 2 来说太难的词；6) 多音字的拼音是否正确。
@@ -74,7 +68,7 @@ Also check: is each part meaning (for example 出 = out, 过 = over, 子 = noun 
 
 ### Shared character 小 (xiǎo): small; little
 - 从小 = 从 (from) + 小 (little)
-- 小孩 = 小 (little) + 孩 (child)
+- 小孩儿 = 小 (little) + 孩儿 (child)
 - 小时候 = 小 (little) + 时候 (time)
 
 ### Shared character 开 (kāi): to open; to start
@@ -88,9 +82,9 @@ Also check: is each part meaning (for example 出 = out, 过 = over, 子 = noun 
 - 奶茶 = 奶 (milk) + 茶 (tea)
 
 ### Shared character 孩 (hái): child
-- 男孩 = 男 (male) + 孩 (child)
-- 女孩 = 女 (female) + 孩 (child)
-- 小孩 = 小 (little) + 孩 (child)
+- 男孩儿 = 男 (male) + 孩儿 (child)
+- 女孩儿 = 女 (female) + 孩儿 (child)
+- 小孩儿 = 小 (little) + 孩儿 (child)
 
 ### Shared character 边 (biān): side
 - 旁边 = 旁 (beside) + 边 (side)
@@ -131,7 +125,7 @@ Also check: is each part meaning (for example 出 = out, 过 = over, 子 = noun 
 - 进 / 出: Add 来 or 去 for direction: 进来, 进去, 出来, 出去.
 - 回来 / 回去: 来 means toward the speaker and 去 means away: 回来 come back, 回去 go back.
 - 上来 / 下来: Both end in 来: moving toward the speaker, upward or downward.
-- 男孩 / 女孩: Both end in 孩 (child): boy and girl.
+- 男孩儿 / 女孩儿: Both end in 孩 (child): boy and girl.
 - 丈夫 / 妻子: A married couple: 丈夫 is the husband, 妻子 is the wife.
 - 爷爷 / 奶奶: Your father’s father and your father’s mother.
 - 晴 / 阴: Both describe the sky: 晴天 is sunny, 阴天 is overcast.
@@ -143,7 +137,7 @@ Also check: is each part meaning (for example 出 = out, 过 = over, 子 = noun 
 - Getting around: 车站 机场 地铁 公交车 打车 路 路上 站 离 近 远 往 走路 出国 旅游 票 机票 门票 酒店 外国
 - Where things are: 左 右 左边 右边 前面 后面 里面 外面 上面 下面 旁边 面 门 门口 楼 洗手间 教室 商场 饭馆 药店
 - Coming and going: 进 出 进来 进去 出来 出去 回来 回去 上来 上去 下来 下去 过来 过去 起来 走 跑 拿 送 出门 跑步 打开
-- Family and people: 爷爷 奶奶 妻子 丈夫 男孩 女孩 小孩 班 姓 姓名 名 位 自己 介绍
+- Family and people: 爷爷 奶奶 妻子 丈夫 男孩儿 女孩儿 小孩儿 班 姓 姓名 名 位 自己 介绍
 - School and study: 词 题 考 考试 教 懂 记得 忘 笔 本子 书包 开学 高中 准备 意思 告诉 帮 帮忙 等 完 错 开始 事情
 - Body and health: 身体 头 手 眼睛 疼 药 个子 舒服 累 洗 高
 - Colors and things: 颜色 白色 黑色 红色 绿色 花 画 鸟 球 手表 裤子 包 床

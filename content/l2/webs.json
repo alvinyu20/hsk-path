@@ -527,8 +527,8 @@
      ]
     },
     {
-     "zh": "这个商场的___多少钱？",
-     "en": "How much is a ticket for this place?",
+     "zh": "这里的___多少钱？",
+     "en": "How much is a ticket here?",
      "ans": "门票",
      "opts": [
       "门票",
@@ -615,10 +615,10 @@
      "little"
     ],
     [
-     "小孩",
+     "小孩儿",
      "小",
      "little",
-     "孩",
+     "孩儿",
      "child"
     ],
     [
@@ -637,7 +637,7 @@
      "opts": [
       "小时候",
       "从小",
-      "小孩",
+      "小孩儿",
       "一会儿"
      ]
     },
@@ -647,7 +647,7 @@
      "ans": "从小",
      "opts": [
       "从小",
-      "小孩",
+      "小孩儿",
       "经常",
       "已经"
      ]
@@ -655,9 +655,9 @@
     {
      "zh": "那个___在笑。",
      "en": "That child is laughing.",
-     "ans": "小孩",
+     "ans": "小孩儿",
      "opts": [
-      "小孩",
+      "小孩儿",
       "小时候",
       "从小",
       "一会儿"
@@ -716,7 +716,7 @@
      ]
     },
     {
-     "zh": "下个星期___，我要准备书包。",
+     "zh": "下个星期___，我要准备好书包。",
      "en": "School starts next week and I need to get my schoolbag ready.",
      "ans": "开学",
      "opts": [
@@ -797,24 +797,24 @@
    "en": "child",
    "words": [
     [
-     "男孩",
+     "男孩儿",
      "男",
      "male",
-     "孩",
+     "孩儿",
      "child"
     ],
     [
-     "女孩",
+     "女孩儿",
      "女",
      "female",
-     "孩",
+     "孩儿",
      "child"
     ],
     [
-     "小孩",
+     "小孩儿",
      "小",
      "little",
-     "孩",
+     "孩儿",
      "child"
     ]
    ],
@@ -822,33 +822,33 @@
     {
      "zh": "那个___是我弟弟。",
      "en": "That boy is my younger brother.",
-     "ans": "男孩",
+     "ans": "男孩儿",
      "opts": [
-      "男孩",
-      "女孩",
-      "小孩",
+      "男孩儿",
+      "女孩儿",
+      "小孩儿",
       "妻子"
      ]
     },
     {
      "zh": "那个___是我妹妹的朋友。",
      "en": "That girl is my younger sister’s friend.",
-     "ans": "女孩",
+     "ans": "女孩儿",
      "opts": [
-      "女孩",
-      "男孩",
-      "小孩",
+      "女孩儿",
+      "男孩儿",
+      "小孩儿",
       "妻子"
      ]
     },
     {
      "zh": "这个___今年五岁。",
      "en": "This child is five years old this year.",
-     "ans": "小孩",
+     "ans": "小孩儿",
      "opts": [
-      "小孩",
-      "男孩",
-      "女孩",
+      "小孩儿",
+      "男孩儿",
+      "女孩儿",
       "丈夫"
      ]
     }
@@ -1245,8 +1245,8 @@
    "note": "Both end in 来: moving toward the speaker, upward or downward."
   },
   {
-   "a": "男孩",
-   "b": "女孩",
+   "a": "男孩儿",
+   "b": "女孩儿",
    "note": "Both end in 孩 (child): boy and girl."
   },
   {
@@ -1286,8 +1286,8 @@
    "to": "review",
    "cta": "Review these words",
    "sentence": {
-    "zh": "我们坐地铁去机场，路上很快。",
-    "en": "We take the subway to the airport; it is fast on the way."
+    "zh": "我们坐地铁去机场，很快就到。",
+    "en": "We take the subway to the airport; we get there quickly."
    },
    "words": [
     "车站",
@@ -1389,9 +1389,9 @@
     "奶奶",
     "妻子",
     "丈夫",
-    "男孩",
-    "女孩",
-    "小孩",
+    "男孩儿",
+    "女孩儿",
+    "小孩儿",
     "班",
     "姓",
     "姓名",

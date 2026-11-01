@@ -74,3 +74,31 @@ lesson:result:exercise4	meaning	听不懂 is a potential complement: 不 between
 lesson:yao:exercise3	meaning	后天 means "the day after tomorrow", so "tomorrow" in the English is part of that phrase
 lesson:yao:exercise4	meaning	后天 means "the day after tomorrow", so "tomorrow" in the English is part of that phrase
 lesson:yao	meaning	快要/就要/要…了 is the "about to" pattern: 要 and 了 are part of it and the English "is about to" translates both
+clip:8	meaning	两次 means twice: the 2 is carried by "twice"
+clip:13	meaning	一会儿 contains 会 but means "a while"
+phrase:2	meaning	听不懂 is a potential complement: 不 between verb and complement means "cannot"
+phrase:6	meaning	知道怎么说 means "know how to say it": 怎么 carries the "how to"
+phrase:7	meaning	忘了 is the past ("forgot"); the checker only looks for -ed endings
+scenario:pharmacy:ai0	meaning	你怎么了 is the set phrase "what is wrong"; 了 is part of it
+scenario:pharmacy:you1	meaning	吃了 is the past ("ate"/"have"); the answer "I have" shows it
+scenario:exam:ai0	meaning	准备好了 means "have prepared": 了 marks the finished state
+scenario:airport:ai3	meaning	到了 means "have arrived": 了 marks the change
+scenario:trousers	meaning	Prices: 二百 is 200 and 一百八十 is 180; the English spells the numbers out in words
+exam:L2:0.2.0	meaning	你怎么了 is the set phrase "what is wrong": 了 is part of it, and "with you" is in the English
+exam:L3:2	meaning	他怎么了 is the set phrase "what is wrong with him": 了 is part of it
+exam:L3:3.1	meaning	Price: 一百五十 is 150; the English spells the number in words
+exam:L3:6.1	meaning	Time: 七点五十五分 (7:55) is said "five to eight" in English: the same time
+exam:L3:9.1	meaning	两次 means twice: the 2 is carried by "twice"
+exam:L3:14.1	meaning	从小 ("since I was little") marks past time; "have been able to" is the right English
+exam:L4:6.2	meaning	准备好了 means "is ready": 了 marks the finished state
+exam:L4:7	meaning	是…的 is used for a past event, so the English past tense ("came", "did") is right
+exam:L4:8.2	meaning	多大了 asks the current age: 了 marks the state
+exam:R2:1.4	meaning	就要…了 means "about to": 要 and 了 are part of the pattern
+exam:R3:13	meaning	快要…了 means "about to": 要 and 了 are part of the pattern
+exam:R3:5:second	meaning	不在这里了 means "is not here any more": 了 marks the change
+exam:R3:11:second	meaning	没意思 is the idiom "boring"; the 没 is part of it
+exam:R4:1.4	meaning	Price: 两百 is 200; the English spells the number in words
+exam:R4:2.2	meaning	从小 ("since I was little") marks past time; 会 means "can" and the English says "have danced since" for the same fact
+exam:R4:3.1	meaning	不疼了 means "no longer hurts": 了 marks the change
+word-extra:花	meaning	二百 / 两百 is 200; the English spells the number out in words
+lesson:duo:example0	meaning	多大了 asks the current age: 了 marks the state, as in 多大了 "how old are you"

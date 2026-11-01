@@ -116,7 +116,7 @@
    }
   ],
   "mistakes": [
-   "Do not leave out 得. 他跑很快 is not standard; say 他跑得很快."
+   "Do not leave out 得. 他跑很快 is heard in casual speech but is not standard; say 他跑得很快."
   ],
   "q": [
    {
@@ -177,7 +177,7 @@
   "explain": [
    "每 means 'every': 每天 'every day', 每个人 'everyone', 每次 'every time'. After 每 the sentence usually has 都: 每个人都喜欢 'Everyone likes it'; 我每天都喝茶 'I drink tea every day'.",
    "How often: 经常 'often' and 有时 'sometimes' go before the verb: 我经常看电影 'I often watch movies'; 我有时坐地铁，有时打车 'Sometimes I take the subway, sometimes a taxi'.",
-   "A question word + 都 means 'everything, everyone, everywhere': 我什么都喜欢吃 'I like eating everything'. With a negative it means 'nothing at all': 我什么都不想吃 'I do not want to eat anything'; 谁都 'everyone'; 哪儿都 'everywhere'."
+   "A question word + 都 means 'everything, everyone, everywhere': 我什么都喜欢吃 'I like eating everything'. With a negative it means 'nothing at all': 我什么都不想吃 'I do not want to eat anything' (here 也 also works: 我什么也不想吃); 谁都 'everyone'; 哪儿都 'everywhere'."
   ],
   "examples": [
    {
@@ -198,7 +198,7 @@
    }
   ],
   "mistakes": [
-   "After 每 + noun, add 都 before the verb: 每个人都喜欢. After 什么 meaning 'everything' add 都 (or 也): 我什么都吃."
+   "After 每 + noun, add 都 before the verb: 每个人都喜欢. After 什么 meaning 'everything' add 都: 我什么都吃. (In a positive sentence 也 does not work there.)"
   ],
   "q": [
    {
@@ -654,7 +654,7 @@
   "explain": [
    "可能 means 'maybe, might': 他可能在家 'He might be at home'; 明天可能下雨 'It may rain tomorrow'. For 'might not' put 不 after 可能: 他可能不来. 不可能 means 'impossible'.",
    "希望 means 'to hope' and is followed by a whole sentence: 我希望明天是晴天 'I hope tomorrow is sunny'; 希望你喜欢 'I hope you like it'.",
-   "准备 means 'to get ready' or 'to plan to': 我准备明年去外国旅游 'I plan to travel abroad next year'; 我在准备考试 'I am preparing for the exam'."
+   "准备 means 'to get ready' or 'to plan to': 我准备明年出国旅游 'I plan to travel abroad next year'; 我在准备考试 'I am preparing for the exam'."
   ],
   "examples": [
    {
@@ -670,7 +670,7 @@
     "en": "I hope tomorrow is sunny."
    },
    {
-    "zh": "我准备明年去外国旅游。",
+    "zh": "我准备明年出国旅游。",
     "en": "I plan to travel abroad next year."
    }
   ],
@@ -715,6 +715,85 @@
     "zh": "他可能不来。",
     "en": "He might not come.",
     "explain": "不可能 means impossible; 可能不 means might not."
+   }
+  ]
+ },
+ {
+  "id": "duo",
+  "title": "多 questions, …的时候 and doubled verbs",
+  "covers": [
+   34,
+   35,
+   36
+  ],
+  "formula": [
+   "*多",
+   "Adjective",
+   "?"
+  ],
+  "explain": [
+   "多 + adjective asks 'how …?' about size, age, height or distance: 你多大了？ 'How old are you?'; 他有多高？ 'How tall is he?'; 学校离这里有多远？ 'How far is the school from here?' Use the 'big' side of the pair: 多高 (you do not ask how short), 多远 (not 多近).",
+   "…的时候 means 'when …': put it after the clause, and put the whole time phrase before the main verb: 吃饭的时候，别看手机 'Do not look at your phone when eating'; 我小的时候，住在中国 'When I was little, I lived in China'.",
+   "Doubling a verb makes an action short and light, like 'have a look' or 'take a moment to': 看看, 听听, 想想, 问问, 走走. 你看看这个 'Have a look at this'; 我们出去走走吧 'Let us go out for a walk'. The second syllable is light."
+  ],
+  "examples": [
+   {
+    "zh": "你今年多大了？",
+    "en": "How old are you this year?"
+   },
+   {
+    "zh": "下雨的时候，我们在家看电影。",
+    "en": "When it rains, we watch movies at home."
+   },
+   {
+    "zh": "再想想，好吗？",
+    "en": "Think about it some more, okay?"
+   },
+   {
+    "zh": "请你问问老师。",
+    "en": "Please ask the teacher."
+   }
+  ],
+  "mistakes": [
+   "Do not ask with the 'small' word. Ask 多远 (how far), not 多近."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "你家离学校有多远？",
+    "en": "How far is your home from school?",
+    "explain": "离 … 有 + 多 + 远."
+   },
+   {
+    "t": "cloze",
+    "zh": "他有多高？",
+    "en": "How tall is he?",
+    "blank": "多",
+    "explain": "多 + adjective asks how big, tall or far."
+   },
+   {
+    "t": "order",
+    "zh": "吃饭的时候，别看手机。",
+    "en": "Do not look at your phone when eating.",
+    "explain": "The …的时候 phrase comes before the main clause."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence asks how far it is?",
+    "options": [
+     "车站离这里有多远？",
+     "车站离这里有多近？"
+    ],
+    "correct": 0,
+    "zh": "车站离这里有多远？",
+    "en": "How far is the station from here?",
+    "explain": "Ask with the 'big' word: 多远."
+   },
+   {
+    "t": "order",
+    "zh": "再想想吧。",
+    "en": "Think about it again.",
+    "explain": "Doubling the verb: 想想."
    }
   ]
  }

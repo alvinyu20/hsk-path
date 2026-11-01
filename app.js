@@ -30,25 +30,18 @@
   // Which level this page shows. level.js sets it (saved in this browser; switching reloads the page). Each level keeps its own progress.
   const LV = window.SHANLU_LEVEL || 1;
   const LVN = 'HSK ' + LV;
+  const LVL = window.ShanluLevel || { MAX_LEVEL:LV, PASS_PCT:80, passedEntry:() => false, levelPassed:() => false, markPassed() {}, unlocked:() => true };
   const LV_DATA = (name) => window['HSK' + LV + '_' + name];
   const WORDS = LV_DATA('WORDS');
   const LESSONS = LV_DATA('GRAMMAR').lessons;
   const { hubs:HUBS, opps:OPPS, topics:TOPICS } = LV_DATA('WEBS');
-  // Listening lab, practice scripts and the mock exam exist for HSK 1 only so far; at HSK 2 those parts are switched off.
-  const { clips:CLIPS, tones:TONES } = LV === 1 ? window.HSK1_LISTEN : { clips:[], tones:[] };
-  const { scenarios:SCEN, phrases:PHRASES } = LV === 1 ? window.HSK1_SPEAK : { scenarios:[], phrases:[] };
+  // Listening lab and practice scripts: a level without them (none yet for HSK 3) has those parts switched off.
+  const { clips:CLIPS, tones:TONES } = LV_DATA('LISTEN') || { clips:[], tones:[] };
+  const { scenarios:SCEN, phrases:PHRASES } = LV_DATA('SPEAK') || { scenarios:[], phrases:[] };
   const HAS_LISTEN = CLIPS.length > 0;
   const HAS_SCRIPTS = SCEN.length > 0;
-  // Talk-with-AI settings for levels without practice scripts: role-play settings only (nothing is scored)
-  const AI_SCN_L2 = [
-    { id:'cafe', title:'Ordering at a café', sub:'Drinks, snacks, paying', goals:['Order a drink and something to eat', 'Say what you like or do not like', 'Ask how much it is'] },
-    { id:'way', title:'Asking the way', sub:'Left, right, near, far', goals:['Ask where a place is', 'Understand left, right and straight on', 'Say how you will get there'] },
-    { id:'trip', title:'Planning a trip', sub:'Where, when, how to go', goals:['Say where you want to go and when', 'Say how you will travel (train, taxi, plane)', 'Talk about who is going with you'] },
-    { id:'doctor', title:'Not feeling well', sub:'Body, medicine, rest', goals:['Say what hurts', 'Say how long you have felt ill', 'Understand simple advice'] },
-    { id:'hobby', title:'Hobbies and sports', sub:'What you do for fun', goals:['Say what you like to do', 'Say how often you do it', 'Ask about the other person’s hobbies'] },
-    { id:'family', title:'Family and friends', sub:'People you know', goals:['Talk about family members', 'Say what they do', 'Say something about a friend'] }
-  ];
-  const AISCN = HAS_SCRIPTS ? SCEN : AI_SCN_L2;
+  // Talk-with-AI role-play settings are the practice scripts' scenarios (title, sub and goals); a level without scripts has free chat only
+  const AISCN = SCEN;
   // stand-ins so the screens that are switched off still render without errors
   const NO_SC = { id:'', glyph:'', title:'', sub:'', goals:[], words:[], ai:[{ zh:'', py:'', en:'' }], you:[{ zh:'', py:'', en:'' }] };
   const NO_CLIP = { zh:'', py:'', en:'', words:[], notes:[] };
@@ -137,7 +130,7 @@
     let dark = false;
     try { dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
     return {
-      screen:'home', sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
+      screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       xp:0, dayXp:0, dayMin:0, streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -268,8 +261,8 @@
   const KB_KEYS = Object.keys(KB);
   const CHARSET = {};
   KB_KEYS.forEach(k => k.split('').forEach(ch => { CHARSET[ch] = true; }));
-  // HSK 2 words (the 2025 syllabus) the conversation may use as a one-level-up preview; pinyin is checked in tools/build-preview.py
-  const PV = LV === 1 ? (window.HSK2_PREVIEW || {}) : {};
+  // words of the next level (the 2025 syllabus) the conversation may use as a one-level-up preview; pinyin is checked in tools/build-preview.py
+  const PV = (LV === 1 ? window.HSK2_PREVIEW : LV === 2 ? window.HSK3_PREVIEW : null) || {};   // the next level's words, shown with pinyin and English when used
   // the other spelling of a 儿 word (the 儿 form when the site shows plain forms, or the reverse) is fine too: the model may use either
   const ERH_ALT = {};
   if (window.HSK1_ERHUA) window.HSK1_ERHUA.pairs.forEach(pr => { [[pr.official, pr.officialPy], [pr.plain, pr.plainPy]].forEach(x => { if (!KB[x[0]] && x[1]) ERH_ALT[x[0]] = x[1]; }); });
@@ -332,16 +325,18 @@
     return out;
   };
   const aiSystem = (scn) => {
-    const up = LV === 1;   // at HSK 1 a little HSK 2 is allowed as a preview; at HSK 2 the words are HSK 1 and HSK 2 and nothing above
+    const known = LV === 1 ? 'HSK 1' : 'HSK 1 and HSK 2';   // the lists the learner knows
+    const nextN = 'HSK ' + (LV + 1);                        // the level the conversation may peek at
+    const up = Object.keys(PV).length > 0;
     return [
-      'You are Mingming (明明), a friendly Mandarin conversation partner for an adult English-speaking beginner who is studying for ' + LVN + (up ? ' and is happy to see a little HSK 2 as a preview.' : ' (HSK 1 words are known too).'),
-      'Speak Simplified Chinese. Use mainly words from this ' + (up ? 'HSK 1' : 'HSK 1 and HSK 2') + ' word list (plus punctuation and numbers): ' + KB_KEYS.join(' ') + '.',
-      up ? 'You may also use a few words from this HSK 2 list as a gentle preview, at most one or two in a reply, when they make the conversation more natural and realistic or let you cover more everyday situations (cafés, travel, directions, hobbies, health): ' + Object.keys(PV).join(' ') + '. Never use a word that is on neither list.' : 'Never use a word that is not on the list.',
+      'You are Mingming (明明), a friendly Mandarin conversation partner for an adult English-speaking beginner who is studying for ' + LVN + (LV === 1 ? '' : ' (HSK 1 words are known too)') + (up ? ' and is happy to see a little ' + nextN + ' as a preview.' : '.'),
+      'Speak Simplified Chinese. Use mainly words from this ' + known + ' word list (plus punctuation and numbers): ' + KB_KEYS.join(' ') + '.',
+      up ? 'You may also use a few words from this ' + nextN + ' list as a gentle preview, at most one or two in a reply, when they make the conversation more natural and realistic or let you cover more everyday situations (cafés, travel, directions, hobbies, health, school, work): ' + Object.keys(PV).join(' ') + '. Never use a word that is on neither list.' : 'Never use a word that is not on the list.',
       'If you need a word that is ' + (up ? 'on neither list' : 'not on the list') + ', say it another way with listed words. Never write pinyin in the Chinese. When you say your own name, say 我叫明明 (the standard way to give a name), not 我是明明. Keep every reply to one or two short sentences (about 15 characters or fewer in total) and ask at most one simple question, so the learner can answer.',
       scn ? 'Role-play setting: ' + scn.title + '. Goals for the learner: ' + scn.goals.join('; ') + '. Stay in this setting and play the other person.' : 'Free chat: pick an everyday topic (food, family, school, weather, plans) and keep it simple.',
-      'After each learner message, also judge it. Say "ok" if it is natural and understandable Mandarin. Say "fix" if it has a grammar, word choice or naturalness problem: then give the corrected sentence in Chinese (' + (up ? 'HSK 1 words, or an HSK 2 word if it really helps' : 'HSK 1 or HSK 2 words') + ') and a one-sentence reason in simple English. ' + (up ? 'Using an HSK 2 word is never a mistake. ' : '') + 'Do not nitpick: only fix real problems. If the learner writes English, give "fix" with the Chinese they could say. The learner message may come from speech recognition and contain wrong characters: if it does not make sense, ask them to say it again as the reply.',
+      'After each learner message, also judge it. Say "ok" if it is natural and understandable Mandarin. Say "fix" if it has a grammar, word choice or naturalness problem: then give the corrected sentence in Chinese (' + (up ? known + ' words, or a ' + nextN + ' word if it really helps' : known + ' words') + ') and a one-sentence reason in simple English. ' + (up ? 'Using a ' + nextN + ' word is never a mistake. ' : '') + 'Do not nitpick: only fix real problems. If the learner writes English, give "fix" with the Chinese they could say. The learner message may come from speech recognition and contain wrong characters: if it does not make sense, ask them to say it again as the reply.',
       'Answer with ONLY a JSON object, no other text: {"reply":{"zh":"<your Chinese>","en":"<English translation>"},"feedback":{"level":"ok"|"fix","better":"<corrected Chinese or empty>","why":"<short English reason or empty>"},"suggest":{"zh":"<suggested learner reply>","en":"<English>"}}. For the very first message of a conversation, set feedback to {"level":"ok","better":"","why":""}.',
-      'Also always add "suggest":{"zh":"<one natural, short reply (about 12 characters or fewer) the learner could say next to answer you, ' + (up ? 'HSK 1 words or at most one HSK 2 word' : 'HSK 1 or HSK 2 words') + ', no pinyin>","en":"<its English meaning>"} so a beginner who is stuck can see what to say. Use 我叫… when giving a name.'
+      'Also always add "suggest":{"zh":"<one natural, short reply (about 12 characters or fewer) the learner could say next to answer you, ' + (up ? known + ' words or at most one ' + nextN + ' word' : known + ' words') + ', no pinyin>","en":"<its English meaning>"} so a beginner who is stuck can see what to say. Use 我叫… when giving a name.'
     ].join('\n');
   };
   const aiParse = (text) => {
@@ -429,9 +424,12 @@
 
   // ---------- the HSK 1 mock exam ----------
   // Layout follows the official HSK 1 sample papers: 4 listening parts and 4 reading parts, 5 questions each, listening played twice.
-  const EXAMBANK = LV === 1 ? (window.HSK1_EXAM || null) : null;
-  const EXAM_MIN = { listening:15, reading:20 };
-  const PART = {
+  const EXAMBANK = LV_DATA('EXAM') || null;
+  const EXAM_MIN = EXAMBANK && EXAMBANK.meta ? { listening:EXAMBANK.meta.listening.minutes, reading:EXAMBANK.meta.reading.minutes } : { listening:15, reading:20 };
+  const EXAM_N = EXAMBANK && EXAMBANK.meta ? { listening:EXAMBANK.meta.listening.questions, reading:EXAMBANK.meta.reading.questions } : { listening:20, reading:20 };
+  // each section is worth 100 points, shared evenly by its questions (5 each at HSK 1; 100/35 and 4 each at HSK 2)
+  const secPts = (correct, total) => Math.round(100 * correct / total);
+  const PART_1 = {
     L1:{ sec:'listening', n:1, inst:'Listen. Does the picture match what you hear?' },
     L2:{ sec:'listening', n:2, inst:'Listen to the sentence. Choose the picture that matches.' },
     L3:{ sec:'listening', n:3, inst:'Listen to the short conversation. Choose the picture it is about.' },
@@ -441,13 +439,52 @@
     R3:{ sec:'reading', n:3, inst:'Choose the answer to the question.' },
     R4:{ sec:'reading', n:4, inst:'Choose the word that fills the blank.' }
   };
+  const PART_2 = {
+    L1:{ sec:'listening', n:1, inst:'Listen. Does the picture match the sentence?' },
+    L2:{ sec:'listening', n:2, inst:'Listen to the conversation. Choose the picture it is about.' },
+    L3:{ sec:'listening', n:3, inst:'Listen to the short conversation and the question. Choose the answer.' },
+    L4:{ sec:'listening', n:4, inst:'Listen to the longer conversation and the question. Choose the answer.' },
+    R1:{ sec:'reading', n:1, inst:'Choose the picture that matches each sentence.' },
+    R2:{ sec:'reading', n:2, inst:'Choose the word that fills the blank.' },
+    R3:{ sec:'reading', n:3, inst:'Do the two sentences mean the same?' },
+    R4:{ sec:'reading', n:4, inst:'Choose the answer to each question.' }
+  };
+  const PART = LV === 1 ? PART_1 : PART_2;
   const LETTERS = 'ABCDEF';
   const pickN = (arr, n) => shuffleArr(arr).slice(0, n);
   function shuffleArr(arr) { const x = arr.slice(); for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = x[i]; x[i] = x[j]; x[j] = t; } return x; }
   // five true/false items with at least two of each
   const pickTF = (bank) => { const t = shuffleArr(bank.filter(e => e.ok)), f = shuffleArr(bank.filter(e => !e.ok)); const rest = shuffleArr(t.slice(2).concat(f.slice(2))); return shuffleArr(t.slice(0, 2).concat(f.slice(0, 2), rest.slice(0, 1))); };
   const audioOf = (lines) => lines.map(l => ({ text:l.zh, pitch:l.s === '女' ? 1.25 : l.s === '男' ? 0.8 : 1 }));
+  // HSK 2: listening 10 + 10 + 10 + 5, reading 5 + 5 + 5 + 10 (the layout of the 2012 HSK 2 sample papers)
+  const pickTFn = (bank, n) => { const half = Math.floor(n / 2); const t = shuffleArr(bank.filter(e => e.ok)), f = shuffleArr(bank.filter(e => !e.ok)); const rest = shuffleArr(t.slice(half).concat(f.slice(half))); return shuffleArr(t.slice(0, half).concat(f.slice(0, half), rest.slice(0, n - 2 * half))); };
+  const examQsL2 = (sec) => {
+    const out = [];
+    const add = (part, q) => { out.push(Object.assign({ part, id:part + '-' + out.length, sec:PART[part].sec }, q)); };
+    const E = EXAMBANK;
+    const sayRev = (lines, q) => ({ zh:lines.map(l => l.zh).join(' ') + (q ? ' ' + q.zh : ''), py:lines.map(l => l.py).join(' ') + (q ? ' ' + q.py : ''), en:lines.map(l => l.en).join(' ') + (q ? ' ' + q.en : '') });
+    const textQ = (part, bank, n) => pickN(bank, n).forEach(e => { const order = shuffleArr([0, 1, 2]); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add(part, { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:sayRev(e.say, e.q), right:e.opts[0].zh }); });
+    if (sec === 'listening') {
+      pickTFn(E.L1, 10).forEach(e => add('L1', { kind:'tf', pic:e.pic, audio:[{ text:e.zh }], ans:e.ok ? 'T' : 'F', opts:[{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }], rev:{ zh:e.zh, py:e.py, en:e.en, pic:e.pic }, right:e.ok ? 'It matches' : 'It does not match' }));
+      pickN(E.L2, 2).forEach(st => shuffleArr(st.items).forEach(it => add('L2', { kind:'match', audio:audioOf(it.say), opts:st.opts.map((p, k) => ({ v:k, label:p, emoji:true })), ans:it.ans, rev:sayRev(it.say), right:st.opts[it.ans] })));
+      textQ('L3', E.L3, 10);
+      textQ('L4', E.L4, 5);
+    } else {
+      const s1 = E.R1[Math.floor(Math.random() * E.R1.length)];
+      shuffleArr(s1.items).forEach(it => add('R1', { kind:'match', text:it.zh, opts:s1.opts.map((p, k) => ({ v:k, label:p, emoji:true })), ans:it.ans, rev:{ zh:it.zh, py:it.py, en:it.en }, right:s1.opts[it.ans] }));
+      const s2 = E.R2[Math.floor(Math.random() * E.R2.length)];
+      const p2 = shuffleArr([0, 1, 2, 3, 4, 5]);
+      shuffleArr(s2.items).forEach(it => add('R2', { kind:'match', text:it.zh, opts:p2.map((k, j) => ({ v:j, label:s2.opts[k].zh })), ans:p2.indexOf(it.ans), rev:{ zh:it.full, py:it.py, en:it.en }, right:s2.opts[it.ans].zh }));
+      pickTFn(E.R3.map(e => Object.assign({ ok:e.same }, e)), 5).forEach(e => add('R3', { kind:'tf', text:e.a.zh + '\n' + e.b.zh, ans:e.same ? 'T' : 'F', opts:[{ v:'T', label:'✓ Same meaning' }, { v:'F', label:'✗ Different meaning' }], rev:{ zh:e.a.zh + ' / ' + e.b.zh, py:e.a.py + ' / ' + e.b.py, en:e.a.en + ' / ' + e.b.en }, right:e.same ? 'Same meaning' : 'Different meaning' }));
+      pickN(E.R4, 2).forEach(st => {
+        const p4 = shuffleArr([0, 1, 2, 3, 4]);
+        st.items.forEach(it => add('R4', { kind:'match', text:it.zh, opts:p4.map((k, j) => ({ v:j, label:st.opts[k].zh })), ans:p4.indexOf(it.ans), rev:{ zh:it.zh + ' ' + st.opts[it.ans].zh, py:it.py + ' ' + st.opts[it.ans].py, en:it.en + ' ' + st.opts[it.ans].en }, right:st.opts[it.ans].zh }));
+      });
+    }
+    return out;
+  };
   const examQs = (sec) => {
+    if (LV === 2) return examQsL2(sec);
     const out = [];
     const add = (part, q) => { out.push(Object.assign({ part, id:part + '-' + out.length, sec:PART[part].sec }, q)); };
     const E = EXAMBANK;
@@ -536,6 +573,7 @@
         const out = {};
         PERSIST.forEach(k => { out[k] = this.state[k]; });
         localStorage.setItem(KEY, JSON.stringify(out));
+        if ((this.state.exams || []).some(LVL.passedEntry)) LVL.markPassed(LV);   // a passed full exam opens the next level
       } catch (e) {}
     }
     later(fn, ms) { const id = setTimeout(fn, ms); this.timers.push(id); }
@@ -653,7 +691,8 @@
       const res = { sec:m.sec, correct, total:m.qs.length, byPart, wrong, auto:!!auto };
       const results = Object.assign({}, m.results); results[m.sec] = res;
       if (m.mode === 'full' && m.sec === 'listening') { this.exPatch({ stage:'break', results }); return; }
-      const entry = { at:Date.now(), mode:m.mode, l:results.listening ? results.listening.correct : null, r:results.reading ? results.reading.correct : null };
+      const entry = { at:Date.now(), mode:m.mode, l:results.listening ? results.listening.correct : null, r:results.reading ? results.reading.correct : null, lt:results.listening ? results.listening.total : null, rt:results.reading ? results.reading.total : null };
+      if (LVL.passedEntry(entry)) LVL.markPassed(LV);   // a passed full exam opens the next level straight away
       const day = ymd(new Date());
       this.setState({ exm:Object.assign({}, m, { stage:'result', results }), exams:this.state.exams.concat([entry]).slice(-20), dayMin:this.state.dayMin + (m.mode === 'full' ? 30 : 15), xp:this.state.xp + Math.round(correct * 2), dayXp:this.state.dayXp + Math.round(correct * 2) });
       try { window.scrollTo(0, 0); } catch (e) {}
@@ -1155,7 +1194,7 @@
         who:m.who, isAi:m.who === 'ai', zh:m.zh, py:m.py, en:m.en, showZh:S.szh, showPy:S.spy && !!m.py, showEn:S.sen && !!m.en && m.who === 'ai',
         quiet, quietText:m.who === 'ai' ? 'Listen to Mingming' : 'You said it', pc:S.playing === 'aim' + k ? 'on' : '', play:() => this.say(m.zh, 'aim' + k),
         hasOutside:m.outside.length > 0, outsideText:'Not in this site\'s HSK 1 or HSK 2 lists, so no pinyin: ' + m.outside.join(' '),
-        hasPv:!!(m.pv && m.pv.length), pvText:'HSK 2 preview: ' + (m.pv || []).map(p => p.t + ' ' + p.py + ' = ' + p.en).join('  ·  '),
+        hasPv:!!(m.pv && m.pv.length), pvText:'HSK ' + (LV + 1) + ' preview: ' + (m.pv || []).map(p => p.t + ' ' + p.py + ' = ' + p.en).join('  ·  '),
         hasFb:!!m.fb, fbBetter:m.fb ? m.fb.better : '', fbWhy:m.fb ? m.fb.why : '', hasOk:m.who === 'me' && !!m.judged && !m.fb,
         cmpGood:!!(m.cmp && m.cmp.same), cmpBad:!!(m.cmp && !m.cmp.same),
         cmpBadHead:m.cmp && !m.cmp.same ? 'Suggested: ' + m.cmp.sugZh + ' (' + m.cmp.sugPy + ')' : '',
@@ -1191,11 +1230,11 @@
       const S = this.state, m = S.exm;
       const secName = (s) => (s === 'listening' ? 'Listening' : 'Reading');
       const hist = (S.exams || []).slice(-5).reverse().map(h => {
-        const pts = ((h.l || 0) + (h.r || 0)) * 5;
+        const pts = (h.l != null ? secPts(h.l, h.lt || 20) : 0) + (h.r != null ? secPts(h.r, h.rt || 20) : 0);
         const what = h.mode === 'full' ? 'Full exam' : secName(h.mode);
         const parts = [];
-        if (h.l !== null && h.l !== undefined) parts.push('Listening ' + h.l + '/20');
-        if (h.r !== null && h.r !== undefined) parts.push('Reading ' + h.r + '/20');
+        if (h.l !== null && h.l !== undefined) parts.push('Listening ' + h.l + '/' + (h.lt || 20));
+        if (h.r !== null && h.r !== undefined) parts.push('Reading ' + h.r + '/' + (h.rt || 20));
         return { text:new Date(h.at).toLocaleDateString('en-US', { month:'short', day:'numeric' }) + ' · ' + what, score:h.mode === 'full' ? pts + ' / 200' : parts.join(' '), detail:h.mode === 'full' ? parts.join(' · ') : '' };
       });
       const v = {
@@ -1206,7 +1245,7 @@
       if (!m) return v;
       if (m.stage === 'break') {
         const l = m.results.listening;
-        v.exBreakText = 'Listening finished: ' + l.correct + ' of ' + l.total + ' right. Next is Reading: 20 questions, ' + EXAM_MIN.reading + ' minutes. Take a breath first.';
+        v.exBreakText = 'Listening finished: ' + l.correct + ' of ' + l.total + ' right. Next is Reading: ' + EXAM_N.reading + ' questions, ' + EXAM_MIN.reading + ' minutes. Take a breath first.';
       }
       if (m.stage === 'run') {
         const q = m.qs[m.i];
@@ -1231,17 +1270,18 @@
       if (m.stage === 'result') {
         const secs = ['listening', 'reading'].filter(s => m.results[s]).map(s => {
           const r = m.results[s]; const pct = Math.round(100 * r.correct / r.total);
-          return { name:secName(s), text:r.correct + ' of ' + r.total, pts:r.correct * 5 + ' / 100', pct:pct + '%', ok:pct >= 80, cls:pct >= 80 ? 'good' : 'low', auto:r.auto,
+          return { name:secName(s), text:r.correct + ' of ' + r.total, pts:secPts(r.correct, r.total) + ' / 100', pct:pct + '%', ok:pct >= LVL.PASS_PCT, cls:pct >= LVL.PASS_PCT ? 'good' : 'low', auto:r.auto,
             parts:Object.keys(r.byPart).map(p => ({ name:'Part ' + PART[p].n, score:r.byPart[p].c + ' / ' + r.byPart[p].t, cls:r.byPart[p].c === r.byPart[p].t ? 'good' : '' })) };
         });
-        const total = ['listening', 'reading'].reduce((n, s) => n + (m.results[s] ? m.results[s].correct * 5 : 0), 0);
+        const total = ['listening', 'reading'].reduce((n, s) => n + (m.results[s] ? secPts(m.results[s].correct, m.results[s].total) : 0), 0);
         const seal = secs.length > 0 && secs.every(s => s.ok);
         const wrong = [];
         ['listening', 'reading'].forEach(s => { if (m.results[s]) m.results[s].wrong.forEach(w => wrong.push(w)); });
         Object.assign(v, {
           exSecs:secs, exFull:m.mode === 'full', exSingle:m.mode !== 'full', exTotal200:total + ' / 200', exPassReal:total >= 120,
-          exVerdict:m.mode === 'full' ? (total >= 120 ? 'At or above 120 of 200, the pass mark of the official HSK 1 test.' : 'Below 120 of 200, the pass mark of the official HSK 1 test.') : 'One section only. The official pass mark is on the total of both sections.',
-          exSeal:seal, exNoSeal:!seal, exSealText:seal ? 'You reached 80% in every section you took. That is this site\'s bar for the HSK 1 seal.' : 'The seal here needs 80% in every section. Review the questions below and try again.',
+          exVerdict:m.mode === 'full' ? (total >= 120 ? 'At or above 120 of 200, the pass mark of the official ' + LVN + ' test.' : 'Below 120 of 200, the pass mark of the official ' + LVN + ' test.') : 'One section only. The official pass mark is on the total of both sections.',
+          exUnlock:seal && m.mode === 'full' && LV < LVL.MAX_LEVEL, exUnlockText:'You passed the ' + LVN + ' level exam. HSK ' + (LV + 1) + ' is now open.', exUnlockGo:() => this.switchLevel(LV + 1), exUnlockGoText:'Go to HSK ' + (LV + 1),
+          exSeal:seal, exNoSeal:!seal, exSealText:seal ? (m.mode === 'full' ? 'You reached ' + LVL.PASS_PCT + '% in every section. That is this site\'s bar for the ' + LVN + ' seal.' : 'You reached ' + LVL.PASS_PCT + '% in the section you took. Take the full exam to open the next level.') : 'The seal here needs 80% in every section. Review the questions below and try again.',
           exWrong:wrong.map(w => ({ n:w.n, part:'Part ' + PART[w.q.part].n, zh:w.q.rev.zh, py:w.q.rev.py, en:w.q.rev.en, pic:w.q.rev.pic || '', hasPic:!!w.q.rev.pic,
             right:w.q.right, yours:w.yours === undefined ? 'No answer' : (w.q.opts.find(o => o.v === w.yours) || { label:'' }).label })), hasWrong:wrong.length > 0, perfect:wrong.length === 0,
           exAgain:() => this.startExam(m.mode)
@@ -1702,11 +1742,22 @@
         navHome:navCls('home'), navReview:navCls('review'), navTest:navCls('testlobby'), navGrammar:navCls('grammar'), navSpeak:navCls('speak'),
         goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
         hasDue:S.rq.length > 0 && !S.rcomplete, dueCount:S.rq.length,
-        lvName:LVN, lvIs1:LV === 1, lvIs2:LV !== 1, hasExamCard:!!EXAMBANK, noExamCard:!EXAMBANK,
-        examCardTitle:EXAMBANK ? LVN + ' level exam' : LVN + ' progress', examCardNote:EXAMBANK ? 'Reach 80% in all four skills to unlock it.' : 'The ' + LVN + ' level exam, listening lab and practice scripts are not built yet. These rings show the parts that are.',
+        exTitle:LVN + ' mock exam',
+        exIntro:LV === 1 ? 'Built like the official HSK 1 sample papers: 20 listening and 20 reading questions in four parts each, about 35 minutes. No hints and no pinyin while you answer. Each exam is drawn from a bank of 120+ questions, so it is different every time.' : 'Built like the HSK 2 sample papers of the 2012 test: 35 listening and 25 reading questions in four parts each, about 47 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Each exam is drawn from a bank of 140+ questions, so it is different every time.',
+        exListenT:'Listening · ' + EXAM_N.listening + ' questions · ' + EXAM_MIN.listening + ' min',
+        exListenD:LV === 1 ? 'Part 1: does the picture match? Part 2: pick the picture for a sentence. Part 3: match five conversations to pictures. Part 4: a conversation, a question, three answers. Each clip can be played twice.' : 'Part 1 (10): does the picture match the sentence? Part 2 (10): match conversations to pictures. Part 3 (10): a short conversation, a question, three answers. Part 4 (5): a longer conversation, a question, three answers. Each clip can be played twice.',
+        exReadT:'Reading · ' + EXAM_N.reading + ' questions · ' + EXAM_MIN.reading + ' min',
+        exReadD:LV === 1 ? 'Part 1: does the picture match the words? Part 2: match five sentences to pictures. Part 3: match five questions to answers. Part 4: fill five blanks from a word list.' : 'Part 1 (5): match sentences to pictures. Part 2 (5): fill blanks from a word list. Part 3 (5): do two sentences mean the same? Part 4 (10): match questions to answers.',
+        exNote:LV === 1 ? 'The real test has pictures; here emoji stand in for them. The official 2025 test is said to have 20 listening questions (about 12 minutes of audio) and 20 reading questions (20 minutes); the part-by-part layout above is from the official sample papers and I could not confirm every detail of the 2025 version. Listening gets 15 minutes here because you press play yourself.' : 'The real test has pictures; here emoji stand in for them. This layout follows the 2012 (HSK 2.0) sample papers. I could not find the layout of the 2025 HSK band 2 exam, so it may differ. Listening gets 25 minutes because you press play yourself.',
+        exScore:(LV === 1 ? 'Each question is worth 5 points, so each section is out of 100 and the total out of 200.' : 'Each section is worth 100 points, shared evenly by its questions (listening about 2.9 points a question, reading 4), so the total is out of 200.') + ' The official ' + LVN + ' pass mark is 120 of 200 (I am not sure whether the 2025 version changed it). This site\'s ' + LVN + ' seal is stricter: ' + LVL.PASS_PCT + '% in every section of one full exam, and it opens ' + (LV < LVL.MAX_LEVEL ? 'HSK ' + (LV + 1) : 'the next level') + '.',
+        chatVocab:LV === 1 ? 'HSK 1 vocabulary only' : 'HSK 1 and HSK 2 vocabulary only', lvName:LVN, nextLvName:'HSK ' + (LV + 1), lvIs1:LV === 1, lvIs2:LV !== 1, hasExamCard:!!EXAMBANK, noExamCard:!EXAMBANK,
+        examCardTitle:EXAMBANK ? LVN + ' level exam' : LVN + ' progress', examCardNote:EXAMBANK ? (LVL.levelPassed(LV) ? LVN + ' exam passed.' + (LV < LVL.MAX_LEVEL ? ' HSK ' + (LV + 1) + ' is open.' : '') : (LV < LVL.MAX_LEVEL ? 'Pass the full exam (' + LVL.PASS_PCT + '% in listening and in reading) to open HSK ' + (LV + 1) + '. The rings show how ready you are.' : 'Reach ' + LVL.PASS_PCT + '% in listening and in reading to pass.')) : 'The ' + LVN + ' level exam, listening lab and practice scripts are not built yet. These rings show the parts that are.',
         examBtnText:'See the ' + LVN + ' level exam',
-        lvOpts:[1, 2].map(n => ({ label:'HSK ' + n, cls:LV === n ? 'on' : '', fn:() => this.switchLevel(n) })),
-        lvNote:'You are studying ' + LVN + '. Each level keeps its own progress on this device and its own copy when you sync. ' + (LV === 1 ? 'HSK 1 has everything: words, word webs, grammar, listening lab, practice scripts, AI conversation and the mock exam.' : 'HSK 2 has words, word webs, grammar, tests and the AI conversation. The listening lab, practice scripts and mock exam are not built for HSK 2 yet.'),
+        lvOpts:[1, 2].map(n => { const open = LVL.unlocked(n); return { label:'HSK ' + n + (open ? '' : ' 🔒'), cls:(LV === n ? 'on' : '') + (open ? '' : ' locked'), fn:() => (open ? this.switchLevel(n) : this.setState({ lvMsg:n })) }; }),
+        lvMsgShow:S.lvMsg > 0 && !LVL.unlocked(S.lvMsg) ? true : false, lvMsgText:'HSK ' + S.lvMsg + ' is locked. It opens when you pass the HSK ' + (S.lvMsg - 1) + ' level exam: the full mock exam with at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading, in one sitting.',
+        lvMsgGo:() => { this.setState({ lvMsg:0 }); if (LV === S.lvMsg - 1) this.go('exam'); else { try { localStorage.setItem('shanlu-level', String(S.lvMsg - 1)); } catch (e) {} window.location.reload(); } },
+        lvMsgClose:() => this.setState({ lvMsg:0 }), lvMsgGoText:LV === S.lvMsg - 1 ? 'Go to the HSK ' + LV + ' exam' : 'Open HSK ' + (S.lvMsg - 1),
+        lvNote:'You are studying ' + LVN + '. Each level keeps its own progress on this device and its own copy when you sync. A level opens when you pass the exam of the level before it (the full mock exam with ' + LVL.PASS_PCT + '% in listening and in reading); a lock on a button means it is not open yet. ' + (LV === 1 ? 'HSK 1 has everything: words, word webs, grammar, listening lab, practice scripts, AI conversation and the mock exam.' : 'HSK 2 has words, word webs, grammar, tests and the AI conversation. The listening lab, practice scripts and mock exam are not built for HSK 2 yet.'),
         isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
 
         // home
@@ -1726,7 +1777,7 @@
         fireSub:studiedToday ? 'Lit for today. Come back tomorrow to keep it.' : (streakShown > 0 ? 'Study today and it burns brighter tomorrow.' : 'Study today to light it.'),
         todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed. Anything else is a bonus.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
         trailCta:() => this.go(ascCta.to), trailCtaText:ascCta.text,
-        trailNote:LV === 1 ? 'Camps are placed by level, not to scale. The climb counts words you have started; grammar, listening and speaking count towards the level exam.' : 'Camps are placed by level, not to scale. The climb counts the ' + LVN + ' words you have started. There is no ' + LVN + ' exam on this site yet.',
+        trailNote:'Camps are placed by level, not to scale. The climb counts the ' + LVN + ' words you have started; grammar, listening and speaking count towards the level exam.',
         mistClearText:mistClear + ' of ' + TOPICS.length + ' clear', mistTiles, mistHasNear:!!nearBest,
         mistNearText:nearBest ? 'Finish ' + nearBest.name + ' (' + (nearBest.tot - nearBest.got) + ' to go)' : '', mistNearGo:() => nearBest && openTopic(nearBest.i),
         mistNote:'A mountain is clear when you have started every word in its Word web topic.',
@@ -1784,7 +1835,7 @@
         syncInput:S.syncInput, onSyncInput:(e) => this.setState({ syncInput:e.target.value }), syncConnect:this.syncConnect, syncNow:() => this.syncNow(true), syncDisconnect:this.syncDisconnect,
         syncAtText:S.syncAt ? 'Last synced ' + new Date(S.syncAt).toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }) + '.' : 'Not synced yet.',
         syncTokenUrl:'https://github.com/settings/tokens/new?scopes=gist&description=Shanlu%20progress',
-        erhuaOn:ERHUA_ON, erhuaOff:!ERHUA_ON, erhuaAvailable:!!ERHUA && LV === 1, toggleErhua:this.toggleErhua,
+        erhuaOn:ERHUA_ON, erhuaOff:!ERHUA_ON, erhuaAvailable:!!ERHUA, toggleErhua:this.toggleErhua,
         erhuaNow:ERHUA_ON ? 'Now: 儿 endings are on (exam style).' : 'Now: plain forms, no 儿 endings.',
         erhuaBtn:ERHUA_ON ? 'Switch to plain forms' : 'Switch to 儿 endings',
         repoUrl:'https://github.com/' + REPO

@@ -1,9 +1,3 @@
-# Sentences, batch 1 of 4 (220 sentences)
-
-Copy everything below the line.
-
----
-
 你好！我正在做一个 HSK 2 学习网站（学习者已学过 HSK 1 的约 300 个词，现在学 HSK 2 的 200 个新词，总共约 500 个词）。请你以中国母语者和汉语老师的身份，检查下面的句子。
 **只报告有问题的地方**，不要夸奖，也不要重复没问题的内容。对每个问题，请写：编号 / 原文 / 哪里不好（简单中文，再加一句英文）/ 更自然的说法（只用 HSK 1 和 HSK 2 的词）。
 需要特别注意：1) 不自然或不地道的说法；2) 语法错误；3) 英文翻译和中文意思不一致；4) 书面语被当成口语教；5) 对 HSK 2 来说太难的词；6) 多音字的拼音是否正确。
@@ -40,7 +34,7 @@ Sentences (Chinese / English):
 20. 药店在医院旁边。  /  The pharmacy is next to the hospital.
 21. 他是外国人。  /  He is a foreigner.
 22. 教室里有二十个学生。  /  There are twenty students in the classroom.
-23. 请问，洗手间在哪儿？  /  Excuse me, where is the restroom?
+23. 请问，洗手间在哪里？  /  Excuse me, where is the restroom?
 24. 往前走。  /  Go forward.
 25. 我家离学校很近。  /  My home is very close to school.
 26. 我家离公司很近。  /  My home is close to my company.
@@ -88,7 +82,7 @@ Sentences (Chinese / English):
 68. 这个小孩很高兴。  /  This child is very happy.
 69. 我们班有二十个学生。  /  Our class has twenty students.
 70. 这个词是什么意思？  /  What does this word mean?
-71. 这个题我不懂。  /  I do not understand this question.
+71. 这个题我不会做。  /  I do not know how to do this problem.
 72. 我明天考汉语。  /  I have a Chinese exam tomorrow.
 73. 明天有考试。  /  There is an exam tomorrow.
 74. 她教我们汉语。  /  She teaches us Chinese.
@@ -105,7 +99,7 @@ Sentences (Chinese / English):
 85. 请写你的姓名。  /  Please write your full name.
 86. 请介绍一下你自己。  /  Please introduce yourself.
 87. 请告诉我你的名字。  /  Please tell me your name.
-88. 请你帮我。  /  Please help me.
+88. 请你帮我一下。  /  Please help me.
 89. 请你帮忙。  /  Please help.
 90. 请等一下。  /  Please wait a moment.
 91. 我做完了。  /  I am finished.
@@ -114,7 +108,7 @@ Sentences (Chinese / English):
 94. 我头疼。  /  I have a headache.
 95. 请洗手。  /  Please wash your hands.
 96. 她的眼睛很大。  /  Her eyes are big.
-97. 哪儿疼？  /  Where does it hurt?
+97. 哪里疼？  /  Where does it hurt?
 98. 你吃药了吗？  /  Have you taken your medicine?
 99. 他个子很高。  /  He is tall.
 100. 这个椅子很舒服。  /  This chair is comfortable.
@@ -170,20 +164,20 @@ Sentences (Chinese / English):
 150. 生日快乐！  /  Happy birthday!
 151. 快要下雨了。  /  It is about to rain.
 152. 我喜欢打篮球。  /  I like playing basketball.
-153. 请说慢一点儿。  /  Please speak a bit slower.
+153. 请说慢一点。  /  Please speak a bit slower.
 154. 这个电影没意思。  /  This movie is boring.
 155. 我每天六点起床。  /  I get up at six every day.
 156. 他没有那么高。  /  He is not that tall.
 157. 别那样做。  /  Do not do it like that.
 158. 今天是晴天。  /  Today is a sunny day.
-159. 妈妈让我睡觉。  /  Mom made me go to sleep.
+159. 妈妈让我睡觉。  /  Mom tells me to go to sleep.
 160. 我每天上网。  /  I go online every day.
 161. 今天是我的生日。  /  Today is my birthday.
 162. 吃饭时，别看手机。  /  Do not look at your phone when eating.
-163. 你有什么事情？  /  What do you need?
+163. 今天我有很多事情。  /  I have a lot of things to do today.
 164. 虽然很累，但是我很高兴。  /  Although I am tired, I am happy.
 165. 我生病了，所以没去学校。  /  I was sick, so I did not go to school.
-166. 他在踢球。  /  He is kicking a ball.
+166. 他在踢球。  /  He is playing soccer.
 167. 我有一条狗。  /  I have a dog.
 168. 她喜欢跳舞。  /  She likes dancing.
 169. 这个手机一万块。  /  This phone is ten thousand yuan.
@@ -210,11 +204,11 @@ Sentences (Chinese / English):
 190. 这样可以吗？  /  Is this way okay?
 191. 门开着。  /  The door is open.
 192. 他正在睡觉。  /  He is sleeping right now.
-193. 这个周我很忙。  /  I am very busy this week.
+193. 这周我很忙。  /  I am very busy this week.
 194. 我在准备考试。  /  I am preparing for the exam.
 195. 我自己做饭。  /  I cook for myself.
 196. 他喜欢踢足球。  /  He likes playing soccer.
-197. 我最喜欢茶。  /  I like tea the most.
+197. 我最喜欢喝茶。  /  I like drinking tea best.
 198. 我在车站等朋友。  /  I am waiting for a friend at the station.
 199. 这个车站很大。  /  This station is very big.
 200. 机场离我家很远。  /  The airport is far from my home.
@@ -222,8 +216,8 @@ Sentences (Chinese / English):
 202. 地铁很快。  /  The subway is fast.
 203. 你坐地铁还是坐公交车？  /  Do you take the subway or the bus?
 204. 我每天坐公交车上学。  /  I take the bus to school every day.
-205. 你在这儿等公交车吧。  /  Wait for the bus here.
-206. 打车很快，但是有点儿贵。  /  Taking a taxi is fast, but a bit expensive.
+205. 你在这里等公交车吧。  /  Wait for the bus here.
+206. 打车很快，但是有点贵。  /  Taking a taxi is fast, but a bit expensive.
 207. 你想坐地铁还是打车？  /  Do you want to take the subway or take a taxi?
 208. 学校在这条路上。  /  The school is on this road.
 209. 你知道去学校的路吗？  /  Do you know the way to school?

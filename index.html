@@ -94,6 +94,7 @@
       <span class="pill"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.2 6.3L21 12l-6.8 2.7L12 21l-2.2-6.3L3 12l6.8-2.7z"/></svg>{{xpText}} XP</span>
     </div>
   </header>
+  <sc-if value="{{lvMsgShow}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">{{lvMsgText}}<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" onClick="{{lvMsgGo}}">{{lvMsgGoText}}</button><button class="btn" onClick="{{lvMsgClose}}">Dismiss</button></div></div></sc-if>
   <sc-if value="{{noVoice}}" hint-placeholder-val="{{ false }}"><div class="banner">This browser does not report a Chinese voice, so audio may be silent or sound wrong. Try Chrome or Safari, or check your device's text-to-speech language settings. <button class="linkbtn" onClick="{{goVoice}}">Open voice settings</button></div></sc-if>
 
   <!-- VOICE -->
@@ -125,7 +126,7 @@
     </section>
     <section class="card" style="margin-bottom:20px">
       <h2 class="h2">AI conversation (optional)</h2>
-      <p class="muted" style="margin:6px 0 0;font-size:16px">Speaking practice with a real conversation partner: you speak or type, Mingming answers in simple Chinese, may use a little HSK 2 as a preview (with pinyin and English), and tells you what was not natural. Pick the service that writes Mingming's lines. You can save a key for both and switch any time.</p>
+      <p class="muted" style="margin:6px 0 0;font-size:16px">Speaking practice with a real conversation partner: you speak or type, Mingming answers in simple Chinese, may use a little of the next level ({{nextLvName}}) as a preview (with pinyin and English), and tells you what was not natural. Pick the service that writes Mingming's lines. You can save a key for both and switch any time.</p>
       <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
         <sc-for list="{{provOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
       </div>
@@ -217,7 +218,7 @@
     <section class="card" style="margin-top:20px">
       <h2 class="h2">儿 endings</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">In the northern, Beijing style, some words end in 儿: 面条儿, 一点儿, 这儿, 哪儿. Many speakers, especially in the south and in Taiwan, say 面条, 一点, 这里 and 哪里 instead. This site uses the plain forms unless you switch.</p>
-      <p class="muted" style="margin:10px 0 0;font-size:15.5px">The official HSK 1 word list prints the 儿 forms, so you may still meet them on the exam. Switching reloads the page. Your progress on these words carries over. With plain forms on, 这儿, 那儿 and 哪儿 are left out, because 这里, 那里 and 哪里 are already on the list.</p>
+      <p class="muted" style="margin:10px 0 0;font-size:15.5px">The official HSK 1 and HSK 2 word lists print the 儿 forms, so you may still meet them on the exam. Switching reloads the page. Your progress on these words carries over. With plain forms on, 这儿, 那儿 and 哪儿 are left out, because 这里, 那里 and 哪里 are already on the list.</p>
       <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
         <button class="btn pri" onClick="{{toggleErhua}}">{{erhuaBtn}}</button>
         <span class="muted">{{erhuaNow}}</span>
@@ -596,7 +597,7 @@
     <section class="chat">
       <div class="chat-h">
         <div class="av zh" aria-hidden="true">明</div>
-        <div class="chat-t"><b>Mingming</b><span>{{chatTitle}} · HSK 1 vocabulary only</span></div>
+        <div class="chat-t"><b>Mingming</b><span>{{chatTitle}} · {{chatVocab}}</span></div>
         <div class="seg2" role="group" aria-label="Show on screen">
           <button class="{{zhCls}}" onClick="{{toggleZh}}">Characters</button>
           <button class="{{pyCls}}" onClick="{{togglePy}}">Pinyin</button>
@@ -681,7 +682,7 @@
         </div>
       </section>
       <section class="card">
-        <h2 class="h2">HSK 1 scenarios</h2>
+        <h2 class="h2">{{lvName}} scenarios</h2>
         <div style="margin-top:8px">
           <sc-for list="{{scenarios}}" as="s" hint-placeholder-count="4">
             <button type="button" class="scn {{s.cls}}" onClick="{{s.fn}}">
@@ -1000,7 +1001,7 @@
   <!-- LISTENING LAB -->
   <sc-if value="{{isListenNA}}" hint-placeholder-val="{{ false }}">
   <div class="lob"><section class="card"><h2 class="h2">Listening lab: not built for {{lvName}} yet</h2>
-    <p class="muted" style="margin:6px 0 0;font-size:16px">The dictation clips, shadowing and tone trainer exist for HSK 1 only so far. In the meantime, the Review words screen plays each {{lvName}} word aloud (the Hear question), and Talk with AI in Speak lets you listen to full sentences.</p>
+    <p class="muted" style="margin:6px 0 0;font-size:16px">The dictation clips, shadowing and tone trainer do not exist for {{lvName}} yet. In the meantime, the Review words screen plays each {{lvName}} word aloud (the Hear question), and Talk with AI in Speak lets you listen to full sentences.</p>
     <div style="margin-top:16px"><button class="btn pri" onClick="{{goHome}}">Back to home</button></div></section></div>
   </sc-if>
   <sc-if value="{{isListen}}" hint-placeholder-val="{{ false }}">
@@ -1156,13 +1157,13 @@
   <sc-if value="{{exHome}}" hint-placeholder-val="{{ true }}">
   <div class="lob">
     <section class="card">
-      <h2 class="h2">HSK 1 mock exam</h2>
-      <p class="muted" style="margin:4px 0 14px;font-size:15.5px">Built like the official HSK 1 sample papers: 20 listening and 20 reading questions in four parts each, about 35 minutes. No hints and no pinyin while you answer. Each exam is drawn from a bank of 120+ questions, so it is different every time.</p>
+      <h2 class="h2">{{exTitle}}</h2>
+      <p class="muted" style="margin:4px 0 14px;font-size:15.5px">{{exIntro}}</p>
       <div class="fmt">
-        <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">听</div><div style="flex:1;min-width:0"><div class="fmt-t">Listening · 20 questions · 15 min</div><div class="fmt-d">Part 1: does the picture match? Part 2: pick the picture for a sentence. Part 3: match five conversations to pictures. Part 4: a conversation, a question, three answers. Each clip can be played twice.</div></div></div>
-        <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">读</div><div style="flex:1;min-width:0"><div class="fmt-t">Reading · 20 questions · 20 min</div><div class="fmt-d">Part 1: does the picture match the words? Part 2: match five sentences to pictures. Part 3: match five questions to answers. Part 4: fill five blanks from a word list.</div></div></div>
+        <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">听</div><div style="flex:1;min-width:0"><div class="fmt-t">{{exListenT}}</div><div class="fmt-d">{{exListenD}}</div></div></div>
+        <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">读</div><div style="flex:1;min-width:0"><div class="fmt-t">{{exReadT}}</div><div class="fmt-d">{{exReadD}}</div></div></div>
       </div>
-      <p class="plan-note">The real test has pictures; here emoji stand in for them. The official 2025 test is said to have 20 listening questions (about 12 minutes of audio) and 20 reading questions (20 minutes); the part-by-part layout above is from the official sample papers and I could not confirm every detail of the 2025 version. Listening gets 15 minutes here because you press play yourself.</p>
+      <p class="plan-note">{{exNote}}</p>
       <sc-if value="{{examAvailable}}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:18px">
         <button class="btn pri big" onClick="{{startFull}}">Start the full exam</button>
@@ -1173,7 +1174,7 @@
     </section>
     <section class="card">
       <h2 class="h2">How it is scored</h2>
-      <p class="muted" style="margin:6px 0 0;font-size:15.5px">Each question is worth 5 points, so each section is out of 100 and the total out of 200. The official HSK 1 pass mark is 120 of 200 (I am not sure whether the 2025 version changed it). This site's HSK 1 seal is stricter: 80% in every section.</p>
+      <p class="muted" style="margin:6px 0 0;font-size:15.5px">{{exScore}}</p>
       <h2 class="h2" style="margin-top:22px">Your last attempts</h2>
       <sc-if value="{{hasHist}}" hint-placeholder-val="{{ false }}">
         <div class="exhist"><sc-for list="{{histRows}}" as="r" hint-placeholder-count="3"><div class="exh-r"><div><b>{{r.text}}</b><span>{{r.detail}}</span></div><div class="exh-s">{{r.score}}</div></div></sc-for></div>
@@ -1243,7 +1244,8 @@
           </div>
         </sc-for>
       </div>
-      <sc-if value="{{exSeal}}" hint-placeholder-val="{{ false }}"><div class="reward"><div class="stamp zh" style="width:56px;height:56px;font-size:34px;border-radius:10px;animation:none" aria-hidden="true">一</div><div><b>HSK 1 seal earned.</b><div class="muted" style="font-size:15px">{{exSealText}}</div></div></div></sc-if>
+      <sc-if value="{{exSeal}}" hint-placeholder-val="{{ false }}"><div class="reward"><div class="stamp zh" style="width:56px;height:56px;font-size:34px;border-radius:10px;animation:none" aria-hidden="true">一</div><div><b>{{lvName}} seal earned.</b><div class="muted" style="font-size:15px">{{exSealText}}</div></div></div></sc-if>
+      <sc-if value="{{exUnlock}}" hint-placeholder-val="{{ false }}"><div class="reward" style="margin-top:12px"><div style="flex:1;min-width:0"><b>{{exUnlockText}}</b></div><button class="btn pri" onClick="{{exUnlockGo}}">{{exUnlockGoText}}</button></div></sc-if>
       <sc-if value="{{exNoSeal}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:14px 0 0">{{exSealText}}</p></sc-if>
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:18px">
         <button class="btn pri" onClick="{{exAgain}}">Try another exam</button>
@@ -1397,7 +1399,11 @@
 <script src="data/hsk1-exam.js"></script>
 <script src="data/hsk1-erhua.js"></script>
 <script src="data/hsk2-preview.js"></script>
+<script src="data/hsk3-preview.js"></script>
 <script src="data/hsk2-words.js"></script>
+<script src="data/hsk2-speak.js"></script>
+<script src="data/hsk2-listen.js"></script>
+<script src="data/hsk2-exam.js"></script>
 <script src="data/hsk2-grammar.js"></script>
 <script src="data/hsk2-webs.js"></script>
 <script src="ascent.js"></script>

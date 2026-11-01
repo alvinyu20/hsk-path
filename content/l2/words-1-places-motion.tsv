@@ -1,7 +1,7 @@
-车站	n	station (bus or train)	车站在学校前面。	The station is in front of the school.
+车站	n	stop or station (bus or train)	车站在学校前面。	The station is in front of the school.
 机场	n	airport	我们明天去机场。	We are going to the airport tomorrow.
 地铁	n	subway	我坐地铁去公司。	I take the subway to work.
-公交车	n	bus	公交车来了。	The bus is here.
+公交车	n	bus (city bus)	公交车来了。	The bus is here.
 打车	v	to take a taxi	我们打车去机场吧。	Let us take a taxi to the airport.
 路	n	road, way	这条路很长。	This road is very long.
 路上	n	on the way	路上有很多人。	There are many people on the road.
@@ -10,7 +10,7 @@
 门	n	door, gate	请打开门。	Please open the door.
 门口	n	doorway, entrance	他在门口等你。	He is waiting for you at the door.
 门票	n	admission ticket	门票多少钱？	How much is the ticket?
-票	n	ticket	你买票了吗？	Have you bought a ticket?
+票	n	ticket (bus, train, movie ...)	你买票了吗？	Have you bought a ticket?
 机票	n	plane ticket	我买了去中国的机票。	I bought a plane ticket to China.
 出国	v	to go abroad	我想明年出国学习。	I want to go abroad to study next year.
 旅游	v	to travel; tourism	我喜欢旅游。	I like to travel.
@@ -21,7 +21,7 @@
 外国	n	foreign country	他是外国人。	He is a foreigner.
 教室	n	classroom	教室里有二十个学生。	There are twenty students in the classroom.
 洗手间	n	restroom	请问，洗手间在哪儿？	Excuse me, where is the restroom?
-往	prep	toward	往前走。	Go forward.
+往	prep	toward	往前走。	Go forward.	Usually 往 + direction + verb: 往前走, 往左走, 往右走.
 离	prep	away from	我家离学校很近。	My home is very close to school.
 近	adj	near	我家离公司很近。	My home is close to my company.
 远	adj	far	学校离我家很远。	School is far from my home.

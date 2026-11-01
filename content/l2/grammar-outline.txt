@@ -31,3 +31,6 @@ verb + 在 + place (住在, 站在)
 可能 / 希望 / 准备
 条 / 位 / 间 (new measure words)
 万 and 多 (big numbers, more than)
+多 + adjective questions (多大, 多高, 多远)
+…的时候 (when …)
+doubled verbs (看看, 想想, 走走)

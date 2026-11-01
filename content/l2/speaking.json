@@ -1,0 +1,518 @@
+{
+ "scenarios": [
+  {
+   "id": "way",
+   "glyph": "路",
+   "title": "Ask the way",
+   "sub": "Directions, 5 turns",
+   "goals": [
+    "Ask where the station is",
+    "Ask if it is far",
+    "Say you will walk",
+    "Say thanks"
+   ],
+   "words": [
+    "请问",
+    "车站",
+    "离",
+    "远",
+    "往前走",
+    "旁边"
+   ],
+   "ai": [
+    {
+     "zh": "你好！我能帮你吗？",
+     "en": "Hello! Can I help you?"
+    },
+    {
+     "zh": "往前走，车站在学校旁边。",
+     "en": "Go straight ahead. The station is next to the school."
+    },
+    {
+     "zh": "不远，走路十分钟。",
+     "en": "Not far, ten minutes on foot."
+    },
+    {
+     "zh": "好。请往前走，别往右走。",
+     "en": "Good. Please go straight ahead; do not turn right."
+    },
+    {
+     "zh": "不客气！再见！",
+     "en": "You are welcome! Goodbye!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "请问，车站在哪儿？",
+     "en": "Excuse me, where is the station?"
+    },
+    {
+     "zh": "离这里远吗？",
+     "en": "Is it far from here?"
+    },
+    {
+     "zh": "好的，我走路去。",
+     "en": "Okay, I will walk."
+    },
+    {
+     "zh": "好的，谢谢你！",
+     "en": "Okay, thank you!"
+    }
+   ]
+  },
+  {
+   "id": "cafe2",
+   "glyph": "茶",
+   "title": "Order at a café",
+   "sub": "Drinks and noodles, 5 turns",
+   "goals": [
+    "Order a drink",
+    "Choose hot",
+    "Order noodles",
+    "Pay"
+   ],
+   "words": [
+    "红茶",
+    "绿茶",
+    "咖啡",
+    "面",
+    "热",
+    "给你"
+   ],
+   "ai": [
+    {
+     "zh": "你好！你想喝什么？",
+     "en": "Hello! What would you like to drink?"
+    },
+    {
+     "zh": "好的。你想喝热的还是冷的？",
+     "en": "Okay. Would you like it hot or cold?"
+    },
+    {
+     "zh": "好。你想吃东西吗？我们有面。",
+     "en": "Okay. Would you like something to eat? We have noodles."
+    },
+    {
+     "zh": "好的。四十块钱。",
+     "en": "Okay. Forty yuan."
+    },
+    {
+     "zh": "谢谢！再见！",
+     "en": "Thank you! Goodbye!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想喝红茶。",
+     "en": "I would like black tea."
+    },
+    {
+     "zh": "我想喝热的。",
+     "en": "I would like it hot."
+    },
+    {
+     "zh": "好的，我想吃面。",
+     "en": "Okay, I would like noodles."
+    },
+    {
+     "zh": "好的，给你。",
+     "en": "Okay, here you are."
+    }
+   ]
+  },
+  {
+   "id": "pharmacy",
+   "glyph": "药",
+   "title": "At the pharmacy",
+   "sub": "Body and medicine, 5 turns",
+   "goals": [
+    "Say what hurts",
+    "Answer about eating",
+    "Ask when to take it",
+    "Say thanks"
+   ],
+   "words": [
+    "头",
+    "疼",
+    "身体",
+    "药",
+    "药店",
+    "休息"
+   ],
+   "ai": [
+    {
+     "zh": "你好！你怎么了？",
+     "en": "Hello! What is wrong with you?"
+    },
+    {
+     "zh": "你今天吃饭了吗？",
+     "en": "Have you eaten today?"
+    },
+    {
+     "zh": "你要多休息。这个药，一天吃三次。",
+     "en": "You need to rest more. Take this medicine three times a day."
+    },
+    {
+     "zh": "吃完饭吃。",
+     "en": "Take it after you finish eating."
+    },
+    {
+     "zh": "不客气，再见！",
+     "en": "You are welcome, goodbye!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我头疼，身体也不舒服。",
+     "en": "I have a headache and I do not feel well."
+    },
+    {
+     "zh": "吃了，但是我不想吃东西。",
+     "en": "I ate, but I do not want anything to eat."
+    },
+    {
+     "zh": "好的，我什么时候吃？",
+     "en": "Okay, when do I take it?"
+    },
+    {
+     "zh": "谢谢你，再见。",
+     "en": "Thank you, goodbye."
+    }
+   ]
+  },
+  {
+   "id": "hobby",
+   "glyph": "球",
+   "title": "Talk about hobbies",
+   "sub": "Sports and fun, 5 turns",
+   "goals": [
+    "Say your hobbies",
+    "Say how often",
+    "Say what you like better",
+    "Agree to go together"
+   ],
+   "words": [
+    "爱好",
+    "游泳",
+    "跳舞",
+    "篮球",
+    "足球",
+    "经常"
+   ],
+   "ai": [
+    {
+     "zh": "你好！你有什么爱好？",
+     "en": "Hello! What are your hobbies?"
+    },
+    {
+     "zh": "你经常游泳吗？",
+     "en": "Do you swim often?"
+    },
+    {
+     "zh": "很好！你喜欢打篮球吗？",
+     "en": "Great! Do you like playing basketball?"
+    },
+    {
+     "zh": "我也喜欢足球！我们一起踢吧。",
+     "en": "I like soccer too! Let us play together."
+    },
+    {
+     "zh": "太好了！",
+     "en": "Wonderful!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我喜欢游泳，我也喜欢跳舞。",
+     "en": "I like swimming, and I like dancing too."
+    },
+    {
+     "zh": "我每天早上都游泳。",
+     "en": "I swim every morning."
+    },
+    {
+     "zh": "不太喜欢，我喜欢踢足球。",
+     "en": "Not really; I like playing soccer."
+    },
+    {
+     "zh": "好啊，我们一起去！",
+     "en": "Great, let us go together!"
+    }
+   ]
+  },
+  {
+   "id": "airport",
+   "glyph": "机",
+   "title": "Go to the airport",
+   "sub": "Taxi, 5 turns",
+   "goals": [
+    "Say where you are going",
+    "Say your flight time",
+    "Ask the driver to hurry",
+    "Ask how much"
+   ],
+   "words": [
+    "机场",
+    "打车",
+    "飞机",
+    "快",
+    "路上",
+    "多少钱"
+   ],
+   "ai": [
+    {
+     "zh": "你好！你去哪儿？",
+     "en": "Hello! Where are you going?"
+    },
+    {
+     "zh": "好的。你几点的飞机？",
+     "en": "Okay. What time is your flight?"
+    },
+    {
+     "zh": "没问题。路上不远，我们很快就到。",
+     "en": "No problem. It is not far, we will be there soon."
+    },
+    {
+     "zh": "好的。我们到了！",
+     "en": "Okay. We have arrived!"
+    },
+    {
+     "zh": "一百块。",
+     "en": "One hundred yuan."
+    }
+   ],
+   "you": [
+    {
+     "zh": "我去机场。",
+     "en": "I am going to the airport."
+    },
+    {
+     "zh": "下午三点。",
+     "en": "Three in the afternoon."
+    },
+    {
+     "zh": "太好了，请开快一点。",
+     "en": "Great, please drive a little faster."
+    },
+    {
+     "zh": "谢谢，多少钱？",
+     "en": "Thanks, how much is it?"
+    }
+   ]
+  },
+  {
+   "id": "birthday",
+   "glyph": "生",
+   "title": "A friend's birthday",
+   "sub": "Wishes and plans, 5 turns",
+   "goals": [
+    "Wish a happy birthday",
+    "Say what you want to drink",
+    "Ask when",
+    "Agree to come"
+   ],
+   "words": [
+    "生日",
+    "快乐",
+    "送",
+    "饭馆",
+    "一起",
+    "车站"
+   ],
+   "ai": [
+    {
+     "zh": "今天是我的生日！",
+     "en": "Today is my birthday!"
+    },
+    {
+     "zh": "谢谢！你真好。你想喝茶还是咖啡？",
+     "en": "Thank you! You are so kind. Would you like tea or coffee?"
+    },
+    {
+     "zh": "我们一起去饭馆吃饭吧。",
+     "en": "Let us go to a restaurant together."
+    },
+    {
+     "zh": "晚上六点，在车站旁边。",
+     "en": "Six in the evening, next to the station."
+    },
+    {
+     "zh": "太好了，晚上见！",
+     "en": "Great, see you in the evening!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "生日快乐！我送你一本书。",
+     "en": "Happy birthday! I am giving you a book."
+    },
+    {
+     "zh": "我想喝茶。",
+     "en": "I would like tea."
+    },
+    {
+     "zh": "好啊，我们什么时候去？",
+     "en": "Sure, when are we going?"
+    },
+    {
+     "zh": "好的，我六点到。",
+     "en": "Okay, I will be there at six."
+    }
+   ]
+  },
+  {
+   "id": "exam",
+   "glyph": "考",
+   "title": "Talk about an exam",
+   "sub": "School, 5 turns",
+   "goals": [
+    "Say you are not ready",
+    "Say what you are doing and ask for help",
+    "Ask what a word means",
+    "Say you understand"
+   ],
+   "words": [
+    "考试",
+    "准备",
+    "教",
+    "词",
+    "意思",
+    "懂"
+   ],
+   "ai": [
+    {
+     "zh": "明天有汉语考试，你准备好了吗？",
+     "en": "There is a Chinese exam tomorrow. Have you prepared?"
+    },
+    {
+     "zh": "你现在做什么？",
+     "en": "What are you doing now?"
+    },
+    {
+     "zh": "可以，我来教你。",
+     "en": "Sure, I will teach you."
+    },
+    {
+     "zh": "这个词是朋友的意思。",
+     "en": "This word means friend."
+    },
+    {
+     "zh": "不客气，明天见。",
+     "en": "You are welcome, see you tomorrow."
+    }
+   ],
+   "you": [
+    {
+     "zh": "还没有，我有点儿累。",
+     "en": "Not yet, and I am a little tired."
+    },
+    {
+     "zh": "我正在看书，你可以帮我吗？",
+     "en": "I am reading. Can you help me?"
+    },
+    {
+     "zh": "这个词是什么意思？",
+     "en": "What does this word mean?"
+    },
+    {
+     "zh": "我懂了，谢谢你！",
+     "en": "I understand now, thank you!"
+    }
+   ]
+  },
+  {
+   "id": "trousers",
+   "glyph": "裤",
+   "title": "Buy trousers",
+   "sub": "Shopping, 5 turns",
+   "goals": [
+    "Say what you want to buy",
+    "Say your colour",
+    "Say it is too big and ask for a smaller one",
+    "Ask for a lower price"
+   ],
+   "words": [
+    "裤子",
+    "颜色",
+    "黑色",
+    "大",
+    "小",
+    "便宜"
+   ],
+   "ai": [
+    {
+     "zh": "你好！你想买什么？",
+     "en": "Hello! What would you like to buy?"
+    },
+    {
+     "zh": "你喜欢什么颜色？",
+     "en": "What colour do you like?"
+    },
+    {
+     "zh": "这条怎么样？",
+     "en": "How about this one?"
+    },
+    {
+     "zh": "有。这条小的很漂亮，二百块。",
+     "en": "Yes. This small one is very nice, two hundred yuan."
+    },
+    {
+     "zh": "好，一百八十块。",
+     "en": "Okay, one hundred and eighty yuan."
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想买一条裤子。",
+     "en": "I want to buy a pair of trousers."
+    },
+    {
+     "zh": "我喜欢黑色的。",
+     "en": "I like black ones."
+    },
+    {
+     "zh": "有点儿大，有小的吗？",
+     "en": "It is a bit big. Do you have a smaller one?"
+    },
+    {
+     "zh": "太贵了，便宜一点吧。",
+     "en": "That is too expensive, make it cheaper."
+    }
+   ]
+  }
+ ],
+ "phrases": [
+  {
+   "zh": "请问，洗手间在哪儿？",
+   "en": "Excuse me, where is the restroom?"
+  },
+  {
+   "zh": "请再说一次。",
+   "en": "Please say it once more."
+  },
+  {
+   "zh": "你说得太快了，我听不懂。",
+   "en": "You speak too fast; I cannot understand."
+  },
+  {
+   "zh": "请说慢一点。",
+   "en": "Please speak a little slower."
+  },
+  {
+   "zh": "这个词是什么意思？",
+   "en": "What does this word mean?"
+  },
+  {
+   "zh": "你可以帮我吗？",
+   "en": "Can you help me?"
+  },
+  {
+   "zh": "我不知道怎么说。",
+   "en": "I do not know how to say it."
+  },
+  {
+   "zh": "对不起，我忘了。",
+   "en": "Sorry, I forgot."
+  }
+ ]
+}

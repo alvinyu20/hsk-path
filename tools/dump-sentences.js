@@ -14,7 +14,7 @@ const dir = path.join(__dirname, '..', 'data');
 const files = fs.readdirSync(dir).filter(f => new RegExp('^hsk' + level + '(-.*)?\\.js$').test(f));
 files.forEach(f => require(path.join(dir, f)));
 
-if (plain && level === '1') { const E = require(path.join(__dirname, '..', 'erhua.js')); E.make(window.HSK1_ERHUA).apply(window); }
+if (plain) { require(path.join(dir, 'hsk1-erhua.js')); const E = require(path.join(__dirname, '..', 'erhua.js')); E.make(window.HSK1_ERHUA).apply(window); }
 
 const N = 'HSK' + level;
 const H = window[N] || {};
@@ -50,7 +50,17 @@ if (LISTEN) {
   });
 }
 const EXAM = window[N + '_EXAM'] || null;
-if (EXAM) {
+if (EXAM && level === '2') {
+  // HSK 2 layout: L1 picture + sentence (true/false), L2 dialogue sets, L3/L4 dialogue + question + options, R1 sentence sets, R2 blanks, R3 sentence pairs, R4 question/answer sets
+  EXAM.L1.forEach((e, i) => add('exam:L1:' + i, e.zh, e.py, e.en));
+  EXAM.L2.forEach((st, a) => st.items.forEach((it, i) => it.say.forEach((l, k) => add('exam:L2:' + a + '.' + i + '.' + k, l.zh, l.py, l.en))));
+  ['L3', 'L4'].forEach(p => EXAM[p].forEach((e, i) => { e.say.forEach((l, k) => add('exam:' + p + ':' + i + '.' + k, l.zh, l.py, l.en)); add('exam:' + p + ':' + i + ':question', e.q.zh, e.q.py, e.q.en); e.opts.forEach((o, k) => add('exam:' + p + ':' + i + ':option' + k, o.zh, o.py, '', { levelOnly: true })); }));
+  EXAM.R1.forEach((st, a) => st.items.forEach((it, i) => add('exam:R1:' + a + '.' + i, it.zh, it.py, it.en)));
+  EXAM.R2.forEach((st, a) => st.items.forEach((it, i) => add('exam:R2:' + a + '.' + i, it.full, it.py, it.en)));
+  EXAM.R3.forEach((e, i) => { add('exam:R3:' + i + ':first', e.a.zh, e.a.py, e.a.en); add('exam:R3:' + i + ':second', e.b.zh, e.b.py, e.b.en); });
+  EXAM.R4.forEach((st, a) => st.items.forEach((it, i) => { add('exam:R4:' + a + '.' + i + ':question', it.zh, it.py, it.en); add('exam:R4:' + a + '.' + i + ':answer', st.opts[it.ans].zh, st.opts[it.ans].py, st.opts[it.ans].en); }));
+}
+if (EXAM && level === '1') {
   ['L1', 'R1'].forEach(p => EXAM[p].forEach((e, i) => add('exam:' + p + ':' + i, e.zh, e.py, e.en, { fragment: true })));
   EXAM.L2.forEach((e, i) => add('exam:L2:' + i, e.zh, e.py, e.en));
   EXAM.L3.forEach((s, a) => s.items.forEach((it, i) => it.say.forEach((l, k) => add('exam:L3:' + a + '.' + i + '.' + k, l.zh, l.py, l.en))));

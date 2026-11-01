@@ -19,6 +19,7 @@ python3 -W ignore tools/build-speech.py | tail -1
 python3 -W ignore tools/build-erhua.py | tail -1
 python3 -W ignore tools/build-exam.py | tail -1
 python3 -W ignore tools/build-preview.py "$DATASET" | tail -1
+python3 -W ignore tools/build-preview.py "$DATASET" 3 | tail -1
 
 echo "== 1b. sync merge and gist round-trip"
 node tools/test-sync.js | tail -1
@@ -36,12 +37,18 @@ echo "   plain style (no 儿 endings, the default): exactly what the learner see
 node tools/dump-sentences.js $LEVEL --plain > /tmp/shanlu-sentences-plain.json
 python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-plain.json --level $LEVEL --dataset "$DATASET" --plain
 
-echo "== 3b. HSK 2: build the data files and check every sentence at level 2"
+echo "== 3b. HSK 2: build the data files and check every sentence at level 2, in both styles"
 LEVEL=2 python3 -W ignore tools/build-words.py | tail -1
 LEVEL=2 python3 -W ignore tools/build-grammar.py | tail -1
 LEVEL=2 python3 -W ignore tools/build-webs.py | tail -1
-node tools/dump-sentences.js 2 --plain > /tmp/shanlu-sentences-l2.json
-python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l2.json --level 2 --dataset "$DATASET" --plain
+LEVEL=2 python3 -W ignore tools/build-speech.py | tail -1
+LEVEL=2 python3 -W ignore tools/build-exam.py | tail -1
+echo "   exam style (with 儿 endings)"
+node tools/dump-sentences.js 2 > /tmp/shanlu-sentences-l2.json
+python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l2.json --level 2 --dataset "$DATASET"
+echo "   plain style (no 儿 endings, the default)"
+node tools/dump-sentences.js 2 --plain > /tmp/shanlu-sentences-l2-plain.json
+python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l2-plain.json --level 2 --dataset "$DATASET" --plain
 
 echo "== 4. regenerate the teacher review packet and the list of everything that changes in plain style"
 node tools/make-review-packet.js
@@ -53,7 +60,9 @@ if [ "$2" != "--no-browser" ]; then
   NODE_PATH="$(npm root -g)" node tools/smoke-test.js
   echo "== 5b. the same again with 儿 endings switched on"
   NODE_PATH="$(npm root -g)" node tools/smoke-test.js --erhua
-  echo "== 5c. HSK 2: click through the parts that exist at that level"
+  echo "== 5c. HSK 2: click through every screen, the exam and the level lock"
   NODE_PATH="$(npm root -g)" node tools/smoke-test-l2.js
+  echo "== 5d. the same again with 儿 endings switched on"
+  NODE_PATH="$(npm root -g)" node tools/smoke-test-l2.js --erhua
 fi
 echo "all checks passed (this does not replace review by a person who reads Chinese)"

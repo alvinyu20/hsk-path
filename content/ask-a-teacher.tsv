@@ -14,3 +14,5 @@ word:日	今天是五月一日。	Is 一日 the right spoken form here, or 一�
 word:雪	今天下雪了。	I mean "it has started snowing / it is snowing today". Is 今天下雪了 natural for that, and does it risk reading as "it snowed earlier today"?
 word:对	你是对的。	Is 你是对的 natural in speech, or do people say 你说得对 / 你对?
 word:房间	房间里有一个电视。	Is 一个电视 fine in speech, or should it be 一台电视?
+word:时	我上学时，爸爸送我。	Does 我上学时 mean "when I go to school (every day)" or "when I was a student"? Qwen says it leans to the second; is 我去上学的时候 clearer?
+word:疼	我今天头很疼。	Is 我很疼 (no body part) odd? Qwen says yes; I replaced it with a headache sentence to be safe.

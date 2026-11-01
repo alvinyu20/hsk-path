@@ -1,9 +1,3 @@
-# HSK 2 word list and glosses (197 words)
-
-Copy everything below the line.
-
----
-
 你好！我正在做一个 HSK 2 学习网站（学习者已学过 HSK 1 的约 300 个词，现在学 HSK 2 的 200 个新词，总共约 500 个词）。请你以中国母语者和汉语老师的身份，检查下面的 HSK 2 词表（拼音、词性、英文解释）。
 **只报告有问题的地方**，不要夸奖，也不要重复没问题的内容。对每个问题，请写：编号 / 原文 / 哪里不好（简单中文，再加一句英文）/ 更自然的说法（只用 HSK 1 和 HSK 2 的词）。
 需要特别注意：1) 不自然或不地道的说法；2) 语法错误；3) 英文翻译和中文意思不一致；4) 书面语被当成口语教；5) 对 HSK 2 来说太难的词；6) 多音字的拼音是否正确。
@@ -18,10 +12,10 @@ If a part has no problems, answer "No problems found".
 
 Words (word | pinyin | part of speech | English):
 
-1. 车站 | chēzhàn | n | station (bus or train)
+1. 车站 | chēzhàn | n | stop or station (bus or train)
 2. 机场 | jīchǎng | n | airport
 3. 地铁 | dìtiě | n | subway
-4. 公交车 | gōngjiāochē | n | bus
+4. 公交车 | gōngjiāochē | n | bus (city bus)
 5. 打车 | dǎchē | v | to take a taxi
 6. 路 | lù | n | road, way
 7. 路上 | lùshang | n | on the way
@@ -30,7 +24,7 @@ Words (word | pinyin | part of speech | English):
 10. 门 | mén | n | door, gate
 11. 门口 | ménkǒu | n | doorway, entrance
 12. 门票 | ménpiào | n | admission ticket
-13. 票 | piào | n | ticket
+13. 票 | piào | n | ticket (bus, train, movie ...)
 14. 机票 | jīpiào | n | plane ticket
 15. 出国 | chūguó | v | to go abroad
 16. 旅游 | lǚyóu | v | to travel; tourism
@@ -41,7 +35,7 @@ Words (word | pinyin | part of speech | English):
 21. 外国 | wàiguó | n | foreign country
 22. 教室 | jiàoshì | n | classroom
 23. 洗手间 | xǐshǒujiān | n | restroom
-24. 往 | wǎng | prep | toward
+24. 往 | wǎng | prep | toward | note: Usually 往 + direction + verb: 往前走, 往左走, 往右走.
 25. 离 | lí | prep | away from
 26. 近 | jìn | adj | near
 27. 远 | yuǎn | adj | far
@@ -63,15 +57,15 @@ Words (word | pinyin | part of speech | English):
 43. 进去 | jìnqù | v | to go in
 44. 出来 | chūlái | v | to come out
 45. 出去 | chūqù | v | to go out
-46. 回来 | huílai | v | to come back
-47. 回去 | huíqu | v | to go back
+46. 回来 | huílái | v | to come back
+47. 回去 | huíqù | v | to go back
 48. 上来 | shànglái | v | to come up
 49. 上去 | shàngqù | v | to go up
-50. 下来 | xiàlai | v | to come down
+50. 下来 | xiàlái | v | to come down
 51. 下去 | xiàqù | v | to go down
 52. 过来 | guòlái | v | to come over
 53. 过去 | guòqù | v | to go over
-54. 起来 | qǐlai | v | to get up, to stand up
+54. 起来 | qǐlái | v | to get up, to stand up
 55. 走 | zǒu | v | to walk, to go; to leave
 56. 走路 | zǒulù | v | to walk (on foot)
 57. 跑 | pǎo | v | to run
@@ -83,9 +77,9 @@ Words (word | pinyin | part of speech | English):
 63. 奶奶 | nǎinai | n | paternal grandmother
 64. 妻子 | qīzi | n | wife
 65. 丈夫 | zhàngfu | n | husband
-66. 男孩 | nánhái | n | boy
-67. 女孩 | nǚhái | n | girl
-68. 小孩 | xiǎohái | n | child
+66. 男孩儿 | nánháir | n | boy
+67. 女孩儿 | nǚháir | n | girl
+68. 小孩儿 | xiǎoháir | n | child
 69. 班 | bān | n | class (a group of students)
 70. 词 | cí | n | word
 71. 题 | tí | n | question, problem (in a test)
@@ -100,9 +94,9 @@ Words (word | pinyin | part of speech | English):
 80. 书包 | shūbāo | n | schoolbag
 81. 开学 | kāixué | v | school starts
 82. 高中 | gāozhōng | n | senior high school
-83. 名 | míng | m | measure word for people (formal) | note: Used with a number before a person word: 一名医生, 二十名学生.
-84. 姓 | xìng | v | to be surnamed; surname
-85. 姓名 | xìngmíng | n | full name
+83. 名 | míng | m | measure word for people with a role or job (formal) | note: Used with a number before a role or job: 一名医生, 二十名学生. Not used for friends or family.
+84. 姓 | xìng | v | to have the surname; surname
+85. 姓名 | xìngmíng | n | full name (formal, as on forms) | note: In speech people ask 你叫什么名字？ ; 姓名 is what a form asks for.
 86. 介绍 | jièshào | v | to introduce
 87. 告诉 | gàosu | v | to tell
 88. 帮 | bāng | v | to help
@@ -110,7 +104,7 @@ Words (word | pinyin | part of speech | English):
 90. 等 | děng | v | to wait
 91. 完 | wán | v | to finish
 92. 错 | cuò | adj | wrong
-93. 身体 | shēntǐ | n | body; health
+93. 身体 | shēntǐ | n | body; health | note: 身体好 means healthy; 身体不舒服 means unwell.
 94. 头 | tóu | n | head
 95. 手 | shǒu | n | hand
 96. 眼睛 | yǎnjing | n | eye
@@ -120,7 +114,7 @@ Words (word | pinyin | part of speech | English):
 100. 舒服 | shūfu | adj | comfortable; well
 101. 累 | lèi | adj | tired
 102. 床 | chuáng | n | bed
-103. 花 | huā | n | flower | note: 花 also means "to spend" (花钱), which comes later.
+103. 花 | huā | n | flower; to spend (money, time) | note: As a verb 花 means "to spend": 花钱, 花时间, and 花了两百块 (spent two hundred yuan).
 104. 画 | huà | v | to draw; a painting
 105. 鸟 | niǎo | n | bird
 106. 球 | qiú | n | ball
@@ -140,7 +134,7 @@ Words (word | pinyin | part of speech | English):
 120. 鱼 | yú | n | fish
 121. 啊 | a | part | ah; softens a sentence
 122. 爱好 | àihào | n | hobby
-123. 比 | bǐ | prep | than; compared with
+123. 比 | bǐ | prep | than; compared with | note: The pattern is A 比 B + adjective: 我比他高.
 124. 别 | bié | adv | do not
 125. 不错 | bùcuò | adj | good, not bad
 126. 不好意思 | bùhǎoyìsi | phr | sorry; embarrassed
@@ -148,7 +142,7 @@ Words (word | pinyin | part of speech | English):
 128. 次 | cì | m | time (occurrence)
 129. 从 | cóng | prep | from
 130. 从小 | cóngxiǎo | adv | since childhood
-131. 打 | dǎ | v | to hit; to play (a ball game); to make (a call)
+131. 打 | dǎ | v | to play (a ball game); to hit; to make (a call)
 132. 打开 | dǎkāi | v | to open; to turn on
 133. 但 | dàn | conj | but
 134. 但是 | dànshì | conj | but, however
@@ -160,11 +154,11 @@ Words (word | pinyin | part of speech | English):
 140. 跟 | gēn | prep | with
 141. 过 | guo | part | (after a verb) have done it before | note: 过 here is read guo and shows an experience you have had.
 142. 过年 | guònián | v | to celebrate the New Year
-143. 还是 | háishi | conj | or; still
+143. 还是 | háishi | conj | or (in a choice question); still
 144. 坏 | huài | adj | bad; broken
 145. 间 | jiān | m | measure word for rooms
 146. 经常 | jīngcháng | adv | often
-147. 就 | jiù | adv | then; just; as early as
+147. 就 | jiù | adv | then; just; as early as | note: Time word + 就 + verb + 了 shows it happened earlier than expected: 我五点就起床了.
 148. 可能 | kěnéng | adv | maybe, may
 149. 快 | kuài | adj | fast; soon
 150. 快乐 | kuàilè | adj | happy
@@ -179,7 +173,7 @@ Words (word | pinyin | part of speech | English):
 159. 让 | ràng | v | to let; to make (someone do)
 160. 上网 | shàngwǎng | v | to go online
 161. 生日 | shēngrì | n | birthday
-162. 时 | shí | n | time; when
+162. 时 | shí | n | time; when | note: Mostly seen inside words (小时候, 有时) or as ...的时候 in speech.
 163. 事情 | shìqing | n | matter, thing
 164. 虽然 | suīrán | conj | although
 165. 所以 | suǒyǐ | conj | so, therefore
@@ -192,7 +186,7 @@ Words (word | pinyin | part of speech | English):
 172. 位 | wèi | m | polite measure word for people
 173. 希望 | xīwàng | v | to hope
 174. 洗 | xǐ | v | to wash
-175. 小时候 | xiǎoshíhou | time | when (I) was little
+175. 小时候 | xiǎoshíhou | time | when (someone) was little; childhood
 176. 笑 | xiào | v | to laugh, to smile
 177. 一会儿 | yíhuìr | time | a moment
 178. 一起 | yìqǐ | adv | together
@@ -222,4 +216,4 @@ B. For each word, is the pinyin right for the meaning given? I fixed 长 (cháng
 C. Neutral tones: I show the dictionary neutral tones for 爷爷 yéye, 奶奶 nǎinai, 丈夫 zhàngfu, 眼睛 yǎnjing, 告诉 gàosu, 事情 shìqing, 还是 háishi, 回来 huílai, 回去 huíqu, 下来 xiàlai, 起来 qǐlai, but 上来 shànglái, 进来 jìnlái, 出来 chūlái, 过来 guòlái without them. Is that how you would teach them to a beginner? What is the usual reading of each?
 D. 一会儿 is shown as yíhuìr (with the tone change). Is that right, or should a beginner see yīhuìr?
 E. Glosses I am least sure of: 名 (measure word for people, formal), 面 (side; noodles), 花 (flower; the "to spend" meaning is not taught), 打 (hit; play a ball game; make a call), 就 (then; just; as early as), 着, 地, 得, 过 (particles), 红茶 (black tea), 爱好 (hobby), 啊, 时 (time; when), 位, 间, 条, 万, 快 (fast; soon), 长 (long), 还是 (or; still), 让, 可能, 正, 周, 每, 自己. Is each gloss correct and the most useful first meaning for a beginner? Which important common meaning is missing?
-F. 一会儿 keeps its 儿 but 男孩, 女孩, 小孩 are written without one. Is that how you would write them in plain Mandarin text? Does 一会儿 sound unnatural without 儿? The open dataset I use lists 男孩儿, 女孩儿, 小孩儿 (with 儿) and 一会儿; does the official list print them that way, and could that explain part of the 200 vs 197 difference?
+F. The site writes 男孩, 女孩, 小孩 without 儿 by default (and with 儿, as the official list prints them, when a switch is on), but 一会儿 always keeps its 儿. Is that how you would write them in plain Mandarin text? Does 一会 without 儿 sound unnatural?
