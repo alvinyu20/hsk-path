@@ -211,11 +211,13 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--jade);outline-o
 .fc-inner.flip{transform:rotateY(180deg)}
 .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:30px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
 .fc-back{transform:rotateY(180deg);padding:28px 36px;display:flex;flex-direction:column;gap:10px}
-.fc-front{display:flex;align-items:center;justify-content:center}
+.fc-front{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
 .fc-front .chip{position:absolute;top:22px;left:24px}
 .tian{position:absolute;width:260px;height:260px;color:var(--line)}
 .fc-hz{position:relative;font-size:150px;line-height:1;font-weight:500;letter-spacing:.04em}
 .fc-hz.two{font-size:104px}
+.fc-fpy{position:relative;font:700 34px/1.1 'Bricolage Grotesque',sans-serif;letter-spacing:-.01em}
+.quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .fc-tip{position:absolute;bottom:22px;left:0;right:0;text-align:center;color:var(--muted);font-size:15px}
 .fc-hit{position:absolute;inset:0;border:0;background:transparent;border-radius:30px;cursor:pointer;z-index:3}
 .fc-bh{display:flex;align-items:center;gap:14px}

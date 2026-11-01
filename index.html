@@ -394,6 +394,7 @@
               <path d="M100 2v196M2 100h196" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 7"></path>
             </svg>
             <div class="zh fc-hz {{card.sizeCls}}">{{card.zh}}</div>
+            <sc-if value="{{rpyShow}}" hint-placeholder-val="{{ false }}"><div class="fc-fpy">{{card.py}}</div></sc-if>
             <div class="fc-tip">Say it out loud, then tap to check</div>
           </div>
           <div class="fc-face fc-back">
@@ -422,6 +423,7 @@
           <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
           Hear the word
         </button>
+        <sc-if value="{{showAnswerBtn}}" hint-placeholder-val="{{ true }}"><button class="btn" onClick="{{toggleRpy}}">{{pyBtnText}}</button></sc-if>
         <sc-if value="{{rflip}}" hint-placeholder-val="{{ false }}">
           <button class="btn {{playExCls}}" onClick="{{playEx}}">
             <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
@@ -431,6 +433,10 @@
       </div>
 
       <sc-if value="{{showAnswerBtn}}" hint-placeholder-val="{{ true }}">
+        <div class="quick">
+          <button class="rate again" onClick="{{quickNo.fn}}"><b>Didn't know it</b><span>{{quickNo.hint}}</span></button>
+          <button class="rate" onClick="{{quickYes.fn}}"><b>Knew it</b><span>{{quickYes.hint}}</span></button>
+        </div>
         <button class="btn pri big" style="align-self:center" onClick="{{flip}}">Show answer</button>
       </sc-if>
       <sc-if value="{{rflip}}" hint-placeholder-val="{{ false }}">

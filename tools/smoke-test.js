@@ -283,6 +283,20 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const practiceN = await page.evaluate(() => window.shanlu.state.rq.length);
   check(practiceN === (await page.evaluate(() => Object.keys(window.shanlu.state.ws).filter(zh => window.shanlu.state.ws[zh].see.s > 0 || window.shanlu.state.ws[zh].see.l > 0).length)) && practiceN >= 5, 'practising anyway offers every started word, not just five');
   await shot('05-review-front');
+  // answer without flipping: pinyin button shows/hides pinyin on the front only; quick buttons rate straight away
+  check((await page.locator('.fc-fpy').count()) === 0, 'review front shows no pinyin at first');
+  await page.locator('button', { hasText: 'Show pinyin' }).click();
+  await page.waitForTimeout(100);
+  check((await page.locator('.fc-fpy').count()) === 1 && !(await page.evaluate(() => window.shanlu.state.rflip)), 'Show pinyin reveals the pinyin without flipping the card');
+  await page.locator('button', { hasText: 'Hide pinyin' }).click();
+  check((await page.locator('.fc-fpy').count()) === 0, 'Hide pinyin hides it again');
+  const rqBefore = await page.evaluate(() => window.shanlu.state.rdone + window.shanlu.state.rq.length);
+  await page.locator('.quick .rate').nth(1).click();
+  await page.waitForTimeout(100);
+  check((await page.evaluate(() => window.shanlu.state.rdone)) === 1 && !(await page.evaluate(() => window.shanlu.state.rflip)), 'Knew it rates the card without flipping it');
+  await page.locator('.quick .rate').nth(0).click();
+  await page.waitForTimeout(100);
+  check((await page.evaluate(() => window.shanlu.state.rdone)) === 1 && (await page.evaluate(() => window.shanlu.state.rq.length)) === rqBefore - 1, 'Didn\'t know it sends the card to the back of the queue');
   await page.locator('button', { hasText: 'Show answer' }).click();
   await page.waitForTimeout(800);
   await shot('06-review-back');

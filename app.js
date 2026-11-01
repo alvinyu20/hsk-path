@@ -137,7 +137,7 @@
       xp:0, dayXp:0, dayMin:0, streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
-      rq:[], rtotal:0, rflip:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
+      rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
       qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
@@ -945,6 +945,7 @@
 
     // ----- review -----
     flip = () => { this.setState({ rflip:!this.state.rflip }); };
+    toggleRpy = () => { this.setState({ rpy:!this.state.rpy }); };
     rate = (r) => {
       const S = this.state;
       if (!S.rq.length) return;
@@ -958,7 +959,7 @@
       if (r === 'again') q.push(zh); else done = done + 1;
       const finished = q.length === 0;
       this.setState({
-        rq:q, rflip:false, rdone:done, rstep:S.rstep + 1, rxp:S.rxp + gain, rcomplete:finished, rcounts:counts,
+        rq:q, rflip:false, rpy:false, rdone:done, rstep:S.rstep + 1, rxp:S.rxp + gain, rcomplete:finished, rcounts:counts,
         xp:S.xp + gain, dayXp:S.dayXp + gain, dayMin:S.dayMin + (finished ? Math.max(1, Math.round(S.rtotal * 0.5)) : 0),
         ws:res.ws, woff:0, rlast:{ zh, from:res.from, to:res.to }
       });
@@ -1858,6 +1859,7 @@
         caughtUp:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft === 0, nextDueText, practiceAnyway:this.practiceAnyway,
         card, flip:this.flip, rflip:S.rflip, flipCls:S.rflip ? 'flip' : '', flipLabel:S.rflip ? 'Flip the card back' : 'Show the answer',
         cardAnim:S.rstep % 2 === 0 ? 'ea' : 'eb', showAnswerBtn:!S.rflip, rates,
+        rpyShow:S.rpy && !S.rflip, toggleRpy:this.toggleRpy, pyBtnText:S.rpy ? 'Hide pinyin' : 'Show pinyin', quickNo:rates[0], quickYes:rates[2],
         playWord:() => this.say(rw.zh, 'word'), playWordCls:pc('word') ? 'ink' : '',
         playEx:() => this.say(rex.zh, 'ex'), playExCls:pc('ex') ? 'ink' : '',
 
@@ -1922,6 +1924,7 @@
     const S = app.state;
     if (S.screen === 'review' && S.rq.length && !S.rcomplete) {
       if ((e.key === ' ' || e.key === 'Enter') && !S.rflip) { e.preventDefault(); app.flip(); }
+      else if ((e.key === 'p' || e.key === 'P') && !S.rflip) { app.toggleRpy(); }
       else if (S.rflip && '1234'.indexOf(e.key) >= 0 && e.key) { app.rate(['again', 'hard', 'good', 'easy'][Number(e.key) - 1]); }
     } else if (S.screen === 'exam' && S.exm && S.exm.stage === 'run') {
       const m = S.exm;
