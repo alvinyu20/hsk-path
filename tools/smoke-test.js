@@ -322,6 +322,48 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('button.listen').click();
   await page.locator('.tonebtn').first().click();
 
+  // two-syllable tone trainer
+  await page.locator('button', { hasText: 'Two syllables' }).click();
+  check((await text()).includes('Which tones did you hear?') && (await page.locator('.tones').count()) === 2, 'the tone trainer has a two-syllable mode with a row of tones for each syllable');
+  const heardPair = async () => page.evaluate(() => { const last = window.__spoken[window.__spoken.length - 1]; const p = window.HSK1_LISTEN.pairs.find(x => x.zh === (last && last.text)); return p ? { zh: p.zh, t: p.t } : null; });
+  await page.locator('button[aria-label="Play a two-syllable word"]').click();
+  await page.waitForTimeout(300);
+  const pair1 = await heardPair();
+  check(!!pair1 && pair1.t.length === 2 && pair1.zh.length === 2, 'a two-syllable word is read aloud (' + (pair1 && pair1.zh) + ')');
+  await page.locator('.tones').nth(0).locator('.tonebtn').nth(pair1.t[0] - 1).click();
+  check(!(await text()).includes('Right.') && !(await text()).includes('Not quite.'), 'one syllable picked is not an answer yet');
+  await page.locator('.tones').nth(1).locator('.tonebtn').nth(pair1.t[1] - 1).click();
+  check((await text()).includes('Right. ' + pair1.zh) && (await text()).includes('1 of 1 right'), 'the right tones for both syllables are marked right and scored');
+  await page.locator('button[aria-label="Play a two-syllable word"]').click();
+  await page.waitForTimeout(300);
+  const pair2 = await heardPair();
+  await page.locator('.tones').nth(0).locator('.tonebtn').nth(pair2.t[0] % 4).click();   // always a different first tone (and not the 2 that also counts for 3 + 3)
+  await page.locator('.tones').nth(1).locator('.tonebtn').nth(pair2.t[1] - 1).click();
+  check((await text()).includes('Not quite. ' + pair2.zh) && (await text()).includes('1 of 2 right'), 'a wrong first tone is marked wrong and the answer is shown');
+  check(await page.evaluate(() => { const l = window.HSK1_LISTEN.pairs; return l.length > 100 && l.every(p => p.t.length === 2 && p.t[0] >= 1 && p.t[0] <= 4 && p.t[1] >= 1 && p.t[1] <= 5); }), 'the HSK 1 tone-pair list holds real two-syllable words with tones 1-4 first and 1-5 second');
+  const sandhi = await page.evaluate(() => { const p = window.HSK1_LISTEN.pairs.find(x => x.t[0] === 3 && x.t[1] === 3); window.shanlu.setState({ t2idx: window.HSK1_LISTEN.pairs.filter(q => window.HSK1_WORDS.some(w => w.zh === q.zh)).findIndex(q => q.zh === p.zh), t2a: null, t2b: null }); return p.zh; });
+  await page.locator('.tones').nth(0).locator('.tonebtn').nth(1).click();   // "2" for the first syllable of a 3 + 3 word
+  await page.locator('.tones').nth(1).locator('.tonebtn').nth(2).click();
+  check((await text()).includes('Right. ' + sandhi) && (await text()).includes('rising tone'), 'for 3 + 3 words, 2 + 3 also counts as right, with the reason');
+  await page.locator('button', { hasText: 'One syllable' }).click();
+  check((await text()).includes('Which tone did you hear?'), 'the one-syllable trainer comes back');
+
+  // recorded audio: a text listed in the manifest plays its file instead of the browser voice
+  const wavBody = (() => { const n = 4000, b = Buffer.alloc(44 + n * 2); b.write('RIFF', 0); b.writeUInt32LE(36 + n * 2, 4); b.write('WAVEfmt ', 8); b.writeUInt32LE(16, 16); b.writeUInt16LE(1, 20); b.writeUInt16LE(1, 22); b.writeUInt32LE(8000, 24); b.writeUInt32LE(16000, 28); b.writeUInt16LE(2, 32); b.writeUInt16LE(16, 34); b.write('data', 36); b.writeUInt32LE(n * 2, 40); return b; })();
+  const audioAsked = []; let audioFound = true;
+  await ctx.route('**/audio/*', async (r) => { audioAsked.push(decodeURIComponent(new URL(r.request().url()).pathname)); if (audioFound) await r.fulfill({ status: 200, contentType: 'audio/wav', body: wavBody }); else await r.fulfill({ status: 200, contentType: 'audio/wav', body: Buffer.from('this is not audio') }); });
+  await page.evaluate(() => { ['妈', '麻', '马', '骂'].forEach(z => { window.SHANLU_AUDIO[z] = 'mp3'; }); });
+  const spokenBeforeRec = await page.evaluate(() => window.__spoken.length);
+  await page.locator('button.listen').first().click();
+  await page.waitForTimeout(600);
+  check(audioAsked.some(u => /\/audio\/[妈麻马骂]\.mp3$/.test(u)), 'a text with a recording asks for its audio file');
+  check(await page.evaluate((n) => window.__spoken.length === n, spokenBeforeRec), 'the recording is played instead of the browser voice');
+  audioFound = false;
+  await page.locator('button.listen').first().click();
+  await page.waitForTimeout(800);
+  check(await page.evaluate((n) => window.__spoken.length > n, spokenBeforeRec), 'if the audio file cannot be played, the browser voice reads it instead');
+  await page.evaluate(() => { ['妈', '麻', '马', '骂'].forEach(z => { delete window.SHANLU_AUDIO[z]; }); });
+
   // Grammar
   await nav('Grammar');
   check((await page.locator('.gl .gp').count()) === 26, 'grammar lists 26 lessons');

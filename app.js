@@ -36,7 +36,10 @@
   const LESSONS = LV_DATA('GRAMMAR').lessons;
   const { hubs:HUBS, opps:OPPS, topics:TOPICS } = LV_DATA('WEBS');
   // Listening lab and practice scripts: a level without them (none yet for HSK 3) has those parts switched off.
-  const { clips:CLIPS, tones:TONES } = LV_DATA('LISTEN') || { clips:[], tones:[] };
+  const { clips:CLIPS, tones:TONES, pairs:PAIR_DATA } = Object.assign({ clips:[], tones:[], pairs:[] }, LV_DATA('LISTEN') || {});
+  // two-syllable words for the tone-pair trainer; the pair [3, 3] is said as 2 + 3 (the first of two third tones rises)
+  const PAIR_LIST = () => PAIR_DATA.filter(p => BANK[p.zh]);
+  const pairHit = (t, slot, n) => n === t[slot - 1] || (slot === 1 && t[0] === 3 && t[1] === 3 && n === 2);
   const { scenarios:SCEN, phrases:PHRASES } = LV_DATA('SPEAK') || { scenarios:[], phrases:[] };
   const HAS_LISTEN = CLIPS.length > 0;
   const HAS_SCRIPTS = SCEN.length > 0;
@@ -141,7 +144,7 @@
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
       wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
-      tidx:null, tpick:null, tright:0, ttotal:0,
+      tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
     };
   }
@@ -617,7 +620,33 @@
       if (!wait) { doSpeak(ss); return; }
       setTimeout(() => { if (tok === this.sayTok) { try { doSpeak(ss); } catch (e) {} } }, wait);
     };
+    // recorded audio: audio/<text>.<ext> for every text listed in data/audio-manifest.js; anything else is read by the browser voice
+    nativeAudio = null;
+    nativeFile = (text) => {
+      const m = window.SHANLU_AUDIO;
+      return m && text && Object.prototype.hasOwnProperty.call(m, text) ? 'audio/' + encodeURIComponent(text) + '.' + m[text] : null;
+    };
+    stopNative = () => { try { if (this.nativeAudio) { this.nativeAudio.pause(); this.nativeAudio = null; } } catch (e) {} };
     say = (text, key, rate, voice) => {
+      const file = voice ? null : this.nativeFile(text);      // a chosen voice (the voice sample in Settings) is always the browser voice
+      if (!file) { this.sayTTS(text, key, rate, voice); return; }
+      this.stopNative();
+      try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+      let a = null;
+      const fallback = () => { if (a && this.nativeAudio === a) { this.nativeAudio = null; this.sayTTS(text, key, rate, voice); } };
+      try {
+        a = new Audio(file);
+        a.playbackRate = rate || this.state.speed || 1;
+        try { a.preservesPitch = true; } catch (e) {}
+        this.nativeAudio = a;
+        a.addEventListener('error', fallback);
+        const pr = a.play(); if (pr && pr.catch) pr.catch(fallback);
+      } catch (e) { fallback(); return; }
+      this.setState({ playing:key });
+      this.later(() => { if (this.state.playing === key) this.setState({ playing:null }); }, 1400);
+    };
+    sayTTS = (text, key, rate, voice) => {
+      this.stopNative();
       try {
         if (window.speechSynthesis) {
           const zh = voice || pickVoice(this.state.voiceId);
@@ -1141,6 +1170,26 @@
       if (idx === null || S.tpick !== null) { idx = Math.floor(Math.random() * 4); this.setState({ tidx:idx, tpick:null }); }
       this.say(TONES[idx].zh, 'tone', 0.8);
     };
+    playPair = () => {
+      const S = this.state; const list = PAIR_LIST(); if (!list.length) return;
+      let idx = S.t2idx;
+      if (idx === null || idx >= list.length || (S.t2a !== null && S.t2b !== null)) {
+        do { idx = Math.floor(Math.random() * list.length); } while (list.length > 1 && idx === S.t2idx);
+        this.setState({ t2idx:idx, t2a:null, t2b:null });
+      }
+      this.say(list[idx].zh, 'tone2', 0.8);
+    };
+    pickPair = (slot, n) => {
+      const S = this.state; const list = PAIR_LIST();
+      if (S.t2idx === null || !list[S.t2idx] || (S.t2a !== null && S.t2b !== null)) return;
+      const a = slot === 1 ? n : S.t2a, b = slot === 2 ? n : S.t2b;
+      const patch = slot === 1 ? { t2a:n } : { t2b:n };
+      if (a !== null && b !== null) {
+        const t = list[S.t2idx].t;
+        patch.t2total = S.t2total + 1; patch.t2right = S.t2right + (pairHit(t, 1, a) && pairHit(t, 2, b) ? 1 : 0);
+      }
+      this.setState(patch);
+    };
     pickTone = (n) => {
       const S = this.state;
       if (S.tidx === null || S.tpick !== null) return;
@@ -1658,6 +1707,20 @@
         cls:S.tpick === null ? '' : (i === S.tidx ? 'right' : (i === S.tpick ? 'wrong' : '')),
         fn:() => this.pickTone(i)
       }));
+      const pairList = PAIR_LIST(); const pair = S.t2idx !== null ? pairList[S.t2idx] : null;
+      const pairDone = !!pair && S.t2a !== null && S.t2b !== null;
+      const pairOk = pairDone && pairHit(pair.t, 1, S.t2a) && pairHit(pair.t, 2, S.t2b);
+      const pairOpts = (slot) => Array.from({ length:slot === 1 ? 4 : 5 }, (_, i) => {
+        const n = i + 1, mine = slot === 1 ? S.t2a : S.t2b;
+        const good = !!pair && pairHit(pair.t, slot, n), chosen = mine === n;
+        return { py:n === 5 ? 'ma' : TONES[i].py, label:n === 5 ? 'Light and short' : TONES[i].label,
+          cls:pairDone ? (good && (chosen || !pairHit(pair.t, slot, mine)) ? 'right' : (chosen ? 'wrong' : '')) : (chosen ? 'right' : ''),
+          fn:() => this.pickPair(slot, n) };
+      });
+      const tn = (n) => n === 5 ? 'light' : String(n);
+      const pairW = pair ? BANK[pair.zh] : null;
+      const pairLine = !pairDone ? '' : (pairOk ? 'Right. ' : 'Not quite. ') + pair.zh + ' ' + pairW.py + ' (' + pairW.en + ') is tone ' + tn(pair.t[0]) + ' + ' + tn(pair.t[1]) + '.'
+        + (pair.t[0] === 3 && pair.t[1] === 3 ? ' Two third tones in a row: the first one is said as a rising tone, so it sounds like 2 + 3. Both answers count.' : '');
       const weak = Object.keys(S.misses).filter(zh => BANK[zh]).map(zh => ({ zh, n:S.misses[zh] })).sort((a, b) => b.n - a.n).slice(0, 3)
         .map(x => ({ t:x.zh + ' ' + (CLIP_PY[x.zh] || ''), d:'Missed ' + x.n + (x.n === 1 ? ' time' : ' times') + ' in dictation' }));
       const phrases = PHRASES.map((p, i) => ({ zh:p.zh, py:p.py, en:p.en, pc:pc('ph' + i), play:() => this.say(p.zh, 'ph' + i) }));
@@ -1733,6 +1796,10 @@
         clearCls:pc('clear') ? 'ink' : '', natCls:pc('nat') ? 'ink' : '',
         hasMissed:missed.length > 0, missedList:missed.map(w => w.py + ' ' + w.zh).join(', '),
         toneOpts, playTone:this.playTone, tonePlayCls:pc('tone'),
+        toneOne:S.tmode === 'one', toneTwo:S.tmode === 'two', tOneCls:S.tmode === 'one' ? 'on' : '', tTwoCls:S.tmode === 'two' ? 'on' : '',
+        setTone1:() => this.setState({ tmode:'one' }), setTone2:() => this.setState({ tmode:'two' }),
+        playPair:this.playPair, pairPlayCls:pc('tone2'), pairOpts1:pairOpts(1), pairOpts2:pairOpts(2),
+        pairIdle:S.t2idx === null, pairAnswered:pairDone, pairLine, hasPairStats:S.t2total > 0, pairStats:S.t2right + ' of ' + S.t2total + ' right', hasPairs:pairList.length > 0,
         toneIdle:S.tidx === null, toneAnswered:S.tpick !== null,
         toneLine:S.tpick === null ? '' : (S.tpick === S.tidx ? 'Right. ' : 'Not quite. ') + 'That was ' + TONES[S.tidx].py + ': ' + TONES[S.tidx].label.toLowerCase() + '.',
         hasToneStats:S.ttotal > 0, toneStats:S.tright + ' of ' + S.ttotal + ' right',

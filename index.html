@@ -1103,6 +1103,34 @@
       <sc-if value="{{isTone}}" hint-placeholder-val="{{ false }}">
         <section class="card dict">
           <div class="kick">Tone trainer</div>
+          <div><div class="seg2" role="group" aria-label="Tone trainer type"><button class="{{tOneCls}}" onClick="{{setTone1}}">One syllable</button><button class="{{tTwoCls}}" onClick="{{setTone2}}">Two syllables</button></div></div>
+          <sc-if value="{{toneTwo}}" hint-placeholder-val="{{ false }}">
+          <h2 class="h2" style="font-size:28px">Which tones did you hear?</h2>
+          <p class="muted" style="margin:0">A real word of two syllables, said by your device's voice. Press play, then pick the tone of each syllable. The second syllable can also be a light, short tone, as in <i>māma</i>.</p>
+          <div class="dict-top">
+            <button class="listen sm {{pairPlayCls}}" onClick="{{playPair}}" aria-label="Play a two-syllable word">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+            </button>
+            <div style="flex:1 1 280px;display:grid;gap:8px">
+              <p class="muted" style="margin:0;font-size:15px">First syllable</p>
+              <div class="tones" style="flex:none">
+                <sc-for list="{{pairOpts1}}" as="t" hint-placeholder-count="4">
+                  <button class="tonebtn {{t.cls}}" onClick="{{t.fn}}"><b>{{t.py}}</b><span>{{t.label}}</span></button>
+                </sc-for>
+              </div>
+              <p class="muted" style="margin:0;font-size:15px">Second syllable</p>
+              <div class="tones" style="flex:none">
+                <sc-for list="{{pairOpts2}}" as="t" hint-placeholder-count="5">
+                  <button class="tonebtn {{t.cls}}" onClick="{{t.fn}}"><b>{{t.py}}</b><span>{{t.label}}</span></button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <sc-if value="{{pairIdle}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0">Press play to hear a word.</p></sc-if>
+          <sc-if value="{{pairAnswered}}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-weight:600">{{pairLine}} Press play for the next one.</p></sc-if>
+          <sc-if value="{{hasPairStats}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0">{{pairStats}} this session</p></sc-if>
+          </sc-if>
+          <sc-if value="{{toneOne}}" hint-placeholder-val="{{ false }}">
           <h2 class="h2" style="font-size:28px">Which tone did you hear?</h2>
           <p class="muted" style="margin:0">One syllable, <i>ma</i>. Press play, then pick the tone. The real version would mix many different speakers.</p>
           <div class="dict-top">
@@ -1118,6 +1146,7 @@
           <sc-if value="{{toneIdle}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0">Press play to hear a syllable.</p></sc-if>
           <sc-if value="{{toneAnswered}}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-weight:600">{{toneLine}} Press play for the next one.</p></sc-if>
           <sc-if value="{{hasToneStats}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0">{{toneStats}} this session</p></sc-if>
+          </sc-if>
         </section>
       </sc-if>
     </div>
@@ -1408,6 +1437,7 @@
 <script src="data/hsk2-webs.js"></script>
 <script src="ascent.js"></script>
 <script src="sync.js"></script>
+<script src="data/audio-manifest.js"></script>
 <script src="erhua.js"></script>
 <script src="app.js"></script>
 </body>

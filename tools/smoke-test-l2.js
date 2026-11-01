@@ -194,6 +194,16 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('button[aria-label="Play the clip"]').first().click();
   await page.waitForTimeout(400);
   check(await page.evaluate(() => window.__spoken.length > 0 && window.HSK2_LISTEN.clips.some(c => window.__spoken.some(x => x.text === c.zh))), 'a dictation clip is read aloud');
+  await page.locator('button', { hasText: 'Tone trainer' }).click();
+  await page.locator('button', { hasText: 'Two syllables' }).click();
+  await page.locator('button[aria-label="Play a two-syllable word"]').click();
+  await page.waitForTimeout(300);
+  const pairL2 = await page.evaluate(() => { const last = window.__spoken[window.__spoken.length - 1]; const p = window.HSK2_LISTEN.pairs.find(x => x.zh === (last && last.text)); return p ? { zh: p.zh, t: p.t } : null; });
+  check(!!pairL2, 'at HSK 2 the two-syllable trainer reads a word aloud (' + (pairL2 && pairL2.zh) + ')');
+  await page.locator('.tones').nth(0).locator('.tonebtn').nth(pairL2.t[0] - 1).click();
+  await page.locator('.tones').nth(1).locator('.tonebtn').nth(pairL2.t[1] - 1).click();
+  check((await text()).includes('Right. ' + pairL2.zh), 'the HSK 2 two-syllable trainer scores a right answer');
+  check(await page.evaluate(() => window.HSK2_LISTEN.pairs.length > 200 && window.HSK2_LISTEN.pairs.some(p => p.zh === '老师' && p.t[0] === 3 && p.t[1] === 1)), 'the HSK 2 tone-pair list includes the HSK 1 and HSK 2 two-syllable words');
   await nav('Speak');
   check((await page.locator('.modeseg').count()) === 1 && (await text()).includes('Practice script'), 'Speak has the practice-script switch at HSK 2');
   const scn = await page.evaluate(() => window.HSK2_SPEAK.scenarios.map(s => s.title));

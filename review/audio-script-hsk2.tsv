@@ -1,0 +1,1636 @@
+priority	text	pinyin	english	where
+1	车站	chēzhàn	stop or station (bus or train)	word
+1	机场	jīchǎng	airport	word
+1	地铁	dìtiě	subway	word
+1	公交车	gōngjiāochē	bus (city bus)	word
+1	打车	dǎchē	to take a taxi	word
+1	路	lù	road, way	word
+1	路上	lùshang	on the way	word
+1	站	zhàn	to stand; a stop	word
+1	楼	lóu	building; floor	word
+1	门	mén	door, gate	word
+1	门口	ménkǒu	doorway, entrance	word
+1	门票	ménpiào	admission ticket	word
+1	票	piào	ticket (bus, train, movie ...)	word
+1	机票	jīpiào	plane ticket	word
+1	出国	chūguó	to go abroad	word
+1	旅游	lǚyóu	to travel; tourism	word
+1	酒店	jiǔdiàn	hotel	word
+1	商场	shāngchǎng	shopping mall	word
+1	饭馆	fànguǎn	restaurant	word
+1	药店	yàodiàn	pharmacy	word
+1	外国	wàiguó	foreign country	word
+1	教室	jiàoshì	classroom	word
+1	洗手间	xǐshǒujiān	restroom	word
+1	往	wǎng	toward	word
+1	离	lí	away from	word
+1	近	jìn	near	word
+1	远	yuǎn	far	word
+1	左	zuǒ	left	word
+1	右	yòu	right	word
+1	左边	zuǒbian	left side	word
+1	右边	yòubian	right side	word
+1	前面	qiánmiàn	in front	word
+1	后面	hòumian	behind	word
+1	里面	lǐmiàn	inside	word
+1	外面	wàimiàn	outside	word
+1	上面	shàngmiàn	on top, above	word
+1	下面	xiàmiàn	below, under	word
+1	旁边	pángbiān	beside	word
+1	面	miàn	side, surface; noodles	word
+1	进	jìn	to enter	word
+1	出	chū	to go out	word
+1	进来	jìnlái	to come in	word
+1	进去	jìnqù	to go in	word
+1	出来	chūlái	to come out	word
+1	出去	chūqù	to go out	word
+1	回来	huílái	to come back	word
+1	回去	huíqù	to go back	word
+1	上来	shànglái	to come up	word
+1	上去	shàngqù	to go up	word
+1	下来	xiàlái	to come down	word
+1	下去	xiàqù	to go down	word
+1	过来	guòlái	to come over	word
+1	过去	guòqù	to go over	word
+1	起来	qǐlái	to get up, to stand up	word
+1	走	zǒu	to walk, to go; to leave	word
+1	走路	zǒulù	to walk (on foot)	word
+1	跑	pǎo	to run	word
+1	跑步	pǎobù	to jog, to run	word
+1	拿	ná	to take, to hold	word
+1	送	sòng	to give (a gift); to see off	word
+1	开始	kāishǐ	to begin	word
+1	爷爷	yéye	paternal grandfather	word
+1	奶奶	nǎinai	paternal grandmother	word
+1	妻子	qīzi	wife	word
+1	丈夫	zhàngfu	husband	word
+1	男孩儿	nánháir	boy	word
+1	女孩儿	nǚháir	girl	word
+1	小孩儿	xiǎoháir	child	word
+1	班	bān	class (a group of students)	word
+1	词	cí	word	word
+1	题	tí	question, problem (in a test)	word
+1	考	kǎo	to take (an exam)	word
+1	考试	kǎoshì	exam; to take an exam	word
+1	教	jiāo	to teach	word
+1	懂	dǒng	to understand	word
+1	记得	jìde	to remember	word
+1	忘	wàng	to forget	word
+1	笔	bǐ	pen	word
+1	本子	běnzi	notebook	word
+1	书包	shūbāo	schoolbag	word
+1	开学	kāixué	school starts	word
+1	高中	gāozhōng	senior high school	word
+1	名	míng	measure word for people with a role or job (formal)	word
+1	姓	xìng	to have the surname; surname	word
+1	姓名	xìngmíng	full name (formal, as on forms)	word
+1	介绍	jièshào	to introduce	word
+1	告诉	gàosu	to tell	word
+1	帮	bāng	to help	word
+1	帮忙	bāngmáng	to help, to do a favor	word
+1	等	děng	to wait	word
+1	完	wán	to finish	word
+1	错	cuò	wrong	word
+1	身体	shēntǐ	body; health	word
+1	头	tóu	head	word
+1	手	shǒu	hand	word
+1	眼睛	yǎnjing	eye	word
+1	疼	téng	to hurt, to ache	word
+1	药	yào	medicine	word
+1	个子	gèzi	height, build	word
+1	舒服	shūfu	comfortable; well	word
+1	累	lèi	tired	word
+1	床	chuáng	bed	word
+1	花	huā	flower; to spend (money, time)	word
+1	画	huà	to draw; a painting	word
+1	鸟	niǎo	bird	word
+1	球	qiú	ball	word
+1	手表	shǒubiǎo	watch	word
+1	裤子	kùzi	trousers	word
+1	包	bāo	bag; to wrap	word
+1	颜色	yánsè	color	word
+1	白色	báisè	white	word
+1	黑色	hēisè	black	word
+1	红色	hóngsè	red	word
+1	绿色	lǜsè	green	word
+1	红茶	hóngchá	black tea	word
+1	绿茶	lǜchá	green tea	word
+1	奶茶	nǎichá	milk tea	word
+1	咖啡	kāfēi	coffee	word
+1	肉	ròu	meat	word
+1	鱼	yú	fish	word
+1	啊	a	ah; softens a sentence	word
+1	爱好	àihào	hobby	word
+1	比	bǐ	than; compared with	word
+1	别	bié	do not	word
+1	不错	bùcuò	good, not bad	word
+1	不好意思	bùhǎoyìsi	sorry; embarrassed	word
+1	出门	chūmén	to go out, to leave home	word
+1	次	cì	time (occurrence)	word
+1	从	cóng	from	word
+1	从小	cóngxiǎo	since childhood	word
+1	打	dǎ	to play (a ball game); to hit; to make (a call)	word
+1	打开	dǎkāi	to open; to turn on	word
+1	但	dàn	but	word
+1	但是	dànshì	but, however	word
+1	地	de	-ly (makes an adverb)	word
+1	得	de	(after a verb) links how well it is done	word
+1	动	dòng	to move	word
+1	飞	fēi	to fly	word
+1	高	gāo	tall, high	word
+1	跟	gēn	with	word
+1	过	guo	(after a verb) have done it before	word
+1	过年	guònián	to celebrate the New Year	word
+1	还是	háishi	or (in a choice question); still	word
+1	坏	huài	bad; broken	word
+1	间	jiān	measure word for rooms	word
+1	经常	jīngcháng	often	word
+1	就	jiù	then; just; as early as	word
+1	可能	kěnéng	maybe, may	word
+1	快	kuài	fast; soon	word
+1	快乐	kuàilè	happy	word
+1	快要	kuàiyào	about to	word
+1	篮球	lánqiú	basketball	word
+1	慢	màn	slow	word
+1	没意思	méiyìsi	boring	word
+1	每	měi	every, each	word
+1	那么	nàme	so, that (to that degree)	word
+1	那样	nàyàng	like that	word
+1	晴	qíng	clear, sunny	word
+1	让	ràng	to let; to make (someone do)	word
+1	上网	shàngwǎng	to go online	word
+1	生日	shēngrì	birthday	word
+1	时	shí	time; when	word
+1	事情	shìqing	matter, thing	word
+1	虽然	suīrán	although	word
+1	所以	suǒyǐ	so, therefore	word
+1	踢	tī	to kick; to play (football)	word
+1	条	tiáo	measure word for long things	word
+1	跳舞	tiàowǔ	to dance	word
+1	万	wàn	ten thousand	word
+1	网上	wǎngshàng	online	word
+1	为什么	wèishénme	why	word
+1	位	wèi	polite measure word for people	word
+1	希望	xīwàng	to hope	word
+1	洗	xǐ	to wash	word
+1	小时候	xiǎoshíhou	when (someone) was little; childhood	word
+1	笑	xiào	to laugh, to smile	word
+1	一会儿	yíhuìr	a moment	word
+1	一起	yìqǐ	together	word
+1	已经	yǐjīng	already	word
+1	意思	yìsi	meaning	word
+1	因为	yīnwèi	because	word
+1	阴	yīn	cloudy	word
+1	游	yóu	to swim	word
+1	游泳	yóuyǒng	to swim	word
+1	有时	yǒushí	sometimes	word
+1	有意思	yǒuyìsi	interesting	word
+1	运动	yùndòng	exercise; sport	word
+1	长	cháng	long	word
+1	这么	zhème	so, this (to this degree)	word
+1	这样	zhèyàng	like this	word
+1	着	zhe	(shows an ongoing state)	word
+1	正	zhèng	just, in the middle of	word
+1	周	zhōu	week	word
+1	准备	zhǔnbèi	to prepare	word
+1	自己	zìjǐ	oneself	word
+1	足球	zúqiú	soccer	word
+1	最	zuì	most	word
+2	车站在学校前面。	Chēzhàn zài xuéxiào qiánmiàn.	The station is in front of the school.	word:车站
+2	我们明天去机场。	Wǒmen míngtiān qù jīchǎng.	We are going to the airport tomorrow.	word:机场
+2	我坐地铁去公司。	Wǒ zuò dìtiě qù gōngsī.	I take the subway to work.	word:地铁
+2	公交车来了。	Gōngjiāochē lái le.	The bus is here.	word:公交车
+2	我们打车去机场吧。	Wǒmen dǎchē qù jīchǎng ba.	Let us take a taxi to the airport.	word:打车
+2	这条路很长。	Zhè tiáo lù hěn cháng.	This road is very long.	word:路
+2	路上有很多人。	Lùshang yǒu hěn duō rén.	There are many people on the road.	word:路上
+2	他站在门口。	Tā zhàn zài ménkǒu.	He is standing at the door.	word:站
+2	我家在三楼。	Wǒ jiā zài sān lóu.	My home is on the third floor.	word:楼
+2	请打开门。	Qǐng dǎkāi mén.	Please open the door.	word:门
+2	他在门口等你。	Tā zài ménkǒu děng nǐ.	He is waiting for you at the door.	word:门口
+2	门票多少钱？	Ménpiào duōshǎo qián?	How much is the ticket?	word:门票
+2	你买票了吗？	Nǐ mǎi piào le ma?	Have you bought a ticket?	word:票
+2	我买了去中国的机票。	Wǒ mǎi le qù Zhōngguó de jīpiào.	I bought a plane ticket to China.	word:机票
+2	我想明年出国学习。	Wǒ xiǎng míngnián chūguó xuéxí.	I want to go abroad to study next year.	word:出国
+2	我喜欢旅游。	Wǒ xǐhuan lǚyóu.	I like to travel.	word:旅游
+2	这个酒店很漂亮。	Zhège jiǔdiàn hěn piàoliang.	This hotel is very pretty.	word:酒店
+2	我们去商场买衣服吧。	Wǒmen qù shāngchǎng mǎi yīfu ba.	Let us go to the mall to buy clothes.	word:商场
+2	这个饭馆的饺子很好吃。	Zhège fànguǎn de jiǎozi hěn hǎochī.	The dumplings at this restaurant are delicious.	word:饭馆
+2	药店在医院旁边。	Yàodiàn zài yīyuàn pángbiān.	The pharmacy is next to the hospital.	word:药店
+2	他是外国人。	Tā shì wàiguó rén.	He is a foreigner.	word:外国
+2	教室里有二十个学生。	Jiàoshì lǐ yǒu èrshí ge xuésheng.	There are twenty students in the classroom.	word:教室
+2	请问，洗手间在哪里？	Qǐngwèn, xǐshǒujiān zài nǎlǐ?	Excuse me, where is the restroom?	word:洗手间
+2	往前走。	Wǎng qián zǒu.	Go forward.	word:往
+2	我家离学校很近。	Wǒ jiā lí xuéxiào hěn jìn.	My home is very close to school.	word:离
+2	我家离公司很近。	Wǒ jiā lí gōngsī hěn jìn.	My home is close to my company.	word:近
+2	学校离我家很远。	Xuéxiào lí wǒ jiā hěn yuǎn.	School is far from my home.	word:远
+2	请往左走。	Qǐng wǎng zuǒ zǒu.	Please go left.	word:左
+2	请往右走。	Qǐng wǎng yòu zǒu.	Please go right.	word:右
+2	商店在学校的左边。	Shāngdiàn zài xuéxiào de zuǒbian.	The shop is on the left of the school.	word:左边
+2	医院在车站的右边。	Yīyuàn zài chēzhàn de yòubian.	The hospital is to the right of the station.	word:右边
+2	学校在前面。	Xuéxiào zài qiánmiàn.	The school is ahead.	word:前面
+2	我家在学校后面。	Wǒ jiā zài xuéxiào hòumian.	My home is behind the school.	word:后面
+2	里面有很多人。	Lǐmiàn yǒu hěn duō rén.	There are many people inside.	word:里面
+2	外面很冷。	Wàimiàn hěn lěng.	It is cold outside.	word:外面
+2	书在桌子上面。	Shū zài zhuōzi shàngmiàn.	The book is on top of the table.	word:上面
+2	猫在椅子下面。	Māo zài yǐzi xiàmiàn.	The cat is under the chair.	word:下面
+2	我家在学校旁边。	Wǒ jiā zài xuéxiào pángbiān.	My home is next to the school.	word:旁边
+2	今天我想吃面。	Jīntiān wǒ xiǎng chī miàn.	Today I want to eat noodles.	word:面
+2	请进。	Qǐng jìn.	Please come in.	word:进
+2	他出门了。	Tā chūmén le.	He went out.	word:出
+2	请进来。	Qǐng jìnlái.	Please come in.	word:进来
+2	我们进去吧。	Wǒmen jìnqù ba.	Let us go in.	word:进去
+2	他出来了。	Tā chūlái le.	He came out.	word:出来
+2	我想出去玩。	Wǒ xiǎng chūqù wán.	I want to go out and play.	word:出去
+2	爸爸晚上回来。	Bàba wǎnshang huílái.	Dad comes back in the evening.	word:回来
+2	我想回去了。	Wǒ xiǎng huíqù le.	I want to go back now.	word:回去
+2	你上来吧。	Nǐ shànglái ba.	Come up.	word:上来
+2	我们上去吧。	Wǒmen shàngqù ba.	Let us go up.	word:上去
+2	请下来。	Qǐng xiàlái.	Please come down.	word:下来
+2	我们下去吧。	Wǒmen xiàqù ba.	Let us go down.	word:下去
+2	你过来一下。	Nǐ guòlái yíxià.	Come over for a moment.	word:过来
+2	我们过去吧。	Wǒmen guòqù ba.	Let us go over.	word:过去
+2	他起来了。	Tā qǐlái le.	He got up.	word:起来
+2	我们走吧。	Wǒmen zǒu ba.	Let us go.	word:走
+2	我走路去学校。	Wǒ zǒulù qù xuéxiào.	I walk to school.	word:走路
+2	他跑得很快。	Tā pǎo de hěn kuài.	He runs very fast.	word:跑
+2	我每天早上跑步。	Wǒ měi tiān zǎoshang pǎobù.	I jog every morning.	word:跑步
+2	我拿着一本书。	Wǒ ná zhe yì běn shū.	I am holding a book.	word:拿
+2	我送你一本书。	Wǒ sòng nǐ yì běn shū.	I will give you a book.	word:送
+2	我们开始吧。	Wǒmen kāishǐ ba.	Let us begin.	word:开始
+2	我爷爷今年八十岁。	Wǒ yéye jīnnián bāshí suì.	My grandfather is eighty years old this year.	word:爷爷
+2	奶奶在家做饭。	Nǎinai zài jiā zuòfàn.	Grandma is cooking at home.	word:奶奶
+2	他的妻子是老师。	Tā de qīzi shì lǎoshī.	His wife is a teacher.	word:妻子
+2	她的丈夫是医生。	Tā de zhàngfu shì yīshēng.	Her husband is a doctor.	word:丈夫
+2	那个男孩是我弟弟。	Nàge nánhái shì wǒ dìdi.	That boy is my younger brother.	word:男孩
+2	这个女孩很漂亮。	Zhège nǚhái hěn piàoliang.	This girl is very pretty.	word:女孩
+2	这个小孩很高兴。	Zhège xiǎohái hěn gāoxìng.	This child is very happy.	word:小孩
+2	我们班有二十个学生。	Wǒmen bān yǒu èrshí ge xuésheng.	Our class has twenty students.	word:班
+2	这个词是什么意思？	Zhège cí shì shénme yìsi?	What does this word mean?	word:词
+2	这个题我不会做。	Zhège tí wǒ bú huì zuò.	I do not know how to do this problem.	word:题
+2	我明天考汉语。	Wǒ míngtiān kǎo Hànyǔ.	I have a Chinese exam tomorrow.	word:考
+2	明天有考试。	Míngtiān yǒu kǎoshì.	There is an exam tomorrow.	word:考试
+2	她教我们汉语。	Tā jiāo wǒmen Hànyǔ.	She teaches us Chinese.	word:教
+2	我不懂。	Wǒ bù dǒng.	I do not understand.	word:懂
+2	你记得我吗？	Nǐ jìde wǒ ma?	Do you remember me?	word:记得
+2	我忘了他的名字。	Wǒ wàng le tā de míngzi.	I forgot his name.	word:忘
+2	你有笔吗？	Nǐ yǒu bǐ ma?	Do you have a pen?	word:笔
+2	这个本子是我的。	Zhège běnzi shì wǒ de.	This notebook is mine.	word:本子
+2	我的书包很大。	Wǒ de shūbāo hěn dà.	My schoolbag is big.	word:书包
+2	明天开学。	Míngtiān kāixué.	School starts tomorrow.	word:开学
+2	他是高中学生。	Tā shì gāozhōng xuésheng.	He is a high school student.	word:高中
+2	我们班有二十名学生。	Wǒmen bān yǒu èrshí míng xuésheng.	Our class has twenty students.	word:名
+2	你姓什么？	Nǐ xìng shénme?	What is your surname?	word:姓
+2	请写你的姓名。	Qǐng xiě nǐ de xìngmíng.	Please write your full name.	word:姓名
+2	请介绍一下你自己。	Qǐng jièshào yíxià nǐ zìjǐ.	Please introduce yourself.	word:介绍
+2	请告诉我你的名字。	Qǐng gàosu wǒ nǐ de míngzi.	Please tell me your name.	word:告诉
+2	请你帮我一下。	Qǐng nǐ bāng wǒ yíxià.	Please help me.	word:帮
+2	请你帮忙。	Qǐng nǐ bāngmáng.	Please help.	word:帮忙
+2	请等一下。	Qǐng děng yíxià.	Please wait a moment.	word:等
+2	我做完了。	Wǒ zuò wán le.	I am finished.	word:完
+2	这个字写错了。	Zhège zì xiě cuò le.	This character is written wrong.	word:错
+2	爷爷的身体很好。	Yéye de shēntǐ hěn hǎo.	Grandpa is in very good health.	word:身体
+2	我头疼。	Wǒ tóu téng.	I have a headache.	word:头
+2	请洗手。	Qǐng xǐ shǒu.	Please wash your hands.	word:手
+2	她的眼睛很大。	Tā de yǎnjing hěn dà.	Her eyes are big.	word:眼睛
+2	哪里疼？	Nǎlǐ téng?	Where does it hurt?	word:疼
+2	你吃药了吗？	Nǐ chī yào le ma?	Have you taken your medicine?	word:药
+2	他个子很高。	Tā gèzi hěn gāo.	He is tall.	word:个子
+2	这个椅子很舒服。	Zhège yǐzi hěn shūfu.	This chair is comfortable.	word:舒服
+2	我今天很累。	Wǒ jīntiān hěn lèi.	I am very tired today.	word:累
+2	我的床很小。	Wǒ de chuáng hěn xiǎo.	My bed is small.	word:床
+2	这些花很漂亮。	Zhèxiē huā hěn piàoliang.	These flowers are pretty.	word:花
+2	他画得很好。	Tā huà de hěn hǎo.	He draws very well.	word:画
+2	外面有一只鸟。	Wàimiàn yǒu yì zhī niǎo.	There is a bird outside.	word:鸟
+2	他有一个球。	Tā yǒu yí ge qiú.	He has a ball.	word:球
+2	这是我的新手表。	Zhè shì wǒ de xīn shǒubiǎo.	This is my new watch.	word:手表
+2	这条裤子太大了。	Zhè tiáo kùzi tài dà le.	These trousers are too big.	word:裤子
+2	我的包很大。	Wǒ de bāo hěn dà.	My bag is big.	word:包
+2	你喜欢什么颜色？	Nǐ xǐhuan shénme yánsè?	What color do you like?	word:颜色
+2	我喜欢白色。	Wǒ xǐhuan báisè.	I like white.	word:白色
+2	我的手机是黑色的。	Wǒ de shǒujī shì hēisè de.	My phone is black.	word:黑色
+2	她穿着红色的衣服。	Tā chuān zhe hóngsè de yīfu.	She is wearing red clothes.	word:红色
+2	这个苹果是绿色的。	Zhège píngguǒ shì lǜsè de.	This apple is green.	word:绿色
+2	我想喝红茶。	Wǒ xiǎng hē hóngchá.	I want to drink black tea.	word:红茶
+2	我喜欢喝绿茶。	Wǒ xǐhuan hē lǜchá.	I like drinking green tea.	word:绿茶
+2	我想喝一杯奶茶。	Wǒ xiǎng hē yì bēi nǎichá.	I want a cup of milk tea.	word:奶茶
+2	我早上喝咖啡。	Wǒ zǎoshang hē kāfēi.	I drink coffee in the morning.	word:咖啡
+2	我不吃肉。	Wǒ bù chī ròu.	I do not eat meat.	word:肉
+2	我喜欢吃鱼。	Wǒ xǐhuan chī yú.	I like eating fish.	word:鱼
+2	你好啊！	Nǐ hǎo a!	Hello there!	word:啊
+2	你有什么爱好？	Nǐ yǒu shénme àihào?	What are your hobbies?	word:爱好
+2	我比你高。	Wǒ bǐ nǐ gāo.	I am taller than you.	word:比
+2	别说话。	Bié shuōhuà.	Do not talk.	word:别
+2	这个电影不错。	Zhège diànyǐng bùcuò.	This movie is not bad.	word:不错
+2	不好意思，我来晚了。	Bùhǎoyìsi, wǒ lái wǎn le.	Sorry, I am late.	word:不好意思
+2	我要出门了。	Wǒ yào chūmén le.	I am going out now.	word:出门
+2	我去过一次中国。	Wǒ qù guo yí cì Zhōngguó.	I have been to China once.	word:次
+2	我从家走路去学校。	Wǒ cóng jiā zǒulù qù xuéxiào.	I walk to school from home.	word:从
+2	我从小就喜欢猫。	Wǒ cóngxiǎo jiù xǐhuan māo.	I have liked cats since I was little.	word:从小
+2	他在打篮球。	Tā zài dǎ lánqiú.	He is playing basketball.	word:打
+2	请打开书。	Qǐng dǎkāi shū.	Please open your book.	word:打开
+2	我想去，但没有时间。	Wǒ xiǎng qù, dàn méiyǒu shíjiān.	I want to go, but I have no time.	word:但
+2	我想去，但是太累了。	Wǒ xiǎng qù, dànshì tài lèi le.	I want to go, but I am too tired.	word:但是
+2	他高兴地说：“谢谢。”	Tā gāoxìng de shuō: " xièxie. "	He said happily, "Thanks."	word:地
+2	他说得很好。	Tā shuō de hěn hǎo.	He speaks very well.	word:得
+2	别动。	Bié dòng.	Do not move.	word:动
+2	鸟在飞。	Niǎo zài fēi.	The bird is flying.	word:飞
+2	他很高。	Tā hěn gāo.	He is very tall.	word:高
+2	我跟朋友一起去。	Wǒ gēn péngyou yìqǐ qù.	I am going with a friend.	word:跟
+2	我去过中国。	Wǒ qù guo Zhōngguó.	I have been to China.	word:过
+2	我们一起过年。	Wǒmen yìqǐ guònián.	We celebrate the New Year together.	word:过年
+2	你想喝茶还是咖啡？	Nǐ xiǎng hē chá háishi kāfēi?	Do you want tea or coffee?	word:还是
+2	我的手机坏了。	Wǒ de shǒujī huài le.	My phone is broken.	word:坏
+2	这个楼有十间教室。	Zhège lóu yǒu shí jiān jiàoshì.	This building has ten classrooms.	word:间
+2	我经常看电影。	Wǒ jīngcháng kàn diànyǐng.	I often watch movies.	word:经常
+2	我六点就起床了。	Wǒ liù diǎn jiù qǐchuáng le.	I got up as early as six.	word:就
+2	他可能不来了。	Tā kěnéng bù lái le.	He may not come.	word:可能
+2	他走得很快。	Tā zǒu de hěn kuài.	He walks fast.	word:快
+2	生日快乐！	Shēngrì kuàilè!	Happy birthday!	word:快乐
+2	快要下雨了。	Kuàiyào xiàyǔ le.	It is about to rain.	word:快要
+2	我喜欢打篮球。	Wǒ xǐhuan dǎ lánqiú.	I like playing basketball.	word:篮球
+2	请说慢一点。	Qǐng shuō màn yìdiǎn.	Please speak a bit slower.	word:慢
+2	这个电影没意思。	Zhège diànyǐng méiyìsi.	This movie is boring.	word:没意思
+2	我每天六点起床。	Wǒ měi tiān liù diǎn qǐchuáng.	I get up at six every day.	word:每
+2	他没有那么高。	Tā méiyǒu nàme gāo.	He is not that tall.	word:那么
+2	别那样做。	Bié nàyàng zuò.	Do not do it like that.	word:那样
+2	今天是晴天。	Jīntiān shì qíng tiān.	Today is a sunny day.	word:晴
+2	妈妈让我睡觉。	Māma ràng wǒ shuìjiào.	Mom tells me to go to sleep.	word:让
+2	我每天上网。	Wǒ měi tiān shàngwǎng.	I go online every day.	word:上网
+2	今天是我的生日。	Jīntiān shì wǒ de shēngrì.	Today is my birthday.	word:生日
+2	吃饭时，别看手机。	Chī fàn shí, bié kàn shǒujī.	Do not look at your phone when eating.	word:时
+2	今天我有很多事情。	Jīntiān wǒ yǒu hěn duō shìqing.	I have a lot of things to do today.	word:事情
+2	虽然很累，但是我很高兴。	Suīrán hěn lèi, dànshì wǒ hěn gāoxìng.	Although I am tired, I am happy.	word:虽然
+2	我生病了，所以没去学校。	Wǒ shēngbìng le, suǒyǐ méi qù xuéxiào.	I was sick, so I did not go to school.	word:所以
+2	他在踢球。	Tā zài tī qiú.	He is playing soccer.	word:踢
+2	我有一条狗。	Wǒ yǒu yì tiáo gǒu.	I have a dog.	word:条
+2	她喜欢跳舞。	Tā xǐhuan tiàowǔ.	She likes dancing.	word:跳舞
+2	这个手机一万块。	Zhège shǒujī yí wàn kuài.	This phone is ten thousand yuan.	word:万
+2	我在网上买东西。	Wǒ zài wǎngshàng mǎi dōngxi.	I buy things online.	word:网上
+2	你为什么不去？	Nǐ wèishénme bú qù?	Why are you not going?	word:为什么
+2	这位是我的老师。	Zhè wèi shì wǒ de lǎoshī.	This is my teacher.	word:位
+2	我希望你快乐。	Wǒ xīwàng nǐ kuàilè.	I hope you are happy.	word:希望
+2	我洗手。	Wǒ xǐ shǒu.	I wash my hands.	word:洗
+2	我小时候住在中国。	Wǒ xiǎoshíhou zhù zài Zhōngguó.	I lived in China when I was little.	word:小时候
+2	她笑了。	Tā xiào le.	She laughed.	word:笑
+2	请等一会儿。	Qǐng děng yíhuìr.	Please wait a little while.	word:一会儿
+2	我们一起去吧。	Wǒmen yìqǐ qù ba.	Let us go together.	word:一起
+2	他已经走了。	Tā yǐjīng zǒu le.	He has already left.	word:已经
+2	这是什么意思？	Zhè shì shénme yìsi?	What does this mean?	word:意思
+2	我没去，因为我生病了。	Wǒ méi qù, yīnwèi wǒ shēngbìng le.	I did not go because I was sick.	word:因为
+2	今天是阴天。	Jīntiān shì yīn tiān.	Today is a cloudy day.	word:阴
+2	他游得很快。	Tā yóu de hěn kuài.	He swims fast.	word:游
+2	我喜欢游泳。	Wǒ xǐhuan yóuyǒng.	I like swimming.	word:游泳
+2	我有时坐地铁。	Wǒ yǒushí zuò dìtiě.	I sometimes take the subway.	word:有时
+2	这个电影很有意思。	Zhège diànyǐng hěn yǒuyìsi.	This movie is very interesting.	word:有意思
+2	我喜欢运动。	Wǒ xǐhuan yùndòng.	I like exercise.	word:运动
+2	这个电影很长。	Zhège diànyǐng hěn cháng.	This movie is long.	word:长
+2	你怎么这么早？	Nǐ zěnme zhème zǎo?	Why are you so early?	word:这么
+2	这样可以吗？	Zhèyàng kěyǐ ma?	Is this way okay?	word:这样
+2	门开着。	Mén kāi zhe.	The door is open.	word:着
+2	他正在睡觉。	Tā zhèngzài shuìjiào.	He is sleeping right now.	word:正
+2	这周我很忙。	Zhè zhōu wǒ hěn máng.	I am very busy this week.	word:周
+2	我在准备考试。	Wǒ zài zhǔnbèi kǎoshì.	I am preparing for the exam.	word:准备
+2	我自己做饭。	Wǒ zìjǐ zuòfàn.	I cook for myself.	word:自己
+2	他喜欢踢足球。	Tā xǐhuan tī zúqiú.	He likes playing soccer.	word:足球
+2	我最喜欢喝茶。	Wǒ zuì xǐhuan hē chá.	I like drinking tea best.	word:最
+3	我在车站等朋友。	Wǒ zài chēzhàn děng péngyou.	I am waiting for a friend at the station.	word-extra:车站:1
+3	这个车站很大。	Zhège chēzhàn hěn dà.	This station is very big.	word-extra:车站:2
+3	机场离我家很远。	Jīchǎng lí wǒ jiā hěn yuǎn.	The airport is far from my home.	word-extra:机场:1
+3	爸爸在机场工作。	Bàba zài jīchǎng gōngzuò.	Dad works at the airport.	word-extra:机场:2
+3	地铁很快。	Dìtiě hěn kuài.	The subway is fast.	word-extra:地铁:1
+3	你坐地铁还是坐公交车？	Nǐ zuò dìtiě háishi zuò gōngjiāochē?	Do you take the subway or the bus?	word-extra:地铁:2
+3	我每天坐公交车上学。	Wǒ měi tiān zuò gōngjiāochē shàngxué.	I take the bus to school every day.	word-extra:公交车:1
+3	你在这里等公交车吧。	Nǐ zài zhèlǐ děng gōngjiāochē ba.	Wait for the bus here.	word-extra:公交车:2
+3	打车很快，但是有点贵。	Dǎchē hěn kuài, dànshì yǒudiǎn guì.	Taking a taxi is fast, but a bit expensive.	word-extra:打车:1
+3	你想坐地铁还是打车？	Nǐ xiǎng zuò dìtiě háishi dǎchē?	Do you want to take the subway or take a taxi?	word-extra:打车:2
+3	学校在这条路上。	Xuéxiào zài zhè tiáo lùshang.	The school is on this road.	word-extra:路:1
+3	你知道去学校的路吗？	Nǐ zhīdào qù xuéxiào de lù ma?	Do you know the way to school?	word-extra:路:2
+3	我在路上，请再等一会儿。	Wǒ zài lùshang, qǐng zài děng yíhuìr.	I am on my way. Please wait a little longer.	word-extra:路上:1
+3	去机场的路上，我看见了一只狗。	Qù jīchǎng de lùshang, wǒ kànjiàn le yì zhī gǒu.	On the way to the airport I saw a dog.	word-extra:路上:2
+3	请大家站起来。	Qǐng dàjiā zhàn qǐlái.	Everyone, please stand up.	word-extra:站:1
+3	你在哪一站下车？	Nǐ zài nǎ yí zhàn xià chē?	At which stop do you get off?	word-extra:站:2
+3	这个楼很高。	Zhège lóu hěn gāo.	This building is very tall.	word-extra:楼:1
+3	你住几楼？	Nǐ zhù jǐ lóu?	Which floor do you live on?	word-extra:楼:2
+3	门在左边。	Mén zài zuǒbian.	The door is on the left.	word-extra:门:1
+3	这个门很大。	Zhège mén hěn dà.	This door is very big.	word-extra:门:2
+3	学校门口有一家商店。	Xuéxiào ménkǒu yǒu yì jiā shāngdiàn.	There is a shop at the school entrance.	word-extra:门口:1
+3	门口有一只猫。	Ménkǒu yǒu yì zhī māo.	There is a cat at the door.	word-extra:门口:2
+3	这里的门票五十块。	Zhèlǐ de ménpiào wǔshí kuài.	Tickets here are fifty yuan.	word-extra:门票:1
+3	这个门票有点贵。	Zhège ménpiào yǒudiǎn guì.	This ticket is a bit expensive.	word-extra:门票:2
+3	火车票很贵。	Huǒchē piào hěn guì.	A train ticket is expensive.	word-extra:票:1
+3	我没有票。	Wǒ méiyǒu piào.	I do not have a ticket.	word-extra:票:2
+3	机票比火车票贵。	Jīpiào bǐ huǒchē piào guì.	A plane ticket is more expensive than a train ticket.	word-extra:机票:1
+3	你的机票在哪里？	Nǐ de jīpiào zài nǎlǐ?	Where is your plane ticket?	word-extra:机票:2
+3	你想出国吗？	Nǐ xiǎng chūguó ma?	Do you want to go abroad?	word-extra:出国:1
+3	爸爸经常出国工作。	Bàba jīngcháng chūguó gōngzuò.	Dad often goes abroad for work.	word-extra:出国:2
+3	他去中国旅游了。	Tā qù Zhōngguó lǚyóu le.	He went to China to travel.	word-extra:旅游:1
+3	我们明年一起去旅游吧。	Wǒmen míngnián yìqǐ qù lǚyóu ba.	Let us travel together next year.	word-extra:旅游:2
+3	我们住在酒店里。	Wǒmen zhù zài jiǔdiàn lǐ.	We are staying in a hotel.	word-extra:酒店:1
+3	酒店离机场很近。	Jiǔdiàn lí jīchǎng hěn jìn.	The hotel is close to the airport.	word-extra:酒店:2
+3	商场里有很多人。	Shāngchǎng lǐ yǒu hěn duō rén.	There are many people in the mall.	word-extra:商场:1
+3	这个商场有一家电影院。	Zhège shāngchǎng yǒu yì jiā diànyǐngyuàn.	This mall has a cinema.	word-extra:商场:2
+3	我们在饭馆吃饭。	Wǒmen zài fànguǎn chī fàn.	We eat at a restaurant.	word-extra:饭馆:1
+3	学校旁边有一个饭馆。	Xuéxiào pángbiān yǒu yí ge fànguǎn.	There is a restaurant next to the school.	word-extra:饭馆:2
+3	我去药店买药。	Wǒ qù yàodiàn mǎi yào.	I go to the pharmacy to buy medicine.	word-extra:药店:1
+3	这个药店很大。	Zhège yàodiàn hěn dà.	This pharmacy is very big.	word-extra:药店:2
+3	我想去外国学习。	Wǒ xiǎng qù wàiguó xuéxí.	I want to study in a foreign country.	word-extra:外国:1
+3	你去过外国吗？	Nǐ qù guo wàiguó ma?	Have you been to a foreign country?	word-extra:外国:2
+3	我们的教室在三楼。	Wǒmen de jiàoshì zài sān lóu.	Our classroom is on the third floor.	word-extra:教室:1
+3	老师在教室里。	Lǎoshī zài jiàoshì lǐ.	The teacher is in the classroom.	word-extra:教室:2
+3	洗手间在右边。	Xǐshǒujiān zài yòubian.	The restroom is on the right.	word-extra:洗手间:1
+3	这里有洗手间吗？	Zhèlǐ yǒu xǐshǒujiān ma?	Is there a restroom here?	word-extra:洗手间:2
+3	你往左看。	Nǐ wǎng zuǒ kàn.	Look to the left.	word-extra:往:2
+3	机场离这里远吗？	Jīchǎng lí zhèlǐ yuǎn ma?	Is the airport far from here?	word-extra:离:1
+3	学校离车站不远。	Xuéxiào lí chēzhàn bù yuǎn.	The school is not far from the station.	word-extra:离:2
+3	商店很近，走路五分钟。	Shāngdiàn hěn jìn, zǒulù wǔ fēnzhōng.	The shop is near; it is five minutes on foot.	word-extra:近:1
+3	这里离医院近吗？	Zhèlǐ lí yīyuàn jìn ma?	Is it close to the hospital here?	word-extra:近:2
+3	你家远不远？	Nǐ jiā yuǎn bù yuǎn?	Is your home far?	word-extra:远:1
+3	去机场不太远。	Qù jīchǎng bú tài yuǎn.	It is not too far to the airport.	word-extra:远:2
+3	往左看，那是学校。	Wǎng zuǒ kàn, nà shì xuéxiào.	Look left, that is the school.	word-extra:左:1
+3	他不知道左和右。	Tā bù zhīdào zuǒ hé yòu.	He does not know left and right.	word-extra:左:2
+3	往右看，那是医院。	Wǎng yòu kàn, nà shì yīyuàn.	Look right, that is the hospital.	word-extra:右:1
+3	我右手拿着一本书。	Wǒ yòu shǒu ná zhe yì běn shū.	I am holding a book in my right hand.	word-extra:右:2
+3	洗手间在左边还是右边？	Xǐshǒujiān zài zuǒbian háishi yòubian?	Is the restroom on the left or the right?	word-extra:左边:1
+3	我坐在你的左边。	Wǒ zuò zài nǐ de zuǒbian.	I sit on your left.	word-extra:左边:2
+3	请坐在右边。	Qǐng zuò zài yòubian.	Please sit on the right.	word-extra:右边:1
+3	我的右边是我哥哥。	Wǒ de yòubian shì wǒ gēge.	On my right is my older brother.	word-extra:右边:2
+3	车站前面有很多人。	Chēzhàn qiánmiàn yǒu hěn duō rén.	There are many people in front of the station.	word-extra:前面:1
+3	你走在前面。	Nǐ zǒu zài qiánmiàn.	You walk in front.	word-extra:前面:2
+3	他坐在我的后面。	Tā zuò zài wǒ de hòumian.	He sits behind me.	word-extra:后面:1
+3	商店后面有一只狗。	Shāngdiàn hòumian yǒu yì zhī gǒu.	There is a dog behind the shop.	word-extra:后面:2
+3	请进，里面坐。	Qǐng jìn, lǐmiàn zuò.	Please come in and sit inside.	word-extra:里面:1
+3	书包里面有什么？	Shūbāo lǐmiàn yǒu shénme?	What is in the schoolbag?	word-extra:里面:2
+3	外面下雨了。	Wàimiàn xiàyǔ le.	It is raining outside.	word-extra:外面:1
+3	你在外面等我吧。	Nǐ zài wàimiàn děng wǒ ba.	Wait for me outside.	word-extra:外面:2
+3	上面有一只猫。	Shàngmiàn yǒu yì zhī māo.	There is a cat on top.	word-extra:上面:1
+3	你看上面。	Nǐ kàn shàngmiàn.	Look up.	word-extra:上面:2
+3	下面有一个杯子。	Xiàmiàn yǒu yí ge bēizi.	There is a cup below.	word-extra:下面:1
+3	请看下面的字。	Qǐng kàn xiàmiàn de zì.	Please look at the characters below.	word-extra:下面:2
+3	他坐在我旁边。	Tā zuò zài wǒ pángbiān.	He sits next to me.	word-extra:旁边:1
+3	商店旁边是医院。	Shāngdiàn pángbiān shì yīyuàn.	Next to the shop is the hospital.	word-extra:旁边:2
+3	你想吃米饭还是面？	Nǐ xiǎng chī mǐfàn háishi miàn?	Do you want rice or noodles?	word-extra:面:1
+3	这个房间的前面是书店。	Zhège fángjiān de qiánmiàn shì shūdiàn.	In front of this room is a bookstore.	word-extra:面:2
+3	他进教室了。	Tā jìn jiàoshì le.	He went into the classroom.	word-extra:进:1
+3	我们一起进去吧。	Wǒmen yìqǐ jìnqù ba.	Let us go in together.	word-extra:进:2
+3	我出去一下。	Wǒ chūqù yíxià.	I will step out for a moment.	word-extra:出:1
+3	她从教室里出来了。	Tā cóng jiàoshì lǐ chūlái le.	She came out of the classroom.	word-extra:出:2
+3	他从门口进来了。	Tā cóng ménkǒu jìnlái le.	He came in from the door.	word-extra:进来:1
+3	你进来坐吧。	Nǐ jìnlái zuò ba.	Come in and sit down.	word-extra:进来:2
+3	他进去了。	Tā jìnqù le.	He went in.	word-extra:进去:1
+3	里面很冷，我不想进去。	Lǐmiàn hěn lěng, wǒ bù xiǎng jìnqù.	It is cold inside; I do not want to go in.	word-extra:进去:2
+3	你出来一下。	Nǐ chūlái yíxià.	Come out for a moment.	word-extra:出来:1
+3	老师从教室里出来了。	Lǎoshī cóng jiàoshì lǐ chūlái le.	The teacher came out of the classroom.	word-extra:出来:2
+3	外面很冷，别出去了。	Wàimiàn hěn lěng, bié chūqù le.	It is cold outside; do not go out.	word-extra:出去:1
+3	他出去了。	Tā chūqù le.	He went out.	word-extra:出去:2
+3	你什么时候回来？	Nǐ shénme shíhou huílái?	When are you coming back?	word-extra:回来:1
+3	我很快就回来。	Wǒ hěn kuài jiù huílái.	I will be back soon.	word-extra:回来:2
+3	太晚了，你回去吧。	Tài wǎn le, nǐ huíqù ba.	It is too late; you should go back.	word-extra:回去:1
+3	他回去学习了。	Tā huíqù xuéxí le.	He went back to study.	word-extra:回去:2
+3	他从楼下上来了。	Tā cóng lóu xià shànglái le.	He came up from downstairs.	word-extra:上来:1
+3	请上来坐。	Qǐng shànglái zuò.	Please come up and sit.	word-extra:上来:2
+3	他上去看看。	Tā shàngqù kàn kàn.	He is going up to take a look.	word-extra:上去:1
+3	你上去吧，我在这里等你。	Nǐ shàngqù ba, wǒ zài zhèlǐ děng nǐ.	You go up; I will wait for you here.	word-extra:上去:2
+3	他从楼上下来了。	Tā cóng lóu shàng xiàlái le.	He came down from upstairs.	word-extra:下来:1
+3	你下来吃饭吧。	Nǐ xiàlái chī fàn ba.	Come down and eat.	word-extra:下来:2
+3	他下去买东西了。	Tā xiàqù mǎi dōngxi le.	He went down to buy things.	word-extra:下去:1
+3	你下去吧。	Nǐ xiàqù ba.	You go down.	word-extra:下去:2
+3	老师叫我过来。	Lǎoshī jiào wǒ guòlái.	The teacher asked me to come over.	word-extra:过来:1
+3	请过来看看。	Qǐng guòlái kàn kàn.	Please come over and take a look.	word-extra:过来:2
+3	你过去问问老师。	Nǐ guòqù wèn wèn lǎoshī.	Go over and ask the teacher.	word-extra:过去:1
+3	他看见我，就走过去了。	Tā kànjiàn wǒ, jiù zǒu guòqù le.	When he saw me, he walked over.	word-extra:过去:2
+3	请你站起来。	Qǐng nǐ zhàn qǐlái.	Please stand up.	word-extra:起来:1
+3	我今天六点起来。	Wǒ jīntiān liù diǎn qǐlái.	I got up at six today.	word-extra:起来:2
+3	他走了。	Tā zǒu le.	He left.	word-extra:走:1
+3	你走吧。	Nǐ zǒu ba.	You can go now.	word-extra:走:2
+3	走路二十分钟。	Zǒulù èrshí fēnzhōng.	It is a twenty-minute walk.	word-extra:走路:1
+3	你走路还是坐车？	Nǐ zǒulù háishi zuò chē?	Do you walk or take a car?	word-extra:走路:2
+3	小狗在外面跑。	Xiǎo gǒu zài wàimiàn pǎo.	The little dog is running outside.	word-extra:跑:1
+3	别跑，慢一点。	Bié pǎo, màn yìdiǎn.	Do not run; slow down a bit.	word-extra:跑:2
+3	他喜欢跑步。	Tā xǐhuan pǎobù.	He likes running.	word-extra:跑步:1
+3	我们一起去跑步吧。	Wǒmen yìqǐ qù pǎobù ba.	Let us go jogging together.	word-extra:跑步:2
+3	请拿一下这个。	Qǐng ná yíxià zhège.	Please hold this for a moment.	word-extra:拿:1
+3	你手里拿着什么？	Nǐ shǒu lǐ ná zhe shénme?	What do you have in your hand?	word-extra:拿:2
+3	妈妈送我去学校。	Māma sòng wǒ qù xuéxiào.	Mom takes me to school.	word-extra:送:1
+3	这是朋友送我的。	Zhè shì péngyou sòng wǒ de.	This was given to me by a friend.	word-extra:送:2
+3	现在开始上课。	Xiànzài kāishǐ shàngkè.	Class begins now.	word-extra:开始:1
+3	电影几点开始？	Diànyǐng jǐ diǎn kāishǐ?	What time does the movie start?	word-extra:开始:2
+3	爷爷喜欢喝茶。	Yéye xǐhuan hē chá.	Grandpa likes drinking tea.	word-extra:爷爷:1
+3	爷爷和奶奶住在中国。	Yéye hé nǎinai zhù zài Zhōngguó.	Grandpa and Grandma live in China.	word-extra:爷爷:2
+3	我想奶奶了。	Wǒ xiǎng nǎinai le.	I miss Grandma.	word-extra:奶奶:1
+3	奶奶给我一个苹果。	Nǎinai gěi wǒ yí ge píngguǒ.	Grandma gave me an apple.	word-extra:奶奶:2
+3	我的妻子很漂亮。	Wǒ de qīzi hěn piàoliang.	My wife is very pretty.	word-extra:妻子:1
+3	他和妻子一起去旅游了。	Tā hé qīzi yìqǐ qù lǚyóu le.	He went traveling with his wife.	word-extra:妻子:2
+3	我丈夫今天不在家。	Wǒ zhàngfu jīntiān bú zài jiā.	My husband is not at home today.	word-extra:丈夫:1
+3	她和丈夫都很忙。	Tā hé zhàngfu dōu hěn máng.	She and her husband are both busy.	word-extra:丈夫:2
+3	这个男孩今年六岁。	Zhège nánhái jīnnián liù suì.	This boy is six this year.	word-extra:男孩:1
+3	教室里有十个男孩。	Jiàoshì lǐ yǒu shí ge nánhái.	There are ten boys in the classroom.	word-extra:男孩:2
+3	她是一个好女孩。	Tā shì yí ge hǎo nǚhái.	She is a good girl.	word-extra:女孩:1
+3	那个女孩在唱歌。	Nàge nǚhái zài chàng gē.	That girl is singing.	word-extra:女孩:2
+3	小孩在外面玩。	Xiǎohái zài wàimiàn wán.	The children are playing outside.	word-extra:小孩:1
+3	这里有很多小孩。	Zhèlǐ yǒu hěn duō xiǎohái.	There are many children here.	word-extra:小孩:2
+3	你在哪个班？	Nǐ zài nǎge bān?	Which class are you in?	word-extra:班:1
+3	他是我们班的同学。	Tā shì wǒmen bān de tóngxué.	He is a classmate in our class.	word-extra:班:2
+3	我学了十个新词。	Wǒ xué le shí ge xīn cí.	I learned ten new words.	word-extra:词:1
+3	你知道这个词吗？	Nǐ zhīdào zhège cí ma?	Do you know this word?	word-extra:词:2
+3	老师问了三个题。	Lǎoshī wèn le sān ge tí.	The teacher asked three questions.	word-extra:题:1
+3	考试有二十个题。	Kǎoshì yǒu èrshí ge tí.	The exam has twenty questions.	word-extra:题:2
+3	他考得很好。	Tā kǎo de hěn hǎo.	He did very well on the exam.	word-extra:考:1
+3	你考了多少分？	Nǐ kǎo le duōshǎo fēn?	What score did you get?	word-extra:考:2
+3	考试开始了。	Kǎoshì kāishǐ le.	The exam has begun.	word-extra:考试:1
+3	你准备考试了吗？	Nǐ zhǔnbèi kǎoshì le ma?	Have you prepared for the exam?	word-extra:考试:2
+3	谁教你唱歌？	Shéi jiāo nǐ chàng gē?	Who taught you to sing?	word-extra:教:1
+3	我哥哥教我做饭。	Wǒ gēge jiāo wǒ zuòfàn.	My older brother teaches me to cook.	word-extra:教:2
+3	你懂汉语吗？	Nǐ dǒng Hànyǔ ma?	Do you understand Chinese?	word-extra:懂:1
+3	老师说得很慢，我都懂了。	Lǎoshī shuō de hěn màn, wǒ dōu dǒng le.	The teacher spoke slowly, and I understood everything.	word-extra:懂:2
+3	我记得他的名字。	Wǒ jìde tā de míngzi.	I remember his name.	word-extra:记得:1
+3	我不记得了。	Wǒ bú jìde le.	I do not remember any more.	word-extra:记得:2
+3	别忘了你的书包。	Bié wàng le nǐ de shūbāo.	Do not forget your schoolbag.	word-extra:忘:1
+3	我忘了，对不起。	Wǒ wàng le, duìbuqǐ.	I forgot, sorry.	word-extra:忘:2
+3	这是我的笔。	Zhè shì wǒ de bǐ.	This is my pen.	word-extra:笔:1
+3	我的笔在书包里。	Wǒ de bǐ zài shūbāo lǐ.	My pen is in my schoolbag.	word-extra:笔:2
+3	我买了两个本子。	Wǒ mǎi le liǎng ge běnzi.	I bought two notebooks.	word-extra:本子:1
+3	你的本子在桌子上。	Nǐ de běnzi zài zhuōzi shàng.	Your notebook is on the table.	word-extra:本子:2
+3	书包里有三本书。	Shūbāo lǐ yǒu sān běn shū.	There are three books in the schoolbag.	word-extra:书包:1
+3	他的书包在椅子上。	Tā de shūbāo zài yǐzi shàng.	His schoolbag is on the chair.	word-extra:书包:2
+3	开学了，我很高兴。	Kāixué le, wǒ hěn gāoxìng.	School has started, and I am happy.	word-extra:开学:1
+3	你什么时候开学？	Nǐ shénme shíhou kāixué?	When does your school start?	word-extra:开学:2
+3	我哥哥在高中学习。	Wǒ gēge zài gāozhōng xuéxí.	My older brother studies in senior high school.	word-extra:高中:1
+3	上高中很忙。	Shàng gāozhōng hěn máng.	Going to senior high school is busy.	word-extra:高中:2
+3	他是一名医生。	Tā shì yì míng yīshēng.	He is a doctor.	word-extra:名:1
+3	她是我们学校的一名老师。	Tā shì wǒmen xuéxiào de yì míng lǎoshī.	She is a teacher at our school.	word-extra:名:2
+3	他姓什么？	Tā xìng shénme?	What is his surname?	word-extra:姓:1
+3	你知道她姓什么吗？	Nǐ zhīdào tā xìng shénme ma?	Do you know her surname?	word-extra:姓:2
+3	你的姓名是什么？	Nǐ de xìngmíng shì shénme?	What is your full name?	word-extra:姓名:1
+3	这里写你的姓名。	Zhèlǐ xiě nǐ de xìngmíng.	Write your full name here.	word-extra:姓名:2
+3	我来介绍一下，这是我朋友。	Wǒ lái jièshào yíxià, zhè shì wǒ péngyou.	Let me make an introduction: this is my friend.	word-extra:介绍:1
+3	他给我们介绍了他的家人。	Tā gěi wǒmen jièshào le tā de jiārén.	He introduced his family to us.	word-extra:介绍:2
+3	他告诉我明天不上课。	Tā gàosu wǒ míngtiān bú shàngkè.	He told me there is no class tomorrow.	word-extra:告诉:1
+3	我告诉你一件事。	Wǒ gàosu nǐ yí jiàn shì.	I will tell you something.	word-extra:告诉:2
+3	我帮你拿书包。	Wǒ bāng nǐ ná shūbāo.	I will help you carry your schoolbag.	word-extra:帮:1
+3	谁能帮我？	Shéi néng bāng wǒ?	Who can help me?	word-extra:帮:2
+3	他经常帮忙做饭。	Tā jīngcháng bāngmáng zuòfàn.	He often helps with the cooking.	word-extra:帮忙:1
+3	谢谢你帮忙。	Xièxie nǐ bāngmáng.	Thank you for helping.	word-extra:帮忙:2
+3	我在门口等你。	Wǒ zài ménkǒu děng nǐ.	I am waiting for you at the door.	word-extra:等:1
+3	你等了多长时间？	Nǐ děng le duō cháng shíjiān?	How long did you wait?	word-extra:等:2
+3	你吃完了吗？	Nǐ chī wán le ma?	Have you finished eating?	word-extra:完:1
+3	他还没写完。	Tā hái méi xiě wán.	He has not finished writing yet.	word-extra:完:2
+3	对不起，我说错了。	Duìbuqǐ, wǒ shuō cuò le.	Sorry, I said it wrong.	word-extra:错:1
+3	你没有错。	Nǐ méiyǒu cuò.	You are not wrong.	word-extra:错:2
+3	你的身体怎么样？	Nǐ de shēntǐ zěnmeyàng?	How is your health?	word-extra:身体:1
+3	身体不舒服，我想休息。	Shēntǐ bù shūfu, wǒ xiǎng xiūxi.	I do not feel well; I want to rest.	word-extra:身体:2
+3	他的头很大。	Tā de tóu hěn dà.	His head is big.	word-extra:头:1
+3	我的头有点疼。	Wǒ de tóu yǒudiǎn téng.	My head hurts a bit.	word-extra:头:2
+3	我的手很冷。	Wǒ de shǒu hěn lěng.	My hands are very cold.	word-extra:手:1
+3	他手里有一本书。	Tā shǒu lǐ yǒu yì běn shū.	He has a book in his hand.	word-extra:手:2
+3	我的眼睛有点疼。	Wǒ de yǎnjing yǒudiǎn téng.	My eyes hurt a bit.	word-extra:眼睛:1
+3	这个小孩的眼睛很漂亮。	Zhège xiǎohái de yǎnjing hěn piàoliang.	This child's eyes are pretty.	word-extra:眼睛:2
+3	我的手疼。	Wǒ de shǒu téng.	My hand hurts.	word-extra:疼:1
+3	我今天头很疼。	Wǒ jīntiān tóu hěn téng.	My head hurts a lot today.	word-extra:疼:2
+3	这个药很好。	Zhège yào hěn hǎo.	This medicine is good.	word-extra:药:1
+3	他生病了，要吃药。	Tā shēngbìng le, yào chī yào.	He is sick and needs to take medicine.	word-extra:药:2
+3	我弟弟个子不高。	Wǒ dìdi gèzi bù gāo.	My younger brother is not tall.	word-extra:个子:1
+3	你的个子比我高。	Nǐ de gèzi bǐ wǒ gāo.	You are taller than me.	word-extra:个子:2
+3	我今天不太舒服。	Wǒ jīntiān bú tài shūfu.	I do not feel very well today.	word-extra:舒服:1
+3	你舒服吗？	Nǐ shūfu ma?	Are you comfortable?	word-extra:舒服:2
+3	你累不累？	Nǐ lèi bú lèi?	Are you tired?	word-extra:累:1
+3	工作了一天，他有点累。	Gōngzuò le yì tiān, tā yǒudiǎn lèi.	After a day of work, he is a bit tired.	word-extra:累:2
+3	他还在床上。	Tā hái zài chuáng shàng.	He is still in bed.	word-extra:床:1
+3	这个床很舒服。	Zhège chuáng hěn shūfu.	This bed is comfortable.	word-extra:床:2
+3	我买了一些花。	Wǒ mǎi le yìxiē huā.	I bought some flowers.	word-extra:花:1
+3	妈妈喜欢花。	Māma xǐhuan huā.	Mom likes flowers.	word-extra:花:2
+3	我花了两百块买这个手表。	Wǒ huā le liǎng bǎi kuài mǎi zhège shǒubiǎo.	I spent two hundred yuan on this watch.	word-extra:花:3
+3	我想画一只猫。	Wǒ xiǎng huà yì zhī māo.	I want to draw a cat.	word-extra:画:1
+3	这是谁的画？	Zhè shì shéi de huà?	Whose painting is this?	word-extra:画:2
+3	这只鸟很小。	Zhè zhǐ niǎo hěn xiǎo.	This bird is small.	word-extra:鸟:1
+3	鸟在天上飞。	Niǎo zài tiān shàng fēi.	The bird flies in the sky.	word-extra:鸟:2
+3	我们去打球吧。	Wǒmen qù dǎ qiú ba.	Let us go play ball.	word-extra:球:1
+3	球在椅子下面。	Qiú zài yǐzi xiàmiàn.	The ball is under the chair.	word-extra:球:2
+3	你的手表很漂亮。	Nǐ de shǒubiǎo hěn piàoliang.	Your watch is very pretty.	word-extra:手表:1
+3	现在几点？看一下手表。	Xiànzài jǐ diǎn? Kàn yíxià shǒubiǎo.	What time is it now? Look at the watch.	word-extra:手表:2
+3	我想买一条新裤子。	Wǒ xiǎng mǎi yì tiáo xīn kùzi.	I want to buy a new pair of trousers.	word-extra:裤子:1
+3	他的裤子是黑色的。	Tā de kùzi shì hēisè de.	His trousers are black.	word-extra:裤子:2
+3	她买了一个新包。	Tā mǎi le yí ge xīn bāo.	She bought a new bag.	word-extra:包:1
+3	我们包饺子吧。	Wǒmen bāo jiǎozi ba.	Let us make dumplings.	word-extra:包:2
+3	这个颜色很漂亮。	Zhège yánsè hěn piàoliang.	This color is pretty.	word-extra:颜色:1
+3	这件衣服的颜色很漂亮。	Zhè jiàn yīfu de yánsè hěn piàoliang.	This piece of clothing has a beautiful color.	word-extra:颜色:2
+3	他有一件白色的衣服。	Tā yǒu yí jiàn báisè de yīfu.	He has a white piece of clothing.	word-extra:白色:1
+3	白色的猫是我的。	Báisè de māo shì wǒ de.	The white cat is mine.	word-extra:白色:2
+3	他穿着黑色的裤子。	Tā chuān zhe hēisè de kùzi.	He is wearing black trousers.	word-extra:黑色:1
+3	黑色的狗在门口。	Hēisè de gǒu zài ménkǒu.	The black dog is at the door.	word-extra:黑色:2
+3	红色很漂亮。	Hóngsè hěn piàoliang.	Red is pretty.	word-extra:红色:1
+3	我想买红色的包。	Wǒ xiǎng mǎi hóngsè de bāo.	I want to buy a red bag.	word-extra:红色:2
+3	我喜欢绿色。	Wǒ xǐhuan lǜsè.	I like green.	word-extra:绿色:1
+3	他有一个绿色的包。	Tā yǒu yí ge lǜsè de bāo.	He has a green bag.	word-extra:绿色:2
+3	你喝红茶还是绿茶？	Nǐ hē hóngchá háishi lǜchá?	Do you drink black tea or green tea?	word-extra:红茶:1
+3	红茶有点热。	Hóngchá yǒudiǎn rè.	The black tea is a bit hot.	word-extra:红茶:2
+3	这个绿茶很贵。	Zhège lǜchá hěn guì.	This green tea is expensive.	word-extra:绿茶:1
+3	爸爸每天喝绿茶。	Bàba měi tiān hē lǜchá.	Dad drinks green tea every day.	word-extra:绿茶:2
+3	她喜欢喝奶茶。	Tā xǐhuan hē nǎichá.	She likes milk tea.	word-extra:奶茶:1
+3	这杯奶茶是你的吗？	Zhè bēi nǎichá shì nǐ de ma?	Is this cup of milk tea yours?	word-extra:奶茶:2
+3	你想喝咖啡还是茶？	Nǐ xiǎng hē kāfēi háishi chá?	Do you want coffee or tea?	word-extra:咖啡:1
+3	咖啡太热了。	Kāfēi tài rè le.	The coffee is too hot.	word-extra:咖啡:2
+3	你想吃什么肉？	Nǐ xiǎng chī shénme ròu?	What meat do you want to eat?	word-extra:肉:1
+3	这个肉很好吃。	Zhège ròu hěn hǎochī.	This meat is delicious.	word-extra:肉:2
+3	这个鱼很大。	Zhège yú hěn dà.	This fish is big.	word-extra:鱼:1
+3	爸爸买了一条鱼。	Bàba mǎi le yì tiáo yú.	Dad bought a fish.	word-extra:鱼:2
+3	是啊，我也喜欢。	Shì a, wǒ yě xǐhuan.	Yes, I like it too.	word-extra:啊:1
+3	你快来啊！	Nǐ kuài lái a!	Come on, hurry up!	word-extra:啊:2
+3	我的爱好是看电影。	Wǒ de àihào shì kàn diànyǐng.	My hobby is watching movies.	word-extra:爱好:1
+3	他的爱好很多。	Tā de àihào hěn duō.	He has many hobbies.	word-extra:爱好:2
+3	今天比昨天冷。	Jīntiān bǐ zuótiān lěng.	Today is colder than yesterday.	word-extra:比:1
+3	弟弟比我小两岁。	Dìdi bǐ wǒ xiǎo liǎng suì.	My younger brother is two years younger than me.	word-extra:比:2
+3	你别忘了。	Nǐ bié wàng le.	Do not forget.	word-extra:别:1
+3	别在这里玩。	Bié zài zhèlǐ wán.	Do not play here.	word-extra:别:2
+3	你的汉语不错。	Nǐ de Hànyǔ bùcuò.	Your Chinese is not bad.	word-extra:不错:1
+3	这个饭馆不错。	Zhège fànguǎn bùcuò.	This restaurant is not bad.	word-extra:不错:2
+3	不好意思，请问几点了？	Bùhǎoyìsi, qǐngwèn jǐ diǎn le?	Excuse me, what time is it?	word-extra:不好意思:1
+3	他有点不好意思。	Tā yǒudiǎn bùhǎoyìsi.	He is a bit embarrassed.	word-extra:不好意思:2
+3	他每天七点出门。	Tā měi tiān qī diǎn chūmén.	He leaves home at seven every day.	word-extra:出门:1
+3	外面冷，出门要多穿一点。	Wàimiàn lěng, chūmén yào duō chuān yì diǎn.	It is cold outside; wear clothes when you go out.	word-extra:出门:2
+3	你看过几次这个电影？	Nǐ kàn guo jǐ cì zhège diànyǐng?	How many times have you seen this movie?	word-extra:次:1
+3	这次考试很好。	Zhè cì kǎoshì hěn hǎo.	This exam went well.	word-extra:次:2
+3	他从中国来。	Tā cóng Zhōngguó lái.	He comes from China.	word-extra:从:1
+3	从早上到晚上，我都在工作。	Cóng zǎoshang dào wǎnshang, wǒ dōu zài gōngzuò.	I am working from morning to evening.	word-extra:从:2
+3	他从小学习汉语。	Tā cóngxiǎo xuéxí Hànyǔ.	He has studied Chinese since childhood.	word-extra:从小:1
+3	她从小住在这里。	Tā cóngxiǎo zhù zài zhèlǐ.	She has lived here since she was little.	word-extra:从小:2
+3	我给妈妈打电话。	Wǒ gěi māma dǎ diànhuà.	I am calling Mom.	word-extra:打:1
+3	别打他。	Bié dǎ tā.	Do not hit him.	word-extra:打:2
+3	他打开了电脑。	Tā dǎkāi le diànnǎo.	He turned on the computer.	word-extra:打开:1
+3	我打开手机看了一下。	Wǒ dǎkāi shǒujī kàn le yíxià.	I turned on my phone and took a look.	word-extra:打开:2
+3	他很忙，但很高兴。	Tā hěn máng, dàn hěn gāoxìng.	He is busy but happy.	word-extra:但:1
+3	这个很好看，但有点贵。	Zhège hěn hǎokàn, dàn yǒudiǎn guì.	This looks nice, but it is a bit expensive.	word-extra:但:2
+3	菜很好吃，但是有点贵。	Cài hěn hǎochī, dànshì yǒudiǎn guì.	The food is delicious, but a bit expensive.	word-extra:但是:1
+3	他很忙，但是还是来了。	Tā hěn máng, dànshì háishi lái le.	He is busy, but he still came.	word-extra:但是:2
+3	请慢慢地说。	Qǐng màn màn de shuō.	Please speak slowly.	word-extra:地:1
+3	她高兴地笑了。	Tā gāoxìng de xiào le.	She laughed happily.	word-extra:地:2
+3	你写得真好。	Nǐ xiě de zhēn hǎo.	You write really well.	word-extra:得:1
+3	今天我来得很早。	Jīntiān wǒ lái de hěn zǎo.	I came very early today.	word-extra:得:2
+3	小狗不动了。	Xiǎo gǒu bú dòng le.	The little dog stopped moving.	word-extra:动:1
+3	请动一下。	Qǐng dòng yíxià.	Please move a little.	word-extra:动:2
+3	飞机飞得很高。	Fēijī fēi de hěn gāo.	The plane flies very high.	word-extra:飞:1
+3	他想坐飞机去中国。	Tā xiǎng zuò fēijī qù Zhōngguó.	He wants to take a plane to China.	word-extra:飞:2
+3	你有多高？	Nǐ yǒu duō gāo?	How tall are you?	word-extra:高:1
+3	他的个子比我高。	Tā de gèzi bǐ wǒ gāo.	He is taller than me.	word-extra:高:2
+3	你跟我来。	Nǐ gēn wǒ lái.	Come with me.	word-extra:跟:1
+3	他跟我说话。	Tā gēn wǒ shuōhuà.	He talks to me.	word-extra:跟:2
+3	你吃过饺子吗？	Nǐ chī guo jiǎozi ma?	Have you ever eaten dumplings?	word-extra:过:1
+3	我没看过这个电影。	Wǒ méi kàn guo zhège diànyǐng.	I have not seen this movie.	word-extra:过:2
+3	过年的时候，我回家。	Guònián de shíhou, wǒ huí jiā.	At the New Year, I go home.	word-extra:过年:1
+3	你在哪里过年？	Nǐ zài nǎlǐ guònián?	Where do you spend the New Year?	word-extra:过年:2
+3	我们坐地铁还是坐公交车？	Wǒmen zuò dìtiě háishi zuò gōngjiāochē?	Shall we take the subway or the bus?	word-extra:还是:1
+3	他还是不懂。	Tā háishi bù dǒng.	He still does not understand.	word-extra:还是:2
+3	这个电脑坏了。	Zhège diànnǎo huài le.	This computer is broken.	word-extra:坏:1
+3	他不是坏人。	Tā bú shì huài rén.	He is not a bad person.	word-extra:坏:2
+3	我有一间大房间。	Wǒ yǒu yì jiān dà fángjiān.	I have a big room.	word-extra:间:1
+3	这间教室很大。	Zhè jiān jiàoshì hěn dà.	This classroom is big.	word-extra:间:2
+3	他经常不在家。	Tā jīngcháng bú zài jiā.	He is often not at home.	word-extra:经常:1
+3	你经常喝茶吗？	Nǐ jīngcháng hē chá ma?	Do you often drink tea?	word-extra:经常:2
+3	你一说我就懂了。	Nǐ yì shuō wǒ jiù dǒng le.	As soon as you said it, I understood.	word-extra:就:1
+3	这个就是我家。	Zhège jiù shì wǒ jiā.	This is my home.	word-extra:就:2
+3	明天可能下雨。	Míngtiān kěnéng xiàyǔ.	It may rain tomorrow.	word-extra:可能:1
+3	她可能在家。	Tā kěnéng zài jiā.	She may be at home.	word-extra:可能:2
+3	快来吃饭！	Kuài lái chī fàn!	Come and eat quickly!	word-extra:快:1
+3	火车很快。	Huǒchē hěn kuài.	The train is fast.	word-extra:快:2
+3	新年快乐！	Xīn nián kuàilè!	Happy New Year!	word-extra:快乐:1
+3	他每天都很快乐。	Tā měi tiān dōu hěn kuàilè.	He is happy every day.	word-extra:快乐:2
+3	火车快要开了。	Huǒchē kuàiyào kāi le.	The train is about to leave.	word-extra:快要:1
+3	我快要二十岁了。	Wǒ kuàiyào èrshí suì le.	I am about to turn twenty.	word-extra:快要:2
+3	他篮球打得很好。	Tā lánqiú dǎ de hěn hǎo.	He plays basketball very well.	word-extra:篮球:1
+3	明天我们去打篮球吧。	Míngtiān wǒmen qù dǎ lánqiú ba.	Let us play basketball tomorrow.	word-extra:篮球:2
+3	他走得很慢。	Tā zǒu de hěn màn.	He walks slowly.	word-extra:慢:1
+3	这个电脑太慢了。	Zhège diànnǎo tài màn le.	This computer is too slow.	word-extra:慢:2
+3	我觉得学习没意思。	Wǒ juéde xuéxí méiyìsi.	I think studying is boring.	word-extra:没意思:1
+3	这本书没意思。	Zhè běn shū méiyìsi.	This book is boring.	word-extra:没意思:2
+3	每个人都有一个名字。	Měi ge rén dōu yǒu yí ge míngzi.	Everyone has a name.	word-extra:每:1
+3	他每年去一次中国。	Tā měi nián qù yí cì Zhōngguó.	He goes to China once every year.	word-extra:每:2
+3	别那么说。	Bié nàme shuō.	Do not say it like that.	word-extra:那么:1
+3	你为什么那么高兴？	Nǐ wèishénme nàme gāoxìng?	Why are you so happy?	word-extra:那么:2
+3	他不是那样的人。	Tā bú shì nàyàng de rén.	He is not that kind of person.	word-extra:那样:1
+3	那样很好。	Nàyàng hěn hǎo.	That way is fine.	word-extra:那样:2
+3	明天是晴天。	Míngtiān shì qíng tiān.	The weather will be sunny tomorrow.	word-extra:晴:1
+3	晴天的时候，我想出去玩。	Qíng tiān de shíhou, wǒ xiǎng chūqù wán.	On sunny days I want to go out and play.	word-extra:晴:2
+3	老师让我们读书。	Lǎoshī ràng wǒmen dúshū.	The teacher asks us to read.	word-extra:让:1
+3	请让我看一下。	Qǐng ràng wǒ kàn yíxià.	Please let me take a look.	word-extra:让:2
+3	他在家上网。	Tā zài jiā shàngwǎng.	He is online at home.	word-extra:上网:1
+3	你喜欢上网吗？	Nǐ xǐhuan shàngwǎng ma?	Do you like being online?	word-extra:上网:2
+3	你的生日是几月几号？	Nǐ de shēngrì shì jǐ yuè jǐ hào?	What is the date of your birthday?	word-extra:生日:1
+3	妈妈的生日在十月。	Māma de shēngrì zài shí yuè.	Mom's birthday is in October.	word-extra:生日:2
+3	我上学时，爸爸送我。	Wǒ shàngxué shí, bàba sòng wǒ.	When I go to school, Dad takes me.	word-extra:时:1
+3	他生病时，我去看他。	Tā shēngbìng shí, wǒ qù kàn tā.	When he was sick, I went to see him.	word-extra:时:2
+3	今天有很多事情。	Jīntiān yǒu hěn duō shìqing.	There is a lot to do today.	word-extra:事情:1
+3	这个事情我不知道。	Zhège shìqing wǒ bù zhīdào.	I do not know about this matter.	word-extra:事情:2
+3	虽然他不高，但是跑得很快。	Suīrán tā bù gāo, dànshì pǎo de hěn kuài.	Although he is not tall, he runs fast.	word-extra:虽然:1
+3	虽然下雨了，我们还是去了。	Suīrán xiàyǔ le, wǒmen háishi qù le.	Although it rained, we still went.	word-extra:虽然:2
+3	今天很冷，所以我穿了很多衣服。	Jīntiān hěn lěng, suǒyǐ wǒ chuān le hěn duō yīfu.	It is cold today, so I wore a lot of clothes.	word-extra:所以:1
+3	他很忙，所以不能来。	Tā hěn máng, suǒyǐ bù néng lái.	He is busy, so he cannot come.	word-extra:所以:2
+3	我喜欢踢足球。	Wǒ xǐhuan tī zúqiú.	I like playing soccer.	word-extra:踢:1
+3	别踢我。	Bié tī wǒ.	Do not kick me.	word-extra:踢:2
+3	他买了一条红色的裤子。	Tā mǎi le yì tiáo hóngsè de kùzi.	He bought a pair of red trousers.	word-extra:条:2
+3	我们一起跳舞吧。	Wǒmen yìqǐ tiàowǔ ba.	Let us dance together.	word-extra:跳舞:1
+3	她跳舞，我唱歌。	Tā tiàowǔ, wǒ chàng gē.	She dances and I sing.	word-extra:跳舞:2
+3	那个大学有一万个学生。	Nàge dàxué yǒu yí wàn ge xuésheng.	That university has ten thousand students.	word-extra:万:1
+3	他有一万块钱。	Tā yǒu yí wàn kuài qián.	He has ten thousand yuan.	word-extra:万:2
+3	网上有很多人。	Wǎngshàng yǒu hěn duō rén.	There are many people online.	word-extra:网上:1
+3	你在网上看电影吗？	Nǐ zài wǎngshàng kàn diànyǐng ma?	Do you watch movies online?	word-extra:网上:2
+3	你为什么笑？	Nǐ wèishénme xiào?	Why are you laughing?	word-extra:为什么:1
+3	你为什么学习汉语？	Nǐ wèishénme xuéxí Hànyǔ?	Why do you study Chinese?	word-extra:为什么:2
+3	请问，您几位？	Qǐngwèn, nín jǐ wèi?	Excuse me, how many are in your party?	word-extra:位:1
+3	三位老师在教室里。	Sān wèi lǎoshī zài jiàoshì lǐ.	Three teachers are in the classroom.	word-extra:位:2
+3	我希望明天不下雨。	Wǒ xīwàng míngtiān bú xiàyǔ.	I hope it does not rain tomorrow.	word-extra:希望:1
+3	他希望去中国学习。	Tā xīwàng qù Zhōngguó xuéxí.	He hopes to study in China.	word-extra:希望:2
+3	妈妈在洗衣服。	Māma zài xǐ yīfu.	Mom is washing clothes.	word-extra:洗:1
+3	请洗一下这个苹果。	Qǐng xǐ yíxià zhège píngguǒ.	Please wash this apple.	word-extra:洗:2
+3	小时候，我喜欢打球。	Xiǎoshíhou, wǒ xǐhuan dǎ qiú.	When I was little I liked playing ball.	word-extra:小时候:1
+3	你小时候喜欢做什么？	Nǐ xiǎoshíhou xǐhuan zuò shénme?	What did you like to do when you were little?	word-extra:小时候:2
+3	他喜欢笑。	Tā xǐhuan xiào.	He likes to smile.	word-extra:笑:1
+3	你笑什么？	Nǐ xiào shénme?	What are you laughing at?	word-extra:笑:2
+3	我休息一会儿。	Wǒ xiūxi yíhuìr.	I will rest for a while.	word-extra:一会儿:1
+3	他一会儿就来。	Tā yíhuìr jiù lái.	He will be here in a moment.	word-extra:一会儿:2
+3	我和朋友一起吃饭。	Wǒ hé péngyou yìqǐ chī fàn.	I eat with friends.	word-extra:一起:1
+3	你想和我们一起吗？	Nǐ xiǎng hé wǒmen yìqǐ ma?	Do you want to join us?	word-extra:一起:2
+3	我已经吃饭了。	Wǒ yǐjīng chī fàn le.	I have already eaten.	word-extra:已经:1
+3	现在已经九点了。	Xiànzài yǐjīng jiǔ diǎn le.	It is already nine o'clock.	word-extra:已经:2
+3	你说的意思我懂了。	Nǐ shuō de yìsi wǒ dǒng le.	I understand what you mean.	word-extra:意思:1
+3	这个字有两个意思。	Zhège zì yǒu liǎng ge yìsi.	This character has two meanings.	word-extra:意思:2
+3	因为下雨，所以我们在家。	Yīnwèi xiàyǔ, suǒyǐ wǒmen zài jiā.	Because it is raining, we stay at home.	word-extra:因为:1
+3	他因为很忙，没来。	Tā yīnwèi hěn máng, méi lái.	Because he is busy, he did not come.	word-extra:因为:2
+3	阴天我不想出门。	Yīn tiān wǒ bù xiǎng chūmén.	I do not want to go out on cloudy days.	word-extra:阴:1
+3	明天可能是阴天。	Míngtiān kěnéng shì yīn tiān.	Tomorrow may be a cloudy day.	word-extra:阴:2
+3	鱼在水里游。	Yú zài shuǐ lǐ yóu.	The fish swims in the water.	word-extra:游:1
+3	我们去游泳吧。	Wǒmen qù yóuyǒng ba.	Let us go swimming.	word-extra:游:2
+3	你会游泳吗？	Nǐ huì yóuyǒng ma?	Can you swim?	word-extra:游泳:1
+3	我们星期天去游泳。	Wǒmen xīngqītiān qù yóuyǒng.	We go swimming on Sunday.	word-extra:游泳:2
+3	他有时很忙。	Tā yǒushí hěn máng.	He is sometimes very busy.	word-extra:有时:1
+3	有时我不想吃早饭。	Yǒushí wǒ bù xiǎng chī zǎofàn.	Sometimes I do not want to eat breakfast.	word-extra:有时:2
+3	汉语很有意思。	Hànyǔ hěn yǒuyìsi.	Chinese is interesting.	word-extra:有意思:1
+3	你觉得这本书有意思吗？	Nǐ juéde zhè běn shū yǒuyìsi ma?	Do you think this book is interesting?	word-extra:有意思:2
+3	你喜欢什么运动？	Nǐ xǐhuan shénme yùndòng?	What sport do you like?	word-extra:运动:1
+3	每天运动对身体好。	Měi tiān yùndòng duì shēntǐ hǎo.	Exercising every day is good for your health.	word-extra:运动:2
+3	这条裤子太长了。	Zhè tiáo kùzi tài cháng le.	These trousers are too long.	word-extra:长:1
+3	晚上很长。	Wǎnshang hěn cháng.	The night is long.	word-extra:长:2
+3	今天这么冷。	Jīntiān zhème lěng.	It is so cold today.	word-extra:这么:1
+3	这么多人！	Zhème duō rén!	So many people!	word-extra:这么:2
+3	这样做不对。	Zhèyàng zuò bú duì.	It is not right to do it this way.	word-extra:这样:1
+3	他就是这样。	Tā jiù shì zhèyàng.	He is just like this.	word-extra:这样:2
+3	他拿着一个包。	Tā ná zhe yí ge bāo.	He is carrying a bag.	word-extra:着:1
+3	老师站着说话。	Lǎoshī zhàn zhe shuōhuà.	The teacher is talking while standing.	word-extra:着:2
+3	我正想找你。	Wǒ zhèng xiǎng zhǎo nǐ.	I was just about to look for you.	word-extra:正:1
+3	我正在看书。	Wǒ zhèngzài kàn shū.	I am reading right now.	word-extra:正:2
+3	一周有七天。	Yì zhōu yǒu qī tiān.	A week has seven days.	word-extra:周:1
+3	每周我都去游泳。	Měi zhōu wǒ dōu qù yóuyǒng.	Every week I go swimming.	word-extra:周:2
+3	妈妈准备了很多菜。	Māma zhǔnbèi le hěn duō cài.	Mom prepared many dishes.	word-extra:准备:1
+3	你准备好了吗？	Nǐ zhǔnbèi hǎo le ma?	Are you ready?	word-extra:准备:2
+3	请你介绍一下自己。	Qǐng nǐ jièshào yíxià zìjǐ.	Please introduce yourself.	word-extra:自己:1
+3	他自己去学校。	Tā zìjǐ qù xuéxiào.	He goes to school by himself.	word-extra:自己:2
+3	我们去看足球吧。	Wǒmen qù kàn zúqiú ba.	Let us go and watch soccer.	word-extra:足球:1
+3	足球和篮球我都喜欢。	Zúqiú hé lánqiú wǒ dōu xǐhuan.	I like both soccer and basketball.	word-extra:足球:2
+3	他是我们班最高的。	Tā shì wǒmen bān zuì gāo de.	He is the tallest in our class.	word-extra:最:1
+3	这是最好的。	Zhè shì zuì hǎo de.	This is the best.	word-extra:最:2
+3	男孩	nánhái		wordform:男孩
+3	女孩	nǚhái		wordform:女孩
+3	小孩	xiǎohái		wordform:小孩
+3	往前走			word-note:往.1
+3	往左走			word-note:往.2
+3	往右走			word-note:往.3
+3	一名医生			word-note:名.0
+3	二十名学生			word-note:名.1
+3	你叫什么名字			word-note:姓名.0
+3	身体好			word-note:身体.0
+3	身体不舒服			word-note:身体.1
+3	花钱			word-note:花.1
+3	花时间			word-note:花.2
+3	花了两百块			word-note:花.3
+3	我比他高			word-note:比.1
+3	的			word-note:地.1
+3	了			word-note:就.1
+3	我五点就起床了			word-note:就.2
+3	的时候			word-note:时.2
+3	开着			word-note:着.1
+3	拿着			word-note:着.2
+3	外面很冷，请进来。		It is cold outside; please come in.	hub-gap:来:0
+3	我明天去旅游，后天回来。		I am going on a trip tomorrow and will be back the day after.	hub-gap:来:1
+3	你过来一下，我给你看我的新手表。		Come over for a moment and I will show you my new watch.	hub-gap:来:2
+3	他在教室里面，你进去吧。		He is inside the classroom, so you go in.	hub-gap:去:0
+3	太晚了，我要回去了。		It is too late; I have to go back.	hub-gap:去:1
+3	你住在三楼，我上去找你。		You live on the third floor, so I will go up to find you.	hub-gap:去:2
+3	外面很冷，教室里面很热。		It is cold outside, but it is hot inside the classroom.	hub-gap:面:0
+3	鸟在上面飞，我们在下面看。		The birds are flying above, and we are watching from below.	hub-gap:面:1
+3	他站在我前面。		He is standing in front of me.	hub-gap:面:2
+3	我的新书包是黑色的。		My new schoolbag is black.	hub-gap:色:1
+3	她今天穿了一条白色的裤子。		She wore a pair of white trousers today.	hub-gap:色:2
+3	我的个子很高，我喜欢打篮球。		I am tall, and I like playing basketball.	hub-gap:子:0
+3	我的本子在书包里面。		My notebook is in my schoolbag.	hub-gap:子:1
+3	他的妻子是我的老师。		His wife is my teacher.	hub-gap:子:2
+3	这个电影很有意思，我想再看一次。		This movie is very interesting; I want to watch it again.	hub-gap:意思:0
+3	今天太冷了，我不想出门。		It is too cold today and I do not want to go out.	hub-gap:门:0
+3	我在教室门口等你。		I will wait for you at the classroom door.	hub-gap:门:1
+3	这里的门票多少钱？		How much is a ticket here?	hub-gap:门:2
+3	请问，车站在哪里？		Excuse me, where is the station?	hub-gap:车:0
+3	这里太远了，我们打车去吧。		It is too far from here; let us take a taxi.	hub-gap:车:1
+3	我每天坐公交车去学校。		I take the bus to school every day.	hub-gap:车:2
+3	小时候，我家在学校旁边。		When I was little, my home was next to a school.	hub-gap:小:0
+3	她从小喜欢画画。		She has liked drawing since she was little.	hub-gap:小:1
+3	那个小孩在笑。		That child is laughing.	hub-gap:小:2
+3	我们八点开始上课。		We start class at eight.	hub-gap:开:1
+3	下个星期开学，我要准备好书包。		School starts next week and I need to get my schoolbag ready.	hub-gap:开:2
+3	我想喝一杯红茶。		I would like a cup of black tea.	hub-gap:茶:0
+3	我不喝咖啡，我喝绿茶。		I do not drink coffee; I drink green tea.	hub-gap:茶:1
+3	她最喜欢喝奶茶。		She likes drinking milk tea best.	hub-gap:茶:2
+3	那个女孩是我妹妹的朋友。		That girl is my younger sister’s friend.	hub-gap:孩:1
+3	这个小孩今年五岁。		This child is five years old this year.	hub-gap:孩:2
+3	洗手间在左边。		The restroom is on the left.	hub-gap:边:0
+3	药店在我家旁边。		The pharmacy is next to my home.	hub-gap:边:1
+3	学校在饭馆的右边。		The school is on the right of the restaurant.	hub-gap:边:2
+3	你下来，我们一起吃饭。		Come down and we will eat together.	hub-gap:下:0
+3	书在桌子的下面。		The book is under the table.	hub-gap:下:1
+3	那里很高，我不想下去。		It is very high there, so I do not want to go down.	hub-gap:下:2
+3	我在网上买了一块手表。		I bought a watch online.	hub-gap:上:0
+3	我每天晚上上网看电影。		I go online and watch movies every evening.	hub-gap:上:1
+3	我在路上给你打电话。		I will call you on the way.	hub-gap:上:2
+3	我想明年出国旅游。		I want to travel abroad next year.	hub-gap:出:0
+3	他从教室出来了。		He came out of the classroom.	hub-gap:出:1
+3	今天是晴天，我们出去玩吧。		Today is sunny; let us go out and play.	hub-gap:出:2
+3	你过来一下，我有事情告诉你。		Come over for a moment; I have something to tell you.	hub-gap:过:0
+3	我们家每年都一起过年。		Our family celebrates the New Year together every year.	hub-gap:过:1
+3	他在那边，你过去吧。		He is over there, so you go over.	hub-gap:过:2
+3	我们坐地铁去机场，很快就到。	Wǒmen zuò dìtiě qù jīchǎng, hěn kuài jiù dào.	We take the subway to the airport; we get there quickly.	topic-sentence:Getting around
+3	洗手间在左边，药店在右边。	Xǐshǒujiān zài zuǒbian, yàodiàn zài yòubian.	The restroom is on the left and the pharmacy is on the right.	topic-sentence:Where things are
+3	请进来，我们一起出去吧。	Qǐng jìnlái, wǒmen yìqǐ chūqù ba.	Please come in; let us go out together.	topic-sentence:Coming and going
+3	请你帮我一下，我想告诉你一件事。	Qǐng nǐ bāng wǒ yíxià, wǒ xiǎng gàosu nǐ yí jiàn shì.	Please help me for a moment; I want to tell you something.	topic-sentence:Doing and saying
+3	这位是我爷爷，那位是我奶奶。	Zhè wèi shì wǒ yéye, nà wèi shì wǒ nǎinai.	This is my grandfather, and that is my grandmother.	topic-sentence:Family and people
+3	明天开学，我准备好书包和本子了。	Míngtiān kāixué, wǒ zhǔnbèi hǎo shūbāo hé běnzi le.	School starts tomorrow, and I have my schoolbag and notebook ready.	topic-sentence:School and study
+3	我头疼，身体不舒服。	Wǒ tóu téng, shēntǐ bù shūfu.	My head hurts and I do not feel well.	topic-sentence:Body and health
+3	我喜欢红色的花和绿色的包。	Wǒ xǐhuan hóngsè de huā hé lǜsè de bāo.	I like red flowers and a green bag.	topic-sentence:Colors, animals and things
+3	我想喝一杯咖啡，吃一点鱼。	Wǒ xiǎng hē yì bēi kāfēi, chī yìdiǎn yú.	I want a cup of coffee and a little fish.	topic-sentence:Food and drink
+3	我的爱好是游泳和踢足球。	Wǒ de àihào shì yóuyǒng hé tī zúqiú.	My hobbies are swimming and playing soccer.	topic-sentence:Sports, hobbies and fun
+3	今天是晴天，我们已经出门了。	Jīntiān shì qíng tiān, wǒmen yǐjīng chūmén le.	Today is a sunny day, and we have already gone out.	topic-sentence:Weather, time and how often
+3	这个电影很有意思，不错。	Zhège diànyǐng hěn yǒuyìsi, bùcuò.	This movie is very interesting, not bad.	topic-sentence:Describing things
+3	因为下雨，所以我们在家看电影。	Yīnwèi xiàyǔ, suǒyǐ wǒmen zài jiā kàn diànyǐng.	Because it is raining, we watch a movie at home.	topic-sentence:Grammar words
+3	我去过三次中国，买了一条红色的裤子。	Wǒ qù guo sān cì Zhōngguó, mǎi le yì tiáo hóngsè de kùzi.	I have been to China three times and bought a pair of red trousers.	topic-sentence:Numbers and measure words
+3	边			opposites:左/右:note0
+3	学校离我家很近			opposites:远/近:note1
+3	机场离这里很远			opposites:远/近:note2
+3	很快			opposites:快/慢:note0
+3	很慢			opposites:快/慢:note1
+3	来			opposites:进/出:note0
+3	去			opposites:进/出:note1
+3	孩			opposites:男孩/女孩:note0
+3	晴天			opposites:晴/阴:note0
+3	阴天			opposites:晴/阴:note1
+3	忘了			opposites:记得/忘:note4
+3	你好！我能帮你吗？	Nǐ hǎo! Wǒ néng bāng nǐ ma?	Hello! Can I help you?	scenario:way:ai0
+3	往前走，车站在学校旁边。	Wǎng qián zǒu, chēzhàn zài xuéxiào pángbiān.	Go straight ahead. The station is next to the school.	scenario:way:ai1
+3	不远，走路十分钟。	Bù yuǎn, zǒulù shí fēnzhōng.	Not far, ten minutes on foot.	scenario:way:ai2
+3	好。请往前走，别往右走。	Hǎo. Qǐng wǎng qián zǒu, bié wǎng yòu zǒu.	Good. Please go straight ahead; do not turn right.	scenario:way:ai3
+3	不客气！再见！	Bú kèqi! Zàijiàn!	You are welcome! Goodbye!	scenario:way:ai4
+3	离这里远吗？	Lí zhèlǐ yuǎn ma?	Is it far from here?	scenario:way:you1
+3	好的，我走路去。	Hǎo de, wǒ zǒulù qù.	Okay, I will walk.	scenario:way:you2
+3	好的，谢谢你！	Hǎo de, xièxie nǐ!	Okay, thank you!	scenario:way:you3
+3	你好！你想喝什么？	Nǐ hǎo! Nǐ xiǎng hē shénme?	Hello! What would you like to drink?	scenario:cafe2:ai0
+3	好的。你想喝热的还是冷的？	Hǎo de. Nǐ xiǎng hē rè de háishi lěng de?	Okay. Would you like it hot or cold?	scenario:cafe2:ai1
+3	好。你想吃东西吗？我们有面。	Hǎo. Nǐ xiǎng chī dōngxi ma? Wǒmen yǒu miàn.	Okay. Would you like something to eat? We have noodles.	scenario:cafe2:ai2
+3	好的。四十块钱。	Hǎo de. Sìshí kuài qián.	Okay. Forty yuan.	scenario:cafe2:ai3
+3	谢谢！再见！	Xièxie! Zàijiàn!	Thank you! Goodbye!	scenario:cafe2:ai4
+3	我想喝热的。	Wǒ xiǎng hē rè de.	I would like it hot.	scenario:cafe2:you1
+3	好的，我想吃面。	Hǎo de, wǒ xiǎng chī miàn.	Okay, I would like noodles.	scenario:cafe2:you2
+3	好的，给你。	Hǎo de, gěi nǐ.	Okay, here you are.	scenario:cafe2:you3
+3	你好！你怎么了？	Nǐ hǎo! Nǐ zěnme le?	Hello! What is wrong with you?	scenario:pharmacy:ai0
+3	你今天吃饭了吗？	Nǐ jīntiān chī fàn le ma?	Have you eaten today?	scenario:pharmacy:ai1
+3	你要多休息。这个药，一天吃三次。	Nǐ yào duō xiūxi. Zhège yào, yì tiān chī sān cì.	You need to rest more. Take this medicine three times a day.	scenario:pharmacy:ai2
+3	吃完饭吃。	Chī wán fàn chī.	Take it after you finish eating.	scenario:pharmacy:ai3
+3	不客气，再见！	Bú kèqi, zàijiàn!	You are welcome, goodbye!	scenario:pharmacy:ai4
+3	我头疼，身体也不舒服。	Wǒ tóu téng, shēntǐ yě bù shūfu.	I have a headache and I do not feel well.	scenario:pharmacy:you0
+3	吃了，但是我不想吃东西。	Chī le, dànshì wǒ bù xiǎng chī dōngxi.	I ate, but I do not want anything to eat.	scenario:pharmacy:you1
+3	好的，我什么时候吃？	Hǎo de, wǒ shénme shíhou chī?	Okay, when do I take it?	scenario:pharmacy:you2
+3	谢谢你，再见。	Xièxie nǐ, zàijiàn.	Thank you, goodbye.	scenario:pharmacy:you3
+3	你好！你有什么爱好？	Nǐ hǎo! Nǐ yǒu shénme àihào?	Hello! What are your hobbies?	scenario:hobby:ai0
+3	你经常游泳吗？	Nǐ jīngcháng yóuyǒng ma?	Do you swim often?	scenario:hobby:ai1
+3	很好！你喜欢打篮球吗？	Hěn hǎo! Nǐ xǐhuan dǎ lánqiú ma?	Great! Do you like playing basketball?	scenario:hobby:ai2
+3	我也喜欢足球！我们一起踢吧。	Wǒ yě xǐhuan zúqiú! Wǒmen yìqǐ tī ba.	I like soccer too! Let us play together.	scenario:hobby:ai3
+3	太好了！	Tài hǎo le!	Wonderful!	scenario:hobby:ai4
+3	我喜欢游泳，我也喜欢跳舞。	Wǒ xǐhuan yóuyǒng, wǒ yě xǐhuan tiàowǔ.	I like swimming, and I like dancing too.	scenario:hobby:you0
+3	我每天早上都游泳。	Wǒ měi tiān zǎoshang dōu yóuyǒng.	I swim every morning.	scenario:hobby:you1
+3	不太喜欢，我喜欢踢足球。	Bú tài xǐhuan, wǒ xǐhuan tī zúqiú.	Not really; I like playing soccer.	scenario:hobby:you2
+3	好啊，我们一起去！	Hǎo a, wǒmen yìqǐ qù!	Great, let us go together!	scenario:hobby:you3
+3	你好！你去哪里？	Nǐ hǎo! Nǐ qù nǎlǐ?	Hello! Where are you going?	scenario:airport:ai0
+3	好的。你几点的飞机？	Hǎo de. Nǐ jǐ diǎn de fēijī?	Okay. What time is your flight?	scenario:airport:ai1
+3	没问题。路上不远，我们很快就到。	Méi wèntí. Lùshang bù yuǎn, wǒmen hěn kuài jiù dào.	No problem. It is not far, we will be there soon.	scenario:airport:ai2
+3	好的。我们到了！	Hǎo de. Wǒmen dào le!	Okay. We have arrived!	scenario:airport:ai3
+3	一百块。	Yì bǎi kuài.	One hundred yuan.	scenario:airport:ai4
+3	我去机场。	Wǒ qù jīchǎng.	I am going to the airport.	scenario:airport:you0
+3	下午三点。	Xiàwǔ sān diǎn.	Three in the afternoon.	scenario:airport:you1
+3	太好了，请开快一点。	Tài hǎo le, qǐng kāi kuài yì diǎn.	Great, please drive a little faster.	scenario:airport:you2
+3	谢谢，多少钱？	Xièxie, duōshǎo qián?	Thanks, how much is it?	scenario:airport:you3
+3	今天是我的生日！	Jīntiān shì wǒ de shēngrì!	Today is my birthday!	scenario:birthday:ai0
+3	谢谢！你真好。你想喝茶还是咖啡？	Xièxie! Nǐ zhēn hǎo. Nǐ xiǎng hē chá háishi kāfēi?	Thank you! You are so kind. Would you like tea or coffee?	scenario:birthday:ai1
+3	我们一起去饭馆吃饭吧。	Wǒmen yìqǐ qù fànguǎn chī fàn ba.	Let us go to a restaurant together.	scenario:birthday:ai2
+3	晚上六点，在车站旁边。	Wǎnshang liù diǎn, zài chēzhàn pángbiān.	Six in the evening, next to the station.	scenario:birthday:ai3
+3	太好了，晚上见！	Tài hǎo le, wǎnshang jiàn!	Great, see you in the evening!	scenario:birthday:ai4
+3	生日快乐！我送你一本书。	Shēngrì kuàilè! Wǒ sòng nǐ yì běn shū.	Happy birthday! I am giving you a book.	scenario:birthday:you0
+3	我想喝茶。	Wǒ xiǎng hē chá.	I would like tea.	scenario:birthday:you1
+3	好啊，我们什么时候去？	Hǎo a, wǒmen shénme shíhou qù?	Sure, when are we going?	scenario:birthday:you2
+3	好的，我六点到。	Hǎo de, wǒ liù diǎn dào.	Okay, I will be there at six.	scenario:birthday:you3
+3	明天有汉语考试，你准备好了吗？	Míngtiān yǒu Hànyǔ kǎoshì, nǐ zhǔnbèi hǎo le ma?	There is a Chinese exam tomorrow. Have you prepared?	scenario:exam:ai0
+3	你现在做什么？	Nǐ xiànzài zuò shénme?	What are you doing now?	scenario:exam:ai1
+3	可以，我来教你。	Kěyǐ, wǒ lái jiāo nǐ.	Sure, I will teach you.	scenario:exam:ai2
+3	这个词是朋友的意思。	Zhège cí shì péngyou de yìsi.	This word means friend.	scenario:exam:ai3
+3	不客气，明天见。	Bú kèqi, míngtiān jiàn.	You are welcome, see you tomorrow.	scenario:exam:ai4
+3	还没有，我有点累。	Hái méiyǒu, wǒ yǒudiǎn lèi.	Not yet, and I am a little tired.	scenario:exam:you0
+3	我正在看书，你可以帮我吗？	Wǒ zhèngzài kàn shū, nǐ kěyǐ bāng wǒ ma?	I am reading. Can you help me?	scenario:exam:you1
+3	我懂了，谢谢你！	Wǒ dǒng le, xièxie nǐ!	I understand now, thank you!	scenario:exam:you3
+3	你好！你想买什么？	Nǐ hǎo! Nǐ xiǎng mǎi shénme?	Hello! What would you like to buy?	scenario:trousers:ai0
+3	这条怎么样？	Zhè tiáo zěnmeyàng?	How about this one?	scenario:trousers:ai2
+3	有。这条小的很漂亮，二百块。	Yǒu. Zhè tiáo xiǎo de hěn piàoliang, èr bǎi kuài.	Yes. This small one is very nice, two hundred yuan.	scenario:trousers:ai3
+3	好，一百八十块。	Hǎo, yì bǎi bāshí kuài.	Okay, one hundred and eighty yuan.	scenario:trousers:ai4
+3	我想买一条裤子。	Wǒ xiǎng mǎi yì tiáo kùzi.	I want to buy a pair of trousers.	scenario:trousers:you0
+3	我喜欢黑色的。	Wǒ xǐhuan hēisè de.	I like black ones.	scenario:trousers:you1
+3	有点大，有小的吗？	Yǒudiǎn dà, yǒu xiǎo de ma?	It is a bit big. Do you have a smaller one?	scenario:trousers:you2
+3	太贵了，便宜一点吧。	Tài guì le, piányi yì diǎn ba.	That is too expensive, make it cheaper.	scenario:trousers:you3
+3	请再说一次。	Qǐng zài shuō yí cì.	Please say it once more.	phrase:1
+3	你说得太快了，我听不懂。	Nǐ shuō de tài kuài le, wǒ tīng bù dǒng.	You speak too fast; I cannot understand.	phrase:2
+3	你可以帮我吗？	Nǐ kěyǐ bāng wǒ ma?	Can you help me?	phrase:5
+3	我不知道怎么说。	Wǒ bù zhīdào zěnme shuō.	I do not know how to say it.	phrase:6
+3	对不起，我忘了。	Duìbuqǐ, wǒ wàng le.	Sorry, I forgot.	phrase:7
+3	请问，洗手间在前面吗？	Qǐngwèn, xǐshǒujiān zài qiánmiàn ma?	Excuse me, is the restroom up ahead?	clip:0
+3	吗			clip:0:note1.0
+3	我坐地铁去机场。	Wǒ zuò dìtiě qù jīchǎng.	I take the subway to the airport.	clip:1
+3	学校离我家很近。	Xuéxiào lí wǒ jiā hěn jìn.	The school is close to my home.	clip:2
+3	学校			clip:2:note0.0
+3	他每天早上都跑步。	Tā měi tiān zǎoshang dōu pǎobù.	He runs every morning.	clip:3
+3	每天			clip:3:note0.0
+3	都			clip:3:note1.0
+3	都跑步			clip:3:note1.1
+3	我最喜欢踢足球。	Wǒ zuì xǐhuan tī zúqiú.	I like playing soccer most.	clip:4
+3	踢足球			clip:4:note0.0
+3	足			clip:4:note0.2
+3	喜欢			clip:4:note1.0
+3	欢			clip:4:note1.1
+3	他比我高，但是我跑得很快。	Tā bǐ wǒ gāo, dànshì wǒ pǎo de hěn kuài.	He is taller than me, but I run fast.	clip:5
+3	比我			clip:5:note0.0
+3	跑得很快			clip:5:note1.0
+3	所			clip:6:note0.1
+3	你想喝红茶还是绿茶？	Nǐ xiǎng hē hóngchá háishi lǜchá?	Do you want black tea or green tea?	clip:7
+3	你想			clip:7:note0.0
+3	你			clip:7:note0.1
+3	我去过两次中国。	Wǒ qù guo liǎng cì Zhōngguó.	I have been to China twice.	clip:8
+3	去过			clip:8:note0.0
+3	两次			clip:8:note1.0
+3	两			clip:8:note1.1
+3	二			clip:8:note1.2
+3	请你告诉我你的名字。	Qǐng nǐ gàosu wǒ nǐ de míngzi.	Please tell me your name.	clip:9
+3	请你			clip:9:note0.0
+3	请			clip:9:note0.1
+3	诉			clip:9:note1.1
+3	叫			clip:10:note0.1
+3	们			clip:10:note1.0
+3	我们			clip:10:note1.1
+3	门开着，请进来。	Mén kāi zhe, qǐng jìnlái.	The door is open; please come in.	clip:11
+3	我已经吃完饭了。	Wǒ yǐjīng chī wán fàn le.	I have already finished eating.	clip:12
+3	已			clip:12:note0.1
+3	别走，再坐一会儿。	Bié zǒu, zài zuò yíhuìr.	Do not go; sit a little longer.	clip:13
+3	一			clip:13:note1.1
+3	会			clip:13:note1.2
+3	老师让我们别说话。	Lǎoshī ràng wǒmen bié shuōhuà.	The teacher asks us not to talk.	clip:14
+3	老师			clip:14:note0.0
+3	老			clip:14:note0.1
+3	别说话			clip:14:note1.0
+3	很有			clip:15:note0.0
+3	很			clip:15:note0.1
+3	思			clip:15:note1.1
+3	我的手机在桌子上面。	Wǒ de shǒujī zài zhuōzi shàngmiàn.	My phone is on the table.	clip:16
+3	手机			clip:16:note0.0
+3	桌子			clip:16:note1.0
+3	子			clip:16:note1.1
+3	我不想出国，我想在家休息。	Wǒ bù xiǎng chūguó, wǒ xiǎng zài jiā xiūxi.	I do not want to go abroad; I want to rest at home.	clip:17
+3	不想			clip:17:note0.0
+3	不			clip:17:note0.1
+3	他个子很高，打篮球打得很好。	Tā gèzi hěn gāo, dǎ lánqiú dǎ de hěn hǎo.	He is tall and plays basketball very well.	clip:18
+3	打篮球			clip:18:note1.0
+3	篮			clip:18:note1.2
+3	从我家到车站走路要十分钟。	Cóng wǒ jiā dào chēzhàn zǒulù yào shí fēnzhōng.	It takes ten minutes to walk from my home to the station.	clip:19
+3	到			clip:19:note1.1
+3	他经常和朋友一起去游泳。	Tā jīngcháng hé péngyou yìqǐ qù yóuyǒng.	He often goes swimming with friends.	clip:20
+3	起			clip:20:note0.2
+3	朋友			clip:20:note1.0
+3	友			clip:20:note1.1
+3	吧			clip:21:note1.0
+3	虽			clip:22:note0.1
+3	然			clip:22:note0.2
+3	他可能不在家，你给他打电话吧。	Tā kěnéng bú zài jiā, nǐ gěi tā dǎ diànhuà ba.	He may not be at home; you should call him.	clip:23
+3	可			clip:23:note0.1
+3	打电话			clip:23:note1.0
+3	他在游泳。	Tā zài yóuyǒng.	He is swimming.	exam:L1:0
+3	他在跑步。	Tā zài pǎobù.	He is running.	exam:L1:1
+3	我坐地铁去学校。	Wǒ zuò dìtiě qù xuéxiào.	I take the subway to school.	exam:L1:4
+3	我坐公交车去学校。	Wǒ zuò gōngjiāochē qù xuéxiào.	I take the bus to school.	exam:L1:5
+3	我们坐飞机去中国。	Wǒmen zuò fēijī qù Zhōngguó.	We are flying to China.	exam:L1:6
+3	我们去商场。	Wǒmen qù shāngchǎng.	We are going to the mall.	exam:L1:7
+3	我喜欢吃肉。	Wǒ xǐhuan chī ròu.	I like eating meat.	exam:L1:9
+3	今天下雨了。	Jīntiān xiàyǔ le.	It is raining today.	exam:L1:10
+3	她在跳舞。	Tā zài tiàowǔ.	She is dancing.	exam:L1:12
+3	她在唱歌。	Tā zài chàng gē.	She is singing.	exam:L1:13
+3	我头疼，我要吃药。	Wǒ tóu téng, wǒ yào chī yào.	I have a headache and need to take medicine.	exam:L1:14
+3	我头疼，我要睡觉。	Wǒ tóu téng, wǒ yào shuìjiào.	I have a headache and want to sleep.	exam:L1:15
+3	现在一点。	Xiànzài yì diǎn.	It is one o'clock now.	exam:L1:16
+3	现在两点。	Xiànzài liǎng diǎn.	It is two o'clock now.	exam:L1:17
+3	我在学校学习。	Wǒ zài xuéxiào xuéxí.	I study at school.	exam:L1:18
+3	我在医院工作。	Wǒ zài yīyuàn gōngzuò.	I work at a hospital.	exam:L1:19
+3	今天是她的生日。	Jīntiān shì tā de shēngrì.	Today is her birthday.	exam:L1:22
+3	今天她有考试。	Jīntiān tā yǒu kǎoshì.	She has an exam today.	exam:L1:23
+3	我最喜欢游泳。	Wǒ zuì xǐhuan yóuyǒng.	I like swimming most.	exam:L2:0.0.1
+3	你怎么去机场？	Nǐ zěnme qù jīchǎng?	How do you get to the airport?	exam:L2:0.1.0
+3	我坐地铁去。	Wǒ zuò dìtiě qù.	I take the subway.	exam:L2:0.1.1
+3	你怎么了？	Nǐ zěnme le?	What is wrong with you?	exam:L2:0.2.0
+3	我头疼，我要去医院。	Wǒ tóu téng, wǒ yào qù yīyuàn.	I have a headache; I have to go to the hospital.	exam:L2:0.2.1
+3	谢谢你！	Xièxie nǐ!	Thank you!	exam:L2:0.3.1
+3	外面怎么样？	Wàimiàn zěnmeyàng?	How is it outside?	exam:L2:0.4.0
+3	在下雨，别出去了。	Zài xiàyǔ, bié chūqù le.	It is raining; do not go out.	exam:L2:0.4.1
+3	明天你做什么？	Míngtiān nǐ zuò shénme?	What are you doing tomorrow?	exam:L2:1.0.0
+3	我去踢足球。	Wǒ qù tī zúqiú.	I am going to play soccer.	exam:L2:1.0.1
+3	你想吃什么？	Nǐ xiǎng chī shénme?	What would you like to eat?	exam:L2:1.1.0
+3	我想吃面。	Wǒ xiǎng chī miàn.	I would like noodles.	exam:L2:1.1.1
+3	你去哪里？	Nǐ qù nǎlǐ?	Where are you going?	exam:L2:1.2.0
+3	我去商场买裤子。	Wǒ qù shāngchǎng mǎi kùzi.	I am going to the mall to buy trousers.	exam:L2:1.2.1
+3	你怎么去学校？	Nǐ zěnme qù xuéxiào?	How do you get to school?	exam:L2:1.3.0
+3	我坐公交车。	Wǒ zuò gōngjiāochē.	I take the bus.	exam:L2:1.3.1
+3	你在做什么？	Nǐ zài zuò shénme?	What are you doing?	exam:L2:1.4.0
+3	我在看书。	Wǒ zài kàn shū.	I am reading.	exam:L2:1.4.1
+3	你坐什么去中国？	Nǐ zuò shénme qù Zhōngguó?	How are you going to China?	exam:L2:2.0.0
+3	我坐飞机去。	Wǒ zuò fēijī qù.	I am going by plane.	exam:L2:2.0.1
+3	你喜欢做什么？	Nǐ xǐhuan zuò shénme?	What do you like doing?	exam:L2:2.1.0
+3	我喜欢唱歌。	Wǒ xǐhuan chàng gē.	I like singing.	exam:L2:2.1.1
+3	我想吃鱼。	Wǒ xiǎng chī yú.	I would like fish.	exam:L2:2.2.1
+3	今天天气怎么样？	Jīntiān tiānqì zěnmeyàng?	How is the weather today?	exam:L2:2.3.0
+3	这条裤子多少钱？	Zhè tiáo kùzi duōshǎo qián?	How much are these trousers?	exam:L2:2.4.0
+3	我在打电话。	Wǒ zài dǎ diànhuà.	I am making a phone call.	exam:L2:3.0.1
+3	你每天做什么？	Nǐ měi tiān zuò shénme?	What do you do every day?	exam:L2:3.1.0
+3	现在几点？	Xiànzài jǐ diǎn?	What time is it now?	exam:L2:3.2.0
+3	你想去旅游吗？	Nǐ xiǎng qù lǚyóu ma?	Do you want to travel?	exam:L2:3.3.0
+3	想，我想出国旅游。	Xiǎng, wǒ xiǎng chūguó lǚyóu.	Yes, I want to travel abroad.	exam:L2:3.3.1
+3	你在哪里学习？	Nǐ zài nǎlǐ xuéxí?	Where do you study?	exam:L2:3.4.0
+3	你明天去哪里？	Nǐ míngtiān qù nǎlǐ?	Where are you going tomorrow?	exam:L3:0.0
+3	他明天去哪里？	Tā míngtiān qù nǎlǐ?	Where is he going tomorrow?	exam:L3:0:question
+3	你想喝什么？	Nǐ xiǎng hē shénme?	What would you like to drink?	exam:L3:1.0
+3	她想喝什么？	Tā xiǎng hē shénme?	What does she want to drink?	exam:L3:1:question
+3	你今天怎么没去学校？	Nǐ jīntiān zěnme méi qù xuéxiào?	Why did you not go to school today?	exam:L3:2.0
+3	他怎么了？	Tā zěnme le?	What is wrong with him?	exam:L3:2:question
+3	头疼	Tóu téng		exam:L3:2:option0
+3	累了	Lèi le		exam:L3:2:option1
+3	太忙	Tài máng		exam:L3:2:option2
+3	一百五十块。	Yì bǎi wǔshí kuài.	One hundred and fifty yuan.	exam:L3:3.1
+3	裤子多少钱？	Kùzi duōshǎo qián?	How much are the trousers?	exam:L3:3:question
+3	一百五十块	Yì bǎi wǔshí kuài		exam:L3:3:option0
+3	一百块	Yì bǎi kuài		exam:L3:3:option1
+3	十五块	Shíwǔ kuài		exam:L3:3:option2
+3	你家离学校远吗？	Nǐ jiā lí xuéxiào yuǎn ma?	Is your home far from school?	exam:L3:4.0
+3	他怎么去学校？	Tā zěnme qù xuéxiào?	How does he get to school?	exam:L3:4:question
+3	坐地铁	Zuò dìtiě		exam:L3:4:option1
+3	她最喜欢什么运动？	Tā zuì xǐhuan shénme yùndòng?	What sport does she like most?	exam:L3:5:question
+3	现在七点五十五分。	Xiànzài qī diǎn wǔshíwǔ fēn.	It is five to eight now.	exam:L3:6.1
+3	七点五十五分	Qī diǎn wǔshíwǔ fēn		exam:L3:6:option0
+3	八点五分	Bā diǎn wǔ fēn		exam:L3:6:option1
+3	七点十五分	Qī diǎn shíwǔ fēn		exam:L3:6:option2
+3	你什么时候过生日？	Nǐ shénme shíhou guo shēngrì?	When is your birthday?	exam:L3:7.0
+3	十月八号。	Shí yuè bā hào.	The eighth of October.	exam:L3:7.1
+3	她的生日是几月几号？	Tā de shēngrì shì jǐ yuè jǐ hào?	When is her birthday?	exam:L3:7:question
+3	十月八号	Shí yuè bā hào		exam:L3:7:option0
+3	八月十号	Bā yuè shí hào		exam:L3:7:option1
+3	十月十八号	Shí yuè shíbā hào		exam:L3:7:option2
+3	他在哪里？	Tā zài nǎlǐ?	Where is he?	exam:L3:8.0
+3	他在教室里面。	Tā zài jiàoshì lǐmiàn.	He is in the classroom.	exam:L3:8.1
+3	在教室里面	Zài jiàoshì lǐmiàn		exam:L3:8:option0
+3	在教室外面	Zài jiàoshì wàimiàn		exam:L3:8:option1
+3	在洗手间	Zài xǐshǒujiān		exam:L3:8:option2
+3	你去过中国吗？	Nǐ qù guo Zhōngguó ma?	Have you been to China?	exam:L3:9.0
+3	去过两次。	Qù guo liǎng cì.	Twice.	exam:L3:9.1
+3	她去过几次中国？	Tā qù guo jǐ cì Zhōngguó?	How many times has she been to China?	exam:L3:9:question
+3	三次	Sān cì		exam:L3:9:option1
+3	一次	Yí cì		exam:L3:9:option2
+3	你为什么不吃饭？	Nǐ wèishénme bù chī fàn?	Why are you not eating?	exam:L3:10.0
+3	因为我不舒服。	Yīnwèi wǒ bù shūfu.	Because I do not feel well.	exam:L3:10.1
+3	他为什么不吃饭？	Tā wèishénme bù chī fàn?	Why is he not eating?	exam:L3:10:question
+3	他不舒服	Tā bù shūfu		exam:L3:10:option0
+3	他不想吃肉	Tā bù xiǎng chī ròu		exam:L3:10:option1
+3	他在上课	Tā zài shàngkè		exam:L3:10:option2
+3	明天你想做什么？	Míngtiān nǐ xiǎng zuò shénme?	What do you want to do tomorrow?	exam:L3:11.0
+3	我想去看电影。	Wǒ xiǎng qù kàn diànyǐng.	I want to see a movie.	exam:L3:11.1
+3	她明天想做什么？	Tā míngtiān xiǎng zuò shénme?	What does she want to do tomorrow?	exam:L3:11:question
+3	看电影	Kàn diànyǐng		exam:L3:11:option0
+3	去旅游	Qù lǚyóu		exam:L3:11:option1
+3	在前面，往左走。	Zài qiánmiàn, wǎng zuǒ zǒu.	It is up ahead; go left.	exam:L3:12.1
+3	洗手间在哪边？	Xǐshǒujiān zài nǎ biān?	Which side is the restroom on?	exam:L3:12:question
+3	你的手表真漂亮！	Nǐ de shǒubiǎo zhēn piàoliang!	Your watch is so nice!	exam:L3:13.0
+3	谢谢，这是我哥哥送我的。	Xièxie, zhè shì wǒ gēge sòng wǒ de.	Thanks, my older brother gave it to me.	exam:L3:13.1
+3	谁送她手表？	Shéi sòng tā shǒubiǎo?	Who gave her the watch?	exam:L3:13:question
+3	她哥哥	Tā gēge		exam:L3:13:option0
+3	她爸爸	Tā bàba		exam:L3:13:option1
+3	她朋友	Tā péngyou		exam:L3:13:option2
+3	会，我从小就会。	Huì, wǒ cóngxiǎo jiù huì.	Yes, I have been able to since I was little.	exam:L3:14.1
+3	他会游泳吗？	Tā huì yóuyǒng ma?	Can he swim?	exam:L3:14:question
+3	不会	Bú huì		exam:L3:14:option1
+3	还不会	Hái bú huì		exam:L3:14:option2
+3	今天阴天，可能会下雨。	Jīntiān yīn tiān, kěnéng huì xiàyǔ.	It is overcast today and may rain.	exam:L3:15.1
+3	下雨了	Xiàyǔ le		exam:L3:15:option2
+3	你们几点开始上课？	Nǐmen jǐ diǎn kāishǐ shàngkè?	What time does your class start?	exam:L3:16.0
+3	八点半。	Bā diǎn bàn.	Half past eight.	exam:L3:16.1
+3	几点开始上课？	Jǐ diǎn kāishǐ shàngkè?	What time does class start?	exam:L3:16:question
+3	八点半	Bā diǎn bàn		exam:L3:16:option0
+3	八点	Bā diǎn		exam:L3:16:option1
+3	九点半	Jiǔ diǎn bàn		exam:L3:16:option2
+3	你比你姐姐高吗？	Nǐ bǐ nǐ jiějie gāo ma?	Are you taller than your older sister?	exam:L3:17.0
+3	我没有她高。	Wǒ méiyǒu tā gāo.	I am not as tall as she is.	exam:L3:17.1
+3	谁高？	Shéi gāo?	Who is taller?	exam:L3:17:question
+3	她姐姐	Tā jiějie		exam:L3:17:option0
+3	她自己	Tā zìjǐ		exam:L3:17:option1
+3	她妹妹	Tā mèimei		exam:L3:17:option2
+3	你想坐公交车还是打车？	Nǐ xiǎng zuò gōngjiāochē háishi dǎchē?	Would you like to take the bus or a taxi?	exam:L3:18.0
+3	打车吧，太远了。	Dǎchē ba, tài yuǎn le.	Let us take a taxi; it is too far.	exam:L3:18.1
+3	他想怎么去？	Tā xiǎng zěnme qù?	How does he want to go?	exam:L3:18:question
+3	坐公交车	Zuò gōngjiāochē		exam:L3:18:option1
+3	你每天都跑步吗？	Nǐ měi tiān dōu pǎobù ma?	Do you run every day?	exam:L3:19.0
+3	不，我有时跑步。	Bù, wǒ yǒushí pǎobù.	No, I run sometimes.	exam:L3:19.1
+3	她经常跑步吗？	Tā jīngcháng pǎobù ma?	Does she run often?	exam:L3:19:question
+3	不经常	Bù jīngcháng		exam:L3:19:option0
+3	每天跑	Měi tiān pǎo		exam:L3:19:option1
+3	不喜欢跑步	Bù xǐhuan pǎobù		exam:L3:19:option2
+3	喂，你在哪里？	Wèi, nǐ zài nǎlǐ?	Hello, where are you?	exam:L4:0.0
+3	我在车站。	Wǒ zài chēzhàn.	I am at the station.	exam:L4:0.1
+3	我六点回来。	Wǒ liù diǎn huílái.	I will be back at six.	exam:L4:0.3
+3	他几点回来？	Tā jǐ diǎn huílái?	What time will he be back?	exam:L4:0:question
+3	六点	Liù diǎn		exam:L4:0:option0
+3	五点	Wǔ diǎn		exam:L4:0:option1
+3	七点	Qī diǎn		exam:L4:0:option2
+3	有咖啡吗？	Yǒu kāfēi ma?	Do you have coffee?	exam:L4:1.1
+3	有，你想喝热的还是冷的？	Yǒu, nǐ xiǎng hē rè de háishi lěng de?	Yes. Do you want it hot or cold?	exam:L4:1.2
+3	冷的，谢谢。	Lěng de, xièxie.	Cold, thanks.	exam:L4:1.3
+3	冷咖啡	Lěng kāfēi		exam:L4:1:option0
+3	热咖啡	Rè kāfēi		exam:L4:1:option1
+3	冷红茶	Lěng hóngchá		exam:L4:1:option2
+3	你的头还疼吗？	Nǐ de tóu hái téng ma?	Does your head still hurt?	exam:L4:2.0
+3	不疼了，我吃药了。	Bù téng le, wǒ chī yào le.	No, I took medicine.	exam:L4:2.1
+3	你要多休息。	Nǐ yào duō xiūxi.	You need to rest more.	exam:L4:2.2
+3	好的，我今天不去上班。	Hǎo de, wǒ jīntiān bú qù shàngbān.	Okay, I will not go to work today.	exam:L4:2.3
+3	他今天做什么？	Tā jīntiān zuò shénme?	What will he do today?	exam:L4:2:question
+3	在家休息	Zài jiā xiūxi		exam:L4:2:option0
+3	去上班	Qù shàngbān		exam:L4:2:option1
+3	去医院	Qù yīyuàn		exam:L4:2:option2
+3	我们去哪里吃饭？	Wǒmen qù nǎlǐ chī fàn?	Where shall we eat?	exam:L4:3.0
+3	我想去那个饭馆。	Wǒ xiǎng qù nàge fànguǎn.	I want to go to that restaurant.	exam:L4:3.1
+3	那个饭馆远不远？	Nàge fànguǎn yuǎn bù yuǎn?	Is that restaurant far?	exam:L4:3.2
+3	不远，就在学校旁边。	Bù yuǎn, jiù zài xuéxiào pángbiān.	Not far, it is right next to the school.	exam:L4:3.3
+3	饭馆在哪里？	Fànguǎn zài nǎlǐ?	Where is the restaurant?	exam:L4:3:question
+3	学校旁边	Xuéxiào pángbiān		exam:L4:3:option0
+3	车站旁边	Chēzhàn pángbiān		exam:L4:3:option1
+3	酒店里面	Jiǔdiàn lǐmiàn		exam:L4:3:option2
+3	你喜欢跳舞吗？	Nǐ xǐhuan tiàowǔ ma?	Do you like dancing?	exam:L4:4.0
+3	喜欢，但是我不会跳舞。	Xǐhuan, dànshì wǒ bú huì tiàowǔ.	Yes, but I cannot dance.	exam:L4:4.1
+3	没关系，我教你。	Méiguānxi, wǒ jiāo nǐ.	It does not matter, I will teach you.	exam:L4:4.2
+3	太好了，谢谢！	Tài hǎo le, xièxie!	Great, thank you!	exam:L4:4.3
+3	谁教谁跳舞？	Shéi jiāo shéi tiàowǔ?	Who will teach whom to dance?	exam:L4:4:question
+3	她教他	Tā jiāo tā		exam:L4:4:option0
+3	他教她	Tā jiāo tā		exam:L4:4:option1
+3	老师教他们	Lǎoshī jiāo tāmen		exam:L4:4:option2
+3	明天你有时间吗？	Míngtiān nǐ yǒushí jiān ma?	Do you have time tomorrow?	exam:L4:5.0
+3	有，什么事？	Yǒu, shénme shì?	Yes, what is it?	exam:L4:5.1
+3	我想请你看电影。	Wǒ xiǎng qǐng nǐ kàn diànyǐng.	I would like to invite you to a movie.	exam:L4:5.2
+3	好啊，几点？	Hǎo a, jǐ diǎn?	Sure, what time?	exam:L4:5.3
+3	他们要做什么？	Tāmen yào zuò shénme?	What are they going to do?	exam:L4:5:question
+3	吃饭	Chī fàn		exam:L4:5:option2
+3	因为今天有考试。	Yīnwèi jīntiān yǒu kǎoshì.	Because there is an exam today.	exam:L4:6.1
+3	还没有，我再看一会儿书。	Hái méiyǒu, wǒ zài kàn yíhuìr shū.	Not yet, I will read for a little longer.	exam:L4:6.3
+3	他在做什么？	Tā zài zuò shénme?	What is he doing?	exam:L4:6:question
+3	准备考试	Zhǔnbèi kǎoshì		exam:L4:6:option0
+3	等朋友	Děng péngyou		exam:L4:6:option1
+3	对不起，我来晚了。	Duìbuqǐ, wǒ lái wǎn le.	Sorry, I am late.	exam:L4:7.0
+3	没关系，你怎么来的？	Méiguānxi, nǐ zěnme lái de?	It is fine. How did you come?	exam:L4:7.1
+3	我坐公交车来的，路上车很多。	Wǒ zuò gōngjiāochē lái de, lùshang chē hěn duō.	I came by bus; there were many cars on the road.	exam:L4:7.2
+3	下次坐地铁吧。	Xià cì zuò dìtiě ba.	Take the subway next time.	exam:L4:7.3
+3	他怎么来的？	Tā zěnme lái de?	How did he come?	exam:L4:7:question
+3	你家有几口人？	Nǐ jiā yǒu jǐ kǒu rén?	How many people are in your family?	exam:L4:8.0
+3	四口人，爸爸、妈妈、妹妹和我。	Sì kǒu rén, bàba, māma, mèimei hé wǒ.	Four: my father, my mother, my younger sister and me.	exam:L4:8.1
+3	你妹妹多大了？	Nǐ mèimei duō dà le?	How old is your younger sister?	exam:L4:8.2
+3	她今年十岁。	Tā jīnnián shí suì.	She is ten this year.	exam:L4:8.3
+3	他妹妹多大？	Tā mèimei duō dà?	How old is his younger sister?	exam:L4:8:question
+3	十岁	Shí suì		exam:L4:8:option0
+3	八岁	Bā suì		exam:L4:8:option1
+3	二十岁	Èrshí suì		exam:L4:8:option2
+3	你的手机在哪里？	Nǐ de shǒujī zài nǎlǐ?	Where is your phone?	exam:L4:9.0
+3	在桌子上面。	Zài zhuōzi shàngmiàn.	On the table.	exam:L4:9.1
+3	我没有看到。	Wǒ méiyǒu kàn dào.	I do not see it.	exam:L4:9.2
+3	你看，在书的下面。	Nǐ kàn, zài shū de xiàmiàn.	Look, it is under the book.	exam:L4:9.3
+3	手机在哪里？	Shǒujī zài nǎlǐ?	Where is the phone?	exam:L4:9:question
+3	书下面	Shū xiàmiàn		exam:L4:9:option0
+3	桌子下面	Zhuōzi xiàmiàn		exam:L4:9:option1
+3	书包里面	Shūbāo lǐmiàn		exam:L4:9:option2
+3	他们在踢足球。	Tāmen zài tī zúqiú.	They are playing soccer.	exam:R1:0.1
+3	外面在下雨。	Wàimiàn zài xiàyǔ.	It is raining outside.	exam:R1:0.4
+3	我头疼，要吃药。	Wǒ tóu téng, yào chī yào.	I have a headache and need to take medicine.	exam:R1:1.2
+3	这条裤子很大。	Zhè tiáo kùzi hěn dà.	These trousers are very big.	exam:R1:1.4
+3	他每天上网。	Tā měi tiān shàngwǎng.	He goes online every day.	exam:R1:2.1
+3	我想出国旅游。	Wǒ xiǎng chūguó lǚyóu.	I want to travel abroad.	exam:R1:2.3
+3	他比我高。	Tā bǐ wǒ gāo.	He is taller than me.	exam:R2:0.0
+3	我从八点工作到五点。	Wǒ cóng bā diǎn gōngzuò dào wǔ diǎn.	I work from eight to five.	exam:R2:0.2
+3	请往前走。	Qǐng wǎng qián zǒu.	Please go straight ahead.	exam:R2:0.3
+3	我跟朋友一起去旅游。	Wǒ gēn péngyou yìqǐ qù lǚyóu.	I travel with a friend.	exam:R2:0.4
+3	我已经吃饭了，你呢？	Wǒ yǐjīng chī fàn le, nǐ ne?	I have already eaten. And you?	exam:R2:1.0
+3	他正在看电视，请等一下。	Tā zhèngzài kàn diànshì, qǐng děng yíxià.	He is watching TV; please wait a moment.	exam:R2:1.1
+3	他经常去游泳，每个星期两次。	Tā jīngcháng qù yóuyǒng, měi ge xīngqī liǎng cì.	He often goes swimming, twice a week.	exam:R2:1.3
+3	我们就要到机场了。	Wǒmen jiù yào dào jīchǎng le.	We are about to arrive at the airport.	exam:R2:1.4
+3	因为今天下雨，我不去了。	Yīnwèi jīntiān xiàyǔ, wǒ bú qù le.	Because it is raining today, I am not going.	exam:R2:2.0
+3	他生病了，所以没去上课。	Tā shēngbìng le, suǒyǐ méi qù shàngkè.	He is ill, so he did not go to class.	exam:R2:2.1
+3	我想去，但是我没有时间。	Wǒ xiǎng qù, dànshì wǒ méiyǒu shíjiān.	I want to go, but I have no time.	exam:R2:2.2
+3	你喝茶还是咖啡？	Nǐ hē chá háishi kāfēi?	Do you drink tea or coffee?	exam:R2:2.3
+3	他可能不在家，你打电话吧。	Tā kěnéng bú zài jiā, nǐ dǎ diànhuà ba.	He may not be at home; you should call him.	exam:R2:2.4
+3	他比我大三岁。	Tā bǐ wǒ dà sān suì.	He is three years older than me.	exam:R3:0:first
+3	我比他小三岁。	Wǒ bǐ tā xiǎo sān suì.	I am three years younger than him.	exam:R3:0:second
+3	我没有他高。	Wǒ méiyǒu tā gāo.	I am not as tall as he is.	exam:R3:1:first
+3	我家离学校不远。	Wǒ jiā lí xuéxiào bù yuǎn.	My home is not far from the school.	exam:R3:2:second
+3	我想买这条裤子。	Wǒ xiǎng mǎi zhè tiáo kùzi.	I want to buy these trousers.	exam:R3:3:first
+3	我要买这条裤子。	Wǒ yào mǎi zhè tiáo kùzi.	I will buy these trousers.	exam:R3:3:second
+3	我很喜欢踢足球。	Wǒ hěn xǐhuan tī zúqiú.	I like playing soccer very much.	exam:R3:4:first
+3	踢足球是我的爱好。	Tī zúqiú shì wǒ de àihào.	Playing soccer is my hobby.	exam:R3:4:second
+3	他不在这里了。	Tā bú zài zhèlǐ le.	He is not here any more.	exam:R3:5:second
+3	学校在我家前面。	Xuéxiào zài wǒ jiā qiánmiàn.	The school is in front of my home.	exam:R3:6:second
+3	他跑得比她快。	Tā pǎo de bǐ tā kuài.	He runs faster than she does.	exam:R3:7:first
+3	她跑得没有他快。	Tā pǎo de méiyǒu tā kuài.	She does not run as fast as he does.	exam:R3:7:second
+3	医院在车站左边。	Yīyuàn zài chēzhàn zuǒbian.	The hospital is to the left of the station.	exam:R3:8:first
+3	车站在医院右边。	Chēzhàn zài yīyuàn yòubian.	The station is to the right of the hospital.	exam:R3:8:second
+3	我比他高。	Wǒ bǐ tā gāo.	I am taller than him.	exam:R3:9:second
+3	我没去过中国。	Wǒ méi qù guo Zhōngguó.	I have never been to China.	exam:R3:10:first
+3	我准备明年出国。	Wǒ zhǔnbèi míngnián chūguó.	I plan to go abroad next year.	exam:R3:12:first
+3	我已经出国了。	Wǒ yǐjīng chūguó le.	I have already gone abroad.	exam:R3:12:second
+3	他快要走了。	Tā kuàiyào zǒu le.	He is about to leave.	exam:R3:13:first
+3	我每天都跑步。	Wǒ měi tiān dōu pǎobù.	I run every day.	exam:R3:14:first
+3	我有时跑步。	Wǒ yǒushí pǎobù.	I sometimes run.	exam:R3:14:second
+3	她唱得很好。	Tā chàng de hěn hǎo.	She sings very well.	exam:R3:15:first
+3	她唱得不好。	Tā chàng de bù hǎo.	She does not sing well.	exam:R3:15:second
+3	我只有一个哥哥。	Wǒ zhǐ yǒu yí ge gēge.	I have only one older brother.	exam:R3:16:first
+3	我有两个哥哥。	Wǒ yǒu liǎng ge gēge.	I have two older brothers.	exam:R3:16:second
+3	你叫什么名字？	Nǐ jiào shénme míngzi?	What is your name?	exam:R4:0.0:question
+3	我叫小明。	Wǒ jiào Xiǎomíng.	My name is Xiaoming.	exam:R4:0.0:answer
+3	去过一次。	Qù guo yí cì.	Once.	exam:R4:0.1:answer
+3	你为什么没去上课？	Nǐ wèishénme méi qù shàngkè?	Why did you not go to class?	exam:R4:0.4:question
+3	因为我生病了。	Yīnwèi wǒ shēngbìng le.	Because I was ill.	exam:R4:0.4:answer
+3	两百块。	Liǎng bǎi kuài.	Two hundred yuan.	exam:R4:1.4:answer
+3	你会跳舞吗？	Nǐ huì tiàowǔ ma?	Can you dance?	exam:R4:2.2:question
+3	会，我从小就跳舞。	Huì, wǒ cóngxiǎo jiù tiàowǔ.	Yes, I have danced since I was little.	exam:R4:2.2:answer
+3	谁教你汉语？	Shéi jiāo nǐ Hànyǔ?	Who teaches you Chinese?	exam:R4:2.4:question
+3	我的朋友教我。	Wǒ de péngyou jiāo wǒ.	My friend teaches me.	exam:R4:2.4:answer
+3	你想吃面还是吃米饭？	Nǐ xiǎng chī miàn háishi chī mǐfàn?	Do you want noodles or rice?	exam:R4:3.0:question
+3	我想吃米饭。	Wǒ xiǎng chī mǐfàn.	I would like rice.	exam:R4:3.0:answer
+3	你头疼吗？	Nǐ tóu téng ma?	Does your head hurt?	exam:R4:3.1:question
+3	不疼了，谢谢。	Bù téng le, xièxie.	It does not hurt any more, thanks.	exam:R4:3.1:answer
+3	你有手表吗？	Nǐ yǒu shǒubiǎo ma?	Do you have a watch?	exam:R4:3.2:question
+3	有，这是我的新手表。	Yǒu, zhè shì wǒ de xīn shǒubiǎo.	Yes, this is my new watch.	exam:R4:3.2:answer
+3	有点累。	Yǒudiǎn lèi.	A little tired.	exam:R4:3.3:answer
+3	有，我们一起去吧。	Yǒu, wǒmen yìqǐ qù ba.	Yes, let us go together.	exam:R4:3.4:answer
+3	哥哥比我大三岁。	Gēge bǐ wǒ dà sān suì.	My older brother is three years older than me.	lesson:bi:example1
+3	我没有他那么高。	Wǒ méiyǒu tā nàme gāo.	I am not as tall as he is.	lesson:bi:example2
+3	姐姐比我高。	Jiějie bǐ wǒ gāo.	My older sister is taller than me.	lesson:bi:exercise1
+3	没有			lesson:bi:exercise3:explain0
+3	妹妹比我高。	Mèimei bǐ wǒ gāo.	My younger sister is taller than me.	lesson:bi:exercise4
+3	妹妹比我很高。			lesson:bi:exercise4:wrong0
+3	我最喜欢这个手表。	Wǒ zuì xǐhuan zhège shǒubiǎo.	I like this watch best.	lesson:bi:exercise5
+3	他比我高			lesson:bi:text0.1
+3	他比我大三岁			lesson:bi:text1.0
+3	这个比那个好一点			lesson:bi:text1.1
+3	他比我高多了			lesson:bi:text1.2
+3	我没有他高			lesson:bi:text2.1
+3	我没有他那么高			lesson:bi:text2.3
+3	我最喜欢喝茶			lesson:bi:text3.1
+3	这么贵			lesson:bi:text3.4
+3	那么远			lesson:bi:text3.5
+3	非常			lesson:bi:text4.1
+3	太			lesson:bi:text4.2
+3	他比我很高			lesson:bi:text4.5
+3	机场离这里很远。	Jīchǎng lí zhèlǐ hěn yuǎn.	The airport is far from here.	lesson:li:example1
+3	我从家走路到学校。	Wǒ cóng jiā zǒulù dào xuéxiào.	I walk from home to school.	lesson:li:example2
+3	请往左走，洗手间在右边。	Qǐng wǎng zuǒ zǒu, xǐshǒujiān zài yòubian.	Please go left; the restroom is on the right.	lesson:li:example3
+3	商店离我家不远。	Shāngdiàn lí wǒ jiā bù yuǎn.	The shop is not far from my home.	lesson:li:exercise1
+3	不远			lesson:li:exercise1:explain1
+3	我们往右走。	Wǒmen wǎng yòu zǒu.	We walk to the right.	lesson:li:exercise2
+3	我从星期一到星期五上班。	Wǒ cóng xīngqī yī dào xīngqī wǔ shàngbān.	I work from Monday to Friday.	lesson:li:exercise4
+3	我离星期一到星期五上班。			lesson:li:exercise4:wrong0
+3	从我家到学校			lesson:li:text1.2
+3	从八点到十点			lesson:li:text1.3
+3	我从学校回来			lesson:li:text1.5
+3	很远			lesson:li:text3.3
+3	很近			lesson:li:text3.4
+3	学校很远我家			lesson:li:text3.6
+3	我们到机场了。	Wǒmen dào jīchǎng le.	We have arrived at the airport.	lesson:dao:example0
+3	他每天八点到学校。	Tā měi tiān bā diǎn dào xuéxiào.	He gets to school at eight every day.	lesson:dao:example1
+3	我住在学校旁边。	Wǒ zhù zài xuéxiào pángbiān.	I live next to the school.	lesson:dao:example2
+3	她站在门口等你。	Tā zhàn zài ménkǒu děng nǐ.	She is standing at the door waiting for you.	lesson:dao:example3
+3	我住在医院旁边。	Wǒ zhù zài yīyuàn pángbiān.	I live next to the hospital.	lesson:dao:exercise1
+3	住			lesson:dao:exercise1:explain0
+3	在			lesson:dao:exercise1:explain1
+3	她们坐在教室里。	Tāmen zuò zài jiàoshì lǐ.	They are sitting in the classroom.	lesson:dao:exercise2
+3	坐			lesson:dao:exercise2:explain0
+3	妈妈六点到家了。	Māma liù diǎn dào jiā le.	Mom got home at six.	lesson:dao:exercise3
+3	奶奶住在我家。	Nǎinai zhù zài wǒ jiā.	Grandma lives at my home.	lesson:dao:exercise4
+3	奶奶住我家。			lesson:dao:exercise4:wrong0
+3	他到学校了。	Tā dào xuéxiào le.	He has arrived at school.	lesson:dao:exercise5
+3	他到在学校了。			lesson:dao:exercise5:wrong0
+3	我们到机场了			lesson:dao:text0.1
+3	他每天八点到学校			lesson:dao:text0.2
+3	我在家吃饭			lesson:dao:text1.1
+3	我住在学校旁边			lesson:dao:text1.3
+3	她站在门口			lesson:dao:text1.4
+3	我在这里工作			lesson:dao:text2.0
+3	我住在这里			lesson:dao:text2.1
+3	我在学校学习			lesson:dao:text3.1
+3	我学习在学校			lesson:dao:text3.2
+3	你喝过红茶吗？	Nǐ hē guo hóngchá ma?	Have you ever drunk black tea?	lesson:guo:example1
+3	我没学过游泳。	Wǒ méi xué guo yóuyǒng.	I have never learned to swim.	lesson:guo:example2
+3	这个电影我看过两次。	Zhège diànyǐng wǒ kàn guo liǎng cì.	I have seen this movie twice.	lesson:guo:example3
+3	我吃过鱼。	Wǒ chī guo yú.	I have eaten fish.	lesson:guo:exercise1
+3	他没去过外国。	Tā méi qù guo wàiguó.	He has never been abroad.	lesson:guo:exercise2
+3	没			lesson:guo:exercise2:explain0
+3	你看过这个电影吗？	Nǐ kàn guo zhège diànyǐng ma?	Have you seen this movie?	lesson:guo:exercise3
+3	我没喝过咖啡。	Wǒ méi hē guo kāfēi.	I have never drunk coffee.	lesson:guo:exercise4
+3	我不喝过咖啡。			lesson:guo:exercise4:wrong0
+3	你学过汉语吗？	Nǐ xué guo Hànyǔ ma?	Have you studied Chinese before?	lesson:guo:exercise5
+3	我去过中国			lesson:guo:text0.1
+3	我没吃过这个			lesson:guo:text1.2
+3	你去过中国吗			lesson:guo:text1.5
+3	我去了中国			lesson:guo:text2.2
+3	我去过三次中国			lesson:guo:text2.5
+3	我去过中国三次			lesson:guo:text2.6
+3	我不去过中国			lesson:guo:text3.2
+3	我没去过中国			lesson:guo:text3.3
+3	他站着，我坐着。	Tā zhàn zhe, wǒ zuò zhe.	He is standing and I am sitting.	lesson:zhe:example1
+3	手机开着。	Shǒujī kāi zhe.	The phone is on.	lesson:zhe:example2
+3	他笑着说话。	Tā xiào zhe shuōhuà.	He talks with a smile.	lesson:zhe:example3
+3	门口站着一个男孩。	Ménkǒu zhàn zhe yí ge nánhái.	A boy is standing at the door.	lesson:zhe:exercise1
+3	饭馆的门开着。	Fànguǎn de mén kāi zhe.	The restaurant door is open.	lesson:zhe:exercise4
+3	饭馆的门开了着。			lesson:zhe:exercise4:wrong0
+3	弟弟坐着看电视。	Dìdi zuò zhe kàn diànshì.	My younger brother watches TV sitting down.	lesson:zhe:exercise5
+3	门开着			lesson:zhe:text0.1
+3	他站着			lesson:zhe:text0.2
+3	我坐着			lesson:zhe:text0.3
+3	他笑着说话			lesson:zhe:text1.2
+3	弟弟坐着看电视			lesson:zhe:text1.3
+3	门没开			lesson:zhe:text2.1
+3	他没站着			lesson:zhe:text2.3
+3	正在			lesson:zhe:text2.5
+3	他在跑步			lesson:zhe:text2.6
+3	我们要出门了。	Wǒmen yào chūmén le.	We are about to go out.	lesson:yao:example1
+3	他明天就要走了。	Tā míngtiān jiù yào zǒu le.	He is leaving tomorrow.	lesson:yao:example2
+3	快要考试了，我要准备一下。	Kuàiyào kǎoshì le, wǒ yào zhǔnbèi yíxià.	The exam is coming up, so I need to get ready.	lesson:yao:example3
+3	车快要来了。	Chē kuàiyào lái le.	The bus is about to come.	lesson:yao:exercise1
+3	老师就要进来了。	Lǎoshī jiù yào jìnlái le.	The teacher is about to come in.	lesson:yao:exercise2
+3	就要			lesson:yao:exercise2:explain0
+3	爸爸后天就要回来了。	Bàba hòu tiān jiù yào huílái le.	Dad is coming back the day after tomorrow.	lesson:yao:exercise3
+3	后天			lesson:yao:exercise3:explain0
+3	后天就要考试了。	Hòu tiān jiù yào kǎoshì le.	The exam is the day after tomorrow.	lesson:yao:exercise4
+3	后天快要考试了。			lesson:yao:exercise4:wrong0
+3	饭快要好了。	Fàn kuàiyào hǎo le.	Dinner is almost ready.	lesson:yao:exercise5
+3	要			lesson:yao:text0.4
+3	快要下雨了			lesson:yao:text0.6
+3	我们要出门了			lesson:yao:text0.7
+3	快下雨了			lesson:yao:text1.1
+3	他明天就要走了			lesson:yao:text2.2
+3	后天就要考试了			lesson:yao:text2.3
+3	明天快要考试了			lesson:yao:text3.1
+3	明天就要考试了			lesson:yao:text3.2
+3	我五点就起床了。	Wǒ wǔ diǎn jiù qǐchuáng le.	I got up as early as five.	lesson:yijing:example2
+3	你累了，就休息吧。	Nǐ lèi le, jiù xiūxi ba.	If you are tired, then rest.	lesson:yijing:example3
+3	她已经回家了。	Tā yǐjīng huí jiā le.	She has already gone home.	lesson:yijing:exercise1
+3	我们八点就到学校了。	Wǒmen bā diǎn jiù dào xuéxiào le.	We were at school by eight.	lesson:yijing:exercise2
+3	弟弟已经吃饭了。	Dìdi yǐjīng chī fàn le.	My younger brother has already eaten.	lesson:yijing:exercise3
+3	我还没吃饭。	Wǒ hái méi chī fàn.	I have not eaten yet.	lesson:yijing:exercise4
+3	我已经没吃饭。			lesson:yijing:exercise4:wrong0
+3	还没			lesson:yijing:exercise4:explain0
+3	他五点就起床了，真早。	Tā wǔ diǎn jiù qǐchuáng le, zhēn zǎo.	He got up as early as five; that is really early.	lesson:yijing:exercise5
+3	我已经吃饭了			lesson:yijing:text0.2
+3	他八点就到了			lesson:yijing:text1.2
+3	你累了			lesson:yijing:text2.1
+3	就休息吧			lesson:yijing:text2.2
+3	我还没吃饭			lesson:yijing:text3.2
+3	我已经没吃饭			lesson:yijing:text3.3
+3	妈妈让我早点睡觉。	Māma ràng wǒ zǎo diǎn shuìjiào.	Mom tells me to go to bed early.	lesson:rang:example0
+3	他让我等一会儿。	Tā ràng wǒ děng yíhuìr.	He asked me to wait a moment.	lesson:rang:example1
+3	这个电影让我很高兴。	Zhège diànyǐng ràng wǒ hěn gāoxìng.	This movie makes me happy.	lesson:rang:example2
+3	老师让我们进来。	Lǎoshī ràng wǒmen jìnlái.	The teacher asked us to come in.	lesson:rang:exercise1
+3	别在这里打电话。	Bié zài zhèlǐ dǎ diànhuà.	Do not make phone calls here.	lesson:rang:exercise2
+3	爸爸让我去买药。	Bàba ràng wǒ qù mǎi yào.	Dad asks me to go and buy medicine.	lesson:rang:exercise3
+3	别进去。	Bié jìnqù.	Do not go in.	lesson:rang:exercise4
+3	没进去。			lesson:rang:exercise4:wrong0
+3	你别说了，我很忙。	Nǐ bié shuō le, wǒ hěn máng.	Stop talking, I am busy.	lesson:rang:exercise5
+3	他让我等一会儿			lesson:rang:text0.1
+3	妈妈让我早点睡觉			lesson:rang:text0.2
+3	这个电影让我很高兴			lesson:rang:text1.1
+3	别走			lesson:rang:text2.1
+3	别笑了			lesson:rang:text2.5
+3	不要			lesson:rang:text2.7
+3	因为今天很冷，所以我不想出门。	Yīnwèi jīntiān hěn lěng, suǒyǐ wǒ bù xiǎng chūmén.	Because it is cold today, I do not want to go out.	lesson:yinwei:example1
+3	虽然这个很贵，但是很好。	Suīrán zhège hěn guì, dànshì hěn hǎo.	Although this one is expensive, it is good.	lesson:yinwei:example2
+3	因为太晚了，所以我回家了。	Yīnwèi tài wǎn le, suǒyǐ wǒ huí jiā le.	Because it was too late, I went home.	lesson:yinwei:exercise1
+3	虽然很远，但是我走路去。	Suīrán hěn yuǎn, dànshì wǒ zǒulù qù.	Although it is far, I walk there.	lesson:yinwei:exercise2
+3	因为下雨，所以我不去。	Yīnwèi xiàyǔ, suǒyǐ wǒ bú qù.	Because it is raining, I am not going.	lesson:yinwei:exercise3
+3	虽然他很小，但是他懂很多。	Suīrán tā hěn xiǎo, dànshì tā dǒng hěn duō.	Although he is young, he understands a lot.	lesson:yinwei:exercise4
+3	虽然很冷，但是我很高兴。	Suīrán hěn lěng, dànshì wǒ hěn gāoxìng.	Although it is cold, I am happy.	lesson:yinwei:exercise5
+3	虽然很冷，因为我很高兴。			lesson:yinwei:exercise5:wrong0
+3	因为下雨			lesson:yinwei:text0.2
+3	所以我们在家看电影			lesson:yinwei:text0.3
+3	我们在家			lesson:yinwei:text0.5
+3	下雨			lesson:yinwei:text0.6
+3	所以我们在家			lesson:yinwei:text0.7
+3	虽然很累			lesson:yinwei:text1.2
+3	但是我很高兴			lesson:yinwei:text1.3
+3	你为什么不去			lesson:yinwei:text2.1
+3	但是很高兴			lesson:yinwei:text3.4
+3	你今天去还是明天去？	Nǐ jīntiān qù háishi míngtiān qù?	Are you going today or tomorrow?	lesson:haishi:example1
+3	我们坐公交车还是打车？	Wǒmen zuò gōngjiāochē háishi dǎchē?	Shall we take the bus or a taxi?	lesson:haishi:example2
+3	太远了，我们还是打车吧。	Tài yuǎn le, wǒmen háishi dǎchē ba.	It is too far; we had better take a taxi.	lesson:haishi:example3
+3	你喜欢红色还是绿色？	Nǐ xǐhuan hóngsè háishi lǜsè?	Do you like red or green?	lesson:haishi:exercise1
+3	他是你哥哥还是你弟弟？	Tā shì nǐ gēge háishi nǐ dìdi?	Is he your older brother or your younger brother?	lesson:haishi:exercise2
+3	你喝咖啡还是喝奶茶？	Nǐ hē kāfēi háishi hē nǎichá?	Do you drink coffee or milk tea?	lesson:haishi:exercise3
+3	你去还是我去？	Nǐ qù háishi wǒ qù?	Are you going or am I going?	lesson:haishi:exercise4
+3	你去还是我去吗？			lesson:haishi:exercise4:wrong0
+3	太晚了，我们还是回家吧。	Tài wǎn le, wǒmen háishi huí jiā ba.	It is too late; we had better go home.	lesson:haishi:exercise5
+3	你喝红茶还是绿茶			lesson:haishi:text0.1
+3	太远了			lesson:haishi:text1.1
+3	我们还是打车吧			lesson:haishi:text1.2
+3	你喝咖啡还是茶吗			lesson:haishi:text3.2
+3	她汉语说得很好。	Tā Hànyǔ shuō de hěn hǎo.	She speaks Chinese very well.	lesson:de2:example1
+3	我们昨天玩得很高兴。	Wǒmen zuótiān wán de hěn gāoxìng.	We had a great time yesterday.	lesson:de2:example2
+3	弟弟高兴地跑回家。	Dìdi gāoxìng de pǎo huí jiā.	My younger brother ran home happily.	lesson:de2:example3
+3	她写得很好。	Tā xiě de hěn hǎo.	She writes very well.	lesson:de2:exercise1
+3	哥哥游得很快。	Gēge yóu de hěn kuài.	My older brother swims very fast.	lesson:de2:exercise2
+3	他说得很慢。	Tā shuō de hěn màn.	He speaks very slowly.	lesson:de2:exercise3
+3	妹妹高兴地笑了。	Mèimei gāoxìng de xiào le.	My younger sister laughed happily.	lesson:de2:exercise4
+3	她跑得很快。	Tā pǎo de hěn kuài.	She runs very fast.	lesson:de2:exercise5
+3	她跑地很快。			lesson:de2:exercise5:wrong0
+3	他跑得很快			lesson:de2:text0.2
+3	她写得很好			lesson:de2:text0.3
+3	他跑得不快			lesson:de2:text0.5
+3	她汉语说得很好			lesson:de2:text1.0
+3	她说汉语说得很好			lesson:de2:text1.1
+3	高兴地说			lesson:de2:text2.2
+3	弟弟高兴地跑回家			lesson:de2:text2.3
+3	他跑很快			lesson:de2:text4.1
+3	每天早上我都喝一杯茶。	Měi tiān zǎoshang wǒ dōu hē yì bēi chá.	Every morning I drink a cup of tea.	lesson:mei:example0
+3	他经常去商场。	Tā jīngcháng qù shāngchǎng.	He often goes to the mall.	lesson:mei:example1
+3	我有时坐地铁，有时打车。	Wǒ yǒushí zuò dìtiě, yǒushí dǎchē.	Sometimes I take the subway, sometimes a taxi.	lesson:mei:example2
+3	我什么都喜欢吃。	Wǒ shénme dōu xǐhuan chī.	I like eating everything.	lesson:mei:example3
+3	他每天都坐地铁。	Tā měi tiān dōu zuò dìtiě.	He takes the subway every day.	lesson:mei:exercise1
+3	我经常在家看电影。	Wǒ jīngcháng zài jiā kàn diànyǐng.	I often watch movies at home.	lesson:mei:exercise2
+3	我什么都不想吃。	Wǒ shénme dōu bù xiǎng chī.	I do not want to eat anything.	lesson:mei:exercise3
+3	什么			lesson:mei:exercise3:explain0
+3	每个人都喜欢这个电影。	Měi ge rén dōu xǐhuan zhège diànyǐng.	Everyone likes this movie.	lesson:mei:exercise4
+3	每个人喜欢都这个电影。			lesson:mei:exercise4:wrong0
+3	每个人			lesson:mei:exercise4:explain1
+3	我弟弟有时踢足球，不是每天都踢。	Wǒ dìdi yǒushí tī zúqiú, bú shì měi tiān dōu tī.	My younger brother sometimes plays soccer, not every day.	lesson:mei:exercise5
+3	每次			lesson:mei:text0.3
+3	每个人都喜欢			lesson:mei:text0.6
+3	我每天都喝茶			lesson:mei:text0.7
+3	我经常看电影			lesson:mei:text1.2
+3	我有时坐地铁			lesson:mei:text1.3
+3	有时打车			lesson:mei:text1.4
+3	我什么都喜欢吃			lesson:mei:text2.1
+3	我什么都不想吃			lesson:mei:text2.2
+3	也			lesson:mei:text2.3
+3	我什么也不想吃			lesson:mei:text2.4
+3	谁都			lesson:mei:text2.5
+3	哪里都			lesson:mei:text2.6
+3	我什么都吃			lesson:mei:text3.5
+3	什么都			lesson:mei:title3
+3	我买了一条红色的裤子。	Wǒ mǎi le yì tiáo hóngsè de kùzi.	I bought a pair of red trousers.	lesson:mw:example0
+3	这是一位新老师。	Zhè shì yí wèi xīn lǎoshī.	This is a new teacher.	lesson:mw:example1
+3	我去过三次中国。	Wǒ qù guo sān cì Zhōngguó.	I have been to China three times.	lesson:mw:example3
+3	我有一条黑色的裤子。	Wǒ yǒu yì tiáo hēisè de kùzi.	I have a pair of black trousers.	lesson:mw:exercise1
+3	这位老师教汉语。	Zhè wèi lǎoshī jiāo Hànyǔ.	This teacher teaches Chinese.	lesson:mw:exercise2
+3	这			lesson:mw:exercise2:explain0
+3	我买了三条鱼。	Wǒ mǎi le sān tiáo yú.	I bought three fish.	lesson:mw:exercise4
+3	这个包两万块。	Zhège bāo liǎng wàn kuài.	This bag is 20,000 yuan.	lesson:mw:exercise5
+3	这个包二万块。			lesson:mw:exercise5:wrong0
+3	两万			lesson:mw:exercise5:explain0
+3	一条裤子			lesson:mw:text0.1
+3	一条鱼			lesson:mw:text0.2
+3	一位老师			lesson:mw:text0.4
+3	一间教室			lesson:mw:text0.6
+3	请再说一次			lesson:mw:text1.2
+3	一万			lesson:mw:text2.1
+3	多			lesson:mw:text2.3
+3	二十多个学生			lesson:mw:text2.4
+3	一裤子			lesson:mw:text3.0
+3	我吃完饭了。	Wǒ chī wán fàn le.	I have finished eating.	lesson:result:example0
+3	你听懂了吗？	Nǐ tīng dǒng le ma?	Did you understand?	lesson:result:example1
+3	他写错了我的名字。	Tā xiě cuò le wǒ de míngzi.	He wrote my name wrongly.	lesson:result:example2
+3	老师说得太快，我听不懂。	Lǎoshī shuō de tài kuài, wǒ tīng bù dǒng.	The teacher speaks too fast; I cannot understand.	lesson:result:example3
+3	我看完这本书了。	Wǒ kàn wán zhè běn shū le.	I have finished this book.	lesson:result:exercise1
+3	他没听懂老师说的。	Tā méi tīng dǒng lǎoshī shuō de.	He did not understand what the teacher said.	lesson:result:exercise2
+3	对不起，我写错了你的名字。	Duìbuqǐ, wǒ xiě cuò le nǐ de míngzi.	Sorry, I wrote your name wrongly.	lesson:result:exercise3
+3	太快了，我听不懂。	Tài kuài le, wǒ tīng bù dǒng.	It is too fast; I cannot understand.	lesson:result:exercise4
+3	听不懂			lesson:result:exercise4:explain0
+3	我没听懂。	Wǒ méi tīng dǒng.	I did not understand.	lesson:result:exercise5
+3	我听没懂。			lesson:result:exercise5:wrong0
+3	做完			lesson:result:text0.0
+3	写错			lesson:result:text0.1
+3	听懂			lesson:result:text0.2
+3	我吃完饭了			lesson:result:text0.3
+3	看不懂			lesson:result:text1.2
+3	我没听懂			lesson:result:text2.1
+3	我听没懂			lesson:result:text3.2
+3	请进来坐。	Qǐng jìnlái zuò.	Please come in and sit down.	lesson:direction:example0
+3	他回家去了。	Tā huí jiā qù le.	He has gone home.	lesson:direction:example1
+3	你下来，我们一起去。	Nǐ xiàlái, wǒmen yìqǐ qù.	Come down, and we will go together.	lesson:direction:example2
+3	她笑起来了。	Tā xiào qǐlái le.	She started laughing.	lesson:direction:example3
+3	老师走进教室来了。	Lǎoshī zǒu jìn jiàoshì lái le.	The teacher came into the classroom.	lesson:direction:exercise1
+3	你快回来吧。	Nǐ kuài huílái ba.	Come back quickly.	lesson:direction:exercise2
+3	哥哥已经回去了。	Gēge yǐjīng huíqù le.	My older brother has already gone back.	lesson:direction:exercise3
+3	外面很冷，快进来吧。	Wàimiàn hěn lěng, kuài jìnlái ba.	It is cold outside; come in quickly.	lesson:direction:exercise4
+3	请进来！	Qǐng jìnlái!	Please come in!	lesson:direction:exercise5
+3	请进去！			lesson:direction:exercise5:wrong0
+3	上			lesson:direction:text0.2
+3	下			lesson:direction:text0.3
+3	回			lesson:direction:text0.6
+3	他进来了			lesson:direction:text0.10
+3	我进去了			lesson:direction:text0.11
+3	他回家去了			lesson:direction:text2.0
+3	她进教室来了			lesson:direction:text2.1
+3	快起来			lesson:direction:text3.1
+3	她笑起来了			lesson:direction:text3.2
+3	请进来			lesson:direction:text4.2
+3	我们一起吃饭吧。	Wǒmen yìqǐ chī fàn ba.	Let us eat together.	lesson:gen:example1
+3	你跟老师说了吗？	Nǐ gēn lǎoshī shuō le ma?	Did you tell the teacher?	lesson:gen:example2
+3	她经常跟妈妈去商场。	Tā jīngcháng gēn māma qù shāngchǎng.	She often goes to the mall with her mom.	lesson:gen:example3
+3	我跟哥哥一起踢足球。	Wǒ gēn gēge yìqǐ tī zúqiú.	I play soccer with my older brother.	lesson:gen:exercise1
+3	他们一起走路去学校。	Tāmen yìqǐ zǒulù qù xuéxiào.	They walk to school together.	lesson:gen:exercise2
+3	我想跟老师说话。	Wǒ xiǎng gēn lǎoshī shuōhuà.	I want to talk to the teacher.	lesson:gen:exercise3
+3	明天我们一起去看电影吧。	Míngtiān wǒmen yìqǐ qù kàn diànyǐng ba.	Let us go and see a movie together tomorrow.	lesson:gen:exercise4
+3	我跟妈妈去商场。	Wǒ gēn māma qù shāngchǎng.	I go to the mall with Mom.	lesson:gen:exercise5
+3	我去商场跟妈妈。			lesson:gen:exercise5:wrong0
+3	我跟朋友去看电影			lesson:gen:text0.1
+3	我们一起去			lesson:gen:text0.3
+3	我跟朋友一起去旅游			lesson:gen:text0.4
+3	我跟老师说话			lesson:gen:text1.1
+3	我们一起吃饭吧			lesson:gen:text2.1
+3	我去商场跟妈妈			lesson:gen:text3.1
+3	我跟妈妈去商场			lesson:gen:text3.2
+3	我是昨天来的。	Wǒ shì zuótiān lái de.	I came yesterday.	lesson:shide:example0
+3	你是怎么来的？	Nǐ shì zěnme lái de?	How did you come?	lesson:shide:example1
+3	我是坐地铁来的。	Wǒ shì zuò dìtiě lái de.	I came by subway.	lesson:shide:example2
+3	他不是从外国来的。	Tā bú shì cóng wàiguó lái de.	He did not come from abroad.	lesson:shide:example3
+3	我是打车来的。	Wǒ shì dǎchē lái de.	I came by taxi.	lesson:shide:exercise1
+3	是			lesson:shide:exercise1:explain0
+3	你是什么时候到的？	Nǐ shì shénme shíhou dào de?	When did you arrive?	lesson:shide:exercise2
+3	他是在这里学汉语的。	Tā shì zài zhèlǐ xué Hànyǔ de.	It was here that he learned Chinese.	lesson:shide:exercise3
+3	她是和朋友一起来的。	Tā shì hé péngyou yìqǐ lái de.	She came together with her friends.	lesson:shide:exercise4
+3	我不是打车来的。	Wǒ bú shì dǎchē lái de.	I did not come by taxi.	lesson:shide:exercise5
+3	我没是打车来的。			lesson:shide:exercise5:wrong0
+3	不是			lesson:shide:exercise5:explain2
+3	我是昨天来的			lesson:shide:text0.2
+3	你是怎么来的			lesson:shide:text0.3
+3	我是坐地铁来的			lesson:shide:text0.4
+3	我昨天来的			lesson:shide:text1.1
+3	我不是坐地铁来的			lesson:shide:text1.4
+3	我昨天来了			lesson:shide:text2.3
+3	我是昨天来了的			lesson:shide:text3.2
+3	他可能不在家。	Tā kěnéng bú zài jiā.	He may not be at home.	lesson:modal:example0
+3	我希望明天是晴天。	Wǒ xīwàng míngtiān shì qíng tiān.	I hope tomorrow is sunny.	lesson:modal:example2
+3	我准备明年出国旅游。	Wǒ zhǔnbèi míngnián chūguó lǚyóu.	I plan to travel abroad next year.	lesson:modal:example3
+3	他可能在睡觉。	Tā kěnéng zài shuìjiào.	He might be sleeping.	lesson:modal:exercise1
+3	我准备明天去买药。	Wǒ zhǔnbèi míngtiān qù mǎi yào.	I plan to go and buy medicine tomorrow.	lesson:modal:exercise2
+3	我希望你喜欢这个手表。	Wǒ xīwàng nǐ xǐhuan zhège shǒubiǎo.	I hope you like this watch.	lesson:modal:exercise3
+3	今天可能会下雨。	Jīntiān kěnéng huì xiàyǔ.	It might rain today.	lesson:modal:exercise4
+3	他可能不来。	Tā kěnéng bù lái.	He might not come.	lesson:modal:exercise5
+3	他不可能来。			lesson:modal:exercise5:wrong0
+3	不可能			lesson:modal:exercise5:explain0
+3	可能不			lesson:modal:exercise5:explain1
+3	他可能在家			lesson:modal:text0.1
+3	明天可能下雨			lesson:modal:text0.2
+3	他可能不来			lesson:modal:text0.5
+3	我希望明天是晴天			lesson:modal:text1.1
+3	希望你喜欢			lesson:modal:text1.2
+3	我准备明年出国旅游			lesson:modal:text2.1
+3	我在准备考试			lesson:modal:text2.2
+3	你今年多大了？	Nǐ jīnnián duō dà le?	How old are you this year?	lesson:duo:example0
+3	下雨的时候，我们在家看电影。	Xiàyǔ de shíhou, wǒmen zài jiā kàn diànyǐng.	When it rains, we watch movies at home.	lesson:duo:example1
+3	再想想，好吗？	Zài xiǎng xiǎng, hǎo ma?	Think about it some more, okay?	lesson:duo:example2
+3	请你问问老师。	Qǐng nǐ wèn wèn lǎoshī.	Please ask the teacher.	lesson:duo:example3
+3	你家离学校有多远？	Nǐ jiā lí xuéxiào yǒu duō yuǎn?	How far is your home from school?	lesson:duo:exercise1
+3	有			lesson:duo:exercise1:explain1
+3	他有多高？	Tā yǒu duō gāo?	How tall is he?	lesson:duo:exercise2
+3	吃饭的时候，别看手机。	Chī fàn de shíhou, bié kàn shǒujī.	Do not look at your phone when eating.	lesson:duo:exercise3
+3	车站离这里有多远？	Chēzhàn lí zhèlǐ yǒu duō yuǎn?	How far is the station from here?	lesson:duo:exercise4
+3	车站离这里有多近？			lesson:duo:exercise4:wrong0
+3	多远			lesson:duo:exercise4:explain0
+3	再想想吧。	Zài xiǎng xiǎng ba.	Think about it again.	lesson:duo:exercise5
+3	想想			lesson:duo:exercise5:explain0
+3	你多大了			lesson:duo:text0.1
+3	他有多高			lesson:duo:text0.2
+3	学校离这里有多远			lesson:duo:text0.3
+3	多高			lesson:duo:text0.4
+3	多近			lesson:duo:text0.6
+3	吃饭的时候			lesson:duo:text1.1
+3	别看手机			lesson:duo:text1.2
+3	我小的时候			lesson:duo:text1.3
+3	住在中国			lesson:duo:text1.4
+3	看看			lesson:duo:text2.0
+3	听听			lesson:duo:text2.1
+3	问问			lesson:duo:text2.3
+3	走走			lesson:duo:text2.4
+3	你看看这个			lesson:duo:text2.5
+3	我们出去走走吧			lesson:duo:text2.6

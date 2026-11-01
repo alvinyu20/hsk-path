@@ -13,7 +13,7 @@ Live site (once GitHub Pages is switched on): https://alvinyu20.github.io/hsk-pa
 | Words | all 300 of band 1 (297 on the site, see 儿 below), each with a meaning and three example sentences using only HSK 1 words | 197 of the 200 new band 2 words (the open dataset lists 197; three could not be identified), each with a meaning and three example sentences using only HSK 1 and HSK 2 words |
 | Word webs | 25 shared-character groups, 23 opposite pairs, 20 topics | 17 groups, 16 pairs and opposites, 14 topics (every word is in a topic) |
 | Grammar | 26 lessons covering all 70 points of the band 1 grammar outline, 130 exercises | 19 lessons, 95 exercises. The points are **not** the official numbered list: they are chosen from the grammar of the HSK 2 words and the Chinese Grammar Wiki's HSK 2 list (`content/l2/grammar-outline.txt`, 36 points) |
-| Listening | 24 clips with dictation, shadowing and a tone trainer | 24 clips with dictation, shadowing and the same tone trainer |
+| Listening | 24 clips with dictation, shadowing and a tone trainer (single syllables, and a two-syllable trainer with 133 real words) | 24 clips with dictation, shadowing and the same tone trainer (236 two-syllable words) |
 | Speaking | 8 scripted conversations you say out loud | 8 scripted conversations you say out loud |
 | Tests | built from the words you have started, mixing meaning, listening, pinyin, fill-in and word-order questions | the same, from the HSK 2 words you have started |
 | Level exam | mock exam, 20 listening + 20 reading questions (the official HSK 1 sample layout) | mock exam, 35 listening + 25 reading questions in the layout of the 2012 HSK 2 sample papers (the 2025 layout was not available to me), from a bank of 141 questions |
@@ -36,7 +36,11 @@ Live site (once GitHub Pages is switched on): https://alvinyu20.github.io/hsk-pa
 
 **Word notes.** A word row can have an optional sixth column, a short note shown under "Show example" (汉语 and 中文 have one).
 
-**Not built yet:** pronunciation scoring (the AI conversation shows what the browser heard, not a score), HSK 3, and native audio recordings.
+**Tone pairs.** Listening lab → Tone trainer → Two syllables: the device voice says a real two-character word and you pick the tone of each syllable (the second can be the light tone). The words come from `tools/build-speech.py`, which reads the tones from the pinyin the site shows (not words with 不, 一 or 儿). For 3 + 3 words, 2 + 3 also counts as right, because the first third tone is said as a rising tone.
+
+**Recorded audio.** The site plays an audio file instead of the browser voice for any text that has one. Put files in `audio/`, named exactly like the text they speak (`你好.mp3`, `我想喝茶.mp3`; also .m4a, .ogg, .wav, .webm), then run `python3 tools/build-audio.py` to list them in `data/audio-manifest.js`. A text without a file, or a file the browser cannot play, falls back to the browser voice. `python3 tools/audio-script.py 2 /tmp/s.json` (after `node tools/dump-sentences.js 2 --plain > /tmp/s.json`) writes `review/audio-script-hsk2.tsv`, the list of everything to record, words first. No recordings exist yet, and dialogue lines in the mock exam still use the browser voices. The match is on the exact text, so the few words written differently in the 儿 style need their own files.
+
+**Not built yet:** pronunciation scoring (the AI conversation shows what the browser heard, not a score), HSK 3, and the recordings themselves.
 
 ## Accuracy
 
