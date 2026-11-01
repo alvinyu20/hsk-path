@@ -152,9 +152,9 @@
         <ol class="muted" style="margin:10px 0 0;padding-left:20px;font-size:15.5px;line-height:1.6">
           <li>Make an account at alibabacloud.com and open Model Studio in the <b>Singapore</b> region. Agree to the terms to switch it on.</li>
           <li>In Key Management (Singapore), press Create API Key (Default workspace) and copy it.</li>
-          <li>Paste it below and press Save, then Test connection. The workspace ID is optional: leave it empty unless the test says it is needed.</li>
+          <li>Paste it below and press Save, then Test connection. The workspace ID is optional: leave it empty at first. Alibaba's newest pages use an address with your workspace ID in it, so if the test fails, paste the ID from the Model Studio console and test again.</li>
         </ol>
-        <p class="muted" style="margin:10px 0 0;font-size:14.5px">The key is stored on this device only and sent straight from your browser to Alibaba. It is not synced or exported. In Model Studio, turn on "Free quota only" so nothing is billed when the free quota runs out.</p>
+        <p class="muted" style="margin:10px 0 0;font-size:14.5px">The key is stored on this device only and sent straight from your browser to Alibaba. It is not synced or exported. In Model Studio, turn on "Free quota only" for each model you use, so nothing is billed when the free quota runs out. Without it, use past the free quota is billed.</p>
         <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
           <input class="wsearch" style="margin:0;flex:1 1 260px;min-width:0" type="password" autocomplete="off" placeholder="Paste the Alibaba API key" value="{{aliKeyInput}}" onInput="{{onAliKeyInput}}" aria-label="Alibaba API key">
         </div>
