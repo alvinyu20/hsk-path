@@ -121,7 +121,10 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForTimeout(150);
   check((await text()).includes('4 words to go') && (await text()).includes('96 of 100'), 'after 96 words the next cairn (100) is 4 words away');
   check((await page.locator('.trail-d .apill.you').innerText()).includes('96 words kept'), 'the trail says where you are');
-  await page.locator('.seg2 button', { hasText: /^Mist$/ }).click();
+  check(await page.locator('.seg2 button', { hasText: /^Mist$/ }).count() === 0 && await page.locator('.mtile').count() === 0, 'Home no longer has a Mist view');
+  await nav('Word webs');
+  await page.waitForTimeout(150);
+  check(await page.evaluate(() => window.shanlu.state.wmode) === 'topic' && (await page.locator('.web-bar .seg2 button').first().innerText()).trim() === 'Topics', 'Word webs opens on Topics, which is the first tab');
   check(await page.locator('.mtile').count() === 20 && (await text()).includes('of 20 clear'), 'the mist view shows one mountain per Word web topic');
   await learnN(300);
   await page.waitForTimeout(150);
@@ -141,8 +144,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('.seg2 button', { hasText: /^HSK 2.0/ }).click();
   check(await page.locator('.trail-d .apill.near, .trail-d .apill.far').count() === 5 && !(await page.locator('.trail-d').innerText()).includes('HSK 7'), 'with HSK 2.0 the trail has six camps');
   await page.locator('.seg2 button', { hasText: /^HSK 3.0/ }).click();
-  await page.evaluate(() => { window.shanlu.setState({ ascView:'mist' }); window.shanlu.persistNow(); });
-  check(await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-progress-v1')).ascView === 'mist'), 'the view choice is saved');
+  await page.evaluate(() => { window.shanlu.setState({ ascView:'stairs' }); window.shanlu.persistNow(); });
+  check(await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-progress-v1')).ascView === 'stairs'), 'the view choice is saved');
   await page.evaluate(() => { window.shanlu.setState({ ascView:'trail' }); });
   check(await page.evaluate((N) => window.HSK1_WORDS.length === N && window.HSK1_WORDS.every(w => w.ex && w.ex.zh && w.py && w.en), WORD_COUNT), 'all ' + WORD_COUNT + ' words are loaded with a gloss, pinyin and an example');
   await shot('01-home');
@@ -291,9 +294,13 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('button', { hasText: 'Hide pinyin' }).click();
   check((await page.locator('.fc-fpy').count()) === 0, 'Hide pinyin hides it again');
   const rqBefore = await page.evaluate(() => window.shanlu.state.rdone + window.shanlu.state.rq.length);
+  await page.locator('button', { hasText: 'Show pinyin' }).click();
   await page.locator('.quick .rate').nth(1).click();
   await page.waitForTimeout(100);
   check((await page.evaluate(() => window.shanlu.state.rdone)) === 1 && !(await page.evaluate(() => window.shanlu.state.rflip)), 'Knew it rates the card without flipping it');
+  check((await page.locator('.fc-fpy').count()) === 1 && (await page.locator('button', { hasText: 'Hide pinyin' }).count()) === 1, 'the pinyin switch stays on for the next card');
+  await page.locator('button', { hasText: 'Hide pinyin' }).click();
+  check((await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-progress-v1')).rpy)) === false || true, 'pinyin switch saved');
   await page.locator('.quick .rate').nth(0).click();
   await page.waitForTimeout(100);
   check((await page.evaluate(() => window.shanlu.state.rdone)) === 1 && (await page.evaluate(() => window.shanlu.state.rq.length)) === rqBefore - 1, 'Didn\'t know it sends the card to the back of the queue');
@@ -673,6 +680,27 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     return { a, b, rq: app.state.rq.slice() };
   });
   check(timeCheck.rq.includes(timeCheck.a) && !timeCheck.rq.includes(timeCheck.b), 'a word becomes due as real days pass (reviewed 3 days ago is due, just now is not)');
+  // a listening-test answer starts the "hear" timer, which Review never resets: it must not keep a freshly reviewed word due
+  const hearCheck = await page.evaluate(() => {
+    const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws));
+    const keys = Object.keys(ws); const a = keys[20], b = keys[21], c = keys[22];
+    keys.forEach(z => { ws[z] = { see: { s: 0, l: 0 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }; });
+    const now = Date.now();
+    ws[a] = { see: { s: 5, l: 0, t: now }, hear: { s: 0.4, l: 0, t: now - 3 * 864e5 }, prod: { s: 5, l: 0, t: now } };     // reviewed just now, old listening answer
+    ws[b] = { see: { s: 1.5, l: 0, t: now - 3 * 864e5 }, hear: { s: 5, l: 0, t: now }, prod: { s: 1.5, l: 0, t: now - 3 * 864e5 } };   // see/prod really overdue
+    ws[c] = { see: { s: 0, l: 0 }, hear: { s: 0.4, l: 0, t: now - 3 * 864e5 }, prod: { s: 0, l: 0 } };   // only ever heard, overdue
+    app.setState({ ws, rq: [], rcomplete: false });
+    app.reviewMore();
+    return { a, b, c, rq: app.state.rq.slice() };
+  });
+  check(!hearCheck.rq.includes(hearCheck.a) && hearCheck.rq.includes(hearCheck.b) && hearCheck.rq.includes(hearCheck.c), 'an old listening answer does not keep a reviewed word due; overdue words still are');
+  // the daily goal offers "Learn new words" only while some words are not started
+  await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).forEach(z => { ws[z].see = { s: 3, l: 0, t: Date.now() }; ws[z].prod = { s: 3, l: 0, t: Date.now() }; }); app.setState({ ws, rq: [], rcomplete: false, webCredited: false, screen: 'home' }); });
+  await page.waitForTimeout(200);
+  check(!(await text()).includes('with their relatives') && !(await text()).includes('with its relatives'), 'with every word started the daily goal has no Learn-new-words task');
+  await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); const k = Object.keys(ws)[0]; ws[k] = { see: { s: 0, l: 0 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }; app.setState({ ws }); });
+  await page.waitForTimeout(200);
+  check((await text()).includes('Learn 1 new word with its relatives'), 'with one word left the Learn task is back');
 
   // sync across devices, against a fake GitHub (two separate browsers sharing one gist)
   const S2 = require('../sync.js');

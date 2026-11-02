@@ -28,19 +28,25 @@
   if (ERHUA && !ERHUA_ON) ERHUA.apply(window);
 
   // Which level this page shows. level.js sets it (saved in this browser; switching reloads the page). Each level keeps its own progress.
-  const LV = window.SHANLU_LEVEL || 1;
-  const LVN = 'HSK ' + LV;
+  const LV = window.SHANLU_LEVEL == null ? 1 : window.SHANLU_LEVEL;   // 0 means "All levels": every unlocked level together
+  const ALL = LV === 0;
+  const LVLS = ALL ? (window.SHANLU_LEVELS || [1]) : [LV];            // the levels whose content is shown
+  const TOPL = Math.max.apply(null, LVLS);                             // the highest of them
+  const LVN = ALL ? 'All levels' : 'HSK ' + LV;
   const LVL = window.ShanluLevel || { MAX_LEVEL:LV, PASS_PCT:80, passedEntry:() => false, levelPassed:() => false, markPassed() {}, unlocked:() => true };
   const LV_DATA = (name) => window['HSK' + LV + '_' + name];
-  const WORDS = LV_DATA('WORDS');
-  const LESSONS = LV_DATA('GRAMMAR').lessons;
-  const { hubs:HUBS, opps:OPPS, topics:TOPICS } = LV_DATA('WEBS');
+  // In "All levels" the content of every unlocked level is joined (HSK 1 first). Words are different in every level, so nothing is shared or duplicated.
+  const LV_ALL = (name) => LVLS.map(n => window['HSK' + n + '_' + name]).filter(Boolean);
+  const JOIN = (name, key) => [].concat.apply([], LV_ALL(name).map(d => d[key] || []));
+  const WORDS = ALL ? [].concat.apply([], LV_ALL('WORDS')) : LV_DATA('WORDS');
+  const LESSONS = ALL ? JOIN('GRAMMAR', 'lessons') : LV_DATA('GRAMMAR').lessons;
+  const { hubs:HUBS, opps:OPPS, topics:TOPICS } = ALL ? { hubs:JOIN('WEBS', 'hubs'), opps:JOIN('WEBS', 'opps'), topics:JOIN('WEBS', 'topics') } : LV_DATA('WEBS');
   // Listening lab and practice scripts: a level without them (none yet for HSK 3) has those parts switched off.
-  const { clips:CLIPS, tones:TONES, pairs:PAIR_DATA } = Object.assign({ clips:[], tones:[], pairs:[] }, LV_DATA('LISTEN') || {});
+  const { clips:CLIPS, tones:TONES, pairs:PAIR_DATA } = Object.assign({ clips:[], tones:[], pairs:[] }, (ALL ? { clips:JOIN('LISTEN', 'clips'), tones:(LV_ALL('LISTEN')[0] || {}).tones, pairs:JOIN('LISTEN', 'pairs') } : LV_DATA('LISTEN')) || {});
   // two-syllable words for the tone-pair trainer; the pair [3, 3] is said as 2 + 3 (the first of two third tones rises)
   const PAIR_LIST = () => PAIR_DATA.filter(p => BANK[p.zh]);
   const pairHit = (t, slot, n) => n === t[slot - 1] || (slot === 1 && t[0] === 3 && t[1] === 3 && n === 2);
-  const { scenarios:SCEN, phrases:PHRASES } = LV_DATA('SPEAK') || { scenarios:[], phrases:[] };
+  const { scenarios:SCEN, phrases:PHRASES } = (ALL ? { scenarios:JOIN('SPEAK', 'scenarios'), phrases:JOIN('SPEAK', 'phrases') } : LV_DATA('SPEAK')) || { scenarios:[], phrases:[] };
   const HAS_LISTEN = CLIPS.length > 0;
   const HAS_SCRIPTS = SCEN.length > 0;
   // Talk-with-AI role-play settings are the practice scripts' scenarios (title, sub and goals); a level without scripts has free chat only
@@ -49,7 +55,12 @@
   const NO_SC = { id:'', glyph:'', title:'', sub:'', goals:[], words:[], ai:[{ zh:'', py:'', en:'' }], you:[{ zh:'', py:'', en:'' }] };
   const NO_CLIP = { zh:'', py:'', en:'', words:[], notes:[] };
   const REPO = 'alvinyu20/hsk-path';
-  const KEY = LV === 1 ? 'shanlu-progress-v1' : 'shanlu-progress-v1-l' + LV;
+  // Progress is kept per level. "All levels" has a key of its own for the daily numbers (XP, streak, today's list), but the words, grammar,
+  // speaking and listening progress (SPLIT) is read from and written back to each level's own save, so every view shows the same progress.
+  const storeKey = (n) => (n === 1 ? 'shanlu-progress-v1' : 'shanlu-progress-v1-l' + n);
+  const KEY = ALL ? 'shanlu-progress-v1-all' : storeKey(LV);
+  const SPLIT = ['ws', 'misses', 'gres', 'sres', 'clipBest'];
+  const LESSON_ALIAS = { 2:{ modal:'modal2' } };   // an HSK 2 lesson id that used to clash with an HSK 1 id
 
   const SYS = {
     '2.0': { levels:[['1', '150'], ['2', '300'], ['3', '600'], ['4', '1,200'], ['5', '2,500'], ['6', '5,000']], note:'Six separate level exams. Word totals are cumulative.' },
@@ -100,7 +111,11 @@
     const m = wMastery(w);
     const lv = levelOf(m);
     const recall = started.length ? Math.round(100 * started.reduce((a, k) => a + retr(w[k], off), 0) / started.length) : 0;
-    const dueN = started.length ? Math.min.apply(null, started.map(k => w[k].s - lOf(w[k]) - off)) : 9999;
+    // A word is due when a skill that Review practises (see, prod) is due. "hear" is only refreshed by listening-test questions, so it must not
+    // keep a word due after you have reviewed it; it counts only for a word that has no see/prod timer yet.
+    const dueDims = started.filter(k => k !== 'hear');
+    const dueFrom = dueDims.length ? dueDims : started;
+    const dueN = started.length ? Math.min.apply(null, dueFrom.map(k => w[k].s - lOf(w[k]) - off)) : 9999;
     let due = 'Not started';
     if (started.length) due = dueN <= 0 ? 'Due now' : (dueN < 1.5 ? 'Due tomorrow' : (dueN < 60 ? 'Due in ' + Math.round(dueN) + ' days' : 'Due in ' + Math.round(dueN / 30) + ' months'));
     return {
@@ -127,7 +142,7 @@
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
   const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy'];
 
   function freshState() {
     let dark = false;
@@ -142,7 +157,7 @@
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'char', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
+      wmode:'topic', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
@@ -179,8 +194,36 @@
     if (S.rlast && !BANK[S.rlast.zh]) S.rlast = null;
   }
 
+  const aliasGres = (gres, n) => {
+    const al = LESSON_ALIAS[n];
+    if (!al || !gres) return gres;
+    const out = Object.assign({}, gres);
+    Object.keys(al).forEach(o => { if (out[o] !== undefined) { out[al[o]] = Math.max(out[al[o]] || 0, out[o]); delete out[o]; } });
+    return out;
+  };
+  const readStore = (n) => {
+    let st = null;
+    try { st = JSON.parse(localStorage.getItem(storeKey(n))); } catch (e) {}
+    if (!st || typeof st !== 'object') return null;
+    if (st.gres) st.gres = aliasGres(st.gres, n);
+    return st;
+  };
+  const clipCount = (n) => ((window['HSK' + n + '_LISTEN'] || {}).clips || []).length;
+  // the words, grammar, speaking and listening progress of every shown level, joined (All levels)
+  const readSplit = () => {
+    const out = { ws:{}, misses:{}, gres:{}, sres:{}, clipBest:[] };
+    LVLS.forEach(n => {
+      const st = readStore(n) || {};
+      Object.assign(out.ws, st.ws || {}); Object.assign(out.misses, st.misses || {}); Object.assign(out.gres, st.gres || {}); Object.assign(out.sres, st.sres || {});
+      const cb = Array.isArray(st.clipBest) ? st.clipBest : [];
+      for (let k = 0; k < clipCount(n); k++) out.clipBest.push(cb[k] || 0);
+    });
+    return out;
+  };
+
   function mergeSaved(base, saved) {
     if (!saved || typeof saved !== 'object') return base;
+    if (!ALL && saved.gres) saved = Object.assign({}, saved, { gres:aliasGres(saved.gres, LV) });
     PERSIST.forEach(k => { if (saved[k] !== undefined && saved[k] !== null) base[k] = saved[k]; });
     carryOverErhua(base);
     // older saves: a started word with no timestamp is treated as reviewed now, so nothing is suddenly overdue
@@ -193,6 +236,13 @@
   function loadState() {
     let saved = null;
     try { saved = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+    if (ALL) {
+      if (!saved) {   // first time in All levels: start from the highest level's numbers (streak, XP, settings) and a fresh day
+        saved = Object.assign({}, readStore(TOPL) || {});
+        delete saved.day; saved.exams = [];
+      }
+      saved = Object.assign({}, saved, readSplit());
+    }
     return rollDay(mergeSaved(freshState(), saved));
   }
 
@@ -259,13 +309,13 @@
   // ---------- talking with an AI (bring-your-own-key, straight from the browser) ----------
   // every word the conversation may use: this level's words, plus the earlier levels' words (at HSK 2 that is HSK 1 too)
   const KB = {};
-  if (LV > 1 && window.HSK1_WORDS) window.HSK1_WORDS.forEach(w => { KB[w.zh] = { py:w.py, en:w.en }; });
+  for (let n = 1; n < (ALL ? TOPL : LV); n++) (window['HSK' + n + '_WORDS'] || []).forEach(w => { KB[w.zh] = { py:w.py, en:w.en }; });
   WORDS.forEach(w => { KB[w.zh] = { py:w.py, en:w.en }; });
   const KB_KEYS = Object.keys(KB);
   const CHARSET = {};
   KB_KEYS.forEach(k => k.split('').forEach(ch => { CHARSET[ch] = true; }));
   // words of the next level (the 2025 syllabus) the conversation may use as a one-level-up preview; pinyin is checked in tools/build-preview.py
-  const PV = (LV === 1 ? window.HSK2_PREVIEW : LV === 2 ? window.HSK3_PREVIEW : null) || {};   // the next level's words, shown with pinyin and English when used
+  const PV = window['HSK' + ((ALL ? TOPL : LV) + 1) + '_PREVIEW'] || {};   // the next level's words, shown with pinyin and English when used
   // the other spelling of a 儿 word (the 儿 form when the site shows plain forms, or the reverse) is fine too: the model may use either
   const ERH_ALT = {};
   if (window.HSK1_ERHUA) window.HSK1_ERHUA.pairs.forEach(pr => { [[pr.official, pr.officialPy], [pr.plain, pr.plainPy]].forEach(x => { if (!KB[x[0]] && x[1]) ERH_ALT[x[0]] = x[1]; }); });
@@ -328,11 +378,11 @@
     return out;
   };
   const aiSystem = (scn) => {
-    const known = LV === 1 ? 'HSK 1' : 'HSK 1 and HSK 2';   // the lists the learner knows
-    const nextN = 'HSK ' + (LV + 1);                        // the level the conversation may peek at
+    const known = TOPL === 1 ? 'HSK 1' : 'HSK 1 and HSK 2';   // the lists the learner knows
+    const nextN = 'HSK ' + (TOPL + 1);                        // the level the conversation may peek at
     const up = Object.keys(PV).length > 0;
     return [
-      'You are Mingming (明明), a friendly Mandarin conversation partner for an adult English-speaking beginner who is studying for ' + LVN + (LV === 1 ? '' : ' (HSK 1 words are known too)') + (up ? ' and is happy to see a little ' + nextN + ' as a preview.' : '.'),
+      'You are Mingming (明明), a friendly Mandarin conversation partner for an adult English-speaking beginner who is studying for HSK ' + TOPL + (TOPL === 1 ? '' : ' (HSK 1 words are known too)') + (up ? ' and is happy to see a little ' + nextN + ' as a preview.' : '.'),
       'Speak Simplified Chinese. Use mainly words from this ' + known + ' word list (plus punctuation and numbers): ' + KB_KEYS.join(' ') + '.',
       up ? 'You may also use a few words from this ' + nextN + ' list as a gentle preview, at most one or two in a reply, when they make the conversation more natural and realistic or let you cover more everyday situations (cafés, travel, directions, hobbies, health, school, work): ' + Object.keys(PV).join(' ') + '. Never use a word that is on neither list.' : 'Never use a word that is not on the list.',
       'If you need a word that is ' + (up ? 'on neither list' : 'not on the list') + ', say it another way with listed words. Never write pinyin in the Chinese. When you say your own name, say 我叫明明 (the standard way to give a name), not 我是明明. Keep every reply to one or two short sentences (about 15 characters or fewer in total) and ask at most one simple question, so the learner can answer.',
@@ -574,10 +624,31 @@
     persistNow() {
       try {
         const out = {};
-        PERSIST.forEach(k => { out[k] = this.state[k]; });
+        PERSIST.forEach(k => { if (!ALL || SPLIT.indexOf(k) < 0) out[k] = this.state[k]; });
         localStorage.setItem(KEY, JSON.stringify(out));
-        if ((this.state.exams || []).some(LVL.passedEntry)) LVL.markPassed(LV);   // a passed full exam opens the next level
+        if (ALL) this.persistSplit();
+        else if ((this.state.exams || []).some(LVL.passedEntry)) LVL.markPassed(LV);   // a passed full exam opens the next level
       } catch (e) {}
+    }
+    // All levels: hand each level its own part of the progress, leaving the rest of that level's save alone
+    persistSplit() {
+      const S = this.state;
+      let off = 0;
+      LVLS.forEach(n => {
+        const st = readStore(n) || {};
+        const words = (window['HSK' + n + '_WORDS'] || []).map(w => w.zh);
+        const ws = Object.assign({}, st.ws); words.forEach(z => { if (S.ws[z]) ws[z] = S.ws[z]; });
+        const mis = Object.assign({}, st.misses); words.forEach(z => { if (S.misses[z] !== undefined) mis[z] = S.misses[z]; else delete mis[z]; });
+        const pick = (src, ids) => { const o = {}; ids.forEach(id => { if (src[id] !== undefined) o[id] = src[id]; }); return o; };
+        const lessons = ((window['HSK' + n + '_GRAMMAR'] || {}).lessons || []).map(l => l.id);
+        const scns = ((window['HSK' + n + '_SPEAK'] || {}).scenarios || []).map(x => x.id);
+        const gres = Object.assign({}, st.gres); lessons.forEach(id => { delete gres[id]; }); Object.assign(gres, pick(S.gres, lessons));
+        const sres = Object.assign({}, st.sres); scns.forEach(id => { delete sres[id]; }); Object.assign(sres, pick(S.sres, scns));
+        const cnt = clipCount(n);
+        st.ws = ws; st.misses = mis; st.gres = gres; st.sres = sres; st.clipBest = S.clipBest.slice(off, off + cnt);
+        off += cnt;
+        try { localStorage.setItem(storeKey(n), JSON.stringify(st)); } catch (e) {}
+      });
     }
     later(fn, ms) { const id = setTimeout(fn, ms); this.timers.push(id); }
 
@@ -910,11 +981,28 @@
       this.noSync = false;
       try {
         this.persistNow();
-        const r = await window.ShanluSync.round({ token:SYNCCFG.token, gistId:SYNCCFG.gist || null, state:this.state, file:window.ShanluSync.fileFor(LV) });
-        let next = rollDay(Object.assign({}, this.state, r.merged));
-        carryOverErhua(next);
-        const patch = window.ShanluSync.pick(next);
-        patch.rq = (patch.rq || []).filter(z => BANK[z]);
+        let r, patch;
+        if (ALL) {
+          // every shown level syncs its own file; only the words, grammar, speaking and listening progress comes back into this view
+          let gist = SYNCCFG.gist || null, created = false;
+          for (const n of LVLS) {
+            const st = readStore(n) || {};
+            const rr = await window.ShanluSync.round({ token:SYNCCFG.token, gistId:gist, state:st, file:window.ShanluSync.fileFor(n) });
+            gist = rr.gistId; created = created || rr.created;
+            try { localStorage.setItem(storeKey(n), JSON.stringify(Object.assign({}, st, window.ShanluSync.pick(rr.merged)))); } catch (e) {}
+          }
+          r = { gistId:gist, created };
+          const tmp = Object.assign({}, this.state, readSplit());
+          Object.keys(BANK).forEach(zh => { if (!tmp.ws[zh]) tmp.ws[zh] = blankWord(); });
+          carryOverErhua(tmp);
+          patch = {}; SPLIT.forEach(k => { patch[k] = tmp[k]; });
+        } else {
+          r = await window.ShanluSync.round({ token:SYNCCFG.token, gistId:SYNCCFG.gist || null, state:this.state, file:window.ShanluSync.fileFor(LV) });
+          let next = rollDay(Object.assign({}, this.state, r.merged));
+          carryOverErhua(next);
+          patch = window.ShanluSync.pick(next);
+          patch.rq = (patch.rq || []).filter(z => BANK[z]);
+        }
         SYNCCFG.gist = r.gistId; SYNCCFG.at = Date.now(); saveSyncCfg();
         this.noSync = true;
         this.setState(Object.assign(patch, { syncBusy:false, syncAt:SYNCCFG.at, syncBad:false, syncMsg:r.created ? 'Connected. Your progress is now saved in a private GitHub gist.' : 'Synced.' }));
@@ -959,7 +1047,7 @@
       if (r === 'again') q.push(zh); else done = done + 1;
       const finished = q.length === 0;
       this.setState({
-        rq:q, rflip:false, rpy:false, rdone:done, rstep:S.rstep + 1, rxp:S.rxp + gain, rcomplete:finished, rcounts:counts,
+        rq:q, rflip:false, rdone:done, rstep:S.rstep + 1, rxp:S.rxp + gain, rcomplete:finished, rcounts:counts,
         xp:S.xp + gain, dayXp:S.dayXp + gain, dayMin:S.dayMin + (finished ? Math.max(1, Math.round(S.rtotal * 0.5)) : 0),
         ws:res.ws, woff:0, rlast:{ zh, from:res.from, to:res.to }
       });
@@ -1206,7 +1294,7 @@
         const blob = new Blob([JSON.stringify({ app:'shanlu', version:1, level:LV, saved:new Date().toISOString(), data:out }, null, 2)], { type:'application/json' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = 'shanlu-progress-' + (LV === 1 ? '' : 'hsk' + LV + '-') + ymd(new Date()) + '.json';
+        a.download = 'shanlu-progress-' + (LV === 1 ? '' : (ALL ? 'all-' : 'hsk' + LV + '-')) + ymd(new Date()) + '.json';
         document.body.appendChild(a); a.click(); a.remove();
       } catch (e) {}
     };
@@ -1216,15 +1304,16 @@
         const obj = JSON.parse(text);
         const data = obj && obj.data;
         if (!data || typeof data !== 'object' || !data.ws) throw new Error('not a progress file');
-        if ((obj.level || 1) !== LV) { window.alert('That file is HSK ' + (obj.level || 1) + ' progress, but this page is on ' + LVN + '. Switch level first, then import it.'); return; }
+        const fileLv = obj.level == null ? 1 : obj.level;
+        if (fileLv !== LV) { window.alert('That file is ' + (fileLv === 0 ? 'All levels' : 'HSK ' + fileLv) + ' progress, but this page is on ' + LVN + '. Switch level first, then import it.'); return; }
         const merged = mergeSaved(Object.assign({}, this.state), data);
         this.setState(rollDay(merged));
         this.persistNow();
       } catch (e) { window.alert('That file does not look like a Shanlu progress file.'); }
     };
     resetAll = () => {
-      if (window.confirm('Delete all progress in this browser? Export it first if you want a copy.')) {
-        try { localStorage.removeItem(KEY); } catch (e) {}
+      if (window.confirm(ALL ? 'Delete the progress of every level shown here (' + LVLS.map(n => 'HSK ' + n).join(' and ') + ') in this browser? Export it first if you want a copy.' : 'Delete all progress in this browser? Export it first if you want a copy.')) {
+        try { localStorage.removeItem(KEY); if (ALL) LVLS.forEach(n => localStorage.removeItem(storeKey(n))); } catch (e) {}
         window.location.reload();
       }
     };
@@ -1244,7 +1333,7 @@
         who:m.who, isAi:m.who === 'ai', zh:m.zh, py:m.py, en:m.en, showZh:S.szh, showPy:S.spy && !!m.py, showEn:S.sen && !!m.en && m.who === 'ai',
         quiet, quietText:m.who === 'ai' ? 'Listen to Mingming' : 'You said it', pc:S.playing === 'aim' + k ? 'on' : '', play:() => this.say(m.zh, 'aim' + k),
         hasOutside:m.outside.length > 0, outsideText:'Not in this site\'s HSK 1 or HSK 2 lists, so no pinyin: ' + m.outside.join(' '),
-        hasPv:!!(m.pv && m.pv.length), pvText:'HSK ' + (LV + 1) + ' preview: ' + (m.pv || []).map(p => p.t + ' ' + p.py + ' = ' + p.en).join('  ·  '),
+        hasPv:!!(m.pv && m.pv.length), pvText:'HSK ' + (TOPL + 1) + ' preview: ' + (m.pv || []).map(p => p.t + ' ' + p.py + ' = ' + p.en).join('  ·  '),
         hasFb:!!m.fb, fbBetter:m.fb ? m.fb.better : '', fbWhy:m.fb ? m.fb.why : '', hasOk:m.who === 'me' && !!m.judged && !m.fb,
         cmpGood:!!(m.cmp && m.cmp.same), cmpBad:!!(m.cmp && !m.cmp.same),
         cmpBadHead:m.cmp && !m.cmp.same ? 'Suggested: ' + m.cmp.sugZh + ' (' + m.cmp.sugPy + ')' : '',
@@ -1409,13 +1498,13 @@
         home:['Welcome back', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
         review:['Review words', 'Words that are due, based on how well you remember them.'],
         testlobby:[LVN + ' test', 'Mixed questions from the words you have started, so you are recalling words, not just recognizing them.'],
-        grammar:['Grammar', LV === 1 ? LESSONS.length + ' lessons that cover the HSK 1 grammar outline, one at a time.' : LESSONS.length + ' lessons on the grammar of the ' + LVN + ' words, one at a time.'],
+        grammar:['Grammar', ALL ? LESSONS.length + ' lessons from every unlocked level, one at a time.' : LV === 1 ? LESSONS.length + ' lessons that cover the HSK 1 grammar outline, one at a time.' : LESSONS.length + ' lessons on the grammar of the ' + LVN + ' words, one at a time.'],
         speak:['Speaking practice', HAS_SCRIPTS ? 'Say a short conversation out loud.' : 'Talk with Mingming, the AI conversation partner.'],
-        exam:[LVN + ' level exam', LV === 1 ? 'Pass every section to climb to HSK 2.' : 'Not built yet for ' + LVN + '.'],
+        exam:[ALL ? 'Level exams' : LVN + ' level exam', ALL ? 'Each exam belongs to one level.' : LV === 1 ? 'Pass every section to climb to HSK 2.' : 'Not built yet for ' + LVN + '.'],
         web:['Word webs', 'Learn new words next to the words you already know.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
         listen:['Listening lab', HAS_LISTEN ? 'Train your ear for how people really talk, not just how lessons sound.' : 'Not built yet for ' + LVN + '.'],
-        voice:['Settings', LV === 1 ? 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud, and how 儿 endings are shown.' : 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud.'],
+        voice:['Settings', LV <= 1 ? 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud, and how 儿 endings are shown.' : 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud.'],
         quiz:S.qmode === 'grammar' ? ['Grammar practice', LESSONS[S.glesson].title] : [LVN + ' test', 'Take your time. Wrong answers show you why.']
       };
       const tt = titles[S.screen];
@@ -1436,9 +1525,10 @@
       const reviewMin = Math.max(2, Math.min(6, Math.round(Math.max(S.rtotal, dueNow) * 0.5)));
       const nextLesson = Math.max(0, LESSONS.findIndex(L => (S.gres[L.id] || 0) < 80));
       const nextScn = Math.max(0, SCEN.findIndex(sc => !S.sres[sc.id]));
-      const learnN = Math.min(4, limitOf(S));
+      const unstartedN = bankKeys.length - startedCount;   // words not yet started: the Learn task only makes sense while some are left
+      const learnN = Math.max(1, Math.min(4, limitOf(S), unstartedN));
       const pool = [
-        { glyph:'联', title:'Learn ' + learnN + ' new words with their relatives', meta:'Word webs', min:5, done:S.webCredited, to:'web' },
+        { glyph:'联', title:'Learn ' + learnN + (learnN === 1 ? ' new word with its relatives' : ' new words with their relatives'), meta:'Word webs', min:5, done:S.webCredited, to:'web', show:unstartedN > 0 || S.webCredited },
         { glyph:'词', title:'Review ' + Math.max(S.rtotal, dueNow) + ' word' + (Math.max(S.rtotal, dueNow) === 1 ? '' : 's'), meta:'Words that are due', min:reviewMin, done:S.rcomplete, to:'review', show:S.rcomplete || dueNow > 0 },
         { glyph:'听', title:'Listening drill', meta:'Dictation with a speed ladder', min:4, done:S.ldone, to:'listen', show:HAS_LISTEN },
         { glyph:'说', title:'Say: ' + (SCEN[nextScn] || NO_SC).title, meta:'Practice script, ' + (SCEN[nextScn] || NO_SC).you.length + ' turns', min:6, done:S.spokeToday, to:'speak', show:HAS_SCRIPTS, pre:() => this.setState({ sidx:nextScn, sturn:0, sdone:false }) },
@@ -1457,7 +1547,7 @@
       ].concat(HAS_LISTEN ? [{ label:'Listening', detail:clipsTried + ' of ' + CLIPS.length + ' clips tried', w:listenPct + '%' }] : [])
         .concat(HAS_SCRIPTS ? [{ label:'Speaking', detail:spkDone + ' of ' + SCEN.length + ' scripts done', w:spkPct + '%' }] : []);
       skills.forEach(k => { const n = parseInt(k.w, 10) || 0; k.pctN = n; k.dash = (n / 100 * 138.23).toFixed(1) + ' 138.23'; });
-      const lvList = sd.levels.slice(LV - 1);   // this level first, then the ones above it
+      const lvList = sd.levels.slice((ALL ? TOPL : LV) - 1);   // this level first, then the ones above it
       const lvN = lvList.length;
       const stairs = lvList.map((lv, i) => ({
         label:'HSK ' + lv[0], words:lv[1] ? lv[1] + ' words' : 'Advanced', h:(172 + i * (lvN > 7 ? 24 : 32)) + 'px',
@@ -1468,7 +1558,7 @@
       // the ascent: trail and mist views (art in ascent.js)
       const AS = window.ShanluAscent;
       const ascDark = S.theme === 'dark';
-      const ascV = ['trail', 'mist', 'stairs'].includes(S.ascView) ? S.ascView : 'trail';
+      const ascV = ['trail', 'stairs'].includes(S.ascView) ? S.ascView : 'trail';
       const apct = (v, tot) => (v / tot * 100).toFixed(2) + '%';
       const asLabels = (t) => t.labels.map(l => ({ left:apct(l.x, t.w), top:apct(l.y, t.h), cls:l.center ? 'c' : '', kind:l.kind, text:l.text, sub:l.sub, hasSub:!!l.sub }));
       const totalW = bankKeys.length;
@@ -1483,7 +1573,7 @@
       const studiedToday = S.lastActive === today;
       const minsLeft = Math.max(0, S.mins - S.dayMin);
       const ascCta = dueNow > 0 ? { text:'Climb: review ' + dueNow + ' due word' + (dueNow === 1 ? '' : 's'), to:'review' }
-        : (minsLeft > 0 ? { text:'Climb for ' + minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's'), to:'web' } : { text:'Learn new words', to:'web' });
+        : (minsLeft > 0 ? { text:'Climb for ' + minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's'), to:(startedCount >= totalW ? 'testlobby' : 'web') } : (startedCount >= totalW ? { text:'Test yourself', to:'testlobby' } : { text:'Learn new words', to:'web' }));
       // mist: one mountain per Word web topic; the mist thins as its words are learned
       const tinfo = TOPICS.map((t, i) => {
         const got = t.words.filter(zh => S.ws[zh] && winfo(S.ws[zh], 0).started).length;
@@ -1762,7 +1852,7 @@
         topicCta:topicNow.cta, goTopic:() => this.go(topicNow.to),
         hasRlast:!!S.rlast, rlastText:S.rlast ? S.rlast.zh + ': mastery ' + S.rlast.from + '% → ' + S.rlast.to + '%' : '', rlastCls:S.rlast && S.rlast.to < S.rlast.from ? 'down' : 'up',
         wordsSumLine:lvNow('mastered') + ' mastered · ' + lvNow('strong') + ' strong · ' + lvNow('familiar') + ' familiar · ' + lvNow('learning') + ' learning · ' + lvNow('new') + ' new',
-        wordsReviewText:dueAllN > 0 ? 'Review ' + dueAllN + ' due word' + (dueAllN === 1 ? '' : 's') : 'Learn new words', wordsReviewGo:() => this.go(dueAllN > 0 ? 'review' : 'web'),
+        wordsReviewText:dueAllN > 0 ? 'Review ' + dueAllN + ' due word' + (dueAllN === 1 ? '' : 's') : (startedCount >= totalW ? 'Practice all my words' : 'Learn new words'), wordsReviewGo:() => this.go(dueAllN > 0 || startedCount >= totalW ? 'review' : 'web'),
         bankCount:rowsAll.length, filters, levelSegs, sortOpts, timeOpts, rows:rowsShown, hasMoreWords:moreCount > 0, moreWordsText:'Show 40 more (' + moreCount + ' left)', showMoreWords:() => this.setState({ wshow:S.wshow + 40 }),
         wq:S.wq, onWSearch:(e) => this.setState({ wq:e.target.value, wshow:40 }), noRows:rowsShown.length === 0,
 
@@ -1818,13 +1908,15 @@
         exReadD:LV === 1 ? 'Part 1: does the picture match the words? Part 2: match five sentences to pictures. Part 3: match five questions to answers. Part 4: fill five blanks from a word list.' : 'Part 1 (5): match sentences to pictures. Part 2 (5): fill blanks from a word list. Part 3 (5): do two sentences mean the same? Part 4 (10): match questions to answers.',
         exNote:LV === 1 ? 'The real test has pictures; here emoji stand in for them. The official 2025 test is said to have 20 listening questions (about 12 minutes of audio) and 20 reading questions (20 minutes); the part-by-part layout above is from the official sample papers and I could not confirm every detail of the 2025 version. Listening gets 15 minutes here because you press play yourself.' : 'The real test has pictures; here emoji stand in for them. This layout follows the 2012 (HSK 2.0) sample papers. I could not find the layout of the 2025 HSK band 2 exam, so it may differ. Listening gets 25 minutes because you press play yourself.',
         exScore:(LV === 1 ? 'Each question is worth 5 points, so each section is out of 100 and the total out of 200.' : 'Each section is worth 100 points, shared evenly by its questions (listening about 2.9 points a question, reading 4), so the total is out of 200.') + ' The official ' + LVN + ' pass mark is 120 of 200 (I am not sure whether the 2025 version changed it). This site\'s ' + LVN + ' seal is stricter: ' + LVL.PASS_PCT + '% in every section of one full exam, and it opens ' + (LV < LVL.MAX_LEVEL ? 'HSK ' + (LV + 1) : 'the next level') + '.',
-        chatVocab:LV === 1 ? 'HSK 1 vocabulary only' : 'HSK 1 and HSK 2 vocabulary only', lvName:LVN, nextLvName:'HSK ' + (LV + 1), lvIs1:LV === 1, lvIs2:LV !== 1, hasExamCard:!!EXAMBANK, noExamCard:!EXAMBANK,
-        examCardTitle:EXAMBANK ? LVN + ' level exam' : LVN + ' progress', examCardNote:EXAMBANK ? (LVL.levelPassed(LV) ? LVN + ' exam passed.' + (LV < LVL.MAX_LEVEL ? ' HSK ' + (LV + 1) + ' is open.' : '') : (LV < LVL.MAX_LEVEL ? 'Pass the full exam (' + LVL.PASS_PCT + '% in listening and in reading) to open HSK ' + (LV + 1) + '. The rings show how ready you are.' : 'Reach ' + LVL.PASS_PCT + '% in listening and in reading to pass.')) : 'The ' + LVN + ' level exam, listening lab and practice scripts are not built yet. These rings show the parts that are.',
+        chatVocab:TOPL === 1 ? 'HSK 1 vocabulary only' : 'HSK 1 and HSK 2 vocabulary only', lvName:LVN, nextLvName:'HSK ' + (TOPL + 1), lvIs1:TOPL === 1, lvIs2:TOPL !== 1, hasExamCard:!!EXAMBANK, noExamCard:!EXAMBANK,
+        examCardTitle:ALL ? 'Level exams' : EXAMBANK ? LVN + ' level exam' : LVN + ' progress', examCardNote:ALL ? 'Each level has its own exam. Switch to HSK 1 or HSK 2 in the header to take it; passing it opens the next level. The rings show your progress across all the levels shown here.' : EXAMBANK ? (LVL.levelPassed(LV) ? LVN + ' exam passed.' + (LV < LVL.MAX_LEVEL ? ' HSK ' + (LV + 1) + ' is open.' : '') : (LV < LVL.MAX_LEVEL ? 'Pass the full exam (' + LVL.PASS_PCT + '% in listening and in reading) to open HSK ' + (LV + 1) + '. The rings show how ready you are.' : 'Reach ' + LVL.PASS_PCT + '% in listening and in reading to pass.')) : 'The ' + LVN + ' level exam, listening lab and practice scripts are not built yet. These rings show the parts that are.',
         examBtnText:'See the ' + LVN + ' level exam',
-        lvOpts:[1, 2].map(n => { const open = LVL.unlocked(n); return { label:'HSK ' + n + (open ? '' : ' 🔒'), cls:(LV === n ? 'on' : '') + (open ? '' : ' locked'), fn:() => (open ? this.switchLevel(n) : this.setState({ lvMsg:n })) }; }),
-        lvMsgShow:S.lvMsg > 0 && !LVL.unlocked(S.lvMsg) ? true : false, lvMsgText:'HSK ' + S.lvMsg + ' is locked. It opens when you pass the HSK ' + (S.lvMsg - 1) + ' level exam: the full mock exam with at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading, in one sitting.',
-        lvMsgGo:() => { this.setState({ lvMsg:0 }); if (LV === S.lvMsg - 1) this.go('exam'); else { try { localStorage.setItem('shanlu-level', String(S.lvMsg - 1)); } catch (e) {} window.location.reload(); } },
-        lvMsgClose:() => this.setState({ lvMsg:0 }), lvMsgGoText:LV === S.lvMsg - 1 ? 'Go to the HSK ' + LV + ' exam' : 'Open HSK ' + (S.lvMsg - 1),
+        examNaTitle:ALL ? 'Level exams are taken one level at a time' : LVN + ' mock exam: not built yet',
+        examNaText:ALL ? 'Each mock exam belongs to one level. Switch to HSK 1 or HSK 2 in the header, take its exam there, and passing it opens the next level. Everything else on this page mixes all the levels you have unlocked.' : 'The mock exam is modelled on the official HSK 1 sample papers and exists for HSK 1 only so far. For ' + LVN + ', the Tests screen gives mixed questions from the words you have started, and Grammar has practice for every lesson.',
+        lvOpts:[1, 2, 0].map(n => { if (n === 0) { const openAll = LVL.unlockedLevels().length >= 2; return { label:'All' + (openAll ? '' : ' 🔒'), cls:(ALL ? 'on' : '') + (openAll ? '' : ' locked'), fn:() => (openAll ? this.switchLevel(0) : this.setState({ lvMsg:99 })) }; } const open = LVL.unlocked(n); return { label:'HSK ' + n + (open ? '' : ' 🔒'), cls:(LV === n ? 'on' : '') + (open ? '' : ' locked'), fn:() => (open ? this.switchLevel(n) : this.setState({ lvMsg:n })) }; }),
+        lvMsgShow:S.lvMsg > 0 && (S.lvMsg === 99 ? LVL.unlockedLevels().length < 2 : !LVL.unlocked(S.lvMsg)) ? true : false, lvMsgText:S.lvMsg === 99 ? 'All levels shows every level you have unlocked together, so it needs at least two. Pass the HSK 1 level exam (the full mock exam with at least ' + LVL.PASS_PCT + '% in listening and in reading, in one sitting) to unlock HSK 2.' : 'HSK ' + S.lvMsg + ' is locked. It opens when you pass the HSK ' + (S.lvMsg - 1) + ' level exam: the full mock exam with at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading, in one sitting.',
+        lvMsgGo:() => { const tgt = S.lvMsg === 99 ? 1 : S.lvMsg - 1; this.setState({ lvMsg:0 }); if (LV === tgt) this.go('exam'); else { try { localStorage.setItem('shanlu-level', String(tgt)); } catch (e) {} window.location.reload(); } },
+        lvMsgClose:() => this.setState({ lvMsg:0 }), lvMsgGoText:LV === (S.lvMsg === 99 ? 1 : S.lvMsg - 1) ? 'Go to the HSK ' + LV + ' exam' : 'Open HSK ' + (S.lvMsg === 99 ? 1 : S.lvMsg - 1),
         lvNote:'You are studying ' + LVN + '. Each level keeps its own progress on this device and its own copy when you sync. A level opens when you pass the exam of the level before it (the full mock exam with ' + LVL.PASS_PCT + '% in listening and in reading); a lock on a button means it is not open yet. ' + (LV === 1 ? 'HSK 1 has everything: words, word webs, grammar, listening lab, practice scripts, AI conversation and the mock exam.' : 'HSK 2 has words, word webs, grammar, tests and the AI conversation. The listening lab, practice scripts and mock exam are not built for HSK 2 yet.'),
         isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
 
@@ -1834,10 +1926,10 @@
         stairs, sysNote:sd.note,
         todayShort:S.dayMin + ' of ' + S.mins + ' min' + (S.mins > S.dayMin ? ' · ' + (S.mins - S.dayMin) + ' to go' : ' · done'),
         webCapOpen:S.webCapOpen, toggleCapOpen:() => this.setState({ webCapOpen:!S.webCapOpen }),
-        ascTrail:ascV === 'trail', ascMist:ascV === 'mist', ascStairs:ascV === 'stairs', ascHasSys:ascV !== 'mist',
-        ascTrailCls:ascV === 'trail' ? 'on' : '', ascMistCls:ascV === 'mist' ? 'on' : '', ascStairsCls:ascV === 'stairs' ? 'on' : '',
-        setAscTrail:() => this.setState({ ascView:'trail' }), setAscMist:() => this.setState({ ascView:'mist' }), setAscStairs:() => this.setState({ ascView:'stairs' }),
-        ascSub:ascV === 'trail' ? 'Every word you learn is a step up the trail.' : (ascV === 'mist' ? 'Every word you learn thins the mist over its mountain.' : 'Pass each checkpoint to climb to the next level.'),
+        ascTrail:ascV === 'trail', ascStairs:ascV === 'stairs', ascHasSys:true,
+        ascTrailCls:ascV === 'trail' ? 'on' : '', ascStairsCls:ascV === 'stairs' ? 'on' : '',
+        setAscTrail:() => this.setState({ ascView:'trail' }), setAscStairs:() => this.setState({ ascView:'stairs' }),
+        ascSub:ascV === 'trail' ? 'Every word you learn is a step up the trail.' : 'Pass each checkpoint to climb to the next level.',
         trailD:{ src:trD.src, alt:trailAlt, labels:asLabels(trD).concat([youLabel(trD)]) }, trailP:{ src:trP.src, alt:trailAlt, labels:asLabels(trP).concat(trP.hideYou ? [] : [youLabel(trP)]) },
         cairnBig:allStarted ? 'All ' + totalW + ' started' : toGo + ' word' + (toGo === 1 ? '' : 's') + ' to go',
         cairnSub:allStarted ? 'Take the level exam when you feel ready.' : startedCount + ' of ' + nextM + '. A few cards and it is yours.', cairnPct:(allStarted ? 100 : Math.round((startedCount - prevM) / (nextM - prevM) * 100)) + '%',

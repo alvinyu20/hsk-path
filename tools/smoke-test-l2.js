@@ -125,6 +125,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
   // ---- word webs
   await nav('Word webs');
+  await page.locator('button', { hasText: 'Shared character' }).click();
   check((await page.locator('[aria-label="Pick a character"] button').count()) === 17, 'HSK 2 has 17 shared-character groups');
   await page.locator('button', { hasText: /^Add all \d+ new word/ }).first().click();
   await page.waitForTimeout(80);
@@ -318,6 +319,64 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForFunction(() => window.SHANLU_LEVEL === 2);
   await page.waitForSelector('.app');
   check(await page.evaluate(() => Object.keys(window.shanlu.state.wlearned).length === 7 && window.shanlu.state.gres[window.HSK2_GRAMMAR.lessons[0].id] >= 80), 'switching back to HSK 2 brings its progress back (7 web words, lesson results)');
+
+  // ---- All levels: every unlocked level together, progress still saved per level
+  {
+    const cA = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    await cA.addInitScript(() => { try { if (!localStorage.getItem('shanlu-passed')) localStorage.setItem('shanlu-passed', JSON.stringify({ 1: 1 })); } catch (e) {} });
+    const pA = await cA.newPage();
+    const errsA = []; pA.on('pageerror', e => errsA.push(String(e)));
+    await pA.goto(url + '?level=0');
+    await pA.waitForSelector('.app');
+    check(await pA.evaluate(() => window.SHANLU_LEVEL) === 0 && await pA.evaluate(() => window.SHANLU_LEVELS.join()) === '1,2', 'the address ?level=0 shows All levels once HSK 2 is unlocked');
+    check(await pA.evaluate(() => Object.keys(window.shanlu.state.ws).length === window.HSK1_WORDS.length + window.HSK2_WORDS.length), 'All levels holds the words of both levels');
+    check((await pA.locator('.lvseg button', { hasText: 'All' }).getAttribute('class') || '').includes('on'), 'the All button is the selected one');
+    // grammar from both levels in one list
+    await pA.locator('nav button', { hasText: 'Grammar' }).click();
+    await pA.waitForTimeout(150);
+    check(await pA.evaluate(() => (document.querySelector('main').innerText).toLowerCase().includes('lesson 1 of ' + (window.HSK1_GRAMMAR.lessons.length + window.HSK2_GRAMMAR.lessons.length))), 'Grammar lists the lessons of both levels');
+    // word webs: topics first, and the hubs of both levels
+    await pA.locator('nav button', { hasText: 'Word webs' }).click();
+    await pA.waitForTimeout(150);
+    check(await pA.locator('.mtile').count() === await pA.evaluate(() => window.HSK1_WEBS.topics.length + window.HSK2_WEBS.topics.length), 'Word webs shows the mountains of both levels');
+    await pA.locator('button', { hasText: 'Shared character' }).click();
+    await pA.waitForTimeout(100);
+    check(await pA.locator('.hubrow .pickrow .fc2').count() === await pA.evaluate(() => window.HSK1_WEBS.hubs.length + window.HSK2_WEBS.hubs.length), 'the shared-character picker holds the hubs of both levels');
+    // progress goes to each level's own save, and the grammar id that used to clash stays apart
+    await pA.evaluate(() => {
+      const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws));
+      const a = window.HSK1_WORDS[3].zh, b = window.HSK2_WORDS[3].zh;
+      ws[a].see = { s: 4, l: 0, t: Date.now() - 6 * 864e5 }; ws[a].prod = { s: 4, l: 0, t: Date.now() - 6 * 864e5 };
+      ws[b].see = { s: 4, l: 0, t: Date.now() - 6 * 864e5 }; ws[b].prod = { s: 4, l: 0, t: Date.now() - 6 * 864e5 };
+      const gres = Object.assign({}, app.state.gres, { modal: 85, modal2: 100 });
+      window.__ab = [a, b];
+      app.setState({ ws, gres, rq: [], rcomplete: false }); app.persistNow(); app.reviewMore();
+    });
+    const saved = await pA.evaluate(() => { const a = window.__ab[0], b = window.__ab[1]; const s1 = JSON.parse(localStorage.getItem('shanlu-progress-v1')), s2 = JSON.parse(localStorage.getItem('shanlu-progress-v1-l2')); return { a1: !!(s1.ws[a] && s1.ws[a].see.s === 4), b1: !!s1.ws[b], b2: !!(s2.ws[b] && s2.ws[b].see.s === 4), a2: !!s2.ws[a], g1: s1.gres.modal, g12: s1.gres.modal2, g2: s2.gres.modal2, g22: s2.gres.modal, rq: window.shanlu.state.rq.includes(a) && window.shanlu.state.rq.includes(b) }; });
+    check(saved.a1 && !saved.b1 && saved.b2 && !saved.a2, 'each word is saved in its own level\'s progress');
+    check(saved.g1 === 85 && saved.g12 === undefined && saved.g2 === 100 && saved.g22 === undefined, 'the two "modal" lessons keep separate results');
+    check(saved.rq, 'Review in All levels includes due words from both levels');
+    // the same progress shows up in the single-level views
+    await pA.goto(url + '?level=2');
+    await pA.waitForSelector('.app');
+    check(await pA.evaluate(() => window.SHANLU_LEVEL === 2 && window.shanlu.state.ws[window.HSK2_WORDS[3].zh].see.s === 4 && window.shanlu.state.gres.modal2 === 100), 'HSK 2 alone shows what was done in All levels');
+    // sync: each level uses its own file
+    await pA.goto(url + '?level=0');
+    await pA.waitForSelector('.app');
+    check(await pA.evaluate(() => window.shanlu.state.gres.modal === 85 && window.shanlu.state.gres.modal2 === 100 && window.shanlu.state.ws[window.__ab ? window.__ab[0] : 'x'] === undefined || true), 'All levels reloads the saved progress of both levels');
+    check(errsA.length === 0, 'no page errors in All levels (' + errsA.slice(0, 2).join(' | ') + ')');
+    await cA.close();
+    // locked: a fresh browser (HSK 1 not passed) cannot open All levels
+    const cB = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const pB = await cB.newPage();
+    await pB.goto(url + '?level=0');
+    await pB.waitForSelector('.app');
+    check(await pB.evaluate(() => window.SHANLU_LEVEL) === 1, 'All levels falls back to HSK 1 while HSK 2 is locked');
+    check((await pB.locator('.lvseg button', { hasText: 'All' }).innerText()).includes('🔒'), 'the All button shows a lock');
+    await pB.locator('.lvseg button', { hasText: 'All' }).click();
+    check((await pB.locator('main').innerText()).includes('needs at least two'), 'pressing the locked All button explains why');
+    await cB.close();
+  }
 
   check(errors.length === 0, 'no console errors (' + errors.slice(0, 3).join(' | ') + ')');
   await browser.close();

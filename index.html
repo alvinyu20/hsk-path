@@ -239,7 +239,6 @@
       </div>
       <div class="seg2" role="group" aria-label="How to show the ascent">
         <button class="{{ascTrailCls}}" onClick="{{setAscTrail}}">Trail</button>
-        <button class="{{ascMistCls}}" onClick="{{setAscMist}}">Mist</button>
         <button class="{{ascStairsCls}}" onClick="{{setAscStairs}}">Stairs</button>
       </div>
     </div>
@@ -283,23 +282,6 @@
       </div>
       <button class="btn pri big trail-cta" onClick="{{trailCta}}">{{trailCtaText}}</button>
       <p class="asc-note">{{trailNote}}</p>
-    </sc-if>
-
-    <sc-if value="{{ascMist}}" hint-placeholder-val="{{ false }}">
-      <div class="mist-top">
-        <div class="mist-sum"><span class="mseal" aria-hidden="true">熟</span><div><b>{{mistClearText}}</b><span>mountains with no mist left</span></div></div>
-        <sc-if value="{{mistHasNear}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{mistNearGo}}">{{mistNearText}}</button></sc-if>
-      </div>
-      <div class="mist">
-        <sc-for list="{{mistTiles}}" as="t" hint-placeholder-count="8">
-          <button type="button" class="mtile {{t.cls}}" onClick="{{t.go}}">
-            <span class="mart"><img src="{{t.art}}" alt="" width="212" height="84"><sc-if value="{{t.clear}}" hint-placeholder-val="{{ false }}"><span class="mseal mseal-on" aria-hidden="true">熟</span></sc-if><sc-if value="{{t.near}}" hint-placeholder-val="{{ false }}"><span class="mnear">{{t.nearText}}</span></sc-if></span>
-            <span class="mname">{{t.name}}</span>
-            <span class="mcount">{{t.count}}</span>
-          </button>
-        </sc-for>
-      </div>
-      <p class="asc-note">{{mistNote}}</p>
     </sc-if>
 
     <sc-if value="{{ascStairs}}" hint-placeholder-val="{{ false }}">
@@ -793,9 +775,9 @@
   <div class="web">
     <div class="web-bar">
       <div class="seg2" role="group" aria-label="Word web type">
+        <button class="{{wTopicCls}}" onClick="{{setWTopic}}">Topics</button>
         <button class="{{wCharCls}}" onClick="{{setWChar}}">Shared character</button>
         <button class="{{wOppCls}}" onClick="{{setWOpp}}">Pairs</button>
-        <button class="{{wTopicCls}}" onClick="{{setWTopic}}">Topics</button>
       </div>
       <button type="button" class="chip familiar capbtn" onClick="{{toggleCapOpen}}">{{webCountText}} <span aria-hidden="true">▾</span></button>
     </div>
@@ -931,6 +913,22 @@
     </sc-if>
 
     <sc-if value="{{isWTopic}}" hint-placeholder-val="{{ false }}">
+    <div class="mist-wrap">
+      <div class="mist-top">
+        <div class="mist-sum"><span class="mseal" aria-hidden="true">熟</span><div><b>{{mistClearText}}</b><span>mountains with no mist left</span></div></div>
+        <sc-if value="{{mistHasNear}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{mistNearGo}}">{{mistNearText}}</button></sc-if>
+      </div>
+      <div class="mist">
+        <sc-for list="{{mistTiles}}" as="t" hint-placeholder-count="8">
+          <button type="button" class="mtile {{t.cls}}" onClick="{{t.go}}">
+            <span class="mart"><img src="{{t.art}}" alt="" width="212" height="84"><sc-if value="{{t.clear}}" hint-placeholder-val="{{ false }}"><span class="mseal mseal-on" aria-hidden="true">熟</span></sc-if><sc-if value="{{t.near}}" hint-placeholder-val="{{ false }}"><span class="mnear">{{t.nearText}}</span></sc-if></span>
+            <span class="mname">{{t.name}}</span>
+            <span class="mcount">{{t.count}}</span>
+          </button>
+        </sc-for>
+      </div>
+      <p class="asc-note">{{mistNote}}</p>
+    </div>
       <div class="pickrow" role="group" aria-label="Topic">
         <sc-for list="{{topicOpts}}" as="t" hint-placeholder-count="2"><button class="fc2 {{t.cls}}" onClick="{{t.fn}}">{{t.label}}</button></sc-for>
       </div>
@@ -1184,8 +1182,8 @@
 
   <!-- LEVEL EXAM -->
   <sc-if value="{{isExamNA}}" hint-placeholder-val="{{ false }}">
-  <div class="lob"><section class="card"><h2 class="h2">{{lvName}} mock exam: not built yet</h2>
-    <p class="muted" style="margin:6px 0 0;font-size:16px">The mock exam is modelled on the official HSK 1 sample papers and exists for HSK 1 only so far. For {{lvName}}, the Tests screen gives mixed questions from the words you have started, and Grammar has practice for every lesson.</p>
+  <div class="lob"><section class="card"><h2 class="h2">{{examNaTitle}}</h2>
+    <p class="muted" style="margin:6px 0 0;font-size:16px">{{examNaText}}</p>
     <div style="margin-top:16px"><button class="btn pri" onClick="{{goHome}}">Back to home</button></div></section></div>
   </sc-if>
   <sc-if value="{{isExam}}" hint-placeholder-val="{{ false }}">

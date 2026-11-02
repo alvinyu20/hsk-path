@@ -1,6 +1,6 @@
 /* Shanlu: which level this page shows, and which levels are unlocked. Runs before the data files and app.js.
  * The level is chosen in the header or in Settings, saved in this browser, and applied by reloading. A ?level=2 address works too
- * (used by the tests) but only if that level is unlocked.
+ * (used by the tests) but only if that level is unlocked. Level 0 means "All levels" (needs two unlocked levels).
  * Unlocking: level N+1 opens when level N's full mock exam has been passed: 80% in listening AND 80% in reading, in one sitting.
  * That bar is the site's own (stricter than the official 60%); change PASS_PCT to change it. */
 (function () {
@@ -34,6 +34,8 @@
   }
   function unlocked(n) { return n <= 1 || (n <= MAX_LEVEL && levelPassed(n - 1)); }
 
+  function unlockedLevels() { var out = []; for (var n = 1; n <= MAX_LEVEL; n++) if (unlocked(n)) out.push(n); return out; }
+
   var wanted = null, level = 1;
   try {
     var q = /[?&]level=(\d)/.exec(location.search);
@@ -44,13 +46,20 @@
       wanted = parseInt(localStorage.getItem(LEVEL_KEY), 10);
     }
   } catch (e) {}
-  if (!(wanted >= 1 && wanted <= MAX_LEVEL)) wanted = 1;
-  level = wanted;
-  while (level > 1 && !unlocked(level)) level--;
+  if (!(wanted >= 0 && wanted <= MAX_LEVEL)) wanted = 1;
+  // level 0 is "All levels": every unlocked level together. It needs at least two unlocked levels; otherwise it falls back to HSK 1.
+  var all = unlockedLevels();
+  if (wanted === 0 && all.length >= 2) {
+    level = 0;
+  } else {
+    level = wanted === 0 ? 1 : wanted;
+    while (level > 1 && !unlocked(level)) level--;
+  }
   try { localStorage.setItem(LEVEL_KEY, String(level)); } catch (e) {}
 
   window.SHANLU_LEVEL = level;
-  window.SHANLU_LOCKED = wanted > level ? wanted : 0;   // the level that was asked for but is still locked
-  window.ShanluLevel = { MAX_LEVEL: MAX_LEVEL, PASS_PCT: PASS_PCT, passedEntry: passedEntry, levelPassed: levelPassed, markPassed: markPassed, unlocked: unlocked };
-  if (document.title) document.title = 'Shanlu · HSK ' + level + ' study path';
+  window.SHANLU_LEVELS = level === 0 ? all : [level];   // the levels whose content this page shows
+  window.SHANLU_LOCKED = wanted > level && level > 0 ? wanted : 0;   // the level that was asked for but is still locked
+  window.ShanluLevel = { MAX_LEVEL: MAX_LEVEL, PASS_PCT: PASS_PCT, passedEntry: passedEntry, levelPassed: levelPassed, markPassed: markPassed, unlocked: unlocked, unlockedLevels: unlockedLevels, PROGRESS_KEYS: PROGRESS_KEYS };
+  if (document.title) document.title = 'Shanlu · ' + (level === 0 ? 'all levels' : 'HSK ' + level) + ' study path';
 })();
