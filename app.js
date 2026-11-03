@@ -17,6 +17,12 @@
   const aiReadyNow = () => (aiProviderNow() === 'alibaba' ? !!aliCfg().key : !!AICFG.key);
   const asrModeNow = () => (AICFG.asr === 'alibaba' && aliCfg().key ? 'alibaba' : 'browser');
   const aliBase = () => { const ws = String(aliCfg().ws || '').trim(); return ws ? 'https://' + ws + '.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1' : 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1'; };
+  // Qwen text-to-speech (Alibaba Model Studio, Singapore): the voice that reads Mingming's lines when an Alibaba key is saved
+  const ALI_TTS_MODEL = 'qwen3-tts-flash';
+  const TTS_VOICES = [['Cherry', 'Cherry: woman, friendly'], ['Serena', 'Serena: woman, gentle'], ['Maia', 'Maia: woman, warm'], ['Neil', 'Neil: man, clear news-reader style'], ['Kai', 'Kai: man, calm']];
+  const ttsModeNow = () => (aliCfg().key && AICFG.ttsMode !== 'browser' ? 'qwen' : 'browser');
+  const ttsVoiceNow = () => (TTS_VOICES.some(v => v[0] === AICFG.ttsVoice) ? AICFG.ttsVoice : 'Cherry');
+  const aliApi = () => aliBase().replace('/compatible-mode/v1', '/api/v1');
   const SYNC_STORE = 'shanlu-sync';   // { token, gist, at } lives only on this device, never in the exported progress file
   let SYNCCFG = {};
   try { SYNCCFG = JSON.parse(localStorage.getItem(SYNC_STORE)) || {}; } catch (e) {}
@@ -227,7 +233,7 @@
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
+      wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiVoiceOnly:AICFG.voiceOnly !== false, aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
@@ -544,6 +550,28 @@
     try { data = await aliPost(body); }
     catch (e) { if (e.status === 400 && /language|asr_options/i.test(e.detail || '')) { delete body.asr_options.language; data = await aliPost(body); } else throw e; }
     return aiText(data).trim();
+  }
+
+  // one line of text -> a link to a WAV file (valid for 24 hours); the page plays it with an <audio> element, so no cross-site download is needed
+  async function aliTTS(text, voice) {
+    let res;
+    try {
+      res = await fetch(aliApi() + '/services/aigc/multimodal-generation/generation', { method:'POST', headers:{ 'Authorization':'Bearer ' + aliCfg().key, 'content-type':'application/json' },
+        body:JSON.stringify({ model:ALI_TTS_MODEL, input:{ text:text.slice(0, 600), voice, language_type:'Chinese' } }) });
+    } catch (e) { throw new Error('Could not reach Alibaba\'s voice service from this page (the browser may be blocking it).'); }
+    let j = null; try { j = await res.json(); } catch (e) {}
+    if (!res.ok) {
+      const detail = (j && (j.message || j.code || (j.error && (j.error.message || j.error.code)))) || '';
+      let msg;
+      if (res.status === 401) msg = 'Alibaba rejected the API key.';
+      else if (res.status === 429) msg = 'Too many requests right now.';
+      else if (/FreeTierOnly|free tier|free quota/i.test(detail)) msg = 'The free quota for the voice model is used up.';
+      else msg = 'Alibaba said ' + res.status + (detail ? ': ' + detail : '') + '.';
+      const err = new Error(msg); err.status = res.status; throw err;
+    }
+    const url = j && j.output && j.output.audio && j.output.audio.url;
+    if (!url) throw new Error('Alibaba answered but sent no audio link' + (j && j.message ? ' (' + j.message + ')' : '') + '.');
+    return String(url).replace(/^http:\/\//, 'https://');
   }
 
   // ---------- the HSK 1 mock exam ----------
@@ -882,7 +910,45 @@
       const m = window.SHANLU_AUDIO;
       return m && text && Object.prototype.hasOwnProperty.call(m, text) ? 'audio/' + encodeURIComponent(text) + '.' + m[text] : null;
     };
-    stopNative = () => { try { if (this.nativeAudio) { this.nativeAudio.pause(); this.nativeAudio = null; } } catch (e) {} };
+    stopNative = () => { this.ttsTok++; try { if (this.nativeAudio) { this.nativeAudio.pause(); this.nativeAudio = null; } } catch (e) {} try { if (this.ttsEl) this.ttsEl.pause(); } catch (e) {} };
+    // Mingming's voice: Qwen when an Alibaba key is saved (and it is switched on), otherwise the browser voice. Any failure falls back to the browser voice.
+    ttsEl = null; ttsTok = 0; ttsOpen = false; ttsCache = {}; ttsWarned = false;
+    ttsUnlock = () => {   // phones only allow sound that starts inside a tap: play a silent clip on the same <audio> element now, reuse it later
+      try {
+        if (ttsModeNow() !== 'qwen') return;
+        if (!this.ttsEl) this.ttsEl = new Audio();
+        if (this.ttsOpen) return; this.ttsOpen = true;
+        this.ttsEl.src = 'data:audio/wav;base64,' + wavBase64(new Float32Array(800), 8000);
+        const p = this.ttsEl.play(); if (p && p.catch) p.catch(() => { this.ttsOpen = false; });
+      } catch (e) {}
+    };
+    sayAi = async (text, key, rate) => {
+      if (ttsModeNow() !== 'qwen') { this.say(text, key, rate); return; }
+      this.stopNative(); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+      const tok = ++this.ttsTok;
+      this.setState({ playing:key, ttsBusy:true });
+      try {
+        const voice = ttsVoiceNow(), ck = voice + '|' + text; let c = this.ttsCache[ck];
+        if (!c || c.exp < Date.now()) { c = this.ttsCache[ck] = { url:await aliTTS(text, voice), exp:Date.now() + 20 * 3600000 }; }
+        if (tok !== this.ttsTok) return;
+        if (!this.ttsEl) this.ttsEl = new Audio();
+        const a = this.ttsEl;
+        a.onended = () => { if (tok === this.ttsTok && this.state.playing === key) this.setState({ playing:null }); };
+        a.onerror = () => { if (tok === this.ttsTok) { this.ttsFail(new Error('the audio could not be played')); this.say(text, key, rate); } };
+        a.src = c.url; a.playbackRate = rate || this.state.speed || 1; try { a.preservesPitch = true; } catch (e) {}
+        await a.play();
+        this.ttsOpen = true;
+        if (tok === this.ttsTok) this.setState({ ttsBusy:false });
+      } catch (e) {
+        if (tok !== this.ttsTok) return;
+        this.ttsFail(e); this.say(text, key, rate);
+      }
+    };
+    ttsFail = (e) => {
+      this.setState({ ttsBusy:false });
+      if (this.ttsWarned) return; this.ttsWarned = true;
+      this.setState({ aiErr:'The Qwen voice did not work (' + ((e && e.message) || 'unknown problem').replace(/\.$/, '') + '), so this browser\'s voice is used for now. Settings has a Test connection button.' });
+    };
     say = (text, key, rate, voice) => {
       const file = voice ? null : this.nativeFile(text);      // a chosen voice (the voice sample in Settings) is always the browser voice
       if (!file) { this.sayTTS(text, key, rate, voice); return; }
@@ -987,7 +1053,7 @@
 
     // ----- talk with AI -----
     setAiMode = (on) => { this.setState({ aiMode:on }); if (on && this.state.aiOn && !this.state.aim.length) this.aiStart(this.state.aiScn); };
-    aiStart = (scnIdx) => { this.setState({ aiScn:scnIdx, aim:[], aiErr:'', aiInput:'' }); this.aiAsk([{ role:'user', content:'(Start the conversation with a short greeting and your first question.)' }], scnIdx, []); };
+    aiStart = (scnIdx) => { this.ttsUnlock(); this.setState({ aiScn:scnIdx, aim:[], aiErr:'', aiInput:'' }); this.aiAsk([{ role:'user', content:'(Start the conversation with a short greeting and your first question.)' }], scnIdx, []); };
     aiAsk = async (history, scnIdx, shown) => {
       this.setState({ aiBusy:true, aiErr:'' });
       try {
@@ -1000,13 +1066,14 @@
         const last = next[next.length - 1];
         if (last && last.who === 'me') next[next.length - 1] = Object.assign({}, last, { judged:true, fb:p.fb });   // the judgement is about the learner's last line
         this.setState({ aim:next.concat([msg]), aiBusy:false });
-        this.say(p.zh, 'aim' + next.length);
+        this.sayAi(p.zh, 'aim' + next.length);
       } catch (e) { this.setState({ aiBusy:false, aiErr:(e && e.message) || 'Something went wrong.' }); }
     };
     aiSend = () => {
       const S = this.state; const text = (S.aiInput || '').trim();
       if (!text || S.aiBusy || !S.aiOn) return;
       try { if (window.speechSynthesis) window.speechSynthesis.speak(new SpeechSynthesisUtterance('')); } catch (e) {}   // lets the reply play on iPhone
+      this.ttsUnlock();
       const toks = segHsk(text);
       const lastAi = S.aim[S.aim.length - 1];
       const cmp = lastAi && lastAi.who === 'ai' && lastAi.sug && lastAi.sug.open ? aiCompare(lastAi.sug.zh, lastAi.sug.py, text) : null;
@@ -1024,6 +1091,7 @@
     // as they come in, asks the recogniser for several guesses and prefers the guess made only of HSK 1 characters that fits the suggested
     // reply, and lets you tap another guess if it still heard it wrong.
     aiMic = () => {
+      this.ttsUnlock(); try { if (window.speechSynthesis) window.speechSynthesis.speak(new SpeechSynthesisUtterance('')); } catch (e) {}   // the reply that follows a spoken turn starts outside a tap
       if (this.state.asrMode === 'alibaba') { this.aiRecord(); return; }
       const SR = window.webkitSpeechRecognition || window.SpeechRecognition;
       if (!SR) return;
@@ -1051,12 +1119,26 @@
           if (err === 'no-speech' || err === 'aborted') { this.setState({ aiListen:false }); return; }
           this.setState({ aiListen:false, aiErr:'The microphone did not work. Check the browser permission, or type instead.' });
         };
-        r.onend = () => { clearTimeout(silence); clearTimeout(cap); this.setState({ aiListen:false }); };
+        r.onend = () => { clearTimeout(silence); clearTimeout(cap); this.setState({ aiListen:false }); this.aiAutoSend(); };
         this.setState({ aiListen:true, aiErr:'', aiAlts:[] });
         r.start();
         cap = setTimeout(done, 20000);
       } catch (e) { this.setState({ aiListen:false, aiErr:'The microphone could not start. Type instead.' }); }
     };
+    // voice only: what the microphone heard is sent by itself (the recognised line stays on screen, with any correction under it)
+    voiceOnlyOn = () => { const S = this.state; return !!S.aiVoiceOnly && !S.aiTyping && this.hasMicNow(); };
+    hasMicNow = () => (this.state.asrMode === 'alibaba' ? !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && (window.AudioContext || window.webkitAudioContext)) : !!(window.webkitSpeechRecognition || window.SpeechRecognition));
+    aiAutoSend = () => { if (this.voiceOnlyOn() && (this.state.aiInput || '').trim() && !this.state.aiBusy) this.aiSend(); };
+    aiVoToggle = () => {
+      if (this.voiceOnlyOn()) { this.setState({ aiTyping:true }); return; }
+      AICFG.voiceOnly = true; saveAiCfg(); this.setState({ aiVoiceOnly:true, aiTyping:false });
+    };
+    aiReveal = (k) => { const a = this.state.aim.slice(); if (!a[k]) return; a[k] = Object.assign({}, a[k], { rev:true }); this.setState({ aim:a }); };
+    setTtsMode = (m) => {
+      if (m === 'qwen' && !aliCfg().key) { this.setState({ aliNote:'Save an Alibaba key first, then Qwen can speak for Mingming.' }); return; }
+      AICFG.ttsMode = m; saveAiCfg(); this.ttsWarned = false; this.setState({ ttsMode:ttsModeNow() });
+    };
+    setTtsVoice = (v) => { AICFG.ttsVoice = v; saveAiCfg(); this.setState({ ttsVoice:ttsVoiceNow() }); if (ttsModeNow() === 'qwen') this.sayAi('你好，我是明明。我们说中文吧。', 'ttsdemo'); };
     aiPickAlt = (t) => { this.setState({ aiInput:t, aiAlts:[] }); };
     aiShowSug = () => { const a = this.state.aim.slice(); const i = a.length - 1; if (i < 0 || !a[i].sug) return; a[i] = Object.assign({}, a[i], { sug:Object.assign({}, a[i].sug, { open:true }) }); this.setState({ aim:a }); };
     aiUseSug = () => { const a = this.state.aim; const m = a[a.length - 1]; if (m && m.sug) this.setState({ aiInput:m.sug.zh }); };
@@ -1101,6 +1183,8 @@
       catch (e) { lines.push('Chat model: ' + e.message); }
       try { await aliTranscribe(wavBase64(new Float32Array(8000), 16000)); lines.push('Voice recogniser: working.'); }
       catch (e) { lines.push('Voice recogniser: ' + (e.status ? 'Alibaba answered, but said: ' + e.message : e.message)); }
+      try { await aliTTS('你好', ttsVoiceNow()); lines.push('Voice (' + ALI_TTS_MODEL + '): working.'); }
+      catch (e) { lines.push('Voice (' + ALI_TTS_MODEL + '): ' + e.message); }
       this.setState({ aliTesting:false, aliNote:lines.join(' ') });
     };
     setAsr = (m) => {
@@ -1140,6 +1224,7 @@
           try {
             const text = await aliTranscribe(wavBase64(to16k(pcm, rate), 16000));
             this.setState({ aiInput:text, asrBusy:false, aiAlts:[], aiErr:text ? '' : 'I could not make out any words. Try again a little closer to the microphone.' });
+            this.aiAutoSend();
           } catch (e) { this.setState({ asrBusy:false, aiErr:(e && e.message) || 'The recording could not be read.' }); }
         };
         const stop = (byHand) => { if (stopped) return; stopped = true; manual = !!byHand; clearInterval(timer); finish(); };
@@ -1522,9 +1607,13 @@
       const S = this.state;
       const aiEff = S.aiMode || !HAS_SCRIPTS;   // without practice scripts, Speak is the AI conversation only
       const quiet = !S.szh && !S.spy && !S.sen;
+      const hasMic0 = S.asrMode === 'alibaba' ? !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && (window.AudioContext || window.webkitAudioContext)) : !!(window.webkitSpeechRecognition || window.SpeechRecognition);
+      const vo = !!S.aiVoiceOnly && !S.aiTyping && hasMic0;   // voice only: Mingming's lines are heard, not read, until you tap Show text
       const msgs = S.aim.map((m, k) => ({
-        who:m.who, isAi:m.who === 'ai', zh:m.zh, py:m.py, en:m.en, showZh:S.szh, showPy:S.spy && !!m.py, showEn:S.sen && !!m.en && m.who === 'ai',
-        quiet, quietText:m.who === 'ai' ? 'Listen to Mingming' : 'You said it', pc:S.playing === 'aim' + k ? 'on' : '', play:() => this.say(m.zh, 'aim' + k),
+        who:m.who, isAi:m.who === 'ai', zh:m.zh, py:m.py, en:m.en,
+        showZh:vo ? (m.who === 'me' || !!m.rev) : S.szh, showPy:vo ? (!!m.py && (m.who === 'me' || !!m.rev)) : S.spy && !!m.py, showEn:vo ? (!!m.rev && !!m.en && m.who === 'ai') : S.sen && !!m.en && m.who === 'ai',
+        canReveal:vo && m.who === 'ai' && !m.rev, reveal:() => this.aiReveal(k),
+        quiet:vo ? (m.who === 'ai' && !m.rev) : quiet, quietText:m.who === 'ai' ? 'Listen to Mingming' : 'You said it', pc:S.playing === 'aim' + k ? 'on' : '', play:() => this.sayAi(m.zh, 'aim' + k),
         hasOutside:m.outside.length > 0, outsideText:'Not in this site\'s HSK 1 or HSK 2 lists, so no pinyin: ' + m.outside.join(' '),
         hasPv:!!(m.pv && m.pv.length), pvText:'HSK ' + (TOPL + 1) + ' preview: ' + (m.pv || []).map(p => p.t + ' ' + p.py + ' = ' + p.en).join('  ·  '),
         hasFb:!!m.fb, fbBetter:m.fb ? m.fb.better : '', fbWhy:m.fb ? m.fb.why : '', hasOk:m.who === 'me' && !!m.judged && !m.fb,
@@ -1536,13 +1625,16 @@
       const lastM = S.aim[S.aim.length - 1];
       const sg = lastM && lastM.who === 'ai' && lastM.sug && !S.aiBusy ? lastM.sug : null;
       return {
+        aiVo:vo, aiNotVo:!vo, aiVoToggleLabel:vo ? 'Type instead' : 'Voice only', aiVoToggle:this.aiVoToggle, aiCanVo:hasMic0,
+        ttsOpts:[['qwen', 'Alibaba Qwen voice (needs the Alibaba key)'], ['browser', 'This browser\'s own voice']].map(o => ({ label:o[1], cls:S.ttsMode === o[0] ? 'on' : '', fn:() => this.setTtsMode(o[0]) })),
+        ttsVoiceOpts:TTS_VOICES.map(v => ({ label:v[1], cls:S.ttsVoice === v[0] ? 'on' : '', fn:() => this.setTtsVoice(v[0]) })), ttsIsQwen:S.ttsMode === 'qwen',
         sugClosed:!!sg && !sg.open, sugOpen:!!sg && sg.open, sugZh:sg ? sg.zh : '', sugPy:sg ? sg.py : '', sugEn:sg ? sg.en : '',
-        hasAlts:S.aiAlts.length > 0, altList:S.aiAlts.map(t => ({ t, fn:() => this.aiPickAlt(t) })), sugShow:this.aiShowSug, sugUse:this.aiUseSug, sugPc:S.playing === 'sug' ? 'on' : '', sugPlay:() => sg && this.say(sg.zh, 'sug'),
+        hasAlts:S.aiAlts.length > 0, altList:S.aiAlts.map(t => ({ t, fn:() => this.aiPickAlt(t) })), sugShow:this.aiShowSug, sugUse:this.aiUseSug, sugPc:S.playing === 'sug' ? 'on' : '', sugPlay:() => sg && this.sayAi(sg.zh, 'sug'),
         scriptMode:!aiEff, aiModeOn:aiEff, scriptCls:aiEff ? '' : 'on', aiCls:aiEff ? 'on' : '', hasModeSwitch:HAS_SCRIPTS,
         setScript:() => this.setAiMode(false), setAi:() => this.setAiMode(true),
         aiNoKey:aiEff && !S.aiOn, aiReady:aiEff && S.aiOn, aiMsgs:msgs, aiBusy:S.aiBusy, aiErr:S.aiErr, hasAiErr:!!S.aiErr,
         aiInput:S.aiInput, onAiInput:(e) => this.setState({ aiInput:e.target.value }), onAiKey:(e) => { if (e.key === 'Enter') this.aiSend(); },
-        aiSend:this.aiSend, aiMic:this.aiMic, aiHasMic:hasMic, aiNoMic:!hasMic, aiMicLabel:S.asrBusy ? 'Transcribing…' : (S.aiListen ? 'Listening… tap to stop' : 'Speak'), aiMicCls:S.aiListen ? 'on' : '',
+        aiSend:this.aiSend, aiMic:this.aiMic, aiHasMic:hasMic, aiNoMic:!hasMic, aiMicLabel:S.asrBusy ? 'Transcribing…' : (S.aiListen ? 'Listening… tap to stop' : 'Speak'), aiMicCls:S.aiListen ? 'on' : (vo ? 'pri' : ''),
         aiScnList:[{ title:'Free chat', sub:'Anything simple', cls:S.aiScn === -1 ? 'cur' : '', fn:() => this.aiStart(-1) }].concat(AISCN.map((x, i) => ({ title:x.title, sub:x.sub, cls:S.aiScn === i ? 'cur' : '', fn:() => this.aiStart(i) }))),
         aiToday:(S.aiDays[ymd(new Date())] || 0) + ' messages today · ' + (S.aiProvider === 'alibaba' ? 'Qwen' : 'Claude'), aiSimpler:this.aiSimpler,
         aiSet:!!AICFG.key, aiUnset:!AICFG.key, aiKeyInput:S.aiKeyInput, onAiKeyInput:(e) => this.setState({ aiKeyInput:e.target.value }), aiSaveKey:this.aiSaveKey, aiRemoveKey:this.aiRemoveKey,

@@ -286,6 +286,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await nav('Speak');
   await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
   await page.waitForFunction(() => window.shanlu.state.aim.length >= 1 && !window.shanlu.state.aiBusy);
+  await page.locator('.ai-tools button', { hasText: 'Type instead' }).click();   // voice only is the default and keeps Mingming's lines hidden
   const sys = calls[0].system;
   check(sys.includes('机场') && sys.includes('米饭') && sys.includes('HSK 2'), 'the instructions hold the HSK 1 and HSK 2 word lists');
   check(sys.includes('as a gentle preview') && sys.includes('HSK 3 list') && sys.includes('聪明'), 'at HSK 2 the instructions allow a few HSK 3 words as a preview');

@@ -184,6 +184,17 @@
       <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
         <sc-for list="{{asrOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
       </div>
+      <h3 style="margin:18px 0 0;font-size:17px">What speaks Mingming's lines</h3>
+      <p class="muted" style="margin:6px 0 0;font-size:15.5px">Alibaba's Qwen voice sounds far more natural than the browser's. It uses the model qwen3-tts-flash, which has its own free quota (turn on "Free quota only" for it too). If it ever fails, the browser voice takes over.</p>
+      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ttsOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
+      </div>
+      <sc-if value="{{ttsIsQwen}}" hint-placeholder-val="{{ false }}">
+        <p class="muted" style="margin:12px 0 0;font-size:15px">Voice (tap one to hear it):</p>
+        <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ttsVoiceOpts}}" as="o" hint-placeholder-count="5"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
+        </div>
+      </sc-if>
       <sc-if value="{{hasAliNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aliNote}}</div></sc-if>
       <sc-if value="{{hasAiNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aiNote}}</div></sc-if>
     </section>
@@ -728,11 +739,11 @@
       <div class="chat-h">
         <div class="av zh" aria-hidden="true">明</div>
         <div class="chat-t"><b>Mingming</b><span>AI conversation · {{aiToday}}</span></div>
-        <div class="seg2" role="group" aria-label="Show on screen">
+        <sc-if value="{{aiNotVo}}" hint-placeholder-val="{{ true }}"><div class="seg2" role="group" aria-label="Show on screen">
           <button class="{{zhCls}}" onClick="{{toggleZh}}">Characters</button>
           <button class="{{pyCls}}" onClick="{{togglePy}}">Pinyin</button>
           <button class="{{enCls}}" onClick="{{toggleEn}}">English</button>
-        </div>
+        </div></sc-if>
       </div>
       <div class="msgs">
         <sc-for list="{{aiMsgs}}" as="m" hint-placeholder-count="3">
@@ -748,6 +759,7 @@
                 <button class="spk {{m.pc}}" aria-label="Hear this line" onClick="{{m.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
               </sc-if>
             </div>
+            <sc-if value="{{m.canReveal}}" hint-placeholder-val="{{ false }}"><div class="note"><button class="linkbtn" onClick="{{m.reveal}}">Show text</button></div></sc-if>
             <sc-if value="{{m.hasOutside}}" hint-placeholder-val="{{ false }}"><div class="note">{{m.outsideText}}</div></sc-if>
             <sc-if value="{{m.hasPv}}" hint-placeholder-val="{{ false }}"><div class="note pv">{{m.pvText}}</div></sc-if>
             <sc-if value="{{m.hasOk}}" hint-placeholder-val="{{ false }}"><div class="note good">Sounds natural.</div></sc-if>
@@ -768,20 +780,22 @@
               <div><div class="zh">{{sugZh}}</div><div class="py">{{sugPy}}</div><div class="en">{{sugEn}}</div></div>
               <button class="spk {{sugPc}}" aria-label="Hear the suggested reply" onClick="{{sugPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
             </div>
-            <div class="sug-t"><button class="linkbtn" onClick="{{sugUse}}">Put it in the box</button><span class="muted">Better: tap Speak and say it. The microphone hears characters, not tones directly, so this is a check, not a pronunciation score.</span></div>
+            <div class="sug-t"><sc-if value="{{aiNotVo}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" onClick="{{sugUse}}">Put it in the box</button></sc-if><span class="muted">Better: tap Speak and say it. The microphone hears characters, not tones directly, so this is a check, not a pronunciation score.</span></div>
           </div>
         </sc-if>
-        <div class="ai-in">
+        <sc-if value="{{aiNotVo}}" hint-placeholder-val="{{ true }}"><div class="ai-in">
           <input class="wsearch" style="margin:0;max-width:none" type="text" lang="zh" autocomplete="off" placeholder="Type Chinese, or tap Speak" value="{{aiInput}}" onInput="{{onAiInput}}" onKeyDown="{{onAiKey}}" aria-label="Your reply">
           <button class="btn pri" onClick="{{aiSend}}">Send</button>
-        </div>
+        </div></sc-if>
         <sc-if value="{{hasAlts}}" hint-placeholder-val="{{ false }}"><div class="alts"><span class="muted">Heard it differently? Tap what you said:</span><sc-for list="{{altList}}" as="a" hint-placeholder-count="2"><button type="button" class="chip" onClick="{{a.fn}}"><span class="zh">{{a.t}}</span></button></sc-for></div></sc-if>
         <div class="ai-tools">
           <sc-if value="{{aiHasMic}}" hint-placeholder-val="{{ true }}"><button class="btn {{aiMicCls}}" onClick="{{aiMic}}">{{aiMicLabel}}</button></sc-if>
           <button class="linkbtn" onClick="{{aiSimpler}}">Say it slower or again</button>
+          <sc-if value="{{aiCanVo}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" onClick="{{aiVoToggle}}">{{aiVoToggleLabel}}</button></sc-if>
         </div>
         <sc-if value="{{aiNoMic}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0;font-size:14.5px">This browser has no speech input for websites. On an iPhone, tap the microphone key on your keyboard to dictate Chinese into the box (add the Chinese keyboard first), or try the site in Safari.</p></sc-if>
-        <p class="muted" style="margin:0;font-size:14.5px">Tap Speak and talk at a normal pace: it keeps listening through short pauses and stops by itself after a moment (or tap again to stop). What it hears lands in the box: check it, fix it if needed, then press Send. Pinyin comes from this site's own word list. The AI can make mistakes too.</p>
+        <sc-if value="{{aiVo}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0;font-size:14.5px">Voice only: tap Speak and talk at a normal pace. When you stop, what the microphone heard is sent by itself and Mingming answers out loud. Tap Show text under a line if you need to read it. Corrections appear under your own line. Pinyin comes from this site's own word list. The AI can make mistakes too.</p></sc-if>
+        <sc-if value="{{aiNotVo}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:0;font-size:14.5px">Tap Speak and talk at a normal pace: it keeps listening through short pauses and stops by itself after a moment (or tap again to stop). What it hears lands in the box: check it, fix it if needed, then press Send. Pinyin comes from this site's own word list. The AI can make mistakes too.</p></sc-if>
       </div>
     </section>
     <div class="sidep">

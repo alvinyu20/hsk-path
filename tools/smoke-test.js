@@ -62,7 +62,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', e => errors.push('pageerror: ' + e.message));
-  page.on('console', m => { if (m.type() === 'error' && !/fonts\.(googleapis|gstatic)|net::ERR|status of 401/.test(m.text())) errors.push('console: ' + m.text()); });
+  page.on('console', m => { if (m.type() === 'error' && !/fonts\.(googleapis|gstatic)|net::ERR|status of (401|500)/.test(m.text())) errors.push('console: ' + m.text()); });
   page.on('dialog', d => d.accept());
 
   const shot = async (name) => { if (shots) await page.screenshot({ path: path.join(shots, name + '.png'), fullPage: true }); };
@@ -800,6 +800,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await nav('Speak');
   await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
   await page.waitForFunction(() => window.shanlu.state.aim.length >= 1 && !window.shanlu.state.aiBusy);
+  check(await page.locator('input[aria-label="Your reply"]').count() === 0 && (await page.locator('.ai-tools').innerText()).includes('Type instead'), 'voice only is the default: no typing box until you ask for it');
+  await page.locator('.ai-tools button', { hasText: 'Type instead' }).click();
   const first = await page.locator('.msgs').innerText();
   check(first.includes('你好！你想喝什么？') && first.includes('Nǐ hǎo! Nǐ xiǎng hē shénme?'), 'Mingming opens the conversation, with pinyin from the site\'s own word list');
   check(aiCalls[0].headers['x-api-key'] === 'sk-ant-test' && aiCalls[0].headers['anthropic-dangerous-direct-browser-access'] === 'true' && /^claude-/.test(aiCalls[0].body.model), 'the request carries the key and a Claude model name');
@@ -854,13 +856,19 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await text()).includes('API key was rejected'), 'a rejected key is explained');
   // Alibaba Qwen: chat and voice recogniser, against a fake Alibaba API
   const aliCalls = [];
-  let aliChatN = 0;
+  let aliChatN = 0, ttsMode2 = 'ok';
+  const silentWav = Buffer.from('UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=', 'base64');
+  await ctx.route('https://tts-files.test/**', (r) => r.fulfill({ status: 200, headers: { 'access-control-allow-origin': '*' }, contentType: 'audio/wav', body: silentWav }));
   const aliHandler = async (r) => {
     const req = r.request();
     const cors = { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' };
     if (req.method() === 'OPTIONS') return r.fulfill({ status: 204, headers: cors });
     const body = JSON.parse(req.postData());
     aliCalls.push({ url: req.url(), headers: req.headers(), body });
+    if (body.model === 'qwen3-tts-flash') {
+      if (ttsMode2 === 'fail') return r.fulfill({ status: 500, headers: cors, contentType: 'application/json', body: JSON.stringify({ code: 'InternalError', message: 'voice service down' }) });
+      return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ request_id: 'x', output: { audio: { url: 'http://tts-files.test/' + encodeURIComponent(body.input.voice + '-' + body.input.text) + '.wav', data: '' } }, usage: { characters: body.input.text.length } }) });
+    }
     if (body.model === 'qwen3-asr-flash') return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { role: 'assistant', content: '我想喝茶' } }] }) });
     const last = body.messages[body.messages.length - 1].content;
     if (last === 'Reply with the single word OK.') return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { role: 'assistant', content: 'OK' } }] }) });
@@ -884,7 +892,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await text()).includes('Qwen (Alibaba) · in use'), 'Use Qwen for conversation switches to Qwen and marks it in use');
   await page.locator('button', { hasText: 'Test connection' }).click();
   await page.waitForFunction(() => /Voice recogniser: working/.test(document.body.innerText), null, { timeout: 5000 });
-  check((await text()).includes('Chat model (qwen-flash): working.'), 'Test connection reports the chat model and the voice recogniser');
+  check((await text()).includes('Chat model (qwen-flash): working.') && (await text()).includes('Voice (qwen3-tts-flash): working.'), 'Test connection reports the chat model, the voice recogniser and the Qwen voice');
   const testCall = aliCalls.find(c => c.body.model === 'qwen3-asr-flash');
   check(testCall && testCall.headers['authorization'] === 'Bearer sk-ali-test' && testCall.url.startsWith('https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions') && testCall.body.messages[0].content[0].input_audio.data.startsWith('data:audio/wav;base64,UklGR'), 'the recogniser request carries the key and a WAV clip to the Singapore endpoint');
   await nav('Speak');
@@ -916,6 +924,39 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(wavHead.startsWith('RIFF') && wavHead.slice(8, 12) === 'WAVE', 'the clip is a real WAV file');
   const wavBytes = Buffer.from(asrCalls[asrCalls.length - 1].body.messages[0].content[0].input_audio.data.split(',')[1], 'base64');
   check(wavBytes.readUInt32LE(24) === 16000 && wavBytes.readUInt16LE(22) === 1 && wavBytes.length > 44 + 16000 * 2 * 0.8, 'the clip is 16 kHz mono and holds about as much sound as was recorded (' + wavBytes.length + ' bytes), taken straight from the microphone');
+  // voice only: what the microphone heard is sent by itself, Mingming answers out loud with the Qwen voice, her text stays hidden until tapped
+  await page.locator('.ai-tools button', { hasText: 'Voice only' }).click();
+  check(await page.locator('input[aria-label="Your reply"]').count() === 0, 'Voice only hides the typing box again');
+  const nBefore = await page.evaluate(() => window.shanlu.state.aim.length);
+  await page.locator('.ai-tools button', { hasText: /^Speak$/ }).click();
+  await page.waitForFunction(() => window.shanlu.state.aiListen === true, null, { timeout: 5000 });
+  await page.waitForTimeout(1200);
+  await page.locator('.ai-tools button', { hasText: 'Listening' }).click();
+  await page.waitForFunction((n) => window.shanlu.state.aim.length >= n + 2 && !window.shanlu.state.aiBusy, nBefore, { timeout: 10000 });
+  const vo1 = await page.locator('.msgs').innerText();
+  check(vo1.includes('我想喝茶') && vo1.includes('Listen to Mingming') && !vo1.includes('好的。'), 'in voice only the recognised line is sent by itself and shown, while Mingming\'s reply is hidden');
+  const ttsReply = aliCalls.filter(c => c.body.model === 'qwen3-tts-flash' && c.body.input.text === '好的。');
+  check(ttsReply.length === 1 && ttsReply[0].body.input.voice === 'Cherry' && ttsReply[0].body.input.language_type === 'Chinese' && ttsReply[0].url === 'https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation' && ttsReply[0].headers['authorization'] === 'Bearer sk-ali-test', 'the reply is read by the Qwen voice (Cherry) through Alibaba\'s speech endpoint');
+  check((await page.evaluate(() => window.shanlu.ttsEl && window.shanlu.ttsEl.src)) === 'https://tts-files.test/Cherry-' + encodeURIComponent('好的。') + '.wav', 'the audio link Alibaba returned is what plays (upgraded to https)');
+  await page.locator('.msgs button', { hasText: 'Show text' }).last().click();
+  const vo2 = await page.locator('.msgs').innerText();
+  check(vo2.includes('好的。') && vo2.includes('Okay.'), 'Show text reveals Mingming\'s line with pinyin and English');
+  // the same line again comes from the cache (no second charge); another voice is used when chosen
+  await page.locator('.msgs .spk').last().click();
+  await page.waitForTimeout(300);
+  check(aliCalls.filter(c => c.body.model === 'qwen3-tts-flash' && c.body.input.text === '好的。').length === 1, 'hearing a line again does not ask Alibaba again');
+  await page.evaluate(() => window.shanlu.setTtsVoice('Neil'));
+  await page.waitForTimeout(400);
+  check(aliCalls.some(c => c.body.model === 'qwen3-tts-flash' && c.body.input.voice === 'Neil'), 'choosing a voice plays a sample in that voice');
+  // if the Qwen voice fails the browser voice takes over and says so
+  ttsMode2 = 'fail';
+  await page.evaluate(() => { window.shanlu.ttsCache = {}; window.shanlu.ttsWarned = false; window.shanlu.setState({ aiErr:'' }); });
+  await page.locator('.msgs .spk').last().click();
+  await page.waitForFunction(() => window.shanlu.state.aiErr, null, { timeout: 5000 });
+  check((await page.evaluate(() => window.shanlu.state.aiErr)).includes('Qwen voice did not work') && (await page.evaluate(() => window.shanlu.state.aiErr)).includes('voice service down'), 'when the Qwen voice fails you are told, and the browser voice is used instead');
+  ttsMode2 = 'ok';
+  await page.locator('.ai-tools button', { hasText: 'Type instead' }).click();
+  check(await page.locator('input[aria-label="Your reply"]').count() === 1, 'Type instead brings the typing box back');
   // a workspace ID changes the web address
   await page.evaluate(() => { const app = window.shanlu; app.setState({ aliWsInput:'testws1', aliKeyInput:'' }); app.aliSaveKey(); });
   await page.evaluate(() => window.shanlu.aliTest());
