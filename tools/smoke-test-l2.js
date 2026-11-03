@@ -137,7 +137,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('button', { hasText: 'Topics' }).click();
   await page.waitForTimeout(80);
   const topicN = await page.evaluate(() => window.HSK2_WEBS.topics.length);
-  check(topicN === 14 && (await text()).includes('Getting around'), 'the topics screen lists the 14 HSK 2 topics');
+  check(topicN > 30 && (await page.locator('.tgroups button').count()) === topicN && (await text()).includes('Roads and distance') && !(await text()).includes('Greetings and manners'), 'the topics screen lists the HSK 2 topics (' + topicN + '), without the ones that have no HSK 2 words');
   check(await page.evaluate(() => window.HSK2_WEBS.hubs.every(h => h.gaps.every(g => g.opts.includes(g.ans)))), 'every fill-in gap has its answer among its options');
 
   // ---- review and My words
@@ -338,13 +338,15 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     // word webs: topics first, and the hubs of both levels
     await pA.locator('nav button', { hasText: 'Word webs' }).click();
     await pA.waitForTimeout(150);
-    check(await pA.locator('.mtile').count() === await pA.evaluate(() => window.HSK1_WEBS.topics.length + window.HSK2_WEBS.topics.length - 10), 'Word webs shows the mountains of both levels, with 10 HSK 2 topics joined to HSK 1 ones');
+    await pA.locator('button', { hasText: /^Show all \d+ mountains$/ }).click();
+    await pA.waitForTimeout(100);
+    check(await pA.locator('.mtile').count() === await pA.evaluate(() => new Set(window.HSK1_WEBS.topics.concat(window.HSK2_WEBS.topics).map(t => t.name)).size), 'Word webs shows one mountain per topic name across both levels');
     // the HSK 2 family words sit in the same topic as the HSK 1 family words, each with a small level tag
-    await pA.locator('.pickrow button', { hasText: /^Family and people$/ }).click();
+    await pA.locator('.pickrow button', { hasText: /^Family$/ }).click();
     await pA.waitForTimeout(150);
-    const fam = await pA.evaluate(() => { const t = document.querySelector('.tgrid').innerText; return { n: document.querySelectorAll('.tgrid .tc').length, cur: document.querySelectorAll('.tgrid .lvtag.cur').length, old: document.querySelectorAll('.tgrid .lvtag.old').length, has: t.includes('爷爷') && t.includes('爸爸') }; });
-    check(fam.has && fam.n === 20 + 9 && fam.cur === 9 && fam.old === 20, 'the Family and people topic holds the 20 HSK 1 and the 9 HSK 2 words, tagged by level');
-    check(await pA.locator('.pickrow button', { hasText: /^School and study$/ }).count() === 0 && await pA.locator('.pickrow button', { hasText: /^Where things are$/ }).count() === 1, 'matching HSK 2 topics are joined, new ones stay');
+    const fam = await pA.evaluate(() => { const a = window.HSK1_WEBS.topics.find(t => t.name === 'Family').words.length, b = window.HSK2_WEBS.topics.find(t => t.name === 'Family').words.length; const t = document.querySelector('.tgrid').innerText; return { a, b, n: document.querySelectorAll('.tgrid .tc').length, cur: document.querySelectorAll('.tgrid .lvtag.cur').length, old: document.querySelectorAll('.tgrid .lvtag.old').length, has: t.includes('爷爷') && t.includes('爸爸') }; });
+    check(fam.has && fam.n === fam.a + fam.b && fam.cur === fam.b && fam.old === fam.a, 'the Family topic holds the HSK 1 and HSK 2 family words together, tagged by level (' + fam.a + ' + ' + fam.b + ')');
+    check(await pA.locator('.tgroup').count() >= 8 && await pA.locator('.tg-l', { hasText: /^Time$/ }).count() === 1, 'the topics are grouped under headings');
     await pA.locator('button', { hasText: 'Shared character' }).click();
     await pA.waitForTimeout(100);
     check(await pA.locator('.hubrow .pickrow .fc2').count() === await pA.evaluate(() => window.HSK1_WEBS.hubs.length + window.HSK2_WEBS.hubs.length), 'the shared-character picker holds the hubs of both levels');

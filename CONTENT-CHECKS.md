@@ -107,3 +107,6 @@ HSK 2 is a separate level (`content/l2/`, tools run with `LEVEL=2`). The level c
 - Character glosses inside the word webs (for example 脑 = brain inside 电脑) and the "what to listen for" notes were written by AI and have no second source.
 - The browser's voice is used for all audio. Its Chinese can be wrong or odd, especially in context, and the quality varies by device.
 - Questions only a native speaker can settle: `content/ask-a-teacher.tsv`.
+
+## Word web topics (content/topics.json)
+One shared list of topics for every level, written by hand: each topic has a group, the words (from any level), and a sentence per level. A level shows only its own words in a topic; a topic with fewer than 3 words at a level is hidden unless it is the only home of one of them (tools/topics.py). All Word web topic sentences go through the same sentence checks. `node tools/test-topics.js` checks that every word is in a topic and that known bad groupings do not come back (万 with numbers, dog/cat with animals, 从小 not with weather, left/right not with shops). When adding a word to a topic, ask: would a learner see why these words belong together? A word may sit in more than one topic.

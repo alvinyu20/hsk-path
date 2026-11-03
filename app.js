@@ -43,20 +43,16 @@
   const LEVEL_OF = {};
   if (ALL) LVLS.forEach(n => (window['HSK' + n + '_WORDS'] || []).forEach(w => { LEVEL_OF[w.zh] = n; }));
   const lvInfo = (zh) => (ALL && LEVEL_OF[zh] ? { hasLvTag:true, lvTag:'HSK ' + LEVEL_OF[zh], lvCls:LEVEL_OF[zh] === TOPL ? 'cur' : 'old' } : { hasLvTag:false, lvTag:'', lvCls:'' });
-  // Topics of a higher level that belong to a topic of a lower level are joined to it in All levels (HSK 2 name -> HSK 1 name).
-  // Topics with no match (new categories) stay as they are.
-  const TOPIC_MERGE = { 'Family and people':'Family and people', 'Getting around':'Getting around', 'Food and drink':'Food and drink', 'Describing things':'Describing things',
-    'School and study':'At school', 'Body and health':'Health and daily routine', 'Sports, hobbies and fun':'Fun and feelings', 'Numbers and measure words':'Amounts and measure words',
-    'Grammar words':'Little words that build sentences', 'Doing and saying':'Everyday verbs' };
+  // Topics are shared by every level (content/topics.json): a topic has the same name at each level and holds that level's words.
+  // In All levels the topics of the same name are joined (their words one after the other, HSK 1 first) and kept in the shared order.
   const mergeTopics = (lists) => {
-    const out = [], byName = {};
-    lists.forEach((list, li) => list.forEach(t => {
-      const to = li > 0 ? TOPIC_MERGE[t.name] || t.name : t.name;
-      const host = byName[to];
-      if (host) t.words.forEach(z => { if (host.words.indexOf(z) < 0) host.words.push(z); });
-      else { const copy = Object.assign({}, t, { words:t.words.slice() }); out.push(copy); byName[t.name] = copy; }
+    const byName = {};
+    lists.forEach(list => list.forEach(t => {
+      const host = byName[t.name];
+      if (host) { t.words.forEach(z => { if (host.words.indexOf(z) < 0) host.words.push(z); }); host.sentence = t.sentence; host.to = t.to; host.cta = t.cta; }
+      else byName[t.name] = Object.assign({}, t, { words:t.words.slice() });
     }));
-    return out;
+    return Object.keys(byName).map(k => byName[k]).sort((x, y) => x.order - y.order);
   };
   const LESSONS = ALL ? JOIN('GRAMMAR', 'lessons') : LV_DATA('GRAMMAR').lessons;
   const { hubs:HUBS, opps:OPPS, topics:TOPICS } = ALL ? { hubs:JOIN('WEBS', 'hubs'), opps:JOIN('WEBS', 'opps'), topics:mergeTopics(LV_ALL('WEBS').map(d => d.topics || [])) } : LV_DATA('WEBS');
@@ -201,7 +197,7 @@
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'topic', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
+      wmode:'topic', wmist:false, whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
@@ -1796,6 +1792,8 @@
       });
       const topicStarted = topicNow.words.filter(zh => mini(zh).started).length;
       const topicOpts = TOPICS.map((t, i) => ({ label:t.name, cls:S.wtopic === i ? 'on' : '', fn:() => this.setState({ wtopic:i }) }));
+      const topicGroups = [];
+      TOPICS.forEach((t, i) => { let g = topicGroups.find(x => x.label === t.group); if (!g) { g = { label:t.group, opts:[] }; topicGroups.push(g); } g.opts.push(topicOpts[i]); });
       const capOpts = LIMIT_OPTIONS.map(n => ({ label:n === 0 ? 'No limit' : String(n), cls:S.nlimit === n ? 'on' : '', fn:() => this.setLimit(n) }));
       const hubNew = hubNow.words.filter(w => mini(w.zh).lv === 'new' && !S.wlearned[w.zh]).length;
       const topicNew = topicNow.words.filter(zh => mini(zh).lv === 'new' && !S.wlearned[zh]).length;
@@ -1907,7 +1905,7 @@
         hubCards, hubOpts, hubZh:hubNow.hub, hubPy:hubNow.py, hubEn:hubNow.en,
         fillEn:gapNow.en, fillZh:gapNow.zh, gapOpts, gapDone, gapOptsCls:gapDone ? 'locked' : '', fillLine, gapNext:this.gapNext,
         fillReport:report('Which word fits?', gapNow.zh + ' = ' + gapNow.ans + ' / ' + gapNow.en),
-        oppRows, topicChips, topicOpts, tsZh:topicNow.sentence.zh, tsPy:topicNow.sentence.py, tsEn:topicNow.sentence.en,
+        oppRows, topicChips, topicOpts, topicGroups, tsZh:topicNow.sentence.zh, tsPy:topicNow.sentence.py, tsEn:topicNow.sentence.en,
         tsReport:report('Topic sentence', topicNow.sentence.zh + ' ' + topicNow.sentence.en),
         topicCta:topicNow.cta, goTopic:() => this.go(topicNow.to),
         hasRlast:!!S.rlast, rlastText:S.rlast ? S.rlast.zh + ': mastery ' + S.rlast.from + '% → ' + S.rlast.to + '%' : '', rlastCls:S.rlast && S.rlast.to < S.rlast.from ? 'down' : 'up',
@@ -2003,7 +2001,7 @@
         todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed. Anything else is a bonus.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
         trailCta:() => this.go(ascCta.to), trailCtaText:ascCta.text,
         trailNote:'Camps are placed by level, not to scale. The climb counts the ' + LVN + ' words you have started; grammar, listening and speaking count towards the level exam.',
-        mistClearText:mistClear + ' of ' + TOPICS.length + ' clear', mistTiles, mistHasNear:!!nearBest,
+        mistClearText:mistClear + ' of ' + TOPICS.length + ' clear', mistTiles, mistHasNear:!!nearBest, mistOpen:S.wmist, toggleMist:() => this.setState({ wmist:!this.state.wmist }), mistToggleText:S.wmist ? 'Hide the mountains' : 'Show all ' + TOPICS.length + ' mountains',
         mistNearText:nearBest ? 'Finish ' + nearBest.name + ' (' + (nearBest.tot - nearBest.got) + ' to go)' : '', mistNearGo:() => nearBest && openTopic(nearBest.i),
         mistNote:'A mountain is clear when you have started every word in its Word web topic.',
         sys2Cls:S.sys === '2.0' ? 'on' : '', sys3Cls:S.sys === '3.0' ? 'on' : '',

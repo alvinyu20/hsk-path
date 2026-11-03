@@ -98,6 +98,9 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--jade);outline-o
 .oc-zh{font-size:44px;line-height:1.15;font-weight:500}
 .oarrow{align-self:center;color:var(--muted);width:26px;height:26px}
 .tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr));gap:12px}
+.tgroups{display:flex;flex-direction:column;gap:12px}
+.tgroup{display:flex;flex-direction:column;gap:6px}
+.tg-l{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .lvtag{flex:none;align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:.02em;line-height:1;padding:3px 7px;border-radius:99px;border:1px solid var(--line);color:var(--muted);background:transparent}
 .lab-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px}
 .lab-n{font-size:14px}

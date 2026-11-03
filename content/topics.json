@@ -1,0 +1,1642 @@
+{
+ "note": "Shared Word web topics for every level. Each topic lists words from any level; a level shows only its own words (topics with fewer than 3 are hidden unless they are a word's only home). sentences: level -> a sentence using only that level's and earlier words; a level without its own sentence uses the nearest lower one. Order and groups here are the order and groups on screen.",
+ "topics": [
+  {
+   "name": "Greetings and manners",
+   "group": "Basics",
+   "to": "speak",
+   "cta": "Use these in a conversation",
+   "words": [
+    "你好",
+    "您",
+    "再见",
+    "谢谢",
+    "不客气",
+    "对不起",
+    "没关系",
+    "请",
+    "请问",
+    "喂",
+    "没事",
+    "见",
+    "大家",
+    "不好意思"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "你好！谢谢你，再见！",
+     "en": "Hello! Thank you, goodbye!"
+    },
+    "2": {
+     "zh": "不好意思，请问洗手间在哪儿？",
+     "en": "Excuse me, where is the restroom?"
+    }
+   }
+  },
+  {
+   "name": "Pronouns",
+   "group": "Basics",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "我",
+    "你",
+    "您",
+    "他",
+    "她",
+    "它",
+    "我们",
+    "你们",
+    "他们",
+    "她们",
+    "它们",
+    "们",
+    "大家",
+    "自己"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "他是我的朋友，她是我的同学，我们都很好。",
+     "en": "He is my friend, she is my classmate, and we are all well."
+    },
+    "2": {
+     "zh": "我自己做饭，大家都说好吃。",
+     "en": "I cook for myself, and everyone says it is tasty."
+    }
+   }
+  },
+  {
+   "name": "This, that, here, there",
+   "group": "Basics",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "这",
+    "那",
+    "这个",
+    "那个",
+    "这些",
+    "那些",
+    "这儿",
+    "那儿",
+    "这里",
+    "那里",
+    "这边",
+    "那边",
+    "这么",
+    "那么",
+    "这样",
+    "那样"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "这个很好，那个太贵了。",
+     "en": "This one is good; that one is too expensive."
+    },
+    "2": {
+     "zh": "今天这里人这么多！",
+     "en": "There are so many people here today!"
+    }
+   }
+  },
+  {
+   "name": "Question words",
+   "group": "Basics",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "谁",
+    "什么",
+    "哪",
+    "哪个",
+    "哪些",
+    "哪儿",
+    "哪里",
+    "怎么",
+    "怎么样",
+    "为什么",
+    "几",
+    "多少",
+    "吗",
+    "呢"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "你叫什么名字？你住在哪儿？",
+     "en": "What is your name? Where do you live?"
+    },
+    "2": {
+     "zh": "你今天为什么不去学校？",
+     "en": "Why aren't you going to school today?"
+    }
+   }
+  },
+  {
+   "name": "Numbers",
+   "group": "Basics",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "一",
+    "二",
+    "两",
+    "三",
+    "四",
+    "五",
+    "六",
+    "七",
+    "八",
+    "九",
+    "十",
+    "百",
+    "千",
+    "万",
+    "零",
+    "第",
+    "半",
+    "一半"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我家有三口人，他八岁，她十岁。",
+     "en": "There are three people in my family; he is eight and she is ten."
+    },
+    "2": {
+     "zh": "这个手机一万块，太贵了。",
+     "en": "This phone costs ten thousand yuan; that is too expensive."
+    }
+   }
+  },
+  {
+   "name": "How much and how many",
+   "group": "Basics",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "多",
+    "少",
+    "多少",
+    "几",
+    "一些",
+    "些",
+    "一点儿",
+    "有些",
+    "有的",
+    "一下",
+    "每",
+    "万"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "你有多少钱？我有一点儿。",
+     "en": "How much money do you have? I have a little."
+    },
+    "2": {
+     "zh": "每个人都有一些书。",
+     "en": "Everyone has some books."
+    }
+   }
+  },
+  {
+   "name": "Measure words",
+   "group": "Basics",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "个",
+    "本",
+    "件",
+    "口",
+    "只",
+    "条",
+    "间",
+    "位",
+    "名",
+    "次",
+    "家"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我买了三本书、两件衣服和一个苹果。",
+     "en": "I bought three books, two items of clothing and an apple."
+    },
+    "2": {
+     "zh": "这位老师有两条狗和一只猫。",
+     "en": "This teacher has two dogs and a cat."
+    }
+   }
+  },
+  {
+   "name": "Names and introductions",
+   "group": "People",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "名字",
+    "叫",
+    "姓",
+    "姓名",
+    "介绍",
+    "认识"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我叫小明，认识你很高兴。",
+     "en": "My name is Xiaoming; nice to meet you."
+    },
+    "2": {
+     "zh": "我来介绍一下，这是我的朋友，他叫小明。",
+     "en": "Let me introduce my friend; his name is Xiaoming."
+    }
+   }
+  },
+  {
+   "name": "People",
+   "group": "People",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "人",
+    "朋友",
+    "男朋友",
+    "女朋友",
+    "同学",
+    "先生",
+    "女士",
+    "男",
+    "女",
+    "男孩儿",
+    "女孩儿",
+    "小孩儿",
+    "小朋友",
+    "孩子",
+    "自己"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "这个人是我的朋友，那个小朋友是他的孩子。",
+     "en": "This person is my friend, and that child is his child."
+    },
+    "2": {
+     "zh": "这个男孩儿是我的同学，那个女孩儿是我的朋友。",
+     "en": "This boy is my classmate and that girl is my friend."
+    }
+   }
+  },
+  {
+   "name": "Family",
+   "group": "People",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "家",
+    "家人",
+    "爸爸",
+    "妈妈",
+    "哥哥",
+    "姐姐",
+    "弟弟",
+    "妹妹",
+    "儿子",
+    "女儿",
+    "爷爷",
+    "奶奶",
+    "妻子",
+    "丈夫",
+    "孩子",
+    "口",
+    "先生"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我家有五口人：爸爸、妈妈、哥哥、姐姐和我。",
+     "en": "There are five people in my family: dad, mom, older brother, older sister and me."
+    },
+    "2": {
+     "zh": "我爷爷奶奶住在我家，他们身体很好。",
+     "en": "My grandparents live in our home; they are in good health."
+    }
+   }
+  },
+  {
+   "name": "Age and growing up",
+   "group": "People",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "岁",
+    "孩子",
+    "小孩儿",
+    "小朋友",
+    "男孩儿",
+    "女孩儿",
+    "小时候",
+    "从小"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我女儿八岁，她是小学生。",
+     "en": "My daughter is eight; she is a primary-school student."
+    },
+    "2": {
+     "zh": "我小时候住在中国，从小就喜欢吃饺子。",
+     "en": "I lived in China when I was little, and I have liked dumplings since I was a child."
+    }
+   }
+  },
+  {
+   "name": "Work and jobs",
+   "group": "People",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "工作",
+    "上班",
+    "下班",
+    "公司",
+    "医生",
+    "老师",
+    "忙"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我在公司工作，今天很忙。",
+     "en": "I work at a company, and I am busy today."
+    },
+    "2": {
+     "zh": "我哥哥是医生，今天他上班很忙。",
+     "en": "My older brother is a doctor, and he is busy at work today."
+    }
+   }
+  },
+  {
+   "name": "Days, weeks and years",
+   "group": "Time",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "今天",
+    "明天",
+    "昨天",
+    "今年",
+    "明年",
+    "去年",
+    "星期",
+    "星期天",
+    "星期日",
+    "周",
+    "月",
+    "日",
+    "号",
+    "年",
+    "天",
+    "生日",
+    "过年"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "今天是四月五日，明天是星期天。",
+     "en": "Today is April 5th, and tomorrow is Sunday."
+    },
+    "2": {
+     "zh": "下个星期五是我的生日。",
+     "en": "Next Friday is my birthday."
+    }
+   }
+  },
+  {
+   "name": "Clock and time of day",
+   "group": "Time",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "点",
+    "分",
+    "分钟",
+    "小时",
+    "早上",
+    "上午",
+    "中午",
+    "下午",
+    "晚上",
+    "白天",
+    "现在",
+    "时候",
+    "时间",
+    "时",
+    "一会儿",
+    "早",
+    "晚"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "现在几点？现在是七点半。",
+     "en": "What time is it? It is half past seven."
+    },
+    "2": {
+     "zh": "请等一会儿，现在是下午三点十分。",
+     "en": "Please wait a moment; it is ten past three in the afternoon."
+    }
+   }
+  },
+  {
+   "name": "When and how often",
+   "group": "Time",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "现在",
+    "时候",
+    "时",
+    "每",
+    "经常",
+    "有时",
+    "再",
+    "已经",
+    "正在",
+    "正",
+    "快要",
+    "就",
+    "一会儿"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "你在做什么？我正在看电视。",
+     "en": "What are you doing? I am watching TV."
+    },
+    "2": {
+     "zh": "我已经吃饭了，你经常在这里吃饭吗？",
+     "en": "I have already eaten; do you often eat here?"
+    }
+   }
+  },
+  {
+   "name": "Food and meals",
+   "group": "Food and shopping",
+   "to": "speak",
+   "cta": "Use these in the café conversation",
+   "words": [
+    "吃",
+    "好吃",
+    "饭",
+    "米饭",
+    "面条儿",
+    "面包",
+    "包子",
+    "饺子",
+    "鸡蛋",
+    "肉",
+    "鱼",
+    "菜",
+    "苹果",
+    "水果",
+    "面",
+    "做饭",
+    "早饭",
+    "午饭",
+    "晚饭",
+    "饭店",
+    "饭馆"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我早饭吃面包，午饭吃米饭，晚饭吃饺子。",
+     "en": "I eat bread for breakfast, rice for lunch and dumplings for dinner."
+    },
+    "2": {
+     "zh": "这家饭馆的鱼很好吃，我们去吃吧。",
+     "en": "The fish at this restaurant is very tasty; let us go and eat."
+    }
+   }
+  },
+  {
+   "name": "Drinks",
+   "group": "Food and shopping",
+   "to": "speak",
+   "cta": "Use these in the café conversation",
+   "words": [
+    "水",
+    "茶",
+    "红茶",
+    "绿茶",
+    "奶茶",
+    "咖啡",
+    "牛奶",
+    "喝",
+    "杯子"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我喝茶，他喝牛奶，你喝水吗？",
+     "en": "I drink tea, he drinks milk; do you drink water?"
+    },
+    "2": {
+     "zh": "我喝咖啡，她喝奶茶，他们喝红茶。",
+     "en": "I drink coffee, she drinks milk tea and they drink black tea."
+    }
+   }
+  },
+  {
+   "name": "Money and shopping",
+   "group": "Food and shopping",
+   "to": "speak",
+   "cta": "Use these when you ask a price",
+   "words": [
+    "钱",
+    "块",
+    "元",
+    "万",
+    "买",
+    "卖",
+    "贵",
+    "便宜",
+    "东西",
+    "花",
+    "多少",
+    "商店",
+    "书店",
+    "超市",
+    "商场",
+    "店"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "这件衣服多少钱？太贵了，我想买便宜的。",
+     "en": "How much is this piece of clothing? It is too expensive; I want to buy a cheaper one."
+    },
+    "2": {
+     "zh": "商场里的东西很贵，超市的便宜一点儿。",
+     "en": "Things in the mall are expensive; the supermarket's are a little cheaper."
+    }
+   }
+  },
+  {
+   "name": "Clothes and accessories",
+   "group": "Food and shopping",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "衣服",
+    "裤子",
+    "穿",
+    "手表",
+    "包",
+    "件"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "这件衣服很好看，你想穿吗？",
+     "en": "This piece of clothing is pretty; do you want to wear it?"
+    },
+    "2": {
+     "zh": "这条裤子和这个包都很好看。",
+     "en": "These trousers and this bag are both pretty."
+    }
+   }
+  },
+  {
+   "name": "Places around town",
+   "group": "Places and travel",
+   "to": "speak",
+   "cta": "Use these to ask where something is",
+   "words": [
+    "医院",
+    "学校",
+    "公司",
+    "饭店",
+    "饭馆",
+    "酒店",
+    "商场",
+    "超市",
+    "书店",
+    "商店",
+    "药店",
+    "店",
+    "电影院",
+    "机场",
+    "车站",
+    "洗手间",
+    "楼"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我去商店买东西，也去书店看书。",
+     "en": "I go to the shop to buy things, and I also go to the bookstore to read."
+    },
+    "2": {
+     "zh": "机场离酒店很远，我们坐地铁去。",
+     "en": "The airport is far from the hotel; we go by subway."
+    }
+   }
+  },
+  {
+   "name": "Directions and positions",
+   "group": "Places and travel",
+   "to": "speak",
+   "cta": "Use these to ask where something is",
+   "words": [
+    "上",
+    "下",
+    "前",
+    "后",
+    "里",
+    "外",
+    "左",
+    "右",
+    "左边",
+    "右边",
+    "前面",
+    "后面",
+    "里面",
+    "外面",
+    "上面",
+    "下面",
+    "旁边",
+    "外边",
+    "边",
+    "面",
+    "这边",
+    "那边"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "你的书在桌子上，我的手机在这里。",
+     "en": "Your book is on the table, and my phone is here."
+    },
+    "2": {
+     "zh": "学校在左边，医院在右边，超市在前面。",
+     "en": "The school is on the left, the hospital is on the right, and the supermarket is ahead."
+    }
+   }
+  },
+  {
+   "name": "Coming and going",
+   "group": "Places and travel",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "去",
+    "来",
+    "到",
+    "回",
+    "进",
+    "出",
+    "进来",
+    "进去",
+    "出来",
+    "出去",
+    "回来",
+    "回去",
+    "上来",
+    "上去",
+    "下来",
+    "下去",
+    "过来",
+    "过去",
+    "起来",
+    "出门"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我今天去学校，明天回家。",
+     "en": "I go to school today and go home tomorrow."
+    },
+    "2": {
+     "zh": "你进来吧，我出去一下就回来。",
+     "en": "Come in; I will go out for a moment and be right back."
+    }
+   }
+  },
+  {
+   "name": "Roads and distance",
+   "group": "Places and travel",
+   "to": "speak",
+   "cta": "Use these to ask where something is",
+   "words": [
+    "路",
+    "路上",
+    "走路",
+    "走",
+    "往",
+    "离",
+    "近",
+    "远"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "学校离我家很近，走路十分钟就到了。",
+     "en": "The school is very near my home; it takes ten minutes on foot."
+    },
+    "2": {
+     "zh": "学校离我家很近，走路十分钟就到了。",
+     "en": "The school is very near my home; it takes ten minutes on foot."
+    }
+   }
+  },
+  {
+   "name": "Transport and tickets",
+   "group": "Places and travel",
+   "to": "speak",
+   "cta": "Use these to ask where something is",
+   "words": [
+    "车",
+    "出租车",
+    "公交车",
+    "地铁",
+    "火车",
+    "飞机",
+    "打车",
+    "开车",
+    "坐",
+    "机场",
+    "车站",
+    "站",
+    "票",
+    "机票"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我坐出租车去，你坐火车去。",
+     "en": "I go by taxi, and you go by train."
+    },
+    "2": {
+     "zh": "我坐地铁去机场，你坐公交车去车站。",
+     "en": "I take the subway to the airport, and you take the bus to the station."
+    }
+   }
+  },
+  {
+   "name": "Travel and countries",
+   "group": "Places and travel",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "旅游",
+    "出国",
+    "外国",
+    "国",
+    "中国",
+    "酒店",
+    "机票",
+    "门票",
+    "票",
+    "机场"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我想去中国玩，你呢？",
+     "en": "I want to go and have fun in China; what about you?"
+    },
+    "2": {
+     "zh": "我想出国旅游，已经买了机票。",
+     "en": "I want to travel abroad, and I have already bought the plane ticket."
+    }
+   }
+  },
+  {
+   "name": "At home",
+   "group": "Places and travel",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "家",
+    "房间",
+    "桌子",
+    "椅子",
+    "床",
+    "门",
+    "门口",
+    "楼",
+    "洗手间",
+    "住",
+    "杯子"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我家有三个房间，桌子和椅子在大房间里。",
+     "en": "My home has three rooms; the table and chairs are in the big room."
+    },
+    "2": {
+     "zh": "我家在三楼，洗手间在门口旁边。",
+     "en": "My home is on the third floor, and the restroom is next to the doorway."
+    }
+   }
+  },
+  {
+   "name": "School",
+   "group": "School and language",
+   "to": "listen",
+   "cta": "Train your ear",
+   "words": [
+    "学校",
+    "小学",
+    "中学",
+    "高中",
+    "大学",
+    "小学生",
+    "中学生",
+    "大学生",
+    "学生",
+    "同学",
+    "老师",
+    "班",
+    "教室",
+    "上学",
+    "开学",
+    "上课",
+    "下课",
+    "课",
+    "书包"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我是大学生，我哥哥是中学生。",
+     "en": "I am a university student, and my older brother is a middle-school student."
+    },
+    "2": {
+     "zh": "明天开学，我要去教室找老师。",
+     "en": "School starts tomorrow; I will go to the classroom to find my teacher."
+    }
+   }
+  },
+  {
+   "name": "Studying and exams",
+   "group": "School and language",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "学",
+    "学习",
+    "教",
+    "懂",
+    "记得",
+    "忘",
+    "考",
+    "考试",
+    "题",
+    "问题"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我学习汉语，我有很多问题。",
+     "en": "I study Chinese, and I have many questions."
+    },
+    "2": {
+     "zh": "明天考试，这些题我都懂，没有问题。",
+     "en": "The exam is tomorrow; I understand all these questions, so there is no problem."
+    }
+   }
+  },
+  {
+   "name": "Chinese and writing",
+   "group": "School and language",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "汉语",
+    "中文",
+    "汉字",
+    "字",
+    "词",
+    "写",
+    "读",
+    "读书",
+    "书",
+    "笔",
+    "本子",
+    "名字"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我学汉语，会写一些汉字。",
+     "en": "I study Chinese and can write some characters."
+    },
+    "2": {
+     "zh": "我每天读书、写汉字，也学新词。",
+     "en": "Every day I read, write characters and learn new words."
+    }
+   }
+  },
+  {
+   "name": "Phones and the internet",
+   "group": "School and language",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "手机",
+    "电脑",
+    "电话",
+    "打电话",
+    "上网",
+    "网上",
+    "喂",
+    "打开"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我的手机在桌子上，请打电话给我。",
+     "en": "My phone is on the table; please call me."
+    },
+    "2": {
+     "zh": "我每天上网看电影，网上的东西很多。",
+     "en": "I go online to watch movies every day; there is a lot online."
+    }
+   }
+  },
+  {
+   "name": "Daily routine",
+   "group": "Daily life and fun",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "起床",
+    "睡",
+    "睡觉",
+    "洗",
+    "床",
+    "休息",
+    "穿",
+    "做饭",
+    "早饭",
+    "午饭",
+    "晚饭",
+    "上班",
+    "下班"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我早上起床，晚上睡觉，中午吃饭。",
+     "en": "I get up in the morning, go to bed in the evening and eat at noon."
+    },
+    "2": {
+     "zh": "我早上起床，洗手，穿衣服，吃早饭。",
+     "en": "In the morning I get up, wash my hands, get dressed and eat breakfast."
+    }
+   }
+  },
+  {
+   "name": "Weather",
+   "group": "Daily life and fun",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "天气",
+    "雨",
+    "下雨",
+    "雪",
+    "晴",
+    "阴",
+    "冷",
+    "热",
+    "天"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "今天天气很冷，在下雨，明天会下雪。",
+     "en": "The weather is cold today and it is raining; it will snow tomorrow."
+    },
+    "2": {
+     "zh": "昨天是阴天，今天是晴天。",
+     "en": "Yesterday was cloudy, and today is sunny."
+    }
+   }
+  },
+  {
+   "name": "Animals and nature",
+   "group": "Daily life and fun",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "狗",
+    "猫",
+    "鸟",
+    "鱼",
+    "花",
+    "只"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我家有一只狗和一只猫。",
+     "en": "My family has a dog and a cat."
+    },
+    "2": {
+     "zh": "那只鸟很漂亮，我很喜欢这些花。",
+     "en": "That bird is very pretty, and I like these flowers a lot."
+    }
+   }
+  },
+  {
+   "name": "Colors",
+   "group": "Daily life and fun",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "颜色",
+    "白色",
+    "黑色",
+    "红色",
+    "绿色",
+    "红茶",
+    "绿茶"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我喜欢白色和绿色，不喜欢黑色。",
+     "en": "I like white and green, and I do not like black."
+    },
+    "2": {
+     "zh": "我喜欢白色和绿色，不喜欢黑色。",
+     "en": "I like white and green, and I do not like black."
+    }
+   }
+  },
+  {
+   "name": "Hobbies and fun",
+   "group": "Daily life and fun",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "爱好",
+    "玩",
+    "好玩儿",
+    "画",
+    "跳舞",
+    "喜欢",
+    "有意思",
+    "没意思",
+    "旅游"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "你喜欢玩什么？",
+     "en": "What do you like to play?"
+    },
+    "2": {
+     "zh": "我的爱好是画画和跳舞，很有意思。",
+     "en": "My hobbies are drawing and dancing, and they are very interesting."
+    }
+   }
+  },
+  {
+   "name": "Movies, music and TV",
+   "group": "Daily life and fun",
+   "to": "listen",
+   "cta": "Train your ear",
+   "words": [
+    "电影",
+    "电影院",
+    "电视",
+    "歌",
+    "唱",
+    "好看",
+    "好听"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我喜欢看电影，也喜欢听歌。",
+     "en": "I like watching movies, and I also like listening to songs."
+    },
+    "2": {
+     "zh": "我喜欢看电影，也喜欢听歌。",
+     "en": "I like watching movies, and I also like listening to songs."
+    }
+   }
+  },
+  {
+   "name": "Sports and exercise",
+   "group": "Daily life and fun",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "运动",
+    "球",
+    "篮球",
+    "足球",
+    "打",
+    "踢",
+    "跑",
+    "跑步",
+    "游泳",
+    "游",
+    "跳舞"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我喜欢运动，也喜欢踢足球和打篮球。",
+     "en": "I like sports, and I also like playing soccer and basketball."
+    },
+    "2": {
+     "zh": "我喜欢运动，也喜欢踢足球和打篮球。",
+     "en": "I like sports, and I also like playing soccer and basketball."
+    }
+   }
+  },
+  {
+   "name": "Body and health",
+   "group": "Body and mind",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "身体",
+    "头",
+    "手",
+    "眼睛",
+    "个子",
+    "病",
+    "生病",
+    "看病",
+    "疼",
+    "药",
+    "医生",
+    "医院",
+    "药店",
+    "舒服"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "他生病了，我们去医院看医生。",
+     "en": "He is ill, so we go to the hospital to see a doctor."
+    },
+    "2": {
+     "zh": "我头疼，身体不舒服，要吃药。",
+     "en": "I have a headache and do not feel well; I need to take medicine."
+    }
+   }
+  },
+  {
+   "name": "Feelings",
+   "group": "Body and mind",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "高兴",
+    "快乐",
+    "笑",
+    "喜欢",
+    "爱",
+    "累",
+    "忙",
+    "舒服",
+    "不好意思"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我很高兴，你也很高兴吗？",
+     "en": "I am very happy; are you happy too?"
+    },
+    "2": {
+     "zh": "今天我很快乐，也有一点儿累。",
+     "en": "I am very happy today, and a little tired too."
+    }
+   }
+  },
+  {
+   "name": "Thinking and knowing",
+   "group": "Body and mind",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "知道",
+    "觉得",
+    "想",
+    "希望",
+    "认识",
+    "懂",
+    "记得",
+    "忘",
+    "意思"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我知道，我觉得这个很好，我想买。",
+     "en": "I know; I think this one is good, and I want to buy it."
+    },
+    "2": {
+     "zh": "我希望你记得，不要忘了，我懂你的意思。",
+     "en": "I hope you remember; do not forget; I understand what you mean."
+    }
+   }
+  },
+  {
+   "name": "Everyday actions",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "做",
+    "拿",
+    "洗",
+    "开",
+    "打开",
+    "找",
+    "画",
+    "写"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我在做饭，你可以开电视吗？",
+     "en": "I am cooking; can you turn on the TV?"
+    },
+    "2": {
+     "zh": "请帮我拿一下书，我来洗杯子。",
+     "en": "Please help me take the book; I will wash the cups."
+    }
+   }
+  },
+  {
+   "name": "Seeing, hearing, speaking",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "看",
+    "看见",
+    "听",
+    "听见",
+    "说",
+    "说话",
+    "问",
+    "告诉",
+    "叫"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我看见他了，他说话，我听见了。",
+     "en": "I saw him; he spoke, and I heard it."
+    },
+    "2": {
+     "zh": "请告诉我，你问他了吗？",
+     "en": "Please tell me: did you ask him?"
+    }
+   }
+  },
+  {
+   "name": "Moving your body",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "站",
+    "坐",
+    "走",
+    "跑",
+    "动",
+    "飞",
+    "游",
+    "起来"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "请坐。",
+     "en": "Please sit down."
+    },
+    "2": {
+     "zh": "他在那儿跑步，我站在这里看。",
+     "en": "He is running over there, and I am standing here watching."
+    }
+   }
+  },
+  {
+   "name": "Starting, finishing, waiting",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "开始",
+    "完",
+    "等",
+    "准备"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "请等一下，我做完就开始。",
+     "en": "Please wait a moment; I will start as soon as I finish."
+    },
+    "2": {
+     "zh": "请等一下，我做完就开始。",
+     "en": "Please wait a moment; I will start as soon as I finish."
+    }
+   }
+  },
+  {
+   "name": "Size, length and speed",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "大",
+    "小",
+    "多",
+    "少",
+    "长",
+    "高",
+    "快",
+    "慢"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "这个大，那个小，这里的人很多。",
+     "en": "This one is big, that one is small, and there are many people here."
+    },
+    "2": {
+     "zh": "他跑得快，我走得慢，路很长。",
+     "en": "He runs fast, I walk slowly, and the road is long."
+    }
+   }
+  },
+  {
+   "name": "Good, bad, right, wrong",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "好",
+    "坏",
+    "新",
+    "不错",
+    "对",
+    "错",
+    "漂亮",
+    "好看",
+    "好吃",
+    "好听",
+    "好玩儿"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "这个菜很好吃，这本书很新。",
+     "en": "This dish is very tasty, and this book is new."
+    },
+    "2": {
+     "zh": "这个不错，那个坏了。",
+     "en": "This one is not bad; that one is broken."
+    }
+   }
+  },
+  {
+   "name": "Things and matters",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "东西",
+    "事",
+    "事情",
+    "问题",
+    "意思",
+    "题"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "这些东西是我的，这件事我知道。",
+     "en": "These things are mine, and I know about this matter."
+    },
+    "2": {
+     "zh": "这件事情我已经知道了，不是问题。",
+     "en": "I already know about this matter, and it is not a problem."
+    }
+   }
+  },
+  {
+   "name": "Be, have, be at",
+   "group": "Grammar words",
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "words": [
+    "是",
+    "有",
+    "在",
+    "没有"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我是学生，我有一个哥哥，他在家。",
+     "en": "I am a student, I have an older brother, and he is at home."
+    },
+    "2": {
+     "zh": "我是学生，我有一个哥哥，他在家。",
+     "en": "I am a student, I have an older brother, and he is at home."
+    }
+   }
+  },
+  {
+   "name": "Can, want, may, don't",
+   "group": "Grammar words",
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "words": [
+    "会",
+    "能",
+    "可以",
+    "要",
+    "想",
+    "可能",
+    "让",
+    "不要",
+    "别"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我想去中国，我会说一点儿汉语，我能去吗？",
+     "en": "I want to go to China; I can speak a little Chinese; may I go?"
+    },
+    "2": {
+     "zh": "他今天可能不来，老师让他在家休息。",
+     "en": "He may not come today; the teacher told him to rest at home."
+    }
+   }
+  },
+  {
+   "name": "Not and don't",
+   "group": "Grammar words",
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "words": [
+    "不",
+    "没有",
+    "不要",
+    "别"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我不想去，我没有时间，你不要问了。",
+     "en": "I do not want to go, and I have no time; you should not ask again."
+    },
+    "2": {
+     "zh": "别等我，我不去了。",
+     "en": "Do not wait for me; I am not going."
+    }
+   }
+  },
+  {
+   "name": "Helping, giving and telling",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "帮",
+    "帮忙",
+    "送",
+    "给",
+    "告诉",
+    "教",
+    "介绍",
+    "问"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "请给我水，我想问你一个问题。",
+     "en": "Please give me some water; I would like to ask you a question."
+    },
+    "2": {
+     "zh": "他帮我拿书，还告诉我怎么学汉语。",
+     "en": "He helps me carry my books and also tells me how to study Chinese."
+    }
+   }
+  },
+  {
+   "name": "Comparing",
+   "group": "Grammar words",
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "words": [
+    "比",
+    "最"
+   ],
+   "sentences": {
+    "2": {
+     "zh": "他比我高，他跑得最快。",
+     "en": "He is taller than me, and he runs the fastest."
+    }
+   }
+  },
+  {
+   "name": "Very, too, most",
+   "group": "Grammar words",
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "words": [
+    "很",
+    "太",
+    "真",
+    "非常",
+    "最",
+    "有点儿",
+    "一点儿"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "今天太热了，我非常想喝水。",
+     "en": "It is too hot today; I really want a drink of water."
+    },
+    "2": {
+     "zh": "这家饭馆的鱼最好吃。",
+     "en": "This restaurant's fish is the tastiest."
+    }
+   }
+  },
+  {
+   "name": "And, also, all, together",
+   "group": "Grammar words",
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "words": [
+    "和",
+    "也",
+    "都",
+    "还",
+    "一起"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我和你都是学生，他也是。",
+     "en": "You and I are both students, and he is too."
+    },
+    "2": {
+     "zh": "我们一起去，大家都去，你也去吗？",
+     "en": "We go together, everyone is going; are you going too?"
+    }
+   }
+  },
+  {
+   "name": "Linking ideas",
+   "group": "Grammar words",
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "words": [
+    "但",
+    "但是",
+    "因为",
+    "所以",
+    "虽然",
+    "还是",
+    "为什么"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "因为今天太冷，所以我不想去，但是我还是去了。",
+     "en": "It was too cold today, so I did not want to go, but I went anyway."
+    },
+    "2": {
+     "zh": "因为今天太冷，所以我不想去，但是我还是去了。",
+     "en": "It was too cold today, so I did not want to go, but I went anyway."
+    }
+   }
+  },
+  {
+   "name": "To, from, than, with",
+   "group": "Grammar words",
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "words": [
+    "给",
+    "对",
+    "从",
+    "比",
+    "跟",
+    "往",
+    "离",
+    "在",
+    "一起"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "我给你一个苹果，你对我很好。",
+     "en": "I give you an apple; you are very good to me."
+    },
+    "2": {
+     "zh": "我从家走路来学校，他比我快。",
+     "en": "I walk to school from home; he is faster than me."
+    }
+   }
+  },
+  {
+   "name": "Little helper words",
+   "group": "Grammar words",
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "words": [
+    "的",
+    "了",
+    "吗",
+    "呢",
+    "吧",
+    "啊",
+    "着",
+    "过",
+    "得",
+    "地"
+   ],
+   "sentences": {
+    "1": {
+     "zh": "你好吗？我很好，你呢？我们去吧。",
+     "en": "How are you? I am fine; and you? Let us go."
+    },
+    "2": {
+     "zh": "你去过中国吗？我去过，那里很大啊！",
+     "en": "Have you been to China? I have; it is very big there!"
+    }
+   }
+  }
+ ]
+}

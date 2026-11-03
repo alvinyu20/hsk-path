@@ -2692,7 +2692,9 @@ window.HSK1_WEBS = {
  ],
  "topics": [
   {
-   "name": "Greetings and thanks",
+   "name": "Greetings and manners",
+   "group": "Basics",
+   "order": 0,
    "to": "speak",
    "cta": "Use these in a conversation",
    "sentence": {
@@ -2717,49 +2719,20 @@ window.HSK1_WEBS = {
    ]
   },
   {
-   "name": "Family and people",
+   "name": "Pronouns",
+   "group": "Basics",
+   "order": 1,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我家有四口人，爸爸、妈妈、哥哥和我。",
-    "py": "Wǒ jiā yǒu sì kǒu rén, bàba, māma, gēge hé wǒ.",
-    "en": "There are four people in my family: Dad, Mom, my older brother and me."
-   },
-   "words": [
-    "爸爸",
-    "妈妈",
-    "哥哥",
-    "姐姐",
-    "弟弟",
-    "妹妹",
-    "儿子",
-    "女儿",
-    "家人",
-    "孩子",
-    "朋友",
-    "男朋友",
-    "女朋友",
-    "小朋友",
-    "先生",
-    "女士",
-    "男",
-    "女",
-    "人",
-    "家"
-   ]
-  },
-  {
-   "name": "Who: pronouns",
-   "to": "review",
-   "cta": "Review your words",
-   "sentence": {
-    "zh": "我们都是学生，他们是老师。",
-    "py": "Wǒmen dōu shì xuésheng, tāmen shì lǎoshī.",
-    "en": "We are all students, and they are teachers."
+    "zh": "他是我的朋友，她是我的同学，我们都很好。",
+    "py": "Tā shì wǒ de péngyou, tā shì wǒ de tóngxué, wǒmen dōu hěn hǎo.",
+    "en": "He is my friend, she is my classmate, and we are all well."
    },
    "words": [
     "我",
     "你",
+    "您",
     "他",
     "她",
     "它",
@@ -2769,19 +2742,19 @@ window.HSK1_WEBS = {
     "她们",
     "它们",
     "们",
-    "谁",
-    "大家",
-    "您"
+    "大家"
    ]
   },
   {
-   "name": "This, that, which, where",
+   "name": "This, that, here, there",
+   "group": "Basics",
+   "order": 2,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "这是我的书，那是你的书。",
-    "py": "Zhè shì wǒ de shū, nà shì nǐ de shū.",
-    "en": "This is my book, and that is your book."
+    "zh": "这个很好，那个太贵了。",
+    "py": "Zhège hěn hǎo, nàge tài guì le.",
+    "en": "This one is good; that one is too expensive."
    },
    "words": [
     "这",
@@ -2795,23 +2768,46 @@ window.HSK1_WEBS = {
     "这里",
     "那里",
     "这边",
-    "那边",
+    "那边"
+   ]
+  },
+  {
+   "name": "Question words",
+   "group": "Basics",
+   "order": 3,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "你叫什么名字？你住在哪儿？",
+    "py": "Nǐ jiào shénme míngzi? Nǐ zhù zài nǎr?",
+    "en": "What is your name? Where do you live?"
+   },
+   "words": [
+    "谁",
+    "什么",
     "哪",
     "哪个",
     "哪些",
     "哪儿",
     "哪里",
-    "边"
+    "怎么",
+    "怎么样",
+    "几",
+    "多少",
+    "吗",
+    "呢"
    ]
   },
   {
    "name": "Numbers",
+   "group": "Basics",
+   "order": 4,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "这个手机三千零五十块。",
-    "py": "Zhège shǒujī sān qiān líng wǔshí kuài.",
-    "en": "This phone is 3,050 yuan."
+    "zh": "我家有三口人，他八岁，她十岁。",
+    "py": "Wǒ jiā yǒu sān kǒu rén, tā bā suì, tā shí suì.",
+    "en": "There are three people in my family; he is eight and she is ten."
    },
    "words": [
     "一",
@@ -2828,76 +2824,172 @@ window.HSK1_WEBS = {
     "百",
     "千",
     "零",
-    "半",
     "第",
-    "一半",
-    "岁"
+    "半",
+    "一半"
    ]
   },
   {
-   "name": "Amounts and measure words",
+   "name": "How much and how many",
+   "group": "Basics",
+   "order": 5,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我想买一些水果。多少钱？",
-    "py": "Wǒ xiǎng mǎi yìxiē shuǐguǒ. Duōshǎo qián?",
-    "en": "I want to buy some fruit. How much is it?"
+    "zh": "你有多少钱？我有一点儿。",
+    "py": "Nǐ yǒu duōshǎo qián? Wǒ yǒu yìdiǎnr.",
+    "en": "How much money do you have? I have a little."
+   },
+   "words": [
+    "多",
+    "少",
+    "多少",
+    "几",
+    "一些",
+    "些",
+    "一点儿",
+    "有些",
+    "有的",
+    "一下"
+   ]
+  },
+  {
+   "name": "Measure words",
+   "group": "Basics",
+   "order": 6,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我买了三本书、两件衣服和一个苹果。",
+    "py": "Wǒ mǎi le sān běn shū, liǎng jiàn yīfu hé yí ge píngguǒ.",
+    "en": "I bought three books, two items of clothing and an apple."
    },
    "words": [
     "个",
     "本",
     "件",
     "口",
-    "块",
-    "元",
     "只",
-    "些",
-    "一些",
-    "一点儿",
-    "有点儿",
-    "有些",
-    "有的",
-    "多",
-    "少",
-    "多少",
-    "几"
+    "家"
    ]
   },
   {
-   "name": "Time of day",
+   "name": "Names and introductions",
+   "group": "People",
+   "order": 7,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我早上七点起床，晚上十点睡觉。",
-    "py": "Wǒ zǎoshang qī diǎn qǐchuáng, wǎnshang shí diǎn shuìjiào.",
-    "en": "I get up at seven in the morning and go to bed at ten in the evening."
+    "zh": "我叫小明，认识你很高兴。",
+    "py": "Wǒ jiào Xiǎomíng, rènshi nǐ hěn gāoxìng.",
+    "en": "My name is Xiaoming; nice to meet you."
    },
    "words": [
-    "点",
-    "分",
-    "分钟",
-    "小时",
-    "现在",
-    "时候",
-    "时间",
-    "早上",
-    "上午",
-    "中午",
-    "下午",
-    "晚上",
-    "白天",
-    "早",
-    "晚"
+    "名字",
+    "叫",
+    "认识"
    ]
   },
   {
-   "name": "Days and dates",
+   "name": "People",
+   "group": "People",
+   "order": 8,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "今天是星期天，我在家。",
-    "py": "Jīntiān shì xīngqītiān, wǒ zài jiā.",
-    "en": "Today is Sunday, and I am at home."
+    "zh": "这个人是我的朋友，那个小朋友是他的孩子。",
+    "py": "Zhège rén shì wǒ de péngyou, nàge xiǎopéngyou shì tā de háizi.",
+    "en": "This person is my friend, and that child is his child."
+   },
+   "words": [
+    "人",
+    "朋友",
+    "男朋友",
+    "女朋友",
+    "同学",
+    "先生",
+    "女士",
+    "男",
+    "女",
+    "小朋友",
+    "孩子"
+   ]
+  },
+  {
+   "name": "Family",
+   "group": "People",
+   "order": 9,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我家有五口人：爸爸、妈妈、哥哥、姐姐和我。",
+    "py": "Wǒ jiā yǒu wǔ kǒu rén: bàba, māma, gēge, jiějie hé wǒ.",
+    "en": "There are five people in my family: dad, mom, older brother, older sister and me."
+   },
+   "words": [
+    "家",
+    "家人",
+    "爸爸",
+    "妈妈",
+    "哥哥",
+    "姐姐",
+    "弟弟",
+    "妹妹",
+    "儿子",
+    "女儿",
+    "孩子",
+    "口",
+    "先生"
+   ]
+  },
+  {
+   "name": "Age and growing up",
+   "group": "People",
+   "order": 10,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我女儿八岁，她是小学生。",
+    "py": "Wǒ nǚ'ér bā suì, tā shì xiǎoxuéshēng.",
+    "en": "My daughter is eight; she is a primary-school student."
+   },
+   "words": [
+    "岁",
+    "孩子",
+    "小朋友"
+   ]
+  },
+  {
+   "name": "Work and jobs",
+   "group": "People",
+   "order": 11,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我在公司工作，今天很忙。",
+    "py": "Wǒ zài gōngsī gōngzuò, jīntiān hěn máng.",
+    "en": "I work at a company, and I am busy today."
+   },
+   "words": [
+    "工作",
+    "上班",
+    "下班",
+    "公司",
+    "医生",
+    "老师",
+    "忙"
+   ]
+  },
+  {
+   "name": "Days, weeks and years",
+   "group": "Time",
+   "order": 12,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "今天是四月五日，明天是星期天。",
+    "py": "Jīntiān shì sì yuè wǔ rì, míngtiān shì xīngqītiān.",
+    "en": "Today is April 5th, and tomorrow is Sunday."
    },
    "words": [
     "今天",
@@ -2917,86 +3009,66 @@ window.HSK1_WEBS = {
    ]
   },
   {
-   "name": "At school",
-   "to": "listen",
-   "cta": "Train your ear",
-   "sentence": {
-    "zh": "学生在学校学习汉语。",
-    "py": "Xuésheng zài xuéxiào xuéxí Hànyǔ.",
-    "en": "The students study Chinese at school."
-   },
-   "words": [
-    "学校",
-    "学",
-    "学习",
-    "学生",
-    "同学",
-    "老师",
-    "课",
-    "上课",
-    "下课",
-    "上学",
-    "书",
-    "读",
-    "读书",
-    "写",
-    "字",
-    "汉字",
-    "汉语",
-    "中文",
-    "中学",
-    "大学",
-    "小学",
-    "中学生",
-    "大学生",
-    "小学生",
-    "问",
-    "问题",
-    "名字"
-   ]
-  },
-  {
-   "name": "Work and places",
+   "name": "Clock and time of day",
+   "group": "Time",
+   "order": 13,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我爸爸在公司工作，我妈妈在医院工作。",
-    "py": "Wǒ bàba zài gōngsī gōngzuò, wǒ māma zài yīyuàn gōngzuò.",
-    "en": "My dad works at a company and my mom works at a hospital."
+    "zh": "现在几点？现在是七点半。",
+    "py": "Xiànzài jǐ diǎn? Xiànzài shì qī diǎn bàn.",
+    "en": "What time is it? It is half past seven."
    },
    "words": [
-    "公司",
-    "工作",
-    "上班",
-    "下班",
-    "医院",
-    "医生",
-    "商店",
-    "书店",
-    "超市",
-    "饭店",
-    "店",
-    "房间",
-    "中国",
-    "国",
-    "家",
-    "事"
+    "点",
+    "分",
+    "分钟",
+    "小时",
+    "早上",
+    "上午",
+    "中午",
+    "下午",
+    "晚上",
+    "白天",
+    "现在",
+    "时候",
+    "时间",
+    "早",
+    "晚"
    ]
   },
   {
-   "name": "Food and drink",
+   "name": "When and how often",
+   "group": "Time",
+   "order": 14,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "你在做什么？我正在看电视。",
+    "py": "Nǐ zài zuò shénme? Wǒ zhèngzài kàn diànshì.",
+    "en": "What are you doing? I am watching TV."
+   },
+   "words": [
+    "现在",
+    "时候",
+    "再",
+    "正在"
+   ]
+  },
+  {
+   "name": "Food and meals",
+   "group": "Food and shopping",
+   "order": 15,
    "to": "speak",
    "cta": "Use these in the café conversation",
    "sentence": {
-    "zh": "我想喝水，不想吃米饭。",
-    "py": "Wǒ xiǎng hē shuǐ, bù xiǎng chī mǐfàn.",
-    "en": "I want to drink water, and I don't want to eat rice."
+    "zh": "我早饭吃面包，午饭吃米饭，晚饭吃饺子。",
+    "py": "Wǒ zǎofàn chī miànbāo, wǔfàn chī mǐfàn, wǎnfàn chī jiǎozi.",
+    "en": "I eat bread for breakfast, rice for lunch and dumplings for dinner."
    },
    "words": [
     "吃",
-    "喝",
-    "茶",
-    "水",
+    "好吃",
     "饭",
     "米饭",
     "面条儿",
@@ -3004,103 +3076,322 @@ window.HSK1_WEBS = {
     "包子",
     "饺子",
     "鸡蛋",
+    "菜",
     "苹果",
     "水果",
-    "牛奶",
-    "午饭",
-    "早饭",
-    "晚饭",
-    "菜",
-    "好吃",
     "做饭",
+    "早饭",
+    "午饭",
+    "晚饭",
+    "饭店"
+   ]
+  },
+  {
+   "name": "Drinks",
+   "group": "Food and shopping",
+   "order": 16,
+   "to": "speak",
+   "cta": "Use these in the café conversation",
+   "sentence": {
+    "zh": "我喝茶，他喝牛奶，你喝水吗？",
+    "py": "Wǒ hē chá, tā hē niúnǎi, nǐ hē shuǐ ma?",
+    "en": "I drink tea, he drinks milk; do you drink water?"
+   },
+   "words": [
+    "水",
+    "茶",
+    "牛奶",
+    "喝",
     "杯子"
    ]
   },
   {
-   "name": "Shopping and money",
+   "name": "Money and shopping",
+   "group": "Food and shopping",
+   "order": 17,
    "to": "speak",
    "cta": "Use these when you ask a price",
    "sentence": {
-    "zh": "这件衣服很贵，那件很便宜。",
-    "py": "Zhè jiàn yīfu hěn guì, nà jiàn hěn piányi.",
-    "en": "This item of clothing is expensive, and that one is cheap."
+    "zh": "这件衣服多少钱？太贵了，我想买便宜的。",
+    "py": "Zhè jiàn yīfu duōshǎo qián? Tài guì le, wǒ xiǎng mǎi piányi de.",
+    "en": "How much is this piece of clothing? It is too expensive; I want to buy a cheaper one."
    },
    "words": [
-    "买",
-    "卖",
     "钱",
     "块",
     "元",
+    "买",
+    "卖",
     "贵",
     "便宜",
     "东西",
-    "衣服",
-    "穿",
-    "新",
-    "手机",
-    "电脑"
+    "多少",
+    "商店",
+    "书店",
+    "超市",
+    "店"
    ]
   },
   {
-   "name": "At home",
+   "name": "Clothes and accessories",
+   "group": "Food and shopping",
+   "order": 18,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我的手机在桌子上，电脑在房间里。",
-    "py": "Wǒ de shǒujī zài zhuōzi shàng, diànnǎo zài fángjiān lǐ.",
-    "en": "My phone is on the table and my computer is in the room."
+    "zh": "这件衣服很好看，你想穿吗？",
+    "py": "Zhè jiàn yīfu hěn hǎokàn, nǐ xiǎng chuān ma?",
+    "en": "This piece of clothing is pretty; do you want to wear it?"
    },
    "words": [
-    "桌子",
-    "椅子",
-    "杯子",
-    "房间",
-    "电视",
-    "电脑",
-    "电话",
-    "手机",
-    "电影",
-    "打电话",
-    "开"
+    "衣服",
+    "穿",
+    "件"
    ]
   },
   {
-   "name": "Getting around",
+   "name": "Places around town",
+   "group": "Places and travel",
+   "order": 19,
    "to": "speak",
    "cta": "Use these to ask where something is",
    "sentence": {
-    "zh": "我坐出租车去学校，他坐火车回家。",
-    "py": "Wǒ zuò chūzūchē qù xuéxiào, tā zuò huǒchē huí jiā.",
-    "en": "I take a taxi to school and he takes the train home."
+    "zh": "我去商店买东西，也去书店看书。",
+    "py": "Wǒ qù shāngdiàn mǎi dōngxi, yě qù shūdiàn kàn shū.",
+    "en": "I go to the shop to buy things, and I also go to the bookstore to read."
+   },
+   "words": [
+    "医院",
+    "学校",
+    "公司",
+    "饭店",
+    "超市",
+    "书店",
+    "商店",
+    "店",
+    "电影院"
+   ]
+  },
+  {
+   "name": "Directions and positions",
+   "group": "Places and travel",
+   "order": 20,
+   "to": "speak",
+   "cta": "Use these to ask where something is",
+   "sentence": {
+    "zh": "你的书在桌子上，我的手机在这里。",
+    "py": "Nǐ de shū zài zhuōzi shàng, wǒ de shǒujī zài zhèlǐ.",
+    "en": "Your book is on the table, and my phone is here."
+   },
+   "words": [
+    "上",
+    "下",
+    "前",
+    "后",
+    "里",
+    "外",
+    "外边",
+    "边",
+    "这边",
+    "那边"
+   ]
+  },
+  {
+   "name": "Coming and going",
+   "group": "Places and travel",
+   "order": 21,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我今天去学校，明天回家。",
+    "py": "Wǒ jīntiān qù xuéxiào, míngtiān huí jiā.",
+    "en": "I go to school today and go home tomorrow."
    },
    "words": [
     "去",
     "来",
     "到",
-    "回",
-    "坐",
-    "飞机",
-    "火车",
-    "出租车",
+    "回"
+   ]
+  },
+  {
+   "name": "Transport and tickets",
+   "group": "Places and travel",
+   "order": 23,
+   "to": "speak",
+   "cta": "Use these to ask where something is",
+   "sentence": {
+    "zh": "我坐出租车去，你坐火车去。",
+    "py": "Wǒ zuò chūzūchē qù, nǐ zuò huǒchē qù.",
+    "en": "I go by taxi, and you go by train."
+   },
+   "words": [
     "车",
+    "出租车",
+    "火车",
+    "飞机",
     "开车",
-    "前",
-    "后",
-    "里",
-    "外",
-    "上",
-    "下",
-    "外边"
+    "坐"
+   ]
+  },
+  {
+   "name": "Travel and countries",
+   "group": "Places and travel",
+   "order": 24,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我想去中国玩，你呢？",
+    "py": "Wǒ xiǎng qù Zhōngguó wán, nǐ ne?",
+    "en": "I want to go and have fun in China; what about you?"
+   },
+   "words": [
+    "国",
+    "中国"
+   ]
+  },
+  {
+   "name": "At home",
+   "group": "Places and travel",
+   "order": 25,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我家有三个房间，桌子和椅子在大房间里。",
+    "py": "Wǒ jiā yǒu sān ge fángjiān, zhuōzi hé yǐzi zài dà fángjiān lǐ.",
+    "en": "My home has three rooms; the table and chairs are in the big room."
+   },
+   "words": [
+    "家",
+    "房间",
+    "桌子",
+    "椅子",
+    "住",
+    "杯子"
+   ]
+  },
+  {
+   "name": "School",
+   "group": "School and language",
+   "order": 26,
+   "to": "listen",
+   "cta": "Train your ear",
+   "sentence": {
+    "zh": "我是大学生，我哥哥是中学生。",
+    "py": "Wǒ shì dàxuéshēng, wǒ gēge shì zhōngxuéshēng.",
+    "en": "I am a university student, and my older brother is a middle-school student."
+   },
+   "words": [
+    "学校",
+    "小学",
+    "中学",
+    "大学",
+    "小学生",
+    "中学生",
+    "大学生",
+    "学生",
+    "同学",
+    "老师",
+    "上学",
+    "上课",
+    "下课",
+    "课"
+   ]
+  },
+  {
+   "name": "Studying and exams",
+   "group": "School and language",
+   "order": 27,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我学习汉语，我有很多问题。",
+    "py": "Wǒ xuéxí Hànyǔ, wǒ yǒu hěn duō wèntí.",
+    "en": "I study Chinese, and I have many questions."
+   },
+   "words": [
+    "学",
+    "学习",
+    "问题"
+   ]
+  },
+  {
+   "name": "Chinese and writing",
+   "group": "School and language",
+   "order": 28,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我学汉语，会写一些汉字。",
+    "py": "Wǒ xué Hànyǔ, huì xiě yìxiē hànzì.",
+    "en": "I study Chinese and can write some characters."
+   },
+   "words": [
+    "汉语",
+    "中文",
+    "汉字",
+    "字",
+    "写",
+    "读",
+    "读书",
+    "书",
+    "名字"
+   ]
+  },
+  {
+   "name": "Phones and the internet",
+   "group": "School and language",
+   "order": 29,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我的手机在桌子上，请打电话给我。",
+    "py": "Wǒ de shǒujī zài zhuōzi shàng, qǐng dǎ diànhuà gěi wǒ.",
+    "en": "My phone is on the table; please call me."
+   },
+   "words": [
+    "手机",
+    "电脑",
+    "电话",
+    "打电话",
+    "喂"
+   ]
+  },
+  {
+   "name": "Daily routine",
+   "group": "Daily life and fun",
+   "order": 30,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我早上起床，晚上睡觉，中午吃饭。",
+    "py": "Wǒ zǎoshang qǐchuáng, wǎnshang shuìjiào, zhōngwǔ chī fàn.",
+    "en": "I get up in the morning, go to bed in the evening and eat at noon."
+   },
+   "words": [
+    "起床",
+    "睡",
+    "睡觉",
+    "休息",
+    "穿",
+    "做饭",
+    "早饭",
+    "午饭",
+    "晚饭",
+    "上班",
+    "下班"
    ]
   },
   {
    "name": "Weather",
+   "group": "Daily life and fun",
+   "order": 31,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "今天下雨，天气很冷。",
-    "py": "Jīntiān xiàyǔ, tiānqì hěn lěng.",
-    "en": "It is raining today and the weather is cold."
+    "zh": "今天天气很冷，在下雨，明天会下雪。",
+    "py": "Jīntiān tiānqì hěn lěng, zài xiàyǔ, míngtiān huì xià xuě.",
+    "en": "The weather is cold today and it is raining; it will snow tomorrow."
    },
    "words": [
     "天气",
@@ -3113,159 +3404,339 @@ window.HSK1_WEBS = {
    ]
   },
   {
-   "name": "Fun and feelings",
+   "name": "Animals and nature",
+   "group": "Daily life and fun",
+   "order": 32,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我家有一只狗和一只猫。",
+    "py": "Wǒ jiā yǒu yì zhī gǒu hé yì zhī māo.",
+    "en": "My family has a dog and a cat."
+   },
+   "words": [
+    "狗",
+    "猫",
+    "只"
+   ]
+  },
+  {
+   "name": "Hobbies and fun",
+   "group": "Daily life and fun",
+   "order": 34,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "你喜欢玩什么？",
+    "py": "Nǐ xǐhuan wán shénme?",
+    "en": "What do you like to play?"
+   },
+   "words": [
+    "玩",
+    "好玩儿",
+    "喜欢"
+   ]
+  },
+  {
+   "name": "Movies, music and TV",
+   "group": "Daily life and fun",
+   "order": 35,
    "to": "listen",
    "cta": "Train your ear",
    "sentence": {
     "zh": "我喜欢看电影，也喜欢听歌。",
     "py": "Wǒ xǐhuan kàn diànyǐng, yě xǐhuan tīng gē.",
-    "en": "I like watching movies, and I like listening to songs too."
+    "en": "I like watching movies, and I also like listening to songs."
    },
    "words": [
-    "狗",
-    "猫",
-    "玩",
-    "唱",
-    "歌",
-    "听",
     "电影",
     "电影院",
-    "好玩儿",
+    "电视",
+    "歌",
+    "唱",
     "好看",
-    "好听",
-    "喜欢",
-    "爱",
-    "高兴",
-    "忙",
-    "漂亮"
+    "好听"
    ]
   },
   {
-   "name": "Health and daily routine",
+   "name": "Body and health",
+   "group": "Body and mind",
+   "order": 37,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我弟弟生病了，他想休息一下。",
-    "py": "Wǒ dìdi shēngbìng le, tā xiǎng xiūxi yíxià.",
-    "en": "My younger brother is sick, and he wants to rest for a bit."
+    "zh": "他生病了，我们去医院看医生。",
+    "py": "Tā shēngbìng le, wǒmen qù yīyuàn kàn yīshēng.",
+    "en": "He is ill, so we go to the hospital to see a doctor."
    },
    "words": [
     "病",
     "生病",
     "看病",
-    "医院",
     "医生",
-    "休息",
-    "睡",
-    "睡觉",
-    "起床"
+    "医院"
    ]
   },
   {
-   "name": "Describing things",
+   "name": "Feelings",
+   "group": "Body and mind",
+   "order": 38,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "这个手机很新，非常好看。",
-    "py": "Zhège shǒujī hěn xīn, fēicháng hǎokàn.",
-    "en": "This phone is very new and really nice-looking."
+    "zh": "我很高兴，你也很高兴吗？",
+    "py": "Wǒ hěn gāoxìng, nǐ yě hěn gāoxìng ma?",
+    "en": "I am very happy; are you happy too?"
    },
    "words": [
-    "好",
-    "大",
-    "小",
-    "新",
-    "早",
-    "晚",
-    "冷",
-    "热",
-    "贵",
-    "便宜",
-    "漂亮",
     "高兴",
-    "忙",
-    "非常",
-    "很",
-    "太",
-    "真"
+    "喜欢",
+    "爱",
+    "忙"
    ]
   },
   {
-   "name": "Everyday verbs",
+   "name": "Thinking and knowing",
+   "group": "Body and mind",
+   "order": 39,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我觉得这个菜很好吃，你觉得呢？",
-    "py": "Wǒ juéde zhège cài hěn hǎochī, nǐ juéde ne?",
-    "en": "I think this dish is very tasty. What do you think?"
+    "zh": "我知道，我觉得这个很好，我想买。",
+    "py": "Wǒ zhīdào, wǒ juéde zhège hěn hǎo, wǒ xiǎng mǎi.",
+    "en": "I know; I think this one is good, and I want to buy it."
    },
    "words": [
-    "看",
-    "听",
-    "说",
-    "读",
-    "写",
-    "买",
-    "卖",
+    "知道",
+    "觉得",
+    "想",
+    "认识"
+   ]
+  },
+  {
+   "name": "Everyday actions",
+   "group": "Actions and descriptions",
+   "order": 40,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我在做饭，你可以开电视吗？",
+    "py": "Wǒ zài zuòfàn, nǐ kěyǐ kāi diànshì ma?",
+    "en": "I am cooking; can you turn on the TV?"
+   },
+   "words": [
     "做",
     "开",
     "找",
-    "问",
-    "叫",
-    "住",
-    "玩",
-    "唱",
-    "坐",
-    "穿",
-    "睡",
-    "觉得",
-    "认识",
-    "知道",
-    "看见",
-    "听见",
-    "爱",
-    "喜欢",
-    "说话"
+    "写"
    ]
   },
   {
-   "name": "Little words that build sentences",
+   "name": "Seeing, hearing, speaking",
+   "group": "Actions and descriptions",
+   "order": 41,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我看见他了，他说话，我听见了。",
+    "py": "Wǒ kànjiàn tā le, tā shuōhuà, wǒ tīngjiàn le.",
+    "en": "I saw him; he spoke, and I heard it."
+   },
+   "words": [
+    "看",
+    "看见",
+    "听",
+    "听见",
+    "说",
+    "说话",
+    "问",
+    "叫"
+   ]
+  },
+  {
+   "name": "Size, length and speed",
+   "group": "Actions and descriptions",
+   "order": 44,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "这个大，那个小，这里的人很多。",
+    "py": "Zhège dà, nàge xiǎo, zhèlǐ de rén hěn duō.",
+    "en": "This one is big, that one is small, and there are many people here."
+   },
+   "words": [
+    "大",
+    "小",
+    "多",
+    "少"
+   ]
+  },
+  {
+   "name": "Good, bad, right, wrong",
+   "group": "Actions and descriptions",
+   "order": 45,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "这个菜很好吃，这本书很新。",
+    "py": "Zhège cài hěn hǎochī, zhè běn shū hěn xīn.",
+    "en": "This dish is very tasty, and this book is new."
+   },
+   "words": [
+    "好",
+    "新",
+    "对",
+    "漂亮",
+    "好看",
+    "好吃",
+    "好听",
+    "好玩儿"
+   ]
+  },
+  {
+   "name": "Things and matters",
+   "group": "Actions and descriptions",
+   "order": 46,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "这些东西是我的，这件事我知道。",
+    "py": "Zhèxiē dōngxi shì wǒ de, zhè jiàn shì wǒ zhīdào.",
+    "en": "These things are mine, and I know about this matter."
+   },
+   "words": [
+    "东西",
+    "事",
+    "问题"
+   ]
+  },
+  {
+   "name": "Be, have, be at",
+   "group": "Grammar words",
+   "order": 47,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
-    "zh": "我也想去，你呢？",
-    "py": "Wǒ yě xiǎng qù, nǐ ne?",
-    "en": "I want to go too. What about you?"
+    "zh": "我是学生，我有一个哥哥，他在家。",
+    "py": "Wǒ shì xuésheng, wǒ yǒu yí ge gēge, tā zài jiā.",
+    "en": "I am a student, I have an older brother, and he is at home."
+   },
+   "words": [
+    "是",
+    "有",
+    "在",
+    "没有"
+   ]
+  },
+  {
+   "name": "Can, want, may, don't",
+   "group": "Grammar words",
+   "order": 48,
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "sentence": {
+    "zh": "我想去中国，我会说一点儿汉语，我能去吗？",
+    "py": "Wǒ xiǎng qù Zhōngguó, wǒ huì shuō yìdiǎnr Hànyǔ, wǒ néng qù ma?",
+    "en": "I want to go to China; I can speak a little Chinese; may I go?"
+   },
+   "words": [
+    "会",
+    "能",
+    "可以",
+    "要",
+    "想",
+    "不要"
+   ]
+  },
+  {
+   "name": "Not and don't",
+   "group": "Grammar words",
+   "order": 49,
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "sentence": {
+    "zh": "我不想去，我没有时间，你不要问了。",
+    "py": "Wǒ bù xiǎng qù, wǒ méiyǒu shíjiān, nǐ búyào wèn le.",
+    "en": "I do not want to go, and I have no time; you should not ask again."
+   },
+   "words": [
+    "不",
+    "没有",
+    "不要"
+   ]
+  },
+  {
+   "name": "Very, too, most",
+   "group": "Grammar words",
+   "order": 52,
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "sentence": {
+    "zh": "今天太热了，我非常想喝水。",
+    "py": "Jīntiān tài rè le, wǒ fēicháng xiǎng hē shuǐ.",
+    "en": "It is too hot today; I really want a drink of water."
+   },
+   "words": [
+    "很",
+    "太",
+    "真",
+    "非常",
+    "有点儿",
+    "一点儿"
+   ]
+  },
+  {
+   "name": "And, also, all, together",
+   "group": "Grammar words",
+   "order": 53,
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "sentence": {
+    "zh": "我和你都是学生，他也是。",
+    "py": "Wǒ hé nǐ dōu shì xuésheng, tā yě shì.",
+    "en": "You and I are both students, and he is too."
+   },
+   "words": [
+    "和",
+    "也",
+    "都",
+    "还"
+   ]
+  },
+  {
+   "name": "To, from, than, with",
+   "group": "Grammar words",
+   "order": 55,
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "sentence": {
+    "zh": "我给你一个苹果，你对我很好。",
+    "py": "Wǒ gěi nǐ yí ge píngguǒ, nǐ duì wǒ hěn hǎo.",
+    "en": "I give you an apple; you are very good to me."
+   },
+   "words": [
+    "给",
+    "对",
+    "在"
+   ]
+  },
+  {
+   "name": "Little helper words",
+   "group": "Grammar words",
+   "order": 56,
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "sentence": {
+    "zh": "你好吗？我很好，你呢？我们去吧。",
+    "py": "Nǐ hǎo ma? Wǒ hěn hǎo, nǐ ne? Wǒmen qù ba.",
+    "en": "How are you? I am fine; and you? Let us go."
    },
    "words": [
     "的",
     "了",
     "吗",
     "呢",
-    "吧",
-    "和",
-    "在",
-    "对",
-    "给",
-    "不",
-    "没有",
-    "也",
-    "都",
-    "还",
-    "再",
-    "正在",
-    "会",
-    "能",
-    "可以",
-    "要",
-    "想",
-    "不要",
-    "是",
-    "有",
-    "什么",
-    "怎么",
-    "怎么样",
-    "一下"
+    "吧"
    ]
   }
  ]

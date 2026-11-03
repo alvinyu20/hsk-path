@@ -926,8 +926,9 @@
     <div class="mist-wrap">
       <div class="mist-top">
         <div class="mist-sum"><span class="mseal" aria-hidden="true">熟</span><div><b>{{mistClearText}}</b><span>mountains with no mist left</span></div></div>
-        <sc-if value="{{mistHasNear}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{mistNearGo}}">{{mistNearText}}</button></sc-if>
+        <div style="display:flex;flex-wrap:wrap;gap:10px"><sc-if value="{{mistHasNear}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{mistNearGo}}">{{mistNearText}}</button></sc-if><button class="btn" onClick="{{toggleMist}}">{{mistToggleText}}</button></div>
       </div>
+      <sc-if value="{{mistOpen}}" hint-placeholder-val="{{ false }}">
       <div class="mist">
         <sc-for list="{{mistTiles}}" as="t" hint-placeholder-count="8">
           <button type="button" class="mtile {{t.cls}}" onClick="{{t.go}}">
@@ -938,9 +939,14 @@
         </sc-for>
       </div>
       <p class="asc-note">{{mistNote}}</p>
+      </sc-if>
     </div>
-      <div class="pickrow" role="group" aria-label="Topic">
-        <sc-for list="{{topicOpts}}" as="t" hint-placeholder-count="2"><button class="fc2 {{t.cls}}" onClick="{{t.fn}}">{{t.label}}</button></sc-for>
+      <div class="tgroups">
+        <sc-for list="{{topicGroups}}" as="g" hint-placeholder-count="4">
+          <div class="tgroup"><span class="tg-l">{{g.label}}</span>
+            <div class="pickrow" role="group" aria-label="{{g.label}}"><sc-for list="{{g.opts}}" as="t" hint-placeholder-count="4"><button class="fc2 {{t.cls}}" onClick="{{t.fn}}">{{t.label}}</button></sc-for></div>
+          </div>
+        </sc-for>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><span class="muted">{{topicProgress}}</span><sc-if value="{{topicHasNew}}" hint-placeholder-val="{{ true }}"><button class="btn" style="min-height:40px;padding:0 16px;font-size:15px" onClick="{{topicAddAll}}">{{topicAddAllText}}</button></sc-if></div>
       <div class="tgrid">

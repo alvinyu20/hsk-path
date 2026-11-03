@@ -1702,45 +1702,256 @@ window.HSK2_WEBS = {
  ],
  "topics": [
   {
-   "name": "Getting around",
+   "name": "This, that, here, there",
+   "group": "Basics",
+   "order": 2,
    "to": "review",
-   "cta": "Review these words",
+   "cta": "Review your words",
    "sentence": {
-    "zh": "我们坐地铁去机场，很快就到。",
-    "py": "Wǒmen zuò dìtiě qù jīchǎng, hěn kuài jiù dào.",
-    "en": "We take the subway to the airport; we get there quickly."
+    "zh": "今天这里人这么多！",
+    "py": "Jīntiān zhèlǐ rén zhème duō!",
+    "en": "There are so many people here today!"
    },
    "words": [
-    "车站",
-    "机场",
-    "地铁",
-    "公交车",
-    "打车",
-    "路",
-    "路上",
-    "站",
-    "离",
-    "近",
-    "远",
-    "往",
-    "走路",
-    "出国",
-    "旅游",
-    "票",
-    "机票",
-    "门票",
-    "酒店",
-    "外国"
+    "这么",
+    "那么",
+    "这样",
+    "那样"
    ]
   },
   {
-   "name": "Where things are",
+   "name": "Measure words",
+   "group": "Basics",
+   "order": 6,
    "to": "review",
-   "cta": "Review these words",
+   "cta": "Review your words",
    "sentence": {
-    "zh": "洗手间在左边，药店在右边。",
-    "py": "Xǐshǒujiān zài zuǒbian, yàodiàn zài yòubian.",
-    "en": "The restroom is on the left and the pharmacy is on the right."
+    "zh": "这位老师有两条狗和一只猫。",
+    "py": "Zhè wèi lǎoshī yǒu liǎng tiáo gǒu hé yì zhī māo.",
+    "en": "This teacher has two dogs and a cat."
+   },
+   "words": [
+    "条",
+    "间",
+    "位",
+    "名",
+    "次"
+   ]
+  },
+  {
+   "name": "Names and introductions",
+   "group": "People",
+   "order": 7,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我来介绍一下，这是我的朋友，他叫小明。",
+    "py": "Wǒ lái jièshào yíxià, zhè shì wǒ de péngyou, tā jiào Xiǎomíng.",
+    "en": "Let me introduce my friend; his name is Xiaoming."
+   },
+   "words": [
+    "姓",
+    "姓名",
+    "介绍"
+   ]
+  },
+  {
+   "name": "People",
+   "group": "People",
+   "order": 8,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "这个男孩儿是我的同学，那个女孩儿是我的朋友。",
+    "py": "Zhège nánháir shì wǒ de tóngxué, nàge nǚháir shì wǒ de péngyou.",
+    "en": "This boy is my classmate and that girl is my friend."
+   },
+   "words": [
+    "男孩儿",
+    "女孩儿",
+    "小孩儿",
+    "自己"
+   ]
+  },
+  {
+   "name": "Family",
+   "group": "People",
+   "order": 9,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我爷爷奶奶住在我家，他们身体很好。",
+    "py": "Wǒ yéye nǎinai zhù zài wǒ jiā, tāmen shēntǐ hěn hǎo.",
+    "en": "My grandparents live in our home; they are in good health."
+   },
+   "words": [
+    "爷爷",
+    "奶奶",
+    "妻子",
+    "丈夫"
+   ]
+  },
+  {
+   "name": "Age and growing up",
+   "group": "People",
+   "order": 10,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我小时候住在中国，从小就喜欢吃饺子。",
+    "py": "Wǒ xiǎoshíhou zhù zài Zhōngguó, cóngxiǎo jiù xǐhuan chī jiǎozi.",
+    "en": "I lived in China when I was little, and I have liked dumplings since I was a child."
+   },
+   "words": [
+    "小孩儿",
+    "男孩儿",
+    "女孩儿",
+    "小时候",
+    "从小"
+   ]
+  },
+  {
+   "name": "Days, weeks and years",
+   "group": "Time",
+   "order": 12,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "下个星期五是我的生日。",
+    "py": "Xià ge xīngqī wǔ shì wǒ de shēngrì.",
+    "en": "Next Friday is my birthday."
+   },
+   "words": [
+    "周",
+    "生日",
+    "过年"
+   ]
+  },
+  {
+   "name": "When and how often",
+   "group": "Time",
+   "order": 14,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我已经吃饭了，你经常在这里吃饭吗？",
+    "py": "Wǒ yǐjīng chī fàn le, nǐ jīngcháng zài zhèlǐ chī fàn ma?",
+    "en": "I have already eaten; do you often eat here?"
+   },
+   "words": [
+    "时",
+    "每",
+    "经常",
+    "有时",
+    "已经",
+    "正",
+    "快要",
+    "就",
+    "一会儿"
+   ]
+  },
+  {
+   "name": "Food and meals",
+   "group": "Food and shopping",
+   "order": 15,
+   "to": "speak",
+   "cta": "Use these in the café conversation",
+   "sentence": {
+    "zh": "这家饭馆的鱼很好吃，我们去吃吧。",
+    "py": "Zhè jiā fànguǎn de yú hěn hǎochī, wǒmen qù chī ba.",
+    "en": "The fish at this restaurant is very tasty; let us go and eat."
+   },
+   "words": [
+    "肉",
+    "鱼",
+    "面",
+    "饭馆"
+   ]
+  },
+  {
+   "name": "Drinks",
+   "group": "Food and shopping",
+   "order": 16,
+   "to": "speak",
+   "cta": "Use these in the café conversation",
+   "sentence": {
+    "zh": "我喝咖啡，她喝奶茶，他们喝红茶。",
+    "py": "Wǒ hē kāfēi, tā hē nǎichá, tāmen hē hóngchá.",
+    "en": "I drink coffee, she drinks milk tea and they drink black tea."
+   },
+   "words": [
+    "红茶",
+    "绿茶",
+    "奶茶",
+    "咖啡"
+   ]
+  },
+  {
+   "name": "Money and shopping",
+   "group": "Food and shopping",
+   "order": 17,
+   "to": "speak",
+   "cta": "Use these when you ask a price",
+   "sentence": {
+    "zh": "商场里的东西很贵，超市的便宜一点儿。",
+    "py": "Shāngchǎng lǐ de dōngxi hěn guì, chāoshì de piányi yìdiǎnr.",
+    "en": "Things in the mall are expensive; the supermarket's are a little cheaper."
+   },
+   "words": [
+    "万",
+    "花",
+    "商场"
+   ]
+  },
+  {
+   "name": "Clothes and accessories",
+   "group": "Food and shopping",
+   "order": 18,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "这条裤子和这个包都很好看。",
+    "py": "Zhè tiáo kùzi hé zhège bāo dōu hěn hǎokàn.",
+    "en": "These trousers and this bag are both pretty."
+   },
+   "words": [
+    "裤子",
+    "手表",
+    "包"
+   ]
+  },
+  {
+   "name": "Places around town",
+   "group": "Places and travel",
+   "order": 19,
+   "to": "speak",
+   "cta": "Use these to ask where something is",
+   "sentence": {
+    "zh": "机场离酒店很远，我们坐地铁去。",
+    "py": "Jīchǎng lí jiǔdiàn hěn yuǎn, wǒmen zuò dìtiě qù.",
+    "en": "The airport is far from the hotel; we go by subway."
+   },
+   "words": [
+    "饭馆",
+    "酒店",
+    "商场",
+    "药店",
+    "机场",
+    "车站",
+    "洗手间",
+    "楼"
+   ]
+  },
+  {
+   "name": "Directions and positions",
+   "group": "Places and travel",
+   "order": 20,
+   "to": "speak",
+   "cta": "Use these to ask where something is",
+   "sentence": {
+    "zh": "学校在左边，医院在右边，超市在前面。",
+    "py": "Xuéxiào zài zuǒbian, yīyuàn zài yòubian, chāoshì zài qiánmiàn.",
+    "en": "The school is on the left, the hospital is on the right, and the supermarket is ahead."
    },
    "words": [
     "左",
@@ -1754,25 +1965,19 @@ window.HSK2_WEBS = {
     "上面",
     "下面",
     "旁边",
-    "面",
-    "门",
-    "门口",
-    "楼",
-    "洗手间",
-    "教室",
-    "商场",
-    "饭馆",
-    "药店"
+    "面"
    ]
   },
   {
    "name": "Coming and going",
+   "group": "Places and travel",
+   "order": 21,
    "to": "review",
-   "cta": "Review these words",
+   "cta": "Review your words",
    "sentence": {
-    "zh": "请进来，我们一起出去吧。",
-    "py": "Qǐng jìnlái, wǒmen yìqǐ chūqù ba.",
-    "en": "Please come in; let us go out together."
+    "zh": "你进来吧，我出去一下就回来。",
+    "py": "Nǐ jìnlái ba, wǒ chūqù yíxià jiù huílái.",
+    "en": "Come in; I will go out for a moment and be right back."
    },
    "words": [
     "进",
@@ -1790,119 +1995,211 @@ window.HSK2_WEBS = {
     "过来",
     "过去",
     "起来",
-    "走",
-    "跑",
     "出门"
    ]
   },
   {
-   "name": "Doing and saying",
-   "to": "review",
-   "cta": "Review these words",
+   "name": "Roads and distance",
+   "group": "Places and travel",
+   "order": 22,
+   "to": "speak",
+   "cta": "Use these to ask where something is",
    "sentence": {
-    "zh": "请你帮我一下，我想告诉你一件事。",
-    "py": "Qǐng nǐ bāng wǒ yíxià, wǒ xiǎng gàosu nǐ yí jiàn shì.",
-    "en": "Please help me for a moment; I want to tell you something."
+    "zh": "学校离我家很近，走路十分钟就到了。",
+    "py": "Xuéxiào lí wǒ jiā hěn jìn, zǒulù shí fēnzhōng jiù dào le.",
+    "en": "The school is very near my home; it takes ten minutes on foot."
    },
    "words": [
-    "拿",
-    "送",
-    "打开",
-    "洗",
-    "笑",
-    "飞",
-    "动",
-    "帮",
-    "帮忙",
-    "等",
-    "告诉",
-    "介绍",
-    "不好意思",
-    "开始",
-    "完",
-    "事情"
+    "路",
+    "路上",
+    "走路",
+    "走",
+    "往",
+    "离",
+    "近",
+    "远"
    ]
   },
   {
-   "name": "Family and people",
-   "to": "review",
-   "cta": "Review these words",
+   "name": "Transport and tickets",
+   "group": "Places and travel",
+   "order": 23,
+   "to": "speak",
+   "cta": "Use these to ask where something is",
    "sentence": {
-    "zh": "这位是我爷爷，那位是我奶奶。",
-    "py": "Zhè wèi shì wǒ yéye, nà wèi shì wǒ nǎinai.",
-    "en": "This is my grandfather, and that is my grandmother."
+    "zh": "我坐地铁去机场，你坐公交车去车站。",
+    "py": "Wǒ zuò dìtiě qù jīchǎng, nǐ zuò gōngjiāochē qù chēzhàn.",
+    "en": "I take the subway to the airport, and you take the bus to the station."
    },
    "words": [
-    "爷爷",
-    "奶奶",
-    "妻子",
-    "丈夫",
-    "男孩儿",
-    "女孩儿",
-    "小孩儿",
-    "姓",
-    "姓名"
+    "公交车",
+    "地铁",
+    "打车",
+    "机场",
+    "车站",
+    "站",
+    "票",
+    "机票"
    ]
   },
   {
-   "name": "School and study",
+   "name": "Travel and countries",
+   "group": "Places and travel",
+   "order": 24,
    "to": "review",
-   "cta": "Review these words",
+   "cta": "Review your words",
    "sentence": {
-    "zh": "明天开学，我准备好书包和本子了。",
-    "py": "Míngtiān kāixué, wǒ zhǔnbèi hǎo shūbāo hé běnzi le.",
-    "en": "School starts tomorrow, and I have my schoolbag and notebook ready."
+    "zh": "我想出国旅游，已经买了机票。",
+    "py": "Wǒ xiǎng chūguó lǚyóu, yǐjīng mǎi le jīpiào.",
+    "en": "I want to travel abroad, and I have already bought the plane ticket."
    },
    "words": [
-    "词",
-    "题",
-    "考",
-    "考试",
+    "旅游",
+    "出国",
+    "外国",
+    "酒店",
+    "机票",
+    "门票",
+    "票",
+    "机场"
+   ]
+  },
+  {
+   "name": "At home",
+   "group": "Places and travel",
+   "order": 25,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我家在三楼，洗手间在门口旁边。",
+    "py": "Wǒ jiā zài sān lóu, xǐshǒujiān zài ménkǒu pángbiān.",
+    "en": "My home is on the third floor, and the restroom is next to the doorway."
+   },
+   "words": [
+    "床",
+    "门",
+    "门口",
+    "楼",
+    "洗手间"
+   ]
+  },
+  {
+   "name": "School",
+   "group": "School and language",
+   "order": 26,
+   "to": "listen",
+   "cta": "Train your ear",
+   "sentence": {
+    "zh": "明天开学，我要去教室找老师。",
+    "py": "Míngtiān kāixué, wǒ yào qù jiàoshì zhǎo lǎoshī.",
+    "en": "School starts tomorrow; I will go to the classroom to find my teacher."
+   },
+   "words": [
+    "高中",
+    "班",
+    "教室",
+    "开学",
+    "书包"
+   ]
+  },
+  {
+   "name": "Studying and exams",
+   "group": "School and language",
+   "order": 27,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "明天考试，这些题我都懂，没有问题。",
+    "py": "Míngtiān kǎoshì, zhèxiē tí wǒ dōu dǒng, méiyǒu wèntí.",
+    "en": "The exam is tomorrow; I understand all these questions, so there is no problem."
+   },
+   "words": [
     "教",
     "懂",
     "记得",
     "忘",
-    "笔",
-    "本子",
-    "书包",
-    "开学",
-    "高中",
-    "准备",
-    "意思",
-    "错",
-    "班"
+    "考",
+    "考试",
+    "题"
    ]
   },
   {
-   "name": "Body and health",
+   "name": "Chinese and writing",
+   "group": "School and language",
+   "order": 28,
    "to": "review",
-   "cta": "Review these words",
+   "cta": "Review your words",
    "sentence": {
-    "zh": "我头疼，身体不舒服。",
-    "py": "Wǒ tóu téng, shēntǐ bù shūfu.",
-    "en": "My head hurts and I do not feel well."
+    "zh": "我每天读书、写汉字，也学新词。",
+    "py": "Wǒ měi tiān dúshū, xiě hànzì, yě xué xīn cí.",
+    "en": "Every day I read, write characters and learn new words."
    },
    "words": [
-    "身体",
-    "头",
-    "手",
-    "眼睛",
-    "疼",
-    "药",
-    "个子",
-    "舒服",
-    "累",
-    "高"
+    "词",
+    "笔",
+    "本子"
    ]
   },
   {
-   "name": "Colors, animals and things",
+   "name": "Phones and the internet",
+   "group": "School and language",
+   "order": 29,
    "to": "review",
-   "cta": "Review these words",
+   "cta": "Review your words",
    "sentence": {
-    "zh": "我喜欢红色的花和绿色的包。",
-    "py": "Wǒ xǐhuan hóngsè de huā hé lǜsè de bāo.",
-    "en": "I like red flowers and a green bag."
+    "zh": "我每天上网看电影，网上的东西很多。",
+    "py": "Wǒ měi tiān shàngwǎng kàn diànyǐng, wǎngshàng de dōngxi hěn duō.",
+    "en": "I go online to watch movies every day; there is a lot online."
+   },
+   "words": [
+    "上网",
+    "网上",
+    "打开"
+   ]
+  },
+  {
+   "name": "Weather",
+   "group": "Daily life and fun",
+   "order": 31,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "昨天是阴天，今天是晴天。",
+    "py": "Zuótiān shì yīn tiān, jīntiān shì qíng tiān.",
+    "en": "Yesterday was cloudy, and today is sunny."
+   },
+   "words": [
+    "晴",
+    "阴"
+   ]
+  },
+  {
+   "name": "Animals and nature",
+   "group": "Daily life and fun",
+   "order": 32,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "那只鸟很漂亮，我很喜欢这些花。",
+    "py": "Nà zhǐ niǎo hěn piàoliang, wǒ hěn xǐhuan zhèxiē huā.",
+    "en": "That bird is very pretty, and I like these flowers a lot."
+   },
+   "words": [
+    "鸟",
+    "鱼",
+    "花"
+   ]
+  },
+  {
+   "name": "Colors",
+   "group": "Daily life and fun",
+   "order": 33,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我喜欢白色和绿色，不喜欢黑色。",
+    "py": "Wǒ xǐhuan báisè hé lǜsè, bù xǐhuan hēisè.",
+    "en": "I like white and green, and I do not like black."
    },
    "words": [
     "颜色",
@@ -1910,118 +2207,288 @@ window.HSK2_WEBS = {
     "黑色",
     "红色",
     "绿色",
-    "花",
-    "画",
-    "鸟",
-    "球",
-    "手表",
-    "裤子",
-    "包",
-    "床"
-   ]
-  },
-  {
-   "name": "Food and drink",
-   "to": "review",
-   "cta": "Review these words",
-   "sentence": {
-    "zh": "我想喝一杯咖啡，吃一点儿鱼。",
-    "py": "Wǒ xiǎng hē yì bēi kāfēi, chī yìdiǎnr yú.",
-    "en": "I want a cup of coffee and a little fish."
-   },
-   "words": [
     "红茶",
-    "绿茶",
-    "奶茶",
-    "咖啡",
-    "肉",
-    "鱼",
-    "面"
+    "绿茶"
    ]
   },
   {
-   "name": "Sports, hobbies and fun",
+   "name": "Hobbies and fun",
+   "group": "Daily life and fun",
+   "order": 34,
    "to": "review",
-   "cta": "Review these words",
+   "cta": "Review your words",
    "sentence": {
-    "zh": "我的爱好是游泳和踢足球。",
-    "py": "Wǒ de àihào shì yóuyǒng hé tī zúqiú.",
-    "en": "My hobbies are swimming and playing soccer."
+    "zh": "我的爱好是画画和跳舞，很有意思。",
+    "py": "Wǒ de àihào shì huà huà hé tiàowǔ, hěn yǒuyìsi.",
+    "en": "My hobbies are drawing and dancing, and they are very interesting."
    },
    "words": [
-    "篮球",
-    "足球",
-    "跑步",
-    "踢",
-    "打",
-    "游",
-    "游泳",
-    "跳舞",
-    "运动",
     "爱好",
-    "上网",
-    "网上",
+    "画",
+    "跳舞",
+    "有意思",
+    "没意思",
     "旅游"
    ]
   },
   {
-   "name": "Weather, time and how often",
+   "name": "Sports and exercise",
+   "group": "Daily life and fun",
+   "order": 36,
    "to": "review",
-   "cta": "Review these words",
+   "cta": "Review your words",
    "sentence": {
-    "zh": "今天是晴天，我们已经出门了。",
-    "py": "Jīntiān shì qíng tiān, wǒmen yǐjīng chūmén le.",
-    "en": "Today is a sunny day, and we have already gone out."
+    "zh": "我喜欢运动，也喜欢踢足球和打篮球。",
+    "py": "Wǒ xǐhuan yùndòng, yě xǐhuan tī zúqiú hé dǎ lánqiú.",
+    "en": "I like sports, and I also like playing soccer and basketball."
    },
    "words": [
-    "晴",
-    "阴",
-    "周",
-    "生日",
-    "过年",
-    "时",
-    "小时候",
-    "一会儿",
-    "已经",
-    "经常",
-    "有时",
-    "每",
-    "正",
-    "快要",
-    "从小",
-    "就"
+    "运动",
+    "球",
+    "篮球",
+    "足球",
+    "打",
+    "踢",
+    "跑",
+    "跑步",
+    "游泳",
+    "游",
+    "跳舞"
    ]
   },
   {
-   "name": "Describing things",
+   "name": "Body and health",
+   "group": "Body and mind",
+   "order": 37,
    "to": "review",
-   "cta": "Review these words",
+   "cta": "Review your words",
    "sentence": {
-    "zh": "这个电影很有意思，不错。",
-    "py": "Zhège diànyǐng hěn yǒuyìsi, bùcuò.",
-    "en": "This movie is very interesting, not bad."
+    "zh": "我头疼，身体不舒服，要吃药。",
+    "py": "Wǒ tóu téng, shēntǐ bù shūfu, yào chī yào.",
+    "en": "I have a headache and do not feel well; I need to take medicine."
    },
    "words": [
-    "高",
-    "坏",
-    "快乐",
-    "不错",
-    "没意思",
-    "有意思",
-    "慢",
-    "长",
-    "快",
+    "身体",
+    "头",
+    "手",
+    "眼睛",
+    "个子",
+    "疼",
+    "药",
+    "药店",
     "舒服"
    ]
   },
   {
-   "name": "Grammar words",
-   "to": "grammar",
-   "cta": "Practise with grammar lessons",
+   "name": "Feelings",
+   "group": "Body and mind",
+   "order": 38,
+   "to": "review",
+   "cta": "Review your words",
    "sentence": {
-    "zh": "因为下雨，所以我们在家看电影。",
-    "py": "Yīnwèi xiàyǔ, suǒyǐ wǒmen zài jiā kàn diànyǐng.",
-    "en": "Because it is raining, we watch a movie at home."
+    "zh": "今天我很快乐，也有一点儿累。",
+    "py": "Jīntiān wǒ hěn kuàilè, yě yǒu yìdiǎnr lèi.",
+    "en": "I am very happy today, and a little tired too."
+   },
+   "words": [
+    "快乐",
+    "笑",
+    "累",
+    "舒服",
+    "不好意思"
+   ]
+  },
+  {
+   "name": "Thinking and knowing",
+   "group": "Body and mind",
+   "order": 39,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我希望你记得，不要忘了，我懂你的意思。",
+    "py": "Wǒ xīwàng nǐ jìde, búyào wàng le, wǒ dǒng nǐ de yìsi.",
+    "en": "I hope you remember; do not forget; I understand what you mean."
+   },
+   "words": [
+    "希望",
+    "懂",
+    "记得",
+    "忘",
+    "意思"
+   ]
+  },
+  {
+   "name": "Everyday actions",
+   "group": "Actions and descriptions",
+   "order": 40,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "请帮我拿一下书，我来洗杯子。",
+    "py": "Qǐng bāng wǒ ná yíxià shū, wǒ lái xǐ bēizi.",
+    "en": "Please help me take the book; I will wash the cups."
+   },
+   "words": [
+    "拿",
+    "洗",
+    "打开",
+    "画"
+   ]
+  },
+  {
+   "name": "Moving your body",
+   "group": "Actions and descriptions",
+   "order": 42,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "他在那儿跑步，我站在这里看。",
+    "py": "Tā zài nàr pǎobù, wǒ zhàn zài zhèlǐ kàn.",
+    "en": "He is running over there, and I am standing here watching."
+   },
+   "words": [
+    "站",
+    "走",
+    "跑",
+    "动",
+    "飞",
+    "游",
+    "起来"
+   ]
+  },
+  {
+   "name": "Starting, finishing, waiting",
+   "group": "Actions and descriptions",
+   "order": 43,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "请等一下，我做完就开始。",
+    "py": "Qǐng děng yíxià, wǒ zuò wán jiù kāishǐ.",
+    "en": "Please wait a moment; I will start as soon as I finish."
+   },
+   "words": [
+    "开始",
+    "完",
+    "等",
+    "准备"
+   ]
+  },
+  {
+   "name": "Size, length and speed",
+   "group": "Actions and descriptions",
+   "order": 44,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "他跑得快，我走得慢，路很长。",
+    "py": "Tā pǎo de kuài, wǒ zǒu de màn, lù hěn cháng.",
+    "en": "He runs fast, I walk slowly, and the road is long."
+   },
+   "words": [
+    "长",
+    "高",
+    "快",
+    "慢"
+   ]
+  },
+  {
+   "name": "Good, bad, right, wrong",
+   "group": "Actions and descriptions",
+   "order": 45,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "这个不错，那个坏了。",
+    "py": "Zhège bùcuò, nàge huài le.",
+    "en": "This one is not bad; that one is broken."
+   },
+   "words": [
+    "坏",
+    "不错",
+    "错"
+   ]
+  },
+  {
+   "name": "Things and matters",
+   "group": "Actions and descriptions",
+   "order": 46,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "这件事情我已经知道了，不是问题。",
+    "py": "Zhè jiàn shìqing wǒ yǐjīng zhīdào le, bú shì wèntí.",
+    "en": "I already know about this matter, and it is not a problem."
+   },
+   "words": [
+    "事情",
+    "意思",
+    "题"
+   ]
+  },
+  {
+   "name": "Can, want, may, don't",
+   "group": "Grammar words",
+   "order": 48,
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "sentence": {
+    "zh": "他今天可能不来，老师让他在家休息。",
+    "py": "Tā jīntiān kěnéng bù lái, lǎoshī ràng tā zài jiā xiūxi.",
+    "en": "He may not come today; the teacher told him to rest at home."
+   },
+   "words": [
+    "可能",
+    "让",
+    "别"
+   ]
+  },
+  {
+   "name": "Helping, giving and telling",
+   "group": "Actions and descriptions",
+   "order": 50,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "他帮我拿书，还告诉我怎么学汉语。",
+    "py": "Tā bāng wǒ ná shū, hái gàosu wǒ zěnme xué Hànyǔ.",
+    "en": "He helps me carry my books and also tells me how to study Chinese."
+   },
+   "words": [
+    "帮",
+    "帮忙",
+    "送",
+    "告诉",
+    "教",
+    "介绍"
+   ]
+  },
+  {
+   "name": "Comparing",
+   "group": "Grammar words",
+   "order": 51,
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "sentence": {
+    "zh": "他比我高，他跑得最快。",
+    "py": "Tā bǐ wǒ gāo, tā pǎo de zuì kuài.",
+    "en": "He is taller than me, and he runs the fastest."
+   },
+   "words": [
+    "比",
+    "最"
+   ]
+  },
+  {
+   "name": "Linking ideas",
+   "group": "Grammar words",
+   "order": 54,
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "sentence": {
+    "zh": "因为今天太冷，所以我不想去，但是我还是去了。",
+    "py": "Yīnwèi jīntiān tài lěng, suǒyǐ wǒ bù xiǎng qù, dànshì wǒ háishi qù le.",
+    "en": "It was too cold today, so I did not want to go, but I went anyway."
    },
    "words": [
     "但",
@@ -2030,45 +2497,46 @@ window.HSK2_WEBS = {
     "所以",
     "虽然",
     "还是",
-    "跟",
-    "从",
-    "让",
-    "别",
-    "为什么",
-    "就",
-    "啊",
-    "地",
-    "得",
-    "着",
-    "过",
-    "希望",
-    "可能",
-    "一起",
-    "自己",
-    "最",
-    "比",
-    "那么",
-    "这么",
-    "那样",
-    "这样"
+    "为什么"
    ]
   },
   {
-   "name": "Numbers and measure words",
-   "to": "review",
-   "cta": "Review these words",
+   "name": "To, from, than, with",
+   "group": "Grammar words",
+   "order": 55,
+   "to": "grammar",
+   "cta": "Practise the grammar",
    "sentence": {
-    "zh": "我去过三次中国，买了一条红色的裤子。",
-    "py": "Wǒ qù guo sān cì Zhōngguó, mǎi le yì tiáo hóngsè de kùzi.",
-    "en": "I have been to China three times and bought a pair of red trousers."
+    "zh": "我从家走路来学校，他比我快。",
+    "py": "Wǒ cóng jiā zǒulù lái xuéxiào, tā bǐ wǒ kuài.",
+    "en": "I walk to school from home; he is faster than me."
    },
    "words": [
-    "万",
-    "次",
-    "条",
-    "间",
-    "位",
-    "名"
+    "从",
+    "比",
+    "跟",
+    "往",
+    "离",
+    "一起"
+   ]
+  },
+  {
+   "name": "Little helper words",
+   "group": "Grammar words",
+   "order": 56,
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "sentence": {
+    "zh": "你去过中国吗？我去过，那里很大啊！",
+    "py": "Nǐ qù guo Zhōngguó ma? Wǒ qù guo, nàlǐ hěn dà a!",
+    "en": "Have you been to China? I have; it is very big there!"
+   },
+   "words": [
+    "啊",
+    "着",
+    "过",
+    "得",
+    "地"
    ]
   }
  ]

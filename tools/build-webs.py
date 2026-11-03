@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build data/hsk1-webs.js (shared-character groups, opposite pairs, topics) from content/webs.json.
+"""Build data/hsk1-webs.js (shared-character groups, opposite pairs, topics) from content/webs.json (hubs, pairs) and content/topics.json (topics).
 
 Checks while building:
   - every word named exists in the HSK 1 list
@@ -13,6 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pinyin_engine import Engine
 from pypinyin import lazy_pinyin, Style
 import levelcfg
+import topics as topics_mod
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 C = os.path.join(ROOT, 'content')
@@ -65,16 +66,11 @@ def main():
             die('opposites: %s / %s not both HSK 1 words' % (o['a'], o['b']))
         opps.append(dict(a=o['a'], b=o['b'], note=o['note'], **({'pair': True} if o.get('pair') else {})))
 
-    topics, seen = [], set()
-    for t in src['topics']:
-        for z in t['words']:
-            if z not in ow:
-                die('topic %s: %s is not an HSK 1 word' % (t['name'], z))
-        if len(set(t['words'])) != len(t['words']):
-            die('topic %s: duplicate words' % t['name'])
-        seen.update(t['words'])
+    topics = []
+    for t in topics_mod.for_level(L):
         py, _ = eng.sentence(t['sentence']['zh'])
-        topics.append(dict(name=t['name'], to=t['to'], cta=t['cta'], sentence=dict(zh=t['sentence']['zh'], py=py, en=t['sentence']['en']), words=t['words']))
+        topics.append(dict(name=t['name'], group=t['group'], order=t['order'], to=t['to'], cta=t['cta'], sentence=dict(zh=t['sentence']['zh'], py=py, en=t['sentence']['en']), words=t['words']))
+    seen = {z for t in topics for z in t['words']}
     missing = [z for z in official if z not in seen]
     if missing:
         die('words that are in no topic: %s' % ' '.join(missing))
