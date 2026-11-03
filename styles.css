@@ -13,7 +13,8 @@ button{font-family:inherit}
 
 /* sidebar */
 .side{flex:1 1 248px;max-width:280px;padding:24px 16px;display:flex;flex-direction:column;gap:28px;border-right:1px solid var(--line);background:var(--panel)}
-.brand{display:flex;align-items:center;gap:12px;padding:0 8px}
+.brand{display:flex;align-items:center;gap:12px;padding:0 8px;border:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer;border-radius:14px}
+.brand:active{transform:scale(.98)}
 .mark{width:46px;height:46px;border-radius:10px;background:var(--seal);color:var(--on-seal);display:grid;place-items:center;font-size:28px;font-weight:700;transform:rotate(-4deg);box-shadow:inset 0 0 0 2px rgba(255,255,255,.18)}
 .bname{font:700 22px/1 'Bricolage Grotesque',sans-serif;letter-spacing:-.02em}
 .bsub{font-size:14px;color:var(--muted)}
@@ -97,6 +98,16 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--jade);outline-o
 .oc-zh{font-size:44px;line-height:1.15;font-weight:500}
 .oarrow{align-self:center;color:var(--muted);width:26px;height:26px}
 .tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr));gap:12px}
+.lvtag{flex:none;align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:.02em;line-height:1;padding:3px 7px;border-radius:99px;border:1px solid var(--line);color:var(--muted);background:transparent}
+.lab-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px}
+.lab-n{font-size:14px}
+.cliprow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:6px 0 4px}
+.chip.cb{height:24px;font-size:12.5px}
+.chip.cb.new{background:var(--jade-soft);color:var(--jade)}
+.chip.cb.again{background:var(--amber-soft);color:var(--amber)}
+.chip.cb.done{background:var(--panel2);color:var(--muted)}
+.lvtag.cur{border-color:var(--jade);color:var(--jade);background:var(--jade-soft)}
+.wr2 .lvtag{align-self:center}
 .tc{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:14px 16px;border-radius:20px;background:var(--panel);border:2px solid var(--line)}
 .tc.new{border-style:dashed;border-color:var(--ink)}
 .tc-main{border:0;background:transparent;color:var(--ink);display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:0;min-height:44px;font-size:16px;text-align:left;cursor:pointer}

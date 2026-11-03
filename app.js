@@ -39,8 +39,27 @@
   const LV_ALL = (name) => LVLS.map(n => window['HSK' + n + '_' + name]).filter(Boolean);
   const JOIN = (name, key) => [].concat.apply([], LV_ALL(name).map(d => d[key] || []));
   const WORDS = ALL ? [].concat.apply([], LV_ALL('WORDS')) : LV_DATA('WORDS');
+  // which level each word belongs to, for the small tag in All levels (the highest level is "current", the others "old")
+  const LEVEL_OF = {};
+  if (ALL) LVLS.forEach(n => (window['HSK' + n + '_WORDS'] || []).forEach(w => { LEVEL_OF[w.zh] = n; }));
+  const lvInfo = (zh) => (ALL && LEVEL_OF[zh] ? { hasLvTag:true, lvTag:'HSK ' + LEVEL_OF[zh], lvCls:LEVEL_OF[zh] === TOPL ? 'cur' : 'old' } : { hasLvTag:false, lvTag:'', lvCls:'' });
+  // Topics of a higher level that belong to a topic of a lower level are joined to it in All levels (HSK 2 name -> HSK 1 name).
+  // Topics with no match (new categories) stay as they are.
+  const TOPIC_MERGE = { 'Family and people':'Family and people', 'Getting around':'Getting around', 'Food and drink':'Food and drink', 'Describing things':'Describing things',
+    'School and study':'At school', 'Body and health':'Health and daily routine', 'Sports, hobbies and fun':'Fun and feelings', 'Numbers and measure words':'Amounts and measure words',
+    'Grammar words':'Little words that build sentences', 'Doing and saying':'Everyday verbs' };
+  const mergeTopics = (lists) => {
+    const out = [], byName = {};
+    lists.forEach((list, li) => list.forEach(t => {
+      const to = li > 0 ? TOPIC_MERGE[t.name] || t.name : t.name;
+      const host = byName[to];
+      if (host) t.words.forEach(z => { if (host.words.indexOf(z) < 0) host.words.push(z); });
+      else { const copy = Object.assign({}, t, { words:t.words.slice() }); out.push(copy); byName[t.name] = copy; }
+    }));
+    return out;
+  };
   const LESSONS = ALL ? JOIN('GRAMMAR', 'lessons') : LV_DATA('GRAMMAR').lessons;
-  const { hubs:HUBS, opps:OPPS, topics:TOPICS } = ALL ? { hubs:JOIN('WEBS', 'hubs'), opps:JOIN('WEBS', 'opps'), topics:JOIN('WEBS', 'topics') } : LV_DATA('WEBS');
+  const { hubs:HUBS, opps:OPPS, topics:TOPICS } = ALL ? { hubs:JOIN('WEBS', 'hubs'), opps:JOIN('WEBS', 'opps'), topics:mergeTopics(LV_ALL('WEBS').map(d => d.topics || [])) } : LV_DATA('WEBS');
   // Listening lab and practice scripts: a level without them (none yet for HSK 3) has those parts switched off.
   const { clips:CLIPS, tones:TONES, pairs:PAIR_DATA } = Object.assign({ clips:[], tones:[], pairs:[] }, (ALL ? { clips:JOIN('LISTEN', 'clips'), tones:(LV_ALL('LISTEN')[0] || {}).tones, pairs:JOIN('LISTEN', 'pairs') } : LV_DATA('LISTEN')) || {});
   // two-syllable words for the tone-pair trainer; the pair [3, 3] is said as 2 + 3 (the first of two third tones rises)
@@ -48,6 +67,27 @@
   const pairHit = (t, slot, n) => n === t[slot - 1] || (slot === 1 && t[0] === 3 && t[1] === 3 && n === 2);
   const { scenarios:SCEN, phrases:PHRASES } = (ALL ? { scenarios:JOIN('SPEAK', 'scenarios'), phrases:JOIN('SPEAK', 'phrases') } : LV_DATA('SPEAK')) || { scenarios:[], phrases:[] };
   const HAS_LISTEN = CLIPS.length > 0;
+  // the level each clip belongs to; in All levels the highest level is "current"
+  const CLIP_LV = [];
+  LVLS.forEach(n => ((window['HSK' + n + '_LISTEN'] || {}).clips || []).forEach(() => CLIP_LV.push(n)));
+  // A random clip. Clips of the current level are 5 times as likely as older levels' clips; clips you have not tried or got wrong come up more
+  // often than ones you already caught completely; the last few clips are not repeated.
+  const pickClip = (best, recent) => {
+    const n = CLIPS.length;
+    if (n <= 1) return 0;
+    const skip = (recent || []).slice(-Math.min(6, n - 1));
+    let total = 0;
+    const w = CLIPS.map((_, i) => {
+      if (skip.indexOf(i) >= 0) return 0;
+      const b = (best && best[i]) || 0;
+      const need = b >= 0.99 ? 0.35 : (b > 0 ? 1.3 - 0.6 * b : 1.5);
+      const x = (CLIP_LV[i] === TOPL ? 5 : 1) * need;
+      total += x; return x;
+    });
+    let r = Math.random() * total;
+    for (let i = 0; i < n; i++) { r -= w[i]; if (r <= 0 && w[i] > 0) return i; }
+    return 0;
+  };
   const HAS_SCRIPTS = SCEN.length > 0;
   // Talk-with-AI role-play settings are the practice scripts' scenarios (title, sub and goals); a level without scripts has free chat only
   const AISCN = SCEN;
@@ -136,20 +176,24 @@
     return (anyway ? rows : rows.filter(r => r.info.dueN <= 0)).map(r => r.zh);
   };
 
+  // "Words in memory": every started word counts by its chance of being recalled right now, so the number rises when you learn and review
+  // and falls when reviews slide. (XP points are still counted inside, only to keep the streak, but they are no longer shown.)
+  const memOf = (ws) => { let sum = 0, n = 0; Object.keys(ws).forEach(z => { const i = winfo(ws[z], 0); if (i.started) { sum += i.recallN / 100; n++; } }); return { words:Math.round(sum), n, avg:n ? Math.round(100 * sum / n) : 0 }; };
+
   // ---------- dates, saving, daily reset ----------
   const pad = (n) => (n < 10 ? '0' : '') + n;
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
   const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog'];
 
   function freshState() {
     let dark = false;
     try { dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
-      xp:0, dayXp:0, dayMin:0, streak:0, lastActive:'', activity:{}, day:'',
+      xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
@@ -158,7 +202,7 @@
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
       wmode:'topic', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
-      lmode:'dict', dclip:0, dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
+      lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
     };
@@ -166,10 +210,10 @@
 
   function rollDay(s) {
     const t = ymd(new Date());
-    if (s.day === t) return s;
+    if (s.day === t) return s.mem0 == null ? Object.assign({}, s, { mem0:memOf(s.ws).words }) : s;
     const rq = buildQueue(s.ws, false);
     return Object.assign({}, s, {
-      day:t, dayXp:0, dayMin:0, wlearned:{}, wrated:{}, wdelta:{}, wreveal:{}, webCredited:false,
+      mem0:memOf(s.ws).words, day:t, dayXp:0, dayMin:0, wlearned:{}, wrated:{}, wdelta:{}, wreveal:{}, webCredited:false,
       rcomplete:false, rdone:0, rxp:0, rq, rtotal:rq.length, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rflip:false,
       gdone:false, tdone:false, ldone:false, spokeToday:false, sdone:false, sturn:0
     });
@@ -243,7 +287,10 @@
       }
       saved = Object.assign({}, saved, readSplit());
     }
-    return rollDay(mergeSaved(freshState(), saved));
+    const st = rollDay(mergeSaved(freshState(), saved));
+    st.dclip = pickClip(st.clipBest, []);   // the Listening lab opens on a random clip, not always the first
+    st.drecent = [st.dclip];
+    return st;
   }
 
   const report = (where, text) => 'https://github.com/' + REPO + '/issues/new?title=' + encodeURIComponent('Content mistake: ' + text) +
@@ -603,6 +650,11 @@
     setState(patch) {
       if (typeof patch === 'function') patch = patch(this.state);
       const S = this.state;
+      if (patch.dayMin !== undefined && patch.dayMin !== S.dayMin) {
+        const ml = Object.assign({}, S.minLog); ml[ymd(new Date())] = patch.dayMin;
+        const ks = Object.keys(ml).sort(); while (ks.length > 60) delete ml[ks.shift()];
+        patch = Object.assign({}, patch, { minLog:ml });
+      }
       const gained = (patch.xp !== undefined && patch.xp > S.xp) || (patch.dayMin !== undefined && patch.dayMin > S.dayMin);
       if (gained) {
         const t = ymd(new Date());
@@ -1224,7 +1276,9 @@
       if (n >= 3) { patch.xp = S.xp + 6; patch.dayXp = S.dayXp + 6; }
       this.setState(patch);
     };
-    shadowNext = () => { this.setState({ dclip:(this.state.dclip + 1) % CLIPS.length, shround:0 }); };
+    // a new random clip (see pickClip); `reset` clears the dictation box
+    newClip = (extra) => { const S = this.state; const i = pickClip(S.clipBest, S.drecent); this.setState(Object.assign({ dclip:i, drecent:(S.drecent || []).concat([i]).slice(-8) }, extra || {})); };
+    shadowNext = () => { this.newClip({ shround:0 }); };
 
     // ----- listening lab -----
     playClip = () => { this.say(CLIPS[this.state.dclip].zh, 'clip', this.state.drate); this.setState({ dplays:this.state.dplays + 1 }); };
@@ -1252,7 +1306,7 @@
       patch.xp = S.xp + hits; patch.dayXp = S.dayXp + hits;
       this.setState(patch);
     };
-    nextClip = () => { const S = this.state; this.setState({ dclip:(S.dclip + 1) % CLIPS.length, dplays:0, dtyped:'', dchecked:false, dmarks:[], dreveal:0 }); };
+    nextClip = () => { this.newClip({ dplays:0, dtyped:'', dchecked:false, dmarks:[], dreveal:0 }); };
     playTone = () => {
       const S = this.state;
       let idx = S.tidx;
@@ -1473,6 +1527,10 @@
       // progress
       const bankKeys = Object.keys(BANK);
       const infos = bankKeys.map(zh => winfo(S.ws[zh], 0));
+      const memNow = { words:Math.round(infos.reduce((a, i) => a + (i.started ? i.recallN / 100 : 0), 0)), avg:(() => { const st = infos.filter(i => i.started); return st.length ? Math.round(st.reduce((a, i) => a + i.recallN, 0) / st.length) : 0; })() };
+      const weekDates = [0, 1, 2, 3, 4, 5, 6].map(daysAgo);
+      const weekMin = weekDates.reduce((a, d) => a + (d === ymd(new Date()) ? S.dayMin : ((S.minLog || {})[d] || 0)), 0);
+      const weekDays = weekDates.filter(d => S.activity[d]).length;
       const startedCount = infos.filter(i => i.started).length;
       const vocabPct = Math.round(infos.reduce((a, i) => a + i.m, 0) / bankKeys.length);
       const gramPassed = LESSONS.filter(L => (S.gres[L.id] || 0) >= 80).length;
@@ -1693,7 +1751,7 @@
           reveal:() => this.revealWord(w.zh), learn:() => this.learnWord(w.zh),
           knew:() => this.rateWeb(w.zh, true), missed:() => this.rateWeb(w.zh, false),
           reportUrl:report('Word web card', w.zh + ' (' + b.py + ') ' + b.en + '; parts ' + w.parts.map(p => p[0] + '=' + p[1]).join(', '))
-        }, info, dlt(w.zh), exFor(w.zh, revealed));
+        }, info, lvInfo(w.zh), dlt(w.zh), exFor(w.zh, revealed));
       };
       const hubNow = HUBS[S.whub];
       const hubCards = hubNow.words.map(w => cardOf(w, hubNow.hub));
@@ -1734,7 +1792,7 @@
         const info = mini(zh);
         const isNew = info.lv === 'new';
         return Object.assign({ zh, py:b.py, en:b.en, cls:isNew ? 'new' : 'ok', canAdd:isNew && !capReached, capHit:isNew && capReached,
-          play:() => this.say(zh, 'w' + zh), learn:() => this.learnWord(zh) }, info, exFor(zh, true));
+          play:() => this.say(zh, 'w' + zh), learn:() => this.learnWord(zh) }, info, lvInfo(zh), exFor(zh, true));
       });
       const topicStarted = topicNow.words.filter(zh => mini(zh).started).length;
       const topicOpts = TOPICS.map((t, i) => ({ label:t.name, cls:S.wtopic === i ? 'on' : '', fn:() => this.setState({ wtopic:i }) }));
@@ -1758,7 +1816,7 @@
       // exact matches (the character itself, or the whole English gloss) come first, then the chosen sort order
       const matchRank = (r) => (!qWords ? 0 : (r.zh === qWords || r.en.toLowerCase() === qWords || r.en.toLowerCase().split(/[,;(]\s*/)[0].trim() === qWords ? 0 : 1));
       const rowsFiltered = rowsAll.filter(r => (S.wfilter === 'all' || r.lv === S.wfilter) && matchRow(r)).sort((a, b) => matchRank(a) - matchRank(b) || sorters[S.wsort](a, b));
-      const rowsShown = rowsFiltered.slice(0, S.wshow).map(r => { const n = r.lv === 'new' ? 0 : Math.max(1, Math.min(5, Math.ceil((parseFloat(r.mW) || 0) / 20))); return Object.assign({}, r, { dots:[0, 1, 2, 3, 4].map(i => ({ cls:i < n ? 'on' : '' })) }); });
+      const rowsShown = rowsFiltered.slice(0, S.wshow).map(r => { const n = r.lv === 'new' ? 0 : Math.max(1, Math.min(5, Math.ceil((parseFloat(r.mW) || 0) / 20))); return Object.assign({}, r, lvInfo(r.zh), { dots:[0, 1, 2, 3, 4].map(i => ({ cls:i < n ? 'on' : '' })) }); });
       const dueAllN = rowsAll.filter(r => r.started && r.dueCls === 'due').length;
       const lvNow = (k) => lvCount[k] || 0;
       const moreCount = rowsFiltered.length - rowsShown.length;
@@ -1788,6 +1846,8 @@
 
       // listening lab
       const clip = CLIPS[S.dclip] || NO_CLIP;
+      const clipBest = (S.clipBest && S.clipBest[S.dclip]) || 0;
+      const lvInfo2 = (i) => (ALL && CLIP_LV[i] ? { hasClipLv:true, clipLv:'HSK ' + CLIP_LV[i], clipLvCls:CLIP_LV[i] === TOPL ? 'cur' : 'old' } : { hasClipLv:false, clipLv:'', clipLvCls:'' });
       const wordsView = clip.words.map((w, i) => ({ py:S.dreveal >= 1 ? w.py : '', zh:S.dreveal >= 2 ? w.zh : '·', cls:S.dchecked ? (S.dmarks[i] ? 'ok' : 'miss') : '' }));
       const hits = S.dmarks.filter(m => m).length;
       const missed = clip.words.filter((w, i) => S.dchecked && !S.dmarks[i]);
@@ -1858,7 +1918,7 @@
 
         // shadowing
         isShadow:S.lmode === 'shadow', lShadowCls:S.lmode === 'shadow' ? 'on' : '', setShadow:() => this.setState({ lmode:'shadow' }),
-        shNow:Math.min(S.shround + 1, 3), shTitle:'Clip ' + (S.dclip + 1) + ' of ' + CLIPS.length, shHelp:shHelps[S.shround],
+        shNow:Math.min(S.shround + 1, 3), shTitle:'Say it after you hear it', shHelp:shHelps[S.shround],
         shZh:shClip.zh, shPy:shClip.py,
         shShowZh:S.shround < 2 || shDone, shShowPy:S.shround === 0 || shDone, shHidden:S.shround === 2,
         shCanGo:!shDone, shDone, shGoLabel:'I said it',
@@ -1870,7 +1930,9 @@
         lDictCls:S.lmode === 'dict' ? 'on' : '', lToneCls:S.lmode === 'tone' ? 'on' : '',
         setDict:() => this.setState({ lmode:'dict' }), setTone:() => this.setState({ lmode:'tone' }),
         stepText:S.dchecked ? 'Step 3 of 3 · Read it, then listen again' : (S.dplays === 0 ? 'Step 1 of 3 · Listen without help' : 'Step 2 of 3 · Type what you heard'),
-        clipNo:S.dclip + 1, clipTotal:CLIPS.length, playedText:S.dplays === 0 ? 'Not played yet.' : 'Played ' + S.dplays + (S.dplays === 1 ? ' time.' : ' times.'),
+        clipBadge:clipBest > 0 ? 'Best so far ' + Math.round(clipBest * 100) + '%' : 'New clip', clipBadgeCls:clipBest >= 0.99 ? 'done' : (clipBest > 0 ? 'again' : 'new'),
+        clipTried:clipsTried + ' of ' + CLIPS.length + ' clips tried', skipClip:this.nextClip, canSkip:!S.dchecked,
+        ...lvInfo2(S.dclip), playedText:S.dplays === 0 ? 'Not played yet.' : 'Played ' + S.dplays + (S.dplays === 1 ? ' time.' : ' times.'),
         rateHint:S.drate < 1 ? 'Slow clip, good for catching every sound.' : (S.drate === 1 ? 'Normal speed.' : 'Faster than a textbook.'),
         rateOpts, playClip:this.playClip, clipPlayCls:pc('clip'),
         dtyped:S.dtyped, dInpCls:S.dchecked ? 'locked' : '',
@@ -1882,7 +1944,7 @@
         dNotChecked:!S.dchecked, dchecked:S.dchecked, dCheckCls:typedOk ? '' : 'dis', dCheckAria:typedOk ? 'false' : 'true',
         checkDict:this.checkDict, nextClip:this.nextClip,
         dSummary:hits + ' of ' + clip.words.length + ' words', clipEn:clip.en, notes:clip.notes.map(t => ({ t })),
-        clipReport:report('Listening clip ' + (S.dclip + 1), clip.zh + ' / ' + clip.en + ' / ' + clip.notes.join(' | ')),
+        clipReport:report('Listening clip ' + clip.zh, clip.zh + ' / ' + clip.en + ' / ' + clip.notes.join(' | ')),
         clearPlay:() => this.say(clip.zh, 'clear', 0.7), naturalPlay:() => this.say(clip.zh, 'nat', 1.1),
         clearCls:pc('clear') ? 'ink' : '', natCls:pc('nat') ? 'ink' : '',
         hasMissed:missed.length > 0, missedList:missed.map(w => w.py + ' ' + w.zh).join(', '),
@@ -1896,6 +1958,9 @@
         hasToneStats:S.ttotal > 0, toneStats:S.tright + ' of ' + S.ttotal + ' right',
         weak, hasWeak:weak.length > 0, noWeak:weak.length === 0, phrases,
         overall, streak:streakShown, streakText:streakShown + (streakShown === 1 ? ' day' : ' days'), xpText:S.xp.toLocaleString('en-US'), dayXp:S.dayXp,
+        memText:memNow.words.toLocaleString('en-US') + ' in memory', memTip:'Words you would probably recall right now: each started word counts by its recall chance. It rises when you learn and review and falls if reviews slide.',
+        memWords:memNow.words.toLocaleString('en-US'), memToday:(memNow.words - (S.mem0 == null ? memNow.words : S.mem0) >= 0 ? '+' : '') + (memNow.words - (S.mem0 == null ? memNow.words : S.mem0)) + ' today', memRecall:memNow.avg + '%',
+        weekMin:weekMin, weekDays:weekDays,
         title:tt[0], subtitle:tt[1],
         navHome:navCls('home'), navReview:navCls('review'), navTest:navCls('testlobby'), navGrammar:navCls('grammar'), navSpeak:navCls('speak'),
         goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
@@ -1981,10 +2046,10 @@
         playQ:() => this.say(q0.audio || '', 'q'), listenCls:pc('q'),
         showCheck:!S.qchecked, checkCls:canCheck ? '' : 'dis', checkAria:canCheck ? 'false' : 'true', check:this.check,
         qchecked:S.qchecked, qcorrect:S.qcorrect, qwrong:!S.qcorrect, fbCls:S.qcorrect ? 'good' : 'bad',
-        fbTitle:S.qcorrect ? 'Correct, +' + S.qgain + ' XP' : 'Not quite',
+        fbTitle:S.qcorrect ? 'Correct' : 'Not quite',
         next:this.next, nextLabel:S.qi + 1 >= total ? 'See results' : 'Continue',
         qcombo:S.qcombo, comboCls:S.qcombo >= 2 ? 'on' : '', exitQuiz:this.exitQuiz,
-        resTitle, resSub, resScore:S.qscore + '/' + total, qbest:S.qbest, qxp:S.qxp, resGain,
+        resTitle, resSub, resScore:S.qscore + '/' + total, qbest:S.qbest, resGain,
         again:() => this.startQuiz(S.qmode),
 
         // footer

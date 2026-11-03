@@ -327,11 +327,24 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForTimeout(100);
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).forEach(zh => { if (ws[zh].see.s === 1 && ws[zh].see.l === 5) ws[zh].see = { s:30, l:0 }; }); app.setState({ ws, rq:[], rcomplete:false }); });
 
+  // the tabs run learn -> practice -> check -> your words, and the logo goes Home
+  check(JSON.stringify(await page.locator('.navs .nav').allInnerTexts().then(a => a.map(t => t.replace(/\d+$/, '').trim()))) === JSON.stringify(['Home', 'Word webs', 'Grammar', 'Review words', 'Listening lab', 'Speak', 'Tests', 'Level exam', 'My words']), 'the tabs are in learning order');
+  await page.locator('nav button', { hasText: 'Grammar' }).click();
+  await page.locator('.brand').click();
+  await page.waitForTimeout(120);
+  check(await page.evaluate(() => window.shanlu.state.screen) === 'home', 'clicking the logo goes Home');
   // Listening lab
   await nav('Listening lab');
   check(await page.evaluate(() => window.HSK1_LISTEN.clips.length) >= 20, 'there are at least 20 listening clips');
   await page.locator('button.listen').click();
-  await page.fill('#dict-input', 'ni hao wo jiao xiaoming');
+  // the lab opens on a random clip (never numbered), and "Another clip" gives a different one
+  check(!(await text()).includes('Clip 1 of') && (await text()).includes('What do you hear?') && (await text()).includes('clips tried'), 'the Listening lab shows no clip numbers');
+  const firstClip = await page.evaluate(() => window.shanlu.state.dclip);
+  let moved = false;
+  for (let i = 0; i < 5 && !moved; i++) { await page.locator('button', { hasText: 'Another clip' }).click(); moved = (await page.evaluate(() => window.shanlu.state.dclip)) !== firstClip; }
+  check(moved, 'Another clip gives a different clip');
+  const typedAns = await page.evaluate(() => window.HSK1_LISTEN.clips[window.shanlu.state.dclip].words.map(w => w.key).join(' '));
+  await page.fill('#dict-input', typedAns);
   await page.locator('button', { hasText: 'Check' }).click();
   await page.waitForTimeout(150);
   check(/(\d+) of \1 words caught/.test(await text()), 'dictation scores a correct answer');

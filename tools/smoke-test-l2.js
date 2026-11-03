@@ -338,10 +338,19 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     // word webs: topics first, and the hubs of both levels
     await pA.locator('nav button', { hasText: 'Word webs' }).click();
     await pA.waitForTimeout(150);
-    check(await pA.locator('.mtile').count() === await pA.evaluate(() => window.HSK1_WEBS.topics.length + window.HSK2_WEBS.topics.length), 'Word webs shows the mountains of both levels');
+    check(await pA.locator('.mtile').count() === await pA.evaluate(() => window.HSK1_WEBS.topics.length + window.HSK2_WEBS.topics.length - 10), 'Word webs shows the mountains of both levels, with 10 HSK 2 topics joined to HSK 1 ones');
+    // the HSK 2 family words sit in the same topic as the HSK 1 family words, each with a small level tag
+    await pA.locator('.pickrow button', { hasText: /^Family and people$/ }).click();
+    await pA.waitForTimeout(150);
+    const fam = await pA.evaluate(() => { const t = document.querySelector('.tgrid').innerText; return { n: document.querySelectorAll('.tgrid .tc').length, cur: document.querySelectorAll('.tgrid .lvtag.cur').length, old: document.querySelectorAll('.tgrid .lvtag.old').length, has: t.includes('爷爷') && t.includes('爸爸') }; });
+    check(fam.has && fam.n === 20 + 9 && fam.cur === 9 && fam.old === 20, 'the Family and people topic holds the 20 HSK 1 and the 9 HSK 2 words, tagged by level');
+    check(await pA.locator('.pickrow button', { hasText: /^School and study$/ }).count() === 0 && await pA.locator('.pickrow button', { hasText: /^Where things are$/ }).count() === 1, 'matching HSK 2 topics are joined, new ones stay');
     await pA.locator('button', { hasText: 'Shared character' }).click();
     await pA.waitForTimeout(100);
     check(await pA.locator('.hubrow .pickrow .fc2').count() === await pA.evaluate(() => window.HSK1_WEBS.hubs.length + window.HSK2_WEBS.hubs.length), 'the shared-character picker holds the hubs of both levels');
+    // random listening clips lean strongly towards the current (highest) level
+    const share = await pA.evaluate(() => { const app = window.shanlu; let cur = 0; const n1 = window.HSK1_LISTEN.clips.length; for (let i = 0; i < 600; i++) { app.newClip(); if (app.state.dclip >= n1) cur++; } return cur / 600; });
+    check(share > 0.65 && share < 0.95, 'in All levels about 4 in 5 listening clips come from the current level (' + share.toFixed(2) + ')');
     // progress goes to each level's own save, and the grammar id that used to clash stays apart
     await pA.evaluate(() => {
       const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws));
