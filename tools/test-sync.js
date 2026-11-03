@@ -75,6 +75,14 @@ function fakeGithub() {
   const gid3 = r.gistId;
   r = await S.round({ token: 'good', state: a, fetch: gh3.fetchFn, file: S.fileFor(1) });
   check(!r.created && r.gistId === gid3 && gh3.gists[gid3].files[S.FILE] && gh3.gists[gid3].files[f2], 'if HSK 2 syncs first, HSK 1 later joins the same gist');
+  // minutes per day, per device
+  const m1 = S.merge({ minLog: { '2026-11-02': 20 }, minDev: { '2026-11-02': { phone: 20 } } }, { minLog: { '2026-11-02': 15 }, minDev: { '2026-11-02': { desk: 15 } } });
+  check(S.dayMinutes(m1, '2026-11-02') === 35, 'minutes studied on two devices the same day add up (20 + 15)');
+  const m2 = S.merge(m1, { minDev: { '2026-11-02': { phone: 12, desk: 15 } } });
+  check(S.dayMinutes(m2, '2026-11-02') === 35 && S.same(S.merge(m1, m1), m1) && S.same(S.merge(m1, { minLog: { '2026-11-02': 15 }, minDev: { '2026-11-02': { desk: 15 } } }), S.merge({ minLog: { '2026-11-02': 15 }, minDev: { '2026-11-02': { desk: 15 } } }, m1)), 'merging again never counts minutes twice, and the order does not matter');
+  check(S.dayMinutes({ minLog: { '2026-11-01': 9 } }, '2026-11-01') === 9 && S.dayMinutes({}, '2026-11-01') === 0, 'older saves without per-device numbers still count');
+  const many = {}; for (let i = 1; i <= 80; i++) many['2026-01-' + String(i).padStart(2, '0')] = { d: i };
+  check(Object.keys(S.merge({ minDev: many }, {}).minDev).length === 60, 'only the last 60 days of minutes are kept');
   console.log(failures ? failures + ' check(s) failed' : 'all sync checks passed');
   process.exit(failures ? 1 : 0);
 })();

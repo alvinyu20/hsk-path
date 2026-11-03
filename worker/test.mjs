@@ -74,6 +74,21 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const mei = g3.members.find((m) => m.id === b.json.id);
   check(mei.cheers === 1 && mei.cheered === true && g3.members.find((m) => m.id === a.json.id).cheered === false, 'a cheer counts once and shows who gave it');
 
+  // progress: a person's own saved progress, readable only with their own key
+  const none = await call('GET', '/api/me/progress', { token: A });
+  check(none.status === 200 && none.json.progress === null, 'a person with no saved progress gets null');
+  const prog = { v: 1, levels: { 1: { ws: { 你: { see: { s: 2, l: 0, t: 5 } } }, exams: [{ at: 1, mode: 'full', l: 18, r: 18 }] } } };
+  check((await call('PUT', '/api/me/progress', { token: A, body: prog })).status === 200, 'saved progress is accepted');
+  const back = await call('GET', '/api/me/progress', { token: A });
+  check(JSON.stringify(back.json.progress) === JSON.stringify(prog) && back.json.updated > 0, 'and comes back exactly as saved');
+  check((await call('GET', '/api/me/progress')).status === 401 && (await call('PUT', '/api/me/progress', { body: prog })).status === 401, 'progress needs a key');
+  check((await call('PUT', '/api/me/progress', { token: A, body: { hello: 1 } })).status === 400 && (await call('PUT', '/api/me/progress', { token: A, body: 'not json at all' })).status === 400, 'something that is not saved progress is refused');
+  check((await call('PUT', '/api/me/progress', { token: A, body: '{"v":1,"levels":{"1":"' + 'x'.repeat(800000) + '"}}' })).status === 413, 'a huge upload is refused');
+  check((await call('GET', '/api/me/progress', { token: B })).json.progress === null, 'another person cannot read it and gets their own (empty) progress');
+  check(!JSON.stringify((await call('GET', '/api/group', { token: B })).json).includes('exams'), 'the group list never contains anyone\'s progress');
+  await call('PUT', '/api/me/progress', { token: A, body: Object.assign({}, prog, { levels: { 1: { ws: {} } } }) });
+  check((await call('GET', '/api/me/progress', { token: A })).json.progress.levels[1].ws && Object.keys((await call('GET', '/api/me/progress', { token: A })).json.progress.levels[1]).length === 1, 'a later save replaces the earlier one');
+
   // admin
   check((await call('GET', '/api/admin/members')).status === 401 && (await call('GET', '/api/admin/members', { headers: { 'X-Admin-Key': 'nope' } })).status === 401, 'the admin list needs the admin key');
   const list = await call('GET', '/api/admin/members', { headers: { 'X-Admin-Key': 'admin-secret-key' } });
@@ -84,6 +99,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
 
   // leaving
   check((await call('DELETE', '/api/me', { token: A })).status === 200 && (await call('GET', '/api/group', { token: A })).status === 401, 'leaving the group removes the person');
+  check((await db.prepare('SELECT COUNT(*) AS n FROM progress WHERE member_id = ?').bind(a.json.id).first()).n === 0, 'leaving also deletes the saved progress');
   check((await call('GET', '/api/nothing', { token: 'x' })).status === 401 && (await call('POST', '/api/nothing')).status === 401, 'unknown routes need a key too');
 
   // cors

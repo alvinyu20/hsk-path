@@ -182,11 +182,13 @@
   // ---------- friends board (optional; stays hidden until config.js has the server address) ----------
   const FR = window.ShanluFriends ? window.ShanluFriends.make() : null;
   const FR_PUSH_KEY = 'shanlu-friends-push';
+  // a random name for this browser, so minutes studied on two devices can be added up instead of one replacing the other
+  const DEVICE = (() => { try { let d = localStorage.getItem('shanlu-device'); if (!d) { d = Math.random().toString(36).slice(2, 10); localStorage.setItem('shanlu-device', d); } return d; } catch (e) { return 'x'; } })();
   // The totals shared with friends, read from every saved progress (each level and All levels), so the numbers do not depend on which view you were in.
   const collectFriendStats = () => {
     const keys = Object.keys(LVL.PROGRESS_KEYS || {}).map(n => ({ n:Number(n), key:LVL.PROGRESS_KEYS[n] })).concat([{ n:0, key:'shanlu-progress-v1-all' }]);
     const stores = keys.map(k => { let st = null; try { st = JSON.parse(localStorage.getItem(k.key)); } catch (e) {} return st && typeof st === 'object' ? Object.assign({ __n:k.n }, st) : null; }).filter(Boolean);
-    const dayMin = (d) => stores.reduce((a, st) => a + ((st.minLog && st.minLog[d] != null) ? st.minLog[d] : (st.day === d ? (st.dayMin || 0) : 0)), 0);
+    const dayMin = (d) => stores.reduce((a, st) => a + (window.ShanluSync.dayMinutes(st, d) || (st.day === d ? (st.dayMin || 0) : 0)), 0);
     const last7 = [6, 5, 4, 3, 2, 1, 0].map(n => Math.max(0, Math.min(1440, Math.round(dayMin(daysAgo(n))))));
     const active = {};
     stores.forEach(st => Object.keys(st.activity || {}).forEach(d => { active[d] = true; }));
@@ -209,7 +211,7 @@
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
   const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev'];
 
   function freshState() {
     let dark = false;
@@ -217,7 +219,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', frLeaveAsk:false, frCopied:false,
-      xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, streak:0, lastActive:'', activity:{}, day:'',
+      xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
@@ -674,10 +676,13 @@
     setState(patch) {
       if (typeof patch === 'function') patch = patch(this.state);
       const S = this.state;
-      if (patch.dayMin !== undefined && patch.dayMin !== S.dayMin) {
-        const ml = Object.assign({}, S.minLog); ml[ymd(new Date())] = patch.dayMin;
+      if (patch.dayMin !== undefined && patch.dayMin !== S.dayMin && !this.noMin) {   // (not when a sync only brings in another device's numbers)
+        const td = ymd(new Date());
+        const ml = Object.assign({}, S.minLog); ml[td] = patch.dayMin;
         const ks = Object.keys(ml).sort(); while (ks.length > 60) delete ml[ks.shift()];
-        patch = Object.assign({}, patch, { minLog:ml });
+        const md = Object.assign({}, S.minDev); md[td] = Object.assign({}, md[td], { [DEVICE]: ((md[td] && md[td][DEVICE]) || 0) + Math.max(0, patch.dayMin - S.dayMin) });   // this device's own minutes: only what was added here
+        const kd = Object.keys(md).sort(); while (kd.length > 60) delete md[kd.shift()];
+        patch = Object.assign({}, patch, { minLog:ml, minDev:md });
       }
       const gained = (patch.xp !== undefined && patch.xp > S.xp) || (patch.dayMin !== undefined && patch.dayMin > S.dayMin);
       if (gained) {
@@ -721,12 +726,44 @@
       const last = Number(localStorage.getItem(FR_PUSH_KEY) || 0);
       if (opt.minGap && Date.now() - last < opt.minGap) return;
       try {
+        if (!opt.keepalive) await this.friendsProgressSync();   // merge your progress first, so the numbers below come from the same progress on every device
         this.persistNow();
         await FR.push(collectFriendStats(), opt.keepalive ? { keepalive:true } : undefined);
         try { localStorage.setItem(FR_PUSH_KEY, String(Date.now())); } catch (e) {}
       } catch (e) { this.friendsFailed(e); }
     };
     friendStats = () => collectFriendStats();
+    // Your progress lives on the server too: every device merges into it (the same order-independent merge the GitHub sync uses),
+    // so a word, an exam pass or a day's study on one device shows up on all of them.
+    friendsProgressSync = async () => {
+      const SY = window.ShanluSync;
+      if (!FR || !FR.enabled() || !FR.identity() || !SY) return false;
+      this.persistNow();
+      const levels = Object.keys(LVL.PROGRESS_KEYS || {}).map(Number);
+      const local = {};
+      levels.forEach(n => { const st = readStore(n); if (st) local[n] = SY.pick(st); });
+      const got = await FR.getProgress();
+      const remote = (got && got.progress && got.progress.levels) || {};
+      const merged = {}; let pushNeeded = !(got && got.progress), changed = false;
+      Object.keys(Object.assign({}, local, remote)).forEach(k => {
+        const n = Number(k);
+        if (levels.indexOf(n) < 0) { merged[k] = remote[k]; return; }   // a level this version does not know: pass it through untouched
+        const m = SY.merge(local[k], remote[k]);
+        merged[k] = m;
+        if (!SY.same(m, SY.merge(remote[k], remote[k]))) pushNeeded = true;
+        if (!SY.same(m, SY.merge(local[k], local[k]))) changed = true;
+      });
+      if (changed) {
+        levels.forEach(n => { if (merged[n]) { const st = readStore(n) || {}; try { localStorage.setItem(storeKey(n), JSON.stringify(Object.assign({}, st, SY.pick(merged[n])))); } catch (e) {} if ((merged[n].exams || []).some(LVL.passedEntry)) LVL.markPassed(n); } });
+        // bring this view up to date
+        let patch;
+        if (ALL) { const tmp = Object.assign({}, this.state, readSplit()); Object.keys(BANK).forEach(zh => { if (!tmp.ws[zh]) tmp.ws[zh] = blankWord(); }); carryOverErhua(tmp); patch = {}; SPLIT.forEach(k => { patch[k] = tmp[k]; }); }
+        else if (merged[LV]) { const next = rollDay(Object.assign({}, this.state, merged[LV])); carryOverErhua(next); patch = SY.pick(next); patch.rq = (patch.rq || []).filter(z => BANK[z]); }
+        if (patch) { this.noSync = true; this.noMin = true; this.setState(patch); this.noMin = false; this.noSync = false; this.persistNow(); }
+      }
+      if (pushNeeded) await FR.putProgress({ v:1, levels:merged });
+      return changed;
+    };
     friendsFailed = (e) => {
       if (e && e.status === 401) { FR.forget(); this.setState({ fr:null, frErr:'This device is not in the group any more. Open your invite link to join again.' }); return; }
       this.setState({ frErr:(e && e.message) || 'Could not reach the friends board.' });
@@ -1154,7 +1191,7 @@
           patch.rq = (patch.rq || []).filter(z => BANK[z]);
         }
         SYNCCFG.gist = r.gistId; SYNCCFG.at = Date.now(); saveSyncCfg();
-        this.noSync = true;
+        this.noSync = true; this.noMin = true;
         this.setState(Object.assign(patch, { syncBusy:false, syncAt:SYNCCFG.at, syncBad:false, syncMsg:r.created ? 'Connected. Your progress is now saved in a private GitHub gist.' : 'Synced.' }));
         this.noSync = false;
         this.persistNow();
@@ -1465,7 +1502,7 @@
       } catch (e) { window.alert('That file does not look like a Shanlu progress file.'); }
     };
     resetAll = () => {
-      if (window.confirm(ALL ? 'Delete the progress of every level shown here (' + LVLS.map(n => 'HSK ' + n).join(' and ') + ') in this browser? Export it first if you want a copy.' : 'Delete all progress in this browser? Export it first if you want a copy.')) {
+      if (window.confirm((FR && FR.identity() ? 'You are in a friends group and your progress is also saved on its server, so it will come back at the next sync. To really start over, leave the group first (Friends tab). ' : '') + (ALL ? 'Delete the progress of every level shown here (' + LVLS.map(n => 'HSK ' + n).join(' and ') + ') in this browser? Export it first if you want a copy.' : 'Delete all progress in this browser? Export it first if you want a copy.'))) {
         try { localStorage.removeItem(KEY); if (ALL) LVLS.forEach(n => localStorage.removeItem(storeKey(n))); } catch (e) {}
         window.location.reload();
       }
@@ -1628,7 +1665,7 @@
       const infos = bankKeys.map(zh => winfo(S.ws[zh], 0));
       const memNow = { words:Math.round(infos.reduce((a, i) => a + (i.started ? i.recallN / 100 : 0), 0)), avg:(() => { const st = infos.filter(i => i.started); return st.length ? Math.round(st.reduce((a, i) => a + i.recallN, 0) / st.length) : 0; })() };
       const weekDates = [0, 1, 2, 3, 4, 5, 6].map(daysAgo);
-      const weekMin = weekDates.reduce((a, d) => a + (d === ymd(new Date()) ? S.dayMin : ((S.minLog || {})[d] || 0)), 0);
+      const weekMin = weekDates.reduce((a, d) => a + (d === ymd(new Date()) ? Math.max(S.dayMin, window.ShanluSync.dayMinutes(S, d)) : window.ShanluSync.dayMinutes(S, d)), 0);
       const weekDays = weekDates.filter(d => S.activity[d]).length;
       const startedCount = infos.filter(i => i.started).length;
       const vocabPct = Math.round(infos.reduce((a, i) => a + i.m, 0) / bankKeys.length);

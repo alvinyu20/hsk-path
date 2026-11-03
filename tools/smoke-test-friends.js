@@ -9,6 +9,7 @@ const types = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css',
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent(req.url.split('?')[0]);
   if (p === '/') p = '/index.html';
+  if (p === '/config.js') { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end("window.SHANLU_FRIENDS_URL = window.SHANLU_FRIENDS_URL || '';"); return; }   // tests never talk to the real friends server
   const f = path.join(root, p);
   if (!f.startsWith(root) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); res.end('nope'); return; }
   res.writeHead(200, { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' });
@@ -97,6 +98,35 @@ const INVITE = 'ABCD-EFGH-JKLM';
   for (let i = 0; i < 30; i++) await A.page.evaluate((i) => window.shanlu.setState({ dayMin: 31 + i }), i);
   await A.page.waitForTimeout(6500);
   check(A.page.puts === before, 'many quick changes do not cause more uploads (the last upload was under 10 minutes ago)');
+
+  // the same person on two devices: progress, exam passes and minutes end up identical on both
+  await A.page.evaluate(() => {
+    const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws));
+    ws['你好'].see = { s: 3, l: 0, t: Date.now() }; ws['你好'].prod = { s: 3, l: 0, t: Date.now() };
+    app.setState({ ws, exams: [{ at: 1, mode: 'full', l: 18, r: 18, lt: 20, rt: 20 }] });
+    app.persistNow();
+  });
+  await A.page.evaluate(() => window.shanlu.friendsPush({}));
+  const link2 = await A.page.evaluate(() => { const v = JSON.parse(localStorage.getItem('shanlu-friends')); return location.href.replace(/#.*$/, '') + '#me=' + v.id + '.' + v.key; });
+  const E = await mk();
+  await E.page.goto(link2); await E.page.waitForSelector('.frow.me');
+  await E.page.waitForFunction(() => { const s = JSON.parse(localStorage.getItem('shanlu-progress-v1') || '{}'); return s.ws && s.ws['你好'] && s.ws['你好'].see.s === 3; });
+  check(await E.page.evaluate(() => window.ShanluLevel.unlocked(2) && (JSON.parse(localStorage.getItem('shanlu-progress-v1')).exams || []).length === 1), 'a second device gets your words and your exam pass, so HSK 2 is unlocked there too');
+  check(await E.page.evaluate(() => window.shanlu.state.ws['你好'].see.s === 3), 'and the page on the second device already shows them');
+  await E.page.evaluate(() => {
+    const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws));
+    ws['谢谢'].see = { s: 4, l: 0, t: Date.now() };
+    app.setState({ ws, dayMin: app.state.dayMin + 20 }); app.persistNow();   // studies 20 more minutes on this device
+  });
+  await E.page.evaluate(() => window.shanlu.friendsPush({}));
+  await A.page.evaluate(() => window.shanlu.friendsPush({}));
+  await E.page.evaluate(() => window.shanlu.friendsPush({}));
+  const dbg = (pg) => pg.evaluate(() => ['shanlu-progress-v1', 'shanlu-progress-v1-l2', 'shanlu-progress-v1-all'].map(k => { const s = JSON.parse(localStorage.getItem(k) || 'null'); return s ? [k.slice(-6), s.day, s.dayMin, JSON.stringify(s.minLog), JSON.stringify(s.minDev)] : [k.slice(-6), null]; }));
+  if (process.env.DBG) { console.log('A', JSON.stringify(await dbg(A.page))); console.log('E', JSON.stringify(await dbg(E.page))); }
+  const sa = await A.page.evaluate(() => window.shanlu.friendStats()), se = await E.page.evaluate(() => window.shanlu.friendStats());
+  check(await A.page.evaluate(() => window.shanlu.state.ws['谢谢'].see.s === 4), 'a word studied on the second device appears on the first');
+  check(JSON.stringify(sa) === JSON.stringify(se) && sa.mem > 0 && sa.last7[6] === 60 + 5 + 20 && sa.passed.includes(1), 'both devices report identical totals ' + (JSON.stringify(sa) === JSON.stringify(se) ? '' : JSON.stringify(sa) + ' vs ' + JSON.stringify(se)) + ', with minutes from both devices added up (60 on the first, 5 from the HSK 2 save, 20 on the second = ' + sa.last7[6] + ' today)');
+  await E.ctx.close();
 
   // personal link signs in on another device
   const link = await A.page.evaluate(() => { const v = JSON.parse(localStorage.getItem('shanlu-friends')); return location.href.replace(/#.*$/, '') + '#me=' + v.id + '.' + v.key; });

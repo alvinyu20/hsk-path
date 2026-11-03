@@ -89,6 +89,9 @@
       async restore(who) { const g = await call('GET', '/api/group', undefined, who); const me = g.members.find((m) => m.id === who.id); save({ id: who.id, key: who.key, name: me ? me.name : '', group: g.group.name }); return g; },
       async group() { const id = identity(); if (!id) throw Object.assign(new Error('Not joined.'), { code: 'not_joined' }); const g = await call('GET', '/api/group', undefined, id); save(Object.assign({}, id, { group: g.group.name })); return g; },
       async push(stats, extra) { const id = identity(); if (!id) return null; return call('PUT', '/api/me', { stats }, id, extra); },
+      // your own saved progress, kept on the server so every device of yours ends up the same
+      async getProgress() { const id = identity(); return call('GET', '/api/me/progress', undefined, id); },
+      async putProgress(bundle, extra) { const id = identity(); return call('PUT', '/api/me/progress', bundle, id, extra); },
       async rename(name) { const id = identity(); const r = await call('PUT', '/api/me', { name }, id); save(Object.assign({}, id, { name: r.name })); return r; },
       async cheer(to) { return call('POST', '/api/cheer', { to }, identity()); },
       async leave() { const id = identity(); if (id) { try { await call('DELETE', '/api/me', undefined, id); } catch (e) { if (e.status !== 401) throw e; } } forget(); },

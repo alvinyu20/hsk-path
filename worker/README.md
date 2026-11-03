@@ -2,7 +2,7 @@
 
 A tiny server so you and your friends can see each other's study totals. It is **optional**: until you put its address in `config.js`, the Friends tab stays hidden and the site works exactly as before.
 
-**What it stores** (per person): a first name and a few totals (minutes studied each of the last 7 days, streak, words in memory, level, exam passes). **Never** word lists or anything else; the server throws away anything else it is sent.
+**What it stores** (per person): a first name, a few totals shown to the group (minutes studied each of the last 7 days, streak, words in memory, level, exam passes), and a private copy of that person's own study progress (words, exam passes, minutes), so every device of the same person shows the same thing. Friends can see only the totals, never the progress copy. You, as the owner, could read it in the database console, so only invite people you trust. The server throws away anything it does not recognise in the totals.
 
 **How people get in, without accounts or passwords:** you send each friend an invite link. They open it, type their first name, done. The app keeps a secret key on their device (the server stores only a hash of it). To use a second device, they copy "their link" from the Friends screen and open it there.
 
@@ -41,10 +41,10 @@ Menu names change now and then; look for the closest match.
 
 ## Day to day
 
-- **Remove someone, or see who is in:** in the dashboard open the D1 database → **Console** and run `SELECT id, name FROM members;` then `DELETE FROM cheers WHERE from_id = '<id>' OR to_id = '<id>'; DELETE FROM members WHERE id = '<id>';`. (Or call `GET /api/admin/members` and `DELETE /api/admin/members/<id>` with the header `X-Admin-Key: <your ADMIN_KEY>`.) A removed person's device is signed out at its next sync.
+- **Remove someone, or see who is in:** in the dashboard open the D1 database → **Console** and run `SELECT id, name FROM members;` then `DELETE FROM cheers WHERE from_id = '<id>' OR to_id = '<id>'; DELETE FROM progress WHERE member_id = '<id>'; DELETE FROM members WHERE id = '<id>';`. (Or call `GET /api/admin/members` and `DELETE /api/admin/members/<id>` with the header `X-Admin-Key: <your ADMIN_KEY>`.) A removed person's device is signed out at its next sync.
 - **Stop new people joining:** change `INVITE_CODE` (people already in are not affected), or delete the variable to switch joining off.
 - **If someone loses their link:** they join again with the invite link; you can remove their old entry.
-- **Free limits:** if a daily limit were ever hit, the Friends tab shows an error until the reset (00:00 UTC). The rest of the app keeps working, because everyone's progress lives on their own device.
+- **Free limits:** if a daily limit were ever hit, the Friends tab shows an error until the reset (00:00 UTC). The rest of the app keeps working, because everyone's progress also lives on their own device.
 
 ## Set it up with the terminal instead
 

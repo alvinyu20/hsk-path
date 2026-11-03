@@ -8,7 +8,7 @@
   const DIMS = ['see', 'hear', 'prod'];
   // progress that is merged between devices; device preferences (theme, voice, hint switches, daily goal, new-word limit) stay local
   const SYNC_KEYS = ['xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'clipBest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone', 'exams', 'aiDays'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone', 'exams', 'aiDays', 'minLog', 'minDev'];
   const FILE = 'shanlu-progress.json';   // HSK 1 progress (the original file name)
   const fileFor = (level) => (level > 1 ? 'shanlu-progress-hsk' + level + '.json' : FILE);   // each level keeps its own file in the same gist
   const DESCRIPTION = 'Shanlu study progress (private; do not delete)';
@@ -63,6 +63,12 @@
     out.exams = (a.exams || []).concat(b.exams || []).filter(h => { const id = JSON.stringify(h); if (seenE[id]) return false; seenE[id] = true; return true; })
       .sort((x, y) => (x.at || 0) - (y.at || 0)).slice(-20);
     out.aiDays = maxObj(a.aiDays, b.aiDays);
+    // minutes studied each day: the larger number of the two devices wins (the same minutes are never counted twice); only the last 60 days are kept
+    out.minLog = maxObj(a.minLog, b.minLog);
+    Object.keys(out.minLog).sort().slice(0, -60).forEach(k => { delete out.minLog[k]; });
+    // minutes per day per device: each device's own number only grows, so the larger one is right; the day's total adds the devices up (dayMinutes)
+    out.minDev = {};
+    Object.keys(Object.assign({}, a.minDev || {}, b.minDev || {})).sort().slice(-60).forEach(d => { out.minDev[d] = maxObj((a.minDev || {})[d], (b.minDev || {})[d]); });
     // today's progress: same day merges, a newer day replaces an older one
     const da = a.day || '', db = b.day || '';
     out.day = da > db ? da : db;
@@ -82,6 +88,13 @@
     }
     return out;
   }
+
+  // minutes studied on one day, all devices together (older saves without the per-device numbers fall back to minLog)
+  const dayMinutes = (st, day) => {
+    const per = st && st.minDev && st.minDev[day];
+    if (per && typeof per === 'object') return Object.keys(per).reduce((n, k) => n + (per[k] || 0), 0);
+    return (st && st.minLog && st.minLog[day]) || 0;
+  };
 
   const pick = (state) => { const o = {}; SYNC_KEYS.forEach(k => { if (state[k] !== undefined) o[k] = state[k]; }); return o; };
   // key order must not matter when deciding whether two progress objects are the same
@@ -148,5 +161,5 @@
     return { merged, wrote, gistId: id, created: false };
   }
 
-  return { SYNC_KEYS, FILE, fileFor, DESCRIPTION, merge, pick, round, gistApi, mergeWs, same };
+  return { SYNC_KEYS, FILE, fileFor, DESCRIPTION, merge, pick, round, gistApi, mergeWs, same, dayMinutes };
 });

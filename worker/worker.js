@@ -1,6 +1,7 @@
 /* Shanlu friends board: one small Cloudflare Worker + D1 database.
  *
- * What it stores: a first name and a few study totals per person (see cleanStats). Never word lists or anything else.
+ * What it stores per person: a first name, a few study totals that friends can see (see cleanStats), and that person's own saved progress
+ * (so every one of their devices ends up with the same progress). Only the person's own key can read their progress; friends never get it.
  * How people get in: an invite code (a secret you set) is checked once when someone joins. They get back a secret key that the app keeps on their
  * device (and in "their link" for a second device). The key is stored here only as a hash. There are no passwords and no accounts.
  *
@@ -22,6 +23,7 @@ const randHex = (bytes) => hex(crypto.getRandomValues(new Uint8Array(bytes)));
 const safeEq = (a, b) => { if (a.length !== b.length) return false; let d = 0; for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i); return d === 0; };
 const normCode = (s) => String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
 const DAY_MS = 864e5;
+const MAX_PROGRESS = 700000;   // characters: a person's whole saved progress is about 150,000
 
 let schemaReady = null;
 function ensureSchema(env) {
@@ -29,6 +31,7 @@ function ensureSchema(env) {
     schemaReady = env.DB.batch([
       env.DB.prepare('CREATE TABLE IF NOT EXISTS members (id TEXT PRIMARY KEY, name TEXT NOT NULL, key_hash TEXT NOT NULL, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL, stats TEXT)'),
       env.DB.prepare('CREATE TABLE IF NOT EXISTS cheers (from_id TEXT NOT NULL, to_id TEXT NOT NULL, at INTEGER NOT NULL, PRIMARY KEY (from_id, to_id))'),
+      env.DB.prepare('CREATE TABLE IF NOT EXISTS progress (member_id TEXT PRIMARY KEY, data TEXT NOT NULL, updated_at INTEGER NOT NULL)'),
     ]).catch((e) => { schemaReady = null; throw e; });
   }
   return schemaReady;
@@ -122,7 +125,7 @@ async function handle(req, env) {
     }
     const del = /^\/api\/admin\/members\/([0-9a-f]{16})$/.exec(path);
     if (del && req.method === 'DELETE') {
-      await env.DB.batch([env.DB.prepare('DELETE FROM cheers WHERE from_id = ? OR to_id = ?').bind(del[1], del[1]), env.DB.prepare('DELETE FROM members WHERE id = ?').bind(del[1])]);
+      await env.DB.batch([env.DB.prepare('DELETE FROM cheers WHERE from_id = ? OR to_id = ?').bind(del[1], del[1]), env.DB.prepare('DELETE FROM progress WHERE member_id = ?').bind(del[1]), env.DB.prepare('DELETE FROM members WHERE id = ?').bind(del[1])]);
       return reply(req, env, { ok: true });
     }
     return fail(req, env, 404, 'not_found');
@@ -154,6 +157,20 @@ async function handle(req, env) {
     return reply(req, env, { ok: true, name });
   }
 
+  if (path === '/api/me/progress' && req.method === 'GET') {
+    const row = await env.DB.prepare('SELECT data, updated_at FROM progress WHERE member_id = ?').bind(me.id).first();
+    // the saved text is passed on as it is (no parsing: the free plan allows only 10 ms of CPU per request)
+    return new Response('{"progress":' + (row ? row.data : 'null') + ',"updated":' + (row ? row.updated_at : 0) + '}', { status: 200, headers: Object.assign({ 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }, corsHeaders(req, env)) });
+  }
+
+  if (path === '/api/me/progress' && req.method === 'PUT') {
+    const text = await req.text();
+    if (text.length > MAX_PROGRESS) return fail(req, env, 413, 'too_big');
+    if (!/^\{"v":1,"levels":\{/.test(text) || text[text.length - 1] !== '}') return fail(req, env, 400, 'bad_progress');
+    await env.DB.prepare('INSERT INTO progress (member_id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(member_id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at').bind(me.id, text, now).run();
+    return reply(req, env, { ok: true });
+  }
+
   if (path === '/api/cheer' && req.method === 'POST') {
     const body = await readJson(req, 512);
     if (body.tooBig) return fail(req, env, 413, 'too_big');
@@ -167,7 +184,7 @@ async function handle(req, env) {
   }
 
   if (path === '/api/me' && req.method === 'DELETE') {
-    await env.DB.batch([env.DB.prepare('DELETE FROM cheers WHERE from_id = ? OR to_id = ?').bind(me.id, me.id), env.DB.prepare('DELETE FROM members WHERE id = ?').bind(me.id)]);
+    await env.DB.batch([env.DB.prepare('DELETE FROM cheers WHERE from_id = ? OR to_id = ?').bind(me.id, me.id), env.DB.prepare('DELETE FROM progress WHERE member_id = ?').bind(me.id), env.DB.prepare('DELETE FROM members WHERE id = ?').bind(me.id)]);
     return reply(req, env, { ok: true });
   }
 
