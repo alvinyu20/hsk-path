@@ -256,6 +256,9 @@
       <h2 class="h2">Level</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">{{lvNote}}</p>
       <div class="seg2" style="margin-top:12px;display:inline-flex" role="group" aria-label="Level"><sc-for list="{{lvOpts}}" as="o" hint-placeholder-count="2"><button class="{{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for></div>
+      <div style="margin:16px 0 0;font-weight:600">Level lock</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{lockOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for></div>
+      <p class="muted" style="margin:8px 0 0;font-size:15px">Locked is the default. The level exams are AI-written and AI-checked, and the pictures use emoji that look different on different devices, so if an unclear question holds you back, switching the lock to open is fine: the exam then only earns the level's seal.</p>
     </section>
     <sc-if value="{{erhuaAvailable}}" hint-placeholder-val="{{ true }}">
     <section class="card" style="margin-top:20px">

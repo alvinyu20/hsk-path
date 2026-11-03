@@ -85,7 +85,7 @@
   const LVLS = ALL ? (window.SHANLU_LEVELS || [1]) : [LV];            // the levels whose content is shown
   const TOPL = Math.max.apply(null, LVLS);                             // the highest of them
   const LVN = ALL ? 'All levels' : 'HSK ' + LV;
-  const LVL = window.ShanluLevel || { MAX_LEVEL:LV, PASS_PCT:80, passedEntry:() => false, levelPassed:() => false, markPassed() {}, unlocked:() => true };
+  const LVL = window.ShanluLevel || { MAX_LEVEL:LV, PASS_PCT:80, passedEntry:() => false, passedList:() => false, softLock:() => false, levelPassed:() => false, markPassed() {}, unlocked:() => true };
   const LV_DATA = (name) => window['HSK' + LV + '_' + name];
   // In "All levels" the content of every unlocked level is joined (HSK 1 first). Words are different in every level, so nothing is shared or duplicated.
   const LV_ALL = (name) => LVLS.map(n => window['HSK' + n + '_' + name]).filter(Boolean);
@@ -877,7 +877,7 @@
         PERSIST.forEach(k => { if (!ALL || SPLIT.indexOf(k) < 0) out[k] = this.state[k]; });
         localStorage.setItem(KEY, JSON.stringify(out));
         if (ALL) this.persistSplit();
-        else if ((this.state.exams || []).some(LVL.passedEntry)) LVL.markPassed(LV);   // a passed full exam opens the next level
+        else if (LVL.passedList(this.state.exams || [])) LVL.markPassed(LV);   // passing both sections (together or one at a time) opens the next level
       } catch (e) {}
     }
     // ----- friends board: talks to the server rarely (on open, after a pause in studying, when you leave, and at most every ~10 minutes) -----
@@ -928,7 +928,7 @@
         if (!SY.same(m, SY.merge(local[k], local[k]))) changed = true;
       });
       if (changed) {
-        levels.forEach(n => { if (merged[n]) { const st = readStore(n) || {}; try { localStorage.setItem(storeKey(n), JSON.stringify(Object.assign({}, st, SY.pick(merged[n])))); } catch (e) {} if ((merged[n].exams || []).some(LVL.passedEntry)) LVL.markPassed(n); } });
+        levels.forEach(n => { if (merged[n]) { const st = readStore(n) || {}; try { localStorage.setItem(storeKey(n), JSON.stringify(Object.assign({}, st, SY.pick(merged[n])))); } catch (e) {} if (LVL.passedList(merged[n].exams || [])) LVL.markPassed(n); } });
         // bring this view up to date
         let patch;
         if (ALL) { const tmp = Object.assign({}, this.state, readSplit()); Object.keys(BANK).forEach(zh => { if (!tmp.ws[zh]) tmp.ws[zh] = blankWord(); }); carryOverErhua(tmp); patch = {}; SPLIT.forEach(k => { patch[k] = tmp[k]; }); }
@@ -1176,12 +1176,46 @@
       const m = this.state.exm; if (!m) return;
       const q = m.qs[m.i]; if (!q.audio) return;
       const used = m.plays[q.id] || 0; if (used >= 2) return;
+      this.ttsUnlock();
       const plays = Object.assign({}, m.plays); plays[q.id] = used + 1;
       this.exPatch({ plays });
       this.speakLines(q.audio, 'exq');
     };
     // several lines in a row (a conversation); the second voice is pitched higher where the browser allows it
     speakLines = (lines, key) => {
+      if (ttsModeNow() === 'qwen') { this.speakLinesQwen(lines, key); return; }
+      this.speakLinesBrowser(lines, key);
+    };
+    // exam conversations with the Qwen voices: a woman and a man, the same on every device (the browser voice differs from device to device)
+    ttsUrl = async (text, voice) => {
+      const ck = voice + '|' + text; let c = this.ttsCache[ck];
+      if (!c || c.exp < Date.now()) { c = this.ttsCache[ck] = { url:await aliTTS(text, voice), exp:Date.now() + 20 * 3600000 }; }
+      return c.url;
+    };
+    speakLinesQwen = async (lines, key) => {
+      this.stopNative(); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+      const tok = ++this.ttsTok;
+      this.setState({ playing:key });
+      const voiceFor = (l) => (l.pitch > 1.05 ? 'Cherry' : l.pitch < 0.95 ? 'Kai' : ttsVoiceNow());
+      const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+      try {
+        this.wakeAudio();
+        if (!this.ttsEl) this.ttsEl = new Audio();
+        const a = this.ttsEl;
+        for (let i = 0; i < lines.length; i++) {
+          const url = await this.ttsUrl(lines[i].text, voiceFor(lines[i]));
+          if (tok !== this.ttsTok) return;
+          await new Promise((res, rej) => { a.onended = res; a.onerror = () => rej(new Error('the audio could not be played')); a.src = url; a.playbackRate = this.state.speed || 1; try { a.preservesPitch = true; } catch (e) {} a.play().catch(rej); });
+          if (tok !== this.ttsTok) return;
+          if (i < lines.length - 1) await sleep(250);
+        }
+        if (tok === this.ttsTok && this.state.playing === key) this.setState({ playing:null });
+      } catch (e) {
+        if (tok !== this.ttsTok) return;
+        this.ttsFail(e); this.speakLinesBrowser(lines, key);
+      }
+    };
+    speakLinesBrowser = (lines, key) => {
       try {
         if (!window.speechSynthesis) return;
         const zh = pickVoice(this.state.voiceId);
@@ -1211,7 +1245,7 @@
       const results = Object.assign({}, m.results); results[m.sec] = res;
       if (m.mode === 'full' && m.sec === 'listening') { this.exPatch({ stage:'break', results }); return; }
       const entry = { at:Date.now(), mode:m.mode, l:results.listening ? results.listening.correct : null, r:results.reading ? results.reading.correct : null, lt:results.listening ? results.listening.total : null, rt:results.reading ? results.reading.total : null };
-      if (LVL.passedEntry(entry)) LVL.markPassed(LV);   // a passed full exam opens the next level straight away
+      if (LVL.passedList(this.state.exams.concat([entry]))) LVL.markPassed(LV);   // passing both sections (together or one at a time) opens the next level straight away
       const day = ymd(new Date());
       this.setState({ exm:Object.assign({}, m, { stage:'result', results }), exams:this.state.exams.concat([entry]).slice(-20), dayMin:this.state.dayMin + (m.mode === 'full' ? 30 : 15), xp:this.state.xp + Math.round(correct * 2), dayXp:this.state.dayXp + Math.round(correct * 2) });
       try { window.scrollTo(0, 0); } catch (e) {}
@@ -1931,6 +1965,12 @@
         try { localStorage.removeItem(KEY); if (ALL) LVLS.forEach(n => localStorage.removeItem(storeKey(n))); } catch (e) {}
         window.location.reload();
       }
+    };
+    // the level lock is a person's setting (saved with the rest, see level.js); the page reloads so the level list is worked out again
+    setLock = (open) => {
+      if (LVL.softLock() === open) return;
+      prefSet('softLock', open); this.persistNow();
+      try { window.location.reload(); } catch (e) {}
     };
     switchLevel = (n) => {
       if (n === LV) return;
@@ -2653,10 +2693,11 @@
         examNaTitle:ALL ? 'Level exams are taken one level at a time' : LVN + ' mock exam: not built yet',
         examNaText:ALL ? 'Each mock exam belongs to one level. Switch to HSK 1 or HSK 2 in the header, take its exam there, and passing it opens the next level. Everything else on this page mixes all the levels you have unlocked.' : 'The mock exam is modelled on the official HSK 1 sample papers and exists for HSK 1 only so far. For ' + LVN + ', the Tests screen gives mixed questions from the words you have started, and Grammar has practice for every lesson.',
         lvOpts:[1, 2, 0].map(n => { if (n === 0) { const openAll = LVL.unlockedLevels().length >= 2; return { label:'All' + (openAll ? '' : ' 🔒'), cls:(ALL ? 'on' : '') + (openAll ? '' : ' locked'), fn:() => (openAll ? this.switchLevel(0) : this.setState({ lvMsg:99 })) }; } const open = LVL.unlocked(n); return { label:'HSK ' + n + (open ? '' : ' 🔒'), cls:(LV === n ? 'on' : '') + (open ? '' : ' locked'), fn:() => (open ? this.switchLevel(n) : this.setState({ lvMsg:n })) }; }),
-        lvMsgShow:S.lvMsg > 0 && (S.lvMsg === 99 ? LVL.unlockedLevels().length < 2 : !LVL.unlocked(S.lvMsg)) ? true : false, lvMsgText:S.lvMsg === 99 ? 'All levels shows every level you have unlocked together, so it needs at least two. Pass the HSK 1 level exam (the full mock exam with at least ' + LVL.PASS_PCT + '% in listening and in reading, in one sitting) to unlock HSK 2.' : 'HSK ' + S.lvMsg + ' is locked. It opens when you pass the HSK ' + (S.lvMsg - 1) + ' level exam: the full mock exam with at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading, in one sitting.',
+        lvMsgShow:S.lvMsg > 0 && (S.lvMsg === 99 ? LVL.unlockedLevels().length < 2 : !LVL.unlocked(S.lvMsg)) ? true : false, lvMsgText:S.lvMsg === 99 ? 'All levels shows every level you have unlocked together, so it needs at least two. Pass the HSK 1 level exam (at least ' + LVL.PASS_PCT + '% in listening and in reading; each section can be taken separately) to unlock HSK 2. Already know HSK 1? Take the exam now to test out. You can also set all levels open in Settings.' : 'HSK ' + S.lvMsg + ' is locked. It opens when you pass the HSK ' + (S.lvMsg - 1) + ' level exam: at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading (each section can be taken separately and retaken). Already know HSK ' + (S.lvMsg - 1) + '? Take the exam now to test out. You can also set all levels open in Settings.',
         lvMsgGo:() => { const tgt = S.lvMsg === 99 ? 1 : S.lvMsg - 1; this.setState({ lvMsg:0 }); if (LV === tgt) this.go('exam'); else { try { localStorage.setItem('shanlu-level', String(tgt)); } catch (e) {} window.location.reload(); } },
         lvMsgClose:() => this.setState({ lvMsg:0 }), lvMsgGoText:LV === (S.lvMsg === 99 ? 1 : S.lvMsg - 1) ? 'Go to the HSK ' + LV + ' exam' : 'Open HSK ' + (S.lvMsg === 99 ? 1 : S.lvMsg - 1),
-        lvNote:'You are studying ' + LVN + '. Each level keeps its own progress on this device and its own copy when you sync. A level opens when you pass the exam of the level before it (the full mock exam with ' + LVL.PASS_PCT + '% in listening and in reading); a lock on a button means it is not open yet. ' + (LV === 1 ? 'HSK 1 has everything: words, word webs, grammar, listening lab, practice scripts, AI conversation and the mock exam.' : 'HSK 2 has words, word webs, grammar, tests and the AI conversation. The listening lab, practice scripts and mock exam are not built for HSK 2 yet.'),
+        lvNote:'You are studying ' + LVN + '. Each level keeps its own progress on this device and its own copy when you sync. ' + (LVL.softLock() ? 'The lock is set to open: every level can be studied, and passing an exam only earns that level\'s seal.' : 'A level opens when you pass the exam of the level before it: at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading. You can sit each section on its own and retake it; your best result for each section counts. If you already know a level, take its exam now to test out (a lock on a button means it is not open yet).'),
+        lockOpts:[[false, 'Locked until the exam is passed'], [true, 'All levels open']].map(o => ({ label:o[1], cls:LVL.softLock() === o[0] ? 'on' : '', fn:() => this.setLock(o[0]) })),
         isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
 
         // home

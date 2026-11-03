@@ -758,6 +758,21 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(await page.evaluate(() => { const all = JSON.stringify(window.HSK1_WORDS.map(w => [w.ex].concat(w.more || []).map(e => e.py))); return !/qián biān|wài guó rén|měi tiān/.test(all) && all.includes('qiánbian'); }), 'sentence pinyin writes 前边 as one word (qiánbian), not qián biān');
   check(await page.evaluate(() => { const T = window.shanlu.testApi; return T.aiPinyin(T.segHsk('每天我在家。')) === 'Měitiān wǒ zài jiā.' && T.aiPinyin(T.segHsk('商店在学校前边。')).endsWith('qiánbian.') && T.aiPinyin(T.segHsk('外国人也想学汉语。')).startsWith('Wàiguórén'); }), 'the AI conversation spaces solid words (每天, 前边, 外国人) the same way, with no "not on the lists" flag');
   check(await page.evaluate(() => { const T = window.shanlu.testApi; return T.segHsk('每天').every(x => x.ok); }), 'a solid word that is not on the HSK list is not flagged as outside the lists');
+  // levels: each exam section can be passed on its own; the lock can be set to open
+  const lockT = await page.evaluate(() => {
+    const L = window.ShanluLevel; const e = (o) => Object.assign({ at: 1, lt: 20, rt: 20 }, o);
+    return {
+      both: L.passedList([e({ mode: 'full', l: 17, r: 17 })]),
+      split: L.passedList([e({ mode: 'listening', l: 18, r: null }), e({ mode: 'reading', l: null, r: 16 })]),
+      retake: L.passedList([e({ mode: 'listening', l: 10, r: null }), e({ mode: 'listening', l: 17, r: null }), e({ mode: 'reading', l: null, r: 20 })]),
+      oneOnly: L.passedList([e({ mode: 'listening', l: 20, r: null })]),
+      low: L.passedList([e({ mode: 'full', l: 15, r: 20 })]),
+      best: L.bestSections([e({ mode: 'listening', l: 12, r: null }), e({ mode: 'listening', l: 18, r: null })]).l
+    };
+  });
+  check(lockT.both && lockT.split && lockT.retake && !lockT.oneOnly && !lockT.low && lockT.best === 90, 'a level passes when the best listening result and the best reading result are both 80%, from one sitting or from separate retakes');
+  const lockOpen = await page.evaluate(() => { const L = window.ShanluLevel; const before = L.unlocked(2); const p = JSON.parse(localStorage.getItem('shanlu-person') || '{}'); p.prefs = p.prefs || {}; p.prefs.softLock = { v: true, at: Date.now() }; localStorage.setItem('shanlu-person', JSON.stringify(p)); const open = L.unlocked(2) && L.softLock(); p.prefs.softLock = { v: false, at: Date.now() }; localStorage.setItem('shanlu-person', JSON.stringify(p)); return { before, open, after: L.unlocked(2) }; });
+  check(lockOpen.before === lockOpen.after && lockOpen.open, 'switching the level lock to open unlocks the next level without the exam, and back');
   // typed pinyin: tones count, with feedback that says what was right
   const cp = (inp, py, opt) => page.evaluate(([i, p, o]) => { const r = window.shanlu.testApi.comparePinyin(i, p, o); return { ok: r.ok, grade: r.grade, note: r.note }; }, [inp, py, !!opt]);
   check((await cp('nǐ hǎo', 'nǐ hǎo')).ok && (await cp('ni3 hao3', 'nǐ hǎo')).ok && (await cp('ni3hao3', 'nǐ hǎo')).ok && (await cp('Nǐ Hǎo', 'nǐ hǎo')).ok, 'tone marks or tone numbers are both accepted, with or without spaces');
@@ -1151,6 +1166,12 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForFunction((n) => window.shanlu.state.aim.length >= n + 2 && !window.shanlu.state.aiBusy, hfM, { timeout: 10000 });
   await page.waitForTimeout(2200);
   check((await page.evaluate(() => window.shanlu.state.aiListen)) === false, 'with hands-free off the microphone waits for you to tap Speak');
+  // exam conversations: with a Qwen voice set up, the woman and the man are the same voices on every device
+  await page.evaluate(() => { window.shanlu.setTtsMode('qwen'); window.shanlu.speakLines([{ text: '你好吗？', pitch: 1.25 }, { text: '我很好。', pitch: 0.8 }], 'exqtest'); });
+  await page.waitForFunction(() => window.shanlu.state.playing === null || true, null, { timeout: 2000 });
+  await page.waitForTimeout(1500);
+  const exVoices = aliCalls.filter(c => c.body.model === 'qwen3-tts-flash' && (c.body.input.text === '你好吗？' || c.body.input.text === '我很好。')).map(c => c.body.input.voice + ':' + c.body.input.text);
+  check(exVoices.join() === 'Cherry:你好吗？,Kai:我很好。', 'an exam conversation is read by Qwen with a woman\'s voice and a man\'s voice, line by line (' + exVoices.join(' ') + ')');
   // a workspace ID changes the web address
   await page.evaluate(() => { const app = window.shanlu; app.setState({ aliWsInput:'testws1', aliKeyInput:'' }); app.aliSaveKey(); });
   await page.evaluate(() => window.shanlu.aliTest());
