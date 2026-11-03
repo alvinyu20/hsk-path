@@ -72,7 +72,7 @@
       if (auth) headers.Authorization = 'Bearer ' + auth.id + '.' + auth.key;
       let res;
       try { res = await doFetch(baseUrl() + path, Object.assign({ method, headers, body: body === undefined ? undefined : JSON.stringify(body) }, extra || {})); }
-      catch (e) { throw Object.assign(new Error('Could not reach the friends board. Check your connection.'), { code: 'network' }); }
+      catch (e) { throw Object.assign(new Error('Could not reach the friends board. Check your connection. If it is fine, the server may not allow this site: its ALLOWED_ORIGINS setting must be exactly ' + (typeof location !== 'undefined' ? location.origin : 'the site address') + '.'), { code: 'network' }); }
       let json = null; try { json = await res.json(); } catch (e) {}
       if (!res.ok) throw Object.assign(new Error(messageFor(json && json.error, res.status)), { code: (json && json.error) || ('http_' + res.status), status: res.status });
       return json;
