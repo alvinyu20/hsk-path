@@ -110,3 +110,12 @@ HSK 2 is a separate level (`content/l2/`, tools run with `LEVEL=2`). The level c
 
 ## Word web topics (content/topics.json)
 One shared list of topics for every level, written by hand: each topic has a group, the words (from any level), and a sentence per level. A level shows only its own words in a topic; a topic with fewer than 3 words at a level is hidden unless it is the only home of one of them (tools/topics.py). All Word web topic sentences go through the same sentence checks. `node tools/test-topics.js` checks that every word is in a topic and that known bad groupings do not come back (万 with numbers, dog/cat with animals, 从小 not with weather, left/right not with shops). When adding a word to a topic, ask: would a learner see why these words belong together? A word may sit in more than one topic.
+
+## When a new HSK level is added: revisit the categories
+The Word web topics (content/topics.json) and the Grammar categories (content/categories-grammar.json) are meant to be re-thought whenever a level is added, not just extended. Moving words, topics or lessons around is fine if it helps learning. For each new level:
+1. Put every new word in at least one topic where a learner would see why the words belong together. Add topics when a group does not fit (do not stretch a topic to fit). Check the new words against the old topics: a new family or animal word belongs with the old family or animal words, not in a topic of its own.
+2. Re-read the whole topic list: split a topic that has become too big or mixed (a topic should stay about one idea), merge ones that have become tiny, and rename if the name no longer fits. Add a sentence for the new level to every topic that has new words (it may use earlier words).
+3. Put every new grammar lesson in a category (or add one), and check that the lessons inside each category still run from easy to harder and the category blurbs are still true.
+4. Run `node tools/test-topics.js` and the content checks for every level, then look at Word webs and Grammar in All levels mode.
+5. Tell the learner what moved. Progress is saved by word and lesson id, so moving things between topics or categories does not lose progress (never rename a lesson id or a word).
+

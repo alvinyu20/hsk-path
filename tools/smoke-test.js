@@ -223,7 +223,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const oText = await page.locator('.orow').first().innerText();
   check(oText.includes(exA) && oText.includes(exB), 'an opposite pair can show an example for both words');
   await page.locator('button', { hasText: 'Topics' }).click();
-  await page.locator('.tgroups button', { hasText: /^School$/ }).click();
+  await page.locator('.trail-rail .trl', { hasText: /^School/ }).click();
   await page.waitForTimeout(80);
   check((await page.locator('.tgrid .tc').count()) >= 14, 'a topic lists its words');
   const tcWord = (await page.locator('.tc .tc-zh').first().innerText()).trim();
@@ -407,7 +407,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await page.locator('.gl .gp').count()) === 26, 'grammar lists 26 lessons');
   check((await text()).toLowerCase().includes('lesson 1 of 26'), 'the first lesson is open');
   await shot('08-grammar');
-  await page.locator('.gl .gp').nth(3).click();
+  await page.locator('.gl .gp', { hasText: 'Yes/no questions with 吗' }).click();
   check((await text()).includes('Yes/no questions with 吗'), 'choosing a lesson opens it');
   check((await text()).includes('你想喝茶吗'), 'the 吗 lesson teaches the offer with 想');
   check(await page.locator('.lesson .expl p').count() >= 2 && (await page.locator('.lesson').innerText()).toLowerCase().includes('the full explanation'), 'the full grammar explanation is shown by default');

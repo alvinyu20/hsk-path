@@ -529,15 +529,17 @@
   <div class="gram">
     <button type="button" class="gpick" onClick="{{toggleGramPick}}" aria-expanded="{{gramPickOpen}}"><span>{{lesson.pickLabel}}</span><span aria-hidden="true">▾</span></button>
     <div class="gl {{gramListCls}}">
-      <div class="kick" style="padding:0 14px 8px">{{lvName}} grammar lessons</div>
-      <sc-for list="{{lessonList}}" as="p" hint-placeholder-count="9">
-        <button type="button" class="gp {{p.cls}}" onClick="{{p.fn}}"><span class="gn">{{p.n}}</span><span class="gt">{{p.title}}</span><span class="soon">{{p.tag}}</span></button>
+      <sc-for list="{{lessonGroups}}" as="g" hint-placeholder-count="4">
+        <div class="gg"><span>{{g.label}}</span><span class="gg-n">{{g.progress}}</span></div>
+        <sc-for list="{{g.items}}" as="p" hint-placeholder-count="3">
+          <button type="button" class="gp {{p.cls}}" onClick="{{p.fn}}"><span class="gn">{{p.n}}</span><span class="gt">{{p.title}}</span><sc-if value="{{p.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{p.lvCls}}">{{p.lvTag}}</span></sc-if><span class="soon">{{p.tag}}</span></button>
+        </sc-for>
       </sc-for>
     </div>
     <div class="lesson">
       <div class="les-top">
         <div>
-          <div class="kick">{{lesson.kick}}</div>
+          <div class="kick">{{lesson.kick}} <sc-if value="{{lesson.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{lesson.lvCls}}" style="vertical-align:middle;margin-left:6px">{{lesson.lvTag}}</span></sc-if></div>
           <h2 class="h2" style="font-size:30px;margin:6px 0 0">{{lesson.title}}</h2>
         </div>
         <div class="les-act"><button class="btn pri big" onClick="{{startGrammar}}">Practise this lesson</button><span class="muted">{{lesson.count}} · {{lesson.best}}</span></div>
@@ -795,7 +797,7 @@
       <sc-for list="{{capOpts}}" as="c" hint-placeholder-count="4"><button class="fc2 {{c.cls}}" onClick="{{c.fn}}">{{c.label}}</button></sc-for>
     </div>
     </sc-if>
-    <p class="muted" style="margin:0;max-width:66ch">New words appear next to words you already know. Try to recall a word before you reveal it, even if you guess wrong.</p>
+    <p class="muted web-intro" style="margin:0;max-width:66ch">New words appear next to words you already know. Try to recall a word before you reveal it, even if you guess wrong.</p>
     <sc-if value="{{capNote}}" hint-placeholder-val="{{ false }}"><p class="capnote">You have reached your limit of {{capCount}} new words for today. The rest wait until tomorrow. Choose "No limit" above to keep going.</p></sc-if>
 
     <sc-if value="{{isWChar}}" hint-placeholder-val="{{ true }}">
@@ -923,12 +925,38 @@
     </sc-if>
 
     <sc-if value="{{isWTopic}}" hint-placeholder-val="{{ false }}">
-    <div class="mist-wrap">
-      <div class="mist-top">
-        <div class="mist-sum"><span class="mseal" aria-hidden="true">熟</span><div><b>{{mistClearText}}</b><span>mountains with no mist left</span></div></div>
-        <div style="display:flex;flex-wrap:wrap;gap:10px"><sc-if value="{{mistHasNear}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{mistNearGo}}">{{mistNearText}}</button></sc-if><button class="btn" onClick="{{toggleMist}}">{{mistToggleText}}</button></div>
+    <div class="tlayout">
+    <aside class="trail-rail" aria-label="Topics">
+      <sc-for list="{{topicGroups}}" as="g" hint-placeholder-count="4">
+        <div class="tr-g"><div class="tr-gl"><span>{{g.label}}</span><span class="tr-gn">{{g.progress}}</span></div>
+          <sc-for list="{{g.opts}}" as="t" hint-placeholder-count="4"><button type="button" class="trl {{t.cls}}" onClick="{{t.fn}}"><span class="trl-n">{{t.label}}</span><span class="trl-c">{{t.count}}</span></button></sc-for>
+        </div>
+      </sc-for>
+    </aside>
+    <div class="tmain">
+      <div class="tbar">
+        <button type="button" class="tb-nav" onClick="{{topicPrev}}" aria-label="Previous topic">‹</button>
+        <button type="button" class="tb-cur" onClick="{{toggleTopicMenu}}" aria-expanded="{{topicMenuOpen}}"><span class="tb-name">{{topicName}}</span><span class="tb-sub">{{topicProgress}} · topic {{topicPos}}</span><span class="tb-car" aria-hidden="true">▾</span></button>
+        <button type="button" class="tb-nav" onClick="{{topicNext}}" aria-label="Next topic">›</button>
+        <sc-if value="{{topicMenuShow}}" hint-placeholder-val="{{ false }}"><div class="tpanel">
+          <sc-for list="{{topicGroups}}" as="g" hint-placeholder-count="4">
+        <div class="tr-g"><div class="tr-gl"><span>{{g.label}}</span><span class="tr-gn">{{g.progress}}</span></div>
+          <sc-for list="{{g.opts}}" as="t" hint-placeholder-count="4"><button type="button" class="trl {{t.cls}}" onClick="{{t.fn}}"><span class="trl-n">{{t.label}}</span><span class="trl-c">{{t.count}}</span></button></sc-for>
+        </div>
+      </sc-for>
+        </div></sc-if>
+      </div>
+      <div class="thead">
+        <h2 class="h2">{{topicName}}</h2>
+        <span class="muted">{{topicProgress}}</span>
+        <sc-if value="{{topicHasNew}}" hint-placeholder-val="{{ true }}"><button class="btn sm" onClick="{{topicAddAll}}">{{topicAddAllText}}</button></sc-if>
+        <button type="button" class="btn sm" onClick="{{toggleMist}}">{{mistToggleText}}</button>
       </div>
       <sc-if value="{{mistOpen}}" hint-placeholder-val="{{ false }}">
+      <div class="mist-top">
+        <div class="mist-sum"><span class="mseal" aria-hidden="true">熟</span><div><b>{{mistClearText}}</b><span>mountains with no mist left</span></div></div>
+        <sc-if value="{{mistHasNear}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{mistNearGo}}">{{mistNearText}}</button></sc-if>
+      </div>
       <div class="mist">
         <sc-for list="{{mistTiles}}" as="t" hint-placeholder-count="8">
           <button type="button" class="mtile {{t.cls}}" onClick="{{t.go}}">
@@ -940,15 +968,6 @@
       </div>
       <p class="asc-note">{{mistNote}}</p>
       </sc-if>
-    </div>
-      <div class="tgroups">
-        <sc-for list="{{topicGroups}}" as="g" hint-placeholder-count="4">
-          <div class="tgroup"><span class="tg-l">{{g.label}}</span>
-            <div class="pickrow" role="group" aria-label="{{g.label}}"><sc-for list="{{g.opts}}" as="t" hint-placeholder-count="4"><button class="fc2 {{t.cls}}" onClick="{{t.fn}}">{{t.label}}</button></sc-for></div>
-          </div>
-        </sc-for>
-      </div>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><span class="muted">{{topicProgress}}</span><sc-if value="{{topicHasNew}}" hint-placeholder-val="{{ true }}"><button class="btn" style="min-height:40px;padding:0 16px;font-size:15px" onClick="{{topicAddAll}}">{{topicAddAllText}}</button></sc-if></div>
       <div class="tgrid">
         <sc-for list="{{topicChips}}" as="c" hint-placeholder-count="7">
           <div class="tc {{c.cls}}">
@@ -974,6 +993,8 @@
         <a class="report" href="{{tsReport}}" target="_blank" rel="noopener">Report a mistake</a>
         <button class="btn pri" style="margin-top:10px" onClick="{{goTopic}}">{{topicCta}}</button>
       </section>
+    </div>
+    </div>
     </sc-if>
   </div>
   </sc-if>

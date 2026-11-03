@@ -1,0 +1,16 @@
+{
+ "note": "Grammar lessons of every level, grouped by what they help you say. Categories are shown in this order; inside a category the lessons run HSK 1 first, then HSK 2 (the order of the lesson files).",
+ "categories": [
+  {"name": "Building a sentence", "blurb": "The skeleton of a sentence: who does what, 是, 有, 的 and pronouns.", "lessons": ["order", "shi", "you", "pron", "de"]},
+  {"name": "Describing and comparing", "blurb": "Say what something is like, compare things, and say how well or how completely something is done.", "lessons": ["adj", "bi", "de2", "result"]},
+  {"name": "Questions", "blurb": "Yes/no questions, question words, either-or questions, and softening with 吧 and 呢.", "lessons": ["ma", "qword", "anota", "bane", "haishi"]},
+  {"name": "Saying no, asking and telling", "blurb": "Say no, make polite requests, and tell someone not to do something.", "lessons": ["neg", "request", "rang"]},
+  {"name": "Wanting and being able", "blurb": "Want, can, may, hope and get ready.", "lessons": ["want", "modal", "modal2"]},
+  {"name": "Numbers and counting", "blurb": "Measure words, numbers, money, age, and how much or how many.", "lessons": ["measure", "num", "some", "mw"]},
+  {"name": "Time and how often", "blurb": "Dates and clock time, how often something happens, and when.", "lessons": ["time", "mei", "duo"]},
+  {"name": "Where and direction", "blurb": "Where something is or happens, distance, and which way things move.", "lessons": ["zai", "loc", "li", "dao", "direction"]},
+  {"name": "Happening now and soon", "blurb": "Actions in progress, states that continue, and things about to happen.", "lessons": ["prog", "zhe", "yao"]},
+  {"name": "Finished and past", "blurb": "Done, changed, already, experienced, and describing how a past event happened.", "lessons": ["le1", "le2", "guo", "yijing", "shide"]},
+  {"name": "Joining people and ideas", "blurb": "With, together, also, then, because and although: link people, actions and sentences.", "lessons": ["hedui", "adv", "seq", "gen", "yinwei"]}
+ ]
+}

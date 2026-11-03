@@ -29,6 +29,15 @@ def die(msg):
     sys.exit('build-grammar: ' + msg)
 
 
+CATS = json.load(open(os.path.join(levelcfg.C, 'categories-grammar.json'), encoding='utf-8'))['categories']
+CAT_OF = {}
+for _i, _c in enumerate(CATS):
+    for _id in _c['lessons']:
+        if _id in CAT_OF:
+            sys.exit('build-grammar: lesson %s is in two categories' % _id)
+        CAT_OF[_id] = _i
+
+
 def main():
     LV = levelcfg.LEVEL
     eng = Engine(levelcfg.known())
@@ -92,7 +101,10 @@ def main():
             else:
                 die('%s: unknown question type %r' % (where, t))
             qs.append(out)
-        lessons.append(dict(id=lid, title=L['title'], covers=L['covers'], formula=formula, explain=L['explain'], examples=examples,
+        if lid not in CAT_OF:
+            die('lesson %s is in no category of content/categories-grammar.json' % lid)
+        ci = CAT_OF[lid]
+        lessons.append(dict(id=lid, title=L['title'], cat=CATS[ci]['name'], catOrder=ci, catBlurb=CATS[ci]['blurb'], covers=L['covers'], formula=formula, explain=L['explain'], examples=examples,
                             mistakes=L.get('mistakes', []), q=qs))
 
     out_path = levelcfg.data_path('grammar')

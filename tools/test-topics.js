@@ -34,5 +34,14 @@ check(topicsOf('个').includes('Measure words') && !topicsOf('个').includes('Ho
 check(['多', '少', '一些', '一点儿'].every(z => topicsOf(z).includes('How much and how many')), 'amount words have their own topic');
 check(topicsOf('下雨').includes('Weather') && topicsOf('冷').includes('Weather'), 'weather words are together');
 check(!master.some(t => t.words.includes('篮球') && t.words.some(z => ['猫', '狗', '忙', '晴', '商场'].includes(z))), 'sports are only grouped with sports-like words');
+// grammar categories (content/categories-grammar.json): every lesson of every level is in exactly one category
+for (const f of ['hsk1-grammar', 'hsk2-grammar']) eval(fs.readFileSync(__dirname + '/../data/' + f + '.js', 'utf8'));
+const cats = JSON.parse(fs.readFileSync(__dirname + '/../content/categories-grammar.json', 'utf8')).categories;
+const listed = cats.flatMap(c => c.lessons);
+const lessons = window.HSK1_GRAMMAR.lessons.concat(window.HSK2_GRAMMAR.lessons);
+check(lessons.every(l => listed.filter(x => x === l.id).length === 1) && listed.every(id => lessons.some(l => l.id === id)), 'every grammar lesson is in exactly one category');
+check(lessons.every(l => l.cat && typeof l.catOrder === 'number' && l.catBlurb), 'every grammar lesson carries its category');
+check(cats.every(c => c.lessons.length >= 3 && c.blurb), 'every grammar category has at least 3 lessons and a description');
+check(cats.some(c => c.lessons.some(id => window.HSK1_GRAMMAR.lessons.some(l => l.id === id)) && c.lessons.some(id => window.HSK2_GRAMMAR.lessons.some(l => l.id === id))), 'grammar categories mix HSK 1 and HSK 2 lessons');
 console.log(failures ? failures + ' topic check(s) failed' : 'all topic checks passed');
 process.exit(failures ? 1 : 0);
