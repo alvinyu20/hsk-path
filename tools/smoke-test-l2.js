@@ -296,6 +296,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(!first.includes('HSK 2 preview') && !(await page.locator('.msgs').innerText()).includes('no pinyin'), 'HSK 2 words are not flagged as a preview or as unknown at HSK 2');
   check((await text()).includes('Order at a café') && (await text()).includes('Buy trousers'), 'the HSK 2 script scenarios are offered as role-play settings');
 
+  check(await page.evaluate(() => { const all = JSON.stringify([window.HSK2_WORDS, window.HSK2_GRAMMAR, window.HSK2_SPEAK]); return all.includes('měitiān') && !/měi tiān|wài guó rén|qíng tiān/.test(all); }), 'HSK 2 sentence pinyin writes 每天 as one word (měitiān) and does not split 晴天 or 外国人');
   // ---- settings: level card, no 儿 card, export names the level
   await page.locator('button', { hasText: 'Settings' }).first().click();
   check((await text()).includes('You are studying HSK 2') && (await text()).includes('儿 endings'), 'Settings has a Level card and the 儿 endings card at HSK 2');

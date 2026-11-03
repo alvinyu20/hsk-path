@@ -335,7 +335,7 @@ window.HSK2_SPEAK = {
     },
     {
      "zh": "我每天早上都游泳。",
-     "py": "Wǒ měi tiān zǎoshang dōu yóuyǒng.",
+     "py": "Wǒ měitiān zǎoshang dōu yóuyǒng.",
      "en": "I swim every morning."
     },
     {

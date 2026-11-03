@@ -754,6 +754,10 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     return { a, b, c, rq: app.state.rq.slice() };
   });
   check(!hearCheck.rq.includes(hearCheck.a) && hearCheck.rq.includes(hearCheck.a + '#h') && hearCheck.rq.includes(hearCheck.b) && hearCheck.rq.includes(hearCheck.c + '#h'), 'every skill has its own timer: an overdue listening answer comes back as an audio card, not as a recognition card');
+  // pinyin word boundaries: solid words are one unit, in the content and in the AI conversation
+  check(await page.evaluate(() => { const all = JSON.stringify(window.HSK1_WORDS.map(w => [w.ex].concat(w.more || []).map(e => e.py))); return !/qián biān|wài guó rén|měi tiān/.test(all) && all.includes('qiánbian'); }), 'sentence pinyin writes 前边 as one word (qiánbian), not qián biān');
+  check(await page.evaluate(() => { const T = window.shanlu.testApi; return T.aiPinyin(T.segHsk('每天我在家。')) === 'Měitiān wǒ zài jiā.' && T.aiPinyin(T.segHsk('商店在学校前边。')).endsWith('qiánbian.') && T.aiPinyin(T.segHsk('外国人也想学汉语。')).startsWith('Wàiguórén'); }), 'the AI conversation spaces solid words (每天, 前边, 外国人) the same way, with no "not on the lists" flag');
+  check(await page.evaluate(() => { const T = window.shanlu.testApi; return T.segHsk('每天').every(x => x.ok); }), 'a solid word that is not on the HSK list is not flagged as outside the lists');
   // typed pinyin: tones count, with feedback that says what was right
   const cp = (inp, py, opt) => page.evaluate(([i, p, o]) => { const r = window.shanlu.testApi.comparePinyin(i, p, o); return { ok: r.ok, grade: r.grade, note: r.note }; }, [inp, py, !!opt]);
   check((await cp('nǐ hǎo', 'nǐ hǎo')).ok && (await cp('ni3 hao3', 'nǐ hǎo')).ok && (await cp('ni3hao3', 'nǐ hǎo')).ok && (await cp('Nǐ Hǎo', 'nǐ hǎo')).ok, 'tone marks or tone numbers are both accepted, with or without spaces');

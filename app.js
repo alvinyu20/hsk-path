@@ -534,11 +534,14 @@
   const MAXW = Math.max(KB_KEYS.reduce((n, k) => Math.max(n, k.length), 1), Object.keys(PV).reduce((n, k) => Math.max(n, k.length), 1), Object.keys(ERH_ALT).reduce((n, k) => Math.max(n, k.length), 1));
   // split a Chinese reply into known words, so pinyin comes from our own checked word list and outside words can be flagged
   const FILLER = { '嗯':'èn', '哦':'ò', '哎':'āi', '哈':'hā', '呀':'ya', '喂':'wèi' };
+  const LEX = window.SHANLU_LEXICON || {};   // words written solid that are not on the HSK lists (每天, 前边 ...): spaced and spelt as one word
   const segHsk = (text) => {
     const out = [];
     for (let i = 0; i < text.length;) {
       let hit = null;
       for (let n = Math.min(MAXW, text.length - i); n >= 1; n--) { const w = text.substr(i, n); if (KB[w] || ERH_ALT[w] || PV[w]) { hit = w; break; } }
+      let lx = ''; for (let n = Math.min(4, text.length - i); n >= 2; n--) { const w = text.substr(i, n); if (LEX[w]) { lx = w; break; } }
+      if (lx && (!hit || lx.length > hit.length)) { out.push({ t:lx, py:LEX[lx], cjk:true, ok:true }); i += lx.length; continue; }   // a solid word: one unit, nothing to flag (its characters are on the lists)
       if (hit && !KB[hit] && ERH_ALT[hit]) { out.push({ t:hit, py:ERH_ALT[hit], cjk:true, ok:true }); i += hit.length; continue; }
       if (hit && KB[hit]) { out.push({ t:hit, py:KB[hit].py.split('/')[0].trim(), cjk:true, ok:true }); i += hit.length; continue; }
       if (hit) { out.push({ t:hit, py:PV[hit][0], en:PV[hit][1], cjk:true, ok:true, pv:true }); i += hit.length; continue; }
@@ -2748,7 +2751,7 @@
   const tpl = document.getElementById('app-template');
   const app = DCMount(root, tpl, Component);
   onPersonChange = () => { try { app.personChanged(); } catch (e) {} };
-  app.testApi = { comparePinyin, toneInfo, checkTyped, bump, buildQueue, itemOf, retK, retention };   // for the browser tests
+  app.testApi = { comparePinyin, toneInfo, checkTyped, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin };   // for the browser tests
   window.shanlu = app;
 
   // keyboard: Space flips a review card, 1-4 rate it; in the exam, arrows move and A-F or 1-6 choose

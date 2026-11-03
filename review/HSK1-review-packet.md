@@ -265,7 +265,7 @@ Examples:
 
 - 我七点起床。  Wǒ qī diǎn qǐchuáng.  — I get up at seven o'clock.
 - 现在是八点零五分。  Xiànzài shì bā diǎn líng wǔ fēn.  — It is 8:05 now.
-- 今天是十月三十号。  Jīntiān shì shí yuè sānshí hào.  — Today is October 30th.
+- 今天是十月三十号。  Jīntiān shì shíyuè sānshí hào.  — Today is October 30th.
 - 今天星期几？  Jīntiān xīngqī jǐ?  — What day of the week is it today?
 - 我星期天在家。  Wǒ xīngqītiān zài jiā.  — I am at home on Sunday.
 
@@ -920,33 +920,62 @@ Examples:
 
 ### Topic sentences
 
-- Greetings and thanks: 你好！谢谢你，再见！  Nǐ hǎo! Xièxie nǐ, zàijiàn!  — Hello! Thank you, goodbye!
-- Family and people: 我家有四口人，爸爸、妈妈、哥哥和我。  Wǒ jiā yǒu sì kǒu rén, bàba, māma, gēge hé wǒ.  — There are four people in my family: Dad, Mom, my older brother and me.
-- Who: pronouns: 我们都是学生，他们是老师。  Wǒmen dōu shì xuésheng, tāmen shì lǎoshī.  — We are all students, and they are teachers.
-- This, that, which, where: 这是我的书，那是你的书。  Zhè shì wǒ de shū, nà shì nǐ de shū.  — This is my book, and that is your book.
-- Numbers: 这个手机三千零五十块。  Zhège shǒujī sān qiān líng wǔshí kuài.  — This phone is 3,050 yuan.
-- Amounts and measure words: 我想买一些水果。多少钱？  Wǒ xiǎng mǎi yìxiē shuǐguǒ. Duōshǎo qián?  — I want to buy some fruit. How much is it?
-- Time of day: 我早上七点起床，晚上十点睡觉。  Wǒ zǎoshang qī diǎn qǐchuáng, wǎnshang shí diǎn shuìjiào.  — I get up at seven in the morning and go to bed at ten in the evening.
-- Days and dates: 今天是星期天，我在家。  Jīntiān shì xīngqītiān, wǒ zài jiā.  — Today is Sunday, and I am at home.
-- At school: 学生在学校学习汉语。  Xuésheng zài xuéxiào xuéxí Hànyǔ.  — The students study Chinese at school.
-- Work and places: 我爸爸在公司工作，我妈妈在医院工作。  Wǒ bàba zài gōngsī gōngzuò, wǒ māma zài yīyuàn gōngzuò.  — My dad works at a company and my mom works at a hospital.
-- Food and drink: 我想喝水，不想吃米饭。  Wǒ xiǎng hē shuǐ, bù xiǎng chī mǐfàn.  — I want to drink water, and I don't want to eat rice.
-- Shopping and money: 这件衣服很贵，那件很便宜。  Zhè jiàn yīfu hěn guì, nà jiàn hěn piányi.  — This item of clothing is expensive, and that one is cheap.
-- At home: 我的手机在桌子上，电脑在房间里。  Wǒ de shǒujī zài zhuōzi shàng, diànnǎo zài fángjiān lǐ.  — My phone is on the table and my computer is in the room.
-- Getting around: 我坐出租车去学校，他坐火车回家。  Wǒ zuò chūzūchē qù xuéxiào, tā zuò huǒchē huí jiā.  — I take a taxi to school and he takes the train home.
-- Weather: 今天下雨，天气很冷。  Jīntiān xiàyǔ, tiānqì hěn lěng.  — It is raining today and the weather is cold.
-- Fun and feelings: 我喜欢看电影，也喜欢听歌。  Wǒ xǐhuan kàn diànyǐng, yě xǐhuan tīng gē.  — I like watching movies, and I like listening to songs too.
-- Health and daily routine: 我弟弟生病了，他想休息一下。  Wǒ dìdi shēngbìng le, tā xiǎng xiūxi yíxià.  — My younger brother is sick, and he wants to rest for a bit.
-- Describing things: 这个手机很新，非常好看。  Zhège shǒujī hěn xīn, fēicháng hǎokàn.  — This phone is very new and really nice-looking.
-- Everyday verbs: 我觉得这个菜很好吃，你觉得呢？  Wǒ juéde zhège cài hěn hǎochī, nǐ juéde ne?  — I think this dish is very tasty. What do you think?
-- Little words that build sentences: 我也想去，你呢？  Wǒ yě xiǎng qù, nǐ ne?  — I want to go too. What about you?
+- Greetings and manners: 你好！谢谢你，再见！  Nǐ hǎo! Xièxie nǐ, zàijiàn!  — Hello! Thank you, goodbye!
+- Pronouns: 他是我的朋友，她是我的同学，我们都很好。  Tā shì wǒ de péngyou, tā shì wǒ de tóngxué, wǒmen dōu hěn hǎo.  — He is my friend, she is my classmate, and we are all well.
+- This, that, here, there: 这个很好，那个太贵了。  Zhège hěn hǎo, nàge tài guì le.  — This one is good; that one is too expensive.
+- Question words: 你叫什么名字？你住在哪儿？  Nǐ jiào shénme míngzi? Nǐ zhù zài nǎr?  — What is your name? Where do you live?
+- Numbers: 我家有三口人，他八岁，她十岁。  Wǒ jiā yǒu sān kǒu rén, tā bā suì, tā shí suì.  — There are three people in my family; he is eight and she is ten.
+- How much and how many: 你有多少钱？我有一点儿。  Nǐ yǒu duōshǎo qián? Wǒ yǒu yìdiǎnr.  — How much money do you have? I have a little.
+- Measure words: 我买了三本书、两件衣服和一个苹果。  Wǒ mǎi le sān běn shū, liǎng jiàn yīfu hé yí ge píngguǒ.  — I bought three books, two items of clothing and an apple.
+- Names and introductions: 我叫小明，认识你很高兴。  Wǒ jiào Xiǎomíng, rènshi nǐ hěn gāoxìng.  — My name is Xiaoming; nice to meet you.
+- People: 这个人是我的朋友，那个小朋友是他的孩子。  Zhège rén shì wǒ de péngyou, nàge xiǎopéngyou shì tā de háizi.  — This person is my friend, and that child is his child.
+- Family: 我家有五口人：爸爸、妈妈、哥哥、姐姐和我。  Wǒ jiā yǒu wǔ kǒu rén: bàba, māma, gēge, jiějie hé wǒ.  — There are five people in my family: dad, mom, older brother, older sister and me.
+- Age and growing up: 我女儿八岁，她是小学生。  Wǒ nǚ'ér bā suì, tā shì xiǎoxuéshēng.  — My daughter is eight; she is a primary-school student.
+- Work and jobs: 我在公司工作，今天很忙。  Wǒ zài gōngsī gōngzuò, jīntiān hěn máng.  — I work at a company, and I am busy today.
+- Days, weeks and years: 今天是四月五日，明天是星期天。  Jīntiān shì sìyuè wǔ rì, míngtiān shì xīngqītiān.  — Today is April 5th, and tomorrow is Sunday.
+- Clock and time of day: 现在几点？现在是七点半。  Xiànzài jǐ diǎn? Xiànzài shì qī diǎn bàn.  — What time is it? It is half past seven.
+- When and how often: 你在做什么？我正在看电视。  Nǐ zài zuò shénme? Wǒ zhèngzài kàn diànshì.  — What are you doing? I am watching TV.
+- Food and meals: 我早饭吃面包，午饭吃米饭，晚饭吃饺子。  Wǒ zǎofàn chī miànbāo, wǔfàn chī mǐfàn, wǎnfàn chī jiǎozi.  — I eat bread for breakfast, rice for lunch and dumplings for dinner.
+- Drinks: 我喝茶，他喝牛奶，你喝水吗？  Wǒ hē chá, tā hē niúnǎi, nǐ hē shuǐ ma?  — I drink tea, he drinks milk; do you drink water?
+- Money and shopping: 这件衣服多少钱？太贵了，我想买便宜的。  Zhè jiàn yīfu duōshǎo qián? Tài guì le, wǒ xiǎng mǎi piányi de.  — How much is this piece of clothing? It is too expensive; I want to buy a cheaper one.
+- Clothes and accessories: 这件衣服很好看，你想穿吗？  Zhè jiàn yīfu hěn hǎokàn, nǐ xiǎng chuān ma?  — This piece of clothing is pretty; do you want to wear it?
+- Places around town: 我去商店买东西，也去书店看书。  Wǒ qù shāngdiàn mǎi dōngxi, yě qù shūdiàn kàn shū.  — I go to the shop to buy things, and I also go to the bookstore to read.
+- Directions and positions: 你的书在桌子上，我的手机在这里。  Nǐ de shū zài zhuōzi shàng, wǒ de shǒujī zài zhèlǐ.  — Your book is on the table, and my phone is here.
+- Coming and going: 我今天去学校，明天回家。  Wǒ jīntiān qù xuéxiào, míngtiān huí jiā.  — I go to school today and go home tomorrow.
+- Transport and tickets: 我坐出租车去，你坐火车去。  Wǒ zuò chūzūchē qù, nǐ zuò huǒchē qù.  — I go by taxi, and you go by train.
+- Travel and countries: 我想去中国玩，你呢？  Wǒ xiǎng qù Zhōngguó wán, nǐ ne?  — I want to go and have fun in China; what about you?
+- At home: 我家有三个房间，桌子和椅子在大房间里。  Wǒ jiā yǒu sān ge fángjiān, zhuōzi hé yǐzi zài dà fángjiān lǐ.  — My home has three rooms; the table and chairs are in the big room.
+- School: 我是大学生，我哥哥是中学生。  Wǒ shì dàxuéshēng, wǒ gēge shì zhōngxuéshēng.  — I am a university student, and my older brother is a middle-school student.
+- Studying and exams: 我学习汉语，我有很多问题。  Wǒ xuéxí Hànyǔ, wǒ yǒu hěn duō wèntí.  — I study Chinese, and I have many questions.
+- Chinese and writing: 我学汉语，会写一些汉字。  Wǒ xué Hànyǔ, huì xiě yìxiē hànzì.  — I study Chinese and can write some characters.
+- Phones and the internet: 我的手机在桌子上，请打电话给我。  Wǒ de shǒujī zài zhuōzi shàng, qǐng dǎ diànhuà gěi wǒ.  — My phone is on the table; please call me.
+- Daily routine: 我早上起床，晚上睡觉，中午吃饭。  Wǒ zǎoshang qǐchuáng, wǎnshang shuìjiào, zhōngwǔ chī fàn.  — I get up in the morning, go to bed in the evening and eat at noon.
+- Weather: 今天天气很冷，在下雨，明天会下雪。  Jīntiān tiānqì hěn lěng, zài xiàyǔ, míngtiān huì xià xuě.  — The weather is cold today and it is raining; it will snow tomorrow.
+- Animals and nature: 我家有一只狗和一只猫。  Wǒ jiā yǒu yì zhī gǒu hé yì zhī māo.  — My family has a dog and a cat.
+- Hobbies and fun: 你喜欢玩什么？  Nǐ xǐhuan wán shénme?  — What do you like to play?
+- Movies, music and TV: 我喜欢看电影，也喜欢听歌。  Wǒ xǐhuan kàn diànyǐng, yě xǐhuan tīng gē.  — I like watching movies, and I also like listening to songs.
+- Body and health: 他生病了，我们去医院看医生。  Tā shēngbìng le, wǒmen qù yīyuàn kàn yīshēng.  — He is ill, so we go to the hospital to see a doctor.
+- Feelings: 我很高兴，你也很高兴吗？  Wǒ hěn gāoxìng, nǐ yě hěn gāoxìng ma?  — I am very happy; are you happy too?
+- Thinking and knowing: 我知道，我觉得这个很好，我想买。  Wǒ zhīdào, wǒ juéde zhège hěn hǎo, wǒ xiǎng mǎi.  — I know; I think this one is good, and I want to buy it.
+- Everyday actions: 我在做饭，你可以开电视吗？  Wǒ zài zuòfàn, nǐ kěyǐ kāi diànshì ma?  — I am cooking; can you turn on the TV?
+- Seeing, hearing, speaking: 我看见他了，他说话，我听见了。  Wǒ kànjiàn tā le, tā shuōhuà, wǒ tīngjiàn le.  — I saw him; he spoke, and I heard it.
+- Size, length and speed: 这个大，那个小，这里的人很多。  Zhège dà, nàge xiǎo, zhèlǐ de rén hěn duō.  — This one is big, that one is small, and there are many people here.
+- Good, bad, right, wrong: 这个菜很好吃，这本书很新。  Zhège cài hěn hǎochī, zhè běn shū hěn xīn.  — This dish is very tasty, and this book is new.
+- Things and matters: 这些东西是我的，这件事我知道。  Zhèxiē dōngxi shì wǒ de, zhè jiàn shì wǒ zhīdào.  — These things are mine, and I know about this matter.
+- Be, have, be at: 我是学生，我有一个哥哥，他在家。  Wǒ shì xuésheng, wǒ yǒu yí ge gēge, tā zài jiā.  — I am a student, I have an older brother, and he is at home.
+- Can, want, may, don't: 我想去中国，我会说一点儿汉语，我能去吗？  Wǒ xiǎng qù Zhōngguó, wǒ huì shuō yìdiǎnr Hànyǔ, wǒ néng qù ma?  — I want to go to China; I can speak a little Chinese; may I go?
+- Not and don't: 我不想去，我没有时间，你不要问了。  Wǒ bù xiǎng qù, wǒ méiyǒu shíjiān, nǐ búyào wèn le.  — I do not want to go, and I have no time; you should not ask again.
+- Very, too, most: 今天太热了，我非常想喝水。  Jīntiān tài rè le, wǒ fēicháng xiǎng hē shuǐ.  — It is too hot today; I really want a drink of water.
+- And, also, all, together: 我和你都是学生，他也是。  Wǒ hé nǐ dōu shì xuésheng, tā yě shì.  — You and I are both students, and he is too.
+- To, from, than, with: 我给你一个苹果，你对我很好。  Wǒ gěi nǐ yí ge píngguǒ, nǐ duì wǒ hěn hǎo.  — I give you an apple; you are very good to me.
+- Little helper words: 你好吗？我很好，你呢？我们去吧。  Nǐ hǎo ma? Wǒ hěn hǎo, nǐ ne? Wǒmen qù ba.  — How are you? I am fine; and you? Let us go.
 
 ## 6. The 300 words: gloss and example
 
 | Word | Pinyin | Meaning shown | Example | Pinyin | English |
 |---|---|---|---|---|---|
 | 一 | yī | one | 我有一个哥哥。 | Wǒ yǒu yí ge gēge. | I have an older brother. |
-| 二 | èr | two (in counting, dates and numbers like 12) | 今天是二月二号。 | Jīntiān shì èr yuè èr hào. | Today is February 2nd. |
+| 二 | èr | two (in counting, dates and numbers like 12) | 今天是二月二号。 | Jīntiān shì èryuè èr hào. | Today is February 2nd. |
 | 两 | liǎng | two (before a measure word) | 我有两个朋友。 | Wǒ yǒu liǎng ge péngyou. | I have two friends. |
 | 三 | sān | three | 他家有三口人。 | Tā jiā yǒu sān kǒu rén. | There are three people in his family. |
 | 四 | sì | four | 现在四点。 | Xiànzài sì diǎn. | It is four o'clock now. |
@@ -979,9 +1008,9 @@ Examples:
 | 块 | kuài | yuan (the spoken word for money) | 一个苹果三块钱。 | Yí ge píngguǒ sān kuài qián. | One apple costs three yuan. |
 | 元 | yuán | yuan (the written word for money) | 这本书三十元。 | Zhè běn shū sānshí yuán. | This book is 30 yuan. |
 | 只 | zhī / zhǐ | zhī: measure word for animals. zhǐ: only | 我只有一只猫。 | Wǒ zhǐ yǒu yì zhī māo. | I only have one cat. |
-| 号 | hào | day of the month | 今天是十月三十号。 | Jīntiān shì shí yuè sānshí hào. | Today is October 30th. |
+| 号 | hào | day of the month | 今天是十月三十号。 | Jīntiān shì shíyuè sānshí hào. | Today is October 30th. |
 | 分 | fēn | minute on the clock | 现在是八点五十分。 | Xiànzài shì bā diǎn wǔshí fēn. | It is 8:50 now. |
-| 点 | diǎn | o'clock | 我七点起床。 | Wǒ qī diǎn qǐchuáng. | I get up at seven o'clock. |
+| 点 | diǎn | o'clock; also a dot or point, and (verb) to order a dish | 我七点起床。 | Wǒ qī diǎn qǐchuáng. | I get up at seven o'clock. |
 | 岁 | suì | years old | 我的女儿五岁。 | Wǒ de nǚ'ér wǔ suì. | My daughter is five years old. |
 | 一下 | yíxià | a bit, for a moment (after a verb) | 我问一下老师。 | Wǒ wèn yíxià lǎoshī. | I'll just ask the teacher. |
 | 小时 | xiǎoshí | hour | 我学习两个小时。 | Wǒ xuéxí liǎng ge xiǎoshí. | I study for two hours. |
@@ -1004,8 +1033,8 @@ Examples:
 | 星期 | xīngqī | week | 今天星期几？ | Jīntiān xīngqī jǐ? | What day of the week is it today? |
 | 星期天 | xīngqītiān | Sunday | 星期天我在家。 | Xīngqītiān wǒ zài jiā. | I am at home on Sunday. |
 | 星期日 | xīngqīrì | Sunday (a little more formal) | 我星期日不工作。 | Wǒ xīngqīrì bù gōngzuò. | I don't work on Sunday. |
-| 月 | yuè | month | 现在是十月。 | Xiànzài shì shí yuè. | It is October now. |
-| 日 | rì | day of the month (written) | 今天是五月一日。 | Jīntiān shì wǔ yuè yī rì. | Today is May 1st. |
+| 月 | yuè | month | 现在是十月。 | Xiànzài shì shíyuè. | It is October now. |
+| 日 | rì | day of the month (written) | 今天是五月一日。 | Jīntiān shì wǔyuè yī rì. | Today is May 1st. |
 | 年 | nián | year | 一年有十二个月。 | Yì nián yǒu shíèr ge yuè. | A year has twelve months. |
 | 天 | tiān | day (also: sky) | 我学习汉语三天了。 | Wǒ xuéxí Hànyǔ sān tiān le. | I have been studying Chinese for three days. |
 | 我 | wǒ | I, me, my | 我是学生。 | Wǒ shì xuésheng. | I am a student. |
@@ -1125,9 +1154,9 @@ Examples:
 | 外 | wài | outside | 他不在房间里，在房间外边。 | Tā bú zài fángjiān lǐ, zài fángjiān wàibian. | He is not in the room, he is outside it. |
 | 里 | lǐ | inside | 杯子里有水。 | Bēizi lǐ yǒu shuǐ. | There is water in the cup. |
 | 上 | shàng | on, above (also: to go up) | 书在桌子上。 | Shū zài zhuōzi shàng. | The book is on the table. |
-| 下 | xià | under, below (also: to go down) | 猫在桌子下边。 | Māo zài zhuōzi xià biān. | The cat is under the table. |
-| 前 | qián | front, before | 商店在学校前边。 | Shāngdiàn zài xuéxiào qián biān. | The shop is in front of the school. |
-| 后 | hòu | back, behind, after | 医院在学校后边。 | Yīyuàn zài xuéxiào hòu biān. | The hospital is behind the school. |
+| 下 | xià | under, below (also: to go down) | 猫在桌子下边。 | Māo zài zhuōzi xiàbian. | The cat is under the table. |
+| 前 | qián | front, before | 商店在学校前边。 | Shāngdiàn zài xuéxiào qiánbian. | The shop is in front of the school. |
+| 后 | hòu | back, behind, after | 医院在学校后边。 | Yīyuàn zài xuéxiào hòubian. | The hospital is behind the school. |
 | 边 | biān | side (as in 这边, 那边) | 我家在学校那边。 | Wǒ jiā zài xuéxiào nàbiān. | My home is over by the school. |
 | 是 | shì | to be | 你是中国人吗？ | Nǐ shì Zhōngguó rén ma? | Are you Chinese? |
 | 有 | yǒu | to have; there is | 桌子上有一本书。 | Zhuōzi shàng yǒu yì běn shū. | There is a book on the table. |

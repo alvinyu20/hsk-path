@@ -117,7 +117,7 @@ window.HSK2_LISTEN = {
   },
   {
    "zh": "他每天早上都跑步。",
-   "py": "Tā měi tiān zǎoshang dōu pǎobù.",
+   "py": "Tā měitiān zǎoshang dōu pǎobù.",
    "en": "He runs every morning.",
    "words": [
     {
@@ -126,14 +126,9 @@ window.HSK2_LISTEN = {
      "key": "ta"
     },
     {
-     "zh": "每",
-     "py": "měi",
-     "key": "mei"
-    },
-    {
-     "zh": "天",
-     "py": "tiān",
-     "key": "tian"
+     "zh": "每天",
+     "py": "měitiān",
+     "key": "meitian"
     },
     {
      "zh": "早上",
@@ -905,7 +900,7 @@ window.HSK2_LISTEN = {
   },
   {
    "zh": "今天是晴天，我们出去玩吧。",
-   "py": "Jīntiān shì qíng tiān, wǒmen chūqù wán ba.",
+   "py": "Jīntiān shì qíngtiān, wǒmen chūqù wán ba.",
    "en": "Today is sunny; let us go out and play.",
    "words": [
     {
@@ -919,14 +914,9 @@ window.HSK2_LISTEN = {
      "key": "shi"
     },
     {
-     "zh": "晴",
-     "py": "qíng",
-     "key": "qing"
-    },
-    {
-     "zh": "天",
-     "py": "tiān",
-     "key": "tian"
+     "zh": "晴天",
+     "py": "qíngtiān",
+     "key": "qingtian"
     },
     {
      "zh": "我们",

@@ -119,3 +119,8 @@ The Word web topics (content/topics.json) and the Grammar categories (content/ca
 4. Run `node tools/test-topics.js` and the content checks for every level, then look at Word webs and Grammar in All levels mode.
 5. Tell the learner what moved. Progress is saved by word and lesson id, so moving things between topics or categories does not lose progress (never rename a lesson id or a word).
 
+
+## Word boundaries in the pinyin (spacing)
+The pinyin engine knows the HSK lists plus `content/lexicon-words.tsv`: words written solid that are not on the lists (每天 měitiān, 前边 qiánbian, 外国人 wàiguórén, weekday and month names ...). Without an entry, a natural word outside the lists would be split per character (měi tiān) and learners copy that spacing. `tools/check-lexicon.py` fails when a noun, time, place or localizer word from the big dataset is split in a sentence and is in neither `lexicon-words.tsv` (written solid) nor `lexicon-split.tsv` (reviewed, stays split, with the reason). Verbs and adverbs (在家, 吃饭, 回家 ...) are not checked: whether they are one word is a matter of taste. The same list feeds the pinyin of the AI conversation (`data/lexicon.js`, built by `tools/build-lexicon.py`).
+- Decisions that were AI-made and not read by a teacher: the entries in both files; the neutral tone on 前边/后边/下边 (like 外边, 左边, 右边).
+- **Measure word 个** is shown with a neutral tone (`yí ge`, `liǎng ge`), as spoken after a number. Some textbooks print `gè`. Deliberate, not an oversight.

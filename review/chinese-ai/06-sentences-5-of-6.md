@@ -139,102 +139,102 @@ Sentences (Chinese / English):
 119. 你在那里做什么？  /  What are you doing there?
 120. 你的电话是多少？  /  What is your phone number?
 121. 你好！谢谢你，再见！  /  Hello! Thank you, goodbye!
-122. 我家有四口人，爸爸、妈妈、哥哥和我。  /  There are four people in my family: Dad, Mom, my older brother and me.
-123. 我们都是学生，他们是老师。  /  We are all students, and they are teachers.
-124. 这是我的书，那是你的书。  /  This is my book, and that is your book.
-125. 这个手机三千零五十块。  /  This phone is 3,050 yuan.
-126. 我想买一些水果。多少钱？  /  I want to buy some fruit. How much is it?
-127. 我早上七点起床，晚上十点睡觉。  /  I get up at seven in the morning and go to bed at ten in the evening.
-128. 今天是星期天，我在家。  /  Today is Sunday, and I am at home.
-129. 学生在学校学习汉语。  /  The students study Chinese at school.
-130. 我爸爸在公司工作，我妈妈在医院工作。  /  My dad works at a company and my mom works at a hospital.
-131. 我想喝水，不想吃米饭。  /  I want to drink water, and I don't want to eat rice.
-132. 这件衣服很贵，那件很便宜。  /  This item of clothing is expensive, and that one is cheap.
-133. 我的手机在桌子上，电脑在房间里。  /  My phone is on the table and my computer is in the room.
-134. 我坐出租车去学校，他坐火车回家。  /  I take a taxi to school and he takes the train home.
-135. 今天下雨，天气很冷。  /  It is raining today and the weather is cold.
-136. 我喜欢看电影，也喜欢听歌。  /  I like watching movies, and I like listening to songs too.
-137. 我弟弟生病了，他想休息一下。  /  My younger brother is sick, and he wants to rest for a bit.
-138. 这个手机很新，非常好看。  /  This phone is very new and really nice-looking.
-139. 我觉得这个菜很好吃，你觉得呢？  /  I think this dish is very tasty. What do you think?
-140. 我也想去，你呢？  /  I want to go too. What about you?
-141. 你好！你想喝什么？  /  Hello! What would you like to drink?
-142. 好的。你想喝热茶吗？  /  Okay. Would you like hot tea?
-143. 好的。你想吃东西吗？  /  Okay. Would you like something to eat?
-144. 好。十块钱。  /  Okay. Ten yuan.
-145. 不客气！再见！  /  You're welcome! Goodbye!
-146. 我想喝茶。  /  I would like some tea.
-147. 是的，我想喝热茶。  /  Yes, I'd like hot tea.
-148. 我不想吃东西，谢谢。  /  I don't want anything to eat, thanks.
-149. 好的，谢谢！  /  Okay, thank you!
-150. 你好！你叫什么名字？  /  Hello! What is your name?
-151. 认识你，我很高兴。你在哪里工作？  /  I am very glad to meet you. Where do you work?
-152. 我是医生。你喜欢你的工作吗？  /  I am a doctor. Do you like your work?
-153. 你的汉语很好！  /  Your Chinese is very good!
-154. 再见！  /  Goodbye!
-155. 我在公司工作。你呢？  /  I work at a company. And you?
-156. 我很喜欢。我也喜欢学习汉语。  /  I like it a lot. I also like studying Chinese.
-157. 谢谢！再见！  /  Thank you! Goodbye!
-158. 你好！你想买什么？  /  Hello! What would you like to buy?
-159. 这件很好看，一百块。  /  This one looks very nice. It is 100 yuan.
-160. 这件八十块。  /  This one is 80 yuan.
-161. 好的。谢谢！  /  Okay. Thank you!
-162. 太贵了。有便宜的吗？  /  That is too expensive. Is there a cheaper one?
-163. 好，我要这件。  /  Good, I'll take this one.
-164. 谢谢，再见！  /  Thank you, goodbye!
-165. 你好！你想去哪里？  /  Hello! Where would you like to go?
-166. 医院在学校那边。  /  The hospital is over by the school.
-167. 可以。你坐出租车吧。  /  Yes, you can. Take a taxi.
-168. 我可以坐出租车去吗？  /  Can I take a taxi there?
-169. 好，谢谢你！  /  Okay, thank you!
-170. 你好！你家有几口人？  /  Hello! How many people are in your family?
-171. 你有哥哥吗？  /  Do you have an older brother?
-172. 你哥哥做什么工作？  /  What does your older brother do?
-173. 你们家人都很好吧？  /  Your family are all well, right?
-174. 太好了！再见！  /  Great! Goodbye!
-175. 有，我有一个哥哥。  /  Yes, I have an older brother.
-176. 他在医院工作，他是医生。  /  He works at a hospital. He is a doctor.
-177. 是的，我们都很好。  /  Yes, we are all fine.
-178. 你好！你明天有时间吗？  /  Hello! Do you have time tomorrow?
-179. 我们去看电影吧！  /  Let's go and watch a movie!
-180. 下午三点，怎么样？  /  How about three o'clock in the afternoon?
-181. 在电影院见吧。  /  Let's meet at the cinema.
-182. 有，我明天下午有时间。  /  Yes, I have time tomorrow afternoon.
-183. 好，几点去？  /  Good, what time shall we go?
-184. 可以。在哪里见？  /  That works. Where shall we meet?
-185. 好，明天见！  /  Okay, see you tomorrow!
-186. 喂，你好！你是谁？  /  Hello! Who are you?
-187. 她不在家，她在公司工作。  /  She is not at home. She is at work.
-188. 她六点下班。  /  She finishes work at six.
-189. 喂，我是小明。你妈妈在家吗？  /  Hello, I am Xiaoming. Is your mom at home?
-190. 她几点下班？  /  What time does she finish work?
-191. 好，我六点再打电话。谢谢！  /  Okay, I'll call again at six. Thank you!
-192. 你好！今天天气怎么样？  /  Hello! How is the weather today?
-193. 对，太冷了！你想喝热茶吗？  /  Yes, it is so cold! Would you like some hot tea?
-194. 你喜欢冷的天气吗？  /  Do you like cold weather?
-195. 我也是！明天天气很好。  /  Me too! The weather will be very nice tomorrow.
-196. 今天很冷，也下雨了。  /  It is very cold today, and it is raining too.
-197. 好，我想喝热茶，谢谢。  /  Yes, I'd like some hot tea, thank you.
-198. 我不太喜欢冷的天气，我喜欢热的天气。  /  I don't like cold weather much. I like hot weather.
-199. 太好了！明天见！  /  Great! See you tomorrow!
-200. 请说慢一点。  /  Please speak a little slower.
-201. 请再说一遍。  /  Please say it one more time.
-202. 我想买一个杯子。  /  I want to buy a cup.
-203. 我七点起床。  /  I get up at seven.
-204. 她在学校学习汉语。  /  She studies Chinese at school.
-205. 天冷了。  /  It has turned cold.
-206. 我喝茶。  /  I drink tea.
-207. 哥哥吃鸡蛋。  /  My older brother eats eggs.
-208. 我们学习汉语。  /  We study Chinese.
-209. 爸爸晚上在家工作。  /  Dad works at home in the evening.
-210. 妈妈中午在家做饭。  /  Mom cooks at home at noon.
-211. 妹妹看电视。  /  My younger sister watches TV.
-212. 我在家吃饭。  /  I eat at home.
-213. 她不是老师。  /  She is not a teacher.
-214. 他是我哥哥。  /  He is my older brother.
-215. 他很高兴。  /  He is very happy.
-216. 这个房间不大。  /  This room is not big.
-217. 这个菜太好吃了！  /  This dish is so tasty!
-218. 我妈妈很忙。  /  My mom is very busy.
-219. 这个苹果真好吃！  /  This apple is really tasty!
-220. 他家有点小。  /  His home is a bit small.
+122. 他是我的朋友，她是我的同学，我们都很好。  /  He is my friend, she is my classmate, and we are all well.
+123. 这个很好，那个太贵了。  /  This one is good; that one is too expensive.
+124. 你叫什么名字？你住在哪里？  /  What is your name? Where do you live?
+125. 我家有三口人，他八岁，她十岁。  /  There are three people in my family; he is eight and she is ten.
+126. 你有多少钱？我有一点。  /  How much money do you have? I have a little.
+127. 我买了三本书、两件衣服和一个苹果。  /  I bought three books, two items of clothing and an apple.
+128. 我叫小明，认识你很高兴。  /  My name is Xiaoming; nice to meet you.
+129. 这个人是我的朋友，那个小朋友是他的孩子。  /  This person is my friend, and that child is his child.
+130. 我家有五口人：爸爸、妈妈、哥哥、姐姐和我。  /  There are five people in my family: dad, mom, older brother, older sister and me.
+131. 我女儿八岁，她是小学生。  /  My daughter is eight; she is a primary-school student.
+132. 我在公司工作，今天很忙。  /  I work at a company, and I am busy today.
+133. 今天是四月五日，明天是星期天。  /  Today is April 5th, and tomorrow is Sunday.
+134. 现在几点？现在是七点半。  /  What time is it? It is half past seven.
+135. 你在做什么？我正在看电视。  /  What are you doing? I am watching TV.
+136. 我早饭吃面包，午饭吃米饭，晚饭吃饺子。  /  I eat bread for breakfast, rice for lunch and dumplings for dinner.
+137. 我喝茶，他喝牛奶，你喝水吗？  /  I drink tea, he drinks milk; do you drink water?
+138. 这件衣服多少钱？太贵了，我想买便宜的。  /  How much is this piece of clothing? It is too expensive; I want to buy a cheaper one.
+139. 这件衣服很好看，你想穿吗？  /  This piece of clothing is pretty; do you want to wear it?
+140. 我去商店买东西，也去书店看书。  /  I go to the shop to buy things, and I also go to the bookstore to read.
+141. 你的书在桌子上，我的手机在这里。  /  Your book is on the table, and my phone is here.
+142. 我今天去学校，明天回家。  /  I go to school today and go home tomorrow.
+143. 我坐出租车去，你坐火车去。  /  I go by taxi, and you go by train.
+144. 我想去中国玩，你呢？  /  I want to go and have fun in China; what about you?
+145. 我家有三个房间，桌子和椅子在大房间里。  /  My home has three rooms; the table and chairs are in the big room.
+146. 我是大学生，我哥哥是中学生。  /  I am a university student, and my older brother is a middle-school student.
+147. 我学习汉语，我有很多问题。  /  I study Chinese, and I have many questions.
+148. 我学汉语，会写一些汉字。  /  I study Chinese and can write some characters.
+149. 我的手机在桌子上，请打电话给我。  /  My phone is on the table; please call me.
+150. 我早上起床，晚上睡觉，中午吃饭。  /  I get up in the morning, go to bed in the evening and eat at noon.
+151. 今天天气很冷，在下雨，明天会下雪。  /  The weather is cold today and it is raining; it will snow tomorrow.
+152. 我家有一只狗和一只猫。  /  My family has a dog and a cat.
+153. 你喜欢玩什么？  /  What do you like to play?
+154. 我喜欢看电影，也喜欢听歌。  /  I like watching movies, and I also like listening to songs.
+155. 他生病了，我们去医院看医生。  /  He is ill, so we go to the hospital to see a doctor.
+156. 我很高兴，你也很高兴吗？  /  I am very happy; are you happy too?
+157. 我知道，我觉得这个很好，我想买。  /  I know; I think this one is good, and I want to buy it.
+158. 我在做饭，你可以开电视吗？  /  I am cooking; can you turn on the TV?
+159. 我看见他了，他说话，我听见了。  /  I saw him; he spoke, and I heard it.
+160. 这个大，那个小，这里的人很多。  /  This one is big, that one is small, and there are many people here.
+161. 这个菜很好吃，这本书很新。  /  This dish is very tasty, and this book is new.
+162. 这些东西是我的，这件事我知道。  /  These things are mine, and I know about this matter.
+163. 我是学生，我有一个哥哥，他在家。  /  I am a student, I have an older brother, and he is at home.
+164. 我想去中国，我会说一点汉语，我能去吗？  /  I want to go to China; I can speak a little Chinese; may I go?
+165. 我不想去，我没有时间，你不要问了。  /  I do not want to go, and I have no time; you should not ask again.
+166. 今天太热了，我非常想喝水。  /  It is too hot today; I really want a drink of water.
+167. 我和你都是学生，他也是。  /  You and I are both students, and he is too.
+168. 我给你一个苹果，你对我很好。  /  I give you an apple; you are very good to me.
+169. 你好吗？我很好，你呢？我们去吧。  /  How are you? I am fine; and you? Let us go.
+170. 你好！你想喝什么？  /  Hello! What would you like to drink?
+171. 好的。你想喝热茶吗？  /  Okay. Would you like hot tea?
+172. 好的。你想吃东西吗？  /  Okay. Would you like something to eat?
+173. 好。十块钱。  /  Okay. Ten yuan.
+174. 不客气！再见！  /  You're welcome! Goodbye!
+175. 我想喝茶。  /  I would like some tea.
+176. 是的，我想喝热茶。  /  Yes, I'd like hot tea.
+177. 我不想吃东西，谢谢。  /  I don't want anything to eat, thanks.
+178. 好的，谢谢！  /  Okay, thank you!
+179. 你好！你叫什么名字？  /  Hello! What is your name?
+180. 认识你，我很高兴。你在哪里工作？  /  I am very glad to meet you. Where do you work?
+181. 我是医生。你喜欢你的工作吗？  /  I am a doctor. Do you like your work?
+182. 你的汉语很好！  /  Your Chinese is very good!
+183. 再见！  /  Goodbye!
+184. 我在公司工作。你呢？  /  I work at a company. And you?
+185. 我很喜欢。我也喜欢学习汉语。  /  I like it a lot. I also like studying Chinese.
+186. 谢谢！再见！  /  Thank you! Goodbye!
+187. 你好！你想买什么？  /  Hello! What would you like to buy?
+188. 这件很好看，一百块。  /  This one looks very nice. It is 100 yuan.
+189. 这件八十块。  /  This one is 80 yuan.
+190. 好的。谢谢！  /  Okay. Thank you!
+191. 太贵了。有便宜的吗？  /  That is too expensive. Is there a cheaper one?
+192. 好，我要这件。  /  Good, I'll take this one.
+193. 谢谢，再见！  /  Thank you, goodbye!
+194. 你好！你想去哪里？  /  Hello! Where would you like to go?
+195. 医院在学校那边。  /  The hospital is over by the school.
+196. 可以。你坐出租车吧。  /  Yes, you can. Take a taxi.
+197. 我可以坐出租车去吗？  /  Can I take a taxi there?
+198. 好，谢谢你！  /  Okay, thank you!
+199. 你好！你家有几口人？  /  Hello! How many people are in your family?
+200. 你有哥哥吗？  /  Do you have an older brother?
+201. 你哥哥做什么工作？  /  What does your older brother do?
+202. 你们家人都很好吧？  /  Your family are all well, right?
+203. 太好了！再见！  /  Great! Goodbye!
+204. 有，我有一个哥哥。  /  Yes, I have an older brother.
+205. 他在医院工作，他是医生。  /  He works at a hospital. He is a doctor.
+206. 是的，我们都很好。  /  Yes, we are all fine.
+207. 你好！你明天有时间吗？  /  Hello! Do you have time tomorrow?
+208. 我们去看电影吧！  /  Let's go and watch a movie!
+209. 下午三点，怎么样？  /  How about three o'clock in the afternoon?
+210. 在电影院见吧。  /  Let's meet at the cinema.
+211. 有，我明天下午有时间。  /  Yes, I have time tomorrow afternoon.
+212. 好，几点去？  /  Good, what time shall we go?
+213. 可以。在哪里见？  /  That works. Where shall we meet?
+214. 好，明天见！  /  Okay, see you tomorrow!
+215. 喂，你好！你是谁？  /  Hello! Who are you?
+216. 她不在家，她在公司工作。  /  She is not at home. She is at work.
+217. 她六点下班。  /  She finishes work at six.
+218. 喂，我是小明。你妈妈在家吗？  /  Hello, I am Xiaoming. Is your mom at home?
+219. 她几点下班？  /  What time does she finish work?
+220. 好，我六点再打电话。谢谢！  /  Okay, I'll call again at six. Thank you!

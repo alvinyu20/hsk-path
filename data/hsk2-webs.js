@@ -1818,7 +1818,7 @@ window.HSK2_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "下个星期五是我的生日。",
-    "py": "Xià ge xīngqī wǔ shì wǒ de shēngrì.",
+    "py": "Xià ge xīngqīwǔ shì wǒ de shēngrì.",
     "en": "Next Friday is my birthday."
    },
    "words": [
@@ -2131,7 +2131,7 @@ window.HSK2_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "我每天读书、写汉字，也学新词。",
-    "py": "Wǒ měi tiān dúshū, xiě hànzì, yě xué xīn cí.",
+    "py": "Wǒ měitiān dúshū, xiě hànzì, yě xué xīn cí.",
     "en": "Every day I read, write characters and learn new words."
    },
    "words": [
@@ -2148,7 +2148,7 @@ window.HSK2_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "我每天上网看电影，网上的东西很多。",
-    "py": "Wǒ měi tiān shàngwǎng kàn diànyǐng, wǎngshàng de dōngxi hěn duō.",
+    "py": "Wǒ měitiān shàngwǎng kàn diànyǐng, wǎngshàng de dōngxi hěn duō.",
     "en": "I go online to watch movies every day; there is a lot online."
    },
    "words": [
@@ -2165,7 +2165,7 @@ window.HSK2_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "昨天是阴天，今天是晴天。",
-    "py": "Zuótiān shì yīn tiān, jīntiān shì qíng tiān.",
+    "py": "Zuótiān shì yīntiān, jīntiān shì qíngtiān.",
     "en": "Yesterday was cloudy, and today is sunny."
    },
    "words": [

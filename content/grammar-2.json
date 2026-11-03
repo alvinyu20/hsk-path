@@ -238,10 +238,10 @@
    },
    {
     "t": "cloze",
-    "zh": "明天星期五。",
-    "en": "Tomorrow is Friday.",
+    "zh": "一个星期有七天。",
+    "en": "A week has seven days.",
     "blank": "星期",
-    "explain": "星期 + number gives the day of the week."
+    "explain": "星期 means week. 星期 + a number names the day: 星期五 is Friday."
    },
    {
     "t": "mc",

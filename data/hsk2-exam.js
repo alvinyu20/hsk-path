@@ -92,7 +92,7 @@ window.HSK2_EXAM = {
   {
    "pic": "🌧️",
    "zh": "今天是晴天。",
-   "py": "Jīntiān shì qíng tiān.",
+   "py": "Jīntiān shì qíngtiān.",
    "en": "Today is sunny.",
    "ok": false
   },
@@ -155,7 +155,7 @@ window.HSK2_EXAM = {
   {
    "pic": "☀️",
    "zh": "今天是晴天。",
-   "py": "Jīntiān shì qíng tiān.",
+   "py": "Jīntiān shì qíngtiān.",
    "en": "Today is sunny.",
    "ok": true
   },
@@ -448,7 +448,7 @@ window.HSK2_EXAM = {
       {
        "s": "男",
        "zh": "今天是晴天。",
-       "py": "Jīntiān shì qíng tiān.",
+       "py": "Jīntiān shì qíngtiān.",
        "en": "It is sunny today."
       }
      ],
@@ -505,13 +505,13 @@ window.HSK2_EXAM = {
       {
        "s": "男",
        "zh": "你每天做什么？",
-       "py": "Nǐ měi tiān zuò shénme?",
+       "py": "Nǐ měitiān zuò shénme?",
        "en": "What do you do every day?"
       },
       {
        "s": "女",
        "zh": "我每天上网。",
-       "py": "Wǒ měi tiān shàngwǎng.",
+       "py": "Wǒ měitiān shàngwǎng.",
        "en": "I go online every day."
       }
      ],
@@ -644,7 +644,7 @@ window.HSK2_EXAM = {
     },
     {
      "zh": "今天是晴天。",
-     "py": "Jīntiān shì qíng tiān.",
+     "py": "Jīntiān shì qíngtiān.",
      "en": "Today is sunny.",
      "ans": 3
     },
@@ -674,7 +674,7 @@ window.HSK2_EXAM = {
     },
     {
      "zh": "他每天上网。",
-     "py": "Tā měi tiān shàngwǎng.",
+     "py": "Tā měitiān shàngwǎng.",
      "en": "He goes online every day.",
      "ans": 1
     },
@@ -956,7 +956,7 @@ window.HSK2_EXAM = {
     {
      "s": "女",
      "zh": "十月八号。",
-     "py": "Shí yuè bā hào.",
+     "py": "Shíyuè bā hào.",
      "en": "The eighth of October."
     }
    ],
@@ -968,15 +968,15 @@ window.HSK2_EXAM = {
    "opts": [
     {
      "zh": "十月八号",
-     "py": "Shí yuè bā hào"
+     "py": "Shíyuè bā hào"
     },
     {
      "zh": "八月十号",
-     "py": "Bā yuè shí hào"
+     "py": "Bāyuè shí hào"
     },
     {
      "zh": "十月十八号",
-     "py": "Shí yuè shíbā hào"
+     "py": "Shíyuè shíbā hào"
     }
    ]
   },
@@ -1236,7 +1236,7 @@ window.HSK2_EXAM = {
     {
      "s": "女",
      "zh": "今天阴天，可能会下雨。",
-     "py": "Jīntiān yīn tiān, kěnéng huì xiàyǔ.",
+     "py": "Jīntiān yīntiān, kěnéng huì xiàyǔ.",
      "en": "It is overcast today and may rain."
     }
    ],
@@ -1248,11 +1248,11 @@ window.HSK2_EXAM = {
    "opts": [
     {
      "zh": "阴天",
-     "py": "Yīn tiān"
+     "py": "Yīntiān"
     },
     {
      "zh": "晴天",
-     "py": "Qíng tiān"
+     "py": "Qíngtiān"
     },
     {
      "zh": "下雨了",
@@ -1370,7 +1370,7 @@ window.HSK2_EXAM = {
     {
      "s": "男",
      "zh": "你每天都跑步吗？",
-     "py": "Nǐ měi tiān dōu pǎobù ma?",
+     "py": "Nǐ měitiān dōu pǎobù ma?",
      "en": "Do you run every day?"
     },
     {
@@ -1392,7 +1392,7 @@ window.HSK2_EXAM = {
     },
     {
      "zh": "每天跑",
-     "py": "Měi tiān pǎo"
+     "py": "Měitiān pǎo"
     },
     {
      "zh": "不喜欢跑步",
@@ -1754,7 +1754,7 @@ window.HSK2_EXAM = {
     {
      "s": "女",
      "zh": "下次坐地铁吧。",
-     "py": "Xià cì zuò dìtiě ba.",
+     "py": "Xiàcì zuò dìtiě ba.",
      "en": "Take the subway next time."
     }
    ],
@@ -2256,7 +2256,7 @@ window.HSK2_EXAM = {
   {
    "a": {
     "zh": "我每天都跑步。",
-    "py": "Wǒ měi tiān dōu pǎobù.",
+    "py": "Wǒ měitiān dōu pǎobù.",
     "en": "I run every day."
    },
    "b": {
@@ -2369,7 +2369,7 @@ window.HSK2_EXAM = {
     },
     {
      "zh": "今天是晴天。",
-     "py": "Jīntiān shì qíng tiān.",
+     "py": "Jīntiān shì qíngtiān.",
      "en": "Today is sunny."
     },
     {
@@ -2425,7 +2425,7 @@ window.HSK2_EXAM = {
     },
     {
      "zh": "十月八号。",
-     "py": "Shí yuè bā hào.",
+     "py": "Shíyuè bā hào.",
      "en": "The eighth of October."
     },
     {

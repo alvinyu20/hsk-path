@@ -2988,7 +2988,7 @@ window.HSK1_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "今天是四月五日，明天是星期天。",
-    "py": "Jīntiān shì sì yuè wǔ rì, míngtiān shì xīngqītiān.",
+    "py": "Jīntiān shì sìyuè wǔ rì, míngtiān shì xīngqītiān.",
     "en": "Today is April 5th, and tomorrow is Sunday."
    },
    "words": [

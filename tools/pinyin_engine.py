@@ -54,6 +54,14 @@ class Engine:
             for ch in z:
                 entries.setdefault(ch, 50)
         entries['你好'] = 10          # "你好吗" splits as 你 / 好 / 吗
+        # words written solid that are not on the HSK list (每天, 前边, 外国人 ...): content/lexicon-words.tsv
+        self.lex = {}
+        lp = os.path.join(C, 'lexicon-words.tsv')
+        if os.path.exists(lp):
+            for _, r in read_tsv(lp):
+                if r[0] and r[0] not in entries:
+                    self.lex[r[0]] = r[1] if len(r) > 1 else ''
+                    entries[r[0]] = 1000 * len(r[0]) ** 3 + 500
         tmp = tempfile.NamedTemporaryFile('w', suffix='.txt', delete=False, encoding='utf-8')
         for k, v in entries.items():
             tmp.write('%s %d\n' % (k, v))
@@ -65,6 +73,8 @@ class Engine:
     def word_py(self, z):
         if z in self.wpy:
             return self.wpy[z]
+        if self.lex.get(z):
+            return self.lex[z]
         return ''.join(lazy_pinyin(z, style=Style.TONE, v_to_u=True))
 
     def tokens(self, zh):

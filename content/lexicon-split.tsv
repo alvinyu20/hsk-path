@@ -1,0 +1,10 @@
+# Noun-type words from the big HSK dataset that look like one word but are deliberately written as separate words in our sentences.
+# tools/check-lexicon.py fails when a dataset noun/time/place word is split in a sentence and is in neither this file nor lexicon-words.tsv.
+# Format: word <TAB> reason
+个人	in 两个人 / 每个人 it is measure word 个 + 人, not 个人 (an individual)
+家里	noun + localizer, written separately (jiā lǐ)
+手里	noun + localizer, written separately (shǒu lǐ)
+冷水	adjective + noun, freely formed (lěng shuǐ)
+有人	verb + noun (there is someone), written yǒu rén
+不太	adverb 不 + 太, written bú tài (the dataset tags it as a name by mistake)
+穿着	verb + aspect particle 着, written chuān zhe
