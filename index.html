@@ -217,6 +217,14 @@
       <sc-if value="{{hasAiNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aiNote}}</div></sc-if>
     </section>
     <section class="card">
+      <h2 class="h2">Reviews</h2>
+      <p class="muted" style="margin:6px 0 0;font-size:16px">A word comes back when your chance of recalling it falls to this level. A lower level means fewer reviews but more forgetting.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"><sc-for list="{{retOpts}}" as="o" hint-placeholder-count="3"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for></div>
+      <div style="margin:16px 0 0;font-weight:600">Tones in typed answers</div>
+      <p class="muted" style="margin:6px 0 0;font-size:15.5px">Type pinyin with tone marks or numbers (nǐ hǎo or ni3 hao3). Tones count, because they are the hardest part. If you are just starting, you can make them optional for now.</p>
+      <div style="margin-top:10px"><button class="fc2 {{tonesCls}}" onClick="{{toggleTones}}">{{tonesLabel}}</button></div>
+    </section>
+    <section class="card">
       <h2 class="h2">Chinese voice</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">{{voiceIntro}}</p>
       <p class="muted" style="margin:10px 0 0;font-size:15.5px">On iPhone, download an Enhanced or Premium voice in Settings, Accessibility, Read &amp; Speak, Voices (it is called Spoken Content on older versions), then come back here and tap Refresh. Voices named Siri may not be offered to websites at all. If a voice you downloaded is missing from this list, your browser is not passing it on to websites.</p>
@@ -417,6 +425,7 @@
       </div>
       <sc-if value="{{hasRlast}}" hint-placeholder-val="{{ false }}"><div class="delta {{rlastCls}}">{{rlastText}}</div></sc-if>
 
+      <sc-if value="{{rIsFlip}}" hint-placeholder-val="{{ true }}">
       <div class="fc-wrap {{cardAnim}}">
         <div class="fc-inner {{flipCls}}">
           <div class="fc-face fc-front">
@@ -451,10 +460,12 @@
       </div>
 
       <div class="acts">
+        <sc-if value="{{rflip}}" hint-placeholder-val="{{ false }}">
         <button class="btn {{playWordCls}}" onClick="{{playWord}}">
           <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
           Hear the word
         </button>
+        </sc-if>
         <sc-if value="{{showAnswerBtn}}" hint-placeholder-val="{{ true }}"><button class="btn" onClick="{{toggleRpy}}">{{pyBtnText}}</button></sc-if>
         <sc-if value="{{rflip}}" hint-placeholder-val="{{ false }}">
           <button class="btn {{playExCls}}" onClick="{{playEx}}">
@@ -471,15 +482,66 @@
         </div>
         <button class="btn pri big" style="align-self:center" onClick="{{flip}}">Show answer</button>
       </sc-if>
-      <sc-if value="{{rflip}}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{rIsIntro}}" hint-placeholder-val="{{ false }}">
+        <p class="muted" style="margin:0;text-align:center">A new word. Look at it and say it out loud. A few cards from now you will be asked for it.</p>
+        <button class="btn pri big" style="align-self:center" onClick="{{rIntroDone}}">Got it, ask me soon</button>
+      </sc-if>
+      <sc-if value="{{rIsPlain}}" hint-placeholder-val="{{ true }}"><sc-if value="{{rflip}}" hint-placeholder-val="{{ false }}">
         <div class="rates">
           <sc-for list="{{rates}}" as="r" hint-placeholder-count="4">
             <button class="rate {{r.cls}}" onClick="{{r.fn}}"><b>{{r.label}}</b><span>{{r.hint}}</span></button>
           </sc-for>
         </div>
+      </sc-if></sc-if>
+      </sc-if>
+
+      <sc-if value="{{rIsAuto}}" hint-placeholder-val="{{ false }}">
+        <div class="q-card {{qAnim}}">
+          <div class="kick">{{q.kicker}}</div>
+          <h2 class="q-prompt">{{q.prompt}}</h2>
+          <sc-if value="{{q.hasBig}}" hint-placeholder-val="{{ true }}"><sc-if value="{{q.bigZh}}" hint-placeholder-val="{{ true }}"><div class="zh q-big {{q.bigCls}}">{{q.big}}</div></sc-if><sc-if value="{{q.bigEn}}" hint-placeholder-val="{{ false }}"><div class="q-big q-en">{{q.big}}</div></sc-if></sc-if>
+          <sc-if value="{{q.isTyped}}" hint-placeholder-val="{{ true }}">
+            <input id="answer-input" class="inp {{inpCls}}" type="text" value="{{qtyped}}" placeholder="{{q.placeholder}}" autocomplete="off" autocapitalize="off" aria-label="Your answer" onInput="{{onType}}" onKeyDown="{{onEnter}}">
+          </sc-if>
+          <sc-if value="{{q.isListen}}" hint-placeholder-val="{{ false }}">
+            <button class="listen {{listenCls}}" onClick="{{playQ}}" aria-label="Play the word">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+            </button>
+          </sc-if>
+          <sc-if value="{{q.isChoice}}" hint-placeholder-val="{{ false }}">
+            <div class="opts {{optsCls}}">
+              <sc-for list="{{opts}}" as="o" hint-placeholder-count="4">
+                <button class="opt {{o.cls}}" onClick="{{o.pick}}"><span class="{{o.lcls}}">{{o.label}}</span></button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+        <sc-if value="{{showCheck}}" hint-placeholder-val="{{ true }}">
+          <button class="btn pri big {{checkCls}}" style="align-self:flex-end" aria-disabled="{{checkAria}}" onClick="{{check}}">Check</button>
+        </sc-if>
+        <sc-if value="{{qchecked}}" hint-placeholder-val="{{ false }}">
+          <div class="fb {{fbCls}}">
+            <div class="fb-m">
+              <div class="fb-t">{{fbTitle}}</div>
+              <sc-if value="{{hasQfeed}}" hint-placeholder-val="{{ false }}"><div class="fb-x">{{qfeed}}</div></sc-if>
+              <div class="fb-s zh">{{q.reveal}}</div>
+              <div class="fb-x">{{q.explain}}</div>
+              <a class="report" href="{{q.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
+            </div>
+            <button class="btn ink big" onClick="{{next}}">Continue</button>
+          </div>
+        </sc-if>
       </sc-if>
     </sc-if>
 
+    <sc-if value="{{newWaiting}}" hint-placeholder-val="{{ false }}">
+      <div class="res">
+        <div class="stamp zh" aria-hidden="true">词</div>
+        <h2 class="res-h">New words are waiting</h2>
+        <p class="res-p">{{newWaitingText}}</p>
+        <div class="res-act"><button class="btn pri big" onClick="{{reviewMore}}">{{newWaitingBtn}}</button></div>
+      </div>
+    </sc-if>
     <sc-if value="{{emptyNew}}" hint-placeholder-val="{{ false }}">
       <div class="res">
         <div class="stamp zh" aria-hidden="true">词</div>
@@ -511,8 +573,9 @@
     <sc-if value="{{rcomplete}}" hint-placeholder-val="{{ false }}">
       <div class="res">
         <div class="stamp zh" aria-hidden="true">熟</div>
-        <h2 class="res-h">{{rtotal}} words reviewed</h2>
-        <p class="res-p">The words you rated Again will come back sooner. The rest move out to longer gaps.</p>
+        <h2 class="res-h">{{rtotal}} cards done</h2>
+        <p class="res-p">Words you missed will come back sooner. The rest move out to longer gaps.</p>
+        <sc-if value="{{hasCalib}}" hint-placeholder-val="{{ false }}"><p class="res-p">{{calText}}</p></sc-if>
         <div class="res-stats">
           <div class="stat"><b>{{rcounts.easy}}</b><span>Easy</span></div>
           <div class="stat"><b>{{rcounts.good}}</b><span>Good</span></div>
@@ -520,6 +583,7 @@
         </div>
         <span class="res-gain">{{memText}} ({{memToday}})</span>
         <div class="res-act">
+          <sc-if value="{{hasLrnMore}}" hint-placeholder-val="{{ false }}"><button class="btn pri big" onClick="{{reviewMore}}">{{lrnMoreText}}</button></sc-if>
           <sc-if value="{{hasMoreDue}}" hint-placeholder-val="{{ false }}"><button class="btn pri big" onClick="{{reviewMore}}">{{moreDueText}}</button></sc-if>
           <button class="btn big" onClick="{{goTest}}">Test these words</button>
           <button class="btn big" onClick="{{goHome}}">Back to home</button>
@@ -838,6 +902,7 @@
   <!-- WORD WEBS -->
   <sc-if value="{{isWeb}}" hint-placeholder-val="{{ false }}">
   <div class="web">
+    <sc-if value="{{lrnBanner}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status" style="margin-bottom:10px">{{lrnBannerText}} <button class="linkbtn" onClick="{{goLearn}}">Learn them now</button></div></sc-if>
     <div class="web-bar">
       <div class="seg2" role="group" aria-label="Word web type">
         <button class="{{wTopicCls}}" onClick="{{setWTopic}}">Topics</button>
@@ -1552,6 +1617,7 @@
           </div>
           <div class="fb-m">
             <div class="fb-t">{{fbTitle}}</div>
+            <sc-if value="{{hasQfeed}}" hint-placeholder-val="{{ false }}"><div class="fb-x">{{qfeed}}</div></sc-if>
             <div class="fb-s zh">{{q.reveal}}</div>
             <div class="fb-x">{{q.explain}}</div>
             <a class="report" href="{{q.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>

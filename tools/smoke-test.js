@@ -34,6 +34,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const url = 'http://127.0.0.1:' + server.address().port + '/';
   const browser = await chromium.launch({ args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'] });
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, acceptDownloads: true, permissions: ['microphone'] });
+  await ctx.addInitScript(() => { window.SHANLU_AUTO_SHARE = 0; });   // Review: no auto-checked recognition cards unless a test asks for them
   // A fake text-to-speech with the kinds of voices an iPhone lists, so the voice picker can be tested without a phone.
   await ctx.addInitScript((erhua) => {
     try { if (erhua && localStorage.getItem('shanlu-erhua') === null) localStorage.setItem('shanlu-erhua', 'on'); } catch (e) {}
@@ -81,7 +82,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
         for (let i = 0; i < n; i++) { if ((await tiles.nth(i).innerText()).trim() === t) { await tiles.nth(i).click(); break; } }
       }
     } else if (q.type === 'cloze' || q.type === 'type') {
-      await page.fill('#answer-input', right ? q.accepts[q.accepts.length - 1] : 'xx');
+      await page.fill('#answer-input', right ? (q.exp ? q.exp.py.split('/')[0].trim() : q.accepts[q.accepts.length - 1]) : 'xx');
     } else if (q.type === 'spot') {
       await page.locator('.tok').nth(right ? q.spot : (q.spot + 1) % q.tokens.length).click();
     } else if (q.type === 'mc' || q.type === 'listen') {
@@ -165,7 +166,10 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   // Word webs
   await nav('Word webs');
   check((await text()).includes('0 new words today') && !/\d+ of \d+ new words today/.test(await text()), 'word webs open with no daily limit');
+  const credit0 = await page.evaluate(() => { const S = window.shanlu.state; return JSON.stringify([S.xp, S.dayMin, S.streak, S.lastActive]); });
   for (let i = 0; i < 6; i++) { await page.locator('button', { hasText: 'Add to my words' }).first().click(); await page.waitForTimeout(50); }
+  check(await page.evaluate((c) => { const S = window.shanlu.state; return JSON.stringify([S.xp, S.dayMin, S.streak, S.lastActive]) === c; }, credit0), 'adding words earns no XP, minutes or streak: only recalling them does');
+  check(await page.evaluate(() => { const S = window.shanlu.state; return Object.keys(S.lrn).length === 6 && Object.keys(S.ws).every(z => !(S.ws[z].see.s > 0)); }), 'added words wait in their learning phase: none is "learned" or "in memory" yet');
   check((await text()).includes('6 new words today'), 'six words added with no limit in the way');
   check((await page.locator('button', { hasText: 'Add to my words' }).count()) > 0, 'add buttons are still there after six words');
   if (!(await page.locator('[aria-label="New words per day"]').count())) await page.locator('.capbtn').click();
@@ -176,7 +180,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForTimeout(80);
   check((await page.locator('button', { hasText: 'Add to my words' }).count()) > 0, 'choosing "No limit" brings the add buttons back');
   const before = await page.evaluate(() => Object.keys(window.shanlu.state.wlearned).length);
-  await page.locator('button', { hasText: /^Add all \d+ new word/ }).first().click();
+  await page.locator('button', { hasText: /^Add (all )?\d+( of \d+)? new word/ }).first().click();
   await page.waitForTimeout(80);
   const after = await page.evaluate(() => Object.keys(window.shanlu.state.wlearned).length);
   check(after > before + 1, 'Add all adds the rest of a shared-character group (' + before + ' to ' + after + ')');
@@ -235,10 +239,13 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForTimeout(60);
   check((await page.locator('.tc').first().innerText()).includes(tcEx), 'a topic card can show its word\'s example sentence (' + tcWord + ': ' + tcEx + ')');
   check(/\d+ of \d+ started/.test(await text()), 'a topic shows how many of its words you started');
-  await page.locator('button', { hasText: /^Add all \d+ new word/ }).first().click();
+  await page.evaluate(() => window.shanlu.setState({ lrn: {}, wlearned: {} }));
+  await page.waitForTimeout(80);
+  await page.locator('button', { hasText: /^Add (all )?\d+( of \d+)? new word/ }).first().click();
   await page.waitForTimeout(100);
   const tp = (await text()).match(/(\d+) of (\d+) started/);
-  check(tp && tp[1] === tp[2], 'Add all on a topic starts every word in it (' + (tp ? tp[0] : 'no progress text') + ')');
+  check(tp && Number(tp[1]) === Math.min(12, Number(tp[2])), 'Add on a topic puts its words in the learning phase, at most 12 waiting at once (' + (tp ? tp[0] : 'no progress text') + ')');
+  check(/Add 12 of \d+ new word|Add all \d+ new word/.test(await text()) || (await page.evaluate(() => Object.keys(window.shanlu.state.lrn).length)) === 12, 'the learning queue is capped at 12 words');
   await shot('03-topics');
   await page.locator('button', { hasText: 'Shared character' }).click();
   await page.locator('.opts .opt').first().click();
@@ -285,8 +292,39 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.fill('.wsearch', '');
   await shot('04-mywords');
 
-  // Review
+  // Review: new words go through a learning phase first
+  const driveCard = async (opts) => {
+    const o = Object.assign({ right: true }, opts || {});
+    const st = await page.evaluate(() => { const a = window.shanlu; const it = a.state.rq[0]; return { it, kind: a.rKind(it) }; });
+    if (st.kind === 'intro') { await page.locator('button', { hasText: 'Got it, ask me soon' }).click(); return st.kind; }
+    if (st.kind === 'flip') {
+      await page.locator('button', { hasText: 'Show answer' }).click();
+      await page.locator('.rates .rate').nth(o.right ? 2 : 0).click();
+      return st.kind;
+    }
+    const q = await page.evaluate(() => { const x = window.shanlu.quizQs[0]; return { type: x.type, correct: x.options && x.options.find(op => op.id === x.correct).label, py: x.exp && x.exp.py, wrong: x.options && x.options.find(op => op.id !== x.correct).label }; });
+    if (q.type === 'type') await page.fill('#answer-input', o.right ? q.py : 'zzz');
+    else await page.locator('.opts .opt', { hasText: o.right ? q.correct : q.wrong }).first().click();
+    await page.locator('button', { hasText: 'Check' }).click();
+    await page.locator('button', { hasText: 'Continue' }).click();
+    return st.kind;
+  };
   await nav('Review words');
+  check((await text()).includes('New words are waiting'), 'review offers the added words as new words waiting, not as due reviews');
+  const lrnN = await page.evaluate(() => Object.keys(window.shanlu.state.lrn).length);
+  await page.locator('button', { hasText: /^Learn \d+ new word/ }).click();
+  await page.waitForTimeout(100);
+  const firstKind = await page.evaluate(() => window.shanlu.rKind(window.shanlu.state.rq[0]));
+  check(firstKind === 'intro' && (await page.locator('.rates .rate').count()) === 0 && (await page.locator('button', { hasText: 'Got it, ask me soon' }).count()) === 1, 'a new word is first introduced (answer showing), with no grading buttons');
+  check((await page.locator('button', { hasText: 'Hear the word' }).count()) === 1, 'the introduction lets you hear the word');
+  const rtotal0 = await page.evaluate(() => window.shanlu.state.rq.length);
+  const lkinds = [];
+  for (let i = 0; i < lrnN * 6 && !(await text()).includes('cards done'); i++) lkinds.push(await driveCard());
+  check((await text()).includes('cards done') && lkinds.includes('intro') && lkinds.includes('choice') && lkinds.includes('type'), 'a new word goes intro, then a check it can fail, then typed recall, before the session ends (' + [...new Set(lkinds)].join(', ') + ')');
+  check(await page.evaluate((n) => { const S = window.shanlu.state; return Object.keys(S.lrn).length === 0 && Object.keys(S.ws).filter(z => S.ws[z].see.s > 0 && S.ws[z].prod.s > 0).length === n; }, lrnN), 'only after two recalls do the ' + lrnN + ' words get an interval and count in "words in memory"');
+  check(await page.evaluate(() => { const S = window.shanlu.state; return S.rlog.length >= 6 && S.rlog.every(e => e.length === 5); }), 'every answer is written to the review log');
+  await page.evaluate(() => window.shanlu.setState({ rcomplete: false, rq: [] }));
+  await nav('Home'); await nav('Review words');
   check((await text()).toLowerCase().includes('all caught up'), 'review shows caught up when nothing is due');
   await page.locator('button', { hasText: 'Practice all my words anyway' }).click();
   await page.waitForTimeout(100);
@@ -305,21 +343,20 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('.quick .rate').nth(1).click();
   await page.waitForTimeout(100);
   check((await page.evaluate(() => window.shanlu.state.rdone)) === 1 && !(await page.evaluate(() => window.shanlu.state.rflip)), 'Knew it rates the card without flipping it');
-  check((await page.locator('.fc-fpy').count()) === 1 && (await page.locator('button', { hasText: 'Hide pinyin' }).count()) === 1, 'the pinyin switch stays on for the next card');
-  await page.locator('button', { hasText: 'Hide pinyin' }).click();
-  check((await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-progress-v1')).rpy)) === false || true, 'pinyin switch saved');
+  check((await page.locator('.fc-fpy').count()) === 0 && (await page.locator('button', { hasText: 'Show pinyin' }).count()) === 1, 'the pinyin peek is for one card only: the next card starts with it hidden');
+  check((await page.locator('button', { hasText: 'Hear the word' }).count()) === 0, 'the word is not played before you answer (the sound would give away the tones)');
   await page.locator('.quick .rate').nth(0).click();
   await page.waitForTimeout(100);
   check((await page.evaluate(() => window.shanlu.state.rdone)) === 1 && (await page.evaluate(() => window.shanlu.state.rq.length)) === rqBefore - 1, 'Didn\'t know it sends the card to the back of the queue');
   await page.locator('button', { hasText: 'Show answer' }).click();
   await page.waitForTimeout(800);
   await shot('06-review-back');
-  for (let i = 0; i < practiceN + 3 && !(await text()).includes('words reviewed'); i++) {
+  for (let i = 0; i < practiceN + 3 && !(await text()).includes('cards done'); i++) {
     if (!(await page.locator('.rates .rate').count())) await page.locator('button', { hasText: 'Show answer' }).click();
     await page.locator('.rates .rate').nth(2).click();
     await page.waitForTimeout(60);
   }
-  check((await text()).includes('words reviewed'), 'review finishes');
+  check((await text()).includes('cards done'), 'review finishes');
   // make 100 words due: there is no cap, all 100 are in one round, in a jumbled order
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).slice(0, 100).forEach(zh => { ws[zh].see = { s:1, l:5 }; }); app.setState({ ws, rq:[], rcomplete:false }); window.__listOrder = Object.keys(ws).slice(0, 100); });
   await nav('Review words');
@@ -703,7 +740,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     return { a, b, rq: app.state.rq.slice() };
   });
   check(timeCheck.rq.includes(timeCheck.a) && !timeCheck.rq.includes(timeCheck.b), 'a word becomes due as real days pass (reviewed 3 days ago is due, just now is not)');
-  // a listening-test answer starts the "hear" timer, which Review never resets: it must not keep a freshly reviewed word due
+  // a listening answer starts the "hear" timer: when it is overdue it comes back as an audio card of its own
   const hearCheck = await page.evaluate(() => {
     const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws));
     const keys = Object.keys(ws); const a = keys[20], b = keys[21], c = keys[22];
@@ -716,7 +753,71 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     app.reviewMore();
     return { a, b, c, rq: app.state.rq.slice() };
   });
-  check(!hearCheck.rq.includes(hearCheck.a) && hearCheck.rq.includes(hearCheck.b) && hearCheck.rq.includes(hearCheck.c), 'an old listening answer does not keep a reviewed word due; overdue words still are');
+  check(!hearCheck.rq.includes(hearCheck.a) && hearCheck.rq.includes(hearCheck.a + '#h') && hearCheck.rq.includes(hearCheck.b) && hearCheck.rq.includes(hearCheck.c + '#h'), 'every skill has its own timer: an overdue listening answer comes back as an audio card, not as a recognition card');
+  // typed pinyin: tones count, with feedback that says what was right
+  const cp = (inp, py, opt) => page.evaluate(([i, p, o]) => { const r = window.shanlu.testApi.comparePinyin(i, p, o); return { ok: r.ok, grade: r.grade, note: r.note }; }, [inp, py, !!opt]);
+  check((await cp('nǐ hǎo', 'nǐ hǎo')).ok && (await cp('ni3 hao3', 'nǐ hǎo')).ok && (await cp('ni3hao3', 'nǐ hǎo')).ok && (await cp('Nǐ Hǎo', 'nǐ hǎo')).ok, 'tone marks or tone numbers are both accepted, with or without spaces');
+  const noTone = await cp('ni hao', 'nǐ hǎo');
+  check(!noTone.ok && noTone.grade === 'hard' && /tones count/.test(noTone.note), 'a toneless answer is not marked right, and says the tones count');
+  check((await cp('ni hao', 'nǐ hǎo', true)).ok, 'with "tones optional" on, a toneless answer is accepted');
+  const wrongTone = await cp('ni4 hao3', 'nǐ hǎo');
+  check(!wrongTone.ok && wrongTone.grade === 'hard' && /wrong tone/.test(wrongTone.note) && wrongTone.note.includes('nǐ hǎo'), 'right sounds with a wrong tone get partial feedback and the right answer');
+  check((await cp('ni2 hao3', 'nǐ hǎo')).ok, 'the spoken 3+3 -> 2+3 change is accepted too');
+  check((await cp('xie4xie', 'xièxie')).ok && (await cp('xie4xie5', 'xièxie')).ok && (await cp('xie4 xie4', 'xièxie')).grade === 'hard', 'neutral tones: the unmarked syllable may be written plainly or with 5');
+  check((await cp('nv3', 'nǚ')).ok && (await cp('nü3', 'nǚ')).ok && (await cp('nu3', 'nǚ')).ok, 'ü may be written v, ü or u');
+  check((await cp('shui', 'shéi')).grade === 'again' || (await cp('chi1', 'shéi')).grade === 'again', 'different sounds are simply wrong');
+  // the scheduler: a lapse then a same-session relearn does not inflate the interval; more difficulty grows slower; desired retention moves due dates
+  const sched = await page.evaluate(() => {
+    const T = window.shanlu.testApi; const now = Date.now();
+    const d90 = { s: 90, l: 0, t: now - 90 * 864e5, d: 5 };
+    const lapse = T.bump(d90, 'again');
+    const relearn = T.bump(lapse, 'good', { relearn: true });
+    const grown = T.bump({ s: 10, l: 0, t: now - 10 * 864e5, d: 5 }, 'good');
+    const hard = T.bump({ s: 10, l: 0, t: now - 10 * 864e5, d: 9 }, 'good');
+    const easy = T.bump({ s: 10, l: 0, t: now - 10 * 864e5, d: 2 }, 'good');
+    return { lapse: lapse.s, relearn: relearn.s, grown: grown.s, hard: hard.s, easy: easy.s, dLapse: lapse.d };
+  });
+  check(sched.lapse === 6 && sched.relearn === 6, 'a word forgotten at 90 days comes back after about 6 days, and relearning in the same session does not make it jump (' + sched.lapse + ' then ' + sched.relearn + ')');
+  check(sched.hard < sched.grown && sched.grown < sched.easy && sched.dLapse > 5, 'a harder card grows its interval more slowly than an easy one, and a lapse makes a card harder');
+  const ret = await page.evaluate(() => {
+    const app = window.shanlu; const T = app.testApi; const zh = Object.keys(app.state.ws)[5]; const now = Date.now();
+    const ws = JSON.parse(JSON.stringify(app.state.ws)); ws[zh].see = { s: 10, l: 0, t: now - 12 * 864e5, d: 5 };
+    const due = (r) => { app.setRetention(r); return T.buildQueue(ws, false, {}).includes(zh); };
+    const out = { at90: due(0.9), at80: due(0.8), k80: T.retK() }; app.setRetention(0.9); return out;
+  });
+  check(ret.at90 && !ret.at80 && ret.k80 > 2 && ret.k80 < 2.6, 'a lower desired retention spaces reviews further apart: 12 days after a review a word is due at 90% but not at 80%');
+  // Review cards of the other kinds, checked for you and written to the log
+  await page.evaluate(() => { window.SHANLU_AUTO_SHARE = 100; });
+  const mk = await page.evaluate(() => {
+    const app = window.shanlu; const keys = Object.keys(app.state.ws).slice(30, 36); const now = Date.now(); const ws = JSON.parse(JSON.stringify(app.state.ws));
+    keys.forEach(z => { ws[z] = { see: { s: 3, l: 0, t: now - 5 * 864e5, d: 5 }, hear: { s: 3, l: 0, t: now - 5 * 864e5, d: 5 }, prod: { s: 3, l: 0, t: now - 5 * 864e5, d: 5 } }; });
+    app.setState({ ws, rq: [], rcomplete: false, lrn: {}, rlog: [], screen: 'review' }); app.reviewMore();
+    return { n: app.state.rq.length, items: app.state.rq.slice(), keys };
+  });
+  check(mk.items.some(i => i.endsWith('#p')) && mk.items.some(i => i.endsWith('#h')) && mk.items.some(i => !i.includes('#')), 'a word due in every skill gives a recognition card, a saying card and an audio card');
+  await page.waitForTimeout(150);
+  const seen = {};
+  for (let i = 0; i < 40 && (await page.evaluate(() => window.shanlu.state.rq.length)) > 0; i++) {
+    const info = await page.evaluate(() => { const a = window.shanlu; return { it: a.state.rq[0], kind: a.rKind(a.state.rq[0]) }; });
+    seen[info.kind] = true;
+    if (info.kind === 'type') {   // first without tones: close but not right; then right
+      await page.fill('#answer-input', await page.evaluate(() => window.shanlu.quizQs[0].exp.py.replace(/[^a-züǖ\s]/gi, (c) => c.normalize('NFD').replace(/[̀-ͯ]/g, ''))));
+      await page.locator('button', { hasText: 'Check' }).click();
+      const fb = await page.locator('.fb').innerText();
+      if (!seen.noTone) { seen.noTone = /close/i.test(fb) && /tones count/i.test(fb); }
+      await page.locator('button', { hasText: 'Continue' }).click();
+    } else { await driveCard(); }
+  }
+  check(seen.choice && seen.audio && seen.type, 'Review mixes checked-for-you cards: choice, audio and typed (' + Object.keys(seen).join(', ') + ')');
+  check(seen.noTone === true, 'a typed answer without tones is "Close" with a note that tones count');
+  const lg = await page.evaluate(() => window.shanlu.state.rlog.map(e => e[4] + e[2]));
+  check(lg.some(x => x === 'cs') && lg.some(x => x === 'ah') && lg.some(x => x === 'tp'), 'the log records the kind of card and the skill (' + [...new Set(lg)].join(' ') + ')');
+  await page.evaluate(() => { window.SHANLU_AUTO_SHARE = 0; });
+  // the honesty check compares self-ratings with the cards that were checked for you
+  await page.evaluate(() => { const app = window.shanlu; const t = Date.now(); const log = []; for (let i = 0; i < 10; i++) log.push([t + i, 'w', 's', 'g', 'f']); for (let i = 0; i < 10; i++) log.push([t + 20 + i, 'w', 's', i < 4 ? 'g' : 'a', 'c']); app.setState({ rlog: log, rcomplete: true, rq: [] }); });
+  await nav('Review words');
+  check((await text()).includes('Honesty check') && (await text()).includes('marked 100% of your flip cards') && (await text()).includes('got 40% right') && (await text()).includes('a little generous'), 'the finished screen compares your self-ratings with your checked answers');
+  await page.evaluate(() => window.shanlu.setState({ rcomplete: false, rq: [], rlog: [] }));
   // the daily goal offers "Learn new words" only while some words are not started
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).forEach(z => { ws[z].see = { s: 3, l: 0, t: Date.now() }; ws[z].prod = { s: 3, l: 0, t: Date.now() }; }); app.setState({ ws, rq: [], rcomplete: false, webCredited: false, screen: 'home' }); });
   await page.waitForTimeout(200);

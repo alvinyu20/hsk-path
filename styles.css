@@ -841,3 +841,6 @@ button.scn:hover .scn-m{text-decoration:underline}
 .fravs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 .fravs .fav.done{box-shadow:0 0 0 2px var(--jade)}
 .fravs .fav.idle{opacity:.5}
+
+.q-en{font-size:30px;font-weight:600;text-align:center;line-height:1.25;margin:8px 0}
+.rev .q-card{max-width:640px;margin:0 auto;width:100%}

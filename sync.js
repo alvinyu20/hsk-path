@@ -8,7 +8,7 @@
   const DIMS = ['see', 'hear', 'prod'];
   // progress that is merged between devices; device preferences (theme, voice, hint switches, daily goal, new-word limit) stay local
   const SYNC_KEYS = ['xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'clipBest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone', 'exams', 'aiDays', 'minLog', 'minDev'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone', 'exams', 'aiDays', 'minLog', 'minDev', 'lrn', 'rlog'];
   const FILE = 'shanlu-progress.json';   // HSK 1 progress (the original file name)
   const fileFor = (level) => (level > 1 ? 'shanlu-progress-hsk' + level + '.json' : FILE);   // each level keeps its own file in the same gist
   const DESCRIPTION = 'Shanlu study progress (private; do not delete)';
@@ -63,6 +63,18 @@
     out.exams = (a.exams || []).concat(b.exams || []).filter(h => { const id = JSON.stringify(h); if (seenE[id]) return false; seenE[id] = true; return true; })
       .sort((x, y) => (x.at || 0) - (y.at || 0)).slice(-20);
     out.aiDays = maxObj(a.aiDays, b.aiDays);
+    // new words in their learning phase: the further along entry wins; a word that is now started (recalled and graduated on any device) is no longer in it
+    out.lrn = {};
+    Object.keys(Object.assign({}, a.lrn || {}, b.lrn || {})).forEach(z => {
+      const x = (a.lrn || {})[z], y = (b.lrn || {})[z];
+      const pick = !x ? y : !y ? x : ((x.st || 0) !== (y.st || 0) ? ((x.st || 0) > (y.st || 0) ? x : y) : ((x.at || 0) >= (y.at || 0) ? x : y));
+      const w = out.ws[z];
+      if (pick && !(w && w.see && w.see.s > 0)) out.lrn[z] = pick;
+    });
+    // every answer ever given (compact tuples [time, word, skill, grade, kind]): the union, newest 800 kept
+    const seenR = {};
+    out.rlog = (a.rlog || []).concat(b.rlog || []).filter(e => { if (!Array.isArray(e)) return false; const id = e[0] + '|' + e[1] + '|' + e[2]; if (seenR[id]) return false; seenR[id] = true; return true; })
+      .sort((x, y) => (x[0] - y[0]) || (x[1] < y[1] ? -1 : x[1] > y[1] ? 1 : 0)).slice(-800);
     // minutes studied each day: the larger number of the two devices wins (the same minutes are never counted twice); only the last 60 days are kept
     out.minLog = maxObj(a.minLog, b.minLog);
     Object.keys(out.minLog).sort().slice(0, -60).forEach(k => { delete out.minLog[k]; });

@@ -83,6 +83,13 @@ function fakeGithub() {
   check(S.dayMinutes({ minLog: { '2026-11-01': 9 } }, '2026-11-01') === 9 && S.dayMinutes({}, '2026-11-01') === 0, 'older saves without per-device numbers still count');
   const many = {}; for (let i = 1; i <= 80; i++) many['2026-01-' + String(i).padStart(2, '0')] = { d: i };
   check(Object.keys(S.merge({ minDev: many }, {}).minDev).length === 60, 'only the last 60 days of minutes are kept');
+  // words in their learning phase and the review log
+  const ma = S.merge({ ws: { 你好: { see: { s: 0, l: 0 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } } }, lrn: { 你好: { st: 0, m: 0, at: 5 }, 谢谢: { st: -1, m: 0, at: 6 } }, rlog: [[10, '你好', 's', 'g', 'c']] },
+    { ws: { 你好: { see: { s: 1.5, l: 0, t: 20 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } } }, lrn: { 谢谢: { st: 1, m: 0, at: 4 } }, rlog: [[10, '你好', 's', 'g', 'c'], [20, '你好', 'p', 'a', 't']] });
+  check(!ma.lrn['你好'] && ma.lrn['谢谢'].st === 1, 'a word that graduated on one device leaves the learning phase on both; the further-along entry wins');
+  check(ma.rlog.length === 2 && S.same(S.merge(ma, ma), ma), 'the review log merges as a union without duplicates');
+  const bigLog = []; for (let i = 0; i < 900; i++) bigLog.push([i, 'w', 's', 'g', 'f']);
+  check(S.merge({ rlog: bigLog }, {}).rlog.length === 800, 'only the newest 800 answers are kept');
   // the person's own settings and notes (follow them to every device)
   const T = Date.now();
   const pA = { prefs: { voiceOnly: { v: true, at: T - 1000 }, ttsVoice: { v: 'Cherry', at: T - 500 } }, lsn: { v: { lvl: 2, ok: 1, miss: 0 }, at: T - 400 },

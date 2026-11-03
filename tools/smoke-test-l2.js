@@ -81,7 +81,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
         for (let i = 0; i < n; i++) { if ((await tiles.nth(i).innerText()).trim() === t) { await tiles.nth(i).click(); break; } }
       }
     } else if (q.type === 'cloze' || q.type === 'type') {
-      await page.fill('#answer-input', right ? q.accepts[q.accepts.length - 1] : 'xx');
+      await page.fill('#answer-input', right ? (q.exp ? q.exp.py.split('/')[0].trim() : q.accepts[q.accepts.length - 1]) : 'xx');
     } else if (q.type === 'spot') {
       await page.locator('.tok').nth(right ? q.spot : (q.spot + 1) % q.tokens.length).click();
     } else if (q.type === 'mc' || q.type === 'listen') {

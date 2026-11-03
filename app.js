@@ -150,7 +150,7 @@
   // speaking and listening progress (SPLIT) is read from and written back to each level's own save, so every view shows the same progress.
   const storeKey = (n) => (n === 1 ? 'shanlu-progress-v1' : 'shanlu-progress-v1-l' + n);
   const KEY = ALL ? 'shanlu-progress-v1-all' : storeKey(LV);
-  const SPLIT = ['ws', 'misses', 'gres', 'sres', 'clipBest'];
+  const SPLIT = ['ws', 'misses', 'gres', 'sres', 'clipBest', 'lrn', 'rlog'];
   const LESSON_ALIAS = { 2:{ modal:'modal2' } };   // an HSK 2 lesson id that used to clash with an HSK 1 id
 
   const SYS = {
@@ -170,16 +170,27 @@
   const wMastery = (w) => Math.round(DIMS.reduce((a, k) => a + mast(w[k]), 0) / 3);
   const levelOf = (m) => (m <= 0 ? 'new' : m < 30 ? 'learning' : m < 55 ? 'familiar' : m < 80 ? 'strong' : 'mastered');
   const LEVEL_LABEL = { new:'New', learning:'Learning', familiar:'Familiar', strong:'Strong', mastered:'Mastered' };
-  const bump = (d, r) => {
+  // How sure the site wants to be before a word comes back: it returns when the recall chance falls to this. 90% by default; 85% or 80%
+  // means fewer reviews and more forgetting. A word's interval in days is its stability times retK (1.0 at 90%). A person's setting: it follows them.
+  const retention = () => { const r = Number(prefGet('retention', 0.9)); return r >= 0.75 && r <= 0.95 ? r : 0.9; };
+  const retK = () => (1 / (retention() * retention()) - 1) * 81 / 19;
+  const dueIn = (d, off) => d.s * retK() - lOf(d) - (off || 0);
+  // One answer changes a skill's stability (s) and its difficulty (d, 1 to 10, starts at 5). The growth factors and the lapse rule are hand-set, not fitted.
+  // o.relearn: the card is being answered again in the same session after a lapse. That is relearning, so the stability does not grow
+  // (before this, a word forgotten at 90 days came back at 31 days and then jumped to 50 days after one Good).
+  const bump = (d, r, o) => {
     const R = retr(d);
-    let s = d.s;
-    if (r === 'again') s = s > 0 ? Math.max(0.4, s * 0.35) : 0.4;
-    else if (r === 'hard') s = s > 0 ? Math.max(0.8, s * 1.25) : 1;
-    else if (r === 'good') s = s > 0 ? s * (1.6 + 1.4 * (1 - R)) : 1.5;
-    else s = s > 0 ? s * (2.2 + 1.8 * (1 - R)) : 3;
-    return { s, l:0, t:Date.now() };
+    const dif = d.d || 5;
+    const grow = (f) => 1 + (f - 1) * Math.max(0.5, 1.3 - 0.06 * dif);   // harder cards grow more slowly, easier ones a little faster
+    let s = d.s, nd = dif;
+    if (r === 'again') { s = s > 0 ? Math.max(0.4, Math.min(s * 0.35, 6)) : 0.4; nd = Math.min(10, dif + 0.8); }
+    else if (o && o.relearn) { nd = dif; }
+    else if (r === 'hard') { s = s > 0 ? Math.max(0.8, s * grow(1.25)) : 1; nd = Math.min(10, dif + 0.3); }
+    else if (r === 'good') { s = s > 0 ? s * grow(1.6 + 1.4 * (1 - R)) : 1.5; nd = dif + (5 - dif) * 0.05; }
+    else { s = s > 0 ? s * grow(2.2 + 1.8 * (1 - R)) : 3; nd = Math.max(1, dif - 0.5); }
+    return { s, l:0, t:Date.now(), d:Math.round(nd * 100) / 100 };
   };
-  const fmtInterval = (s) => (s < 1 ? 'Today' : s < 1.5 ? 'Tomorrow' : s < 45 ? 'In ' + Math.round(s) + ' days' : 'In ' + Math.round(s / 30) + ' months');
+  const fmtInterval = (s) => { const d = s * retK(); return d < 1 ? 'Today' : d < 1.5 ? 'Tomorrow' : d < 45 ? 'In ' + Math.round(d) + ' days' : 'In ' + Math.round(d / 30) + ' months'; };
 
   const BANK = {};
   const EX = {};
@@ -202,11 +213,8 @@
     const m = wMastery(w);
     const lv = levelOf(m);
     const recall = started.length ? Math.round(100 * started.reduce((a, k) => a + retr(w[k], off), 0) / started.length) : 0;
-    // A word is due when a skill that Review practises (see, prod) is due. "hear" is only refreshed by listening-test questions, so it must not
-    // keep a word due after you have reviewed it; it counts only for a word that has no see/prod timer yet.
-    const dueDims = started.filter(k => k !== 'hear');
-    const dueFrom = dueDims.length ? dueDims : started;
-    const dueN = started.length ? Math.min.apply(null, dueFrom.map(k => w[k].s - lOf(w[k]) - off)) : 9999;
+    // A word is due when any of its skills is due: recognising it (see), saying it (prod) or hearing it (hear); Review practises all three.
+    const dueN = started.length ? Math.min.apply(null, started.map(k => dueIn(w[k], off))) : 9999;
     let due = 'Not started';
     if (started.length) due = dueN <= 0 ? 'Due now' : (dueN < 1.5 ? 'Due tomorrow' : (dueN < 60 ? 'Due in ' + Math.round(dueN) + ' days' : 'Due in ' + Math.round(dueN / 30) + ' months'));
     return {
@@ -218,13 +226,31 @@
     };
   };
 
-  // Review queue: every word that is due, with no cap. The weakest words tend to come first, but the order is jumbled (a random nudge
-  // on each word's recall) so words that were learned together do not come back in list order. "anyway" is every started word.
-  const buildQueue = (ws, anyway) => {
-    const rows = Object.keys(ws).map(zh => ({ zh, info:winfo(ws[zh], 0) })).filter(r => r.info.started);
-    rows.forEach(r => { r.key = r.info.recallN + Math.random() * 30; });
-    rows.sort((a, b) => a.key - b.key);
-    return (anyway ? rows : rows.filter(r => r.info.dueN <= 0)).map(r => r.zh);
+  // Review queue. Each item is one card: 'zh' recognise it, 'zh#p' produce it (type it with tones), 'zh#h' hear it, 'zh#l' a new word in its
+  // learning phase. Every skill has its own timer, so a word can be due as one card and not as another. New words come first; then everything due,
+  // weakest first but jumbled (a random nudge) so words learned together do not come back in list order. Saying and hearing cards are capped at
+  // half the recognition cards (at least 3), so adding two directions does not double the pile in one day; the rest stay due for next time.
+  const LRN_MAX = 12;       // new words waiting in their learning phase at once; add more after these are learned
+  const LEARN_STEPS = 2;    // successful recalls (after meeting the word) before it gets a real interval
+  const itemOf = (it) => { const m = /^(.*?)(?:#([lph]))?$/.exec(String(it)); return { zh:m[1], t:m[2] || 's' }; };
+  const buildQueue = (ws, anyway, lrn) => {
+    const fresh = Object.keys(lrn || {}).filter(zh => ws[zh] && !(ws[zh].see.s > 0)).map(zh => zh + '#l');
+    const see = [], other = [];
+    Object.keys(ws).forEach(zh => {
+      const w = ws[zh];
+      if (!w) return;
+      [['see', ''], ['prod', '#p'], ['hear', '#h']].forEach(x => {
+        const d = w[x[0]];
+        if (!(d.s > 0)) return;
+        if (anyway ? x[0] !== 'see' : dueIn(d, 0) > 0) return;
+        if (x[0] === 'prod' && !(w.see.s >= 2)) return;     // say it only once you recognise it
+        (x[0] === 'see' ? see : other).push({ it:zh + x[1], key:retr(d) * 100 + Math.random() * 30 });
+      });
+    });
+    const byKey = (a, b) => a.key - b.key;
+    see.sort(byKey); other.sort(byKey);
+    const cap = Math.max(3, Math.ceil(see.length / 2));
+    return fresh.concat(see.concat(other.slice(0, cap)).sort(byKey).map(r => r.it));
   };
 
   // "Words in memory": every started word counts by its chance of being recalled right now, so the number rises when you learn and review
@@ -263,7 +289,7 @@
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
   const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog'];
 
   function freshState() {
     let dark = false;
@@ -271,7 +297,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', frLeaveAsk:false, frCopied:false,
-      xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, streak:0, lastActive:'', activity:{}, day:'',
+      xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
@@ -333,9 +359,10 @@
   const clipCount = (n) => ((window['HSK' + n + '_LISTEN'] || {}).clips || []).length;
   // the words, grammar, speaking and listening progress of every shown level, joined (All levels)
   const readSplit = () => {
-    const out = { ws:{}, misses:{}, gres:{}, sres:{}, clipBest:[] };
+    const out = { ws:{}, misses:{}, gres:{}, sres:{}, clipBest:[], lrn:{}, rlog:[] };
     LVLS.forEach(n => {
       const st = readStore(n) || {};
+      Object.assign(out.lrn, st.lrn || {}); out.rlog = out.rlog.concat(Array.isArray(st.rlog) ? st.rlog : []);
       Object.assign(out.ws, st.ws || {}); Object.assign(out.misses, st.misses || {}); Object.assign(out.gres, st.gres || {}); Object.assign(out.sres, st.sres || {});
       const cb = Array.isArray(st.clipBest) ? st.clipBest : [];
       for (let k = 0; k < clipCount(n); k++) out.clipBest.push(cb[k] || 0);
@@ -382,6 +409,77 @@
     py.split('/').forEach(v => { const t = toneless(v); if (t) { out.push(t); if (/r$/.test(t) && /儿/.test(zh)) out.push(t.replace(/r$/, 'er')); } });
     return out.filter((x, i, a) => a.indexOf(x) === i);
   };
+  // ---- typed pinyin: tones count (unless the person has switched on "tones optional"), with feedback that says what was right ----
+  const tonesOptional = () => prefGet('tonesOptional', false) === true;
+  // letters and tones of a pinyin string written with tone marks (nǐ hǎo), tone numbers (ni3 hao3) or neither; ü may be written v, u: or ü
+  const toneInfo = (str) => {
+    let letters = '', marks = [], digits = [];
+    const t = String(str || '').normalize('NFD').toLowerCase();
+    for (let i = 0; i < t.length; i++) {
+      const c = t[i];
+      if (c >= 'a' && c <= 'z') letters += c;
+      else if (c === '̈') letters = letters.slice(0, -1) + 'v';
+      else if (c === ':' && letters.slice(-1) === 'u') letters = letters.slice(0, -1) + 'v';
+      else if (c === '̄') marks.push(1); else if (c === '́') marks.push(2); else if (c === '̌') marks.push(3); else if (c === '̀') marks.push(4);
+      else if (c >= '0' && c <= '5') digits.push(Number(c));
+    }
+    return { letters, tones:marks.length ? marks : digits.filter(n => n >= 1 && n <= 4), hasTone:marks.length + digits.length > 0 };
+  };
+  const sameLetters = (a, b) => { const f = (x) => x.replace(/v/g, 'u'); return f(a) === f(b) || f(a) === f(b).replace(/r$/, 'er') || f(a).replace(/er$/, 'r') === f(b); };
+  const sandhi = (tones) => tones.map((t, i) => (t === 3 && tones[i + 1] === 3 ? 2 : t));   // 3+3 is said 2+3: both ways of writing it are accepted
+  const tonesEqual = (got, want) => { const eq = (x, y) => x.length === y.length && x.every((v, i) => v === y[i]); return eq(got, want) || eq(got, sandhi(want)); };
+  const comparePinyin = (input, py, optional) => {
+    const got = toneInfo(input);
+    if (!got.letters) return { ok:false, grade:'again', note:'' };
+    let partial = null;
+    const variants = String(py).split('/');
+    for (let i = 0; i < variants.length; i++) {
+      const want = toneInfo(variants[i]);
+      if (!sameLetters(got.letters, want.letters)) continue;
+      const needs = want.tones.length > 0;
+      if (!got.hasTone) { if (!needs || optional) return { ok:true, grade:'good', note:'' }; partial = partial || { ok:false, grade:'hard', note:'Right sounds, but the tones count. It is ' + py.split('/')[0].trim() + '.' }; continue; }
+      if (needs ? tonesEqual(got.tones, want.tones) : got.tones.length === 0) return { ok:true, grade:'good', note:'' };
+      partial = partial || { ok:false, grade:'hard', note:'Right sounds, wrong tone. You typed ' + String(input).trim() + '; it is ' + py.split('/')[0].trim() + '.' };
+    }
+    return partial || { ok:false, grade:'again', note:'Not quite. It is ' + py.split('/')[0].trim() + '.' };
+  };
+  const PY_WORD = {};   // known words by their toneless pinyin, to recognise "a real word, just not this one"
+  const knownByPinyin = (typed) => {
+    if (!Object.keys(PY_WORD).length) BANK_KEYS.forEach(z => { String(BANK[z].py).split('/').forEach(v => { const t = toneless(v); if (t && !PY_WORD[t]) PY_WORD[t] = z; }); });
+    const t = String(typed || '').trim();
+    return BANK[t] ? t : PY_WORD[toneless(t)] || '';
+  };
+  // the answer to a typed or fill-in question: hanzi, or pinyin with tones. grade 'good' (right), 'hard' (right sounds, wrong tone, or another real word) or 'again'
+  const checkTyped = (q, typed) => {
+    const t = String(typed || '').trim();
+    if (!q.exp) return { ok:q.accepts.indexOf(t.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[0-9\s.,!?]/g, '')) >= 0, grade:'again', note:'' };
+    if (t === q.exp.zh || (q.exp.alt && t === q.exp.alt)) return { ok:true, grade:'good', note:'' };
+    const r = comparePinyin(t, q.exp.py, tonesOptional());
+    if (r.ok || r.grade === 'hard') return r;
+    if (q.type === 'cloze') {   // several words can fit a gap; a real word that is not the expected one is not marked as a plain miss
+      const known = knownByPinyin(t);
+      if (known && known !== q.exp.zh) return { ok:false, grade:'hard', note:'That is a real word (' + known + ') but not the one this gap was written for. Several words can fit; if yours fits the English too, use "Report a mistake" so it can be added. Expected: ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
+    }
+    return r;
+  };
+  // question builders (used by tests and by Review)
+  const others = (zh, k) => {
+    const w = BANK[zh];
+    const same = shuffle(BANK_KEYS.filter(z => z !== zh && BANK[z].pos === w.pos && BANK[z].en !== w.en));
+    const rest = shuffle(BANK_KEYS.filter(z => z !== zh && BANK[z].pos !== w.pos && BANK[z].en !== w.en));
+    return same.concat(rest).slice(0, k);
+  };
+  const choiceOptions = (zh, labelOf) => {
+    const opts = shuffle([zh].concat(others(zh, 3))).map((z, i) => ({ id:ORDER_IDS[i], label:labelOf(z), zh:z }));
+    return { options:opts.map(o => ({ id:o.id, label:o.label })), correct:opts.find(o => o.zh === zh).id };
+  };
+  const exLine = (e) => e.zh + ' ' + e.py + ' (' + e.en + ')';
+  const qMeaning = (zh) => { const e0 = pickEx(zh); return Object.assign({ type:'mc', kicker:'Meaning', prompt:'What does this word mean?', big:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(e0), word:zh, dim:'see' }, choiceOptions(zh, z => BANK[z].en)); };
+  const qHearWord = (zh, ex) => Object.assign({ type:'listen', kicker:'Listen', prompt:'Which word did you hear?', audio:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(ex || pickEx(zh)), word:zh, dim:'hear' }, choiceOptions(zh, z => z));
+  const qHearMeaning = (zh) => Object.assign({ type:'listen', kicker:'Listen', prompt:'What does this word mean?', audio:zh, optsLatin:true, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(pickEx(zh)), word:zh, dim:'hear' }, choiceOptions(zh, z => BANK[z].en));
+  const TYPE_HELP = 'Write the tones as marks or numbers: nǐ hǎo or ni3 hao3. Hanzi also works.';
+  const qTypePinyin = (zh, ex) => ({ type:'type', kicker:'Type it', prompt:'Type the pinyin for this word, with tones', big:zh, placeholder:'nǐ hǎo or ni3 hao3', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, ''), reveal:BANK[zh].py + ' · ' + BANK[zh].en, explain:TYPE_HELP + ' Example: ' + ex.zh + ' ' + ex.py, word:zh, dim:'prod' });
+  const qSayIt = (zh, ex) => ({ type:'type', kicker:'Say it', prompt:'Say this out loud, then type its pinyin with tones', big:BANK[zh].en, bigCls:'en', placeholder:'nǐ hǎo or ni3 hao3', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, ''), reveal:zh + ' · ' + BANK[zh].py, explain:TYPE_HELP + ' Example: ' + ex.zh + ' ' + ex.py, word:zh, dim:'prod' });
   const ORDER_IDS = 'abcd';
   const orderQ = (toks, base) => {
     let p;
@@ -408,26 +506,15 @@
     for (let i = 0; i < n; i++) picks.push(ranked[i % ranked.length]);
     const kinds = ['mc', 'listen', 'type', 'cloze', 'order'];
     const offset = Math.floor(Math.random() * kinds.length);
-    const others = (zh, k) => {
-      const w = BANK[zh];
-      const same = shuffle(BANK_KEYS.filter(z => z !== zh && BANK[z].pos === w.pos && BANK[z].en !== w.en));
-      const rest = shuffle(BANK_KEYS.filter(z => z !== zh && BANK[z].pos !== w.pos && BANK[z].en !== w.en));
-      return same.concat(rest).slice(0, k);
-    };
-    const choiceOptions = (zh, labelOf) => {
-      const opts = shuffle([zh].concat(others(zh, 3))).map((z, i) => ({ id:ORDER_IDS[i], label:labelOf(z), zh:z }));
-      return { options:opts.map(o => ({ id:o.id, label:o.label })), correct:opts.find(o => o.zh === zh).id };
-    };
-    const mcQ = (zh) => { const e0 = pickEx(zh); return Object.assign({ type:'mc', kicker:'Meaning', prompt:'What does this word mean?', big:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:e0.zh + ' ' + e0.py + ' (' + e0.en + ')', word:zh, dim:'see' }, choiceOptions(zh, z => BANK[z].en)); };
     return picks.map((zh, i) => {
       const kind = kinds[(i + offset) % kinds.length];
       const ex = kind === 'cloze' ? pickEx(zh, e => e.toks.indexOf(zh) >= 0 && e.zh.split(zh).length === 2)
         : kind === 'order' ? pickEx(zh, e => e.toks.length >= 3 && e.toks.length <= 8) : pickEx(zh);
-      if (kind === 'listen') return Object.assign({ type:'listen', kicker:'Listen', prompt:'Which word did you hear?', audio:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:ex.zh + ' ' + ex.py + ' (' + ex.en + ')', word:zh, dim:'hear' }, choiceOptions(zh, z => z));
-      if (kind === 'type') return { type:'type', kicker:'Type it', prompt:'Type the pinyin for this word', big:zh, placeholder:'Pinyin, for example shui', accepts:pinyinAccepts(BANK[zh].py, ''), reveal:BANK[zh].py + ' · ' + BANK[zh].en, explain:'Tone marks are optional for now. Example: ' + ex.zh + ' ' + ex.py, word:zh, dim:'prod' };
-      if (kind === 'cloze' && ex.toks.indexOf(zh) >= 0 && ex.zh.split(zh).length === 2) return { type:'cloze', kicker:'Fill it', prompt:'Type the missing word', big:ex.zh.replace(zh, '___'), sub:ex.en, placeholder:'Pinyin or character', accepts:pinyinAccepts(BANK[zh].py, zh), reveal:zh + ' · ' + BANK[zh].py, explain:ex.py, word:zh, dim:'prod' };
+      if (kind === 'listen') return qHearWord(zh, ex);
+      if (kind === 'type') return qTypePinyin(zh, ex);
+      if (kind === 'cloze' && ex.toks.indexOf(zh) >= 0 && ex.zh.split(zh).length === 2) return { type:'cloze', kicker:'Fill it', prompt:'Type the missing word', big:ex.zh.replace(zh, '___'), sub:ex.en, placeholder:'Hanzi, or pinyin with tones', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, zh), reveal:zh + ' · ' + BANK[zh].py, explain:ex.py + ' (' + TYPE_HELP + ')', word:zh, dim:'prod' };
       if (kind === 'order' && ex.toks.length >= 3 && ex.toks.length <= 8) return orderQ(ex.toks, { kicker:'Build it', prompt:'Put the words in order: ' + ex.en, reveal:ex.zh, explain:ex.py });
-      return mcQ(zh);
+      return qMeaning(zh);
     });
   }
 
@@ -921,6 +1008,9 @@
         const gres = Object.assign({}, st.gres); lessons.forEach(id => { delete gres[id]; }); Object.assign(gres, pick(S.gres, lessons));
         const sres = Object.assign({}, st.sres); scns.forEach(id => { delete sres[id]; }); Object.assign(sres, pick(S.sres, scns));
         const cnt = clipCount(n);
+        const wset = {}; words.forEach(z => { wset[z] = true; });
+        const lrn = {}; Object.keys(S.lrn || {}).forEach(z => { if (wset[z]) lrn[z] = S.lrn[z]; });
+        st.lrn = lrn; st.rlog = (S.rlog || []).filter(e => wset[e[1]]);
         st.ws = ws; st.misses = mis; st.gres = gres; st.sres = sres; st.clipBest = S.clipBest.slice(off, off + cnt);
         off += cnt;
         try { localStorage.setItem(storeKey(n), JSON.stringify(st)); } catch (e) {}
@@ -1286,6 +1376,8 @@
       }, 20000);
     };
     // what Mingming remembers (follows the person)
+    setRetention = (r) => { prefSet('retention', r); this.setState({ retTick:(this.state.retTick || 0) + 1 }); };
+    toggleTones = () => { prefSet('tonesOptional', !tonesOptional()); this.setState({ retTick:(this.state.retTick || 0) + 1 }); };
     memRemember = (t) => { const c = cleanFact(t); if (c && memOn()) memAdd(c); this.setState({ memFacts:memFacts() }); };
     memToggle = () => { prefSet('memOn', !memOn()); this.setState({ memOn:memOn() }); };
     memForget = (i) => { const f = memFacts()[i]; if (f) memDrop(memKey(f.t)); this.setState({ memFacts:memFacts() }); };
@@ -1477,28 +1569,94 @@
 
     // ----- review -----
     flip = () => { this.setState({ rflip:!this.state.rflip }); };
-    toggleRpy = () => { this.setState({ rpy:!this.state.rpy }); };
+    toggleRpy = () => { this.setState({ rpy:!this.state.rpy }); };   // a peek at this card only: it is switched off again for the next card
+    // every answer is logged: [time, word, skill (s/p/h), grade (a/h/g/e), kind (f flip, c choice, t typed, a audio)]; the newest 800 are kept
+    logAnswer = (zh, dim, r, kind) => { const e = [Date.now(), zh, dim === 'prod' ? 'p' : dim === 'hear' ? 'h' : 's', { again:'a', hard:'h', good:'g', easy:'e' }[r], kind]; return (this.state.rlog || []).concat([e]).slice(-800); };
+    lapsed = {}; rvKey = null;
+    // the card on top of the queue: which kind of card it is. Stable for a given card (a hash), so a re-render does not change it.
+    rKind = (it) => {
+      const S = this.state; const m = itemOf(it);
+      if (m.t === 'l') { const e = S.lrn[m.zh] || { st:-1 }; return e.st < 0 ? 'intro' : e.st === 0 ? 'choice' : 'type'; }
+      if (m.t === 'p') return 'type';
+      if (m.t === 'h') return 'audio';
+      const share = typeof window.SHANLU_AUTO_SHARE === 'number' ? window.SHANLU_AUTO_SHARE : 35;   // (the browser tests set it to 0)
+      return (strHash(m.zh) + Math.floor(Date.now() / 864e5) + S.rstep * 7) % 100 < share ? 'choice' : 'flip';   // about a third of recognition cards are checked for you
+    };
+    rQuestion = (it, kind) => {
+      const m = itemOf(it); const ex = pickEx(m.zh);
+      const q = kind === 'choice' ? qMeaning(m.zh) : kind === 'audio' ? qHearMeaning(m.zh) : m.t === 'l' ? qTypePinyin(m.zh, ex) : qSayIt(m.zh, ex);
+      return Object.assign(q, { rv:true, rit:it, reportUrl:report('Review card for ' + m.zh, m.zh + ' ' + BANK[m.zh].py + ' ' + BANK[m.zh].en) });
+    };
+    // one answer: changes the word's memory (or its learning step) and the log; returns what the queue should do next
+    rGrade = (it, r, kind) => {
+      const S = this.state; const m = itemOf(it); const zh = m.zh;
+      const patch = { rlog:[] }; let again = false, at = 0, done = true, gain = { again:0, hard:2, good:4, easy:5 }[r];
+      let ws = S.ws; const from = wMastery(S.ws[zh]);
+      if (m.t === 'l') {
+        const e = S.lrn[zh] || { st:-1, m:0 }; const lrn = Object.assign({}, S.lrn);
+        if (e.st < 0) { lrn[zh] = { st:0, m:e.m || 0, at:Date.now() }; at = 3; done = false; gain = 0; }   // met it: the first recall comes a few cards later
+        else if (r === 'good' || r === 'easy') {
+          if (e.st + 1 >= LEARN_STEPS) {   // recalled twice: it graduates with a real interval and now counts in "words in memory"
+            const cur = S.ws[zh]; const miss = (e.m || 0) > 0;
+            ws = Object.assign({}, S.ws); ws[zh] = { see:{ s:miss ? 1 : 1.5, l:0, t:Date.now(), d:5 }, hear:cur.hear, prod:{ s:miss ? 0.6 : 1, l:0, t:Date.now(), d:5 } };
+            delete lrn[zh]; gain = 5;
+          } else { lrn[zh] = { st:e.st + 1, m:e.m || 0, at:Date.now() }; again = true; gain = 3; done = false; }
+        } else { lrn[zh] = { st:0, m:(e.m || 0) + 1, at:Date.now() }; at = 2; done = false; gain = 0; }
+        patch.lrn = lrn;
+        if (e.st >= 0) patch.rlog = this.logAnswer(zh, m.t === 'l' && e.st >= 1 ? 'prod' : 'see', r, kind);
+      } else {
+        const dim = m.t === 'p' ? 'prod' : m.t === 'h' ? 'hear' : 'see';
+        const key = zh + '#' + dim;
+        const cur = S.ws[zh]; const next = { see:cur.see, hear:cur.hear, prod:cur.prod };
+        next[dim] = bump(cur[dim], r, { relearn:!!this.lapsed[key] && r !== 'again' });
+        if (r === 'again') this.lapsed[key] = true;
+        ws = Object.assign({}, S.ws); ws[zh] = next;
+        if (r === 'again') again = true;
+        patch.rlog = this.logAnswer(zh, dim, r, kind);
+      }
+      patch.ws = ws; patch.from = from; patch.to = wMastery(ws[zh]); patch.gain = gain; patch.again = again; patch.at = at; patch.done = done;
+      return patch;
+    };
+    // after an answer: take the card off the queue (or put it back), count it, and finish the session when the queue is empty
+    rAdvance = (g) => {
+      const S = this.state;
+      if (!S.rq.length) return;
+      const it = S.rq[0];
+      g = g || this.rLast;
+      const q = S.rq.slice(1);
+      if (g.again) q.push(it); else if (g.at) q.splice(Math.min(g.at, q.length), 0, it);
+      const counts = Object.assign({}, S.rcounts); if (g.rate) counts[g.rate] = (counts[g.rate] || 0) + 1;
+      const finished = q.length === 0;
+      this.rvKey = null; this.rLast = null;
+      this.setState({
+        rq:q, rflip:false, rpy:false, rdone:S.rdone + (g.done && !g.again ? 1 : 0), rstep:S.rstep + 1, rxp:S.rxp + g.gain, rcomplete:finished, rcounts:counts,
+        xp:S.xp + g.gain, dayXp:S.dayXp + g.gain, dayMin:S.dayMin + (finished ? Math.max(1, Math.round(S.rtotal * 0.5)) : 0),
+        ws:g.ws, lrn:g.lrn || S.lrn, rlog:g.rlog.length ? g.rlog : S.rlog, woff:0, rlast:g.rate ? { zh:itemOf(it).zh, from:g.from, to:g.to } : S.rlast,
+        qchecked:false, qchoice:null, qtyped:'', qcorrect:false, qfeed:''
+      });
+    };
+    // a self-graded flip card (or the introduction of a new word)
     rate = (r) => {
       const S = this.state;
       if (!S.rq.length) return;
-      const q = S.rq.slice();
-      const zh = q.shift();
-      const res = this.applyRating(zh, r, ['see', 'prod']);
-      const gain = { again:0, hard:2, good:4, easy:5 }[r];
-      const counts = Object.assign({}, S.rcounts);
-      counts[r] = counts[r] + 1;
-      let done = S.rdone;
-      if (r === 'again') q.push(zh); else done = done + 1;
-      const finished = q.length === 0;
-      this.setState({
-        rq:q, rflip:false, rdone:done, rstep:S.rstep + 1, rxp:S.rxp + gain, rcomplete:finished, rcounts:counts,
-        xp:S.xp + gain, dayXp:S.dayXp + gain, dayMin:S.dayMin + (finished ? Math.max(1, Math.round(S.rtotal * 0.5)) : 0),
-        ws:res.ws, woff:0, rlast:{ zh, from:res.from, to:res.to }
-      });
+      const it = S.rq[0];
+      const g = this.rGrade(it, r, 'f'); g.rate = itemOf(it).t === 'l' ? null : r;
+      this.rAdvance(g);
+    };
+    rIntroDone = () => { const S = this.state; if (!S.rq.length) return; const g = this.rGrade(S.rq[0], 'good', 'f'); g.rate = null; this.rAdvance(g); };
+    // an auto-checked card (choice, audio or typed): graded the moment it is checked; Continue moves on
+    rAnswer = (q, ok, grade, feed) => {
+      const S = this.state; if (!S.rq.length) return;
+      const r = ok ? 'good' : (grade === 'hard' ? 'hard' : 'again');
+      const kind = q.type === 'listen' ? 'a' : q.type === 'mc' ? 'c' : 't';
+      const g = this.rGrade(S.rq[0], r, kind); g.rate = itemOf(S.rq[0]).t === 'l' ? null : r;
+      this.rLast = g;
+      this.setState({ qchecked:true, qcorrect:ok, qfeed:feed });
     };
     practiceAnyway = () => {
-      const q = buildQueue(this.state.ws, true);
-      this.setState({ rq:q, rtotal:q.length, rdone:0, rxp:0, rcomplete:false, rflip:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null });
+      const q = buildQueue(this.state.ws, true, this.state.lrn);
+      this.lapsed = {}; this.rvKey = null;
+      this.setState({ rq:q, rtotal:q.length, rdone:0, rxp:0, rcomplete:false, rflip:false, rpy:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, qchecked:false, qchoice:null, qtyped:'', qfeed:'' });
     };
 
     // ----- quiz engine (tests and grammar practice) -----
@@ -1509,7 +1667,7 @@
       const list = mode === 'grammar' ? prepGrammar(LESSONS[lessonIdx === undefined ? this.state.glesson : lessonIdx]) : buildTest(this.state);
       if (!list.length) return;
       this.quizQs = list;
-      this.setState({ screen:'quiz', qmode:mode, qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false });
+      this.rvKey = null; this.setState({ screen:'quiz', qmode:mode, qi:0, qpicked:[], qtyped:'', qchoice:null, qfeed:'', qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false });
       try { window.scrollTo(0, 0); } catch (e) {}
     };
     norm = (s) => (s || '').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[0-9\s.,!?]/g, '');
@@ -1524,26 +1682,29 @@
       const S = this.state;
       if (S.qchecked || !this.canCheck()) return;
       const q = this.curQ();
-      let ok = false;
-      if (q.type === 'type' || q.type === 'cloze') ok = q.accepts.indexOf(this.norm(S.qtyped)) >= 0;
+      let ok = false, grade = 'again', feed = '';
+      if (q.type === 'type' || q.type === 'cloze') { const r = checkTyped(q, S.qtyped); ok = !!r.ok; grade = ok ? 'good' : (r.grade || 'again'); feed = r.note || ''; }
       else if (q.type === 'listen' || q.type === 'mc') ok = S.qchoice === q.correct;
       else if (q.type === 'order') ok = S.qpicked.map(id => q.tiles[id]).join('|') === q.toks.join('|');
       else if (q.type === 'spot') ok = S.qchoice === q.spot;
+      if (q.rv) { this.rAnswer(q, ok, grade, feed); return; }   // a Review card: the answer goes to the word's memory and the review log, not to a test score
       const gain = ok ? 10 + Math.min(S.qcombo, 4) * 2 : 0;
       const combo = ok ? S.qcombo + 1 : 0;
       const res = S.qres.slice(); res[S.qi] = ok;
-      const patch = { qchecked:true, qcorrect:ok, qscore:S.qscore + (ok ? 1 : 0), qcombo:combo, qbest:Math.max(S.qbest, combo), qxp:S.qxp + gain, qgain:gain, qres:res, xp:S.xp + gain, dayXp:S.dayXp + gain };
+      const patch = { qfeed:feed, qchecked:true, qcorrect:ok, qscore:S.qscore + (ok ? 1 : 0), qcombo:combo, qbest:Math.max(S.qbest, combo), qxp:S.qxp + gain, qgain:gain, qres:res, xp:S.xp + gain, dayXp:S.dayXp + gain };
       if (q.word && q.dim && S.ws[q.word]) {
         const cur = S.ws[q.word];
         const ws = Object.assign({}, S.ws);
         ws[q.word] = { see:cur.see, hear:cur.hear, prod:cur.prod };
-        ws[q.word][q.dim] = bump(cur[q.dim], ok ? 'good' : 'again');
+        ws[q.word][q.dim] = bump(cur[q.dim], ok ? 'good' : (grade === 'hard' ? 'hard' : 'again'));
         patch.ws = ws;
+        patch.rlog = this.logAnswer(q.word, q.dim, ok ? 'good' : (grade === 'hard' ? 'hard' : 'again'), q.type === 'listen' ? 'a' : q.type === 'mc' ? 'c' : 't');
       }
       this.setState(patch);
     };
     next = () => {
       const S = this.state;
+      if (this.curQ() && this.curQ().rv) { this.rAdvance(); return; }
       const total = this.quizQs.length;
       if (S.qi + 1 >= total) {
         const patch = { qdone:true };
@@ -1558,7 +1719,7 @@
         }
         this.setState(patch);
       } else {
-        this.setState({ qi:S.qi + 1, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false });
+        this.setState({ qi:S.qi + 1, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qfeed:'' });
       }
     };
     primary = () => { if (this.state.qchecked) this.next(); else this.check(); };
@@ -1597,55 +1758,54 @@
       ws[zh] = next;
       return { ws, from:wMastery(cur), to:wMastery(next) };
     };
+    // Adding a word does not mean learning it. It enters a short learning phase in Review: meet it, recall it a few cards later, recall it again
+    // (typed) before the session ends. Only then does it get a real interval and count in "words in memory". Adding earns no streak or minutes.
+    lrnRoom = () => Math.max(0, LRN_MAX - Object.keys(this.state.lrn || {}).length);
+    toLearning = (zh, known) => { const l = Object.assign({}, this.state.lrn); l[zh] = { st:known ? 0 : -1, m:0, at:Date.now() }; return l; };
     learnWord = (zh) => {
       const S = this.state;
-      if (S.wlearned[zh] || Object.keys(S.wlearned).length >= limitOf(S)) return;
-      const cur = S.ws[zh];
-      const ws = Object.assign({}, S.ws);
-      ws[zh] = { see:{ s:0.5, l:0, t:Date.now() }, hear:cur.hear, prod:cur.prod };
+      if (S.wlearned[zh] || S.lrn[zh] || S.ws[zh].see.s > 0 || Object.keys(S.wlearned).length >= limitOf(S)) return;
+      if (!this.lrnRoom()) { this.setState({ lrnNote:'You already have ' + LRN_MAX + ' new words waiting. Learn those in Review first, then add more.' }); return; }
       const wl = Object.assign({}, S.wlearned); wl[zh] = true;
-      const patch = { ws, wlearned:wl, xp:S.xp + 3, dayXp:S.dayXp + 3 };
-      if (Object.keys(wl).length >= Math.min(4, limitOf(S)) && !S.webCredited) { patch.webCredited = true; patch.dayMin = S.dayMin + 5; }
-      this.setState(patch);
+      this.setState({ lrn:this.toLearning(zh, false), wlearned:wl, lrnNote:'' });
     };
     rateWeb = (zh, ok) => {
       const S = this.state;
       if (S.wrated[zh]) return;
-      const wasNew = wMastery(S.ws[zh]) === 0;
+      const wasNew = !(S.ws[zh].see.s > 0) && !S.lrn[zh];
       if (wasNew && !S.wlearned[zh] && Object.keys(S.wlearned).length >= limitOf(S)) return;
-      const res = this.applyRating(zh, ok ? 'good' : 'again', ['see']);
       const wr = Object.assign({}, S.wrated); wr[zh] = true;
-      const wd = Object.assign({}, S.wdelta); wd[zh] = { from:res.from, to:res.to };
-      const patch = { ws:res.ws, wrated:wr, wdelta:wd, xp:S.xp + (ok ? 3 : 1), dayXp:S.dayXp + (ok ? 3 : 1) };
-      if (wasNew) {
-        const wl = Object.assign({}, S.wlearned); wl[zh] = true; patch.wlearned = wl;
-        if (Object.keys(wl).length >= Math.min(4, limitOf(S)) && !S.webCredited) { patch.webCredited = true; patch.dayMin = S.dayMin + 5; }
+      if (wasNew) {   // a word met here for the first time still has to be recalled in Review ("I knew it" skips the introduction)
+        if (!this.lrnRoom()) { this.setState({ lrnNote:'You already have ' + LRN_MAX + ' new words waiting. Learn those in Review first, then add more.' }); return; }
+        const wl = Object.assign({}, S.wlearned); wl[zh] = true;
+        this.setState({ lrn:this.toLearning(zh, ok), wlearned:wl, wrated:wr, lrnNote:'' });
+        return;
       }
-      this.setState(patch);
+      const res = this.applyRating(zh, ok ? 'good' : 'again', ['see']);
+      const wd = Object.assign({}, S.wdelta); wd[zh] = { from:res.from, to:res.to };
+      this.setState({ ws:res.ws, wrated:wr, wdelta:wd, xp:S.xp + (ok ? 3 : 1), dayXp:S.dayXp + (ok ? 3 : 1) });
     };
     setLimit = (n) => { this.setState({ nlimit:n }); };
-    // Adds every still-new word in a list (a shared-character group or a topic), up to the daily limit if one is set.
+    // Adds every still-new word in a list (a shared-character group or a topic) to the learning phase, as many as there is room for.
     learnMany = (list) => {
       const S = this.state;
       const lim = limitOf(S);
       const wl = Object.assign({}, S.wlearned);
-      const ws = Object.assign({}, S.ws);
+      const lrn = Object.assign({}, S.lrn);
+      let room = this.lrnRoom();
       let n = 0;
       list.forEach(zh => {
-        if (wl[zh] || wMastery(ws[zh]) > 0 || Object.keys(wl).length >= lim) return;
-        ws[zh] = { see:{ s:0.5, l:0, t:Date.now() }, hear:ws[zh].hear, prod:ws[zh].prod };
-        wl[zh] = true;
-        n++;
+        if (wl[zh] || lrn[zh] || S.ws[zh].see.s > 0 || Object.keys(wl).length >= lim || room <= 0) return;
+        lrn[zh] = { st:-1, m:0, at:Date.now() }; wl[zh] = true; room--; n++;
       });
-      if (!n) return;
-      const patch = { ws, wlearned:wl, xp:S.xp + 3 * n, dayXp:S.dayXp + 3 * n };
-      if (Object.keys(wl).length >= Math.min(4, lim) && !S.webCredited) { patch.webCredited = true; patch.dayMin = S.dayMin + 5; }
-      this.setState(patch);
+      if (!n) { if (!this.lrnRoom()) this.setState({ lrnNote:'You already have ' + LRN_MAX + ' new words waiting. Learn those in Review first, then add more.' }); return; }
+      this.setState({ lrn, wlearned:wl, lrnNote:'' });
     };
     reviewMore = () => {
-      const q = buildQueue(this.state.ws, false);
+      const q = buildQueue(this.state.ws, false, this.state.lrn);
       if (!q.length) return;
-      this.setState({ rq:q, rtotal:q.length, rdone:0, rxp:0, rcomplete:false, rflip:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null });
+      this.lapsed = {}; this.rvKey = null;
+      this.setState({ rq:q, rtotal:q.length, rdone:0, rxp:0, rcomplete:false, rflip:false, rpy:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, qchecked:false, qchoice:null, qtyped:'', qfeed:'' });
     };
     nextEx = (zh) => { const n = Object.assign({}, this.state.wexn); n[zh] = ((n[zh] || 0) + 1) % EXS[zh].length; this.setState({ wexn:n }); };
     toggleEx = (key) => { const x = Object.assign({}, this.state.wex); x[key] = !x[key]; this.setState({ wex:x }); };
@@ -1655,6 +1815,11 @@
       if (S.gfpick !== null) return;
       const g = HUBS[S.whub].gaps[S.gfq];
       const ok = zh === g.ans;
+      if (!(S.ws[g.ans].see.s > 0)) {   // not recalled before: it is a hint that the word is worth learning, not proof it is known
+        const patch = { gfpick:zh, xp:S.xp + (ok ? 2 : 0) };
+        if (!S.lrn[g.ans] && this.lrnRoom()) { patch.lrn = this.toLearning(g.ans, ok); const wl = Object.assign({}, S.wlearned); wl[g.ans] = true; patch.wlearned = wl; }
+        this.setState(patch); return;
+      }
       const res = this.applyRating(g.ans, ok ? 'good' : 'again', ['see']);
       this.setState({ gfpick:zh, ws:res.ws, xp:S.xp + (ok ? 2 : 0) });
     };
@@ -1796,6 +1961,8 @@
       const lastM = S.aim[S.aim.length - 1];
       const sg = lastM && lastM.who === 'ai' && lastM.sug && !S.aiBusy ? lastM.sug : null;
       return {
+        retOpts:[[0.9, '90% (recommended)'], [0.85, '85%'], [0.8, '80%']].map(o => ({ label:o[1], cls:Math.abs(retention() - o[0]) < 0.001 ? 'on' : '', fn:() => this.setRetention(o[0]) })),
+        tonesLabel:tonesOptional() ? 'Optional (beginner)' : 'Required', tonesCls:tonesOptional() ? '' : 'on', toggleTones:this.toggleTones,
         personSyncOn:!!(FR && FR.enabled() && FR.identity()), personSyncOff:!(FR && FR.enabled() && FR.identity()),
         keySyncCls:S.syncKeys ? 'on' : '', keySyncLabel:S.syncKeys ? 'On: my keys follow me' : 'Off: keys stay on each device', keySyncToggle:this.keySyncToggle,
         lsnLine:'Listening level ' + S.lsnLvl + ' of 5 · ' + LSN_LEVELS[S.lsnLvl - 1].name, lsnEasier:() => this.lsnStep(-1), lsnHarder:() => this.lsnStep(1), lsnAutoLabel:'Auto-adjust: ' + (S.lsnAuto ? 'on' : 'off'), lsnAutoToggle:this.lsnAutoToggle,
@@ -2087,7 +2254,21 @@
       }));
 
       // review
-      const rzh = S.rq.length ? S.rq[0] : bankKeys[0];
+      const rit = S.rq.length ? S.rq[0] : bankKeys[0];
+      const rzh = itemOf(rit).zh;
+      const rkind = S.rq.length ? this.rKind(rit) : 'flip';
+      const rAuto = rkind === 'choice' || rkind === 'audio' || rkind === 'type';
+      if (S.screen === 'review' && S.rq.length && rAuto) {   // an auto-checked card is a one-question quiz: the Review screen reuses the quiz card
+        const key = rit + '|' + S.rstep;
+        if (this.rvKey !== key || !this.quizQs[0] || !this.quizQs[0].rv) { this.rvKey = key; this.quizQs = [this.rQuestion(rit, rkind)]; }
+      }
+      const rflipV = S.rflip || rkind === 'intro';
+      const lrnCount = Object.keys(S.lrn || {}).length;
+      const cal = (() => { let fN = 0, fOk = 0, aN = 0, aOk = 0; (S.rlog || []).slice(-300).forEach(e => { const ok = e[3] === 'g' || e[3] === 'e'; if (e[4] === 'f') { fN++; if (ok) fOk++; } else { aN++; if (ok) aOk++; } }); return { fN, fOk, aN, aOk }; })();
+      const calText = cal.fN >= 6 && cal.aN >= 6
+        ? 'Honesty check: you marked ' + Math.round(100 * cal.fOk / cal.fN) + '% of your flip cards Good or Easy. On the cards the site checked for you (' + cal.aN + ' recently) you got ' + Math.round(100 * cal.aOk / cal.aN) + '% right.' +
+          (100 * cal.fOk / cal.fN - 100 * cal.aOk / cal.aN >= 15 ? ' Your self-ratings may be a little generous: when unsure, tap Again or Hard.' : '')
+        : '';
       const rw = BANK[rzh];
       const rexL = EXS[rzh]; const rex = rexL[(strHash(rzh) + Math.floor(Date.now() / 864e5) + S.rstep) % rexL.length];
       const cinfo = winfo(S.ws[rzh], 0);
@@ -2097,7 +2278,7 @@
         { key:'hard', label:'Hard', cls:'' },
         { key:'good', label:'Good', cls:'' },
         { key:'easy', label:'Easy', cls:'easy' }
-      ].map(r => Object.assign({}, r, { hint:r.key === 'again' ? 'Later today' : fmtInterval(bump(S.ws[rzh].see, r.key).s), fn:() => this.rate(r.key) }));
+      ].map(r => Object.assign({}, r, { hint:r.key === 'again' ? 'Later today' : fmtInterval(bump(S.ws[rzh].see, r.key, { relearn:!!this.lapsed[rzh + '#see'] }).s), fn:() => this.rate(r.key) }));
       let nextDueText = '';
       if (startedCount > 0) {
         const soon = infos.filter(i => i.started).sort((a, b) => a.dueN - b.dueN)[0];
@@ -2114,7 +2295,7 @@
       const isSpot = q0.type === 'spot';
       const q = {
         kicker:q0.kicker, prompt:q0.prompt, big:q0.big || '', hasBig:!!q0.big, bigCls:(q0.big || '').length > 3 ? 'sm' : '',
-        sub:q0.sub || '', hasSub:!!q0.sub, placeholder:q0.placeholder || '',
+        sub:q0.sub || '', hasSub:!!q0.sub, placeholder:q0.placeholder || '', bigZh:q0.bigCls !== 'en', bigEn:q0.bigCls === 'en',
         isTyped, isListen, isChoice, isOrder, isSpot, reveal:q0.reveal, explain:q0.explain,
         reportUrl:report((S.qmode === 'grammar' ? 'Grammar practice' : 'Test') + ' question ' + (S.qi + 1), q0.prompt + ' / ' + q0.reveal)
       };
@@ -2122,7 +2303,7 @@
         let cls = '';
         if (S.qchecked) { if (o.id === q0.correct) cls = 'right'; else if (o.id === S.qchoice) cls = 'wrong'; }
         else if (o.id === S.qchoice) cls = 'sel';
-        return { label:o.label, cls, lcls:isListen ? 'zh' : '', pick:() => { if (!this.state.qchecked) this.setState({ qchoice:o.id }); } };
+        return { label:o.label, cls, lcls:isListen && !q0.optsLatin ? 'zh' : '', pick:() => { if (!this.state.qchecked) this.setState({ qchoice:o.id }); } };
       });
       const tileState = S.qchecked ? (S.qcorrect ? 'right' : 'wrong') : '';
       const pickedTiles = (isOrder ? S.qpicked : []).map(id => ({ label:q0.tiles[id], cls:tileState, fn:() => this.unpick(id) }));
@@ -2161,7 +2342,8 @@
       // word webs and word memory
       const webCount = Object.keys(S.wlearned).length;
       const capReached = webCount >= limitOf(S);
-      const mini = (zh) => winfo(S.ws[zh], 0);
+      // a word in its learning phase counts as added (no Add button), but not as learned: it is not "in memory" until it has been recalled in Review
+      const mini = (zh) => { const i = winfo(S.ws[zh], 0); return S.lrn[zh] && !i.started ? Object.assign({}, i, { lv:'learning', mLabel:'Learning', chipCls:'learning', started:true, recallText:'In your next Review', due:'Learn it in Review' }) : i; };
       // "Show example": the word's own example sentence (the same checked sentences used in My words and the tests)
       const exOf = (zh) => { const l = EXS[zh]; const e = l ? l[(S.wexn[zh] || 0) % l.length] : null; return e ? { zh:e.zh, py:e.py, en:e.en } : { zh:'', py:'', en:'' }; };
       const exFor = (zh, avail) => {
@@ -2388,8 +2570,8 @@
         quizOffCls:S.wquiz ? '' : 'on', quizOnCls:S.wquiz ? 'on' : '',
         setQuizOff:() => this.setState({ wquiz:false }), setQuizOn:() => this.setState({ wquiz:true }),
         webCountText:limitOf(S) === Infinity ? webCount + ' new words today' : webCount + ' of ' + S.nlimit + ' new words today', capNote:capReached, capCount:S.nlimit, capOpts,
-        hubHasNew:hubNew > 0 && !capReached, hubAddAllText:'Add all ' + hubNew + ' new word' + (hubNew === 1 ? '' : 's'), hubAddAll:() => this.learnMany(hubNow.words.map(w => w.zh)),
-        topicHasNew:topicNew > 0 && !capReached, topicAddAllText:'Add all ' + topicNew + ' new word' + (topicNew === 1 ? '' : 's'), topicAddAll:() => this.learnMany(topicNow.words),
+        hubHasNew:hubNew > 0 && !capReached && this.lrnRoom() > 0, hubAddAllText:(hubNew <= this.lrnRoom() ? 'Add all ' + hubNew : 'Add ' + this.lrnRoom() + ' of ' + hubNew) + ' new word' + (hubNew === 1 ? '' : 's'), hubAddAll:() => this.learnMany(hubNow.words.map(w => w.zh)),
+        topicHasNew:topicNew > 0 && !capReached && this.lrnRoom() > 0, topicAddAllText:(topicNew <= this.lrnRoom() ? 'Add all ' + topicNew : 'Add ' + this.lrnRoom() + ' of ' + topicNew) + ' new word' + (topicNew === 1 ? '' : 's'), topicAddAll:() => this.learnMany(topicNow.words),
         moreDue:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft > 0, hasMoreDue:dueLeft > 0, reviewMore:this.reviewMore,
         moreDueText:'Review ' + dueLeft + ' word' + (dueLeft === 1 ? '' : 's'), dueLeftText:dueLeft + ' word' + (dueLeft === 1 ? ' is' : 's are') + ' still due.', topicProgress:topicStarted + ' of ' + topicNow.words.length + ' started',
         hubCards, hubOpts, hubZh:hubNow.hub, hubPy:hubNow.py, hubEn:hubNow.en,
@@ -2398,6 +2580,7 @@
         oppRows, topicChips, topicOpts, topicGroups, topicName:topicNow.name, wtq:S.wtq, onTopicSearch:(e) => this.setState({ wtq:e.target.value }), topicNoMatch, topicPos:(S.wtopic + 1) + ' of ' + TOPICS.length, topicMenuOpen:S.wtmenu ? 'true' : 'false', topicMenuShow:S.wtmenu, toggleTopicMenu:() => this.setState({ wtmenu:!this.state.wtmenu }), topicPrev:() => this.pickTopic((S.wtopic + TOPICS.length - 1) % TOPICS.length), topicNext:() => this.pickTopic((S.wtopic + 1) % TOPICS.length), tsZh:topicNow.sentence.zh, tsPy:topicNow.sentence.py, tsEn:topicNow.sentence.en,
         tsReport:report('Topic sentence', topicNow.sentence.zh + ' ' + topicNow.sentence.en),
         topicCta:topicNow.cta, goTopic:() => this.go(topicNow.to),
+        lrnBanner:Object.keys(S.lrn || {}).length > 0 || !!S.lrnNote, lrnBannerText:S.lrnNote || (Object.keys(S.lrn || {}).length + ' new word' + (Object.keys(S.lrn || {}).length === 1 ? ' is' : 's are') + ' waiting in Review. Adding a word does not mean you know it yet: Review will have you recall it.'), goLearn:() => { this.go('review'); if (!this.state.rq.length || this.state.rcomplete) this.reviewMore(); },
         hasRlast:!!S.rlast, rlastText:S.rlast ? S.rlast.zh + ': mastery ' + S.rlast.from + '% → ' + S.rlast.to + '%' : '', rlastCls:S.rlast && S.rlast.to < S.rlast.from ? 'down' : 'up',
         wordsSumLine:lvNow('mastered') + ' mastered · ' + lvNow('strong') + ' strong · ' + lvNow('familiar') + ' familiar · ' + lvNow('learning') + ' learning · ' + lvNow('new') + ' new',
         wordsReviewText:dueAllN > 0 ? 'Review ' + dueAllN + ' due word' + (dueAllN === 1 ? '' : 's') : (startedCount >= totalW ? 'Practice all my words' : 'Learn new words'), wordsReviewGo:() => this.go(dueAllN > 0 || startedCount >= totalW ? 'review' : 'web'),
@@ -2500,11 +2683,15 @@
         // review
         inReview:!S.rcomplete && S.rq.length > 0, rcomplete:S.rcomplete, rdone:S.rdone, rtotal:S.rtotal, rxp:S.rxp, rcounts:S.rcounts,
         rPct:(S.rtotal ? Math.round(S.rdone / S.rtotal * 100) : 0) + '%',
-        emptyNew:!S.rcomplete && S.rq.length === 0 && startedCount === 0,
-        caughtUp:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft === 0, nextDueText, practiceAnyway:this.practiceAnyway,
-        card, flip:this.flip, rflip:S.rflip, flipCls:S.rflip ? 'flip' : '', flipLabel:S.rflip ? 'Flip the card back' : 'Show the answer',
-        cardAnim:S.rstep % 2 === 0 ? 'ea' : 'eb', showAnswerBtn:!S.rflip, rates,
-        rpyShow:S.rpy && !S.rflip, toggleRpy:this.toggleRpy, pyBtnText:S.rpy ? 'Hide pinyin' : 'Show pinyin', quickNo:rates[0], quickYes:rates[2],
+        emptyNew:!S.rcomplete && S.rq.length === 0 && startedCount === 0 && lrnCount === 0,
+        newWaiting:!S.rcomplete && S.rq.length === 0 && lrnCount > 0, newWaitingText:lrnCount + ' new word' + (lrnCount === 1 ? ' is' : 's are') + ' waiting. Meet them, then recall them a few cards later and once more before you finish: about ' + Math.max(2, Math.round(lrnCount * 1.2)) + ' minutes.', newWaitingBtn:'Learn ' + lrnCount + ' new word' + (lrnCount === 1 ? '' : 's'),
+        hasLrnMore:S.rcomplete && lrnCount > 0, lrnMoreText:'Learn ' + lrnCount + ' new word' + (lrnCount === 1 ? '' : 's'),
+        hasCalib:!!calText, calText,
+        caughtUp:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft === 0 && lrnCount === 0, nextDueText, practiceAnyway:this.practiceAnyway,
+        card, flip:this.flip, rflip:rflipV, flipCls:rflipV ? 'flip' : '', flipLabel:rflipV ? 'Flip the card back' : 'Show the answer',
+        rIsFlip:rkind === 'flip' || rkind === 'intro', rIsAuto:rAuto, rIsIntro:rkind === 'intro', rIsPlain:rkind === 'flip', rIntroDone:this.rIntroDone,
+        cardAnim:S.rstep % 2 === 0 ? 'ea' : 'eb', showAnswerBtn:!S.rflip && rkind === 'flip', rates, qfeed:S.qfeed, hasQfeed:!!S.qfeed,
+        rpyShow:S.rpy && !rflipV && rkind === 'flip', toggleRpy:this.toggleRpy, pyBtnText:S.rpy ? 'Hide pinyin' : 'Show pinyin', quickNo:rates[0], quickYes:rates[2],
         playWord:() => this.say(rw.zh, 'word'), playWordCls:pc('word') ? 'ink' : '',
         playEx:() => this.say(rex.zh, 'ex'), playExCls:pc('ex') ? 'ink' : '',
 
@@ -2534,7 +2721,7 @@
         playQ:() => this.say(q0.audio || '', 'q'), listenCls:pc('q'),
         showCheck:!S.qchecked, checkCls:canCheck ? '' : 'dis', checkAria:canCheck ? 'false' : 'true', check:this.check,
         qchecked:S.qchecked, qcorrect:S.qcorrect, qwrong:!S.qcorrect, fbCls:S.qcorrect ? 'good' : 'bad',
-        fbTitle:S.qcorrect ? 'Correct' : 'Not quite',
+        fbTitle:S.qcorrect ? 'Correct' : (S.qfeed && /Right sounds|real word/.test(S.qfeed) ? 'Close' : 'Not quite'),
         next:this.next, nextLabel:S.qi + 1 >= total ? 'See results' : 'Continue',
         qcombo:S.qcombo, comboCls:S.qcombo >= 2 ? 'on' : '', exitQuiz:this.exitQuiz,
         resTitle, resSub, resScore:S.qscore + '/' + total, qbest:S.qbest, resGain,
@@ -2561,6 +2748,7 @@
   const tpl = document.getElementById('app-template');
   const app = DCMount(root, tpl, Component);
   onPersonChange = () => { try { app.personChanged(); } catch (e) {} };
+  app.testApi = { comparePinyin, toneInfo, checkTyped, bump, buildQueue, itemOf, retK, retention };   // for the browser tests
   window.shanlu = app;
 
   // keyboard: Space flips a review card, 1-4 rate it; in the exam, arrows move and A-F or 1-6 choose
