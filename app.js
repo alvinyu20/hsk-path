@@ -23,13 +23,32 @@
   const ttsModeNow = () => (aliCfg().key && AICFG.ttsMode !== 'browser' ? 'qwen' : 'browser');
   const ttsVoiceNow = () => (TTS_VOICES.some(v => v[0] === AICFG.ttsVoice) ? AICFG.ttsVoice : 'Cherry');
   const aliApi = () => aliBase().replace('/compatible-mode/v1', '/api/v1');
-  // ---- the listening level and what Mingming remembers: both stay on this device (not synced, not exported, not on any server)
-  const LSN_STORE = 'shanlu-listen', MEM_STORE = 'shanlu-memory';
-  let LSN = {}, MEM = {};
-  try { LSN = JSON.parse(localStorage.getItem(LSN_STORE)) || {}; } catch (e) {}
-  try { MEM = JSON.parse(localStorage.getItem(MEM_STORE)) || {}; } catch (e) {}
-  const saveLsn = () => { try { localStorage.setItem(LSN_STORE, JSON.stringify(LSN)); } catch (e) {} };
-  const saveMem = () => { try { localStorage.setItem(MEM_STORE, JSON.stringify(MEM)); } catch (e) {} };
+  // ---- the person's own settings and notes follow them to every device (when they are in the study group): the listening level, what
+  // Mingming remembers, the chat preferences and, only if switched on, the API keys. Every value is stamped with the time it was set
+  // and the newer stamp wins (sync.js, mergePerson). Kept in localStorage 'shanlu-person'; never in the progress export or the GitHub sync.
+  const PERSON_STORE = 'shanlu-person';
+  let PERSON = {};
+  try { PERSON = JSON.parse(localStorage.getItem(PERSON_STORE)) || {}; } catch (e) {}
+  if (!PERSON.prefs || typeof PERSON.prefs !== 'object') PERSON.prefs = {};
+  if (!PERSON.mem || typeof PERSON.mem !== 'object') PERSON.mem = { facts:[], del:{}, cleared:0 };
+  let onPersonChange = () => {};
+  const savePerson = (notify) => { try { localStorage.setItem(PERSON_STORE, JSON.stringify(PERSON)); } catch (e) {} if (notify !== false) onPersonChange(); };
+  const prefGet = (k, d) => (PERSON.prefs[k] && PERSON.prefs[k].v !== undefined ? PERSON.prefs[k].v : d);
+  const prefSet = (k, v) => { PERSON.prefs[k] = { v, at:Date.now() }; savePerson(); };
+  // take over what older versions kept on the device only (stamp 1: older than anything set on another device)
+  (() => {
+    let changed = false;
+    const old = (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } };
+    const l = old('shanlu-listen'), m = old('shanlu-memory');
+    if (l && !PERSON.lsn) { PERSON.lsn = { v:{ lvl:l.lvl || 1, ok:l.ok || 0, miss:l.miss || 0 }, at:1 }; if (l.auto === false) PERSON.prefs.lsnAuto = { v:false, at:1 }; changed = true; }
+    if (m) { if (m.on === false) PERSON.prefs.memOn = { v:false, at:1 }; (m.facts || []).forEach(f => { if (f && typeof f.t === 'string') PERSON.mem.facts.push({ t:f.t, d:f.d || '', at:1 }); }); changed = true; }
+    ['shanlu-listen', 'shanlu-memory'].forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
+    const seed = { voiceOnly:AICFG.voiceOnly, handsFree:AICFG.handsFree, ttsMode:AICFG.ttsMode, ttsVoice:AICFG.ttsVoice, asr:AICFG.asr, provider:AICFG.provider, claudeModel:AICFG.model, aliModel:aliCfg().model };
+    Object.keys(seed).forEach(k => { if (seed[k] !== undefined && !PERSON.prefs[k]) { PERSON.prefs[k] = { v:seed[k], at:1 }; changed = true; } });
+    if (changed) savePerson(false);
+  })();
+  const LSN = Object.assign({ lvl:1, ok:0, miss:0 }, (PERSON.lsn && PERSON.lsn.v) || {});   // working copy of the listening level
+  const saveLsn = () => { PERSON.lsn = { v:{ lvl:lsnLvl(), ok:LSN.ok || 0, miss:LSN.miss || 0 }, at:Date.now() }; savePerson(); };
   // five listening levels: how fast the voice plays, and how long and casual Mingming's lines are
   const LSN_LEVELS = [
     { name:'slow and clear', factor:0.85, spec:'Reply with ONE very short sentence (about 10 characters or fewer), slow and clear, with no filler words.' },
@@ -39,9 +58,14 @@
     { name:'fast and casual', factor:1.3, spec:'Reply the way a native speaker talks to a friend: two or three quick, casual sentences (about 46 characters or fewer in total) with fillers and an aside. Still use only listed words.' }
   ];
   const lsnLvl = () => Math.max(1, Math.min(5, Math.round(LSN.lvl) || 1));
-  const lsnAuto = () => LSN.auto !== false;
-  const memOn = () => MEM.on !== false;
-  const memFacts = () => (Array.isArray(MEM.facts) ? MEM.facts.filter(f => f && typeof f.t === 'string') : []);
+  const lsnAuto = () => prefGet('lsnAuto', true) !== false;
+  const memOn = () => prefGet('memOn', true) !== false;
+  const memKey = (t) => String(t || '').trim().toLowerCase();
+  const memAlive = (f) => !!f && typeof f.t === 'string' && (f.at || 0) > Math.max(PERSON.mem.cleared || 0, (PERSON.mem.del || {})[memKey(f.t)] || 0);
+  const memFacts = () => (PERSON.mem.facts || []).filter(memAlive).sort((a, b) => (a.at || 0) - (b.at || 0));
+  const memAdd = (t) => { const k = memKey(t); PERSON.mem.facts = memFacts().filter(f => memKey(f.t) !== k).concat([{ t, d:ymd(new Date()), at:Date.now() }]).slice(-30); savePerson(); };
+  const memDrop = (k) => { PERSON.mem.del = Object.assign({}, PERSON.mem.del, { [k]:Date.now() }); PERSON.mem.facts = memFacts().filter(f => memKey(f.t) !== k); savePerson(); };
+  const memWipe = () => { PERSON.mem.cleared = Date.now(); PERSON.mem.facts = []; savePerson(); };
   // facts about health, money, identity documents, politics, religion and the like are never kept, even if the AI suggests them (best effort: a keyword filter)
   const MEM_BLOCK = /health|medic|disease|diagnos|illness|\bill\b|sick|cancer|diabet|asthma|allerg|\bhiv\b|surgery|injur|pain|disab|heart|blood|pill|drug|doctor|hospital|clinic|mental|adhd|autis|bipolar|ptsd|trauma|chronic|pregnan|therapy|therapist|depress|anxi|salary|income|wage|debt|loan|money|bank|credit|password|address|phone number|email|passport|licen[sc]e|religio|church|mosque|temple|politic|vote|party|sexual|gay|lesbian|trans\b|immigra|visa|citizen|arrest|police|crime|prison|divorce|abuse|suicid|death|died|funeral/i;
   const cleanFact = (t) => { t = String(t || '').replace(/\s+/g, ' ').trim().slice(0, 80); return t.length < 4 || MEM_BLOCK.test(t) ? '' : t; };
@@ -255,7 +279,7 @@
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), lsnNote:'', memOn:memOn(), memFacts:memFacts().slice(), aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
+      wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, syncKeys:prefGet('syncKeys', false) === true, aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), lsnNote:'', memOn:memOn(), memFacts:memFacts().slice(), aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
@@ -789,7 +813,13 @@
     friendStats = () => collectFriendStats();
     // Your progress lives on the server too: every device merges into it (the same order-independent merge the GitHub sync uses),
     // so a word, an exam pass or a day's study on one device shows up on all of them.
+    progBusy = false;
     friendsProgressSync = async () => {
+      if (this.progBusy) return false;
+      this.progBusy = true;
+      try { return await this.friendsProgressSyncRun(); } finally { this.progBusy = false; }
+    };
+    friendsProgressSyncRun = async () => {
       const SY = window.ShanluSync;
       if (!FR || !FR.enabled() || !FR.identity() || !SY) return false;
       this.persistNow();
@@ -815,7 +845,12 @@
         else if (merged[LV]) { const next = rollDay(Object.assign({}, this.state, merged[LV])); carryOverErhua(next); patch = SY.pick(next); patch.rq = (patch.rq || []).filter(z => BANK[z]); }
         if (patch) { this.noSync = true; this.noMin = true; this.setState(patch); this.noMin = false; this.noSync = false; this.persistNow(); }
       }
-      if (pushNeeded) await FR.putProgress({ v:1, levels:merged });
+      // the person's own settings and notes (listening level, what Mingming remembers, chat preferences) travel in the same bundle
+      const remoteP = (got && got.progress && got.progress.person) || {};
+      const mergedP = SY.mergePerson ? SY.mergePerson(PERSON, remoteP) : PERSON;
+      if (SY.samePerson && !SY.samePerson(mergedP, PERSON)) { PERSON = mergedP; savePerson(false); this.personApply(); changed = true; }
+      if (SY.samePerson && !SY.samePerson(mergedP, remoteP)) pushNeeded = true;
+      if (pushNeeded) await FR.putProgress({ v:1, levels:merged, person:mergedP });
       return changed;
     };
     friendsFailed = (e) => {
@@ -1106,7 +1141,7 @@
         const last = next[next.length - 1];
         let kept = '';
         if (last && last.who === 'me') {
-          if (memOn()) (p.remember || []).forEach(f => { const t = cleanFact(f); if (t && !kept && !memFacts().some(x => x.t.toLowerCase() === t.toLowerCase())) { kept = t; MEM.facts = memFacts().concat([{ t, d:ymd(new Date()) }]).slice(-30); saveMem(); } });
+          if (memOn()) (p.remember || []).forEach(f => { const t = cleanFact(f); if (t && !kept && !memFacts().some(x => x.t.toLowerCase() === t.toLowerCase())) { kept = t; memAdd(t); } });
           next[next.length - 1] = Object.assign({}, last, { judged:true, fb:p.fb, mem:kept || undefined });   // the judgement is about the learner's last line
           this.lsnJudge(next[next.length - 2], p.understood);
         }
@@ -1189,7 +1224,7 @@
       saveLsn(); this.setState({ lsnLvl:lsnLvl(), lsnNote:note });
     };
     lsnStep = (d) => { LSN.lvl = Math.max(1, Math.min(5, lsnLvl() + d)); LSN.ok = 0; LSN.miss = 0; saveLsn(); this.setState({ lsnLvl:lsnLvl(), lsnNote:'' }); };
-    lsnAutoToggle = () => { LSN.auto = !lsnAuto(); saveLsn(); this.setState({ lsnAuto:lsnAuto(), lsnNote:'' }); };
+    lsnAutoToggle = () => { prefSet('lsnAuto', !lsnAuto()); this.setState({ lsnAuto:lsnAuto(), lsnNote:'' }); };
     aiPlay = (k) => {
       const a = this.state.aim.slice(); const m = a[k]; if (!m) return;
       a[k] = Object.assign({}, m, { plays:(m.plays || 0) + 1 }); this.setState({ aim:a });
@@ -1209,28 +1244,66 @@
       }, 500);
     };
     aiHfToggle = () => {
-      AICFG.handsFree = !this.state.handsFree; saveAiCfg(); this.setState({ handsFree:!!AICFG.handsFree });
+      AICFG.handsFree = !this.state.handsFree; saveAiCfg(); prefSet('handsFree', !!AICFG.handsFree); this.setState({ handsFree:!!AICFG.handsFree });
       const S = this.state, last = S.aim[S.aim.length - 1];
       if (S.handsFree && last && last.who === 'ai' && !S.aiBusy && !S.aiListen && this.voiceOnlyOn()) this.aiMic(true);
     };
-    // what Mingming remembers (device only)
-    memToggle = () => { MEM.on = !memOn(); saveMem(); this.setState({ memOn:memOn() }); };
-    memForget = (i) => { const f = memFacts().slice(); f.splice(i, 1); MEM.facts = f; saveMem(); this.setState({ memFacts:f }); };
-    memClear = () => { MEM.facts = []; saveMem(); this.setState({ memFacts:[] }); };
+    // API keys follow the person only when they switch this on (they would be stored on the group's server)
+    secretsChanged = () => {
+      if (!prefGet('syncKeys', false)) return;
+      PERSON.secrets = { v:{ key:AICFG.key || null, aliKey:aliCfg().key || null, aliWs:aliCfg().ws || '' }, at:Date.now() }; savePerson();
+    };
+    keySyncToggle = () => {
+      const on = !prefGet('syncKeys', false);
+      prefSet('syncKeys', on);
+      if (on) { if (AICFG.key || aliCfg().key) this.secretsChanged(); }
+      else { PERSON.secrets = { v:null, at:Date.now() }; savePerson(); }   // a newer empty copy takes the keys off the server
+      this.setState({ syncKeys:on });
+    };
+    // what arrived from the person's other devices becomes the live setting here
+    personApply = () => {
+      const g = (k) => (PERSON.prefs[k] ? PERSON.prefs[k].v : undefined);
+      [['voiceOnly', 'voiceOnly'], ['handsFree', 'handsFree'], ['ttsMode', 'ttsMode'], ['ttsVoice', 'ttsVoice'], ['asr', 'asr'], ['provider', 'provider'], ['claudeModel', 'model']].forEach(p => { if (g(p[0]) !== undefined) AICFG[p[1]] = g(p[0]); });
+      const sec = PERSON.secrets && PERSON.secrets.v;
+      if (prefGet('syncKeys', false) && sec) {
+        if (sec.key) AICFG.key = sec.key; else delete AICFG.key;
+        if (sec.aliKey) AICFG.ali = Object.assign({ model:'qwen-flash' }, AICFG.ali, { key:sec.aliKey, ws:sec.aliWs || '' }); else delete AICFG.ali;
+      }
+      if (g('aliModel') !== undefined && AICFG.ali) AICFG.ali.model = g('aliModel');
+      saveAiCfg();
+      if (PERSON.lsn && PERSON.lsn.v) { LSN.lvl = PERSON.lsn.v.lvl || 1; LSN.ok = PERSON.lsn.v.ok || 0; LSN.miss = PERSON.lsn.v.miss || 0; }
+      this.setState({ aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), asrMode:asrModeNow(), aiProvider:aiProviderNow(), aiOn:aiReadyNow(), aliOn:!!aliCfg().key,
+        aiModel:AICFG.model || this.state.aiModel, aliModelInput:aliCfg().model || this.state.aliModelInput, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), memOn:memOn(), memFacts:memFacts(), syncKeys:prefGet('syncKeys', false) === true });
+    };
+    personTimer = null; personAt = 0;
+    personChanged = () => {   // a change was made here: send it to the group's server soon, but not on every tap
+      clearTimeout(this.personTimer);
+      this.personTimer = setTimeout(() => {
+        if (!FR || !FR.enabled() || !FR.identity()) return;
+        if (Date.now() - this.personAt < 45000) { this.personChanged(); return; }
+        this.personAt = Date.now();
+        this.friendsProgressSync().catch(() => {});
+      }, 20000);
+    };
+    // what Mingming remembers (follows the person)
+    memRemember = (t) => { const c = cleanFact(t); if (c && memOn()) memAdd(c); this.setState({ memFacts:memFacts() }); };
+    memToggle = () => { prefSet('memOn', !memOn()); this.setState({ memOn:memOn() }); };
+    memForget = (i) => { const f = memFacts()[i]; if (f) memDrop(memKey(f.t)); this.setState({ memFacts:memFacts() }); };
+    memClear = () => { memWipe(); this.setState({ memFacts:[] }); };
     // voice only: what the microphone heard is sent by itself (the recognised line stays on screen, with any correction under it)
     voiceOnlyOn = () => { const S = this.state; return !!S.aiVoiceOnly && !S.aiTyping && this.hasMicNow(); };
     hasMicNow = () => (this.state.asrMode === 'alibaba' ? !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && (window.AudioContext || window.webkitAudioContext)) : !!(window.webkitSpeechRecognition || window.SpeechRecognition));
     aiAutoSend = () => { if (this.voiceOnlyOn() && (this.state.aiInput || '').trim() && !this.state.aiBusy) this.aiSend(); };
     aiVoToggle = () => {
       if (this.voiceOnlyOn()) { this.setState({ aiTyping:true }); return; }
-      AICFG.voiceOnly = true; saveAiCfg(); this.setState({ aiVoiceOnly:true, aiTyping:false });
+      AICFG.voiceOnly = true; saveAiCfg(); prefSet('voiceOnly', true); this.setState({ aiVoiceOnly:true, aiTyping:false });
     };
     aiReveal = (k) => { const a = this.state.aim.slice(); if (!a[k]) return; a[k] = Object.assign({}, a[k], { rev:true }); this.setState({ aim:a }); };
     setTtsMode = (m) => {
       if (m === 'qwen' && !aliCfg().key) { this.setState({ aliNote:'Save an Alibaba key first, then Qwen can speak for Mingming.' }); return; }
-      AICFG.ttsMode = m; saveAiCfg(); this.ttsWarned = false; this.setState({ ttsMode:ttsModeNow() });
+      AICFG.ttsMode = m; saveAiCfg(); prefSet('ttsMode', m); this.ttsWarned = false; this.setState({ ttsMode:ttsModeNow() });
     };
-    setTtsVoice = (v) => { AICFG.ttsVoice = v; saveAiCfg(); this.setState({ ttsVoice:ttsVoiceNow() }); if (ttsModeNow() === 'qwen') this.sayAi('你好，我是明明。我们说中文吧。', 'ttsdemo'); };
+    setTtsVoice = (v) => { AICFG.ttsVoice = v; saveAiCfg(); prefSet('ttsVoice', v); this.setState({ ttsVoice:ttsVoiceNow() }); if (ttsModeNow() === 'qwen') this.sayAi('你好，我是明明。我们说中文吧。', 'ttsdemo'); };
     aiPickAlt = (t) => { this.setState({ aiInput:t, aiAlts:[] }); };
     aiShowSug = () => { const a = this.state.aim.slice(); const i = a.length - 1; if (i < 0 || !a[i].sug) return; a[i] = Object.assign({}, a[i], { sug:Object.assign({}, a[i].sug, { open:true }) }); this.setState({ aim:a }); };
     aiUseSug = () => { const a = this.state.aim; const m = a[a.length - 1]; if (m && m.sug) this.setState({ aiInput:m.sug.zh }); };
@@ -1242,17 +1315,17 @@
     aiSaveKey = () => {
       const k = (this.state.aiKeyInput || '').trim();
       if (!k) { this.setState({ aiNote:'Paste your API key first.' }); return; }
-      AICFG.key = k; AICFG.model = this.state.aiModel; saveAiCfg();
+      AICFG.key = k; AICFG.model = this.state.aiModel; saveAiCfg(); prefSet('claudeModel', AICFG.model); this.secretsChanged();
       this.setState({ aiOn:aiReadyNow(), aiKeyInput:'', aiNote:'Saved on this device.' });
     };
-    aiRemoveKey = () => { delete AICFG.key; delete AICFG.model; saveAiCfg(); this.setState({ aiOn:aiReadyNow(), aiNote:'The key was removed from this device.', aim:[] }); };
-    aiSetModel = (m) => { AICFG.model = m; if (AICFG.key) saveAiCfg(); this.setState({ aiModel:m }); };
+    aiRemoveKey = () => { delete AICFG.key; delete AICFG.model; saveAiCfg(); this.secretsChanged(); this.setState({ aiOn:aiReadyNow(), aiNote:'The key was removed from this device.', aim:[] }); };
+    aiSetModel = (m) => { AICFG.model = m; if (AICFG.key) saveAiCfg(); prefSet('claudeModel', m); this.setState({ aiModel:m }); };
     // which service writes Mingming's lines
     viewProvider = (p) => { this.setState({ aiTab:p, aiNote:'', aliNote:'' }); };   // which settings form is shown; nothing else changes
     setProvider = (p) => {
       const has = p === 'alibaba' ? !!aliCfg().key : !!AICFG.key;
       if (!has) return;
-      AICFG.provider = p; saveAiCfg();
+      AICFG.provider = p; saveAiCfg(); prefSet('provider', p);
       this.setState({ aiTab:p, aiProvider:aiProviderNow(), aiOn:aiReadyNow(), aim:[], aiNote:'', aliNote:'', aiErr:'' });
     };
     aliSaveKey = () => {
@@ -1262,12 +1335,12 @@
       if (!/^[A-Za-z0-9_-]*$/.test(ws)) { this.setState({ aliNote:'The workspace ID should be letters, numbers, dashes and underscores only. Leave it empty if you are not sure.' }); return; }
       if (!k && !aliCfg().key) { this.setState({ aliNote:'Paste your Alibaba API key first.' }); return; }
       AICFG.ali = { key:k || aliCfg().key, ws, model };
-      if (!AICFG.key || AICFG.provider === 'alibaba') AICFG.provider = 'alibaba';
-      saveAiCfg();
+      if (!AICFG.key || AICFG.provider === 'alibaba') { AICFG.provider = 'alibaba'; prefSet('provider', 'alibaba'); }
+      saveAiCfg(); prefSet('aliModel', model); this.secretsChanged();
       this.setState({ aliOn:true, aliKeyInput:'', aliModelInput:model, aiTab:'alibaba', aiProvider:aiProviderNow(), aiOn:aiReadyNow(), aliNote:'Saved on this device. Press "Test connection" to check it.' });
     };
     aliRemoveKey = () => {
-      delete AICFG.ali; if (AICFG.provider === 'alibaba') AICFG.provider = 'anthropic'; if (AICFG.asr === 'alibaba') AICFG.asr = 'browser'; saveAiCfg();
+      delete AICFG.ali; if (AICFG.provider === 'alibaba') { AICFG.provider = 'anthropic'; prefSet('provider', 'anthropic'); } if (AICFG.asr === 'alibaba') { AICFG.asr = 'browser'; prefSet('asr', 'browser'); } saveAiCfg(); this.secretsChanged();
       this.setState({ aliOn:false, aliWsInput:'', aliModelInput:'qwen-flash', aiProvider:aiProviderNow(), aiOn:aiReadyNow(), asrMode:'browser', aliNote:'The Alibaba key was removed from this device.', aim:[] });
     };
     aliPreset = (m) => { this.setState({ aliModelInput:m }); };
@@ -1285,7 +1358,7 @@
     };
     setAsr = (m) => {
       if (m === 'alibaba' && !aliCfg().key) { this.setState({ aliNote:'Save an Alibaba key first, then you can use it to hear you.' }); return; }
-      AICFG.asr = m; saveAiCfg(); this.setState({ asrMode:asrModeNow() });
+      AICFG.asr = m; saveAiCfg(); prefSet('asr', m); this.setState({ asrMode:asrModeNow() });
     };
     // recording for Alibaba's recogniser: stops by itself after a pause once you have spoken (or when you tap again)
     recStop = null;
@@ -1723,6 +1796,8 @@
       const lastM = S.aim[S.aim.length - 1];
       const sg = lastM && lastM.who === 'ai' && lastM.sug && !S.aiBusy ? lastM.sug : null;
       return {
+        personSyncOn:!!(FR && FR.enabled() && FR.identity()), personSyncOff:!(FR && FR.enabled() && FR.identity()),
+        keySyncCls:S.syncKeys ? 'on' : '', keySyncLabel:S.syncKeys ? 'On: my keys follow me' : 'Off: keys stay on each device', keySyncToggle:this.keySyncToggle,
         lsnLine:'Listening level ' + S.lsnLvl + ' of 5 · ' + LSN_LEVELS[S.lsnLvl - 1].name, lsnEasier:() => this.lsnStep(-1), lsnHarder:() => this.lsnStep(1), lsnAutoLabel:'Auto-adjust: ' + (S.lsnAuto ? 'on' : 'off'), lsnAutoToggle:this.lsnAutoToggle,
         lsnNote:S.lsnNote, hasLsnNote:!!S.lsnNote, aiHfLabel:'Hands-free: ' + (S.handsFree ? 'on' : 'off'), aiHfToggle:this.aiHfToggle,
         memOnLabel:S.memOn ? 'On: Mingming remembers' : 'Off: nothing is kept', memCls:S.memOn ? 'on' : '', memToggle:this.memToggle, memClear:this.memClear, hasMemFacts:S.memFacts.length > 0, noMemFacts:S.memFacts.length === 0,
@@ -2485,6 +2560,7 @@
   const root = document.getElementById('app');
   const tpl = document.getElementById('app-template');
   const app = DCMount(root, tpl, Component);
+  onPersonChange = () => { try { app.personChanged(); } catch (e) {} };
   window.shanlu = app;
 
   // keyboard: Space flips a review card, 1-4 rate it; in the exam, arrows move and A-F or 1-6 choose

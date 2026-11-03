@@ -196,7 +196,10 @@
         </div>
       </sc-if>
       <h3 style="margin:18px 0 0;font-size:17px">What Mingming remembers</h3>
-      <p class="muted" style="margin:6px 0 0;font-size:15.5px">Light everyday facts you tell her (a hobby, a food you like, a plan), so the next chat can pick them up naturally. They are kept only on this device: not synced, not exported, not on any server. The AI service does see them while a chat is running. Health, money, politics, religion and documents are filtered out (a keyword filter, so not perfect).</p>
+      <p class="muted" style="margin:6px 0 0;font-size:15.5px">Light everyday facts you tell her (a hobby, a food you like, a plan), so the next chat can pick them up naturally.</p>
+      <sc-if value="{{personSyncOn}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:6px 0 0;font-size:15.5px">They follow you: they are saved with your progress on the group's server, so every device of yours has the same ones. Only you (and whoever runs the server) can read them; the other friends cannot.</p></sc-if>
+      <sc-if value="{{personSyncOff}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:6px 0 0;font-size:15.5px">They are kept on this device. If you join the study group (Friends tab), they follow you to your other devices.</p></sc-if>
+      <p class="muted" style="margin:6px 0 0;font-size:15.5px">The AI service does see them while a chat is running. Health, money, politics, religion and documents are filtered out (a keyword filter, so not perfect).</p>
       <div style="margin-top:10px"><button class="fc2 {{memCls}}" onClick="{{memToggle}}">{{memOnLabel}}</button></div>
       <sc-if value="{{noMemFacts}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:10px 0 0;font-size:15px">Nothing remembered yet.</p></sc-if>
       <sc-if value="{{hasMemFacts}}" hint-placeholder-val="{{ false }}">
@@ -204,6 +207,11 @@
           <sc-for list="{{memList}}" as="f" hint-placeholder-count="2"><div style="display:flex;gap:10px;align-items:center;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line)"><span>{{f.t}} <span class="muted" style="font-size:13.5px">{{f.d}}</span></span><button class="linkbtn" onClick="{{f.forget}}">Forget</button></div></sc-for>
         </div>
         <div style="margin-top:8px"><button class="linkbtn" onClick="{{memClear}}">Forget everything</button></div>
+      </sc-if>
+      <sc-if value="{{personSyncOn}}" hint-placeholder-val="{{ false }}">
+        <h3 style="margin:18px 0 0;font-size:17px">API keys on all my devices</h3>
+        <p class="muted" style="margin:6px 0 0;font-size:15.5px">Your chat settings, listening level and remembered facts already follow you. API keys are the exception, unless you switch this on: then your keys are saved with your progress on the group's server so your other devices can use them without pasting them again. Whoever runs the server can read them (the other friends cannot). Switching it off removes them from the server; the copies on your devices stay.</p>
+        <div style="margin-top:10px"><button class="fc2 {{keySyncCls}}" onClick="{{keySyncToggle}}">{{keySyncLabel}}</button></div>
       </sc-if>
       <sc-if value="{{hasAliNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aliNote}}</div></sc-if>
       <sc-if value="{{hasAiNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aiNote}}</div></sc-if>
@@ -1074,7 +1082,7 @@
         <label class="kick" for="fr-code" style="margin-top:12px">Invite code</label>
         <input id="fr-code" class="inp" type="text" autocomplete="off" autocapitalize="characters" placeholder="From your invite link" value="{{frCode}}" onInput="{{onFrCode}}">
         <button class="btn pri big" style="margin-top:16px" onClick="{{friendsJoin}}">{{frJoinText}}</button>
-        <p class="muted" style="margin:14px 0 0;font-size:14.5px">The group sees your minutes each day, your streak, words in memory, level and exam passes. Never your word list. Your own progress is also saved on the group's server so your devices stay the same; other friends cannot see it.</p>
+        <p class="muted" style="margin:14px 0 0;font-size:14.5px">The group sees your minutes each day, your streak, words in memory, level and exam passes. Never your word list. Your own progress, listening level, remembered facts and chat settings are also saved on the group's server so your devices stay the same; other friends cannot see them.</p>
       </section>
     </sc-if>
     <sc-if value="{{frJoined}}" hint-placeholder-val="{{ false }}">
@@ -1113,7 +1121,7 @@
             <button class="btn" onClick="{{frCopy}}">{{frLinkText}}</button>
             <button class="btn" onClick="{{frLeave}}">{{frLeaveText}}</button>
           </div>
-          <p class="muted" style="margin:12px 0 0;font-size:14.5px">The group sees your minutes each day, your streak, words in memory, level and exam passes. Never your word list. Your progress is also saved on the group's server so all your devices stay the same (other friends cannot see it). It is sent when you open the app, now and then while you study, and when you leave it.</p>
+          <p class="muted" style="margin:12px 0 0;font-size:14.5px">The group sees your minutes each day, your streak, words in memory, level and exam passes. Never your word list. Your progress, listening level, remembered facts and chat settings are also saved on the group's server so all your devices stay the same (other friends cannot see them). It is sent when you open the app, now and then while you study, and when you leave it.</p>
         </section>
       </sc-if>
     </sc-if>

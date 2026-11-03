@@ -161,5 +161,42 @@
     return { merged, wrote, gistId: id, created: false };
   }
 
-  return { SYNC_KEYS, FILE, fileFor, DESCRIPTION, merge, pick, round, gistApi, mergeWs, same, dayMinutes };
+  // ---- the person's own settings and notes, which follow them to every device (not study progress, which merge() handles) ----
+  // person = { prefs: { name: {v, at} }, lsn: {v, at}, secrets: {v, at}, mem: { facts: [{t, d, at}], del: { text: at }, cleared: at } }
+  // Every value is stamped with the time it was set; the newer stamp wins. Deleted notes leave a stamped tombstone so they stay deleted.
+  const MEM_MAX = 30, TOMB_DAYS = 90;
+  function lww(a, b) {
+    if (!isObj(a)) return isObj(b) ? b : undefined;
+    if (!isObj(b)) return a;
+    if ((a.at || 0) !== (b.at || 0)) return (a.at || 0) > (b.at || 0) ? a : b;
+    return JSON.stringify(a.v) >= JSON.stringify(b.v) ? a : b;
+  }
+  const factKey = (t) => String(t || '').trim().toLowerCase();
+  function mergePerson(a, b) {
+    a = isObj(a) ? a : {}; b = isObj(b) ? b : {};
+    const out = { prefs: {} };
+    const names = {};
+    Object.keys(a.prefs || {}).concat(Object.keys(b.prefs || {})).forEach(k => { names[k] = true; });
+    Object.keys(names).sort().forEach(k => { const r = lww((a.prefs || {})[k], (b.prefs || {})[k]); if (r) out.prefs[k] = r; });
+    const lsn = lww(a.lsn, b.lsn); if (lsn) out.lsn = lsn;
+    const sec = lww(a.secrets, b.secrets); if (sec) out.secrets = sec;
+    const ma = isObj(a.mem) ? a.mem : {}, mb = isObj(b.mem) ? b.mem : {};
+    const cleared = maxNum(ma.cleared, mb.cleared);
+    const del = maxObj(ma.del, mb.del);
+    const byKey = {};
+    (ma.facts || []).concat(mb.facts || []).forEach(f => {
+      if (!f || typeof f.t !== 'string') return;
+      const k = factKey(f.t), cur = byKey[k];
+      if (!cur || (f.at || 0) > (cur.at || 0) || ((f.at || 0) === (cur.at || 0) && f.t > cur.t)) byKey[k] = { t: f.t, d: f.d || '', at: f.at || 0 };
+    });
+    const alive = Object.keys(byKey).map(k => byKey[k]).filter(f => f.at > Math.max(cleared, del[factKey(f.t)] || 0));
+    alive.sort((x, y) => (x.at - y.at) || (x.t < y.t ? -1 : x.t > y.t ? 1 : 0));
+    const cutoff = Date.now() - TOMB_DAYS * 86400000;
+    const keepDel = {}; Object.keys(del).forEach(k => { if (del[k] > cutoff) keepDel[k] = del[k]; });
+    out.mem = { facts: alive.slice(-MEM_MAX), del: keepDel, cleared };
+    return out;
+  }
+  function samePerson(a, b) { return JSON.stringify(mergePerson(a, a)) === JSON.stringify(mergePerson(b, b)); }
+
+  return { SYNC_KEYS, FILE, fileFor, DESCRIPTION, merge, pick, round, gistApi, mergeWs, same, dayMinutes, mergePerson, samePerson };
 });

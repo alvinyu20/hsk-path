@@ -83,6 +83,28 @@ function fakeGithub() {
   check(S.dayMinutes({ minLog: { '2026-11-01': 9 } }, '2026-11-01') === 9 && S.dayMinutes({}, '2026-11-01') === 0, 'older saves without per-device numbers still count');
   const many = {}; for (let i = 1; i <= 80; i++) many['2026-01-' + String(i).padStart(2, '0')] = { d: i };
   check(Object.keys(S.merge({ minDev: many }, {}).minDev).length === 60, 'only the last 60 days of minutes are kept');
+  // the person's own settings and notes (follow them to every device)
+  const T = Date.now();
+  const pA = { prefs: { voiceOnly: { v: true, at: T - 1000 }, ttsVoice: { v: 'Cherry', at: T - 500 } }, lsn: { v: { lvl: 2, ok: 1, miss: 0 }, at: T - 400 },
+    mem: { facts: [{ t: 'learner likes hiking', d: '2026-11-03', at: T - 900 }, { t: 'learner has a cat', d: '2026-11-03', at: T - 800 }], del: {}, cleared: 0 } };
+  const pB = { prefs: { voiceOnly: { v: false, at: T - 100 }, handsFree: { v: true, at: T - 50 } }, lsn: { v: { lvl: 3, ok: 0, miss: 0 }, at: T - 10 },
+    mem: { facts: [{ t: 'learner likes tea', d: '2026-11-03', at: T - 700 }], del: { 'learner has a cat': T - 300 }, cleared: 0 } };
+  const pm = S.mergePerson(pA, pB);
+  check(pm.prefs.voiceOnly.v === false && pm.prefs.ttsVoice.v === 'Cherry' && pm.prefs.handsFree.v === true, 'a setting changed later on one device wins; others are kept');
+  check(pm.lsn.v.lvl === 3, 'the listening level set last wins');
+  check(pm.mem.facts.map(f => f.t).join() === 'learner likes hiking,learner likes tea', 'remembered facts from both devices are kept, and a fact forgotten on one device stays forgotten');
+  check(JSON.stringify(S.mergePerson(pA, pB)) === JSON.stringify(S.mergePerson(pB, pA)), 'person data merges the same in either order');
+  check(S.samePerson(S.mergePerson(pm, pm), pm) && S.samePerson(S.mergePerson(pm, pA), pm), 'merging again changes nothing');
+  const readded = S.mergePerson(pm, { mem: { facts: [{ t: 'learner has a cat', d: '2026-11-04', at: T + 5 }], del: {}, cleared: 0 } });
+  check(readded.mem.facts.some(f => f.t === 'learner has a cat'), 'a fact told again after it was forgotten comes back');
+  const cleared = S.mergePerson(pm, { mem: { facts: [], del: {}, cleared: T } });
+  check(cleared.mem.facts.length === 0 && S.mergePerson(cleared, pA).mem.facts.length === 0, 'Forget everything wipes the older facts on every device');
+  const secA = { prefs: {}, secrets: { v: { key: null, aliKey: 'sk-x' }, at: T - 5 } };
+  check(S.mergePerson(secA, { prefs: {}, secrets: { v: null, at: T } }).secrets.v === null, 'switching key sharing off (a newer empty copy) removes the keys');
+  const many2 = []; for (let i = 0; i < 45; i++) many2.push({ t: 'learner fact number ' + i, d: '', at: T - 1000 + i });
+  const capped = S.mergePerson({ mem: { facts: many2, del: {}, cleared: 0 } }, {});
+  check(capped.mem.facts.length === 30 && capped.mem.facts[29].t === 'learner fact number 44', 'only the 30 newest facts are kept');
+  check(S.samePerson(undefined, {}) && S.samePerson(null, { prefs: {} }), 'empty person data is all the same');
   console.log(failures ? failures + ' check(s) failed' : 'all sync checks passed');
   process.exit(failures ? 1 : 0);
 })();

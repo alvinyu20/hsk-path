@@ -126,6 +126,35 @@ const INVITE = 'ABCD-EFGH-JKLM';
   const sa = await A.page.evaluate(() => window.shanlu.friendStats()), se = await E.page.evaluate(() => window.shanlu.friendStats());
   check(await A.page.evaluate(() => window.shanlu.state.ws['谢谢'].see.s === 4), 'a word studied on the second device appears on the first');
   check(JSON.stringify(sa) === JSON.stringify(se) && sa.mem > 0 && sa.last7[6] === 60 + 5 + 20 && sa.passed.includes(1), 'both devices report identical totals ' + (JSON.stringify(sa) === JSON.stringify(se) ? '' : JSON.stringify(sa) + ' vs ' + JSON.stringify(se)) + ', with minutes from both devices added up (60 on the first, 5 from the HSK 2 save, 20 on the second = ' + sa.last7[6] + ' today)');
+  // the person's own settings and notes follow them to every device
+  const serverCopy = (pg) => pg.evaluate(async (api) => { const v = JSON.parse(localStorage.getItem('shanlu-friends')); const r = await fetch(api + '/api/me/progress', { headers: { authorization: 'Bearer ' + v.id + '.' + v.key } }); return r.text(); }, api);
+  await A.page.evaluate(() => {
+    const app = window.shanlu;
+    app.lsnStep(2); app.setTtsVoice('Neil'); app.aiHfToggle(); app.memRemember('learner likes hiking');
+    app.setState({ aliKeyInput: 'sk-ali-secret' }); app.aliSaveKey();
+  });
+  await A.page.evaluate(() => window.shanlu.friendsPush({}));
+  await E.page.evaluate(() => window.shanlu.friendsPush({}));
+  const pe = await E.page.evaluate(() => ({ lvl: window.shanlu.state.lsnLvl, voice: window.shanlu.state.ttsVoice, hf: window.shanlu.state.handsFree, facts: window.shanlu.state.memFacts.map(f => f.t), ali: (JSON.parse(localStorage.getItem('shanlu-ai')).ali || {}).key || null, on: window.shanlu.state.aiOn }));
+  check(pe.lvl === 3 && pe.voice === 'Neil' && pe.hf === true && pe.facts.join() === 'learner likes hiking', 'the listening level, chat settings and remembered facts reach the person\'s other device');
+  check(pe.ali === null && !(await serverCopy(A.page)).includes('sk-ali-secret'), 'API keys stay on the device by default and are not on the server');
+  await A.page.evaluate(() => window.shanlu.keySyncToggle());
+  await A.page.evaluate(() => window.shanlu.friendsPush({}));
+  await E.page.evaluate(() => window.shanlu.friendsPush({}));
+  const pe2 = await E.page.evaluate(() => ({ ali: (JSON.parse(localStorage.getItem('shanlu-ai')).ali || {}).key || null, on: window.shanlu.state.aiOn, keys: window.shanlu.state.syncKeys }));
+  check(pe2.ali === 'sk-ali-secret' && pe2.on === true && pe2.keys === true && (await serverCopy(A.page)).includes('sk-ali-secret'), 'switching key sharing on gives the other device the key');
+  await E.page.evaluate(() => { window.shanlu.memForget(0); window.shanlu.lsnStep(1); });
+  await E.page.evaluate(() => window.shanlu.friendsPush({}));
+  await A.page.evaluate(() => window.shanlu.friendsPush({}));
+  const pa = await A.page.evaluate(() => ({ lvl: window.shanlu.state.lsnLvl, facts: window.shanlu.state.memFacts.length }));
+  check(pa.lvl === 4 && pa.facts === 0, 'a fact forgotten and a level changed on one device show up on the other');
+  await E.page.evaluate(() => window.shanlu.keySyncToggle());
+  await E.page.evaluate(() => window.shanlu.friendsPush({}));
+  check(!(await serverCopy(E.page)).includes('sk-ali-secret'), 'switching key sharing off removes the keys from the server');
+  await A.page.evaluate(() => window.shanlu.friendsPush({}));
+  check((await A.page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-ai')).ali.key)) === 'sk-ali-secret' && (await E.page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-ai')).ali.key)) === 'sk-ali-secret', 'the keys stay on the devices that already have them');
+  const exp = await A.page.evaluate(() => { window.shanlu.persistNow(); return JSON.stringify(JSON.parse(localStorage.getItem('shanlu-progress-v1'))); });
+  check(!exp.includes('sk-ali-secret') && !exp.includes('hiking'), 'none of it is in the progress file that is exported or synced to GitHub');
   await E.ctx.close();
 
   // personal link signs in on another device

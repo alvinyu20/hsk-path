@@ -2,7 +2,7 @@
 
 A tiny server so you and your friends can see each other's study totals. It is **optional**: until you put its address in `config.js`, the Friends tab stays hidden and the site works exactly as before.
 
-**What it stores** (per person): a first name, a few totals shown to the group (minutes studied each of the last 7 days, streak, words in memory, level, exam passes), and a private copy of that person's own study progress (words, exam passes, minutes), so every device of the same person shows the same thing. Friends can see only the totals, never the progress copy. You, as the owner, could read it in the database console, so only invite people you trust. The server throws away anything it does not recognise in the totals.
+**What it stores** (per person): a first name, a few totals shown to the group (minutes studied each of the last 7 days, streak, words in memory, level, exam passes), and a private copy of that person's own study progress (words, exam passes, minutes) plus their own settings and notes (listening level, what the AI chat remembers about them, chat preferences, and API keys only if that person switches key sharing on), so every device of the same person shows the same thing. Friends can see only the totals, never the progress copy. You, as the owner, could read it in the database console, so only invite people you trust. The server throws away anything it does not recognise in the totals.
 
 **How people get in, without accounts or passwords:** you send each friend an invite link. They open it, type their first name, done. The app keeps a secret key on their device (the server stores only a hash of it). To use a second device, they copy "their link" from the Friends screen and open it there.
 
