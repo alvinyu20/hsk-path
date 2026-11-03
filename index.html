@@ -195,6 +195,16 @@
           <sc-for list="{{ttsVoiceOpts}}" as="o" hint-placeholder-count="5"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
         </div>
       </sc-if>
+      <h3 style="margin:18px 0 0;font-size:17px">What Mingming remembers</h3>
+      <p class="muted" style="margin:6px 0 0;font-size:15.5px">Light everyday facts you tell her (a hobby, a food you like, a plan), so the next chat can pick them up naturally. They are kept only on this device: not synced, not exported, not on any server. The AI service does see them while a chat is running. Health, money, politics, religion and documents are filtered out (a keyword filter, so not perfect).</p>
+      <div style="margin-top:10px"><button class="fc2 {{memCls}}" onClick="{{memToggle}}">{{memOnLabel}}</button></div>
+      <sc-if value="{{noMemFacts}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:10px 0 0;font-size:15px">Nothing remembered yet.</p></sc-if>
+      <sc-if value="{{hasMemFacts}}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:10px">
+          <sc-for list="{{memList}}" as="f" hint-placeholder-count="2"><div style="display:flex;gap:10px;align-items:center;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line)"><span>{{f.t}} <span class="muted" style="font-size:13.5px">{{f.d}}</span></span><button class="linkbtn" onClick="{{f.forget}}">Forget</button></div></sc-for>
+        </div>
+        <div style="margin-top:8px"><button class="linkbtn" onClick="{{memClear}}">Forget everything</button></div>
+      </sc-if>
       <sc-if value="{{hasAliNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aliNote}}</div></sc-if>
       <sc-if value="{{hasAiNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aiNote}}</div></sc-if>
     </section>
@@ -759,7 +769,8 @@
                 <button class="spk {{m.pc}}" aria-label="Hear this line" onClick="{{m.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
               </sc-if>
             </div>
-            <sc-if value="{{m.canReveal}}" hint-placeholder-val="{{ false }}"><div class="note"><button class="linkbtn" onClick="{{m.reveal}}">Show text</button></div></sc-if>
+            <sc-if value="{{m.canReveal}}" hint-placeholder-val="{{ false }}"><div class="note"><button class="linkbtn" onClick="{{m.reveal}}">Show text</button><sc-if value="{{m.canSlow}}" hint-placeholder-val="{{ false }}"> · <button class="linkbtn" onClick="{{m.slower}}">Hear it slower</button></sc-if></div></sc-if>
+            <sc-if value="{{m.hasMem}}" hint-placeholder-val="{{ false }}"><div class="note good">Mingming will remember: {{m.memText}}</div></sc-if>
             <sc-if value="{{m.hasOutside}}" hint-placeholder-val="{{ false }}"><div class="note">{{m.outsideText}}</div></sc-if>
             <sc-if value="{{m.hasPv}}" hint-placeholder-val="{{ false }}"><div class="note pv">{{m.pvText}}</div></sc-if>
             <sc-if value="{{m.hasOk}}" hint-placeholder-val="{{ false }}"><div class="note good">Sounds natural.</div></sc-if>
@@ -792,7 +803,10 @@
           <sc-if value="{{aiHasMic}}" hint-placeholder-val="{{ true }}"><button class="btn {{aiMicCls}}" onClick="{{aiMic}}">{{aiMicLabel}}</button></sc-if>
           <button class="linkbtn" onClick="{{aiSimpler}}">Say it slower or again</button>
           <sc-if value="{{aiCanVo}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" onClick="{{aiVoToggle}}">{{aiVoToggleLabel}}</button></sc-if>
+          <sc-if value="{{aiVo}}" hint-placeholder-val="{{ false }}"><button class="linkbtn" onClick="{{aiHfToggle}}">{{aiHfLabel}}</button></sc-if>
         </div>
+        <div class="ai-lsn"><span class="muted">{{lsnLine}}</span><button class="linkbtn" onClick="{{lsnEasier}}">Easier</button><button class="linkbtn" onClick="{{lsnHarder}}">Harder</button><button class="linkbtn" onClick="{{lsnAutoToggle}}">{{lsnAutoLabel}}</button></div>
+        <sc-if value="{{hasLsnNote}}" hint-placeholder-val="{{ false }}"><div class="note good" role="status">{{lsnNote}}</div></sc-if>
         <sc-if value="{{aiNoMic}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0;font-size:14.5px">This browser has no speech input for websites. On an iPhone, tap the microphone key on your keyboard to dictate Chinese into the box (add the Chinese keyboard first), or try the site in Safari.</p></sc-if>
         <sc-if value="{{aiVo}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0;font-size:14.5px">Voice only: tap Speak and talk at a normal pace. When you stop, what the microphone heard is sent by itself and Mingming answers out loud. Tap Show text under a line if you need to read it. Corrections appear under your own line. Pinyin comes from this site's own word list. The AI can make mistakes too.</p></sc-if>
         <sc-if value="{{aiNotVo}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:0;font-size:14.5px">Tap Speak and talk at a normal pace: it keeps listening through short pauses and stops by itself after a moment (or tap again to stop). What it hears lands in the box: check it, fix it if needed, then press Send. Pinyin comes from this site's own word list. The AI can make mistakes too.</p></sc-if>

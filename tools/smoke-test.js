@@ -856,7 +856,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await text()).includes('API key was rejected'), 'a rejected key is explained');
   // Alibaba Qwen: chat and voice recogniser, against a fake Alibaba API
   const aliCalls = [];
-  let aliChatN = 0, ttsMode2 = 'ok';
+  let aliChatN = 0, ttsMode2 = 'ok', aliUnderstood = null, aliRemember = [];
   const silentWav = Buffer.from('UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=', 'base64');
   await ctx.route('https://tts-files.test/**', (r) => r.fulfill({ status: 200, headers: { 'access-control-allow-origin': '*' }, contentType: 'audio/wav', body: silentWav }));
   const aliHandler = async (r) => {
@@ -875,6 +875,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     aliChatN++;
     const reply = aliChatN === 1 ? { reply: { zh: '你好！你想去哪儿？', en: 'Hello! Where do you want to go?' }, feedback: { level: 'ok', better: '', why: '' }, suggest: { zh: '我想去学校。', en: 'I want to go to school.' } }
       : { reply: { zh: '好的。', en: 'Okay.' }, feedback: { level: 'ok', better: '', why: '' } };
+    if (aliUnderstood !== null) reply.feedback.understood = aliUnderstood;
+    reply.remember = aliRemember;
     return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { role: 'assistant', content: JSON.stringify(reply) } }] }) });
   };
   await ctx.route('https://dashscope-intl.aliyuncs.com/**', aliHandler);
@@ -937,6 +939,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(vo1.includes('我想喝茶') && vo1.includes('Listen to Mingming') && !vo1.includes('好的。'), 'in voice only the recognised line is sent by itself and shown, while Mingming\'s reply is hidden');
   const ttsReply = aliCalls.filter(c => c.body.model === 'qwen3-tts-flash' && c.body.input.text === '好的。');
   check(ttsReply.length === 1 && ttsReply[0].body.input.voice === 'Cherry' && ttsReply[0].body.input.language_type === 'Chinese' && ttsReply[0].url === 'https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation' && ttsReply[0].headers['authorization'] === 'Bearer sk-ali-test', 'the reply is read by the Qwen voice (Cherry) through Alibaba\'s speech endpoint');
+  await page.waitForFunction((u) => window.shanlu.ttsEl && window.shanlu.ttsEl.src === u, 'https://tts-files.test/Cherry-' + encodeURIComponent('好的。') + '.wav', { timeout: 5000 }).catch(() => {});
   check((await page.evaluate(() => window.shanlu.ttsEl && window.shanlu.ttsEl.src)) === 'https://tts-files.test/Cherry-' + encodeURIComponent('好的。') + '.wav', 'the audio link Alibaba returned is what plays (upgraded to https)');
   await page.locator('.msgs button', { hasText: 'Show text' }).last().click();
   const vo2 = await page.locator('.msgs').innerText();
@@ -957,6 +960,92 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   ttsMode2 = 'ok';
   await page.locator('.ai-tools button', { hasText: 'Type instead' }).click();
   check(await page.locator('input[aria-label="Your reply"]').count() === 1, 'Type instead brings the typing box back');
+  // listening level: lines get faster and longer when you keep up, easier when you do not (device only)
+  const sysOf = (i) => aliCalls.filter(c => c.body.messages && c.body.messages[0] && c.body.messages[0].role === 'system')[i];
+  const lastSys = () => { const l = aliCalls.filter(c => c.body.messages && c.body.messages[0] && c.body.messages[0].role === 'system'); return l[l.length - 1].body.messages[0].content; };
+  const say = async (t) => { const n = await page.evaluate(() => window.shanlu.state.aim.length); await page.evaluate((t) => { window.shanlu.setState({ aiInput: t }); window.shanlu.aiSend(); }, t); await page.waitForFunction((n) => window.shanlu.state.aim.length >= n + 2 && !window.shanlu.state.aiBusy, n, { timeout: 8000 }); };
+  const lsn = () => page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-listen') || '{}'));
+  await page.evaluate(() => { window.shanlu.lsnStep(0); window.shanlu.aiStart(-1); });
+  await page.waitForFunction(() => window.shanlu.state.aim.length === 1 && !window.shanlu.state.aiBusy);
+  aliUnderstood = true;
+  check((await text()).includes('Listening level 1 of 5 · slow and clear') && lastSys().includes('ONE very short sentence'), 'level 1 asks for one very short, slow sentence');
+  check(lastSys().includes('"understood"') && lastSys().includes('PREVIOUS reply'), 'the instructions ask the AI to say whether you understood its last line');
+  await say('你好'); await say('我想喝茶'); await say('我想去学校');
+  check((await page.evaluate(() => window.shanlu.state.lsnLvl)) === 2 && (await text()).includes('You kept up: listening level 2 of 5') && (await lsn()).lvl === 2, 'three smooth turns in a row raise the listening level');
+  await say('我很好');
+  check(lastSys().includes('one or two short sentences (about 16 characters'), 'at level 2 Mingming\'s lines get a little longer');
+  check((await page.evaluate(() => window.shanlu.lsnRate())) === 1, 'level 2 plays at the normal pace');
+  aliUnderstood = false;
+  await say('什么'); await say('我不知道');
+  check((await page.evaluate(() => window.shanlu.state.lsnLvl)) === 1 && (await text()).includes('A little easier now: listening level 1 of 5'), 'two misunderstood lines in a row lower the level');
+  check(Math.abs((await page.evaluate(() => window.shanlu.lsnRate())) - 0.85) < 0.001, 'level 1 plays slower');
+  aliUnderstood = true;
+  await page.evaluate(() => { const a = window.shanlu.state.aim; window.shanlu.aiSlower(a.length - 1); });
+  await say('我想喝水');
+  check((await lsn()).ok === 0 && (await lsn()).miss === 1, 'asking to hear a line slower counts as not having caught it');
+  await page.locator('.ai-lsn button', { hasText: 'Harder' }).click();
+  check((await page.evaluate(() => window.shanlu.state.lsnLvl)) === 2, 'Harder raises the level by hand');
+  await page.locator('.ai-lsn button', { hasText: 'Auto-adjust: on' }).click();
+  await say('好'); await say('好的'); await say('好吧'); await say('好啊');
+  check((await page.evaluate(() => window.shanlu.state.lsnLvl)) === 2 && (await text()).includes('Auto-adjust: off'), 'with auto-adjust off the level stays where you put it');
+  await page.locator('.ai-lsn button', { hasText: 'Auto-adjust: off' }).click();
+  const exported2 = await page.evaluate(() => { window.shanlu.persistNow(); return JSON.stringify(JSON.parse(localStorage.getItem('shanlu-progress-v1'))); });
+  check(!exported2.includes('"lsn"') && !exported2.includes('shanlu-listen'), 'the listening level is not part of the synced progress');
+  // what Mingming remembers (device only)
+  aliRemember = ['learner likes hiking'];
+  await say('我喜欢爬山');
+  check((await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-memory')).facts.map(f => f.t))).join() === 'learner likes hiking', 'a lasting everyday fact is kept on this device');
+  check((await page.locator('.msgs').innerText()).includes('Mingming will remember: learner likes hiking'), 'the chat says what it will remember');
+  aliRemember = [];
+  await say('你好');
+  check(lastSys().includes('Things the learner told you in earlier chats') && lastSys().includes('learner likes hiking'), 'a remembered fact is passed to the next chat');
+  aliRemember = ['learner likes hiking'];
+  await say('好的');
+  aliRemember = ['learner has diabetes', 'learner has a salary of 90k'];
+  await say('我很好');
+  aliRemember = ['learner has a cat'];
+  await say('我有一只猫');
+  const facts = await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-memory')).facts.map(f => f.t));
+  check(facts.join() === 'learner likes hiking,learner has a cat', 'the same fact is not kept twice, and health or money facts are never kept (' + facts.join(' | ') + ')');
+  const exported3 = await page.evaluate(() => { window.shanlu.persistNow(); return JSON.stringify(JSON.parse(localStorage.getItem('shanlu-progress-v1'))) + JSON.stringify(JSON.parse(localStorage.getItem('shanlu-friends') || 'null')); });
+  check(!exported3.includes('hiking'), 'remembered facts are not in the saved progress (so not in the export, the sync or the friends server)');
+  await page.locator('button', { hasText: 'Settings' }).first().click();
+  check((await text()).includes('What Mingming remembers') && (await text()).includes('learner likes hiking') && (await text()).includes('learner has a cat'), 'Settings lists what Mingming remembers');
+  await page.locator('button', { hasText: 'Forget' }).first().click();
+  check((await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-memory')).facts.map(f => f.t))).join() === 'learner has a cat', 'one fact can be forgotten');
+  await page.locator('button', { hasText: 'On: Mingming remembers' }).click();
+  await nav('Speak');
+  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
+  aliRemember = ['learner likes tea'];
+  await say('你好');
+  check(lastSys().includes('Always use an empty list for "remember"') && !lastSys().includes('learner has a cat') && (await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-memory')).facts.length)) === 1, 'with memory switched off nothing is sent or kept');
+  await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.locator('button', { hasText: 'Off: nothing is kept' }).click();
+  await page.locator('button', { hasText: 'Forget everything' }).click();
+  check((await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-memory')).facts.length)) === 0 && (await text()).includes('Nothing remembered yet'), 'Forget everything empties the list');
+  aliRemember = [];
+  await nav('Speak');
+  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
+  // hands-free: the microphone opens by itself when Mingming has finished speaking
+  await page.locator('.ai-tools button', { hasText: 'Voice only' }).click();
+  aliUnderstood = null;
+  check((await page.locator('.ai-tools').innerText()).includes('Hands-free: off'), 'hands-free starts off');
+  await page.locator('.ai-tools button', { hasText: 'Hands-free: off' }).click();
+  await page.waitForFunction(() => window.shanlu.state.aiListen === true, null, { timeout: 5000 });
+  check((await page.locator('.ai-tools').innerText()).includes('Hands-free: on') && (await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-ai')).handsFree)) === true, 'turning hands-free on opens the microphone and is remembered');
+  await page.waitForTimeout(1200);
+  const hfN = await page.evaluate(() => window.shanlu.state.aim.length);
+  await page.locator('.ai-tools button', { hasText: 'Listening' }).click();
+  await page.waitForFunction((n) => window.shanlu.state.aim.length >= n + 2 && !window.shanlu.state.aiBusy, hfN, { timeout: 10000 });
+  await page.waitForFunction(() => window.shanlu.state.aiListen === true, null, { timeout: 6000 });
+  check(true, 'after Mingming finished speaking the microphone opened by itself');
+  await page.locator('.ai-tools button', { hasText: 'Hands-free: on' }).click();
+  await page.waitForTimeout(500);
+  const hfM = await page.evaluate(() => window.shanlu.state.aim.length);
+  await page.locator('.ai-tools button', { hasText: 'Listening' }).click();
+  await page.waitForFunction((n) => window.shanlu.state.aim.length >= n + 2 && !window.shanlu.state.aiBusy, hfM, { timeout: 10000 });
+  await page.waitForTimeout(2200);
+  check((await page.evaluate(() => window.shanlu.state.aiListen)) === false, 'with hands-free off the microphone waits for you to tap Speak');
   // a workspace ID changes the web address
   await page.evaluate(() => { const app = window.shanlu; app.setState({ aliWsInput:'testws1', aliKeyInput:'' }); app.aliSaveKey(); });
   await page.evaluate(() => window.shanlu.aliTest());

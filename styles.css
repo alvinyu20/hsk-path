@@ -665,6 +665,7 @@ button.scn:hover .scn-m{text-decoration:underline}
 .ai-in{display:flex;gap:10px}
 .ai-in input{flex:1;min-width:0}
 .ai-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ai-lsn{display:flex;align-items:center;gap:6px 14px;flex-wrap:wrap;font-size:14.5px}
 .btn.on{background:var(--seal);color:var(--on-seal)}
 .note.fix{background:var(--amber-soft);color:var(--ink)}
 .note.good{color:var(--jade)}

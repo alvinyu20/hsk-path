@@ -23,6 +23,28 @@
   const ttsModeNow = () => (aliCfg().key && AICFG.ttsMode !== 'browser' ? 'qwen' : 'browser');
   const ttsVoiceNow = () => (TTS_VOICES.some(v => v[0] === AICFG.ttsVoice) ? AICFG.ttsVoice : 'Cherry');
   const aliApi = () => aliBase().replace('/compatible-mode/v1', '/api/v1');
+  // ---- the listening level and what Mingming remembers: both stay on this device (not synced, not exported, not on any server)
+  const LSN_STORE = 'shanlu-listen', MEM_STORE = 'shanlu-memory';
+  let LSN = {}, MEM = {};
+  try { LSN = JSON.parse(localStorage.getItem(LSN_STORE)) || {}; } catch (e) {}
+  try { MEM = JSON.parse(localStorage.getItem(MEM_STORE)) || {}; } catch (e) {}
+  const saveLsn = () => { try { localStorage.setItem(LSN_STORE, JSON.stringify(LSN)); } catch (e) {} };
+  const saveMem = () => { try { localStorage.setItem(MEM_STORE, JSON.stringify(MEM)); } catch (e) {} };
+  // five listening levels: how fast the voice plays, and how long and casual Mingming's lines are
+  const LSN_LEVELS = [
+    { name:'slow and clear', factor:0.85, spec:'Reply with ONE very short sentence (about 10 characters or fewer), slow and clear, with no filler words.' },
+    { name:'relaxed', factor:1, spec:'Reply with one or two short sentences (about 16 characters or fewer in total).' },
+    { name:'everyday pace', factor:1.1, spec:'Reply with two short sentences (about 26 characters or fewer in total), the way a friendly person talks. You may open with a small filler such as 嗯 or 对了.' },
+    { name:'quick', factor:1.2, spec:'Reply with two or three sentences (about 36 characters or fewer in total) at a natural speaking pace: casual, with a filler such as 嗯, 哦 or 对了, and you may add a quick aside before your question.' },
+    { name:'fast and casual', factor:1.3, spec:'Reply the way a native speaker talks to a friend: two or three quick, casual sentences (about 46 characters or fewer in total) with fillers and an aside. Still use only listed words.' }
+  ];
+  const lsnLvl = () => Math.max(1, Math.min(5, Math.round(LSN.lvl) || 1));
+  const lsnAuto = () => LSN.auto !== false;
+  const memOn = () => MEM.on !== false;
+  const memFacts = () => (Array.isArray(MEM.facts) ? MEM.facts.filter(f => f && typeof f.t === 'string') : []);
+  // facts about health, money, identity documents, politics, religion and the like are never kept, even if the AI suggests them (best effort: a keyword filter)
+  const MEM_BLOCK = /health|medic|disease|diagnos|illness|\bill\b|sick|cancer|diabet|asthma|allerg|\bhiv\b|surgery|injur|pain|disab|heart|blood|pill|drug|doctor|hospital|clinic|mental|adhd|autis|bipolar|ptsd|trauma|chronic|pregnan|therapy|therapist|depress|anxi|salary|income|wage|debt|loan|money|bank|credit|password|address|phone number|email|passport|licen[sc]e|religio|church|mosque|temple|politic|vote|party|sexual|gay|lesbian|trans\b|immigra|visa|citizen|arrest|police|crime|prison|divorce|abuse|suicid|death|died|funeral/i;
+  const cleanFact = (t) => { t = String(t || '').replace(/\s+/g, ' ').trim().slice(0, 80); return t.length < 4 || MEM_BLOCK.test(t) ? '' : t; };
   const SYNC_STORE = 'shanlu-sync';   // { token, gist, at } lives only on this device, never in the exported progress file
   let SYNCCFG = {};
   try { SYNCCFG = JSON.parse(localStorage.getItem(SYNC_STORE)) || {}; } catch (e) {}
@@ -233,7 +255,7 @@
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiVoiceOnly:AICFG.voiceOnly !== false, aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
+      wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), lsnNote:'', memOn:memOn(), memFacts:memFacts().slice(), aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
@@ -400,6 +422,7 @@
   if (window.HSK1_ERHUA) window.HSK1_ERHUA.pairs.forEach(pr => { [[pr.official, pr.officialPy], [pr.plain, pr.plainPy]].forEach(x => { if (!KB[x[0]] && x[1]) ERH_ALT[x[0]] = x[1]; }); });
   const MAXW = Math.max(KB_KEYS.reduce((n, k) => Math.max(n, k.length), 1), Object.keys(PV).reduce((n, k) => Math.max(n, k.length), 1), Object.keys(ERH_ALT).reduce((n, k) => Math.max(n, k.length), 1));
   // split a Chinese reply into known words, so pinyin comes from our own checked word list and outside words can be flagged
+  const FILLER = { '嗯':'èn', '哦':'ò', '哎':'āi', '哈':'hā', '呀':'ya', '喂':'wèi' };
   const segHsk = (text) => {
     const out = [];
     for (let i = 0; i < text.length;) {
@@ -409,6 +432,7 @@
       if (hit && KB[hit]) { out.push({ t:hit, py:KB[hit].py.split('/')[0].trim(), cjk:true, ok:true }); i += hit.length; continue; }
       if (hit) { out.push({ t:hit, py:PV[hit][0], en:PV[hit][1], cjk:true, ok:true, pv:true }); i += hit.length; continue; }
       const ch = text[i]; const cjk = /[\u4e00-\u9fff]/.test(ch);
+      if (FILLER[ch] && !CHARSET[ch]) { out.push({ t:ch, py:FILLER[ch], cjk:true, ok:true }); i++; continue; }   // spoken fillers: not vocabulary, but nothing to flag
       out.push({ t:ch, py:'', cjk, ok:!cjk || !!CHARSET[ch] });
       i++;
     }
@@ -464,19 +488,23 @@
       'You are Mingming (明明), a friendly Mandarin conversation partner for an adult English-speaking beginner who is studying for HSK ' + TOPL + (TOPL === 1 ? '' : ' (HSK 1 words are known too)') + (up ? ' and is happy to see a little ' + nextN + ' as a preview.' : '.'),
       'Speak Simplified Chinese. Use mainly words from this ' + known + ' word list (plus punctuation and numbers): ' + KB_KEYS.join(' ') + '.',
       up ? 'You may also use a few words from this ' + nextN + ' list as a gentle preview, at most one or two in a reply, when they make the conversation more natural and realistic or let you cover more everyday situations (cafés, travel, directions, hobbies, health, school, work): ' + Object.keys(PV).join(' ') + '. Never use a word that is on neither list.' : 'Never use a word that is not on the list.',
-      'If you need a word that is ' + (up ? 'on neither list' : 'not on the list') + ', say it another way with listed words. Never write pinyin in the Chinese. When you say your own name, say 我叫明明 (the standard way to give a name), not 我是明明. Keep every reply to one or two short sentences (about 15 characters or fewer in total) and ask at most one simple question, so the learner can answer.',
+      'If you need a word that is ' + (up ? 'on neither list' : 'not on the list') + ', say it another way with listed words. Never write pinyin in the Chinese. When you say your own name, say 我叫明明 (the standard way to give a name), not 我是明明. ' + LSN_LEVELS[lsnLvl() - 1].spec + ' Ask at most one simple question, so the learner can answer.',
       scn ? 'Role-play setting: ' + scn.title + '. Goals for the learner: ' + scn.goals.join('; ') + '. Stay in this setting and play the other person.' : 'Free chat: pick an everyday topic (food, family, school, weather, plans) and keep it simple.',
       'After each learner message, also judge it. Say "ok" if it is natural and understandable Mandarin. Say "fix" if it has a grammar, word choice or naturalness problem: then give the corrected sentence in Chinese (' + (up ? known + ' words, or a ' + nextN + ' word if it really helps' : known + ' words') + ') and a one-sentence reason in simple English. ' + (up ? 'Using a ' + nextN + ' word is never a mistake. ' : '') + 'Do not nitpick: only fix real problems. If the learner writes English, give "fix" with the Chinese they could say. The learner message may come from speech recognition and contain wrong characters: if it does not make sense, ask them to say it again as the reply.',
-      'Answer with ONLY a JSON object, no other text: {"reply":{"zh":"<your Chinese>","en":"<English translation>"},"feedback":{"level":"ok"|"fix","better":"<corrected Chinese or empty>","why":"<short English reason or empty>"},"suggest":{"zh":"<suggested learner reply>","en":"<English>"}}. For the very first message of a conversation, set feedback to {"level":"ok","better":"","why":""}.',
+      'Answer with ONLY a JSON object, no other text: {"reply":{"zh":"<your Chinese>","en":"<English translation>"},"feedback":{"level":"ok"|"fix","better":"<corrected Chinese or empty>","why":"<short English reason or empty>","understood":true|false|null},"remember":["<a short English fact, or leave the list empty>"],"suggest":{"zh":"<suggested learner reply>","en":"<English>"}}. For the very first message of a conversation, set feedback to {"level":"ok","better":"","why":"","understood":null}.',
+      'About "understood": it is about your PREVIOUS reply. Say true if the learner\'s message answers or reacts sensibly to it. Say false if the message shows they misheard or misunderstood it (an answer to a different question, or something unrelated), or if they ask you to repeat it. Say null if there was no previous reply or the learner only greeted you.',
+      memOn() ? 'About "remember": if the learner just told you a lasting, everyday fact about themselves (a hobby, a food they like, a pet, a place, a plan, the kind of work they do), put it in "remember" as a short English phrase such as "learner likes hiking". At most one per reply, only what the learner actually said, never anything about health, money, politics, religion, documents or other sensitive matters. Otherwise use an empty list.' : 'Always use an empty list for "remember".',
+      memOn() && memFacts().length ? 'Things the learner told you in earlier chats (use at most one, only when it fits naturally, never invent details, and never say that you remember): ' + memFacts().slice(-12).map(f => f.t).join('; ') + '.' : '',,
       'Also always add "suggest":{"zh":"<one natural, short reply (about 12 characters or fewer) the learner could say next to answer you, ' + (up ? known + ' words or at most one ' + nextN + ' word' : known + ' words') + ', no pinyin>","en":"<its English meaning>"} so a beginner who is stuck can see what to say. Use 我叫… when giving a name.'
-    ].join('\n');
+    ].filter(Boolean).join('\n');
   };
   const aiParse = (text) => {
     const i = text.indexOf('{'), j = text.lastIndexOf('}');
     if (i < 0 || j < i) throw new Error('The reply was not in the expected format.');
     const o = JSON.parse(text.slice(i, j + 1));
     if (!o.reply || typeof o.reply.zh !== 'string') throw new Error('The reply was not in the expected format.');
-    return { zh:o.reply.zh, en:o.reply.en || '', sug:o.suggest && typeof o.suggest.zh === 'string' && o.suggest.zh.trim() ? { zh:o.suggest.zh.trim(), en:o.suggest.en || '' } : null, fb:o.feedback && o.feedback.level === 'fix' ? { better:o.feedback.better || '', why:o.feedback.why || '' } : null };
+    return { zh:o.reply.zh, en:o.reply.en || '', sug:o.suggest && typeof o.suggest.zh === 'string' && o.suggest.zh.trim() ? { zh:o.suggest.zh.trim(), en:o.suggest.en || '' } : null, fb:o.feedback && o.feedback.level === 'fix' ? { better:o.feedback.better || '', why:o.feedback.why || '' } : null,
+      understood:o.feedback && typeof o.feedback.understood === 'boolean' ? o.feedback.understood : null, remember:Array.isArray(o.remember) ? o.remember.filter(x => typeof x === 'string').slice(0, 2) : [] };
   };
   // Alibaba Cloud Model Studio (OpenAI-compatible endpoint). Used for the conversation and for the voice recogniser.
   async function aliPost(body) {
@@ -922,8 +950,8 @@
         const p = this.ttsEl.play(); if (p && p.catch) p.catch(() => { this.ttsOpen = false; });
       } catch (e) {}
     };
-    sayAi = async (text, key, rate) => {
-      if (ttsModeNow() !== 'qwen') { this.say(text, key, rate); return; }
+    sayAi = async (text, key, rate, after) => {
+      if (ttsModeNow() !== 'qwen') { this.say(text, key, rate, undefined, after); return; }
       this.stopNative(); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
       const tok = ++this.ttsTok;
       this.setState({ playing:key, ttsBusy:true });
@@ -937,8 +965,8 @@
         if (tok !== this.ttsTok) return;
         if (!this.ttsEl) this.ttsEl = new Audio();
         const a = this.ttsEl;
-        a.onended = () => { if (tok === this.ttsTok && this.state.playing === key) this.setState({ playing:null }); };
-        a.onerror = () => { if (tok === this.ttsTok) { this.ttsFail(new Error('the audio could not be played')); this.say(text, key, rate); } };
+        a.onended = () => { if (tok !== this.ttsTok) return; if (this.state.playing === key) this.setState({ playing:null }); if (after) after(); };
+        a.onerror = () => { if (tok === this.ttsTok) { this.ttsFail(new Error('the audio could not be played')); this.say(text, key, rate, undefined, after); } };
         a.preload = 'auto'; a.src = c.url; a.playbackRate = rate || this.state.speed || 1; try { a.preservesPitch = true; } catch (e) {}
         await new Promise((res) => { let done = false; const go = () => { if (!done) { done = true; res(); } }; a.addEventListener('canplaythrough', go, { once:true }); a.addEventListener('canplay', go, { once:true }); setTimeout(go, 4000); try { a.load(); } catch (e) {} });
         if (tok !== this.ttsTok) return;
@@ -951,7 +979,7 @@
         if (tok === this.ttsTok) this.setState({ ttsBusy:false });
       } catch (e) {
         if (tok !== this.ttsTok) return;
-        this.ttsFail(e); this.say(text, key, rate);
+        this.ttsFail(e); this.say(text, key, rate, undefined, after);
       }
     };
     ttsFail = (e) => {
@@ -959,25 +987,26 @@
       if (this.ttsWarned) return; this.ttsWarned = true;
       this.setState({ aiErr:'The Qwen voice did not work (' + ((e && e.message) || 'unknown problem').replace(/\.$/, '') + '), so this browser\'s voice is used for now. Settings has a Test connection button.' });
     };
-    say = (text, key, rate, voice) => {
+    say = (text, key, rate, voice, after) => {
       const file = voice ? null : this.nativeFile(text);      // a chosen voice (the voice sample in Settings) is always the browser voice
-      if (!file) { this.sayTTS(text, key, rate, voice); return; }
+      if (!file) { this.sayTTS(text, key, rate, voice, after); return; }
       this.stopNative();
       try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
       let a = null;
-      const fallback = () => { if (a && this.nativeAudio === a) { this.nativeAudio = null; this.sayTTS(text, key, rate, voice); } };
+      const fallback = () => { if (a && this.nativeAudio === a) { this.nativeAudio = null; this.sayTTS(text, key, rate, voice, after); } };
       try {
         a = new Audio(file);
         a.playbackRate = rate || this.state.speed || 1;
         try { a.preservesPitch = true; } catch (e) {}
         this.nativeAudio = a;
         a.addEventListener('error', fallback);
+        if (after) a.addEventListener('ended', () => { if (this.nativeAudio === a) after(); });
         const pr = a.play(); if (pr && pr.catch) pr.catch(fallback);
       } catch (e) { fallback(); return; }
       this.setState({ playing:key });
       this.later(() => { if (this.state.playing === key) this.setState({ playing:null }); }, 1400);
     };
-    sayTTS = (text, key, rate, voice) => {
+    sayTTS = (text, key, rate, voice, after) => {
       this.stopNative();
       try {
         if (window.speechSynthesis) {
@@ -987,6 +1016,7 @@
             const u = new SpeechSynthesisUtterance(text);
             u.lang = zh ? zh.lang : 'zh-CN'; u.rate = rate || this.state.speed || 1;
             if (zh) u.voice = zh;
+            if (after) { const tk = this.sayTok; u.onend = () => { if (tk === this.sayTok) after(); }; }
             ss.speak(u);
           });
         } else {
@@ -1074,9 +1104,15 @@
         const msg = { who:'ai', zh:p.zh, en:p.en, py:aiPinyin(toks), outside:aiOutside(toks), pv:aiPreview(toks), raw:out.raw, sug };
         const next = shown.slice();
         const last = next[next.length - 1];
-        if (last && last.who === 'me') next[next.length - 1] = Object.assign({}, last, { judged:true, fb:p.fb });   // the judgement is about the learner's last line
-        this.setState({ aim:next.concat([msg]), aiBusy:false });
-        this.sayAi(p.zh, 'aim' + next.length);
+        let kept = '';
+        if (last && last.who === 'me') {
+          if (memOn()) (p.remember || []).forEach(f => { const t = cleanFact(f); if (t && !kept && !memFacts().some(x => x.t.toLowerCase() === t.toLowerCase())) { kept = t; MEM.facts = memFacts().concat([{ t, d:ymd(new Date()) }]).slice(-30); saveMem(); } });
+          next[next.length - 1] = Object.assign({}, last, { judged:true, fb:p.fb, mem:kept || undefined });   // the judgement is about the learner's last line
+          this.lsnJudge(next[next.length - 2], p.understood);
+        }
+        this.setState({ aim:next.concat([msg]), aiBusy:false, memFacts:memFacts().slice() });
+        const n = next.length + 1;
+        this.sayAi(p.zh, 'aim' + next.length, this.lsnRate(), () => this.aiHandsFree(n));
       } catch (e) { this.setState({ aiBusy:false, aiErr:(e && e.message) || 'Something went wrong.' }); }
     };
     aiSend = () => {
@@ -1100,9 +1136,9 @@
     // Listening. Built to cope with normal speed: it keeps listening through short pauses (the default stops at the first one), shows the words
     // as they come in, asks the recogniser for several guesses and prefers the guess made only of HSK 1 characters that fits the suggested
     // reply, and lets you tap another guess if it still heard it wrong.
-    aiMic = () => {
+    aiMic = (auto) => {
       this.ttsUnlock(); try { if (window.speechSynthesis) window.speechSynthesis.speak(new SpeechSynthesisUtterance('')); } catch (e) {}   // the reply that follows a spoken turn starts outside a tap
-      if (this.state.asrMode === 'alibaba') { this.aiRecord(); return; }
+      if (this.state.asrMode === 'alibaba') { this.aiRecord(auto === true); return; }
       const SR = window.webkitSpeechRecognition || window.SpeechRecognition;
       if (!SR) return;
       if (this.state.aiListen) { try { this.recog && this.recog.stop(); } catch (e) {} return; }
@@ -1135,6 +1171,52 @@
         cap = setTimeout(done, 20000);
       } catch (e) { this.setState({ aiListen:false, aiErr:'The microphone could not start. Type instead.' }); }
     };
+    // listening level: Mingming's lines get faster and longer when you keep up, and easier when you do not
+    lsnRate = () => Math.max(0.6, Math.min(1.5, (this.state.speed || 1) * LSN_LEVELS[lsnLvl() - 1].factor));
+    lsnJudge = (prev, understood) => {   // prev: the Mingming line the learner has just answered
+      if (!lsnAuto() || !prev || prev.who !== 'ai') return;
+      const missed = understood === false || !!prev.slow;
+      const needed = !!prev.rev || (prev.plays || 0) >= 2;
+      let note = '';
+      if (missed) {
+        LSN.ok = 0; LSN.miss = (LSN.miss || 0) + 1;
+        if (LSN.miss >= 2 && lsnLvl() > 1) { LSN.lvl = lsnLvl() - 1; LSN.miss = 0; note = 'A little easier now: listening level ' + lsnLvl() + ' of 5.'; }
+      } else if (needed || understood !== true) { LSN.ok = 0; }
+      else {
+        LSN.miss = 0; LSN.ok = (LSN.ok || 0) + 1;
+        if (LSN.ok >= 3 && lsnLvl() < 5) { LSN.lvl = lsnLvl() + 1; LSN.ok = 0; note = 'You kept up: listening level ' + lsnLvl() + ' of 5.'; }
+      }
+      saveLsn(); this.setState({ lsnLvl:lsnLvl(), lsnNote:note });
+    };
+    lsnStep = (d) => { LSN.lvl = Math.max(1, Math.min(5, lsnLvl() + d)); LSN.ok = 0; LSN.miss = 0; saveLsn(); this.setState({ lsnLvl:lsnLvl(), lsnNote:'' }); };
+    lsnAutoToggle = () => { LSN.auto = !lsnAuto(); saveLsn(); this.setState({ lsnAuto:lsnAuto(), lsnNote:'' }); };
+    aiPlay = (k) => {
+      const a = this.state.aim.slice(); const m = a[k]; if (!m) return;
+      a[k] = Object.assign({}, m, { plays:(m.plays || 0) + 1 }); this.setState({ aim:a });
+      this.sayAi(m.zh, 'aim' + k, this.lsnRate());
+    };
+    aiSlower = (k) => {   // plays the line again, slower; this counts as "not caught"
+      const a = this.state.aim.slice(); const m = a[k]; if (!m) return;
+      a[k] = Object.assign({}, m, { slow:true, plays:(m.plays || 0) + 1 }); this.setState({ aim:a });
+      this.sayAi(m.zh, 'aim' + k, Math.max(0.6, this.lsnRate() * 0.75));
+    };
+    // hands-free: when Mingming has finished speaking, the microphone opens by itself
+    aiHandsFree = (n) => {
+      setTimeout(() => {
+        const S = this.state;
+        if (!S.handsFree || S.screen !== 'speak' || S.aim.length !== n || S.aiBusy || S.aiListen || S.asrBusy || !S.aiOn || !this.voiceOnlyOn()) return;
+        this.aiMic(true);
+      }, 500);
+    };
+    aiHfToggle = () => {
+      AICFG.handsFree = !this.state.handsFree; saveAiCfg(); this.setState({ handsFree:!!AICFG.handsFree });
+      const S = this.state, last = S.aim[S.aim.length - 1];
+      if (S.handsFree && last && last.who === 'ai' && !S.aiBusy && !S.aiListen && this.voiceOnlyOn()) this.aiMic(true);
+    };
+    // what Mingming remembers (device only)
+    memToggle = () => { MEM.on = !memOn(); saveMem(); this.setState({ memOn:memOn() }); };
+    memForget = (i) => { const f = memFacts().slice(); f.splice(i, 1); MEM.facts = f; saveMem(); this.setState({ memFacts:f }); };
+    memClear = () => { MEM.facts = []; saveMem(); this.setState({ memFacts:[] }); };
     // voice only: what the microphone heard is sent by itself (the recognised line stays on screen, with any correction under it)
     voiceOnlyOn = () => { const S = this.state; return !!S.aiVoiceOnly && !S.aiTyping && this.hasMicNow(); };
     hasMicNow = () => (this.state.asrMode === 'alibaba' ? !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && (window.AudioContext || window.webkitAudioContext)) : !!(window.webkitSpeechRecognition || window.SpeechRecognition));
@@ -1152,7 +1234,11 @@
     aiPickAlt = (t) => { this.setState({ aiInput:t, aiAlts:[] }); };
     aiShowSug = () => { const a = this.state.aim.slice(); const i = a.length - 1; if (i < 0 || !a[i].sug) return; a[i] = Object.assign({}, a[i], { sug:Object.assign({}, a[i].sug, { open:true }) }); this.setState({ aim:a }); };
     aiUseSug = () => { const a = this.state.aim; const m = a[a.length - 1]; if (m && m.sug) this.setState({ aiInput:m.sug.zh }); };
-    aiSimpler = () => { this.setState({ aiInput:'请再说一遍，慢一点。' }); this.aiSend(); };
+    aiSimpler = () => {
+      const a = this.state.aim.slice(), i = a.length - 1;
+      if (i >= 0 && a[i].who === 'ai') { a[i] = Object.assign({}, a[i], { slow:true }); this.setState({ aim:a }); }
+      this.setState({ aiInput:'请再说一遍，慢一点。' }); this.aiSend();
+    };
     aiSaveKey = () => {
       const k = (this.state.aiKeyInput || '').trim();
       if (!k) { this.setState({ aiNote:'Paste your API key first.' }); return; }
@@ -1203,7 +1289,7 @@
     };
     // recording for Alibaba's recogniser: stops by itself after a pause once you have spoken (or when you tap again)
     recStop = null;
-    aiRecord = async () => {
+    aiRecord = async (auto) => {
       if (this.state.aiListen) { if (this.recStop) this.recStop(true); return; }
       if (this.state.asrBusy || this.state.aiBusy) return;
       let stream;
@@ -1228,7 +1314,7 @@
         const finish = async () => {
           const pcm = new Float32Array(total); let o = 0; parts.forEach(p => { pcm.set(p, o); o += p.length; });
           release(); this.recStop = null;
-          if (!heard && !manual) { this.setState({ aiListen:false, aiErr:'I did not hear anything. Check your microphone, then try again.' }); return; }
+          if (!heard && !manual) { this.setState({ aiListen:false, aiErr:auto ? '' : 'I did not hear anything. Check your microphone, then try again.' }); return; }
           if (total < rate * 0.2) { this.setState({ aiListen:false, aiErr:'That was too short. Tap Speak and say a whole sentence.' }); return; }
           this.setState({ aiListen:false, asrBusy:true });
           try {
@@ -1242,7 +1328,7 @@
           an.getFloatTimeDomainData(buf); let sum = 0; for (let i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
           const now = Date.now();
           if (Math.sqrt(sum / buf.length) > 0.02) { heard = true; lastVoice = now; }
-          if ((heard && now - lastVoice > 1500) || now - t0 > 30000 || (!heard && now - t0 > 8000)) stop(false);
+          if ((heard && now - lastVoice > 1500) || now - t0 > 30000 || (!heard && now - t0 > (auto ? 12000 : 8000))) stop(false);
         }, 100);
         this.recStop = stop;
         this.setState({ aiListen:true, aiErr:'', aiAlts:[] });
@@ -1619,11 +1705,13 @@
       const quiet = !S.szh && !S.spy && !S.sen;
       const hasMic0 = S.asrMode === 'alibaba' ? !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && (window.AudioContext || window.webkitAudioContext)) : !!(window.webkitSpeechRecognition || window.SpeechRecognition);
       const vo = !!S.aiVoiceOnly && !S.aiTyping && hasMic0;   // voice only: Mingming's lines are heard, not read, until you tap Show text
+      const lastAiIdx = (() => { for (let i = S.aim.length - 1; i >= 0; i--) if (S.aim[i].who === 'ai') return i; return -1; })();
       const msgs = S.aim.map((m, k) => ({
         who:m.who, isAi:m.who === 'ai', zh:m.zh, py:m.py, en:m.en,
         showZh:vo ? (m.who === 'me' || !!m.rev) : S.szh, showPy:vo ? (!!m.py && (m.who === 'me' || !!m.rev)) : S.spy && !!m.py, showEn:vo ? (!!m.rev && !!m.en && m.who === 'ai') : S.sen && !!m.en && m.who === 'ai',
-        canReveal:vo && m.who === 'ai' && !m.rev, reveal:() => this.aiReveal(k),
-        quiet:vo ? (m.who === 'ai' && !m.rev) : quiet, quietText:m.who === 'ai' ? 'Listen to Mingming' : 'You said it', pc:S.playing === 'aim' + k ? 'on' : '', play:() => this.sayAi(m.zh, 'aim' + k),
+        canReveal:vo && m.who === 'ai' && !m.rev, reveal:() => this.aiReveal(k), canSlow:vo && m.who === 'ai' && k === lastAiIdx, slower:() => this.aiSlower(k),
+        hasMem:!!m.mem, memText:m.mem || '',
+        quiet:vo ? (m.who === 'ai' && !m.rev) : quiet, quietText:m.who === 'ai' ? 'Listen to Mingming' : 'You said it', pc:S.playing === 'aim' + k ? 'on' : '', play:() => this.aiPlay(k),
         hasOutside:m.outside.length > 0, outsideText:'Not in this site\'s HSK 1 or HSK 2 lists, so no pinyin: ' + m.outside.join(' '),
         hasPv:!!(m.pv && m.pv.length), pvText:'HSK ' + (TOPL + 1) + ' preview: ' + (m.pv || []).map(p => p.t + ' ' + p.py + ' = ' + p.en).join('  ·  '),
         hasFb:!!m.fb, fbBetter:m.fb ? m.fb.better : '', fbWhy:m.fb ? m.fb.why : '', hasOk:m.who === 'me' && !!m.judged && !m.fb,
@@ -1635,6 +1723,10 @@
       const lastM = S.aim[S.aim.length - 1];
       const sg = lastM && lastM.who === 'ai' && lastM.sug && !S.aiBusy ? lastM.sug : null;
       return {
+        lsnLine:'Listening level ' + S.lsnLvl + ' of 5 · ' + LSN_LEVELS[S.lsnLvl - 1].name, lsnEasier:() => this.lsnStep(-1), lsnHarder:() => this.lsnStep(1), lsnAutoLabel:'Auto-adjust: ' + (S.lsnAuto ? 'on' : 'off'), lsnAutoToggle:this.lsnAutoToggle,
+        lsnNote:S.lsnNote, hasLsnNote:!!S.lsnNote, aiHfLabel:'Hands-free: ' + (S.handsFree ? 'on' : 'off'), aiHfToggle:this.aiHfToggle,
+        memOnLabel:S.memOn ? 'On: Mingming remembers' : 'Off: nothing is kept', memCls:S.memOn ? 'on' : '', memToggle:this.memToggle, memClear:this.memClear, hasMemFacts:S.memFacts.length > 0, noMemFacts:S.memFacts.length === 0,
+        memList:S.memFacts.map((f, i) => ({ t:f.t, d:f.d || '', forget:() => this.memForget(i) })),
         aiVo:vo, aiNotVo:!vo, aiVoToggleLabel:vo ? 'Type instead' : 'Voice only', aiVoToggle:this.aiVoToggle, aiCanVo:hasMic0,
         ttsOpts:[['qwen', 'Alibaba Qwen voice (needs the Alibaba key)'], ['browser', 'This browser\'s own voice']].map(o => ({ label:o[1], cls:S.ttsMode === o[0] ? 'on' : '', fn:() => this.setTtsMode(o[0]) })),
         ttsVoiceOpts:TTS_VOICES.map(v => ({ label:v[1], cls:S.ttsVoice === v[0] ? 'on' : '', fn:() => this.setTtsVoice(v[0]) })), ttsIsQwen:S.ttsMode === 'qwen',
