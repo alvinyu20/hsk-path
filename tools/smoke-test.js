@@ -223,6 +223,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const oText = await page.locator('.orow').first().innerText();
   check(oText.includes(exA) && oText.includes(exB), 'an opposite pair can show an example for both words');
   await page.locator('button', { hasText: 'Topics' }).click();
+  await page.locator('.trail-rail .tr-gh', { hasText: 'School and language' }).click();
+  check((await page.locator('.trail-rail .tr-gh.open').count()) === 1, 'opening a group closes the one that was open');
   await page.locator('.trail-rail .trl', { hasText: /^School/ }).click();
   await page.waitForTimeout(80);
   check((await page.locator('.tgrid .tc').count()) >= 14, 'a topic lists its words');
@@ -404,9 +406,12 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
   // Grammar
   await nav('Grammar');
-  check((await page.locator('.gl .gp').count()) === 26, 'grammar lists 26 lessons');
+  check((await page.locator('.gl .gg').count()) === 11 && (await page.locator('.gl .gg .gg-n').allInnerTexts()).reduce((a, t) => a + parseInt(t.split('/')[1], 10), 0) === 26, 'grammar lists 26 lessons in 11 categories');
+  check((await page.locator('.gl .gp').count()) < 26 && (await page.locator('.gl .gg.open').count()) === 1, 'only the open category shows its lessons');
   check((await text()).toLowerCase().includes('lesson 1 of 26'), 'the first lesson is open');
   await shot('08-grammar');
+  await page.fill('.gl .tr-search', 'yes/no');
+  check((await page.locator('.gl .gp').count()) === 1, 'searching for a lesson shows only the matching lessons');
   await page.locator('.gl .gp', { hasText: 'Yes/no questions with 吗' }).click();
   check((await text()).includes('Yes/no questions with 吗'), 'choosing a lesson opens it');
   check((await text()).includes('你想喝茶吗'), 'the 吗 lesson teaches the offer with 想');
@@ -432,7 +437,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await page.locator('.gl .gp.cur').first().innerText()).includes('80%'), 'the lesson shows its best score');
   // pass every question of another lesson (all question types appear across lessons)
   for (const idx of [0, 4, 14, 20]) {
-    await page.locator('.gl .gp').nth(idx).click();
+    await page.evaluate((i) => window.shanlu.pickLesson(i), idx);
     await page.locator('button', { hasText: 'Practise this lesson' }).first().click();
     await page.waitForTimeout(80);
     const total = await runQuiz(true);
@@ -440,7 +445,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('button', { hasText: 'Back to' }).first().click().catch(() => {});
     await nav('Grammar');
   }
-  check((await page.locator('.gl .gp.done').count()) >= 4, 'passed lessons are marked done');
+  check(await page.evaluate(() => Object.values(window.shanlu.state.gres).filter(v => v >= 80).length) >= 4, 'passed lessons are marked done');
 
   // Test
   await nav('Tests');
@@ -602,7 +607,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForSelector('.app');
   check(!(await page.locator('.side').innerText()).includes('0-day streak'), 'progress survives a reload');
   await nav('Grammar');
-  check((await page.locator('.gl .gp.done').count()) >= 4, 'passed lessons survive a reload');
+  check(await page.evaluate(() => Object.values(window.shanlu.state.gres).filter(v => v >= 80).length) >= 4, 'passed lessons survive a reload');
   await nav('Speak');
   check((await page.locator('.scn.done').count()) >= 2, 'finished speaking scripts survive a reload');
   await nav('Word webs');

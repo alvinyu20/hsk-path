@@ -193,14 +193,14 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, streak:0, lastActive:'', activity:{}, day:'',
-      gres:{}, sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
+      gres:{}, sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
       qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'topic', wmist:false, wtmenu:false, whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
+      wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
@@ -1172,8 +1172,8 @@
     pick = (id) => { const S = this.state; if (S.qchecked || S.qpicked.indexOf(id) >= 0) return; this.setState({ qpicked:S.qpicked.concat([id]) }); };
     unpick = (id) => { const S = this.state; if (S.qchecked) return; this.setState({ qpicked:S.qpicked.filter(x => x !== id) }); };
     exitQuiz = () => { this.setState({ screen:this.state.qmode === 'grammar' ? 'grammar' : 'testlobby', qdone:false }); };
-    pickLesson = (i) => { this.setState({ glesson:i, gramPick:false }); try { window.scrollTo(0, 0); } catch (e) {} };
-    pickTopic = (i) => { this.setState({ wtopic:i, wtmenu:false }); try { window.scrollTo(0, 0); } catch (e) {} };
+    pickLesson = (i) => { this.setState({ glesson:i, gramPick:false, ggopen:null, gq:'' }); try { window.scrollTo(0, 0); } catch (e) {} };
+    pickTopic = (i) => { this.setState({ wtopic:i, wtmenu:false, wgopen:null, wtq:'' }); try { window.scrollTo(0, 0); } catch (e) {} };
 
     // ----- speaking practice: a scripted conversation you say out loud yourself -----
     sayIt = () => {
@@ -1590,7 +1590,7 @@
         { glyph:'词', title:'Review ' + Math.max(S.rtotal, dueNow) + ' word' + (Math.max(S.rtotal, dueNow) === 1 ? '' : 's'), meta:'Words that are due', min:reviewMin, done:S.rcomplete, to:'review', show:S.rcomplete || dueNow > 0 },
         { glyph:'听', title:'Listening drill', meta:'Dictation with a speed ladder', min:4, done:S.ldone, to:'listen', show:HAS_LISTEN },
         { glyph:'说', title:'Say: ' + (SCEN[nextScn] || NO_SC).title, meta:'Practice script, ' + (SCEN[nextScn] || NO_SC).you.length + ' turns', min:6, done:S.spokeToday, to:'speak', show:HAS_SCRIPTS, pre:() => this.setState({ sidx:nextScn, sturn:0, sdone:false }) },
-        { glyph:'语', title:'Grammar: ' + LESSONS[nextLesson].title, meta:LESSONS[nextLesson].q.length + ' exercises', min:4, done:S.gdone, to:'grammar', pre:() => this.setState({ glesson:nextLesson }) },
+        { glyph:'语', title:'Grammar: ' + LESSONS[nextLesson].title, meta:LESSONS[nextLesson].q.length + ' exercises', min:4, done:S.gdone, to:'grammar', pre:() => this.setState({ ggopen:null, gq:'', glesson:nextLesson }) },
         { glyph:'测', title:LVN + ' test', meta:'Mixed questions from your words', min:3, done:S.tdone, to:'testlobby', show:testReady }
       ].filter(t => t.show !== false);
       let planned = 0;
@@ -1639,7 +1639,7 @@
         return { i, name:t.name, got, tot, clear:got === tot, near:got > 0 && got < tot && tot - got <= 3 };
       });
       const mistClear = tinfo.filter(t => t.clear).length;
-      const openTopic = (i) => { this.go('web'); this.setState({ wmode:'topic', wtopic:i }); };
+      const openTopic = (i) => { this.go('web'); this.setState({ wmode:'topic', wtopic:i, wgopen:null, wtq:'' }); };
       const nearBest = tinfo.filter(t => t.got > 0 && !t.clear).sort((a, b) => (a.tot - a.got) - (b.tot - b.got) || a.i - b.i)[0];
       const mistTiles = tinfo.map(t => ({
         name:t.name, count:t.got + ' of ' + t.tot + ' words' + (t.clear ? ' · clear' : ''), clear:t.clear, near:t.near, nearText:(t.tot - t.got) + ' to clear',
@@ -1796,9 +1796,32 @@
       });
       const topicStarted = topicNow.words.filter(zh => mini(zh).started).length;
       const topicOpts = TOPICS.map((t, i) => ({ label:t.name, count:tinfo[i].got + '/' + tinfo[i].tot, cls:(S.wtopic === i ? 'on' : '') + (tinfo[i].clear ? ' clear' : ''), fn:() => this.pickTopic(i) }));
-      const topicGroups = [];
-      TOPICS.forEach((t, i) => { let g = topicGroups.find(x => x.label === t.group); if (!g) { g = { label:t.group, opts:[], got:0, tot:0 }; topicGroups.push(g); } g.opts.push(topicOpts[i]); g.got += tinfo[i].got; g.tot += tinfo[i].tot; });
-      topicGroups.forEach(g => { g.progress = g.got + '/' + g.tot; });
+      // two tiers: a group opens to show its topics. The group of the topic you are on is open by default; a search opens every group that matches.
+      const normQ = (x) => String(x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\u4e00-\u9fff ]/g, '');
+      const tq = normQ(S.wtq).trim();
+      const tqc = tq.replace(/ /g, '');
+      const topicMatch = (t) => {
+        if (!tq || normQ(t.name).includes(tq)) return { ok:true, hint:'' };
+        const hits = t.words.filter(z => { const b = BANK[z]; return z.includes(tq) || normQ(b.py).replace(/ /g, '').includes(tqc) || normQ(b.en).includes(tq); });
+        return hits.length ? { ok:true, hint:hits.slice(0, 3).join(' ') } : { ok:false, hint:'' };
+      };
+      const curGroup = TOPICS[S.wtopic] ? TOPICS[S.wtopic].group : '';
+      const openGroup = S.wgopen === null || S.wgopen === undefined ? curGroup : S.wgopen;
+      let topicGroups = [];
+      TOPICS.forEach((t, i) => {
+        let g = topicGroups.find(x => x.label === t.group);
+        if (!g) { g = { label:t.group, items:[], got:0, tot:0, n:0 }; topicGroups.push(g); }
+        g.got += tinfo[i].got; g.tot += tinfo[i].tot; g.n++;
+        const m = topicMatch(t);
+        if (m.ok) g.items.push(Object.assign({}, topicOpts[i], { hint:m.hint, hasHint:!!m.hint }));
+      });
+      if (tq) topicGroups = topicGroups.filter(g => g.items.length);
+      topicGroups.forEach(g => {
+        const open = tq ? true : openGroup === g.label;
+        Object.assign(g, { open, expanded:open ? 'true' : 'false', chev:open ? '▾' : '▸', cls:(open ? 'open ' : '') + (g.label === curGroup ? 'has-cur' : ''),
+          countText:g.n + ' topics · ' + g.got + '/' + g.tot, toggle:() => { if (!tq) this.setState({ wgopen:open ? '' : g.label }); } });
+      });
+      const topicNoMatch = !!tq && topicGroups.length === 0;
       const capOpts = LIMIT_OPTIONS.map(n => ({ label:n === 0 ? 'No limit' : String(n), cls:S.nlimit === n ? 'on' : '', fn:() => this.setLimit(n) }));
       const hubNew = hubNow.words.filter(w => mini(w.zh).lv === 'new' && !S.wlearned[w.zh]).length;
       const topicNew = topicNow.words.filter(zh => mini(zh).lv === 'new' && !S.wlearned[zh]).length;
@@ -1827,17 +1850,26 @@
       const timeOpts = [[0, 'Today'], [7, 'In 1 week'], [30, 'In 1 month']].map(x => ({ label:x[1], cls:S.woff === x[0] ? 'on' : '', fn:() => this.setState({ woff:x[0] }) }));
 
       // grammar
-      const lessonGroups = [];
+      const gqn = String(S.gq || '').toLowerCase().trim();
+      const curCat = LESSONS[S.glesson] ? LESSONS[S.glesson].cat : '';
+      const openCat = S.ggopen === null || S.ggopen === undefined ? curCat : S.ggopen;
+      let lessonGroups = [];
       LESSONS.forEach((l, i) => {
         let g = lessonGroups.find(x => x.label === l.cat);
         if (!g) { g = { label:l.cat, blurb:l.catBlurb, items:[], total:0, passed:0 }; lessonGroups.push(g); }
         const best = S.gres[l.id]; const passed = (best || 0) >= 80;
         g.total++; if (passed) g.passed++;
+        if (gqn && !(l.title.toLowerCase().includes(gqn) || l.cat.toLowerCase().includes(gqn))) return;
         const n = LESSON_LV[l.id];
         g.items.push({ n:i + 1, title:l.title, cls:(i === S.glesson ? 'cur ' : '') + (passed ? 'done' : '') + (ALL ? ' rl' + n : ''), tag:best === undefined ? '' : best + '%', fn:() => this.pickLesson(i),
           hasLvTag:ALL, lvTag:'HSK ' + n, lvCls:(n === TOPL ? 'cur' : 'old') + ' l' + n });
       });
-      lessonGroups.forEach(g => { g.progress = g.passed + ' of ' + g.total; });
+      if (gqn) lessonGroups = lessonGroups.filter(g => g.items.length);
+      lessonGroups.forEach(g => {
+        const open = gqn ? true : openCat === g.label;
+        Object.assign(g, { progress:g.passed + '/' + g.total, open, expanded:open ? 'true' : 'false', chev:open ? '▾' : '▸', cls:(open ? 'open ' : '') + (g.label === curCat ? 'has-cur' : ''), toggle:() => { if (!gqn) this.setState({ ggopen:open ? '' : g.label }); } });
+      });
+      const gramNoMatch = !!gqn && lessonGroups.length === 0;
       const L = LESSONS[S.glesson];
       const lessonBest = S.gres[L.id];
       const lesson = {
@@ -1920,7 +1952,7 @@
         hubCards, hubOpts, hubZh:hubNow.hub, hubPy:hubNow.py, hubEn:hubNow.en,
         fillEn:gapNow.en, fillZh:gapNow.zh, gapOpts, gapDone, gapOptsCls:gapDone ? 'locked' : '', fillLine, gapNext:this.gapNext,
         fillReport:report('Which word fits?', gapNow.zh + ' = ' + gapNow.ans + ' / ' + gapNow.en),
-        oppRows, topicChips, topicOpts, topicGroups, topicName:topicNow.name, topicPos:(S.wtopic + 1) + ' of ' + TOPICS.length, topicMenuOpen:S.wtmenu ? 'true' : 'false', topicMenuShow:S.wtmenu, toggleTopicMenu:() => this.setState({ wtmenu:!this.state.wtmenu }), topicPrev:() => this.pickTopic((S.wtopic + TOPICS.length - 1) % TOPICS.length), topicNext:() => this.pickTopic((S.wtopic + 1) % TOPICS.length), tsZh:topicNow.sentence.zh, tsPy:topicNow.sentence.py, tsEn:topicNow.sentence.en,
+        oppRows, topicChips, topicOpts, topicGroups, topicName:topicNow.name, wtq:S.wtq, onTopicSearch:(e) => this.setState({ wtq:e.target.value }), topicNoMatch, topicPos:(S.wtopic + 1) + ' of ' + TOPICS.length, topicMenuOpen:S.wtmenu ? 'true' : 'false', topicMenuShow:S.wtmenu, toggleTopicMenu:() => this.setState({ wtmenu:!this.state.wtmenu }), topicPrev:() => this.pickTopic((S.wtopic + TOPICS.length - 1) % TOPICS.length), topicNext:() => this.pickTopic((S.wtopic + 1) % TOPICS.length), tsZh:topicNow.sentence.zh, tsPy:topicNow.sentence.py, tsEn:topicNow.sentence.en,
         tsReport:report('Topic sentence', topicNow.sentence.zh + ' ' + topicNow.sentence.en),
         topicCta:topicNow.cta, goTopic:() => this.go(topicNow.to),
         hasRlast:!!S.rlast, rlastText:S.rlast ? S.rlast.zh + ': mastery ' + S.rlast.from + '% → ' + S.rlast.to + '%' : '', rlastCls:S.rlast && S.rlast.to < S.rlast.from ? 'down' : 'up',
@@ -2040,7 +2072,7 @@
         hasRecent:S.testHistory.length > 0, noRecent:S.testHistory.length === 0,
 
         // grammar
-        lessonGroups, lesson, gramPickOpen:S.gramPick ? 'true' : 'false', gramListCls:S.gramPick ? 'open' : '', toggleGramPick:() => this.setState({ gramPick:!S.gramPick }),
+        lessonGroups, gramNoMatch, gq:S.gq, onGramSearch:(e) => this.setState({ gq:e.target.value }), lesson, gramPickOpen:S.gramPick ? 'true' : 'false', gramListCls:S.gramPick ? 'open' : '', toggleGramPick:() => this.setState({ gramPick:!S.gramPick }),
         startGrammar:() => this.startQuiz('grammar'),
 
         // speak

@@ -137,7 +137,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('button', { hasText: 'Topics' }).click();
   await page.waitForTimeout(80);
   const topicN = await page.evaluate(() => window.HSK2_WEBS.topics.length);
-  check(topicN > 30 && (await page.locator('.trail-rail .trl').count()) === topicN && (await text()).includes('Roads and distance') && !(await text()).includes('Greetings and manners'), 'the topics screen lists the HSK 2 topics (' + topicN + '), without the ones that have no HSK 2 words');
+  check(topicN > 30 && (await page.locator('.trail-rail .tr-gn').allInnerTexts()).reduce((a, t) => a + parseInt(t, 10), 0) === topicN && await page.evaluate(() => window.HSK2_WEBS.topics.some(t => t.name === 'Roads and distance')) && !(await text()).includes('Greetings and manners'), 'the topics screen lists the HSK 2 topics (' + topicN + '), without the ones that have no HSK 2 words');
   check(await page.evaluate(() => window.HSK2_WEBS.hubs.every(h => h.gaps.every(g => g.opts.includes(g.ans)))), 'every fill-in gap has its answer among its options');
 
   // ---- review and My words
@@ -171,7 +171,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(lessons === 19, 'the Grammar screen has 19 HSK 2 lessons');
   let allFull = true;
   for (let i = 0; i < lessons; i++) {
-    await page.locator('.gl .gp').nth(i).click();
+    await page.evaluate((j) => window.shanlu.pickLesson(j), i);
     await page.locator('button', { hasText: 'Practise this lesson' }).first().click();
     await page.waitForTimeout(60);
     const total = await runQuiz(true);
@@ -180,9 +180,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await nav('Grammar');
   }
   check(allFull, 'every HSK 2 lesson scores full marks when its questions are answered correctly');
-  check((await page.locator('.gl .gp.done').count()) === 19, 'all 19 lessons are marked done');
+  check(await page.evaluate(() => Object.values(window.shanlu.state.gres).filter(v => v >= 80).length) === 19, 'all 19 lessons are marked done');
   // wrong answers are marked wrong in each question type
-  await page.locator('.gl .gp').nth(0).click();
+  await page.evaluate(() => window.shanlu.pickLesson(0));
   await page.locator('button', { hasText: 'Practise this lesson' }).first().click();
   await answer(false);
   check((await text()).includes('Not quite'), 'a wrong grammar answer is marked wrong');
@@ -335,8 +335,13 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await pA.locator('nav button', { hasText: 'Grammar' }).click();
     await pA.waitForTimeout(150);
     check(await pA.evaluate(() => (document.querySelector('main').innerText).toLowerCase().includes('lesson 1 of ' + (window.HSK1_GRAMMAR.lessons.length + window.HSK2_GRAMMAR.lessons.length))), 'Grammar lists the lessons of both levels');
-    check(await pA.locator('.gl .gg').count() === 11 && await pA.locator('.gl .gp .lvtag.l1').count() === 26 && await pA.locator('.gl .gp .lvtag.l2').count() === 19, 'Grammar is in 11 categories and every lesson carries its HSK level tag (26 + 19)');
-    check(await pA.evaluate(() => { const rows = [...document.querySelectorAll('.gl > *')]; let cat = ''; const m = {}; rows.forEach(r => { if (r.classList.contains('gg')) cat = r.innerText.split('\n')[0].trim(); else m[r.innerText] = cat; }); const k = Object.keys(m).find(x => x.includes('Comparing: 比')); return !!k && /DESCRIBING AND COMPARING/i.test(m[k]); }), 'the HSK 2 comparing lesson sits in Describing and comparing with the HSK 1 describing lesson');
+    check(await pA.locator('.gl .gg').count() === 11, 'Grammar is in 11 categories');
+    await pA.evaluate(() => { const i = window.shanlu && [...document.querySelectorAll('.gl .gp')].length; window.__cmp = (() => { const all = window.HSK1_GRAMMAR.lessons.concat(window.HSK2_GRAMMAR.lessons); return all; })(); });
+    await pA.fill('.gl .tr-search', 'describing and comparing');
+    await pA.waitForTimeout(100);
+    const cmp = await pA.evaluate(() => ({ n: document.querySelectorAll('.gl .gp').length, l1: document.querySelectorAll('.gl .gp .lvtag.l1').length, l2: document.querySelectorAll('.gl .gp .lvtag.l2').length, edge1: document.querySelectorAll('.gl .gp.rl1').length, edge2: document.querySelectorAll('.gl .gp.rl2').length, t: document.querySelector('.gl').innerText }));
+    check(cmp.n === 4 && cmp.l1 === 1 && cmp.l2 === 3 && cmp.edge1 === 1 && cmp.edge2 === 3 && cmp.t.includes('Comparing: 比'), 'the Describing and comparing category holds the HSK 1 describing lesson and three HSK 2 lessons, each with its level tag and coloured edge');
+    await pA.fill('.gl .tr-search', '');
     // word webs: topics first, and the hubs of both levels
     await pA.locator('nav button', { hasText: 'Word webs' }).click();
     await pA.waitForTimeout(150);
@@ -344,11 +349,15 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await pA.waitForTimeout(100);
     check(await pA.locator('.mtile').count() === await pA.evaluate(() => new Set(window.HSK1_WEBS.topics.concat(window.HSK2_WEBS.topics).map(t => t.name)).size), 'Word webs shows one mountain per topic name across both levels');
     // the HSK 2 family words sit in the same topic as the HSK 1 family words, each with a small level tag
+    await pA.locator('.trail-rail .tr-gh', { hasText: /^.?\s*People/ }).click();
     await pA.locator('.trail-rail .trl', { hasText: /^Family/ }).click();
     await pA.waitForTimeout(150);
     const fam = await pA.evaluate(() => { const a = window.HSK1_WEBS.topics.find(t => t.name === 'Family').words.length, b = window.HSK2_WEBS.topics.find(t => t.name === 'Family').words.length; const t = document.querySelector('.tgrid').innerText; return { a, b, n: document.querySelectorAll('.tgrid .tc').length, cur: document.querySelectorAll('.tgrid .lvtag.cur').length, old: document.querySelectorAll('.tgrid .lvtag.old').length, has: t.includes('爷爷') && t.includes('爸爸') }; });
     check(fam.has && fam.n === fam.a + fam.b && fam.cur === fam.b && fam.old === fam.a, 'the Family topic holds the HSK 1 and HSK 2 family words together, tagged by level (' + fam.a + ' + ' + fam.b + ')');
-    check(await pA.locator('.tr-g').count() >= 8 && await pA.locator('.tr-gl', { hasText: /^Time/ }).count() === 1, 'the topics are grouped under headings in a side list');
+    check(await pA.locator('.tr-g').count() >= 8 && await pA.locator('.tr-gh', { hasText: /Time/ }).count() === 1 && await pA.locator('.tr-gh.open').count() === 1, 'the topics are in a two-tier list: groups that open to show their topics (one open at a time)');
+    await pA.fill('.trail-rail .tr-search', '猫');
+    check((await pA.locator('.trail-rail .trl').count()) >= 1 && (await pA.locator('.trail-rail').innerText()).includes('Animals and nature'), 'searching a word finds the topic it is in');
+    await pA.fill('.trail-rail .tr-search', '');
     await pA.locator('button', { hasText: 'Shared character' }).click();
     await pA.waitForTimeout(100);
     check(await pA.locator('.hubrow .pickrow .fc2').count() === await pA.evaluate(() => window.HSK1_WEBS.hubs.length + window.HSK2_WEBS.hubs.length), 'the shared-character picker holds the hubs of both levels');

@@ -100,8 +100,18 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--jade);outline-o
 .tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(150px,100%),1fr));gap:10px}
 .tlayout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:22px;align-items:start}
 .trail-rail{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;overscroll-behavior:contain;padding-right:4px;display:flex;flex-direction:column;gap:6px}
-.tr-gl{position:sticky;top:0;z-index:1;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:10px 10px 4px;background:var(--bg);font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
-.tr-gn{font-weight:600;letter-spacing:0;text-transform:none}
+.inp.tr-search{position:sticky;top:0;z-index:2;margin:0 0 4px;min-height:42px;font-size:15px;padding:0 14px}
+.tr-g{display:flex;flex-direction:column;gap:2px}
+.tr-gh{display:flex;align-items:center;gap:8px;width:100%;min-height:42px;padding:6px 10px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink);font:inherit;font-size:15px;font-weight:700;text-align:left;cursor:pointer}
+.tr-gh:hover{background:var(--panel2)}
+.tr-gh.open{background:var(--panel2)}
+.tr-chev{flex:none;width:14px;color:var(--muted);font-size:13px}
+.tr-gname{flex:1 1 auto;min-width:0}
+.tr-gh.has-cur:not(.open) .tr-gname::after{content:'';display:inline-block;width:7px;height:7px;margin-left:8px;border-radius:50%;background:var(--jade);vertical-align:middle}
+.tr-gn{flex:none;font-size:12px;font-weight:600;color:var(--muted)}
+.tr-items{display:flex;flex-direction:column;gap:1px;padding:2px 0 8px 14px}
+.trl-h{display:block;font-style:normal;font-size:12.5px;color:var(--muted)}
+.trl.on .trl-h{color:var(--bg);opacity:.8}
 .trl{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:36px;padding:5px 10px;border:0;border-radius:10px;background:transparent;color:var(--ink);font:inherit;font-size:15px;text-align:left;cursor:pointer}
 .trl:hover{background:var(--panel2)}
 .trl.on{background:var(--ink);color:var(--bg)}
@@ -117,7 +127,9 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--jade);outline-o
 .tb-sub{grid-column:1;font-size:13px;color:var(--muted)}
 .tb-car{grid-row:1 / span 2;grid-column:2}
 .tpanel{position:absolute;left:0;right:0;top:100%;max-height:70vh;overflow-y:auto;padding:6px 8px 10px;border-radius:16px;border:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow)}
-.tpanel .tr-gl{background:var(--panel)}
+.tpanel .tr-gh{background:var(--bg)}
+.tpanel .tr-gh.open{background:var(--panel2)}
+.tpanel .tr-search{background:var(--panel)}
 .thead{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
 .thead .h2{font-size:26px}
 .btn.sm{min-height:38px;padding:0 14px;font-size:14.5px}
@@ -374,8 +386,12 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--jade);outline-o
 /* grammar */
 .gram{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start}
 .gl{flex:1 1 300px;max-width:370px;display:flex;flex-direction:column;gap:4px;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;overscroll-behavior:contain;padding-right:4px}
-.gg{position:sticky;top:0;z-index:1;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:12px 14px 4px;background:var(--bg);font-size:12.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
-.gg-n{font-weight:600;letter-spacing:0;text-transform:none}
+.gg{display:flex;align-items:center;gap:8px;width:100%;min-height:42px;padding:6px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink);font:inherit;font-size:15px;font-weight:700;text-align:left;cursor:pointer}
+.gg:hover,.gg.open{background:var(--panel2)}
+.gg.has-cur:not(.open) .tr-gname::after{content:'';display:inline-block;width:7px;height:7px;margin-left:8px;border-radius:50%;background:var(--jade);vertical-align:middle}
+.gg-n{flex:none;font-size:12.5px;font-weight:600;color:var(--muted)}
+.gg-items{display:flex;flex-direction:column;gap:2px;padding:2px 0 8px 10px}
+.gl .tr-search{background:var(--panel)}
 .gp,.gg{flex:none}
 .gp{line-height:1.25;padding-top:8px;padding-bottom:8px}
 .gp .gt{flex:1 1 auto;min-width:0}

@@ -529,12 +529,18 @@
   <div class="gram">
     <button type="button" class="gpick" onClick="{{toggleGramPick}}" aria-expanded="{{gramPickOpen}}"><span>{{lesson.pickLabel}}</span><span aria-hidden="true">▾</span></button>
     <div class="gl {{gramListCls}}">
+      <input class="inp wsearch tr-search" type="search" value="{{gq}}" placeholder="Find a lesson" autocomplete="off" aria-label="Find a lesson" onInput="{{onGramSearch}}">
       <sc-for list="{{lessonGroups}}" as="g" hint-placeholder-count="4">
-        <div class="gg"><span>{{g.label}}</span><span class="gg-n">{{g.progress}}</span></div>
-        <sc-for list="{{g.items}}" as="p" hint-placeholder-count="3">
-          <button type="button" class="gp {{p.cls}}" onClick="{{p.fn}}"><span class="gn">{{p.n}}</span><span class="gt">{{p.title}}</span><sc-if value="{{p.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{p.lvCls}}">{{p.lvTag}}</span></sc-if><span class="soon">{{p.tag}}</span></button>
-        </sc-for>
+        <button type="button" class="gg {{g.cls}}" aria-expanded="{{g.expanded}}" onClick="{{g.toggle}}"><span class="tr-chev" aria-hidden="true">{{g.chev}}</span><span class="tr-gname">{{g.label}}</span><span class="gg-n">{{g.progress}}</span></button>
+        <sc-if value="{{g.open}}" hint-placeholder-val="{{ false }}">
+          <div class="gg-items">
+            <sc-for list="{{g.items}}" as="p" hint-placeholder-count="3">
+              <button type="button" class="gp {{p.cls}}" onClick="{{p.fn}}"><span class="gn">{{p.n}}</span><span class="gt">{{p.title}}</span><sc-if value="{{p.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{p.lvCls}}">{{p.lvTag}}</span></sc-if><span class="soon">{{p.tag}}</span></button>
+            </sc-for>
+          </div>
+        </sc-if>
       </sc-for>
+      <sc-if value="{{gramNoMatch}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:6px 10px">No lesson matches.</p></sc-if>
     </div>
     <div class="lesson">
       <div class="les-top">
@@ -927,11 +933,18 @@
     <sc-if value="{{isWTopic}}" hint-placeholder-val="{{ false }}">
     <div class="tlayout">
     <aside class="trail-rail" aria-label="Topics">
+      <input class="inp wsearch tr-search" type="search" value="{{wtq}}" placeholder="Find a topic or word" autocomplete="off" aria-label="Find a topic or word" onInput="{{onTopicSearch}}">
       <sc-for list="{{topicGroups}}" as="g" hint-placeholder-count="4">
-        <div class="tr-g"><div class="tr-gl"><span>{{g.label}}</span><span class="tr-gn">{{g.progress}}</span></div>
-          <sc-for list="{{g.opts}}" as="t" hint-placeholder-count="4"><button type="button" class="trl {{t.cls}}" onClick="{{t.fn}}"><span class="trl-n">{{t.label}}</span><span class="trl-c">{{t.count}}</span></button></sc-for>
+        <div class="tr-g">
+          <button type="button" class="tr-gh {{g.cls}}" aria-expanded="{{g.expanded}}" onClick="{{g.toggle}}"><span class="tr-chev" aria-hidden="true">{{g.chev}}</span><span class="tr-gname">{{g.label}}</span><span class="tr-gn">{{g.countText}}</span></button>
+          <sc-if value="{{g.open}}" hint-placeholder-val="{{ false }}">
+            <div class="tr-items">
+              <sc-for list="{{g.items}}" as="t" hint-placeholder-count="4"><button type="button" class="trl {{t.cls}}" onClick="{{t.fn}}"><span class="trl-n">{{t.label}}<sc-if value="{{t.hasHint}}" hint-placeholder-val="{{ false }}"><i class="trl-h">{{t.hint}}</i></sc-if></span><span class="trl-c">{{t.count}}</span></button></sc-for>
+            </div>
+          </sc-if>
         </div>
       </sc-for>
+      <sc-if value="{{topicNoMatch}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:6px 10px">No topic or word matches.</p></sc-if>
     </aside>
     <div class="tmain">
       <div class="tbar">
@@ -939,11 +952,18 @@
         <button type="button" class="tb-cur" onClick="{{toggleTopicMenu}}" aria-expanded="{{topicMenuOpen}}"><span class="tb-name">{{topicName}}</span><span class="tb-sub">{{topicProgress}} · topic {{topicPos}}</span><span class="tb-car" aria-hidden="true">▾</span></button>
         <button type="button" class="tb-nav" onClick="{{topicNext}}" aria-label="Next topic">›</button>
         <sc-if value="{{topicMenuShow}}" hint-placeholder-val="{{ false }}"><div class="tpanel">
-          <sc-for list="{{topicGroups}}" as="g" hint-placeholder-count="4">
-        <div class="tr-g"><div class="tr-gl"><span>{{g.label}}</span><span class="tr-gn">{{g.progress}}</span></div>
-          <sc-for list="{{g.opts}}" as="t" hint-placeholder-count="4"><button type="button" class="trl {{t.cls}}" onClick="{{t.fn}}"><span class="trl-n">{{t.label}}</span><span class="trl-c">{{t.count}}</span></button></sc-for>
+          <input class="inp wsearch tr-search" type="search" value="{{wtq}}" placeholder="Find a topic or word" autocomplete="off" aria-label="Find a topic or word" onInput="{{onTopicSearch}}">
+      <sc-for list="{{topicGroups}}" as="g" hint-placeholder-count="4">
+        <div class="tr-g">
+          <button type="button" class="tr-gh {{g.cls}}" aria-expanded="{{g.expanded}}" onClick="{{g.toggle}}"><span class="tr-chev" aria-hidden="true">{{g.chev}}</span><span class="tr-gname">{{g.label}}</span><span class="tr-gn">{{g.countText}}</span></button>
+          <sc-if value="{{g.open}}" hint-placeholder-val="{{ false }}">
+            <div class="tr-items">
+              <sc-for list="{{g.items}}" as="t" hint-placeholder-count="4"><button type="button" class="trl {{t.cls}}" onClick="{{t.fn}}"><span class="trl-n">{{t.label}}<sc-if value="{{t.hasHint}}" hint-placeholder-val="{{ false }}"><i class="trl-h">{{t.hint}}</i></sc-if></span><span class="trl-c">{{t.count}}</span></button></sc-for>
+            </div>
+          </sc-if>
         </div>
       </sc-for>
+      <sc-if value="{{topicNoMatch}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:6px 10px">No topic or word matches.</p></sc-if>
         </div></sc-if>
       </div>
       <div class="thead">
