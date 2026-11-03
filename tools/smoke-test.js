@@ -914,6 +914,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(asrCalls.length === asrBefore + 1 && asrCalls[asrCalls.length - 1].body.messages[0].content[0].input_audio.data.length > 2000, 'recording is sent to Alibaba as a WAV clip and the words land in the box');
   const wavHead = Buffer.from(asrCalls[asrCalls.length - 1].body.messages[0].content[0].input_audio.data.split(',')[1].slice(0, 64), 'base64').toString('latin1');
   check(wavHead.startsWith('RIFF') && wavHead.slice(8, 12) === 'WAVE', 'the clip is a real WAV file');
+  const wavBytes = Buffer.from(asrCalls[asrCalls.length - 1].body.messages[0].content[0].input_audio.data.split(',')[1], 'base64');
+  check(wavBytes.readUInt32LE(24) === 16000 && wavBytes.readUInt16LE(22) === 1 && wavBytes.length > 44 + 16000 * 2 * 0.8, 'the clip is 16 kHz mono and holds about as much sound as was recorded (' + wavBytes.length + ' bytes), taken straight from the microphone');
   // a workspace ID changes the web address
   await page.evaluate(() => { const app = window.shanlu; app.setState({ aliWsInput:'testws1', aliKeyInput:'' }); app.aliSaveKey(); });
   await page.evaluate(() => window.shanlu.aliTest());

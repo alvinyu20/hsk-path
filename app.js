@@ -526,18 +526,16 @@
     for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
     return btoa(bin);
   };
-  const blobToWavBase64 = async (blob) => {
-    const AC = window.AudioContext || window.webkitAudioContext;
-    const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-    const ab = await blob.arrayBuffer();
-    const ctx = new AC();
-    const audio = await new Promise((res, rej) => { const p = ctx.decodeAudioData(ab, res, rej); if (p && p.catch) p.catch(rej); });
-    try { ctx.close(); } catch (e) {}
-    const rate = 16000;
-    const off = new OAC(1, Math.max(1, Math.ceil(audio.duration * rate)), rate);
-    const src = off.createBufferSource(); src.buffer = audio; src.connect(off.destination); src.start();
-    const done = await off.startRendering();
-    return wavBase64(done.getChannelData(0), rate);
+  // average neighbouring samples down to 16 kHz (the recording is taken straight from the microphone, so nothing has to be decoded)
+  const to16k = (pcm, rate) => {
+    if (rate === 16000) return pcm;
+    const ratio = rate / 16000, n = Math.floor(pcm.length / ratio), out = new Float32Array(n);
+    for (let j = 0; j < n; j++) {
+      const a = Math.floor(j * ratio), b = Math.max(a + 1, Math.min(pcm.length, Math.floor((j + 1) * ratio)));
+      let sum = 0; for (let i = a; i < b; i++) sum += pcm[i];
+      out[j] = sum / (b - a);
+    }
+    return out;
   };
   async function aliTranscribe(b64) {
     const body = { model:ALI_ASR_MODEL, stream:false, asr_options:{ enable_itn:false, language:'zh' },
@@ -1117,18 +1115,34 @@
       let stream;
       try { stream = await navigator.mediaDevices.getUserMedia({ audio:true }); }
       catch (e) { this.setState({ aiErr:'The microphone is blocked. Allow microphone access for this site in the browser, or type instead.' }); return; }
+      let actx = null, node = null;
+      const release = () => { try { stream.getTracks().forEach(t => t.stop()); } catch (e) {} try { if (node) node.disconnect(); } catch (e) {} try { if (actx) actx.close(); } catch (e) {} };
       try {
-        const MR = window.MediaRecorder;
-        const types = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'];
-        const mt = MR.isTypeSupported ? types.find(t => MR.isTypeSupported(t)) : '';
-        const rec = mt ? new MR(stream, { mimeType:mt }) : new MR(stream);
-        const chunks = [];
-        rec.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
+        // the sound is taken straight from the microphone as raw samples (no MediaRecorder, so no compressed clip has to be decoded afterwards: that step fails on some browsers)
         const AC = window.AudioContext || window.webkitAudioContext;
-        const actx = new AC(); const an = actx.createAnalyser(); an.fftSize = 1024; actx.createMediaStreamSource(stream).connect(an);
+        actx = new AC(); if (actx.resume) { try { await actx.resume(); } catch (e) {} }
+        const rate = actx.sampleRate;
+        const srcNode = actx.createMediaStreamSource(stream);
+        const an = actx.createAnalyser(); an.fftSize = 1024; srcNode.connect(an);
         const buf = new Float32Array(an.fftSize);
+        const parts = []; let total = 0;
+        node = actx.createScriptProcessor(4096, 1, 1);
+        node.onaudioprocess = (e) => { const d = e.inputBuffer.getChannelData(0); parts.push(new Float32Array(d)); total += d.length; };
+        const mute = actx.createGain(); mute.gain.value = 0;   // keeps the processor running without playing the microphone back
+        srcNode.connect(node); node.connect(mute); mute.connect(actx.destination);
         let heard = false, manual = false, stopped = false, lastVoice = Date.now(); const t0 = Date.now();
-        const stop = (byHand) => { if (stopped) return; stopped = true; manual = !!byHand; clearInterval(timer); try { rec.stop(); } catch (e) {} };
+        const finish = async () => {
+          const pcm = new Float32Array(total); let o = 0; parts.forEach(p => { pcm.set(p, o); o += p.length; });
+          release(); this.recStop = null;
+          if (!heard && !manual) { this.setState({ aiListen:false, aiErr:'I did not hear anything. Check your microphone, then try again.' }); return; }
+          if (total < rate * 0.2) { this.setState({ aiListen:false, aiErr:'That was too short. Tap Speak and say a whole sentence.' }); return; }
+          this.setState({ aiListen:false, asrBusy:true });
+          try {
+            const text = await aliTranscribe(wavBase64(to16k(pcm, rate), 16000));
+            this.setState({ aiInput:text, asrBusy:false, aiAlts:[], aiErr:text ? '' : 'I could not make out any words. Try again a little closer to the microphone.' });
+          } catch (e) { this.setState({ asrBusy:false, aiErr:(e && e.message) || 'The recording could not be read.' }); }
+        };
+        const stop = (byHand) => { if (stopped) return; stopped = true; manual = !!byHand; clearInterval(timer); finish(); };
         const timer = setInterval(() => {
           an.getFloatTimeDomainData(buf); let sum = 0; for (let i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
           const now = Date.now();
@@ -1136,19 +1150,8 @@
           if ((heard && now - lastVoice > 1500) || now - t0 > 30000 || (!heard && now - t0 > 8000)) stop(false);
         }, 100);
         this.recStop = stop;
-        rec.onstop = async () => {
-          stream.getTracks().forEach(t => t.stop()); try { actx.close(); } catch (e) {}
-          this.recStop = null;
-          if (!heard && !manual) { this.setState({ aiListen:false, aiErr:'I did not hear anything. Check your microphone, then try again.' }); return; }
-          this.setState({ aiListen:false, asrBusy:true });
-          try {
-            const text = await aliTranscribe(await blobToWavBase64(new Blob(chunks, { type:rec.mimeType || mt || 'audio/webm' })));
-            this.setState({ aiInput:text, asrBusy:false, aiAlts:[], aiErr:text ? '' : 'I could not make out any words. Try again a little closer to the microphone.' });
-          } catch (e) { this.setState({ asrBusy:false, aiErr:(e && e.message) || 'The recording could not be read.' }); }
-        };
-        rec.start();
         this.setState({ aiListen:true, aiErr:'', aiAlts:[] });
-      } catch (e) { try { stream.getTracks().forEach(t => t.stop()); } catch (e2) {} this.setState({ aiListen:false, aiErr:'The microphone could not start. Type instead.' }); }
+      } catch (e) { release(); this.setState({ aiListen:false, aiErr:'The microphone could not start. Type instead.' }); }
     };
 
     goVoice = () => this.go('voice');
@@ -1529,7 +1532,7 @@
         cmpBadHead:m.cmp && !m.cmp.same ? 'Suggested: ' + m.cmp.sugZh + ' (' + m.cmp.sugPy + ')' : '',
         cmpBadDetail:m.cmp && !m.cmp.same ? (m.cmp.lens ? 'The suggestion has ' + m.cmp.lens.exp + ' characters and you had ' + m.cmp.lens.got + '.' : m.cmp.diffs.map(d => d.exp + (d.pe ? ' (' + d.pe + ')' : '') + ' → you: ' + d.got + (d.pg ? ' (' + d.pg + ')' : '') + (d.tone ? ' · same sound, different tone' : '')).join('  ·  ')) : ''
       }));
-      const hasMic = S.asrMode === 'alibaba' ? !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder) : !!(window.webkitSpeechRecognition || window.SpeechRecognition);
+      const hasMic = S.asrMode === 'alibaba' ? !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && (window.AudioContext || window.webkitAudioContext)) : !!(window.webkitSpeechRecognition || window.SpeechRecognition);
       const lastM = S.aim[S.aim.length - 1];
       const sg = lastM && lastM.who === 'ai' && lastM.sug && !S.aiBusy ? lastM.sug : null;
       return {
