@@ -1,0 +1,9 @@
+{
+  "name": "shanlu-friends-worker",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Tiny Cloudflare Worker + D1 backend for the Shanlu friends board",
+  "type": "module",
+  "scripts": { "test": "node test.mjs" },
+  "devDependencies": { "miniflare": "^3.20240000.0" }
+}

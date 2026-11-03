@@ -179,6 +179,30 @@
   // and falls when reviews slide. (XP points are still counted inside, only to keep the streak, but they are no longer shown.)
   const memOf = (ws) => { let sum = 0, n = 0; Object.keys(ws).forEach(z => { const i = winfo(ws[z], 0); if (i.started) { sum += i.recallN / 100; n++; } }); return { words:Math.round(sum), n, avg:n ? Math.round(100 * sum / n) : 0 }; };
 
+  // ---------- friends board (optional; stays hidden until config.js has the server address) ----------
+  const FR = window.ShanluFriends ? window.ShanluFriends.make() : null;
+  const FR_PUSH_KEY = 'shanlu-friends-push';
+  // The totals shared with friends, read from every saved progress (each level and All levels), so the numbers do not depend on which view you were in.
+  const collectFriendStats = () => {
+    const keys = Object.keys(LVL.PROGRESS_KEYS || {}).map(n => ({ n:Number(n), key:LVL.PROGRESS_KEYS[n] })).concat([{ n:0, key:'shanlu-progress-v1-all' }]);
+    const stores = keys.map(k => { let st = null; try { st = JSON.parse(localStorage.getItem(k.key)); } catch (e) {} return st && typeof st === 'object' ? Object.assign({ __n:k.n }, st) : null; }).filter(Boolean);
+    const dayMin = (d) => stores.reduce((a, st) => a + ((st.minLog && st.minLog[d] != null) ? st.minLog[d] : (st.day === d ? (st.dayMin || 0) : 0)), 0);
+    const last7 = [6, 5, 4, 3, 2, 1, 0].map(n => Math.max(0, Math.min(1440, Math.round(dayMin(daysAgo(n))))));
+    const active = {};
+    stores.forEach(st => Object.keys(st.activity || {}).forEach(d => { active[d] = true; }));
+    last7.forEach((m, i) => { if (m > 0) active[daysAgo(6 - i)] = true; });
+    const today = ymd(new Date());
+    let lastActive = '';
+    for (let n = 0; n < 100 && !lastActive; n++) if (active[daysAgo(n)]) lastActive = daysAgo(n);
+    let streak = 0;
+    if (lastActive === today || lastActive === daysAgo(1)) for (let n = lastActive === today ? 0 : 1; active[daysAgo(n)]; n++) streak++;
+    stores.forEach(st => { if ((st.lastActive === today || st.lastActive === daysAgo(1)) && (st.streak || 0) > streak) streak = st.streak; });
+    let mem = 0;
+    stores.filter(st => st.__n > 0 && st.ws).forEach(st => { try { mem += memOf(st.ws).words; } catch (e) {} });
+    const levels = LVL.unlockedLevels ? LVL.unlockedLevels() : [LV];
+    return { asOf:today, last7, streak:Math.min(streak, 9999), lastActive, mem, levels, passed:levels.filter(n => LVL.levelPassed(n)) };
+  };
+
   // ---------- dates, saving, daily reset ----------
   const pad = (n) => (n < 10 ? '0' : '') + n;
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
@@ -192,6 +216,7 @@
     try { dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
+      fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', frLeaveAsk:false, frCopied:false,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -669,6 +694,7 @@
     }
     persistSoon() {
       this.syncLater();
+      this.friendsTick();
       clearTimeout(this.saveTimer);
       this.saveTimer = setTimeout(() => this.persistNow(), 250);
     }
@@ -681,6 +707,79 @@
         else if ((this.state.exams || []).some(LVL.passedEntry)) LVL.markPassed(LV);   // a passed full exam opens the next level
       } catch (e) {}
     }
+    // ----- friends board: talks to the server rarely (on open, after a pause in studying, when you leave, and at most every ~10 minutes) -----
+    frTimer = null;
+    friendsTick() {
+      if (!FR || !FR.enabled() || !FR.identity() || this.frTimer) return;
+      const last = Number(localStorage.getItem(FR_PUSH_KEY) || 0);
+      if (Date.now() - last < 10 * 60 * 1000) return;
+      this.frTimer = setTimeout(() => { this.frTimer = null; this.friendsPush({ minGap:10 * 60 * 1000 }); }, 5000);
+    }
+    friendsPush = async (o) => {
+      const opt = o || {};
+      if (!FR || !FR.enabled() || !FR.identity()) return;
+      const last = Number(localStorage.getItem(FR_PUSH_KEY) || 0);
+      if (opt.minGap && Date.now() - last < opt.minGap) return;
+      try {
+        this.persistNow();
+        await FR.push(collectFriendStats(), opt.keepalive ? { keepalive:true } : undefined);
+        try { localStorage.setItem(FR_PUSH_KEY, String(Date.now())); } catch (e) {}
+      } catch (e) { this.friendsFailed(e); }
+    };
+    friendStats = () => collectFriendStats();
+    friendsFailed = (e) => {
+      if (e && e.status === 401) { FR.forget(); this.setState({ fr:null, frErr:'This device is not in the group any more. Open your invite link to join again.' }); return; }
+      this.setState({ frErr:(e && e.message) || 'Could not reach the friends board.' });
+    };
+    friendsRefresh = async (force) => {
+      if (!FR || !FR.enabled() || !FR.identity()) return;
+      const S = this.state;
+      if (S.frBusy || (!force && S.fr && Date.now() - S.frAt < 2 * 60 * 1000)) return;
+      this.setState({ frBusy:true });
+      try { const g = await FR.group(); this.setState({ fr:g, frAt:Date.now(), frBusy:false, frErr:'' }); }
+      catch (e) { this.setState({ frBusy:false }); this.friendsFailed(e); }
+    };
+    friendsJoin = async () => {
+      const S = this.state;
+      if (S.frBusy || !FR) return;
+      this.setState({ frBusy:true, frErr:'' });
+      try {
+        await FR.join(S.frCode, S.frName);
+        this.setState({ frBusy:false, frName:'', frCode:'', frMsg:'' });
+        await this.friendsPush({});
+        await this.friendsRefresh(true);
+      } catch (e) { this.setState({ frBusy:false, frErr:(e && e.message) || 'Could not join.' }); }
+    };
+    friendsCheer = async (id) => {
+      try { await FR.cheer(id); await this.friendsRefresh(true); } catch (e) { this.friendsFailed(e); }
+    };
+    friendsLeave = async () => {
+      if (!this.state.frLeaveAsk) { this.setState({ frLeaveAsk:true }); return; }
+      try { await FR.leave(); this.setState({ fr:null, frLeaveAsk:false, frErr:'', frMsg:'You left the group.' }); } catch (e) { this.setState({ frLeaveAsk:false }); this.friendsFailed(e); }
+    };
+    friendsCopyLink = async () => {
+      const id = FR && FR.identity();
+      if (!id) return;
+      const link = window.ShanluFriends.makeLink(location.href, id);
+      try { await navigator.clipboard.writeText(link); this.setState({ frCopied:true }); setTimeout(() => this.setState({ frCopied:false }), 2500); } catch (e) { try { window.prompt('Copy your link', link); } catch (e2) {} }
+    };
+    // an invite link (#join=CODE) opens the join form; a personal link (#me=...) signs this device in
+    friendsBoot = async () => {
+      if (!FR || !FR.enabled()) return;
+      const hit = window.ShanluFriends.parseHash(location.hash);
+      if (hit.join || hit.me) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+      if (hit.join) {
+        if (FR.identity()) this.setState({ screen:'friends', frMsg:'This device is already in the group.' });
+        else this.setState({ screen:'friends', frCode:hit.join });
+      } else if (hit.me) {
+        const cur = FR.identity();
+        if (cur && cur.id !== hit.me.id && !window.confirm('This device is already in the group as ' + (cur.name || 'someone') + '. Replace that with the link you opened?')) { this.setState({ screen:'friends' }); return; }
+        try { const g = await FR.restore(hit.me); this.setState({ screen:'friends', fr:g, frAt:Date.now(), frMsg:'Signed in on this device.', frErr:'' }); await this.friendsPush({}); }
+        catch (e) { this.setState({ screen:'friends', frErr:(e && e.message) || 'That link does not work.' }); }
+      }
+      if (FR.identity()) { await this.friendsRefresh(false); setTimeout(() => this.friendsPush({ minGap:5 * 60 * 1000 }), 1500); }
+    };
+
     // All levels: hand each level its own part of the progress, leaving the rest of that level's save alone
     persistSplit() {
       const S = this.state;
@@ -1552,6 +1651,37 @@
       const active = S.screen === 'quiz' ? (S.qmode === 'grammar' ? 'grammar' : 'testlobby') : S.screen;
       const navCls = (k) => 'nav' + (active === k ? ' on' : '');
 
+      // friends board
+      const frIdent = FR && FR.enabled() ? FR.identity() : null;
+      const frToday = ymd(new Date());
+      const frRows = S.fr ? window.ShanluFriends.sortRows(S.fr.members.map(m => window.ShanluFriends.boardRow(m, frToday, S.fr.me)), S.frSort) : [];
+      const frWeekMin = frRows.reduce((a, r) => a + r.minutes, 0);
+      const frGoal = Math.max(1, frRows.length) * 100;
+      const frAgo = S.frAt ? Math.max(0, Math.round((Date.now() - S.frAt) / 60000)) : 0;
+      const frSorts = [['week', 'This week'], ['streak', 'Streak'], ['mem', 'In memory']];
+      const frVals = {
+        frJoined:!!frIdent, frNotJoined:!!(FR && FR.enabled()) && !frIdent, frOff:!(FR && FR.enabled()),
+        frName:S.frName, frCode:S.frCode, frErr:S.frErr, frHasErr:!!S.frErr, frMsg:S.frMsg, frHasMsg:!!S.frMsg, frBusy:S.frBusy, frJoinText:S.frBusy ? 'Joining…' : 'Join group',
+        onFrName:(e) => this.setState({ frName:e.target.value }), onFrCode:(e) => this.setState({ frCode:e.target.value }), friendsJoin:this.friendsJoin,
+        frLoaded:!!S.fr, frWaiting:!!frIdent && !S.fr, frMine:frIdent ? frIdent.name : '', frGroup:frIdent ? frIdent.group : '',
+        frWeekMin, frGoal, frGoalPct:Math.min(100, Math.round(frWeekMin / frGoal * 100)) + '%', frGoalText:frWeekMin + ' of ' + frGoal + ' min',
+        frSortOpts:frSorts.map(x => ({ label:x[1], cls:S.frSort === x[0] ? 'on' : '', fn:() => this.setState({ frSort:x[0] }) })),
+        frRows:frRows.map((r, i) => ({
+          name:r.name, initial:r.initial, avCls:'c' + (i % 4), isMe:r.isMe, you:r.isMe ? 'You' : r.name, hasLv:r.level > 0, lvTag:'HSK ' + r.level, lvCls:'cur l' + r.level,
+          strip:r.week.map(m => ({ cls:m > 0 ? 'on' : '' })), studied:r.studiedToday, cls:r.isMe ? 'me' : '',
+          minutes:r.hasStats ? r.minutes + ' min' : 'New', sub:(r.hasStats ? (r.streak > 0 ? r.streak + ' day streak' : 'No streak yet') + ' · ' + r.mem + ' in memory' : 'Has not shared yet') + (r.isMe && r.cheers > 0 ? ' · ' + r.cheers + (r.cheers === 1 ? ' cheer' : ' cheers') + ' for you' : ''),
+          canCheer:!r.isMe, cheerCls:r.cheered ? 'on' : '', hasCheers:r.cheers > 0, cheers:r.cheers, cheerLabel:(r.cheered ? 'You cheered ' : 'Cheer for ') + r.name, cheer:() => this.friendsCheer(r.id)
+        })),
+        frStudied:frRows.filter(r => r.studiedToday).length, frCount:frRows.length,
+        frAvatars:frRows.slice(0, 8).map((r, i) => ({ initial:r.initial, cls:'fav c' + (i % 4) + (r.studiedToday ? ' done' : ' idle'), name:r.name + (r.studiedToday ? ' studied today' : ' has not studied today') })),
+        frHomeShow:!!frIdent && !!S.fr && S.screen === 'home', frHomeText:frRows.filter(r => r.studiedToday).length + ' of ' + frRows.length + ' studied today',
+        goFriendsHome:() => { this.go('friends'); this.friendsRefresh(false); },
+        frUpdated:S.fr ? (frAgo < 1 ? 'Updated just now' : 'Updated ' + frAgo + ' min ago') : '', frRefresh:() => this.friendsRefresh(true),
+        frLinkText:S.frCopied ? 'Copied' : 'Copy my link', frCopy:this.friendsCopyLink, frMyLink:frIdent ? window.ShanluFriends.makeLink(location.href, frIdent) : '',
+        frLeaveText:S.frLeaveAsk ? 'Tap again to leave' : 'Leave group', frLeave:this.friendsLeave,
+        frOffText:'The friends board is not set up yet. Add the address of your friends server to config.js (see worker/README.md).'
+      };
+
       const titles = {
         home:['Welcome back', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
         review:['Review words', 'Words that are due, based on how well you remember them.'],
@@ -1561,6 +1691,7 @@
         exam:[ALL ? 'Level exams' : LVN + ' level exam', ALL ? 'Each exam belongs to one level.' : LV === 1 ? 'Pass every section to climb to HSK 2.' : 'Not built yet for ' + LVN + '.'],
         web:['Word webs', 'Learn new words next to the words you already know.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
+        friends:['Friends', FR && FR.identity() && FR.identity().group ? FR.identity().group + '. Only your study totals are shared.' : 'Study together. Only your study totals are shared.'],
         listen:['Listening lab', HAS_LISTEN ? 'Train your ear for how people really talk, not just how lessons sound.' : 'Not built yet for ' + LVN + '.'],
         voice:['Settings', LV <= 1 ? 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud, and how 儿 endings are shown.' : 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud.'],
         quiz:S.qmode === 'grammar' ? ['Grammar practice', LESSONS[S.glesson].title] : [LVN + ' test', 'Take your time. Wrong answers show you why.']
@@ -1939,6 +2070,9 @@
         // word webs and word memory
         navWeb:navCls('web'), goWeb:() => this.go('web'), isWeb:S.screen === 'web',
         navWords:navCls('words'), goWords:() => this.go('words'), isWords:S.screen === 'words',
+        friendsOn:!!(FR && FR.enabled()), navFriends:navCls('friends'), isFriends:S.screen === 'friends',
+        goFriends:() => { this.go('friends'); this.friendsRefresh(false); },
+        ...frVals,
         isWChar:S.wmode === 'char', isWOpp:S.wmode === 'opp', isWTopic:S.wmode === 'topic',
         wCharCls:S.wmode === 'char' ? 'on' : '', wOppCls:S.wmode === 'opp' ? 'on' : '', wTopicCls:S.wmode === 'topic' ? 'on' : '',
         setWChar:() => this.setState({ wmode:'char' }), setWOpp:() => this.setState({ wmode:'opp' }), setWTopic:() => this.setState({ wmode:'topic' }),
@@ -2138,9 +2272,10 @@
       }
     }
   });
-  window.addEventListener('pagehide', () => app.persistNow());
+  window.addEventListener('pagehide', () => { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); });
+  app.friendsBoot();
   if (SYNCCFG.token) setTimeout(() => app.syncNow(false), 1200);
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') app.persistNow(); else { app._schedule(); if (SYNCCFG.token) app.syncNow(false); } });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); } else { app._schedule(); if (SYNCCFG.token) app.syncNow(false); } });
   const fileInput = document.getElementById('import-file');
   if (fileInput) {
     fileInput.addEventListener('change', () => {

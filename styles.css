@@ -807,3 +807,36 @@ button.scn:hover .scn-m{text-decoration:underline}
 
 .lvseg button.locked,.seg2 button.locked{opacity:.65}
 .ex-text{white-space:pre-line}
+
+/* friends board */
+.frd{display:flex;flex-direction:column;gap:16px;max-width:760px}
+.frd .inp{width:100%}
+.frjoin{display:flex;flex-direction:column}
+.banner.err{border-color:var(--seal);color:var(--seal)}
+.fgoal-n{font:700 30px/1.1 'Bricolage Grotesque',sans-serif;letter-spacing:-.02em;margin-top:6px}
+.fgoal-n span{font:400 16px 'Source Sans 3',sans-serif;color:var(--muted);letter-spacing:0}
+.frlist{padding:4px 16px}
+.frow{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.frow:first-child{border-top:0}
+.fav{width:34px;height:34px;border-radius:50%;display:inline-grid;place-items:center;flex:none;font-size:14px;font-weight:700}
+.fav.c0{background:var(--lv1s);color:var(--lv1)}
+.fav.c1{background:var(--jade-soft);color:var(--jade)}
+.fav.c2{background:var(--amber-soft);color:var(--amber)}
+.fav.c3{background:var(--panel2);color:var(--ink)}
+.fmain{flex:1 1 auto;min-width:0}
+.fname{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fname .lvtag{align-self:center}
+.fwk{display:flex;gap:3px;margin:5px 0 3px}
+.fwk i{width:11px;height:11px;border-radius:3px;background:var(--panel2);border:1px solid var(--line)}
+.fwk i.on{background:var(--jade);border-color:var(--jade)}
+.fsub{font-size:13.5px}
+.fnum{flex:none;text-align:right}
+.fnum b{font:700 17px 'Bricolage Grotesque',sans-serif}
+.fcheer{flex:none;position:relative;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--muted);display:grid;place-items:center;cursor:pointer}
+.fcheer.on{background:var(--jade-soft);border-color:var(--jade);color:var(--jade)}
+.fcn{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 4px;border-radius:99px;background:var(--ink);color:var(--bg);font-size:11px;font-weight:700;display:grid;place-items:center}
+.fmeta{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px}
+.frhome{display:block;width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.fravs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.fravs .fav.done{box-shadow:0 0 0 2px var(--jade)}
+.fravs .fav.idle{opacity:.5}

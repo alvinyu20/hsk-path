@@ -1,0 +1,15 @@
+# Copy to wrangler.toml and fill in database_id (printed by: npx wrangler d1 create shanlu-friends).
+# Secrets (INVITE_CODE, ADMIN_KEY) are set with: npx wrangler secret put <NAME>
+name = "shanlu-friends"
+main = "worker.js"
+compatibility_date = "2024-09-01"
+
+[vars]
+GROUP_NAME = "Shanlu crew"
+ALLOWED_ORIGINS = "https://alvinyu20.github.io"
+MAX_MEMBERS = "12"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "shanlu-friends"
+database_id = "PASTE-THE-ID-HERE"

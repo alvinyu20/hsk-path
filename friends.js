@@ -1,0 +1,99 @@
+/* Friends board: the browser side of worker/worker.js. No page code in here, so tools/test-friends.js can run it too.
+ * Identity: there is no sign-in. Joining with an invite gives a secret key that is kept on this device (localStorage) and can be carried to
+ * another device as a link (#me=id.key). The key sits in the part of the address after "#", which browsers never send to the website host.
+ * Only study totals are ever sent (see statsFor in app.js); the server also throws away everything else. */
+(function (root, factory) {
+  if (typeof module === 'object' && module.exports) module.exports = factory();
+  else root.ShanluFriends = factory();
+})(typeof self !== 'undefined' ? self : this, function () {
+  const STORE = 'shanlu-friends';          // { id, key, name, group }  lives only on this device
+  const DAY_MS = 864e5;
+
+  const ymd = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  const parseDay = (s) => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? new Date(+m[1], +m[2] - 1, +m[3], 12) : null; };
+  const daysBetween = (a, b) => { const x = parseDay(a), y = parseDay(b); return x && y ? Math.round((y - x) / DAY_MS) : 0; };
+
+  // A friend's week of minutes (oldest first, ending on THEIR last sync day) lined up with today: older days drop off the left.
+  function shiftWeek(last7, asOf, today) {
+    const diff = Math.max(0, Math.min(7, daysBetween(asOf, today)));
+    const week = (last7 || []).slice(0, 7);
+    while (week.length < 7) week.unshift(0);
+    return week.slice(diff).concat(new Array(diff).fill(0));
+  }
+  // A streak only counts if the person studied today or yesterday.
+  function effectiveStreak(stats, today) {
+    if (!stats || !stats.lastActive) return 0;
+    return daysBetween(stats.lastActive, today) <= 1 ? stats.streak : 0;
+  }
+  const weekTotal = (week) => week.reduce((a, b) => a + b, 0);
+  const initial = (name) => (Array.from(String(name || '?').trim())[0] || '?').toUpperCase();
+
+  // One row of the board, ready to show. `today` is this device's local date.
+  function boardRow(m, today, meId) {
+    const st = m.stats || null;
+    const week = st ? shiftWeek(st.last7, st.asOf, today) : [0, 0, 0, 0, 0, 0, 0];
+    return {
+      id: m.id, name: m.name, initial: initial(m.name), isMe: m.id === meId, hasStats: !!st,
+      week, minutes: weekTotal(week), studiedToday: week[6] > 0, streak: st ? effectiveStreak(st, today) : 0, mem: st ? st.mem : 0,
+      level: st && st.levels && st.levels.length ? st.levels[st.levels.length - 1] : 0, passed: st && st.passed ? st.passed : [],
+      cheers: m.cheers || 0, cheered: !!m.cheered, updated: m.updated || 0,
+    };
+  }
+  function sortRows(rows, by) {
+    const key = { week: 'minutes', streak: 'streak', mem: 'mem' }[by] || 'minutes';
+    return rows.slice().sort((a, b) => (b[key] - a[key]) || (b.minutes - a.minutes) || a.name.localeCompare(b.name));
+  }
+
+  // "#join=CODE" (an invite) or "#me=id.key" (come back on another device) in the address
+  function parseHash(hash) {
+    const h = String(hash || '').replace(/^#/, '');
+    let m = /(?:^|&)join=([A-Za-z0-9-]{4,40})(?:&|$)/.exec(h);
+    if (m) return { join: m[1] };
+    m = /(?:^|&)me=([0-9a-f]{16})\.([0-9a-f]{48})(?:&|$)/.exec(h);
+    if (m) return { me: { id: m[1], key: m[2] } };
+    return {};
+  }
+  const makeLink = (base, who) => String(base).replace(/#.*$/, '') + '#me=' + who.id + '.' + who.key;
+  const inviteLink = (base, code) => String(base).replace(/#.*$/, '') + '#join=' + code;
+
+  function make(opts) {
+    const o = opts || {};
+    const storage = o.storage || (typeof localStorage !== 'undefined' ? localStorage : null);
+    const doFetch = o.fetch || (typeof fetch !== 'undefined' ? fetch.bind(typeof self !== 'undefined' ? self : undefined) : null);
+    const baseUrl = () => String((o.url ? o.url() : (typeof window !== 'undefined' && window.SHANLU_FRIENDS_URL) || '') || '').replace(/\/+$/, '');
+    const enabled = () => !!baseUrl();
+    const identity = () => { try { const v = JSON.parse(storage.getItem(STORE)); return v && v.id && v.key ? v : null; } catch (e) { return null; } };
+    const save = (v) => { try { storage.setItem(STORE, JSON.stringify(v)); } catch (e) {} };
+    const forget = () => { try { storage.removeItem(STORE); } catch (e) {} };
+
+    async function call(method, path, body, auth, extra) {
+      if (!enabled()) throw Object.assign(new Error('The friends board is not set up.'), { code: 'off' });
+      const headers = { 'Content-Type': 'application/json' };
+      if (auth) headers.Authorization = 'Bearer ' + auth.id + '.' + auth.key;
+      let res;
+      try { res = await doFetch(baseUrl() + path, Object.assign({ method, headers, body: body === undefined ? undefined : JSON.stringify(body) }, extra || {})); }
+      catch (e) { throw Object.assign(new Error('Could not reach the friends board. Check your connection.'), { code: 'network' }); }
+      let json = null; try { json = await res.json(); } catch (e) {}
+      if (!res.ok) throw Object.assign(new Error(messageFor(json && json.error, res.status)), { code: (json && json.error) || ('http_' + res.status), status: res.status });
+      return json;
+    }
+    const messageFor = (code, status) => ({
+      bad_invite: 'That invite code does not work. Ask for a new link.', name_needed: 'Type your first name.', group_full: 'This group is full.',
+      joining_is_off: 'Joining is switched off for now.', unauthorized: 'This device is not signed in to the group any more.', too_big: 'That was too big to send.',
+    }[code] || (status === 429 ? 'The friends board is busy. Try again later.' : 'The friends board had a problem. Try again later.'));
+
+    return {
+      enabled, identity, forget, baseUrl,
+      async join(invite, name) { const r = await call('POST', '/api/join', { invite, name }); save({ id: r.id, key: r.key, name: r.name, group: r.group }); return r; },
+      // coming back on another device with a #me link: check the key really works before keeping it
+      async restore(who) { const g = await call('GET', '/api/group', undefined, who); const me = g.members.find((m) => m.id === who.id); save({ id: who.id, key: who.key, name: me ? me.name : '', group: g.group.name }); return g; },
+      async group() { const id = identity(); if (!id) throw Object.assign(new Error('Not joined.'), { code: 'not_joined' }); const g = await call('GET', '/api/group', undefined, id); save(Object.assign({}, id, { group: g.group.name })); return g; },
+      async push(stats, extra) { const id = identity(); if (!id) return null; return call('PUT', '/api/me', { stats }, id, extra); },
+      async rename(name) { const id = identity(); const r = await call('PUT', '/api/me', { name }, id); save(Object.assign({}, id, { name: r.name })); return r; },
+      async cheer(to) { return call('POST', '/api/cheer', { to }, identity()); },
+      async leave() { const id = identity(); if (id) { try { await call('DELETE', '/api/me', undefined, id); } catch (e) { if (e.status !== 401) throw e; } } forget(); },
+    };
+  }
+
+  return { make, shiftWeek, effectiveStreak, weekTotal, boardRow, sortRows, parseHash, makeLink, inviteLink, initial, ymd, daysBetween, STORE };
+});

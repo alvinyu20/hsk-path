@@ -63,6 +63,12 @@
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>
       My words
     </button>
+    <sc-if value="{{friendsOn}}" hint-placeholder-val="{{ false }}">
+    <button class="{{navFriends}}" onClick="{{goFriends}}">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17.5" cy="9" r="2.5"/><path d="M16.5 14.2A5 5 0 0 1 21.5 19"/></svg>
+      Friends
+    </button>
+    </sc-if>
   </nav>
 
   <div class="streak">
@@ -353,6 +359,12 @@
       </sc-if>
     </section>
   </div>
+  <sc-if value="{{frHomeShow}}" hint-placeholder-val="{{ false }}">
+  <button type="button" class="card frhome" onClick="{{goFriendsHome}}">
+    <div class="today-top"><h2 class="h2">Study group</h2><span class="muted">{{frHomeText}}</span></div>
+    <div class="fravs"><sc-for list="{{frAvatars}}" as="a" hint-placeholder-count="5"><span class="{{a.cls}}" title="{{a.name}}">{{a.initial}}</span></sc-for></div>
+  </button>
+  </sc-if>
   <section class="card">
     <div class="today-top"><h2 class="h2">Your memory</h2><span class="muted">What you can recall, not points</span></div>
     <div class="res-stats" style="max-width:none;margin-top:12px">
@@ -1019,6 +1031,67 @@
   </div>
   </sc-if>
 
+  <!-- FRIENDS -->
+  <sc-if value="{{isFriends}}" hint-placeholder-val="{{ false }}">
+  <div class="frd">
+    <sc-if value="{{frOff}}" hint-placeholder-val="{{ false }}"><section class="card"><p class="muted" style="margin:0">{{frOffText}}</p></section></sc-if>
+    <sc-if value="{{frHasMsg}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">{{frMsg}}</div></sc-if>
+    <sc-if value="{{frHasErr}}" hint-placeholder-val="{{ false }}"><div class="banner err" role="alert">{{frErr}}</div></sc-if>
+    <sc-if value="{{frNotJoined}}" hint-placeholder-val="{{ false }}">
+      <section class="card frjoin">
+        <h2 class="h2">Join your group</h2>
+        <p class="muted" style="margin:6px 0 14px">No account and no password. Type your first name and you are in.</p>
+        <label class="kick" for="fr-name">Your first name</label>
+        <input id="fr-name" class="inp" type="text" maxlength="20" autocomplete="off" placeholder="Alvin" value="{{frName}}" onInput="{{onFrName}}">
+        <label class="kick" for="fr-code" style="margin-top:12px">Invite code</label>
+        <input id="fr-code" class="inp" type="text" autocomplete="off" autocapitalize="characters" placeholder="From your invite link" value="{{frCode}}" onInput="{{onFrCode}}">
+        <button class="btn pri big" style="margin-top:16px" onClick="{{friendsJoin}}">{{frJoinText}}</button>
+        <p class="muted" style="margin:14px 0 0;font-size:14.5px">The group sees your minutes each day, your streak, words in memory, level and exam passes. Never your word list.</p>
+      </section>
+    </sc-if>
+    <sc-if value="{{frJoined}}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{frWaiting}}" hint-placeholder-val="{{ false }}"><section class="card"><p class="muted" style="margin:0">Loading your group…</p></section></sc-if>
+      <sc-if value="{{frLoaded}}" hint-placeholder-val="{{ false }}">
+        <section class="card fgoal">
+          <div class="kick">Together this week</div>
+          <div class="fgoal-n"><b>{{frWeekMin}}</b><span> of {{frGoal}} min</span></div>
+          <div class="abar jade" style="margin:8px 0 4px"><i style="width: {{frGoalPct}}"></i></div>
+          <div class="muted" style="font-size:14px">{{frHomeText}}. The goal is 100 minutes for each person.</div>
+        </section>
+        <div class="seg2" role="group" aria-label="Order friends by">
+          <sc-for list="{{frSortOpts}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
+        </div>
+        <section class="card frlist">
+          <sc-for list="{{frRows}}" as="r" hint-placeholder-count="5">
+            <div class="frow {{r.cls}}">
+              <span class="fav {{r.avCls}}" aria-hidden="true">{{r.initial}}</span>
+              <div class="fmain">
+                <div class="fname"><b>{{r.you}}</b><sc-if value="{{r.hasLv}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{r.lvCls}}">{{r.lvTag}}</span></sc-if></div>
+                <div class="fwk" role="img" aria-label="Days studied in the last 7 days"><sc-for list="{{r.strip}}" as="d" hint-placeholder-count="7"><i class="{{d.cls}}"></i></sc-for></div>
+                <div class="muted fsub">{{r.sub}}</div>
+              </div>
+              <div class="fnum"><b>{{r.minutes}}</b></div>
+              <sc-if value="{{r.canCheer}}" hint-placeholder-val="{{ false }}">
+                <button type="button" class="fcheer {{r.cheerCls}}" aria-label="{{r.cheerLabel}}" onClick="{{r.cheer}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3a4 4 0 0 0 4-4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1-2 2h-7a3 3 0 0 1-3-3"/></svg><sc-if value="{{r.hasCheers}}" hint-placeholder-val="{{ false }}"><span class="fcn">{{r.cheers}}</span></sc-if></button>
+              </sc-if>
+            </div>
+          </sc-for>
+        </section>
+        <div class="fmeta"><span class="muted">{{frUpdated}}</span><button class="linkbtn" onClick="{{frRefresh}}">Refresh</button></div>
+        <section class="card">
+          <h2 class="h2" style="font-size:18px">You are {{frMine}}</h2>
+          <p class="muted" style="margin:6px 0 12px;font-size:15px">Your personal link signs you in on another phone or computer, with no password. Keep it private, like a password.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <button class="btn" onClick="{{frCopy}}">{{frLinkText}}</button>
+            <button class="btn" onClick="{{frLeave}}">{{frLeaveText}}</button>
+          </div>
+          <p class="muted" style="margin:12px 0 0;font-size:14.5px">The group sees your minutes each day, your streak, words in memory, level and exam passes. Never your word list. Your numbers are sent when you open the app, now and then while you study, and when you leave it.</p>
+        </section>
+      </sc-if>
+    </sc-if>
+  </div>
+  </sc-if>
+
   <!-- MY WORDS -->
   <sc-if value="{{isWords}}" hint-placeholder-val="{{ false }}">
   <div class="wlist">
@@ -1487,6 +1560,8 @@
 </template>
 <script src="vendor/morphdom-umd.min.js"></script>
 <script src="runtime.js"></script>
+<script src="config.js"></script>
+<script src="friends.js"></script>
 <script src="level.js"></script>
 <script src="data/hsk1-words.js"></script>
 <script src="data/hsk1-grammar.js"></script>

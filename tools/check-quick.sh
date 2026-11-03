@@ -15,6 +15,9 @@ case "$MODE" in
     node tools/test-sync.js | tail -1
     node tools/test-ascent.js | tail -1
     node tools/test-topics.js | tail -1
+    node tools/test-friends.js | tail -1
+    (cd worker && [ -d node_modules ] && node test.mjs | tail -1) || true
+    NODE_PATH="$(npm root -g)" node tools/smoke-test-friends.js | tail -1
     NODE_PATH="$(npm root -g)" node tools/smoke-test.js
     NODE_PATH="$(npm root -g)" node tools/smoke-test-l2.js
     echo "ui checks passed (plain style only; run 'full' to also check the 儿-style pass and the content)" ;;
