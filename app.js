@@ -927,6 +927,10 @@
       this.stopNative(); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
       const tok = ++this.ttsTok;
       this.setState({ playing:key, ttsBusy:true });
+      // The start of a line can be clipped when the speaker or headset has gone to sleep (worst after the microphone was open): so wake the output
+      // right now, while the line is still being fetched, and do not start before it is awake and the clip is ready to play.
+      const t0 = Date.now(), cold = this.wakeAudio() > 0;
+      const sleep = (ms) => new Promise(r => setTimeout(r, ms));
       try {
         const voice = ttsVoiceNow(), ck = voice + '|' + text; let c = this.ttsCache[ck];
         if (!c || c.exp < Date.now()) { c = this.ttsCache[ck] = { url:await aliTTS(text, voice), exp:Date.now() + 20 * 3600000 }; }
@@ -935,7 +939,13 @@
         const a = this.ttsEl;
         a.onended = () => { if (tok === this.ttsTok && this.state.playing === key) this.setState({ playing:null }); };
         a.onerror = () => { if (tok === this.ttsTok) { this.ttsFail(new Error('the audio could not be played')); this.say(text, key, rate); } };
-        a.src = c.url; a.playbackRate = rate || this.state.speed || 1; try { a.preservesPitch = true; } catch (e) {}
+        a.preload = 'auto'; a.src = c.url; a.playbackRate = rate || this.state.speed || 1; try { a.preservesPitch = true; } catch (e) {}
+        await new Promise((res) => { let done = false; const go = () => { if (!done) { done = true; res(); } }; a.addEventListener('canplaythrough', go, { once:true }); a.addEventListener('canplay', go, { once:true }); setTimeout(go, 4000); try { a.load(); } catch (e) {} });
+        if (tok !== this.ttsTok) return;
+        const lead = (cold ? 600 : 150) - (Date.now() - t0);   // time the speaker has had to wake up since this request began
+        if (lead > 0) await sleep(lead);
+        if (tok !== this.ttsTok) return;
+        try { a.currentTime = 0; } catch (e) {}
         await a.play();
         this.ttsOpen = true;
         if (tok === this.ttsTok) this.setState({ ttsBusy:false });
