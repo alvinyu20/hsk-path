@@ -2,4 +2,4 @@
  * SHANLU_FRIENDS_URL: the address of your friends-board Worker (see worker/README.md), for example
  *   https://shanlu-friends.your-name.workers.dev
  * Leave it empty and the Friends tab stays hidden. */
-window.SHANLU_FRIENDS_URL = window.SHANLU_FRIENDS_URL || '';
+window.SHANLU_FRIENDS_URL = window.SHANLU_FRIENDS_URL || 'https://shanlu-friends.alvinyu20.workers.dev';
