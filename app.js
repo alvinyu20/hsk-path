@@ -228,14 +228,14 @@
 
   // Review queue. Each item is one card: 'zh' recognise it, 'zh#p' produce it (type it with tones), 'zh#h' hear it, 'zh#l' a new word in its
   // learning phase. Every skill has its own timer, so a word can be due as one card and not as another. New words come first; then everything due,
-  // weakest first but jumbled (a random nudge) so words learned together do not come back in list order. Saying and hearing cards are capped at
-  // half the recognition cards (at least 3), so adding two directions does not double the pile in one day; the rest stay due for next time.
+  // weakest first but jumbled (a random nudge) so words learned together do not come back in list order. Saying cards and hearing cards are each capped at
+  // a third of the recognition cards (at least 2), so adding two directions does not double the pile in one day; the rest stay due for next time.
   const LRN_MAX = 12;       // new words waiting in their learning phase at once; add more after these are learned
   const LEARN_STEPS = 2;    // successful recalls (after meeting the word) before it gets a real interval
   const itemOf = (it) => { const m = /^(.*?)(?:#([lph]))?$/.exec(String(it)); return { zh:m[1], t:m[2] || 's' }; };
   const buildQueue = (ws, anyway, lrn) => {
     const fresh = Object.keys(lrn || {}).filter(zh => ws[zh] && !(ws[zh].see.s > 0)).map(zh => zh + '#l');
-    const see = [], other = [];
+    const see = [], prod = [], hear = [];
     Object.keys(ws).forEach(zh => {
       const w = ws[zh];
       if (!w) return;
@@ -244,13 +244,13 @@
         if (!(d.s > 0)) return;
         if (anyway ? x[0] !== 'see' : dueIn(d, 0) > 0) return;
         if (x[0] === 'prod' && !(w.see.s >= 2)) return;     // say it only once you recognise it
-        (x[0] === 'see' ? see : other).push({ it:zh + x[1], key:retr(d) * 100 + Math.random() * 30 });
+        (x[0] === 'see' ? see : x[0] === 'prod' ? prod : hear).push({ it:zh + x[1], key:retr(d) * 100 + Math.random() * 30 });
       });
     });
     const byKey = (a, b) => a.key - b.key;
-    see.sort(byKey); other.sort(byKey);
-    const cap = Math.max(3, Math.ceil(see.length / 2));
-    return fresh.concat(see.concat(other.slice(0, cap)).sort(byKey).map(r => r.it));
+    see.sort(byKey); prod.sort(byKey); hear.sort(byKey);
+    const cap = Math.max(2, Math.ceil(see.length / 3));
+    return fresh.concat(see.concat(prod.slice(0, cap), hear.slice(0, cap)).sort(byKey).map(r => r.it));
   };
 
   // "Words in memory": every started word counts by its chance of being recalled right now, so the number rises when you learn and review
@@ -1021,7 +1021,13 @@
     }
     later(fn, ms) { const id = setTimeout(fn, ms); this.timers.push(id); }
 
+    lastSub = {};
+    goGroup = (id) => {   // a phone tab: back to the screen last used in that section
+      const first = { home:'home', learn:'web', review:'review', talk:'listen', more:'exam' }[id];
+      this.go(this.lastSub[id] || first);
+    };
     go = (screen) => {
+      { const grp = { web:'learn', grammar:'learn', words:'learn', review:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
       this.setState({ screen }); try { window.scrollTo(0, 0); } catch (e) {}
       if (screen === 'speak' && !HAS_SCRIPTS) { const S = this.state; if (S.aiOn && !S.aim.length && !S.aiBusy) this.aiStart(S.aiScn); }   // no scripts at this level: go straight to the AI conversation
       // on phones the tab bar scrolls sideways: keep the current tab in view
@@ -2169,6 +2175,13 @@
 
       const active = S.screen === 'quiz' ? (S.qmode === 'grammar' ? 'grammar' : 'testlobby') : S.screen;
       const navCls = (k) => 'nav' + (active === k ? ' on' : '');
+      // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
+      const GROUPS = [['home', ['home']], ['learn', ['web', 'grammar', 'words']], ['review', ['review', 'testlobby']], ['talk', ['listen', 'speak']], ['more', ['exam', 'friends', 'voice']]];
+      const SUBLABEL = { web:'Word webs', grammar:'Grammar', words:'My words', review:'Review words', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', voice:'Settings' };
+      const curScreen = S.screen === 'quiz' ? (S.qmode === 'grammar' ? 'grammar' : 'testlobby') : S.screen;
+      const navGroup = (GROUPS.find(g => g[1].indexOf(curScreen) >= 0) || GROUPS[0])[0];
+      const gcls = (id) => 'nav' + (navGroup === id ? ' on' : '');
+      const subnavItems = ((GROUPS.find(g => g[0] === navGroup) || [0, []])[1]).filter(id => id !== 'friends' || (FR && FR.enabled())).filter(id => id !== 'exam' || !!EXAMBANK).map(id => [id, SUBLABEL[id]]);
 
       // friends board
       const frIdent = FR && FR.enabled() ? FR.identity() : null;
@@ -2272,7 +2285,7 @@
       const totalW = bankKeys.length;
       const trD = AS.trail({ started:startedCount, total:totalW, levels:lvList, dark:ascDark });
       const trP = AS.phoneTrail({ started:startedCount, total:totalW, levels:lvList, dark:ascDark });
-      const youLabel = (t) => ({ left:apct(t.you.x, t.w), top:apct(t.you.y, t.h), cls:t === trD ? 'c' : '', kind:'you', text:'You are here', sub:startedCount + ' word' + (startedCount === 1 ? '' : 's') + ' kept', hasSub:true });
+      const youLabel = (t) => ({ left:t === trD ? 'max(72px, ' + apct(t.you.x, t.w) + ')' : apct(t.you.x, t.w), top:apct(t.you.y, t.h), cls:t === trD ? 'c' : '', kind:'you', text:'You are here', sub:startedCount + ' word' + (startedCount === 1 ? '' : 's') + ' kept', hasSub:true });
       const trailAlt = 'Mountain trail: ' + startedCount + ' of ' + totalW + ' words learned on the way to the ' + LVN + ' level exam';
       const nextM = AS.nextMilestone(startedCount, totalW);
       const toGo = nextM - startedCount;
@@ -2280,8 +2293,8 @@
       const allStarted = startedCount >= totalW;
       const studiedToday = S.lastActive === today;
       const minsLeft = Math.max(0, S.mins - S.dayMin);
-      const ascCta = dueNow > 0 ? { text:'Climb: review ' + dueNow + ' due word' + (dueNow === 1 ? '' : 's'), to:'review' }
-        : (minsLeft > 0 ? { text:'Climb for ' + minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's'), to:(startedCount >= totalW ? 'testlobby' : 'web') } : (startedCount >= totalW ? { text:'Test yourself', to:'testlobby' } : { text:'Learn new words', to:'web' }));
+      const ascCta = dueNow > 0 ? { text:'Review ' + dueNow + ' due word' + (dueNow === 1 ? '' : 's'), to:'review' }
+        : (minsLeft > 0 ? { text:'Study ' + minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's'), to:(startedCount >= totalW ? 'testlobby' : 'web') } : (startedCount >= totalW ? { text:'Test yourself', to:'testlobby' } : { text:'Learn new words', to:'web' }));
       // mist: one mountain per Word web topic; the mist thins as its words are learned
       const tinfo = TOPICS.map((t, i) => {
         const got = t.words.filter(zh => S.ws[zh] && winfo(S.ws[zh], 0).started).length;
@@ -2597,6 +2610,10 @@
 
       return {
         focusCls:(S.exm && (S.exm.stage === 'run' || S.exm.stage === 'break') && S.screen === 'exam') || (S.screen === 'quiz' && !S.qdone) ? 'focus' : '',
+        scrCls:'scr-' + S.screen,
+        gHomeCls:gcls('home'), gLearnCls:gcls('learn'), gReviewCls:gcls('review'), gTalkCls:gcls('talk'), gMoreCls:gcls('more'),
+        gHome:() => this.goGroup('home'), gLearn:() => this.goGroup('learn'), gReview:() => this.goGroup('review'), gTalk:() => this.goGroup('talk'), gMore:() => this.goGroup('more'),
+        hasSubnav:subnavItems.length > 1, subnav:subnavItems.map(o => ({ label:o[1], cls:'on' === (curScreen === o[0] ? 'on' : '') ? 'on' : '', fn:() => this.go(o[0]) })),
         themeCls:dark ? 't-dark' : 't-light', themeLabel:dark ? 'Switch to light' : 'Switch to dark', toggleTheme:this.toggleTheme,
         noVoice:S.noVoice, week,
         gapLine, examParts, navExam:navCls('exam'), goExam:() => this.go('exam'), isExam:S.screen === 'exam' && !!EXAMBANK, isExamNA:S.screen === 'exam' && !EXAMBANK,
@@ -2612,7 +2629,7 @@
         setWChar:() => this.setState({ wmode:'char' }), setWOpp:() => this.setState({ wmode:'opp' }), setWTopic:() => this.setState({ wmode:'topic' }),
         quizOffCls:S.wquiz ? '' : 'on', quizOnCls:S.wquiz ? 'on' : '',
         setQuizOff:() => this.setState({ wquiz:false }), setQuizOn:() => this.setState({ wquiz:true }),
-        webCountText:limitOf(S) === Infinity ? webCount + ' new words today' : webCount + ' of ' + S.nlimit + ' new words today', capNote:capReached, capCount:S.nlimit, capOpts,
+        webCountText:limitOf(S) === Infinity ? webCount + ' added today' : webCount + ' of ' + S.nlimit + ' added today', capNote:capReached, capCount:S.nlimit, capOpts,
         hubHasNew:hubNew > 0 && !capReached && this.lrnRoom() > 0, hubAddAllText:(hubNew <= this.lrnRoom() ? 'Add all ' + hubNew : 'Add ' + this.lrnRoom() + ' of ' + hubNew) + ' new word' + (hubNew === 1 ? '' : 's'), hubAddAll:() => this.learnMany(hubNow.words.map(w => w.zh)),
         topicHasNew:topicNew > 0 && !capReached && this.lrnRoom() > 0, topicAddAllText:(topicNew <= this.lrnRoom() ? 'Add all ' + topicNew : 'Add ' + this.lrnRoom() + ' of ' + topicNew) + ' new word' + (topicNew === 1 ? '' : 's'), topicAddAll:() => this.learnMany(topicNow.words),
         moreDue:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft > 0, hasMoreDue:dueLeft > 0, reviewMore:this.reviewMore,
@@ -2706,21 +2723,21 @@
         stairs, sysNote:sd.note,
         todayShort:S.dayMin + ' of ' + S.mins + ' min' + (S.mins > S.dayMin ? ' · ' + (S.mins - S.dayMin) + ' to go' : ' · done'),
         webCapOpen:S.webCapOpen, toggleCapOpen:() => this.setState({ webCapOpen:!S.webCapOpen }),
-        ascTrail:ascV === 'trail', ascStairs:ascV === 'stairs', ascHasSys:true,
+        ascTrail:ascV === 'trail', ascStairs:ascV === 'stairs', ascHasSys:false,
         ascTrailCls:ascV === 'trail' ? 'on' : '', ascStairsCls:ascV === 'stairs' ? 'on' : '',
         setAscTrail:() => this.setState({ ascView:'trail' }), setAscStairs:() => this.setState({ ascView:'stairs' }),
-        ascSub:ascV === 'trail' ? 'Every word you learn is a step up the trail.' : 'Pass each checkpoint to climb to the next level.',
+        ascSub:ascV === 'trail' ? 'Every word you learn moves you along the path.' : 'Pass each level exam to move on to the next level.',
         trailD:{ src:trD.src, alt:trailAlt, labels:asLabels(trD).concat([youLabel(trD)]) }, trailP:{ src:trP.src, alt:trailAlt, labels:asLabels(trP).concat(trP.hideYou ? [] : [youLabel(trP)]) },
         cairnBig:allStarted ? 'All ' + totalW + ' started' : toGo + ' word' + (toGo === 1 ? '' : 's') + ' to go',
         cairnSub:allStarted ? 'Take the level exam when you feel ready.' : startedCount + ' of ' + nextM + '. A few cards and it is yours.', cairnPct:(allStarted ? 100 : Math.round((startedCount - prevM) / (nextM - prevM) * 100)) + '%',
-        fireBig:streakShown > 0 ? streakShown + ' day' + (streakShown === 1 ? '' : 's') + ' lit' : 'Not lit yet',
-        fireSub:studiedToday ? 'Lit for today. Come back tomorrow to keep it.' : (streakShown > 0 ? 'Study today and it burns brighter tomorrow.' : 'Study today to light it.'),
+        fireBig:streakShown > 0 ? streakShown + ' day' + (streakShown === 1 ? '' : 's') : 'No streak yet',
+        fireSub:studiedToday ? 'You studied today. Come back tomorrow to keep it going.' : (streakShown > 0 ? 'Study today to keep the streak going.' : 'Study today to start one.'),
         todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed. Anything else is a bonus.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
         trailCta:() => this.go(ascCta.to), trailCtaText:ascCta.text,
-        trailNote:'Camps are placed by level, not to scale. The climb counts the ' + LVN + ' words you have started; grammar, listening and speaking count towards the level exam.',
-        mistClearText:mistClear + ' of ' + TOPICS.length + ' clear', mistTiles, mistHasNear:!!nearBest, mistOpen:S.wmist, toggleMist:() => this.setState({ wmist:!this.state.wmist }), mistToggleText:S.wmist ? 'Hide the mountains' : 'Show all ' + TOPICS.length + ' mountains',
+        trailNote:'Levels are placed on the path, not to scale. The path counts the ' + LVN + ' words you have started; grammar, listening and speaking count towards the level exam.',
+        mistClearText:mistClear + ' of ' + TOPICS.length + ' fully started', mistTiles, mistHasNear:!!nearBest, mistOpen:S.wmist, toggleMist:() => this.setState({ wmist:!this.state.wmist }), mistToggleText:S.wmist ? 'Hide the topic map' : 'Show all ' + TOPICS.length + ' topics',
         mistNearText:nearBest ? 'Finish ' + nearBest.name + ' (' + (nearBest.tot - nearBest.got) + ' to go)' : '', mistNearGo:() => nearBest && openTopic(nearBest.i),
-        mistNote:'A mountain is clear when you have started every word in its Word web topic.',
+        mistNote:'A topic is fully started when you have started every word in it.',
         sys2Cls:S.sys === '2.0' ? 'on' : '', sys3Cls:S.sys === '3.0' ? 'on' : '',
         setSys2:() => this.setState({ sys:'2.0' }), setSys3:() => this.setState({ sys:'3.0' }),
 

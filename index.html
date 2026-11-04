@@ -17,7 +17,7 @@
 <input type="file" id="import-file" accept="application/json,.json" hidden>
 <template id="app-template">
 
-<div class="app {{themeCls}} {{focusCls}}">
+<div class="app {{themeCls}} {{focusCls}} {{scrCls}}">
 
 <aside class="side">
   <button type="button" class="brand" onClick="{{goHome}}" aria-label="Shanlu: go to Home">
@@ -71,6 +71,30 @@
     </sc-if>
   </nav>
 
+  <nav class="navs navg" aria-label="Main sections">
+    <button class="{{gHomeCls}}" onClick="{{gHome}}">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg>
+      Today
+    </button>
+    <button class="{{gLearnCls}}" onClick="{{gLearn}}">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg>
+      Learn
+    </button>
+    <button class="{{gReviewCls}}" onClick="{{gReview}}">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7" width="17" height="12" rx="2.5"/><path d="M7 3.8h10"/></svg>
+      Review
+      <sc-if value="{{hasDue}}" hint-placeholder-val="{{ true }}"><span class="badge">{{dueCount}}</span></sc-if>
+    </button>
+    <button class="{{gTalkCls}}" onClick="{{gTalk}}">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg>
+      Listen &amp; speak
+    </button>
+    <button class="{{gMoreCls}}" onClick="{{gMore}}">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18.5" cy="12" r="1.6"/></svg>
+      More
+    </button>
+  </nav>
+
   <div class="streak">
     <div class="streak-h">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c1.1 3.4 5 5.3 5 9.9a5 5 0 0 1-10 0c0-1.8.8-3 1.8-4.1.2 1.6 1.1 2.5 2.1 2.7C10.3 8.5 11 5.5 12 2.5z"/></svg>
@@ -101,6 +125,7 @@
     </div>
   </header>
   <sc-if value="{{lvMsgShow}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">{{lvMsgText}}<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" onClick="{{lvMsgGo}}">{{lvMsgGoText}}</button><button class="btn" onClick="{{lvMsgClose}}">Dismiss</button></div></div></sc-if>
+  <sc-if value="{{hasSubnav}}" hint-placeholder-val="{{ false }}"><div class="seg2 subnav" role="group" aria-label="In this section"><sc-for list="{{subnav}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for></div></sc-if>
   <sc-if value="{{noVoice}}" hint-placeholder-val="{{ false }}"><div class="banner">This browser does not report a Chinese voice, so audio may be silent or sound wrong. Try Chrome or Safari, or check your device's text-to-speech language settings. <button class="linkbtn" onClick="{{goVoice}}">Open voice settings</button></div></sc-if>
 
   <!-- VOICE -->
@@ -256,6 +281,8 @@
       <h2 class="h2">Level</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">{{lvNote}}</p>
       <div class="seg2" style="margin-top:12px;display:inline-flex" role="group" aria-label="Level"><sc-for list="{{lvOpts}}" as="o" hint-placeholder-count="2"><button class="{{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for></div>
+      <div style="margin:16px 0 0;font-weight:600">HSK version shown on your path</div>
+      <div class="seg2" style="margin-top:8px;display:inline-flex" role="group" aria-label="HSK version"><button class="{{sys2Cls}}" onClick="{{setSys2}}">HSK 2.0 · 6 levels</button><button class="{{sys3Cls}}" onClick="{{setSys3}}">HSK 3.0 · 9 levels</button></div>
       <div style="margin:16px 0 0;font-weight:600">Level lock</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{lockOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for></div>
       <p class="muted" style="margin:8px 0 0;font-size:15px">Locked is the default. The level exams are AI-written and AI-checked, and the pictures use emoji that look different on different devices, so if an unclear question holds you back, switching the lock to open is fine: the exam then only earns the level's seal.</p>
@@ -277,84 +304,10 @@
   <!-- HOME -->
   <sc-if value="{{isHome}}" hint-placeholder-val="{{ true }}">
   <div class="home">
-  <section>
-    <div class="asc-h">
-      <div>
-        <h2 class="h2">The ascent</h2>
-        <p class="muted" style="margin:4px 0 0;font-size:16px">{{ascSub}}</p>
-      </div>
-      <div class="seg2" role="group" aria-label="How to show the ascent">
-        <button class="{{ascTrailCls}}" onClick="{{setAscTrail}}">Trail</button>
-        <button class="{{ascStairsCls}}" onClick="{{setAscStairs}}">Stairs</button>
-      </div>
-    </div>
-    <sc-if value="{{ascHasSys}}" hint-placeholder-val="{{ true }}">
-      <div class="asc-sys"><div class="seg2" role="group" aria-label="HSK version">
-        <button class="{{sys2Cls}}" onClick="{{setSys2}}">HSK 2.0 · 6 levels</button>
-        <button class="{{sys3Cls}}" onClick="{{setSys3}}">HSK 3.0 · 9 levels</button>
-      </div></div>
-    </sc-if>
-
-    <sc-if value="{{ascTrail}}" hint-placeholder-val="{{ true }}">
-      <div class="trail">
-        <div class="trail-d">
-          <img class="trail-img" src="{{trailD.src}}" alt="{{trailD.alt}}" width="1124" height="380">
-          <button class="btn pri big trail-go" onClick="{{trailCta}}">{{trailCtaText}}</button>
-          <sc-for list="{{trailD.labels}}" as="l" hint-placeholder-count="4">
-            <div class="apill {{l.kind}} {{l.cls}}" style="left: {{l.left}}; top: {{l.top}}"><b>{{l.text}}</b><sc-if value="{{l.hasSub}}" hint-placeholder-val="{{ true }}"><span>{{l.sub}}</span></sc-if></div>
-          </sc-for>
-        </div>
-        <div class="trail-p">
-          <div class="trail-pin">
-            <img class="trail-img" src="{{trailP.src}}" alt="{{trailP.alt}}" width="342" height="470">
-            <sc-for list="{{trailP.labels}}" as="l" hint-placeholder-count="4">
-              <div class="apill {{l.kind}} {{l.cls}}" style="left: {{l.left}}; top: {{l.top}}"><b>{{l.text}}</b><sc-if value="{{l.hasSub}}" hint-placeholder-val="{{ true }}"><span>{{l.sub}}</span></sc-if></div>
-            </sc-for>
-          </div>
-        </div>
-      </div>
-      <div class="astats">
-        <div class="astat first">
-          <div class="astat-k"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4M6 5h11l-2.5 3.5L17 12H6"/></svg>Next cairn</div>
-          <div class="astat-v">{{cairnBig}}</div>
-          <div class="astat-s">{{cairnSub}}</div>
-          <div class="abar"><i style="width: {{cairnPct}}"></i></div>
-        </div>
-        <div class="astat">
-          <div class="astat-k fire"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3.2 5 5.2 5 10a5 5 0 0 1-10 0c0-2 .9-3.2 2-4.2 0 2 .9 3 2 3 0-3-1-6 1-8.8z"/></svg>Campfire</div>
-          <div class="astat-v">{{fireBig}}</div>
-          <div class="astat-s">{{fireSub}}</div>
-        </div>
-      </div>
-      <button class="btn pri big trail-cta" onClick="{{trailCta}}">{{trailCtaText}}</button>
-      <p class="asc-note">{{trailNote}}</p>
-    </sc-if>
-
-    <sc-if value="{{ascStairs}}" hint-placeholder-val="{{ false }}">
-    <div class="stairs">
-      <sc-for list="{{stairs}}" as="s" hint-placeholder-count="6">
-        <div class="step">
-          <sc-if value="{{s.isCur}}" hint-placeholder-val="{{ false }}">
-            <span class="flagpill"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4M6 5h11l-2.5 3.5L17 12H6"/></svg>You are here</span>
-          </sc-if>
-          <div class="blk {{s.cls}}" style="height: {{s.h}}">
-            <div class="bf" style="height: {{s.fillH}}"></div>
-            <sc-if value="{{s.isLock}}" hint-placeholder-val="{{ true }}">
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>
-            </sc-if>
-            <div class="blk-n">{{s.label}}</div>
-            <div class="blk-w">{{s.words}}</div>
-            <div class="blk-s">{{s.status}}</div>
-          </div>
-        </div>
-      </sc-for>
-    </div>
-    <p class="asc-note">{{sysNote}}</p>
-    </sc-if>
-  </section>
   <div class="hgrid2">
     <section class="card">
       <div class="today-top"><h2 class="h2">Today</h2><span class="muted">{{todayShort}}</span></div>
+      <button class="btn pri big today-go" onClick="{{trailCta}}">{{trailCtaText}}</button>
       <div class="abar jade" style="margin:10px 0 8px"><i style="width: {{todayPct}}"></i></div>
       <div class="tasks2">
         <sc-for list="{{tasks}}" as="t" hint-placeholder-count="3">
@@ -399,6 +352,81 @@
       </sc-if>
     </section>
   </div>
+  <section>
+    <div class="asc-h">
+      <div>
+        <h2 class="h2">Your path</h2>
+        <p class="muted" style="margin:4px 0 0;font-size:16px">{{ascSub}}</p>
+      </div>
+      <div class="seg2" role="group" aria-label="How to show your path">
+        <button class="{{ascTrailCls}}" onClick="{{setAscTrail}}">Trail</button>
+        <button class="{{ascStairsCls}}" onClick="{{setAscStairs}}">Stairs</button>
+      </div>
+    </div>
+    <sc-if value="{{ascHasSys}}" hint-placeholder-val="{{ true }}">
+      <div class="asc-sys"><div class="seg2" role="group" aria-label="HSK version">
+        <button class="{{sys2Cls}}" onClick="{{setSys2}}">HSK 2.0 · 6 levels</button>
+        <button class="{{sys3Cls}}" onClick="{{setSys3}}">HSK 3.0 · 9 levels</button>
+      </div></div>
+    </sc-if>
+
+    <sc-if value="{{ascTrail}}" hint-placeholder-val="{{ true }}">
+      <div class="trail">
+        <div class="trail-d">
+          <img class="trail-img" src="{{trailD.src}}" alt="{{trailD.alt}}" width="1124" height="380">
+          <button class="btn pri big trail-go" onClick="{{trailCta}}">{{trailCtaText}}</button>
+          <sc-for list="{{trailD.labels}}" as="l" hint-placeholder-count="4">
+            <div class="apill {{l.kind}} {{l.cls}}" style="left: {{l.left}}; top: {{l.top}}"><b>{{l.text}}</b><sc-if value="{{l.hasSub}}" hint-placeholder-val="{{ true }}"><span>{{l.sub}}</span></sc-if></div>
+          </sc-for>
+        </div>
+        <div class="trail-p">
+          <div class="trail-pin">
+            <img class="trail-img" src="{{trailP.src}}" alt="{{trailP.alt}}" width="342" height="470">
+            <sc-for list="{{trailP.labels}}" as="l" hint-placeholder-count="4">
+              <div class="apill {{l.kind}} {{l.cls}}" style="left: {{l.left}}; top: {{l.top}}"><b>{{l.text}}</b><sc-if value="{{l.hasSub}}" hint-placeholder-val="{{ true }}"><span>{{l.sub}}</span></sc-if></div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      <div class="astats">
+        <div class="astat first">
+          <div class="astat-k"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4M6 5h11l-2.5 3.5L17 12H6"/></svg>Next milestone</div>
+          <div class="astat-v">{{cairnBig}}</div>
+          <div class="astat-s">{{cairnSub}}</div>
+          <div class="abar"><i style="width: {{cairnPct}}"></i></div>
+        </div>
+        <div class="astat">
+          <div class="astat-k fire"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3.2 5 5.2 5 10a5 5 0 0 1-10 0c0-2 .9-3.2 2-4.2 0 2 .9 3 2 3 0-3-1-6 1-8.8z"/></svg>Streak</div>
+          <div class="astat-v">{{fireBig}}</div>
+          <div class="astat-s">{{fireSub}}</div>
+        </div>
+      </div>
+      <button class="btn pri big trail-cta" onClick="{{trailCta}}">{{trailCtaText}}</button>
+      <p class="asc-note">{{trailNote}}</p>
+    </sc-if>
+
+    <sc-if value="{{ascStairs}}" hint-placeholder-val="{{ false }}">
+    <div class="stairs">
+      <sc-for list="{{stairs}}" as="s" hint-placeholder-count="6">
+        <div class="step">
+          <sc-if value="{{s.isCur}}" hint-placeholder-val="{{ false }}">
+            <span class="flagpill"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4M6 5h11l-2.5 3.5L17 12H6"/></svg>You are here</span>
+          </sc-if>
+          <div class="blk {{s.cls}}" style="height: {{s.h}}">
+            <div class="bf" style="height: {{s.fillH}}"></div>
+            <sc-if value="{{s.isLock}}" hint-placeholder-val="{{ true }}">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>
+            </sc-if>
+            <div class="blk-n">{{s.label}}</div>
+            <div class="blk-w">{{s.words}}</div>
+            <div class="blk-s">{{s.status}}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <p class="asc-note">{{sysNote}}</p>
+    </sc-if>
+  </section>
   <sc-if value="{{frHomeShow}}" hint-placeholder-val="{{ false }}">
   <button type="button" class="card frhome" onClick="{{goFriendsHome}}">
     <div class="today-top"><h2 class="h2">Study group</h2><span class="muted">{{frHomeText}}</span></div>
@@ -910,7 +938,7 @@
       <div class="seg2" role="group" aria-label="Word web type">
         <button class="{{wTopicCls}}" onClick="{{setWTopic}}">Topics</button>
         <button class="{{wCharCls}}" onClick="{{setWChar}}">Shared character</button>
-        <button class="{{wOppCls}}" onClick="{{setWOpp}}">Pairs</button>
+        <button class="{{wOppCls}}" onClick="{{setWOpp}}">Word pairs</button>
       </div>
       <button type="button" class="chip familiar capbtn" onClick="{{toggleCapOpen}}">{{webCountText}} <span aria-hidden="true">▾</span></button>
     </div>
@@ -1090,7 +1118,7 @@
       </div>
       <sc-if value="{{mistOpen}}" hint-placeholder-val="{{ false }}">
       <div class="mist-top">
-        <div class="mist-sum"><span class="mseal" aria-hidden="true">熟</span><div><b>{{mistClearText}}</b><span>mountains with no mist left</span></div></div>
+        <div class="mist-sum"><span class="mseal" aria-hidden="true">熟</span><div><b>{{mistClearText}}</b><span>topics with every word started</span></div></div>
         <sc-if value="{{mistHasNear}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{mistNearGo}}">{{mistNearText}}</button></sc-if>
       </div>
       <div class="mist">

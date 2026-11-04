@@ -844,3 +844,23 @@ button.scn:hover .scn-m{text-decoration:underline}
 
 .q-en{font-size:30px;font-weight:600;text-align:center;line-height:1.25;margin:8px 0}
 .rev .q-card{max-width:640px;margin:0 auto;width:100%}
+
+/* sections: on desktop the sidebar lists every screen; on a phone five tabs open a section, and its screens sit in a strip under the header */
+.navg{display:none}
+.subnav{display:none}
+.today-go{width:100%;margin-top:10px}
+@media (max-width:900px){
+  .navs:not(.navg){display:none}
+  .navg{display:flex}
+  .navg .nav{flex:1 1 0;min-width:0;padding:6px 2px;white-space:normal;line-height:1.15}
+  .subnav{display:flex;align-self:flex-start;max-width:100%;overflow-x:auto;margin:0 0 14px;scrollbar-width:none}
+  .subnav::-webkit-scrollbar{display:none}
+  .subnav button{white-space:nowrap}
+  /* one slim header: the title and the level switch; streak and memory are on Today */
+  .top{gap:8px;flex-wrap:nowrap}
+  .top .h1{font-size:22px;line-height:1.15}
+  .app:not(.scr-home) .stats .pill{display:none}
+  .stats{gap:6px}
+  .stats .pill{height:34px;padding:0 10px;font-size:14px}
+  .main{padding-top:14px}
+}

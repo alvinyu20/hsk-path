@@ -67,7 +67,17 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   page.on('dialog', d => d.accept());
 
   const shot = async (name) => { if (shots) await page.screenshot({ path: path.join(shots, name + '.png'), fullPage: true }); };
-  const nav = async (label) => { await page.locator('nav button', { hasText: label }).first().click(); await page.waitForTimeout(120); };
+  // desktop: the sidebar lists every screen. Phone width: five tabs, and the screens of a section in a strip under the header.
+  const PHONE_GROUP = { Home: 'Today', 'Word webs': 'Learn', Grammar: 'Learn', 'My words': 'Learn', 'Review words': 'Review', Tests: 'Review', 'Listening lab': 'Listen & speak', Speak: 'Listen & speak', 'Level exam': 'More', Friends: 'More', Settings: 'More' };
+  const nav = async (label) => {
+    if (page.viewportSize().width > 900) { await page.locator('nav button', { hasText: label }).first().click(); }
+    else {
+      const g = PHONE_GROUP[label] || label;
+      await page.locator('.navg button', { hasText: g }).first().click();
+      if (g !== label && g !== 'Today') await page.locator('.subnav button', { hasText: new RegExp('^' + label + '$') }).first().click();
+    }
+    await page.waitForTimeout(120);
+  };
   const text = async () => (await page.locator('main').innerText());
   const noSideways = () => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
 
@@ -111,30 +121,30 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await text()).includes('Welcome back'), 'home loads');
   check((await page.locator('.side').innerText()).includes('0-day streak'), 'fresh state starts at a 0-day streak');
   // Home: the trail comes first, then today and the level exam
-  check(await page.evaluate(() => { const h = document.querySelector('.home'); return !!h && h.firstElementChild.querySelector('.trail') !== null; }), 'the trail is the first thing on Home');
+  check(await page.evaluate(() => { const h = document.querySelector('.home'); const f = h && h.firstElementChild; return !!f && !!f.querySelector('.today-go') && f.innerText.includes('Today') && !!h.querySelector('.trail') && f.compareDocumentPosition(h.querySelector('.trail')) & Node.DOCUMENT_POSITION_FOLLOWING; }), 'Today and its main button come first on Home; the path is below');
   check(await page.locator('.rg').count() === 4 && await page.locator('.task2').count() >= 1, 'Home shows four skill rings and the Today list');
   // The ascent: trail, mist and stairs views of the same progress
   const ws0 = await page.evaluate(() => JSON.stringify(window.shanlu.state.ws));
-  check((await text()).toLowerCase().includes('next cairn') && (await text()).includes('10 words to go'), 'the ascent opens on the trail: ten words to the first cairn on a fresh start');
+  check((await text()).toLowerCase().includes('next milestone') && (await text()).includes('10 words to go'), 'your path opens on the trail: ten words to the first milestone on a fresh start');
   check(await page.locator('.trail-d .apill.next').count() === 1 && (await page.locator('.trail-d .apill.next').innerText()).includes('HSK 1 exam'), 'the trail names the next camp');
   check((await page.locator('.trail-d img').getAttribute('src')).startsWith('data:image/svg+xml'), 'the trail art is drawn from the progress');
   const learnN = async (n) => page.evaluate((n) => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).slice(0, n).forEach(zh => { ws[zh].see = { s:2, l:2, t:Date.now() }; }); app.setState({ ws }); }, n);
   await learnN(96);
   await page.waitForTimeout(150);
-  check((await text()).includes('4 words to go') && (await text()).includes('96 of 100'), 'after 96 words the next cairn (100) is 4 words away');
+  check((await text()).includes('4 words to go') && (await text()).includes('96 of 100'), 'after 96 words the next milestone (100) is 4 words away');
   check((await page.locator('.trail-d .apill.you').innerText()).includes('96 words kept'), 'the trail says where you are');
   check(await page.locator('.seg2 button', { hasText: /^Mist$/ }).count() === 0 && await page.locator('.mtile').count() === 0, 'Home no longer has a Mist view');
   await nav('Word webs');
   await page.waitForTimeout(150);
   check(await page.locator('.mtile').count() === 0, 'the mountains start folded away');
-  await page.locator('button', { hasText: /^Show all \d+ mountains$/ }).click();
+  await page.locator('button', { hasText: /^Show all \d+ topics$/ }).click();
   await page.waitForTimeout(100);
   check(await page.evaluate(() => window.shanlu.state.wmode) === 'topic' && (await page.locator('.web-bar .seg2 button').first().innerText()).trim() === 'Topics', 'Word webs opens on Topics, which is the first tab');
   const NT = await page.evaluate(() => window.HSK1_WEBS.topics.length);
-  check(await page.locator('.mtile').count() === NT && (await text()).includes('of ' + NT + ' clear'), 'the mist view shows one mountain per Word web topic (' + NT + ')');
+  check(await page.locator('.mtile').count() === NT && (await text()).includes('of ' + NT + ' fully started'), 'the mist view shows one mountain per Word web topic (' + NT + ')');
   await learnN(300);
   await page.waitForTimeout(150);
-  check((await text()).includes(NT + ' of ' + NT + ' clear') && await page.locator('.mtile .mseal-on').count() === NT, 'when every word is started every mountain is clear and sealed');
+  check((await text()).includes(NT + ' of ' + NT + ' fully started') && await page.locator('.mtile .mseal-on').count() === NT, 'when every word is started every mountain is clear and sealed');
   await page.evaluate((j) => { window.shanlu.setState({ ws:JSON.parse(j) }); }, ws0);
   await page.locator('.mtile').nth(4).click();
   await page.waitForTimeout(150);
@@ -143,13 +153,18 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await nav('Home');
   await page.locator('.seg2 button', { hasText: /^Stairs$/ }).click();
   check(await page.locator('.stairs .step').count() === 9, 'the stairs view is still there');
-  await page.locator('.seg2 button', { hasText: /^HSK 2.0/ }).click();
+  check(await page.locator('.seg2 button', { hasText: /^HSK 2.0/ }).count() === 0, 'the HSK 2.0 / 3.0 switch is not on the home screen (it is in Settings)');
+  await page.evaluate(() => window.shanlu.setState({ sys: '2.0' }));
+  await page.waitForTimeout(80);
   check(await page.locator('.stairs .step').count() === 6, 'the HSK 2.0 / 3.0 switch still changes the stairs');
-  await page.locator('.seg2 button', { hasText: /^HSK 3.0/ }).click();
+  await page.evaluate(() => window.shanlu.setState({ sys: '3.0' }));
+  await page.waitForTimeout(80);
   await page.locator('.seg2 button', { hasText: /^Trail$/ }).click();
-  await page.locator('.seg2 button', { hasText: /^HSK 2.0/ }).click();
+  await page.evaluate(() => window.shanlu.setState({ sys: '2.0' }));
+  await page.waitForTimeout(80);
   check(await page.locator('.trail-d .apill.near, .trail-d .apill.far').count() === 5 && !(await page.locator('.trail-d').innerText()).includes('HSK 7'), 'with HSK 2.0 the trail has six camps');
-  await page.locator('.seg2 button', { hasText: /^HSK 3.0/ }).click();
+  await page.evaluate(() => window.shanlu.setState({ sys: '3.0' }));
+  await page.waitForTimeout(80);
   await page.evaluate(() => { window.shanlu.setState({ ascView:'stairs' }); window.shanlu.persistNow(); });
   check(await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-progress-v1')).ascView === 'stairs'), 'the view choice is saved');
   await page.evaluate(() => { window.shanlu.setState({ ascView:'trail' }); });
@@ -165,12 +180,12 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
   // Word webs
   await nav('Word webs');
-  check((await text()).includes('0 new words today') && !/\d+ of \d+ new words today/.test(await text()), 'word webs open with no daily limit');
+  check((await text()).includes('0 added today') && !/\d+ of \d+ added today/.test(await text()), 'word webs open with no daily limit');
   const credit0 = await page.evaluate(() => { const S = window.shanlu.state; return JSON.stringify([S.xp, S.dayMin, S.streak, S.lastActive]); });
   for (let i = 0; i < 6; i++) { await page.locator('button', { hasText: 'Add to my words' }).first().click(); await page.waitForTimeout(50); }
   check(await page.evaluate((c) => { const S = window.shanlu.state; return JSON.stringify([S.xp, S.dayMin, S.streak, S.lastActive]) === c; }, credit0), 'adding words earns no XP, minutes or streak: only recalling them does');
   check(await page.evaluate(() => { const S = window.shanlu.state; return Object.keys(S.lrn).length === 6 && Object.keys(S.ws).every(z => !(S.ws[z].see.s > 0)); }), 'added words wait in their learning phase: none is "learned" or "in memory" yet');
-  check((await text()).includes('6 new words today'), 'six words added with no limit in the way');
+  check((await text()).includes('6 added today'), 'six words added with no limit in the way');
   check((await page.locator('button', { hasText: 'Add to my words' }).count()) > 0, 'add buttons are still there after six words');
   if (!(await page.locator('[aria-label="New words per day"]').count())) await page.locator('.capbtn').click();
   await page.locator('[aria-label="New words per day"] button', { hasText: /^5$/ }).click();
@@ -208,7 +223,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await page.locator('button', { hasText: 'Show example' }).count()) === 0, 'in quiz mode the example stays hidden until the meaning is revealed');
   await page.locator('button', { hasText: 'Reveal meaning' }).first().click();
   await page.locator('button', { hasText: 'Add to my words' }).first().click().catch(() => {});
-  await page.locator('button', { hasText: 'Pairs' }).click();
+  await page.locator('button', { hasText: 'Word pairs' }).click();
   await page.locator('button', { hasText: 'Reveal' }).first().click();
   check((await page.locator('.orow').count()) >= 20, 'opposite pairs are listed');
   const pair = await page.evaluate(() => window.HSK1_WEBS.opps[0]);
@@ -372,7 +387,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).forEach(zh => { if (ws[zh].see.s === 1 && ws[zh].see.l === 5) ws[zh].see = { s:30, l:0 }; }); app.setState({ ws, rq:[], rcomplete:false }); });
 
   // the tabs run learn -> practice -> check -> your words, and the logo goes Home
-  check(JSON.stringify(await page.locator('.navs .nav').allInnerTexts().then(a => a.map(t => t.replace(/\d+$/, '').trim()))) === JSON.stringify(['Home', 'Word webs', 'Grammar', 'Review words', 'Listening lab', 'Speak', 'Tests', 'Level exam', 'My words']), 'the tabs are in learning order');
+  check(JSON.stringify(await page.locator('.navs:not(.navg) .nav').allInnerTexts().then(a => a.map(t => t.replace(/\d+$/, '').trim()))) === JSON.stringify(['Home', 'Word webs', 'Grammar', 'Review words', 'Listening lab', 'Speak', 'Tests', 'Level exam', 'My words']), 'the tabs are in learning order');
   await page.locator('nav button', { hasText: 'Grammar' }).click();
   await page.locator('.brand').click();
   await page.waitForTimeout(120);
@@ -649,7 +664,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await nav('Speak');
   check((await page.locator('.scn.done').count()) >= 2, 'finished speaking scripts survive a reload');
   await nav('Word webs');
-  check(/of 10 new words today/.test(await text()), 'a chosen daily limit survives a reload');
+  check(/of 10 added today/.test(await text()), 'a chosen daily limit survives a reload');
   await nav('My words');
   check(!(await text()).includes('0 words started'), 'word progress survives a reload');
 
@@ -1200,6 +1215,31 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await noSideways(), 'no sideways scroll on ' + label + ' at phone width');
   }
   await page.locator('button', { hasText: 'Topics' }).first().click().catch(() => {});
+
+  // phone navigation: five tabs that all fit, a strip for the screens of a section, one slim header, Today first
+  await nav('Home');
+  const bar = await page.evaluate(() => { const b = document.querySelector('.navg'); const r = b.getBoundingClientRect(); return { n: b.querySelectorAll('button').length, fits: b.scrollWidth <= b.clientWidth + 1, visible: r.height > 40 && r.bottom <= window.innerHeight + 1, old: getComputedStyle(document.querySelector('.navs:not(.navg)')).display }; });
+  check(bar.n === 5 && bar.fits && bar.visible && bar.old === 'none', 'on a phone the bottom bar has five tabs that all fit, with no sideways scroll (the long list is hidden)');
+  check((await page.locator('.navg button').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()).join('|') === 'Today|Learn|Review|Listen & speak|More', 'the tabs are Today, Learn, Review, Listen & speak, More');
+  const homeTop = await page.evaluate(() => { const g = document.querySelector('.today-go').getBoundingClientRect(); return { y: g.bottom, h: window.innerHeight }; });
+  check(homeTop.y < homeTop.h - 60, 'on a phone the main Today button is on the first screen, above the bottom bar (bottom edge at ' + Math.round(homeTop.y) + ' of ' + homeTop.h + ')');
+  await page.locator('.navg button', { hasText: 'Learn' }).click();
+  await page.waitForTimeout(120);
+  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Word webs|Grammar|My words' && ['web', 'grammar', 'words'].includes(await page.evaluate(() => window.shanlu.state.screen)), 'the Learn tab opens a Learn screen, with Word webs, Grammar and My words one tap away');
+  await page.locator('.subnav button', { hasText: 'Grammar' }).click();
+  await page.waitForTimeout(100);
+  check((await page.evaluate(() => window.shanlu.state.screen)) === 'grammar' && (await page.locator('.navg button.on').innerText()).includes('Learn'), 'the strip switches screens inside the section and the Learn tab stays lit');
+  await page.locator('.navg button', { hasText: 'Review' }).click(); await page.waitForTimeout(100);
+  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Review words|Tests', 'the Review tab holds Review words and Tests');
+  await page.locator('.navg button', { hasText: 'Learn' }).click(); await page.waitForTimeout(100);
+  check((await page.evaluate(() => window.shanlu.state.screen)) === 'grammar', 'a tab returns to the screen you last used in that section');
+  await page.locator('.navg button', { hasText: 'More' }).click(); await page.waitForTimeout(100);
+  check((await page.locator('.subnav button').allInnerTexts()).includes('Settings') && (await page.locator('.subnav button').allInnerTexts()).includes('Level exam'), 'More holds the level exam and Settings');
+  const slim = await page.evaluate(() => { const t = document.querySelector('.top').getBoundingClientRect(); return { h: t.height, pills: [...document.querySelectorAll('.stats .pill')].filter(p => p.offsetParent !== null).length }; });
+  check(slim.h < 90 && slim.pills === 0, 'the header is one slim row on a phone, with no repeated streak and memory chips outside Today (' + Math.round(slim.h) + ' px)');
+  await nav('Home');
+  check((await page.evaluate(() => [...document.querySelectorAll('.stats .pill')].filter(p => p.offsetParent !== null).length)) === 2, 'Today still shows the streak and memory chips');
+  await page.setViewportSize({ width: 1280, height: 900 });
 
   check(errors.length === 0, 'no console or page errors' + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));
   await browser.close();

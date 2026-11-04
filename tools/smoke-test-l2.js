@@ -132,7 +132,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForTimeout(80);
   const added = await page.evaluate(() => Object.keys(window.shanlu.state.wlearned));
   check(added.length === 7 && added.every(z => /来/.test(z)), 'Add all starts the seven 来 words (' + added.join(' ') + ')');
-  await page.locator('button', { hasText: 'Pairs' }).click();
+  await page.locator('button', { hasText: 'Word pairs' }).click();
   await page.waitForTimeout(80);
   check((await text()).includes('左') && (await text()).includes('右'), 'opposite pairs include 左 and 右');
   await page.locator('button', { hasText: 'Topics' }).click();
@@ -348,7 +348,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     // word webs: topics first, and the hubs of both levels
     await pA.locator('nav button', { hasText: 'Word webs' }).click();
     await pA.waitForTimeout(150);
-    await pA.locator('button', { hasText: /^Show all \d+ mountains$/ }).click();
+    await pA.locator('button', { hasText: /^Show all \d+ topics$/ }).click();
     await pA.waitForTimeout(100);
     check(await pA.locator('.mtile').count() === await pA.evaluate(() => new Set(window.HSK1_WEBS.topics.concat(window.HSK2_WEBS.topics).map(t => t.name)).size), 'Word webs shows one mountain per topic name across both levels');
     // the HSK 2 family words sit in the same topic as the HSK 1 family words, each with a small level tag
