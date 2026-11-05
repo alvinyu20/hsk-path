@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="0ac144c99b">
+<meta name="shanlu-version" content="b5c1baa904">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=0ac144c99b">
+<link rel="stylesheet" href="styles.css?v=b5c1baa904">
 </head>
 <body>
 <div id="app"></div>
@@ -26,51 +26,51 @@
 <div class="app {{themeCls}} {{focusCls}} {{scrCls}}">
 
 <aside class="side">
-  <button type="button" class="brand" onClick="{{goHome}}" aria-label="Shanlu: go to Home">
+  <button type="button" class="brand" data-on-click="{{goHome}}" aria-label="Shanlu: go to Home">
     <div class="mark zh" aria-hidden="true">山</div>
     <div><div class="bname">Shanlu</div><div class="bsub">HSK study path</div></div>
   </button>
 
   <nav class="navs" aria-label="Main">
-    <button class="{{navHome}}" onClick="{{goHome}}">
+    <button class="{{navHome}}" data-on-click="{{goHome}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg>
       Home
     </button>
-    <button class="{{navWeb}}" onClick="{{goWeb}}">
+    <button class="{{navWeb}}" data-on-click="{{goWeb}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.5"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="M10 10.5 6.5 7.5M14 10.5l3.5-3M10 13.5 6.5 16.5M14 13.5l3.5 3"/></svg>
       Word webs
     </button>
-    <button class="{{navGrammar}}" onClick="{{goGrammar}}">
+    <button class="{{navGrammar}}" data-on-click="{{goGrammar}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg>
       Grammar
     </button>
-    <button class="{{navReview}}" onClick="{{goReview}}">
+    <button class="{{navReview}}" data-on-click="{{goReview}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7" width="17" height="12" rx="2.5"/><path d="M7 3.8h10"/></svg>
       Review words
       <sc-if value="{{hasDue}}" hint-placeholder-val="{{ true }}"><span class="badge">{{dueCount}}</span></sc-if>
     </button>
-    <button class="{{navListen}}" onClick="{{goListen}}">
+    <button class="{{navListen}}" data-on-click="{{goListen}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>
       Listening lab
     </button>
-    <button class="{{navSpeak}}" onClick="{{goSpeak}}">
+    <button class="{{navSpeak}}" data-on-click="{{goSpeak}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg>
       Speak
     </button>
-    <button class="{{navTest}}" onClick="{{goTest}}">
+    <button class="{{navTest}}" data-on-click="{{goTest}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>
       Tests
     </button>
-    <button class="{{navExam}}" onClick="{{goExam}}">
+    <button class="{{navExam}}" data-on-click="{{goExam}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20l6-10 4 6 2-3 6 7z"/><path d="M14 6l1.5-2.5L17 6"/></svg>
       Level exam
     </button>
-    <button class="{{navWords}}" onClick="{{goWords}}">
+    <button class="{{navWords}}" data-on-click="{{goWords}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>
       My words
     </button>
     <sc-if value="{{friendsOn}}" hint-placeholder-val="{{ false }}">
-    <button class="{{navFriends}}" onClick="{{goFriends}}">
+    <button class="{{navFriends}}" data-on-click="{{goFriends}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17.5" cy="9" r="2.5"/><path d="M16.5 14.2A5 5 0 0 1 21.5 19"/></svg>
       Friends
     </button>
@@ -78,24 +78,24 @@
   </nav>
 
   <nav class="navs navg" aria-label="Main sections">
-    <button class="{{gHomeCls}}" onClick="{{gHome}}">
+    <button class="{{gHomeCls}}" data-on-click="{{gHome}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg>
       Today
     </button>
-    <button class="{{gLearnCls}}" onClick="{{gLearn}}">
+    <button class="{{gLearnCls}}" data-on-click="{{gLearn}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg>
       Learn
     </button>
-    <button class="{{gReviewCls}}" onClick="{{gReview}}">
+    <button class="{{gReviewCls}}" data-on-click="{{gReview}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7" width="17" height="12" rx="2.5"/><path d="M7 3.8h10"/></svg>
       Review
       <sc-if value="{{hasDue}}" hint-placeholder-val="{{ true }}"><span class="badge">{{dueCount}}</span></sc-if>
     </button>
-    <button class="{{gTalkCls}}" onClick="{{gTalk}}">
+    <button class="{{gTalkCls}}" data-on-click="{{gTalk}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg>
       Listen &amp; speak
     </button>
-    <button class="{{gMoreCls}}" onClick="{{gMore}}">
+    <button class="{{gMoreCls}}" data-on-click="{{gMore}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18.5" cy="12" r="1.6"/></svg>
       More
     </button>
@@ -115,7 +115,7 @@
     <div class="me-av zh" aria-hidden="true">学</div>
     <div><b>Your progress</b><div class="bsub">{{lvName}} · {{overall}}% to checkpoint</div></div>
   </div>
-  <button class="linkbtn" onClick="{{toggleTheme}}">{{themeLabel}}</button>
+  <button class="linkbtn" data-on-click="{{toggleTheme}}">{{themeLabel}}</button>
 </aside>
 
 <main class="main">
@@ -125,27 +125,27 @@
       <p class="sub">{{subtitle}}</p>
     </div>
     <div class="stats">
-      <div class="seg2 lvseg" role="group" aria-label="Level"><sc-for list="{{lvOpts}}" as="o" hint-placeholder-count="2"><button class="{{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for></div>
+      <div class="seg2 lvseg" role="group" aria-label="Level"><sc-for list="{{lvOpts}}" as="o" hint-placeholder-count="2"><button class="{{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
       <span class="pill fl"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c1.1 3.4 5 5.3 5 9.9a5 5 0 0 1-10 0c0-1.8.8-3 1.8-4.1.2 1.6 1.1 2.5 2.1 2.7C10.3 8.5 11 5.5 12 2.5z"/></svg>{{streakText}}</span>
       <span class="pill" title="{{memTip}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.2 6.3L21 12l-6.8 2.7L12 21l-2.2-6.3L3 12l6.8-2.7z"/></svg>{{memText}}</span>
     </div>
   </header>
-  <sc-if value="{{lvMsgShow}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">{{lvMsgText}}<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" onClick="{{lvMsgGo}}">{{lvMsgGoText}}</button><button class="btn" onClick="{{lvMsgClose}}">Dismiss</button></div></div></sc-if>
-  <sc-if value="{{hasSubnav}}" hint-placeholder-val="{{ false }}"><div class="seg2 subnav" role="group" aria-label="In this section"><sc-for list="{{subnav}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for></div></sc-if>
-  <sc-if value="{{saveFail}}" hint-placeholder-val="{{ false }}"><div class="banner bad" role="alert">This device could not save your progress. Its storage may be full or blocked (a private tab does this). What you do now can be lost when you close the page, so download a backup.<div style="margin-top:10px"><button class="btn pri" onClick="{{exportData}}">Download a backup</button></div></div></sc-if>
-  <sc-if value="{{swReady}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">A new version of Shanlu is ready.<div style="margin-top:10px"><button class="btn pri" onClick="{{updateNow}}">Reload now</button></div></div></sc-if>
+  <sc-if value="{{lvMsgShow}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">{{lvMsgText}}<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" data-on-click="{{lvMsgGo}}">{{lvMsgGoText}}</button><button class="btn" data-on-click="{{lvMsgClose}}">Dismiss</button></div></div></sc-if>
+  <sc-if value="{{hasSubnav}}" hint-placeholder-val="{{ false }}"><div class="seg2 subnav" role="group" aria-label="In this section"><sc-for list="{{subnav}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div></sc-if>
+  <sc-if value="{{saveFail}}" hint-placeholder-val="{{ false }}"><div class="banner bad" role="alert">This device could not save your progress. Its storage may be full or blocked (a private tab does this). What you do now can be lost when you close the page, so download a backup.<div style="margin-top:10px"><button class="btn pri" data-on-click="{{exportData}}">Download a backup</button></div></div></sc-if>
+  <sc-if value="{{swReady}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">A new version of Shanlu is ready.<div style="margin-top:10px"><button class="btn pri" data-on-click="{{updateNow}}">Reload now</button></div></div></sc-if>
   <sc-if value="{{tipShow}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">
     <sc-if value="{{tipIsInstall}}" hint-placeholder-val="{{ true }}">
       <b>Put Shanlu on your home screen.</b> It opens full screen, works without a connection, and keeps your saved progress safe: a browser may clear a website's saved data after a long time unused, an installed app is not treated that way.
       <sc-if value="{{tipIosHow}}" hint-placeholder-val="{{ true }}"> On iPhone: tap the Share button, then Add to Home Screen.</sc-if>
-      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"><sc-if value="{{tipCanPrompt}}" hint-placeholder-val="{{ false }}"><button class="btn pri" onClick="{{tipInstall}}">Install</button></sc-if><button class="btn" onClick="{{tipDismiss}}">Not now</button></div>
+      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"><sc-if value="{{tipCanPrompt}}" hint-placeholder-val="{{ false }}"><button class="btn pri" data-on-click="{{tipInstall}}">Install</button></sc-if><button class="btn" data-on-click="{{tipDismiss}}">Not now</button></div>
     </sc-if>
     <sc-if value="{{tipIsBackup}}" hint-placeholder-val="{{ false }}">
       <b>Your progress lives only in this browser.</b> Download a backup file now and then, or connect sync in Settings so it follows you to your other devices.
-      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" onClick="{{exportData}}">Download a backup</button><button class="btn" onClick="{{tipDismiss}}">Not now</button></div>
+      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" data-on-click="{{exportData}}">Download a backup</button><button class="btn" data-on-click="{{tipDismiss}}">Not now</button></div>
     </sc-if>
   </div></sc-if>
-  <sc-if value="{{noVoice}}" hint-placeholder-val="{{ false }}"><div class="banner">This browser does not report a Chinese voice, so audio may be silent or sound wrong. Try Chrome or Safari, or check your device's text-to-speech language settings. <button class="linkbtn" onClick="{{goVoice}}">Open voice settings</button></div></sc-if>
+  <sc-if value="{{noVoice}}" hint-placeholder-val="{{ false }}"><div class="banner">This browser does not report a Chinese voice, so audio may be silent or sound wrong. Try Chrome or Safari, or check your device's text-to-speech language settings. <button class="linkbtn" data-on-click="{{goVoice}}">Open voice settings</button></div></sc-if>
 
   <!-- VOICE -->
   <sc-if value="{{isVoice}}" hint-placeholder-val="{{ false }}">
@@ -160,17 +160,17 @@
           <li>Press Connect. Do the same on your other devices with the same token.</li>
         </ol>
         <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-          <input class="wsearch" type="password" autocomplete="off" placeholder="Paste the token" value="{{syncInput}}" onInput="{{onSyncInput}}" style="flex:1 1 220px;min-width:0" aria-label="GitHub token">
-          <button class="btn pri" onClick="{{syncConnect}}">Connect</button>
+          <input class="wsearch" type="password" autocomplete="off" placeholder="Paste the token" value="{{syncInput}}" data-on-input="{{onSyncInput}}" style="flex:1 1 220px;min-width:0" aria-label="GitHub token">
+          <button class="btn pri" data-on-click="{{syncConnect}}">Connect</button>
         </div>
         <p class="muted" style="margin:10px 0 0;font-size:14.5px">The token is kept on this device only, never in your exported progress. It can only read and write gists. You can delete it any time at github.com/settings/tokens.</p>
       </sc-if>
       <sc-if value="{{syncOn}}" hint-placeholder-val="{{ false }}">
         <p class="muted" style="margin:6px 0 0;font-size:16px">{{syncAtText}} Progress syncs when you open the site, when you come back to the tab, and shortly after you study.</p>
         <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-          <button class="btn pri" onClick="{{syncNow}}">Sync now</button>
-          <button class="btn" onClick="{{syncTest}}">{{syncTestLabel}}</button>
-          <button class="btn" onClick="{{syncDisconnect}}">Disconnect this device</button>
+          <button class="btn pri" data-on-click="{{syncNow}}">Sync now</button>
+          <button class="btn" data-on-click="{{syncTest}}">{{syncTestLabel}}</button>
+          <button class="btn" data-on-click="{{syncDisconnect}}">Disconnect this device</button>
         </div>
       </sc-if>
       <sc-if value="{{hasSyncMsg}}" hint-placeholder-val="{{ false }}"><div class="banner {{syncMsgCls}}" style="margin-top:14px" role="status">{{syncMsg}}</div></sc-if>
@@ -180,29 +180,29 @@
       <p class="muted" style="margin:6px 0 0;font-size:15.5px">{{storageText}}</p>
       <p class="muted" style="margin:6px 0 0;font-size:15.5px">{{installedText}}</p>
       <p class="muted" style="margin:6px 0 0;font-size:15.5px">{{versionText}}</p>
-      <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn" onClick="{{exportData}}">Download a backup</button><button class="btn" onClick="{{importData}}">Import a backup</button></div>
+      <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn" data-on-click="{{exportData}}">Download a backup</button><button class="btn" data-on-click="{{importData}}">Import a backup</button></div>
     </section>
     <section class="card" style="margin-bottom:20px">
       <h2 class="h2">AI conversation (optional)</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">Speaking practice with a real conversation partner: you speak or type, Mingming answers in simple Chinese, may use a little of the next level ({{nextLvName}}) as a preview (with pinyin and English), and tells you what was not natural. Pick the service that writes Mingming's lines. You can save a key for both and switch any time.</p>
       <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
-        <sc-for list="{{provOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
+        <sc-for list="{{provOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
       </div>
       <sc-if value="{{provAnthropic}}" hint-placeholder-val="{{ true }}">
-      <sc-if value="{{aiCanUse}}" hint-placeholder-val="{{ false }}"><div style="margin-top:12px"><button class="btn pri" onClick="{{useAnth}}">Use Claude for conversation</button></div></sc-if>
+      <sc-if value="{{aiCanUse}}" hint-placeholder-val="{{ false }}"><div style="margin-top:12px"><button class="btn pri" data-on-click="{{useAnth}}">Use Claude for conversation</button></div></sc-if>
       <p class="muted" style="margin:12px 0 0;font-size:16px">Claude is billed separately from a Claude.ai subscription: create a key at console.anthropic.com and add some credit there. Each message costs only a small fraction of a cent on the cheaper model, but I could not look up current prices from here, so check them on that site.</p>
       <p class="muted" style="margin:10px 0 0;font-size:14.5px">The key is stored on this device only. It is sent straight from your browser to Anthropic and is not synced or exported. Anyone who can use this browser can use the key, so set a spending limit on the key's account.</p>
       <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
-        <sc-for list="{{aiModelOpts}}" as="m" hint-placeholder-count="2"><button class="fc2 {{m.cls}}" onClick="{{m.fn}}">{{m.label}}</button></sc-for>
+        <sc-for list="{{aiModelOpts}}" as="m" hint-placeholder-count="2"><button class="fc2 {{m.cls}}" data-on-click="{{m.fn}}">{{m.label}}</button></sc-for>
       </div>
       <sc-if value="{{aiUnset}}" hint-placeholder-val="{{ true }}">
         <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-          <input class="wsearch" style="margin:0;flex:1 1 220px;min-width:0" type="password" autocomplete="off" placeholder="Paste the API key" value="{{aiKeyInput}}" onInput="{{onAiKeyInput}}" aria-label="Anthropic API key">
-          <button class="btn pri" onClick="{{aiSaveKey}}">Save key</button>
+          <input class="wsearch" style="margin:0;flex:1 1 220px;min-width:0" type="password" autocomplete="off" placeholder="Paste the API key" value="{{aiKeyInput}}" data-on-input="{{onAiKeyInput}}" aria-label="Anthropic API key">
+          <button class="btn pri" data-on-click="{{aiSaveKey}}">Save key</button>
         </div>
       </sc-if>
       <sc-if value="{{aiSet}}" hint-placeholder-val="{{ false }}">
-        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span class="muted">A key is saved on this device.</span><button class="btn" onClick="{{aiTestKey}}">{{aiTestLabel}}</button><button class="btn" onClick="{{aiRemoveKey}}">Remove the key</button></div>
+        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span class="muted">A key is saved on this device.</span><button class="btn" data-on-click="{{aiTestKey}}">{{aiTestLabel}}</button><button class="btn" data-on-click="{{aiRemoveKey}}">Remove the key</button></div>
       </sc-if>
       </sc-if>
       <sc-if value="{{provAlibaba}}" hint-placeholder-val="{{ false }}">
@@ -214,37 +214,37 @@
         </ol>
         <p class="muted" style="margin:10px 0 0;font-size:14.5px">The key is stored on this device only and sent straight from your browser to Alibaba. It is not synced or exported. In Model Studio, turn on "Free quota only" for each model you use, so nothing is billed when the free quota runs out. Without it, use past the free quota is billed.</p>
         <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-          <input class="wsearch" style="margin:0;flex:1 1 260px;min-width:0" type="password" autocomplete="off" placeholder="Paste the Alibaba API key" value="{{aliKeyInput}}" onInput="{{onAliKeyInput}}" aria-label="Alibaba API key">
+          <input class="wsearch" style="margin:0;flex:1 1 260px;min-width:0" type="password" autocomplete="off" placeholder="Paste the Alibaba API key" value="{{aliKeyInput}}" data-on-input="{{onAliKeyInput}}" aria-label="Alibaba API key">
         </div>
         <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-          <input class="wsearch" style="margin:0;flex:1 1 200px;min-width:0" type="text" autocomplete="off" placeholder="Workspace ID (optional)" value="{{aliWsInput}}" onInput="{{onAliWsInput}}" aria-label="Alibaba workspace ID">
-          <input class="wsearch" style="margin:0;flex:1 1 200px;min-width:0" type="text" autocomplete="off" placeholder="Model name" value="{{aliModelInput}}" onInput="{{onAliModelInput}}" aria-label="Qwen model name">
+          <input class="wsearch" style="margin:0;flex:1 1 200px;min-width:0" type="text" autocomplete="off" placeholder="Workspace ID (optional)" value="{{aliWsInput}}" data-on-input="{{onAliWsInput}}" aria-label="Alibaba workspace ID">
+          <input class="wsearch" style="margin:0;flex:1 1 200px;min-width:0" type="text" autocomplete="off" placeholder="Model name" value="{{aliModelInput}}" data-on-input="{{onAliModelInput}}" aria-label="Qwen model name">
         </div>
         <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
-          <sc-for list="{{aliModelOpts}}" as="m" hint-placeholder-count="2"><button class="fc2 {{m.cls}}" onClick="{{m.fn}}">{{m.label}}</button></sc-for>
+          <sc-for list="{{aliModelOpts}}" as="m" hint-placeholder-count="2"><button class="fc2 {{m.cls}}" data-on-click="{{m.fn}}">{{m.label}}</button></sc-for>
         </div>
         <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-          <button class="btn pri" onClick="{{aliSaveKey}}">Save</button>
-          <button class="btn" onClick="{{aliTest}}">{{aliTestLabel}}</button>
-          <sc-if value="{{aliSet}}" hint-placeholder-val="{{ false }}"><span class="muted">A key is saved on this device.</span><button class="btn" onClick="{{aliRemoveKey}}">Remove the key</button></sc-if>
-          <sc-if value="{{aliCanUse}}" hint-placeholder-val="{{ false }}"><button class="btn pri" onClick="{{useAli}}">Use Qwen for conversation</button></sc-if>
+          <button class="btn pri" data-on-click="{{aliSaveKey}}">Save</button>
+          <button class="btn" data-on-click="{{aliTest}}">{{aliTestLabel}}</button>
+          <sc-if value="{{aliSet}}" hint-placeholder-val="{{ false }}"><span class="muted">A key is saved on this device.</span><button class="btn" data-on-click="{{aliRemoveKey}}">Remove the key</button></sc-if>
+          <sc-if value="{{aliCanUse}}" hint-placeholder-val="{{ false }}"><button class="btn pri" data-on-click="{{useAli}}">Use Qwen for conversation</button></sc-if>
         </div>
         <p class="muted" style="margin:10px 0 0;font-size:14.5px">Model names change over time. If Alibaba says the model does not exist, type the current name from the Model Studio model list.</p>
       </sc-if>
       <h3 style="margin:18px 0 0;font-size:17px">What hears your voice</h3>
       <p class="muted" style="margin:6px 0 0;font-size:15.5px">The browser's own recogniser is free but can miss normal-speed Mandarin. Alibaba's Qwen3-ASR is built for Chinese. It records you, sends the clip to Alibaba, and fills the box a moment after you stop.</p>
       <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
-        <sc-for list="{{asrOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
+        <sc-for list="{{asrOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
       </div>
       <h3 style="margin:18px 0 0;font-size:17px">What speaks Mingming's lines</h3>
       <p class="muted" style="margin:6px 0 0;font-size:15.5px">Alibaba's Qwen voice sounds far more natural than the browser's. It uses the model qwen3-tts-flash, which has its own free quota (turn on "Free quota only" for it too). If it ever fails, the browser voice takes over.</p>
       <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
-        <sc-for list="{{ttsOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
+        <sc-for list="{{ttsOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
       </div>
       <sc-if value="{{ttsIsQwen}}" hint-placeholder-val="{{ false }}">
         <p class="muted" style="margin:12px 0 0;font-size:15px">Voice (tap one to hear it):</p>
         <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
-          <sc-for list="{{ttsVoiceOpts}}" as="o" hint-placeholder-count="5"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
+          <sc-for list="{{ttsVoiceOpts}}" as="o" hint-placeholder-count="5"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
         </div>
       </sc-if>
       <h3 style="margin:18px 0 0;font-size:17px">What Mingming remembers</h3>
@@ -252,25 +252,25 @@
       <sc-if value="{{personSyncOn}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:6px 0 0;font-size:15.5px">They follow you: they are saved with your progress on the group's server, so every device of yours has the same ones. Only you (and whoever runs the server) can read them; the other friends cannot.</p></sc-if>
       <sc-if value="{{personSyncOff}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:6px 0 0;font-size:15.5px">They are kept on this device. If you join the study group (Friends tab), they follow you to your other devices.</p></sc-if>
       <p class="muted" style="margin:6px 0 0;font-size:15.5px">The AI service does see them while a chat is running. Health, money, politics, religion and documents are filtered out (a keyword filter, so not perfect).</p>
-      <div style="margin-top:10px"><button class="fc2 {{memCls}}" onClick="{{memToggle}}">{{memOnLabel}}</button></div>
+      <div style="margin-top:10px"><button class="fc2 {{memCls}}" data-on-click="{{memToggle}}">{{memOnLabel}}</button></div>
       <sc-if value="{{noMemFacts}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:10px 0 0;font-size:15px">Nothing remembered yet.</p></sc-if>
       <sc-if value="{{hasMemFacts}}" hint-placeholder-val="{{ false }}">
         <div style="margin-top:10px">
-          <sc-for list="{{memList}}" as="f" hint-placeholder-count="2"><div style="display:flex;gap:10px;align-items:center;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line)"><span>{{f.t}} <span class="muted" style="font-size:13.5px">{{f.d}}</span></span><button class="linkbtn" onClick="{{f.forget}}">Forget</button></div></sc-for>
+          <sc-for list="{{memList}}" as="f" hint-placeholder-count="2"><div style="display:flex;gap:10px;align-items:center;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line)"><span>{{f.t}} <span class="muted" style="font-size:13.5px">{{f.d}}</span></span><button class="linkbtn" data-on-click="{{f.forget}}">Forget</button></div></sc-for>
         </div>
-        <div style="margin-top:8px"><button class="linkbtn" onClick="{{memClear}}">Forget everything</button></div>
+        <div style="margin-top:8px"><button class="linkbtn" data-on-click="{{memClear}}">Forget everything</button></div>
       </sc-if>
       <sc-if value="{{personSyncOn}}" hint-placeholder-val="{{ false }}">
         <h3 style="margin:18px 0 0;font-size:17px">API keys on all my devices</h3>
         <p class="muted" style="margin:6px 0 0;font-size:15.5px">Your chat settings, listening level and remembered facts already follow you. API keys stay on each device unless you switch this on. Then they are locked on this device with a passphrase you choose, and only the scrambled text is saved with your progress on the group's server, so whoever runs the server cannot read your keys. The passphrase is never sent anywhere: type it once on each device. If you forget it, switch this off and on again.</p>
-        <div style="margin-top:10px"><button class="fc2 {{keySyncCls}}" onClick="{{keySyncToggle}}">{{keySyncLabel}}</button></div>
+        <div style="margin-top:10px"><button class="fc2 {{keySyncCls}}" data-on-click="{{keySyncToggle}}">{{keySyncLabel}}</button></div>
         <sc-if value="{{keyAsk}}" hint-placeholder-val="{{ false }}">
           <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-            <input class="wsearch" style="margin:0;flex:1 1 220px;min-width:0" type="password" autocomplete="new-password" placeholder="{{keyAskHint}}" value="{{keyPassInput}}" onInput="{{onKeyPassInput}}" aria-label="Key passphrase">
-            <button class="btn pri" onClick="{{keyPassGo}}">{{keyGoLabel}}</button>
+            <input class="wsearch" style="margin:0;flex:1 1 220px;min-width:0" type="password" autocomplete="new-password" placeholder="{{keyAskHint}}" value="{{keyPassInput}}" data-on-input="{{onKeyPassInput}}" aria-label="Key passphrase">
+            <button class="btn pri" data-on-click="{{keyPassGo}}">{{keyGoLabel}}</button>
           </div>
         </sc-if>
-        <sc-if value="{{keyReady}}" hint-placeholder-val="{{ false }}"><div class="muted" style="margin-top:10px"><span>Your keys are locked with your passphrase.</span> <button class="linkbtn" onClick="{{keyChange}}">Change passphrase</button></div></sc-if>
+        <sc-if value="{{keyReady}}" hint-placeholder-val="{{ false }}"><div class="muted" style="margin-top:10px"><span>Your keys are locked with your passphrase.</span> <button class="linkbtn" data-on-click="{{keyChange}}">Change passphrase</button></div></sc-if>
         <sc-if value="{{keyMsgShow}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:10px" role="status">{{keyMsgText}}</div></sc-if>
       </sc-if>
       <sc-if value="{{hasAliNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aliNote}}</div></sc-if>
@@ -279,34 +279,34 @@
     <section class="card">
       <h2 class="h2">Reviews</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">A word comes back when your chance of recalling it falls to this level. A lower level means fewer reviews but more forgetting.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"><sc-for list="{{retOpts}}" as="o" hint-placeholder-count="3"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for></div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"><sc-for list="{{retOpts}}" as="o" hint-placeholder-count="3"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
       <div style="margin:16px 0 0;font-weight:600">Tones in typed answers</div>
       <p class="muted" style="margin:6px 0 0;font-size:15.5px">Type pinyin with tone marks or numbers (nǐ hǎo or ni3 hao3). Tones count, because they are the hardest part. If you are just starting, you can make them optional for now.</p>
-      <div style="margin-top:10px"><button class="fc2 {{tonesCls}}" onClick="{{toggleTones}}">{{tonesLabel}}</button></div>
+      <div style="margin-top:10px"><button class="fc2 {{tonesCls}}" data-on-click="{{toggleTones}}">{{tonesLabel}}</button></div>
     </section>
     <section class="card">
       <h2 class="h2">Chinese voice</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">{{voiceIntro}}</p>
       <p class="muted" style="margin:10px 0 0;font-size:15.5px">On iPhone, download an Enhanced or Premium voice in Settings, Accessibility, Read &amp; Speak, Voices (it is called Spoken Content on older versions), then come back here and tap Refresh. Voices named Siri may not be offered to websites at all. If a voice you downloaded is missing from this list, your browser is not passing it on to websites.</p>
       <div style="margin:16px 0 0;font-weight:600">Speaking speed</div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{speedOpts}}" as="o" hint-placeholder-count="4"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for></div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{speedOpts}}" as="o" hint-placeholder-count="4"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
       <p class="muted" style="margin:8px 0 0;font-size:15px">{{speedNote}}</p>
       <div class="vlist">
         <div class="vrow {{autoCls}}">
           <div><b>{{autoName}}</b><span>Picks the highest-quality Mandarin voice, then prefers mainland over Taiwan</span></div>
-          <div class="vact"><button class="fc2 {{autoPlayCls}}" onClick="{{autoPlay}}">Play</button><button class="fc2 {{autoCls}}" onClick="{{useAuto}}">{{autoLabel}}</button></div>
+          <div class="vact"><button class="fc2 {{autoPlayCls}}" data-on-click="{{autoPlay}}">Play</button><button class="fc2 {{autoCls}}" data-on-click="{{useAuto}}">{{autoLabel}}</button></div>
         </div>
         <sc-for list="{{voiceRows}}" as="v" hint-placeholder-count="3">
           <div class="vrow {{v.cls}}">
             <div><b>{{v.name}}</b><span>{{v.meta}}</span></div>
-            <div class="vact"><button class="fc2 {{v.playCls}}" onClick="{{v.play}}">Play</button><button class="fc2 {{v.useCls}}" onClick="{{v.use}}">{{v.useLabel}}</button></div>
+            <div class="vact"><button class="fc2 {{v.playCls}}" data-on-click="{{v.play}}">Play</button><button class="fc2 {{v.useCls}}" data-on-click="{{v.use}}">{{v.useLabel}}</button></div>
           </div>
         </sc-for>
       </div>
       <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-        <button class="btn pri" onClick="{{refreshVoices}}">Refresh</button>
-        <button class="btn" onClick="{{goHome}}">Back to home</button>
-        <button class="linkbtn" onClick="{{toggleAllVoices}}">{{allVoicesBtn}}</button>
+        <button class="btn pri" data-on-click="{{refreshVoices}}">Refresh</button>
+        <button class="btn" data-on-click="{{goHome}}">Back to home</button>
+        <button class="linkbtn" data-on-click="{{toggleAllVoices}}">{{allVoicesBtn}}</button>
       </div>
       <sc-if value="{{showAllVoices}}" hint-placeholder-val="{{ false }}">
         <ul class="vall"><sc-for list="{{everyVoice}}" as="e" hint-placeholder-count="3"><li>{{e.line}}</li></sc-for></ul>
@@ -315,11 +315,11 @@
     <section class="card" style="margin-top:20px">
       <h2 class="h2">Level</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">{{lvNote}}</p>
-      <div class="seg2" style="margin-top:12px;display:inline-flex" role="group" aria-label="Level"><sc-for list="{{lvOpts}}" as="o" hint-placeholder-count="2"><button class="{{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for></div>
+      <div class="seg2" style="margin-top:12px;display:inline-flex" role="group" aria-label="Level"><sc-for list="{{lvOpts}}" as="o" hint-placeholder-count="2"><button class="{{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
       <div style="margin:16px 0 0;font-weight:600">HSK version shown on your path</div>
-      <div class="seg2" style="margin-top:8px;display:inline-flex" role="group" aria-label="HSK version"><button class="{{sys2Cls}}" onClick="{{setSys2}}">HSK 2.0 · 6 levels</button><button class="{{sys3Cls}}" onClick="{{setSys3}}">HSK 3.0 · 9 levels</button></div>
+      <div class="seg2" style="margin-top:8px;display:inline-flex" role="group" aria-label="HSK version"><button class="{{sys2Cls}}" data-on-click="{{setSys2}}">HSK 2.0 · 6 levels</button><button class="{{sys3Cls}}" data-on-click="{{setSys3}}">HSK 3.0 · 9 levels</button></div>
       <div style="margin:16px 0 0;font-weight:600">Level lock</div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{lockOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for></div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{lockOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
       <p class="muted" style="margin:8px 0 0;font-size:15px">Locked is the default. The level exams are AI-written and AI-checked, and the pictures use emoji that look different on different devices, so if an unclear question holds you back, switching the lock to open is fine: the exam then only earns the level's seal.</p>
     </section>
     <sc-if value="{{erhuaAvailable}}" hint-placeholder-val="{{ true }}">
@@ -328,7 +328,7 @@
       <p class="muted" style="margin:6px 0 0;font-size:16px">In the northern, Beijing style, some words end in 儿: 面条儿, 一点儿, 这儿, 哪儿. Many speakers, especially in the south and in Taiwan, say 面条, 一点, 这里 and 哪里 instead. This site uses the plain forms unless you switch.</p>
       <p class="muted" style="margin:10px 0 0;font-size:15.5px">The official HSK 1 and HSK 2 word lists print the 儿 forms, so you may still meet them on the exam. Switching reloads the page. Your progress on these words carries over. With plain forms on, 这儿, 那儿 and 哪儿 are left out, because 这里, 那里 and 哪里 are already on the list.</p>
       <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-        <button class="btn pri" onClick="{{toggleErhua}}">{{erhuaBtn}}</button>
+        <button class="btn pri" data-on-click="{{toggleErhua}}">{{erhuaBtn}}</button>
         <span class="muted">{{erhuaNow}}</span>
       </div>
     </section>
@@ -342,7 +342,7 @@
   <div class="hgrid2">
     <section class="card">
       <div class="today-top"><h2 class="h2">Today</h2><span class="muted">{{todayShort}}</span></div>
-      <button class="btn pri big today-go" onClick="{{trailCta}}">{{trailCtaText}}</button>
+      <button class="btn pri big today-go" data-on-click="{{trailCta}}">{{trailCtaText}}</button>
       <div class="abar jade" style="margin:10px 0 8px"><i style="width: {{todayPct}}"></i></div>
       <div class="tasks2">
         <sc-for list="{{tasks}}" as="t" hint-placeholder-count="3">
@@ -354,7 +354,7 @@
             </div>
             <sc-if value="{{t.open}}" hint-placeholder-val="{{ true }}">
               <span class="xpc">{{t.xp}}</span>
-              <button class="btn ink" onClick="{{t.go}}">Start</button>
+              <button class="btn ink" data-on-click="{{t.go}}">Start</button>
             </sc-if>
             <sc-if value="{{t.done}}" hint-placeholder-val="{{ false }}"><span class="xpc">Done</span></sc-if>
           </div>
@@ -363,7 +363,7 @@
       <div class="goalrow" style="margin:14px 0 0">
         <span class="muted">Daily goal</span>
         <div class="seg2" role="group" aria-label="Daily time goal">
-          <sc-for list="{{minOpts}}" as="o" hint-placeholder-count="4"><button class="{{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
+          <sc-for list="{{minOpts}}" as="o" hint-placeholder-count="4"><button class="{{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
         </div>
       </div>
     </section>
@@ -380,7 +380,7 @@
         </sc-for>
       </div>
       <sc-if value="{{hasExamCard}}" hint-placeholder-val="{{ true }}">
-      <button class="btn big" style="margin-top:18px" onClick="{{goExam}}">
+      <button class="btn big" style="margin-top:18px" data-on-click="{{goExam}}">
         <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>
         {{examBtnText}}
       </button>
@@ -394,14 +394,14 @@
         <p class="muted" style="margin:4px 0 0;font-size:16px">{{ascSub}}</p>
       </div>
       <div class="seg2" role="group" aria-label="How to show your path">
-        <button class="{{ascTrailCls}}" onClick="{{setAscTrail}}">Trail</button>
-        <button class="{{ascStairsCls}}" onClick="{{setAscStairs}}">Stairs</button>
+        <button class="{{ascTrailCls}}" data-on-click="{{setAscTrail}}">Trail</button>
+        <button class="{{ascStairsCls}}" data-on-click="{{setAscStairs}}">Stairs</button>
       </div>
     </div>
     <sc-if value="{{ascHasSys}}" hint-placeholder-val="{{ true }}">
       <div class="asc-sys"><div class="seg2" role="group" aria-label="HSK version">
-        <button class="{{sys2Cls}}" onClick="{{setSys2}}">HSK 2.0 · 6 levels</button>
-        <button class="{{sys3Cls}}" onClick="{{setSys3}}">HSK 3.0 · 9 levels</button>
+        <button class="{{sys2Cls}}" data-on-click="{{setSys2}}">HSK 2.0 · 6 levels</button>
+        <button class="{{sys3Cls}}" data-on-click="{{setSys3}}">HSK 3.0 · 9 levels</button>
       </div></div>
     </sc-if>
 
@@ -409,7 +409,7 @@
       <div class="trail">
         <div class="trail-d">
           <img class="trail-img" src="{{trailD.src}}" alt="{{trailD.alt}}" width="1124" height="380">
-          <button class="btn pri big trail-go" onClick="{{trailCta}}">{{trailCtaText}}</button>
+          <button class="btn pri big trail-go" data-on-click="{{trailCta}}">{{trailCtaText}}</button>
           <sc-for list="{{trailD.labels}}" as="l" hint-placeholder-count="4">
             <div class="apill {{l.kind}} {{l.cls}}" style="left: {{l.left}}; top: {{l.top}}"><b>{{l.text}}</b><sc-if value="{{l.hasSub}}" hint-placeholder-val="{{ true }}"><span>{{l.sub}}</span></sc-if></div>
           </sc-for>
@@ -436,7 +436,7 @@
           <div class="astat-s">{{fireSub}}</div>
         </div>
       </div>
-      <button class="btn pri big trail-cta" onClick="{{trailCta}}">{{trailCtaText}}</button>
+      <button class="btn pri big trail-cta" data-on-click="{{trailCta}}">{{trailCtaText}}</button>
       <p class="asc-note">{{trailNote}}</p>
     </sc-if>
 
@@ -463,7 +463,7 @@
     </sc-if>
   </section>
   <sc-if value="{{frHomeShow}}" hint-placeholder-val="{{ false }}">
-  <button type="button" class="card frhome" onClick="{{goFriendsHome}}">
+  <button type="button" class="card frhome" data-on-click="{{goFriendsHome}}">
     <div class="today-top"><h2 class="h2">Study group</h2><span class="muted">{{frHomeText}}</span></div>
     <div class="fravs"><sc-for list="{{frAvatars}}" as="a" hint-placeholder-count="5"><span class="{{a.cls}}" title="{{a.name}}">{{a.initial}}</span></sc-for></div>
   </button>
@@ -522,19 +522,19 @@
             </div>
           </div>
         </div>
-        <button class="fc-hit" onClick="{{flip}}" aria-label="{{flipLabel}}"></button>
+        <button class="fc-hit" data-on-click="{{flip}}" aria-label="{{flipLabel}}"></button>
       </div>
 
       <div class="acts">
         <sc-if value="{{rflip}}" hint-placeholder-val="{{ false }}">
-        <button class="btn {{playWordCls}}" onClick="{{playWord}}">
+        <button class="btn {{playWordCls}}" data-on-click="{{playWord}}">
           <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
           Hear the word
         </button>
         </sc-if>
-        <sc-if value="{{showAnswerBtn}}" hint-placeholder-val="{{ true }}"><button class="btn" onClick="{{toggleRpy}}">{{pyBtnText}}</button></sc-if>
+        <sc-if value="{{showAnswerBtn}}" hint-placeholder-val="{{ true }}"><button class="btn" data-on-click="{{toggleRpy}}">{{pyBtnText}}</button></sc-if>
         <sc-if value="{{rflip}}" hint-placeholder-val="{{ false }}">
-          <button class="btn {{playExCls}}" onClick="{{playEx}}">
+          <button class="btn {{playExCls}}" data-on-click="{{playEx}}">
             <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
             Hear the sentence
           </button>
@@ -543,19 +543,19 @@
 
       <sc-if value="{{showAnswerBtn}}" hint-placeholder-val="{{ true }}">
         <div class="quick">
-          <button class="rate again" onClick="{{quickNo.fn}}"><b>Didn't know it</b><span>{{quickNo.hint}}</span></button>
-          <button class="rate" onClick="{{quickYes.fn}}"><b>Knew it</b><span>{{quickYes.hint}}</span></button>
+          <button class="rate again" data-on-click="{{quickNo.fn}}"><b>Didn't know it</b><span>{{quickNo.hint}}</span></button>
+          <button class="rate" data-on-click="{{quickYes.fn}}"><b>Knew it</b><span>{{quickYes.hint}}</span></button>
         </div>
-        <button class="btn pri big" style="align-self:center" onClick="{{flip}}">Show answer</button>
+        <button class="btn pri big" style="align-self:center" data-on-click="{{flip}}">Show answer</button>
       </sc-if>
       <sc-if value="{{rIsIntro}}" hint-placeholder-val="{{ false }}">
         <p class="muted" style="margin:0;text-align:center">A new word. Look at it and say it out loud. A few cards from now you will be asked for it.</p>
-        <button class="btn pri big" style="align-self:center" onClick="{{rIntroDone}}">Got it, ask me soon</button>
+        <button class="btn pri big" style="align-self:center" data-on-click="{{rIntroDone}}">Got it, ask me soon</button>
       </sc-if>
       <sc-if value="{{rIsPlain}}" hint-placeholder-val="{{ true }}"><sc-if value="{{rflip}}" hint-placeholder-val="{{ false }}">
         <div class="rates">
           <sc-for list="{{rates}}" as="r" hint-placeholder-count="4">
-            <button class="rate {{r.cls}}" onClick="{{r.fn}}"><b>{{r.label}}</b><span>{{r.hint}}</span></button>
+            <button class="rate {{r.cls}}" data-on-click="{{r.fn}}"><b>{{r.label}}</b><span>{{r.hint}}</span></button>
           </sc-for>
         </div>
       </sc-if></sc-if>
@@ -567,23 +567,23 @@
           <h2 class="q-prompt">{{q.prompt}}</h2>
           <sc-if value="{{q.hasBig}}" hint-placeholder-val="{{ true }}"><sc-if value="{{q.bigZh}}" hint-placeholder-val="{{ true }}"><div class="zh q-big {{q.bigCls}}">{{q.big}}</div></sc-if><sc-if value="{{q.bigEn}}" hint-placeholder-val="{{ false }}"><div class="q-big q-en">{{q.big}}</div></sc-if></sc-if>
           <sc-if value="{{q.isTyped}}" hint-placeholder-val="{{ true }}">
-            <input id="answer-input" class="inp {{inpCls}}" type="text" value="{{qtyped}}" placeholder="{{q.placeholder}}" autocomplete="off" autocapitalize="off" aria-label="Your answer" onInput="{{onType}}" onKeyDown="{{onEnter}}">
+            <input id="answer-input" class="inp {{inpCls}}" type="text" value="{{qtyped}}" placeholder="{{q.placeholder}}" autocomplete="off" autocapitalize="off" aria-label="Your answer" data-on-input="{{onType}}" data-on-keydown="{{onEnter}}">
           </sc-if>
           <sc-if value="{{q.isListen}}" hint-placeholder-val="{{ false }}">
-            <button class="listen {{listenCls}}" onClick="{{playQ}}" aria-label="Play the word">
+            <button class="listen {{listenCls}}" data-on-click="{{playQ}}" aria-label="Play the word">
               <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
             </button>
           </sc-if>
           <sc-if value="{{q.isChoice}}" hint-placeholder-val="{{ false }}">
             <div class="opts {{optsCls}}">
               <sc-for list="{{opts}}" as="o" hint-placeholder-count="4">
-                <button class="opt {{o.cls}}" onClick="{{o.pick}}"><span class="{{o.lcls}}">{{o.label}}</span></button>
+                <button class="opt {{o.cls}}" data-on-click="{{o.pick}}"><span class="{{o.lcls}}">{{o.label}}</span></button>
               </sc-for>
             </div>
           </sc-if>
         </div>
         <sc-if value="{{showCheck}}" hint-placeholder-val="{{ true }}">
-          <button class="btn pri big {{checkCls}}" style="align-self:flex-end" aria-disabled="{{checkAria}}" onClick="{{check}}">Check</button>
+          <button class="btn pri big {{checkCls}}" style="align-self:flex-end" aria-disabled="{{checkAria}}" data-on-click="{{check}}">Check</button>
         </sc-if>
         <sc-if value="{{qchecked}}" hint-placeholder-val="{{ false }}">
           <div class="fb {{fbCls}}">
@@ -594,7 +594,7 @@
               <div class="fb-x">{{q.explain}}</div>
               <a class="report" href="{{q.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
             </div>
-            <button class="btn ink big" onClick="{{next}}">Continue</button>
+            <button class="btn ink big" data-on-click="{{next}}">Continue</button>
           </div>
         </sc-if>
       </sc-if>
@@ -605,7 +605,7 @@
         <div class="stamp zh" aria-hidden="true">词</div>
         <h2 class="res-h">New words are waiting</h2>
         <p class="res-p">{{newWaitingText}}</p>
-        <div class="res-act"><button class="btn pri big" onClick="{{reviewMore}}">{{newWaitingBtn}}</button></div>
+        <div class="res-act"><button class="btn pri big" data-on-click="{{reviewMore}}">{{newWaitingBtn}}</button></div>
       </div>
     </sc-if>
     <sc-if value="{{emptyNew}}" hint-placeholder-val="{{ false }}">
@@ -613,7 +613,7 @@
         <div class="stamp zh" aria-hidden="true">词</div>
         <h2 class="res-h">Nothing to review yet</h2>
         <p class="res-p">Reviews start once you have learned some words. Meet your first words in Word webs.</p>
-        <div class="res-act"><button class="btn pri big" onClick="{{goWeb}}">Go to Word webs</button></div>
+        <div class="res-act"><button class="btn pri big" data-on-click="{{goWeb}}">Go to Word webs</button></div>
       </div>
     </sc-if>
     <sc-if value="{{moreDue}}" hint-placeholder-val="{{ false }}">
@@ -621,7 +621,7 @@
         <div class="stamp zh" aria-hidden="true">词</div>
         <h2 class="res-h">More words are due</h2>
         <p class="res-p">{{dueLeftText}} Reviewing them now keeps them from fading.</p>
-        <div class="res-act"><button class="btn pri big" onClick="{{reviewMore}}">{{moreDueText}}</button></div>
+        <div class="res-act"><button class="btn pri big" data-on-click="{{reviewMore}}">{{moreDueText}}</button></div>
       </div>
     </sc-if>
     <sc-if value="{{caughtUp}}" hint-placeholder-val="{{ false }}">
@@ -630,8 +630,8 @@
         <h2 class="res-h">You are all caught up</h2>
         <p class="res-p">{{nextDueText}} Reviews are scheduled for just before you would forget a word, so there is nothing more due right now.</p>
         <div class="res-act">
-          <button class="btn pri big" onClick="{{goWeb}}">Learn new words</button>
-          <button class="btn big" onClick="{{practiceAnyway}}">Practice all my words anyway</button>
+          <button class="btn pri big" data-on-click="{{goWeb}}">Learn new words</button>
+          <button class="btn big" data-on-click="{{practiceAnyway}}">Practice all my words anyway</button>
         </div>
       </div>
     </sc-if>
@@ -649,10 +649,10 @@
         </div>
         <span class="res-gain">{{memText}} ({{memToday}})</span>
         <div class="res-act">
-          <sc-if value="{{hasLrnMore}}" hint-placeholder-val="{{ false }}"><button class="btn pri big" onClick="{{reviewMore}}">{{lrnMoreText}}</button></sc-if>
-          <sc-if value="{{hasMoreDue}}" hint-placeholder-val="{{ false }}"><button class="btn pri big" onClick="{{reviewMore}}">{{moreDueText}}</button></sc-if>
-          <button class="btn big" onClick="{{goTest}}">Test these words</button>
-          <button class="btn big" onClick="{{goHome}}">Back to home</button>
+          <sc-if value="{{hasLrnMore}}" hint-placeholder-val="{{ false }}"><button class="btn pri big" data-on-click="{{reviewMore}}">{{lrnMoreText}}</button></sc-if>
+          <sc-if value="{{hasMoreDue}}" hint-placeholder-val="{{ false }}"><button class="btn pri big" data-on-click="{{reviewMore}}">{{moreDueText}}</button></sc-if>
+          <button class="btn big" data-on-click="{{goTest}}">Test these words</button>
+          <button class="btn big" data-on-click="{{goHome}}">Back to home</button>
         </div>
       </div>
     </sc-if>
@@ -671,13 +671,13 @@
       </div>
       <sc-if value="{{testReady}}" hint-placeholder-val="{{ true }}">
         <div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-          <button class="btn pri big" onClick="{{startTest}}">Start the test</button>
+          <button class="btn pri big" data-on-click="{{startTest}}">Start the test</button>
           <span class="muted">{{testInfo}}</span>
         </div>
       </sc-if>
       <sc-if value="{{testBlocked}}" hint-placeholder-val="{{ false }}">
         <div class="banner" style="margin-top:22px">The test is built from words you have started, so it can ask fair questions. Add at least three words in Word webs first, then come back.</div>
-        <button class="btn pri" style="margin-top:14px" onClick="{{goWeb}}">Go to Word webs</button>
+        <button class="btn pri" style="margin-top:14px" data-on-click="{{goWeb}}">Go to Word webs</button>
       </sc-if>
     </section>
     <section class="card">
@@ -698,15 +698,15 @@
   <!-- GRAMMAR -->
   <sc-if value="{{isGrammar}}" hint-placeholder-val="{{ false }}">
   <div class="gram">
-    <button type="button" class="gpick" onClick="{{toggleGramPick}}" aria-expanded="{{gramPickOpen}}"><span>{{lesson.pickLabel}}</span><span aria-hidden="true">▾</span></button>
+    <button type="button" class="gpick" data-on-click="{{toggleGramPick}}" aria-expanded="{{gramPickOpen}}"><span>{{lesson.pickLabel}}</span><span aria-hidden="true">▾</span></button>
     <div class="gl {{gramListCls}}">
-      <input class="inp wsearch tr-search" type="search" value="{{gq}}" placeholder="Find a lesson" autocomplete="off" aria-label="Find a lesson" onInput="{{onGramSearch}}">
+      <input class="inp wsearch tr-search" type="search" value="{{gq}}" placeholder="Find a lesson" autocomplete="off" aria-label="Find a lesson" data-on-input="{{onGramSearch}}">
       <sc-for list="{{lessonGroups}}" as="g" hint-placeholder-count="4">
-        <button type="button" class="gg {{g.cls}}" aria-expanded="{{g.expanded}}" onClick="{{g.toggle}}"><span class="tr-chev" aria-hidden="true">{{g.chev}}</span><span class="tr-gname">{{g.label}}</span><span class="gg-n">{{g.progress}}</span></button>
+        <button type="button" class="gg {{g.cls}}" aria-expanded="{{g.expanded}}" data-on-click="{{g.toggle}}"><span class="tr-chev" aria-hidden="true">{{g.chev}}</span><span class="tr-gname">{{g.label}}</span><span class="gg-n">{{g.progress}}</span></button>
         <sc-if value="{{g.open}}" hint-placeholder-val="{{ false }}">
           <div class="gg-items">
             <sc-for list="{{g.items}}" as="p" hint-placeholder-count="3">
-              <button type="button" class="gp {{p.cls}}" onClick="{{p.fn}}"><span class="gn">{{p.n}}</span><span class="gt">{{p.title}}</span><sc-if value="{{p.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{p.lvCls}}">{{p.lvTag}}</span></sc-if><span class="soon">{{p.tag}}</span></button>
+              <button type="button" class="gp {{p.cls}}" data-on-click="{{p.fn}}"><span class="gn">{{p.n}}</span><span class="gt">{{p.title}}</span><sc-if value="{{p.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{p.lvCls}}">{{p.lvTag}}</span></sc-if><span class="soon">{{p.tag}}</span></button>
             </sc-for>
           </div>
         </sc-if>
@@ -719,7 +719,7 @@
           <div class="kick">{{lesson.kick}} <sc-if value="{{lesson.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{lesson.lvCls}}" style="vertical-align:middle;margin-left:6px">{{lesson.lvTag}}</span></sc-if></div>
           <h2 class="h2" style="font-size:30px;margin:6px 0 0">{{lesson.title}}</h2>
         </div>
-        <div class="les-act"><button class="btn pri big" onClick="{{startGrammar}}">Practise this lesson</button><span class="muted">{{lesson.count}} · {{lesson.best}}</span></div>
+        <div class="les-act"><button class="btn pri big" data-on-click="{{startGrammar}}">Practise this lesson</button><span class="muted">{{lesson.count}} · {{lesson.best}}</span></div>
       </div>
       <div class="formula">
         <sc-for list="{{lesson.formula}}" as="f" hint-placeholder-count="3"><sc-if value="{{f.hasSep}}" hint-placeholder-val="{{ true }}"><span>{{f.sep}}</span></sc-if><span class="fchip {{f.cls}}">{{f.t}}</span></sc-for>
@@ -735,7 +735,7 @@
         <sc-for list="{{lesson.examples}}" as="e" hint-placeholder-count="3">
           <div class="ex2">
             <div class="ex-m"><div class="zh">{{e.zh}}</div><div class="py">{{e.py}}</div><div class="muted">{{e.en}}</div><a class="report" href="{{e.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a></div>
-            <button class="spk {{e.pc}}" aria-label="Hear this sentence" onClick="{{e.play}}">
+            <button class="spk {{e.pc}}" aria-label="Hear this sentence" data-on-click="{{e.play}}">
               <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
             </button>
           </div>
@@ -751,9 +751,9 @@
       </sc-if>
       <div class="muted" style="font-size:14.5px">{{lesson.covers}}. Written and checked by AI, not yet reviewed by a teacher. <a class="report" href="{{lesson.reportUrl}}" target="_blank" rel="noopener">Report a mistake in this lesson</a></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <sc-if value="{{lesson.hasPrev}}" hint-placeholder-val="{{ true }}"><button class="btn" onClick="{{lesson.prev}}">Previous lesson</button></sc-if>
-        <sc-if value="{{lesson.hasNext}}" hint-placeholder-val="{{ true }}"><button class="btn" onClick="{{lesson.next}}">Next lesson</button></sc-if>
-        <button class="btn pri" onClick="{{startGrammar}}">Practise this lesson</button>
+        <sc-if value="{{lesson.hasPrev}}" hint-placeholder-val="{{ true }}"><button class="btn" data-on-click="{{lesson.prev}}">Previous lesson</button></sc-if>
+        <sc-if value="{{lesson.hasNext}}" hint-placeholder-val="{{ true }}"><button class="btn" data-on-click="{{lesson.next}}">Next lesson</button></sc-if>
+        <button class="btn pri" data-on-click="{{startGrammar}}">Practise this lesson</button>
       </div>
     </div>
   </div>
@@ -763,8 +763,8 @@
   <sc-if value="{{isSpeak}}" hint-placeholder-val="{{ false }}">
   <sc-if value="{{hasModeSwitch}}" hint-placeholder-val="{{ true }}">
   <div class="seg2 modeseg" role="group" aria-label="Practice mode">
-    <button class="{{scriptCls}}" onClick="{{setScript}}">Practice script</button>
-    <button class="{{aiCls}}" onClick="{{setAi}}">Talk with AI</button>
+    <button class="{{scriptCls}}" data-on-click="{{setScript}}">Practice script</button>
+    <button class="{{aiCls}}" data-on-click="{{setAi}}">Talk with AI</button>
   </div>
   </sc-if>
   <sc-if value="{{scriptMode}}" hint-placeholder-val="{{ true }}">
@@ -775,9 +775,9 @@
         <div class="av zh" aria-hidden="true">明</div>
         <div class="chat-t"><b>Mingming</b><span>{{chatTitle}} · {{chatVocab}}</span></div>
         <div class="seg2" role="group" aria-label="Show on screen">
-          <button class="{{zhCls}}" onClick="{{toggleZh}}">Characters</button>
-          <button class="{{pyCls}}" onClick="{{togglePy}}">Pinyin</button>
-          <button class="{{enCls}}" onClick="{{toggleEn}}">English</button>
+          <button class="{{zhCls}}" data-on-click="{{toggleZh}}">Characters</button>
+          <button class="{{pyCls}}" data-on-click="{{togglePy}}">Pinyin</button>
+          <button class="{{enCls}}" data-on-click="{{toggleEn}}">English</button>
         </div>
       </div>
 
@@ -792,7 +792,7 @@
                 <sc-if value="{{m.showEn}}" hint-placeholder-val="{{ true }}"><div class="en">{{m.en}}</div></sc-if>
               </div>
               <sc-if value="{{m.isAi}}" hint-placeholder-val="{{ true }}">
-                <button class="spk {{m.pc}}" aria-label="Hear this line" onClick="{{m.play}}">
+                <button class="spk {{m.pc}}" aria-label="Hear this line" data-on-click="{{m.play}}">
                   <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
                 </button>
               </sc-if>
@@ -816,21 +816,21 @@
               <div class="kick">Try saying</div>
               <div class="zh">{{target.zh}}</div>
               <div class="py">{{target.py}}</div>
-              <button class="btn" style="min-height:38px;padding:0 14px;margin-top:8px;font-size:14px" onClick="{{toggleHint}}">Hide hint</button>
+              <button class="btn" style="min-height:38px;padding:0 14px;margin-top:8px;font-size:14px" data-on-click="{{toggleHint}}">Hide hint</button>
             </sc-if>
             <sc-if value="{{noHint}}" hint-placeholder-val="{{ false }}">
               <div class="kick">Your turn</div>
               <div class="muted" style="margin:4px 0 8px">Answer in your own words.</div>
-              <button class="btn" style="min-height:38px;padding:0 14px;font-size:14px" onClick="{{toggleHint}}">Show hint</button>
+              <button class="btn" style="min-height:38px;padding:0 14px;font-size:14px" data-on-click="{{toggleHint}}">Show hint</button>
             </sc-if>
           </div>
           <div class="micwrap">
-            <button class="btn pri big" onClick="{{sayIt}}">I said it</button>
+            <button class="btn pri big" data-on-click="{{sayIt}}">I said it</button>
           </div>
         </sc-if>
         <sc-if value="{{sdone}}" hint-placeholder-val="{{ false }}">
           <div class="hint"><b>Conversation complete</b><div class="muted">Try it again with the hint hidden.</div></div>
-          <button class="btn pri" onClick="{{resetSpeak}}">
+          <button class="btn pri" data-on-click="{{resetSpeak}}">
             <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg>
             Practice again
           </button>
@@ -853,7 +853,7 @@
         <h2 class="h2">Useful words</h2>
         <div class="wchips">
           <sc-for list="{{wchips}}" as="w" hint-placeholder-count="6">
-            <button class="wchip" onClick="{{w.play}}" aria-label="Hear {{w.py}}"><span class="zh" style="font-size:24px;color:inherit">{{w.zh}}</span><span>{{w.py}}</span></button>
+            <button class="wchip" data-on-click="{{w.play}}" aria-label="Hear {{w.py}}"><span class="zh" style="font-size:24px;color:inherit">{{w.zh}}</span><span>{{w.py}}</span></button>
           </sc-for>
         </div>
       </section>
@@ -861,7 +861,7 @@
         <h2 class="h2">{{lvName}} scenarios</h2>
         <div style="margin-top:8px">
           <sc-for list="{{scenarios}}" as="s" hint-placeholder-count="4">
-            <button type="button" class="scn {{s.cls}}" onClick="{{s.fn}}">
+            <button type="button" class="scn {{s.cls}}" data-on-click="{{s.fn}}">
               <div class="scn-g zh" aria-hidden="true">{{s.glyph}}</div>
               <div class="scn-m">{{s.title}}<span>{{s.sub}}</span></div>
               <span class="scn-s">{{s.state}}</span>
@@ -879,7 +879,7 @@
     <section class="card" style="grid-column:1/-1">
       <h2 class="h2">Talk with Mingming</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">Mingming is an AI that plays the other person in a conversation, answers you in simple Chinese and tells you when something you said was not natural. It needs an API key from Anthropic (Claude) or Alibaba (Qwen), which you add once in Settings. The key stays on this device.</p>
-      <button class="btn pri" style="margin-top:16px" onClick="{{goVoice}}">Open Settings</button>
+      <button class="btn pri" style="margin-top:16px" data-on-click="{{goVoice}}">Open Settings</button>
     </section>
     </sc-if>
     <sc-if value="{{aiReady}}" hint-placeholder-val="{{ false }}">
@@ -888,9 +888,9 @@
         <div class="av zh" aria-hidden="true">明</div>
         <div class="chat-t"><b>Mingming</b><span>AI conversation · {{aiToday}}</span></div>
         <sc-if value="{{aiNotVo}}" hint-placeholder-val="{{ true }}"><div class="seg2" role="group" aria-label="Show on screen">
-          <button class="{{zhCls}}" onClick="{{toggleZh}}">Characters</button>
-          <button class="{{pyCls}}" onClick="{{togglePy}}">Pinyin</button>
-          <button class="{{enCls}}" onClick="{{toggleEn}}">English</button>
+          <button class="{{zhCls}}" data-on-click="{{toggleZh}}">Characters</button>
+          <button class="{{pyCls}}" data-on-click="{{togglePy}}">Pinyin</button>
+          <button class="{{enCls}}" data-on-click="{{toggleEn}}">English</button>
         </div></sc-if>
       </div>
       <div class="msgs">
@@ -904,10 +904,10 @@
                 <sc-if value="{{m.showEn}}" hint-placeholder-val="{{ true }}"><div class="en">{{m.en}}</div></sc-if>
               </div>
               <sc-if value="{{m.isAi}}" hint-placeholder-val="{{ true }}">
-                <button class="spk {{m.pc}}" aria-label="Hear this line" onClick="{{m.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+                <button class="spk {{m.pc}}" aria-label="Hear this line" data-on-click="{{m.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
               </sc-if>
             </div>
-            <sc-if value="{{m.canReveal}}" hint-placeholder-val="{{ false }}"><div class="note"><button class="linkbtn" onClick="{{m.reveal}}">Show text</button><sc-if value="{{m.canSlow}}" hint-placeholder-val="{{ false }}"> · <button class="linkbtn" onClick="{{m.slower}}">Hear it slower</button></sc-if></div></sc-if>
+            <sc-if value="{{m.canReveal}}" hint-placeholder-val="{{ false }}"><div class="note"><button class="linkbtn" data-on-click="{{m.reveal}}">Show text</button><sc-if value="{{m.canSlow}}" hint-placeholder-val="{{ false }}"> · <button class="linkbtn" data-on-click="{{m.slower}}">Hear it slower</button></sc-if></div></sc-if>
             <sc-if value="{{m.hasMem}}" hint-placeholder-val="{{ false }}"><div class="note good">Mingming will remember: {{m.memText}}</div></sc-if>
             <sc-if value="{{m.hasOutside}}" hint-placeholder-val="{{ false }}"><div class="note">{{m.outsideText}}</div></sc-if>
             <sc-if value="{{m.hasPv}}" hint-placeholder-val="{{ false }}"><div class="note pv">{{m.pvText}}</div></sc-if>
@@ -921,29 +921,29 @@
       </div>
       <sc-if value="{{hasAiErr}}" hint-placeholder-val="{{ false }}"><div class="banner bad" role="alert" style="margin:0 16px 12px">{{aiErr}}</div></sc-if>
       <div class="dock ai-dock">
-        <sc-if value="{{sugClosed}}" hint-placeholder-val="{{ true }}"><div class="sugbox"><button class="btn" onClick="{{sugShow}}">Suggest a reply</button><span class="muted">Try it yourself first, then peek. Then say it and press Send to be checked.</span></div></sc-if>
+        <sc-if value="{{sugClosed}}" hint-placeholder-val="{{ true }}"><div class="sugbox"><button class="btn" data-on-click="{{sugShow}}">Suggest a reply</button><span class="muted">Try it yourself first, then peek. Then say it and press Send to be checked.</span></div></sc-if>
         <sc-if value="{{sugOpen}}" hint-placeholder-val="{{ false }}">
           <div class="sugbox open">
             <div class="sug-h">Suggested reply</div>
             <div class="sug-row">
               <div><div class="zh">{{sugZh}}</div><div class="py">{{sugPy}}</div><div class="en">{{sugEn}}</div></div>
-              <button class="spk {{sugPc}}" aria-label="Hear the suggested reply" onClick="{{sugPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+              <button class="spk {{sugPc}}" aria-label="Hear the suggested reply" data-on-click="{{sugPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
             </div>
-            <div class="sug-t"><sc-if value="{{aiNotVo}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" onClick="{{sugUse}}">Put it in the box</button></sc-if><span class="muted">Better: tap Speak and say it. The microphone hears characters, not tones directly, so this is a check, not a pronunciation score.</span></div>
+            <div class="sug-t"><sc-if value="{{aiNotVo}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" data-on-click="{{sugUse}}">Put it in the box</button></sc-if><span class="muted">Better: tap Speak and say it. The microphone hears characters, not tones directly, so this is a check, not a pronunciation score.</span></div>
           </div>
         </sc-if>
         <sc-if value="{{aiNotVo}}" hint-placeholder-val="{{ true }}"><div class="ai-in">
-          <input class="wsearch" style="margin:0;max-width:none" type="text" lang="zh" autocomplete="off" placeholder="Type Chinese, or tap Speak" value="{{aiInput}}" onInput="{{onAiInput}}" onKeyDown="{{onAiKey}}" aria-label="Your reply">
-          <button class="btn pri" onClick="{{aiSend}}">Send</button>
+          <input class="wsearch" style="margin:0;max-width:none" type="text" lang="zh" autocomplete="off" placeholder="Type Chinese, or tap Speak" value="{{aiInput}}" data-on-input="{{onAiInput}}" data-on-keydown="{{onAiKey}}" aria-label="Your reply">
+          <button class="btn pri" data-on-click="{{aiSend}}">Send</button>
         </div></sc-if>
-        <sc-if value="{{hasAlts}}" hint-placeholder-val="{{ false }}"><div class="alts"><span class="muted">Heard it differently? Tap what you said:</span><sc-for list="{{altList}}" as="a" hint-placeholder-count="2"><button type="button" class="chip" onClick="{{a.fn}}"><span class="zh">{{a.t}}</span></button></sc-for></div></sc-if>
+        <sc-if value="{{hasAlts}}" hint-placeholder-val="{{ false }}"><div class="alts"><span class="muted">Heard it differently? Tap what you said:</span><sc-for list="{{altList}}" as="a" hint-placeholder-count="2"><button type="button" class="chip" data-on-click="{{a.fn}}"><span class="zh">{{a.t}}</span></button></sc-for></div></sc-if>
         <div class="ai-tools">
-          <sc-if value="{{aiHasMic}}" hint-placeholder-val="{{ true }}"><button class="btn {{aiMicCls}}" onClick="{{aiMic}}">{{aiMicLabel}}</button></sc-if>
-          <button class="linkbtn" onClick="{{aiSimpler}}">Say it slower or again</button>
-          <sc-if value="{{aiCanVo}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" onClick="{{aiVoToggle}}">{{aiVoToggleLabel}}</button></sc-if>
-          <sc-if value="{{aiVo}}" hint-placeholder-val="{{ false }}"><button class="linkbtn" onClick="{{aiHfToggle}}">{{aiHfLabel}}</button></sc-if>
+          <sc-if value="{{aiHasMic}}" hint-placeholder-val="{{ true }}"><button class="btn {{aiMicCls}}" data-on-click="{{aiMic}}">{{aiMicLabel}}</button></sc-if>
+          <button class="linkbtn" data-on-click="{{aiSimpler}}">Say it slower or again</button>
+          <sc-if value="{{aiCanVo}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" data-on-click="{{aiVoToggle}}">{{aiVoToggleLabel}}</button></sc-if>
+          <sc-if value="{{aiVo}}" hint-placeholder-val="{{ false }}"><button class="linkbtn" data-on-click="{{aiHfToggle}}">{{aiHfLabel}}</button></sc-if>
         </div>
-        <div class="ai-lsn"><span class="muted">{{lsnLine}}</span><button class="linkbtn" onClick="{{lsnEasier}}">Easier</button><button class="linkbtn" onClick="{{lsnHarder}}">Harder</button><button class="linkbtn" onClick="{{lsnAutoToggle}}">{{lsnAutoLabel}}</button></div>
+        <div class="ai-lsn"><span class="muted">{{lsnLine}}</span><button class="linkbtn" data-on-click="{{lsnEasier}}">Easier</button><button class="linkbtn" data-on-click="{{lsnHarder}}">Harder</button><button class="linkbtn" data-on-click="{{lsnAutoToggle}}">{{lsnAutoLabel}}</button></div>
         <sc-if value="{{hasLsnNote}}" hint-placeholder-val="{{ false }}"><div class="note good" role="status">{{lsnNote}}</div></sc-if>
         <sc-if value="{{aiNoMic}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0;font-size:14.5px">This browser has no speech input for websites. On an iPhone, tap the microphone key on your keyboard to dictate Chinese into the box (add the Chinese keyboard first), or try the site in Safari.</p></sc-if>
         <sc-if value="{{aiVo}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0;font-size:14.5px">Voice only: tap Speak and talk at a normal pace. When you stop, what the microphone heard is sent by itself and Mingming answers out loud. Tap Show text under a line if you need to read it. Corrections appear under your own line. Pinyin comes from this site's own word list. The AI can make mistakes too.</p></sc-if>
@@ -955,7 +955,7 @@
         <h2 class="h2">Pick a situation</h2>
         <div style="margin-top:8px">
           <sc-for list="{{aiScnList}}" as="s" hint-placeholder-count="4">
-            <button type="button" class="scn {{s.cls}}" onClick="{{s.fn}}"><div class="scn-m">{{s.title}}<span>{{s.sub}}</span></div></button>
+            <button type="button" class="scn {{s.cls}}" data-on-click="{{s.fn}}"><div class="scn-m">{{s.title}}<span>{{s.sub}}</span></div></button>
           </sc-for>
         </div>
       </section>
@@ -968,18 +968,18 @@
   <!-- WORD WEBS -->
   <sc-if value="{{isWeb}}" hint-placeholder-val="{{ false }}">
   <div class="web">
-    <sc-if value="{{lrnBanner}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status" style="margin-bottom:10px">{{lrnBannerText}} <button class="linkbtn" onClick="{{goLearn}}">Learn them now</button></div></sc-if>
+    <sc-if value="{{lrnBanner}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status" style="margin-bottom:10px">{{lrnBannerText}} <button class="linkbtn" data-on-click="{{goLearn}}">Learn them now</button></div></sc-if>
     <div class="web-bar">
       <div class="seg2" role="group" aria-label="Word web type">
-        <button class="{{wTopicCls}}" onClick="{{setWTopic}}">Topics</button>
-        <button class="{{wCharCls}}" onClick="{{setWChar}}">Shared character</button>
-        <button class="{{wOppCls}}" onClick="{{setWOpp}}">Word pairs</button>
+        <button class="{{wTopicCls}}" data-on-click="{{setWTopic}}">Topics</button>
+        <button class="{{wCharCls}}" data-on-click="{{setWChar}}">Shared character</button>
+        <button class="{{wOppCls}}" data-on-click="{{setWOpp}}">Word pairs</button>
       </div>
-      <button type="button" class="chip familiar capbtn" onClick="{{toggleCapOpen}}">{{webCountText}} <span aria-hidden="true">▾</span></button>
+      <button type="button" class="chip familiar capbtn" data-on-click="{{toggleCapOpen}}">{{webCountText}} <span aria-hidden="true">▾</span></button>
     </div>
     <sc-if value="{{webCapOpen}}" hint-placeholder-val="{{ false }}">
     <div class="pickrow" role="group" aria-label="New words per day"><span class="muted">New words per day</span>
-      <sc-for list="{{capOpts}}" as="c" hint-placeholder-count="4"><button class="fc2 {{c.cls}}" onClick="{{c.fn}}">{{c.label}}</button></sc-for>
+      <sc-for list="{{capOpts}}" as="c" hint-placeholder-count="4"><button class="fc2 {{c.cls}}" data-on-click="{{c.fn}}">{{c.label}}</button></sc-for>
     </div>
     </sc-if>
     <p class="muted web-intro" style="margin:0;max-width:66ch">New words appear next to words you already know. Try to recall a word before you reveal it, even if you guess wrong.</p>
@@ -993,12 +993,12 @@
           <div class="hub-py">{{hubPy}}</div>
           <div class="muted" style="margin-bottom:6px">{{hubEn}}</div>
           <div class="pickrow" role="group" aria-label="Pick a character">
-            <sc-for list="{{hubOpts}}" as="h" hint-placeholder-count="3"><button class="zh fc2 {{h.cls}}" style="font-size:20px" onClick="{{h.fn}}">{{h.zh}}</button></sc-for>
+            <sc-for list="{{hubOpts}}" as="h" hint-placeholder-count="3"><button class="zh fc2 {{h.cls}}" style="font-size:20px" data-on-click="{{h.fn}}">{{h.zh}}</button></sc-for>
           </div>
-          <sc-if value="{{hubHasNew}}" hint-placeholder-val="{{ true }}"><button class="btn" style="min-height:40px;padding:0 16px;font-size:15px;align-self:flex-start" onClick="{{hubAddAll}}">{{hubAddAllText}}</button></sc-if>
+          <sc-if value="{{hubHasNew}}" hint-placeholder-val="{{ true }}"><button class="btn" style="min-height:40px;padding:0 16px;font-size:15px;align-self:flex-start" data-on-click="{{hubAddAll}}">{{hubAddAllText}}</button></sc-if>
           <div class="seg2" role="group" aria-label="Meanings">
-            <button class="{{quizOffCls}}" onClick="{{setQuizOff}}">Meanings</button>
-            <button class="{{quizOnCls}}" onClick="{{setQuizOn}}">Quiz me</button>
+            <button class="{{quizOffCls}}" data-on-click="{{setQuizOff}}">Meanings</button>
+            <button class="{{quizOnCls}}" data-on-click="{{setQuizOn}}">Quiz me</button>
           </div>
         </section>
         <div class="wgrid">
@@ -1007,7 +1007,7 @@
               <div class="wc-top">
                 <span class="chip {{w.chipCls}}">{{w.status}}</span>
                 <sc-if value="{{w.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{w.lvCls}}">{{w.lvTag}}</span></sc-if>
-                <button class="spk {{w.pc}}" aria-label="Hear this word" onClick="{{w.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+                <button class="spk {{w.pc}}" aria-label="Hear this word" data-on-click="{{w.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
               </div>
               <div class="wc-zh zh">{{w.zh}}</div>
               <div class="wc-py">{{w.py}}</div>
@@ -1017,18 +1017,18 @@
                 <span class="plus">+</span>
                 <span class="part {{w.p2cls}}"><b class="zh">{{w.p2c}}</b>{{w.p2n}}</span>
               </div>
-              <sc-if value="{{w.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" onClick="{{w.exToggle}}">{{w.exLabel}}</button></sc-if>
-              <sc-if value="{{w.exOpen}}" hint-placeholder-val="{{ false }}"><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{w.exZh}}</div><button class="spk {{w.exPc}}" aria-label="Hear the example sentence" onClick="{{w.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{w.exPy}}</div><div>{{w.exEn}}</div><sc-if value="{{w.hasExMore}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" onClick="{{w.exNext}}">Another example ({{w.exCount}})</button></sc-if><sc-if value="{{w.hasExNote}}" hint-placeholder-val="{{ false }}"><div class="exnote">{{w.exNote}}</div></sc-if></div></sc-if>
+              <sc-if value="{{w.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{w.exToggle}}">{{w.exLabel}}</button></sc-if>
+              <sc-if value="{{w.exOpen}}" hint-placeholder-val="{{ false }}"><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{w.exZh}}</div><button class="spk {{w.exPc}}" aria-label="Hear the example sentence" data-on-click="{{w.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{w.exPy}}</div><div>{{w.exEn}}</div><sc-if value="{{w.hasExMore}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{w.exNext}}">Another example ({{w.exCount}})</button></sc-if><sc-if value="{{w.hasExNote}}" hint-placeholder-val="{{ false }}"><div class="exnote">{{w.exNote}}</div></sc-if></div></sc-if>
               <div class="mbar">
                 <div class="mbar-h"><span>{{w.mLabel}}</span><b>{{w.mPct}}</b></div>
                 <div class="track sm"><div class="fill {{w.mCls}}" style="width: {{w.mW}}"></div><i class="tk" style="left:30%"></i><i class="tk" style="left:55%"></i><i class="tk" style="left:80%"></i></div>
                 <div class="mbar-s"><span>{{w.recallText}}</span><span class="{{w.dueCls}}">{{w.due}}</span></div>
               </div>
-              <sc-if value="{{w.canReveal}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{w.reveal}}">Reveal meaning</button></sc-if>
+              <sc-if value="{{w.canReveal}}" hint-placeholder-val="{{ false }}"><button class="btn" data-on-click="{{w.reveal}}">Reveal meaning</button></sc-if>
               <sc-if value="{{w.canRate}}" hint-placeholder-val="{{ false }}">
-                <div class="rrow"><button class="btn pri" onClick="{{w.knew}}">I knew it</button><button class="btn" onClick="{{w.missed}}">I missed it</button></div>
+                <div class="rrow"><button class="btn pri" data-on-click="{{w.knew}}">I knew it</button><button class="btn" data-on-click="{{w.missed}}">I missed it</button></div>
               </sc-if>
-              <sc-if value="{{w.canAdd}}" hint-placeholder-val="{{ false }}"><button class="btn pri" onClick="{{w.learn}}">Add to my words</button></sc-if>
+              <sc-if value="{{w.canAdd}}" hint-placeholder-val="{{ false }}"><button class="btn pri" data-on-click="{{w.learn}}">Add to my words</button></sc-if>
               <sc-if value="{{w.capHit}}" hint-placeholder-val="{{ false }}"><div class="muted" style="font-size:14.5px">This one waits until tomorrow.</div></sc-if>
               <sc-if value="{{w.hasDelta}}" hint-placeholder-val="{{ false }}"><div class="delta {{w.deltaCls}}">{{w.deltaText}}</div></sc-if>
               <a class="report" href="{{w.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
@@ -1043,13 +1043,13 @@
         <div class="zh" style="font-size:34px;line-height:1.3">{{fillZh}}</div>
         <div class="opts {{gapOptsCls}}">
           <sc-for list="{{gapOpts}}" as="g" hint-placeholder-count="4">
-            <button class="opt {{g.cls}}" onClick="{{g.fn}}"><span class="zh">{{g.zh}}</span> <span style="font-size:15px;color:var(--muted)">{{g.py}}</span></button>
+            <button class="opt {{g.cls}}" data-on-click="{{g.fn}}"><span class="zh">{{g.zh}}</span> <span style="font-size:15px;color:var(--muted)">{{g.py}}</span></button>
           </sc-for>
         </div>
         <sc-if value="{{gapDone}}" hint-placeholder-val="{{ false }}">
           <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
             <span style="font-weight:600">{{fillLine}}</span>
-            <button class="btn ink" onClick="{{gapNext}}">Next sentence</button>
+            <button class="btn ink" data-on-click="{{gapNext}}">Next sentence</button>
           </div>
         </sc-if>
         <a class="report" href="{{fillReport}}" target="_blank" rel="noopener">Report a mistake</a>
@@ -1066,7 +1066,7 @@
                 <div class="wc-py">{{o.apy}}</div>
                 <div>{{o.aen}}</div>
                 <div class="mbar" style="width:100%"><div class="mbar-h"><span>{{o.aLabel}}</span><b>{{o.aPct}}</b></div><div class="track sm"><div class="fill {{o.aBar}}" style="width: {{o.aW}}"></div></div></div>
-                <button class="spk {{o.aPc}}" aria-label="Hear this word" onClick="{{o.playA}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+                <button class="spk {{o.aPc}}" aria-label="Hear this word" data-on-click="{{o.playA}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
               </div>
               <svg class="ic oarrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>
               <sc-if value="{{o.revealed}}" hint-placeholder-val="{{ false }}">
@@ -1075,32 +1075,32 @@
                   <div class="wc-py">{{o.bpy}}</div>
                   <div>{{o.ben}}</div>
                   <div class="mbar" style="width:100%"><div class="mbar-h"><span>{{o.bLabel}}</span><b>{{o.bPct}}</b></div><div class="track sm"><div class="fill {{o.bBar}}" style="width: {{o.bW}}"></div></div></div>
-                  <button class="spk {{o.bPc}}" aria-label="Hear this word" onClick="{{o.playB}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+                  <button class="spk {{o.bPc}}" aria-label="Hear this word" data-on-click="{{o.playB}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
                 </div>
               </sc-if>
               <sc-if value="{{o.hidden}}" hint-placeholder-val="{{ true }}">
                 <div class="oc blank">
                   <div class="oc-zh zh">?</div>
                   <div class="muted">{{o.hint}}</div>
-                  <button class="btn" onClick="{{o.reveal}}">Reveal</button>
+                  <button class="btn" data-on-click="{{o.reveal}}">Reveal</button>
                 </div>
               </sc-if>
             </div>
             <div class="muted">{{o.note}}</div>
-            <sc-if value="{{o.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" onClick="{{o.exToggle}}">{{o.exLabel}}</button></sc-if>
+            <sc-if value="{{o.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{o.exToggle}}">{{o.exLabel}}</button></sc-if>
             <sc-if value="{{o.exOpen}}" hint-placeholder-val="{{ false }}">
-              <div class="opair exboth"><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{o.aExZh}}</div><button class="spk {{o.aExPc}}" aria-label="Hear the example sentence" onClick="{{o.aExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.aExPy}}</div><div>{{o.aExEn}}</div></div><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{o.bExZh}}</div><button class="spk {{o.bExPc}}" aria-label="Hear the example sentence" onClick="{{o.bExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.bExPy}}</div><div>{{o.bExEn}}</div></div></div>
+              <div class="opair exboth"><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{o.aExZh}}</div><button class="spk {{o.aExPc}}" aria-label="Hear the example sentence" data-on-click="{{o.aExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.aExPy}}</div><div>{{o.aExEn}}</div></div><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{o.bExZh}}</div><button class="spk {{o.bExPc}}" aria-label="Hear the example sentence" data-on-click="{{o.bExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.bExPy}}</div><div>{{o.bExEn}}</div></div></div>
             </sc-if>
             <a class="report" href="{{o.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
             <sc-if value="{{o.hasAdd}}" hint-placeholder-val="{{ false }}">
               <div class="rrow">
-                <sc-if value="{{o.canAddBoth}}" hint-placeholder-val="{{ false }}"><button class="btn pri" onClick="{{o.learnBoth}}">Add both words</button></sc-if>
-                <sc-if value="{{o.canAddA}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{o.learnA}}">Add {{o.azh}}</button></sc-if>
-                <sc-if value="{{o.canAdd}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{o.learn}}">Add {{o.bzh}}</button></sc-if>
+                <sc-if value="{{o.canAddBoth}}" hint-placeholder-val="{{ false }}"><button class="btn pri" data-on-click="{{o.learnBoth}}">Add both words</button></sc-if>
+                <sc-if value="{{o.canAddA}}" hint-placeholder-val="{{ false }}"><button class="btn" data-on-click="{{o.learnA}}">Add {{o.azh}}</button></sc-if>
+                <sc-if value="{{o.canAdd}}" hint-placeholder-val="{{ false }}"><button class="btn" data-on-click="{{o.learn}}">Add {{o.bzh}}</button></sc-if>
               </div>
             </sc-if>
             <sc-if value="{{o.canRate}}" hint-placeholder-val="{{ false }}">
-              <div class="rrow"><button class="btn pri" onClick="{{o.knew}}">I knew it</button><button class="btn" onClick="{{o.missed}}">I missed it</button></div>
+              <div class="rrow"><button class="btn pri" data-on-click="{{o.knew}}">I knew it</button><button class="btn" data-on-click="{{o.missed}}">I missed it</button></div>
             </sc-if>
             <sc-if value="{{o.capHit}}" hint-placeholder-val="{{ false }}"><div class="muted" style="font-size:14.5px">This one waits until tomorrow.</div></sc-if>
             <sc-if value="{{o.hasDelta}}" hint-placeholder-val="{{ false }}"><div class="delta {{o.deltaCls}}">{{o.deltaText}}</div></sc-if>
@@ -1112,13 +1112,13 @@
     <sc-if value="{{isWTopic}}" hint-placeholder-val="{{ false }}">
     <div class="tlayout">
     <aside class="trail-rail" aria-label="Topics">
-      <input class="inp wsearch tr-search" type="search" value="{{wtq}}" placeholder="Find a topic or word" autocomplete="off" aria-label="Find a topic or word" onInput="{{onTopicSearch}}">
+      <input class="inp wsearch tr-search" type="search" value="{{wtq}}" placeholder="Find a topic or word" autocomplete="off" aria-label="Find a topic or word" data-on-input="{{onTopicSearch}}">
       <sc-for list="{{topicGroups}}" as="g" hint-placeholder-count="4">
         <div class="tr-g">
-          <button type="button" class="tr-gh {{g.cls}}" aria-expanded="{{g.expanded}}" onClick="{{g.toggle}}"><span class="tr-chev" aria-hidden="true">{{g.chev}}</span><span class="tr-gname">{{g.label}}</span><span class="tr-gn">{{g.countText}}</span></button>
+          <button type="button" class="tr-gh {{g.cls}}" aria-expanded="{{g.expanded}}" data-on-click="{{g.toggle}}"><span class="tr-chev" aria-hidden="true">{{g.chev}}</span><span class="tr-gname">{{g.label}}</span><span class="tr-gn">{{g.countText}}</span></button>
           <sc-if value="{{g.open}}" hint-placeholder-val="{{ false }}">
             <div class="tr-items">
-              <sc-for list="{{g.items}}" as="t" hint-placeholder-count="4"><button type="button" class="trl {{t.cls}}" onClick="{{t.fn}}"><span class="trl-n">{{t.label}}<sc-if value="{{t.hasHint}}" hint-placeholder-val="{{ false }}"><i class="trl-h">{{t.hint}}</i></sc-if></span><span class="trl-c">{{t.count}}</span></button></sc-for>
+              <sc-for list="{{g.items}}" as="t" hint-placeholder-count="4"><button type="button" class="trl {{t.cls}}" data-on-click="{{t.fn}}"><span class="trl-n">{{t.label}}<sc-if value="{{t.hasHint}}" hint-placeholder-val="{{ false }}"><i class="trl-h">{{t.hint}}</i></sc-if></span><span class="trl-c">{{t.count}}</span></button></sc-for>
             </div>
           </sc-if>
         </div>
@@ -1127,17 +1127,17 @@
     </aside>
     <div class="tmain">
       <div class="tbar">
-        <button type="button" class="tb-nav" onClick="{{topicPrev}}" aria-label="Previous topic">‹</button>
-        <button type="button" class="tb-cur" onClick="{{toggleTopicMenu}}" aria-expanded="{{topicMenuOpen}}"><span class="tb-name">{{topicName}}</span><span class="tb-sub">{{topicProgress}} · topic {{topicPos}}</span><span class="tb-car" aria-hidden="true">▾</span></button>
-        <button type="button" class="tb-nav" onClick="{{topicNext}}" aria-label="Next topic">›</button>
+        <button type="button" class="tb-nav" data-on-click="{{topicPrev}}" aria-label="Previous topic">‹</button>
+        <button type="button" class="tb-cur" data-on-click="{{toggleTopicMenu}}" aria-expanded="{{topicMenuOpen}}"><span class="tb-name">{{topicName}}</span><span class="tb-sub">{{topicProgress}} · topic {{topicPos}}</span><span class="tb-car" aria-hidden="true">▾</span></button>
+        <button type="button" class="tb-nav" data-on-click="{{topicNext}}" aria-label="Next topic">›</button>
         <sc-if value="{{topicMenuShow}}" hint-placeholder-val="{{ false }}"><div class="tpanel">
-          <input class="inp wsearch tr-search" type="search" value="{{wtq}}" placeholder="Find a topic or word" autocomplete="off" aria-label="Find a topic or word" onInput="{{onTopicSearch}}">
+          <input class="inp wsearch tr-search" type="search" value="{{wtq}}" placeholder="Find a topic or word" autocomplete="off" aria-label="Find a topic or word" data-on-input="{{onTopicSearch}}">
       <sc-for list="{{topicGroups}}" as="g" hint-placeholder-count="4">
         <div class="tr-g">
-          <button type="button" class="tr-gh {{g.cls}}" aria-expanded="{{g.expanded}}" onClick="{{g.toggle}}"><span class="tr-chev" aria-hidden="true">{{g.chev}}</span><span class="tr-gname">{{g.label}}</span><span class="tr-gn">{{g.countText}}</span></button>
+          <button type="button" class="tr-gh {{g.cls}}" aria-expanded="{{g.expanded}}" data-on-click="{{g.toggle}}"><span class="tr-chev" aria-hidden="true">{{g.chev}}</span><span class="tr-gname">{{g.label}}</span><span class="tr-gn">{{g.countText}}</span></button>
           <sc-if value="{{g.open}}" hint-placeholder-val="{{ false }}">
             <div class="tr-items">
-              <sc-for list="{{g.items}}" as="t" hint-placeholder-count="4"><button type="button" class="trl {{t.cls}}" onClick="{{t.fn}}"><span class="trl-n">{{t.label}}<sc-if value="{{t.hasHint}}" hint-placeholder-val="{{ false }}"><i class="trl-h">{{t.hint}}</i></sc-if></span><span class="trl-c">{{t.count}}</span></button></sc-for>
+              <sc-for list="{{g.items}}" as="t" hint-placeholder-count="4"><button type="button" class="trl {{t.cls}}" data-on-click="{{t.fn}}"><span class="trl-n">{{t.label}}<sc-if value="{{t.hasHint}}" hint-placeholder-val="{{ false }}"><i class="trl-h">{{t.hint}}</i></sc-if></span><span class="trl-c">{{t.count}}</span></button></sc-for>
             </div>
           </sc-if>
         </div>
@@ -1148,17 +1148,17 @@
       <div class="thead">
         <h2 class="h2">{{topicName}}</h2>
         <span class="muted">{{topicProgress}}</span>
-        <sc-if value="{{topicHasNew}}" hint-placeholder-val="{{ true }}"><button class="btn sm" onClick="{{topicAddAll}}">{{topicAddAllText}}</button></sc-if>
-        <button type="button" class="btn sm" onClick="{{toggleMist}}">{{mistToggleText}}</button>
+        <sc-if value="{{topicHasNew}}" hint-placeholder-val="{{ true }}"><button class="btn sm" data-on-click="{{topicAddAll}}">{{topicAddAllText}}</button></sc-if>
+        <button type="button" class="btn sm" data-on-click="{{toggleMist}}">{{mistToggleText}}</button>
       </div>
       <sc-if value="{{mistOpen}}" hint-placeholder-val="{{ false }}">
       <div class="mist-top">
         <div class="mist-sum"><span class="mseal" aria-hidden="true">熟</span><div><b>{{mistClearText}}</b><span>topics with every word started</span></div></div>
-        <sc-if value="{{mistHasNear}}" hint-placeholder-val="{{ false }}"><button class="btn" onClick="{{mistNearGo}}">{{mistNearText}}</button></sc-if>
+        <sc-if value="{{mistHasNear}}" hint-placeholder-val="{{ false }}"><button class="btn" data-on-click="{{mistNearGo}}">{{mistNearText}}</button></sc-if>
       </div>
       <div class="mist">
         <sc-for list="{{mistTiles}}" as="t" hint-placeholder-count="8">
-          <button type="button" class="mtile {{t.cls}}" onClick="{{t.go}}">
+          <button type="button" class="mtile {{t.cls}}" data-on-click="{{t.go}}">
             <span class="mart"><img src="{{t.art}}" alt="" width="212" height="84"><sc-if value="{{t.clear}}" hint-placeholder-val="{{ false }}"><span class="mseal mseal-on" aria-hidden="true">熟</span></sc-if><sc-if value="{{t.near}}" hint-placeholder-val="{{ false }}"><span class="mnear">{{t.nearText}}</span></sc-if></span>
             <span class="mname">{{t.name}}</span>
             <span class="mcount">{{t.count}}</span>
@@ -1171,15 +1171,15 @@
         <sc-for list="{{topicChips}}" as="c" hint-placeholder-count="7">
           <div class="tc {{c.cls}}">
             <sc-if value="{{c.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{c.lvCls}}">{{c.lvTag}}</span></sc-if>
-            <button class="tc-main" onClick="{{c.play}}" aria-label="Hear this word">
+            <button class="tc-main" data-on-click="{{c.play}}" aria-label="Hear this word">
               <span class="zh tc-zh">{{c.zh}}</span>
               <span class="wc-py" style="font-size:17px">{{c.py}}</span>
               <span>{{c.en}}</span>
             </button>
-            <sc-if value="{{c.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" onClick="{{c.exToggle}}">{{c.exLabel}}</button></sc-if>
-            <sc-if value="{{c.exOpen}}" hint-placeholder-val="{{ false }}"><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{c.exZh}}</div><button class="spk {{c.exPc}}" aria-label="Hear the example sentence" onClick="{{c.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{c.exPy}}</div><div>{{c.exEn}}</div><sc-if value="{{c.hasExMore}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" onClick="{{c.exNext}}">Another example ({{c.exCount}})</button></sc-if><sc-if value="{{c.hasExNote}}" hint-placeholder-val="{{ false }}"><div class="exnote">{{c.exNote}}</div></sc-if></div></sc-if>
+            <sc-if value="{{c.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{c.exToggle}}">{{c.exLabel}}</button></sc-if>
+            <sc-if value="{{c.exOpen}}" hint-placeholder-val="{{ false }}"><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{c.exZh}}</div><button class="spk {{c.exPc}}" aria-label="Hear the example sentence" data-on-click="{{c.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{c.exPy}}</div><div>{{c.exEn}}</div><sc-if value="{{c.hasExMore}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{c.exNext}}">Another example ({{c.exCount}})</button></sc-if><sc-if value="{{c.hasExNote}}" hint-placeholder-val="{{ false }}"><div class="exnote">{{c.exNote}}</div></sc-if></div></sc-if>
             <div class="mbar" style="width:100%"><div class="mbar-h"><span>{{c.mLabel}}</span><b>{{c.mPct}}</b></div><div class="track sm"><div class="fill {{c.mCls}}" style="width: {{c.mW}}"></div></div></div>
-            <sc-if value="{{c.canAdd}}" hint-placeholder-val="{{ false }}"><button class="btn" style="min-height:40px;padding:0 16px;font-size:15px" onClick="{{c.learn}}">Add to my words</button></sc-if>
+            <sc-if value="{{c.canAdd}}" hint-placeholder-val="{{ false }}"><button class="btn" style="min-height:40px;padding:0 16px;font-size:15px" data-on-click="{{c.learn}}">Add to my words</button></sc-if>
             <sc-if value="{{c.capHit}}" hint-placeholder-val="{{ false }}"><span class="muted" style="font-size:14px">Waits until tomorrow</span></sc-if>
           </div>
         </sc-for>
@@ -1190,7 +1190,7 @@
         <div class="muted">{{tsPy}}</div>
         <div>{{tsEn}}</div>
         <a class="report" href="{{tsReport}}" target="_blank" rel="noopener">Report a mistake</a>
-        <button class="btn pri" style="margin-top:10px" onClick="{{goTopic}}">{{topicCta}}</button>
+        <button class="btn pri" style="margin-top:10px" data-on-click="{{goTopic}}">{{topicCta}}</button>
       </section>
     </div>
     </div>
@@ -1209,10 +1209,10 @@
         <h2 class="h2">Join your group</h2>
         <p class="muted" style="margin:6px 0 14px">No account and no password. Type your first name and you are in.</p>
         <label class="kick" for="fr-name">Your first name</label>
-        <input id="fr-name" class="inp" type="text" maxlength="20" autocomplete="off" placeholder="Alvin" value="{{frName}}" onInput="{{onFrName}}">
+        <input id="fr-name" class="inp" type="text" maxlength="20" autocomplete="off" placeholder="Alvin" value="{{frName}}" data-on-input="{{onFrName}}">
         <label class="kick" for="fr-code" style="margin-top:12px">Invite code</label>
-        <input id="fr-code" class="inp" type="text" autocomplete="off" autocapitalize="characters" placeholder="From your invite link" value="{{frCode}}" onInput="{{onFrCode}}">
-        <button class="btn pri big" style="margin-top:16px" onClick="{{friendsJoin}}">{{frJoinText}}</button>
+        <input id="fr-code" class="inp" type="text" autocomplete="off" autocapitalize="characters" placeholder="From your invite link" value="{{frCode}}" data-on-input="{{onFrCode}}">
+        <button class="btn pri big" style="margin-top:16px" data-on-click="{{friendsJoin}}">{{frJoinText}}</button>
         <p class="muted" style="margin:14px 0 0;font-size:14.5px">The group sees your minutes each day, your streak, words in memory, level and exam passes. Never your word list. Your own progress, listening level, remembered facts and chat settings are also saved on the group's server so your devices stay the same; other friends cannot see them.</p>
       </section>
     </sc-if>
@@ -1226,7 +1226,7 @@
           <div class="muted" style="font-size:14px">{{frHomeText}}. The goal is 100 minutes for each person.</div>
         </section>
         <div class="seg2" role="group" aria-label="Order friends by">
-          <sc-for list="{{frSortOpts}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
+          <sc-for list="{{frSortOpts}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
         </div>
         <section class="card frlist">
           <sc-for list="{{frRows}}" as="r" hint-placeholder-count="5">
@@ -1239,19 +1239,19 @@
               </div>
               <div class="fnum"><b>{{r.minutes}}</b></div>
               <sc-if value="{{r.canCheer}}" hint-placeholder-val="{{ false }}">
-                <button type="button" class="fcheer {{r.cheerCls}}" aria-label="{{r.cheerLabel}}" onClick="{{r.cheer}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3a4 4 0 0 0 4-4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1-2 2h-7a3 3 0 0 1-3-3"/></svg><sc-if value="{{r.hasCheers}}" hint-placeholder-val="{{ false }}"><span class="fcn">{{r.cheers}}</span></sc-if></button>
+                <button type="button" class="fcheer {{r.cheerCls}}" aria-label="{{r.cheerLabel}}" data-on-click="{{r.cheer}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3a4 4 0 0 0 4-4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1-2 2h-7a3 3 0 0 1-3-3"/></svg><sc-if value="{{r.hasCheers}}" hint-placeholder-val="{{ false }}"><span class="fcn">{{r.cheers}}</span></sc-if></button>
               </sc-if>
             </div>
           </sc-for>
         </section>
-        <div class="fmeta"><span class="muted">{{frUpdated}}</span><button class="linkbtn" onClick="{{frRefresh}}">Refresh</button></div>
+        <div class="fmeta"><span class="muted">{{frUpdated}}</span><button class="linkbtn" data-on-click="{{frRefresh}}">Refresh</button></div>
         <section class="card">
           <h2 class="h2" style="font-size:18px">You are {{frMine}}</h2>
           <p class="muted" style="margin:6px 0 12px;font-size:15px">Your personal link signs you in on another phone or computer, with no password. Keep it private, like a password.</p>
           <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-            <button class="btn" onClick="{{frCopy}}">{{frLinkText}}</button>
-            <button class="btn" onClick="{{frTest}}">{{frTestLabel}}</button>
-            <button class="btn" onClick="{{frLeave}}">{{frLeaveText}}</button>
+            <button class="btn" data-on-click="{{frCopy}}">{{frLinkText}}</button>
+            <button class="btn" data-on-click="{{frTest}}">{{frTestLabel}}</button>
+            <button class="btn" data-on-click="{{frLeave}}">{{frLeaveText}}</button>
           </div>
           <p class="muted" style="margin:12px 0 0;font-size:14.5px">The group sees your minutes each day, your streak, words in memory, level and exam passes. Never your word list. Your progress, listening level, remembered facts and chat settings are also saved on the group's server so all your devices stay the same (other friends cannot see them). It is sent when you open the app, now and then while you study, and when you leave it.</p>
         </section>
@@ -1271,18 +1271,18 @@
         </div>
         <p class="muted" style="margin:0;font-size:15px">{{wordsSumLine}}</p>
       </div>
-      <button class="btn pri big" onClick="{{wordsReviewGo}}">{{wordsReviewText}}</button>
+      <button class="btn pri big" data-on-click="{{wordsReviewGo}}">{{wordsReviewText}}</button>
     </section>
     <div class="wtools">
-      <input class="inp wsearch" type="search" value="{{wq}}" placeholder="Search words" autocomplete="off" aria-label="Search words" onInput="{{onWSearch}}">
+      <input class="inp wsearch" type="search" value="{{wq}}" placeholder="Search words" autocomplete="off" aria-label="Search words" data-on-input="{{onWSearch}}">
       <div class="fchips2">
-        <sc-for list="{{filters}}" as="f" hint-placeholder-count="6"><button class="fc2 {{f.cls}}" onClick="{{f.fn}}">{{f.label}} <b>{{f.n}}</b></button></sc-for>
+        <sc-for list="{{filters}}" as="f" hint-placeholder-count="6"><button class="fc2 {{f.cls}}" data-on-click="{{f.fn}}">{{f.label}} <b>{{f.n}}</b></button></sc-for>
       </div>
     </div>
     <div class="wl-bar">
       <span class="muted">Sort by</span>
       <div class="seg2" role="group" aria-label="Sort words">
-        <sc-for list="{{sortOpts}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" onClick="{{o.fn}}">{{o.label}}</button></sc-for>
+        <sc-for list="{{sortOpts}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
       </div>
     </div>
     <div class="wrows2">
@@ -1293,12 +1293,12 @@
           <sc-if value="{{r.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{r.lvCls}}">{{r.lvTag}}</span></sc-if>
           <div class="wr2-dots" role="img" aria-label="{{r.mLabel}}"><sc-for list="{{r.dots}}" as="d" hint-placeholder-count="5"><i class="{{d.cls}}"></i></sc-for></div>
           <div class="wr2-due {{r.dueCls}}">{{r.due}}</div>
-          <button class="spk {{r.pc}}" aria-label="Hear this word" onClick="{{r.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+          <button class="spk {{r.pc}}" aria-label="Hear this word" data-on-click="{{r.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
         </div>
       </sc-for>
     </div>
     <sc-if value="{{noRows}}" hint-placeholder-val="{{ false }}"><p class="muted">No words match. Try a different search or filter.</p></sc-if>
-    <sc-if value="{{hasMoreWords}}" hint-placeholder-val="{{ false }}"><button class="btn" style="align-self:center" onClick="{{showMoreWords}}">{{moreWordsText}}</button></sc-if>
+    <sc-if value="{{hasMoreWords}}" hint-placeholder-val="{{ false }}"><button class="btn" style="align-self:center" data-on-click="{{showMoreWords}}">{{moreWordsText}}</button></sc-if>
   </div>
   </sc-if>
 
@@ -1306,22 +1306,22 @@
   <sc-if value="{{isListenNA}}" hint-placeholder-val="{{ false }}">
   <div class="lob"><section class="card"><h2 class="h2">Listening lab: not built for {{lvName}} yet</h2>
     <p class="muted" style="margin:6px 0 0;font-size:16px">The dictation clips, shadowing and tone trainer do not exist for {{lvName}} yet. In the meantime, the Review words screen plays each {{lvName}} word aloud (the Hear question), and Talk with AI in Speak lets you listen to full sentences.</p>
-    <div style="margin-top:16px"><button class="btn pri" onClick="{{goHome}}">Back to home</button></div></section></div>
+    <div style="margin-top:16px"><button class="btn pri" data-on-click="{{goHome}}">Back to home</button></div></section></div>
   </sc-if>
   <sc-if value="{{isListen}}" hint-placeholder-val="{{ false }}">
   <div class="lab">
     <div class="lab-main">
       <div class="seg2" role="group" aria-label="Lab mode" style="align-self:flex-start">
-        <button class="{{lDictCls}}" onClick="{{setDict}}">Dictation</button>
-        <button class="{{lShadowCls}}" onClick="{{setShadow}}">Shadowing</button>
-        <button class="{{lToneCls}}" onClick="{{setTone}}">Tone trainer</button>
+        <button class="{{lDictCls}}" data-on-click="{{setDict}}">Dictation</button>
+        <button class="{{lShadowCls}}" data-on-click="{{setShadow}}">Shadowing</button>
+        <button class="{{lToneCls}}" data-on-click="{{setTone}}">Tone trainer</button>
       </div>
 
       <sc-if value="{{isDict}}" hint-placeholder-val="{{ true }}">
         <section class="card dict">
           <div class="lab-top"><div class="kick">{{stepText}}</div><span class="muted lab-n">{{clipTried}}</span></div>
           <div class="dict-top">
-            <button class="listen sm {{clipPlayCls}}" onClick="{{playClip}}" aria-label="Play the clip">
+            <button class="listen sm {{clipPlayCls}}" data-on-click="{{playClip}}" aria-label="Play the clip">
               <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
             </button>
             <div>
@@ -1333,10 +1333,10 @@
           <div>
             <div class="kick" style="margin-bottom:8px">Speed ladder</div>
             <div class="ladder" role="group" aria-label="Playback speed">
-              <sc-for list="{{rateOpts}}" as="r" hint-placeholder-count="4"><button class="lad {{r.cls}}" onClick="{{r.fn}}">{{r.label}}</button></sc-for>
+              <sc-for list="{{rateOpts}}" as="r" hint-placeholder-count="4"><button class="lad {{r.cls}}" data-on-click="{{r.fn}}">{{r.label}}</button></sc-for>
             </div>
           </div>
-          <input id="dict-input" class="inp {{dInpCls}}" type="text" value="{{dtyped}}" placeholder="Type the pinyin you heard. Tones are optional." autocomplete="off" aria-label="What you heard" onInput="{{onDType}}" onKeyDown="{{onDEnter}}">
+          <input id="dict-input" class="inp {{dInpCls}}" type="text" value="{{dtyped}}" placeholder="Type the pinyin you heard. Tones are optional." autocomplete="off" aria-label="What you heard" data-on-input="{{onDType}}" data-on-keydown="{{onDEnter}}">
           <sc-if value="{{showWords}}" hint-placeholder-val="{{ false }}">
             <div class="wds">
               <sc-for list="{{wordsView}}" as="w" hint-placeholder-count="4">
@@ -1346,16 +1346,16 @@
           </sc-if>
           <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
             <sc-if value="{{dNotChecked}}" hint-placeholder-val="{{ true }}">
-              <button class="btn pri big {{dCheckCls}}" aria-disabled="{{dCheckAria}}" onClick="{{checkDict}}">Check</button>
+              <button class="btn pri big {{dCheckCls}}" aria-disabled="{{dCheckAria}}" data-on-click="{{checkDict}}">Check</button>
             </sc-if>
             <sc-if value="{{dchecked}}" hint-placeholder-val="{{ false }}">
-              <button class="btn ink big" onClick="{{nextClip}}">Next clip</button>
+              <button class="btn ink big" data-on-click="{{nextClip}}">Next clip</button>
             </sc-if>
             <sc-if value="{{canPeek}}" hint-placeholder-val="{{ true }}">
-              <button class="btn" onClick="{{peek}}">{{peekLabel}}</button>
+              <button class="btn" data-on-click="{{peek}}">{{peekLabel}}</button>
             </sc-if>
             <sc-if value="{{canSkip}}" hint-placeholder-val="{{ true }}">
-              <button class="linkbtn" onClick="{{skipClip}}">Another clip</button>
+              <button class="linkbtn" data-on-click="{{skipClip}}">Another clip</button>
             </sc-if>
           </div>
         </section>
@@ -1379,8 +1379,8 @@
               </ul>
             </div>
             <div class="acts" style="justify-content:flex-start">
-              <button class="btn {{clearCls}}" onClick="{{clearPlay}}">Hear it slow and clear</button>
-              <button class="btn {{natCls}}" onClick="{{naturalPlay}}">Hear it faster</button>
+              <button class="btn {{clearCls}}" data-on-click="{{clearPlay}}">Hear it slow and clear</button>
+              <button class="btn {{natCls}}" data-on-click="{{naturalPlay}}">Hear it faster</button>
             </div>
             <a class="report" href="{{clipReport}}" target="_blank" rel="noopener">Report a mistake</a>
           </section>
@@ -1394,7 +1394,7 @@
           <div class="cliprow"><span class="chip cb {{clipBadgeCls}}">{{clipBadge}}</span><sc-if value="{{hasClipLv}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{clipLvCls}}">{{clipLv}}</span></sc-if></div>
           <p class="muted" style="margin:0">{{shHelp}}</p>
           <div class="dict-top">
-            <button class="listen sm {{clipPlayCls}}" onClick="{{playClip}}" aria-label="Play the clip"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+            <button class="listen sm {{clipPlayCls}}" data-on-click="{{playClip}}" aria-label="Play the clip"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
             <div style="flex:1 1 220px;min-width:0">
               <sc-if value="{{shShowZh}}" hint-placeholder-val="{{ true }}"><div class="zh" style="font-size:34px;line-height:1.3">{{shZh}}</div></sc-if>
               <sc-if value="{{shShowPy}}" hint-placeholder-val="{{ true }}"><div class="muted" style="font-size:18px">{{shPy}}</div></sc-if>
@@ -1402,8 +1402,8 @@
             </div>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-            <sc-if value="{{shCanGo}}" hint-placeholder-val="{{ true }}"><button class="btn pri big" onClick="{{shadowGo}}">{{shGoLabel}}</button></sc-if>
-            <sc-if value="{{shDone}}" hint-placeholder-val="{{ false }}"><button class="btn ink big" onClick="{{shadowNext}}">Next clip</button></sc-if>
+            <sc-if value="{{shCanGo}}" hint-placeholder-val="{{ true }}"><button class="btn pri big" data-on-click="{{shadowGo}}">{{shGoLabel}}</button></sc-if>
+            <sc-if value="{{shDone}}" hint-placeholder-val="{{ false }}"><button class="btn ink big" data-on-click="{{shadowNext}}">Next clip</button></sc-if>
           </div>
           <p class="muted" style="margin:0;font-size:15px">The real site would record you and show your pitch next to the native speaker's.</p>
         </section>
@@ -1412,25 +1412,25 @@
       <sc-if value="{{isTone}}" hint-placeholder-val="{{ false }}">
         <section class="card dict">
           <div class="kick">Tone trainer</div>
-          <div><div class="seg2" role="group" aria-label="Tone trainer type"><button class="{{tOneCls}}" onClick="{{setTone1}}">One syllable</button><button class="{{tTwoCls}}" onClick="{{setTone2}}">Two syllables</button></div></div>
+          <div><div class="seg2" role="group" aria-label="Tone trainer type"><button class="{{tOneCls}}" data-on-click="{{setTone1}}">One syllable</button><button class="{{tTwoCls}}" data-on-click="{{setTone2}}">Two syllables</button></div></div>
           <sc-if value="{{toneTwo}}" hint-placeholder-val="{{ false }}">
           <h2 class="h2" style="font-size:28px">Which tones did you hear?</h2>
           <p class="muted" style="margin:0">A real word of two syllables, said by your device's voice. Press play, then pick the tone of each syllable. The second syllable can also be a light, short tone, as in <i>māma</i>.</p>
           <div class="dict-top">
-            <button class="listen sm {{pairPlayCls}}" onClick="{{playPair}}" aria-label="Play a two-syllable word">
+            <button class="listen sm {{pairPlayCls}}" data-on-click="{{playPair}}" aria-label="Play a two-syllable word">
               <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
             </button>
             <div style="flex:1 1 280px;display:grid;gap:8px">
               <p class="muted" style="margin:0;font-size:15px">First syllable</p>
               <div class="tones" style="flex:none">
                 <sc-for list="{{pairOpts1}}" as="t" hint-placeholder-count="4">
-                  <button class="tonebtn {{t.cls}}" onClick="{{t.fn}}"><b>{{t.py}}</b><span>{{t.label}}</span></button>
+                  <button class="tonebtn {{t.cls}}" data-on-click="{{t.fn}}"><b>{{t.py}}</b><span>{{t.label}}</span></button>
                 </sc-for>
               </div>
               <p class="muted" style="margin:0;font-size:15px">Second syllable</p>
               <div class="tones" style="flex:none">
                 <sc-for list="{{pairOpts2}}" as="t" hint-placeholder-count="5">
-                  <button class="tonebtn {{t.cls}}" onClick="{{t.fn}}"><b>{{t.py}}</b><span>{{t.label}}</span></button>
+                  <button class="tonebtn {{t.cls}}" data-on-click="{{t.fn}}"><b>{{t.py}}</b><span>{{t.label}}</span></button>
                 </sc-for>
               </div>
             </div>
@@ -1443,12 +1443,12 @@
           <h2 class="h2" style="font-size:28px">Which tone did you hear?</h2>
           <p class="muted" style="margin:0">One syllable, <i>ma</i>. Press play, then pick the tone. The real version would mix many different speakers.</p>
           <div class="dict-top">
-            <button class="listen sm {{tonePlayCls}}" onClick="{{playTone}}" aria-label="Play a syllable">
+            <button class="listen sm {{tonePlayCls}}" data-on-click="{{playTone}}" aria-label="Play a syllable">
               <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
             </button>
             <div class="tones">
               <sc-for list="{{toneOpts}}" as="t" hint-placeholder-count="4">
-                <button class="tonebtn {{t.cls}}" onClick="{{t.fn}}"><b>{{t.py}}</b><span>{{t.label}}</span></button>
+                <button class="tonebtn {{t.cls}}" data-on-click="{{t.fn}}"><b>{{t.py}}</b><span>{{t.label}}</span></button>
               </sc-for>
             </div>
           </div>
@@ -1475,7 +1475,7 @@
         <sc-for list="{{phrases}}" as="p" hint-placeholder-count="2">
           <div class="ex">
             <div class="ex-m"><div class="zh">{{p.zh}}</div><div class="py">{{p.py}}</div><div>{{p.en}}</div></div>
-            <button class="spk {{p.pc}}" aria-label="Hear this phrase" onClick="{{p.play}}">
+            <button class="spk {{p.pc}}" aria-label="Hear this phrase" data-on-click="{{p.play}}">
               <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
             </button>
           </div>
@@ -1489,7 +1489,7 @@
   <sc-if value="{{isExamNA}}" hint-placeholder-val="{{ false }}">
   <div class="lob"><section class="card"><h2 class="h2">{{examNaTitle}}</h2>
     <p class="muted" style="margin:6px 0 0;font-size:16px">{{examNaText}}</p>
-    <div style="margin-top:16px"><button class="btn pri" onClick="{{goHome}}">Back to home</button></div></section></div>
+    <div style="margin-top:16px"><button class="btn pri" data-on-click="{{goHome}}">Back to home</button></div></section></div>
   </sc-if>
   <sc-if value="{{isExam}}" hint-placeholder-val="{{ false }}">
   <sc-if value="{{exHome}}" hint-placeholder-val="{{ true }}">
@@ -1504,9 +1504,9 @@
       <p class="plan-note">{{exNote}}</p>
       <sc-if value="{{examAvailable}}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:18px">
-        <button class="btn pri big" onClick="{{startFull}}">Start the full exam</button>
-        <button class="btn big" onClick="{{startListening}}">Listening only</button>
-        <button class="btn big" onClick="{{startReading}}">Reading only</button>
+        <button class="btn pri big" data-on-click="{{startFull}}">Start the full exam</button>
+        <button class="btn big" data-on-click="{{startListening}}">Listening only</button>
+        <button class="btn big" data-on-click="{{startReading}}">Reading only</button>
       </div>
       </sc-if>
     </section>
@@ -1532,7 +1532,7 @@
       <p class="ex-inst">{{exInst}}</p>
       <sc-if value="{{exListen}}" hint-placeholder-val="{{ false }}">
         <div class="ex-play">
-          <button class="btn pri big {{exPlayCls}}" onClick="{{exPlay}}" aria-disabled="{{exPlayDis}}">
+          <button class="btn pri big {{exPlayCls}}" data-on-click="{{exPlay}}" aria-disabled="{{exPlayDis}}">
             <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
             Play
           </button>
@@ -1543,16 +1543,16 @@
       <sc-if value="{{exHasText}}" hint-placeholder-val="{{ false }}"><div class="zh ex-text">{{exText}}</div></sc-if>
       <div class="ex-opts {{exOptsCls}}" role="group" aria-label="Answers">
         <sc-for list="{{exOpts}}" as="o" hint-placeholder-count="3">
-          <button class="ex-opt {{o.cls}}" onClick="{{o.pick}}"><b>{{o.letter}}</b><span class="{{o.big}}">{{o.label}}</span></button>
+          <button class="ex-opt {{o.cls}}" data-on-click="{{o.pick}}"><b>{{o.letter}}</b><span class="{{o.big}}">{{o.label}}</span></button>
         </sc-for>
       </div>
     </section>
     <div class="ex-nav">
-      <div class="ex-pal" role="group" aria-label="Questions"><sc-for list="{{exPal}}" as="p" hint-placeholder-count="20"><button class="{{p.cls}}" onClick="{{p.go}}">{{p.n}}</button></sc-for></div>
-      <div class="ex-btns"><button class="btn" onClick="{{exPrev}}">Back</button><button class="btn pri" onClick="{{exNext}}">Next</button></div>
+      <div class="ex-pal" role="group" aria-label="Questions"><sc-for list="{{exPal}}" as="p" hint-placeholder-count="20"><button class="{{p.cls}}" data-on-click="{{p.go}}">{{p.n}}</button></sc-for></div>
+      <div class="ex-btns"><button class="btn" data-on-click="{{exPrev}}">Back</button><button class="btn pri" data-on-click="{{exNext}}">Next</button></div>
     </div>
     <sc-if value="{{hasConfirm}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">{{exConfirmMsg}}</div></sc-if>
-    <div><button class="btn pri" onClick="{{exSubmit}}">{{exSubmitLabel}}</button></div>
+    <div><button class="btn pri" data-on-click="{{exSubmit}}">{{exSubmitLabel}}</button></div>
   </div>
   </sc-if>
 
@@ -1561,7 +1561,7 @@
     <section class="card">
       <h2 class="h2">Listening is done</h2>
       <p class="muted" style="margin:6px 0 16px;font-size:16px">{{exBreakText}}</p>
-      <button class="btn pri big" onClick="{{exContinue}}">Start Reading</button>
+      <button class="btn pri big" data-on-click="{{exContinue}}">Start Reading</button>
     </section>
   </div>
   </sc-if>
@@ -1583,11 +1583,11 @@
         </sc-for>
       </div>
       <sc-if value="{{exSeal}}" hint-placeholder-val="{{ false }}"><div class="reward"><div class="stamp zh" style="width:56px;height:56px;font-size:34px;border-radius:10px;animation:none" aria-hidden="true">一</div><div><b>{{lvName}} seal earned.</b><div class="muted" style="font-size:15px">{{exSealText}}</div></div></div></sc-if>
-      <sc-if value="{{exUnlock}}" hint-placeholder-val="{{ false }}"><div class="reward" style="margin-top:12px"><div style="flex:1;min-width:0"><b>{{exUnlockText}}</b></div><button class="btn pri" onClick="{{exUnlockGo}}">{{exUnlockGoText}}</button></div></sc-if>
+      <sc-if value="{{exUnlock}}" hint-placeholder-val="{{ false }}"><div class="reward" style="margin-top:12px"><div style="flex:1;min-width:0"><b>{{exUnlockText}}</b></div><button class="btn pri" data-on-click="{{exUnlockGo}}">{{exUnlockGoText}}</button></div></sc-if>
       <sc-if value="{{exNoSeal}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:14px 0 0">{{exSealText}}</p></sc-if>
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:18px">
-        <button class="btn pri" onClick="{{exAgain}}">Try another exam</button>
-        <button class="btn" onClick="{{exClose}}">Back to the exam page</button>
+        <button class="btn pri" data-on-click="{{exAgain}}">Try another exam</button>
+        <button class="btn" data-on-click="{{exClose}}">Back to the exam page</button>
       </div>
     </section>
     <sc-if value="{{hasWrong}}" hint-placeholder-val="{{ false }}">
@@ -1618,7 +1618,7 @@
   <div class="quiz">
     <sc-if value="{{inQuestions}}" hint-placeholder-val="{{ true }}">
       <div class="q-top">
-        <button class="btn" onClick="{{exitQuiz}}">
+        <button class="btn" data-on-click="{{exitQuiz}}">
           <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
           Exit
         </button>
@@ -1636,11 +1636,11 @@
         <sc-if value="{{q.hasSub}}" hint-placeholder-val="{{ false }}"><div class="q-sub">{{q.sub}}</div></sc-if>
 
         <sc-if value="{{q.isTyped}}" hint-placeholder-val="{{ true }}">
-          <input id="answer-input" class="inp {{inpCls}}" type="text" value="{{qtyped}}" placeholder="{{q.placeholder}}" autocomplete="off" aria-label="Your answer" onInput="{{onType}}" onKeyDown="{{onEnter}}">
+          <input id="answer-input" class="inp {{inpCls}}" type="text" value="{{qtyped}}" placeholder="{{q.placeholder}}" autocomplete="off" aria-label="Your answer" data-on-input="{{onType}}" data-on-keydown="{{onEnter}}">
         </sc-if>
 
         <sc-if value="{{q.isListen}}" hint-placeholder-val="{{ false }}">
-          <button class="listen {{listenCls}}" onClick="{{playQ}}" aria-label="Play the word">
+          <button class="listen {{listenCls}}" data-on-click="{{playQ}}" aria-label="Play the word">
             <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
           </button>
         </sc-if>
@@ -1648,25 +1648,25 @@
         <sc-if value="{{q.isChoice}}" hint-placeholder-val="{{ false }}">
           <div class="opts {{optsCls}}">
             <sc-for list="{{opts}}" as="o" hint-placeholder-count="4">
-              <button class="opt {{o.cls}}" onClick="{{o.pick}}"><span class="{{o.lcls}}">{{o.label}}</span></button>
+              <button class="opt {{o.cls}}" data-on-click="{{o.pick}}"><span class="{{o.lcls}}">{{o.label}}</span></button>
             </sc-for>
           </div>
         </sc-if>
 
         <sc-if value="{{q.isOrder}}" hint-placeholder-val="{{ false }}">
           <div class="ans-line">
-            <sc-for list="{{pickedTiles}}" as="t" hint-placeholder-count="0"><button class="tile zh {{t.cls}}" onClick="{{t.fn}}">{{t.label}}</button></sc-for>
+            <sc-for list="{{pickedTiles}}" as="t" hint-placeholder-count="0"><button class="tile zh {{t.cls}}" data-on-click="{{t.fn}}">{{t.label}}</button></sc-for>
             <sc-if value="{{noPicked}}" hint-placeholder-val="{{ true }}"><span class="ans-ph">Tap the words below in order</span></sc-if>
           </div>
           <div class="bank">
-            <sc-for list="{{bankTiles}}" as="t" hint-placeholder-count="4"><button class="tile zh {{t.cls}}" onClick="{{t.fn}}">{{t.label}}</button></sc-for>
+            <sc-for list="{{bankTiles}}" as="t" hint-placeholder-count="4"><button class="tile zh {{t.cls}}" data-on-click="{{t.fn}}">{{t.label}}</button></sc-for>
           </div>
         </sc-if>
 
         <sc-if value="{{q.isSpot}}" hint-placeholder-val="{{ false }}">
           <div class="spot">
             <sc-for list="{{spotTokens}}" as="t" hint-placeholder-count="5">
-              <sc-if value="{{t.isTok}}" hint-placeholder-val="{{ true }}"><button class="tok zh {{t.cls}}" onClick="{{t.pick}}">{{t.label}}</button></sc-if>
+              <sc-if value="{{t.isTok}}" hint-placeholder-val="{{ true }}"><button class="tok zh {{t.cls}}" data-on-click="{{t.pick}}">{{t.label}}</button></sc-if>
               <sc-if value="{{t.isPunct}}" hint-placeholder-val="{{ false }}"><span class="punct zh">{{t.label}}</span></sc-if>
             </sc-for>
           </div>
@@ -1674,7 +1674,7 @@
       </div>
 
       <sc-if value="{{showCheck}}" hint-placeholder-val="{{ true }}">
-        <button class="btn pri big {{checkCls}}" style="align-self:flex-end" aria-disabled="{{checkAria}}" onClick="{{check}}">Check</button>
+        <button class="btn pri big {{checkCls}}" style="align-self:flex-end" aria-disabled="{{checkAria}}" data-on-click="{{check}}">Check</button>
       </sc-if>
       <sc-if value="{{qchecked}}" hint-placeholder-val="{{ false }}">
         <div class="fb {{fbCls}}">
@@ -1689,7 +1689,7 @@
             <div class="fb-x">{{q.explain}}</div>
             <a class="report" href="{{q.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
           </div>
-          <button class="btn ink big" onClick="{{next}}">{{nextLabel}}</button>
+          <button class="btn ink big" data-on-click="{{next}}">{{nextLabel}}</button>
         </div>
       </sc-if>
     </sc-if>
@@ -1706,8 +1706,8 @@
         </div>
         <span class="res-gain">{{resGain}}</span>
         <div class="res-act">
-          <button class="btn pri big" onClick="{{again}}">Go again</button>
-          <button class="btn big" onClick="{{goHome}}">Back to home</button>
+          <button class="btn pri big" data-on-click="{{again}}">Go again</button>
+          <button class="btn big" data-on-click="{{goHome}}">Back to home</button>
         </div>
       </div>
     </sc-if>
@@ -1717,42 +1717,42 @@
   <footer class="foot">
     <p>The Chinese on this site is checked by AI against a community HSK word list and has not been reviewed by a teacher yet. If something looks wrong, use "Report a mistake" next to it.</p>
     <div class="foot-act">
-      <button class="linkbtn" onClick="{{goVoice}}">Settings</button>
-      <button class="linkbtn" onClick="{{exportData}}">Export progress</button>
-      <button class="linkbtn" onClick="{{importData}}">Import progress</button>
-      <button class="linkbtn" onClick="{{resetAll}}">Reset progress</button>
+      <button class="linkbtn" data-on-click="{{goVoice}}">Settings</button>
+      <button class="linkbtn" data-on-click="{{exportData}}">Export progress</button>
+      <button class="linkbtn" data-on-click="{{importData}}">Import progress</button>
+      <button class="linkbtn" data-on-click="{{resetAll}}">Reset progress</button>
       <a class="linkbtn" href="{{repoUrl}}" target="_blank" rel="noopener">Source on GitHub</a>
     </div>
   </footer>
 </main>
 </div>
 </template>
-<script defer src="vendor/morphdom-umd.min.js?v=0ac144c99b"></script>
-<script defer src="runtime.js?v=0ac144c99b"></script>
-<script defer src="config.js?v=0ac144c99b"></script>
-<script defer src="friends.js?v=0ac144c99b"></script>
-<script defer src="level.js?v=0ac144c99b"></script>
-<script defer src="data/hsk1-words.js?v=0ac144c99b"></script>
-<script defer src="data/hsk1-grammar.js?v=0ac144c99b"></script>
-<script defer src="data/hsk1-webs.js?v=0ac144c99b"></script>
-<script defer src="data/hsk1-speak.js?v=0ac144c99b"></script>
-<script defer src="data/hsk1-listen.js?v=0ac144c99b"></script>
-<script defer src="data/hsk1-exam.js?v=0ac144c99b"></script>
-<script defer src="data/hsk1-erhua.js?v=0ac144c99b"></script>
-<script defer src="data/lexicon.js?v=0ac144c99b"></script>
-<script defer src="data/hsk2-preview.js?v=0ac144c99b"></script>
-<script defer src="data/hsk3-preview.js?v=0ac144c99b"></script>
-<script defer src="data/hsk2-words.js?v=0ac144c99b"></script>
-<script defer src="data/hsk2-speak.js?v=0ac144c99b"></script>
-<script defer src="data/hsk2-listen.js?v=0ac144c99b"></script>
-<script defer src="data/hsk2-exam.js?v=0ac144c99b"></script>
-<script defer src="data/hsk2-grammar.js?v=0ac144c99b"></script>
-<script defer src="data/hsk2-webs.js?v=0ac144c99b"></script>
-<script defer src="ascent.js?v=0ac144c99b"></script>
-<script defer src="secrets.js?v=0ac144c99b"></script>
-<script defer src="sync.js?v=0ac144c99b"></script>
-<script defer src="data/audio-manifest.js?v=0ac144c99b"></script>
-<script defer src="erhua.js?v=0ac144c99b"></script>
-<script defer src="app.js?v=0ac144c99b"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=b5c1baa904"></script>
+<script defer src="runtime.js?v=b5c1baa904"></script>
+<script defer src="config.js?v=b5c1baa904"></script>
+<script defer src="friends.js?v=b5c1baa904"></script>
+<script defer src="level.js?v=b5c1baa904"></script>
+<script defer src="data/hsk1-words.js?v=b5c1baa904"></script>
+<script defer src="data/hsk1-grammar.js?v=b5c1baa904"></script>
+<script defer src="data/hsk1-webs.js?v=b5c1baa904"></script>
+<script defer src="data/hsk1-speak.js?v=b5c1baa904"></script>
+<script defer src="data/hsk1-listen.js?v=b5c1baa904"></script>
+<script defer src="data/hsk1-exam.js?v=b5c1baa904"></script>
+<script defer src="data/hsk1-erhua.js?v=b5c1baa904"></script>
+<script defer src="data/lexicon.js?v=b5c1baa904"></script>
+<script defer src="data/hsk2-preview.js?v=b5c1baa904"></script>
+<script defer src="data/hsk3-preview.js?v=b5c1baa904"></script>
+<script defer src="data/hsk2-words.js?v=b5c1baa904"></script>
+<script defer src="data/hsk2-speak.js?v=b5c1baa904"></script>
+<script defer src="data/hsk2-listen.js?v=b5c1baa904"></script>
+<script defer src="data/hsk2-exam.js?v=b5c1baa904"></script>
+<script defer src="data/hsk2-grammar.js?v=b5c1baa904"></script>
+<script defer src="data/hsk2-webs.js?v=b5c1baa904"></script>
+<script defer src="ascent.js?v=b5c1baa904"></script>
+<script defer src="secrets.js?v=b5c1baa904"></script>
+<script defer src="sync.js?v=b5c1baa904"></script>
+<script defer src="data/audio-manifest.js?v=b5c1baa904"></script>
+<script defer src="erhua.js?v=b5c1baa904"></script>
+<script defer src="app.js?v=b5c1baa904"></script>
 </body>
 </html>

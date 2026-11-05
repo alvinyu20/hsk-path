@@ -65,11 +65,13 @@
       for (const a of Array.from(n.attributes)) {
         const name = a.name;
         if (name.indexOf('hint-') === 0) continue;
-        if (name.indexOf('on') === 0) {
+        // handlers are written as data-on-click="{{fn}}" (not onClick=): a real on* attribute counts as an inline script, which the
+        // page's security policy forbids and newer Chrome reports for every one of them, even inside a <template>
+        if (name.indexOf('data-on-') === 0) {
           const fn = holeValue(a.value, scope);
           if (typeof fn === 'function') {
             ctx.handlers.push(fn);
-            out.push(' data-on-' + name.slice(2) + '="' + (ctx.handlers.length - 1) + '"');
+            out.push(' ' + name + '="' + (ctx.handlers.length - 1) + '"');
           }
           continue;
         }

@@ -45,6 +45,7 @@ function copySite() {
   await page.goto(site); await page.waitForSelector('.app');
   const vAtLoad = await page.evaluate(() => window.__csp.length);
   const html = await (await ctx.request.get(site)).text();
+  check((html.match(/\son[a-zA-Z]+\s*=/g) || []).length === 0 && !/<[^>]+\son[a-z]+\s*=/i.test(fs.readFileSync(path.join(tmp, 'index.html'), 'utf8')), 'the page has no inline event attributes (onclick= and the like), which the policy forbids and newer Chrome reports one by one');
   const cspTag = (/http-equiv="Content-Security-Policy" content="([^"]+)"/.exec(html) || [])[1] || '';
   check(/script-src 'self'(;|$)/.test(cspTag) && !/unsafe-eval/.test(cspTag) && !/script-src[^;]*unsafe-inline/.test(cspTag), 'the page carries a policy that allows scripts only from this site (no inline, no eval)');
   check(/connect-src[^;]*api\.anthropic\.com/.test(cspTag) && /connect-src[^;]*dashscope-intl\.aliyuncs\.com/.test(cspTag) && /connect-src[^;]*api\.github\.com/.test(cspTag) && /connect-src[^;]*shanlu-friends\.alvinyu20\.workers\.dev/.test(cspTag), 'network calls are limited to Anthropic, Alibaba, GitHub and the friends server named in config.js');
