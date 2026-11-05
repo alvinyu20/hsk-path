@@ -74,6 +74,10 @@ def en_number_set(en):
     t2 = re.sub(r'\d{1,2}:\d{2}', ' ', t)
     for d in re.findall(r'\d[\d,]*', t2):
         nums.add(int(d.replace(',', '')))
+    for tens, ones in re.findall(r'\b(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)-(one|two|three|four|five|six|seven|eight|nine)\b', t2):
+        if tens in EN_NUM and ones in EN_NUM:      # twenty-five is 25, not 20 and 5
+            nums.add(EN_NUM[tens] + EN_NUM[ones])
+    t2 = re.sub(r'\b(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)-(one|two|three|four|five|six|seven|eight|nine)\b', ' ', t2)
     for w in re.findall(r'[a-z]+', t2):
         if w in EN_NUM:
             nums.add(EN_NUM[w])
@@ -104,7 +108,7 @@ QUESTION_WORDS = ['什么', '谁', '哪', '几', '多少', '怎么', '怎么样'
 LEXICAL_NEG = ['不客气', '对不起', '没关系', '没事', '不好意思', '不见了', '不早了', '不同', '不久', '差不多', '不对', '特别', '别人', '别的']   # 别人 "other people" and 别的 "other" use 别 without a negative meaning
 PAST_EN = r"\b(ate|bought|saw|heard|went|was|were|did|drank|had|got|said|took|came|made|read|wrote|studied|worked|lived|asked|called|finished|\w+ed)\b"
 IRREGULAR_PAST = 'ate|bought|saw|heard|went|drank|had|got|said|took|came|made|wrote|was|were|did|told|sent|gave|found|lost|left|met|paid|brought|taught|began|ran|sat|stood|forgot|knew|thought|felt|kept|won|fell|spoke|woke|rode|drove|broke|bit|read|blew|grew|drew|threw|wore|chose|swam|sang|slept|spent|sold|held|led|lay|fed|hid|shook|stole|flew|dug|rang|built|caught|cut|hurt|let|lit|meant|put|set|shut|sank|sat|sent|shot|slid|spun|stuck|swept|tore|understood|woke|lent'
-PAST_ADJ = {'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based'}
+PAST_ADJ = {'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured'}
 
 
 def meaning_checks(zh, en):
@@ -235,7 +239,7 @@ def meaning_checks(zh, en):
     for v in evals:
         if v not in zvals and v not in zord and v not in (1,) and not any(w in e for w in ('half',)):
             out.append(('WARN', 'meaning', 'number %d in the English is not in the Chinese' % v))
-    if '半' in z and not re.search(r'half|:30|thirty', e):
+    if '半' in z.replace('半天', '') + ('半天' if '半天' in z and not re.search(r'\bages\b|long time|a while|for hours|half a day|half day|all day', e) else '') and not re.search(r'half|:30|thirty', e):
         out.append(('ERROR', 'meaning', '半 in the Chinese but the English does not say half'))
     if re.search(r'\bhalf\b', e) and '半' not in z:
         out.append(('ERROR', 'meaning', 'English says half but the Chinese has no 半'))
@@ -247,7 +251,7 @@ def meaning_checks(zh, en):
     for mw, nouns in (('本', '书字词笔杂'), ('件', '衣事'), ('口', '人')):
         for m in re.finditer(r'[零一二两三四五六七八九十几]' + mw + r'(.)', zc):
             nxt = m.group(1)
-            ok = nxt in nouns or (mw == '件' and nxt in '新') or (mw == '本' and zc[m.end() - 1:m.end() + 1] == '关于')
+            ok = nxt in nouns or (mw == '件' and (nxt in '新衬' or zc[m.end() - 1:m.end() + 1] in ('上衣', '大衣', '雨衣'))) or (mw == '本' and zc[m.end() - 1:m.end() + 1] == '关于')
             if mw == '口' and nxt not in '人':
                 ok = False
             if not ok and not (mw == '本' and nxt in '新好小大'):
@@ -269,7 +273,7 @@ def meaning_checks(zh, en):
     toks_past = [w for w in re.findall(r"[a-z]+", e_tense) if re.fullmatch(r'\w+ed', w) and w not in PAST_ADJ] + [w for w in re.findall(r'[a-z]+', e) if w in ('ate', 'bought', 'saw', 'heard', 'went', 'drank', 'had', 'got', 'said', 'took', 'came', 'made', 'wrote', 'was', 'were', 'did')]
     if toks_past and not re.search('了|没|昨天|昨晚|前天|去年|上个|上星期|过|以前|从前|当时|后来|小时候|是.*的|看见|听见|才|已经|刚|以为', z) and not re.search(r"\b(has|have|had been)\b", e):
         out.append(('WARN', 'meaning', 'English is in the past (%s) but the Chinese has no 了 or past time word' % toks_past[0]))
-    if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|no longer|about to|get to|arrive|reach|come to|soon)\b", e):
+    if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|no longer|getting|growing|about to|get to|arrive|reach|come to|soon)\b", e):
         out.append(('WARN', 'meaning', '了 in the Chinese: English shows no completed action or change of state'))
     # ZH 在 + verb = in progress
     if re.search('正在|(?<![不要])在(看|吃|喝|做|写|读|听|打|找|玩|睡|说话)', z) and not re.search(r'\b\w+ing\b|\bright now\b|\bat\b|\bin\b', e):
@@ -554,7 +558,7 @@ def main():
         for line in open(wp, encoding='utf-8'):
             p = line.rstrip('\n').split('\t')
             if len(p) >= 3 and not line.startswith('#'):
-                waivers.append((p[0], p[1], p[2]))
+                waivers.append((p[0], p[1], p[2], p[3] if len(p) > 3 else ''))   # optional 4th column: the Chinese the waiver is for (the same label is used by every level)
 
     allowed, higher = load_vocab(a.dataset, a.level, os.path.join(ROOT, 'content'))
     if a.plain:
@@ -601,7 +605,7 @@ def main():
                 if keys and not any(en_has_key(toks, k) for k in keys):
                     found.append(('WARN', 'gloss', 'the word being taught, %s (%s), is not reflected in the English' % (w, g['en'])))
         for sev, rule, msg in found:
-            waived = next((r for p, ru, r in waivers if (where == p or (where.startswith(p) and (p[-1] in ':.' or where[len(p)] in ':.'))) and ru == rule), None)   # a waiver for 懂 must not swallow 懂得 (found 5 Nov 2026)
+            waived = next((r for p, ru, r, need in waivers if (where == p or (where.startswith(p) and (p[-1] in ':.' or where[len(p)] in ':.'))) and ru == rule and (not need or need in zh)), None)   # a waiver for 懂 must not swallow 懂得 (found 5 Nov 2026)
             findings.append((sev, rule, where, zh, en, msg, waived))
 
     errors = [f for f in findings if f[0] == 'ERROR' and not f[6]]

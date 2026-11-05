@@ -2876,7 +2876,7 @@ window.HSK1_WEBS = {
   {
    "name": "Names and introductions",
    "group": "People",
-   "order": 7,
+   "order": 8,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -2893,7 +2893,7 @@ window.HSK1_WEBS = {
   {
    "name": "People",
    "group": "People",
-   "order": 8,
+   "order": 9,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -2918,7 +2918,7 @@ window.HSK1_WEBS = {
   {
    "name": "Family",
    "group": "People",
-   "order": 9,
+   "order": 11,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -2945,7 +2945,7 @@ window.HSK1_WEBS = {
   {
    "name": "Age and growing up",
    "group": "People",
-   "order": 10,
+   "order": 12,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -2962,7 +2962,7 @@ window.HSK1_WEBS = {
   {
    "name": "Work and jobs",
    "group": "People",
-   "order": 11,
+   "order": 13,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -2983,7 +2983,7 @@ window.HSK1_WEBS = {
   {
    "name": "Days, weeks and years",
    "group": "Time",
-   "order": 12,
+   "order": 14,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3011,7 +3011,7 @@ window.HSK1_WEBS = {
   {
    "name": "Clock and time of day",
    "group": "Time",
-   "order": 13,
+   "order": 17,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3040,7 +3040,7 @@ window.HSK1_WEBS = {
   {
    "name": "When and how often",
    "group": "Time",
-   "order": 14,
+   "order": 19,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3058,7 +3058,7 @@ window.HSK1_WEBS = {
   {
    "name": "Food and meals",
    "group": "Food and shopping",
-   "order": 15,
+   "order": 21,
    "to": "speak",
    "cta": "Use these in the café conversation",
    "sentence": {
@@ -3089,7 +3089,7 @@ window.HSK1_WEBS = {
   {
    "name": "Drinks",
    "group": "Food and shopping",
-   "order": 16,
+   "order": 23,
    "to": "speak",
    "cta": "Use these in the café conversation",
    "sentence": {
@@ -3108,7 +3108,7 @@ window.HSK1_WEBS = {
   {
    "name": "Money and shopping",
    "group": "Food and shopping",
-   "order": 17,
+   "order": 25,
    "to": "speak",
    "cta": "Use these when you ask a price",
    "sentence": {
@@ -3135,7 +3135,7 @@ window.HSK1_WEBS = {
   {
    "name": "Clothes and accessories",
    "group": "Food and shopping",
-   "order": 18,
+   "order": 26,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3152,7 +3152,7 @@ window.HSK1_WEBS = {
   {
    "name": "Places around town",
    "group": "Places and travel",
-   "order": 19,
+   "order": 27,
    "to": "speak",
    "cta": "Use these to ask where something is",
    "sentence": {
@@ -3175,7 +3175,7 @@ window.HSK1_WEBS = {
   {
    "name": "Directions and positions",
    "group": "Places and travel",
-   "order": 20,
+   "order": 29,
    "to": "speak",
    "cta": "Use these to ask where something is",
    "sentence": {
@@ -3199,7 +3199,7 @@ window.HSK1_WEBS = {
   {
    "name": "Coming and going",
    "group": "Places and travel",
-   "order": 21,
+   "order": 31,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3217,7 +3217,7 @@ window.HSK1_WEBS = {
   {
    "name": "Transport and tickets",
    "group": "Places and travel",
-   "order": 23,
+   "order": 33,
    "to": "speak",
    "cta": "Use these to ask where something is",
    "sentence": {
@@ -3237,7 +3237,7 @@ window.HSK1_WEBS = {
   {
    "name": "Travel and countries",
    "group": "Places and travel",
-   "order": 24,
+   "order": 34,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3253,7 +3253,7 @@ window.HSK1_WEBS = {
   {
    "name": "At home",
    "group": "Places and travel",
-   "order": 25,
+   "order": 35,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3273,7 +3273,7 @@ window.HSK1_WEBS = {
   {
    "name": "School",
    "group": "School and language",
-   "order": 26,
+   "order": 37,
    "to": "listen",
    "cta": "Train your ear",
    "sentence": {
@@ -3301,7 +3301,7 @@ window.HSK1_WEBS = {
   {
    "name": "Studying and exams",
    "group": "School and language",
-   "order": 27,
+   "order": 39,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3318,7 +3318,7 @@ window.HSK1_WEBS = {
   {
    "name": "Chinese and writing",
    "group": "School and language",
-   "order": 28,
+   "order": 40,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3339,9 +3339,9 @@ window.HSK1_WEBS = {
    ]
   },
   {
-   "name": "Phones and the internet",
+   "name": "Phones, email and the internet",
    "group": "School and language",
-   "order": 29,
+   "order": 41,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3360,7 +3360,7 @@ window.HSK1_WEBS = {
   {
    "name": "Daily routine",
    "group": "Daily life and fun",
-   "order": 30,
+   "order": 42,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3385,7 +3385,7 @@ window.HSK1_WEBS = {
   {
    "name": "Weather",
    "group": "Daily life and fun",
-   "order": 31,
+   "order": 43,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3406,7 +3406,7 @@ window.HSK1_WEBS = {
   {
    "name": "Animals and nature",
    "group": "Daily life and fun",
-   "order": 32,
+   "order": 45,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3423,7 +3423,7 @@ window.HSK1_WEBS = {
   {
    "name": "Hobbies and fun",
    "group": "Daily life and fun",
-   "order": 34,
+   "order": 47,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3438,9 +3438,9 @@ window.HSK1_WEBS = {
    ]
   },
   {
-   "name": "Movies, music and TV",
+   "name": "Movies, music, TV and news",
    "group": "Daily life and fun",
-   "order": 35,
+   "order": 49,
    "to": "listen",
    "cta": "Train your ear",
    "sentence": {
@@ -3459,9 +3459,9 @@ window.HSK1_WEBS = {
    ]
   },
   {
-   "name": "Body and health",
+   "name": "Health and illness",
    "group": "Body and mind",
-   "order": 37,
+   "order": 52,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3480,7 +3480,7 @@ window.HSK1_WEBS = {
   {
    "name": "Feelings",
    "group": "Body and mind",
-   "order": 38,
+   "order": 53,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3498,7 +3498,7 @@ window.HSK1_WEBS = {
   {
    "name": "Thinking and knowing",
    "group": "Body and mind",
-   "order": 39,
+   "order": 55,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3516,7 +3516,7 @@ window.HSK1_WEBS = {
   {
    "name": "Everyday actions",
    "group": "Actions and descriptions",
-   "order": 40,
+   "order": 56,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3534,7 +3534,7 @@ window.HSK1_WEBS = {
   {
    "name": "Seeing, hearing, speaking",
    "group": "Actions and descriptions",
-   "order": 41,
+   "order": 58,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3556,7 +3556,7 @@ window.HSK1_WEBS = {
   {
    "name": "Size, length and speed",
    "group": "Actions and descriptions",
-   "order": 44,
+   "order": 62,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3574,7 +3574,7 @@ window.HSK1_WEBS = {
   {
    "name": "Good, bad, right, wrong",
    "group": "Actions and descriptions",
-   "order": 45,
+   "order": 63,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3596,7 +3596,7 @@ window.HSK1_WEBS = {
   {
    "name": "Things and matters",
    "group": "Actions and descriptions",
-   "order": 46,
+   "order": 67,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -3613,7 +3613,7 @@ window.HSK1_WEBS = {
   {
    "name": "Be, have, be at",
    "group": "Grammar words",
-   "order": 47,
+   "order": 68,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -3631,7 +3631,7 @@ window.HSK1_WEBS = {
   {
    "name": "Can, want, may, don't",
    "group": "Grammar words",
-   "order": 48,
+   "order": 69,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -3651,7 +3651,7 @@ window.HSK1_WEBS = {
   {
    "name": "Not and don't",
    "group": "Grammar words",
-   "order": 49,
+   "order": 70,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -3668,7 +3668,7 @@ window.HSK1_WEBS = {
   {
    "name": "Very, too, most",
    "group": "Grammar words",
-   "order": 52,
+   "order": 75,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -3688,7 +3688,7 @@ window.HSK1_WEBS = {
   {
    "name": "And, also, all, together",
    "group": "Grammar words",
-   "order": 53,
+   "order": 76,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -3706,7 +3706,7 @@ window.HSK1_WEBS = {
   {
    "name": "To, from, than, with",
    "group": "Grammar words",
-   "order": 55,
+   "order": 78,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -3723,7 +3723,7 @@ window.HSK1_WEBS = {
   {
    "name": "Little helper words",
    "group": "Grammar words",
-   "order": 56,
+   "order": 79,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {

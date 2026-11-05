@@ -1,4 +1,4 @@
-# where-prefix	rule	reason   (known false alarms; every line needs a reason)
+# where-prefix	rule	reason	[Chinese the waiver is for]   (known false alarms; every line needs a reason. The 4th column keeps a waiver from covering a different sentence that has the same label at another level)
 phrase:0	level	慢 (HSK 2) is kept on purpose: "please speak slowly" is a survival phrase a beginner needs from day one
 phrase:1	level	遍 (HSK 3) is kept on purpose: "please say it again" is a survival phrase a beginner needs from day one
 word:对	gloss	the sense "toward (someone)" is shown by "to me"; "to" is too short for the gloss check
@@ -59,9 +59,9 @@ word-extra:姓:2	meaning	an embedded question ("do you know what her surname is"
 word-extra:白色:1	meaning	件 goes with 衣服 later in the sentence: 一件白色的衣服 is correct
 word:这样	meaning	这样可以吗 asks "is this okay?": 可以 means okay here
 word:地	style	the sentence ends with a closing quotation mark, which is correct
-hub-gap:小:0	meaning	小时候 ("when I was little") is itself the past time word; Chinese verbs have no tense, so the English past tense is correct
-hub-gap:小:1	meaning	从小 ("since I was little") marks past time with the verb 喜欢 still true now; "has liked" is the correct English
-hub-gap:色:2	meaning	穿了 describes a completed action, and "wore" is the matching English past; the checker only looks for -ed endings
+hub-gap:小:0	meaning	小时候 ("when I was little") is itself the past time word; Chinese verbs have no tense, so the English past tense is correct	小时候
+hub-gap:小:1	meaning	从小 ("since I was little") marks past time with the verb 喜欢 still true now; "has liked" is the correct English	从小
+hub-gap:色:2	meaning	穿了 describes a completed action, and "wore" is the matching English past; the checker only looks for -ed endings	穿了
 lesson:guo:example3	meaning	两次 means twice: the 2 is carried by "twice"
 lesson:mw:exercise5	meaning	两万 is 20,000: 两 is the spoken form of 2, so "twenty thousand" is the correct translation
 lesson:rang:exercise5	meaning	别…了 is a command to stop and 别 is a negative word; "Stop talking" says the same without "not"
@@ -103,7 +103,7 @@ exam:R4:3.1	meaning	不疼了 means "no longer hurts": 了 marks the change
 word-extra:花	meaning	二百 / 两百 is 200; the English spells the number out in words
 lesson:duo:example0	meaning	多大了 asks the current age: 了 marks the state, as in 多大了 "how old are you"
 exam:L4:9.3	meaning	你看 is an attention word that means "look!" (it is not "you see"); English imperatives have no "you"
-topic-sentence:Age and growing up	meaning	小时候 is a past time word, so the Chinese needs no 了; English must use the past tense
-topic-sentence:Good, bad, right, wrong	meaning	坏了 is the normal way to say something is broken: 了 marks the change of state and English says "broken"
-topic-sentence:Roads and distance	meaning	到了 means "arrive/get there" here: 了 marks the arrival and English says "it takes ten minutes"
-topic-sentence:Thinking and knowing	meaning	不要忘了 is the normal way to say "do not forget": 了 is part of the fixed phrase
+topic-sentence:Age and growing up	meaning	小时候 is a past time word, so the Chinese needs no 了; English must use the past tense	小时候
+topic-sentence:Good, bad, right, wrong	meaning	坏了 is the normal way to say something is broken: 了 marks the change of state and English says "broken"	坏了
+topic-sentence:Roads and distance	meaning	到了 means "arrive/get there" here: 了 marks the arrival and English says "it takes ten minutes"	到了
+topic-sentence:Thinking and knowing	meaning	不要忘了 is the normal way to say "do not forget": 了 is part of the fixed phrase	不要忘了

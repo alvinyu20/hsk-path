@@ -948,13 +948,13 @@ Examples:
 - School: 我是大学生，我哥哥是中学生。  Wǒ shì dàxuéshēng, wǒ gēge shì zhōngxuéshēng.  — I am a university student, and my older brother is a middle-school student.
 - Studying and exams: 我学习汉语，我有很多问题。  Wǒ xuéxí Hànyǔ, wǒ yǒu hěn duō wèntí.  — I study Chinese, and I have many questions.
 - Chinese and writing: 我学汉语，会写一些汉字。  Wǒ xué Hànyǔ, huì xiě yìxiē hànzì.  — I study Chinese and can write some characters.
-- Phones and the internet: 我的手机在桌子上，请打电话给我。  Wǒ de shǒujī zài zhuōzi shàng, qǐng dǎ diànhuà gěi wǒ.  — My phone is on the table; please call me.
+- Phones, email and the internet: 我的手机在桌子上，请打电话给我。  Wǒ de shǒujī zài zhuōzi shàng, qǐng dǎ diànhuà gěi wǒ.  — My phone is on the table; please call me.
 - Daily routine: 我早上起床，晚上睡觉，中午吃饭。  Wǒ zǎoshang qǐchuáng, wǎnshang shuìjiào, zhōngwǔ chī fàn.  — I get up in the morning, go to bed in the evening and eat at noon.
 - Weather: 今天天气很冷，在下雨，明天会下雪。  Jīntiān tiānqì hěn lěng, zài xiàyǔ, míngtiān huì xià xuě.  — The weather is cold today and it is raining; it will snow tomorrow.
 - Animals and nature: 我家有一只狗和一只猫。  Wǒ jiā yǒu yì zhī gǒu hé yì zhī māo.  — My family has a dog and a cat.
 - Hobbies and fun: 你喜欢玩什么？  Nǐ xǐhuan wán shénme?  — What do you like to play?
-- Movies, music and TV: 我喜欢看电影，也喜欢听歌。  Wǒ xǐhuan kàn diànyǐng, yě xǐhuan tīng gē.  — I like watching movies, and I also like listening to songs.
-- Body and health: 他生病了，我们去医院看医生。  Tā shēngbìng le, wǒmen qù yīyuàn kàn yīshēng.  — He is ill, so we go to the hospital to see a doctor.
+- Movies, music, TV and news: 我喜欢看电影，也喜欢听歌。  Wǒ xǐhuan kàn diànyǐng, yě xǐhuan tīng gē.  — I like watching movies, and I also like listening to songs.
+- Health and illness: 他生病了，我们去医院看医生。  Tā shēngbìng le, wǒmen qù yīyuàn kàn yīshēng.  — He is ill, so we go to the hospital to see a doctor.
 - Feelings: 我很高兴，你也很高兴吗？  Wǒ hěn gāoxìng, nǐ yě hěn gāoxìng ma?  — I am very happy; are you happy too?
 - Thinking and knowing: 我知道，我觉得这个很好，我想买。  Wǒ zhīdào, wǒ juéde zhège hěn hǎo, wǒ xiǎng mǎi.  — I know; I think this one is good, and I want to buy it.
 - Everyday actions: 我在做饭，你可以开电视吗？  Wǒ zài zuòfàn, nǐ kěyǐ kāi diànshì ma?  — I am cooking; can you turn on the TV?
