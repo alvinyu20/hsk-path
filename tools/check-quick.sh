@@ -7,29 +7,31 @@
 #   sh tools/check-quick.sh full /path/to/complete.json      # everything (use before a bigger release or when unsure)
 set -e
 cd "$(dirname "$0")/.."
+# last CMD...: run a command, show only its last line, and stop everything if it fails (a pipe into tail would hide the failure)
+last() { _o=$(mktemp); if "$@" > "$_o" 2>&1; then tail -n 1 "$_o"; rm -f "$_o"; else cat "$_o"; rm -f "$_o"; echo "FAILED: $*"; exit 1; fi; }
 MODE="${1:-ui}"
 DATASET="${2:-../hsk-dataset/complete.json}"
 case "$MODE" in
   content) sh tools/check-all.sh "$DATASET" --no-browser ;;
   ui)
     node tools/build-site.js --check
-    node tools/test-sync.js | tail -1
-    node tools/test-secrets.js | tail -1
-    node tools/test-ascent.js | tail -1
-    node tools/test-topics.js | tail -1
-    node tools/test-friends.js | tail -1
+    last node tools/test-sync.js
+    last node tools/test-secrets.js
+    last node tools/test-ascent.js
+    last node tools/test-topics.js
+    last node tools/test-friends.js
     (cd worker && [ -d node_modules ] && node test.mjs | tail -1) || true
-    NODE_PATH="$(npm root -g)" node tools/smoke-test-friends.js | tail -1
-    NODE_PATH="$(npm root -g)" node tools/smoke-test-pwa.js | tail -1
+    last env NODE_PATH="$(npm root -g)" node tools/smoke-test-friends.js
+    last env NODE_PATH="$(npm root -g)" node tools/smoke-test-pwa.js
     NODE_PATH="$(npm root -g)" node tools/smoke-test.js
     NODE_PATH="$(npm root -g)" node tools/smoke-test-l2.js
     echo "ui checks passed (plain style only; run 'full' to also check the 儿-style pass and the content)" ;;
   l2)
-    LEVEL=2 python3 -W ignore tools/build-words.py | tail -1
-    LEVEL=2 python3 -W ignore tools/build-grammar.py | tail -1
-    LEVEL=2 python3 -W ignore tools/build-webs.py | tail -1
-    LEVEL=2 python3 -W ignore tools/build-speech.py | tail -1
-    LEVEL=2 python3 -W ignore tools/build-exam.py | tail -1
+    last env LEVEL=2 python3 -W ignore tools/build-words.py
+    last env LEVEL=2 python3 -W ignore tools/build-grammar.py
+    last env LEVEL=2 python3 -W ignore tools/build-webs.py
+    last env LEVEL=2 python3 -W ignore tools/build-speech.py
+    last env LEVEL=2 python3 -W ignore tools/build-exam.py
     node tools/dump-sentences.js 2 > /tmp/shanlu-sentences-l2.json
     python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l2.json --level 2 --dataset "$DATASET"
     node tools/dump-sentences.js 2 --plain > /tmp/shanlu-sentences-l2-plain.json

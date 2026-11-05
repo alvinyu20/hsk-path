@@ -8,26 +8,28 @@
 # The dataset is a clone of https://github.com/drkameleon/complete-hsk-vocabulary (file complete.json), used only for checking.
 set -e
 cd "$(dirname "$0")/.."
+# last CMD...: run a command, show only its last line, and stop everything if it fails (a pipe into tail would hide the failure)
+last() { _o=$(mktemp); if "$@" > "$_o" 2>&1; then tail -n 1 "$_o"; rm -f "$_o"; else cat "$_o"; rm -f "$_o"; echo "FAILED: $*"; exit 1; fi; }
 DATASET="${1:-../hsk-dataset/complete.json}"
 LEVEL=1
 
 echo "== 1. build the data files from content/ (pinyin is generated, never typed)"
-python3 -W ignore tools/build-words.py | tail -1
-python3 -W ignore tools/build-grammar.py | tail -1
-python3 -W ignore tools/build-webs.py | tail -1
-python3 -W ignore tools/build-speech.py | tail -1
-python3 -W ignore tools/build-lexicon.py | tail -1
-python3 -W ignore tools/build-erhua.py | tail -1
-python3 -W ignore tools/build-exam.py | tail -1
-python3 -W ignore tools/build-preview.py "$DATASET" | tail -1
-python3 -W ignore tools/build-preview.py "$DATASET" 3 | tail -1
+last python3 -W ignore tools/build-words.py
+last python3 -W ignore tools/build-grammar.py
+last python3 -W ignore tools/build-webs.py
+last python3 -W ignore tools/build-speech.py
+last python3 -W ignore tools/build-lexicon.py
+last python3 -W ignore tools/build-erhua.py
+last python3 -W ignore tools/build-exam.py
+last python3 -W ignore tools/build-preview.py "$DATASET"
+last python3 -W ignore tools/build-preview.py "$DATASET" 3
 
 echo "== 1b. sync merge and gist round-trip"
-node tools/test-sync.js | tail -1
+last node tools/test-sync.js
 
-node tools/test-ascent.js | tail -1
-node tools/test-topics.js | tail -1
-node tools/test-friends.js | tail -1
+last node tools/test-ascent.js
+last node tools/test-topics.js
+last node tools/test-friends.js
 
 echo "== 2. the meaning rules must still catch the known past mistakes"
 python3 tools/check-content.py --selftest
@@ -46,11 +48,11 @@ echo "   word cuts: a sentence that can be cut two equally good ways must be rev
 LEVEL=1 python3 -W ignore tools/check-ties.py /tmp/shanlu-sentences.json
 
 echo "== 3b. HSK 2: build the data files and check every sentence at level 2, in both styles"
-LEVEL=2 python3 -W ignore tools/build-words.py | tail -1
-LEVEL=2 python3 -W ignore tools/build-grammar.py | tail -1
-LEVEL=2 python3 -W ignore tools/build-webs.py | tail -1
-LEVEL=2 python3 -W ignore tools/build-speech.py | tail -1
-LEVEL=2 python3 -W ignore tools/build-exam.py | tail -1
+last env LEVEL=2 python3 -W ignore tools/build-words.py
+last env LEVEL=2 python3 -W ignore tools/build-grammar.py
+last env LEVEL=2 python3 -W ignore tools/build-webs.py
+last env LEVEL=2 python3 -W ignore tools/build-speech.py
+last env LEVEL=2 python3 -W ignore tools/build-exam.py
 echo "   exam style (with 儿 endings)"
 node tools/dump-sentences.js 2 > /tmp/shanlu-sentences-l2.json
 python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l2.json --level 2 --dataset "$DATASET"

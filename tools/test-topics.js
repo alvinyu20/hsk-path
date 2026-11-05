@@ -2,16 +2,18 @@
 // Run: node tools/test-topics.js
 global.window = {};
 const fs = require('fs');
-for (const f of ['hsk1-words', 'hsk2-words', 'hsk1-webs', 'hsk2-webs']) eval(fs.readFileSync(__dirname + '/../data/' + f + '.js', 'utf8'));
+const has = (f) => fs.existsSync(__dirname + '/../data/' + f + '.js');
+const LEVELS = [1, 2, 3].filter(n => has('hsk' + n + '-words') && has('hsk' + n + '-webs'));   // a level counts once its words and word webs are built
+for (const n of LEVELS) for (const f of ['words', 'webs']) eval(fs.readFileSync(__dirname + '/../data/hsk' + n + '-' + f + '.js', 'utf8'));
 let failures = 0;
 const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else console.log('ok  ', m); };
 const master = JSON.parse(fs.readFileSync(__dirname + '/../content/topics.json', 'utf8')).topics;
-const L = { 1: window.HSK1_WORDS.map(w => w.zh), 2: window.HSK2_WORDS.map(w => w.zh) };
-const T = { 1: window.HSK1_WEBS.topics, 2: window.HSK2_WEBS.topics };
+const L = {}, T = {};
+for (const n of LEVELS) { L[n] = window['HSK' + n + '_WORDS'].map(w => w.zh); T[n] = window['HSK' + n + '_WEBS'].topics; }
 const topicsOf = (zh) => master.filter(t => t.words.includes(zh)).map(t => t.name);
 const sameTopic = (a, b) => master.some(t => t.words.includes(a) && t.words.includes(b));
 
-for (const n of [1, 2]) {
+for (const n of LEVELS) {
   const inTopic = new Set(); T[n].forEach(t => t.words.forEach(z => inTopic.add(z)));
   check(L[n].every(z => inTopic.has(z)), 'every HSK ' + n + ' word is in a topic');
   check(T[n].every(t => t.words.every(z => L[n].includes(z))), 'HSK ' + n + ' topics hold only HSK ' + n + ' words');
@@ -35,10 +37,11 @@ check(['多', '少', '一些', '一点儿'].every(z => topicsOf(z).includes('How
 check(topicsOf('下雨').includes('Weather') && topicsOf('冷').includes('Weather'), 'weather words are together');
 check(!master.some(t => t.words.includes('篮球') && t.words.some(z => ['猫', '狗', '忙', '晴', '商场'].includes(z))), 'sports are only grouped with sports-like words');
 // grammar categories (content/categories-grammar.json): every lesson of every level is in exactly one category
-for (const f of ['hsk1-grammar', 'hsk2-grammar']) eval(fs.readFileSync(__dirname + '/../data/' + f + '.js', 'utf8'));
+const GL = [1, 2, 3].filter(n => has('hsk' + n + '-grammar'));
+for (const n of GL) eval(fs.readFileSync(__dirname + '/../data/hsk' + n + '-grammar.js', 'utf8'));
 const cats = JSON.parse(fs.readFileSync(__dirname + '/../content/categories-grammar.json', 'utf8')).categories;
 const listed = cats.flatMap(c => c.lessons);
-const lessons = window.HSK1_GRAMMAR.lessons.concat(window.HSK2_GRAMMAR.lessons);
+const lessons = [].concat(...GL.map(n => window['HSK' + n + '_GRAMMAR'].lessons));
 check(lessons.every(l => listed.filter(x => x === l.id).length === 1) && listed.every(id => lessons.some(l => l.id === id)), 'every grammar lesson is in exactly one category');
 check(lessons.every(l => l.cat && typeof l.catOrder === 'number' && l.catBlurb), 'every grammar lesson carries its category');
 check(cats.every(c => c.lessons.length >= 3 && c.blurb), 'every grammar category has at least 3 lessons and a description');
