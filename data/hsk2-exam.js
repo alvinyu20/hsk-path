@@ -1642,7 +1642,7 @@ window.HSK2_EXAM = {
     {
      "s": "男",
      "zh": "明天你有时间吗？",
-     "py": "Míngtiān nǐ yǒushí jiān ma?",
+     "py": "Míngtiān nǐ yǒu shíjiān ma?",
      "en": "Do you have time tomorrow?"
     },
     {
@@ -2532,7 +2532,7 @@ window.HSK2_EXAM = {
     },
     {
      "zh": "明天你有时间吗？",
-     "py": "Míngtiān nǐ yǒushí jiān ma?",
+     "py": "Míngtiān nǐ yǒu shíjiān ma?",
      "en": "Do you have time tomorrow?",
      "ans": 4
     }

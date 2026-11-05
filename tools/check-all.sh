@@ -42,6 +42,8 @@ python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-plain.json --leve
 
 echo "   word boundaries: noun-type words must not be split into single characters unless reviewed (content/lexicon-*.tsv)"
 LEVEL=1 python3 -W ignore tools/check-lexicon.py "$DATASET" /tmp/shanlu-sentences.json
+echo "   word cuts: a sentence that can be cut two equally good ways must be reviewed (content/segment-reviewed.tsv)"
+LEVEL=1 python3 -W ignore tools/check-ties.py /tmp/shanlu-sentences.json
 
 echo "== 3b. HSK 2: build the data files and check every sentence at level 2, in both styles"
 LEVEL=2 python3 -W ignore tools/build-words.py | tail -1
@@ -53,6 +55,7 @@ echo "   exam style (with 儿 endings)"
 node tools/dump-sentences.js 2 > /tmp/shanlu-sentences-l2.json
 python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l2.json --level 2 --dataset "$DATASET"
 LEVEL=2 python3 -W ignore tools/check-lexicon.py "$DATASET" /tmp/shanlu-sentences-l2.json
+LEVEL=2 python3 -W ignore tools/check-ties.py /tmp/shanlu-sentences-l2.json
 echo "   plain style (no 儿 endings, the default)"
 node tools/dump-sentences.js 2 --plain > /tmp/shanlu-sentences-l2-plain.json
 python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l2-plain.json --level 2 --dataset "$DATASET" --plain

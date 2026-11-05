@@ -46,5 +46,6 @@ window.SHANLU_LEXICON = {
 "还钱": "huánqián",
 "地上": "dìshang",
 "服务员": "fúwùyuán",
-"学会": "xuéhuì"
+"学会": "xuéhuì",
+"还给": "huángěi"
 };

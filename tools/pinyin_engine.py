@@ -4,6 +4,7 @@ Used by build-words.py and build-grammar.py so every piece of content gets pinyi
 Pinyin is generated (pypinyin + content/pinyin-overrides.tsv + rules for 不 and 一), never typed by hand.
 """
 import os, re, tempfile
+from math import log
 import jieba
 from pypinyin import lazy_pinyin, Style
 
@@ -16,6 +17,7 @@ NUMBER_PREV = '第月期十二三四五六七八九零'
 DIGITS = '二三四五六七八九'
 NUM_CHARS = '一二两三四五六七八九十百千零'
 PROPER = {'中国', '汉语', '中文', '小明'}
+DEI_PREV = {'我', '你', '他', '她', '它', '我们', '你们', '他们', '她们', '大家', '也', '还', '都', '就', '先', '再', '今天', '明天', '现在', '晚上', '早上', '下午', '中午', '以后'}   # before 得 these make it děi
 ZHI_ONLY_NEXT = '是有能会想要好在可需用知爱喜吃去来看说做' + ''     # after 这/那 these start a verb, so 只 means "only"
 ATTACH = {'们'}
 TONES = {'ā': 1, 'ē': 1, 'ī': 1, 'ō': 1, 'ū': 1, 'ǖ': 1, 'á': 2, 'é': 2, 'í': 2, 'ó': 2, 'ú': 2, 'ǘ': 2,
@@ -41,6 +43,32 @@ def read_tsv(path):
     return rows
 
 
+class _Tokenizer(jieba.Tokenizer):
+    """jieba's own cut, with its ties made deterministic.
+    The weights here are 1000*len**3, so two ways of cutting a string often score exactly the same
+    (马路|上 and 马|路上, 不但|是 and 不|但是, 常常|用 and 常|常用). jieba breaks such a tie towards the longer
+    first word, but it compares floats, so adding any word to the dictionary could flip the result by
+    rounding noise alone. Rounding the scores keeps the tie a tie and so the cut always goes to the longer first word."""
+    def calc(self, sentence, DAG, route):
+        N = len(sentence)
+        route[N] = (0, 0)
+        logtotal = log(self.total)
+        for idx in range(N - 1, -1, -1):
+            route[idx] = max((round(log(self.FREQ.get(sentence[idx:x + 1]) or 1) - logtotal + route[x + 1][0], 8), x)
+                             for x in DAG[idx])
+
+
+class _TokenizerRight(_Tokenizer):
+    """The same cut with ties going to the shorter first word. Only used by tools/check-ties.py to find the sentences where a tie exists."""
+    def calc(self, sentence, DAG, route):
+        N = len(sentence)
+        route[N] = (0, 0)
+        logtotal = log(self.total)
+        for idx in range(N - 1, -1, -1):
+            best = max((round(log(self.FREQ.get(sentence[idx:x + 1]) or 1) - logtotal + route[x + 1][0], 8), -x) for x in DAG[idx])
+            route[idx] = (best[0], -best[1])
+
+
 class Engine:
     def __init__(self, official):
         self.official = list(official)
@@ -63,11 +91,17 @@ class Engine:
                 if r[0] and r[0] not in entries:
                     self.lex[r[0]] = r[1] if len(r) > 1 else ''
                     entries[r[0]] = 1000 * len(r[0]) ** 3 + 500
+        # words that win a tie: 有时间 is 有 + 时间, not 有时 + 间 (content/segment-prefer.tsv)
+        pp = os.path.join(C, 'segment-prefer.tsv')
+        if os.path.exists(pp):
+            for _, r in read_tsv(pp):
+                if r[0] in entries:
+                    entries[r[0]] += 1
         tmp = tempfile.NamedTemporaryFile('w', suffix='.txt', delete=False, encoding='utf-8')
         for k, v in entries.items():
             tmp.write('%s %d\n' % (k, v))
         tmp.close()
-        self.tk = jieba.Tokenizer(dictionary=tmp.name)
+        self.tk = _Tokenizer(dictionary=tmp.name)
         self.tk.initialize()
         os.unlink(tmp.name)
 
@@ -80,6 +114,14 @@ class Engine:
 
     def tokens(self, zh):
         return [t for t in self.tk.cut(zh, HMM=False) if t.strip()]
+
+    def tokens_right(self, zh):
+        """The cut with ties going the other way (see _TokenizerRight)."""
+        if not hasattr(self, '_tk_right'):
+            import copy
+            self._tk_right = copy.copy(self.tk)
+            self._tk_right.__class__ = _TokenizerRight
+        return [t for t in self._tk_right.cut(zh, HMM=False) if t.strip()]
 
     def word_tokens(self, zh):
         return [t for t in self.tokens(zh) if t not in P_MAP and t not in ('—', '——')]
@@ -133,6 +175,19 @@ class Engine:
                 nxt = parts[i + 1][1] if i + 1 < len(parts) and parts[i + 1][0] == 'w' else ''
                 measure = bool(prev) and (prev[-1] in NUM_CHARS or (prev[-1] in '几这那哪每' and nxt[:1] not in ZHI_ONLY_NEXT))
                 parts[i] = ('w', '只', 'zhī' if measure else 'zhǐ')
+        # 得: děi ("must") before a verb after a pronoun, a time word, an adverb like 也 还 都 就 先 or at the start of a clause;
+        #     dé ("to get") in 得了 + a number (他考试得了一百分); de (the particle) after a verb (跑得很快), which is the default reading
+        for i, p in enumerate(parts):
+            if p[0] == 'w' and p[1] == '得':
+                prev = parts[i - 1] if i > 0 else None
+                pw = prev[1] if prev and prev[0] == 'w' else ''
+                nxt = parts[i + 1] if i + 1 < len(parts) else None
+                nw = nxt[1] if nxt and nxt[0] == 'w' else ''
+                nn = parts[i + 2][1] if i + 2 < len(parts) and parts[i + 2][0] == 'w' else ''
+                if nw == '了' and nn and nn[0] in NUM_CHARS:
+                    parts[i] = ('w', '得', 'dé')
+                elif nw and nw != '了' and (prev is None or prev[0] == 'p' or pw in DEI_PREV):
+                    parts[i] = ('w', '得', 'děi')
         # proper nouns get a capital
         for i, p in enumerate(parts):
             if p[0] == 'w' and p[1] in PROPER:

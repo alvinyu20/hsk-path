@@ -128,7 +128,8 @@ def meaning_checks(zh, en):
         out.append(('ERROR', 'meaning', 'English is an offer ("would you / do you want") but the Chinese is a plain habit question (needs 想/要)'))
 
     # can / may
-    if re.search(r"\b(can|can't|cannot|could|able to|may|allowed|know how)\b", e) and not re.search('会|能|可以|懂得', z):
+    z_pot = re.search('[听看吃找买做写说记搬拿读喝走跑学爬睡等想][得不](懂|见|清楚|完|到|住|动|起|出|好|对|会|了)', z)     # 听得懂 / 听不懂: the 得 / 不 + result form already means can / cannot
+    if re.search(r"\b(can|can't|cannot|could|able to|may|allowed|know how)\b", e) and not re.search('会|能|可以|懂得', z) and not z_pot:
         out.append(('ERROR', 'meaning', 'English says can/may/able but the Chinese has no 会 / 能 / 可以'))
     z_modal = re.sub('开会|会议|晚会|运动会|机会|一会儿|一会|社会|会话|开会|学会|懂得', '', z)       # 会 inside these words is not the modal verb
     if re.search('会|能|可以', z_modal) and not re.search(r"can|could|able|may|allowed|know how|will|might|should|be able|please|fine|okay|\bok\b|all right|alright|either", e):
@@ -197,10 +198,13 @@ def meaning_checks(zh, en):
             continue
         if after == '分' and not zc[ed:ed + 2] == '分钟':
             continue
+        if len(s) >= 2 and not re.search('[零十百千]', s):       # 两三个, 七八天, 一两次: two numbers side by side = "about", each one counts
+            for ch in s:
+                if parse_cn(ch) != 1:
+                    zvals.add(parse_cn(ch))
+            continue
         v = parse_cn(s)
         if v == 1:
-            continue
-        if re.fullmatch(r'十[零一二三四五六七八九]?', s) and before in '' and False:
             continue
         zvals.add(v)
     # times and dates
@@ -265,7 +269,7 @@ def meaning_checks(zh, en):
     toks_past = [w for w in re.findall(r"[a-z]+", e_tense) if re.fullmatch(r'\w+ed', w) and w not in PAST_ADJ] + [w for w in re.findall(r'[a-z]+', e) if w in ('ate', 'bought', 'saw', 'heard', 'went', 'drank', 'had', 'got', 'said', 'took', 'came', 'made', 'wrote', 'was', 'were', 'did')]
     if toks_past and not re.search('了|没|昨天|昨晚|前天|去年|上个|上星期|过|以前|从前|当时|后来|小时候|是.*的|看见|听见|才|已经|刚|以为', z) and not re.search(r"\b(has|have|had been)\b", e):
         out.append(('WARN', 'meaning', 'English is in the past (%s) but the Chinese has no 了 or past time word' % toks_past[0]))
-    if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|no longer|about to|get to|arrive|reach|come to|soon)\b", e):
+    if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|no longer|about to|get to|arrive|reach|come to|soon)\b", e):
         out.append(('WARN', 'meaning', '了 in the Chinese: English shows no completed action or change of state'))
     # ZH 在 + verb = in progress
     if re.search('正在|(?<![不要])在(看|吃|喝|做|写|读|听|打|找|玩|睡|说话)', z) and not re.search(r'\b\w+ing\b|\bright now\b|\bat\b|\bin\b', e):
@@ -385,7 +389,7 @@ def load_reviewed():
             if line.strip() and not line.startswith('#'):
                 f = line.rstrip('\n').split('\t')
                 if len(f) >= 2:
-                    out[f[0]] = f[1]
+                    out.setdefault(f[0], []).append(f[1])      # a character may have several reviewed readings (得: de, děi, dé)
     return out
 
 
@@ -430,8 +434,8 @@ def pinyin_check(zh, py):
     spots = [k for k, c in enumerate(chars) if c in REVIEWED]
     if spots and len(spots) <= 6:
         import itertools
-        for choice in itertools.product([False, True], repeat=len(spots)):
-            pick = {k: REVIEWED[chars[k]] for k, use in zip(spots, choice) if use}
+        for choice in itertools.product(*[[None] + REVIEWED[chars[k]] for k in spots]):
+            pick = {k: r for k, r in zip(spots, choice) if r}
             res = _pinyin_variant(chars, py, pick)
             if (len(res), any(f[0] == 'ERROR' for f in res)) < (len(best), any(f[0] == 'ERROR' for f in best)):
                 best = res

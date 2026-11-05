@@ -1,0 +1,12 @@
+# Sentences where two cuts into words score the same (tools/check-ties.py). The cut listed here was checked sentence by sentence (by Claude; no teacher has read it) and is the right one.
+# Columns: sentence <TAB> words separated by spaces <TAB> why. If the engine ever cuts one of these differently, the check fails.
+她是和朋友一起来的。	她 是 和 朋友 一起 来 的 。	longer first word is right
+他每天早上去公园锻炼。	他 每天 早上 去 公园 锻炼 。	longer first word is right
+你先走，我马上来。	你 先 走 ， 我 马上 来 。	longer first word is right
+马路上的车很多。	马路 上 的 车 很 多 。	longer first word is right
+我常常用手机查词典。	我 常常 用 手机 查 词典 。	longer first word is right
+他不但是我的同学，而且是我的朋友。	他 不但 是 我 的 同学 ， 而且 是 我 的 朋友 。	longer first word is right
+请等一下，他马上来。	请 等 一下 ， 他 马上 来 。	longer first word is right
+天冷了，你最好多穿一点儿衣服。	天 冷 了 ， 你 最好 多 穿 一点儿 衣服 。	longer first word is right
+外面很冷，你最好多穿一点儿。	外面 很 冷 ， 你 最好 多 穿 一点儿 。	longer first word is right
+你最好多穿一点儿	你 最好 多 穿 一点儿	longer first word is right
