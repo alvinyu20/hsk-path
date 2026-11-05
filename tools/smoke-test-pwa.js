@@ -35,7 +35,7 @@ function copySite() {
   const ctx = await browser.newContext({ viewport: { width: 1100, height: 900 }, acceptDownloads: true });
   const page = await ctx.newPage();
   const errors = [], hosts = new Set();
-  page.on('console', (m) => { if (m.type() === 'error' && !IGNORE.some((h) => m.text().includes(h))) errors.push(m.text()); });
+  page.on('console', (m) => { if (m.type() === 'error' && !IGNORE.some((h) => m.text().includes(h))) errors.push('console: ' + m.text().slice(0, 300) + ' @' + (m.location().url || '') + ':' + m.location().lineNumber); });
   page.on('pageerror', (e) => errors.push(String(e)));
   page.on('request', (r) => hosts.add(new URL(r.url()).hostname));
   await ctx.addInitScript(() => {
@@ -43,6 +43,7 @@ function copySite() {
     document.addEventListener('securitypolicyviolation', (e) => window.__csp.push(e.violatedDirective + ' ' + e.blockedURI + (e.blockedURI === 'inline' ? ' [' + (e.sample || '') + ' @' + (e.sourceFile || '').split('/').pop() + ':' + e.lineNumber + ' ' + (e.target && e.target.outerHTML ? e.target.outerHTML.slice(0, 140) : String(e.target)) + ']' : '')));
   });
   await page.goto(site); await page.waitForSelector('.app');
+  const vAtLoad = await page.evaluate(() => window.__csp.length);
   const html = await (await ctx.request.get(site)).text();
   const cspTag = (/http-equiv="Content-Security-Policy" content="([^"]+)"/.exec(html) || [])[1] || '';
   check(/script-src 'self'(;|$)/.test(cspTag) && !/unsafe-eval/.test(cspTag) && !/script-src[^;]*unsafe-inline/.test(cspTag), 'the page carries a policy that allows scripts only from this site (no inline, no eval)');
@@ -60,7 +61,7 @@ function copySite() {
   check(fontsOk.zh && fontsOk.sans && fontsOk.py && fontsOk.loaded >= 3, 'the three typefaces load from this site (' + fontsOk.loaded + ' font files in use)');
   check(!Array.from(hosts).some((h) => h !== '127.0.0.1'), 'opening the site and two screens contacts no other address (' + Array.from(hosts).join(', ') + ')');
   const violations = await page.evaluate(() => window.__csp.slice());
-  check(violations.length === 0 && errors.length === 0, 'the site runs under its own policy with no violation and no console error ' + violations.concat(errors).slice(0, 3).join(' | '));
+  check(violations.length === 0 && errors.length === 0, 'the site runs under its own policy with no violation and no console error [' + violations.length + ' violations (' + vAtLoad + ' at load), ' + errors.length + ' errors] ' + violations.concat(errors).slice(0, 3).join(' | '));
   // the policy really bites, and really lets the app's own addresses through
   const probe = await page.evaluate(async () => {
     const out = {};
