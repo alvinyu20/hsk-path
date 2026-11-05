@@ -4,8 +4,9 @@
  *   - the content-security tag is taken out of index.html, because tests talk to fake servers on other addresses
  *     (tools/smoke-test-pwa.js runs the real tag with the real addresses);
  *   - sw.js is an empty one (the real offline copy would cache files between test runs), unless the test asks: server(root, { sw: true }).
- *   - server(root, { level3: true }) opens HSK 3 for the HSK 3 test while it is still closed on the real site: level.js gets MAX_LEVEL = 3 and
- *     index.html gets the HSK 3 data scripts. (When HSK 3 is released, both go into the real files and this option does nothing.) */
+ *   - server(root, { level3: true }) would open HSK 3 while it is still closed on the real site (level.js gets MAX_LEVEL = 3 and index.html
+ *     gets the HSK 3 data scripts). HSK 3 has been released, so both are in the real files and this option does nothing; it is kept for the
+ *     next level, which can be copied from it. */
 const http = require('http');
 const fs = require('fs');
 const path = require('path');

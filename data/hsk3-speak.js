@@ -53,7 +53,7 @@ window.HSK3_SPEAK = {
     {
      "zh": "谢谢。你的房间在八层，坐电梯就可以上去。",
      "py": "Xièxie. Nǐ de fángjiān zài bā céng, zuò diàntī jiù kěyǐ shàngqù.",
-     "en": "Thank you. Your room is on the eighth floor; you can go up by the lift."
+     "en": "Thank you. Your room is on the eighth floor; you can go up by the elevator."
     },
     {
      "zh": "在一层，早上六点半开始。",
@@ -406,7 +406,7 @@ window.HSK3_SPEAK = {
     {
      "zh": "在那边，然后坐电梯上去。",
      "py": "Zài nàbiān, ránhòu zuò diàntī shàngqù.",
-     "en": "Over there, and then go up by the lift."
+     "en": "Over there, and then go up by the elevator."
     },
     {
      "zh": "不客气，再见！",

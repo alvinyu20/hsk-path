@@ -107,7 +107,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const home = await text();
   check(home.includes('197 words to go'), 'the trail counts the 197 HSK 2 words');
   check(home.includes('Listening drill') && home.includes('Say: ') && home.includes('Grammar: Comparing'), 'Today offers word webs, the listening drill, a practice script and grammar');
-  check(home.includes('HSK 2 level exam') && home.includes('Reach 80%') && (await page.locator('.rg').count()) === 4, 'the home card is the HSK 2 level exam with four skill rings and the pass bar');
+  check(home.includes('HSK 2 level exam') && home.includes('to open HSK 3') && (await page.locator('.rg').count()) === 4, 'the home card is the HSK 2 level exam with four skill rings, and says passing it opens HSK 3');
   const st = await page.evaluate(() => ({ n: Object.keys(window.shanlu.state.ws).length, l1: !!window.shanlu.state.ws['你好'], l2: !!window.shanlu.state.ws['机场'] }));
   check(st.n === 197 && !st.l1 && st.l2, 'progress holds the 197 HSK 2 words and none of the HSK 1 words');
   const kidWord = await page.evaluate((erhua) => ({ has: !!window.shanlu.state.ws[erhua ? '男孩儿' : '男孩'], other: !!window.shanlu.state.ws[erhua ? '男孩' : '男孩儿'], moment: !!window.shanlu.state.ws['一会儿'] }), erhuaMode);
@@ -254,8 +254,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForTimeout(100);
   rt = await text();
   check(rt.includes('200 / 200') && rt.includes('HSK 2 seal earned'), 'a perfect HSK 2 sitting scores 200 of 200 and earns the seal');
-  check(!rt.includes('is now open'), 'there is no next level to open yet, so no unlock card');
-  check(await page.evaluate(() => !!JSON.parse(localStorage.getItem('shanlu-passed') || '{}')[2]), 'the HSK 2 pass is remembered (it will open HSK 3 later)');
+  check(rt.includes('HSK 3 is now open'), 'a perfect HSK 2 sitting says HSK 3 is now open');
+  check(await page.evaluate(() => !!JSON.parse(localStorage.getItem('shanlu-passed') || '{}')[2]), 'the HSK 2 pass is remembered (it opens HSK 3)');
   await page.locator('button', { hasText: 'Back to the exam page' }).click();
   check((await text()).includes('200 / 200'), 'the sitting appears in the exam history');
 

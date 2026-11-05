@@ -125,7 +125,7 @@ window.HSK3_WEBS = {
      ]
     },
     {
-     "en": "Guests are coming to our home, so Mum has cooked a lot of dishes.",
+     "en": "Guests are coming to our home, so Mom has cooked a lot of dishes.",
      "zh": "有___来我们家，妈妈做了很多菜。",
      "ans": "客人",
      "opts": [
@@ -974,7 +974,7 @@ window.HSK3_WEBS = {
      ]
     },
     {
-     "en": "Mum cares about me a lot. Every day she asks me if I have eaten.",
+     "en": "Mom cares about me a lot. Every day she asks me if I have eaten.",
      "zh": "妈妈很___我，她每天都问我吃饭了吗。",
      "ans": "关心",
      "opts": [
@@ -1059,7 +1059,7 @@ window.HSK3_WEBS = {
    ],
    "gaps": [
     {
-     "en": "Please switch it off in class, and do not look at your phone.",
+     "en": "Please turn off your phone in class, and do not look at it.",
      "zh": "上课的时候请___，不要看手机。",
      "ans": "关机",
      "opts": [
@@ -1092,7 +1092,7 @@ window.HSK3_WEBS = {
      ]
     },
     {
-     "en": "There are many people on the metro, so I listen to music with headphones.",
+     "en": "There are many people on the subway, so I listen to music with headphones.",
      "zh": "地铁上人很多，我用___听音乐。",
      "ans": "耳机",
      "opts": [
@@ -1579,7 +1579,7 @@ window.HSK3_WEBS = {
      ]
     },
     {
-     "en": "My sister’s clothes and mine are the same size.",
+     "en": "My sister's clothes and mine are the same size.",
      "zh": "我和姐姐的衣服___大。",
      "ans": "一样",
      "opts": [
@@ -2040,7 +2040,7 @@ window.HSK3_WEBS = {
      ]
     },
     {
-     "en": "Mum is ill, so I want to go home and look after her.",
+     "en": "Mom is ill, so I want to go home and look after her.",
      "zh": "妈妈生病了，我要回家___她。",
      "ans": "照顾",
      "opts": [
@@ -2534,7 +2534,7 @@ window.HSK3_WEBS = {
    ],
    "gaps": [
     {
-     "en": "Guests have come to our home, and Mum is cooking.",
+     "en": "Guests have come to our home, and Mom is cooking.",
      "zh": "我们家来了___，妈妈在做饭。",
      "ans": "客人",
      "opts": [
@@ -2556,7 +2556,7 @@ window.HSK3_WEBS = {
      ]
     },
     {
-     "en": "Tomorrow I am going to my friend’s home as a guest.",
+     "en": "Tomorrow I am going to my friend's home as a guest.",
      "zh": "明天我要去朋友家___。",
      "ans": "做客",
      "opts": [
@@ -3442,7 +3442,7 @@ window.HSK3_WEBS = {
   {
    "a": "阿姨",
    "b": "叔叔",
-   "note": "阿姨 is a woman about your mother’s age and 叔叔 is a man about your father’s age.",
+   "note": "阿姨 is a woman about your mother's age and 叔叔 is a man about your father's age.",
    "pair": true
   }
  ],
@@ -3492,8 +3492,8 @@ window.HSK3_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我买了一双新鞋，还给朋友写了一封信。",
-    "py": "Wǒ mǎi le yì shuāng xīn xié, huángěi péngyou xiě le yì fēng xìn.",
+    "zh": "我买了一双新鞋，也给朋友写了一封信。",
+    "py": "Wǒ mǎi le yì shuāng xīn xié, yě gěi péngyou xiě le yì fēng xìn.",
     "en": "I bought a pair of new shoes and also wrote a letter to a friend."
    },
    "words": [
@@ -4080,7 +4080,7 @@ window.HSK3_WEBS = {
    "sentence": {
     "zh": "我们搬家了，新房子在十二层，有电梯。",
     "py": "Wǒmen bānjiā le, xīn fángzi zài shíèr céng, yǒu diàntī.",
-    "en": "We have moved house; the new home is on the 12th floor and has a lift."
+    "en": "We have moved house; the new home is on the 12th floor and has an elevator."
    },
    "words": [
     "房子",

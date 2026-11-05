@@ -91,7 +91,7 @@ if [ "$2" != "--no-browser" ]; then
   NODE_PATH="$(npm root -g)" node tools/smoke-test-l2.js
   echo "== 5d. the same again with 儿 endings switched on"
   NODE_PATH="$(npm root -g)" node tools/smoke-test-l2.js --erhua
-  echo "== 5e. HSK 3 (opened for the test only): every screen that exists, with all three levels together"
+  echo "== 5e. HSK 3: every screen, the exam and the level lock, with all three levels together"
   NODE_PATH="$(npm root -g)" node tools/smoke-test-l3.js
   echo "== 5f. the same again with 儿 endings switched on"
   NODE_PATH="$(npm root -g)" node tools/smoke-test-l3.js --erhua

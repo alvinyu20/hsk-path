@@ -1329,7 +1329,7 @@ window.HSK3_EXAM = {
      "s": "女",
      "zh": "是啊，我考试没考好。",
      "py": "Shì a, wǒ kǎoshì méi kǎo hǎo.",
-     "en": "No, I did not do well in the exam."
+     "en": "Right, I did not do well in the exam."
     }
    ],
    "q": {

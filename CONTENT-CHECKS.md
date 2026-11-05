@@ -66,6 +66,10 @@ Known false alarms go in `content/check-waivers.tsv`, each with a reason. Questi
 - A review pack for a Chinese AI is generated from what the learner actually sees (plain style): review/chinese-ai/.
 - **The pinyin check accepts any reading a dictionary lists for a character.** So 长 (cháng, "long") was shown as zhǎng, 教 (jiāo, "to teach") as jiào, and the particles 得, 地 and 过 as dé, dì and guò, and every check passed (found 31 Oct 2026, while preparing the HSK 2 review packs). Fixes: `content/pinyin-overrides.tsv` (what the site shows); `content/pinyin-reviewed.tsv` (tells the checker that for these characters pypinyin's usual reading is not the taught one, so both readings are accepted); a self-test that fails if the shown readings regress; and a scan that compares every token's reading with the context reading from pypinyin and lists the differences for a human to read (the differences that remain are neutral tones and 一/不 changes, by design). Read the list again for every new level.
 - Neutral tones: the site follows the dictionary (爷爷 yéye, 还是 háishi, 回来 huílai); a Chinese AI should say whether a beginner should see them.
+- **Whole-sentence pinyin rules are separate from word readings.** Reading each token on its own with pypinyin hid errors that the sentence rules fix (只 zhī/zhǐ, 过 guo/guò, 得 děi/dé/de). The HSK 3 scan found 星期六只开半天 read with zhī (a measure word) and 过得, 过马路, 过生日 read with guo, which also affected the live HSK 2 exam. They are now rules in `tools/pinyin_engine.py`. When you scan for polyphones, scan the finished sentences, not the tokens.
+- **A solid word in the lexicon wins over context.** 还给 is entered as huán gěi ("give back"), so 我买了一双新鞋，还给朋友写了一封信 ("... and also wrote a letter to a friend") was shown as huángěi. The sentence was reworded (也给朋友写了…). If a lexicon word can also be two ordinary words in a sentence, do not write the second reading.
+- **A random draw can hand out the answer.** The word-order exam question shuffles the words; for a sentence with repeated words the shuffle sometimes came out in the right order (1 failed browser run in about 5). The shuffle now rejects any order that is right or in the list of accepted orders, and the test checks it.
+- **A `//` comment at the end of a line of generated JavaScript swallowed the next statement** and the page stopped loading. Comments go on their own line.
 
 ## HSK 2 (added 31 Oct 2026)
 
@@ -77,6 +81,18 @@ HSK 2 is a separate level (`content/l2/`, tools run with `LEVEL=2`). The level c
 - **Neutral tones.** Words are shown with the dictionary's neutral tones (爷爷 yéye, 还是 háishi), but the direction compounds (回来, 回去, 上来, 下来, 起来 ...) all show their full tones so there is one rule. 一会儿 is shown with the tone change (yíhuìr), like 一起 yìqǐ at HSK 1.
 - **HSK 3 preview words** for the AI conversation at HSK 2 come from the dataset's level-3 words (481 of 487; six whose sense I was unsure of were left out).
 - Nothing has been read by a person who reads Chinese. `tools/make-ai-review-pack-l2.py` builds the packs for that (`review/chinese-ai-hsk2/`).
+
+## HSK 3 (added 5 Nov 2026)
+
+HSK 3 is the third level (`content/l3/`, tools run with `LEVEL=3`). The level checker allows words from HSK 1, 2 and 3 only (小明 is the one name allowed; 没 and 杯 come in through `content/allowed-extra.tsv`); every check runs in both the 儿 style and the plain style. What is different from HSK 1 and HSK 2:
+- **Words: 491 cards from the 500 band 3 entries.** The list was read from a third-party copy of the syllabus PDF (`content/hsk3-official-500.tsv`) in two independent passes by a summarising fetch tool; both passes agree on all 500 headwords. It was **not compared with the official document**. Nine entries reuse a headword from a lower level with a different sense or reading (得 dé and děi, 地, 过去, 还, 会, 站, 长, 只); they are taught in a grammar lesson on new meanings, not as separate cards. Glosses, parts of speech, notes and three example sentences per word were written by AI.
+- **Grammar outline is my own, not the official list** (`content/l3/grammar-outline.txt`, 52 points, 28 lessons, 140 exercises), built from the grammar of the HSK 3 words and the Chinese Grammar Wiki's lists. `tools/build-grammar.py` fails if a point has no lesson. Only four lessons were compared page by page with the Wiki.
+- **Mock exam layout** follows the HSK 3 sample papers of the 2012 test (listening 10 + 10 + 10 + 10 = 40 questions, reading 10 + 10 + 10 = 30), because the 2025 layout was not available to me. The bank has 78 listening and 56 reading questions. Each section is scored out of 100; 120 of 200 (60%) is the official-style pass mark and the site's lock asks for 80% in both sections. Pictures are emoji (every set was written to have one answer per picture; emoji can still be ambiguous).
+- **Writing practice** (10 questions: put 5 word sets in order, type one missing character in 5 sentences; bank of 32) is offered on its own. It is practice, typed or tapped: it cannot judge handwriting, and it does **not** count towards the seal.
+- **Pinyin rules added:** 只 after 星期X is zhǐ; 过 is guò before 得, 马路, 生日, 日子; solid words 长得 (zhǎng de), 从来, 对面, 热水, 车上 (and others) in `content/lexicon-words.tsv`. Re-scanned with a list of 141 distinct polyphone tokens (below).
+- **Topics were re-thought, as the process above says.** "Phones and the internet" became "Phones, email and the internet", "Movies, music and TV" became "Movies, music, TV and news", and "Body and health" was split into "Parts of the body" and "Health and illness". Progress is saved by word, so nothing is lost. The word webs have 28 shared-character groups, 29 opposite pairs and 72 topics at HSK 3.
+- **Unlocking.** HSK 3 stays behind the lock: it opens when the HSK 2 exam is passed (80% in both sections), and "open lock" in Settings still lets anyone in.
+- Nothing has been read by a person who reads Chinese. `tools/make-ai-review-pack-l3.py` builds the packs for that (`review/chinese-ai-hsk3/`); they have not yet been run past DeepSeek or Qwen.
 
 ## Review log
 
@@ -108,6 +124,40 @@ HSK 2 is a separate level (`content/l2/`, tools run with `LEVEL=2`). The level c
 - Character glosses inside the word webs (for example 脑 = brain inside 电脑) and the "what to listen for" notes were written by AI and have no second source.
 - The browser's voice is used for all audio. Its Chinese can be wrong or odd, especially in context, and the quality varies by device.
 - Questions only a native speaker can settle: `content/ask-a-teacher.tsv`.
+
+### 5 Nov 2026, HSK 3 (491 words, 28 grammar lessons, 24 listening clips, mock exam)
+
+**Sources used**
+- Word list: the band 3 entries of the November 2025 syllabus from a third-party copy of the PDF, read twice by a summarising tool (agree on all 500). Not compared with the official document.
+- Grammar: my own outline (52 points). Four lessons compared with the Chinese Grammar Wiki; the others rely on my own knowledge.
+- Exam layout: the 2012 HSK 3 sample papers.
+
+**Errors found and fixed**
+1. 长 was read cháng in 他长得又高又瘦 (the verb 长得 "to look", zhǎng de). Fixed with a solid lexicon entry.
+2. 星期六只开半天 showed 只 as zhī. Fixed in the engine (after 星期 and 礼拜 it is zhǐ).
+3. 过 was read guo in 过得, 过马路, 过生日. Fixed in the engine; this also corrected the live HSK 2 exam ("guo shēngrì").
+4. 还给朋友写了一封信 was read huángěi ("give back"). Reworded with 也. Found by the polyphone scan of the finished sentences.
+5. The exam bank, when first checked, contained words above HSK 3, names other than 小明, 儿 endings in the wrong style, English that did not match, and 的哥 (a pypinyin misreading). All reworded.
+6. Word-boundary check: 面条, 对面, 热水, 车上 were split into single characters; they are now written 面条儿 in the sources and entered as solid words (with 从来).
+7. The word-order exam question could shuffle into the right order. Fixed in the app; the test now checks it.
+8. The first HSK 3 plain-style checks were not valid until the 儿 switch covered HSK 3. Fixed, and re-run (0 errors in both styles).
+9. About a dozen small corrections found by reading every sentence next to its English (below). Chinese: 这个楼, 这个铅笔 and 这个酒 (measure words that sound off) became 我们楼, 我的铅笔 and 这种酒; 花已经开花了 became 树已经开花了; 什么事发生了 became 发生什么事了; 一块是十毛 became 一块钱是十毛; 我们三年不见了 became 我们好久不见了. English: "There are my clothes in this suitcase", the answer to 是啊 that began "No", "Please switch it off in class" (nothing for "it" to refer to), and the spellings "metro", "lift", "Mum" and curly apostrophes now match the rest of the site.
+
+**Passes done**
+- Automated rules (level, pinyin, Chinese against English, gloss, word boundaries, segmentation ties) on 4,199 items (2,234 distinct sentences): 0 errors, 0 unexplained warnings, 4 waivers (each with a reason in `content/check-waivers.tsv`), in both styles.
+- A read of **every distinct sentence next to its English** (2,234). This is **not a blind back-translation**: the sentences were written in the same project, so the read is biased towards agreeing with them. It found the small items above and nothing that changes a meaning.
+- A read of all 28 grammar explanations and mistake lines for claims that are wrong or too strong. Two lines were reworded: 又 is "not for a plan or a request" (not "not for the future", since 明天又是星期一 is fine) and the 刚 mistake example 我刚吃饭 (incomplete as a sentence) became 我刚到家.
+- A polyphone scan of the finished sentences: 141 distinct tokens with more than one possible reading (的, 得, 地, 了, 着, 过, 还, 行, 长, 会, 重, 发, 数, 好, 都, 为, 觉, 假 ...) were read with an example. One real error (还给) and one false alarm (a word note that is shown without pinyin).
+- Browser tests (`smoke-test-l3.js`, 80 checks of the exam alone) for every screen, in both styles, with all three levels together, and the level lock.
+
+**Not done**
+- No human has reviewed any of it. The packs are in `review/chinese-ai-hsk3/`.
+- The word list was not compared with the official document; the grammar outline is not the official one; only four lessons were cross-checked against a second source.
+- The separate "high-risk word read" (了, 在, 呢, 吧, 会, 能, 可以, 想, 要, 还, 再, 也, 都) was not done as its own pass; those sentences were covered by the full read above and by the automated meaning rules.
+- 园里的花都开了 (the example for the word 园) is a little unusual because 园 is mostly used inside words; the word's note says so. A teacher should say whether to keep it.
+- The exam layout is from older papers; exam pictures are emoji; the writing practice cannot judge handwriting.
+- The pinyin of the "what to listen for" notes in the listening clips was only checked by script.
+- `review/audio-script-hsk2.tsv` has not been regenerated and is out of date.
 
 ## Word web topics (content/topics.json)
 One shared list of topics for every level, written by hand: each topic has a group, the words (from any level), and a sentence per level. A level shows only its own words in a topic; a topic with fewer than 3 words at a level is hidden unless it is the only home of one of them (tools/topics.py). All Word web topic sentences go through the same sentence checks. `node tools/test-topics.js` checks that every word is in a topic and that known bad groupings do not come back (万 with numbers, dog/cat with animals, 从小 not with weather, left/right not with shops). When adding a word to a topic, ask: would a learner see why these words belong together? A word may sit in more than one topic.

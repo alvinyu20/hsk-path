@@ -1,8 +1,8 @@
 /* Smoke test for HSK 3: loads the site at level 3 in headless Chromium and checks the parts that exist at this level
  * (words, word webs, every grammar lesson, tests, listening lab, practice scripts, AI conversation, level switch, separate progress,
  * All levels with three levels, the mock exam including the writing practice).
- * HSK 3 is closed on the real site until it is released, so this test opens it: the test server gives level.js MAX_LEVEL = 3 and
- * adds the HSK 3 data scripts to the page (tools/test-static.js, option level3). The lock itself is tested by smoke-test-l2.js.
+ * HSK 3 is open on the real site (behind the lock: it needs the HSK 2 exam passed); the first checks here look at that lock, and
+ * smoke-test-l2.js checks that passing the HSK 2 exam opens HSK 3.
  * Usage: node tools/smoke-test-l3.js [--erhua]   (needs Playwright). Tests for the other levels: smoke-test.js, smoke-test-l2.js. */
 const fs = require('fs');
 const path = require('path');
@@ -10,7 +10,7 @@ const { chromium } = require('playwright');
 
 const root = path.join(__dirname, '..');
 const erhuaMode = process.argv.includes('--erhua');
-const server = require('./test-static').server(root, { level3: true });
+const server = require('./test-static').server(root);
 
 let failures = 0;
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };

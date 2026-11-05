@@ -9,7 +9,7 @@
   var LEVEL_KEY = 'shanlu-level';
   var PASSED_KEY = 'shanlu-passed';              // { "1": time } remembered even if that level's progress is later reset
   var PROGRESS_KEYS = { 1: 'shanlu-progress-v1', 2: 'shanlu-progress-v1-l2', 3: 'shanlu-progress-v1-l3' };
-  var MAX_LEVEL = 2;                            // the highest level that is open to learners; HSK 3 is built but stays closed until it has passed every check
+  var MAX_LEVEL = 3;                            // the highest level that is open to learners (a level is added here only after it has passed every check)
   var PASS_PCT = 80;
   var DEFAULT_SIZE = { l: 20, r: 20 };          // exam entries saved before the totals were recorded were HSK 1: 20 + 20 questions
 
