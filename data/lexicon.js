@@ -36,5 +36,9 @@ window.SHANLU_LEXICON = {
 "十月": "shíyuè",
 "十一月": "shíyīyuè",
 "十二月": "shíèryuè",
-"下次": "xiàcì"
+"下次": "xiàcì",
+"东边": "dōngbiān",
+"西边": "xībiān",
+"南边": "nánbiān",
+"北边": "běibiān"
 };

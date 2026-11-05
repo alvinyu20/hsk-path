@@ -16,6 +16,7 @@ NUMBER_PREV = '第月期十二三四五六七八九零'
 DIGITS = '二三四五六七八九'
 NUM_CHARS = '一二两三四五六七八九十百千零'
 PROPER = {'中国', '汉语', '中文', '小明'}
+ZHI_ONLY_NEXT = '是有能会想要好在可需用知爱喜吃去来看说做' + ''     # after 这/那 these start a verb, so 只 means "only"
 ATTACH = {'们'}
 TONES = {'ā': 1, 'ē': 1, 'ī': 1, 'ō': 1, 'ū': 1, 'ǖ': 1, 'á': 2, 'é': 2, 'í': 2, 'ó': 2, 'ú': 2, 'ǘ': 2,
          'ǎ': 3, 'ě': 3, 'ǐ': 3, 'ǒ': 3, 'ǔ': 3, 'ǚ': 3, 'à': 4, 'è': 4, 'ì': 4, 'ò': 4, 'ù': 4, 'ǜ': 4}
@@ -125,11 +126,13 @@ class Engine:
                 del parts[i]
             else:
                 i += 1
-        # 只: zhī after a number, zhǐ otherwise
+        # 只: zhī (the measure word) after a number, or after 几 这 那 哪 每 when a noun follows; zhǐ ("only") otherwise
         for i, p in enumerate(parts):
             if p[0] == 'w' and p[1] == '只':
                 prev = parts[i - 1][1] if i > 0 and parts[i - 1][0] == 'w' else ''
-                parts[i] = ('w', '只', 'zhī' if prev and prev[-1] in NUM_CHARS else 'zhǐ')
+                nxt = parts[i + 1][1] if i + 1 < len(parts) and parts[i + 1][0] == 'w' else ''
+                measure = bool(prev) and (prev[-1] in NUM_CHARS or (prev[-1] in '几这那哪每' and nxt[:1] not in ZHI_ONLY_NEXT))
+                parts[i] = ('w', '只', 'zhī' if measure else 'zhǐ')
         # proper nouns get a capital
         for i, p in enumerate(parts):
             if p[0] == 'w' and p[1] in PROPER:

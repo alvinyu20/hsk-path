@@ -1,14 +1,15 @@
-"""Which HSK level a build or check is for. Set LEVEL=2 in the environment (default 1).
+"""Which HSK level a build or check is for. Set LEVEL=2 or LEVEL=3 in the environment (default 1).
 
-Level 1 content lives in content/; level 2 content in content/l2/. Data files are data/hsk1-*.js and data/hsk2-*.js.
+Level 1 content lives in content/; level 2 content in content/l2/; level 3 content in content/l3/.
+Data files are data/hsk1-*.js, data/hsk2-*.js and data/hsk3-*.js.
 Sentences of level N may use the words of every level up to N, so the pinyin engine is given the lists of all of them.
 """
 import os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 C = os.path.join(ROOT, 'content')
 LEVEL = int(os.environ.get('LEVEL', '1'))
-CONTENT = C if LEVEL == 1 else os.path.join(C, 'l2')
-OFFICIAL_FILES = {1: 'hsk1-official-300.txt', 2: 'hsk2-official-197.txt'}
+CONTENT = C if LEVEL == 1 else os.path.join(C, 'l%d' % LEVEL)
+OFFICIAL_FILES = {1: 'hsk1-official-300.txt', 2: 'hsk2-official-197.txt', 3: 'hsk3-official-491.txt'}
 
 
 def read_list(n):

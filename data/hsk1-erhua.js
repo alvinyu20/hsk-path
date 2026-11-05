@@ -70,6 +70,20 @@ window.HSK1_ERHUA = {
    "officialPy": "xiǎoháir",
    "plainPy": "xiǎohái",
    "twin": false
+  },
+  {
+   "official": "聊天儿",
+   "plain": "聊天",
+   "officialPy": "liáotiānr",
+   "plainPy": "liáotiān",
+   "twin": false
+  },
+  {
+   "official": "一块儿",
+   "plain": "一块",
+   "officialPy": "yíkuàir",
+   "plainPy": "yíkuài",
+   "twin": false
   }
  ],
  "overrides": [

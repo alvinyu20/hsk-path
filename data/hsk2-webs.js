@@ -2181,7 +2181,7 @@ window.HSK2_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "那只鸟很漂亮，我很喜欢这些花。",
-    "py": "Nà zhǐ niǎo hěn piàoliang, wǒ hěn xǐhuan zhèxiē huā.",
+    "py": "Nà zhī niǎo hěn piàoliang, wǒ hěn xǐhuan zhèxiē huā.",
     "en": "That bird is very pretty, and I like these flowers a lot."
    },
    "words": [
