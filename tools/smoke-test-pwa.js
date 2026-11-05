@@ -40,7 +40,7 @@ function copySite() {
   page.on('request', (r) => hosts.add(new URL(r.url()).hostname));
   await ctx.addInitScript(() => {
     window.__csp = [];
-    document.addEventListener('securitypolicyviolation', (e) => window.__csp.push(e.violatedDirective + ' ' + e.blockedURI));
+    document.addEventListener('securitypolicyviolation', (e) => window.__csp.push(e.violatedDirective + ' ' + e.blockedURI + (e.blockedURI === 'inline' ? ' [' + (e.sample || '') + ' @' + (e.sourceFile || '').split('/').pop() + ':' + e.lineNumber + ' ' + (e.target && e.target.outerHTML ? e.target.outerHTML.slice(0, 140) : String(e.target)) + ']' : '')));
   });
   await page.goto(site); await page.waitForSelector('.app');
   const html = await (await ctx.request.get(site)).text();
