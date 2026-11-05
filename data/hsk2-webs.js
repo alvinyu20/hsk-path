@@ -1855,7 +1855,7 @@ window.HSK2_WEBS = {
    "group": "Food and shopping",
    "order": 21,
    "to": "speak",
-   "cta": "Use these in the café conversation",
+   "cta": "Use these when you order food or drinks",
    "sentence": {
     "zh": "这家饭馆的鱼很好吃，我们去吃吧。",
     "py": "Zhè jiā fànguǎn de yú hěn hǎochī, wǒmen qù chī ba.",
@@ -1873,7 +1873,7 @@ window.HSK2_WEBS = {
    "group": "Food and shopping",
    "order": 23,
    "to": "speak",
-   "cta": "Use these in the café conversation",
+   "cta": "Use these when you order food or drinks",
    "sentence": {
     "zh": "我喝咖啡，她喝奶茶，他们喝红茶。",
     "py": "Wǒ hē kāfēi, tā hē nǎichá, tāmen hē hóngchá.",

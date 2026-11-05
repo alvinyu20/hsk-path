@@ -1,0 +1,218 @@
+{
+ "clips": [
+  {
+   "zh": "我昨天在路口遇到了一个老同事。",
+   "en": "I ran into an old colleague at the crossing yesterday.",
+   "notes": [
+    "遇到 yùdào: both syllables fall.",
+    "老同事 lǎo tóngshì: 老 is a third tone before a rising tone, so it only dips."
+   ]
+  },
+  {
+   "zh": "请问，我怎么去图书馆？",
+   "en": "Excuse me, how do I get to the library?",
+   "notes": [
+    "图书馆 túshūguǎn: a rise, a high tone, then a dip.",
+    "怎么 zěnme: 么 is light and short. 怎么去 asks how to get somewhere."
+   ]
+  },
+  {
+   "zh": "刚才下雨了，你带伞了吗？",
+   "en": "It just rained; did you bring an umbrella?",
+   "notes": [
+    "刚才 gāngcái means \"a moment ago\": high and flat, then rising.",
+    "带伞 dài sǎn: a fall, then a dip. The last two sounds, 了吗, are both light."
+   ]
+  },
+  {
+   "zh": "我的手机没电了，只能关机。",
+   "en": "My phone has no battery left now, so I can only turn it off.",
+   "notes": [
+    "没电 méi diàn: a rise, then a fall.",
+    "只能 zhǐnéng: 只 is a third tone before a rising tone, so it only dips."
+   ]
+  },
+  {
+   "zh": "比赛结束以后，我们一起去吃饭吧。",
+   "en": "After the match ends, let us go and eat together.",
+   "notes": [
+    "结束 jiéshù: a rise, then a fall.",
+    "以后 yǐhòu: 以 is low and short before the fourth tone 后. 比赛结束以后 means \"after the match ends\"."
+   ]
+  },
+  {
+   "zh": "这个问题很难，我想了半天才明白。",
+   "en": "This question is hard; I thought for a long time before I understood.",
+   "notes": [
+    "半天 bàntiān: a fall, then high and flat. Here it means a long time, not half a day.",
+    "才 cái sits before the verb and tells you it took longer than expected: 才明白."
+   ]
+  },
+  {
+   "zh": "我的自行车被朋友借走了，我只能坐地铁。",
+   "en": "My bike was borrowed by a friend, so I can only take the subway.",
+   "notes": [
+    "被 bèi comes before the person who did it: 被朋友借走.",
+    "借 jiè (to borrow) falls; 街 jiē (street) is high and flat."
+   ]
+  },
+  {
+   "zh": "他一边走路，一边听音乐。",
+   "en": "He listens to music while he walks.",
+   "notes": [
+    "一边 yìbiān: 一 is yì before the high tone 边. You hear it twice: 一边…一边….",
+    "音乐 yīnyuè: high and flat, then falling."
+   ]
+  },
+  {
+   "zh": "我对中国文化很感兴趣。",
+   "en": "I am very interested in Chinese culture.",
+   "notes": [
+    "感兴趣 gǎn xìngqù: 兴 is xìng (fourth tone) here, not xīng.",
+    "对 comes first and 感兴趣 later: 对…感兴趣 means to be interested in …."
+   ]
+  },
+  {
+   "zh": "老师让我们先复习，然后再做作业。",
+   "en": "The teacher has us review first and then do the homework.",
+   "notes": [
+    "复习 fùxí: a fall, then a rise.",
+    "先…然后…: when you hear 先 (first), listen for 然后 (then) later."
+   ]
+  },
+  {
+   "zh": "今天比昨天凉快多了。",
+   "en": "Today is much cooler than yesterday.",
+   "notes": [
+    "凉快 liángkuài: a rise, then a fall. 快 kuài (fast) is the same sound.",
+    "多了 duō le after an adjective means \"much more\": 凉快多了."
+   ]
+  },
+  {
+   "zh": "他长得又高又瘦，很像他爸爸。",
+   "en": "He is tall and thin and looks a lot like his dad.",
+   "notes": [
+    "长 zhǎng (to grow) is a third tone; 长 cháng (long) rises. Here it is zhǎng.",
+    "像 xiàng (to look like) and 向 xiàng (towards) sound the same."
+   ]
+  },
+  {
+   "zh": "他决定明年去国外留学。",
+   "en": "He has decided to study abroad next year.",
+   "notes": [
+    "决定 juédìng: a rise, then a fall.",
+    "留学 liúxué: both syllables rise."
+   ]
+  },
+  {
+   "zh": "我妈妈担心我晚上骑车不安全。",
+   "en": "My mother worries that riding at night is not safe for me.",
+   "notes": [
+    "担心 dānxīn: both syllables are high and flat.",
+    "不安全 bù ānquán: 不 stays bù before the high tone 安; it changes only before a fourth tone."
+   ]
+  },
+  {
+   "zh": "请把你的护照给我看看。",
+   "en": "Please show me your passport.",
+   "notes": [
+    "护照 hùzhào: both syllables fall.",
+    "把 bǎ puts the object first: 把护照给我看看. Listen for 把 and then the verb at the end."
+   ]
+  },
+  {
+   "zh": "他刚到家，就接到了朋友的电话。",
+   "en": "He had only just got home when he got a call from a friend.",
+   "notes": [
+    "刚…就…: 刚 (just) and 就 (then) come as a pair.",
+    "接到 jiēdào: high and flat, then falling."
+   ]
+  },
+  {
+   "zh": "学校附近新开了一家银行。",
+   "en": "A new bank has opened near the school.",
+   "notes": [
+    "附近 fùjìn: both syllables fall.",
+    "银行 yínháng: here 行 is háng (a business), not xíng."
+   ]
+  },
+  {
+   "zh": "春天来了，公园里的花都开了。",
+   "en": "Spring has come, and the flowers in the park have all opened.",
+   "notes": [
+    "春天 chūntiān: both syllables are high and flat.",
+    "公园 gōngyuán: a high tone, then a rise. 里 is light in 公园里."
+   ]
+  },
+  {
+   "zh": "我一直在等你，你怎么现在才来？",
+   "en": "I have been waiting for you all along; why do you only come now?",
+   "notes": [
+    "一直 yìzhí: 一 is yì before the rising tone 直.",
+    "才 cái here shows it is later than expected."
+   ]
+  },
+  {
+   "zh": "听说下个月学校要开运动会。",
+   "en": "It is said that the school will hold a sports meeting next month.",
+   "notes": [
+    "听说 tīngshuō: both syllables are high and flat.",
+    "运动会 yùndònghuì: all three syllables fall."
+   ]
+  },
+  {
+   "zh": "你应该多锻炼，身体才会健康。",
+   "en": "You should exercise more; only then will you be healthy.",
+   "notes": [
+    "应该 yīnggāi: both syllables are high and flat.",
+    "锻炼 duànliàn: both syllables fall."
+   ]
+  },
+  {
+   "zh": "如果你不舒服，就请假回家休息吧。",
+   "en": "If you do not feel well, ask for leave and go home to rest.",
+   "notes": [
+    "如果 rúguǒ starts the \"if\" part and 就 starts the \"then\" part. Listen for the pair.",
+    "请假 qǐngjià: a dip, then a fall. 请假回家 is a chain of actions: ask for leave, go home."
+   ]
+  },
+  {
+   "zh": "雨越下越大，我们别出去了。",
+   "en": "The rain is getting heavier and heavier, so let us not go out.",
+   "notes": [
+    "越 yuè is said twice, and both fall: 越下越大 means \"the more it rains, the heavier\".",
+    "别出去了 bié chūqu le: 别 rises, and the last two syllables are light."
+   ]
+  },
+  {
+   "zh": "对不起，我迟到了，路上车太多了。",
+   "en": "Sorry, I am late; there were too many cars on the road.",
+   "notes": [
+    "迟到 chídào: a rise, then a fall.",
+    "对不起 duìbuqǐ: the 不 in the middle is light and short."
+   ]
+  }
+ ],
+ "tones": [
+  {
+   "zh": "妈",
+   "py": "mā",
+   "label": "High and flat"
+  },
+  {
+   "zh": "麻",
+   "py": "má",
+   "label": "Rising"
+  },
+  {
+   "zh": "马",
+   "py": "mǎ",
+   "label": "Dips, then rises"
+  },
+  {
+   "zh": "骂",
+   "py": "mà",
+   "label": "Falling"
+  }
+ ]
+}

@@ -42,6 +42,7 @@ window.SHANLU_LEXICON = {
 "南边": "nánbiān",
 "北边": "běibiān",
 "长大": "zhǎngdà",
+"长得": "zhǎng de",
 "还书": "huánshū",
 "还钱": "huánqián",
 "地上": "dìshang",
@@ -51,5 +52,6 @@ window.SHANLU_LEXICON = {
 "火车站": "huǒchēzhàn",
 "国外": "guówài",
 "海边": "hǎibiān",
-"半年": "bànnián"
+"半年": "bànnián",
+"地铁站": "dìtiězhàn"
 };

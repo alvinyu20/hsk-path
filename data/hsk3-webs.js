@@ -3776,7 +3776,7 @@ window.HSK3_WEBS = {
    "group": "Food and shopping",
    "order": 21,
    "to": "speak",
-   "cta": "Use these in the café conversation",
+   "cta": "Use these when you order food or drinks",
    "sentence": {
     "zh": "我饿了，请给我菜单，我想尝一尝这个菜。",
     "py": "Wǒ è le, qǐng gěi wǒ càidān, wǒ xiǎng cháng yì cháng zhège cài.",
@@ -3817,7 +3817,7 @@ window.HSK3_WEBS = {
    "group": "Food and shopping",
    "order": 23,
    "to": "speak",
-   "cta": "Use these in the café conversation",
+   "cta": "Use these when you order food or drinks",
    "sentence": {
     "zh": "我很渴，想喝一杯冰的饮料。",
     "py": "Wǒ hěn kě, xiǎng hē yì bēi bīng de yǐnliào.",

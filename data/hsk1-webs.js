@@ -3060,7 +3060,7 @@ window.HSK1_WEBS = {
    "group": "Food and shopping",
    "order": 21,
    "to": "speak",
-   "cta": "Use these in the café conversation",
+   "cta": "Use these when you order food or drinks",
    "sentence": {
     "zh": "我早饭吃面包，午饭吃米饭，晚饭吃饺子。",
     "py": "Wǒ zǎofàn chī miànbāo, wǔfàn chī mǐfàn, wǎnfàn chī jiǎozi.",
@@ -3091,7 +3091,7 @@ window.HSK1_WEBS = {
    "group": "Food and shopping",
    "order": 23,
    "to": "speak",
-   "cta": "Use these in the café conversation",
+   "cta": "Use these when you order food or drinks",
    "sentence": {
     "zh": "我喝茶，他喝牛奶，你喝水吗？",
     "py": "Wǒ hē chá, tā hē niúnǎi, nǐ hē shuǐ ma?",

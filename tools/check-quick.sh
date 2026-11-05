@@ -43,6 +43,7 @@ case "$MODE" in
     last env LEVEL=3 python3 -W ignore tools/build-words.py
     last env LEVEL=3 python3 -W ignore tools/build-grammar.py
     last env LEVEL=3 python3 -W ignore tools/build-webs.py
+    last env LEVEL=3 python3 -W ignore tools/build-speech.py
     node tools/dump-sentences.js 3 > /tmp/shanlu-sentences-l3.json
     python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l3.json --level 3 --dataset "$DATASET"
     LEVEL=3 python3 -W ignore tools/check-ties.py /tmp/shanlu-sentences-l3.json

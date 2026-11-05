@@ -711,7 +711,7 @@
    "name": "Food and meals",
    "group": "Food and shopping",
    "to": "speak",
-   "cta": "Use these in the café conversation",
+   "cta": "Use these when you order food or drinks",
    "words": [
     "吃",
     "好吃",
@@ -787,7 +787,7 @@
    "name": "Drinks",
    "group": "Food and shopping",
    "to": "speak",
-   "cta": "Use these in the café conversation",
+   "cta": "Use these when you order food or drinks",
    "words": [
     "水",
     "茶",

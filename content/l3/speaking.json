@@ -1,0 +1,518 @@
+{
+ "scenarios": [
+  {
+   "id": "hotel",
+   "glyph": "住",
+   "title": "Check in at a hotel",
+   "sub": "Hotel, 5 turns",
+   "goals": [
+    "Say how many days",
+    "Hand over your passport",
+    "Ask which floor breakfast is on",
+    "Say thanks"
+   ],
+   "words": [
+    "宾馆",
+    "护照",
+    "层",
+    "电梯",
+    "欢迎",
+    "住"
+   ],
+   "ai": [
+    {
+     "zh": "你好！欢迎来到我们宾馆。你想住几天？",
+     "en": "Hello! Welcome to our hotel. How many days would you like to stay?"
+    },
+    {
+     "zh": "好的。请把你的护照给我。",
+     "en": "Okay. Please give me your passport."
+    },
+    {
+     "zh": "谢谢。你的房间在八层，坐电梯就可以上去。",
+     "en": "Thank you. Your room is on the eighth floor; you can go up by the lift."
+    },
+    {
+     "zh": "在一层，早上六点半开始。",
+     "en": "On the first floor. It starts at half past six in the morning."
+    },
+    {
+     "zh": "不客气！有问题可以找我。",
+     "en": "You are welcome! You can come to me if you have any problem."
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想住三天。",
+     "en": "I would like to stay three days."
+    },
+    {
+     "zh": "好的，给你。",
+     "en": "Okay, here you are."
+    },
+    {
+     "zh": "好的，早饭在几层？",
+     "en": "Okay, which floor is breakfast on?"
+    },
+    {
+     "zh": "好的，谢谢你。",
+     "en": "Okay, thank you."
+    }
+   ]
+  },
+  {
+   "id": "doctor",
+   "glyph": "医",
+   "title": "See a doctor",
+   "sub": "Health, 5 turns",
+   "goals": [
+    "Say what is wrong",
+    "Say since when",
+    "Ask if you need medicine",
+    "Say thanks"
+   ],
+   "words": [
+    "感冒",
+    "发烧",
+    "头",
+    "疼",
+    "休息",
+    "药"
+   ],
+   "ai": [
+    {
+     "zh": "你好，你哪里不舒服？",
+     "en": "Hello, where do you feel unwell?"
+    },
+    {
+     "zh": "从什么时候开始的？",
+     "en": "Since when?"
+    },
+    {
+     "zh": "你可能感冒了。你要多喝水，多休息。",
+     "en": "You may have a cold. You need to drink more water and rest more."
+    },
+    {
+     "zh": "要，这个药一天吃三次，吃完饭再吃。",
+     "en": "Yes. Take this medicine three times a day, after you finish eating."
+    },
+    {
+     "zh": "不客气。如果明天还发烧，你再来。",
+     "en": "You are welcome. If you still have a fever tomorrow, come again."
+    }
+   ],
+   "you": [
+    {
+     "zh": "我头疼，还有点儿发烧。",
+     "en": "I have a headache and a bit of a fever."
+    },
+    {
+     "zh": "从昨天晚上开始的。",
+     "en": "Since yesterday evening."
+    },
+    {
+     "zh": "我需要吃药吗？",
+     "en": "Do I need to take medicine?"
+    },
+    {
+     "zh": "好的，谢谢医生。",
+     "en": "Okay, thank you, doctor."
+    }
+   ]
+  },
+  {
+   "id": "weekend",
+   "glyph": "周",
+   "title": "Plan the weekend",
+   "sub": "Plans, 5 turns",
+   "goals": [
+    "Say you have no plan yet",
+    "Ask when to set out",
+    "Say it is too early",
+    "Say what you will bring"
+   ],
+   "words": [
+    "周末",
+    "打算",
+    "爬山",
+    "出发",
+    "见面",
+    "带"
+   ],
+   "ai": [
+    {
+     "zh": "这个周末你有什么打算？",
+     "en": "What are your plans for this weekend?"
+    },
+    {
+     "zh": "天气很好，我们一起去爬山吧。",
+     "en": "The weather is nice; let us go climbing together."
+    },
+    {
+     "zh": "早上七点吧。我们在地铁站见面。",
+     "en": "Seven in the morning. We meet at the subway station."
+    },
+    {
+     "zh": "可以。那你带点吃的和喝的，好吗？",
+     "en": "Okay. Then will you bring something to eat and drink?"
+    },
+    {
+     "zh": "太好了，星期天见！",
+     "en": "Great, see you on Sunday!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我还没有打算，你呢？",
+     "en": "I have no plan yet. What about you?"
+    },
+    {
+     "zh": "好啊！我们几点出发？",
+     "en": "Sure! What time do we set out?"
+    },
+    {
+     "zh": "太早了，八点可以吗？",
+     "en": "That is too early; is eight okay?"
+    },
+    {
+     "zh": "好的，我带面包和水。",
+     "en": "Okay, I will bring bread and water."
+    }
+   ]
+  },
+  {
+   "id": "moving",
+   "glyph": "搬",
+   "title": "Move to a new home",
+   "sub": "Housing, 5 turns",
+   "goals": [
+    "Say you are moving soon",
+    "Say the area is handy",
+    "Ask your friend to help",
+    "Say you need nothing"
+   ],
+   "words": [
+    "搬家",
+    "小区",
+    "附近",
+    "方便",
+    "帮助",
+    "当然"
+   ],
+   "ai": [
+    {
+     "zh": "我听说你要搬家，是真的吗？",
+     "en": "I heard you will move. Is it true?"
+    },
+    {
+     "zh": "新家在哪儿？附近方便吗？",
+     "en": "Where is the new home? Is it handy around there?"
+    },
+    {
+     "zh": "太好了！你什么时候搬？",
+     "en": "Great! When are you moving?"
+    },
+    {
+     "zh": "当然可以！我需要带东西吗？",
+     "en": "Of course you can! Do I need to bring anything?"
+    },
+    {
+     "zh": "好的，到时候见！",
+     "en": "Okay, see you then!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "是的，我下个月搬到新小区。",
+     "en": "Yes, next month I am moving to a new neighbourhood."
+    },
+    {
+     "zh": "很方便，附近有地铁站和银行。",
+     "en": "Very handy; there is a subway station and a bank nearby."
+    },
+    {
+     "zh": "下个月五号，你可以来帮助我吗？",
+     "en": "On the fifth of next month. Can you come and help me?"
+    },
+    {
+     "zh": "不用，谢谢你，你来就行。",
+     "en": "No need, thank you. Just come."
+    }
+   ]
+  },
+  {
+   "id": "train",
+   "glyph": "铁",
+   "title": "Take the high-speed train",
+   "sub": "Travel, 5 turns",
+   "goals": [
+    "Ask when the train leaves",
+    "Ask about your luggage",
+    "Show your ticket and ask where to check it",
+    "Say thanks"
+   ],
+   "words": [
+    "高铁",
+    "出发",
+    "晚点",
+    "检票",
+    "行李",
+    "电梯"
+   ],
+   "ai": [
+    {
+     "zh": "你好！需要帮助吗？",
+     "en": "Hello! Do you need help?"
+    },
+    {
+     "zh": "十点二十。可是今天晚点了，要等半个小时。",
+     "en": "Twenty past ten. But today it is late, so you have to wait half an hour."
+    },
+    {
+     "zh": "可以。你先把票给我看看。",
+     "en": "Yes, you can. First show me your ticket."
+    },
+    {
+     "zh": "在那边，然后坐电梯上去。",
+     "en": "Over there, and then go up by the lift."
+    },
+    {
+     "zh": "不客气，再见！",
+     "en": "You are welcome, goodbye!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "请问，高铁几点出发？",
+     "en": "Excuse me, what time does the high-speed train leave?"
+    },
+    {
+     "zh": "好的，我的行李可以带上去吗？",
+     "en": "Okay. Can I take my luggage up with me?"
+    },
+    {
+     "zh": "好的，给你。我在哪儿检票？",
+     "en": "Okay, here you are. Where do I have my ticket checked?"
+    },
+    {
+     "zh": "谢谢你。",
+     "en": "Thank you."
+    }
+   ]
+  },
+  {
+   "id": "school",
+   "glyph": "校",
+   "title": "Talk about school",
+   "sub": "Study, 5 turns",
+   "goals": [
+    "Say your result was not good",
+    "Say you forget to review",
+    "Say you will ask the teacher",
+    "Agree and thank"
+   ],
+   "words": [
+    "成绩",
+    "作业",
+    "复习",
+    "努力",
+    "办法",
+    "提高"
+   ],
+   "ai": [
+    {
+     "zh": "这次考试你的成绩怎么样？",
+     "en": "How is your result in this exam?"
+    },
+    {
+     "zh": "没关系。你每天都做作业吗？",
+     "en": "Never mind. Do you do your homework every day?"
+    },
+    {
+     "zh": "那你要每天复习一点儿，不要太着急。",
+     "en": "Then you should review a little every day and not worry too much."
+    },
+    {
+     "zh": "多练习，也可以问老师。",
+     "en": "Practise more, and you can ask the teacher too."
+    },
+    {
+     "zh": "很好，我相信你一定可以提高！",
+     "en": "Good. I am sure you can improve!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "不太好，我的数学很差。",
+     "en": "Not so good; my maths is poor."
+    },
+    {
+     "zh": "做，可是我常常忘记复习。",
+     "en": "I do, but I often forget to review."
+    },
+    {
+     "zh": "好的，我会努力的。你有什么好办法？",
+     "en": "Okay, I will work hard. What good ideas do you have?"
+    },
+    {
+     "zh": "好，我明天就去问老师。",
+     "en": "Okay, I will go and ask the teacher tomorrow."
+    }
+   ]
+  },
+  {
+   "id": "exchange",
+   "glyph": "换",
+   "title": "Change a shirt",
+   "sub": "Shopping, 5 turns",
+   "goals": [
+    "Say you want to change it",
+    "Say it is a bit small",
+    "Ask for a blue one",
+    "Say you will take it"
+   ],
+   "words": [
+    "衬衫",
+    "换",
+    "合适",
+    "大小",
+    "颜色",
+    "试"
+   ],
+   "ai": [
+    {
+     "zh": "你好！你需要帮助吗？",
+     "en": "Hello! Do you need help?"
+    },
+    {
+     "zh": "好的。这件有问题吗？",
+     "en": "Okay. Is there a problem with this one?"
+    },
+    {
+     "zh": "那你要大一点儿的吗？",
+     "en": "Then do you want a bigger one?"
+    },
+    {
+     "zh": "有。你可以试一下。",
+     "en": "Yes. You can try it on."
+    },
+    {
+     "zh": "好的，谢谢你！",
+     "en": "Okay, thank you!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想换这件衬衫。",
+     "en": "I would like to change this shirt."
+    },
+    {
+     "zh": "大小不合适，有点儿小。",
+     "en": "The size is not right; it is a bit small."
+    },
+    {
+     "zh": "要，还有蓝的吗？",
+     "en": "Yes. Do you have a blue one?"
+    },
+    {
+     "zh": "好的，这件很合适，我买这件。",
+     "en": "Okay, this one fits well. I will buy this one."
+    }
+   ]
+  },
+  {
+   "id": "abroad",
+   "glyph": "外",
+   "title": "Call a friend abroad",
+   "sub": "Friends, 5 turns",
+   "goals": [
+    "Say you miss home",
+    "Say the winter is cold",
+    "Ask how your friend is",
+    "Agree to talk at the weekend"
+   ],
+   "words": [
+    "留学",
+    "生活",
+    "习惯",
+    "聊天儿",
+    "好久",
+    "注意"
+   ],
+   "ai": [
+    {
+     "zh": "好久不见！你在国外生活得怎么样？",
+     "en": "Long time no see! How is your life abroad?"
+    },
+    {
+     "zh": "你习惯那里的天气了吗？",
+     "en": "Have you got used to the weather there?"
+    },
+    {
+     "zh": "你要注意身体，多穿一点儿。",
+     "en": "Take care of yourself and wear a bit more."
+    },
+    {
+     "zh": "我很忙，可是很开心。我们周末再聊天儿吧。",
+     "en": "I am busy but happy. Let us chat again at the weekend."
+    },
+    {
+     "zh": "好，再见！",
+     "en": "Okay, goodbye!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "很好，可是我有点儿想家。",
+     "en": "Very well, but I miss home a bit."
+    },
+    {
+     "zh": "还没有，那里的冬天很冷。",
+     "en": "Not yet; the winter there is very cold."
+    },
+    {
+     "zh": "好的。你最近怎么样？",
+     "en": "Okay. How have you been lately?"
+    },
+    {
+     "zh": "好啊，周末见！",
+     "en": "Sure, see you at the weekend!"
+    }
+   ]
+  }
+ ],
+ "phrases": [
+  {
+   "zh": "请再说一遍。",
+   "en": "Please say it once more."
+  },
+  {
+   "zh": "我没听清楚，请再说一遍。",
+   "en": "I did not hear it clearly; please say it once more."
+  },
+  {
+   "zh": "你可以说得慢一点儿吗？",
+   "en": "Can you speak a little slower?"
+  },
+  {
+   "zh": "这个句子是什么意思？",
+   "en": "What does this sentence mean?"
+  },
+  {
+   "zh": "我不太明白，你可以再讲一遍吗？",
+   "en": "I do not quite understand; can you explain it again?"
+  },
+  {
+   "zh": "我想查一下这个词。",
+   "en": "I want to look this word up."
+  },
+  {
+   "zh": "你能帮助我吗？",
+   "en": "Can you help me?"
+  },
+  {
+   "zh": "对不起，我忘记了。",
+   "en": "Sorry, I forgot."
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 /* Smoke test for HSK 3: loads the site at level 3 in headless Chromium and checks the parts that exist at this level
- * (words, word webs, every grammar lesson, tests, AI conversation, level switch, separate progress, All levels with three levels),
- * and that the parts that are not built yet (listening lab, practice scripts, mock exam) say so instead of breaking.
+ * (words, word webs, every grammar lesson, tests, listening lab, practice scripts, AI conversation, level switch, separate progress,
+ * All levels with three levels), and that the part that is not built yet (the mock exam) says so instead of breaking.
  * HSK 3 is closed on the real site until it is released, so this test opens it: the test server gives level.js MAX_LEVEL = 3 and
  * adds the HSK 3 data scripts to the page (tools/test-static.js, option level3). The lock itself is tested by smoke-test-l2.js.
  * Usage: node tools/smoke-test-l3.js [--erhua]   (needs Playwright). Tests for the other levels: smoke-test.js, smoke-test-l2.js. */
@@ -96,7 +96,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(n3 === 491, 'the HSK 3 list has 491 cards (' + n3 + ')');
   const home = await text();
   check(home.includes(n3 + ' words to go'), 'the trail counts the ' + n3 + ' HSK 3 words');
-  check(home.includes('Grammar: '), 'Today offers a grammar lesson');
+  check(home.includes('Listening drill') && home.includes('Say: ') && home.includes('Grammar: '), 'Today offers the listening drill, a practice script and a grammar lesson');
   const st = await page.evaluate(() => ({ n: Object.keys(window.shanlu.state.ws).length, l1: !!window.shanlu.state.ws['你好'], l2: !!window.shanlu.state.ws['机场'], l3: !!window.shanlu.state.ws['聪明'] }));
   check(st.n === n3 && !st.l1 && !st.l2 && st.l3, 'progress holds the HSK 3 words and none of the HSK 1 or HSK 2 words');
   check(await page.evaluate(() => !localStorage.getItem('shanlu-progress-v1') && !localStorage.getItem('shanlu-progress-v1-l2')), 'HSK 1 and HSK 2 progress are not touched by opening HSK 3');
@@ -172,13 +172,32 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await text()).includes('Not quite'), 'a wrong grammar answer is marked wrong');
   await page.locator('button', { hasText: 'Back to' }).first().click().catch(() => {});
 
-  // ---- the parts that are not built yet say so
+  // ---- listening lab and practice scripts
   await nav('Listening lab');
-  check((await text()).includes('not built for HSK 3 yet'), 'the listening lab says it is not built for HSK 3 yet');
+  check((await text()).includes('Dictation') && (await text()).includes('Shadowing') && (await text()).includes('Tone trainer'), 'the HSK 3 listening lab has dictation, shadowing and the tone trainer');
+  check(await page.evaluate(() => window.HSK3_LISTEN.clips.length === 24 && window.HSK3_LISTEN.clips.every(c => c.words.length >= 4 && c.notes.length >= 2)), 'there are 24 HSK 3 clips, each with words to dictate and two notes');
+  await page.locator('button[aria-label="Play the clip"]').first().click();
+  await page.waitForTimeout(400);
+  check(await page.evaluate(() => window.__spoken.length > 0 && window.HSK3_LISTEN.clips.some(c => window.__spoken.some(x => x.text === c.zh))), 'a dictation clip is read aloud');
+  await page.locator('button', { hasText: 'Tone trainer' }).click();
+  await page.locator('button', { hasText: 'Two syllables' }).click();
+  await page.locator('button[aria-label="Play a two-syllable word"]').click();
+  await page.waitForTimeout(300);
+  const pairL3 = await page.evaluate(() => { const last = window.__spoken[window.__spoken.length - 1]; const p = window.HSK3_LISTEN.pairs.find(x => x.zh === (last && last.text)); return p ? { zh: p.zh, t: p.t } : null; });
+  check(!!pairL3, 'at HSK 3 the two-syllable trainer reads a word aloud (' + (pairL3 && pairL3.zh) + ')');
+  await page.locator('.tones').nth(0).locator('.tonebtn').nth(pairL3.t[0] - 1).click();
+  await page.locator('.tones').nth(1).locator('.tonebtn').nth(pairL3.t[1] - 1).click();
+  check((await text()).includes('Right. ' + pairL3.zh), 'the HSK 3 two-syllable trainer scores a right answer');
+  check(await page.evaluate(() => window.HSK3_LISTEN.pairs.length > 500 && window.HSK3_LISTEN.pairs.some(p => p.zh === '老师' && p.t[0] === 3 && p.t[1] === 1) && window.HSK3_LISTEN.pairs.some(p => p.zh === '决定' && p.t[0] === 2 && p.t[1] === 4)), 'the HSK 3 tone-pair list includes HSK 1, HSK 2 and HSK 3 two-syllable words');
   await nav('Speak');
-  check((await text()).includes('Talk with Mingming') || (await text()).includes('Mingming'), 'Speak is the AI conversation only (no practice scripts yet)');
+  check((await page.locator('.modeseg').count()) === 1 && (await text()).includes('Practice script'), 'Speak has the practice-script switch at HSK 3');
+  check((await text()).includes('Check in at a hotel') && (await text()).includes('Call a friend abroad') && await page.evaluate(() => window.HSK3_SPEAK.scenarios.length === 8 && window.HSK3_SPEAK.phrases.length === 8), 'the eight HSK 3 scripts and eight phrases are listed');
+  await page.locator('button', { hasText: 'I said it' }).first().click();
+  check((await text()).includes('欢迎来到我们宾馆'), 'an HSK 3 script plays: the first line of the first scenario shows after "I said it"');
+  await nav('Level exam');
+  check((await text()).includes('HSK 3 mock exam') && (await text()).includes('not built yet'), 'the HSK 3 exam page says the mock exam is not built yet');
 
-  // ---- Speak: talk to a fake Anthropic API
+  // ---- Speak with AI: talk to a fake Anthropic API
   const calls = [];
   await ctx.route('https://api.anthropic.com/**', async (r) => {
     const req = r.request();
@@ -188,10 +207,13 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const reply = { reply: { zh: '你担心考试吗？', en: 'Are you worried about the exam?' }, feedback: { level: 'ok', better: '', why: '' }, suggest: { zh: '我有一点儿担心。', en: 'I am a little worried.' } };
     return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ content: [{ type: 'text', text: JSON.stringify(reply) }] }) });
   });
+  await nav('Speak');
+  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
   await page.locator('button', { hasText: 'Open Settings' }).click();
   await page.fill('input[aria-label="Anthropic API key"]', 'sk-ant-test');
   await page.locator('button', { hasText: 'Save key' }).click();
   await nav('Speak');
+  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
   await page.waitForFunction(() => window.shanlu.state.aim.length >= 1 && !window.shanlu.state.aiBusy);
   await page.locator('.ai-tools button', { hasText: 'Type instead' }).click();   // voice only is the default and keeps Mingming's lines hidden
   const sys = calls[0].system;
@@ -201,6 +223,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const first = await page.locator('.msgs').innerText();
   check(first.includes('你担心考试吗？') && first.includes('Nǐ dānxīn kǎoshì ma?'), 'an HSK 3 word in the reply gets its pinyin from the HSK 3 list');
   check(!first.includes('preview') && !first.includes('no pinyin'), 'HSK 3 words are not flagged as a preview or as unknown at HSK 3');
+  check((await text()).includes('Check in at a hotel') && (await text()).includes('Take the high-speed train'), 'the HSK 3 script scenarios are offered as role-play settings');
 
   // ---- settings: level card, export names the level
   await page.locator('button', { hasText: 'Settings' }).first().click();

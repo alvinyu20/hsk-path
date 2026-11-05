@@ -176,7 +176,7 @@ def meaning_checks(zh, en):
     # question marks and 吗
     if zh.count('？') != en.count('?'):
         out.append(('ERROR', 'meaning', 'question mark count differs between Chinese (%d) and English (%d)' % (zh.count('？'), en.count('?'))))
-    if '吗' in z and any(q in re.sub('什么时候', '', z) for q in QUESTION_WORDS):
+    if any('吗' in seg and any(q in re.sub('什么时候', '', seg) for q in QUESTION_WORDS) for seg in re.split('[。！？!?；]', zh)):   # one sentence at a time: 在哪儿？…吗？ are two questions
         out.append(('WARN', 'meaning', '吗 together with a question word: usually a mistake (unless 什么/哪 means "some/any")'))
     if '吗' in z and re.search(r'(.{1,2})[不没]\1', z):
         out.append(('ERROR', 'meaning', '吗 together with an A-not-A question'))
@@ -271,7 +271,7 @@ def meaning_checks(zh, en):
     e = e.replace('had better', 'HADBETTER')
     e_tense = re.sub(r"\b(?:is|are|am|be|'s|'re|'m)\s+(?:\w+ly\s+)?\w+ed\b", ' ', e)       # "is loved", "are interested": a present passive or state, not a past tense
     toks_past = [w for w in re.findall(r"[a-z]+", e_tense) if re.fullmatch(r'\w+ed', w) and w not in PAST_ADJ] + [w for w in re.findall(r'[a-z]+', e) if w in ('ate', 'bought', 'saw', 'heard', 'went', 'drank', 'had', 'got', 'said', 'took', 'came', 'made', 'wrote', 'was', 'were', 'did')]
-    if toks_past and not re.search('了|没|昨天|昨晚|前天|去年|上个|上星期|过|以前|从前|当时|后来|小时候|是.*的|看见|听见|才|已经|刚|以为', z) and not re.search(r"\b(has|have|had been)\b", e):
+    if toks_past and not re.search('了|没|昨天|昨晚|前天|去年|上个|上星期|过|以前|从前|当时|后来|小时候|是.*的|看见|听见|才|已经|刚|以为|听说', z) and not re.search(r"\b(has|have|had been)\b", e):
         out.append(('WARN', 'meaning', 'English is in the past (%s) but the Chinese has no 了 or past time word' % toks_past[0]))
     if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|no longer|getting|growing|about to|get to|arrive|reach|come to|soon)\b", e):
         out.append(('WARN', 'meaning', '了 in the Chinese: English shows no completed action or change of state'))
