@@ -40,5 +40,11 @@ window.SHANLU_LEXICON = {
 "东边": "dōngbiān",
 "西边": "xībiān",
 "南边": "nánbiān",
-"北边": "běibiān"
+"北边": "běibiān",
+"长大": "zhǎngdà",
+"还书": "huánshū",
+"还钱": "huánqián",
+"地上": "dìshang",
+"服务员": "fúwùyuán",
+"学会": "xuéhuì"
 };
