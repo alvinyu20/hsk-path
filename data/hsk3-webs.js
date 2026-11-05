@@ -4013,7 +4013,7 @@ window.HSK3_WEBS = {
    "cta": "Use these to ask where something is",
    "sentence": {
     "zh": "过马路的时候，请看红绿灯。",
-    "py": "Guo mǎlù de shíhou, qǐng kàn hónglǜdēng.",
+    "py": "Guò mǎlù de shíhou, qǐng kàn hónglǜdēng.",
     "en": "When you cross the road, please look at the traffic light."
    },
    "words": [

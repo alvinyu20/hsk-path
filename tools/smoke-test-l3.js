@@ -1,6 +1,6 @@
 /* Smoke test for HSK 3: loads the site at level 3 in headless Chromium and checks the parts that exist at this level
  * (words, word webs, every grammar lesson, tests, listening lab, practice scripts, AI conversation, level switch, separate progress,
- * All levels with three levels), and that the part that is not built yet (the mock exam) says so instead of breaking.
+ * All levels with three levels, the mock exam including the writing practice).
  * HSK 3 is closed on the real site until it is released, so this test opens it: the test server gives level.js MAX_LEVEL = 3 and
  * adds the HSK 3 data scripts to the page (tools/test-static.js, option level3). The lock itself is tested by smoke-test-l2.js.
  * Usage: node tools/smoke-test-l3.js [--erhua]   (needs Playwright). Tests for the other levels: smoke-test.js, smoke-test-l2.js. */
@@ -195,7 +195,101 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('button', { hasText: 'I said it' }).first().click();
   check((await text()).includes('欢迎来到我们宾馆'), 'an HSK 3 script plays: the first line of the first scenario shows after "I said it"');
   await nav('Level exam');
-  check((await text()).includes('HSK 3 mock exam') && (await text()).includes('not built yet'), 'the HSK 3 exam page says the mock exam is not built yet');
+  const ex3 = await text();
+  check(ex3.includes('HSK 3 mock exam') && ex3.includes('40 questions') && ex3.includes('30 questions') && ex3.includes('10 questions') && (await page.locator('button', { hasText: 'Start the full exam' }).count()) === 1 && (await page.locator('button', { hasText: 'Writing practice' }).count()) === 1,
+    'the HSK 3 exam page offers the full exam (40 + 30 questions) and writing practice (10)');
+  const draw3 = await page.evaluate(() => {
+    const bad = []; const app = window.shanlu;
+    const chars = (s) => Array.from(s).sort().join('');
+    for (let t = 0; t < 60; t++) ['listening', 'reading', 'writing'].forEach(sec => {
+      const qs = app.examDraw(sec); const want = sec === 'listening' ? 40 : sec === 'reading' ? 30 : 10;
+      if (qs.length !== want) bad.push(sec + ' has ' + qs.length);
+      if (new Set(qs.map(q => q.id)).size !== want) bad.push('duplicate ids');
+      const parts = {}; qs.forEach(q => { parts[q.part] = (parts[q.part] || 0) + 1; });
+      const exp = sec === 'listening' ? { L1: 10, L2: 10, L3: 10, L4: 10 } : sec === 'reading' ? { R1: 10, R2: 10, R3: 10 } : { W1: 5, W2: 5 };
+      Object.keys(exp).forEach(k => { if (parts[k] !== exp[k]) bad.push(sec + ' part ' + k + ' has ' + parts[k]); });
+      qs.forEach(q => {
+        if (q.kind === 'order') {
+          if (chars(q.opts.map(o => o.label).join('')) !== chars(q.ans) || (q.alts || []).some(a => chars(a) !== chars(q.ans))) bad.push(q.id + ': the words do not make the answer');
+          const shown = q.opts.map(o => o.label).join(''); if (shown === q.ans || (q.alts || []).indexOf(shown) >= 0) bad.push(q.id + ': words are already in a right order');
+        } else if (q.kind === 'type') {
+          if (q.ans.length !== 1 || !q.hint || q.text.indexOf('___') < 0) bad.push(q.id + ': a typed question needs one character, a hint and a blank');
+        } else {
+          if (!q.opts.some(o => o.v === q.ans)) bad.push(q.id + ': answer not among options');
+          if (new Set(q.opts.map(o => o.label)).size !== q.opts.length) bad.push(q.id + ': two options look the same');
+        }
+      });
+      ['L1', 'R1', 'R2'].forEach(p => { const g = qs.filter(q => q.part === p); for (let i = 0; i < g.length; i += 5) { if (new Set(g.slice(i, i + 5).map(q => q.right)).size !== 5) bad.push(p + ': two questions in one set share an answer'); } });
+      if (sec === 'listening') { const tf = qs.filter(q => q.part === 'L2'); const yes = tf.filter(q => q.ans === 'T').length; if (yes < 4 || yes > 6) bad.push('L2 has ' + yes + ' true of 10'); if (tf.some(q => !q.text || !q.audio)) bad.push('L2 needs a sentence on screen and a passage to hear'); }
+    });
+    return bad.slice(0, 5);
+  });
+  check(draw3.length === 0, '60 random HSK 3 exams are well formed: 40 + 30 + 10 questions in the right parts, one right answer each' + (draw3.length ? ' ' + draw3.join('; ') : ''));
+  const answerAll3 = async (right) => {
+    const total = await page.evaluate(() => window.shanlu.state.exm.qs.length);
+    for (let i = 0; i < total; i++) {
+      const q = await page.evaluate(() => { const m = window.shanlu.state.exm; const q = m.qs[m.i]; return { kind: q.kind, ans: q.ans, vals: q.opts.map(o => o.v), labels: q.opts.map(o => o.label) }; });
+      if (q.kind === 'type') {
+        await page.locator('#ex-input').fill(right ? q.ans : '无');
+      } else if (q.kind === 'order') {
+        if (right) { let rest = q.ans; const used = []; while (rest) { const k = q.labels.findIndex((l, j) => used.indexOf(j) < 0 && rest.startsWith(l)); used.push(k); await page.locator('.ex-opt').nth(k).click(); rest = rest.slice(q.labels[k].length); } }
+        else await page.locator('.ex-opt').first().click();
+      } else {
+        let target = q.vals.indexOf(q.ans);
+        if (!right) target = (target + 1) % q.vals.length;
+        await page.locator('.ex-opt').nth(target).click();
+      }
+      if (i < total - 1) await page.locator('.ex-nav button', { hasText: 'Next' }).click();
+    }
+  };
+  // part 2 of listening: a passage to hear and a sentence to read
+  await page.locator('button', { hasText: 'Start the full exam' }).click();
+  check((await text()).includes('Question 1 of 40') && /\d+:\d\d/.test(await page.locator('.ex-timer').innerText()), 'the HSK 3 exam starts with question 1 of 40 and a timer');
+  await page.evaluate(() => window.shanlu.exGo(10));
+  check((await page.locator('.ex-play').count()) === 1 && (await page.locator('.ex-text').innerText()).length > 3 && (await page.locator('.ex-opt').count()) === 2, 'listening part 2 plays a passage and shows the sentence with two answers');
+  await page.evaluate(() => window.shanlu.exGo(0));
+  // a sitting with many wrong answers: no seal
+  await answerAll3(false);
+  await page.locator('button', { hasText: 'Submit listening' }).click();
+  await page.locator('button', { hasText: 'Start Reading' }).click();
+  check((await text()).includes('Question 1 of 30'), 'reading has 30 questions');
+  await answerAll3(false);
+  await page.locator('button', { hasText: 'Submit reading' }).click();
+  await page.waitForTimeout(100);
+  let rt3 = await text();
+  check(rt3.includes('Your result') && !rt3.includes('seal earned') && rt3.includes('What to review'), 'an HSK 3 sitting with wrong answers earns no seal and lists what to review');
+  await page.locator('button', { hasText: 'Back to the exam page' }).click();
+  // writing practice: a wrong sitting, then a perfect one; neither counts toward the seal
+  await page.locator('button', { hasText: 'Writing practice' }).click();
+  check((await text()).includes('Question 1 of 10') && (await text()).includes('Tap the words'), 'writing practice starts with question 1 of 10');
+  await answerAll3(false);
+  await page.locator('button', { hasText: 'Submit writing' }).click();
+  await page.waitForTimeout(100);
+  rt3 = await text();
+  check(rt3.includes('Writing') && rt3.includes('0 of 10') && rt3.includes('Right answer') && rt3.includes('does not count toward the seal'), 'a wrong writing sitting scores 0 of 10, shows the right answers and says it does not count toward the seal');
+  await page.locator('button', { hasText: 'Back to the exam page' }).click();
+  await page.locator('button', { hasText: 'Writing practice' }).click();
+  await answerAll3(true);
+  await page.locator('button', { hasText: 'Submit writing' }).click();
+  await page.waitForTimeout(100);
+  rt3 = await text();
+  check(rt3.includes('10 of 10') && !rt3.includes('seal earned') && !rt3.includes('What to review'), 'a perfect writing sitting scores 10 of 10 and earns no seal');
+  check(await page.evaluate(() => !JSON.parse(localStorage.getItem('shanlu-passed') || '{}')[3]), 'writing practice alone does not mark HSK 3 as passed');
+  await page.locator('button', { hasText: 'Back to the exam page' }).click();
+  check((await text()).includes('Writing practice'), 'the writing sitting appears in the exam history');
+  // a perfect full sitting: 100 + 100 and the seal
+  await page.locator('button', { hasText: 'Start the full exam' }).click();
+  await answerAll3(true);
+  await page.locator('button', { hasText: 'Submit listening' }).click();
+  await page.locator('button', { hasText: 'Start Reading' }).click();
+  await answerAll3(true);
+  await page.locator('button', { hasText: 'Submit reading' }).click();
+  await page.waitForTimeout(100);
+  rt3 = await text();
+  check(rt3.includes('200 / 200') && rt3.includes('HSK 3 seal earned'), 'a perfect HSK 3 sitting scores 200 of 200 and earns the seal');
+  check(await page.evaluate(() => !!JSON.parse(localStorage.getItem('shanlu-passed') || '{}')[3]), 'the HSK 3 pass is remembered');
+  await page.locator('button', { hasText: 'Back to the exam page' }).click();
+  check((await text()).includes('200 / 200'), 'the full sitting appears in the exam history');
 
   // ---- Speak with AI: talk to a fake Anthropic API
   const calls = [];

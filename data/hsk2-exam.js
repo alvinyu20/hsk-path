@@ -950,7 +950,7 @@ window.HSK2_EXAM = {
     {
      "s": "男",
      "zh": "你什么时候过生日？",
-     "py": "Nǐ shénme shíhou guo shēngrì?",
+     "py": "Nǐ shénme shíhou guò shēngrì?",
      "en": "When is your birthday?"
     },
     {

@@ -1,0 +1,88 @@
+{
+ "R1": [
+  {"opts": ["我是骑自行车来的。", "我喜欢蓝的。", "下个月，我已经买好票了。", "没什么，我只是有点儿累。", "好啊，你想去哪儿吃？", "不客气，这是我应该做的。"],
+   "oen": ["I came by bike.", "I like the blue one.", "Next month. I have already bought the ticket.", "Nothing. I am just a bit tired.", "Sure, where would you like to eat?", "You are welcome. It is what I should do."],
+   "items": [
+    {"zh": "你是怎么来学校的？", "en": "How did you come to school?", "ans": 0},
+    {"zh": "你喜欢什么颜色？", "en": "What colour do you like?", "ans": 1},
+    {"zh": "你什么时候去旅游？", "en": "When are you going travelling?", "ans": 2},
+    {"zh": "你怎么哭了？", "en": "Why have you started to cry?", "ans": 3},
+    {"zh": "我们一起去吃饭，好吗？", "en": "Shall we go and eat together?", "ans": 4}
+  ]},
+  {"opts": ["两点半了。", "我不知道，它突然坏了。", "来杯热茶吧，外面太冷了。", "我发烧了，在家休息。", "当然可以，请坐。", "我的爸爸是医生。"],
+   "oen": ["It is half past two now.", "I do not know. It suddenly broke.", "Let me have a cup of hot tea. It is too cold outside.", "I had a fever and rested at home.", "Of course you can. Please sit down.", "My father is a doctor."],
+   "items": [
+    {"zh": "请问，现在几点了？", "en": "Excuse me, what time is it now?", "ans": 0},
+    {"zh": "你的电脑怎么了？", "en": "What is wrong with your computer?", "ans": 1},
+    {"zh": "你想喝什么？", "en": "What would you like to drink?", "ans": 2},
+    {"zh": "你昨天为什么没来？", "en": "Why did you not come yesterday?", "ans": 3},
+    {"zh": "我可以坐这里吗？", "en": "May I sit here?", "ans": 4}
+  ]},
+  {"opts": ["下个星期六。", "对不起，我也不认识。", "我们去公园了，公园里人很多。", "还可以，就是有点儿忙。", "不太远，走路十五分钟。", "我已经吃过了，谢谢。"],
+   "oen": ["Next Saturday.", "Sorry, I do not know it either.", "We went to the park. There were many people in the park.", "It is okay, just a bit busy.", "Not too far, fifteen minutes on foot.", "I have already eaten, thank you."],
+   "items": [
+    {"zh": "你的生日是什么时候？", "en": "When is your birthday?", "ans": 0},
+    {"zh": "这个字怎么读？", "en": "How do you read this character?", "ans": 1},
+    {"zh": "你们去哪儿玩了？", "en": "Where did you go to have fun?", "ans": 2},
+    {"zh": "你喜欢这个工作吗？", "en": "Do you like this job?", "ans": 3},
+    {"zh": "你家离学校远不远？", "en": "Is your home far from school?", "ans": 4}
+  ]},
+  {"opts": ["我会说一点儿，说得不好。", "我听说会下，你带把伞吧。", "因为我对中国文化很感兴趣。", "九点，在学校门口。", "很好用，我很满意。", "好的，我马上过来。"],
+   "oen": ["I can speak a little, but not well.", "I heard it will. You should take an umbrella.", "Because I am very interested in Chinese culture.", "Nine o'clock, at the school gate.", "Very easy to use. I am very satisfied.", "Okay, I will come over right away."],
+   "items": [
+    {"zh": "你会说汉语吗？", "en": "Can you speak Chinese?", "ans": 0},
+    {"zh": "明天会下雨吗？", "en": "Will it rain tomorrow?", "ans": 1},
+    {"zh": "你为什么学习中文？", "en": "Why are you studying Chinese?", "ans": 2},
+    {"zh": "我们几点见面？", "en": "What time shall we meet?", "ans": 3},
+    {"zh": "你的新手机怎么样？", "en": "How is your new phone?", "ans": 4}
+  ]}
+ ],
+ "R2": [
+  {"opts": ["但是", "或者", "比", "把", "如果", "一边"], "items": [
+   {"zh": "今天___昨天冷。", "en": "Today is colder than yesterday.", "ans": 2},
+   {"zh": "请___门关上。", "en": "Please close the door.", "ans": 3},
+   {"zh": "___明天下雨，我们就不去。", "en": "If it rains tomorrow, we will not go.", "ans": 4},
+   {"zh": "星期六___星期天，我都可以去。", "en": "Saturday or Sunday, I can go on either.", "ans": 1},
+   {"zh": "他___走路，一边听音乐。", "en": "He walks while listening to music.", "ans": 5}
+  ]},
+  {"opts": ["已经", "突然", "终于", "一直", "刚才", "还"], "items": [
+   {"zh": "我___三十岁了，不是小孩子了。", "en": "I am already thirty. I am not a child any more.", "ans": 0},
+   {"zh": "我走在路上，___看见了一只小狗。", "en": "I was walking along the road when I suddenly saw a puppy.", "ans": 1},
+   {"zh": "他学了三年，___会说汉语了。", "en": "He studied for three years and can finally speak Chinese.", "ans": 2},
+   {"zh": "从这里___往前走，就是银行。", "en": "Go straight ahead from here and you will reach the bank.", "ans": 3},
+   {"zh": "___谁给你打电话了？", "en": "Who called you a moment ago?", "ans": 4}
+  ]},
+  {"opts": ["为了", "除了", "对", "离", "从", "给"], "items": [
+   {"zh": "___身体健康，他每天跑步。", "en": "To stay healthy, he runs every day.", "ans": 0},
+   {"zh": "___苹果，我还喜欢吃香蕉。", "en": "Besides apples, I also like bananas.", "ans": 1},
+   {"zh": "他___音乐很感兴趣。", "en": "He is very interested in music.", "ans": 2},
+   {"zh": "我家___公司很近。", "en": "My home is close to the company.", "ans": 3},
+   {"zh": "我___八点工作到五点。", "en": "I work from eight to five.", "ans": 4}
+  ]},
+  {"opts": ["地", "得", "着", "了", "过", "的"], "items": [
+   {"zh": "他认真___写作业。", "en": "He does his homework carefully.", "ans": 0},
+   {"zh": "她唱歌唱___很好。", "en": "She sings very well.", "ans": 1},
+   {"zh": "他在椅子上坐___看书。", "en": "He is sitting on the chair reading.", "ans": 2},
+   {"zh": "昨天我买___两本书。", "en": "Yesterday I bought two books.", "ans": 3},
+   {"zh": "我从来没吃___这种水果。", "en": "I have never eaten this kind of fruit.", "ans": 4}
+  ]}
+ ],
+ "R3": [
+  {"zh": "小明昨天晚上看比赛看到十二点，他今天早上八点才起床，所以上课迟到了。", "en": "Xiao Ming watched a match until twelve yesterday evening and he only got up at eight this morning, so he was late for class.", "q": {"zh": "小明今天为什么迟到了？", "en": "Why was Xiao Ming late today?"}, "opts": ["他起得很晚", "他生病了", "路上车太多"]},
+  {"zh": "我很喜欢我们的新邻居。他们常常给我们送水果，我们也请他们来家里吃饭。", "en": "I like our new neighbours very much. They often bring us fruit, and we invite them to eat at our home too.", "q": {"zh": "他们和邻居的关系怎么样？", "en": "How is their relationship with the neighbours?"}, "opts": ["很好", "不太好", "不认识"]},
+  {"zh": "这家银行星期一到星期五上午九点开门，下午五点关门，星期六只开半天，星期天不开。", "en": "This bank opens at nine in the morning and closes at five in the afternoon from Monday to Friday, is open only half a day on Saturday and does not open on Sunday.", "q": {"zh": "星期天银行怎么样？", "en": "What about the bank on Sunday?"}, "opts": ["不开门", "开半天", "开一天"]},
+  {"zh": "我的朋友今年二十五岁，她不但会说汉语，而且汉字写得很漂亮。", "en": "My friend is twenty-five this year. She can not only speak Chinese but also writes characters beautifully.", "q": {"zh": "她的汉字写得怎么样？", "en": "How well does she write characters?"}, "opts": ["很漂亮", "不太好", "一般"]},
+  {"zh": "快过年了，商店里人很多。我妈妈买了很多菜和水果，她说要请朋友来家里吃饭。", "en": "The New Year is coming and the shops are full of people. My mother bought a lot of vegetables and fruit. She said she wants to invite friends to eat at home.", "q": {"zh": "妈妈为什么买了很多菜？", "en": "Why did Mother buy a lot of vegetables?"}, "opts": ["要请朋友吃饭", "菜很便宜", "家里没有菜了"]},
+  {"zh": "昨天我去商店买东西，发现手机不在包里了。我很着急，后来才知道，手机在办公室。", "en": "Yesterday I went shopping and found that my phone was not in my bag. I was very worried, and only later did I find out that it was in the office.", "q": {"zh": "他的手机在哪儿？", "en": "Where is his phone?"}, "opts": ["在办公室", "在商店", "在家里"]},
+  {"zh": "今天的天气太热了，我们不想出去，所以在家一边吃西瓜，一边看电视。", "en": "The weather is too hot today and we did not want to go out, so we stayed at home eating watermelon and watching TV.", "q": {"zh": "他们今天在哪儿？", "en": "Where are they today?"}, "opts": ["在家", "在公园", "在饭馆"]},
+  {"zh": "老师说，学汉语最重要的是多说、多听、多写。只看书不太好。", "en": "The teacher says that the most important thing in learning Chinese is to speak more, listen more and write more. Only reading books is not very good.", "q": {"zh": "老师觉得怎么学汉语才好？", "en": "How does the teacher think one should learn Chinese?"}, "opts": ["多说多听多写", "只看书", "只听音乐"]},
+  {"zh": "我的邻居每天都骑自行车上班，他说骑车可以锻炼身体，也不用花钱。", "en": "My neighbour cycles to work every day. He says cycling can give him exercise and also costs nothing.", "q": {"zh": "邻居为什么骑自行车上班？", "en": "Why does the neighbour cycle to work?"}, "opts": ["可以锻炼身体，也不用花钱", "车上人太多", "他喜欢开车"]},
+  {"zh": "你好，我是小明。我的电脑坏了，下午你有时间帮我看一看吗？", "en": "Hello, this is Xiao Ming. My computer is broken. Do you have time this afternoon to take a look at it for me?", "q": {"zh": "小明想让别人做什么？", "en": "What does Xiao Ming want someone to do?"}, "opts": ["看电脑", "买电脑", "借电脑"]},
+  {"zh": "这个周末我们学校有运动会，我参加了跑步比赛。", "en": "Our school has a sports meeting this weekend. I am taking part in the running race.", "q": {"zh": "他参加了什么比赛？", "en": "Which race did he enter?"}, "opts": ["跑步", "游泳", "打篮球"]},
+  {"zh": "妈妈给我买了两件衬衫，一大一小。大的太大了，所以我今天穿小的。", "en": "Mother bought me two shirts, one big and one small. The big one is too big, so I am wearing the small one today.", "q": {"zh": "他今天穿哪件衬衫？", "en": "Which shirt is he wearing today?"}, "opts": ["小的", "大的", "两件都穿"]},
+  {"zh": "昨天我和朋友去看了一个电影，电影很长，我们看了三个小时，所以回家以后很累。", "en": "Yesterday a friend and I went to see a film. It was very long, three hours, so we were tired when we got home.", "q": {"zh": "电影有多长？", "en": "How long is the film?"}, "opts": ["三个小时", "两个小时", "一个小时"]},
+  {"zh": "我哥哥的房间很小，但是很干净。他每天回家以后先打扫房间，然后再做饭。", "en": "My older brother's room is small but very clean. Every day after he gets home he first cleans the room and then cooks.", "q": {"zh": "哥哥回家以后先做什么？", "en": "What does the older brother do first after getting home?"}, "opts": ["打扫房间", "做饭", "看电视"]},
+  {"zh": "每个星期天，爷爷都带我去公园。他在公园里和朋友们一起唱歌，我在旁边玩。", "en": "Every Sunday, Grandpa takes me to the park. He sings with his friends in the park while I play nearby.", "q": {"zh": "爷爷在公园里做什么？", "en": "What does Grandpa do in the park?"}, "opts": ["和朋友唱歌", "跑步", "看书"]},
+  {"zh": "我在南方长大，那里冬天不太冷。去年我来到北方，这里冬天常常下雪，我很不习惯。", "en": "I grew up in the south, where the winter is not too cold. Last year I came to the north, where it often snows in winter, and I am not used to it.", "q": {"zh": "他为什么不习惯北方的冬天？", "en": "Why is he not used to the winter in the north?"}, "opts": ["因为太冷", "因为太热", "因为人太多"]}
+ ]
+}

@@ -745,6 +745,9 @@
   const EXAMBANK = LV_DATA('EXAM') || null;
   const EXAM_MIN = EXAMBANK && EXAMBANK.meta ? { listening:EXAMBANK.meta.listening.minutes, reading:EXAMBANK.meta.reading.minutes } : { listening:15, reading:20 };
   const EXAM_N = EXAMBANK && EXAMBANK.meta ? { listening:EXAMBANK.meta.listening.questions, reading:EXAMBANK.meta.reading.questions } : { listening:20, reading:20 };
+  // HSK 3 also has a writing section; the site treats it as practice (it is not part of the 200 points or the seal)
+  const HAS_WRITING = !!(EXAMBANK && EXAMBANK.meta && EXAMBANK.meta.writing);
+  if (HAS_WRITING) { EXAM_MIN.writing = EXAMBANK.meta.writing.minutes; EXAM_N.writing = EXAMBANK.meta.writing.questions; }
   // each section is worth 100 points, shared evenly by its questions (5 each at HSK 1; 100/35 and 4 each at HSK 2)
   const secPts = (correct, total) => Math.round(100 * correct / total);
   const PART_1 = {
@@ -767,7 +770,18 @@
     R3:{ sec:'reading', n:3, inst:'Do the two sentences mean the same?' },
     R4:{ sec:'reading', n:4, inst:'Choose the answer to each question.' }
   };
-  const PART = LV === 1 ? PART_1 : PART_2;
+  const PART_3 = {
+    L1:{ sec:'listening', n:1, inst:'Listen to the conversation. Choose the picture it is about.' },
+    L2:{ sec:'listening', n:2, inst:'Listen to the passage. Does the sentence on the screen match what you heard?' },
+    L3:{ sec:'listening', n:3, inst:'Listen to the short conversation and the question. Choose the answer.' },
+    L4:{ sec:'listening', n:4, inst:'Listen to the longer conversation and the question. Choose the answer.' },
+    R1:{ sec:'reading', n:1, inst:'Choose the reply that fits the sentence.' },
+    R2:{ sec:'reading', n:2, inst:'Choose the word that fills the blank.' },
+    R3:{ sec:'reading', n:3, inst:'Read the passage. Choose the answer to the question.' },
+    W1:{ sec:'writing', n:1, inst:'Tap the words in the right order to make a sentence. Tap a word again to take it back.' },
+    W2:{ sec:'writing', n:2, inst:'Type the missing character. The pinyin under the sentence tells you how it sounds.' }
+  };
+  const PART = LV === 1 ? PART_1 : LV === 2 ? PART_2 : PART_3;
   const LETTERS = 'ABCDEF';
   const pickN = (arr, n) => shuffleArr(arr).slice(0, n);
   function shuffleArr(arr) { const x = arr.slice(); for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = x[i]; x[i] = x[j]; x[j] = t; } return x; }
@@ -801,8 +815,34 @@
     }
     return out;
   };
+  // HSK 3: listening 10 + 10 + 10 + 10, reading 10 + 10 + 10 (the layout of the 2012 HSK 3 sample papers); writing practice 5 + 5
+  const qRight = (q, a) => a !== undefined && (a === q.ans || (q.alts || []).indexOf(a) >= 0);
+  const examQsL3 = (sec) => {
+    const out = [];
+    const add = (part, q) => { out.push(Object.assign({ part, id:part + '-' + out.length, sec:PART[part].sec }, q)); };
+    const E = EXAMBANK;
+    const sayRev = (lines, q) => ({ zh:lines.map(l => l.zh).join(' ') + (q ? ' ' + q.zh : ''), py:lines.map(l => l.py).join(' ') + (q ? ' ' + q.py : ''), en:lines.map(l => l.en).join(' ') + (q ? ' ' + q.en : '') });
+    const textQ = (part, bank, n) => pickN(bank, n).forEach(e => { const order = shuffleArr([0, 1, 2]); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add(part, { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:sayRev(e.say, e.q), right:e.opts[0].zh }); });
+    if (sec === 'listening') {
+      pickN(E.L1, 2).forEach(st => shuffleArr(st.items).forEach(it => add('L1', { kind:'match', audio:audioOf(it.say), opts:st.opts.map((p, k) => ({ v:k, label:p, emoji:true })), ans:it.ans, rev:sayRev(it.say), right:st.opts[it.ans] })));
+      pickTFn(E.L2, 10).forEach(e => add('L2', { kind:'tf', text:e.st.zh, audio:audioOf(e.say), ans:e.ok ? 'T' : 'F', opts:[{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }],
+        rev:{ zh:e.say.map(l => l.zh).join(' ') + ' / ' + e.st.zh, py:e.say.map(l => l.py).join(' ') + ' / ' + e.st.py, en:e.say.map(l => l.en).join(' ') + ' / ' + e.st.en }, right:e.ok ? 'It matches' : 'It does not match' }));
+      textQ('L3', E.L3, 10);
+      textQ('L4', E.L4, 10);
+    } else if (sec === 'reading') {
+      pickN(E.R1, 2).forEach(st => { const p1 = shuffleArr([0, 1, 2, 3, 4, 5]); st.items.forEach(it => add('R1', { kind:'match', text:it.zh, opts:p1.map((k, j) => ({ v:j, label:st.opts[k].zh })), ans:p1.indexOf(it.ans), rev:{ zh:it.zh + ' ' + st.opts[it.ans].zh, py:it.py + ' ' + st.opts[it.ans].py, en:it.en + ' ' + st.opts[it.ans].en }, right:st.opts[it.ans].zh })); });
+      pickN(E.R2, 2).forEach(st => { const p2 = shuffleArr([0, 1, 2, 3, 4, 5]); st.items.forEach(it => add('R2', { kind:'match', text:it.zh, opts:p2.map((k, j) => ({ v:j, label:st.opts[k].zh })), ans:p2.indexOf(it.ans), rev:{ zh:it.full, py:it.py, en:it.en }, right:st.opts[it.ans].zh })); });
+      pickN(E.R3, 10).forEach(e => { const order = shuffleArr([0, 1, 2]); add('R3', { kind:'text', text:e.zh + '\n' + e.q.zh, opts:order.map((k, j) => ({ v:j, label:e.opts[k].zh })), ans:order.indexOf(0), rev:{ zh:e.zh + ' ' + e.q.zh, py:e.py + ' ' + e.q.py, en:e.en + ' ' + e.q.en }, right:e.opts[0].zh }); });
+    } else {
+      // the words are never shown already in a right order (two identical words could otherwise swap places)
+      pickN(E.W1, 5).forEach(e => { let order; const said = (o) => o.map(k => e.words[k]).join(''); do { order = shuffleArr(e.words.map((w, k) => k)); } while (said(order) === e.zh || (e.alts || []).indexOf(said(order)) >= 0); add('W1', { kind:'order', opts:order.map((k, j) => ({ v:j, label:e.words[k] })), ans:e.zh, alts:e.alts, rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.zh }); });
+      pickN(E.W2, 5).forEach(e => add('W2', { kind:'type', text:e.zh, hint:e.hint, opts:[], ans:e.ans, rev:{ zh:e.full, py:e.py, en:e.en }, right:e.ans }));
+    }
+    return out;
+  };
   const examQs = (sec) => {
     if (LV === 2) return examQsL2(sec);
+    if (LV === 3) return examQsL3(sec);
     const out = [];
     const add = (part, q) => { out.push(Object.assign({ part, id:part + '-' + out.length, sec:PART[part].sec }, q)); };
     const E = EXAMBANK;
@@ -1221,9 +1261,9 @@
     // ----- the mock exam -----
     exTimer = null;
     examDraw = (sec) => examQs(sec);   // used by the browser test
-    startExam = (mode) => { if (!EXAMBANK) return; this.exBegin({ mode, sec:mode === 'reading' ? 'reading' : 'listening', results:{} }); };
+    startExam = (mode) => { if (!EXAMBANK) return; this.exBegin({ mode, sec:mode === 'reading' ? 'reading' : mode === 'writing' ? 'writing' : 'listening', results:{} }); };
     exBegin = (base) => {
-      const exm = Object.assign({}, base, { stage:'run', qs:examQs(base.sec), ans:{}, i:0, plays:{}, confirm:false, endAt:Date.now() + EXAM_MIN[base.sec] * 60000 });
+      const exm = Object.assign({}, base, { stage:'run', qs:examQs(base.sec), ans:{}, picks:{}, typed:{}, i:0, plays:{}, confirm:false, endAt:Date.now() + EXAM_MIN[base.sec] * 60000 });
       clearInterval(this.exTimer);
       this.exTimer = setInterval(() => {
         const m = this.state.exm;
@@ -1234,7 +1274,29 @@
       this.setState({ exm, screen:'exam' });
     };
     exPatch = (patch) => { const m = this.state.exm; if (m) this.setState({ exm:Object.assign({}, m, patch) }); };
-    exPick = (v) => { const m = this.state.exm; if (!m || m.stage !== 'run') return; const ans = Object.assign({}, m.ans); ans[m.qs[m.i].id] = v; this.exPatch({ ans, confirm:false }); };
+    exPick = (v) => {
+      const m = this.state.exm; if (!m || m.stage !== 'run') return;
+      const q = m.qs[m.i];
+      if (q.kind === 'order') {   // writing part 1: tap the words in turn; tap one again to take it back
+        const picks = (m.picks && m.picks[q.id]) || [];
+        this.exSetPicks(q, picks.indexOf(v) >= 0 ? picks.filter(x => x !== v) : picks.concat([v]));
+        return;
+      }
+      const ans = Object.assign({}, m.ans); ans[q.id] = v; this.exPatch({ ans, confirm:false });
+    };
+    exSetPicks = (q, picks) => {
+      const m = this.state.exm; if (!m) return;
+      const ans = Object.assign({}, m.ans);
+      if (picks.length) ans[q.id] = picks.map(k => q.opts[k].label).join(''); else delete ans[q.id];
+      this.exPatch({ picks:Object.assign({}, m.picks, { [q.id]:picks }), ans, confirm:false });
+    };
+    exClearPicks = () => { const m = this.state.exm; if (m && m.stage === 'run') this.exSetPicks(m.qs[m.i], []); };
+    exType = (e) => {   // writing part 2: the character is typed
+      const m = this.state.exm; if (!m || m.stage !== 'run') return;
+      const q = m.qs[m.i]; const raw = String(e.target.value || ''); const val = raw.replace(/\s/g, '');
+      const ans = Object.assign({}, m.ans); if (val) ans[q.id] = val; else delete ans[q.id];
+      this.exPatch({ ans, typed:Object.assign({}, m.typed, { [q.id]:raw }), confirm:false });
+    };
     exGo = (i) => { const m = this.state.exm; if (!m) return; try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {} this.exPatch({ i:Math.max(0, Math.min(m.qs.length - 1, i)), confirm:false }); };
     exPlay = () => {
       const m = this.state.exm; if (!m) return;
@@ -1303,10 +1365,16 @@
       m.qs.forEach((q, n) => {
         byPart[q.part] = byPart[q.part] || { c:0, t:0 };
         byPart[q.part].t += 1;
-        if (m.ans[q.id] === q.ans) { correct += 1; byPart[q.part].c += 1; } else wrong.push({ n:n + 1, q, yours:m.ans[q.id] });
+        if (qRight(q, m.ans[q.id])) { correct += 1; byPart[q.part].c += 1; } else wrong.push({ n:n + 1, q, yours:m.ans[q.id] });
       });
       const res = { sec:m.sec, correct, total:m.qs.length, byPart, wrong, auto:!!auto };
       const results = Object.assign({}, m.results); results[m.sec] = res;
+      if (m.sec === 'writing') {   // practice only: it is saved in the history but never counts toward the seal or the next level
+        const entry = { at:Date.now(), mode:'writing', w:correct, wt:m.qs.length };
+        this.setState({ exm:Object.assign({}, m, { stage:'result', results }), exams:this.state.exams.concat([entry]).slice(-20), dayMin:this.state.dayMin + 10, xp:this.state.xp + Math.round(correct * 2), dayXp:this.state.dayXp + Math.round(correct * 2) });
+        try { window.scrollTo(0, 0); } catch (e) {}
+        return;
+      }
       if (m.mode === 'full' && m.sec === 'listening') { this.exPatch({ stage:'break', results }); return; }
       const entry = { at:Date.now(), mode:m.mode, l:results.listening ? results.listening.correct : null, r:results.reading ? results.reading.correct : null, lt:results.listening ? results.listening.total : null, rt:results.reading ? results.reading.total : null };
       if (LVL.passedList(this.state.exams.concat([entry]))) LVL.markPassed(LV);   // passing both sections (together or one at a time) opens the next level straight away
@@ -2254,18 +2322,19 @@
 
     examVals() {
       const S = this.state, m = S.exm;
-      const secName = (s) => (s === 'listening' ? 'Listening' : 'Reading');
+      const secName = (s) => (s === 'listening' ? 'Listening' : s === 'writing' ? 'Writing' : 'Reading');
       const hist = (S.exams || []).slice(-5).reverse().map(h => {
         const pts = (h.l != null ? secPts(h.l, h.lt || 20) : 0) + (h.r != null ? secPts(h.r, h.rt || 20) : 0);
-        const what = h.mode === 'full' ? 'Full exam' : secName(h.mode);
+        const what = h.mode === 'full' ? 'Full exam' : h.mode === 'writing' ? 'Writing practice' : secName(h.mode);
         const parts = [];
         if (h.l !== null && h.l !== undefined) parts.push('Listening ' + h.l + '/' + (h.lt || 20));
         if (h.r !== null && h.r !== undefined) parts.push('Reading ' + h.r + '/' + (h.rt || 20));
+        if (h.w !== null && h.w !== undefined) parts.push('Writing ' + h.w + '/' + (h.wt || 10));
         return { text:new Date(h.at).toLocaleDateString('en-US', { month:'short', day:'numeric' }) + ' · ' + what, score:h.mode === 'full' ? pts + ' / 200' : parts.join(' '), detail:h.mode === 'full' ? parts.join(' · ') : '' };
       });
       const v = {
         examAvailable:!!EXAMBANK, exHome:!m, exRun:!!m && m.stage === 'run', exBreak:!!m && m.stage === 'break', exResult:!!m && m.stage === 'result',
-        startFull:() => this.startExam('full'), startListening:() => this.startExam('listening'), startReading:() => this.startExam('reading'),
+        startFull:() => this.startExam('full'), startListening:() => this.startExam('listening'), startReading:() => this.startExam('reading'), startWriting:() => this.startExam('writing'), examHasWriting:HAS_WRITING,
         histRows:hist, hasHist:hist.length > 0, noHist:hist.length === 0, exClose:this.exClose, exContinue:this.exContinue
       };
       if (!m) return v;
@@ -2278,6 +2347,7 @@
         const left = Math.max(0, m.endAt - Date.now());
         const used = m.plays[q.id] || 0;
         const chosen = m.ans[q.id];
+        const picks = (m.picks && m.picks[q.id]) || [];
         const taken = {};
         if (q.kind === 'match') m.qs.forEach(o => { if (o.part === q.part && o.id !== q.id && m.ans[o.id] !== undefined) taken[m.ans[o.id]] = true; });
         Object.assign(v, {
@@ -2285,8 +2355,10 @@
           exTimer:Math.floor(left / 60000) + ':' + pad(Math.floor(left / 1000) % 60), exTimerCls:left < 60000 ? 'warn' : '',
           exListen:!!q.audio, exPlaysLeft:2 - used, exCanPlay:used < 2, exPlayDis:used < 2 ? 'false' : 'true', exPlayCls:S.playing === 'exq' ? 'on' : '', exPlay:this.exPlay,
           exHasPic:!!q.pic, exPic:q.pic || '', exHasText:!!q.text, exText:q.text || '',
-          exOpts:q.opts.map((o, k) => ({ letter:q.kind === 'tf' ? '' : LETTERS[k], label:o.label, emo:!!o.emoji, big:(q.kind === 'pic' || o.emoji) ? 'true' : '',
-            cls:(chosen === o.v ? 'on ' : '') + (taken[o.v] ? 'used ' : ''), pick:() => this.exPick(o.v) })),
+          exHasHint:!!q.hint, exHint:q.hint ? 'Pinyin: ' + q.hint : '', exIsType:q.kind === 'type', exTypedVal:(m.typed && m.typed[q.id]) || '', exType:this.exType,
+          exIsOrder:q.kind === 'order', exBuilt:picks.map(k => q.opts[k].label).join('') || '＿＿＿＿', exClear:this.exClearPicks, exCanClear:picks.length > 0,
+          exOpts:q.opts.map((o, k) => ({ letter:(q.kind === 'tf' || q.kind === 'order') ? '' : LETTERS[k], label:o.label, emo:!!o.emoji, big:(q.kind === 'pic' || o.emoji) ? 'true' : '',
+            cls:((q.kind === 'order' ? picks.indexOf(o.v) >= 0 : chosen === o.v) ? 'on ' : '') + (taken[o.v] ? 'used ' : ''), pick:() => this.exPick(o.v) })),
           exOptsCls:'k-' + q.kind, exPal:m.qs.map((o, k) => ({ n:k + 1, cls:(k === m.i ? 'cur ' : '') + (m.ans[o.id] !== undefined ? 'done' : ''), go:() => this.exGo(k) })),
           exPrev:() => this.exGo(m.i - 1), exNext:() => this.exGo(m.i + 1), exCanPrev:m.i > 0, exCanNext:m.i < m.qs.length - 1,
           exSubmit:() => this.exSubmit(false), exSubmitLabel:'Submit ' + secName(m.sec).toLowerCase(), exOpen:m.qs.filter(o => m.ans[o.id] === undefined).length,
@@ -2294,22 +2366,22 @@
         });
       }
       if (m.stage === 'result') {
-        const secs = ['listening', 'reading'].filter(s => m.results[s]).map(s => {
+        const secs = ['listening', 'reading', 'writing'].filter(s => m.results[s]).map(s => {
           const r = m.results[s]; const pct = Math.round(100 * r.correct / r.total);
           return { name:secName(s), text:r.correct + ' of ' + r.total, pts:secPts(r.correct, r.total) + ' / 100', pct:pct + '%', ok:pct >= LVL.PASS_PCT, cls:pct >= LVL.PASS_PCT ? 'good' : 'low', auto:r.auto,
             parts:Object.keys(r.byPart).map(p => ({ name:'Part ' + PART[p].n, score:r.byPart[p].c + ' / ' + r.byPart[p].t, cls:r.byPart[p].c === r.byPart[p].t ? 'good' : '' })) };
         });
         const total = ['listening', 'reading'].reduce((n, s) => n + (m.results[s] ? secPts(m.results[s].correct, m.results[s].total) : 0), 0);
-        const seal = secs.length > 0 && secs.every(s => s.ok);
+        const seal = m.mode !== 'writing' && secs.length > 0 && secs.every(s => s.ok);
         const wrong = [];
-        ['listening', 'reading'].forEach(s => { if (m.results[s]) m.results[s].wrong.forEach(w => wrong.push(w)); });
+        ['listening', 'reading', 'writing'].forEach(s => { if (m.results[s]) m.results[s].wrong.forEach(w => wrong.push(w)); });
         Object.assign(v, {
           exSecs:secs, exFull:m.mode === 'full', exSingle:m.mode !== 'full', exTotal200:total + ' / 200', exPassReal:total >= 120,
-          exVerdict:m.mode === 'full' ? (total >= 120 ? 'At or above 120 of 200, the pass mark of the official ' + LVN + ' test.' : 'Below 120 of 200, the pass mark of the official ' + LVN + ' test.') : 'One section only. The official pass mark is on the total of both sections.',
+          exVerdict:m.mode === 'writing' ? 'Writing is practice here. The site cannot mark handwriting, so it is not part of the 200 points or the seal.' : m.mode === 'full' ? (total >= 120 ? 'At or above 120 of 200, the pass mark of the official ' + LVN + ' test.' : 'Below 120 of 200, the pass mark of the official ' + LVN + ' test.') : 'One section only. The official pass mark is on the total of both sections.',
           exUnlock:seal && m.mode === 'full' && LV < LVL.MAX_LEVEL, exUnlockText:'You passed the ' + LVN + ' level exam. HSK ' + (LV + 1) + ' is now open.', exUnlockGo:() => this.switchLevel(LV + 1), exUnlockGoText:'Go to HSK ' + (LV + 1),
-          exSeal:seal, exNoSeal:!seal, exSealText:seal ? (m.mode === 'full' ? 'You reached ' + LVL.PASS_PCT + '% in every section. That is this site\'s bar for the ' + LVN + ' seal.' : 'You reached ' + LVL.PASS_PCT + '% in the section you took. Take the full exam to open the next level.') : 'The seal here needs 80% in every section. Review the questions below and try again.',
+          exSeal:seal, exNoSeal:!seal, exSealText:m.mode === 'writing' ? 'Writing practice does not count toward the seal. The seal needs ' + LVL.PASS_PCT + '% in listening and in reading.' : seal ? (m.mode === 'full' ? 'You reached ' + LVL.PASS_PCT + '% in every section. That is this site\'s bar for the ' + LVN + ' seal.' : 'You reached ' + LVL.PASS_PCT + '% in the section you took. Take the full exam to open the next level.') : 'The seal here needs 80% in every section. Review the questions below and try again.',
           exWrong:wrong.map(w => ({ n:w.n, part:'Part ' + PART[w.q.part].n, zh:w.q.rev.zh, py:w.q.rev.py, en:w.q.rev.en, pic:w.q.rev.pic || '', hasPic:!!w.q.rev.pic,
-            right:w.q.right, yours:w.yours === undefined ? 'No answer' : (w.q.opts.find(o => o.v === w.yours) || { label:'' }).label })), hasWrong:wrong.length > 0, perfect:wrong.length === 0,
+            right:w.q.right, yours:w.yours === undefined ? 'No answer' : (w.q.kind === 'order' || w.q.kind === 'type') ? String(w.yours) : (w.q.opts.find(o => o.v === w.yours) || { label:'' }).label })), hasWrong:wrong.length > 0, perfect:wrong.length === 0,
           exAgain:() => this.startExam(m.mode)
         });
       }
@@ -2916,13 +2988,15 @@
         goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
         hasDue:S.rq.length > 0 && !S.rcomplete, dueCount:S.rq.length,
         exTitle:LVN + ' mock exam',
-        exIntro:LV === 1 ? 'Built like the official HSK 1 sample papers: 20 listening and 20 reading questions in four parts each, about 35 minutes. No hints and no pinyin while you answer. Each exam is drawn from a bank of 120+ questions, so it is different every time.' : 'Built like the HSK 2 sample papers of the 2012 test: 35 listening and 25 reading questions in four parts each, about 47 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Each exam is drawn from a bank of 140+ questions, so it is different every time.',
+        exIntro:LV === 1 ? 'Built like the official HSK 1 sample papers: 20 listening and 20 reading questions in four parts each, about 35 minutes. No hints and no pinyin while you answer. Each exam is drawn from a bank of 120+ questions, so it is different every time.' : LV === 3 ? 'Built like the HSK 3 sample papers of the 2012 test: 40 listening questions in four parts and 30 reading questions in three parts, about 65 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Writing is separate practice. Each exam is drawn from a bank of 130+ questions, so it is different every time.' : 'Built like the HSK 2 sample papers of the 2012 test: 35 listening and 25 reading questions in four parts each, about 47 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Each exam is drawn from a bank of 140+ questions, so it is different every time.',
         exListenT:'Listening · ' + EXAM_N.listening + ' questions · ' + EXAM_MIN.listening + ' min',
-        exListenD:LV === 1 ? 'Part 1: does the picture match? Part 2: pick the picture for a sentence. Part 3: match five conversations to pictures. Part 4: a conversation, a question, three answers. Each clip can be played twice.' : 'Part 1 (10): does the picture match the sentence? Part 2 (10): match conversations to pictures. Part 3 (10): a short conversation, a question, three answers. Part 4 (5): a longer conversation, a question, three answers. Each clip can be played twice.',
+        exListenD:LV === 1 ? 'Part 1: does the picture match? Part 2: pick the picture for a sentence. Part 3: match five conversations to pictures. Part 4: a conversation, a question, three answers. Each clip can be played twice.' : LV === 3 ? 'Part 1 (10): match conversations to pictures. Part 2 (10): does the sentence match the passage? Part 3 (10): a short conversation, a question, three answers. Part 4 (10): a longer conversation, a question, three answers. Each clip can be played twice.' : 'Part 1 (10): does the picture match the sentence? Part 2 (10): match conversations to pictures. Part 3 (10): a short conversation, a question, three answers. Part 4 (5): a longer conversation, a question, three answers. Each clip can be played twice.',
+        exWriteT:HAS_WRITING ? 'Writing · ' + EXAM_N.writing + ' questions · ' + EXAM_MIN.writing + ' min · practice' : '',
+        exWriteD:'Part 1 (5): tap the words in the right order. Part 2 (5): type the missing character. Practice only: it does not count toward the 200 points or the seal.',
         exReadT:'Reading · ' + EXAM_N.reading + ' questions · ' + EXAM_MIN.reading + ' min',
-        exReadD:LV === 1 ? 'Part 1: does the picture match the words? Part 2: match five sentences to pictures. Part 3: match five questions to answers. Part 4: fill five blanks from a word list.' : 'Part 1 (5): match sentences to pictures. Part 2 (5): fill blanks from a word list. Part 3 (5): do two sentences mean the same? Part 4 (10): match questions to answers.',
-        exNote:LV === 1 ? 'The real test has pictures; here emoji stand in for them. The official 2025 test is said to have 20 listening questions (about 12 minutes of audio) and 20 reading questions (20 minutes); the part-by-part layout above is from the official sample papers and I could not confirm every detail of the 2025 version. Listening gets 15 minutes here because you press play yourself.' : 'The real test has pictures; here emoji stand in for them. This layout follows the 2012 (HSK 2.0) sample papers. I could not find the layout of the 2025 HSK band 2 exam, so it may differ. Listening gets 25 minutes because you press play yourself.',
-        exScore:(LV === 1 ? 'Each question is worth 5 points, so each section is out of 100 and the total out of 200.' : 'Each section is worth 100 points, shared evenly by its questions (listening about 2.9 points a question, reading 4), so the total is out of 200.') + ' The official ' + LVN + ' pass mark is 120 of 200 (I am not sure whether the 2025 version changed it). This site\'s ' + LVN + ' seal is stricter: ' + LVL.PASS_PCT + '% in every section of one full exam, and it opens ' + (LV < LVL.MAX_LEVEL ? 'HSK ' + (LV + 1) : 'the next level') + '.',
+        exReadD:LV === 1 ? 'Part 1: does the picture match the words? Part 2: match five sentences to pictures. Part 3: match five questions to answers. Part 4: fill five blanks from a word list.' : LV === 3 ? 'Part 1 (10): choose the reply that fits each sentence. Part 2 (10): fill blanks from a word list. Part 3 (10): read a passage and answer a question.' : 'Part 1 (5): match sentences to pictures. Part 2 (5): fill blanks from a word list. Part 3 (5): do two sentences mean the same? Part 4 (10): match questions to answers.',
+        exNote:LV === 1 ? 'The real test has pictures; here emoji stand in for them. The official 2025 test is said to have 20 listening questions (about 12 minutes of audio) and 20 reading questions (20 minutes); the part-by-part layout above is from the official sample papers and I could not confirm every detail of the 2025 version. Listening gets 15 minutes here because you press play yourself.' : LV === 3 ? 'The real test has pictures; here emoji stand in for them. This layout follows the 2012 (HSK 2.0) sample papers. I could not find the layout of the 2025 HSK band 3 exam, so it may differ. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand; here you tap and type, and the site cannot judge a hand-written character.' : 'The real test has pictures; here emoji stand in for them. This layout follows the 2012 (HSK 2.0) sample papers. I could not find the layout of the 2025 HSK band 2 exam, so it may differ. Listening gets 25 minutes because you press play yourself.',
+        exScore:(LV === 1 ? 'Each question is worth 5 points, so each section is out of 100 and the total out of 200.' : LV === 3 ? 'Each section is worth 100 points, shared evenly by its questions (listening 2.5 points a question, reading about 3.3), so the total is out of 200. Writing practice is not scored in points.' : 'Each section is worth 100 points, shared evenly by its questions (listening about 2.9 points a question, reading 4), so the total is out of 200.') + ' The official ' + LVN + ' pass mark is ' + (LV === 3 ? '180 of 300, which is 60% and so 120 of the 200 here' : '120 of 200') + ' (I am not sure whether the 2025 version changed it). This site\'s ' + LVN + ' seal is stricter: ' + LVL.PASS_PCT + '% in every section of one full exam, and it opens ' + (LV < LVL.MAX_LEVEL ? 'HSK ' + (LV + 1) : 'the next level') + '.',
         chatVocab:KNOWN_LISTS + ' vocabulary only', lvName:LVN, nextLvName:'HSK ' + (TOPL + 1), lvIs1:TOPL === 1, lvIs2:TOPL !== 1, hasExamCard:!!EXAMBANK, noExamCard:!EXAMBANK,
         examCardTitle:ALL ? 'Level exams' : EXAMBANK ? LVN + ' level exam' : LVN + ' progress', examCardNote:ALL ? 'Each level has its own exam. Switch to HSK 1 or HSK 2 in the header to take it; passing it opens the next level. The rings show your progress across all the levels shown here.' : EXAMBANK ? (LVL.levelPassed(LV) ? LVN + ' exam passed.' + (LV < LVL.MAX_LEVEL ? ' HSK ' + (LV + 1) + ' is open.' : '') : (LV < LVL.MAX_LEVEL ? 'Pass the full exam (' + LVL.PASS_PCT + '% in listening and in reading) to open HSK ' + (LV + 1) + '. The rings show how ready you are.' : 'Reach ' + LVL.PASS_PCT + '% in listening and in reading to pass.')) : 'The ' + LVN + ' level exam, listening lab and practice scripts are not built yet. These rings show the parts that are.',
         examBtnText:'See the ' + LVN + ' level exam',

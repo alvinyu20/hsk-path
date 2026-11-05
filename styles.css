@@ -591,6 +591,12 @@ button.scn:hover .scn-m{text-decoration:underline}
 .ex-opts{display:grid;gap:12px}
 .ex-opts.k-tf{grid-template-columns:repeat(2,minmax(0,1fr))}
 .ex-opts.k-pic,.ex-opts.k-match{grid-template-columns:repeat(auto-fit,minmax(min(130px,100%),1fr))}
+.ex-opts.k-order{grid-template-columns:repeat(auto-fit,minmax(min(96px,100%),1fr))}
+.ex-opts.k-type{display:none}
+.ex-hint{text-align:center;font-size:20px;margin-top:6px}
+.ex-built-row{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin:10px 0 14px}
+.ex-built{font-size:28px;line-height:1.4;min-width:200px;min-height:44px;text-align:center;border-bottom:2px solid var(--line);padding:2px 12px}
+.ex-input{display:block;max-width:240px;margin:14px auto 4px;font-size:32px;text-align:center}
 .ex-opts.k-text{grid-template-columns:minmax(0,1fr)}
 .ex-opt{display:flex;align-items:center;justify-content:center;gap:10px;min-height:60px;padding:10px 14px;border-radius:18px;border:2px solid var(--line);background:var(--bg);color:var(--ink);font-size:22px;cursor:pointer;transition:border-color .15s,background .15s}
 .ex-opt b{color:var(--muted);font-size:16px}

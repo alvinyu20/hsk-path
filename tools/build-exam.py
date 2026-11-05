@@ -18,7 +18,13 @@ def die(m):
 
 LV = levelcfg.LEVEL
 eng = Engine(levelcfg.known())
-src = json.load(open(os.path.join(levelcfg.CONTENT, 'exam-%d.json' % LV), encoding='utf-8'))
+if LV == 3:
+    # the HSK 3 bank is kept in three files (listening, reading, writing) so each stays readable
+    src = {}
+    for part in ('listening', 'reading', 'writing'):
+        src.update(json.load(open(os.path.join(levelcfg.CONTENT, 'exam-3-%s.json' % part), encoding='utf-8')))
+else:
+    src = json.load(open(os.path.join(levelcfg.CONTENT, 'exam-%d.json' % LV), encoding='utf-8'))
 
 
 def py(zh):
@@ -146,7 +152,91 @@ def build_l2():
     print('wrote data/hsk2-exam.js: %d questions in the bank' % n)
 
 
+def build_l3():
+    from pypinyin import lazy_pinyin, Style
+    out = {}
+    # L1: five two-line dialogues for each set of six pictures (as at HSK 2)
+    out['L1'] = []
+    for st in src['L1']:
+        if len(st['opts']) != 6 or len(set(st['opts'])) != 6 or sorted(i['ans'] for i in st['items']) != [0, 1, 2, 3, 4]:
+            die('L1 set must have 6 different pictures and five items answering pictures 0-4 once each')
+        for i in st['items']:
+            if len(i['say']) != 2:
+                die('L1 dialogues have two lines: ' + i['say'][0]['zh'])
+        out['L1'].append(dict(opts=st['opts'], items=[dict(say=say(i['say']), ans=i['ans']) for i in st['items']]))
+    # L2: a short passage and a printed sentence: does the sentence match what was said?
+    out['L2'] = []
+    for e in src['L2']:
+        out['L2'].append(dict(say=say(e['say']), st=dict(zh=e['st'][0], py=py(e['st'][0]), en=e['st'][1]), ok=bool(e['ok'])))
+    if sum(1 for e in out['L2'] if e['ok']) < 10 or sum(1 for e in out['L2'] if not e['ok']) < 10:
+        die('L2 needs at least 10 true and 10 false items')
+    for part, nlines, least in (('L3', 2, 20), ('L4', 4, 14)):
+        out[part] = []
+        for i in src[part]:
+            if len(i['opts']) != 3 or len(set(i['opts'])) != 3 or len(i['say']) != nlines:
+                die('%s needs %d lines and 3 different options: %s' % (part, nlines, i['q']['zh']))
+            out[part].append(dict(say=say(i['say']), q=dict(zh=i['q']['zh'], py=py(i['q']['zh']), en=i['q']['en']), opts=[dict(zh=o, py=py(o)) for o in i['opts']]))
+        if len(out[part]) < least:
+            die('%s needs at least %d items' % (part, least))
+    # R1: five sentences, six possible replies (one is not used)
+    out['R1'] = []
+    for st in src['R1']:
+        if len(st['opts']) != 6 or len(set(st['opts'])) != 6 or len(st['oen']) != 6 or len(set(i['ans'] for i in st['items'])) != 5 or len(st['items']) != 5:
+            die('R1 set must have 6 different replies (with English) and five sentences, each with a different reply')
+        out['R1'].append(dict(opts=[dict(zh=o, py=py(o), en=st['oen'][k]) for k, o in enumerate(st['opts'])],
+                              items=[dict(zh=i['zh'], py=py(i['zh']), en=i['en'], ans=i['ans']) for i in st['items']]))
+    # R2: six words, five blanks (one word is not used)
+    out['R2'] = []
+    for st in src['R2']:
+        if len(st['opts']) != 6 or len(set(st['opts'])) != 6 or len(st['items']) != 5 or len(set(i['ans'] for i in st['items'])) != 5:
+            die('R2 set must have 6 words and five blanks, each with a different answer')
+        items = []
+        for i in st['items']:
+            if i['zh'].count('___') != 1:
+                die('R2 sentence needs exactly one blank: ' + i['zh'])
+            full = i['zh'].replace('___', st['opts'][i['ans']])
+            items.append(dict(zh=i['zh'], full=full, py=py(full), en=i['en'], ans=i['ans']))
+        out['R2'].append(dict(opts=[dict(zh=o, py=eng.word_py(o)) for o in st['opts']], items=items))
+    # R3: a short passage, a question and three answers (the first is right)
+    out['R3'] = []
+    for e in src['R3']:
+        if len(e['opts']) != 3 or len(set(e['opts'])) != 3:
+            die('R3 needs 3 different options: ' + e['q']['zh'])
+        out['R3'].append(dict(zh=e['zh'], py=py(e['zh']), en=e['en'], q=dict(zh=e['q']['zh'], py=py(e['q']['zh']), en=e['q']['en']), opts=[dict(zh=o, py=py(o)) for o in e['opts']]))
+    # W1: put the words in order (practice, typed or tapped)
+    out['W1'] = []
+    for e in src['W1']:
+        main = ''.join(e['words'])
+        alts = [''.join(a) for a in e.get('alts', [])]
+        for a in e.get('alts', []):
+            if sorted(a) != sorted(e['words']):
+                die('W1 alternative must use the same words: ' + main)
+        if len(e['words']) < 4 or main in alts:
+            die('W1 needs at least 4 words and a different order for each alternative: ' + main)
+        out['W1'].append(dict(words=e['words'], zh=main, alts=alts, py=py(main), en=e['en']))
+    # W2: write the missing character; the pinyin hint comes from pypinyin and must appear in the sentence's own pinyin
+    out['W2'] = []
+    for e in src['W2']:
+        if e['zh'].count('___') != 1 or len(e['ans']) != 1:
+            die('W2 needs one blank and a one-character answer: ' + e['zh'])
+        full = e['zh'].replace('___', e['ans'])
+        hint = lazy_pinyin(e['ans'], style=Style.TONE, v_to_u=True)[0]
+        sentence_py = py(full)
+        if hint.lower() not in sentence_py.lower().replace(' ', ''):
+            die('W2 pinyin hint %s for %s is not in the sentence pinyin: %s' % (hint, e['ans'], sentence_py))
+        out['W2'].append(dict(zh=e['zh'], full=full, ans=e['ans'], hint=hint, py=sentence_py, en=e['en']))
+    meta = dict(listening=dict(questions=40, minutes=35), reading=dict(questions=30, minutes=30), writing=dict(questions=10, minutes=15))
+    n = sum(len(x['items']) for x in out['L1']) + len(out['L2']) + len(out['L3']) + len(out['L4']) + sum(len(x['items']) for x in out['R1']) + sum(len(x['items']) for x in out['R2']) + len(out['R3']) + len(out['W1']) + len(out['W2'])
+    with open(levelcfg.data_path('exam'), 'w', encoding='utf-8') as f:
+        f.write('/* HSK 3 mock exam question bank for Shanlu. GENERATED by tools/build-exam.py from content/l3/exam-3-*.json. Do not edit by hand.\n')
+        f.write(' * Modelled on the HSK 3 sample papers of the 2012 (HSK 2.0) test: listening 10 + 10 + 10 + 10, reading 10 + 10 + 10, writing 5 + 5. The layout of the 2025 test was not available to me. Pictures are emoji. AI-written, not reviewed by a teacher. */\n')
+        f.write('window.HSK3_EXAM = ' + json.dumps(dict(meta=meta, **out), ensure_ascii=False, indent=1) + ';\n')
+    print('wrote data/hsk3-exam.js: %d questions in the bank' % n)
+
+
 if LV == 1:
     build_l1()
-else:
+elif LV == 2:
     build_l2()
+else:
+    build_l3()

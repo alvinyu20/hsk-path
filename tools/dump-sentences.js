@@ -60,6 +60,18 @@ if (EXAM && level === '2') {
   EXAM.R3.forEach((e, i) => { add('exam:R3:' + i + ':first', e.a.zh, e.a.py, e.a.en); add('exam:R3:' + i + ':second', e.b.zh, e.b.py, e.b.en); });
   EXAM.R4.forEach((st, a) => st.items.forEach((it, i) => { add('exam:R4:' + a + '.' + i + ':question', it.zh, it.py, it.en); add('exam:R4:' + a + '.' + i + ':answer', st.opts[it.ans].zh, st.opts[it.ans].py, st.opts[it.ans].en); }));
 }
+if (EXAM && level === '3') {
+  // HSK 3 layout: L1 dialogue sets for pictures, L2 passage + printed sentence (true/false), L3/L4 dialogue + question + options,
+  // R1 sentences matched to replies, R2 blanks, R3 passage + question + options, W1 word order, W2 missing character
+  EXAM.L1.forEach((st, a) => st.items.forEach((it, i) => it.say.forEach((l, k) => add('exam:L1:' + a + '.' + i + '.' + k, l.zh, l.py, l.en))));
+  EXAM.L2.forEach((e, i) => { e.say.forEach((l, k) => add('exam:L2:' + i + '.' + k, l.zh, l.py, l.en)); add('exam:L2:' + i + ':statement', e.st.zh, e.st.py, e.st.en); });
+  ['L3', 'L4'].forEach(p => EXAM[p].forEach((e, i) => { e.say.forEach((l, k) => add('exam:' + p + ':' + i + '.' + k, l.zh, l.py, l.en)); add('exam:' + p + ':' + i + ':question', e.q.zh, e.q.py, e.q.en); e.opts.forEach((o, k) => add('exam:' + p + ':' + i + ':option' + k, o.zh, o.py, '', { levelOnly: true })); }));
+  EXAM.R1.forEach((st, a) => { st.items.forEach((it, i) => add('exam:R1:' + a + '.' + i + ':question', it.zh, it.py, it.en)); st.opts.forEach((o, k) => add('exam:R1:' + a + ':reply' + k, o.zh, o.py, o.en)); });
+  EXAM.R2.forEach((st, a) => st.items.forEach((it, i) => add('exam:R2:' + a + '.' + i, it.full, it.py, it.en)));
+  EXAM.R3.forEach((e, i) => { add('exam:R3:' + i + ':passage', e.zh, e.py, e.en); add('exam:R3:' + i + ':question', e.q.zh, e.q.py, e.q.en); e.opts.forEach((o, k) => add('exam:R3:' + i + ':option' + k, o.zh, o.py, '', { levelOnly: true })); });
+  EXAM.W1.forEach((e, i) => add('exam:W1:' + i, e.zh, e.py, e.en, { fragment: true }));
+  EXAM.W2.forEach((e, i) => add('exam:W2:' + i, e.full, e.py, e.en));
+}
 if (EXAM && level === '1') {
   ['L1', 'R1'].forEach(p => EXAM[p].forEach((e, i) => add('exam:' + p + ':' + i, e.zh, e.py, e.en, { fragment: true })));
   EXAM.L2.forEach((e, i) => add('exam:L2:' + i, e.zh, e.py, e.en));

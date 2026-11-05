@@ -194,8 +194,14 @@ class Engine:
             if p[0] == 'w' and p[1] == '只':
                 prev = parts[i - 1][1] if i > 0 and parts[i - 1][0] == 'w' else ''
                 nxt = parts[i + 1][1] if i + 1 < len(parts) and parts[i + 1][0] == 'w' else ''
-                measure = bool(prev) and (prev[-1] in NUM_CHARS or (prev[-1] in '几这那哪每' and nxt[:1] not in ZHI_ONLY_NEXT))
+                measure = bool(prev) and not prev.startswith(('星期', '礼拜')) and (prev[-1] in NUM_CHARS or (prev[-1] in '几这那哪每' and nxt[:1] not in ZHI_ONLY_NEXT))
                 parts[i] = ('w', '只', 'zhī' if measure else 'zhǐ')
+        # 过: guo (the "have done it before" particle, 去过 吃过) after a verb; guò (the verb: to spend time, to cross) before 得 马路 生日 日子
+        for i, p in enumerate(parts):
+            if p[0] == 'w' and p[1] == '过':
+                nxt = parts[i + 1][1] if i + 1 < len(parts) and parts[i + 1][0] == 'w' else ''
+                if nxt in ('得', '马路', '生日', '日子'):
+                    parts[i] = ('w', '过', 'guò')
         # 得: děi ("must") before a verb after a pronoun, a time word, an adverb like 也 还 都 就 先 or at the start of a clause;
         #     dé ("to get") in 得了 + a number (他考试得了一百分); de (the particle) after a verb (跑得很快), which is the default reading
         for i, p in enumerate(parts):
