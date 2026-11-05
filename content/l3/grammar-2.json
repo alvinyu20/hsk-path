@@ -1,0 +1,803 @@
+[
+ {
+  "id": "yue",
+  "title": "越…越… and 越来越",
+  "covers": [
+   18,
+   19
+  ],
+  "formula": [
+   "*越",
+   "Verb / Adjective",
+   "*越",
+   "Adjective"
+  ],
+  "explain": [
+   "越…越… means 'the more … the more …': 他越说越快 'He speaks faster and faster'; 汉语歌越听越好听 'This song sounds better the more you listen to it'.",
+   "越来越 + adjective (or a feeling verb such as 喜欢) means 'more and more': 天气越来越冷 'The weather gets colder and colder'; 我越来越喜欢汉语了 'I like Chinese more and more'. A final 了 is common.",
+   "Both parts of 越 stand right before the words they describe. Do not add 很 after them."
+  ],
+  "examples": [
+   {
+    "zh": "他越说越快。",
+    "en": "He speaks faster and faster."
+   },
+   {
+    "zh": "汉语歌越听越好听。",
+    "en": "Chinese songs sound better the more you listen to them."
+   },
+   {
+    "zh": "天气越来越冷了。",
+    "en": "The weather has become colder and colder."
+   },
+   {
+    "zh": "我越来越喜欢汉语了。",
+    "en": "I have come to like Chinese more and more."
+   }
+  ],
+  "mistakes": [
+   "Put 越 before both words: 雨越下越大. 雨下越大 is wrong.",
+   "Do not add 很 after 越来越: say 天气越来越冷, not 天气越来越很冷."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "雨越下越大。",
+    "en": "The rain is getting heavier and heavier.",
+    "explain": "越 + verb + 越 + adjective."
+   },
+   {
+    "t": "order",
+    "zh": "天越来越冷。",
+    "en": "The weather gets colder and colder.",
+    "explain": "越来越 + adjective."
+   },
+   {
+    "t": "order",
+    "zh": "我的汉语越来越好。",
+    "en": "My Chinese is getting better and better.",
+    "explain": "越来越 + adjective."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: The weather gets colder and colder?",
+    "options": [
+     "天气越来越冷。",
+     "天气越冷越来。"
+    ],
+    "correct": 0,
+    "zh": "天气越来越冷。",
+    "en": "The weather gets colder and colder.",
+    "explain": "越来越 comes right before the adjective."
+   },
+   {
+    "t": "spot",
+    "zh": "天气越来越冷了。",
+    "en": "The weather has become colder and colder.",
+    "wrong": "天气越来越很冷了。",
+    "remove": "很",
+    "explain": "Do not add 很 after 越来越."
+   }
+  ]
+ },
+ {
+  "id": "cai",
+  "title": "才 and 就: late and early",
+  "covers": [
+   20,
+   21
+  ],
+  "formula": [
+   "Subject",
+   "Time",
+   "*才 / *就",
+   "Verb"
+  ],
+  "explain": [
+   "才 after a time word means 'only then': it happened later than expected. 他八点才到学校 'He did not get to school until eight'. 我等了半个小时，他才来 'I waited half an hour before he came'.",
+   "就 after a time word means 'as early as': it happened sooner than expected. 他六点就起床了 'He got up as early as six'.",
+   "So the same time word gives opposite feelings: 他六点才起床 (late) and 他六点就起床了 (early). A 就 sentence about the past normally ends with 了; a 才 sentence does not.",
+   "才 can also mean 'only' with a small amount or a time that is not late: 这件衣服才三十块 'This piece of clothing is only thirty yuan'; 才八点，别急 'It is only eight o'clock, don't worry'."
+  ],
+  "examples": [
+   {
+    "zh": "他八点才到学校。",
+    "en": "He did not get to school until eight."
+   },
+   {
+    "zh": "他六点就起床了。",
+    "en": "He got up as early as six."
+   },
+   {
+    "zh": "这件衣服才三十块。",
+    "en": "This piece of clothing is only thirty yuan."
+   },
+   {
+    "zh": "我等了半个小时，他才来。",
+    "en": "I waited half an hour before he came."
+   }
+  ],
+  "mistakes": [
+   "才 and 就 are not interchangeable. 他六点才起床 says he got up late; 他六点就起床了 says he got up early.",
+   "Use 才 for late and 就 for early, and put both before the verb: 他八点才到, 他六点就到了. A 才 sentence about the past usually has no 了 at the end."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他八点才到学校。",
+    "en": "He did not get to school until eight.",
+    "explain": "Time + 才 + verb: later than expected."
+   },
+   {
+    "t": "order",
+    "zh": "我六点就起床了。",
+    "en": "I got up as early as six.",
+    "explain": "Time + 就 + verb + 了: earlier than expected."
+   },
+   {
+    "t": "cloze",
+    "zh": "他十点才起床。",
+    "en": "He does not get up until ten.",
+    "blank": "才",
+    "explain": "才 shows it is late."
+   },
+   {
+    "t": "cloze",
+    "zh": "我们七点就到了。",
+    "en": "We arrived as early as seven.",
+    "blank": "就",
+    "explain": "就 shows it is early."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He got up as early as five?",
+    "options": [
+     "他五点就起床了。",
+     "他五点才起床了。"
+    ],
+    "correct": 0,
+    "zh": "他五点就起床了。",
+    "en": "He got up as early as five.",
+    "explain": "就 means early."
+   }
+  ]
+ },
+ {
+  "id": "gang",
+  "title": "刚, 刚刚 and 刚才: just",
+  "covers": [
+   22,
+   23
+  ],
+  "formula": [
+   "Subject",
+   "*刚 / *刚刚",
+   "Verb"
+  ],
+  "explain": [
+   "刚 means 'just (a moment ago)': 我刚到家 'I have just got home'; 电影刚开始 'The film has just started'. It goes before the verb. 刚刚 is the same with more stress, 'only just': 他刚刚出去 'He has only just gone out'.",
+   "刚才 means 'just now'. It is a time word, so it can come before the subject: 刚才谁给你打电话？ 'Who called you just now?'",
+   "刚 cannot stand before the subject: say 我刚到, not 刚我到. Use 刚才 there."
+  ],
+  "examples": [
+   {
+    "zh": "我刚吃完饭。",
+    "en": "I have just finished eating."
+   },
+   {
+    "zh": "电影刚开始。",
+    "en": "The film has just started."
+   },
+   {
+    "zh": "刚才谁给你打电话？",
+    "en": "Who called you just now?"
+   },
+   {
+    "zh": "他刚刚出去。",
+    "en": "He has only just gone out."
+   }
+  ],
+  "mistakes": [
+   "刚 goes right before the verb. 刚我吃饭 is wrong; say 我刚吃饭 or 刚才我吃饭.",
+   "Do not use 刚 for the future. 我刚去 never means 'I will go'."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我刚到家。",
+    "en": "I have just got home.",
+    "explain": "刚 goes before the verb."
+   },
+   {
+    "t": "order",
+    "zh": "刚才谁给你打电话？",
+    "en": "Who called you just now?",
+    "explain": "刚才 can come first."
+   },
+   {
+    "t": "cloze",
+    "zh": "他刚起床。",
+    "en": "He has just got up.",
+    "blank": "刚",
+    "explain": "刚 means just."
+   },
+   {
+    "t": "cloze",
+    "zh": "刚才你去哪儿了？",
+    "en": "Where did you go just now?",
+    "blank": "刚才",
+    "explain": "刚才 means just now."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: The film has just started?",
+    "options": [
+     "电影刚开始。",
+     "刚电影开始。"
+    ],
+    "correct": 0,
+    "zh": "电影刚开始。",
+    "en": "The film has just started.",
+    "explain": "刚 goes right before the verb."
+   }
+  ]
+ },
+ {
+  "id": "yizhi",
+  "title": "一直, 总是, 常常 and 平时: always and often",
+  "covers": [
+   24,
+   25,
+   26
+  ],
+  "formula": [
+   "Subject",
+   "*一直 / *总是 / *常常",
+   "Verb"
+  ],
+  "explain": [
+   "一直 means 'all along, without stopping': 我一直在学汉语 'I have been studying Chinese all along'. With a direction it means 'straight': 一直往前走，银行就在左边 'Go straight ahead, and the bank is on the left'.",
+   "总是 (or 总) means 'always, every time': 他总是很早到学校 'He always gets to school very early'. 老 + verb is a casual way to complain: 他老迟到 'He is always late'.",
+   "常 and 常常 mean 'often': 我们常常在这儿见面 'We often meet here'. 平时 and 一般 mean 'usually': 我平时七点起床 'I usually get up at seven'.",
+   "All of these go before the verb, after the subject."
+  ],
+  "examples": [
+   {
+    "zh": "我一直在学汉语。",
+    "en": "I have been studying Chinese all along."
+   },
+   {
+    "zh": "一直往前走，银行就在左边。",
+    "en": "Go straight ahead, and the bank is on the left."
+   },
+   {
+    "zh": "他总是很早到学校。",
+    "en": "He always gets to school very early."
+   },
+   {
+    "zh": "我们常常在这儿见面。",
+    "en": "We often meet here."
+   }
+  ],
+  "mistakes": [
+   "Put these words before the verb: 我一直在这里等你, not 我在这里等你一直.",
+   "总是 means every time, 常常 means many times. Do not use 总是 when it is only 'often'."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我一直在这里等你。",
+    "en": "I have been waiting for you here all along.",
+    "explain": "一直 goes before the verb."
+   },
+   {
+    "t": "order",
+    "zh": "他总是很忙。",
+    "en": "He is always very busy.",
+    "explain": "总是 goes before the verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "请一直往前走。",
+    "en": "Please go straight ahead.",
+    "blank": "一直",
+    "explain": "一直 + direction means straight on."
+   },
+   {
+    "t": "cloze",
+    "zh": "我们常常一起吃饭。",
+    "en": "We often eat together.",
+    "blank": "常常",
+    "explain": "常常 means often."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He is always late?",
+    "options": [
+     "他总是迟到。",
+     "他迟到总是。"
+    ],
+    "correct": 0,
+    "zh": "他总是迟到。",
+    "en": "He is always late.",
+    "explain": "总是 goes before the verb."
+   }
+  ]
+ },
+ {
+  "id": "degree",
+  "title": "更, 比较, 挺, 特别 and 极了: how much",
+  "covers": [
+   27
+  ],
+  "formula": [
+   "Subject",
+   "*比较 / *挺 / *特别",
+   "Adjective"
+  ],
+  "explain": [
+   "These words say how much, and each one already does the job of 很. 比较 means 'fairly, rather': 这个问题比较难. 挺 means 'quite', and is often followed by 的: 他的汉语挺好的 'His Chinese is quite good'. 特别 means 'especially, very': 这里的菜特别好吃 'The food here is especially delicious'.",
+   "更 means 'even more' and is used to compare: 这个比那个更大 'This one is even bigger than that one'.",
+   "极了 goes after the adjective and means 'extremely': 今天的天气好极了 'The weather today is extremely nice'; 我累极了 'I am tired out'.",
+   "A rough scale from weak to strong: 比较, 挺, 很, 特别, 极了."
+  ],
+  "examples": [
+   {
+    "zh": "他的汉语挺好的。",
+    "en": "His Chinese is quite good."
+   },
+   {
+    "zh": "这里的菜特别好吃。",
+    "en": "The food here is especially delicious."
+   },
+   {
+    "zh": "今天的天气好极了。",
+    "en": "The weather today is extremely nice."
+   },
+   {
+    "zh": "这个比那个更大。",
+    "en": "This one is even bigger than that one."
+   }
+  ],
+  "mistakes": [
+   "Do not add 很 to these words: 很挺好 and 很特别好 are wrong. Each one already says how much.",
+   "极了 comes after the adjective: 好极了, not 极了好."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他的汉语挺好的。",
+    "en": "His Chinese is quite good.",
+    "explain": "挺 + adjective + 的."
+   },
+   {
+    "t": "order",
+    "zh": "今天特别冷。",
+    "en": "It is especially cold today.",
+    "explain": "特别 + adjective."
+   },
+   {
+    "t": "cloze",
+    "zh": "我累极了。",
+    "en": "I am extremely tired.",
+    "blank": "极",
+    "explain": "极了 comes after the adjective."
+   },
+   {
+    "t": "cloze",
+    "zh": "这个比那个更大。",
+    "en": "This one is even bigger than that one.",
+    "blank": "更",
+    "explain": "更 means even more."
+   },
+   {
+    "t": "spot",
+    "zh": "这个菜挺好吃的。",
+    "en": "This dish is quite delicious.",
+    "wrong": "这个菜很挺好吃的。",
+    "remove": "很",
+    "explain": "Do not add 很 to 挺."
+   }
+  ]
+ },
+ {
+  "id": "yiyang",
+  "title": "一样, 不同 and more ways to compare",
+  "covers": [
+   28,
+   29
+  ],
+  "formula": [
+   "A",
+   "*跟 / *和",
+   "B",
+   "*一样",
+   "(Adjective)"
+  ],
+  "explain": [
+   "A 跟 B 一样 means 'A is the same as B': 我的手机跟你的一样 'My phone is the same as yours'. Add an adjective for 'as … as': 他跟我一样高 'He is as tall as me'. The negative is 不一样: 这两个字不一样 'These two characters are not the same'. 不同 means 'different' and sounds a little more formal: 两个城市的天气不同.",
+   "比 + 更 or 还 means 'even more': 今天比昨天还冷 'Today is even colder than yesterday'. Do not add 很.",
+   "比 + adjective + 多了 means 'much more': 他比我高多了 'He is much taller than me'.",
+   "跟…比起来 means 'compared with …': 跟我的手机比起来，你的手机大多了 'Compared with my phone, yours is much bigger'."
+  ],
+  "examples": [
+   {
+    "zh": "我的手机跟你的一样。",
+    "en": "My phone is the same as yours."
+   },
+   {
+    "zh": "今天比昨天还冷。",
+    "en": "Today is even colder than yesterday."
+   },
+   {
+    "zh": "他比我高多了。",
+    "en": "He is much taller than me."
+   },
+   {
+    "zh": "这两个字不一样。",
+    "en": "These two characters are not the same."
+   }
+  ],
+  "mistakes": [
+   "Do not add 很 in a 比 sentence: 他比我更高 is right, 他比我很更高 is wrong.",
+   "In 跟…一样 the adjective comes after 一样: 他跟我一样高, not 他跟我高一样."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他跟我一样高。",
+    "en": "He is as tall as me.",
+    "explain": "A + 跟 + B + 一样 + adjective."
+   },
+   {
+    "t": "order",
+    "zh": "今天比昨天还冷。",
+    "en": "Today is even colder than yesterday.",
+    "explain": "比 + B + 还 + adjective."
+   },
+   {
+    "t": "cloze",
+    "zh": "他比我高多了。",
+    "en": "He is much taller than me.",
+    "blank": "多",
+    "explain": "比 + adjective + 多了 means much more."
+   },
+   {
+    "t": "cloze",
+    "zh": "这两个字不一样。",
+    "en": "These two characters are not the same.",
+    "blank": "一样",
+    "explain": "不一样 means not the same."
+   },
+   {
+    "t": "spot",
+    "zh": "他比我更高。",
+    "en": "He is even taller than me.",
+    "wrong": "他比我很更高。",
+    "remove": "很",
+    "explain": "Do not add 很 in a 比 sentence."
+   }
+  ]
+ },
+ {
+  "id": "nan",
+  "title": "难 and 容易: hard to, easy to",
+  "covers": [
+   30
+  ],
+  "formula": [
+   "Thing",
+   "很 *难 / *容易",
+   "Verb"
+  ],
+  "explain": [
+   "难 + verb means 'hard to …': 这种鞋很难买 'This kind of shoes is hard to buy'; 汉语不难学 'Chinese is not hard to learn'. The thing you are talking about comes first, then 难, then the verb.",
+   "容易 + verb means 'easy to …': 这个问题很容易回答 'This question is easy to answer'. It can also mean 'likely to': 冬天容易感冒 'It is easy to catch a cold in winter'.",
+   "Some of these have become words of their own: 难看 'ugly', 难听 'unpleasant to hear'. The opposite pattern with 好 is common too: 好看, 好吃, 好听.",
+   "If you want to say how hard or easy, 很 goes before 难 or 容易."
+  ],
+  "examples": [
+   {
+    "zh": "汉语不难学。",
+    "en": "Chinese is not hard to learn."
+   },
+   {
+    "zh": "这个问题很容易回答。",
+    "en": "This question is easy to answer."
+   },
+   {
+    "zh": "这种鞋很难买。",
+    "en": "This kind of shoes is hard to buy."
+   },
+   {
+    "zh": "冬天容易感冒。",
+    "en": "It is easy to catch a cold in winter."
+   }
+  ],
+  "mistakes": [
+   "Put 很 before 难 or 容易, not after: 很难写, not 难很写.",
+   "The thing you talk about usually comes first: 这个字很难写 sounds more natural than 很难写这个字."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "汉语不难学。",
+    "en": "Chinese is not hard to learn.",
+    "explain": "难 + verb."
+   },
+   {
+    "t": "order",
+    "zh": "这个问题很容易回答。",
+    "en": "This question is easy to answer.",
+    "explain": "容易 + verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "这个字很难写。",
+    "en": "This character is hard to write.",
+    "blank": "难",
+    "explain": "难 + verb means hard to."
+   },
+   {
+    "t": "cloze",
+    "zh": "冬天容易感冒。",
+    "en": "It is easy to catch a cold in winter.",
+    "blank": "容易",
+    "explain": "容易 means easy to or likely to."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Chinese songs are hard to learn?",
+    "options": [
+     "汉语歌很难学。",
+     "汉语歌难很学。"
+    ],
+    "correct": 0,
+    "zh": "汉语歌很难学。",
+    "en": "Chinese songs are hard to learn.",
+    "explain": "很 goes before 难."
+   }
+  ]
+ },
+ {
+  "id": "potential",
+  "title": "听得懂 and 听不懂: can or cannot",
+  "covers": [
+   31
+  ],
+  "formula": [
+   "Verb",
+   "*得 / *不",
+   "Result"
+  ],
+  "explain": [
+   "Put 得 between a verb and its result to say you can reach that result, and 不 to say you cannot: 我听不懂 'I cannot understand (what I hear)'; 你看得清楚吗？ 'Can you see clearly?'",
+   "Common ones: 听得懂 / 听不懂 (understand by listening), 看得见 / 看不见 (see), 吃得完 / 吃不完 (finish eating), 找得到 / 找不到 (find), 买得到 / 买不到 (be able to buy).",
+   "In statements the 不 form is far more common: 这么多菜，我吃不完 'There is so much food that I cannot finish it'. The 得 form is mostly used in questions and answers.",
+   "Use this pattern instead of 不能 + result: say 我听不懂, not 我不能听懂."
+  ],
+  "examples": [
+   {
+    "zh": "老师说得太快，我听不懂。",
+    "en": "The teacher speaks too fast, and I cannot understand."
+   },
+   {
+    "zh": "你看得清楚吗？",
+    "en": "Can you see clearly?"
+   },
+   {
+    "zh": "这么多菜，我吃不完。",
+    "en": "There is so much food that I cannot finish it."
+   },
+   {
+    "zh": "我找不到我的手机。",
+    "en": "I cannot find my phone."
+   }
+  ],
+  "mistakes": [
+   "Do not say 我不能听懂. For 'I cannot understand' say 我听不懂.",
+   "The result comes after 得 or 不: 听不懂, not 听懂不."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我听不懂。",
+    "en": "I cannot understand.",
+    "explain": "Verb + 不 + result."
+   },
+   {
+    "t": "order",
+    "zh": "你看得清楚吗？",
+    "en": "Can you see clearly?",
+    "explain": "Verb + 得 + result, then 吗."
+   },
+   {
+    "t": "cloze",
+    "zh": "这么多菜，我吃不完。",
+    "en": "There is so much food that I cannot finish it.",
+    "blank": "完",
+    "explain": "吃不完 means cannot finish eating."
+   },
+   {
+    "t": "cloze",
+    "zh": "我找不到我的手机。",
+    "en": "I cannot find my phone.",
+    "blank": "到",
+    "explain": "找不到 means cannot find."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I cannot hear clearly?",
+    "options": [
+     "我听不清楚。",
+     "我不听清楚。"
+    ],
+    "correct": 0,
+    "zh": "我听不清楚。",
+    "en": "I cannot hear clearly.",
+    "explain": "Verb + 不 + result."
+   }
+  ]
+ },
+ {
+  "id": "direction2",
+  "title": "起来, 出来, 下去 and 向",
+  "covers": [
+   32,
+   33
+  ],
+  "formula": [
+   "Verb",
+   "*起来 / *出来 / *下去"
+  ],
+  "explain": [
+   "After a verb, direction words such as 进 'in', 出 'out' and 回 'back' go in front of 来 or 去: 他走进来了 'He has walked in', 出去 'go out', 回来 'come back'. If there is a place, it goes between the two parts: 他回学校去了 'He has gone back to school'.",
+   "起来 can mean 'start to': 他笑起来了 'He started to laugh'. 下去 can mean 'go on': 请说下去 'Please go on speaking'.",
+   "向 + direction or person means 'toward': 孩子们向老师跑去了 'The children ran toward the teacher'; 请向前走 'Please walk forward'."
+  ],
+  "examples": [
+   {
+    "zh": "他笑起来了。",
+    "en": "He started to laugh."
+   },
+   {
+    "zh": "请进来。",
+    "en": "Please come in."
+   },
+   {
+    "zh": "请说下去。",
+    "en": "Please go on speaking."
+   },
+   {
+    "zh": "孩子们向老师跑去了。",
+    "en": "The children ran toward the teacher."
+   }
+  ],
+  "mistakes": [
+   "Do not put a place after 来 or 去: say 他回学校去了, not 他回去学校了.",
+   "Do not put a plain direction word like 起 on its own after a verb. It needs 来: 笑起来."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他走进来了。",
+    "en": "He has walked in.",
+    "explain": "Verb + direction."
+   },
+   {
+    "t": "order",
+    "zh": "他回学校去了。",
+    "en": "He has gone back to school.",
+    "explain": "The place goes between 回 and 去."
+   },
+   {
+    "t": "cloze",
+    "zh": "孩子们向老师跑去了。",
+    "en": "The children ran toward the teacher.",
+    "blank": "向",
+    "explain": "向 means toward."
+   },
+   {
+    "t": "cloze",
+    "zh": "请说下去。",
+    "en": "Please go on speaking.",
+    "blank": "下去",
+    "explain": "下去 means go on."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He has gone back to school?",
+    "options": [
+     "他回学校去了。",
+     "他回去了学校。"
+    ],
+    "correct": 0,
+    "zh": "他回学校去了。",
+    "en": "He has gone back to school.",
+    "explain": "The place goes between 回 and 去."
+   }
+  ]
+ },
+ {
+  "id": "duration",
+  "title": "How long: 学了两年 and 三年没见了",
+  "covers": [
+   34,
+   35
+  ],
+  "formula": [
+   "Subject",
+   "Verb",
+   "*了",
+   "Time length"
+  ],
+  "explain": [
+   "To say how long something lasted, put the time length after the verb and 了: 我学了两年汉语 'I studied Chinese for two years'. The time length comes before the object.",
+   "Add a second 了 at the end if it is still going on: 他在这里工作了三年了 'He has worked here for three years (and still does)'.",
+   "Time length + 没 + verb + 了 means 'has not … for …': 我们三年没见面了 'We have not met for three years'.",
+   "The time length never goes before the verb: 我两年学汉语 is wrong."
+  ],
+  "examples": [
+   {
+    "zh": "我学了两年汉语。",
+    "en": "I studied Chinese for two years."
+   },
+   {
+    "zh": "他在这里工作了三年了。",
+    "en": "He has worked here for three years."
+   },
+   {
+    "zh": "我们三年没见面了。",
+    "en": "We have not met for three years."
+   },
+   {
+    "zh": "他等了你一个小时。",
+    "en": "He waited for you for an hour."
+   }
+  ],
+  "mistakes": [
+   "Time length goes after the verb, not before: 我学了两年汉语, not 我两年学汉语.",
+   "Without the final 了 the action is finished; with it, the action is still going on."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我学了两年汉语。",
+    "en": "I studied Chinese for two years.",
+    "explain": "Verb + 了 + time length + object."
+   },
+   {
+    "t": "order",
+    "zh": "我们三年没见面了。",
+    "en": "We have not met for three years.",
+    "explain": "Time length + 没 + verb + 了."
+   },
+   {
+    "t": "cloze",
+    "zh": "他等了你一个小时。",
+    "en": "He waited for you for an hour.",
+    "blank": "了",
+    "explain": "了 comes right after the verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "我们三年没见面了。",
+    "en": "We have not met for three years.",
+    "blank": "没",
+    "explain": "没 + verb says it has not happened."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I studied Chinese for two years?",
+    "options": [
+     "我学了两年汉语。",
+     "我学汉语了两年。"
+    ],
+    "correct": 0,
+    "zh": "我学了两年汉语。",
+    "en": "I studied Chinese for two years.",
+    "explain": "The time length comes before the object."
+   }
+  ]
+ }
+]

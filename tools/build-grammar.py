@@ -115,7 +115,7 @@ def main():
             f.write(' * transcription, not the official PDF). Explanations were written by AI and cross-checked against the Chinese Grammar Wiki\n')
         else:
             f.write(' * The points are NOT the official numbered list. They are chosen from the grammar of the HSK %d words and from the Chinese Grammar Wiki list of\n' % LV)
-            f.write(' * HSK 2 points (content/l2/grammar-outline.txt). Explanations were written by AI and cross-checked against the Chinese Grammar Wiki\n')
+            f.write(' * HSK %d points (content/l%d/grammar-outline.txt). Explanations were written by AI and cross-checked against the Chinese Grammar Wiki\n' % (LV, LV))
         f.write(' * where noted in CONTENT-CHECKS.md. They have NOT been reviewed by a human teacher. */\n')
         f.write('window.HSK%d_GRAMMAR = { lessons: [' % LV + '\n' + ',\n'.join(json.dumps(l, ensure_ascii=False) for l in lessons) + '\n] };\n')
     covered = sorted({p for l in lessons for p in l['covers']})

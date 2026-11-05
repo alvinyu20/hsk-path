@@ -1,0 +1,648 @@
+[
+ {
+  "id": "time3",
+  "title": "以前, 以后, 后来 and more time words",
+  "covers": [
+   36,
+   37,
+   38
+  ],
+  "formula": [
+   "Time / Verb",
+   "*以前 / *以后"
+  ],
+  "explain": [
+   "以前 means 'before' and 以后 means 'after'. They come after a time or a verb: 八点以前 'before eight'; 睡觉以前 'before going to bed'; 吃饭以后 'after eating'. On their own they also mean 'in the past' and 'later, in the future'.",
+   "后来 means 'afterwards' and is only used about the past: 他以前不喝咖啡，后来喝了 'He did not drink coffee before; later he did'. For the future use 以后: 以后我想去中国.",
+   "然后 means 'then, after that', the next step in a series (past or future). 最后 means 'finally, last': 最后一个问题.",
+   "More time words: 前天 'the day before yesterday', 后天 'the day after tomorrow', 前年 'the year before last', 后年 'the year after next', 最近 'recently'."
+  ],
+  "examples": [
+   {
+    "zh": "八点以前，我必须到。",
+    "en": "I must arrive before eight."
+   },
+   {
+    "zh": "睡觉以前，他喜欢听音乐。",
+    "en": "Before going to bed, he likes listening to music."
+   },
+   {
+    "zh": "他以前不喝咖啡，后来喝了。",
+    "en": "He did not drink coffee before; later he did."
+   },
+   {
+    "zh": "我前天见到了他。",
+    "en": "I saw him the day before yesterday."
+   }
+  ],
+  "mistakes": [
+   "后来 is only for the past. For the future say 以后: 以后我想去中国, not 后来我想去中国.",
+   "以前 and 以后 come after the time or verb: 八点以前, not 以前八点."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "八点以前我必须到。",
+    "en": "I must arrive before eight.",
+    "explain": "Time + 以前."
+   },
+   {
+    "t": "order",
+    "zh": "吃饭以后，我们去走走。",
+    "en": "After eating, we go for a walk.",
+    "explain": "Verb + 以后."
+   },
+   {
+    "t": "cloze",
+    "zh": "睡觉以前，他喜欢听音乐。",
+    "en": "Before going to bed, he likes listening to music.",
+    "blank": "以前",
+    "explain": "以前 means before."
+   },
+   {
+    "t": "cloze",
+    "zh": "他以前不喝咖啡，后来喝了。",
+    "en": "He did not drink coffee before; later he did.",
+    "blank": "后来",
+    "explain": "后来 is for the past."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I want to go to China in the future?",
+    "options": [
+     "以后我想去中国。",
+     "后来我想去中国。"
+    ],
+    "correct": 0,
+    "zh": "以后我想去中国。",
+    "en": "I want to go to China in the future.",
+    "explain": "以后 can look to the future; 后来 cannot."
+   }
+  ]
+ },
+ {
+  "id": "should",
+  "title": "应该, 必须, 需要, 不用 and 最好",
+  "covers": [
+   39,
+   40,
+   41
+  ],
+  "formula": [
+   "Subject",
+   "*应该 / *必须 / *需要",
+   "Verb"
+  ],
+  "explain": [
+   "应该 (or 该) means 'should': 你应该多休息 'You should rest more'. The negative is 不应该.",
+   "必须 means 'must, have to': 学生必须在八点以前到学校 'Students must be at school before eight'. Do not say 不必须. The opposite of 必须 is 不用, 'no need to': 你不用急，慢慢来 'There is no need to rush; take your time'.",
+   "需要 is a verb that means 'need': 我需要你的帮助 'I need your help'. It can also be followed by a verb: 你需要多休息.",
+   "最好 means 'had better': 外面很冷，你最好多穿一点儿 'It is cold outside, so you had better wear a bit more'."
+  ],
+  "examples": [
+   {
+    "zh": "你应该多休息。",
+    "en": "You should rest more."
+   },
+   {
+    "zh": "学生必须在八点以前到学校。",
+    "en": "Students must be at school before eight."
+   },
+   {
+    "zh": "你不用急，慢慢来。",
+    "en": "There is no need to rush; take your time."
+   },
+   {
+    "zh": "外面很冷，你最好多穿一点儿。",
+    "en": "It is cold outside, so you had better wear a bit more."
+   }
+  ],
+  "mistakes": [
+   "Do not say 不必须. The opposite of 必须 is 不用: 你不用来, not 你不必须来.",
+   "应该 and 该 both mean should. 该 is shorter and more common in speech."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "你应该多休息。",
+    "en": "You should rest more.",
+    "explain": "应该 + verb."
+   },
+   {
+    "t": "order",
+    "zh": "你不用急。",
+    "en": "You do not need to rush.",
+    "explain": "不用 means no need to."
+   },
+   {
+    "t": "cloze",
+    "zh": "我需要你的帮助。",
+    "en": "I need your help.",
+    "blank": "需要",
+    "explain": "需要 means need."
+   },
+   {
+    "t": "cloze",
+    "zh": "外面很冷，你最好多穿一点儿。",
+    "en": "It is cold outside, so you had better wear a bit more.",
+    "blank": "最好",
+    "explain": "最好 means had better."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: You must come at eight?",
+    "options": [
+     "你必须八点来。",
+     "你不用八点来。"
+    ],
+    "correct": 0,
+    "zh": "你必须八点来。",
+    "en": "You must come at eight.",
+    "explain": "必须 means must."
+   }
+  ]
+ },
+ {
+  "id": "zhi",
+  "title": "只, 只是 and 只能: only",
+  "covers": [
+   42
+  ],
+  "formula": [
+   "Subject",
+   "*只 / *只是 / *只能",
+   "Verb"
+  ],
+  "explain": [
+   "只 before a verb means 'only': 我只喝水 'I only drink water'; 他只会说汉语 'He can only speak Chinese'. It goes right before the verb.",
+   "只是 means 'just, merely': 我只是想帮你 'I just want to help you'; 这只是一个小问题 'This is only a small problem'.",
+   "只能 means 'can only, have no choice but to': 没有别的办法，我们只能等 'There is no other way; we can only wait'.",
+   "Do not confuse the 'only' 只 (zhǐ) with the measure word 只 (zhī) in 一只猫."
+  ],
+  "examples": [
+   {
+    "zh": "我只喝水。",
+    "en": "I only drink water."
+   },
+   {
+    "zh": "他只会说汉语。",
+    "en": "He can only speak Chinese."
+   },
+   {
+    "zh": "我只是想帮你。",
+    "en": "I just want to help you."
+   },
+   {
+    "zh": "没有别的办法，我们只能等。",
+    "en": "There is no other way; we can only wait."
+   }
+  ],
+  "mistakes": [
+   "只 goes right before the verb: 我只喝水, not 我喝只水.",
+   "只有 is a different word: it needs 才 in the next part (see 只要 and 只有)."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我只喝水。",
+    "en": "I only drink water.",
+    "explain": "只 goes before the verb."
+   },
+   {
+    "t": "order",
+    "zh": "他只会说汉语。",
+    "en": "He can only speak Chinese.",
+    "explain": "只 + 会 + verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "我只是想帮你。",
+    "en": "I just want to help you.",
+    "blank": "只是",
+    "explain": "只是 means just."
+   },
+   {
+    "t": "cloze",
+    "zh": "没有车，我们只能走路。",
+    "en": "There are no cars, so we can only walk.",
+    "blank": "只能",
+    "explain": "只能 means can only."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I am just asking?",
+    "options": [
+     "我只是问问。",
+     "我只问是问。"
+    ],
+    "correct": 0,
+    "zh": "我只是问问。",
+    "en": "I am just asking.",
+    "explain": "只是 comes before the verb."
+   }
+  ]
+ },
+ {
+  "id": "guess",
+  "title": "好像, 看起来, 大概, 其实 and 当然",
+  "covers": [
+   43,
+   44
+  ],
+  "formula": [
+   "Subject",
+   "*好像 / *看起来 / *大概",
+   "…"
+  ],
+  "explain": [
+   "好像 means 'it seems, as if': 他好像不在家 'He does not seem to be at home'. 看起来 means 'it looks like': 这个菜看起来很好吃 'This dish looks delicious'. 看来 means 'it seems (from what I can see)': 看来明天要下雨 'It seems it will rain tomorrow'.",
+   "大概 means 'probably, roughly': 现在大概九点了 'It is probably about nine now'.",
+   "其实 means 'actually, in fact' and points out how things really are, often against what people think: 其实我不是老师 'Actually, I am not a teacher'.",
+   "当然 means 'of course': 你会游泳吗？——我当然会 'Can you swim? Of course I can'."
+  ],
+  "examples": [
+   {
+    "zh": "他好像不在家。",
+    "en": "He does not seem to be at home."
+   },
+   {
+    "zh": "这个菜看起来很好吃。",
+    "en": "This dish looks delicious."
+   },
+   {
+    "zh": "现在大概九点了。",
+    "en": "It is probably about nine now."
+   },
+   {
+    "zh": "其实我不是老师。",
+    "en": "Actually, I am not a teacher."
+   }
+  ],
+  "mistakes": [
+   "好像 here means 'seems', not 'like'. For 'like' (be fond of) use 喜欢.",
+   "其实 points to the real situation, so it often goes against what was just said. Do not use it just to agree."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他好像不在家。",
+    "en": "He does not seem to be at home.",
+    "explain": "好像 goes before the part that seems true."
+   },
+   {
+    "t": "order",
+    "zh": "这个菜看起来很好吃。",
+    "en": "This dish looks delicious.",
+    "explain": "看起来 + description."
+   },
+   {
+    "t": "cloze",
+    "zh": "现在大概九点了。",
+    "en": "It is probably about nine now.",
+    "blank": "大概",
+    "explain": "大概 means probably."
+   },
+   {
+    "t": "cloze",
+    "zh": "其实我不是老师。",
+    "en": "Actually, I am not a teacher.",
+    "blank": "其实",
+    "explain": "其实 means actually."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Of course I can swim?",
+    "options": [
+     "我当然会游泳。",
+     "我当然游泳会。"
+    ],
+    "correct": 0,
+    "zh": "我当然会游泳。",
+    "en": "Of course I can swim.",
+    "explain": "当然 goes before the verb."
+   }
+  ]
+ },
+ {
+  "id": "finally",
+  "title": "终于, 几乎, 突然, 马上 and 一定",
+  "covers": [
+   45,
+   46
+  ],
+  "formula": [
+   "Subject",
+   "*终于 / *几乎 / *突然",
+   "Verb"
+  ],
+  "explain": [
+   "终于 means 'at last, finally' and is for something you waited for: 火车终于来了 'The train has finally come'. 几乎 means 'almost, nearly': 我几乎忘了他的名字 'I almost forgot his name'; 几乎没 means 'hardly any': 他几乎没吃东西.",
+   "突然 means 'suddenly': 突然，他笑了 'Suddenly, he laughed'; 天突然下雨了 'It suddenly started to rain'. It can go before the subject or before the verb.",
+   "马上 means 'right away': 我马上就到 'I will be there right away'. 一定 means 'certainly, must': 我一定会给你打电话 'I will definitely call you'.",
+   "All of these go right before the verb; 突然 can also start the sentence."
+  ],
+  "examples": [
+   {
+    "zh": "火车终于来了。",
+    "en": "The train has finally come."
+   },
+   {
+    "zh": "我几乎忘了他的名字。",
+    "en": "I almost forgot his name."
+   },
+   {
+    "zh": "突然，他笑了。",
+    "en": "Suddenly, he laughed."
+   },
+   {
+    "zh": "我一定会给你打电话。",
+    "en": "I will definitely call you."
+   }
+  ],
+  "mistakes": [
+   "Use 终于 only for a result you were waiting for. For a surprise, say 突然.",
+   "Put these words before the verb: 我马上就到, not 我到马上."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "火车终于来了。",
+    "en": "The train has finally come.",
+    "explain": "终于 goes before the verb."
+   },
+   {
+    "t": "order",
+    "zh": "他突然笑了。",
+    "en": "He suddenly laughed.",
+    "explain": "突然 goes before the verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "我几乎忘了他的名字。",
+    "en": "I almost forgot his name.",
+    "blank": "几乎",
+    "explain": "几乎 means almost."
+   },
+   {
+    "t": "cloze",
+    "zh": "我马上就到。",
+    "en": "I will be there right away.",
+    "blank": "马上",
+    "explain": "马上 means right away."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I will definitely call you?",
+    "options": [
+     "我一定给你打电话。",
+     "我给你打电话一定。"
+    ],
+    "correct": 0,
+    "zh": "我一定给你打电话。",
+    "en": "I will definitely call you.",
+    "explain": "一定 goes before the verb."
+   }
+  ]
+ },
+ {
+  "id": "qword2",
+  "title": "Question words for \"any\": 谁都, 想吃什么就吃什么, 一个也不",
+  "covers": [
+   47,
+   48,
+   49
+  ],
+  "formula": [
+   "*谁 / *什么 / *哪儿",
+   "*都 / *也",
+   "…"
+  ],
+  "explain": [
+   "A question word + 都 or 也 means 'every' or 'any': 谁都知道这件事 'Everyone knows about this'; 我哪儿都不想去 'I don't want to go anywhere'. With 不 or 没 it means 'nothing, nobody, nowhere': 我什么都没买 'I did not buy anything'.",
+   "想 + question word + 就 + the same question word means 'as you like': 你想吃什么就吃什么 'Eat whatever you want'; 你想去哪儿就去哪儿 'Go wherever you want'.",
+   "一 + measure word + noun + 也 or 都 + 不 or 没 + verb means 'not even one': 教室里一个人也没有 'There is not a single person in the classroom'; 我一个字也不认识 'I do not know a single character'."
+  ],
+  "examples": [
+   {
+    "zh": "谁都知道这件事。",
+    "en": "Everyone knows about this."
+   },
+   {
+    "zh": "我什么都没买。",
+    "en": "I did not buy anything."
+   },
+   {
+    "zh": "你想吃什么就吃什么。",
+    "en": "Eat whatever you want."
+   },
+   {
+    "zh": "教室里一个人也没有。",
+    "en": "There is not a single person in the classroom."
+   }
+  ],
+  "mistakes": [
+   "Do not leave out 都 or 也: 谁知道这件事？ is a question 'Who knows?', but 谁都知道这件事 is a statement 'Everyone knows'.",
+   "In 想…就… use the same question word twice: 想吃什么就吃什么."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "谁都知道。",
+    "en": "Everyone knows.",
+    "explain": "Question word + 都 + verb."
+   },
+   {
+    "t": "order",
+    "zh": "我什么都不想吃。",
+    "en": "I do not want to eat anything.",
+    "explain": "Question word + 都 + 不 + verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "你想吃什么就吃什么。",
+    "en": "Eat whatever you want.",
+    "blank": "就",
+    "explain": "想…就… repeats the question word."
+   },
+   {
+    "t": "cloze",
+    "zh": "我哪儿都不想去。",
+    "en": "I do not want to go anywhere.",
+    "blank": "都",
+    "explain": "哪儿 + 都 means anywhere."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: There is not a single person here?",
+    "options": [
+     "这里一个人也没有。",
+     "这里一个人也有。"
+    ],
+    "correct": 0,
+    "zh": "这里一个人也没有。",
+    "en": "There is not a single person here.",
+    "explain": "一…也没有 means not even one."
+   }
+  ]
+ },
+ {
+  "id": "num2",
+  "title": "半, 两三个 and 以上 / 以下",
+  "covers": [
+   50,
+   51
+  ],
+  "formula": [
+   "Number",
+   "Measure word",
+   "*半",
+   "Noun"
+  ],
+  "explain": [
+   "半 means 'half'. After a measure word: 一个半小时 'one and a half hours'. Before a measure word: 半个小时 'half an hour'; 半年 'half a year'.",
+   "Two numbers next to each other (smaller first) mean 'about': 两三个学生 'two or three students'; 我在这里住了七八天 'I stayed here for seven or eight days'.",
+   "以上 means 'above, and over' and counts the number itself: 十八岁以上的人 'people aged eighteen and over'. 以下 means 'below, under': 五十块以下的鞋 'shoes under fifty yuan'."
+  ],
+  "examples": [
+   {
+    "zh": "我等了一个半小时。",
+    "en": "I waited for an hour and a half."
+   },
+   {
+    "zh": "半个小时以后，他就到。",
+    "en": "He will be here in half an hour."
+   },
+   {
+    "zh": "这儿有两三个学生。",
+    "en": "There are two or three students here."
+   },
+   {
+    "zh": "五十块以下的鞋很少。",
+    "en": "Shoes under fifty yuan are rare."
+   }
+  ],
+  "mistakes": [
+   "半 goes before the measure word in 半个小时 but after it in 一个半小时. Do not say 一半个小时.",
+   "Put the smaller number first: 两三个, not 三两个."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我等了一个半小时。",
+    "en": "I waited for an hour and a half.",
+    "explain": "Number + measure word + 半 + noun."
+   },
+   {
+    "t": "order",
+    "zh": "这儿有两三个学生。",
+    "en": "There are two or three students here.",
+    "explain": "Two numbers side by side mean about."
+   },
+   {
+    "t": "cloze",
+    "zh": "他半个小时以后到。",
+    "en": "He will arrive in half an hour.",
+    "blank": "半",
+    "explain": "半个 means half."
+   },
+   {
+    "t": "cloze",
+    "zh": "十八岁以上的人可以进去。",
+    "en": "People aged eighteen and over can go in.",
+    "blank": "以上",
+    "explain": "以上 means and over."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I stayed here for seven or eight days?",
+    "options": [
+     "我在这里住了七八天。",
+     "我在这里住了八七天。"
+    ],
+    "correct": 0,
+    "zh": "我在这里住了七八天。",
+    "en": "I stayed here for seven or eight days.",
+    "explain": "Put the smaller number first."
+   }
+  ]
+ },
+ {
+  "id": "newmean",
+  "title": "Words you know, with a new meaning",
+  "covers": [
+   52
+  ],
+  "formula": [
+   "*得 děi",
+   "Verb"
+  ],
+  "explain": [
+   "Some words you already know come back in HSK 3 with another meaning or another sound. The character is the same; the word around it tells you which one it is.",
+   "得 děi means 'must, have to' before a verb: 我得走了 'I have to go now'; 你得多休息 'You must rest more'. It sounds different from the 得 after a verb (他跑得很快, de), and from 得 dé 'to get' (得到, 得分).",
+   "地 dì means 'ground, place': 地方 'place', 地铁 'subway', 地图 'map', 地上 'on the ground'. It is de only after an adverb (高兴地说). 过去 is also 'the past': 过去的事 'things of the past'.",
+   "还 huán means 'to give back': 还书 'return a book', 还钱 'pay back', 还给 'give back to'. 还 hái 'still, also' is the one you already know. 会 huì also means 'a meeting': 开会 'have a meeting'. 长 zhǎng means 'to grow': 长大 'grow up', 长高 'grow taller'; 长 cháng is 'long'."
+  ],
+  "examples": [
+   {
+    "zh": "我得走了。",
+    "en": "I have to go now."
+   },
+   {
+    "zh": "我把书还给他了。",
+    "en": "I have given the book back to him."
+   },
+   {
+    "zh": "明天我们开会。",
+    "en": "We have a meeting tomorrow."
+   },
+   {
+    "zh": "孩子长大了。",
+    "en": "The child has grown up."
+   }
+  ],
+  "mistakes": [
+   "Do not mix up the sounds: 我得走了 is děi (must), 他跑得很快 is de (how). The characters are the same, the sound is decided by the words around.",
+   "还 hái 'still' goes before another verb: 我还没吃 'I have not eaten yet'. 还 huán 'give back' is the verb itself: 还书 'return a book'."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我得走了。",
+    "en": "I have to go now.",
+    "explain": "得 děi + verb."
+   },
+   {
+    "t": "order",
+    "zh": "你得多休息。",
+    "en": "You must rest more.",
+    "explain": "得 děi + verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "孩子长大了。",
+    "en": "The child has grown up.",
+    "blank": "长大",
+    "explain": "长大 is zhǎngdà, to grow up."
+   },
+   {
+    "t": "cloze",
+    "zh": "我把书还给他了。",
+    "en": "I have given the book back to him.",
+    "blank": "还给",
+    "explain": "还给 is huán gěi, give back to."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: We have a meeting tomorrow?",
+    "options": [
+     "明天我们开会。",
+     "明天我们会开。"
+    ],
+    "correct": 0,
+    "zh": "明天我们开会。",
+    "en": "We have a meeting tomorrow.",
+    "explain": "开会 means to have a meeting."
+   }
+  ]
+ }
+]
