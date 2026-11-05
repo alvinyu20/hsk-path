@@ -1,4 +1,11 @@
 /* Layout idea: mist-green ground, ink type, one vermilion seal accent. Sidebar + one scrolling main column; every screen is a calm single focus. */
+/* Fonts are served from this site (fonts/), trimmed to the characters it uses: see tools/build-fonts.py. Licences: fonts/LICENSE-*.txt (SIL Open Font License). */
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:500 800;font-display:swap;src:url(fonts/bricolage-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02C6,U+02DC,U+2000-206F,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+25CF,U+2713,U+FEFF}
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:500 800;font-display:swap;src:url(fonts/bricolage-latin-ext.woff2) format('woff2');unicode-range:U+0100-024F,U+02C7,U+02C9-02CB,U+02D9,U+0300-036F,U+1E3F}
+@font-face{font-family:'Source Sans 3';font-style:normal;font-weight:400 700;font-display:swap;src:url(fonts/sourcesans-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02C6,U+02DC,U+2000-206F,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+25CF,U+2713,U+FEFF}
+@font-face{font-family:'Source Sans 3';font-style:normal;font-weight:400 700;font-display:swap;src:url(fonts/sourcesans-latin-ext.woff2) format('woff2');unicode-range:U+0100-024F,U+02C7,U+02C9-02CB,U+02D9,U+0300-036F,U+1E3F}
+@font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:400 599;font-display:swap;src:url(fonts/noto-serif-sc-500.woff2) format('woff2');unicode-range:U+00B7,U+2014,U+2026,U+201C-201D,U+3000-303F,U+3400-4DBF,U+4E00-9FFF,U+FF00-FFEF}
+@font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:600 900;font-display:swap;src:url(fonts/noto-serif-sc-700.woff2) format('woff2');unicode-range:U+00B7,U+2014,U+2026,U+201C-201D,U+3000-303F,U+3400-4DBF,U+4E00-9FFF,U+FF00-FFEF}
 *{box-sizing:border-box}
 body{margin:0}
 button{font-family:inherit}

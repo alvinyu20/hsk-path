@@ -7,7 +7,21 @@
   const AI_STORE = 'shanlu-ai';   // { key, model } lives only on this device
   let AICFG = {};
   try { AICFG = JSON.parse(localStorage.getItem(AI_STORE)) || {}; } catch (e) {}
-  const saveAiCfg = () => { try { localStorage.setItem(AI_STORE, JSON.stringify(AICFG)); } catch (e) {} };
+  // Saving can fail (storage full, blocked, a private tab). The person must hear about it instead of quietly losing progress:
+  // the first failure raises a banner (app.setState({ saveFail:true }), see the bottom of this file) and the next success clears it.
+  let saveFailed = false, onSaveState = null;
+  const lsSet = (k, v) => {
+    try { localStorage.setItem(k, v); if (saveFailed) { saveFailed = false; if (onSaveState) onSaveState(false); } return true; }
+    catch (e) { if (!saveFailed) { saveFailed = true; if (onSaveState) onSaveState(true); } return false; }
+  };
+  const saveAiCfg = () => { lsSet(AI_STORE, JSON.stringify(AICFG)); };
+  // small device-level notes: when a tip was dismissed, when the last backup file was made (these belong to this device, not to the person)
+  const TIPS_STORE = 'shanlu-tips';
+  const tipRead = () => { try { return JSON.parse(localStorage.getItem(TIPS_STORE)) || {}; } catch (e) { return {}; } };
+  const tipStore = (k, v) => { const t = tipRead(); t[k] = v; lsSet(TIPS_STORE, JSON.stringify(t)); };
+  const isStandalone = () => { try { return window.navigator.standalone === true || !!(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches); } catch (e) { return false; } };
+  const isIos = () => { try { return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); } catch (e) { return false; } };
+  let installEvt = null;   // Chrome/Android: the browser's own "install" prompt, kept until the person asks for it
   const AI_MODELS = [['claude-haiku-5-5', 'Haiku 5.5: fastest and cheapest'], ['claude-sonnet-5-5', 'Sonnet 5.5: smarter, costs more']];
   // Alibaba Cloud Model Studio (Qwen), International edition (Singapore). Config: { provider, key, model, asr, ali:{ key, ws, model } }
   const ALI_MODELS = [['qwen-flash', 'qwen-flash: fastest and cheapest'], ['qwen-plus', 'qwen-plus: smarter, costs more']];
@@ -32,7 +46,7 @@
   if (!PERSON.prefs || typeof PERSON.prefs !== 'object') PERSON.prefs = {};
   if (!PERSON.mem || typeof PERSON.mem !== 'object') PERSON.mem = { facts:[], del:{}, cleared:0 };
   let onPersonChange = () => {};
-  const savePerson = (notify) => { try { localStorage.setItem(PERSON_STORE, JSON.stringify(PERSON)); } catch (e) {} if (notify !== false) onPersonChange(); };
+  const savePerson = (notify) => { lsSet(PERSON_STORE, JSON.stringify(PERSON)); if (notify !== false) onPersonChange(); };
   const prefGet = (k, d) => (PERSON.prefs[k] && PERSON.prefs[k].v !== undefined ? PERSON.prefs[k].v : d);
   const prefSet = (k, v) => { PERSON.prefs[k] = { v, at:Date.now() }; savePerson(); };
   // take over what older versions kept on the device only (stamp 1: older than anything set on another device)
@@ -72,7 +86,7 @@
   const SYNC_STORE = 'shanlu-sync';   // { token, gist, at } lives only on this device, never in the exported progress file
   let SYNCCFG = {};
   try { SYNCCFG = JSON.parse(localStorage.getItem(SYNC_STORE)) || {}; } catch (e) {}
-  const saveSyncCfg = () => { try { localStorage.setItem(SYNC_STORE, JSON.stringify(SYNCCFG)); } catch (e) {} };
+  const saveSyncCfg = () => { lsSet(SYNC_STORE, JSON.stringify(SYNCCFG)); };
   const ERHUA_KEY = 'shanlu-erhua';
   let ERHUA_ON = false;
   try { ERHUA_ON = localStorage.getItem(ERHUA_KEY) === 'on'; } catch (e) {}
@@ -188,7 +202,7 @@
     else if (r === 'hard') { s = s > 0 ? Math.max(0.8, s * grow(1.25)) : 1; nd = Math.min(10, dif + 0.3); }
     else if (r === 'good') { s = s > 0 ? s * grow(1.6 + 1.4 * (1 - R)) : 1.5; nd = dif + (5 - dif) * 0.05; }
     else { s = s > 0 ? s * grow(2.2 + 1.8 * (1 - R)) : 3; nd = Math.max(1, dif - 0.5); }
-    return { s, l:0, t:Date.now(), d:Math.round(nd * 100) / 100 };
+    return { s, t:Date.now(), d:Math.round(nd * 100) / 100 };
   };
   const fmtInterval = (s) => { const d = s * retK(); return d < 1 ? 'Today' : d < 1.5 ? 'Tomorrow' : d < 45 ? 'In ' + Math.round(d) + ' days' : 'In ' + Math.round(d / 30) + ' months'; };
 
@@ -204,9 +218,16 @@
   CLIPS.forEach(c => c.words.forEach(w => { CLIP_PY[w.zh] = w.py; }));
   const BANK_KEYS = Object.keys(BANK);
 
-  const blankDim = () => ({ s:0, l:0 });
+  const blankDim = () => ({ s:0 });
   const blankWord = () => ({ see:blankDim(), hear:blankDim(), prod:blankDim() });
   const blankWs = () => { const out = {}; Object.keys(BANK).forEach(zh => { out[zh] = blankWord(); }); return out; };
+  // Saved progress keeps only started words and skills (see sync.js compactWs). The page works with every word and skill present, so fill in what is missing.
+  const fillWs = (ws) => {
+    if (!ws) return ws;
+    Object.keys(BANK).forEach(zh => { if (!ws[zh]) ws[zh] = {}; });
+    Object.keys(ws).forEach(zh => { DIMS.forEach(k => { if (!ws[zh][k]) ws[zh][k] = blankDim(); }); });
+    return ws;
+  };
 
   const winfo = (w, off) => {
     const started = DIMS.filter(k => w[k].s > 0);
@@ -278,7 +299,7 @@
     if (lastActive === today || lastActive === daysAgo(1)) for (let n = lastActive === today ? 0 : 1; active[daysAgo(n)]; n++) streak++;
     stores.forEach(st => { if ((st.lastActive === today || st.lastActive === daysAgo(1)) && (st.streak || 0) > streak) streak = st.streak; });
     let mem = 0;
-    stores.filter(st => st.__n > 0 && st.ws).forEach(st => { try { mem += memOf(st.ws).words; } catch (e) {} });
+    stores.filter(st => st.__n > 0 && st.ws).forEach(st => { try { mem += memOf(fillWs(st.ws)).words; } catch (e) {} });   // a saved copy keeps only started skills: fill the rest in first
     const levels = LVL.unlockedLevels ? LVL.unlockedLevels() : [LV];
     return { asOf:today, last7, streak:Math.min(streak, 9999), lastActive, mem, levels, passed:levels.filter(n => LVL.levelPassed(n)) };
   };
@@ -289,7 +310,7 @@
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
   const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
 
   function freshState() {
     let dark = false;
@@ -297,7 +318,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', frLeaveAsk:false, frCopied:false,
-      xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
+      xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
@@ -305,7 +326,7 @@
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, syncKeys:prefGet('syncKeys', false) === true, aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), lsnNote:'', memOn:memOn(), memFacts:memFacts().slice(), aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
+      wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, syncKeys:prefGet('syncKeys', false) === true, aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), lsnNote:'', memOn:memOn(), memFacts:memFacts().slice(), aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, aiTesting:false, syncTesting:false, frTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
       tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
@@ -377,7 +398,7 @@
     carryOverErhua(base);
     // older saves: a started word with no timestamp is treated as reviewed now, so nothing is suddenly overdue
     if (base.ws) Object.keys(base.ws).forEach(z => DIMS.forEach(k => { const d = base.ws[z] && base.ws[z][k]; if (d && d.s > 0 && !d.t) d.t = Date.now() - (d.l || 0) * DAY_MS; }));
-    Object.keys(BANK).forEach(zh => { if (!base.ws[zh]) base.ws[zh] = blankWord(); });
+    fillWs(base.ws);
     if (!Array.isArray(base.clipBest) || base.clipBest.length !== CLIPS.length) base.clipBest = CLIPS.map((_, i) => (saved.clipBest && saved.clipBest[i]) || 0);
     return base;
   }
@@ -866,16 +887,20 @@
       this.persistSoon();
     }
     persistSoon() {
+      if (!this.persistAsked && this.state.xp > 0) this.ensurePersist(true);
       this.syncLater();
       this.friendsTick();
       clearTimeout(this.saveTimer);
       this.saveTimer = setTimeout(() => this.persistNow(), 250);
     }
+    frozen = false;   // set while the page is being reloaded after a reset, so the leaving page does not write the old progress back
     persistNow() {
+      if (this.frozen) return;
       try {
         const out = {};
         PERSIST.forEach(k => { if (!ALL || SPLIT.indexOf(k) < 0) out[k] = this.state[k]; });
-        localStorage.setItem(KEY, JSON.stringify(out));
+        if (out.ws && window.ShanluSync) out.ws = window.ShanluSync.compactWs(out.ws);   // only started words are stored; mergeSaved() fills the rest in
+        lsSet(KEY, JSON.stringify(out));
         if (ALL) this.persistSplit();
         else if (LVL.passedList(this.state.exams || [])) LVL.markPassed(LV);   // passing both sections (together or one at a time) opens the next level
       } catch (e) {}
@@ -890,7 +915,7 @@
     }
     friendsPush = async (o) => {
       const opt = o || {};
-      if (!FR || !FR.enabled() || !FR.identity()) return;
+      if (this.frozen || !FR || !FR.enabled() || !FR.identity()) return;
       const last = Number(localStorage.getItem(FR_PUSH_KEY) || 0);
       if (opt.minGap && Date.now() - last < opt.minGap) return;
       try {
@@ -910,8 +935,17 @@
       try { return await this.friendsProgressSyncRun(); } finally { this.progBusy = false; }
     };
     friendsProgressSyncRun = async () => {
+      let changed = false;
+      for (let attempt = 0; attempt < 3; attempt++) {   // a save the server refuses because another device saved in between is simply merged again
+        const r = await this.friendsProgressSyncOnce();
+        changed = changed || r.changed;
+        if (!r.conflict) break;
+      }
+      return changed;
+    };
+    friendsProgressSyncOnce = async () => {
       const SY = window.ShanluSync;
-      if (!FR || !FR.enabled() || !FR.identity() || !SY) return false;
+      if (!FR || !FR.enabled() || !FR.identity() || !SY) return { changed:false, conflict:false };
       this.persistNow();
       const levels = Object.keys(LVL.PROGRESS_KEYS || {}).map(Number);
       const local = {};
@@ -928,11 +962,17 @@
         if (!SY.same(m, SY.merge(local[k], local[k]))) changed = true;
       });
       if (changed) {
-        levels.forEach(n => { if (merged[n]) { const st = readStore(n) || {}; try { localStorage.setItem(storeKey(n), JSON.stringify(Object.assign({}, st, SY.pick(merged[n])))); } catch (e) {} if (LVL.passedList(merged[n].exams || [])) LVL.markPassed(n); } });
+        levels.forEach(n => { if (merged[n]) { const st = readStore(n) || {}; lsSet(storeKey(n), JSON.stringify(SY.applyMerged(st, merged[n]))); if (LVL.passedList(merged[n].exams || [])) LVL.markPassed(n); } });
         // bring this view up to date
         let patch;
-        if (ALL) { const tmp = Object.assign({}, this.state, readSplit()); Object.keys(BANK).forEach(zh => { if (!tmp.ws[zh]) tmp.ws[zh] = blankWord(); }); carryOverErhua(tmp); patch = {}; SPLIT.forEach(k => { patch[k] = tmp[k]; }); }
-        else if (merged[LV]) { const next = rollDay(Object.assign({}, this.state, merged[LV])); carryOverErhua(next); patch = SY.pick(next); patch.rq = (patch.rq || []).filter(z => BANK[z]); }
+        if (ALL) { const tmp = Object.assign({}, this.state, readSplit()); fillWs(tmp.ws); carryOverErhua(tmp); patch = {}; SPLIT.forEach(k => { patch[k] = tmp[k]; }); }
+        else if (merged[LV]) {
+          const bumped = (merged[LV].epoch || 0) > (this.state.epoch || 0);   // another device reset this level: today's "words so far" baseline starts again too
+          const next = rollDay(Object.assign({}, this.state, merged[LV], bumped ? { mem0:null } : {}));
+          carryOverErhua(next);
+          patch = SY.pick(next); patch.rq = (patch.rq || []).filter(z => BANK[z]); patch.ws = fillWs(patch.ws);
+          if (bumped) patch.mem0 = next.mem0;
+        }
         if (patch) { this.noSync = true; this.noMin = true; this.setState(patch); this.noMin = false; this.noSync = false; this.persistNow(); }
       }
       // the person's own settings and notes (listening level, what Mingming remembers, chat preferences) travel in the same bundle
@@ -940,8 +980,11 @@
       const mergedP = SY.mergePerson ? SY.mergePerson(PERSON, remoteP) : PERSON;
       if (SY.samePerson && !SY.samePerson(mergedP, PERSON)) { PERSON = mergedP; savePerson(false); this.personApply(); changed = true; }
       if (SY.samePerson && !SY.samePerson(mergedP, remoteP)) pushNeeded = true;
-      if (pushNeeded) await FR.putProgress({ v:1, levels:merged, person:mergedP });
-      return changed;
+      if (pushNeeded) {
+        try { await FR.putProgress({ v:1, levels:merged, person:mergedP }, { base:got ? got.updated : undefined }); }
+        catch (e) { if (e && e.status === 412) return { changed, conflict:true }; throw e; }
+      }
+      return { changed, conflict:false };
     };
     friendsFailed = (e) => {
       if (e && e.status === 401) { FR.forget(); this.setState({ fr:null, frErr:'This device is not in the group any more. Open your invite link to join again.' }); return; }
@@ -965,6 +1008,18 @@
         await this.friendsPush({});
         await this.friendsRefresh(true);
       } catch (e) { this.setState({ frBusy:false, frErr:(e && e.message) || 'Could not join.' }); }
+    };
+    // "Test connection" for the friends server: reachable from this browser, and does it still accept this device's key?
+    friendsTest = async () => {
+      if (!FR || this.state.frTesting) return;
+      this.setState({ frTesting:true, frErr:'', frMsg:'Testing…' });
+      try {
+        const r = await FR.ping();
+        let msg = 'The friends server answers (' + r.ms + ' ms).';
+        if (r.signedIn === true) msg += ' This device is signed in' + (r.group ? ' to ' + r.group : '') + '.';
+        else if (r.signedIn === false) { this.setState({ frTesting:false, frMsg:'', frErr:'The server answers, but it no longer accepts this device. Open your personal link again, or ask for a new invite.' }); return; }
+        this.setState({ frTesting:false, frMsg:msg });
+      } catch (e) { this.setState({ frTesting:false, frMsg:'', frErr:(e && e.message) || 'Could not reach the friends server.' }); }
     };
     friendsCheer = async (id) => {
       try { await FR.cheer(id); await this.friendsRefresh(true); } catch (e) { this.friendsFailed(e); }
@@ -1003,7 +1058,7 @@
       LVLS.forEach(n => {
         const st = readStore(n) || {};
         const words = (window['HSK' + n + '_WORDS'] || []).map(w => w.zh);
-        const ws = Object.assign({}, st.ws); words.forEach(z => { if (S.ws[z]) ws[z] = S.ws[z]; });
+        const ws = Object.assign({}, st.ws); words.forEach(z => { const cw = window.ShanluSync ? window.ShanluSync.compactWord(S.ws[z]) : S.ws[z]; if (cw) ws[z] = cw; else delete ws[z]; });
         const mis = Object.assign({}, st.misses); words.forEach(z => { if (S.misses[z] !== undefined) mis[z] = S.misses[z]; else delete mis[z]; });
         const pick = (src, ids) => { const o = {}; ids.forEach(id => { if (src[id] !== undefined) o[id] = src[id]; }); return o; };
         const lessons = ((window['HSK' + n + '_GRAMMAR'] || {}).lessons || []).map(l => l.id);
@@ -1016,7 +1071,7 @@
         st.lrn = lrn; st.rlog = (S.rlog || []).filter(e => wset[e[1]]);
         st.ws = ws; st.misses = mis; st.gres = gres; st.sres = sres; st.clipBest = S.clipBest.slice(off, off + cnt);
         off += cnt;
-        try { localStorage.setItem(storeKey(n), JSON.stringify(st)); } catch (e) {}
+        lsSet(storeKey(n), JSON.stringify(st));
       });
     }
     later(fn, ms) { const id = setTimeout(fn, ms); this.timers.push(id); }
@@ -1381,32 +1436,74 @@
       const S = this.state, last = S.aim[S.aim.length - 1];
       if (S.handsFree && last && last.who === 'ai' && !S.aiBusy && !S.aiListen && this.voiceOnlyOn()) this.aiMic(true);
     };
-    // API keys follow the person only when they switch this on (they would be stored on the group's server)
-    secretsChanged = () => {
+    // ----- API keys that follow the person: only when switched on, and only as an encrypted blob (secrets.js) -----
+    // The passphrase stays on the person's devices (AICFG.syncPass, never synced). The server holds scrambled text it cannot read.
+    keyVal = () => ({ key:AICFG.key || null, aliKey:aliCfg().key || null, aliWs:aliCfg().ws || '' });
+    secretsChanged = () => { this.secretsPush(); };
+    secretsPush = async () => {
       if (!prefGet('syncKeys', false)) return;
-      PERSON.secrets = { v:{ key:AICFG.key || null, aliKey:aliCfg().key || null, aliWs:aliCfg().ws || '' }, at:Date.now() }; savePerson();
+      const SX = window.ShanluSecrets;
+      if (!SX || !SX.available() || !AICFG.syncPass) return;   // nothing leaves the device without a passphrase
+      try {
+        const sealed = await SX.seal(this.keyVal(), AICFG.syncPass);   // sealed even when empty, so removing a key reaches the other devices too
+        PERSON.secrets = { v:sealed, at:Date.now() }; savePerson();
+      } catch (e) { this.setState({ keyMsg:(e && e.message) || 'Could not encrypt the keys.' }); }
+    };
+    // keys that arrived from another device become this device's keys (encrypted: with the passphrase; the older plain copy: as it is)
+    secretsOpen = async () => {
+      const sec = PERSON.secrets && PERSON.secrets.v;
+      if (!prefGet('syncKeys', false) || !sec || typeof sec !== 'object') return;
+      const SX = window.ShanluSecrets;
+      let v = null;
+      if (SX && SX.isSealed(sec)) {
+        if (!AICFG.syncPass) { this.setState({ keyLock:'need' }); return; }
+        try { v = await SX.open(sec, AICFG.syncPass); } catch (e) { if (e && e.code === 'wrong') this.setState({ keyLock:'wrong' }); return; }
+      } else if ('key' in sec || 'aliKey' in sec) { v = sec; }   // the older way: stored without a passphrase (the Settings screen offers to encrypt it)
+      else return;
+      if (v.key) AICFG.key = v.key; else delete AICFG.key;
+      if (v.aliKey) AICFG.ali = Object.assign({ model:'qwen-flash' }, AICFG.ali, { key:v.aliKey, ws:v.aliWs || '' }); else delete AICFG.ali;
+      const am = PERSON.prefs.aliModel; if (am && am.v !== undefined && AICFG.ali) AICFG.ali.model = am.v;
+      saveAiCfg();
+      this.setState({ keyLock:'', aiOn:aiReadyNow(), aliOn:!!aliCfg().key, aiProvider:aiProviderNow(), asrMode:asrModeNow(), ttsMode:ttsModeNow() });
     };
     keySyncToggle = () => {
       const on = !prefGet('syncKeys', false);
       prefSet('syncKeys', on);
-      if (on) { if (AICFG.key || aliCfg().key) this.secretsChanged(); }
-      else { PERSON.secrets = { v:null, at:Date.now() }; savePerson(); }   // a newer empty copy takes the keys off the server
-      this.setState({ syncKeys:on });
+      if (on) { this.setState({ syncKeys:true, keyPassInput:'', keyMsg:'', keyChanging:false }); if (AICFG.syncPass) this.secretsPush(); else this.secretsOpen(); }
+      else {
+        PERSON.secrets = { v:null, at:Date.now() }; savePerson();   // a newer empty copy takes the keys off the server
+        delete AICFG.syncPass; saveAiCfg();
+        this.setState({ syncKeys:false, keyLock:'', keyPassInput:'', keyMsg:'', keyChanging:false });
+      }
+    };
+    keyChange = () => { this.setState({ keyChanging:true, keyPassInput:'', keyMsg:'' }); };
+    keyPassGo = async () => {
+      const SX = window.ShanluSecrets, pass = this.state.keyPassInput || '';
+      if (!SX || !SX.available()) { this.setState({ keyMsg:'This browser cannot encrypt here (it needs a secure https page).' }); return; }
+      if (pass.length < SX.MIN_LENGTH) { this.setState({ keyMsg:'The passphrase needs at least ' + SX.MIN_LENGTH + ' characters.' }); return; }
+      const sec = PERSON.secrets && PERSON.secrets.v;
+      this.setState({ keyBusy:true, keyMsg:'' });
+      if (SX.isSealed(sec) && !this.state.keyChanging) {   // keys are already saved by another device: this passphrase must open them
+        try { await SX.open(sec, pass); } catch (e) { this.setState({ keyBusy:false, keyMsg:'That passphrase does not open the saved keys.' }); return; }
+        AICFG.syncPass = pass; saveAiCfg();
+        await this.secretsOpen();
+        this.setState({ keyBusy:false, keyPassInput:'', keyMsg:'Unlocked. Your keys are on this device now.' });
+      } else {   // the first device, an older unencrypted copy, or a new passphrase
+        AICFG.syncPass = pass; saveAiCfg();
+        await this.secretsPush();
+        this.setState({ keyBusy:false, keyPassInput:'', keyChanging:false, keyLock:'', keyMsg:'Saved, encrypted. On your other devices, enter the same passphrase once.' });
+      }
     };
     // what arrived from the person's other devices becomes the live setting here
     personApply = () => {
       const g = (k) => (PERSON.prefs[k] ? PERSON.prefs[k].v : undefined);
       [['voiceOnly', 'voiceOnly'], ['handsFree', 'handsFree'], ['ttsMode', 'ttsMode'], ['ttsVoice', 'ttsVoice'], ['asr', 'asr'], ['provider', 'provider'], ['claudeModel', 'model']].forEach(p => { if (g(p[0]) !== undefined) AICFG[p[1]] = g(p[0]); });
-      const sec = PERSON.secrets && PERSON.secrets.v;
-      if (prefGet('syncKeys', false) && sec) {
-        if (sec.key) AICFG.key = sec.key; else delete AICFG.key;
-        if (sec.aliKey) AICFG.ali = Object.assign({ model:'qwen-flash' }, AICFG.ali, { key:sec.aliKey, ws:sec.aliWs || '' }); else delete AICFG.ali;
-      }
       if (g('aliModel') !== undefined && AICFG.ali) AICFG.ali.model = g('aliModel');
       saveAiCfg();
       if (PERSON.lsn && PERSON.lsn.v) { LSN.lvl = PERSON.lsn.v.lvl || 1; LSN.ok = PERSON.lsn.v.ok || 0; LSN.miss = PERSON.lsn.v.miss || 0; }
       this.setState({ aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), asrMode:asrModeNow(), aiProvider:aiProviderNow(), aiOn:aiReadyNow(), aliOn:!!aliCfg().key,
         aiModel:AICFG.model || this.state.aiModel, aliModelInput:aliCfg().model || this.state.aliModelInput, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), memOn:memOn(), memFacts:memFacts(), syncKeys:prefGet('syncKeys', false) === true });
+      this.secretsOpen();   // API keys (only if switched on): opened with the passphrase kept on this device
     };
     personTimer = null; personAt = 0;
     personChanged = () => {   // a change was made here: send it to the group's server soon, but not on every tap
@@ -1479,6 +1576,32 @@
       this.setState({ aliOn:false, aliWsInput:'', aliModelInput:'qwen-flash', aiProvider:aiProviderNow(), aiOn:aiReadyNow(), asrMode:'browser', aliNote:'The Alibaba key was removed from this device.', aim:[] });
     };
     aliPreset = (m) => { this.setState({ aliModelInput:m }); };
+    // "Test connection" for the Claude key: a free key check, then one tiny message (so a missing credit or a wrong model name shows up now, not in the middle of a chat)
+    aiTestKey = async () => {
+      if (!AICFG.key) { this.setState({ aiNote:'Save the key first.' }); return; }
+      if (this.state.aiTesting) return;
+      this.setState({ aiTesting:true, aiNote:'Testing…' });
+      const H = { 'x-api-key':AICFG.key, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true', 'content-type':'application/json' };
+      const model = AICFG.model || 'claude-haiku-5-5';
+      const lines = []; let keyOk = false;
+      try {
+        const r = await fetch('https://api.anthropic.com/v1/models?limit=1', { headers:H });
+        if (r.ok) { keyOk = true; lines.push('The key is accepted by Anthropic.'); }
+        else if (r.status === 401) lines.push('Anthropic rejected the key. Check that all of it was copied, with no spaces.');
+        else lines.push('Anthropic answered with an error (' + r.status + ') when checking the key.');
+      } catch (e) { lines.push('Could not reach Anthropic from this browser. Check the connection, and that no blocker is stopping api.anthropic.com.'); }
+      if (keyOk) {
+        try {
+          const r = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', headers:H, body:JSON.stringify({ model, max_tokens:8, messages:[{ role:'user', content:'Reply with the single word OK.' }] }) });
+          if (r.ok) lines.push('Chat model (' + model + '): working.');
+          else if (r.status === 404) lines.push('Chat model (' + model + '): Anthropic does not know that model name. Pick another model above.');
+          else if (r.status === 429) lines.push('Chat model: Anthropic says too many requests right now. Try again in a minute.');
+          else if (r.status === 400 || r.status === 402 || r.status === 403) lines.push('Chat model: refused, which usually means the API account has no credit yet (add some at console.anthropic.com).');
+          else lines.push('Chat model: Anthropic had a problem (' + r.status + ').');
+        } catch (e) { lines.push('Chat model: could not reach Anthropic.'); }
+      }
+      this.setState({ aiTesting:false, aiNote:lines.join(' ') });
+    };
     aliTest = async () => {
       if (!aliCfg().key) { this.setState({ aliNote:'Save the key first.' }); return; }
       this.setState({ aliTesting:true, aliNote:'Testing…' });
@@ -1563,26 +1686,31 @@
         let r, patch;
         if (ALL) {
           // every shown level syncs its own file; only the words, grammar, speaking and listening progress comes back into this view
-          let gist = SYNCCFG.gist || null, created = false;
+          let gist = SYNCCFG.gist || null, created = false, personBack = null;
           for (const n of LVLS) {
             const st = readStore(n) || {};
-            const rr = await window.ShanluSync.round({ token:SYNCCFG.token, gistId:gist, state:st, file:window.ShanluSync.fileFor(n) });
-            gist = rr.gistId; created = created || rr.created;
-            try { localStorage.setItem(storeKey(n), JSON.stringify(Object.assign({}, st, window.ShanluSync.pick(rr.merged)))); } catch (e) {}
+            const rr = await window.ShanluSync.round({ token:SYNCCFG.token, gistId:gist, state:st, file:window.ShanluSync.fileFor(n), person:personBack ? null : PERSON });
+            gist = rr.gistId; created = created || rr.created; if (rr.person) personBack = rr.person;
+            lsSet(storeKey(n), JSON.stringify(window.ShanluSync.applyMerged(st, rr.merged)));
           }
-          r = { gistId:gist, created };
+          r = { gistId:gist, created, person:personBack };
           const tmp = Object.assign({}, this.state, readSplit());
-          Object.keys(BANK).forEach(zh => { if (!tmp.ws[zh]) tmp.ws[zh] = blankWord(); });
+          fillWs(tmp.ws);
           carryOverErhua(tmp);
           patch = {}; SPLIT.forEach(k => { patch[k] = tmp[k]; });
         } else {
-          r = await window.ShanluSync.round({ token:SYNCCFG.token, gistId:SYNCCFG.gist || null, state:this.state, file:window.ShanluSync.fileFor(LV) });
-          let next = rollDay(Object.assign({}, this.state, r.merged));
+          r = await window.ShanluSync.round({ token:SYNCCFG.token, gistId:SYNCCFG.gist || null, state:this.state, file:window.ShanluSync.fileFor(LV), person:PERSON });
+          const bumped = (r.merged.epoch || 0) > (this.state.epoch || 0);
+          let next = rollDay(Object.assign({}, this.state, r.merged, bumped ? { mem0:null } : {}));
           carryOverErhua(next);
           patch = window.ShanluSync.pick(next);
           patch.rq = (patch.rq || []).filter(z => BANK[z]);
+          patch.ws = fillWs(patch.ws);
+          if (bumped) patch.mem0 = next.mem0;
         }
         SYNCCFG.gist = r.gistId; SYNCCFG.at = Date.now(); saveSyncCfg();
+        // the person's own settings (listening level, what Mingming remembers, chat preferences) come back through the gist too
+        if (r.person && window.ShanluSync.samePerson && !window.ShanluSync.samePerson(r.person, PERSON)) { PERSON = r.person; savePerson(false); this.personApply(); }
         this.noSync = true; this.noMin = true;
         this.setState(Object.assign(patch, { syncBusy:false, syncAt:SYNCCFG.at, syncBad:false, syncMsg:r.created ? 'Connected. Your progress is now saved in a private GitHub gist.' : 'Synced.' }));
         this.noSync = false;
@@ -1599,6 +1727,24 @@
       SYNCCFG = { token:t, gist:'', at:0 }; saveSyncCfg();
       this.setState({ syncOn:true, syncInput:'', syncMsg:'', syncBad:false });
       this.syncNow(true);
+    };
+    // "Test connection" for the GitHub token: one read-only request, so a wrong, expired or under-permissioned token shows up now
+    syncTest = async () => {
+      if (!SYNCCFG.token || this.state.syncTesting || !window.ShanluSync) return;
+      this.noSync = true; this.setState({ syncTesting:true, syncBad:false, syncMsg:'Testing…' }); this.noSync = false;
+      let bad = false, msg = '';
+      try {
+        const api = window.ShanluSync.gistApi(SYNCCFG.token);
+        const info = await api.check();
+        const gid = SYNCCFG.gist || await api.find();
+        msg = 'GitHub accepts the token.';
+        if (typeof info.scopes === 'string' && !/(^|[\s,])gist(,|$)/.test(info.scopes)) { bad = true; msg = 'GitHub accepts the token, but it does not have the gist permission, so it cannot save your progress. Make a new token with the gist box ticked.'; }
+        else {
+          if (info.expires) { const d = new Date(info.expires.replace(' UTC', 'Z').replace(' ', 'T')); if (!isNaN(d)) msg += ' It expires ' + d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }) + '.'; }
+          msg += gid ? ' Your private progress gist is there.' : ' No progress gist yet; it is created at the first sync.';
+        }
+      } catch (e) { bad = true; msg = (e && e.message) || 'The test failed.'; }
+      this.noSync = true; this.setState({ syncTesting:false, syncBad:bad, syncMsg:msg }); this.noSync = false;
     };
     syncDisconnect = () => { SYNCCFG = {}; saveSyncCfg(); clearTimeout(this.syncTimer); this.setState({ syncOn:false, syncAt:0, syncMsg:'This device is disconnected. Your progress here is kept.', syncBad:false }); };
     toggleErhua = () => {
@@ -1641,7 +1787,7 @@
         else if (r === 'good' || r === 'easy') {
           if (e.st + 1 >= LEARN_STEPS) {   // recalled twice: it graduates with a real interval and now counts in "words in memory"
             const cur = S.ws[zh]; const miss = (e.m || 0) > 0;
-            ws = Object.assign({}, S.ws); ws[zh] = { see:{ s:miss ? 1 : 1.5, l:0, t:Date.now(), d:5 }, hear:cur.hear, prod:{ s:miss ? 0.6 : 1, l:0, t:Date.now(), d:5 } };
+            ws = Object.assign({}, S.ws); ws[zh] = { see:{ s:miss ? 1 : 1.5, t:Date.now(), d:5 }, hear:cur.hear, prod:{ s:miss ? 0.6 : 1, t:Date.now(), d:5 } };
             delete lrn[zh]; gain = 5;
           } else { lrn[zh] = { st:e.st + 1, m:e.m || 0, at:Date.now() }; again = true; gain = 3; done = false; }
         } else { lrn[zh] = { st:0, m:(e.m || 0) + 1, at:Date.now() }; at = 2; done = false; gain = 0; }
@@ -1940,6 +2086,45 @@
       this.setState({ tpick:n, tright:S.tright + (n === S.tidx ? 1 : 0), ttotal:S.ttotal + 1 });
     };
 
+    // ----- keeping the saved progress safe, offline and installable -----
+    persistAsked = false;
+    // Ask the browser not to clear this site's saved data (Chrome and Firefox may say yes; Safari decides on its own, mostly for installed apps).
+    // The prompt (Firefox shows one) comes only once there is some progress to protect.
+    ensurePersist = async (ask) => {
+      try {
+        if (!navigator.storage || !navigator.storage.persisted) return;
+        let ok = await navigator.storage.persisted();
+        if (!ok && ask && !this.persistAsked && navigator.storage.persist) { this.persistAsked = true; ok = await navigator.storage.persist(); }
+        if (!!ok !== this.state.storagePersisted) this.setState({ storagePersisted:!!ok });
+      } catch (e) {}
+    };
+    // one small card on Home at most: install the app (it protects the saved data and works offline), or make a backup when nothing syncs
+    tipNow = () => {
+      const S = this.state;
+      if (S.screen !== 'home') return null;
+      const t = tipRead(), day = 864e5, now = Date.now();
+      const installDue = !isStandalone() && (isIos() || !!installEvt) && now - (t.install || 0) > 14 * day;
+      const synced = !!((FR && FR.enabled() && FR.identity()) || SYNCCFG.token);
+      const backupDue = !synced && now - (t.lastBackup || 0) > 14 * day && now - (t.backup || 0) > 7 * day;
+      if (!installDue && !backupDue) return null;
+      const words = memOf(S.ws).words;
+      if (installDue && (words >= 5 || S.streak >= 2)) return { id:'install' };
+      if (backupDue && words >= 20) return { id:'backup' };
+      return null;
+    };
+    tipDismiss = () => { const t = this.tipNow(); if (t) tipStore(t.id, Date.now()); this.setState({ tipTick:(this.state.tipTick || 0) + 1 }); };
+    tipInstall = async () => {
+      if (installEvt) { try { installEvt.prompt(); await installEvt.userChoice; } catch (e) {} installEvt = null; }
+      tipStore('install', Date.now()); this.setState({ tipTick:(this.state.tipTick || 0) + 1 });
+    };
+    // a new version was downloaded in the background (sw.js): switch to it when the person says so
+    swReg = null; updating = false;
+    updateNow = () => {
+      this.persistNow(); this.updating = true;
+      const w = this.swReg && this.swReg.waiting;
+      if (w) w.postMessage('skip-waiting'); else { try { location.reload(); } catch (e) {} }
+    };
+
     // ----- progress file and reset -----
     exportData = () => {
       try {
@@ -1951,6 +2136,8 @@
         a.href = URL.createObjectURL(blob);
         a.download = 'shanlu-progress-' + (LV === 1 ? '' : (ALL ? 'all-' : 'hsk' + LV + '-')) + ymd(new Date()) + '.json';
         document.body.appendChild(a); a.click(); a.remove();
+        tipStore('lastBackup', Date.now());
+        this.setState({ tipTick:(this.state.tipTick || 0) + 1 });
       } catch (e) {}
     };
     importData = () => { const el = document.getElementById('import-file'); if (el) el.click(); };
@@ -1967,8 +2154,16 @@
       } catch (e) { window.alert('That file does not look like a Shanlu progress file.'); }
     };
     resetAll = () => {
-      if (window.confirm((FR && FR.identity() ? 'You are in a friends group and your progress is also saved on its server, so it will come back at the next sync. To really start over, leave the group first (Friends tab). ' : '') + (ALL ? 'Delete the progress of every level shown here (' + LVLS.map(n => 'HSK ' + n).join(' and ') + ') in this browser? Export it first if you want a copy.' : 'Delete all progress in this browser? Export it first if you want a copy.'))) {
-        try { localStorage.removeItem(KEY); if (ALL) LVLS.forEach(n => localStorage.removeItem(storeKey(n))); } catch (e) {}
+      const synced = (FR && FR.enabled() && FR.identity()) || SYNCCFG.token;
+      if (window.confirm((synced ? 'Your progress is also saved by sync, so this resets it on your other devices too, the next time they sync. ' : '') + (ALL ? 'Delete the progress of every level shown here (' + LVLS.map(n => 'HSK ' + n).join(' and ') + ') in this browser? Export it first if you want a copy.' : 'Delete all progress in this browser? Export it first if you want a copy.'))) {
+        // A reset starts a new "epoch": the empty start is saved with a newer time stamp than any old progress, so syncing spreads the reset
+        // to the other devices instead of bringing the old progress back (see merge() in sync.js).
+        try {
+          const SY = window.ShanluSync;
+          (ALL ? LVLS : [LV]).forEach(n => { const st = readStore(n) || {}; lsSet(storeKey(n), JSON.stringify({ epoch:SY ? SY.nextEpoch(st.epoch) : 0 })); });
+          if (ALL) localStorage.removeItem(KEY);
+        } catch (e) {}
+        this.frozen = true; clearTimeout(this.saveTimer);
         window.location.reload();
       }
     };
@@ -2014,6 +2209,17 @@
         tonesLabel:tonesOptional() ? 'Optional (beginner)' : 'Required', tonesCls:tonesOptional() ? '' : 'on', toggleTones:this.toggleTones,
         personSyncOn:!!(FR && FR.enabled() && FR.identity()), personSyncOff:!(FR && FR.enabled() && FR.identity()),
         keySyncCls:S.syncKeys ? 'on' : '', keySyncLabel:S.syncKeys ? 'On: my keys follow me' : 'Off: keys stay on each device', keySyncToggle:this.keySyncToggle,
+        ...(() => {
+          const SX = window.ShanluSecrets, sec = PERSON.secrets && PERSON.secrets.v;
+          const sealed = !!(sec && SX && SX.isSealed(sec)), plain = !!(sec && !sealed && typeof sec === 'object' && (sec.key || sec.aliKey));
+          const ready = !!AICFG.syncPass && S.keyLock !== 'wrong';
+          const mode = !S.syncKeys ? 'off' : ready ? 'ready' : sealed ? 'unlock' : 'set';
+          const ask = mode === 'set' || mode === 'unlock' || (mode === 'ready' && !!S.keyChanging);
+          const msg = S.keyMsg || (mode === 'unlock' ? (S.keyLock === 'wrong' ? 'The passphrase on this device no longer opens the saved keys (it was changed on another device). Enter the new one.' : 'Your keys are saved, encrypted. Enter your passphrase to use them on this device.') : (mode === 'set' && plain ? 'Your keys are stored on the server the older way, without a passphrase. Set one now to encrypt them.' : ''));
+          return { keyOn:S.syncKeys === true, keyAsk:ask, keyReady:mode === 'ready' && !S.keyChanging, keyMsgShow:!!msg, keyMsgText:msg,
+            keyPassInput:S.keyPassInput || '', onKeyPassInput:(e) => this.setState({ keyPassInput:e.target.value }), keyPassGo:this.keyPassGo, keyChange:this.keyChange,
+            keyAskHint:mode === 'unlock' ? 'Your key passphrase' : 'Choose a passphrase (8+ characters)', keyGoLabel:S.keyBusy ? 'One moment…' : mode === 'unlock' ? 'Unlock my keys' : mode === 'ready' ? 'Change passphrase' : 'Encrypt and save my keys' };
+        })(),
         lsnLine:'Listening level ' + S.lsnLvl + ' of 5 · ' + LSN_LEVELS[S.lsnLvl - 1].name, lsnEasier:() => this.lsnStep(-1), lsnHarder:() => this.lsnStep(1), lsnAutoLabel:'Auto-adjust: ' + (S.lsnAuto ? 'on' : 'off'), lsnAutoToggle:this.lsnAutoToggle,
         lsnNote:S.lsnNote, hasLsnNote:!!S.lsnNote, aiHfLabel:'Hands-free: ' + (S.handsFree ? 'on' : 'off'), aiHfToggle:this.aiHfToggle,
         memOnLabel:S.memOn ? 'On: Mingming remembers' : 'Off: nothing is kept', memCls:S.memOn ? 'on' : '', memToggle:this.memToggle, memClear:this.memClear, hasMemFacts:S.memFacts.length > 0, noMemFacts:S.memFacts.length === 0,
@@ -2038,7 +2244,7 @@
         aliWsInput:S.aliWsInput, onAliWsInput:(e) => this.setState({ aliWsInput:e.target.value }), aliModelInput:S.aliModelInput, onAliModelInput:(e) => this.setState({ aliModelInput:e.target.value }),
         aliModelOpts:ALI_MODELS.map(m => ({ label:m[1], cls:S.aliModelInput === m[0] ? 'on' : '', fn:() => this.aliPreset(m[0]) })),
         aliCanUse:S.aliOn && S.aiProvider !== 'alibaba', aiCanUse:!!AICFG.key && S.aiProvider === 'alibaba', useAli:() => this.setProvider('alibaba'), useAnth:() => this.setProvider('anthropic'),
-        aliSaveKey:this.aliSaveKey, aliRemoveKey:this.aliRemoveKey, aliTest:this.aliTest, aliTestLabel:S.aliTesting ? 'Testing…' : 'Test connection', aliNote:S.aliNote, hasAliNote:!!S.aliNote,
+        aiTestKey:this.aiTestKey, aiTestLabel:S.aiTesting ? 'Testing…' : 'Test connection', aliSaveKey:this.aliSaveKey, aliRemoveKey:this.aliRemoveKey, aliTest:this.aliTest, aliTestLabel:S.aliTesting ? 'Testing…' : 'Test connection', aliNote:S.aliNote, hasAliNote:!!S.aliNote,
         asrOpts:[['browser', 'This browser\'s own recogniser'], ['alibaba', 'Alibaba Qwen3-ASR (needs the Alibaba key)']].map(o => ({ label:o[1], cls:S.asrMode === o[0] ? 'on' : '', fn:() => this.setAsr(o[0]) }))
       };
     }
@@ -2210,7 +2416,7 @@
         goFriendsHome:() => { this.go('friends'); this.friendsRefresh(false); },
         frUpdated:S.fr ? (frAgo < 1 ? 'Updated just now' : 'Updated ' + frAgo + ' min ago') : '', frRefresh:() => this.friendsRefresh(true),
         frLinkText:S.frCopied ? 'Copied' : 'Copy my link', frCopy:this.friendsCopyLink, frMyLink:frIdent ? window.ShanluFriends.makeLink(location.href, frIdent) : '',
-        frLeaveText:S.frLeaveAsk ? 'Tap again to leave' : 'Leave group', frLeave:this.friendsLeave,
+        frLeaveText:S.frLeaveAsk ? 'Tap again to leave' : 'Leave group', frLeave:this.friendsLeave, frTest:this.friendsTest, frTestLabel:S.frTesting ? 'Testing…' : 'Test connection',
         frOffText:'The friends board is not set up yet. Add the address of your friends server to config.js (see worker/README.md).'
       };
 
@@ -2616,6 +2822,16 @@
         hasSubnav:subnavItems.length > 1, subnav:subnavItems.map(o => ({ label:o[1], cls:'on' === (curScreen === o[0] ? 'on' : '') ? 'on' : '', fn:() => this.go(o[0]) })),
         themeCls:dark ? 't-dark' : 't-light', themeLabel:dark ? 'Switch to light' : 'Switch to dark', toggleTheme:this.toggleTheme,
         noVoice:S.noVoice, week,
+        ...(() => {
+          const tp = this.tipNow();
+          let swOn = false; try { swOn = !!(navigator.serviceWorker && navigator.serviceWorker.controller); } catch (e) {}
+          const meta = document.querySelector('meta[name="shanlu-version"]');
+          return { saveFail:S.saveFail, swReady:S.swReady, updateNow:this.updateNow,
+            tipShow:!!tp, tipIsInstall:!!tp && tp.id === 'install', tipIsBackup:!!tp && tp.id === 'backup', tipCanPrompt:!!installEvt, tipIosHow:isIos() && !installEvt, tipDismiss:this.tipDismiss, tipInstall:this.tipInstall,
+            storageText:S.storagePersisted === true ? 'Protected: the browser has agreed to keep this site\'s saved data.' : S.storagePersisted === false ? 'Not protected: the browser may clear this site\'s saved data when space is short or after a long time unused. A backup or sync keeps your progress safe.' : 'Not known on this browser.',
+            installedText:isStandalone() ? 'Opened as an installed app.' : 'Opened in the browser. Installing it (Share, then Add to Home Screen on iPhone) gives a full-screen app and protects the saved data.',
+            versionText:(meta && meta.content ? 'Version ' + meta.content : 'Version unknown') + (swOn ? ', works offline.' : ', offline copy not active.') };
+        })(),
         gapLine, examParts, navExam:navCls('exam'), goExam:() => this.go('exam'), isExam:S.screen === 'exam' && !!EXAMBANK, isExamNA:S.screen === 'exam' && !EXAMBANK,
 
         // word webs and word memory
@@ -2794,7 +3010,7 @@
         ...this.examVals(),
         ...this.aiVals(),
         syncOn:S.syncOn, syncOff:!S.syncOn, syncBusy:S.syncBusy, syncMsg:S.syncMsg, hasSyncMsg:!!S.syncMsg, syncMsgCls:S.syncBad ? 'bad' : 'good',
-        syncInput:S.syncInput, onSyncInput:(e) => this.setState({ syncInput:e.target.value }), syncConnect:this.syncConnect, syncNow:() => this.syncNow(true), syncDisconnect:this.syncDisconnect,
+        syncInput:S.syncInput, onSyncInput:(e) => this.setState({ syncInput:e.target.value }), syncConnect:this.syncConnect, syncNow:() => this.syncNow(true), syncTest:this.syncTest, syncTestLabel:S.syncTesting ? 'Testing…' : 'Test connection', syncDisconnect:this.syncDisconnect,
         syncAtText:S.syncAt ? 'Last synced ' + new Date(S.syncAt).toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }) + '.' : 'Not synced yet.',
         syncTokenUrl:'https://github.com/settings/tokens/new?scopes=gist&description=Shanlu%20progress',
         erhuaOn:ERHUA_ON, erhuaOff:!ERHUA_ON, erhuaAvailable:!!ERHUA, toggleErhua:this.toggleErhua,
@@ -2833,6 +3049,24 @@
   });
   window.addEventListener('pagehide', () => { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); });
   app.friendsBoot();
+  // a failed save raises the banner; the next successful save clears it
+  onSaveState = (bad) => { try { app.setState({ saveFail:bad }); } catch (e) {} };
+  if (saveFailed) onSaveState(true);
+  app.ensurePersist(false);
+  window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); installEvt = e; try { app.setState({ tipTick:(app.state.tipTick || 0) + 1 }); } catch (e2) {} });
+  window.addEventListener('appinstalled', () => { installEvt = null; });
+  // the offline copy (sw.js): a new version waits until the person taps Reload, so a page never mixes old and new files
+  if ('serviceWorker' in navigator && !window.SHANLU_NO_SW && /^https:|^http:\/\/(localhost|127\.0\.0\.1)/.test(location.protocol + '//' + location.hostname)) {
+    const start = () => navigator.serviceWorker.register('sw.js').then((reg) => {
+      app.swReg = reg;
+      const ready = () => { if (navigator.serviceWorker.controller) app.setState({ swReady:true }); };
+      if (reg.waiting) ready();
+      reg.addEventListener('updatefound', () => { const w = reg.installing; if (w) w.addEventListener('statechange', () => { if (w.state === 'installed') ready(); }); });
+      document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { try { reg.update().catch(() => {}); } catch (e) {} } });
+    }).catch(() => {});
+    navigator.serviceWorker.addEventListener('controllerchange', () => { if (app.updating) { try { location.reload(); } catch (e) {} } });
+    if (document.readyState === 'complete') start(); else window.addEventListener('load', start);
+  }
   if (SYNCCFG.token) setTimeout(() => app.syncNow(false), 1200);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); } else { app._schedule(); if (SYNCCFG.token) app.syncNow(false); } });
   const fileInput = document.getElementById('import-file');

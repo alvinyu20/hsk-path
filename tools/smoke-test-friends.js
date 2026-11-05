@@ -6,15 +6,7 @@ const path = require('path');
 const { chromium } = require('playwright');
 const root = path.join(__dirname, '..');
 const types = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css', '.json':'application/json', '.svg':'image/svg+xml' };
-const server = http.createServer((req, res) => {
-  let p = decodeURIComponent(req.url.split('?')[0]);
-  if (p === '/') p = '/index.html';
-  if (p === '/config.js') { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end("window.SHANLU_FRIENDS_URL = window.SHANLU_FRIENDS_URL || '';"); return; }   // tests never talk to the real friends server
-  const f = path.join(root, p);
-  if (!f.startsWith(root) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); res.end('nope'); return; }
-  res.writeHead(200, { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' });
-  fs.createReadStream(f).pipe(res);
-});
+const server = require('./test-static').server(root);
 let failures = 0;
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };
 const INVITE = 'ABCD-EFGH-JKLM';
@@ -125,6 +117,7 @@ const INVITE = 'ABCD-EFGH-JKLM';
   if (process.env.DBG) { console.log('A', JSON.stringify(await dbg(A.page))); console.log('E', JSON.stringify(await dbg(E.page))); }
   const sa = await A.page.evaluate(() => window.shanlu.friendStats()), se = await E.page.evaluate(() => window.shanlu.friendStats());
   check(await A.page.evaluate(() => window.shanlu.state.ws['谢谢'].see.s === 4), 'a word studied on the second device appears on the first');
+  if (process.env.DBG) console.log("SA", JSON.stringify(sa));
   check(JSON.stringify(sa) === JSON.stringify(se) && sa.mem > 0 && sa.last7[6] === 60 + 5 + 20 && sa.passed.includes(1), 'both devices report identical totals ' + (JSON.stringify(sa) === JSON.stringify(se) ? '' : JSON.stringify(sa) + ' vs ' + JSON.stringify(se)) + ', with minutes from both devices added up (60 on the first, 5 from the HSK 2 save, 20 on the second = ' + sa.last7[6] + ' today)');
   // the person's own settings and notes follow them to every device
   const serverCopy = (pg) => pg.evaluate(async (api) => { const v = JSON.parse(localStorage.getItem('shanlu-friends')); const r = await fetch(api + '/api/me/progress', { headers: { authorization: 'Bearer ' + v.id + '.' + v.key } }); return r.text(); }, api);
@@ -138,11 +131,25 @@ const INVITE = 'ABCD-EFGH-JKLM';
   const pe = await E.page.evaluate(() => ({ lvl: window.shanlu.state.lsnLvl, voice: window.shanlu.state.ttsVoice, hf: window.shanlu.state.handsFree, facts: window.shanlu.state.memFacts.map(f => f.t), ali: (JSON.parse(localStorage.getItem('shanlu-ai')).ali || {}).key || null, on: window.shanlu.state.aiOn }));
   check(pe.lvl === 3 && pe.voice === 'Neil' && pe.hf === true && pe.facts.join() === 'learner likes hiking', 'the listening level, chat settings and remembered facts reach the person\'s other device');
   check(pe.ali === null && !(await serverCopy(A.page)).includes('sk-ali-secret'), 'API keys stay on the device by default and are not on the server');
+  // sharing API keys needs a passphrase: without one nothing leaves the device, and what is saved is encrypted
   await A.page.evaluate(() => window.shanlu.keySyncToggle());
   await A.page.evaluate(() => window.shanlu.friendsPush({}));
+  check(!(await serverCopy(A.page)).includes('sk-ali-secret'), 'switching key sharing on without a passphrase saves no key on the server');
+  await A.page.evaluate(async () => { window.shanlu.setState({ keyPassInput: 'short' }); await window.shanlu.keyPassGo(); });
+  check(/at least 8/.test(await A.page.evaluate(() => window.shanlu.state.keyMsg)), 'a passphrase under 8 characters is refused');
+  await A.page.evaluate(async () => { window.shanlu.setState({ keyPassInput: 'blue kettle 42 morning' }); await window.shanlu.keyPassGo(); });
+  await A.page.evaluate(() => window.shanlu.friendsPush({}));
   await E.page.evaluate(() => window.shanlu.friendsPush({}));
-  const pe2 = await E.page.evaluate(() => ({ ali: (JSON.parse(localStorage.getItem('shanlu-ai')).ali || {}).key || null, on: window.shanlu.state.aiOn, keys: window.shanlu.state.syncKeys }));
-  check(pe2.ali === 'sk-ali-secret' && pe2.on === true && pe2.keys === true && (await serverCopy(A.page)).includes('sk-ali-secret'), 'switching key sharing on gives the other device the key');
+  const onServer = await serverCopy(A.page);
+  check(!onServer.includes('sk-ali-secret') && onServer.includes('"enc":1'), 'with a passphrase the keys are on the server only as encrypted text');
+  const locked = await E.page.evaluate(() => ({ ali: (JSON.parse(localStorage.getItem('shanlu-ai')).ali || {}).key || null, lock: window.shanlu.state.keyLock, keys: window.shanlu.state.syncKeys }));
+  check(locked.ali === null && locked.lock === 'need' && locked.keys === true, 'the other device knows keys are waiting but cannot use them without the passphrase');
+  await E.page.evaluate(async () => { window.shanlu.setState({ keyPassInput: 'not the passphrase' }); await window.shanlu.keyPassGo(); });
+  check((await E.page.evaluate(() => (JSON.parse(localStorage.getItem('shanlu-ai')).ali || {}).key || null)) === null && /does not open/.test(await E.page.evaluate(() => window.shanlu.state.keyMsg)), 'a wrong passphrase on the other device opens nothing');
+  await E.page.evaluate(async () => { window.shanlu.setState({ keyPassInput: 'blue kettle 42 morning' }); await window.shanlu.keyPassGo(); });
+  const pe2 = await E.page.evaluate(() => ({ ali: (JSON.parse(localStorage.getItem('shanlu-ai')).ali || {}).key || null, on: window.shanlu.state.aiOn, keys: window.shanlu.state.syncKeys, pass: JSON.parse(localStorage.getItem('shanlu-ai')).syncPass }));
+  check(pe2.ali === 'sk-ali-secret' && pe2.on === true && pe2.keys === true, 'the right passphrase gives the other device the key');
+  check(pe2.pass === 'blue kettle 42 morning' && !(await serverCopy(A.page)).includes('blue kettle'), 'the passphrase stays on the devices and is never on the server');
   await E.page.evaluate(() => { window.shanlu.memForget(0); window.shanlu.lsnStep(1); });
   await E.page.evaluate(() => window.shanlu.friendsPush({}));
   await A.page.evaluate(() => window.shanlu.friendsPush({}));
@@ -155,6 +162,37 @@ const INVITE = 'ABCD-EFGH-JKLM';
   check((await A.page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-ai')).ali.key)) === 'sk-ali-secret' && (await E.page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-ai')).ali.key)) === 'sk-ali-secret', 'the keys stay on the devices that already have them');
   const exp = await A.page.evaluate(() => { window.shanlu.persistNow(); return JSON.stringify(JSON.parse(localStorage.getItem('shanlu-progress-v1'))); });
   check(!exp.includes('sk-ali-secret') && !exp.includes('hiking'), 'none of it is in the progress file that is exported or synced to GitHub');
+  // only started words are saved on the server, and a save the server refuses (another device saved in between) is merged and sent again
+  const levelCopy = async () => JSON.parse(await serverCopy(A.page)).progress.levels[1];
+  const wsOnServer = (await levelCopy()).ws;
+  check(Object.keys(wsOnServer).length >= 2 && Object.keys(wsOnServer).length <= 10 && !JSON.stringify(wsOnServer).includes('"l":0') && !('我' in wsOnServer && wsOnServer['我'].see.s === 0), 'the saved copy holds only the few words started (' + Object.keys(wsOnServer).length + ' of 297), with no zero fields');
+  let refused = 0, based = 0;
+  await A.page.route(/\/api\/me\/progress\?base=/, async (r) => {
+    if (r.request().method() === 'PUT') { based++; if (refused < 1) { refused++; await r.fulfill({ status: 412, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: '{"error":"conflict"}' }); return; } }
+    await r.continue();
+  });
+  await A.page.evaluate(() => { const a = window.shanlu; a.setState({ xp: a.state.xp + 7 }); a.persistNow(); });
+  const xpA = await A.page.evaluate(() => window.shanlu.state.xp);
+  await A.page.evaluate(() => window.shanlu.friendsProgressSync());
+  check(refused === 1 && based === 2 && (await levelCopy()).xp === xpA, 'a refused save is merged again and sent a second time with the new version number (' + based + ' tries, then it was saved)');
+  await A.page.unroute(/\/api\/me\/progress\?base=/);
+
+  // a reset reaches the other device and stays reset
+  A.page.on('dialog', (d) => d.accept());
+  await Promise.all([A.page.waitForEvent('load'), A.page.evaluate(() => window.shanlu.resetAll())]);
+  await A.page.waitForSelector('.app');
+  const resetNow = await A.page.evaluate(() => ({ epoch: window.shanlu.state.epoch, xp: window.shanlu.state.xp, see: window.shanlu.state.ws['你好'].see.s }));
+  check(resetNow.epoch > 0 && resetNow.xp === 0 && resetNow.see === 0, 'Reset empties this device and starts a new epoch (saved with a time stamp)');
+  await A.page.evaluate(() => window.shanlu.friendsProgressSync());
+  const emptied = await levelCopy();
+  check(emptied.epoch === resetNow.epoch && Object.keys(emptied.ws).length === 0 && emptied.xp === 0, 'the server copy becomes the empty start');
+  await E.page.evaluate(() => window.shanlu.friendsProgressSync());
+  const eAfter = await E.page.evaluate(() => ({ epoch: window.shanlu.state.epoch, xp: window.shanlu.state.xp, see: window.shanlu.state.ws['你好'].see.s, other: window.shanlu.state.ws['谢谢'].see.s, mem0: window.shanlu.state.mem0 }));
+  check(eAfter.epoch === resetNow.epoch && eAfter.xp === 0 && eAfter.see === 0 && eAfter.other === 0, 'the other device syncs and is reset too, instead of sending the old progress back');
+  await E.page.evaluate(() => { const a = window.shanlu; const ws = JSON.parse(JSON.stringify(a.state.ws)); ws['朋友'].see = { s: 2, t: Date.now() }; a.setState({ ws }); a.persistNow(); });
+  await E.page.evaluate(() => window.shanlu.friendsProgressSync());
+  await A.page.evaluate(() => window.shanlu.friendsProgressSync());
+  check(await A.page.evaluate(() => window.shanlu.state.ws['朋友'].see.s === 2 && window.shanlu.state.ws['你好'].see.s === 0), 'study after the reset travels as usual, and the old progress stays gone');
   await E.ctx.close();
 
   // personal link signs in on another device

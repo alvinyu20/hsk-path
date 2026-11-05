@@ -14,6 +14,12 @@
  *   ALLOWED_ORIGINS  text     the address of the site, for example https://alvinyu20.github.io  (comma separated; "*" allows any site)
  *   MAX_MEMBERS      text     optional, default 12
  * Binding: a D1 database named DB.
+ *
+ * Safety features (all on by default, nothing to set up):
+ *   - wrong invite codes are rate-limited per network address (8 per hour) and for the whole server (60 per hour);
+ *   - "single-use" invite codes can be made with the admin key (POST /api/admin/invites), valid 7 days, and stop working after one join;
+ *   - saving progress checks the body is real JSON of a known shape, and an optional ?base=<version> makes the save fail with 412 if another
+ *     device saved in between (so no device silently overwrites another).
  */
 
 const enc = new TextEncoder();
@@ -23,7 +29,9 @@ const randHex = (bytes) => hex(crypto.getRandomValues(new Uint8Array(bytes)));
 const safeEq = (a, b) => { if (a.length !== b.length) return false; let d = 0; for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i); return d === 0; };
 const normCode = (s) => String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
 const DAY_MS = 864e5;
-const MAX_PROGRESS = 700000;   // characters: a person's whole saved progress is about 150,000
+const MAX_PROGRESS = 700000;       // characters, for the compressed form {"v":2,"gz":"..."}; a person's whole saved progress is about 100,000 before compression
+const MAX_PROGRESS_PLAIN = 400000; // the plain form is parsed here, so it is held lower (400,000 characters parse in about 2 ms; the free plan allows 10 ms of CPU)
+const JOIN_TRIES_PER_IP = 8, JOIN_TRIES_ALL = 60, TRY_WINDOW_MS = 36e5, INVITE_LIFE_MS = 7 * DAY_MS;
 
 let schemaReady = null;
 function ensureSchema(env) {
@@ -32,6 +40,8 @@ function ensureSchema(env) {
       env.DB.prepare('CREATE TABLE IF NOT EXISTS members (id TEXT PRIMARY KEY, name TEXT NOT NULL, key_hash TEXT NOT NULL, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL, stats TEXT)'),
       env.DB.prepare('CREATE TABLE IF NOT EXISTS cheers (from_id TEXT NOT NULL, to_id TEXT NOT NULL, at INTEGER NOT NULL, PRIMARY KEY (from_id, to_id))'),
       env.DB.prepare('CREATE TABLE IF NOT EXISTS progress (member_id TEXT PRIMARY KEY, data TEXT NOT NULL, updated_at INTEGER NOT NULL)'),
+      env.DB.prepare('CREATE TABLE IF NOT EXISTS join_fails (ip_hash TEXT NOT NULL, at INTEGER NOT NULL)'),
+      env.DB.prepare('CREATE TABLE IF NOT EXISTS invites (code_hash TEXT PRIMARY KEY, created_at INTEGER NOT NULL, used_at INTEGER)'),
     ]).catch((e) => { schemaReady = null; throw e; });
   }
   return schemaReady;
@@ -45,7 +55,7 @@ function corsHeaders(req, env) {
   else if (origin && allowed.includes(origin)) h['Access-Control-Allow-Origin'] = origin;
   return h;
 }
-const reply = (req, env, data, status = 200) => new Response(JSON.stringify(data), { status, headers: Object.assign({ 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }, corsHeaders(req, env)) });
+const reply = (req, env, data, status = 200) => new Response(JSON.stringify(data), { status, headers: Object.assign({ 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' }, corsHeaders(req, env)) });
 const fail = (req, env, status, error) => reply(req, env, { error }, status);
 
 async function readJson(req, maxBytes) {
@@ -101,19 +111,38 @@ async function handle(req, env) {
   const now = Date.now();
 
   if (path === '/api/join' && req.method === 'POST') {
-    if (!env.INVITE_CODE) return fail(req, env, 503, 'joining_is_off');
     const body = await readJson(req, 2048);
     if (body.tooBig) return fail(req, env, 413, 'too_big');
     if (body.bad) return fail(req, env, 400, 'bad_json');
+    // too many wrong codes from one network (or from everywhere): stop answering for a while
+    const ip = (await sha256('ip:' + (req.headers.get('CF-Connecting-IP') || 'unknown'))).slice(0, 16);
+    const tries = await env.DB.prepare('SELECT COALESCE(SUM(ip_hash = ?), 0) AS mine, COUNT(*) AS total FROM join_fails WHERE at > ?').bind(ip, now - TRY_WINDOW_MS).first();
+    if (tries.mine >= JOIN_TRIES_PER_IP || tries.total >= JOIN_TRIES_ALL) return fail(req, env, 429, 'slow_down');
     const given = normCode(body.value.invite);
-    if (!given || !safeEq(await sha256(given), await sha256(normCode(env.INVITE_CODE)))) return fail(req, env, 403, 'bad_invite');
+    const codeHash = await sha256(given);
+    const isStatic = !!env.INVITE_CODE && !!given && safeEq(codeHash, await sha256(normCode(env.INVITE_CODE)));
+    let oneTime = false;
+    if (!isStatic && given) {
+      // a single-use code: marking it used is one statement, so two people cannot both use it
+      const used = await env.DB.prepare('UPDATE invites SET used_at = ? WHERE code_hash = ? AND used_at IS NULL AND created_at > ?').bind(now, codeHash, now - INVITE_LIFE_MS).run();
+      oneTime = !!(used.meta && used.meta.changes === 1);
+    }
+    if (!isStatic && !oneTime) {
+      if (!env.INVITE_CODE) {   // no standing code: joining is off unless single-use codes are waiting
+        const open = await env.DB.prepare('SELECT COUNT(*) AS n FROM invites WHERE used_at IS NULL AND created_at > ?').bind(now - INVITE_LIFE_MS).first();
+        if (!open.n) return fail(req, env, 503, 'joining_is_off');
+      }
+      await env.DB.batch([env.DB.prepare('INSERT INTO join_fails (ip_hash, at) VALUES (?, ?)').bind(ip, now), env.DB.prepare('DELETE FROM join_fails WHERE at < ?').bind(now - TRY_WINDOW_MS)]);
+      return fail(req, env, 403, 'bad_invite');
+    }
+    const release = () => (oneTime ? env.DB.prepare('UPDATE invites SET used_at = NULL WHERE code_hash = ?').bind(codeHash).run() : null);
     const name = cleanName(body.value.name);
-    if (!name) return fail(req, env, 400, 'name_needed');
+    if (!name) { await release(); return fail(req, env, 400, 'name_needed'); }
     const max = Math.max(1, parseInt(env.MAX_MEMBERS, 10) || 12);
-    const count = (await env.DB.prepare('SELECT COUNT(*) AS n FROM members').first()).n;
-    if (count >= max) return fail(req, env, 409, 'group_full');
     const id = randHex(8), key = randHex(24);
-    await env.DB.prepare('INSERT INTO members (id, name, key_hash, created_at, updated_at, stats) VALUES (?, ?, ?, ?, ?, NULL)').bind(id, name, await sha256(key), now, now).run();
+    // the room check and the insert are one statement, so the group can never go over its size
+    const ins = await env.DB.prepare('INSERT INTO members (id, name, key_hash, created_at, updated_at, stats) SELECT ?, ?, ?, ?, ?, NULL WHERE (SELECT COUNT(*) FROM members) < ?').bind(id, name, await sha256(key), now, now, max).run();
+    if (!ins.meta || ins.meta.changes !== 1) { await release(); return fail(req, env, 409, 'group_full'); }
     return reply(req, env, { id, key, name, group: String(env.GROUP_NAME || 'Study group') }, 201);
   }
 
@@ -122,6 +151,15 @@ async function handle(req, env) {
     if (path === '/api/admin/members' && req.method === 'GET') {
       const rows = (await env.DB.prepare('SELECT id, name, created_at, updated_at FROM members ORDER BY created_at').all()).results;
       return reply(req, env, { members: rows });
+    }
+    if (path === '/api/admin/invites' && req.method === 'POST') {
+      // a code that works once, for 7 days: send it to one person (the app opens it from  <site>/#join=CODE )
+      const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';   // no 0/O/1/I, so a code can be read out loud
+      const bytes = crypto.getRandomValues(new Uint8Array(12));
+      const raw = Array.from(bytes, (b) => letters[b & 31]).join('');
+      const code = raw.slice(0, 4) + '-' + raw.slice(4, 8) + '-' + raw.slice(8, 12);
+      await env.DB.prepare('INSERT INTO invites (code_hash, created_at, used_at) VALUES (?, ?, NULL)').bind(await sha256(normCode(code)), now).run();
+      return reply(req, env, { code, valid_days: 7 }, 201);
     }
     const del = /^\/api\/admin\/members\/([0-9a-f]{16})$/.exec(path);
     if (del && req.method === 'DELETE') {
@@ -159,16 +197,35 @@ async function handle(req, env) {
 
   if (path === '/api/me/progress' && req.method === 'GET') {
     const row = await env.DB.prepare('SELECT data, updated_at FROM progress WHERE member_id = ?').bind(me.id).first();
-    // the saved text is passed on as it is (no parsing: the free plan allows only 10 ms of CPU per request)
+    // the saved text is passed on as it is (it was checked when it was saved; no parsing here, the free plan allows only 10 ms of CPU per request)
     return new Response('{"progress":' + (row ? row.data : 'null') + ',"updated":' + (row ? row.updated_at : 0) + '}', { status: 200, headers: Object.assign({ 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }, corsHeaders(req, env)) });
   }
 
   if (path === '/api/me/progress' && req.method === 'PUT') {
     const text = await req.text();
     if (text.length > MAX_PROGRESS) return fail(req, env, 413, 'too_big');
-    if (!/^\{"v":1,"levels":\{/.test(text) || text[text.length - 1] !== '}') return fail(req, env, 400, 'bad_progress');
-    await env.DB.prepare('INSERT INTO progress (member_id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(member_id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at').bind(me.id, text, now).run();
-    return reply(req, env, { ok: true });
+    // it must be real JSON of one of the two shapes the app sends; anything else would make this person's own next download unreadable
+    let doc = null;
+    try { doc = JSON.parse(text); } catch (e) { doc = null; }
+    const isObj = (x) => !!x && typeof x === 'object' && !Array.isArray(x);
+    const plain = isObj(doc) && doc.v === 1 && isObj(doc.levels) && (doc.person === undefined || isObj(doc.person));
+    const packed = isObj(doc) && doc.v === 2 && typeof doc.gz === 'string' && /^[A-Za-z0-9+/]+={0,2}$/.test(doc.gz) && Object.keys(doc).length === 2;
+    if (!plain && !packed) return fail(req, env, 400, 'bad_progress');
+    if (plain && text.length > MAX_PROGRESS_PLAIN) return fail(req, env, 413, 'too_big');
+    const base = url.searchParams.get('base');
+    if (base !== null) {
+      // the app says which saved version it started from; if the stored one is newer, someone else saved in between
+      if (!/^\d{1,15}$/.test(base)) return fail(req, env, 400, 'bad_base');
+      const b = Number(base), next = Math.max(now, b + 1);
+      const res = b === 0
+        ? await env.DB.prepare('INSERT INTO progress (member_id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(member_id) DO NOTHING').bind(me.id, text, next).run()
+        : await env.DB.prepare('UPDATE progress SET data = ?, updated_at = ? WHERE member_id = ? AND updated_at = ?').bind(text, next, me.id, b).run();
+      if (!res.meta || res.meta.changes !== 1) return fail(req, env, 412, 'conflict');
+      return reply(req, env, { ok: true, updated: next });
+    }
+    await env.DB.prepare('INSERT INTO progress (member_id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(member_id) DO UPDATE SET data = excluded.data, updated_at = MAX(excluded.updated_at, progress.updated_at + 1)').bind(me.id, text, now).run();
+    const cur = await env.DB.prepare('SELECT updated_at FROM progress WHERE member_id = ?').bind(me.id).first();
+    return reply(req, env, { ok: true, updated: cur ? cur.updated_at : now });
   }
 
   if (path === '/api/cheer' && req.method === 'POST') {

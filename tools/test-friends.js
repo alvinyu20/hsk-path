@@ -51,6 +51,47 @@ const fakeFetch = async (url, o) => { log.push({ url, method: o.method, auth: o.
   nextStatus = 200; nextJson = { group: { name: 'Crew' }, me: KEY, now: 1, members: [{ id: KEY, name: 'Mei' }] };
   await c.restore({ id: KEY, key: SECRET });
   check(c.identity().name === 'Mei' && c.identity().group === 'Crew', 'a personal link is checked with the server before it is kept');
+  // saving the progress bundle: small ones as plain JSON, big ones gzipped, a base version for the compare-and-swap, and a fallback for an older server
+  const small = { v: 1, levels: { 1: { ws: { 你好: { see: { s: 2, t: 5 } } } } }, person: {} };
+  check(await F.encodeProgress(small) === JSON.stringify(small), 'a small bundle is sent as plain JSON');
+  const ws = {}; for (let i = 0; i < 4000; i++) ws['词' + i] = { see: { s: 1.5, t: 1730000000000 + i, d: 5 }, hear: { s: 1, t: 1730000000000 + i, d: 5 } };
+  const big = { v: 1, levels: { 1: { ws, rlog: [] } }, person: {} };
+  const bigText = JSON.stringify(big);
+  const packed = await F.encodeProgress(big);
+  const packedDoc = JSON.parse(packed);
+  check(bigText.length > F.GZ_FROM && packedDoc.v === 2 && typeof packedDoc.gz === 'string' && packed.length < bigText.length / 3, 'a big bundle is gzipped (' + bigText.length + ' characters become ' + packed.length + ')');
+  check(JSON.stringify(await F.decodeProgress(packedDoc)) === bigText && JSON.stringify(await F.decodeProgress(small)) === JSON.stringify(small), 'both forms read back exactly');
+  nextStatus = 200; nextJson = { progress: packedDoc, updated: 42 };
+  const got = await c2().getProgress();
+  check(JSON.stringify(got.progress) === bigText && got.updated === 42, 'a download of the compressed form is unpacked for the app');
+  function c2() { const x = F.make({ storage, fetch: fakeFetch, url: () => 'https://w.example' }); storage.setItem(F.STORE, JSON.stringify({ id: KEY, key: SECRET, name: 'Mei', group: 'Crew' })); return x; }
+  log.length = 0; nextJson = { ok: true, updated: 43 };
+  await c2().putProgress(small, { base: 42 });
+  check(log[0].method === 'PUT' && log[0].url === 'https://w.example/api/me/progress?base=42' && log[0].body === JSON.stringify(small), 'saving sends the version it started from and the bundle as plain text');
+  log.length = 0; await c2().putProgress(small);
+  check(log[0].url === 'https://w.example/api/me/progress', 'saving without a version number sends none');
+  nextStatus = 412; nextJson = { error: 'conflict' };
+  const refused = await c2().putProgress(small, { base: 1 }).catch((e) => e);
+  check(refused.status === 412 && refused.code === 'conflict', 'a refused save (another device saved first) is reported as a conflict');
+  // an older server answers 400 to the compressed form: the same bundle goes out plain, and the client remembers
+  const seen = []; let accept = false;
+  const oldServer = async (url, o) => { seen.push(o.body.slice(0, 8)); const ok = o.body.indexOf('{"v":2,') !== 0; return { ok, status: ok ? 200 : 400, json: async () => (ok ? { ok: true } : { error: 'bad_progress' }) }; };
+  const cx = F.make({ storage, fetch: oldServer, url: () => 'https://w.example' });
+  await cx.putProgress(big, { base: 0 }); await cx.putProgress(big, { base: 0 });
+  check(seen.length === 3 && seen[0] === '{"v":2,"' && seen[1] === '{"v":1,"' && seen[2] === '{"v":1,"', 'an older server that refuses the compressed form gets the plain one, and later saves go straight to plain');
+  // the "Test connection" check
+  const routes = { health: 200, group: 200 };
+  const pingFetch = async (url, o) => { const k = /health/.test(url) ? 'health' : 'group'; const st = routes[k]; if (st === 0) throw new Error('offline'); return { ok: st < 400, status: st, json: async () => (st < 400 ? (k === 'group' ? { group: { name: 'Crew' }, members: [{ id: KEY, name: 'Mei' }] } : { ok: true }) : { error: 'unauthorized' }) }; };
+  const pingNew = F.make({ storage: { getItem: () => null, setItem() {}, removeItem() {} }, fetch: pingFetch, url: () => 'https://w.example' });
+  const p0 = await pingNew.ping();
+  check(p0.reachable && p0.signedIn === null && typeof p0.ms === 'number', 'the ping from a device that has not joined only checks the server is reachable');
+  const pingIn = F.make({ storage, fetch: pingFetch, url: () => 'https://w.example' }); storage.setItem(F.STORE, JSON.stringify({ id: KEY, key: SECRET, name: 'Mei', group: 'Crew' }));
+  const p1 = await pingIn.ping();
+  check(p1.signedIn === true && p1.group === 'Crew', 'a joined device is checked against the server and its group name is returned');
+  routes.group = 401;
+  check((await pingIn.ping()).signedIn === false, 'a key the server no longer accepts is reported as signed out, not as an error');
+  routes.health = 0;
+  check((await pingIn.ping().catch((e) => e)).message.length > 10, 'an unreachable server is reported as an error');
   console.log(failures ? failures + ' friends unit check(s) failed' : 'all friends unit checks passed');
   process.exit(failures ? 1 : 0);
 })();

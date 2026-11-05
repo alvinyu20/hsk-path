@@ -124,6 +124,83 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   check((await api(open)('GET', '/api/health', { headers: { Origin: 'https://anything.example' } })).headers.get('access-control-allow-origin') === '*', 'ALLOWED_ORIGINS=* allows any site');
   await open.dispose();
 
+  // saved progress must be real JSON of a known shape (the Worker now parses it; sizes are held to what the free plan's 10 ms allows)
+  const pw = await makeWorker();
+  const cp = api(pw);
+  const P = (await cp('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'Pat' } })).json; const PT = P.id + '.' + P.key;
+  const put = (body, q) => cp('PUT', '/api/me/progress' + (q || ''), { token: PT, body });
+  check((await put('{"v":1,"levels":{broken}}')).status === 400 && (await put('{"v":1,"levels":[]}')).status === 400 && (await put('{"v":1,"levels":{},"person":[]}')).status === 400, 'text that only starts and ends like progress, or has the wrong shape, is refused');
+  check((await put('{"v":2,"gz":"not base64!"}')).status === 400 && (await put('{"v":2,"gz":"QUJD","extra":1}')).status === 400 && (await put('{"v":3,"gz":"QUJD"}')).status === 400, 'a compressed save must be exactly {v:2, gz:<base64>}');
+  check((await put('{"v":2,"gz":"QUJD"}')).status === 200 && (await cp('GET', '/api/me/progress', { token: PT })).json.progress.gz === 'QUJD', 'the compressed form is accepted and comes back as saved');
+  check((await put('{"v":1,"levels":{"1":{"ws":{"x":"' + 'y'.repeat(450000) + '"}}}}')).status === 413, 'a plain save over 400,000 characters is refused (it would be too slow to check)');
+  check((await put('{"v":2,"gz":"' + 'A'.repeat(600000) + '"}')).status === 200, 'a compressed save up to 700,000 characters is accepted');
+  check((await put('{"v":2,"gz":"' + 'A'.repeat(720000) + '"}')).status === 413, 'and over that it is refused');
+  check((await put('{"v":1,"levels":{"1":{"xp":5}},"person":{"prefs":{}}}')).status === 200 && (await cp('GET', '/api/me/progress', { token: PT })).json.progress.levels[1].xp === 5, 'a normal save with the person\'s settings works');
+
+  // saving with a base version: a device that did not see the latest save is told so
+  const Q = (await cp('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'Quin' } })).json; const QT = Q.id + '.' + Q.key;
+  const qput = (body, q) => cp('PUT', '/api/me/progress' + (q || ''), { token: QT, body });
+  const v1 = await qput({ v: 1, levels: { 1: { xp: 1 } } }, '?base=0');
+  check(v1.status === 200 && v1.json.updated > 0, 'the first save with base 0 works and reports its version number');
+  check((await cp('GET', '/api/me/progress', { token: QT })).json.updated === v1.json.updated, 'the version number is what a later download reports');
+  check((await qput({ v: 1, levels: { 1: { xp: 2 } } }, '?base=0')).status === 412, 'saving again as if nothing was there is refused (another device saved first)');
+  const v2 = await qput({ v: 1, levels: { 1: { xp: 3 } } }, '?base=' + v1.json.updated);
+  check(v2.status === 200 && v2.json.updated > v1.json.updated, 'saving from the latest version works and the number goes up');
+  check((await qput({ v: 1, levels: { 1: { xp: 4 } } }, '?base=' + v1.json.updated)).status === 412 && (await cp('GET', '/api/me/progress', { token: QT })).json.progress.levels[1].xp === 3, 'saving from an older version is refused and the stored copy is untouched');
+  check((await qput({ v: 1, levels: { 1: { xp: 5 } } }, '?base=abc')).status === 400, 'a made-up base number is refused');
+  const v3 = await qput({ v: 1, levels: { 1: { xp: 6 } } });
+  check(v3.status === 200 && v3.json.updated > v2.json.updated, 'saving without a base still works (last save wins, as before) and the number still goes up');
+  const race = await Promise.all([1, 2, 3, 4].map((i) => qput({ v: 1, levels: { 1: { xp: 100 + i } } }, '?base=' + v3.json.updated)));
+  check(race.filter((r) => r.status === 200).length === 1 && race.filter((r) => r.status === 412).length === 3, 'four devices saving at the same moment from the same version: exactly one wins');
+  await pw.dispose();
+
+  // too many wrong invite codes
+  const jw = await makeWorker();
+  const cj = api(jw);
+  let last = 0; for (let i = 0; i < 8; i++) last = (await cj('POST', '/api/join', { body: { invite: 'WRONG-' + i, name: 'x' } })).status;
+  check(last === 403, 'eight wrong codes are each answered "wrong code"');
+  check((await cj('POST', '/api/join', { body: { invite: 'WRONG-9', name: 'x' } })).status === 429, 'the ninth is answered "slow down"');
+  check((await cj('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'Real' } })).status === 429, 'and so is the right code, from that same network, for the next hour');
+  check((await cj('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'Real' }, headers: { 'CF-Connecting-IP': '203.0.113.9' } })).status === 201, 'a different network is not affected');
+  await jw.dispose();
+
+  // single-use invite codes
+  const iw = await makeWorker({ MAX_MEMBERS: '3' });
+  const ci = api(iw);
+  check((await ci('POST', '/api/admin/invites')).status === 401 && (await ci('POST', '/api/admin/invites', { headers: { 'X-Admin-Key': 'nope' } })).status === 401, 'making single-use codes needs the admin key');
+  const inv = await ci('POST', '/api/admin/invites', { headers: { 'X-Admin-Key': 'admin-secret-key' } });
+  check(inv.status === 201 && /^[A-Z2-9]{4}-[A-Z2-9]{4}-[A-Z2-9]{4}$/.test(inv.json.code) && inv.json.valid_days === 7, 'a single-use code looks like XXXX-XXXX-XXXX (' + inv.json.code + ')');
+  const dbi = await iw.getD1Database('DB');
+  check(!JSON.stringify(await dbi.prepare('SELECT * FROM invites').all()).includes(inv.json.code.replace(/-/g, '')), 'the database holds only a hash of it');
+  const j1 = await ci('POST', '/api/join', { body: { invite: inv.json.code.toLowerCase().replace(/-/g, ' '), name: 'One' } });
+  check(j1.status === 201, 'the code joins one person, in any case and spacing');
+  check((await ci('POST', '/api/join', { body: { invite: inv.json.code, name: 'Two' } })).status === 403, 'and works only once');
+  const inv2 = (await ci('POST', '/api/admin/invites', { headers: { 'X-Admin-Key': 'admin-secret-key' } })).json.code;
+  const both = await Promise.all([1, 2, 3].map((i) => ci('POST', '/api/join', { body: { invite: inv2, name: 'R' + i } })));
+  check(both.filter((r) => r.status === 201).length === 1, 'three people using the same single-use code at the same moment: one gets in');
+  const inv3 = (await ci('POST', '/api/admin/invites', { headers: { 'X-Admin-Key': 'admin-secret-key' } })).json.code;
+  await dbi.prepare('UPDATE invites SET created_at = ? WHERE 1 = 1').bind(Date.now() - 8 * 864e5).run();
+  const stale = await ci('POST', '/api/join', { body: { invite: inv3, name: 'Late' } });
+  check(stale.status === 403, 'a single-use code older than 7 days no longer works');
+  await iw.dispose();
+  const fw = await makeWorker({ MAX_MEMBERS: '1', INVITE_CODE: '' });
+  const cf = api(fw);
+  check((await cf('POST', '/api/join', { body: { invite: 'ANYTHING', name: 'a' } })).status === 503, 'with no standing code and no single-use codes waiting, joining is off');
+  const f1 = (await cf('POST', '/api/admin/invites', { headers: { 'X-Admin-Key': 'admin-secret-key' } })).json.code;
+  const f2 = (await cf('POST', '/api/admin/invites', { headers: { 'X-Admin-Key': 'admin-secret-key' } })).json.code;
+  check((await cf('POST', '/api/join', { body: { invite: f1, name: 'First' } })).status === 201, 'a single-use code alone is enough to join');
+  check((await cf('POST', '/api/join', { body: { invite: f2, name: 'Second' } })).status === 409, 'a full group refuses a code...');
+  const dbf = await fw.getD1Database('DB');
+  check((await dbf.prepare('SELECT used_at FROM invites WHERE code_hash = (SELECT code_hash FROM invites WHERE used_at IS NULL LIMIT 1)').first()) !== null, '...and the code is not used up by that refusal');
+  await fw.dispose();
+  // the group size is held even under a rush
+  const rw = await makeWorker({ MAX_MEMBERS: '2' });
+  const cr = api(rw);
+  const rush = await Promise.all([1, 2, 3, 4, 5, 6].map((i) => cr('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'P' + i } })));
+  const dbr = await rw.getD1Database('DB');
+  check(rush.filter((r) => r.status === 201).length === 2 && rush.filter((r) => r.status === 409).length === 4 && (await dbr.prepare('SELECT COUNT(*) AS n FROM members').first()).n === 2, 'six people joining at once into a group of two: exactly two get in');
+  await rw.dispose();
+
   console.log(failures ? failures + ' worker check(s) failed' : 'all worker checks passed');
   process.exit(failures ? 1 : 0);
 }

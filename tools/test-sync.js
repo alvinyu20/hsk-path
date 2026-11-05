@@ -112,6 +112,61 @@ function fakeGithub() {
   const capped = S.mergePerson({ mem: { facts: many2, del: {}, cleared: 0 } }, {});
   check(capped.mem.facts.length === 30 && capped.mem.facts[29].t === 'learner fact number 44', 'only the 30 newest facts are kept');
   check(S.samePerson(undefined, {}) && S.samePerson(null, { prefs: {} }), 'empty person data is all the same');
+
+  // ---- compact storage: only started words and dimensions are kept, and the always-zero `l` is dropped ----
+  const cs = S.compactWs({ a: { see: { s: 0, l: 0 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }, b: { see: { s: 2, l: 0, t: 100, d: 5 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }, c: { see: { s: 0, l: 0, t: 9 }, hear: { s: 1, l: 3, t: 4 }, prod: { s: 0, l: 0 } } });
+  check(!cs.a && JSON.stringify(cs.b) === '{"see":{"s":2,"t":100,"d":5}}', 'a word nobody started is not stored, and an unstarted skill and the zero `l` are left out');
+  check(cs.c.see && cs.c.see.t === 9 && cs.c.hear.l === 3, 'a skill with a timestamp is kept, and a non-zero `l` (older saves) is kept');
+  const old = { ws: { x: { see: { s: 2, l: 0, t: 100 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }, y: { see: { s: 0, l: 0 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } } }, xp: 1 };
+  const compactNew = { ws: { x: { see: { s: 2, t: 100 } } }, xp: 1 };
+  check(S.same(S.merge(old, compactNew), S.merge(compactNew, old)) && !('y' in S.merge(old, compactNew).ws), 'an older device\'s full list and a compact list merge to the same compact result');
+  check(S.same(S.merge(old, old), S.merge(compactNew, compactNew)), 'old and compact forms of the same progress are the same progress');
+  check(S.merge(compactNew, { ws: {} }).ws.x.see.s === 2, 'a word missing on the other device is not lost');
+
+  // ---- reset (epoch): the newer epoch wins outright, in any order ----
+  const E = S.nextEpoch(0);
+  const oldProg = { ws: { x: { see: { s: 9, t: 100 } } }, xp: 500, streak: 7, lastActive: '2026-11-03', day: '2026-11-03', epoch: 0, rlog: [[1, 'x', 'see', 'good', 'flip']], exams: [{ at: 5, l: 18, r: 18 }] };
+  const reset = { epoch: E };
+  const rm1 = S.merge(oldProg, reset), rm2 = S.merge(reset, oldProg);
+  check(S.same(rm1, rm2) && rm1.epoch === E && Object.keys(rm1.ws).length === 0 && rm1.xp === 0 && rm1.rlog.length === 0 && rm1.exams.length === 0, 'a reset beats the old progress, whichever side it comes from');
+  check(S.same(S.merge(rm1, rm1), rm1) && S.same(S.merge(S.merge(oldProg, reset), oldProg), rm1), 'merging the old progress in again after a reset changes nothing (merge stays a join)');
+  const after = Object.assign({}, S.merge(reset, reset), { ws: { y: { see: { s: 1, t: 900 } } }, xp: 4 });
+  const mm = S.merge(after, oldProg);
+  check(mm.epoch === E && mm.xp === 4 && mm.ws.y && !mm.ws.x, 'study done after a reset is kept and the old progress stays gone');
+  check(S.nextEpoch(E) > E && S.nextEpoch(Date.now() + 1e9) > Date.now() + 1e9, 'a new epoch is always later than the one it replaces, even when the clock is behind');
+  const store = { xp: 5, ws: { x: {} }, theme: 'dark', rlog: [[1]] };
+  const applied = S.applyMerged(store, S.merge(reset, reset));
+  check(applied.theme === 'dark' && Object.keys(applied.ws).length === 0 && applied.rlog.length === 0 && applied.epoch === E, 'applying a merged reset clears the synced keys and keeps the device\'s own');
+
+  // ---- the person\'s settings travel through the gist too ----
+  const ghp = fakeGithub();
+  const p1 = { prefs: { ttsVoice: { v: 'Kai', at: 100 } }, lsn: { v: { lvl: 3, ok: 1, miss: 0 }, at: 100 }, mem: { facts: [], del: {}, cleared: 0 } };
+  const p2 = { prefs: { retention: { v: 0.85, at: 200 } }, mem: { facts: [{ t: 'likes tea', d: '2026-11-01', at: 150 }], del: {}, cleared: 0 } };
+  let pr = await S.round({ token: 'good', state: a, person: p1, fetch: ghp.fetchFn });
+  check(pr.created && pr.person.prefs.ttsVoice.v === 'Kai' && ghp.gists[pr.gistId].files[S.PERSON_FILE], 'the first device saves its settings in their own file in the gist');
+  pr = await S.round({ token: 'good', state: b, person: p2, fetch: ghp.fetchFn });
+  check(pr.person.prefs.ttsVoice.v === 'Kai' && pr.person.prefs.retention.v === 0.85 && pr.person.mem.facts.length === 1 && pr.person.lsn.v.lvl === 3, 'the second device gets the first one\'s settings and adds its own');
+  const gpers = JSON.parse(ghp.gists[pr.gistId].files[S.PERSON_FILE].content).person;
+  check(S.samePerson(gpers, pr.person), 'the gist holds the merged settings');
+  const callsBefore = ghp.calls.length;
+  pr = await S.round({ token: 'good', gistId: pr.gistId, state: pr.merged, person: pr.person, fetch: ghp.fetchFn });
+  check(!pr.wrote && ghp.calls.slice(callsBefore).every(c => c.startsWith('GET')), 'a round with nothing new in the progress or the settings writes nothing');
+  const nop = await S.round({ token: 'good', gistId: pr.gistId, state: pr.merged, fetch: ghp.fetchFn });
+  check(nop.person === null, 'without settings passed in, the settings file is left alone');
+  // the Settings "Test connection" check: read-only, tells a good token from a bad one, and reads the permission list when GitHub shows it
+  const hdr = (o) => ({ get: (n) => (o[n.toLowerCase()] === undefined ? null : o[n.toLowerCase()]) });
+  const mk = (status, headers) => async (url, o) => ({ ok: status < 400, status, headers: hdr(headers || {}), json: async () => [] });
+  const okTok = await S.gistApi('t', mk(200, { 'x-oauth-scopes': 'gist', 'github-authentication-token-expiration': '2027-01-02 10:00:00 UTC' })).check();
+  check(okTok.scopes === 'gist' && /^2027-01-02/.test(okTok.expires), 'the token check returns the permissions and the expiry date GitHub reports');
+  const noHdr = await S.gistApi('t', async () => ({ ok: true, status: 200, json: async () => [] })).check();
+  check(noHdr.scopes === null && noHdr.expires === null, 'the token check still works when the browser cannot read those headers');
+  const badTok = await S.gistApi('t', mk(401)).check().catch(e => e);
+  check(badTok.kind === 'auth' && /rejected the token/.test(badTok.message), 'a rejected token is reported as such');
+  const offTok = await S.gistApi('t', async () => { throw new Error('x'); }).check().catch(e => e);
+  check(offTok.kind === 'network', 'an unreachable GitHub is reported as a network problem');
+  let wrote = false;
+  await S.gistApi('t', async (u, o) => { if (o.method !== 'GET') wrote = true; return { ok: true, status: 200, headers: hdr({}), json: async () => [] }; }).check();
+  check(!wrote, 'the check only reads');
   console.log(failures ? failures + ' check(s) failed' : 'all sync checks passed');
   process.exit(failures ? 1 : 0);
 })();

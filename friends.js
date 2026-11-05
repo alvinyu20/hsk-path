@@ -56,6 +56,33 @@
   const makeLink = (base, who) => String(base).replace(/#.*$/, '') + '#me=' + who.id + '.' + who.key;
   const inviteLink = (base, code) => String(base).replace(/#.*$/, '') + '#join=' + code;
 
+  // ---- saving the progress bundle on the server ----
+  // Small bundles are sent as plain JSON ({"v":1,"levels":...}). A big one (many levels) is gzipped and sent as {"v":2,"gz":"<base64>"} so it
+  // stays far below the server's size cap; both forms are read back. Gzip needs CompressionStream (all current browsers, Node 18+).
+  const GZ_FROM = 150000;   // characters of JSON from which it is worth compressing
+  const b64 = (u8) => { let s = ''; for (let i = 0; i < u8.length; i += 8192) s += String.fromCharCode.apply(null, u8.subarray(i, i + 8192)); return btoa(s); };
+  const unb64 = (s) => { const bin = atob(s); const u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); return u8; };
+  const canGzip = () => typeof CompressionStream !== 'undefined' && typeof DecompressionStream !== 'undefined' && typeof Response !== 'undefined';
+  async function pipeThrough(u8, stream) {
+    const w = stream.writable.getWriter(); w.write(u8); w.close();
+    return new Uint8Array(await new Response(stream.readable).arrayBuffer());
+  }
+  async function encodeProgress(bundle, opts) {
+    const text = JSON.stringify(bundle);
+    if (!(opts && opts.noGzip) && text.length >= GZ_FROM && canGzip()) {
+      const gz = await pipeThrough(new TextEncoder().encode(text), new CompressionStream('gzip'));
+      return JSON.stringify({ v: 2, gz: b64(gz) });
+    }
+    return text;
+  }
+  async function decodeProgress(p) {
+    if (p && p.v === 2 && typeof p.gz === 'string') {
+      if (!canGzip()) throw Object.assign(new Error('This browser cannot unpack your saved progress.'), { code: 'no_gzip' });
+      return JSON.parse(new TextDecoder().decode(await pipeThrough(unb64(p.gz), new DecompressionStream('gzip'))));
+    }
+    return p;
+  }
+
   function make(opts) {
     const o = opts || {};
     const storage = o.storage || (typeof localStorage !== 'undefined' ? localStorage : null);
@@ -65,13 +92,14 @@
     const identity = () => { try { const v = JSON.parse(storage.getItem(STORE)); return v && v.id && v.key ? v : null; } catch (e) { return null; } };
     const save = (v) => { try { storage.setItem(STORE, JSON.stringify(v)); } catch (e) {} };
     const forget = () => { try { storage.removeItem(STORE); } catch (e) {} };
+    let gzRefused = false;
 
-    async function call(method, path, body, auth, extra) {
+    async function call(method, path, body, auth, extra, raw) {
       if (!enabled()) throw Object.assign(new Error('The friends board is not set up.'), { code: 'off' });
       const headers = { 'Content-Type': 'application/json' };
       if (auth) headers.Authorization = 'Bearer ' + auth.id + '.' + auth.key;
       let res;
-      try { res = await doFetch(baseUrl() + path, Object.assign({ method, headers, body: body === undefined ? undefined : JSON.stringify(body) }, extra || {})); }
+      try { res = await doFetch(baseUrl() + path, Object.assign({ method, headers, body: body === undefined ? undefined : (raw ? body : JSON.stringify(body)) }, extra || {})); }
       catch (e) { throw Object.assign(new Error('Could not reach the friends board. Check your connection. If it is fine, the server may not allow this site: its ALLOWED_ORIGINS setting must be exactly ' + (typeof location !== 'undefined' ? location.origin : 'the site address') + '.'), { code: 'network' }); }
       let json = null; try { json = await res.json(); } catch (e) {}
       if (!res.ok) throw Object.assign(new Error(messageFor(json && json.error, res.status)), { code: (json && json.error) || ('http_' + res.status), status: res.status });
@@ -79,7 +107,7 @@
     }
     const messageFor = (code, status) => ({
       bad_invite: 'That invite code does not work. Ask for a new link.', name_needed: 'Type your first name.', group_full: 'This group is full.',
-      joining_is_off: 'Joining is switched off for now.', unauthorized: 'This device is not signed in to the group any more.', too_big: 'That was too big to send.',
+      joining_is_off: 'Joining is switched off for now.', slow_down: 'Too many wrong codes from this network. Try again in an hour.', conflict: 'Your progress changed on another device while saving.', bad_progress: 'The server did not accept the saved progress format.', unauthorized: 'This device is not signed in to the group any more.', too_big: 'That was too big to send.',
     }[code] || (status === 429 ? 'The friends board is busy. Try again later.' : 'The friends board had a problem. Try again later.'));
 
     return {
@@ -90,13 +118,38 @@
       async group() { const id = identity(); if (!id) throw Object.assign(new Error('Not joined.'), { code: 'not_joined' }); const g = await call('GET', '/api/group', undefined, id); save(Object.assign({}, id, { group: g.group.name })); return g; },
       async push(stats, extra) { const id = identity(); if (!id) return null; return call('PUT', '/api/me', { stats }, id, extra); },
       // your own saved progress, kept on the server so every device of yours ends up the same
-      async getProgress() { const id = identity(); return call('GET', '/api/me/progress', undefined, id); },
-      async putProgress(bundle, extra) { const id = identity(); return call('PUT', '/api/me/progress', bundle, id, extra); },
+      // `updated` is the server's version number of the saved copy; hand it back as `base` when saving and the server refuses (412, code 'conflict')
+      // if another device saved in between, so the caller can merge again instead of overwriting.
+      async getProgress() {
+        const id = identity(); const r = await call('GET', '/api/me/progress', undefined, id);
+        if (r && r.progress) r.progress = await decodeProgress(r.progress);
+        return r;
+      },
+      async putProgress(bundle, o) {
+        const id = identity(); const opt = o || {};
+        const q = opt.base !== undefined && opt.base !== null ? '?base=' + Math.max(0, Math.floor(Number(opt.base) || 0)) : '';
+        let body = await encodeProgress(bundle, { noGzip: gzRefused });
+        try { return await call('PUT', '/api/me/progress' + q, body, id, opt.extra, true); }
+        catch (e) {
+          // a server that was set up before the compressed format existed answers 400: send the plain form instead (and remember it for this session)
+          if (e.status === 400 && body.indexOf('{"v":2,') === 0) { gzRefused = true; return call('PUT', '/api/me/progress' + q, JSON.stringify(bundle), id, opt.extra, true); }
+          throw e;
+        }
+      },
+      // for the "Test connection" button: can this browser reach the server, and (if joined) does the server still accept this device's key?
+      async ping() {
+        const t0 = Date.now();
+        await call('GET', '/api/health');
+        const ms = Date.now() - t0, id = identity();
+        if (!id) return { reachable: true, signedIn: null, ms };
+        try { const g = await call('GET', '/api/group', undefined, id); return { reachable: true, signedIn: true, group: g.group && g.group.name, ms }; }
+        catch (e) { if (e.status === 401) return { reachable: true, signedIn: false, ms }; throw e; }
+      },
       async rename(name) { const id = identity(); const r = await call('PUT', '/api/me', { name }, id); save(Object.assign({}, id, { name: r.name })); return r; },
       async cheer(to) { return call('POST', '/api/cheer', { to }, identity()); },
       async leave() { const id = identity(); if (id) { try { await call('DELETE', '/api/me', undefined, id); } catch (e) { if (e.status !== 401) throw e; } } forget(); },
     };
   }
 
-  return { make, shiftWeek, effectiveStreak, weekTotal, boardRow, sortRows, parseHash, makeLink, inviteLink, initial, ymd, daysBetween, STORE };
+  return { make, encodeProgress, decodeProgress, GZ_FROM, shiftWeek, effectiveStreak, weekTotal, boardRow, sortRows, parseHash, makeLink, inviteLink, initial, ymd, daysBetween, STORE };
 });

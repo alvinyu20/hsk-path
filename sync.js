@@ -8,9 +8,10 @@
   const DIMS = ['see', 'hear', 'prod'];
   // progress that is merged between devices; device preferences (theme, voice, hint switches, daily goal, new-word limit) stay local
   const SYNC_KEYS = ['xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'clipBest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone', 'exams', 'aiDays', 'minLog', 'minDev', 'lrn', 'rlog'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone', 'exams', 'aiDays', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
   const FILE = 'shanlu-progress.json';   // HSK 1 progress (the original file name)
   const fileFor = (level) => (level > 1 ? 'shanlu-progress-hsk' + level + '.json' : FILE);   // each level keeps its own file in the same gist
+  const PERSON_FILE = 'shanlu-person.json';   // the person's own settings and notes: one file for the whole gist, whatever the level
   const DESCRIPTION = 'Shanlu study progress (private; do not delete)';
 
   const isObj = (x) => x && typeof x === 'object' && !Array.isArray(x);
@@ -24,6 +25,20 @@
     if (b.t && !(a.s > 0)) return b;
     return (a.s || 0) >= (b.s || 0) ? a : b;
   }
+  // A word nobody has started carries no information, so it is not stored: only started dimensions are kept, and the always-zero `l` is dropped.
+  // (Missing words and dimensions mean "not started" everywhere: merge() and the app both fill them in when they need them.)
+  const dimBlank = (d) => !d || (!(d.s > 0) && !d.t);
+  function compactDim(d) { if (!d.l) { const o = Object.assign({}, d); delete o.l; return o; } return d; }
+  function compactWord(w) {
+    const o = {}; let any = false;
+    DIMS.forEach(k => { if (w && !dimBlank(w[k])) { o[k] = compactDim(w[k]); any = true; } });
+    return any ? o : null;
+  }
+  function compactWs(ws) {
+    const out = {};
+    Object.keys(ws || {}).forEach(z => { const w = compactWord(ws[z]); if (w) out[z] = w; });
+    return out;
+  }
   function mergeWs(a, b) {
     const out = {};
     const keys = {};
@@ -32,7 +47,8 @@
       const x = (a || {})[z] || {}, y = (b || {})[z] || {};
       const w = {};
       DIMS.forEach(d => { w[d] = pickDim(x[d], y[d]); });
-      out[z] = w;
+      const c = compactWord(w);
+      if (c) out[z] = c;
     });
     return out;
   }
@@ -40,9 +56,14 @@
   function maxObj(a, b) { const o = Object.assign({}, a || {}); Object.keys(b || {}).forEach(k => { o[k] = Math.max(o[k] || 0, b[k] || 0); }); return o; }
 
   // merge two progress objects (each holding SYNC_KEYS). Returns a new object.
+  // A reset starts a new "epoch" (a timestamp stored with the progress). The side with the newer epoch wins outright, so a reset reaches
+  // every device instead of being undone by a device that still holds the old progress. Equal epochs merge as usual.
   function merge(a, b) {
     a = a || {}; b = b || {};
+    const ea = a.epoch || 0, eb = b.epoch || 0;
+    if (ea !== eb) { const w = ea > eb ? a : b; return merge(w, w); }
     const out = {};
+    out.epoch = ea;
     out.ws = mergeWs(a.ws, b.ws);
     out.xp = maxNum(a.xp, b.xp);
     out.activity = unionObj(a.activity, b.activity);
@@ -109,6 +130,11 @@
   };
 
   const pick = (state) => { const o = {}; SYNC_KEYS.forEach(k => { if (state[k] !== undefined) o[k] = state[k]; }); return o; };
+  // a saved store with the merged progress applied: every synced key is replaced (a key the merge left out is gone, which a reset needs);
+  // keys that stay on the device (theme, voice, hints) are kept
+  const applyMerged = (store, merged) => { const o = {}; Object.keys(store || {}).forEach(k => { if (SYNC_KEYS.indexOf(k) < 0) o[k] = store[k]; }); return Object.assign(o, pick(merged)); };
+  // the start of a new epoch: later than every epoch this device has seen, and later than now
+  const nextEpoch = (seen) => Math.max(Date.now(), (seen || 0) + 1);
   // key order must not matter when deciding whether two progress objects are the same
   const canon = (x) => JSON.stringify(x, (k, v) => (v && typeof v === 'object' && !Array.isArray(v) ? Object.keys(v).sort().reduce((o, kk) => { o[kk] = v[kk]; return o; }, {}) : v));
   const same = (a, b) => canon(a) === canon(b);
@@ -118,7 +144,7 @@
     const NAME = file || FILE;
     const f = fetchFn || (typeof fetch !== 'undefined' ? fetch.bind(typeof self !== 'undefined' ? self : undefined) : null);
     const headers = () => ({ 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' });
-    async function call(method, path, body) {
+    async function call(method, path, body, wantRes) {
       let res;
       try { res = await f('https://api.github.com' + path, { method, headers: headers(), body: body ? JSON.stringify(body) : undefined }); }
       catch (e) { const err = new Error('Could not reach GitHub. Check your connection.'); err.kind = 'network'; throw err; }
@@ -126,9 +152,16 @@
       if (res.status === 403 || res.status === 429) { const err = new Error('GitHub said slow down or the token lacks the gist permission.'); err.kind = 'limit'; throw err; }
       if (res.status === 404) { const err = new Error('Not found'); err.kind = 'missing'; throw err; }
       if (!res.ok) { const err = new Error('GitHub error ' + res.status); err.kind = 'http'; throw err; }
-      return res.json();
+      return wantRes ? res : res.json();
     }
     return {
+      // A small read-only request for the Settings "Test connection" button: is the token accepted, what may it do, and when does it expire?
+      // (scopes and expires are null when the browser is not allowed to read those headers)
+      async check() {
+        const res = await call('GET', '/gists?per_page=1', undefined, true);
+        const get = (n) => { try { return res.headers && res.headers.get ? res.headers.get(n) : null; } catch (e) { return null; } };
+        return { scopes: get('x-oauth-scopes'), expires: get('github-authentication-token-expiration') };
+      },
       async find() {
         for (let page = 1; page <= 5; page++) {
           const list = await call('GET', '/gists?per_page=100&page=' + page);
@@ -138,39 +171,66 @@
         }
         return null;
       },
-      async create(payload) {
-        const g = await call('POST', '/gists', { description: DESCRIPTION, public: false, files: { [NAME]: { content: JSON.stringify(payload) } } });
+      async create(payload, person) {
+        const files = { [NAME]: { content: JSON.stringify(payload) } };
+        if (person) files[PERSON_FILE] = { content: JSON.stringify(person) };
+        const g = await call('POST', '/gists', { description: DESCRIPTION, public: false, files });
         return g.id;
       },
-      async read(id) {
+      async read(id) { return (await this.readAll(id)).state; },
+      // one request returns both files: the level's progress and the person's settings
+      async readAll(id) {
         const g = await call('GET', '/gists/' + id);
-        const file = g.files && g.files[NAME];
-        if (!file) return null;
-        if (file.truncated) throw Object.assign(new Error('The saved progress is too large to read.'), { kind: 'http' });
-        try { return JSON.parse(file.content); } catch (e) { return null; }
+        const parse = (name) => {
+          const file = g.files && g.files[name];
+          if (!file) return null;
+          if (file.truncated) throw Object.assign(new Error('The saved progress is too large to read.'), { kind: 'http' });
+          try { return JSON.parse(file.content); } catch (e) { return null; }
+        };
+        return { state: parse(NAME), person: parse(PERSON_FILE) };
       },
-      async write(id, payload) { await call('PATCH', '/gists/' + id, { files: { [NAME]: { content: JSON.stringify(payload) } } }); }
+      async write(id, payload, person) {
+        const files = { [NAME]: { content: JSON.stringify(payload) } };
+        if (person) files[PERSON_FILE] = { content: JSON.stringify(person) };
+        await call('PATCH', '/gists/' + id, { files });
+      }
     };
   }
 
-  // One round: find or create the gist, read it, merge, write back if the merge added something. Returns { merged, wrote, gistId }.
+  // One round: find or create the gist, read it, merge, write back if the merge added something. Returns { merged, person, wrote, gistId }.
+  // opts.person (optional): the person's settings and notes, merged and saved in their own file in the same gist.
   async function round(opts) {
     const api = gistApi(opts.token, opts.fetch, opts.file);
     const local = pick(opts.state);
+    const mine = opts.person || null;
+    const fresh = () => ({ v: 1, savedAt: Date.now(), state: local });
+    const freshPerson = () => (mine ? { v: 1, savedAt: Date.now(), person: mergePerson(mine, mine) } : null);
     let id = opts.gistId || null;
     if (!id) id = await api.find();
     if (!id) {
-      id = await api.create({ v: 1, savedAt: Date.now(), state: local });
-      return { merged: local, wrote: true, gistId: id, created: true };
+      id = await api.create(fresh(), freshPerson());
+      return { merged: local, person: mine ? mergePerson(mine, mine) : null, wrote: true, gistId: id, created: true };
     }
     let remote;
-    try { remote = await api.read(id); }
-    catch (e) { if (e.kind === 'missing') { id = await api.find(); if (!id) { id = await api.create({ v: 1, savedAt: Date.now(), state: local }); return { merged: local, wrote: true, gistId: id, created: true }; } remote = await api.read(id); } else throw e; }
-    const remoteState = remote && remote.state ? remote.state : {};
+    try { remote = await api.readAll(id); }
+    catch (e) {
+      if (e.kind === 'missing') {
+        id = await api.find();
+        if (!id) { id = await api.create(fresh(), freshPerson()); return { merged: local, person: mine ? mergePerson(mine, mine) : null, wrote: true, gistId: id, created: true }; }
+        remote = await api.readAll(id);
+      } else throw e;
+    }
+    const remoteState = remote.state && remote.state.state ? remote.state.state : {};
     const merged = merge(local, remoteState);
-    const wrote = !same(merged, merge(remoteState, remoteState));
-    if (wrote) await api.write(id, { v: 1, savedAt: Date.now(), state: merged });
-    return { merged, wrote, gistId: id, created: false };
+    let wrote = !same(merged, merge(remoteState, remoteState));
+    let mergedPerson = null, personFile = null;
+    if (mine) {
+      const remotePerson = remote.person && remote.person.person ? remote.person.person : {};
+      mergedPerson = mergePerson(mine, remotePerson);
+      if (!samePerson(mergedPerson, remotePerson)) { wrote = true; personFile = { v: 1, savedAt: Date.now(), person: mergedPerson }; }
+    }
+    if (wrote) await api.write(id, { v: 1, savedAt: Date.now(), state: merged }, personFile);
+    return { merged, person: mergedPerson, wrote, gistId: id, created: false };
   }
 
   // ---- the person's own settings and notes, which follow them to every device (not study progress, which merge() handles) ----
@@ -210,5 +270,5 @@
   }
   function samePerson(a, b) { return JSON.stringify(mergePerson(a, a)) === JSON.stringify(mergePerson(b, b)); }
 
-  return { SYNC_KEYS, FILE, fileFor, DESCRIPTION, merge, pick, round, gistApi, mergeWs, same, dayMinutes, mergePerson, samePerson };
+  return { SYNC_KEYS, FILE, PERSON_FILE, fileFor, DESCRIPTION, merge, pick, round, gistApi, mergeWs, same, dayMinutes, mergePerson, samePerson, compactWs, compactWord, applyMerged, nextEpoch };
 });

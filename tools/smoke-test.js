@@ -15,15 +15,7 @@ const shots = process.argv.slice(2).find(a => !a.startsWith('--')) || null;
 if (shots) fs.mkdirSync(shots, { recursive: true });
 const types = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css', '.json':'application/json', '.svg':'image/svg+xml' };
 
-const server = http.createServer((req, res) => {
-  let p = decodeURIComponent(req.url.split('?')[0]);
-  if (p === '/') p = '/index.html';
-  if (p === '/config.js') { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end("window.SHANLU_FRIENDS_URL = window.SHANLU_FRIENDS_URL || '';"); return; }   // tests never talk to the real friends server
-  const f = path.join(root, p);
-  if (!f.startsWith(root) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); res.end('nope'); return; }
-  res.writeHead(200, { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' });
-  fs.createReadStream(f).pipe(res);
-});
+const server = require('./test-static').server(root);
 
 let failures = 0;
 const window_level_still_1 = (n) => n === 1;

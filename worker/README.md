@@ -39,6 +39,18 @@ Menu names change now and then; look for the closest match.
 
    `https://alvinyu20.github.io/hsk-path/#join=K7QM-2XVD-9RTB`
 
+## Updating a Worker you already set up
+
+Whenever `worker.js` changes, paste the whole new file over the old one (**Edit code**) and **Deploy**. Nothing else changes: the variables, the database and everyone's links stay. The newest version adds:
+
+- **Single-use invite codes.** `curl -X POST -H "X-Admin-Key: <your ADMIN_KEY>" https://<your-worker>.workers.dev/api/admin/invites` answers `{"code":"ABCD-EFGH-JKLM","valid_days":7}`. Send that person `https://alvinyu20.github.io/hsk-path/#join=ABCD-EFGH-JKLM`. The code works once and for 7 days, so a forwarded or leaked link is useless after the friend has joined. `INVITE_CODE` still works as before (it is the shared code for the whole group); delete it once everyone is in if you only want single-use codes.
+- **A brake on guessing.** Wrong codes are limited to 8 an hour per network address and 60 an hour for the whole server (answer `slow_down` / HTTP 429). Joining is also atomic, so many people racing for the last seat cannot go over `MAX_MEMBERS`.
+- **Checked saves.** A progress save must be real JSON of the expected shape and not too big (about 400,000 characters plain, or a compressed copy that unpacks to the same). The app adds `?base=<version>` so that if your other device saved in between, the server answers 412 (`conflict`) and the app merges again instead of overwriting.
+- **Compressed saves.** The app sends large progress copies gzip-compressed (`{"v":2,"gz":"..."}`). An older Worker answers 400 to that and the app falls back to the plain form by itself, so updating the site first is safe; update the Worker to get the smaller, faster saves.
+- A Cloudflare **rate-limiting rule** (Security → WAF → Rate limiting rules, free plan: 1 rule) in front of the Worker, for example 100 requests per minute per address, is a good extra brake. It is a dashboard setting and is not part of this repository.
+
+**In the app:** Friends → *Test connection* checks that this browser can reach the server and that it still accepts this device. If it says the server may not allow this site, `ALLOWED_ORIGINS` must be exactly the address in the browser's address bar, with no slash and no path (for example `https://alvinyu20.github.io`).
+
 ## Day to day
 
 - **Remove someone, or see who is in:** in the dashboard open the D1 database → **Console** and run `SELECT id, name FROM members;` then `DELETE FROM cheers WHERE from_id = '<id>' OR to_id = '<id>'; DELETE FROM progress WHERE member_id = '<id>'; DELETE FROM members WHERE id = '<id>';`. (Or call `GET /api/admin/members` and `DELETE /api/admin/members/<id>` with the header `X-Admin-Key: <your ADMIN_KEY>`.) A removed person's device is signed out at its next sync.
@@ -62,11 +74,12 @@ Fill in `wrangler.toml` (copy `wrangler.example.toml`) first.
 
 ## Tests
 
-`cd worker && npm install && node test.mjs` runs this exact `worker.js` against a real local D1 database. `node tools/smoke-test-friends.js` (from the repo root) clicks through the whole feature in a browser with several friends.
+`cd worker && npm install && node test.mjs` runs this exact `worker.js` against a real local D1 database (checks, conflicts, the guessing brake, single-use codes, racing joins). `node tools/smoke-test-friends.js` (from the repo root) clicks through the whole feature in a browser with several friends. All of these also run on every push (see `.github/workflows/ci.yml`).
 
 ## Notes on safety
 
 - The invite code is checked once, in constant time. Make it long and random: the member limit is the only other brake on strangers joining.
 - A key is 192 random bits and is stored only as a SHA-256 hash. Treat "your link" like a password. It lives after the `#` in the address, which browsers never send to the website host.
 - The server only answers requests from the sites listed in `ALLOWED_ORIGINS` (browsers enforce this). Requests need the secret key anyway.
+- **Other pages under `alvinyu20.github.io` share this site's browser storage.** Browsers keep saved data per address up to the host name, so any other project page you publish at `alvinyu20.github.io/<something>` runs in the same space as Shanlu and could read the saved progress, API keys and friend key on a device. That is fine while every page there is yours. If you ever host something you do not fully control on that host, first move Shanlu to its own address (a custom domain, or a Cloudflare Pages project) and change `ALLOWED_ORIGINS` to match. Until then, the site's security policy (written into `index.html` by `tools/build-site.js`) keeps Shanlu's own pages from loading code from anywhere else, and API keys can be kept on every device only if you set a passphrase (they are stored encrypted).
 - The server has not been tried on Cloudflare itself from the place it was written; it was tested against Cloudflare's own local runtime (workerd) and a local D1 database. Do the first real test with one friend before inviting everyone.

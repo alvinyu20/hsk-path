@@ -1,0 +1,76 @@
+# Checks for Shanlu. Fast ones first (a few seconds), then the browser ones.
+# The word/sentence content checks (tools/check-all.sh) need the HSK dataset, which lives outside this repository, so they are run by hand
+# (see CONTENT-CHECKS.md) and are not part of this workflow.
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 10 * * *'   # every morning: catches a browser or dependency update that breaks something while nobody pushed
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  fast:
+    name: Stamp, unit tests, worker tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            worker/package-lock.json
+      - run: npm ci
+      - run: npm ci --prefix worker
+      # fails when a script, style or font changed but `node tools/build-site.js` was not run (stale version numbers, security policy or offline file list)
+      - name: The version stamp is current
+        run: node tools/build-site.js --check
+      - name: Unit tests
+        run: npm run test:unit
+      - name: Worker tests (friends server, in a local Cloudflare simulator)
+        run: npm run test:worker
+
+  browser:
+    name: Browser tests
+    needs: fast
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            worker/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Friends board and sync across two devices
+        run: node tools/smoke-test-friends.js
+      - name: Security policy, offline copy, fonts, banners, connection tests
+        run: node tools/smoke-test-pwa.js
+      - name: HSK 1 screens and flows
+        run: node tools/smoke-test.js
+      - name: HSK 2 screens and flows
+        run: node tools/smoke-test-l2.js
+      - name: Keep the screenshots of a failed run
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-test-output
+          path: |
+            /tmp/shanlu-*.png
+          if-no-files-found: ignore

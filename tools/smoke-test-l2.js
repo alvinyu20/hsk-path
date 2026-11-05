@@ -11,15 +11,7 @@ const root = path.join(__dirname, '..');
 // Default run: plain forms (no 儿 endings). `--erhua` runs everything again in exam style (儿 endings on).
 const erhuaMode = process.argv.includes('--erhua');
 const types = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css', '.json':'application/json', '.svg':'image/svg+xml' };
-const server = http.createServer((req, res) => {
-  let p = decodeURIComponent(req.url.split('?')[0]);
-  if (p === '/') p = '/index.html';
-  if (p === '/config.js') { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end("window.SHANLU_FRIENDS_URL = window.SHANLU_FRIENDS_URL || '';"); return; }   // tests never talk to the real friends server
-  const f = path.join(root, p);
-  if (!f.startsWith(root) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); res.end('nope'); return; }
-  res.writeHead(200, { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' });
-  fs.createReadStream(f).pipe(res);
-});
+const server = require('./test-static').server(root);
 
 let failures = 0;
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };
