@@ -47,5 +47,9 @@ window.SHANLU_LEXICON = {
 "地上": "dìshang",
 "服务员": "fúwùyuán",
 "学会": "xuéhuì",
-"还给": "huángěi"
+"还给": "huángěi",
+"火车站": "huǒchēzhàn",
+"国外": "guówài",
+"海边": "hǎibiān",
+"半年": "bànnián"
 };

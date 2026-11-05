@@ -66,6 +66,8 @@ jobs:
         run: node tools/smoke-test.js
       - name: HSK 2 screens and flows
         run: node tools/smoke-test-l2.js
+      - name: HSK 3 screens and flows (HSK 3 is opened for the test only)
+        run: node tools/smoke-test-l3.js
       - name: Keep the screenshots of a failed run
         if: failure()
         uses: actions/upload-artifact@v4

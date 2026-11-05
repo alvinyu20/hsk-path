@@ -4603,7 +4603,7 @@ window.HSK3_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "我听说你会讲汉语，我们聊聊天儿吧。",
-    "py": "Wǒ tīngshuō nǐ huì jiǎng Hànyǔ, wǒmen liáo liáotiānér ba.",
+    "py": "Wǒ tīngshuō nǐ huì jiǎng Hànyǔ, wǒmen liáo liáotiānr ba.",
     "en": "I heard that you can speak Chinese. Let us have a chat."
    },
    "words": [
@@ -4937,7 +4937,7 @@ window.HSK3_WEBS = {
    "cta": "Practise the grammar",
    "sentence": {
     "zh": "我们一块儿去吧，你想坐车或者骑车都可以。",
-    "py": "Wǒmen yīkuàiér qù ba, nǐ xiǎng zuò chē huòzhě qí chē dōu kěyǐ.",
+    "py": "Wǒmen yíkuàir qù ba, nǐ xiǎng zuò chē huòzhě qí chē dōu kěyǐ.",
     "en": "Let us go together; you can go by car or by bike, whichever you want."
    },
    "words": [

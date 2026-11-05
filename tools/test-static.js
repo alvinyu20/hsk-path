@@ -3,7 +3,9 @@
  *   - config.js is blank (tests never talk to the real friends server; they set window.SHANLU_FRIENDS_URL themselves);
  *   - the content-security tag is taken out of index.html, because tests talk to fake servers on other addresses
  *     (tools/smoke-test-pwa.js runs the real tag with the real addresses);
- *   - sw.js is an empty one (the real offline copy would cache files between test runs), unless the test asks: server(root, { sw: true }). */
+ *   - sw.js is an empty one (the real offline copy would cache files between test runs), unless the test asks: server(root, { sw: true }).
+ *   - server(root, { level3: true }) opens HSK 3 for the HSK 3 test while it is still closed on the real site: level.js gets MAX_LEVEL = 3 and
+ *     index.html gets the HSK 3 data scripts. (When HSK 3 is released, both go into the real files and this option does nothing.) */
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -20,9 +22,20 @@ function server(root, opts) {
     if (!f.startsWith(root) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); res.end('nope'); return; }
     const headers = { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' };
     if (o.noCache) headers['Cache-Control'] = 'no-cache';
-    if (p === '/index.html' && !o.csp) {
+    if (p === '/level.js' && o.level3) {
       res.writeHead(200, headers);
-      res.end(fs.readFileSync(f, 'utf8').replace(/<meta http-equiv="Content-Security-Policy"[^>]*>\n?/, ''));
+      res.end(fs.readFileSync(f, 'utf8').replace(/var MAX_LEVEL = \d;/, 'var MAX_LEVEL = 3;'));
+      return;
+    }
+    if (p === '/index.html' && (!o.csp || o.level3)) {
+      let html = fs.readFileSync(f, 'utf8');
+      if (!o.csp) html = html.replace(/<meta http-equiv="Content-Security-Policy"[^>]*>\n?/, '');
+      if (o.level3 && html.indexOf('data/hsk3-words.js') < 0) {
+        const tags = ['words', 'grammar', 'webs', 'speak', 'listen', 'exam'].filter((n) => fs.existsSync(path.join(root, 'data/hsk3-' + n + '.js'))).map((n) => '<script defer src="data/hsk3-' + n + '.js"></script>').join('\n');
+        html = html.replace(/(<script defer src="ascent\.js)/, tags + '\n$1');
+      }
+      res.writeHead(200, headers);
+      res.end(html);
       return;
     }
     res.writeHead(200, headers);

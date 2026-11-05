@@ -100,13 +100,15 @@
         win[name] = w;
       };
       webs('HSK1_WEBS');
-      // HSK 2 data (same table: the official level-2 list prints 男孩儿, 女孩儿, 小孩儿 and 一会儿)
-      ['HSK2_WORDS', 'HSK2_GRAMMAR', 'HSK2_LISTEN', 'HSK2_EXAM'].forEach(k => { if (win[k]) win[k] = walk(win[k]); });
-      if (win.HSK2_SPEAK) {
-        win.HSK2_SPEAK = walk(win.HSK2_SPEAK);
-        win.HSK2_SPEAK.scenarios.forEach(s => { s.words = uniq(s.words, w => w.zh); });
-      }
-      webs('HSK2_WEBS');
+      // HSK 2 and HSK 3 data (same table: the official level-2 list prints 男孩儿, 女孩儿, 小孩儿 and 一会儿; HSK 3 sentences use 哪儿, 一点儿 ...)
+      [2, 3].forEach(n => {
+        ['WORDS', 'GRAMMAR', 'LISTEN', 'EXAM'].forEach(k => { if (win['HSK' + n + '_' + k]) win['HSK' + n + '_' + k] = walk(win['HSK' + n + '_' + k]); });
+        if (win['HSK' + n + '_SPEAK']) {
+          win['HSK' + n + '_SPEAK'] = walk(win['HSK' + n + '_SPEAK']);
+          win['HSK' + n + '_SPEAK'].scenarios.forEach(s => { s.words = uniq(s.words, w => w.zh); });
+        }
+        webs('HSK' + n + '_WEBS');
+      });
       return twins;
     }
     return { apply, zh, py, toPlain, twins, pairs };
