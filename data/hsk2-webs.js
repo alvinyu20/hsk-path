@@ -2414,7 +2414,7 @@ window.HSK2_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "这个不错，那个坏了。",
-    "py": "Zhège bùcuò, nàge huài le.",
+    "py": "Zhège búcuò, nàge huài le.",
     "en": "This one is not bad; that one is broken."
    },
    "words": [

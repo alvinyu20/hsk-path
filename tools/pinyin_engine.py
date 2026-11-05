@@ -33,6 +33,27 @@ def tone_of(syl):
     return 0
 
 
+# words that start with 一 and are said "yì-" / "yí-" like 不 (a 一 that means the number one, as in 一月 or 第一, stays yī)
+ONE_WORDS = {'一样', '一共', '一边', '一定', '一般', '一直', '一起', '一块儿', '一会儿', '一半', '一些', '一下', '一点儿', '一切'}
+
+
+def sandhi_word(z, py):
+    """不 and 一 at the start of a longer word change tone before the next syllable, as they do on their own:
+    不 is bú before a fourth tone (不错 búcuò, 不但 búdàn, 不用 búyòng) and bù otherwise; 一 is yí before a fourth tone and yì before the others
+    (一样 yíyàng, 一共 yígòng, 一边 yìbiān)."""
+    if len(z) < 2 or not py:
+        return py
+    if z[0] == '不' and py[:2] in ('b\u00f9', 'b\u00fa'):
+        return ('b\u00fa' if tone_of(py[2:]) == 4 else 'b\u00f9') + py[2:]
+    if z[0] == '一' and z in ONE_WORDS and py[:2] in ('y\u012b', 'y\u00ec', 'y\u00ed'):
+        t = tone_of(py[2:])
+        if t == 4:
+            return 'y\u00ed' + py[2:]
+        if t in (1, 2, 3):
+            return 'y\u00ec' + py[2:]
+    return py
+
+
 def read_tsv(path):
     rows = []
     with open(path, encoding='utf-8') as f:
@@ -107,10 +128,10 @@ class Engine:
 
     def word_py(self, z):
         if z in self.wpy:
-            return self.wpy[z]
+            return sandhi_word(z, self.wpy[z])
         if self.lex.get(z):
-            return self.lex[z]
-        return ''.join(lazy_pinyin(z, style=Style.TONE, v_to_u=True))
+            return sandhi_word(z, self.lex[z])
+        return sandhi_word(z, ''.join(lazy_pinyin(z, style=Style.TONE, v_to_u=True)))
 
     def tokens(self, zh):
         return [t for t in self.tk.cut(zh, HMM=False) if t.strip()]

@@ -398,6 +398,7 @@ def load_reviewed():
 
 
 REVIEWED = load_reviewed()
+ONE_WORDS = ['一样', '一共', '一边', '一定', '一般', '一直', '一起', '一块', '一会', '一半', '一些', '一下', '一点', '一切']   # 一块儿 and 一会儿 are matched by their first two characters
 
 
 def _pinyin_variant(chars, py, pick):
@@ -417,6 +418,24 @@ def _pinyin_variant(chars, py, pick):
     if disp is None:
         return [('ERROR', 'pinyin', 'pinyin letters do not match pypinyin (%s)' % ' '.join(exp))]
     out = []
+    # 不 is bú before a fourth tone and bù before the others; the words that start with 一 (一样, 一共, 一边 ...) are yí before a fourth tone and yì before the others
+    zc = ''.join(chars)
+    one_at = set()
+    for w in ONE_WORDS:
+        for m in re.finditer(re.escape(w), zc):
+            one_at.add(m.start())
+    for k, (syl, t) in enumerate(disp):
+        if k + 1 >= len(disp) or t == 0 or disp[k + 1][1] == 0:
+            continue
+        nt = disp[k + 1][1]
+        if chars[k] == '不':
+            want = 2 if nt == 4 else 4
+        elif k in one_at:
+            want = 2 if nt == 4 else 4
+        else:
+            continue
+        if t != want:
+            out.append(('WARN', 'pinyin', 'tone change: %s before a tone-%d syllable should be tone %d, shown %d' % (chars[k], nt, want, t)))
     for k, ((syl, t), et) in enumerate(zip(disp, exp_tone)):
         ch = chars[k]
         if t == et or t == 0 or ch in '不一' or (et == 0):

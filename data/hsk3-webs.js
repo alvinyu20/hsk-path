@@ -3474,7 +3474,7 @@ window.HSK3_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "这里来了好多人，一共有一百个，几乎都是学生。",
-    "py": "Zhèlǐ lái le hǎoduō rén, yīgòng yǒu yì bǎi ge, jīhū dōu shì xuésheng.",
+    "py": "Zhèlǐ lái le hǎoduō rén, yígòng yǒu yì bǎi ge, jīhū dōu shì xuésheng.",
     "en": "Lots of people have come here, a hundred in all, and almost all of them are students."
    },
    "words": [
@@ -4259,7 +4259,7 @@ window.HSK3_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "今天刮风，天气很凉快，你不用带伞。",
-    "py": "Jīntiān guā fēng, tiānqì hěn liángkuài, nǐ bùyòng dài sǎn.",
+    "py": "Jīntiān guā fēng, tiānqì hěn liángkuài, nǐ búyòng dài sǎn.",
     "en": "It is windy today and the weather is nicely cool, so you do not need to bring an umbrella."
    },
    "words": [
@@ -4763,7 +4763,7 @@ window.HSK3_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "我们的手机一样，但是颜色不同。",
-    "py": "Wǒmen de shǒujī yīyàng, dànshì yánsè bùtóng.",
+    "py": "Wǒmen de shǒujī yíyàng, dànshì yánsè bùtóng.",
     "en": "Our phones are the same, but the colours are different."
    },
    "words": [
@@ -4807,7 +4807,7 @@ window.HSK3_WEBS = {
    "cta": "Practise the grammar",
    "sentence": {
     "zh": "你应该早一点儿睡，不用等我。",
-    "py": "Nǐ yīnggāi zǎo yìdiǎnr shuì, bùyòng děng wǒ.",
+    "py": "Nǐ yīnggāi zǎo yìdiǎnr shuì, búyòng děng wǒ.",
     "en": "You should go to bed a bit earlier; you do not need to wait for me."
    },
    "words": [
@@ -4957,7 +4957,7 @@ window.HSK3_WEBS = {
    "cta": "Practise the grammar",
    "sentence": {
     "zh": "他不但会唱歌，而且会跳舞。",
-    "py": "Tā bùdàn huì chàng gē, érqiě huì tiàowǔ.",
+    "py": "Tā búdàn huì chàng gē, érqiě huì tiàowǔ.",
     "en": "He can not only sing but also dance."
    },
    "words": [
