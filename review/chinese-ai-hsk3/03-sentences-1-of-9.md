@@ -18,7 +18,7 @@ Sentences (Chinese / English):
 4. 他们是夫妻，都在银行工作。  /  They are husband and wife, and both work at a bank.
 5. 我们三个人是姐妹。  /  The three of us are sisters.
 6. 叔叔明天来我家吃饭。  /  Uncle is coming to my home for dinner tomorrow.
-7. 这位老人每天早上都去公园走路。  /  This old man walks in the park every morning.
+7. 这位老人每天早上都去公园锻炼。  /  This old man exercises in the park every morning.
 8. 那个男人是我们的新同事。  /  That man is our new colleague.
 9. 那个女人在商店里买衣服。  /  That woman is buying clothes in the shop.
 10. 我们班有十五个男生。  /  There are fifteen boys in our class.
@@ -125,7 +125,7 @@ Sentences (Chinese / English):
 111. 球场上有很多人在踢球。  /  Many people are playing football on the field.
 112. 我们周末去爬山吧。  /  Let us go hiking in the mountains this weekend.
 113. 世界很大，我想去看看。  /  The world is big, and I want to go and see it.
-114. 我家在这个市的东边。  /  My home is in the east of this city.
+114. 我家在市里。  /  My home is in the city.
 115. 学校的体育馆很大。  /  The school's gym is very big.
 116. 我星期六在图书馆学习。  /  I study in the library on Saturday.
 117. 他是外地人，第一次来这里。  /  He is from out of town and is here for the first time.
@@ -135,7 +135,7 @@ Sentences (Chinese / English):
 121. 这间屋子很小。  /  This room is very small.
 122. 请问，卫生间在哪里？  /  Excuse me, where is the bathroom?
 123. 桌子在房间的中间。  /  The table is in the middle of the room.
-124. 我们的面前有一条河。  /  There is a river in front of us.
+124. 我们面前有一条河。  /  There is a river in front of us.
 125. 这个小区的环境很好。  /  The environment of this neighbourhood is very good.
 126. 我们坐船去那个地方。  /  We take a boat to that place.
 127. 他开汽车去公司。  /  He drives to the company in his car.
@@ -230,5 +230,5 @@ Sentences (Chinese / English):
 216. 过节的时候，家人都回家。  /  At festival time, the whole family comes home.
 217. 周末我去朋友家做客。  /  At the weekend I am going to a friend's home as a guest.
 218. 今天我请客，你们想吃什么？  /  I am treating you today. What would you like to eat?
-219. 你有什么兴趣？  /  What are your interests?
+219. 你有什么兴趣爱好？  /  What are your interests and hobbies?
 220. 我对音乐很感兴趣。  /  I am very interested in music.

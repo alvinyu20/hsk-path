@@ -43,7 +43,7 @@ Sentences (Chinese / English):
 29. 他们来自不同的城市。  /  They come from different cities.
 30. 请不要离开这里。  /  Please do not leave here.
 31. 我离开家已经三年了。  /  I have been away from home for three years.
-32. 我想练汉字。  /  I want to practise characters.
+32. 我想练写汉字。  /  I want to practise writing characters.
 33. 每天练一个小时。  /  Practise for an hour every day.
 34. 我们聊聊吧。  /  Let us have a chat.
 35. 他们聊得很开心。  /  They are having a happy chat.
@@ -63,8 +63,8 @@ Sentences (Chinese / English):
 49. 这个字我认得。  /  I recognise this character.
 50. 我认为他是对的。  /  I think he is right.
 51. 你认为呢？  /  What do you think?
-52. 他在扫房间。  /  He is sweeping the room.
-53. 请扫一下。  /  Please sweep.
+52. 他在扫地。  /  He is sweeping the floor.
+53. 请把地扫一下。  /  Please sweep the floor.
 54. 我想试试这双鞋。  /  I want to try on these shoes.
 55. 你可以试一下。  /  You can give it a try.
 56. 请收好你的手机。  /  Please put your phone away.
@@ -111,7 +111,7 @@ Sentences (Chinese / English):
 97. 他在路上遇到了朋友。  /  He ran into a friend on the road.
 98. 我在商店遇见了老师。  /  I met my teacher in the shop.
 99. 很高兴遇见你。  /  Nice to meet you.
-100. 月亮照着山。  /  The moon is shining on the mountain.
+100. 月亮照在山上。  /  The moon is shining on the mountain.
 101. 他给我照了一张照片。  /  He took a photo of me.
 102. 我等了很久，直到他来了。  /  I waited a long time, until he came.
 103. 直到现在，他还没来。  /  He has not come until now.

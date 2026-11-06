@@ -13,7 +13,7 @@
   ],
   "explain": [
    "把 puts the object in front of the verb, so you can say what you do to it and what becomes of it: 我把门关上了 'I closed the door'. The pattern is Subject + 把 + object + verb + something extra (a result, a place, or 了).",
-   "The verb cannot stand alone after 把. Add a result, a place, a direction or 了: 请把门打开 'Please open the door'; 请把书放在桌子上 'Please put the book on the table'; 我把作业做完了 'I have finished my homework'.",
+   "The verb cannot stand alone after 把. Add a result, a place, a direction or 了: 请把门打开 'Please open the door'; 请把书放在桌子上 'Please put the book on the table'; 我把作业做完了 'I have finished my homework'. A result such as 完 or 好 is the safest choice; 了 alone works only with some verbs.",
    "The object after 把 should be something known (the, this, that), not 'a' something. Say 把这本书给我 'Give me this book', not 把一本书给我.",
    "A negative goes before 把: 我没把作业做完 'I did not finish the homework'; 别把手机丢了 'Don't lose your phone'."
   ],
@@ -96,7 +96,7 @@
   "explain": [
    "被 turns the sentence around. Instead of 'he broke the cup' (他打坏了杯子) you can say what happened to the cup: 杯子被他打坏了 'The cup was broken by him'.",
    "The pattern is Thing + 被 + (doer) + verb + result or 了. Like 把, the verb needs something extra. The doer can be left out: 我的书被借走了 'My book has been borrowed'.",
-   "被 is most often used when something unwanted or unexpected happens to the thing: 我的伞被朋友拿走了 'My umbrella was taken away by a friend'. In speech 让 and 叫 can replace 被: 杯子让他打坏了.",
+   "被 is most often used when something unwanted or unexpected happens to the thing: 我的伞被朋友拿走了 'My umbrella was taken away by a friend'. It is not limited to bad news: 他被老师叫到办公室了 'He was called to the office by the teacher'. In speech 让 and 叫 can replace 被: 杯子让他打坏了.",
    "A negative goes before 被: 我的书没被借走 'My book was not borrowed'."
   ],
   "examples": [
@@ -266,8 +266,8 @@
   ],
   "examples": [
    {
-    "zh": "这个饭馆不但很便宜，而且很好吃。",
-    "en": "This restaurant is not only cheap but also delicious."
+    "zh": "这个饭馆不但很便宜，而且菜很好吃。",
+    "en": "This restaurant is not only cheap, but the food is also delicious."
    },
    {
     "zh": "今天很冷，而且下雨了。",

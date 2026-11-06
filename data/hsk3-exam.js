@@ -293,7 +293,7 @@ window.HSK3_EXAM = {
       {
        "s": "女",
        "zh": "今天晚上月亮很大。",
-       "py": "Jīntiān wǎnshang yuèliàng hěn dà.",
+       "py": "Jīntiān wǎnshang yuèliang hěn dà.",
        "en": "The moon is very big tonight."
       },
       {
@@ -1243,7 +1243,7 @@ window.HSK3_EXAM = {
     },
     {
      "zh": "十二月二十八号",
-     "py": "Shíèryuè èrshíbā hào"
+     "py": "Shí'èryuè èrshíbā hào"
     }
    ]
   },
@@ -1960,7 +1960,7 @@ window.HSK3_EXAM = {
     },
     {
      "zh": "十二月",
-     "py": "Shíèryuè"
+     "py": "Shí'èryuè"
     }
    ]
   },
@@ -2684,7 +2684,7 @@ window.HSK3_EXAM = {
  "R3": [
   {
    "zh": "小明昨天晚上看比赛看到十二点，他今天早上八点才起床，所以上课迟到了。",
-   "py": "Xiǎomíng zuótiān wǎnshang kàn bǐsài kàn dào shíèr diǎn, tā jīntiān zǎoshang bā diǎn cái qǐchuáng, suǒyǐ shàngkè chídào le.",
+   "py": "Xiǎomíng zuótiān wǎnshang kàn bǐsài kàn dào shí'èr diǎn, tā jīntiān zǎoshang bā diǎn cái qǐchuáng, suǒyǐ shàngkè chídào le.",
    "en": "Xiao Ming watched a match until twelve yesterday evening and he only got up at eight this morning, so he was late for class.",
    "q": {
     "zh": "小明今天为什么迟到了？",
@@ -3132,7 +3132,9 @@ window.HSK3_EXAM = {
     "吃饭"
    ],
    "zh": "他一边看电视一边吃饭",
-   "alts": [],
+   "alts": [
+    "他一边吃饭一边看电视"
+   ],
    "py": "Tā yìbiān kàn diànshì yìbiān chī fàn",
    "en": "He eats while watching TV."
   },
@@ -3163,7 +3165,9 @@ window.HSK3_EXAM = {
     "感兴趣"
    ],
    "zh": "我对中国文化很感兴趣",
-   "alts": [],
+   "alts": [
+    "对中国文化我很感兴趣"
+   ],
    "py": "Wǒ duì Zhōngguó wénhuà hěn gǎnxìngqù",
    "en": "I am very interested in Chinese culture."
   },
@@ -3209,7 +3213,9 @@ window.HSK3_EXAM = {
     "吧"
    ],
    "zh": "如果你不舒服就回家休息吧",
-   "alts": [],
+   "alts": [
+    "你如果不舒服就回家休息吧"
+   ],
    "py": "Rúguǒ nǐ bù shūfu jiù huí jiā xiūxi ba",
    "en": "If you do not feel well, go home and rest."
   },
@@ -3250,7 +3256,9 @@ window.HSK3_EXAM = {
     "电话"
    ],
    "zh": "他刚到家就接到了电话",
-   "alts": [],
+   "alts": [
+    "他刚到家就接到电话了"
+   ],
    "py": "Tā gāng dào jiā jiù jiē dào le diànhuà",
    "en": "He had just got home when he received a call."
   },
@@ -3295,7 +3303,9 @@ window.HSK3_EXAM = {
     "话"
    ],
    "zh": "我没听懂他说的话",
-   "alts": [],
+   "alts": [
+    "他说的话我没听懂"
+   ],
    "py": "Wǒ méi tīng dǒng tā shuō dehuà",
    "en": "I did not understand what he said."
   }

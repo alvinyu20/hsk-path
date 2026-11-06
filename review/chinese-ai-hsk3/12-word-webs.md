@@ -247,7 +247,7 @@ Also check: is each part meaning (for example 机 = machine inside 耳机, 关�
 
 ### Topics (words grouped for learning)
 - Pronouns: 咱们 别人 别的 其他 怎样
-- How much and how many: 好多 一共 几乎 差不多 大小
+- How much and how many: 好多 一共 差不多
 - Measure words: 层 辆 页 张 双 遍 段 封 种 声 节 句 把 刻
 - Units: weight, length and money: 公斤 斤 米 毛 角
 - People: 阿姨 叔叔 大人 老人 男人 女人 男生 女生 别人 名人
@@ -257,13 +257,13 @@ Also check: is each part meaning (for example 机 = machine inside 耳机, 关�
 - Work and jobs: 司机 经理 画家 校长 运动员 办公室 会议 开会 服务 同事
 - Days, weeks and years: 周末 工作日 前天 后天 前年 后年 新年
 - Seasons: 春天 夏天 秋天 冬天 四季 季节 季
-- Holidays and time off: 放假 休假 假期 请假 周末 工作日 节日 过节 新年
+- Holidays and time off: 放假 休假 假期 请假 周末 节日 过节 新年
 - How long and how late: 好久 久 半天 迟到 晚点 不久
-- When and how often: 常 常常 平时 一直 总 总是 又 才 常见 常用
+- When and how often: 常 常常 平时 一直 总 总是 又 才
 - Before, after and just now: 以前 以后 后来 最近 最后 刚 刚刚 刚才 马上 先 然后 终于 突然
 - Food and meals: 菜单 外卖 尝 新鲜 饿 饱
 - Fruit, sweets and snacks: 西瓜 香蕉 蛋糕 糖 冰激凌 方便面 甜
-- Drinks: 啤酒 酒 饮料 矿泉水 冰 渴
+- Drinks: 啤酒 酒 饮料 矿泉水 渴
 - Dishes and containers: 碗 盘子 勺子 筷子 瓶子
 - Money and shopping: 银行 信用卡 银行卡 卡 礼物
 - Clothes and accessories: 衬衫 短裤 大衣 裙子 上衣 雨衣 鞋 伞
@@ -283,7 +283,7 @@ Also check: is each part meaning (for example 机 = machine inside 耳机, 关�
 - Chinese and writing: 词典 字典 句子 句 对话 故事 语言 课文
 - Phones, email and the internet: 网站 邮件 邮箱 关机 开机 号码 耳机 电子书 笔记本 信
 - Daily routine: 洗澡 牙刷 刷 习惯 起
-- Weather: 风 刮 凉快 太阳 月亮 伞 雨衣
+- Weather: 风 刮 凉快 太阳 月亮 伞 雨衣 冰
 - Mountains, rivers and plants: 山 河 海 树 草 草地 开花
 - Animals and nature: 动物 动物园 牛 羊 鸡 马 大熊猫 养
 - Colors: 蓝 黄色
@@ -303,18 +303,18 @@ Also check: is each part meaning (for example 机 = machine inside 耳机, 关�
 - Moving your body: 爬 骑 跳
 - Starting, finishing, waiting: 结束 完成 坚持 直到 发生
 - Size, length and speed: 矮 短 大小
-- Good, bad, right, wrong: 差 行 不行 合适 难看 奇怪
-- Clean, quiet and safe: 干净 脏 安静 安全 新鲜 旧
-- Easy, hard and useful: 简单 难 容易 难题 方便 有用 重要 主要 有名 一般
+- Good, bad, right, wrong: 差 行 不行 合适 难看 奇怪 旧
+- Clean, quiet and safe: 干净 脏 安静 安全
+- Easy, hard and useful: 简单 难 容易 难题 方便 有用 重要 主要 有名 一般 常见 常用
 - Same and different: 一样 不同 差不多 特别 像
 - Things and matters: 办法 方法 机会 关系 变化 环境 水平 生活 影响 名单 有关
 - Can, want, may, don't: 应该 该 必须 需要 愿意 打算 只能 不用 最好
 - If, only if, in order to: 如果 的话 只要 只有 除了 为了 关于 根据
 - Certainly and probably: 一定 大概 好像 当然 其实 看来 几乎 必须
 - Helping, giving and telling: 帮助 照顾 借 发 收到 受到 得到 要求 服务 怎么办 受
-- Comparing: 比较 比如 更 越
+- Comparing: 比较 更 越
 - Very, too, most: 极 特别 挺 比较 更 可
 - And, also, all, together: 又 或 或者 一块 一共 一边
-- Linking ideas: 不但 而且 可是 然后 其实 当然 只是
+- Linking ideas: 不但 而且 可是 然后 其实 当然 只是 比如
 - To, from, than, with: 向 为 被 把
 - Word endings: 子 员 室 园

@@ -159,6 +159,32 @@ HSK 3 is the third level (`content/l3/`, tools run with `LEVEL=3`). The level ch
 - The pinyin of the "what to listen for" notes in the listening clips was only checked by script.
 - `review/audio-script-hsk2.tsv` has not been regenerated and is out of date.
 
+### 5 Nov 2026, HSK 3 second-opinion round (Qwen and DeepSeek)
+
+**What was done.** The HSK 3 review packs (`review/chinese-ai-hsk3/`) were run past Qwen and DeepSeek, three answers from each. Every finding was checked against the real data before anything was changed. A finding was applied only when it held up (both reviewers agreed, or the sentence was clearly wrong, unnatural or misleading). Reviewers are AI, so each claim was treated as a lead to verify, not as a verdict.
+
+**Applied (about 50 content edits)**
+- Rewordings of sentences that were stiff or slightly off in Chinese, and English that did not show the taught word's meaning, in the example files, grammar lessons, speaking lines and word webs. Every rewrite went through the same automated checks again; several were bounced by the checker and redone (a word above HSK 3, 三百米 without "300", 了 without a finished action in the English, "I" without 我).
+- Word topics: several words moved to the topic where a learner would look for them; one topic sentence made more natural.
+- Word-order exam questions: five items now accept the other correct orders (他一边看电视一边吃饭, 我对中国文化很感兴趣, 如果你不舒服就回家休息吧, 他刚到家就接到了电话, 我没听懂他说的话). The app shows only the tiles for these, so two valid orders must both count.
+- **Neutral tones (real, systematic).** Fourteen words showed full tones although the official list and the card's own note say neutral: 爱人, 地方, 行李, 头发, 电子书, 大人, 耳朵, 故事, 凉快, 明白, 清楚, 叔叔, 月亮. Added to `content/pinyin-overrides.tsv`.
+- **照片** was shown zhàopiān (pypinyin's spoken form). Now zhàopiàn, as printed in the official list; `content/pinyin-reviewed.tsv` accepts it for 片.
+- **Separating apostrophe (found while checking, not by a reviewer).** The engine joined syllables without it, so 十二 showed shíèr, 可爱 kěài, 喜爱 xǐài. It now writes shí'èr, kě'ài, xǐ'ài, xīngqī'èr (`join_syl` in `tools/pinyin_engine.py`). This also changed HSK 1 (十二, 十二月, 星期二); nothing else in HSK 1 or HSK 2 changed (compared file by file).
+- After the changes, all 491 card pinyin readings were compared with `content/hsk3-official-500.tsv`: 0 differences (apart from hyphen and apostrophe style).
+
+**Declined, with reasons**
+- DeepSeek's "wrong answer key" on the listening question about who drives the other to the station (pack items 13-1 and 13-2): a false alarm. The review pack did not print who says each line (男 / 女), so the reviewer guessed the speakers. In the real file the woman is the second speaker and says 不用，我开车送你, so the key is right. **Fix:** the pack now prints 男： / 女： before each line.
+- Qwen's tone claim that 只能 needs a different sandhi note: wrong. A third tone before a second tone is read as a "half third" (low dip), so the note is correct.
+- Qwen's remarks on files 10 and 11: unreliable. It answered about grammar chunks and not about the sentences in those files, so those two batches have effectively had one reviewer (DeepSeek) only.
+- Style preferences with no error (a sentence that is correct but could be more idiomatic) were left; the cards must stay inside the HSK 1 to 3 vocabulary, which limits rewording.
+- Suggestion to explain in the app that HSK 3 has 500 official entries but 491 cards: not done yet (it is in the README and in this file). Optional.
+
+**Not verified**
+- Still no teacher or native speaker has read any of it. Two AI reviewers each had gaps, as above.
+- The official word list was read from a third-party copy of the PDF and not compared with the document from the exam body.
+- The new rewrites were read by me and by the automated rules, not by anyone else.
+- The picture questions in the exam still use emoji; replacing them with drawn pictograms is queued.
+
 ## Word web topics (content/topics.json)
 One shared list of topics for every level, written by hand: each topic has a group, the words (from any level), and a sentence per level. A level shows only its own words in a topic; a topic with fewer than 3 words at a level is hidden unless it is the only home of one of them (tools/topics.py). All Word web topic sentences go through the same sentence checks. `node tools/test-topics.js` checks that every word is in a topic and that known bad groupings do not come back (万 with numbers, dog/cat with animals, 从小 not with weather, left/right not with shops). When adding a word to a topic, ask: would a learner see why these words belong together? A word may sit in more than one topic.
 

@@ -156,20 +156,27 @@ lb = json.load(open(os.path.join(ROOT, 'content', 'l3', 'exam-3-listening.json')
 rb = json.load(open(os.path.join(ROOT, 'content', 'l3', 'exam-3-reading.json'), encoding='utf-8'))
 wb = json.load(open(os.path.join(ROOT, 'content', 'l3', 'exam-3-writing.json'), encoding='utf-8'))
 ex = []
+
+
+def says(lines):
+    """The spoken lines with who says them (男 = the man, 女 = the woman), so a question like 男的为什么没吃饭？ can be checked."""
+    return ' / '.join(('%s：%s' % (l['s'], l['zh'])) if l.get('s') else l['zh'] for l in lines)
+
+
 ex.append('## Listening part 1 (picture matching): each set has six pictures; the dialogue is spoken; the learner picks the picture')
 for si, st in enumerate(lb['L1'], 1):
     ex.append('Set %d pictures: %s' % (si, '  '.join('%d=%s' % (k + 1, p) for k, p in enumerate(st['opts']))))
     for it in st['items']:
-        ex.append('- 对话“%s” → 正确图片 %s' % (' / '.join(l['zh'] for l in it['say']), st['opts'][it['ans']]))
+        ex.append('- 对话“%s” → 正确图片 %s' % (says(it['say']), st['opts'][it['ans']]))
 ex.append('\n## Listening part 2 (true or false): a passage is spoken, then a statement is shown')
 for st in lb['L2']:
     ex.append('- 短文“%s” 说法“%s” → %s' % (' '.join(l['zh'] for l in st['say']), st['st'][0], '正确' if st['ok'] else '错误'))
 ex.append('\n## Listening part 3 (dialogue, question, three options; the FIRST option listed is the right one)')
 for st in lb['L3']:
-    ex.append('- 对话“%s” 问题“%s” 选项：%s' % (' / '.join(l['zh'] for l in st['say']), st['q']['zh'], ' | '.join(st['opts'])))
+    ex.append('- 对话“%s” 问题“%s” 选项：%s' % (says(st['say']), st['q']['zh'], ' | '.join(st['opts'])))
 ex.append('\n## Listening part 4 (longer dialogue, question, three options; the FIRST option listed is the right one)')
 for st in lb['L4']:
-    ex.append('- 对话“%s” 问题“%s” 选项：%s' % (' / '.join(l['zh'] for l in st['say']), st['q']['zh'], ' | '.join(st['opts'])))
+    ex.append('- 对话“%s” 问题“%s” 选项：%s' % (says(st['say']), st['q']['zh'], ' | '.join(st['opts'])))
 ex.append('\n## Reading part 1 (match each question to its reply)')
 for si, st in enumerate(rb['R1'], 1):
     ex.append('Set %d replies: %s' % (si, '  '.join('%s' % o for o in st['opts'])))

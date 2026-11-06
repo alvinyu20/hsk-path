@@ -23,7 +23,7 @@ Sentences (Chinese / English):
 9. 我每天都看邮件。  /  I check my email every day.
 10. 你的邮箱是多少？  /  What is your email address?
 11. 我的邮箱里有三封邮件。  /  There are three emails in my mailbox.
-12. 电子书比纸书便宜。  /  E-books are cheaper than paper books.
+12. 电子书比书店里的书便宜。  /  E-books are cheaper than the books in a bookshop.
 13. 他喜欢看电子书。  /  He likes reading e-books.
 14. 这张照片很漂亮。  /  This photo is very beautiful.
 15. 我给你看看我的照片。  /  Let me show you my photos.
@@ -46,7 +46,7 @@ Sentences (Chinese / English):
 32. 桌子上有一张纸。  /  There is a sheet of paper on the table.
 33. 请给我两张票。  /  Please give me two tickets.
 34. 我需要一张纸。  /  I need a sheet of paper.
-35. 这些纸太小了。  /  This paper is too small.
+35. 这些纸太小了。  /  These sheets of paper are too small.
 36. 请看黑板。  /  Please look at the blackboard.
 37. 黑板上有很多字。  /  There are many characters on the blackboard.
 38. 我用铅笔写字。  /  I write with a pencil.
@@ -71,7 +71,7 @@ Sentences (Chinese / English):
 57. 飞机上请关机。  /  Please turn off your phone on the plane.
 58. 电脑开机很慢。  /  The computer is slow to turn on.
 59. 手机没电，不能开机。  /  The phone has no power, so it cannot be turned on.
-60. 夏天，我喜欢喝有冰的茶。  /  In summer I like tea with ice.
+60. 夏天，我喜欢喝加冰的茶。  /  In summer I like tea with ice.
 61. 河上有冰。  /  There is ice on the river.
 62. 请把牛奶放进冰箱。  /  Please put the milk into the fridge.
 63. 我们家的冰箱很大。  /  Our fridge is very big.
@@ -206,7 +206,7 @@ Sentences (Chinese / English):
 192. 我们的得分比他们高。  /  Our score is higher than theirs.
 193. 他今天一直得分。  /  He keeps scoring today.
 194. 我的钱丢了。  /  I have lost my money.
-195. 小心，别丢你的手机。  /  Be careful. Don't lose your phone.
+195. 小心，别丢手机。  /  Be careful. Don't lose your phone.
 196. 他懂得很多。  /  He knows a lot.
 197. 孩子要懂得关心别人。  /  Children need to know how to care for others.
 198. 多锻炼对身体好。  /  Exercising more is good for your health.

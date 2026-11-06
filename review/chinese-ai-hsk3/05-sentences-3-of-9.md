@@ -14,7 +14,7 @@ Sentences (Chinese / English):
 
 1. 我想看一本关于中国的书。  /  I want to read a book about China.
 2. 根据地图，银行在前面。  /  According to the map, the bank is ahead.
-3. 手机丢了，怎么办？  /  The phone is lost. What is to be done?
+3. 我的手机丢了，怎么办？  /  My phone is lost. What should I do?
 4. 你觉得这个怎样？  /  What do you think of this?
 5. 当然可以！  /  Of course you can!
 6. 其实这个字不难写。  /  Actually, this character is not hard to write.
@@ -48,7 +48,7 @@ Sentences (Chinese / English):
 34. 我平时七点起床。  /  I usually get up at seven.
 35. 他突然笑了。  /  He suddenly laughed.
 36. 火车晚点了。  /  The train is delayed.
-37. 我后来才知道这件事。  /  Only later did I learn of this.
+37. 我后来才知道这件事。  /  I only found out about this later.
 38. 后天是星期五。  /  The day after tomorrow is Friday.
 39. 我们后年去中国旅游。  /  We are going to travel in China the year after next.
 40. 前天我们见面了。  /  We met the day before yesterday.
@@ -59,7 +59,7 @@ Sentences (Chinese / English):
 45. 我以前住在这里。  /  I used to live here.
 46. 十八岁以上的人可以进去。  /  People aged 18 and above can go in.
 47. 十岁以下的孩子不用买票。  /  Children under ten do not need to buy a ticket.
-48. 学校以外有一家小商店。  /  There is a small shop outside the school.
+48. 除了我以外，大家都来了。  /  Everyone has come apart from me.
 49. 他到处找手机。  /  He is looking for his phone everywhere.
 50. 你不用来，我自己去。  /  You do not need to come. I will go myself.
 51. 我明白你的意思。  /  I understand what you mean.
@@ -71,7 +71,7 @@ Sentences (Chinese / English):
 57. 孩子要跟着大人过马路。  /  Children need to cross the road with an adult.
 58. 他们夫妻都喜欢旅游。  /  Both of them, husband and wife, like to travel.
 59. 他们夫妻的关系很好。  /  Their relationship as husband and wife is very good.
-60. 她们是好姐妹。  /  They are good sisters.
+60. 她们是姐妹，关系很好。  /  They are sisters and get along very well.
 61. 我没有姐妹，只有一个弟弟。  /  I have no sisters, only one younger brother.
 62. 我叔叔是一名司机。  /  My uncle is a driver.
 63. 叔叔，您好！  /  Hello, uncle!
@@ -126,13 +126,13 @@ Sentences (Chinese / English):
 112. 他穿的鞋太小，脚很疼。  /  The shoes he wears are too small, and his feet hurt.
 113. 游泳以后，脚很冷。  /  After swimming, my feet are cold.
 114. 你的身高多少？  /  What is your height?
-115. 他的身高比我高。  /  He is taller than me.
+115. 我的身高一米七，他的身高一米八。  /  I am 1.7 metres tall and he is 1.8 metres tall.
 116. 孩子发烧了，我们去医院吧。  /  The child has a fever. Let us go to the hospital.
 117. 他发烧三天了。  /  He has had a fever for three days.
 118. 我感冒了，不想出去。  /  I have a cold and do not want to go out.
 119. 感冒的时候，要多喝水。  /  When you have a cold, you need to drink more water.
 120. 他住院三天了。  /  He has been in hospital for three days.
-121. 爷爷在医院住院，我们明天去看他。  /  Grandpa is in the hospital. We are going to see him tomorrow.
+121. 爷爷住院了，我们明天去看他。  /  Grandpa has been admitted to hospital. We are going to see him tomorrow.
 122. 病人可以出院了。  /  The patient can leave the hospital now.
 123. 他出院以后，会在家休息。  /  After he leaves the hospital, he will rest at home.
 124. 她身体很健康。  /  She is very healthy.

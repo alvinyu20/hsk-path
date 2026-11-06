@@ -26,7 +26,7 @@ Sentences (Chinese / English):
 12. 我比较喜欢这个。  /  I rather like this one.
 13. 这个问题比较难。  /  This question is rather difficult.
 14. 我喜欢很多水果，比如苹果、西瓜。  /  I like a lot of fruit, for example apples and watermelons.
-15. 他会很多运动，比如跑步、游泳。  /  He can do a lot of sports, for example running and swimming.
+15. 他喜欢很多运动，比如跑步、游泳。  /  He likes a lot of sports, for example running and swimming.
 16. 你必须带护照。  /  You must bring your passport.
 17. 在飞机上必须关手机。  /  You must turn off your phone on the plane.
 18. 我没有别的问题。  /  I do not have any other questions.
@@ -131,7 +131,7 @@ Sentences (Chinese / English):
 117. 他常常不吃早饭。  /  He often does not eat breakfast.
 118. 平时你几点睡觉？  /  What time do you usually go to bed?
 119. 我平时不喝咖啡。  /  I do not usually drink coffee.
-120. 天突然下雨了。  /  It suddenly started to rain.
+120. 突然下雨了。  /  It suddenly started to rain.
 121. 他突然不说话了。  /  He suddenly stopped talking.
 122. 今天的火车不会晚点。  /  Today's train will not be late.
 123. 飞机晚点了，我们在机场等。  /  The plane is delayed, so we are waiting at the airport.
@@ -157,8 +157,8 @@ Sentences (Chinese / English):
 143. 三百块以上的我不买。  /  I will not buy anything above 300 yuan.
 144. 请回答以下问题。  /  Please answer the following questions.
 145. 十六岁以下不能进。  /  Those under sixteen cannot enter.
-146. 他以外的人都走了。  /  Everyone apart from him has left.
-147. 房间以外有很多人。  /  There are a lot of people outside the room.
+146. 三百米以外有一家银行。  /  There is a bank more than 300 metres away.
+147. 学校以外的地方我不太了解。  /  I do not know the places outside the school very well.
 148. 到处都是人。  /  There are people everywhere.
 149. 春天，到处都是花。  /  In spring there are flowers everywhere.
 150. 你不用买票。  /  You do not need to buy a ticket.
@@ -167,7 +167,7 @@ Sentences (Chinese / English):
 153. 我不明白这个字的意思。  /  I do not understand the meaning of this character.
 154. 医生说这位病人要多休息。  /  The doctor says this patient needs to rest more.
 155. 有客人来我们家，妈妈做了很多菜。  /  Guests are coming to our home, so Mom has cooked a lot of dishes.
-156. 八十岁的老人很喜欢在公园里走路。  /  Old people of eighty like walking in the park.
+156. 八十岁的老人很喜欢在公园里走走。  /  Old people of eighty like taking a walk in the park.
 157. 她穿了一条红色的裙子，很漂亮。  /  She is wearing a red skirt, and it is very pretty.
 158. 我们的房子有三个房间，不太大。  /  Our house has three rooms and is not very big.
 159. 这个箱子里有很多行李。  /  There is a lot of luggage in this suitcase.
@@ -214,7 +214,7 @@ Sentences (Chinese / English):
 200. 他一边走路，一边听音乐。  /  He walks while listening to music.
 201. 除了汉语以外，你还会说别的外语吗？  /  Besides Chinese, can you speak any other foreign language?
 202. 你来以前，请先给我打电话。  /  Before you come, please call me first.
-203. 考试成绩在八十以上的同学可以不参加复习。  /  Students whose test results are eighty or above may choose not to join the review.
+203. 考试成绩在八十以上的同学不用复习。  /  Students whose test results are eighty or above do not have to review.
 204. 我们吃饭以后去看电影吧。  /  After eating, let us go and see a film.
 205. 我们在草地上坐一会儿吧，这里很舒服。  /  Let us sit on the grass for a while; it is comfortable here.
 206. 我看不懂这张地图，你能帮我吗？  /  I cannot read this map. Can you help me?

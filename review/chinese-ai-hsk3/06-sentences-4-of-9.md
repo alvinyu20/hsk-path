@@ -16,7 +16,7 @@ Sentences (Chinese / English):
 2. 学校的东边有一个图书馆。  /  To the east of the school there is a library.
 3. 向东走，就能看到银行。  /  Walk east and you will see the bank.
 4. 银行在公园的西边。  /  The bank is to the west of the park.
-5. 太阳从西边下去。  /  The sun goes down in the west.
+5. 太阳在西边下山了。  /  The sun has set in the west.
 6. 这个城市的南边有一条河。  /  To the south of this city there is a river.
 7. 向南走，你会看到一家商店。  /  Walk south and you will see a shop.
 8. 北边的冬天很冷。  /  Winter in the north is cold.
@@ -30,7 +30,7 @@ Sentences (Chinese / English):
 16. 我家在城市的西南。  /  My home is in the southwest of the city.
 17. 西南有很多山。  /  There are many mountains in the southwest.
 18. 东方文化很有意思。  /  Eastern culture is very interesting.
-19. 太阳在东方出来。  /  The sun rises in the east.
+19. 他喜欢东方的音乐。  /  He likes Eastern music.
 20. 他在西方国家生活了三年。  /  He lived in Western countries for three years.
 21. 西方人也喜欢吃饺子。  /  Westerners also like to eat dumplings.
 22. 南方的夏天很热。  /  Summers in the south are very hot.
@@ -44,10 +44,10 @@ Sentences (Chinese / English):
 30. 这附近有银行吗？  /  Is there a bank near here?
 31. 他家就在学校附近。  /  His home is right near the school.
 32. 公园里的花很漂亮。  /  The flowers in the park are beautiful.
-33. 爷爷每天在公园里走路。  /  Grandpa walks in the park every day.
-34. 中国是一个大国家。  /  China is a big country.
+33. 爷爷每天在公园里走走。  /  Grandpa takes a walk in the park every day.
+34. 中国是一个很大的国家。  /  China is a very big country.
 35. 每个国家都有自己的文化。  /  Every country has its own culture.
-36. 我们坐船去海上。  /  We go out to sea by boat.
+36. 我们坐船在海上玩了一天。  /  We spent the day out on the sea in a boat.
 37. 海很大，也很蓝。  /  The sea is big and blue.
 38. 河里有一条小船。  /  There is a small boat on the river.
 39. 这条河很长。  /  This river is very long.
@@ -69,8 +69,8 @@ Sentences (Chinese / English):
 55. 这里的山很高。  /  The mountains here are very high.
 56. 我想看看这个世界。  /  I want to see this world.
 57. 世界上有很多国家。  /  There are many countries in the world.
-58. 他在这个市工作。  /  He works in this city.
-59. 这个市有三个公园。  /  This city has three parks.
+58. 他在市里工作。  /  He works in the city.
+59. 市里有很多公园。  /  There are a lot of parks in the city.
 60. 体育馆在学校的东边。  /  The gym is on the east side of the school.
 61. 我们在体育馆打羽毛球。  /  We play badminton in the gym.
 62. 图书馆几点开门？  /  What time does the library open?
@@ -131,7 +131,7 @@ Sentences (Chinese / English):
 117. 四季的衣服我都有。  /  I have clothes for all four seasons.
 118. 太阳出来了。  /  The sun has come out.
 119. 今天的太阳很大。  /  The sun is strong today.
-120. 月亮在山上。  /  The moon is over the mountain.
+120. 月亮在山的上面。  /  The moon is above the mountain.
 121. 晚上，月亮出来了。  /  In the evening, the moon came out.
 122. 外面的风很大。  /  The wind outside is very strong.
 123. 今天没有风。  /  There is no wind today.
@@ -152,7 +152,7 @@ Sentences (Chinese / English):
 138. 大熊猫喜欢吃什么？  /  What do giant pandas like to eat?
 139. 大熊猫是一种很可爱的动物。  /  The giant panda is a very cute kind of animal.
 140. 我们班级的同学都很热情。  /  The students in our class are all very friendly.
-141. 这个班级在二楼。  /  This class is on the second floor.
+141. 我们班级的教室在二楼。  /  The classroom of our class is on the second floor.
 142. 这是我的汉语笔记。  /  These are my Chinese notes.
 143. 你可以看我的笔记。  /  You can look at my notes.
 144. 我的笔记本里有很多汉字。  /  There are many characters in my notebook.

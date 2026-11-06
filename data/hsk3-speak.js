@@ -51,13 +51,13 @@ window.HSK3_SPEAK = {
      "en": "Okay. Please give me your passport."
     },
     {
-     "zh": "谢谢。你的房间在八层，坐电梯就可以上去。",
-     "py": "Xièxie. Nǐ de fángjiān zài bā céng, zuò diàntī jiù kěyǐ shàngqù.",
+     "zh": "谢谢。你的房间在八楼，坐电梯就可以上去。",
+     "py": "Xièxie. Nǐ de fángjiān zài bā lóu, zuò diàntī jiù kěyǐ shàngqù.",
      "en": "Thank you. Your room is on the eighth floor; you can go up by the elevator."
     },
     {
-     "zh": "在一层，早上六点半开始。",
-     "py": "Zài yì céng, zǎoshang liù diǎn bàn kāishǐ.",
+     "zh": "在一楼，早上六点半开始。",
+     "py": "Zài yì lóu, zǎoshang liù diǎn bàn kāishǐ.",
      "en": "On the first floor. It starts at half past six in the morning."
     },
     {
@@ -78,8 +78,8 @@ window.HSK3_SPEAK = {
      "en": "Okay, here you are."
     },
     {
-     "zh": "好的，早饭在几层？",
-     "py": "Hǎo de, zǎofàn zài jǐ céng?",
+     "zh": "好的，早饭在几楼？",
+     "py": "Hǎo de, zǎofàn zài jǐ lóu?",
      "en": "Okay, which floor is breakfast on?"
     },
     {
@@ -339,8 +339,8 @@ window.HSK3_SPEAK = {
      "en": "Very handy; there is a subway station and a bank nearby."
     },
     {
-     "zh": "下个月五号，你可以来帮助我吗？",
-     "py": "Xià ge yuè wǔ hào, nǐ kěyǐ lái bāngzhù wǒ ma?",
+     "zh": "下个月五号，你可以来帮我吗？",
+     "py": "Xià ge yuè wǔ hào, nǐ kěyǐ lái bāng wǒ ma?",
      "en": "On the fifth of next month. Can you come and help me?"
     },
     {
@@ -380,7 +380,7 @@ window.HSK3_SPEAK = {
     },
     {
      "zh": "行李",
-     "py": "xínglǐ"
+     "py": "xíngli"
     },
     {
      "zh": "电梯",
@@ -422,7 +422,7 @@ window.HSK3_SPEAK = {
     },
     {
      "zh": "好的，我的行李可以带上去吗？",
-     "py": "Hǎo de, wǒ de xínglǐ kěyǐ dài shàngqù ma?",
+     "py": "Hǎo de, wǒ de xíngli kěyǐ dài shàngqù ma?",
      "en": "Okay. Can I take my luggage up with me?"
     },
     {
@@ -496,9 +496,9 @@ window.HSK3_SPEAK = {
      "en": "Practise more, and you can ask the teacher too."
     },
     {
-     "zh": "很好，我相信你一定可以提高！",
-     "py": "Hěn hǎo, wǒ xiāngxìn nǐ yídìng kěyǐ tígāo!",
-     "en": "Good. I am sure you can improve!"
+     "zh": "很好，我相信你的成绩一定可以提高！",
+     "py": "Hěn hǎo, wǒ xiāngxìn nǐ de chéngjì yídìng kěyǐ tígāo!",
+     "en": "Good. I am sure your grades can improve!"
     }
    ],
    "you": [
@@ -707,7 +707,7 @@ window.HSK3_SPEAK = {
   },
   {
    "zh": "我没听清楚，请再说一遍。",
-   "py": "Wǒ méi tīng qīngchǔ, qǐng zài shuō yí biàn.",
+   "py": "Wǒ méi tīng qīngchu, qǐng zài shuō yí biàn.",
    "en": "I did not hear it clearly; please say it once more."
   },
   {
@@ -722,7 +722,7 @@ window.HSK3_SPEAK = {
   },
   {
    "zh": "我不太明白，你可以再讲一遍吗？",
-   "py": "Wǒ bú tài míngbái, nǐ kěyǐ zài jiǎng yí biàn ma?",
+   "py": "Wǒ bú tài míngbai, nǐ kěyǐ zài jiǎng yí biàn ma?",
    "en": "I do not quite understand; can you explain it again?"
   },
   {
@@ -731,8 +731,8 @@ window.HSK3_SPEAK = {
    "en": "I want to look this word up."
   },
   {
-   "zh": "你能帮助我吗？",
-   "py": "Nǐ néng bāngzhù wǒ ma?",
+   "zh": "你能帮我吗？",
+   "py": "Nǐ néng bāng wǒ ma?",
    "en": "Can you help me?"
   },
   {

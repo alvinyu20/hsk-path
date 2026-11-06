@@ -860,7 +860,7 @@ window.HSK1_EXAM = {
     },
     {
      "zh": "十二号",
-     "py": "Shíèr hào"
+     "py": "Shí'èr hào"
     }
    ]
   },

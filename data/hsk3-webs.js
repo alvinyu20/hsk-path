@@ -136,8 +136,8 @@ window.HSK3_WEBS = {
      ]
     },
     {
-     "en": "Old people of eighty like walking in the park.",
-     "zh": "八十岁的___很喜欢在公园里走路。",
+     "en": "Old people of eighty like taking a walk in the park.",
+     "zh": "八十岁的___很喜欢在公园里走走。",
      "ans": "老人",
      "opts": [
       "老人",
@@ -1697,8 +1697,8 @@ window.HSK3_WEBS = {
      ]
     },
     {
-     "en": "Students whose test results are eighty or above may choose not to join the review.",
-     "zh": "考试成绩在八十___的同学可以不参加复习。",
+     "en": "Students whose test results are eighty or above do not have to review.",
+     "zh": "考试成绩在八十___的同学不用复习。",
      "ans": "以上",
      "opts": [
       "以上",
@@ -3480,9 +3480,7 @@ window.HSK3_WEBS = {
    "words": [
     "好多",
     "一共",
-    "几乎",
-    "差不多",
-    "大小"
+    "差不多"
    ]
   },
   {
@@ -3540,7 +3538,7 @@ window.HSK3_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "阿姨和叔叔是我爸爸妈妈的朋友。",
-    "py": "Āyí hé shūshū shì wǒ bàba māma de péngyou.",
+    "py": "Āyí hé shūshu shì wǒ bàba māma de péngyou.",
     "en": "Auntie and Uncle are friends of my mum and dad."
    },
    "words": [
@@ -3694,7 +3692,6 @@ window.HSK3_WEBS = {
     "假期",
     "请假",
     "周末",
-    "工作日",
     "节日",
     "过节",
     "新年"
@@ -3727,8 +3724,8 @@ window.HSK3_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我平时常常六点起床，今天八点才起床。",
-    "py": "Wǒ píngshí chángcháng liù diǎn qǐchuáng, jīntiān bā diǎn cái qǐchuáng.",
+    "zh": "我平时六点起床，今天八点才起床。",
+    "py": "Wǒ píngshí liù diǎn qǐchuáng, jīntiān bā diǎn cái qǐchuáng.",
     "en": "I usually get up at six, but today I only got up at eight."
    },
    "words": [
@@ -3739,9 +3736,7 @@ window.HSK3_WEBS = {
     "总",
     "总是",
     "又",
-    "才",
-    "常见",
-    "常用"
+    "才"
    ]
   },
   {
@@ -3799,7 +3794,7 @@ window.HSK3_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "夏天我喜欢吃西瓜和冰激凌，很甜也很凉快。",
-    "py": "Xiàtiān wǒ xǐhuan chī xīguā hé bīngjīlíng, hěn tián yě hěn liángkuài.",
+    "py": "Xiàtiān wǒ xǐhuan chī xīguā hé bīngjīlíng, hěn tián yě hěn liángkuai.",
     "en": "In summer I like eating watermelon and ice cream; they are sweet and cool."
    },
    "words": [
@@ -3828,7 +3823,6 @@ window.HSK3_WEBS = {
     "酒",
     "饮料",
     "矿泉水",
-    "冰",
     "渴"
    ]
   },
@@ -4057,7 +4051,7 @@ window.HSK3_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "出国要带护照，也要带好行李。",
-    "py": "Chūguó yào dài hùzhào, yě yào dài hǎo xínglǐ.",
+    "py": "Chūguó yào dài hùzhào, yě yào dài hǎo xíngli.",
     "en": "To go abroad you need to bring your passport and pack your luggage well."
    },
    "words": [
@@ -4079,7 +4073,7 @@ window.HSK3_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "我们搬家了，新房子在十二层，有电梯。",
-    "py": "Wǒmen bānjiā le, xīn fángzi zài shíèr céng, yǒu diàntī.",
+    "py": "Wǒmen bānjiā le, xīn fángzi zài shí'èr céng, yǒu diàntī.",
     "en": "We have moved house; the new home is on the 12th floor and has an elevator."
    },
    "words": [
@@ -4259,7 +4253,7 @@ window.HSK3_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "今天刮风，天气很凉快，你不用带伞。",
-    "py": "Jīntiān guā fēng, tiānqì hěn liángkuài, nǐ búyòng dài sǎn.",
+    "py": "Jīntiān guā fēng, tiānqì hěn liángkuai, nǐ búyòng dài sǎn.",
     "en": "It is windy today and the weather is nicely cool, so you do not need to bring an umbrella."
    },
    "words": [
@@ -4269,7 +4263,8 @@ window.HSK3_WEBS = {
     "太阳",
     "月亮",
     "伞",
-    "雨衣"
+    "雨衣",
+    "冰"
    ]
   },
   {
@@ -4427,7 +4422,7 @@ window.HSK3_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "他个子很高，头发很短，眼睛很大。",
-    "py": "Tā gèzi hěn gāo, tóufà hěn duǎn, yǎnjing hěn dà.",
+    "py": "Tā gèzi hěn gāo, tóufa hěn duǎn, yǎnjing hěn dà.",
     "en": "He is tall, his hair is very short and his eyes are big."
    },
    "words": [
@@ -4708,7 +4703,8 @@ window.HSK3_WEBS = {
     "不行",
     "合适",
     "难看",
-    "奇怪"
+    "奇怪",
+    "旧"
    ]
   },
   {
@@ -4726,9 +4722,7 @@ window.HSK3_WEBS = {
     "干净",
     "脏",
     "安静",
-    "安全",
-    "新鲜",
-    "旧"
+    "安全"
    ]
   },
   {
@@ -4752,7 +4746,9 @@ window.HSK3_WEBS = {
     "重要",
     "主要",
     "有名",
-    "一般"
+    "一般",
+    "常见",
+    "常用"
    ]
   },
   {
@@ -4904,7 +4900,6 @@ window.HSK3_WEBS = {
    },
    "words": [
     "比较",
-    "比如",
     "更",
     "越"
    ]
@@ -4967,7 +4962,8 @@ window.HSK3_WEBS = {
     "然后",
     "其实",
     "当然",
-    "只是"
+    "只是",
+    "比如"
    ]
   },
   {

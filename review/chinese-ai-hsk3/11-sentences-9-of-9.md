@@ -21,7 +21,7 @@ Sentences (Chinese / English):
 7. 你累的话，就休息吧。  /  If you are tired, then rest.
 8. 如果你有钱，你就买吧。  /  If you have money, then buy it.
 9. 如果我有时间，我就去。  /  If I have time, I will go.
-10. 这个饭馆不但很便宜，而且很好吃。  /  This restaurant is not only cheap but also delicious.
+10. 这个饭馆不但很便宜，而且菜很好吃。  /  This restaurant is not only cheap, but the food is also delicious.
 11. 今天很冷，而且下雨了。  /  It is cold today, and it has started raining.
 12. 这个很好看，可是有点贵。  /  This looks nice, but it is a bit expensive.
 13. 我们先看电影，然后去吃饭。  /  We will watch a movie first, and then go and eat.

@@ -4,18 +4,18 @@
   {"words": ["他", "把", "手机", "忘", "在家里", "了"], "en": "He left his phone at home."},
   {"words": ["我", "比", "哥哥", "高", "一点儿"], "en": "I am a little taller than my older brother."},
   {"words": ["这个", "问题", "很", "难", "回答"], "en": "This question is very hard to answer."},
-  {"words": ["他", "一边", "看电视", "一边", "吃饭"], "en": "He eats while watching TV."},
+  {"words": ["他", "一边", "看电视", "一边", "吃饭"], "alts": [["他", "一边", "吃饭", "一边", "看电视"]], "en": "He eats while watching TV."},
   {"words": ["老师", "让", "我们", "明天", "早", "一点儿", "来"], "alts": [["老师", "明天", "让", "我们", "早", "一点儿", "来"]], "en": "The teacher told us to come earlier tomorrow."},
-  {"words": ["我", "对", "中国", "文化", "很", "感兴趣"], "en": "I am very interested in Chinese culture."},
+  {"words": ["我", "对", "中国", "文化", "很", "感兴趣"], "alts": [["对", "中国", "文化", "我", "很", "感兴趣"]], "en": "I am very interested in Chinese culture."},
   {"words": ["小明", "被", "老师", "叫", "去", "办公室", "了"], "en": "Xiao Ming was called to the office by the teacher."},
   {"words": ["请", "把", "你的", "护照", "给", "我", "看看"], "en": "Please show me your passport."},
-  {"words": ["如果", "你", "不", "舒服", "就", "回家", "休息", "吧"], "en": "If you do not feel well, go home and rest."},
+  {"words": ["如果", "你", "不", "舒服", "就", "回家", "休息", "吧"], "alts": [["你", "如果", "不", "舒服", "就", "回家", "休息", "吧"]], "en": "If you do not feel well, go home and rest."},
   {"words": ["她", "唱歌", "唱得", "很好"], "en": "She sings very well."},
   {"words": ["我们", "先", "吃饭", "再", "去", "看电影"], "en": "We will eat first and then go to see a film."},
-  {"words": ["他", "刚", "到家", "就", "接到", "了", "电话"], "en": "He had just got home when he received a call."},
+  {"words": ["他", "刚", "到家", "就", "接到", "了", "电话"], "alts": [["他", "刚", "到家", "就", "接到", "电话", "了"]], "en": "He had just got home when he received a call."},
   {"words": ["这", "条", "路", "比", "那", "条", "路", "长"], "en": "This road is longer than that road."},
   {"words": ["雨", "越", "下", "越", "大", "了"], "en": "The rain is getting heavier and heavier."},
-  {"words": ["我", "没", "听懂", "他", "说", "的", "话"], "en": "I did not understand what he said."}
+  {"words": ["我", "没", "听懂", "他", "说", "的", "话"], "alts": [["他", "说", "的", "话", "我", "没", "听懂"]], "en": "I did not understand what he said."}
  ],
  "W2": [
   {"zh": "我每天___自行车上班。", "ans": "骑", "en": "I ride a bike to work every day."},

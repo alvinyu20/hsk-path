@@ -29,11 +29,11 @@
      "en": "Okay. Please give me your passport."
     },
     {
-     "zh": "谢谢。你的房间在八层，坐电梯就可以上去。",
+     "zh": "谢谢。你的房间在八楼，坐电梯就可以上去。",
      "en": "Thank you. Your room is on the eighth floor; you can go up by the elevator."
     },
     {
-     "zh": "在一层，早上六点半开始。",
+     "zh": "在一楼，早上六点半开始。",
      "en": "On the first floor. It starts at half past six in the morning."
     },
     {
@@ -51,7 +51,7 @@
      "en": "Okay, here you are."
     },
     {
-     "zh": "好的，早饭在几层？",
+     "zh": "好的，早饭在几楼？",
      "en": "Okay, which floor is breakfast on?"
     },
     {
@@ -231,7 +231,7 @@
      "en": "Very handy; there is a subway station and a bank nearby."
     },
     {
-     "zh": "下个月五号，你可以来帮助我吗？",
+     "zh": "下个月五号，你可以来帮我吗？",
      "en": "On the fifth of next month. Can you come and help me?"
     },
     {
@@ -337,8 +337,8 @@
      "en": "Practise more, and you can ask the teacher too."
     },
     {
-     "zh": "很好，我相信你一定可以提高！",
-     "en": "Good. I am sure you can improve!"
+     "zh": "很好，我相信你的成绩一定可以提高！",
+     "en": "Good. I am sure your grades can improve!"
     }
    ],
    "you": [
@@ -507,7 +507,7 @@
    "en": "I want to look this word up."
   },
   {
-   "zh": "你能帮助我吗？",
+   "zh": "你能帮我吗？",
    "en": "Can you help me?"
   },
   {

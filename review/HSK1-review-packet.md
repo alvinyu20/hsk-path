@@ -1035,7 +1035,7 @@ Examples:
 | 星期日 | xīngqīrì | Sunday (a little more formal) | 我星期日不工作。 | Wǒ xīngqīrì bù gōngzuò. | I don't work on Sunday. |
 | 月 | yuè | month | 现在是十月。 | Xiànzài shì shíyuè. | It is October now. |
 | 日 | rì | day of the month (written) | 今天是五月一日。 | Jīntiān shì wǔyuè yī rì. | Today is May 1st. |
-| 年 | nián | year | 一年有十二个月。 | Yì nián yǒu shíèr ge yuè. | A year has twelve months. |
+| 年 | nián | year | 一年有十二个月。 | Yì nián yǒu shí'èr ge yuè. | A year has twelve months. |
 | 天 | tiān | day (also: sky) | 我学习汉语三天了。 | Wǒ xuéxí Hànyǔ sān tiān le. | I have been studying Chinese for three days. |
 | 我 | wǒ | I, me, my | 我是学生。 | Wǒ shì xuésheng. | I am a student. |
 | 你 | nǐ | you | 你好吗？ | Nǐ hǎo ma? | How are you? |

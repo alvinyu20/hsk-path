@@ -37,6 +37,24 @@ def tone_of(syl):
 ONE_WORDS = {'一样', '一共', '一边', '一定', '一般', '一直', '一起', '一块儿', '一会儿', '一半', '一些', '一下', '一点儿', '一切'}
 
 
+VOWEL_START = 'aeoāáǎàēéěèōóǒò'
+
+
+def join_syl(sylls):
+    """Joins the syllables of one word. A syllable that starts with a, e or o gets a separating apostrophe (shí'èr, kě'ài, nǚ'ér)."""
+    out = ''
+    for k, x in enumerate(sylls):
+        if k and x[:1].lower() in VOWEL_START:
+            out += "'"
+        out += x
+    return out
+
+
+def cat_py(a, b):
+    """Puts two pieces of pinyin together (shí + èr), with the apostrophe when the second one starts with a, e or o."""
+    return a + ("'" if a and b[:1].lower() in VOWEL_START and a[-1] != "'" else '') + b
+
+
 def sandhi_word(z, py):
     """不 and 一 at the start of a longer word change tone before the next syllable, as they do on their own:
     不 is bú before a fourth tone (不错 búcuò, 不但 búdàn, 不用 búyòng) and bù otherwise; 一 is yí before a fourth tone and yì before the others
@@ -96,7 +114,7 @@ class Engine:
         self.overrides = {r[0]: r[1] for _, r in read_tsv(os.path.join(C, 'pinyin-overrides.tsv'))}
         self.wpy = {}
         for z in self.official:
-            self.wpy[z] = self.overrides.get(z) or ''.join(lazy_pinyin(z, style=Style.TONE, v_to_u=True))
+            self.wpy[z] = self.overrides.get(z) or join_syl(lazy_pinyin(z, style=Style.TONE, v_to_u=True))
         entries = {}
         for z in self.official + NAMES + EXTRA_TOKENS:
             entries[z] = 1000 * len(z) ** 3
@@ -131,7 +149,7 @@ class Engine:
             return sandhi_word(z, self.wpy[z])
         if self.lex.get(z):
             return sandhi_word(z, self.lex[z])
-        return sandhi_word(z, ''.join(lazy_pinyin(z, style=Style.TONE, v_to_u=True)))
+        return sandhi_word(z, join_syl(lazy_pinyin(z, style=Style.TONE, v_to_u=True)))
 
     def tokens(self, zh):
         return [t for t in self.tk.cut(zh, HMM=False) if t.strip()]
@@ -173,10 +191,10 @@ class Engine:
                 py = p[2]
                 if i > 0 and parts[i - 1][0] == 'w' and parts[i - 1][1] in DIGITS:
                     lo = i - 1
-                    py = parts[i - 1][2] + py
+                    py = cat_py(parts[i - 1][2], py)
                 if i + 1 < len(parts) and parts[i + 1][0] == 'w' and parts[i + 1][1] in DIGITS + '一':
                     hi = i + 1
-                    py = py + ('yī' if parts[i + 1][1] == '一' else parts[i + 1][2])
+                    py = cat_py(py, 'yī' if parts[i + 1][1] == '一' else parts[i + 1][2])
                 if hi > lo or lo < i:
                     parts[lo:hi + 1] = [('w', ''.join(x[1] for x in parts[lo:hi + 1]), py)]
                     i = lo

@@ -14,7 +14,7 @@ Lessons:
 
 ### Lesson 1: 把: doing something to something
 - 把 puts the object in front of the verb, so you can say what you do to it and what becomes of it: 我把门关上了 'I closed the door'. The pattern is Subject + 把 + object + verb + something extra (a result, a place, or 了).
-- The verb cannot stand alone after 把. Add a result, a place, a direction or 了: 请把门打开 'Please open the door'; 请把书放在桌子上 'Please put the book on the table'; 我把作业做完了 'I have finished my homework'.
+- The verb cannot stand alone after 把. Add a result, a place, a direction or 了: 请把门打开 'Please open the door'; 请把书放在桌子上 'Please put the book on the table'; 我把作业做完了 'I have finished my homework'. A result such as 完 or 好 is the safest choice; 了 alone works only with some verbs.
 - The object after 把 should be something known (the, this, that), not 'a' something. Say 把这本书给我 'Give me this book', not 把一本书给我.
 - A negative goes before 把: 我没把作业做完 'I did not finish the homework'; 别把手机丢了 'Don't lose your phone'.
 - (common mistake) Do not use 把 with a bare verb: 我把书看 is wrong. Add a result or 了: 我把书看完了 'I have finished the book'.
@@ -27,7 +27,7 @@ Lessons:
 ### Lesson 2: 被: something is done to it
 - 被 turns the sentence around. Instead of 'he broke the cup' (他打坏了杯子) you can say what happened to the cup: 杯子被他打坏了 'The cup was broken by him'.
 - The pattern is Thing + 被 + (doer) + verb + result or 了. Like 把, the verb needs something extra. The doer can be left out: 我的书被借走了 'My book has been borrowed'.
-- 被 is most often used when something unwanted or unexpected happens to the thing: 我的伞被朋友拿走了 'My umbrella was taken away by a friend'. In speech 让 and 叫 can replace 被: 杯子让他打坏了.
+- 被 is most often used when something unwanted or unexpected happens to the thing: 我的伞被朋友拿走了 'My umbrella was taken away by a friend'. It is not limited to bad news: 他被老师叫到办公室了 'He was called to the office by the teacher'. In speech 让 and 叫 can replace 被: 杯子让他打坏了.
 - A negative goes before 被: 我的书没被借走 'My book was not borrowed'.
 - (common mistake) Do not use a bare verb after 被: 杯子被他打 is incomplete. Say 杯子被他打坏了.
 - (common mistake) The negative goes before 被: 我的书没被借走, not 我的书被没借走.
@@ -55,7 +55,7 @@ Lessons:
 - 然后 means 'then, after that': 我们先看电影，然后去吃饭 'We will watch a movie first, and then go and eat'.
 - (common mistake) Use 不但 with 而且, not with 但是 or 可是: 不但…而且… go together.
 - (common mistake) 而且 comes at the start of the second part: do not put it before the first part.
-- example: 这个饭馆不但很便宜，而且很好吃。 / This restaurant is not only cheap but also delicious.
+- example: 这个饭馆不但很便宜，而且菜很好吃。 / This restaurant is not only cheap, but the food is also delicious.
 - example: 今天很冷，而且下雨了。 / It is cold today, and it has started raining.
 - example: 这个很好看，可是有点贵。 / This looks nice, but it is a bit expensive.
 - example: 我们先看电影，然后去吃饭。 / We will watch a movie first, and then go and eat.
@@ -132,7 +132,7 @@ Lessons:
 - example: 明天我再来。 / I will come again tomorrow.
 
 ### Lesson 11: 越…越… and 越来越
-- 越…越… means 'the more … the more …': 他越说越快 'He speaks faster and faster'; 汉语歌越听越好听 'This song sounds better the more you listen to it'.
+- 越…越… means 'the more … the more …': 他越说越快 'He speaks faster and faster'; 汉语歌越听越好听 'Chinese songs sound better the more you listen to them'.
 - 越来越 + adjective (or a feeling verb such as 喜欢) means 'more and more': 天气越来越冷 'The weather gets colder and colder'; 我越来越喜欢汉语了 'I like Chinese more and more'. A final 了 is common.
 - Both parts of 越 stand right before the words they describe. Do not add 很 after them.
 - (common mistake) Put 越 before both words: 雨越下越大. 雨下越大 is wrong.
@@ -262,7 +262,7 @@ Lessons:
 
 ### Lesson 22: 应该, 必须, 需要, 不用 and 最好
 - 应该 (or 该) means 'should': 你应该多休息 'You should rest more'. The negative is 不应该.
-- 必须 means 'must, have to': 学生必须在八点以前到学校 'Students must be at school before eight'. Do not say 不必须. The opposite of 必须 is 不用, 'no need to': 你不用急，慢慢来 'There is no need to rush; take your time'.
+- 必须 means 'must, have to': 学生必须在八点以前到学校 'Students must be at school before eight'. Do not say 不必须. The opposite of 必须 is 不用, 'no need to': 你不用急，慢慢来 'There is no need to rush; take your time'. Do not mix 不用 up with 别, which means 'don't': 别急 'Don't rush'.
 - 需要 is a verb that means 'need': 我需要你的帮助 'I need your help'. It can also be followed by a verb: 你需要多休息.
 - 最好 means 'had better': 外面很冷，你最好多穿一点 'It is cold outside, so you had better wear a bit more'.
 - (common mistake) Do not say 不必须. The opposite of 必须 is 不用: 你不用来, not 你不必须来.
@@ -298,7 +298,7 @@ Lessons:
 
 ### Lesson 25: 终于, 几乎, 突然, 马上 and 一定
 - 终于 means 'at last, finally' and is for something you waited for: 火车终于来了 'The train has finally come'. 几乎 means 'almost, nearly': 我几乎忘了他的名字 'I almost forgot his name'; 几乎没 means 'hardly any': 他几乎没吃东西.
-- 突然 means 'suddenly': 突然，他笑了 'Suddenly, he laughed'; 天突然下雨了 'It suddenly started to rain'. It can go before the subject or before the verb.
+- 突然 means 'suddenly': 突然，他笑了 'Suddenly, he laughed'; 突然下雨了 'It suddenly started to rain'. It can go before the subject or before the verb.
 - 马上 means 'right away': 我马上就到 'I will be there right away'. 一定 means 'certainly, must': 我一定会给你打电话 'I will definitely call you'.
 - All of these go right before the verb; 突然 can also start the sentence.
 - (common mistake) Use 终于 only for a result you were waiting for. For a surprise, say 突然.

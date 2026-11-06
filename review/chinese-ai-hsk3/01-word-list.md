@@ -13,11 +13,11 @@ If a part has no problems, answer "No problems found".
 Words (word | pinyin | part of speech | English):
 
 1. 阿姨 | āyí | n | aunt; polite way to address a woman about your mother's age | note: A child calls a woman about their mother's age 阿姨. It also means a mother's sister.
-2. 爱人 | àirén | n | husband or wife; spouse | note: 爱人 is used in mainland China for one's husband or wife.
-3. 大人 | dàrén | n | adult; grown-up
+2. 爱人 | àiren | n | husband or wife; spouse | note: 爱人 is used in mainland China for one's husband or wife.
+3. 大人 | dàren | n | adult; grown-up
 4. 夫妻 | fūqī | n | husband and wife; married couple
 5. 姐妹 | jiěmèi | n | sisters
-6. 叔叔 | shūshū | n | uncle (father's younger brother); polite way to address a man
+6. 叔叔 | shūshu | n | uncle (father's younger brother); polite way to address a man
 7. 老人 | lǎorén | n | old person; the elderly
 8. 男人 | nánrén | n | man
 9. 女人 | nǚrén | n | woman
@@ -36,11 +36,11 @@ Words (word | pinyin | part of speech | English):
 22. 运动员 | yùndòngyuán | n | athlete; sportsperson
 23. 留学生 | liúxuéshēng | n | international student; student studying abroad
 24. 名人 | míngrén | n | famous person; celebrity
-25. 耳朵 | ěrduǒ | n | ear
+25. 耳朵 | ěrduo | n | ear
 26. 脸 | liǎn | n | face
 27. 腿 | tuǐ | n | leg
 28. 嘴 | zuǐ | n | mouth
-29. 头发 | tóufà | n | hair (on the head)
+29. 头发 | tóufa | n | hair (on the head)
 30. 牙 | yá | n | tooth
 31. 脚 | jiǎo | n | foot
 32. 身高 | shēngāo | n | height (of a person)
@@ -64,7 +64,7 @@ Words (word | pinyin | part of speech | English):
 50. 担心 | dānxīn | v | to worry; to be anxious about
 51. 满意 | mǎnyì | adj | satisfied; pleased
 52. 放心 | fàngxīn | v | to set one's mind at rest; not to worry
-53. 可爱 | kěài | adj | cute; lovely
+53. 可爱 | kě'ài | adj | cute; lovely
 54. 聪明 | cōngmíng | adj | smart; clever
 55. 年轻 | niánqīng | adj | young
 56. 热情 | rèqíng | adj | warm; friendly; enthusiastic
@@ -77,7 +77,7 @@ Words (word | pinyin | part of speech | English):
 63. 养 | yǎng | v | to keep (a pet); to raise; to bring up
 64. 照顾 | zhàogù | v | to take care of; to look after
 65. 关心 | guānxīn | v | to care about; to show concern for
-66. 喜爱 | xǐài | v | to be fond of; to love
+66. 喜爱 | xǐ'ài | v | to be fond of; to love
 67. 愿意 | yuànyì | v | to be willing; to want to
 68. 感到 | gǎndào | v | to feel; to sense
 69. 小心 | xiǎoxīn | v | to be careful; to take care
@@ -92,7 +92,7 @@ Words (word | pinyin | part of speech | English):
 78. 草地 | cǎodì | n | lawn; grassy field
 79. 层 | céng | m | floor (of a building); storey; layer | note: 三层 means the third floor. 楼 is the building and 层 counts its floors.
 80. 地点 | dìdiǎn | n | place; location (of an event)
-81. 地方 | dìfāng | n | place; space | note: The 方 is read in the neutral tone: dìfang.
+81. 地方 | dìfang | n | place; space | note: The 方 is read in the neutral tone: dìfang.
 82. 地图 | dìtú | n | map
 83. 电梯 | diàntī | n | elevator; lift
 84. 动物 | dòngwù | n | animal
@@ -147,7 +147,7 @@ Words (word | pinyin | part of speech | English):
 133. 出发 | chūfā | v | to set off; to start a journey
 134. 检票 | jiǎnpiào | v | to check tickets; to have one's ticket checked
 135. 护照 | hùzhào | n | passport
-136. 行李 | xínglǐ | n | luggage; baggage | note: 行李 is read xíngli, with a neutral second syllable.
+136. 行李 | xíngli | n | luggage; baggage | note: 行李 is read xíngli, with a neutral second syllable.
 137. 箱子 | xiāngzi | n | suitcase; box; chest
 138. 季节 | jìjié | n | season
 139. 春天 | chūntiān | n | spring
@@ -156,10 +156,10 @@ Words (word | pinyin | part of speech | English):
 142. 冬天 | dōngtiān | n | winter
 143. 四季 | sìjì | n | the four seasons
 144. 太阳 | tàiyáng | n | sun
-145. 月亮 | yuèliàng | n | moon
+145. 月亮 | yuèliang | n | moon
 146. 风 | fēng | n | wind
 147. 刮 | guā | v | to blow (of wind)
-148. 凉快 | liángkuài | adj | pleasantly cool
+148. 凉快 | liángkuai | adj | pleasantly cool
 149. 树 | shù | n | tree
 150. 牛 | niú | n | cow; ox; cattle
 151. 羊 | yáng | n | sheep; goat
@@ -202,7 +202,7 @@ Words (word | pinyin | part of speech | English):
 188. 工作日 | gōngzuòrì | n | working day; weekday
 189. 新闻 | xīnwén | n | news
 190. 报纸 | bàozhǐ | n | newspaper
-191. 故事 | gùshì | n | story
+191. 故事 | gùshi | n | story
 192. 节目 | jiémù | n | programme; show
 193. 节日 | jiérì | n | festival; holiday
 194. 晚会 | wǎnhuì | n | evening party; gala
@@ -212,8 +212,8 @@ Words (word | pinyin | part of speech | English):
 198. 网站 | wǎngzhàn | n | website
 199. 邮件 | yóujiàn | n | email; mail
 200. 邮箱 | yóuxiāng | n | mailbox; email address
-201. 电子书 | diànzishū | n | e-book
-202. 照片 | zhàopiān | n | photo; picture
+201. 电子书 | diànzǐshū | n | e-book
+202. 照片 | zhàopiàn | n | photo; picture
 203. 相机 | xiàngjī | n | camera
 204. 照相 | zhàoxiàng | v | to take a photo
 205. 拍照 | pāizhào | v | to take photos
@@ -397,7 +397,7 @@ Words (word | pinyin | part of speech | English):
 383. 容易 | róngyì | adj | easy; likely
 384. 方便 | fāngbiàn | adj | convenient
 385. 合适 | héshì | adj | suitable; fitting
-386. 清楚 | qīngchǔ | adj | clear
+386. 清楚 | qīngchu | adj | clear
 387. 奇怪 | qíguài | adj | strange; odd
 388. 重要 | zhòngyào | adj | important
 389. 主要 | zhǔyào | adj | main; major
@@ -502,11 +502,11 @@ Words (word | pinyin | part of speech | English):
 488. 以外 | yǐwài | loc | outside; apart from
 489. 到处 | dàochù | adv | everywhere
 490. 不用 | búyòng | adv | need not; there is no need to
-491. 明白 | míngbái | v | to understand; to be clear about
+491. 明白 | míngbai | v | to understand; to be clear about
 
 Extra questions for this part:
 A. The site has 491 cards. The November 2025 HSK 3.0 syllabus has 500 entries at band 3. Nine of them reuse a headword from an earlier level with a different sense or reading (得 dé and děi, 地, 过去, 还 huán, 会 huì "a meeting", 站, 长 zhǎng, 只 zhǐ); those are taught in a lesson about new meanings of known words, not as separate cards. I read the list from a third-party copy of the syllabus PDF, so please tell me which official band 3 words are NOT in my list and which of my words are NOT official band 3 words (as far as you know the list).
 B. For each word, is the pinyin right for the meaning given? Look especially at words with more than one reading: 长, 发, 行, 好, 重, 数, 教, 种, 调, 角, 假, 号, 差, 干, 便宜, 地方, 觉得, 还 (huán / hái), 会 (huì / kuài), 只 (zhī / zhǐ), 得 (de / děi / dé), 地 (de / dì), 着 (zhe / zháo), 了 (le / liǎo).
-C. Neutral tones: the site follows the dictionary. These HSK 3 words are shown with at least one neutral-tone syllable: 咱们 zánmen, 房子 fángzi, 屋子 wūzi, 箱子 xiāngzi, 句子 jùzi, 电子书 diànzishū, 盘子 pánzi, 勺子 sháozi, 筷子 kuàizi, 瓶子 píngzi, 裙子 qúnzi, 懂得 dǒngde, 认得 rènde, 差不多 chàbuduō, 子 zi, 别的 biéde, 的话 dehuà, 除了 chúle, 为了 wèile, 怎么办 zěnmebàn. Please say which you would show differently for a beginner.
+C. Neutral tones: the site follows the dictionary. These HSK 3 words are shown with at least one neutral-tone syllable: 爱人 àiren, 大人 dàren, 叔叔 shūshu, 耳朵 ěrduo, 头发 tóufa, 咱们 zánmen, 地方 dìfang, 房子 fángzi, 屋子 wūzi, 行李 xíngli, 箱子 xiāngzi, 月亮 yuèliang, 凉快 liángkuai, 句子 jùzi, 故事 gùshi, 盘子 pánzi, 勺子 sháozi, 筷子 kuàizi, 瓶子 píngzi, 裙子 qúnzi, 懂得 dǒngde, 认得 rènde, 清楚 qīngchu, 差不多 chàbuduō, 子 zi, 别的 biéde, 的话 dehuà, 除了 chúle, 为了 wèile, 怎么办 zěnmebàn, 明白 míngbai. Please say which you would show differently for a beginner.
 D. The site writes 聊天 and 一块 without 儿 by default (and with 儿, as the syllabus prints them, when a switch is on). Is that how you would write them in plain Mandarin text?
 E. Glosses I am least sure of: 层 (floor; layer), 间 (room measure word), 号 (date; number), 假 (leave; holiday), 担 and 担心, 干 (do), 差 (poor; lacking), 重 (heavy; important), 关系 (relationship; connection), 着急 versus 担心, 满意, 合适, 熟, 影响. Is each gloss correct and the most useful first meaning for a beginner? Which important common meaning is missing?

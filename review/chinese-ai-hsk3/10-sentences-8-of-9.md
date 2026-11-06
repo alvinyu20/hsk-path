@@ -61,7 +61,7 @@ Sentences (Chinese / English):
 47. 一年有四季：春天、夏天、秋天和冬天。  /  A year has four seasons: spring, summer, autumn and winter.
 48. 学校放假了，我们回家过节。  /  School has closed for the holiday, so we are going home to celebrate the festival.
 49. 火车晚点了，我们等了半天，所以迟到了。  /  The train was late, we waited for ages, and so we were late ourselves.
-50. 我平时常常六点起床，今天八点才起床。  /  I usually get up at six, but today I only got up at eight.
+50. 我平时六点起床，今天八点才起床。  /  I usually get up at six, but today I only got up at eight.
 51. 我刚到家，雨突然下大了。  /  I had just got home when it suddenly started to rain hard.
 52. 我饿了，请给我菜单，我想尝一尝这个菜。  /  I am hungry now. Please give me the menu, because I want to try this dish.
 53. 夏天我喜欢吃西瓜和冰激凌，很甜也很凉快。  /  In summer I like eating watermelon and ice cream; they are sweet and cool.
@@ -122,12 +122,12 @@ Sentences (Chinese / English):
 108. 他的房子有一个小花园。  /  His house has a small garden.
 109. 你好！欢迎来到我们宾馆。你想住几天？  /  Hello! Welcome to our hotel. How many days would you like to stay?
 110. 好的。请把你的护照给我。  /  Okay. Please give me your passport.
-111. 谢谢。你的房间在八层，坐电梯就可以上去。  /  Thank you. Your room is on the eighth floor; you can go up by the elevator.
-112. 在一层，早上六点半开始。  /  On the first floor. It starts at half past six in the morning.
+111. 谢谢。你的房间在八楼，坐电梯就可以上去。  /  Thank you. Your room is on the eighth floor; you can go up by the elevator.
+112. 在一楼，早上六点半开始。  /  On the first floor. It starts at half past six in the morning.
 113. 不客气！有问题可以找我。  /  You are welcome! You can come to me if you have any problem.
 114. 我想住三天。  /  I would like to stay three days.
 115. 好的，给你。  /  Okay, here you are.
-116. 好的，早饭在几层？  /  Okay, which floor is breakfast on?
+116. 好的，早饭在几楼？  /  Okay, which floor is breakfast on?
 117. 好的，谢谢你。  /  Okay, thank you.
 118. 你好，你哪里不舒服？  /  Hello, where do you feel unwell?
 119. 从什么时候开始的？  /  Since when?
@@ -153,7 +153,7 @@ Sentences (Chinese / English):
 139. 好的，到时候见！  /  Okay, see you then!
 140. 是的，我下个月搬到新小区。  /  Yes, next month I am moving to a new neighbourhood.
 141. 很方便，附近有地铁站和银行。  /  Very handy; there is a subway station and a bank nearby.
-142. 下个月五号，你可以来帮助我吗？  /  On the fifth of next month. Can you come and help me?
+142. 下个月五号，你可以来帮我吗？  /  On the fifth of next month. Can you come and help me?
 143. 不用，谢谢你，你来就行。  /  No need, thank you. Just come.
 144. 你好！需要帮助吗？  /  Hello! Do you need help?
 145. 十点二十。可是今天晚点了，要等半个小时。  /  Twenty past ten. But today it is late, so you have to wait half an hour.
@@ -168,7 +168,7 @@ Sentences (Chinese / English):
 154. 没关系。你每天都做作业吗？  /  Never mind. Do you do your homework every day?
 155. 那你要每天复习一点，不要太着急。  /  Then you should review a little every day and not worry too much.
 156. 多练习，也可以问老师。  /  Practise more, and you can ask the teacher too.
-157. 很好，我相信你一定可以提高！  /  Good. I am sure you can improve!
+157. 很好，我相信你的成绩一定可以提高！  /  Good. I am sure your grades can improve!
 158. 不太好，我的数学很差。  /  Not so good; my maths is poor.
 159. 做，可是我常常忘记复习。  /  I do, but I often forget to review.
 160. 好的，我会努力的。你有什么好办法？  /  Okay, I will work hard. What good ideas do you have?
@@ -197,7 +197,7 @@ Sentences (Chinese / English):
 183. 这个句子是什么意思？  /  What does this sentence mean?
 184. 我不太明白，你可以再讲一遍吗？  /  I do not quite understand; can you explain it again?
 185. 我想查一下这个词。  /  I want to look this word up.
-186. 你能帮助我吗？  /  Can you help me?
+186. 你能帮我吗？  /  Can you help me?
 187. 对不起，我忘记了。  /  Sorry, I forgot.
 188. 我昨天在路口遇到了一个老同事。  /  I ran into an old colleague at the crossing yesterday.
 189. 请问，我怎么去图书馆？  /  Excuse me, how do I get to the library?

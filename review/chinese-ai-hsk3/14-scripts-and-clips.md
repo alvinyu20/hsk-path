@@ -18,9 +18,9 @@ Also check: do the practice conversations sound like something people really say
 - 学习者：我想住三天。  /  I would like to stay three days.
 - 对方：好的。请把你的护照给我。  /  Okay. Please give me your passport.
 - 学习者：好的，给你。  /  Okay, here you are.
-- 对方：谢谢。你的房间在八层，坐电梯就可以上去。  /  Thank you. Your room is on the eighth floor; you can go up by the elevator.
-- 学习者：好的，早饭在几层？  /  Okay, which floor is breakfast on?
-- 对方：在一层，早上六点半开始。  /  On the first floor. It starts at half past six in the morning.
+- 对方：谢谢。你的房间在八楼，坐电梯就可以上去。  /  Thank you. Your room is on the eighth floor; you can go up by the elevator.
+- 学习者：好的，早饭在几楼？  /  Okay, which floor is breakfast on?
+- 对方：在一楼，早上六点半开始。  /  On the first floor. It starts at half past six in the morning.
 - 学习者：好的，谢谢你。  /  Okay, thank you.
 - 对方：不客气！有问题可以找我。  /  You are welcome! You can come to me if you have any problem.
 ### See a doctor (Health, 5 turns)
@@ -49,7 +49,7 @@ Also check: do the practice conversations sound like something people really say
 - 对方：新家在哪里？附近方便吗？  /  Where is the new home? Is it handy around there?
 - 学习者：很方便，附近有地铁站和银行。  /  Very handy; there is a subway station and a bank nearby.
 - 对方：太好了！你什么时候搬？  /  Great! When are you moving?
-- 学习者：下个月五号，你可以来帮助我吗？  /  On the fifth of next month. Can you come and help me?
+- 学习者：下个月五号，你可以来帮我吗？  /  On the fifth of next month. Can you come and help me?
 - 对方：当然可以！我需要带东西吗？  /  Of course you can! Do I need to bring anything?
 - 学习者：不用，谢谢你，你来就行。  /  No need, thank you. Just come.
 - 对方：好的，到时候见！  /  Okay, see you then!
@@ -72,7 +72,7 @@ Also check: do the practice conversations sound like something people really say
 - 学习者：好的，我会努力的。你有什么好办法？  /  Okay, I will work hard. What good ideas do you have?
 - 对方：多练习，也可以问老师。  /  Practise more, and you can ask the teacher too.
 - 学习者：好，我明天就去问老师。  /  Okay, I will go and ask the teacher tomorrow.
-- 对方：很好，我相信你一定可以提高！  /  Good. I am sure you can improve!
+- 对方：很好，我相信你的成绩一定可以提高！  /  Good. I am sure your grades can improve!
 ### Change a shirt (Shopping, 5 turns)
 - 对方：你好！你需要帮助吗？  /  Hello! Do you need help?
 - 学习者：我想换这件衬衫。  /  I would like to change this shirt.
@@ -101,7 +101,7 @@ Also check: do the practice conversations sound like something people really say
 - 这个句子是什么意思？  /  What does this sentence mean?
 - 我不太明白，你可以再讲一遍吗？  /  I do not quite understand; can you explain it again?
 - 我想查一下这个词。  /  I want to look this word up.
-- 你能帮助我吗？  /  Can you help me?
+- 你能帮我吗？  /  Can you help me?
 - 对不起，我忘记了。  /  Sorry, I forgot.
 
 ## Listening clips: the passage, the English and the "what to listen for" notes

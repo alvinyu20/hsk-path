@@ -259,7 +259,7 @@ window.HSK3_LISTEN = {
   },
   {
    "zh": "这个问题很难，我想了半天才明白。",
-   "py": "Zhège wèntí hěn nán, wǒ xiǎng le bàntiān cái míngbái.",
+   "py": "Zhège wèntí hěn nán, wǒ xiǎng le bàntiān cái míngbai.",
    "en": "This question is hard; I thought for a long time before I understood.",
    "words": [
     {
@@ -309,7 +309,7 @@ window.HSK3_LISTEN = {
     },
     {
      "zh": "明白",
-     "py": "míngbái",
+     "py": "míngbai",
      "key": "mingbai"
     }
    ],
@@ -529,7 +529,7 @@ window.HSK3_LISTEN = {
   },
   {
    "zh": "今天比昨天凉快多了。",
-   "py": "Jīntiān bǐ zuótiān liángkuài duō le.",
+   "py": "Jīntiān bǐ zuótiān liángkuai duō le.",
    "en": "Today is much cooler than yesterday.",
    "words": [
     {
@@ -549,7 +549,7 @@ window.HSK3_LISTEN = {
     },
     {
      "zh": "凉快",
-     "py": "liángkuài",
+     "py": "liángkuai",
      "key": "liangkuai"
     },
     {
@@ -2983,7 +2983,7 @@ window.HSK3_LISTEN = {
    "zh": "爱人",
    "t": [
     4,
-    2
+    5
    ]
   },
   {
@@ -3291,7 +3291,7 @@ window.HSK3_LISTEN = {
    "zh": "大人",
    "t": [
     4,
-    2
+    5
    ]
   },
   {
@@ -3361,7 +3361,7 @@ window.HSK3_LISTEN = {
    "zh": "地方",
    "t": [
     4,
-    1
+    5
    ]
   },
   {
@@ -3452,7 +3452,7 @@ window.HSK3_LISTEN = {
    "zh": "耳朵",
    "t": [
     3,
-    3
+    5
    ]
   },
   {
@@ -3641,7 +3641,7 @@ window.HSK3_LISTEN = {
    "zh": "故事",
    "t": [
     4,
-    4
+    5
    ]
   },
   {
@@ -4096,7 +4096,7 @@ window.HSK3_LISTEN = {
    "zh": "凉快",
    "t": [
     2,
-    4
+    5
    ]
   },
   {
@@ -4166,7 +4166,7 @@ window.HSK3_LISTEN = {
    "zh": "明白",
    "t": [
     2,
-    2
+    5
    ]
   },
   {
@@ -4362,7 +4362,7 @@ window.HSK3_LISTEN = {
    "zh": "清楚",
    "t": [
     1,
-    3
+    5
    ]
   },
   {
@@ -4530,7 +4530,7 @@ window.HSK3_LISTEN = {
    "zh": "叔叔",
    "t": [
     1,
-    1
+    5
    ]
   },
   {
@@ -4614,7 +4614,7 @@ window.HSK3_LISTEN = {
    "zh": "头发",
    "t": [
     2,
-    4
+    5
    ]
   },
   {
@@ -4852,7 +4852,7 @@ window.HSK3_LISTEN = {
    "zh": "行李",
    "t": [
     2,
-    3
+    5
    ]
   },
   {
@@ -5062,7 +5062,7 @@ window.HSK3_LISTEN = {
    "zh": "月亮",
    "t": [
     4,
-    4
+    5
    ]
   },
   {
@@ -5090,7 +5090,7 @@ window.HSK3_LISTEN = {
    "zh": "照片",
    "t": [
     4,
-    1
+    4
    ]
   },
   {
