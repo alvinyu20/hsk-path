@@ -473,6 +473,15 @@
     const t = String(typed || '').trim();
     return BANK[t] ? t : PY_WORD[toneless(t)] || '';
   };
+  // "Say it" cards show the English and ask for the word. Another word on the lists whose English is the very same (孩子 and 小孩 are both "child") is a right answer too.
+  const senseSet = (en) => String(en).toLowerCase().replace(/\([^)]*\)/g, '').split(/;|,|\s\/\s/).map(x => x.trim()).filter(Boolean).sort().join('|');
+  const synonymOf = (q, typed) => {
+    if (!q.sayEn) return '';
+    const want = senseSet(q.sayEn);
+    if (!want) return '';
+    const hit = BANK_KEYS.filter(z => z !== q.exp.zh && senseSet(BANK[z].en) === want);
+    return hit.find(z => typed === z || comparePinyin(typed, BANK[z].py, tonesOptional()).ok) || '';
+  };
   // the answer to a typed or fill-in question: hanzi, or pinyin with tones. grade 'good' (right), 'hard' (right sounds, wrong tone, or another real word) or 'again'
   const checkTyped = (q, typed) => {
     const t = String(typed || '').trim();
@@ -480,6 +489,8 @@
     if (t === q.exp.zh || (q.exp.alt && t === q.exp.alt)) return { ok:true, grade:'good', note:'' };
     const r = comparePinyin(t, q.exp.py, tonesOptional());
     if (r.ok || r.grade === 'hard') return r;
+    const syn = synonymOf(q, t);
+    if (syn) return { ok:true, grade:'good', note:'Also right: ' + syn + ' (' + BANK[syn].py.split('/')[0].trim() + ') means the same. This card was asking for ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
     if (q.type === 'cloze') {   // several words can fit a gap; a real word that is not the expected one is not marked as a plain miss
       const known = knownByPinyin(t);
       if (known && known !== q.exp.zh) return { ok:false, grade:'hard', note:'That is a real word (' + known + ') but not the one this gap was written for. Several words can fit; if yours fits the English too, use "Report a mistake" so it can be added. Expected: ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
@@ -503,7 +514,7 @@
   const qHearMeaning = (zh) => Object.assign({ type:'listen', kicker:'Listen', prompt:'What does this word mean?', audio:zh, optsLatin:true, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(pickEx(zh)), word:zh, dim:'hear' }, choiceOptions(zh, z => BANK[z].en));
   const TYPE_HELP = 'Write the tones as marks or numbers: nǐ hǎo or ni3 hao3. Hanzi also works.';
   const qTypePinyin = (zh, ex) => ({ type:'type', kicker:'Type it', prompt:'Type the pinyin for this word, with tones', big:zh, placeholder:'nǐ hǎo or ni3 hao3', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, ''), reveal:BANK[zh].py + ' · ' + BANK[zh].en, explain:TYPE_HELP + ' Example: ' + ex.zh + ' ' + ex.py, word:zh, dim:'prod' });
-  const qSayIt = (zh, ex) => ({ type:'type', kicker:'Say it', prompt:'Say this out loud, then type its pinyin with tones', big:BANK[zh].en, bigCls:'en', placeholder:'nǐ hǎo or ni3 hao3', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, ''), reveal:zh + ' · ' + BANK[zh].py, explain:TYPE_HELP + ' Example: ' + ex.zh + ' ' + ex.py, word:zh, dim:'prod' });
+  const qSayIt = (zh, ex) => ({ type:'type', kicker:'Say it', prompt:'Say this out loud, then type its pinyin with tones', big:BANK[zh].en, bigCls:'en', sayEn:BANK[zh].en, placeholder:'nǐ hǎo or ni3 hao3', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, ''), reveal:zh + ' · ' + BANK[zh].py, explain:TYPE_HELP + ' Example: ' + ex.zh + ' ' + ex.py, word:zh, dim:'prod' });
   const ORDER_IDS = 'abcd';
   const orderQ = (toks, base) => {
     let p;
@@ -3104,7 +3115,7 @@
   const tpl = document.getElementById('app-template');
   const app = DCMount(root, tpl, Component);
   onPersonChange = () => { try { app.personChanged(); } catch (e) {} };
-  app.testApi = { comparePinyin, toneInfo, checkTyped, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin };   // for the browser tests
+  app.testApi = { comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin };   // for the browser tests
   window.shanlu = app;
 
   // keyboard: Space flips a review card, 1-4 rate it; in the exam, arrows move and A-F or 1-6 choose

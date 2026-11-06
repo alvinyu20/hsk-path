@@ -326,6 +326,14 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await pA.evaluate(() => window.SHANLU_LEVEL) === 0 && await pA.evaluate(() => window.SHANLU_LEVELS.join()) === '1,2', 'the address ?level=0 shows All levels once HSK 2 is unlocked');
     check(await pA.evaluate(() => Object.keys(window.shanlu.state.ws).length === window.HSK1_WORDS.length + window.HSK2_WORDS.length), 'All levels holds the words of both levels');
     check((await pA.locator('.lvseg button', { hasText: 'All' }).getAttribute('class') || '').includes('on'), 'the All button is the selected one');
+    // "Say it" cards: another word with exactly the same English is a right answer (孩子 for 小孩, both "child")
+    const syn = await pA.evaluate(() => {
+      const T = window.shanlu.testApi; const z = window.HSK2_WORDS.map(w => w.zh).find(w => w.indexOf('小孩') === 0);
+      const q = T.qSayIt(z, { zh: '', py: '' });
+      const r1 = T.checkTyped(q, 'hai2zi'), r2 = T.checkTyped(q, '孩子'), r3 = T.checkTyped(q, 'ma1ma'), r4 = T.checkTyped(q, 'hai3zi');
+      return { z, r1: [r1.ok, r1.grade, r1.note], r2: r2.ok, r3: [r3.ok, r3.grade], r4: [r4.ok, r4.grade] };
+    });
+    check(syn.r1[0] && syn.r2 && /Also right: 孩子/.test(syn.r1[2]) && !syn.r3[0] && !syn.r4[0], 'on a Say-it card a different word with the same English is accepted, with a note (' + syn.z + ' / hai2zi), and other words still are not');
     // grammar from both levels in one list
     await pA.locator('nav button', { hasText: 'Grammar' }).click();
     await pA.waitForTimeout(150);
