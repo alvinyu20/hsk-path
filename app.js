@@ -257,6 +257,8 @@
   const LRN_MAX = 12;       // new words waiting in their learning phase at once; add more after these are learned
   const LEARN_STEPS = 2;    // successful recalls (after meeting the word) before it gets a real interval
   const itemOf = (it) => { const m = /^(.*?)(?:#([lph]))?$/.exec(String(it)); return { zh:m[1], t:m[2] || 's' }; };
+  // a "new word" card (word#l) for a word that has already graduated (it is in memory and no longer in the learning list) is out of date: it would show the word as new again and reset its progress
+  const staleNew = (z, ws, lrn) => { const m = itemOf(z); return m.t === 'l' && !(lrn && lrn[m.zh]) && !!(ws && ws[m.zh] && ws[m.zh].see && ws[m.zh].see.s > 0); };
   const buildQueue = (ws, anyway, lrn) => {
     const fresh = Object.keys(lrn || {}).filter(zh => ws[zh] && !(ws[zh].see.s > 0)).map(zh => zh + '#l');
     const see = [], prod = [], hear = [];
@@ -361,7 +363,7 @@
       if (Array.isArray(S.rq)) S.rq = S.rq.map(z => { const m = itemOf(z); return m.zh === f ? t + (m.t === 's' ? '' : '#' + m.t) : z; }).filter((z, i, arr) => arr.indexOf(z) === i);
     });
     // anything still pointing at a word that is not in this mode's list (the dropped twins) is left out of today's lists
-    if (Array.isArray(S.rq)) S.rq = S.rq.filter(z => BANK[itemOf(z).zh]);   // queue items are a word, or word#l / #p / #h for a new, typed or heard card
+    if (Array.isArray(S.rq)) S.rq = S.rq.filter(z => BANK[itemOf(z).zh] && !staleNew(z, S.ws, S.lrn));   // queue items are a word, or word#l / #p / #h for a new, typed or heard card
     if (S.wlearned) Object.keys(S.wlearned).forEach(z => { if (!BANK[z]) delete S.wlearned[z]; });
     if (S.rlast && !BANK[S.rlast.zh]) S.rlast = null;
   }
@@ -948,7 +950,7 @@
       this.saveTimer = setTimeout(() => this.persistNow(), 250);
     }
     // the Review queue after a sync or an import: drop words that no longer exist, keep the word#l / #p / #h cards (a sync that dropped them emptied the queue mid-session and Continue did nothing)
-    cleanQueue = (rq) => (rq || []).filter(z => BANK[itemOf(z).zh]);
+    cleanQueue = (rq, ws, lrn) => (rq || []).filter(z => BANK[itemOf(z).zh] && !staleNew(z, ws, lrn));
     frozen = false;   // set while the page is being reloaded after a reset, so the leaving page does not write the old progress back
     persistNow() {
       if (this.frozen) return;
@@ -1026,7 +1028,7 @@
           const bumped = (merged[LV].epoch || 0) > (this.state.epoch || 0);   // another device reset this level: today's "words so far" baseline starts again too
           const next = rollDay(Object.assign({}, this.state, merged[LV], bumped ? { mem0:null } : {}));
           carryOverErhua(next);
-          patch = SY.pick(next); patch.rq = this.cleanQueue(patch.rq); patch.ws = fillWs(patch.ws);
+          patch = SY.pick(next); patch.rq = this.cleanQueue(patch.rq, patch.ws, patch.lrn); patch.ws = fillWs(patch.ws);
           if (bumped) patch.mem0 = next.mem0;
         }
         if (patch) { this.noSync = true; this.noMin = true; this.setState(patch); this.noMin = false; this.noSync = false; this.persistNow(); }
@@ -1788,7 +1790,7 @@
           let next = rollDay(Object.assign({}, this.state, r.merged, bumped ? { mem0:null } : {}));
           carryOverErhua(next);
           patch = window.ShanluSync.pick(next);
-          patch.rq = this.cleanQueue(patch.rq);
+          patch.rq = this.cleanQueue(patch.rq, patch.ws, patch.lrn);
           patch.ws = fillWs(patch.ws);
           if (bumped) patch.mem0 = next.mem0;
         }
@@ -1865,6 +1867,7 @@
       const S = this.state; const m = itemOf(it); const zh = m.zh;
       const patch = { rlog:[] }; let again = false, at = 0, done = true, gain = { again:0, hard:2, good:4, easy:5 }[r];
       let ws = S.ws; const from = wMastery(S.ws[zh]);
+      if (staleNew(it, S.ws, S.lrn)) return { rlog:[], ws:S.ws, from, to:from, gain:0, again:false, at:0, done:true };   // already learned: nothing to grade, nothing to reset
       if (m.t === 'l') {
         const e = S.lrn[zh] || { st:-1, m:0 }; const lrn = Object.assign({}, S.lrn);
         if (e.st < 0) { lrn[zh] = { st:0, m:e.m || 0, at:Date.now() }; at = 3; done = false; gain = 0; }   // met it: the first recall comes a few cards later
@@ -1896,7 +1899,7 @@
       if (!S.rq.length) return;
       const it = S.rq[0];
       g = g || this.rLast;
-      const q = S.rq.slice(1);
+      const q = S.rq.slice(1).filter(z => !staleNew(z, g.ws, g.lrn || S.lrn));
       if (g.again) q.push(it); else if (g.at) q.splice(Math.min(g.at, q.length), 0, it);
       const counts = Object.assign({}, S.rcounts); if (g.rate) counts[g.rate] = (counts[g.rate] || 0) + 1;
       const finished = q.length === 0;
@@ -3115,7 +3118,7 @@
   const tpl = document.getElementById('app-template');
   const app = DCMount(root, tpl, Component);
   onPersonChange = () => { try { app.personChanged(); } catch (e) {} };
-  app.testApi = { comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin };   // for the browser tests
+  app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin };   // for the browser tests
   window.shanlu = app;
   // app mode (a phone): the chat scrolls inside its own box, so keep the newest line in view
   if (window.MutationObserver && window.matchMedia) {

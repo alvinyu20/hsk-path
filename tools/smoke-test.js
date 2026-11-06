@@ -341,6 +341,14 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await text()).includes('cards done') && lkinds.includes('intro') && lkinds.includes('choice') && lkinds.includes('type'), 'a new word goes intro, then a check it can fail, then typed recall, before the session ends (' + [...new Set(lkinds)].join(', ') + ')');
   check(await page.evaluate((n) => { const S = window.shanlu.state; return Object.keys(S.lrn).length === 0 && Object.keys(S.ws).filter(z => S.ws[z].see.s > 0 && S.ws[z].prod.s > 0).length === n; }, lrnN), 'only after two recalls do the ' + lrnN + ' words get an interval and count in "words in memory"');
   check(await page.evaluate(() => { const S = window.shanlu.state; return S.rlog.length >= 6 && S.rlog.every(e => e.length === 5); }), 'every answer is written to the review log');
+  // a new-word card for a word that already graduated (another device finished it, or a sync restored an old queue) must not show it as new again or reset it
+  check(await page.evaluate(() => { const T = window.shanlu.testApi; const ws = { 三: { see: { s: 1.5 } }, 四: { see: { s: 0 } } };
+    return T.staleNew('三#l', ws, {}) === true && T.staleNew('三#l', ws, { 三: { st: 0 } }) === false && T.staleNew('四#l', ws, {}) === false && T.staleNew('三', ws, {}) === false && T.staleNew('三#p', ws, {}) === false; }), 'a new-word card is out of date only when the word is already in memory and no longer in the learning list');
+  const stale = await page.evaluate(() => { const a = window.shanlu; const z = Object.keys(a.state.ws).find(w => a.state.ws[w].see.s > 0); const other = Object.keys(a.state.ws).find(w => w !== z && a.state.ws[w].see.s > 0); const before = JSON.stringify(a.state.ws[z]);
+    a.setState({ rq: [z + '#l', other], rtotal: 2, rcomplete: false });
+    const cleaned = a.cleanQueue(a.state.rq, a.state.ws, a.state.lrn);
+    return { z, other, cleaned, same: JSON.stringify(a.rGrade(z + '#l', 'good', 'f').ws[z]) === before }; });
+  check(stale.cleaned.length === 1 && stale.cleaned[0] === stale.other && stale.same, 'a sync drops the out-of-date new-word card, and grading one would not reset the word');
   await page.evaluate(() => window.shanlu.setState({ rcomplete: false, rq: [] }));
   await nav('Home'); await nav('Review words');
   check((await text()).toLowerCase().includes('all caught up'), 'review shows caught up when nothing is due');
