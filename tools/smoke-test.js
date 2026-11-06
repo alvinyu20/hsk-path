@@ -362,6 +362,13 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     return { first: a.state.rq[0], n: a.state.rq.length, expect: n, bar: !!bar && /snag/.test(bar.textContent), main: document.querySelector('main').innerText.length > 40 }; });
   check(dead.first !== 'not-a-word' && dead.n === dead.expect && dead.bar && dead.main, 'a card that cannot be drawn is skipped, the page keeps working and a red bar says so');
   await page.evaluate(() => { const b = document.getElementById('render-err'); if (b) b.remove(); });
+  // a saved queue that holds a word this view does not have (a locked level's word) is cleaned on load instead of crashing the card
+  const savedKey = await page.evaluate(() => { const a = window.shanlu; a.persistNow(); a.frozen = true;
+    const k = Object.keys(localStorage).filter((x) => /^shanlu-progress/.test(x)).find((x) => { try { return Array.isArray(JSON.parse(localStorage.getItem(x)).rq); } catch (e) { return false; } });
+    const o = JSON.parse(localStorage.getItem(k)); o.rq = ['not-a-word#p'].concat(o.rq || []); localStorage.setItem(k, JSON.stringify(o)); return k; });
+  await page.reload(); await page.waitForSelector('.app');
+  check(await page.evaluate((k) => !window.shanlu.state.rq.some((z) => /not-a-word/.test(z)) && !document.getElementById('render-err'), savedKey), 'a saved Review queue with an unknown word is cleaned on load, with no error bar');
+  await page.evaluate(() => { window.shanlu.go('review'); window.shanlu.practiceAnyway(); }); await page.waitForTimeout(150);   // back to the practice queue the next checks use
   await shot('05-review-front');
   // answer without flipping: pinyin button shows/hides pinyin on the front only; quick buttons rate straight away
   check((await page.locator('.fc-fpy').count()) === 0, 'review front shows no pinyin at first');

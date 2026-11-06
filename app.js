@@ -215,7 +215,7 @@
   const EXS = {};    // every example sentence for a word: its main one first, then the extras (content/examples-*.tsv)
   WORDS.forEach(w => { BANK[w.zh] = { zh:w.zh, py:w.py, en:w.en, pos:w.pos }; EX[w.zh] = w.ex; NOTE[w.zh] = w.note || ''; EXS[w.zh] = [w.ex].concat(w.more || []); });
   // a random example that fits (`ok`), so the same word does not always come with the same sentence
-  const pickEx = (zh, ok) => { const all = EXS[zh]; const fit = ok ? all.filter(ok) : all; const pool = fit.length ? fit : all; return pool[Math.floor(Math.random() * pool.length)]; };
+  const pickEx = (zh, ok) => { const all = EXS[zh] || [{ zh:'', py:'', en:'', toks:[] }]; const fit = ok ? all.filter(ok) : all; const pool = fit.length ? fit : all; return pool[Math.floor(Math.random() * pool.length)]; };
   const strHash = (s) => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; };
   const CLIP_PY = {};
   CLIPS.forEach(c => c.words.forEach(w => { CLIP_PY[w.zh] = w.py; }));
@@ -419,6 +419,8 @@
       saved = Object.assign({}, saved, readSplit());
     }
     const st = rollDay(mergeSaved(freshState(), saved));
+    // a saved Review queue can hold a word this view does not have (a word of a locked level, or one that was renamed): drawing it threw and froze the page
+    if (Array.isArray(st.rq)) { const n0 = st.rq.length; st.rq = st.rq.filter(z => BANK[itemOf(z).zh] && !staleNew(z, st.ws, st.lrn)); if (n0 && !st.rq.length) st.rcomplete = true; }
     st.dclip = pickClip(st.clipBest, []);   // the Listening lab opens on a random clip, not always the first
     st.drecent = [st.dclip];
     return st;
@@ -1927,7 +1929,7 @@
       if (!S.rq.length) return;
       const it = S.rq[0];
       g = g || this.rLast || { ws:S.ws, lrn:S.lrn, rlog:[], gain:0, done:true, again:false, at:0, from:wMastery(S.ws[itemOf(it).zh]), to:wMastery(S.ws[itemOf(it).zh]), rate:null };   // (no grade kept: just move on, never throw)
-      const q = S.rq.slice(1).filter(z => !staleNew(z, g.ws, g.lrn || S.lrn));
+      const q = S.rq.slice(1).filter(z => BANK[itemOf(z).zh] && !staleNew(z, g.ws, g.lrn || S.lrn));
       if (g.again) q.push(it); else if (g.at) q.splice(Math.min(g.at, q.length), 0, it);
       const counts = Object.assign({}, S.rcounts); if (g.rate) counts[g.rate] = (counts[g.rate] || 0) + 1;
       const finished = q.length === 0;
