@@ -9,10 +9,11 @@
   try { AICFG = JSON.parse(localStorage.getItem(AI_STORE)) || {}; } catch (e) {}
   // Saving can fail (storage full, blocked, a private tab). The person must hear about it instead of quietly losing progress:
   // the first failure raises a banner (app.setState({ saveFail:true }), see the bottom of this file) and the next success clears it.
-  let saveFailed = false, onSaveState = null;
+  let saveFailed = false, onSaveState = null, lsFails = 0;
+  const SAVE_RETRY_MS = (typeof window.SHANLU_SAVE_RETRY_MS === 'number') ? window.SHANLU_SAVE_RETRY_MS : 10000;   // (the browser tests shorten it)
   const lsSet = (k, v) => {
     try { localStorage.setItem(k, v); if (saveFailed) { saveFailed = false; if (onSaveState) onSaveState(false); } return true; }
-    catch (e) { if (!saveFailed) { saveFailed = true; if (onSaveState) onSaveState(true); } return false; }
+    catch (e) { lsFails++; if (!saveFailed) { saveFailed = true; if (onSaveState) onSaveState(true); } return false; }
   };
   const saveAiCfg = () => { lsSet(AI_STORE, JSON.stringify(AICFG)); };
   // small device-level notes: when a tip was dismissed, when the last backup file was made (these belong to this device, not to the person)
@@ -1100,6 +1101,7 @@
     frozen = false;   // set while the page is being reloaded after a reset, so the leaving page does not write the old progress back
     persistNow() {
       if (this.frozen) return;
+      const f0 = lsFails;
       try {
         const out = {};
         PERSIST.forEach(k => { if (!ALL || SPLIT.indexOf(k) < 0) out[k] = this.state[k]; });
@@ -1108,6 +1110,9 @@
         if (ALL) this.persistSplit();
         else if (LVL.passedList(this.state.exams || [])) LVL.markPassed(LV);   // passing both sections (together or one at a time) opens the next level
       } catch (e) {}
+      // a save that failed is tried again every 10 seconds until it works (the next action also saves, as usual); nothing is retried once it has worked
+      clearTimeout(this.saveRetry); this.saveRetry = null;
+      if (lsFails > f0) this.saveRetry = setTimeout(() => { this.saveRetry = null; this.persistNow(); }, SAVE_RETRY_MS);
     }
     // ----- friends board: talks to the server rarely (on open, after a pause in studying, when you leave, and at most every ~10 minutes) -----
     frTimer = null;

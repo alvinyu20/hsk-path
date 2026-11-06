@@ -38,6 +38,7 @@ function copySite() {
   page.on('console', (m) => { if (m.type() === 'error' && !IGNORE.some((h) => m.text().includes(h))) errors.push('console: ' + m.text().slice(0, 300) + ' @' + (m.location().url || '') + ':' + m.location().lineNumber); });
   page.on('pageerror', (e) => errors.push(String(e)));
   page.on('request', (r) => hosts.add(new URL(r.url()).hostname));
+  await ctx.addInitScript(() => { window.SHANLU_SAVE_RETRY_MS = 600; });   // the 10-second save retry, shortened for the test
   await ctx.addInitScript(() => {
     window.__csp = [];
     document.addEventListener('securitypolicyviolation', (e) => window.__csp.push(e.violatedDirective + ' ' + e.blockedURI + (e.blockedURI === 'inline' ? ' [' + (e.sample || '') + ' @' + (e.sourceFile || '').split('/').pop() + ':' + e.lineNumber + ' ' + (e.target && e.target.outerHTML ? e.target.outerHTML.slice(0, 140) : String(e.target)) + ']' : '')));
@@ -139,6 +140,17 @@ function copySite() {
   await page.evaluate(() => { const a = window.shanlu; a.setState({ xp: a.state.xp + 1 }); });
   await page.waitForFunction(() => !document.body.innerText.includes('could not save your progress'), null, { timeout: 3000 });
   check(true, 'the banner goes away at the next successful save');
+  // a failed save is retried by itself, with no further action from the learner
+  await page.evaluate(() => { window.__tries = 0; window.__realSet2 = Storage.prototype.setItem; Storage.prototype.setItem = function () { window.__tries++; throw new DOMException('full', 'QuotaExceededError'); }; });
+  await page.evaluate(() => { const a = window.shanlu; a.setState({ xp: a.state.xp + 1 }); });
+  await page.waitForSelector('text=could not save your progress', { timeout: 3000 });
+  await page.waitForTimeout(2500);
+  const tries = await page.evaluate(() => window.__tries);
+  check(tries >= 3, 'while saving keeps failing, it tries again on its own (' + tries + ' attempts without any action)');
+  await page.evaluate(() => { Storage.prototype.setItem = window.__realSet2; });
+  await page.waitForFunction(() => !document.body.innerText.includes('could not save your progress'), null, { timeout: 4000 });
+  const saved = await page.evaluate(() => { const o = JSON.parse(localStorage.getItem('shanlu-progress-v1')); return o.xp === window.shanlu.state.xp; });
+  check(saved, 'once storage works again the retry saves the latest progress and the banner goes away without another action');
 
   // ---------- protected storage ----------
   const pctx = await browser.newContext({ viewport: { width: 1100, height: 900 } });
