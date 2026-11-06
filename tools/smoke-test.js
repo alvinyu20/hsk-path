@@ -325,6 +325,17 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(firstKind === 'intro' && (await page.locator('.rates .rate').count()) === 0 && (await page.locator('button', { hasText: 'Got it, ask me soon' }).count()) === 1, 'a new word is first introduced (answer showing), with no grading buttons');
   check((await page.locator('button', { hasText: 'Hear the word' }).count()) === 1, 'the introduction lets you hear the word');
   const rtotal0 = await page.evaluate(() => window.shanlu.state.rq.length);
+  // leaving in the middle of the session (a refresh, a frozen tab) must not lose the queue or the steps already made
+  for (let i = 0; i < 4; i++) await driveCard();
+  const midBefore = await page.evaluate(() => ({ rq: window.shanlu.state.rq.slice(), lrn: JSON.stringify(window.shanlu.state.lrn), total: window.shanlu.state.rtotal }));
+  check(midBefore.rq.some(z => z.endsWith('#l')), 'mid-session the queue holds new-word cards (' + midBefore.rq.slice(0, 3).join(' ') + ' ...)');
+  await page.reload();
+  await page.waitForSelector('.app');
+  const midAfter = await page.evaluate(() => ({ rq: window.shanlu.state.rq.slice(), lrn: JSON.stringify(window.shanlu.state.lrn), total: window.shanlu.state.rtotal }));
+  check(JSON.stringify(midAfter.rq) === JSON.stringify(midBefore.rq) && midAfter.lrn === midBefore.lrn && midAfter.total === midBefore.total, 'after a refresh in the middle of a session the queue and every new word\'s step are exactly as they were');
+  check(await page.evaluate(() => { const q = window.shanlu.state.rq.slice(0, 2).concat(['nope#l']); return JSON.stringify(window.shanlu.cleanQueue(q)) === JSON.stringify(q.slice(0, 2)); }), 'a sync keeps the new-word, typed and heard cards of the queue and drops only unknown words');
+  await nav('Review words');
+  check(!(await text()).includes('New words are waiting') && (await page.evaluate(() => window.shanlu.state.rq.length)) === midBefore.rq.length, 'Review picks the session up where it was left, not from the start');
   const lkinds = [];
   for (let i = 0; i < lrnN * 6 && !(await text()).includes('cards done'); i++) lkinds.push(await driveCard());
   check((await text()).includes('cards done') && lkinds.includes('intro') && lkinds.includes('choice') && lkinds.includes('type'), 'a new word goes intro, then a check it can fail, then typed recall, before the session ends (' + [...new Set(lkinds)].join(', ') + ')');

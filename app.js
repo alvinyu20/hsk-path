@@ -358,10 +358,10 @@
       const t = ERHUA_ON ? p.official : p.plain;
       if (S.ws && S.ws[f] && blank(S.ws[t])) { S.ws[t] = S.ws[f]; delete S.ws[f]; }
       maps.forEach(m => { if (S[m] && S[m][f] !== undefined && S[m][t] === undefined) { S[m][t] = S[m][f]; delete S[m][f]; } });
-      if (Array.isArray(S.rq)) S.rq = S.rq.map(z => (z === f ? t : z)).filter((z, i, arr) => arr.indexOf(z) === i);
+      if (Array.isArray(S.rq)) S.rq = S.rq.map(z => { const m = itemOf(z); return m.zh === f ? t + (m.t === 's' ? '' : '#' + m.t) : z; }).filter((z, i, arr) => arr.indexOf(z) === i);
     });
     // anything still pointing at a word that is not in this mode's list (the dropped twins) is left out of today's lists
-    if (Array.isArray(S.rq)) S.rq = S.rq.filter(z => BANK[z]);
+    if (Array.isArray(S.rq)) S.rq = S.rq.filter(z => BANK[itemOf(z).zh]);   // queue items are a word, or word#l / #p / #h for a new, typed or heard card
     if (S.wlearned) Object.keys(S.wlearned).forEach(z => { if (!BANK[z]) delete S.wlearned[z]; });
     if (S.rlast && !BANK[S.rlast.zh]) S.rlast = null;
   }
@@ -936,6 +936,8 @@
       clearTimeout(this.saveTimer);
       this.saveTimer = setTimeout(() => this.persistNow(), 250);
     }
+    // the Review queue after a sync or an import: drop words that no longer exist, keep the word#l / #p / #h cards (a sync that dropped them emptied the queue mid-session and Continue did nothing)
+    cleanQueue = (rq) => (rq || []).filter(z => BANK[itemOf(z).zh]);
     frozen = false;   // set while the page is being reloaded after a reset, so the leaving page does not write the old progress back
     persistNow() {
       if (this.frozen) return;
@@ -1013,7 +1015,7 @@
           const bumped = (merged[LV].epoch || 0) > (this.state.epoch || 0);   // another device reset this level: today's "words so far" baseline starts again too
           const next = rollDay(Object.assign({}, this.state, merged[LV], bumped ? { mem0:null } : {}));
           carryOverErhua(next);
-          patch = SY.pick(next); patch.rq = (patch.rq || []).filter(z => BANK[z]); patch.ws = fillWs(patch.ws);
+          patch = SY.pick(next); patch.rq = this.cleanQueue(patch.rq); patch.ws = fillWs(patch.ws);
           if (bumped) patch.mem0 = next.mem0;
         }
         if (patch) { this.noSync = true; this.noMin = true; this.setState(patch); this.noMin = false; this.noSync = false; this.persistNow(); }
@@ -1775,7 +1777,7 @@
           let next = rollDay(Object.assign({}, this.state, r.merged, bumped ? { mem0:null } : {}));
           carryOverErhua(next);
           patch = window.ShanluSync.pick(next);
-          patch.rq = (patch.rq || []).filter(z => BANK[z]);
+          patch.rq = this.cleanQueue(patch.rq);
           patch.ws = fillWs(patch.ws);
           if (bumped) patch.mem0 = next.mem0;
         }
