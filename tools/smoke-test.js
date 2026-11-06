@@ -486,6 +486,11 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await page.locator('.gl .gg').count()) === 11 && (await page.locator('.gl .gg .gg-n').allInnerTexts()).reduce((a, t) => a + parseInt(t.split('/')[1], 10), 0) === 26, 'grammar lists 26 lessons in 11 categories');
   check((await page.locator('.gl .gp').count()) < 26 && (await page.locator('.gl .gg.open').count()) === 1, 'only the open category shows its lessons');
   check((await text()).toLowerCase().includes('lesson 1 of 26'), 'the first lesson is open');
+  check((await page.locator('.grv').count()) === 1 && (await page.locator('.grv-go .btn.pri').count()) === 1, 'the grammar screen has the grammar review panel');
+  await page.locator('.grv-go .btn.pri').click(); await page.waitForTimeout(150);
+  check(await page.evaluate(() => window.shanlu.state.qmode === 'greview' && window.shanlu.state.screen === 'quiz'), 'Start grammar review opens a grammar review session');
+  await page.evaluate(() => { window.shanlu.go('grammar'); }); await page.waitForTimeout(150);
+  check((await page.locator('.gl .gg').count()) === 11, 'leaving a grammar review returns to the lesson list');
   await shot('08-grammar');
   await page.fill('.gl .tr-search', 'yes/no');
   check((await page.locator('.gl .gp').count()) === 1, 'searching for a lesson shows only the matching lessons');

@@ -14,6 +14,10 @@ check(S.same(S.merge(S.merge(a, b), b), m1), 'merging the same device twice chan
 check(m1.ws.x.see.s === 5 && m1.ws.x.hear.s === 1 && m1.ws.y.see.s === 1, 'per word and per skill, the more recent review wins');
 check(m1.xp === 80 && m1.streak === 3 && m1.lastActive === '2026-10-30', 'xp is the larger, the streak follows the device active most recently');
 check(m1.gres.l1 === 90 && m1.gres.l2 === 80 && m1.misses.z === 4 && m1.misses.x === 2, 'best lesson scores and miss counts keep the larger value');
+const ga = { gpt: { 'g1-svo': { rn: 1, at: 100 }, 'g1-dou': { rn: 4, at: 300 } } }, gb = { gpt: { 'g1-svo': { rn: 3, at: 200 }, 'g1-dou': { rn: 2, at: 50 }, 'g2-1': { rn: 1, at: 10 } } };
+const gm = S.merge(ga, gb);
+check(gm.gpt['g1-svo'].rn === 3 && gm.gpt['g1-dou'].rn === 4 && gm.gpt['g2-1'].rn === 1, 'grammar point records merge per point, the newest one wins');
+check(S.same(gm, S.merge(gb, ga)), 'the grammar point merge is symmetric');
 check(m1.clipBest.join() === '1,2,3,4', 'listening best scores merge per clip');
 check(m1.rq.join() === 'b', 'a word reviewed on either device is out of today\'s queue');
 check(Object.keys(m1.wlearned).sort().join() === 'p,q' && Object.keys(m1.activity).length === 2, 'today\'s added words and active days are united');

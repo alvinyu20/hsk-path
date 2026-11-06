@@ -1,0 +1,86 @@
+# point id <TAB> English prompt <TAB> a model answer <TAB> words the answer needs (a+b = both, a|b = either)
+g1-svo	My younger sister watches TV.	妹妹看电视。	看
+g1-svo	I drink tea.	我喝茶。	喝
+g1-timeplace	I eat at home.	我在家吃饭。	在
+g1-timeplace	We go to school tomorrow.	我们明天去学校。	明天
+g1-shi	She is my classmate.	她是我的同学。	是
+g1-shi	I am not a teacher.	我不是老师。	是
+g1-hen	I am very busy today.	我今天很忙。	很
+g1-hen	This apple is really tasty!	这个苹果真好吃！	真|很|太
+g1-youdianr	His home is a bit small.	他家有点儿小。	有点儿
+g1-youdianr	I am a bit cold.	我有点儿冷。	有点儿
+g1-ma	Do you like tea?	你喜欢茶吗？	吗
+g1-ma	Is she your friend?	她是你的朋友吗？	吗
+g1-qword	What is your name?	你叫什么名字？	什么
+g1-qword	Who is your teacher?	你们的老师是谁？	谁
+g1-qword	How much is this cup?	这个杯子多少钱？	多少
+g1-neg	I do not drink tea.	我不喝茶。	不
+g1-neg	He did not come today.	他今天没来。	没
+g1-buyao	Do not talk here!	不要在这儿说话！	不要
+g1-buyao	Do not go.	不要去。	不要
+g1-you	He has two friends.	他有两个朋友。	有
+g1-you	Do you have a phone?	你有手机吗？	有
+g1-pron	They are all teachers.	他们都是老师。	们
+g1-pron	She is my younger sister.	她是我妹妹。	她
+g1-de	This is Dad's car.	这是爸爸的车。	的
+g1-de	That is my teacher's cup.	那是我老师的杯子。	的
+g1-measure	I want to buy a book.	我想买一本书。	本
+g1-measure	I have a cat.	我有一只猫。	只
+g1-liang	I have two older brothers.	我有两个哥哥。	两
+g1-liang	I want to buy two apples.	我想买两个苹果。	两
+g1-money	This cup is five yuan.	这个杯子五块钱。	块
+g1-money	This one is ten yuan.	这个十块钱。	块
+g1-age	She is twenty this year.	她今年二十岁。	岁
+g1-age	My daughter is five.	我女儿五岁了。	岁
+g1-di	He is my first teacher.	他是我的第一个老师。	第
+g1-di	This is the second book.	这是第二本书。	第
+g1-clock	We have class at eight.	我们八点上课。	点
+g1-clock	It is two o'clock now.	现在两点。	点
+g1-date	A week has seven days.	一个星期有七天。	星期
+g1-date	Today is November fifth.	今天是十一月五号。	月|号
+g1-zai	We eat at the restaurant.	我们在饭店吃饭。	在
+g1-zai	Mom cooks at home.	妈妈在家做饭。	在
+g1-loc	My phone is on the chair.	手机在椅子上。	上
+g1-loc	There is a cat in the room.	房间里有一只猫。	里
+g1-xiang	I want to eat rice.	我想吃米饭。	想
+g1-xiang	I do not want to go to school.	我不想去学校。	想
+g1-yao	I would like a glass of water.	我要一杯水。	要
+g1-yao	I want two cups of tea.	我要两杯茶。	要
+g1-hui	My younger sister can write Chinese characters.	妹妹会写汉字。	会
+g1-hui	Can you speak Chinese?	你会说汉语吗？	会
+g1-neng	I cannot go today.	我今天不能去。	能
+g1-neng	Can you come tomorrow?	你明天能来吗？	能
+g1-keyi	May I read here?	我可以在这儿看书吗？	可以
+g1-keyi	You may sit here.	你可以坐这儿。	可以
+g1-dou	We are all fine.	我们都很好。	都
+g1-dou	They are all students.	他们都是学生。	都
+g1-ye	I like tea too.	我也喜欢茶。	也
+g1-ye	My older brother is also a teacher.	我哥哥也是老师。	也
+g1-hai	What else do you want?	你还要什么？	还
+g1-hai	I still want some water.	我还想喝水。	还
+g1-anota	Are you a student?	你是不是学生？	不
+g1-anota	Do you want tea or not?	你要不要茶？	不
+g1-ba	Let us go home.	我们回家吧。	吧
+g1-ba	Let us go to school.	我们去学校吧。	吧
+g1-ne	I am very busy. And you?	我很忙，你呢？	呢
+g1-ne	Where is my book?	我的书呢？	呢
+g1-prog	My older sister is reading.	姐姐在看书。	在|正在
+g1-prog	Mom is cooking.	妈妈在做饭呢。	在|正在
+g1-le1	I ate two buns.	我吃了两个包子。	了
+g1-le1	He bought a phone.	他买了一个手机。	了
+g1-le2	The child has grown.	孩子大了。	了
+g1-le2	It has got cold.	天气冷了。	了
+g1-he	Dad and Mom are at home.	爸爸和妈妈在家。	和
+g1-he	My older brother and I go to school.	我和哥哥去学校。	和
+g1-dui	The teacher is very good to us.	老师对我们很好。	对
+g1-dui	He is good to me.	他对我很好。	对
+g1-serial	I go to school to study Chinese.	我去学校学习汉语。	去
+g1-serial	Mom takes a taxi to the hospital.	妈妈坐出租车去医院。	坐
+g1-give	I give you a cup of tea.	我给你一杯茶。	给
+g1-give	I ask the teacher a question.	我问老师一个问题。	问
+g1-qing	Please sit.	请坐。	请
+g1-qing	Excuse me, what is your name?	请问，你叫什么名字？	请问
+g1-yixia	I want to take a look.	我想看一下。	一下
+g1-yixia	I will ask the teacher.	我问一下老师。	一下
+g1-yixie	There are some books on the table.	桌子上有一些书。	一些
+g1-yixie	I want to drink a little water.	我想喝一点儿水。	一点儿|一些

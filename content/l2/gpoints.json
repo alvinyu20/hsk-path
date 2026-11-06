@@ -1,0 +1,399 @@
+[
+ {
+  "id": "g2-1",
+  "title": "A 比 B + adjective",
+  "src": {
+   "bi": [
+    0,
+    1,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g2-2",
+  "title": "比: how much more (一点, 多了, a number)",
+  "src": {
+   "bi": []
+  }
+ },
+ {
+  "id": "g2-3",
+  "title": "没有 comparison (A 没有 B 那么 adjective)",
+  "src": {
+   "bi": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g2-4",
+  "title": "最 (most)",
+  "src": {
+   "bi": [
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-5",
+  "title": "这么 / 那么 (so)",
+  "src": {
+   "bi": []
+  }
+ },
+ {
+  "id": "g2-6",
+  "title": "离 (distance between two places)",
+  "src": {
+   "li": [
+    0,
+    2
+   ]
+  }
+ },
+ {
+  "id": "g2-7",
+  "title": "从…到… (from … to …)",
+  "src": {
+   "li": [
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-8",
+  "title": "往 (toward)",
+  "src": {
+   "li": [
+    1
+   ]
+  }
+ },
+ {
+  "id": "g2-9",
+  "title": "到 + place (arrive, go to)",
+  "src": {
+   "dao": [
+    2,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-10",
+  "title": "verb + 在 + place (住在, 站在)",
+  "src": {
+   "dao": [
+    0,
+    1,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g2-11",
+  "title": "过 (have done it before)",
+  "src": {
+   "guo": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-12",
+  "title": "着 (a state that continues)",
+  "src": {
+   "zhe": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-13",
+  "title": "快要 / 就要 / 要…了 (about to)",
+  "src": {
+   "yao": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-14",
+  "title": "已经…了 (already)",
+  "src": {
+   "yijing": [
+    0,
+    2,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g2-15",
+  "title": "就 (as early as, then)",
+  "src": {
+   "yijing": [
+    1,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-16",
+  "title": "别 / 别…了 (do not, stop)",
+  "src": {
+   "rang": [
+    1,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-17",
+  "title": "因为…所以…",
+  "src": {
+   "yinwei": [
+    0,
+    2
+   ]
+  }
+ },
+ {
+  "id": "g2-18",
+  "title": "虽然…但是…",
+  "src": {
+   "yinwei": [
+    1,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-19",
+  "title": "还是 (A or B?)",
+  "src": {
+   "haishi": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-20",
+  "title": "得 (how well, degree complement)",
+  "src": {
+   "de2": [
+    0,
+    1,
+    2,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-21",
+  "title": "地 (how, before a verb)",
+  "src": {
+   "de2": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g2-22",
+  "title": "让 (let, ask, make)",
+  "src": {
+   "rang": [
+    0,
+    2
+   ]
+  }
+ },
+ {
+  "id": "g2-23",
+  "title": "每…都… (every)",
+  "src": {
+   "mei": [
+    0,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g2-24",
+  "title": "经常 / 有时 (how often)",
+  "src": {
+   "mei": [
+    1,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-25",
+  "title": "次 (counting actions)",
+  "src": {
+   "mw": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g2-26",
+  "title": "完 / 错 / 懂 (result complements)",
+  "src": {
+   "result": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-27",
+  "title": "来 / 去 after a verb (direction)",
+  "src": {
+   "direction": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-28",
+  "title": "跟 / 一起 (with, together)",
+  "src": {
+   "gen": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-29",
+  "title": "是…的 (how, when or where it happened)",
+  "src": {
+   "shide": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-30",
+  "title": "什么 / 谁 / 哪儿 + 都 (everything, everyone)",
+  "src": {
+   "mei": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g2-31a",
+  "title": "可能 (maybe, might)",
+  "src": {
+   "modal2": [
+    0,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-31b",
+  "title": "希望 (hope)",
+  "src": {
+   "modal2": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g2-31c",
+  "title": "准备 (plan to, get ready to)",
+  "src": {
+   "modal2": [
+    1
+   ]
+  }
+ },
+ {
+  "id": "g2-32",
+  "title": "条 / 位 / 间 (new measure words)",
+  "src": {
+   "mw": [
+    0,
+    1,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g2-33",
+  "title": "万 and 多 (big numbers, more than)",
+  "src": {
+   "mw": [
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-34",
+  "title": "多 + adjective questions (多大, 多高, 多远)",
+  "src": {
+   "duo": [
+    0,
+    1,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g2-35",
+  "title": "…的时候 (when …)",
+  "src": {
+   "duo": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g2-36",
+  "title": "doubled verbs (看看, 想想, 走走)",
+  "src": {
+   "duo": [
+    4
+   ]
+  }
+ }
+]

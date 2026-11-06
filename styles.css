@@ -1048,3 +1048,24 @@ button.scn:hover .scn-m{text-decoration:underline}
 @media (max-width:700px){
   .app.am .fc-front .tian{width:auto;height:76%;max-width:80%;aspect-ratio:1/1}
 }
+
+/* ---- grammar review: panel, tracker ---- */
+.grv{border:1px solid var(--line,#d9d6cf);border-radius:16px;padding:14px 16px;margin:0 0 16px;background:var(--card,#fff)}
+.grv-h{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.grv-h .muted{font-size:14px}
+.grv-lv{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
+.grv-chip{font:inherit;font-size:14px;padding:5px 12px;border-radius:999px;border:1px solid var(--line,#d9d6cf);background:transparent;color:inherit;cursor:pointer}
+.grv-chip.on{background:var(--ink,#16202a);color:#fff;border-color:transparent}
+.grv-note{margin:10px 0 0;font-size:14.5px;color:var(--muted,#5b6670)}
+.grv-go{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.grv-rows{margin-top:12px;display:flex;flex-direction:column;gap:2px}
+.grv-row{padding:8px 0;border-top:1px solid var(--line,#e6e3dc)}
+.grv-t{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;font-size:15px}
+.grv-lv-tag{font-size:12px;color:var(--muted,#5b6670)}
+.grv-st{margin-left:auto;font-size:12.5px;padding:2px 9px;border-radius:999px;background:var(--amber-soft,#f6ead2)}
+.grv-row.mastered .grv-st{background:#d3e8dc}.grv-row.strong .grv-st{background:#dfeee6}.grv-row.new .grv-st{background:#eceae4}
+.grv-row.due .grv-st::after{content:" · due"}
+.grv-bars{display:grid;grid-template-columns:auto 1fr auto;gap:2px 8px;align-items:center;margin-top:5px;font-size:12.5px;color:var(--muted,#5b6670)}
+.grv-bar{height:7px;border-radius:4px;background:var(--line,#e6e3dc);overflow:hidden}
+.grv-bar i{display:block;height:100%;background:#3d7a5c}.grv-bar.w i{background:#b3392b}
+.grv-bv{min-width:46px;text-align:right}

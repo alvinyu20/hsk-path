@@ -1,0 +1,105 @@
+# point id <TAB> English prompt <TAB> a model answer <TAB> words the answer needs (a+b = all, a|b = any)
+g3-1	Please put the book on the table.	请把书放在桌子上。	把
+g3-1	I have closed the door.	我把门关上了。	把
+g3-2	My phone was taken away by my brother.	我的手机被哥哥拿走了。	被
+g3-2	The cup was broken by the child.	杯子被孩子打坏了。	被
+g3-3	If it rains tomorrow, I will not go.	如果明天下雨，我就不去。	如果+就
+g3-3	If you are tired, then rest.	你累的话，就休息吧。	的话
+g3-4	This dish is not only cheap but also tasty.	这个菜不但便宜，而且好吃。	不但+而且
+g3-4	She can not only sing but also dance.	她不但会唱歌，而且会跳舞。	不但+而且
+g3-5	I want to go, but I have no time.	我想去，可是没有时间。	可是
+g3-5	First eat, then watch a movie.	先吃饭，然后看电影。	然后
+g3-6	As long as you work hard, you can learn well.	只要你努力，就能学好。	只要+就
+g3-6	As long as the weather is good, we will go.	只要天气好，我们就去。	只要+就
+g3-7	Only if you practise more can you speak well.	只有你多练习，才能说好。	只有+才
+g3-7	I will go only if you come.	只有你来，我才去。	只有+才
+g3-8	Everyone came except him.	除了他，大家都来了。	除了
+g3-8	Besides rice, I also want fish.	除了米饭，我还要鱼。	除了
+g3-9	In order to learn Chinese, he went to China.	为了学汉语，他去中国。	为了
+g3-9	In order to see my friend, I went to the station.	为了看我的朋友，我去了火车站。	为了
+g3-10	He cooked a meal for us.	他为我们做了饭。	为
+g3-10	I bought a present for my mother.	我为妈妈买了一个礼物。	为
+g3-11	This is a book about China.	这是一本关于中国的书。	关于
+g3-11	I have a question about this word.	我有一个关于这个词的问题。	关于
+g3-12	According to the map, the bank is ahead.	根据地图，银行在前面。	根据
+g3-12	According to what the teacher said, the test is on Friday.	根据老师说的，考试在星期五。	根据
+g3-13	I want tea or coffee.	我想喝茶或者咖啡。	或者
+g3-13	Do you want to go by train or by plane?	你想坐火车还是坐飞机？	还是
+g3-14	Wash your hands first, then eat.	先洗手，再吃饭。	先+再
+g3-14	I shower first, then sleep.	我先洗澡，再睡觉。	先+再
+g3-15	He eats while watching TV.	他一边吃饭一边看电视。	一边
+g3-15	She sings while walking.	她一边走路一边唱歌。	一边
+g3-16	She is both tall and pretty.	她又高又漂亮。	又+又
+g3-16	This dish is both cheap and tasty.	这个菜又便宜又好吃。	又+又
+g3-17	He is late again today.	他今天又迟到了。	又
+g3-17	Please say it once more.	请再说一遍。	再
+g3-18	The rain falls harder and harder.	雨越下越大。	越
+g3-18	The more he eats, the fatter he gets.	他越吃越胖。	越
+g3-19	The weather is getting colder and colder.	天越来越冷。	越来越
+g3-19	My Chinese is getting better and better.	我的汉语越来越好。	越来越
+g3-20	He only got to school at eight.	他八点才到学校。	才
+g3-20	He did not get up until ten.	他十点才起床。	才
+g3-21	I got up as early as six.	我六点就起床了。	就
+g3-21	We were already there at seven.	我们七点就到了。	就
+g3-22	I have just got home.	我刚到家。	刚
+g3-22	The film has just started.	电影刚开始。	刚
+g3-23	Who called you just now?	刚才谁给你打电话？	刚才
+g3-23	Where did you go just now?	刚才你去哪儿了？	刚才
+g3-24	I have been waiting for you here all along.	我一直在这里等你。	一直
+g3-24	Please keep going straight ahead.	请一直往前走。	一直
+g3-25	He is always busy.	他总是很忙。	总
+g3-25	She is always late.	她总是迟到。	总
+g3-26	We often eat together.	我们常常一起吃饭。	常
+g3-26	I usually get up at seven.	我平时七点起床。	平时|一般
+g3-27	His Chinese is quite good.	他的汉语挺好的。	挺
+g3-27	I am extremely tired.	我累极了。	极了
+g3-28	He is as tall as me.	他跟我一样高。	一样
+g3-28	These two words are not the same.	这两个字不一样。	一样|不同
+g3-29	He is much taller than me.	他比我高多了。	比+多了
+g3-29	Today is even colder than yesterday.	今天比昨天还冷。	比+还|比+更
+g3-30	Chinese is not hard to learn.	汉语不难学。	难
+g3-30	It is easy to catch a cold in winter.	冬天容易感冒。	容易
+g3-31	I cannot understand.	我听不懂。	不
+g3-31	Can you see clearly?	你看得清楚吗？	得
+g3-32	He ran in.	他跑进来了。	进来
+g3-32	Please keep talking.	请说下去。	下去
+g3-33	The children ran toward the teacher.	孩子们向老师跑去了。	向
+g3-33	Please go to the left.	请向左走。	向
+g3-34	I studied Chinese for two years.	我学了两年汉语。	了
+g3-34	He waited for an hour.	他等了一个小时。	了
+g3-35	We have not seen each other for three years.	我们三年没见面了。	没
+g3-35	I have not eaten for a whole day.	我一天没吃饭了。	没
+g3-36	I must arrive before eight.	八点以前我必须到。	以前
+g3-36	After eating, we will go for a walk.	吃饭以后，我们去走走。	以后
+g3-37	He did not drink coffee before; later he did.	他以前不喝咖啡，后来喝了。	后来
+g3-37	In the end we got home.	最后我们到家了。	最后
+g3-38	I have been busy recently.	我最近很忙。	最近
+g3-38	The day before yesterday I went to the shop.	前天我去了商店。	前天
+g3-39	You should rest more.	你应该多休息。	应该|该
+g3-39	I should go now.	我该走了。	该|应该
+g3-40	You must come at eight.	你必须八点来。	必须
+g3-40	You do not need to hurry.	你不用急。	不用
+g3-41	You had better wear a bit more.	你最好多穿一点儿。	最好
+g3-41	We had better go now.	我们最好现在就走。	最好
+g3-42	I only drink water.	我只喝水。	只
+g3-42	We can only walk.	我们只能走路。	只
+g3-43	He seems not to be at home.	他好像不在家。	好像
+g3-43	This dish looks delicious.	这个菜看起来很好吃。	看起来|好像
+g3-44	It is probably nine o'clock now.	现在大概九点了。	大概
+g3-44	Actually I am not a teacher.	其实我不是老师。	其实|当然
+g3-45	The train has finally come.	火车终于来了。	终于
+g3-45	I almost forgot his name.	我几乎忘了他的名字。	几乎
+g3-46	He suddenly laughed.	他突然笑了。	突然
+g3-46	I will be there right away.	我马上就到。	马上
+g3-47	Everyone knows.	谁都知道。	都
+g3-47	I do not want to go anywhere.	我哪儿都不想去。	都
+g3-48	Eat whatever you want.	你想吃什么就吃什么。	什么+就
+g3-48	Go wherever you like.	你想去哪儿就去哪儿。	哪儿+就
+g3-49	There is not a single person here.	这里一个人也没有。	也
+g3-49	I have not eaten a single bite.	我一口也没吃。	也
+g3-50	I waited an hour and a half.	我等了一个半小时。	半
+g3-50	He will arrive in half an hour.	他半个小时以后到。	半
+g3-51	There are two or three students here.	这儿有两三个学生。	两三|三四|四五|五六|六七|七八
+g3-51	People over eighteen may go in.	十八岁以上的人可以进去。	以上|以下
+g3-52	I have to go.	我得走了。	得
+g3-52	The child has grown up.	孩子长大了。	长

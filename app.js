@@ -167,7 +167,7 @@
   // speaking and listening progress (SPLIT) is read from and written back to each level's own save, so every view shows the same progress.
   const storeKey = (n) => (n === 1 ? 'shanlu-progress-v1' : 'shanlu-progress-v1-l' + n);
   const KEY = ALL ? 'shanlu-progress-v1-all' : storeKey(LV);
-  const SPLIT = ['ws', 'misses', 'gres', 'sres', 'clipBest', 'lrn', 'rlog'];
+  const SPLIT = ['ws', 'misses', 'gres', 'gpt', 'sres', 'clipBest', 'lrn', 'rlog'];
   const LESSON_ALIAS = { 2:{ modal:'modal2' } };   // an HSK 2 lesson id that used to clash with an HSK 1 id
 
   const SYS = {
@@ -260,11 +260,11 @@
   // a "new word" card (word#l) for a word that has already graduated (it is in memory and no longer in the learning list) is out of date: it would show the word as new again and reset its progress
   const staleNew = (z, ws, lrn) => { const m = itemOf(z); return m.t === 'l' && !(lrn && lrn[m.zh]) && !!(ws && ws[m.zh] && ws[m.zh].see && ws[m.zh].see.s > 0); };
   const buildQueue = (ws, anyway, lrn) => {
-    const fresh = Object.keys(lrn || {}).filter(zh => ws[zh] && !(ws[zh].see.s > 0)).map(zh => zh + '#l');
+    const fresh = Object.keys(lrn || {}).filter(zh => BANK[zh] && ws[zh] && !(ws[zh].see.s > 0)).map(zh => zh + '#l');
     const see = [], prod = [], hear = [];
     Object.keys(ws).forEach(zh => {
       const w = ws[zh];
-      if (!w) return;
+      if (!w || !BANK[zh]) return;     // a word from a locked level (not in this view's word bank) never joins the queue
       [['see', ''], ['prod', '#p'], ['hear', '#h']].forEach(x => {
         const d = w[x[0]];
         if (!(d.s > 0)) return;
@@ -314,7 +314,7 @@
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
-  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'misses', 'testHistory', 'ws',
+  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'misses', 'testHistory', 'ws',
     'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
 
   function freshState() {
@@ -324,7 +324,7 @@
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', frLeaveAsk:false, frCopied:false,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
-      gres:{}, sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
+      gres:{}, gpt:{}, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
       qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
@@ -385,11 +385,11 @@
   const clipCount = (n) => ((window['HSK' + n + '_LISTEN'] || {}).clips || []).length;
   // the words, grammar, speaking and listening progress of every shown level, joined (All levels)
   const readSplit = () => {
-    const out = { ws:{}, misses:{}, gres:{}, sres:{}, clipBest:[], lrn:{}, rlog:[] };
+    const out = { ws:{}, misses:{}, gres:{}, gpt:{}, sres:{}, clipBest:[], lrn:{}, rlog:[] };
     LVLS.forEach(n => {
       const st = readStore(n) || {};
       Object.assign(out.lrn, st.lrn || {}); out.rlog = out.rlog.concat(Array.isArray(st.rlog) ? st.rlog : []);
-      Object.assign(out.ws, st.ws || {}); Object.assign(out.misses, st.misses || {}); Object.assign(out.gres, st.gres || {}); Object.assign(out.sres, st.sres || {});
+      Object.assign(out.ws, st.ws || {}); Object.assign(out.misses, st.misses || {}); Object.assign(out.gres, st.gres || {}); Object.assign(out.gpt, st.gpt || {}); Object.assign(out.sres, st.sres || {});
       const cb = Array.isArray(st.clipBest) ? st.clipBest : [];
       for (let k = 0; k < clipCount(n); k++) out.clipBest.push(cb[k] || 0);
     });
@@ -478,13 +478,13 @@
     return BANK[t] ? t : PY_WORD[toneless(t)] || '';
   };
   // "Say it" cards show the English and ask for the word. Another word on the lists whose English is the very same (孩子 and 小孩 are both "child") is a right answer too.
-  const senseSet = (en) => String(en).toLowerCase().replace(/\([^)]*\)/g, '').split(/;|,|\s\/\s/).map(x => x.trim()).filter(Boolean).sort().join('|');
-  const synonymOf = (q, typed) => {
+  const senseSet = (en) => String(en).toLowerCase().replace(/\([^)]*\)/g, '').replace(/\bdon['’]t\b/g, 'do not').split(/;|,|\s\/\s/).map(x => x.trim()).filter(Boolean).sort().join('|');
+  const synonymOf = (q, typed, soft) => {
     if (!q.sayEn) return '';
     const want = senseSet(q.sayEn);
     if (!want) return '';
     const hit = BANK_KEYS.filter(z => z !== q.exp.zh && senseSet(BANK[z].en) === want);
-    return hit.find(z => typed === z || comparePinyin(typed, BANK[z].py, tonesOptional()).ok) || '';
+    return hit.find(z => typed === z || (soft ? comparePinyin(typed, BANK[z].py, tonesOptional()).grade === 'hard' : comparePinyin(typed, BANK[z].py, tonesOptional()).ok)) || '';
   };
   // the answer to a typed or fill-in question: hanzi, or pinyin with tones. grade 'good' (right), 'hard' (right sounds, wrong tone, or another real word) or 'again'
   const checkTyped = (q, typed) => {
@@ -495,6 +495,8 @@
     if (r.ok || r.grade === 'hard') return r;
     const syn = synonymOf(q, t);
     if (syn) return { ok:true, grade:'good', note:'Also right: ' + syn + ' (' + BANK[syn].py.split('/')[0].trim() + ') means the same. This card was asking for ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
+    const synSoft = synonymOf(q, t, true);
+    if (synSoft) return { ok:false, grade:'hard', note:synSoft + ' (' + BANK[synSoft].py.split('/')[0].trim() + ') means the same, but check the tone. This card was asking for ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
     if (q.type === 'cloze') {   // several words can fit a gap; a real word that is not the expected one is not marked as a plain miss
       const known = knownByPinyin(t);
       if (known && known !== q.exp.zh) return { ok:false, grade:'hard', note:'That is a real word (' + known + ') but not the one this gap was written for. Several words can fit; if yours fits the English too, use "Report a mistake" so it can be added. Expected: ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
@@ -526,16 +528,124 @@
     do { p = shuffle(toks.map((_, i) => i)); tries++; } while (toks.length > 1 && p.every((v, i) => v === i) && tries < 12);
     return Object.assign({}, base, { type:'order', toks, tiles:p.map(i => toks[i]), seq:toks.map((_, j) => p.indexOf(j)) });
   };
-  function prepGrammar(L) {
-    return L.q.map(q => {
+  function prepGrammar(L) { return L.q.map(prepQ); }
+  function prepQ(q) {
+    {
       const base = { kicker:q.kicker, prompt:q.prompt, reveal:q.reveal, explain:q.explain };
       if (q.type === 'order') return orderQ(q.toks, base);
       if (q.type === 'cloze') return Object.assign(base, { type:'cloze', big:q.big, sub:q.sub, placeholder:q.placeholder, accepts:q.accepts });
       if (q.type === 'spot') return Object.assign(base, { type:'spot', tokens:q.tokens, punct:q.punct, spot:q.spot });
       const opts = shuffle(q.options.map(o => o.label));
       return Object.assign(base, { type:'mc', options:opts.map((label, i) => ({ id:ORDER_IDS[i], label })), correct:ORDER_IDS[opts.indexOf(q.reveal)] });
-    });
+    }
   }
+  // ---------- grammar review: every grammar point has its own memory (recognise it, write it), see content/gpoints.json ----------
+  const isG = (m) => m === 'grammar' || m === 'greview';
+  let GPT_REG = null;
+  const gptReg = () => {
+    if (GPT_REG) return GPT_REG;
+    const reg = {};
+    LVLS.forEach(n => {
+      const G = window['HSK' + n + '_GRAMMAR'] || {};
+      (G.points || []).forEach(p => { reg[p.id] = { id:p.id, title:p.title, lesson:p.lesson, level:n, write:p.write || [], pool:[] }; });
+      (G.lessons || []).forEach(l => (l.q || []).concat(l.qx || []).forEach(q => { if (q.pt && reg[q.pt]) reg[q.pt].pool.push(q); }));
+    });
+    GPT_REG = reg; return reg;
+  };
+  // a point's state: how well you recognise it, how well you write it, and whether it counts as mastered (that needs your own sentence)
+  const gptInfo = (e) => {
+    e = e || {}; const r = e.r || { s:0 }, w = e.w || { s:0 };
+    const rm = Math.round(mast(r)), wm = Math.round(mast(w));
+    const mastered = (e.wok || 0) >= 2 && w.s >= 4 && r.s >= 2;
+    const started = r.s > 0 || w.s > 0;
+    const state = mastered ? 'mastered' : !started ? 'new' : rm >= 55 && wm > 0 ? 'strong' : rm >= 30 ? 'familiar' : 'learning';
+    const due = (r.s > 0 && dueIn(r, 0) <= 0) || (w.s > 0 && dueIn(w, 0) <= 0);
+    return { rm, wm, mastered, started, state, due, label:{ mastered:'Mastered', strong:'Strong', familiar:'Familiar', learning:'Learning', new:'New' }[state] };
+  };
+  const G_SYSTEM = [
+    'You check one sentence written by a learner of Chinese (HSK 1 to 3). Reply with JSON only.',
+    'You are given the English prompt, the grammar point being practised, and the learner\'s answer.',
+    'The answer may be in Chinese characters or in pinyin (tone marks or numbers may be missing). Treat pinyin as the sentence the learner meant and judge that sentence. Do not fail an answer only because it is pinyin or lacks tones.',
+    'Pass the answer only if all three are true: (1) the Chinese is grammatical and natural; (2) it uses the grammar point asked for; (3) it says what the English prompt says. Different natural wording, extra detail, or a different but correct word choice is fine. Ignore punctuation and spacing.',
+    'Otherwise the verdict is "fix".',
+    'Format: {"verdict":"pass" or "fix","better":"a corrected Chinese sentence, or the same sentence if it passes","reason":"one short sentence in English"}'
+  ].join('\n');
+  const gptWeight = (e) => {
+    const info = gptInfo(e);
+    if (!info.started) return 1;
+    const rr = e.r && e.r.s > 0 ? retr(e.r) : 0.5;
+    const miss = e.rn ? (e.rn - (e.rok || 0)) / e.rn : 0;
+    let w = 0.4 + 3 * (1 - rr) + 1.5 * miss + (info.due ? 1.5 : 0);
+    if (info.mastered && !info.due) w *= 0.25;
+    return w;
+  };
+  // a session: weak and due points first, a few new ones, and (when an AI key is saved) a sentence of your own for points you already recognise
+  const gptSession = (S, levels, size, canWrite) => {
+    const reg = gptReg();
+    let ids = Object.keys(reg).filter(id => levels.indexOf(reg[id].level) >= 0 && reg[id].pool.length);
+    const chosen = []; let news = 0;
+    while (chosen.length < size && ids.length) {
+      let rows = ids.map(id => ({ id, w:gptWeight(S.gpt[id]) * (gptInfo(S.gpt[id]).started ? 1 : (news >= 3 ? 0 : 1)) })).filter(x => x.w > 0);
+      if (!rows.length) rows = ids.map(id => ({ id, w:gptWeight(S.gpt[id]) }));   // only new points are left: a first session still gets a full set
+      if (!rows.length) break;
+      let t = rows.reduce((a, x) => a + x.w, 0) * Math.random(), pick = rows[rows.length - 1];
+      for (const x of rows) { t -= x.w; if (t <= 0) { pick = x; break; } }
+      chosen.push(pick.id); ids = ids.filter(i => i !== pick.id);
+      if (!gptInfo(S.gpt[pick.id]).started) news++;
+    }
+    return chosen.map(id => {
+      const e = S.gpt[id] || {}; const pt = reg[id]; const info = gptInfo(e);
+      const wr = pt.write;
+      const wantWrite = canWrite && wr.length && e.r && e.r.s >= 1.5 && (e.w && e.w.s > 0 ? (info.due ? Math.random() < 0.7 : Math.random() < 0.25) : Math.random() < 0.6);
+      if (wantWrite) {
+        const w = wr[(e.wn || 0) % wr.length];
+        return { type:'write', kicker:'Write it · ' + pt.title, prompt:'Write this in Chinese (characters or pinyin)', big:w.en, bigCls:'en', placeholder:'Your own sentence', pt:id, gdim:'w', gtitle:pt.title, model:w.zh, need:w.need || '', reveal:w.zh, explain:'' };
+      }
+      let k = Math.floor(Math.random() * pt.pool.length);
+      if (pt.pool.length > 1 && k === (e.li || 0) % pt.pool.length) k = (k + 1) % pt.pool.length;
+      return Object.assign(prepQ(pt.pool[k]), { pt:id, gdim:'r', gpool:k, gtitle:pt.title });
+    });
+  };
+  // quick checks before asking the AI: the pattern the prompt is about must be in a sentence written in characters
+  const writeLocal = (q, text) => {
+    if (!/[一-鿿]/.test(text) || !q.need) return null;
+    const ok = q.need.split('|').some(alt => alt.split('+').every(x => text.indexOf(x) >= 0));
+    return ok ? null : 'This point needs ' + q.need.split('|').map(alt => alt.split('+').join(' and ')).join(' or ') + ' in the sentence.';
+  };
+  const gParse = (text) => {
+    const i = text.indexOf('{'), j = text.lastIndexOf('}');
+    if (i < 0 || j <= i) throw new Error('The reply was not in the expected format.');
+    const o = JSON.parse(text.slice(i, j + 1)); const v = String(o.verdict || '').toLowerCase();
+    if (v !== 'pass' && v !== 'fix') throw new Error('The reply was not in the expected format.');
+    return { verdict:v, better:String(o.better || ''), reason:String(o.reason || '') };
+  };
+  // Claude Sonnet when an Anthropic key is saved (it got all 30 test sentences right); Qwen Plus when only an Alibaba key is
+  async function gAiCheck(q, text) {
+    const user = 'English prompt: ' + q.big + '\nGrammar point: ' + q.gtitle + '\nLearner\'s answer: ' + text;
+    if (AICFG.key) {
+      const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 30000);
+      let res;
+      try {
+        res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', signal:ctl.signal,
+          headers:{ 'x-api-key':AICFG.key, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true', 'content-type':'application/json' },
+          body:JSON.stringify({ model:'claude-sonnet-5-5', max_tokens:300, system:G_SYSTEM, messages:[{ role:'user', content:user }] }) });
+      } catch (e) { throw new Error('Could not reach the AI service. Check your connection.'); } finally { clearTimeout(tm); }
+      if (res.status === 401) throw new Error('The API key was rejected. Check it in Settings.');
+      if (res.status === 429) throw new Error('Too many requests right now. Wait a moment.');
+      if (!res.ok) throw new Error('The AI service had a problem (' + res.status + ').');
+      const d = await res.json();
+      return Object.assign(gParse((d.content || []).filter(b => b.type === 'text').map(b => b.text).join('')), { by:'claude' });
+    }
+    if (aliCfg().key) {
+      const body = { model:'qwen-plus', max_tokens:300, messages:[{ role:'system', content:G_SYSTEM }, { role:'user', content:user }], response_format:{ type:'json_object' } };
+      let data;
+      try { data = await aliPost(body); }
+      catch (e) { if (e.status === 400 && /response_format|json/i.test(e.detail || '')) { delete body.response_format; data = await aliPost(body); } else throw e; }
+      return Object.assign(gParse(aiText(data)), { by:'qwen' });
+    }
+    throw new Error('No AI key is saved on this device.');
+  }
+
   function buildTest(S) {
     const pool = BANK_KEYS.filter(zh => DIMS.some(k => S.ws[zh][k].s > 0));
     if (pool.length < 3) return [];
@@ -1152,12 +1262,14 @@
         const lessons = ((window['HSK' + n + '_GRAMMAR'] || {}).lessons || []).map(l => l.id);
         const scns = ((window['HSK' + n + '_SPEAK'] || {}).scenarios || []).map(x => x.id);
         const gres = Object.assign({}, st.gres); lessons.forEach(id => { delete gres[id]; }); Object.assign(gres, pick(S.gres, lessons));
+        const pts = ((window['HSK' + n + '_GRAMMAR'] || {}).points || []).map(x => x.id);
+        const gpt = Object.assign({}, st.gpt); pts.forEach(id => { delete gpt[id]; }); Object.assign(gpt, pick(S.gpt || {}, pts));
         const sres = Object.assign({}, st.sres); scns.forEach(id => { delete sres[id]; }); Object.assign(sres, pick(S.sres, scns));
         const cnt = clipCount(n);
         const wset = {}; words.forEach(z => { wset[z] = true; });
         const lrn = {}; Object.keys(S.lrn || {}).forEach(z => { if (wset[z]) lrn[z] = S.lrn[z]; });
         st.lrn = lrn; st.rlog = (S.rlog || []).filter(e => wset[e[1]]);
-        st.ws = ws; st.misses = mis; st.gres = gres; st.sres = sres; st.clipBest = S.clipBest.slice(off, off + cnt);
+        st.ws = ws; st.misses = mis; st.gres = gres; st.gpt = gpt; st.sres = sres; st.clipBest = S.clipBest.slice(off, off + cnt);
         off += cnt;
         lsSet(storeKey(n), JSON.stringify(st));
       });
@@ -1980,20 +2092,22 @@
     canCheck = () => {
       const S = this.state; const q = this.curQ();
       if (!q) return false;
-      if (q.type === 'type' || q.type === 'cloze') return this.norm(S.qtyped).length > 0;
+      if (q.type === 'type' || q.type === 'cloze' || q.type === 'write') return this.norm(S.qtyped).length > 0 || (q.type === 'write' && S.qtyped.trim().length > 0);
       if (q.type === 'order') return S.qpicked.length === q.tiles.length;
       return S.qchoice !== null;
     };
     check = () => {
       const S = this.state;
-      if (S.qchecked || !this.canCheck()) return;
+      if (S.qchecked || S.qbusy || !this.canCheck()) return;
       const q = this.curQ();
+      if (q.type === 'write') { this.checkWrite(q); return; }
       let ok = false, grade = 'again', feed = '';
       if (q.type === 'type' || q.type === 'cloze') { const r = checkTyped(q, S.qtyped); ok = !!r.ok; grade = ok ? 'good' : (r.grade || 'again'); feed = r.note || ''; }
       else if (q.type === 'listen' || q.type === 'mc') ok = S.qchoice === q.correct;
       else if (q.type === 'order') ok = S.qpicked.map(id => q.tiles[id]).join('|') === q.toks.join('|');
       else if (q.type === 'spot') ok = S.qchoice === q.spot;
       if (q.rv) { this.rAnswer(q, ok, grade, feed); return; }   // a Review card: the answer goes to the word's memory and the review log, not to a test score
+      if (q.pt) this.gptRecord(q.pt, 'r', ok, grade, q.gpool);   // a grammar-review card: the point's own memory moves on
       const gain = ok ? 10 + Math.min(S.qcombo, 4) * 2 : 0;
       const combo = ok ? S.qcombo + 1 : 0;
       const res = S.qres.slice(); res[S.qi] = ok;
@@ -2018,6 +2132,8 @@
         if (S.qmode === 'test') {
           const hist = S.testHistory.concat([{ date:new Date().toLocaleDateString('en-US', { month:'short', day:'numeric' }), score:pct }]).slice(-5);
           patch.testHistory = hist; patch.tdone = true; patch.dayMin = S.dayMin + (S.tdone ? 0 : 3);
+        } else if (S.qmode === 'greview') {
+          patch.gdone = true; patch.dayMin = S.dayMin + (S.gdone ? 0 : 4);
         } else {
           const L = LESSONS[S.glesson];
           const gres = Object.assign({}, S.gres); gres[L.id] = Math.max(gres[L.id] || 0, pct);
@@ -2025,13 +2141,53 @@
         }
         this.setState(patch);
       } else {
-        this.setState({ qi:S.qi + 1, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qfeed:'' });
+        this.setState({ qi:S.qi + 1, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qfeed:'', qerr:'', qbusy:false });
       }
     };
     primary = () => { if (this.state.qchecked) this.next(); else this.check(); };
     pick = (id) => { const S = this.state; if (S.qchecked || S.qpicked.indexOf(id) >= 0) return; this.setState({ qpicked:S.qpicked.concat([id]) }); };
     unpick = (id) => { const S = this.state; if (S.qchecked) return; this.setState({ qpicked:S.qpicked.filter(x => x !== id) }); };
-    exitQuiz = () => { this.setState({ screen:this.state.qmode === 'grammar' ? 'grammar' : 'testlobby', qdone:false }); };
+    // ----- grammar review: points, not lessons -----
+    startGrammarReview = () => {
+      const S = this.state;
+      const levels = S.grvLv ? [S.grvLv] : LVLS.slice();
+      const list = gptSession(S, levels, 8, aiReadyNow());
+      if (!list.length) return;
+      this.quizQs = list;
+      this.rvKey = null; this.setState({ screen:'quiz', qmode:'greview', qi:0, qpicked:[], qtyped:'', qchoice:null, qfeed:'', qerr:'', qbusy:false, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false });
+      try { window.scrollTo(0, 0); } catch (e) {}
+    };
+    // one answer about a point: its memory (recognise or write) moves on, with spaced repetition like a word
+    gptRecord = (pid, dim, ok, grade, pool) => {
+      const S = this.state; const e0 = S.gpt[pid] || {};
+      const e = Object.assign({ rn:0, rok:0, wn:0, wok:0 }, e0);
+      const key = dim === 'w' ? 'w' : 'r'; const cur = e[key] || { s:0 };
+      e[key] = bump(cur, ok ? 'good' : (grade === 'hard' ? 'hard' : 'again'));
+      e[key + 'n'] = (e[key + 'n'] || 0) + 1; if (ok) e[key + 'ok'] = (e[key + 'ok'] || 0) + 1;
+      if (pool !== undefined) e.li = pool;
+      e.at = Date.now();
+      this.setState({ gpt:Object.assign({}, S.gpt, { [pid]: e }) });
+    };
+    // a sentence written from scratch: quick local checks, then the AI says whether it is right
+    checkWrite = async (q) => {
+      const S = this.state; if (S.qchecked || S.qbusy) return;
+      const text = (S.qtyped || '').trim(); if (!text) return;
+      const local = writeLocal(q, text);
+      if (local) { this.writeDone(q, false, local, q.model, ''); return; }
+      this.setState({ qbusy:true, qerr:'' });
+      try { const r = await gAiCheck(q, text); this.writeDone(q, r.verdict === 'pass', r.reason, r.verdict === 'pass' ? '' : (r.better || q.model), r.by === 'qwen' ? 'Checked by Qwen, which is a little less strict than Claude.' : ''); }
+      catch (e) { this.setState({ qbusy:false, qerr:(e && e.message) || 'Could not check it.' }); }
+    };
+    writeDone = (q, ok, reason, better, note) => {
+      const S = this.state;
+      q.reveal = ok ? q.model : (better || q.model);
+      q.explain = (ok ? 'A model answer: ' + q.model : (better && better !== q.model ? 'A model answer: ' + q.model : ''));
+      const res = S.qres.slice(); res[S.qi] = ok;
+      const gain = ok ? 12 : 0;
+      this.setState({ qbusy:false, qerr:'', qchecked:true, qcorrect:ok, qfeed:(reason || '') + (note ? ' ' + note : ''), qscore:S.qscore + (ok ? 1 : 0), qres:res, qxp:S.qxp + gain, qgain:gain, xp:S.xp + gain, dayXp:S.dayXp + gain });
+      this.gptRecord(q.pt, 'w', ok);
+    };
+    exitQuiz = () => { this.setState({ screen:isG(this.state.qmode) ? 'grammar' : 'testlobby', qdone:false }); };
     pickLesson = (i) => { this.setState({ glesson:i, gramPick:false, ggopen:null, gq:'' }); try { window.scrollTo(0, 0); } catch (e) {} };
     pickTopic = (i) => { this.setState({ wtopic:i, wtmenu:false, wgopen:null, wtq:'' }); try { window.scrollTo(0, 0); } catch (e) {} };
 
@@ -2500,12 +2656,12 @@
       };
       const streakShown = (S.lastActive === today || S.lastActive === daysAgo(1)) ? S.streak : 0;
 
-      const active = S.screen === 'quiz' ? (S.qmode === 'grammar' ? 'grammar' : 'testlobby') : S.screen;
+      const active = S.screen === 'quiz' ? (isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
       const navCls = (k) => 'nav' + (active === k ? ' on' : '');
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
       const GROUPS = [['home', ['home']], ['learn', ['web', 'grammar', 'words']], ['review', ['review', 'testlobby']], ['talk', ['listen', 'speak']], ['more', ['exam', 'friends', 'voice']]];
       const SUBLABEL = { web:'Word webs', grammar:'Grammar', words:'My words', review:'Review words', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', voice:'Settings' };
-      const curScreen = S.screen === 'quiz' ? (S.qmode === 'grammar' ? 'grammar' : 'testlobby') : S.screen;
+      const curScreen = S.screen === 'quiz' ? (isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
       const navGroup = (GROUPS.find(g => g[1].indexOf(curScreen) >= 0) || GROUPS[0])[0];
       const gcls = (id) => 'nav' + (navGroup === id ? ' on' : '');
       const subnavItems = ((GROUPS.find(g => g[0] === navGroup) || [0, []])[1]).filter(id => id !== 'friends' || (FR && FR.enabled())).filter(id => id !== 'exam' || !!EXAMBANK).map(id => [id, SUBLABEL[id]]);
@@ -2553,7 +2709,7 @@
         friends:['Friends', FR && FR.identity() && FR.identity().group ? FR.identity().group + '. Only your study totals are shared.' : 'Study together. Only your study totals are shared.'],
         listen:['Listening lab', HAS_LISTEN ? 'Train your ear for how people really talk, not just how lessons sound.' : 'Not built yet for ' + LVN + '.'],
         voice:['Settings', LV <= 1 ? 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud, and how 儿 endings are shown.' : 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud.'],
-        quiz:S.qmode === 'grammar' ? ['Grammar practice', LESSONS[S.glesson].title] : [LVN + ' test', 'Take your time. Wrong answers show you why.']
+        quiz:S.qmode === 'greview' ? ['Grammar review', 'Points you are weakest on come first. Write your own sentence when it asks: that is how a point becomes mastered.'] : S.qmode === 'grammar' ? ['Grammar practice', LESSONS[S.glesson].title] : [LVN + ' test', 'Take your time. Wrong answers show you why.']
       };
       const tt = titles[S.screen];
 
@@ -2671,7 +2827,7 @@
       // quiz
       const qs = this.quizQs.length ? this.quizQs : [{ type:'mc', kicker:'', prompt:'', options:[], correct:'', reveal:'', explain:'' }];
       const q0 = qs[Math.min(S.qi, qs.length - 1)];
-      const isTyped = q0.type === 'type' || q0.type === 'cloze';
+      const isTyped = q0.type === 'type' || q0.type === 'cloze' || q0.type === 'write';
       const isListen = q0.type === 'listen';
       const isChoice = isListen || q0.type === 'mc';
       const isOrder = q0.type === 'order';
@@ -2680,7 +2836,7 @@
         kicker:q0.kicker, prompt:q0.prompt, big:q0.big || '', hasBig:!!q0.big, bigCls:(q0.big || '').length > 3 ? 'sm' : '',
         sub:q0.sub || '', hasSub:!!q0.sub, placeholder:q0.placeholder || '', bigZh:q0.bigCls !== 'en', bigEn:q0.bigCls === 'en',
         isTyped, isListen, isChoice, isOrder, isSpot, reveal:q0.reveal, explain:q0.explain,
-        reportUrl:report((S.qmode === 'grammar' ? 'Grammar practice' : 'Test') + ' question ' + (S.qi + 1), q0.prompt + ' / ' + q0.reveal)
+        reportUrl:report((isG(S.qmode) ? 'Grammar practice' : 'Test') + ' question ' + (S.qi + 1), q0.prompt + ' / ' + q0.reveal)
       };
       const opts = (isChoice ? q0.options : []).map(o => {
         let cls = '';
@@ -2702,10 +2858,10 @@
       const total = qs.length;
       const acc = Math.round(S.qscore / total * 100);
       const resTitle = acc >= 80 ? 'Strong run' : acc >= 60 ? 'Solid work' : 'Good start';
-      const resSub = S.qmode === 'grammar'
+      const resSub = S.qmode === 'greview' ? 'Each point you answered has moved on in its own memory. Check the tracker to see which are strong and which are mastered.' : S.qmode === 'grammar'
         ? (acc >= 80 ? 'Lesson passed. It now counts toward your grammar progress.' : 'You need 80% to pass a lesson. Read the explanation again and have another go.')
         : 'Your score is saved to the list of recent tests.';
-      const resGain = S.qmode === 'grammar' ? (acc >= 80 ? 'Lesson passed' : 'Not passed yet (80% needed)') : 'Test saved to your history';
+      const resGain = S.qmode === 'greview' ? 'Grammar review saved' : S.qmode === 'grammar' ? (acc >= 80 ? 'Lesson passed' : 'Not passed yet (80% needed)') : 'Test saved to your history';
 
       // speak (practice script)
       const sc = SCEN[S.sidx] || NO_SC;
@@ -2876,6 +3032,20 @@
       });
       const gramNoMatch = !!gqn && lessonGroups.length === 0;
       const L = LESSONS[S.glesson];
+      // grammar review panel and tracker
+      const greg = gptReg();
+      const grvLevels = S.grvLv && LVLS.indexOf(S.grvLv) >= 0 ? [S.grvLv] : LVLS.slice();
+      const grvRowsAll = Object.keys(greg).filter(id => grvLevels.indexOf(greg[id].level) >= 0).map(id => {
+        const info = gptInfo(S.gpt[id]); const pt = greg[id];
+        return { id, info, pt, rank:(info.started ? (info.due ? 0 : 1) : 2) + (info.mastered ? 5 : 0) + (info.started ? info.rm / 1000 : 0) };
+      }).sort((a, b) => a.rank - b.rank);
+      const grvStart = grvRowsAll.filter(r => r.info.started).length, grvDue = grvRowsAll.filter(r => r.info.due).length, grvMastered = grvRowsAll.filter(r => r.info.mastered).length;
+      const grvCanWrite = aiReadyNow();
+      const grvRows = (S.grvAll ? grvRowsAll : grvRowsAll.slice(0, 12)).map(r => ({
+        title:r.pt.title, lv:'HSK ' + r.pt.level, hasLv:LVLS.length > 1, rw:r.info.rm + '%', ww:r.info.wm + '%', label:r.info.label, cls:r.info.state + (r.info.due ? ' due' : ''),
+        rtxt:r.info.rm + '%', wtxt:r.pt.write.length ? (r.info.wm > 0 ? r.info.wm + '%' : 'not yet') : '–'
+      }));
+      const grvLvChips = (LVLS.length > 1 ? [{ label:'All', n:0 }].concat(LVLS.map(n => ({ label:'HSK ' + n, n }))) : []).map(c => ({ label:c.label, cls:(S.grvLv || 0) === c.n ? 'on' : '', fn:() => this.setState({ grvLv:c.n }) }));
       const lessonBest = S.gres[L.id];
       const lesson = {
         kick:(L.cat ? L.cat + ' · ' : '') + 'Lesson ' + (S.glesson + 1) + ' of ' + LESSONS.length, hasLvTag:ALL, lvTag:'HSK ' + LESSON_LV[L.id], lvCls:(LESSON_LV[L.id] === TOPL ? 'cur' : 'old') + ' l' + LESSON_LV[L.id], title:L.title, pickLabel:(S.glesson + 1) + ' · ' + L.title,
@@ -3102,6 +3272,11 @@
         hasRecent:S.testHistory.length > 0, noRecent:S.testHistory.length === 0,
 
         // grammar
+        grvLvChips, hasGrvChips:grvLvChips.length > 0, grvSub:grvRowsAll.length + ' points · ' + grvStart + ' started · ' + grvDue + ' due · ' + grvMastered + ' mastered',
+        grvStartLabel:grvDue > 0 ? 'Review ' + grvDue + ' due, and more' : 'Start grammar review', grvStart:() => this.startGrammarReview(), 
+        grvNote:grvCanWrite ? 'It also asks you to write your own sentence. Claude checks it, and that is how a point becomes mastered.' : 'Add an AI key in Settings to unlock writing your own sentences. Without one you can still review, but no point can reach Mastered.',
+        grvToggleLabel:S.grvOpen ? 'Hide tracker' : 'Show tracker', grvToggle:() => this.setState({ grvOpen:!S.grvOpen }), grvOpen:!!S.grvOpen, grvRows,
+        grvMoreShow:!!S.grvOpen && grvRowsAll.length > 12, grvMoreLabel:S.grvAll ? 'Show fewer' : 'Show all ' + grvRowsAll.length, grvMore:() => this.setState({ grvAll:!S.grvAll }),
         lessonGroups, gramNoMatch, gq:S.gq, onGramSearch:(e) => this.setState({ gq:e.target.value }), lesson, gramPickOpen:S.gramPick ? 'true' : 'false', gramListCls:S.gramPick ? 'open' : '', toggleGramPick:() => this.setState({ gramPick:!S.gramPick }),
         startGrammar:() => this.startQuiz('grammar'),
 
@@ -3119,13 +3294,13 @@
         onType:(e) => { if (!this.state.qchecked) this.setState({ qtyped:e.target.value }); },
         onEnter:(e) => { if (e.key === 'Enter') this.primary(); },
         playQ:() => this.say(q0.audio || '', 'q'), listenCls:pc('q'),
-        showCheck:!S.qchecked, checkCls:canCheck ? '' : 'dis', checkAria:canCheck ? 'false' : 'true', check:this.check,
+        showCheck:!S.qchecked, checkLabel:S.qbusy ? 'Checking…' : 'Check', hasQerr:!!S.qerr, qerr:S.qerr || '', checkCls:(canCheck && !S.qbusy) ? '' : 'dis', checkAria:canCheck ? 'false' : 'true', check:this.check,
         qchecked:S.qchecked, qcorrect:S.qcorrect, qwrong:!S.qcorrect, fbCls:S.qcorrect ? 'good' : 'bad',
         fbTitle:S.qcorrect ? 'Correct' : (S.qfeed && /Right sounds|real word/.test(S.qfeed) ? 'Close' : 'Not quite'),
         next:this.next, nextLabel:S.qi + 1 >= total ? 'See results' : 'Continue',
         qcombo:S.qcombo, comboCls:S.qcombo >= 2 ? 'on' : '', exitQuiz:this.exitQuiz,
         resTitle, resSub, resScore:S.qscore + '/' + total, qbest:S.qbest, resGain,
-        again:() => this.startQuiz(S.qmode),
+        again:() => (S.qmode === 'greview' ? this.startGrammarReview() : this.startQuiz(S.qmode)),
 
         // footer
         exportData:this.exportData, importData:this.importData, resetAll:this.resetAll, goVoice:this.goVoice,

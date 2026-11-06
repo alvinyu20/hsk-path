@@ -1,0 +1,77 @@
+# point id <TAB> English prompt <TAB> a model answer <TAB> words the answer needs (a+b = both, a|b = either)
+g2-1	My older sister is taller than me.	姐姐比我高。	比
+g2-1	Today is colder than yesterday.	今天比昨天冷。	比
+g2-2	He is much taller than me.	他比我高多了。	比
+g2-2	My sister is two years older than me.	姐姐比我大两岁。	比
+g2-3	I am not as tall as him.	我没有他高。	没有
+g2-3	Today is not as cold as yesterday.	今天没有昨天冷。	没有
+g2-4	I like this watch the best.	我最喜欢这个手表。	最
+g2-4	He is the tallest in our class.	他是我们班最高的。	最
+g2-5	Why is it so cold today?	今天怎么这么冷？	这么
+g2-5	He is not that tall.	他没有那么高。	那么
+g2-6	The shop is not far from my home.	商店离我家不远。	离
+g2-6	My home is very close to the school.	我家离学校很近。	离
+g2-7	I work from eight to five.	我从八点工作到五点。	从+到
+g2-7	I work from Monday to Friday.	我从星期一到星期五上班。	从+到
+g2-8	Let us go to the right.	我们往右走。	往
+g2-8	Please go straight ahead.	请往前走。	往
+g2-9	Mom got home at six.	妈妈六点到家了。	到
+g2-9	He has arrived at school.	他到学校了。	到
+g2-10	I live next to the hospital.	我住在医院旁边。	在
+g2-10	They sit in the classroom.	她们坐在教室里。	在
+g2-11	I have eaten fish before.	我吃过鱼。	过
+g2-11	He has never been abroad.	他没去过外国。	过
+g2-12	A boy is standing at the door.	门口站着一个男孩儿。	着
+g2-12	The phone is on.	手机开着。	着
+g2-13	The train is about to come.	车快要来了。	快要|就要
+g2-13	The teacher is about to come in.	老师就要进来了。	就要|快要
+g2-14	She has already gone home.	她已经回家了。	已经
+g2-14	My younger brother has already eaten.	弟弟已经吃饭了。	已经
+g2-15	We got to school at eight already.	我们八点就到学校了。	就
+g2-15	He got up at five already.	他五点就起床了。	就
+g2-16	Do not talk on the phone here.	别在这里打电话。	别
+g2-16	Stop talking, I am busy.	你别说了，我很忙。	别
+g2-17	Because it is raining, I am not going.	因为下雨，所以我不去。	因为+所以
+g2-17	Because it was too late, I went home.	因为太晚了，所以我回家了。	因为+所以
+g2-18	Although it is far, I walk there.	虽然很远，但是我走路去。	虽然+但是
+g2-18	Although it is cold, I am happy.	虽然很冷，但是我很高兴。	虽然+但是
+g2-19	Do you like red or green?	你喜欢红色还是绿色？	还是
+g2-19	Do you drink coffee or milk tea?	你喝咖啡还是喝奶茶？	还是
+g2-20	She writes very well.	她写得很好。	得
+g2-20	My older brother swims fast.	哥哥游得很快。	得
+g2-21	My little sister smiled happily.	妹妹高兴地笑了。	地
+g2-21	He spoke slowly.	他慢慢地说。	地
+g2-22	The teacher let us come in.	老师让我们进来。	让
+g2-22	Dad asked me to buy medicine.	爸爸让我去买药。	让
+g2-23	He takes the subway every day.	他每天都坐地铁。	每+都
+g2-23	Everyone likes this film.	每个人都喜欢这个电影。	每+都
+g2-24	I often watch films at home.	我经常在家看电影。	经常
+g2-24	Sometimes my younger brother plays football.	我弟弟有时踢足球。	有时
+g2-25	Please say it once more.	请再说一次。	次
+g2-25	I have been to China twice.	我去过两次中国。	次
+g2-26	I have finished reading this book.	我看完这本书了。	完
+g2-26	I did not understand.	我没听懂。	懂
+g2-27	Come in quickly.	快进来吧。	来
+g2-27	My older brother has already gone back.	哥哥已经回去了。	去
+g2-28	I play football with my older brother.	我跟哥哥一起踢足球。	跟|一起
+g2-28	Let us go to the cinema together tomorrow.	明天我们一起去看电影吧。	一起
+g2-29	I came by taxi.	我是打车来的。	是+的
+g2-29	When did you arrive?	你是什么时候到的？	是+的
+g2-30	I do not want to eat anything.	我什么都不想吃。	都
+g2-30	I do not want to go anywhere.	我哪儿都不想去。	都
+g2-31a	He may be sleeping.	他可能在睡觉。	可能
+g2-31a	It might rain today.	今天可能会下雨。	可能
+g2-31b	I hope you like this watch.	我希望你喜欢这个手表。	希望
+g2-31b	I hope it does not rain tomorrow.	我希望明天不下雨。	希望
+g2-31c	I plan to go and buy medicine tomorrow.	我准备明天去买药。	准备
+g2-31c	He is getting ready for the test.	他在准备考试。	准备
+g2-32	I have a pair of black trousers.	我有一条黑色的裤子。	条
+g2-32	This teacher teaches Chinese.	这位老师教汉语。	位
+g2-33	This bag costs twenty thousand.	这个包两万块。	万
+g2-33	There are more than twenty students here.	这里有二十多个学生。	多
+g2-34	How far is it from your home to school?	你家离学校有多远？	多
+g2-34	How tall is he?	他有多高？	多
+g2-35	When you eat, do not look at your phone.	吃饭的时候，别看手机。	的时候
+g2-35	When I was small, I liked drinking milk.	我小的时候，喜欢喝牛奶。	的时候
+g2-36	Think about it again.	再想想吧。	想想
+g2-36	Let me have a look.	我看看。	看看

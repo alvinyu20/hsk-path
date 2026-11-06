@@ -33,6 +33,7 @@ Run everything with `sh tools/check-all.sh /path/to/complete.json`. It rebuilds 
 | 8b | **App checks** (not about content) | Sync losing or resurrecting progress, a reset not reaching other devices, a friends-server change, a too-loose security policy, a broken offline copy or update, a save that fails silently, a connection test that lies | `test-sync.js`, `test-secrets.js`, `test-friends.js`, `worker/test.mjs`, `smoke-test-friends.js`, `smoke-test-pwa.js` (run on every push by `.github/workflows/ci.yml`) |
 | 9 | **Blind back-translation** (by hand, per level) | What a rule cannot see. Translate each Chinese sentence cold, without looking at the English, then compare | see the log |
 | 10 | **High-risk word read** (by hand, per level) | List every sentence with 了, 在, 呢, 吧, 会, 能, 可以, 想, 要, 还, 再, 也, 都 and read each one against its English | see the log |
+| 11b | **Grammar review vocabulary** | A grammar-review exercise (extra exercises, write prompts) that uses a word above its level or not on the lists | `check-grammar-vocab.py` (run per level in `check-all.sh` and `check-quick.sh`) |
 | 11 | **Cross-check of grammar explanations** | An explanation that is wrong. Each point is compared with the official outline's example sentences and the Chinese Grammar Wiki | see the log |
 | 12 | **Teacher review** | Everything above. Natural-sounding Chinese, tone of phrases, whether an explanation will mislead | `review/` packet |
 

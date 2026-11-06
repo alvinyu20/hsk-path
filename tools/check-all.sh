@@ -16,6 +16,7 @@ LEVEL=1
 echo "== 1. build the data files from content/ (pinyin is generated, never typed)"
 last python3 -W ignore tools/build-words.py
 last python3 -W ignore tools/build-grammar.py
+last python3 -W ignore tools/check-grammar-vocab.py
 last python3 -W ignore tools/build-webs.py
 last python3 -W ignore tools/build-speech.py
 last python3 -W ignore tools/build-lexicon.py
@@ -50,6 +51,7 @@ LEVEL=1 python3 -W ignore tools/check-ties.py /tmp/shanlu-sentences.json
 echo "== 3b. HSK 2: build the data files and check every sentence at level 2, in both styles"
 last env LEVEL=2 python3 -W ignore tools/build-words.py
 last env LEVEL=2 python3 -W ignore tools/build-grammar.py
+last env LEVEL=2 python3 -W ignore tools/check-grammar-vocab.py
 last env LEVEL=2 python3 -W ignore tools/build-webs.py
 last env LEVEL=2 python3 -W ignore tools/build-speech.py
 last env LEVEL=2 python3 -W ignore tools/build-exam.py
@@ -65,6 +67,7 @@ python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l2-plain.json --l
 echo "== 3c. HSK 3: build the data files and check every sentence at level 3, in both styles"
 last env LEVEL=3 python3 -W ignore tools/build-words.py
 last env LEVEL=3 python3 -W ignore tools/build-grammar.py
+last env LEVEL=3 python3 -W ignore tools/check-grammar-vocab.py
 last env LEVEL=3 python3 -W ignore tools/build-webs.py
 last env LEVEL=3 python3 -W ignore tools/build-speech.py
 last env LEVEL=3 python3 -W ignore tools/build-exam.py

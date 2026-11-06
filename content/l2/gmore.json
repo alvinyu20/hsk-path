@@ -1,0 +1,586 @@
+[
+ {
+  "p": "g2-1",
+  "t": "mc",
+  "prompt": "Which sentence says: My older brother is taller than me?",
+  "options": [
+   "哥哥比我高。",
+   "哥哥很比我高。"
+  ],
+  "correct": 0,
+  "zh": "哥哥比我高。",
+  "en": "My older brother is taller than me.",
+  "explain": "比 comes straight before the person you compare with, and no 很 goes before the adjective."
+ },
+ {
+  "p": "g2-2",
+  "t": "order",
+  "zh": "他比我高一点儿。",
+  "en": "He is a bit taller than me.",
+  "explain": "一点儿 after the adjective says how much more."
+ },
+ {
+  "p": "g2-2",
+  "t": "cloze",
+  "zh": "他比我大三岁。",
+  "en": "He is three years older than me.",
+  "blank": "比",
+  "explain": "比 + person + adjective + number."
+ },
+ {
+  "p": "g2-2",
+  "t": "order",
+  "zh": "今天比昨天冷多了。",
+  "en": "Today is much colder than yesterday.",
+  "explain": "多了 after the adjective means much more."
+ },
+ {
+  "p": "g2-2",
+  "t": "mc",
+  "prompt": "Which sentence says: She is a bit older than me?",
+  "options": [
+   "她比我大一点儿。",
+   "她比一点儿我大。"
+  ],
+  "correct": 0,
+  "zh": "她比我大一点儿。",
+  "en": "She is a bit older than me.",
+  "explain": "The amount goes after the adjective."
+ },
+ {
+  "p": "g2-3",
+  "t": "cloze",
+  "zh": "今天没有昨天热。",
+  "en": "Today is not as hot as yesterday.",
+  "blank": "没有",
+  "explain": "A 没有 B + adjective means A is not as ... as B."
+ },
+ {
+  "p": "g2-3",
+  "t": "order",
+  "zh": "我没有哥哥高。",
+  "en": "I am not as tall as my older brother.",
+  "explain": "没有 replaces 比 in the negative."
+ },
+ {
+  "p": "g2-3",
+  "t": "mc",
+  "prompt": "Which sentence says: This one is not as big as that one?",
+  "options": [
+   "这个没有那个大。",
+   "这个没有那个比大。"
+  ],
+  "correct": 0,
+  "zh": "这个没有那个大。",
+  "en": "This one is not as big as that one.",
+  "explain": "没有 does not go with 比."
+ },
+ {
+  "p": "g2-4",
+  "t": "cloze",
+  "zh": "他最喜欢吃鱼。",
+  "en": "He likes eating fish the most.",
+  "blank": "最",
+  "explain": "最 goes right before the word it describes."
+ },
+ {
+  "p": "g2-4",
+  "t": "order",
+  "zh": "这是我最好的朋友。",
+  "en": "This is my best friend.",
+  "explain": "最 + adjective means the most."
+ },
+ {
+  "p": "g2-4",
+  "t": "mc",
+  "prompt": "Which sentence says: She runs the fastest?",
+  "options": [
+   "她跑得最快。",
+   "她最跑得快。"
+  ],
+  "correct": 0,
+  "zh": "她跑得最快。",
+  "en": "She runs the fastest.",
+  "explain": "最 goes before the adjective, after 得."
+ },
+ {
+  "p": "g2-5",
+  "t": "cloze",
+  "zh": "今天怎么这么冷？",
+  "en": "Why is it so cold today?",
+  "blank": "这么",
+  "explain": "这么 means so, for something near."
+ },
+ {
+  "p": "g2-5",
+  "t": "order",
+  "zh": "这个杯子这么大！",
+  "en": "This cup is so big!",
+  "explain": "这么 goes before the adjective."
+ },
+ {
+  "p": "g2-5",
+  "t": "cloze",
+  "zh": "他没有那么高。",
+  "en": "He is not that tall.",
+  "blank": "那么",
+  "explain": "那么 means that, for something further away."
+ },
+ {
+  "p": "g2-5",
+  "t": "mc",
+  "prompt": "Which sentence says: The school is so far from here!?",
+  "options": [
+   "学校离这儿这么远！",
+   "学校离这儿远这么！"
+  ],
+  "correct": 0,
+  "zh": "学校离这儿这么远！",
+  "en": "The school is so far from here!",
+  "explain": "这么 goes before the adjective."
+ },
+ {
+  "p": "g2-6",
+  "t": "cloze",
+  "zh": "学校离这儿很近。",
+  "en": "The school is very close to here.",
+  "blank": "离",
+  "explain": "A 离 B + distance."
+ },
+ {
+  "p": "g2-6",
+  "t": "order",
+  "zh": "我家离火车站很远。",
+  "en": "My home is far from the station.",
+  "explain": "离 says the distance between two places."
+ },
+ {
+  "p": "g2-7",
+  "t": "cloze",
+  "zh": "从这儿到学校很近。",
+  "en": "It is close from here to the school.",
+  "blank": "到",
+  "explain": "从 + start + 到 + end."
+ },
+ {
+  "p": "g2-7",
+  "t": "order",
+  "zh": "我们从九点上课到十二点。",
+  "en": "We have class from nine to twelve.",
+  "explain": "从 … 到 … gives a start and an end."
+ },
+ {
+  "p": "g2-8",
+  "t": "cloze",
+  "zh": "请往左走。",
+  "en": "Please go left.",
+  "blank": "往",
+  "explain": "往 + direction goes before the verb."
+ },
+ {
+  "p": "g2-8",
+  "t": "order",
+  "zh": "你往前走，再往右走。",
+  "en": "Go forward, then go right.",
+  "explain": "往 goes before each direction."
+ },
+ {
+  "p": "g2-8",
+  "t": "mc",
+  "prompt": "Which sentence says: Go straight ahead?",
+  "options": [
+   "请往前走。",
+   "请走往前。"
+  ],
+  "correct": 0,
+  "zh": "请往前走。",
+  "en": "Please go straight ahead.",
+  "explain": "往 comes before the verb."
+ },
+ {
+  "p": "g2-9",
+  "t": "cloze",
+  "zh": "我们九点到学校。",
+  "en": "We get to school at nine.",
+  "blank": "到",
+  "explain": "到 + place means arrive at."
+ },
+ {
+  "p": "g2-9",
+  "t": "mc",
+  "prompt": "Which sentence says: He has arrived home?",
+  "options": [
+   "他到家了。",
+   "他家到了。"
+  ],
+  "correct": 0,
+  "zh": "他到家了。",
+  "en": "He has arrived home.",
+  "explain": "到 + place."
+ },
+ {
+  "p": "g2-10",
+  "t": "cloze",
+  "zh": "孩子们坐在椅子上。",
+  "en": "The children sit on the chairs.",
+  "blank": "在",
+  "explain": "Verb + 在 + place."
+ },
+ {
+  "p": "g2-14",
+  "t": "cloze",
+  "zh": "他已经五岁了。",
+  "en": "He is already five.",
+  "blank": "已经",
+  "explain": "已经 + ... + 了."
+ },
+ {
+  "p": "g2-15",
+  "t": "cloze",
+  "zh": "我们十点就睡觉了。",
+  "en": "We were asleep by ten.",
+  "blank": "就",
+  "explain": "就 means as early as."
+ },
+ {
+  "p": "g2-15",
+  "t": "mc",
+  "prompt": "Which sentence says: He arrived as early as seven?",
+  "options": [
+   "他七点就到了。",
+   "他七点到就了。"
+  ],
+  "correct": 0,
+  "zh": "他七点就到了。",
+  "en": "He arrived as early as seven.",
+  "explain": "就 goes before the verb."
+ },
+ {
+  "p": "g2-16",
+  "t": "cloze",
+  "zh": "别看电视了，去睡觉吧。",
+  "en": "Stop watching TV, go to sleep.",
+  "blank": "别",
+  "explain": "别 ... 了 means stop."
+ },
+ {
+  "p": "g2-17",
+  "t": "cloze",
+  "zh": "因为他生病了，所以没来。",
+  "en": "Because he was ill, he did not come.",
+  "blank": "所以",
+  "explain": "因为 gives the reason and 所以 the result."
+ },
+ {
+  "p": "g2-17",
+  "t": "order",
+  "zh": "因为我很忙，所以不去。",
+  "en": "Because I am busy, I am not going.",
+  "explain": "因为 + reason, 所以 + result."
+ },
+ {
+  "p": "g2-18",
+  "t": "cloze",
+  "zh": "虽然很晚，但是我还想看书。",
+  "en": "Although it is late, I still want to read.",
+  "blank": "但是",
+  "explain": "虽然 is followed by 但是."
+ },
+ {
+  "p": "g2-21",
+  "t": "order",
+  "zh": "他慢慢地走进来。",
+  "en": "He walks in slowly.",
+  "explain": "地 turns the word before it into how the action is done."
+ },
+ {
+  "p": "g2-21",
+  "t": "cloze",
+  "zh": "孩子们高兴地唱歌。",
+  "en": "The children sing happily.",
+  "blank": "地",
+  "explain": "Adjective + 地 + verb."
+ },
+ {
+  "p": "g2-21",
+  "t": "mc",
+  "prompt": "Which sentence says: She smiled happily?",
+  "options": [
+   "她高兴地笑了。",
+   "她高兴笑地了。"
+  ],
+  "correct": 0,
+  "zh": "她高兴地笑了。",
+  "en": "She smiled happily.",
+  "explain": "地 comes right after the describing word."
+ },
+ {
+  "p": "g2-22",
+  "t": "cloze",
+  "zh": "妈妈让我早点儿睡。",
+  "en": "Mom told me to go to bed earlier.",
+  "blank": "让",
+  "explain": "让 + person + verb."
+ },
+ {
+  "p": "g2-22",
+  "t": "order",
+  "zh": "老师让我们看书。",
+  "en": "The teacher asks us to read.",
+  "explain": "让 + person + verb."
+ },
+ {
+  "p": "g2-23",
+  "t": "cloze",
+  "zh": "我每天都喝茶。",
+  "en": "I drink tea every day.",
+  "blank": "都",
+  "explain": "每天 is followed by 都 before the verb."
+ },
+ {
+  "p": "g2-23",
+  "t": "order",
+  "zh": "每个学生都有一本书。",
+  "en": "Every student has a book.",
+  "explain": "每 ... 都 means every."
+ },
+ {
+  "p": "g2-24",
+  "t": "cloze",
+  "zh": "他经常去那家饭店。",
+  "en": "He often goes to that restaurant.",
+  "blank": "经常",
+  "explain": "经常 means often."
+ },
+ {
+  "p": "g2-24",
+  "t": "mc",
+  "prompt": "Which sentence says: Sometimes I take a taxi?",
+  "options": [
+   "我有时坐出租车。",
+   "我坐有时出租车。"
+  ],
+  "correct": 0,
+  "zh": "我有时坐出租车。",
+  "en": "Sometimes I take a taxi.",
+  "explain": "有时 comes before the verb."
+ },
+ {
+  "p": "g2-25",
+  "t": "cloze",
+  "zh": "我去过一次中国。",
+  "en": "I have been to China once.",
+  "blank": "次",
+  "explain": "次 counts how many times."
+ },
+ {
+  "p": "g2-25",
+  "t": "order",
+  "zh": "我看了两次这个电影。",
+  "en": "I have seen this film twice.",
+  "explain": "次 goes after the number."
+ },
+ {
+  "p": "g2-25",
+  "t": "mc",
+  "prompt": "Which sentence says: I have been to China once?",
+  "options": [
+   "我去过一次中国。",
+   "我去过一个中国。"
+  ],
+  "correct": 0,
+  "zh": "我去过一次中国。",
+  "en": "I have been to China once.",
+  "explain": "Use 次 to count times, not 个."
+ },
+ {
+  "p": "g2-30",
+  "t": "cloze",
+  "zh": "这儿什么都有。",
+  "en": "There is everything here.",
+  "blank": "都",
+  "explain": "Question word + 都 means all."
+ },
+ {
+  "p": "g2-30",
+  "t": "order",
+  "zh": "他什么都不喝。",
+  "en": "He does not drink anything.",
+  "explain": "什么 + 都 + 不."
+ },
+ {
+  "p": "g2-30",
+  "t": "mc",
+  "prompt": "Which sentence says: Everyone is here?",
+  "options": [
+   "谁都在这儿。",
+   "谁在都这儿。"
+  ],
+  "correct": 0,
+  "zh": "谁都在这儿。",
+  "en": "Everyone is here.",
+  "explain": "都 comes right after the question word."
+ },
+ {
+  "p": "g2-31a",
+  "t": "cloze",
+  "zh": "明天可能会冷。",
+  "en": "It may be cold tomorrow.",
+  "blank": "可能",
+  "explain": "可能 means maybe."
+ },
+ {
+  "p": "g2-31b",
+  "t": "cloze",
+  "zh": "我希望你高兴。",
+  "en": "I hope you are happy.",
+  "blank": "希望",
+  "explain": "希望 means hope."
+ },
+ {
+  "p": "g2-31b",
+  "t": "order",
+  "zh": "我希望明天天气好。",
+  "en": "I hope the weather is good tomorrow.",
+  "explain": "希望 + a whole sentence."
+ },
+ {
+  "p": "g2-31b",
+  "t": "mc",
+  "prompt": "Which sentence says: I hope he comes?",
+  "options": [
+   "我希望他来。",
+   "我希望来他。"
+  ],
+  "correct": 0,
+  "zh": "我希望他来。",
+  "en": "I hope he comes.",
+  "explain": "希望 + person + verb."
+ },
+ {
+  "p": "g2-31c",
+  "t": "cloze",
+  "zh": "他准备去中国学习。",
+  "en": "He plans to go and study in China.",
+  "blank": "准备",
+  "explain": "准备 + verb means plan to."
+ },
+ {
+  "p": "g2-31c",
+  "t": "order",
+  "zh": "我准备买一个新手机。",
+  "en": "I plan to buy a new phone.",
+  "explain": "准备 + verb."
+ },
+ {
+  "p": "g2-31c",
+  "t": "mc",
+  "prompt": "Which sentence says: She is getting ready to go home?",
+  "options": [
+   "她准备回家了。",
+   "她准备了回家。"
+  ],
+  "correct": 0,
+  "zh": "她准备回家了。",
+  "en": "She is getting ready to go home.",
+  "explain": "准备 goes before the verb."
+ },
+ {
+  "p": "g2-32",
+  "t": "cloze",
+  "zh": "我有两位老师。",
+  "en": "I have two teachers.",
+  "blank": "位",
+  "explain": "位 is a polite measure word for people."
+ },
+ {
+  "p": "g2-33",
+  "t": "cloze",
+  "zh": "这个手机三万块。",
+  "en": "This phone costs thirty thousand.",
+  "blank": "万",
+  "explain": "万 means ten thousand."
+ },
+ {
+  "p": "g2-33",
+  "t": "order",
+  "zh": "我有五十多本书。",
+  "en": "I have more than fifty books.",
+  "explain": "多 after a round number means more than."
+ },
+ {
+  "p": "g2-33",
+  "t": "mc",
+  "prompt": "Which sentence says: There are more than thirty people?",
+  "options": [
+   "这儿有三十多个人。",
+   "这儿有多三十个人。"
+  ],
+  "correct": 0,
+  "zh": "这儿有三十多个人。",
+  "en": "There are more than thirty people here.",
+  "explain": "多 comes after the number."
+ },
+ {
+  "p": "g2-34",
+  "t": "cloze",
+  "zh": "你家有多大？",
+  "en": "How big is your home?",
+  "blank": "多",
+  "explain": "多 + adjective asks how big, how far."
+ },
+ {
+  "p": "g2-35",
+  "t": "order",
+  "zh": "我吃饭的时候，不看手机。",
+  "en": "When I eat, I do not look at my phone.",
+  "explain": "的时候 comes after the first action."
+ },
+ {
+  "p": "g2-35",
+  "t": "order",
+  "zh": "他在家的时候，常常看书。",
+  "en": "When he is at home, he often reads.",
+  "explain": "…的时候 sets the time of the second part."
+ },
+ {
+  "p": "g2-35",
+  "t": "mc",
+  "prompt": "Which sentence says: When I have time, I watch TV?",
+  "options": [
+   "我有时间的时候，看电视。",
+   "我有时间，的时候看电视。"
+  ],
+  "correct": 0,
+  "zh": "我有时间的时候，看电视。",
+  "en": "When I have time, I watch TV.",
+  "explain": "的时候 goes straight after the time part."
+ },
+ {
+  "p": "g2-36",
+  "t": "order",
+  "zh": "我们走走吧。",
+  "en": "Let us take a walk.",
+  "explain": "A doubled verb makes the action light."
+ },
+ {
+  "p": "g2-36",
+  "t": "order",
+  "zh": "你想想，再说。",
+  "en": "Think first, then speak.",
+  "explain": "A doubled verb is short and light."
+ },
+ {
+  "p": "g2-36",
+  "t": "mc",
+  "prompt": "Which sentence says: Let us take a walk?",
+  "options": [
+   "我们走走吧。",
+   "我们走吧走。"
+  ],
+  "correct": 0,
+  "zh": "我们走走吧。",
+  "en": "Let us take a walk.",
+  "explain": "The doubled verb stays together."
+ }
+]

@@ -1,0 +1,557 @@
+[
+ {
+  "id": "g3-1",
+  "title": "把 + object + verb",
+  "src": {
+   "ba": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-2",
+  "title": "被 + doer + verb",
+  "src": {
+   "bei": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-3",
+  "title": "如果…(的话)，就… (if)",
+  "src": {
+   "ruguo": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-4",
+  "title": "不但…而且…",
+  "src": {
+   "budan": [
+    0,
+    2
+   ]
+  }
+ },
+ {
+  "id": "g3-5",
+  "title": "而且, 可是 and 然后",
+  "src": {
+   "budan": [
+    1,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-6",
+  "title": "只要…就…",
+  "src": {
+   "zhiyao": [
+    0,
+    2
+   ]
+  }
+ },
+ {
+  "id": "g3-7",
+  "title": "只有…才…",
+  "src": {
+   "zhiyao": [
+    1,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-8",
+  "title": "除了…(以外)，都 / 也 / 还… (except, and besides)",
+  "src": {
+   "chule": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-9",
+  "title": "为了 + purpose",
+  "src": {
+   "weile": [
+    0
+   ]
+  }
+ },
+ {
+  "id": "g3-10",
+  "title": "为 + person",
+  "src": {
+   "weile": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g3-11",
+  "title": "关于 + topic",
+  "src": {
+   "weile": [
+    1,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-12",
+  "title": "根据",
+  "src": {
+   "weile": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g3-13",
+  "title": "或者 (or in a statement) and 还是 (or in a question)",
+  "src": {
+   "huozhe": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-14",
+  "title": "先…再 / 然后…",
+  "src": {
+   "xian": [
+    0,
+    2,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g3-15",
+  "title": "一边…一边…",
+  "src": {
+   "xian": [
+    1
+   ]
+  }
+ },
+ {
+  "id": "g3-16",
+  "title": "又…又…",
+  "src": {
+   "xian": [
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-17",
+  "title": "又 and 再",
+  "src": {
+   "zaiyou": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-18",
+  "title": "越…越…",
+  "src": {
+   "yue": [
+    0
+   ]
+  }
+ },
+ {
+  "id": "g3-19",
+  "title": "越来越",
+  "src": {
+   "yue": [
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-20",
+  "title": "才",
+  "src": {
+   "cai": [
+    0,
+    2
+   ]
+  }
+ },
+ {
+  "id": "g3-21",
+  "title": "才 and 就",
+  "src": {
+   "cai": [
+    1,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-22",
+  "title": "刚 and 刚刚",
+  "src": {
+   "gang": [
+    0,
+    2,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-23",
+  "title": "刚才",
+  "src": {
+   "gang": [
+    1,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g3-24",
+  "title": "一直",
+  "src": {
+   "yizhi": [
+    0,
+    2
+   ]
+  }
+ },
+ {
+  "id": "g3-25",
+  "title": "总是, 总 and 老",
+  "src": {
+   "yizhi": [
+    1,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-26",
+  "title": "常, 常常, 平时 and 一般",
+  "src": {
+   "yizhi": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g3-27",
+  "title": "更, 比较, 挺, 特别 and 极了",
+  "src": {
+   "degree": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-28",
+  "title": "A 跟 B 一样 (the same as) and 不同 (different)",
+  "src": {
+   "yiyang": [
+    0,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g3-29",
+  "title": "比 + 更 / 还 and 比 + adjective + 多了",
+  "src": {
+   "yiyang": [
+    1,
+    2,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-30",
+  "title": "难 and 容易 + verb",
+  "src": {
+   "nan": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-31",
+  "title": "verb + 得 / 不 + complement",
+  "src": {
+   "potential": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-32",
+  "title": "起来, 出来, 回来 and 下去 after a verb",
+  "src": {
+   "direction2": [
+    0,
+    1,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-33",
+  "title": "向 + direction or person",
+  "src": {
+   "direction2": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g3-34",
+  "title": "verb + 了 + duration",
+  "src": {
+   "duration": [
+    0,
+    2,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-35",
+  "title": "duration + 没 + verb + 了",
+  "src": {
+   "duration": [
+    1,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g3-36",
+  "title": "以前 and 以后",
+  "src": {
+   "time3": [
+    0,
+    1,
+    2,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-37",
+  "title": "后来, 然后 and 最后",
+  "src": {
+   "time3": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g3-38",
+  "title": "前天, 后天, 前年, 后年 and 最近",
+  "src": {
+   "time3": []
+  }
+ },
+ {
+  "id": "g3-39",
+  "title": "应该 and 该",
+  "src": {
+   "should": [
+    0
+   ]
+  }
+ },
+ {
+  "id": "g3-40",
+  "title": "必须, 需要 and 不用",
+  "src": {
+   "should": [
+    1,
+    2,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-41",
+  "title": "最好",
+  "src": {
+   "should": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g3-42",
+  "title": "只, 只是 and 只能",
+  "src": {
+   "zhi": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-43",
+  "title": "好像, 看起来 and 看来",
+  "src": {
+   "guess": [
+    0,
+    1
+   ]
+  }
+ },
+ {
+  "id": "g3-44",
+  "title": "大概, 其实 and 当然",
+  "src": {
+   "guess": [
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-45",
+  "title": "终于 and 几乎",
+  "src": {
+   "finally": [
+    0,
+    2
+   ]
+  }
+ },
+ {
+  "id": "g3-46",
+  "title": "突然, 马上 and 一定",
+  "src": {
+   "finally": [
+    1,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-47",
+  "title": "question word + 都",
+  "src": {
+   "qword2": [
+    0,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g3-48",
+  "title": "想 + question word + 就 + question word",
+  "src": {
+   "qword2": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g3-49",
+  "title": "一 + measure word + 也 / 都 + 不 / 没",
+  "src": {
+   "qword2": [
+    4,
+    1
+   ]
+  }
+ },
+ {
+  "id": "g3-50",
+  "title": "半",
+  "src": {
+   "num2": [
+    0,
+    2
+   ]
+  }
+ },
+ {
+  "id": "g3-51",
+  "title": "approximate numbers (两三个, 七八个), 以上 and 以下",
+  "src": {
+   "num2": [
+    1,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-52",
+  "title": "new meanings of words you know",
+  "src": {
+   "newmean": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ }
+]

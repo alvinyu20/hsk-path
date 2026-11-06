@@ -7,7 +7,7 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   const DIMS = ['see', 'hear', 'prod'];
   // progress that is merged between devices; device preferences (theme, voice, hint switches, daily goal, new-word limit) stay local
-  const SYNC_KEYS = ['xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'sres', 'clipBest', 'misses', 'testHistory', 'ws',
+  const SYNC_KEYS = ['xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'clipBest', 'misses', 'testHistory', 'ws',
     'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone', 'exams', 'aiDays', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
   const FILE = 'shanlu-progress.json';   // HSK 1 progress (the original file name)
   const fileFor = (level) => (level > 1 ? 'shanlu-progress-hsk' + level + '.json' : FILE);   // each level keeps its own file in the same gist
@@ -72,6 +72,9 @@
     out.lastActive = la > lb ? la : lb;
     out.streak = la === lb ? maxNum(a.streak, b.streak) : (la > lb ? a.streak || 0 : b.streak || 0);
     out.gres = maxObj(a.gres, b.gres);
+    // grammar points: each point's own record; the one answered most recently wins (ties settle the same way on every device)
+    out.gpt = {};
+    Object.keys(Object.assign({}, a.gpt || {}, b.gpt || {})).forEach(id => { const x = (a.gpt || {})[id], y = (b.gpt || {})[id]; out.gpt[id] = !x ? y : !y ? x : ((x.at || 0) !== (y.at || 0) ? ((x.at || 0) > (y.at || 0) ? x : y) : (JSON.stringify(x) >= JSON.stringify(y) ? x : y)); });
     out.sres = unionObj(a.sres, b.sres);
     out.misses = maxObj(a.misses, b.misses);
     const n = Math.max((a.clipBest || []).length, (b.clipBest || []).length);

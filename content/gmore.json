@@ -1,0 +1,450 @@
+[
+ {
+  "p": "g1-svo",
+  "t": "cloze",
+  "zh": "我喝茶。",
+  "en": "I drink tea.",
+  "blank": "喝",
+  "explain": "Subject + verb + object."
+ },
+ {
+  "p": "g1-svo",
+  "t": "order",
+  "zh": "他学习汉语。",
+  "en": "He studies Chinese.",
+  "explain": "Subject, verb, then object."
+ },
+ {
+  "p": "g1-svo",
+  "t": "mc",
+  "prompt": "Which sentence says: I read a book?",
+  "options": [
+   "我看书。",
+   "我书看。"
+  ],
+  "correct": 0,
+  "zh": "我看书。",
+  "en": "I read a book.",
+  "explain": "In Chinese the object comes after the verb."
+ },
+ {
+  "p": "g1-youdianr",
+  "t": "order",
+  "zh": "今天有点儿冷。",
+  "en": "It is a bit cold today.",
+  "explain": "有点儿 comes before the adjective."
+ },
+ {
+  "p": "g1-buyao",
+  "t": "cloze",
+  "zh": "不要说话！",
+  "en": "Do not talk!",
+  "blank": "不要",
+  "explain": "不要 + verb tells someone not to do it."
+ },
+ {
+  "p": "g1-buyao",
+  "t": "order",
+  "zh": "不要在这儿看书。",
+  "en": "Do not read here.",
+  "explain": "不要 goes before the verb."
+ },
+ {
+  "p": "g1-buyao",
+  "t": "mc",
+  "prompt": "Which sentence says: Do not go?",
+  "options": [
+   "不要去。",
+   "去不要。"
+  ],
+  "correct": 0,
+  "zh": "不要去。",
+  "en": "Do not go.",
+  "explain": "不要 comes before the verb."
+ },
+ {
+  "p": "g1-liang",
+  "t": "cloze",
+  "zh": "我有两个杯子。",
+  "en": "I have two cups.",
+  "blank": "两",
+  "explain": "Before a measure word, use 两, not 二."
+ },
+ {
+  "p": "g1-liang",
+  "t": "order",
+  "zh": "我家有两个人。",
+  "en": "There are two people in my home.",
+  "explain": "两 + measure word."
+ },
+ {
+  "p": "g1-money",
+  "t": "cloze",
+  "zh": "这个五块钱。",
+  "en": "This one is five kuai.",
+  "blank": "块",
+  "explain": "块 is the spoken word for yuan."
+ },
+ {
+  "p": "g1-money",
+  "t": "order",
+  "zh": "这本书多少钱？",
+  "en": "How much is this book?",
+  "explain": "多少钱 asks the price."
+ },
+ {
+  "p": "g1-money",
+  "t": "mc",
+  "prompt": "Which sentence asks: How much is this?",
+  "options": [
+   "这个多少钱？",
+   "这个钱多少？"
+  ],
+  "correct": 0,
+  "zh": "这个多少钱？",
+  "en": "How much is this?",
+  "explain": "多少钱 asks the price."
+ },
+ {
+  "p": "g1-age",
+  "t": "cloze",
+  "zh": "我儿子今年六岁。",
+  "en": "My son is six this year.",
+  "blank": "岁",
+  "explain": "Number + 岁 gives the age."
+ },
+ {
+  "p": "g1-age",
+  "t": "order",
+  "zh": "你今年多大？",
+  "en": "How old are you this year?",
+  "explain": "多大 asks the age."
+ },
+ {
+  "p": "g1-age",
+  "t": "mc",
+  "prompt": "Which sentence says: He is seven?",
+  "options": [
+   "他今年七岁。",
+   "他今年岁七。"
+  ],
+  "correct": 0,
+  "zh": "他今年七岁。",
+  "en": "He is seven this year.",
+  "explain": "The number comes before 岁."
+ },
+ {
+  "p": "g1-di",
+  "t": "cloze",
+  "zh": "今天是我的第一天。",
+  "en": "Today is my first day.",
+  "blank": "第",
+  "explain": "第 + number makes it first, second, third."
+ },
+ {
+  "p": "g1-di",
+  "t": "order",
+  "zh": "她是第二个。",
+  "en": "She is the second one.",
+  "explain": "第 goes before the number."
+ },
+ {
+  "p": "g1-di",
+  "t": "mc",
+  "prompt": "Which sentence says: This is the third book?",
+  "options": [
+   "这是第三本书。",
+   "这是三第本书。"
+  ],
+  "correct": 0,
+  "zh": "这是第三本书。",
+  "en": "This is the third book.",
+  "explain": "第 comes before the number."
+ },
+ {
+  "p": "g1-clock",
+  "t": "order",
+  "zh": "现在三点十分。",
+  "en": "It is ten past three now.",
+  "explain": "The hour comes first, then the minutes."
+ },
+ {
+  "p": "g1-date",
+  "t": "cloze",
+  "zh": "明天是星期四。",
+  "en": "Tomorrow is Thursday.",
+  "blank": "是",
+  "explain": "Use 是 before the day of the week."
+ },
+ {
+  "p": "g1-date",
+  "t": "order",
+  "zh": "明天是八月二号。",
+  "en": "Tomorrow is the second of August.",
+  "explain": "Month first, then the day."
+ },
+ {
+  "p": "g1-yao",
+  "t": "cloze",
+  "zh": "我要一杯茶。",
+  "en": "I would like a cup of tea.",
+  "blank": "要",
+  "explain": "要 + thing means I would like."
+ },
+ {
+  "p": "g1-yao",
+  "t": "order",
+  "zh": "你要什么？",
+  "en": "What would you like?",
+  "explain": "要 + what asks what you want."
+ },
+ {
+  "p": "g1-yao",
+  "t": "mc",
+  "prompt": "Which sentence says: I want to buy a book?",
+  "options": [
+   "我要买一本书。",
+   "我要一本书买。"
+  ],
+  "correct": 0,
+  "zh": "我要买一本书。",
+  "en": "I want to buy a book.",
+  "explain": "要 comes before the verb."
+ },
+ {
+  "p": "g1-hui",
+  "t": "cloze",
+  "zh": "我会说汉语。",
+  "en": "I can speak Chinese.",
+  "blank": "会",
+  "explain": "会 means know how to."
+ },
+ {
+  "p": "g1-neng",
+  "t": "cloze",
+  "zh": "你能来吗？",
+  "en": "Can you come?",
+  "blank": "能",
+  "explain": "能 asks whether you are able to."
+ },
+ {
+  "p": "g1-neng",
+  "t": "order",
+  "zh": "我明天能去学校。",
+  "en": "I can go to school tomorrow.",
+  "explain": "能 goes before the verb."
+ },
+ {
+  "p": "g1-neng",
+  "t": "mc",
+  "prompt": "Which sentence says: I cannot come today?",
+  "options": [
+   "我今天不能来。",
+   "我今天能不来。"
+  ],
+  "correct": 0,
+  "zh": "我今天不能来。",
+  "en": "I cannot come today.",
+  "explain": "不 comes before 能."
+ },
+ {
+  "p": "g1-keyi",
+  "t": "cloze",
+  "zh": "我可以坐这儿吗？",
+  "en": "May I sit here?",
+  "blank": "可以",
+  "explain": "可以 asks for permission."
+ },
+ {
+  "p": "g1-keyi",
+  "t": "order",
+  "zh": "你可以在这儿吃饭。",
+  "en": "You may eat here.",
+  "explain": "可以 goes before the verb."
+ },
+ {
+  "p": "g1-keyi",
+  "t": "mc",
+  "prompt": "Which sentence asks: May I read?",
+  "options": [
+   "我可以看书吗？",
+   "我看书可以吗？"
+  ],
+  "correct": 0,
+  "zh": "我可以看书吗？",
+  "en": "May I read?",
+  "explain": "可以 goes before the verb."
+ },
+ {
+  "p": "g1-dou",
+  "t": "cloze",
+  "zh": "我们都是学生。",
+  "en": "We are all students.",
+  "blank": "都",
+  "explain": "都 goes before the verb."
+ },
+ {
+  "p": "g1-dou",
+  "t": "order",
+  "zh": "他们都在家。",
+  "en": "They are all at home.",
+  "explain": "都 comes after the people."
+ },
+ {
+  "p": "g1-dou",
+  "t": "mc",
+  "prompt": "Which sentence says: We all like tea?",
+  "options": [
+   "我们都喜欢茶。",
+   "我们喜欢都茶。"
+  ],
+  "correct": 0,
+  "zh": "我们都喜欢茶。",
+  "en": "We all like tea.",
+  "explain": "都 goes before the verb."
+ },
+ {
+  "p": "g1-hai",
+  "t": "cloze",
+  "zh": "我还想喝一杯。",
+  "en": "I want another cup.",
+  "blank": "还",
+  "explain": "还 means still or more."
+ },
+ {
+  "p": "g1-hai",
+  "t": "order",
+  "zh": "他还在学校。",
+  "en": "He is still at school.",
+  "explain": "还 goes before the verb."
+ },
+ {
+  "p": "g1-hai",
+  "t": "mc",
+  "prompt": "Which sentence says: I also want to buy a book?",
+  "options": [
+   "我还想买一本书。",
+   "我想还买一本书。"
+  ],
+  "correct": 0,
+  "zh": "我还想买一本书。",
+  "en": "I also want to buy a book.",
+  "explain": "还 goes before 想."
+ },
+ {
+  "p": "g1-ba",
+  "t": "order",
+  "zh": "我们去看电影吧。",
+  "en": "Let us go and see a film.",
+  "explain": "吧 comes at the end to suggest."
+ },
+ {
+  "p": "g1-ne",
+  "t": "cloze",
+  "zh": "我很好，你呢？",
+  "en": "I am fine, and you?",
+  "blank": "呢",
+  "explain": "呢 asks the same question back."
+ },
+ {
+  "p": "g1-ne",
+  "t": "order",
+  "zh": "我的杯子呢？",
+  "en": "Where is my cup?",
+  "explain": "呢 asks where something is."
+ },
+ {
+  "p": "g1-dui",
+  "t": "cloze",
+  "zh": "他对我很好。",
+  "en": "He is very nice to me.",
+  "blank": "对",
+  "explain": "对 + person means toward that person."
+ },
+ {
+  "p": "g1-dui",
+  "t": "order",
+  "zh": "老师对学生很好。",
+  "en": "The teacher is good to the students.",
+  "explain": "对 comes before the person."
+ },
+ {
+  "p": "g1-dui",
+  "t": "mc",
+  "prompt": "Which sentence says: She is kind to us?",
+  "options": [
+   "她对我们很好。",
+   "她很好对我们。"
+  ],
+  "correct": 0,
+  "zh": "她对我们很好。",
+  "en": "She is kind to us.",
+  "explain": "对 + person comes before 很好."
+ },
+ {
+  "p": "g1-serial",
+  "t": "order",
+  "zh": "他坐车去学校。",
+  "en": "He goes to school by car.",
+  "explain": "The first action comes first."
+ },
+ {
+  "p": "g1-serial",
+  "t": "mc",
+  "prompt": "Which sentence says: I go home to eat?",
+  "options": [
+   "我回家吃饭。",
+   "我吃饭回家。"
+  ],
+  "correct": 0,
+  "zh": "我回家吃饭。",
+  "en": "I go home to eat.",
+  "explain": "Actions follow the order they happen in."
+ },
+ {
+  "p": "g1-give",
+  "t": "cloze",
+  "zh": "他给我一本书。",
+  "en": "He gives me a book.",
+  "blank": "给",
+  "explain": "给 + person + thing."
+ },
+ {
+  "p": "g1-qing",
+  "t": "order",
+  "zh": "请你坐这儿。",
+  "en": "Please sit here.",
+  "explain": "请 comes at the start of the polite request."
+ },
+ {
+  "p": "g1-yixia",
+  "t": "cloze",
+  "zh": "请你看一下。",
+  "en": "Please take a look.",
+  "blank": "一下",
+  "explain": "一下 after a verb makes it short and light."
+ },
+ {
+  "p": "g1-yixia",
+  "t": "order",
+  "zh": "我想问一下。",
+  "en": "I would like to ask a moment.",
+  "explain": "一下 goes after the verb."
+ },
+ {
+  "p": "g1-yixie",
+  "t": "cloze",
+  "zh": "我想买一些水果。",
+  "en": "I want to buy some fruit.",
+  "blank": "一些",
+  "explain": "一些 means some."
+ },
+ {
+  "p": "g1-ye",
+  "t": "cloze",
+  "zh": "我也是学生。",
+  "en": "I am a student too.",
+  "blank": "也",
+  "explain": "也 goes before the verb."
+ }
+]

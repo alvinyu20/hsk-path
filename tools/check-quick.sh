@@ -31,6 +31,7 @@ case "$MODE" in
   l2)
     last env LEVEL=2 python3 -W ignore tools/build-words.py
     last env LEVEL=2 python3 -W ignore tools/build-grammar.py
+    last env LEVEL=2 python3 -W ignore tools/check-grammar-vocab.py
     last env LEVEL=2 python3 -W ignore tools/build-webs.py
     last env LEVEL=2 python3 -W ignore tools/build-speech.py
     last env LEVEL=2 python3 -W ignore tools/build-exam.py
@@ -42,6 +43,7 @@ case "$MODE" in
   l3)
     last env LEVEL=3 python3 -W ignore tools/build-words.py
     last env LEVEL=3 python3 -W ignore tools/build-grammar.py
+    last env LEVEL=3 python3 -W ignore tools/check-grammar-vocab.py
     last env LEVEL=3 python3 -W ignore tools/build-webs.py
     last env LEVEL=3 python3 -W ignore tools/build-speech.py
     last env LEVEL=3 python3 -W ignore tools/build-exam.py

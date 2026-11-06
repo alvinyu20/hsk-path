@@ -1,0 +1,472 @@
+[
+ {
+  "id": "g1-svo",
+  "title": "Subject + verb + object",
+  "src": {
+   "order": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g1-timeplace",
+  "title": "Time and place come before the verb",
+  "src": {
+   "order": [
+    0,
+    1,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-shi",
+  "title": "是: A is B",
+  "src": {
+   "shi": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-hen",
+  "title": "很, 太, 真 with adjectives",
+  "src": {
+   "adj": [
+    0,
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g1-youdianr",
+  "title": "有点儿 (a bit, and not in a good way)",
+  "src": {
+   "adj": [
+    4
+   ],
+   "some": [
+    2,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g1-ma",
+  "title": "Yes/no questions with 吗",
+  "src": {
+   "ma": [
+    0,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-qword",
+  "title": "Question words: 什么, 谁, 哪儿, 几, 多少",
+  "src": {
+   "qword": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "ma": [
+    1
+   ]
+  }
+ },
+ {
+  "id": "g1-neg",
+  "title": "不 and 没 (saying no)",
+  "src": {
+   "neg": [
+    0,
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g1-buyao",
+  "title": "不要 (do not)",
+  "src": {
+   "neg": [
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-you",
+  "title": "有: having something",
+  "src": {
+   "you": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-pron",
+  "title": "Pronouns and 们",
+  "src": {
+   "pron": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-de",
+  "title": "的: belonging and describing",
+  "src": {
+   "de": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-measure",
+  "title": "这, 那 and measure words",
+  "src": {
+   "measure": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-liang",
+  "title": "二 and 两",
+  "src": {
+   "num": [
+    1,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-money",
+  "title": "Money and numbers",
+  "src": {
+   "num": [
+    0
+   ]
+  }
+ },
+ {
+  "id": "g1-age",
+  "title": "Saying your age",
+  "src": {
+   "num": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g1-di",
+  "title": "第 (ordinal numbers)",
+  "src": {
+   "num": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g1-clock",
+  "title": "Telling the time",
+  "src": {
+   "time": [
+    0,
+    1,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g1-date",
+  "title": "Days, weeks and dates",
+  "src": {
+   "time": [
+    2,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-zai",
+  "title": "在: where something happens",
+  "src": {
+   "zai": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-loc",
+  "title": "Positions: 上, 里, 外边 and where things are",
+  "src": {
+   "loc": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-xiang",
+  "title": "想: want to",
+  "src": {
+   "want": [
+    0,
+    1,
+    2,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-yao",
+  "title": "要: want, would like",
+  "src": {
+   "want": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g1-hui",
+  "title": "会: know how to",
+  "src": {
+   "modal": [
+    0,
+    1,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g1-neng",
+  "title": "能: be able to",
+  "src": {
+   "modal": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g1-keyi",
+  "title": "可以: may",
+  "src": {
+   "modal": [
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-dou",
+  "title": "都: all",
+  "src": {
+   "adv": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g1-ye",
+  "title": "也: also",
+  "src": {
+   "adv": [
+    0,
+    1,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g1-hai",
+  "title": "还: still, also",
+  "src": {
+   "adv": [
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-anota",
+  "title": "A-not-A questions",
+  "src": {
+   "anota": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-ba",
+  "title": "吧: suggesting, guessing",
+  "src": {
+   "bane": [
+    0,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-ne",
+  "title": "呢: and you? where is it?",
+  "src": {
+   "bane": [
+    1,
+    2
+   ]
+  }
+ },
+ {
+  "id": "g1-prog",
+  "title": "在, 正在 and 呢: happening now",
+  "src": {
+   "prog": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-le1",
+  "title": "了 after a verb: it is done",
+  "src": {
+   "le1": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-le2",
+  "title": "了 at the end: something has changed",
+  "src": {
+   "le2": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-he",
+  "title": "和: and",
+  "src": {
+   "hedui": [
+    0,
+    1,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-dui",
+  "title": "对: toward, to someone",
+  "src": {
+   "hedui": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g1-serial",
+  "title": "Two actions in a row",
+  "src": {
+   "seq": [
+    0,
+    1
+   ]
+  }
+ },
+ {
+  "id": "g1-give",
+  "title": "Giving and asking: 给 and 问",
+  "src": {
+   "seq": [
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-qing",
+  "title": "请 and 喂",
+  "src": {
+   "request": [
+    0,
+    1,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g1-yixia",
+  "title": "一下 (a little, just a moment)",
+  "src": {
+   "request": [
+    2,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g1-yixie",
+  "title": "一点儿, 一些 and 有的",
+  "src": {
+   "some": [
+    0,
+    1,
+    4
+   ]
+  }
+ }
+]

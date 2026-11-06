@@ -334,6 +334,12 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
       return { z, r1: [r1.ok, r1.grade, r1.note], r2: r2.ok, r3: [r3.ok, r3.grade], r4: [r4.ok, r4.grade] };
     });
     check(syn.r1[0] && syn.r2 && /Also right: 孩子/.test(syn.r1[2]) && !syn.r3[0] && !syn.r4[0], 'on a Say-it card a different word with the same English is accepted, with a note (' + syn.z + ' / hai2zi), and other words still are not');
+    const dn = await pA.evaluate(() => {
+      const T = window.shanlu.testApi; const q = T.qSayIt('不要', { zh: '', py: '' });
+      const a = T.checkTyped(q, '别'), b = T.checkTyped(q, 'bie2'), c = T.checkTyped(q, 'bie1'), d = T.checkTyped(q, 'ma1ma');
+      return { a: [a.ok, a.grade], b: b.ok, c: [c.ok, c.grade], d: d.ok };
+    });
+    check(dn.a[0] && dn.b && !dn.c[0] && dn.c[1] === 'hard' && !dn.d, 'on the "don\'t" card, 别 is right too (bie2), a wrong tone is only "close", and other words are not');
     // grammar from both levels in one list
     await pA.locator('nav button', { hasText: 'Grammar' }).click();
     await pA.waitForTimeout(150);
