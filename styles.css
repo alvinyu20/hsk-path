@@ -877,3 +877,174 @@ button.scn:hover .scn-m{text-decoration:underline}
   .stats .pill{height:34px;padding:0 10px;font-size:14px}
   .main{padding-top:14px}
 }
+
+
+/* APP MODE on a phone: Review, Listening lab and Speak fill the screen like an app. The page itself does not scroll; each screen is laid out to fit,
+   and only a part that can really be long (the chat, a long explanation, a long list of lines) scrolls inside its own box. */
+@media (max-width:700px){
+  .app.am{position:fixed;inset:0;height:100vh;height:100dvh;min-height:0;flex-direction:column;flex-wrap:nowrap;overflow:hidden}
+  .app.am .side{flex:0 0 auto;max-width:none;padding:6px 14px;border-bottom:1px solid var(--line)}
+  .app.am .mark{width:32px;height:32px;font-size:20px;border-radius:8px}
+  .app.am .bname{font-size:16px;line-height:1.1}
+  .app.am .bsub{display:none}
+  .app.am .side .linkbtn{min-height:0;padding:2px 0;font-size:13.5px}
+  .app.am .main{flex:1 1 auto;min-height:0;padding:8px 12px calc(76px + env(safe-area-inset-bottom));gap:8px;overflow:hidden}
+  /* the title is already on the tab; keep the level switch and the section strip, both slim */
+  .app.am .top{flex:0 0 auto}
+  .app.am .top .h1{display:none}
+  .app.am .top > div:first-child{display:none}
+  .app.am .stats{width:100%;justify-content:flex-start}
+  .app.am .lvseg button{min-height:30px;padding:0 12px;font-size:13.5px}
+  .app.am .subnav{flex:0 0 auto;margin:0}
+  .app.am .subnav button{min-height:32px;padding:0 14px;font-size:14px}
+  .app.am .banner{flex:0 0 auto;padding:8px 12px;font-size:14px;border-radius:12px}
+  .app.am .foot{display:none}
+  /* each screen takes the rest of the height */
+  .app.am .main > .rev,.app.am .main > .lab,.app.am .main > .speak,.app.am .main > .lob,.app.am .main > .chatwrap,.app.am .main > .res{flex:1 1 auto;min-height:0}
+
+  /* ---- Review ---- */
+  .app.am .rev{max-width:none;gap:8px;overflow-y:auto;overscroll-behavior:contain}
+  .app.am .rev-top{gap:10px;flex:0 0 auto}
+  .app.am .pbar{height:8px}
+  .app.am .rev-n{font-size:14px}
+  .app.am .chip.familiar{height:22px;font-size:12px}
+  .app.am .delta{padding:2px 10px;font-size:13px;flex:0 0 auto}
+  .app.am .fc-wrap{height:auto;flex:1 1 0;min-height:190px}
+  .app.am .fc-face{border-radius:22px}
+  .app.am .fc-front .chip{top:12px;left:14px}
+  .app.am .fc-hz{font-size:clamp(56px,15dvh,110px)}
+  .app.am .fc-hz.two{font-size:clamp(44px,11dvh,76px)}
+  .app.am .fc-tip{bottom:10px;font-size:13px}
+  .app.am .fc-back{padding:12px 16px;gap:4px;overflow-y:auto}
+  .app.am .fc-py{font-size:clamp(22px,4.6dvh,32px)}
+  .app.am .fc-en{font-size:16px}
+  .app.am .mbar{margin:0}
+  .app.am .mbar-s{display:none}
+  .app.am .exbox{padding:8px 12px;border-radius:14px}
+  .app.am .exbox .zh{font-size:20px}
+  .app.am .exbox .py,.app.am .exbox .en{font-size:14px}
+  .app.am .exnote{font-size:13px}
+  .app.am .acts{gap:6px;flex:0 0 auto}
+  .app.am .acts .btn{min-height:38px;padding:0 12px;font-size:14px}
+  .app.am .quick{gap:8px;flex:0 0 auto}
+  .app.am .quick .rate,.app.am .rates .rate{min-height:50px;border-radius:14px}
+  .app.am .rate b{font-size:15px}
+  .app.am .rate span{font-size:12px}
+  .app.am .rates{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;flex:0 0 auto}
+  .app.am .rev > .btn.big{min-height:46px;flex:0 0 auto}
+  .app.am .rev > p.muted{font-size:14px}
+  .app.am .q-card{min-height:0;flex:1 1 auto;padding:14px 16px;gap:10px;border-radius:22px;overflow-y:auto}
+  .app.am .q-card .kick{font-size:12px}
+  .app.am .q-prompt{font-size:clamp(18px,3.2dvh,24px)}
+  .app.am .q-big{font-size:clamp(44px,9dvh,72px);padding:0}
+  .app.am .q-big.sm{font-size:clamp(30px,5.5dvh,42px)}
+  .app.am .q-big.en{font-size:clamp(24px,4dvh,30px)}
+  .app.am .inp{height:48px;font-size:19px;border-radius:14px;padding:0 16px}
+  .app.am .opts{gap:8px}
+  .app.am .opt{min-height:clamp(42px,6.4dvh,56px);font-size:17px;border-radius:14px}
+  .app.am .opt .zh{font-size:26px}
+  .app.am .listen{width:clamp(64px,11dvh,92px);height:clamp(64px,11dvh,92px)}
+  .app.am .listen svg{width:34px;height:34px}
+  .app.am .rev > .btn.pri.big{min-height:48px}
+  .app.am .fb{gap:8px;padding:10px 14px;border-radius:16px;flex-wrap:nowrap;flex:0 0 auto}
+  .app.am .fb-m{flex:1 1 auto;max-height:30dvh;overflow-y:auto}
+  .app.am .fb-t{font-size:18px}
+  .app.am .fb-s{font-size:15px;margin:0}
+  .app.am .fb-x{font-size:13px}
+  .app.am .fb .btn{min-height:46px;padding:0 20px;flex:0 0 auto}
+}
+
+@media (max-width:700px){
+  /* ---- Listening lab ---- */
+  .app.am .lab{display:flex;flex-direction:column;flex-wrap:nowrap;gap:8px;align-items:stretch;overflow:hidden}
+  .app.am .lab-main{flex:1 1 auto;min-height:0;gap:8px;overflow-y:auto;overscroll-behavior:contain}
+  .app.am .lab .sidep{display:none}
+  .app.am .lab-main > .seg2{flex:0 0 auto;padding:3px}
+  .app.am .lab-main > .seg2 button{min-height:30px;padding:0 12px;font-size:13.5px}
+  .app.am .card{padding:14px 16px;border-radius:20px}
+  .app.am .dict{gap:10px}
+  .app.am .dict .h2{font-size:20px!important}
+  .app.am .dict-top{flex-wrap:nowrap;gap:14px}
+  .app.am .dict-top > div{min-width:0}
+  .app.am .listen.sm{width:64px;height:64px;flex:none}
+  .app.am .listen.sm svg{width:28px;height:28px}
+  .app.am .cliprow{margin:2px 0}
+  .app.am .dict .kick{font-size:12px}
+  .app.am .dict .muted{font-size:14px}
+  .app.am .dict > div > .kick{margin-bottom:4px!important}
+  .app.am .ladder{flex-wrap:nowrap;gap:6px}
+  .app.am .lad{min-height:36px;min-width:0;flex:1 1 0;padding:0 6px;font-size:15px}
+  .app.am .dict .inp{height:46px;font-size:16px}
+  .app.am .dict .btn.big{min-height:46px}
+  .app.am .dict .btn{min-height:42px;font-size:15px;padding:0 16px}
+  .app.am .wd{padding:6px 10px;min-width:56px}
+  .app.am .wds{gap:6px}
+  .app.am .tones{gap:6px;flex:1 1 auto}
+  .app.am .tonebtn{min-height:48px;padding:6px 12px;border-radius:12px}
+  .app.am .tonebtn b{font-size:20px}
+  .app.am .tonebtn span{font-size:12.5px}
+  .app.am .lfb{gap:8px}
+  .app.am .lfb .h2{font-size:19px}
+  .app.am .lnotes{font-size:14.5px;gap:3px}
+
+  /* ---- Speak ---- */
+  .app.am .speak{display:flex;flex-direction:column;flex-wrap:nowrap;gap:8px;align-items:stretch;overflow:hidden}
+  .app.am .speak > .banner,.app.am .speak .sidep{display:none}
+  .app.am .modeseg{flex:0 0 auto;margin:0}
+  .app.am .modeseg button{min-height:30px;padding:0 14px;font-size:13.5px}
+  .app.am .chat{flex:1 1 auto;min-height:0;border-radius:20px}
+  .app.am .chat-h{flex:0 0 auto;padding:8px 12px;gap:8px}
+  .app.am .chat-h .av{width:34px;height:34px;font-size:18px}
+  .app.am .chat-t b{font-size:15px}
+  .app.am .chat-t span{font-size:12.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .app.am .chat-h .seg2{padding:2px}
+  .app.am .chat-h .seg2 button{min-height:28px;padding:0 10px;font-size:13px}
+  .app.am .msgs{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:12px;gap:10px}
+  .app.am .bub{max-width:92%;padding:8px 12px;gap:8px;border-radius:16px}
+  .app.am .bub .zh{font-size:20px}
+  .app.am .bub .py{font-size:14px}
+  .app.am .bub .en{font-size:13.5px}
+  .app.am .spk{width:36px;height:36px}
+  .app.am .note{font-size:13.5px;padding:6px 10px}
+  .app.am .sumry{margin:4px 12px 12px;padding:12px;grid-template-columns:minmax(0,1fr);gap:8px}
+  .app.am .dock{flex:0 0 auto;padding:8px 12px;gap:10px;flex-wrap:nowrap}
+  .app.am .dock .hint{flex:1 1 0}
+  .app.am .hint .zh{font-size:20px}
+  .app.am .hint .py{font-size:13.5px}
+  .app.am .dock .btn.big{min-height:46px;padding:0 18px;font-size:16px}
+  .app.am .ai-dock{padding:8px 12px;gap:6px}
+}
+@media (max-width:700px){
+  .app.am .q-big.q-en{font-size:clamp(22px,3.8dvh,30px);margin:0;padding:0}
+}
+/* small phones (about 640 px tall): trim a little more so each screen still fits */
+@media (max-width:700px) and (max-height:700px){
+  .app.am .side{padding:4px 12px}
+  .app.am .mark{width:26px;height:26px;font-size:16px}
+  .app.am .main{padding-top:6px;gap:6px}
+  .app.am .lvseg button{min-height:26px;padding:0 10px;font-size:13px}
+  .app.am .subnav button{min-height:28px;font-size:13.5px}
+  .app.am .delta{display:none}
+  .app.am .fc-back .mbar{display:none}
+  .app.am .exbox .report{display:none}
+  .app.am .fc-front .chip{display:none}
+  .app.am .fc-tip{display:none}
+  .app.am .q-card{padding:10px 14px;gap:6px}
+  .app.am .q-card .kick{display:none}
+  .app.am .q-prompt{font-size:18px}
+  .app.am .opt{min-height:40px}
+  .app.am .inp{height:42px}
+  .app.am .fb{padding:8px 12px}
+  .app.am .fb-x{display:none}
+  .app.am .fb-x:first-of-type{display:block}
+  .app.am .rate{min-height:44px}
+  .app.am .rate span{display:none}
+  .app.am .lab-main > .seg2 button{min-height:28px}
+  .app.am .card{padding:10px 14px}
+  .app.am .listen.sm{width:52px;height:52px}
+  .app.am .dict .muted{font-size:13px}
+  .app.am .tonebtn{min-height:42px}
+}
+@media (max-width:700px){
+  .app.am .fc-front .tian{width:auto;height:76%;max-width:80%;aspect-ratio:1/1}
+}

@@ -1212,10 +1212,11 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('button', { hasText: 'Switch to dark' }).click();
   await shot('14-dark');
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const [label, name] of [['Home', '15-phone-home'], ['Word webs', '16-phone-webs'], ['My words', '17-phone-words'], ['Grammar', '18-phone-grammar'], ['Speak', '19-phone-speak'], ['Listening lab', '20-phone-listen']]) {
+  for (const [label, name] of [['Home', '15-phone-home'], ['Word webs', '16-phone-webs'], ['My words', '17-phone-words'], ['Grammar', '18-phone-grammar'], ['Speak', '19-phone-speak'], ['Listening lab', '20-phone-listen'], ['Review words', '20b-phone-review']]) {
     await nav(label);
     await shot(name);
     check(await noSideways(), 'no sideways scroll on ' + label + ' at phone width');
+    if (['Review words', 'Listening lab', 'Speak'].includes(label)) check(await page.evaluate(() => document.documentElement.scrollHeight <= window.innerHeight + 1 && getComputedStyle(document.querySelector('.app')).position === 'fixed'), label + ' fills the phone screen like an app, with no page scrolling');
   }
   await page.locator('button', { hasText: 'Topics' }).first().click().catch(() => {});
 

@@ -2904,7 +2904,7 @@
 
       return {
         focusCls:(S.exm && (S.exm.stage === 'run' || S.exm.stage === 'break') && S.screen === 'exam') || (S.screen === 'quiz' && !S.qdone) ? 'focus' : '',
-        scrCls:'scr-' + S.screen,
+        scrCls:'scr-' + S.screen + (S.screen === 'review' || S.screen === 'listen' || S.screen === 'speak' ? ' am' : ''),   // am = app mode on a phone: these screens fill the screen and do not scroll as a page
         gHomeCls:gcls('home'), gLearnCls:gcls('learn'), gReviewCls:gcls('review'), gTalkCls:gcls('talk'), gMoreCls:gcls('more'),
         gHome:() => this.goGroup('home'), gLearn:() => this.goGroup('learn'), gReview:() => this.goGroup('review'), gTalk:() => this.goGroup('talk'), gMore:() => this.goGroup('more'),
         hasSubnav:subnavItems.length > 1, subnav:subnavItems.map(o => ({ label:o[1], cls:'on' === (curScreen === o[0] ? 'on' : '') ? 'on' : '', fn:() => this.go(o[0]) })),
@@ -3117,6 +3117,15 @@
   onPersonChange = () => { try { app.personChanged(); } catch (e) {} };
   app.testApi = { comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin };   // for the browser tests
   window.shanlu = app;
+  // app mode (a phone): the chat scrolls inside its own box, so keep the newest line in view
+  if (window.MutationObserver && window.matchMedia) {
+    const amQuery = window.matchMedia('(max-width:700px)'); let amQueued = false;
+    new MutationObserver(() => {
+      if (amQueued || !amQuery.matches) return;
+      amQueued = true;
+      requestAnimationFrame(() => { amQueued = false; document.querySelectorAll('.app.am .msgs').forEach(el => { if (el._amN !== el.children.length) { el._amN = el.children.length; el.scrollTop = el.scrollHeight; } }); });
+    }).observe(document.body, { childList:true, subtree:true });
+  }
 
   // keyboard: Space flips a review card, 1-4 rate it; in the exam, arrows move and A-F or 1-6 choose
   document.addEventListener('keydown', (e) => {
