@@ -411,8 +411,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).forEach(zh => { if (ws[zh].see.s === 1 && ws[zh].see.l === 5) ws[zh].see = { s:30, l:0 }; }); app.setState({ ws, rq:[], rcomplete:false }); });
 
   // the tabs run learn -> practice -> check -> your words, and the logo goes Home
-  check(JSON.stringify(await page.locator('.navs:not(.navg) .nav').allInnerTexts().then(a => a.map(t => t.replace(/\d+$/, '').trim()))) === JSON.stringify(['Home', 'Word webs', 'Grammar', 'Review words', 'Listening lab', 'Speak', 'Tests', 'Level exam', 'My words']), 'the tabs are in learning order');
-  await page.locator('nav button', { hasText: 'Grammar' }).click();
+  check(JSON.stringify(await page.locator('.navs:not(.navg) .nav').allInnerTexts().then(a => a.map(t => t.replace(/\d+$/, '').trim()))) === JSON.stringify(['Home', 'Word webs', 'Grammar', 'Review words', 'Grammar review', 'Listening lab', 'Speak', 'Tests', 'Level exam', 'My words']), 'the tabs are in learning order');
+  await page.locator('nav button', { hasText: /^\s*Grammar\s*$/ }).first().click();
   await page.locator('.brand').click();
   await page.waitForTimeout(120);
   check(await page.evaluate(() => window.shanlu.state.screen) === 'home', 'clicking the logo goes Home');
@@ -486,11 +486,13 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await page.locator('.gl .gg').count()) === 11 && (await page.locator('.gl .gg .gg-n').allInnerTexts()).reduce((a, t) => a + parseInt(t.split('/')[1], 10), 0) === 26, 'grammar lists 26 lessons in 11 categories');
   check((await page.locator('.gl .gp').count()) < 26 && (await page.locator('.gl .gg.open').count()) === 1, 'only the open category shows its lessons');
   check((await text()).toLowerCase().includes('lesson 1 of 26'), 'the first lesson is open');
-  check((await page.locator('.grv').count()) === 1 && (await page.locator('.grv-go .btn.pri').count()) === 1, 'the grammar screen has the grammar review panel');
+  await page.evaluate(() => { window.shanlu.go('greview'); }); await page.waitForTimeout(150);
+  check((await page.locator('.grv').count()) === 1 && (await page.locator('.grv-go .btn.pri').count()) === 1, 'the Review section has a Grammar review panel');
   await page.locator('.grv-go .btn.pri').click(); await page.waitForTimeout(150);
   check(await page.evaluate(() => window.shanlu.state.qmode === 'greview' && window.shanlu.state.screen === 'quiz'), 'Start grammar review opens a grammar review session');
-  await page.evaluate(() => { window.shanlu.go('grammar'); }); await page.waitForTimeout(150);
-  check((await page.locator('.gl .gg').count()) === 11, 'leaving a grammar review returns to the lesson list');
+  await page.evaluate(() => { window.shanlu.exitQuiz(); }); await page.waitForTimeout(150);
+  check(await page.evaluate(() => window.shanlu.state.screen === 'greview'), 'leaving a grammar review returns to the Grammar review screen');
+  await nav('Grammar'); await page.waitForTimeout(100);
   await shot('08-grammar');
   await page.fill('.gl .tr-search', 'yes/no');
   check((await page.locator('.gl .gp').count()) === 1, 'searching for a lesson shows only the matching lessons');
@@ -1256,11 +1258,11 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('.navg button', { hasText: 'Learn' }).click();
   await page.waitForTimeout(120);
   check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Word webs|Grammar|My words' && ['web', 'grammar', 'words'].includes(await page.evaluate(() => window.shanlu.state.screen)), 'the Learn tab opens a Learn screen, with Word webs, Grammar and My words one tap away');
-  await page.locator('.subnav button', { hasText: 'Grammar' }).click();
+  await page.locator('.subnav button', { hasText: /^Grammar$/ }).click();
   await page.waitForTimeout(100);
   check((await page.evaluate(() => window.shanlu.state.screen)) === 'grammar' && (await page.locator('.navg button.on').innerText()).includes('Learn'), 'the strip switches screens inside the section and the Learn tab stays lit');
   await page.locator('.navg button', { hasText: 'Review' }).click(); await page.waitForTimeout(100);
-  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Review words|Tests', 'the Review tab holds Review words and Tests');
+  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Review words|Grammar review|Tests', 'the Review tab holds Review words, Grammar review and Tests');
   await page.locator('.navg button', { hasText: 'Learn' }).click(); await page.waitForTimeout(100);
   check((await page.evaluate(() => window.shanlu.state.screen)) === 'grammar', 'a tab returns to the screen you last used in that section');
   await page.locator('.navg button', { hasText: 'More' }).click(); await page.waitForTimeout(100);

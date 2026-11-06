@@ -495,6 +495,12 @@
     if (r.ok || r.grade === 'hard') return r;
     const syn = synonymOf(q, t);
     if (syn) return { ok:true, grade:'good', note:'Also right: ' + syn + ' (' + BANK[syn].py.split('/')[0].trim() + ') means the same. This card was asking for ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
+    if (q.sayEn && q.exp.zh.length > 1) {   // a single syllable or character from inside the answer (店 for 商店): close, with a note
+      const flat = toneless(t), whole = toneless(q.exp.py);
+      const partHanzi = t.length === 1 && q.exp.zh.indexOf(t) >= 0;
+      const partPy = !/[\u4e00-\u9fff]/.test(t) && flat.length >= 2 && flat !== whole && (whole.endsWith(flat) || whole.startsWith(flat));
+      if (partHanzi || partPy) return { ok:false, grade:'hard', note:'That is only part of the word. This card asks for the whole word ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
+    }
     const synSoft = synonymOf(q, t, true);
     if (synSoft) return { ok:false, grade:'hard', note:synSoft + ' (' + BANK[synSoft].py.split('/')[0].trim() + ') means the same, but check the tone. This card was asking for ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
     if (q.type === 'cloze') {   // several words can fit a gap; a real word that is not the expected one is not marked as a plain miss
@@ -1282,7 +1288,7 @@
       this.go(this.lastSub[id] || first);
     };
     go = (screen) => {
-      { const grp = { web:'learn', grammar:'learn', words:'learn', review:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
+      { const grp = { web:'learn', grammar:'learn', words:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
       this.setState({ screen }); try { window.scrollTo(0, 0); } catch (e) {}
       if (screen === 'speak' && !HAS_SCRIPTS) { const S = this.state; if (S.aiOn && !S.aim.length && !S.aiBusy) this.aiStart(S.aiScn); }   // no scripts at this level: go straight to the AI conversation
       // on phones the tab bar scrolls sideways: keep the current tab in view
@@ -2187,7 +2193,7 @@
       this.setState({ qbusy:false, qerr:'', qchecked:true, qcorrect:ok, qfeed:(reason || '') + (note ? ' ' + note : ''), qscore:S.qscore + (ok ? 1 : 0), qres:res, qxp:S.qxp + gain, qgain:gain, xp:S.xp + gain, dayXp:S.dayXp + gain });
       this.gptRecord(q.pt, 'w', ok);
     };
-    exitQuiz = () => { this.setState({ screen:isG(this.state.qmode) ? 'grammar' : 'testlobby', qdone:false }); };
+    exitQuiz = () => { this.setState({ screen:this.state.qmode === 'greview' ? 'greview' : isG(this.state.qmode) ? 'grammar' : 'testlobby', qdone:false }); };
     pickLesson = (i) => { this.setState({ glesson:i, gramPick:false, ggopen:null, gq:'' }); try { window.scrollTo(0, 0); } catch (e) {} };
     pickTopic = (i) => { this.setState({ wtopic:i, wtmenu:false, wgopen:null, wtq:'' }); try { window.scrollTo(0, 0); } catch (e) {} };
 
@@ -2656,12 +2662,12 @@
       };
       const streakShown = (S.lastActive === today || S.lastActive === daysAgo(1)) ? S.streak : 0;
 
-      const active = S.screen === 'quiz' ? (isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
+      const active = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
       const navCls = (k) => 'nav' + (active === k ? ' on' : '');
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
-      const GROUPS = [['home', ['home']], ['learn', ['web', 'grammar', 'words']], ['review', ['review', 'testlobby']], ['talk', ['listen', 'speak']], ['more', ['exam', 'friends', 'voice']]];
-      const SUBLABEL = { web:'Word webs', grammar:'Grammar', words:'My words', review:'Review words', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', voice:'Settings' };
-      const curScreen = S.screen === 'quiz' ? (isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
+      const GROUPS = [['home', ['home']], ['learn', ['web', 'grammar', 'words']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['more', ['exam', 'friends', 'voice']]];
+      const SUBLABEL = { web:'Word webs', grammar:'Grammar', words:'My words', review:'Review words', greview:'Grammar review', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', voice:'Settings' };
+      const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
       const navGroup = (GROUPS.find(g => g[1].indexOf(curScreen) >= 0) || GROUPS[0])[0];
       const gcls = (id) => 'nav' + (navGroup === id ? ' on' : '');
       const subnavItems = ((GROUPS.find(g => g[0] === navGroup) || [0, []])[1]).filter(id => id !== 'friends' || (FR && FR.enabled())).filter(id => id !== 'exam' || !!EXAMBANK).map(id => [id, SUBLABEL[id]]);
@@ -2700,6 +2706,7 @@
       const titles = {
         home:['Welcome back', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
         review:['Review words', 'Words that are due, based on how well you remember them.'],
+        greview:['Grammar review', 'Short sessions on the grammar points you have met, weakest first, with a record for each point.'],
         testlobby:[LVN + ' test', 'Mixed questions from the words you have started, so you are recalling words, not just recognizing them.'],
         grammar:['Grammar', ALL ? LESSONS.length + ' lessons from every unlocked level, one at a time.' : LV === 1 ? LESSONS.length + ' lessons that cover the HSK 1 grammar outline, one at a time.' : LESSONS.length + ' lessons on the grammar of the ' + LVN + ' words, one at a time.'],
         speak:['Speaking practice', HAS_SCRIPTS ? 'Say a short conversation out loud.' : 'Talk with Mingming, the AI conversation partner.'],
@@ -3200,8 +3207,8 @@
         memWords:memNow.words.toLocaleString('en-US'), memToday:(memNow.words - (S.mem0 == null ? memNow.words : S.mem0) >= 0 ? '+' : '') + (memNow.words - (S.mem0 == null ? memNow.words : S.mem0)) + ' today', memRecall:memNow.avg + '%',
         weekMin:weekMin, weekDays:weekDays,
         title:tt[0], subtitle:tt[1],
-        navHome:navCls('home'), navReview:navCls('review'), navTest:navCls('testlobby'), navGrammar:navCls('grammar'), navSpeak:navCls('speak'),
-        goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
+        navHome:navCls('home'), navReview:navCls('review'), navTest:navCls('testlobby'), navGrv:navCls('greview'), navGrammar:navCls('grammar'), navSpeak:navCls('speak'),
+        goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrv:() => this.go('greview'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
         hasDue:S.rq.length > 0 && !S.rcomplete, dueCount:S.rq.length,
         exTitle:LVN + ' mock exam',
         exIntro:LV === 1 ? 'Built like the official HSK 1 sample papers: 20 listening and 20 reading questions in four parts each, about 35 minutes. No hints and no pinyin while you answer. Each exam is drawn from a bank of 120+ questions, so it is different every time.' : LV === 3 ? 'Built like the HSK 3 sample papers of the 2012 test: 40 listening questions in four parts and 30 reading questions in three parts, about 65 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Writing is separate practice. Each exam is drawn from a bank of 130+ questions, so it is different every time.' : 'Built like the HSK 2 sample papers of the 2012 test: 35 listening and 25 reading questions in four parts each, about 47 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Each exam is drawn from a bank of 140+ questions, so it is different every time.',
@@ -3224,7 +3231,7 @@
         lvMsgClose:() => this.setState({ lvMsg:0 }), lvMsgGoText:LV === (S.lvMsg === 99 ? 1 : S.lvMsg - 1) ? 'Go to the HSK ' + LV + ' exam' : 'Open HSK ' + (S.lvMsg === 99 ? 1 : S.lvMsg - 1),
         lvNote:'You are studying ' + LVN + '. Each level keeps its own progress on this device and its own copy when you sync. ' + (LVL.softLock() ? 'The lock is set to open: every level can be studied, and passing an exam only earns that level\'s seal.' : 'A level opens when you pass the exam of the level before it: at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading. You can sit each section on its own and retake it; your best result for each section counts. If you already know a level, take its exam now to test out (a lock on a button means it is not open yet).'),
         lockOpts:[[false, 'Locked until the exam is passed'], [true, 'All levels open']].map(o => ({ label:o[1], cls:LVL.softLock() === o[0] ? 'on' : '', fn:() => this.setLock(o[0]) })),
-        isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
+        isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isGrv:S.screen === 'greview', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
 
         // home
         ringDash, todayLine:titles.home[1], tasks, minOpts, planNote, dayMin:S.dayMin, mins:S.mins, skills, wordTarget:bankKeys.length, wmTotal:startedCount, wm,
@@ -3273,7 +3280,7 @@
 
         // grammar
         grvLvChips, hasGrvChips:grvLvChips.length > 0, grvSub:grvRowsAll.length + ' points · ' + grvStart + ' started · ' + grvDue + ' due · ' + grvMastered + ' mastered',
-        grvStartLabel:grvDue > 0 ? 'Review ' + grvDue + ' due, and more' : 'Start grammar review', grvStart:() => this.startGrammarReview(), 
+        grvStartLabel:grvDue > 0 ? 'Review ' + grvDue + ' due, and more' : 'Start grammar review', grvStart:() => this.startGrammarReview(), grvGoReview:() => this.go('greview'), 
         grvNote:grvCanWrite ? 'It also asks you to write your own sentence. Claude checks it, and that is how a point becomes mastered.' : 'Add an AI key in Settings to unlock writing your own sentences. Without one you can still review, but no point can reach Mastered.',
         grvToggleLabel:S.grvOpen ? 'Hide tracker' : 'Show tracker', grvToggle:() => this.setState({ grvOpen:!S.grvOpen }), grvOpen:!!S.grvOpen, grvRows,
         grvMoreShow:!!S.grvOpen && grvRowsAll.length > 12, grvMoreLabel:S.grvAll ? 'Show fewer' : 'Show all ' + grvRowsAll.length, grvMore:() => this.setState({ grvAll:!S.grvAll }),

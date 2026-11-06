@@ -339,9 +339,15 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
       const a = T.checkTyped(q, '别'), b = T.checkTyped(q, 'bie2'), c = T.checkTyped(q, 'bie1'), d = T.checkTyped(q, 'ma1ma');
       return { a: [a.ok, a.grade], b: b.ok, c: [c.ok, c.grade], d: d.ok };
     });
+    const pt = await pA.evaluate(() => {
+      const T = window.shanlu.testApi; const q = T.qSayIt('商店', { zh: '', py: '' });
+      const a = T.checkTyped(q, 'dian4'), b = T.checkTyped(q, '店'), c = T.checkTyped(q, 'shang1dian4'), d = T.checkTyped(q, 'ma1ma');
+      return { a: [a.ok, a.grade, a.note], b: [b.ok, b.grade], c: c.ok, d: d.grade };
+    });
+    check(!pt.a[0] && pt.a[1] === 'hard' && /only part of the word/.test(pt.a[2]) && pt.b[1] === 'hard' && pt.c && pt.d === 'again', 'typing only 店 (dian4) for 商店 is close, with a note; the whole word is right; other words are wrong');
     check(dn.a[0] && dn.b && !dn.c[0] && dn.c[1] === 'hard' && !dn.d, 'on the "don\'t" card, 别 is right too (bie2), a wrong tone is only "close", and other words are not');
     // grammar from both levels in one list
-    await pA.locator('nav button', { hasText: 'Grammar' }).click();
+    await pA.locator('nav button', { hasText: /^\s*Grammar\s*$/ }).first().click();
     await pA.waitForTimeout(150);
     check(await pA.evaluate(() => (document.querySelector('main').innerText).toLowerCase().includes('lesson 1 of ' + (window.HSK1_GRAMMAR.lessons.length + window.HSK2_GRAMMAR.lessons.length))), 'Grammar lists the lessons of both levels');
     check(await pA.locator('.gl .gg').count() === 11, 'Grammar is in 11 categories');

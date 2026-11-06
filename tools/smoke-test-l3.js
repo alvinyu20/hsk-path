@@ -355,7 +355,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check((await pA.locator('.lvseg button', { hasText: 'All' }).getAttribute('class') || '').includes('on'), 'the All button is the selected one');
     check((await pA.locator('.lvseg button').allInnerTexts()).join('|').replace(/\s+/g, '') === 'HSK1|HSK2|HSK3|All', 'the level switch offers HSK 1, HSK 2, HSK 3 and All');
     // grammar from three levels in one list
-    await pA.locator('nav button', { hasText: 'Grammar' }).click();
+    await pA.locator('nav button', { hasText: /^\s*Grammar\s*$/ }).first().click();
     await pA.waitForTimeout(150);
     check(await pA.evaluate(() => (document.querySelector('main').innerText).toLowerCase().includes('lesson 1 of ' + (window.HSK1_GRAMMAR.lessons.length + window.HSK2_GRAMMAR.lessons.length + window.HSK3_GRAMMAR.lessons.length))), 'Grammar lists the lessons of the three levels');
     check(await pA.locator('.gl .gg').count() === 15, 'Grammar is in 15 categories');
