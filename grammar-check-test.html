@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="robots" content="noindex">
+<title>Shanlu: grammar checker test</title>
+<style>
+  body { font: 15px/1.45 system-ui, sans-serif; margin: 0; padding: 16px; max-width: 980px; margin-inline: auto; color: #222; background: #faf8f4; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.sub { margin: 0 0 12px; color: #555; }
+  .box { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+  label { display: inline-block; margin: 2px 12px 2px 0; }
+  button { font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid #888; background: #fff; cursor: pointer; }
+  button.go { background: #b3392b; color: #fff; border-color: #b3392b; }
+  button:disabled { opacity: .5; cursor: default; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { border-bottom: 1px solid #eee; padding: 4px 6px; text-align: left; vertical-align: top; }
+  td.ok { color: #1b7a3a; font-weight: 600; } td.no { color: #b3392b; font-weight: 600; }
+  tr.dis td { background: #fff4e0; }
+  .zh { font-size: 16px; }
+  .muted { color: #777; }
+  pre { white-space: pre-wrap; font-size: 12px; background: #f3f1ec; padding: 8px; border-radius: 8px; }
+  #status { margin: 8px 0; min-height: 1.4em; }
+</style>
+</head>
+<body>
+<h1>Grammar checker test</h1>
+<p class="sub">30 sentences with known answers, checked by each AI you pick. Your saved keys are read from this browser (the same ones Settings uses) and go only to Anthropic and Alibaba.</p>
+<div class="box">
+  <div id="keys" class="muted"></div>
+  <div id="models"></div>
+  <p><button id="run" class="go">Run the test</button> <button id="copy" disabled>Copy results</button></p>
+  <div id="status"></div>
+</div>
+<div class="box" id="score" hidden></div>
+<div class="box" id="detail" hidden></div>
+<script src="grammar-check-test.js"></script>
+</body>
+</html>
