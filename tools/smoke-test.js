@@ -518,8 +518,11 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await text()).toLowerCase().includes('lesson 1 of 26'), 'the first lesson is open');
   await page.evaluate(() => { window.shanlu.go('greview'); }); await page.waitForTimeout(150);
   check((await page.locator('.grv').count()) === 1 && (await page.locator('.grv-go .btn.pri').count()) === 1, 'the Review section has a Grammar review panel');
+  check(/unlock/.test(await page.locator('.grv-go .btn.pri').innerText()), 'before any grammar lesson is passed, Grammar review is locked and says so');
+  const gl = await page.evaluate(() => { const a = window.shanlu; const L = Object.keys(window.HSK1_GRAMMAR.points.reduce((o, p) => { o[p.lesson] = 1; return o; }, {}))[0]; a.setState({ gres: Object.assign({}, a.state.gres, { [L]: 90 }) }); return L; });
+  await page.waitForTimeout(150);
   await page.locator('.grv-go .btn.pri').click(); await page.waitForTimeout(150);
-  check(await page.evaluate(() => window.shanlu.state.qmode === 'greview' && window.shanlu.state.screen === 'quiz'), 'Start grammar review opens a grammar review session');
+  check(await page.evaluate((L) => { const S = window.shanlu.state; const ok = window.shanlu.quizQs.length > 0 && window.shanlu.quizQs.every(q => window.HSK1_GRAMMAR.points.find(p => p.id === q.pt).lesson === L); return S.qmode === 'greview' && S.screen === 'quiz' && ok; }, gl), 'once a lesson is passed, Start grammar review asks only about the points of passed lessons');
   await page.evaluate(() => { window.shanlu.exitQuiz(); }); await page.waitForTimeout(150);
   check(await page.evaluate(() => window.shanlu.state.screen === 'greview'), 'leaving a grammar review returns to the Grammar review screen');
   await nav('Grammar'); await page.waitForTimeout(100);

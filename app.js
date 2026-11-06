@@ -594,9 +594,11 @@
     return w;
   };
   // a session: weak and due points first, a few new ones, and (when an AI key is saved) a sentence of your own for points you already recognise
+  // a grammar point joins Grammar review once its lesson is passed (80%), like a word joins Review words once it is learned
+  const gptOpen = (S, id) => { const p = gptReg()[id]; return !!p && ((S.gres || {})[p.lesson] || 0) >= 80; };
   const gptSession = (S, levels, size, canWrite) => {
     const reg = gptReg();
-    let ids = Object.keys(reg).filter(id => levels.indexOf(reg[id].level) >= 0 && reg[id].pool.length);
+    let ids = Object.keys(reg).filter(id => levels.indexOf(reg[id].level) >= 0 && reg[id].pool.length && gptOpen(S, id));
     const chosen = []; let news = 0;
     while (chosen.length < size && ids.length) {
       let rows = ids.map(id => ({ id, w:gptWeight(S.gpt[id]) * (gptInfo(S.gpt[id]).started ? 1 : (news >= 3 ? 0 : 1)) })).filter(x => x.w > 0);
@@ -3094,14 +3096,16 @@
       const greg = gptReg();
       const grvLevels = S.grvLv && LVLS.indexOf(S.grvLv) >= 0 ? [S.grvLv] : LVLS.slice();
       const grvRowsAll = Object.keys(greg).filter(id => grvLevels.indexOf(greg[id].level) >= 0).map(id => {
-        const info = gptInfo(S.gpt[id]); const pt = greg[id];
-        return { id, info, pt, rank:(info.started ? (info.due ? 0 : 1) : 2) + (info.mastered ? 5 : 0) + (info.started ? info.rm / 1000 : 0) };
+        const info = gptInfo(S.gpt[id]); const pt = greg[id]; const open = gptOpen(S, id);
+        return { id, info, pt, open, rank:(!open ? 20 : (info.started ? (info.due ? 0 : 1) : 2) + (info.mastered ? 5 : 0)) + (info.started ? info.rm / 1000 : 0) };
       }).sort((a, b) => a.rank - b.rank);
-      const grvStart = grvRowsAll.filter(r => r.info.started).length, grvDue = grvRowsAll.filter(r => r.info.due).length, grvMastered = grvRowsAll.filter(r => r.info.mastered).length;
+      const grvOpenN = grvRowsAll.filter(r => r.open).length;
+      const lessonName = (lid) => { const l = LESSONS.find(x => x.id === lid); return l ? l.title : ''; };
+      const grvStart = grvRowsAll.filter(r => r.open && r.info.started).length, grvDue = grvRowsAll.filter(r => r.open && r.info.due).length, grvMastered = grvRowsAll.filter(r => r.open && r.info.mastered).length;
       const grvCanWrite = aiReadyNow();
       const grvRows = (S.grvAll ? grvRowsAll : grvRowsAll.slice(0, 12)).map(r => ({
-        title:r.pt.title, lv:'HSK ' + r.pt.level, hasLv:LVLS.length > 1, rw:r.info.rm + '%', ww:r.info.wm + '%', label:r.info.label, cls:r.info.state + (r.info.due ? ' due' : ''),
-        rtxt:r.info.rm + '%', wtxt:r.pt.write.length ? (r.info.wm > 0 ? r.info.wm + '%' : 'not yet') : '–'
+        title:r.pt.title, lv:'HSK ' + r.pt.level, hasLv:LVLS.length > 1, rw:r.open ? r.info.rm + '%' : '0%', ww:r.open ? r.info.wm + '%' : '0%', label:r.open ? r.info.label : 'Locked: pass the lesson "' + lessonName(r.pt.lesson) + '"', cls:r.open ? r.info.state + (r.info.due ? ' due' : '') : 'locked',
+        rtxt:r.open ? r.info.rm + '%' : '–', wtxt:!r.open ? '–' : r.pt.write.length ? (r.info.wm > 0 ? r.info.wm + '%' : 'not yet') : '–'
       }));
       const grvLvChips = (LVLS.length > 1 ? [{ label:'All', n:0 }].concat(LVLS.map(n => ({ label:'HSK ' + n, n }))) : []).map(c => ({ label:c.label, cls:(S.grvLv || 0) === c.n ? 'on' : '', fn:() => this.setState({ grvLv:c.n }) }));
       const lessonBest = S.gres[L.id];
@@ -3331,9 +3335,9 @@
         hasRecent:S.testHistory.length > 0, noRecent:S.testHistory.length === 0,
 
         // grammar
-        grvLvChips, hasGrvChips:grvLvChips.length > 0, grvSub:grvRowsAll.length + ' points · ' + grvStart + ' started · ' + grvDue + ' due · ' + grvMastered + ' mastered',
-        grvStartLabel:grvDue > 0 ? 'Review ' + grvDue + ' due, and more' : 'Start grammar review', grvStart:() => this.startGrammarReview(), grvGoReview:() => this.go('greview'), 
-        grvNote:grvCanWrite ? 'It also asks you to write your own sentence. Claude checks it, and that is how a point becomes mastered.' : 'Add an AI key in Settings to unlock writing your own sentences. Without one you can still review, but no point can reach Mastered.',
+        grvLvChips, hasGrvChips:grvLvChips.length > 0, grvSub:grvOpenN + ' of ' + grvRowsAll.length + ' points open · ' + grvStart + ' started · ' + grvDue + ' due · ' + grvMastered + ' mastered',
+        grvStartLabel:grvOpenN === 0 ? 'Pass a grammar lesson to unlock' : grvDue > 0 ? 'Review ' + grvDue + ' due, and more' : 'Start grammar review', grvStart:() => (grvOpenN === 0 ? this.go('grammar') : this.startGrammarReview()), grvGoReview:() => this.go('greview'), 
+        grvNote:grvOpenN === 0 ? 'Grammar points join this review once you pass their lesson (80% or more in the lesson practice), just as words join Review words once you have learned them.' : grvCanWrite ? 'It also asks you to write your own sentence. Claude checks it, and that is how a point becomes mastered.' : 'Add an AI key in Settings to unlock writing your own sentences. Without one you can still review, but no point can reach Mastered.',
         grvToggleLabel:S.grvOpen ? 'Hide tracker' : 'Show tracker', grvToggle:() => this.setState({ grvOpen:!S.grvOpen }), grvOpen:!!S.grvOpen, grvRows,
         grvMoreShow:!!S.grvOpen && grvRowsAll.length > 12, grvMoreLabel:S.grvAll ? 'Show fewer' : 'Show all ' + grvRowsAll.length, grvMore:() => this.setState({ grvAll:!S.grvAll }),
         lessonGroups, gramNoMatch, gq:S.gq, onGramSearch:(e) => this.setState({ gq:e.target.value }), lesson, gramPickOpen:S.gramPick ? 'true' : 'false', gramListCls:S.gramPick ? 'open' : '', toggleGramPick:() => this.setState({ gramPick:!S.gramPick }),
