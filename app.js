@@ -913,10 +913,38 @@
     return a;
   };
 
+  // A small bar at the top (outside the page that is redrawn) that names an error, so a stuck page can be explained instead of just sitting there
+  function showErr(e, kind) {
+    try {
+      const msg = String(e && e.message || e).slice(0, 200); const where = String((e && e.stack || '').split('\n')[1] || '').replace(/^\s*at\s+/, '').slice(-90);
+      try { localStorage.setItem('shanlu-lasterr', JSON.stringify({ at:new Date().toISOString(), kind, msg, where, screen:window.shanlu && window.shanlu.state.screen, item:window.shanlu && window.shanlu.state.rq && window.shanlu.state.rq[0] })); } catch (x) {}
+      let b = document.getElementById('render-err');
+      if (!b) { b = document.createElement('div'); b.id = 'render-err'; b.className = 'banner bad'; b.setAttribute('role', 'alert'); document.body.insertBefore(b, document.body.firstChild); }
+      b.dataset.kind = kind;
+      b.textContent = (kind === 'draw' ? 'The page hit a snag and skipped a card. ' : 'Something went wrong. ') + 'If it keeps happening, send this: ' + msg + (where ? ' (' + where + ')' : '') + ' ';
+      const r = document.createElement('button'); r.textContent = 'Reload'; r.onclick = () => location.reload(); b.appendChild(r);
+      clearTimeout(showErr.t); showErr.t = setTimeout(() => { const o = document.getElementById('render-err'); if (o) o.remove(); }, 30000);
+    } catch (x) {}
+  }
   class Component extends DCLogic {
     state = loadState();
     timers = [];
     saveTimer = null;
+
+    // If drawing the page ever throws, nothing on screen updates again and every button seems dead. So: catch it, say what happened
+    // (the message is also kept in localStorage 'shanlu-lasterr'), drop the Review card that was being drawn, and carry on.
+    rFails = 0;
+    _render() {
+      try { super._render(); this.rFails = 0; }
+      catch (e) {
+        showErr(e, 'draw');
+        const S = this.state; this.rFails++;
+        if (this.rFails > 3) return;
+        this.quizQs = []; this.rvKey = null; this.rLast = null;
+        if (S.screen === 'review' && S.rq && S.rq.length) this.setState({ rq:S.rq.slice(1), rcomplete:S.rq.length <= 1, rflip:false, rpy:false, qchecked:false, qchoice:null, qtyped:'', qfeed:'' });
+        else this.setState({ screen:'home' });
+      }
+    }
 
     setState(patch) {
       if (typeof patch === 'function') patch = patch(this.state);
@@ -1898,7 +1926,7 @@
       const S = this.state;
       if (!S.rq.length) return;
       const it = S.rq[0];
-      g = g || this.rLast;
+      g = g || this.rLast || { ws:S.ws, lrn:S.lrn, rlog:[], gain:0, done:true, again:false, at:0, from:wMastery(S.ws[itemOf(it).zh]), to:wMastery(S.ws[itemOf(it).zh]), rate:null };   // (no grade kept: just move on, never throw)
       const q = S.rq.slice(1).filter(z => !staleNew(z, g.ws, g.lrn || S.lrn));
       if (g.again) q.push(it); else if (g.at) q.splice(Math.min(g.at, q.length), 0, it);
       const counts = Object.assign({}, S.rcounts); if (g.rate) counts[g.rate] = (counts[g.rate] || 0) + 1;
@@ -3120,6 +3148,8 @@
   onPersonChange = () => { try { app.personChanged(); } catch (e) {} };
   app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin };   // for the browser tests
   window.shanlu = app;
+  window.addEventListener('error', (ev) => { if (ev && ev.error) showErr(ev.error, 'run'); });
+  window.addEventListener('unhandledrejection', (ev) => { if (ev && ev.reason && ev.reason.message && !/fetch|network|Failed to|aborted|AbortError|NotAllowed/i.test(ev.reason.message)) showErr(ev.reason, 'run'); });
   // app mode (a phone): the chat scrolls inside its own box, so keep the newest line in view
   if (window.MutationObserver && window.matchMedia) {
     const amQuery = window.matchMedia('(max-width:700px)'); let amQueued = false;

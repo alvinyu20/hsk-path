@@ -356,6 +356,12 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForTimeout(100);
   const practiceN = await page.evaluate(() => window.shanlu.state.rq.length);
   check(practiceN === (await page.evaluate(() => Object.keys(window.shanlu.state.ws).filter(zh => window.shanlu.state.ws[zh].see.s > 0 || window.shanlu.state.ws[zh].see.l > 0).length)) && practiceN >= 5, 'practising anyway offers every started word, not just five');
+  // if drawing a card ever fails, the page must not go dead: the bad card is skipped, the next one shows, and a bar says what happened
+  const dead = await page.evaluate(async () => { const a = window.shanlu; const n = a.state.rq.length; a.setState({ rq: ['not-a-word'].concat(a.state.rq), rtotal: n + 1, rstep: a.state.rstep + 1 });
+    await new Promise((r) => setTimeout(r, 150)); const bar = document.getElementById('render-err');
+    return { first: a.state.rq[0], n: a.state.rq.length, expect: n, bar: !!bar && /snag/.test(bar.textContent), main: document.querySelector('main').innerText.length > 40 }; });
+  check(dead.first !== 'not-a-word' && dead.n === dead.expect && dead.bar && dead.main, 'a card that cannot be drawn is skipped, the page keeps working and a red bar says so');
+  await page.evaluate(() => { const b = document.getElementById('render-err'); if (b) b.remove(); });
   await shot('05-review-front');
   // answer without flipping: pinyin button shows/hides pinyin on the front only; quick buttons rate straight away
   check((await page.locator('.fc-fpy').count()) === 0, 'review front shows no pinyin at first');
