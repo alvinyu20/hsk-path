@@ -1053,7 +1053,7 @@
     // (the message is also kept in localStorage 'shanlu-lasterr'), drop the Review card that was being drawn, and carry on.
     rFails = 0;
     _render() {
-      try { super._render(); this.rFails = 0; }
+      try { super._render(); this.rFails = 0; this.focusTyped(); }
       catch (e) {
         showErr(e, 'draw');
         const S = this.state; this.rFails++;
@@ -2151,6 +2151,45 @@
       }
     };
     primary = () => { if (this.state.qchecked) this.next(); else this.check(); };
+    // keyboard for Review words (the global key listener calls this). Returns true when it used the key.
+    //   flip card: Space/Enter show the answer, then 1-4 rate (Space/Enter = Good); before showing: Y = knew it, N = did not, P = pinyin; H / S hear the word / sentence
+    //   new word: Space/Enter = got it.  Choice and listening cards: 1-4 or A-D answers at once, Enter or Space continues, P or R plays.  Typed cards: the box is already focused, Enter checks, Enter continues
+    //   result screens: Enter presses the main button
+    kbReview = (e) => {
+      const S = this.state; const k = e.key; const lk = String(k).toLowerCase();
+      const go = k === ' ' || k === 'Enter';
+      if (S.rcomplete || !S.rq.length) { if (go) { const b = document.querySelector('.rev .res-act .btn.pri'); if (b) { b.click(); return true; } } return false; }
+      const kind = this.rKind(S.rq[0]);
+      if (kind === 'flip') {
+        if (!S.rflip) {
+          if (go) this.flip(); else if (lk === 'y') this.rate('good'); else if (lk === 'n') this.rate('again'); else if (lk === 'p') this.toggleRpy(); else return false;
+        } else if ('1234'.indexOf(k) >= 0 && k.length === 1) this.rate(['again', 'hard', 'good', 'easy'][Number(k) - 1]);
+        else if (go) this.rate('good');
+        else if (lk === 'h') this.say(itemOf(S.rq[0]).zh, 'word');
+        else if (lk === 's') { const zh = itemOf(S.rq[0]).zh; const l = EXS[zh]; if (l && l.length) this.say(l[(strHash(zh) + Math.floor(Date.now() / 864e5) + S.rstep) % l.length].zh, 'ex'); }
+        else return false;
+        return true;
+      }
+      if (kind === 'intro') { if (go) { this.rIntroDone(); return true; } return false; }
+      if (S.qchecked) { if (go) { this.next(); return true; } return false; }
+      const q = this.curQ();
+      if (q && q.options && (kind === 'choice' || kind === 'audio')) {
+        const i = '1234'.indexOf(k) >= 0 && k.length === 1 ? Number(k) - 1 : 'abcd'.indexOf(lk) >= 0 && lk.length === 1 ? 'abcd'.indexOf(lk) : -1;
+        if (i >= 0 && q.options[i]) { this.setState({ qchoice:q.options[i].id }); this.check(); return true; }   // one key answers: pick and check together
+        if (kind === 'audio' && (lk === 'p' || lk === 'r')) { this.say(q.audio || '', 'q'); return true; }
+        if (go) { this.check(); return true; }
+      } else if (go) { this.check(); return true; }
+      return false;
+    };
+    // a typed card: put the cursor in the answer box so the whole session can be done from the keyboard (only where there is a real keyboard and mouse)
+    focusTyped() {
+      try {
+        const S = this.state; if ((S.screen !== 'review' && S.screen !== 'quiz') || S.qchecked) return;
+        if (!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches)) return;
+        const el = document.getElementById('answer-input');
+        if (el && !el.readOnly && document.activeElement !== el) el.focus({ preventScroll:true });
+      } catch (err) {}
+    }
     pick = (id) => { const S = this.state; if (S.qchecked || S.qpicked.indexOf(id) >= 0) return; this.setState({ qpicked:S.qpicked.concat([id]) }); };
     unpick = (id) => { const S = this.state; if (S.qchecked) return; this.setState({ qpicked:S.qpicked.filter(x => x !== id) }); };
     // ----- grammar review: points, not lessons -----
@@ -3266,6 +3305,7 @@
         hasCalib:!!calText, calText,
         caughtUp:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft === 0 && lrnCount === 0, nextDueText, practiceAnyway:this.practiceAnyway,
         card, flip:this.flip, rflip:rflipV, flipCls:rflipV ? 'flip' : '', flipLabel:rflipV ? 'Flip the card back' : 'Show the answer',
+        kbHint:S.rcomplete ? '' : rkind === 'flip' ? (S.rflip ? 'Keys: 1 Again · 2 Hard · 3 Good · 4 Easy · Space = Good · H hear word · S hear sentence' : 'Keys: Space show answer · Y knew it · N did not · P pinyin') : rkind === 'intro' ? 'Keys: Space or Enter = got it' : S.qchecked ? 'Keys: Space or Enter = continue' : rkind === 'type' ? 'Keys: type your answer, Enter to check' : rkind === 'audio' ? 'Keys: 1-4 to answer · P play again' : 'Keys: 1-4 to answer',
         rIsFlip:rkind === 'flip' || rkind === 'intro', rIsAuto:rAuto, rIsIntro:rkind === 'intro', rIsPlain:rkind === 'flip', rIntroDone:this.rIntroDone,
         cardAnim:S.rstep % 2 === 0 ? 'ea' : 'eb', showAnswerBtn:!S.rflip && rkind === 'flip', rates, qfeed:S.qfeed, hasQfeed:!!S.qfeed,
         rpyShow:S.rpy && !rflipV && rkind === 'flip', toggleRpy:this.toggleRpy, pyBtnText:S.rpy ? 'Hide pinyin' : 'Show pinyin', quickNo:rates[0], quickYes:rates[2],
@@ -3299,7 +3339,7 @@
         inQuestions:!S.qdone, qdone:S.qdone, q, segs, opts, optsCls:S.qchecked ? 'locked' : '', pickedTiles, noPicked:S.qpicked.length === 0, bankTiles, spotTokens,
         qAnim:S.qi % 2 === 0 ? 'qa' : 'qb', qtyped:S.qtyped, inpCls:S.qchecked ? (S.qcorrect ? 'locked right' : 'locked wrong') : '',
         onType:(e) => { if (!this.state.qchecked) this.setState({ qtyped:e.target.value }); },
-        onEnter:(e) => { if (e.key === 'Enter') this.primary(); },
+        onEnter:(e) => { if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229 && !e.repeat) this.primary(); },
         playQ:() => this.say(q0.audio || '', 'q'), listenCls:pc('q'),
         showCheck:!S.qchecked, checkLabel:S.qbusy ? 'Checking…' : 'Check', hasQerr:!!S.qerr, qerr:S.qerr || '', checkCls:(canCheck && !S.qbusy) ? '' : 'dis', checkAria:canCheck ? 'false' : 'true', check:this.check,
         qchecked:S.qchecked, qcorrect:S.qcorrect, qwrong:!S.qcorrect, fbCls:S.qcorrect ? 'good' : 'bad',
@@ -3349,10 +3389,10 @@
     const t = e.target; if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
     const S = app.state;
-    if (S.screen === 'review' && S.rq.length && !S.rcomplete) {
-      if ((e.key === ' ' || e.key === 'Enter') && !S.rflip) { e.preventDefault(); app.flip(); }
-      else if ((e.key === 'p' || e.key === 'P') && !S.rflip) { app.toggleRpy(); }
-      else if (S.rflip && '1234'.indexOf(e.key) >= 0 && e.key) { app.rate(['again', 'hard', 'good', 'easy'][Number(e.key) - 1]); }
+    if (S.screen === 'review') {
+      if (e.repeat && (e.key === ' ' || e.key === 'Enter')) { e.preventDefault(); return; }   // holding a key must not race through cards
+      if ((e.key === ' ' || e.key === 'Enter') && t && (t.tagName === 'BUTTON' || t.tagName === 'A')) return;   // a focused button handles its own Space and Enter
+      if (app.kbReview(e)) e.preventDefault();
     } else if (S.screen === 'exam' && S.exm && S.exm.stage === 'run') {
       const m = S.exm;
       if (e.key === 'ArrowRight') { e.preventDefault(); app.exGo(m.i + 1); }
@@ -3363,6 +3403,8 @@
       }
     }
   });
+  // after a mouse click on a Review button, drop the focus so Space and Enter go to the card, not back to that button
+  document.addEventListener('click', (e) => { try { const b = e.target && e.target.closest && e.target.closest('.rev button'); if (b && e.detail > 0) b.blur(); } catch (err) {} });
   window.addEventListener('pagehide', () => { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); });
   app.friendsBoot();
   // a failed save raises the banner; the next successful save clears it

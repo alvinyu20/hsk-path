@@ -1071,3 +1071,5 @@ button.scn:hover .scn-m{text-decoration:underline}
 .grv-bv{min-width:46px;text-align:right}
 .gram > .grv-link{flex:0 0 100%;margin:0 0 -8px}
 .gram > .grv{flex:1 1 100%;max-width:760px;margin:0}
+.kbhint{display:none;margin:0;font-size:13.5px;color:var(--muted,#6b7280);text-align:center}
+@media (hover:hover) and (pointer:fine){.kbhint{display:block}}

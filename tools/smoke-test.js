@@ -369,6 +369,36 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.reload(); await page.waitForSelector('.app');
   check(await page.evaluate((k) => !window.shanlu.state.rq.some((z) => /not-a-word/.test(z)) && !document.getElementById('render-err'), savedKey), 'a saved Review queue with an unknown word is cleaned on load, with no error bar');
   await page.evaluate(() => { window.shanlu.go('review'); window.shanlu.practiceAnyway(); }); await page.waitForTimeout(150);   // back to the practice queue the next checks use
+  {   // the whole of Review words can be done from the keyboard
+    const st = () => page.evaluate(() => { const S = window.shanlu.state; return { done: S.rdone, flip: S.rflip, n: S.rq.length, screen: S.screen }; });
+    const key = async (k) => { await page.keyboard.press(k); await page.waitForTimeout(120); };
+    await page.evaluate(() => { window.__kb0 = JSON.stringify({ lrn: window.shanlu.state.lrn, ws: window.shanlu.state.ws }); });
+    const k0 = await st();
+    check(k0.screen === 'review' && k0.n >= 4 && /Keys:/.test(await page.locator('.kbhint').innerText()), 'Review shows a line of keyboard shortcuts');
+    await key(' '); const k1 = await st();
+    await key('3'); const k2 = await st();
+    await key(' '); await key(' '); const k3 = await st();
+    await key('y'); const k4 = await st();
+    await key('Enter'); await key('4'); const k5 = await st();
+    check(k1.flip && !k2.flip && k2.done === k0.done + 1 && k3.done === k0.done + 2 && k4.done === k0.done + 3 && k5.done === k0.done + 4, 'Review words works from the keyboard: Space shows, 1-4 or Space rates, Y marks "knew it" (' + [k0.done, k2.done, k3.done, k4.done, k5.done].join(',') + ')');
+    await page.evaluate(() => { const a = window.shanlu; const z = Object.keys(a.state.ws).find(w => !(a.state.ws[w].see.s > 0) && !a.state.lrn[w]); const q = a.state.rq.length ? a.state.rq : [z]; a.setState({ lrn: Object.assign({}, a.state.lrn, { [z]: { st: -1, m: 0, at: Date.now() } }), rq: [z + '#l', ...q.slice(0, 2)], rtotal: 3, rdone: 0, rcomplete: false, rflip: false }); });
+    await page.waitForTimeout(120);
+    const i0 = await page.evaluate(() => window.shanlu.state.rq[0]); await key(' ');
+    check(await page.evaluate((f) => window.shanlu.state.rq[0] !== f, i0), 'on a new word, Space is "got it" and the card moves on')
+    // a choice card: one key answers it, the next Space continues
+    await page.evaluate(() => { const a = window.shanlu; const zs = Object.keys(a.state.ws).filter(w => a.state.ws[w].see.s > 0); a.setState({ rq: [zs[0] + '#l', zs[1]], rtotal: 2, rdone: 0, rcomplete: false, rflip: false, qchecked: false, qchoice: null, lrn: Object.assign({}, a.state.lrn, { [zs[0]]: { st: 0, m: 0, at: Date.now() } }), ws: Object.assign({}, a.state.ws, { [zs[0]]: Object.assign({}, a.state.ws[zs[0]], { see: { s: 0, l: 0 } }) }) }); });
+    await page.waitForTimeout(150);
+    const c0 = await page.evaluate(() => ({ choice: !!document.querySelector('.rev .opts .opt'), checked: window.shanlu.state.qchecked }));
+    if (c0.choice) { const f0 = await page.evaluate(() => window.shanlu.state.rq[0]); await key('2'); const c1 = await page.evaluate(() => window.shanlu.state.qchecked); await key(' '); const c2 = await page.evaluate((f) => ({ checked: window.shanlu.state.qchecked, moved: window.shanlu.state.rq[0] !== f }), f0); check(c1 && !c2.checked && c2.moved, 'on a multiple-choice card one key answers it and Space moves on'); }
+    else check(false, 'the keyboard test could not set up a multiple-choice card');
+    // a typed card: the cursor is already in the box; Enter checks, Enter continues
+    await page.evaluate(() => { const a = window.shanlu; const zs = Object.keys(a.state.ws).filter(w => a.state.ws[w].see.s > 0); a.setState({ rq: [zs[2] + '#p', zs[3]], rtotal: 2, rdone: 0, rcomplete: false, rflip: false, qchecked: false, qchoice: null, qtyped: '' }); });
+    await page.waitForTimeout(200);
+    const foc = await page.evaluate(() => document.activeElement && document.activeElement.id);
+    await page.keyboard.type('x'); await key('Enter'); const t1 = await page.evaluate(() => window.shanlu.state.qchecked); await key('Enter'); const t2 = await page.evaluate(() => window.shanlu.state.qchecked);
+    check(foc === 'answer-input' && t1 && !t2, 'on a typed card the cursor is already in the box, Enter checks and Enter continues');
+    await page.evaluate(() => { const a = window.shanlu; const o = JSON.parse(window.__kb0); a.setState({ lrn: o.lrn, ws: o.ws }); a.go('review'); a.practiceAnyway(); }); await page.waitForTimeout(150);
+  }
   await shot('05-review-front');
   // answer without flipping: pinyin button shows/hides pinyin on the front only; quick buttons rate straight away
   check((await page.locator('.fc-fpy').count()) === 0, 'review front shows no pinyin at first');
