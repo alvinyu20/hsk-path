@@ -9,11 +9,18 @@
   try { AICFG = JSON.parse(localStorage.getItem(AI_STORE)) || {}; } catch (e) {}
   // Saving can fail (storage full, blocked, a private tab). The person must hear about it instead of quietly losing progress:
   // the first failure raises a banner (app.setState({ saveFail:true }), see the bottom of this file) and the next success clears it.
-  let saveFailed = false, onSaveState = null, lsFails = 0;
+  let saveFailed = false, onSaveState = null, lsFails = 0, saveInfo = '';
   const SAVE_RETRY_MS = (typeof window.SHANLU_SAVE_RETRY_MS === 'number') ? window.SHANLU_SAVE_RETRY_MS : 10000;   // (the browser tests shorten it)
   const lsSet = (k, v) => {
     try { localStorage.setItem(k, v); if (saveFailed) { saveFailed = false; if (onSaveState) onSaveState(false); } return true; }
-    catch (e) { lsFails++; if (!saveFailed) { saveFailed = true; if (onSaveState) onSaveState(true); } return false; }
+    catch (e) {
+      lsFails++;
+      let used = 0; try { for (let i = 0; i < localStorage.length; i++) { const kk = localStorage.key(i); used += kk.length + (localStorage.getItem(kk) || '').length; } } catch (e2) { used = -1; }
+      const prevInfo = saveInfo;
+      saveInfo = 'Detail for the developer: could not write "' + k + '" (' + Math.round(String(v).length / 1024) + ' KB), error ' + ((e && e.name) || 'unknown') + (used >= 0 ? ', this site stores ' + Math.round(used / 1024) + ' KB in total' : ', storage could not be read at all') + '.';
+      if (!saveFailed) { saveFailed = true; if (onSaveState) onSaveState(true); } else if (saveInfo !== prevInfo && onSaveState) onSaveState(true);   // only when the detail changed, or each failed write would re-save and fail again in a loop
+      return false;
+    }
   };
   const saveAiCfg = () => { lsSet(AI_STORE, JSON.stringify(AICFG)); };
   // small device-level notes: when a tip was dismissed, when the last backup file was made (these belong to this device, not to the person)
@@ -324,7 +331,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', frLeaveAsk:false, frCopied:false,
-      xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
+      xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
@@ -3168,7 +3175,7 @@
           const tp = this.tipNow();
           let swOn = false; try { swOn = !!(navigator.serviceWorker && navigator.serviceWorker.controller); } catch (e) {}
           const meta = document.querySelector('meta[name="shanlu-version"]');
-          return { saveFail:S.saveFail, swReady:S.swReady, updateNow:this.updateNow,
+          return { saveFail:S.saveFail, saveInfo:S.saveInfo || '', swReady:S.swReady, updateNow:this.updateNow,
             tipShow:!!tp, tipIsInstall:!!tp && tp.id === 'install', tipIsBackup:!!tp && tp.id === 'backup', tipCanPrompt:!!installEvt, tipIosHow:isIos() && !installEvt, tipDismiss:this.tipDismiss, tipInstall:this.tipInstall,
             storageText:S.storagePersisted === true ? 'Protected: the browser has agreed to keep this site\'s saved data.' : S.storagePersisted === false ? 'Not protected: the browser may clear this site\'s saved data when space is short or after a long time unused. A backup or sync keeps your progress safe.' : 'Not known on this browser.',
             installedText:isStandalone() ? 'Opened as an installed app.' : 'Opened in the browser. Installing it (Share, then Add to Home Screen on iPhone) gives a full-screen app and protects the saved data.',
@@ -3413,7 +3420,7 @@
   window.addEventListener('pagehide', () => { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); });
   app.friendsBoot();
   // a failed save raises the banner; the next successful save clears it
-  onSaveState = (bad) => { try { app.setState({ saveFail:bad }); } catch (e) {} };
+  onSaveState = (bad) => { try { app.setState({ saveFail:bad, saveInfo:bad ? saveInfo : '' }); } catch (e) {} };
   if (saveFailed) onSaveState(true);
   app.ensurePersist(false);
   window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); installEvt = e; try { app.setState({ tipTick:(app.state.tipTick || 0) + 1 }); } catch (e2) {} });
