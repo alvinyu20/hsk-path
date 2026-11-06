@@ -1069,3 +1069,5 @@ button.scn:hover .scn-m{text-decoration:underline}
 .grv-bar{height:7px;border-radius:4px;background:var(--line,#e6e3dc);overflow:hidden}
 .grv-bar i{display:block;height:100%;background:#3d7a5c}.grv-bar.w i{background:#b3392b}
 .grv-bv{min-width:46px;text-align:right}
+.gram > .grv-link{flex:0 0 100%;margin:0 0 -8px}
+.gram > .grv{flex:1 1 100%;max-width:760px;margin:0}
