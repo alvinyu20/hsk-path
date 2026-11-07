@@ -25,17 +25,17 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   // ---- a new person: the first flight is free ----
   {
     const { ctx, page, errors } = await open({});
-    check((await page.locator('.pill.xpp').innerText()).includes('0 XP'), 'the XP pill is in the header');
+    check((await page.locator('.pill.xpp').innerText()).includes('0 coins'), 'the coins pill is in the header');
     check(await page.locator('.xp-ready').count() === 1, 'the pill shows one stop waiting');
     await page.locator('.pill.xpp').click();
     check((await main(page)).includes('Take your first flight (free)'), 'a new person sees the free first flight');
-    check(await page.locator('.jy-go[disabled]').count() === 0, 'the first flight button is enabled at 0 XP');
+    check(await page.locator('.jy-go[disabled]').count() === 0, 'the first flight button is enabled at 0 coins');
     await page.locator('.jy-go').click();
     let t = await main(page);
     check(/Welcome to Sichuan/.test(t) && /TFU/.test(t) && /Chéngdū Tiānfǔ Guójì Jīchǎng/.test(t), 'the airport arrival card shows the code and pinyin');
     check(/Boarding pass/.test(await page.locator('.mstoast').innerText().catch(() => '')), 'the Boarding pass achievement shows');
     check(await page.locator('.jy-go[disabled]').count() === 1, 'the next stop is not free');
-    check(/50 XP to go/.test(t), 'the next stop costs 50 XP');
+    check(/50 more coins to go/.test(t), 'the next stop costs 50 coins');
     // the background tint follows the region
     const hue = await page.locator('.jy').evaluate(el => getComputedStyle(el).getPropertyValue('--jh').trim());
     check(hue === '8', 'Sichuan has its own colour (hue 8), got ' + hue);
@@ -51,7 +51,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.brand').click();
     check(await page.locator('.pill.xpp.ready').count() === 0 && await page.locator('.xp-ping').count() === 0, 'nothing glows while the next stop is not paid for');
     await page.evaluate(() => { const a = window.shanlu; a.setState({ xp: a.state.xp + 50, dayXp: a.state.dayXp + 50 }); });
-    check(await page.locator('.pill.xpp.ready').count() === 1, 'the XP pill glows once enough XP is earned for a stop');
+    check(await page.locator('.pill.xpp.ready').count() === 1, 'the coins pill glows once enough coins are earned for a stop');
     check(/New stop unlocked/.test(await page.locator('.xp-ping').innerText().catch(() => '')), 'a small note says a new stop is unlocked');
     await page.locator('.xp-ping').click();
     check(await page.locator('.jy-meter.ready').count() === 1 && /1 stop ready/.test(await main(page)), 'the Journey bar glows and says one stop is ready');
@@ -60,7 +60,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await ctx.close();
   }
 
-  // ---- with XP: travel, the order, the maps ----
+  // ---- with coins: travel, the order, the maps ----
   {
     const { ctx, page, errors } = await open({ xp: 1500 });
     await page.locator('.pill.xpp').click();
@@ -73,8 +73,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     t = await page.locator('.jy-card').innerText();
     check(/CITY/i.test(t) && /Chengdu/.test(t) && /成都/.test(t), 'the second stop is the main city, Chengdu');
     check(/New city/.test(t) === false || true, 'ok');
+    check(/1,450 coins/.test(await page.locator('.pill.xpp').innerText()), 'travelling spends coins: 1,500 minus the 50 for the second stop leaves 1,450');
     await page.locator('.jy-acts .btn.pri').click();
-    // keep travelling while XP lasts: every stop in this city block belongs to Chengdu until the city is done
+    // keep travelling while coins last: every stop in this city block belongs to Chengdu until the city is done
     let n = 2, outside = 0;
     for (let i = 0; i < 12; i++) {
       if (await page.locator('.jy-go[disabled]').count()) break;

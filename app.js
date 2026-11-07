@@ -343,13 +343,15 @@
   const onbRead = () => { const v = prefGet('onb', null); return v && typeof v === 'object' ? v : {}; };
   const START_WORDS = ['你好', '谢谢', '我', '你', '是'];   // the same five for everyone: a greeting, thanks, I, you, and the verb to be
   const jyRead = () => { const v = prefGet('jy', null); return v && typeof v === 'object' && Array.isArray(v.seen) ? v : null; };
-  // lifetime XP: this view's live number plus what the other saved copies hold (each level, and All levels); read at most every few seconds because it parses saved data
+  // lifetime XP (the saved name for the coins ever earned): this view's live number plus what the other saved copies hold (each level, and All levels); read at most every few seconds because it parses saved data
   let jyOther = { at:0, v:0 };
   const otherXp = (force) => {
     if (force || Date.now() - jyOther.at > 4000) { let t = 0; try { readAllStores().forEach(st => { if (st.__key !== KEY) t += (Number(st.xp) || 0); }); } catch (e) {} jyOther = { at:Date.now(), v:t }; }
     return jyOther.v;
   };
   const totalXp = (S) => (S.xp || 0) + otherXp();
+  // coins to spend: everything earned (lifetime XP in the saved data) minus the price of the stops already travelled to
+  const coinBalance = (S, st) => Math.max(0, totalXp(S) - (st && JY ? JY.cum(st.n || 0) : 0));
 
   // ---------- dates, saving, daily reset ----------
   const pad = (n) => (n < 10 ? '0' : '') + n;
@@ -1147,7 +1149,7 @@
     { id:'rev100', grp:'Habits', icon:'⚡', title:'100 reviews in a day', desc:'One hundred cards answered in a single day.', hint:'Answer 100 Review cards in one day.', test:m => !!m.ev.rev100 },
     { id:'goal7', grp:'Habits', icon:'🎯', title:'Goal getter', desc:'Hit your daily goal 7 days in a row.', hint:'Reach your daily goal 7 days in a row.', test:m => m.goalRun >= 7, prog:m => [m.goalRun, 7] },
     { id:'topic1', grp:'Collecting', icon:'🕸️', title:'Topic complete', desc:'Every word in one topic web has been started.', hint:'Start every word of one topic in Word webs.', test:m => !!m.topic },
-    { id:'jy1', grp:'Journey', icon:'✈️', title:'Boarding pass', desc:'Your first flight in. The Journey has begun.', hint:'Spend XP on your first stop.', test:m => m.jy.n >= 1 },
+    { id:'jy1', grp:'Journey', icon:'✈️', title:'Boarding pass', desc:'Your first flight in. The Journey has begun.', hint:'Spend coins on your first stop.', test:m => m.jy.n >= 1 },
     { id:'jy10', grp:'Journey', icon:'🧭', title:'10 stops', desc:'Ten places, dishes and traditions discovered.', hint:'Unlock 10 stops.', test:m => m.jy.n >= 10, prog:m => [m.jy.n, 10] },
     { id:'jy50', grp:'Journey', icon:'🗺️', title:'50 stops', desc:'Fifty stops. The map is filling in.', hint:'Unlock 50 stops.', test:m => m.jy.n >= 50, prog:m => [m.jy.n, 50] },
     { id:'jy200', grp:'Journey', icon:'🚆', title:'200 stops', desc:'Two hundred stops along the way.', hint:'Unlock 200 stops.', test:m => m.jy.n >= 200, prog:m => [m.jy.n, 200] },
@@ -2423,11 +2425,12 @@
     jyFilterSet = (f) => this.setState({ jyFilter:f, jySel:null, jyMoreN:40 });
 
     jyView(S) {
-      const base = { isJourney:S.screen === 'journey', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Lifetime XP across every level. Spend it on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), xpPillCls:'pill xpp', jyPingShow:false, jyReadyShow:false, jyReadyN:0, jyReadyLabel:'', jyGuideShow:false };
+      const base = { isJourney:S.screen === 'journey', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Your coins, from everything you study on every level. Spend them on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), xpPillCls:'pill xpp', jyPingShow:false, jyReadyShow:false, jyReadyN:0, jyReadyLabel:'', jyGuideShow:false };
       if (!JWORLD || !JMAP) return Object.assign(base, { jyOff:S.screen === 'journey' });
       const st = jyRead() || JY.fresh();   // only read here;
+      base.xpTotalText = coinBalance(S, st).toLocaleString('en-US');
       base.jyGuideShow = S.screen === 'journey' && !ONB_OFF() && !onbRead().g && st.seen.length > 0;   // you have flown: here is how the site works the screen saves it when it opens and after every stop
-      const xp = totalXp(S); const mt = JY.meter(xp, st);
+      const xp = totalXp(S); const mt = JY.meter(xp, st); const bal = coinBalance(S, st); base.xpTotalText = bal.toLocaleString('en-US');
       const META = JY.META;
       const rName = (id) => (JWORLD.byRegion[id] ? JWORLD.byRegion[id].en : (META[id] ? META[id][1] : id));
       const R = st.reg ? JWORLD.byRegion[st.reg] : null;
@@ -2457,9 +2460,9 @@
         Object.assign(out, { jyNowLabel:'Exploring', jyNowZh:R.zh, jyNowEn:R.en, jyNowSub:rs.got + ' of ' + rs.total + ' stops' + (C ? ' · now in ' + C.en : '') });
       }
       out.jyPct = (done ? 100 : mt.pct) + '%'; out.jyPctNum = done ? 100 : mt.pct;
-      out.jyMeterCls = 'jy-meter' + (mt.ready > 0 && !done ? ' ready' : ''); out.jyMeterText = done ? 'Journey complete' : mt.ready > 0 ? plural(mt.ready, 'stop', 'stops') + ' ready' : mt.into + ' of ' + mt.nextCost + ' XP to the next stop';
-      out.jyXpTotal = xp.toLocaleString('en-US') + ' XP in total';
-      out.jyGoOff = done || mt.ready < 1; out.jyGoText = done ? 'All done' : mt.ready > 0 ? (st.n === 0 ? 'Take your first flight (free)' : st.started ? 'Travel to the next stop' : 'Board the flight') : mt.toGo + ' XP to go';
+      out.jyMeterCls = 'jy-meter' + (mt.ready > 0 && !done ? ' ready' : ''); out.jyMeterText = done ? 'Journey complete' : mt.ready > 0 ? plural(mt.ready, 'stop', 'stops') + ' ready' : mt.into + ' of ' + mt.nextCost + ' coins for the next stop';
+      out.jyXpTotal = bal.toLocaleString('en-US') + ' coins to spend · ' + xp.toLocaleString('en-US') + ' earned in total';
+      out.jyGoOff = done || mt.ready < 1; out.jyGoText = done ? 'All done' : mt.ready > 0 ? (st.n === 0 ? 'Take your first flight (free)' : st.started ? 'Travel to the next stop' : 'Board the flight') : mt.toGo + ' more coins to go';
       out.jyTravel = this.jyTravel;
 
       // the tint follows the region on screen: the one being looked at, else the one you are in
@@ -2474,7 +2477,7 @@
         const banners = [];
         if (rv) {
           const ev = rv.ev;
-          if (ev.indexOf('arrive') >= 0) banners.push({ t:'Welcome to ' + CR.en + '!', d:st.n === 1 ? 'Your first flight is on the house. From here on, the XP you earn studying pays for each new stop.' : 'You have landed. Your journey here begins at the airport.' });
+          if (ev.indexOf('arrive') >= 0) banners.push({ t:'Welcome to ' + CR.en + '!', d:st.n === 1 ? 'Your first flight is on the house. From here on, each new stop costs coins, and studying earns them.' : 'You have landed. Your journey here begins at the airport.' });
           if (ev.indexOf('city') >= 0 && ev.indexOf('arrive') < 0) banners.push({ t:'New city: ' + CC.en, d:'Its stops will unlock one by one.' });
           if (ev.indexOf('muni') >= 0) banners.push({ t:CC.muni + ' is its own municipality.', d:(CR.munis && CR.munis[CC.muni]) || (CC.muni + ' is a municipality of its own, not part of ' + CR.en + '.') });
           if (ev.indexOf('citydone') >= 0 && ev.indexOf('stamp') < 0) banners.push({ t:CC.en + ' complete!', d:'You have seen every stop here.' });
@@ -2545,7 +2548,7 @@
         if (S.jyTab === 'stops') out.jyFilters = filterChips(all);
         out.jyRows = shown.slice(0, S.jyMoreN).map(s => rowOf(s));
         out.jyMoreShow = shown.length > S.jyMoreN; out.jyMore = () => this.setState({ jyMoreN:S.jyMoreN + 60 });
-        out.jyStopsNote = all.length ? plural(shown.length, 'stop', 'stops') + (S.jyFilter === 'all' ? ' unlocked, newest first.' : ' of this kind, newest first.') : 'No stops yet. Earn XP, then tap the button above to take your first flight.';
+        out.jyStopsNote = all.length ? plural(shown.length, 'stop', 'stops') + (S.jyFilter === 'all' ? ' unlocked, newest first.' : ' of this kind, newest first.') : 'No stops yet. Earn coins, then tap the button above to take your first flight.';
       }
 
       // passport: stamped regions first (in the order earned), then the one you are in, then the rest
@@ -3243,7 +3246,7 @@
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
         ach:['Achievements', 'Things you have earned, and what is still ahead.'],
         guide:['How Shanlu works', 'The daily loop, what each part is for, and where your progress lives.'],
-        journey:['Journey', 'Spend the XP you earn on trips through the Chinese-speaking world.'],
+        journey:['Journey', 'Spend the coins you earn on trips through the Chinese-speaking world.'],
         friends:['Friends', FR && FR.identity() && FR.identity().group ? FR.identity().group + '. Only your study totals are shared.' : 'Study together. Only your study totals are shared.'],
         listen:['Listening lab', HAS_LISTEN ? 'Train your ear for how people really talk, not just how lessons sound.' : 'Not built yet for ' + LVN + '.'],
         voice:['Settings', LV <= 1 ? 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud, and how 儿 endings are shown.' : 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud.'],

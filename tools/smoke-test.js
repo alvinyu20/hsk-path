@@ -424,7 +424,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     check(await page.evaluate(() => !(window.shanlu.state.msQueue || []).some(x => /full week/.test(x.title))), 'a milestone is shown only once');
     await page.evaluate(() => { const a = window.shanlu; a.setState({ rq: [], rtotal: 12, rcomplete: true, rcounts: { again: 1, hard: 1, good: 6, easy: 4 }, rxp: 40 }); }); await page.waitForTimeout(200);
     const cel = await page.locator('.res.celebrate').innerText();
-    check(/right first time/.test(cel) && /day streak/.test(cel) && (await page.locator('.confetti').count()) === 1 && /83%\s+right first time/.test(cel) && /\+40\s+XP/.test(cel), 'the end of a session is a celebration with the accuracy, XP and streak');
+    check(/right first time/.test(cel) && /day streak/.test(cel) && (await page.locator('.confetti').count()) === 1 && /83%\s+right first time/.test(cel) && /\+40\s+coins/.test(cel), 'the end of a session is a celebration with the accuracy, XP and streak');
     await page.evaluate(() => { window.SHANLU_MUTE_SFX = false; const a = window.shanlu; a.setState({ rcomplete: false }); a.go('review'); a.practiceAnyway(); }); await page.waitForTimeout(150);
     {   // achievements: the page, and the things that earn them
       const titles = () => page.evaluate(() => (window.shanlu.state.msQueue || []).map(x => x.title).join('|'));
