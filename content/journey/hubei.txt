@@ -1,0 +1,77 @@
+# Hubei. DRAFT: written from general knowledge, not yet fact-checked.
+region: hubei | 湖北 | Hubei
+air: 武汉天河国际机场 | Wuhan Tianhe International Airport | WUH | 30.78 | 114.21 | The main airport of central China. Welcome to Hubei. | |
+
+city: wuhan | 武汉 | Wuhan | 30.59 | 114.31 | A huge city where the Yangtze meets the Han River. |
+A | 黄鹤楼 | Yellow Crane Tower | A tower on Snake Hill, famous for a Tang poem. | | 30.54,114.30
+A | 东湖 | East Lake | One of the biggest city lakes in China, with paths and plum gardens. | | 30.55,114.38
+A | 武汉长江大桥 | Wuhan Yangtze River Bridge | The first bridge across the Yangtze, opened in 1957. | | 30.55,114.29
+A | 户部巷 | Hubu Alley | A lane of breakfast and snack stalls. | | 30.55,114.30
+A | 湖北省博物馆 | Hubei Provincial Museum | Home of the chime bells of Marquis Yi, about 2,400 years old. | | 30.56,114.36
+A | 武汉大学 | Wuhan University | A campus famous for its cherry blossoms in spring. | | 30.54,114.37
+A | 汉口江滩 | Hankou Riverside | A long riverfront park beside old colonial buildings. | | 30.59,114.30
+A | 古琴台 | Guqin Terrace | A garden remembering a friendship between a musician and a woodcutter. | | 30.56,114.26
+D | 热干面 | Hot dry noodles | Wuhan's famous breakfast noodles with sesame paste. | |
+D | 豆皮 | Doupi | A pancake of tofu skin filled with sticky rice and meat. | |
+D | 武昌鱼 | Wuchang fish | A freshwater bream, steamed whole, praised by Mao Zedong. | |
+D | 藕汤 | Lotus root soup | Pork ribs simmered with lotus root. | |
+D | 周黑鸭 | Zhou Hei Ya duck | Spicy braised duck, a local snack brand. | |
+D | 糊汤粉 | Hutang rice noodles | A creamy fish soup with rice noodles. | |
+C | 楚文化 | Chu culture | The old kingdom of Chu, known for lacquer, bronze and music. | |
+C | 汉绣 | Han embroidery | A traditional style of embroidery from Wuhan. | |
+C | 汉剧 | Han opera | A form of local opera with long history. | |
+
+city: yichang | 宜昌 | Yichang | 30.69 | 111.29 | The city at the Gorge that holds the Three Gorges Dam. |
+A | 三峡大坝 | Three Gorges Dam | The largest hydropower station in the world. | | 30.82,111.00
+A | 三峡人家 | Three Gorges Family | A scenic area of river valleys and local culture. | | 30.80,111.00
+A | 西陵峡 | Xiling Gorge | The longest of the Three Gorges. | | 30.78,110.95
+A | 屈原祠 | Qu Yuan Temple | A shrine to the poet Qu Yuan. | | 30.97,110.69
+A | 清江画廊 | Qingjiang Gallery | A bright green river between tall cliffs. | | 30.32,111.04
+D | 宜昌鱼糕 | Yichang fish cake | Fish paste steamed and served in soup. | |
+D | 宜昌蜜橘 | Yichang tangerines | Sweet tangerines grown along the river. | |
+C | 巴山背篓号子 | Basket-carrier chants | Work songs of porters in the mountains. | |
+
+city: shennongjia | 神农架 | Shennongjia | 31.74 | 110.68 | A forested mountain region with rare animals. |
+A | 神农顶 | Shennong Peak | The highest point of central China. | | 31.45,110.30
+A | 大九湖 | Dajiuhu Wetland | A high wetland basin with grass and mist. | | 31.49,110.04
+A | 官门山 | Guanmenshan | A park about the area's plants and animals. | | 31.73,110.50
+D | 神农架腊肉 | Shennongjia smoked pork | Smoked meat from the mountain farms. | |
+C | 野人传说 | Wild man legend | Stories of a hairy creature said to live in these forests. | |
+
+city: jingzhou | 荆州 | Jingzhou | 30.33 | 112.24 | An old walled city of the Three Kingdoms. |
+A | 荆州古城墙 | Jingzhou City Wall | A well-preserved city wall, much of it from the Ming and Qing. | | 30.35,112.19
+A | 荆州博物馆 | Jingzhou Museum | A museum with a well-preserved corpse from the Han period. | | 30.34,112.19
+A | 关公义园 | Guan Yu Memorial Garden | A site remembering the Three Kingdoms general Guan Yu. | | 30.36,112.20
+D | 鱼糕 | Jingzhou fish cake | A soft steamed fish dish for banquets. | |
+D | 皮条鳝鱼 | Eel strips | Eel cut in strips and cooked in a spicy sauce. | |
+
+city: xiangyang | 襄阳 | Xiangyang | 32.04 | 112.14 | A walled city that held out in famous sieges. |
+A | 襄阳古城墙 | Xiangyang City Wall | An old wall on the Han River. | | 32.04,112.15
+A | 古隆中 | Gulongzhong | The place where the strategist Zhuge Liang lived before he served Liu Bei. | | 32.00,112.01
+A | 夫人城 | Madam's Fort | A small fort built by a woman for the defense of the city. | | 32.04,112.14
+D | 牛肉面 | Xiangyang beef noodles | A local bowl of beef noodles in a bold broth. | |
+
+city: enshi | 恩施 | Enshi | 30.27 | 109.49 | A mountain prefecture of Tujia and Miao culture. |
+A | 恩施大峡谷 | Enshi Grand Canyon | A deep canyon with a long cliff and a stone pillar. | | 30.40,109.28
+A | 腾龙洞 | Tenglong Cave | One of the longest caves in China, with a huge entrance. | | 30.30,108.94
+A | 土司城 | Tusi City | A reconstruction of a hereditary chief's town. | | 30.28,109.49
+D | 恩施土豆 | Enshi potatoes | Small potatoes roasted or fried in the highland style. | |
+D | 硒茶 | Selenium tea | Green tea from soil rich in selenium. | |
+C | 女儿会 | Daughters' Meeting | A Tujia festival in which young people meet. | |
+
+city: huangshi | 黄石 | Huangshi | 30.20 | 115.04 | An old mining city on the Yangtze. |
+A | 黄石国家矿山公园 | Huangshi National Mining Park | An open-pit mine turned into a park. | | 30.21,115.07
+A | 东方山 | Dongfang Mountain | A Buddhist mountain beside the city. | | 30.14,115.15
+D | 大冶藕 | Daye lotus root | Soft lotus root from the lake area. | |
+
+city: xianning | 咸宁 | Xianning | 29.84 | 114.32 | A green city of hot springs and bamboo. |
+A | 赤壁古战场 | Chibi Ancient Battlefield | The site said to be of the famous Battle of Red Cliffs. | | 29.72,113.89
+A | 温泉 | Xianning hot springs | A hot spring resort town. | | 29.87,114.30
+D | 桂花糕 | Osmanthus cake | A sweet cake with fragrant osmanthus flowers. | |
+
+city: shiyan | 十堰 | Shiyan | 32.65 | 110.78 | A mountain city and a home of Wudang martial arts. |
+A | 武当山 | Wudang Mountain | A Taoist mountain with temples on its peaks. | A UNESCO World Heritage Site. | 32.40,111.00
+A | 金顶 | Golden Summit | A bronze hall on the top of Wudang Mountain. | | 32.40,111.00
+A | 丹江口水库 | Danjiangkou Reservoir | A huge reservoir for the water diversion to Beijing. | | 32.55,111.50
+C | 武当太极拳 | Wudang tai chi | A style of martial arts rooted in the mountain's Taoism. | |
+D | 武当道茶 | Wudang Taoist tea | A green tea of the mountain, linked to Taoist monks. | |

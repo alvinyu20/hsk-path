@@ -18,7 +18,7 @@
  *   ms     { name: 1 } municipalities whose "this is its own municipality" note has been shown
  */
 (function (root) {
-  const LADDER = [100, 150, 200, 250];
+  const LADDER = [50, 100, 150, 200];
   const FLAT = 250;
   // the very first stop (the first flight in) is free, so a new person is welcomed at 0 XP; after that the ladder starts
   const costOf = (k) => (k <= 1 ? 0 : k - 1 <= LADDER.length ? LADDER[k - 2] : FLAT);
@@ -49,7 +49,7 @@
   function build(data) {
     const W = { regions:[], byRegion:{}, byCity:{}, byStop:{}, order:[] };
     (data.regions || []).forEach((r) => {
-      const R = { id:r.id, zh:r.zh, py:r.py, en:r.en, hue:r.hue != null ? r.hue : (META[r.id] ? META[r.id][2] : 200), muni:r.muni || '', muniNote:r.muniNote || '', air:r.air, cities:[], stops:[] };
+      const R = { id:r.id, zh:r.zh, py:r.py, en:r.en, hue:r.hue != null ? r.hue : (META[r.id] ? META[r.id][2] : 200), muni:r.muni || '', munis:r.munis || {}, air:r.air, cities:[], stops:[] };
       const used = {};
       const add = (c, kind, zh, py, en, note, fun, lat, lon) => {
         let id = r.id + '.' + slug(kind + ' ' + en); if (used[id]) { let k = 2; while (used[id + '-' + k]) k++; id += '-' + k; } used[id] = 1;
@@ -75,7 +75,7 @@
   function aim(W, st, rnd) {
     const left = W.order.filter((id) => !st.done[id]);
     if (!left.length) { st.reg = null; st.started = false; st.cq = []; st.cur = null; st.sq = []; return null; }
-    const id = left[Math.floor(rnd() * left.length)];
+    const id = W.prefer && left.indexOf(W.prefer) >= 0 ? W.prefer : left[Math.floor(rnd() * left.length)];   // W.prefer is for tests only
     const R = W.byRegion[id];
     st.reg = id; st.started = false; st.cur = null; st.sq = [];
     st.cq = [R.cities[0].id].concat(shuffle(R.cities.slice(1).map((c) => c.id), rnd));

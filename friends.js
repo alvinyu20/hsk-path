@@ -36,7 +36,7 @@
       id: m.id, name: m.name, initial: initial(m.name), isMe: m.id === meId, hasStats: !!st,
       week, minutes: weekTotal(week), studiedToday: week[6] > 0, streak: st ? effectiveStreak(st, today) : 0, mem: st ? st.mem : 0,
       level: st && st.levels && st.levels.length ? st.levels[st.levels.length - 1] : 0, passed: st && st.passed ? st.passed : [],
-      cheers: m.cheers || 0, cheered: !!m.cheered, updated: m.updated || 0,
+      cheers: m.cheers || 0, cheered: !!m.cheered, updated: m.updated || 0, jy: st && st.jy && st.jy.n > 0 ? st.jy : null,
     };
   }
   function sortRows(rows, by) {

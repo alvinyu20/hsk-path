@@ -84,7 +84,25 @@ function cleanStats(s) {
   const mem = int(s.mem, 0, 100000);
   if (streak === null || mem === null) return null;
   const levels = (a) => (Array.isArray(a) ? Array.from(new Set(a.map((x) => int(x, 1, 9)).filter((x) => x !== null))).sort((p, q) => p - q) : []);
-  return { v: 1, asOf, last7, streak, lastActive, mem, levels: levels(s.levels), passed: levels(s.passed) };
+  const out = { v: 1, asOf, last7, streak, lastActive, mem, levels: levels(s.levels), passed: levels(s.passed) };
+  const jy = cleanJourney(s.jy);
+  if (jy) out.jy = jy;
+  return out;
+}
+
+// The Journey part of the study totals: how many stops, the regions stamped (with the day), the region being explored, and stops per region.
+// Region names are checked against a plain shape, so nothing else can be tucked in.
+function cleanJourney(j) {
+  if (!j || typeof j !== 'object') return null;
+  const id = (x) => (typeof x === 'string' && /^[a-z]{2,16}$/.test(x) ? x : null);
+  const n = typeof j.n === 'number' && Number.isFinite(j.n) ? Math.max(0, Math.min(20000, Math.round(j.n))) : null;
+  if (n === null) return null;
+  const done = {}, per = {};
+  let count = 0;
+  if (j.done && typeof j.done === 'object') for (const k of Object.keys(j.done)) { if (count++ >= 40) break; const d = j.done[k]; if (id(k) && typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d)) done[k] = d; }
+  count = 0;
+  if (j.per && typeof j.per === 'object') for (const k of Object.keys(j.per)) { if (count++ >= 40) break; const c = j.per[k]; if (id(k) && typeof c === 'number' && Number.isFinite(c)) per[k] = Math.max(0, Math.min(5000, Math.round(c))); }
+  return { n, here: id(j.here) || '', done, per };
 }
 
 async function whoAmI(req, env) {
@@ -184,7 +202,7 @@ async function handle(req, env) {
   }
 
   if (path === '/api/me' && req.method === 'PUT') {
-    const body = await readJson(req, 2048);
+    const body = await readJson(req, 4096);
     if (body.tooBig) return fail(req, env, 413, 'too_big');
     if (body.bad) return fail(req, env, 400, 'bad_json');
     let name = me.name, stats = null;

@@ -27,6 +27,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   const url = 'http://127.0.0.1:' + server.address().port + '/';
   const browser = await chromium.launch({ args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'] });
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, acceptDownloads: true, permissions: ['microphone'] });
+  await ctx.addInitScript(() => { Date.prototype.getHours = function () { return 12; }; });   // the hour of the day is noon unless a test sets it, so "Night owl" and "Early bird" do not depend on when the suite runs
   await ctx.addInitScript(() => { window.SHANLU_AUTO_SHARE = 0; });   // Review: no auto-checked recognition cards unless a test asks for them
   // A fake text-to-speech with the kinds of voices an iPhone lists, so the voice picker can be tested without a phone.
   await ctx.addInitScript((erhua) => {
@@ -494,7 +495,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).forEach(zh => { if (ws[zh].see.s === 1 && ws[zh].see.l === 5) ws[zh].see = { s:30, l:0 }; }); app.setState({ ws, rq:[], rcomplete:false }); });
 
   // the tabs run learn -> practice -> check -> your words, and the logo goes Home
-  check(JSON.stringify(await page.locator('.navs:not(.navg) .nav').allInnerTexts().then(a => a.map(t => t.replace(/\d+$/, '').trim()))) === JSON.stringify(['Home', 'Word webs', 'Grammar', 'Review words', 'Grammar review', 'Listening lab', 'Speak', 'Tests', 'Level exam', 'My words']), 'the tabs are in learning order');
+  check(JSON.stringify(await page.locator('.navs:not(.navg) .nav').allInnerTexts().then(a => a.map(t => t.replace(/\d+$/, '').trim()))) === JSON.stringify(['Home', 'Word webs', 'Grammar', 'Review words', 'Grammar review', 'Listening lab', 'Speak', 'Tests', 'Level exam', 'My words', 'Journey']), 'the tabs are in learning order');
   await page.locator('nav button', { hasText: /^\s*Grammar\s*$/ }).first().click();
   await page.locator('.brand').click();
   await page.waitForTimeout(120);
@@ -1390,7 +1391,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   const slim = await page.evaluate(() => { const t = document.querySelector('.top').getBoundingClientRect(); return { h: t.height, pills: [...document.querySelectorAll('.stats .pill')].filter(p => p.offsetParent !== null).length }; });
   check(slim.h < 90 && slim.pills === 0, 'the header is one slim row on a phone, with no repeated streak and memory chips outside Today (' + Math.round(slim.h) + ' px)');
   await nav('Home');
-  check((await page.evaluate(() => [...document.querySelectorAll('.stats > .pill')].filter(p => p.offsetParent !== null).length)) === 2, 'Today still shows the streak and memory chips');
+  check((await page.evaluate(() => [...document.querySelectorAll('.stats > .pill')].filter(p => p.offsetParent !== null).length)) === 3, 'Today still shows the streak, XP and memory chips');
   await page.setViewportSize({ width: 1280, height: 900 });
 
   check(errors.length === 0, 'no console or page errors' + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));

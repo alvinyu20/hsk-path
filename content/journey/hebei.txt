@@ -1,0 +1,131 @@
+# Hebei, with Beijing and Tianjin shown as cities (they are municipalities, each with a one-time note). DRAFT: written from general knowledge, not yet fact-checked.
+region: hebei | 河北 | Hebei
+muni: Beijing | Beijing is a municipality in its own right, directly under the national government, not part of Hebei. It sits in the middle of Hebei, so it is visited here.
+muni: Tianjin | Tianjin is a municipality in its own right, directly under the national government, not part of Hebei. It sits beside Hebei and Beijing, so it is visited here.
+air: 北京首都国际机场 | Beijing Capital International Airport | PEK | 40.08 | 116.58 | The capital's main international airport, northeast of the city. Welcome to Hebei. | |
+
+city: beijing | 北京 | Beijing | 39.90 | 116.40 | The capital of China, with palaces, hutongs and the Great Wall nearby. | | | Beijing
+A | 故宫 | The Forbidden City | The palace of the Ming and Qing emperors, with nearly a thousand buildings. | A UNESCO World Heritage Site. | 39.92,116.40
+A | 天安门广场 | Tiananmen Square | One of the largest public squares in the world. | | 39.90,116.39
+A | 天坛 | Temple of Heaven | Where emperors prayed for good harvests, with a round blue-tiled hall. | | 39.88,116.41
+A | 颐和园 | Summer Palace | A lake and hill garden used as a summer retreat by the Qing court. | | 40.00,116.27
+A | 北海公园 | Beihai Park | An imperial garden around a lake with a white pagoda. | | 39.93,116.38
+A | 景山公园 | Jingshan Park | A hill behind the Forbidden City with a view over the roofs. | | 39.93,116.40
+A | 八达岭长城 | Badaling Great Wall | The best-known stretch of the Great Wall, an hour from the city. | | 40.36,116.02
+A | 慕田峪长城 | Mutianyu Great Wall | A quieter, restored stretch of the Great Wall among green hills. | | 40.43,116.56
+A | 鸟巢 | Bird's Nest | The national stadium of the 2008 Olympics. | | 39.99,116.40
+A | 水立方 | Water Cube | The swimming center of the Olympics, wrapped in blue bubbles. | | 39.99,116.39
+A | 雍和宫 | Lama Temple | A big Tibetan Buddhist temple with a tall carved Buddha. | | 39.95,116.42
+A | 国家博物馆 | National Museum of China | A vast museum on the east side of the square. | | 39.90,116.40
+A | 胡同 | Hutongs | The narrow lanes of old Beijing, with courtyard homes. | | 39.94,116.40
+A | 南锣鼓巷 | Nanluoguxiang | A lively hutong street of cafés and snacks. | | 39.94,116.40
+A | 什刹海 | Shichahai | A set of lakes with old homes, bars and boats. | | 39.94,116.38
+A | 圆明园 | Old Summer Palace | The ruins of an imperial garden burned in 1860. | | 40.01,116.30
+A | 明十三陵 | Ming Tombs | The burial place of thirteen Ming emperors. | | 40.25,116.22
+A | 798艺术区 | 798 Art Zone | A former factory area turned into galleries. | | 39.99,116.50
+A | 天文台 | Ancient Observatory | A Ming-era observatory with bronze instruments on the old wall. | | 39.91,116.43
+D | 北京烤鸭 | Peking duck | Crisp-skinned roast duck served with pancakes, scallion and sweet sauce. | |
+D | 炸酱面 | Zhajiangmian | Noodles with a thick fried bean sauce and fresh vegetables. | |
+D | 豆汁 | Douzhi | A sour fermented mung bean drink, loved or hated by visitors. | |
+D | 驴打滚 | Donkey rolling | A sticky rice roll coated in soybean flour. | |
+D | 糖葫芦 | Tanghulu | Hawthorn fruit on a stick, coated in sugar. | |
+D | 涮羊肉 | Instant-boiled mutton | Thin lamb slices dipped in a copper pot of hot water. | |
+D | 卤煮 | Luzhu | Pork offal and bread stewed together, an old Beijing dish. | |
+D | 艾窝窝 | Aiwowo | A soft rice ball with a sweet filling. | |
+C | 京剧 | Peking opera | A stylized opera with face paint and acrobatics. | |
+C | 相声 | Xiangsheng | A comedy talk between two performers. | |
+C | 景泰蓝 | Cloisonné | Colored enamel on copper, a Beijing craft. | |
+C | 北京四合院 | Siheyuan courtyard house | A home built around a central courtyard. | |
+
+city: tianjin | 天津 | Tianjin | 39.12 | 117.19 | A port city by the sea, with old foreign quarters and comic talk. | | | Tianjin
+A | 天津之眼 | Tianjin Eye | A giant Ferris wheel built over a bridge on the Hai River. | | 39.15,117.18
+A | 古文化街 | Ancient Culture Street | A pedestrian street of crafts and snacks. | | 39.15,117.18
+A | 意大利风情区 | Italian Style Town | A district of old Italian buildings from the concession era. | | 39.14,117.20
+A | 五大道 | Five Great Avenues | A leafy area of old European-style villas. | | 39.11,117.19
+A | 盘山 | Panshan Mountain | A mountain with temples and peaks in the north. | | 40.07,117.28
+A | 天津博物馆 | Tianjin Museum | A museum shaped like a swan. | | 39.10,117.21
+A | 瓷房子 | Porcelain House | A mansion covered with ceramics and old porcelain. | | 39.12,117.20
+D | 狗不理包子 | Goubuli buns | Famous steamed buns with a fine pleated top. | |
+D | 煎饼馃子 | Jianbing guozi | A crepe with egg, sauce and a crisp cracker, a street breakfast. | |
+D | 麻花 | Mahua twists | Fried dough twists, Tianjin's famous snack. | |
+D | 耳朵眼炸糕 | Erduoyan fried cake | Sticky rice cakes fried and filled with sweet bean paste. | |
+D | 锅巴菜 | Guoba cai | A pancake soup with a savory sauce. | |
+C | 天津快板 | Tianjin clapper talk | A rhythmic comic performance. | |
+C | 泥人张 | Clay Figure Zhang | Hand-modeled clay figures, a Tianjin art for 180 years. | |
+C | 杨柳青年画 | Yangliuqing New Year prints | Brightly colored woodblock prints. | |
+
+city: shijiazhuang | 石家庄 | Shijiazhuang | 38.04 | 114.51 | The capital of Hebei, a rail hub. |
+A | 赵州桥 | Zhaozhou Bridge | The oldest stone arch bridge in China, built around 600 CE. | | 37.74,114.78
+A | 正定古城 | Zhengding Ancient City | An old walled town with temples and a big Buddha. | | 38.15,114.57
+A | 隆兴寺 | Longxing Temple | A temple with a tall bronze Guanyin statue. | | 38.15,114.57
+A | 西柏坡 | Xibaipo | A village that was a Party headquarters in 1948-49. | | 38.35,113.94
+A | 河北博物院 | Hebei Museum | The home of a jade burial suit from a Han prince's tomb. | | 38.04,114.50
+D | 正定马保定驴肉火烧 | Zhengding donkey sandwich | Braised donkey meat in a flatbread. | |
+D | 缸炉烧饼 | Ganglu flatbread | A sesame flatbread baked in a jar oven. | |
+
+city: chengde | 承德 | Chengde | 40.97 | 117.94 | The Qing emperors' summer capital. |
+A | 避暑山庄 | Mountain Resort | A huge imperial garden and palace where Qing emperors spent summers. | A UNESCO World Heritage Site. | 40.99,117.94
+A | 外八庙 | Eight Outer Temples | A group of temples in Tibetan and Han styles around the resort. | | 41.00,117.97
+A | 普陀宗乘之庙 | Putuo Zongsheng Temple | A big temple modeled on the Potala Palace. | | 41.02,117.94
+A | 磬锤峰 | Chime Hammer Rock | A tall rock shaped like a hammer on the hillside. | | 40.99,117.99
+A | 塞罕坝 | Saihanba | A forest and grassland created by generations of tree planters. | | 42.40,117.40
+D | 承德杏仁露 | Chengde almond drink | A drink of almond milk, a local brand. | |
+D | 驴肉火烧 | Donkey fire-baked bun | A crisp bun with braised donkey meat. | |
+
+city: qinhuangdao | 秦皇岛 | Qinhuangdao | 39.94 | 119.60 | A seaside city where the Great Wall reaches the sea. |
+A | 山海关 | Shanhaiguan | A fortress pass where the Great Wall meets the sea. | | 40.01,119.76
+A | 老龙头 | Old Dragon's Head | The place where the Great Wall plunges into the sea. | | 39.96,119.80
+A | 北戴河 | Beidaihe | A beach resort long used by officials in summer. | | 39.83,119.48
+A | 孟姜女庙 | Mengjiangnu Temple | A temple for a legendary woman who wept at the Great Wall. | | 40.07,119.73
+D | 山海关八大碗 | Shanhaiguan eight bowls | A banquet of eight classic dishes. | |
+D | 秦皇岛海鲜 | Qinhuangdao seafood | Crabs and shells from the Bohai Sea. | |
+
+city: baoding | 保定 | Baoding | 38.87 | 115.46 | A former provincial capital close to the capital. |
+A | 直隶总督署 | Zhili Governor's Office | The only Qing governor's office still standing in a good state. | | 38.87,115.46
+A | 白洋淀 | Baiyangdian Lake | A large wetland of reeds and lotus. | | 38.93,116.00
+A | 清西陵 | Western Qing Tombs | A burial ground of Qing emperors. | | 39.40,115.37
+A | 古莲花池 | Ancient Lotus Pond | A garden pond dating to the Yuan dynasty. | | 38.87,115.46
+D | 保定驴肉火烧 | Baoding donkey burger | The classic version of the donkey meat bun. | |
+D | 白洋淀鱼 | Baiyangdian fish | Stewed fish from the lake. | |
+
+city: tangshan | 唐山 | Tangshan | 39.63 | 118.18 | An industrial port city rebuilt after an earthquake. |
+A | 唐山地震遗址公园 | Tangshan Earthquake Memorial Park | A park remembering the 1976 earthquake. | | 39.62,118.19
+A | 清东陵 | Eastern Qing Tombs | A big tomb complex of Qing emperors. | | 40.18,117.68
+A | 南湖公园 | South Lake Park | A big park built on land that had collapsed in coal mining. | | 39.60,118.17
+D | 唐山棋子烧饼 | Tangshan chess flatbread | A small round flatbread. | |
+C | 唐山皮影 | Tangshan shadow puppets | Leather figures in a long-running local tradition. | |
+
+city: handan | 邯郸 | Handan | 36.61 | 114.54 | An ancient city of Zhao and many Chinese idioms. |
+A | 邯郸学步桥 | Handan Learning-to-Walk Bridge | A site linked to the idiom about copying others and forgetting one's own way. | | 36.60,114.50
+A | 响堂山石窟 | Xiangtangshan Caves | Buddhist caves cut into a hillside in the sixth century. | | 36.57,114.20
+A | 赵王城 | King Zhao's City | The ruins of the capital of the state of Zhao. | | 36.58,114.45
+A | 磁州窑 | Cizhou Kiln | An old kiln site known for bold black-and-white pottery. | | 36.40,114.18
+D | 邯郸武安小米 | Wu'an millet | Millet grown in the hills. | |
+
+city: zhangjiakou | 张家口 | Zhangjiakou | 40.82 | 114.89 | A northern city that co-hosted the 2022 Winter Olympics. |
+A | 崇礼滑雪场 | Chongli ski resorts | Ski slopes used for the 2022 Winter Olympics. | | 40.97,115.28
+A | 草原天路 | Grassland Sky Road | A scenic road across a high grassland. | | 41.00,115.00
+A | 云州古城 | Xuanhua Ancient City | An old fortress town of the Ming. | | 40.61,115.04
+D | 莜面 | Oat noodles | Noodles made from naked oats, steamed in rolls. | |
+
+city: langfang | 廊坊 | Langfang | 39.52 | 116.68 | A city between Beijing and Tianjin. |
+A | 第一城 | First City | A park with copies of old Chinese buildings. | | 39.52,116.68
+A | 大厂回族自治县 | Dachang Hui County | A Hui county with mosques and halal food. | | 39.89,116.99
+D | 大厂香肠 | Dachang sausage | A spicy halal sausage. | |
+
+city: xingtai | 邢台 | Xingtai | 37.07 | 114.50 | One of the oldest cities in northern China. |
+A | 天河山 | Tianhe Mountain | A mountain with red cliffs and waterfalls. | | 37.00,113.60
+A | 开元寺 | Kaiyuan Temple | A Tang-dynasty temple with a famous bronze bell. | | 37.06,114.50
+D | 内丘酥饼 | Neiqiu pastry | A buttery pastry from the county. | |
+
+city: cangzhou | 沧州 | Cangzhou | 38.30 | 116.84 | A martial arts city by the Bohai Sea. |
+A | 沧州铁狮子 | Cangzhou Iron Lion | A huge iron lion cast in the year 953. | | 38.10,117.40
+A | 南大港湿地 | Nandagang Wetland | A bird wetland near the coast. | | 38.45,117.45
+D | 金丝小枣 | Golden-thread jujubes | Small sweet dates with golden threads when broken. | |
+D | 沧州火锅鸡 | Cangzhou hotpot chicken | A pot of stewed chicken. | |
+C | 沧州武术 | Cangzhou martial arts | A region long famed for kung fu schools. | |
+
+city: hengshui | 衡水 | Hengshui | 37.74 | 115.67 | A city by a lake, famous for its schools. |
+A | 衡水湖 | Hengshui Lake | A large lake and wetland with wintering birds. | | 37.60,115.60
+A | 衡水内画 | Hengshui inside painting | Tiny paintings made inside glass snuff bottles. | | 37.74,115.67
+D | 衡水老白干 | Hengshui Laobaigan | A strong clear spirit, a local brand. | |

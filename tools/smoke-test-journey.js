@@ -12,8 +12,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const browser = await chromium.launch();
   const open = async (opts) => {
     const ctx = await browser.newContext({ viewport: opts.viewport || { width: 1100, height: 900 } });
-    if (opts.xp != null) await ctx.addInitScript((xp) => { if (!localStorage.getItem('shanlu-progress-v1')) localStorage.setItem('shanlu-progress-v1', JSON.stringify({ xp, dayXp: 0 })); window.SHANLU_MUTE_SFX = true; }, opts.xp);
-    else await ctx.addInitScript(() => { window.SHANLU_MUTE_SFX = true; });
+    if (opts.xp != null) await ctx.addInitScript((xp) => { if (!localStorage.getItem('shanlu-progress-v1')) localStorage.setItem('shanlu-progress-v1', JSON.stringify({ xp, dayXp: 0 })); window.SHANLU_MUTE_SFX = true; window.SHANLU_JY_FIRST = 'sichuan'; }, opts.xp);
+    else await ctx.addInitScript(() => { window.SHANLU_MUTE_SFX = true; window.SHANLU_JY_FIRST = 'sichuan'; });
     const page = await ctx.newPage(); const errors = [];
     page.on('pageerror', e => errors.push(String(e))); page.on('console', m => { if (m.type() === 'error') errors.push('console: ' + m.text()); });
     await page.goto(site); await page.waitForSelector('.app');
@@ -34,7 +34,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(/Welcome to Sichuan/.test(t) && /TFU/.test(t) && /Chéngdū Tiānfǔ Guójì Jīchǎng/.test(t), 'the airport arrival card shows the code and pinyin');
     check(/Boarding pass/.test(await page.locator('.mstoast').innerText().catch(() => '')), 'the Boarding pass achievement shows');
     check(await page.locator('.jy-go[disabled]').count() === 1, 'the next stop is not free');
-    check(/100 XP to go/.test(t), 'the next stop costs 100 XP');
+    check(/50 XP to go/.test(t), 'the next stop costs 50 XP');
     // the background tint follows the region
     const hue = await page.locator('.jy').evaluate(el => getComputedStyle(el).getPropertyValue('--jh').trim());
     check(hue === '8', 'Sichuan has its own colour (hue 8), got ' + hue);

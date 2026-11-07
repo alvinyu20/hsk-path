@@ -314,7 +314,16 @@
     let mem = 0;
     stores.filter(st => st.__n > 0 && st.ws).forEach(st => { try { mem += memOf(fillWs(st.ws)).words; } catch (e) {} });   // a saved copy keeps only started skills: fill the rest in first
     const levels = LVL.unlockedLevels ? LVL.unlockedLevels() : [LV];
-    return { asOf:today, last7, streak:Math.min(streak, 9999), lastActive, mem, levels, passed:levels.filter(n => LVL.levelPassed(n)) };
+    const out = { asOf:today, last7, streak:Math.min(streak, 9999), lastActive, mem, levels, passed:levels.filter(n => LVL.levelPassed(n)) };
+    try { const jy = jyShare(); if (jy) out.jy = jy; } catch (e) {}
+    return out;
+  };
+  // What friends can see of the Journey: how many stops, which regions are stamped (and when), the region you are in, and stops per region. No stop names.
+  const jyShare = () => {
+    const st = jyRead(); if (!st || !JWORLD || !st.seen.length) return null;
+    const per = {}; st.seen.forEach(id => { const s = JWORLD.byStop[id]; if (s) per[s.rid] = (per[s.rid] || 0) + 1; });
+    const done = {}; Object.keys(st.done || {}).forEach(id => { if (JWORLD.byRegion[id]) done[id] = st.done[id]; });
+    return { n:st.seen.length, here:st.reg && st.started ? st.reg : '', done, per };
   };
 
   // every saved progress (each level and All levels), as stored; used by the achievements for things that span levels
@@ -326,6 +335,7 @@
   // ---- the Journey: journey.js has the rules, data/journey.js the stops, data/journey-map.js the outlines ----
   const JY = window.ShanluJourney || null;
   const JWORLD = JY && window.JOURNEY ? JY.build(window.JOURNEY) : null;
+  if (JWORLD && window.SHANLU_JY_FIRST) JWORLD.prefer = window.SHANLU_JY_FIRST;   // set by tests so the first region is known
   const JMAP = window.JOURNEY_MAP || null;
   const JMEDIA = window.JOURNEY_MEDIA || {};
   const jyRead = () => { const v = prefGet('jy', null); return v && typeof v === 'object' && Array.isArray(v.seen) ? v : null; };
@@ -1427,7 +1437,7 @@
     };
     go = (screen) => {
       { const grp = { web:'learn', grammar:'learn', words:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', ach:'more', journey:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
-      if (screen === 'journey') { otherXp(true); this.jyEnsure(); }
+      if (screen === 'journey') { otherXp(true); this.jyEnsure(); this.friendsRefresh(false); }
       this.setState({ screen }); try { window.scrollTo(0, 0); } catch (e) {}
       if (screen === 'speak' && !HAS_SCRIPTS) { const S = this.state; if (S.aiOn && !S.aim.length && !S.aiBusy) this.aiStart(S.aiScn); }   // no scripts at this level: go straight to the AI conversation
       // on phones the tab bar scrolls sideways: keep the current tab in view
@@ -2364,6 +2374,7 @@
       const r = JY.step(JWORLD, st0, Math.random, ymd(new Date()));
       if (!r.stop) return;
       prefSet('jy', r.st);
+      this.friendsTick();
       SFX.play(r.ev.indexOf('stamp') >= 0 || r.ev.indexOf('arrive') >= 0 ? 'fly' : 'ok');
       this.setState({ jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next }, jyOpen:null, jyTab:'map', jySel:null });
       try { window.scrollTo(0, 0); } catch (e) {}
@@ -2390,6 +2401,17 @@
       const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
       const out = Object.assign(base, { jyOn:true });
 
+      // friends: the people in your group who have started travelling. Looking at one shows their map and passport in place of yours.
+      const fMembers = S.fr && S.fr.members ? S.fr.members.filter(m => m.id !== S.fr.me && m.stats && m.stats.jy && m.stats.jy.n > 0) : [];
+      const fm = S.jyFriend ? fMembers.find(m => m.id === S.jyFriend) : null;
+      const vs = fm ? { done:fm.stats.jy.done || {}, reg:fm.stats.jy.here || null, started:!!fm.stats.jy.here } : st;   // the journey being looked at
+      const stampCount = (j) => Object.keys(j.done || {}).filter(id => JWORLD.byRegion[id]).length;
+      Object.assign(out, { jyMine:!fm, jyFriendMode:!!fm, jyFriendsShow:!fm && fMembers.length > 0,
+        jyFriends:fMembers.map((m, i) => ({ name:m.name, initial:window.ShanluFriends.initial(m.name), cls:'c' + (i % 4), sub:plural(m.stats.jy.n, 'stop', 'stops') + ' · ' + plural(stampCount(m.stats.jy), 'stamp', 'stamps'),
+          open:() => { SFX.play('ok'); this.setState({ jyFriend:m.id, jyTab:'map', jyReg:null, jySel:null, jyOpen:null, jyRv:null }); try { window.scrollTo(0, 0); } catch (e) {} } })),
+        jyFriendBack:() => this.setState({ jyFriend:null, jyTab:'map' }) });
+      if (fm) Object.assign(out, { jyFriendName:fm.name, jyFriendSub:plural(fm.stats.jy.n, 'stop', 'stops') + ' · ' + stampCount(fm.stats.jy) + ' of ' + Object.keys(JY.META).length + ' regions stamped' });
+
       // where you are and the XP bar
       const done = !R;
       if (done) { Object.assign(out, { jyNowLabel:'Every region stamped', jyNowZh:'完', jyNowEn:'The whole map is yours', jyNowSub:'You finished the Journey. More stops can be added later.' }); }
@@ -2405,11 +2427,11 @@
       out.jyTravel = this.jyTravel;
 
       // the tint follows the region on screen: the one being looked at, else the one you are in
-      const focusId = S.jyReg || st.reg;
+      const focusId = fm ? null : (S.jyReg || st.reg);
       out.jyHue = focusId && META[focusId] ? (JWORLD.byRegion[focusId] ? JWORLD.byRegion[focusId].hue : META[focusId][2]) : 205;
 
       // the card: a stop just unlocked, or one opened from the map or the list
-      const rv = S.jyRv; const cardId = rv ? rv.id : S.jyOpen; const stop = cardId ? JWORLD.byStop[cardId] : null;
+      const rv = fm ? null : S.jyRv; const cardId = fm ? null : (rv ? rv.id : S.jyOpen); const stop = cardId ? JWORLD.byStop[cardId] : null;
       out.jyCardShow = !!stop;
       if (stop) {
         const CR = JWORLD.byRegion[stop.rid], CC = JWORLD.byCity[stop.cid];
@@ -2418,7 +2440,7 @@
           const ev = rv.ev;
           if (ev.indexOf('arrive') >= 0) banners.push({ t:'Welcome to ' + CR.en + '!', d:st.n === 1 ? 'Your first flight is on the house. From here on, the XP you earn studying pays for each new stop.' : 'You have landed. Your journey here begins at the airport.' });
           if (ev.indexOf('city') >= 0 && ev.indexOf('arrive') < 0) banners.push({ t:'New city: ' + CC.en, d:'Its stops will unlock one by one.' });
-          if (ev.indexOf('muni') >= 0) banners.push({ t:CC.muni + ' is its own municipality.', d:CR.muniNote || (CC.muni + ' is a municipality of its own, not part of ' + CR.en + '.') });
+          if (ev.indexOf('muni') >= 0) banners.push({ t:CC.muni + ' is its own municipality.', d:(CR.munis && CR.munis[CC.muni]) || (CC.muni + ' is a municipality of its own, not part of ' + CR.en + '.') });
           if (ev.indexOf('citydone') >= 0 && ev.indexOf('stamp') < 0) banners.push({ t:CC.en + ' complete!', d:'You have seen every stop here.' });
           if (ev.indexOf('stamp') >= 0) banners.push({ t:CR.en + ' complete!', d:'Your passport is stamped.' + (rv.next ? ' Next flight: ' + rName(rv.next) + '.' : '') });
           if (ev.indexOf('all') >= 0) banners.push({ t:'Every region stamped!', d:'You have been everywhere. Well travelled.' });
@@ -2436,23 +2458,24 @@
       }
 
       // tabs
-      out.jyTabs = [['map', 'Map'], ['stops', 'Stops'], ['pass', 'Passport']].map(t => ({ label:t[1], cls:S.jyTab === t[0] ? 'on' : '', fn:() => this.jyTabSet(t[0]) }));
-      out.jyIsMap = S.jyTab === 'map'; out.jyIsStops = S.jyTab === 'stops'; out.jyIsPass = S.jyTab === 'pass';
+      const tabNow = fm && S.jyTab === 'stops' ? 'map' : S.jyTab;
+      out.jyTabs = (fm ? [['map', 'Map'], ['pass', 'Passport']] : [['map', 'Map'], ['stops', 'Stops'], ['pass', 'Passport']]).map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', fn:() => this.jyTabSet(t[0]) }));
+      out.jyIsMap = tabNow === 'map'; out.jyIsStops = tabNow === 'stops'; out.jyIsPass = tabNow === 'pass';
       const FILT = [['all', 'All'], ['T', 'Cities'], ['A', 'Attractions'], ['D', 'Dishes'], ['C', 'Culture'], ['P', 'Airports']];
       const filterChips = (stopsSeen) => FILT.map(f => ({ label:f[1], count:f[0] === 'all' ? stopsSeen.length : stopsSeen.filter(s => s.k === f[0]).length, cls:S.jyFilter === f[0] ? 'on' : '', fn:() => this.jyFilterSet(f[0]) }));
       const pass = (s) => S.jyFilter === 'all' || s.k === S.jyFilter;
       const rowOf = (s, cls) => ({ kind:({ T:'City', A:'Sight', D:'Dish', C:'Culture', P:'Airport' })[s.k], zh:s.zh, en:s.en, where:JWORLD.byRegion[s.rid].en + ' · ' + JWORLD.byCity[s.cid].en, cls:cls || '', open:() => this.jyOpenStop(s.id) });
 
       // map: the whole map, or one region with its pins
-      out.jyCountry = !S.jyReg || !JMAP.regions[S.jyReg]; out.jyProv = !out.jyCountry;
+      out.jyCountry = !!fm || !S.jyReg || !JMAP.regions[S.jyReg]; out.jyProv = !out.jyCountry;
       if (out.jyCountry) {
         const regs = Object.keys(JMAP.regions);
-        const status = (id) => st.done[id] ? 'done' : (st.reg === id && st.started ? 'here' : (st.reg === id ? 'next' : 'none'));
+        const status = (id) => vs.done[id] ? 'done' : (vs.reg === id && vs.started ? 'here' : (vs.reg === id && !fm ? 'next' : 'none'));
         const mk = (id) => {
           const has = !!JWORLD.byRegion[id]; const m = JMAP.regions[id]; const en = rName(id); const stt = has ? status(id) : 'none';
           const hue = has ? JWORLD.byRegion[id].hue : META[id][2];
-          const word = stt === 'done' ? 'stamped' : stt === 'here' ? 'you are here' : stt === 'next' ? 'next flight' : has ? 'not visited yet' : 'coming soon';
-          return { id, cls:stt + (has ? '' : ' na') + (JY.SMALL.indexOf(id) >= 0 && id !== 'singapore' ? ' tiny' : ''), hue, d:m.cd || '', m:m.cm || '', hasM:!!m.cm, label:en + ', ' + word, en, open:has ? () => this.jyShowReg(id) : () => {} };
+          const word = stt === 'done' ? 'stamped' : stt === 'here' ? (fm ? 'there now' : 'you are here') : stt === 'next' ? 'next flight' : has ? 'not visited yet' : 'coming soon';
+          return { id, cls:stt + (has ? '' : ' na') + (JY.SMALL.indexOf(id) >= 0 && id !== 'singapore' ? ' tiny' : ''), hue, d:m.cd || '', m:m.cm || '', hasM:!!m.cm, label:en + ', ' + word, en, open:has && !fm ? () => this.jyShowReg(id) : () => {} };
         };
         out.jyMapRegions = regs.filter(id => JMAP.regions[id].cd && id !== 'singapore').map(mk);
         out.jySmall = JY.SMALL.map(id => Object.assign(mk(id), { d:JMAP.insets[id] || '' }));
@@ -2492,14 +2515,14 @@
       // passport: stamped regions first (in the order earned), then the one you are in, then the rest
       {
         const ids = Object.keys(META).filter(id => JMAP.regions[id]);
-        const rank = (id) => (st.done[id] ? '0' + st.done[id] : (st.reg === id && st.started ? '1' : (JWORLD.byRegion[id] ? '2' : '3')) + rName(id));
+        const rank = (id) => (vs.done[id] ? '0' + vs.done[id] : (vs.reg === id && vs.started ? '1' : (JWORLD.byRegion[id] ? '2' : '3')) + rName(id));
         const sorted = ids.slice().sort((a, b) => (rank(a) < rank(b) ? -1 : rank(a) > rank(b) ? 1 : 0));
-        const stamped = ids.filter(id => st.done[id]).length;
-        out.jyPassTitle = 'Passport'; out.jyPassSub = stamped + ' of ' + ids.length + ' regions stamped';
+        const stamped = ids.filter(id => vs.done[id]).length;
+        out.jyPassTitle = fm ? fm.name + '\'s passport' : 'Passport'; out.jyPassSub = stamped + ' of ' + ids.length + ' regions stamped';
         out.jyStamps = sorted.map(id => {
-          const has = !!JWORLD.byRegion[id]; const RR = JWORLD.byRegion[id]; const got = !!st.done[id]; const here = !got && st.reg === id && st.started;
-          return { hue:has ? RR.hue : META[id][2], cls:got ? 'got' : here ? 'here' : 'empty', zh:got || here ? (has ? RR.zh : META[id][0]) : '?', en:got || here ? rName(id) : 'Not yet', code:got || here ? (has && RR.air ? RR.air.code : '') : '', date:got ? st.done[id] : here ? 'In progress' : '',
-            label:got ? rName(id) + ', stamped' : here ? rName(id) + ', in progress' : 'Not visited yet', open:has && (got || here) ? () => this.jyShowReg(id) : () => {} };
+          const has = !!JWORLD.byRegion[id]; const RR = JWORLD.byRegion[id]; const got = !!vs.done[id]; const here = !got && vs.reg === id && vs.started;
+          return { hue:has ? RR.hue : META[id][2], cls:got ? 'got' : here ? 'here' : 'empty', zh:got || here ? (has ? RR.zh : META[id][0]) : '?', en:got || here ? rName(id) : 'Not yet', code:got || here ? (has && RR.air ? RR.air.code : '') : '', date:got ? vs.done[id] : here ? 'In progress' : '',
+            label:got ? rName(id) + ', stamped' : here ? rName(id) + ', in progress' : 'Not visited yet', open:has && (got || here) && !fm ? () => this.jyShowReg(id) : () => {} };
         });
       }
       return out;
@@ -3133,7 +3156,7 @@
         frRows:frRows.map((r, i) => ({
           name:r.name, initial:r.initial, avCls:'c' + (i % 4), isMe:r.isMe, you:r.isMe ? 'You' : r.name, hasLv:r.level > 0, lvTag:'HSK ' + r.level, lvCls:'cur l' + r.level,
           strip:r.week.map(m => ({ cls:m > 0 ? 'on' : '' })), studied:r.studiedToday, cls:r.isMe ? 'me' : '',
-          minutes:r.hasStats ? r.minutes + ' min' : 'New', sub:(r.hasStats ? (r.streak > 0 ? r.streak + ' day streak' : 'No streak yet') + ' · ' + r.mem + ' in memory' : 'Has not shared yet') + (r.isMe && r.cheers > 0 ? ' · ' + r.cheers + (r.cheers === 1 ? ' cheer' : ' cheers') + ' for you' : ''),
+          minutes:r.hasStats ? r.minutes + ' min' : 'New', sub:(r.hasStats ? (r.streak > 0 ? r.streak + ' day streak' : 'No streak yet') + ' · ' + r.mem + ' in memory' + (r.jy ? ' · ' + r.jy.n + (r.jy.n === 1 ? ' stop' : ' stops') + ' traveled' : '') : 'Has not shared yet') + (r.isMe && r.cheers > 0 ? ' · ' + r.cheers + (r.cheers === 1 ? ' cheer' : ' cheers') + ' for you' : ''),
           canCheer:!r.isMe, cheerCls:r.cheered ? 'on' : '', hasCheers:r.cheers > 0, cheers:r.cheers, cheerLabel:(r.cheered ? 'You cheered ' : 'Cheer for ') + r.name, cheer:() => this.friendsCheer(r.id)
         })),
         frStudied:frRows.filter(r => r.studiedToday).length, frCount:frRows.length,

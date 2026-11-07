@@ -85,6 +85,27 @@ const INVITE = 'ABCD-EFGH-JKLM';
   await A.page.waitForSelector('.frhome');
   check((await A.page.locator('.frhome').innerText()).includes('studied today') && await A.page.locator('.frhome .fav').count() === 2, 'Home shows who studied today');
 
+  // Journey: friends see each other's travel totals, coloured map and passport (never the stop names)
+  await A.page.evaluate(() => window.shanlu.go('journey'));
+  await A.page.locator('.jy-go').click();   // the first flight is free
+  await A.page.evaluate(() => window.shanlu.friendsPush({}));
+  const shared = await A.page.evaluate(() => window.shanlu.friendStats().jy);
+  check(shared && shared.n === 1 && shared.here && Object.keys(shared).sort().join() === 'done,here,n,per' && !JSON.stringify(shared).includes('airport'), 'the Journey totals that are shared hold counts and region names only');
+  await B.page.evaluate(() => window.shanlu.go('journey'));
+  await B.page.evaluate(() => window.shanlu.friendsRefresh(true));
+  await B.page.waitForSelector('.jy-fr');
+  check((await B.page.locator('.jy-fr').innerText()).includes('Alvin') && /1 stop/.test(await B.page.locator('.jy-fr').innerText()), 'Mei sees Alvin on the Journey with his stop count');
+  await B.page.locator('.jy-fr').click();
+  check(await B.page.locator('.jy-fbar').count() === 1 && (await B.page.locator('.jy-fbar').innerText()).includes("Alvin's journey") && await B.page.locator('.jy-now').count() === 0, "Alvin's journey replaces Mei's own panel");
+  check(await B.page.locator('.jy-tabs button').count() === 2, 'a friend\'s journey has a Map and a Passport, no Stops');
+  check(await B.page.locator('.jy-r.here').count() === 1, "the region Alvin is exploring is marked on the map");
+  await B.page.locator('.jy-tabs button', { hasText: 'Passport' }).click();
+  check((await text(B.page)).includes("Alvin's passport") && await B.page.locator('.jy-slot.here').count() === 1, "Alvin's passport shows the region in progress");
+  await B.page.locator('.jy-fbar .linkbtn').click();
+  check(await B.page.locator('.jy-now').count() === 1 && await B.page.locator('.jy-fbar').count() === 0, 'going back shows your own journey again');
+  const boardText = await (async () => { await B.page.locator('nav button', { hasText: 'Friends' }).click(); await B.page.waitForSelector('.frow'); return text(B.page); })();
+  check(/1 stop traveled/.test(boardText), 'the friends board mentions the stops traveled');
+
   // spaced-out syncing: 30 quick changes cause no extra uploads
   const before = A.page.puts;
   for (let i = 0; i < 30; i++) await A.page.evaluate((i) => window.shanlu.setState({ dayMin: 31 + i }), i);

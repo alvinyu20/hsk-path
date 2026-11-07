@@ -1285,3 +1285,12 @@ html,body,.app,button,a,input,select,textarea,label,[role=button]{touch-action:m
   .jy-pass{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
   .jy-stamp{width:96px;height:96px}
 }
+
+/* Journey: looking at a friend's map and passport */
+.jy-fbar{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin:0 0 12px;padding:10px 12px;border-radius:12px;background:var(--card, #fff);border:1px solid var(--line, #e6e0d6)}
+.jy-fbar b{font-size:1.02rem}
+.jy-friends{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.jy-fr{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:8px 10px;border-radius:12px;border:1px solid var(--line, #e6e0d6);background:transparent;color:inherit;font:inherit;cursor:pointer}
+.jy-fr:hover,.jy-fr:focus-visible{border-color:hsl(var(--jh, 205) 45% 55%)}
+.jy-fr-t{display:flex;flex-direction:column;min-width:0}
+.jy-fr-t small{color:var(--muted, #6b6459)}

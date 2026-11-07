@@ -1,0 +1,75 @@
+# Hainan. DRAFT: written from general knowledge, not yet fact-checked.
+region: hainan | 海南 | Hainan
+air: 海口美兰国际机场 | Haikou Meilan International Airport | HAK | 19.93 | 110.46 | The main airport of Hainan, on the north coast. Welcome to Hainan. | |
+
+city: haikou | 海口 | Haikou | 20.04 | 110.20 | The capital of Hainan, a tropical coastal city. |
+A | 骑楼老街 | Arcade Old Street | A street of old arcade buildings. | | 20.05,110.34
+A | 五公祠 | Five Lords Temple | A temple for five exiled officials. | | 20.01,110.34
+A | 海口火山群 | Haikou Volcanic Cluster | A park of extinct volcano craters. | | 19.90,110.20
+A | 假日海滩 | Holiday Beach | The city beach. | | 20.04,110.32
+A | 海南省博物馆 | Hainan Provincial Museum | A museum of the island. | | 20.02,110.35
+A | 海瑞墓 | Hai Rui Tomb | The tomb of an honest Ming official. | | 20.00,110.31
+D | 海南鸡饭 | Hainanese chicken rice | Poached chicken with rice cooked in the chicken stock. | |
+D | 文昌鸡 | Wenchang chicken | A famous chicken breed from Wenchang. | |
+D | 加积鸭 | Jiaji duck | A fat duck breed from Qionghai. | |
+D | 抱罗粉 | Baoluo noodles | Rice noodles in a rich broth. | |
+D | 椰子饭 | Coconut rice | Rice steamed in a coconut. | |
+D | 清补凉 | Qingbuliang | A cool dessert of beans, coconut and fruits. | |
+D | 老爸茶 | Laoba tea | A local teahouse culture of long chats and light snacks. | |
+C | 琼剧 | Qiong opera | The local opera of Hainan. | |
+
+city: sanya | 三亚 | Sanya | 18.25 | 109.51 | A tropical resort city at the southern tip of the island. |
+A | 亚龙湾 | Yalong Bay | A wide white-sand bay. | | 18.22,109.64
+A | 天涯海角 | End of the Earth | A beach with rocks inscribed with the words, a symbol of exile. | | 18.30,109.35
+A | 南山寺 | Nanshan Temple | A temple with a huge Guanyin statue by the sea. | | 18.30,109.17
+A | 蜈支洲岛 | Wuzhizhou Island | An island with clear water for diving. | | 18.31,109.76
+A | 大东海 | Dadonghai | A city beach. | | 18.22,109.52
+A | 鹿回头 | Luhuitou | A hill with a legend of a deer and a hunter. | | 18.20,109.51
+A | 南山文化旅游区 | Nanshan Cultural Zone | A large Buddhist cultural park. | | 18.30,109.17
+D | 海鲜 | Sanya seafood | Fresh seafood at the market. | |
+D | 椰子鸡 | Coconut chicken hot pot | Chicken simmered in coconut water. | |
+D | 芒果 | Hainan mango | Sweet mangoes in season. | |
+D | 和乐蟹 | Hele crab | A famous crab from Wanning. | |
+C | 黎族船型屋 | Li boat-shaped houses | Traditional thatched houses of the Li people. | |
+C | 黎锦 | Li brocade | A woven cloth with a very long history. | |
+
+city: wanning | 万宁 | Wanning | 18.80 | 110.39 | A coastal city for surfing. |
+A | 日月湾 | Riyue Bay | A surfing bay. | | 18.67,110.50
+A | 东山岭 | Dongshan Ridge | A hill with a temple and a view of the coast. | | 18.80,110.40
+D | 兴隆咖啡 | Xinglong coffee | A coffee grown in Hainan. | |
+
+city: qionghai | 琼海 | Qionghai | 19.25 | 110.47 | A quiet city on the river. |
+A | 博鳌 | Boao | The place where the Boao Forum is held. | | 19.15,110.57
+A | 万泉河 | Wanquan River | A river with a clear flow. | | 19.20,110.47
+A | 红色娘子军 | Red Detachment of Women | A memorial for a famous women's unit. | | 19.25,110.47
+D | 嘉积鸭 | Jiaji duck | A famous duck dish. | |
+
+city: wenchang | 文昌 | Wenchang | 19.54 | 110.80 | The home of the space launch center and Wenchang chicken. |
+A | 文昌航天发射场 | Wenchang Space Launch Site | A launch site for large rockets near the sea. | | 19.61,110.95
+A | 宋氏祖居 | Soong Family Home | The ancestral home of the Soong family. | | 19.54,110.80
+A | 铜鼓岭 | Tonggu Ridge | A coastal hill. | | 19.62,111.00
+D | 椰子 | Coconut | A major coconut area. | |
+
+city: danzhou | 儋州 | Danzhou | 19.52 | 109.58 | A western city where the poet Su Dongpo was exiled. |
+A | 东坡书院 | Dongpo Academy | A school started by the exiled poet Su Dongpo. | | 19.57,109.48
+A | 海南热带植物园 | Hainan Tropical Garden | A large tropical plant garden. | | 19.50,109.50
+D | 儋州米烂 | Danzhou mi lan | A rice-based porridge. | |
+D | 儋州火山荔枝 | Danzhou lychee | Lychees grown on volcanic soil. | |
+
+city: wuzhishan | 五指山 | Wuzhishan | 18.78 | 109.52 | The mountain city at the island's heart. |
+A | 五指山 | Five Finger Mountain | The highest mountain in Hainan. | | 18.90,109.67
+A | 水满乡 | Shuiman Village | A Li village in the mountains. | | 18.78,109.52
+D | 五指山红茶 | Wuzhishan black tea | A tea grown in the mountains. | |
+D | 山兰酒 | Shanlan wine | A rice wine of the Li people. | |
+C | 三月三 | Li March Third | The main festival of the Li people. | |
+
+city: ledong | 乐东 | Ledong | 18.75 | 109.17 | A western county of Li culture. |
+A | 尖峰岭 | Jianfengling | A tropical rainforest. | | 18.73,108.85
+A | 莺歌海盐场 | Yinggehai Salt Field | An old salt field by the sea. | | 18.51,108.70
+D | 乐东芒果 | Ledong mango | Sweet mangoes. | |
+
+city: lingshui | 陵水 | Lingshui | 18.50 | 110.03 | An eastern coastal county. |
+A | 分界洲岛 | Fenjiezhou Island | An island with monkeys and diving. | | 18.54,110.08
+A | 南湾猴岛 | Monkey Island | A peninsula home to macaques. | | 18.76,110.06
+D | 陵水酸粉 | Lingshui sour noodles | Rice noodles in a sour broth. | |
+D | 陵水海鲜 | Lingshui seafood | Seafood. | |

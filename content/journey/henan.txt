@@ -1,0 +1,83 @@
+# Henan. DRAFT: written from general knowledge, not yet fact-checked.
+region: henan | 河南 | Henan
+air: 郑州新郑国际机场 | Zhengzhou Xinzheng International Airport | CGO | 34.52 | 113.84 | A cargo and passenger hub in the Central Plains. Welcome to Henan. | |
+
+city: zhengzhou | 郑州 | Zhengzhou | 34.75 | 113.63 | A rail hub on the Yellow River plain, once a capital of the Shang dynasty. |
+A | 河南博物院 | Henan Museum | One of China's oldest museums, with bronze, jade and the Jiahu bone flutes. | | 34.77,113.67
+A | 商城遗址 | Shang City Ruins | The remains of a city wall from about 3,500 years ago. | | 34.76,113.68
+A | 黄河风景名胜区 | Yellow River Scenic Area | A park on the bank of the Yellow River with huge statues. | | 34.93,113.51
+A | 二七纪念塔 | Erqi Tower | A twin-towered memorial in the city center. | | 34.76,113.66
+A | 少林寺 | Shaolin Temple | The famous temple where kung fu is said to have begun. | | 34.51,112.94
+A | 嵩山 | Mount Song | One of the Five Sacred Mountains of China, in the center. | | 34.48,113.03
+A | 中岳庙 | Zhongyue Temple | A temple for the God of Mount Song. | | 34.46,113.05
+D | 烩面 | Braised noodles | Wide pulled noodles in a mutton broth, Zhengzhou's staple. | |
+D | 胡辣汤 | Hu la soup | A thick, peppery breakfast soup. | |
+D | 灌汤包 | Soup dumplings | Large steamed buns full of hot broth, a Zhengzhou favorite. | |
+D | 河南蒸面条 | Steamed noodles | Noodles steamed with vegetables and a garlic sauce. | |
+C | 少林功夫 | Shaolin kung fu | The martial arts of the Shaolin monks. | |
+C | 豫剧 | Henan opera | The most popular local opera in China by audience. | |
+
+city: luoyang | 洛阳 | Luoyang | 34.62 | 112.45 | An ancient capital for thirteen dynasties, famous for peonies. |
+A | 龙门石窟 | Longmen Grottoes | Thousands of Buddhist carvings in a limestone cliff, including a giant Buddha. | A UNESCO World Heritage Site. | 34.56,112.47
+A | 白马寺 | White Horse Temple | The first Buddhist temple in China, founded in the first century. | | 34.72,112.60
+A | 关林 | Guanlin Temple | A temple and tomb for the general Guan Yu. | | 34.60,112.46
+A | 洛阳博物馆 | Luoyang Museum | A museum on the long history of the capital. | | 34.62,112.45
+A | 应天门 | Yingtian Gate | A huge restored gate of the Sui and Tang palace. | | 34.67,112.46
+A | 丽景门 | Lijing Gate | A gate of the old city, with a night market in the street. | | 34.67,112.47
+D | 洛阳水席 | Luoyang water banquet | A traditional banquet of about 24 dishes, many of them soups. | |
+D | 不翻汤 | Bufan soup | A soup of egg and pork served in a bowl. | |
+D | 牡丹饼 | Peony cake | A sweet pastry made with peony petals. | |
+C | 牡丹花会 | Peony Festival | A spring festival when the city's peonies bloom. | |
+C | 唐三彩 | Tang sancai ceramics | Colorful lead-glazed pottery of horses and camels. | |
+
+city: kaifeng | 开封 | Kaifeng | 34.80 | 114.31 | The capital of the Northern Song dynasty, with canals and night markets. |
+A | 清明上河园 | Qingming Riverside Garden | A theme park that brings a famous Song painting to life. | | 34.81,114.34
+A | 开封府 | Kaifeng Prefecture Office | A court of Judge Bao, a figure of justice in folk stories. | | 34.80,114.34
+A | 龙亭 | Dragon Pavilion | A palace hall on a platform beside a lake. | | 34.81,114.35
+A | 铁塔 | Iron Pagoda | A brown glazed brick pagoda from the Song dynasty. | | 34.81,114.36
+A | 开封鼓楼夜市 | Kaifeng Gulou Night Market | A famous night market of local snacks. | | 34.80,114.35
+A | 相国寺 | Xiangguo Temple | A major temple of the Song era. | | 34.80,114.35
+D | 开封灌汤包 | Kaifeng soup buns | Thin-skinned soup dumplings from a famous shop. | |
+D | 黄焖鱼 | Braised Yellow River carp | Carp braised in a rich sauce. | |
+D | 花生糕 | Peanut cake | A sweet snack sold at the night market. | |
+C | 汴绣 | Bian embroidery | A traditional embroidery of Kaifeng. | |
+C | 菊花展 | Chrysanthemum show | Kaifeng's city flower is the chrysanthemum, with a big show each autumn. | |
+
+city: anyang | 安阳 | Anyang | 36.10 | 114.39 | The site of the last Shang capital and the earliest Chinese writing. |
+A | 殷墟 | Yin Ruins | The ruins of a Shang capital where oracle bone inscriptions were found. | A UNESCO World Heritage Site. | 36.13,114.32
+A | 中国文字博物馆 | Chinese Characters Museum | A museum of the history of Chinese writing. | | 36.11,114.36
+A | 红旗渠 | Red Flag Canal | A canal cut into cliffs by villagers in the 1960s. | | 36.12,113.84
+A | 袁林 | Yuan Lin | The tomb of Yuan Shikai. | | 36.12,114.37
+D | 安阳扁粉菜 | Anyang flat noodle stew | A hearty stew with flat sweet potato noodles. | |
+D | 道口烧鸡 | Daokou roast chicken | A famous braised chicken, boneless when pulled. | |
+C | 甲骨文 | Oracle bone script | The earliest known Chinese writing, carved on bones and shells. | |
+
+city: jiaozuo | 焦作 | Jiaozuo | 35.24 | 113.24 | The hometown of tai chi and a mountain of cliffs. |
+A | 云台山 | Yuntai Mountain | A canyon park with waterfalls and cliff paths. | | 35.43,113.37
+A | 陈家沟 | Chenjiagou | The village where Chen-style tai chi began. | | 34.93,113.30
+A | 青天河 | Qingtian River | A river gorge with turquoise water. | | 35.32,113.50
+D | 怀山药 | Huai yam | A famous yam used in cooking and medicine. | |
+C | 太极拳 | Tai chi | A slow martial art, born in this region, now practiced worldwide. | |
+
+city: nanyang | 南阳 | Nanyang | 33.00 | 112.53 | The city of Zhuge Liang and a famed doctor. |
+A | 武侯祠 | Wuhou Temple | A temple for Zhuge Liang. | | 32.99,112.52
+A | 医圣祠 | Doctor Sage Temple | A shrine for Zhang Zhongjing, the physician. | | 33.01,112.54
+A | 恐龙蛋化石 | Dinosaur egg fossils | A county that holds many fossil dinosaur eggs. | | 33.50,111.35
+D | 南阳黄牛 | Nanyang beef | Local beef from Nanyang cattle. | |
+C | 玉雕 | Jade carving | Jade carved in Zhen-ping and Nanyang. | |
+
+city: shangqiu | 商丘 | Shangqiu | 34.41 | 115.66 | A city that gave its name to the Shang. |
+A | 商丘古城 | Shangqiu Ancient City | A walled city of the Ming dynasty. | | 34.41,115.65
+A | 芒砀山 | Mangdang Mountain | A hill with Han-dynasty royal tombs. | | 34.38,116.34
+D | 商丘烧饼 | Shangqiu sesame flatbread | A crisp, layered bread filled with meat. | |
+
+city: xinyang | 信阳 | Xinyang | 32.13 | 114.09 | A southern city known for green tea. |
+A | 鸡公山 | Jigong Mountain | A cool mountain resort with old villas. | | 31.80,114.07
+A | 南湾湖 | Nanwan Lake | A large lake with islands. | | 32.07,114.00
+D | 信阳毛尖 | Xinyang Maojian tea | One of China's famous green teas. | |
+D | 罗山板栗 | Luoshan chestnuts | Sweet chestnuts from the Dabie Mountains. | |
+
+city: pingdingshan | 平顶山 | Pingdingshan | 33.74 | 113.19 | A coal city near a famous scenic mountain. |
+A | 尧山 | Yao Mountain | A mountain of cliffs and water, also called Yaoshan. | | 33.75,112.12
+A | 大佛 | Zhongyuan Giant Buddha | One of the tallest statues in the world, at Lushan. | | 33.78,112.88
+D | 鲁山花生 | Lushan peanuts | A local peanut variety. | |

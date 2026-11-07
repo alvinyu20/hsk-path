@@ -1,0 +1,48 @@
+# Macau. DRAFT: written from general knowledge, not yet fact-checked.
+region: macau | 澳门 | Macau
+air: 澳门国际机场 | Macau International Airport | MFM | 22.15 | 113.59 | Macau's airport, built on reclaimed land beside Taipa. Welcome to Macau. | |
+
+city: macau-peninsula | 澳门半岛 | Macau Peninsula | 22.20 | 113.54 | The old city with Portuguese squares and temples. |
+A | 大三巴牌坊 | Ruins of St. Paul's | The carved stone front of a church that burned in 1835. | A UNESCO World Heritage Site. | 22.20,113.54
+A | 议事亭前地 | Senado Square | A wave-patterned square of pastel buildings. | | 22.19,113.54
+A | 妈阁庙 | A-Ma Temple | A temple for the sea goddess Mazu, said to give Macau its name. | | 22.19,113.53
+A | 澳门博物馆 | Macau Museum | A museum in the fortress. | | 22.20,113.54
+A | 大炮台 | Mount Fortress | A fortress above the city. | | 22.20,113.54
+A | 民政总署 | Leal Senado | A Portuguese-style civic building. | | 22.19,113.54
+A | 玫瑰堂 | St. Dominic's Church | A yellow Baroque church. | | 22.19,113.54
+A | 观音堂 | Kun Iam Temple | A temple where a Sino-American treaty was signed in 1844. | | 22.20,113.55
+A | 澳门塔 | Macau Tower | A tower with a skywalk and a bungee jump. | | 22.18,113.54
+A | 西望洋山 | Penha Hill | A hill with a chapel. | | 22.19,113.53
+A | 郑家大屋 | Mandarin's House | A house of a Chinese thinker. | | 22.19,113.53
+A | 卢家大屋 | Lou Kau Mansion | A mansion. | | 22.20,113.54
+D | 葡式蛋挞 | Portuguese egg tart | A flaky tart with a burnt-sugar top, from Lord Stow's bakery. | |
+D | 猪扒包 | Pork chop bun | A fried pork chop in a bun. | |
+D | 杏仁饼 | Almond cookie | A crisp cookie. | |
+D | 猪肉脯 | Dried pork slices | Sweet dried pork. | |
+D | 姜撞奶 | Ginger milk curd | A warm ginger milk pudding. | |
+D | 木糠布丁 | Sawdust pudding | A cream dessert with biscuit crumbs. | |
+D | 马介休 | Bacalhau | Salt cod from Portugal. | |
+D | 葡国鸡 | Macanese chicken | Chicken baked in coconut and curry. | |
+D | 非洲鸡 | African chicken | Chicken in a spicy sauce. | |
+C | 澳门土生葡人 | Macanese people | People of mixed Chinese and Portuguese descent. | |
+C | 葡语 | Portuguese language | Portuguese is an official language along with Chinese. | |
+C | 澳门博彩 | Macau gaming | The city's casino industry. | |
+C | 妈祖诞 | Mazu birthday | A festival for the sea goddess. | |
+
+city: taipa | 氹仔 | Taipa | 22.15 | 113.56 | A pastel island of old village streets and new resorts. |
+A | 官也街 | Rua do Cunha | A snack street. | | 22.15,113.56
+A | 龙环葡韵 | Taipa Houses | Five green houses by the lake. | | 22.15,113.56
+A | 嘉模圣母堂 | Our Lady of Carmo Church | A church in the village. | | 22.15,113.56
+A | 威尼斯人 | The Venetian | A resort with gondolas indoors. | | 22.15,113.57
+A | 大潭山 | Taipa Grande hill | A hill with a view. | | 22.15,113.56
+A | 氹仔博物馆 | Taipa Museum | A small museum. | | 22.15,113.56
+D | 咖喱蟹 | Curry crab | A rich curry dish. | |
+
+city: coloane | 路环 | Coloane | 22.12 | 113.56 | A quiet island with beaches and a chapel. |
+A | 路环村 | Coloane Village | A quiet village of pastel houses. | | 22.12,113.55
+A | 圣方济各教堂 | St. Francis Xavier Chapel | A small yellow chapel. | | 22.12,113.56
+A | 黑沙海滩 | Hac Sa Beach | A beach of black sand. | | 22.11,113.60
+A | 九澳 | Ka Ho | A hillside village. | | 22.12,113.58
+A | 天后宫 | Tin Hau Temple | A small temple. | | 22.12,113.55
+D | 安德鲁蛋挞 | Lord Stow's egg tart | The famous egg tart, born in Coloane. | The Macau egg tart is said to have been created here in 1989. |
+C | 路环渔村 | Coloane fishing village | A village of dried fish and old boats. | |

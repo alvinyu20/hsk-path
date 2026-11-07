@@ -1,0 +1,51 @@
+name: Journey photos
+
+# Finds a Wikimedia Commons photo for Journey stops (public domain, CC BY, CC BY-SA only) and saves them in data/journey-media.js.
+# Run it by hand from the Actions tab. It does a few hundred stops each time and skips the ones it has done, so run it again until it says 0 left.
+on:
+  workflow_dispatch:
+    inputs:
+      region:
+        description: 'Only this region (for example sichuan). Leave empty for all.'
+        required: false
+        default: ''
+      limit:
+        description: 'How many stops to look up in this run'
+        required: false
+        default: '400'
+      retry_misses:
+        description: 'Try again the stops that had no usable photo last time'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Look up photos
+        env:
+          REGION: ${{ inputs.region }}
+          LIMIT: ${{ inputs.limit }}
+          RETRY: ${{ inputs.retry_misses }}
+        run: |
+          args="--limit ${LIMIT:-400}"
+          if [ -n "$REGION" ]; then args="$args --region $REGION"; fi
+          if [ "$RETRY" = "true" ]; then args="$args --retry-misses"; fi
+          node tools/journey-media.js $args
+      - name: Rebuild the site files (cache stamps)
+        run: node tools/build-site.js
+      - name: Save the new photos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/journey-media.js tools/journey-media-misses.json index.html sw.js
+          if git diff --cached --quiet; then echo "Nothing new."; else git commit -m "Journey photos: add photos found on Wikimedia Commons" && git push; fi

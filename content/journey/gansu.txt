@@ -1,0 +1,98 @@
+# Gansu. DRAFT: written from general knowledge, not yet fact-checked.
+region: gansu | 甘肃 | Gansu
+air: 兰州中川国际机场 | Lanzhou Zhongchuan International Airport | LHW | 36.52 | 103.62 | The main airport of Gansu, far north of Lanzhou across the hills. Welcome to Gansu. | |
+
+city: lanzhou | 兰州 | Lanzhou | 36.06 | 103.83 | A long river city on the Yellow River. |
+A | 中山桥 | Zhongshan Bridge | The first iron bridge across the Yellow River, built in 1909. | | 36.06,103.83
+A | 白塔山 | White Pagoda Hill | A hill park with a white pagoda above the river. | | 36.07,103.83
+A | 黄河母亲雕塑 | Mother Yellow River Sculpture | A stone sculpture of a mother and child by the river. | | 36.06,103.81
+A | 甘肃省博物馆 | Gansu Provincial Museum | Home of the Flying Horse of Gansu, a bronze Han sculpture. | | 36.07,103.75
+A | 水车博览园 | Waterwheel Garden | Giant wooden wheels that once lifted river water. | | 36.05,103.84
+A | 五泉山 | Five Springs Mountain | A hill park with old temples. | | 36.04,103.83
+D | 兰州牛肉面 | Lanzhou beef noodles | Hand-pulled noodles in clear beef broth, with five colors. | Said to follow the rule of one clear, two white, three red, four green, five yellow. |
+D | 手抓羊肉 | Hand-grabbed mutton | Boiled mutton eaten by hand. | |
+D | 酿皮 | Niangpi | Cool wheat or rice noodles in chili and vinegar. | |
+D | 百合 | Lanzhou lily | A sweet edible lily bulb. | |
+D | 甜醅 | Tianpei | A sweet fermented oat drink. | |
+D | 灰豆子 | Huidouzi | A sweet pea dessert. | |
+C | 太平鼓 | Taiping drum | A drum dance. | |
+C | 兰州鼓子 | Lanzhou drum songs | A local folk art. | |
+
+city: dunhuang | 敦煌 | Dunhuang | 40.14 | 94.66 | An oasis at the end of the Hexi Corridor, known for Buddhist art. |
+A | 莫高窟 | Mogao Caves | Hundreds of caves of Buddhist murals and statues from the fourth to the 14th centuries. | A UNESCO World Heritage Site. | 40.04,94.80
+A | 鸣沙山 | Singing Sand Dunes | Tall sand dunes you can climb or slide down, and a crescent lake at the foot. | | 40.09,94.68
+A | 月牙泉 | Crescent Moon Spring | A spring shaped like a crescent in the dunes. | | 40.09,94.67
+A | 玉门关 | Yumen Pass | An old Han-dynasty frontier pass. | | 40.36,93.86
+A | 雅丹地质公园 | Yadan Geopark | A desert area of wind-carved rock. | | 40.57,93.40
+A | 敦煌夜市 | Dunhuang Night Market | A market of local snacks. | | 40.14,94.66
+A | 阳关 | Yang Pass | An old Han-dynasty gate on the Silk Road. | | 39.88,93.90
+A | 藏经洞 | Library Cave | The cave where thousands of scrolls were found in 1900. | | 40.04,94.80
+D | 驴肉黄面 | Donkey meat yellow noodles | Yellow noodles with braised donkey meat. | |
+D | 杏皮茶 | Apricot peel tea | A sweet-sour cold drink of dried apricot. | |
+D | 敦煌李广杏 | Dunhuang Li Guang apricot | A famous apricot. | |
+C | 敦煌壁画 | Dunhuang murals | Painted walls telling Buddhist stories and showing daily life. | |
+C | 飞天 | Flying apsaras | Heavenly beings that fly in the murals. | |
+C | 反弹琵琶 | Pipa behind the back | A dance pose from the murals, with the pipa played behind the back. | |
+
+city: jiayuguan | 嘉峪关 | Jiayuguan | 39.77 | 98.29 | The western end of the Ming Great Wall. |
+A | 嘉峪关关城 | Jiayuguan Fort | A fortress at the western end of the Ming Great Wall. | | 39.80,98.21
+A | 悬壁长城 | Overhanging Great Wall | A stretch of wall climbing a steep ridge. | | 39.84,98.30
+A | 长城第一墩 | First Beacon of the Great Wall | A tower where the Great Wall meets the Taolai River. | | 39.80,98.18
+A | 魏晋墓壁画 | Wei-Jin Tomb Murals | Painted tombs of the third to fourth century. | | 39.85,98.47
+D | 烤羊肉 | Roast mutton | Grilled lamb. | |
+D | 嘉峪关烤饼 | Jiayuguan baked bread | A baked flatbread. | |
+
+city: zhangye | 张掖 | Zhangye | 38.93 | 100.45 | A city of rainbow mountains and an old temple. |
+A | 张掖丹霞 | Zhangye Danxia | Hills striped in red, orange and yellow. | A UNESCO World Heritage Site. | 38.93,100.12
+A | 大佛寺 | Giant Buddha Temple | A temple with one of the biggest reclining Buddhas. | | 38.93,100.45
+A | 七彩丹霞 | Rainbow Mountains | A popular name for the colorful hills. | | 38.93,100.12
+A | 马蹄寺 | Mati Temple | A cave temple. | | 38.55,100.50
+A | 平山湖大峡谷 | Pingshanhu Grand Canyon | A canyon of red cliffs. | | 39.12,100.35
+D | 张掖搓鱼面 | Zhangye finger noodles | Short noodles rolled by hand. | |
+D | 张掖肉夹馍 | Zhangye meat bun | A Gansu take on the meat sandwich. | |
+
+city: tianshui | 天水 | Tianshui | 34.58 | 105.72 | The home of the Maijishan Grottoes. |
+A | 麦积山石窟 | Maijishan Grottoes | Cave temples carved on a cliff shaped like a haystack. | A UNESCO World Heritage Site. | 34.35,105.87
+A | 伏羲庙 | Fuxi Temple | A temple for Fuxi, a mythical ancestor. | | 34.58,105.72
+A | 石门山 | Shimen Mountain | A hill park. | | 34.60,105.90
+D | 呱呱 | Gua gua | A cold dish made from buckwheat jelly. | |
+D | 天水荞面 | Tianshui buckwheat noodles | Buckwheat noodles. | |
+
+city: linxia | 临夏 | Linxia | 35.60 | 103.21 | A Hui city, called Little Mecca. |
+A | 八坊十三巷 | Eight Wards and Thirteen Lanes | A Hui neighborhood of mosques. | | 35.60,103.21
+A | 炳灵寺 | Bingling Temple | A cave temple on the Yellow River reached by boat. | | 35.80,103.07
+A | 积石山 | Jishi Mountain | A mountain with a gorge. | | 35.70,102.88
+D | 烤包子 | Roasted dumplings | Dumplings baked until crisp. | |
+C | 砖雕 | Brick carving | A craft of carved bricks. | |
+
+city: pingliang | 平凉 | Pingliang | 35.54 | 106.67 | The home of Kongtong Mountain. |
+A | 崆峒山 | Kongtong Mountain | A Taoist mountain, sacred in Chinese martial arts stories. | | 35.55,106.50
+A | 王母宫 | Queen Mother Temple | A temple for the Queen Mother of the West. | | 35.55,107.28
+D | 平凉烧鸡 | Pingliang braised chicken | A spiced chicken. | |
+
+city: jiuquan | 酒泉 | Jiuquan | 39.74 | 98.50 | A desert city and the home of a space launch center. |
+A | 酒泉卫星发射中心 | Jiuquan Satellite Launch Center | China's first launch site, where its first crewed spaceflight began. | | 40.96,100.29
+A | 汉酒泉 | Han Jiuquan Spring | The spring said to have given the city its name. | | 39.74,98.52
+A | 阿克塞 | Aksay | A Kazakh autonomous county. | | 39.63,94.34
+D | 酒泉夜光杯 | Jiuquan luminous cups | Jade cups carved here. | |
+D | 酒泉烤羊肉 | Jiuquan roast lamb | Grilled lamb. | |
+
+city: wuwei | 武威 | Wuwei | 37.93 | 102.64 | A city of the Hexi corridor and the Flying Horse. |
+A | 马踏飞燕 | Flying Horse of Gansu | A bronze horse from the Eastern Han, found in a tomb here. | | 37.93,102.64
+A | 雷台汉墓 | Leitai Han Tomb | The tomb where the bronze horse was found. | | 37.93,102.64
+A | 文庙 | Wuwei Confucius Temple | A big Confucius temple. | | 37.93,102.64
+A | 天梯山石窟 | Tiantishan Grottoes | Early Buddhist caves. | | 37.78,102.80
+
+city: longnan | 陇南 | Longnan | 33.40 | 104.92 | A green southern city on the Bailong River. |
+A | 官鹅沟 | Guan'e Gully | A forest valley with waterfalls. | | 33.60,104.55
+A | 万象洞 | Wanxiang Cave | A karst cave. | | 33.40,104.92
+D | 陇南橄榄油 | Longnan olive oil | Olive oil grown in a warm valley. | |
+D | 武都花椒 | Wudu Sichuan pepper | The pepper that gives a numbing taste. | |
+
+city: gannan | 甘南 | Gannan | 34.99 | 102.91 | A Tibetan area with grasslands. |
+A | 拉卜楞寺 | Labrang Monastery | One of the six great monasteries of the Gelug school. | | 35.20,102.51
+A | 郎木寺 | Langmusi | A temple town on the Gansu-Sichuan border. | | 34.10,102.64
+A | 桑科草原 | Sangke Grassland | A high grassland. | | 35.14,102.45
+D | 酸奶 | Yak yogurt | Yogurt made from yak milk. | |
+D | 糌粑 | Tsampa | Roasted barley flour. | |
+C | 晒佛节 | Buddha Unveiling | A ritual unveiling of a giant thangka. | |

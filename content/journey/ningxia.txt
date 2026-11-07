@@ -1,0 +1,42 @@
+# Ningxia. DRAFT: written from general knowledge, not yet fact-checked.
+region: ningxia | 宁夏 | Ningxia
+air: 银川河东国际机场 | Yinchuan Hedong International Airport | INC | 38.32 | 106.39 | The main airport of Ningxia. Welcome to Ningxia. | |
+
+city: yinchuan | 银川 | Yinchuan | 38.49 | 106.23 | The capital of the Hui Autonomous Region. |
+A | 西夏王陵 | Western Xia Imperial Tombs | The tombs of kings of a lost kingdom, with earthen pyramids. | | 38.48,105.98
+A | 镇北堡西部影城 | Zhenbeibu Western Film Studio | A ruined fort used as a film set. | | 38.62,106.01
+A | 贺兰山岩画 | Helan Mountain Rock Art | Thousands of ancient carvings in rocks. | | 38.62,105.94
+A | 海宝塔 | Haibao Pagoda | An old pagoda in the city. | | 38.52,106.23
+A | 沙湖 | Shahu Lake | A lake in the desert. | | 38.84,106.36
+A | 南关清真寺 | Nanguan Mosque | A mosque in the city center. | | 38.47,106.27
+D | 手抓羊肉 | Hand-grabbed mutton | Boiled lamb on the bone. | |
+D | 宁夏枸杞 | Ningxia goji berries | The most famous goji berries in China. | |
+D | 贺兰山葡萄酒 | Helan Mountain wine | Wine grown on the eastern slope of the Helan range. | |
+D | 羊杂碎 | Lamb offal soup | A spicy soup. | |
+D | 八宝茶 | Eight-treasure tea | A tea with goji, jujube and rock sugar. | |
+D | 黄渠桥羊羔肉 | Huangqiaoqiao lamb | A tender lamb dish. | |
+C | 花儿 | Hua'er folk songs | Songs of the northwest. | |
+C | 回族婚礼 | Hui wedding | A tradition of the Hui people. | |
+
+city: zhongwei | 中卫 | Zhongwei | 37.50 | 105.19 | A desert city on the Yellow River. |
+A | 沙坡头 | Shapotou | A desert park with a sand slope by the Yellow River. | | 37.46,104.95
+A | 黄河大拐弯 | Yellow River Bend | A great bend of the river. | | 37.50,105.19
+A | 腾格里沙漠 | Tengger Desert | A big desert. | | 37.60,105.10
+A | 高庙 | Gao Temple | A temple that mixes three faiths. | | 37.51,105.19
+D | 中卫苹果 | Zhongwei apples | Crisp apples. | |
+D | 中卫硒砂瓜 | Zhongwei sand melon | Melons grown in gravel. | |
+
+city: shizuishan | 石嘴山 | Shizuishan | 39.01 | 106.38 | A coal and wetland city in the north. |
+A | 星海湖 | Xinghai Lake | A wetland. | | 39.02,106.38
+D | 石嘴山羊肉 | Shizuishan lamb | A local meat. | |
+
+city: wuzhong | 吴忠 | Wuzhong | 37.99 | 106.20 | A river city of Hui culture. |
+A | 青铜峡一百零八塔 | 108 Dagobas at Qingtongxia | A set of 108 white pagodas on a hillside. | | 37.93,105.99
+A | 黄河大峡谷 | Yellow River Gorge | A river gorge. | | 37.93,105.99
+D | 吴忠手抓羊肉 | Wuzhong mutton | A local dish. | |
+D | 盐池滩羊 | Yanchi Tan sheep | Prized lamb from the grassland. | |
+
+city: guyuan | 固原 | Guyuan | 36.00 | 106.28 | A southern mountain city on the Silk Road. |
+A | 须弥山石窟 | Xumishan Grottoes | Cave temples carved in a red cliff. | | 36.20,106.40
+A | 六盘山 | Liupan Mountain | The last big mountain of the Long March. | | 35.67,106.20
+D | 固原荞面 | Guyuan buckwheat | Buckwheat noodles. | |

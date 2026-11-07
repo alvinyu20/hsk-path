@@ -1,0 +1,65 @@
+# Singapore. DRAFT: written from general knowledge, not yet fact-checked.
+region: singapore | 新加坡 | Singapore
+air: 新加坡樟宜机场 | Singapore Changi Airport | SIN | 1.36 | 103.99 | A famous airport with a huge indoor waterfall. Welcome to Singapore. | |
+
+city: singapore-central | 新加坡中心 | Central Singapore | 1.29 | 103.85 | The downtown, with the skyline, river and Chinatown. |
+A | 鱼尾狮公园 | Merlion Park | A fountain of a half-lion, half-fish symbol of the city. | | 1.29,103.85
+A | 滨海湾金沙 | Marina Bay Sands | A hotel with a ship-shaped rooftop pool. | | 1.28,103.86
+A | 滨海湾花园 | Gardens by the Bay | A park with giant Supertrees. | | 1.28,103.86
+A | 牛车水 | Chinatown | An old district of shophouses and temples. | | 1.28,103.84
+A | 佛牙寺龙华院 | Buddha Tooth Relic Temple | A big Tang-style temple. | | 1.28,103.84
+A | 小印度 | Little India | A colorful area of Indian shops. | | 1.31,103.85
+A | 甘榜格南 | Kampong Glam | A Malay quarter with the Sultan Mosque. | | 1.30,103.86
+A | 苏丹回教堂 | Sultan Mosque | A golden-domed mosque. | | 1.30,103.86
+A | 新加坡河 | Singapore River | A river with old warehouses. | | 1.29,103.85
+A | 乌节路 | Orchard Road | A famous shopping street. | | 1.30,103.83
+A | 新加坡国家博物馆 | National Museum of Singapore | The oldest museum in the country. | | 1.30,103.85
+A | 新加坡植物园 | Singapore Botanic Gardens | A garden listed by UNESCO. | | 1.31,103.82
+A | 莱佛士酒店 | Raffles Hotel | A colonial hotel where the Singapore Sling was invented. | | 1.29,103.85
+D | 海南鸡饭 | Hainanese chicken rice | Poached chicken with rice cooked in stock; seen as the national dish. | |
+D | 辣椒螃蟹 | Chili crab | A crab in sweet-spicy tomato chili sauce. | |
+D | 叻沙 | Laksa | A coconut curry noodle soup. | |
+D | 咖椰吐司 | Kaya toast | Toast with coconut jam and soft eggs. | |
+D | 肉骨茶 | Bak kut teh | Pork rib soup with pepper and garlic. | |
+D | 炒粿条 | Char kway teow | Fried flat noodles. | |
+D | 沙爹 | Satay | Grilled skewers with peanut sauce. | |
+D | 福建面 | Hokkien mee | Stir-fried noodles with prawns. | |
+D | 煎蚝 | Oyster omelet | A starchy omelet. | |
+D | 新加坡司令 | Singapore Sling | A pink cocktail from Raffles Hotel. | |
+D | 小贩中心 | Hawker center | Open-air food courts, listed on UNESCO's intangible heritage list. | |
+C | 多元文化 | Multiculturalism | The country has Chinese, Malay, Indian and other communities. | |
+C | 新加坡式英语 | Singlish | A local English mixed with Chinese, Malay and Tamil. | |
+C | 国庆 | National Day | A celebration with parades and fireworks every August. | |
+C | 排灯节 | Deepavali | The Hindu festival of lights. | |
+
+city: sentosa | 圣淘沙 | Sentosa | 1.25 | 103.83 | A resort island south of the city. |
+A | 新加坡环球影城 | Universal Studios Singapore | A theme park. | | 1.25,103.83
+A | 海洋馆 | S.E.A. Aquarium | A big aquarium. | | 1.26,103.82
+A | 西乐索海滩 | Siloso Beach | A beach. | | 1.25,103.81
+A | 音乐喷泉 | Sentosa Fountain | A water show. | | 1.25,103.82
+A | 鱼尾狮塔 | Merlion Tower | A big Merlion statue. | | 1.25,103.82
+
+city: east-coast | 东海岸 | East Coast | 1.31 | 103.93 | A coast of beaches, seafood and Peranakan culture. |
+A | 东海岸公园 | East Coast Park | A seaside park with cycling paths. | | 1.30,103.91
+A | 加东 | Katong | A Peranakan district of colorful shophouses. | | 1.31,103.90
+A | 樟宜海滩 | Changi Beach | A quiet beach. | | 1.39,103.99
+A | 樟宜机场星耀樟宜 | Jewel Changi | A garden mall with an indoor waterfall. | | 1.36,103.99
+A | 乌敏岛 | Pulau Ubin | An island that keeps the old village life. | | 1.41,103.97
+D | 娘惹糕 | Nyonya kueh | Colorful steamed cakes. | |
+D | 椰浆饭 | Nasi lemak | Coconut rice with fried fish and sambal. | |
+D | 加东叻沙 | Katong laksa | A curry noodle soup. | |
+C | 娘惹文化 | Peranakan culture | A mixed Chinese-Malay heritage. | |
+
+city: west | 西部 | West Singapore | 1.34 | 103.72 | A nature and science area. |
+A | 裕廊飞禽公园 | Jurong Bird Park | A bird park. | | 1.32,103.71
+A | 中华花园 | Chinese Garden | A garden of Chinese design. | | 1.34,103.73
+A | 日本花园 | Japanese Garden | A garden. | | 1.34,103.73
+A | 新加坡科学中心 | Science Centre Singapore | A science museum. | | 1.33,103.74
+A | 南洋理工大学 | Nanyang Technological University | A university. | | 1.35,103.68
+
+city: north | 北部 | North Singapore | 1.42 | 103.79 | A green north with zoos and wetlands. |
+A | 新加坡动物园 | Singapore Zoo | A zoo with open enclosures. | | 1.40,103.79
+A | 夜间野生动物园 | Night Safari | A zoo at night. | | 1.40,103.79
+A | 双溪布洛湿地 | Sungei Buloh Wetland Reserve | A wetland. | | 1.45,103.73
+A | 兀兰 | Woodlands | A border town. | | 1.44,103.79
+D | 榴莲 | Durian | The king of fruits, banned on public transport. | |

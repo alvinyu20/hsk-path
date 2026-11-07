@@ -58,12 +58,19 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   check((await call('PUT', '/api/me', { token: A, body: { stats: stats({ last7: [1, 2, 3] }) } })).status === 400, 'totals with the wrong week length are refused');
   check((await call('PUT', '/api/me', { token: A, body: { stats: stats({ asOf: 'yesterday' }) } })).status === 400, 'totals with a bad date are refused');
   check((await call('PUT', '/api/me', { token: A, body: { stats: stats({ mem: 'lots' }) } })).status === 400, 'totals with text where a number belongs are refused');
-  check((await call('PUT', '/api/me', { token: A, body: { stats: 'x'.repeat(4000) } })).status === 413, 'a big stats upload is refused');
+  check((await call('PUT', '/api/me', { token: A, body: { stats: 'x'.repeat(5000) } })).status === 413, 'a big stats upload is refused');
   await call('PUT', '/api/me', { token: A, body: { stats: Object.assign(stats({ last7: [5000, 0, 0, 0, 0, 0, -9], streak: 99999999, mem: 1e9, levels: [1, 1, 2, 99, 'x'] }), { words: ['secret', 'list'], email: 'a@b.c' }) } });
   const g2 = (await call('GET', '/api/group', { token: B })).json;
   const mine = g2.members.find((m) => m.id === a.json.id).stats;
   check(mine.last7[0] === 1440 && mine.last7[6] === 0 && mine.streak === 9999 && mine.mem === 100000 && JSON.stringify(mine.levels) === '[1,2,9]', 'numbers are clamped to sensible ranges');
   check(!('words' in mine) && !('email' in mine) && JSON.stringify(Object.keys(mine).sort()) === JSON.stringify(['asOf', 'lastActive', 'last7', 'levels', 'mem', 'passed', 'streak', 'v'].sort()), 'anything other than the study totals is thrown away');
+  // the Journey totals: kept in a fixed shape, anything extra thrown away
+  await call('PUT', '/api/me', { token: A, body: { stats: stats({ jy: { n: 42, here: 'sichuan', done: { guangdong: '2026-11-03', 'Bad Id': '2026-11-04', hunan: 'soon' }, per: { sichuan: 12, guangdong: 99999, x: 1 }, stops: ['secret'] } }) } });
+  const gJy = (await call('GET', '/api/group', { token: B })).json;
+  const jyMine = gJy.members.find((m) => m.id === a.json.id).stats.jy;
+  check(jyMine && jyMine.n === 42 && jyMine.here === 'sichuan' && JSON.stringify(jyMine.done) === '{"guangdong":"2026-11-03"}' && jyMine.per.sichuan === 12 && jyMine.per.guangdong === 5000 && !('stops' in jyMine), 'Journey totals are kept in shape and anything else is dropped');
+  await call('PUT', '/api/me', { token: A, body: { stats: stats({ jy: 'lots' }) } });
+  check(!('jy' in (await call('GET', '/api/group', { token: B })).json.members.find((m) => m.id === a.json.id).stats), 'a bad Journey part is ignored without refusing the study totals');
   check((await call('PUT', '/api/me', { token: B, body: { stats: stats() } })).status === 200 && (await call('PUT', '/api/me', { token: B, body: { name: 'Mei K' } })).json.name === 'Mei K', 'a person can rename themselves without resending totals');
 
   // cheers

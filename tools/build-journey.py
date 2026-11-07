@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Builds data/journey.js from the region files in content/journey/*.txt.   Run:  python3 tools/build-journey.py [--check]
+"""Builds data/journey.js from the region files in content/journey/*.txt.   Run:  python3 tools/build-journey.py [--check]   (needs: pip install pypinyin jieba)
 
 A region file (one per region) looks like this; lines starting with # are notes:
 
   region: sichuan | 四川 | Sichuan                           id | Chinese | English (| hue 0-360, optional: the default is in journey.js)
-  muni: Chongqing | Chongqing is its own municipality ...       (optional) name used by the cities flagged `muni`, and the note shown once
+  muni: Chongqing | Chongqing is its own municipality ...       (optional, may repeat) a municipality shown inside this region, and the note shown once when it is first reached
   air: 成都天府国际机场 | Chengdu Tianfu International Airport | TFU | 30.32 | 104.44 | note | fun | pinyin
-  city: chengdu | 成都 | Chengdu | 30.67 | 104.07 | note | fun | pinyin | muni      the FIRST city is the one the airport serves
+  city: chengdu | 成都 | Chengdu | 30.67 | 104.07 | note | fun | pinyin | Chongqing      the FIRST city is the one the airport serves; the last field names a muni: municipality it belongs to
   A | 宽窄/巷子 | Wide and Narrow Alleys | note | fun | 30.67,104.05 | pinyin       A attraction, D dish, C culture (belong to the city above)
 
 Only the Chinese and English names are required on a stop. The pinyin is worked out from the Chinese (pypinyin); put / between the words of a long
@@ -38,9 +38,40 @@ def seg_py(seg):
         out += s
     return out
 
+try:
+    import jieba, logging
+    jieba.setLogLevel(logging.WARNING)
+except Exception:
+    jieba = None   # without jieba the names are read as one run, so install it (pip install jieba) before building
+
+GENERIC = sorted('''国家森林公园 森林公园 国家公园 国际机场 国际大巴扎 风景名胜区 风景区 旅游区 文化旅游区 博物院 博物馆 纪念馆 纪念堂 纪念碑 大学 公园 广场 大桥 长城 古镇 古城 古村 老街 夜市 遗址 石窟 大峡谷 峡谷 瀑布 湿地 海滩 国家地质公园 地质公园 保护区 发射中心 中心 学院 书院 故居 陵园 文化城 古墓 水库 草原 古道 度假区 乐园 景区 古寨 苗寨 侗寨 村寨 天主教堂 教堂 清真寺 大寺 古堡 山庄 火车站 保护区'''.split(), key=len, reverse=True)
+SINGLE = '寺 庙 宫 塔 桥 湖 山 岛 洞 园 馆 楼 阁 殿 祠 陵 墓 关 港 湾 滩 河 江 海 泉 谷 岭 峰 崖 沟 洲 岩 窟 坊 街 路 堂 院 城 村 镇 寨 坝 林 池 潭 渡 门 台 亭 观 庵'.split()
+
+def split_generic(w):
+    # a long name that jieba kept whole: put the generic ending (park, temple, lake...) in its own word
+    if len(w) < 4 or re.match(r'^[A-Za-z0-9 ]+$', w): return [w]
+    for g in GENERIC:
+        if w.endswith(g) and len(w) - len(g) >= 2: return [w[:-len(g)], g]
+    for g in SINGLE:
+        if w.endswith(g) and len(w) - 1 >= 3: return [w[:-1], g]
+    return [w]
+
+def words(zh):
+    # split a name into words for the pinyin: jieba finds the words, and runs of single characters (a name jieba does not know) stay together
+    if not jieba or len(zh) < 3: return [zh]
+    out = []; run = ''
+    for t in jieba.lcut(zh):
+        if len(t) == 1 and not re.match(r'^[A-Za-z0-9]$', t): run += t; continue
+        if run: out.append(run); run = ''
+        out.append(t)
+    if run: out.append(run)
+    res = []
+    for w in out: res += split_generic(w)
+    return res
+
 def zh_py(zh, kind):
     if zh in overrides: return overrides[zh]
-    segs = zh.split('/')
+    segs = zh.split('/') if '/' in zh else words(zh)
     parts = [seg_py(s) for s in segs]
     if kind in ('A', 'T', 'P'): parts = [p[:1].upper() + p[1:] for p in parts]
     s = ' '.join(parts)
@@ -70,7 +101,7 @@ def build():
                     if f[3]: R['hue'] = int(f[3])
                     regions.append(R)
                 elif line.startswith('muni:'):
-                    f = fields(line[5:], 2); muni = f[0]; R['muniNote'] = f[1]
+                    f = fields(line[5:], 2); muni = f[0]; R.setdefault('munis', {})[f[0]] = f[1]
                 elif line.startswith('air:'):
                     f = fields(line[4:], 8)
                     R['air'] = {'zh': f[0].replace('/', ''), 'py': f[7] or zh_py(f[0], 'P'), 'en': f[1], 'code': f[2], 'lat': num(f[3]), 'lon': num(f[4]), 'note': f[5], 'fun': f[6]}
@@ -78,6 +109,7 @@ def build():
                     f = fields(line[5:], 9)
                     C = {'id': f[0], 'zh': f[1].replace('/', ''), 'py': f[7] or zh_py(f[1], 'T'), 'en': f[2], 'lat': num(f[3]), 'lon': num(f[4]), 'note': f[5], 'fun': f[6], 'stops': []}
                     if f[8]: C['muni'] = muni if f[8] == 'muni' else f[8]
+                    if C.get('muni') and C['muni'] not in R.get('munis', {}): problems.append(where + ' unknown municipality ' + C['muni'])
                     if C['lat'] is None or C['lon'] is None: problems.append(where + ' city without coordinates')
                     R['cities'].append(C)
                 elif line[:1] in 'ADC' and line[1:2] in ' |':

@@ -10,10 +10,10 @@ const eq = (a, b, m) => ok(JSON.stringify(a) === JSON.stringify(b), m + ' (got '
 // seeded random numbers so a failure can be repeated
 const seeded = (seed) => () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
 
-// ---- the price ladder: 100, 150, 200, 250, then 250 each ----
-eq([1, 2, 3, 4, 5, 6, 7, 100].map(J.costOf), [0, 100, 150, 200, 250, 250, 250, 250], 'ladder: the first stop is free');
-eq([0, 1, 2, 3, 4, 5, 6, 7].map(J.cum), [0, 0, 100, 250, 450, 700, 950, 1200], 'cumulative cost');
-eq([0, 99, 100, 249, 250, 449, 450, 699, 700].map(J.paidFor), [1, 1, 2, 2, 3, 3, 4, 4, 5], 'stops paid for');
+// ---- the price ladder: free, 50, 100, 150, 200, then 250 each ----
+eq([1, 2, 3, 4, 5, 6, 7, 100].map(J.costOf), [0, 50, 100, 150, 200, 250, 250, 250], 'ladder: the first stop is free');
+eq([0, 1, 2, 3, 4, 5, 6, 7].map(J.cum), [0, 0, 50, 150, 300, 500, 750, 1000], 'cumulative cost');
+eq([0, 49, 50, 149, 150, 299, 300, 499, 500, 749, 750].map(J.paidFor), [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6], 'stops paid for');
 for (let n = 2; n < 300; n++) ok(J.paidFor(J.cum(n)) === n && J.paidFor(J.cum(n) - 1) === n - 1, 'paidFor inverts cum at ' + n);
 
 const W = J.build(window.JOURNEY);
@@ -90,10 +90,10 @@ for (let seed = 1; seed <= 25; seed++) {
   const st = J.fresh();
   const m0 = J.meter(0, st); eq([m0.ready, m0.nextCost], [1, 0], 'a new person has the first flight waiting at 0 XP');
   st.n = 1;
-  eq(J.meter(0, st), { ready:0, nextCost:100, into:0, pct:0, toGo:100 }, 'meter after the first flight, at 0');
-  eq(J.meter(60, st), { ready:0, nextCost:100, into:60, pct:60, toGo:40 }, 'meter at 60');
+  eq(J.meter(0, st), { ready:0, nextCost:50, into:0, pct:0, toGo:50 }, 'meter after the first flight, at 0');
+  eq(J.meter(30, st), { ready:0, nextCost:50, into:30, pct:60, toGo:20 }, 'meter at 30');
   const m = J.meter(260, st); eq([m.ready, m.pct], [2, 100], 'two stops waiting at 260 XP');
-  st.n = 3; const m2 = J.meter(260, st); eq([m2.ready, m2.nextCost, m2.into, m2.toGo], [0, 200, 10, 190], 'after three stops, 10 XP into the next');
+  st.n = 3; const m2 = J.meter(260, st); eq([m2.ready, m2.nextCost, m2.into, m2.toGo], [0, 150, 110, 40], 'after three stops, 110 XP into the next');
 }
 
 // ---- a stop added to the data later still turns up, and a removed one does not break anything ----

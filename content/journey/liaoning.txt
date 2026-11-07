@@ -1,0 +1,102 @@
+# Liaoning. DRAFT: written from general knowledge, not yet fact-checked.
+region: liaoning | 辽宁 | Liaoning
+air: 沈阳桃仙国际机场 | Shenyang Taoxian International Airport | SHE | 41.64 | 123.48 | The main airport of Liaoning. Welcome to Liaoning. | |
+
+city: shenyang | 沈阳 | Shenyang | 41.80 | 123.43 | The capital of Liaoning and a Qing-era capital. |
+A | 沈阳故宫 | Shenyang Imperial Palace | The early palace of the Qing before they moved to Beijing. | A UNESCO World Heritage Site. | 41.80,123.45
+A | 张氏帅府 | Marshal Zhang's Mansion | The home of the warlord Zhang Zuolin and his son. | | 41.80,123.46
+A | 北陵公园 | Beiling Park | A park with the tomb of the second Qing emperor. | | 41.84,123.42
+A | 九一八事变博物馆 | September 18th History Museum | A museum of the 1931 incident. | | 41.83,123.50
+A | 中街 | Zhongjie Street | The oldest pedestrian street in China. | | 41.80,123.46
+A | 东陵 | Fuling Tomb | The tomb of the first Qing emperor. | | 41.85,123.58
+A | 辽宁省博物馆 | Liaoning Provincial Museum | A museum. | | 41.77,123.43
+D | 老边饺子 | Laobian dumplings | A historic dumpling house with a long story. | |
+D | 锅包肉 | Guobaorou | Crisp sweet and sour pork. | |
+D | 酸菜炖粉条 | Sauerkraut and glass noodles | A northeastern stew. | |
+D | 沈阳烤串 | Shenyang skewers | Grilled meat skewers. | |
+D | 马家烧麦 | Majia shaomai | A halal dumpling. | |
+D | 鸡架 | Roasted chicken frames | A street food. | |
+C | 二人转 | Errenzhuan | A comic song-and-dance. | |
+C | 评剧 | Pingju opera | A local opera. | |
+C | 秧歌 | Northeast yangge | A folk dance. | |
+
+city: dalian | 大连 | Dalian | 38.91 | 121.61 | A seaside port city. |
+A | 星海广场 | Xinghai Square | One of the world's largest city squares, by the sea. | | 38.88,121.58
+A | 老虎滩海洋公园 | Tiger Beach Ocean Park | An aquarium park. | | 38.87,121.68
+A | 金石滩 | Golden Pebble Beach | A beach with strange rocks. | | 39.09,121.98
+A | 旅顺口 | Lüshun | A historic naval port. | | 38.81,121.26
+A | 俄罗斯风情街 | Russian Style Street | A street of Russian-era buildings. | | 38.92,121.64
+A | 大连港 | Dalian Port | A busy port. | | 38.93,121.65
+A | 滨海路 | Binhai Road | A coastal road. | | 38.87,121.58
+D | 大连海鲜 | Dalian seafood | Sea cucumber, scallops and prawns. | |
+D | 焖子 | Menzi | A fried starch jelly. | |
+D | 海鲜饺子 | Seafood dumplings | Dumplings with shrimp. | |
+D | 大连烧烤 | Dalian barbecue | Grilled seafood. | |
+
+city: anshan | 鞍山 | Anshan | 41.11 | 122.99 | A steel city with a big jade Buddha. |
+A | 玉佛苑 | Jade Buddha Garden | A garden with a large Buddha carved from jade. | | 41.00,123.10
+A | 千山 | Qianshan Mountain | A hill with temples. | | 41.05,123.12
+A | 鞍山钢铁 | Anshan Steel | A giant steel plant. | | 41.11,122.99
+D | 海城馅饼 | Haicheng pies | Pan-fried filled pies. | |
+D | 岫岩玉 | Xiuyan jade | A green jade. | |
+
+city: fushun | 抚顺 | Fushun | 41.88 | 123.96 | A coal town and a Manchu homeland. |
+A | 赫图阿拉城 | Hetu Ala | The first capital of the Manchu state. | | 41.88,124.88
+A | 西露天矿 | West Open Pit Mine | A huge open pit coal mine. | | 41.85,123.90
+A | 雷锋纪念馆 | Lei Feng Memorial | A memorial to the soldier held up as a model. | | 41.88,123.96
+D | 抚顺煤精雕刻 | Fushun coal carving | A craft carved from coal. | |
+
+city: dandong | 丹东 | Dandong | 40.12 | 124.35 | A border city beside North Korea. |
+A | 鸭绿江断桥 | Yalu River Broken Bridge | A bridge half destroyed in the war. | | 40.12,124.39
+A | 虎山长城 | Hushan Great Wall | The eastern start of the Ming Great Wall. | | 40.20,124.45
+A | 抗美援朝纪念馆 | Resist America Aid Korea Memorial | A war memorial. | | 40.13,124.37
+D | 丹东草莓 | Dandong strawberries | A sweet strawberry. | |
+D | 黄蚬子 | Yellow clams | A famed clam. | |
+
+city: jinzhou | 锦州 | Jinzhou | 41.10 | 121.13 | A coastal city on the corridor to the northeast. |
+A | 辽沈战役纪念馆 | Liaoshen Campaign Memorial | A museum on the 1948 campaign. | | 41.10,121.13
+A | 笔架山 | Bijia Mountain | A tidal sand bridge to an island. | | 40.88,121.15
+A | 北普陀山 | Beipuoshan | A temple mountain. | | 41.13,121.22
+D | 锦州烧烤 | Jinzhou barbecue | Grilled meats. | |
+D | 锦州小菜 | Jinzhou pickles | Pickled vegetables. | |
+
+city: yingkou | 营口 | Yingkou | 40.67 | 122.24 | A port city on the Liao River. |
+A | 鲅鱼圈 | Bayuquan | A port and beach. | | 40.26,122.12
+A | 西炮台 | West Fort | An old fort. | | 40.67,122.24
+D | 营口大饼 | Yingkou big cake | A savory flatbread. | |
+
+city: fuxin | 阜新 | Fuxin | 42.02 | 121.67 | A coal town with a jade culture. |
+A | 查海遗址 | Chahai Site | A neolithic site with jade ornaments and a dragon. | | 42.17,121.15
+A | 阜新煤矿博物馆 | Fuxin Coal Museum | A mining museum. | | 42.02,121.67
+D | 阜新玛瑙 | Fuxin agate | An agate carving craft. | |
+
+city: liaoyang | 辽阳 | Liaoyang | 41.27 | 123.24 | One of the oldest cities in the northeast. |
+A | 白塔 | Liaoyang White Pagoda | A white pagoda from the Liao. | | 41.27,123.24
+A | 东京城 | Dongjing City | An old city of the Later Jin. | | 41.30,123.30
+
+city: panjin | 盘锦 | Panjin | 41.12 | 122.07 | A wetland city with red beach. |
+A | 红海滩 | Red Beach | A beach red with sea-blite plants in autumn. | | 40.90,121.90
+A | 盘锦大米 | Panjin rice | A famous rice. | | 41.12,122.07
+D | 盘锦河蟹 | Panjin crab | River crab. | |
+
+city: tieling | 铁岭 | Tieling | 42.29 | 123.84 | The hometown of the northeast comedy. |
+A | 龙首山 | Longshou Hill | A hill park. | | 42.29,123.84
+A | 莲花湖 | Lotus Lake | A wetland. | | 42.35,123.85
+D | 铁岭榛子 | Tieling hazelnuts | Hazelnuts. | |
+C | 小品 | Xiaopin comic sketch | Comedy sketches typical of the northeast. | |
+
+city: chaoyang | 朝阳 | Chaoyang | 41.57 | 120.45 | An ancient fossil city. |
+A | 朝阳古生物化石 | Chaoyang fossils | Fossil beds with early birds and feathered dinosaurs. | | 41.57,120.45
+A | 凤凰山 | Fenghuang Mountain | A hill with temples. | | 41.57,120.45
+
+city: huludao | 葫芦岛 | Huludao | 40.71 | 120.84 | A coastal city and its fortress. |
+A | 兴城古城 | Xingcheng Ancient City | A Ming walled town on the coast. | | 40.61,120.73
+A | 觉华岛 | Juehua Island | An island with a temple. | | 40.58,120.80
+D | 兴城海鲜 | Xingcheng seafood | Seafood. | |
+D | 葫芦岛海蜇 | Huludao jellyfish | A cold dish. | |
+
+city: benxi | 本溪 | Benxi | 41.29 | 123.77 | A cave city. |
+A | 本溪水洞 | Benxi Water Cave | One of the largest water caves in the world. | | 41.20,124.05
+A | 关门山 | Guanmenshan | A scenic mountain. | | 41.30,124.20
+A | 五女山 | Wunushan | An ancient mountain fortress of the Goguryeo. | A UNESCO World Heritage Site. | 41.30,125.40
+D | 本溪山葡萄 | Benxi wild grape | A wild grape. | |

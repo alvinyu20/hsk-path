@@ -1,0 +1,74 @@
+# Jilin. DRAFT: written from general knowledge, not yet fact-checked.
+region: jilin | 吉林 | Jilin
+air: 长春龙嘉国际机场 | Changchun Longjia International Airport | CGQ | 43.99 | 125.68 | The main airport of Jilin. Welcome to Jilin. | |
+
+city: changchun | 长春 | Changchun | 43.82 | 125.32 | The capital of Jilin, a car and film city. |
+A | 伪满皇宫博物院 | Puppet Emperor's Palace | The former palace of the last Qing emperor, Puyi. | | 43.90,125.34
+A | 长影旧址博物馆 | Changchun Film Studio Museum | A film museum. | | 43.88,125.36
+A | 净月潭 | Jingyuetan | A forest lake park. | | 43.78,125.45
+A | 南湖公园 | South Lake Park | A big lake park. | | 43.86,125.28
+A | 长春雕塑公园 | Changchun Sculpture Park | A park of sculptures. | | 43.84,125.29
+A | 一汽 | FAW | The first car factory in China. | | 43.87,125.21
+A | 吉林省博物院 | Jilin Provincial Museum | A museum. | | 43.88,125.33
+D | 锅包肉 | Guobaorou | Crisp sweet and sour pork, from the northeast. | |
+D | 酸菜白肉 | Sauerkraut and white pork | A winter stew. | |
+D | 烤冷面 | Grilled cold noodles | A street snack. | |
+D | 冻梨 | Frozen pear | A pear frozen outside, a winter treat. | |
+D | 杀猪菜 | Pig slaughter stew | A winter feast stew. | |
+D | 打糕 | Rice cake | A pounded Korean rice cake. | |
+C | 二人转 | Errenzhuan | A comic song-and-dance duet from the northeast. | |
+C | 东北大秧歌 | Northeast yangge | A folk dance. | |
+
+city: jilin-city | 吉林市 | Jilin City | 43.84 | 126.55 | A river city famous for rime ice. |
+A | 雾凇岛 | Rime Island | An island in the Songhua River covered with frost trees in winter. | | 44.00,126.65
+A | 松花湖 | Songhua Lake | A large lake. | | 43.60,126.78
+A | 北大湖滑雪场 | Beidahu Ski Resort | A large ski resort. | | 43.50,126.60
+A | 龙潭山 | Longtan Mountain | A hill park with a fort. | | 43.87,126.58
+A | 北山公园 | Beishan Park | A hill park. | | 43.87,126.55
+D | 大锅炖鱼 | Pot-stewed fish | A big stew pot. | |
+C | 雾凇 | Rime ice | Frost on trees, one of the four great natural sights of China. | |
+
+city: yanbian | 延边 | Yanbian | 42.89 | 129.51 | A Korean autonomous prefecture on the border. |
+A | 长白山 | Changbai Mountain | A volcano with a crater lake at the border with North Korea. | | 42.00,128.06
+A | 长白山天池 | Heaven Lake | A crater lake at the peak of Changbai. | | 42.01,128.06
+A | 长白山瀑布 | Changbai Waterfall | A tall waterfall from the lake. | | 42.02,128.07
+A | 图们江 | Tumen River | A border river. | | 42.96,129.84
+A | 延吉朝鲜族民俗园 | Yanji Korean Folk Park | A park about Korean customs. | | 42.90,129.51
+A | 敦化六鼎山 | Liuding Mountain | A temple and tomb hill. | | 43.37,128.20
+D | 冷面 | Korean cold noodles | Chewy noodles in an icy broth. | |
+D | 烤肉 | Korean barbecue | Meat grilled at the table. | |
+D | 石锅拌饭 | Bibimbap | Rice with vegetables and egg. | |
+D | 辣白菜 | Kimchi | Spicy fermented cabbage. | |
+C | 朝鲜族农乐舞 | Korean farmers' dance | A dance with drums. | |
+C | 朝鲜族秋千 | Korean swing | A swing game at festivals. | |
+C | 朝鲜族跳板 | Korean seesaw | A seesaw jumping game. | |
+
+city: siping | 四平 | Siping | 43.17 | 124.35 | A city on a rail line, site of battles. |
+A | 四平战役纪念馆 | Siping Campaign Memorial | A museum of the 1946 battles. | | 43.17,124.35
+A | 叶赫那拉城 | Yehe Nara City | The old city of the clan of Empress Dowager Cixi. | | 43.20,124.45
+D | 四平烧烤 | Siping barbecue | Grilled meat. | |
+
+city: songyuan | 松原 | Songyuan | 45.14 | 124.82 | A city of lakes and oil. |
+A | 查干湖 | Chagan Lake | A big lake with winter fishing, in which people pull huge nets through the ice. | | 45.20,124.20
+A | 查干湖冬捕 | Chagan winter fishing | A winter festival where a huge net is pulled through ice. | | 45.20,124.20
+D | 查干湖鱼 | Chagan Lake fish | Fish from the lake. | |
+
+city: tonghua | 通化 | Tonghua | 41.73 | 125.94 | A mountain city known for wine and herbs. |
+A | 集安高句丽遗迹 | Ji'an Goguryeo Sites | Tombs and fortresses of the Goguryeo kingdom. | A UNESCO World Heritage Site. | 41.13,126.19
+A | 好太王碑 | Gwanggaeto Stele | A big stone stele from the fifth century. | | 41.13,126.19
+A | 通化葡萄酒 | Tonghua wine | A wine region. | | 41.73,125.94
+D | 通化人参 | Tonghua ginseng | Ginseng from the hills. | |
+D | 通化山葡萄酒 | Mountain grape wine | A sweet wild-grape wine. | |
+
+city: baicheng | 白城 | Baicheng | 45.62 | 122.84 | A western city of grasslands. |
+A | 向海湿地 | Xianghai Wetland | A bird wetland. | | 45.00,122.30
+A | 嫩江湿地 | Nenjiang Wetland | A river wetland. | | 45.60,123.00
+
+city: liaoyuan | 辽源 | Liaoyuan | 42.89 | 125.14 | A small coal city. |
+A | 龙首山 | Longshou Mountain | A hill park. | | 42.89,125.14
+
+city: baishan | 白山 | Baishan | 41.94 | 126.42 | A forest city at the foot of Changbai. |
+A | 长白山北坡 | Changbai North Slope | A hiking route. | | 42.10,128.00
+A | 鸭绿江 | Yalu River | The border river. | | 41.60,126.50
+D | 长白山人参 | Changbai ginseng | A famous herb. | |
+D | 林蛙 | Forest frog | A frog dish of the forests. | |

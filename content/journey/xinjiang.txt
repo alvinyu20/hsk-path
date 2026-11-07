@@ -1,0 +1,124 @@
+# Xinjiang. DRAFT: written from general knowledge, not yet fact-checked.
+region: xinjiang | 新疆 | Xinjiang
+air: 乌鲁木齐地窝堡国际机场 | Urumqi Diwopu International Airport | URC | 43.91 | 87.47 | The main airport of Xinjiang and the gateway to Central Asia. Welcome to Xinjiang. | |
+
+city: urumqi | 乌鲁木齐 | Urumqi | 43.83 | 87.62 | The capital of Xinjiang, said to be the city farthest from any ocean. |
+A | 新疆国际大巴扎 | Xinjiang Grand Bazaar | A giant market with a tall tower, selling carpets, dried fruit and crafts. | | 43.78,87.61
+A | 红山公园 | Hongshan Park | A hill park with a pagoda over the city. | | 43.81,87.62
+A | 新疆维吾尔自治区博物馆 | Xinjiang Museum | A museum with the Loulan Beauty mummy. | | 43.80,87.58
+A | 天山天池 | Heavenly Lake of Tianshan | A mountain lake under snow peaks. | | 43.89,88.13
+A | 南山牧场 | Nanshan Pasture | A mountain pasture for horses and sheep. | | 43.45,87.20
+A | 乌鲁木齐二道桥 | Erdaoqiao | An old neighborhood of the Uyghur market. | | 43.78,87.61
+D | 大盘鸡 | Big plate chicken | Chicken, potatoes and peppers in a spicy sauce, served with wide noodles. | |
+D | 羊肉串 | Lamb skewers | Charcoal lamb on skewers with cumin. | |
+D | 抓饭 | Polo | Rice cooked with lamb, carrots and raisins. | |
+D | 馕 | Naan | A round baked bread. | |
+D | 拌面 | Laghman | Hand-pulled noodles with a stir-fried topping. | |
+D | 烤包子 | Samsa | Baked pastries filled with lamb and onion. | |
+D | 馕坑肉 | Pit-baked meat | Meat roasted in the naan oven. | |
+D | 葡萄干 | Raisins | Turpan raisins in many colors. | |
+D | 哈密瓜 | Hami melon | Sweet orange melons. | |
+C | 十二木卡姆 | Twelve Muqam | A huge set of songs and music of the Uyghur people. | |
+C | 艾德莱斯绸 | Atlas silk | A silk cloth dyed in bold patterns. | |
+C | 麦西热甫 | Meshrep | A gathering with music, dance and games. | |
+C | 达瓦孜 | Dawaz | The Uyghur art of tightrope walking. | |
+
+city: turpan | 吐鲁番 | Turpan | 42.95 | 89.19 | A desert oasis below sea level, known for grapes. |
+A | 火焰山 | Flaming Mountain | A red sandstone ridge that glows in the heat, in Journey to the West. | | 42.88,89.58
+A | 葡萄沟 | Grape Valley | A green valley of vineyards. | | 42.96,89.23
+A | 交河故城 | Jiaohe Ruins | An ancient city built on a river island. | | 42.95,89.07
+A | 高昌故城 | Gaochang Ruins | The remains of a Silk Road city. | | 42.85,89.53
+A | 坎儿井 | Karez wells | A system of underground channels that bring water to the oasis. | | 42.94,89.18
+A | 苏公塔 | Emin Minaret | A minaret of mud brick. | | 42.92,89.23
+A | 艾丁湖 | Aydingkol Lake | A dry salt lake, the lowest point in China. | | 42.65,89.17
+A | 吐峪沟 | Tuyoq Valley | A canyon village with Buddhist caves. | | 42.85,89.80
+D | 烤全羊 | Roast whole lamb | A whole lamb roasted in the oven. | |
+D | 吐鲁番葡萄 | Turpan grapes | Seedless grapes in many varieties. | |
+
+city: kashgar | 喀什 | Kashgar | 39.47 | 75.99 | An old Silk Road city at the western edge of China. |
+A | 艾提尕尔清真寺 | Id Kah Mosque | One of the largest mosques in China, in the main square. | | 39.47,75.99
+A | 喀什老城 | Kashgar Old City | A maze of mud-brick houses and lanes. | | 39.47,75.99
+A | 香妃墓 | Fragrant Concubine Tomb | A tomb complex with green tiles. | | 39.50,76.00
+A | 星期日大巴扎 | Sunday Bazaar | A weekly livestock and goods market. | | 39.47,76.00
+A | 帕米尔高原 | Pamir Plateau | A high plateau with snow peaks. | | 38.60,75.50
+A | 慕士塔格峰 | Muztagh Ata | A high snow peak called the Father of Ice Mountains. | | 38.28,75.12
+A | 卡拉库里湖 | Karakul Lake | A lake at the foot of the Pamirs. | | 38.45,75.05
+A | 塔什库尔干石头城 | Tashkurgan Stone City | An old stone fortress town. | | 37.77,75.23
+D | 烤羊肉串 | Kashgar skewers | Lamb on skewers. | |
+D | 酸奶 | Kashgar yogurt | A thick yogurt with honey. | |
+D | 切糕 | Qiegao | A block of nuts and dried fruit sliced to order. | |
+C | 热瓦甫 | Rawap | A Uyghur long-necked lute. | |
+C | 维吾尔族手工艺 | Uyghur handicrafts | Hats, knives and ceramics. | |
+
+city: yining | 伊宁 | Yining | 43.91 | 81.32 | The Ili valley city near Kazakhstan. |
+A | 薰衣草田 | Lavender fields | A summer sea of purple. | | 44.05,81.50
+A | 赛里木湖 | Sayram Lake | A big blue lake in the mountains. | | 44.60,81.20
+A | 那拉提草原 | Narat Grassland | A grassland at the foot of the Tianshan. | | 43.33,84.00
+A | 喀拉峻草原 | Kalajun Grassland | A high alpine meadow. | | 43.37,82.20
+A | 六星街 | Six-Star Street | A star-shaped quarter of houses. | | 43.91,81.32
+D | 伊犁马奶酒 | Ili kumis | Fermented mare's milk. | |
+D | 伊犁薄皮包子 | Ili thin-skinned buns | Buns filled with lamb. | |
+C | 哈萨克族阿肯弹唱 | Kazakh aytys singing | A sung duel of improvised verse. | |
+C | 冬不拉 | Dombra | A Kazakh two-stringed lute. | |
+
+city: altay | 阿勒泰 | Altay | 47.85 | 88.14 | A northern region of forests, lakes and skiing. |
+A | 喀纳斯湖 | Kanas Lake | A lake of changing colors in the Altai mountains. | | 48.70,87.03
+A | 白哈巴 | Baihaba | A border village among larch trees. | | 48.88,87.40
+A | 禾木村 | Hemu Village | A wooden village of Tuvan people. | | 48.65,87.45
+A | 可可托海 | Koktokay | A mining town and gorge. | | 46.80,89.80
+A | 喀纳斯月亮湾 | Moon Bay | A bend in the river shaped like a crescent. | | 48.65,87.05
+A | 将军山滑雪场 | Jiangjunshan Ski Resort | A ski hill in the city. | | 47.85,88.14
+D | 奶茶 | Milk tea | Salty milk tea of the Kazakhs. | |
+D | 手抓肉 | Hand-grabbed meat | Boiled lamb with noodles. | |
+D | 冷水鱼 | Cold-water fish | Fish from the cold rivers. | |
+C | 图瓦人 | Tuvan people | A small people who live in the Kanas area. | |
+C | 滑雪起源 | Birthplace of skiing | Rock art here has been used to argue that skiing began in the Altay. | Said to be the oldest depictions of skiing in the world. |
+
+city: kuqa | 库车 | Kuqa | 41.72 | 82.96 | An old Buddhist kingdom on the northern Silk Road. |
+A | 克孜尔千佛洞 | Kizil Caves | Some of the earliest Buddhist cave paintings in China. | | 41.78,82.50
+A | 库车大寺 | Kuqa Grand Mosque | A big mosque. | | 41.72,82.96
+A | 天山神秘大峡谷 | Tianshan Mystery Canyon | A red sandstone canyon. | | 42.00,83.00
+A | 库车王府 | Kuqa Palace | A former palace of the local ruler. | | 41.72,82.96
+D | 库车大馕 | Kuqa big naan | A giant naan. | |
+D | 库车小白杏 | Kuqa white apricot | A sweet apricot. | |
+C | 龟兹乐舞 | Kucha music and dance | An ancient style of music from the Kucha kingdom. | |
+
+city: hotan | 和田 | Hotan | 37.11 | 79.92 | A jade and silk oasis on the southern Silk Road. |
+A | 和田玉 | Hotan jade | A famed white jade. | | 37.11,79.92
+A | 丝绸作坊 | Hotan silk workshop | A workshop where silk is spun in the old way. | | 37.11,79.92
+A | 玉龙喀什河 | Yurungkash River | The river where jade is found. | | 37.10,79.90
+A | 尼雅遗址 | Niya Ruins | A buried town in the Taklamakan. | | 37.97,82.72
+D | 和田大枣 | Hotan jujubes | Large sweet dates. | |
+D | 核桃 | Walnut | Hotan walnuts. | |
+C | 和田地毯 | Hotan carpets | Hand-knotted carpets. | |
+
+city: korla | 库尔勒 | Korla | 41.76 | 86.15 | A pear city on the edge of the Taklamakan. |
+A | 博斯腾湖 | Bosten Lake | The largest inland freshwater lake in China. | | 41.95,87.00
+A | 孔雀河 | Peacock River | A river through the city. | | 41.76,86.15
+A | 罗布人村寨 | Lop village | A village of the Lop people. | | 40.70,88.15
+D | 库尔勒香梨 | Korla fragrant pear | A famed sweet pear. | |
+
+city: aksu | 阿克苏 | Aksu | 41.17 | 80.26 | A city known for apples. |
+A | 阿克苏冰糖心苹果 | Aksu rock-sugar apples | Apples with a sweet core. | | 41.17,80.26
+A | 天山神木园 | Tianshan Divine Wood Park | A park with old trees. | | 41.70,80.20
+D | 阿克苏苹果 | Aksu apples | Crisp apples. | |
+
+city: hami | 哈密 | Hami | 42.82 | 93.52 | A melon city between the desert and the mountains. |
+A | 哈密王墓 | Hami King Tomb | A tomb of the Hami rulers. | | 42.82,93.52
+A | 巴里坤草原 | Barkol Grassland | A pasture. | | 43.60,93.00
+D | 葡萄 | Hami grapes | Sweet grapes. | |
+
+city: karamay | 克拉玛依 | Karamay | 45.58 | 84.89 | An oil city in the Junggar Basin. |
+A | 黑油山 | Black Oil Mountain | A natural oil seep that began the oil field. | | 45.60,84.90
+A | 世界魔鬼城 | World Ghost City | An area of yardang landforms. | | 45.50,85.90
+D | 克拉玛依烤肉 | Karamay barbecue | Grilled meat. | |
+
+city: changji | 昌吉 | Changji | 44.01 | 87.31 | A Hui prefecture east of Urumqi. |
+A | 江布拉克 | Jiangbulake | A wheat field in the mountains. | | 43.80,89.50
+A | 恐龙沟 | Dinosaur Valley | A site with dinosaur fossils. | | 44.30,88.50
+D | 昌吉拌面 | Changji laghman | A hearty noodle dish. | |
+
+city: shihezi | 石河子 | Shihezi | 44.30 | 86.04 | A planned oasis city built by army settlers. |
+A | 军垦博物馆 | Military Reclamation Museum | A museum of the settlers who built the city. | | 44.30,86.04
+A | 周恩来总理纪念碑 | Zhou Enlai Memorial | A monument in the city. | | 44.30,86.04
+D | 石河子葡萄 | Shihezi grapes | Grapes grown by settlers. | |

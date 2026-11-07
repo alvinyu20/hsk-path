@@ -1,0 +1,70 @@
+# Hong Kong. DRAFT: written from general knowledge, not yet fact-checked.
+region: hongkong | 香港 | Hong Kong
+air: 香港国际机场 | Hong Kong International Airport | HKG | 22.31 | 113.92 | Hong Kong's airport on Chek Lap Kok island. Welcome to Hong Kong. | |
+
+city: hongkong-island | 香港岛 | Hong Kong Island | 22.28 | 114.16 | The financial heart, with towers, trams and a famous peak. |
+A | 太平山顶 | Victoria Peak | A hill with a view of the harbor and skyline. | | 22.27,114.15
+A | 山顶缆车 | Peak Tram | A cable railway to the top, running since 1888. | | 22.28,114.16
+A | 中环 | Central | The business district with banks and old markets. | | 22.28,114.16
+A | 叮叮车 | Ding Ding tram | The double-decker trams on the island. | | 22.28,114.17
+A | 兰桂坊 | Lan Kwai Fong | A nightlife lane. | | 22.28,114.16
+A | 文武庙 | Man Mo Temple | A temple for the gods of literature and war, full of incense coils. | | 22.28,114.15
+A | 香港大会堂 | City Hall | A civic hall on the harbor. | | 22.28,114.16
+A | 铜锣湾 | Causeway Bay | A shopping district. | | 22.28,114.18
+A | 赤柱 | Stanley | A seaside village with a market. | | 22.22,114.21
+A | 浅水湾 | Repulse Bay | A beach on the south side. | | 22.24,114.20
+A | 海洋公园 | Ocean Park | A marine theme park. | | 22.25,114.18
+A | 中环半山自动扶梯 | Central-Mid-Levels Escalator | The longest outdoor covered escalator system in the world. | | 22.28,114.15
+D | 菠萝包 | Pineapple bun | A sweet crusty bun with no pineapple in it. | The name is said to come from its checked top, like a pineapple skin. |
+D | 港式奶茶 | Hong Kong milk tea | Strong tea with evaporated milk, filtered through a cloth. | |
+D | 鸡蛋仔 | Egg waffle | Bubble-shaped waffles. | |
+D | 烧鹅 | Roast goose | Crisp roast goose. | |
+D | 云吞面 | Wonton noodles | Thin noodles with shrimp wontons. | |
+D | 蛋挞 | Egg tart | A flaky or short crust tart with custard. | |
+D | 茶餐厅 | Cha chaan teng | A Hong Kong-style café. | |
+D | 烧腊 | Siu mei | Roast meats. | |
+C | 粤剧 | Cantonese opera | A form of opera with song and martial arts. | |
+C | 港片 | Hong Kong cinema | A film tradition of kung fu and crime. | |
+C | 太平清醮 | Cheung Chau Bun Festival | A festival of towers of buns. | |
+C | 龙舟 | Dragon boat races | Boat races at the Dragon Boat Festival. | |
+
+city: kowloon | 九龙 | Kowloon | 22.32 | 114.17 | The crowded peninsula of markets and neon signs. |
+A | 星光大道 | Avenue of Stars | A harbor promenade honoring film stars. | | 22.29,114.17
+A | 尖沙咀 | Tsim Sha Tsui | A harbor district of shops and museums. | | 22.30,114.17
+A | 庙街夜市 | Temple Street Night Market | A night market. | | 22.31,114.17
+A | 旺角 | Mong Kok | One of the most crowded areas in the world. | | 22.32,114.17
+A | 女人街 | Ladies' Market | A market of cheap clothes. | | 22.32,114.17
+A | 金鱼街 | Goldfish Market | A street of fish shops. | | 22.33,114.17
+A | 雀鸟花园 | Yuen Po Street Bird Garden | A garden of caged birds. | | 22.33,114.17
+A | 志莲净苑 | Chi Lin Nunnery | A Tang-style nunnery of wooden halls. | | 22.34,114.21
+A | 南莲园池 | Nan Lian Garden | A Tang-style garden. | | 22.34,114.21
+A | 黄大仙祠 | Wong Tai Sin Temple | A busy temple known for fortune sticks. | | 22.34,114.19
+A | 钻石山 | Diamond Hill | A hill with a nunnery. | | 22.34,114.20
+A | 九龙寨城公园 | Kowloon Walled City Park | A park on the site of the old walled city. | | 22.33,114.19
+D | 鱼蛋 | Curry fish balls | Fish balls in curry sauce. | |
+D | 车仔面 | Cart noodles | A bowl of noodles with a choice of toppings. | |
+D | 点心 | Dim sum | Small dishes eaten with tea. | |
+D | 糖水 | Tong sui | A sweet dessert soup. | |
+D | 烧卖 | Siu mai | A steamed dumpling. | |
+D | 港式炒饭 | Hong Kong fried rice | Fried rice. | |
+C | 风水 | Feng shui | The belief in arranging buildings by qi, strongly followed by the city's builders. | |
+
+city: new-territories | 新界 | New Territories | 22.42 | 114.15 | The green north, with villages, hills and islands. |
+A | 大屿山天坛大佛 | Tian Tan Buddha | A huge bronze Buddha on Lantau Island. | | 22.25,113.90
+A | 昂坪360 | Ngong Ping 360 | A cable car to the Buddha. | | 22.25,113.91
+A | 大澳 | Tai O | A fishing village with stilt houses. | | 22.25,113.86
+A | 西贡 | Sai Kung | A seaside town with islands and hills. | | 22.38,114.27
+A | 香港迪士尼乐园 | Hong Kong Disneyland | A theme park on Lantau. | | 22.31,114.04
+A | 沙田 | Sha Tin | A city with a racecourse. | | 22.38,114.19
+A | 万佛寺 | Ten Thousand Buddhas Monastery | A hillside temple of golden Buddhas. | | 22.38,114.20
+A | 长洲 | Cheung Chau | An island with a bun festival. | | 22.21,114.03
+A | 南丫岛 | Lamma Island | A car-free island with hikes. | | 22.21,114.12
+A | 八仙岭 | Pat Sin Leng | A hill range. | | 22.51,114.23
+A | 屏山文物径 | Ping Shan Heritage Trail | A trail of old clan halls. | | 22.45,114.00
+A | 大帽山 | Tai Mo Shan | The highest peak in Hong Kong. | | 22.41,114.12
+D | 大澳虾酱 | Tai O shrimp paste | A strong-smelling paste. | |
+D | 盆菜 | Poon choi | A big basin of layered meats for village feasts. | |
+D | 西贡海鲜 | Sai Kung seafood | Fresh seafood by the sea. | |
+D | 长洲平安包 | Cheung Chau peace buns | Sweet buns for the festival. | |
+C | 客家围村 | Walled villages | Villages built by clans. | |
+C | 疍家 | Tanka people | Boat people who lived on the water. | |

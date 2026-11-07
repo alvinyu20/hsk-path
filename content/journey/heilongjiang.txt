@@ -1,0 +1,86 @@
+# Heilongjiang. DRAFT: written from general knowledge, not yet fact-checked.
+region: heilongjiang | 黑龙江 | Heilongjiang
+air: 哈尔滨太平国际机场 | Harbin Taiping International Airport | HRB | 45.62 | 126.25 | The main airport of Heilongjiang, in the far northeast. Welcome to Heilongjiang. | |
+
+city: harbin | 哈尔滨 | Harbin | 45.80 | 126.53 | The Ice City, with Russian architecture and a famous winter festival. |
+A | 圣索菲亚教堂 | St. Sophia Cathedral | A Russian Orthodox church with green domes, a symbol of the city. | | 45.77,126.62
+A | 中央大街 | Central Street | A cobbled pedestrian street of European buildings. | | 45.77,126.62
+A | 冰雪大世界 | Harbin Ice and Snow World | A giant park of lit ice buildings in winter. | | 45.78,126.58
+A | 太阳岛 | Sun Island | A park island in the Songhua River. | | 45.80,126.57
+A | 松花江 | Songhua River | The river that freezes in winter. | | 45.77,126.60
+A | 东北虎林园 | Siberian Tiger Park | A park that breeds Siberian tigers. | | 45.84,126.60
+A | 731部队遗址 | Unit 731 Museum | A museum on a Japanese wartime unit. | | 45.60,126.62
+A | 哈尔滨极地馆 | Harbin Polar Land | A park with polar animals. | | 45.78,126.58
+D | 锅包肉 | Guobaorou | Crisp sweet and sour pork, said to be invented in Harbin. | |
+D | 红肠 | Harbin red sausage | A smoked sausage from Russian influence. | |
+D | 马迭尔冰棍 | Modern ice cream bar | A famous ice cream on Central Street. | |
+D | 大列巴 | Big lieba | A big round Russian-style bread. | |
+D | 哈尔滨啤酒 | Harbin beer | One of China's oldest beer brands. | |
+D | 冻梨 | Frozen pear | A frozen pear snack. | |
+D | 杀猪菜 | Pig-slaughter dishes | A hearty winter meal. | |
+C | 冰雪节 | Ice and Snow Festival | A winter festival with huge ice sculptures. | |
+C | 俄罗斯风情 | Russian influence | Many buildings and foods from Russian settlers. | |
+C | 冰灯 | Ice lanterns | Lanterns carved from ice. | |
+
+city: qiqihar | 齐齐哈尔 | Qiqihar | 47.35 | 123.97 | A northern city with cranes and a wetland. |
+A | 扎龙湿地 | Zhalong Wetland | A famous wetland where red-crowned cranes breed. | | 47.20,124.25
+A | 明月岛 | Mingyue Island | A river island. | | 47.35,123.97
+A | 碾子山 | Nianzishan | A mountain town. | | 47.50,122.88
+D | 齐齐哈尔烤肉 | Qiqihar barbecue | A famed meat barbecue. | |
+D | 扎龙鹤 | Zhalong crane | A bird symbol of the city. | |
+
+city: mudanjiang | 牡丹江 | Mudanjiang | 44.55 | 129.63 | A lake and forest city, with a snow village. |
+A | 镜泊湖 | Jingpo Lake | A volcanic barrier lake with a waterfall. | | 43.90,128.90
+A | 吊水楼瀑布 | Diaoshuilou Waterfall | A wide waterfall at the lake. | | 43.88,128.78
+A | 渤海国上京遗址 | Bohai Kingdom Shangjing | The ruins of a medieval capital. | | 44.00,129.10
+A | 中国雪乡 | China Snow Town | A mountain village famous for heavy snow. | | 44.80,128.50
+A | 雪乡 | Snow Village | A hamlet with snow-heaped roofs. | | 44.80,128.50
+D | 牡丹江冷面 | Mudanjiang cold noodles | Noodles. | |
+D | 五常大米 | Wuchang rice | A prized rice. | |
+C | 朝鲜族风情 | Korean culture | Korean heritage in the area. | |
+
+city: jiamusi | 佳木斯 | Jiamusi | 46.80 | 130.32 | A city on the Songhua near the Russian border. |
+A | 抚远 | Fuyuan | The first place in China to see the sunrise. | | 48.37,134.30
+A | 黑瞎子岛 | Heixiazi Island | A river island on the border. | | 48.30,134.60
+A | 赫哲族 | Hezhe people | A small people who fish on the rivers. | | 47.30,132.60
+D | 鱼皮 | Fish skin crafts | A traditional craft by the Hezhe. | |
+D | 抚远大马哈鱼 | Fuyuan salmon | A river fish. | |
+
+city: daqing | 大庆 | Daqing | 46.59 | 125.10 | An oil city on the plains. |
+A | 铁人纪念馆 | Iron Man Memorial | A memorial for the oil worker Wang Jinxi. | | 46.60,125.10
+A | 大庆油田历史陈列馆 | Daqing Oilfield Museum | A museum of the oil field found in 1959. | | 46.59,125.10
+A | 龙凤湿地 | Longfeng Wetland | A city wetland. | | 46.60,125.10
+D | 大庆烤鱼 | Daqing grilled fish | Grilled fish. | |
+D | 杜蒙羊肉 | Dumeng lamb | Local lamb. | |
+
+city: heihe | 黑河 | Heihe | 50.25 | 127.53 | A border city facing Russia across the Amur. |
+A | 黑龙江大桥 | Amur River Bridge | A border bridge. | | 50.25,127.50
+A | 五大连池 | Wudalianchi | A volcano park with black lava and mineral springs. | A UNESCO Global Geopark. | 48.70,126.10
+A | 瑷珲古城 | Aihun Ancient City | The site of a treaty in 1858. | | 49.97,127.45
+D | 五大连池矿泉水 | Wudalianchi mineral water | Mineral water from volcanic springs. | |
+
+city: mohe | 漠河 | Mohe | 52.97 | 122.54 | The northernmost town of China. |
+A | 北极村 | Arctic Village | The northernmost village in China, where the northern lights may appear. | | 53.48,122.35
+A | 北极光 | Northern lights | Auroras seen rarely from the town. | | 53.48,122.35
+A | 龙江第一湾 | First Bend of the Amur | A bend of the river. | | 52.97,122.54
+D | 蓝莓 | Blueberry | Wild blueberries. | |
+D | 驯鹿 | Reindeer | The Ewenki raise reindeer in the Greater Khingan range. | |
+C | 鄂伦春族 | Oroqen people | A hunting people of the northeast. | |
+
+city: yichun-hlj | 伊春 | Yichun | 47.73 | 128.84 | A forest city, a source of timber for decades. |
+A | 汤旺河林海奇石 | Tangwang River Forest Rocks | A forest of stones in the woods. | | 48.50,129.50
+A | 红松林 | Korean pine forest | A forest of tall pines. | | 47.73,128.84
+A | 小兴安岭 | Lesser Khingan Range | A forested range. | | 48.00,129.00
+D | 松子 | Pine nuts | Pine nuts from the forest. | |
+D | 蓝莓酒 | Blueberry wine | A wine. | |
+
+city: shuangyashan | 双鸭山 | Shuangyashan | 46.64 | 131.16 | A coal city on the Wusuli River. |
+A | 乌苏里江 | Ussuri River | A border river with Russia. | | 46.64,131.16
+A | 七星峰 | Qixing Peak | A hill park. | | 46.60,131.20
+D | 双鸭山大米 | Shuangyashan rice | A local rice. | |
+
+city: suihua | 绥化 | Suihua | 46.64 | 126.97 | A farming city. |
+A | 绥化黑土地 | Suihua black soil | The black soil that feeds the northeast. | | 46.64,126.97
+A | 大兴安岭 | Great Khingan | A big forested range. | | 51.00,124.00
+
+city: hegang | 鹤岗 | Hegang | 47.35 | 130.30 | A quiet coal town with very cheap homes. |
