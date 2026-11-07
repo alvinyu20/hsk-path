@@ -14,6 +14,7 @@ const server = require('./test-static').server(root);
 
 let failures = 0;
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };
+const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await p.locator('.lvbtn').click(); await p.waitForTimeout(80); };
 
 (async () => {
   await new Promise(r => server.listen(0, r));
@@ -29,7 +30,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await p0.waitForSelector('.app');
     check(await p0.evaluate(() => window.SHANLU_LEVEL) === 2, 'asking for ?level=3 before passing HSK 2 gives HSK 2');
     check((await p0.locator('main').innerText()).includes('HSK 3 is locked'), 'the page explains that HSK 3 is locked');
-    check((await p0.locator('.lvseg button', { hasText: 'HSK 3' }).innerText()).includes('🔒'), 'the HSK 3 button shows a lock');
+    await openLv(p0); check((await p0.locator('.lvpanel .lvitem:has(.lvn:text-is("HSK 3"))').getAttribute('class') || '').includes('locked'), 'the HSK 3 button shows a lock');
     await c0.close();
   }
 
@@ -332,12 +333,12 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(dialogs.some(m => /HSK 2 progress, but this page is on HSK 3/.test(m)), 'importing an HSK 2 file at HSK 3 is refused with an explanation');
 
   // ---- switching level keeps every progress
-  await page.locator('.lvseg button', { hasText: 'HSK 2' }).click();
+  await openLv(page); await page.locator('.lvpanel .lvitem:has(.lvn:text-is("HSK 2"))').click();
   await page.waitForFunction(() => window.SHANLU_LEVEL === 2);
   await page.waitForSelector('.app');
   check((await text()).includes('197 words to go'), 'switching to HSK 2 shows the HSK 2 trail');
   check(await page.evaluate(() => !window.shanlu.state.ws['聪明'] && Object.keys(window.shanlu.state.wlearned).length === 0), 'HSK 2 progress is separate: none of the HSK 3 words started there');
-  await page.locator('.lvseg button', { hasText: 'HSK 3' }).click();
+  await openLv(page); await page.locator('.lvpanel .lvitem:has(.lvn:text-is("HSK 3"))').click();
   await page.waitForFunction(() => window.SHANLU_LEVEL === 3);
   await page.waitForSelector('.app');
   check(await page.evaluate(() => Object.keys(window.shanlu.state.wlearned).length >= 3 && window.shanlu.state.gres[window.HSK3_GRAMMAR.lessons[0].id] >= 80), 'switching back to HSK 3 brings its progress back (web words, lesson results)');
@@ -352,8 +353,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await pA.waitForSelector('.app');
     check(await pA.evaluate(() => window.SHANLU_LEVEL) === 0 && await pA.evaluate(() => window.SHANLU_LEVELS.join()) === '1,2,3', 'the address ?level=0 shows All levels with all three levels once HSK 3 is unlocked');
     check(await pA.evaluate(() => Object.keys(window.shanlu.state.ws).length === window.HSK1_WORDS.length + window.HSK2_WORDS.length + window.HSK3_WORDS.length), 'All levels holds the words of the three levels');
-    check((await pA.locator('.lvseg button', { hasText: 'All' }).getAttribute('class') || '').includes('on'), 'the All button is the selected one');
-    check((await pA.locator('.lvseg button').allInnerTexts()).join('|').replace(/\s+/g, '') === 'HSK1|HSK2|HSK3|All', 'the level switch offers HSK 1, HSK 2, HSK 3 and All');
+    check((await pA.locator('.lvbtn').innerText()).includes('All levels'), 'the All button is the selected one');
+    check((await openLv(pA), (await pA.locator('.lvpanel .lvitem .lvn').allInnerTexts()).join('|').replace(/\s+/g, '') === 'HSK1|HSK2|HSK3|Alllevels'), 'the Levels menu offers HSK 1, HSK 2, HSK 3 and All levels');
     // grammar from three levels in one list
     await pA.locator('nav button', { hasText: /^\s*Grammar\s*$/ }).first().click();
     await pA.waitForTimeout(150);

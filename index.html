@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="ac1d90cae2">
+<meta name="shanlu-version" content="2893a17fb6">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=ac1d90cae2">
+<link rel="stylesheet" href="styles.css?v=2893a17fb6">
 </head>
 <body>
 <div id="app"></div>
@@ -129,11 +129,13 @@
       <p class="sub">{{subtitle}}</p>
     </div>
     <div class="stats">
-      <div class="seg2 lvseg" role="group" aria-label="Level"><sc-for list="{{lvOpts}}" as="o" hint-placeholder-count="2"><button class="{{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
+      <div class="lvmenu"><button type="button" class="pill lvbtn" aria-haspopup="true" aria-expanded="{{lvMenuOpen}}" data-on-click="{{lvMenuToggle}}">{{lvLabel}}<svg class="ic lvcaret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <sc-if value="{{lvMenuOpen}}" hint-placeholder-val="{{ false }}"><div class="lvpanel" role="menu" aria-label="Levels"><div class="lvh">Levels</div><sc-for list="{{lvItems}}" as="o" hint-placeholder-count="3"><button type="button" role="menuitem" class="lvitem {{o.cls}}" data-on-click="{{o.fn}}"><span class="lvn">{{o.label}}</span><span class="lvs">{{o.sub}}</span></button></sc-for></div></sc-if></div>
       <span class="pill fl"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c1.1 3.4 5 5.3 5 9.9a5 5 0 0 1-10 0c0-1.8.8-3 1.8-4.1.2 1.6 1.1 2.5 2.1 2.7C10.3 8.5 11 5.5 12 2.5z"/></svg>{{streakText}}</span>
       <span class="pill" title="{{memTip}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.2 6.3L21 12l-6.8 2.7L12 21l-2.2-6.3L3 12l6.8-2.7z"/></svg>{{memText}}</span>
     </div>
   </header>
+  <sc-if value="{{msShow}}" hint-placeholder-val="{{ false }}"><div class="mstoast" role="status" aria-live="polite" data-on-click="{{msClose}}"><span class="ms-ic" aria-hidden="true">{{msIcon}}</span><div class="ms-t"><b>{{msTitle}}</b><span>{{msDesc}}</span></div><span class="ms-more">{{msMore}}</span><button type="button" class="ms-x" aria-label="Dismiss" data-on-click="{{msClose}}">×</button></div></sc-if>
   <sc-if value="{{lvMsgShow}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">{{lvMsgText}}<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" data-on-click="{{lvMsgGo}}">{{lvMsgGoText}}</button><button class="btn" data-on-click="{{lvMsgClose}}">Dismiss</button></div></div></sc-if>
   <sc-if value="{{hasSubnav}}" hint-placeholder-val="{{ false }}"><div class="seg2 subnav" role="group" aria-label="In this section"><sc-for list="{{subnav}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div></sc-if>
   <sc-if value="{{saveFail}}" hint-placeholder-val="{{ false }}"><div class="banner bad" role="alert">This device could not save your progress. Its storage may be full or blocked (a private tab does this). What you do now can be lost when you close the page, so download a backup.<div style="margin-top:10px"><button class="btn pri" data-on-click="{{exportData}}">Download a backup</button></div><div class="muted" style="margin-top:8px;font-size:13px">{{saveInfo}}</div></div></sc-if>
@@ -317,9 +319,14 @@
       </sc-if>
     </section>
     <section class="card" style="margin-top:20px">
+      <h2 class="h2">Sounds</h2>
+      <p class="muted" style="margin:6px 0 0;font-size:16px">A short ding when you get something right, a soft tone when you do not, and a flourish when you finish a session or earn a milestone. They are made on the spot, with no downloads.</p>
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" data-on-click="{{soundToggle}}">{{soundLabel}}</button><button class="btn" data-on-click="{{soundTest}}">Play the right-answer sound</button><button class="btn" data-on-click="{{soundTestDone}}">Play the session-done sound</button></div>
+    </section>
+    <section class="card" style="margin-top:20px">
       <h2 class="h2">Level</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">{{lvNote}}</p>
-      <div class="seg2" style="margin-top:12px;display:inline-flex" role="group" aria-label="Level"><sc-for list="{{lvOpts}}" as="o" hint-placeholder-count="2"><button class="{{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
+      <div class="lvlist" role="group" aria-label="Level"><sc-for list="{{lvItems}}" as="o" hint-placeholder-count="3"><button type="button" class="lvitem {{o.cls}}" data-on-click="{{o.fn}}"><span class="lvn">{{o.label}}</span><span class="lvs">{{o.sub}}</span></button></sc-for></div>
       <div style="margin:16px 0 0;font-weight:600">HSK version shown on your path</div>
       <div class="seg2" style="margin-top:8px;display:inline-flex" role="group" aria-label="HSK version"><button class="{{sys2Cls}}" data-on-click="{{setSys2}}">HSK 2.0 · 6 levels</button><button class="{{sys3Cls}}" data-on-click="{{setSys3}}">HSK 3.0 · 9 levels</button></div>
       <div style="margin:16px 0 0;font-weight:600">Level lock</div>
@@ -493,6 +500,7 @@
         <span class="rev-n">{{rdone}} of {{rtotal}}</span>
         <span class="chip familiar" title="{{memTip}}">{{memText}}</span>
       </div>
+      <div class="dgoal" title="Your daily goal, in minutes"><span>{{dgText}}</span><div class="dbar"><i style="width:{{dgPct}}"></i></div></div>
       <sc-if value="{{hasRlast}}" hint-placeholder-val="{{ false }}"><div class="delta {{rlastCls}}">{{rlastText}}</div></sc-if>
       <p class="kbhint">{{kbHint}}</p>
 
@@ -642,11 +650,17 @@
     </sc-if>
 
     <sc-if value="{{rcomplete}}" hint-placeholder-val="{{ false }}">
-      <div class="res">
+      <div class="res celebrate">
+        <sc-if value="{{rcConfetti}}" hint-placeholder-val="{{ false }}"><div class="confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></sc-if>
         <div class="stamp zh" aria-hidden="true">熟</div>
-        <h2 class="res-h">{{rtotal}} cards done</h2>
-        <p class="res-p">Words you missed will come back sooner. The rest move out to longer gaps.</p>
+        <h2 class="res-h">{{rcHead}}</h2>
+        <p class="res-p">{{rtotal}} cards done. {{rcSub}}</p>
         <sc-if value="{{hasCalib}}" hint-placeholder-val="{{ false }}"><p class="res-p">{{calText}}</p></sc-if>
+        <div class="rc-grid">
+          <div class="rc-tile"><b>{{rcAcc}}</b><span>right first time</span></div>
+          <div class="rc-tile"><b>+{{rxp}}</b><span>XP</span></div>
+          <div class="rc-tile"><b>{{rcStreak}}</b><span>day streak</span></div>
+        </div>
         <div class="res-stats">
           <div class="stat"><b>{{rcounts.easy}}</b><span>Easy</span></div>
           <div class="stat"><b>{{rcounts.good}}</b><span>Good</span></div>
@@ -1764,38 +1778,38 @@
 </main>
 </div>
 </template>
-<script defer src="vendor/morphdom-umd.min.js?v=ac1d90cae2"></script>
-<script defer src="runtime.js?v=ac1d90cae2"></script>
-<script defer src="config.js?v=ac1d90cae2"></script>
-<script defer src="friends.js?v=ac1d90cae2"></script>
-<script defer src="level.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk1-words.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk1-grammar.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk1-webs.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk1-speak.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk1-listen.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk1-exam.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk1-erhua.js?v=ac1d90cae2"></script>
-<script defer src="data/lexicon.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk2-preview.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk3-preview.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk2-words.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk2-speak.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk2-listen.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk2-exam.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk2-grammar.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk2-webs.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk3-words.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk3-speak.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk3-listen.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk3-exam.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk3-grammar.js?v=ac1d90cae2"></script>
-<script defer src="data/hsk3-webs.js?v=ac1d90cae2"></script>
-<script defer src="ascent.js?v=ac1d90cae2"></script>
-<script defer src="secrets.js?v=ac1d90cae2"></script>
-<script defer src="sync.js?v=ac1d90cae2"></script>
-<script defer src="data/audio-manifest.js?v=ac1d90cae2"></script>
-<script defer src="erhua.js?v=ac1d90cae2"></script>
-<script defer src="app.js?v=ac1d90cae2"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=2893a17fb6"></script>
+<script defer src="runtime.js?v=2893a17fb6"></script>
+<script defer src="config.js?v=2893a17fb6"></script>
+<script defer src="friends.js?v=2893a17fb6"></script>
+<script defer src="level.js?v=2893a17fb6"></script>
+<script defer src="data/hsk1-words.js?v=2893a17fb6"></script>
+<script defer src="data/hsk1-grammar.js?v=2893a17fb6"></script>
+<script defer src="data/hsk1-webs.js?v=2893a17fb6"></script>
+<script defer src="data/hsk1-speak.js?v=2893a17fb6"></script>
+<script defer src="data/hsk1-listen.js?v=2893a17fb6"></script>
+<script defer src="data/hsk1-exam.js?v=2893a17fb6"></script>
+<script defer src="data/hsk1-erhua.js?v=2893a17fb6"></script>
+<script defer src="data/lexicon.js?v=2893a17fb6"></script>
+<script defer src="data/hsk2-preview.js?v=2893a17fb6"></script>
+<script defer src="data/hsk3-preview.js?v=2893a17fb6"></script>
+<script defer src="data/hsk2-words.js?v=2893a17fb6"></script>
+<script defer src="data/hsk2-speak.js?v=2893a17fb6"></script>
+<script defer src="data/hsk2-listen.js?v=2893a17fb6"></script>
+<script defer src="data/hsk2-exam.js?v=2893a17fb6"></script>
+<script defer src="data/hsk2-grammar.js?v=2893a17fb6"></script>
+<script defer src="data/hsk2-webs.js?v=2893a17fb6"></script>
+<script defer src="data/hsk3-words.js?v=2893a17fb6"></script>
+<script defer src="data/hsk3-speak.js?v=2893a17fb6"></script>
+<script defer src="data/hsk3-listen.js?v=2893a17fb6"></script>
+<script defer src="data/hsk3-exam.js?v=2893a17fb6"></script>
+<script defer src="data/hsk3-grammar.js?v=2893a17fb6"></script>
+<script defer src="data/hsk3-webs.js?v=2893a17fb6"></script>
+<script defer src="ascent.js?v=2893a17fb6"></script>
+<script defer src="secrets.js?v=2893a17fb6"></script>
+<script defer src="sync.js?v=2893a17fb6"></script>
+<script defer src="data/audio-manifest.js?v=2893a17fb6"></script>
+<script defer src="erhua.js?v=2893a17fb6"></script>
+<script defer src="app.js?v=2893a17fb6"></script>
 </body>
 </html>

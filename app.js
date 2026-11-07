@@ -1047,6 +1047,59 @@
     return a;
   };
 
+  // ---- sounds: tiny synthesised tones (no audio files). On by default; Settings has a switch. ----
+  const SFX = (() => {
+    let ctx = null;
+    const ensure = () => {
+      try {
+        if (!ctx) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; ctx = new C(); }
+        if (ctx.state === 'suspended') ctx.resume();
+        return ctx;
+      } catch (e) { return null; }
+    };
+    const tone = (c, f, at, dur, type, vol) => {
+      const o = c.createOscillator(), g = c.createGain();
+      o.type = type; o.frequency.setValueAtTime(f, at);
+      g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(vol, at + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+      o.connect(g); g.connect(c.destination); o.start(at); o.stop(at + dur + 0.03);
+    };
+    const SOUNDS = {
+      ok:   (c, t) => { tone(c, 880, t, 0.14, 'sine', 0.11); tone(c, 1318.5, t + 0.085, 0.2, 'sine', 0.11); },
+      bad:  (c, t) => { tone(c, 262, t, 0.16, 'triangle', 0.1); tone(c, 196, t + 0.1, 0.24, 'triangle', 0.1); },
+      done: (c, t) => { [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(c, f, t + i * 0.11, 0.3, 'sine', 0.1)); tone(c, 1046.5, t + 0.44, 0.5, 'triangle', 0.06); },
+      ach:  (c, t) => { [783.99, 987.77, 1174.66, 1567.98].forEach((f, i) => tone(c, f, t + i * 0.09, 0.45, 'sine', 0.09)); }
+    };
+    const play = (name, force) => {
+      try {
+        if (!force && prefGet('sound', true) === false) return;
+        if (window.SHANLU_MUTE_SFX) { window.__sfxLog = (window.__sfxLog || []).concat([name]); return; }   // (the browser tests listen instead of playing)
+        const c = ensure(); if (!c || !SOUNDS[name]) return;
+        SOUNDS[name](c, c.currentTime + 0.01);
+      } catch (e) {}
+    };
+    // browsers only let a page make sound after the first tap or key press
+    const unlock = () => { ensure(); };
+    ['pointerdown', 'keydown', 'touchstart'].forEach(ev => document.addEventListener(ev, unlock, { once:true, passive:true }));
+    return { play };
+  })();
+  // ---- milestones: each one is earned once, when its test becomes true; the list is also what achievements will be built on ----
+  const MILESTONES = [
+    { id:'streak3', icon:'🔥', title:'3-day streak', desc:'Three days in a row. The habit is starting.', test:m => m.streak >= 3 },
+    { id:'streak7', icon:'🔥', title:'A full week', desc:'7 days in a row. That is real consistency.', test:m => m.streak >= 7 },
+    { id:'streak14', icon:'🔥', title:'Two weeks strong', desc:'14 days in a row.', test:m => m.streak >= 14 },
+    { id:'streak30', icon:'🔥', title:'A month of Chinese', desc:'30 days in a row. Most people never get here.', test:m => m.streak >= 30 },
+    { id:'streak100', icon:'🔥', title:'100-day streak', desc:'One hundred days. Remarkable.', test:m => m.streak >= 100 },
+    { id:'words10', icon:'🌱', title:'First 10 words', desc:'Ten words are in your memory.', test:m => m.words >= 10 },
+    { id:'words50', icon:'🌿', title:'50 words', desc:'Fifty words you can recall.', test:m => m.words >= 50 },
+    { id:'words100', icon:'🌳', title:'100 words', desc:'A hundred words in memory.', test:m => m.words >= 100 },
+    { id:'words250', icon:'⛰️', title:'250 words', desc:'A quarter of a thousand.', test:m => m.words >= 250 },
+    { id:'words500', icon:'🏔️', title:'500 words', desc:'Half a thousand words. You can read real sentences now.', test:m => m.words >= 500 },
+    { id:'words1000', icon:'🚀', title:'1,000 words', desc:'One thousand words in memory.', test:m => m.words >= 1000 },
+    { id:'lesson1', icon:'📘', title:'First grammar lesson', desc:'You passed your first grammar lesson.', test:m => m.lessons >= 1 },
+    { id:'lessons10', icon:'📚', title:'10 grammar lessons', desc:'Ten lessons passed.', test:m => m.lessons >= 10 },
+    { id:'gmaster1', icon:'✍️', title:'First grammar point mastered', desc:'You wrote it yourself and got it right, more than once.', test:m => m.gmastered >= 1 },
+    { id:'exam1', icon:'🎓', title:'Level exam passed', desc:'You passed a level exam.', test:m => m.exams >= 1 }
+  ];
   // A small bar at the top (outside the page that is redrawn) that names an error, so a stuck page can be explained instead of just sitting there
   function showErr(e, kind) {
     try {
@@ -1069,7 +1122,7 @@
     // (the message is also kept in localStorage 'shanlu-lasterr'), drop the Review card that was being drawn, and carry on.
     rFails = 0;
     _render() {
-      try { super._render(); this.rFails = 0; this.focusTyped(); }
+      try { super._render(); this.rFails = 0; this.focusTyped(); this.sfxWatch(); }
       catch (e) {
         showErr(e, 'draw');
         const S = this.state; this.rFails++;
@@ -1128,6 +1181,7 @@
       // a save that failed is tried again every 10 seconds until it works (the next action also saves, as usual); nothing is retried once it has worked
       clearTimeout(this.saveRetry); this.saveRetry = null;
       if (lsFails > f0) this.saveRetry = setTimeout(() => { this.saveRetry = null; this.persistNow(); }, SAVE_RETRY_MS);
+      this.checkMilestones();
     }
     // ----- friends board: talks to the server rarely (on open, after a pause in studying, when you leave, and at most every ~10 minutes) -----
     frTimer = null;
@@ -2202,6 +2256,42 @@
       return false;
     };
     // a typed card: put the cursor in the answer box so the whole session can be done from the keyboard (only where there is a real keyboard and mouse)
+    // sounds follow what just changed on screen: an answer being marked, a card rated, a session finished
+    sfxWatch() {
+      try {
+        const S = this.state; const p = this._sx;
+        const rc = S.rcounts || {};
+        const cur = { chk:S.qchecked, ok:S.qcorrect, rc:S.rcomplete, qd:S.qdone, step:S.rstep, again:rc.again || 0, pos:(rc.hard || 0) + (rc.good || 0) + (rc.easy || 0) };
+        this._sx = cur;
+        if (!p) return;
+        if (cur.chk && !p.chk) { SFX.play(cur.ok ? 'ok' : 'bad'); return; }
+        if (cur.rc && !p.rc) { SFX.play('done'); return; }
+        if (cur.qd && !p.qd) { SFX.play('done'); return; }
+        if (cur.step > p.step && !p.chk) { if (cur.again > p.again) SFX.play('bad'); else if (cur.pos > p.pos) SFX.play('ok'); }
+      } catch (e) {}
+    }
+    // earned milestones: a toast the first time, remembered in the person's saved preferences
+    checkMilestones() {
+      try {
+        const S = this.state; if (this.frozen) return;
+        const have = prefGet('ach', {}) || {};
+        const today = ymd(new Date()); const streak = (S.lastActive === today || S.lastActive === daysAgo(1)) ? S.streak : 0;
+        const m = { streak, words:memOf(S.ws).words, lessons:LESSONS.filter(L => (S.gres[L.id] || 0) >= 80).length, gmastered:Object.keys(S.gpt || {}).filter(id => gptInfo(S.gpt[id]).mastered).length, exams:LVL.passedList(S.exams || []) ? 1 : 0 };
+        const fresh = MILESTONES.filter(x => !have[x.id] && x.test(m));
+        if (!fresh.length) return;
+        const next = Object.assign({}, have); const now = Date.now(); fresh.forEach(x => { next[x.id] = now; });
+        prefSet('ach', next);
+        if (!this.msStarted) { this.msStarted = true; if (!Object.keys(have).length && fresh.length > 3) return; }   // an existing learner meeting this for the first time is not showered with old news
+        this.setState({ msQueue:(S.msQueue || []).concat(fresh.map(x => ({ icon:x.icon, title:x.title, desc:x.desc }))) });
+        SFX.play('ach');
+        this.msArm();
+      } catch (e) {}
+    }
+    // a milestone toast leaves by itself after a few seconds (the next one in line then shows)
+    msArm() {
+      clearTimeout(this.msTimer);
+      this.msTimer = setTimeout(() => { const q = (this.state.msQueue || []).slice(1); this.setState({ msQueue:q }); if (q.length) this.msArm(); }, 6500);
+    }
     focusTyped() {
       try {
         const S = this.state; if ((S.screen !== 'review' && S.screen !== 'quiz') || S.qchecked) return;
@@ -2732,6 +2822,13 @@
       };
       const streakShown = (S.lastActive === today || S.lastActive === daysAgo(1)) ? S.streak : 0;
 
+      // the end-of-session celebration: how it went, in words that fit
+      const rc = S.rcounts || {}; const rcN = (rc.again || 0) + (rc.hard || 0) + (rc.good || 0) + (rc.easy || 0);
+      const rcAccN = rcN ? Math.round(((rc.good || 0) + (rc.easy || 0)) / rcN * 100) : 0;
+      const rcAcc = rcAccN + '%';
+      const rcPick = (list) => list[(S.rtotal + (S.rdone || 0)) % list.length];
+      const rcHead = rcAccN >= 90 ? rcPick(['Flawless focus!', 'Superb session!', 'That was sharp!']) : rcAccN >= 70 ? rcPick(['Great session!', 'Nicely done!', 'Solid work!']) : rcAccN >= 40 ? rcPick(['Session complete!', 'Good effort, that counts!', 'You showed up, and it shows!']) : rcPick(['Done, and the misses are the learning', 'Tough one, and you finished it', 'Hard words are where memory grows']);
+      const rcSub = rcAccN >= 90 ? 'Almost everything stuck. Those words will come back after longer gaps.' : rcAccN >= 70 ? 'Most of it is sticking. The ones you missed will be back soon.' : 'Words you missed will come back sooner. Seeing them again is how they stick.';
       const active = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
       const navCls = (k) => 'nav' + (active === k ? ' on' : '');
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
@@ -3297,7 +3394,18 @@
         examBtnText:'See the ' + LVN + ' level exam',
         examNaTitle:ALL ? 'Level exams are taken one level at a time' : LVN + ' mock exam: not built yet',
         examNaText:ALL ? 'Each mock exam belongs to one level. Switch to that level in the header, take its exam there, and passing it opens the next level. Everything else on this page mixes all the levels you have unlocked.' : 'The mock exam is modelled on the official HSK 1 sample papers and exists for HSK 1 only so far. For ' + LVN + ', the Tests screen gives mixed questions from the words you have started, and Grammar has practice for every lesson.',
-        lvOpts:Array.from({ length:LVL.MAX_LEVEL }, (_, i) => i + 1).concat([0]).map(n => { if (n === 0) { const openAll = LVL.unlockedLevels().length >= 2; return { label:'All' + (openAll ? '' : ' 🔒'), cls:(ALL ? 'on' : '') + (openAll ? '' : ' locked'), fn:() => (openAll ? this.switchLevel(0) : this.setState({ lvMsg:99 })) }; } const open = LVL.unlocked(n); return { label:'HSK ' + n + (open ? '' : ' 🔒'), cls:(LV === n ? 'on' : '') + (open ? '' : ' locked'), fn:() => (open ? this.switchLevel(n) : this.setState({ lvMsg:n })) }; }),
+        lvLabel:ALL ? 'All levels' : 'HSK ' + LV, lvMenuOpen:!!S.lvMenu, lvMenuToggle:() => this.setState({ lvMenu:!S.lvMenu }),
+        lvItems:Array.from({ length:LVL.MAX_LEVEL }, (_, i) => i + 1).concat([0]).map(n => {
+          if (n === 0) { const openAll = LVL.unlockedLevels().length >= 2; return { label:'All levels', sub:openAll ? 'Every level you have opened, together' : 'Opens when two levels are unlocked', cls:(ALL ? 'on' : '') + (openAll ? '' : ' locked'), isOn:ALL, fn:() => { this.setState({ lvMenu:false }); if (openAll) this.switchLevel(0); else this.setState({ lvMsg:99 }); } }; }
+          const open = LVL.unlocked(n);
+          let sub = 'Locked: pass the HSK ' + (n - 1) + ' exam';
+          if (open) {
+            let got = 0; const tot = (window['HSK' + n + '_WORDS'] || []).length;
+            try { const ws = n === LV && !ALL ? S.ws : ((readStore(n) || {}).ws || {}); Object.keys(ws).forEach(z => { if (ws[z] && ws[z].see && ws[z].see.s > 0) got++; }); } catch (e) {}
+            sub = got + ' of ' + tot + ' words in memory';
+          }
+          return { label:'HSK ' + n, sub, cls:(!ALL && LV === n ? 'on' : '') + (open ? '' : ' locked'), isOn:!ALL && LV === n, fn:() => { this.setState({ lvMenu:false }); if (open) this.switchLevel(n); else this.setState({ lvMsg:n }); } };
+        }),
         lvMsgShow:S.lvMsg > 0 && (S.lvMsg === 99 ? LVL.unlockedLevels().length < 2 : !LVL.unlocked(S.lvMsg)) ? true : false, lvMsgText:S.lvMsg === 99 ? 'All levels shows every level you have unlocked together, so it needs at least two. Pass the HSK 1 level exam (at least ' + LVL.PASS_PCT + '% in listening and in reading; each section can be taken separately) to unlock HSK 2. Already know HSK 1? Take the exam now to test out. You can also set all levels open in Settings.' : 'HSK ' + S.lvMsg + ' is locked. It opens when you pass the HSK ' + (S.lvMsg - 1) + ' level exam: at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading (each section can be taken separately and retaken). Already know HSK ' + (S.lvMsg - 1) + '? Take the exam now to test out. You can also set all levels open in Settings.',
         lvMsgGo:() => { const tgt = S.lvMsg === 99 ? 1 : S.lvMsg - 1; this.setState({ lvMsg:0 }); if (LV === tgt) this.go('exam'); else { try { localStorage.setItem('shanlu-level', String(tgt)); } catch (e) {} window.location.reload(); } },
         lvMsgClose:() => this.setState({ lvMsg:0 }), lvMsgGoText:LV === (S.lvMsg === 99 ? 1 : S.lvMsg - 1) ? 'Go to the HSK ' + LV + ' exam' : 'Open HSK ' + (S.lvMsg === 99 ? 1 : S.lvMsg - 1),
@@ -3330,6 +3438,10 @@
         setSys2:() => this.setState({ sys:'2.0' }), setSys3:() => this.setState({ sys:'3.0' }),
 
         // review
+        msShow:(S.msQueue || []).length > 0, msIcon:(S.msQueue || [])[0] ? S.msQueue[0].icon : '', msTitle:(S.msQueue || [])[0] ? S.msQueue[0].title : '', msDesc:(S.msQueue || [])[0] ? S.msQueue[0].desc : '', msMore:(S.msQueue || []).length > 1 ? '+' + (S.msQueue.length - 1) + ' more' : '', msClose:() => { const q = (this.state.msQueue || []).slice(1); this.setState({ msQueue:q }); if (q.length) this.msArm(); else clearTimeout(this.msTimer); },
+        dgPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%', dgText:S.dayMin >= S.mins ? 'Daily goal reached. Everything now is a bonus.' : 'Daily goal: ' + S.dayMin + ' of ' + S.mins + ' min', dgDone:S.dayMin >= S.mins,
+        soundOn:prefGet('sound', true) !== false, soundLabel:prefGet('sound', true) !== false ? 'Sounds are on. Turn off' : 'Sounds are off. Turn on', soundToggle:() => { const on = prefGet('sound', true) !== false; prefSet('sound', !on); this.setState({ soundTick:(this.state.soundTick || 0) + 1 }); if (!on) SFX.play('ok', true); }, soundTest:() => SFX.play('ok', true), soundTestDone:() => SFX.play('done', true),
+        rcHead:rcHead, rcSub:rcSub, rcAcc:rcAcc, rcAccN:rcAccN, rcStreak:streakShown, hasHard:(S.rcounts.hard || 0) > 0, rcConfetti:rcAccN >= 60,
         inReview:!S.rcomplete && S.rq.length > 0, rcomplete:S.rcomplete, rdone:S.rdone, rtotal:S.rtotal, rxp:S.rxp, rcounts:S.rcounts,
         rPct:(S.rtotal ? Math.round(S.rdone / S.rtotal * 100) : 0) + '%',
         emptyNew:!S.rcomplete && S.rq.length === 0 && startedCount === 0 && lrnCount === 0,
@@ -3376,7 +3488,7 @@
         playQ:() => this.say(q0.audio || '', 'q'), listenCls:pc('q'),
         showCheck:!S.qchecked, checkLabel:S.qbusy ? 'Checking…' : 'Check', hasQerr:!!S.qerr, qerr:S.qerr || '', checkCls:(canCheck && !S.qbusy) ? '' : 'dis', checkAria:canCheck ? 'false' : 'true', check:this.check,
         qchecked:S.qchecked, qcorrect:S.qcorrect, qwrong:!S.qcorrect, fbCls:S.qcorrect ? 'good' : 'bad',
-        fbTitle:S.qcorrect ? 'Correct' : (S.qfeed && /Right sounds|real word/.test(S.qfeed) ? 'Close' : 'Not quite'),
+        fbTitle:S.qcorrect ? (S.qcombo >= 3 ? S.qcombo + ' in a row!' : ['Correct', 'Nice', 'Right on', 'Spot on', 'Exactly', 'Yes'][(S.qi + S.rstep) % 6]) : (S.qfeed && /Right sounds|real word|check the tone|is a word too|only part of the word/.test(S.qfeed) ? 'So close' : 'Not quite'),
         next:this.next, nextLabel:S.qi + 1 >= total ? 'See results' : 'Continue',
         qcombo:S.qcombo, comboCls:S.qcombo >= 2 ? 'on' : '', exitQuiz:this.exitQuiz,
         resTitle, resSub, resScore:S.qscore + '/' + total, qbest:S.qbest, resGain,
@@ -3436,6 +3548,8 @@
       }
     }
   });
+  document.addEventListener('click', (e) => { try { if (window.shanlu && window.shanlu.state.lvMenu && !(e.target.closest && e.target.closest('.lvmenu'))) window.shanlu.setState({ lvMenu:false }); } catch (err) {} });
+  document.addEventListener('keydown', (e) => { try { if (e.key === 'Escape' && window.shanlu && window.shanlu.state.lvMenu) window.shanlu.setState({ lvMenu:false }); } catch (err) {} });
   // after a mouse click on a Review button, drop the focus so Space and Enter go to the card, not back to that button
   document.addEventListener('click', (e) => { try { const b = e.target && e.target.closest && e.target.closest('.rev button'); if (b && e.detail > 0) b.blur(); } catch (err) {} });
   window.addEventListener('pagehide', () => { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); });

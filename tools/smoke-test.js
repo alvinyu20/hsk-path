@@ -20,6 +20,7 @@ const server = require('./test-static').server(root);
 let failures = 0;
 const window_level_still_1 = (n) => n === 1;
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };
+const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await p.locator('.lvbtn').click(); await p.waitForTimeout(80); };
 
 (async () => {
   await new Promise(r => server.listen(0, r));
@@ -399,6 +400,32 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(foc === 'answer-input' && t1 && !t2, 'on a typed card the cursor is already in the box, Enter checks and Enter continues');
     await page.evaluate(() => { const a = window.shanlu; const o = JSON.parse(window.__kb0); a.setState({ lrn: o.lrn, ws: o.ws }); a.go('review'); a.practiceAnyway(); }); await page.waitForTimeout(150);
   }
+  {   // sounds, milestones, the session-end celebration and the daily goal bar
+    await page.evaluate(() => { window.SHANLU_MUTE_SFX = true; window.__sfxLog = []; });
+    const key2 = async (k) => { await page.keyboard.press(k); await page.waitForTimeout(150); };
+    await key2(' '); await key2('3'); await key2(' '); await key2('1');
+    const log1 = await page.evaluate(() => window.__sfxLog.join(','));
+    check(log1 === 'ok,bad', 'a right answer plays the ding and a missed one the soft tone (' + log1 + ')');
+    await page.evaluate(() => { window.shanlu.go('voice'); }); await page.waitForTimeout(150);
+    await page.locator('button', { hasText: /^Sounds are on/ }).click(); await page.waitForTimeout(100);
+    await page.evaluate(() => { window.__sfxLog = []; window.shanlu.go('review'); window.shanlu.practiceAnyway(); }); await page.waitForTimeout(150);
+    await key2(' '); await key2('3');
+    check(await page.evaluate(() => window.__sfxLog.length === 0), 'with sounds turned off in Settings nothing plays');
+    await page.evaluate(() => { window.shanlu.go('voice'); }); await page.waitForTimeout(150);
+    await page.locator('button', { hasText: /^Sounds are off/ }).click(); await page.waitForTimeout(100);
+    check(await page.evaluate(() => window.__sfxLog.join(',') === 'ok'), 'turning sounds back on plays a sample');
+    check(await page.evaluate(() => { window.shanlu.go('review'); return true; }) && (await page.locator('.dgoal').count()) === 1, 'the daily goal is shown while studying');
+    await page.evaluate(() => { const a = window.shanlu; const today = new Date(); const ymd = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); a.setState({ streak: 7, lastActive: ymd(today), msQueue: [] }); a.persistNow(); });
+    await page.waitForTimeout(200);
+    const ms = await page.evaluate(() => (window.shanlu.state.msQueue || []).map(x => x.title).join('|'));
+    check(/full week/.test(ms) && (await page.locator('.mstoast').count()) === 1, 'reaching a 7-day streak shows a milestone toast (' + ms + ')');
+    await page.evaluate(() => { const a = window.shanlu; a.setState({ msQueue: [] }); a.persistNow(); }); await page.waitForTimeout(150);
+    check(await page.evaluate(() => !(window.shanlu.state.msQueue || []).some(x => /full week/.test(x.title))), 'a milestone is shown only once');
+    await page.evaluate(() => { const a = window.shanlu; a.setState({ rq: [], rtotal: 12, rcomplete: true, rcounts: { again: 1, hard: 1, good: 6, easy: 4 }, rxp: 40 }); }); await page.waitForTimeout(200);
+    const cel = await page.locator('.res.celebrate').innerText();
+    check(/right first time/.test(cel) && /day streak/.test(cel) && (await page.locator('.confetti').count()) === 1 && /83%\s+right first time/.test(cel) && /\+40\s+XP/.test(cel), 'the end of a session is a celebration with the accuracy, XP and streak');
+    await page.evaluate(() => { window.SHANLU_MUTE_SFX = false; const a = window.shanlu; a.setState({ rcomplete: false }); a.go('review'); a.practiceAnyway(); }); await page.waitForTimeout(150);
+  }
   await shot('05-review-front');
   // answer without flipping: pinyin button shows/hides pinyin on the front only; quick buttons rate straight away
   check((await page.locator('.fc-fpy').count()) === 0, 'review front shows no pinyin at first');
@@ -688,9 +715,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('button', { hasText: 'Back to the exam page' }).click();
 
   // The lock: HSK 2 stays closed until a full exam is passed with 80% in both sections
-  check((await page.locator('.lvseg button', { hasText: 'HSK 2' }).innerText()).includes('🔒'), 'HSK 2 shows a lock before the exam is passed');
+  await openLv(page); check((await page.locator('.lvpanel .lvitem:has(.lvn:text-is("HSK 2"))').getAttribute('class') || '').includes('locked'), 'HSK 2 shows a lock before the exam is passed');
   check(await page.evaluate(() => !JSON.parse(localStorage.getItem('shanlu-passed') || '{}')[1]), 'a full exam with a section under 80% does not open HSK 2');
-  await page.locator('.lvseg button', { hasText: 'HSK 2' }).click();
+  await openLv(page); await page.locator('.lvpanel .lvitem:has(.lvn:text-is("HSK 2"))').click();
   check((await text()).includes('HSK 2 is locked') && window_level_still_1(await page.evaluate(() => window.SHANLU_LEVEL)), 'pressing the locked HSK 2 explains how to open it and stays on HSK 1');
   await page.locator('button', { hasText: 'Go to the HSK 1 exam' }).click();
   check((await text()).includes('HSK 1 mock exam'), 'the lock message leads to the exam');
@@ -704,7 +731,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const pt = await text();
   check(pt.includes('seal earned') && pt.includes('HSK 2 is now open') && pt.includes('200 / 200'), 'a perfect full exam earns the seal and says HSK 2 is open');
   check(await page.evaluate(() => !!JSON.parse(localStorage.getItem('shanlu-passed') || '{}')[1]), 'the pass is remembered');
-  check(!(await page.locator('.lvseg button', { hasText: 'HSK 2' }).innerText()).includes('🔒'), 'the lock on HSK 2 is gone');
+  await openLv(page); check(!(await page.locator('.lvpanel .lvitem:has(.lvn:text-is("HSK 2"))').getAttribute('class') || '').includes('locked'), 'the lock on HSK 2 is gone');
   await page.locator('button', { hasText: 'Back to the exam page' }).click();
 
   // Exam + home
@@ -1316,7 +1343,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const slim = await page.evaluate(() => { const t = document.querySelector('.top').getBoundingClientRect(); return { h: t.height, pills: [...document.querySelectorAll('.stats .pill')].filter(p => p.offsetParent !== null).length }; });
   check(slim.h < 90 && slim.pills === 0, 'the header is one slim row on a phone, with no repeated streak and memory chips outside Today (' + Math.round(slim.h) + ' px)');
   await nav('Home');
-  check((await page.evaluate(() => [...document.querySelectorAll('.stats .pill')].filter(p => p.offsetParent !== null).length)) === 2, 'Today still shows the streak and memory chips');
+  check((await page.evaluate(() => [...document.querySelectorAll('.stats > .pill')].filter(p => p.offsetParent !== null).length)) === 2, 'Today still shows the streak and memory chips');
   await page.setViewportSize({ width: 1280, height: 900 });
 
   check(errors.length === 0, 'no console or page errors' + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));
