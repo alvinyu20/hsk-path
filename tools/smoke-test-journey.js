@@ -46,6 +46,15 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.jy-tabs button', { hasText: 'Passport' }).click();
     t = await main(page); check(/0 of 31 regions stamped/.test(t), 'the passport counts 31 regions: ' + t.match(/\d+ of \d+ regions stamped/));
     check(await page.locator('.jy-slot.here').count() === 1, 'the region you are in shows as in progress in the passport');
+    // a stop gets paid for: the pill and the bar glow, and a small note says so
+    await page.locator('.brand').click();
+    check(await page.locator('.pill.xpp.ready').count() === 0 && await page.locator('.xp-ping').count() === 0, 'nothing glows while the next stop is not paid for');
+    await page.evaluate(() => { const a = window.shanlu; a.setState({ xp: a.state.xp + 50, dayXp: a.state.dayXp + 50 }); });
+    check(await page.locator('.pill.xpp.ready').count() === 1, 'the XP pill glows once enough XP is earned for a stop');
+    check(/New stop unlocked/.test(await page.locator('.xp-ping').innerText().catch(() => '')), 'a small note says a new stop is unlocked');
+    await page.locator('.xp-ping').click();
+    check(await page.locator('.jy-meter.ready').count() === 1 && /1 stop ready/.test(await main(page)), 'the Journey bar glows and says one stop is ready');
+    check(await page.locator('.xp-ping').count() === 0, 'the note goes away on the Journey screen');
     check(errors.length === 0, 'no errors: ' + errors.join(' | '));
     await ctx.close();
   }

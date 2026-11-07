@@ -365,7 +365,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', frLeaveAsk:false, frCopied:false,
-      jyTab:'map', jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0,
+      jyPing:0, jyTab:'map', jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -1231,6 +1231,19 @@
           while (keys.length > 60) delete act[keys.shift()];
           patch = Object.assign({}, patch, { activity:act, streak:S.lastActive === daysAgo(1) ? S.streak + 1 : 1, lastActive:t });
         }
+      }
+      // enough XP for another Journey stop: the XP pill glows (see jyView) and a small note says so for a few seconds
+      if (patch.xp !== undefined && patch.xp > S.xp && JY && JWORLD) {
+        try {
+          const st = jyRead();
+          if (st && st.reg) {
+            const before = totalXp(S), after = before + (patch.xp - S.xp);
+            if (JY.meter(after, st).ready > JY.meter(before, st).ready) {
+              patch = Object.assign({}, patch, { jyPing:Date.now() });
+              clearTimeout(this.pingTimer); this.pingTimer = setTimeout(() => { this.setState({ jyPing:0 }); }, 9000);
+            }
+          }
+        } catch (e) {}
       }
       super.setState(patch);
       this.persistSoon();
@@ -2410,7 +2423,7 @@
     jyFilterSet = (f) => this.setState({ jyFilter:f, jySel:null, jyMoreN:40 });
 
     jyView(S) {
-      const base = { isJourney:S.screen === 'journey', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Lifetime XP across every level. Spend it on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), jyReadyShow:false, jyReadyN:0, jyReadyLabel:'', jyGuideShow:false };
+      const base = { isJourney:S.screen === 'journey', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Lifetime XP across every level. Spend it on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), xpPillCls:'pill xpp', jyPingShow:false, jyReadyShow:false, jyReadyN:0, jyReadyLabel:'', jyGuideShow:false };
       if (!JWORLD || !JMAP) return Object.assign(base, { jyOff:S.screen === 'journey' });
       const st = jyRead() || JY.fresh();   // only read here;
       base.jyGuideShow = S.screen === 'journey' && !ONB_OFF() && !onbRead().g && st.seen.length > 0;   // you have flown: here is how the site works the screen saves it when it opens and after every stop
@@ -2418,7 +2431,7 @@
       const META = JY.META;
       const rName = (id) => (JWORLD.byRegion[id] ? JWORLD.byRegion[id].en : (META[id] ? META[id][1] : id));
       const R = st.reg ? JWORLD.byRegion[st.reg] : null;
-      base.jyReadyShow = mt.ready > 0 && !!R; base.jyReadyN = mt.ready; base.jyReadyLabel = mt.ready + (mt.ready === 1 ? ' stop' : ' stops') + ' ready on the Journey';
+      base.jyReadyShow = mt.ready > 0 && !!R; base.xpPillCls = 'pill xpp' + (mt.ready > 0 && R ? ' ready' : ''); base.jyPingShow = !!S.jyPing && S.screen !== 'journey' && !!R && mt.ready > 0; base.jyReadyN = mt.ready; base.jyReadyLabel = mt.ready + (mt.ready === 1 ? ' stop' : ' stops') + ' ready on the Journey';
       if (S.screen !== 'journey') return base;
       const have = {}; st.seen.forEach(id => { have[id] = 1; });
       const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
@@ -2444,7 +2457,7 @@
         Object.assign(out, { jyNowLabel:'Exploring', jyNowZh:R.zh, jyNowEn:R.en, jyNowSub:rs.got + ' of ' + rs.total + ' stops' + (C ? ' · now in ' + C.en : '') });
       }
       out.jyPct = (done ? 100 : mt.pct) + '%'; out.jyPctNum = done ? 100 : mt.pct;
-      out.jyMeterText = done ? 'Journey complete' : mt.ready > 0 ? plural(mt.ready, 'stop', 'stops') + ' ready' : mt.into + ' of ' + mt.nextCost + ' XP to the next stop';
+      out.jyMeterCls = 'jy-meter' + (mt.ready > 0 && !done ? ' ready' : ''); out.jyMeterText = done ? 'Journey complete' : mt.ready > 0 ? plural(mt.ready, 'stop', 'stops') + ' ready' : mt.into + ' of ' + mt.nextCost + ' XP to the next stop';
       out.jyXpTotal = xp.toLocaleString('en-US') + ' XP in total';
       out.jyGoOff = done || mt.ready < 1; out.jyGoText = done ? 'All done' : mt.ready > 0 ? (st.n === 0 ? 'Take your first flight (free)' : st.started ? 'Travel to the next stop' : 'Board the flight') : mt.toGo + ' XP to go';
       out.jyTravel = this.jyTravel;

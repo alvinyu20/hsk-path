@@ -80,7 +80,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.ob-banner button', { hasText: 'How Shanlu works' }).click();
     t = await main(page);
     check(/A day on Shanlu/.test(t) && /What each part is for/.test(t) && /XP and the Journey/.test(t) && /Your progress and your friends/.test(t), 'the guide opens with its sections');
-    check(/Your first stop is free/.test(t) && /50, 100, 150, 200 and then 250 XP/.test(t), 'the guide states the XP ramp');
+    check(/Your first stop is free/.test(t) && /50, 100, 200, 300, 400 and then 500 XP/.test(t), 'the guide states the XP ramp');
     check(await page.locator('.side .linkbtn', { hasText: 'How Shanlu works' }).count() === 1, 'the sidebar keeps a link to the guide');
     await page.locator('.pill.xpp').click();
     check(await page.locator('.ob-banner').count() === 0, 'the prompt does not come back once the guide was opened');

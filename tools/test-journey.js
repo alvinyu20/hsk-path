@@ -10,10 +10,10 @@ const eq = (a, b, m) => ok(JSON.stringify(a) === JSON.stringify(b), m + ' (got '
 // seeded random numbers so a failure can be repeated
 const seeded = (seed) => () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
 
-// ---- the price ladder: free, 50, 100, 150, 200, then 250 each ----
-eq([1, 2, 3, 4, 5, 6, 7, 100].map(J.costOf), [0, 50, 100, 150, 200, 250, 250, 250], 'ladder: the first stop is free');
-eq([0, 1, 2, 3, 4, 5, 6, 7].map(J.cum), [0, 0, 50, 150, 300, 500, 750, 1000], 'cumulative cost');
-eq([0, 49, 50, 149, 150, 299, 300, 499, 500, 749, 750].map(J.paidFor), [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6], 'stops paid for');
+// ---- the price ladder: free, 50, 100, 200, 300, 400, then 500 each ----
+eq([1, 2, 3, 4, 5, 6, 7, 100].map(J.costOf), [0, 50, 100, 200, 300, 400, 500, 500], 'ladder: the first stop is free');
+eq([0, 1, 2, 3, 4, 5, 6, 7].map(J.cum), [0, 0, 50, 150, 350, 650, 1050, 1550], 'cumulative cost');
+eq([0, 49, 50, 149, 150, 349, 350, 649, 650, 1049, 1050].map(J.paidFor), [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6], 'stops paid for');
 for (let n = 2; n < 300; n++) ok(J.paidFor(J.cum(n)) === n && J.paidFor(J.cum(n) - 1) === n - 1, 'paidFor inverts cum at ' + n);
 
 const W = J.build(window.JOURNEY);
@@ -93,7 +93,7 @@ for (let seed = 1; seed <= 25; seed++) {
   eq(J.meter(0, st), { ready:0, nextCost:50, into:0, pct:0, toGo:50 }, 'meter after the first flight, at 0');
   eq(J.meter(30, st), { ready:0, nextCost:50, into:30, pct:60, toGo:20 }, 'meter at 30');
   const m = J.meter(260, st); eq([m.ready, m.pct], [2, 100], 'two stops waiting at 260 XP');
-  st.n = 3; const m2 = J.meter(260, st); eq([m2.ready, m2.nextCost, m2.into, m2.toGo], [0, 150, 110, 40], 'after three stops, 110 XP into the next');
+  st.n = 3; const m2 = J.meter(260, st); eq([m2.ready, m2.nextCost, m2.into, m2.toGo], [0, 200, 110, 90], 'after three stops, 110 XP into the next');
 }
 
 // ---- a stop added to the data later still turns up, and a removed one does not break anything ----

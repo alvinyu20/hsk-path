@@ -18,8 +18,8 @@
  *   ms     { name: 1 } municipalities whose "this is its own municipality" note has been shown
  */
 (function (root) {
-  const LADDER = [50, 100, 150, 200];
-  const FLAT = 250;
+  const LADDER = [50, 100, 200, 300, 400];
+  const FLAT = 500;
   // the very first stop (the first flight in) is free, so a new person is welcomed at 0 XP; after that the ladder starts
   const costOf = (k) => (k <= 1 ? 0 : k - 1 <= LADDER.length ? LADDER[k - 2] : FLAT);
   const cum = (n) => { if (n <= 1) return 0; const m = n - 1; if (m <= LADDER.length) { let s = 0; for (let i = 0; i < m; i++) s += LADDER[i]; return s; } return LADDER.reduce((a, b) => a + b, 0) + (m - LADDER.length) * FLAT; };
