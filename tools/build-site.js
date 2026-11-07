@@ -53,7 +53,7 @@ const csp = [
   "default-src 'self'",
   "script-src 'self'",
   "style-src 'self' 'unsafe-inline'",   // the page sets style attributes while it draws; scripts stay locked to this site
-  "img-src 'self' data: blob: https://upload.wikimedia.org",   // Journey photos come from Wikimedia Commons
+  "img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org",   // Journey photos come from Wikimedia Commons
   "font-src 'self'",
   'media-src \'self\' blob: data: https://*.aliyuncs.com',   // Qwen voice clips are links to files on Alibaba's storage
   ["connect-src 'self'", 'https://api.anthropic.com', 'https://dashscope-intl.aliyuncs.com', 'https://*.ap-southeast-1.maas.aliyuncs.com', 'https://api.github.com', friendsOrigin].filter(Boolean).join(' '),

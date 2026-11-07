@@ -23,7 +23,7 @@ const ROOT = path.join(__dirname, '..');
 const OUT = path.join(ROOT, 'data', 'journey-media.js');
 const MISS = path.join(__dirname, 'journey-media-misses.json');
 const UA = 'ShanluJourneyMedia/1.0 (https://github.com/alvinyu20/hsk-path; study site photo lookup)';
-const WIDTH = 640;
+const WIDTH = 500;   // Wikimedia hands out thumbnails only in fixed sizes and rounds up to the next one
 const KEEP_LICENCES = /^(public domain|pd\b|cc0|cc[- ]by(?![- ]nc)(?![- ]nd)|cc[- ]by[- ]sa(?![- ]nc)(?![- ]nd))/i;
 
 const km = (a, b, c, d) => { const r = Math.PI / 180, x = (d - b) * r * Math.cos((a + c) * r / 2), y = (c - a) * r; return Math.sqrt(x * x + y * y) * 6371; };
@@ -52,14 +52,14 @@ function makeApi(doFetch) {
     throw new Error('Too many retries for ' + url);
   };
   return {
-    page: (title) => get('https://zh.wikipedia.org/w/api.php', { action: 'query', titles: title, redirects: '1', prop: 'pageimages|coordinates|pageprops', piprop: 'name|thumbnail', pithumbsize: String(WIDTH), ppprop: 'disambiguation', colimit: '1' }),
+    page: (title, lang) => get('https://' + (lang || 'zh') + '.wikipedia.org/w/api.php', { action: 'query', titles: title, redirects: '1', prop: 'pageimages|coordinates|pageprops', piprop: 'name|thumbnail', pithumbsize: String(WIDTH), ppprop: 'disambiguation', colimit: '1' }),
     file: (name) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', titles: 'File:' + name, prop: 'imageinfo', iiprop: 'url|extmetadata|mime', iiurlwidth: String(WIDTH), iiextmetadatafilter: 'Artist|LicenseShortName|Credit|UsageTerms' }),
   };
 }
 
-// One stop: returns { entry } or { miss: 'why' }
-async function lookup(api, stop) {
-  const q = await api.page(stop.zh);
+// One page of one Wikipedia: returns { entry } or { miss: 'why' }
+async function tryPage(api, stop, lang, title) {
+  const q = await api.page(title, lang);
   const page = q && q.query && q.query.pages && q.query.pages[0];
   if (!page || page.missing) return { miss: 'no page' };
   if (page.pageprops && page.pageprops.disambiguation !== undefined) return { miss: 'disambiguation' };
@@ -81,7 +81,16 @@ async function lookup(api, stop) {
   if (!KEEP_LICENCES.test(licence)) return { miss: 'licence ' + (licence || 'unknown') };
   const artist = strip(meta.Artist && meta.Artist.value) || strip(meta.Credit && meta.Credit.value) || 'Wikimedia Commons';
   const credit = (artist.length > 70 ? artist.slice(0, 67) + '...' : artist) + ' / ' + licence;
-  return { entry: { u: info.thumburl || page.thumbnail.source, c: credit, a: stop.en } };
+  const u = String(info.thumburl || page.thumbnail.source).replace(/\?.*$/, '');   // the tracking tail adds nothing
+  return { entry: { u, c: credit, a: stop.en } };
+}
+
+// The Chinese Wikipedia first (exact Chinese name); when that gives nothing usable, the English page for the English name, held to the same rules.
+async function lookup(api, stop) {
+  const zh = await tryPage(api, stop, 'zh', stop.zh);
+  if (zh.entry || !stop.en) return zh;
+  const en = await tryPage(api, stop, 'en', stop.en);
+  return en.entry ? en : zh;
 }
 
 function writeMedia(media) {
@@ -92,7 +101,7 @@ function writeMedia(media) {
 }
 
 async function run(opts) {
-  const o = Object.assign({ fetch: globalThis.fetch, region: '', limit: 300, retryMisses: false, world: null, media: null, misses: null, concurrency: 4, log: console.log, save: true }, opts || {});
+  const o = Object.assign({ fetch: globalThis.fetch, region: '', limit: 300, retryMisses: false, world: null, media: null, misses: null, concurrency: 4, log: console.log, save: true, verify: false }, opts || {});
   const W = o.world || loadWorld();
   const media = o.media || loadMedia(), misses = o.misses || loadMisses();
   const api = makeApi(o.fetch);
@@ -107,6 +116,7 @@ async function run(opts) {
       const stop = todo[next++];
       try {
         const r = await lookup(api, stop);
+        if (r.entry && o.verify) { const v = await o.fetch(r.entry.u, { method: 'HEAD', headers: { 'User-Agent': UA } }).catch(() => null); if (!v || !v.ok || !/^image\//.test((v.headers && v.headers.get && v.headers.get('content-type')) || '')) { delete r.entry; r.miss = 'image does not load'; } }
         if (r.entry) { media[stop.id] = r.entry; delete misses[stop.id]; found++; } else { misses[stop.id] = r.miss; missed++; }
       } catch (e) { failed++; o.log('  error for ' + stop.id + ': ' + e.message); }
       if ((found + missed) % 50 === 0 && o.save) { writeMedia(media); fs.writeFileSync(MISS, JSON.stringify(misses, null, 0) + '\n'); }
@@ -122,5 +132,5 @@ module.exports = { run, lookup, makeApi, strip, km, KEEP_LICENCES, writeMedia };
 
 if (require.main === module) {
   const arg = (n) => { const i = process.argv.indexOf('--' + n); return i >= 0 ? process.argv[i + 1] : ''; };
-  run({ region: arg('region'), limit: Number(arg('limit')) || 300, retryMisses: process.argv.includes('--retry-misses') }).catch((e) => { console.error(e); process.exit(1); });
+  run({ region: arg('region'), limit: Number(arg('limit')) || 300, retryMisses: process.argv.includes('--retry-misses'), verify: true }).catch((e) => { console.error(e); process.exit(1); });
 }
