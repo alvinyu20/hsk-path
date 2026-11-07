@@ -14,6 +14,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const open = async (opts) => {
     opts = opts || {};
     const ctx = await browser.newContext({ viewport: opts.viewport || { width: 1100, height: 900 } });
+    await ctx.route(/wikimedia\.org/, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64') }));   // photos come from Wikimedia: a stand-in picture keeps the test offline
     await ctx.addInitScript((o) => {
       window.SHANLU_MUTE_SFX = true; window.SHANLU_JY_FIRST = 'sichuan'; window.SHANLU_AUTO_SHARE = 0;
       if (!o.off) window.SHANLU_ONBOARDING = 1;

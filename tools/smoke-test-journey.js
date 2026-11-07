@@ -12,6 +12,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const browser = await chromium.launch();
   const open = async (opts) => {
     const ctx = await browser.newContext({ viewport: opts.viewport || { width: 1100, height: 900 } });
+    await ctx.route(/wikimedia\.org/, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64') }));   // photos come from Wikimedia: a stand-in picture keeps the test offline
     if (opts.xp != null) await ctx.addInitScript((xp) => { if (!localStorage.getItem('shanlu-progress-v1')) localStorage.setItem('shanlu-progress-v1', JSON.stringify({ xp, dayXp: 0 })); window.SHANLU_MUTE_SFX = true; window.SHANLU_JY_FIRST = 'sichuan'; }, opts.xp);
     else await ctx.addInitScript(() => { window.SHANLU_MUTE_SFX = true; window.SHANLU_JY_FIRST = 'sichuan'; });
     const page = await ctx.newPage(); const errors = [];
