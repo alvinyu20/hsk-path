@@ -193,9 +193,8 @@ async function viaWikidata(api, stop) {
   return last;
 }
 
-// Dishes: a Commons search limited to the cuisine category tree (deepcat), so every result is already food. Because the title need not hold the whole name,
-// a result must share the dish's distinctive words (or its pinyin, or its Chinese name) with its title or categories.
-const CUISINE = { sichuan: 'Sichuan cuisine', guangdong: 'Cantonese cuisine', zhejiang: 'Zhejiang cuisine', jiangsu: 'Jiangsu cuisine', shandong: 'Shandong cuisine', fujian: 'Fujian cuisine', anhui: 'Anhui cuisine', hunan: 'Hunan cuisine', xinjiang: 'Uyghur cuisine', yunnan: 'Yunnan cuisine', shaanxi: 'Shaanxi cuisine', taiwan: 'Taiwanese cuisine', hongkong: 'Hong Kong cuisine', macau: 'Macanese cuisine', singapore: 'Cuisine of Singapore' };
+// Dishes: a Commons category found by the dish's name must share the dish's distinctive words (or its pinyin, or its Chinese name).
+// (A deepcat: search inside the cuisine category tree was tried too; it returned nothing at all, so it was dropped.)
 const GENERIC = new Set('soup noodle noodles pork beef chicken duck fish rice cake cakes tofu dumpling dumplings pot hotpot dish style fried braised stewed steamed roasted sweet sour spicy cold hot tea with wine pancake pancakes bun buns bread sauce pie roll rolls mutton lamb shrimp crab goose eggs vegetable vegetables sausage cured smoked local traditional famous wrapped cooked grilled barbecue black white green red yellow golden crispy fresh dried salted pickled sliced mixed small big old city region province'.split(' '));
 const stem = (w) => w.replace(/(ies|es|s)$/, '');
 const plain = (t) => String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -233,25 +232,6 @@ async function viaDishCategory(api, stop, dbg) {
   }
   return last;
 }
-async function viaCategory(api, stop, dbg) {
-  let last = { miss: 'no category match' };
-  const cuisines = ['Chinese cuisine'].concat(CUISINE[stop.rid] ? [CUISINE[stop.rid]] : []);
-  for (const c of cuisines) for (const name of [stop.en, stop.zh]) {
-    if (!name || name.length < 2) continue;
-    const q = await api.cfiles('deepcat:"' + c + '" ' + name).catch((e) => { if (dbg) dbg('deepcat error: ' + e.message); return null; });
-    const titles = ((q && q.query && q.query.search) || []).map((h) => nm(h.title)).filter((t) => /\.(jpe?g|png|webp)$/i.test(t) && !NOT_A_PHOTO.test(t)).slice(0, 8);
-    if (dbg) dbg(stop.id + ': deepcat "' + c + '" ' + name + ' -> ' + titles.length + ' files');
-    if (!titles.length) continue;
-    const detail = {};
-    const fl = await foodFlags(api, titles, detail).catch(() => ({}));
-    for (const t of titles.filter((t) => fl[t] && relevant(stop, t, detail[t])).slice(0, 2)) {
-      const r = await fileEntry(api, t, stop.en, { dish: true, checked: true });
-      if (r.entry) { r.note = t + ' (' + c + ')'; return r; } last = r;
-    }
-  }
-  return last;
-}
-
 // Commons itself: a file whose title holds the stop's whole English (or Chinese) name. Names that are too short or generic are not trusted.
 async function viaCommons(api, stop) {
   let last = { miss: 'no commons file' };
@@ -294,7 +274,6 @@ async function lookup(api, stop) {
   if (stop.k === 'D') {
     const dbg = process.env.JM_DEBUG ? (m) => console.log('  [debug] ' + m) : null;
     const dc = await viaDishCategory(api, stop, dbg); if (dc.entry) return dc;
-    const ct = await viaCategory(api, stop, dbg); if (ct.entry) return ct;
   }
   return zh;
 }
