@@ -366,7 +366,7 @@
     try { dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
-      fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', frLeaveAsk:false, frCopied:false,
+      fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
       jyPing:0, jyTab:'map', jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
@@ -1379,6 +1379,20 @@
         await this.friendsPush({});
         await this.friendsRefresh(true);
       } catch (e) { this.setState({ frBusy:false, frErr:(e && e.message) || 'Could not join.' }); }
+    };
+    // The Home Screen icon on iPhone has its own storage and links open in the browser, so a personal link has to be pasted in. Accepts the whole link, "#me=…" or just "id.key".
+    friendsSignInLink = async () => {
+      const S = this.state;
+      if (S.frLinkBusy || !FR) return;
+      const m = /([0-9a-f]{16})\.([0-9a-f]{48})/.exec(String(S.frLinkIn || '').trim().toLowerCase());
+      if (!m) { this.setState({ frErr:'That is not a personal link. Copy it from Friends on the device that is already in the group ("Copy my link").', frMsg:'' }); return; }
+      this.setState({ frLinkBusy:true, frErr:'', frMsg:'' });
+      try {
+        const g = await FR.restore({ id:m[1], key:m[2] });
+        this.setState({ frLinkBusy:false, frLinkIn:'', fr:g, frAt:Date.now(), frMsg:'Signed in on this device.', frErr:'' });
+        await this.friendsPush({});
+        await this.friendsRefresh(true);
+      } catch (e) { this.setState({ frLinkBusy:false, frErr:(e && e.message) || 'That link does not work.' }); }
     };
     // "Test connection" for the friends server: reachable from this browser, and does it still accept this device's key?
     friendsTest = async () => {
@@ -3198,7 +3212,7 @@
       const frVals = {
         frJoined:!!frIdent, frNotJoined:!!(FR && FR.enabled()) && !frIdent, frOff:!(FR && FR.enabled()),
         frName:S.frName, frCode:S.frCode, frErr:S.frErr, frHasErr:!!S.frErr, frMsg:S.frMsg, frHasMsg:!!S.frMsg, frBusy:S.frBusy, frJoinText:S.frBusy ? 'Joining…' : 'Join group',
-        onFrName:(e) => this.setState({ frName:e.target.value }), onFrCode:(e) => this.setState({ frCode:e.target.value }), friendsJoin:this.friendsJoin,
+        onFrName:(e) => this.setState({ frName:e.target.value }), onFrCode:(e) => this.setState({ frCode:e.target.value }), friendsJoin:this.friendsJoin, frLinkIn:S.frLinkIn, onFrLink:(e) => this.setState({ frLinkIn:e.target.value }), friendsSignInLink:this.friendsSignInLink, frSignText:S.frLinkBusy ? 'Signing in…' : 'Sign in with my link',
         frLoaded:!!S.fr, frWaiting:!!frIdent && !S.fr, frMine:frIdent ? frIdent.name : '', frGroup:frIdent ? frIdent.group : '',
         frWeekMin, frGoal, frGoalPct:Math.min(100, Math.round(frWeekMin / frGoal * 100)) + '%', frGoalText:frWeekMin + ' of ' + frGoal + ' min',
         frSortOpts:frSorts.map(x => ({ label:x[1], cls:S.frSort === x[0] ? 'on' : '', fn:() => this.setState({ frSort:x[0] }) })),

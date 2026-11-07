@@ -227,6 +227,15 @@ const INVITE = 'ABCD-EFGH-JKLM';
   check(await Cbad.page.locator('.frjoin').count() === 1 && await Cbad.page.evaluate(() => !localStorage.getItem('shanlu-friends')), 'a wrong personal link is refused and nothing is kept');
   await Cbad.ctx.close();
 
+  // pasting the link (the Home Screen icon on iPhone cannot open links)
+  const P = await mk();
+  await P.page.goto(site + '#/friends'); await P.page.evaluate(() => window.shanlu.setState({ screen:'friends' })); await P.page.waitForSelector('#fr-link');
+  await P.page.fill('#fr-link', 'not a link'); await P.page.locator('button', { hasText: 'Sign in with my link' }).click(); await P.page.waitForSelector('.banner.err');
+  check(await P.page.evaluate(() => !localStorage.getItem('shanlu-friends')), 'a pasted text that is not a personal link is refused');
+  await P.page.fill('#fr-link', link); await P.page.locator('button', { hasText: 'Sign in with my link' }).click(); await P.page.waitForSelector('.frow.me');
+  check((await text(P.page)).includes('Signed in on this device') && await P.page.locator('.frow').count() === 2, 'a pasted personal link signs the device in');
+  await P.ctx.close();
+
   // wrong invite
   const D = await mk();
   await D.page.goto(site + '#join=WRONG-CODE-HERE'); await D.page.waitForSelector('.frjoin');

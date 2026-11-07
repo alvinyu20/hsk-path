@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="ea29c8e967">
+<meta name="shanlu-version" content="a29b4941dd">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=ea29c8e967">
+<link rel="stylesheet" href="styles.css?v=a29b4941dd">
 </head>
 <body>
 <div id="app"></div>
@@ -1466,6 +1466,11 @@
         <label class="kick" for="fr-code" style="margin-top:12px">Invite code</label>
         <input id="fr-code" class="inp" type="text" autocomplete="off" autocapitalize="characters" placeholder="From your invite link" value="{{frCode}}" data-on-input="{{onFrCode}}">
         <button class="btn pri big" style="margin-top:16px" data-on-click="{{friendsJoin}}">{{frJoinText}}</button>
+        <h3 class="h2" style="margin:26px 0 0;font-size:17px">Already in the group on another device?</h3>
+        <p class="muted" style="margin:6px 0 10px;font-size:14.5px">Use this on the Home Screen icon. On the device that is already in the group, open Friends and tap "Copy my link" (your link), send the link to yourself, then copy it and paste it here. Opening the link does not work for the Home Screen icon, because iPhone opens links in the browser, which keeps its own separate storage.</p>
+        <label class="kick" for="fr-link">Your personal link</label>
+        <input id="fr-link" class="inp" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste your link here" value="{{frLinkIn}}" data-on-input="{{onFrLink}}">
+        <button class="btn big" style="margin-top:12px" data-on-click="{{friendsSignInLink}}">{{frSignText}}</button>
         <p class="muted" style="margin:14px 0 0;font-size:14.5px">The group sees your minutes each day, your streak, words in memory, level and exam passes. Never your word list. Your own progress, listening level, remembered facts and chat settings are also saved on the group's server so your devices stay the same; other friends cannot see them.</p>
       </section>
     </sc-if>
@@ -1987,42 +1992,42 @@
 </main>
 </div>
 </template>
-<script defer src="vendor/morphdom-umd.min.js?v=ea29c8e967"></script>
-<script defer src="runtime.js?v=ea29c8e967"></script>
-<script defer src="config.js?v=ea29c8e967"></script>
-<script defer src="friends.js?v=ea29c8e967"></script>
-<script defer src="level.js?v=ea29c8e967"></script>
-<script defer src="data/hsk1-words.js?v=ea29c8e967"></script>
-<script defer src="data/hsk1-grammar.js?v=ea29c8e967"></script>
-<script defer src="data/hsk1-webs.js?v=ea29c8e967"></script>
-<script defer src="data/hsk1-speak.js?v=ea29c8e967"></script>
-<script defer src="data/hsk1-listen.js?v=ea29c8e967"></script>
-<script defer src="data/hsk1-exam.js?v=ea29c8e967"></script>
-<script defer src="data/hsk1-erhua.js?v=ea29c8e967"></script>
-<script defer src="data/lexicon.js?v=ea29c8e967"></script>
-<script defer src="data/hsk2-preview.js?v=ea29c8e967"></script>
-<script defer src="data/hsk3-preview.js?v=ea29c8e967"></script>
-<script defer src="data/hsk2-words.js?v=ea29c8e967"></script>
-<script defer src="data/hsk2-speak.js?v=ea29c8e967"></script>
-<script defer src="data/hsk2-listen.js?v=ea29c8e967"></script>
-<script defer src="data/hsk2-exam.js?v=ea29c8e967"></script>
-<script defer src="data/hsk2-grammar.js?v=ea29c8e967"></script>
-<script defer src="data/hsk2-webs.js?v=ea29c8e967"></script>
-<script defer src="data/hsk3-words.js?v=ea29c8e967"></script>
-<script defer src="data/hsk3-speak.js?v=ea29c8e967"></script>
-<script defer src="data/hsk3-listen.js?v=ea29c8e967"></script>
-<script defer src="data/hsk3-exam.js?v=ea29c8e967"></script>
-<script defer src="data/hsk3-grammar.js?v=ea29c8e967"></script>
-<script defer src="data/hsk3-webs.js?v=ea29c8e967"></script>
-<script defer src="ascent.js?v=ea29c8e967"></script>
-<script defer src="secrets.js?v=ea29c8e967"></script>
-<script defer src="sync.js?v=ea29c8e967"></script>
-<script defer src="data/audio-manifest.js?v=ea29c8e967"></script>
-<script defer src="journey.js?v=ea29c8e967"></script>
-<script defer src="data/journey.js?v=ea29c8e967"></script>
-<script defer src="data/journey-map.js?v=ea29c8e967"></script>
-<script defer src="data/journey-media.js?v=ea29c8e967"></script>
-<script defer src="erhua.js?v=ea29c8e967"></script>
-<script defer src="app.js?v=ea29c8e967"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=a29b4941dd"></script>
+<script defer src="runtime.js?v=a29b4941dd"></script>
+<script defer src="config.js?v=a29b4941dd"></script>
+<script defer src="friends.js?v=a29b4941dd"></script>
+<script defer src="level.js?v=a29b4941dd"></script>
+<script defer src="data/hsk1-words.js?v=a29b4941dd"></script>
+<script defer src="data/hsk1-grammar.js?v=a29b4941dd"></script>
+<script defer src="data/hsk1-webs.js?v=a29b4941dd"></script>
+<script defer src="data/hsk1-speak.js?v=a29b4941dd"></script>
+<script defer src="data/hsk1-listen.js?v=a29b4941dd"></script>
+<script defer src="data/hsk1-exam.js?v=a29b4941dd"></script>
+<script defer src="data/hsk1-erhua.js?v=a29b4941dd"></script>
+<script defer src="data/lexicon.js?v=a29b4941dd"></script>
+<script defer src="data/hsk2-preview.js?v=a29b4941dd"></script>
+<script defer src="data/hsk3-preview.js?v=a29b4941dd"></script>
+<script defer src="data/hsk2-words.js?v=a29b4941dd"></script>
+<script defer src="data/hsk2-speak.js?v=a29b4941dd"></script>
+<script defer src="data/hsk2-listen.js?v=a29b4941dd"></script>
+<script defer src="data/hsk2-exam.js?v=a29b4941dd"></script>
+<script defer src="data/hsk2-grammar.js?v=a29b4941dd"></script>
+<script defer src="data/hsk2-webs.js?v=a29b4941dd"></script>
+<script defer src="data/hsk3-words.js?v=a29b4941dd"></script>
+<script defer src="data/hsk3-speak.js?v=a29b4941dd"></script>
+<script defer src="data/hsk3-listen.js?v=a29b4941dd"></script>
+<script defer src="data/hsk3-exam.js?v=a29b4941dd"></script>
+<script defer src="data/hsk3-grammar.js?v=a29b4941dd"></script>
+<script defer src="data/hsk3-webs.js?v=a29b4941dd"></script>
+<script defer src="ascent.js?v=a29b4941dd"></script>
+<script defer src="secrets.js?v=a29b4941dd"></script>
+<script defer src="sync.js?v=a29b4941dd"></script>
+<script defer src="data/audio-manifest.js?v=a29b4941dd"></script>
+<script defer src="journey.js?v=a29b4941dd"></script>
+<script defer src="data/journey.js?v=a29b4941dd"></script>
+<script defer src="data/journey-map.js?v=a29b4941dd"></script>
+<script defer src="data/journey-media.js?v=a29b4941dd"></script>
+<script defer src="erhua.js?v=a29b4941dd"></script>
+<script defer src="app.js?v=a29b4941dd"></script>
 </body>
 </html>
