@@ -70,6 +70,8 @@ function makeApi(doFetch) {
     cats: (titles) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', titles: titles.join('|'), prop: 'categories', cllimit: 'max' }),
     images: (title, lang) => get((HOSTS[lang] || ('https://' + lang + '.wikipedia.org')) + '/w/api.php', { action: 'query', titles: title, redirects: '1', prop: 'images', imlimit: '40' }),
     wdsearch: (text) => get('https://www.wikidata.org/w/api.php', { action: 'wbsearchentities', search: text, language: 'en', uselang: 'en', type: 'item', limit: '5' }),
+    ccats: (text) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', list: 'search', srsearch: text, srnamespace: '14', srlimit: '6', srprop: '' }),
+    cmembers: (cat) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', list: 'categorymembers', cmtitle: 'Category:' + cat, cmtype: 'file', cmlimit: '20' }),
     cfiles: (text) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', list: 'search', srsearch: text, srnamespace: '6', srlimit: '8', srprop: '' }),
     wikidata: (qid) => get('https://www.wikidata.org/w/api.php', { action: 'wbgetentities', ids: qid, props: 'claims', languages: 'en' }),
     file: (name) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', titles: 'File:' + name, prop: 'imageinfo|coordinates', iiprop: 'url|extmetadata|mime', iiurlwidth: String(WIDTH), iiextmetadatafilter: 'Artist|LicenseShortName|Credit|UsageTerms' }),
@@ -210,13 +212,35 @@ function relevant(stop, title, cats) {
   const hit = need.filter((w) => hay.includes(stem(w))).length;
   return key.length ? hit >= Math.ceil(key.length / 2) : hit === need.length;
 }
-async function viaCategory(api, stop) {
+// A Commons category named after the dish ("Category:Mapo doufu"): its files are pictures of that dish.
+async function viaDishCategory(api, stop, dbg) {
+  let last = { miss: 'no dish category' };
+  for (const name of [stop.en, stop.zh]) {
+    if (!name || name.length < 3) continue;
+    const q = await api.ccats(name).catch(() => null);
+    const cats = ((q && q.query && q.query.search) || []).map((h) => nm(h.title)).filter((c) => relevant(stop, c, [])).slice(0, 2);
+    if (dbg) dbg(stop.id + ': "' + name + '" -> categories ' + JSON.stringify(((q && q.query && q.query.search) || []).map((h) => h.title)) + ' kept ' + JSON.stringify(cats));
+    for (const c of cats) {
+      const m = await api.cmembers(c).catch(() => null);
+      const titles = ((m && m.query && m.query.categorymembers) || []).map((x) => nm(x.title)).filter((t) => /\.(jpe?g|png|webp)$/i.test(t) && !NOT_A_PHOTO.test(t)).slice(0, 12);
+      const fl = titles.length ? await foodFlags(api, titles).catch(() => ({})) : {};
+      if (dbg) dbg('   ' + c + ': ' + titles.length + ' files, ' + titles.filter((t) => fl[t]).length + ' look like food');
+      for (const t of titles.filter((t) => fl[t]).slice(0, 3)) {
+        const r = await fileEntry(api, t, stop.en, { dish: true, checked: true });
+        if (r.entry) { r.note = t + ' (category ' + c + ')'; return r; } last = r;
+      }
+    }
+  }
+  return last;
+}
+async function viaCategory(api, stop, dbg) {
   let last = { miss: 'no category match' };
   const cuisines = ['Chinese cuisine'].concat(CUISINE[stop.rid] ? [CUISINE[stop.rid]] : []);
   for (const c of cuisines) for (const name of [stop.en, stop.zh]) {
     if (!name || name.length < 2) continue;
-    const q = await api.cfiles('deepcat:"' + c + '" ' + name).catch(() => null);
+    const q = await api.cfiles('deepcat:"' + c + '" ' + name).catch((e) => { if (dbg) dbg('deepcat error: ' + e.message); return null; });
     const titles = ((q && q.query && q.query.search) || []).map((h) => nm(h.title)).filter((t) => /\.(jpe?g|png|webp)$/i.test(t) && !NOT_A_PHOTO.test(t)).slice(0, 8);
+    if (dbg) dbg(stop.id + ': deepcat "' + c + '" ' + name + ' -> ' + titles.length + ' files');
     if (!titles.length) continue;
     const detail = {};
     const fl = await foodFlags(api, titles, detail).catch(() => ({}));
@@ -267,7 +291,11 @@ async function lookup(api, stop) {
   }
   const wd = await viaWikidata(api, stop); if (wd.entry) return wd;
   const cm = await viaCommons(api, stop); if (cm.entry) return cm;
-  if (stop.k === 'D') { const ct = await viaCategory(api, stop); if (ct.entry) return ct; }
+  if (stop.k === 'D') {
+    const dbg = process.env.JM_DEBUG ? (m) => console.log('  [debug] ' + m) : null;
+    const dc = await viaDishCategory(api, stop, dbg); if (dc.entry) return dc;
+    const ct = await viaCategory(api, stop, dbg); if (ct.entry) return ct;
+  }
   return zh;
 }
 
@@ -326,7 +354,7 @@ async function run(opts) {
     R.stops.forEach((s) => {
       regionOf[s.id] = R; s.rid = R.id; s.avoid = new Set(plain(R.en + ' ' + R.cities.map((c) => c.en).join(' ')).split(/[^a-z0-9]+/).filter((w) => w.length >= 4));
       if (s.k === 'P') { if (!(media[s.id] && media[s.id].r) && (o.retryMisses || !tried[s.id])) { s.ll = null; todo.push(s); } return; }   // an airport's photo shows the whole province
-      if (!media[s.id] && (o.retryMisses ? (s.k === 'D' ? !(tried[s.id] >= 2) : !tried[s.id]) : !misses[s.id])) { s.ll = JY.pinLatLon(W, s); todo.push(s); }
+      if (!media[s.id] && (o.retryMisses ? (o.force ? true : s.k === 'D' ? !(tried[s.id] >= 2) : !tried[s.id]) : !misses[s.id])) { s.ll = JY.pinLatLon(W, s); todo.push(s); }
     });
   });
   todo = todo.slice(0, o.limit);
@@ -360,5 +388,5 @@ module.exports = { landmarkPhoto, setSlow: (v) => { SLOW = v; }, run, lookup, ma
 
 if (require.main === module) {
   const arg = (n) => { const i = process.argv.indexOf('--' + n); return i >= 0 ? process.argv[i + 1] : ''; };
-  run({ region: arg('region'), limit: Number(arg('limit')) || 300, retryMisses: process.argv.includes('--retry-misses'), verify: true }).catch((e) => { console.error(e); process.exit(1); });
+  run({ region: arg('region'), limit: Number(arg('limit')) || 300, retryMisses: process.argv.includes('--retry-misses'), force: process.argv.includes('--force'), verify: true }).catch((e) => { console.error(e); process.exit(1); });
 }

@@ -13,6 +13,10 @@ on:
         description: 'How many stops to look up in this run'
         required: false
         default: '3000'
+      extra:
+        description: 'Extra options for the lookup (for example --force, to ignore what was already searched)'
+        required: false
+        default: ''
       retry_misses:
         description: 'Try again the stops that had no usable photo last time'
         type: boolean
@@ -37,11 +41,13 @@ jobs:
           REGION: ${{ inputs.region }}
           LIMIT: ${{ inputs.limit }}
           RETRY: ${{ inputs.retry_misses }}
+          EXTRA: ${{ inputs.extra }}
+          JM_DEBUG: ${{ inputs.extra != '' && '1' || '' }}
         run: |
           args="--limit ${LIMIT:-400}"
           if [ -n "$REGION" ]; then args="$args --region $REGION"; fi
           if [ "$RETRY" = "true" ]; then args="$args --retry-misses"; fi
-          node tools/journey-media.js $args
+          node tools/journey-media.js $args $EXTRA
       - name: Rebuild the site files (cache stamps)
         if: always()
         run: node tools/build-site.js
