@@ -11,6 +11,7 @@ A | 涌泉寺 | Yongquan Temple | A big Buddhist temple on Drum Mountain. | | 26
 D | 佛跳墙 | Buddha Jumps Over the Wall | A rich stew of sea treasures, so tasty a monk is said to have leaped a wall for it. | |
 D | 鱼丸 | Fuzhou fish balls | Fish balls with a pork filling. | |
 D | 肉燕 | Rouyan | Wrappers made of pounded pork, filled with meat. | |
+D | 福州线面 | Fuzhou thread noodles | Very thin noodles, eaten on birthdays. | |
 C | 寿山石 | Shoushan stone | A soft stone carved into seals and figures. | |
 C | 闽剧 | Min opera | The opera of Fuzhou. | |
 
@@ -44,32 +45,47 @@ C | 梨园戏 | Liyuan opera | One of the oldest forms of Chinese opera. | |
 city: zhangzhou | 漳州 | Zhangzhou | 24.51 | 117.65 | A city of flowers and fruit. |
 A | 南靖土楼 | Nanjing Tulou | Round earth buildings of the Hakka people. | A UNESCO World Heritage Site. | 24.67,117.40
 A | 东山岛 | Dongshan Island | An island with beaches and bays. | | 23.65,117.45
+D | 漳州卤面 | Zhangzhou lu noodles | Noodles in a thick sauce. | |
+D | 水仙花 | Zhangzhou narcissus | A flower grown for New Year. | |
+D | 平和蜜柚 | Pinghe pomelo | A big sweet pomelo. | |
 
 city: putian | 莆田 | Putian | 25.45 | 119.01 | The birthplace of Mazu, the sea goddess. |
 A | 湄洲岛 | Meizhou Island | The home island of Mazu, with her main temple. | | 25.07,119.12
+D | 莆田卤面 | Putian lu noodles | Noodles with seafood. | |
+D | 莆田荔枝 | Putian lychee | Sweet lychees. | |
+D | 兴化米粉 | Xinghua rice noodles | Rice noodles stir-fried with ingredients. | |
 
 city: nanping | 南平 | Nanping | 26.64 | 118.18 | A mountain city of tea, in the Wuyi area. |
 A | 武夷山 | Wuyi Mountain | A mountain of red cliffs, rivers and rare plants. | A UNESCO World Heritage Site. | 27.73,118.03
 A | 天游峰 | Tianyou Peak | A peak with a long stair and a view of the stream. | | 27.72,118.02
+D | 岩茶 | Wuyi rock tea | A roasted oolong from the cliffs. | |
 D | 正山小种 | Lapsang souchong | The first black tea in the world, smoky in flavor. | |
+D | 武夷山笋 | Wuyi bamboo shoots | Fresh bamboo shoots in spring. | |
+D | 建瓯板鸭 | Jian'ou cured duck | A cured, flattened duck. | |
 C | 茶艺 | Tea art | The art of making oolong tea in small cups. | |
 
 city: sanming | 三明 | Sanming | 26.26 | 117.64 | A forest city of the central mountains. |
 A | 泰宁古城 | Taining Ancient Town | A town of Ming houses. | | 26.90,117.17
 D | 沙县小吃 | Shaxian snacks | Simple dumplings and noodles, with shops across China. | |
+D | 清流笋干 | Qingliu dried bamboo | Dried bamboo shoots. | |
 
 city: longyan | 龙岩 | Longyan | 25.08 | 117.02 | The Hakka heartland with earth buildings. |
 A | 永定土楼 | Yongding Tulou | The Hakka round earth houses, some very big. | A UNESCO World Heritage Site. | 24.70,116.80
 A | 承启楼 | Chengqi Tower | The "king of tulou", with four concentric rings. | | 24.62,116.97
 D | 客家酿豆腐 | Hakka stuffed tofu | Tofu filled with meat and fried. | |
+D | 永定菜干 | Yongding dried greens | Dried vegetables. | |
 
 city: ningde | 宁德 | Ningde | 26.66 | 119.55 | A coastal city of tea, bays and a big battery maker. |
 A | 太姥山 | Taimu Mountain | A coastal mountain of strange rocks. | | 27.10,120.20
+D | 福鼎白茶 | Fuding white tea | A light white tea. | |
+D | 大黄鱼 | Large yellow croaker | A prized fish from Ningde. | |
 
 city: pingtan | 平潭 | Pingtan | 25.50 | 119.79 | An island county closest to Taiwan. |
 A | 石头厝 | Stone houses | Stone houses in fishing villages. | | 25.51,119.80
 A | 海坛岛 | Haitan Island | The main island of Pingtan. | | 25.50,119.79
+D | 平潭海鲜 | Pingtan seafood | Fresh seafood. | |
 
 city: wuyishan | 武夷山市 | Wuyishan City | 27.76 | 118.04 | The tea town at the foot of Wuyi Mountain. |
 A | 大王峰 | Dawang Peak | A tall stone peak by the stream. | | 27.72,118.03
 A | 武夷宫 | Wuyi Palace | An old Taoist palace at the stream. | | 27.72,118.02
+D | 武夷茶 | Wuyi tea | A tea region with a long record. | |

@@ -13,6 +13,7 @@ A | 中岳庙 | Zhongyue Temple | A temple for the God of Mount Song. | | 34.46,
 D | 烩面 | Braised noodles | Wide pulled noodles in a mutton broth, Zhengzhou's staple. | |
 D | 胡辣汤 | Hu la soup | A thick, peppery breakfast soup. | |
 D | 灌汤包 | Soup dumplings | Large steamed buns full of hot broth, a Zhengzhou favorite. | |
+D | 河南蒸面条 | Steamed noodles | Noodles steamed with vegetables and a garlic sauce. | |
 C | 少林功夫 | Shaolin kung fu | The martial arts of the Shaolin monks. | |
 C | 豫剧 | Henan opera | The most popular local opera in China by audience. | |
 
@@ -23,6 +24,9 @@ A | 关林 | Guanlin Temple | A temple and tomb for the general Guan Yu. | | 34.
 A | 洛阳博物馆 | Luoyang Museum | A museum on the long history of the capital. | | 34.62,112.45
 A | 应天门 | Yingtian Gate | A huge restored gate of the Sui and Tang palace. | | 34.67,112.46
 A | 丽景门 | Lijing Gate | A gate of the old city, with a night market in the street. | | 34.67,112.47
+D | 洛阳水席 | Luoyang water banquet | A traditional banquet of about 24 dishes, many of them soups. | |
+D | 不翻汤 | Bufan soup | A soup of egg and pork served in a bowl. | |
+D | 牡丹饼 | Peony cake | A sweet pastry made with peony petals. | |
 C | 牡丹花会 | Peony Festival | A spring festival when the city's peonies bloom. | |
 C | 唐三彩 | Tang sancai ceramics | Colorful lead-glazed pottery of horses and camels. | |
 
@@ -30,6 +34,8 @@ city: kaifeng | 开封 | Kaifeng | 34.80 | 114.31 | The capital of the Northern 
 A | 龙亭 | Dragon Pavilion | A palace hall on a platform beside a lake. | | 34.81,114.35
 A | 铁塔 | Iron Pagoda | A brown glazed brick pagoda from the Song dynasty. | | 34.81,114.36
 A | 相国寺 | Xiangguo Temple | A major temple of the Song era. | | 34.80,114.35
+D | 开封灌汤包 | Kaifeng soup buns | Thin-skinned soup dumplings from a famous shop. | |
+D | 黄焖鱼 | Braised Yellow River carp | Carp braised in a rich sauce. | |
 D | 花生糕 | Peanut cake | A sweet snack sold at the night market. | |
 C | 菊花展 | Chrysanthemum show | Kaifeng's city flower is the chrysanthemum, with a big show each autumn. | |
 
@@ -38,6 +44,7 @@ A | 殷墟 | Yin Ruins | The ruins of a Shang capital where oracle bone inscript
 A | 中国文字博物馆 | Chinese Characters Museum | A museum of the history of Chinese writing. | | 36.11,114.36
 A | 红旗渠 | Red Flag Canal | A canal cut into cliffs by villagers in the 1960s. | | 36.12,113.84
 A | 袁林 | Yuan Lin | The tomb of Yuan Shikai. | | 36.12,114.37
+D | 安阳扁粉菜 | Anyang flat noodle stew | A hearty stew with flat sweet potato noodles. | |
 D | 道口烧鸡 | Daokou roast chicken | A famous braised chicken, boneless when pulled. | |
 C | 甲骨文 | Oracle bone script | The earliest known Chinese writing, carved on bones and shells. | |
 

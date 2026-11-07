@@ -13,8 +13,11 @@ A | 731部队遗址 | Unit 731 Museum | A museum on a Japanese wartime unit. | |
 A | 哈尔滨极地馆 | Harbin Polar Land | A park with polar animals. | | 45.78,126.58
 D | 锅包肉 | Guobaorou | Crisp sweet and sour pork, said to be invented in Harbin. | |
 D | 红肠 | Harbin red sausage | A smoked sausage from Russian influence. | |
+D | 马迭尔冰棍 | Modern ice cream bar | A famous ice cream on Central Street. | |
 D | 大列巴 | Big lieba | A big round Russian-style bread. | |
+D | 哈尔滨啤酒 | Harbin beer | One of China's oldest beer brands. | |
 D | 冻梨 | Frozen pear | A frozen pear snack. | |
+D | 杀猪菜 | Pig-slaughter dishes | A hearty winter meal. | |
 C | 冰雪节 | Ice and Snow Festival | A winter festival with huge ice sculptures. | |
 C | 俄罗斯风情 | Russian influence | Many buildings and foods from Russian settlers. | |
 C | 冰灯 | Ice lanterns | Lanterns carved from ice. | |
@@ -23,12 +26,16 @@ city: qiqihar | 齐齐哈尔 | Qiqihar | 47.35 | 123.97 | A northern city with c
 A | 扎龙湿地 | Zhalong Wetland | A famous wetland where red-crowned cranes breed. | | 47.20,124.25
 A | 明月岛 | Mingyue Island | A river island. | | 47.35,123.97
 A | 碾子山 | Nianzishan | A mountain town. | | 47.50,122.88
+D | 齐齐哈尔烤肉 | Qiqihar barbecue | A famed meat barbecue. | |
+D | 扎龙鹤 | Zhalong crane | A bird symbol of the city. | |
 
 city: mudanjiang | 牡丹江 | Mudanjiang | 44.55 | 129.63 | A lake and forest city, with a snow village. |
 A | 镜泊湖 | Jingpo Lake | A volcanic barrier lake with a waterfall. | | 43.90,128.90
 A | 吊水楼瀑布 | Diaoshuilou Waterfall | A wide waterfall at the lake. | | 43.88,128.78
 A | 中国雪乡 | China Snow Town | A mountain village famous for heavy snow. | | 44.80,128.50
 A | 雪乡 | Snow Village | A hamlet with snow-heaped roofs. | | 44.80,128.50
+D | 牡丹江冷面 | Mudanjiang cold noodles | Noodles. | |
+D | 五常大米 | Wuchang rice | A prized rice. | |
 C | 朝鲜族风情 | Korean culture | Korean heritage in the area. | |
 
 city: jiamusi | 佳木斯 | Jiamusi | 46.80 | 130.32 | A city on the Songhua near the Russian border. |

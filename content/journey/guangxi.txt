@@ -11,6 +11,7 @@ A | 德天跨国瀑布 | Detian Waterfall | A huge waterfall on the Vietnam bord
 D | 老友粉 | Laoyou noodles | Rice noodles with sour bamboo, garlic and chili, a Nanning favorite. | |
 D | 螺蛳粉 | Luosifen | Snail rice noodles with a famous strong smell. | |
 D | 柠檬鸭 | Lemon duck | Duck cooked with pickled lemon. | |
+D | 生榨米粉 | Fresh-pressed noodles | Rice noodles pressed fresh into the broth. | |
 D | 芒果 | Mango | Nanning is a major mango area. | |
 C | 壮锦 | Zhuang brocade | A traditional woven cloth. | |
 C | 铜鼓 | Bronze drum | A drum used by southern peoples for thousands of years. | |
@@ -24,6 +25,7 @@ A | 龙脊梯田 | Longji Rice Terraces | Rice terraces on hillsides, home to th
 A | 遇龙河 | Yulong River | A quiet river for bamboo rafts. | | 24.76,110.45
 A | 银子岩 | Silver Cave | A cave of glittering rock. | | 24.65,110.50
 D | 桂林米粉 | Guilin rice noodles | Round rice noodles with braised meat and a rich broth. | |
+D | 啤酒鱼 | Beer fish | River fish cooked in beer, from Yangshuo. | |
 D | 荔浦芋头 | Lipu taro | A starchy taro used in braised pork. | |
 D | 恭城油茶 | Gongcheng oil tea | A savory tea made with fried tea leaves and nuts. | |
 D | 桂花糕 | Osmanthus cake | A sweet cake with osmanthus flowers, popular in autumn. | |
@@ -34,31 +36,42 @@ A | 西街 | West Street | A lively street in Yangshuo with cafés and shops. | 
 A | 月亮山 | Moon Hill | A hill with a round hole through its top. | | 24.74,110.46
 A | 兴坪古镇 | Xingping Ancient Town | A town upriver with a famous view. | | 24.92,110.52
 A | 漓江竹筏 | Li River bamboo rafts | Rafts that carry visitors down the river. | | 24.92,110.52
+D | 阳朔啤酒鱼 | Yangshuo beer fish | A well-known local dish. | |
+D | 田螺酿 | Stuffed river snails | Snails stuffed with pork and herbs. | |
 C | 刘三姐 | Liu Sanjie | A singer of Zhuang legend, a folk heroine. | |
 
 city: liuzhou | 柳州 | Liuzhou | 24.33 | 109.43 | An industrial city on the Liu River, home of snail noodles. |
 A | 柳侯公园 | Liuhou Park | A park for the Tang writer Liu Zongyuan. | | 24.31,109.41
 A | 龙潭公园 | Longtan Park | A lake park with a hill. | | 24.30,109.37
 A | 鱼峰山 | Yufeng Hill | A hill shaped like a fish. | | 24.30,109.40
+D | 柳州螺蛳粉 | Liuzhou snail noodles | The original home of the strong-smelling snail noodle soup. | |
 
 city: beihai | 北海 | Beihai | 21.48 | 109.12 | A beach city on the Gulf of Tonkin. |
 A | 银滩 | Silver Beach | A long, fine beach. | | 21.42,109.14
 A | 涠洲岛 | Weizhou Island | A volcanic island with coral and cliffs. | | 21.03,109.10
 A | 红树林 | Mangrove forest | A mangrove reserve on the coast. | | 21.58,109.30
 D | 海鲜 | Beihai seafood | Fresh shrimp, crab and fish. | |
+D | 沙虫 | Sandworm | A prized sea worm, boiled or fried. | |
+D | 合浦珍珠 | Hepu pearls | Pearls farmed near Beihai for over 2,000 years. | |
 
 city: wuzhou | 梧州 | Wuzhou | 23.48 | 111.28 | A river city at the border with Guangdong. |
 A | 骑楼城 | Arcade City | A district of old arcade buildings. | | 23.48,111.28
 D | 龟苓膏 | Turtle jelly | A black herbal jelly eaten sweetened. | |
+D | 梧州纸包鸡 | Paper-wrapped chicken | Chicken wrapped in paper and fried. | |
 
 city: baise | 百色 | Baise | 23.90 | 106.62 | A red-history city and mountain area. |
 A | 百色起义纪念馆 | Baise Uprising Memorial | A memorial of the 1929 Baise uprising. | | 23.90,106.62
+D | 百色芒果 | Baise mango | A famed mango from the river valley. | |
+D | 靖西鸭 | Jingxi duck | A local duck breed. | |
 
 city: chongzuo | 崇左 | Chongzuo | 22.38 | 107.37 | A border city with rock art. |
 A | 花山岩画 | Zuojiang Huashan Rock Art | Rock paintings of people on a cliff beside a river. | A UNESCO World Heritage Site. | 22.10,107.35
 A | 友谊关 | Friendship Pass | The main border gate with Vietnam. | | 22.01,106.73
+D | 崇左糖 | Chongzuo sugar | The city is a major sugar-cane area. | |
 
 city: qinzhou | 钦州 | Qinzhou | 21.96 | 108.65 | A port city and home of pottery. |
+D | 钦州猪脚粉 | Qinzhou pork-foot noodles | Noodles with braised pork feet. | |
+D | 大蚝 | Qinzhou oysters | Large oysters from the bay. | |
 
 city: yulin-gx | 玉林 | Yulin | 22.65 | 110.18 | A city famed for medicinal herbs and cuisine. |
 A | 云天文化城 | Yuntian Culture City | A cultural park in Yulin. | | 22.64,110.17

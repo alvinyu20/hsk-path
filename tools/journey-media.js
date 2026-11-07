@@ -138,7 +138,7 @@ async function fileEntry(api, name, alt, o) {
 const FOOD_CAT = /\b(foods?|dish(es)?|cuisines?|cooking|meals?|noodles?|dumplings?|soups?|stews?|congee|porridge|breads?|buns?|cakes?|pastr(y|ies)|pancakes?|snacks?|desserts?|tofu|hot ?pots?|barbecue|kebabs?|skewers?|baozi|jiaozi|mantou|breakfast|delicacies|sweets|confection(ery)?|pudding|biscuits?|cookies?|bakery|sandwich(es)?|pickled|sausages?|sauces?|roast(ed)?|fried|braised|steamed|grilled|street food|cuisine)\b/i;
 const NOT_FOOD_CAT = /\b(taxa|taxon|species|plants?|flora|crops?|botanical|botany|trees?|flowers?|vegetation|agriculture|farms?|farming|fields?|fauna|animals?|fish of|fishes|birds?|mammals?|insects?|aquaculture|fishing|vineyards?|plantations?)\b/i;
 const nm = (t) => String(t || '').replace(/^(File|Category):/, '').replace(/_/g, ' ').trim();
-async function foodFlags(api, names) {   // names -> { name: true|false }
+async function foodFlags(api, names, detail) {   // names -> { name: true|false }; detail (optional) receives each file's own categories
   const out = {}, l1 = {};
   const catsOf = async (titles) => {   // 'File:x' or 'Category:x' titles -> { title without prefix: [category names] }
     const res = {};
@@ -151,7 +151,7 @@ async function foodFlags(api, names) {   // names -> { name: true|false }
   const c1 = await catsOf(names.map((n) => 'File:' + nm(n)));
   const need = {};
   names.forEach((n) => {
-    const cs = c1[nm(n)] || []; l1[n] = cs;
+    const cs = c1[nm(n)] || []; l1[n] = cs; if (detail) detail[n] = cs;
     if (cs.some((c) => NOT_FOOD_CAT.test(c))) out[n] = false;
     else if (cs.some((c) => FOOD_CAT.test(c))) out[n] = true;
     else cs.forEach((c) => { need[c] = 1; });
@@ -187,6 +187,43 @@ async function viaWikidata(api, stop) {
     }
     const r = await fileEntry(api, img, stop.en, { dish: stop.k === 'D' });
     if (r.entry) return r; last = r;
+  }
+  return last;
+}
+
+// Dishes: a Commons search limited to the cuisine category tree (deepcat), so every result is already food. Because the title need not hold the whole name,
+// a result must share the dish's distinctive words (or its pinyin, or its Chinese name) with its title or categories.
+const CUISINE = { sichuan: 'Sichuan cuisine', guangdong: 'Cantonese cuisine', zhejiang: 'Zhejiang cuisine', jiangsu: 'Jiangsu cuisine', shandong: 'Shandong cuisine', fujian: 'Fujian cuisine', anhui: 'Anhui cuisine', hunan: 'Hunan cuisine', xinjiang: 'Uyghur cuisine', yunnan: 'Yunnan cuisine', shaanxi: 'Shaanxi cuisine', taiwan: 'Taiwanese cuisine', hongkong: 'Hong Kong cuisine', macau: 'Macanese cuisine', singapore: 'Cuisine of Singapore' };
+const GENERIC = new Set('soup noodle noodles pork beef chicken duck fish rice cake cakes tofu dumpling dumplings pot hotpot dish style fried braised stewed steamed roasted sweet sour spicy cold hot tea with wine pancake pancakes bun buns bread sauce pie roll rolls mutton lamb shrimp crab goose eggs vegetable vegetables sausage cured smoked local traditional famous wrapped cooked grilled barbecue black white green red yellow golden crispy fresh dried salted pickled sliced mixed small big old city region province'.split(' '));
+const stem = (w) => w.replace(/(ies|es|s)$/, '');
+const plain = (t) => String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+function relevant(stop, title, cats) {
+  const hay = plain(title + ' ' + (cats || []).join(' ')).replace(/[^a-z0-9\u4e00-\u9fff]+/g, ' ');
+  if (stop.zh && stop.zh.length >= 2 && (title + ' ' + (cats || []).join(' ')).includes(stop.zh)) return true;
+  const py = plain(stop.py).replace(/[^a-z]/g, '');
+  if (py.length >= 6 && hay.replace(/ /g, '').includes(py)) return true;
+  const avoid = stop.avoid || new Set();
+  const words = plain(stop.en).split(/[^a-z0-9]+/).filter((w) => w.length >= 4 && !avoid.has(w));
+  const key = words.filter((w) => !GENERIC.has(w));
+  const need = key.length ? key : words;
+  if (!need.length) return false;
+  const hit = need.filter((w) => hay.includes(stem(w))).length;
+  return key.length ? hit >= Math.ceil(key.length / 2) : hit === need.length;
+}
+async function viaCategory(api, stop) {
+  let last = { miss: 'no category match' };
+  const cuisines = ['Chinese cuisine'].concat(CUISINE[stop.rid] ? [CUISINE[stop.rid]] : []);
+  for (const c of cuisines) for (const name of [stop.en, stop.zh]) {
+    if (!name || name.length < 2) continue;
+    const q = await api.cfiles('deepcat:"' + c + '" ' + name).catch(() => null);
+    const titles = ((q && q.query && q.query.search) || []).map((h) => nm(h.title)).filter((t) => /\.(jpe?g|png|webp)$/i.test(t) && !NOT_A_PHOTO.test(t)).slice(0, 8);
+    if (!titles.length) continue;
+    const detail = {};
+    const fl = await foodFlags(api, titles, detail).catch(() => ({}));
+    for (const t of titles.filter((t) => fl[t] && relevant(stop, t, detail[t])).slice(0, 2)) {
+      const r = await fileEntry(api, t, stop.en, { dish: true, checked: true });
+      if (r.entry) { r.note = t + ' (' + c + ')'; return r; } last = r;
+    }
   }
   return last;
 }
@@ -230,6 +267,7 @@ async function lookup(api, stop) {
   }
   const wd = await viaWikidata(api, stop); if (wd.entry) return wd;
   const cm = await viaCommons(api, stop); if (cm.entry) return cm;
+  if (stop.k === 'D') { const ct = await viaCategory(api, stop); if (ct.entry) return ct; }
   return zh;
 }
 
@@ -286,9 +324,9 @@ async function run(opts) {
   W.regions.forEach((R) => {
     if (o.region && R.id !== o.region) return;
     R.stops.forEach((s) => {
-      regionOf[s.id] = R;
+      regionOf[s.id] = R; s.rid = R.id; s.avoid = new Set(plain(R.en + ' ' + R.cities.map((c) => c.en).join(' ')).split(/[^a-z0-9]+/).filter((w) => w.length >= 4));
       if (s.k === 'P') { if (!(media[s.id] && media[s.id].r) && (o.retryMisses || !tried[s.id])) { s.ll = null; todo.push(s); } return; }   // an airport's photo shows the whole province
-      if (!media[s.id] && (o.retryMisses ? !tried[s.id] : !misses[s.id])) { s.ll = JY.pinLatLon(W, s); todo.push(s); }
+      if (!media[s.id] && (o.retryMisses ? (s.k === 'D' ? !(tried[s.id] >= 2) : !tried[s.id]) : !misses[s.id])) { s.ll = JY.pinLatLon(W, s); todo.push(s); }
     });
   });
   todo = todo.slice(0, o.limit);
@@ -306,7 +344,8 @@ async function run(opts) {
         } else r = await lookup(api, stop);
         if (r.entry && o.verify) { const v = await o.fetch(r.entry.u, { method: 'HEAD', headers: { 'User-Agent': UA } }).catch(() => null); if (!v || !v.ok || !/^image\//.test((v.headers && v.headers.get && v.headers.get('content-type')) || '')) { delete r.entry; r.miss = 'image does not load'; } }
         if (r.entry) { media[stop.id] = r.entry; delete misses[stop.id]; found++; } else { misses[stop.id] = r.miss; missed++; }
-        tried[stop.id] = 1;
+        tried[stop.id] = 2;   // 2 = searched with every source including the dish category search
+        if (r.note) o.log('  dish photo via category search: ' + stop.id + ' <- ' + r.note);
       } catch (e) { failed++; o.log('  error for ' + stop.id + ': ' + e.message); }
       if ((found + missed) % 50 === 0 && o.save) saveAll();
     }

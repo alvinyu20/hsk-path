@@ -36,6 +36,8 @@ city: foshan | 佛山 | Foshan | 23.02 | 113.12 | A city of kung fu, ceramics an
 A | 祖庙 | Ancestral Temple | A temple with elaborate roof ceramics and a martial arts hall. | | 23.03,113.11
 A | 黄飞鸿纪念馆 | Wong Fei-hung Memorial Hall | A museum for the folk hero Wong Fei-hung. | He is the subject of many Hong Kong kung fu films. | 23.03,113.11
 A | 南风古灶 | Nanfeng Ancient Kiln | A dragon kiln still used to make pottery. | | 23.00,113.05
+D | 顺德双皮奶 | Shunde milk pudding | Shunde is called the food capital of Guangdong. | |
+D | 均安蒸猪 | Steamed pig of Junan | A local festive dish of roast pork. | |
 D | 鱼生 | Raw fish slices | Thin slices of raw freshwater fish eaten with ginger and sauces, a Shunde dish. | |
 C | 咏春拳 | Wing Chun | A style of kung fu said to have been developed by a woman. | |
 C | 剪纸 | Foshan paper cuts | Delicate cut-paper art for festivals. | |
@@ -45,10 +47,13 @@ A | 圆明新园 | New Yuanmingyuan | A theme park of reconstructed palaces. | |
 A | 情侣路 | Lover's Road | A long seaside road for walking and cycling. | | 22.25,113.58
 A | 渔女雕像 | Fisher Girl statue | The city's symbol, a statue on a rock in the sea. | | 22.27,113.59
 A | 横琴岛 | Hengqin Island | An island next to Macau with a big ocean resort. | | 22.12,113.53
+D | 横山蚝 | Hengshan oysters | Large oysters served grilled with garlic. | |
 
 city: dongguan | 东莞 | Dongguan | 23.02 | 113.75 | A factory city that makes a lot of the world's products. |
 A | 可园 | Keyuan Garden | A small garden in Lingnan style with halls and pavilions. | | 23.05,113.74
 A | 鸦片战争博物馆 | Opium War Museum | A museum at the site of an old fort near Humen. | | 22.82,113.62
+D | 东莞烧鹅 | Dongguan roast goose | Crispy roast goose from the Qingxi area. | |
+D | 道滘粽 | Daojiao rice dumplings | Large sticky rice dumplings from the Dragon Boat season. | |
 
 city: shantou | 汕头 | Shantou | 23.35 | 116.68 | The center of Chaoshan culture on the east coast. |
 A | 南澳岛 | Nan'ao Island | An island with beaches and seafood. | | 23.43,117.03
@@ -60,6 +65,7 @@ C | 工夫茶 | Gongfu tea | Tea brewed in tiny cups with careful steps. Almost 
 city: chaozhou | 潮州 | Chaozhou | 23.66 | 116.62 | An old city with a famous stone bridge and a strong food tradition. |
 A | 广济桥 | Guangji Bridge | A medieval bridge half made of boats that can be opened. | | 23.66,116.63
 A | 开元寺 | Kaiyuan Temple | A Tang-dynasty temple with a long history. | | 23.66,116.62
+D | 潮州牛肉丸 | Chaozhou beef balls | Fresh, bouncy beef balls in clear soup. | |
 D | 卤鹅 | Braised goose | Goose slowly cooked in a spiced master sauce. | |
 C | 潮州木雕 | Chaozhou wood carving | Detailed gold-painted carvings in temples and houses. | |
 
@@ -78,16 +84,20 @@ D | 东江盐焗鸡 | Salt-baked chicken | A Hakka dish of chicken baked in salt
 
 city: zhongshan | 中山 | Zhongshan | 22.52 | 113.39 | The hometown of Sun Yat-sen. |
 A | 孙中山故居 | Sun Yat-sen Former Residence | The house where Sun Yat-sen was born. | | 22.45,113.52
+D | 脆肉鲩 | Crispy grass carp | Fish fed on broad beans until the flesh turns crunchy. | |
+D | 石岐乳鸽 | Shiqi roast pigeon | Roast pigeon with crisp skin, a Zhongshan favorite. | |
 
 city: jiangmen | 江门 | Jiangmen | 22.58 | 113.08 | The land of diaolou, towers built by overseas Chinese families. |
 A | 开平碉楼 | Kaiping Diaolou | Fortified watch towers mixing Chinese and Western styles. | A UNESCO World Heritage Site. | 22.37,112.59
 A | 自力村 | Zili Village | A village with many tall diaolou among rice fields. | | 22.37,112.55
 A | 小鸟天堂 | Bird's Paradise | A giant banyan tree that thousands of birds roost in. | | 22.54,113.07
+D | 新会陈皮 | Xinhui aged tangerine peel | Sun-dried peel used in cooking, tea and sweets, aged like wine. | |
 
 city: shaoguan | 韶关 | Shaoguan | 24.81 | 113.60 | A mountain city in the north with red cliffs and a Buddhist temple. |
 A | 丹霞山 | Danxia Mountain | Red sandstone cliffs and peaks that give the landform its name. | A UNESCO World Heritage Site. | 25.03,113.74
 A | 南华禅寺 | Nanhua Temple | A famous temple, home of the Sixth Patriarch of Chan Buddhism. | | 24.66,113.62
 A | 云门寺 | Yunmen Temple | A Chan temple founded in the Tang dynasty. | | 24.75,113.41
+D | 韶关红茶 | Shaoguan black tea | Black tea from the hills of northern Guangdong. | |
 
 city: meizhou | 梅州 | Meizhou | 24.29 | 116.12 | The heart of Hakka culture, with round earth buildings and mountains. |
 D | 客家酿豆腐 | Hakka stuffed tofu | Tofu pieces stuffed with minced pork and simmered. | |
@@ -96,6 +106,7 @@ D | 盐焗鸡 | Salt-baked chicken (Meizhou) | A Hakka classic served cold or wa
 city: yangjiang | 阳江 | Yangjiang | 21.86 | 111.98 | A coastal city of knives, kites and seafood. |
 A | 海陵岛 | Hailing Island | An island with long beaches and a Song-dynasty shipwreck museum. | | 21.58,111.82
 A | 南海一号 | Nanhai No. 1 shipwreck | A Song-dynasty merchant ship recovered whole, now in a museum. | | 21.58,111.83
+D | 阳江豆豉 | Yangjiang fermented black beans | Salty black beans used in cooking. | |
 D | 海鲜 | Island seafood | Fresh fish and shellfish at Hailing Island. | |
 
 city: zhanjiang | 湛江 | Zhanjiang | 21.27 | 110.36 | A southern port at the tip of the Leizhou Peninsula. |

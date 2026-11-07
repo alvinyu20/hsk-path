@@ -31,6 +31,7 @@ A | 苏公塔 | Emin Minaret | A minaret of mud brick. | | 42.92,89.23
 A | 艾丁湖 | Aydingkol Lake | A dry salt lake, the lowest point in China. | | 42.65,89.17
 A | 吐峪沟 | Tuyoq Valley | A canyon village with Buddhist caves. | | 42.85,89.80
 D | 烤全羊 | Roast whole lamb | A whole lamb roasted in the oven. | |
+D | 吐鲁番葡萄 | Turpan grapes | Seedless grapes in many varieties. | |
 
 city: kashgar | 喀什 | Kashgar | 39.47 | 75.99 | An old Silk Road city at the western edge of China. |
 A | 艾提尕尔清真寺 | Id Kah Mosque | One of the largest mosques in China, in the main square. | | 39.47,75.99
@@ -49,6 +50,8 @@ A | 薰衣草田 | Lavender fields | A summer sea of purple. | | 44.05,81.50
 A | 赛里木湖 | Sayram Lake | A big blue lake in the mountains. | | 44.60,81.20
 A | 那拉提草原 | Narat Grassland | A grassland at the foot of the Tianshan. | | 43.33,84.00
 A | 喀拉峻草原 | Kalajun Grassland | A high alpine meadow. | | 43.37,82.20
+D | 伊犁马奶酒 | Ili kumis | Fermented mare's milk. | |
+D | 伊犁薄皮包子 | Ili thin-skinned buns | Buns filled with lamb. | |
 C | 冬不拉 | Dombra | A Kazakh two-stringed lute. | |
 
 city: altay | 阿勒泰 | Altay | 47.85 | 88.14 | A northern region of forests, lakes and skiing. |
@@ -58,31 +61,40 @@ A | 可可托海 | Koktokay | A mining town and gorge. | | 46.80,89.80
 A | 将军山滑雪场 | Jiangjunshan Ski Resort | A ski hill in the city. | | 47.85,88.14
 D | 奶茶 | Milk tea | Salty milk tea of the Kazakhs. | |
 D | 手抓肉 | Hand-grabbed meat | Boiled lamb with noodles. | |
+D | 冷水鱼 | Cold-water fish | Fish from the cold rivers. | |
 C | 图瓦人 | Tuvan people | A small people who live in the Kanas area. | |
 
 city: kuqa | 库车 | Kuqa | 41.72 | 82.96 | An old Buddhist kingdom on the northern Silk Road. |
 A | 克孜尔千佛洞 | Kizil Caves | Some of the earliest Buddhist cave paintings in China. | | 41.78,82.50
 A | 库车大寺 | Kuqa Grand Mosque | A big mosque. | | 41.72,82.96
 A | 天山神秘大峡谷 | Tianshan Mystery Canyon | A red sandstone canyon. | | 42.00,83.00
+D | 库车大馕 | Kuqa big naan | A giant naan. | |
+D | 库车小白杏 | Kuqa white apricot | A sweet apricot. | |
 
 city: hotan | 和田 | Hotan | 37.11 | 79.92 | A jade and silk oasis on the southern Silk Road. |
 A | 玉龙喀什河 | Yurungkash River | The river where jade is found. | | 37.10,79.90
 A | 尼雅遗址 | Niya Ruins | A buried town in the Taklamakan. | | 37.97,82.72
+D | 和田大枣 | Hotan jujubes | Large sweet dates. | |
 D | 核桃 | Walnut | Hotan walnuts. | |
 
 city: korla | 库尔勒 | Korla | 41.76 | 86.15 | A pear city on the edge of the Taklamakan. |
 A | 博斯腾湖 | Bosten Lake | The largest inland freshwater lake in China. | | 41.95,87.00
 A | 孔雀河 | Peacock River | A river through the city. | | 41.76,86.15
+D | 库尔勒香梨 | Korla fragrant pear | A famed sweet pear. | |
 
 city: aksu | 阿克苏 | Aksu | 41.17 | 80.26 | A city known for apples. |
+D | 阿克苏苹果 | Aksu apples | Crisp apples. | |
 
 city: hami | 哈密 | Hami | 42.82 | 93.52 | A melon city between the desert and the mountains. |
 D | 葡萄 | Hami grapes | Sweet grapes. | |
 
 city: karamay | 克拉玛依 | Karamay | 45.58 | 84.89 | An oil city in the Junggar Basin. |
 A | 黑油山 | Black Oil Mountain | A natural oil seep that began the oil field. | | 45.60,84.90
+D | 克拉玛依烤肉 | Karamay barbecue | Grilled meat. | |
 
 city: changji | 昌吉 | Changji | 44.01 | 87.31 | A Hui prefecture east of Urumqi. |
+D | 昌吉拌面 | Changji laghman | A hearty noodle dish. | |
 
 city: shihezi | 石河子 | Shihezi | 44.30 | 86.04 | A planned oasis city built by army settlers. |
 A | 军垦博物馆 | Military Reclamation Museum | A museum of the settlers who built the city. | | 44.30,86.04
+D | 石河子葡萄 | Shihezi grapes | Grapes grown by settlers. | |

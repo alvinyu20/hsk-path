@@ -11,6 +11,10 @@ A | 东陵 | Fuling Tomb | The tomb of the first Qing emperor. | | 41.85,123.58
 A | 辽宁省博物馆 | Liaoning Provincial Museum | A museum. | | 41.77,123.43
 D | 老边饺子 | Laobian dumplings | A historic dumpling house with a long story. | |
 D | 锅包肉 | Guobaorou | Crisp sweet and sour pork. | |
+D | 酸菜炖粉条 | Sauerkraut and glass noodles | A northeastern stew. | |
+D | 沈阳烤串 | Shenyang skewers | Grilled meat skewers. | |
+D | 马家烧麦 | Majia shaomai | A halal dumpling. | |
+D | 鸡架 | Roasted chicken frames | A street food. | |
 C | 二人转 | Errenzhuan | A comic song-and-dance. | |
 C | 评剧 | Pingju opera | A local opera. | |
 C | 秧歌 | Northeast yangge | A folk dance. | |
@@ -22,32 +26,42 @@ A | 金石滩 | Golden Pebble Beach | A beach with strange rocks. | | 39.09,121.
 A | 旅顺口 | Lüshun | A historic naval port. | | 38.81,121.26
 A | 大连港 | Dalian Port | A busy port. | | 38.93,121.65
 A | 滨海路 | Binhai Road | A coastal road. | | 38.87,121.58
+D | 大连海鲜 | Dalian seafood | Sea cucumber, scallops and prawns. | |
 D | 焖子 | Menzi | A fried starch jelly. | |
 D | 海鲜饺子 | Seafood dumplings | Dumplings with shrimp. | |
+D | 大连烧烤 | Dalian barbecue | Grilled seafood. | |
 
 city: anshan | 鞍山 | Anshan | 41.11 | 122.99 | A steel city with a big jade Buddha. |
 A | 玉佛苑 | Jade Buddha Garden | A garden with a large Buddha carved from jade. | | 41.00,123.10
 A | 千山 | Qianshan Mountain | A hill with temples. | | 41.05,123.12
 A | 鞍山钢铁 | Anshan Steel | A giant steel plant. | | 41.11,122.99
+D | 海城馅饼 | Haicheng pies | Pan-fried filled pies. | |
+D | 岫岩玉 | Xiuyan jade | A green jade. | |
 
 city: fushun | 抚顺 | Fushun | 41.88 | 123.96 | A coal town and a Manchu homeland. |
 A | 西露天矿 | West Open Pit Mine | A huge open pit coal mine. | | 41.85,123.90
 A | 雷锋纪念馆 | Lei Feng Memorial | A memorial to the soldier held up as a model. | | 41.88,123.96
+D | 抚顺煤精雕刻 | Fushun coal carving | A craft carved from coal. | |
 
 city: dandong | 丹东 | Dandong | 40.12 | 124.35 | A border city beside North Korea. |
 A | 鸭绿江断桥 | Yalu River Broken Bridge | A bridge half destroyed in the war. | | 40.12,124.39
 A | 虎山长城 | Hushan Great Wall | The eastern start of the Ming Great Wall. | | 40.20,124.45
 A | 抗美援朝纪念馆 | Resist America Aid Korea Memorial | A war memorial. | | 40.13,124.37
+D | 丹东草莓 | Dandong strawberries | A sweet strawberry. | |
 D | 黄蚬子 | Yellow clams | A famed clam. | |
 
 city: jinzhou | 锦州 | Jinzhou | 41.10 | 121.13 | A coastal city on the corridor to the northeast. |
 A | 辽沈战役纪念馆 | Liaoshen Campaign Memorial | A museum on the 1948 campaign. | | 41.10,121.13
 A | 笔架山 | Bijia Mountain | A tidal sand bridge to an island. | | 40.88,121.15
+D | 锦州烧烤 | Jinzhou barbecue | Grilled meats. | |
+D | 锦州小菜 | Jinzhou pickles | Pickled vegetables. | |
 
 city: yingkou | 营口 | Yingkou | 40.67 | 122.24 | A port city on the Liao River. |
 A | 鲅鱼圈 | Bayuquan | A port and beach. | | 40.26,122.12
+D | 营口大饼 | Yingkou big cake | A savory flatbread. | |
 
 city: fuxin | 阜新 | Fuxin | 42.02 | 121.67 | A coal town with a jade culture. |
+D | 阜新玛瑙 | Fuxin agate | An agate carving craft. | |
 
 city: liaoyang | 辽阳 | Liaoyang | 41.27 | 123.24 | One of the oldest cities in the northeast. |
 A | 白塔 | Liaoyang White Pagoda | A white pagoda from the Liao. | | 41.27,123.24
@@ -55,9 +69,11 @@ A | 东京城 | Dongjing City | An old city of the Later Jin. | | 41.30,123.30
 
 city: panjin | 盘锦 | Panjin | 41.12 | 122.07 | A wetland city with red beach. |
 A | 红海滩 | Red Beach | A beach red with sea-blite plants in autumn. | | 40.90,121.90
+D | 盘锦河蟹 | Panjin crab | River crab. | |
 
 city: tieling | 铁岭 | Tieling | 42.29 | 123.84 | The hometown of the northeast comedy. |
 A | 莲花湖 | Lotus Lake | A wetland. | | 42.35,123.85
+D | 铁岭榛子 | Tieling hazelnuts | Hazelnuts. | |
 
 city: chaoyang | 朝阳 | Chaoyang | 41.57 | 120.45 | An ancient fossil city. |
 A | 凤凰山 | Fenghuang Mountain | A hill with temples. | | 41.57,120.45

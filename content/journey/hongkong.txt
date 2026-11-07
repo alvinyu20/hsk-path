@@ -45,6 +45,7 @@ D | 车仔面 | Cart noodles | A bowl of noodles with a choice of toppings. | |
 D | 点心 | Dim sum | Small dishes eaten with tea. | |
 D | 糖水 | Tong sui | A sweet dessert soup. | |
 D | 烧卖 | Siu mai | A steamed dumpling. | |
+D | 港式炒饭 | Hong Kong fried rice | Fried rice. | |
 C | 风水 | Feng shui | The belief in arranging buildings by qi, strongly followed by the city's builders. | |
 
 city: new-territories | 新界 | New Territories | 22.42 | 114.15 | The green north, with villages, hills and islands. |
@@ -60,6 +61,9 @@ A | 南丫岛 | Lamma Island | A car-free island with hikes. | | 22.21,114.12
 A | 八仙岭 | Pat Sin Leng | A hill range. | | 22.51,114.23
 A | 屏山文物径 | Ping Shan Heritage Trail | A trail of old clan halls. | | 22.45,114.00
 A | 大帽山 | Tai Mo Shan | The highest peak in Hong Kong. | | 22.41,114.12
+D | 大澳虾酱 | Tai O shrimp paste | A strong-smelling paste. | |
 D | 盆菜 | Poon choi | A big basin of layered meats for village feasts. | |
+D | 西贡海鲜 | Sai Kung seafood | Fresh seafood by the sea. | |
+D | 长洲平安包 | Cheung Chau peace buns | Sweet buns for the festival. | |
 C | 客家围村 | Walled villages | Villages built by clans. | |
 C | 疍家 | Tanka people | Boat people who lived on the water. | |

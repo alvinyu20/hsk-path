@@ -12,8 +12,10 @@ A | 圆通寺 | Yuantong Temple | The biggest Buddhist temple in Kunming. | | 25
 A | 金马碧鸡坊 | Golden Horse and Jade Rooster Archways | Two archways that make a symbol of old Kunming. | | 25.04,102.71
 D | 过桥米线 | Crossing-the-bridge noodles | Rice noodles with hot broth, meat and vegetables added at the table. | |
 D | 汽锅鸡 | Steam-pot chicken | Chicken steamed in a clay pot until the broth is clear. | |
+D | 鲜花饼 | Flower cake | A flaky pastry with edible rose petals. | |
 D | 烤乳扇 | Grilled milk fan | A thin dried cheese from Yunnan, grilled and sweetened. | |
 D | 野生菌火锅 | Wild mushroom hot pot | A hot pot with local mushrooms from the rainy season. | |
+D | 云腿月饼 | Yunnan ham mooncake | A mooncake filled with salty ham and sugar. | |
 
 city: dali | 大理 | Dali | 25.61 | 100.27 | An old Bai kingdom between a lake and a snowy range. |
 A | 大理古城 | Dali Old Town | A walled town of cobbled streets and cafés at the foot of Cangshan. | | 25.69,100.16
@@ -26,6 +28,7 @@ A | 蝴蝶泉 | Butterfly Spring | A spring famous for the butterflies in spring
 D | 乳饼 | Rubing cheese | A firm Bai-style cheese, fried or grilled. | |
 D | 酸辣鱼 | Sour and spicy fish | Erhai fish in a tangy broth. | |
 D | 喜洲粑粑 | Xizhou baba | A flaky flatbread, savory or sweet. | |
+D | 白族三道茶 | Bai three-course tea | Tea served in three stages: bitter, sweet and aftertaste. | |
 C | 白族扎染 | Bai tie-dye | Blue-and-white cloth dyed with plants by the Bai people. | |
 C | 三月街 | March Fair | An ancient trade and folk festival in Dali. | |
 
@@ -36,6 +39,7 @@ A | 束河古镇 | Shuhe Ancient Town | A quieter old town on the stream. | | 26
 A | 黑龙潭 | Black Dragon Pool | A pond with a view of the snow mountain. | | 26.89,100.22
 A | 虎跳峡 | Tiger Leaping Gorge | One of the deepest river gorges in the world. | | 27.19,100.10
 A | 蓝月谷 | Blue Moon Valley | Turquoise pools at the foot of the mountain. | | 27.12,100.22
+D | 腊排骨火锅 | Cured ribs hot pot | A hot pot of local smoked ribs. | |
 D | 丽江粑粑 | Lijiang baba | A flatbread filled with ham or sweet filling. | |
 D | 鸡豆凉粉 | Chickpea jelly | A cool, spicy chickpea jelly in the Lijiang style. | |
 C | 纳西古乐 | Naxi ancient music | An old style of music that Naxi musicians have kept alive. | |
@@ -47,6 +51,7 @@ A | 热带植物园 | Tropical Botanical Garden | A huge garden of rainforest pl
 A | 告庄西双景 | Gaozhuang Xishuangjing | A night market and Dai-style town beside the Mekong. | | 22.00,100.81
 A | 曼听公园 | Manting Park | A royal garden of the Dai kings. | | 22.00,100.80
 D | 菠萝饭 | Pineapple rice | Sticky rice steamed inside a hollowed-out pineapple. | |
+D | 香茅草烤鱼 | Lemongrass grilled fish | Fish wrapped with lemongrass and grilled. | |
 D | 普洱茶 | Pu'er tea | A fermented tea, grown in the south of Yunnan. | |
 C | 泼水节 | Water Splashing Festival | The Dai New Year, when people splash each other with water. | |
 C | 孔雀舞 | Peacock dance | A graceful Dai dance imitating a peacock. | |
@@ -62,12 +67,14 @@ D | 牦牛肉 | Yak meat | Meat of the yak, boiled or dried. | |
 city: honghe | 红河 | Honghe | 23.37 | 103.38 | A prefecture famous for terraced rice fields. |
 A | 元阳梯田 | Yuanyang Rice Terraces | Tens of thousands of terraces carved into the hills by the Hani people. | A UNESCO World Heritage Site. | 23.10,102.77
 A | 朱家花园 | Zhu Family Garden | A big family mansion in Jianshui. | | 23.63,102.83
+D | 建水烧豆腐 | Jianshui grilled tofu | Tofu grilled on charcoal and dipped in sauce. | |
 D | 蒙自过桥米线 | Mengzi crossing-the-bridge noodles | The Mengzi variety of this noodle dish. | |
 
 city: baoshan | 保山 | Baoshan | 25.11 | 99.17 | A western city near the Burma border. |
 A | 腾冲 | Tengchong | A town of volcanoes, hot springs and old border houses. | | 25.02,98.49
 A | 和顺古镇 | Heshun Ancient Town | A village of overseas Chinese families with a library. | | 25.03,98.45
 D | 腾冲大救驾 | Tengchong Da Jiu Jia | A fried rice cake dish with a royal legend. | |
+D | 保山咖啡 | Baoshan coffee | Yunnan is a main coffee region in China. | |
 
 city: puer | 普洱 | Pu'er | 22.79 | 100.97 | The home of the tea named after it. |
 A | 景迈山 | Jingmai Mountain | A mountain with ancient tea forests. | | 22.20,100.00
@@ -75,14 +82,18 @@ A | 景迈山 | Jingmai Mountain | A mountain with ancient tea forests. | | 22.2
 city: lincang | 临沧 | Lincang | 23.88 | 100.09 | A border city of tea and coffee. |
 A | 沧源佤山 | Cangyuan Wa Mountains | A county with rock paintings from 3,000 years ago. | | 23.15,99.25
 A | 沧源崖画 | Cangyuan Rock Paintings | Red cliff paintings of people, animals and houses. | | 23.18,99.24
+D | 临沧红茶 | Lincang black tea | A strong black tea (called red tea in Chinese). | |
 
 city: zhaotong | 昭通 | Zhaotong | 27.34 | 103.72 | A northern city on the way to Sichuan. |
 A | 大山包 | Dashanbao | A high wetland where black-necked cranes winter. | | 27.35,103.38
 A | 豆沙关 | Dousha Pass | An old pass on the Five-Foot Road. | | 28.07,104.00
+D | 昭通苹果 | Zhaotong apples | Crisp apples from the highlands. | |
 
 city: wenshan | 文山 | Wenshan | 23.37 | 104.24 | A karst area near Vietnam, home to a famous herb. |
 A | 普者黑 | Puzhehei | A karst lake area of lotus and boats. | | 23.64,104.04
+D | 文山三七鸡 | Sanqi chicken | Chicken stewed with notoginseng. | |
 
 city: chuxiong | 楚雄 | Chuxiong | 25.04 | 101.55 | A prefecture of the Yi people. |
 A | 元谋土林 | Yuanmou Earth Forest | Pillars of earth shaped by erosion. | | 25.72,101.88
+D | 彝族坨坨肉 | Yi tuotuo pork | Boiled chunks of pork eaten with salt and chili. | |
 C | 火把节 | Torch Festival | A Yi festival in summer with torches and bonfires. | |

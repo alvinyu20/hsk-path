@@ -11,7 +11,11 @@ A | 蒙山大佛 | Mengshan Giant Buddha | A big stone Buddha carved into a hill
 A | 迎泽公园 | Yingze Park | A park in the center. | | 37.85,112.56
 D | 刀削面 | Knife-cut noodles | Noodles shaved off a block of dough straight into boiling water. | |
 D | 头脑 | Toune | A winter medicinal stew of lamb, yam and wine. | |
+D | 太原老陈醋 | Shanxi aged vinegar | A dark aged vinegar, a sign of Shanxi. | |
 D | 莜面栲栳栳 | Oat noodle rolls | Rolled noodles of oat flour. | |
+D | 过油肉 | Guoyou rou | Pork stir-fried with a quick oil bath. | |
+D | 平遥牛肉 | Pingyao beef | Cured beef from Pingyao. | |
+D | 汾酒 | Fenjiu | A famed baijiu from Shanxi. | |
 C | 晋剧 | Jin opera | The local opera. | |
 C | 面塑 | Dough sculpting | Figures made of dough. | |
 C | 晋商 | Shanxi merchants | Merchants who ran banks across China. | |
@@ -23,6 +27,8 @@ A | 华严寺 | Huayan Temple | One of the biggest wooden temples. | | 40.09,113
 A | 九龙壁 | Nine Dragon Wall | A glazed wall of nine dragons. | | 40.09,113.30
 A | 应县木塔 | Yingxian Wooden Pagoda | The oldest and tallest wooden pagoda in China. | | 39.56,113.18
 A | 恒山 | Mount Heng (North) | One of the Five Sacred Mountains. | | 39.68,113.72
+D | 浑源凉粉 | Hunyuan jelly | A cool jelly dish. | |
+D | 大同铜火锅 | Datong copper hot pot | A copper hot pot. | |
 D | 黄花菜 | Daylily | A famous dried daylily. | |
 
 city: pingyao | 平遥 | Pingyao | 37.20 | 112.18 | A walled town that was a banking center. |
@@ -30,6 +36,8 @@ A | 平遥古城 | Pingyao Ancient City | A Ming walled town with 3,000 old buil
 A | 平遥城墙 | Pingyao City Wall | A Ming wall you can walk on. | | 37.20,112.18
 A | 双林寺 | Shuanglin Temple | A temple of painted statues. | | 37.19,112.14
 A | 镇国寺 | Zhenguo Temple | A temple with a very old wooden hall. | | 37.25,112.19
+D | 平遥碗托 | Pingyao wantuo | A cold buckwheat jelly. | |
+D | 平遥推光漆器 | Pingyao pushed-light lacquer | A hand-polished lacquerware. | |
 C | 票号 | Piaohao banks | Local banks of the Qing. | |
 
 city: jinzhong | 晋中 | Jinzhong | 37.69 | 112.75 | A home of great merchant mansions. |
@@ -37,28 +45,35 @@ A | 乔家大院 | Qiao Family Compound | A big courtyard mansion of a merchant 
 A | 王家大院 | Wang Family Compound | A huge Qing mansion complex. | | 37.65,112.20
 A | 常家庄园 | Chang Family Manor | A merchant manor. | | 37.62,112.78
 A | 绵山 | Mianshan | A mountain tied to the Cold Food Festival. | | 36.98,111.99
+D | 太谷饼 | Taigu cake | A round sweet cake. | |
 
 city: linfen | 临汾 | Linfen | 36.09 | 111.52 | A cradle of Chinese civilization along the Fen River. |
 A | 壶口瀑布 | Hukou Waterfall | A waterfall on the Yellow River, seen from the Shanxi side. | | 36.14,110.43
 A | 洪洞大槐树 | Hongtong Big Locust Tree | A tree linked to the origin of many Chinese families. | | 36.25,111.67
 A | 广胜寺 | Guangsheng Temple | A temple of the Yuan, with a fine glazed pagoda. | | 36.48,111.75
+D | 临汾羊杂 | Linfen lamb offal | A hot soup. | |
 
 city: yuncheng | 运城 | Yuncheng | 35.03 | 111.00 | The hometown of the general Guan Yu. |
 A | 解州关帝庙 | Xiezhou Guandi Temple | A huge temple for Guan Yu. | | 34.94,110.87
 A | 鹳雀楼 | Stork Tower | A tower from a famous Tang poem. | | 34.82,110.28
 A | 永乐宫 | Yongle Palace | A Taoist temple with remarkable murals. | | 34.62,110.60
 A | 运城盐湖 | Yuncheng Salt Lake | A salt lake with pink water. | | 35.00,111.00
+D | 运城羊肉泡馍 | Yuncheng lamb bun soup | A lamb soup with bread. | |
+D | 稷山麻花 | Jishan twists | Fried dough twists. | |
 
 city: changzhi | 长治 | Changzhi | 36.20 | 113.12 | A highland city on the Taihang range. |
 A | 太行山大峡谷 | Taihang Grand Canyon | Deep gorges in the Taihang range. | | 36.30,113.90
 A | 老顶山 | Laoding Mountain | A park hill. | | 36.15,113.12
+D | 潞酒 | Lu liquor | A local liquor. | |
 
 city: jincheng | 晋城 | Jincheng | 35.49 | 112.85 | A coal city with old stone houses. |
 A | 皇城相府 | Huangcheng Xiangfu | A Qing official's walled mansion. | | 35.57,112.45
 A | 青莲寺 | Qinglian Temple | An old cliff temple. | | 35.50,112.80
+D | 陵川黑猪肉 | Lingchuan black pork | A local pork. | |
 
 city: lvliang | 吕梁 | Lüliang | 37.52 | 111.14 | A mountain city on the Yellow River. |
 A | 北武当山 | North Wudang Mountain | A Taoist mountain. | | 37.70,111.30
+D | 吕梁红枣 | Lüliang red jujube | A sweet red date. | |
 D | 柳林碗托 | Liulin wantuo | Cold jelly. | |
 
 city: xinzhou | 忻州 | Xinzhou | 38.42 | 112.73 | A north Shanxi city beside the Wutai holy mountain. |

@@ -19,6 +19,7 @@ D | 牦牛肉 | Yak meat | Dried or stewed yak. | |
 D | 青稞酒 | Chang barley beer | A mild barley drink. | |
 D | 酸奶 | Yak yogurt | A thick sweet yogurt. | |
 D | 藏式包子 | Momo | Dumplings filled with meat. | |
+D | 甜茶 | Sweet tea | A milky tea sold in teahouses. | |
 C | 藏历新年 | Losar | The Tibetan New Year. | |
 C | 雪顿节 | Shoton Festival | A summer festival with the unveiling of a giant thangka and opera. | |
 C | 藏戏 | Tibetan opera | A masked opera. | |
@@ -33,7 +34,9 @@ A | 白居寺 | Palcho Monastery | A monastery with a nine-story stupa in Gyants
 A | 江孜宗山古堡 | Gyantse Dzong | A fortress on a hill. | | 28.92,89.60
 A | 羊卓雍错 | Yamdrok Lake | A turquoise lake shaped like a scorpion. | | 28.97,90.45
 A | 卡若拉冰川 | Karola Glacier | A glacier by the road. | | 28.95,90.27
+D | 藏香猪 | Tibetan fragrant pig | A small local pig. | |
 D | 酥油饼 | Butter cakes | Butter-fried bread. | |
+D | 牦牛酸奶 | Yak yogurt | A yogurt from yak milk. | |
 
 city: nyingchi | 林芝 | Nyingchi | 29.65 | 94.36 | The green southeast, called the Switzerland of Tibet. |
 A | 雅鲁藏布大峡谷 | Yarlung Tsangpo Grand Canyon | The deepest canyon in the world. | | 29.60,95.00
@@ -42,6 +45,8 @@ A | 巴松措 | Basum Lake | A forest lake. | | 30.00,93.90
 A | 色季拉山 | Sejila Mountain | A pass with views of Namcha Barwa. | | 29.65,94.70
 A | 鲁朗林海 | Lulang Forest | A forest and meadow. | | 29.70,94.80
 A | 桃花节 | Peach Blossom Festival | A spring festival in the valley. | | 29.65,94.36
+D | 林芝松茸 | Nyingchi matsutake | Wild mushrooms. | |
+D | 石锅鸡 | Stone pot chicken | Chicken cooked in a stone pot. | |
 C | 门巴族 | Monpa people | A small people of the forest. | |
 C | 珞巴族 | Lhoba people | A small people of the southeast. | |
 
@@ -55,6 +60,7 @@ C | 藏医药 | Tibetan medicine | A medical system with centuries of history. |
 
 city: nagqu | 那曲 | Nagqu | 31.48 | 92.05 | A high grassland where nomads live. |
 A | 色林错 | Selin Co | A large lake on the northern plateau. | | 31.80,89.00
+D | 牦牛肉干 | Yak jerky | Dried yak meat. | |
 
 city: ngari | 阿里 | Ngari | 32.50 | 80.10 | The remote far west, with Mount Kailash. |
 A | 冈仁波齐 | Mount Kailash | A holy mountain for Buddhists, Hindus, Jains and Bon followers. | | 31.07,81.31

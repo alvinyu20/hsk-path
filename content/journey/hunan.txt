@@ -15,6 +15,7 @@ D | 剁椒鱼头 | Fish head with chopped chilies | A steamed fish head under a 
 D | 口味虾 | Spicy crayfish | Crayfish stir-fried with chili and spices, eaten by hand in summer. | |
 D | 糖油粑粑 | Sugar-oil glutinous cake | Hot, sticky fried rice cakes in sugar syrup. | |
 D | 长沙米粉 | Changsha rice noodles | Rice noodles in broth with pork, a breakfast favorite. | |
+D | 毛氏红烧肉 | Chairman Mao's red-braised pork | Soft pork belly braised in soy and sugar, a Hunan classic. | |
 C | 湘绣 | Xiang embroidery | Fine silk embroidery of animals and landscapes. | |
 
 city: zhangjiajie | 张家界 | Zhangjiajie | 29.12 | 110.48 | A national forest park of tall sandstone pillars. | The floating Hallelujah Mountains in a famous science fiction film were inspired by these pillars.
@@ -24,6 +25,7 @@ A | 天子山 | Tianzi Mountain | A viewpoint area of dense stone forest. | | 29
 A | 百龙天梯 | Bailong Elevator | A glass elevator built against a cliff, said to be the tallest outdoor lift in the world. | | 29.34,110.43
 A | 黄龙洞 | Yellow Dragon Cave | A huge cave with an underground river and rock formations. | | 29.28,110.47
 A | 大峡谷玻璃桥 | Grand Canyon Glass Bridge | A long glass-floored bridge over a deep gorge. | | 29.27,110.53
+D | 三下锅 | Sanxia guo | A hearty hotpot of meat and vegetables cooked at the table. | |
 D | 土家腊肉 | Tujia cured pork | Smoked pork with a deep flavor from the Tujia people. | |
 
 city: fenghuang | 凤凰 | Fenghuang | 27.95 | 109.60 | A river town of stilted houses, famous in Chinese literature. |
