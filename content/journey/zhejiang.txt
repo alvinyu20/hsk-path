@@ -23,7 +23,6 @@ city: ningbo | 宁波 | Ningbo | 29.87 | 121.55 | A port city and old trade cent
 A | 天一阁 | Tianyi Pavilion | One of the oldest private libraries in China, founded in the 1500s. | | 29.87,121.54
 A | 老外滩 | Old Bund | A riverside area of historic buildings. | | 29.88,121.56
 A | 天童寺 | Tiantong Temple | A large Chan Buddhist temple in the hills. | | 29.80,121.78
-A | 东钱湖 | Dongqian Lake | A big lake with villas and temples. | | 29.80,121.64
 A | 河姆渡遗址 | Hemudu Site | A neolithic site of rice farmers about 7,000 years old. | | 30.00,121.35
 D | 宁波汤圆 | Ningbo tangyuan | Black sesame rice balls, a famous Ningbo sweet. | |
 D | 宁波年糕 | Ningbo rice cake | Chewy rice cake stir-fried with greens. | |
@@ -32,9 +31,7 @@ D | 咸蟹 | Salted crab | Raw crab pickled in brine. | |
 city: shaoxing | 绍兴 | Shaoxing | 30.00 | 120.58 | A canal town of wine, writers and bridges. |
 A | 鲁迅故里 | Lu Xun's Hometown | The old home of the writer Lu Xun and the streets of his stories. | | 30.00,120.59
 A | 兰亭 | Orchid Pavilion | The garden where Wang Xizhi wrote a famous piece of calligraphy. | | 29.97,120.54
-A | 沈园 | Shen Garden | A garden tied to a famous love poem by Lu You. | | 29.99,120.58
 A | 乌篷船 | Black-awning boats | Small boats that carry visitors through the canals. | | 30.00,120.59
-A | 柯岩 | Keyan | A scenic area of old quarries and rock carvings. | | 30.03,120.48
 D | 绍兴黄酒 | Shaoxing wine | A famous rice wine, used in cooking and drunk warm. | |
 D | 茴香豆 | Fennel beans | Dried broad beans cooked with fennel, mentioned in a Lu Xun story. | |
 D | 霉干菜扣肉 | Preserved greens with pork | Pork belly steamed with salted dried greens. | |
@@ -63,11 +60,9 @@ D | 太湖银鱼 | Taihu whitebait | Tiny silvery fish from Lake Tai. | |
 city: jinhua | 金华 | Jinhua | 29.08 | 119.65 | A city with a famous ham and the Yiwu market. |
 A | 义乌小商品城 | Yiwu International Trade City | The largest wholesale market for small goods in the world. | | 29.31,120.07
 A | 横店影视城 | Hengdian World Studios | The largest film studio in the world by size. | | 29.15,120.32
-A | 双龙洞 | Shuanglong Cave | A cave reached by boat through a narrow channel. | | 29.17,119.64
 D | 金华火腿 | Jinhua ham | A famous dry-cured ham. | |
 
 city: taizhou | 台州 | Taizhou | 28.66 | 121.42 | A coastal city with an old city wall. |
-A | 临海古城墙 | Linhai City Wall | A Ming-era wall with a river gate. | | 28.86,121.12
 A | 天台山 | Tiantai Mountain | A Buddhist mountain, birthplace of the Tiantai school. | | 29.17,121.03
 D | 台州海鲜 | Taizhou seafood | Fresh crabs and fish from the coast. | |
 
@@ -78,10 +73,7 @@ D | 舟山海鲜 | Zhoushan seafood | Yellow croaker, crabs and shellfish. | |
 D | 带鱼 | Hairtail fish | A long silver fish, grilled or braised. | |
 
 city: lishui | 丽水 | Lishui | 28.45 | 119.92 | A green mountain city with terraced fields. |
-A | 缙云仙都 | Jinyun Xiandu | A rock pillar landscape with a river. | | 28.67,120.15
 A | 龙泉青瓷 | Longquan celadon | Pottery made here with a pale green glaze for 1,700 years. | | 28.07,119.14
 
 city: quzhou | 衢州 | Quzhou | 28.94 | 118.87 | A city with a Confucius family temple in the south. |
-A | 孔氏南宗家庙 | Southern Confucius Temple | A temple of the Confucius family branch that moved south. | | 28.96,118.87
-A | 江郎山 | Jianglang Mountain | Three rock pillars rising from a hill. | | 28.57,118.58
 D | 衢州鸭头 | Quzhou duck head | A spicy braised snack. | |

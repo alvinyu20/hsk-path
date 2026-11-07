@@ -24,8 +24,6 @@ C | 冰灯 | Ice lanterns | Lanterns carved from ice. | |
 
 city: qiqihar | 齐齐哈尔 | Qiqihar | 47.35 | 123.97 | A northern city with cranes and a wetland. |
 A | 扎龙湿地 | Zhalong Wetland | A famous wetland where red-crowned cranes breed. | | 47.20,124.25
-A | 明月岛 | Mingyue Island | A river island. | | 47.35,123.97
-A | 碾子山 | Nianzishan | A mountain town. | | 47.50,122.88
 D | 齐齐哈尔烤肉 | Qiqihar barbecue | A famed meat barbecue. | |
 D | 扎龙鹤 | Zhalong crane | A bird symbol of the city. | |
 
@@ -39,13 +37,10 @@ D | 五常大米 | Wuchang rice | A prized rice. | |
 C | 朝鲜族风情 | Korean culture | Korean heritage in the area. | |
 
 city: jiamusi | 佳木斯 | Jiamusi | 46.80 | 130.32 | A city on the Songhua near the Russian border. |
-A | 抚远 | Fuyuan | The first place in China to see the sunrise. | | 48.37,134.30
-A | 黑瞎子岛 | Heixiazi Island | A river island on the border. | | 48.30,134.60
 D | 鱼皮 | Fish skin crafts | A traditional craft by the Hezhe. | |
 D | 抚远大马哈鱼 | Fuyuan salmon | A river fish. | |
 
 city: daqing | 大庆 | Daqing | 46.59 | 125.10 | An oil city on the plains. |
-A | 龙凤湿地 | Longfeng Wetland | A city wetland. | | 46.60,125.10
 D | 大庆烤鱼 | Daqing grilled fish | Grilled fish. | |
 D | 杜蒙羊肉 | Dumeng lamb | Local lamb. | |
 
@@ -68,7 +63,6 @@ D | 蓝莓酒 | Blueberry wine | A wine. | |
 
 city: shuangyashan | 双鸭山 | Shuangyashan | 46.64 | 131.16 | A coal city on the Wusuli River. |
 A | 乌苏里江 | Ussuri River | A border river with Russia. | | 46.64,131.16
-A | 七星峰 | Qixing Peak | A hill park. | | 46.60,131.20
 D | 双鸭山大米 | Shuangyashan rice | A local rice. | |
 
 city: suihua | 绥化 | Suihua | 46.64 | 126.97 | A farming city. |

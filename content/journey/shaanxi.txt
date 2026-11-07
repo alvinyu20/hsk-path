@@ -27,7 +27,6 @@ C | 西安鼓乐 | Xi'an drum music | An old style of ensemble music from Tang t
 city: xianyang | 咸阳 | Xianyang | 34.33 | 108.71 | The capital of the Qin dynasty before the empire. |
 A | 汉阳陵 | Hanyangling Mausoleum | A Han tomb complex with thousands of small figures. | | 34.45,108.98
 A | 乾陵 | Qianling Mausoleum | The tomb of Emperor Gaozong and Empress Wu Zetian. | | 34.58,108.22
-A | 咸阳博物馆 | Xianyang Museum | A museum with Qin and Han finds. | | 34.34,108.71
 D | 咸阳烙面 | Xianyang lao mian | Noodles served with a fragrant sauce. | |
 
 city: baoji | 宝鸡 | Baoji | 34.36 | 107.24 | The cradle of Zhou culture and bronzes. |
@@ -37,7 +36,6 @@ D | 岐山臊子面 | Qishan saozi noodles | The classic Qishan version of the d
 D | 宝鸡擀面皮 | Baoji rolled noodles | A cool noodle dish with a rich sauce. | |
 
 city: yanan | 延安 | Yan'an | 36.60 | 109.49 | The base of the Communist Party in the 1930s and 40s. |
-A | 宝塔山 | Pagoda Hill | A hill with a pagoda that stands as a symbol of Yan'an. | | 36.60,109.50
 A | 壶口瀑布 | Hukou Waterfall | A great waterfall where the Yellow River squeezes into a narrow gorge. | | 36.14,110.43
 D | 洋芋擦擦 | Potato shreds | Shredded potato steamed and tossed with chili. | |
 D | 延安黄馍馍 | Yellow millet bun | A sweet steamed cake of yellow millet. | |
@@ -48,7 +46,6 @@ D | 汉中热米皮 | Hanzhong hot rice skin | Steamed rice noodles with spicy s
 D | 汉中菜豆腐 | Hanzhong vegetable tofu | A tofu made with vegetables, a local specialty. | |
 
 city: yulin | 榆林 | Yulin | 38.29 | 109.73 | A northern city on the edge of the desert. |
-A | 镇北台 | Zhenbei Tower | A Ming-dynasty watchtower at the edge of the Great Wall. | | 38.40,109.78
 A | 红碱淖 | Hongjiannao Lake | The largest desert lake in China. | | 39.07,109.87
 A | 榆林古城 | Yulin Old City | A Ming and Qing walled city. | | 38.29,109.74
 D | 羊肉面 | Yulin lamb noodles | Noodles with lamb broth. | |

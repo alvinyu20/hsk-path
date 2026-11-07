@@ -9,7 +9,6 @@ A | 橘子洲 | Orange Isle | A long island in the river with a giant statue of 
 A | 湖南省博物馆 | Hunan Provincial Museum | Home of the Mawangdui tomb finds, including a Han-dynasty silk painting. | | 28.21,112.99
 A | 太平老街 | Taiping Old Street | A stone lane of old shops and snack stalls. | | 28.19,112.97
 A | 天心阁 | Tianxin Pavilion | A tower on the old city wall in the middle of the city. | | 28.19,112.97
-A | 梅溪湖 | Meixi Lake | A lake district of parks and modern buildings. | | 28.15,112.89
 D | 臭豆腐 | Stinky tofu | Fried tofu with a strong smell and a spicy dip, a Changsha street snack. | |
 D | 剁椒鱼头 | Fish head with chopped chilies | A steamed fish head under a bright red blanket of chopped chili. | |
 D | 口味虾 | Spicy crayfish | Crayfish stir-fried with chili and spices, eaten by hand in summer. | |
@@ -39,7 +38,6 @@ C | 扎染 | Tie-dye | Hand-dyed blue cloth. | |
 city: yueyang | 岳阳 | Yueyang | 29.36 | 113.13 | A lakeside city with a very famous tower. |
 A | 岳阳楼 | Yueyang Tower | A tall wooden tower beside Dongting Lake, praised in a famous essay by Fan Zhongyan. | | 29.38,113.09
 A | 洞庭湖 | Dongting Lake | One of the biggest freshwater lakes in China, feeding the Yangtze. | | 29.30,112.90
-A | 君山岛 | Junshan Island | A small island in the lake known for its yellow tea. | | 29.38,113.00
 D | 君山银针 | Junshan Silver Needle tea | A yellow tea of silvery buds, grown on the island. | |
 D | 洞庭湖银鱼 | Dongting silver fish | Tiny clear fish cooked with egg or in soup. | |
 
@@ -50,7 +48,6 @@ D | 红烧肉 | Red-braised pork | The dish said to be Mao's favorite. | |
 city: hengyang | 衡阳 | Hengyang | 26.89 | 112.57 | A southern city beside one of the Five Sacred Mountains. |
 A | 衡山 | Mount Heng (South) | One of the Five Sacred Mountains of China, in the south. | | 27.25,112.69
 A | 南岳大庙 | Nanyue Great Temple | A big temple complex at the foot of the mountain. | | 27.25,112.70
-A | 石鼓书院 | Shigu Academy | An old academy on a rock above the river. | | 26.90,112.61
 D | 衡阳鱼粉 | Hengyang fish noodles | Rice noodles in a rich fish broth. | |
 
 city: xiangxi | 湘西 | Xiangxi | 28.31 | 109.74 | A mountain prefecture of Tujia and Miao villages. |
@@ -59,11 +56,8 @@ D | 酸鱼 | Sour fish | Fermented fish eaten by the Miao people. | |
 D | 腊肉 | Smoked bacon | Smoked pork hung over the fire. | |
 
 city: shaoyang | 邵阳 | Shaoyang | 27.24 | 111.47 | A city in mid-Hunan with an old hill landscape. |
-A | 崀山 | Langshan Mountain | Red sandstone cliffs and arches, part of Danxia landform. | | 26.35,110.95
 
 city: yongzhou | 永州 | Yongzhou | 26.42 | 111.61 | A southern city of rivers and a famous essay. |
-A | 柳子庙 | Liuzi Temple | A temple for the Tang writer Liu Zongyuan, who was exiled here. | | 26.43,111.61
-A | 阳明山 | Yangming Mountain | A forested mountain known for azaleas. | | 26.26,111.93
 D | 永州血鸭 | Yongzhou blood duck | A spicy duck stir-fry. | |
 
 city: changde | 常德 | Changde | 29.04 | 111.70 | A river city with a peach-blossom legend. |

@@ -6,7 +6,6 @@ city: xining | 西宁 | Xining | 36.62 | 101.78 | The capital of Qinghai, a high
 A | 塔尔寺 | Kumbum Monastery | A big Tibetan Buddhist monastery, birthplace of Tsongkhapa. | | 36.49,101.57
 A | 东关清真大寺 | Dongguan Mosque | One of the largest mosques in northwest China. | | 36.63,101.79
 A | 青海省博物馆 | Qinghai Provincial Museum | A museum of the plateau. | | 36.64,101.76
-A | 北禅寺 | Beichan Temple | A cliff temple above the city. | | 36.65,101.77
 A | 水井巷 | Shuijing Lane | A food lane in the city. | | 36.62,101.78
 D | 手抓羊肉 | Hand-grabbed mutton | Plain boiled mutton on the bone. | |
 D | 酿皮 | Niangpi | A cool noodle dish with spice. | |
@@ -29,7 +28,6 @@ C | 环湖赛 | Qinghai Lake Cycling Race | A major cycling race. | |
 city: haidong | 海东 | Haidong | 36.50 | 102.10 | An eastern city of Tu and Hui culture. |
 A | 瞿昙寺 | Qutan Temple | A Ming-era temple with fine murals. | | 36.50,102.62
 A | 喇家遗址 | Lajia Site | A neolithic site with a disaster preserved, with a bowl of noodles 4,000 years old. | | 35.82,102.58
-A | 互助 | Huzhu | The Tu people's home. | | 36.84,101.96
 D | 土族盘绣 | Tu coiled embroidery | A stitched craft of the Tu women. | |
 
 city: haixi | 海西 | Haixi | 37.37 | 97.37 | A prefecture of salt lakes and deserts. |
@@ -51,5 +49,4 @@ city: guoluo | 果洛 | Golog | 34.47 | 100.24 | A high grassland prefecture. |
 A | 阿尼玛卿雪山 | Amne Machin | A sacred snow range. | | 34.70,99.40
 
 city: hainan-qh | 海南州 | Hainan Prefecture | 36.28 | 100.62 | A prefecture near the lake. |
-A | 龙羊峡 | Longyang Gorge | A gorge with a big dam. | | 36.12,100.92
 D | 贵德梨 | Guide pear | A sweet pear. | |

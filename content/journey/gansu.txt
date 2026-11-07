@@ -20,7 +20,6 @@ A | 莫高窟 | Mogao Caves | Hundreds of caves of Buddhist murals and statues f
 A | 鸣沙山 | Singing Sand Dunes | Tall sand dunes you can climb or slide down, and a crescent lake at the foot. | | 40.09,94.68
 A | 月牙泉 | Crescent Moon Spring | A spring shaped like a crescent in the dunes. | | 40.09,94.67
 A | 玉门关 | Yumen Pass | An old Han-dynasty frontier pass. | | 40.36,93.86
-A | 敦煌夜市 | Dunhuang Night Market | A market of local snacks. | | 40.14,94.66
 A | 阳关 | Yang Pass | An old Han-dynasty gate on the Silk Road. | | 39.88,93.90
 A | 藏经洞 | Library Cave | The cave where thousands of scrolls were found in 1900. | | 40.04,94.80
 D | 驴肉黄面 | Donkey meat yellow noodles | Yellow noodles with braised donkey meat. | |
@@ -46,13 +45,11 @@ D | 张掖肉夹馍 | Zhangye meat bun | A Gansu take on the meat sandwich. | |
 city: tianshui | 天水 | Tianshui | 34.58 | 105.72 | The home of the Maijishan Grottoes. |
 A | 麦积山石窟 | Maijishan Grottoes | Cave temples carved on a cliff shaped like a haystack. | A UNESCO World Heritage Site. | 34.35,105.87
 A | 伏羲庙 | Fuxi Temple | A temple for Fuxi, a mythical ancestor. | | 34.58,105.72
-A | 石门山 | Shimen Mountain | A hill park. | | 34.60,105.90
 D | 呱呱 | Gua gua | A cold dish made from buckwheat jelly. | |
 D | 天水荞面 | Tianshui buckwheat noodles | Buckwheat noodles. | |
 
 city: linxia | 临夏 | Linxia | 35.60 | 103.21 | A Hui city, called Little Mecca. |
 A | 炳灵寺 | Bingling Temple | A cave temple on the Yellow River reached by boat. | | 35.80,103.07
-A | 积石山 | Jishi Mountain | A mountain with a gorge. | | 35.70,102.88
 D | 烤包子 | Roasted dumplings | Dumplings baked until crisp. | |
 C | 砖雕 | Brick carving | A craft of carved bricks. | |
 
@@ -62,14 +59,10 @@ D | 平凉烧鸡 | Pingliang braised chicken | A spiced chicken. | |
 
 city: jiuquan | 酒泉 | Jiuquan | 39.74 | 98.50 | A desert city and the home of a space launch center. |
 A | 酒泉卫星发射中心 | Jiuquan Satellite Launch Center | China's first launch site, where its first crewed spaceflight began. | | 40.96,100.29
-A | 阿克塞 | Aksay | A Kazakh autonomous county. | | 39.63,94.34
 D | 酒泉夜光杯 | Jiuquan luminous cups | Jade cups carved here. | |
 D | 酒泉烤羊肉 | Jiuquan roast lamb | Grilled lamb. | |
 
 city: wuwei | 武威 | Wuwei | 37.93 | 102.64 | A city of the Hexi corridor and the Flying Horse. |
-A | 雷台汉墓 | Leitai Han Tomb | The tomb where the bronze horse was found. | | 37.93,102.64
-A | 文庙 | Wuwei Confucius Temple | A big Confucius temple. | | 37.93,102.64
-A | 天梯山石窟 | Tiantishan Grottoes | Early Buddhist caves. | | 37.78,102.80
 
 city: longnan | 陇南 | Longnan | 33.40 | 104.92 | A green southern city on the Bailong River. |
 D | 陇南橄榄油 | Longnan olive oil | Olive oil grown in a warm valley. | |

@@ -39,8 +39,6 @@ A | 西乐索海滩 | Siloso Beach | A beach. | | 1.25,103.81
 
 city: east-coast | 东海岸 | East Coast | 1.31 | 103.93 | A coast of beaches, seafood and Peranakan culture. |
 A | 东海岸公园 | East Coast Park | A seaside park with cycling paths. | | 1.30,103.91
-A | 加东 | Katong | A Peranakan district of colorful shophouses. | | 1.31,103.90
-A | 樟宜海滩 | Changi Beach | A quiet beach. | | 1.39,103.99
 A | 樟宜机场星耀樟宜 | Jewel Changi | A garden mall with an indoor waterfall. | | 1.36,103.99
 A | 乌敏岛 | Pulau Ubin | An island that keeps the old village life. | | 1.41,103.97
 D | 娘惹糕 | Nyonya kueh | Colorful steamed cakes. | |
@@ -51,12 +49,9 @@ city: west | 西部 | West Singapore | 1.34 | 103.72 | A nature and science area
 A | 裕廊飞禽公园 | Jurong Bird Park | A bird park. | | 1.32,103.71
 A | 中华花园 | Chinese Garden | A garden of Chinese design. | | 1.34,103.73
 A | 日本花园 | Japanese Garden | A garden. | | 1.34,103.73
-A | 新加坡科学中心 | Science Centre Singapore | A science museum. | | 1.33,103.74
 A | 南洋理工大学 | Nanyang Technological University | A university. | | 1.35,103.68
 
 city: north | 北部 | North Singapore | 1.42 | 103.79 | A green north with zoos and wetlands. |
 A | 新加坡动物园 | Singapore Zoo | A zoo with open enclosures. | | 1.40,103.79
 A | 夜间野生动物园 | Night Safari | A zoo at night. | | 1.40,103.79
-A | 双溪布洛湿地 | Sungei Buloh Wetland Reserve | A wetland. | | 1.45,103.73
-A | 兀兰 | Woodlands | A border town. | | 1.44,103.79
 D | 榴莲 | Durian | The king of fruits, banned on public transport. | |

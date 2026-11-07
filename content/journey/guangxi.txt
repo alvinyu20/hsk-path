@@ -41,9 +41,6 @@ D | 田螺酿 | Stuffed river snails | Snails stuffed with pork and herbs. | |
 C | 刘三姐 | Liu Sanjie | A singer of Zhuang legend, a folk heroine. | |
 
 city: liuzhou | 柳州 | Liuzhou | 24.33 | 109.43 | An industrial city on the Liu River, home of snail noodles. |
-A | 柳侯公园 | Liuhou Park | A park for the Tang writer Liu Zongyuan. | | 24.31,109.41
-A | 龙潭公园 | Longtan Park | A lake park with a hill. | | 24.30,109.37
-A | 鱼峰山 | Yufeng Hill | A hill shaped like a fish. | | 24.30,109.40
 D | 柳州螺蛳粉 | Liuzhou snail noodles | The original home of the strong-smelling snail noodle soup. | |
 
 city: beihai | 北海 | Beihai | 21.48 | 109.12 | A beach city on the Gulf of Tonkin. |
@@ -55,12 +52,10 @@ D | 沙虫 | Sandworm | A prized sea worm, boiled or fried. | |
 D | 合浦珍珠 | Hepu pearls | Pearls farmed near Beihai for over 2,000 years. | |
 
 city: wuzhou | 梧州 | Wuzhou | 23.48 | 111.28 | A river city at the border with Guangdong. |
-A | 骑楼城 | Arcade City | A district of old arcade buildings. | | 23.48,111.28
 D | 龟苓膏 | Turtle jelly | A black herbal jelly eaten sweetened. | |
 D | 梧州纸包鸡 | Paper-wrapped chicken | Chicken wrapped in paper and fried. | |
 
 city: baise | 百色 | Baise | 23.90 | 106.62 | A red-history city and mountain area. |
-A | 百色起义纪念馆 | Baise Uprising Memorial | A memorial of the 1929 Baise uprising. | | 23.90,106.62
 D | 百色芒果 | Baise mango | A famed mango from the river valley. | |
 D | 靖西鸭 | Jingxi duck | A local duck breed. | |
 
@@ -74,7 +69,6 @@ D | 钦州猪脚粉 | Qinzhou pork-foot noodles | Noodles with braised pork feet
 D | 大蚝 | Qinzhou oysters | Large oysters from the bay. | |
 
 city: yulin-gx | 玉林 | Yulin | 22.65 | 110.18 | A city famed for medicinal herbs and cuisine. |
-A | 云天文化城 | Yuntian Culture City | A cultural park in Yulin. | | 22.64,110.17
 D | 玉林牛巴 | Yulin beef jerky | Cured beef. | |
 D | 玉林凉茶 | Yulin herbal tea | A herbal drink. | |
 

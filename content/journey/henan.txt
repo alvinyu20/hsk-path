@@ -23,7 +23,6 @@ A | 白马寺 | White Horse Temple | The first Buddhist temple in China, founded
 A | 关林 | Guanlin Temple | A temple and tomb for the general Guan Yu. | | 34.60,112.46
 A | 洛阳博物馆 | Luoyang Museum | A museum on the long history of the capital. | | 34.62,112.45
 A | 应天门 | Yingtian Gate | A huge restored gate of the Sui and Tang palace. | | 34.67,112.46
-A | 丽景门 | Lijing Gate | A gate of the old city, with a night market in the street. | | 34.67,112.47
 D | 洛阳水席 | Luoyang water banquet | A traditional banquet of about 24 dishes, many of them soups. | |
 D | 不翻汤 | Bufan soup | A soup of egg and pork served in a bowl. | |
 D | 牡丹饼 | Peony cake | A sweet pastry made with peony petals. | |
@@ -43,27 +42,20 @@ city: anyang | 安阳 | Anyang | 36.10 | 114.39 | The site of the last Shang cap
 A | 殷墟 | Yin Ruins | The ruins of a Shang capital where oracle bone inscriptions were found. | A UNESCO World Heritage Site. | 36.13,114.32
 A | 中国文字博物馆 | Chinese Characters Museum | A museum of the history of Chinese writing. | | 36.11,114.36
 A | 红旗渠 | Red Flag Canal | A canal cut into cliffs by villagers in the 1960s. | | 36.12,113.84
-A | 袁林 | Yuan Lin | The tomb of Yuan Shikai. | | 36.12,114.37
 D | 安阳扁粉菜 | Anyang flat noodle stew | A hearty stew with flat sweet potato noodles. | |
 D | 道口烧鸡 | Daokou roast chicken | A famous braised chicken, boneless when pulled. | |
 C | 甲骨文 | Oracle bone script | The earliest known Chinese writing, carved on bones and shells. | |
 
 city: jiaozuo | 焦作 | Jiaozuo | 35.24 | 113.24 | The hometown of tai chi and a mountain of cliffs. |
 A | 云台山 | Yuntai Mountain | A canyon park with waterfalls and cliff paths. | | 35.43,113.37
-A | 青天河 | Qingtian River | A river gorge with turquoise water. | | 35.32,113.50
 D | 怀山药 | Huai yam | A famous yam used in cooking and medicine. | |
 C | 太极拳 | Tai chi | A slow martial art, born in this region, now practiced worldwide. | |
 
 city: nanyang | 南阳 | Nanyang | 33.00 | 112.53 | The city of Zhuge Liang and a famed doctor. |
-A | 武侯祠 | Wuhou Temple | A temple for Zhuge Liang. | | 32.99,112.52
-A | 医圣祠 | Doctor Sage Temple | A shrine for Zhang Zhongjing, the physician. | | 33.01,112.54
-A | 恐龙蛋化石 | Dinosaur egg fossils | A county that holds many fossil dinosaur eggs. | | 33.50,111.35
 D | 南阳黄牛 | Nanyang beef | Local beef from Nanyang cattle. | |
 C | 玉雕 | Jade carving | Jade carved in Zhen-ping and Nanyang. | |
 
 city: shangqiu | 商丘 | Shangqiu | 34.41 | 115.66 | A city that gave its name to the Shang. |
-A | 商丘古城 | Shangqiu Ancient City | A walled city of the Ming dynasty. | | 34.41,115.65
-A | 芒砀山 | Mangdang Mountain | A hill with Han-dynasty royal tombs. | | 34.38,116.34
 D | 商丘烧饼 | Shangqiu sesame flatbread | A crisp, layered bread filled with meat. | |
 
 city: xinyang | 信阳 | Xinyang | 32.13 | 114.09 | A southern city known for green tea. |

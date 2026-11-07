@@ -45,6 +45,7 @@ function loadMedia() {
   try { const sandbox = { window: {} }; vm.runInNewContext(fs.readFileSync(OUT, 'utf8'), sandbox); return sandbox.window.JOURNEY_MEDIA || {}; } catch (e) { return {}; }
 }
 const loadTried = () => { try { return JSON.parse(fs.readFileSync(TRIED, 'utf8')); } catch (e) { return {}; } };
+const loadReject = () => { try { return JSON.parse(fs.readFileSync(path.join(__dirname, 'journey-media-reject.json'), 'utf8')); } catch (e) { return {}; } };   // photos a person looked at and turned down: stop id -> why
 const loadMisses = () => { try { return JSON.parse(fs.readFileSync(MISS, 'utf8')); } catch (e) { return {}; } };
 
 const HOSTS = { voyen: 'https://en.wikivoyage.org', voyzh: 'https://zh.wikivoyage.org' };   // Wikivoyage pictures are Commons files too, so they get the same licence check
@@ -311,7 +312,7 @@ function writeMedia(media) {
 async function run(opts) {
   const o = Object.assign({ fetch: globalThis.fetch, region: '', limit: 300, retryMisses: false, world: null, media: null, misses: null, tried: null, concurrency: 3, log: console.log, save: true, verify: false }, opts || {});
   const W = o.world || loadWorld();
-  const media = o.media || loadMedia(), misses = o.misses || loadMisses(), tried = o.tried || loadTried();
+  const media = o.media || loadMedia(), misses = o.misses || loadMisses(), tried = o.tried || loadTried(), reject = o.reject || loadReject();
   const saveAll = () => { writeMedia(media); fs.writeFileSync(MISS, JSON.stringify(misses, null, 0) + '\n'); fs.writeFileSync(TRIED, JSON.stringify(tried, null, 0) + '\n'); };
   const api = makeApi(o.fetch);
   let todo = [];
@@ -349,6 +350,7 @@ async function run(opts) {
           r = await provinces[R.id];
           if (!r.entry) { const c = landmarkPhoto(R, media); if (c) r = { entry: { u: c.u, c: c.c, a: R.en, r: 1 } }; }
         } else r = await lookup(api, stop);
+        if (r.entry && reject[stop.id]) r = { miss: 'rejected by hand: ' + reject[stop.id] };
         if (r.entry && o.verify) { const v = await o.fetch(r.entry.u, { method: 'HEAD', headers: { 'User-Agent': UA } }).catch(() => null); if (!v || !v.ok || !/^image\//.test((v.headers && v.headers.get && v.headers.get('content-type')) || '')) { delete r.entry; r.miss = 'image does not load'; } }
         if (r.entry) { media[stop.id] = r.entry; delete misses[stop.id]; found++; } else { misses[stop.id] = r.miss; missed++; }
         tried[stop.id] = 2;   // 2 = searched with every source including the dish category search

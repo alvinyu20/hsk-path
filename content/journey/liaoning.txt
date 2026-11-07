@@ -34,30 +34,24 @@ D | 大连烧烤 | Dalian barbecue | Grilled seafood. | |
 city: anshan | 鞍山 | Anshan | 41.11 | 122.99 | A steel city with a big jade Buddha. |
 A | 玉佛苑 | Jade Buddha Garden | A garden with a large Buddha carved from jade. | | 41.00,123.10
 A | 千山 | Qianshan Mountain | A hill with temples. | | 41.05,123.12
-A | 鞍山钢铁 | Anshan Steel | A giant steel plant. | | 41.11,122.99
 D | 海城馅饼 | Haicheng pies | Pan-fried filled pies. | |
 D | 岫岩玉 | Xiuyan jade | A green jade. | |
 
 city: fushun | 抚顺 | Fushun | 41.88 | 123.96 | A coal town and a Manchu homeland. |
-A | 西露天矿 | West Open Pit Mine | A huge open pit coal mine. | | 41.85,123.90
 A | 雷锋纪念馆 | Lei Feng Memorial | A memorial to the soldier held up as a model. | | 41.88,123.96
 D | 抚顺煤精雕刻 | Fushun coal carving | A craft carved from coal. | |
 
 city: dandong | 丹东 | Dandong | 40.12 | 124.35 | A border city beside North Korea. |
 A | 鸭绿江断桥 | Yalu River Broken Bridge | A bridge half destroyed in the war. | | 40.12,124.39
 A | 虎山长城 | Hushan Great Wall | The eastern start of the Ming Great Wall. | | 40.20,124.45
-A | 抗美援朝纪念馆 | Resist America Aid Korea Memorial | A war memorial. | | 40.13,124.37
 D | 丹东草莓 | Dandong strawberries | A sweet strawberry. | |
 D | 黄蚬子 | Yellow clams | A famed clam. | |
 
 city: jinzhou | 锦州 | Jinzhou | 41.10 | 121.13 | A coastal city on the corridor to the northeast. |
-A | 辽沈战役纪念馆 | Liaoshen Campaign Memorial | A museum on the 1948 campaign. | | 41.10,121.13
-A | 笔架山 | Bijia Mountain | A tidal sand bridge to an island. | | 40.88,121.15
 D | 锦州烧烤 | Jinzhou barbecue | Grilled meats. | |
 D | 锦州小菜 | Jinzhou pickles | Pickled vegetables. | |
 
 city: yingkou | 营口 | Yingkou | 40.67 | 122.24 | A port city on the Liao River. |
-A | 鲅鱼圈 | Bayuquan | A port and beach. | | 40.26,122.12
 D | 营口大饼 | Yingkou big cake | A savory flatbread. | |
 
 city: fuxin | 阜新 | Fuxin | 42.02 | 121.67 | A coal town with a jade culture. |
@@ -65,7 +59,6 @@ D | 阜新玛瑙 | Fuxin agate | An agate carving craft. | |
 
 city: liaoyang | 辽阳 | Liaoyang | 41.27 | 123.24 | One of the oldest cities in the northeast. |
 A | 白塔 | Liaoyang White Pagoda | A white pagoda from the Liao. | | 41.27,123.24
-A | 东京城 | Dongjing City | An old city of the Later Jin. | | 41.30,123.30
 
 city: panjin | 盘锦 | Panjin | 41.12 | 122.07 | A wetland city with red beach. |
 A | 红海滩 | Red Beach | A beach red with sea-blite plants in autumn. | | 40.90,121.90
@@ -86,5 +79,4 @@ D | 葫芦岛海蜇 | Huludao jellyfish | A cold dish. | |
 city: benxi | 本溪 | Benxi | 41.29 | 123.77 | A cave city. |
 A | 本溪水洞 | Benxi Water Cave | One of the largest water caves in the world. | | 41.20,124.05
 A | 关门山 | Guanmenshan | A scenic mountain. | | 41.30,124.20
-A | 五女山 | Wunushan | An ancient mountain fortress of the Goguryeo. | A UNESCO World Heritage Site. | 41.30,125.40
 D | 本溪山葡萄 | Benxi wild grape | A wild grape. | |

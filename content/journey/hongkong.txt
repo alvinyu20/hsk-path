@@ -8,7 +8,6 @@ A | 山顶缆车 | Peak Tram | A cable railway to the top, running since 1888. |
 A | 中环 | Central | The business district with banks and old markets. | | 22.28,114.16
 A | 兰桂坊 | Lan Kwai Fong | A nightlife lane. | | 22.28,114.16
 A | 文武庙 | Man Mo Temple | A temple for the gods of literature and war, full of incense coils. | | 22.28,114.15
-A | 香港大会堂 | City Hall | A civic hall on the harbor. | | 22.28,114.16
 A | 铜锣湾 | Causeway Bay | A shopping district. | | 22.28,114.18
 A | 赤柱 | Stanley | A seaside village with a market. | | 22.22,114.21
 A | 浅水湾 | Repulse Bay | A beach on the south side. | | 22.24,114.20
@@ -33,12 +32,10 @@ A | 尖沙咀 | Tsim Sha Tsui | A harbor district of shops and museums. | | 22.3
 A | 庙街夜市 | Temple Street Night Market | A night market. | | 22.31,114.17
 A | 旺角 | Mong Kok | One of the most crowded areas in the world. | | 22.32,114.17
 A | 女人街 | Ladies' Market | A market of cheap clothes. | | 22.32,114.17
-A | 金鱼街 | Goldfish Market | A street of fish shops. | | 22.33,114.17
 A | 雀鸟花园 | Yuen Po Street Bird Garden | A garden of caged birds. | | 22.33,114.17
 A | 志莲净苑 | Chi Lin Nunnery | A Tang-style nunnery of wooden halls. | | 22.34,114.21
 A | 南莲园池 | Nan Lian Garden | A Tang-style garden. | | 22.34,114.21
 A | 黄大仙祠 | Wong Tai Sin Temple | A busy temple known for fortune sticks. | | 22.34,114.19
-A | 钻石山 | Diamond Hill | A hill with a nunnery. | | 22.34,114.20
 A | 九龙寨城公园 | Kowloon Walled City Park | A park on the site of the old walled city. | | 22.33,114.19
 D | 鱼蛋 | Curry fish balls | Fish balls in curry sauce. | |
 D | 车仔面 | Cart noodles | A bowl of noodles with a choice of toppings. | |
@@ -58,9 +55,6 @@ A | 沙田 | Sha Tin | A city with a racecourse. | | 22.38,114.19
 A | 万佛寺 | Ten Thousand Buddhas Monastery | A hillside temple of golden Buddhas. | | 22.38,114.20
 A | 长洲 | Cheung Chau | An island with a bun festival. | | 22.21,114.03
 A | 南丫岛 | Lamma Island | A car-free island with hikes. | | 22.21,114.12
-A | 八仙岭 | Pat Sin Leng | A hill range. | | 22.51,114.23
-A | 屏山文物径 | Ping Shan Heritage Trail | A trail of old clan halls. | | 22.45,114.00
-A | 大帽山 | Tai Mo Shan | The highest peak in Hong Kong. | | 22.41,114.12
 D | 大澳虾酱 | Tai O shrimp paste | A strong-smelling paste. | |
 D | 盆菜 | Poon choi | A big basin of layered meats for village feasts. | |
 D | 西贡海鲜 | Sai Kung seafood | Fresh seafood by the sea. | |

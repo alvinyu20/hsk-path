@@ -6,9 +6,7 @@ city: hefei | 合肥 | Hefei | 31.82 | 117.23 | The capital of Anhui, a city of 
 A | 包公园 | Lord Bao Park | A park for Judge Bao, a figure of justice in folk stories. | | 31.86,117.30
 A | 三河古镇 | Sanhe Ancient Town | A water town with old streets and bridges. | | 31.67,117.22
 A | 安徽博物院 | Anhui Museum | A museum of the province. | | 31.81,117.23
-A | 逍遥津公园 | Xiaoyaojin Park | A park from the Three Kingdoms era. | | 31.86,117.30
 A | 巢湖 | Chao Lake | One of China's five largest freshwater lakes. | | 31.60,117.60
-A | 中国科学技术大学 | University of Science and Technology of China | A top science university. | | 31.84,117.27
 D | 庐州烤鸭 | Luzhou roast duck | A local crisp roast duck. | |
 D | 三河米饺 | Sanhe rice dumplings | Rice dumplings filled with meat and vegetables. | |
 D | 合肥龙虾 | Hefei crayfish | Spicy crayfish, a summer favorite. | |
@@ -38,8 +36,6 @@ D | 九华素斋 | Jiuhua vegetarian food | The temple's vegetarian cuisine. | |
 D | 九华黄精 | Jiuhua Huangjing | A herb grown in the mountains. | |
 
 city: wuhu | 芜湖 | Wuhu | 31.35 | 118.43 | A river port with a famous sculpture park. |
-A | 镜湖 | Jing Lake | A city lake. | | 31.34,118.38
-A | 中江塔 | Zhongjiang Pagoda | A pagoda on the Yangtze. | | 31.37,118.37
 D | 芜湖小笼包 | Wuhu small buns | Little buns. | |
 D | 芜湖铁画 | Wuhu iron painting | Pictures made of forged iron. | |
 
@@ -51,8 +47,6 @@ D | 安庆桂花糕 | Anqing osmanthus cake | A fragrant sweet. | |
 C | 黄梅戏 | Huangmei opera | One of the most loved opera forms in China. | |
 
 city: bengbu | 蚌埠 | Bengbu | 32.92 | 117.39 | A Huai River city. |
-A | 蚌埠博物馆 | Bengbu Museum | A museum of local finds. | | 32.92,117.39
-A | 龙子湖 | Longzi Lake | A lake park. | | 32.92,117.43
 D | 蚌埠烧饼 | Bengbu sesame flatbread | A crisp flatbread. | |
 D | 淮河大鲤鱼 | Huai River carp | River carp. | |
 
@@ -63,13 +57,9 @@ D | 八公山豆腐 | Bagongshan tofu | A tofu made in the place linked to its o
 D | 牛肉汤 | Huainan beef soup | A hot beef broth. | |
 
 city: maanshan | 马鞍山 | Ma'anshan | 31.69 | 118.51 | A steel city on the Yangtze. |
-A | 采石矶 | Caishiji | A cliff on the river tied to the poet Li Bai. | | 31.62,118.49
-A | 李白墓 | Li Bai Tomb | A tomb said to be the poet's. | | 31.62,118.49
 D | 采石矶鱼 | Caishiji river fish | Fresh river fish. | |
 
 city: tongling | 铜陵 | Tongling | 30.93 | 117.81 | The copper capital of China. |
-A | 铜文化博物馆 | Copper Culture Museum | A museum of copper mining, which began here 3,000 years ago. | | 30.93,117.81
-A | 铜官山 | Tongguan Mountain | A mine hill. | | 30.93,117.80
 D | 铜陵白姜 | Tongling white ginger | A pale ginger. | |
 
 city: lu-an | 六安 | Lu'an | 31.73 | 116.52 | A city of green tea and revolution. |
@@ -78,16 +68,13 @@ D | 六安瓜片茶 | Lu'an melon-seed tea | Tea leaves rolled flat like melon s
 D | 霍山黄芽 | Huoshan Huangya tea | A yellow tea from the mountains. | |
 
 city: suzhou-ah | 宿州 | Suzhou (Anhui) | 33.64 | 116.96 | A northern city, known for the Grand Canal. |
-A | 皇藏峪 | Huangcangyu | A forest valley where a Han emperor is said to have hidden. | | 34.35,116.70
 D | 符离集烧鸡 | Fuliji roast chicken | A famous braised chicken. | |
 
 city: fuyang | 阜阳 | Fuyang | 32.89 | 115.81 | A northern Anhui city. |
-A | 颍州西湖 | Yingzhou West Lake | A lake once visited by poets. | | 32.91,115.81
 D | 格拉条 | Gelatiao | A cold noodle dish. | |
 D | 阜阳卷馍 | Fuyang rolled bread | A steamed bun. | |
 
 city: xuancheng | 宣城 | Xuancheng | 30.94 | 118.76 | The home of Xuan paper and ink brushes. |
-A | 桃花潭 | Peach Blossom Pool | A pool made famous by a poem by Li Bai. | | 30.55,118.40
 D | 宣城板鸭 | Xuancheng cured duck | Cured duck. | |
 
 city: bozhou | 亳州 | Bozhou | 33.84 | 115.78 | A city of Chinese medicine and liquor. |
@@ -95,9 +82,7 @@ D | 古井贡酒 | Gujing Gong liquor | A well-known baijiu. | |
 D | 亳州药材 | Bozhou herbs | A large herb trading market. | |
 
 city: chuzhou | 滁州 | Chuzhou | 32.30 | 118.32 | A hill city with an essay in its name. |
-A | 琅琊山 | Langya Mountain | A hill with a pavilion, where Ouyang Xiu wrote his Old Drunkard essay. | | 32.28,118.28
 A | 醉翁亭 | Old Drunkard's Pavilion | The pavilion in Ouyang Xiu's famous essay. | | 32.28,118.28
-A | 凤阳小岗村 | Xiaogang Village | The village where land reform began in 1978. | | 32.88,117.58
 D | 滁州菜 | Chuzhou dishes | Local mountain cuisine. | |
 
 city: huaibei | 淮北 | Huaibei | 33.97 | 116.80 | A coal city in the north. |

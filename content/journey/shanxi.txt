@@ -6,9 +6,6 @@ city: taiyuan | 太原 | Taiyuan | 37.87 | 112.55 | The capital of Shanxi, a coa
 A | 晋祠 | Jinci Temple | A temple complex of the Song dynasty with a spring and ancient trees. | | 37.71,112.44
 A | 山西博物院 | Shanxi Museum | A museum of Jin culture and bronzes. | | 37.84,112.53
 A | 双塔寺 | Twin Pagodas Temple | Two Ming pagodas that stand for Taiyuan. | | 37.85,112.59
-A | 崇善寺 | Chongshan Temple | A large temple of the Ming. | | 37.86,112.56
-A | 蒙山大佛 | Mengshan Giant Buddha | A big stone Buddha carved into a hillside. | | 37.78,112.24
-A | 迎泽公园 | Yingze Park | A park in the center. | | 37.85,112.56
 D | 刀削面 | Knife-cut noodles | Noodles shaved off a block of dough straight into boiling water. | |
 D | 头脑 | Toune | A winter medicinal stew of lamb, yam and wine. | |
 D | 太原老陈醋 | Shanxi aged vinegar | A dark aged vinegar, a sign of Shanxi. | |
@@ -44,17 +41,14 @@ city: jinzhong | 晋中 | Jinzhong | 37.69 | 112.75 | A home of great merchant m
 A | 乔家大院 | Qiao Family Compound | A big courtyard mansion of a merchant family, seen in a famous film. | | 37.43,112.52
 A | 王家大院 | Wang Family Compound | A huge Qing mansion complex. | | 37.65,112.20
 A | 常家庄园 | Chang Family Manor | A merchant manor. | | 37.62,112.78
-A | 绵山 | Mianshan | A mountain tied to the Cold Food Festival. | | 36.98,111.99
 D | 太谷饼 | Taigu cake | A round sweet cake. | |
 
 city: linfen | 临汾 | Linfen | 36.09 | 111.52 | A cradle of Chinese civilization along the Fen River. |
 A | 壶口瀑布 | Hukou Waterfall | A waterfall on the Yellow River, seen from the Shanxi side. | | 36.14,110.43
-A | 洪洞大槐树 | Hongtong Big Locust Tree | A tree linked to the origin of many Chinese families. | | 36.25,111.67
 A | 广胜寺 | Guangsheng Temple | A temple of the Yuan, with a fine glazed pagoda. | | 36.48,111.75
 D | 临汾羊杂 | Linfen lamb offal | A hot soup. | |
 
 city: yuncheng | 运城 | Yuncheng | 35.03 | 111.00 | The hometown of the general Guan Yu. |
-A | 解州关帝庙 | Xiezhou Guandi Temple | A huge temple for Guan Yu. | | 34.94,110.87
 A | 鹳雀楼 | Stork Tower | A tower from a famous Tang poem. | | 34.82,110.28
 A | 永乐宫 | Yongle Palace | A Taoist temple with remarkable murals. | | 34.62,110.60
 A | 运城盐湖 | Yuncheng Salt Lake | A salt lake with pink water. | | 35.00,111.00
@@ -63,22 +57,18 @@ D | 稷山麻花 | Jishan twists | Fried dough twists. | |
 
 city: changzhi | 长治 | Changzhi | 36.20 | 113.12 | A highland city on the Taihang range. |
 A | 太行山大峡谷 | Taihang Grand Canyon | Deep gorges in the Taihang range. | | 36.30,113.90
-A | 老顶山 | Laoding Mountain | A park hill. | | 36.15,113.12
 D | 潞酒 | Lu liquor | A local liquor. | |
 
 city: jincheng | 晋城 | Jincheng | 35.49 | 112.85 | A coal city with old stone houses. |
 A | 皇城相府 | Huangcheng Xiangfu | A Qing official's walled mansion. | | 35.57,112.45
-A | 青莲寺 | Qinglian Temple | An old cliff temple. | | 35.50,112.80
 D | 陵川黑猪肉 | Lingchuan black pork | A local pork. | |
 
 city: lvliang | 吕梁 | Lüliang | 37.52 | 111.14 | A mountain city on the Yellow River. |
-A | 北武当山 | North Wudang Mountain | A Taoist mountain. | | 37.70,111.30
 D | 吕梁红枣 | Lüliang red jujube | A sweet red date. | |
 D | 柳林碗托 | Liulin wantuo | Cold jelly. | |
 
 city: xinzhou | 忻州 | Xinzhou | 38.42 | 112.73 | A north Shanxi city beside the Wutai holy mountain. |
 A | 五台山 | Mount Wutai | One of the four sacred Buddhist mountains, with dozens of temples. | A UNESCO World Heritage Site. | 39.02,113.58
-A | 佛光寺 | Foguang Temple | A Tang-era wooden hall, among the oldest in China. | | 38.67,113.50
 A | 南禅寺 | Nanchan Temple | A Tang hall, the oldest surviving wooden building in China. | Said to date to 782 CE. | 38.82,112.97
 A | 雁门关 | Yanmen Pass | A frontier pass on the Great Wall. | | 39.20,112.90
 D | 忻州瓦酥 | Xinzhou wasu pastry | A flaky pastry. | |

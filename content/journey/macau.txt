@@ -35,14 +35,12 @@ A | 龙环葡韵 | Taipa Houses | Five green houses by the lake. | | 22.15,113.5
 A | 嘉模圣母堂 | Our Lady of Carmo Church | A church in the village. | | 22.15,113.56
 A | 威尼斯人 | The Venetian | A resort with gondolas indoors. | | 22.15,113.57
 A | 大潭山 | Taipa Grande hill | A hill with a view. | | 22.15,113.56
-A | 氹仔博物馆 | Taipa Museum | A small museum. | | 22.15,113.56
 D | 咖喱蟹 | Curry crab | A rich curry dish. | |
 
 city: coloane | 路环 | Coloane | 22.12 | 113.56 | A quiet island with beaches and a chapel. |
 A | 路环村 | Coloane Village | A quiet village of pastel houses. | | 22.12,113.55
 A | 圣方济各教堂 | St. Francis Xavier Chapel | A small yellow chapel. | | 22.12,113.56
 A | 黑沙海滩 | Hac Sa Beach | A beach of black sand. | | 22.11,113.60
-A | 九澳 | Ka Ho | A hillside village. | | 22.12,113.58
 A | 天后宫 | Tin Hau Temple | A small temple. | | 22.12,113.55
 D | 安德鲁蛋挞 | Lord Stow's egg tart | The famous egg tart, born in Coloane. | The Macau egg tart is said to have been created here in 1989. |
 C | 路环渔村 | Coloane fishing village | A village of dried fish and old boats. | |

@@ -6,8 +6,6 @@ city: nanchang | 南昌 | Nanchang | 28.68 | 115.86 | The capital of Jiangxi, on
 A | 滕王阁 | Tengwang Pavilion | A tall tower on the river, made famous by a Tang prose poem. | One of the Three Great Towers south of the Yangtze. | 28.68,115.87
 A | 八一起义纪念馆 | August 1st Uprising Museum | A memorial for the 1927 uprising that founded the Red Army. | | 28.68,115.89
 A | 绳金塔 | Shengjin Pagoda | An old pagoda in the city center. | | 28.66,115.89
-A | 秋水广场 | Qiushui Square | A big square on the river. | | 28.70,115.86
-A | 南昌之星摩天轮 | Star of Nanchang | A very tall Ferris wheel. | | 28.69,115.84
 A | 八大山人纪念馆 | Bada Shanren Museum | A museum for the painter Zhu Da. | | 28.60,115.90
 A | 万寿宫 | Wanshou Palace | A Taoist temple tied to the Xu Xun cult. | | 28.67,115.87
 D | 南昌拌粉 | Nanchang mixed rice noodles | Rice noodles with a spicy sauce and a clear soup on the side. | |
@@ -35,17 +33,13 @@ A | 庐山瀑布 | Lushan Waterfall | A waterfall praised by Li Bai. | | 29.57,1
 A | 白鹿洞书院 | White Deer Grotto Academy | One of the four great academies of ancient China. | | 29.65,116.04
 A | 鄱阳湖 | Poyang Lake | The largest freshwater lake in China, a winter home for cranes. | | 29.10,116.30
 A | 东林寺 | Donglin Temple | A birthplace of Pure Land Buddhism. | | 29.58,115.90
-A | 含鄱口 | Hanpokou | A viewpoint over the lake. | | 29.57,116.00
 D | 庐山石鸡 | Lushan stone frog | A mountain frog dish. | |
 D | 鄱阳湖大闸蟹 | Poyang crab | Crabs from the lake. | |
 C | 陶渊明 | Tao Yuanming | The poet who wrote about returning to the fields. | |
 
 city: ganzhou | 赣州 | Ganzhou | 25.83 | 114.93 | A southern city of Hakka culture and Song-era walls. |
-A | 郁孤台 | Yugu Terrace | A tower from a poem by Xin Qiji. | | 25.85,114.93
 A | 赣州古城墙 | Ganzhou City Wall | A Song wall, still intact. | | 25.85,114.93
-A | 福寿沟 | Fushou Sewers | A Song-era sewer system still in use. | | 25.85,114.94
 A | 通天岩 | Tongtianyan | A red-rock cave temple. | | 25.77,114.88
-A | 瑞金 | Ruijin | The capital of the Red Republic of the early 1930s. | | 25.88,116.03
 D | 赣南脐橙 | Gannan navel oranges | Sweet oranges grown in the south. | |
 D | 赣州小炒鱼 | Ganzhou fried fish | A spicy fish dish. | |
 D | 客家酿豆腐 | Hakka stuffed tofu | Tofu with meat filling. | |
@@ -53,7 +47,6 @@ D | 客家酿豆腐 | Hakka stuffed tofu | Tofu with meat filling. | |
 city: shangrao | 上饶 | Shangrao | 28.45 | 117.94 | A northeast city with Mount Sanqing. |
 A | 三清山 | Mount Sanqing | A mountain of strange granite pillars that look like people and animals. | A UNESCO World Heritage Site. | 28.91,118.06
 A | 婺源 | Wuyuan | A county of villages and rapeseed fields called the most beautiful countryside. | | 29.25,117.86
-A | 龟峰 | Guifeng | A red-rock peak area. | | 28.21,117.47
 A | 龙虎山 | Dragon-Tiger Mountain | The home of the Celestial Masters of Taoism. | | 28.10,117.02
 D | 婺源糕点 | Wuyuan cakes | Sweets. | |
 D | 弋阳年糕 | Yiyang rice cake | A rice cake. | |
@@ -82,5 +75,4 @@ A | 武功山 | Wugong Mountain | A mountain with a high meadow and a sea of clo
 D | 萍乡炒粉 | Pingxiang fried rice noodles | A signature dish. | |
 
 city: xinyu | 新余 | Xinyu | 27.82 | 114.92 | A city of lakes and solar panels. |
-A | 仙女湖 | Fairy Lake | A lake with a legend of a fairy. | | 27.83,114.75
 D | 新余蜜橘 | Xinyu tangerines | Sweet tangerines. | |

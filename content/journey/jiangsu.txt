@@ -11,9 +11,7 @@ A | 豫园 | Yu Garden | A Ming-dynasty garden with rockeries and a zigzag bridg
 A | 南京路 | Nanjing Road | The most famous shopping street in China. | | 31.24,121.48
 A | 田子坊 | Tianzifang | Old lanes turned into small shops and cafés. | | 31.21,121.47
 A | 上海博物馆 | Shanghai Museum | A museum of Chinese bronzes, ceramics and paintings. | | 31.23,121.47
-A | 人民广场 | People's Square | The city's central square and park. | | 31.23,121.47
 A | 朱家角 | Zhujiajiao | A water town with canals and stone bridges, within the city. | | 31.11,121.05
-A | 磁悬浮列车 | Shanghai Maglev | A magnetic train that runs at around 430 km/h. | | 31.20,121.60
 A | 上海迪士尼度假区 | Shanghai Disney Resort | A big theme park in Pudong. | | 31.14,121.66
 A | 静安寺 | Jing'an Temple | A temple standing among skyscrapers. | | 31.22,121.45
 D | 小笼包 | Xiaolongbao | Small soup-filled steamed dumplings. | |
@@ -33,12 +31,9 @@ A | 中山陵 | Sun Yat-sen Mausoleum | The tomb of Sun Yat-sen on Purple Mounta
 A | 明孝陵 | Ming Xiaoling Mausoleum | The tomb of the first Ming emperor. | | 32.06,118.84
 A | 夫子庙 | Confucius Temple | A temple district on the Qinhuai River with lantern markets. | | 32.02,118.79
 A | 南京城墙 | Nanjing City Wall | The longest surviving city wall in the world. | | 32.03,118.78
-A | 玄武湖 | Xuanwu Lake | A big lake park next to the old walls. | | 32.07,118.80
-A | 南京长江大桥 | Nanjing Yangtze River Bridge | A bridge opened in 1968, a source of national pride. | | 32.11,118.74
 A | 总统府 | Presidential Palace | The old government offices, once used by Hong Xiuquan and Sun Yat-sen. | | 32.05,118.80
 A | 侵华日军南京大屠杀遇难同胞纪念馆 | Nanjing Massacre Memorial Hall | A memorial for the victims of the 1937 massacre. | | 32.03,118.75
 A | 南京博物院 | Nanjing Museum | One of the largest museums in China. | | 32.04,118.83
-A | 鸡鸣寺 | Jiming Temple | A hillside temple known for cherry blossoms. | | 32.06,118.80
 D | 盐水鸭 | Salted duck | Nanjing's famous cold duck, pale and tender. | |
 D | 鸭血粉丝汤 | Duck blood vermicelli soup | Glass noodles in a soup of duck blood and giblets. | |
 D | 南京小笼包 | Nanjing soup dumplings | Small steamed dumplings. | |
@@ -54,8 +49,6 @@ A | 平江路 | Pingjiang Road | A canal-side lane of old homes and teahouses. |
 A | 周庄 | Zhouzhuang | A famous water town with arched bridges. | | 31.12,120.85
 A | 同里古镇 | Tongli Ancient Town | A quieter canal town with three bridges. | | 31.16,120.72
 A | 寒山寺 | Hanshan Temple | A temple made famous by a Tang poem about a night mooring. | | 31.31,120.57
-A | 苏州博物馆 | Suzhou Museum | A museum designed by I. M. Pei. | | 31.32,120.63
-A | 山塘街 | Shantang Street | A canal street from the Tang dynasty. | | 31.32,120.60
 D | 松鼠鳜鱼 | Squirrel-shaped mandarin fish | A fish cut and fried so it looks like a squirrel's tail. | |
 D | 苏式面 | Suzhou noodles | Noodles with a clear sweet broth and toppings. | |
 D | 糖粥 | Sugar congee | A sweet sticky rice porridge. | |
@@ -65,10 +58,8 @@ C | 昆曲 | Kunqu opera | One of the oldest opera forms in China. | |
 C | 评弹 | Pingtan storytelling | A story told with song and string music. | |
 
 city: wuxi | 无锡 | Wuxi | 31.49 | 120.31 | A city on Lake Tai. |
-A | 鼋头渚 | Turtle Head Isle | A lakeside park famed for cherry blossoms. | | 31.52,120.22
 A | 灵山大佛 | Lingshan Grand Buddha | A giant standing bronze Buddha. | | 31.43,120.10
 A | 无锡古运河 | Wuxi Ancient Canal | A stretch of the Grand Canal with old streets. | | 31.57,120.30
-A | 惠山古镇 | Huishan Ancient Town | An old temple and ancestral hall area at the foot of a hill. | | 31.58,120.28
 D | 无锡排骨 | Wuxi spare ribs | Sweet braised pork ribs. | |
 D | 小笼馒头 | Wuxi small buns | Soupy buns that are sweeter than in other regions. | |
 D | 惠山泥人 | Huishan clay figures | Hand-made clay figures. | |
@@ -76,9 +67,6 @@ D | 惠山泥人 | Huishan clay figures | Hand-made clay figures. | |
 city: yangzhou | 扬州 | Yangzhou | 32.39 | 119.41 | A canal and salt-merchant city of poets and gardens. |
 A | 瘦西湖 | Slender West Lake | A narrow lake with a white pagoda and bridges. | | 32.41,119.42
 A | 个园 | Ge Garden | A garden known for its four rockeries for four seasons. | | 32.39,119.43
-A | 大明寺 | Daming Temple | A temple tied to the monk Jianzhen, who sailed to Japan. | | 32.42,119.40
-A | 东关街 | Dongguan Street | An old street along the canal. | | 32.39,119.43
-A | 何园 | He Garden | A late-Qing garden with a two-story corridor. | | 32.39,119.44
 D | 扬州炒饭 | Yangzhou fried rice | The original egg-and-ham fried rice, known worldwide. | |
 D | 狮子头 | Lion's head meatball | Big, soft pork meatballs in broth. | |
 D | 三丁包 | Sanding buns | Buns filled with chicken, pork and bamboo. | |
@@ -87,33 +75,24 @@ C | 扬州评话 | Yangzhou storytelling | A traditional performance. | |
 
 city: zhenjiang | 镇江 | Zhenjiang | 32.19 | 119.45 | A Yangtze port known for its black vinegar. |
 A | 金山寺 | Jinshan Temple | A temple on a hill by the river, in the legend of the White Snake. | | 32.22,119.40
-A | 焦山 | Jiao Mountain | A river island with a temple and steles. | | 32.24,119.50
-A | 北固山 | Beigu Hill | A hill in stories of the Three Kingdoms. | | 32.22,119.46
 D | 镇江香醋 | Zhenjiang vinegar | A dark rice vinegar, one of the best known in China. | |
 D | 锅盖面 | Pot-lid noodles | Noodles cooked under a wooden pot lid. | |
 D | 肴肉 | Yaorou aspic pork | Pork in clear jelly, eaten with ginger and vinegar. | |
 
 city: changzhou | 常州 | Changzhou | 31.81 | 119.97 | A canal city with a dinosaur park. |
-A | 中华恐龙园 | China Dinosaur Park | A theme park with dinosaur themes. | | 31.83,119.91
-A | 天宁寺 | Tianning Temple | A temple with a very tall pagoda. | | 31.78,119.97
-A | 红梅公园 | Red Plum Park | A city park. | | 31.78,119.95
 D | 常州萝卜干 | Changzhou dried radish | Salted radish strips. | |
 D | 常州梳篦 | Changzhou combs | Handmade combs, a famed craft. | |
 
 city: nantong | 南通 | Nantong | 32.01 | 120.86 | A river-mouth city of textiles and a pioneering industrialist. |
-A | 南通博物苑 | Nantong Museum Garden | The first museum in China built by a person, in 1905. | | 32.01,120.87
-A | 狼山 | Langshan Mountain | A hill with a temple above the Yangtze. | | 31.96,120.89
 D | 南通蓝印花布 | Nantong blue calico | Blue-and-white printed cloth. | |
 D | 南通海鲜 | Nantong seafood | Seafood from the Yellow Sea. | |
 
 city: xuzhou | 徐州 | Xuzhou | 34.26 | 117.18 | A northern city with Han-dynasty tombs. |
-A | 云龙湖 | Yunlong Lake | A big lake in the city. | | 34.24,117.15
 D | 徐州地锅鸡 | Xuzhou earthen-pot chicken | Chicken braised in an iron pot with flatbread. | |
 D | 把子肉 | Bazi meat | Braised pork served with rice. | |
 
 city: lianyungang | 连云港 | Lianyungang | 34.60 | 119.22 | A seaside city with the Monkey King's mountain. |
 A | 花果山 | Flower Fruit Mountain | A mountain said to be the home of the Monkey King in Journey to the West. | | 34.65,119.30
-A | 连岛 | Lian Island | An island with a beach. | | 34.76,119.45
 D | 紫菜 | Laver | Seaweed from the coast. | |
 D | 海州海鲜 | Haizhou seafood | Seafood from the Yellow Sea. | |
 
@@ -121,13 +100,10 @@ city: yancheng | 盐城 | Yancheng | 33.35 | 120.16 | A coastal city of wetlands
 D | 盐城河虾 | Yancheng river shrimp | Fresh small shrimp from the rivers. | |
 
 city: huaian | 淮安 | Huai'an | 33.61 | 119.02 | The hometown of Premier Zhou Enlai. |
-A | 周恩来故居 | Zhou Enlai's Former Residence | A courtyard where Zhou Enlai spent his childhood. | | 33.50,119.12
-A | 清江浦 | Qingjiangpu | An old canal district. | | 33.55,119.03
 D | 淮安软兜长鱼 | Huai'an soft-pocket eel | A famed eel dish. | |
 D | 淮安茶馓 | Huai'an fried twists | Fried dough twists for tea. | |
 
 city: suqian | 宿迁 | Suqian | 33.96 | 118.28 | A city beside Hongze and Luoma Lakes. |
-A | 洪泽湖 | Hongze Lake | A very large freshwater lake. | | 33.30,118.70
 D | 洋河大曲 | Yanghe liquor | A well-known baijiu from the area. | |
 
 city: taizhou-js | 泰州 | Taizhou | 32.46 | 119.92 | A water city in central Jiangsu. |

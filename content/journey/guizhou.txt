@@ -6,7 +6,6 @@ city: guiyang | 贵阳 | Guiyang | 26.65 | 106.63 | A cool mountain capital know
 A | 甲秀楼 | Jiaxiu Tower | A tower on a river island, a symbol of the city. | | 26.56,106.72
 A | 黔灵山公园 | Qianling Mountain Park | A hill park with monkeys and a temple. | | 26.60,106.70
 A | 青岩古镇 | Qingyan Ancient Town | A Ming walled town with stone streets. | | 26.34,106.67
-A | 贵州省博物馆 | Guizhou Provincial Museum | A museum on the province's many peoples. | | 26.66,106.67
 A | 阳明祠 | Yangming Shrine | A shrine for the Ming thinker Wang Yangming. | | 26.84,106.88
 D | 酸汤鱼 | Sour soup fish | Fish in a tangy red tomato broth, a Miao classic. | |
 D | 丝娃娃 | Si wawa | Tiny wraps of thin pancakes with vegetables, called silk dolls. | |
@@ -22,7 +21,6 @@ A | 遵义会议会址 | Zunyi Conference Site | The building where Mao's leader
 A | 茅台镇 | Maotai Town | The town where the famous baijiu is made. | | 27.86,106.38
 A | 赤水丹霞 | Chishui Danxia | Red cliffs, waterfalls and bamboo. | A UNESCO World Heritage Site. | 28.58,105.70
 A | 四渡赤水 | Four Crossings of the Chishui | A river tied to the Red Army's famous manoeuvre. | | 28.58,105.70
-A | 海龙屯 | Hailongtun | A hill fortress of a local chief. | A UNESCO World Heritage Site. | 27.84,106.82
 D | 茅台酒 | Moutai | A prized baijiu. | |
 D | 遵义羊肉粉 | Zunyi lamb noodles | Rice noodles in a lamb broth. | |
 D | 鸭溪窖酒 | Yaxi liquor | A local liquor. | |
@@ -39,7 +37,6 @@ city: qiandongnan | 黔东南 | Southeast Guizhou | 26.58 | 107.98 | A prefectur
 A | 西江千户苗寨 | Xijiang Thousand-Household Miao Village | The largest Miao village in China. | | 26.50,108.19
 A | 肇兴侗寨 | Zhaoxing Dong Village | A Dong village of drum towers and bridges. | | 25.92,109.17
 A | 镇远古镇 | Zhenyuan Ancient Town | A river town with a long history. | | 27.05,108.43
-A | 黎平 | Liping | A county of Dong culture. | | 26.23,109.14
 D | 腌鱼 | Dong pickled fish | Fish preserved in rice. | |
 C | 芦笙 | Lusheng | A reed pipe played at festivals. | |
 

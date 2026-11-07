@@ -7,7 +7,6 @@ A | 五公祠 | Five Lords Temple | A temple for five exiled officials. | | 20.0
 A | 海口火山群 | Haikou Volcanic Cluster | A park of extinct volcano craters. | | 19.90,110.20
 A | 假日海滩 | Holiday Beach | The city beach. | | 20.04,110.32
 A | 海南省博物馆 | Hainan Provincial Museum | A museum of the island. | | 20.02,110.35
-A | 海瑞墓 | Hai Rui Tomb | The tomb of an honest Ming official. | | 20.00,110.31
 D | 海南鸡饭 | Hainanese chicken rice | Poached chicken with rice cooked in the chicken stock. | |
 D | 文昌鸡 | Wenchang chicken | A famous chicken breed from Wenchang. | |
 D | 加积鸭 | Jiaji duck | A fat duck breed from Qionghai. | |
@@ -23,7 +22,6 @@ A | 天涯海角 | End of the Earth | A beach with rocks inscribed with the word
 A | 南山寺 | Nanshan Temple | A temple with a huge Guanyin statue by the sea. | | 18.30,109.17
 A | 蜈支洲岛 | Wuzhizhou Island | An island with clear water for diving. | | 18.31,109.76
 A | 大东海 | Dadonghai | A city beach. | | 18.22,109.52
-A | 鹿回头 | Luhuitou | A hill with a legend of a deer and a hunter. | | 18.20,109.51
 D | 海鲜 | Sanya seafood | Fresh seafood at the market. | |
 D | 椰子鸡 | Coconut chicken hot pot | Chicken simmered in coconut water. | |
 D | 芒果 | Hainan mango | Sweet mangoes in season. | |
@@ -38,13 +36,11 @@ D | 兴隆咖啡 | Xinglong coffee | A coffee grown in Hainan. | |
 city: qionghai | 琼海 | Qionghai | 19.25 | 110.47 | A quiet city on the river. |
 A | 博鳌 | Boao | The place where the Boao Forum is held. | | 19.15,110.57
 A | 万泉河 | Wanquan River | A river with a clear flow. | | 19.20,110.47
-A | 红色娘子军 | Red Detachment of Women | A memorial for a famous women's unit. | | 19.25,110.47
 D | 嘉积鸭 | Jiaji duck | A famous duck dish. | |
 
 city: wenchang | 文昌 | Wenchang | 19.54 | 110.80 | The home of the space launch center and Wenchang chicken. |
 A | 文昌航天发射场 | Wenchang Space Launch Site | A launch site for large rockets near the sea. | | 19.61,110.95
 A | 宋氏祖居 | Soong Family Home | The ancestral home of the Soong family. | | 19.54,110.80
-A | 铜鼓岭 | Tonggu Ridge | A coastal hill. | | 19.62,111.00
 D | 椰子 | Coconut | A major coconut area. | |
 
 city: danzhou | 儋州 | Danzhou | 19.52 | 109.58 | A western city where the poet Su Dongpo was exiled. |
@@ -62,7 +58,6 @@ city: ledong | 乐东 | Ledong | 18.75 | 109.17 | A western county of Li culture
 D | 乐东芒果 | Ledong mango | Sweet mangoes. | |
 
 city: lingshui | 陵水 | Lingshui | 18.50 | 110.03 | An eastern coastal county. |
-A | 分界洲岛 | Fenjiezhou Island | An island with monkeys and diving. | | 18.54,110.08
 A | 南湾猴岛 | Monkey Island | A peninsula home to macaques. | | 18.76,110.06
 D | 陵水酸粉 | Lingshui sour noodles | Rice noodles in a sour broth. | |
 D | 陵水海鲜 | Lingshui seafood | Seafood. | |

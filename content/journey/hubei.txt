@@ -9,8 +9,6 @@ A | 武汉长江大桥 | Wuhan Yangtze River Bridge | The first bridge across th
 A | 户部巷 | Hubu Alley | A lane of breakfast and snack stalls. | | 30.55,114.30
 A | 湖北省博物馆 | Hubei Provincial Museum | Home of the chime bells of Marquis Yi, about 2,400 years old. | | 30.56,114.36
 A | 武汉大学 | Wuhan University | A campus famous for its cherry blossoms in spring. | | 30.54,114.37
-A | 汉口江滩 | Hankou Riverside | A long riverfront park beside old colonial buildings. | | 30.59,114.30
-A | 古琴台 | Guqin Terrace | A garden remembering a friendship between a musician and a woodcutter. | | 30.56,114.26
 D | 热干面 | Hot dry noodles | Wuhan's famous breakfast noodles with sesame paste. | |
 D | 豆皮 | Doupi | A pancake of tofu skin filled with sticky rice and meat. | |
 D | 武昌鱼 | Wuchang fish | A freshwater bream, steamed whole, praised by Mao Zedong. | |
@@ -42,19 +40,15 @@ D | 皮条鳝鱼 | Eel strips | Eel cut in strips and cooked in a spicy sauce. |
 
 city: xiangyang | 襄阳 | Xiangyang | 32.04 | 112.14 | A walled city that held out in famous sieges. |
 A | 襄阳古城墙 | Xiangyang City Wall | An old wall on the Han River. | | 32.04,112.15
-A | 古隆中 | Gulongzhong | The place where the strategist Zhuge Liang lived before he served Liu Bei. | | 32.00,112.01
-A | 夫人城 | Madam's Fort | A small fort built by a woman for the defense of the city. | | 32.04,112.14
 D | 牛肉面 | Xiangyang beef noodles | A local bowl of beef noodles in a bold broth. | |
 
 city: enshi | 恩施 | Enshi | 30.27 | 109.49 | A mountain prefecture of Tujia and Miao culture. |
 A | 恩施大峡谷 | Enshi Grand Canyon | A deep canyon with a long cliff and a stone pillar. | | 30.40,109.28
 A | 腾龙洞 | Tenglong Cave | One of the longest caves in China, with a huge entrance. | | 30.30,108.94
-A | 土司城 | Tusi City | A reconstruction of a hereditary chief's town. | | 30.28,109.49
 D | 恩施土豆 | Enshi potatoes | Small potatoes roasted or fried in the highland style. | |
 D | 硒茶 | Selenium tea | Green tea from soil rich in selenium. | |
 
 city: huangshi | 黄石 | Huangshi | 30.20 | 115.04 | An old mining city on the Yangtze. |
-A | 东方山 | Dongfang Mountain | A Buddhist mountain beside the city. | | 30.14,115.15
 D | 大冶藕 | Daye lotus root | Soft lotus root from the lake area. | |
 
 city: xianning | 咸宁 | Xianning | 29.84 | 114.32 | A green city of hot springs and bamboo. |
