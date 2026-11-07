@@ -241,7 +241,8 @@ async function regionPhoto(api, R) {
     const q = await api.page(title, lang).catch(() => null);
     const page = q && q.query && q.query.pages && q.query.pages[0];
     if (!page || page.missing || !page.pageimage || !page.thumbnail) continue;
-    if (/\b(map|location|locator|flag|emblem|logo|seal|skyline|montage|collage)\b/i.test(page.pageimage.replace(/[_.]/g, ' '))) continue;
+    const cityState = R.id === 'singapore' || R.id === 'hongkong' || R.id === 'macau';   // for these the skyline is the province-wide picture
+    if (new RegExp('\\b(map|location|locator|flag|emblem|logo|seal' + (cityState ? '' : '|skyline|montage|collage') + ')\\b', 'i').test(page.pageimage.replace(/[_.]/g, ' '))) continue;
     const r = await fileEntry(api, page.pageimage, R.en, { fallback: page.thumbnail.source });
     if (r.entry) { r.entry.r = 1; return r; }
   }
