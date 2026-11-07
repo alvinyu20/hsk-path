@@ -28,6 +28,7 @@ const OUT = path.join(ROOT, 'data', 'journey-media.js');
 const MISS = path.join(__dirname, 'journey-media-misses.json');
 const TRIED = path.join(__dirname, 'journey-media-tried.json');   // stops already searched with every source, so a re-run does not repeat them
 const UA = 'ShanluJourneyMedia/1.0 (https://github.com/alvinyu20/hsk-path; study site photo lookup)';
+const TRIED_V = process.env.OPENVERSE_CLIENT_ID ? 3 : 2;
 let SLOW = true;   // tests switch the waiting off with setSlow(false)
 const WIDTH = 500;   // Wikimedia hands out thumbnails only in fixed sizes and rounds up to the next one
 const KEEP_LICENCES = /^(public domain|pd\b|cc0|cc[- ]by(?![- ]nc)(?![- ]nd)|cc[- ]by[- ]sa(?![- ]nc)(?![- ]nd))/i;
@@ -51,6 +52,7 @@ const loadMisses = () => { try { return JSON.parse(fs.readFileSync(MISS, 'utf8')
 const HOSTS = { voyen: 'https://en.wikivoyage.org', voyzh: 'https://zh.wikivoyage.org' };   // Wikivoyage pictures are Commons files too, so they get the same licence check
 
 function makeApi(doFetch) {
+  const ovAuth = { token: '', exp: 0, next: 0 };
   const get = async (base, params) => {
     const url = base + '?' + new URLSearchParams(Object.assign({ format: 'json', formatversion: '2', origin: '*' }, params)).toString();
     for (let tries = 0; tries < 6; tries++) {
@@ -71,6 +73,25 @@ function makeApi(doFetch) {
     cats: (titles) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', titles: titles.join('|'), prop: 'categories', cllimit: 'max' }),
     images: (title, lang) => get((HOSTS[lang] || ('https://' + lang + '.wikipedia.org')) + '/w/api.php', { action: 'query', titles: title, redirects: '1', prop: 'images', imlimit: '40' }),
     wdsearch: (text) => get('https://www.wikidata.org/w/api.php', { action: 'wbsearchentities', search: text, language: 'en', uselang: 'en', type: 'item', limit: '5' }),
+    ov: async (text) => {   // Openverse image search; needs a free key (OPENVERSE_CLIENT_ID / OPENVERSE_CLIENT_SECRET), since anonymous use allows only 100 requests a day
+      const id = process.env.OPENVERSE_CLIENT_ID, secret = process.env.OPENVERSE_CLIENT_SECRET;
+      if (!id || !secret) return null;
+      if (!ovAuth.token || Date.now() > ovAuth.exp) {
+        const r = await doFetch('https://api.openverse.org/v1/auth_tokens/token/', { method: 'POST', headers: { 'User-Agent': UA, 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ grant_type: 'client_credentials', client_id: id, client_secret: secret }).toString() });
+        if (!r.ok) throw new Error('Openverse sign-in failed: HTTP ' + r.status);
+        const j = await r.json(); ovAuth.token = j.access_token; ovAuth.exp = Date.now() + Math.max(60, (j.expires_in || 3600) - 120) * 1000;
+      }
+      const wait = Math.max(0, ovAuth.next - Date.now()); ovAuth.next = Math.max(Date.now(), ovAuth.next) + (SLOW ? 700 : 0);   // at most about 85 requests a minute
+      if (wait) await new Promise((r) => setTimeout(r, wait));
+      const url = 'https://api.openverse.org/v1/images/?' + new URLSearchParams({ q: text, license: 'cc0,pdm,by,by-sa', category: 'photograph', page_size: '12', mature: 'false' }).toString();
+      for (let tries = 0; tries < 4; tries++) {
+        const r = await doFetch(url, { headers: { 'User-Agent': UA, Authorization: 'Bearer ' + ovAuth.token } });
+        if (r.status === 429 || r.status >= 500) { await new Promise((x) => setTimeout(x, 3000 * (tries + 1) * (SLOW ? 1 : 0.001))); continue; }
+        if (!r.ok) throw new Error('Openverse HTTP ' + r.status);
+        return r.json();
+      }
+      throw new Error('Openverse: too many retries');
+    },
     ccats: (text) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', list: 'search', srsearch: text, srnamespace: '14', srlimit: '6', srprop: '' }),
     cmembers: (cat) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', list: 'categorymembers', cmtitle: 'Category:' + cat, cmtype: 'file', cmlimit: '20' }),
     cfiles: (text) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', list: 'search', srsearch: text, srnamespace: '6', srlimit: '8', srprop: '' }),
@@ -212,6 +233,30 @@ function relevant(stop, title, cats) {
   const hit = need.filter((w) => hay.includes(stem(w))).length;
   return key.length ? hit >= Math.ceil(key.length / 2) : hit === need.length;
 }
+// Openverse (openly licensed photos from Flickr, Wikimedia and others). A result must name food in its title or tags, name no plant or animal,
+// and share the dish's distinctive words (or pinyin, or Chinese name) with its title or tags. The credit line names the photographer and the licence.
+const OV_LICENCE = { cc0: 'CC0', pdm: 'Public domain', by: 'CC BY', 'by-sa': 'CC BY-SA' };
+async function viaOpenverse(api, stop, dbg) {
+  let last = { miss: 'no openverse photo' };
+  for (const name of [stop.en, stop.zh]) {
+    if (!name || name.length < 3) continue;
+    const q = await api.ov(name).catch((e) => { if (dbg) dbg('openverse error: ' + e.message); return null; });
+    if (!q) return { miss: 'openverse not available' };
+    const res = (q.results || []).filter((x) => x && x.thumbnail && OV_LICENCE[x.license]);
+    if (dbg) dbg(stop.id + ': openverse "' + name + '" -> ' + res.length + ' usable results: ' + res.slice(0, 4).map((x) => x.title).join(' | '));
+    for (const x of res) {
+      const tags = (x.tags || []).map((t) => (typeof t === 'string' ? t : t && t.name) || '');
+      const text = [x.title].concat(tags);
+      if (!text.some((t) => FOOD_CAT.test(t)) || text.some((t) => NOT_FOOD_CAT.test(t))) { last = { miss: 'not a dish photo' }; continue; }
+      if (!relevant(stop, x.title || '', tags)) { last = { miss: 'not this dish' }; continue; }
+      const who = strip(x.creator) || strip(x.source) || 'Openverse';
+      const credit = (who.length > 60 ? who.slice(0, 57) + '...' : who) + ' / ' + OV_LICENCE[x.license] + (x.license_version && /^(by|by-sa)$/.test(x.license) ? ' ' + x.license_version : '');
+      return { entry: { u: x.thumbnail, c: credit, a: stop.en, f: 1, o: 1 }, note: (x.title || '') + ' (Openverse, ' + (x.source || '') + ')' };
+    }
+  }
+  return last;
+}
+
 // A Commons category named after the dish ("Category:Mapo doufu"): its files are pictures of that dish.
 async function viaDishCategory(api, stop, dbg) {
   let last = { miss: 'no dish category' };
@@ -275,6 +320,7 @@ async function lookup(api, stop) {
   if (stop.k === 'D') {
     const dbg = process.env.JM_DEBUG ? (m) => console.log('  [debug] ' + m) : null;
     const dc = await viaDishCategory(api, stop, dbg); if (dc.entry) return dc;
+    const ov = await viaOpenverse(api, stop, dbg); if (ov.entry) return ov;
   }
   return zh;
 }
@@ -351,9 +397,9 @@ async function run(opts) {
           if (!r.entry) { const c = landmarkPhoto(R, media); if (c) r = { entry: { u: c.u, c: c.c, a: R.en, r: 1 } }; }
         } else r = await lookup(api, stop);
         if (r.entry && reject[stop.id]) r = { miss: 'rejected by hand: ' + reject[stop.id] };
-        if (r.entry && o.verify) { const v = await o.fetch(r.entry.u, { method: 'HEAD', headers: { 'User-Agent': UA } }).catch(() => null); if (!v || !v.ok || !/^image\//.test((v.headers && v.headers.get && v.headers.get('content-type')) || '')) { delete r.entry; r.miss = 'image does not load'; } }
+        if (r.entry && o.verify && !r.entry.o) { const v = await o.fetch(r.entry.u, { method: 'HEAD', headers: { 'User-Agent': UA } }).catch(() => null); if (!v || !v.ok || !/^image\//.test((v.headers && v.headers.get && v.headers.get('content-type')) || '')) { delete r.entry; r.miss = 'image does not load'; } }
         if (r.entry) { media[stop.id] = r.entry; delete misses[stop.id]; found++; } else { misses[stop.id] = r.miss; missed++; }
-        tried[stop.id] = 2;   // 2 = searched with every source including the dish category search
+        tried[stop.id] = TRIED_V;   // 2 = searched with every source up to the dish category search; 3 = also Openverse
         if (r.note) o.log('  dish photo via category search: ' + stop.id + ' <- ' + r.note);
       } catch (e) { failed++; o.log('  error for ' + stop.id + ': ' + e.message); }
       if ((found + missed) % 50 === 0 && o.save) saveAll();

@@ -42,6 +42,8 @@ jobs:
           LIMIT: ${{ inputs.limit }}
           RETRY: ${{ inputs.retry_misses }}
           EXTRA: ${{ inputs.extra }}
+          OPENVERSE_CLIENT_ID: ${{ secrets.OPENVERSE_CLIENT_ID }}
+          OPENVERSE_CLIENT_SECRET: ${{ secrets.OPENVERSE_CLIENT_SECRET }}
           JM_DEBUG: ${{ inputs.extra != '' && '1' || '' }}
         run: |
           args="--limit ${LIMIT:-400}"
