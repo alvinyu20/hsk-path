@@ -67,6 +67,8 @@ function makeApi(doFetch) {
   return {
     page: (title, lang) => get((HOSTS[lang || 'zh'] || ('https://' + lang + '.wikipedia.org')) + '/w/api.php', { action: 'query', titles: title, redirects: '1', prop: 'pageimages|coordinates|pageprops', piprop: 'name|thumbnail', pithumbsize: String(WIDTH), ppprop: 'disambiguation|wikibase_item', colimit: '1' }),
     search: (text, lang) => get('https://' + lang + '.wikipedia.org/w/api.php', { action: 'query', list: 'search', srsearch: text, srnamespace: '0', srlimit: '5', srprop: '' }),
+    cats: (titles) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', titles: titles.join('|'), prop: 'categories', cllimit: 'max' }),
+    images: (title, lang) => get((HOSTS[lang] || ('https://' + lang + '.wikipedia.org')) + '/w/api.php', { action: 'query', titles: title, redirects: '1', prop: 'images', imlimit: '40' }),
     wdsearch: (text) => get('https://www.wikidata.org/w/api.php', { action: 'wbsearchentities', search: text, language: 'en', uselang: 'en', type: 'item', limit: '5' }),
     cfiles: (text) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', list: 'search', srsearch: text, srnamespace: '6', srlimit: '8', srprop: '' }),
     wikidata: (qid) => get('https://www.wikidata.org/w/api.php', { action: 'wbgetentities', ids: qid, props: 'claims', languages: 'en' }),
@@ -95,7 +97,16 @@ async function tryPage(api, stop, lang, title) {
   }
   const name = page.pageimage;
   if (!name || !page.thumbnail) return { miss: 'no picture' };
-  return fileEntry(api, name, stop.en, { fallback: page.thumbnail.source });
+  const first = await fileEntry(api, name, stop.en, { fallback: page.thumbnail.source, dish: stop.k === 'D' });
+  if (first.entry || stop.k !== 'D' || first.miss !== 'not a dish photo') return first;
+  // the lead picture is not the dish (a plant, an ingredient): look through the page's other pictures for one that is
+  const im = await api.images(page.title || title, lang).catch(() => null);
+  const ip = im && im.query && im.query.pages && im.query.pages[0];
+  const cands = ((ip && ip.images) || []).map((x) => nm(x.title)).filter((n) => /\.(jpe?g|png|webp)$/i.test(n) && !NOT_A_PHOTO.test(n) && n !== nm(name)).slice(0, 30);
+  if (!cands.length) return first;
+  const fl = await foodFlags(api, cands).catch(() => ({}));
+  for (const n of cands.filter((n) => fl[n]).slice(0, 2)) { const r = await fileEntry(api, n, stop.en, { dish: true, checked: true }); if (r.entry) return r; }
+  return first;
 }
 
 const NOT_A_PHOTO = /\.(svg|gif|ogg|ogv|webm|pdf|tiff?)$|^(Flag[ _]|Coat[ _]|Map[ _]|Location[ _]|Locator|Emblem[ _]|Logo[ _]|Commons-logo|Wikimedia)/i;
@@ -118,7 +129,40 @@ async function fileEntry(api, name, alt, o) {
   const credit = (artist.length > 70 ? artist.slice(0, 67) + '...' : artist) + ' / ' + licence;
   const u = String(info.thumburl || o.fallback || '').replace(/\?.*$/, '');   // the tracking tail adds nothing
   if (!u) return { miss: 'no file info' };
-  return { entry: { u, c: credit, a: alt } };
+  if (o.dish && !o.checked) { const fl = await foodFlags(api, [name]).catch(() => null); if (!fl || !fl[name]) return { miss: 'not a dish photo' }; }
+  return { entry: Object.assign({ u, c: credit, a: alt }, o.dish ? { f: 1 } : {}) };
+}
+
+// Is this Commons file a picture of a prepared dish? A dish's Wikipedia page often leads with the plant, animal or ingredient (oats for oat noodles),
+// so for dishes the file's Commons categories (and their parents) must name food, and must not name plants, animals or farming.
+const FOOD_CAT = /\b(foods?|dish(es)?|cuisines?|cooking|meals?|noodles?|dumplings?|soups?|stews?|congee|porridge|breads?|buns?|cakes?|pastr(y|ies)|pancakes?|snacks?|desserts?|tofu|hot ?pots?|barbecue|kebabs?|skewers?|baozi|jiaozi|mantou|breakfast|delicacies|sweets|confection(ery)?|pudding|biscuits?|cookies?|bakery|sandwich(es)?|pickled|sausages?|sauces?|roast(ed)?|fried|braised|steamed|grilled|street food|cuisine)\b/i;
+const NOT_FOOD_CAT = /\b(taxa|taxon|species|plants?|flora|crops?|botanical|botany|trees?|flowers?|vegetation|agriculture|farms?|farming|fields?|fauna|animals?|fish of|fishes|birds?|mammals?|insects?|aquaculture|fishing|vineyards?|plantations?)\b/i;
+const nm = (t) => String(t || '').replace(/^(File|Category):/, '').replace(/_/g, ' ').trim();
+async function foodFlags(api, names) {   // names -> { name: true|false }
+  const out = {}, l1 = {};
+  const catsOf = async (titles) => {   // 'File:x' or 'Category:x' titles -> { title without prefix: [category names] }
+    const res = {};
+    for (let i = 0; i < titles.length; i += 40) {
+      const q = await api.cats(titles.slice(i, i + 40)).catch(() => null);
+      ((q && q.query && q.query.pages) || []).forEach((p) => { res[nm(p.title)] = (p.categories || []).map((c) => nm(c.title)); });
+    }
+    return res;
+  };
+  const c1 = await catsOf(names.map((n) => 'File:' + nm(n)));
+  const need = {};
+  names.forEach((n) => {
+    const cs = c1[nm(n)] || []; l1[n] = cs;
+    if (cs.some((c) => NOT_FOOD_CAT.test(c))) out[n] = false;
+    else if (cs.some((c) => FOOD_CAT.test(c))) out[n] = true;
+    else cs.forEach((c) => { need[c] = 1; });
+  });
+  const parents = Object.keys(need).length ? await catsOf(Object.keys(need).map((c) => 'Category:' + c)) : {};
+  names.forEach((n) => {
+    if (out[n] !== undefined) return;
+    const ps = [].concat(...l1[n].map((c) => parents[c] || []));
+    out[n] = !ps.some((c) => NOT_FOOD_CAT.test(c)) && ps.some((c) => FOOD_CAT.test(c));
+  });
+  return out;
 }
 
 const isPlace = (stop) => stop.k === 'T' || stop.k === 'A' || stop.k === 'P';
@@ -141,7 +185,7 @@ async function viaWikidata(api, stop) {
       if (!c || typeof c.latitude !== 'number') { last = { miss: 'no coordinates' }; continue; }
       if (stop.ll && km(stop.ll[0], stop.ll[1], c.latitude, c.longitude) > 60) { last = { miss: 'too far' }; continue; }
     }
-    const r = await fileEntry(api, img, stop.en, {});
+    const r = await fileEntry(api, img, stop.en, { dish: stop.k === 'D' });
     if (r.entry) return r; last = r;
   }
   return last;
@@ -157,7 +201,7 @@ async function viaCommons(api, stop) {
     const q = await api.cfiles(name).catch(() => null);
     const titles = ((q && q.query && q.query.search) || []).map((h) => String(h.title || '').replace(/^File:/, '')).filter((t) => /\.(jpe?g|png|webp)$/i.test(t) && hasWhole(t.replace(/\.[a-z]+$/i, ''), name)).slice(0, 3);
     for (const t of titles) {
-      const r = await fileEntry(api, t, stop.en, { ll: isPlace(stop) ? stop.ll : null });
+      const r = await fileEntry(api, t, stop.en, { ll: isPlace(stop) ? stop.ll : null, dish: stop.k === 'D' });
       if (r.entry) return r; last = r;
     }
   }
@@ -219,6 +263,17 @@ async function run(opts) {
   const api = makeApi(o.fetch);
   let todo = [];
   const JY = require(path.join(ROOT, 'journey.js'));
+  // dish photos found before the food check existed: keep the ones whose categories say food, send the rest back to be looked up again
+  const dishes = [];
+  W.regions.forEach((R) => R.stops.forEach((s) => { if (s.k === 'D' && media[s.id] && !media[s.id].f && (!o.region || R.id === o.region)) dishes.push(s.id); }));
+  if (dishes.length) {
+    const fileOf = (u) => { const m = /\/thumb\/[0-9a-f]\/[0-9a-f]{2}\/([^/]+)\//.exec(u) || /\/[0-9a-f]\/[0-9a-f]{2}\/([^/]+)$/.exec(u); try { return m ? decodeURIComponent(m[1]) : ''; } catch (e) { return ''; } };
+    const named = dishes.filter((id) => fileOf(media[id].u));
+    const fl = await foodFlags(api, Array.from(new Set(named.map((id) => fileOf(media[id].u))))).catch((e) => { o.log('  food check failed: ' + e.message); return null; });
+    let kept = 0, dropped = 0;
+    if (fl) named.forEach((id) => { if (fl[fileOf(media[id].u)]) { media[id].f = 1; kept++; } else { delete media[id]; delete tried[id]; delete misses[id]; dropped++; } });
+    o.log('Dish photos checked: ' + kept + ' show a dish, ' + dropped + ' do not and will be looked up again.');
+  }
   const regionOf = {};
   W.regions.forEach((R) => {
     if (o.region && R.id !== o.region) return;

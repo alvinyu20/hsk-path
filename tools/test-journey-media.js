@@ -13,6 +13,8 @@ let bad = 0; const ok = (c, m) => { if (!c) { bad++; console.log('FAIL ' + m); }
     '熊猫基地': { missing: true },
     '锦里古街': { title: '锦里古街', pageimage: 'Jinli.jpg', thumbnail: { source: 'https://upload.wikimedia.org/thumb/Jinli.jpg/500px-Jinli.jpg' }, pageprops: { wikibase_item: 'Q1' } },   // no coordinates on the page, but on Wikidata
     '四川甜皮鸭': { title: '四川甜皮鸭', pageimage: 'Duck.jpg', thumbnail: { source: 'https://upload.wikimedia.org/thumb/Duck.jpg/500px-Duck.jpg' } },
+    '莜面': { title: '莜面', pageimage: 'Oat_plant.jpg', thumbnail: { source: 'https://upload.wikimedia.org/thumb/Oat_plant.jpg/500px-Oat_plant.jpg' } },
+    '植物面': { title: '植物面', pageimage: 'Plant2.jpg', thumbnail: { source: 'https://upload.wikimedia.org/thumb/Plant2.jpg/500px-Plant2.jpg' } },
     '都江堰': { title: '都江堰', pageimage: 'Map_of_Dujiangyan.svg', thumbnail: { source: 'z' }, coordinates: [{ lat: 31.0, lon: 103.6 }] },
   };
   const files = {
@@ -27,9 +29,17 @@ let bad = 0; const ok = (c, m) => { if (!c) { bad++; console.log('FAIL ' + m); }
   files['Duck.jpg'] = { url: 'u', thumburl: 'https://upload.wikimedia.org/thumb/Duck.jpg/500px-Duck.jpg', extmetadata: { LicenseShortName: { value: 'CC BY 4.0' }, Artist: { value: 'D' } } };
   const add = (n, lic) => { files[n] = { url: 'u', thumburl: 'https://upload.wikimedia.org/thumb/' + n + '/500px-' + n, extmetadata: { LicenseShortName: { value: lic || 'CC BY 4.0' }, Artist: { value: 'P' } } }; };
   ['Imaginary Dumpling Soup 01.jpg', 'WDN.jpg', 'Ja.jpg', 'Voy.jpg', 'Sichuan_view.jpg'].forEach((n) => add(n));
+  ['Oat_plant.jpg', 'Youmian dish.jpg', 'Plant2.jpg'].forEach((n) => add(n));
+  // Commons categories of files, and parents of categories
+  const CATS = { 'Mapo.jpg': ['Mapo doufu dishes'], 'Duck.jpg': ['Duck dishes'], 'WDN.jpg': ['Noodle dishes'], 'Ja.jpg': ['Japanese food'], 'Broken.jpg': ['Dishes'], 'Imaginary Dumpling Soup 01.jpg': ['Soups'],
+    'Oat plant.jpg': ['Avena sativa'], 'Youmian dish.jpg': ['Chinese noodle dishes'], 'Plant2.jpg': ['Some plant'], 'Soup2.jpg': ['Soups'], 'Plant.jpg': ['Avena sativa'], 'Unknown.jpg': ['Misc'] };
+  const PARENTS = { 'Avena sativa': ['Avena', 'Cereal crops'], 'Some plant': ['Plants by name'], 'Misc': ['Things'] };
+  const IMAGES = { '莜面': ['File:Oat_plant.jpg', 'File:Icon.svg', 'File:Youmian dish.jpg'] };
   const calls = [];
   const fake = async (url) => {
     calls.push(url); const u = new URL(url); const t = u.searchParams.get('titles');
+    if (u.searchParams.get('prop') === 'categories') return { ok: true, status: 200, json: async () => ({ query: { pages: t.split('|').map((x) => { const nmx = x.replace(/^(File|Category):/, '').replace(/_/g, ' '); const list = /^File:/.test(x) ? CATS[nmx] : PARENTS[nmx]; return { title: x.replace(/_/g, ' '), categories: (list || []).map((c) => ({ title: 'Category:' + c })) }; }) } }) };
+    if (u.searchParams.get('prop') === 'images') return { ok: true, status: 200, json: async () => ({ query: { pages: [{ title: t, images: (IMAGES[t] || []).map((x) => ({ title: x })) }] } }) };
     if (u.searchParams.get('action') === 'wbsearchentities') { const q = u.searchParams.get('search'); return { ok: true, status: 200, json: async () => ({ search: q === 'Wikidata Noodle' ? [{ id: 'Q9', label: 'Wikidata Noodle', description: 'a noodle' }] : q === 'Wrong Item Soup' ? [{ id: 'Q8', label: 'Wrong Item Soup', description: 'Wikimedia disambiguation page' }] : [] }) }; }
     if (/wikidata\.org/.test(u.hostname) && u.searchParams.get('action') === 'wbgetentities' && u.searchParams.get('ids') === 'Q9') return { ok: true, status: 200, json: async () => ({ entities: { Q9: { claims: { P18: [{ mainsnak: { datavalue: { value: 'WDN.jpg' } } }] } } } }) };
     if (/wikidata\.org/.test(u.hostname)) return { ok: true, status: 200, json: async () => ({ entities: { Q1: { claims: { P625: [{ mainsnak: { datavalue: { value: { latitude: 30.65, longitude: 104.05 } } } }] } } } }) };
@@ -46,12 +56,12 @@ let bad = 0; const ok = (c, m) => { if (!c) { bad++; console.log('FAIL ' + m); }
   };
   const stop = (id, k, zh, en, lat, lon) => ({ id, k, zh, en, lat, lon, ll: lat == null ? null : [lat, lon] });
   const world = { byCity: {}, regions: [{ id: 'sichuan', stops: [stop('s.a', 'T', '成都', 'Chengdu', 30.67, 104.07), stop('s.b', 'A', '宽窄巷子', 'Wide and Narrow Alley', 30.67, 104.06), stop('s.c', 'D', '麻婆豆腐', 'Mapo tofu'), stop('s.d', 'D', '火锅', 'Hot pot'), stop('s.e', 'C', '川剧', 'Sichuan opera'), stop('s.f', 'A', '熊猫基地', 'Panda base', 30.7, 104.1), stop('s.g', 'A', '都江堰', 'Dujiangyan', 31.0, 103.6), stop('s.h', 'D', '回锅肉', 'Twice-cooked pork'), stop('s.i', 'A', '鹤鸣茶社', 'Tea house', 30.67, 104.06), stop('s.j', 'D', '烂图', 'Broken pic'), stop('s.k', 'A', '锦里古街', 'Jinli Ancient Street', 30.65, 104.05), stop('s.l', 'D', '甜皮鸭', 'Sweet-skin duck'),
-    stop('s.m', 'D', '无页汤', 'Imaginary Dumpling Soup'), stop('s.n', 'D', '无页面', 'Wikidata Noodle'), stop('s.o', 'D', '日本菜', 'Japan only dish'), stop('s.p', 'A', '游记巷', 'Voyage Lane', 30.67, 104.06), stop('s.q', 'D', '错项汤', 'Wrong Item Soup'),
+    stop('s.m', 'D', '无页汤', 'Imaginary Dumpling Soup'), stop('s.n', 'D', '无页面', 'Wikidata Noodle'), stop('s.o', 'D', '日本菜', 'Japan only dish'), stop('s.p', 'A', '游记巷', 'Voyage Lane', 30.67, 104.06), stop('s.q', 'D', '错项汤', 'Wrong Item Soup'), stop('s.r', 'D', '莜面', 'Oat noodles'), stop('s.t', 'D', '植物面', 'Plant noodles'), stop('s.u', 'D', '旧图', 'Old picture dish'), stop('s.v', 'D', '好图', 'Good old dish'),
     Object.assign(stop('s.air', 'P', '成都天府国际机场', 'Chengdu Tianfu International Airport'), { ll: null })], zh: '四川', en: 'Sichuan', cities: [{ first: { id: 's.a' } }] },
     { id: 'mapland', zh: '地图国', en: 'Mapland', cities: [{ first: { id: 's.a' } }], stops: [Object.assign(stop('m.air', 'P', '地图机场', 'Map Airport'), { ll: null })] }] };
   const logs = [];
-  const r = await J.run({ fetch: fake, world, media: { 's.air': { u: 'https://upload.wikimedia.org/old-airport.jpg', c: 'x', a: 'old' } }, misses: {}, tried: {}, save: false, verify: true, log: (m) => logs.push(m) });
-  ok(Object.keys(r.media).sort().join() === 'm.air,s.a,s.air,s.c,s.i,s.k,s.l,s.m,s.n,s.o,s.p', 'only the right pictures are kept: ' + Object.keys(r.media));
+  const r = await J.run({ fetch: fake, world, media: { 's.air': { u: 'https://upload.wikimedia.org/old-airport.jpg', c: 'x', a: 'old' }, 's.u': { u: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Plant.jpg/500px-Plant.jpg', c: 'x', a: 'o' }, 's.v': { u: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Soup2.jpg/500px-Soup2.jpg', c: 'x', a: 'g' } }, misses: {}, tried: {}, save: false, verify: true, log: (m) => logs.push(m) });
+  ok(Object.keys(r.media).sort().join() === 'm.air,s.a,s.air,s.c,s.i,s.k,s.l,s.m,s.n,s.o,s.p,s.r,s.v', 'only the right pictures are kept: ' + Object.keys(r.media));
   ok(/Imaginary/.test(r.media['s.m'].u) && !/map|Soup of the day/.test(r.media['s.m'].u), 'a Commons file search takes the file whose title holds the whole name (not other files, not an svg): ' + (r.media['s.m'] && r.media['s.m'].u));
   ok(r.media['s.n'] && /WDN/.test(r.media['s.n'].u), 'a Wikidata item with exactly that label supplies its picture');
   ok(!r.media['s.q'], 'a Wikidata disambiguation item is not used');
@@ -59,6 +69,10 @@ let bad = 0; const ok = (c, m) => { if (!c) { bad++; console.log('FAIL ' + m); }
   ok(r.media['s.p'] && /Voy\.jpg/.test(r.media['s.p'].u), 'Wikivoyage is tried with the English name, with the same distance rule');
   ok(r.media['s.air'].r === 1 && /Sichuan_view/.test(r.media['s.air'].u) && r.media['s.air'].a === 'Sichuan', 'an airport shows the province-wide photo, replacing the old airport photo: ' + JSON.stringify(r.media['s.air']));
   ok(r.media['m.air'] && r.media['m.air'].r === 1 && /Chengdu/.test(r.media['m.air'].u), 'when the province page only has a map, the main city photo stands in');
+  ok(r.media['s.r'] && /Youmian dish/.test(r.media['s.r'].u) && r.media['s.r'].f === 1, 'a dish whose lead picture is a plant takes another picture from the page that is food: ' + (r.media['s.r'] && r.media['s.r'].u));
+  ok(!r.media['s.t'] && r.misses['s.t'] === 'not a dish photo', 'a dish with only a plant photo gets none: ' + r.misses['s.t']);
+  ok(!r.media['s.u'] && r.tried['s.u'] === 1, 'an old dish photo that is not food is dropped and looked up again');
+  ok(r.media['s.v'] && r.media['s.v'].f === 1, 'an old dish photo whose categories say food is kept');
   ok(r.tried['s.h'] === 1 && r.tried['s.air'] === 1, 'every finished stop is noted as searched');
   ok(r.media['s.a'].c === 'Jane & Co / CC BY-SA 4.0', 'credit is author and licence, HTML removed: ' + r.media['s.a'].c);
   ok(r.media['s.a'].a === 'Chengdu' && r.media['s.a'].u.startsWith('https://upload.wikimedia.org/'), 'alt text and address');
