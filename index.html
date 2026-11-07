@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="84727d5828">
+<meta name="shanlu-version" content="3f48f6f904">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=84727d5828">
+<link rel="stylesheet" href="styles.css?v=3f48f6f904">
 </head>
 <body>
 <div id="app"></div>
@@ -124,6 +124,7 @@
     <div class="me-av zh" aria-hidden="true">学</div>
     <div><b>Your progress</b><div class="bsub">{{lvName}} · {{overall}}% to checkpoint</div></div>
   </div>
+  <sc-if value="{{guideAvail}}" hint-placeholder-val="{{ false }}"><button class="{{guideSideCls}}" data-on-click="{{onbOpenGuide}}">How Shanlu works</button></sc-if>
   <button class="linkbtn" data-on-click="{{toggleTheme}}">{{themeLabel}}</button>
 </aside>
 
@@ -356,6 +357,36 @@
   <!-- HOME -->
   <sc-if value="{{isHome}}" hint-placeholder-val="{{ true }}">
   <div class="home">
+  <sc-if value="{{welcomeShow}}" hint-placeholder-val="{{ false }}">
+  <section class="card ob" aria-label="Welcome">
+    <div class="ob-top"><div class="mark zh" aria-hidden="true">山</div><div><h2 class="h2">Learn Mandarin step by step</h2><p class="muted" style="margin:2px 0 0">Toward the HSK levels, a little every day.</p></div></div>
+    <p class="cp-note" style="margin-top:14px">A good day takes about 15 to 20 minutes and goes like this:</p>
+    <div class="tasks2">
+      <div class="task2"><div class="task2-ico zh" aria-hidden="true">联</div><div class="task-m"><div class="task-t">Meet a few new words</div><div class="task-s">Word webs shows each new word next to words you already know.</div></div></div>
+      <div class="task2"><div class="task2-ico zh" aria-hidden="true">词</div><div class="task-m"><div class="task-t">Recall them in Review</div><div class="task-s">Review asks you to remember a word, then brings it back a little later. That is how it sticks.</div></div></div>
+      <div class="task2"><div class="task2-ico zh" aria-hidden="true">语</div><div class="task-m"><div class="task-t">Add some grammar, listening or speaking</div><div class="task-s">Today, just below, lists a short plan that fits your daily goal.</div></div></div>
+    </div>
+    <div class="goalrow" style="margin:16px 0 0">
+      <span class="muted">Daily goal</span>
+      <div class="seg2" role="group" aria-label="Daily time goal">
+        <sc-for list="{{minOpts}}" as="o" hint-placeholder-count="4"><button class="{{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
+      </div>
+    </div>
+    <p class="cp-note" style="margin:14px 0 0">You begin at HSK 1. HSK 2 opens when you pass the HSK 1 exam. The AI conversation is optional: everything else works without an AI key.</p>
+    <div class="ob-act"><button class="btn pri big" data-on-click="{{onbStartPath}}">Start with 5 words</button><button class="btn big" data-on-click="{{onbSkipWelcome}}">Skip, I will look around</button></div>
+  </section>
+  </sc-if>
+  <sc-if value="{{startShow}}" hint-placeholder-val="{{ false }}">
+  <section class="card ob" aria-label="Start here">
+    <div class="today-top"><h2 class="h2">Start here</h2><span class="muted">About 5 minutes</span></div>
+    <p class="cp-note" style="margin-top:8px">Your first session is five everyday words, the same for everyone. You meet each one, pick its meaning, then type it. Nothing to set up.</p>
+    <div class="ob-words" aria-label="The five words">
+      <sc-for list="{{startWords}}" as="w" hint-placeholder-count="5"><span class="ob-w"><b class="zh">{{w.zh}}</b><i>{{w.py}}</i><span>{{w.en}}</span></span></sc-for>
+    </div>
+    <div class="ob-act"><button class="btn pri big" data-on-click="{{onbStartPath}}">{{startBtnText}}</button></div>
+    <sc-if value="{{startFresh}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" style="margin-top:10px" data-on-click="{{onbSkipStart}}">Skip this, I will find my own way</button></sc-if>
+  </section>
+  </sc-if>
   <div class="hgrid2">
     <section class="card">
       <div class="today-top"><h2 class="h2">Today</h2><span class="muted">{{todayShort}}</span></div>
@@ -673,6 +704,17 @@
           <div class="stat"><b>{{rcounts.again}}</b><span>Again</span></div>
         </div>
         <span class="res-gain">{{memText}} ({{memToday}})</span>
+        <sc-if value="{{startDoneShow}}" hint-placeholder-val="{{ false }}">
+        <div class="ob-next">
+          <b>First session done. What next?</b>
+          <ul>
+            <li>Tomorrow, Review brings these five words back at the right moment. Open Review first.</li>
+            <li>Learn a few more in Word webs, a little each day, and try a grammar lesson.</li>
+            <li>About 15 to 20 minutes a day is plenty. Your daily goal is set on Home.</li>
+          </ul>
+          <sc-if value="{{onbFlightShow}}" hint-placeholder-val="{{ false }}"><p class="cp-note" style="margin:8px 0 0">Your first flight on the Journey is free: study earns XP, and XP takes you around the Chinese-speaking world.</p><button class="btn pri" style="margin-top:10px" data-on-click="{{onbFlight}}">Take my first flight</button></sc-if>
+        </div>
+        </sc-if>
         <div class="res-act">
           <sc-if value="{{hasLrnMore}}" hint-placeholder-val="{{ false }}"><button class="btn pri big" data-on-click="{{reviewMore}}">{{lrnMoreText}}</button></sc-if>
           <sc-if value="{{hasMoreDue}}" hint-placeholder-val="{{ false }}"><button class="btn pri big" data-on-click="{{reviewMore}}">{{moreDueText}}</button></sc-if>
@@ -726,6 +768,8 @@
   <section class="jy" style="--jh:{{jyHue}}" aria-label="Journey">
     <sc-if value="{{jyOff}}" hint-placeholder-val="{{ false }}"><p class="muted">The Journey could not load. Reload the page, and if it stays like this tell Alvin.</p></sc-if>
     <sc-if value="{{jyOn}}" hint-placeholder-val="{{ true }}">
+
+    <sc-if value="{{jyGuideShow}}" hint-placeholder-val="{{ false }}"><div class="banner ob-banner" role="status"><b>You have landed.</b> Here is a short guide to how Shanlu works: the daily loop, what each part is for, and where your progress lives. <div style="margin-top:10px"><button class="btn pri" data-on-click="{{onbOpenGuide}}">How Shanlu works</button></div></div></sc-if>
 
     <sc-if value="{{jyMine}}" hint-placeholder-val="{{ true }}">
     <div class="jy-now">
@@ -818,6 +862,46 @@
     </sc-if>
     </sc-if>
   </section>
+  </div>
+  </sc-if>
+
+  <!-- HOW SHANLU WORKS -->
+  <sc-if value="{{isGuide}}" hint-placeholder-val="{{ false }}">
+  <div class="gram">
+    <section class="guide" aria-label="How Shanlu works">
+      <div class="card">
+        <h2 class="h2">A day on Shanlu</h2>
+        <p class="cp-note">About 15 to 20 minutes is plenty. Little and often works better than one long session.</p>
+        <div class="tasks2">
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">联</div><div class="task-m"><div class="task-t">1. Meet new words</div><div class="task-s">In Word webs, each new word sits next to words you already know. Adding a word does not mean you know it yet.</div></div></div>
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">词</div><div class="task-m"><div class="task-t">2. Recall them in Review</div><div class="task-s">A new word is introduced, then you pick its meaning, then you type it. After that Review brings it back when you are about to forget it. Be honest with the buttons: Again, Hard, Good, Easy.</div></div></div>
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">语</div><div class="task-m"><div class="task-t">3. Add grammar, listening or speaking</div><div class="task-s">The Today list on Home puts together a short plan for your daily goal. You can change the goal there at any time.</div></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="h2">What each part is for</h2>
+        <div class="tasks2">
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">联</div><div class="task-m"><div class="task-t">Word webs</div><div class="task-s">Learn words in groups: shared characters, pairs such as opposites, and topics such as family.</div></div></div>
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">词</div><div class="task-m"><div class="task-t">Review words</div><div class="task-s">The words that are due, based on how well you remember each one. This is the heart of the site.</div></div></div>
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">语</div><div class="task-m"><div class="task-t">Grammar and Grammar review</div><div class="task-s">One lesson at a time with practice questions. Once you pass a lesson, its points join Grammar review, where the weakest come first.</div></div></div>
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">听</div><div class="task-m"><div class="task-t">Listening lab</div><div class="task-s">Dictation and shadowing at different speeds, plus a tone trainer for training your ear.</div></div></div>
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">说</div><div class="task-m"><div class="task-t">Speak</div><div class="task-s">Short scripted conversations to say out loud. The AI conversation with Mingming is optional and needs a key in Settings.</div></div></div>
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">测</div><div class="task-m"><div class="task-t">Tests</div><div class="task-s">Mixed questions from the words you have started, so you recall words instead of only recognising them.</div></div></div>
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">考</div><div class="task-m"><div class="task-t">Level exam</div><div class="task-s">A mock exam for the level, listening and reading. Passing it opens the next level.</div></div></div>
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">我</div><div class="task-m"><div class="task-t">My words</div><div class="task-s">How well you know each word, and when it needs a refresh.</div></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="h2">XP and the Journey</h2>
+        <p class="cp-note">Everything you do on the site earns XP. XP is spent on the Journey: each stop is a real place, dish or piece of culture, with its Chinese name. Your first stop is free, then the next ones cost 50, 100, 150, 200 and then 250 XP each. A province is stamped in your passport when you finish it.</p>
+        <p class="cp-note">The memory number at the top is different from XP: it estimates how many words you would recall right now, and it falls if you stop reviewing.</p>
+      </div>
+      <div class="card">
+        <h2 class="h2">Your progress and your friends</h2>
+        <p class="cp-note">Your progress is saved in this browser. Download a backup, or connect sync in Settings, so it follows you to your other devices. If you join a friends board, only your study totals are shared with the group.</p>
+        <div class="ob-act"><button class="btn pri" data-on-click="{{goVoice}}">Open Settings</button><button class="btn" data-on-click="{{goHome}}">Back to home</button></div>
+      </div>
+    </section>
   </div>
   </sc-if>
 
@@ -1902,42 +1986,42 @@
 </main>
 </div>
 </template>
-<script defer src="vendor/morphdom-umd.min.js?v=84727d5828"></script>
-<script defer src="runtime.js?v=84727d5828"></script>
-<script defer src="config.js?v=84727d5828"></script>
-<script defer src="friends.js?v=84727d5828"></script>
-<script defer src="level.js?v=84727d5828"></script>
-<script defer src="data/hsk1-words.js?v=84727d5828"></script>
-<script defer src="data/hsk1-grammar.js?v=84727d5828"></script>
-<script defer src="data/hsk1-webs.js?v=84727d5828"></script>
-<script defer src="data/hsk1-speak.js?v=84727d5828"></script>
-<script defer src="data/hsk1-listen.js?v=84727d5828"></script>
-<script defer src="data/hsk1-exam.js?v=84727d5828"></script>
-<script defer src="data/hsk1-erhua.js?v=84727d5828"></script>
-<script defer src="data/lexicon.js?v=84727d5828"></script>
-<script defer src="data/hsk2-preview.js?v=84727d5828"></script>
-<script defer src="data/hsk3-preview.js?v=84727d5828"></script>
-<script defer src="data/hsk2-words.js?v=84727d5828"></script>
-<script defer src="data/hsk2-speak.js?v=84727d5828"></script>
-<script defer src="data/hsk2-listen.js?v=84727d5828"></script>
-<script defer src="data/hsk2-exam.js?v=84727d5828"></script>
-<script defer src="data/hsk2-grammar.js?v=84727d5828"></script>
-<script defer src="data/hsk2-webs.js?v=84727d5828"></script>
-<script defer src="data/hsk3-words.js?v=84727d5828"></script>
-<script defer src="data/hsk3-speak.js?v=84727d5828"></script>
-<script defer src="data/hsk3-listen.js?v=84727d5828"></script>
-<script defer src="data/hsk3-exam.js?v=84727d5828"></script>
-<script defer src="data/hsk3-grammar.js?v=84727d5828"></script>
-<script defer src="data/hsk3-webs.js?v=84727d5828"></script>
-<script defer src="ascent.js?v=84727d5828"></script>
-<script defer src="secrets.js?v=84727d5828"></script>
-<script defer src="sync.js?v=84727d5828"></script>
-<script defer src="data/audio-manifest.js?v=84727d5828"></script>
-<script defer src="journey.js?v=84727d5828"></script>
-<script defer src="data/journey.js?v=84727d5828"></script>
-<script defer src="data/journey-map.js?v=84727d5828"></script>
-<script defer src="data/journey-media.js?v=84727d5828"></script>
-<script defer src="erhua.js?v=84727d5828"></script>
-<script defer src="app.js?v=84727d5828"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=3f48f6f904"></script>
+<script defer src="runtime.js?v=3f48f6f904"></script>
+<script defer src="config.js?v=3f48f6f904"></script>
+<script defer src="friends.js?v=3f48f6f904"></script>
+<script defer src="level.js?v=3f48f6f904"></script>
+<script defer src="data/hsk1-words.js?v=3f48f6f904"></script>
+<script defer src="data/hsk1-grammar.js?v=3f48f6f904"></script>
+<script defer src="data/hsk1-webs.js?v=3f48f6f904"></script>
+<script defer src="data/hsk1-speak.js?v=3f48f6f904"></script>
+<script defer src="data/hsk1-listen.js?v=3f48f6f904"></script>
+<script defer src="data/hsk1-exam.js?v=3f48f6f904"></script>
+<script defer src="data/hsk1-erhua.js?v=3f48f6f904"></script>
+<script defer src="data/lexicon.js?v=3f48f6f904"></script>
+<script defer src="data/hsk2-preview.js?v=3f48f6f904"></script>
+<script defer src="data/hsk3-preview.js?v=3f48f6f904"></script>
+<script defer src="data/hsk2-words.js?v=3f48f6f904"></script>
+<script defer src="data/hsk2-speak.js?v=3f48f6f904"></script>
+<script defer src="data/hsk2-listen.js?v=3f48f6f904"></script>
+<script defer src="data/hsk2-exam.js?v=3f48f6f904"></script>
+<script defer src="data/hsk2-grammar.js?v=3f48f6f904"></script>
+<script defer src="data/hsk2-webs.js?v=3f48f6f904"></script>
+<script defer src="data/hsk3-words.js?v=3f48f6f904"></script>
+<script defer src="data/hsk3-speak.js?v=3f48f6f904"></script>
+<script defer src="data/hsk3-listen.js?v=3f48f6f904"></script>
+<script defer src="data/hsk3-exam.js?v=3f48f6f904"></script>
+<script defer src="data/hsk3-grammar.js?v=3f48f6f904"></script>
+<script defer src="data/hsk3-webs.js?v=3f48f6f904"></script>
+<script defer src="ascent.js?v=3f48f6f904"></script>
+<script defer src="secrets.js?v=3f48f6f904"></script>
+<script defer src="sync.js?v=3f48f6f904"></script>
+<script defer src="data/audio-manifest.js?v=3f48f6f904"></script>
+<script defer src="journey.js?v=3f48f6f904"></script>
+<script defer src="data/journey.js?v=3f48f6f904"></script>
+<script defer src="data/journey-map.js?v=3f48f6f904"></script>
+<script defer src="data/journey-media.js?v=3f48f6f904"></script>
+<script defer src="erhua.js?v=3f48f6f904"></script>
+<script defer src="app.js?v=3f48f6f904"></script>
 </body>
 </html>

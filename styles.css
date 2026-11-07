@@ -648,6 +648,7 @@ button.scn:hover .scn-m{text-decoration:underline}
 @media (max-width:900px){
   .side{padding:10px 16px;flex-wrap:nowrap;justify-content:space-between}
   .side .linkbtn{padding:4px 0;white-space:nowrap}
+  .side .guide-link{display:none}
   .navs{position:fixed;left:0;right:0;bottom:0;z-index:30;flex-direction:row;flex-wrap:nowrap;gap:2px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;
     background:var(--panel);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px -16px rgba(20,33,42,.35)}
   .navs::-webkit-scrollbar{display:none}
@@ -1294,3 +1295,18 @@ html,body,.app,button,a,input,select,textarea,label,[role=button]{touch-action:m
 .jy-fr:hover,.jy-fr:focus-visible{border-color:hsl(var(--jh, 205) 45% 55%)}
 .jy-fr-t{display:flex;flex-direction:column;min-width:0}
 .jy-fr-t small{color:var(--muted, #6b6459)}
+
+/* Onboarding: Welcome card, Start here, guide */
+.ob{margin-bottom:18px}
+.ob-top{display:flex;align-items:center;gap:14px}
+.ob-act{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.ob-words{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.ob-w{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:84px;padding:10px 12px;border-radius:14px;background:var(--panel2);text-align:center}
+.ob-w b{font-size:26px;font-weight:700;line-height:1.2}
+.ob-w i{font-style:normal;font-size:14px;color:var(--muted)}
+.ob-w span{font-size:13.5px;color:var(--muted)}
+.ob-next{margin:14px 0 4px;padding:14px 16px;border-radius:16px;background:var(--jade-soft);color:var(--ink);text-align:left}
+.ob-next ul{margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.ob-banner{margin-bottom:14px}
+.guide{display:flex;flex-direction:column;gap:18px}
+.linkbtn.on{font-weight:700}

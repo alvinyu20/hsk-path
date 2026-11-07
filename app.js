@@ -338,6 +338,10 @@
   if (JWORLD && window.SHANLU_JY_FIRST) JWORLD.prefer = window.SHANLU_JY_FIRST;   // set by tests so the first region is known
   const JMAP = window.JOURNEY_MAP || null;
   const JMEDIA = window.JOURNEY_MEDIA || {};
+  // ---- onboarding: the Welcome card, the Start here path and the guide that opens after the first flight (pref 'onb': w welcomed, s start path 'go' | 'done' | 'skip', d day finished, g guide opened) ----
+  const ONB_OFF = () => { try { return !!(navigator.webdriver && !window.SHANLU_ONBOARDING); } catch (e) { return false; } };   // browser tests run without it unless they ask for it
+  const onbRead = () => { const v = prefGet('onb', null); return v && typeof v === 'object' ? v : {}; };
+  const START_WORDS = ['你好', '谢谢', '我', '你', '是'];   // the same five for everyone: a greeting, thanks, I, you, and the verb to be
   const jyRead = () => { const v = prefGet('jy', null); return v && typeof v === 'object' && Array.isArray(v.seen) ? v : null; };
   // lifetime XP: this view's live number plus what the other saved copies hold (each level, and All levels); read at most every few seconds because it parses saved data
   let jyOther = { at:0, v:0 };
@@ -361,7 +365,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', frLeaveAsk:false, frCopied:false,
-      jyTab:'map', jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40,
+      jyTab:'map', jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -1436,7 +1440,8 @@
       this.go(this.lastSub[id] || first);
     };
     go = (screen) => {
-      { const grp = { web:'learn', grammar:'learn', words:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', ach:'more', journey:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
+      { const grp = { web:'learn', grammar:'learn', words:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', ach:'more', journey:'more', guide:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
+      if (screen === 'guide' && !onbRead().g) this.onbSet({ g:Date.now() });
       if (screen === 'journey') { otherXp(true); this.jyEnsure(); this.friendsRefresh(false); }
       this.setState({ screen }); try { window.scrollTo(0, 0); } catch (e) {}
       if (screen === 'speak' && !HAS_SCRIPTS) { const S = this.state; if (S.aiOn && !S.aim.length && !S.aiBusy) this.aiStart(S.aiScn); }   // no scripts at this level: go straight to the AI conversation
@@ -2209,6 +2214,7 @@
         ws:g.ws, lrn:g.lrn || S.lrn, rlog:g.rlog.length ? g.rlog : S.rlog, woff:0, rlast:g.rate ? { zh:itemOf(it).zh, from:g.from, to:g.to } : S.rlast,
         qchecked:false, qchoice:null, qtyped:'', qcorrect:false, qfeed:''
       });
+      if (finished && onbRead().s === 'go') this.onbSet({ s:'done', d:ymd(new Date()) });   // the Start here session is over
     };
     // a self-graded flip card (or the introduction of a new word)
     rate = (r) => {
@@ -2380,6 +2386,22 @@
       try { window.scrollTo(0, 0); } catch (e) {}
       this.checkMilestones();
     };
+    // ---- onboarding ----
+    onbSet = (p) => { prefSet('onb', Object.assign({}, onbRead(), p)); this.setState({ onbV:(this.state.onbV || 0) + 1 }); };
+    onbSkipWelcome = () => this.onbSet({ w:Date.now() });
+    onbSkipStart = () => this.onbSet({ w:Date.now(), s:'skip' });
+    // the first session: five fixed words go into the learning phase, then Review runs them (introduction, a choice, then typing)
+    onbStartPath = () => {
+      const S = this.state;
+      if (onbRead().s === 'go' && !S.rcomplete && S.rq.length) { this.onbSet({ w:Date.now() }); this.go('review'); return; }
+      const lrn = Object.assign({}, S.lrn); const wl = Object.assign({}, S.wlearned);
+      START_WORDS.forEach(z => { if (BANK[z] && !(S.ws[z].see.s > 0) && !lrn[z]) { lrn[z] = { st:-1, m:0, at:Date.now() }; wl[z] = true; } });
+      this.setState(this.webCredit({ lrn, wlearned:wl, lrnNote:'' }));
+      this.onbSet({ w:Date.now(), s:'go' });
+      this.go('review'); this.reviewMore();
+    };
+    onbOpenGuide = () => { this.go('guide'); };
+    onbFlight = () => { this.go('journey'); };
     jyCloseCard = () => this.setState({ jyRv:null, jyOpen:null });
     jyOpenStop = (id) => { SFX.play('ok'); this.setState({ jyOpen:id, jyRv:null }); try { window.scrollTo(0, 0); } catch (e) {} };
     jyShowReg = (id) => this.setState({ jyTab:'map', jyReg:id, jySel:null, jyFilter:'all', jyOpen:null, jyRv:null });
@@ -2388,9 +2410,10 @@
     jyFilterSet = (f) => this.setState({ jyFilter:f, jySel:null, jyMoreN:40 });
 
     jyView(S) {
-      const base = { isJourney:S.screen === 'journey', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Lifetime XP across every level. Spend it on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), jyReadyShow:false, jyReadyN:0, jyReadyLabel:'' };
+      const base = { isJourney:S.screen === 'journey', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Lifetime XP across every level. Spend it on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), jyReadyShow:false, jyReadyN:0, jyReadyLabel:'', jyGuideShow:false };
       if (!JWORLD || !JMAP) return Object.assign(base, { jyOff:S.screen === 'journey' });
-      const st = jyRead() || JY.fresh();   // only read here; the screen saves it when it opens and after every stop
+      const st = jyRead() || JY.fresh();   // only read here;
+      base.jyGuideShow = S.screen === 'journey' && !ONB_OFF() && !onbRead().g && st.seen.length > 0;   // you have flown: here is how the site works the screen saves it when it opens and after every stop
       const xp = totalXp(S); const mt = JY.meter(xp, st);
       const META = JY.META;
       const rName = (id) => (JWORLD.byRegion[id] ? JWORLD.byRegion[id].en : (META[id] ? META[id][1] : id));
@@ -3130,13 +3153,23 @@
       const rcSub = rcAccN >= 90 ? 'Almost everything stuck. Those words will come back after longer gaps.' : rcAccN >= 70 ? 'Most of it is sticking. The ones you missed will be back soon.' : 'Words you missed will come back sooner. Seeing them again is how they stick.';
       const active = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
       const navCls = (k) => 'nav' + (active === k ? ' on' : '');
+      // onboarding: who sees what (the browser tests run without it; see ONB_OFF)
+      const onb = onbRead(); const onbOn = !ONB_OFF() && LV === 1;
+      const noProg = totalXp(S) === 0 && startedCount === 0 && Object.keys(S.lrn || {}).length === 0;
+      const flown = (() => { const j = jyRead(); return !!(j && j.seen && j.seen.length); })();   // the first flight has happened
+      const guideAvail = flown;
+      const welcomeShow = onbOn && S.screen === 'home' && !onb.w && noProg;
+      const startShow = onbOn && S.screen === 'home' && !welcomeShow && ((!onb.s && noProg) || (onb.s === 'go' && !S.rcomplete));
+      const startGoing = onb.s === 'go' && S.rq.length > 0 && !S.rcomplete;
+      const startWords = START_WORDS.filter(z => BANK[z]).map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en.split(',')[0] }));
+      const startDoneShow = onbOn && onb.s === 'done' && onb.d === ymd(new Date()) && S.rcomplete;   // the end of the first session: what to do next
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
-      const GROUPS = [['home', ['home']], ['learn', ['web', 'grammar', 'words']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['more', ['exam', 'friends', 'journey', 'ach', 'voice']]];
-      const SUBLABEL = { web:'Word webs', grammar:'Grammar', words:'My words', review:'Review words', greview:'Grammar review', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', journey:'Journey', ach:'Achievements', voice:'Settings' };
+      const GROUPS = [['home', ['home']], ['learn', ['web', 'grammar', 'words']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['more', ['exam', 'friends', 'journey', 'ach', 'guide', 'voice']]];
+      const SUBLABEL = { web:'Word webs', grammar:'Grammar', words:'My words', review:'Review words', greview:'Grammar review', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', journey:'Journey', ach:'Achievements', guide:'How Shanlu works', voice:'Settings' };
       const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
       const navGroup = (GROUPS.find(g => g[1].indexOf(curScreen) >= 0) || GROUPS[0])[0];
       const gcls = (id) => 'nav' + (navGroup === id ? ' on' : '');
-      const subnavItems = ((GROUPS.find(g => g[0] === navGroup) || [0, []])[1]).filter(id => id !== 'friends' || (FR && FR.enabled())).filter(id => id !== 'exam' || !!EXAMBANK).map(id => [id, SUBLABEL[id]]);
+      const subnavItems = ((GROUPS.find(g => g[0] === navGroup) || [0, []])[1]).filter(id => id !== 'friends' || (FR && FR.enabled())).filter(id => id !== 'exam' || !!EXAMBANK).filter(id => id !== 'guide' || guideAvail).map(id => [id, SUBLABEL[id]]);
 
       // friends board
       const frIdent = FR && FR.enabled() ? FR.identity() : null;
@@ -3186,7 +3219,7 @@
         });
       }
       const titles = {
-        home:['Welcome back', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
+        home:welcomeShow || startShow ? ['Welcome to Shanlu', 'Five words, about five minutes. You do not pick anything.'] : ['Welcome back', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
         review:['Review words', 'Words that are due, based on how well you remember them.'],
         greview:['Grammar review', 'Short sessions on the grammar points you have met, weakest first, with a record for each point.'],
         testlobby:[LVN + ' test', 'Mixed questions from the words you have started, so you are recalling words, not just recognizing them.'],
@@ -3196,6 +3229,7 @@
         web:['Word webs', 'Learn new words next to the words you already know.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
         ach:['Achievements', 'Things you have earned, and what is still ahead.'],
+        guide:['How Shanlu works', 'The daily loop, what each part is for, and where your progress lives.'],
         journey:['Journey', 'Spend the XP you earn on trips through the Chinese-speaking world.'],
         friends:['Friends', FR && FR.identity() && FR.identity().group ? FR.identity().group + '. Only your study totals are shared.' : 'Study together. Only your study totals are shared.'],
         listen:['Listening lab', HAS_LISTEN ? 'Train your ear for how people really talk, not just how lessons sound.' : 'Not built yet for ' + LVN + '.'],
@@ -3695,6 +3729,9 @@
         memWords:memNow.words.toLocaleString('en-US'), memToday:(memNow.words - (S.mem0 == null ? memNow.words : S.mem0) >= 0 ? '+' : '') + (memNow.words - (S.mem0 == null ? memNow.words : S.mem0)) + ' today', memRecall:memNow.avg + '%',
         weekMin:weekMin, weekDays:weekDays,
         title:tt[0], subtitle:tt[1],
+        welcomeShow, startShow, startWords, startGoing, startFresh:!startGoing, startBtnText:startGoing ? 'Continue my first session' : 'Learn my first 5 words', startDoneShow, guideAvail, isGuide:S.screen === 'guide',
+        onbSkipWelcome:this.onbSkipWelcome, onbSkipStart:this.onbSkipStart, onbStartPath:this.onbStartPath, onbOpenGuide:this.onbOpenGuide, onbFlight:this.onbFlight,
+        onbFlightShow:startDoneShow && !flown, guideSideCls:'linkbtn guide-link' + (S.screen === 'guide' ? ' on' : ''),
         isAch:S.screen === 'ach', achSummary:achSummary, achPct:achPct, achItems:achItems,
         navHome:navCls('home'), navReview:navCls('review'), navTest:navCls('testlobby'), navGrv:navCls('greview'), navGrammar:navCls('grammar'), navSpeak:navCls('speak'),
         goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrv:() => this.go('greview'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
