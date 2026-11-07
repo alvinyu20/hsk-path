@@ -23,6 +23,7 @@ const ROOT = path.join(__dirname, '..');
 const OUT = path.join(ROOT, 'data', 'journey-media.js');
 const MISS = path.join(__dirname, 'journey-media-misses.json');
 const UA = 'ShanluJourneyMedia/1.0 (https://github.com/alvinyu20/hsk-path; study site photo lookup)';
+let SLOW = true;   // tests switch the waiting off with setSlow(false)
 const WIDTH = 500;   // Wikimedia hands out thumbnails only in fixed sizes and rounds up to the next one
 const KEEP_LICENCES = /^(public domain|pd\b|cc0|cc[- ]by(?![- ]nc)(?![- ]nd)|cc[- ]by[- ]sa(?![- ]nc)(?![- ]nd))/i;
 
@@ -43,16 +44,22 @@ const loadMisses = () => { try { return JSON.parse(fs.readFileSync(MISS, 'utf8')
 function makeApi(doFetch) {
   const get = async (base, params) => {
     const url = base + '?' + new URLSearchParams(Object.assign({ format: 'json', formatversion: '2', origin: '*' }, params)).toString();
-    for (let tries = 0; tries < 3; tries++) {
+    for (let tries = 0; tries < 6; tries++) {
       const res = await doFetch(url, { headers: { 'User-Agent': UA, 'Api-User-Agent': UA } });
-      if (res.status === 429 || res.status >= 500) { await new Promise((r) => setTimeout(r, 1500 * (tries + 1))); continue; }
+      if (res.status === 429 || res.status >= 500) {   // told to slow down: wait as long as asked, or longer each time
+        const ra = Number(res.headers && res.headers.get && res.headers.get('retry-after'));
+        await new Promise((r) => setTimeout(r, (ra > 0 && ra < 120 ? ra * 1000 : 2000 * (tries + 1) * (tries + 1)) * (SLOW ? 1 : 0.001)));
+        continue;
+      }
       if (!res.ok) throw new Error('HTTP ' + res.status + ' for ' + url);
       return res.json();
     }
     throw new Error('Too many retries for ' + url);
   };
   return {
-    page: (title, lang) => get('https://' + (lang || 'zh') + '.wikipedia.org/w/api.php', { action: 'query', titles: title, redirects: '1', prop: 'pageimages|coordinates|pageprops', piprop: 'name|thumbnail', pithumbsize: String(WIDTH), ppprop: 'disambiguation', colimit: '1' }),
+    page: (title, lang) => get('https://' + (lang || 'zh') + '.wikipedia.org/w/api.php', { action: 'query', titles: title, redirects: '1', prop: 'pageimages|coordinates|pageprops', piprop: 'name|thumbnail', pithumbsize: String(WIDTH), ppprop: 'disambiguation|wikibase_item', colimit: '1' }),
+    search: (text, lang) => get('https://' + lang + '.wikipedia.org/w/api.php', { action: 'query', list: 'search', srsearch: text, srnamespace: '0', srlimit: '5', srprop: '' }),
+    wikidata: (qid) => get('https://www.wikidata.org/w/api.php', { action: 'wbgetentities', ids: qid, props: 'claims', languages: 'en' }),
     file: (name) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', titles: 'File:' + name, prop: 'imageinfo', iiprop: 'url|extmetadata|mime', iiurlwidth: String(WIDTH), iiextmetadatafilter: 'Artist|LicenseShortName|Credit|UsageTerms' }),
   };
 }
@@ -65,7 +72,13 @@ async function tryPage(api, stop, lang, title) {
   if (page.pageprops && page.pageprops.disambiguation !== undefined) return { miss: 'disambiguation' };
   const places = stop.k === 'T' || stop.k === 'A' || stop.k === 'P';
   if (places) {
-    const c = page.coordinates && page.coordinates[0];
+    let c = page.coordinates && page.coordinates[0];
+    if (!c && page.pageprops && page.pageprops.wikibase_item) {   // the page has no coordinates of its own: take them from its Wikidata item
+      const w = await api.wikidata(page.pageprops.wikibase_item).catch(() => null);
+      const ent = w && w.entities && w.entities[page.pageprops.wikibase_item];
+      const v = ent && ent.claims && ent.claims.P625 && ent.claims.P625[0] && ent.claims.P625[0].mainsnak && ent.claims.P625[0].mainsnak.datavalue && ent.claims.P625[0].mainsnak.datavalue.value;
+      if (v && typeof v.latitude === 'number') c = { lat: v.latitude, lon: v.longitude };
+    }
     if (!c) return { miss: 'no coordinates' };
     const ll = stop.ll || (stop.lat != null ? [stop.lat, stop.lon] : null);   // stops without their own coordinates are measured from their city
     if (ll && km(ll[0], ll[1], c.lat, c.lon) > 60) return { miss: 'too far (' + Math.round(km(ll[0], ll[1], c.lat, c.lon)) + ' km)' };
@@ -90,7 +103,17 @@ async function lookup(api, stop) {
   const zh = await tryPage(api, stop, 'zh', stop.zh);
   if (zh.entry || !stop.en) return zh;
   const en = await tryPage(api, stop, 'en', stop.en);
-  return en.entry ? en : zh;
+  if (en.entry) return en;
+  // last resort: a search, but only pages whose title contains the stop's whole name, and held to the same rules (places must lie within 60 km)
+  for (const [lang, name] of [['zh', stop.zh], ['en', stop.en]]) {
+    if (!name || name.length < 2) continue;
+    const q = await api.search(name, lang).catch(() => null);
+    const hits = (q && q.query && q.query.search) || [];
+    const low = name.toLowerCase();
+    const cands = hits.map((h) => h.title).filter((t) => t.toLowerCase().includes(low) && t.toLowerCase() !== low).slice(0, 2);
+    for (const t of cands) { const r = await tryPage(api, stop, lang, t); if (r.entry) return r; }
+  }
+  return zh;
 }
 
 function writeMedia(media) {
@@ -101,7 +124,7 @@ function writeMedia(media) {
 }
 
 async function run(opts) {
-  const o = Object.assign({ fetch: globalThis.fetch, region: '', limit: 300, retryMisses: false, world: null, media: null, misses: null, concurrency: 4, log: console.log, save: true, verify: false }, opts || {});
+  const o = Object.assign({ fetch: globalThis.fetch, region: '', limit: 300, retryMisses: false, world: null, media: null, misses: null, concurrency: 3, log: console.log, save: true, verify: false }, opts || {});
   const W = o.world || loadWorld();
   const media = o.media || loadMedia(), misses = o.misses || loadMisses();
   const api = makeApi(o.fetch);
@@ -128,7 +151,7 @@ async function run(opts) {
   return { media, misses, found, missed, failed };
 }
 
-module.exports = { run, lookup, makeApi, strip, km, KEEP_LICENCES, writeMedia };
+module.exports = { setSlow: (v) => { SLOW = v; }, run, lookup, makeApi, strip, km, KEEP_LICENCES, writeMedia };
 
 if (require.main === module) {
   const arg = (n) => { const i = process.argv.indexOf('--' + n); return i >= 0 ? process.argv[i + 1] : ''; };
