@@ -380,7 +380,7 @@ async function run(opts) {
     R.stops.forEach((s) => {
       regionOf[s.id] = R; s.rid = R.id; s.avoid = new Set(plain(R.en + ' ' + R.cities.map((c) => c.en).join(' ')).split(/[^a-z0-9]+/).filter((w) => w.length >= 4));
       if (s.k === 'P') { if (!(media[s.id] && media[s.id].r) && (o.retryMisses || !tried[s.id])) { s.ll = null; todo.push(s); } return; }   // an airport's photo shows the whole province
-      if (!media[s.id] && (o.retryMisses ? (o.force ? true : s.k === 'D' ? !(tried[s.id] >= 2) : !tried[s.id]) : !misses[s.id])) { s.ll = JY.pinLatLon(W, s); todo.push(s); }
+      if (!media[s.id] && (o.retryMisses ? (o.force ? true : s.k === 'D' ? !(tried[s.id] >= TRIED_V) : !tried[s.id]) : !misses[s.id])) { s.ll = JY.pinLatLon(W, s); todo.push(s); }
     });
   });
   todo = todo.slice(0, o.limit);
