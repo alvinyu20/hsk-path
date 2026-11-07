@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="70b90cee64">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="shanlu-version" content="18003aefc6">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=70b90cee64">
+<link rel="stylesheet" href="styles.css?v=18003aefc6">
 </head>
 <body>
 <div id="app"></div>
@@ -72,6 +72,11 @@
     <button class="{{navWords}}" data-on-click="{{goWords}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>
       My words
+    </button>
+    <button class="{{navJourney}}" data-on-click="{{goJourney}}">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12.5l17-8.5-5 16-3.5-6.5z"/><path d="M11.5 13.5L20 4"/></svg>
+      Journey
+      <sc-if value="{{jyReadyShow}}" hint-placeholder-val="{{ false }}"><span class="badge">{{jyReadyN}}</span></sc-if>
     </button>
     <sc-if value="{{friendsOn}}" hint-placeholder-val="{{ false }}">
     <button class="{{navFriends}}" data-on-click="{{goFriends}}">
@@ -132,6 +137,7 @@
       <div class="lvmenu"><button type="button" class="pill lvbtn" aria-haspopup="true" aria-expanded="{{lvMenuOpen}}" data-on-click="{{lvMenuToggle}}">{{lvLabel}}<svg class="ic lvcaret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <sc-if value="{{lvMenuOpen}}" hint-placeholder-val="{{ false }}"><div class="lvpanel" role="menu" aria-label="Levels"><div class="lvh">Levels</div><sc-for list="{{lvItems}}" as="o" hint-placeholder-count="3"><button type="button" role="menuitem" class="lvitem {{o.cls}}" data-on-click="{{o.fn}}"><span class="lvn">{{o.label}}</span><span class="lvs">{{o.sub}}</span></button></sc-for></div></sc-if></div>
       <span class="pill fl"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c1.1 3.4 5 5.3 5 9.9a5 5 0 0 1-10 0c0-1.8.8-3 1.8-4.1.2 1.6 1.1 2.5 2.1 2.7C10.3 8.5 11 5.5 12 2.5z"/></svg>{{streakText}}</span>
+      <button type="button" class="pill xpp" title="{{xpTip}}" data-on-click="{{goJourney}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.5l6-.8z"/></svg>{{xpTotalText}} XP<sc-if value="{{jyReadyShow}}" hint-placeholder-val="{{ false }}"><span class="xp-ready" aria-label="{{jyReadyLabel}}">{{jyReadyN}}</span></sc-if></button>
       <span class="pill" title="{{memTip}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.2 6.3L21 12l-6.8 2.7L12 21l-2.2-6.3L3 12l6.8-2.7z"/></svg>{{memText}}</span>
     </div>
   </header>
@@ -711,6 +717,96 @@
       </sc-if>
       <sc-if value="{{noRecent}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:18px 0 0">No tests yet. Your scores will appear here after your first test.</p></sc-if>
     </section>
+  </div>
+  </sc-if>
+
+  <!-- JOURNEY -->
+  <sc-if value="{{isJourney}}" hint-placeholder-val="{{ false }}">
+  <div class="gram">
+  <section class="jy" style="--jh:{{jyHue}}" aria-label="Journey">
+    <sc-if value="{{jyOff}}" hint-placeholder-val="{{ false }}"><p class="muted">The Journey could not load. Reload the page, and if it stays like this tell Alvin.</p></sc-if>
+    <sc-if value="{{jyOn}}" hint-placeholder-val="{{ true }}">
+
+    <div class="jy-now">
+      <div class="jy-now-t">
+        <span class="jy-lab">{{jyNowLabel}}</span>
+        <b class="jy-where"><span class="zh">{{jyNowZh}}</span> {{jyNowEn}}</b>
+        <span class="jy-sub">{{jyNowSub}}</span>
+      </div>
+      <div class="jy-meter" role="progressbar" aria-label="XP toward the next stop" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{jyPctNum}}"><i style="width:{{jyPct}}"></i></div>
+      <div class="jy-meter-t"><span>{{jyMeterText}}</span><span>{{jyXpTotal}}</span></div>
+      <button type="button" class="btn pri jy-go" disabled="{{jyGoOff}}" data-on-click="{{jyTravel}}">{{jyGoText}}</button>
+    </div>
+
+    <sc-if value="{{jyCardShow}}" hint-placeholder-val="{{ false }}">
+    <article class="jy-card {{jyKindCls}}" aria-live="polite">
+      <sc-if value="{{jyBannerShow}}" hint-placeholder-val="{{ false }}"><div class="jy-banner"><sc-for list="{{jyBanners}}" as="b" hint-placeholder-count="1"><p><b>{{b.t}}</b> {{b.d}}</p></sc-for></div></sc-if>
+      <sc-if value="{{jyStampShow}}" hint-placeholder-val="{{ false }}">
+        <div class="jy-stampbox"><div class="jy-stamp big" style="--sh:{{jyStampHue}}"><span class="jy-stamp-zh zh">{{jyStampZh}}</span><span class="jy-stamp-en">{{jyStampEn}}</span><span class="jy-stamp-code">{{jyStampCode}}</span><span class="jy-stamp-date">{{jyStampDate}}</span></div></div>
+      </sc-if>
+      <div class="jy-photo">
+        <sc-if value="{{jyHasPhoto}}" hint-placeholder-val="{{ false }}"><img src="{{jyPhotoUrl}}" alt="{{jyPhotoAlt}}" loading="lazy" referrerpolicy="no-referrer"><span class="jy-credit">{{jyPhotoCredit}}</span></sc-if>
+        <sc-if value="{{jyNoPhoto}}" hint-placeholder-val="{{ true }}"><div class="jy-tile" aria-hidden="true"><svg viewBox="-10 -10 20 20"><sc-if value="{{jyIsT}}" hint-placeholder-val="{{ false }}"><rect x="-6" y="-6" width="12" height="12" rx="1.5"/></sc-if><sc-if value="{{jyIsA}}" hint-placeholder-val="{{ false }}"><path d="M0 -7.5 L7 5 L-7 5 Z"/></sc-if><sc-if value="{{jyIsD}}" hint-placeholder-val="{{ false }}"><circle r="6.2"/></sc-if><sc-if value="{{jyIsC}}" hint-placeholder-val="{{ false }}"><path d="M0 -7.5 L7.5 0 L0 7.5 L-7.5 0 Z"/></sc-if><sc-if value="{{jyIsP}}" hint-placeholder-val="{{ false }}"><path d="M0 -8 L1.8 -2.3 L8 1.2 L8 3 L1.8 1.4 L1.4 5.7 L3.4 7 L3.4 8.2 L0 7.3 L-3.4 8.2 L-3.4 7 L-1.4 5.7 L-1.8 1.4 L-8 3 L-8 1.2 L-1.8 -2.3 Z"/></sc-if></svg></div></sc-if>
+      </div>
+      <div class="jy-ct"><span class="jy-kind">{{jyKindLabel}}</span><span class="jy-place">{{jyPlace}}</span></div>
+      <h2 class="jy-zh zh">{{jyCardZh}}</h2>
+      <div class="jy-py">{{jyCardPy}}</div>
+      <div class="jy-en">{{jyCardEn}}</div>
+      <p class="jy-note">{{jyCardNote}}</p>
+      <sc-if value="{{jyHasFun}}" hint-placeholder-val="{{ false }}"><p class="jy-fun"><b>Did you know?</b> {{jyCardFun}}</p></sc-if>
+      <sc-if value="{{jyHasWords}}" hint-placeholder-val="{{ false }}"><p class="jy-words"><b>Travel words</b> {{jyWords}}</p></sc-if>
+      <div class="jy-acts">
+        <button type="button" class="btn" data-on-click="{{jySay}}">Hear it</button>
+        <sc-if value="{{jyMapBtn}}" hint-placeholder-val="{{ false }}"><button type="button" class="btn" data-on-click="{{jyOnMap}}">Show on map</button></sc-if>
+        <button type="button" class="btn pri" data-on-click="{{jyCloseCard}}">{{jyCloseText}}</button>
+      </div>
+    </article>
+    </sc-if>
+
+    <div class="seg2 jy-tabs" role="group" aria-label="Journey views"><sc-for list="{{jyTabs}}" as="t" hint-placeholder-count="3"><button type="button" class="{{t.cls}}" data-on-click="{{t.fn}}">{{t.label}}</button></sc-for></div>
+
+    <sc-if value="{{jyIsMap}}" hint-placeholder-val="{{ true }}">
+      <sc-if value="{{jyCountry}}" hint-placeholder-val="{{ true }}">
+        <div class="jy-panel">
+          <svg class="jy-map" viewBox="0 0 350 290" role="group" aria-label="Map of China, Taiwan, Hong Kong, Macau and Singapore. Choose a region.">
+            <sc-for list="{{jyMapRegions}}" as="r" hint-placeholder-count="3"><g class="jy-r {{r.cls}}" style="--rh:{{r.hue}}" tabindex="0" role="button" aria-label="{{r.label}}" data-on-click="{{r.open}}"><path d="{{r.d}}"/><sc-if value="{{r.hasM}}" hint-placeholder-val="{{ false }}"><path class="mu" d="{{r.m}}"/></sc-if></g></sc-for>
+          </svg>
+          <div class="jy-small"><span class="muted">Small regions</span><sc-for list="{{jySmall}}" as="r" hint-placeholder-count="3"><button type="button" class="jy-sm {{r.cls}}" style="--rh:{{r.hue}}" aria-label="{{r.label}}" data-on-click="{{r.open}}"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="{{r.d}}"/></svg><span>{{r.en}}</span></button></sc-for></div>
+          <p class="muted jy-key">Grey: not visited. Outlined: where you are now. Filled: stamped.</p>
+        </div>
+      </sc-if>
+      <sc-if value="{{jyProv}}" hint-placeholder-val="{{ false }}">
+        <div class="jy-panel">
+          <div class="jy-ph"><button type="button" class="linkbtn" data-on-click="{{jyBack}}">← All regions</button><b><span class="zh">{{jyProvZh}}</span> {{jyProvEn}}</b><span class="muted">{{jyProvCount}}</span></div>
+          <div class="jy-chips" role="group" aria-label="Show on the map"><sc-for list="{{jyFilters}}" as="f" hint-placeholder-count="5"><button type="button" class="jy-chip {{f.cls}}" data-on-click="{{f.fn}}">{{f.label}} <i>{{f.count}}</i></button></sc-for></div>
+          <svg class="jy-map" viewBox="0 0 360 300" role="group" aria-label="{{jyProvLabel}}">
+            <path class="jy-out" d="{{jyProvD}}"/>
+            <sc-if value="{{jyProvHasM}}" hint-placeholder-val="{{ false }}"><path class="jy-out mu" d="{{jyProvM}}"/></sc-if>
+            <sc-for list="{{jyPins}}" as="p" hint-placeholder-count="3"><g class="jy-pin {{p.cls}}" transform="translate({{p.x}} {{p.y}})" tabindex="0" role="button" aria-label="{{p.label}}" data-on-click="{{p.tap}}"><circle class="hit" r="8"/><sc-if value="{{p.isCluster}}" hint-placeholder-val="{{ false }}"><circle class="cl" r="10"/><text y="4" text-anchor="middle">{{p.count}}</text></sc-if><sc-if value="{{p.isCity}}" hint-placeholder-val="{{ false }}"><rect x="-5" y="-5" width="10" height="10" rx="1.5"/></sc-if><sc-if value="{{p.isAttr}}" hint-placeholder-val="{{ false }}"><path d="M0 -6.5 L6 4.5 L-6 4.5 Z"/></sc-if><sc-if value="{{p.isDish}}" hint-placeholder-val="{{ false }}"><circle r="5.2"/></sc-if><sc-if value="{{p.isCult}}" hint-placeholder-val="{{ false }}"><path d="M0 -6.5 L6.5 0 L0 6.5 L-6.5 0 Z"/></sc-if><sc-if value="{{p.isAir}}" hint-placeholder-val="{{ false }}"><path d="M0 -7 L1.6 -2 L7 1 L7 2.6 L1.6 1.2 L1.2 5 L3 6.2 L3 7.2 L0 6.4 L-3 7.2 L-3 6.2 L-1.2 5 L-1.6 1.2 L-7 2.6 L-7 1 L-1.6 -2 Z"/></sc-if></g></sc-for>
+          </svg>
+          <p class="muted jy-key">{{jyProvKey}}</p>
+          <sc-if value="{{jySelShow}}" hint-placeholder-val="{{ false }}"><div class="jy-sel"><sc-for list="{{jySelRows}}" as="r" hint-placeholder-count="2"><button type="button" class="jy-row {{r.cls}}" data-on-click="{{r.open}}"><span class="jy-k">{{r.kind}}</span><span class="zh">{{r.zh}}</span><span class="jy-rowen">{{r.en}}</span></button></sc-for></div></sc-if>
+        </div>
+      </sc-if>
+    </sc-if>
+
+    <sc-if value="{{jyIsStops}}" hint-placeholder-val="{{ false }}">
+      <div class="jy-panel">
+        <div class="jy-chips" role="group" aria-label="Show stops of one kind"><sc-for list="{{jyFilters}}" as="f" hint-placeholder-count="5"><button type="button" class="jy-chip {{f.cls}}" data-on-click="{{f.fn}}">{{f.label}} <i>{{f.count}}</i></button></sc-for></div>
+        <p class="muted jy-key">{{jyStopsNote}}</p>
+        <div class="jy-list"><sc-for list="{{jyRows}}" as="r" hint-placeholder-count="4"><button type="button" class="jy-row {{r.cls}}" data-on-click="{{r.open}}"><span class="jy-k">{{r.kind}}</span><span class="zh">{{r.zh}}</span><span class="jy-rowen">{{r.en}}<small>{{r.where}}</small></span></button></sc-for></div>
+        <sc-if value="{{jyMoreShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="btn" data-on-click="{{jyMore}}">Show more</button></sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{jyIsPass}}" hint-placeholder-val="{{ false }}">
+      <div class="jy-panel">
+        <div class="jy-pass-h"><b>{{jyPassTitle}}</b><span class="muted">{{jyPassSub}}</span></div>
+        <div class="jy-pass"><sc-for list="{{jyStamps}}" as="s" hint-placeholder-count="6"><button type="button" class="jy-slot {{s.cls}}" style="--sh:{{s.hue}}" aria-label="{{s.label}}" data-on-click="{{s.open}}"><span class="jy-stamp"><span class="jy-stamp-zh zh">{{s.zh}}</span><span class="jy-stamp-en">{{s.en}}</span><span class="jy-stamp-code">{{s.code}}</span><span class="jy-stamp-date">{{s.date}}</span></span></button></sc-for></div>
+      </div>
+    </sc-if>
+    </sc-if>
+  </section>
   </div>
   </sc-if>
 
@@ -1795,38 +1891,42 @@
 </main>
 </div>
 </template>
-<script defer src="vendor/morphdom-umd.min.js?v=70b90cee64"></script>
-<script defer src="runtime.js?v=70b90cee64"></script>
-<script defer src="config.js?v=70b90cee64"></script>
-<script defer src="friends.js?v=70b90cee64"></script>
-<script defer src="level.js?v=70b90cee64"></script>
-<script defer src="data/hsk1-words.js?v=70b90cee64"></script>
-<script defer src="data/hsk1-grammar.js?v=70b90cee64"></script>
-<script defer src="data/hsk1-webs.js?v=70b90cee64"></script>
-<script defer src="data/hsk1-speak.js?v=70b90cee64"></script>
-<script defer src="data/hsk1-listen.js?v=70b90cee64"></script>
-<script defer src="data/hsk1-exam.js?v=70b90cee64"></script>
-<script defer src="data/hsk1-erhua.js?v=70b90cee64"></script>
-<script defer src="data/lexicon.js?v=70b90cee64"></script>
-<script defer src="data/hsk2-preview.js?v=70b90cee64"></script>
-<script defer src="data/hsk3-preview.js?v=70b90cee64"></script>
-<script defer src="data/hsk2-words.js?v=70b90cee64"></script>
-<script defer src="data/hsk2-speak.js?v=70b90cee64"></script>
-<script defer src="data/hsk2-listen.js?v=70b90cee64"></script>
-<script defer src="data/hsk2-exam.js?v=70b90cee64"></script>
-<script defer src="data/hsk2-grammar.js?v=70b90cee64"></script>
-<script defer src="data/hsk2-webs.js?v=70b90cee64"></script>
-<script defer src="data/hsk3-words.js?v=70b90cee64"></script>
-<script defer src="data/hsk3-speak.js?v=70b90cee64"></script>
-<script defer src="data/hsk3-listen.js?v=70b90cee64"></script>
-<script defer src="data/hsk3-exam.js?v=70b90cee64"></script>
-<script defer src="data/hsk3-grammar.js?v=70b90cee64"></script>
-<script defer src="data/hsk3-webs.js?v=70b90cee64"></script>
-<script defer src="ascent.js?v=70b90cee64"></script>
-<script defer src="secrets.js?v=70b90cee64"></script>
-<script defer src="sync.js?v=70b90cee64"></script>
-<script defer src="data/audio-manifest.js?v=70b90cee64"></script>
-<script defer src="erhua.js?v=70b90cee64"></script>
-<script defer src="app.js?v=70b90cee64"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=18003aefc6"></script>
+<script defer src="runtime.js?v=18003aefc6"></script>
+<script defer src="config.js?v=18003aefc6"></script>
+<script defer src="friends.js?v=18003aefc6"></script>
+<script defer src="level.js?v=18003aefc6"></script>
+<script defer src="data/hsk1-words.js?v=18003aefc6"></script>
+<script defer src="data/hsk1-grammar.js?v=18003aefc6"></script>
+<script defer src="data/hsk1-webs.js?v=18003aefc6"></script>
+<script defer src="data/hsk1-speak.js?v=18003aefc6"></script>
+<script defer src="data/hsk1-listen.js?v=18003aefc6"></script>
+<script defer src="data/hsk1-exam.js?v=18003aefc6"></script>
+<script defer src="data/hsk1-erhua.js?v=18003aefc6"></script>
+<script defer src="data/lexicon.js?v=18003aefc6"></script>
+<script defer src="data/hsk2-preview.js?v=18003aefc6"></script>
+<script defer src="data/hsk3-preview.js?v=18003aefc6"></script>
+<script defer src="data/hsk2-words.js?v=18003aefc6"></script>
+<script defer src="data/hsk2-speak.js?v=18003aefc6"></script>
+<script defer src="data/hsk2-listen.js?v=18003aefc6"></script>
+<script defer src="data/hsk2-exam.js?v=18003aefc6"></script>
+<script defer src="data/hsk2-grammar.js?v=18003aefc6"></script>
+<script defer src="data/hsk2-webs.js?v=18003aefc6"></script>
+<script defer src="data/hsk3-words.js?v=18003aefc6"></script>
+<script defer src="data/hsk3-speak.js?v=18003aefc6"></script>
+<script defer src="data/hsk3-listen.js?v=18003aefc6"></script>
+<script defer src="data/hsk3-exam.js?v=18003aefc6"></script>
+<script defer src="data/hsk3-grammar.js?v=18003aefc6"></script>
+<script defer src="data/hsk3-webs.js?v=18003aefc6"></script>
+<script defer src="ascent.js?v=18003aefc6"></script>
+<script defer src="secrets.js?v=18003aefc6"></script>
+<script defer src="sync.js?v=18003aefc6"></script>
+<script defer src="data/audio-manifest.js?v=18003aefc6"></script>
+<script defer src="journey.js?v=18003aefc6"></script>
+<script defer src="data/journey.js?v=18003aefc6"></script>
+<script defer src="data/journey-map.js?v=18003aefc6"></script>
+<script defer src="data/journey-media.js?v=18003aefc6"></script>
+<script defer src="erhua.js?v=18003aefc6"></script>
+<script defer src="app.js?v=18003aefc6"></script>
 </body>
 </html>

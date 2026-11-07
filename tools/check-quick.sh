@@ -21,6 +21,9 @@ case "$MODE" in
     last node tools/test-ascent.js
     last node tools/test-topics.js
     last node tools/test-friends.js
+    python3 tools/build-journey.py --check
+    last node tools/test-journey.js
+    last env NODE_PATH="$(npm root -g)" node tools/smoke-test-journey.js
     (cd worker && [ -d node_modules ] && node test.mjs | tail -1) || true
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-friends.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-pwa.js

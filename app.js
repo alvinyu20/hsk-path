@@ -299,7 +299,7 @@
   // The totals shared with friends, read from every saved progress (each level and All levels), so the numbers do not depend on which view you were in.
   const collectFriendStats = () => {
     const keys = Object.keys(LVL.PROGRESS_KEYS || {}).map(n => ({ n:Number(n), key:LVL.PROGRESS_KEYS[n] })).concat([{ n:0, key:'shanlu-progress-v1-all' }]);
-    const stores = keys.map(k => { let st = null; try { st = JSON.parse(localStorage.getItem(k.key)); } catch (e) {} return st && typeof st === 'object' ? Object.assign({ __n:k.n }, st) : null; }).filter(Boolean);
+    const stores = keys.map(k => { let st = null; try { st = JSON.parse(localStorage.getItem(k.key)); } catch (e) {} return st && typeof st === 'object' ? Object.assign({ __n:k.n, __key:k.key }, st) : null; }).filter(Boolean);
     const dayMin = (d) => stores.reduce((a, st) => a + (window.ShanluSync.dayMinutes(st, d) || (st.day === d ? (st.dayMin || 0) : 0)), 0);
     const last7 = [6, 5, 4, 3, 2, 1, 0].map(n => Math.max(0, Math.min(1440, Math.round(dayMin(daysAgo(n))))));
     const active = {};
@@ -320,8 +320,22 @@
   // every saved progress (each level and All levels), as stored; used by the achievements for things that span levels
   const readAllStores = () => {
     const keys = Object.keys(LVL.PROGRESS_KEYS || {}).map(n => ({ n:Number(n), key:LVL.PROGRESS_KEYS[n] })).concat([{ n:0, key:'shanlu-progress-v1-all' }]);
-    return keys.map(k => { let st = null; try { st = JSON.parse(localStorage.getItem(k.key)); } catch (e) {} return st && typeof st === 'object' ? Object.assign({ __n:k.n }, st) : null; }).filter(Boolean);
+    return keys.map(k => { let st = null; try { st = JSON.parse(localStorage.getItem(k.key)); } catch (e) {} return st && typeof st === 'object' ? Object.assign({ __n:k.n, __key:k.key }, st) : null; }).filter(Boolean);
   };
+
+  // ---- the Journey: journey.js has the rules, data/journey.js the stops, data/journey-map.js the outlines ----
+  const JY = window.ShanluJourney || null;
+  const JWORLD = JY && window.JOURNEY ? JY.build(window.JOURNEY) : null;
+  const JMAP = window.JOURNEY_MAP || null;
+  const JMEDIA = window.JOURNEY_MEDIA || {};
+  const jyRead = () => { const v = prefGet('jy', null); return v && typeof v === 'object' && Array.isArray(v.seen) ? v : null; };
+  // lifetime XP: this view's live number plus what the other saved copies hold (each level, and All levels); read at most every few seconds because it parses saved data
+  let jyOther = { at:0, v:0 };
+  const otherXp = (force) => {
+    if (force || Date.now() - jyOther.at > 4000) { let t = 0; try { readAllStores().forEach(st => { if (st.__key !== KEY) t += (Number(st.xp) || 0); }); } catch (e) {} jyOther = { at:Date.now(), v:t }; }
+    return jyOther.v;
+  };
+  const totalXp = (S) => (S.xp || 0) + otherXp();
 
   // ---------- dates, saving, daily reset ----------
   const pad = (n) => (n < 10 ? '0' : '') + n;
@@ -337,6 +351,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', frLeaveAsk:false, frCopied:false,
+      jyTab:'map', jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -1073,7 +1088,8 @@
       ok:   (c, t) => { tone(c, 880, t, 0.14, 'sine', 0.11); tone(c, 1318.5, t + 0.085, 0.2, 'sine', 0.11); },
       bad:  (c, t) => { tone(c, 262, t, 0.16, 'triangle', 0.1); tone(c, 196, t + 0.1, 0.24, 'triangle', 0.1); },
       done: (c, t) => { [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(c, f, t + i * 0.11, 0.3, 'sine', 0.1)); tone(c, 1046.5, t + 0.44, 0.5, 'triangle', 0.06); },
-      ach:  (c, t) => { [783.99, 987.77, 1174.66, 1567.98].forEach((f, i) => tone(c, f, t + i * 0.09, 0.45, 'sine', 0.09)); }
+      ach:  (c, t) => { [783.99, 987.77, 1174.66, 1567.98].forEach((f, i) => tone(c, f, t + i * 0.09, 0.45, 'sine', 0.09)); },
+      fly:  (c, t) => { [392, 523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(c, f, t + i * 0.08, 0.4, 'triangle', 0.08)); tone(c, 1318.5, t + 0.5, 0.6, 'sine', 0.07); }
     };
     const play = (name, force) => {
       try {
@@ -1089,7 +1105,7 @@
     return { play };
   })();
   // ---- milestones and achievements: each one is earned once, when its test becomes true. `m` is what achMetrics() measured; `prog` (optional) gives [now, goal] for the bar on the Achievements page ----
-  const AGROUPS = ['Streaks', 'Words', 'Grammar', 'Habits', 'Collecting', 'Levels', 'Friends'];
+  const AGROUPS = ['Streaks', 'Words', 'Grammar', 'Habits', 'Collecting', 'Journey', 'Levels', 'Friends'];
   const streakM = (n, icon, title, desc) => ({ id:'streak' + n, grp:'Streaks', icon, title, desc, hint:'Study ' + n + ' days in a row.', test:m => m.streak >= n, prog:m => [m.streak, n] });
   const wordsM = (n, icon, title, desc) => ({ id:'words' + n, grp:'Words', icon, title, desc, hint:'Get ' + n.toLocaleString('en-US') + ' words into memory.', test:m => m.words >= n, prog:m => [m.words, n] });
   const MILESTONES = [
@@ -1117,6 +1133,23 @@
     { id:'rev100', grp:'Habits', icon:'⚡', title:'100 reviews in a day', desc:'One hundred cards answered in a single day.', hint:'Answer 100 Review cards in one day.', test:m => !!m.ev.rev100 },
     { id:'goal7', grp:'Habits', icon:'🎯', title:'Goal getter', desc:'Hit your daily goal 7 days in a row.', hint:'Reach your daily goal 7 days in a row.', test:m => m.goalRun >= 7, prog:m => [m.goalRun, 7] },
     { id:'topic1', grp:'Collecting', icon:'🕸️', title:'Topic complete', desc:'Every word in one topic web has been started.', hint:'Start every word of one topic in Word webs.', test:m => !!m.topic },
+    { id:'jy1', grp:'Journey', icon:'✈️', title:'Boarding pass', desc:'Your first flight in. The Journey has begun.', hint:'Spend XP on your first stop.', test:m => m.jy.n >= 1 },
+    { id:'jy10', grp:'Journey', icon:'🧭', title:'10 stops', desc:'Ten places, dishes and traditions discovered.', hint:'Unlock 10 stops.', test:m => m.jy.n >= 10, prog:m => [m.jy.n, 10] },
+    { id:'jy50', grp:'Journey', icon:'🗺️', title:'50 stops', desc:'Fifty stops. The map is filling in.', hint:'Unlock 50 stops.', test:m => m.jy.n >= 50, prog:m => [m.jy.n, 50] },
+    { id:'jy200', grp:'Journey', icon:'🚆', title:'200 stops', desc:'Two hundred stops along the way.', hint:'Unlock 200 stops.', test:m => m.jy.n >= 200, prog:m => [m.jy.n, 200] },
+    { id:'jy500', grp:'Journey', icon:'🌏', title:'500 stops', desc:'Five hundred stops. You have seen a lot of the Chinese-speaking world.', hint:'Unlock 500 stops.', test:m => m.jy.n >= 500, prog:m => [m.jy.n, 500] },
+    { id:'jy1000', grp:'Journey', icon:'🧳', title:'1,000 stops', desc:'A thousand stops. Seasoned traveller.', hint:'Unlock 1,000 stops.', test:m => m.jy.n >= 1000, prog:m => [m.jy.n, 1000] },
+    { id:'jystamp1', grp:'Journey', icon:'🛂', title:'First stamp', desc:'You finished a region and your passport is stamped.', hint:'Unlock every stop in one region.', test:m => m.jy.stamps >= 1 },
+    { id:'jystamp5', grp:'Journey', icon:'📕', title:'5 stamps', desc:'Five regions stamped.', hint:'Finish 5 regions.', test:m => m.jy.stamps >= 5, prog:m => [m.jy.stamps, 5] },
+    { id:'jystamp10', grp:'Journey', icon:'📗', title:'10 stamps', desc:'Ten regions stamped.', hint:'Finish 10 regions.', test:m => m.jy.stamps >= 10, prog:m => [m.jy.stamps, 10] },
+    { id:'jystamp20', grp:'Journey', icon:'📘', title:'20 stamps', desc:'Twenty regions stamped.', hint:'Finish 20 regions.', test:m => m.jy.stamps >= 20, prog:m => [m.jy.stamps, 20] },
+    { id:'jystampall', grp:'Journey', icon:'🏅', title:'Every stamp', desc:'Every region in your passport. You have been everywhere.', hint:'Finish every region.', test:m => m.jy.total > 0 && m.jy.stamps >= m.jy.total, prog:m => [m.jy.stamps, m.jy.total] },
+    { id:'jycity1', grp:'Journey', icon:'🏙️', title:'City explored', desc:'You saw every stop in a city.', hint:'Unlock every stop in one city.', test:m => m.jy.cities >= 1 },
+    { id:'jycity25', grp:'Journey', icon:'🌆', title:'25 cities explored', desc:'Twenty-five cities, every stop seen.', hint:'Finish 25 cities.', test:m => m.jy.cities >= 25, prog:m => [m.jy.cities, 25] },
+    { id:'jydish10', grp:'Journey', icon:'🥟', title:'10 dishes', desc:'Ten local dishes tried, in spirit.', hint:'Unlock 10 dishes.', test:m => m.jy.dish >= 10, prog:m => [m.jy.dish, 10] },
+    { id:'jydish100', grp:'Journey', icon:'🍜', title:'100 dishes', desc:'A hundred dishes. You know what to order.', hint:'Unlock 100 dishes.', test:m => m.jy.dish >= 100, prog:m => [m.jy.dish, 100] },
+    { id:'jyattr25', grp:'Journey', icon:'⛰️', title:'25 sights', desc:'Twenty-five attractions seen.', hint:'Unlock 25 attractions.', test:m => m.jy.attr >= 25, prog:m => [m.jy.attr, 25] },
+    { id:'jycult25', grp:'Journey', icon:'🎎', title:'25 traditions', desc:'Twenty-five pieces of culture learned.', hint:'Unlock 25 culture stops.', test:m => m.jy.cult >= 25, prog:m => [m.jy.cult, 25] },
     { id:'exam1', grp:'Levels', icon:'🎓', title:'Level exam passed', desc:'You passed a level exam.', hint:'Pass both sections of a level exam.', test:m => m.exams >= 1 },
     { id:'friend1', grp:'Friends', icon:'🤝', title:'Study buddies', desc:'You are in a group with a friend.', hint:'Join a friends group with at least one other person.', test:m => m.frMembers >= 2 },
     { id:'leader', grp:'Friends', icon:'🏆', title:'Top of the board', desc:'Most study minutes this week in your group.', hint:'Study more minutes this week than every friend in your group.', test:m => !!m.frLeader }
@@ -1393,7 +1426,8 @@
       this.go(this.lastSub[id] || first);
     };
     go = (screen) => {
-      { const grp = { web:'learn', grammar:'learn', words:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', ach:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
+      { const grp = { web:'learn', grammar:'learn', words:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', ach:'more', journey:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
+      if (screen === 'journey') { otherXp(true); this.jyEnsure(); }
       this.setState({ screen }); try { window.scrollTo(0, 0); } catch (e) {}
       if (screen === 'speak' && !HAS_SCRIPTS) { const S = this.state; if (S.aiOn && !S.aim.length && !S.aiBusy) this.aiStart(S.aiScn); }   // no scripts at this level: go straight to the AI conversation
       // on phones the tab bar scrolls sideways: keep the current tab in view
@@ -2303,13 +2337,181 @@
         if (cur.step > p.step && !p.chk) { if (cur.again > p.again) SFX.play('bad'); else if (cur.pos > p.pos) SFX.play('ok'); }
       } catch (e) {}
     }
+    // ---- Journey ----
+    // numbers for the achievements
+    jyCounts() {
+      const o = { n:0, stamps:0, total:JWORLD ? JWORLD.order.length : 0, dish:0, attr:0, cult:0, cities:0 };
+      try {
+        const st = jyRead(); if (!st || !JWORLD) return o;
+        o.n = st.seen.length; o.stamps = Object.keys(st.done || {}).filter(id => JWORLD.byRegion[id]).length;
+        const have = {}; st.seen.forEach(id => { have[id] = 1; const s = JWORLD.byStop[id]; if (!s) return; if (s.k === 'D') o.dish++; else if (s.k === 'A') o.attr++; else if (s.k === 'C') o.cult++; });
+        Object.keys(JWORLD.byCity).forEach(cid => { const C = JWORLD.byCity[cid]; if (C.stops.length > 1 && C.stops.every(x => have[x.id])) o.cities++; });
+      } catch (e) {}
+      return o;
+    }
+    // make sure a saved journey exists and points at a region (the first look, or after the stop lists changed)
+    jyEnsure() {
+      if (!JWORLD) return null;
+      const cur = jyRead(); const st = JY.ensure(JWORLD, cur, Math.random);
+      if (!cur || st.reg !== cur.reg || !cur.ms) prefSet('jy', st);
+      return st;
+    }
+    // spend the XP: unlock the next stop
+    jyTravel = () => {
+      if (!JWORLD) return;
+      const S = this.state; const st0 = this.jyEnsure(); if (!st0 || !st0.reg) return;
+      if (JY.meter(totalXp(S), st0).ready < 1) return;
+      const r = JY.step(JWORLD, st0, Math.random, ymd(new Date()));
+      if (!r.stop) return;
+      prefSet('jy', r.st);
+      SFX.play(r.ev.indexOf('stamp') >= 0 || r.ev.indexOf('arrive') >= 0 ? 'fly' : 'ok');
+      this.setState({ jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next }, jyOpen:null, jyTab:'map', jySel:null });
+      try { window.scrollTo(0, 0); } catch (e) {}
+      this.checkMilestones();
+    };
+    jyCloseCard = () => this.setState({ jyRv:null, jyOpen:null });
+    jyOpenStop = (id) => { SFX.play('ok'); this.setState({ jyOpen:id, jyRv:null }); try { window.scrollTo(0, 0); } catch (e) {} };
+    jyShowReg = (id) => this.setState({ jyTab:'map', jyReg:id, jySel:null, jyFilter:'all', jyOpen:null, jyRv:null });
+    jyBack = () => this.setState({ jyReg:null, jySel:null, jyFilter:'all' });
+    jyTabSet = (t) => this.setState({ jyTab:t, jyFilter:'all', jyMoreN:40 });
+    jyFilterSet = (f) => this.setState({ jyFilter:f, jySel:null, jyMoreN:40 });
+
+    jyView(S) {
+      const base = { isJourney:S.screen === 'journey', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Lifetime XP across every level. Spend it on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), jyReadyShow:false, jyReadyN:0, jyReadyLabel:'' };
+      if (!JWORLD || !JMAP) return Object.assign(base, { jyOff:S.screen === 'journey' });
+      const st = jyRead() || JY.fresh();   // only read here; the screen saves it when it opens and after every stop
+      const xp = totalXp(S); const mt = JY.meter(xp, st);
+      const META = JY.META;
+      const rName = (id) => (JWORLD.byRegion[id] ? JWORLD.byRegion[id].en : (META[id] ? META[id][1] : id));
+      const R = st.reg ? JWORLD.byRegion[st.reg] : null;
+      base.jyReadyShow = mt.ready > 0 && !!R; base.jyReadyN = mt.ready; base.jyReadyLabel = mt.ready + (mt.ready === 1 ? ' stop' : ' stops') + ' ready on the Journey';
+      if (S.screen !== 'journey') return base;
+      const have = {}; st.seen.forEach(id => { have[id] = 1; });
+      const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
+      const out = Object.assign(base, { jyOn:true });
+
+      // where you are and the XP bar
+      const done = !R;
+      if (done) { Object.assign(out, { jyNowLabel:'Every region stamped', jyNowZh:'完', jyNowEn:'The whole map is yours', jyNowSub:'You finished the Journey. More stops can be added later.' }); }
+      else if (!st.started) Object.assign(out, { jyNowLabel:'Next flight', jyNowZh:R.zh, jyNowEn:R.en, jyNowSub:'Fly in to ' + (R.air ? R.air.en + (R.air.code ? '' : '') : R.cities[0].en) + '.' });
+      else {
+        const rs = JY.regionStats(JWORLD, st, R.id); const C = st.cur && JWORLD.byCity[st.cur];
+        Object.assign(out, { jyNowLabel:'Exploring', jyNowZh:R.zh, jyNowEn:R.en, jyNowSub:rs.got + ' of ' + rs.total + ' stops' + (C ? ' · now in ' + C.en : '') });
+      }
+      out.jyPct = (done ? 100 : mt.pct) + '%'; out.jyPctNum = done ? 100 : mt.pct;
+      out.jyMeterText = done ? 'Journey complete' : mt.ready > 0 ? plural(mt.ready, 'stop', 'stops') + ' ready' : mt.into + ' of ' + mt.nextCost + ' XP to the next stop';
+      out.jyXpTotal = xp.toLocaleString('en-US') + ' XP in total';
+      out.jyGoOff = done || mt.ready < 1; out.jyGoText = done ? 'All done' : mt.ready > 0 ? (st.n === 0 ? 'Take your first flight (free)' : st.started ? 'Travel to the next stop' : 'Board the flight') : mt.toGo + ' XP to go';
+      out.jyTravel = this.jyTravel;
+
+      // the tint follows the region on screen: the one being looked at, else the one you are in
+      const focusId = S.jyReg || st.reg;
+      out.jyHue = focusId && META[focusId] ? (JWORLD.byRegion[focusId] ? JWORLD.byRegion[focusId].hue : META[focusId][2]) : 205;
+
+      // the card: a stop just unlocked, or one opened from the map or the list
+      const rv = S.jyRv; const cardId = rv ? rv.id : S.jyOpen; const stop = cardId ? JWORLD.byStop[cardId] : null;
+      out.jyCardShow = !!stop;
+      if (stop) {
+        const CR = JWORLD.byRegion[stop.rid], CC = JWORLD.byCity[stop.cid];
+        const banners = [];
+        if (rv) {
+          const ev = rv.ev;
+          if (ev.indexOf('arrive') >= 0) banners.push({ t:'Welcome to ' + CR.en + '!', d:st.n === 1 ? 'Your first flight is on the house. From here on, the XP you earn studying pays for each new stop.' : 'You have landed. Your journey here begins at the airport.' });
+          if (ev.indexOf('city') >= 0 && ev.indexOf('arrive') < 0) banners.push({ t:'New city: ' + CC.en, d:'Its stops will unlock one by one.' });
+          if (ev.indexOf('muni') >= 0) banners.push({ t:CC.muni + ' is its own municipality.', d:CR.muniNote || (CC.muni + ' is a municipality of its own, not part of ' + CR.en + '.') });
+          if (ev.indexOf('citydone') >= 0 && ev.indexOf('stamp') < 0) banners.push({ t:CC.en + ' complete!', d:'You have seen every stop here.' });
+          if (ev.indexOf('stamp') >= 0) banners.push({ t:CR.en + ' complete!', d:'Your passport is stamped.' + (rv.next ? ' Next flight: ' + rName(rv.next) + '.' : '') });
+          if (ev.indexOf('all') >= 0) banners.push({ t:'Every region stamped!', d:'You have been everywhere. Well travelled.' });
+        }
+        Object.assign(out, { jyBanners:banners, jyBannerShow:banners.length > 0, jyStampShow:!!rv && rv.ev.indexOf('stamp') >= 0, jyKindCls:'k' + stop.k,
+          jyIsT:stop.k === 'T', jyIsA:stop.k === 'A', jyIsD:stop.k === 'D', jyIsC:stop.k === 'C', jyIsP:stop.k === 'P', jyKindLabel:stop.kind, jyPlace:CR.en + ' · ' + CC.en + (CC.muni ? ' (' + CC.muni + ' municipality)' : ''), jyCardZh:stop.zh, jyCardPy:stop.py, jyCardEn:stop.en, jyCardNote:stop.note, jyHasFun:!!stop.fun, jyCardFun:stop.fun,
+          jyHasWords:stop.k === 'P', jyWords:'机场 jīchǎng airport · 护照 hùzhào passport · 登机牌 dēngjīpái boarding pass · 行李 xíngli luggage',
+          jySay:() => this.say(stop.zh, 'jy:' + stop.id), jyCloseCard:this.jyCloseCard, jyCloseText:rv ? 'Keep exploring' : 'Close',
+          jyMapBtn:!!JMAP.regions[stop.rid], jyOnMap:() => this.setState({ jyTab:'map', jyReg:stop.rid, jySel:[stop.id], jyFilter:'all', jyRv:null, jyOpen:null }) });
+        const ph = JMEDIA[stop.id];
+        out.jyHasPhoto = !!(ph && ph.u); out.jyNoPhoto = !out.jyHasPhoto; out.jyPhotoUrl = ph ? ph.u : ''; out.jyPhotoAlt = ph && ph.a ? ph.a : stop.en; out.jyPhotoCredit = ph ? ph.c : '';
+        if (rv && rv.ev.indexOf('stamp') >= 0) {
+          Object.assign(out, { jyStampHue:CR.hue, jyStampZh:CR.zh, jyStampEn:CR.en, jyStampCode:CR.air && CR.air.code ? CR.air.code : '', jyStampDate:st.done[CR.id] || '' });
+        }
+      }
+
+      // tabs
+      out.jyTabs = [['map', 'Map'], ['stops', 'Stops'], ['pass', 'Passport']].map(t => ({ label:t[1], cls:S.jyTab === t[0] ? 'on' : '', fn:() => this.jyTabSet(t[0]) }));
+      out.jyIsMap = S.jyTab === 'map'; out.jyIsStops = S.jyTab === 'stops'; out.jyIsPass = S.jyTab === 'pass';
+      const FILT = [['all', 'All'], ['T', 'Cities'], ['A', 'Attractions'], ['D', 'Dishes'], ['C', 'Culture'], ['P', 'Airports']];
+      const filterChips = (stopsSeen) => FILT.map(f => ({ label:f[1], count:f[0] === 'all' ? stopsSeen.length : stopsSeen.filter(s => s.k === f[0]).length, cls:S.jyFilter === f[0] ? 'on' : '', fn:() => this.jyFilterSet(f[0]) }));
+      const pass = (s) => S.jyFilter === 'all' || s.k === S.jyFilter;
+      const rowOf = (s, cls) => ({ kind:({ T:'City', A:'Sight', D:'Dish', C:'Culture', P:'Airport' })[s.k], zh:s.zh, en:s.en, where:JWORLD.byRegion[s.rid].en + ' · ' + JWORLD.byCity[s.cid].en, cls:cls || '', open:() => this.jyOpenStop(s.id) });
+
+      // map: the whole map, or one region with its pins
+      out.jyCountry = !S.jyReg || !JMAP.regions[S.jyReg]; out.jyProv = !out.jyCountry;
+      if (out.jyCountry) {
+        const regs = Object.keys(JMAP.regions);
+        const status = (id) => st.done[id] ? 'done' : (st.reg === id && st.started ? 'here' : (st.reg === id ? 'next' : 'none'));
+        const mk = (id) => {
+          const has = !!JWORLD.byRegion[id]; const m = JMAP.regions[id]; const en = rName(id); const stt = has ? status(id) : 'none';
+          const hue = has ? JWORLD.byRegion[id].hue : META[id][2];
+          const word = stt === 'done' ? 'stamped' : stt === 'here' ? 'you are here' : stt === 'next' ? 'next flight' : has ? 'not visited yet' : 'coming soon';
+          return { id, cls:stt + (has ? '' : ' na') + (JY.SMALL.indexOf(id) >= 0 && id !== 'singapore' ? ' tiny' : ''), hue, d:m.cd || '', m:m.cm || '', hasM:!!m.cm, label:en + ', ' + word, en, open:has ? () => this.jyShowReg(id) : () => {} };
+        };
+        out.jyMapRegions = regs.filter(id => JMAP.regions[id].cd && id !== 'singapore').map(mk);
+        out.jySmall = JY.SMALL.map(id => Object.assign(mk(id), { d:JMAP.insets[id] || '' }));
+      } else {
+        const id = S.jyReg; const RR = JWORLD.byRegion[id]; const mp = JMAP.regions[id];
+        const seenHere = RR.stops.filter(s => have[s.id]);
+        Object.assign(out, { jyProvZh:RR.zh, jyProvEn:RR.en, jyProvCount:st.done[id] ? 'Stamped · ' + seenHere.length + ' stops' : seenHere.length + ' of ' + RR.stops.length + ' stops', jyBack:this.jyBack,
+          jyProvD:mp.d, jyProvM:mp.m || '', jyProvHasM:!!mp.m, jyProvLabel:'Map of ' + RR.en + ' with ' + plural(seenHere.length, 'stop', 'stops') + ' found so far', jyFilters:filterChips(seenHere) });
+        // pins: place each seen stop, then merge the ones that touch
+        const pts = seenHere.filter(pass).map(s => { const ll = JY.pinLatLon(JWORLD, s); const xy = JY.project(mp, ll[0], ll[1]); return { s, x:xy[0], y:xy[1] }; });
+        const groups = [];
+        pts.forEach(p => { const g = groups.find(q => Math.hypot(q.x - p.x, q.y - p.y) < 11); if (g) { g.items.push(p); g.x = g.items.reduce((a, b) => a + b.x, 0) / g.items.length; g.y = g.items.reduce((a, b) => a + b.y, 0) / g.items.length; } else groups.push({ x:p.x, y:p.y, items:[p] }); });
+        const sel = S.jySel || [];
+        out.jyPins = groups.map(g => {
+          const ids = g.items.map(i => i.s.id); const one = g.items.length === 1; const s = g.items[0].s;
+          const x = Math.round(Math.max(8, Math.min(352, g.x)) * 10) / 10, y = Math.round(Math.max(8, Math.min(292, g.y)) * 10) / 10;
+          return { x, y, isCluster:!one, count:g.items.length, isCity:one && s.k === 'T', isAttr:one && s.k === 'A', isDish:one && s.k === 'D', isCult:one && s.k === 'C', isAir:one && s.k === 'P',
+            cls:(one ? 'k' + s.k : 'kx') + (ids.some(i => sel.indexOf(i) >= 0) ? ' sel' : ''), label:one ? s.kind + ': ' + s.en : plural(g.items.length, 'stop', 'stops') + ' close together',
+            tap:one ? () => this.jyOpenStop(s.id) : () => this.setState({ jySel:ids }) };
+        });
+        const selStops = sel.map(i => JWORLD.byStop[i]).filter(Boolean);
+        out.jySelShow = selStops.length > 1 || (selStops.length === 1 && !S.jyOpen && !S.jyRv); out.jySelRows = selStops.map(s => rowOf(s));
+        out.jyProvKey = seenHere.length ? 'Square: city · triangle: sight · circle: dish · diamond: culture · plane: airport. A numbered circle is several stops close together: tap it.' : 'Nothing here yet. Stops show up on the map as you unlock them.';
+      }
+
+      // stops: everything unlocked, newest first
+      {
+        const all = st.seen.slice().reverse().map(i => JWORLD.byStop[i]).filter(Boolean);
+        const shown = all.filter(pass);
+        out.jyFilters = out.jyFilters || filterChips(all);
+        if (S.jyTab === 'stops') out.jyFilters = filterChips(all);
+        out.jyRows = shown.slice(0, S.jyMoreN).map(s => rowOf(s));
+        out.jyMoreShow = shown.length > S.jyMoreN; out.jyMore = () => this.setState({ jyMoreN:S.jyMoreN + 60 });
+        out.jyStopsNote = all.length ? plural(shown.length, 'stop', 'stops') + (S.jyFilter === 'all' ? ' unlocked, newest first.' : ' of this kind, newest first.') : 'No stops yet. Earn XP, then tap the button above to take your first flight.';
+      }
+
+      // passport: stamped regions first (in the order earned), then the one you are in, then the rest
+      {
+        const ids = Object.keys(META).filter(id => JMAP.regions[id]);
+        const rank = (id) => (st.done[id] ? '0' + st.done[id] : (st.reg === id && st.started ? '1' : (JWORLD.byRegion[id] ? '2' : '3')) + rName(id));
+        const sorted = ids.slice().sort((a, b) => (rank(a) < rank(b) ? -1 : rank(a) > rank(b) ? 1 : 0));
+        const stamped = ids.filter(id => st.done[id]).length;
+        out.jyPassTitle = 'Passport'; out.jyPassSub = stamped + ' of ' + ids.length + ' regions stamped';
+        out.jyStamps = sorted.map(id => {
+          const has = !!JWORLD.byRegion[id]; const RR = JWORLD.byRegion[id]; const got = !!st.done[id]; const here = !got && st.reg === id && st.started;
+          return { hue:has ? RR.hue : META[id][2], cls:got ? 'got' : here ? 'here' : 'empty', zh:got || here ? (has ? RR.zh : META[id][0]) : '?', en:got || here ? rName(id) : 'Not yet', code:got || here ? (has && RR.air ? RR.air.code : '') : '', date:got ? st.done[id] : here ? 'In progress' : '',
+            label:got ? rName(id) + ', stamped' : here ? rName(id) + ', in progress' : 'Not visited yet', open:has && (got || here) ? () => this.jyShowReg(id) : () => {} };
+        });
+      }
+      return out;
+    }
+
     // what the achievements are measured by: this view's numbers plus every other level's saved copy
     achEv = {};   // things that happened just now (a perfect session, studying at night...): set where they happen, used once by checkMilestones
     achMetrics() {
       const S = this.state; const today = ymd(new Date());
       const started = (w) => !!w && DIMS.some(k => w[k] && w[k].s > 0);
       const m = { streak:(S.lastActive === today || S.lastActive === daysAgo(1)) ? S.streak : 0, words:memOf(S.ws).words, lessons:LESSONS.filter(L => (S.gres[L.id] || 0) >= 80).length,
-        gmastered:Object.keys(S.gpt || {}).filter(id => gptInfo(S.gpt[id]).mastered).length, exams:LVL.passedList(S.exams || []) ? 1 : 0, gwrote:0, topic:false, goalRun:0, lv:{}, ev:{}, frMembers:0, frLeader:false };
+        gmastered:Object.keys(S.gpt || {}).filter(id => gptInfo(S.gpt[id]).mastered).length, exams:LVL.passedList(S.exams || []) ? 1 : 0, gwrote:0, topic:false, goalRun:0, lv:{}, ev:{}, frMembers:0, frLeader:false, jy:this.jyCounts() };
       let words = 0, lessons = 0, gm = 0;
       for (let n = 1; n <= LVL.MAX_LEVEL; n++) {
         const W = window['HSK' + n + '_WORDS'], G = window['HSK' + n + '_GRAMMAR'], B = window['HSK' + n + '_WEBS'];
@@ -2906,8 +3108,8 @@
       const active = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
       const navCls = (k) => 'nav' + (active === k ? ' on' : '');
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
-      const GROUPS = [['home', ['home']], ['learn', ['web', 'grammar', 'words']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['more', ['exam', 'friends', 'ach', 'voice']]];
-      const SUBLABEL = { web:'Word webs', grammar:'Grammar', words:'My words', review:'Review words', greview:'Grammar review', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', ach:'Achievements', voice:'Settings' };
+      const GROUPS = [['home', ['home']], ['learn', ['web', 'grammar', 'words']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['more', ['exam', 'friends', 'journey', 'ach', 'voice']]];
+      const SUBLABEL = { web:'Word webs', grammar:'Grammar', words:'My words', review:'Review words', greview:'Grammar review', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', journey:'Journey', ach:'Achievements', voice:'Settings' };
       const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
       const navGroup = (GROUPS.find(g => g[1].indexOf(curScreen) >= 0) || GROUPS[0])[0];
       const gcls = (id) => 'nav' + (navGroup === id ? ' on' : '');
@@ -2971,6 +3173,7 @@
         web:['Word webs', 'Learn new words next to the words you already know.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
         ach:['Achievements', 'Things you have earned, and what is still ahead.'],
+        journey:['Journey', 'Spend the XP you earn on trips through the Chinese-speaking world.'],
         friends:['Friends', FR && FR.identity() && FR.identity().group ? FR.identity().group + '. Only your study totals are shared.' : 'Study together. Only your study totals are shared.'],
         listen:['Listening lab', HAS_LISTEN ? 'Train your ear for how people really talk, not just how lessons sound.' : 'Not built yet for ' + LVN + '.'],
         voice:['Settings', LV <= 1 ? 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud, and how 儿 endings are shown.' : 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud.'],
@@ -3398,6 +3601,7 @@
         friendsOn:!!(FR && FR.enabled()), navFriends:navCls('friends'), isFriends:S.screen === 'friends',
         goFriends:() => { this.go('friends'); this.friendsRefresh(false); },
         ...frVals,
+        ...this.jyView(S),
         isWChar:S.wmode === 'char', isWOpp:S.wmode === 'opp', isWTopic:S.wmode === 'topic',
         wCharCls:S.wmode === 'char' ? 'on' : '', wOppCls:S.wmode === 'opp' ? 'on' : '', wTopicCls:S.wmode === 'topic' ? 'on' : '',
         setWChar:() => this.setState({ wmode:'char' }), setWOpp:() => this.setState({ wmode:'opp' }), setWTopic:() => this.setState({ wmode:'topic' }),
@@ -3610,6 +3814,7 @@
   onPersonChange = () => { try { app.personChanged(); } catch (e) {} };
   app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin };   // for the browser tests
   window.shanlu = app;
+  try { if (app.jyEnsure()) app.setState({ jyTick:1 }); } catch (e) {}   // the Journey points at a first region from the first visit, so the free first flight is waiting
   window.addEventListener('error', (ev) => { if (ev && ev.error) showErr(ev.error, 'run'); });
   window.addEventListener('unhandledrejection', (ev) => { if (ev && ev.reason && ev.reason.message && !/fetch|network|Failed to|aborted|AbortError|NotAllowed/i.test(ev.reason.message)) showErr(ev.reason, 'run'); });
   // app mode (a phone): the chat scrolls inside its own box, so keep the newest line in view
