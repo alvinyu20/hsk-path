@@ -373,6 +373,8 @@
     // anything still pointing at a word that is not in this mode's list (the dropped twins) is left out of today's lists
     if (Array.isArray(S.rq)) S.rq = S.rq.filter(z => BANK[itemOf(z).zh] && !staleNew(z, S.ws, S.lrn));   // queue items are a word, or word#l / #p / #h for a new, typed or heard card
     if (S.wlearned) Object.keys(S.wlearned).forEach(z => { if (!BANK[z]) delete S.wlearned[z]; });
+    // words already added today (before this fix) still count towards the "learn new words" goal
+    if (!S.webCredited && S.wlearned && Object.keys(S.wlearned).length >= Math.min(4, limitOf(S)) && Object.keys(S.wlearned).length > 0) S.webCredited = true;
     if (S.rlast && !BANK[S.rlast.zh]) S.rlast = null;
   }
 
@@ -507,7 +509,11 @@
       const flat = toneless(t), whole = toneless(q.exp.py);
       const partHanzi = t.length === 1 && q.exp.zh.indexOf(t) >= 0;
       const partPy = !/[\u4e00-\u9fff]/.test(t) && flat.length >= 2 && flat !== whole && (whole.endsWith(flat) || whole.startsWith(flat));
-      if (partHanzi || partPy) return { ok:false, grade:'hard', note:'That is only part of the word. This card asks for the whole word ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
+      if (partHanzi || partPy) {
+        const ask = q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ')';
+        const own = BANK_KEYS.find(z => z !== q.exp.zh && q.exp.zh.indexOf(z) >= 0 && (t === z || comparePinyin(t, BANK[z].py, tonesOptional()).ok));   // the part is a word of its own (听 inside 听见)
+        return { ok:false, grade:'hard', note:own ? own + ' (' + BANK[own].py.split('/')[0].trim() + ') is a word too: "' + BANK[own].en + '". This card asks for ' + ask + ', "' + q.sayEn + '".' : 'That is only part of the word. This card asks for the whole word ' + ask + '.' };
+      }
     }
     const synSoft = synonymOf(q, t, true);
     if (synSoft) return { ok:false, grade:'hard', note:synSoft + ' (' + BANK[synSoft].py.split('/')[0].trim() + ') means the same, but check the tone. This card was asking for ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
@@ -2281,6 +2287,17 @@
     };
     // Adding a word does not mean learning it. It enters a short learning phase in Review: meet it, recall it a few cards later, recall it again
     // (typed) before the session ends. Only then does it get a real interval and count in "words in memory". Adding earns no streak or minutes.
+    // Adding new words from Word webs (a topic, a group, one word, a gap) counts towards the daily goal "Learn N new words with their relatives":
+    // once the day's added words reach the goal, that task is ticked. (Adding words earns no minutes or XP: only recalling them in Review does.)
+    webCredit = (patch) => {
+      const S = this.state; const wl = patch.wlearned;
+      if (!wl || S.webCredited || patch.webCredited) return patch;
+      const prev = Object.keys(S.wlearned || {}).length;
+      const left = BANK_KEYS.filter(z => !(S.ws[z].see.s > 0) && !(S.lrn || {})[z] && !(S.wlearned || {})[z]).length + prev;
+      const need = Math.max(1, Math.min(4, limitOf(S), left));
+      if (Object.keys(wl).length >= need) patch.webCredited = true;
+      return patch;
+    };
     lrnRoom = () => Math.max(0, LRN_MAX - Object.keys(this.state.lrn || {}).length);
     toLearning = (zh, known) => { const l = Object.assign({}, this.state.lrn); l[zh] = { st:known ? 0 : -1, m:0, at:Date.now() }; return l; };
     learnWord = (zh) => {
@@ -2288,7 +2305,7 @@
       if (S.wlearned[zh] || S.lrn[zh] || S.ws[zh].see.s > 0 || Object.keys(S.wlearned).length >= limitOf(S)) return;
       if (!this.lrnRoom()) { this.setState({ lrnNote:'You already have ' + LRN_MAX + ' new words waiting. Learn those in Review first, then add more.' }); return; }
       const wl = Object.assign({}, S.wlearned); wl[zh] = true;
-      this.setState({ lrn:this.toLearning(zh, false), wlearned:wl, lrnNote:'' });
+      this.setState(this.webCredit({ lrn:this.toLearning(zh, false), wlearned:wl, lrnNote:'' }));
     };
     rateWeb = (zh, ok) => {
       const S = this.state;
@@ -2299,7 +2316,7 @@
       if (wasNew) {   // a word met here for the first time still has to be recalled in Review ("I knew it" skips the introduction)
         if (!this.lrnRoom()) { this.setState({ lrnNote:'You already have ' + LRN_MAX + ' new words waiting. Learn those in Review first, then add more.' }); return; }
         const wl = Object.assign({}, S.wlearned); wl[zh] = true;
-        this.setState({ lrn:this.toLearning(zh, ok), wlearned:wl, wrated:wr, lrnNote:'' });
+        this.setState(this.webCredit({ lrn:this.toLearning(zh, ok), wlearned:wl, wrated:wr, lrnNote:'' }));
         return;
       }
       const res = this.applyRating(zh, ok ? 'good' : 'again', ['see']);
@@ -2320,7 +2337,7 @@
         lrn[zh] = { st:-1, m:0, at:Date.now() }; wl[zh] = true; room--; n++;
       });
       if (!n) { if (!this.lrnRoom()) this.setState({ lrnNote:'You already have ' + LRN_MAX + ' new words waiting. Learn those in Review first, then add more.' }); return; }
-      this.setState({ lrn, wlearned:wl, lrnNote:'' });
+      this.setState(this.webCredit({ lrn, wlearned:wl, lrnNote:'' }));
     };
     reviewMore = () => {
       const q = buildQueue(this.state.ws, false, this.state.lrn);
@@ -2339,7 +2356,7 @@
       if (!(S.ws[g.ans].see.s > 0)) {   // not recalled before: it is a hint that the word is worth learning, not proof it is known
         const patch = { gfpick:zh, xp:S.xp + (ok ? 2 : 0) };
         if (!S.lrn[g.ans] && this.lrnRoom()) { patch.lrn = this.toLearning(g.ans, ok); const wl = Object.assign({}, S.wlearned); wl[g.ans] = true; patch.wlearned = wl; }
-        this.setState(patch); return;
+        this.setState(this.webCredit(patch)); return;
       }
       const res = this.applyRating(g.ans, ok ? 'good' : 'again', ['see']);
       this.setState({ gfpick:zh, ws:res.ws, xp:S.xp + (ok ? 2 : 0) });

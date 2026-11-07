@@ -923,6 +923,19 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); const k = Object.keys(ws)[0]; ws[k] = { see: { s: 0, l: 0 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }; app.setState({ ws }); });
   await page.waitForTimeout(200);
   check((await text()).includes('Learn 1 new word with its relatives'), 'with one word left the Learn task is back');
+  {   // adding new words in Word webs (a topic's "add all") ticks the daily goal task
+    const before = await page.evaluate(() => { const a = window.shanlu; const S = a.state; return JSON.stringify({ lrn: S.lrn, wlearned: S.wlearned, webCredited: S.webCredited, dayMin: S.dayMin, ws: S.ws }); });
+    const r = await page.evaluate(() => {
+      const a = window.shanlu; const S = a.state;
+      const ws = JSON.parse(JSON.stringify(S.ws)); const zs = Object.keys(ws).slice(0, 5); zs.forEach(z => { ws[z] = { see: { s: 0, l: 0 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }; });
+      a.setState({ ws, lrn: {}, wlearned: {}, webCredited: false });
+      const m0 = a.state.dayMin; a.learnMany(zs.slice(0, 3)); const mid = a.state.webCredited;
+      a.learnMany(zs.slice(3, 5)); return { mid, after: a.state.webCredited, dm: a.state.dayMin - m0 };
+    });
+    check(!r.mid && r.after && r.dm === 0, 'adding the day\'s new words in Word webs ticks the Learn goal on the home page without adding minutes (' + JSON.stringify(r) + ')');
+    await page.evaluate((b) => { const o = JSON.parse(b); window.shanlu.setState({ lrn: o.lrn, wlearned: o.wlearned, webCredited: o.webCredited, dayMin: o.dayMin, ws: o.ws }); }, before);
+    await page.waitForTimeout(150);
+  }
 
   // sync across devices, against a fake GitHub (two separate browsers sharing one gist)
   const S2 = require('../sync.js');
