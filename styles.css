@@ -1168,3 +1168,6 @@ button.scn:hover .scn-m{text-decoration:underline}
 .ach-pb{flex:1;max-width:220px;height:6px;border-radius:99px;background:var(--panel2);overflow:hidden;display:block}
 .ach-pb i{display:block;height:100%;background:var(--j2);border-radius:99px}
 .ach-pt{font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--muted)}
+
+/* no zoom by double tap anywhere (pinch still works); taps respond at once */
+html,body,.app,button,a,input,select,textarea,label,[role=button]{touch-action:manipulation}

@@ -576,6 +576,14 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.waitForTimeout(150);
   await page.locator('.grv-go .btn.pri').click(); await page.waitForTimeout(150);
   check(await page.evaluate((L) => { const S = window.shanlu.state; const ok = window.shanlu.quizQs.length > 0 && window.shanlu.quizQs.every(q => window.HSK1_GRAMMAR.points.find(p => p.id === q.pt).lesson === L); return S.qmode === 'greview' && S.screen === 'quiz' && ok; }, gl), 'once a lesson is passed, Start grammar review asks only about the points of passed lessons');
+  {   // after each grammar-review card the point's percentage change is shown, as in Review words
+    await page.evaluate(() => { const a = window.shanlu; const pid = a.quizQs[0].pt; a.gptRecord(pid, 'r', true, 'good'); a.gptRecord(pid, 'r', true, 'good'); }); await page.waitForTimeout(150);
+    const up = await page.locator('.delta.up').first().innerText().catch(() => '');
+    check(/, recognising: \d+% → \d+%/.test(up) && (await page.locator('.delta.up').count()) === 1, 'after a grammar-review answer the point\'s change is shown (' + up + ')');
+    await page.evaluate(() => { const a = window.shanlu; a.gptRecord(a.quizQs[0].pt, 'r', false, 'again'); }); await page.waitForTimeout(150);
+    check((await page.locator('.delta.down').count()) === 1, 'a missed grammar-review card shows the percentage going down');
+    check(await page.evaluate(() => getComputedStyle(document.body).touchAction === 'manipulation' || getComputedStyle(document.querySelector('.app')).touchAction === 'manipulation'), 'double-tap zoom is switched off (touch-action: manipulation)');
+  }
   await page.evaluate(() => { window.shanlu.exitQuiz(); }); await page.waitForTimeout(150);
   check(await page.evaluate(() => window.shanlu.state.screen === 'greview'), 'leaving a grammar review returns to the Grammar review screen');
   await nav('Grammar'); await page.waitForTimeout(100);

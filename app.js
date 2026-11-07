@@ -338,7 +338,7 @@
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', frLeaveAsk:false, frCopied:false,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
-      gres:{}, gpt:{}, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
+      gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
       qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
@@ -2381,7 +2381,7 @@
       const list = gptSession(S, levels, 8, aiReadyNow());
       if (!list.length) return;
       this.quizQs = list;
-      this.rvKey = null; this.setState({ screen:'quiz', qmode:'greview', qi:0, qpicked:[], qtyped:'', qchoice:null, qfeed:'', qerr:'', qbusy:false, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false });
+      this.rvKey = null; this.setState({ screen:'quiz', qmode:'greview', glast:null, qi:0, qpicked:[], qtyped:'', qchoice:null, qfeed:'', qerr:'', qbusy:false, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false });
       try { window.scrollTo(0, 0); } catch (e) {}
     };
     // one answer about a point: its memory (recognise or write) moves on, with spaced repetition like a word
@@ -2389,11 +2389,13 @@
       const S = this.state; const e0 = S.gpt[pid] || {};
       const e = Object.assign({ rn:0, rok:0, wn:0, wok:0 }, e0);
       const key = dim === 'w' ? 'w' : 'r'; const cur = e[key] || { s:0 };
+      const from = gptInfo(e0)[key === 'w' ? 'wm' : 'rm'];
       e[key] = bump(cur, ok ? 'good' : (grade === 'hard' ? 'hard' : 'again'));
       e[key + 'n'] = (e[key + 'n'] || 0) + 1; if (ok) e[key + 'ok'] = (e[key + 'ok'] || 0) + 1;
       if (pool !== undefined) e.li = pool;
       e.at = Date.now();
-      this.setState({ gpt:Object.assign({}, S.gpt, { [pid]: e }) });
+      const reg = gptReg()[pid]; const to = gptInfo(e)[key === 'w' ? 'wm' : 'rm'];
+      this.setState({ gpt:Object.assign({}, S.gpt, { [pid]: e }), glast:{ title:reg ? reg.title : 'This point', dim:key === 'w' ? 'writing' : 'recognising', from, to } });
     };
     // a sentence written from scratch: quick local checks, then the AI says whether it is right
     checkWrite = async (q) => {
@@ -3413,6 +3415,7 @@
         tsReport:report('Topic sentence', topicNow.sentence.zh + ' ' + topicNow.sentence.en),
         topicCta:topicNow.cta, goTopic:() => this.go(topicNow.to),
         lrnBanner:Object.keys(S.lrn || {}).length > 0 || !!S.lrnNote, lrnBannerText:S.lrnNote || (Object.keys(S.lrn || {}).length + ' new word' + (Object.keys(S.lrn || {}).length === 1 ? ' is' : 's are') + ' waiting in Review. Adding a word does not mean you know it yet: Review will have you recall it.'), goLearn:() => { this.go('review'); if (!this.state.rq.length || this.state.rcomplete) this.reviewMore(); },
+        hasGlast:S.qmode === 'greview' && !!S.glast, glastText:S.glast ? S.glast.title + ', ' + S.glast.dim + ': ' + S.glast.from + '% → ' + S.glast.to + '%' : '', glastCls:S.glast && S.glast.to < S.glast.from ? 'down' : 'up',
         hasRlast:!!S.rlast, rlastText:S.rlast ? S.rlast.zh + ': mastery ' + S.rlast.from + '% → ' + S.rlast.to + '%' : '', rlastCls:S.rlast && S.rlast.to < S.rlast.from ? 'down' : 'up',
         wordsSumLine:lvNow('mastered') + ' mastered · ' + lvNow('strong') + ' strong · ' + lvNow('familiar') + ' familiar · ' + lvNow('learning') + ' learning · ' + lvNow('new') + ' new',
         wordsReviewText:dueAllN > 0 ? 'Review ' + dueAllN + ' due word' + (dueAllN === 1 ? '' : 's') : (startedCount >= totalW ? 'Practice all my words' : 'Learn new words'), wordsReviewGo:() => this.go(dueAllN > 0 || startedCount >= totalW ? 'review' : 'web'),
