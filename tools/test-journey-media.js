@@ -84,9 +84,9 @@ let bad = 0; const ok = (c, m) => { if (!c) { bad++; console.log('FAIL ' + m); }
   ok(r.media['s.x'] && /Kungpao one/.test(r.media['s.x'].u), 'a Commons category named after the dish supplies a food photo from its files: ' + (r.media['s.x'] && r.media['s.x'].u));
   ok(r.media['s.y'] && r.media['s.y'].c === 'Flickr Person / CC BY-SA 2.0' && /abc/.test(r.media['s.y'].u), 'Openverse: a licence outside the four is skipped, a non-food or unrelated result is skipped, the credit names photographer and licence: ' + JSON.stringify(r.media['s.y']));
   ok(!r.media['s.t'] && r.misses['s.t'] === 'not a dish photo', 'a dish with only a plant photo gets none: ' + r.misses['s.t']);
-  ok(!r.media['s.u'] && r.tried['s.u'] === 2, 'an old dish photo that is not food is dropped and looked up again');
+  ok(!r.media['s.u'] && r.tried['s.u'] === 4, 'an old dish photo that is not food is dropped and looked up again');
   ok(r.media['s.v'] && r.media['s.v'].f === 1, 'an old dish photo whose categories say food is kept');
-  ok(r.tried['s.h'] === 2 && r.tried['s.air'] === 2, 'every finished stop is noted as searched');
+  ok(r.tried['s.h'] === 4 && r.tried['s.air'] === 4, 'every finished stop is noted as searched');
   ok(r.media['s.a'].c === 'Jane & Co / CC BY-SA 4.0', 'credit is author and licence, HTML removed: ' + r.media['s.a'].c);
   ok(r.media['s.a'].a === 'Chengdu' && r.media['s.a'].u.startsWith('https://upload.wikimedia.org/'), 'alt text and address');
   ok(/too far/.test(r.misses['s.b']), 'a page far from the stop is refused: ' + r.misses['s.b']);

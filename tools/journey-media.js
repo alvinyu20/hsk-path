@@ -28,7 +28,7 @@ const OUT = path.join(ROOT, 'data', 'journey-media.js');
 const MISS = path.join(__dirname, 'journey-media-misses.json');
 const TRIED = path.join(__dirname, 'journey-media-tried.json');   // stops already searched with every source, so a re-run does not repeat them
 const UA = 'ShanluJourneyMedia/1.0 (https://github.com/alvinyu20/hsk-path; study site photo lookup)';
-const TRIED_V = process.env.OPENVERSE_CLIENT_ID ? 3 : 2;
+const TRIED_V = 4;   // 1 = early, 2 = through the dish category, 3 = also Openverse, 4 = also the other-language Wikipedias, Wikidata in Chinese and Commons categories, Commons by pinyin
 let SLOW = true;   // tests switch the waiting off with setSlow(false)
 const WIDTH = 500;   // Wikimedia hands out thumbnails only in fixed sizes and rounds up to the next one
 const KEEP_LICENCES = /^(public domain|pd\b|cc0|cc[- ]by(?![- ]nc)(?![- ]nd)|cc[- ]by[- ]sa(?![- ]nc)(?![- ]nd))/i;
@@ -72,7 +72,7 @@ function makeApi(doFetch) {
     search: (text, lang) => get('https://' + lang + '.wikipedia.org/w/api.php', { action: 'query', list: 'search', srsearch: text, srnamespace: '0', srlimit: '5', srprop: '' }),
     cats: (titles) => get('https://commons.wikimedia.org/w/api.php', { action: 'query', titles: titles.join('|'), prop: 'categories', cllimit: 'max' }),
     images: (title, lang) => get((HOSTS[lang] || ('https://' + lang + '.wikipedia.org')) + '/w/api.php', { action: 'query', titles: title, redirects: '1', prop: 'images', imlimit: '40' }),
-    wdsearch: (text) => get('https://www.wikidata.org/w/api.php', { action: 'wbsearchentities', search: text, language: 'en', uselang: 'en', type: 'item', limit: '5' }),
+    wdsearch: (text, lang) => get('https://www.wikidata.org/w/api.php', { action: 'wbsearchentities', search: text, language: lang || 'en', uselang: lang || 'en', type: 'item', limit: '5' }),
     ov: async (text) => {   // Openverse image search; needs a free key (OPENVERSE_CLIENT_ID / OPENVERSE_CLIENT_SECRET), since anonymous use allows only 100 requests a day
       const id = process.env.OPENVERSE_CLIENT_ID, secret = process.env.OPENVERSE_CLIENT_SECRET;
       if (!id || !secret) return null;
@@ -101,8 +101,8 @@ function makeApi(doFetch) {
 }
 
 // One page of one Wikipedia: returns { entry } or { miss: 'why' }
-async function tryPage(api, stop, lang, title) {
-  const q = await api.page(title, lang);
+async function tryPage(api, stop, lang, title, pre) {
+  const q = pre || await api.page(title, lang);
   const page = q && q.query && q.query.pages && q.query.pages[0];
   if (!page || page.missing) return { miss: 'no page' };
   if (page.pageprops && page.pageprops.disambiguation !== undefined) return { miss: 'disambiguation' };
@@ -195,22 +195,70 @@ const hasWhole = (title, name) => (' ' + norm(title) + ' ').includes(' ' + norm(
 
 // Wikidata: an item whose English label is exactly the stop's name and that has a picture. Places must also lie within 60 km.
 async function viaWikidata(api, stop) {
-  const q = await api.wdsearch(stop.en).catch(() => null);
-  const hits = ((q && q.search) || []).filter((h) => norm(h.label) === norm(stop.en) && !/disambiguation/i.test(h.description || '')).slice(0, 3);
   let last = { miss: 'no wikidata item' };
-  for (const h of hits) {
-    const w = await api.wikidata(h.id).catch(() => null);
-    const cl = w && w.entities && w.entities[h.id] && w.entities[h.id].claims;
-    const claim = (p) => cl && cl[p] && cl[p][0] && cl[p][0].mainsnak && cl[p][0].mainsnak.datavalue && cl[p][0].mainsnak.datavalue.value;
-    const img = claim('P18');
-    if (typeof img !== 'string') continue;
-    if (isPlace(stop)) {
-      const c = claim('P625');
-      if (!c || typeof c.latitude !== 'number') { last = { miss: 'no coordinates' }; continue; }
-      if (stop.ll && km(stop.ll[0], stop.ll[1], c.latitude, c.longitude) > 60) { last = { miss: 'too far' }; continue; }
+  // the English label first, then (dishes) the Chinese label, since many dish items carry only a Chinese name
+  for (const [lang, name] of [['en', stop.en], ...(stop.k === 'D' ? [['zh', stop.zh]] : [])]) {
+    if (!name) continue;
+    const q = await api.wdsearch(name, lang).catch(() => null);
+    const hits = ((q && q.search) || []).filter((h) => norm(h.label) === norm(name) && !/disambiguation/i.test(h.description || '')).slice(0, 3);
+    for (const h of hits) {
+      const w = await api.wikidata(h.id).catch(() => null);
+      const cl = w && w.entities && w.entities[h.id] && w.entities[h.id].claims;
+      const claim = (p) => cl && cl[p] && cl[p][0] && cl[p][0].mainsnak && cl[p][0].mainsnak.datavalue && cl[p][0].mainsnak.datavalue.value;
+      if (isPlace(stop)) {
+        const c = claim('P625');
+        if (!c || typeof c.latitude !== 'number') { last = { miss: 'no coordinates' }; continue; }
+        if (stop.ll && km(stop.ll[0], stop.ll[1], c.latitude, c.longitude) > 60) { last = { miss: 'too far' }; continue; }
+      }
+      const img = claim('P18');
+      if (typeof img === 'string') {
+        const r = await fileEntry(api, img, stop.en, { dish: stop.k === 'D' });
+        if (r.entry) return r; last = r;
+      }
+      // no usable picture on the item itself: the Commons category the item points to (dishes only; every file is food-checked)
+      const cat = claim('P373');
+      if (stop.k === 'D' && typeof cat === 'string') {
+        const r = await fromCategory(api, stop, cat);
+        if (r.entry) { r.note = (r.note || '') + ' (Wikidata ' + h.id + ')'; return r; } last = r;
+      }
     }
-    const r = await fileEntry(api, img, stop.en, { dish: stop.k === 'D' });
-    if (r.entry) return r; last = r;
+  }
+  return last;
+}
+
+// The first few food photos of a Commons category (used by the category search and by Wikidata's "Commons category" link).
+async function fromCategory(api, stop, c, dbg) {
+  let last = { miss: 'empty category' };
+  const m = await api.cmembers(c).catch(() => null);
+  const titles = ((m && m.query && m.query.categorymembers) || []).map((x) => nm(x.title)).filter((t) => /\.(jpe?g|png|webp)$/i.test(t) && !NOT_A_PHOTO.test(t)).slice(0, 12);
+  const fl = titles.length ? await foodFlags(api, titles).catch(() => ({})) : {};
+  if (dbg) dbg('   ' + c + ': ' + titles.length + ' files, ' + titles.filter((t) => fl[t]).length + ' look like food');
+  for (const t of titles.filter((t) => fl[t]).slice(0, 3)) {
+    const r = await fileEntry(api, t, stop.en, { dish: true, checked: true });
+    if (r.entry) { r.note = t + ' (category ' + c + ')'; return r; } last = r;
+  }
+  return last;
+}
+
+// Pinyin as search words ("Lúzhōu kǎoyā" -> "luzhou kaoya") and without spaces, for titles that run the syllables together.
+const pinyinWords = (stop) => plain(stop.py).replace(/[^a-z ]+/g, ' ').replace(/\s+/g, ' ').trim();
+const sentenceCase = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+
+// Dishes: the same page in other languages. The Chinese name on the Cantonese, Hokkien and Wu Wikipedias (they write Chinese too, with their own
+// pictures), the English name and the pinyin name on the European and Southeast Asian ones. Held to the same food check as every dish photo.
+const WIKIS_ZH = ['yue', 'zh-min-nan', 'wuu', 'zh-classical'];
+const WIKIS_LATIN = ['de', 'fr', 'es', 'it', 'pt', 'nl', 'id', 'vi', 'sv', 'pl', 'tr', 'ms'];
+async function viaOtherWikis(api, stop) {
+  let last = { miss: 'not on other wikis' };
+  const py = pinyinWords(stop);
+  for (const lang of WIKIS_ZH.concat(WIKIS_LATIN)) {
+    const titles = WIKIS_ZH.includes(lang) ? [stop.zh] : [stop.en, py.length >= 6 ? sentenceCase(py) : ''];
+    const q = await api.page(titles.filter(Boolean).join('|'), lang).catch(() => null);
+    const pages = ((q && q.query && q.query.pages) || []).filter((p) => p && !p.missing && !(p.pageprops && p.pageprops.disambiguation !== undefined));
+    for (const page of pages.slice(0, 2)) {
+      const r = await tryPage(api, stop, lang, page.title, { query: { pages: [page] } }).catch(() => null);
+      if (r && r.entry) { r.note = 'page "' + page.title + '" on the ' + lang + ' Wikipedia'; return r; } if (r) last = r;
+    }
   }
   return last;
 }
@@ -260,20 +308,15 @@ async function viaOpenverse(api, stop, dbg) {
 // A Commons category named after the dish ("Category:Mapo doufu"): its files are pictures of that dish.
 async function viaDishCategory(api, stop, dbg) {
   let last = { miss: 'no dish category' };
-  for (const name of [stop.en, stop.zh]) {
+  const py = pinyinWords(stop);
+  for (const name of [stop.en, stop.zh, py.length >= 6 ? py : '']) {
     if (!name || name.length < 3) continue;
     const q = await api.ccats(name).catch(() => null);
     const cats = ((q && q.query && q.query.search) || []).map((h) => nm(h.title)).filter((c) => relevant(stop, c, [])).slice(0, 2);
     if (dbg) dbg(stop.id + ': "' + name + '" -> categories ' + JSON.stringify(((q && q.query && q.query.search) || []).map((h) => h.title)) + ' kept ' + JSON.stringify(cats));
     for (const c of cats) {
-      const m = await api.cmembers(c).catch(() => null);
-      const titles = ((m && m.query && m.query.categorymembers) || []).map((x) => nm(x.title)).filter((t) => /\.(jpe?g|png|webp)$/i.test(t) && !NOT_A_PHOTO.test(t)).slice(0, 12);
-      const fl = titles.length ? await foodFlags(api, titles).catch(() => ({})) : {};
-      if (dbg) dbg('   ' + c + ': ' + titles.length + ' files, ' + titles.filter((t) => fl[t]).length + ' look like food');
-      for (const t of titles.filter((t) => fl[t]).slice(0, 3)) {
-        const r = await fileEntry(api, t, stop.en, { dish: true, checked: true });
-        if (r.entry) { r.note = t + ' (category ' + c + ')'; return r; } last = r;
-      }
+      const r = await fromCategory(api, stop, c, dbg);
+      if (r.entry) return r; last = r;
     }
   }
   return last;
@@ -281,12 +324,14 @@ async function viaDishCategory(api, stop, dbg) {
 // Commons itself: a file whose title holds the stop's whole English (or Chinese) name. Names that are too short or generic are not trusted.
 async function viaCommons(api, stop) {
   let last = { miss: 'no commons file' };
-  for (const name of [stop.en, stop.zh]) {
+  const py = stop.k === 'D' ? pinyinWords(stop) : '';
+  for (const name of [stop.en, stop.zh, py.length >= 6 ? py : '']) {
     const n = norm(name); const zhName = /[\u4e00-\u9fff]/.test(name || '');
     if (!n || (zhName ? n.length < 3 : n.length < 6)) continue;
     if (isPlace(stop) && !zhName && (n.length < 10 || n.indexOf(' ') < 0)) continue;   // a place needs a distinctive name, since it cannot be checked against a page
     const q = await api.cfiles(name).catch(() => null);
-    const titles = ((q && q.query && q.query.search) || []).map((h) => String(h.title || '').replace(/^File:/, '')).filter((t) => /\.(jpe?g|png|webp)$/i.test(t) && hasWhole(t.replace(/\.[a-z]+$/i, ''), name)).slice(0, 3);
+    const isPy = name === py;   // pinyin titles often run the syllables together ("Mapodoufu"), so compare without spaces
+    const titles = ((q && q.query && q.query.search) || []).map((h) => String(h.title || '').replace(/^File:/, '')).filter((t) => /\.(jpe?g|png|webp)$/i.test(t) && (isPy ? plain(t.replace(/\.[a-z]+$/i, '')).replace(/[^a-z]/g, '').includes(py.replace(/ /g, '')) : hasWhole(t.replace(/\.[a-z]+$/i, ''), name))).slice(0, 3);
     for (const t of titles) {
       const r = await fileEntry(api, t, stop.en, { ll: isPlace(stop) ? stop.ll : null, dish: stop.k === 'D' });
       if (r.entry) return r; last = r;
@@ -319,8 +364,9 @@ async function lookup(api, stop) {
   const cm = await viaCommons(api, stop); if (cm.entry) return cm;
   if (stop.k === 'D') {
     const dbg = process.env.JM_DEBUG ? (m) => console.log('  [debug] ' + m) : null;
+    const ow = await viaOtherWikis(api, stop); if (ow.entry) return ow;
     const dc = await viaDishCategory(api, stop, dbg); if (dc.entry) return dc;
-    const ov = await viaOpenverse(api, stop, dbg); if (ov.entry) return ov;
+    if (!stop.skipOv) { const ov = await viaOpenverse(api, stop, dbg); if (ov.entry) return ov; }   // Openverse was already searched in an earlier run
   }
   return zh;
 }
@@ -395,12 +441,12 @@ async function run(opts) {
           const R = regionOf[stop.id]; provinces[R.id] = provinces[R.id] || regionPhoto(api, R);
           r = await provinces[R.id];
           if (!r.entry) { const c = landmarkPhoto(R, media); if (c) r = { entry: { u: c.u, c: c.c, a: R.en, r: 1 } }; }
-        } else r = await lookup(api, stop);
+        } else { stop.skipOv = !o.force && tried[stop.id] >= 3; r = await lookup(api, stop); }
         if (r.entry && reject[stop.id]) r = { miss: 'rejected by hand: ' + reject[stop.id] };
         if (r.entry && o.verify && !r.entry.o) { const v = await o.fetch(r.entry.u, { method: 'HEAD', headers: { 'User-Agent': UA } }).catch(() => null); if (!v || !v.ok || !/^image\//.test((v.headers && v.headers.get && v.headers.get('content-type')) || '')) { delete r.entry; r.miss = 'image does not load'; } }
         if (r.entry) { media[stop.id] = r.entry; delete misses[stop.id]; found++; } else { misses[stop.id] = r.miss; missed++; }
         tried[stop.id] = TRIED_V;   // 2 = searched with every source up to the dish category search; 3 = also Openverse
-        if (r.note) o.log('  dish photo via category search: ' + stop.id + ' <- ' + r.note);
+        if (r.note) o.log('  dish photo via extra search: ' + stop.id + ' <- ' + r.note);
       } catch (e) { failed++; o.log('  error for ' + stop.id + ': ' + e.message); }
       if ((found + missed) % 50 === 0 && o.save) saveAll();
     }
