@@ -15,30 +15,23 @@ D | 剁椒鱼头 | Fish head with chopped chilies | A steamed fish head under a 
 D | 口味虾 | Spicy crayfish | Crayfish stir-fried with chili and spices, eaten by hand in summer. | |
 D | 糖油粑粑 | Sugar-oil glutinous cake | Hot, sticky fried rice cakes in sugar syrup. | |
 D | 长沙米粉 | Changsha rice noodles | Rice noodles in broth with pork, a breakfast favorite. | |
-D | 毛氏红烧肉 | Chairman Mao's red-braised pork | Soft pork belly braised in soy and sugar, a Hunan classic. | |
-C | 湘剧 | Xiang opera | A local opera form of Hunan. | |
 C | 湘绣 | Xiang embroidery | Fine silk embroidery of animals and landscapes. | |
 
 city: zhangjiajie | 张家界 | Zhangjiajie | 29.12 | 110.48 | A national forest park of tall sandstone pillars. | The floating Hallelujah Mountains in a famous science fiction film were inspired by these pillars.
 A | 张家界国家森林公园 | Zhangjiajie National Forest Park | Thousands of quartz sandstone pillars rising from the forest. | | 29.32,110.43
 A | 天门山 | Tianmen Mountain | A mountain with a huge natural arch, a long cable car and a glass walkway. | | 29.05,110.48
 A | 天子山 | Tianzi Mountain | A viewpoint area of dense stone forest. | | 29.34,110.41
-A | 袁家界 | Yuanjiajie | The area with the Avatar Hallelujah Mountain pillar. | | 29.31,110.44
 A | 百龙天梯 | Bailong Elevator | A glass elevator built against a cliff, said to be the tallest outdoor lift in the world. | | 29.34,110.43
 A | 黄龙洞 | Yellow Dragon Cave | A huge cave with an underground river and rock formations. | | 29.28,110.47
 A | 大峡谷玻璃桥 | Grand Canyon Glass Bridge | A long glass-floored bridge over a deep gorge. | | 29.27,110.53
-D | 三下锅 | Sanxia guo | A hearty hotpot of meat and vegetables cooked at the table. | |
 D | 土家腊肉 | Tujia cured pork | Smoked pork with a deep flavor from the Tujia people. | |
-C | 土家族摆手舞 | Tujia hand-waving dance | A group dance of the Tujia people. | |
 
 city: fenghuang | 凤凰 | Fenghuang | 27.95 | 109.60 | A river town of stilted houses, famous in Chinese literature. |
 A | 凤凰古城 | Fenghuang Ancient Town | Wooden houses on stilts over the Tuo River, lit at night. | | 27.95,109.60
 A | 沈从文故居 | Shen Congwen Former Residence | The home of the writer who made the town famous. | | 27.95,109.60
-A | 南方长城 | Southern Great Wall | A stone wall built in the Qing dynasty to guard the Miao areas. | | 27.88,109.43
 A | 虹桥 | Rainbow Bridge | A covered bridge with shops inside. | | 27.95,109.60
 D | 姜糖 | Ginger candy | Sticky ginger sweets pulled by hand. | |
 D | 血粑鸭 | Duck with blood rice cake | A spicy Miao-style duck dish. | |
-C | 苗族银饰 | Miao silver jewelry | Large silver headdresses and necklaces made for festivals. | |
 C | 扎染 | Tie-dye | Hand-dyed blue cloth. | |
 
 city: yueyang | 岳阳 | Yueyang | 29.36 | 113.13 | A lakeside city with a very famous tower. |
@@ -50,7 +43,6 @@ D | 洞庭湖银鱼 | Dongting silver fish | Tiny clear fish cooked with egg or 
 
 city: shaoshan | 韶山 | Shaoshan | 27.92 | 112.53 | The village where Mao Zedong was born. |
 A | 毛泽东故居 | Mao Zedong's Former Residence | A farmhouse where Mao Zedong was born. | | 27.92,112.53
-A | 韶峰 | Shaofeng Peak | The highest hill in the area with a view over the village. | | 27.93,112.55
 D | 红烧肉 | Red-braised pork | The dish said to be Mao's favorite. | |
 
 city: hengyang | 衡阳 | Hengyang | 26.89 | 112.57 | A southern city beside one of the Five Sacred Mountains. |
@@ -60,16 +52,12 @@ A | 石鼓书院 | Shigu Academy | An old academy on a rock above the river. | |
 D | 衡阳鱼粉 | Hengyang fish noodles | Rice noodles in a rich fish broth. | |
 
 city: xiangxi | 湘西 | Xiangxi | 28.31 | 109.74 | A mountain prefecture of Tujia and Miao villages. |
-A | 德夯苗寨 | Dehang Miao Village | A village of Miao culture beside a waterfall gorge. | | 28.35,109.61
 A | 芙蓉镇 | Furong Town | A town built on a waterfall, famous from a film. | | 28.99,109.87
-A | 里耶古城 | Liye Ancient City | A site where thousands of Qin-dynasty bamboo slips were found. | | 28.69,109.15
 D | 酸鱼 | Sour fish | Fermented fish eaten by the Miao people. | |
 D | 腊肉 | Smoked bacon | Smoked pork hung over the fire. | |
-C | 苗族鼓舞 | Miao drum dance | A dance with large drums at festivals. | |
 
 city: shaoyang | 邵阳 | Shaoyang | 27.24 | 111.47 | A city in mid-Hunan with an old hill landscape. |
 A | 崀山 | Langshan Mountain | Red sandstone cliffs and arches, part of Danxia landform. | | 26.35,110.95
-A | 魏源故居 | Wei Yuan Former Residence | The home of a scholar who wrote about the world in the 1800s. | | 27.45,111.07
 
 city: yongzhou | 永州 | Yongzhou | 26.42 | 111.61 | A southern city of rivers and a famous essay. |
 A | 柳子庙 | Liuzi Temple | A temple for the Tang writer Liu Zongyuan, who was exiled here. | | 26.43,111.61
@@ -78,5 +66,4 @@ D | 永州血鸭 | Yongzhou blood duck | A spicy duck stir-fry. | |
 
 city: changde | 常德 | Changde | 29.04 | 111.70 | A river city with a peach-blossom legend. |
 A | 桃花源 | Taohuayuan | A garden said to be the model for a classical story of a hidden paradise. | | 28.91,111.28
-A | 常德诗墙 | Poetry Wall | A long wall inscribed with poems about the city. | | 29.03,111.69
 D | 常德米粉 | Changde rice noodles | A bowl of beef or pork noodles in chili broth. | |

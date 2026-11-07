@@ -8,7 +8,6 @@ A | 东关清真大寺 | Dongguan Mosque | One of the largest mosques in northwe
 A | 青海省博物馆 | Qinghai Provincial Museum | A museum of the plateau. | | 36.64,101.76
 A | 北禅寺 | Beichan Temple | A cliff temple above the city. | | 36.65,101.77
 A | 水井巷 | Shuijing Lane | A food lane in the city. | | 36.62,101.78
-A | 互助土族故土园 | Huzhu Tu Home Garden | A park of the Tu people. | | 36.84,101.96
 D | 手抓羊肉 | Hand-grabbed mutton | Plain boiled mutton on the bone. | |
 D | 酿皮 | Niangpi | A cool noodle dish with spice. | |
 D | 青稞酒 | Highland barley wine | A wine from barley. | |
@@ -21,8 +20,6 @@ C | 热贡艺术 | Regong art | A tradition of Tibetan Buddhist painting. | |
 
 city: haibei | 海北 | Haibei | 36.96 | 100.90 | A prefecture with the great lake and rapeseed fields. |
 A | 青海湖 | Qinghai Lake | China's largest lake, high on the plateau. | | 36.90,100.20
-A | 二郎剑 | Erlang Jian | A lakeside viewpoint. | | 36.72,100.34
-A | 门源油菜花 | Menyuan rapeseed flowers | A sea of yellow flowers in July. | | 37.38,101.62
 A | 祁连山 | Qilian Mountains | A range with snow peaks. | | 38.18,100.25
 A | 卓尔山 | Zhuoer Mountain | A hill with a view of the valley. | | 38.20,100.25
 D | 青海湖裸鲤 | Qinghai Lake naked carp | A fish without scales that lives in the salt lake. | |
@@ -38,29 +35,21 @@ D | 土族盘绣 | Tu coiled embroidery | A stitched craft of the Tu women. | |
 city: haixi | 海西 | Haixi | 37.37 | 97.37 | A prefecture of salt lakes and deserts. |
 A | 茶卡盐湖 | Chaka Salt Lake | A shallow lake that mirrors the sky, called the Sky Mirror. | | 36.79,99.08
 A | 青海翡翠湖 | Emerald Lake | A lake of salt crystals, green and blue. | | 36.88,95.97
-A | 水上雅丹 | Water Yadan | Rock formations rising out of water. | | 37.13,90.10
-A | 敦煌石油基地 | Oil base at Mang'ai | A desert oil area. | | 38.25,90.50
 D | 柴达木枸杞 | Qaidam goji berries | Red berries from the basin. | |
 D | 察尔汗盐 | Qarhan salt | Salt harvested from a vast salt lake. | |
 
 city: yushu | 玉树 | Yushu | 33.00 | 97.01 | The source region of three great rivers. |
-A | 三江源 | Sanjiangyuan | The source of the Yangtze, Yellow and Mekong rivers. | | 34.50,93.00
-A | 文成公主庙 | Princess Wencheng Temple | A temple tied to the Tang princess who went to Tibet. | | 32.85,97.15
 A | 结古寺 | Jyekundo Monastery | A monastery in the town. | | 33.00,97.01
 D | 虫草 | Caterpillar fungus | A prized fungus gathered in the high meadows. | |
 D | 玉树赛马节 | Yushu horse festival | A summer festival of horse racing. | |
 
 city: huangnan | 黄南 | Huangnan | 35.52 | 102.02 | The home of Regong painting. |
 A | 隆务寺 | Rongwo Monastery | A large monastery with fine art. | | 35.52,102.01
-A | 热贡唐卡 | Regong thangka | Painted scroll art. | | 35.52,102.01
 D | 黄南酥油花 | Butter flowers | Sculptures of butter. | |
 
 city: guoluo | 果洛 | Golog | 34.47 | 100.24 | A high grassland prefecture. |
 A | 阿尼玛卿雪山 | Amne Machin | A sacred snow range. | | 34.70,99.40
-A | 年保玉则 | Nianbaoyuze | A peak with turquoise lakes. | | 33.20,101.00
-A | 扎陵湖 | Ngoring Lake | A lake at the Yellow River's source. | | 34.90,97.70
 
 city: hainan-qh | 海南州 | Hainan Prefecture | 36.28 | 100.62 | A prefecture near the lake. |
 A | 龙羊峡 | Longyang Gorge | A gorge with a big dam. | | 36.12,100.92
-A | 贵德国家地质公园 | Guide Geopark | A park of red cliffs on the Yellow River. | | 36.04,101.43
 D | 贵德梨 | Guide pear | A sweet pear. | |

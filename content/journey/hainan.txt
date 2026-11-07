@@ -3,7 +3,6 @@ region: hainan | 海南 | Hainan
 air: 海口美兰国际机场 | Haikou Meilan International Airport | HAK | 19.93 | 110.46 | The main airport of Hainan, on the north coast. Welcome to Hainan. | |
 
 city: haikou | 海口 | Haikou | 20.04 | 110.20 | The capital of Hainan, a tropical coastal city. |
-A | 骑楼老街 | Arcade Old Street | A street of old arcade buildings. | | 20.05,110.34
 A | 五公祠 | Five Lords Temple | A temple for five exiled officials. | | 20.01,110.34
 A | 海口火山群 | Haikou Volcanic Cluster | A park of extinct volcano craters. | | 19.90,110.20
 A | 假日海滩 | Holiday Beach | The city beach. | | 20.04,110.32
@@ -25,12 +24,10 @@ A | 南山寺 | Nanshan Temple | A temple with a huge Guanyin statue by the sea.
 A | 蜈支洲岛 | Wuzhizhou Island | An island with clear water for diving. | | 18.31,109.76
 A | 大东海 | Dadonghai | A city beach. | | 18.22,109.52
 A | 鹿回头 | Luhuitou | A hill with a legend of a deer and a hunter. | | 18.20,109.51
-A | 南山文化旅游区 | Nanshan Cultural Zone | A large Buddhist cultural park. | | 18.30,109.17
 D | 海鲜 | Sanya seafood | Fresh seafood at the market. | |
 D | 椰子鸡 | Coconut chicken hot pot | Chicken simmered in coconut water. | |
 D | 芒果 | Hainan mango | Sweet mangoes in season. | |
 D | 和乐蟹 | Hele crab | A famous crab from Wanning. | |
-C | 黎族船型屋 | Li boat-shaped houses | Traditional thatched houses of the Li people. | |
 C | 黎锦 | Li brocade | A woven cloth with a very long history. | |
 
 city: wanning | 万宁 | Wanning | 18.80 | 110.39 | A coastal city for surfing. |
@@ -52,20 +49,16 @@ D | 椰子 | Coconut | A major coconut area. | |
 
 city: danzhou | 儋州 | Danzhou | 19.52 | 109.58 | A western city where the poet Su Dongpo was exiled. |
 A | 东坡书院 | Dongpo Academy | A school started by the exiled poet Su Dongpo. | | 19.57,109.48
-A | 海南热带植物园 | Hainan Tropical Garden | A large tropical plant garden. | | 19.50,109.50
 D | 儋州米烂 | Danzhou mi lan | A rice-based porridge. | |
 D | 儋州火山荔枝 | Danzhou lychee | Lychees grown on volcanic soil. | |
 
 city: wuzhishan | 五指山 | Wuzhishan | 18.78 | 109.52 | The mountain city at the island's heart. |
 A | 五指山 | Five Finger Mountain | The highest mountain in Hainan. | | 18.90,109.67
-A | 水满乡 | Shuiman Village | A Li village in the mountains. | | 18.78,109.52
 D | 五指山红茶 | Wuzhishan black tea | A tea grown in the mountains. | |
 D | 山兰酒 | Shanlan wine | A rice wine of the Li people. | |
 C | 三月三 | Li March Third | The main festival of the Li people. | |
 
 city: ledong | 乐东 | Ledong | 18.75 | 109.17 | A western county of Li culture. |
-A | 尖峰岭 | Jianfengling | A tropical rainforest. | | 18.73,108.85
-A | 莺歌海盐场 | Yinggehai Salt Field | An old salt field by the sea. | | 18.51,108.70
 D | 乐东芒果 | Ledong mango | Sweet mangoes. | |
 
 city: lingshui | 陵水 | Lingshui | 18.50 | 110.03 | An eastern coastal county. |

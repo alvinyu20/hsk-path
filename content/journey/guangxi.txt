@@ -7,14 +7,11 @@ A | 青秀山 | Qingxiu Mountain | A forested hill park above the Yong River. | 
 A | 广西民族博物馆 | Guangxi Ethnic Museum | A museum of the many peoples of Guangxi. | | 22.78,108.30
 A | 南湖公园 | South Lake Park | A lake park in the city center. | | 22.80,108.33
 A | 邕江 | Yong River | The river that flows through the city. | | 22.80,108.36
-A | 中山路美食街 | Zhongshan Road Food Street | A famous food street. | | 22.81,108.34
 A | 德天跨国瀑布 | Detian Waterfall | A huge waterfall on the Vietnam border. | | 22.86,106.72
 D | 老友粉 | Laoyou noodles | Rice noodles with sour bamboo, garlic and chili, a Nanning favorite. | |
 D | 螺蛳粉 | Luosifen | Snail rice noodles with a famous strong smell. | |
 D | 柠檬鸭 | Lemon duck | Duck cooked with pickled lemon. | |
-D | 生榨米粉 | Fresh-pressed noodles | Rice noodles pressed fresh into the broth. | |
 D | 芒果 | Mango | Nanning is a major mango area. | |
-C | 壮族三月三 | Zhuang March Third | The biggest festival of the Zhuang people with songs. | |
 C | 壮锦 | Zhuang brocade | A traditional woven cloth. | |
 C | 铜鼓 | Bronze drum | A drum used by southern peoples for thousands of years. | |
 
@@ -22,81 +19,52 @@ city: guilin | 桂林 | Guilin | 25.27 | 110.29 | The home of the most famous ka
 A | 漓江 | Li River | A river among green karst peaks, shown on the 20 yuan note. | | 25.07,110.33
 A | 象鼻山 | Elephant Trunk Hill | A hill shaped like an elephant drinking from the river. | | 25.27,110.30
 A | 芦笛岩 | Reed Flute Cave | A cave with lit rock formations. | | 25.31,110.26
-A | 两江四湖 | Two Rivers and Four Lakes | A night cruise in the heart of the city. | | 25.28,110.29
 A | 独秀峰 | Solitary Beauty Peak | A hill within the old Ming princes' city. | | 25.29,110.29
 A | 龙脊梯田 | Longji Rice Terraces | Rice terraces on hillsides, home to the Zhuang and Yao. | | 25.75,110.10
 A | 遇龙河 | Yulong River | A quiet river for bamboo rafts. | | 24.76,110.45
 A | 银子岩 | Silver Cave | A cave of glittering rock. | | 24.65,110.50
-A | 世外桃源 | Shangri-La Garden | A garden of rice fields and karst peaks. | | 24.80,110.45
 D | 桂林米粉 | Guilin rice noodles | Round rice noodles with braised meat and a rich broth. | |
-D | 啤酒鱼 | Beer fish | River fish cooked in beer, from Yangshuo. | |
 D | 荔浦芋头 | Lipu taro | A starchy taro used in braised pork. | |
 D | 恭城油茶 | Gongcheng oil tea | A savory tea made with fried tea leaves and nuts. | |
 D | 桂花糕 | Osmanthus cake | A sweet cake with osmanthus flowers, popular in autumn. | |
 C | 瑶族长发 | Yao long hair | The Red Yao women of Longji are known for their very long hair. | |
-C | 桂林山水画 | Guilin landscape painting | A rich art of ink and mountain scenery. | |
 
 city: yangshuo | 阳朔 | Yangshuo | 24.78 | 110.49 | A river town surrounded by karst peaks. |
 A | 西街 | West Street | A lively street in Yangshuo with cafés and shops. | | 24.78,110.49
 A | 月亮山 | Moon Hill | A hill with a round hole through its top. | | 24.74,110.46
-A | 十里画廊 | Ten-Mile Gallery | A scenic road lined with peaks. | | 24.76,110.45
-A | 印象刘三姐 | Impression Liu Sanjie | An open-air show on the river, directed by Zhang Yimou. | | 24.80,110.50
 A | 兴坪古镇 | Xingping Ancient Town | A town upriver with a famous view. | | 24.92,110.52
 A | 漓江竹筏 | Li River bamboo rafts | Rafts that carry visitors down the river. | | 24.92,110.52
-D | 阳朔啤酒鱼 | Yangshuo beer fish | A well-known local dish. | |
-D | 田螺酿 | Stuffed river snails | Snails stuffed with pork and herbs. | |
 C | 刘三姐 | Liu Sanjie | A singer of Zhuang legend, a folk heroine. | |
 
 city: liuzhou | 柳州 | Liuzhou | 24.33 | 109.43 | An industrial city on the Liu River, home of snail noodles. |
 A | 柳侯公园 | Liuhou Park | A park for the Tang writer Liu Zongyuan. | | 24.31,109.41
-A | 柳州工业博物馆 | Liuzhou Industrial Museum | A museum of the city's industry. | | 24.33,109.43
 A | 龙潭公园 | Longtan Park | A lake park with a hill. | | 24.30,109.37
 A | 鱼峰山 | Yufeng Hill | A hill shaped like a fish. | | 24.30,109.40
-D | 柳州螺蛳粉 | Liuzhou snail noodles | The original home of the strong-smelling snail noodle soup. | |
 
 city: beihai | 北海 | Beihai | 21.48 | 109.12 | A beach city on the Gulf of Tonkin. |
 A | 银滩 | Silver Beach | A long, fine beach. | | 21.42,109.14
 A | 涠洲岛 | Weizhou Island | A volcanic island with coral and cliffs. | | 21.03,109.10
-A | 老街 | Zhuhai Road Old Street | A street of old arcades. | | 21.48,109.11
 A | 红树林 | Mangrove forest | A mangrove reserve on the coast. | | 21.58,109.30
-A | 合浦古港 | Hepu Ancient Port | A port of the Maritime Silk Road. | | 21.65,109.20
 D | 海鲜 | Beihai seafood | Fresh shrimp, crab and fish. | |
-D | 沙虫 | Sandworm | A prized sea worm, boiled or fried. | |
-D | 合浦珍珠 | Hepu pearls | Pearls farmed near Beihai for over 2,000 years. | |
 
 city: wuzhou | 梧州 | Wuzhou | 23.48 | 111.28 | A river city at the border with Guangdong. |
 A | 骑楼城 | Arcade City | A district of old arcade buildings. | | 23.48,111.28
-A | 龙母庙 | Dragon Mother Temple | A temple to a river goddess. | | 23.47,111.27
 D | 龟苓膏 | Turtle jelly | A black herbal jelly eaten sweetened. | |
-D | 梧州纸包鸡 | Paper-wrapped chicken | Chicken wrapped in paper and fried. | |
 
 city: baise | 百色 | Baise | 23.90 | 106.62 | A red-history city and mountain area. |
 A | 百色起义纪念馆 | Baise Uprising Memorial | A memorial of the 1929 Baise uprising. | | 23.90,106.62
-A | 靖西通灵大峡谷 | Tongling Grand Canyon | A canyon with waterfalls. | | 23.14,106.40
-D | 百色芒果 | Baise mango | A famed mango from the river valley. | |
-D | 靖西鸭 | Jingxi duck | A local duck breed. | |
 
 city: chongzuo | 崇左 | Chongzuo | 22.38 | 107.37 | A border city with rock art. |
 A | 花山岩画 | Zuojiang Huashan Rock Art | Rock paintings of people on a cliff beside a river. | A UNESCO World Heritage Site. | 22.10,107.35
 A | 友谊关 | Friendship Pass | The main border gate with Vietnam. | | 22.01,106.73
-A | 白头叶猴保护区 | White-headed Langur Reserve | A reserve for a rare monkey. | | 22.45,107.20
-D | 崇左糖 | Chongzuo sugar | The city is a major sugar-cane area. | |
 
 city: qinzhou | 钦州 | Qinzhou | 21.96 | 108.65 | A port city and home of pottery. |
-A | 钦州坭兴陶 | Qinzhou Nixing pottery | A red-brown pottery that is not glazed. | | 21.96,108.65
-A | 三娘湾 | Sanniang Bay | A bay where pink dolphins are seen. | | 21.73,108.60
-D | 钦州猪脚粉 | Qinzhou pork-foot noodles | Noodles with braised pork feet. | |
-D | 大蚝 | Qinzhou oysters | Large oysters from the bay. | |
 
 city: yulin-gx | 玉林 | Yulin | 22.65 | 110.18 | A city famed for medicinal herbs and cuisine. |
 A | 云天文化城 | Yuntian Culture City | A cultural park in Yulin. | | 22.64,110.17
-A | 大容山 | Darong Mountain | A forest mountain. | | 22.65,110.50
 D | 玉林牛巴 | Yulin beef jerky | Cured beef. | |
 D | 玉林凉茶 | Yulin herbal tea | A herbal drink. | |
 
 city: hechi | 河池 | Hechi | 24.69 | 108.09 | A mountain area of Zhuang and Yao cultures. |
-A | 巴马长寿村 | Bama Longevity Village | A county known for its many elderly residents. | | 24.14,107.26
-A | 刘三姐故里 | Liu Sanjie's Hometown | The area linked to the folk singer. | | 24.69,108.09
 D | 巴马香猪 | Bama fragrant pig | A small local pig. | |
 D | 巴马火麻汤 | Bama hemp soup | A soup made with hemp seeds. | |
-C | 壮族山歌 | Zhuang folk song | Singing contests in the mountains. | |

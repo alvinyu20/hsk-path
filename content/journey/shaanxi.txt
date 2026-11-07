@@ -10,7 +10,6 @@ A | 小雁塔 | Small Wild Goose Pagoda | A thinner Tang pagoda in the city. | |
 A | 钟楼 | Bell Tower | A Ming tower at the center of the old city. | | 34.26,108.94
 A | 鼓楼 | Drum Tower | A tower that once beat out the time at dusk. | | 34.26,108.94
 A | 回民街 | Muslim Quarter | A lane of snacks and shops in the old Muslim neighborhood. | | 34.26,108.94
-A | 大唐不夜城 | Tang Paradise at Night | A street of lights, statues and shows in Tang style. | | 34.21,108.96
 A | 华清池 | Huaqing Pool | A hot spring palace tied to Emperor Xuanzong and Yang Guifei. | | 34.36,109.21
 A | 陕西历史博物馆 | Shaanxi History Museum | A museum of Tang gold and silver and ancient relics. | | 34.22,108.95
 A | 碑林博物馆 | Beilin Museum | A forest of stone steles, including old calligraphy. | | 34.25,108.95
@@ -33,24 +32,18 @@ D | 咸阳烙面 | Xianyang lao mian | Noodles served with a fragrant sauce. | |
 
 city: baoji | 宝鸡 | Baoji | 34.36 | 107.24 | The cradle of Zhou culture and bronzes. |
 A | 法门寺 | Famen Temple | A temple that holds a finger bone relic of the Buddha. | | 34.45,107.89
-A | 周原遗址 | Zhouyuan Site | The old heartland of the Zhou dynasty. | | 34.52,107.75
 A | 太白山 | Taibai Mountain | The highest peak in the Qinling Mountains. | | 34.00,107.76
 D | 岐山臊子面 | Qishan saozi noodles | The classic Qishan version of the dish. | |
 D | 宝鸡擀面皮 | Baoji rolled noodles | A cool noodle dish with a rich sauce. | |
 
 city: yanan | 延安 | Yan'an | 36.60 | 109.49 | The base of the Communist Party in the 1930s and 40s. |
 A | 宝塔山 | Pagoda Hill | A hill with a pagoda that stands as a symbol of Yan'an. | | 36.60,109.50
-A | 杨家岭 | Yangjialing | A set of cave dwellings used as an office and a hall. | | 36.62,109.46
-A | 枣园 | Zaoyuan | A garden compound where Party leaders lived. | | 36.62,109.41
 A | 壶口瀑布 | Hukou Waterfall | A great waterfall where the Yellow River squeezes into a narrow gorge. | | 36.14,110.43
 D | 洋芋擦擦 | Potato shreds | Shredded potato steamed and tossed with chili. | |
 D | 延安黄馍馍 | Yellow millet bun | A sweet steamed cake of yellow millet. | |
-C | 安塞腰鼓 | Ansai waist drum | A powerful drum dance of northern Shaanxi. | |
 
 city: hanzhong | 汉中 | Hanzhong | 33.07 | 107.02 | A southern basin city, the base of the Han dynasty. |
-A | 张良庙 | Zhang Liang Temple | A shrine to the strategist who helped found the Han. | | 33.17,106.97
 A | 武侯墓 | Wuhou Tomb | The tomb of Zhuge Liang. | | 33.14,106.78
-A | 油菜花海 | Rapeseed flower fields | A vast yellow flower sea in spring. | | 33.07,107.02
 D | 汉中热米皮 | Hanzhong hot rice skin | Steamed rice noodles with spicy sauce. | |
 D | 汉中菜豆腐 | Hanzhong vegetable tofu | A tofu made with vegetables, a local specialty. | |
 
@@ -62,16 +55,12 @@ D | 羊肉面 | Yulin lamb noodles | Noodles with lamb broth. | |
 D | 榆林豆腐 | Yulin tofu | Tofu made with local water, firm and fine. | |
 
 city: weinan | 渭南 | Weinan | 34.50 | 109.51 | An eastern city near the Yellow River. |
-A | 司马迁祠 | Sima Qian Temple | A temple to the historian who wrote the Records of the Grand Historian. | | 35.66,110.43
 D | 蒲城酥饼 | Pucheng pastry | A flaky pastry with a sweet filling. | |
 D | 大荔冬枣 | Dali winter jujube | Crisp sweet jujubes. | |
 
 city: shangluo | 商洛 | Shangluo | 33.87 | 109.94 | A mountain area in the Qinling range. |
-A | 金丝大峡谷 | Golden Thread Canyon | A deep canyon with a river. | | 33.69,109.87
-A | 棣花古镇 | Dihua Ancient Town | A town in the novels of the writer Jia Pingwa. | | 33.69,110.46
 D | 商洛核桃 | Shangluo walnuts | Walnuts from the mountain slopes. | |
 
 city: ankang | 安康 | Ankang | 32.69 | 109.03 | A southern city rich in tea and selenium. |
-A | 瀛湖 | Yinghu Lake | A reservoir lake with islands. | | 32.89,109.42
 D | 安康蒸面 | Ankang steamed noodles | Steamed noodles with a spicy sauce. | |
 D | 紫阳富硒茶 | Ziyang selenium tea | Tea grown in selenium-rich soil. | |

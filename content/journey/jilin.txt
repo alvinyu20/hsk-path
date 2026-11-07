@@ -7,7 +7,6 @@ A | 伪满皇宫博物院 | Puppet Emperor's Palace | The former palace of the l
 A | 长影旧址博物馆 | Changchun Film Studio Museum | A film museum. | | 43.88,125.36
 A | 净月潭 | Jingyuetan | A forest lake park. | | 43.78,125.45
 A | 南湖公园 | South Lake Park | A big lake park. | | 43.86,125.28
-A | 长春雕塑公园 | Changchun Sculpture Park | A park of sculptures. | | 43.84,125.29
 A | 一汽 | FAW | The first car factory in China. | | 43.87,125.21
 A | 吉林省博物院 | Jilin Provincial Museum | A museum. | | 43.88,125.33
 D | 锅包肉 | Guobaorou | Crisp sweet and sour pork, from the northeast. | |
@@ -33,42 +32,31 @@ A | 长白山 | Changbai Mountain | A volcano with a crater lake at the border w
 A | 长白山天池 | Heaven Lake | A crater lake at the peak of Changbai. | | 42.01,128.06
 A | 长白山瀑布 | Changbai Waterfall | A tall waterfall from the lake. | | 42.02,128.07
 A | 图们江 | Tumen River | A border river. | | 42.96,129.84
-A | 延吉朝鲜族民俗园 | Yanji Korean Folk Park | A park about Korean customs. | | 42.90,129.51
 A | 敦化六鼎山 | Liuding Mountain | A temple and tomb hill. | | 43.37,128.20
 D | 冷面 | Korean cold noodles | Chewy noodles in an icy broth. | |
 D | 烤肉 | Korean barbecue | Meat grilled at the table. | |
 D | 石锅拌饭 | Bibimbap | Rice with vegetables and egg. | |
 D | 辣白菜 | Kimchi | Spicy fermented cabbage. | |
-C | 朝鲜族农乐舞 | Korean farmers' dance | A dance with drums. | |
-C | 朝鲜族秋千 | Korean swing | A swing game at festivals. | |
-C | 朝鲜族跳板 | Korean seesaw | A seesaw jumping game. | |
 
 city: siping | 四平 | Siping | 43.17 | 124.35 | A city on a rail line, site of battles. |
 A | 四平战役纪念馆 | Siping Campaign Memorial | A museum of the 1946 battles. | | 43.17,124.35
-A | 叶赫那拉城 | Yehe Nara City | The old city of the clan of Empress Dowager Cixi. | | 43.20,124.45
 D | 四平烧烤 | Siping barbecue | Grilled meat. | |
 
 city: songyuan | 松原 | Songyuan | 45.14 | 124.82 | A city of lakes and oil. |
 A | 查干湖 | Chagan Lake | A big lake with winter fishing, in which people pull huge nets through the ice. | | 45.20,124.20
-A | 查干湖冬捕 | Chagan winter fishing | A winter festival where a huge net is pulled through ice. | | 45.20,124.20
 D | 查干湖鱼 | Chagan Lake fish | Fish from the lake. | |
 
 city: tonghua | 通化 | Tonghua | 41.73 | 125.94 | A mountain city known for wine and herbs. |
-A | 集安高句丽遗迹 | Ji'an Goguryeo Sites | Tombs and fortresses of the Goguryeo kingdom. | A UNESCO World Heritage Site. | 41.13,126.19
 A | 好太王碑 | Gwanggaeto Stele | A big stone stele from the fifth century. | | 41.13,126.19
-A | 通化葡萄酒 | Tonghua wine | A wine region. | | 41.73,125.94
 D | 通化人参 | Tonghua ginseng | Ginseng from the hills. | |
 D | 通化山葡萄酒 | Mountain grape wine | A sweet wild-grape wine. | |
 
 city: baicheng | 白城 | Baicheng | 45.62 | 122.84 | A western city of grasslands. |
-A | 向海湿地 | Xianghai Wetland | A bird wetland. | | 45.00,122.30
-A | 嫩江湿地 | Nenjiang Wetland | A river wetland. | | 45.60,123.00
 
 city: liaoyuan | 辽源 | Liaoyuan | 42.89 | 125.14 | A small coal city. |
 A | 龙首山 | Longshou Mountain | A hill park. | | 42.89,125.14
 
 city: baishan | 白山 | Baishan | 41.94 | 126.42 | A forest city at the foot of Changbai. |
-A | 长白山北坡 | Changbai North Slope | A hiking route. | | 42.10,128.00
 A | 鸭绿江 | Yalu River | The border river. | | 41.60,126.50
 D | 长白山人参 | Changbai ginseng | A famous herb. | |
 D | 林蛙 | Forest frog | A frog dish of the forests. | |

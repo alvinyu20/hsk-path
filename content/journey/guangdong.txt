@@ -10,7 +10,6 @@ A | 越秀公园 | Yuexiu Park | A hill park with the five-ram statue, the symbo
 A | 上下九步行街 | Shangxiajiu Pedestrian Street | An old shopping street with arcade buildings and many snack shops. | | 23.12,113.24
 A | 珠江夜游 | Pearl River Night Cruise | Boats pass the lit-up towers and bridges along the river. | | 23.11,113.27
 A | 白云山 | Baiyun Mountain | The green hill north of the center, a favorite for weekend walks. | | 23.18,113.30
-A | 南越王墓博物馆 | Museum of the Nanyue King | A tomb of a king who ruled here more than 2,000 years ago, with a jade burial suit. | | 23.14,113.26
 D | 早茶 | Morning tea (dim sum) | A slow breakfast of small dishes and pots of tea, a Guangzhou tradition. | | | zǎochá
 D | 虾饺 | Shrimp dumplings | Thin, clear wrappers around whole shrimp. A test of a dim sum chef. | |
 D | 肠粉 | Rice noodle rolls | Silky steamed rice sheets rolled around shrimp, beef or pork and drizzled with sweet soy. | |
@@ -22,7 +21,6 @@ D | 艇仔粥 | Boat congee | Smooth rice porridge with fish, squid and peanuts,
 C | 粤剧 | Cantonese opera | Singing, martial arts and costumes in the Cantonese language. | |
 C | 广彩 | Guangcai porcelain | Brightly painted porcelain made for export. | |
 C | 凉茶 | Herbal tea | Bitter herbal drinks that Cantonese people drink to cool the body. | |
-C | 醒狮 | Awakening lion dance | A lion dance with drums, often seen at openings and festivals. | |
 
 city: shenzhen | 深圳 | Shenzhen | 22.54 | 114.06 | A fishing town that became a giant technology city in a few decades. | Its population grew from tens of thousands to over ten million within about 40 years.
 A | 世界之窗 | Window of the World | A park with small copies of famous sights from around the world. | | 22.54,113.97
@@ -38,8 +36,6 @@ city: foshan | 佛山 | Foshan | 23.02 | 113.12 | A city of kung fu, ceramics an
 A | 祖庙 | Ancestral Temple | A temple with elaborate roof ceramics and a martial arts hall. | | 23.03,113.11
 A | 黄飞鸿纪念馆 | Wong Fei-hung Memorial Hall | A museum for the folk hero Wong Fei-hung. | He is the subject of many Hong Kong kung fu films. | 23.03,113.11
 A | 南风古灶 | Nanfeng Ancient Kiln | A dragon kiln still used to make pottery. | | 23.00,113.05
-D | 顺德双皮奶 | Shunde milk pudding | Shunde is called the food capital of Guangdong. | |
-D | 均安蒸猪 | Steamed pig of Junan | A local festive dish of roast pork. | |
 D | 鱼生 | Raw fish slices | Thin slices of raw freshwater fish eaten with ginger and sauces, a Shunde dish. | |
 C | 咏春拳 | Wing Chun | A style of kung fu said to have been developed by a woman. | |
 C | 剪纸 | Foshan paper cuts | Delicate cut-paper art for festivals. | |
@@ -49,16 +45,12 @@ A | 圆明新园 | New Yuanmingyuan | A theme park of reconstructed palaces. | |
 A | 情侣路 | Lover's Road | A long seaside road for walking and cycling. | | 22.25,113.58
 A | 渔女雕像 | Fisher Girl statue | The city's symbol, a statue on a rock in the sea. | | 22.27,113.59
 A | 横琴岛 | Hengqin Island | An island next to Macau with a big ocean resort. | | 22.12,113.53
-D | 横山蚝 | Hengshan oysters | Large oysters served grilled with garlic. | |
 
 city: dongguan | 东莞 | Dongguan | 23.02 | 113.75 | A factory city that makes a lot of the world's products. |
 A | 可园 | Keyuan Garden | A small garden in Lingnan style with halls and pavilions. | | 23.05,113.74
 A | 鸦片战争博物馆 | Opium War Museum | A museum at the site of an old fort near Humen. | | 22.82,113.62
-D | 东莞烧鹅 | Dongguan roast goose | Crispy roast goose from the Qingxi area. | |
-D | 道滘粽 | Daojiao rice dumplings | Large sticky rice dumplings from the Dragon Boat season. | |
 
 city: shantou | 汕头 | Shantou | 23.35 | 116.68 | The center of Chaoshan culture on the east coast. |
-A | 小公园开埠区 | Little Park Old Town | Old arcade streets built when the port opened. | | 23.36,116.69
 A | 南澳岛 | Nan'ao Island | An island with beaches and seafood. | | 23.43,117.03
 D | 牛肉丸 | Beef balls | Springy beef balls pounded by hand, a Chaoshan specialty. | |
 D | 蚝烙 | Oyster omelet | Crispy oysters in a starchy egg pancake. | |
@@ -67,12 +59,9 @@ C | 工夫茶 | Gongfu tea | Tea brewed in tiny cups with careful steps. Almost 
 
 city: chaozhou | 潮州 | Chaozhou | 23.66 | 116.62 | An old city with a famous stone bridge and a strong food tradition. |
 A | 广济桥 | Guangji Bridge | A medieval bridge half made of boats that can be opened. | | 23.66,116.63
-A | 牌坊街 | Archway Street | A street lined with stone memorial archways. | | 23.66,116.62
 A | 开元寺 | Kaiyuan Temple | A Tang-dynasty temple with a long history. | | 23.66,116.62
-D | 潮州牛肉丸 | Chaozhou beef balls | Fresh, bouncy beef balls in clear soup. | |
 D | 卤鹅 | Braised goose | Goose slowly cooked in a spiced master sauce. | |
 C | 潮州木雕 | Chaozhou wood carving | Detailed gold-painted carvings in temples and houses. | |
-C | 潮州凤凰单丛 | Phoenix Dancong tea | An oolong tea grown on Phoenix Mountain, known for floral scents. | | 23.85,116.73
 
 city: zhaoqing | 肇庆 | Zhaoqing | 23.05 | 112.47 | A lakeside city with limestone hills and a Ming-dynasty wall. |
 A | 七星岩 | Seven Star Crags | Seven limestone hills rising from a lake. | | 23.10,112.48
@@ -89,37 +78,26 @@ D | 东江盐焗鸡 | Salt-baked chicken | A Hakka dish of chicken baked in salt
 
 city: zhongshan | 中山 | Zhongshan | 22.52 | 113.39 | The hometown of Sun Yat-sen. |
 A | 孙中山故居 | Sun Yat-sen Former Residence | The house where Sun Yat-sen was born. | | 22.45,113.52
-A | 詹园 | Zhanyuan Garden | A garden in Lingnan style. | | 22.53,113.38
-D | 脆肉鲩 | Crispy grass carp | Fish fed on broad beans until the flesh turns crunchy. | |
-D | 石岐乳鸽 | Shiqi roast pigeon | Roast pigeon with crisp skin, a Zhongshan favorite. | |
 
 city: jiangmen | 江门 | Jiangmen | 22.58 | 113.08 | The land of diaolou, towers built by overseas Chinese families. |
 A | 开平碉楼 | Kaiping Diaolou | Fortified watch towers mixing Chinese and Western styles. | A UNESCO World Heritage Site. | 22.37,112.59
 A | 自力村 | Zili Village | A village with many tall diaolou among rice fields. | | 22.37,112.55
 A | 小鸟天堂 | Bird's Paradise | A giant banyan tree that thousands of birds roost in. | | 22.54,113.07
-D | 新会陈皮 | Xinhui aged tangerine peel | Sun-dried peel used in cooking, tea and sweets, aged like wine. | |
-C | 侨乡文化 | Overseas Chinese hometown culture | Many families here have relatives who moved abroad, shaping local buildings. | |
 
 city: shaoguan | 韶关 | Shaoguan | 24.81 | 113.60 | A mountain city in the north with red cliffs and a Buddhist temple. |
 A | 丹霞山 | Danxia Mountain | Red sandstone cliffs and peaks that give the landform its name. | A UNESCO World Heritage Site. | 25.03,113.74
 A | 南华禅寺 | Nanhua Temple | A famous temple, home of the Sixth Patriarch of Chan Buddhism. | | 24.66,113.62
 A | 云门寺 | Yunmen Temple | A Chan temple founded in the Tang dynasty. | | 24.75,113.41
-D | 韶关红茶 | Shaoguan black tea | Black tea from the hills of northern Guangdong. | |
 
 city: meizhou | 梅州 | Meizhou | 24.29 | 116.12 | The heart of Hakka culture, with round earth buildings and mountains. |
-A | 客家博物馆 | Hakka Museum | A museum on the history of the Hakka people. | | 24.30,116.12
-A | 雁南飞茶田 | Yannanfei Tea Fields | Tea terraces in the hills. | | 24.37,116.28
 D | 客家酿豆腐 | Hakka stuffed tofu | Tofu pieces stuffed with minced pork and simmered. | |
 D | 盐焗鸡 | Salt-baked chicken (Meizhou) | A Hakka classic served cold or warm. | |
-C | 客家山歌 | Hakka mountain songs | Folk songs sung across the fields and hills. | |
 
 city: yangjiang | 阳江 | Yangjiang | 21.86 | 111.98 | A coastal city of knives, kites and seafood. |
 A | 海陵岛 | Hailing Island | An island with long beaches and a Song-dynasty shipwreck museum. | | 21.58,111.82
 A | 南海一号 | Nanhai No. 1 shipwreck | A Song-dynasty merchant ship recovered whole, now in a museum. | | 21.58,111.83
-D | 阳江豆豉 | Yangjiang fermented black beans | Salty black beans used in cooking. | |
 D | 海鲜 | Island seafood | Fresh fish and shellfish at Hailing Island. | |
 
 city: zhanjiang | 湛江 | Zhanjiang | 21.27 | 110.36 | A southern port at the tip of the Leizhou Peninsula. |
-A | 特呈岛 | Techeng Island | A small island with mangroves and beaches. | | 21.20,110.46
 A | 湖光岩 | Huguangyan Maar Lake | A round lake in an ancient volcanic crater. | | 21.15,110.28
 D | 生蚝 | Fresh oysters | Plump oysters grilled or steamed with garlic. | |

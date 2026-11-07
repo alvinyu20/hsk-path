@@ -235,6 +235,13 @@ async function lookup(api, stop) {
 
 // Airports: one photo for the whole province (its own Wikipedia page, never a map, flag or the airport itself); failing that, the main city's photo.
 const PROVINCE_PAGES = { anhui: ['安徽省', 'Anhui'], fujian: ['福建省', 'Fujian'], gansu: ['甘肃省', 'Gansu'], guangdong: ['广东省', 'Guangdong'], guangxi: ['广西壮族自治区', 'Guangxi'], guizhou: ['贵州省', 'Guizhou'], hainan: ['海南省', 'Hainan'], hebei: ['河北省', 'Hebei'], heilongjiang: ['黑龙江省', 'Heilongjiang'], henan: ['河南省', 'Henan'], hongkong: ['香港', 'Hong Kong'], hubei: ['湖北省', 'Hubei'], hunan: ['湖南省', 'Hunan'], jiangsu: ['江苏省', 'Jiangsu'], jiangxi: ['江西省', 'Jiangxi'], jilin: ['吉林省', 'Jilin'], liaoning: ['辽宁省', 'Liaoning'], macau: ['澳门', 'Macau'], neimenggu: ['内蒙古自治区', 'Inner Mongolia'], ningxia: ['宁夏回族自治区', 'Ningxia'], qinghai: ['青海省', 'Qinghai'], shaanxi: ['陕西省', 'Shaanxi'], shandong: ['山东省', 'Shandong'], shanxi: ['山西省', 'Shanxi'], sichuan: ['四川省', 'Sichuan'], singapore: ['新加坡', 'Singapore'], taiwan: ['台湾', 'Taiwan'], xinjiang: ['新疆维吾尔自治区', 'Xinjiang'], xizang: ['西藏自治区', 'Tibet'], yunnan: ['云南省', 'Yunnan'], zhejiang: ['浙江省', 'Zhejiang'] };
+// Last resort for a province photo: the main city's photo, else the first sight in the region that has one.
+function landmarkPhoto(R, media) {
+  const main = R.cities[0] && R.cities[0].first && media[R.cities[0].first.id];
+  if (main) return main;
+  const a = R.stops.find((s) => s.k === 'A' && media[s.id]);
+  return a ? media[a.id] : null;
+}
 async function regionPhoto(api, R) {
   const t = PROVINCE_PAGES[R.id] || [R.zh, R.en];
   for (const [lang, title] of [['zh', t[0]], ['en', t[1]]]) {
@@ -295,7 +302,7 @@ async function run(opts) {
         if (stop.k === 'P') {
           const R = regionOf[stop.id]; provinces[R.id] = provinces[R.id] || regionPhoto(api, R);
           r = await provinces[R.id];
-          if (!r.entry) { const c = R.cities[0] && R.cities[0].first && media[R.cities[0].first.id]; if (c) r = { entry: { u: c.u, c: c.c, a: R.en, r: 1 } }; }
+          if (!r.entry) { const c = landmarkPhoto(R, media); if (c) r = { entry: { u: c.u, c: c.c, a: R.en, r: 1 } }; }
         } else r = await lookup(api, stop);
         if (r.entry && o.verify) { const v = await o.fetch(r.entry.u, { method: 'HEAD', headers: { 'User-Agent': UA } }).catch(() => null); if (!v || !v.ok || !/^image\//.test((v.headers && v.headers.get && v.headers.get('content-type')) || '')) { delete r.entry; r.miss = 'image does not load'; } }
         if (r.entry) { media[stop.id] = r.entry; delete misses[stop.id]; found++; } else { misses[stop.id] = r.miss; missed++; }
@@ -310,7 +317,7 @@ async function run(opts) {
   return { media, misses, tried, found, missed, failed };
 }
 
-module.exports = { setSlow: (v) => { SLOW = v; }, run, lookup, makeApi, strip, km, KEEP_LICENCES, writeMedia };
+module.exports = { landmarkPhoto, setSlow: (v) => { SLOW = v; }, run, lookup, makeApi, strip, km, KEEP_LICENCES, writeMedia };
 
 if (require.main === module) {
   const arg = (n) => { const i = process.argv.indexOf('--' + n); return i >= 0 ? process.argv[i + 1] : ''; };

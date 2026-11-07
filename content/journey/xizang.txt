@@ -12,7 +12,6 @@ A | 色拉寺 | Sera Monastery | A monastery famed for monks' debates in the cou
 A | 纳木错 | Namtso Lake | A great salt lake high on the plateau. | | 30.70,90.55
 A | 西藏博物馆 | Tibet Museum | A museum of Tibetan history and art. | | 29.64,91.09
 A | 药王山 | Chakpori Hill | A hill facing the Potala. | | 29.65,91.12
-A | 拉姆拉措 | Lhamo Latso | A sacred lake used to see visions. | | 29.20,92.50
 D | 酥油茶 | Butter tea | Tea churned with yak butter and salt. | |
 D | 糌粑 | Tsampa | Roasted barley flour, the staple of Tibet. | |
 D | 藏面 | Tibetan noodles | Thick noodles with beef. | |
@@ -20,12 +19,10 @@ D | 牦牛肉 | Yak meat | Dried or stewed yak. | |
 D | 青稞酒 | Chang barley beer | A mild barley drink. | |
 D | 酸奶 | Yak yogurt | A thick sweet yogurt. | |
 D | 藏式包子 | Momo | Dumplings filled with meat. | |
-D | 甜茶 | Sweet tea | A milky tea sold in teahouses. | |
 C | 藏历新年 | Losar | The Tibetan New Year. | |
 C | 雪顿节 | Shoton Festival | A summer festival with the unveiling of a giant thangka and opera. | |
 C | 藏戏 | Tibetan opera | A masked opera. | |
 C | 唐卡 | Thangka | Painted scrolls of Buddhist figures. | |
-C | 转经 | Pilgrim circuits | Walking clockwise around sacred sites. | |
 
 city: shigatse | 日喀则 | Shigatse | 29.27 | 88.88 | The second city of Tibet, seat of the Panchen Lama. |
 A | 扎什伦布寺 | Tashilhunpo Monastery | The seat of the Panchen Lamas, with a giant Maitreya statue. | | 29.26,88.87
@@ -36,9 +33,7 @@ A | 白居寺 | Palcho Monastery | A monastery with a nine-story stupa in Gyants
 A | 江孜宗山古堡 | Gyantse Dzong | A fortress on a hill. | | 28.92,89.60
 A | 羊卓雍错 | Yamdrok Lake | A turquoise lake shaped like a scorpion. | | 28.97,90.45
 A | 卡若拉冰川 | Karola Glacier | A glacier by the road. | | 28.95,90.27
-D | 藏香猪 | Tibetan fragrant pig | A small local pig. | |
 D | 酥油饼 | Butter cakes | Butter-fried bread. | |
-D | 牦牛酸奶 | Yak yogurt | A yogurt from yak milk. | |
 
 city: nyingchi | 林芝 | Nyingchi | 29.65 | 94.36 | The green southeast, called the Switzerland of Tibet. |
 A | 雅鲁藏布大峡谷 | Yarlung Tsangpo Grand Canyon | The deepest canyon in the world. | | 29.60,95.00
@@ -47,8 +42,6 @@ A | 巴松措 | Basum Lake | A forest lake. | | 30.00,93.90
 A | 色季拉山 | Sejila Mountain | A pass with views of Namcha Barwa. | | 29.65,94.70
 A | 鲁朗林海 | Lulang Forest | A forest and meadow. | | 29.70,94.80
 A | 桃花节 | Peach Blossom Festival | A spring festival in the valley. | | 29.65,94.36
-D | 林芝松茸 | Nyingchi matsutake | Wild mushrooms. | |
-D | 石锅鸡 | Stone pot chicken | Chicken cooked in a stone pot. | |
 C | 门巴族 | Monpa people | A small people of the forest. | |
 C | 珞巴族 | Lhoba people | A small people of the southeast. | |
 
@@ -57,24 +50,18 @@ A | 雍布拉康 | Yumbulagang | The first palace in Tibet, said to be built in 
 A | 桑耶寺 | Samye Monastery | The first Buddhist monastery in Tibet, built to the plan of a mandala. | | 29.32,91.52
 A | 藏王墓 | Tombs of the Tibetan Kings | Burial mounds of the Tibetan emperors. | | 29.22,91.76
 A | 昌珠寺 | Tradruk Temple | One of the oldest temples in Tibet. | | 29.24,91.77
-A | 哲古错 | Dzeku Lake | A lake in the south. | | 28.90,91.90
 D | 青稞饼 | Barley cake | A flatbread of barley. | |
 C | 藏医药 | Tibetan medicine | A medical system with centuries of history. | |
 
 city: nagqu | 那曲 | Nagqu | 31.48 | 92.05 | A high grassland where nomads live. |
-A | 那曲赛马节 | Nagqu Horse Festival | A summer horse racing festival. | | 31.48,92.05
 A | 色林错 | Selin Co | A large lake on the northern plateau. | | 31.80,89.00
-D | 牦牛肉干 | Yak jerky | Dried yak meat. | |
 
 city: ngari | 阿里 | Ngari | 32.50 | 80.10 | The remote far west, with Mount Kailash. |
 A | 冈仁波齐 | Mount Kailash | A holy mountain for Buddhists, Hindus, Jains and Bon followers. | | 31.07,81.31
 A | 玛旁雍错 | Lake Manasarovar | A holy lake near Mount Kailash. | | 30.65,81.50
-A | 古格王朝遗址 | Guge Kingdom Ruins | The ruins of a lost kingdom on a hill. | | 31.50,79.80
-A | 札达土林 | Zanda Earth Forest | Clay pillars sculpted by erosion. | | 31.48,79.80
 D | 阿里羊肉 | Ngari lamb | Local lamb. | |
 C | 转山 | Kailash kora | A three-day walk around the mountain. | A circuit of about 52 km, said to bring merit. |
 
 city: qamdo | 昌都 | Qamdo | 31.14 | 97.17 | A city at the meeting of three rivers in the east. |
 A | 邦达草原 | Bangda Grassland | A high pasture. | | 30.40,97.10
 A | 然乌湖 | Ranwu Lake | A lake among glaciers. | | 29.45,96.80
-A | 昌都卡若遗址 | Karuo Site | A neolithic site about 5,000 years old. | | 31.15,97.17

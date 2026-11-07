@@ -39,8 +39,6 @@ A | 六合夜市 | Liuhe Night Market | A famous night market. | | 22.63,120.30
 A | 高雄港 | Kaohsiung Harbor | A big container port. | | 22.60,120.28
 A | 美丽岛站 | Formosa Boulevard Station | A subway station with a huge glass dome. | | 22.63,120.30
 D | 木瓜牛奶 | Papaya milk | A drink. | |
-D | 烤乌鱼子 | Grilled mullet roe | A delicacy. | |
-D | 担仔面 | Danzi noodles | A small bowl of noodles with shrimp. | |
 D | 棺材板 | Coffin bread | Thick toast filled with creamy stew. | |
 
 city: tainan | 台南 | Tainan | 23.00 | 120.23 | The oldest city in Taiwan. |
@@ -54,15 +52,12 @@ A | 奇美博物馆 | Chimei Museum | A museum with violins and art. | | 22.93,1
 D | 度小月担仔面 | Du Xiao Yue noodles | A well-known noodle shop. | |
 D | 牛肉汤 | Beef soup | A morning hot beef soup. | |
 D | 鳝鱼意面 | Eel noodles | A Tainan dish. | |
-D | 虱目鱼粥 | Milkfish porridge | A breakfast. | |
-C | 台南庙宇 | Tainan temples | The city has hundreds of temples. | |
 
 city: taichung | 台中 | Taichung | 24.15 | 120.67 | A central city of art and bubble tea. |
 A | 彩虹眷村 | Rainbow Village | A village painted in bright colors. | | 24.13,120.60
 A | 高美湿地 | Gaomei Wetlands | A tidal flat with a famous sunset. | | 24.31,120.55
 A | 逢甲夜市 | Fengjia Night Market | A big student night market. | | 24.18,120.65
 A | 台中国家歌剧院 | Taichung Opera House | A curvy building. | | 24.16,120.64
-A | 宫原眼科 | Miyahara | A shop in an old eye hospital. | | 24.14,120.68
 D | 太阳饼 | Sun cake | A flaky pastry. | |
 
 city: hualien | 花莲 | Hualien | 23.98 | 121.60 | A gateway to the Taroko Gorge. |
@@ -71,7 +66,6 @@ A | 清水断崖 | Qingshui Cliff | A tall sea cliff. | | 24.22,121.68
 A | 七星潭 | Qixingtan | A pebble beach on the Pacific. | | 24.03,121.63
 A | 花东纵谷 | East Rift Valley | A long valley of rice fields. | | 23.50,121.35
 D | 麻糬 | Mochi | Chewy rice cakes. | |
-D | 扁食 | Bianshi | Wonton soup. | |
 C | 阿美族 | Amis people | The largest Indigenous people on the east coast. | |
 C | 丰年祭 | Harvest Festival | An Amis festival. | |
 
@@ -82,47 +76,35 @@ A | 玉山 | Yushan | The highest mountain in Taiwan, at about 3,950 meters. | |
 A | 清境农场 | Qingjing Farm | A high-mountain farm. | | 24.06,121.17
 A | 溪头森林 | Xitou Forest | A bamboo and cedar forest. | | 23.67,120.80
 D | 高山茶 | High mountain tea | A tea grown at high altitude. | |
-D | 阿里山茶 | Alishan tea | A well-known oolong. | |
 C | 邵族 | Thao people | A small Indigenous people. | |
 
 city: yilan | 宜兰 | Yilan | 24.75 | 121.75 | A rice and hot-spring county on the northeast coast. |
 A | 龟山岛 | Turtle Island | An island with whales. | | 24.84,121.95
 A | 太平山 | Taipingshan | A forest park. | | 24.50,121.52
 A | 罗东夜市 | Luodong Night Market | A night market. | | 24.68,121.77
-D | 三星葱 | Sanxing scallion | Scallions grown in Yilan. | |
-D | 卜肉 | Bourou | Fried pork rolls. | |
 
 city: taitung | 台东 | Taitung | 22.76 | 121.14 | A laid-back southeast coast. |
 A | 热气球嘉年华 | Hot Air Balloon Festival | A summer balloon festival. | | 23.05,121.20
 A | 三仙台 | Sanxiantai | A rock island with an arched bridge. | | 23.12,121.41
 A | 绿岛 | Green Island | An island with hot springs and diving. | | 22.66,121.49
 A | 兰屿 | Orchid Island | An island of the Tao people. | | 22.05,121.55
-D | 释迦 | Sugar apple | A sweet custard fruit. | |
-D | 池上饭包 | Chishang lunchbox | A famous railway lunch. | |
 C | 达悟族 | Tao people | An island people with flying fish traditions. | |
 
 city: pingtung | 屏东 | Pingtung | 22.67 | 120.49 | The southern tip with beaches. |
 A | 垦丁 | Kenting | A beach and national park at the tip of the island. | | 21.95,120.80
 A | 鹅銮鼻灯塔 | Eluanbi Lighthouse | A lighthouse at the southern tip. | | 21.90,120.85
 A | 小琉球 | Little Liuqiu | A coral island with green turtles. | | 22.34,120.37
-D | 黑珍珠莲雾 | Black pearl wax apple | A sweet fruit. | |
 D | 万峦猪脚 | Wanluan pork knuckle | A famous braised pork dish. | |
 
 city: hsinchu | 新竹 | Hsinchu | 24.80 | 120.97 | The silicon city. |
 A | 新竹科学园区 | Hsinchu Science Park | The tech hub where many chips are made. | | 24.78,121.01
 A | 城隍庙 | City God Temple | A temple with a night market. | | 24.80,120.96
-A | 内湾老街 | Neiwan Old Street | A railway old street. | | 24.70,121.18
 D | 新竹米粉 | Hsinchu rice vermicelli | Thin rice noodles. | |
 D | 贡丸 | Meatball | A bouncy pork meatball. | |
 
 city: keelung | 基隆 | Keelung | 25.13 | 121.74 | A rainy port city with a night market. |
 A | 庙口夜市 | Miaokou Night Market | A top night market. | | 25.13,121.74
 A | 和平岛公园 | Heping Island Park | A rock coast park. | | 25.16,121.76
-D | 营养三明治 | Nutrition sandwich | A fried sandwich. | |
 D | 天妇罗 | Keelung tempura | Fish cake. | |
 
 city: kinmen | 金门 | Kinmen | 24.45 | 118.32 | A small island group close to Xiamen. |
-A | 金门坑道 | Kinmen tunnels | Tunnels built for war. | | 24.45,118.32
-A | 闽南古厝 | Minnan old houses | Old houses in the southern Fujian style. | | 24.45,118.32
-D | 金门高粱酒 | Kinmen sorghum liquor | A strong liquor. | |
-D | 贡糖 | Gong candy | A peanut candy. | |

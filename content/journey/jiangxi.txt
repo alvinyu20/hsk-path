@@ -10,10 +10,7 @@ A | 秋水广场 | Qiushui Square | A big square on the river. | | 28.70,115.86
 A | 南昌之星摩天轮 | Star of Nanchang | A very tall Ferris wheel. | | 28.69,115.84
 A | 八大山人纪念馆 | Bada Shanren Museum | A museum for the painter Zhu Da. | | 28.60,115.90
 A | 万寿宫 | Wanshou Palace | A Taoist temple tied to the Xu Xun cult. | | 28.67,115.87
-D | 南昌拌粉 | Nanchang mixed rice noodles | Rice noodles with a spicy sauce and a clear soup on the side. | |
 D | 瓦罐汤 | Clay pot soup | Soup simmered in a clay jar for hours. | |
-D | 藜蒿炒腊肉 | Wormwood with bacon | A stir-fry of river stems and cured pork. | |
-D | 鄱阳湖银鱼 | Poyang silverfish | Tiny fish from the lake. | |
 D | 南昌炒粉 | Nanchang fried noodles | Fried rice noodles. | |
 C | 采茶戏 | Tea-picking opera | A folk theater of tea-picking songs. | |
 C | 傩舞 | Nuo dance | A masked ritual dance. | |
@@ -22,10 +19,8 @@ city: jingdezhen | 景德镇 | Jingdezhen | 29.27 | 117.18 | The porcelain capit
 A | 景德镇御窑厂 | Jingdezhen Imperial Kiln | The site of the kilns that made porcelain for the court. | | 29.27,117.19
 A | 古窑民俗博览区 | Ancient Kiln Folk Museum | A park of old kilns and workshops. | | 29.30,117.20
 A | 陶溪川 | Taoxichuan | A former factory area now full of studios. | | 29.27,117.21
-A | 瑶里古镇 | Yaoli Ancient Town | A hill village by a stream. | | 29.60,117.40
 A | 中国陶瓷博物馆 | China Ceramics Museum | A museum. | | 29.29,117.20
 D | 瓷器 | Jingdezhen porcelain | White porcelain with blue patterns, famous around the world. | |
-D | 景德镇冷粉 | Jingdezhen cold noodles | Cold rice noodles with a hot sauce. | |
 D | 鱼饼 | Fish cake | A pan-fried fish cake. | |
 C | 青花瓷 | Blue and white porcelain | Painted in cobalt blue under the glaze. | |
 C | 粉彩 | Fencai enamel | A soft-colored porcelain style. | |
@@ -35,58 +30,36 @@ A | 庐山 | Mount Lu | A misty mountain of waterfalls and villas, a retreat for
 A | 庐山瀑布 | Lushan Waterfall | A waterfall praised by Li Bai. | | 29.57,116.00
 A | 白鹿洞书院 | White Deer Grotto Academy | One of the four great academies of ancient China. | | 29.65,116.04
 A | 鄱阳湖 | Poyang Lake | The largest freshwater lake in China, a winter home for cranes. | | 29.10,116.30
-A | 浔阳楼 | Xunyang Tower | A tower from a classic novel. | | 29.73,115.99
 A | 东林寺 | Donglin Temple | A birthplace of Pure Land Buddhism. | | 29.58,115.90
 A | 含鄱口 | Hanpokou | A viewpoint over the lake. | | 29.57,116.00
-D | 庐山石鸡 | Lushan stone frog | A mountain frog dish. | |
-D | 鄱阳湖大闸蟹 | Poyang crab | Crabs from the lake. | |
 C | 陶渊明 | Tao Yuanming | The poet who wrote about returning to the fields. | |
 
 city: ganzhou | 赣州 | Ganzhou | 25.83 | 114.93 | A southern city of Hakka culture and Song-era walls. |
 A | 郁孤台 | Yugu Terrace | A tower from a poem by Xin Qiji. | | 25.85,114.93
 A | 赣州古城墙 | Ganzhou City Wall | A Song wall, still intact. | | 25.85,114.93
 A | 福寿沟 | Fushou Sewers | A Song-era sewer system still in use. | | 25.85,114.94
-A | 客家围屋 | Hakka walled houses | Walled houses of the Hakka. | | 25.40,115.00
 A | 通天岩 | Tongtianyan | A red-rock cave temple. | | 25.77,114.88
 A | 瑞金 | Ruijin | The capital of the Red Republic of the early 1930s. | | 25.88,116.03
-D | 赣南脐橙 | Gannan navel oranges | Sweet oranges grown in the south. | |
-D | 赣州小炒鱼 | Ganzhou fried fish | A spicy fish dish. | |
 D | 客家酿豆腐 | Hakka stuffed tofu | Tofu with meat filling. | |
-C | 客家围龙屋 | Hakka round houses | A style of home. | |
 
 city: shangrao | 上饶 | Shangrao | 28.45 | 117.94 | A northeast city with Mount Sanqing. |
 A | 三清山 | Mount Sanqing | A mountain of strange granite pillars that look like people and animals. | A UNESCO World Heritage Site. | 28.91,118.06
 A | 婺源 | Wuyuan | A county of villages and rapeseed fields called the most beautiful countryside. | | 29.25,117.86
 A | 龟峰 | Guifeng | A red-rock peak area. | | 28.21,117.47
-A | 篁岭 | Huangling | A hill village with drying crops on roofs. | | 29.27,117.80
 A | 龙虎山 | Dragon-Tiger Mountain | The home of the Celestial Masters of Taoism. | | 28.10,117.02
-D | 婺源糕点 | Wuyuan cakes | Sweets. | |
-D | 弋阳年糕 | Yiyang rice cake | A rice cake. | |
-D | 婺源绿茶 | Wuyuan green tea | A green tea. | |
 
 city: yichun | 宜春 | Yichun | 27.81 | 114.42 | A green city with a hot spring and Mount Mingyue. |
-A | 明月山 | Mingyue Mountain | A mountain with hot springs. | | 27.60,114.25
-A | 温汤温泉 | Wentang Hot Springs | A hot spring. | | 27.70,114.30
-D | 宜春富硒米 | Yichun selenium rice | Rice from selenium-rich soil. | |
-D | 宜春富硒茶 | Yichun selenium tea | A tea. | |
 
 city: jian | 吉安 | Ji'an | 27.11 | 114.99 | A revolutionary mountain city. |
 A | 井冈山 | Jinggangshan | The cradle of the Chinese revolution, in forested mountains. | | 26.58,114.17
-A | 渼陂古村 | Meibei Ancient Village | A village of old houses. | | 27.05,115.07
 A | 白鹭洲书院 | Bailuzhou Academy | An old academy. | | 27.11,114.99
 A | 青原山 | Qingyuan Mountain | A temple mountain. | | 27.05,115.07
-D | 井冈山红米饭 | Red rice and pumpkin soup | A simple Red Army meal. | |
 
 city: fuzhou-jx | 抚州 | Fuzhou | 27.95 | 116.36 | A city of Tang Xianzu, a great playwright. |
-A | 汤显祖纪念馆 | Tang Xianzu Memorial | A memorial for the playwright of The Peony Pavilion. | | 27.95,116.36
-A | 资溪大觉山 | Dajue Mountain | A scenic mountain. | | 27.70,117.00
-A | 金溪古村 | Jinxi Ancient Village | A scholar village. | | 27.92,116.77
-D | 抚州建昌帮 | Jianchang pharmacy | A school of herbal medicine. | |
 D | 南丰蜜桔 | Nanfeng mandarin | A tiny sweet mandarin. | |
 
 city: yingtan | 鹰潭 | Yingtan | 28.24 | 117.03 | The home of Taoist Celestial Masters. |
 A | 天师府 | Celestial Master's Mansion | The home of Taoist grand masters for 60 generations. | | 28.11,117.00
-A | 悬棺 | Hanging coffin site | Ancient coffins placed in cliffs. | | 28.10,117.00
 D | 龙虎山茶 | Dragon-Tiger tea | A tea from the mountain. | |
 
 city: pingxiang | 萍乡 | Pingxiang | 27.62 | 113.85 | A coal city near Wugong Mountain. |

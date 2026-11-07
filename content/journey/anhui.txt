@@ -9,9 +9,6 @@ A | 安徽博物院 | Anhui Museum | A museum of the province. | | 31.81,117.23
 A | 逍遥津公园 | Xiaoyaojin Park | A park from the Three Kingdoms era. | | 31.86,117.30
 A | 巢湖 | Chao Lake | One of China's five largest freshwater lakes. | | 31.60,117.60
 A | 中国科学技术大学 | University of Science and Technology of China | A top science university. | | 31.84,117.27
-D | 庐州烤鸭 | Luzhou roast duck | A local crisp roast duck. | |
-D | 三河米饺 | Sanhe rice dumplings | Rice dumplings filled with meat and vegetables. | |
-D | 合肥龙虾 | Hefei crayfish | Spicy crayfish, a summer favorite. | |
 D | 李鸿章杂烩 | Li Hongzhang stew | A stew said to be created for the statesman. | |
 
 city: huangshan | 黄山 | Huangshan | 29.71 | 118.34 | The city at the foot of the Yellow Mountains. |
@@ -23,97 +20,61 @@ A | 西递 | Xidi | An ancient village of Ming and Qing houses. | A UNESCO World
 A | 宏村 | Hongcun | A village with a moon-shaped pond, seen in a famous film. | | 30.01,117.98
 A | 屯溪老街 | Tunxi Old Street | An old street of tea shops and crafts. | | 29.71,118.33
 A | 徽州古城 | Huizhou Ancient City | A walled city of the Hui merchants. | | 29.89,118.43
-A | 唐模 | Tangmo | A village garden with a water pavilion. | | 30.07,118.43
-D | 臭鳜鱼 | Stinky mandarin fish | A fermented fish, fried until the smell turns into flavor. | |
 D | 毛豆腐 | Hairy tofu | Tofu left to grow a fine white mold, then fried. | |
-D | 黄山烧饼 | Huangshan sesame cake | A crisp cake with preserved vegetables and pork. | |
 D | 黄山毛峰 | Huangshan Maofeng tea | A famed green tea from the mountain. | |
-D | 一品锅 | Yipin pot | A layered stew pot. | |
 C | 徽派建筑 | Huizhou architecture | White walls, dark roofs and carved wood. | |
-C | 徽墨歙砚 | Hui ink and She inkstone | Ink and inkstones from the region, tools of the scholar. | |
 C | 徽剧 | Hui opera | A local opera that fed into Peking opera. | |
 
 city: chizhou | 池州 | Chizhou | 30.66 | 117.49 | A city with a holy Buddhist mountain. |
 A | 九华山 | Jiuhua Mountain | One of the four sacred Buddhist mountains. | | 30.48,117.80
 A | 肉身殿 | Flesh Body Hall | A hall where a monk's body is kept. | | 30.48,117.80
-A | 升金湖 | Shengjin Lake | A wintering ground for cranes. | | 30.35,117.15
-D | 九华素斋 | Jiuhua vegetarian food | The temple's vegetarian cuisine. | |
-D | 九华黄精 | Jiuhua Huangjing | A herb grown in the mountains. | |
 
 city: wuhu | 芜湖 | Wuhu | 31.35 | 118.43 | A river port with a famous sculpture park. |
-A | 方特乐园 | Fantawild Park | A theme park in the city. | | 31.38,118.37
 A | 镜湖 | Jing Lake | A city lake. | | 31.34,118.38
 A | 中江塔 | Zhongjiang Pagoda | A pagoda on the Yangtze. | | 31.37,118.37
-D | 芜湖小笼包 | Wuhu small buns | Little buns. | |
-D | 芜湖铁画 | Wuhu iron painting | Pictures made of forged iron. | |
 
 city: anqing | 安庆 | Anqing | 30.54 | 117.06 | A river city, the cradle of Huangmei opera. |
 A | 振风塔 | Zhenfeng Pagoda | A tall Ming pagoda on the river. | | 30.51,117.05
 A | 天柱山 | Tianzhu Mountain | A mountain of granite peaks. | | 30.73,116.46
 A | 迎江寺 | Yingjiang Temple | A temple beside the Yangtze. | | 30.51,117.05
-D | 安庆桂花糕 | Anqing osmanthus cake | A fragrant sweet. | |
 C | 黄梅戏 | Huangmei opera | One of the most loved opera forms in China. | |
 
 city: bengbu | 蚌埠 | Bengbu | 32.92 | 117.39 | A Huai River city. |
-A | 双墩遗址 | Shuangdun Site | A neolithic site with early marks. | | 33.03,117.30
 A | 蚌埠博物馆 | Bengbu Museum | A museum of local finds. | | 32.92,117.39
 A | 龙子湖 | Longzi Lake | A lake park. | | 32.92,117.43
-D | 蚌埠烧饼 | Bengbu sesame flatbread | A crisp flatbread. | |
-D | 淮河大鲤鱼 | Huai River carp | River carp. | |
 
 city: huainan | 淮南 | Huainan | 32.63 | 116.99 | The home of tofu, as a legend goes. |
 A | 八公山 | Bagong Mountain | A hill where tofu is said to have been invented. | | 32.63,116.84
 A | 寿县古城 | Shouxian Ancient City | A well-preserved Song-era wall. | | 32.58,116.78
-D | 八公山豆腐 | Bagongshan tofu | A tofu made in the place linked to its origin. | A legend says Liu An, a Han-dynasty prince, invented tofu here. |
 D | 牛肉汤 | Huainan beef soup | A hot beef broth. | |
 
 city: maanshan | 马鞍山 | Ma'anshan | 31.69 | 118.51 | A steel city on the Yangtze. |
 A | 采石矶 | Caishiji | A cliff on the river tied to the poet Li Bai. | | 31.62,118.49
 A | 李白墓 | Li Bai Tomb | A tomb said to be the poet's. | | 31.62,118.49
-D | 采石矶鱼 | Caishiji river fish | Fresh river fish. | |
 
 city: tongling | 铜陵 | Tongling | 30.93 | 117.81 | The copper capital of China. |
 A | 铜文化博物馆 | Copper Culture Museum | A museum of copper mining, which began here 3,000 years ago. | | 30.93,117.81
 A | 铜官山 | Tongguan Mountain | A mine hill. | | 30.93,117.80
-D | 铜陵白姜 | Tongling white ginger | A pale ginger. | |
 
 city: lu-an | 六安 | Lu'an | 31.73 | 116.52 | A city of green tea and revolution. |
 A | 天堂寨 | Tiantangzhai | A forest park in the Dabie Mountains. | | 31.10,115.76
-A | 皖西大裂谷 | Wanxi Grand Canyon | A scenic gorge. | | 31.50,115.80
-D | 六安瓜片茶 | Lu'an melon-seed tea | Tea leaves rolled flat like melon seeds. | |
 D | 霍山黄芽 | Huoshan Huangya tea | A yellow tea from the mountains. | |
 
 city: suzhou-ah | 宿州 | Suzhou (Anhui) | 33.64 | 116.96 | A northern city, known for the Grand Canal. |
-A | 隋唐大运河遗址 | Grand Canal ruins | The old Sui-Tang canal site. | | 33.64,116.97
 A | 皇藏峪 | Huangcangyu | A forest valley where a Han emperor is said to have hidden. | | 34.35,116.70
 D | 符离集烧鸡 | Fuliji roast chicken | A famous braised chicken. | |
 
 city: fuyang | 阜阳 | Fuyang | 32.89 | 115.81 | A northern Anhui city. |
 A | 颍州西湖 | Yingzhou West Lake | A lake once visited by poets. | | 32.91,115.81
-A | 管仲祠 | Guan Zhong Shrine | A shrine to the Qi chancellor. | | 32.89,115.81
-D | 格拉条 | Gelatiao | A cold noodle dish. | |
-D | 阜阳卷馍 | Fuyang rolled bread | A steamed bun. | |
 
 city: xuancheng | 宣城 | Xuancheng | 30.94 | 118.76 | The home of Xuan paper and ink brushes. |
-A | 泾县宣纸 | Jingxian Xuan paper | The home of Xuan paper, used for calligraphy for centuries. | | 30.69,118.42
 A | 桃花潭 | Peach Blossom Pool | A pool made famous by a poem by Li Bai. | | 30.55,118.40
-A | 查济古村 | Chaji Ancient Village | A village of Ming houses. | | 30.42,118.20
-D | 宣城板鸭 | Xuancheng cured duck | Cured duck. | |
-C | 宣纸制作 | Xuan paper making | A craft with over 100 steps. | |
 
 city: bozhou | 亳州 | Bozhou | 33.84 | 115.78 | A city of Chinese medicine and liquor. |
-A | 华祖庵 | Huazu Temple | A temple for the doctor Hua Tuo. | | 33.85,115.78
-A | 曹操地下运兵道 | Cao Cao Underground Passage | A network of tunnels attributed to Cao Cao. | | 33.84,115.78
-D | 古井贡酒 | Gujing Gong liquor | A well-known baijiu. | |
-D | 亳州药材 | Bozhou herbs | A large herb trading market. | |
 
 city: chuzhou | 滁州 | Chuzhou | 32.30 | 118.32 | A hill city with an essay in its name. |
 A | 琅琊山 | Langya Mountain | A hill with a pavilion, where Ouyang Xiu wrote his Old Drunkard essay. | | 32.28,118.28
 A | 醉翁亭 | Old Drunkard's Pavilion | The pavilion in Ouyang Xiu's famous essay. | | 32.28,118.28
 A | 凤阳小岗村 | Xiaogang Village | The village where land reform began in 1978. | | 32.88,117.58
-D | 滁州菜 | Chuzhou dishes | Local mountain cuisine. | |
 
 city: huaibei | 淮北 | Huaibei | 33.97 | 116.80 | A coal city in the north. |
-A | 相山 | Xiang Mountain | A hill park in the city. | | 33.96,116.80
-A | 塔山 | Tashan Mountain | A hill with a pagoda. | | 33.95,116.80
-D | 淮北烧烤 | Huaibei barbecue | Grilled meat skewers. | |

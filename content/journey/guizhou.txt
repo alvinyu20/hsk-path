@@ -6,7 +6,6 @@ city: guiyang | 贵阳 | Guiyang | 26.65 | 106.63 | A cool mountain capital know
 A | 甲秀楼 | Jiaxiu Tower | A tower on a river island, a symbol of the city. | | 26.56,106.72
 A | 黔灵山公园 | Qianling Mountain Park | A hill park with monkeys and a temple. | | 26.60,106.70
 A | 青岩古镇 | Qingyan Ancient Town | A Ming walled town with stone streets. | | 26.34,106.67
-A | 花溪公园 | Huaxi Park | A park on a river south of the city. | | 26.41,106.67
 A | 贵州省博物馆 | Guizhou Provincial Museum | A museum on the province's many peoples. | | 26.66,106.67
 A | 阳明祠 | Yangming Shrine | A shrine for the Ming thinker Wang Yangming. | | 26.84,106.88
 D | 酸汤鱼 | Sour soup fish | Fish in a tangy red tomato broth, a Miao classic. | |
@@ -32,8 +31,6 @@ C | 酒文化 | Liquor culture | Baijiu is a major part of Guizhou life. | |
 city: anshun | 安顺 | Anshun | 26.25 | 105.95 | The home of Huangguoshu Waterfall. |
 A | 黄果树瀑布 | Huangguoshu Waterfall | The biggest waterfall in China, with a path behind it. | | 25.99,105.67
 A | 龙宫 | Dragon Palace | A cave and underground river. | | 26.14,105.96
-A | 天星桥 | Tianxingqiao | A scenic area of stone forest and bridges. | | 25.99,105.69
-A | 屯堡 | Tunpu villages | Villages of descendants of Ming soldiers who still wear old clothes. | | 26.25,105.95
 D | 安顺裹卷 | Anshun guojuan | A thin rice roll with fillings. | |
 D | 荞凉粉 | Buckwheat jelly | A cold jelly dish. | |
 C | 地戏 | Ground opera | A masked ritual drama by the Tunpu people. | |
@@ -42,40 +39,30 @@ city: qiandongnan | 黔东南 | Southeast Guizhou | 26.58 | 107.98 | A prefectur
 A | 西江千户苗寨 | Xijiang Thousand-Household Miao Village | The largest Miao village in China. | | 26.50,108.19
 A | 肇兴侗寨 | Zhaoxing Dong Village | A Dong village of drum towers and bridges. | | 25.92,109.17
 A | 镇远古镇 | Zhenyuan Ancient Town | A river town with a long history. | | 27.05,108.43
-A | 从江岜沙苗寨 | Basha Miao Village | A village where men carry old-style guns and wear topknots. | | 25.76,108.90
 A | 黎平 | Liping | A county of Dong culture. | | 26.23,109.14
 D | 腌鱼 | Dong pickled fish | Fish preserved in rice. | |
-C | 侗族鼓楼 | Dong drum tower | A wooden tower built without nails. | |
-C | 苗年 | Miao New Year | A major festival with dancing. | |
 C | 芦笙 | Lusheng | A reed pipe played at festivals. | |
 
 city: bijie | 毕节 | Bijie | 27.30 | 105.29 | A highland city of azaleas. |
-A | 百里杜鹃 | Baili Azalea | A massive forest of wild azaleas. | | 27.25,105.88
 A | 织金洞 | Zhijin Cave | One of China's largest caves. | | 26.67,105.78
 D | 毕节汤圆 | Bijie tangyuan | Sticky rice balls. | |
 D | 威宁荞麦 | Weining buckwheat | Highland buckwheat. | |
 
 city: tongren | 铜仁 | Tongren | 27.72 | 109.19 | A city with the Fanjing mountain. |
 A | 梵净山 | Fanjing Mountain | A sacred mountain with a rock tower on its peak. | A UNESCO World Heritage Site. | 27.90,108.69
-A | 老金顶 | Old Golden Summit | A twin-peak rock pillar on Fanjing. | | 27.90,108.69
-A | 云舍土家 | Yunshe Tujia Village | A Tujia village of wooden houses. | | 27.99,109.18
 D | 铜仁米粉 | Tongren rice noodles | Rice noodles with meat. | |
 D | 梵净山茶 | Fanjing Mountain tea | A tea from the mountain. | |
 
 city: qianxinan | 黔西南 | Southwest Guizhou | 25.09 | 104.90 | A prefecture of karst peaks. |
 A | 万峰林 | Wanfenglin | A forest of thousands of karst peaks. | | 25.00,104.96
-A | 马岭河大峡谷 | Maling River Canyon | A gorge with waterfalls. | | 25.10,105.10
 D | 兴义鸡肉粉 | Xingyi chicken noodles | Rice noodles with chicken. | |
 D | 布依族五色糯米饭 | Buyi five-color rice | Sticky rice dyed with plant colors. | |
 
 city: qiannan | 黔南 | South Guizhou | 26.25 | 107.52 | A prefecture with a giant telescope. |
 A | 中国天眼 | FAST Telescope | The world's largest single-dish radio telescope, set into a karst bowl. | | 25.65,106.86
 A | 荔波小七孔 | Libo Xiaoqikong | A scenic area of emerald pools. | A UNESCO World Heritage Site. | 25.28,107.80
-A | 水春河 | Shuichun River | A river valley. | | 25.30,107.70
 D | 都匀毛尖 | Duyun Maojian tea | A well-known green tea. | |
 D | 荔波鱼 | Libo fish | Fresh river fish. | |
 
 city: liupanshui | 六盘水 | Liupanshui | 26.59 | 104.83 | A cool city in western Guizhou, popular in summer. |
-A | 乌蒙大草原 | Wumeng Grassland | A high grassland. | | 26.83,104.44
-A | 玉舍 | Yushe | A forest park. | | 26.50,104.95
 D | 六盘水猕猴桃 | Liupanshui kiwi | Kiwi fruit from the highlands. | |

@@ -9,7 +9,6 @@ A | 内蒙古博物院 | Inner Mongolia Museum | A museum with dinosaurs and Mon
 A | 席力图召 | Xilitu Temple | A temple of the Yellow Hat sect. | | 40.80,111.66
 A | 五塔寺 | Five Pagoda Temple | A temple of five small pagodas. | | 40.79,111.66
 A | 大青山 | Daqing Mountain | A mountain range north of the city. | | 40.90,111.70
-A | 辽代万部华严经塔 | White Pagoda of Wanbu Huayan | A Liao pagoda near the city. | | 40.85,111.95
 D | 烧麦 | Hohhot shaomai | Steamed lamb dumplings. | |
 D | 手把肉 | Hand-held meat | Boiled mutton eaten with hands. | |
 D | 奶茶 | Milk tea | Salty milk tea. | |
@@ -18,34 +17,22 @@ D | 莜面 | Oat noodles | Noodles of oat flour. | |
 D | 马奶酒 | Mare's milk wine | A fermented drink. | |
 C | 那达慕 | Naadam | A summer festival of wrestling, archery and horse racing. | |
 C | 马头琴 | Morin khuur | A horse-head fiddle. | |
-C | 蒙古长调 | Mongolian long song | A style of song with long notes. | |
 C | 呼麦 | Khoomei | Throat singing. | |
 C | 蒙古包 | Yurt | A round felt tent. | |
 
 city: baotou | 包头 | Baotou | 40.66 | 109.84 | A steel city and the Bayan Obo mines. |
 A | 五当召 | Wudang Lamasery | The biggest Tibetan Buddhist temple in Inner Mongolia. | | 40.70,110.20
-A | 赛汗塔拉 | Saihan Tala | A city grassland park. | | 40.66,109.84
 A | 成吉思汗陵 | Genghis Khan Mausoleum | A memorial hall of Genghis Khan, in Ordos. | | 39.27,109.80
-A | 黄河湿地 | Yellow River Wetland | A wetland. | | 40.60,109.80
-A | 召河 | Zhaohe | A village of Mongol culture. | | 40.80,110.10
-D | 包头羊肉 | Baotou lamb | A famous meat. | |
-D | 包头烧麦 | Baotou shaomai | Dumplings. | |
 
 city: ordos | 鄂尔多斯 | Ordos | 39.61 | 109.78 | A coal city on a high plateau, home of Genghis Khan's mausoleum. |
 A | 响沙湾 | Singing Sand Bay | A tall singing dune. | | 40.30,109.90
 A | 成吉思汗陵园 | Genghis Khan Mausoleum | A grand memorial in the Mongolian style. | | 39.27,109.80
 A | 康巴什新区 | Kangbashi | A modern new city that was once called a ghost city. | | 39.60,109.78
-A | 红海子 | Red Lake | A lake. | | 39.60,109.78
-A | 七星湖 | Seven Star Lake | A desert lake. | | 39.60,109.90
-D | 鄂尔多斯羊肉 | Ordos lamb | A grassland meat. | |
-D | 手把羊肉 | Ordos hand-held mutton | A mutton dish. | |
-C | 鄂尔多斯民歌 | Ordos folk song | A style of Mongol song. | |
 
 city: hulunbuir | 呼伦贝尔 | Hulunbuir | 49.21 | 119.77 | A huge grassland in the far northeast. |
 A | 呼伦贝尔大草原 | Hulunbuir Grassland | One of the most beautiful grasslands in the world. | | 49.20,119.70
 A | 满洲里 | Manzhouli | A border town facing Russia. | | 49.58,117.43
 A | 额尔古纳 | Ergun | A wetland and a river. | | 50.23,120.18
-A | 室韦 | Shiwei | A border village by the Argun River. | | 51.37,119.98
 A | 阿尔山 | Arxan | A forest and hot springs. | | 47.18,119.95
 A | 呼伦湖 | Hulun Lake | A large lake. | | 48.90,117.30
 D | 烤全羊 | Roast whole lamb | A feast. | |
@@ -55,44 +42,24 @@ C | 敖包 | Ovoo | A stone heap used as a shrine. | |
 
 city: chifeng | 赤峰 | Chifeng | 42.26 | 118.89 | A city of ancient culture and the Hongshan jade dragon. |
 A | 红山文化 | Hongshan Culture | A neolithic culture 5,000 years old. | | 42.30,119.00
-A | 玉龙 | Jade dragon | A C-shaped jade dragon of the Hongshan culture. | Called the first dragon of China. | 42.30,119.00
 A | 克什克腾 | Hexigten Geopark | A geopark. | | 43.25,117.55
 A | 达里诺尔湖 | Dalinor Lake | A lake. | | 43.30,116.50
-A | 乌兰布统草原 | Ulan Butong Grassland | A grassland near Beijing. | | 43.50,116.80
-D | 赤峰烤肉 | Chifeng barbecue | A famed barbecue. | |
-D | 赤峰莜面 | Chifeng oat noodles | Noodles. | |
 
 city: wuhai | 乌海 | Wuhai | 39.67 | 106.80 | A coal city by the Yellow River. |
-A | 乌海湖 | Wuhai Lake | A reservoir. | | 39.67,106.80
-A | 书法城 | Calligraphy City | A city known for calligraphy. | | 39.67,106.80
-D | 乌海葡萄 | Wuhai grapes | Sweet grapes. | |
-D | 乌海牛肉 | Wuhai beef | Local beef. | |
 
 city: bayannur | 巴彦淖尔 | Bayannur | 40.75 | 107.39 | The Hetao plain, a granary by the Yellow River. |
-A | 河套灌区 | Hetao Irrigation Area | A huge irrigation area. | | 40.75,107.39
-A | 阴山岩画 | Yinshan Rock Art | Rock art in the mountains. | | 41.50,107.00
-D | 河套蜜瓜 | Hetao melon | A sweet melon. | |
-D | 河套羊肉 | Hetao lamb | Lamb. | |
 
 city: alxa | 阿拉善 | Alxa | 38.85 | 105.73 | A desert league with the Badain Jaran. |
 A | 巴丹吉林沙漠 | Badain Jaran Desert | A desert with the tallest dunes in the world. | | 39.50,102.50
-A | 额济纳胡杨林 | Ejina Populus Forest | A forest of poplars that turn gold in autumn. | | 41.95,101.07
-A | 居延海 | Juyan Lake | A lake in the desert. | | 42.30,101.00
 A | 黑城遗址 | Khara-Khoto | A ruin of a Western Xia fortress. | | 41.80,101.10
-D | 阿拉善肉苁蓉 | Alxa cistanche | A desert herb. | |
 D | 骆驼奶 | Camel milk | Milk from camels. | |
-C | 骆驼文化 | Camel culture | Camels carry life in the desert. | |
 
 city: xilingol | 锡林郭勒 | Xilingol | 43.95 | 116.09 | A grassland league. |
-A | 锡林郭勒草原 | Xilingol Grassland | A large grassland. | | 43.95,116.09
 A | 元上都遗址 | Site of Shangdu | The summer capital of Kublai Khan. | A UNESCO World Heritage Site. | 42.35,116.17
 A | 贡格尔草原 | Gonggor Grassland | A grassland. | | 43.70,117.20
-D | 锡林郭勒羊肉 | Xilingol lamb | Famous lamb. | |
 
 city: tongliao | 通辽 | Tongliao | 43.62 | 122.24 | A city of Horqin grassland. |
 A | 科尔沁草原 | Horqin Grassland | A grassland. | | 43.80,122.30
-A | 大青沟 | Daqinggou | A forest valley in the sand. | | 43.40,122.00
-D | 通辽黄米 | Tongliao millet | Yellow millet. | |
 
 city: ulanqab | 乌兰察布 | Ulanqab | 41.03 | 113.13 | A highland city of dinosaurs and wind farms. |
 A | 辉腾锡勒 | Huiteng Xile | A highland grassland. | | 41.30,112.50

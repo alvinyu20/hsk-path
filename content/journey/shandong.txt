@@ -11,10 +11,7 @@ A | 天主教堂 | St. Michael's Cathedral | A twin-spired Catholic church from 
 A | 五四广场 | May Fourth Square | A seafront square with a big red sculpture. | | 36.06,120.39
 A | 小青岛 | Little Qingdao Island | A small island with a lighthouse. | | 36.05,120.32
 A | 金沙滩 | Golden Sands Beach | A long beach on the east coast. | | 35.93,120.19
-D | 青岛啤酒 | Tsingtao beer | China's best-known beer, drunk fresh from a bag in summer. | |
 D | 海鲜 | Qingdao seafood | Clams, shrimp and fish from the Yellow Sea. | |
-D | 辣炒蛤蜊 | Spicy stir-fried clams | A beachside favorite of clams in chili. | |
-D | 鲅鱼水饺 | Mackerel dumplings | Dumplings filled with fish and chives. | |
 C | 啤酒节 | Qingdao Beer Festival | A summer festival with beer and music. | |
 
 city: jinan | 济南 | Jinan | 36.67 | 117.00 | The City of Springs and the capital of Shandong. |
@@ -26,7 +23,6 @@ A | 芙蓉街 | Furong Street | A street of snacks near the springs. | | 36.67,1
 A | 灵岩寺 | Lingyan Temple | An old temple with a pagoda forest, south of the city. | | 36.34,117.15
 D | 九转大肠 | Nine-turn large intestine | A braised pork intestine dish in a sweet-sour sauce, a Shandong classic. | |
 D | 把子肉 | Bazi pork | Braised pork served with rice. | |
-D | 油旋 | Youxuan | A flaky, layered bread with scallion. | |
 D | 甜沫 | Tianmo | A savory millet porridge with vegetables. | |
 C | 吕剧 | Lü opera | The local opera of Shandong. | |
 
@@ -35,8 +31,6 @@ A | 孔庙 | Confucius Temple | A vast temple complex for Confucius with cypress
 A | 孔府 | Kong Family Mansion | The home of the Confucius family, with over 400 rooms. | | 35.60,116.99
 A | 孔林 | Confucius Forest | A large cemetery for Confucius and his descendants. | | 35.61,117.00
 A | 颜庙 | Yan Hui Temple | A temple for Confucius's favorite student. | | 35.59,116.99
-D | 孔府菜 | Kong family cuisine | A banquet cuisine of the Confucius family. | |
-D | 曲阜烧饼 | Qufu flatbread | A crisp sesame flatbread. | |
 C | 祭孔大典 | Confucius Ceremony | A ceremony to honor Confucius. | |
 C | 儒家思想 | Confucianism | The teaching system that shaped China and East Asia. | |
 
@@ -45,67 +39,40 @@ A | 泰山 | Mount Tai | The most honored of the Five Sacred Mountains, with 6,0
 A | 岱庙 | Dai Temple | A temple at the foot of Mount Tai where emperors made offerings. | | 36.19,117.12
 A | 玉皇顶 | Jade Emperor Peak | The highest point of Mount Tai. | | 36.27,117.11
 A | 南天门 | South Heaven Gate | A gate near the summit at the end of the long staircase. | | 36.25,117.11
-A | 日出 | Mount Tai sunrise | People climb at night to see the sunrise from the top. | | 36.27,117.11
-D | 泰安豆腐宴 | Tai'an tofu banquet | A feast made from tofu in many forms. | |
-D | 泰山赤鳞鱼 | Mount Tai red-scale fish | A mountain-stream fish, steamed or fried. | |
 
 city: yantai | 烟台 | Yantai | 37.46 | 121.45 | A port city of wine, apples and beaches. |
 A | 蓬莱阁 | Penglai Pavilion | A cliff pavilion in the legend of the Eight Immortals. | | 37.82,120.76
-A | 张裕酒文化博物馆 | Changyu Wine Culture Museum | A museum in China's oldest big winery. | | 37.54,121.40
-A | 养马岛 | Yangma Island | An island with beaches. | | 37.46,121.67
 A | 烟台山 | Yantai Hill | A hill with old consulate buildings. | | 37.55,121.40
-D | 烟台苹果 | Yantai apples | Sweet red apples. | |
-D | 烟台海参 | Yantai sea cucumber | A valued seafood from the Bohai Sea. | |
-D | 福山拉面 | Fushan hand-pulled noodles | Hand-pulled noodles with a rich meat topping. | |
-D | 张裕葡萄酒 | Changyu wine | A wine from one of China's oldest wine brands. | |
 
 city: weihai | 威海 | Weihai | 37.51 | 122.12 | A clean seaside city at the tip of the peninsula. |
 A | 刘公岛 | Liugong Island | An island museum of the 1894 naval war. | | 37.51,122.19
 A | 成山头 | Chengshantou | The eastern tip of Shandong, called the end of the earth. | | 37.40,122.70
-A | 威海国际海水浴场 | Weihai Beach | A sandy beach in the city. | | 37.51,122.10
-D | 威海海参 | Weihai sea cucumber | A prized local seafood. | |
 D | 烤鱿鱼 | Grilled squid | A common street snack. | |
 
 city: weifang | 潍坊 | Weifang | 36.71 | 119.16 | The kite capital of the world. |
 A | 潍坊风筝博物馆 | Weifang Kite Museum | A museum of the city's kites. | | 36.71,119.16
 A | 十笏园 | Shihu Garden | A small garden of the Qing era. | | 36.71,119.16
-A | 杨家埠 | Yangjiabu | A village known for woodblock New Year prints and kites. | | 36.76,119.23
-D | 潍坊朝天锅 | Weifang chaotian pot | A pot of pork and offal stewed all day. | |
-D | 潍县萝卜 | Weixian radish | A crisp radish eaten like fruit. | |
-C | 潍坊风筝节 | Weifang Kite Festival | A yearly festival in April. | |
 
 city: zibo | 淄博 | Zibo | 36.81 | 118.05 | A city of ancient Qi and barbecue fame. |
-A | 齐国历史博物馆 | Qi State Museum | A museum on the ancient Qi kingdom. | | 36.81,118.05
-A | 蹴鞠 | Cuju | An ancient ball game said to have started in Linzi. | | 36.83,118.30
 A | 周村古商城 | Zhoucun Ancient Commercial City | An old trading district. | | 36.80,117.87
-D | 淄博烧烤 | Zibo barbecue | Grilled meat wrapped in small flatbreads with scallion, a hit since 2023. | |
 D | 周村烧饼 | Zhoucun flatbread | A thin, crisp, sesame flatbread. | |
 C | 琉璃 | Zibo colored glaze | Colored glass art made in Boshan. | |
 
 city: jining | 济宁 | Jining | 35.41 | 116.59 | A canal city next to Qufu. |
-A | 南阳古镇 | Nanyang Ancient Town | A town on a lake that sits on the Grand Canal. | | 35.12,116.94
 A | 微山湖 | Weishan Lake | A big lake with lotus fields. | | 34.80,117.15
 A | 太白楼 | Taibai Tower | A tower for the poet Li Bai. | | 35.41,116.59
 A | 孟庙 | Mencius Temple | A temple to the second sage Mencius, in Zoucheng. | | 35.40,117.04
-D | 济宁辣子鸡 | Jining spicy chicken | A fried chicken dish. | |
 
 city: linyi | 临沂 | Linyi | 35.10 | 118.36 | A commercial city in the Yimeng hills. |
 A | 沂蒙山 | Yimeng Mountain | A hill area with a revolutionary history. | | 35.53,118.00
-A | 诸葛亮故居 | Zhuge Liang's Birthplace | The place said to be Zhuge Liang's birth home. | | 35.28,118.33
 A | 王羲之故居 | Wang Xizhi's Former Residence | A site for the master calligrapher. | | 35.10,118.36
-D | 沂蒙煎饼 | Yimeng jianbing | Thin crepe-like bread rolled with scallion. | |
 D | 临沂炒鸡 | Linyi stir-fried chicken | Chicken fried with spices. | |
 
 city: rizhao | 日照 | Rizhao | 35.42 | 119.53 | A sunny coastal city and a green tea region. |
-A | 日照海滨国家森林公园 | Rizhao Seashore Forest Park | A pine forest along the beach. | | 35.40,119.55
 A | 万平口 | Wanpingkou | A beach and resort spot. | | 35.38,119.57
-D | 日照绿茶 | Rizhao green tea | A green tea grown in the north. | |
-D | 日照海鲜 | Rizhao seafood | Fresh catches from the Yellow Sea. | |
 
 city: dongying | 东营 | Dongying | 37.43 | 118.67 | The city of the Yellow River Delta and oil. |
 A | 黄河入海口 | Yellow River Mouth | The place where the river reaches the sea. | | 37.77,119.15
-A | 黄河三角洲湿地 | Yellow River Delta Wetlands | A bird-rich marsh. | | 37.80,118.95
-D | 黄河口大闸蟹 | Yellow River crab | Crab from the river delta. | |
 
 city: dezhou | 德州 | Dezhou | 37.44 | 116.36 | A city famous for braised chicken. |
 A | 苏禄王墓 | Tomb of the Sultan of Sulu | The tomb of a Sulu king who died on a visit in 1417. | | 37.48,116.28
@@ -114,26 +81,14 @@ D | 德州扒鸡 | Dezhou braised chicken | A famous tender braised chicken, so 
 
 city: liaocheng | 聊城 | Liaocheng | 36.46 | 115.99 | A canal city of old towers. |
 A | 光岳楼 | Guangyue Tower | A Ming wooden tower in the center. | | 36.46,115.99
-A | 山陕会馆 | Shanxi-Shaanxi Guildhall | A merchant hall of the Qing era. | | 36.45,115.99
-D | 聊城火烧 | Liaocheng baked bun | A baked, layered flatbread. | |
 
 city: binzhou | 滨州 | Binzhou | 37.38 | 117.97 | A city on the Yellow River. |
-A | 孙子故里 | Sun Tzu's Hometown | A museum of the author of The Art of War. | | 37.39,117.97
 A | 魏氏庄园 | Wei Family Manor | A rural mansion of the late Qing. | | 37.55,117.77
-D | 滨州锅子 | Binzhou pot | A pot dish of meat and vegetables. | |
 
 city: zaozhuang | 枣庄 | Zaozhuang | 34.81 | 117.32 | A coal city on the Grand Canal. |
-A | 台儿庄古城 | Taierzhuang Ancient City | A canal town rebuilt after a famous 1938 battle. | | 34.56,117.73
-A | 微山湖湿地红荷 | Weishan Lake Red Lotus | A lake of red lotus flowers. | | 34.70,117.30
-D | 枣庄辣子鸡 | Zaozhuang spicy chicken | A spicy fried chicken dish. | |
 
 city: heze | 菏泽 | Heze | 35.23 | 115.48 | The city of peonies. |
-A | 曹州牡丹园 | Caozhou Peony Garden | A park with thousands of peony varieties. | | 35.26,115.48
-A | 水浒好汉城 | Water Margin City | A theme park of the novel. | | 35.50,115.60
-D | 菏泽牡丹 | Heze peonies | The main place that grows peonies in China. | |
-D | 单县羊肉汤 | Shanxian lamb soup | A white milky lamb soup. | |
 
 city: laiwu | 莱芜 | Laiwu | 36.21 | 117.68 | A hilly city, now a district of Jinan. |
 A | 莱芜战役纪念馆 | Laiwu Campaign Memorial | A museum of a 1947 battle. | | 36.21,117.68
 A | 雪野湖 | Xueye Lake | A big reservoir lake. | | 36.30,117.70
-D | 莱芜生姜 | Laiwu ginger | Famous ginger. | |

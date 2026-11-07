@@ -36,8 +36,6 @@ city: sentosa | 圣淘沙 | Sentosa | 1.25 | 103.83 | A resort island south of t
 A | 新加坡环球影城 | Universal Studios Singapore | A theme park. | | 1.25,103.83
 A | 海洋馆 | S.E.A. Aquarium | A big aquarium. | | 1.26,103.82
 A | 西乐索海滩 | Siloso Beach | A beach. | | 1.25,103.81
-A | 音乐喷泉 | Sentosa Fountain | A water show. | | 1.25,103.82
-A | 鱼尾狮塔 | Merlion Tower | A big Merlion statue. | | 1.25,103.82
 
 city: east-coast | 东海岸 | East Coast | 1.31 | 103.93 | A coast of beaches, seafood and Peranakan culture. |
 A | 东海岸公园 | East Coast Park | A seaside park with cycling paths. | | 1.30,103.91
@@ -48,7 +46,6 @@ A | 乌敏岛 | Pulau Ubin | An island that keeps the old village life. | | 1.41
 D | 娘惹糕 | Nyonya kueh | Colorful steamed cakes. | |
 D | 椰浆饭 | Nasi lemak | Coconut rice with fried fish and sambal. | |
 D | 加东叻沙 | Katong laksa | A curry noodle soup. | |
-C | 娘惹文化 | Peranakan culture | A mixed Chinese-Malay heritage. | |
 
 city: west | 西部 | West Singapore | 1.34 | 103.72 | A nature and science area. |
 A | 裕廊飞禽公园 | Jurong Bird Park | A bird park. | | 1.32,103.71
