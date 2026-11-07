@@ -425,6 +425,32 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     const cel = await page.locator('.res.celebrate').innerText();
     check(/right first time/.test(cel) && /day streak/.test(cel) && (await page.locator('.confetti').count()) === 1 && /83%\s+right first time/.test(cel) && /\+40\s+XP/.test(cel), 'the end of a session is a celebration with the accuracy, XP and streak');
     await page.evaluate(() => { window.SHANLU_MUTE_SFX = false; const a = window.shanlu; a.setState({ rcomplete: false }); a.go('review'); a.practiceAnyway(); }); await page.waitForTimeout(150);
+    {   // achievements: the page, and the things that earn them
+      const titles = () => page.evaluate(() => (window.shanlu.state.msQueue || []).map(x => x.title).join('|'));
+      await page.evaluate(() => { window.SHANLU_MUTE_SFX = true; const a = window.shanlu; a.setState({ msQueue: [], rcomplete: false }); a.go('review'); a.practiceAnyway(); }); await page.waitForTimeout(150);
+      await page.evaluate(() => { const a = window.shanlu; a.setState({ rq: [a.state.rq[0]], rtotal: 12, rcomplete: false, rcounts: { again: 0, hard: 0, good: 11, easy: 0 } }); a.rAdvance(); }); await page.waitForTimeout(300);
+      check(/Flawless session/.test(await titles()), 'finishing a 10+ card session without a miss earns "Flawless session" (' + await titles() + ')');
+      await page.evaluate(() => { const a = window.shanlu; a.setState({ msQueue: [] }); const h = Date.prototype.getHours; Date.prototype.getHours = () => 6; a.setState({ xp: a.state.xp + 1 }); Date.prototype.getHours = h; }); await page.waitForTimeout(300);
+      check(/Early bird/.test(await titles()), 'studying at 6 in the morning earns "Early bird" (' + await titles() + ')');
+      await page.evaluate(() => { const a = window.shanlu; a.setState({ msQueue: [] }); const h = Date.prototype.getHours; Date.prototype.getHours = () => 23; a.setState({ xp: a.state.xp + 1 }); Date.prototype.getHours = h; }); await page.waitForTimeout(300);
+      check(/Night owl/.test(await titles()), 'studying at 11 at night earns "Night owl" (' + await titles() + ')');
+      await page.evaluate(() => {   // a week and more away: every saved progress last studied long ago, then the first study of today
+        const a = window.shanlu; a.setState({ msQueue: [] });
+        Object.values(window.ShanluLevel.PROGRESS_KEYS).concat(['shanlu-progress-v1-all']).forEach(k => { try { const st = JSON.parse(localStorage.getItem(k)); if (st) { st.activity = {}; st.lastActive = '2020-01-01'; localStorage.setItem(k, JSON.stringify(st)); } } catch (e) {} });
+        window.__ach0 = { streak: a.state.streak, lastActive: a.state.lastActive, activity: a.state.activity };
+        a.setState({ activity: {}, lastActive: '2020-01-01' }); a.setState({ xp: a.state.xp + 1 });
+      }); await page.waitForTimeout(300);
+      check(/Welcome back/.test(await titles()), 'studying again after a long time away earns "Welcome back" (' + await titles() + ')');
+      await page.evaluate(() => { const a = window.shanlu; a.setState(window.__ach0); a.setState({ msQueue: [] }); });
+      const am = await page.evaluate(() => { const a = window.shanlu; const m = a.achMetrics(); return { lv1: m.lv[1], lv2: !!m.lv[2], gwrote: m.gwrote }; });
+      check(am.lv1 && am.lv1.total > 100 && am.lv1.lessonsTotal > 5 && am.lv2, 'the achievements know each level\'s words and lessons (' + JSON.stringify(am.lv1) + ')');
+      await page.evaluate(() => { window.shanlu.go('ach'); }); await page.waitForTimeout(200);
+      const ach = await page.locator('.ach').innerText();
+      check(/\d+ of \d+ earned/.test(ach) && /Streaks/.test(ach) && /Habits/.test(ach) && /Collecting/.test(ach) && /Friends/.test(ach) && (await page.locator('.ach-card.got').count()) >= 3 && (await page.locator('.ach-card.lock').count()) >= 10, 'the Achievements page lists earned and locked achievements by group');
+      check((await page.locator('.ach-card.got', { hasText: 'Flawless session' }).count()) === 1 && (await page.locator('.ach-card.lock .ach-pb').count()) >= 3, 'earned ones are lit and locked ones show how far along you are');
+      check((await page.locator('.subnav button', { hasText: 'Achievements' }).count()) === 1 || (await page.locator('button', { hasText: 'Achievements' }).count()) >= 1, 'Achievements is in the More section');
+      await page.evaluate(() => { window.SHANLU_MUTE_SFX = false; const a = window.shanlu; a.go('review'); a.practiceAnyway(); }); await page.waitForTimeout(150);
+    }
   }
   await shot('05-review-front');
   // answer without flipping: pinyin button shows/hides pinyin on the front only; quick buttons rate straight away
@@ -1319,12 +1345,25 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     check(await noSideways(), 'no sideways scroll on ' + label + ' at phone width');
     if (['Review words', 'Listening lab', 'Speak'].includes(label)) check(await page.evaluate(() => document.documentElement.scrollHeight <= window.innerHeight + 1 && getComputedStyle(document.querySelector('.app')).position === 'fixed'), label + ' fills the phone screen like an app, with no page scrolling');
   }
+  {   // the end-of-session screen must fit a phone without scrolling (a small phone too), with its buttons above the bottom bar
+    await nav('Review words');
+    await page.evaluate(() => { const S = window.shanlu.state; window.__r0 = { rq: S.rq, rtotal: S.rtotal, rcomplete: S.rcomplete, rcounts: S.rcounts, rxp: S.rxp }; });
+    for (const [w, h] of [[390, 844], [375, 667]]) {
+      await page.setViewportSize({ width: w, height: h });
+      await page.evaluate(() => { window.shanlu.setState({ rq: [], rtotal: 12, rcomplete: true, rcounts: { again: 2, hard: 1, good: 5, easy: 4 }, rxp: 40 }); });
+      await page.waitForTimeout(300);
+      const fit = await page.evaluate(() => { const r = document.querySelector('.res.celebrate'); const b = r.querySelector('.res-act').getBoundingClientRect(); const nav = document.querySelector('.navg').getBoundingClientRect(); return { inner: r.scrollHeight <= r.clientHeight + 1, doc: document.documentElement.scrollHeight <= window.innerHeight + 1, btn: b.bottom <= nav.top + 1, rs: r.scrollHeight, rch: r.clientHeight }; });
+      check(fit.inner && fit.doc && fit.btn, 'the session-end screen fits a ' + w + 'x' + h + ' phone with no scrolling (' + JSON.stringify(fit) + ')');
+    }
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.evaluate(() => { window.shanlu.setState(window.__r0); }); await page.waitForTimeout(200);
+  }
   await page.locator('button', { hasText: 'Topics' }).first().click().catch(() => {});
 
   // phone navigation: five tabs that all fit, a strip for the screens of a section, one slim header, Today first
   await nav('Home');
   const bar = await page.evaluate(() => { const b = document.querySelector('.navg'); const r = b.getBoundingClientRect(); return { n: b.querySelectorAll('button').length, fits: b.scrollWidth <= b.clientWidth + 1, visible: r.height > 40 && r.bottom <= window.innerHeight + 1, old: getComputedStyle(document.querySelector('.navs:not(.navg)')).display }; });
-  check(bar.n === 5 && bar.fits && bar.visible && bar.old === 'none', 'on a phone the bottom bar has five tabs that all fit, with no sideways scroll (the long list is hidden)');
+  check(bar.n === 5 && bar.fits && bar.visible && bar.old === 'none', 'on a phone the bottom bar has five tabs that all fit, with no sideways scroll (the long list is hidden) ' + JSON.stringify(bar));
   check((await page.locator('.navg button').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()).join('|') === 'Today|Learn|Review|Listen & speak|More', 'the tabs are Today, Learn, Review, Listen & speak, More');
   const homeTop = await page.evaluate(() => { const g = document.querySelector('.today-go').getBoundingClientRect(); return { y: g.bottom, h: window.innerHeight }; });
   check(homeTop.y < homeTop.h - 60, 'on a phone the main Today button is on the first screen, above the bottom bar (bottom edge at ' + Math.round(homeTop.y) + ' of ' + homeTop.h + ')');

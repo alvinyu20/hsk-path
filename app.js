@@ -317,6 +317,12 @@
     return { asOf:today, last7, streak:Math.min(streak, 9999), lastActive, mem, levels, passed:levels.filter(n => LVL.levelPassed(n)) };
   };
 
+  // every saved progress (each level and All levels), as stored; used by the achievements for things that span levels
+  const readAllStores = () => {
+    const keys = Object.keys(LVL.PROGRESS_KEYS || {}).map(n => ({ n:Number(n), key:LVL.PROGRESS_KEYS[n] })).concat([{ n:0, key:'shanlu-progress-v1-all' }]);
+    return keys.map(k => { let st = null; try { st = JSON.parse(localStorage.getItem(k.key)); } catch (e) {} return st && typeof st === 'object' ? Object.assign({ __n:k.n }, st) : null; }).filter(Boolean);
+  };
+
   // ---------- dates, saving, daily reset ----------
   const pad = (n) => (n < 10 ? '0' : '') + n;
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
@@ -1082,24 +1088,47 @@
     ['pointerdown', 'keydown', 'touchstart'].forEach(ev => document.addEventListener(ev, unlock, { once:true, passive:true }));
     return { play };
   })();
-  // ---- milestones: each one is earned once, when its test becomes true; the list is also what achievements will be built on ----
+  // ---- milestones and achievements: each one is earned once, when its test becomes true. `m` is what achMetrics() measured; `prog` (optional) gives [now, goal] for the bar on the Achievements page ----
+  const AGROUPS = ['Streaks', 'Words', 'Grammar', 'Habits', 'Collecting', 'Levels', 'Friends'];
+  const streakM = (n, icon, title, desc) => ({ id:'streak' + n, grp:'Streaks', icon, title, desc, hint:'Study ' + n + ' days in a row.', test:m => m.streak >= n, prog:m => [m.streak, n] });
+  const wordsM = (n, icon, title, desc) => ({ id:'words' + n, grp:'Words', icon, title, desc, hint:'Get ' + n.toLocaleString('en-US') + ' words into memory.', test:m => m.words >= n, prog:m => [m.words, n] });
   const MILESTONES = [
-    { id:'streak3', icon:'🔥', title:'3-day streak', desc:'Three days in a row. The habit is starting.', test:m => m.streak >= 3 },
-    { id:'streak7', icon:'🔥', title:'A full week', desc:'7 days in a row. That is real consistency.', test:m => m.streak >= 7 },
-    { id:'streak14', icon:'🔥', title:'Two weeks strong', desc:'14 days in a row.', test:m => m.streak >= 14 },
-    { id:'streak30', icon:'🔥', title:'A month of Chinese', desc:'30 days in a row. Most people never get here.', test:m => m.streak >= 30 },
-    { id:'streak100', icon:'🔥', title:'100-day streak', desc:'One hundred days. Remarkable.', test:m => m.streak >= 100 },
-    { id:'words10', icon:'🌱', title:'First 10 words', desc:'Ten words are in your memory.', test:m => m.words >= 10 },
-    { id:'words50', icon:'🌿', title:'50 words', desc:'Fifty words you can recall.', test:m => m.words >= 50 },
-    { id:'words100', icon:'🌳', title:'100 words', desc:'A hundred words in memory.', test:m => m.words >= 100 },
-    { id:'words250', icon:'⛰️', title:'250 words', desc:'A quarter of a thousand.', test:m => m.words >= 250 },
-    { id:'words500', icon:'🏔️', title:'500 words', desc:'Half a thousand words. You can read real sentences now.', test:m => m.words >= 500 },
-    { id:'words1000', icon:'🚀', title:'1,000 words', desc:'One thousand words in memory.', test:m => m.words >= 1000 },
-    { id:'lesson1', icon:'📘', title:'First grammar lesson', desc:'You passed your first grammar lesson.', test:m => m.lessons >= 1 },
-    { id:'lessons10', icon:'📚', title:'10 grammar lessons', desc:'Ten lessons passed.', test:m => m.lessons >= 10 },
-    { id:'gmaster1', icon:'✍️', title:'First grammar point mastered', desc:'You wrote it yourself and got it right, more than once.', test:m => m.gmastered >= 1 },
-    { id:'exam1', icon:'🎓', title:'Level exam passed', desc:'You passed a level exam.', test:m => m.exams >= 1 }
+    streakM(3, '🔥', '3-day streak', 'Three days in a row. The habit is starting.'),
+    streakM(7, '🔥', 'A full week', '7 days in a row. That is real consistency.'),
+    streakM(14, '🔥', 'Two weeks strong', '14 days in a row.'),
+    streakM(30, '🔥', 'A month of Chinese', '30 days in a row. Most people never get here.'),
+    streakM(100, '🔥', '100-day streak', 'One hundred days. Remarkable.'),
+    wordsM(10, '🌱', 'First 10 words', 'Ten words are in your memory.'),
+    wordsM(50, '🌿', '50 words', 'Fifty words you can recall.'),
+    wordsM(100, '🌳', '100 words', 'A hundred words in memory.'),
+    wordsM(250, '⛰️', '250 words', 'A quarter of a thousand.'),
+    wordsM(500, '🏔️', '500 words', 'Half a thousand words. You can read real sentences now.'),
+    wordsM(1000, '🚀', '1,000 words', 'One thousand words in memory.'),
+    { id:'lesson1', grp:'Grammar', icon:'📘', title:'First grammar lesson', desc:'You passed your first grammar lesson.', hint:'Pass a grammar lesson (80% or more).', test:m => m.lessons >= 1 },
+    { id:'lessons10', grp:'Grammar', icon:'📚', title:'10 grammar lessons', desc:'Ten lessons passed.', hint:'Pass 10 grammar lessons.', test:m => m.lessons >= 10, prog:m => [m.lessons, 10] },
+    { id:'gmaster1', grp:'Grammar', icon:'✍️', title:'First grammar point mastered', desc:'You wrote it yourself and got it right, more than once.', hint:'Master a grammar point in Grammar review: write it correctly more than once.', test:m => m.gmastered >= 1 },
+    { id:'gmaster10', grp:'Grammar', icon:'🧩', title:'10 points mastered', desc:'Ten grammar points are truly yours.', hint:'Master 10 grammar points.', test:m => m.gmastered >= 10, prog:m => [m.gmastered, 10] },
+    { id:'gmaster50', grp:'Grammar', icon:'🏛️', title:'50 points mastered', desc:'Fifty grammar points. That is a solid foundation.', hint:'Master 50 grammar points.', test:m => m.gmastered >= 50, prog:m => [m.gmastered, 50] },
+    { id:'gwrite1', grp:'Grammar', icon:'💬', title:'Your own sentence', desc:'You wrote a sentence from scratch and the checker passed it.', hint:'Write a sentence in Grammar review that gets a pass.', test:m => m.gwrote >= 1 },
+    { id:'perfect', grp:'Habits', icon:'💯', title:'Flawless session', desc:'A full Review session with every card right first time.', hint:'Finish a Review session of 10 or more cards without missing or struggling on any.', test:m => !!m.ev.perfect },
+    { id:'comeback', grp:'Habits', icon:'👋', title:'Welcome back', desc:'You came back after a week or more away. That is what counts.', hint:'Study again after 7 or more days away.', test:m => !!m.ev.comeback },
+    { id:'early', grp:'Habits', icon:'🌅', title:'Early bird', desc:'Studying before 8 in the morning.', hint:'Study between 4 and 8 in the morning.', test:m => !!m.ev.early },
+    { id:'night', grp:'Habits', icon:'🌙', title:'Night owl', desc:'Studying late at night.', hint:'Study between 10 at night and 4 in the morning.', test:m => !!m.ev.night },
+    { id:'rev100', grp:'Habits', icon:'⚡', title:'100 reviews in a day', desc:'One hundred cards answered in a single day.', hint:'Answer 100 Review cards in one day.', test:m => !!m.ev.rev100 },
+    { id:'goal7', grp:'Habits', icon:'🎯', title:'Goal getter', desc:'Hit your daily goal 7 days in a row.', hint:'Reach your daily goal 7 days in a row.', test:m => m.goalRun >= 7, prog:m => [m.goalRun, 7] },
+    { id:'topic1', grp:'Collecting', icon:'🕸️', title:'Topic complete', desc:'Every word in one topic web has been started.', hint:'Start every word of one topic in Word webs.', test:m => !!m.topic },
+    { id:'exam1', grp:'Levels', icon:'🎓', title:'Level exam passed', desc:'You passed a level exam.', hint:'Pass both sections of a level exam.', test:m => m.exams >= 1 },
+    { id:'friend1', grp:'Friends', icon:'🤝', title:'Study buddies', desc:'You are in a group with a friend.', hint:'Join a friends group with at least one other person.', test:m => m.frMembers >= 2 },
+    { id:'leader', grp:'Friends', icon:'🏆', title:'Top of the board', desc:'Most study minutes this week in your group.', hint:'Study more minutes this week than every friend in your group.', test:m => !!m.frLeader }
   ];
+  // one set per level: every lesson passed, every word started, and the first step into each level above HSK 1
+  for (let n = 1; n <= LVL.MAX_LEVEL; n++) {
+    ((k) => {
+      MILESTONES.push({ id:'gram' + k, grp:'Grammar', icon:'📗', title:'All HSK ' + k + ' lessons', desc:'Every HSK ' + k + ' grammar lesson passed.', hint:'Pass every HSK ' + k + ' grammar lesson.', test:m => !!m.lv[k] && m.lv[k].lessonsTotal > 0 && m.lv[k].lessonsDone >= m.lv[k].lessonsTotal, prog:m => m.lv[k] ? [m.lv[k].lessonsDone, m.lv[k].lessonsTotal] : null });
+      MILESTONES.push({ id:'all' + k, grp:'Collecting', icon:'🗂️', title:'Every HSK ' + k + ' word', desc:'All HSK ' + k + ' words have been started.', hint:'Start every HSK ' + k + ' word.', test:m => !!m.lv[k] && m.lv[k].total > 0 && m.lv[k].started >= m.lv[k].total, prog:m => m.lv[k] ? [m.lv[k].started, m.lv[k].total] : null });
+      if (k > 1) MILESTONES.push({ id:'lvstart' + k, grp:'Levels', icon:'🪜', title:'On to HSK ' + k, desc:'Your first HSK ' + k + ' word.', hint:'Start your first HSK ' + k + ' word.', test:m => !!m.lv[k] && m.lv[k].started >= 1 });
+    })(n);
+  }
   // A small bar at the top (outside the page that is redrawn) that names an error, so a stuck page can be explained instead of just sitting there
   function showErr(e, kind) {
     try {
@@ -1147,7 +1176,9 @@
       const gained = (patch.xp !== undefined && patch.xp > S.xp) || (patch.dayMin !== undefined && patch.dayMin > S.dayMin);
       if (gained) {
         const t = ymd(new Date());
+        { const h = new Date().getHours(); const ev = this.achEv || (this.achEv = {}); if (h >= 4 && h < 8) ev.early = 1; else if (h >= 22 || h < 4) ev.night = 1; }
         if (!S.activity[t]) {
+          try { let last = ''; readAllStores().forEach(st => Object.keys(st.activity || {}).concat(st.lastActive ? [st.lastActive] : []).forEach(d => { if (d < t && d > last) last = d; })); if (last && (Date.parse(t) - Date.parse(last)) / 864e5 >= 7) (this.achEv || (this.achEv = {})).comeback = 1; } catch (e) {}
           const act = Object.assign({}, S.activity); act[t] = true;
           const keys = Object.keys(act).sort();
           while (keys.length > 60) delete act[keys.shift()];
@@ -1362,7 +1393,7 @@
       this.go(this.lastSub[id] || first);
     };
     go = (screen) => {
-      { const grp = { web:'learn', grammar:'learn', words:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
+      { const grp = { web:'learn', grammar:'learn', words:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', ach:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
       this.setState({ screen }); try { window.scrollTo(0, 0); } catch (e) {}
       if (screen === 'speak' && !HAS_SCRIPTS) { const S = this.state; if (S.aiOn && !S.aim.length && !S.aiBusy) this.aiStart(S.aiScn); }   // no scripts at this level: go straight to the AI conversation
       // on phones the tab bar scrolls sideways: keep the current tab in view
@@ -2126,6 +2157,8 @@
       const counts = Object.assign({}, S.rcounts); if (g.rate) counts[g.rate] = (counts[g.rate] || 0) + 1;
       const finished = q.length === 0;
       this.rvKey = null; this.rLast = null;
+      if (g.rate) { try { const t = ymd(new Date()); let d = null; try { d = JSON.parse(localStorage.getItem('shanlu-achday')); } catch (e) {} if (!d || d.d !== t) d = { d:t, n:0 }; d.n++; if (d.n >= 100) this.achEv.rev100 = 1; localStorage.setItem('shanlu-achday', JSON.stringify(d)); } catch (e) {} }
+      if (finished) { const c = (counts.again || 0) + (counts.hard || 0) + (counts.good || 0) + (counts.easy || 0); if (c >= 10 && !counts.again && !counts.hard) this.achEv.perfect = 1; }
       this.setState({
         rq:q, rflip:false, rpy:false, rdone:S.rdone + (g.done && !g.again ? 1 : 0), rstep:S.rstep + 1, rxp:S.rxp + g.gain, rcomplete:finished, rcounts:counts,
         xp:S.xp + g.gain, dayXp:S.dayXp + g.gain, dayMin:S.dayMin + (finished ? Math.max(1, Math.round(S.rtotal * 0.5)) : 0),
@@ -2270,19 +2303,58 @@
         if (cur.step > p.step && !p.chk) { if (cur.again > p.again) SFX.play('bad'); else if (cur.pos > p.pos) SFX.play('ok'); }
       } catch (e) {}
     }
+    // what the achievements are measured by: this view's numbers plus every other level's saved copy
+    achEv = {};   // things that happened just now (a perfect session, studying at night...): set where they happen, used once by checkMilestones
+    achMetrics() {
+      const S = this.state; const today = ymd(new Date());
+      const started = (w) => !!w && DIMS.some(k => w[k] && w[k].s > 0);
+      const m = { streak:(S.lastActive === today || S.lastActive === daysAgo(1)) ? S.streak : 0, words:memOf(S.ws).words, lessons:LESSONS.filter(L => (S.gres[L.id] || 0) >= 80).length,
+        gmastered:Object.keys(S.gpt || {}).filter(id => gptInfo(S.gpt[id]).mastered).length, exams:LVL.passedList(S.exams || []) ? 1 : 0, gwrote:0, topic:false, goalRun:0, lv:{}, ev:{}, frMembers:0, frLeader:false };
+      let words = 0, lessons = 0, gm = 0;
+      for (let n = 1; n <= LVL.MAX_LEVEL; n++) {
+        const W = window['HSK' + n + '_WORDS'], G = window['HSK' + n + '_GRAMMAR'], B = window['HSK' + n + '_WEBS'];
+        if (!W) continue;
+        const st = readStore(n); if (!st) { m.lv[n] = { started:0, total:W.length, lessonsDone:0, lessonsTotal:G ? (G.lessons || []).length : 0 }; continue; }
+        const ws = st.ws || {};
+        try { words += memOf(fillWs(JSON.parse(JSON.stringify(ws)))).words; } catch (e) {}
+        const L = G ? (G.lessons || []) : [];
+        const lessonsDone = L.filter(l => ((st.gres || {})[l.id] || 0) >= 80).length; lessons += lessonsDone;
+        m.lv[n] = { started:W.filter(w => started(ws[w.zh])).length, total:W.length, lessonsDone, lessonsTotal:L.length };
+        Object.keys(st.gpt || {}).forEach(id => { const e = st.gpt[id]; if (gptInfo(e).mastered) gm++; if (e && (e.wok || 0) >= 1) m.gwrote++; });
+        if (B && (B.topics || []).some(t => (t.words || []).length > 0 && t.words.every(zh => started(ws[zh])))) m.topic = true;
+      }
+      m.words = Math.max(m.words, Math.round(words)); m.lessons = Math.max(m.lessons, lessons); m.gmastered = Math.max(m.gmastered, gm);
+      m.gwrote = Math.max(m.gwrote, Object.keys(S.gpt || {}).filter(id => ((S.gpt[id] || {}).wok || 0) >= 1).length);
+      // days in a row at (or over) the daily goal, counted back from today (or from yesterday if today is not done yet)
+      try {
+        const stores = readAllStores();
+        const dayMin = (d) => stores.reduce((a, st) => a + (window.ShanluSync.dayMinutes(st, d) || (st.day === d ? (st.dayMin || 0) : 0)), 0);
+        const goal = Math.max(1, S.mins || 1);
+        let n = dayMin(today) >= goal ? 0 : 1, run = 0;
+        for (; n < 60 && dayMin(daysAgo(n)) >= goal; n++) run++;
+        m.goalRun = run;
+      } catch (e) {}
+      if (S.fr && S.fr.members && window.ShanluFriends) {
+        m.frMembers = S.fr.members.length;
+        const rows = S.fr.members.map(x => window.ShanluFriends.boardRow(x, today, S.fr.me)); const me = rows.filter(r => r.isMe)[0]; const others = rows.filter(r => !r.isMe);
+        m.frLeader = !!me && me.minutes > 0 && others.length > 0 && others.every(r => me.minutes > r.minutes);
+      }
+      return m;
+    }
     // earned milestones: a toast the first time, remembered in the person's saved preferences
     checkMilestones() {
       try {
-        const S = this.state; if (this.frozen) return;
+        if (this.frozen) return;
         const have = prefGet('ach', {}) || {};
-        const today = ymd(new Date()); const streak = (S.lastActive === today || S.lastActive === daysAgo(1)) ? S.streak : 0;
-        const m = { streak, words:memOf(S.ws).words, lessons:LESSONS.filter(L => (S.gres[L.id] || 0) >= 80).length, gmastered:Object.keys(S.gpt || {}).filter(id => gptInfo(S.gpt[id]).mastered).length, exams:LVL.passedList(S.exams || []) ? 1 : 0 };
+        if (MILESTONES.every(x => have[x.id])) return;
+        const m = this.achMetrics(); m.ev = this.achEv; this.achEv = {};
         const fresh = MILESTONES.filter(x => !have[x.id] && x.test(m));
         if (!fresh.length) return;
         const next = Object.assign({}, have); const now = Date.now(); fresh.forEach(x => { next[x.id] = now; });
         prefSet('ach', next);
-        if (!this.msStarted) { this.msStarted = true; if (!Object.keys(have).length && fresh.length > 3) return; }   // an existing learner meeting this for the first time is not showered with old news
-        this.setState({ msQueue:(S.msQueue || []).concat(fresh.map(x => ({ icon:x.icon, title:x.title, desc:x.desc }))) });
+        if (!this.msStarted) { this.msStarted = true; if (fresh.length > 3) return; }   // the first look in a visit that finds a pile of them (an older learner, a new device) records them quietly instead of showering old news
+        this.msStarted = true;
+        this.setState({ msQueue:(this.state.msQueue || []).concat(fresh.map(x => ({ icon:x.icon, title:x.title, desc:x.desc }))) });
         SFX.play('ach');
         this.msArm();
       } catch (e) {}
@@ -2832,8 +2904,8 @@
       const active = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
       const navCls = (k) => 'nav' + (active === k ? ' on' : '');
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
-      const GROUPS = [['home', ['home']], ['learn', ['web', 'grammar', 'words']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['more', ['exam', 'friends', 'voice']]];
-      const SUBLABEL = { web:'Word webs', grammar:'Grammar', words:'My words', review:'Review words', greview:'Grammar review', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', voice:'Settings' };
+      const GROUPS = [['home', ['home']], ['learn', ['web', 'grammar', 'words']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['more', ['exam', 'friends', 'ach', 'voice']]];
+      const SUBLABEL = { web:'Word webs', grammar:'Grammar', words:'My words', review:'Review words', greview:'Grammar review', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', ach:'Achievements', voice:'Settings' };
       const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
       const navGroup = (GROUPS.find(g => g[1].indexOf(curScreen) >= 0) || GROUPS[0])[0];
       const gcls = (id) => 'nav' + (navGroup === id ? ' on' : '');
@@ -2870,6 +2942,22 @@
         frOffText:'The friends board is not set up yet. Add the address of your friends server to config.js (see worker/README.md).'
       };
 
+      // the Achievements page: every achievement by group, earned ones lit, the rest with a hint and (where it makes sense) a bar
+      let achItems = [], achSummary = '', achPct = '0%';
+      if (S.screen === 'ach') {
+        const have = prefGet('ach', {}) || {}; const am = this.achMetrics(); am.ev = {};
+        const earnedN = MILESTONES.filter(x => have[x.id]).length;
+        achSummary = earnedN + ' of ' + MILESTONES.length + ' earned'; achPct = Math.round(earnedN / MILESTONES.length * 100) + '%';
+        AGROUPS.forEach(g => {
+          const list = MILESTONES.filter(x => x.grp === g); if (!list.length) return;
+          achItems.push({ isHead:true, head:g, headSub:list.filter(x => have[x.id]).length + ' of ' + list.length, isCard:false });
+          list.forEach(x => {
+            const got = !!have[x.id]; let pr = null; try { pr = !got && x.prog ? x.prog(am) : null; } catch (e) {}
+            const pc = pr && pr[1] > 0 ? Math.max(0, Math.min(100, Math.round(pr[0] / pr[1] * 100))) : 0;
+            achItems.push({ isHead:false, isCard:true, cls:got ? 'got' : 'lock', icon:x.icon, title:x.title, desc:got ? x.desc : x.hint, hasBar:!!pr && !got, barW:pc + '%', barTxt:pr ? Math.min(pr[0], pr[1]).toLocaleString('en-US') + ' / ' + pr[1].toLocaleString('en-US') : '', state:got ? 'Earned' : 'Not yet' });
+          });
+        });
+      }
       const titles = {
         home:['Welcome back', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
         review:['Review words', 'Words that are due, based on how well you remember them.'],
@@ -2880,6 +2968,7 @@
         exam:[ALL ? 'Level exams' : LVN + ' level exam', ALL ? 'Each exam belongs to one level.' : LV === 1 ? 'Pass every section to climb to HSK 2.' : 'Not built yet for ' + LVN + '.'],
         web:['Word webs', 'Learn new words next to the words you already know.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
+        ach:['Achievements', 'Things you have earned, and what is still ahead.'],
         friends:['Friends', FR && FR.identity() && FR.identity().group ? FR.identity().group + '. Only your study totals are shared.' : 'Study together. Only your study totals are shared.'],
         listen:['Listening lab', HAS_LISTEN ? 'Train your ear for how people really talk, not just how lessons sound.' : 'Not built yet for ' + LVN + '.'],
         voice:['Settings', LV <= 1 ? 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud, and how 儿 endings are shown.' : 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud.'],
@@ -3376,6 +3465,7 @@
         memWords:memNow.words.toLocaleString('en-US'), memToday:(memNow.words - (S.mem0 == null ? memNow.words : S.mem0) >= 0 ? '+' : '') + (memNow.words - (S.mem0 == null ? memNow.words : S.mem0)) + ' today', memRecall:memNow.avg + '%',
         weekMin:weekMin, weekDays:weekDays,
         title:tt[0], subtitle:tt[1],
+        isAch:S.screen === 'ach', achSummary:achSummary, achPct:achPct, achItems:achItems,
         navHome:navCls('home'), navReview:navCls('review'), navTest:navCls('testlobby'), navGrv:navCls('greview'), navGrammar:navCls('grammar'), navSpeak:navCls('speak'),
         goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrv:() => this.go('greview'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
         hasDue:S.rq.length > 0 && !S.rcomplete, dueCount:S.rq.length,

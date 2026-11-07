@@ -901,6 +901,20 @@ button.scn:hover .scn-m{text-decoration:underline}
   .app.am .foot{display:none}
   /* each screen takes the rest of the height */
   .app.am .main > .rev,.app.am .main > .lab,.app.am .main > .speak,.app.am .main > .lob,.app.am .main > .chatwrap,.app.am .main > .res{flex:1 1 auto;min-height:0}
+  /* the end-of-session screen: compact so it fits without scrolling (and scrolls inside itself if a very small phone needs it) */
+  .app.am .res{padding:14px 16px;gap:8px;overflow-y:auto;overscroll-behavior:contain;justify-content:center}
+  .app.am .res .stamp{width:52px;height:52px;font-size:32px;border-radius:12px;flex:0 0 auto}
+  .app.am .res .res-h{font-size:24px;line-height:1.15;margin:0}
+  .app.am .res .res-p{font-size:14.5px;line-height:1.35;margin:0}
+  .app.am .res .rc-grid{gap:8px}
+  .app.am .res .rc-tile{padding:8px 6px;border-radius:14px}
+  .app.am .res .rc-tile b{font-size:22px}
+  .app.am .res .rc-tile span{font-size:12px}
+  .app.am .res .res-stats{display:none}
+  .app.am .res .res-gain{font-size:13px}
+  .app.am .res .res-act{gap:8px}
+  .app.am .res .res-act .btn.big{min-height:44px;padding-top:0;padding-bottom:0}
+  @media (max-height:700px){.app.am .res .stamp{display:none}}
 
   /* ---- Review ---- */
   .app.am .rev{max-width:none;gap:8px;overflow-y:auto;overscroll-behavior:contain}
@@ -1131,3 +1145,26 @@ button.scn:hover .scn-m{text-decoration:underline}
 .dgoal .dbar{flex:1;height:6px;border-radius:99px;background:var(--panel2);overflow:hidden}
 .dgoal .dbar i{display:block;height:100%;border-radius:99px;background:var(--accent,#2e8b6a);transition:width .5s ease}
 @media (max-width:720px){.mstoast{bottom:calc(92px + env(safe-area-inset-bottom,0px))}}
+
+/* Achievements page */
+.gram > .ach{flex:1 1 100%;max-width:760px;margin:0}
+.ach-top{display:flex;align-items:center;gap:14px;margin:0 0 6px}
+.ach-top b{font-size:18px;white-space:nowrap}
+.ach-bar{flex:1;height:10px;border-radius:99px;background:var(--panel2);overflow:hidden}
+.ach-bar i{display:block;height:100%;background:var(--jade);border-radius:99px}
+.ach-h{display:flex;align-items:baseline;gap:10px;margin:22px 0 8px;font-size:16px}
+.ach-h span{font-size:13.5px;font-weight:400;color:var(--muted)}
+.ach-card{display:flex;align-items:center;gap:12px;padding:11px 14px;margin:0 0 8px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+.ach-card .ach-ic{font-size:28px;line-height:1;flex:0 0 36px;text-align:center}
+.ach-card .ach-t{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+.ach-card .ach-t b{font-size:16px}
+.ach-card .ach-t > span{font-size:14px;color:var(--muted)}
+.ach-card .ach-st{font-size:12.5px;font-weight:600;color:var(--muted);white-space:nowrap}
+.ach-card.got{border-color:var(--j2);background:var(--jade-soft)}
+.ach-card.got .ach-st{color:var(--jade)}
+.ach-card.lock .ach-ic{filter:grayscale(1);opacity:.45}
+.ach-card.lock .ach-t b{opacity:.8}
+.ach-pg{display:flex !important;align-items:center;gap:8px;margin-top:5px}
+.ach-pb{flex:1;max-width:220px;height:6px;border-radius:99px;background:var(--panel2);overflow:hidden;display:block}
+.ach-pb i{display:block;height:100%;background:var(--j2);border-radius:99px}
+.ach-pt{font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--muted)}
