@@ -32,6 +32,7 @@ jobs:
         with:
           node-version: 22
       - name: Look up photos
+        timeout-minutes: 32   # leaves time to save what was found even when Wikimedia is slow
         env:
           REGION: ${{ inputs.region }}
           LIMIT: ${{ inputs.limit }}
@@ -42,8 +43,10 @@ jobs:
           if [ "$RETRY" = "true" ]; then args="$args --retry-misses"; fi
           node tools/journey-media.js $args
       - name: Rebuild the site files (cache stamps)
+        if: always()
         run: node tools/build-site.js
       - name: Save the new photos
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
