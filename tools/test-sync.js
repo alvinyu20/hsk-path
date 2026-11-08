@@ -166,6 +166,14 @@ function fakeGithub() {
   check(noHdr.scopes === null && noHdr.expires === null, 'the token check still works when the browser cannot read those headers');
   const badTok = await S.gistApi('t', mk(401)).check().catch(e => e);
   check(badTok.kind === 'auth' && /rejected the token/.test(badTok.message), 'a rejected token is reported as such');
+  // the Journey: the journey with more stops wins, whatever the save times say
+  const jyBig = { prefs: { jy: { v: { n: 15, seen: new Array(15).fill('a'), reg: 'neimenggu' }, at: T - 5000 } } };
+  const jyNew = { prefs: { jy: { v: { n: 0, seen: [], reg: 'sichuan' }, at: T + 5000 } } };   // a fresh device that just opened the Journey, saved later
+  check(S.mergePerson(jyBig, jyNew).prefs.jy.v.reg === 'neimenggu' && S.mergePerson(jyNew, jyBig).prefs.jy.v.reg === 'neimenggu', 'a journey with more stops is never replaced by a newer, emptier one');
+  const jyTieA = { prefs: { jy: { v: { n: 3, seen: ['a', 'b', 'c'], reg: 'x' }, at: T } } }, jyTieB = { prefs: { jy: { v: { n: 3, seen: ['a', 'b', 'c'], reg: 'y' }, at: T + 1 } } };
+  check(S.mergePerson(jyTieA, jyTieB).prefs.jy.v.reg === 'y' && JSON.stringify(S.mergePerson(jyTieA, jyTieB)) === JSON.stringify(S.mergePerson(jyTieB, jyTieA)), 'with the same number of stops the newer save wins, in either order');
+  check(S.mergePerson(jyBig, { prefs: {} }).prefs.jy.v.n === 15 && S.mergePerson({ prefs: {} }, jyBig).prefs.jy.v.n === 15, 'a device with no journey takes the other one');
+
   const offTok = await S.gistApi('t', async () => { throw new Error('x'); }).check().catch(e => e);
   check(offTok.kind === 'network', 'an unreachable GitHub is reported as a network problem');
   let wrote = false;

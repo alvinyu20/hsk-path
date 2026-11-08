@@ -162,6 +162,14 @@
     return [mp.tx + mp.k * lo, mp.ty - mp.k * Math.log(Math.tan(Math.PI / 4 + la / 2))];
   }
 
-  const api = { META, SMALL, LADDER, FLAT, costOf, cum, paidFor, build, fresh, ensure, step, meter, regionStats, pinLatLon, project, shuffle, slug, KINDS };
+  // The random choices of a step come from the journey itself (its seed and how many stops are unlocked), not from Math.random, so two devices that
+  // unlock the next stop from the same saved journey end up with the same stop and the same order of what follows.
+  function seedOf(st) { return (st && st.sd) || ((st && st.seen) || []).slice(0, 2).join(',') || (st && st.reg) || 'journey'; }
+  function rngFor(st) {
+    let a = hash(seedOf(st) + ':' + ((st && st.n) || 0)) || 1;
+    return function () { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  }
+
+  const api = { META, SMALL, LADDER, FLAT, costOf, cum, paidFor, build, fresh, ensure, step, meter, regionStats, pinLatLon, project, shuffle, slug, KINDS, seedOf, rngFor };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.ShanluJourney = api;
 })(typeof window !== 'undefined' ? window : globalThis);

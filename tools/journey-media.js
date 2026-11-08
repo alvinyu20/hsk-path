@@ -133,7 +133,7 @@ async function tryPage(api, stop, lang, title, pre) {
   return first;
 }
 
-const NOT_A_PHOTO = /\.(svg|gif|ogg|ogv|webm|pdf|tiff?)$|^(Flag[ _]|Coat[ _]|Map[ _]|Location[ _]|Locator|Emblem[ _]|Logo[ _]|Commons-logo|Wikimedia)/i;
+const NOT_A_PHOTO = /\.(svg|gif|ogg|ogv|webm|pdf|tiff?)$|^(Flag[ _]|Coat[ _]|Map[ _]|Location[ _]|Locator|Emblem[ _]|Logo[ _]|Commons-logo|Wikimedia)|logo|icon|symbol/i;
 
 // One Commons file: refuses icons, maps and anything but the four open licences; builds the credit line "Author / licence".
 // o.ll = [lat, lon] makes a file that carries its own coordinates prove it is near the stop.

@@ -246,13 +246,22 @@
     if ((a.at || 0) !== (b.at || 0)) return (a.at || 0) > (b.at || 0) ? a : b;
     return JSON.stringify(a.v) >= JSON.stringify(b.v) ? a : b;
   }
+  // The Journey is not "newest save wins": the journey with more stops unlocked wins, so a device that has only just opened the Journey (or a
+  // freshly installed Home Screen icon) can never overwrite real progress. With the same number of stops the newer save wins.
+  const jyCount = (x) => { const v = isObj(x) ? x.v : null; return isObj(v) ? (typeof v.n === 'number' ? v.n : Array.isArray(v.seen) ? v.seen.length : 0) : -1; };
+  function mergeJourney(a, b) {
+    const na = jyCount(a), nb = jyCount(b);
+    if (na < 0 || nb < 0) return lww(a, b);
+    if (na !== nb) return na > nb ? a : b;
+    return lww(a, b);
+  }
   const factKey = (t) => String(t || '').trim().toLowerCase();
   function mergePerson(a, b) {
     a = isObj(a) ? a : {}; b = isObj(b) ? b : {};
     const out = { prefs: {} };
     const names = {};
     Object.keys(a.prefs || {}).concat(Object.keys(b.prefs || {})).forEach(k => { names[k] = true; });
-    Object.keys(names).sort().forEach(k => { const r = lww((a.prefs || {})[k], (b.prefs || {})[k]); if (r) out.prefs[k] = r; });
+    Object.keys(names).sort().forEach(k => { const r = (k === 'jy' ? mergeJourney : lww)((a.prefs || {})[k], (b.prefs || {})[k]); if (r) out.prefs[k] = r; });
     const lsn = lww(a.lsn, b.lsn); if (lsn) out.lsn = lsn;
     const sec = lww(a.secrets, b.secrets); if (sec) out.secrets = sec;
     const ma = isObj(a.mem) ? a.mem : {}, mb = isObj(b.mem) ? b.mem : {};

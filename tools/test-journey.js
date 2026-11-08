@@ -117,5 +117,16 @@ for (let seed = 1; seed <= 25; seed++) {
   }
 }
 
+// two devices that unlock the next stop from the same saved journey get the same stop and the same order afterwards
+{
+  const base = J.step(W, J.ensure(W, null, seeded(7)), seeded(7), '2026-11-07').st; base.sd = 'abc12345';
+  const a = J.step(W, base, J.rngFor(base), '2026-11-07'), b = J.step(W, JSON.parse(JSON.stringify(base)), J.rngFor(JSON.parse(JSON.stringify(base))), '2026-11-07');
+  eq(a.st, b.st, 'the same saved journey gives the same next state on every device');
+  let x = a.st, y = JSON.parse(JSON.stringify(a.st));
+  for (let i = 0; i < 40; i++) { x = J.step(W, x, J.rngFor(x), '2026-11-07').st; y = J.step(W, y, J.rngFor(y), '2026-11-07').st; }
+  eq(x.seen, y.seen, 'forty steps on two devices give the same journey');
+  ok(J.seedOf({ seen: ['p', 'q', 'r'] }) === 'p,q' && J.seedOf({ sd: 'k', seen: ['p'] }) === 'k', 'an older journey without a seed uses its first stops as the seed');
+}
+
 if (bad) { console.log(bad + ' failed'); process.exit(1); }
 console.log('journey tests passed (' + W.regions.length + ' regions, ' + Object.keys(all).length + ' stops)');

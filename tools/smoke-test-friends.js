@@ -227,6 +227,18 @@ const INVITE = 'ABCD-EFGH-JKLM';
   check(await Cbad.page.locator('.frjoin').count() === 1 && await Cbad.page.evaluate(() => !localStorage.getItem('shanlu-friends')), 'a wrong personal link is refused and nothing is kept');
   await Cbad.ctx.close();
 
+  // settings follow the person: a daily goal and a new-words limit set on A reach A's second device (signed in with A's link)
+  await A.page.evaluate(() => window.shanlu.setState({ mins: 45, nlimit: 7 }));
+  await A.page.evaluate(() => window.shanlu.friendsProgressSync());
+  const A2 = await mk();
+  await A2.page.goto(link); await A2.page.waitForSelector('.frow.me');
+  await A2.page.evaluate(() => window.shanlu.friendsProgressSync());
+  check(await A2.page.evaluate(() => window.shanlu.state.mins === 45 && window.shanlu.state.nlimit === 7), 'a setting changed on one device (daily goal, new-words limit) reaches the same person\'s other device');
+  await A2.page.evaluate(() => window.shanlu.setState({ mins: 10 })); await A2.page.evaluate(() => window.shanlu.friendsProgressSync());
+  await A.page.evaluate(() => window.shanlu.friendsProgressSync());
+  check(await A.page.evaluate(() => window.shanlu.state.mins === 10), 'and a later change on the second device comes back');
+  await A2.ctx.close();
+
   // pasting the link (the Home Screen icon on iPhone cannot open links)
   const P = await mk();
   await P.page.goto(site + '#/friends'); await P.page.evaluate(() => window.shanlu.setState({ screen:'friends' })); await P.page.waitForSelector('#fr-link');

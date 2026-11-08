@@ -361,6 +361,11 @@
   const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'misses', 'testHistory', 'ws',
     'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
 
+  // Settings that belong to the person, not the device: kept as person preferences ('set.<name>', 'level', 'erhua') so every device ends up with the same ones.
+  // (The browser voice stays on the device: the voices on a phone and a laptop are different ones.)
+  const SETTING_KEYS = ['sys', 'mins', 'theme', 'nlimit', 'speed', 'ascView'];
+  const SETTING_DEFAULT = { sys:'3.0', mins:20, nlimit:0, speed:1, ascView:'trail' };
+
   function freshState() {
     let dark = false;
     try { dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
@@ -1247,6 +1252,7 @@
           }
         } catch (e) {}
       }
+      if (!this.fromPerson) SETTING_KEYS.forEach(k => { if (patch[k] !== undefined && patch[k] !== S[k]) prefSet('set.' + k, patch[k]); });   // a setting the person changed travels to their other devices
       super.setState(patch);
       this.persistSoon();
     }
@@ -1339,6 +1345,7 @@
         if (ALL) { const tmp = Object.assign({}, this.state, readSplit()); fillWs(tmp.ws); carryOverErhua(tmp); patch = {}; SPLIT.forEach(k => { patch[k] = tmp[k]; }); }
         else if (merged[LV]) {
           const bumped = (merged[LV].epoch || 0) > (this.state.epoch || 0);   // another device reset this level: today's "words so far" baseline starts again too
+          if (merged[LV].ws) fillWs(merged[LV].ws);   // the saved copy holds only started words; the day roll below counts every word
           const next = rollDay(Object.assign({}, this.state, merged[LV], bumped ? { mem0:null } : {}));
           carryOverErhua(next);
           patch = SY.pick(next); patch.rq = this.cleanQueue(patch.rq, patch.ws, patch.lrn); patch.ws = fillWs(patch.ws);
@@ -1921,6 +1928,32 @@
       this.setState({ aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), asrMode:asrModeNow(), aiProvider:aiProviderNow(), aiOn:aiReadyNow(), aliOn:!!aliCfg().key,
         aiModel:AICFG.model || this.state.aiModel, aliModelInput:aliCfg().model || this.state.aliModelInput, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), memOn:memOn(), memFacts:memFacts(), syncKeys:prefGet('syncKeys', false) === true });
       this.secretsOpen();   // API keys (only if switched on): opened with the passphrase kept on this device
+      this.settingsApply(true);
+    };
+    // Bring this device's settings in line with the person's saved ones. Study level and the reading style need a fresh page, which happens at most once per tab session.
+    settingsApply = (fromSync) => {
+      const g = (k) => (PERSON.prefs[k] ? PERSON.prefs[k].v : undefined);
+      this.fromPerson = true;
+      try { const sp = {}; SETTING_KEYS.forEach(k => { const v = g('set.' + k); if (v !== undefined && v !== this.state[k]) sp[k] = v; }); if (Object.keys(sp).length) this.setState(sp); }
+      finally { this.fromPerson = false; }
+      if (!fromSync) return;   // at start-up only the plain settings are applied; the page is never reloaded before anything has synced
+      let guard = false; try { guard = sessionStorage.getItem('shanlu-setreload') === '1'; } catch (e) {}
+      if (guard) return;
+      let reload = false;
+      const er = g('erhua');
+      if ((er === 'on' || er === 'off') && er !== (ERHUA_ON ? 'on' : 'off')) { try { localStorage.setItem(ERHUA_KEY, er); reload = true; } catch (e) {} }
+      const lv = g('level');
+      if (typeof lv === 'number' && lv !== LV && (lv === 0 ? (LVL.unlockedLevels ? LVL.unlockedLevels().length : 0) >= 2 : lv >= 1 && LVL.unlocked(lv))) { try { localStorage.setItem('shanlu-level', String(lv)); reload = true; } catch (e) {} }
+      if (reload) { try { sessionStorage.setItem('shanlu-setreload', '1'); } catch (e) {} this.persistNow(); try { location.reload(); } catch (e) {} }
+    };
+    // Settings chosen before they travelled: file them as the oldest value, so a later choice on any device wins.
+    settingsSeed = () => {
+      let changed = false;
+      const S = this.state;
+      Object.keys(SETTING_DEFAULT).forEach(k => { if (!PERSON.prefs['set.' + k] && S[k] !== undefined && S[k] !== SETTING_DEFAULT[k]) { PERSON.prefs['set.' + k] = { v:S[k], at:1 }; changed = true; } });
+      if (!PERSON.prefs.erhua && ERHUA_ON) { PERSON.prefs.erhua = { v:'on', at:1 }; changed = true; }
+      if (!PERSON.prefs.level && LV !== 1) { PERSON.prefs.level = { v:LV, at:1 }; changed = true; }
+      if (changed) savePerson(false);
     };
     personTimer = null; personAt = 0;
     personChanged = () => {   // a change was made here: send it to the group's server soon, but not on every tap
@@ -2167,6 +2200,7 @@
     toggleErhua = () => {
       this.persistNow();
       try { localStorage.setItem(ERHUA_KEY, ERHUA_ON ? 'off' : 'on'); } catch (e) {}
+      prefSet('erhua', ERHUA_ON ? 'off' : 'on');
       try { location.reload(); } catch (e) {}
     };
     setVoice = (id) => { this.setState({ voiceId:id }); };
@@ -2397,7 +2431,8 @@
     // make sure a saved journey exists and points at a region (the first look, or after the stop lists changed)
     jyEnsure() {
       if (!JWORLD) return null;
-      const cur = jyRead(); const st = JY.ensure(JWORLD, cur, Math.random);
+      const cur = jyRead(); const st = JY.ensure(JWORLD, cur, cur ? JY.rngFor(cur) : Math.random);
+      if (!cur) st.sd = Math.random().toString(36).slice(2, 10);   // this journey's own seed (see journey.js rngFor)
       if (!cur || st.reg !== cur.reg || !cur.ms) prefSet('jy', st);
       return st;
     }
@@ -2406,7 +2441,7 @@
       if (!JWORLD) return;
       const S = this.state; const st0 = this.jyEnsure(); if (!st0 || !st0.reg) return;
       if (JY.meter(totalXp(S), st0).ready < 1) return;
-      const r = JY.step(JWORLD, st0, Math.random, ymd(new Date()));
+      const r = JY.step(JWORLD, st0, JY.rngFor(st0), ymd(new Date()));
       if (!r.stop) return;
       prefSet('jy', r.st);
       this.friendsTick();
@@ -2968,6 +3003,7 @@
       if (n === LV) return;
       this.persistNow();
       try { localStorage.setItem('shanlu-level', String(n)); } catch (e) {}
+      prefSet('level', n);
       window.location.reload();
     };
     toggleTheme = () => { this.setState({ theme:this.state.theme === 'dark' ? 'light' : 'dark' }); };
@@ -3794,7 +3830,7 @@
           return { label:'HSK ' + n, sub, cls:(!ALL && LV === n ? 'on' : '') + (open ? '' : ' locked'), isOn:!ALL && LV === n, fn:() => { this.setState({ lvMenu:false }); if (open) this.switchLevel(n); else this.setState({ lvMsg:n }); } };
         }),
         lvMsgShow:S.lvMsg > 0 && (S.lvMsg === 99 ? LVL.unlockedLevels().length < 2 : !LVL.unlocked(S.lvMsg)) ? true : false, lvMsgText:S.lvMsg === 99 ? 'All levels shows every level you have unlocked together, so it needs at least two. Pass the HSK 1 level exam (at least ' + LVL.PASS_PCT + '% in listening and in reading; each section can be taken separately) to unlock HSK 2. Already know HSK 1? Take the exam now to test out. You can also set all levels open in Settings.' : 'HSK ' + S.lvMsg + ' is locked. It opens when you pass the HSK ' + (S.lvMsg - 1) + ' level exam: at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading (each section can be taken separately and retaken). Already know HSK ' + (S.lvMsg - 1) + '? Take the exam now to test out. You can also set all levels open in Settings.',
-        lvMsgGo:() => { const tgt = S.lvMsg === 99 ? 1 : S.lvMsg - 1; this.setState({ lvMsg:0 }); if (LV === tgt) this.go('exam'); else { try { localStorage.setItem('shanlu-level', String(tgt)); } catch (e) {} window.location.reload(); } },
+        lvMsgGo:() => { const tgt = S.lvMsg === 99 ? 1 : S.lvMsg - 1; this.setState({ lvMsg:0 }); if (LV === tgt) this.go('exam'); else { try { localStorage.setItem('shanlu-level', String(tgt)); } catch (e) {} prefSet('level', tgt); window.location.reload(); } },
         lvMsgClose:() => this.setState({ lvMsg:0 }), lvMsgGoText:LV === (S.lvMsg === 99 ? 1 : S.lvMsg - 1) ? 'Go to the HSK ' + LV + ' exam' : 'Open HSK ' + (S.lvMsg === 99 ? 1 : S.lvMsg - 1),
         lvNote:'You are studying ' + LVN + '. Each level keeps its own progress on this device and its own copy when you sync. ' + (LVL.softLock() ? 'The lock is set to open: every level can be studied, and passing an exam only earns that level\'s seal.' : 'A level opens when you pass the exam of the level before it: at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading. You can sit each section on its own and retake it; your best result for each section counts. If you already know a level, take its exam now to test out (a lock on a button means it is not open yet).'),
         lockOpts:[[false, 'Locked until the exam is passed'], [true, 'All levels open']].map(o => ({ label:o[1], cls:LVL.softLock() === o[0] ? 'on' : '', fn:() => this.setLock(o[0]) })),
@@ -3941,6 +3977,8 @@
   // after a mouse click on a Review button, drop the focus so Space and Enter go to the card, not back to that button
   document.addEventListener('click', (e) => { try { const b = e.target && e.target.closest && e.target.closest('.rev button'); if (b && e.detail > 0) b.blur(); } catch (err) {} });
   window.addEventListener('pagehide', () => { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); });
+  app.settingsSeed();
+  app.settingsApply();
   app.friendsBoot();
   // a failed save raises the banner; the next successful save clears it
   onSaveState = (bad) => { try { app.setState({ saveFail:bad, saveInfo:bad ? saveInfo : '' }); } catch (e) {} };
