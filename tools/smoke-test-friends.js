@@ -238,6 +238,15 @@ const INVITE = 'ABCD-EFGH-JKLM';
   await A2.page.goto(link); await A2.page.waitForSelector('.frow.me');
   await A2.page.evaluate(() => window.shanlu.friendsProgressSync());
   check(await A2.page.evaluate(() => window.shanlu.state.mins === 45 && window.shanlu.state.nlimit === 7), 'a setting changed on one device (daily goal, new-words limit) reaches the same person\'s other device');
+  // coins earned in the All-levels view are kept apart from the levels: they travel too
+  await A.page.evaluate(() => localStorage.setItem('shanlu-progress-v1-all', JSON.stringify({ xp: 7777 })));
+  await A.page.evaluate(() => window.shanlu.friendsProgressSync());
+  await A2.page.evaluate(() => window.shanlu.friendsProgressSync());
+  check(await A2.page.evaluate(() => (JSON.parse(localStorage.getItem('shanlu-progress-v1-all')) || {}).xp === 7777), 'coins earned in the All-levels view reach the same person\'s other device');
+  // the Sync now button says what happened
+  await A2.page.evaluate(() => window.shanlu.setState({ screen:'friends' }));
+  await A2.page.locator('button', { hasText: 'Sync now' }).click(); await A2.page.waitForSelector('.banner:has-text("Synced.")');
+  check((await text(A2.page)).includes('coins earned in total') && (await text(A2.page)).includes('Progress last synced'), 'Sync now reports the result and the page shows when progress last synced');
   await A2.page.evaluate(() => window.shanlu.setState({ mins: 10 })); await A2.page.evaluate(() => window.shanlu.friendsProgressSync());
   await A.page.evaluate(() => window.shanlu.friendsProgressSync());
   check(await A.page.evaluate(() => window.shanlu.state.mins === 10), 'and a later change on the second device comes back');

@@ -371,7 +371,7 @@
     try { dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
-      fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
+      fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
       jyPing:0, jyTab:'map', jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
@@ -1309,7 +1309,29 @@
     friendsProgressSync = async () => {
       if (this.progBusy) return false;
       this.progBusy = true;
-      try { return await this.friendsProgressSyncRun(); } finally { this.progBusy = false; }
+      try {
+        const r = await this.friendsProgressSyncRun();
+        this.syncInfo = { ok:true, at:Date.now() };
+        if (this.state.syncBadMsg) this.setState({ syncBadMsg:'' });
+        return r;
+      } catch (e) {
+        const why = ((e && e.message) || 'Could not reach the server.') + (e && e.status ? ' (error ' + e.status + (e.code ? ', ' + e.code : '') + ')' : '');
+        this.syncInfo = { ok:false, at:Date.now(), msg:why };
+        try { if (this.state.syncBadMsg !== why) this.setState({ syncBadMsg:why }); } catch (e2) {}
+        throw e;
+      } finally { this.progBusy = false; }
+    };
+    syncInfo = null;
+    // "Sync now": merge with the server right away and say what happened (the numbers are this device's, after the merge)
+    friendsSyncNow = async () => {
+      if (!FR || !FR.enabled() || !FR.identity() || this.state.frSyncing) return;
+      this.setState({ frSyncing:true, frErr:'', frMsg:'' });
+      await this.friendsPush({});
+      otherXp(true);
+      const info = this.syncInfo, st = jyRead();
+      this.setState({ frSyncing:false });
+      if (info && info.ok) this.setState({ frMsg:'Synced. This device now has ' + totalXp(this.state).toLocaleString('en-US') + ' coins earned in total and ' + (st ? st.n : 0) + ' Journey stops.' });
+      else if (info && !this.state.frErr) this.setState({ frErr:'Could not sync: ' + info.msg });
     };
     friendsProgressSyncRun = async () => {
       let changed = false;
@@ -1330,6 +1352,19 @@
       const got = await FR.getProgress();
       const remote = (got && got.progress && got.progress.levels) || {};
       const merged = {}; let pushNeeded = !(got && got.progress), changed = false;
+      // Coins earned while the "All levels" view is open are kept in that view's own saved copy, which is not one of the levels above:
+      // they travel as one number (the larger one wins), so every device ends up with the same coin total.
+      const allKey = 'shanlu-progress-v1-all';
+      const readAllSt = () => { try { return JSON.parse(localStorage.getItem(allKey)); } catch (e) { return null; } };
+      const localAllXp = ALL ? (this.state.xp || 0) : ((readAllSt() || {}).xp || 0);
+      const remoteAllXp = Number(got && got.progress && got.progress.allXp) || 0;
+      const mergedAllXp = Math.max(localAllXp, remoteAllXp);
+      if (mergedAllXp > localAllXp) {
+        if (ALL) { this.noSync = true; this.setState({ xp:mergedAllXp }); this.noSync = false; this.persistNow(); }
+        else { const st = readAllSt() || {}; st.xp = mergedAllXp; lsSet(allKey, JSON.stringify(st)); }
+        changed = true; otherXp(true);
+      }
+      if (mergedAllXp > remoteAllXp) pushNeeded = true;
       Object.keys(Object.assign({}, local, remote)).forEach(k => {
         const n = Number(k);
         if (levels.indexOf(n) < 0) { merged[k] = remote[k]; return; }   // a level this version does not know: pass it through untouched
@@ -1359,7 +1394,7 @@
       if (SY.samePerson && !SY.samePerson(mergedP, PERSON)) { PERSON = mergedP; savePerson(false); this.personApply(); changed = true; }
       if (SY.samePerson && !SY.samePerson(mergedP, remoteP)) pushNeeded = true;
       if (pushNeeded) {
-        try { await FR.putProgress({ v:1, levels:merged, person:mergedP }, { base:got ? got.updated : undefined }); }
+        try { await FR.putProgress({ v:1, levels:merged, person:mergedP, allXp:mergedAllXp }, { base:got ? got.updated : undefined }); }
         catch (e) { if (e && e.status === 412) return { changed, conflict:true }; throw e; }
       }
       return { changed, conflict:false };
@@ -1440,7 +1475,7 @@
         try { const g = await FR.restore(hit.me); this.setState({ screen:'friends', fr:g, frAt:Date.now(), frMsg:'Signed in on this device.', frErr:'' }); await this.friendsPush({}); }
         catch (e) { this.setState({ screen:'friends', frErr:(e && e.message) || 'That link does not work.' }); }
       }
-      if (FR.identity()) { await this.friendsRefresh(false); setTimeout(() => this.friendsPush({ minGap:5 * 60 * 1000 }), 1500); }
+      if (FR.identity()) { await this.friendsRefresh(false); this.friendsProgressSync().catch(() => {}); setTimeout(() => this.friendsPush({ minGap:5 * 60 * 1000 }), 1500); }
     };
 
     // All levels: hand each level its own part of the progress, leaving the rest of that level's save alone
@@ -2484,7 +2519,7 @@
     jyFilterSet = (f) => this.setState({ jyFilter:f, jySel:null, jyMoreN:40 });
 
     jyView(S) {
-      const base = { isJourney:S.screen === 'journey', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Your coins, from everything you study on every level. Spend them on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), xpPillCls:'pill xpp', jyPingShow:false, jyReadyShow:false, jyReadyN:0, jyReadyLabel:'', jyGuideShow:false };
+      const base = { isJourney:S.screen === 'journey', jySyncBad:!!S.syncBadMsg && !!(FR && FR.identity && FR.identity()), jySyncText:'This device could not sync with your other devices: ' + (S.syncBadMsg || '') + ' Open Friends and tap Sync now.', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Your coins, from everything you study on every level. Spend them on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), xpPillCls:'pill xpp', jyPingShow:false, jyReadyShow:false, jyReadyN:0, jyReadyLabel:'', jyGuideShow:false };
       if (!JWORLD || !JMAP) return Object.assign(base, { jyOff:S.screen === 'journey' });
       const st = jyRead() || JY.fresh();   // only read here;
       base.xpTotalText = coinBalance(S, st).toLocaleString('en-US');
@@ -3272,6 +3307,8 @@
         frAvatars:frRows.slice(0, 8).map((r, i) => ({ initial:r.initial, cls:'fav c' + (i % 4) + (r.studiedToday ? ' done' : ' idle'), name:r.name + (r.studiedToday ? ' studied today' : ' has not studied today') })),
         frHomeShow:!!frIdent && !!S.fr && S.screen === 'home', frHomeText:frRows.filter(r => r.studiedToday).length + ' of ' + frRows.length + ' studied today',
         goFriendsHome:() => { this.go('friends'); this.friendsRefresh(false); },
+        frSyncText:S.syncBadMsg ? 'Your progress could not sync: ' + S.syncBadMsg : (this.syncInfo && this.syncInfo.ok ? 'Progress last synced on this device ' + (Math.round((Date.now() - this.syncInfo.at) / 60000) < 1 ? 'just now' : Math.round((Date.now() - this.syncInfo.at) / 60000) + ' min ago') + '.' : 'Progress has not synced on this device yet in this session.'),
+        frSyncBad:!!S.syncBadMsg, frSyncNow:this.friendsSyncNow, frSyncLabel:S.frSyncing ? 'Syncing…' : 'Sync now',
         frUpdated:S.fr ? (frAgo < 1 ? 'Updated just now' : 'Updated ' + frAgo + ' min ago') : '', frRefresh:() => this.friendsRefresh(true),
         frLinkText:S.frCopied ? 'Copied' : 'Copy my link', frCopy:this.friendsCopyLink, frMyLink:frIdent ? window.ShanluFriends.makeLink(location.href, frIdent) : '',
         frLeaveText:S.frLeaveAsk ? 'Tap again to leave' : 'Leave group', frLeave:this.friendsLeave, frTest:this.friendsTest, frTestLabel:S.frTesting ? 'Testing…' : 'Test connection',
@@ -4009,6 +4046,9 @@
     if (document.readyState === 'complete') start(); else window.addEventListener('load', start);
   }
   if (SYNCCFG.token) setTimeout(() => app.syncNow(false), 1200);
+  // coming back to the app (switching from another app or device): pick up what the other devices did, at most once a minute
+  let lastBack = 0;
+  document.addEventListener('visibilitychange', () => { try { if (document.visibilityState === 'visible' && Date.now() - lastBack > 60000 && FR && FR.identity && FR.identity()) { lastBack = Date.now(); app.friendsProgressSync().catch(() => {}); } } catch (e) {} });
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); } else { app._schedule(); if (SYNCCFG.token) app.syncNow(false); } });
   const fileInput = document.getElementById('import-file');
   if (fileInput) {
