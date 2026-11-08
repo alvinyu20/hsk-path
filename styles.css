@@ -1320,3 +1320,130 @@ html,body,.app,button,a,input,select,textarea,label,[role=button]{touch-action:m
 .xp-ping span{color:var(--muted)}
 @keyframes xppop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 @media (max-width:900px){.xp-ping{top:164px;right:12px}}
+
+/* ---------- pinyin and tones course ---------- */
+.py{display:flex;flex-direction:column;gap:18px}
+.py-hero-t{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.py-hero-t .ach-bar{flex:1 1 160px}
+.py-lessons{display:flex;flex-direction:column;gap:10px}
+.py-lesson{display:flex;align-items:center;gap:16px;width:100%;min-height:76px;padding:12px 18px;border-radius:20px;border:1px solid var(--line);background:var(--panel);color:var(--ink);text-align:left;cursor:pointer;font:inherit;transition:transform .15s,border-color .15s,background .15s}
+.py-lesson:hover{border-color:var(--ink);transform:translateY(-2px)}
+.py-lesson:active{transform:scale(.99)}
+.py-glyph{flex:none;width:52px;height:52px;border-radius:14px;background:var(--seal);color:var(--on-seal);display:grid;place-items:center;font-size:28px;font-weight:700;transform:rotate(-3deg)}
+.py-lesson.done .py-glyph{background:var(--jade);color:var(--on-jade)}
+.py-chartbtn .py-glyph{background:var(--ink);color:var(--bg)}
+.py-lt{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px}
+.py-lt b{font:650 18px/1.2 'Bricolage Grotesque',sans-serif}
+.py-lt span{color:var(--muted);font-size:15px}
+.py-st{flex:none;font-size:13px;font-weight:700;padding:5px 12px;border-radius:99px;background:var(--panel2);color:var(--muted)}
+.py-lesson.done .py-st{background:var(--jade-soft);color:var(--jade)}
+.py-honest{font-size:14px;margin:0}
+.py-nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.py-card{display:flex;flex-direction:column;gap:18px}
+.py-lh{display:flex;align-items:center;gap:14px}
+.py-lh .py-glyph{width:46px;height:46px;font-size:24px}
+.py-p{margin:0;font-size:17px;line-height:1.55;max-width:70ch}
+.py-tip{display:flex;flex-direction:column;gap:4px;padding:14px 18px;border-radius:16px;background:var(--jade-soft);border-left:5px solid var(--jade);font-size:16px;line-height:1.5}
+.py-tip b{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--jade)}
+.py-parts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.py-part{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border-radius:16px;background:var(--bg);border:1px solid var(--line)}
+.py-part b{font:650 18px/1.2 'Bricolage Grotesque',sans-serif}
+.py-part span{color:var(--muted);font-size:15px}
+.py-part:nth-child(1){border-top:4px solid var(--seal)}.py-part:nth-child(2){border-top:4px solid var(--jade)}.py-part:nth-child(3){border-top:4px solid var(--amber)}
+.py-saywrap{display:flex;flex-direction:column;gap:10px}
+.py-says{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.py-say{display:flex;align-items:center;gap:14px;min-height:64px;padding:10px 16px;border-radius:16px;border:2px solid var(--line);background:var(--bg);color:var(--ink);text-align:left;cursor:pointer;font:inherit;transition:border-color .15s,background .15s,transform .15s}
+.py-say:hover{border-color:var(--ink);transform:translateY(-2px)}
+.py-say.on{border-color:var(--jade);background:var(--jade-soft)}
+.py-say .ic{margin-left:auto;color:var(--muted)}
+.py-say.on .ic{color:var(--jade)}
+.py-say-zh{font-size:30px;line-height:1.1;min-width:34px}
+.py-say-m{display:flex;flex-direction:column;gap:1px;min-width:0}
+.py-say-m b{font-size:19px;font-weight:650}
+.py-say-m span{color:var(--muted);font-size:14.5px}
+.py-say-m i{font-style:normal;font-size:13.5px;color:var(--jade);font-weight:600}
+.py-groups{display:flex;flex-direction:column;gap:12px}
+.py-group{padding:14px 16px;border-radius:18px;background:var(--bg);border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.py-gh{font:650 17px/1.2 'Bricolage Grotesque',sans-serif}
+.py-gn{margin:0;color:var(--muted);font-size:15px}
+.py-cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
+.py-cell{display:flex;flex-direction:column;align-items:center;gap:1px;padding:10px 6px 9px;border-radius:14px;border:2px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;font:inherit;transition:border-color .15s,background .15s,transform .15s}
+.py-cell:hover{border-color:var(--ink);transform:translateY(-2px)}
+.py-cell.on{border-color:var(--jade);background:var(--jade-soft)}
+.py-cs{font:700 28px/1.1 'Bricolage Grotesque',sans-serif;letter-spacing:-.02em;color:var(--seal)}
+.py-cz{font-size:22px;line-height:1.2}
+.py-cp{font-size:15px;font-weight:600}
+.py-ce{font-size:12.5px;color:var(--muted);text-align:center;line-height:1.2}
+.py-pair{display:flex;flex-direction:column;gap:10px}
+.py-pair-r{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.py-table{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.py-tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:16px;padding:11px 16px;border-top:1px solid var(--line);font-size:16px;line-height:1.45}
+.py-tr:first-child{border-top:0}
+.py-th{background:var(--panel2);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.py-tr span:first-child{font-weight:600}
+.py-tonegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.py-tone{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:12px 14px;border-radius:18px;border:2px solid var(--line);background:var(--bg);color:var(--ink);text-align:left;cursor:pointer;font:inherit;transition:border-color .15s,background .15s,transform .15s}
+.py-tone:hover{border-color:var(--ink);transform:translateY(-2px)}
+.py-tone.on{border-color:var(--jade);background:var(--jade-soft)}
+.py-curve{width:100%;height:64px;fill:none;stroke:var(--seal);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.py-curve .g{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
+.py-tone b{font:650 17px/1.2 'Bricolage Grotesque',sans-serif}
+.py-td{font-size:14.5px;color:var(--muted)}
+.py-tx{font-size:15px}
+.py-tx .zh{font-size:20px}
+.py-check{display:flex;flex-direction:column;gap:14px;padding:16px 18px;border-radius:18px;background:var(--bg);border:1px solid var(--line)}
+.py-q{display:flex;flex-direction:column;gap:8px}
+.py-qp{margin:0;font-size:17px;font-weight:600}
+.py-opts{display:flex;flex-wrap:wrap;gap:8px}
+.py-opt{min-height:44px;padding:0 18px;border-radius:99px;border:2px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;font-size:16px;font-weight:600;cursor:pointer;transition:border-color .15s,background .15s}
+.py-opt:hover{border-color:var(--ink)}
+.py-opt.right{border-color:var(--jade);background:var(--jade-soft)}
+.py-opt.wrong{border-color:var(--amber);background:var(--amber-soft)}
+.py-opt.lock{pointer-events:none}
+.py-why{margin:0;font-size:15.5px;line-height:1.5;color:var(--muted)}
+.py-why b{color:var(--ink)}
+.py-why.right b{color:var(--jade)}
+.py-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding-top:6px}
+.py-donechip{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:99px;background:var(--jade-soft);color:var(--jade);font-weight:700}
+.py-inis{display:flex;flex-wrap:wrap;gap:6px}
+.py-ini{min-width:46px;height:42px;padding:0 12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);font:700 18px/1 'Bricolage Grotesque',sans-serif;cursor:pointer}
+.py-ini:hover{border-color:var(--ink)}
+.py-ini.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.py-chartnote{margin:0;font-size:15px}
+.py-sylls{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.py-syl{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:16px;background:var(--bg);border:1px solid var(--line)}
+.py-sn{font:700 18px/1 'Bricolage Grotesque',sans-serif;color:var(--seal)}
+.py-syl-t{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.py-tb{display:flex;flex-direction:column;align-items:center;gap:0;min-height:56px;padding:4px 2px;border-radius:12px;border:2px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;cursor:pointer}
+.py-tb:hover{border-color:var(--ink)}
+.py-tb.on{border-color:var(--jade);background:var(--jade-soft)}
+.py-tb.off{opacity:.38;pointer-events:none;background:transparent;border-style:dashed}
+.py-tbm{font-size:15px;font-weight:650}
+.py-tbz{font-size:20px;line-height:1.2}
+.py-info{padding:12px 16px;border-radius:14px;background:var(--jade-soft);font-size:16px}
+.py-info .zh{font-size:24px}
+/* the typing tutorial card (Review, Tests and the lesson) */
+.py-typ{display:flex;flex-direction:column;gap:12px;padding:16px 18px;border-radius:18px;background:var(--jade-soft);border:2px solid var(--jade);animation:rise .35s cubic-bezier(.2,.8,.2,1) both}
+.py-typ.lesson{background:var(--bg);border-color:var(--line);animation:none}
+.py-typ-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.py-typ-h b{font:650 18px/1.2 'Bricolage Grotesque',sans-serif}
+.py-typ-h .muted{font-size:14px}
+.py-typ-box{display:flex;flex-direction:column;gap:10px}
+.py-typ-l{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:16px;line-height:1.45}
+.py-try{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.py-try span{font-weight:700;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.py-try .inp{flex:1 1 200px;min-width:0}
+.py-try-out{min-height:34px;font-size:26px;line-height:1.3;color:var(--ink)}
+.py-typ-act{display:flex;flex-wrap:wrap;gap:10px}
+.py-typ-link{align-self:flex-start}
+@media (max-width:600px){
+  .py-parts{grid-template-columns:minmax(0,1fr)}
+  .py-says{grid-template-columns:minmax(0,1fr)}
+  .py-lesson{padding:10px 12px;gap:12px}
+  .py-st{display:none}
+  .py-tr{grid-template-columns:minmax(0,1fr);gap:2px}
+  .py-th span:last-child{display:none}
+  .py-pair-r{grid-template-columns:minmax(0,1fr)}
+  .py-sylls{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){.py-typ{animation:none}}

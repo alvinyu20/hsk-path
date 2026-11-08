@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="36c708d69a">
+<meta name="shanlu-version" content="9ba6e9e375">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=36c708d69a">
+<link rel="stylesheet" href="styles.css?v=9ba6e9e375">
 </head>
 <body>
 <div id="app"></div>
@@ -43,6 +43,10 @@
     <button class="{{navGrammar}}" data-on-click="{{goGrammar}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg>
       Grammar
+    </button>
+    <button class="{{navPinyin}}" data-on-click="{{goPinyin}}">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18c2-1.5 3-4 3-7a3 3 0 0 1 6 0c0 3 1 5.5 3 7"/><path d="M14 6.5 17.5 4M14 10h6"/></svg>
+      Pinyin
     </button>
     <button class="{{navReview}}" data-on-click="{{goReview}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7" width="17" height="12" rx="2.5"/><path d="M7 3.8h10"/></svg>
@@ -620,6 +624,24 @@
           <sc-if value="{{q.isTyped}}" hint-placeholder-val="{{ true }}">
             <input id="answer-input" class="inp {{inpCls}}" type="text" value="{{qtyped}}" placeholder="{{q.placeholder}}" autocomplete="off" autocapitalize="off" aria-label="Your answer" data-on-input="{{onType}}" data-on-keydown="{{onEnter}}">
           </sc-if>
+          <sc-if value="{{q.isPyType}}" hint-placeholder-val="{{ false }}">
+            <sc-if value="{{typShow}}" hint-placeholder-val="{{ false }}">
+              <div class="py-typ" role="region" aria-label="How to type pinyin">
+                <div class="py-typ-h"><b>How to type pinyin</b><span class="muted">Ten seconds, and you only see this once.</span></div>
+                <div class="py-typ-box">
+      <ul class="py-typ-l">
+        <li>Put the <b>tone as a number</b> after each syllable: <b>ni3 hao3</b> becomes nǐ hǎo. Tone marks (nǐ hǎo) work too.</li>
+        <li><b>1</b> high and level &middot; <b>2</b> rising &middot; <b>3</b> dip &middot; <b>4</b> falling &middot; <b>neutral tone</b>: no number (or 5).</li>
+        <li>For <b>ü</b> type <b>v</b>: nv3 becomes nǚ. Capitals and spaces do not matter, and typing the hanzi works too.</li>
+      </ul>
+      <label class="py-try"><span>Try it here</span><input class="inp py-tryi" type="text" placeholder="ni3 hao3" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Practice typing pinyin" value="{{typIn}}" data-on-input="{{onTypIn}}"></label>
+      <div class="py-try-out zh" aria-live="polite">{{typOut}}</div>
+    </div>
+                <div class="py-typ-act"><button type="button" class="btn pri" data-on-click="{{typDone}}">Got it</button><button type="button" class="btn" data-on-click="{{typCourse}}">Open the pinyin course</button></div>
+              </div>
+            </sc-if>
+            <sc-if value="{{typLinkShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn py-typ-link" data-on-click="{{typToggle}}">How to type pinyin</button></sc-if>
+          </sc-if>
           <sc-if value="{{q.isListen}}" hint-placeholder-val="{{ false }}">
             <button class="listen {{listenCls}}" data-on-click="{{playQ}}" aria-label="Play the word">
               <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
@@ -894,6 +916,11 @@
         </div>
       </div>
       <div class="card">
+        <h2 class="h2">New to pinyin?</h2>
+        <p class="cp-note">A short course on initials, finals, the four tones, tone changes and the spelling rules, with sounds you can tap to hear. Seven lessons, about 30 minutes in all.</p>
+        <div class="ob-act"><button class="btn pri" data-on-click="{{goPinyin}}">Open the pinyin course</button></div>
+      </div>
+      <div class="card">
         <h2 class="h2">Coins and the Journey</h2>
         <p class="cp-note">Everything you do on the site earns coins. Coins are spent on the Journey: each stop is a real place, dish or piece of culture, with its Chinese name, and travelling to it takes its price out of your coins. Your first stop is free, then the next ones cost 50, 100, 200, 300, 400 and then 500 coins each. A province is stamped in your passport when you finish it.</p>
         <p class="cp-note">The memory number at the top is different from your coins: it estimates how many words you would recall right now, and it falls if you stop reviewing.</p>
@@ -903,6 +930,160 @@
         <p class="cp-note">Your progress is saved in this browser. Download a backup, or connect sync in Settings, so it follows you to your other devices. If you join a friends board, only your study totals are shared with the group.</p>
         <div class="ob-act"><button class="btn pri" data-on-click="{{goVoice}}">Open Settings</button><button class="btn" data-on-click="{{goHome}}">Back to home</button></div>
       </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- PINYIN AND TONES -->
+  <sc-if value="{{isPinyin}}" hint-placeholder-val="{{ false }}">
+  <div class="gram">
+    <section class="py" aria-label="Pinyin and tones">
+
+      <sc-if value="{{pyIsList}}" hint-placeholder-val="{{ true }}">
+        <div class="card py-hero">
+          <div class="py-hero-t"><b>{{pySummary}}</b><span class="ach-bar" aria-hidden="true"><i style="width:{{pyPct}}"></i></span></div>
+          <p class="cp-note" style="margin:10px 0 0">Seven short lessons. Tap any sound to hear it, and answer a few quick questions at the end of each. Come back to any lesson later.</p>
+        </div>
+        <div class="py-lessons">
+          <sc-for list="{{pyLessons}}" as="l" hint-placeholder-count="7">
+            <button type="button" class="py-lesson {{l.cls}}" data-on-click="{{l.open}}">
+              <span class="py-glyph zh" aria-hidden="true">{{l.glyph}}</span>
+              <span class="py-lt"><b>{{l.title}}</b><span>{{l.blurb}}</span></span>
+              <span class="py-st">{{l.state}}</span>
+            </button>
+          </sc-for>
+          <button type="button" class="py-lesson py-chartbtn" data-on-click="{{pyOpenChart}}">
+            <span class="py-glyph zh" aria-hidden="true">表</span>
+            <span class="py-lt"><b>Sound chart</b><span>Every syllable in HSK 1 to 3 that has a character to say it: tap one to hear it in each tone.</span></span>
+            <span class="py-st">Open</span>
+          </button>
+        </div>
+        <p class="muted py-honest">Written by AI and not yet read by a Chinese teacher. The English sound comparisons are rough, and the voice you hear is your device&rsquo;s own.</p>
+      </sc-if>
+
+      <sc-if value="{{pyIsLesson}}" hint-placeholder-val="{{ false }}">
+        <div class="py-nav"><button type="button" class="linkbtn" data-on-click="{{pyBack}}">&larr; All lessons</button><span class="muted">{{pyLessonNo}}</span></div>
+        <div class="card py-card">
+          <div class="py-lh"><span class="py-glyph zh" aria-hidden="true">{{pyGlyph}}</span><h2 class="h2">{{pyTitle}}</h2></div>
+          <sc-for list="{{pyBlocks}}" as="b" hint-placeholder-count="4">
+
+            <sc-if value="{{b.isP}}" hint-placeholder-val="{{ true }}"><p class="py-p">{{b.x}}</p></sc-if>
+
+            <sc-if value="{{b.isTip}}" hint-placeholder-val="{{ false }}"><div class="py-tip"><b>Good to know</b><span>{{b.x}}</span></div></sc-if>
+
+            <sc-if value="{{b.isParts}}" hint-placeholder-val="{{ false }}">
+              <div class="py-parts"><sc-for list="{{b.items}}" as="it" hint-placeholder-count="3"><div class="py-part"><b>{{it.h}}</b><span>{{it.x}}</span></div></sc-for></div>
+            </sc-if>
+
+            <sc-if value="{{b.isSay}}" hint-placeholder-val="{{ false }}">
+              <div class="py-saywrap">
+                <sc-if value="{{b.hasTitle}}" hint-placeholder-val="{{ false }}"><div class="kick">{{b.title}}</div></sc-if>
+                <div class="py-says"><sc-for list="{{b.items}}" as="it" hint-placeholder-count="3">
+                  <button type="button" class="py-say {{it.cls}}" data-on-click="{{it.play}}" aria-label="Hear {{it.py}}">
+                    <span class="py-say-zh zh">{{it.zh}}</span>
+                    <span class="py-say-m"><b>{{it.py}}</b><span>{{it.en}}</span><sc-if value="{{it.hasSplit}}" hint-placeholder-val="{{ false }}"><i>{{it.split}}</i></sc-if></span>
+                    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+                  </button>
+                </sc-for></div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{b.isGroups}}" hint-placeholder-val="{{ false }}">
+              <div class="py-groups"><sc-for list="{{b.items}}" as="g" hint-placeholder-count="3">
+                <div class="py-group">
+                  <div class="py-gh">{{g.h}}</div>
+                  <sc-if value="{{g.hasNote}}" hint-placeholder-val="{{ false }}"><p class="py-gn">{{g.note}}</p></sc-if>
+                  <div class="py-cells"><sc-for list="{{g.cells}}" as="c" hint-placeholder-count="4">
+                    <button type="button" class="py-cell {{c.cls}}" data-on-click="{{c.play}}" aria-label="Hear {{c.s}} in {{c.py}}">
+                      <b class="py-cs">{{c.s}}</b><span class="py-cz zh">{{c.zh}}</span><span class="py-cp">{{c.py}}</span><span class="py-ce">{{c.en}}</span>
+                    </button>
+                  </sc-for></div>
+                </div>
+              </sc-for></div>
+            </sc-if>
+
+            <sc-if value="{{b.isPair}}" hint-placeholder-val="{{ false }}">
+              <div class="py-pair">
+                <div class="kick">{{b.title}}</div>
+                <div class="py-pair-r">
+                  <button type="button" class="py-say {{b.a.cls}}" data-on-click="{{b.a.play}}"><span class="py-say-zh zh">{{b.a.zh}}</span><span class="py-say-m"><b>{{b.a.py}}</b><span>{{b.a.en}}</span></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+                  <button type="button" class="py-say {{b.b.cls}}" data-on-click="{{b.b.play}}"><span class="py-say-zh zh">{{b.b.zh}}</span><span class="py-say-m"><b>{{b.b.py}}</b><span>{{b.b.en}}</span></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{b.isTable}}" hint-placeholder-val="{{ false }}">
+              <div class="py-table" role="table">
+                <div class="py-tr py-th" role="row"><span role="columnheader">{{b.h0}}</span><span role="columnheader">{{b.h1}}</span></div>
+                <sc-for list="{{b.rows}}" as="r" hint-placeholder-count="3"><div class="py-tr" role="row"><span role="cell">{{r.c0}}</span><span role="cell">{{r.c1}}</span></div></sc-for>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{b.isTones}}" hint-placeholder-val="{{ false }}">
+              <div class="py-tonegrid"><sc-for list="{{b.tones}}" as="t" hint-placeholder-count="5">
+                <button type="button" class="py-tone {{t.cls}}" data-on-click="{{t.play}}" aria-label="Hear {{t.name}}: {{t.py}}">
+                  <svg class="py-curve" viewBox="0 0 60 40" aria-hidden="true"><line x1="4" y1="6" x2="56" y2="6" class="g"/><line x1="4" y1="20" x2="56" y2="20" class="g"/><line x1="4" y1="34" x2="56" y2="34" class="g"/><path d="{{t.path}}"/></svg>
+                  <b>{{t.name}}</b><span class="py-td">{{t.desc}}</span><span class="py-tx"><span class="zh">{{t.zh}}</span> {{t.py}} &middot; {{t.en}}</span>
+                </button>
+              </sc-for></div>
+            </sc-if>
+
+            <sc-if value="{{b.isTyping}}" hint-placeholder-val="{{ false }}">
+              <div class="py-typ lesson">
+                <div class="py-typ-box">
+                <ul class="py-typ-l">
+                  <li>Put the <b>tone as a number</b> after each syllable: <b>ni3 hao3</b> becomes nǐ hǎo. Tone marks (nǐ hǎo) work too.</li>
+                  <li><b>1</b> high and level &middot; <b>2</b> rising &middot; <b>3</b> dip &middot; <b>4</b> falling &middot; <b>neutral tone</b>: no number (or 5).</li>
+                  <li>For <b>ü</b> type <b>v</b>: nv3 becomes nǚ. Capitals and spaces do not matter, and typing the hanzi works too.</li>
+                </ul>
+                <label class="py-try"><span>Try it here</span><input class="inp py-tryi" type="text" placeholder="ni3 hao3" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Practice typing pinyin" value="{{typIn}}" data-on-input="{{onTypIn}}"></label>
+                <div class="py-try-out zh" aria-live="polite">{{typOut}}</div>
+              </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{b.isCheck}}" hint-placeholder-val="{{ false }}">
+              <div class="py-check">
+                <div class="kick">Check yourself</div>
+                <sc-for list="{{b.qs}}" as="q" hint-placeholder-count="3">
+                  <div class="py-q">
+                    <p class="py-qp">{{q.q}}</p>
+                    <div class="py-opts"><sc-for list="{{q.opts}}" as="o" hint-placeholder-count="3"><button type="button" class="py-opt {{o.cls}}" data-on-click="{{o.pick}}">{{o.label}}</button></sc-for></div>
+                    <sc-if value="{{q.answered}}" hint-placeholder-val="{{ false }}"><p class="py-why {{q.whyCls}}"><b>{{q.verdict}}</b> {{q.why}}</p></sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+          </sc-for>
+
+          <div class="py-foot">
+            <sc-if value="{{pyFootWait}}" hint-placeholder-val="{{ false }}"><span class="muted">{{pyFootWaitText}}</span></sc-if>
+            <sc-if value="{{pyCanFinish}}" hint-placeholder-val="{{ false }}"><button type="button" class="btn pri big" data-on-click="{{pyFinish}}">{{pyFinishText}}</button></sc-if>
+            <sc-if value="{{pyIsDone}}" hint-placeholder-val="{{ false }}"><span class="py-donechip">&#10003; {{pyDoneText}}</span></sc-if>
+            <sc-if value="{{pyHasNext}}" hint-placeholder-val="{{ false }}"><button type="button" class="btn {{pyNextCls}}" data-on-click="{{pyNext}}">{{pyNextText}}</button></sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{pyIsChart}}" hint-placeholder-val="{{ false }}">
+        <div class="py-nav"><button type="button" class="linkbtn" data-on-click="{{pyBack}}">&larr; All lessons</button><span class="muted">Sound chart</span></div>
+        <div class="card py-card">
+          <div class="py-lh"><span class="py-glyph zh" aria-hidden="true">表</span><h2 class="h2">Sound chart</h2></div>
+          <p class="py-p">Pick an initial, then tap a syllable in the tone you want to hear. Only syllables that appear in HSK 1 to 3 words are here, each said with one real character that has a single reading, so the voice cannot pick the wrong one. Greyed tones have no such character in the lists.</p>
+          <div class="py-inis" role="group" aria-label="Initial"><sc-for list="{{pyInis}}" as="i" hint-placeholder-count="12"><button type="button" class="py-ini {{i.cls}}" data-on-click="{{i.pick}}">{{i.label}}</button></sc-for></div>
+          <p class="muted py-chartnote">{{pyChartNote}}</p>
+          <div class="py-sylls"><sc-for list="{{pySylls}}" as="s" hint-placeholder-count="6">
+            <div class="py-syl"><b class="py-sn">{{s.name}}</b>
+              <div class="py-syl-t"><sc-for list="{{s.tones}}" as="t" hint-placeholder-count="4">
+                <button type="button" class="py-tb {{t.cls}}" data-on-click="{{t.play}}" aria-label="{{t.label}}"><span class="py-tbm">{{t.mark}}</span><span class="py-tbz zh">{{t.zh}}</span></button>
+              </sc-for></div>
+            </div>
+          </sc-for></div>
+          <sc-if value="{{pyHasInfo}}" hint-placeholder-val="{{ false }}"><div class="py-info" role="status"><span class="zh">{{pyInfoZh}}</span> <b>{{pyInfoPy}}</b> &middot; {{pyInfoEn}}</div></sc-if>
+        </div>
+      </sc-if>
+
     </section>
   </div>
   </sc-if>
@@ -1674,6 +1855,7 @@
         <section class="card dict">
           <div class="kick">Tone trainer</div>
           <div><div class="seg2" role="group" aria-label="Tone trainer type"><button class="{{tOneCls}}" data-on-click="{{setTone1}}">One syllable</button><button class="{{tTwoCls}}" data-on-click="{{setTone2}}">Two syllables</button></div></div>
+          <p class="muted" style="margin:0;font-size:15px">New to tones? <button type="button" class="linkbtn" data-on-click="{{goPinyin}}">Open the pinyin and tones course</button></p>
           <sc-if value="{{toneTwo}}" hint-placeholder-val="{{ false }}">
           <h2 class="h2" style="font-size:28px">Which tones did you hear?</h2>
           <p class="muted" style="margin:0">A real word of two syllables, said by your device's voice. Press play, then pick the tone of each syllable. The second syllable can also be a light, short tone, as in <i>māma</i>.</p>
@@ -1906,6 +2088,25 @@
           <input id="answer-input" class="inp {{inpCls}}" type="text" value="{{qtyped}}" placeholder="{{q.placeholder}}" autocomplete="off" aria-label="Your answer" data-on-input="{{onType}}" data-on-keydown="{{onEnter}}">
         </sc-if>
 
+        <sc-if value="{{q.isPyType}}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{typShow}}" hint-placeholder-val="{{ false }}">
+            <div class="py-typ" role="region" aria-label="How to type pinyin">
+              <div class="py-typ-h"><b>How to type pinyin</b><span class="muted">Ten seconds, and you only see this once.</span></div>
+              <div class="py-typ-box">
+      <ul class="py-typ-l">
+        <li>Put the <b>tone as a number</b> after each syllable: <b>ni3 hao3</b> becomes nǐ hǎo. Tone marks (nǐ hǎo) work too.</li>
+        <li><b>1</b> high and level &middot; <b>2</b> rising &middot; <b>3</b> dip &middot; <b>4</b> falling &middot; <b>neutral tone</b>: no number (or 5).</li>
+        <li>For <b>ü</b> type <b>v</b>: nv3 becomes nǚ. Capitals and spaces do not matter, and typing the hanzi works too.</li>
+      </ul>
+      <label class="py-try"><span>Try it here</span><input class="inp py-tryi" type="text" placeholder="ni3 hao3" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Practice typing pinyin" value="{{typIn}}" data-on-input="{{onTypIn}}"></label>
+      <div class="py-try-out zh" aria-live="polite">{{typOut}}</div>
+    </div>
+              <div class="py-typ-act"><button type="button" class="btn pri" data-on-click="{{typDone}}">Got it</button><button type="button" class="btn" data-on-click="{{typCourse}}">Open the pinyin course</button></div>
+            </div>
+          </sc-if>
+          <sc-if value="{{typLinkShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn py-typ-link" data-on-click="{{typToggle}}">How to type pinyin</button></sc-if>
+        </sc-if>
+
         <sc-if value="{{q.isListen}}" hint-placeholder-val="{{ false }}">
           <button class="listen {{listenCls}}" data-on-click="{{playQ}}" aria-label="Play the word">
             <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
@@ -1995,42 +2196,45 @@
 </main>
 </div>
 </template>
-<script defer src="vendor/morphdom-umd.min.js?v=36c708d69a"></script>
-<script defer src="runtime.js?v=36c708d69a"></script>
-<script defer src="config.js?v=36c708d69a"></script>
-<script defer src="friends.js?v=36c708d69a"></script>
-<script defer src="level.js?v=36c708d69a"></script>
-<script defer src="data/hsk1-words.js?v=36c708d69a"></script>
-<script defer src="data/hsk1-grammar.js?v=36c708d69a"></script>
-<script defer src="data/hsk1-webs.js?v=36c708d69a"></script>
-<script defer src="data/hsk1-speak.js?v=36c708d69a"></script>
-<script defer src="data/hsk1-listen.js?v=36c708d69a"></script>
-<script defer src="data/hsk1-exam.js?v=36c708d69a"></script>
-<script defer src="data/hsk1-erhua.js?v=36c708d69a"></script>
-<script defer src="data/lexicon.js?v=36c708d69a"></script>
-<script defer src="data/hsk2-preview.js?v=36c708d69a"></script>
-<script defer src="data/hsk3-preview.js?v=36c708d69a"></script>
-<script defer src="data/hsk2-words.js?v=36c708d69a"></script>
-<script defer src="data/hsk2-speak.js?v=36c708d69a"></script>
-<script defer src="data/hsk2-listen.js?v=36c708d69a"></script>
-<script defer src="data/hsk2-exam.js?v=36c708d69a"></script>
-<script defer src="data/hsk2-grammar.js?v=36c708d69a"></script>
-<script defer src="data/hsk2-webs.js?v=36c708d69a"></script>
-<script defer src="data/hsk3-words.js?v=36c708d69a"></script>
-<script defer src="data/hsk3-speak.js?v=36c708d69a"></script>
-<script defer src="data/hsk3-listen.js?v=36c708d69a"></script>
-<script defer src="data/hsk3-exam.js?v=36c708d69a"></script>
-<script defer src="data/hsk3-grammar.js?v=36c708d69a"></script>
-<script defer src="data/hsk3-webs.js?v=36c708d69a"></script>
-<script defer src="ascent.js?v=36c708d69a"></script>
-<script defer src="secrets.js?v=36c708d69a"></script>
-<script defer src="sync.js?v=36c708d69a"></script>
-<script defer src="data/audio-manifest.js?v=36c708d69a"></script>
-<script defer src="journey.js?v=36c708d69a"></script>
-<script defer src="data/journey.js?v=36c708d69a"></script>
-<script defer src="data/journey-map.js?v=36c708d69a"></script>
-<script defer src="data/journey-media.js?v=36c708d69a"></script>
-<script defer src="erhua.js?v=36c708d69a"></script>
-<script defer src="app.js?v=36c708d69a"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=9ba6e9e375"></script>
+<script defer src="runtime.js?v=9ba6e9e375"></script>
+<script defer src="config.js?v=9ba6e9e375"></script>
+<script defer src="friends.js?v=9ba6e9e375"></script>
+<script defer src="level.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk1-words.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk1-grammar.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk1-webs.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk1-speak.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk1-listen.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk1-exam.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk1-erhua.js?v=9ba6e9e375"></script>
+<script defer src="data/lexicon.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk2-preview.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk3-preview.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk2-words.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk2-speak.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk2-listen.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk2-exam.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk2-grammar.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk2-webs.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk3-words.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk3-speak.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk3-listen.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk3-exam.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk3-grammar.js?v=9ba6e9e375"></script>
+<script defer src="data/hsk3-webs.js?v=9ba6e9e375"></script>
+<script defer src="ascent.js?v=9ba6e9e375"></script>
+<script defer src="secrets.js?v=9ba6e9e375"></script>
+<script defer src="sync.js?v=9ba6e9e375"></script>
+<script defer src="data/audio-manifest.js?v=9ba6e9e375"></script>
+<script defer src="journey.js?v=9ba6e9e375"></script>
+<script defer src="data/journey.js?v=9ba6e9e375"></script>
+<script defer src="data/journey-map.js?v=9ba6e9e375"></script>
+<script defer src="data/journey-media.js?v=9ba6e9e375"></script>
+<script defer src="erhua.js?v=9ba6e9e375"></script>
+<script defer src="pinyin.js?v=9ba6e9e375"></script>
+<script defer src="data/pinyin-course.js?v=9ba6e9e375"></script>
+<script defer src="data/pinyin-chart.js?v=9ba6e9e375"></script>
+<script defer src="app.js?v=9ba6e9e375"></script>
 </body>
 </html>

@@ -495,7 +495,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).forEach(zh => { if (ws[zh].see.s === 1 && ws[zh].see.l === 5) ws[zh].see = { s:30, l:0 }; }); app.setState({ ws, rq:[], rcomplete:false }); });
 
   // the tabs run learn -> practice -> check -> your words, and the logo goes Home
-  check(JSON.stringify(await page.locator('.navs:not(.navg) .nav').allInnerTexts().then(a => a.map(t => t.replace(/\d+$/, '').trim()))) === JSON.stringify(['Home', 'Word webs', 'Grammar', 'Review words', 'Grammar review', 'Listening lab', 'Speak', 'Tests', 'Level exam', 'My words', 'Journey']), 'the tabs are in learning order');
+  check(JSON.stringify(await page.locator('.navs:not(.navg) .nav').allInnerTexts().then(a => a.map(t => t.replace(/\d+$/, '').trim()))) === JSON.stringify(['Home', 'Word webs', 'Grammar', 'Pinyin', 'Review words', 'Grammar review', 'Listening lab', 'Speak', 'Tests', 'Level exam', 'My words', 'Journey']), 'the tabs are in learning order');
   await page.locator('nav button', { hasText: /^\s*Grammar\s*$/ }).first().click();
   await page.locator('.brand').click();
   await page.waitForTimeout(120);
@@ -1378,7 +1378,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(homeTop.y < homeTop.h - 60, 'on a phone the main Today button is on the first screen, above the bottom bar (bottom edge at ' + Math.round(homeTop.y) + ' of ' + homeTop.h + ')');
   await page.locator('.navg button', { hasText: 'Learn' }).click();
   await page.waitForTimeout(120);
-  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Word webs|Grammar|My words' && ['web', 'grammar', 'words'].includes(await page.evaluate(() => window.shanlu.state.screen)), 'the Learn tab opens a Learn screen, with Word webs, Grammar and My words one tap away');
+  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Word webs|Grammar|Pinyin|My words' && ['web', 'grammar', 'pinyin', 'words'].includes(await page.evaluate(() => window.shanlu.state.screen)), 'the Learn tab opens a Learn screen, with Word webs, Grammar and My words one tap away');
   await page.locator('.subnav button', { hasText: /^Grammar$/ }).click();
   await page.waitForTimeout(100);
   check((await page.evaluate(() => window.shanlu.state.screen)) === 'grammar' && (await page.locator('.navg button.on').innerText()).includes('Learn'), 'the strip switches screens inside the section and the Learn tab stays lit');

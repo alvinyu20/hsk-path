@@ -353,6 +353,38 @@
   // coins to spend: everything earned (lifetime XP in the saved data) minus the price of the stops already travelled to
   const coinBalance = (S, st) => Math.max(0, totalXp(S) - (st && JY ? JY.cum(st.n || 0) : 0));
 
+  // ---- the pinyin and tones course (data/pinyin-course.js, data/pinyin-chart.js) and the typing tutorial ----
+  // What the person has done follows them: one person pref per finished lesson ('pyc.<lesson id>' = when) and 'typT' = when the typing tutorial was dismissed.
+  const PYC = window.SHANLU_PYCOURSE || { lessons:[] };
+  const PYCHART = window.SHANLU_PYCHART || {};
+  const PY_COINS = 10;   // coins for finishing a lesson the first time
+  const pyDoneAt = (id) => Number(prefGet('pyc.' + id, 0)) || 0;
+  const typSeen = () => (Number(prefGet('typT', 0)) || 0) > 0;
+  const toMarks = (t) => (window.ShanluPinyin ? window.ShanluPinyin.toMarks(t) : String(t == null ? '' : t));
+  // the five tone shapes on the five-step scale (1 low, 5 high); y = 34 - (level - 1) * 7 in a 60 x 40 box
+  const TONE_PANEL = [
+    { n:1, name:'Tone 1', desc:'High and level, like holding a note', path:'M6 6 L54 6', zh:'妈', py:'mā', en:'mom' },
+    { n:2, name:'Tone 2', desc:'Rises from the middle to high, like “Really?”', path:'M6 20 L54 6', zh:'麻', py:'má', en:'hemp' },
+    { n:3, name:'Tone 3', desc:'Dips low, then comes up', path:'M6 27 Q26 41 54 13', zh:'马', py:'mǎ', en:'horse' },
+    { n:4, name:'Tone 4', desc:'Falls sharply, like a firm “No!”', path:'M6 6 L54 34', zh:'骂', py:'mà', en:'to scold' },
+    { n:5, name:'Neutral', desc:'Short and light, no mark', path:'M22 24 L38 27', zh:'妈妈', py:'māma', en:'mom' }
+  ];
+  const PY_INIS = ['b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 'g', 'k', 'h', 'j', 'q', 'x', 'zh', 'ch', 'sh', 'r', 'z', 'c', 's', 'y', 'w', '·'];
+  const pyIniOf = (syl) => { const m = /^(zh|ch|sh|b|p|m|f|d|t|n|l|g|k|h|j|q|x|r|z|c|s|y|w)/.exec(syl); return m ? m[1] : '·'; };
+  let pyChartCache = null;
+  const pyChartBy = () => {   // initial -> syllable -> tone -> entry
+    if (pyChartCache) return pyChartCache;
+    const by = {};
+    Object.keys(PYCHART).forEach(k => {
+      const syl = k.slice(0, -1), tone = Number(k.slice(-1)), ini = pyIniOf(syl);
+      if (!by[ini]) by[ini] = {};
+      if (!by[ini][syl]) by[ini][syl] = {};
+      by[ini][syl][tone] = Object.assign({ key:k }, PYCHART[k]);
+    });
+    pyChartCache = by;
+    return by;
+  };
+
   // ---------- dates, saving, daily reset ----------
   const pad = (n) => (n < 10 ? '0' : '') + n;
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
@@ -377,7 +409,7 @@
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
-      qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
+      pyView:'list', pyLs:0, pyAns:{}, pyGain:'', pyIni:'b', pyInfo:null, typOpen:false, typIn:'', qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
@@ -1511,7 +1543,7 @@
       this.go(this.lastSub[id] || first);
     };
     go = (screen) => {
-      { const grp = { web:'learn', grammar:'learn', words:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', ach:'more', journey:'more', guide:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
+      { const grp = { web:'learn', grammar:'learn', words:'learn', pinyin:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', ach:'more', journey:'more', guide:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
       if (screen === 'guide' && !onbRead().g) this.onbSet({ g:Date.now() });
       if (screen === 'journey') { otherXp(true); this.jyEnsure(); this.friendsRefresh(false); }
       this.setState({ screen }); try { window.scrollTo(0, 0); } catch (e) {}
@@ -2717,6 +2749,7 @@
       try {
         const S = this.state; if ((S.screen !== 'review' && S.screen !== 'quiz') || S.qchecked) return;
         if (!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches)) return;
+        if (document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('py-tryi')) return;   // typing in the tutorial's practice box
         const el = document.getElementById('answer-input');
         if (el && !el.readOnly && document.activeElement !== el) el.focus({ preventScroll:true });
       } catch (err) {}
@@ -2947,6 +2980,104 @@
       if (S.tidx === null || S.tpick !== null) return;
       this.setState({ tpick:n, tright:S.tright + (n === S.tidx ? 1 : 0), ttotal:S.ttotal + 1 });
     };
+
+    pyVals(S, navCls) {
+      const lessons = PYC.lessons || [];
+      const doneN = lessons.filter(l => pyDoneAt(l.id)).length;
+      const out = {
+        isPinyin:S.screen === 'pinyin', navPinyin:navCls('pinyin'), goPinyin:this.goPinyin,
+        typShow:S.typOpen || !typSeen(), typLinkShow:typSeen() && !S.typOpen, typIn:S.typIn, typOut:S.typIn.trim() ? toMarks(S.typIn) : 'Your tone marks appear here',
+        onTypIn:(e) => this.setState({ typIn:e.target.value }), typDone:this.typDone, typCourse:this.typCourse, typToggle:this.typToggle,
+        pyIsList:false, pyIsLesson:false, pyIsChart:false, pySummary:'', pyPct:'0%', pyLessons:[], pyOpenChart:() => { this.setState({ pyView:'chart', pyInfo:null }); try { window.scrollTo(0, 0); } catch (e) {} }, pyBack:this.pyBack,
+        pyLessonNo:'', pyGlyph:'', pyTitle:'', pyBlocks:[], pyFootWait:false, pyFootWaitText:'', pyCanFinish:false, pyFinish:this.pyFinish, pyFinishText:'', pyIsDone:false, pyDoneText:'', pyHasNext:false, pyNext:this.pyNext, pyNextText:'', pyNextCls:'',
+        pyInis:[], pyChartNote:'', pySylls:[], pyHasInfo:false, pyInfoZh:'', pyInfoPy:'', pyInfoEn:''
+      };
+      if (S.screen !== 'pinyin') return out;
+      const view = S.pyView;
+      out.pyIsList = view === 'list'; out.pyIsLesson = view === 'lesson' && !!lessons[S.pyLs]; out.pyIsChart = view === 'chart';
+      out.pySummary = doneN + ' of ' + lessons.length + ' lessons done';
+      out.pyPct = Math.round(doneN / Math.max(1, lessons.length) * 100) + '%';
+      out.pyLessons = lessons.map((l, i) => ({ glyph:l.glyph, title:(i + 1) + '. ' + l.title, blurb:l.blurb + ' About ' + l.mins + ' min.', cls:pyDoneAt(l.id) ? 'done' : '', state:pyDoneAt(l.id) ? 'Done' : 'Start', open:() => this.pyOpen(i) }));
+      const play = (text, key) => ({ cls:S.playing === key ? 'on' : '', play:() => this.pySay(text, key) });
+      if (out.pyIsLesson) {
+        const les = lessons[S.pyLs];
+        let nq = 0, na = 0;
+        const none = { isP:false, isTip:false, isParts:false, isSay:false, isGroups:false, isPair:false, isTable:false, isTones:false, isTyping:false, isCheck:false, x:'', items:[], qs:[], rows:[], tones:[], title:'', hasTitle:false, h0:'', h1:'', a:{}, b:{} };
+        out.pyBlocks = les.blocks.map((b, bi) => {
+          const o = Object.assign({}, none);
+          if (b.t === 'p') { o.isP = true; o.x = b.x; }
+          else if (b.t === 'tip') { o.isTip = true; o.x = b.x; }
+          else if (b.t === 'parts') { o.isParts = true; o.items = b.items.map(it => ({ h:it.h, x:it.x })); }
+          else if (b.t === 'say') {
+            o.isSay = true; o.title = b.title || ''; o.hasTitle = !!b.title;
+            o.items = b.items.map((it, i) => Object.assign({ zh:it.zh, py:it.py, en:it.en, split:it.split || '', hasSplit:!!it.split }, play(it.say || it.zh, 'py:' + les.id + ':' + bi + ':' + i)));
+          }
+          else if (b.t === 'groups') {
+            o.isGroups = true;
+            o.items = b.items.map((g, gi) => ({ h:g.h, note:g.note || '', hasNote:!!g.note,
+              cells:g.cells.map((c, ci) => Object.assign({ s:c.s, zh:c.zh, py:c.py, en:c.en }, play(c.zh, 'py:' + les.id + ':' + bi + ':' + gi + ':' + ci))) }));
+          }
+          else if (b.t === 'pair') {
+            o.isPair = true; o.title = b.title || '';
+            o.a = Object.assign({ zh:b.a.zh, py:b.a.py, en:b.a.en }, play(b.a.zh, 'py:' + les.id + ':' + bi + ':a'));
+            o.b = Object.assign({ zh:b.b.zh, py:b.b.py, en:b.b.en }, play(b.b.zh, 'py:' + les.id + ':' + bi + ':b'));
+          }
+          else if (b.t === 'table') { o.isTable = true; o.h0 = b.head[0]; o.h1 = b.head[1]; o.rows = b.rows.map(r => ({ c0:r[0], c1:r[1] })); }
+          else if (b.t === 'tones') { o.isTones = true; o.tones = TONE_PANEL.map(t => Object.assign({ name:t.name, desc:t.desc, path:t.path, zh:t.zh, py:t.py, en:t.en }, play(t.zh, 'py:tone' + t.n))); }
+          else if (b.t === 'typing') { o.isTyping = true; }
+          else if (b.t === 'check') {
+            o.isCheck = true;
+            o.qs = b.qs.map((q, qi) => {
+              const key = les.id + ':' + bi + ':' + qi; const ans = S.pyAns[key]; nq++; if (ans !== undefined) na++;
+              return { q:q.q, answered:ans !== undefined, verdict:ans === q.a ? 'Right.' : 'Not quite.', whyCls:ans === q.a ? 'right' : 'wrong', why:q.why,
+                opts:q.o.map((label, oi) => ({ label, cls:ans === undefined ? '' : 'lock ' + (oi === q.a ? 'right' : oi === ans ? 'wrong' : ''), pick:() => this.pyPick(key, oi) })) };
+            });
+          }
+          return o;
+        });
+        const done = pyDoneAt(les.id) > 0;
+        out.pyLessonNo = 'Lesson ' + (S.pyLs + 1) + ' of ' + lessons.length; out.pyGlyph = les.glyph; out.pyTitle = les.title;
+        out.pyCanFinish = !done && na >= nq;
+        out.pyFinishText = 'Finish lesson (+' + PY_COINS + ' coins)';
+        out.pyFootWait = !done && na < nq; out.pyFootWaitText = 'Answer the questions above to finish this lesson (' + na + ' of ' + nq + ').';
+        out.pyIsDone = done; out.pyDoneText = 'Lesson done' + (S.pyGain ? ' · ' + S.pyGain : '');
+        const hasNext = S.pyLs + 1 < lessons.length;
+        out.pyHasNext = done || !hasNext; out.pyNextText = hasNext ? 'Next: ' + lessons[S.pyLs + 1].title : 'Back to all lessons'; out.pyNextCls = done ? 'pri' : '';
+      }
+      if (out.pyIsChart) {
+        const by = pyChartBy(); const cur = by[S.pyIni] || {};
+        out.pyInis = PY_INIS.map(i => ({ label:i === '·' ? 'none' : i, cls:S.pyIni === i ? 'on' : '', pick:() => this.pyChartIni(i) }));
+        const names = Object.keys(cur).sort();
+        out.pyChartNote = (S.pyIni === 'y' ? 'y is how a syllable that starts with an i or ü sound is written (yi, ya, yue). ' : S.pyIni === 'w' ? 'w is how a syllable that starts with a u sound is written (wu, wo, wei). ' : S.pyIni === '·' ? 'Syllables with no initial: they start straight with the final. ' : '')
+          + names.length + ' syllable' + (names.length === 1 ? '' : 's') + ' with this initial in HSK 1 to 3.';
+        out.pySylls = names.map(n => ({ name:n.replace(/v/g, 'ü'), tones:[1, 2, 3, 4].map(t => {
+          const e = cur[n][t]; const key = e ? 'py:chart:' + e.key : '';
+          if (!e) return { cls:'off', mark:toMarks(n + t), zh:'·', label:n + t + ': no character in the lists', play:() => {} };
+          return { cls:S.playing === key ? 'on' : '', mark:toMarks(n + t), zh:e.c, label:'Hear ' + toMarks(n + t) + ' (' + e.c + ')', play:() => { this.setState({ pyInfo:{ zh:e.c, py:toMarks(n + t), en:e.e + (e.w ? ' (in ' + e.w + ')' : '') } }); this.pySay(e.c, key); } };
+        }) }));
+        out.pyHasInfo = !!S.pyInfo; out.pyInfoZh = S.pyInfo ? S.pyInfo.zh : ''; out.pyInfoPy = S.pyInfo ? S.pyInfo.py : ''; out.pyInfoEn = S.pyInfo ? S.pyInfo.en : '';
+      }
+      return out;
+    }
+
+    // ----- pinyin course and the typing tutorial -----
+    pySay = (text, key) => { try { this.say(text, key, 0.85); } catch (e) {} };
+    goPinyin = () => { this.setState({ pyView:'list' }); this.go('pinyin'); };
+    pyOpen = (i) => { this.setState({ pyView:'lesson', pyLs:i, pyAns:{}, pyGain:'' }); try { window.scrollTo(0, 0); } catch (e) {} };
+    pyOpenId = (id) => { const i = (PYC.lessons || []).findIndex(l => l.id === id); this.setState({ pyView:i >= 0 ? 'lesson' : 'list', pyLs:Math.max(0, i), pyAns:{}, pyGain:'' }); this.go('pinyin'); };
+    pyBack = () => { this.setState({ pyView:'list', pyGain:'' }); try { window.scrollTo(0, 0); } catch (e) {} };
+    pyPick = (key, i) => { const S = this.state; if (S.pyAns[key] !== undefined) return; this.setState({ pyAns:Object.assign({}, S.pyAns, { [key]:i }) }); };
+    pyFinish = () => {
+      const S = this.state; const les = (PYC.lessons || [])[S.pyLs]; if (!les || pyDoneAt(les.id)) return;
+      prefSet('pyc.' + les.id, Date.now());
+      this.setState({ xp:S.xp + PY_COINS, dayXp:S.dayXp + PY_COINS, dayMin:S.dayMin + (les.mins || 3), pyGain:'+' + PY_COINS + ' coins' });
+    };
+    pyNext = () => { const S = this.state; const n = S.pyLs + 1; if (n < (PYC.lessons || []).length) this.pyOpen(n); else this.pyBack(); };
+    pyChartIni = (ini) => { this.setState({ pyIni:ini, pyInfo:null }); };
+    typToggle = () => { this.setState({ typOpen:!this.state.typOpen }); };
+    typMarkSeen = () => { if (!typSeen()) prefSet('typT', Date.now()); };
+    typDone = () => { this.typMarkSeen(); this.setState({ typOpen:false }); };
+    typCourse = () => { this.typMarkSeen(); this.setState({ typOpen:false }); this.pyOpenId('typing'); };
 
     // ----- keeping the saved progress safe, offline and installable -----
     persistAsked = false;
@@ -3266,8 +3397,8 @@
       const startWords = START_WORDS.filter(z => BANK[z]).map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en.split(',')[0] }));
       const startDoneShow = onbOn && onb.s === 'done' && onb.d === ymd(new Date()) && S.rcomplete;   // the end of the first session: what to do next
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
-      const GROUPS = [['home', ['home']], ['learn', ['web', 'grammar', 'words']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['more', ['exam', 'friends', 'journey', 'ach', 'guide', 'voice']]];
-      const SUBLABEL = { web:'Word webs', grammar:'Grammar', words:'My words', review:'Review words', greview:'Grammar review', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', journey:'Journey', ach:'Achievements', guide:'How Shanlu works', voice:'Settings' };
+      const GROUPS = [['home', ['home']], ['learn', ['web', 'grammar', 'pinyin', 'words']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['more', ['exam', 'friends', 'journey', 'ach', 'guide', 'voice']]];
+      const SUBLABEL = { web:'Word webs', grammar:'Grammar', words:'My words', pinyin:'Pinyin', review:'Review words', greview:'Grammar review', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', journey:'Journey', ach:'Achievements', guide:'How Shanlu works', voice:'Settings' };
       const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
       const navGroup = (GROUPS.find(g => g[1].indexOf(curScreen) >= 0) || GROUPS[0])[0];
       const gcls = (id) => 'nav' + (navGroup === id ? ' on' : '');
@@ -3332,6 +3463,7 @@
         exam:[ALL ? 'Level exams' : LVN + ' level exam', ALL ? 'Each exam belongs to one level.' : LV === 1 ? 'Pass every section to climb to HSK 2.' : 'Not built yet for ' + LVN + '.'],
         web:['Word webs', 'Learn new words next to the words you already know.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
+        pinyin:['Pinyin and tones', 'Sounds, tones and the spelling rules, with audio you can tap.'],
         ach:['Achievements', 'Things you have earned, and what is still ahead.'],
         guide:['How Shanlu works', 'The daily loop, what each part is for, and where your progress lives.'],
         journey:['Journey', 'Spend the coins you earn on trips through the Chinese-speaking world.'],
@@ -3464,7 +3596,7 @@
       const q = {
         kicker:q0.kicker, prompt:q0.prompt, big:q0.big || '', hasBig:!!q0.big, bigCls:(q0.big || '').length > 3 ? 'sm' : '',
         sub:q0.sub || '', hasSub:!!q0.sub, placeholder:q0.placeholder || '', bigZh:q0.bigCls !== 'en', bigEn:q0.bigCls === 'en',
-        isTyped, isListen, isChoice, isOrder, isSpot, reveal:q0.reveal, explain:q0.explain,
+        isTyped, isPyType:q0.type === 'type' || q0.type === 'cloze', isListen, isChoice, isOrder, isSpot, reveal:q0.reveal, explain:q0.explain,
         reportUrl:report((isG(S.qmode) ? 'Grammar practice' : 'Test') + ' question ' + (S.qi + 1), q0.prompt + ' / ' + q0.reveal)
       };
       const opts = (isChoice ? q0.options : []).map(o => {
@@ -3756,6 +3888,7 @@
         })(),
         gapLine, examParts, navExam:navCls('exam'), goExam:() => this.go('exam'), isExam:S.screen === 'exam' && !!EXAMBANK, isExamNA:S.screen === 'exam' && !EXAMBANK,
 
+        ...this.pyVals(S, navCls),
         // word webs and word memory
         navWeb:navCls('web'), goWeb:() => this.go('web'), isWeb:S.screen === 'web',
         navWords:navCls('words'), goWords:() => this.go('words'), isWords:S.screen === 'words',
