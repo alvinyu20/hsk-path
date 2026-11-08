@@ -97,6 +97,22 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await ctx.close();
   }
 
+  // ---- light (neutral) syllables: the character's own tone is accepted, except in repeated words ----
+  {
+    const { ctx, page, errors } = await open();
+    const ck = (zh, py, typed) => page.evaluate(([z, p, t]) => window.shanlu.testApi.checkTyped({ exp: { zh: z, py: p }, accepts: [] }, t).ok, [zh, py, typed]);
+    check(await ck('眼睛', 'yǎnjing', 'yan3jing') && await ck('眼睛', 'yǎnjing', 'yǎnjing') && await ck('眼睛', 'yǎnjing', '眼睛'), '眼睛: yǎnjing, yan3jing and the hanzi are right');
+    check(await ck('眼睛', 'yǎnjing', 'yan3jing1') && await ck('眼睛', 'yǎnjing', 'yǎnjīng'), '眼睛: the character\'s own tone (yan3jing1, yǎnjīng) is right too');
+    check(!(await ck('眼睛', 'yǎnjing', 'yan2jing1')) && !(await ck('眼睛', 'yǎnjing', 'yan3jing2')), '眼睛: a wrong tone is still wrong');
+    check(await ck('朋友', 'péngyou', 'peng2you3') && await ck('朋友', 'péngyou', 'peng2you'), '朋友: peng2you3 is right');
+    check(await ck('妈妈', 'māma', 'ma1ma') && await ck('妈妈', 'māma', 'māma') && !(await ck('妈妈', 'māma', 'ma1ma1')), '妈妈: repeated words stay strict (ma1ma1 is wrong)');
+    check(await ck('谢谢', 'xièxie', 'xie4xie') && !(await ck('谢谢', 'xièxie', 'xie4xie4')), '谢谢: repeated words stay strict');
+    check(!(await ck('东西', 'dōngxi', 'dong1xi1')) && await ck('东西', 'dōngxi', 'dong1xi'), '东西: dōngxī is another word, so it stays wrong');
+    check(!(await ck('孩子', 'háizi', 'hai2zi3')), '孩子: 子 has a light reading of its own, so zǐ stays wrong');
+    check(errors.length === 0, 'no page errors: ' + errors.join(' | '));
+    await ctx.close();
+  }
+
   // ---- the guide and the tone trainer link to the course; a phone gets it under Learn ----
   {
     const { ctx, page, errors } = await open({ viewport: { width: 390, height: 800 } });

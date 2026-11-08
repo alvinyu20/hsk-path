@@ -571,11 +571,16 @@
     return hit.find(z => typed === z || (soft ? comparePinyin(typed, BANK[z].py, tonesOptional()).grade === 'hard' : comparePinyin(typed, BANK[z].py, tonesOptional()).ok)) || '';
   };
   // the answer to a typed or fill-in question: hanzi, or pinyin with tones. grade 'good' (right), 'hard' (right sounds, wrong tone, or another real word) or 'again'
+  const NEUTRAL_ALT = window.SHANLU_NEUTRAL_ALT || {};   // word -> spelling with the light syllable's own tone (data/neutral-alt.js)
   const checkTyped = (q, typed) => {
     const t = String(typed || '').trim();
     if (!q.exp) return { ok:q.accepts.indexOf(t.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[0-9\s.,!?]/g, '')) >= 0, grade:'again', note:'' };
     if (t === q.exp.zh || (q.exp.alt && t === q.exp.alt)) return { ok:true, grade:'good', note:'' };
     const r = comparePinyin(t, q.exp.py, tonesOptional());
+    if (!r.ok) {   // the character's own tone on a light syllable is fine (睛 is jīng alone, light in 眼睛): not for repeated words like 妈妈, see tools/build-neutral-alt.py
+      const alt = NEUTRAL_ALT[q.exp.zh];
+      if (alt && String(q.exp.py).indexOf('/') < 0 && comparePinyin(t, alt, tonesOptional()).ok) return { ok:true, grade:'good', note:'Also right: each character keeps its own tone when written alone. In this word the last syllable is said light: ' + String(q.exp.py).trim() + '.' };
+    }
     if (r.ok || r.grade === 'hard') return r;
     const syn = synonymOf(q, t);
     if (syn) return { ok:true, grade:'good', note:'Also right: ' + syn + ' (' + BANK[syn].py.split('/')[0].trim() + ') means the same. This card was asking for ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
