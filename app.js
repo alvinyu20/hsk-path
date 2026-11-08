@@ -2431,7 +2431,17 @@
     // make sure a saved journey exists and points at a region (the first look, or after the stop lists changed)
     jyEnsure() {
       if (!JWORLD) return null;
-      const cur = jyRead(); const st = JY.ensure(JWORLD, cur, cur ? JY.rngFor(cur) : Math.random);
+      let cur = jyRead();
+      // ONE-OFF (Alvin, 7 Nov 2026): the person named Alvin, the only user, starts in Inner Mongolia; everything after that is random like for anyone else.
+      // The restart (rs 1) wins over older journeys on every device. Delete this block once his journey has moved to every device.
+      try {
+        const me = FR && FR.identity && FR.identity();
+        if (me && String(me.name || '').trim().toLowerCase() === 'alvin' && !(cur && cur.rs >= 1)) {
+          const seed = 'alvin-inner-mongolia', sn = JY.startAt(JWORLD, 'neimenggu', JY.rngFor({ sd:seed, n:0 }), seed);
+          if (sn) { prefSet('jy', sn); cur = sn; }
+        }
+      } catch (e) {}
+      const st = JY.ensure(JWORLD, cur, cur ? JY.rngFor(cur) : Math.random);
       if (!cur) st.sd = Math.random().toString(36).slice(2, 10);   // this journey's own seed (see journey.js rngFor)
       if (!cur || st.reg !== cur.reg || !cur.ms) prefSet('jy', st);
       return st;

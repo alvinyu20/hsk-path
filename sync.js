@@ -252,6 +252,8 @@
   function mergeJourney(a, b) {
     const na = jyCount(a), nb = jyCount(b);
     if (na < 0 || nb < 0) return lww(a, b);
+    const ra = a.v.rs || 0, rb = b.v.rs || 0;   // a deliberate restart (rs) beats any older journey, however far that got
+    if (ra !== rb) return ra > rb ? a : b;
     if (na !== nb) return na > nb ? a : b;
     return lww(a, b);
   }

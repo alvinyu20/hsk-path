@@ -172,6 +172,9 @@ function fakeGithub() {
   check(S.mergePerson(jyBig, jyNew).prefs.jy.v.reg === 'neimenggu' && S.mergePerson(jyNew, jyBig).prefs.jy.v.reg === 'neimenggu', 'a journey with more stops is never replaced by a newer, emptier one');
   const jyTieA = { prefs: { jy: { v: { n: 3, seen: ['a', 'b', 'c'], reg: 'x' }, at: T } } }, jyTieB = { prefs: { jy: { v: { n: 3, seen: ['a', 'b', 'c'], reg: 'y' }, at: T + 1 } } };
   check(S.mergePerson(jyTieA, jyTieB).prefs.jy.v.reg === 'y' && JSON.stringify(S.mergePerson(jyTieA, jyTieB)) === JSON.stringify(S.mergePerson(jyTieB, jyTieA)), 'with the same number of stops the newer save wins, in either order');
+  const jyRestart = { prefs: { jy: { v: { n: 0, seen: [], reg: 'neimenggu', rs: 1 }, at: T - 9000 } } };
+  check(S.mergePerson(jyBig, jyRestart).prefs.jy.v.reg === 'neimenggu' && S.mergePerson(jyRestart, jyBig).prefs.jy.v.rs === 1, 'a deliberate restart beats an older journey with more stops, in either order');
+  check(S.mergePerson(jyRestart, { prefs: { jy: { v: { n: 4, seen: ['a', 'b', 'c', 'd'], reg: 'neimenggu', rs: 1 }, at: T - 8000 } } }).prefs.jy.v.n === 4, 'after a restart the journey with more stops wins again');
   check(S.mergePerson(jyBig, { prefs: {} }).prefs.jy.v.n === 15 && S.mergePerson({ prefs: {} }, jyBig).prefs.jy.v.n === 15, 'a device with no journey takes the other one');
 
   const offTok = await S.gistApi('t', async () => { throw new Error('x'); }).check().catch(e => e);

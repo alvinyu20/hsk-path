@@ -128,5 +128,13 @@ for (let seed = 1; seed <= 25; seed++) {
   ok(J.seedOf({ seen: ['p', 'q', 'r'] }) === 'p,q' && J.seedOf({ sd: 'k', seen: ['p'] }) === 'k', 'an older journey without a seed uses its first stops as the seed');
 }
 
+{
+  const st = J.startAt(W, 'neimenggu', J.rngFor({ sd:'k', n:0 }), 'k');
+  ok(st && st.reg === 'neimenggu' && st.rs === 1 && st.n === 0 && !st.started && st.cq[0] === W.byRegion.neimenggu.cities[0].id, 'a journey can be started in a chosen region');
+  const r = J.step(W, st, J.rngFor(st), '2026-11-07');
+  ok(r.stop && r.stop.id.indexOf('neimenggu.') === 0 && r.ev.indexOf('arrive') >= 0, 'the first stop is the airport of that region');
+  eq(J.step(W, J.startAt(W, 'neimenggu', J.rngFor({ sd:'k', n:0 }), 'k'), J.rngFor(st), '2026-11-07').st, r.st, 'starting again gives the same journey on every device');
+}
+
 if (bad) { console.log(bad + ' failed'); process.exit(1); }
 console.log('journey tests passed (' + W.regions.length + ' regions, ' + Object.keys(all).length + ' stops)');
