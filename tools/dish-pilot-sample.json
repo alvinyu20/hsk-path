@@ -1,0 +1,394 @@
+[
+ {
+  "id": "anhui.d-luzhou-roast-duck",
+  "region": "Anhui",
+  "zh": "庐州烤鸭",
+  "py": "Lúzhōu kǎoyā",
+  "en": "Luzhou roast duck"
+ },
+ {
+  "id": "anhui.d-wuhu-iron-painting",
+  "region": "Anhui",
+  "zh": "芜湖铁画",
+  "py": "Wúhú tiěhuà",
+  "en": "Wuhu iron painting"
+ },
+ {
+  "id": "anhui.d-gelatiao",
+  "region": "Anhui",
+  "zh": "格拉条",
+  "py": "Gélā tiáo",
+  "en": "Gelatiao"
+ },
+ {
+  "id": "fujian.d-zhangzhou-lu-noodles",
+  "region": "Fujian",
+  "zh": "漳州卤面",
+  "py": "Zhāngzhōu lǔmiàn",
+  "en": "Zhangzhou lu noodles"
+ },
+ {
+  "id": "fujian.d-jian-ou-cured-duck",
+  "region": "Fujian",
+  "zh": "建瓯板鸭",
+  "py": "Jiàn’ōu bǎnyā",
+  "en": "Jian'ou cured duck"
+ },
+ {
+  "id": "gansu.d-tianpei",
+  "region": "Gansu",
+  "zh": "甜醅",
+  "py": "Tiánpēi",
+  "en": "Tianpei"
+ },
+ {
+  "id": "gansu.d-gua-gua",
+  "region": "Gansu",
+  "zh": "呱呱",
+  "py": "Gūgū",
+  "en": "Gua gua"
+ },
+ {
+  "id": "guangdong.d-steamed-pig-of-junan",
+  "region": "Guangdong",
+  "zh": "均安蒸猪",
+  "py": "Jūn’ānzhēng zhū",
+  "en": "Steamed pig of Junan"
+ },
+ {
+  "id": "guangdong.d-yangjiang-fermented-black-beans",
+  "region": "Guangdong",
+  "zh": "阳江豆豉",
+  "py": "Yángjiāng dòuchǐ",
+  "en": "Yangjiang fermented black beans"
+ },
+ {
+  "id": "guangxi.d-baise-mango",
+  "region": "Guangxi",
+  "zh": "百色芒果",
+  "py": "Bǎisè mángguǒ",
+  "en": "Baise mango"
+ },
+ {
+  "id": "guizhou.d-sour-soup-fish",
+  "region": "Guizhou",
+  "zh": "酸汤鱼",
+  "py": "Suān tāngyú",
+  "en": "Sour soup fish"
+ },
+ {
+  "id": "guizhou.d-weining-buckwheat",
+  "region": "Guizhou",
+  "zh": "威宁荞麦",
+  "py": "Wēiníng qiáomài",
+  "en": "Weining buckwheat"
+ },
+ {
+  "id": "hainan.d-jiaji-duck",
+  "region": "Hainan",
+  "zh": "加积鸭",
+  "py": "Jiājī yā",
+  "en": "Jiaji duck"
+ },
+ {
+  "id": "hainan.d-shanlan-wine",
+  "region": "Hainan",
+  "zh": "山兰酒",
+  "py": "Shānlánjiǔ",
+  "en": "Shanlan wine"
+ },
+ {
+  "id": "hebei.d-qinhuangdao-seafood",
+  "region": "Hebei",
+  "zh": "秦皇岛海鲜",
+  "py": "Qínhuángdǎo hǎixiān",
+  "en": "Qinhuangdao seafood"
+ },
+ {
+  "id": "heilongjiang.d-modern-ice-cream-bar",
+  "region": "Heilongjiang",
+  "zh": "马迭尔冰棍",
+  "py": "Mǎdié’ěr bīnggùn",
+  "en": "Modern ice cream bar"
+ },
+ {
+  "id": "heilongjiang.d-fuyuan-salmon",
+  "region": "Heilongjiang",
+  "zh": "抚远大马哈鱼",
+  "py": "Fǔyuǎn dàmǎhāyú",
+  "en": "Fuyuan salmon"
+ },
+ {
+  "id": "henan.d-bufan-soup",
+  "region": "Henan",
+  "zh": "不翻汤",
+  "py": "Bùfān tāng",
+  "en": "Bufan soup"
+ },
+ {
+  "id": "henan.d-lushan-peanuts",
+  "region": "Henan",
+  "zh": "鲁山花生",
+  "py": "Lǔshān huāshēng",
+  "en": "Lushan peanuts"
+ },
+ {
+  "id": "hubei.d-eel-strips",
+  "region": "Hubei",
+  "zh": "皮条鳝鱼",
+  "py": "Pítiáo shànyú",
+  "en": "Eel strips"
+ },
+ {
+  "id": "hunan.d-duck-with-blood-rice-cake",
+  "region": "Hunan",
+  "zh": "血粑鸭",
+  "py": "Xuèbā yā",
+  "en": "Duck with blood rice cake"
+ },
+ {
+  "id": "jiangsu.d-huishan-clay-figures",
+  "region": "Jiangsu",
+  "zh": "惠山泥人",
+  "py": "Huìshān nírén",
+  "en": "Huishan clay figures"
+ },
+ {
+  "id": "jiangsu.d-yancheng-river-shrimp",
+  "region": "Jiangsu",
+  "zh": "盐城河虾",
+  "py": "Yánchéng héxiā",
+  "en": "Yancheng river shrimp"
+ },
+ {
+  "id": "jiangxi.d-lushan-stone-frog",
+  "region": "Jiangxi",
+  "zh": "庐山石鸡",
+  "py": "Lúshān shíjī",
+  "en": "Lushan stone frog"
+ },
+ {
+  "id": "jiangxi.d-yichun-selenium-tea",
+  "region": "Jiangxi",
+  "zh": "宜春富硒茶",
+  "py": "Yíchūn fùxīchá",
+  "en": "Yichun selenium tea"
+ },
+ {
+  "id": "jilin.d-pig-slaughter-stew",
+  "region": "Jilin",
+  "zh": "杀猪菜",
+  "py": "Shāzhū cài",
+  "en": "Pig slaughter stew"
+ },
+ {
+  "id": "liaoning.d-sauerkraut-and-glass-noodles",
+  "region": "Liaoning",
+  "zh": "酸菜炖粉条",
+  "py": "Suāncài dùn fěntiáo",
+  "en": "Sauerkraut and glass noodles"
+ },
+ {
+  "id": "liaoning.d-fushun-coal-carving",
+  "region": "Liaoning",
+  "zh": "抚顺煤精雕刻",
+  "py": "Fǔshùn méijīng diāokè",
+  "en": "Fushun coal carving"
+ },
+ {
+  "id": "liaoning.d-xingcheng-seafood",
+  "region": "Liaoning",
+  "zh": "兴城海鲜",
+  "py": "Xīngchéng hǎixiān",
+  "en": "Xingcheng seafood"
+ },
+ {
+  "id": "neimenggu.d-chifeng-barbecue",
+  "region": "Inner Mongolia",
+  "zh": "赤峰烤肉",
+  "py": "Chìfēng kǎoròu",
+  "en": "Chifeng barbecue"
+ },
+ {
+  "id": "neimenggu.d-tongliao-millet",
+  "region": "Inner Mongolia",
+  "zh": "通辽黄米",
+  "py": "Tōngliáo huángmǐ",
+  "en": "Tongliao millet"
+ },
+ {
+  "id": "ningxia.d-zhongwei-sand-melon",
+  "region": "Ningxia",
+  "zh": "中卫硒砂瓜",
+  "py": "Zhōngwèi xī shāguā",
+  "en": "Zhongwei sand melon"
+ },
+ {
+  "id": "qinghai.d-menyuan-honey",
+  "region": "Qinghai",
+  "zh": "门源蜂蜜",
+  "py": "Ményuán fēngmì",
+  "en": "Menyuan honey"
+ },
+ {
+  "id": "shaanxi.d-oil-splashed-noodles",
+  "region": "Shaanxi",
+  "zh": "油泼面",
+  "py": "Yóupōmiàn",
+  "en": "Oil-splashed noodles"
+ },
+ {
+  "id": "shaanxi.d-dali-winter-jujube",
+  "region": "Shaanxi",
+  "zh": "大荔冬枣",
+  "py": "Dàlì dōngzǎo",
+  "en": "Dali winter jujube"
+ },
+ {
+  "id": "shandong.d-qufu-flatbread",
+  "region": "Shandong",
+  "zh": "曲阜烧饼",
+  "py": "Qūfù shāobǐng",
+  "en": "Qufu flatbread"
+ },
+ {
+  "id": "shandong.d-weifang-chaotian-pot",
+  "region": "Shandong",
+  "zh": "潍坊朝天锅",
+  "py": "Wéifāng cháotiān guō",
+  "en": "Weifang chaotian pot"
+ },
+ {
+  "id": "shandong.d-binzhou-pot",
+  "region": "Shandong",
+  "zh": "滨州锅子",
+  "py": "Bīnzhōu guōzi",
+  "en": "Binzhou pot"
+ },
+ {
+  "id": "shanxi.d-hunyuan-jelly",
+  "region": "Shanxi",
+  "zh": "浑源凉粉",
+  "py": "Húnyuán liángfěn",
+  "en": "Hunyuan jelly"
+ },
+ {
+  "id": "shanxi.d-lingchuan-black-pork",
+  "region": "Shanxi",
+  "zh": "陵川黑猪肉",
+  "py": "Língchuān hēi zhūròu",
+  "en": "Lingchuan black pork"
+ },
+ {
+  "id": "sichuan.d-steamed-cold-noodles",
+  "region": "Sichuan",
+  "zh": "蒸凉面",
+  "py": "Zhēng liángmiàn",
+  "en": "Steamed cold noodles"
+ },
+ {
+  "id": "sichuan.d-fengjie-navel-oranges",
+  "region": "Sichuan",
+  "zh": "奉节脐橙",
+  "py": "Fèngjié qíchéng",
+  "en": "Fengjie navel oranges"
+ },
+ {
+  "id": "taiwan.d-milkfish-porridge",
+  "region": "Taiwan",
+  "zh": "虱目鱼粥",
+  "py": "Shīmùyú zhōu",
+  "en": "Milkfish porridge"
+ },
+ {
+  "id": "taiwan.d-nutrition-sandwich",
+  "region": "Taiwan",
+  "zh": "营养三明治",
+  "py": "Yíngyǎng sānmíngzhì",
+  "en": "Nutrition sandwich"
+ },
+ {
+  "id": "xinjiang.d-kuqa-white-apricot",
+  "region": "Xinjiang",
+  "zh": "库车小白杏",
+  "py": "Kùchē xiǎobáixìng",
+  "en": "Kuqa white apricot"
+ },
+ {
+  "id": "xizang.d-tibetan-fragrant-pig",
+  "region": "Tibet (Xizang)",
+  "zh": "藏香猪",
+  "py": "Zàngxiāng zhū",
+  "en": "Tibetan fragrant pig"
+ },
+ {
+  "id": "yunnan.d-cured-ribs-hot-pot",
+  "region": "Yunnan",
+  "zh": "腊排骨火锅",
+  "py": "Là páigǔ huǒguō",
+  "en": "Cured ribs hot pot"
+ },
+ {
+  "id": "zhejiang.d-ningbo-tangyuan",
+  "region": "Zhejiang",
+  "zh": "宁波汤圆",
+  "py": "Níngbō tāngyuán",
+  "en": "Ningbo tangyuan"
+ },
+ {
+  "id": "zhejiang.d-taizhou-seafood",
+  "region": "Zhejiang",
+  "zh": "台州海鲜",
+  "py": "Tāizhōu hǎixiān",
+  "en": "Taizhou seafood"
+ },
+ {
+  "id": "shandong.d-spicy-stir-fried-clams",
+  "region": "Shandong",
+  "zh": "辣炒蛤蜊",
+  "py": "Làchǎo gélí",
+  "en": "Spicy stir-fried clams"
+ },
+ {
+  "id": "shandong.d-mackerel-dumplings",
+  "region": "Shandong",
+  "zh": "鲅鱼水饺",
+  "py": "Bàyú shuǐjiǎo",
+  "en": "Mackerel dumplings"
+ },
+ {
+  "id": "shandong.d-youxuan",
+  "region": "Shandong",
+  "zh": "油旋",
+  "py": "Yóuxuán",
+  "en": "Youxuan"
+ },
+ {
+  "id": "zhejiang.d-ningbo-rice-cake",
+  "region": "Zhejiang",
+  "zh": "宁波年糕",
+  "py": "Níngbō niángāo",
+  "en": "Ningbo rice cake"
+ },
+ {
+  "id": "zhejiang.d-fennel-beans",
+  "region": "Zhejiang",
+  "zh": "茴香豆",
+  "py": "Huíxiāngdòu",
+  "en": "Fennel beans"
+ },
+ {
+  "id": "zhejiang.d-preserved-greens-with-pork",
+  "region": "Zhejiang",
+  "zh": "霉干菜扣肉",
+  "py": "Méigāncài kòuròu",
+  "en": "Preserved greens with pork"
+ },
+ {
+  "id": "zhejiang.d-ou-tangerines",
+  "region": "Zhejiang",
+  "zh": "瓯柑",
+  "py": "Ōugān",
+  "en": "Ou tangerines"
+ }
+]

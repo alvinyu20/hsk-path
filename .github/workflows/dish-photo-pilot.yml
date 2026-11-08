@@ -1,0 +1,29 @@
+name: Dish photo test
+
+# A small test that changes nothing in the repo: looks for Creative Commons Flickr photos (needs the secret FLICKR_API_KEY)
+# and checks whether Chinese local-government open-data portals can be reached, for ~50 dishes that have no photo yet.
+# Run it by hand from the Actions tab, then download the "dish-photo-report" file from the run page and open report.html.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run the test
+        env:
+          FLICKR_API_KEY: ${{ secrets.FLICKR_API_KEY }}
+        run: node tools/dish-photo-pilot.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dish-photo-report
+          path: pilot-out/
