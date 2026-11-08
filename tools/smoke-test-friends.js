@@ -227,10 +227,6 @@ const INVITE = 'ABCD-EFGH-JKLM';
   check(await Cbad.page.locator('.frjoin').count() === 1 && await Cbad.page.evaluate(() => !localStorage.getItem('shanlu-friends')), 'a wrong personal link is refused and nothing is kept');
   await Cbad.ctx.close();
 
-  // the one-off: the person named Alvin starts in Inner Mongolia; anyone else is random
-  check(await A.page.evaluate(() => { window.shanlu.jyEnsure(); return JSON.parse(localStorage.getItem('shanlu-person')).prefs.jy.v; }).then((v) => v.reg === 'neimenggu' && v.rs === 1), 'the person named Alvin starts the Journey in Inner Mongolia');
-  check(await B.page.evaluate(() => { window.shanlu.jyEnsure(); return JSON.parse(localStorage.getItem('shanlu-person')).prefs.jy.v; }).then((v) => !v.rs), 'anyone else gets a random first region');
-
   // settings follow the person: a daily goal and a new-words limit set on A reach A's second device (signed in with A's link)
   await A.page.evaluate(() => window.shanlu.setState({ mins: 45, nlimit: 7 }));
   await A.page.evaluate(() => window.shanlu.friendsProgressSync());

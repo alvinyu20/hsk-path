@@ -81,13 +81,6 @@
     st.cq = [R.cities[0].id].concat(shuffle(R.cities.slice(1).map((c) => c.id), rnd));
     return id;
   }
-  // a journey that starts in a chosen region (not at random). `rs` marks it as a deliberate restart, which beats any older journey when devices merge.
-  function startAt(W, regionId, rnd, seed) {
-    const R = W.byRegion[regionId]; if (!R) return null;
-    const st = fresh(); st.sd = seed; st.rs = 1;
-    st.reg = R.id; st.cq = [R.cities[0].id].concat(shuffle(R.cities.slice(1).map((c) => c.id), rnd));
-    return st;
-  }
   // make sure the state points somewhere (first visit, or after the world changed)
   function ensure(W, st, rnd) {
     st = clone(st || fresh()); if (!st.ms) st.ms = {};
@@ -177,6 +170,6 @@
     return function () { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
   }
 
-  const api = { META, SMALL, LADDER, FLAT, costOf, cum, paidFor, build, fresh, ensure, step, meter, regionStats, pinLatLon, project, shuffle, slug, KINDS, seedOf, rngFor, startAt };
+  const api = { META, SMALL, LADDER, FLAT, costOf, cum, paidFor, build, fresh, ensure, step, meter, regionStats, pinLatLon, project, shuffle, slug, KINDS, seedOf, rngFor };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.ShanluJourney = api;
 })(typeof window !== 'undefined' ? window : globalThis);
