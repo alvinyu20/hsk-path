@@ -1,5 +1,8 @@
 /* Photos for the mock-exam pictures, built by tools/exam-media.js from the choices in tools/exam-media-picks.json: emoji (without its variation selector) -> { u: image address, c: credit line, a: what it shows }.
  * Only public-domain, CC0, CC BY and CC BY-SA pictures from Wikimedia Commons. A picture without an entry stays an emoji. */
 window.SHANLU_EXAM_MEDIA = {
-
+  "🚆": {"u":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/%D0%9F%D0%BE%D0%B5%D0%B7%D0%B4_%D0%BD%D0%B0_%D1%84%D0%BE%D0%BD%D0%B5_%D0%B3%D0%BE%D1%80%D1%8B_%D0%A8%D0%B0%D1%82%D1%80%D0%B8%D1%89%D0%B5._%D0%92%D0%BE%D1%80%D0%BE%D0%BD%D0%B5%D0%B6%D1%81%D0%BA%D0%B0%D1%8F_%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C.jpg/500px-%D0%9F%D0%BE%D0%B5%D0%B7%D0%B4_%D0%BD%D0%B0_%D1%84%D0%BE%D0%BD%D0%B5_%D0%B3%D0%BE%D1%80%D1%8B_%D0%A8%D0%B0%D1%82%D1%80%D0%B8%D1%89%D0%B5._%D0%92%D0%BE%D1%80%D0%BE%D0%BD%D0%B5%D0%B6%D1%81%D0%BA%D0%B0%D1%8F_%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C.jpg","c":"Алексей Задонский / CC BY-SA 4.0","a":"train"},
+  "🍜": {"u":"https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Dalian_Liaoning_China_Noodlemaker-01.jpg/500px-Dalian_Liaoning_China_Noodlemaker-01.jpg","c":"CEphoto, Uwe Aranas / CC BY-SA 4.0","a":"noodles"},
+  "🌸": {"u":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Sakura_and_Moss_Pink_-_%E6%A1%9C%28%E3%81%95%E3%81%8F%E3%82%89%29%E3%81%A8%E8%8A%9D%E6%A1%9C%28%E3%81%97%E3%81%B0%E3%81%96%E3%81%8F%E3%82%89%29.jpg/500px-Sakura_and_Moss_Pink_-_%E6%A1%9C%28%E3%81%95%E3%81%8F%E3%82%89%29%E3%81%A8%E8%8A%9D%E6%A1%9C%28%E3%81%97%E3%81%B0%E3%81%96%E3%81%8F%E3%82%89%29.jpg","c":"TANAKA Juuyoh (田中十洋) / CC BY 2.0","a":"cherry blossom"},
+  "🌙": {"u":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/500px-FullMoon2010.jpg","c":"Gregory H. Revera / CC BY-SA 3.0","a":"moon"}
 };

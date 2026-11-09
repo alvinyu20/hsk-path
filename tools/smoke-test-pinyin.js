@@ -113,7 +113,17 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await ck('妈妈', 'māma', 'ma1ma') && await ck('妈妈', 'māma', 'māma') && !(await ck('妈妈', 'māma', 'ma1ma1')), '妈妈: repeated words stay strict (ma1ma1 is wrong)');
     check(await ck('谢谢', 'xièxie', 'xie4xie') && !(await ck('谢谢', 'xièxie', 'xie4xie4')), '谢谢: repeated words stay strict');
     check(!(await ck('东西', 'dōngxi', 'dong1xi1')) && await ck('东西', 'dōngxi', 'dong1xi'), '东西: dōngxī is another word, so it stays wrong');
-    check(!(await ck('孩子', 'háizi', 'hai2zi3')), '孩子: 子 has a light reading of its own, so zǐ stays wrong');
+    check(await ck('孩子', 'háizi', 'hai2zi3') && await ck('孩子', 'háizi', 'hai2zi') && !(await ck('孩子', 'háizi', 'hai2zi4')), '孩子: 子 is zǐ on its own, so hai2zi3 is right; another tone is not');
+    check(await ck('右边', 'yòubian', 'you4bian1') && await ck('右边', 'yòubian', 'you4bian') && !(await ck('右边', 'yòubian', 'you4bian2')), '右边: you4bian1 is right (边 is biān on its own)');
+    check(await ck('便宜', 'piányi', 'pian2yi2') && !(await ck('便宜', 'piányi', 'pian2yi4')), '便宜: 宜 is yí, so yi2 is right and yi4 is wrong');
+    check(await ck('不要', 'búyào', 'bu4yao4') && await ck('不要', 'búyào', 'bu2yao4') && !(await ck('不要', 'búyào', 'bu1yao4')), '不要: bù (its own tone) and bú (spoken) are both right');
+    check(await ck('一样', 'yíyàng', 'yi1yang4') && await ck('一样', 'yíyàng', 'yi2yang4') && !(await ck('一样', 'yíyàng', 'yi4yang4')), '一样: yī (its own tone) and yí (spoken) are both right');
+    check(await ck('不客气', 'bú kèqi', 'bu4ke4qi4') && await ck('不客气', 'bú kèqi', 'bu2ke4qi4') && await ck('不客气', 'bú kèqi', 'bu4ke4qi'), '不客气: any mix of own and spoken tones is right');
+    check(await ck('这儿', 'zhèr', 'zhe4er2') && await ck('这儿', 'zhèr', 'zhe4r') && !(await ck('这儿', 'zhèr', 'zhe4er4')), '这儿: 儿 is ér, so zhe4er2 is right');
+    { const cs2 = (zh, py, en, typed) => page.evaluate(([z, p, e, t]) => window.shanlu.testApi.checkTyped({ exp: { zh: z, py: p }, sayEn: e, accepts: [] }, t).ok, [zh, py, en, typed]);
+      check(await cs2('外面', 'wàimiàn', 'outside', 'wai4bian1') && await cs2('外面', 'wàimiàn', 'outside', 'wai4bian') && !(await cs2('外面', 'wàimiàn', 'outside', 'wai4bian4')), '外面 card ("outside"): 外边 is the same word, also with 边 as biān'); }
+    check(await ck('一点儿', 'yìdiǎnr', 'yi1dian3er2') && await ck('一点儿', 'yìdiǎnr', 'yi4dian3er'), '一点儿: own tones of 一 and 儿 are right');
+    check(await ck('对不起', 'duìbuqǐ', 'dui4bu4qi3') && await ck('对不起', 'duìbuqǐ', 'dui4bu qi3'.replace(' ', '')), '对不起: bù is right');
     check(errors.length === 0, 'no page errors: ' + errors.join(' | '));
     await ctx.close();
   }

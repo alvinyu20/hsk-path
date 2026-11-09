@@ -565,12 +565,13 @@
   const senseSet = (en) => String(en).toLowerCase().replace(/\([^)]*\)/g, '').replace(/\bdon['’]t\b/g, 'do not').split(/;|,|\s\/\s/).map(x => x.trim()).filter(Boolean).sort().join('|');
   const sensesOf = (en) => senseSet(en).split('|').filter(Boolean);
   const sharedSense = (a, b) => { const x = sensesOf(a); return sensesOf(b).some(v => x.indexOf(v) >= 0); };
+  const pyOk = (typed, z) => comparePinyin(typed, BANK[z].py, tonesOptional()).ok || (!!NEUTRAL_ALT[z] && comparePinyin(typed, NEUTRAL_ALT[z], tonesOptional()).ok);   // also with the characters' own tones (data/neutral-alt.js)
   const synonymOf = (q, typed, soft) => {
     if (!q.sayEn) return '';
     const want = senseSet(q.sayEn);
     if (!want) return '';
     const hit = BANK_KEYS.filter(z => z !== q.exp.zh && senseSet(BANK[z].en) === want);
-    return hit.find(z => typed === z || (soft ? comparePinyin(typed, BANK[z].py, tonesOptional()).grade === 'hard' : comparePinyin(typed, BANK[z].py, tonesOptional()).ok)) || '';
+    return hit.find(z => typed === z || (soft ? comparePinyin(typed, BANK[z].py, tonesOptional()).grade === 'hard' : pyOk(typed, z))) || '';
   };
   // the answer to a typed or fill-in question: hanzi, or pinyin with tones. grade 'good' (right), 'hard' (right sounds, wrong tone, or another real word) or 'again'
   const NEUTRAL_ALT = window.SHANLU_NEUTRAL_ALT || {};   // word -> spelling with the light syllable's own tone (data/neutral-alt.js)
@@ -579,9 +580,9 @@
     if (!q.exp) return { ok:q.accepts.indexOf(t.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[0-9\s.,!?]/g, '')) >= 0, grade:'again', note:'' };
     if (t === q.exp.zh || (q.exp.alt && t === q.exp.alt)) return { ok:true, grade:'good', note:'' };
     const r = comparePinyin(t, q.exp.py, tonesOptional());
-    if (!r.ok) {   // the character's own tone on a light syllable is fine (睛 is jīng alone, light in 眼睛): not for repeated words like 妈妈, see tools/build-neutral-alt.py
+    if (!r.ok) {   // a character's own tone is fine where the word changes it: a light syllable (睛 is jīng alone, light in 眼睛), 一/不 before another syllable, 儿 as r. Not for repeated words like 妈妈. See tools/build-neutral-alt.py
       const alt = NEUTRAL_ALT[q.exp.zh];
-      if (alt && String(q.exp.py).indexOf('/') < 0 && comparePinyin(t, alt, tonesOptional()).ok) return { ok:true, grade:'good', note:'Also right: each character keeps its own tone when written alone. In this word the last syllable is said light: ' + String(q.exp.py).trim() + '.' };
+      if (alt && String(q.exp.py).indexOf('/') < 0 && comparePinyin(t, alt, tonesOptional()).ok) return { ok:true, grade:'good', note:'Also right: those are the characters\' own tones. Said in the word it is ' + String(q.exp.py).trim() + ' (a light syllable, 一 or 不 changing tone, or 儿 as r).' };
     }
     if (r.ok || r.grade === 'hard') return r;
     const syn = synonymOf(q, t);
@@ -592,7 +593,7 @@
       const partPy = !/[\u4e00-\u9fff]/.test(t) && flat.length >= 2 && flat !== whole && (whole.endsWith(flat) || whole.startsWith(flat));
       if (partHanzi || partPy) {
         const ask = q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ')';
-        const own = BANK_KEYS.find(z => z !== q.exp.zh && q.exp.zh.indexOf(z) >= 0 && (t === z || comparePinyin(t, BANK[z].py, tonesOptional()).ok));   // the part is a word of its own (听 inside 听见)
+        const own = BANK_KEYS.find(z => z !== q.exp.zh && q.exp.zh.indexOf(z) >= 0 && (t === z || pyOk(t, z)));   // the part is a word of its own (听 inside 听见)
         if (own && sharedSense(BANK[own].en, q.sayEn)) return { ok:true, grade:'good', note:'Also right: ' + own + ' (' + BANK[own].py.split('/')[0].trim() + ') means "' + BANK[own].en + '". This card asked for ' + ask + ', "' + q.sayEn + '".' };   // 说 for "to talk, to speak" (说话): the part is a word whose English shares a meaning with the card
         return { ok:false, grade:'hard', note:own ? own + ' (' + BANK[own].py.split('/')[0].trim() + ') is a word too: "' + BANK[own].en + '". This card asks for ' + ask + ', "' + q.sayEn + '".' : 'That is only part of the word. This card asks for the whole word ' + ask + '.' };
       }

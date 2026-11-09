@@ -16,7 +16,7 @@ const EMOJI = ['🍎', '🐶', '🐱', '✈', '💻', '📱', '🚗', '📺', '�
   const open = async (media) => {
     const ctx = await browser.newContext({ viewport: { width: 1100, height: 900 } });
     await ctx.addInitScript(() => { window.SHANLU_MUTE_SFX = true; window.SHANLU_AUTO_SHARE = 0; });
-    if (media) await ctx.route('**/data/exam-media.js*', (r) => r.fulfill({ status: 200, contentType: 'application/javascript', body: 'window.SHANLU_EXAM_MEDIA = ' + JSON.stringify(media) + ';' }));   // stands in for the real data file
+    await ctx.route('**/data/exam-media.js*', (r) => r.fulfill({ status: 200, contentType: 'application/javascript', body: 'window.SHANLU_EXAM_MEDIA = ' + JSON.stringify(media || {}) + ';' }));   // stands in for the real data file
     await ctx.route('**/upload.wikimedia.org/**', (r) => /bad\.png/.test(r.request().url()) ? r.abort() : r.fulfill({ status: 200, contentType: 'image/png', body: PNG }));
     const page = await ctx.newPage(); const errors = [];
     page.on('pageerror', e => errors.push(String(e))); page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push('console: ' + m.text()); });
