@@ -134,4 +134,54 @@ for (let seed = 1; seed <= 25; seed++) {
 }
 
 if (bad) { console.log(bad + ' failed'); process.exit(1); }
-console.log('journey tests passed (' + W.regions.length + ' regions, ' + Object.keys(all).length + ' stops)');
+// ---- Say it there: every stop gets one sentence, built from the fixed patterns ----
+{
+  const cjk = /[㐀-鿿]/; const kinds = {};
+  Object.keys(W.byStop).forEach((id) => {
+    const s = W.byStop[id]; const y = J.sayFor(s); kinds[y.kind] = (kinds[y.kind] || 0) + 1;
+    ok(y.zh && y.py && y.en && y.tag, id + ' has a sentence with pinyin, English and a label');
+    ok(/[。？！]$/.test(y.zh), id + ' sentence ends with Chinese punctuation: ' + y.zh);
+    ok(!cjk.test(y.py), id + ' sentence pinyin has no Chinese characters left: ' + y.py);
+    ok(!/[。？！，]/.test(y.py) && /[.?!]$/.test(y.py), id + ' sentence pinyin uses Latin punctuation: ' + y.py);
+    if (s.k !== 'P') ok(y.zh.indexOf(s.zh) >= 0 && y.py.indexOf(s.py) >= 0, id + ' sentence holds the name of the stop');
+    if (y.kind === 'drink') ok(y.zh.indexOf('吃') < 0, id + ' a drink is not eaten: ' + y.zh);
+    if (y.kind === 'dish') ok(y.zh.indexOf('喝') < 0, id + ' a dish is not drunk: ' + y.zh);
+    if (/[族人]$/.test(s.zh) && s.k === 'C') ok(y.zh.indexOf('是什么') < 0, id + ' a people is not asked about as a thing: ' + y.zh);
+    eq(J.sayFor(s).zh, y.zh, id + ' the sentence is the same every time');
+  });
+  ok(kinds.dish > 400 && kinds.drink > 50 && kinds.buy > 50 && kinds.way > 600 && kinds.ask > 150 && kinds.city > 300 && kinds.air === 31, 'the kinds of sentence: ' + JSON.stringify(kinds));
+  const kindOf = (zh, k) => { const s = Object.keys(W.byStop).map((id) => W.byStop[id]).find((x) => x.zh === zh && (!k || x.k === k)); return s ? J.sayKind(s) : 'missing ' + zh; };
+  eq([kindOf('麻婆豆腐'), kindOf('龙井茶'), kindOf('信阳毛尖'), kindOf('肉骨茶'), kindOf('哈密瓜'), kindOf('湖笔'), kindOf('茶餐厅'), kindOf('西湖'), kindOf('北极光'), kindOf('京剧'), kindOf('成都', 'T')],
+    ['dish', 'drink', 'drink', 'dish', 'buy', 'ask', 'near', 'way', 'ask', 'ask', 'city'], 'what kind of thing a stop is');
+}
+
+// ---- hops, routes and the passport extras ----
+{
+  ok(Math.abs(J.kmBetween(39.9, 116.4, 31.23, 121.47) - 1068) < 15, 'Beijing to Shanghai is about 1,070 km in a straight line');
+  eq(J.dirBetween(30.66, 104.06, 29.55, 103.77)[2], 'south', 'Leshan is south of Chengdu');
+  eq(J.dirBetween(30.66, 104.06, 39.9, 116.4)[0], '东北', 'Beijing is northeast of Chengdu');
+  W.prefer = 'macau';
+  let st = J.ensure(W, null, J.rngFor(null)); st.sd = 'hop-test';
+  let prev = null, seenModes = {}, rides = 0, flights = [];
+  for (let i = 0; i < 400 && Object.keys(st.done).length < 2; i++) {
+    if (st.started) W.prefer = 'hongkong';   // the next region is chosen in the step that stamps this one
+    const r = J.step(W, st, J.rngFor(st), '2026-11-09'); if (!r.stop) break;
+    const h = J.hop(W, r.st, prev, r.stop.id, r.ev); ok(h && h.mode, 'every stop has a hop');
+    seenModes[h.mode] = 1;
+    if (h.mode === 'fly') { flights.push(h); ok(h.to.code && h.to.zh, 'a flight lands at an airport with a code'); }
+    if (h.mode === 'ride') { rides++; ok(h.from.zh !== h.to.zh && h.km >= 0, 'a ride goes from one city to another'); }
+    if (h.mode === 'walk') ok(h.inCity >= 1 && h.inCity <= h.ofCity, 'a walk counts the stops seen in the city');
+    prev = r.stop.id; st = r.st;
+  }
+  W.prefer = null;
+  eq(Object.keys(seenModes).sort(), ['fly', 'ride', 'walk'], 'the three ways of getting around all happen');
+  ok(flights.length >= 2 && flights[0].from === null && flights[1].from && flights[1].from.code === 'MFM' && flights[1].km > 0, 'the first flight comes from home, the next from the region before');
+  eq(rides, W.byRegion.macau.cities.length - 1 + W.byRegion.hongkong.cities.length - 1, 'one ride for every city after the first');
+  eq(J.cityRoute(W, st, 'macau').length, W.byRegion.macau.cities.length, 'the route passes every city of the region once');
+  eq(J.regionRoute(W, st).slice(0, 2), ['macau', 'hongkong'], 'the regions in the order flown');
+  const cs = J.cityStamps(W, st); ok(cs.length >= W.byRegion.macau.cities.length + W.byRegion.hongkong.cities.length, 'a stamp for every finished city: ' + cs.length);
+  ok(cs.every((c, i) => i === 0 || cs[i - 1].at <= c.at), 'city stamps come in the order earned');
+  eq(J.mustSeen(W, st).length, W.byRegion.macau.stops.filter((s) => s.sp).length + W.byRegion.hongkong.stops.filter((s) => s.sp).length, 'a must-see stamp for every must-see stop seen');
+}
+
+console.log('journey tests passed ('  + W.regions.length + ' regions, ' + Object.keys(all).length + ' stops)');

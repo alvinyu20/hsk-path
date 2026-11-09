@@ -13,7 +13,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const open = async (opts) => {
     const ctx = await browser.newContext({ viewport: opts.viewport || { width: 1100, height: 900 } });
     await ctx.route(/wikimedia\.org/, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64') }));   // photos come from Wikimedia: a stand-in picture keeps the test offline
-    if (opts.xp != null) await ctx.addInitScript((xp) => { if (!localStorage.getItem('shanlu-progress-v1')) localStorage.setItem('shanlu-progress-v1', JSON.stringify({ xp, dayXp: 0 })); window.SHANLU_MUTE_SFX = true; window.SHANLU_JY_FIRST = 'sichuan'; }, opts.xp);
+    if (opts.xp != null) await ctx.addInitScript((o) => { if (!localStorage.getItem('shanlu-progress-v1')) localStorage.setItem('shanlu-progress-v1', JSON.stringify({ xp:o.xp, dayXp: 0 })); window.SHANLU_MUTE_SFX = true; window.SHANLU_JY_FIRST = o.first; }, { xp:opts.xp, first:opts.first || 'sichuan' });
     else await ctx.addInitScript(() => { window.SHANLU_MUTE_SFX = true; window.SHANLU_JY_FIRST = 'sichuan'; });
     const page = await ctx.newPage(); const errors = [];
     page.on('pageerror', e => errors.push(String(e))); page.on('console', m => { if (m.type() === 'error') errors.push('console: ' + m.text()); });
@@ -34,6 +34,11 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     let t = await main(page);
     check(/Welcome to Sichuan/.test(t) && /TFU/.test(t) && /Chéngdū Tiānfǔ Guójì Jīchǎng/.test(t), 'the airport arrival card shows the code and pinyin');
     check(/Boarding pass/.test(await page.locator('.mstoast').innerText().catch(() => '')), 'the Boarding pass achievement shows');
+    // the flight in comes with a boarding pass (from home, the first time) and a sentence to say at the airport
+    const pass = await page.locator('.jy-tk.fly').innerText().catch(() => '');
+    check(/登机牌/.test(pass) && /TFU/.test(pass) && /成都/.test(pass) && /家/.test(pass) && /SL 001/.test(pass), 'the first flight shows a boarding pass from home to TFU: ' + pass.replace(/\s+/g, ' '));
+    const say = await page.locator('.jy-sayit').innerText();
+    check(/Say it there/i.test(say) && /[\u4e00-\u9fff]+[。？！]/.test(say) && /At the airport/i.test(say), 'the card has a sentence to say there: ' + say.replace(/\s+/g, ' '));
     check(await page.locator('.jy-go[disabled]').count() === 1, 'the next stop is not free');
     check(/50 more coins to go/.test(t), 'the next stop costs 50 coins');
     // the background tint follows the region
@@ -72,6 +77,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.jy-go').click();   // second stop: the main city
     t = await page.locator('.jy-card').innerText();
     check(/CITY/i.test(t) && /Chengdu/.test(t) && /成都/.test(t), 'the second stop is the main city, Chengdu');
+    check(await page.locator('.jy-tk.walk').count() === 1 && /走路/.test(await page.locator('.jy-tk.walk').innerText()), 'a stop in the same city is reached on foot');
+    check(/成都/.test(await page.locator('.jy-sayit-zh').innerText()), 'the sentence to say uses the name of the stop');
+    check(await page.locator('.jy-ph').count() === 1 && await page.locator('.jy-here').count() === 1, 'after a stop the map of the region shows, with a mark where you are');
     check(/New city/.test(t) === false || true, 'ok');
     check(/1,450 coins/.test(await page.locator('.pill.xpp').innerText()), 'travelling spends coins: 1,500 minus the 50 for the second stop leaves 1,450');
     await page.locator('.jy-acts .btn.pri').click();
@@ -87,6 +95,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(outside === 0, 'the first stops after the main city are all in Chengdu');
     // the map
     await page.locator('.jy-tabs button', { hasText: 'Map' }).click();
+    if (await page.locator('.jy-ph .linkbtn').count()) await page.locator('.jy-ph .linkbtn').click();   // travelling leaves the region map open: back to the whole map
     check(await page.locator('.jy-r').count() >= 28, 'the country map has the regions: ' + await page.locator('.jy-r').count());
     check(await page.locator('.jy-r.here').count() === 1, 'the region you are in is outlined');
     await page.locator('.jy-r.here').click();
@@ -115,11 +124,48 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await ctx.close();
   }
 
+  // ---- a whole small region: the ride between cities, city stamps, must-see stamps, the next flight ----
+  {
+    const { ctx, page, errors } = await open({ xp: 60000, first: 'macau' });
+    await page.locator('.pill.xpp').click();
+    let ride = '', cityStamp = false, star = false, second = '', n = 0;
+    for (let i = 0; i < 70 && !second; i++) {
+      await page.locator('.jy-go').click(); n++;
+      while (await page.locator('.ms-x').count()) await page.locator('.ms-x').first().click();
+      if (await page.locator('.jy-cstamp.big').count()) cityStamp = true;
+      if (await page.locator('.jy-starnote').count()) star = true;
+      if (!ride && await page.locator('.jy-tk.ride').count()) {
+        ride = (await page.locator('.jy-tk.ride').innerText()).replace(/\s+/g, ' ');
+        check(await page.locator('.jy-route').count() === 1 && await page.locator('.jy-leg').count() === 1, 'the ride is drawn on the region map: the route, and the new leg');
+      }
+      if (n > 1 && await page.locator('.jy-tk.fly').count()) second = (await page.locator('.jy-tk.fly').innerText()).replace(/\s+/g, ' ');
+      else await page.locator('.jy-acts .btn.pri').click();
+    }
+    check(/车票/.test(ride) && /澳门半岛/.test(ride) && /公里/.test(ride) && /km/.test(ride), 'moving to the next city shows a ticket with the two cities and the distance: ' + ride);
+    check(cityStamp, 'finishing a city shows its city stamp');
+    check(star, 'a must-see stop says its gold stamp is in the passport');
+    check(/MFM/.test(second) && /SL 002/.test(second) && /公里/.test(second), 'the next flight leaves from Macau with the distance: ' + second);
+    check(await page.locator('.jy-arc').count() === 1, 'the flight is drawn on the map of the whole country');
+    await page.locator('.jy-acts .btn.pri').click();
+    await page.locator('.jy-tabs button', { hasText: 'Passport' }).click();
+    const t = await main(page);
+    check(/1 of 31 regions stamped/.test(t) && /3 city stamps/.test(t) && /4 must-sees/.test(t), 'the passport counts regions, city stamps and must-sees: ' + (t.match(/\d+ of 31 regions[^\n]*/) || [''])[0]);
+    check(await page.locator('.jy-cstamps .jy-cstamp.got').count() === 3 && await page.locator('.jy-sstamp').count() === 4, 'Macau gives three city stamps and four must-see stamps');
+    check(await page.locator('.jy-slot').count() === 2, 'the passport shows the regions you have been to: ' + await page.locator('.jy-slot').count());
+    await page.locator('.jy-passmore').click();
+    check(await page.locator('.jy-slot').count() === 31, 'the rest of the regions unfold on request');
+    await page.locator('.jy-sstamp').first().click();
+    check(await page.locator('.jy-card.sp').count() === 1 && await page.locator('.jy-tk').count() === 0, 'a must-see stamp opens its stop, with no ticket on a stop opened later');
+    check(errors.length === 0, 'no errors on the long trip: ' + errors.join(' | '));
+    await ctx.close();
+  }
+
   // ---- a phone: nothing spills sideways ----
   {
     const { ctx, page, errors } = await open({ xp: 800, viewport: { width: 390, height: 844 } });
     await page.locator('.pill.xpp').click();
     await page.locator('.jy-go').click(); await page.waitForTimeout(100);
+    { const over = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth); check(over <= 1, 'the card with its boarding pass fits a phone width (overflow ' + over + 'px)'); }
     for (const tab of ['Map', 'Stops', 'Passport']) {
       await page.locator('.jy-tabs button', { hasText: tab }).click();
       const over = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);

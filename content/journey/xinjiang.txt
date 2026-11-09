@@ -1,6 +1,6 @@
 # Xinjiang. DRAFT: written from general knowledge, not yet fact-checked.
 region: xinjiang | 新疆 | Xinjiang
-air: 乌鲁木齐地窝堡国际机场 | Urumqi Diwopu International Airport | URC | 43.91 | 87.47 | The main airport of Xinjiang and the gateway to Central Asia. Welcome to Xinjiang. | |
+air: 乌鲁木齐天山国际机场 | Urumqi Tianshan International Airport | URC | 43.91 | 87.47 | The main airport of Xinjiang and the gateway to Central Asia, known as Diwopu Airport until 2025. Welcome to Xinjiang. | |
 
 city: urumqi | 乌鲁木齐 | Urumqi | 43.83 | 87.62 | The capital of Xinjiang, said to be the city farthest from any ocean. |
 A | 新疆国际大巴扎 | Xinjiang Grand Bazaar | A giant market with a tall tower, selling carpets, dried fruit and crafts. | | 43.78,87.61

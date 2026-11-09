@@ -452,7 +452,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
-      jyPing:0, jyTab:'map', jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0,
+      jyPing:0, jyTab:'map', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -2641,12 +2641,15 @@
       if (!JWORLD) return;
       const S = this.state; const st0 = this.jyEnsure(); if (!st0 || !st0.reg) return;
       if (JY.meter(totalXp(S), st0).ready < 1) return;
+      const from = st0.seen.length ? st0.seen[st0.seen.length - 1] : null;
       const r = JY.step(JWORLD, st0, JY.rngFor(st0), ymd(new Date()));
       if (!r.stop) return;
       prefSet('jy', r.st);
       this.friendsTick();
       SFX.play(r.ev.indexOf('stamp') >= 0 || r.ev.indexOf('arrive') >= 0 ? 'fly' : 'ok');
-      this.setState({ jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next }, jyOpen:null, jyTab:'map', jySel:null });
+      // a flight shows on the map of the whole country; a ride or a walk shows on the map of the region you are in
+      const flew = r.ev.indexOf('arrive') >= 0;
+      this.setState({ jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next, from, k:(this.jyK = ((this.jyK || 0) + 1) % 2) }, jyOpen:null, jyTab:'map', jySel:null, jyFilter:'all', jyReg:flew || !JMAP.regions[r.stop.rid] ? null : r.stop.rid });
       try { window.scrollTo(0, 0); } catch (e) {}
       this.checkMilestones();
     };
@@ -2687,7 +2690,7 @@
       if (S.screen !== 'journey') return base;
       const have = {}; st.seen.forEach(id => { have[id] = 1; });
       const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
-      const out = Object.assign(base, { jyOn:true });
+      const out = Object.assign(base, { jyOn:true, jyFlip:S.jyRv && S.jyRv.k ? 'kb' : 'ka' });
 
       // friends: the people in your group who have started travelling. Looking at one shows their map and passport in place of yours.
       const fMembers = S.fr && S.fr.members ? S.fr.members.filter(m => m.id !== S.fr.me && m.stats && m.stats.jy && m.stats.jy.n > 0) : [];
@@ -2750,7 +2753,7 @@
           if (ev.indexOf('arrive') >= 0) banners.push({ t:'Welcome to ' + CR.en + '!', d:st.n === 1 ? 'Your first flight is on the house. From here on, each new stop costs coins, and studying earns them.' : 'You have landed. Your journey here begins at the airport.' });
           if (ev.indexOf('city') >= 0 && ev.indexOf('arrive') < 0) banners.push({ t:'New city: ' + CC.en, d:'Its stops will unlock one by one.' });
           if (ev.indexOf('muni') >= 0) banners.push({ t:CC.muni + ' is its own municipality.', d:(CR.munis && CR.munis[CC.muni]) || (CC.muni + ' is a municipality of its own, not part of ' + CR.en + '.') });
-          if (ev.indexOf('citydone') >= 0 && ev.indexOf('stamp') < 0) banners.push({ t:CC.en + ' complete!', d:'You have seen every stop here.' });
+          if (ev.indexOf('citydone') >= 0 && ev.indexOf('stamp') < 0) banners.push({ t:CC.en + ' complete!', d:'You have seen every stop here. Its city stamp is in your passport.' });
           if (ev.indexOf('stamp') >= 0) banners.push({ t:CR.en + ' complete!', d:'Your passport is stamped.' + (rv.next ? ' Next flight: ' + rName(rv.next) + '.' : '') });
           if (ev.indexOf('all') >= 0) banners.push({ t:'Every region stamped!', d:'You have been everywhere. Well travelled.' });
         }
@@ -2759,6 +2762,24 @@
           jyHasWords:stop.k === 'P', jyWords:'机场 jīchǎng airport · 护照 hùzhào passport · 登机牌 dēngjīpái boarding pass · 行李 xíngli luggage',
           jySay:() => this.say(stop.zh, 'jy:' + stop.id), jyCloseCard:this.jyCloseCard, jyCloseText:rv ? 'Keep exploring' : 'Close',
           jyMapBtn:!!JMAP.regions[stop.rid], jyOnMap:() => this.setState({ jyTab:'map', jyReg:stop.rid, jySel:[stop.id], jyFilter:'all', jyRv:null, jyOpen:null }) });
+        // how you got here: a boarding pass, a ticket between two cities, or a walk (only on a stop just reached)
+        const hp = rv ? JY.hop(JWORLD, st, rv.from, stop.id, rv.ev) : null;
+        const kmT = (n) => n.toLocaleString('en-US');
+        out.jyTkFly = !!hp && hp.mode === 'fly'; out.jyTkRide = !!hp && hp.mode === 'ride'; out.jyTkWalk = !!hp && hp.mode === 'walk';
+        if (hp && hp.mode === 'fly') Object.assign(out, { jyTkFromCode:hp.from ? hp.from.code || '···' : '家', jyTkFromZh:hp.from ? hp.from.zh : '', jyTkFromPy:hp.from ? hp.from.py : 'jiā · home',
+          jyTkToCode:hp.to.code || '···', jyTkToZh:hp.to.zh, jyTkToPy:hp.to.py, jyTkToEn:hp.to.en, jyTkNo:'SL ' + String(hp.no).padStart(3, '0'), jyTkDate:hp.date,
+          jyTkHasKm:hp.km > 0, jyTkKm:'约 ' + kmT(hp.km) + ' 公里', jyTkKmEn:'about ' + kmT(hp.km) + ' km',
+          jyTkLabel:'Boarding pass: ' + (hp.from ? hp.from.en : 'home') + ' to ' + hp.to.en + (hp.km ? ', about ' + kmT(hp.km) + ' km' : '') });
+        if (hp && hp.mode === 'ride') Object.assign(out, { jyTkFromZh:hp.from.zh, jyTkFromPy:hp.from.py, jyTkFromEn:hp.from.en, jyTkToZh:hp.to.zh, jyTkToPy:hp.to.py, jyTkToEn:hp.to.en, jyTkNo:'第 ' + hp.no + ' 站', jyTkNoEn:'Stop ' + hp.no,
+          jyTkHasKm:hp.km > 0, jyTkKm:(hp.dir ? '往' + hp.dir[0] + '，' : '') + '约 ' + kmT(hp.km) + ' 公里', jyTkKmPy:(hp.dir ? 'wǎng ' + hp.dir[1] + ', ' : '') + 'yuē ' + kmT(hp.km) + ' gōnglǐ', jyTkKmEn:'about ' + kmT(hp.km) + ' km' + (hp.dir ? ' to the ' + hp.dir[2] : '') + ', in a straight line',
+          jyTkLabel:'Ticket: ' + hp.from.en + ' to ' + hp.to.en + (hp.km ? ', about ' + kmT(hp.km) + ' km' : '') });
+        if (hp && hp.mode === 'walk') Object.assign(out, { jyTkWalkText:'On foot in ' + hp.to.en, jyTkWalkN:'stop ' + hp.inCity + ' of ' + hp.ofCity + ' here' });
+        // a sentence to say at this stop
+        const sy = JY.sayFor(stop);
+        Object.assign(out, { jySayTag:sy.tag, jySayZh:sy.zh, jySayPy:sy.py, jySayEn:sy.en, jySayIt:() => this.say(sy.zh, 'jysay:' + stop.id) });
+        // stamps earned by this stop: the city is finished, or the stop is a must-see
+        const cityDone = !!rv && rv.ev.indexOf('citydone') >= 0 && rv.ev.indexOf('stamp') < 0;
+        Object.assign(out, { jyCityStampShow:cityDone, jyCityStampZh:CC.zh, jyCityStampCls:CC.zh.length > 4 ? 'long' : CC.zh.length === 4 ? 'l4' : '', jyCityStampEn:CC.en, jyCityStampHue:CR.hue, jyStarNote:!!rv && stop.sp });
         const ph = JMEDIA[stop.id];
         out.jyHasPhoto = !!(ph && ph.u); out.jyNoPhoto = !out.jyHasPhoto; out.jyPhotoUrl = ph ? ph.u : ''; out.jyPhotoAlt = ph && ph.a ? ph.a : stop.en; out.jyPhotoCredit = ph ? ph.c : '';
         if (rv && rv.ev.indexOf('stamp') >= 0) {
@@ -2787,6 +2808,19 @@
           return { id, cls:stt + (has ? '' : ' na') + (JY.SMALL.indexOf(id) >= 0 && id !== 'singapore' ? ' tiny' : ''), hue, d:m.cd || '', m:m.cm || '', hasM:!!m.cm, label:en + ', ' + word, en, open:has && !fm ? () => this.jyShowReg(id) : () => {} };
         };
         out.jyMapRegions = regs.filter(id => JMAP.regions[id].cd && id !== 'singapore').map(mk);
+        // the flights so far: an arc from each region to the next one flown to (the newest one draws itself)
+        out.jyArcs = [];
+        if (!fm) {
+          const airXY = (rid) => { const RR = JWORLD.byRegion[rid]; const a = RR && (RR.cities[0].air || RR.cities[0].first); if (!a) return null; const xy = JY.projectCountry(a.lat, a.lon); return [Math.max(4, Math.min(346, xy[0])), Math.max(4, Math.min(286, xy[1]))]; };
+          const rr = JY.regionRoute(JWORLD, st);
+          for (let i = 1; i < rr.length; i++) {
+            const a = airXY(rr[i - 1]), b = airXY(rr[i]); if (!a || !b) continue;
+            const len = Math.hypot(b[0] - a[0], b[1] - a[1]); if (len < 2) continue;
+            const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2 - Math.min(34, len * 0.28);
+            const r1 = (n) => Math.round(n * 10) / 10;
+            out.jyArcs.push({ d:'M' + r1(a[0]) + ' ' + r1(a[1]) + ' Q' + r1(mx) + ' ' + r1(my) + ' ' + r1(b[0]) + ' ' + r1(b[1]), len:Math.ceil(len * 1.25), cls:rv && rv.ev.indexOf('arrive') >= 0 && i === rr.length - 1 ? 'new' : '' });
+          }
+        }
         out.jySmall = JY.SMALL.map(id => Object.assign(mk(id), { d:JMAP.insets[id] || '' }));
       } else {
         const id = S.jyReg; const RR = JWORLD.byRegion[id]; const mp = JMAP.regions[id];
@@ -2805,9 +2839,22 @@
             cls:(one ? 'k' + s.k + (s.sp ? ' sp' : '') : 'kx' + (g.items.some(i => i.s.sp) ? ' sp' : '')) + (ids.some(i => sel.indexOf(i) >= 0) ? ' sel' : ''), label:one ? s.kind + ': ' + s.en : plural(g.items.length, 'stop', 'stops') + ' close together',
             tap:one ? () => this.jyOpenStop(s.id) : () => this.setState({ jySel:ids }) };
         });
+        // the route so far: a line through the cities in the order you reached them; the newest leg draws itself and a dot rides along it
+        {
+          const r1 = (n) => Math.round(n * 10) / 10;
+          const cxy = (cid) => { const C = JWORLD.byCity[cid]; const xy = JY.project(mp, C.lat, C.lon); return [r1(Math.max(8, Math.min(352, xy[0]))), r1(Math.max(8, Math.min(292, xy[1])))]; };
+          const cr = JY.cityRoute(JWORLD, st, id).filter(c => JWORLD.byCity[c]).map(cxy);
+          out.jyRouteShow = cr.length > 1; out.jyRouteD = cr.map((p, i) => (i ? 'L' : 'M') + p[0] + ' ' + p[1]).join(' ');
+          const newLeg = !!rv && rv.ev.indexOf('city') >= 0 && rv.ev.indexOf('arrive') < 0 && JWORLD.byStop[rv.id] && JWORLD.byStop[rv.id].rid === id && cr.length > 1;
+          out.jyLegShow = newLeg;
+          if (newLeg) { const a = cr[cr.length - 2], b = cr[cr.length - 1]; Object.assign(out, { jyLegD:'M' + a[0] + ' ' + a[1] + ' L' + b[0] + ' ' + b[1], jyLegLen:Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1])) + 1, jyLegX1:a[0], jyLegY1:a[1], jyLegX2:b[0], jyLegY2:b[1] }); }
+          const last = st.reg === id && st.started && st.seen.length ? JWORLD.byStop[st.seen[st.seen.length - 1]] : null;
+          out.jyHereShow = !!last && last.rid === id;
+          if (out.jyHereShow) { const p = cxy(last.cid); out.jyHereX = p[0]; out.jyHereY = p[1]; }
+        }
         const selStops = sel.map(i => JWORLD.byStop[i]).filter(Boolean);
         out.jySelShow = selStops.length > 1 || (selStops.length === 1 && !S.jyOpen && !S.jyRv); out.jySelRows = selStops.map(s => rowOf(s));
-        out.jyProvKey = seenHere.length ? 'Square: city · triangle: sight · circle: dish · diamond: culture · plane: airport · gold ring: a must-see. A numbered circle is several stops close together: tap it.' : 'Nothing here yet. Stops show up on the map as you unlock them.';
+        out.jyProvKey = seenHere.length ? 'Square: city · triangle: sight · circle: dish · diamond: culture · plane: airport · gold ring: a must-see. The dotted line is your route and the ripple is where you are. A numbered circle is several stops close together: tap it.' : 'Nothing here yet. Stops show up on the map as you unlock them.';
       }
 
       // stops: everything unlocked, newest first
@@ -2828,7 +2875,26 @@
         const sorted = ids.slice().sort((a, b) => (rank(a) < rank(b) ? -1 : rank(a) > rank(b) ? 1 : 0));
         const stamped = ids.filter(id => vs.done[id]).length;
         out.jyPassTitle = fm ? fm.name + '\'s passport' : 'Passport'; out.jyPassSub = stamped + ' of ' + ids.length + ' regions stamped';
-        out.jyStamps = sorted.map(id => {
+        // the regions not visited yet stay folded away, so the passport shows what you have, not a wall of blanks
+        const blank = sorted.filter(id => !vs.done[id] && !(vs.reg === id && vs.started)).length;
+        const showAll = !!S.jyPassAll || blank === sorted.length;
+        out.jyPassMoreShow = blank > 0 && blank < sorted.length; out.jyPassMoreText = S.jyPassAll ? 'Hide the regions still to visit' : 'Show the ' + plural(blank, 'region', 'regions') + ' still to visit';
+        out.jyPassMore = () => this.setState({ jyPassAll:!S.jyPassAll });
+        out.jyPassExtra = !fm;
+        if (!fm) {
+          const cs = JY.cityStamps(JWORLD, st).reverse(); const nCities = Object.keys(JWORLD.byCity).length;
+          const curC = st.started && st.cur && JWORLD.byCity[st.cur] && !cs.some(c => c.cid === st.cur) ? JWORLD.byCity[st.cur] : null;
+          out.jyCityStamps = (curC ? [{ C:curC, here:true }] : []).concat(cs.map(c => ({ C:JWORLD.byCity[c.cid], here:false }))).map(o => {
+            const got = o.C.stops.filter(x => have[x.id]).length;
+            return { zh:o.C.zh, en:o.C.en, hue:JWORLD.byRegion[o.C.rid].hue, cls:(o.here ? 'here' : 'got') + (o.C.zh.length > 4 ? ' long' : o.C.zh.length === 4 ? ' l4' : ''), sub:o.here ? got + ' / ' + o.C.stops.length : '', label:o.C.en + (o.here ? ', ' + got + ' of ' + o.C.stops.length + ' stops seen' : ', city stamp'), open:() => this.jyShowReg(o.C.rid) };
+          });
+          out.jyCityNone = out.jyCityStamps.length === 0; out.jyCitySub = cs.length + ' of ' + nCities + ' cities · see every stop in a city to earn its stamp';
+          const ms = JY.mustSeen(JWORLD, st).reverse(); const nStar = Object.keys(JWORLD.byStop).filter(k => JWORLD.byStop[k].sp).length;
+          out.jyStarStamps = ms.map(x => ({ zh:x.zh, en:x.en, label:'Must-see: ' + x.en, open:() => this.jyOpenStop(x.id) }));
+          out.jyStarNone = ms.length === 0; out.jyStarSub = ms.length + ' of ' + nStar + ' must-sees · the best of each region';
+          out.jyPassSub += ' · ' + plural(cs.length, 'city stamp', 'city stamps') + ' · ' + plural(ms.length, 'must-see', 'must-sees');
+        }
+        out.jyStamps = sorted.filter(id => showAll || vs.done[id] || (vs.reg === id && vs.started)).map(id => {
           const has = !!JWORLD.byRegion[id]; const RR = JWORLD.byRegion[id]; const got = !!vs.done[id]; const here = !got && vs.reg === id && vs.started;
           return { hue:has ? RR.hue : META[id][2], cls:got ? 'got' : here ? 'here' : 'empty', zh:got || here ? (has ? RR.zh : META[id][0]) : '?', en:got || here ? rName(id) : 'Not yet', code:got || here ? (has && RR.air ? RR.air.code : '') : '', date:got ? vs.done[id] : here ? 'In progress' : '',
             label:got ? rName(id) + ', stamped' : here ? rName(id) + ', in progress' : 'Not visited yet', open:has && (got || here) && !fm ? () => this.jyShowReg(id) : () => {} };
