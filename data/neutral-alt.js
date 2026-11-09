@@ -2,6 +2,7 @@
  * 眼睛 is yǎnjing; yǎnjīng is accepted too. Repeated words (妈妈) and characters with more than one reading are left out. */
 window.SHANLU_NEUTRAL_ALT = {
 "不好意思": "bùhǎoyìsī",
+"不客气": "búkèqì",
 "事情": "shìqíng",
 "休息": "xiūxī",
 "便宜": "piányí",

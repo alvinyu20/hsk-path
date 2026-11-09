@@ -347,7 +347,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     });
     const ty = await pA.evaluate(() => { const T = window.shanlu.testApi; const q = T.qSayIt('听见', { zh: '', py: '' }); const a = T.checkTyped(q, 'ting1'); return { g: a.grade, n: a.note }; });
     check(ty.g === 'hard' && /听 \(tīng\) is a word too/.test(ty.n), 'ting1 for "to hear" (听见) is close and the note says 听 is a word of its own (' + ty.n + ')');
-    check(!pt.a[0] && pt.a[1] === 'hard' && /only part of the word|is a word too/.test(pt.a[2]) && pt.b[1] === 'hard' && pt.c && pt.d === 'again', 'typing only 店 (dian4) for 商店 is close, with a note; the whole word is right; other words are wrong');
+    check(pt.a[0] && /Also right: 店/.test(pt.a[2]) && pt.b[0] && pt.c && pt.d === 'again', 'typing only 店 (dian4) for "shop" (商店) is right too, with a note (店 is "shop, store"); the whole word is right; other words are wrong');
     check(dn.a[0] && dn.b && !dn.c[0] && dn.c[1] === 'hard' && !dn.d, 'on the "don\'t" card, 别 is right too (bie2), a wrong tone is only "close", and other words are not');
     // grammar from both levels in one list
     await pA.locator('nav button', { hasText: /^\s*Grammar\s*$/ }).first().click();

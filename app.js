@@ -563,6 +563,8 @@
   };
   // "Say it" cards show the English and ask for the word. Another word on the lists whose English is the very same (孩子 and 小孩 are both "child") is a right answer too.
   const senseSet = (en) => String(en).toLowerCase().replace(/\([^)]*\)/g, '').replace(/\bdon['’]t\b/g, 'do not').split(/;|,|\s\/\s/).map(x => x.trim()).filter(Boolean).sort().join('|');
+  const sensesOf = (en) => senseSet(en).split('|').filter(Boolean);
+  const sharedSense = (a, b) => { const x = sensesOf(a); return sensesOf(b).some(v => x.indexOf(v) >= 0); };
   const synonymOf = (q, typed, soft) => {
     if (!q.sayEn) return '';
     const want = senseSet(q.sayEn);
@@ -591,6 +593,7 @@
       if (partHanzi || partPy) {
         const ask = q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ')';
         const own = BANK_KEYS.find(z => z !== q.exp.zh && q.exp.zh.indexOf(z) >= 0 && (t === z || comparePinyin(t, BANK[z].py, tonesOptional()).ok));   // the part is a word of its own (听 inside 听见)
+        if (own && sharedSense(BANK[own].en, q.sayEn)) return { ok:true, grade:'good', note:'Also right: ' + own + ' (' + BANK[own].py.split('/')[0].trim() + ') means "' + BANK[own].en + '". This card asked for ' + ask + ', "' + q.sayEn + '".' };   // 说 for "to talk, to speak" (说话): the part is a word whose English shares a meaning with the card
         return { ok:false, grade:'hard', note:own ? own + ' (' + BANK[own].py.split('/')[0].trim() + ') is a word too: "' + BANK[own].en + '". This card asks for ' + ask + ', "' + q.sayEn + '".' : 'That is only part of the word. This card asks for the whole word ' + ask + '.' };
       }
     }

@@ -70,9 +70,9 @@ def own(ch):
 def main():
     alt = {}
     for zh, py in words():
-        if zh in KEEP_STRICT or len(zh) < 2 or '/' in py or ' ' in py or not all('一' <= c <= '鿿' for c in zh):
+        if zh in KEEP_STRICT or len(zh) < 2 or '/' in py or not all('一' <= c <= '鿿' for c in zh):
             continue
-        rest = unicodedata.normalize('NFC', py.replace("'", '')).lower()
+        rest = unicodedata.normalize('NFC', py.replace("'", '').replace(' ', '')).lower()   # 不客气 is written "bú kèqi" in the word list
         syl, ok = [], True
         for i, ch in enumerate(zh):
             c = pinyin(ch, style=Style.TONE, heteronym=True)[0]

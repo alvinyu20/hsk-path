@@ -105,6 +105,11 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await ck('眼睛', 'yǎnjing', 'yan3jing1') && await ck('眼睛', 'yǎnjing', 'yǎnjīng'), '眼睛: the character\'s own tone (yan3jing1, yǎnjīng) is right too');
     check(!(await ck('眼睛', 'yǎnjing', 'yan2jing1')) && !(await ck('眼睛', 'yǎnjing', 'yan3jing2')), '眼睛: a wrong tone is still wrong');
     check(await ck('朋友', 'péngyou', 'peng2you3') && await ck('朋友', 'péngyou', 'peng2you'), '朋友: peng2you3 is right');
+    check(await ck('不客气', 'bú kèqi', 'bu2ke4qi4') && await ck('不客气', 'bú kèqi', 'bu2ke4qi') && await ck('不客气', 'bú kèqi', 'búkèqì'), '不客气: bu2ke4qi4 is right (气 is qì on its own)');
+    check(!(await ck('不客气', 'bú kèqi', 'bu2ke4qi3')), '不客气: a wrong tone on 气 is still wrong');
+    const cs = (zh, py, en, typed) => page.evaluate(([z, p, e, t]) => window.shanlu.testApi.checkTyped({ exp: { zh: z, py: p }, sayEn: e, accepts: [] }, t).ok, [zh, py, en, typed]);
+    check(await cs('说话', 'shuōhuà', 'to talk, to speak', 'shuo1') && await cs('说话', 'shuōhuà', 'to talk, to speak', '说'), '说话 card: 说 (to speak) is right too');
+    check(!(await cs('那里', 'nàlǐ', 'there', 'na4')) && !(await cs('那里', 'nàlǐ', 'there', '那')), '那里 card: 那 means "that", not "there", so it stays wrong');
     check(await ck('妈妈', 'māma', 'ma1ma') && await ck('妈妈', 'māma', 'māma') && !(await ck('妈妈', 'māma', 'ma1ma1')), '妈妈: repeated words stay strict (ma1ma1 is wrong)');
     check(await ck('谢谢', 'xièxie', 'xie4xie') && !(await ck('谢谢', 'xièxie', 'xie4xie4')), '谢谢: repeated words stay strict');
     check(!(await ck('东西', 'dōngxi', 'dong1xi1')) && await ck('东西', 'dōngxi', 'dong1xi'), '东西: dōngxī is another word, so it stays wrong');
