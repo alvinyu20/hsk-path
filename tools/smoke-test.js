@@ -466,19 +466,21 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await page.locator('.fc-fpy').count()) === 0, 'Hide pinyin hides it again');
   const rqBefore = await page.evaluate(() => window.shanlu.state.rdone + window.shanlu.state.rq.length);
   await page.locator('button', { hasText: 'Show pinyin' }).click();
-  await page.locator('.quick .rate').nth(1).click();
+  check((await page.locator('.rates .rate').allInnerTexts()).map(t => t.split('\n')[0]).join('|') === 'Again|Hard|Good|Easy', 'the front of the card offers all four ratings');
+  await page.locator('.rates .rate').nth(2).click();
   await page.waitForTimeout(100);
-  check((await page.evaluate(() => window.shanlu.state.rdone)) === 1 && !(await page.evaluate(() => window.shanlu.state.rflip)), 'Knew it rates the card without flipping it');
+  check((await page.evaluate(() => window.shanlu.state.rdone)) === 1 && !(await page.evaluate(() => window.shanlu.state.rflip)), 'Good on the front rates the card without flipping it');
   check((await page.locator('.fc-fpy').count()) === 0 && (await page.locator('button', { hasText: 'Show pinyin' }).count()) === 1, 'the pinyin peek is for one card only: the next card starts with it hidden');
   check((await page.locator('button', { hasText: 'Hear the word' }).count()) === 0, 'the word is not played before you answer (the sound would give away the tones)');
-  await page.locator('.quick .rate').nth(0).click();
+  await page.locator('.rates .rate').nth(0).click();
   await page.waitForTimeout(100);
-  check((await page.evaluate(() => window.shanlu.state.rdone)) === 1 && (await page.evaluate(() => window.shanlu.state.rq.length)) === rqBefore - 1, 'Didn\'t know it sends the card to the back of the queue');
+  check((await page.evaluate(() => window.shanlu.state.rdone)) === 1 && (await page.evaluate(() => window.shanlu.state.rq.length)) === rqBefore - 1, 'Again on the front sends the card to the back of the queue');
   await page.locator('button', { hasText: 'Show answer' }).click();
   await page.waitForTimeout(800);
+  check((await page.locator('.rates .rate').count()) === 4, 'the back of the card offers the same four ratings');
   await shot('06-review-back');
   for (let i = 0; i < practiceN + 3 && !(await text()).includes('cards done'); i++) {
-    if (!(await page.locator('.rates .rate').count())) await page.locator('button', { hasText: 'Show answer' }).click();
+    if (!(await page.evaluate(() => window.shanlu.state.rflip))) await page.locator('button', { hasText: 'Show answer' }).click();
     await page.locator('.rates .rate').nth(2).click();
     await page.waitForTimeout(60);
   }

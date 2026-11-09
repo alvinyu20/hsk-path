@@ -2544,7 +2544,7 @@
     };
     primary = () => { if (this.state.qchecked) this.next(); else this.check(); };
     // keyboard for Review words (the global key listener calls this). Returns true when it used the key.
-    //   flip card: Space/Enter show the answer, then 1-4 rate (Space/Enter = Good); before showing: Y = knew it, N = did not, P = pinyin; H / S hear the word / sentence
+    //   flip card: Space/Enter show the answer, then 1-4 rate (Space/Enter = Good); before showing: 1-4 rate it straight away (Y = Good, N = Again), P = pinyin; H / S hear the word / sentence
     //   new word: Space/Enter = got it.  Choice and listening cards: 1-4 or A-D answers at once, Enter or Space continues, P or R plays.  Typed cards: the box is already focused, Enter checks, Enter continues
     //   result screens: Enter presses the main button
     kbReview = (e) => {
@@ -2554,7 +2554,7 @@
       const kind = this.rKind(S.rq[0]);
       if (kind === 'flip') {
         if (!S.rflip) {
-          if (go) this.flip(); else if (lk === 'y') this.rate('good'); else if (lk === 'n') this.rate('again'); else if (lk === 'p') this.toggleRpy(); else return false;
+          if (go) this.flip(); else if ('1234'.indexOf(k) >= 0 && k.length === 1) this.rate(['again', 'hard', 'good', 'easy'][Number(k) - 1]); else if (lk === 'y') this.rate('good'); else if (lk === 'n') this.rate('again'); else if (lk === 'p') this.toggleRpy(); else return false;
         } else if ('1234'.indexOf(k) >= 0 && k.length === 1) this.rate(['again', 'hard', 'good', 'easy'][Number(k) - 1]);
         else if (go) this.rate('good');
         else if (lk === 'h') this.say(itemOf(S.rq[0]).zh, 'word');
@@ -3926,6 +3926,20 @@
         if (this.rvKey !== key || !this.quizQs[0] || !this.quizQs[0].rv) { this.rvKey = key; this.quizQs = [this.rQuestion(rit, rkind)]; }
       }
       const rflipV = S.rflip || rkind === 'intro';
+      // Review plays the word by itself where there is something to hear: a new word, a listening card, and a flip card once it is turned over.
+      // The front of a flip card stays silent: it asks you to recall, and hearing the word first would give half of it away.
+      {
+        let autoKey = '', autoText = '', autoSlot = 'word';
+        if (S.screen === 'review' && S.rq.length && !S.rcomplete) {
+          if (rkind === 'intro') { autoKey = rit + '|' + S.rstep + '|i'; autoText = rzh; }
+          else if (rkind === 'flip' && S.rflip) { autoKey = rit + '|' + S.rstep + '|b'; autoText = rzh; }
+          else if (rkind === 'audio' && this.quizQs[0] && this.quizQs[0].audio) { autoKey = rit + '|' + S.rstep + '|a'; autoText = this.quizQs[0].audio; autoSlot = 'q'; }
+        }
+        if (autoKey !== this.autoKey) {
+          this.autoKey = autoKey;
+          if (autoKey && autoText && prefGet('autoplay', true) !== false) setTimeout(() => { if (this.autoKey === autoKey) this.say(autoText, autoSlot); }, 200);
+        }
+      }
       const lrnCount = Object.keys(S.lrn || {}).length;
       const cal = (() => { let fN = 0, fOk = 0, aN = 0, aOk = 0; (S.rlog || []).slice(-300).forEach(e => { const ok = e[3] === 'g' || e[3] === 'e'; if (e[4] === 'f') { fN++; if (ok) fOk++; } else { aN++; if (ok) aOk++; } }); return { fN, fOk, aN, aOk }; })();
       const calText = cal.fN >= 6 && cal.aN >= 6
@@ -4401,6 +4415,7 @@
         // review
         msShow:(S.msQueue || []).length > 0, msIcon:(S.msQueue || [])[0] ? S.msQueue[0].icon : '', msTitle:(S.msQueue || [])[0] ? S.msQueue[0].title : '', msDesc:(S.msQueue || [])[0] ? S.msQueue[0].desc : '', msMore:(S.msQueue || []).length > 1 ? '+' + (S.msQueue.length - 1) + ' more' : '', msClose:() => { const q = (this.state.msQueue || []).slice(1); this.setState({ msQueue:q }); if (q.length) this.msArm(); else clearTimeout(this.msTimer); },
         dgPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%', dgText:S.dayMin >= S.mins ? 'Daily goal reached. Everything now is a bonus.' : 'Daily goal: ' + S.dayMin + ' of ' + S.mins + ' min', dgDone:S.dayMin >= S.mins,
+        autoplayLabel:prefGet('autoplay', true) !== false ? 'Words play by themselves. Turn off' : 'Words wait for a tap. Turn on', autoplayToggle:() => { prefSet('autoplay', prefGet('autoplay', true) === false); this.setState({ soundTick:(this.state.soundTick || 0) + 1 }); },
         soundOn:prefGet('sound', true) !== false, soundLabel:prefGet('sound', true) !== false ? 'Sounds are on. Turn off' : 'Sounds are off. Turn on', soundToggle:() => { const on = prefGet('sound', true) !== false; prefSet('sound', !on); this.setState({ soundTick:(this.state.soundTick || 0) + 1 }); if (!on) SFX.play('ok', true); }, soundTest:() => SFX.play('ok', true), soundTestDone:() => SFX.play('done', true),
         rcHead:rcHead, rcSub:rcSub, rcAcc:rcAcc, rcAccN:rcAccN, rcStreak:streakShown, hasHard:(S.rcounts.hard || 0) > 0, rcConfetti:rcAccN >= 60,
         inReview:!S.rcomplete && S.rq.length > 0, rcomplete:S.rcomplete, rdone:S.rdone, rtotal:S.rtotal, rxp:S.rxp, rcounts:S.rcounts,
@@ -4411,9 +4426,9 @@
         hasCalib:!!calText, calText,
         caughtUp:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft === 0 && lrnCount === 0, nextDueText, practiceAnyway:this.practiceAnyway,
         card, flip:this.flip, rflip:rflipV, flipCls:rflipV ? 'flip' : '', flipLabel:rflipV ? 'Flip the card back' : 'Show the answer',
-        kbHint:S.rcomplete ? '' : rkind === 'flip' ? (S.rflip ? 'Keys: 1 Again · 2 Hard · 3 Good · 4 Easy · Space = Good · H hear word · S hear sentence' : 'Keys: Space show answer · Y knew it · N did not · P pinyin') : rkind === 'intro' ? 'Keys: Space or Enter = got it' : S.qchecked ? 'Keys: Space or Enter = continue' : rkind === 'type' ? 'Keys: type your answer, Enter to check' : rkind === 'audio' ? 'Keys: 1-4 to answer · P play again' : 'Keys: 1-4 to answer',
+        kbHint:S.rcomplete ? '' : rkind === 'flip' ? (S.rflip ? 'Keys: 1 Again · 2 Hard · 3 Good · 4 Easy · Space = Good · H hear word · S hear sentence' : 'Keys: Space show answer · 1 Again · 2 Hard · 3 Good · 4 Easy · P pinyin') : rkind === 'intro' ? 'Keys: Space or Enter = got it' : S.qchecked ? 'Keys: Space or Enter = continue' : rkind === 'type' ? 'Keys: type your answer, Enter to check' : rkind === 'audio' ? 'Keys: 1-4 to answer · P play again' : 'Keys: 1-4 to answer',
         rIsFlip:rkind === 'flip' || rkind === 'intro', rIsAuto:rAuto, rIsIntro:rkind === 'intro', rIsPlain:rkind === 'flip', rIntroDone:this.rIntroDone,
-        cardAnim:S.rstep % 2 === 0 ? 'ea' : 'eb', showAnswerBtn:!S.rflip && rkind === 'flip', rates, qfeed:S.qfeed, hasQfeed:!!S.qfeed,
+        cardAnim:S.rstep % 2 === 0 ? 'ea' : 'eb', showAnswerBtn:!S.rflip && rkind === 'flip', rates, rateGrid:rates, qfeed:S.qfeed, hasQfeed:!!S.qfeed,
         rpyShow:S.rpy && !rflipV && rkind === 'flip', toggleRpy:this.toggleRpy, pyBtnText:S.rpy ? 'Hide pinyin' : 'Show pinyin', quickNo:rates[0], quickYes:rates[2],
         playWord:() => this.say(rw.zh, 'word'), playWordCls:pc('word') ? 'ink' : '',
         playEx:() => this.say(rex.zh, 'ex'), playExCls:pc('ex') ? 'ink' : '',
