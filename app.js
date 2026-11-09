@@ -698,20 +698,38 @@
     return r;
   };
   // question builders (used by tests and by Review)
-  const others = (zh, k) => {
+  // Meaning choices must not be near-duplicates: "to read; to study" next to "to read (aloud); to study", or "sorry" next to "sorry; embarrassed",
+  // makes a right answer feel wrong. Two English glosses clash when they share a meaningful word.
+  const GLOSS_SKIP = { to:1, a:1, an:1, the:1, of:1, be:1, or:1, and:1, in:1, on:1, at:1, for:1, it:1, is:1, as:1, with:1, not:1, one:1, i:1, you:1, your:1, my:1, me:1, we:1, he:1, she:1, they:1, that:1, this:1, so:1, by:1, from:1, get:1, do:1 };
+  const glossBits = (en) => {
+    const out = {};
+    String(en || '').toLowerCase().replace(/[^a-z\s]+/g, ' ').split(/\s+/).forEach(t => {
+      if (!t || GLOSS_SKIP[t]) return;
+      out[t.length > 3 ? t.replace(/(ing|ed|es|s)$/, '') : t] = 1;
+    });
+    return out;
+  };
+  const glossClash = (a, b) => { const x = glossBits(a), y = glossBits(b); return Object.keys(x).some(t => y[t]); };
+  const others = (zh, k, byMeaning) => {
     const w = BANK[zh];
     const same = shuffle(BANK_KEYS.filter(z => z !== zh && BANK[z].pos === w.pos && BANK[z].en !== w.en));
     const rest = shuffle(BANK_KEYS.filter(z => z !== zh && BANK[z].pos !== w.pos && BANK[z].en !== w.en));
-    return same.concat(rest).slice(0, k);
+    const all = same.concat(rest);
+    if (!byMeaning) return all.slice(0, k);
+    const picked = [];
+    all.forEach(z => { if (picked.length < k && !glossClash(BANK[z].en, w.en) && !picked.some(p => glossClash(BANK[p].en, BANK[z].en))) picked.push(z); });
+    if (picked.length < k) all.forEach(z => { if (picked.length < k && picked.indexOf(z) < 0 && !glossClash(BANK[z].en, w.en)) picked.push(z); });   // a tiny word bank: relax the rule between wrong answers
+    if (picked.length < k) all.forEach(z => { if (picked.length < k && picked.indexOf(z) < 0) picked.push(z); });
+    return picked;
   };
-  const choiceOptions = (zh, labelOf) => {
-    const opts = shuffle([zh].concat(others(zh, 3))).map((z, i) => ({ id:ORDER_IDS[i], label:labelOf(z), zh:z }));
+  const choiceOptions = (zh, labelOf, byMeaning) => {
+    const opts = shuffle([zh].concat(others(zh, 3, byMeaning))).map((z, i) => ({ id:ORDER_IDS[i], label:labelOf(z), zh:z }));
     return { options:opts.map(o => ({ id:o.id, label:o.label })), correct:opts.find(o => o.zh === zh).id };
   };
   const exLine = (e) => e.zh + ' ' + e.py + ' (' + e.en + ')';
-  const qMeaning = (zh) => { const e0 = pickEx(zh); return Object.assign({ type:'mc', kicker:'Meaning', prompt:'What does this word mean?', big:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(e0), word:zh, dim:'see' }, choiceOptions(zh, z => BANK[z].en)); };
+  const qMeaning = (zh) => { const e0 = pickEx(zh); return Object.assign({ type:'mc', kicker:'Meaning', prompt:'What does this word mean?', big:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(e0), word:zh, dim:'see' }, choiceOptions(zh, z => BANK[z].en, true)); };
   const qHearWord = (zh, ex) => Object.assign({ type:'listen', kicker:'Listen', prompt:'Which word did you hear?', audio:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(ex || pickEx(zh)), word:zh, dim:'hear' }, choiceOptions(zh, z => z));
-  const qHearMeaning = (zh) => Object.assign({ type:'listen', kicker:'Listen', prompt:'What does this word mean?', audio:zh, optsLatin:true, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(pickEx(zh)), word:zh, dim:'hear' }, choiceOptions(zh, z => BANK[z].en));
+  const qHearMeaning = (zh) => Object.assign({ type:'listen', kicker:'Listen', prompt:'What does this word mean?', audio:zh, optsLatin:true, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(pickEx(zh)), word:zh, dim:'hear' }, choiceOptions(zh, z => BANK[z].en, true));
   const TYPE_HELP = 'Write the tones as marks or numbers: nǐ hǎo or ni3 hao3. Hanzi also works.';
   const qTypePinyin = (zh, ex) => ({ type:'type', kicker:'Type it', prompt:'Type the pinyin for this word, with tones', big:zh, placeholder:'nǐ hǎo or ni3 hao3', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, ''), reveal:BANK[zh].py + ' · ' + BANK[zh].en, explain:TYPE_HELP + ' Example: ' + ex.zh + ' ' + ex.py, word:zh, dim:'prod' });
   const qSayIt = (zh, ex) => ({ type:'type', kicker:'Say it', prompt:'Say this out loud, then type its pinyin with tones', big:BANK[zh].en, bigCls:'en', sayEn:BANK[zh].en, placeholder:'nǐ hǎo or ni3 hao3', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, ''), reveal:zh + ' · ' + BANK[zh].py, explain:TYPE_HELP + ' Example: ' + ex.zh + ' ' + ex.py, word:zh, dim:'prod' });
