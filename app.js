@@ -2754,8 +2754,8 @@
           if (ev.indexOf('stamp') >= 0) banners.push({ t:CR.en + ' complete!', d:'Your passport is stamped.' + (rv.next ? ' Next flight: ' + rName(rv.next) + '.' : '') });
           if (ev.indexOf('all') >= 0) banners.push({ t:'Every region stamped!', d:'You have been everywhere. Well travelled.' });
         }
-        Object.assign(out, { jyBanners:banners, jyBannerShow:banners.length > 0, jyStampShow:!!rv && rv.ev.indexOf('stamp') >= 0, jyKindCls:'k' + stop.k,
-          jyIsT:stop.k === 'T', jyIsA:stop.k === 'A', jyIsD:stop.k === 'D', jyIsC:stop.k === 'C', jyIsP:stop.k === 'P', jyKindLabel:stop.kind, jyPlace:CR.en + ' · ' + CC.en + (CC.muni ? ' (' + CC.muni + ' municipality)' : ''), jyCardZh:stop.zh, jyCardPy:stop.py, jyCardEn:stop.en, jyCardNote:stop.note, jyHasFun:!!stop.fun, jyCardFun:stop.fun,
+        Object.assign(out, { jyBanners:banners, jyBannerShow:banners.length > 0, jyStampShow:!!rv && rv.ev.indexOf('stamp') >= 0, jyKindCls:'k' + stop.k + (stop.sp ? ' sp' : ''),
+          jyIsT:stop.k === 'T', jyIsA:stop.k === 'A', jyIsD:stop.k === 'D', jyIsC:stop.k === 'C', jyIsP:stop.k === 'P', jyKindLabel:(stop.sp ? '★ Must-see · ' : '') + stop.kind, jyPlace:CR.en + ' · ' + CC.en + (CC.muni ? ' (' + CC.muni + ' municipality)' : ''), jyCardZh:stop.zh, jyCardPy:stop.py, jyCardEn:stop.en, jyCardNote:stop.note, jyHasFun:!!stop.fun, jyCardFun:stop.fun,
           jyHasWords:stop.k === 'P', jyWords:'机场 jīchǎng airport · 护照 hùzhào passport · 登机牌 dēngjīpái boarding pass · 行李 xíngli luggage',
           jySay:() => this.say(stop.zh, 'jy:' + stop.id), jyCloseCard:this.jyCloseCard, jyCloseText:rv ? 'Keep exploring' : 'Close',
           jyMapBtn:!!JMAP.regions[stop.rid], jyOnMap:() => this.setState({ jyTab:'map', jyReg:stop.rid, jySel:[stop.id], jyFilter:'all', jyRv:null, jyOpen:null }) });
@@ -2770,10 +2770,10 @@
       const tabNow = fm && S.jyTab === 'stops' ? 'map' : S.jyTab;
       out.jyTabs = (fm ? [['map', 'Map'], ['pass', 'Passport']] : [['map', 'Map'], ['stops', 'Stops'], ['pass', 'Passport']]).map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', fn:() => this.jyTabSet(t[0]) }));
       out.jyIsMap = tabNow === 'map'; out.jyIsStops = tabNow === 'stops'; out.jyIsPass = tabNow === 'pass';
-      const FILT = [['all', 'All'], ['T', 'Cities'], ['A', 'Attractions'], ['D', 'Dishes'], ['C', 'Culture'], ['P', 'Airports']];
-      const filterChips = (stopsSeen) => FILT.map(f => ({ label:f[1], count:f[0] === 'all' ? stopsSeen.length : stopsSeen.filter(s => s.k === f[0]).length, cls:S.jyFilter === f[0] ? 'on' : '', fn:() => this.jyFilterSet(f[0]) }));
-      const pass = (s) => S.jyFilter === 'all' || s.k === S.jyFilter;
-      const rowOf = (s, cls) => ({ kind:({ T:'City', A:'Sight', D:'Dish', C:'Culture', P:'Airport' })[s.k], zh:s.zh, en:s.en, where:JWORLD.byRegion[s.rid].en + ' · ' + JWORLD.byCity[s.cid].en, cls:cls || '', open:() => this.jyOpenStop(s.id) });
+      const FILT = [['all', 'All'], ['S', '★ Must-see'], ['T', 'Cities'], ['A', 'Attractions'], ['D', 'Dishes'], ['C', 'Culture'], ['P', 'Airports']];
+      const filterChips = (stopsSeen) => FILT.map(f => ({ label:f[1], count:f[0] === 'all' ? stopsSeen.length : stopsSeen.filter(s => f[0] === 'S' ? s.sp : s.k === f[0]).length, cls:S.jyFilter === f[0] ? 'on' : '', fn:() => this.jyFilterSet(f[0]) }));
+      const pass = (s) => S.jyFilter === 'all' || (S.jyFilter === 'S' ? s.sp : s.k === S.jyFilter);
+      const rowOf = (s, cls) => ({ kind:(s.sp ? '★ ' : '') + ({ T:'City', A:'Sight', D:'Dish', C:'Culture', P:'Airport' })[s.k], zh:s.zh, en:s.en, where:JWORLD.byRegion[s.rid].en + ' · ' + JWORLD.byCity[s.cid].en, cls:(cls || '') + (s.sp ? ' sp' : ''), open:() => this.jyOpenStop(s.id) });
 
       // map: the whole map, or one region with its pins
       out.jyCountry = !!fm || !S.jyReg || !JMAP.regions[S.jyReg]; out.jyProv = !out.jyCountry;
@@ -2802,12 +2802,12 @@
           const ids = g.items.map(i => i.s.id); const one = g.items.length === 1; const s = g.items[0].s;
           const x = Math.round(Math.max(8, Math.min(352, g.x)) * 10) / 10, y = Math.round(Math.max(8, Math.min(292, g.y)) * 10) / 10;
           return { x, y, isCluster:!one, count:g.items.length, isCity:one && s.k === 'T', isAttr:one && s.k === 'A', isDish:one && s.k === 'D', isCult:one && s.k === 'C', isAir:one && s.k === 'P',
-            cls:(one ? 'k' + s.k : 'kx') + (ids.some(i => sel.indexOf(i) >= 0) ? ' sel' : ''), label:one ? s.kind + ': ' + s.en : plural(g.items.length, 'stop', 'stops') + ' close together',
+            cls:(one ? 'k' + s.k + (s.sp ? ' sp' : '') : 'kx' + (g.items.some(i => i.s.sp) ? ' sp' : '')) + (ids.some(i => sel.indexOf(i) >= 0) ? ' sel' : ''), label:one ? s.kind + ': ' + s.en : plural(g.items.length, 'stop', 'stops') + ' close together',
             tap:one ? () => this.jyOpenStop(s.id) : () => this.setState({ jySel:ids }) };
         });
         const selStops = sel.map(i => JWORLD.byStop[i]).filter(Boolean);
         out.jySelShow = selStops.length > 1 || (selStops.length === 1 && !S.jyOpen && !S.jyRv); out.jySelRows = selStops.map(s => rowOf(s));
-        out.jyProvKey = seenHere.length ? 'Square: city · triangle: sight · circle: dish · diamond: culture · plane: airport. A numbered circle is several stops close together: tap it.' : 'Nothing here yet. Stops show up on the map as you unlock them.';
+        out.jyProvKey = seenHere.length ? 'Square: city · triangle: sight · circle: dish · diamond: culture · plane: airport · gold ring: a must-see. A numbered circle is several stops close together: tap it.' : 'Nothing here yet. Stops show up on the map as you unlock them.';
       }
 
       // stops: everything unlocked, newest first

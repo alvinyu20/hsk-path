@@ -96,6 +96,11 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const pinsDish = await page.locator('.jy-pin').count();
     check(pinsDish <= pinsAll, 'the Dishes filter narrows the pins (' + pinsDish + ' of ' + pinsAll + ')');
     await page.locator('.jy-chip', { hasText: 'All' }).click();
+    await page.locator('.jy-chip', { hasText: 'Must-see' }).click();
+    const pinsSp = await page.locator('.jy-pin').count();
+    check(pinsSp <= pinsAll, 'the Must-see filter keeps only the starred pins (may be none yet, the map shows stops you have visited) (' + pinsSp + ' of ' + pinsAll + ')');
+    check(await page.locator('.jy-pin.sp').count() === pinsSp, 'every pin left under Must-see has the gold ring');
+    await page.locator('.jy-chip', { hasText: 'All' }).click();
     // clusters: stops of one city sit together; tapping a cluster lists them
     while (await page.locator('.ms-x').count()) await page.locator('.ms-x').first().click();   // an achievement toast can sit on top of the map
     if (await page.locator('.jy-pin.kx').count()) {

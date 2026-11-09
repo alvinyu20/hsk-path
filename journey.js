@@ -51,9 +51,9 @@
     (data.regions || []).forEach((r) => {
       const R = { id:r.id, zh:r.zh, py:r.py, en:r.en, hue:r.hue != null ? r.hue : (META[r.id] ? META[r.id][2] : 200), muni:r.muni || '', munis:r.munis || {}, air:r.air, cities:[], stops:[] };
       const used = {};
-      const add = (c, kind, zh, py, en, note, fun, lat, lon) => {
+      const add = (c, kind, zh, py, en, note, fun, lat, lon, sp) => {
         let id = r.id + '.' + slug(kind + ' ' + en); if (used[id]) { let k = 2; while (used[id + '-' + k]) k++; id += '-' + k; } used[id] = 1;
-        const s = { id, rid:r.id, cid:c.id, kind:KINDS[kind], k:kind, zh, py, en, note:note || '', fun:fun || '', lat:lat == null ? null : lat, lon:lon == null ? null : lon };
+        const s = { id, rid:r.id, cid:c.id, kind:KINDS[kind], k:kind, zh, py, en, note:note || '', fun:fun || '', lat:lat == null ? null : lat, lon:lon == null ? null : lon, sp:!!sp };
         c.stops.push(s); R.stops.push(s); W.byStop[id] = s; return s;
       };
       (r.cities || []).forEach((cd, ci) => {
@@ -61,7 +61,7 @@
         R.cities.push(C); W.byCity[C.id] = C;
         if (ci === 0 && r.air) { C.air = add(C, 'P', r.air.zh, r.air.py, r.air.en + (r.air.code ? ' (' + r.air.code + ')' : ''), r.air.note, r.air.fun, r.air.lat == null ? cd.lat : r.air.lat, r.air.lon == null ? cd.lon : r.air.lon); C.air.code = r.air.code || ''; }
         C.first = add(C, 'T', cd.zh, cd.py, cd.en, cd.note, cd.fun, cd.lat, cd.lon);
-        (cd.stops || []).forEach((s) => add(C, s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]));
+        (cd.stops || []).forEach((s) => add(C, s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], s[8]));
       });
       W.regions.push(R); W.byRegion[R.id] = R; W.order.push(R.id);
     });

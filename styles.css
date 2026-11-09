@@ -1670,3 +1670,19 @@ button.me .me-av{flex:none}
   .app.scr-home .stats{flex:1 1 100%;flex-wrap:wrap;justify-content:flex-start;gap:6px}
   .app.scr-home .stats .pill{height:32px;padding:0 9px;font-size:13px}
 }
+
+/* must-see stops: the best of each region wear gold */
+.jy-card.sp{border-color:hsl(42 85% 52%);box-shadow:var(--shadow),0 0 0 2px hsl(42 85% 52% / .35)}
+.jy-card.sp .jy-kind{background:hsl(42 90% 82%);color:hsl(30 70% 22%)}
+.jy-row.sp{border-color:hsl(42 85% 52%);background:linear-gradient(90deg,hsl(42 90% 94%),var(--bg) 60%)}
+.jy-row.sp .jy-k{color:hsl(32 80% 32%)}
+.t-dark .jy-card.sp .jy-kind{background:hsl(42 60% 28%);color:hsl(42 90% 88%)}
+.t-dark .jy-row.sp{background:linear-gradient(90deg,hsl(42 50% 20%),var(--bg) 60%)}
+.t-dark .jy-row.sp .jy-k{color:hsl(42 85% 70%)}
+.jy-pin.sp rect,.jy-pin.sp path,.jy-pin.sp circle:not(.hit){stroke:hsl(42 95% 55%);stroke-width:3}
+/* phone: a long Chinese name no longer squeezes the English name off the edge of a stop row */
+@media (max-width:600px){
+  .jy-row{flex-wrap:wrap;row-gap:2px}
+  .jy-row .jy-k{min-width:0}
+  .jy-rowen{flex:1 1 150px}
+}

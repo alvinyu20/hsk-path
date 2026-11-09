@@ -30,6 +30,11 @@ W.regions.forEach((R) => {
     ok(C.first && C.first.kind === 'City', C.id + ' has its city stop');
     C.stops.forEach((s) => { ok(!all[s.id], 'duplicate stop id ' + s.id); all[s.id] = 1; ok(s.zh && s.en && s.py, s.id + ' needs zh, en and pinyin'); ok(/^[㐀-鿿0-9a-zA-Z ·\-]+$/.test(s.zh), s.id + ' odd characters in the Chinese: ' + s.zh); });
   });
+  // must-see stops: every region has a few, and they are a small share of its stops
+  let nAll = 0, nSp = 0;
+  R.cities.forEach((C) => C.stops.forEach((s) => { nAll++; if (s.sp) nSp++; }));
+  ok(nSp >= 2, R.id + ' has at least two must-see stops (' + nSp + ')');
+  ok(nSp <= Math.max(3, Math.round(nAll * 0.13)), R.id + ' keeps must-see stops rare (' + nSp + ' of ' + nAll + ')');
 });
 
 // ---- play every region to the end, many times, and check the order rules ----
