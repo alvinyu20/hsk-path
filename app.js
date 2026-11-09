@@ -744,7 +744,7 @@
   function prepGrammar(L) { return L.q.map(prepQ); }
   function prepQ(q) {
     {
-      const base = { kicker:q.kicker, prompt:q.prompt, reveal:q.reveal, explain:q.explain };
+      const base = { kicker:q.kicker, prompt:q.prompt, reveal:q.reveal, explain:q.explain, py:q.sentence && q.sentence.py ? q.sentence.py : '' };
       if (q.type === 'order') return orderQ(q.toks, base);
       if (q.type === 'cloze') return Object.assign(base, { type:'cloze', big:q.big, sub:q.sub, placeholder:q.placeholder, accepts:q.accepts });
       if (q.type === 'spot') return Object.assign(base, { type:'spot', tokens:q.tokens, punct:q.punct, spot:q.spot });
@@ -4021,7 +4021,7 @@
       const q = {
         kicker:q0.kicker, prompt:q0.prompt, big:q0.big || '', hasBig:!!q0.big, bigCls:(q0.big || '').length > 3 ? 'sm' : '',
         sub:q0.sub || '', hasSub:!!q0.sub, placeholder:q0.placeholder || '', bigZh:q0.bigCls !== 'en', bigEn:q0.bigCls === 'en',
-        isTyped, isPyType:q0.type === 'type' || q0.type === 'cloze', isListen, isChoice, isOrder, isSpot, reveal:q0.reveal, explain:q0.explain,
+        isTyped, isPyType:q0.type === 'type' || q0.type === 'cloze', isListen, isChoice, isOrder, isSpot, reveal:q0.reveal, explain:q0.explain, revealPy:q0.py || '', hasRevealPy:!!q0.py,
         reportUrl:report((isG(S.qmode) ? 'Grammar practice' : 'Test') + ' question ' + (S.qi + 1), q0.prompt + ' / ' + q0.reveal)
       };
       const opts = (isChoice ? q0.options : []).map(o => {

@@ -40,6 +40,19 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForTimeout(200);
   check(await page.evaluate(() => window.shanlu.state.rcomplete && window.shanlu.state.rtotal === 3), 'ending after answering shows the summary for the 3 reviewed');
 
+  // grammar answers show the sentence's pinyin in the answer box, right or wrong
+  const gpy = await page.evaluate(() => {
+    const a = window.shanlu;
+    for (let li = 0; li < 40; li++) {
+      try { a.startQuiz('grammar', li); } catch (e) { continue; }
+      const qi = a.quizQs.findIndex(q => q.py && q.reveal);
+      if (qi >= 0) { a.setState({ qi, qchecked: true, qcorrect: false, qfeed: '' }); return { py: a.quizQs[qi].py }; }
+    }
+    return null;
+  });
+  await page.waitForTimeout(300);
+  check(!!gpy && (await page.locator('.fb .fb-py').first().innerText()) === gpy.py, 'the answer box shows the sentence pinyin (' + (gpy && gpy.py) + ')');
+
   // path: the first-class order
   const order = await page.evaluate(() => window.SHANLU_PATH[1].units.map(u => u.title || u.t || u.n));
   check(order.length === 13, 'HSK 1 has 13 units');
