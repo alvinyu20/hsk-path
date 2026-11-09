@@ -281,7 +281,7 @@ const INVITE = 'ABCD-EFGH-JKLM';
   await A.page.locator('button', { hasText: 'Refresh' }).click();
   await A.page.waitForSelector('.banner.err');
   check((await text(A.page)).includes('Could not reach the friends board'), 'if the server is unreachable the app says so');
-  await A.page.locator('nav button', { hasText: 'Word webs' }).click();
+  await A.page.locator('nav button', { hasText: 'Archive' }).click();
   check((await text(A.page)).length > 100 && A.errors.length === 0 && B.errors.length === 0, 'the rest of the app keeps working (no page errors: ' + A.errors.concat(B.errors).slice(0, 2).join(' | ') + ')');
 
   await browser.close(); server.close();

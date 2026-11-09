@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="ba86da311d">
+<meta name="shanlu-version" content="0625736252">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=ba86da311d">
+<link rel="stylesheet" href="styles.css?v=0625736252">
 </head>
 <body>
 <div id="app"></div>
@@ -36,9 +36,13 @@
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg>
       Home
     </button>
+    <button class="{{navPath}}" data-on-click="{{goPath}}">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 17.5c7 0 1-11 8-11"/></svg>
+      Path
+    </button>
     <button class="{{navWeb}}" data-on-click="{{goWeb}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.5"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="M10 10.5 6.5 7.5M14 10.5l3.5-3M10 13.5 6.5 16.5M14 13.5l3.5 3"/></svg>
-      Word webs
+      Archive
     </button>
     <button class="{{navGrammar}}" data-on-click="{{goGrammar}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg>
@@ -124,12 +128,13 @@
     </div>
   </div>
 
-  <div class="me">
-    <div class="me-av zh" aria-hidden="true">学</div>
-    <div><b>Your progress</b><div class="bsub">{{lvName}} · {{overall}}% to checkpoint</div></div>
-  </div>
+  <button type="button" class="me {{navAcct}}" data-on-click="{{goAcct}}" aria-label="Open your account">
+    <div class="me-av zh" aria-hidden="true">{{acctInitial}}</div>
+    <div class="me-t"><b>{{acctName}}</b><div class="bsub">{{lvName}} · {{overall}}% of the way</div></div>
+  </button>
   <sc-if value="{{guideAvail}}" hint-placeholder-val="{{ false }}"><button class="{{guideSideCls}}" data-on-click="{{onbOpenGuide}}">How Shanlu works</button></sc-if>
   <button class="linkbtn" data-on-click="{{toggleTheme}}">{{themeLabel}}</button>
+  <button type="button" class="acct-mini zh {{navAcct}}" data-on-click="{{goAcct}}" aria-label="Open your account">{{acctInitial}}</button>
 </aside>
 
 <main class="main">
@@ -367,7 +372,7 @@
     <div class="ob-top"><div class="mark zh" aria-hidden="true">山</div><div><h2 class="h2">Learn Mandarin step by step</h2><p class="muted" style="margin:2px 0 0">Toward the HSK levels, a little every day.</p></div></div>
     <p class="cp-note" style="margin-top:14px">A good day takes about 15 to 20 minutes and goes like this:</p>
     <div class="tasks2">
-      <div class="task2"><div class="task2-ico zh" aria-hidden="true">联</div><div class="task-m"><div class="task-t">Meet a few new words</div><div class="task-s">Word webs shows each new word next to words you already know.</div></div></div>
+      <div class="task2"><div class="task2-ico zh" aria-hidden="true">联</div><div class="task-m"><div class="task-t">Meet a few new words</div><div class="task-s">The Path takes you through the words in order, a few related ones at a time, from the basics up.</div></div></div>
       <div class="task2"><div class="task2-ico zh" aria-hidden="true">词</div><div class="task-m"><div class="task-t">Recall them in Review</div><div class="task-s">Review asks you to remember a word, then brings it back a little later. That is how it sticks.</div></div></div>
       <div class="task2"><div class="task2-ico zh" aria-hidden="true">语</div><div class="task-m"><div class="task-t">Add some grammar, listening or speaking</div><div class="task-s">Today, just below, lists a short plan that fits your daily goal.</div></div></div>
     </div>
@@ -685,8 +690,8 @@
       <div class="res">
         <div class="stamp zh" aria-hidden="true">词</div>
         <h2 class="res-h">Nothing to review yet</h2>
-        <p class="res-p">Reviews start once you have learned some words. Meet your first words in Word webs.</p>
-        <div class="res-act"><button class="btn pri big" data-on-click="{{goWeb}}">Go to Word webs</button></div>
+        <p class="res-p">Reviews start once you have learned some words. Meet your first words on the Path.</p>
+        <div class="res-act"><button class="btn pri big" data-on-click="{{goPath}}">Go to the Path</button></div>
       </div>
     </sc-if>
     <sc-if value="{{moreDue}}" hint-placeholder-val="{{ false }}">
@@ -732,7 +737,7 @@
           <b>First session done. What next?</b>
           <ul>
             <li>Tomorrow, Review brings these five words back at the right moment. Open Review first.</li>
-            <li>Learn a few more in Word webs, a little each day, and try a grammar lesson.</li>
+            <li>Learn a few more on the Path, a little each day, and try a grammar lesson.</li>
             <li>About 15 to 20 minutes a day is plenty. Your daily goal is set on Home.</li>
           </ul>
           <sc-if value="{{onbFlightShow}}" hint-placeholder-val="{{ false }}"><p class="cp-note" style="margin:8px 0 0">Your first flight on the Journey is free: study earns coins, and coins take you around the Chinese-speaking world.</p><button class="btn pri" style="margin-top:10px" data-on-click="{{onbFlight}}">Take my first flight</button></sc-if>
@@ -766,8 +771,8 @@
         </div>
       </sc-if>
       <sc-if value="{{testBlocked}}" hint-placeholder-val="{{ false }}">
-        <div class="banner" style="margin-top:22px">The test is built from words you have started, so it can ask fair questions. Add at least three words in Word webs first, then come back.</div>
-        <button class="btn pri" style="margin-top:14px" data-on-click="{{goWeb}}">Go to Word webs</button>
+        <div class="banner" style="margin-top:22px">The test is built from words you have started, so it can ask fair questions. Add at least three words on the Path first, then come back.</div>
+        <button class="btn pri" style="margin-top:14px" data-on-click="{{goPath}}">Go to the Path</button>
       </sc-if>
     </section>
     <section class="card">
@@ -897,7 +902,7 @@
         <h2 class="h2">A day on Shanlu</h2>
         <p class="cp-note">About 15 to 20 minutes is plenty. Little and often works better than one long session.</p>
         <div class="tasks2">
-          <div class="task2"><div class="task2-ico zh" aria-hidden="true">联</div><div class="task-m"><div class="task-t">1. Meet new words</div><div class="task-s">In Word webs, each new word sits next to words you already know. Adding a word does not mean you know it yet.</div></div></div>
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">联</div><div class="task-m"><div class="task-t">1. Meet new words</div><div class="task-s">On the Path, each stop introduces a few related words: you meet each one, then try it. Meeting a word does not mean you know it yet.</div></div></div>
           <div class="task2"><div class="task2-ico zh" aria-hidden="true">词</div><div class="task-m"><div class="task-t">2. Recall them in Review</div><div class="task-s">A new word is introduced, then you pick its meaning, then you type it. After that Review brings it back when you are about to forget it. Be honest with the buttons: Again, Hard, Good, Easy.</div></div></div>
           <div class="task2"><div class="task2-ico zh" aria-hidden="true">语</div><div class="task-m"><div class="task-t">3. Add grammar, listening or speaking</div><div class="task-s">The Today list on Home puts together a short plan for your daily goal. You can change the goal there at any time.</div></div></div>
         </div>
@@ -905,7 +910,8 @@
       <div class="card">
         <h2 class="h2">What each part is for</h2>
         <div class="tasks2">
-          <div class="task2"><div class="task2-ico zh" aria-hidden="true">联</div><div class="task-m"><div class="task-t">Word webs</div><div class="task-s">Learn words in groups: shared characters, pairs such as opposites, and topics such as family.</div></div></div>
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">路</div><div class="task-m"><div class="task-t">Path</div><div class="task-s">Your road through the level: word stops and grammar stops in a sensible order, with the next one always one tap away.</div></div></div>
+          <div class="task2"><div class="task2-ico zh" aria-hidden="true">联</div><div class="task-m"><div class="task-t">Archive</div><div class="task-s">The word webs, topics and pairs, for seeing words in groups: shared characters, opposites, and topics such as family. Good for revising what you have met.</div></div></div>
           <div class="task2"><div class="task2-ico zh" aria-hidden="true">词</div><div class="task-m"><div class="task-t">Review words</div><div class="task-s">The words that are due, based on how well you remember each one. This is the heart of the site.</div></div></div>
           <div class="task2"><div class="task2-ico zh" aria-hidden="true">语</div><div class="task-m"><div class="task-t">Grammar and Grammar review</div><div class="task-s">One lesson at a time with practice questions. Once you pass a lesson, its points join Grammar review, where the weakest come first.</div></div></div>
           <div class="task2"><div class="task2-ico zh" aria-hidden="true">听</div><div class="task-m"><div class="task-t">Listening lab</div><div class="task-s">Dictation and shadowing at different speeds, plus a tone trainer for training your ear.</div></div></div>
@@ -1398,6 +1404,230 @@
     </sc-if>
   </div>
   </sc-if>
+  </sc-if>
+
+  <!-- PATH -->
+  <sc-if value="{{isPath}}" hint-placeholder-val="{{ false }}">
+  <div class="pth">
+    <sc-if value="{{pthHasTabs}}" hint-placeholder-val="{{ false }}">
+      <div class="seg2" role="group" aria-label="Level"><sc-for list="{{pthTabs}}" as="t" hint-placeholder-count="3"><button class="{{t.cls}}" data-on-click="{{t.fn}}">{{t.label}}</button></sc-for></div>
+    </sc-if>
+    <sc-if value="{{pthHas}}" hint-placeholder-val="{{ true }}">
+      <section class="card pth-head">
+        <div class="pth-head-t"><h2 class="h2">{{pthName}}</h2><span class="muted">{{pthSub}}</span></div>
+        <div class="track"><div class="fill" style="width: {{pthPct}}"></div></div>
+        <p class="muted pth-blurb">{{pthBlurb}}</p>
+      </section>
+      <sc-if value="{{pthHasNext}}" hint-placeholder-val="{{ true }}">
+        <section class="card pth-next">
+          <div class="kick">{{pthNextKick}}</div>
+          <h3 class="pth-next-t">{{pthNextTitle}}</h3>
+          <div class="pth-next-s"><span>{{pthNextSub}}</span> <span class="zh">{{pthNextWords}}</span></div>
+          <button class="btn pri big" data-on-click="{{pthNextGo}}">{{pthNextBtn}}</button>
+        </section>
+      </sc-if>
+      <sc-if value="{{pthAllDone}}" hint-placeholder-val="{{ false }}">
+        <section class="card pth-next">
+          <div class="kick">The whole path</div>
+          <h3 class="pth-next-t">You have walked it all</h3>
+          <div class="pth-next-s"><span>Every stop is done. Keep the words alive in Review, and browse everything in the Archive.</span></div>
+          <button class="btn pri big" data-on-click="{{goReview}}">Go to Review</button>
+        </section>
+      </sc-if>
+      <sc-for list="{{pthUnits}}" as="u" hint-placeholder-count="3">
+        <section class="pth-unit {{u.cls}}">
+          <button type="button" class="pth-uh" aria-expanded="{{u.open}}" data-on-click="{{u.toggle}}">
+            <span class="pth-un">{{u.num}}</span>
+            <span class="pth-ut"><b>{{u.title}}</b><span class="muted">{{u.blurb}}</span></span>
+            <span class="pth-up">{{u.prog}}</span>
+            <span class="pth-uc">{{u.toggleText}}</span>
+          </button>
+          <sc-if value="{{u.open}}" hint-placeholder-val="{{ true }}">
+            <div class="pth-trail">
+              <sc-for list="{{u.stops}}" as="s" hint-placeholder-count="4">
+                <div class="pth-row">
+                  <sc-if value="{{s.hasLink}}" hint-placeholder-val="{{ true }}"><svg class="pth-link {{s.linkCls}}" viewBox="0 0 100 104" preserveAspectRatio="none" aria-hidden="true"><path d="{{s.curve}}"></path></svg></sc-if>
+                  <button type="button" class="pth-node {{s.cls}}" style="{{s.nodeStyle}}" aria-label="{{s.aria}}" data-on-click="{{s.pick}}">
+                    <span class="zh pth-glyph">{{s.glyph}}</span>
+                    <sc-if value="{{s.isDone}}" hint-placeholder-val="{{ false }}"><svg class="pth-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12.5l4 4 8-9"/></svg></sc-if>
+                  </button>
+                  <div class="pth-label" style="{{s.labelStyle}}"><b>{{s.title}}</b><span class="pth-sub zh">{{s.sub}}</span><span class="pth-meta">{{s.meta}}</span></div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </section>
+      </sc-for>
+    </sc-if>
+    <sc-if value="{{pthHas}}" hint-placeholder-val="{{ false }}">
+      <section class="card"><h2 class="h2">The path is not here yet</h2><p class="muted" style="margin:6px 0 0">Browse the Archive for now.</p></section>
+    </sc-if>
+    <sc-if value="{{pthSheet}}" hint-placeholder-val="{{ false }}">
+      <div class="pth-scrim" data-on-click="{{pthClose}}"></div>
+      <section class="pth-sheet" role="dialog" aria-modal="true" aria-label="{{pthSh.title}}">
+        <div class="kick">{{pthSh.kick}}</div>
+        <div class="pth-sh-h"><h2 class="h2">{{pthSh.title}}</h2><button type="button" class="btn sm" data-on-click="{{pthClose}}">Close</button></div>
+        <p class="muted pth-sh-p">{{pthSh.sub}}</p>
+        <sc-if value="{{pthSh.isW}}" hint-placeholder-val="{{ true }}">
+          <ul class="pth-wl">
+            <sc-for list="{{pthSh.words}}" as="w" hint-placeholder-count="4"><li class="{{w.cls}}"><span class="zh pth-wz">{{w.zh}}</span><span class="pth-py">{{w.py}}</span><span class="pth-en">{{w.en}}</span></li></sc-for>
+          </ul>
+        </sc-if>
+        <sc-if value="{{pthSh.hasBest}}" hint-placeholder-val="{{ false }}"><p class="muted pth-sh-p">{{pthSh.best}}</p></sc-if>
+        <sc-if value="{{pthSh.hasNote}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">{{pthSh.note}}<sc-if value="{{pthSh.hasAlt}}" hint-placeholder-val="{{ false }}"> <button type="button" class="linkbtn" data-on-click="{{pthAlt}}">{{pthSh.altText}}</button></sc-if></div></sc-if>
+        <button type="button" class="btn pri big pth-go" data-on-click="{{pthSh.go}}">{{pthSh.cta}}</button>
+      </section>
+    </sc-if>
+  </div>
+  </sc-if>
+
+  <!-- STOP LESSON -->
+  <sc-if value="{{isPlesson}}" hint-placeholder-val="{{ false }}">
+  <sc-if value="{{plOn}}" hint-placeholder-val="{{ true }}">
+  <div class="quiz pl">
+    <sc-if value="{{plIsDone}}" hint-placeholder-val="{{ false }}">
+      <div class="res celebrate pl-res">
+        <div class="stamp zh" aria-hidden="true">山</div>
+        <h2 class="res-h">{{plRes.headline}}</h2>
+        <p class="res-p">{{plRes.sub}}</p>
+        <sc-if value="{{plRes.hasGain}}" hint-placeholder-val="{{ false }}"><span class="res-gain">+{{plRes.gain}} coins</span></sc-if>
+        <ul class="pth-wl pl-wl">
+          <sc-for list="{{plRes.words}}" as="w" hint-placeholder-count="4"><li class="{{w.cls}}"><span class="zh pth-wz">{{w.zh}}</span><span class="pth-py">{{w.py}}</span><span class="pth-en">{{w.en}}</span></li></sc-for>
+        </ul>
+        <sc-if value="{{plRes.hasMissed}}" hint-placeholder-val="{{ false }}"><p class="muted pl-miss">{{plRes.missedText}}</p></sc-if>
+        <div class="res-act">
+          <sc-if value="{{plRes.hasNext}}" hint-placeholder-val="{{ true }}"><button class="btn pri big" data-on-click="{{plAfter}}">{{plRes.nextText}}</button></sc-if>
+          <button class="btn big" data-on-click="{{plExit}}">Back to the path</button>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{plInside}}" hint-placeholder-val="{{ true }}">
+      <div class="q-top">
+        <button class="btn" data-on-click="{{plClose}}">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          Exit
+        </button>
+        <div class="pl-bar">
+          <div class="track"><div class="fill" style="width: {{plPct}}"></div></div>
+          <div class="pl-phase">{{plPhase}} <span class="muted">· {{plTitle}}</span></div>
+        </div>
+      </div>
+      <sc-if value="{{plAsk}}" hint-placeholder-val="{{ false }}">
+        <div class="banner" role="alertdialog">Leave this lesson? The new words are added to your Review when you finish it.
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" data-on-click="{{plKeep}}">Keep going</button><button class="btn" data-on-click="{{plExit}}">Leave</button></div>
+        </div>
+      </sc-if>
+      <sc-if value="{{plIsMeet}}" hint-placeholder-val="{{ false }}">
+        <div class="q-card pl-meet">
+          <div class="kick">{{plMeet.count}}</div>
+          <div class="pl-w zh">{{plMeet.zh}}</div>
+          <div class="pl-py">{{plMeet.py}}</div>
+          <div class="pl-row">
+            <button class="listen sm {{plHearCls}}" data-on-click="{{plHear}}" aria-label="Hear the word">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+            </button>
+            <div class="pl-mean"><b>{{plMeet.en}}</b><span class="chip">{{plMeet.pos}}</span></div>
+          </div>
+          <sc-if value="{{plMeet.hasBuilt}}" hint-placeholder-val="{{ false }}">
+            <div class="pl-built"><span class="kick">Built from</span>
+              <sc-for list="{{plMeet.built}}" as="b" hint-placeholder-count="2"><span class="pl-ch"><span class="zh">{{b.ch}}</span><sc-if value="{{b.hasEn}}" hint-placeholder-val="{{ true }}"><small>{{b.en}}</small></sc-if></span></sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{plMeet.hasEx}}" hint-placeholder-val="{{ true }}">
+            <div class="exbox pl-ex">
+              <div class="zh pl-exz"><sc-for list="{{plMeet.exParts}}" as="p" hint-placeholder-count="3"><span class="{{p.cls}}">{{p.t}}</span></sc-for></div>
+              <div class="py">{{plMeet.exPy}}</div>
+              <div class="en">{{plMeet.exEn}}</div>
+              <button type="button" class="btn sm {{plHearExCls}}" data-on-click="{{plHearEx}}">Hear the sentence</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{plMeet.hasNote}}" hint-placeholder-val="{{ false }}"><div class="exnote">{{plMeet.note}}</div></sc-if>
+          <p class="muted pl-tip">Say it out loud, then tap Next.</p>
+        </div>
+        <button class="btn pri big" style="align-self:flex-end" data-on-click="{{plNext}}">Next</button>
+      </sc-if>
+      <sc-if value="{{plIsQ}}" hint-placeholder-val="{{ false }}">
+        <div class="q-card">
+          <div class="kick">{{plQuest.kicker}}</div>
+          <h2 class="q-prompt">{{plQuest.prompt}}</h2>
+          <sc-if value="{{plQuest.hasBig}}" hint-placeholder-val="{{ true }}"><div class="q-big {{plQuest.bigCls}}">{{plQuest.big}}</div></sc-if>
+          <sc-if value="{{plQuest.hasSub}}" hint-placeholder-val="{{ false }}"><div class="q-sub">{{plQuest.sub}}</div></sc-if>
+          <sc-if value="{{plQuest.isListen}}" hint-placeholder-val="{{ false }}">
+            <button class="listen {{plHearCls}}" data-on-click="{{plHear}}" aria-label="Play the word again">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+            </button>
+          </sc-if>
+          <div class="opts {{plOptsCls}}">
+            <sc-for list="{{plOpts}}" as="o" hint-placeholder-count="4">
+              <button class="opt {{o.cls}}" data-on-click="{{o.pick}}"><span class="{{o.lcls}}">{{o.label}}</span><sc-if value="{{o.hasSub}}" hint-placeholder-val="{{ false }}"><small class="opt-py">{{o.sub}}</small></sc-if></button>
+            </sc-for>
+          </div>
+        </div>
+        <sc-if value="{{plChecked}}" hint-placeholder-val="{{ false }}">
+          <div class="fb {{plFbCls}}">
+            <div class="fb-m">
+              <div class="fb-t">{{plFbTitle}}</div>
+              <div class="fb-s zh">{{plFbZh}}</div>
+              <div class="fb-x">{{plFbPyEn}}</div>
+              <sc-if value="{{plHasFbMore}}" hint-placeholder-val="{{ false }}"><div class="fb-x">{{plFbMore}}</div></sc-if>
+            </div>
+            <button class="btn ink big" data-on-click="{{plNext}}">Continue</button>
+          </div>
+        </sc-if>
+      </sc-if>
+    </sc-if>
+  </div>
+  </sc-if>
+  </sc-if>
+
+  <!-- ACCOUNT -->
+  <sc-if value="{{isAcct}}" hint-placeholder-val="{{ false }}">
+  <div class="acct">
+    <section class="card acct-id">
+      <div class="acct-av zh" aria-hidden="true">{{acctInitial}}</div>
+      <div class="acct-who">
+        <sc-if value="{{acctShowName}}" hint-placeholder-val="{{ true }}">
+          <h2 class="h2">{{acctName}}</h2>
+          <div class="muted">{{acctSub}}</div>
+          <button type="button" class="linkbtn" data-on-click="{{acctEditOpen}}">Change my name</button>
+        </sc-if>
+        <sc-if value="{{acctEditing}}" hint-placeholder-val="{{ false }}">
+          <label class="acct-edit"><span class="muted">Your name</span><input class="inp" type="text" maxlength="30" autocomplete="off" aria-label="Your name" placeholder="What should Shanlu call you?" value="{{acctNameIn}}" data-on-input="{{onAcctName}}"></label>
+          <div class="acct-btns"><button type="button" class="btn pri sm" data-on-click="{{acctSave}}">Save</button><button type="button" class="btn sm" data-on-click="{{acctCancel}}">Cancel</button></div>
+        </sc-if>
+      </div>
+    </section>
+    <section class="card">
+      <h2 class="h2">Your numbers</h2>
+      <div class="acct-stats">
+        <sc-for list="{{acctStats}}" as="x" hint-placeholder-count="6"><div class="acct-stat"><b>{{x.value}}</b><span>{{x.label}}</span></div></sc-for>
+      </div>
+    </section>
+    <section class="card">
+      <h2 class="h2">Goals</h2>
+      <div class="acct-set"><span>Daily study goal</span>
+        <div class="pickrow" role="group" aria-label="Daily study goal"><sc-for list="{{minOpts}}" as="m" hint-placeholder-count="4"><button class="fc2 {{m.cls}}" data-on-click="{{m.fn}}">{{m.label}}</button></sc-for></div>
+      </div>
+      <div class="acct-set"><span>New words per day</span>
+        <div class="pickrow" role="group" aria-label="New words per day"><sc-for list="{{capOpts}}" as="c" hint-placeholder-count="4"><button class="fc2 {{c.cls}}" data-on-click="{{c.fn}}">{{c.label}}</button></sc-for></div>
+      </div>
+    </section>
+    <section class="card">
+      <h2 class="h2">This device</h2>
+      <div class="acct-set"><span>Look</span><button type="button" class="btn sm" data-on-click="{{toggleTheme}}">{{themeLabel}}</button></div>
+      <div class="acct-set"><span>Sounds</span><button type="button" class="btn sm" data-on-click="{{soundToggle}}">{{soundLabel}}</button></div>
+    </section>
+    <section class="card acct-links">
+      <h2 class="h2">More</h2>
+      <sc-for list="{{acctLinks}}" as="l" hint-placeholder-count="4">
+        <button type="button" class="acct-row" data-on-click="{{l.go}}">
+          <span class="zh acct-g" aria-hidden="true">{{l.glyph}}</span>
+          <span class="acct-rt"><b>{{l.title}}</b><span class="muted">{{l.sub}}</span></span>
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </sc-for>
+    </section>
+  </div>
   </sc-if>
 
   <!-- WORD WEBS -->
@@ -2199,47 +2429,48 @@
 </main>
 </div>
 </template>
-<script defer src="vendor/morphdom-umd.min.js?v=ba86da311d"></script>
-<script defer src="runtime.js?v=ba86da311d"></script>
-<script defer src="config.js?v=ba86da311d"></script>
-<script defer src="friends.js?v=ba86da311d"></script>
-<script defer src="level.js?v=ba86da311d"></script>
-<script defer src="data/hsk1-words.js?v=ba86da311d"></script>
-<script defer src="data/hsk1-grammar.js?v=ba86da311d"></script>
-<script defer src="data/hsk1-webs.js?v=ba86da311d"></script>
-<script defer src="data/hsk1-speak.js?v=ba86da311d"></script>
-<script defer src="data/hsk1-listen.js?v=ba86da311d"></script>
-<script defer src="data/hsk1-exam.js?v=ba86da311d"></script>
-<script defer src="data/hsk1-erhua.js?v=ba86da311d"></script>
-<script defer src="data/lexicon.js?v=ba86da311d"></script>
-<script defer src="data/hsk2-preview.js?v=ba86da311d"></script>
-<script defer src="data/hsk3-preview.js?v=ba86da311d"></script>
-<script defer src="data/hsk2-words.js?v=ba86da311d"></script>
-<script defer src="data/hsk2-speak.js?v=ba86da311d"></script>
-<script defer src="data/hsk2-listen.js?v=ba86da311d"></script>
-<script defer src="data/hsk2-exam.js?v=ba86da311d"></script>
-<script defer src="data/hsk2-grammar.js?v=ba86da311d"></script>
-<script defer src="data/hsk2-webs.js?v=ba86da311d"></script>
-<script defer src="data/hsk3-words.js?v=ba86da311d"></script>
-<script defer src="data/hsk3-speak.js?v=ba86da311d"></script>
-<script defer src="data/hsk3-listen.js?v=ba86da311d"></script>
-<script defer src="data/hsk3-exam.js?v=ba86da311d"></script>
-<script defer src="data/hsk3-grammar.js?v=ba86da311d"></script>
-<script defer src="data/hsk3-webs.js?v=ba86da311d"></script>
-<script defer src="ascent.js?v=ba86da311d"></script>
-<script defer src="secrets.js?v=ba86da311d"></script>
-<script defer src="sync.js?v=ba86da311d"></script>
-<script defer src="data/audio-manifest.js?v=ba86da311d"></script>
-<script defer src="journey.js?v=ba86da311d"></script>
-<script defer src="data/journey.js?v=ba86da311d"></script>
-<script defer src="data/journey-map.js?v=ba86da311d"></script>
-<script defer src="data/journey-media.js?v=ba86da311d"></script>
-<script defer src="erhua.js?v=ba86da311d"></script>
-<script defer src="pinyin.js?v=ba86da311d"></script>
-<script defer src="data/pinyin-course.js?v=ba86da311d"></script>
-<script defer src="data/pinyin-chart.js?v=ba86da311d"></script>
-<script defer src="data/exam-media.js?v=ba86da311d"></script>
-<script defer src="data/neutral-alt.js?v=ba86da311d"></script>
-<script defer src="app.js?v=ba86da311d"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=0625736252"></script>
+<script defer src="runtime.js?v=0625736252"></script>
+<script defer src="config.js?v=0625736252"></script>
+<script defer src="friends.js?v=0625736252"></script>
+<script defer src="level.js?v=0625736252"></script>
+<script defer src="data/hsk1-words.js?v=0625736252"></script>
+<script defer src="data/hsk1-grammar.js?v=0625736252"></script>
+<script defer src="data/hsk1-webs.js?v=0625736252"></script>
+<script defer src="data/hsk1-speak.js?v=0625736252"></script>
+<script defer src="data/hsk1-listen.js?v=0625736252"></script>
+<script defer src="data/hsk1-exam.js?v=0625736252"></script>
+<script defer src="data/hsk1-erhua.js?v=0625736252"></script>
+<script defer src="data/lexicon.js?v=0625736252"></script>
+<script defer src="data/hsk2-preview.js?v=0625736252"></script>
+<script defer src="data/hsk3-preview.js?v=0625736252"></script>
+<script defer src="data/hsk2-words.js?v=0625736252"></script>
+<script defer src="data/hsk2-speak.js?v=0625736252"></script>
+<script defer src="data/hsk2-listen.js?v=0625736252"></script>
+<script defer src="data/hsk2-exam.js?v=0625736252"></script>
+<script defer src="data/hsk2-grammar.js?v=0625736252"></script>
+<script defer src="data/hsk2-webs.js?v=0625736252"></script>
+<script defer src="data/hsk3-words.js?v=0625736252"></script>
+<script defer src="data/hsk3-speak.js?v=0625736252"></script>
+<script defer src="data/hsk3-listen.js?v=0625736252"></script>
+<script defer src="data/hsk3-exam.js?v=0625736252"></script>
+<script defer src="data/hsk3-grammar.js?v=0625736252"></script>
+<script defer src="data/hsk3-webs.js?v=0625736252"></script>
+<script defer src="ascent.js?v=0625736252"></script>
+<script defer src="secrets.js?v=0625736252"></script>
+<script defer src="sync.js?v=0625736252"></script>
+<script defer src="data/audio-manifest.js?v=0625736252"></script>
+<script defer src="journey.js?v=0625736252"></script>
+<script defer src="data/journey.js?v=0625736252"></script>
+<script defer src="data/journey-map.js?v=0625736252"></script>
+<script defer src="data/journey-media.js?v=0625736252"></script>
+<script defer src="erhua.js?v=0625736252"></script>
+<script defer src="pinyin.js?v=0625736252"></script>
+<script defer src="data/pinyin-course.js?v=0625736252"></script>
+<script defer src="data/pinyin-chart.js?v=0625736252"></script>
+<script defer src="data/exam-media.js?v=0625736252"></script>
+<script defer src="data/neutral-alt.js?v=0625736252"></script>
+<script defer src="data/path.js?v=0625736252"></script>
+<script defer src="app.js?v=0625736252"></script>
 </body>
 </html>

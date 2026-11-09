@@ -118,7 +118,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(await page.evaluate(() => !localStorage.getItem('shanlu-progress-v1')), 'HSK 1 progress is not touched by opening HSK 2');
 
   // ---- word webs
-  await nav('Word webs');
+  await nav('Archive');
   await page.locator('button', { hasText: 'Shared character' }).click();
   check((await page.locator('[aria-label="Pick a character"] button').count()) === 17, 'HSK 2 has 17 shared-character groups');
   await page.locator('button', { hasText: /^Add all \d+ new word/ }).first().click();
@@ -361,7 +361,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     check(cmp.n === 4 && cmp.l1 === 1 && cmp.l2 === 3 && cmp.edge1 === 1 && cmp.edge2 === 3 && cmp.t.includes('Comparing: 比'), 'the Describing and comparing category holds the HSK 1 describing lesson and three HSK 2 lessons, each with its level tag and coloured edge');
     await pA.fill('.gl .tr-search', '');
     // word webs: topics first, and the hubs of both levels
-    await pA.locator('nav button', { hasText: 'Word webs' }).click();
+    await pA.locator('nav button', { hasText: 'Archive' }).click();
     await pA.waitForTimeout(150);
     await pA.locator('button', { hasText: /^Show all \d+ topics$/ }).click();
     await pA.waitForTimeout(100);

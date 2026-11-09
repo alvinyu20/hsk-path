@@ -22,6 +22,7 @@ last python3 -W ignore tools/build-speech.py
 last python3 -W ignore tools/build-lexicon.py
 last python3 -W ignore tools/build-erhua.py
 last python3 -W ignore tools/build-exam.py
+last python3 -W ignore tools/build-path.py
 last python3 -W ignore tools/build-preview.py "$DATASET"
 last python3 -W ignore tools/build-preview.py "$DATASET" 3
 
@@ -30,6 +31,7 @@ last node tools/test-sync.js
 
 last node tools/test-ascent.js
 last node tools/test-topics.js
+last node tools/test-path.js
 last node tools/test-friends.js
 
 echo "== 2. the meaning rules must still catch the known past mistakes"

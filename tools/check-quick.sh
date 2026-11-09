@@ -20,6 +20,8 @@ case "$MODE" in
     last node tools/test-secrets.js
     last node tools/test-ascent.js
     last node tools/test-topics.js
+    python3 tools/build-path.py --check | tail -n 1
+    last node tools/test-path.js
     last node tools/test-friends.js
     python3 tools/build-journey.py --check
     last node tools/test-journey.js
@@ -31,6 +33,7 @@ case "$MODE" in
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-journey.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-onboarding.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-pinyin.js
+    last env NODE_PATH="$(npm root -g)" node tools/smoke-test-path.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-exam-media.js
     (cd worker && [ -d node_modules ] && node test.mjs | tail -1) || true
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-friends.js

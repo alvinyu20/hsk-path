@@ -106,7 +106,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(await page.evaluate(() => { const all = JSON.stringify([window.HSK3_WORDS, window.HSK3_GRAMMAR, window.HSK3_WEBS]); return !/yǒushí jiān|měi tiān|wài guó rén/.test(all); }), 'HSK 3 pinyin keeps 有时间, 每天 and 外国人 as one word each');
 
   // ---- word webs
-  await nav('Word webs');
+  await nav('Archive');
   await page.locator('button', { hasText: 'Shared character' }).click();
   const hubN = await page.evaluate(() => window.HSK3_WEBS.hubs.length);
   check((await page.locator('[aria-label="Pick a character"] button').count()) === hubN && hubN === 28, 'HSK 3 has ' + hubN + ' shared-character groups, all listed');
@@ -366,7 +366,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     check(await pA.locator('.gl .gp .lvtag.l3').count() >= 1 && await pA.locator('.gl .gp.rl3').count() >= 1, 'an HSK 3 lesson is found by its title and carries its HSK 3 tag and coloured edge (' + t0 + ')');
     await pA.fill('.gl .tr-search', '');
     // topics of the same name are joined across the three levels; HSK 3 words carry their tag
-    await pA.locator('nav button', { hasText: 'Word webs' }).click();
+    await pA.locator('nav button', { hasText: 'Archive' }).click();
     await pA.waitForTimeout(150);
     await pA.locator('button', { hasText: /^Show all \d+ topics$/ }).click();
     await pA.waitForTimeout(100);

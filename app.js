@@ -229,6 +229,53 @@
   CLIPS.forEach(c => c.words.forEach(w => { CLIP_PY[w.zh] = w.py; }));
   const BANK_KEYS = Object.keys(BANK);
 
+  // ---------- the learning path (Learn > Path) ----------
+  // data/path.js (built by tools/build-path.py from content/path.json): per level, units of stops. A word stop is a small group of related
+  // words, met for the first time in a short lesson; a grammar stop opens one grammar lesson. Nothing is locked: the path only says what
+  // comes next. A word stop is done when every word in it has been started (here, in a web, or in Review) or its lesson was finished;
+  // a grammar stop is done when its lesson was passed (80%).
+  const PATH = window.SHANLU_PATH || {};
+  const PATH_LVLS = LVLS.filter(n => PATH[n] && (PATH[n].units || []).length);
+  const LESSON_AT = {};
+  LESSONS.forEach((L, i) => { LESSON_AT[L.id] = i; });
+  const POS_NAME = { n:'noun', v:'verb', adj:'adjective', adv:'adverb', pron:'pronoun', num:'number', m:'measure word', qw:'question word', phr:'phrase', time:'time word', conj:'conjunction', prep:'preposition', part:'particle', loc:'place word', suf:'suffix' };
+  const STOP_COINS = 10;     // coins for finishing a word stop the first time
+  const PATH_BATCH = 4;      // most words met before the first questions about them
+  const PATH_XS = [50, 68, 78, 68, 50, 32, 22, 32];   // where the stops sit across the trail (percent from the left), one after the other
+  const stopWords = (st) => (st.k === 'w' ? st.w.filter(z => BANK[z]) : []);
+  const stopTitle = (st) => st.t + (st.p ? ' (' + st.p[0] + ' of ' + st.p[1] + ')' : '');
+  const wStarted = (S, zh) => !!(S.ws[zh] && S.ws[zh].see.s > 0) || !!(S.lrn || {})[zh] || !!(S.wlearned || {})[zh];
+  const stopState = (S, st) => {   // 'done' | 'part' | 'new'
+    if (st.k === 'g') { const i = LESSON_AT[st.g]; const best = i === undefined ? 0 : (S.gres[LESSONS[i].id] || 0); return best >= 80 ? 'done' : best > 0 ? 'part' : 'new'; }
+    const ws = stopWords(st); const n = ws.filter(z => wStarted(S, z)).length;
+    if (!ws.length || n === ws.length || prefGet('pth.' + st.id, 0)) return 'done';
+    return n > 0 ? 'part' : 'new';
+  };
+  // The path is written with the official word forms. In plain mode the site has rewritten its words (这儿 is gone, 一点儿 is 一点 ...), so the
+  // path's lists go through the same rewrite: twins (这儿 next to 这里) drop out, the others take their plain form, and repeats are removed.
+  const plainWords = (arr) => {
+    if (!ERHUA || ERHUA_ON) return arr;
+    const out = [];
+    arr.forEach(z => { if (ERHUA.twins.indexOf(z) >= 0) return; const q = ERHUA.zh(z); if (out.indexOf(q) < 0) out.push(q); });
+    return out;
+  };
+  const PATH_U = {}, STOP_BY = {};
+  PATH_LVLS.forEach(n => {
+    PATH_U[n] = PATH[n].units.map(u => ({ id:u.id, title:u.title, blurb:u.blurb, stops:u.stops.map(st => (st.k === 'w' ? Object.assign({}, st, { w:plainWords(st.w) }) : st)).filter(st => (st.k === 'w' ? stopWords(st).length > 0 : LESSON_AT[st.g] !== undefined)) })).filter(u => u.stops.length);
+    PATH_U[n].forEach((u, ui) => u.stops.forEach((st, si) => { STOP_BY[st.id] = { st, u, ui, si, lv:n }; }));
+  });
+  const pathNext = (S, lv) => {   // the first stop that is not done
+    const us = PATH_U[lv] || [];
+    for (let ui = 0; ui < us.length; ui++) for (let si = 0; si < us[ui].stops.length; si++) { if (stopState(S, us[ui].stops[si]) !== 'done') return { st:us[ui].stops[si], u:us[ui], ui, si, lv }; }
+    return null;
+  };
+  const pathNextWord = (S, lv) => {   // the first word stop that is not done (the Today list uses it for its new-words task; grammar has its own task there)
+    const us = PATH_U[lv] || [];
+    for (let ui = 0; ui < us.length; ui++) for (let si = 0; si < us[ui].stops.length; si++) { const st = us[ui].stops[si]; if (st.k === 'w' && stopState(S, st) !== 'done') return { st, u:us[ui], ui, si, lv }; }
+    return null;
+  };
+  const pathFirstOpen = (S) => { for (let i = 0; i < PATH_LVLS.length; i++) { if (pathNext(S, PATH_LVLS[i])) return PATH_LVLS[i]; } return PATH_LVLS.length ? PATH_LVLS[PATH_LVLS.length - 1] : 0; };
+
   const blankDim = () => ({ s:0 });
   const blankWord = () => ({ see:blankDim(), hear:blankDim(), prod:blankDim() });
   const blankWs = () => { const out = {}; Object.keys(BANK).forEach(zh => { out[zh] = blankWord(); }); return out; };
@@ -411,6 +458,7 @@
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
       pyView:'list', pyLs:0, pyAns:{}, pyGain:'', pyIni:'b', pyInfo:null, typOpen:false, typIn:'', qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
       gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
+      plv:0, pstop:'', pu:{}, pl:null, plNote:'', plAlt:'', acctEdit:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
       wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, syncKeys:prefGet('syncKeys', false) === true, aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), lsnNote:'', memOn:memOn(), memFacts:memFacts().slice(), aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, aiTesting:false, syncTesting:false, frTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
@@ -515,6 +563,49 @@
 
   // ---------- building quiz questions ----------
   const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
+
+  // ---------- the stop lesson: how a word is met for the first time ----------
+  // Meet 3 or 4 words (hear it, see it, its meaning, a sentence, what it is built from), answer two easy questions about each straight away
+  // (meaning, then sound), then after the last group one mixed checkpoint on every word of the stop. A wrong answer comes back once, a few
+  // questions later. Nothing is typed yet: the words go into Review afterwards, which asks for them again (a choice, then typed from memory).
+  const plPlain = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z]/g, '');
+  const plChoices = (zh, kind, pool, n) => {   // zh plus n-1 wrong answers: first words of the same stop, then words of the same kind, then any
+    const me = BANK[zh]; const seen = {};
+    seen[kind === 'mean' ? me.en : zh] = true;
+    if (kind === 'hear') seen['~' + plPlain(me.py)] = true;
+    const out = [];
+    const take = (list) => list.forEach(z => {
+      if (out.length >= n - 1 || z === zh || !BANK[z]) return;
+      const key = kind === 'mean' ? BANK[z].en : z; const sound = '~' + plPlain(BANK[z].py);
+      if (seen[key] || (kind === 'hear' && seen[sound])) return;
+      seen[key] = true; if (kind === 'hear') seen[sound] = true;
+      out.push(z);
+    });
+    take(shuffle(pool)); take(shuffle(BANK_KEYS.filter(z => BANK[z].pos === me.pos))); take(shuffle(BANK_KEYS));
+    return shuffle([zh].concat(out));
+  };
+  const plQ = (zh, kind, pool, n, ph) => {
+    let kd = kind, ex = null;
+    if (kd === 'cloze') {
+      ex = pickEx(zh, e => e.toks.indexOf(zh) >= 0 && e.zh.split(zh).length === 2);
+      if (!ex || ex.toks.indexOf(zh) < 0 || ex.zh.split(zh).length !== 2) { kd = 'rev'; ex = null; }
+    }
+    return { t:'q', kind:kd, zh, ph, ex:ex ? { zh:ex.zh, py:ex.py, en:ex.en } : null, opts:plChoices(zh, kd, pool, n) };
+  };
+  const plBuild = (teach, known) => {
+    const steps = []; const k = Math.ceil(teach.length / PATH_BATCH);
+    let at = 0, met = [];
+    for (let b = 0; b < k; b++) {
+      const size = Math.floor(teach.length / k) + (b < teach.length % k ? 1 : 0);
+      const batch = teach.slice(at, at + size); at += size; met = met.concat(batch);
+      batch.forEach(z => steps.push({ t:'meet', zh:z, ph:'meet', n:at - size + batch.indexOf(z) + 1, of:teach.length }));
+      shuffle(batch).forEach(z => steps.push(plQ(z, 'mean', met, 3, 'try')));
+      shuffle(batch).forEach(z => steps.push(plQ(z, 'hear', met, 3, 'try')));
+    }
+    const all = teach.concat(known);
+    shuffle(all).forEach((z, i) => steps.push(plQ(z, i % 2 ? 'cloze' : 'rev', all, 4, 'final')));
+    return steps;
+  };
   const toneless = (py) => py.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z]/g, '').toLowerCase();
   const pinyinAccepts = (py, zh) => {
     const out = [zh];
@@ -1199,7 +1290,7 @@
     { id:'night', grp:'Habits', icon:'🌙', title:'Night owl', desc:'Studying late at night.', hint:'Study between 10 at night and 4 in the morning.', test:m => !!m.ev.night },
     { id:'rev100', grp:'Habits', icon:'⚡', title:'100 reviews in a day', desc:'One hundred cards answered in a single day.', hint:'Answer 100 Review cards in one day.', test:m => !!m.ev.rev100 },
     { id:'goal7', grp:'Habits', icon:'🎯', title:'Goal getter', desc:'Hit your daily goal 7 days in a row.', hint:'Reach your daily goal 7 days in a row.', test:m => m.goalRun >= 7, prog:m => [m.goalRun, 7] },
-    { id:'topic1', grp:'Collecting', icon:'🕸️', title:'Topic complete', desc:'Every word in one topic web has been started.', hint:'Start every word of one topic in Word webs.', test:m => !!m.topic },
+    { id:'topic1', grp:'Collecting', icon:'🕸️', title:'Topic complete', desc:'Every word in one topic web has been started.', hint:'Start every word of one topic. The Path and the Archive both get you there.', test:m => !!m.topic },
     { id:'jy1', grp:'Journey', icon:'✈️', title:'Boarding pass', desc:'Your first flight in. The Journey has begun.', hint:'Spend coins on your first stop.', test:m => m.jy.n >= 1 },
     { id:'jy10', grp:'Journey', icon:'🧭', title:'10 stops', desc:'Ten places, dishes and traditions discovered.', hint:'Unlock 10 stops.', test:m => m.jy.n >= 10, prog:m => [m.jy.n, 10] },
     { id:'jy50', grp:'Journey', icon:'🗺️', title:'50 stops', desc:'Fifty stops. The map is filling in.', hint:'Unlock 50 stops.', test:m => m.jy.n >= 50, prog:m => [m.jy.n, 50] },
@@ -1553,14 +1644,14 @@
 
     lastSub = {};
     goGroup = (id) => {   // a phone tab: back to the screen last used in that section
-      const first = { home:'home', learn:'web', review:'review', talk:'listen', more:'exam' }[id];
+      const first = { home:'home', learn:PATH_LVLS.length ? 'path' : 'pinyin', review:'review', talk:'listen', more:'acct' }[id];
       this.go(this.lastSub[id] || first);
     };
     go = (screen) => {
-      { const grp = { web:'learn', grammar:'learn', words:'learn', pinyin:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', ach:'more', journey:'more', guide:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
+      { const grp = { path:'learn', grammar:'learn', pinyin:'learn', web:'review', words:'review', acct:'more', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', ach:'more', journey:'more', guide:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
       if (screen === 'guide' && !onbRead().g) this.onbSet({ g:Date.now() });
       if (screen === 'journey') { otherXp(true); this.jyEnsure(); this.friendsRefresh(false); }
-      this.setState({ screen }); try { window.scrollTo(0, 0); } catch (e) {}
+      this.setState(screen === 'path' ? { screen, pstop:'', plNote:'', plAlt:'' } : { screen }); try { window.scrollTo(0, 0); } catch (e) {}
       if (screen === 'speak' && !HAS_SCRIPTS) { const S = this.state; if (S.aiOn && !S.aim.length && !S.aiBusy) this.aiStart(S.aiScn); }   // no scripts at this level: go straight to the AI conversation
       // on phones the tab bar scrolls sideways: keep the current tab in view
       setTimeout(() => { try { const bar = document.querySelector('.navs'); const on = bar && bar.querySelector('.nav.on'); if (on) bar.scrollLeft = on.offsetLeft - (bar.clientWidth - on.offsetWidth) / 2; } catch (e) {} }, 60);
@@ -2836,6 +2927,259 @@
     resetSpeak = () => { this.setState({ sturn:0, sdone:false }); };
     pickScenario = (i) => { this.setState({ sidx:i, sturn:0, sdone:false }); };
 
+    // ----- the learning path and its stop lesson -----
+    pathLevel = () => { const S = this.state; return S.plv && PATH_LVLS.indexOf(S.plv) >= 0 ? S.plv : pathFirstOpen(S); };
+    pathSetLevel = (n) => { this.setState({ plv:n, pstop:'', plNote:'', plAlt:'' }); };
+    pathUnitToggle = (id, open) => { const pu = Object.assign({}, this.state.pu); pu[id] = open; this.setState({ pu }); };
+    pathSelect = (id) => { this.setState({ pstop:id, plNote:'', plAlt:'' }); };
+    pathClose = () => { this.setState({ pstop:'', plNote:'', plAlt:'' }); };
+    // open a stop: a word stop starts its lesson (unless the daily limit or the waiting words say wait), a grammar stop opens its lesson
+    pathStart = (id) => {
+      const S = this.state; const hit = STOP_BY[id]; if (!hit) return;
+      const st = hit.st;
+      if (st.k === 'g') { this.setState({ pstop:'', plNote:'', plAlt:'', ggopen:null, gq:'', glesson:LESSON_AT[st.g] }); this.go('grammar'); return; }
+      const words = stopWords(st);
+      const fresh = words.filter(z => !wStarted(S, z)); const known = words.filter(z => wStarted(S, z));
+      if (fresh.length) {
+        const lim = limitOf(S);
+        if (Object.keys(S.wlearned).length + fresh.length > lim) { this.setState({ pstop:id, plNote:'That would go past your limit of ' + lim + ' new words for today. Raise the limit in Settings, or come back tomorrow.', plAlt:'settings' }); return; }
+        if (this.lrnRoom() < fresh.length) { this.setState({ pstop:id, plNote:'You already have ' + Object.keys(S.lrn || {}).length + ' new words waiting. Learn those in Review first, then come back for these.', plAlt:'review' }); return; }
+      }
+      const steps = plBuild(fresh.length ? fresh : words, fresh.length ? known : []);
+      this.setState({ screen:'plesson', pstop:'', plNote:'', plAlt:'', pl:{ id, steps, i:0, pick:null, checked:false, ok:0, bad:0, missed:{}, fresh, replay:!fresh.length, leave:false, done:false, gain:0 } });
+      try { window.scrollTo(0, 0); } catch (e) {}
+      this.plSay(steps[0]);
+    };
+    pathAlt = () => { const a = this.state.plAlt; this.setState({ pstop:'', plNote:'', plAlt:'' }); this.go(a === 'review' ? 'review' : 'voice'); };
+    plSay = (st) => { if (st && (st.t === 'meet' || (st.t === 'q' && st.kind === 'hear'))) this.say(st.zh, 'pl'); };
+    plHear = () => { const pl = this.state.pl; const st = pl && pl.steps[pl.i]; if (st) this.say(st.zh, 'pl'); };
+    plHearEx = () => { const pl = this.state.pl; const st = pl && pl.steps[pl.i]; if (!st) return; const ex = st.t === 'meet' ? EX[st.zh] : st.ex; if (ex && ex.zh) this.say(ex.zh, 'plx'); };
+    plPick = (zh) => {
+      const S = this.state; const pl = S.pl; const st = pl && pl.steps[pl.i];
+      if (!st || st.t !== 'q' || pl.checked) return;
+      const ok = zh === st.zh; const steps = pl.steps.slice(); const missed = Object.assign({}, pl.missed);
+      let okN = pl.ok, badN = pl.bad;
+      if (!st.again) { if (ok) okN++; else badN++; }
+      if (!ok) {
+        if (st.ph === 'final') missed[st.zh] = 'final'; else if (!missed[st.zh]) missed[st.zh] = 'try';
+        if (!st.again) steps.splice(Math.min(pl.i + 4, steps.length), 0, Object.assign({}, st, { again:true, opts:shuffle(st.opts) }));   // it comes back once, a few questions later
+      }
+      SFX.play(ok ? 'ok' : 'bad');
+      this.setState({ pl:Object.assign({}, pl, { steps, pick:zh, checked:true, ok:okN, bad:badN, missed }) });
+      this.say(st.kind === 'cloze' && st.ex ? st.ex.zh : st.zh, 'pl');
+    };
+    plNext = () => {
+      const S = this.state; const pl = S.pl; if (!pl || pl.done) return;
+      const cur = pl.steps[pl.i];
+      if (cur.t === 'q' && !pl.checked) return;
+      const i = pl.i + 1;
+      if (i >= pl.steps.length) { this.plFinish(); return; }
+      this.setState({ pl:Object.assign({}, pl, { i, pick:null, checked:false }) });
+      this.plSay(pl.steps[i]);
+      try { window.scrollTo(0, 0); } catch (e) {}
+    };
+    // the end: the new words go into Review (a word missed in the checkpoint will be introduced there again first)
+    plFinish = () => {
+      const S = this.state; const pl = S.pl; if (!pl || pl.done) return;
+      const first = !prefGet('pth.' + pl.id, 0); const now = Date.now();
+      const lrn = Object.assign({}, S.lrn); const wl = Object.assign({}, S.wlearned);
+      pl.fresh.forEach(zh => { lrn[zh] = { st:pl.missed[zh] === 'final' ? -1 : 0, m:0, at:now }; wl[zh] = true; });
+      prefSet('pth.' + pl.id, now);
+      const patch = { lrn, wlearned:wl, webCredited:true, lrnNote:'', pl:Object.assign({}, pl, { done:true, gain:first ? STOP_COINS : 0 }) };
+      if (first) { patch.xp = S.xp + STOP_COINS; patch.dayXp = S.dayXp + STOP_COINS; patch.dayMin = S.dayMin + Math.max(2, Math.round(pl.steps.length / 5)); }
+      SFX.play('done');
+      this.setState(patch);
+      try { window.scrollTo(0, 0); } catch (e) {}
+    };
+    plClose = () => {
+      const pl = this.state.pl; if (!pl) return;
+      if (pl.done || pl.i === 0) { this.setState({ screen:'path', pl:null }); return; }
+      this.setState({ pl:Object.assign({}, pl, { leave:true }) });
+    };
+    plStay = () => { const pl = this.state.pl; if (pl) this.setState({ pl:Object.assign({}, pl, { leave:false }) }); };
+    plLeave = () => { this.setState({ screen:'path', pl:null }); try { window.scrollTo(0, 0); } catch (e) {} };
+    plAfter = () => {   // the stop that comes next on the path
+      const S = this.state; const pl = S.pl; const hit = pl && STOP_BY[pl.id];
+      const nx = hit ? pathNext(S, hit.lv) : null;
+      this.setState({ screen:'path', pl:null });
+      if (nx) this.pathStart(nx.st.id);
+    };
+
+    // ----- the account page -----
+    acctEditOpen = () => { this.setState({ acctEdit:true, acctNameIn:prefGet('name', '') }); };
+    acctCancel = () => { this.setState({ acctEdit:false }); };
+    acctSave = () => {
+      const v = String(this.state.acctNameIn || '').replace(/\s+/g, ' ').trim().slice(0, 30);
+      prefSet('name', v);
+      this.setState({ acctEdit:false });
+    };
+    acctVals = (S, c) => {
+      const name = String(prefGet('name', '') || '');
+      const keys = Object.keys(S.activity || {}).filter(k => S.activity[k]).sort();
+      let since = '';
+      if (keys.length) { const d = new Date(keys[0] + 'T12:00:00'); if (!isNaN(d.getTime())) since = d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }); }
+      let stopsDone = 0, stopsAll = 0;
+      PATH_LVLS.forEach(n => (PATH_U[n] || []).forEach(u => u.stops.forEach(st => { stopsAll++; if (stopState(S, st) === 'done') stopsDone++; })));
+      const gPassed = LESSONS.filter(L => (S.gres[L.id] || 0) >= 80).length;
+      const stat = (label, value) => ({ label, value });
+      const links = [
+        { glyph:'设', title:'Settings and sync', sub:'Keep one progress on every device, choose the level and the voice, saved data and backups.', go:() => this.go('voice') },
+        { glyph:'友', title:'Friends', sub:'Study totals shared with your group.', go:() => this.go('friends'), show:!!(FR && FR.enabled()) },
+        { glyph:'成', title:'Achievements', sub:'What you have earned and what is ahead.', go:() => this.go('ach') },
+        { glyph:'旅', title:'Journey', sub:'Spend your coins on trips through the Chinese-speaking world.', go:() => this.go('journey') },
+        { glyph:'考', title:LVN + ' level exam', sub:'The mock exam for this level.', go:() => this.go('exam'), show:!!EXAMBANK },
+        { glyph:'问', title:'How Shanlu works', sub:'The daily loop and where your progress lives.', go:() => this.go('guide'), show:!!c.guide }
+      ].filter(x => x.show !== false);
+      return {
+        isAcct:S.screen === 'acct', acctShowName:!S.acctEdit,
+        acctName:name || 'Learner', acctInitial:name ? name.charAt(0).toUpperCase() : '学', acctHasName:!!name,
+        acctSub:c.level + (since ? ' · studying since ' + since : ''),
+        acctEditing:!!S.acctEdit, acctNameIn:String(S.acctNameIn || ''), onAcctName:(e) => this.setState({ acctNameIn:e.target.value }),
+        acctEditOpen:this.acctEditOpen, acctCancel:this.acctCancel, acctSave:this.acctSave,
+        acctStats:[
+          stat('Day streak', String(c.streak)), stat('Coins', c.coins), stat('Words in memory', String(c.mem)), stat('Words started', c.started + ' of ' + c.total),
+          stat('Path stops done', PATH_LVLS.length ? stopsDone + ' of ' + stopsAll : 'None yet'), stat('Grammar lessons passed', gPassed + ' of ' + LESSONS.length)
+        ],
+        acctLinks:links
+      };
+    };
+
+    // what the Path and the stop lesson show (the same keys every time, empty when the screen is not open)
+    pathVals = (S) => {
+      const sh0 = { kick:'', title:'', isW:false, isG:false, words:[], sub:'', cta:'', go:() => {}, hasNote:false, note:'', hasAlt:false, altText:'', hasBest:false, best:'' };
+      const out = {
+        isPath:S.screen === 'path', isPlesson:S.screen === 'plesson',
+        pthHas:PATH_LVLS.length > 0, pthHasTabs:PATH_LVLS.length > 1, pthTabs:[], pthSub:'', pthPct:'0%', pthName:'', pthBlurb:'',
+        pthHasNext:false, pthAllDone:false, pthNextKick:'', pthNextTitle:'', pthNextSub:'', pthNextWords:'', pthNextBtn:'', pthNextGo:() => {},
+        pthUnits:[], pthSheet:false, pthSh:sh0, pthClose:this.pathClose, pthAlt:this.pathAlt
+      };
+      if (S.screen === 'path') {
+        const lv = this.pathLevel(); const us = PATH_U[lv] || []; const nxt = pathNext(S, lv);
+        let nTotal = 0, nDone = 0, wTotal = 0, wStart = 0;
+        us.forEach(u => u.stops.forEach(st => { nTotal++; if (stopState(S, st) === 'done') nDone++; stopWords(st).forEach(z => { wTotal++; if (wStarted(S, z)) wStart++; }); }));
+        out.pthName = 'HSK ' + lv + ' path'; out.pthBlurb = (PATH[lv] || {}).blurb || '';
+        out.pthTabs = PATH_LVLS.map(n => ({ label:'HSK ' + n, cls:n === lv ? 'on' : '', fn:() => this.pathSetLevel(n) }));
+        out.pthSub = nDone + ' of ' + nTotal + ' stops done · ' + wStart + ' of ' + wTotal + ' words started';
+        out.pthPct = (nTotal ? Math.round(nDone / nTotal * 100) : 0) + '%';
+        out.pthAllDone = !nxt && nTotal > 0;
+        if (nxt) {
+          const ws = stopWords(nxt.st); const state = stopState(S, nxt.st);
+          out.pthHasNext = true; out.pthNextKick = 'Next on your path · Unit ' + (nxt.ui + 1) + ': ' + nxt.u.title;
+          out.pthNextTitle = stopTitle(nxt.st);
+          out.pthNextSub = nxt.st.k === 'w' ? ws.length + ' words:' : 'A grammar lesson, about 4 minutes';
+          out.pthNextWords = nxt.st.k === 'w' ? ws.slice(0, 4).join(' · ') + (ws.length > 4 ? ' …' : '') : '';
+          out.pthNextBtn = nxt.st.k === 'g' ? 'Open the lesson' : state === 'part' ? 'Continue' : 'Start';
+          out.pthNextGo = () => this.pathStart(nxt.st.id);
+        }
+        out.pthUnits = us.map((u, ui) => {
+          const states = u.stops.map(st => stopState(S, st));
+          const nd = states.filter(x => x === 'done').length;
+          const open = S.pu[u.id] !== undefined ? S.pu[u.id] : (!!nxt && (ui === nxt.ui || ui === nxt.ui + 1));
+          return {
+            id:u.id, num:ui + 1, title:u.title, blurb:u.blurb, prog:nd + ' of ' + u.stops.length, open, cls:(nd === u.stops.length ? 'done' : nxt && ui === nxt.ui ? 'cur' : ''),
+            isDone:nd === u.stops.length, toggleText:open ? 'Hide' : 'Show', toggle:() => this.pathUnitToggle(u.id, !open),
+            stops:open ? u.stops.map((st, si) => {
+              const state = states[si]; const isCur = !!nxt && nxt.st.id === st.id; const ws = stopWords(st);
+              const x = PATH_XS[si % PATH_XS.length], xp = PATH_XS[(si + PATH_XS.length - 1) % PATH_XS.length];
+              return {
+                id:st.id, isW:st.k === 'w', isG:st.k === 'g', glyph:st.k === 'w' ? ws[0].charAt(0) : '语', title:stopTitle(st),
+                sub:st.k === 'w' ? ws.slice(0, 3).join(' · ') + (ws.length > 3 ? ' …' : '') : 'Grammar',
+                meta:st.k === 'w' ? ws.length + ' words' + (state === 'part' ? ' · ' + ws.filter(z => wStarted(S, z)).length + ' started' : '') : (state === 'done' ? 'Passed' : state === 'part' ? 'Best ' + (S.gres[st.g] || 0) + '%' : 'Lesson'),
+                cls:(state === 'done' ? 'done' : isCur ? 'cur' : state === 'part' ? 'part' : '') + (st.k === 'g' ? ' g' : '') + (S.pstop === st.id ? ' sel' : ''),
+                state, isDone:state === 'done', isCur, nodeStyle:'left:' + x + '%',
+                labelStyle:x <= 50 ? 'left:calc(' + x + '% + 50px);width:calc(' + (100 - x) + '% - 58px);text-align:left' : 'right:calc(' + (100 - x) + '% + 50px);width:calc(' + x + '% - 58px);text-align:right',
+                hasLink:si > 0, curve:'M ' + xp + ' 0 C ' + xp + ' 52 ' + x + ' 52 ' + x + ' 104', linkCls:states[si - 1] === 'done' ? 'on' : '',
+                aria:stopTitle(st) + ', ' + (state === 'done' ? 'done' : isCur ? 'next' : state === 'part' ? 'started' : 'not started'),
+                pick:() => this.pathSelect(st.id)
+              };
+            }) : []
+          };
+        });
+        const hit = S.pstop ? STOP_BY[S.pstop] : null;
+        if (hit) {
+          const st = hit.st; const state = stopState(S, st); const ws = stopWords(st);
+          const L = st.k === 'g' ? LESSONS[LESSON_AT[st.g]] : null;
+          out.pthSheet = true;
+          out.pthSh = {
+            kick:'Unit ' + (hit.ui + 1) + ': ' + hit.u.title + ' · Stop ' + (hit.si + 1) + ' of ' + hit.u.stops.length,
+            title:stopTitle(st), isW:st.k === 'w', isG:st.k === 'g',
+            words:ws.map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en, mark:wStarted(S, z) ? 'learned' : '', cls:wStarted(S, z) ? 'on' : '' })),
+            sub:L ? L.catBlurb || L.cat || '' : (state === 'done' ? 'You have met these words. Practise them again whenever you like.' : 'About ' + Math.max(3, Math.round(ws.filter(z => !wStarted(S, z)).length * 0.8 + 1)) + ' minutes. You meet the words, answer a few easy questions, then they join your Review.'),
+            cta:st.k === 'g' ? (state === 'done' ? 'Open the lesson again' : 'Open the lesson') : state === 'done' ? 'Practise again' : state === 'part' ? 'Continue' : 'Start',
+            go:() => this.pathStart(st.id),
+            hasNote:!!S.plNote, note:S.plNote, hasAlt:!!S.plAlt, altText:S.plAlt === 'review' ? 'Go to Review' : 'Open Settings',
+            hasBest:!!L && (S.gres[L.id] || 0) > 0, best:L ? 'Best score so far: ' + (S.gres[L.id] || 0) + '%. You pass at 80%.' : ''
+          };
+        }
+      }
+      return Object.assign(out, this.lessonVals(S));
+    };
+    lessonVals = (S) => {
+      const pl = S.pl;
+      const emptyMeet = { zh:'', py:'', en:'', pos:'', exParts:[], exPy:'', exEn:'', hasEx:false, hasNote:false, note:'', hasBuilt:false, built:[], count:'' };
+      const emptyQ = { kicker:'', prompt:'', hasBig:false, big:'', bigCls:'', hasSub:false, sub:'', isListen:false };
+      const out = {
+        plOn:!!pl && S.screen === 'plesson', plInside:!!pl && !pl.done, plTitle:'', plPhase:'', plPct:'0%', plIsMeet:false, plIsQ:false, plIsDone:false, plAsk:false,
+        plMeet:emptyMeet, plQuest:emptyQ, plOpts:[], plOptsCls:'', plChecked:false, plFbCls:'', plFbTitle:'', plFbZh:'', plFbPyEn:'', plFbMore:'', plHasFbMore:false,
+        plHearCls:S.playing === 'pl' ? 'on' : '', plHearExCls:S.playing === 'plx' ? 'on' : '',
+        plNext:this.plNext, plHear:this.plHear, plHearEx:this.plHearEx, plClose:this.plClose, plKeep:this.plStay, plExit:this.plLeave, plAfter:this.plAfter,
+        plRes:{ n:0, gain:0, hasGain:false, words:[], hasMissed:false, missedText:'', headline:'', sub:'', replay:false, nextText:'', hasNext:false }
+      };
+      if (!pl || S.screen !== 'plesson') return out;
+      const hit = STOP_BY[pl.id]; const st = pl.steps[pl.i];
+      out.plTitle = hit ? stopTitle(hit.st) : ''; out.plAsk = !!pl.leave;
+      out.plPct = (pl.done ? 100 : Math.round(pl.i / pl.steps.length * 100)) + '%';
+      if (pl.done) {
+        out.plIsDone = true;
+        const words = hit ? stopWords(hit.st) : [];
+        const missed = words.filter(z => pl.missed[z]);
+        const nx = hit ? pathNext(S, hit.lv) : null;
+        out.plRes = {
+          n:pl.fresh.length, gain:pl.gain, hasGain:pl.gain > 0, replay:pl.replay,
+          words:words.map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en, cls:pl.missed[z] ? 'miss' : 'ok' })),
+          hasMissed:missed.length > 0, missedText:'Worth another look: ' + missed.join(' · ') + '. Review will bring ' + (missed.length === 1 ? 'it' : 'them') + ' back soon.',
+          headline:pl.replay ? 'Practice done' : 'Stop complete',
+          sub:pl.replay ? 'Nice. These words were already yours.' : pl.fresh.length + (pl.fresh.length === 1 ? ' new word is' : ' new words are') + ' now in your Review. You will be asked for ' + (pl.fresh.length === 1 ? 'it' : 'them') + ' again soon, which is what makes ' + (pl.fresh.length === 1 ? 'it' : 'them') + ' stay.',
+          hasNext:!!nx, nextText:nx ? 'Next: ' + stopTitle(nx.st) : ''
+        };
+        return out;
+      }
+      if (st.t === 'meet') {
+        const b = BANK[st.zh]; const ex = EX[st.zh] || { zh:'', py:'', en:'' };
+        const built = st.zh.length > 1 ? st.zh.split('').map(ch => ({ ch, en:KB[ch] && KB[ch].en ? KB[ch].en : '' })) : [];
+        const parts = ex.zh && ex.zh.indexOf(st.zh) >= 0 ? ex.zh.split(st.zh).reduce((acc, seg, i, arr) => { if (seg) acc.push({ t:seg, cls:'' }); if (i < arr.length - 1) acc.push({ t:st.zh, cls:'hl' }); return acc; }, []) : [{ t:ex.zh, cls:'' }];
+        out.plIsMeet = true; out.plPhase = 'Meet the words';
+        out.plMeet = { zh:st.zh, py:b.py, en:b.en, pos:POS_NAME[b.pos] || b.pos, exParts:parts, exPy:ex.py, exEn:ex.en, hasEx:!!ex.zh, hasNote:!!NOTE[st.zh], note:NOTE[st.zh] || '',
+          hasBuilt:built.some(x => x.en), built:built.map(x => ({ ch:x.ch, en:x.en || '', hasEn:!!x.en })), count:'Word ' + st.n + ' of ' + st.of };
+        return out;
+      }
+      // a question
+      out.plIsQ = true; out.plPhase = st.ph === 'final' ? 'Checkpoint' : 'Try it';
+      const b = BANK[st.zh];
+      const q = { kicker:(st.again ? 'Once more' : st.ph === 'final' ? 'Checkpoint' : 'Try it'), prompt:'', hasBig:false, big:'', bigCls:'', hasSub:false, sub:'', isListen:false };
+      if (st.kind === 'mean') { q.prompt = 'What does this word mean?'; q.hasBig = true; q.big = st.zh; q.bigCls = 'zh'; q.hasSub = true; q.sub = b.py; }
+      else if (st.kind === 'hear') { q.prompt = 'Which word did you hear?'; q.isListen = true; }
+      else if (st.kind === 'rev') { q.prompt = 'Which word means “' + b.en + '”?'; }
+      else { q.prompt = 'Which word fits the gap?'; q.hasBig = true; q.big = st.ex.zh.replace(st.zh, '＿＿'); q.bigCls = 'zh sm'; q.hasSub = true; q.sub = st.ex.en; }
+      out.plQuest = q;
+      out.plOpts = st.opts.map(zh => {
+        const o = BANK[zh]; const isAns = zh === st.zh; const picked = pl.pick === zh;
+        const cls = pl.checked ? (isAns ? 'right' : picked ? 'wrong' : '') : '';
+        return st.kind === 'mean'
+          ? { label:o.en, sub:'', hasSub:false, lcls:'', cls, pick:() => this.plPick(zh) }
+          : { label:zh, sub:st.kind === 'cloze' ? '' : o.py, hasSub:st.kind !== 'cloze', lcls:'zh', cls, pick:() => this.plPick(zh) };
+      });
+      out.plOptsCls = (pl.checked ? 'locked' : '') + (out.plOpts.length === 3 ? ' pl-three' : '');
+      if (pl.checked) {
+        const ok = pl.pick === st.zh;
+        out.plChecked = true; out.plFbCls = ok ? 'good' : 'bad';
+        out.plFbTitle = ok ? ['Yes!', 'Right.', 'Nice.', 'Exactly.'][(pl.i + st.zh.length) % 4] : 'Not quite';
+        out.plFbZh = st.zh; out.plFbPyEn = b.py + ' · ' + b.en;
+        out.plHasFbMore = !ok && !st.again; out.plFbMore = 'You will see this one again in a moment.';
+      }
+      return out;
+    };
+
     // ----- word webs and word memory -----
     applyRating = (zh, r, dims) => {
       const cur = this.state.ws[zh];
@@ -3398,7 +3742,7 @@
       const rcPick = (list) => list[(S.rtotal + (S.rdone || 0)) % list.length];
       const rcHead = rcAccN >= 90 ? rcPick(['Flawless focus!', 'Superb session!', 'That was sharp!']) : rcAccN >= 70 ? rcPick(['Great session!', 'Nicely done!', 'Solid work!']) : rcAccN >= 40 ? rcPick(['Session complete!', 'Good effort, that counts!', 'You showed up, and it shows!']) : rcPick(['Done, and the misses are the learning', 'Tough one, and you finished it', 'Hard words are where memory grows']);
       const rcSub = rcAccN >= 90 ? 'Almost everything stuck. Those words will come back after longer gaps.' : rcAccN >= 70 ? 'Most of it is sticking. The ones you missed will be back soon.' : 'Words you missed will come back sooner. Seeing them again is how they stick.';
-      const active = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
+      const active = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen === 'plesson' ? 'path' : S.screen;
       const navCls = (k) => 'nav' + (active === k ? ' on' : '');
       // onboarding: who sees what (the browser tests run without it; see ONB_OFF)
       const onb = onbRead(); const onbOn = !ONB_OFF() && LV === 1;
@@ -3411,9 +3755,9 @@
       const startWords = START_WORDS.filter(z => BANK[z]).map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en.split(',')[0] }));
       const startDoneShow = onbOn && onb.s === 'done' && onb.d === ymd(new Date()) && S.rcomplete;   // the end of the first session: what to do next
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
-      const GROUPS = [['home', ['home']], ['learn', ['web', 'grammar', 'pinyin', 'words']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['more', ['exam', 'friends', 'journey', 'ach', 'guide', 'voice']]];
-      const SUBLABEL = { web:'Word webs', grammar:'Grammar', words:'My words', pinyin:'Pinyin', review:'Review words', greview:'Grammar review', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', journey:'Journey', ach:'Achievements', guide:'How Shanlu works', voice:'Settings' };
-      const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen;
+      const GROUPS = [['home', ['home']], ['learn', ['path', 'pinyin', 'grammar']], ['review', ['review', 'greview', 'testlobby', 'web', 'words']], ['talk', ['listen', 'speak']], ['more', ['acct', 'exam', 'friends', 'journey', 'ach', 'guide', 'voice']]];
+      const SUBLABEL = { path:'Path', acct:'Account', web:'Archive', grammar:'Grammar', words:'My words', pinyin:'Pinyin', review:'Review words', greview:'Grammar review', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', journey:'Journey', ach:'Achievements', guide:'How Shanlu works', voice:'Settings' };
+      const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen === 'plesson' ? 'path' : S.screen;
       const navGroup = (GROUPS.find(g => g[1].indexOf(curScreen) >= 0) || GROUPS[0])[0];
       const gcls = (id) => 'nav' + (navGroup === id ? ' on' : '');
       const subnavItems = ((GROUPS.find(g => g[0] === navGroup) || [0, []])[1]).filter(id => id !== 'friends' || (FR && FR.enabled())).filter(id => id !== 'exam' || !!EXAMBANK).filter(id => id !== 'guide' || guideAvail).map(id => [id, SUBLABEL[id]]);
@@ -3475,7 +3819,10 @@
         grammar:['Grammar', ALL ? LESSONS.length + ' lessons from every unlocked level, one at a time.' : LV === 1 ? LESSONS.length + ' lessons that cover the HSK 1 grammar outline, one at a time.' : LESSONS.length + ' lessons on the grammar of the ' + LVN + ' words, one at a time.'],
         speak:['Speaking practice', HAS_SCRIPTS ? 'Say a short conversation out loud.' : 'Talk with Mingming, the AI conversation partner.'],
         exam:[ALL ? 'Level exams' : LVN + ' level exam', ALL ? 'Each exam belongs to one level.' : LV === 1 ? 'Pass every section to climb to HSK 2.' : 'Not built yet for ' + LVN + '.'],
-        web:['Word webs', 'Learn new words next to the words you already know.'],
+        path:['Your path', 'Words and grammar in order, from the basics up. The next stop is always one tap away.'],
+        plesson:[S.pl && STOP_BY[S.pl.id] ? stopTitle(STOP_BY[S.pl.id].st) : 'Lesson', 'Meet the words, try them, then check them.'],
+        acct:['Account', 'You, your numbers, and the settings behind Shanlu.'],
+        web:['Archive', 'Every topic, word web and word pair, to browse and review. New words are best learned on your path.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
         pinyin:['Pinyin and tones', 'Sounds, tones and the spelling rules, with audio you can tap.'],
         ach:['Achievements', 'Things you have earned, and what is still ahead.'],
@@ -3504,10 +3851,12 @@
       const reviewMin = Math.max(2, Math.min(6, Math.round(Math.max(S.rtotal, dueNow) * 0.5)));
       const nextLesson = Math.max(0, LESSONS.findIndex(L => (S.gres[L.id] || 0) < 80));
       const nextScn = Math.max(0, SCEN.findIndex(sc => !S.sres[sc.id]));
-      const unstartedN = bankKeys.length - startedCount;   // words not yet started: the Learn task only makes sense while some are left
+      const unstartedN = bankKeys.filter((zh, i) => !infos[i].started && !(S.lrn || {})[zh] && !(S.wlearned || {})[zh]).length;   // words not yet met: the Learn task only makes sense while some are left (a word already waiting in Review has been met)
       const learnN = Math.max(1, Math.min(4, limitOf(S), unstartedN));
+      const pathToday = PATH_LVLS.length ? pathNextWord(S, pathFirstOpen(S)) : null;
+      const pathNewN = pathToday && pathToday.st.k === 'w' ? stopWords(pathToday.st).filter(z => !wStarted(S, z)).length : 0;   // the next stop on the path stands in for the learn-new-words task
       const pool = [
-        { glyph:'联', title:'Learn ' + learnN + (learnN === 1 ? ' new word with its relatives' : ' new words with their relatives'), meta:'Word webs', min:5, done:S.webCredited, to:'web', show:unstartedN > 0 || S.webCredited },
+        { glyph:'路', title:pathToday ? 'Path: ' + stopTitle(pathToday.st) : 'Learn ' + learnN + (learnN === 1 ? ' new word with its relatives' : ' new words with their relatives'), meta:pathToday ? (pathToday.st.k === 'w' ? (pathNewN === 1 ? '1 new word' : pathNewN + ' new words') : 'Grammar lesson') : 'Archive', min:5, done:S.webCredited, to:pathToday ? 'path' : 'web', run:pathToday ? () => { this.go('path'); this.setState({ pstop:pathToday.st.id }); } : null, show:unstartedN > 0 || S.webCredited },
         { glyph:'词', title:'Review ' + Math.max(S.rtotal, dueNow) + ' word' + (Math.max(S.rtotal, dueNow) === 1 ? '' : 's'), meta:'Words that are due', min:reviewMin, done:S.rcomplete, to:'review', show:S.rcomplete || dueNow > 0 },
         { glyph:'听', title:'Listening drill', meta:'Dictation with a speed ladder', min:4, done:S.ldone, to:'listen', show:HAS_LISTEN },
         { glyph:'说', title:'Say: ' + (SCEN[nextScn] || NO_SC).title, meta:'Practice script, ' + (SCEN[nextScn] || NO_SC).you.length + ' turns', min:6, done:S.spokeToday, to:'speak', show:HAS_SCRIPTS, pre:() => this.setState({ sidx:nextScn, sturn:0, sdone:false }) },
@@ -3517,7 +3866,7 @@
       let planned = 0;
       const plan = [];
       pool.forEach(t => { if (planned + t.min <= S.mins) { plan.push(t); planned += t.min; } });
-      const tasks = plan.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, xp:t.min + ' min', done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:() => { if (t.pre) t.pre(); this.go(t.to); } }));
+      const tasks = plan.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, xp:t.min + ' min', done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:() => { if (t.run) { t.run(); return; } if (t.pre) t.pre(); this.go(t.to); } }));
       const minOpts = [10, 20, 30, 45].map(m => ({ label:m + ' min', cls:S.mins === m ? 'on' : '', fn:() => this.setState({ mins:m }) }));
       const planNote = planned + ' of ' + S.mins + ' minutes planned. A longer goal adds more to the list.';
       const skills = [
@@ -3883,7 +4232,7 @@
       ];
 
       return {
-        focusCls:(S.exm && (S.exm.stage === 'run' || S.exm.stage === 'break') && S.screen === 'exam') || (S.screen === 'quiz' && !S.qdone) ? 'focus' : '',
+        focusCls:(S.exm && (S.exm.stage === 'run' || S.exm.stage === 'break') && S.screen === 'exam') || (S.screen === 'quiz' && !S.qdone) || (S.screen === 'plesson' && S.pl && !S.pl.done) ? 'focus' : '',
         scrCls:'scr-' + S.screen + (S.screen === 'review' || S.screen === 'listen' || S.screen === 'speak' ? ' am' : ''),   // am = app mode on a phone: these screens fill the screen and do not scroll as a page
         gHomeCls:gcls('home'), gLearnCls:gcls('learn'), gReviewCls:gcls('review'), gTalkCls:gcls('talk'), gMoreCls:gcls('more'),
         gHome:() => this.goGroup('home'), gLearn:() => this.goGroup('learn'), gReview:() => this.goGroup('review'), gTalk:() => this.goGroup('talk'), gMore:() => this.goGroup('more'),
@@ -3909,6 +4258,8 @@
         friendsOn:!!(FR && FR.enabled()), navFriends:navCls('friends'), isFriends:S.screen === 'friends',
         goFriends:() => { this.go('friends'); this.friendsRefresh(false); },
         ...frVals,
+        ...this.pathVals(S),
+        ...this.acctVals(S, { level:LVN, streak:streakShown, coins:totalXp(S).toLocaleString('en-US'), mem:memNow.words, started:startedCount, total:bankKeys.length, guide:guideAvail }),
         ...this.jyView(S),
         isWChar:S.wmode === 'char', isWOpp:S.wmode === 'opp', isWTopic:S.wmode === 'topic',
         wCharCls:S.wmode === 'char' ? 'on' : '', wOppCls:S.wmode === 'opp' ? 'on' : '', wTopicCls:S.wmode === 'topic' ? 'on' : '',
@@ -3984,7 +4335,7 @@
         onbSkipWelcome:this.onbSkipWelcome, onbSkipStart:this.onbSkipStart, onbStartPath:this.onbStartPath, onbOpenGuide:this.onbOpenGuide, onbFlight:this.onbFlight,
         onbFlightShow:startDoneShow && !flown, guideSideCls:'linkbtn guide-link' + (S.screen === 'guide' ? ' on' : ''),
         isAch:S.screen === 'ach', achSummary:achSummary, achPct:achPct, achItems:achItems,
-        navHome:navCls('home'), navReview:navCls('review'), navTest:navCls('testlobby'), navGrv:navCls('greview'), navGrammar:navCls('grammar'), navSpeak:navCls('speak'),
+        navHome:navCls('home'), navPath:navCls('path'), goPath:() => this.go('path'), navAcct:active === 'acct' ? 'on' : '', goAcct:() => this.go('acct'), navReview:navCls('review'), navTest:navCls('testlobby'), navGrv:navCls('greview'), navGrammar:navCls('grammar'), navSpeak:navCls('speak'),
         goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrv:() => this.go('greview'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
         hasDue:S.rq.length > 0 && !S.rcomplete, dueCount:S.rq.length,
         exTitle:LVN + ' mock exam',
@@ -4165,7 +4516,7 @@
     }
   });
   document.addEventListener('click', (e) => { try { if (window.shanlu && window.shanlu.state.lvMenu && !(e.target.closest && e.target.closest('.lvmenu'))) window.shanlu.setState({ lvMenu:false }); } catch (err) {} });
-  document.addEventListener('keydown', (e) => { try { if (e.key === 'Escape' && window.shanlu && window.shanlu.state.lvMenu) window.shanlu.setState({ lvMenu:false }); } catch (err) {} });
+  document.addEventListener('keydown', (e) => { try { if (e.key === 'Escape' && window.shanlu && window.shanlu.state.lvMenu) window.shanlu.setState({ lvMenu:false }); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.pstop) window.shanlu.pathClose(); } catch (err) {} });
   // after a mouse click on a Review button, drop the focus so Space and Enter go to the card, not back to that button
   document.addEventListener('click', (e) => { try { const b = e.target && e.target.closest && e.target.closest('.rev button'); if (b && e.detail > 0) b.blur(); } catch (err) {} });
   window.addEventListener('pagehide', () => { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); });
