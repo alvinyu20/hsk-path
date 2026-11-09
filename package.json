@@ -8,7 +8,7 @@
     "check:stamp": "node tools/build-site.js --check",
     "test:unit": "node tools/test-sync.js && node tools/test-secrets.js && node tools/test-friends.js && node tools/test-ascent.js && node tools/test-topics.js && node tools/test-path.js && node tools/test-journey.js && node tools/test-journey-media.js && node tools/test-journey-media-wikis.js && node tools/test-pinyin.js && node tools/test-exam-media.js",
     "test:worker": "npm test --prefix worker",
-    "test:browser": "node tools/smoke-test-journey.js && node tools/smoke-test-onboarding.js && node tools/smoke-test-pinyin.js && node tools/smoke-test-path.js && node tools/smoke-test-review-audio.js && node tools/smoke-test-distractors.js && node tools/smoke-test-exam-media.js && node tools/smoke-test-friends.js && node tools/smoke-test-pwa.js && node tools/smoke-test.js && node tools/smoke-test-l2.js && node tools/smoke-test-l3.js",
+    "test:browser": "node tools/smoke-test-journey.js && node tools/smoke-test-onboarding.js && node tools/smoke-test-pinyin.js && node tools/smoke-test-path.js && node tools/smoke-test-review-audio.js && node tools/smoke-test-distractors.js && node tools/smoke-test-redesign.js && node tools/smoke-test-exam-media.js && node tools/smoke-test-friends.js && node tools/smoke-test-pwa.js && node tools/smoke-test.js && node tools/smoke-test-l2.js && node tools/smoke-test-l3.js",
     "test": "npm run check:stamp && npm run test:unit && npm run test:worker && npm run test:browser"
   },
   "devDependencies": {

@@ -64,7 +64,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
     // ---- the path
     await page.locator('.side .nav', { hasText: 'Path' }).first().click(); await page.waitForTimeout(150);
-    check((await page.locator('.pth-unit').count()) === 12, 'HSK 1 path shows its 12 units');
+    check((await page.locator('.pth-unit').count()) === 13, 'HSK 1 path shows its 13 units');
     const head = await page.locator('.pth-head').innerText();
     const wordsHsk1 = await page.evaluate(() => (window.HSK1_WORDS || []).length);
     check(/0 of 83 stops done/.test(head) && head.includes('0 of ' + wordsHsk1 + ' words started'), 'the header counts 83 stops and every word of the level (' + wordsHsk1 + '): ' + head.replace(/\n/g, ' | '));

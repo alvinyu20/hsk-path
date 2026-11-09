@@ -1141,7 +1141,7 @@ button.scn:hover .scn-m{text-decoration:underline}
 @media (prefers-reduced-motion:reduce){.confetti{display:none}.celebrate .stamp{animation:none}}
 
 /* milestone toast, daily goal bar */
-.mstoast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:12px;max-width:min(92vw,460px);padding:12px 14px 12px 16px;background:var(--ink);color:var(--bg,#fff);border-radius:18px;box-shadow:0 12px 34px rgba(0,0,0,.3);cursor:pointer;animation:msIn .45s cubic-bezier(.2,1.3,.4,1) both}
+.mstoast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:12px;width:max-content;max-width:min(92vw,460px);padding:12px 14px 12px 16px;background:var(--ink);color:var(--bg,#fff);border-radius:18px;box-shadow:0 12px 34px rgba(0,0,0,.3);cursor:pointer;animation:msIn .45s cubic-bezier(.2,1.3,.4,1) both}
 .mstoast .ms-ic{font-size:30px;line-height:1}
 .mstoast .ms-t{display:flex;flex-direction:column;gap:1px;min-width:0}
 .mstoast .ms-t b{font-size:16px}
@@ -1152,6 +1152,8 @@ button.scn:hover .scn-m{text-decoration:underline}
 @media (prefers-reduced-motion:reduce){.mstoast{animation:none}}
 .dgoal{display:flex;align-items:center;gap:12px;margin:-4px 0 12px;font-size:13px;color:var(--muted)}
 .dgoal .dbar{flex:1;height:6px;border-radius:99px;background:var(--panel2);overflow:hidden}
+.dgoal .rev-end{flex:none;border:1px solid var(--line,#d5dad6);background:transparent;color:var(--muted);font:inherit;font-size:12.5px;font-weight:600;padding:3px 11px;border-radius:99px;cursor:pointer}
+.dgoal .rev-end:hover{color:var(--ink);border-color:var(--ink)}
 .dgoal .dbar i{display:block;height:100%;border-radius:99px;background:var(--accent,#2e8b6a);transition:width .5s ease}
 @media (max-width:720px){.mstoast{bottom:calc(92px + env(safe-area-inset-bottom,0px))}}
 
@@ -1580,4 +1582,91 @@ button.me .me-av{flex:none}
   .acct-mini{margin-left:auto}
   .backbar{display:inline-flex;align-items:center;gap:4px;align-self:flex-start;min-height:44px;padding:0 12px 0 4px;border:0;background:transparent;color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
   .backbar .ic{width:22px;height:22px}
+}
+
+/* ---- Journey: wide screens get two columns (where you are and who is where on the left, the map on the right); phones keep one column ---- */
+.gram > .jy{flex:1 1 100%;min-width:0;max-width:1180px}
+.jy-side,.jy-main{display:contents}
+.jy-friendsp{order:5}
+.jy-fr-t small{line-height:1.3}
+.jy-dot{cursor:pointer;outline:none}
+.jy-dot .hit{fill:transparent}
+.jy-dot .dc{fill:var(--lv1s);stroke:var(--ink);stroke-width:1.4}
+.jy-dot.c1 .dc{fill:var(--jade-soft)}
+.jy-dot.c2 .dc{fill:var(--amber-soft)}
+.jy-dot.c3 .dc{fill:var(--panel2)}
+.jy-dot.me .dc{fill:var(--seal);stroke:var(--panel);stroke-width:2}
+.jy-dot text{font-size:8.5px;font-weight:700;fill:var(--ink);pointer-events:none}
+.jy-dot.me text{fill:var(--on-seal);font-size:8px}
+.jy-dot:hover .dc,.jy-dot:focus-visible .dc{stroke-width:2.4}
+.jy-now{order:1}.jy-fbar{order:1}.jy-card{order:2}.jy-tabs{order:3}.jy-main > .jy-panel{order:4}
+@media (min-width:1000px){
+  .jy{display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);gap:18px 24px;align-items:start;padding:20px}
+  .jy > .banner{grid-column:1 / -1}
+  .jy-side{display:flex;flex-direction:column;gap:14px;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;overscroll-behavior:contain}
+  .jy-main{display:flex;flex-direction:column;gap:14px;min-width:0}
+  .jy-friendsp{order:3}
+  .jy-map{max-height:calc(100vh - 230px);margin:0 auto}
+  .jy-card .jy-photo img{max-height:200px}
+}
+
+/* ---- phone: Path page and the new-word lesson fit the screen ---- */
+@media (max-width:700px){
+  .pth{gap:10px}
+  .pth-head{padding:12px 14px;gap:8px}
+  .pth-head .h2{font-size:18px}
+  .pth-blurb{display:none}
+  .pth-next{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px 12px;padding:12px 14px}
+  .pth-next .kick{grid-column:1 / -1}
+  .pth-next-t{grid-column:1;font-size:19px}
+  .pth-next-s{grid-column:1;margin:0;font-size:14px}
+  .pth-next-s .zh{font-size:18px}
+  .pth-next .btn{grid-column:2;grid-row:2 / span 2;align-self:center;min-height:44px;padding:0 22px}
+  .pth-uh{padding:12px 14px;gap:12px}
+  .pth-un{width:30px;height:30px;font-size:14px}
+  .pth-ut b{font-size:16.5px}
+  .pth-ut .muted{font-size:13.5px}
+  .pth-trail{padding:8px 0 12px}
+  .pth-row{height:86px}
+  .pth-link{top:-50px;height:86px}
+  .pth-node{top:6px;width:60px;height:60px;margin-left:-30px}
+  .pth-glyph{font-size:28px}
+  .pth-label{top:6px}
+  .pth-label b{font-size:15px}
+
+  /* the lesson: no page scrolling while meeting new words */
+  .app.am .main > .quiz.pl{flex:1 1 auto;min-height:0;max-width:none;gap:8px;overflow-y:auto;overscroll-behavior:contain}
+  .app.am .pl .q-top{flex:0 0 auto;gap:10px}
+  .app.am .pl .q-top .btn{min-height:36px;padding:0 12px}
+  .app.am .pl .pl-phase{font-size:13px}
+  .app.am .pl-meet{flex:1 1 auto;min-height:0;justify-content:center;gap:6px;padding:10px 14px;border-radius:22px;overflow-y:auto}
+  .app.am .pl-w{font-size:clamp(48px,10dvh,78px)}
+  .app.am .pl-py{font-size:clamp(20px,3.4dvh,26px);margin-top:-2px}
+  .app.am .pl-mean b{font-size:19px}
+  .app.am .pl-row{gap:12px}
+  .app.am .pl-row .listen.sm{width:46px;height:46px}
+  .app.am .pl-built{gap:8px}
+  .app.am .pl-ch{padding:2px 10px}
+  .app.am .pl-ch .zh{font-size:21px}
+  .app.am .pl-ex{padding:8px 12px;gap:1px}
+  .app.am .pl-ex .btn{margin-top:4px;min-height:32px}
+  .app.am .pl-tip{display:none}
+  .app.am .pl > .btn.pri.big{flex:0 0 auto;align-self:stretch !important;min-height:48px}
+}
+@media (max-width:700px){
+  .app.scr-path .top > div:first-child{display:none}
+  .app.scr-path .top{margin:0}
+  .app.am.scr-plesson .subnav{display:none}
+  .pth-head-t .muted{font-size:13.5px}
+}
+
+/* phone: the "new stop" ping sits just above the tab bar instead of floating over the page */
+@media (max-width:700px){.xp-ping{top:auto;right:auto;left:12px;bottom:calc(74px + env(safe-area-inset-bottom,0px));flex-direction:row;align-items:center;gap:8px;padding:7px 12px;font-size:13px}.xp-ping b{font-size:13.5px}}
+
+/* phone Today: the greeting on its own line, the four pills in one row under it */
+@media (max-width:700px){
+  .app.scr-home .top{flex-wrap:wrap;align-items:flex-start}
+  .app.scr-home .top > div:first-child{flex:1 1 100%}
+  .app.scr-home .stats{flex:1 1 100%;flex-wrap:wrap;justify-content:flex-start;gap:6px}
+  .app.scr-home .stats .pill{height:32px;padding:0 9px;font-size:13px}
 }

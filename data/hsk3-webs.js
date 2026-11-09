@@ -3295,6 +3295,706 @@ window.HSK3_WEBS = {
      ]
     }
    ]
+  },
+  {
+   "hub": "开",
+   "py": "kāi",
+   "en": "to open; to start",
+   "words": [
+    {
+     "zh": "开花",
+     "parts": [
+      [
+       "开",
+       "open"
+      ],
+      [
+       "花",
+       "flower"
+      ]
+     ]
+    },
+    {
+     "zh": "开会",
+     "parts": [
+      [
+       "开",
+       "hold"
+      ],
+      [
+       "会",
+       "meeting"
+      ]
+     ]
+    },
+    {
+     "zh": "开机",
+     "parts": [
+      [
+       "开",
+       "turn on"
+      ],
+      [
+       "机",
+       "machine"
+      ]
+     ]
+    },
+    {
+     "zh": "开心",
+     "parts": [
+      [
+       "开",
+       "open"
+      ],
+      [
+       "心",
+       "heart"
+      ]
+     ]
+    },
+    {
+     "zh": "分开",
+     "parts": [
+      [
+       "分",
+       "divide"
+      ],
+      [
+       "开",
+       "apart"
+      ]
+     ]
+    },
+    {
+     "zh": "离开",
+     "parts": [
+      [
+       "离",
+       "leave"
+      ],
+      [
+       "开",
+       "away"
+      ]
+     ]
+    }
+   ],
+   "gaps": [
+    {
+     "en": "My phone is not on yet, so I cannot call you now.",
+     "zh": "手机还没___，我现在不能给你打电话。",
+     "ans": "开机",
+     "opts": [
+      "开机",
+      "开会",
+      "开花",
+      "开心"
+     ]
+    },
+    {
+     "en": "The company will have a meeting this afternoon, and everyone has to go.",
+     "zh": "公司下午要___，大家都要去。",
+     "ans": "开会",
+     "opts": [
+      "开会",
+      "开机",
+      "开花",
+      "离开"
+     ]
+    },
+    {
+     "en": "Today is my birthday and I am very happy.",
+     "zh": "今天是我的生日，我很___。",
+     "ans": "开心",
+     "opts": [
+      "开心",
+      "开会",
+      "开机",
+      "分开"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "见",
+   "py": "jiàn",
+   "en": "to see; to meet",
+   "words": [
+    {
+     "zh": "不见",
+     "parts": [
+      [
+       "不",
+       "not"
+      ],
+      [
+       "见",
+       "see"
+      ]
+     ]
+    },
+    {
+     "zh": "常见",
+     "parts": [
+      [
+       "常",
+       "often"
+      ],
+      [
+       "见",
+       "see"
+      ]
+     ]
+    },
+    {
+     "zh": "见面",
+     "parts": [
+      [
+       "见",
+       "meet"
+      ],
+      [
+       "面",
+       "face"
+      ]
+     ]
+    },
+    {
+     "zh": "遇见",
+     "parts": [
+      [
+       "遇",
+       "come across"
+      ],
+      [
+       "见",
+       "see"
+      ]
+     ]
+    }
+   ],
+   "gaps": [
+    {
+     "en": "We have not met for a long time. How are you?",
+     "zh": "我们很久没有___了，你好吗？",
+     "ans": "见面",
+     "opts": [
+      "见面",
+      "不见",
+      "常见",
+      "遇见"
+     ]
+    },
+    {
+     "en": "I ran into an old classmate on the road.",
+     "zh": "我在路上___了一个老同学。",
+     "ans": "遇见",
+     "opts": [
+      "遇见",
+      "见面",
+      "不见",
+      "常见"
+     ]
+    },
+    {
+     "en": "This kind of bird is very common here.",
+     "zh": "这种鸟在这里很___。",
+     "ans": "常见",
+     "opts": [
+      "常见",
+      "不见",
+      "见面",
+      "遇见"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "出",
+   "py": "chū",
+   "en": "to go out; to come out",
+   "words": [
+    {
+     "zh": "出发",
+     "parts": [
+      [
+       "出",
+       "out"
+      ],
+      [
+       "发",
+       "set off"
+      ]
+     ]
+    },
+    {
+     "zh": "出生",
+     "parts": [
+      [
+       "出",
+       "out"
+      ],
+      [
+       "生",
+       "be born"
+      ]
+     ]
+    },
+    {
+     "zh": "出院",
+     "parts": [
+      [
+       "出",
+       "out"
+      ],
+      [
+       "院",
+       "hospital"
+      ]
+     ]
+    }
+   ],
+   "gaps": [
+    {
+     "en": "We set off at seven tomorrow morning. Do not be late.",
+     "zh": "我们明天早上七点___，不要晚。",
+     "ans": "出发",
+     "opts": [
+      "出发",
+      "出生",
+      "出院",
+      "发生"
+     ]
+    },
+    {
+     "en": "I was born in China.",
+     "zh": "我是在中国___的。",
+     "ans": "出生",
+     "opts": [
+      "出生",
+      "出发",
+      "出院",
+      "发生"
+     ]
+    },
+    {
+     "en": "He is better now and can leave the hospital next week.",
+     "zh": "他的病好了，下星期可以___。",
+     "ans": "出院",
+     "opts": [
+      "出院",
+      "出发",
+      "出生",
+      "发生"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "放",
+   "py": "fàng",
+   "en": "to let go; to put",
+   "words": [
+    {
+     "zh": "放假",
+     "parts": [
+      [
+       "放",
+       "let go"
+      ],
+      [
+       "假",
+       "holiday"
+      ]
+     ]
+    },
+    {
+     "zh": "放心",
+     "parts": [
+      [
+       "放",
+       "put"
+      ],
+      [
+       "心",
+       "heart"
+      ]
+     ]
+    },
+    {
+     "zh": "放学",
+     "parts": [
+      [
+       "放",
+       "let out"
+      ],
+      [
+       "学",
+       "school"
+      ]
+     ]
+    }
+   ],
+   "gaps": [
+    {
+     "en": "School has a holiday next week, so we can go travelling.",
+     "zh": "下个星期学校___，我们可以去旅游。",
+     "ans": "放假",
+     "opts": [
+      "放假",
+      "放心",
+      "放学",
+      "出发"
+     ]
+    },
+    {
+     "en": "Please rest assured, I will look after the children well.",
+     "zh": "请___，我会照顾好孩子。",
+     "ans": "放心",
+     "opts": [
+      "放心",
+      "放假",
+      "放学",
+      "出院"
+     ]
+    },
+    {
+     "en": "The children finish school at four in the afternoon, and I go to pick them up.",
+     "zh": "孩子们下午四点___，我去接他们。",
+     "ans": "放学",
+     "opts": [
+      "放学",
+      "放假",
+      "放心",
+      "出发"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "比",
+   "py": "bǐ",
+   "en": "to compare",
+   "words": [
+    {
+     "zh": "比较",
+     "parts": [
+      [
+       "比",
+       "compare"
+      ],
+      [
+       "较",
+       "rather"
+      ]
+     ]
+    },
+    {
+     "zh": "比如",
+     "parts": [
+      [
+       "比",
+       "compare"
+      ],
+      [
+       "如",
+       "like"
+      ]
+     ]
+    },
+    {
+     "zh": "比赛",
+     "parts": [
+      [
+       "比",
+       "compete"
+      ],
+      [
+       "赛",
+       "match"
+      ]
+     ]
+    }
+   ],
+   "gaps": [
+    {
+     "en": "I like noodles better. I do not like rice so much.",
+     "zh": "我___喜欢吃面条儿，不太喜欢米饭。",
+     "ans": "比较",
+     "opts": [
+      "比较",
+      "比如",
+      "比赛",
+      "不同"
+     ]
+    },
+    {
+     "en": "I like many fruits, for example apples and watermelon.",
+     "zh": "我喜欢很多水果，___苹果和西瓜。",
+     "ans": "比如",
+     "opts": [
+      "比如",
+      "比较",
+      "比赛",
+      "不同"
+     ]
+    },
+    {
+     "en": "There is a football match tomorrow afternoon. Let us go and watch it together.",
+     "zh": "明天下午有足球___，我们一起去看。",
+     "ans": "比赛",
+     "opts": [
+      "比赛",
+      "比较",
+      "比如",
+      "同意"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "同",
+   "py": "tóng",
+   "en": "same; together",
+   "words": [
+    {
+     "zh": "不同",
+     "parts": [
+      [
+       "不",
+       "not"
+      ],
+      [
+       "同",
+       "same"
+      ]
+     ]
+    },
+    {
+     "zh": "同事",
+     "parts": [
+      [
+       "同",
+       "same"
+      ],
+      [
+       "事",
+       "work"
+      ]
+     ]
+    },
+    {
+     "zh": "同意",
+     "parts": [
+      [
+       "同",
+       "same"
+      ],
+      [
+       "意",
+       "opinion"
+      ]
+     ]
+    }
+   ],
+   "gaps": [
+    {
+     "en": "He and I are colleagues. We work at the same company.",
+     "zh": "他和我是___，我们在一个公司工作。",
+     "ans": "同事",
+     "opts": [
+      "同事",
+      "同意",
+      "不同",
+      "比较"
+     ]
+    },
+    {
+     "en": "You are right. I agree with you.",
+     "zh": "你说得对，我很___你的话。",
+     "ans": "同意",
+     "opts": [
+      "同意",
+      "同事",
+      "不同",
+      "比较"
+     ]
+    },
+    {
+     "en": "The meanings of these two characters are very different.",
+     "zh": "这两个字的意思很___。",
+     "ans": "不同",
+     "opts": [
+      "不同",
+      "同事",
+      "同意",
+      "比较"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "家",
+   "py": "jiā",
+   "en": "home; family; expert",
+   "words": [
+    {
+     "zh": "搬家",
+     "parts": [
+      [
+       "搬",
+       "move"
+      ],
+      [
+       "家",
+       "home"
+      ]
+     ]
+    },
+    {
+     "zh": "国家",
+     "parts": [
+      [
+       "国",
+       "country"
+      ],
+      [
+       "家",
+       "family"
+      ]
+     ]
+    },
+    {
+     "zh": "画家",
+     "parts": [
+      [
+       "画",
+       "paint"
+      ],
+      [
+       "家",
+       "expert"
+      ]
+     ]
+    }
+   ],
+   "gaps": [
+    {
+     "en": "We will move house next month.",
+     "zh": "我们下个月要___。",
+     "ans": "搬家",
+     "opts": [
+      "搬家",
+      "国家",
+      "画家",
+      "放假"
+     ]
+    },
+    {
+     "en": "China is a very big country.",
+     "zh": "中国是一个很大的___。",
+     "ans": "国家",
+     "opts": [
+      "国家",
+      "搬家",
+      "画家",
+      "放假"
+     ]
+    },
+    {
+     "en": "He is a very famous painter.",
+     "zh": "他是一个很有名的___。",
+     "ans": "画家",
+     "opts": [
+      "画家",
+      "国家",
+      "搬家",
+      "放假"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "单",
+   "py": "dān",
+   "en": "single; list",
+   "words": [
+    {
+     "zh": "菜单",
+     "parts": [
+      [
+       "菜",
+       "dish"
+      ],
+      [
+       "单",
+       "list"
+      ]
+     ]
+    },
+    {
+     "zh": "简单",
+     "parts": [
+      [
+       "简",
+       "simple"
+      ],
+      [
+       "单",
+       "single"
+      ]
+     ]
+    },
+    {
+     "zh": "名单",
+     "parts": [
+      [
+       "名",
+       "name"
+      ],
+      [
+       "单",
+       "list"
+      ]
+     ]
+    }
+   ],
+   "gaps": [
+    {
+     "en": "Please show me the menu. I want to order food.",
+     "zh": "请给我看看___，我想点菜。",
+     "ans": "菜单",
+     "opts": [
+      "菜单",
+      "简单",
+      "名单",
+      "同意"
+     ]
+    },
+    {
+     "en": "This question is very easy. I can do it.",
+     "zh": "这个问题很___，我会做。",
+     "ans": "简单",
+     "opts": [
+      "简单",
+      "菜单",
+      "名单",
+      "同意"
+     ]
+    },
+    {
+     "en": "Your name is on this list.",
+     "zh": "你的名字在这个___上。",
+     "ans": "名单",
+     "opts": [
+      "名单",
+      "菜单",
+      "简单",
+      "同意"
+     ]
+    }
+   ]
   }
  ],
  "opps": [

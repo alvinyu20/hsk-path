@@ -2571,6 +2571,369 @@ window.HSK1_WEBS = {
      ]
     }
    ]
+  },
+  {
+   "hub": "中",
+   "py": "zhōng",
+   "en": "middle; China",
+   "words": [
+    {
+     "zh": "中午",
+     "parts": [
+      [
+       "中",
+       "middle"
+      ],
+      [
+       "午",
+       "noon"
+      ]
+     ]
+    },
+    {
+     "zh": "中国",
+     "parts": [
+      [
+       "中",
+       "middle"
+      ],
+      [
+       "国",
+       "country"
+      ]
+     ]
+    },
+    {
+     "zh": "中学",
+     "parts": [
+      [
+       "中",
+       "middle"
+      ],
+      [
+       "学",
+       "school"
+      ]
+     ]
+    },
+    {
+     "zh": "中文",
+     "parts": [
+      [
+       "中",
+       "China"
+      ],
+      [
+       "文",
+       "writing, language"
+      ]
+     ]
+    }
+   ],
+   "gaps": [
+    {
+     "en": "We eat rice at noon.",
+     "zh": "我们___吃米饭。",
+     "ans": "中午",
+     "opts": [
+      "中午",
+      "中国",
+      "中学",
+      "中文"
+     ]
+    },
+    {
+     "en": "Can you speak Chinese?",
+     "zh": "你会说___吗？",
+     "ans": "中文",
+     "opts": [
+      "中文",
+      "中午",
+      "中学",
+      "中国"
+     ]
+    },
+    {
+     "en": "My friend is Chinese.",
+     "zh": "我朋友是___人。",
+     "ans": "中国",
+     "opts": [
+      "中国",
+      "中文",
+      "中午",
+      "中学"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "们",
+   "py": "men",
+   "en": "plural ending for people",
+   "words": [
+    {
+     "zh": "我们",
+     "parts": [
+      [
+       "我",
+       "I"
+      ],
+      [
+       "们",
+       "plural"
+      ]
+     ]
+    },
+    {
+     "zh": "你们",
+     "parts": [
+      [
+       "你",
+       "you"
+      ],
+      [
+       "们",
+       "plural"
+      ]
+     ]
+    },
+    {
+     "zh": "他们",
+     "parts": [
+      [
+       "他",
+       "he"
+      ],
+      [
+       "们",
+       "plural"
+      ]
+     ]
+    },
+    {
+     "zh": "她们",
+     "parts": [
+      [
+       "她",
+       "she"
+      ],
+      [
+       "们",
+       "plural"
+      ]
+     ]
+    },
+    {
+     "zh": "它们",
+     "parts": [
+      [
+       "它",
+       "it"
+      ],
+      [
+       "们",
+       "plural"
+      ]
+     ]
+    }
+   ],
+   "gaps": [
+    {
+     "en": "My friend and I went to a shop, and we both bought clothes.",
+     "zh": "我和朋友去商店，___都买了衣服。",
+     "ans": "我们",
+     "opts": [
+      "我们",
+      "你们",
+      "他们",
+      "它们"
+     ]
+    },
+    {
+     "en": "The teacher asks the students: can you speak Chinese?",
+     "zh": "老师问学生：___会说汉语吗？",
+     "ans": "你们",
+     "opts": [
+      "你们",
+      "他们",
+      "我们",
+      "她们"
+     ]
+    },
+    {
+     "en": "My two older sisters are pretty, and they are both doctors.",
+     "zh": "我的两个姐姐很漂亮，___都是医生。",
+     "ans": "她们",
+     "opts": [
+      "她们",
+      "他们",
+      "它们",
+      "我们"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "里",
+   "py": "lǐ",
+   "en": "inside; here and there",
+   "words": [
+    {
+     "zh": "这里",
+     "parts": [
+      [
+       "这",
+       "this"
+      ],
+      [
+       "里",
+       "inside, place"
+      ]
+     ]
+    },
+    {
+     "zh": "那里",
+     "parts": [
+      [
+       "那",
+       "that"
+      ],
+      [
+       "里",
+       "inside, place"
+      ]
+     ]
+    },
+    {
+     "zh": "哪里",
+     "parts": [
+      [
+       "哪",
+       "which"
+      ],
+      [
+       "里",
+       "inside, place"
+      ]
+     ]
+    }
+   ],
+   "gaps": [
+    {
+     "en": "Excuse me, where is your school?",
+     "zh": "请问，你的学校在___？",
+     "ans": "哪里",
+     "opts": [
+      "哪里",
+      "这里",
+      "那里",
+      "这边"
+     ]
+    },
+    {
+     "en": "I am here, and you are over there.",
+     "zh": "我在___，你在那里。",
+     "ans": "这里",
+     "opts": [
+      "这里",
+      "那里",
+      "哪里",
+      "这边"
+     ]
+    },
+    {
+     "en": "The school is over there, not here.",
+     "zh": "学校在___，不在这里。",
+     "ans": "那里",
+     "opts": [
+      "那里",
+      "这里",
+      "哪里",
+      "这边"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "边",
+   "py": "biān",
+   "en": "side",
+   "words": [
+    {
+     "zh": "外边",
+     "parts": [
+      [
+       "外",
+       "outside"
+      ],
+      [
+       "边",
+       "side"
+      ]
+     ]
+    },
+    {
+     "zh": "这边",
+     "parts": [
+      [
+       "这",
+       "this"
+      ],
+      [
+       "边",
+       "side"
+      ]
+     ]
+    },
+    {
+     "zh": "那边",
+     "parts": [
+      [
+       "那",
+       "that"
+      ],
+      [
+       "边",
+       "side"
+      ]
+     ]
+    }
+   ],
+   "gaps": [
+    {
+     "en": "The bookshop is outside the school.",
+     "zh": "书店在学校的___。",
+     "ans": "外边",
+     "opts": [
+      "外边",
+      "这边",
+      "那边",
+      "这里"
+     ]
+    },
+    {
+     "en": "I am on this side, and you are on that side.",
+     "zh": "我在这边，你在___。",
+     "ans": "那边",
+     "opts": [
+      "那边",
+      "这边",
+      "外边",
+      "这里"
+     ]
+    },
+    {
+     "en": "Please come over to our side.",
+     "zh": "请到我们___来。",
+     "ans": "这边",
+     "opts": [
+      "这边",
+      "那边",
+      "外边",
+      "哪里"
+     ]
+    }
+   ]
   }
  ],
  "opps": [

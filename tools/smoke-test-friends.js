@@ -90,7 +90,7 @@ const INVITE = 'ABCD-EFGH-JKLM';
   await A.page.locator('.jy-go').click();   // the first flight is free
   await A.page.evaluate(() => window.shanlu.friendsPush({}));
   const shared = await A.page.evaluate(() => window.shanlu.friendStats().jy);
-  check(shared && shared.n === 1 && shared.here && Object.keys(shared).sort().join() === 'done,here,n,per' && !JSON.stringify(shared).includes('airport'), 'the Journey totals that are shared hold counts and region names only');
+  check(shared && shared.n === 1 && shared.here && Object.keys(shared).sort().join() === 'at,done,here,n,per' && typeof shared.at === 'string' && shared.at.indexOf(shared.here + '.') === 0, 'the Journey totals that are shared hold counts, region names and the stop reached last (a game place, no real location)');
   await B.page.evaluate(() => window.shanlu.go('journey'));
   await B.page.evaluate(() => window.shanlu.friendsRefresh(true));
   await B.page.waitForSelector('.jy-fr');

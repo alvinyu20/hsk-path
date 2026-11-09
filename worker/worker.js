@@ -102,7 +102,9 @@ function cleanJourney(j) {
   if (j.done && typeof j.done === 'object') for (const k of Object.keys(j.done)) { if (count++ >= 40) break; const d = j.done[k]; if (id(k) && typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d)) done[k] = d; }
   count = 0;
   if (j.per && typeof j.per === 'object') for (const k of Object.keys(j.per)) { if (count++ >= 40) break; const c = j.per[k]; if (id(k) && typeof c === 'number' && Number.isFinite(c)) per[k] = Math.max(0, Math.min(5000, Math.round(c))); }
-  return { n, here: id(j.here) || '', done, per };
+  // the stop reached last, as an id like sichuan.d-mapo-tofu: friends see which city you are in; it is the game's map, not a real location
+  const at = typeof j.at === 'string' && /^[a-z]{2,16}\.[a-z0-9-]{1,90}$/.test(j.at) ? j.at : '';
+  return { n, here: id(j.here) || '', at, done, per };
 }
 
 async function whoAmI(req, env) {

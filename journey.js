@@ -157,6 +157,15 @@
     const h = hash(s.id); const ang = (h % 360) * Math.PI / 180; const rad = s.k === 'T' ? 0 : 0.04 + ((h >>> 9) % 100) / 100 * 0.09;
     return [C.lat + Math.sin(ang) * rad, C.lon + Math.cos(ang) * rad * 1.1];
   }
+  // A place on the country map (the 350 x 290 one in data/journey-map.js): the same Albers equal-area cone the outlines were drawn with
+  // (centre 105 E, 36 N, parallels 27 and 45), with the scale and shift fitted to the outlines (317 of 331 cities fall inside their own region).
+  const AL = (() => { const d = Math.PI / 180, s0 = Math.sin(27 * d), n = (s0 + Math.sin(45 * d)) / 2, c = 1 + s0 * (2 * n - s0), r0 = Math.sqrt(c) / n;
+    const fw = (lo, la) => { const r = Math.sqrt(c - 2 * n * Math.sin(la)) / n; return [r * Math.sin(lo * n), r0 - r * Math.cos(lo * n)]; };
+    return { d, fw, ctr: fw(0, 36 * d) }; })();
+  function projectCountry(lat, lon) {
+    const p = AL.fw((lon - 105) * AL.d, lat * AL.d);
+    return [190 + 438 * (p[0] - AL.ctr[0]), 149.5 - 438 * (p[1] - AL.ctr[1])];
+  }
   function project(mp, lat, lon) {
     const la = lat * Math.PI / 180, lo = lon * Math.PI / 180;
     return [mp.tx + mp.k * lo, mp.ty - mp.k * Math.log(Math.tan(Math.PI / 4 + la / 2))];
@@ -170,6 +179,6 @@
     return function () { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
   }
 
-  const api = { META, SMALL, LADDER, FLAT, costOf, cum, paidFor, build, fresh, ensure, step, meter, regionStats, pinLatLon, project, shuffle, slug, KINDS, seedOf, rngFor };
+  const api = { META, SMALL, LADDER, FLAT, costOf, cum, paidFor, build, fresh, ensure, step, meter, regionStats, pinLatLon, project, projectCountry, shuffle, slug, KINDS, seedOf, rngFor };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.ShanluJourney = api;
 })(typeof window !== 'undefined' ? window : globalThis);

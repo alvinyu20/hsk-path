@@ -365,12 +365,13 @@
     try { const jy = jyShare(); if (jy) out.jy = jy; } catch (e) {}
     return out;
   };
-  // What friends can see of the Journey: how many stops, which regions are stamped (and when), the region you are in, and stops per region. No stop names.
+  // What friends can see of the Journey: how many stops, which regions are stamped (and when), the region you are in, stops per region, and the stop you reached last (an id, so
+  // they can see which city you are in). Nothing about where you really are: this is the game's map, not your location.
   const jyShare = () => {
     const st = jyRead(); if (!st || !JWORLD || !st.seen.length) return null;
     const per = {}; st.seen.forEach(id => { const s = JWORLD.byStop[id]; if (s) per[s.rid] = (per[s.rid] || 0) + 1; });
     const done = {}; Object.keys(st.done || {}).forEach(id => { if (JWORLD.byRegion[id]) done[id] = st.done[id]; });
-    return { n:st.seen.length, here:st.reg && st.started ? st.reg : '', done, per };
+    return { n:st.seen.length, here:st.reg && st.started ? st.reg : '', at:st.seen[st.seen.length - 1] || '', done, per };
   };
 
   // every saved progress (each level and All levels), as stored; used by the achievements for things that span levels
@@ -2487,6 +2488,14 @@
       this.rLast = g;
       this.setState({ qchecked:true, qcorrect:ok, qfeed:feed });
     };
+    // stop part-way: what is answered is already saved card by card; the rest simply stays due. With some cards done you get the normal summary.
+    endSession = () => {
+      const S = this.state; if (!S.rq.length || S.rcomplete) return;
+      this.rvKey = null; this.rLast = null;
+      if (!S.rdone) { this.setState({ rq:[], rtotal:0, rflip:false, rpy:false, qchecked:false, qchoice:null, qtyped:'', qfeed:'' }); return; }
+      this.setState({ rq:[], rtotal:S.rdone, rcomplete:true, rflip:false, rpy:false, qchecked:false, qchoice:null, qtyped:'', qfeed:'', dayMin:S.dayMin + Math.max(1, Math.round(S.rdone * 0.5)) });
+      if (onbRead().s === 'go') this.onbSet({ s:'done', d:ymd(new Date()) });
+    };
     practiceAnyway = () => {
       const q = buildQueue(this.state.ws, true, this.state.lrn);
       this.lapsed = {}; this.rvKey = null;
@@ -2685,11 +2694,32 @@
       const fm = S.jyFriend ? fMembers.find(m => m.id === S.jyFriend) : null;
       const vs = fm ? { done:fm.stats.jy.done || {}, reg:fm.stats.jy.here || null, started:!!fm.stats.jy.here } : st;   // the journey being looked at
       const stampCount = (j) => Object.keys(j.done || {}).filter(id => JWORLD.byRegion[id]).length;
+      // where someone is now: the city of the stop they reached last (or just the region, if their device has not shared that yet)
+      const hereOf = (j) => {
+        const stop = j.at ? JWORLD.byStop[j.at] : null; const C = stop ? JWORLD.byCity[stop.cid] : null; const rid = stop ? stop.rid : (j.here && JWORLD.byRegion[j.here] ? j.here : '');
+        if (!rid) return null;
+        const place = C ? (C.muni ? C.en : C.en + ', ' + rName(rid)) : rName(rid);
+        let xy = null; const mr = JMAP.regions[rid];
+        if (C && C.lat != null && mr && mr.cd) xy = JY.projectCountry(C.lat, C.lon); else if (mr && mr.cc) xy = mr.cc;
+        return { place, rid, stop:stop && stop.k !== 'P' && stop.k !== 'T' ? stop.en : '', xy };
+      };
+      const fWhere = (m) => hereOf(m.stats.jy);
       Object.assign(out, { jyMine:!fm, jyFriendMode:!!fm, jyFriendsShow:!fm && fMembers.length > 0,
-        jyFriends:fMembers.map((m, i) => ({ name:m.name, initial:window.ShanluFriends.initial(m.name), cls:'c' + (i % 4), sub:plural(m.stats.jy.n, 'stop', 'stops') + ' · ' + plural(stampCount(m.stats.jy), 'stamp', 'stamps'),
-          open:() => { SFX.play('ok'); this.setState({ jyFriend:m.id, jyTab:'map', jyReg:null, jySel:null, jyOpen:null, jyRv:null }); try { window.scrollTo(0, 0); } catch (e) {} } })),
-        jyFriendBack:() => this.setState({ jyFriend:null, jyTab:'map' }) });
-      if (fm) Object.assign(out, { jyFriendName:fm.name, jyFriendSub:plural(fm.stats.jy.n, 'stop', 'stops') + ' · ' + stampCount(fm.stats.jy) + ' of ' + Object.keys(JY.META).length + ' regions stamped' });
+        jyFriends:fMembers.map((m, i) => { const w = fWhere(m); return { name:m.name, initial:window.ShanluFriends.initial(m.name), cls:'c' + (i % 4), sub:(w ? 'Now in ' + w.place + (w.stop ? ' · at ' + w.stop : '') + ' · ' : '') + plural(m.stats.jy.n, 'stop', 'stops') + ' · ' + plural(stampCount(m.stats.jy), 'stamp', 'stamps'),
+          open:() => { SFX.play('ok'); this.setState({ jyFriend:m.id, jyTab:'map', jyReg:null, jySel:null, jyOpen:null, jyRv:null }); try { window.scrollTo(0, 0); } catch (e) {} } }; }),
+        jyFriendBack:() => this.setState({ jyFriend:null, jyTab:'map' }), jyDots:[], jyHasDots:false });
+      // everyone's place on the country map (you and your friends), spread out a little where several are in the same city
+      if (!fm) {
+        const raw = [];
+        const me = st.started && st.seen.length ? hereOf({ here:st.reg, at:st.seen[st.seen.length - 1] }) : null;
+        if (me && me.xy) raw.push({ w:me, name:'You', initial:'You', cls:'me', open:() => this.jyShowReg(st.reg) });
+        fMembers.forEach((m, i) => { const w = fWhere(m); if (w && w.xy) raw.push({ w, name:m.name, initial:window.ShanluFriends.initial(m.name), cls:'c' + (i % 4), open:() => this.setState({ jyFriend:m.id, jyTab:'map', jyReg:null, jySel:null, jyOpen:null, jyRv:null }) }); });
+        const groups = {}; raw.forEach(r => { const k = Math.round(r.w.xy[0] / 9) + ',' + Math.round(r.w.xy[1] / 9); (groups[k] = groups[k] || []).push(r); });
+        const dots = [];
+        Object.keys(groups).forEach(k => { const g = groups[k]; g.forEach((r, j) => { const a = g.length > 1 ? j * 2 * Math.PI / g.length - Math.PI / 2 : 0; const rad = g.length > 1 ? 8 : 0; dots.push({ x:Math.round((r.w.xy[0] + Math.cos(a) * rad) * 10) / 10, y:Math.round((r.w.xy[1] + Math.sin(a) * rad) * 10) / 10, initial:r.initial === 'You' ? '我' : r.initial, cls:r.cls, label:(r.name === 'You' ? 'You are' : r.name + ' is') + ' in ' + r.w.place, open:r.open }); }); });
+        out.jyHasDots = dots.length > 1 || (dots.length === 1 && fMembers.length > 0); out.jyDots = out.jyHasDots ? dots : [];
+      }
+      if (fm) { const fw = fWhere(fm); Object.assign(out, { jyFriendName:fm.name, jyFriendSub:(fw ? 'Now in ' + fw.place + ' · ' : '') + plural(fm.stats.jy.n, 'stop', 'stops') + ' · ' + stampCount(fm.stats.jy) + ' of ' + Object.keys(JY.META).length + ' regions stamped' }); }
 
       // where you are and the XP bar
       const done = !R;
@@ -4265,7 +4295,7 @@
 
       return {
         focusCls:(S.exm && (S.exm.stage === 'run' || S.exm.stage === 'break') && S.screen === 'exam') || (S.screen === 'quiz' && !S.qdone) || (S.screen === 'plesson' && S.pl && !S.pl.done) ? 'focus' : '',
-        scrCls:'scr-' + S.screen + (S.screen === 'review' || S.screen === 'listen' || S.screen === 'speak' ? ' am' : ''),   // am = app mode on a phone: these screens fill the screen and do not scroll as a page
+        scrCls:'scr-' + S.screen + (S.screen === 'review' || S.screen === 'listen' || S.screen === 'speak' || (S.screen === 'plesson' && S.pl && !S.pl.done) ? ' am' : ''),   // am = app mode on a phone: these screens fill the screen and do not scroll as a page
         gHomeCls:gcls('home'), gLearnCls:gcls('learn'), gReviewCls:gcls('review'), gTalkCls:gcls('talk'), gJourneyCls:gcls('journey'),
         gHome:() => this.goGroup('home'), gLearn:() => this.goGroup('learn'), gReview:() => this.goGroup('review'), gTalk:() => this.goGroup('talk'), gJourney:() => this.goGroup('journey'),
         acctMiniCls:inBranch ? 'on' : '', hasBack:inBranch && curScreen !== 'acct',
@@ -4436,7 +4466,7 @@
         autoplayLabel:prefGet('autoplay', true) !== false ? 'Words play by themselves. Turn off' : 'Words wait for a tap. Turn on', autoplayToggle:() => { prefSet('autoplay', prefGet('autoplay', true) === false); this.setState({ soundTick:(this.state.soundTick || 0) + 1 }); },
         soundOn:prefGet('sound', true) !== false, soundLabel:prefGet('sound', true) !== false ? 'Sounds are on. Turn off' : 'Sounds are off. Turn on', soundToggle:() => { const on = prefGet('sound', true) !== false; prefSet('sound', !on); this.setState({ soundTick:(this.state.soundTick || 0) + 1 }); if (!on) SFX.play('ok', true); }, soundTest:() => SFX.play('ok', true), soundTestDone:() => SFX.play('done', true),
         rcHead:rcHead, rcSub:rcSub, rcAcc:rcAcc, rcAccN:rcAccN, rcStreak:streakShown, hasHard:(S.rcounts.hard || 0) > 0, rcConfetti:rcAccN >= 60,
-        inReview:!S.rcomplete && S.rq.length > 0, rcomplete:S.rcomplete, rdone:S.rdone, rtotal:S.rtotal, rxp:S.rxp, rcounts:S.rcounts,
+        inReview:!S.rcomplete && S.rq.length > 0, endSession:this.endSession, rcomplete:S.rcomplete, rdone:S.rdone, rtotal:S.rtotal, rxp:S.rxp, rcounts:S.rcounts,
         rPct:(S.rtotal ? Math.round(S.rdone / S.rtotal * 100) : 0) + '%',
         emptyNew:!S.rcomplete && S.rq.length === 0 && startedCount === 0 && lrnCount === 0,
         newWaiting:!S.rcomplete && S.rq.length === 0 && lrnCount > 0, newWaitingText:lrnCount + ' new word' + (lrnCount === 1 ? ' is' : 's are') + ' waiting. Meet them, then recall them a few cards later and once more before you finish: about ' + Math.max(2, Math.round(lrnCount * 1.2)) + ' minutes.', newWaitingBtn:'Learn ' + lrnCount + ' new word' + (lrnCount === 1 ? '' : 's'),

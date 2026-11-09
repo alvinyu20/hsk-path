@@ -109,7 +109,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await nav('Archive');
   await page.locator('button', { hasText: 'Shared character' }).click();
   const hubN = await page.evaluate(() => window.HSK3_WEBS.hubs.length);
-  check((await page.locator('[aria-label="Pick a character"] button').count()) === hubN && hubN === 28, 'HSK 3 has ' + hubN + ' shared-character groups, all listed');
+  check((await page.locator('[aria-label="Pick a character"] button').count()) === hubN && hubN === 36, 'HSK 3 has ' + hubN + ' shared-character groups, all listed');
   await page.locator('button', { hasText: /^Add all \d+ new word/ }).first().click();
   await page.waitForTimeout(80);
   const added = await page.evaluate(() => Object.keys(window.shanlu.state.wlearned));
