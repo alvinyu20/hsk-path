@@ -587,6 +587,14 @@ button.scn:hover .scn-m{text-decoration:underline}
 .ex-inst{margin:0;font-size:17px;color:var(--muted)}
 .ex-play{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .ex-pic{font-size:84px;line-height:1.1;text-align:center}
+.ex-pic-photo{display:flex;justify-content:center}
+.ex-img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;background:var(--line)}
+.ex-pic-photo .ex-img{width:min(320px,100%)}
+.ex-opt:has(.ex-img){flex-direction:column;align-items:stretch;gap:6px;padding:8px}
+.ex-opt:has(.ex-img) b{align-self:flex-start}
+.ex-opt .ex-img{width:100%}
+.exw-img{width:min(220px,100%);margin:4px 0}
+.ex-credits{margin:10px 2px 0;color:var(--muted);font-size:14px}.ex-credits ul{margin:6px 0 0;padding-left:18px}
 .ex-text{font-size:32px;line-height:1.4;text-align:center}
 .ex-opts{display:grid;gap:12px}
 .ex-opts.k-tf{grid-template-columns:repeat(2,minmax(0,1fr))}

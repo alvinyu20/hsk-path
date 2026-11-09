@@ -25,11 +25,13 @@ case "$MODE" in
     last node tools/test-journey.js
     last node tools/test-journey-media.js
     last node tools/test-journey-media-wikis.js
+    last node tools/test-exam-media.js
     last node tools/test-pinyin.js
     python3 tools/check-pinyin-course.py | tail -n 1
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-journey.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-onboarding.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-pinyin.js
+    last env NODE_PATH="$(npm root -g)" node tools/smoke-test-exam-media.js
     (cd worker && [ -d node_modules ] && node test.mjs | tail -1) || true
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-friends.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-pwa.js

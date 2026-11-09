@@ -457,7 +457,7 @@ async function run(opts) {
   return { media, misses, tried, found, missed, failed };
 }
 
-module.exports = { landmarkPhoto, setSlow: (v) => { SLOW = v; }, run, lookup, makeApi, strip, km, KEEP_LICENCES, writeMedia };
+module.exports = { fileEntry, NOT_A_PHOTO, nm, landmarkPhoto, setSlow: (v) => { SLOW = v; }, run, lookup, makeApi, strip, km, KEEP_LICENCES, writeMedia };
 
 if (require.main === module) {
   const arg = (n) => { const i = process.argv.indexOf('--' + n); return i >= 0 ? process.argv[i + 1] : ''; };

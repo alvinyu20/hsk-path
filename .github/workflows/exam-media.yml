@@ -1,0 +1,31 @@
+name: Exam photos
+
+# Looks up candidate photos (Wikimedia Commons: public domain, CC0, CC BY, CC BY-SA) for the mock-exam pictures and writes a contact sheet, review/exam-photos.html,
+# which opens at https://alvinyu20.github.io/hsk-path/review/exam-photos.html a minute or two after the run. Nothing changes in the exam itself until
+# the choices are saved in tools/exam-media-picks.json and `node tools/exam-media.js --build` is run. Run it by hand from the Actions tab.
+on:
+  workflow_dispatch:
+  push:
+    paths: ['tools/exam-media-run.txt']   # committing a change to this file also starts a run
+
+permissions:
+  contents: write
+
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Look up candidates
+        run: node tools/exam-media.js --find
+      - name: Save the candidates and the contact sheet
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/exam-media-candidates.json review/exam-photos.html
+          if git diff --cached --quiet; then echo "Nothing new."; else git commit -m "Exam photos: candidates found on Wikimedia Commons" && git pull --rebase -q && git push; fi
