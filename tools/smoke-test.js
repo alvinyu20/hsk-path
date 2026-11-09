@@ -62,9 +62,11 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
 
   const shot = async (name) => { if (shots) await page.screenshot({ path: path.join(shots, name + '.png'), fullPage: true }); };
   // desktop: the sidebar lists every screen. Phone width: five tabs, and the screens of a section in a strip under the header.
-  const PHONE_GROUP = { Home: 'Today', Path: 'Learn', Archive: 'Review', Grammar: 'Learn', Pinyin: 'Learn', 'My words': 'Review', 'Grammar review': 'Review', 'Review words': 'Review', Tests: 'Review', 'Listening lab': 'Listen & speak', Speak: 'Listen & speak', 'Level exam': 'More', Friends: 'More', Settings: 'More' };
+  const PHONE_GROUP = { Home: 'Today', Path: 'Learn', Archive: 'Review', Grammar: 'Learn', Pinyin: 'Learn', 'My words': 'Review', 'Grammar review': 'Review', 'Review words': 'Review', Tests: 'Review', 'Listening lab': 'Listen & speak', Speak: 'Listen & speak', 'Level exam': 'Review', Journey: 'Journey' };
+  const ACCT_ROW = { Friends: 'Friends', Settings: 'Settings and sync', Achievements: 'Achievements', 'How Shanlu works': 'How Shanlu works' };   // reached from the Account page
   const nav = async (label) => {
     if (page.viewportSize().width > 900) { await page.locator('nav button', { hasText: label }).first().click(); }
+    else if (ACCT_ROW[label]) { await page.locator('.acct-mini').click(); await page.waitForTimeout(80); await page.locator('.acct-row', { hasText: ACCT_ROW[label] }).first().click(); }
     else {
       const g = PHONE_GROUP[label] || label;
       await page.locator('.navg button', { hasText: g }).first().click();
@@ -445,11 +447,12 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
       await page.evaluate(() => { const a = window.shanlu; a.setState(window.__ach0); a.setState({ msQueue: [] }); });
       const am = await page.evaluate(() => { const a = window.shanlu; const m = a.achMetrics(); return { lv1: m.lv[1], lv2: !!m.lv[2], gwrote: m.gwrote }; });
       check(am.lv1 && am.lv1.total > 100 && am.lv1.lessonsTotal > 5 && am.lv2, 'the achievements know each level\'s words and lessons (' + JSON.stringify(am.lv1) + ')');
+      await page.evaluate(() => { window.shanlu.go('acct'); }); await page.waitForTimeout(150);
+      check((await page.locator('.acct-row', { hasText: 'Achievements' }).count()) === 1, 'Achievements is reached from the Account page');
       await page.evaluate(() => { window.shanlu.go('ach'); }); await page.waitForTimeout(200);
       const ach = await page.locator('.ach').innerText();
       check(/\d+ of \d+ earned/.test(ach) && /Streaks/.test(ach) && /Habits/.test(ach) && /Collecting/.test(ach) && /Friends/.test(ach) && (await page.locator('.ach-card.got').count()) >= 3 && (await page.locator('.ach-card.lock').count()) >= 10, 'the Achievements page lists earned and locked achievements by group');
       check((await page.locator('.ach-card.got', { hasText: 'Flawless session' }).count()) === 1 && (await page.locator('.ach-card.lock .ach-pb').count()) >= 3, 'earned ones are lit and locked ones show how far along you are');
-      check((await page.locator('.subnav button', { hasText: 'Achievements' }).count()) === 1 || (await page.locator('button', { hasText: 'Achievements' }).count()) >= 1, 'Achievements is in the More section');
       await page.evaluate(() => { window.SHANLU_MUTE_SFX = false; const a = window.shanlu; a.go('review'); a.practiceAnyway(); }); await page.waitForTimeout(150);
     }
   }
@@ -1377,7 +1380,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await nav('Home');
   const bar = await page.evaluate(() => { const b = document.querySelector('.navg'); const r = b.getBoundingClientRect(); return { n: b.querySelectorAll('button').length, fits: b.scrollWidth <= b.clientWidth + 1, visible: r.height > 40 && r.bottom <= window.innerHeight + 1, old: getComputedStyle(document.querySelector('.navs:not(.navg)')).display }; });
   check(bar.n === 5 && bar.fits && bar.visible && bar.old === 'none', 'on a phone the bottom bar has five tabs that all fit, with no sideways scroll (the long list is hidden) ' + JSON.stringify(bar));
-  check((await page.locator('.navg button').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()).join('|') === 'Today|Learn|Review|Listen & speak|More', 'the tabs are Today, Learn, Review, Listen & speak, More');
+  check((await page.locator('.navg button').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()).join('|') === 'Today|Learn|Review|Listen & speak|Journey', 'the tabs are Today, Learn, Review, Listen & speak, Journey');
   const homeTop = await page.evaluate(() => { const g = document.querySelector('.today-go').getBoundingClientRect(); return { y: g.bottom, h: window.innerHeight }; });
   check(homeTop.y < homeTop.h - 60, 'on a phone the main Today button is on the first screen, above the bottom bar (bottom edge at ' + Math.round(homeTop.y) + ' of ' + homeTop.h + ')');
   await page.locator('.navg button', { hasText: 'Learn' }).click();
@@ -1387,11 +1390,19 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.waitForTimeout(100);
   check((await page.evaluate(() => window.shanlu.state.screen)) === 'grammar' && (await page.locator('.navg button.on').innerText()).includes('Learn'), 'the strip switches screens inside the section and the Learn tab stays lit');
   await page.locator('.navg button', { hasText: 'Review' }).click(); await page.waitForTimeout(100);
-  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Review words|Grammar review|Tests|Archive|My words', 'the Review tab holds Review words, Grammar review, Tests, the Archive and My words');
+  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Review words|Grammar review|Tests|Level exam|Archive|My words', 'the Review tab holds Review words, Grammar review, Tests, the Level exam, the Archive and My words');
   await page.locator('.navg button', { hasText: 'Learn' }).click(); await page.waitForTimeout(100);
   check((await page.evaluate(() => window.shanlu.state.screen)) === 'grammar', 'a tab returns to the screen you last used in that section');
-  await page.locator('.navg button', { hasText: 'More' }).click(); await page.waitForTimeout(100);
-  check((await page.locator('.subnav button').allInnerTexts()).includes('Settings') && (await page.locator('.subnav button').allInnerTexts()).includes('Level exam'), 'More holds the level exam and Settings');
+  await page.locator('.navg button', { hasText: 'Journey' }).click(); await page.waitForTimeout(100);
+  check((await page.evaluate(() => window.shanlu.state.screen)) === 'journey' && (await page.locator('.navg button.on').innerText()).includes('Journey'), 'the Journey tab opens the Journey and lights up');
+  await page.locator('.acct-mini').click(); await page.waitForTimeout(100);
+  check((await page.evaluate(() => window.shanlu.state.screen)) === 'acct' && await page.locator('.navg button.on').count() === 0 && await page.locator('.acct-mini.on').count() === 1, 'the avatar opens the Account page; no tab is lit and the avatar is');
+  const acctRows = (await page.locator('.acct-row').allInnerTexts()).join(' ');
+  check(/Settings/.test(acctRows) && /Achievements/.test(acctRows), 'Settings and Achievements branch off the Account page (' + acctRows.replace(/\n/g, ' ').slice(0, 80) + ')');
+  await page.locator('.acct-row', { hasText: 'Achievements' }).click(); await page.waitForTimeout(100);
+  check(await page.locator('.backbar').isVisible() && (await page.locator('.navg button.on').count()) === 0, 'Achievements has a back link to Account, and no tab is lit');
+  await page.locator('.backbar').click(); await page.waitForTimeout(100);
+  check((await page.evaluate(() => window.shanlu.state.screen)) === 'acct' && !(await page.locator('.backbar').isVisible().catch(() => false)), 'the back link returns to the Account page');
   const slim = await page.evaluate(() => { const t = document.querySelector('.top').getBoundingClientRect(); return { h: t.height, pills: [...document.querySelectorAll('.stats .pill')].filter(p => p.offsetParent !== null).length }; });
   check(slim.h < 90 && slim.pills === 0, 'the header is one slim row on a phone, with no repeated streak and memory chips outside Today (' + Math.round(slim.h) + ' px)');
   await nav('Home');

@@ -237,7 +237,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const ctx = await mkCtx({ width: 390, height: 844 }, true);
     const page = await ctx.newPage(); watch(page);
     await page.goto(url); await page.waitForSelector('.app'); await page.waitForTimeout(200);
-    check((await page.locator('.navg button').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()).join('|') === 'Today|Learn|Review|Listen & speak|More', 'the five tabs are unchanged on a phone');
+    check((await page.locator('.navg button').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()).join('|') === 'Today|Learn|Review|Listen & speak|Journey', 'the five tabs on a phone: Today, Learn, Review, Listen & speak, Journey');
     await page.locator('.navg button', { hasText: 'Learn' }).click(); await page.waitForTimeout(150);
     check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Path|Pinyin|Grammar', 'Learn holds Path, Pinyin and Grammar');
     check((await st(page)).screen === 'path', 'Learn opens on the Path');
@@ -246,7 +246,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const clipped = await page.evaluate(() => [...document.querySelectorAll('.pth-label')].filter(l => { const r = l.getBoundingClientRect(); return r.right > window.innerWidth + 1 || r.left < -1; }).length);
     check(clipped === 0, 'no stop label runs off the screen on a phone');
     await page.locator('.navg button', { hasText: 'Review' }).click(); await page.waitForTimeout(150);
-    check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Review words|Grammar review|Tests|Archive|My words', 'Review holds Review words, Grammar review, Tests, Archive and My words');
+    check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Review words|Grammar review|Tests|Level exam|Archive|My words', 'Review holds Review words, Grammar review, Tests, Level exam, Archive and My words');
     check(await page.locator('.acct-mini').count() === 1 && await page.locator('.acct-mini').isVisible(), 'the account avatar sits in the phone header');
     const box = await page.locator('.acct-mini').boundingBox();
     check(box && Math.abs(box.width - box.height) < 2, 'the avatar is round (' + (box ? Math.round(box.width) + 'x' + Math.round(box.height) : '?') + ')');

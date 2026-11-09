@@ -1644,11 +1644,11 @@
 
     lastSub = {};
     goGroup = (id) => {   // a phone tab: back to the screen last used in that section
-      const first = { home:'home', learn:PATH_LVLS.length ? 'path' : 'pinyin', review:'review', talk:'listen', more:'acct' }[id];
+      const first = { home:'home', learn:PATH_LVLS.length ? 'path' : 'pinyin', review:'review', talk:'listen', journey:'journey' }[id];
       this.go(this.lastSub[id] || first);
     };
     go = (screen) => {
-      { const grp = { path:'learn', grammar:'learn', pinyin:'learn', web:'review', words:'review', acct:'more', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'more', friends:'more', ach:'more', journey:'more', guide:'more', voice:'more' }[screen]; if (grp) this.lastSub[grp] = screen; }
+      { const grp = { path:'learn', grammar:'learn', pinyin:'learn', web:'review', words:'review', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'review', journey:'journey' }[screen]; if (grp) this.lastSub[grp] = screen; }
       if (screen === 'guide' && !onbRead().g) this.onbSet({ g:Date.now() });
       if (screen === 'journey') { otherXp(true); this.jyEnsure(); this.friendsRefresh(false); }
       this.setState(screen === 'path' ? { screen, pstop:'', plNote:'', plAlt:'' } : { screen }); try { window.scrollTo(0, 0); } catch (e) {}
@@ -3026,8 +3026,6 @@
         { glyph:'设', title:'Settings and sync', sub:'Keep one progress on every device, choose the level and the voice, saved data and backups.', go:() => this.go('voice') },
         { glyph:'友', title:'Friends', sub:'Study totals shared with your group.', go:() => this.go('friends'), show:!!(FR && FR.enabled()) },
         { glyph:'成', title:'Achievements', sub:'What you have earned and what is ahead.', go:() => this.go('ach') },
-        { glyph:'旅', title:'Journey', sub:'Spend your coins on trips through the Chinese-speaking world.', go:() => this.go('journey') },
-        { glyph:'考', title:LVN + ' level exam', sub:'The mock exam for this level.', go:() => this.go('exam'), show:!!EXAMBANK },
         { glyph:'问', title:'How Shanlu works', sub:'The daily loop and where your progress lives.', go:() => this.go('guide'), show:!!c.guide }
       ].filter(x => x.show !== false);
       return {
@@ -3755,10 +3753,12 @@
       const startWords = START_WORDS.filter(z => BANK[z]).map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en.split(',')[0] }));
       const startDoneShow = onbOn && onb.s === 'done' && onb.d === ymd(new Date()) && S.rcomplete;   // the end of the first session: what to do next
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
-      const GROUPS = [['home', ['home']], ['learn', ['path', 'pinyin', 'grammar']], ['review', ['review', 'greview', 'testlobby', 'web', 'words']], ['talk', ['listen', 'speak']], ['more', ['acct', 'exam', 'friends', 'journey', 'ach', 'guide', 'voice']]];
+      const GROUPS = [['home', ['home']], ['learn', ['path', 'pinyin', 'grammar']], ['review', ['review', 'greview', 'testlobby', 'exam', 'web', 'words']], ['talk', ['listen', 'speak']], ['journey', ['journey']]];
+      const BRANCH = ['acct', 'friends', 'ach', 'voice', 'guide'];   // reached from the Account page (the avatar), not from a tab
       const SUBLABEL = { path:'Path', acct:'Account', web:'Archive', grammar:'Grammar', words:'My words', pinyin:'Pinyin', review:'Review words', greview:'Grammar review', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', journey:'Journey', ach:'Achievements', guide:'How Shanlu works', voice:'Settings' };
       const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen === 'plesson' ? 'path' : S.screen;
-      const navGroup = (GROUPS.find(g => g[1].indexOf(curScreen) >= 0) || GROUPS[0])[0];
+      const navGroup = BRANCH.indexOf(curScreen) >= 0 ? '' : (GROUPS.find(g => g[1].indexOf(curScreen) >= 0) || GROUPS[0])[0];
+      const inBranch = BRANCH.indexOf(curScreen) >= 0;
       const gcls = (id) => 'nav' + (navGroup === id ? ' on' : '');
       const subnavItems = ((GROUPS.find(g => g[0] === navGroup) || [0, []])[1]).filter(id => id !== 'friends' || (FR && FR.enabled())).filter(id => id !== 'exam' || !!EXAMBANK).filter(id => id !== 'guide' || guideAvail).map(id => [id, SUBLABEL[id]]);
 
@@ -4234,8 +4234,9 @@
       return {
         focusCls:(S.exm && (S.exm.stage === 'run' || S.exm.stage === 'break') && S.screen === 'exam') || (S.screen === 'quiz' && !S.qdone) || (S.screen === 'plesson' && S.pl && !S.pl.done) ? 'focus' : '',
         scrCls:'scr-' + S.screen + (S.screen === 'review' || S.screen === 'listen' || S.screen === 'speak' ? ' am' : ''),   // am = app mode on a phone: these screens fill the screen and do not scroll as a page
-        gHomeCls:gcls('home'), gLearnCls:gcls('learn'), gReviewCls:gcls('review'), gTalkCls:gcls('talk'), gMoreCls:gcls('more'),
-        gHome:() => this.goGroup('home'), gLearn:() => this.goGroup('learn'), gReview:() => this.goGroup('review'), gTalk:() => this.goGroup('talk'), gMore:() => this.goGroup('more'),
+        gHomeCls:gcls('home'), gLearnCls:gcls('learn'), gReviewCls:gcls('review'), gTalkCls:gcls('talk'), gJourneyCls:gcls('journey'),
+        gHome:() => this.goGroup('home'), gLearn:() => this.goGroup('learn'), gReview:() => this.goGroup('review'), gTalk:() => this.goGroup('talk'), gJourney:() => this.goGroup('journey'),
+        acctMiniCls:inBranch ? 'on' : '', hasBack:inBranch && curScreen !== 'acct',
         hasSubnav:subnavItems.length > 1, subnav:subnavItems.map(o => ({ label:o[1], cls:'on' === (curScreen === o[0] ? 'on' : '') ? 'on' : '', fn:() => this.go(o[0]) })),
         themeCls:dark ? 't-dark' : 't-light', themeLabel:dark ? 'Switch to light' : 'Switch to dark', toggleTheme:this.toggleTheme,
         noVoice:S.noVoice, week,
