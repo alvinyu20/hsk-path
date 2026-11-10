@@ -9,7 +9,7 @@ button,select{font:inherit;padding:6px 12px;border-radius:99px;border:1px solid 
 button.on{background:#15222b;color:#fff;border-color:#15222b}
 .row{display:grid;grid-template-columns:auto 1fr auto;gap:4px 12px;align-items:center;padding:8px 0;border-bottom:1px dotted #c8d1d5}
 .row .zh{font-size:24px}.row small{display:block;color:#5b6b73}
-.row.bad{background:#fde8e4}.row.ok{background:#e8f5ec}.row.risk .zh::after{content:" ⚠";font-size:14px;color:#b4540a}
+.row.flag .zh::after{content:" 🔍";font-size:14px}.row.bad{background:#fde8e4}.row.ok{background:#e8f5ec}.row.risk .zh::after{content:" ⚠";font-size:14px;color:#b4540a}
 .row .btns{display:flex;gap:6px}
 .trial{background:#fff;border:1px solid #d5dcdf;border-radius:12px;padding:10px 14px;margin:12px 0}.trial h2{font-size:17px;margin:0 0 4px}
 .trial .row{grid-template-columns:1fr auto}.trial .zh{font-size:20px}.trial .btns button{font-size:14px}
@@ -20,7 +20,7 @@ button.on{background:#15222b;color:#fff;border-color:#15222b}
 <p class="muted">Tap ▶ to hear each recorded word. Mark ✓ if it sounds right, ✗ if the sound or the tone is wrong. ⚠ marks words with more than one reading: listen to those first. Your marks stay on this device. When done, "Copy redo list" gives the texts to paste into the Qwen audio workflow's <b>redo</b> box.</p>
 <div class="bar">
   <select id="lv"><option value="0">All levels</option><option value="1">HSK 1</option><option value="2">HSK 2</option><option value="3">HSK 3</option></select>
-  <select id="show"><option value="risk">Risky readings first</option><option value="all">All words</option><option value="bad">Marked ✗</option><option value="todo">Not checked yet</option></select>
+  <select id="show"><option value="flag">Checker flagged first</option><option value="risk">Risky readings first</option><option value="all">All words</option><option value="bad">Marked ✗</option><option value="todo">Not checked yet</option></select>
   <button id="copy">Copy redo list</button><span id="count" class="muted"></span>
 </div>
 <div id="style" class="trial" hidden></div>
@@ -35,6 +35,7 @@ let marks = {}; try { marks = JSON.parse(localStorage.getItem(KEY) || '{}'); } c
 const M = window.SHANLU_AUDIO || {};
 const words = [];
 [1, 2, 3].forEach(n => (window['HSK' + n + '_WORDS'] || []).forEach(w => { if (M[w.zh]) words.push({ n, zh: w.zh, py: w.py, en: w.en, file: '../audio/' + (String(M[w.zh]).indexOf('.') >= 0 ? M[w.zh] : encodeURIComponent(w.zh) + '.' + M[w.zh]), risk: [...w.zh].some(c => RISK.has(c)) || w.py.indexOf('/') >= 0 }); }));
+let VER = { differs: {}, homophone: {}, trial2: {} };
 const a = new Audio();
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(marks)); } catch (e) {} };
 function render() {
@@ -42,22 +43,27 @@ function render() {
   let l = words.filter(w => !lv || w.n === lv);
   if (show === 'bad') l = l.filter(w => marks[w.zh] === 'x');
   if (show === 'todo') l = l.filter(w => !marks[w.zh]);
+  if (show === 'flag') l = l.slice().sort((p, q) => (VER.differs[q.zh] ? 1 : 0) - (VER.differs[p.zh] ? 1 : 0) || (q.risk ? 1 : 0) - (p.risk ? 1 : 0));
   if (show === 'risk') l = l.slice().sort((p, q) => (q.risk ? 1 : 0) - (p.risk ? 1 : 0));
   const box = document.getElementById('list'); box.textContent = '';
   l.slice(0, 400).forEach(w => {
     const r = document.createElement('div'); r.className = 'row' + (w.risk ? ' risk' : '') + (marks[w.zh] === 'x' ? ' bad' : marks[w.zh] === 'ok' ? ' ok' : '');
     r.innerHTML = '<button class="play" aria-label="Play ' + w.zh + '">▶</button><div><span class="zh"></span><small></small></div><div class="btns"><button data-m="ok" aria-label="Sounds right">✓</button><button data-m="x" aria-label="Sounds wrong">✗</button></div>';
-    r.querySelector('.zh').textContent = w.zh; r.querySelector('small').textContent = w.py + ' · ' + w.en + ' · HSK ' + w.n;
+    r.querySelector('.zh').textContent = w.zh; r.querySelector('small').textContent = w.py + ' · ' + w.en + ' · HSK ' + w.n + (VER.differs[w.zh] ? ' · 🔍 checker heard “' + VER.differs[w.zh] + '”' : '');
+    if (VER.differs[w.zh]) r.classList.add('flag');
     r.querySelector('.play').onclick = () => { a.onended = null; a.src = w.file; a.play(); };
     r.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { marks[w.zh] = marks[w.zh] === b.dataset.m ? '' : b.dataset.m; save(); render(); });
     box.appendChild(r);
   });
   const bad = Object.keys(marks).filter(k => marks[k] === 'x').length, ok = Object.keys(marks).filter(k => marks[k] === 'ok').length;
-  document.getElementById('count').textContent = words.length + ' recorded · ' + ok + ' ✓ · ' + bad + ' ✗' + (l.length > 400 ? ' · showing 400 (use the filters)' : '');
+  document.getElementById('count').textContent = words.length + ' recorded · ' + (VER.checked ? Object.keys(VER.differs).length + ' flagged by the checker (' + VER.ok + ' of ' + VER.checked + ' heard exactly right) · ' : '') + ok + ' ✓ · ' + bad + ' ✗' + (l.length > 400 ? ' · showing 400 (use the filters)' : '');
 }
 document.getElementById('lv').onchange = render; document.getElementById('show').onchange = render;
 document.getElementById('copy').onclick = () => { const t = Object.keys(marks).filter(k => marks[k] === 'x').join(','); const o = document.getElementById('out'); o.hidden = false; o.value = t || '(nothing marked ✗)'; o.select(); try { navigator.clipboard.writeText(t).catch(() => {}); } catch (e) {} };
 render();
+
+// The speech-recogniser check (audio/verify.json, made by the "Audio verify" workflow): what it heard for each recording that did not come out exactly right.
+fetch('../audio/verify.json').then(r => r.ok ? r.json() : null).then(d => { if (d) { VER = Object.assign({ differs: {}, homophone: {}, trial2: {} }, d); render(); renderStyle(); } }).catch(() => {});
 
 // Trial recordings (audio/trial/trial.json, made by the "Qwen audio" workflow with scope "trial"): whole sentences, and short words in two versions.
 const T = '../audio/trial/';
@@ -74,17 +80,21 @@ function pieces(zh) {
 }
 const fileOf = (w) => '../audio/' + (String(M[w]).indexOf('.') >= 0 ? M[w] : encodeURIComponent(w) + '.' + M[w]);
 // Style trial (audio/trial2/trial2.json, workflow scope "style"): the same texts read with different instructions to Qwen.
-fetch('../audio/trial2/trial2.json').then(r => r.ok ? r.json() : null).then(d => {
-  if (!d) return;
+let T2 = null;
+function renderStyle() {
+  const d = T2; if (!d) return;
   const box = document.getElementById('style'); box.hidden = false;
-  box.innerHTML = '<h2>Style trial: does telling Qwen how to read give a plainer voice?</h2><p class="muted">Same texts, read different ways. <b>plain</b> is what the site has now. The others use the newer Qwen-Audio models from Alibaba, which accept a sentence telling them to read like a textbook recording; a31-huan-0 is the 3.1 model with no instruction, for comparison. A greyed button means Alibaba refused that version (tap it to see why).</p>';
+  box.innerHTML = '<h2>Style trial: does telling Qwen how to read give a plainer voice?</h2><p class="muted">Same texts, read different ways. <b>plain</b> is what the site has now. The others use the newer Qwen-Audio models from Alibaba, which accept a sentence telling them to read like a textbook recording; a31-huan-0 is the 3.1 model with no instruction, for comparison. A greyed button means Alibaba refused that version (tap it to see why). If the checker ran, a 🔍 line says what a speech recogniser heard when it differs from the text.</p>';
   const key = document.createElement('div'); key.className = 'muted'; key.style.margin = '4px 0 8px';
   d.variants.forEach(v => { const p = document.createElement('div'); p.textContent = v.id + ' = ' + v.label + (v.instructions ? ' · "' + v.instructions + '"' : ''); key.appendChild(p); });
   box.appendChild(key);
-  d.texts.forEach((t, i) => { const r = document.createElement('div'); r.className = 'row'; r.innerHTML = '<div><span class="zh"></span></div><div class="btns"></div>'; r.querySelector('.zh').textContent = t;
-    d.variants.forEach(v => { const res = v.results[i]; const b = document.createElement('button'); b.textContent = v.id; if (res.file) b.onclick = () => { a.onended = null; a.src = '../audio/trial2/' + res.file; a.play(); }; else { b.style.opacity = .4; b.onclick = () => alert(res.error || 'no file'); } r.querySelector('.btns').appendChild(b); });
+  d.texts.forEach((t, i) => { const r = document.createElement('div'); r.className = 'row'; r.innerHTML = '<div><span class="zh"></span><small></small></div><div class="btns"></div>'; r.querySelector('.zh').textContent = t;
+    const heard = [];
+    d.variants.forEach(v => { const res = v.results[i]; const b = document.createElement('button'); b.textContent = v.id; if (res.file) { b.onclick = () => { a.onended = null; a.src = '../audio/trial2/' + res.file; a.play(); }; const c = (VER.trial2 || {})[res.file]; if (c && c.status === 'differs') heard.push(v.id + ': “' + c.heard + '”'); } else { b.style.opacity = .4; b.onclick = () => alert(res.error || 'no file'); } r.querySelector('.btns').appendChild(b); });
+    if (heard.length) r.querySelector('small').textContent = '🔍 checker heard ' + heard.join(' · ');
     box.appendChild(r); });
-}).catch(() => {});
+}
+fetch('../audio/trial2/trial2.json').then(r => r.ok ? r.json() : null).then(d => { T2 = d; renderStyle(); }).catch(() => {});
 
 fetch(T + 'trial.json').then(r => r.ok ? r.json() : null).then(d => {
   if (!d) return;
