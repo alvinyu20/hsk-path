@@ -8,10 +8,121 @@
 "万": "when",
 "三": "sar"
 },
+"extra": {},
 "homophone": {},
 "model": "funasr paraformer-zh",
 "ok": 14,
 "skipped": 0,
-"trial2": {},
+"trial2": {
+"a31-huan-0-t00.mp3": {
+"heard": "东 西",
+"status": "ok"
+},
+"a31-huan-0-t01.mp3": {
+"heard": "但 是",
+"status": "ok"
+},
+"a31-huan-0-t02.mp3": {
+"heard": "如 果",
+"status": "ok"
+},
+"a31-huan-0-t03.mp3": {
+"heard": "国 家",
+"status": "ok"
+},
+"a31-huan-0-t04.mp3": {
+"heard": "我 喜 欢 好 吃 的 东 西",
+"status": "ok"
+},
+"a31-huan-0-t05.mp3": {
+"heard": "不 要 在 这 说 话",
+"status": "ok"
+},
+"a31-huan-0-t06.mp3": {
+"heard": "我 吃 过 饭 了",
+"status": "ok"
+},
+"a31-huan-0-t07.mp3": {
+"heard": "他 们 在 这 里 住 了 两 天",
+"status": "ok"
+},
+"a31-huan-0-t08.mp3": {
+"heard": "如 果 明 天 下 雨 我 们 就 不 去 了",
+"status": "ok"
+},
+"a31-huan-t00.mp3": {
+"heard": "东 西",
+"status": "ok"
+},
+"a31-huan-t01.mp3": {
+"heard": "但 是",
+"status": "ok"
+},
+"a31-huan-t02.mp3": {
+"heard": "如 果",
+"status": "ok"
+},
+"a31-huan-t03.mp3": {
+"heard": "国 家",
+"status": "ok"
+},
+"a31-huan-t04.mp3": {
+"heard": "我 喜 欢 好 吃 的 东 西",
+"status": "ok"
+},
+"a31-huan-t05.mp3": {
+"heard": "不 要 在 这 儿 说 话",
+"status": "ok"
+},
+"a31-huan-t06.mp3": {
+"heard": "我 吃 过 饭 了",
+"status": "ok"
+},
+"a31-huan-t07.mp3": {
+"heard": "他 们 在 这 里 住 了 两 天",
+"status": "ok"
+},
+"a31-huan-t08.mp3": {
+"heard": "如 果 明 天 下 雨 我 们 就 不 去 了",
+"status": "ok"
+},
+"plain-t00.mp3": {
+"heard": "东 西",
+"status": "ok"
+},
+"plain-t01.mp3": {
+"heard": "但 是",
+"status": "ok"
+},
+"plain-t02.mp3": {
+"heard": "如 果",
+"status": "ok"
+},
+"plain-t03.mp3": {
+"heard": "国 家",
+"status": "ok"
+},
+"plain-t04.mp3": {
+"heard": "我 喜 欢 好 吃 的 东 西",
+"status": "ok"
+},
+"plain-t05.mp3": {
+"heard": "不 要 在 这 儿 说 话",
+"status": "ok"
+},
+"plain-t06.mp3": {
+"heard": "我 吃 过 饭 了",
+"status": "ok"
+},
+"plain-t07.mp3": {
+"heard": "他 们 在 这 里 住 了 两 天",
+"status": "ok"
+},
+"plain-t08.mp3": {
+"heard": "如 果 明 天 下 雨 我 们 就 不 去 了",
+"status": "ok"
+}
+},
+"unsure": {},
 "when": "2026-11-10"
 }
