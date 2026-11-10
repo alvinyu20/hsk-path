@@ -135,7 +135,17 @@
   const LESSON_LV = {};
   LVLS.forEach(n => ((window['HSK' + n + '_GRAMMAR'] || {}).lessons || []).forEach(l => { LESSON_LV[l.id] = n; }));
   const LESSONS = (ALL ? JOIN('GRAMMAR', 'lessons') : LV_DATA('GRAMMAR').lessons).map((l, i) => ({ l, i })).sort((a, b) => ((a.l.catOrder || 0) - (b.l.catOrder || 0)) || (a.i - b.i)).map(x => x.l);
-  const { hubs:HUBS, opps:OPPS, topics:TOPICS } = ALL ? { hubs:JOIN('WEBS', 'hubs'), opps:JOIN('WEBS', 'opps'), topics:mergeTopics(LV_ALL('WEBS').map(d => d.topics || [])) } : LV_DATA('WEBS');
+  // A level can add words to a character group of a lower level (webs.json "extends": 高中 for the HSK 1 group 中).
+  // In All levels they join that group. On one level they stay out: the lower group's words are not part of that level's word list.
+  const webHubs = () => {
+    const hubs = JOIN('WEBS', 'hubs').map(h => Object.assign({}, h, { words:h.words.slice() }));
+    LVLS.forEach(n => {
+      const d = window['HSK' + n + '_WEBS']; if (!d || !d.extends) return;
+      d.extends.forEach(e => { const host = hubs.find(x => x.hub === e.hub); if (host) e.words.forEach(w => { if (!host.words.some(x => x.zh === w.zh)) host.words.push(w); }); });
+    });
+    return hubs;
+  };
+  const { hubs:HUBS, opps:OPPS, topics:TOPICS } = ALL ? { hubs:webHubs(), opps:JOIN('WEBS', 'opps'), topics:mergeTopics(LV_ALL('WEBS').map(d => d.topics || [])) } : LV_DATA('WEBS');
   // Listening lab and practice scripts: a level without them (none yet for HSK 3) has those parts switched off.
   const { clips:CLIPS, tones:TONES, pairs:PAIR_DATA } = Object.assign({ clips:[], tones:(window.HSK1_LISTEN || {}).tones || [], pairs:[] }, (ALL ? { clips:JOIN('LISTEN', 'clips'), tones:(LV_ALL('LISTEN')[0] || {}).tones, pairs:JOIN('LISTEN', 'pairs') } : LV_DATA('LISTEN')) || {});
   // two-syllable words for the tone-pair trainer; the pair [3, 3] is said as 2 + 3 (the first of two third tones rises)
@@ -887,6 +897,7 @@
   const KB = {};
   for (let n = 1; n < (ALL ? TOPL : LV); n++) (window['HSK' + n + '_WORDS'] || []).forEach(w => { KB[w.zh] = { py:w.py, en:w.en }; });
   WORDS.forEach(w => { KB[w.zh] = { py:w.py, en:w.en }; });
+  const CHAR_GLOSS = window.CHAR_GLOSSES || {};
   const KB_KEYS = Object.keys(KB);
   const CHARSET = {};
   KB_KEYS.forEach(k => k.split('').forEach(ch => { CHARSET[ch] = true; }));
@@ -3291,7 +3302,7 @@
       }
       if (st.t === 'meet') {
         const b = BANK[st.zh]; const ex = EX[st.zh] || { zh:'', py:'', en:'' };
-        const built = st.zh.length > 1 ? st.zh.split('').map(ch => ({ ch, en:KB[ch] && KB[ch].en ? KB[ch].en : '' })) : [];
+        const built = st.zh.length > 1 ? st.zh.split('').map(ch => ({ ch, en:KB[ch] && KB[ch].en ? KB[ch].en : (CHAR_GLOSS[ch] || '') })) : [];
         const parts = ex.zh && ex.zh.indexOf(st.zh) >= 0 ? ex.zh.split(st.zh).reduce((acc, seg, i, arr) => { if (seg) acc.push({ t:seg, cls:'' }); if (i < arr.length - 1) acc.push({ t:st.zh, cls:'hl' }); return acc; }, []) : [{ t:ex.zh, cls:'' }];
         out.plIsMeet = true; out.plPhase = 'Meet the words';
         out.plMeet = { zh:st.zh, py:b.py, en:b.en, pos:POS_NAME[b.pos] || b.pos, exParts:parts, exPy:ex.py, exEn:ex.en, hasEx:!!ex.zh, hasNote:!!NOTE[st.zh], note:NOTE[st.zh] || '',

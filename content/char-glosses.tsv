@@ -1,0 +1,351 @@
+# A short meaning for a character that is not a word of its own (or not yet at this level), shown in "Built from" when you meet a word.
+# char<TAB>gloss. AI-written, not reviewed by a teacher. A character that is itself a word at the learner's level uses that word's meaning instead.
+# Checked by tools/test-char-glosses.js: every character in an HSK 1-3 word must have a meaning here or be a word at or before that level.
+儿	child; a spoken ending
+时	time
+钟	clock
+今	this (day, year)
+明	next; bright
+昨	yesterday
+午	noon
+中	middle
+白	white; clear
+现	now; to appear
+候	time, moment
+间	between; room
+星	star
+期	period of time
+什	what
+么	what (ending)
+怎	how
+样	kind, way
+没	not; not have
+非	not; very
+常	often
+正	right now; correct
+可	can, may
+以	by means of
+客	guest
+气	air; manner
+起	rise, up
+关	connect; close
+系	tie, link
+谢	to thank
+爸	dad
+妈	mum
+哥	older brother
+姐	older sister
+弟	younger brother
+妹	younger sister
+子	child; small thing
+孩	child
+朋	friend
+友	friend
+同	same
+老	old
+师	teacher
+生	life; person
+医	medicine
+先	first
+士	person (polite)
+校	school
+院	courtyard; institution
+商	trade, business
+公	public
+司	to manage; office
+超	beyond; super
+市	market, city
+房	house, room
+觉	sleep; to feel
+床	bed
+休	rest
+息	rest; breath
+班	class; shift
+习	practise
+工	work
+作	do, make
+话	speech, words
+喜	happy; to like
+欢	joyful
+知	know
+道	way; to say
+得	get; obtain
+认	recognise
+识	know
+打	hit; make (a call)
+电	electricity
+漂	pretty
+亮	bright
+高	tall, high
+兴	interest; excited
+便	convenient; cheap
+宜	suitable
+汉	Han (Chinese)
+语	language
+文	writing; culture
+名	name
+题	topic, question
+东	east
+西	west
+米	rice
+面	noodles; flour
+条	strip, long thing
+包	wrap; bun; bag
+饺	dumpling
+鸡	chicken
+蛋	egg
+苹	apple
+果	fruit
+牛	cow
+奶	milk
+杯	cup
+桌	table
+椅	chair
+衣	clothes
+服	clothes; to serve
+手	hand
+机	machine
+脑	brain
+视	look at
+影	shadow; film
+飞	fly
+火	fire
+出	out
+租	rent
+场	place, field
+铁	iron
+交	hand over; mix
+旅	travel
+酒	alcohol
+馆	hall, venue
+室	room
+旁	side
+步	step
+始	begin
+爷	grandpa
+妻	wife
+丈	husband (in 丈夫)
+夫	husband
+试	try, test
+记	remember; record
+介	introduce; between
+绍	introduce
+告	tell
+诉	tell
+身	body
+体	body
+眼	eye
+睛	eye
+舒	comfortable
+表	watch; show
+裤	trousers
+颜	colour
+色	colour
+黑	black
+红	red
+绿	green
+咖	coffee (sound)
+啡	coffee (sound)
+意	meaning, idea
+思	think
+经	pass through
+乐	happy; music
+篮	basket
+网	net
+情	feeling
+虽	although
+然	so; like that
+所	place; that which
+跳	jump
+舞	dance
+为	for; be
+希	hope
+望	hope; look
+已	already
+因	cause
+泳	swim
+运	move; luck
+准	accurate; allowed
+备	prepare
+自	self
+己	self
+足	foot
+阿	friendly prefix
+姨	aunt
+叔	uncle
+邻	neighbour
+居	live, dwell
+理	reason; manage
+留	stay
+耳	ear
+朵	ear; flower
+烧	burn
+感	feel
+冒	emit; risk
+健	healthy
+康	healthy
+心	heart
+害	harm; fear
+担	carry; worry
+满	full
+聪	clever
+轻	light; young
+努	strive
+力	strength
+澡	bath
+结	tie; end
+婚	marry
+顾	look after
+愿	wish
+惯	be used to
+咱	we (with you)
+宾	guest
+城	city
+方	side; direction
+图	picture; map
+梯	ladder, stairs
+物	thing
+附	attached; near
+世	world
+界	boundary; world
+育	raise; educate
+区	area
+银	silver
+屋	room
+卫	guard; hygiene
+环	ring; surround
+境	border; situation
+汽	steam
+检	inspect
+护	protect
+李	luggage (in 行李)
+箱	box
+春	spring
+夏	summer
+秋	autumn
+冬	winter
+阳	sun
+凉	cool
+熊	bear
+级	grade
+成	become; achieve
+绩	achievement
+典	standard book
+初	beginning; first
+业	work; study
+数	number
+言	speech
+化	change
+历	history
+史	history
+音	sound
+复	repeat; again
+议	discuss
+假	holiday; false
+末	end
+闻	hear; news
+报	report; newspaper
+故	reason; old
+目	eye; item
+赛	compete
+戏	play; game
+邮	post, mail
+片	piece; photo
+相	each other; look
+拍	pat; take (photo)
+码	number
+板	board
+铅	lead
+趣	interest
+羽	feather
+激	stir up
+凌	ice (in 冰激凌)
+单	single; list
+糕	cake
+啤	beer (sound)
+瓜	melon
+香	fragrant
+蕉	banana
+饮	drink
+料	material
+矿	mineral
+泉	spring (of water)
+盘	plate
+勺	spoon
+筷	chopstick
+瓶	bottle
+沙	sand
+空	empty; sky
+调	adjust
+衬	lining
+衫	shirt
+裙	skirt
+礼	gift; courtesy
+助	help
+演	perform
+参	take part
+迟	late
+算	calculate; plan
+锻	forge; train
+炼	refine; train
+展	unfold; develop
+务	affairs; business
+注	pour; focus
+答	answer
+坚	firm
+持	hold
+束	bundle; end
+解	solve; undo
+决	decide
+定	fixed; decide
+提	lift; raise
+需	need
+择	choose
+求	seek; ask
+响	sound; affect
+遇	meet
+直	straight
+迎	welcome
+应	should; respond
+安	safe; peaceful
+静	quiet
+全	whole; all
+净	clean
+黄	yellow
+鲜	fresh
+简	simple
+容	contain; allow
+易	easy
+合	fit; join
+适	suitable
+清	clear
+楚	clear
+奇	strange
+怪	strange
+重	heavy; important
+主	main
+般	kind
+平	flat; level
+法	method; law
+活	alive; live
+较	compare
+如	as; like
+必	must
+须	must
+其	its; that
+而	and; but
+且	and; moreover
+者	one who
+除	remove; except
+于	at; about
+根	root
+据	according to
+当	should; at the time
+实	real
+概	general
+乎	(ending, as in 几乎)
+特	special
+共	altogether
+终	end; finally
+突	sudden
+处	place
