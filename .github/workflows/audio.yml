@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       scope:
-        description: 'What to make: style (tests whether instructions give a plainer reading, about 45 short recordings), trial (a few sentences and words to listen to, about 1 cent), words, examples, lab, exams, extra, core (words+examples+lab+exams) or all'
+        description: 'What to make: style (tests whether a reading instruction gives a plainer voice, about 50 short recordings), trial (a few sentences and words to listen to, about 1 cent), words, examples, lab, exams, extra, core (words+examples+lab+exams) or all'
         default: 'words'
       limit:
         description: 'Make at most this many new files (0 = no limit)'
