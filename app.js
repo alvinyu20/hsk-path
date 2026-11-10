@@ -1069,6 +1069,19 @@
     return aiText(data).trim();
   }
 
+  // made lines are remembered on this device for 20 of the 24 hours their link lives (a reload or a second look at a clip is not made, or billed, again)
+  const TTS_KEPT = 'shanlu-tts-links';
+  const ttsKept = (ck) => { try { const m = JSON.parse(localStorage.getItem(TTS_KEPT) || '{}'); const c = m[ck]; return c && c.exp > Date.now() ? c : null; } catch (e) { return null; } };
+  const ttsKeep = (ck, c) => {
+    try {
+      const m = JSON.parse(localStorage.getItem(TTS_KEPT) || '{}'), now = Date.now();
+      Object.keys(m).forEach(k => { if (!(m[k].exp > now)) delete m[k]; });
+      m[ck] = c;
+      const ks = Object.keys(m); if (ks.length > 250) ks.sort((a, b) => m[a].exp - m[b].exp).slice(0, ks.length - 250).forEach(k => delete m[k]);
+      localStorage.setItem(TTS_KEPT, JSON.stringify(m));
+    } catch (e) {}
+  };
+
   // one line of text -> a link to a WAV file (valid for 24 hours); the page plays it with an <audio> element, so no cross-site download is needed
   async function aliTTS(text, voice) {
     let res;
@@ -1747,8 +1760,9 @@
       const t0 = Date.now(), cold = this.wakeAudio() > 0;
       const sleep = (ms) => new Promise(r => setTimeout(r, ms));
       try {
-        const voice = ttsVoiceNow(), ck = voice + '|' + text; let c = this.ttsCache[ck];
-        if (!c || c.exp < Date.now()) { c = this.ttsCache[ck] = { url:await aliTTS(text, voice), exp:Date.now() + 20 * 3600000 }; }
+        const voice = ttsVoiceNow(), ck = voice + '|' + text; let c = this.ttsCache[ck] || ttsKept(ck);
+        if (!c || c.exp < Date.now()) { c = this.ttsCache[ck] = { url:await aliTTS(text, voice), exp:Date.now() + 20 * 3600000 }; ttsKeep(ck, c); }
+        else this.ttsCache[ck] = c;
         if (tok !== this.ttsTok) return;
         if (!this.ttsEl) this.ttsEl = new Audio();
         const a = this.ttsEl;
@@ -3437,7 +3451,7 @@
     shadowNext = () => { this.newClip({ shround:0 }); };
 
     // ----- listening lab -----
-    playClip = () => { this.say(CLIPS[this.state.dclip].zh, 'clip', this.state.drate); this.setState({ dplays:this.state.dplays + 1 }); };
+    playClip = () => { this.ttsUnlock(); this.sayAi(CLIPS[this.state.dclip].zh, 'clip', this.state.drate); this.setState({ dplays:this.state.dplays + 1 }); };
     checkDict = () => {
       const S = this.state;
       if (S.dchecked) return;
@@ -3467,7 +3481,7 @@
       const S = this.state;
       let idx = S.tidx;
       if (idx === null || S.tpick !== null) { idx = Math.floor(Math.random() * 4); this.setState({ tidx:idx, tpick:null }); }
-      this.say(TONES[idx].zh, 'tone', 0.8);
+      this.ttsUnlock(); this.sayAi(TONES[idx].zh, 'tone', 0.8);
     };
     playPair = () => {
       const S = this.state; const list = PAIR_LIST(); if (!list.length) return;
@@ -3476,7 +3490,7 @@
         do { idx = Math.floor(Math.random() * list.length); } while (list.length > 1 && idx === S.t2idx);
         this.setState({ t2idx:idx, t2a:null, t2b:null });
       }
-      this.say(list[idx].zh, 'tone2', 0.8);
+      this.ttsUnlock(); this.sayAi(list[idx].zh, 'tone2', 0.8);
     };
     pickPair = (slot, n) => {
       const S = this.state; const list = PAIR_LIST();
@@ -4487,7 +4501,7 @@
         checkDict:this.checkDict, nextClip:this.nextClip,
         dSummary:hits + ' of ' + clip.words.length + ' words', clipEn:clip.en, notes:clip.notes.map(t => ({ t })),
         clipReport:report('Listening clip ' + clip.zh, clip.zh + ' / ' + clip.en + ' / ' + clip.notes.join(' | ')),
-        clearPlay:() => this.say(clip.zh, 'clear', 0.7), naturalPlay:() => this.say(clip.zh, 'nat', 1.1),
+        clearPlay:() => { this.ttsUnlock(); this.sayAi(clip.zh, 'clear', 0.7); }, naturalPlay:() => { this.ttsUnlock(); this.sayAi(clip.zh, 'nat', 1.1); },
         clearCls:pc('clear') ? 'ink' : '', natCls:pc('nat') ? 'ink' : '',
         hasMissed:missed.length > 0, missedList:missed.map(w => w.py + ' ' + w.zh).join(', '),
         toneOpts, playTone:this.playTone, tonePlayCls:pc('tone'),

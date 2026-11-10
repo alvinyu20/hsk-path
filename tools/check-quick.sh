@@ -44,6 +44,7 @@ case "$MODE" in
     (cd worker && [ -d node_modules ] && node test.mjs | tail -1) || true
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-friends.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-pwa.js
+    last env NODE_PATH="$(npm root -g)" node tools/smoke-test-lab-voice.js
     NODE_PATH="$(npm root -g)" node tools/smoke-test.js
     NODE_PATH="$(npm root -g)" node tools/smoke-test-l2.js
     NODE_PATH="$(npm root -g)" node tools/smoke-test-l3.js
