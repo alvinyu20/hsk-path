@@ -1,0 +1,57 @@
+<!doctype html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audio check: Qwen recordings</title>
+<style>
+body{font:16px/1.4 system-ui,sans-serif;max-width:760px;margin:0 auto;padding:16px;color:#15222b;background:#f7f9f8}
+h1{font-size:22px;margin:0 0 4px}.muted{color:#5b6b73;font-size:14px}
+.bar{position:sticky;top:0;background:#f7f9f8;padding:8px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center;border-bottom:1px solid #d5dcdf;z-index:2}
+button,select{font:inherit;padding:6px 12px;border-radius:99px;border:1px solid #9aa8ae;background:#fff;cursor:pointer}
+button.on{background:#15222b;color:#fff;border-color:#15222b}
+.row{display:grid;grid-template-columns:auto 1fr auto;gap:4px 12px;align-items:center;padding:8px 0;border-bottom:1px dotted #c8d1d5}
+.row .zh{font-size:24px}.row small{display:block;color:#5b6b73}
+.row.bad{background:#fde8e4}.row.ok{background:#e8f5ec}.row.risk .zh::after{content:" ⚠";font-size:14px;color:#b4540a}
+.row .btns{display:flex;gap:6px}
+.play{width:44px;height:44px;border-radius:50%;padding:0;font-size:18px}
+#out{width:100%;margin-top:8px;font:14px monospace}
+</style>
+<h1>Audio check</h1>
+<p class="muted">Tap ▶ to hear each recorded word. Mark ✓ if it sounds right, ✗ if the sound or the tone is wrong. ⚠ marks words with more than one reading: listen to those first. Your marks stay on this device. When done, "Copy redo list" gives the texts to paste into the Qwen audio workflow's <b>redo</b> box.</p>
+<div class="bar">
+  <select id="lv"><option value="0">All levels</option><option value="1">HSK 1</option><option value="2">HSK 2</option><option value="3">HSK 3</option></select>
+  <select id="show"><option value="risk">Risky readings first</option><option value="all">All words</option><option value="bad">Marked ✗</option><option value="todo">Not checked yet</option></select>
+  <button id="copy">Copy redo list</button><span id="count" class="muted"></span>
+</div>
+<div id="list"></div>
+<textarea id="out" rows="3" readonly hidden></textarea>
+<script src="../data/hsk1-words.js"></script><script src="../data/hsk2-words.js"></script><script src="../data/hsk3-words.js"></script><script src="../data/audio-manifest.js"></script>
+<script>
+const RISK = new Set('只过了得地还会好行长重数教种发角假号差干都为着'.split(''));
+const KEY = 'shanlu-audio-check';
+let marks = {}; try { marks = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+const M = window.SHANLU_AUDIO || {};
+const words = [];
+[1, 2, 3].forEach(n => (window['HSK' + n + '_WORDS'] || []).forEach(w => { if (M[w.zh]) words.push({ n, zh: w.zh, py: w.py, en: w.en, file: 'audio/' + (String(M[w.zh]).indexOf('.') >= 0 ? M[w.zh] : encodeURIComponent(w.zh) + '.' + M[w.zh]), risk: [...w.zh].some(c => RISK.has(c)) || w.py.indexOf('/') >= 0 })); }));
+const a = new Audio();
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(marks)); } catch (e) {} };
+function render() {
+  const lv = +document.getElementById('lv').value, show = document.getElementById('show').value;
+  let l = words.filter(w => !lv || w.n === lv);
+  if (show === 'bad') l = l.filter(w => marks[w.zh] === 'x');
+  if (show === 'todo') l = l.filter(w => !marks[w.zh]);
+  if (show === 'risk') l = l.slice().sort((p, q) => (q.risk ? 1 : 0) - (p.risk ? 1 : 0));
+  const box = document.getElementById('list'); box.textContent = '';
+  l.slice(0, 400).forEach(w => {
+    const r = document.createElement('div'); r.className = 'row' + (w.risk ? ' risk' : '') + (marks[w.zh] === 'x' ? ' bad' : marks[w.zh] === 'ok' ? ' ok' : '');
+    r.innerHTML = '<button class="play" aria-label="Play ' + w.zh + '">▶</button><div><span class="zh"></span><small></small></div><div class="btns"><button data-m="ok" aria-label="Sounds right">✓</button><button data-m="x" aria-label="Sounds wrong">✗</button></div>';
+    r.querySelector('.zh').textContent = w.zh; r.querySelector('small').textContent = w.py + ' · ' + w.en + ' · HSK ' + w.n;
+    r.querySelector('.play').onclick = () => { a.src = w.file; a.play(); };
+    r.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { marks[w.zh] = marks[w.zh] === b.dataset.m ? '' : b.dataset.m; save(); render(); });
+    box.appendChild(r);
+  });
+  const bad = Object.keys(marks).filter(k => marks[k] === 'x').length, ok = Object.keys(marks).filter(k => marks[k] === 'ok').length;
+  document.getElementById('count').textContent = words.length + ' recorded · ' + ok + ' ✓ · ' + bad + ' ✗' + (l.length > 400 ? ' · showing 400 (use the filters)' : '');
+}
+document.getElementById('lv').onchange = render; document.getElementById('show').onchange = render;
+document.getElementById('copy').onclick = () => { const t = Object.keys(marks).filter(k => marks[k] === 'x').join(','); const o = document.getElementById('out'); o.hidden = false; o.value = t || '(nothing marked ✗)'; o.select(); try { navigator.clipboard.writeText(t); } catch (e) {} };
+render();
+</script>
