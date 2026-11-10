@@ -1221,9 +1221,9 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   const vo1 = await page.locator('.msgs').innerText();
   check(vo1.includes('我想喝茶') && vo1.includes('Listen to Mingming') && !vo1.includes('好的。'), 'in voice only the recognised line is sent by itself and shown, while Mingming\'s reply is hidden');
   const ttsReply = aliCalls.filter(c => c.body.model === 'qwen3-tts-flash' && c.body.input.text === '好的。');
-  check(ttsReply.length === 1 && ttsReply[0].body.input.voice === 'Cherry' && ttsReply[0].body.input.language_type === 'Chinese' && ttsReply[0].url === 'https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation' && ttsReply[0].headers['authorization'] === 'Bearer sk-ali-test', 'the reply is read by the Qwen voice (Cherry) through Alibaba\'s speech endpoint');
-  await page.waitForFunction((u) => window.shanlu.ttsEl && window.shanlu.ttsEl.src === u, 'https://tts-files.test/Cherry-' + encodeURIComponent('好的。') + '.wav', { timeout: 5000 }).catch(() => {});
-  check((await page.evaluate(() => window.shanlu.ttsEl && window.shanlu.ttsEl.src)) === 'https://tts-files.test/Cherry-' + encodeURIComponent('好的。') + '.wav', 'the audio link Alibaba returned is what plays (upgraded to https)');
+  check(ttsReply.length === 1 && ttsReply[0].body.input.voice === 'Maia' && ttsReply[0].body.input.language_type === 'Chinese' && ttsReply[0].url === 'https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation' && ttsReply[0].headers['authorization'] === 'Bearer sk-ali-test', 'the reply is read by the Qwen voice (Cherry) through Alibaba\'s speech endpoint');
+  await page.waitForFunction((u) => window.shanlu.ttsEl && window.shanlu.ttsEl.src === u, 'https://tts-files.test/Maia-' + encodeURIComponent('好的。') + '.wav', { timeout: 5000 }).catch(() => {});
+  check((await page.evaluate(() => window.shanlu.ttsEl && window.shanlu.ttsEl.src)) === 'https://tts-files.test/Maia-' + encodeURIComponent('好的。') + '.wav', 'the audio link Alibaba returned is what plays (upgraded to https)');
   await page.locator('.msgs button', { hasText: 'Show text' }).last().click();
   const vo2 = await page.locator('.msgs').innerText();
   check(vo2.includes('好的。') && vo2.includes('Okay.'), 'Show text reveals Mingming\'s line with pinyin and English');
@@ -1334,7 +1334,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.waitForFunction(() => window.shanlu.state.playing === null || true, null, { timeout: 2000 });
   await page.waitForTimeout(1500);
   const exVoices = aliCalls.filter(c => c.body.model === 'qwen3-tts-flash' && (c.body.input.text === '你好吗？' || c.body.input.text === '我很好。')).map(c => c.body.input.voice + ':' + c.body.input.text);
-  check(exVoices.join() === 'Cherry:你好吗？,Kai:我很好。', 'an exam conversation is read by Qwen with a woman\'s voice and a man\'s voice, line by line (' + exVoices.join(' ') + ')');
+  check(exVoices.join() === 'Maia:你好吗？,Kai:我很好。', 'an exam conversation is read by Qwen with a woman\'s voice and a man\'s voice, line by line (' + exVoices.join(' ') + ')');
   // a workspace ID changes the web address
   await page.evaluate(() => { const app = window.shanlu; app.setState({ aliWsInput:'testws1', aliKeyInput:'' }); app.aliSaveKey(); });
   await page.evaluate(() => window.shanlu.aliTest());

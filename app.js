@@ -43,7 +43,7 @@
   const ALI_TTS_MODEL = 'qwen3-tts-flash';
   const TTS_VOICES = [['Cherry', 'Cherry: woman, friendly'], ['Serena', 'Serena: woman, gentle'], ['Maia', 'Maia: woman, warm'], ['Neil', 'Neil: man, clear news-reader style'], ['Kai', 'Kai: man, calm']];
   const ttsModeNow = () => (aliCfg().key && AICFG.ttsMode !== 'browser' ? 'qwen' : 'browser');
-  const ttsVoiceNow = () => (TTS_VOICES.some(v => v[0] === AICFG.ttsVoice) ? AICFG.ttsVoice : 'Cherry');
+  const ttsVoiceNow = () => (TTS_VOICES.some(v => v[0] === AICFG.ttsVoice) ? AICFG.ttsVoice : 'Maia');
   const aliApi = () => aliBase().replace('/compatible-mode/v1', '/api/v1');
   // ---- the person's own settings and notes follow them to every device (when they are in the study group): the listening level, what
   // Mingming remembers, the chat preferences and, only if switched on, the API keys. Every value is stamped with the time it was set
@@ -1916,7 +1916,7 @@
       this.stopNative(); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
       const tok = ++this.ttsTok;
       this.setState({ playing:key });
-      const voiceFor = (l) => (l.pitch > 1.05 ? 'Cherry' : l.pitch < 0.95 ? 'Kai' : ttsVoiceNow());
+      const voiceFor = (l) => (l.pitch > 1.05 ? 'Maia' : l.pitch < 0.95 ? 'Kai' : ttsVoiceNow());
       const sleep = (ms) => new Promise(r => setTimeout(r, ms));
       try {
         this.wakeAudio();

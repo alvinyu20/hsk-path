@@ -7,7 +7,7 @@
 What it does: reads the list from `node tools/audio-texts.js`, asks qwen3-tts-flash (Alibaba Model Studio, Singapore) for each text that has no file yet,
 downloads the WAV, turns it into a small mono mp3 with ffmpeg, saves audio/<hash>.mp3 and records text -> file in audio/index.json.
 Safe to stop and run again: lines that already have a file are skipped. The key is read from the environment only; it is never written anywhere.
-Voices: --voice-f (default Cherry, the woman) and --voice-m (default Kai, the man in exam conversations). Key in the manifest: the text itself for the woman,
+Voices: --voice-f (default Maia, the woman) and --voice-m (default Kai, the man in exam conversations). Key in the manifest: the text itself for the woman,
 "m|" + text for the man.
 Scopes: words, examples, lab, exams, extra (grammar lesson examples and Speak scenarios), core (= words + examples + lab + exams), all.
 Redo a line: delete its entry from audio/index.json (and its file) and run again; or --redo "你好,谢谢".
@@ -89,7 +89,7 @@ def main():
     ap.add_argument('--scope', default='core')
     ap.add_argument('--limit', type=int, default=0, help='make at most this many new files (0 = no limit)')
     ap.add_argument('--workers', type=int, default=3)
-    ap.add_argument('--voice-f', default='Cherry')
+    ap.add_argument('--voice-f', default='Maia')
     ap.add_argument('--voice-m', default='Kai')
     ap.add_argument('--redo', default='', help='comma-separated texts to make again')
     ap.add_argument('--dry-run', action='store_true', help='only count what would be made and what it would cost')

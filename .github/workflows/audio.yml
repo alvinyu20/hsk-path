@@ -13,6 +13,12 @@ on:
       limit:
         description: 'Make at most this many new files (0 = no limit)'
         default: '0'
+      voice_f:
+        description: 'The woman voice (words, sentences, lab, exam women)'
+        default: 'Maia'
+      voice_m:
+        description: 'The man voice (lines spoken by 男 in exam conversations). Use Maia too if you want one voice everywhere'
+        default: 'Kai'
       redo:
         description: 'Texts to make again, comma separated (leave empty normally)'
         default: ''
@@ -48,7 +54,9 @@ jobs:
           SCOPE: ${{ inputs.scope }}
           LIMIT: ${{ inputs.limit }}
           REDO: ${{ inputs.redo }}
-        run: python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --redo "$REDO" --workers 3
+          VOICE_F: ${{ inputs.voice_f }}
+          VOICE_M: ${{ inputs.voice_m }}
+        run: python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --redo "$REDO" --voice-f "$VOICE_F" --voice-m "$VOICE_M" --workers 3
       - name: Save the files and the list
         if: always()
         env:
