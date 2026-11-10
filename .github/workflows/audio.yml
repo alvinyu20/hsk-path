@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       scope:
-        description: 'What to make: words, examples, lab, exams, extra, core (words+examples+lab+exams) or all'
+        description: 'What to make: trial (a few sentences and words to listen to, about 1 cent), words, examples, lab, exams, extra, core (words+examples+lab+exams) or all'
         default: 'words'
       limit:
         description: 'Make at most this many new files (0 = no limit)'
@@ -47,7 +47,12 @@ jobs:
         env:
           SCOPE: ${{ inputs.scope }}
           LIMIT: ${{ inputs.limit }}
-        run: python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --dry-run
+        run: |
+          if [ "$SCOPE" = trial ]; then
+            echo "trial set, about 42 short recordings, about 1 cent"
+          else
+            python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --dry-run
+          fi
       - name: Make the audio
         env:
           DASHSCOPE_API_KEY: ${{ secrets.DASHSCOPE_API_KEY }}
@@ -56,7 +61,12 @@ jobs:
           REDO: ${{ inputs.redo }}
           VOICE_F: ${{ inputs.voice_f }}
           VOICE_M: ${{ inputs.voice_m }}
-        run: python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --redo "$REDO" --voice-f "$VOICE_F" --voice-m "$VOICE_M" --workers 3
+        run: |
+          if [ "$SCOPE" = trial ]; then
+            python3 tools/make-trial-audio.py --voice "$VOICE_F"
+          else
+            python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --redo "$REDO" --voice-f "$VOICE_F" --voice-m "$VOICE_M" --workers 3
+          fi
       - name: Save the files and the list
         if: always()
         env:

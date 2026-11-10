@@ -11,6 +11,8 @@ button.on{background:#15222b;color:#fff;border-color:#15222b}
 .row .zh{font-size:24px}.row small{display:block;color:#5b6b73}
 .row.bad{background:#fde8e4}.row.ok{background:#e8f5ec}.row.risk .zh::after{content:" ⚠";font-size:14px;color:#b4540a}
 .row .btns{display:flex;gap:6px}
+.trial{background:#fff;border:1px solid #d5dcdf;border-radius:12px;padding:10px 14px;margin:12px 0}.trial h2{font-size:17px;margin:0 0 4px}
+.trial .row{grid-template-columns:1fr auto}.trial .zh{font-size:20px}.trial .btns button{font-size:14px}
 .play{width:44px;height:44px;border-radius:50%;padding:0;font-size:18px}
 #out{width:100%;margin-top:8px;font:14px monospace}
 </style>
@@ -21,6 +23,7 @@ button.on{background:#15222b;color:#fff;border-color:#15222b}
   <select id="show"><option value="risk">Risky readings first</option><option value="all">All words</option><option value="bad">Marked ✗</option><option value="todo">Not checked yet</option></select>
   <button id="copy">Copy redo list</button><span id="count" class="muted"></span>
 </div>
+<div id="trial" class="trial" hidden></div>
 <div id="list"></div>
 <textarea id="out" rows="3" readonly hidden></textarea>
 <script src="../data/hsk1-words.js"></script><script src="../data/hsk2-words.js"></script><script src="../data/hsk3-words.js"></script><script src="../data/audio-manifest.js"></script>
@@ -44,7 +47,7 @@ function render() {
     const r = document.createElement('div'); r.className = 'row' + (w.risk ? ' risk' : '') + (marks[w.zh] === 'x' ? ' bad' : marks[w.zh] === 'ok' ? ' ok' : '');
     r.innerHTML = '<button class="play" aria-label="Play ' + w.zh + '">▶</button><div><span class="zh"></span><small></small></div><div class="btns"><button data-m="ok" aria-label="Sounds right">✓</button><button data-m="x" aria-label="Sounds wrong">✗</button></div>';
     r.querySelector('.zh').textContent = w.zh; r.querySelector('small').textContent = w.py + ' · ' + w.en + ' · HSK ' + w.n;
-    r.querySelector('.play').onclick = () => { a.src = w.file; a.play(); };
+    r.querySelector('.play').onclick = () => { a.onended = null; a.src = w.file; a.play(); };
     r.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { marks[w.zh] = marks[w.zh] === b.dataset.m ? '' : b.dataset.m; save(); render(); });
     box.appendChild(r);
   });
@@ -54,4 +57,28 @@ function render() {
 document.getElementById('lv').onchange = render; document.getElementById('show').onchange = render;
 document.getElementById('copy').onclick = () => { const t = Object.keys(marks).filter(k => marks[k] === 'x').join(','); const o = document.getElementById('out'); o.hidden = false; o.value = t || '(nothing marked ✗)'; o.select(); try { navigator.clipboard.writeText(t).catch(() => {}); } catch (e) {} };
 render();
+
+// Trial recordings (audio/trial/trial.json, made by the "Qwen audio" workflow with scope "trial"): whole sentences, and short words in two versions.
+const T = '../audio/trial/';
+function playSeq(files) { let i = 0; const next = () => { if (i >= files.length) return; a.onended = next; a.src = files[i++]; a.play(); }; next(); }
+// The sentence cut into the words we have recordings for (longest match first), played one file after the other: what joining word files would sound like.
+function pieces(zh) {
+  const out = []; let i = 0;
+  while (i < zh.length) {
+    let hit = null;
+    for (let L = Math.min(4, zh.length - i); L >= 1; L--) { const w = zh.substr(i, L); if (M[w]) { hit = w; break; } }
+    if (hit) { out.push(hit); i += hit.length; } else i++;
+  }
+  return out;
+}
+const fileOf = (w) => '../audio/' + (String(M[w]).indexOf('.') >= 0 ? M[w] : encodeURIComponent(w) + '.' + M[w]);
+fetch(T + 'trial.json').then(r => r.ok ? r.json() : null).then(d => {
+  if (!d) return;
+  const box = document.getElementById('trial'); box.hidden = false;
+  box.innerHTML = '<h2>Trial: whole sentences and short words (voice ' + d.voice + ')</h2><p class="muted">Each sentence is ONE recording; this is what the site plays for an example. "Word by word" plays the same sentence by joining the single-word recordings, so you can hear the difference. Under it, short words in two versions: <b>pad</b> = the word with a little silence around it, <b>stop</b> = the word followed by 。 (both new). "Now" is the recording the site has today.</p>';
+  const add = (zh, sub, btns) => { const r = document.createElement('div'); r.className = 'row'; r.innerHTML = '<div><span class="zh"></span><small></small></div><div class="btns"></div>'; r.querySelector('.zh').textContent = zh; r.querySelector('small').textContent = sub; btns.forEach(([t, f]) => { const b = document.createElement('button'); b.textContent = t; b.onclick = f; r.querySelector('.btns').appendChild(b); }); box.appendChild(r); };
+  d.sentences.forEach(e => { const p = pieces(e.zh); add(e.zh, e.py + ' · ' + e.en, [['▶ Whole', () => { a.onended = null; a.src = T + e.file; a.play(); }], ['▶ Word by word', () => playSeq(p.map(fileOf))]]); });
+  const h = document.createElement('h2'); h.textContent = 'Short words'; h.style.marginTop = '12px'; box.appendChild(h);
+  d.words.forEach(w => add(w.zh, '', [['Now', () => { a.onended = null; a.src = fileOf(w.zh); a.play(); }], ['pad', () => { a.onended = null; a.src = T + w.pad; a.play(); }], ['stop', () => { a.onended = null; a.src = T + w.stop; a.play(); }]]));
+}).catch(() => {});
 </script>

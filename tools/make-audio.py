@@ -72,12 +72,13 @@ def synth(text, voice, key):
     raise RuntimeError(last)
 
 
-def to_mp3(wav, out):
+def to_mp3(wav, out, pad=False):
     with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as t:
         t.write(wav)
         p = t.name
     try:
-        r = subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', p, '-ac', '1', '-ar', '24000', '-c:a', 'libmp3lame', '-b:a', '40k', out], capture_output=True)
+        af = ['-af', 'adelay=120:all=1,apad=pad_dur=0.25'] if pad else []   # pad: a little silence before and after, so a player cannot clip the start or the end
+        r = subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', p] + af + ['-ac', '1', '-ar', '24000', '-c:a', 'libmp3lame', '-b:a', '40k', out], capture_output=True)
         if r.returncode != 0:
             raise RuntimeError('ffmpeg: ' + r.stderr.decode('utf-8', 'replace')[:200])
     finally:
