@@ -218,8 +218,8 @@ class Engine:
         for i, p in enumerate(parts):
             if p[0] == 'w' and p[1] == '过':
                 nxt = parts[i + 1][1] if i + 1 < len(parts) and parts[i + 1][0] == 'w' else ''
-                if nxt in ('得', '马路', '生日', '日子'):
-                    parts[i] = ('w', '过', 'guò')
+                # the word entry lists both readings ("guo / guò"); a sentence gets exactly one
+                parts[i] = ('w', '过', 'guò' if nxt in ('得', '马路', '生日', '日子') else 'guo')
         # 得: děi ("must") before a verb after a pronoun, a time word, an adverb like 也 还 都 就 先 or at the start of a clause;
         #     dé ("to get") in 得了 + a number (他考试得了一百分); de (the particle) after a verb (跑得很快), which is the default reading
         for i, p in enumerate(parts):

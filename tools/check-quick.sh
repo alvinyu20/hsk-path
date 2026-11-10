@@ -27,6 +27,7 @@ case "$MODE" in
     last node tools/test-journey.js
     last node tools/test-journey-media.js
     last node tools/test-char-glosses.js
+    last node tools/test-readings.js
     last python3 tools/build-char-glosses.py --check
     last node tools/test-journey-media-wikis.js
     last node tools/test-exam-media.js
