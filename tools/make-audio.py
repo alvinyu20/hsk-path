@@ -198,6 +198,15 @@ def main():
         tmp = INDEX + '.tmp'
         json.dump(index, open(tmp, 'w', encoding='utf-8'), ensure_ascii=False, indent=0, sort_keys=True)
         os.replace(tmp, INDEX)
+    if done[0]:   # the checker's results (audio/verify.json) describe the OLD files: drop them so the audio-check page never shows them beside new audio
+        vp = os.path.join(AUDIO, 'verify.json')
+        if os.path.exists(vp):
+            v = json.load(open(vp, encoding='utf-8'))
+            for k in ('homophone', 'differs', 'extra', 'unsure'):
+                v[k] = {}
+            v['checked'] = v['ok'] = v['skipped'] = 0
+            v['when'] = 'cleared: audio was re-made, run Audio verify again'
+            json.dump(v, open(vp, 'w', encoding='utf-8'), ensure_ascii=False, indent=0, sort_keys=True)
     print('made %d files, %d failed' % (done[0], len(failed)))
     for t, m in failed[:20]:
         print('  FAILED', t, m)
