@@ -1734,9 +1734,11 @@
     };
     // recorded audio: audio/<text>.<ext> for every text listed in data/audio-manifest.js; anything else is read by the browser voice
     nativeAudio = null;
-    nativeFile = (text) => {
-      const m = window.SHANLU_AUDIO;
-      return m && text && Object.prototype.hasOwnProperty.call(m, text) ? 'audio/' + encodeURIComponent(text) + '.' + m[text] : null;
+    // tag 'm' is the man's voice (exam lines spoken by 男). A manifest value with a dot is the file name itself (made by tools/make-audio.py), otherwise it is the extension of audio/<text>.<ext>.
+    nativeFile = (text, tag) => {
+      const m = window.SHANLU_AUDIO, k = (tag === 'm' ? 'm|' : '') + text;
+      if (!m || !text || !Object.prototype.hasOwnProperty.call(m, k)) return null;
+      return 'audio/' + (String(m[k]).indexOf('.') >= 0 ? m[k] : encodeURIComponent(text) + '.' + m[k]);
     };
     stopNative = () => { this.ttsTok++; try { if (this.nativeAudio) { this.nativeAudio.pause(); this.nativeAudio = null; } } catch (e) {} try { if (this.ttsEl) this.ttsEl.pause(); } catch (e) {} };
     // Mingming's voice: Qwen when an Alibaba key is saved (and it is switched on), otherwise the browser voice. Any failure falls back to the browser voice.
@@ -1751,7 +1753,7 @@
       } catch (e) {}
     };
     sayAi = async (text, key, rate, after) => {
-      if (ttsModeNow() !== 'qwen') { this.say(text, key, rate, undefined, after); return; }
+      if (this.nativeFile(text) || ttsModeNow() !== 'qwen') { this.say(text, key, rate, undefined, after); return; }   // a recording needs no key and costs nothing
       this.stopNative(); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
       const tok = ++this.ttsTok;
       this.setState({ playing:key, ttsBusy:true });
@@ -1878,6 +1880,8 @@
     };
     // several lines in a row (a conversation); the second voice is pitched higher where the browser allows it
     speakLines = (lines, key) => {
+      const files = lines.map(l => this.nativeFile(l.text, l.pitch < 0.95 ? 'm' : ''));
+      if (files.length && files.every(Boolean)) { this.speakFiles(lines, files, key); return; }
       if (ttsModeNow() === 'qwen') { this.speakLinesQwen(lines, key); return; }
       this.speakLinesBrowser(lines, key);
     };
@@ -1886,6 +1890,27 @@
       const ck = voice + '|' + text; let c = this.ttsCache[ck];
       if (!c || c.exp < Date.now()) { c = this.ttsCache[ck] = { url:await aliTTS(text, voice), exp:Date.now() + 20 * 3600000 }; }
       return c.url;
+    };
+    // a conversation from recordings (one <audio> element, so a phone that allowed the first line allows the rest)
+    speakFiles = async (lines, files, key) => {
+      this.stopNative(); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+      const tok = ++this.ttsTok;
+      this.setState({ playing:key });
+      const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+      try {
+        if (!this.ttsEl) this.ttsEl = new Audio();
+        const a = this.ttsEl;
+        for (let i = 0; i < files.length; i++) {
+          await new Promise((res, rej) => { a.onended = res; a.onerror = () => rej(new Error('the recording could not be played')); a.src = files[i]; a.playbackRate = this.state.speed || 1; try { a.preservesPitch = true; } catch (e) {} const pr = a.play(); if (pr && pr.catch) pr.catch(rej); });
+          if (tok !== this.ttsTok) return;
+          if (i < files.length - 1) await sleep(250);
+        }
+        if (tok === this.ttsTok && this.state.playing === key) this.setState({ playing:null });
+      } catch (e) {
+        if (tok !== this.ttsTok) return;
+        if (this.state.playing === key) this.setState({ playing:null });
+        if (ttsModeNow() === 'qwen') this.speakLinesQwen(lines, key); else this.speakLinesBrowser(lines, key);
+      }
     };
     speakLinesQwen = async (lines, key) => {
       this.stopNative(); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
@@ -2609,8 +2634,8 @@
           if (go) this.flip(); else if ('1234'.indexOf(k) >= 0 && k.length === 1) this.rate(['again', 'hard', 'good', 'easy'][Number(k) - 1]); else if (lk === 'y') this.rate('good'); else if (lk === 'n') this.rate('again'); else if (lk === 'p') this.toggleRpy(); else return false;
         } else if ('1234'.indexOf(k) >= 0 && k.length === 1) this.rate(['again', 'hard', 'good', 'easy'][Number(k) - 1]);
         else if (go) this.rate('good');
-        else if (lk === 'h') this.say(itemOf(S.rq[0]).zh, 'word');
-        else if (lk === 's') { const zh = itemOf(S.rq[0]).zh; const l = EXS[zh]; if (l && l.length) this.say(l[(strHash(zh) + Math.floor(Date.now() / 864e5) + S.rstep) % l.length].zh, 'ex'); }
+        else if (lk === 'h') this.sayAi(itemOf(S.rq[0]).zh, 'word');
+        else if (lk === 's') { const zh = itemOf(S.rq[0]).zh; const l = EXS[zh]; if (l && l.length) this.sayAi(l[(strHash(zh) + Math.floor(Date.now() / 864e5) + S.rstep) % l.length].zh, 'ex'); }
         else return false;
         return true;
       }
@@ -2620,7 +2645,7 @@
       if (q && q.options && (kind === 'choice' || kind === 'audio')) {
         const i = '1234'.indexOf(k) >= 0 && k.length === 1 ? Number(k) - 1 : 'abcd'.indexOf(lk) >= 0 && lk.length === 1 ? 'abcd'.indexOf(lk) : -1;
         if (i >= 0 && q.options[i]) { this.setState({ qchoice:q.options[i].id }); this.check(); return true; }   // one key answers: pick and check together
-        if (kind === 'audio' && (lk === 'p' || lk === 'r')) { this.say(q.audio || '', 'q'); return true; }
+        if (kind === 'audio' && (lk === 'p' || lk === 'r')) { this.sayAi(q.audio || '', 'q'); return true; }
         if (go) { this.check(); return true; }
       } else if (go) { this.check(); return true; }
       return false;
@@ -3123,9 +3148,9 @@
       this.plSay(steps[0]);
     };
     pathAlt = () => { const a = this.state.plAlt; this.setState({ pstop:'', plNote:'', plAlt:'' }); this.go(a === 'review' ? 'review' : 'voice'); };
-    plSay = (st) => { if (st && (st.t === 'meet' || (st.t === 'q' && st.kind === 'hear'))) this.say(st.zh, 'pl'); };
-    plHear = () => { const pl = this.state.pl; const st = pl && pl.steps[pl.i]; if (st) this.say(st.zh, 'pl'); };
-    plHearEx = () => { const pl = this.state.pl; const st = pl && pl.steps[pl.i]; if (!st) return; const ex = st.t === 'meet' ? EX[st.zh] : st.ex; if (ex && ex.zh) this.say(ex.zh, 'plx'); };
+    plSay = (st) => { if (st && (st.t === 'meet' || (st.t === 'q' && st.kind === 'hear'))) this.sayAi(st.zh, 'pl'); };
+    plHear = () => { const pl = this.state.pl; const st = pl && pl.steps[pl.i]; if (st) this.sayAi(st.zh, 'pl'); };
+    plHearEx = () => { const pl = this.state.pl; const st = pl && pl.steps[pl.i]; if (!st) return; const ex = st.t === 'meet' ? EX[st.zh] : st.ex; if (ex && ex.zh) this.sayAi(ex.zh, 'plx'); };
     plPick = (zh) => {
       const S = this.state; const pl = S.pl; const st = pl && pl.steps[pl.i];
       if (!st || st.t !== 'q' || pl.checked) return;
@@ -3138,7 +3163,7 @@
       }
       SFX.play(ok ? 'ok' : 'bad');
       this.setState({ pl:Object.assign({}, pl, { steps, pick:zh, checked:true, ok:okN, bad:badN, missed }) });
-      this.say(st.kind === 'cloze' && st.ex ? st.ex.zh : st.zh, 'pl');
+      this.sayAi(st.kind === 'cloze' && st.ex ? st.ex.zh : st.zh, 'pl');
     };
     plNext = () => {
       const S = this.state; const pl = S.pl; if (!pl || pl.done) return;
@@ -4109,7 +4134,7 @@
         }
         if (autoKey !== this.autoKey) {
           this.autoKey = autoKey;
-          if (autoKey && autoText && prefGet('autoplay', true) !== false) setTimeout(() => { if (this.autoKey === autoKey) this.say(autoText, autoSlot); }, 200);
+          if (autoKey && autoText && prefGet('autoplay', true) !== false) setTimeout(() => { if (this.autoKey === autoKey) this.sayAi(autoText, autoSlot); }, 200);
         }
       }
       const lrnCount = Object.keys(S.lrn || {}).length;
@@ -4185,7 +4210,7 @@
       const canTalk = S.sturn < turns;
       const target = sc.you[Math.min(S.sturn, turns - 1)];
       const goals = sc.goals.map((g, i) => ({ t:g, cls:S.sturn >= i + 1 ? 'ok' : '' }));
-      const wchips = sc.words.map(x => ({ zh:x.zh, py:x.py, play:() => this.say(x.zh, 'w' + x.zh) }));
+      const wchips = sc.words.map(x => ({ zh:x.zh, py:x.py, play:() => this.sayAi(x.zh, 'w' + x.zh) }));
       const scenarios = SCEN.map((x, i) => ({ glyph:x.glyph, title:x.title, sub:x.sub, state:S.sres[x.id] ? 'Done' : (i === S.sidx ? 'Now' : 'Open'), cls:(S.sres[x.id] ? 'done ' : '') + (i === S.sidx ? 'cur' : ''), fn:() => this.pickScenario(i) }));
 
       // word webs and word memory
@@ -4199,7 +4224,7 @@
         const e = exOf(zh);
         const open = avail && !!S.wex[zh];
         return { hasExBtn:avail && !!e.zh, exOpen:open, exLabel:open ? 'Hide example' : 'Show example', exToggle:() => this.toggleEx(zh),
-          exZh:e.zh, exPy:e.py, exEn:e.en, exPlay:() => this.say(e.zh, 'x' + zh), exPc:pc('x' + zh),
+          exZh:e.zh, exPy:e.py, exEn:e.en, exPlay:() => this.sayAi(e.zh, 'x' + zh), exPc:pc('x' + zh),
           hasExMore:(EXS[zh] || []).length > 1, exNext:() => this.nextEx(zh), exCount:(((S.wexn[zh] || 0) % (EXS[zh] || [0]).length) + 1) + ' of ' + (EXS[zh] || []).length, hasExNote:!!NOTE[zh], exNote:NOTE[zh] || '' };
       };
       const dlt = (zh) => { const d = S.wdelta[zh]; return d ? { hasDelta:true, deltaText:'Mastery ' + d.from + '% → ' + d.to + '%', deltaCls:d.to >= d.from ? 'up' : 'down' } : { hasDelta:false, deltaText:'', deltaCls:'' }; };
@@ -4218,7 +4243,7 @@
           capHit:isNew && capReached && !rated,
           p1c:w.parts[0][0], p1n:w.parts[0][1], p1cls:w.parts[0][0] === hubZh ? 'hub' : '',
           p2c:w.parts[1][0], p2n:w.parts[1][1], p2cls:w.parts[1][0] === hubZh ? 'hub' : '',
-          pc:pc('w' + w.zh), play:() => this.say(w.zh, 'w' + w.zh),
+          pc:pc('w' + w.zh), play:() => this.sayAi(w.zh, 'w' + w.zh),
           reveal:() => this.revealWord(w.zh), learn:() => this.learnWord(w.zh),
           knew:() => this.rateWeb(w.zh, true), missed:() => this.rateWeb(w.zh, false),
           reportUrl:report('Word web card', w.zh + ' (' + b.py + ') ' + b.en + '; parts ' + w.parts.map(p => p[0] + '=' + p[1]).join(', '))
@@ -4243,12 +4268,12 @@
           azh:A.zh, apy:A.py, aen:A.en, bzh:B.zh, bpy:B.py, ben:B.en, note:o.note,
           revealed:rev, hidden:!rev, hint:(o.pair ? 'The partner of ' : 'The opposite of ') + A.en,
           aPc:pc('w' + A.zh), bPc:pc('w' + B.zh),
-          playA:() => this.say(A.zh, 'w' + A.zh), playB:() => this.say(B.zh, 'w' + B.zh),
+          playA:() => this.sayAi(A.zh, 'w' + A.zh), playB:() => this.sayAi(B.zh, 'w' + B.zh),
           reveal:() => this.revealWord(B.zh),
           canAdd:rev && bNew && !capReached, canRate:rev && !bNew && !rated, capHit:rev && bNew && capReached && !rated,
           hasExBtn:rev, exOpen:rev && !!S.wex[A.zh + B.zh], exLabel:(rev && S.wex[A.zh + B.zh]) ? 'Hide examples' : 'Show examples', exToggle:() => this.toggleEx(A.zh + B.zh),
           aExZh:exOf(A.zh).zh, aExPy:exOf(A.zh).py, aExEn:exOf(A.zh).en, bExZh:exOf(B.zh).zh, bExPy:exOf(B.zh).py, bExEn:exOf(B.zh).en,
-          aExPlay:() => this.say(exOf(A.zh).zh, 'x' + A.zh), bExPlay:() => this.say(exOf(B.zh).zh, 'x' + B.zh), aExPc:pc('x' + A.zh), bExPc:pc('x' + B.zh),
+          aExPlay:() => this.sayAi(exOf(A.zh).zh, 'x' + A.zh), bExPlay:() => this.sayAi(exOf(B.zh).zh, 'x' + B.zh), aExPc:pc('x' + A.zh), bExPc:pc('x' + B.zh),
           canAddA:ia.lv === 'new' && !capReached, hasAdd:(ia.lv === 'new' || (rev && bNew)) && !capReached,
           canAddBoth:rev && ia.lv === 'new' && bNew && !capReached && (limitOf(S) - webCount >= 2),
           learnA:() => this.learnWord(A.zh), learnBoth:() => this.learnMany([A.zh, B.zh]),
@@ -4263,7 +4288,7 @@
         const info = mini(zh);
         const isNew = info.lv === 'new';
         return Object.assign({ zh, py:b.py, en:b.en, cls:isNew ? 'new' : 'ok', canAdd:isNew && !capReached, capHit:isNew && capReached,
-          play:() => this.say(zh, 'w' + zh), learn:() => this.learnWord(zh) }, info, lvInfo(zh), exFor(zh, true));
+          play:() => this.sayAi(zh, 'w' + zh), learn:() => this.learnWord(zh) }, info, lvInfo(zh), exFor(zh, true));
       });
       const topicStarted = topicNow.words.filter(zh => mini(zh).started).length;
       const topicOpts = TOPICS.map((t, i) => ({ label:t.name, count:tinfo[i].got + '/' + tinfo[i].tot, cls:(S.wtopic === i ? 'on' : '') + (tinfo[i].clear ? ' clear' : ''), fn:() => this.pickTopic(i) }));
@@ -4299,7 +4324,7 @@
       const dueLeft = BANK_KEYS.filter(zh => { const i = winfo(S.ws[zh], 0); return i.started && i.dueN <= 0; }).length;
 
       // my words
-      const rowsAll = BANK_KEYS.map(zh => Object.assign({ zh, py:BANK[zh].py, en:BANK[zh].en, pc:pc('w' + zh), play:() => this.say(zh, 'w' + zh) }, winfo(S.ws[zh], S.woff)));
+      const rowsAll = BANK_KEYS.map(zh => Object.assign({ zh, py:BANK[zh].py, en:BANK[zh].en, pc:pc('w' + zh), play:() => this.sayAi(zh, 'w' + zh) }, winfo(S.ws[zh], S.woff)));
       const lvKeys = ['new', 'learning', 'familiar', 'strong', 'mastered'];
       const lvCount = {};
       lvKeys.forEach(k => { lvCount[k] = rowsAll.filter(r => r.lv === k).length; });
@@ -4602,8 +4627,8 @@
         rIsFlip:rkind === 'flip' || rkind === 'intro', rIsAuto:rAuto, rIsIntro:rkind === 'intro', rIsPlain:rkind === 'flip', rIntroDone:this.rIntroDone,
         cardAnim:S.rstep % 2 === 0 ? 'ea' : 'eb', showAnswerBtn:!S.rflip && rkind === 'flip', rates, rateGrid:rates, qfeed:S.qfeed, hasQfeed:!!S.qfeed,
         rpyShow:S.rpy && !rflipV && rkind === 'flip', toggleRpy:this.toggleRpy, pyBtnText:S.rpy ? 'Hide pinyin' : 'Show pinyin', quickNo:rates[0], quickYes:rates[2],
-        playWord:() => this.say(rw.zh, 'word'), playWordCls:pc('word') ? 'ink' : '',
-        playEx:() => this.say(rex.zh, 'ex'), playExCls:pc('ex') ? 'ink' : '',
+        playWord:() => this.sayAi(rw.zh, 'word'), playWordCls:pc('word') ? 'ink' : '',
+        playEx:() => this.sayAi(rex.zh, 'ex'), playExCls:pc('ex') ? 'ink' : '',
 
         // lobby
         startTest:() => this.startQuiz('test'), testReady, testBlocked:!testReady,
@@ -4633,7 +4658,7 @@
         qAnim:S.qi % 2 === 0 ? 'qa' : 'qb', qtyped:S.qtyped, inpCls:S.qchecked ? (S.qcorrect ? 'locked right' : 'locked wrong') : '',
         onType:(e) => { if (!this.state.qchecked) this.setState({ qtyped:e.target.value }); },
         onEnter:(e) => { if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229 && !e.repeat) this.primary(); },
-        playQ:() => this.say(q0.audio || '', 'q'), listenCls:pc('q'),
+        playQ:() => this.sayAi(q0.audio || '', 'q'), listenCls:pc('q'),
         showCheck:!S.qchecked, checkLabel:S.qbusy ? 'Checking…' : 'Check', hasQerr:!!S.qerr, qerr:S.qerr || '', checkCls:(canCheck && !S.qbusy) ? '' : 'dis', checkAria:canCheck ? 'false' : 'true', check:this.check,
         qchecked:S.qchecked, qcorrect:S.qcorrect, qwrong:!S.qcorrect, fbCls:S.qcorrect ? 'good' : 'bad',
         fbTitle:S.qcorrect ? (S.qcombo >= 3 ? S.qcombo + ' in a row!' : ['Correct', 'Nice', 'Right on', 'Spot on', 'Exactly', 'Yes'][(S.qi + S.rstep) % 6]) : (S.qfeed && /Right sounds|real word|check the tone|is a word too|only part of the word/.test(S.qfeed) ? 'So close' : 'Not quite'),

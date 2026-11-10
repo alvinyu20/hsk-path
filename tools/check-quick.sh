@@ -28,6 +28,7 @@ case "$MODE" in
     last node tools/test-journey-media.js
     last node tools/test-char-glosses.js
     last node tools/test-readings.js
+    last node tools/test-audio.js
     last python3 tools/build-char-glosses.py --check
     last node tools/test-journey-media-wikis.js
     last node tools/test-exam-media.js
@@ -45,6 +46,7 @@ case "$MODE" in
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-friends.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-pwa.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-lab-voice.js
+    last env NODE_PATH="$(npm root -g)" node tools/smoke-test-audio.js
     NODE_PATH="$(npm root -g)" node tools/smoke-test.js
     NODE_PATH="$(npm root -g)" node tools/smoke-test-l2.js
     NODE_PATH="$(npm root -g)" node tools/smoke-test-l3.js
