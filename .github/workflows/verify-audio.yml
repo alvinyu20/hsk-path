@@ -6,9 +6,6 @@ name: Audio verify
 on:
   workflow_dispatch:
     inputs:
-      only:
-        description: 'What to check: all, index (the site recordings) or trial2 (the style trial)'
-        default: 'all'
       limit:
         description: 'Check at most this many (0 = all; try 20 first to see it works)'
         default: '0'
@@ -36,9 +33,8 @@ jobs:
           pip install --quiet funasr modelscope pypinyin
       - name: Check the recordings
         env:
-          ONLY: ${{ inputs.only }}
           LIMIT: ${{ inputs.limit }}
-        run: python3 tools/verify-audio.py --only "$ONLY" --limit "$LIMIT"
+        run: python3 tools/verify-audio.py --limit "$LIMIT"
       - name: Save the result
         if: always()
         run: |

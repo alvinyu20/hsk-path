@@ -1,28 +1,27 @@
 #!/usr/bin/env python3
 """Make recorded audio with the Qwen voice, once, so the site plays files instead of paying for a voice on every tap.
 
-  DASHSCOPE_API_KEY=...  python3 tools/make-audio.py --scope core [--limit 50] [--workers 3] [--dry-run]
+  DASHSCOPE_API_KEY=...  python3 tools/make-audio.py --scope core [--limit 50] [--workers 2] [--dry-run]
   then:                   python3 tools/build-audio.py
 
-What it does: reads the list from `node tools/audio-texts.js`, asks qwen3-tts-flash (Alibaba Model Studio, Singapore) for each text that has no file yet,
-downloads the WAV, turns it into a small mono mp3 with ffmpeg, saves audio/<hash>.mp3 and records text -> file in audio/index.json.
-Safe to stop and run again: lines that already have a file are skipped. The key is read from the environment only; it is never written anywhere.
-Engine (--engine): audio31 (default) = Alibaba Qwen-Audio 3.1 flash with the voice longanhuan_v3.1 and a reading instruction (standard Mandarin, neutral, no personality or
-filler sounds); it was judged clearly better than qwen3 (Maia) in the style trial. The man's voice (xunanchuan_v3.1, for 男 lines in exam conversations) is NOT tried yet.
-qwen3 = the old qwen3-tts-flash with Maia/Kai and no instruction. Every file is padded with a little silence at the start and end. Billing for audio31 is per token
-(price unconfirmed; the dry run prints a rough guess). Voices: --voice-f (the woman) and --voice-m (the man in exam conversations). Key in the manifest: the text itself for the woman,
-"m|" + text for the man.
+What it does: reads the list from `node tools/audio-texts.js` and asks Alibaba's Qwen-Audio 3.1 flash (qwen-audio-3.1-tts-flash, Model Studio, Singapore) for each text
+that has no file yet, with the voice longanhuan_v3.1 and a reading instruction (standard Mandarin, neutral, no personality or filler sounds; see INSTRUCTION below).
+It downloads the WAV, pads it with a little silence at the start and end (so a player cannot clip it), turns it into a small mono mp3 with ffmpeg, saves
+audio/<hash>.mp3 and records text -> file in audio/index.json. Safe to stop and run again: lines that already have a file are skipped.
+The key is read from the environment only; it is never written anywhere.
+Voices: --voice-f (the woman: words, sentences, lab, exam women; default longanhuan_v3.1) and --voice-m (the man in exam conversations; default xunanchuan_v3.1,
+NOT listened to yet). Key in the manifest: the text itself for the woman, "m|" + text for the man.
 Scopes: words, examples, lab, exams, extra (grammar lesson examples and Speak scenarios), core (= words + examples + lab + exams), all.
-Redo a line: delete its entry from audio/index.json (and its file) and run again; or --redo "你好,谢谢"; --redo "*" makes everything in the scope again (use it after changing voice).
-Cost: $0.10 per 10,000 billed characters, each Chinese character counted as 2 (checked against Alibaba's price table only through secondary sources).
+Redo a line: --redo "你好,谢谢"; --redo "*" makes everything in the scope again (use it after changing voice or the instruction). Re-making files clears
+audio/verify.json (the speech-recogniser results describe the old files); run the Audio verify workflow again.
+Cost: Qwen-Audio 3.1 is billed per token (input text and output audio), not per character; the price here is unconfirmed. The dry run prints a rough guess;
+real use so far: all 988 words (1,689 Chinese characters) cost about 1 cent.
 """
 import argparse, concurrent.futures as cf, hashlib, json, os, subprocess, sys, tempfile, threading, time, urllib.request, urllib.error
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AUDIO = os.path.join(ROOT, 'audio')
 INDEX = os.path.join(AUDIO, 'index.json')
-API = 'https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation'
-MODEL = 'qwen3-tts-flash'
 CORE = {'words', 'examples', 'lab', 'exams'}
 
 
@@ -50,16 +49,16 @@ def fake_wav():
 
 INSTRUCTION = ('请用标准普通话朗读，这是给汉语学习者的教学录音。发音和声调必须准确标准，语速平稳适中，音量一致。'
                '语气中性平淡，像教材录音，不要有个人情绪、表演、语气词、笑声、叹息、呼吸声或任何多余的声音。')
-API31 = 'https://dashscope-intl.aliyuncs.com/api/v1/services/audio/tts/SpeechSynthesizer'
-MODEL31 = 'qwen-audio-3.1-tts-flash'
+API = 'https://dashscope-intl.aliyuncs.com/api/v1/services/audio/tts/SpeechSynthesizer'
+MODEL = 'qwen-audio-3.1-tts-flash'
 
 
-def synth31(text, voice, key):
+def synth(text, voice, key):
     if os.environ.get('MAKE_AUDIO_FAKE'):
         return fake_wav()
     ws = os.environ.get('DASHSCOPE_WORKSPACE_ID', '').strip()
-    url = ('https://%s.ap-southeast-1.maas.aliyuncs.com/api/v1/services/audio/tts/SpeechSynthesizer' % ws) if ws else API31
-    body = json.dumps({'model': MODEL31, 'input': {'text': text[:600], 'voice': voice, 'format': 'wav', 'sample_rate': 24000, 'instruction': INSTRUCTION}}).encode()
+    url = ('https://%s.ap-southeast-1.maas.aliyuncs.com/api/v1/services/audio/tts/SpeechSynthesizer' % ws) if ws else API
+    body = json.dumps({'model': MODEL, 'input': {'text': text[:600], 'voice': voice, 'format': 'wav', 'sample_rate': 24000, 'instruction': INSTRUCTION}}).encode()
     last = ''
     for attempt in range(7):
         req = urllib.request.Request(url, data=body, headers={'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'})
@@ -83,39 +82,12 @@ def synth31(text, voice, key):
     raise RuntimeError(last)
 
 
-def synth(text, voice, key):
-    if os.environ.get('MAKE_AUDIO_FAKE'):
-        return fake_wav()
-    body = json.dumps({'model': MODEL, 'input': {'text': text[:600], 'voice': voice, 'language_type': 'Chinese'}}).encode()
-    for attempt in range(5):
-        req = urllib.request.Request(API, data=body, headers={'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'})
-        try:
-            with urllib.request.urlopen(req, timeout=60) as r:
-                j = json.load(r)
-            url = j['output']['audio']['url'].replace('http://', 'https://')
-            with urllib.request.urlopen(url, timeout=60) as r:
-                return r.read()
-        except urllib.error.HTTPError as e:
-            msg = e.read().decode('utf-8', 'replace')[:200]
-            if e.code in (401, 403):
-                sys.exit('Alibaba rejected the key (%d): %s' % (e.code, msg))
-            if e.code == 400 and ('quota' in msg.lower() or 'FreeTier' in msg):
-                sys.exit('The free quota is used up: ' + msg)
-            wait = 4 * (attempt + 1) if e.code == 429 else 2 * (attempt + 1)
-            time.sleep(wait)
-            last = '%d %s' % (e.code, msg)
-        except Exception as e:   # network hiccup, bad JSON, expired link
-            time.sleep(2 * (attempt + 1))
-            last = repr(e)
-    raise RuntimeError(last)
-
-
-def to_mp3(wav, out, pad=False):
+def to_mp3(wav, out):
     with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as t:
         t.write(wav)
         p = t.name
     try:
-        af = ['-af', 'adelay=120:all=1,apad=pad_dur=0.25'] if pad else []   # pad: a little silence before and after, so a player cannot clip the start or the end
+        af = ['-af', 'adelay=120:all=1,apad=pad_dur=0.25']   # a little silence before and after, so a player cannot clip the start or the end
         r = subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', p] + af + ['-ac', '1', '-ar', '24000', '-c:a', 'libmp3lame', '-b:a', '40k', out], capture_output=True)
         if r.returncode != 0:
             raise RuntimeError('ffmpeg: ' + r.stderr.decode('utf-8', 'replace')[:200])
@@ -128,14 +100,13 @@ def main():
     ap.add_argument('--scope', default='core')
     ap.add_argument('--limit', type=int, default=0, help='make at most this many new files (0 = no limit)')
     ap.add_argument('--workers', type=int, default=2)
-    ap.add_argument('--engine', default='audio31', choices=['audio31', 'qwen3'])
     ap.add_argument('--voice-f', default='')
     ap.add_argument('--voice-m', default='')
     ap.add_argument('--redo', default='', help='comma-separated texts to make again')
     ap.add_argument('--dry-run', action='store_true', help='only count what would be made and what it would cost')
     a = ap.parse_args()
-    a.voice_f = a.voice_f or ('longanhuan_v3.1' if a.engine == 'audio31' else 'Maia')
-    a.voice_m = a.voice_m or ('xunanchuan_v3.1' if a.engine == 'audio31' else 'Kai')
+    a.voice_f = a.voice_f or 'longanhuan_v3.1'
+    a.voice_m = a.voice_m or 'xunanchuan_v3.1'
     scopes = CORE if a.scope == 'core' else ({'words', 'examples', 'lab', 'exams', 'extra'} if a.scope == 'all' else set(a.scope.split(',')))
     texts = json.loads(subprocess.run(['node', os.path.join(ROOT, 'tools', 'audio-texts.js')], capture_output=True, check=True, cwd=ROOT).stdout)
     texts = [e for e in texts if e['group'] in scopes]
@@ -155,11 +126,8 @@ def main():
     chars = sum(zh_chars(e['text']) for e in todo)
     print('%d texts in scope, %d already have a file, %d without one%s: making %d, which is %d Chinese characters'
           % (len(texts), len(texts) - pending, pending, ' (limit %d)' % a.limit if a.limit else '', len(todo), chars))
-    if a.engine == 'qwen3':
-        print('qwen3 price: %d billed characters, about $%.3f' % (chars * 2, chars * 2 / 1e4 * 0.1))
-    else:
-        secs = chars * 0.4 + len(todo) * 0.4
-        print('audio31 is billed per token, price NOT confirmed: roughly %.0f s of audio; if audio is 50 tokens/s at $1.87 per million tokens that is about $%.2f' % (secs, secs * 50 * 1.87 / 1e6))
+    # real use so far: 988 words / 1,689 characters cost about 1 cent (about $0.006 per 1,000 characters); the price list is unconfirmed, so this is only a guide
+    print('rough guide only (billed per token, price unconfirmed): about $%.2f' % (chars * 0.006 / 1000))
     if a.dry_run or not todo:
         return
     key = os.environ.get('DASHSCOPE_API_KEY', '').strip()
@@ -174,8 +142,8 @@ def main():
         voice = a.voice_m if e['voice'] == 'm' else a.voice_f
         out = os.path.join(AUDIO, fname(k))
         try:
-            wav = (synth31 if a.engine == 'audio31' else synth)(e['text'], voice, key)
-            to_mp3(wav, out, pad=(a.engine == 'audio31'))
+            wav = synth(e['text'], voice, key)
+            to_mp3(wav, out)
         except SystemExit:
             raise
         except Exception as ex:

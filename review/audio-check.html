@@ -11,8 +11,6 @@ button.on{background:#15222b;color:#fff;border-color:#15222b}
 .row .zh{font-size:24px}.row small{display:block;color:#5b6b73}
 .row.flag .zh::after{content:" 🔍";font-size:14px}.row.bad{background:#fde8e4}.row.ok{background:#e8f5ec}.row.risk .zh::after{content:" ⚠";font-size:14px;color:#b4540a}
 .row .btns{display:flex;gap:6px}
-.trial{background:#fff;border:1px solid #d5dcdf;border-radius:12px;padding:10px 14px;margin:12px 0}.trial h2{font-size:17px;margin:0 0 4px}
-.trial .row{display:block}.trial .zh{font-size:20px}.trial .btns{flex-wrap:wrap;margin:6px 0 2px}.trial .btns button{font-size:14px;padding:6px 10px}.trial .heard{font-size:13px;color:#5b6b73;line-height:1.5}
 .play{width:44px;height:44px;border-radius:50%;padding:0;font-size:18px}
 #out{width:100%;margin-top:8px;font:14px monospace}
 </style>
@@ -23,9 +21,8 @@ button.on{background:#15222b;color:#fff;border-color:#15222b}
   <select id="show"><option value="flag">Checker flagged first</option><option value="risk">Risky readings first</option><option value="all">All words</option><option value="bad">Marked ✗</option><option value="todo">Not checked yet</option></select>
   <button id="copy">Copy redo list</button><span id="count" class="muted"></span>
 </div>
-<div id="style" class="trial" hidden></div>
-<div id="trial" class="trial" hidden></div>
 <div id="list"></div>
+<div id="others" hidden><h2 style="font-size:17px;margin:18px 0 4px">Flagged sentences and other lines</h2><div id="olist"></div></div>
 <textarea id="out" rows="3" readonly hidden></textarea>
 <script src="../data/hsk1-words.js"></script><script src="../data/hsk2-words.js"></script><script src="../data/hsk3-words.js"></script><script src="../data/audio-manifest.js"></script>
 <script>
@@ -35,7 +32,7 @@ let marks = {}; try { marks = JSON.parse(localStorage.getItem(KEY) || '{}'); } c
 const M = window.SHANLU_AUDIO || {};
 const words = [];
 [1, 2, 3].forEach(n => (window['HSK' + n + '_WORDS'] || []).forEach(w => { if (M[w.zh]) words.push({ n, zh: w.zh, py: w.py, en: w.en, file: '../audio/' + (String(M[w.zh]).indexOf('.') >= 0 ? M[w.zh] : encodeURIComponent(w.zh) + '.' + M[w.zh]), risk: [...w.zh].some(c => RISK.has(c)) || w.py.indexOf('/') >= 0 }); }));
-let VER = { differs: {}, extra: {}, unsure: {}, homophone: {}, trial2: {} };
+let VER = { differs: {}, extra: {}, unsure: {}, homophone: {} };
 const a = new Audio();
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(marks)); } catch (e) {} };
 function render() {
@@ -58,51 +55,25 @@ function render() {
   const bad = Object.keys(marks).filter(k => marks[k] === 'x').length, ok = Object.keys(marks).filter(k => marks[k] === 'ok').length;
   document.getElementById('count').textContent = words.length + ' recorded · ' + (!VER.checked && VER.when ? 'checker: no results yet (' + VER.when + ') · ' : '') + (VER.checked ? Object.keys(VER.differs).length + ' differ · ' + Object.keys(VER.extra).length + ' with extra sounds · ' + Object.keys(VER.unsure).length + ' unsure (' + VER.ok + ' of ' + VER.checked + ' heard exactly right) · ' : '') + ok + ' ✓ · ' + bad + ' ✗' + (l.length > 400 ? ' · showing 400 (use the filters)' : '');
 }
+// Lines the checker flagged that are not in the word list (sentences, lab clips, exam lines; "m|" = the man's voice)
+function renderOthers() {
+  const isWord = new Set(words.map(w => w.zh));
+  const flagged = Object.keys(Object.assign({}, VER.extra || {}, VER.differs || {})).filter(k => !isWord.has(k) && M[k]);
+  const box = document.getElementById('olist'); box.textContent = '';
+  document.getElementById('others').hidden = !flagged.length;
+  flagged.slice(0, 300).forEach(k => {
+    const r = document.createElement('div'); r.className = 'row flag';
+    r.innerHTML = '<button class="play" aria-label="Play">▶</button><div><span class="zh" style="font-size:18px"></span><small></small></div><div></div>';
+    r.querySelector('.zh').textContent = k.replace(/^m\|/, '') + (k.indexOf('m|') === 0 ? '  (man)' : '');
+    r.querySelector('small').textContent = '🔍 checker heard “' + String((VER.differs || {})[k] || (VER.extra || {})[k]).replace(/ /g, '') + '”';
+    r.querySelector('.play').onclick = () => { a.onended = null; a.src = '../audio/' + (String(M[k]).indexOf('.') >= 0 ? M[k] : encodeURIComponent(k) + '.' + M[k]); a.play(); };
+    box.appendChild(r);
+  });
+}
 document.getElementById('lv').onchange = render; document.getElementById('show').onchange = render;
 document.getElementById('copy').onclick = () => { const t = Object.keys(marks).filter(k => marks[k] === 'x').join(','); const o = document.getElementById('out'); o.hidden = false; o.value = t || '(nothing marked ✗)'; o.select(); try { navigator.clipboard.writeText(t).catch(() => {}); } catch (e) {} };
 render();
 
 // The speech-recogniser check (audio/verify.json, made by the "Audio verify" workflow): what it heard for each recording that did not come out exactly right.
-fetch('../audio/verify.json').then(r => r.ok ? r.json() : null).then(d => { if (d) { VER = Object.assign({ differs: {}, extra: {}, unsure: {}, homophone: {}, trial2: {} }, d); render(); renderStyle(); } }).catch(() => {});
-
-// Trial recordings (audio/trial/trial.json, made by the "Qwen audio" workflow with scope "trial"): whole sentences, and short words in two versions.
-const T = '../audio/trial/';
-function playSeq(files) { let i = 0; const next = () => { if (i >= files.length) return; a.onended = next; a.src = files[i++]; a.play(); }; next(); }
-// The sentence cut into the words we have recordings for (longest match first), played one file after the other: what joining word files would sound like.
-function pieces(zh) {
-  const out = []; let i = 0;
-  while (i < zh.length) {
-    let hit = null;
-    for (let L = Math.min(4, zh.length - i); L >= 1; L--) { const w = zh.substr(i, L); if (M[w]) { hit = w; break; } }
-    if (hit) { out.push(hit); i += hit.length; } else i++;
-  }
-  return out;
-}
-const fileOf = (w) => '../audio/' + (String(M[w]).indexOf('.') >= 0 ? M[w] : encodeURIComponent(w) + '.' + M[w]);
-// Style trial (audio/trial2/trial2.json, workflow scope "style"): the same texts read with different instructions to Qwen.
-let T2 = null;
-function renderStyle() {
-  const d = T2; if (!d) return;
-  const box = document.getElementById('style'); box.hidden = false;
-  box.innerHTML = '<h2>Style trial: does telling Qwen how to read give a plainer voice?</h2><p class="muted">Same texts, read different ways. <b>plain</b> is what the site has now. The others use the newer Qwen-Audio models from Alibaba, which accept a sentence telling them to read like a textbook recording; a31-huan-0 is the 3.1 model with no instruction, for comparison. A greyed button means Alibaba refused that version (tap it to see why). If the checker ran, a 🔍 line says what a speech recogniser heard for each version (✓ exactly right, ≈ same sounds, ✗ different, ➕ extra sounds, ? it answered in English letters).</p>';
-  const key = document.createElement('div'); key.className = 'muted'; key.style.margin = '4px 0 8px';
-  d.variants.forEach(v => { const p = document.createElement('div'); p.textContent = v.id + ' = ' + v.label + (v.instructions ? ' · "' + v.instructions + '"' : ''); key.appendChild(p); });
-  box.appendChild(key);
-  d.texts.forEach((t, i) => { const r = document.createElement('div'); r.className = 'row'; r.innerHTML = '<div><span class="zh"></span></div><div class="btns"></div><div class="heard"></div>'; r.querySelector('.zh').textContent = t;
-    const heard = [];
-    d.variants.forEach(v => { const res = v.results[i]; const b = document.createElement('button'); b.textContent = v.id; if (res.file) { b.onclick = () => { a.onended = null; a.src = '../audio/trial2/' + res.file; a.play(); }; const c = (VER.trial2 || {})[res.file]; if (c) heard.push(({ ok: '✓', homophone: '≈', differs: '✗', extra: '➕', unsure: '?', skip: '–' }[c.status] || '') + ' ' + v.id + ': “' + c.heard.replace(/ /g, '') + '”'); } else { b.style.opacity = .4; b.onclick = () => alert(res.error || 'no file'); } r.querySelector('.btns').appendChild(b); });
-    if (heard.length) r.querySelector('.heard').innerHTML = '🔍 recogniser heard:<br>' + heard.map(x => x.replace(/&/g, '&amp;').replace(/</g, '&lt;')).join('<br>');
-    box.appendChild(r); });
-}
-fetch('../audio/trial2/trial2.json').then(r => r.ok ? r.json() : null).then(d => { T2 = d; renderStyle(); }).catch(() => {});
-
-fetch(T + 'trial.json').then(r => r.ok ? r.json() : null).then(d => {
-  if (!d) return;
-  const box = document.getElementById('trial'); box.hidden = false;
-  box.innerHTML = '<h2>Trial: whole sentences and short words (voice ' + d.voice + ')</h2><p class="muted">Each sentence is ONE recording; this is what the site plays for an example. "Word by word" plays the same sentence by joining the single-word recordings, so you can hear the difference. Under it, short words in two versions: <b>pad</b> = the word with a little silence around it, <b>stop</b> = the word followed by 。 (both new). "Now" is the recording the site has today.</p>';
-  const add = (zh, sub, btns) => { const r = document.createElement('div'); r.className = 'row'; r.innerHTML = '<div><span class="zh"></span><small></small></div><div class="btns"></div>'; r.querySelector('.zh').textContent = zh; r.querySelector('small').textContent = sub; btns.forEach(([t, f]) => { const b = document.createElement('button'); b.textContent = t; b.onclick = f; r.querySelector('.btns').appendChild(b); }); box.appendChild(r); };
-  d.sentences.forEach(e => { const p = pieces(e.zh); add(e.zh, e.py + ' · ' + e.en, [['▶ Whole', () => { a.onended = null; a.src = T + e.file; a.play(); }], ['▶ Word by word', () => playSeq(p.map(fileOf))]]); });
-  const h = document.createElement('h2'); h.textContent = 'Short words'; h.style.marginTop = '12px'; box.appendChild(h);
-  d.words.forEach(w => add(w.zh, '', [['Now', () => { a.onended = null; a.src = fileOf(w.zh); a.play(); }], ['pad', () => { a.onended = null; a.src = T + w.pad; a.play(); }], ['stop', () => { a.onended = null; a.src = T + w.stop; a.play(); }]]));
-}).catch(() => {});
+fetch('../audio/verify.json').then(r => r.ok ? r.json() : null).then(d => { if (d) { VER = Object.assign({ differs: {}, extra: {}, unsure: {}, homophone: {} }, d); render(); renderOthers(); } }).catch(() => {});
 </script>

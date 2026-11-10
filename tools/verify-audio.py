@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Checks the recordings without listening: a speech recogniser listens to each one and we compare what it HEARD with the text we MEANT.
 
-  python3 tools/verify-audio.py [--only index|trial2|all] [--limit N]      (writes audio/verify.json; the "Audio verify" workflow runs it)
+  python3 tools/verify-audio.py [--limit N]      (writes audio/verify.json; the "Audio verify" workflow runs it)
 
 Recogniser: FunASR paraformer-zh (open model, Chinese, downloaded on first use; no key, no cost). Statuses per recording:
   ok          the recogniser wrote exactly the text we meant (儿 and punctuation ignored)
@@ -67,51 +67,34 @@ class Asr:
         return (res[0].get('text', '') if res else '') or ''
 
 
-def items(only):
-    out = []   # (group, key, text, file)
-    if only in ('index', 'all'):
-        idx = json.load(open(os.path.join(AUDIO, 'index.json'), encoding='utf-8'))
-        for k, f in idx.items():
-            p = os.path.join(AUDIO, f)
-            if os.path.exists(p):
-                out.append(('index', k, k[2:] if k.startswith('m|') else k, p))
-    if only in ('trial2', 'all'):
-        tj = os.path.join(AUDIO, 'trial2', 'trial2.json')
-        if os.path.exists(tj):
-            d = json.load(open(tj, encoding='utf-8'))
-            for v in d['variants']:
-                for i, r in enumerate(v['results']):
-                    if r.get('file'):
-                        out.append(('trial2', r['file'], d['texts'][i], os.path.join(AUDIO, 'trial2', r['file'])))
+def items():
+    """-> [(key, text, file)] for every recording in audio/index.json (key starts with "m|" for the man's voice)"""
+    idx = json.load(open(os.path.join(AUDIO, 'index.json'), encoding='utf-8'))
+    out = []
+    for k, f in idx.items():
+        p = os.path.join(AUDIO, f)
+        if os.path.exists(p):
+            out.append((k, k[2:] if k.startswith('m|') else k, p))
     return out
 
 
 def main(asr=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument('--only', default='all'); ap.add_argument('--limit', type=int, default=0)
+    ap.add_argument('--limit', type=int, default=0)
     a = ap.parse_args()
-    todo = items(a.only)
-    if a.limit:   # the limit applies to each group, so a small test run still covers the style trial
-        todo = [t for g in ('index', 'trial2') for t in [x for x in todo if x[0] == g][:a.limit]]
+    todo = items()
+    if a.limit:
+        todo = todo[:a.limit]
     asr = asr or Asr()
-    path = os.path.join(AUDIO, 'verify.json')
-    old = json.load(open(path, encoding='utf-8')) if os.path.exists(path) else {}
-    res = {'model': 'funasr paraformer-zh', 'when': time.strftime('%Y-%m-%d'), 'checked': 0, 'ok': 0, 'skipped': 0, 'homophone': {}, 'differs': {}, 'extra': {}, 'unsure': {}, 'trial2': {}}
-    if a.only == 'index':
-        res['trial2'] = old.get('trial2', {})
-    if a.only == 'trial2':   # keep the main results when only the trial is re-checked
-        for k in ('checked', 'ok', 'skipped', 'homophone', 'differs', 'extra', 'unsure'):
-            res[k] = old.get(k, res[k])
+    res = {'model': 'funasr paraformer-zh', 'when': time.strftime('%Y-%m-%d'), 'checked': 0, 'ok': 0, 'skipped': 0,
+           'homophone': {}, 'differs': {}, 'extra': {}, 'unsure': {}}
     t0 = time.time()
-    for n, (group, key, meant, p) in enumerate(todo):
+    for n, (key, meant, p) in enumerate(todo):
         try:
             heard = asr(p)
         except Exception as e:
             print('  asr failed for', key, repr(e)); continue
         st = judge(meant, heard)
-        if group == 'trial2':
-            res['trial2'][key] = {'heard': heard, 'status': st}
-            continue
         res['checked'] += 1
         if st == 'ok':
             res['ok'] += 1
@@ -121,12 +104,10 @@ def main(asr=None):
             res[st][key] = heard
         if (n + 1) % 100 == 0:
             print('  %d / %d  (%.0f s)' % (n + 1, len(todo), time.time() - t0), flush=True)
-    json.dump(res, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=0, sort_keys=True)
-    print('checked %d: %d ok, %d same sounds, %d DIFFER, %d with extra sounds, %d unsure, %d skipped' % (res['checked'], res['ok'], len(res['homophone']), len(res['differs']), len(res['extra']), len(res['unsure']), res['skipped']))
-    for g in ('trial2',):
-        for f, r in sorted(res[g].items()):
-            print('  trial2 %-18s %-10s heard: %s' % (f, r['status'], r['heard']))
-    for k, h in list(res['differs'].items())[:40]:
+    json.dump(res, open(os.path.join(AUDIO, 'verify.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=0, sort_keys=True)
+    print('checked %d: %d ok, %d same sounds, %d DIFFER, %d with extra sounds, %d unsure, %d skipped'
+          % (res['checked'], res['ok'], len(res['homophone']), len(res['differs']), len(res['extra']), len(res['unsure']), res['skipped']))
+    for k, h in list(res['differs'].items())[:60]:
         print('  DIFFERS %s  heard: %s' % (k, h))
 
 

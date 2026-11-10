@@ -1,6 +1,6 @@
 name: Qwen audio
 
-# Makes recorded audio with the Qwen voice (qwen3-tts-flash) once, saves it in audio/ and lists it in data/audio-manifest.js, so the site plays files:
+# Makes recorded audio with Alibaba's Qwen-Audio 3.1 voice (longanhuan_v3.1, plain textbook-reading instruction) once, saves it in audio/ and lists it in data/audio-manifest.js, so the site plays files:
 # no key is needed to hear them and nothing is paid per tap. Run it by hand from the Actions tab (choose the scope; try "words" first).
 # It needs the repository secret DASHSCOPE_API_KEY (Settings > Secrets and variables > Actions): the Alibaba Model Studio key for Singapore.
 # Lines that already have a file are skipped, so running again only fills the gaps.
@@ -8,13 +8,13 @@ on:
   workflow_dispatch:
     inputs:
       scope:
-        description: 'What to make: style (tests whether a reading instruction gives a plainer voice, about 50 short recordings), trial (a few sentences and words to listen to, about 1 cent), words, examples, lab, exams, extra, core (words+examples+lab+exams) or all'
+        description: 'What to make: words, examples, lab, exams, extra, core (words+examples+lab+exams) or all'
         default: 'words'
       limit:
         description: 'Make at most this many new files (0 = no limit)'
         default: '0'
       voice_f:
-        description: 'The woman voice (words, sentences, lab, exam women). longanhuan_v3.1 won the style trial'
+        description: 'The woman voice (words, sentences, lab, exam women). longanhuan_v3.1: chosen by listening'
         default: 'longanhuan_v3.1'
       voice_m:
         description: 'The man voice (lines spoken by 男 in exam conversations). Not tried yet: check the first exam clips'
@@ -48,11 +48,7 @@ jobs:
           SCOPE: ${{ inputs.scope }}
           LIMIT: ${{ inputs.limit }}
         run: |
-          if [ "$SCOPE" = trial ] || [ "$SCOPE" = style ]; then
-            echo "$SCOPE set, a few dozen short recordings, a few cents"
-          else
-            python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --dry-run
-          fi
+          python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --dry-run
       - name: Make the audio
         env:
           DASHSCOPE_API_KEY: ${{ secrets.DASHSCOPE_API_KEY }}
@@ -61,14 +57,7 @@ jobs:
           REDO: ${{ inputs.redo }}
           VOICE_F: ${{ inputs.voice_f }}
           VOICE_M: ${{ inputs.voice_m }}
-        run: |
-          if [ "$SCOPE" = trial ]; then
-            python3 tools/make-trial-audio.py --voice "$VOICE_F"
-          elif [ "$SCOPE" = style ]; then
-            python3 tools/make-style-trial.py
-          else
-            python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --redo "$REDO" --voice-f "$VOICE_F" --voice-m "$VOICE_M" --workers 2
-          fi
+        run: python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --redo "$REDO" --voice-f "$VOICE_F" --voice-m "$VOICE_M" --workers 2
       - name: Save the files and the list
         if: always()
         env:
@@ -78,7 +67,7 @@ jobs:
           node tools/build-site.js
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add audio data/audio-manifest.js index.html sw.js
+          git add -A audio data/audio-manifest.js index.html sw.js
           if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
           git commit -m "Qwen audio: $SCOPE (made by the Qwen audio workflow)"
           git pull --rebase -q
