@@ -14,13 +14,13 @@ on:
         description: 'Make at most this many new files (0 = no limit)'
         default: '0'
       voice_f:
-        description: 'The woman voice (words, sentences, lab, exam women)'
-        default: 'Maia'
+        description: 'The woman voice (words, sentences, lab, exam women). longanhuan_v3.1 won the style trial'
+        default: 'longanhuan_v3.1'
       voice_m:
-        description: 'The man voice (lines spoken by 男 in exam conversations). Use Maia too if you want one voice everywhere'
-        default: 'Kai'
+        description: 'The man voice (lines spoken by 男 in exam conversations). Not tried yet: check the first exam clips'
+        default: 'xunanchuan_v3.1'
       redo:
-        description: 'Texts to make again, comma separated (leave empty normally)'
+        description: 'Texts to make again, comma separated, or * for everything in the scope (use * after changing voice). Leave empty normally'
         default: ''
 
 permissions:
@@ -67,7 +67,7 @@ jobs:
           elif [ "$SCOPE" = style ]; then
             python3 tools/make-style-trial.py
           else
-            python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --redo "$REDO" --voice-f "$VOICE_F" --voice-m "$VOICE_M" --workers 3
+            python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --redo "$REDO" --voice-f "$VOICE_F" --voice-m "$VOICE_M" --workers 2
           fi
       - name: Save the files and the list
         if: always()

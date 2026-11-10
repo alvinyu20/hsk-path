@@ -7,10 +7,13 @@
 What it does: reads the list from `node tools/audio-texts.js`, asks qwen3-tts-flash (Alibaba Model Studio, Singapore) for each text that has no file yet,
 downloads the WAV, turns it into a small mono mp3 with ffmpeg, saves audio/<hash>.mp3 and records text -> file in audio/index.json.
 Safe to stop and run again: lines that already have a file are skipped. The key is read from the environment only; it is never written anywhere.
-Voices: --voice-f (default Maia, the woman) and --voice-m (default Kai, the man in exam conversations). Key in the manifest: the text itself for the woman,
+Engine (--engine): audio31 (default) = Alibaba Qwen-Audio 3.1 flash with the voice longanhuan_v3.1 and a reading instruction (standard Mandarin, neutral, no personality or
+filler sounds); it was judged clearly better than qwen3 (Maia) in the style trial. The man's voice (xunanchuan_v3.1, for 男 lines in exam conversations) is NOT tried yet.
+qwen3 = the old qwen3-tts-flash with Maia/Kai and no instruction. Every file is padded with a little silence at the start and end. Billing for audio31 is per token
+(price unconfirmed; the dry run prints a rough guess). Voices: --voice-f (the woman) and --voice-m (the man in exam conversations). Key in the manifest: the text itself for the woman,
 "m|" + text for the man.
 Scopes: words, examples, lab, exams, extra (grammar lesson examples and Speak scenarios), core (= words + examples + lab + exams), all.
-Redo a line: delete its entry from audio/index.json (and its file) and run again; or --redo "你好,谢谢".
+Redo a line: delete its entry from audio/index.json (and its file) and run again; or --redo "你好,谢谢"; --redo "*" makes everything in the scope again (use it after changing voice).
 Cost: $0.10 per 10,000 billed characters, each Chinese character counted as 2 (checked against Alibaba's price table only through secondary sources).
 """
 import argparse, concurrent.futures as cf, hashlib, json, os, subprocess, sys, tempfile, threading, time, urllib.request, urllib.error
@@ -43,6 +46,41 @@ def fake_wav():
         w.setnchannels(1); w.setsampwidth(2); w.setframerate(24000)
         w.writeframes(b''.join(struct.pack('<h', int(3000 * math.sin(i / 20))) for i in range(7200)))
     return b.getvalue()
+
+
+INSTRUCTION = ('请用标准普通话朗读，这是给汉语学习者的教学录音。发音和声调必须准确标准，语速平稳适中，音量一致。'
+               '语气中性平淡，像教材录音，不要有个人情绪、表演、语气词、笑声、叹息、呼吸声或任何多余的声音。')
+API31 = 'https://dashscope-intl.aliyuncs.com/api/v1/services/audio/tts/SpeechSynthesizer'
+MODEL31 = 'qwen-audio-3.1-tts-flash'
+
+
+def synth31(text, voice, key):
+    if os.environ.get('MAKE_AUDIO_FAKE'):
+        return fake_wav()
+    ws = os.environ.get('DASHSCOPE_WORKSPACE_ID', '').strip()
+    url = ('https://%s.ap-southeast-1.maas.aliyuncs.com/api/v1/services/audio/tts/SpeechSynthesizer' % ws) if ws else API31
+    body = json.dumps({'model': MODEL31, 'input': {'text': text[:600], 'voice': voice, 'format': 'wav', 'sample_rate': 24000, 'instruction': INSTRUCTION}}).encode()
+    last = ''
+    for attempt in range(7):
+        req = urllib.request.Request(url, data=body, headers={'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'})
+        try:
+            with urllib.request.urlopen(req, timeout=90) as r:
+                j = json.load(r)
+            with urllib.request.urlopen(j['output']['audio']['url'].replace('http://', 'https://'), timeout=90) as r:
+                return r.read()
+        except urllib.error.HTTPError as e:
+            msg = e.read().decode('utf-8', 'replace')[:200]
+            last = '%d %s' % (e.code, msg)
+            if e.code in (401, 403):
+                sys.exit('Alibaba rejected the key (%d): %s' % (e.code, msg))
+            if e.code == 429:
+                time.sleep(6 * (attempt + 1)); continue
+            if e.code in (400, 404):
+                raise RuntimeError(last)   # voice or model refused: retrying will not help
+            time.sleep(2 * (attempt + 1))
+        except Exception as e:
+            time.sleep(2 * (attempt + 1)); last = repr(e)
+    raise RuntimeError(last)
 
 
 def synth(text, voice, key):
@@ -89,12 +127,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--scope', default='core')
     ap.add_argument('--limit', type=int, default=0, help='make at most this many new files (0 = no limit)')
-    ap.add_argument('--workers', type=int, default=3)
-    ap.add_argument('--voice-f', default='Maia')
-    ap.add_argument('--voice-m', default='Kai')
+    ap.add_argument('--workers', type=int, default=2)
+    ap.add_argument('--engine', default='audio31', choices=['audio31', 'qwen3'])
+    ap.add_argument('--voice-f', default='')
+    ap.add_argument('--voice-m', default='')
     ap.add_argument('--redo', default='', help='comma-separated texts to make again')
     ap.add_argument('--dry-run', action='store_true', help='only count what would be made and what it would cost')
     a = ap.parse_args()
+    a.voice_f = a.voice_f or ('longanhuan_v3.1' if a.engine == 'audio31' else 'Maia')
+    a.voice_m = a.voice_m or ('xunanchuan_v3.1' if a.engine == 'audio31' else 'Kai')
     scopes = CORE if a.scope == 'core' else ({'words', 'examples', 'lab', 'exams', 'extra'} if a.scope == 'all' else set(a.scope.split(',')))
     texts = json.loads(subprocess.run(['node', os.path.join(ROOT, 'tools', 'audio-texts.js')], capture_output=True, check=True, cwd=ROOT).stdout)
     texts = [e for e in texts if e['group'] in scopes]
@@ -105,15 +146,20 @@ def main():
     for e in texts:
         k = key_of(e)
         have = k in index and os.path.exists(os.path.join(AUDIO, index[k]))
-        if have and e['text'] not in redo:
+        if have and e['text'] not in redo and '*' not in redo:
             continue
         todo.append(e)
     pending = len(todo)
     if a.limit:
         todo = todo[:a.limit]
     chars = sum(zh_chars(e['text']) for e in todo)
-    print('%d texts in scope, %d already have a file, %d without one%s: making %d, which is %d Chinese characters = %d billed characters, about $%.3f'
-          % (len(texts), len(texts) - pending, pending, ' (limit %d)' % a.limit if a.limit else '', len(todo), chars, chars * 2, chars * 2 / 1e4 * 0.1))
+    print('%d texts in scope, %d already have a file, %d without one%s: making %d, which is %d Chinese characters'
+          % (len(texts), len(texts) - pending, pending, ' (limit %d)' % a.limit if a.limit else '', len(todo), chars))
+    if a.engine == 'qwen3':
+        print('qwen3 price: %d billed characters, about $%.3f' % (chars * 2, chars * 2 / 1e4 * 0.1))
+    else:
+        secs = chars * 0.4 + len(todo) * 0.4
+        print('audio31 is billed per token, price NOT confirmed: roughly %.0f s of audio; if audio is 50 tokens/s at $1.87 per million tokens that is about $%.2f' % (secs, secs * 50 * 1.87 / 1e6))
     if a.dry_run or not todo:
         return
     key = os.environ.get('DASHSCOPE_API_KEY', '').strip()
@@ -128,8 +174,8 @@ def main():
         voice = a.voice_m if e['voice'] == 'm' else a.voice_f
         out = os.path.join(AUDIO, fname(k))
         try:
-            wav = synth(e['text'], voice, key)
-            to_mp3(wav, out)
+            wav = (synth31 if a.engine == 'audio31' else synth)(e['text'], voice, key)
+            to_mp3(wav, out, pad=(a.engine == 'audio31'))
         except SystemExit:
             raise
         except Exception as ex:
