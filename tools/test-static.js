@@ -3,6 +3,8 @@
  *   - config.js is blank (tests never talk to the real friends server; they set window.SHANLU_FRIENDS_URL themselves);
  *   - the content-security tag is taken out of index.html, because tests talk to fake servers on other addresses
  *     (tools/smoke-test-pwa.js runs the real tag with the real addresses);
+ *   - data/audio-manifest.js is empty (no recorded audio), so tests do not depend on which texts have been recorded; a test that wants recordings
+ *     sets its own manifest (tools/smoke-test-audio.js), or server(root, { realAudio: true }) keeps the real one;
  *   - sw.js is an empty one (the real offline copy would cache files between test runs), unless the test asks: server(root, { sw: true }).
  *   - server(root, { level3: true }) would open HSK 3 while it is still closed on the real site (level.js gets MAX_LEVEL = 3 and index.html
  *     gets the HSK 3 data scripts). HSK 3 has been released, so both are in the real files and this option does nothing; it is kept for the
@@ -19,6 +21,7 @@ function server(root, opts) {
     if (p === '/') p = '/index.html';
     if (p === '/config.js' && !o.realConfig) { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end("window.SHANLU_FRIENDS_URL = window.SHANLU_FRIENDS_URL || '';"); return; }
     if (p === '/sw.js' && !o.sw) { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end('/* tests: a service worker that does nothing, so no files are cached between test runs */'); return; }
+    if (p === '/data/audio-manifest.js' && !o.realAudio) { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end('window.SHANLU_AUDIO = {};'); return; }
     const f = path.join(root, p);
     if (!f.startsWith(root) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); res.end('nope'); return; }
     const headers = { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' };
