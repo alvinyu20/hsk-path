@@ -30,7 +30,7 @@ const KEY = 'shanlu-audio-check';
 let marks = {}; try { marks = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
 const M = window.SHANLU_AUDIO || {};
 const words = [];
-[1, 2, 3].forEach(n => (window['HSK' + n + '_WORDS'] || []).forEach(w => { if (M[w.zh]) words.push({ n, zh: w.zh, py: w.py, en: w.en, file: 'audio/' + (String(M[w.zh]).indexOf('.') >= 0 ? M[w.zh] : encodeURIComponent(w.zh) + '.' + M[w.zh]), risk: [...w.zh].some(c => RISK.has(c)) || w.py.indexOf('/') >= 0 })); }));
+[1, 2, 3].forEach(n => (window['HSK' + n + '_WORDS'] || []).forEach(w => { if (M[w.zh]) words.push({ n, zh: w.zh, py: w.py, en: w.en, file: '../audio/' + (String(M[w.zh]).indexOf('.') >= 0 ? M[w.zh] : encodeURIComponent(w.zh) + '.' + M[w.zh]), risk: [...w.zh].some(c => RISK.has(c)) || w.py.indexOf('/') >= 0 }); }));
 const a = new Audio();
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(marks)); } catch (e) {} };
 function render() {
@@ -52,6 +52,6 @@ function render() {
   document.getElementById('count').textContent = words.length + ' recorded · ' + ok + ' ✓ · ' + bad + ' ✗' + (l.length > 400 ? ' · showing 400 (use the filters)' : '');
 }
 document.getElementById('lv').onchange = render; document.getElementById('show').onchange = render;
-document.getElementById('copy').onclick = () => { const t = Object.keys(marks).filter(k => marks[k] === 'x').join(','); const o = document.getElementById('out'); o.hidden = false; o.value = t || '(nothing marked ✗)'; o.select(); try { navigator.clipboard.writeText(t); } catch (e) {} };
+document.getElementById('copy').onclick = () => { const t = Object.keys(marks).filter(k => marks[k] === 'x').join(','); const o = document.getElementById('out'); o.hidden = false; o.value = t || '(nothing marked ✗)'; o.select(); try { navigator.clipboard.writeText(t).catch(() => {}); } catch (e) {} };
 render();
 </script>
