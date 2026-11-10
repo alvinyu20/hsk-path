@@ -12,7 +12,7 @@ button.on{background:#15222b;color:#fff;border-color:#15222b}
 .row.flag .zh::after{content:" 🔍";font-size:14px}.row.bad{background:#fde8e4}.row.ok{background:#e8f5ec}.row.risk .zh::after{content:" ⚠";font-size:14px;color:#b4540a}
 .row .btns{display:flex;gap:6px}
 .trial{background:#fff;border:1px solid #d5dcdf;border-radius:12px;padding:10px 14px;margin:12px 0}.trial h2{font-size:17px;margin:0 0 4px}
-.trial .row{grid-template-columns:1fr auto}.trial .zh{font-size:20px}.trial .btns button{font-size:14px}
+.trial .row{display:block}.trial .zh{font-size:20px}.trial .btns{flex-wrap:wrap;margin:6px 0 2px}.trial .btns button{font-size:14px;padding:6px 10px}.trial .heard{font-size:13px;color:#5b6b73;line-height:1.5}
 .play{width:44px;height:44px;border-radius:50%;padding:0;font-size:18px}
 #out{width:100%;margin-top:8px;font:14px monospace}
 </style>
@@ -88,10 +88,10 @@ function renderStyle() {
   const key = document.createElement('div'); key.className = 'muted'; key.style.margin = '4px 0 8px';
   d.variants.forEach(v => { const p = document.createElement('div'); p.textContent = v.id + ' = ' + v.label + (v.instructions ? ' · "' + v.instructions + '"' : ''); key.appendChild(p); });
   box.appendChild(key);
-  d.texts.forEach((t, i) => { const r = document.createElement('div'); r.className = 'row'; r.innerHTML = '<div><span class="zh"></span><small></small></div><div class="btns"></div>'; r.querySelector('.zh').textContent = t;
+  d.texts.forEach((t, i) => { const r = document.createElement('div'); r.className = 'row'; r.innerHTML = '<div><span class="zh"></span></div><div class="btns"></div><div class="heard"></div>'; r.querySelector('.zh').textContent = t;
     const heard = [];
-    d.variants.forEach(v => { const res = v.results[i]; const b = document.createElement('button'); b.textContent = v.id; if (res.file) { b.onclick = () => { a.onended = null; a.src = '../audio/trial2/' + res.file; a.play(); }; const c = (VER.trial2 || {})[res.file]; if (c) heard.push(v.id + ' ' + ({ ok: '✓', homophone: '≈', differs: '✗', extra: '➕', unsure: '?', skip: '–' }[c.status] || '') + ' “' + c.heard + '”'); } else { b.style.opacity = .4; b.onclick = () => alert(res.error || 'no file'); } r.querySelector('.btns').appendChild(b); });
-    if (heard.length) r.querySelector('small').textContent = '🔍 heard: ' + heard.join(' · ');
+    d.variants.forEach(v => { const res = v.results[i]; const b = document.createElement('button'); b.textContent = v.id; if (res.file) { b.onclick = () => { a.onended = null; a.src = '../audio/trial2/' + res.file; a.play(); }; const c = (VER.trial2 || {})[res.file]; if (c) heard.push(({ ok: '✓', homophone: '≈', differs: '✗', extra: '➕', unsure: '?', skip: '–' }[c.status] || '') + ' ' + v.id + ': “' + c.heard.replace(/ /g, '') + '”'); } else { b.style.opacity = .4; b.onclick = () => alert(res.error || 'no file'); } r.querySelector('.btns').appendChild(b); });
+    if (heard.length) r.querySelector('.heard').innerHTML = '🔍 recogniser heard:<br>' + heard.map(x => x.replace(/&/g, '&amp;').replace(/</g, '&lt;')).join('<br>');
     box.appendChild(r); });
 }
 fetch('../audio/trial2/trial2.json').then(r => r.ok ? r.json() : null).then(d => { T2 = d; renderStyle(); }).catch(() => {});
