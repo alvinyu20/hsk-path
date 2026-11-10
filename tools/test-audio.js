@@ -30,5 +30,13 @@ Object.keys(M).forEach((k) => {
 const before = fs.readFileSync(path.join(root, 'data', 'audio-manifest.js'), 'utf8');
 cp.execSync('python3 ' + path.join(__dirname, 'build-audio.py'), { stdio: 'pipe' });
 if (fs.readFileSync(path.join(root, 'data', 'audio-manifest.js'), 'utf8') !== before) { fs.writeFileSync(path.join(root, 'data', 'audio-manifest.js'), before); fail('data/audio-manifest.js is out of date (run python3 tools/build-audio.py)'); }
+// the listening-check page must at least parse (a stray quote once blanked the whole page)
+{
+  const html = fs.readFileSync(path.join(root, 'review', 'audio-check.html'), 'utf8');
+  const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
+  scripts.forEach((code) => { try { new Function(code); } catch (e) { fail('review/audio-check.html has a script error: ' + e.message); } });
+  if (!scripts.length) fail('review/audio-check.html has no inline script');
+}
 if (bad) process.exit(1);
 console.log('audio tests passed (' + list.length + ' lines to record, ' + male + ' by the man, ' + Object.keys(M).length + ' recorded)');
+

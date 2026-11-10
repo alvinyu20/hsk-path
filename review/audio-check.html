@@ -77,7 +77,7 @@ const fileOf = (w) => '../audio/' + (String(M[w]).indexOf('.') >= 0 ? M[w] : enc
 fetch('../audio/trial2/trial2.json').then(r => r.ok ? r.json() : null).then(d => {
   if (!d) return;
   const box = document.getElementById('style'); box.hidden = false;
-  box.innerHTML = '<h2>Style trial: does telling Qwen how to read give a plainer voice?</h2><p class="muted">Same texts, read different ways. <b>plain</b> is what the site has now. The others use Alibaba's newer Qwen-Audio models, which accept a sentence telling them to read like a textbook recording; a31-huan-0 is the 3.1 model with no instruction, for comparison. A greyed button means Alibaba refused that version (tap it to see why).</p>';
+  box.innerHTML = '<h2>Style trial: does telling Qwen how to read give a plainer voice?</h2><p class="muted">Same texts, read different ways. <b>plain</b> is what the site has now. The others use the newer Qwen-Audio models from Alibaba, which accept a sentence telling them to read like a textbook recording; a31-huan-0 is the 3.1 model with no instruction, for comparison. A greyed button means Alibaba refused that version (tap it to see why).</p>';
   const key = document.createElement('div'); key.className = 'muted'; key.style.margin = '4px 0 8px';
   d.variants.forEach(v => { const p = document.createElement('div'); p.textContent = v.id + ' = ' + v.label + (v.instructions ? ' · "' + v.instructions + '"' : ''); key.appendChild(p); });
   box.appendChild(key);
