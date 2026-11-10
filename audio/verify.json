@@ -1,0 +1,17 @@
+{
+"checked": 20,
+"differs": {
+"一共": "一 共 三 八",
+"一样": "young",
+"一点儿": "刚 一 点",
+"一起": "一 起 啊",
+"万": "when",
+"三": "sar"
+},
+"homophone": {},
+"model": "funasr paraformer-zh",
+"ok": 14,
+"skipped": 0,
+"trial2": {},
+"when": "2026-11-10"
+}
