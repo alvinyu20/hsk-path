@@ -6,10 +6,12 @@
 Recogniser: FunASR paraformer-zh (open model, Chinese, downloaded on first use; no key, no cost). Statuses per recording:
   ok          the recogniser wrote exactly the text we meant (儿 and punctuation ignored)
   homophone   different characters but the same syllables (toneless), e.g. it picked 事 for 是: the sounds are right
-  differs     different syllables: the recording probably sounds wrong (a swallowed or changed sound such as 如果 heard as 书果, a cut-off word, extra noise)
+  differs     different syllables: the recording probably sounds wrong (a swallowed or changed sound such as 如果 heard as 书果, a cut-off word)
+  extra       it heard our text PLUS more (a stray syllable before or after): either the recogniser made it up from the tail, or the recording has a stray sound
+  unsure      it answered in Latin letters (it does that for a bare one-syllable word, e.g. "when" for 万): not counted as wrong, not counted as right
 Limits, so nobody trusts it too far: a recogniser is helped by context and can "fix" a bad sound in a sentence; it does NOT check tones (it only
 sees the characters it chose); numerals it writes as digits are skipped. So "ok" is good news but not proof, and "differs" means listen to this one.
-audio/verify.json keeps only what needs a look: {"model","when","checked","ok","homophone":{key:heard},"differs":{key:heard},"trial2":{file:{heard,status}}}.
+audio/verify.json keeps only what needs a look: {"model","when","checked","ok","homophone"/"differs"/"extra"/"unsure":{key:heard},"trial2":{file:{heard,status}} (every trial file, ok or not)}.
 """
 import argparse, json, os, re, subprocess, sys, tempfile, time
 
@@ -33,12 +35,16 @@ def syl_heard(text):
 
 
 def judge(meant, heard):
-    """-> 'ok' | 'homophone' | 'differs' | 'skip'"""
+    """-> 'ok' | 'homophone' | 'extra' | 'differs' | 'unsure' | 'skip'"""
     if re.search(r'[0-9]', heard):
         return 'skip'
+    if re.search(r'[A-Za-z]', heard):
+        return 'unsure'
     m, h = han(meant), han(heard)
     if m == h:
         return 'ok'
+    if m and m in h:
+        return 'extra'
     if len(m) == len(h):
         sets, got = syl_sets(m), syl_heard(h)
         if all(g in s for g, s in zip(got, sets)):
@@ -85,16 +91,16 @@ def main(asr=None):
     ap.add_argument('--only', default='all'); ap.add_argument('--limit', type=int, default=0)
     a = ap.parse_args()
     todo = items(a.only)
-    if a.limit:
-        todo = todo[:a.limit]
+    if a.limit:   # the limit applies to each group, so a small test run still covers the style trial
+        todo = [t for g in ('index', 'trial2') for t in [x for x in todo if x[0] == g][:a.limit]]
     asr = asr or Asr()
     path = os.path.join(AUDIO, 'verify.json')
     old = json.load(open(path, encoding='utf-8')) if os.path.exists(path) else {}
-    res = {'model': 'funasr paraformer-zh', 'when': time.strftime('%Y-%m-%d'), 'checked': 0, 'ok': 0, 'skipped': 0, 'homophone': {}, 'differs': {}, 'trial2': {}}
+    res = {'model': 'funasr paraformer-zh', 'when': time.strftime('%Y-%m-%d'), 'checked': 0, 'ok': 0, 'skipped': 0, 'homophone': {}, 'differs': {}, 'extra': {}, 'unsure': {}, 'trial2': {}}
     if a.only == 'index':
         res['trial2'] = old.get('trial2', {})
     if a.only == 'trial2':   # keep the main results when only the trial is re-checked
-        for k in ('checked', 'ok', 'skipped', 'homophone', 'differs'):
+        for k in ('checked', 'ok', 'skipped', 'homophone', 'differs', 'extra', 'unsure'):
             res[k] = old.get(k, res[k])
     t0 = time.time()
     for n, (group, key, meant, p) in enumerate(todo):
@@ -116,7 +122,7 @@ def main(asr=None):
         if (n + 1) % 100 == 0:
             print('  %d / %d  (%.0f s)' % (n + 1, len(todo), time.time() - t0), flush=True)
     json.dump(res, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=0, sort_keys=True)
-    print('checked %d: %d ok, %d same sounds, %d DIFFER, %d skipped' % (res['checked'], res['ok'], len(res['homophone']), len(res['differs']), res['skipped']))
+    print('checked %d: %d ok, %d same sounds, %d DIFFER, %d with extra sounds, %d unsure, %d skipped' % (res['checked'], res['ok'], len(res['homophone']), len(res['differs']), len(res['extra']), len(res['unsure']), res['skipped']))
     for g in ('trial2',):
         for f, r in sorted(res[g].items()):
             print('  trial2 %-18s %-10s heard: %s' % (f, r['status'], r['heard']))
