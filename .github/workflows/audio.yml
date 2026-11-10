@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       scope:
-        description: 'What to make: trial (a few sentences and words to listen to, about 1 cent), words, examples, lab, exams, extra, core (words+examples+lab+exams) or all'
+        description: 'What to make: style (tests whether instructions give a plainer reading, about 45 short recordings), trial (a few sentences and words to listen to, about 1 cent), words, examples, lab, exams, extra, core (words+examples+lab+exams) or all'
         default: 'words'
       limit:
         description: 'Make at most this many new files (0 = no limit)'
@@ -48,8 +48,8 @@ jobs:
           SCOPE: ${{ inputs.scope }}
           LIMIT: ${{ inputs.limit }}
         run: |
-          if [ "$SCOPE" = trial ]; then
-            echo "trial set, about 42 short recordings, about 1 cent"
+          if [ "$SCOPE" = trial ] || [ "$SCOPE" = style ]; then
+            echo "$SCOPE set, a few dozen short recordings, a few cents"
           else
             python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --dry-run
           fi
@@ -64,6 +64,8 @@ jobs:
         run: |
           if [ "$SCOPE" = trial ]; then
             python3 tools/make-trial-audio.py --voice "$VOICE_F"
+          elif [ "$SCOPE" = style ]; then
+            python3 tools/make-style-trial.py
           else
             python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --redo "$REDO" --voice-f "$VOICE_F" --voice-m "$VOICE_M" --workers 3
           fi

@@ -23,6 +23,7 @@ button.on{background:#15222b;color:#fff;border-color:#15222b}
   <select id="show"><option value="risk">Risky readings first</option><option value="all">All words</option><option value="bad">Marked ✗</option><option value="todo">Not checked yet</option></select>
   <button id="copy">Copy redo list</button><span id="count" class="muted"></span>
 </div>
+<div id="style" class="trial" hidden></div>
 <div id="trial" class="trial" hidden></div>
 <div id="list"></div>
 <textarea id="out" rows="3" readonly hidden></textarea>
@@ -72,6 +73,19 @@ function pieces(zh) {
   return out;
 }
 const fileOf = (w) => '../audio/' + (String(M[w]).indexOf('.') >= 0 ? M[w] : encodeURIComponent(w) + '.' + M[w]);
+// Style trial (audio/trial2/trial2.json, workflow scope "style"): the same texts read with different instructions to Qwen.
+fetch('../audio/trial2/trial2.json').then(r => r.ok ? r.json() : null).then(d => {
+  if (!d) return;
+  const box = document.getElementById('style'); box.hidden = false;
+  box.innerHTML = '<h2>Style trial: does telling Qwen how to read give a plainer voice?</h2><p class="muted">Same texts, read different ways. <b>plain</b> is what the site has now. The others use the instruct model with a sentence telling it to read like a textbook recording. A greyed button means Alibaba refused that version (tap it to see why).</p>';
+  const key = document.createElement('div'); key.className = 'muted'; key.style.margin = '4px 0 8px';
+  d.variants.forEach(v => { const p = document.createElement('div'); p.textContent = v.id + ' = ' + v.label + (v.instructions ? ' · "' + v.instructions + '"' : ''); key.appendChild(p); });
+  box.appendChild(key);
+  d.texts.forEach((t, i) => { const r = document.createElement('div'); r.className = 'row'; r.innerHTML = '<div><span class="zh"></span></div><div class="btns"></div>'; r.querySelector('.zh').textContent = t;
+    d.variants.forEach(v => { const res = v.results[i]; const b = document.createElement('button'); b.textContent = v.id; if (res.file) b.onclick = () => { a.onended = null; a.src = '../audio/trial2/' + res.file; a.play(); }; else { b.style.opacity = .4; b.onclick = () => alert(res.error || 'no file'); } r.querySelector('.btns').appendChild(b); });
+    box.appendChild(r); });
+}).catch(() => {});
+
 fetch(T + 'trial.json').then(r => r.ok ? r.json() : null).then(d => {
   if (!d) return;
   const box = document.getElementById('trial'); box.hidden = false;
