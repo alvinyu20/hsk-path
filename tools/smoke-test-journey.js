@@ -39,6 +39,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(/登机牌/.test(pass) && /TFU/.test(pass) && /成都/.test(pass) && /家/.test(pass) && /SL 001/.test(pass), 'the first flight shows a boarding pass from home to TFU: ' + pass.replace(/\s+/g, ' '));
     const say = await page.locator('.jy-sayit').innerText();
     check(/Say it there/i.test(say) && /[\u4e00-\u9fff]+[。？！]/.test(say) && /At the airport/i.test(say), 'the card has a sentence to say there: ' + say.replace(/\s+/g, ' '));
+    { const it = await page.locator('.jy-card .jy-intro').innerText().catch(() => '');
+      check(/Sichuan in three lines/.test(it) && /THE LAND/i.test(it) && /THE TABLE/i.test(it) && /GOOD TO KNOW/i.test(it) && /must-sees? to find/.test(it), 'the airport card has the three lines about the region: ' + it.replace(/\s+/g, ' ').slice(0, 80)); }
+    check(await page.locator('.jy-now .jy-hero').count() === 0, 'the same province picture is not shown twice on the airport card');
     check(await page.locator('.jy-go[disabled]').count() === 1, 'the next stop is not free');
     check(/50 more coins to go/.test(t), 'the next stop costs 50 coins');
     // the background tint follows the region
@@ -47,8 +50,12 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.jy-acts .btn.pri').click();
     check(await page.locator('.jy-card').count() === 0, 'the card closes');
     // stops list and passport
-    await page.locator('.jy-tabs button', { hasText: 'Stops' }).click();
-    check(/Chengdu Tianfu International Airport/.test(await main(page)), 'the Stops tab lists the airport');
+    await page.locator('.jy-tabs button', { hasText: 'Postcards' }).click();
+    check(/Chengdu Tianfu International Airport/.test(await main(page)) && await page.locator('.jy-pc').count() >= 1, 'the Postcards tab has the airport as a postcard');
+    await page.locator('.jy-tabs button', { hasText: 'Food' }).click();
+    check(/Nothing on your table yet/.test(await main(page)), 'the Food diary starts empty');
+    await page.locator('.jy-tabs button', { hasText: 'Map' }).click();
+    check(await page.locator('.jy-now .jy-hero img').count() === 1, 'with no card open, the main card has a picture of the province on top');
     await page.locator('.jy-tabs button', { hasText: 'Passport' }).click();
     t = await main(page); check(/0 of 31 regions stamped/.test(t), 'the passport counts 31 regions: ' + t.match(/\d+ of \d+ regions stamped/));
     check(await page.locator('.jy-slot.here').count() === 1, 'the region you are in shows as in progress in the passport');
@@ -166,7 +173,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.pill.xpp').click();
     await page.locator('.jy-go').click(); await page.waitForTimeout(100);
     { const over = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth); check(over <= 1, 'the card with its boarding pass fits a phone width (overflow ' + over + 'px)'); }
-    for (const tab of ['Map', 'Stops', 'Passport']) {
+    for (const tab of ['Map', 'Postcards', 'Food', 'Passport']) {
       await page.locator('.jy-tabs button', { hasText: tab }).click();
       const over = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       check(over <= 1, tab + ' tab fits a phone width (overflow ' + over + 'px)');

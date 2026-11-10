@@ -2732,6 +2732,11 @@
         const rs = JY.regionStats(JWORLD, st, R.id); const C = st.cur && JWORLD.byCity[st.cur];
         Object.assign(out, { jyNowLabel:'Exploring', jyNowZh:R.zh, jyNowEn:R.en, jyNowSub:rs.got + ' of ' + rs.total + ' stops' + (C ? ' · now in ' + C.en : '') });
       }
+      // a picture of the region you are in (or about to fly to) on top of the card: the same province photo its airport stop shows
+      { const a0 = R ? (R.cities[0].air || R.cities[0].first) : null; const hero = a0 && JMEDIA[a0.id] && JMEDIA[a0.id].u ? JMEDIA[a0.id] : null;
+        Object.assign(out, { jyHeroShow:!!hero, jyHeroUrl:hero ? hero.u : '', jyHeroAlt:hero ? (hero.a || R.en) : '', jyHeroCredit:hero ? hero.c : '' }); }
+      // three lines about a region: on its airport card, and under its map
+      const introOf = (RR) => (RR && RR.intro && RR.intro.length === 3 ? [{ k:'The land', t:RR.intro[0] }, { k:'The table', t:RR.intro[1] }, { k:'Good to know', t:RR.intro[2] }] : []);
       out.jyPct = (done ? 100 : mt.pct) + '%'; out.jyPctNum = done ? 100 : mt.pct;
       out.jyMeterCls = 'jy-meter' + (mt.ready > 0 && !done ? ' ready' : ''); out.jyMeterText = done ? 'Journey complete' : mt.ready > 0 ? plural(mt.ready, 'stop', 'stops') + ' ready' : mt.into + ' of ' + mt.nextCost + ' coins for the next stop';
       out.jyXpTotal = bal.toLocaleString('en-US') + ' coins to spend · ' + xp.toLocaleString('en-US') + ' earned in total';
@@ -2780,17 +2785,25 @@
         // stamps earned by this stop: the city is finished, or the stop is a must-see
         const cityDone = !!rv && rv.ev.indexOf('citydone') >= 0 && rv.ev.indexOf('stamp') < 0;
         Object.assign(out, { jyCityStampShow:cityDone, jyCityStampZh:CC.zh, jyCityStampCls:CC.zh.length > 4 ? 'long' : CC.zh.length === 4 ? 'l4' : '', jyCityStampEn:CC.en, jyCityStampHue:CR.hue, jyStarNote:!!rv && stop.sp });
+        const intro = stop.k === 'P' ? introOf(CR) : [];
+        Object.assign(out, { jyIntroShow:intro.length > 0, jyIntro:intro, jyIntroTitle:CR.en + ' in three lines', jyIntroCount:plural(CR.cities.length, 'city', 'cities') + ' · ' + CR.stops.length + ' stops · ' + plural(CR.stops.filter(x => x.sp).length, 'must-see', 'must-sees') + ' to find' });
+        // a finished region: an album of its pictures, the must-sees first
+        const stamped = !!rv && rv.ev.indexOf('stamp') >= 0;
+        const pics = stamped ? CR.stops.filter(x => x.k !== 'P' && JMEDIA[x.id] && JMEDIA[x.id].u).sort((a, b) => (b.sp ? 1 : 0) - (a.sp ? 1 : 0)).slice(0, 6) : [];
+        Object.assign(out, { jyAlbumShow:pics.length >= 3, jyAlbum:pics.map(x => ({ url:JMEDIA[x.id].u, alt:x.en })), jyAlbumTitle:'Your ' + CR.en + ' album' });
         const ph = JMEDIA[stop.id];
         out.jyHasPhoto = !!(ph && ph.u); out.jyNoPhoto = !out.jyHasPhoto; out.jyPhotoUrl = ph ? ph.u : ''; out.jyPhotoAlt = ph && ph.a ? ph.a : stop.en; out.jyPhotoCredit = ph ? ph.c : '';
+        // the airport card already shows the province picture: don't show the same one twice
+        if (out.jyHeroShow && out.jyPhotoUrl === out.jyHeroUrl) out.jyHeroShow = false;
         if (rv && rv.ev.indexOf('stamp') >= 0) {
           Object.assign(out, { jyStampHue:CR.hue, jyStampZh:CR.zh, jyStampEn:CR.en, jyStampCode:CR.air && CR.air.code ? CR.air.code : '', jyStampDate:st.done[CR.id] || '' });
         }
       }
 
       // tabs
-      const tabNow = fm && S.jyTab === 'stops' ? 'map' : S.jyTab;
-      out.jyTabs = (fm ? [['map', 'Map'], ['pass', 'Passport']] : [['map', 'Map'], ['stops', 'Stops'], ['pass', 'Passport']]).map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', fn:() => this.jyTabSet(t[0]) }));
-      out.jyIsMap = tabNow === 'map'; out.jyIsStops = tabNow === 'stops'; out.jyIsPass = tabNow === 'pass';
+      const tabNow = fm && (S.jyTab === 'stops' || S.jyTab === 'food') ? 'map' : S.jyTab;
+      out.jyTabs = (fm ? [['map', 'Map'], ['pass', 'Passport']] : [['map', 'Map'], ['stops', 'Postcards'], ['food', 'Food'], ['pass', 'Passport']]).map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', fn:() => this.jyTabSet(t[0]) }));
+      out.jyIsMap = tabNow === 'map'; out.jyIsStops = tabNow === 'stops'; out.jyIsFood = tabNow === 'food'; out.jyIsPass = tabNow === 'pass';
       const FILT = [['all', 'All'], ['S', '★ Must-see'], ['T', 'Cities'], ['A', 'Attractions'], ['D', 'Dishes'], ['C', 'Culture'], ['P', 'Airports']];
       const filterChips = (stopsSeen) => FILT.map(f => ({ label:f[1], count:f[0] === 'all' ? stopsSeen.length : stopsSeen.filter(s => f[0] === 'S' ? s.sp : s.k === f[0]).length, cls:S.jyFilter === f[0] ? 'on' : '', fn:() => this.jyFilterSet(f[0]) }));
       const pass = (s) => S.jyFilter === 'all' || (S.jyFilter === 'S' ? s.sp : s.k === S.jyFilter);
@@ -2827,6 +2840,7 @@
         const seenHere = RR.stops.filter(s => have[s.id]);
         Object.assign(out, { jyProvZh:RR.zh, jyProvEn:RR.en, jyProvCount:st.done[id] ? 'Stamped · ' + seenHere.length + ' stops' : seenHere.length + ' of ' + RR.stops.length + ' stops', jyBack:this.jyBack,
           jyProvD:mp.d, jyProvM:mp.m || '', jyProvHasM:!!mp.m, jyProvLabel:'Map of ' + RR.en + ' with ' + plural(seenHere.length, 'stop', 'stops') + ' found so far', jyFilters:filterChips(seenHere) });
+        out.jyProvIntro = introOf(RR); out.jyProvIntroShow = out.jyProvIntro.length > 0;
         // pins: place each seen stop, then merge the ones that touch
         const pts = seenHere.filter(pass).map(s => { const ll = JY.pinLatLon(JWORLD, s); const xy = JY.project(mp, ll[0], ll[1]); return { s, x:xy[0], y:xy[1] }; });
         const groups = [];
@@ -2863,9 +2877,28 @@
         const shown = all.filter(pass);
         out.jyFilters = out.jyFilters || filterChips(all);
         if (S.jyTab === 'stops') out.jyFilters = filterChips(all);
-        out.jyRows = shown.slice(0, S.jyMoreN).map(s => rowOf(s));
-        out.jyMoreShow = shown.length > S.jyMoreN; out.jyMore = () => this.setState({ jyMoreN:S.jyMoreN + 60 });
-        out.jyStopsNote = all.length ? plural(shown.length, 'stop', 'stops') + (S.jyFilter === 'all' ? ' unlocked, newest first.' : ' of this kind, newest first.') : 'No stops yet. Earn coins, then tap the button above to take your first flight.';
+        // every stop you have reached is a postcard: its photo (or its name, where there is no photo yet), gold for a must-see
+        const KN = { T:'City', A:'Sight', D:'Dish', C:'Culture', P:'Airport' };
+        out.jyCards = S.jyTab === 'stops' ? shown.slice(0, S.jyMoreN).map(s => { const ph = JMEDIA[s.id]; const has = !!(ph && ph.u); const RR = JWORLD.byRegion[s.rid];
+          return { kind:(s.sp ? '★ ' : '') + KN[s.k], zh:s.zh, en:s.en, where:JWORLD.byCity[s.cid].en + ' · ' + RR.en, hue:RR.hue, cls:'k' + s.k + (s.sp ? ' sp' : '') + (s.zh.length > 6 ? ' long' : ''), hasPhoto:has, noPhoto:!has, url:has ? ph.u : '', label:'Postcard: ' + s.en + ', ' + JWORLD.byCity[s.cid].en + (s.sp ? ', a must-see' : ''), open:() => this.jyOpenStop(s.id) }; }) : [];
+        out.jyMoreShow = shown.length > S.jyMoreN; out.jyMore = () => this.setState({ jyMoreN:S.jyMoreN + 40 });
+        out.jyStopsNote = all.length ? plural(shown.length, 'postcard', 'postcards') + (S.jyFilter === 'all' ? ', newest first. Tap one to read it again.' : ' of this kind, newest first.') : 'No postcards yet. Every stop you reach sends one here.';
+      }
+
+      // food diary: everything from the dish lists that you have found, written up as one menu per city (the newest city first)
+      {
+        const order = [], byC = {};
+        st.seen.forEach(i => { const s = JWORLD.byStop[i]; if (!s || s.k !== 'D') return; if (!byC[s.cid]) { byC[s.cid] = []; order.push(s.cid); } byC[s.cid].push(s); });
+        const G = [['菜', 'cài', 'Dishes', ['dish', 'near']], ['饮料', 'yǐnliào', 'Drinks', ['drink']], ['特产', 'tèchǎn', 'Local specialties', ['buy', 'ask']]];
+        const tally = [0, 0, 0];
+        const tables = order.slice().reverse().map(cid => {
+          const C = JWORLD.byCity[cid], mine = byC[cid], total = C.stops.filter(x => x.k === 'D').length;
+          const groups = G.map((g, gi) => { const items = mine.filter(x => g[3].indexOf(JY.sayKind(x)) >= 0); tally[gi] += items.length;
+            return { zh:g[0], py:g[1], en:g[2], items:items.map(x => ({ zh:x.zh, py:x.py, en:x.en, cls:x.sp ? 'sp' : '', label:x.en + (x.sp ? ', a must-see' : ''), open:() => this.jyOpenStop(x.id) })) }; }).filter(g => g.items.length);
+          return { zh:C.zh, py:C.py, en:C.en, hue:JWORLD.byRegion[C.rid].hue, sub:mine.length === total ? 'All ' + total + ' found' : mine.length + ' of ' + total + ' found', groups };
+        });
+        out.jyTables = S.jyTab === 'food' ? tables : []; out.jyFoodNone = tables.length === 0;
+        out.jyFoodSub = tables.length ? plural(tally[0], 'dish', 'dishes') + ' · ' + plural(tally[1], 'drink', 'drinks') + ' · ' + plural(tally[2], 'local specialty', 'local specialties') + ', in ' + plural(tables.length, 'city', 'cities') : 'Nothing on your table yet. Every dish you find on your travels is written down here, one menu per city.';
       }
 
       // passport: stamped regions first (in the order earned), then the one you are in, then the rest

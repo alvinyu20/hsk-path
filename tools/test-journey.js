@@ -184,4 +184,9 @@ if (bad) { console.log(bad + ' failed'); process.exit(1); }
   eq(J.mustSeen(W, st).length, W.byRegion.macau.stops.filter((s) => s.sp).length + W.byRegion.hongkong.stops.filter((s) => s.sp).length, 'a must-see stamp for every must-see stop seen');
 }
 
+// region intro cards: every region has three lines
+{
+  const none = W.regions.filter(r => !r.intro || r.intro.length !== 3 || r.intro.some(x => !x || x.length < 20));
+  ok(none.length === 0, 'every region has three real intro lines: ' + none.map(r => r.id).join(','));
+}
 console.log('journey tests passed ('  + W.regions.length + ' regions, ' + Object.keys(all).length + ' stops)');

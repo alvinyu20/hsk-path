@@ -49,7 +49,7 @@
   function build(data) {
     const W = { regions:[], byRegion:{}, byCity:{}, byStop:{}, order:[] };
     (data.regions || []).forEach((r) => {
-      const R = { id:r.id, zh:r.zh, py:r.py, en:r.en, hue:r.hue != null ? r.hue : (META[r.id] ? META[r.id][2] : 200), muni:r.muni || '', munis:r.munis || {}, air:r.air, cities:[], stops:[] };
+      const R = { id:r.id, zh:r.zh, py:r.py, en:r.en, hue:r.hue != null ? r.hue : (META[r.id] ? META[r.id][2] : 200), muni:r.muni || '', munis:r.munis || {}, air:r.air, intro:r.intro || [], cities:[], stops:[] };
       const used = {};
       const add = (c, kind, zh, py, en, note, fun, lat, lon, sp) => {
         let id = r.id + '.' + slug(kind + ' ' + en); if (used[id]) { let k = 2; while (used[id + '-' + k]) k++; id += '-' + k; } used[id] = 1;

@@ -1769,3 +1769,75 @@ button.me .me-av{flex:none}
 .t-dark .jy-sstamp{border-color:hsl(42 80% 58%);color:hsl(42 85% 78%);background:hsl(42 45% 18%)}
 .jy-cstamp:focus-visible,.jy-sstamp:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 @media (max-width:600px){.jy-tk-p b{font-size:24px}.jy-sstamp{width:96px}}
+
+/* ---- Journey: a picture of the region on the main card ---- */
+.jy-hero{position:relative;margin:-16px -16px 4px;height:132px;border-radius:19px 19px 0 0;overflow:hidden;background:var(--jbg)}
+.jy-hero img{display:block;width:100%;height:100%;object-fit:cover}
+/* ---- Journey: three lines about a region ---- */
+.jy-intro{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border-radius:14px;background:hsl(var(--jh) 55% 95%)}
+.t-dark .jy-intro{background:hsl(var(--jh) 28% 20%)}
+.jy-intro h3{margin:0;font-size:16px;font-family:'Bricolage Grotesque',system-ui,sans-serif}
+.jy-intro p{margin:0;font-size:14.5px;line-height:1.45}
+.jy-intro p b{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.jy-intro small{font-size:12.5px;color:var(--muted)}
+.jy-albumbox{display:flex;flex-direction:column;gap:6px;width:100%;margin-top:10px}
+.jy-albumbox b{font-size:14px}
+.jy-album{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;border-radius:12px;overflow:hidden}
+.jy-album img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--jbg)}
+/* ---- Journey: postcards ---- */
+.jy-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px 14px;padding:4px 2px}
+.jy-pc{position:relative;display:flex;flex-direction:column;gap:6px;min-width:0;padding:7px 7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);font:inherit;text-align:left;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.08),0 8px 16px -10px rgba(0,0,0,.35);transform:rotate(-1.2deg);transition:transform .15s}
+.jy-pc:nth-child(3n+2){transform:rotate(1deg)}
+.jy-pc:nth-child(3n){transform:rotate(-.4deg)}
+.jy-pc:hover,.jy-pc:focus-visible{transform:rotate(0) translateY(-2px)}
+.jy-pc:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.jy-pc-img{display:grid;place-items:center;aspect-ratio:4/3;overflow:hidden;border-radius:3px;background:hsl(var(--ph) 45% 88%)}
+.jy-pc-img img{display:block;width:100%;height:100%;object-fit:cover}
+.jy-pc-zh{padding:6px;font-size:26px;line-height:1.15;text-align:center;color:hsl(var(--ph) 50% 28%);overflow-wrap:anywhere}
+.jy-pc.long .jy-pc-zh{font-size:19px}
+.jy-pc-k{position:absolute;top:12px;right:12px;padding:2px 7px;border-radius:99px;background:rgba(255,255,255,.92);color:#1c2a33;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.jy-pc-t{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+.jy-pc-t b{font-size:17px;font-weight:600;overflow-wrap:anywhere}
+.jy-pc-t span{font-size:13px;overflow-wrap:anywhere}
+.jy-pc-t small{font-size:11px;color:var(--muted)}
+.jy-pc.sp{border-color:hsl(42 85% 52%);box-shadow:0 0 0 2px hsl(42 85% 52% / .4),0 8px 16px -10px rgba(0,0,0,.35)}
+.jy-pc.sp .jy-pc-k{background:hsl(42 90% 88%);color:hsl(32 80% 26%)}
+.t-dark .jy-pc-img{background:hsl(var(--ph) 30% 24%)}
+.t-dark .jy-pc-zh{color:hsl(var(--ph) 60% 80%)}
+/* ---- Journey: the food diary, one menu per city ---- */
+.jy-table{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.jy-table-h{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px;padding-bottom:8px;border-bottom:3px double hsl(var(--sh) 35% 60%)}
+.jy-table-h b{font-size:24px;font-weight:600}
+.jy-table-h > span{font-size:15px;font-weight:600}
+.jy-table-h i{font-style:normal;font-size:12.5px;color:var(--muted)}
+.jy-table-h i .zh{font-size:14px;color:var(--ink)}
+.jy-table-h small{margin-left:auto;font-size:12.5px;color:var(--muted)}
+.jy-menu-g{margin-top:10px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.jy-menu-g .zh{font-size:14px;color:hsl(var(--sh) 50% 32%);letter-spacing:0}
+.t-dark .jy-menu-g .zh{color:hsl(var(--sh) 60% 76%)}
+.jy-dish{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 10px;width:100%;min-height:40px;padding:6px 0;border:0;border-bottom:1px dotted var(--line);background:none;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.jy-dish:last-child{border-bottom:0}
+.jy-dish .zh{font-size:18px}
+.jy-dish small{flex:1 1 auto;font-size:12.5px;color:var(--muted)}
+.jy-dish .en{font-size:14px;text-align:right}
+.jy-dish.sp .zh::before{content:"★ ";color:hsl(42 90% 42%)}
+.jy-dish:hover .zh,.jy-dish:focus-visible .zh{text-decoration:underline}
+@media (max-width:600px){
+  .jy-hero{height:112px}
+  .jy-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}
+  .jy-tabs button{padding:0 13px}
+  .jy-table-h small{margin-left:0;flex-basis:100%}
+}
+/* ---- Journey: small motions (all off for people who ask for less motion) ---- */
+@keyframes jyken{from{transform:scale(1.02)}to{transform:scale(1.1) translate(-1.5%,-1%)}}
+@keyframes jyrise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes jydrop{from{opacity:0;transform:translateY(-10px) rotate(4deg) scale(.96)}}
+@keyframes jypop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+.jy-hero img{animation:jyken 18s ease-in-out infinite alternate}
+.jy-card .jy-intro{animation:jyrise .5s .15s both}
+.jy-pc:nth-child(-n+8){animation:jydrop .45s both}
+.jy-pc:nth-child(2){animation-delay:.05s}.jy-pc:nth-child(3){animation-delay:.1s}.jy-pc:nth-child(4){animation-delay:.15s}
+.jy-pc:nth-child(5){animation-delay:.2s}.jy-pc:nth-child(6){animation-delay:.25s}.jy-pc:nth-child(7){animation-delay:.3s}.jy-pc:nth-child(8){animation-delay:.35s}
+.jy-album img{animation:jypop .4s both}
+.jy-album img:nth-child(2){animation-delay:.1s}.jy-album img:nth-child(3){animation-delay:.2s}.jy-album img:nth-child(4){animation-delay:.3s}.jy-album img:nth-child(5){animation-delay:.4s}.jy-album img:nth-child(6){animation-delay:.5s}
+@media (prefers-reduced-motion:reduce){.jy-hero img,.jy-card .jy-intro,.jy-pc,.jy-album img{animation:none!important}}

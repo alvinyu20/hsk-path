@@ -100,8 +100,18 @@ def load_notes(rid):
         out[f[0].strip()] = (f[1].strip() == '*', f[2].strip(), no)
     return out
 
+def load_intros():
+    p = os.path.join(SRC, 'intros.tsv'); out = {}
+    if not os.path.exists(p): return out
+    for ln in open(p, encoding='utf8'):
+        ln = ln.rstrip('\n')
+        if not ln.strip() or ln.startswith('#'): continue
+        f = [x.strip() for x in ln.split('\t')]
+        out[f[0]] = f[1:]
+    return out
+
 def build():
-    regions = []; problems = []
+    regions = []; problems = []; INTRO = load_intros(); seen_intro = set()
     for path in sorted(glob.glob(os.path.join(SRC, '*.txt'))):
         R = None; C = None; muni = None; NT = None; used = set()
         for no, raw in enumerate(open(path, encoding='utf8'), 1):
@@ -113,6 +123,11 @@ def build():
                     f = fields(line[7:], 4)
                     R = {'id': f[0], 'zh': f[1].replace('/', ''), 'py': zh_py(f[1], 'T'), 'en': f[2], 'cities': []}
                     NT = load_notes(f[0]); used = set()
+                    if f[0] in INTRO:
+                        seen_intro.add(f[0])
+                        if len(INTRO[f[0]]) == 3 and all(INTRO[f[0]]): R['intro'] = INTRO[f[0]]
+                        else: problems.append('intros.tsv: %s needs exactly three lines' % f[0])
+                    elif INTRO: problems.append('intros.tsv has no lines for ' + f[0])
                     if f[3]: R['hue'] = int(f[3])
                     regions.append(R)
                 elif line.startswith('muni:'):
@@ -154,6 +169,8 @@ def build():
             if nsp > max(3, round(nstops * 0.12)): problems.append('%s has %d must-see stops of %d (keep it to about 5-10%%)' % (R['id'], nsp, nstops))
         if R and not R.get('air'): problems.append(path + ' has no air: line')
         if R and not R['cities']: problems.append(path + ' has no cities')
+    for k in INTRO:
+        if k not in seen_intro: problems.append('intros.tsv: %s is not a region' % k)
     # an airport sits in the first city
     return regions, problems
 
