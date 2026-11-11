@@ -324,6 +324,10 @@
   const itemOf = (it) => { const m = /^(.*?)(?:#([lph]))?$/.exec(String(it)); return { zh:m[1], t:m[2] || 's' }; };
   // a "new word" card (word#l) for a word that has already graduated (it is in memory and no longer in the learning list) is out of date: it would show the word as new again and reset its progress
   const staleNew = (z, ws, lrn) => { const m = itemOf(z); return m.t === 'l' && !(lrn && lrn[m.zh]) && !!(ws && ws[m.zh] && ws[m.zh].see && ws[m.zh].see.s > 0); };
+  // the words really waiting in their learning phase: a word that is already learned (it has an interval, e.g. marked as known elsewhere) or is not in this view's list
+  // can never be served as a new card, so it must not count (it made "Learn N new words" appear after a finished session and used up the 12-word limit)
+  const lrnLive = (ws, lrn) => Object.keys(lrn || {}).filter(z => BANK[z] && ws && ws[z] && !(ws[z].see.s > 0));
+  const lrnPrune = (ws, lrn) => { const o = {}; Object.keys(lrn || {}).forEach(z => { if (!(ws && ws[z] && ws[z].see.s > 0)) o[z] = lrn[z]; }); return o; };
   const buildQueue = (ws, anyway, lrn) => {
     const fresh = Object.keys(lrn || {}).filter(zh => BANK[zh] && ws[zh] && !(ws[zh].see.s > 0)).map(zh => zh + '#l');
     const see = [], prod = [], hear = [];
@@ -505,6 +509,7 @@
     });
     // anything still pointing at a word that is not in this mode's list (the dropped twins) is left out of today's lists
     if (Array.isArray(S.rq)) S.rq = S.rq.filter(z => BANK[itemOf(z).zh] && !staleNew(z, S.ws, S.lrn));   // queue items are a word, or word#l / #p / #h for a new, typed or heard card
+    if (S.lrn) S.lrn = lrnPrune(S.ws, S.lrn);   // a word that is already learned is not "learning" any more
     if (S.wlearned) Object.keys(S.wlearned).forEach(z => { if (!BANK[z]) delete S.wlearned[z]; });
     // words already added today (before this fix) still count towards the "learn new words" goal
     if (!S.webCredited && S.wlearned && Object.keys(S.wlearned).length >= Math.min(4, limitOf(S)) && Object.keys(S.wlearned).length > 0) S.webCredited = true;
@@ -788,7 +793,8 @@
   const G_SYSTEM = [
     'You check one sentence written by a learner of Chinese (HSK 1 to 3). Reply with JSON only.',
     'You are given the English prompt, the grammar point being practised, and the learner\'s answer.',
-    'The answer may be in Chinese characters or in pinyin (tone marks or numbers may be missing). Treat pinyin as the sentence the learner meant and judge that sentence. Do not fail an answer only because it is pinyin or lacks tones.',
+    'The answer may be in Chinese characters or in pinyin. Pinyin is allowed to have no tones, no tone marks, no punctuation, no capital letters, and no spaces between syllables (niyoumeiyoushouji means ni you mei you shou ji). Work out the sentence the learner meant, and judge that sentence. Never fail an answer, and never mention tones, spacing, capitals or punctuation in the reason, because of how the pinyin is written.',
+    'The grammar point name may list several patterns (for example "请, 一下 and 喂"). The sentence only has to use the pattern that the English prompt calls for, not all of them.',
     'Pass the answer only if all three are true: (1) the Chinese is grammatical and natural; (2) it uses the grammar point asked for; (3) it says what the English prompt says. Different natural wording, extra detail, or a different but correct word choice is fine. Ignore punctuation and spacing.',
     'Otherwise the verdict is "fix".',
     'Format: {"verdict":"pass" or "fix","better":"a corrected Chinese sentence, or the same sentence if it passes","reason":"one short sentence in English"}'
@@ -837,6 +843,13 @@
     const ok = q.need.split('|').some(alt => alt.split('+').every(x => text.indexOf(x) >= 0));
     return ok ? null : 'This point needs ' + q.need.split('|').map(alt => alt.split('+').join(' and ')).join(' or ') + ' in the sentence.';
   };
+  // the learner wrote the model answer (in characters, or in pinyin with or without tones, spaces, capitals, punctuation): right, no AI needed
+  const writeSame = (q, text) => {
+    const cjk = (x) => String(x || '').replace(/[^一-鿿]/g, '');
+    if (/[一-鿿]/.test(text)) return cjk(text) === cjk(q.model);
+    const toks = segHsk(q.model); const py = aiPinyin(toks);
+    return !!py && toneless(py) === toneless(text);
+  };
   const gParse = (text) => {
     const i = text.indexOf('{'), j = text.lastIndexOf('}');
     if (i < 0 || j <= i) throw new Error('The reply was not in the expected format.');
@@ -846,7 +859,7 @@
   };
   // Claude Sonnet when an Anthropic key is saved (it got all 30 test sentences right); Qwen Plus when only an Alibaba key is
   async function gAiCheck(q, text) {
-    const user = 'English prompt: ' + q.big + '\nGrammar point: ' + q.gtitle + '\nLearner\'s answer: ' + text;
+    const user = 'English prompt: ' + q.big + '\nGrammar point: ' + q.gtitle + '\nOne model answer (other natural answers are fine too): ' + q.model + '\nLearner\'s answer: ' + text;
     if (AICFG.key) {
       const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 30000);
       let res;
@@ -3085,6 +3098,7 @@
     checkWrite = async (q) => {
       const S = this.state; if (S.qchecked || S.qbusy) return;
       const text = (S.qtyped || '').trim(); if (!text) return;
+      if (writeSame(q, text)) { this.writeDone(q, true, 'That is the model answer.', '', ''); return; }
       const local = writeLocal(q, text);
       if (local) { this.writeDone(q, false, local, q.model, ''); return; }
       this.setState({ qbusy:true, qerr:'' });
@@ -3140,7 +3154,7 @@
       if (fresh.length) {
         const lim = limitOf(S);
         if (Object.keys(S.wlearned).length + fresh.length > lim) { this.setState({ pstop:id, plNote:'That would go past your limit of ' + lim + ' new words for today. Raise the limit in Settings, or come back tomorrow.', plAlt:'settings' }); return; }
-        if (this.lrnRoom() < fresh.length) { this.setState({ pstop:id, plNote:'You already have ' + Object.keys(S.lrn || {}).length + ' new words waiting. Learn those in Review first, then come back for these.', plAlt:'review' }); return; }
+        if (this.lrnRoom() < fresh.length) { this.setState({ pstop:id, plNote:'You already have ' + lrnLive(S.ws, S.lrn).length + ' new words waiting. Learn those in Review first, then come back for these.', plAlt:'review' }); return; }
       }
       const steps = plBuild(fresh.length ? fresh : words, fresh.length ? known : []);
       this.setState({ screen:'plesson', pstop:'', plNote:'', plAlt:'', pl:{ id, steps, i:0, pick:null, checked:false, ok:0, bad:0, missed:{}, fresh, replay:!fresh.length, leave:false, done:false, gain:0 } });
@@ -3397,7 +3411,7 @@
       if (Object.keys(wl).length >= need) patch.webCredited = true;
       return patch;
     };
-    lrnRoom = () => Math.max(0, LRN_MAX - Object.keys(this.state.lrn || {}).length);
+    lrnRoom = () => Math.max(0, LRN_MAX - lrnLive(this.state.ws, this.state.lrn).length);
     toLearning = (zh, known) => { const l = Object.assign({}, this.state.lrn); l[zh] = { st:known ? 0 : -1, m:0, at:Date.now() }; return l; };
     learnWord = (zh) => {
       const S = this.state;
@@ -3439,7 +3453,9 @@
       this.setState(this.webCredit({ lrn, wlearned:wl, lrnNote:'' }));
     };
     reviewMore = () => {
-      const q = buildQueue(this.state.ws, false, this.state.lrn);
+      const clean = lrnPrune(this.state.ws, this.state.lrn);
+      if (Object.keys(clean).length !== Object.keys(this.state.lrn || {}).length) this.setState({ lrn:clean });   // drop "learning" entries of words that are already learned
+      const q = buildQueue(this.state.ws, false, clean);
       if (!q.length) return;
       this.lapsed = {}; this.rvKey = null;
       this.setState({ rq:q, rtotal:q.length, rdone:0, rxp:0, rcomplete:false, rflip:false, rpy:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, qchecked:false, qchoice:null, qtyped:'', qfeed:'' });
@@ -4137,7 +4153,7 @@
           if (autoKey && autoText && prefGet('autoplay', true) !== false) setTimeout(() => { if (this.autoKey === autoKey) this.sayAi(autoText, autoSlot); }, 200);
         }
       }
-      const lrnCount = Object.keys(S.lrn || {}).length;
+      const lrnCount = lrnLive(S.ws, S.lrn).length;
       const cal = (() => { let fN = 0, fOk = 0, aN = 0, aOk = 0; (S.rlog || []).slice(-300).forEach(e => { const ok = e[3] === 'g' || e[3] === 'e'; if (e[4] === 'f') { fN++; if (ok) fOk++; } else { aN++; if (ok) aOk++; } }); return { fN, fOk, aN, aOk }; })();
       const calText = cal.fN >= 6 && cal.aN >= 6
         ? 'Honesty check: you marked ' + Math.round(100 * cal.fOk / cal.fN) + '% of your flip cards Good or Easy. On the cards the site checked for you (' + cal.aN + ' recently) you got ' + Math.round(100 * cal.aOk / cal.aN) + '% right.' +
@@ -4489,7 +4505,7 @@
         oppRows, topicChips, topicOpts, topicGroups, topicName:topicNow.name, wtq:S.wtq, onTopicSearch:(e) => this.setState({ wtq:e.target.value }), topicNoMatch, topicPos:(S.wtopic + 1) + ' of ' + TOPICS.length, topicMenuOpen:S.wtmenu ? 'true' : 'false', topicMenuShow:S.wtmenu, toggleTopicMenu:() => this.setState({ wtmenu:!this.state.wtmenu }), topicPrev:() => this.pickTopic((S.wtopic + TOPICS.length - 1) % TOPICS.length), topicNext:() => this.pickTopic((S.wtopic + 1) % TOPICS.length), tsZh:topicNow.sentence.zh, tsPy:topicNow.sentence.py, tsEn:topicNow.sentence.en,
         tsReport:report('Topic sentence', topicNow.sentence.zh + ' ' + topicNow.sentence.en),
         topicCta:topicNow.cta, goTopic:() => this.go(topicNow.to),
-        lrnBanner:Object.keys(S.lrn || {}).length > 0 || !!S.lrnNote, lrnBannerText:S.lrnNote || (Object.keys(S.lrn || {}).length + ' new word' + (Object.keys(S.lrn || {}).length === 1 ? ' is' : 's are') + ' waiting in Review. Adding a word does not mean you know it yet: Review will have you recall it.'), goLearn:() => { this.go('review'); if (!this.state.rq.length || this.state.rcomplete) this.reviewMore(); },
+        lrnBanner:lrnLive(S.ws, S.lrn).length > 0 || !!S.lrnNote, lrnBannerText:S.lrnNote || (lrnLive(S.ws, S.lrn).length + ' new word' + (lrnLive(S.ws, S.lrn).length === 1 ? ' is' : 's are') + ' waiting in Review. Adding a word does not mean you know it yet: Review will have you recall it.'), goLearn:() => { this.go('review'); if (!this.state.rq.length || this.state.rcomplete) this.reviewMore(); },
         hasGlast:S.qmode === 'greview' && !!S.glast, glastText:S.glast ? S.glast.title + ', ' + S.glast.dim + ': ' + S.glast.from + '% → ' + S.glast.to + '%' : '', glastCls:S.glast && S.glast.to < S.glast.from ? 'down' : 'up',
         hasRlast:!!S.rlast, rlastText:S.rlast ? S.rlast.zh + ': mastery ' + S.rlast.from + '% → ' + S.rlast.to + '%' : '', rlastCls:S.rlast && S.rlast.to < S.rlast.from ? 'down' : 'up',
         wordsSumLine:lvNow('mastered') + ' mastered · ' + lvNow('strong') + ' strong · ' + lvNow('familiar') + ' familiar · ' + lvNow('learning') + ' learning · ' + lvNow('new') + ' new',

@@ -181,7 +181,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.waitForTimeout(80);
     // the Review queue is full: pretend 12 words are waiting
     await page.evaluate(() => {
-      const lrn = {}; for (let k = 0; k < 14; k++) lrn['x' + k] = { st: 0, m: 0, at: Date.now() };
+      const ws = window.shanlu.state.ws; const lrn = {}; Object.keys(ws).filter(z => !(ws[z].see.s > 0)).slice(0, 14).forEach(z => { lrn[z] = { st: 0, m: 0, at: Date.now() }; });   // real words that are not learned yet (made-up entries are ignored)
       window.shanlu.setState({ lrn, screen: 'path', pstop: '', plNote: '' });
     });
     await page.waitForTimeout(100);
