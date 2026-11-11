@@ -36,6 +36,7 @@ const words = [];
 [1, 2, 3].forEach(n => (window['HSK' + n + '_WORDS'] || []).forEach(w => { if (M[w.zh]) words.push({ n, zh: w.zh, py: w.py, en: w.en, file: '../audio/' + (String(M[w.zh]).indexOf('.') >= 0 ? M[w.zh] : encodeURIComponent(w.zh) + '.' + M[w.zh]), risk: [...w.zh].some(c => RISK.has(c)) || w.py.indexOf('/') >= 0 }); }));
 let VER = { differs: {}, extra: {}, unsure: {}, homophone: {} };
 const a = new Audio();
+const bust = (u) => u + (u.indexOf('?') < 0 ? '?r=' : '&r=') + Date.now();   // a re-made file keeps its name, so ask for a fresh copy every time
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(marks)); } catch (e) {} };
 function render() {
   const lv = +document.getElementById('lv').value, show = document.getElementById('show').value;
@@ -51,7 +52,7 @@ function render() {
     r.innerHTML = '<button class="play" aria-label="Play ' + w.zh + '">▶</button><div><span class="zh"></span><small></small></div><div class="btns"><button data-m="ok" aria-label="Sounds right">✓</button><button data-m="x" aria-label="Sounds wrong">✗</button></div>';
     r.querySelector('.zh').textContent = w.zh; r.querySelector('small').textContent = w.py + ' · ' + w.en + ' · HSK ' + w.n + (VER.differs[w.zh] ? ' · 🔍 checker heard “' + VER.differs[w.zh] + '”' : VER.extra[w.zh] ? ' · ➕ checker heard extra: “' + VER.extra[w.zh] + '”' : '');
     if (VER.differs[w.zh]) r.classList.add('flag');
-    r.querySelector('.play').onclick = () => { a.onended = null; a.src = w.file; a.play(); };
+    r.querySelector('.play').onclick = () => { a.onended = null; a.src = bust(w.file); a.play(); };
     r.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { marks[w.zh] = marks[w.zh] === b.dataset.m ? '' : b.dataset.m; save(); render(); });
     box.appendChild(r);
   });
@@ -59,7 +60,7 @@ function render() {
   document.getElementById('count').textContent = words.length + ' recorded · ' + (!VER.checked && VER.when ? 'checker: no results yet · ' : '') + (VER.remade ? VER.remade + ' re-made since the check (run Audio verify again) · ' : '') + (VER.checked ? Object.keys(VER.differs).length + ' differ · ' + Object.keys(VER.extra).length + ' with extra sounds · ' + Object.keys(VER.unsure).length + ' unsure (' + VER.ok + ' of ' + VER.checked + ' heard exactly right) · ' : '') + ok + ' ✓ · ' + bad + ' ✗' + (l.length > 1000 ? ' · showing 1000' : '');
 }
 // Lines the checker flagged that are not in the word list (sentences, lab clips, exam lines; "m|" = the man's voice)
-function playKey(k) { a.onended = null; a.src = '../audio/' + (String(M[k]).indexOf('.') >= 0 ? M[k] : encodeURIComponent(k) + '.' + M[k]); a.play(); }
+function playKey(k) { a.onended = null; a.src = bust('../audio/' + (String(M[k]).indexOf('.') >= 0 ? M[k] : encodeURIComponent(k) + '.' + M[k])); a.play(); }
 function renderRemade() {
   const keys = (VER.remade_keys || []).filter(k => M[k]), byZh = {}; words.forEach(w => { byZh[w.zh] = w; });
   const box = document.getElementById('rlist'); box.textContent = '';
@@ -83,7 +84,7 @@ function renderOthers() {
     r.innerHTML = '<button class="play" aria-label="Play">▶</button><div><span class="zh" style="font-size:18px"></span><small></small></div><div></div>';
     r.querySelector('.zh').textContent = k.replace(/^m\|/, '') + (k.indexOf('m|') === 0 ? '  (man)' : '');
     r.querySelector('small').textContent = '🔍 checker heard “' + String((VER.differs || {})[k] || (VER.extra || {})[k]).replace(/ /g, '') + '”';
-    r.querySelector('.play').onclick = () => { a.onended = null; a.src = '../audio/' + (String(M[k]).indexOf('.') >= 0 ? M[k] : encodeURIComponent(k) + '.' + M[k]); a.play(); };
+    r.querySelector('.play').onclick = () => { a.onended = null; a.src = bust('../audio/' + (String(M[k]).indexOf('.') >= 0 ? M[k] : encodeURIComponent(k) + '.' + M[k])); a.play(); };
     box.appendChild(r);
   });
 }
