@@ -87,7 +87,7 @@ def main(asr=None):
         todo = todo[:a.limit]
     asr = asr or Asr()
     res = {'model': 'funasr paraformer-zh', 'when': time.strftime('%Y-%m-%d'), 'checked': 0, 'ok': 0, 'skipped': 0,
-           'homophone': {}, 'differs': {}, 'extra': {}, 'unsure': {}}
+           'remade': 0, 'homophone': {}, 'differs': {}, 'extra': {}, 'unsure': {}}
     t0 = time.time()
     for n, (key, meant, p) in enumerate(todo):
         try:

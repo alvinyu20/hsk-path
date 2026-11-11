@@ -53,7 +53,7 @@ function render() {
     box.appendChild(r);
   });
   const bad = Object.keys(marks).filter(k => marks[k] === 'x').length, ok = Object.keys(marks).filter(k => marks[k] === 'ok').length;
-  document.getElementById('count').textContent = words.length + ' recorded · ' + (!VER.checked && VER.when ? 'checker: no results yet (' + VER.when + ') · ' : '') + (VER.checked ? Object.keys(VER.differs).length + ' differ · ' + Object.keys(VER.extra).length + ' with extra sounds · ' + Object.keys(VER.unsure).length + ' unsure (' + VER.ok + ' of ' + VER.checked + ' heard exactly right) · ' : '') + ok + ' ✓ · ' + bad + ' ✗' + (l.length > 400 ? ' · showing 400 (use the filters)' : '');
+  document.getElementById('count').textContent = words.length + ' recorded · ' + (!VER.checked && VER.when ? 'checker: no results yet · ' : '') + (VER.remade ? VER.remade + ' re-made since the check (run Audio verify again) · ' : '') + (VER.checked ? Object.keys(VER.differs).length + ' differ · ' + Object.keys(VER.extra).length + ' with extra sounds · ' + Object.keys(VER.unsure).length + ' unsure (' + VER.ok + ' of ' + VER.checked + ' heard exactly right) · ' : '') + ok + ' ✓ · ' + bad + ' ✗' + (l.length > 400 ? ' · showing 400 (use the filters)' : '');
 }
 // Lines the checker flagged that are not in the word list (sentences, lab clips, exam lines; "m|" = the man's voice)
 function renderOthers() {

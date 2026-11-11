@@ -134,7 +134,7 @@ def main():
     if not key and not os.environ.get('MAKE_AUDIO_FAKE'):
         sys.exit('Set DASHSCOPE_API_KEY (the Alibaba Model Studio key, Singapore) in the environment. Do not paste it into chat or a file.')
     lock = threading.Lock()
-    done = [0]; failed = []
+    done = [0]; failed = []; made = []
     t0 = time.time()
 
     def work(e):
@@ -152,6 +152,7 @@ def main():
             return
         with lock:
             index[k] = os.path.basename(out)
+            made.append(k)
             done[0] += 1
             if done[0] % 25 == 0:
                 tmp = INDEX + '.tmp'
@@ -166,14 +167,14 @@ def main():
         tmp = INDEX + '.tmp'
         json.dump(index, open(tmp, 'w', encoding='utf-8'), ensure_ascii=False, indent=0, sort_keys=True)
         os.replace(tmp, INDEX)
-    if done[0]:   # the checker's results (audio/verify.json) describe the OLD files: drop them so the audio-check page never shows them beside new audio
+    if made:   # the checker's results (audio/verify.json) describe the OLD files: drop the entries of the re-made ones so the audio-check page never shows them beside new audio
         vp = os.path.join(AUDIO, 'verify.json')
         if os.path.exists(vp):
             v = json.load(open(vp, encoding='utf-8'))
-            for k in ('homophone', 'differs', 'extra', 'unsure'):
-                v[k] = {}
-            v['checked'] = v['ok'] = v['skipped'] = 0
-            v['when'] = 'cleared: audio was re-made, run Audio verify again'
+            for b in ('homophone', 'differs', 'extra', 'unsure'):
+                for k in made:
+                    v.get(b, {}).pop(k, None)
+            v['remade'] = v.get('remade', 0) + len(made)   # shown on the check page; Audio verify resets it
             json.dump(v, open(vp, 'w', encoding='utf-8'), ensure_ascii=False, indent=0, sort_keys=True)
     print('made %d files, %d failed' % (done[0], len(failed)))
     for t, m in failed[:20]:
