@@ -574,8 +574,8 @@
     return st;
   }
 
-  const report = (where, text) => 'https://github.com/' + REPO + '/issues/new?title=' + encodeURIComponent('Content mistake: ' + text) +
-    '&body=' + encodeURIComponent('Where: ' + where + '\nText: ' + text + '\n\nWhat is wrong:\n\nWhat it should say:\n');
+  const report = (where, text, extra) => 'https://github.com/' + REPO + '/issues/new?title=' + encodeURIComponent('Content mistake: ' + text) +
+    '&body=' + encodeURIComponent('Where: ' + where + '\nText: ' + text + (extra ? '\n' + extra : '') + '\n\nWhat is wrong:\n\nWhat it should say:\n');
 
   // ---------- building quiz questions ----------
   const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
@@ -4187,7 +4187,11 @@
         kicker:q0.kicker, prompt:q0.prompt, big:q0.big || '', hasBig:!!q0.big, bigCls:(q0.big || '').length > 3 ? 'sm' : '',
         sub:q0.sub || '', hasSub:!!q0.sub, placeholder:q0.placeholder || '', bigZh:q0.bigCls !== 'en', bigEn:q0.bigCls === 'en',
         isTyped, isPyType:q0.type === 'type' || q0.type === 'cloze', isListen, isChoice, isOrder, isSpot, reveal:q0.reveal, explain:q0.explain, revealPy:q0.py || '', hasRevealPy:!!q0.py,
-        reportUrl:report((isG(S.qmode) ? 'Grammar practice' : 'Test') + ' question ' + (S.qi + 1), q0.prompt + ' / ' + q0.reveal)
+        reportUrl:q0.type === 'write'
+          // a sentence written by the learner: the report carries what was typed and what the checker said, so a wrong verdict can be looked into
+          ? report('Grammar practice question ' + (S.qi + 1) + ' (Write it)', 'Write it: ' + q0.big + ' (' + q0.gtitle + ')', 'Model answer: ' + q0.model + '\nWhat I typed: ' + (S.qtyped || '') +
+              '\nVerdict: ' + (S.qchecked ? (S.qcorrect ? 'marked right' : 'marked wrong') : 'not checked yet') + (S.qfeed ? '\nWhat the checker said: ' + S.qfeed : ''))
+          : report((isG(S.qmode) ? 'Grammar practice' : 'Test') + ' question ' + (S.qi + 1), q0.prompt + ' / ' + q0.reveal)
       };
       const opts = (isChoice ? q0.options : []).map(o => {
         let cls = '';

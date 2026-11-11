@@ -37,6 +37,15 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
     if (ok) check(r.checked && r.correct, 'right without the AI: ' + t + ' for ' + m);
     else check(!r.checked && /AI key/.test(r.err), 'not the model answer, goes to the AI: ' + t + ' for ' + m);
   }
+  // the Report a mistake link on a written answer carries what was typed and the verdict
+  await page.evaluate(() => {
+    const a = window.shanlu; const q = { type:'write', kicker:'Write it', prompt:'Write this', big:'Please sit.', gtitle:'请, 一下 and 喂', model:'请坐。', need:'', pt:'g1-svo', gdim:'w', reveal:'请坐。', explain:'' };
+    a.quizQs = [q];
+    a.setState({ screen:'quiz', qmode:'greview', qi:0, qres:[], qchecked:true, qcorrect:false, qfeed:'Too strict.', qtyped:'Qingzuo', qdone:false });
+  });
+  await page.waitForTimeout(300);
+  const href = await page.evaluate(() => { const l = document.querySelector('.fb a.report'); return l ? decodeURIComponent(l.getAttribute('href')) : ''; });
+  check(/What I typed: Qingzuo/.test(href) && /marked wrong/.test(href) && /Model answer: 请坐/.test(href) && /Too strict/.test(href), 'the report link has the typed answer, the model answer and the verdict: ' + href.slice(0, 60));
   check(errs.length === 0, 'no script errors ' + errs.slice(0, 2).join(' | '));
   await browser.close(); server.close();
   console.log(failures ? failures + ' FAILED' : 'all passed'); process.exit(failures ? 1 : 0);
