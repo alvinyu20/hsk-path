@@ -274,6 +274,11 @@
 "model": "funasr paraformer-zh",
 "ok": 4562,
 "remade": 3,
+"remade_keys": [
+"想",
+"脏",
+"成绩"
+],
 "skipped": 0,
 "unsure": {
 "万": "one",

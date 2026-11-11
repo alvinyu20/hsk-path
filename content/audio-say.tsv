@@ -1,0 +1,3 @@
+# What to send Qwen instead of the word itself, for words the voice reads wrongly. Columns: word <TAB> text to speak. Then redo the word in the Qwen audio workflow.
+# The recording is still filed under the word (left column), so the site finds it as usual.
+成绩	成绩。

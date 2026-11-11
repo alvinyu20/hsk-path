@@ -12,6 +12,7 @@ The key is read from the environment only; it is never written anywhere.
 Voices: --voice-f (the woman: words, sentences, lab, exam women; default longanhuan_v3.1) and --voice-m (the man in exam conversations; default xunanchuan_v3.1,
 NOT listened to yet). Key in the manifest: the text itself for the woman, "m|" + text for the man.
 Scopes: words, examples, lab, exams, extra (grammar lesson examples and Speak scenarios), core (= words + examples + lab + exams), all.
+Say overrides: content/audio-say.tsv sends different text to Qwen for a word it keeps misreading (the recording is still stored under the real text).
 Redo a line: --redo "你好,谢谢"; --redo "*" makes everything in the scope again (use it after changing voice or the instruction). Re-making files clears
 audio/verify.json (the speech-recogniser results describe the old files); run the Audio verify workflow again.
 Cost: Qwen-Audio 3.1 is billed per token (input text and output audio), not per character; the price here is unconfirmed. The dry run prints a rough guess;
@@ -23,6 +24,19 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AUDIO = os.path.join(ROOT, 'audio')
 INDEX = os.path.join(AUDIO, 'index.json')
 CORE = {'words', 'examples', 'lab', 'exams'}
+SAY = os.path.join(ROOT, 'content', 'audio-say.tsv')
+
+
+def load_say():
+    """content/audio-say.tsv: text <TAB> what to send Qwen instead (for a word the voice keeps getting wrong, e.g. add 。). The site still looks the recording up by the text."""
+    out = {}
+    if os.path.exists(SAY):
+        for line in open(SAY, encoding='utf-8'):
+            if line.strip() and not line.startswith('#') and '\t' in line:
+                t, say = line.rstrip('\n').split('\t')[:2]
+                out[t.strip()] = say.strip()
+    return out
+
 
 
 def key_of(e):
@@ -135,6 +149,7 @@ def main():
         sys.exit('Set DASHSCOPE_API_KEY (the Alibaba Model Studio key, Singapore) in the environment. Do not paste it into chat or a file.')
     lock = threading.Lock()
     done = [0]; failed = []; made = []
+    say = load_say()
     t0 = time.time()
 
     def work(e):
@@ -142,7 +157,7 @@ def main():
         voice = a.voice_m if e['voice'] == 'm' else a.voice_f
         out = os.path.join(AUDIO, fname(k))
         try:
-            wav = synth(e['text'], voice, key)
+            wav = synth(say.get(e['text'], e['text']), voice, key)
             to_mp3(wav, out)
         except SystemExit:
             raise
@@ -175,6 +190,7 @@ def main():
                 for k in made:
                     v.get(b, {}).pop(k, None)
             v['remade'] = v.get('remade', 0) + len(made)   # shown on the check page; Audio verify resets it
+            v['remade_keys'] = sorted(set(v.get('remade_keys', [])) | set(made))
             json.dump(v, open(vp, 'w', encoding='utf-8'), ensure_ascii=False, indent=0, sort_keys=True)
     print('made %d files, %d failed' % (done[0], len(failed)))
     for t, m in failed[:20]:
