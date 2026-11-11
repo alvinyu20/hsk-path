@@ -221,8 +221,8 @@
     if (r === 'again') { s = s > 0 ? Math.max(0.4, Math.min(s * 0.35, 6)) : 0.4; nd = Math.min(10, dif + 0.8); }
     else if (o && o.relearn) { nd = dif; }
     else if (r === 'hard') { s = s > 0 ? Math.max(0.8, s * grow(1.25)) : 1; nd = Math.min(10, dif + 0.3); }
-    else if (r === 'good') { s = s > 0 ? s * grow(1.6 + 1.4 * (1 - R)) : 1.5; nd = dif + (5 - dif) * 0.05; }
-    else { s = s > 0 ? s * grow(2.2 + 1.8 * (1 - R)) : 3; nd = Math.max(1, dif - 0.5); }
+    else if (r === 'good') { s = s > 0 ? s * grow(2.2 + 1.4 * (1 - R)) : 1.5; nd = dif + (5 - dif) * 0.05; }   // on time (recall 90%) a Good makes the interval about 2.3 times longer (it was 1.7: three timers per word brought words back too often)
+    else { s = s > 0 ? s * grow(3.2 + 1.8 * (1 - R)) : 3; nd = Math.max(1, dif - 0.5); }
     return { s, t:Date.now(), d:Math.round(nd * 100) / 100 };
   };
   const fmtInterval = (s) => { const d = s * retK(); return d < 1 ? 'Today' : d < 1.5 ? 'Tomorrow' : d < 45 ? 'In ' + Math.round(d) + ' days' : 'In ' + Math.round(d / 30) + ' months'; };
