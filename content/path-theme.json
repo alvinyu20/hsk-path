@@ -1,5 +1,5 @@
 {
-  "note": "The look and story of the Learn path, one theme per level. Read by tools/build-path.py (never edit data/path.js). Units are named by id (h1u1 = HSK 1 unit 1). Chinese lines get their pinyin from the build. Culture notes are kept to things that are generally true; have a native speaker look over the Chinese.",
+  "note": "The look and story of the Learn path, one theme per level. Read by tools/build-path.py (never edit data/path.js). Units are named by id (h1u1 = HSK 1 unit 1). Chinese lines get their pinyin from the build. Have a native speaker look over the Chinese. tile = the wallpaper of a unit's trail (data/path-scenes.js, SHANLU_PATH_TILES); bg = its two background colours, top to bottom.",
   "levels": {
     "1": {
       "kind": "day",
@@ -8,44 +8,224 @@
       "blurb": "You arrive off the morning train, and by evening you are chatting with everyone. Each unit is one moment of the day.",
       "hero": "day-hero",
       "phases": [
-        {"id": "morning", "title": "Morning", "sub": "Arrive", "from": "h1u1", "to": "h1u4", "scene": "day-arrive", "line": "The train pulls in. Someone on the platform is waving: your host."},
-        {"id": "noon", "title": "Noon", "sub": "Lunch with friends", "from": "h1u5", "to": "h1u8", "scene": "day-lunch", "line": "Lunch is loud, warm and full of new people to meet."},
-        {"id": "afternoon", "title": "Afternoon", "sub": "Out and about", "from": "h1u9", "to": "h1u11", "scene": "day-afternoon", "line": "Find your way across town, sit in your first class, then breathe out."},
-        {"id": "evening", "title": "Evening", "sub": "The night street", "from": "h1u12", "to": "h1u13", "scene": "day-evening", "line": "Lanterns come on. Everyone is out, and you can finally join in."}
+        {
+          "id": "morning",
+          "title": "Morning",
+          "sub": "Arrive",
+          "from": "h1u1",
+          "to": "h1u4",
+          "scene": "day-arrive",
+          "line": "The train pulls in. Someone on the platform is waving: your host.",
+          "bg": [
+            "#FCE3C8",
+            "#FBF1E2"
+          ]
+        },
+        {
+          "id": "noon",
+          "title": "Noon",
+          "sub": "Lunch with friends",
+          "from": "h1u5",
+          "to": "h1u8",
+          "scene": "day-lunch",
+          "line": "Lunch is loud, warm and full of new people to meet.",
+          "bg": [
+            "#D9EEF6",
+            "#EFF8F6"
+          ]
+        },
+        {
+          "id": "afternoon",
+          "title": "Afternoon",
+          "sub": "Out and about",
+          "from": "h1u9",
+          "to": "h1u11",
+          "scene": "day-afternoon",
+          "line": "Find your way across town, sit in your first class, then breathe out.",
+          "bg": [
+            "#DAEFE2",
+            "#F2F8EC"
+          ]
+        },
+        {
+          "id": "evening",
+          "title": "Evening",
+          "sub": "The night street",
+          "from": "h1u12",
+          "to": "h1u13",
+          "scene": "day-evening",
+          "line": "Lanterns come on. Everyone is out, and you can finally join in.",
+          "bg": [
+            "#E1DCF0",
+            "#F4EBF2"
+          ]
+        }
       ],
       "units": {
-        "h1u1": {"time": "7:40", "scene": "The train pulls in and your host is waving on the platform."},
-        "h1u2": {"time": "8:10", "scene": "In the taxi queue your host asks who you are, and you ask what things are."},
-        "h1u3": {"time": "8:40", "scene": "At the front desk: your name, and what is this and that."},
-        "h1u4": {"time": "9:30", "scene": "Your room number, the price of the room, how many bags."},
-        "h1u5": {"time": "11:30", "scene": "Your host introduces friends and family."},
-        "h1u6": {"time": "12:00", "scene": "The menu is on the wall: big, small, hot, good."},
-        "h1u7": {"time": "12:30", "scene": "What time is it? When is the next bus? Plan the day."},
-        "h1u8": {"time": "13:00", "scene": "Order lunch, ask the price, pay."},
-        "h1u9": {"time": "14:30", "scene": "Where is the school? How do we get there?"},
-        "h1u10": {"time": "15:30", "scene": "Your first Chinese class, and a phone full of new apps."},
-        "h1u11": {"time": "16:30", "scene": "After class: the weather, hobbies, how you feel."},
-        "h1u12": {"time": "18:30", "scene": "At the night market: what you do, can do and want to do."},
-        "h1u13": {"time": "20:00", "scene": "Dinner with everyone, and a sentence that joins it all together."}
+        "h1u1": {
+          "time": "7:40",
+          "scene": "The train pulls in and your host is waving on the platform.",
+          "tile": "station"
+        },
+        "h1u2": {
+          "time": "8:10",
+          "scene": "In the taxi queue your host asks who you are, and you ask what things are.",
+          "tile": "street"
+        },
+        "h1u3": {
+          "time": "8:40",
+          "scene": "At the front desk: your name, and what is this and that.",
+          "tile": "city"
+        },
+        "h1u4": {
+          "time": "9:30",
+          "scene": "Your room number, the price of the room, how many bags.",
+          "tile": "city"
+        },
+        "h1u5": {
+          "time": "11:30",
+          "scene": "Your host introduces friends and family.",
+          "tile": "park"
+        },
+        "h1u6": {
+          "time": "12:00",
+          "scene": "The menu is on the wall: big, small, hot, good.",
+          "tile": "street"
+        },
+        "h1u7": {
+          "time": "12:30",
+          "scene": "What time is it? When is the next bus? Plan the day.",
+          "tile": "station"
+        },
+        "h1u8": {
+          "time": "13:00",
+          "scene": "Order lunch, ask the price, pay.",
+          "tile": "street"
+        },
+        "h1u9": {
+          "time": "14:30",
+          "scene": "Where is the school? How do we get there?",
+          "tile": "city"
+        },
+        "h1u10": {
+          "time": "15:30",
+          "scene": "Your first Chinese class, and a phone full of new apps.",
+          "tile": "school"
+        },
+        "h1u11": {
+          "time": "16:30",
+          "scene": "After class: the weather, hobbies, how you feel.",
+          "tile": "park"
+        },
+        "h1u12": {
+          "time": "18:30",
+          "scene": "At the night market: what you do, can do and want to do.",
+          "tile": "night"
+        },
+        "h1u13": {
+          "time": "20:00",
+          "scene": "Dinner with everyone, and a sentence that joins it all together.",
+          "tile": "night"
+        }
       }
     },
     "2": {
       "kind": "rail",
       "name": "The line",
       "tag": "路线 lùxiàn",
-      "blurb": "Ten stops on one line. Each station has one character to remember it by, and a ticket note from the platform.",
+      "blurb": "Ten stops on one line. Each station has one character to remember it by.",
       "hero": "rail-hero",
       "units": {
-        "h2u1": {"ch": "家", "py": "jiā", "note": {"kick": "Ticket note", "text": "Chinese has separate words for relatives on your mother's side and your father's side, like 奶奶 (father's mother) and 外婆 (mother's mother)."}},
-        "h2u2": {"ch": "时", "py": "shí", "note": {"kick": "Ticket note", "text": "Dates run big to small: year, month, then day. 2026年11月12日."}},
-        "h2u3": {"ch": "吃", "py": "chī", "note": {"kick": "Ticket note", "text": "Many meals in China are shared. Dishes go in the middle of the table and everyone takes some."}},
-        "h2u4": {"ch": "校", "py": "xiào", "note": {"kick": "Ticket note", "text": "In many homes people change into slippers at the door."}},
-        "h2u5": {"ch": "路", "py": "lù", "note": {"kick": "Ticket note", "text": "People often give directions with north, south, east and west as well as left and right."}},
-        "h2u6": {"ch": "车", "py": "chē", "note": {"kick": "Ticket note", "text": "China has the longest high-speed rail network in the world."}},
-        "h2u7": {"ch": "身", "py": "shēn", "note": {"kick": "Ticket note", "text": "In many parks you will find people exercising in the morning: tai chi, dancing, stretching."}},
-        "h2u8": {"ch": "心", "py": "xīn", "note": {"kick": "Ticket note", "text": "A modest reply to a compliment is 哪里哪里 (nǎli nǎli), which means roughly: not at all."}},
-        "h2u9": {"ch": "想", "py": "xiǎng", "note": {"kick": "Language tip", "text": "To compare, use A 比 B + adjective: 今天比昨天冷."}},
-        "h2u10": {"ch": "因", "py": "yīn", "note": {"kick": "Language tip", "text": "Chinese happily uses both halves: 因为……所以…… is because … so …, in one sentence."}}
+        "h2u1": {
+          "ch": "家",
+          "py": "jiā",
+          "tile": "station",
+          "bg": [
+            "#E3F0EA",
+            "#EEF3E2"
+          ]
+        },
+        "h2u2": {
+          "ch": "时",
+          "py": "shí",
+          "tile": "station",
+          "bg": [
+            "#EAF1DE",
+            "#F5F3E3"
+          ]
+        },
+        "h2u3": {
+          "ch": "吃",
+          "py": "chī",
+          "tile": "street",
+          "bg": [
+            "#F8E6D2",
+            "#FBF1E2"
+          ]
+        },
+        "h2u4": {
+          "ch": "校",
+          "py": "xiào",
+          "tile": "school",
+          "bg": [
+            "#E2EAF3",
+            "#F0F4F2"
+          ]
+        },
+        "h2u5": {
+          "ch": "路",
+          "py": "lù",
+          "tile": "hills",
+          "bg": [
+            "#DCEBE2",
+            "#EEF4EA"
+          ]
+        },
+        "h2u6": {
+          "ch": "车",
+          "py": "chē",
+          "tile": "river",
+          "bg": [
+            "#D6ECF1",
+            "#EAF5F3"
+          ]
+        },
+        "h2u7": {
+          "ch": "身",
+          "py": "shēn",
+          "tile": "park",
+          "bg": [
+            "#E1F0DC",
+            "#F1F6E8"
+          ]
+        },
+        "h2u8": {
+          "ch": "心",
+          "py": "xīn",
+          "tile": "trees",
+          "bg": [
+            "#DFEFE6",
+            "#EDF5EE"
+          ]
+        },
+        "h2u9": {
+          "ch": "想",
+          "py": "xiǎng",
+          "tile": "fields",
+          "bg": [
+            "#EAF0D4",
+            "#F6F5E1"
+          ]
+        },
+        "h2u10": {
+          "ch": "因",
+          "py": "yīn",
+          "tile": "night",
+          "bg": [
+            "#E1DCF0",
+            "#F4EBF2"
+          ]
+        }
       }
     },
     "3": {
@@ -55,28 +235,316 @@
       "blurb": "You spend a semester studying in Hangzhou with your classmate 梅 (Méi). Every chapter opens with a short chat that uses the words of that unit.",
       "hero": "story-hero",
       "seasons": [
-        {"id": "autumn", "zh": "秋", "title": "Autumn", "from": "h3u1", "to": "h3u6", "scene": "story-autumn"},
-        {"id": "winter", "zh": "冬", "title": "Winter", "from": "h3u7", "to": "h3u12", "scene": "story-winter"},
-        {"id": "spring", "zh": "春", "title": "Spring", "from": "h3u13", "to": "h3u17", "scene": "story-spring"}
+        {
+          "id": "autumn",
+          "zh": "秋",
+          "title": "Autumn",
+          "from": "h3u1",
+          "to": "h3u6",
+          "scene": "story-autumn",
+          "bg": [
+            "#F8E1BF",
+            "#FCF0DC"
+          ]
+        },
+        {
+          "id": "winter",
+          "zh": "冬",
+          "title": "Winter",
+          "from": "h3u7",
+          "to": "h3u12",
+          "scene": "story-winter",
+          "bg": [
+            "#D7E4EE",
+            "#EEF3F8"
+          ]
+        },
+        {
+          "id": "spring",
+          "zh": "春",
+          "title": "Spring",
+          "from": "h3u13",
+          "to": "h3u17",
+          "scene": "story-spring",
+          "bg": [
+            "#F9DDE4",
+            "#EEF6E8"
+          ]
+        }
       ],
       "units": {
-        "h3u1": {"place": "At the station", "lines": [["梅", "你好！欢迎来到杭州。", "Hello! Welcome to Hangzhou."], ["你", "谢谢你来接我。", "Thanks for coming to pick me up."]]},
-        "h3u2": {"place": "At the supermarket", "lines": [["梅", "你要买多少水果？", "How much fruit do you want to buy?"], ["你", "我要两公斤苹果。", "I want two kilos of apples."]]},
-        "h3u3": {"place": "First week", "lines": [["梅", "今天几号？", "What is the date today?"], ["你", "十月十号。秋天来了。", "The tenth of October. Autumn has come."]]},
-        "h3u4": {"place": "In the library", "lines": [["梅", "你每天学习多长时间？", "How long do you study every day?"], ["你", "我每天学习一个小时。", "I study for an hour every day."]]},
-        "h3u5": {"place": "A restaurant", "lines": [["梅", "我们去吃杭州菜吧。", "Let's go and eat Hangzhou food."], ["你", "好，我想吃鱼和米饭。", "Good, I would like fish and rice."]]},
-        "h3u6": {"place": "By the lake", "lines": [["梅", "前面就是西湖。", "Just ahead is West Lake."], ["你", "太漂亮了！我们走过去吧。", "So beautiful! Let's walk over."]]},
-        "h3u7": {"place": "Winter break", "lines": [["梅", "放假了，你想去哪里旅游？", "The break has started. Where do you want to travel?"], ["你", "我想坐火车去北京。", "I want to take the train to Beijing."]]},
-        "h3u8": {"place": "Exam week", "lines": [["梅", "明天有考试，你复习了吗？", "There is an exam tomorrow. Have you revised?"], ["你", "还没有，我现在就复习。", "Not yet, I will revise right now."]]},
-        "h3u9": {"place": "First snow", "lines": [["梅", "下雪了！", "It is snowing!"], ["你", "真的吗？我第一次看到雪。", "Really? It is my first time seeing snow."]]},
-        "h3u10": {"place": "New Year party", "lines": [["梅", "今天晚上有晚会，你来吗？", "There is an evening party tonight. Are you coming?"], ["你", "当然来！我带一个礼物。", "Of course! I will bring a gift."]]},
-        "h3u11": {"place": "A cold week", "lines": [["梅", "你怎么了？", "What is wrong?"], ["你", "我有点发烧，头也疼。", "I have a bit of a fever, and a headache too."]]},
-        "h3u12": {"place": "Café talk", "lines": [["梅", "你觉得汉语难吗？", "Do you think Chinese is hard?"], ["你", "我觉得很有意思，但是有点难。", "I think it is very interesting, but a little hard."]]},
-        "h3u13": {"place": "Hike in the hills", "lines": [["梅", "春天来了，我们去爬山吧。", "Spring is here. Let's go climbing."], ["你", "好，我把水带上。", "OK, I will bring the water."]]},
-        "h3u14": {"place": "A tea house", "lines": [["梅", "这家店的茶怎么样？", "How is the tea in this shop?"], ["你", "很好喝，店也很干净。", "Very tasty, and the shop is clean too."]]},
-        "h3u15": {"place": "Talking about later", "lines": [["梅", "你以后会再来吗？", "Will you come again someday?"], ["你", "我一定会再来。", "I will definitely come again."]]},
-        "h3u16": {"place": "Weekend plans", "lines": [["梅", "如果明天不下雨，我们去哪里？", "If it does not rain tomorrow, where shall we go?"], ["你", "为了看花，我们去公园吧。", "To see the flowers, let's go to the park."]]},
-        "h3u17": {"place": "Last day", "lines": [["梅", "你不但会说汉语，而且写得很好。", "You not only speak Chinese, you write it well too."], ["你", "谢谢你一直帮我！", "Thank you for always helping me!"]]}
+        "h3u1": {
+          "place": "At the station",
+          "lines": [
+            [
+              "梅",
+              "你好！欢迎来到杭州。",
+              "Hello! Welcome to Hangzhou."
+            ],
+            [
+              "你",
+              "谢谢你来接我。",
+              "Thanks for coming to pick me up."
+            ]
+          ],
+          "tile": "autumn"
+        },
+        "h3u2": {
+          "place": "At the supermarket",
+          "lines": [
+            [
+              "梅",
+              "你要买多少水果？",
+              "How much fruit do you want to buy?"
+            ],
+            [
+              "你",
+              "我要两公斤苹果。",
+              "I want two kilos of apples."
+            ]
+          ],
+          "tile": "autumn2"
+        },
+        "h3u3": {
+          "place": "First week",
+          "lines": [
+            [
+              "梅",
+              "今天几号？",
+              "What is the date today?"
+            ],
+            [
+              "你",
+              "十月十号。秋天来了。",
+              "The tenth of October. Autumn has come."
+            ]
+          ],
+          "tile": "autumn"
+        },
+        "h3u4": {
+          "place": "In the library",
+          "lines": [
+            [
+              "梅",
+              "你每天学习多长时间？",
+              "How long do you study every day?"
+            ],
+            [
+              "你",
+              "我每天学习一个小时。",
+              "I study for an hour every day."
+            ]
+          ],
+          "tile": "autumn2"
+        },
+        "h3u5": {
+          "place": "A restaurant",
+          "lines": [
+            [
+              "梅",
+              "我们去吃杭州菜吧。",
+              "Let's go and eat Hangzhou food."
+            ],
+            [
+              "你",
+              "好，我想吃鱼和米饭。",
+              "Good, I would like fish and rice."
+            ]
+          ],
+          "tile": "autumn"
+        },
+        "h3u6": {
+          "place": "By the lake",
+          "lines": [
+            [
+              "梅",
+              "前面就是西湖。",
+              "Just ahead is West Lake."
+            ],
+            [
+              "你",
+              "太漂亮了！我们走过去吧。",
+              "So beautiful! Let's walk over."
+            ]
+          ],
+          "tile": "autumn2"
+        },
+        "h3u7": {
+          "place": "Winter break",
+          "lines": [
+            [
+              "梅",
+              "放假了，你想去哪里旅游？",
+              "The break has started. Where do you want to travel?"
+            ],
+            [
+              "你",
+              "我想坐火车去北京。",
+              "I want to take the train to Beijing."
+            ]
+          ],
+          "tile": "winter"
+        },
+        "h3u8": {
+          "place": "Exam week",
+          "lines": [
+            [
+              "梅",
+              "明天有考试，你复习了吗？",
+              "There is an exam tomorrow. Have you revised?"
+            ],
+            [
+              "你",
+              "还没有，我现在就复习。",
+              "Not yet, I will revise right now."
+            ]
+          ],
+          "tile": "winter2"
+        },
+        "h3u9": {
+          "place": "First snow",
+          "lines": [
+            [
+              "梅",
+              "下雪了！",
+              "It is snowing!"
+            ],
+            [
+              "你",
+              "真的吗？我第一次看到雪。",
+              "Really? It is my first time seeing snow."
+            ]
+          ],
+          "tile": "winter"
+        },
+        "h3u10": {
+          "place": "New Year party",
+          "lines": [
+            [
+              "梅",
+              "今天晚上有晚会，你来吗？",
+              "There is an evening party tonight. Are you coming?"
+            ],
+            [
+              "你",
+              "当然来！我带一个礼物。",
+              "Of course! I will bring a gift."
+            ]
+          ],
+          "tile": "winter2"
+        },
+        "h3u11": {
+          "place": "A cold week",
+          "lines": [
+            [
+              "梅",
+              "你怎么了？",
+              "What is wrong?"
+            ],
+            [
+              "你",
+              "我有点发烧，头也疼。",
+              "I have a bit of a fever, and a headache too."
+            ]
+          ],
+          "tile": "winter"
+        },
+        "h3u12": {
+          "place": "Café talk",
+          "lines": [
+            [
+              "梅",
+              "你觉得汉语难吗？",
+              "Do you think Chinese is hard?"
+            ],
+            [
+              "你",
+              "我觉得很有意思，但是有点难。",
+              "I think it is very interesting, but a little hard."
+            ]
+          ],
+          "tile": "winter2"
+        },
+        "h3u13": {
+          "place": "Hike in the hills",
+          "lines": [
+            [
+              "梅",
+              "春天来了，我们去爬山吧。",
+              "Spring is here. Let's go climbing."
+            ],
+            [
+              "你",
+              "好，我把水带上。",
+              "OK, I will bring the water."
+            ]
+          ],
+          "tile": "spring"
+        },
+        "h3u14": {
+          "place": "A tea house",
+          "lines": [
+            [
+              "梅",
+              "这家店的茶怎么样？",
+              "How is the tea in this shop?"
+            ],
+            [
+              "你",
+              "很好喝，店也很干净。",
+              "Very tasty, and the shop is clean too."
+            ]
+          ],
+          "tile": "spring2"
+        },
+        "h3u15": {
+          "place": "Talking about later",
+          "lines": [
+            [
+              "梅",
+              "你以后会再来吗？",
+              "Will you come again someday?"
+            ],
+            [
+              "你",
+              "我一定会再来。",
+              "I will definitely come again."
+            ]
+          ],
+          "tile": "spring"
+        },
+        "h3u16": {
+          "place": "Weekend plans",
+          "lines": [
+            [
+              "梅",
+              "如果明天不下雨，我们去哪里？",
+              "If it does not rain tomorrow, where shall we go?"
+            ],
+            [
+              "你",
+              "为了看花，我们去公园吧。",
+              "To see the flowers, let's go to the park."
+            ]
+          ],
+          "tile": "spring2"
+        },
+        "h3u17": {
+          "place": "Last day",
+          "lines": [
+            [
+              "梅",
+              "你不但会说汉语，而且写得很好。",
+              "You not only speak Chinese, you write it well too."
+            ],
+            [
+              "你",
+              "谢谢你一直帮我！",
+              "Thank you for always helping me!"
+            ]
+          ],
+          "tile": "spring"
+        }
       }
     }
   }

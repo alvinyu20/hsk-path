@@ -152,9 +152,78 @@ S['story-hero'] = svg(`
   '<linearGradient id="lk" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8FB8B0"/><stop offset=".36" stop-color="#8FB8B0"/><stop offset=".46" stop-color="#A9C2D2"/><stop offset=".62" stop-color="#A9C2D2"/><stop offset=".72" stop-color="#9ED0D8"/><stop offset="1" stop-color="#9ED0D8"/></linearGradient>' +
   '<linearGradient id="gr" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#C89A5E"/><stop offset=".36" stop-color="#C89A5E"/><stop offset=".46" stop-color="#F4F8FA"/><stop offset=".62" stop-color="#F4F8FA"/><stop offset=".72" stop-color="#7DB56C"/><stop offset="1" stop-color="#7DB56C"/></linearGradient>');
 
+// ---- wallpaper tiles: the background of each unit's trail. 600x600, transparent, little icons scattered mostly along the two edges, repeated downwards ----
+const T = {};
+const I = {   // each icon is drawn around (0,0), about 50 wide
+  building: (c = '#8FA3B5') => `<rect x="-14" y="-30" width="28" height="60" rx="2" fill="${c}"/><g fill="#fff" opacity=".7"><rect x="-8" y="-22" width="6" height="6"/><rect x="2" y="-22" width="6" height="6"/><rect x="-8" y="-10" width="6" height="6"/><rect x="2" y="-10" width="6" height="6"/><rect x="-8" y="2" width="6" height="6"/><rect x="2" y="2" width="6" height="6"/></g>`,
+  tower: (c = '#8FA3B5') => `<rect x="-10" y="-8" width="20" height="38" fill="${c}"/><rect x="-18" y="-24" width="36" height="18" rx="2" fill="${c}"/><rect x="-3" y="-38" width="6" height="14" fill="${c}"/>`,
+  bus: (c = '#E9A24B') => `<rect x="-26" y="-14" width="52" height="28" rx="6" fill="${c}"/><g fill="#fff" opacity=".85"><rect x="-21" y="-9" width="11" height="9" rx="1.5"/><rect x="-6" y="-9" width="11" height="9" rx="1.5"/><rect x="9" y="-9" width="11" height="9" rx="1.5"/></g><circle cx="-14" cy="15" r="5" fill="#4A5C65"/><circle cx="14" cy="15" r="5" fill="#4A5C65"/>`,
+  cloud: (c = '#fff') => `<g fill="${c}"><ellipse cx="0" cy="4" rx="26" ry="9"/><ellipse cx="-11" cy="-3" rx="14" ry="9"/><ellipse cx="9" cy="-5" rx="15" ry="10"/></g>`,
+  train: (c = '#F8FAF7') => `<rect x="-30" y="-12" width="60" height="26" rx="9" fill="${c}" stroke="#6F8793" stroke-width="2"/><rect x="-30" y="4" width="60" height="5" fill="#C2362B" opacity=".8"/><g fill="#A9CBE8"><rect x="-24" y="-7" width="12" height="9" rx="2"/><rect x="-8" y="-7" width="12" height="9" rx="2"/><rect x="8" y="-7" width="12" height="9" rx="2"/></g>`,
+  clock: (c = '#6F8793') => `<circle r="20" fill="#fff" stroke="${c}" stroke-width="4"/><path d="M0-12V0l8 5" stroke="${c}" stroke-width="3" fill="none" stroke-linecap="round"/>`,
+  suitcase: (c = '#C2362B') => `<rect x="-18" y="-14" width="36" height="28" rx="5" fill="${c}" opacity=".85"/><path d="M-7-14v-6h14v6" stroke="${c}" stroke-width="3" fill="none"/><path d="M-18 0h36" stroke="#fff" stroke-width="2" opacity=".6"/>`,
+  lantern: (c = '#C2362B') => `<path d="M0-24v8" stroke="#6F8793" stroke-width="2"/><ellipse cx="0" cy="-2" rx="13" ry="15" fill="${c}"/><path d="M-5-14q-5 12 0 24M5-14q5 12 0 24" stroke="#8E1F18" stroke-width="1.2" fill="none"/><rect x="-6" y="-17" width="12" height="3" fill="#E9B44C"/><rect x="-6" y="12" width="12" height="3" fill="#E9B44C"/><path d="M0 15v10" stroke="#E9B44C" stroke-width="2"/>`,
+  bowl: (c = '#fff') => `<path d="M-20 0h40q-4 18-20 18T-20 0z" fill="${c}" stroke="#6F8793" stroke-width="2.4"/><path d="M-9-8q-6-8 0-14M2-8q-6-8 0-14M13-8q-6-8 0-14" stroke="#9FB2BA" stroke-width="2.6" fill="none" stroke-linecap="round"/>`,
+  cup: (c = '#fff') => `<path d="M-14-6h26v14q0 10-13 10T-14 8z" fill="${c}" stroke="#6F8793" stroke-width="2.4"/><path d="M12-2q10 0 10 8t-10 8" fill="none" stroke="#6F8793" stroke-width="2.4"/><path d="M-4-14q-4-6 0-10M4-14q-4-6 0-10" stroke="#9FB2BA" stroke-width="2.4" fill="none" stroke-linecap="round"/>`,
+  book: (c = '#6A8FB5') => `<path d="M-22-14h20q4 0 4 4v26q0-4-4-4h-20z" fill="${c}"/><path d="M22-14h-20q-4 0-4 4v26q0-4 4-4h20z" fill="${c}" opacity=".7"/>`,
+  pencil: (c = '#E9A24B') => `<g transform="rotate(-40)"><rect x="-6" y="-26" width="12" height="40" fill="${c}"/><path d="M-6 14h12l-6 12z" fill="#F0C9A0"/><rect x="-6" y="-26" width="12" height="7" fill="#C2362B" opacity=".7"/></g>`,
+  flag: (c = '#C2362B') => `<path d="M-8-26V28" stroke="#6F8793" stroke-width="3"/><path d="M-8-26h30l-8 9 8 9H-8z" fill="${c}"/>`,
+  round: (c = '#7DB56C') => `<rect x="-3" y="6" width="6" height="22" fill="#8A6A4F"/><circle cx="0" cy="-6" r="20" fill="${c}"/><circle cx="-8" cy="-12" r="8" fill="#fff" opacity=".14"/>`,
+  pine: (c = '#3C8670') => `<rect x="-3" y="14" width="6" height="14" fill="#8A6A4F"/><path d="M0-30-14-8h28z" fill="${c}"/><path d="M0-18-18 8h36z" fill="${c}"/><path d="M0-4-22 20h44z" fill="${c}"/>`,
+  bench: (c = '#8A6A4F') => `<rect x="-24" y="-8" width="48" height="6" rx="2" fill="${c}"/><rect x="-24" y="-20" width="48" height="5" rx="2" fill="${c}"/><path d="M-18-2v16M18-2v16M-18-20v12M18-20v12" stroke="${c}" stroke-width="4"/>`,
+  bird: (c = '#4A5C65') => `<path d="M-16 0q8-12 16 0 8-12 16 0" stroke="${c}" stroke-width="3" fill="none" stroke-linecap="round"/>`,
+  star: (c = '#fff') => `<path d="M0-12 3-3 12 0 3 3 0 12-3 3-12 0-3-3z" fill="${c}"/>`,
+  moon: (c = '#F8E4CB') => `<circle r="16" fill="${c}"/><circle cx="8" cy="-5" r="14" fill="#E4E0F0"/>`,
+  mountain: (c = '#9DB7AE') => `<path d="M-30 18 -8-16 6 4 14-6 30 18z" fill="${c}"/><path d="M-8-16-16-2-8-6-2 0z" fill="#fff" opacity=".7"/>`,
+  wave: (c = '#6AAE9A') => `<path d="M-26 0q6-8 13 0t13 0 13 0 13 0M-20 12q6-8 13 0t13 0 13 0" stroke="${c}" stroke-width="3.2" fill="none" stroke-linecap="round"/>`,
+  boat: (c = '#8A6A4F') => `<path d="M-22 4h44q-6 14-22 14T-22 4z" fill="${c}"/><path d="M0 4V-22l14 20z" fill="#fff" stroke="#6F8793" stroke-width="2"/>`,
+  bridge: (c = '#6F8793') => `<path d="M-30 12q30-40 60 0" stroke="${c}" stroke-width="5" fill="none"/><path d="M-34 12h68" stroke="${c}" stroke-width="5"/><path d="M-20 12v8M-6 12v8M8 12v8M20 12v8" stroke="${c}" stroke-width="2.4"/>`,
+  terrace: (c = '#6AAE9A') => `<path d="M-30 18q30-8 60 0M-24 8q24-8 48 0M-18-2q18-8 36 0M-12-12q12-6 24 0" stroke="${c}" stroke-width="5" fill="none" stroke-linecap="round"/>`,
+  sun: (c = '#F7D054') => `<circle r="13" fill="${c}"/><g stroke="${c}" stroke-width="3" stroke-linecap="round"><path d="M0-20v-6M0 20v6M-20 0h-6M20 0h6M-14-14l-4-4M14-14l4-4M-14 14l-4 4M14 14l4 4"/></g>`,
+  leaf: (c = '#E8A24B') => `<path d="M0-16q18 6 12 22-14 6-22-8 0-10 10-14z" fill="${c}"/><path d="M0-14Q-2 0 -8 12" stroke="#8A4300" stroke-width="1.6" fill="none" opacity=".6"/>`,
+  maple: (c = '#C2362B') => `<path d="M0-16 4-6 14-8 8 0 16 6 6 8 4 18 0 10-4 18-6 8-16 6-8 0-14-8-4-6z" fill="${c}" opacity=".85"/>`,
+  willow: (c = '#C08A3E') => `<rect x="-3" y="-20" width="6" height="46" fill="#8A6A4F"/><g stroke="${c}" stroke-width="3" fill="none" stroke-linecap="round"><path d="M0-20q-22 4-20 34M0-20q-12 8-10 38M0-20q12 8 10 38M0-20q22 4 20 34"/></g>`,
+  flake: (c = '#8FB0C8') => `<g stroke="${c}" stroke-width="3" stroke-linecap="round"><path d="M0-14V14M-12-7 12 7M-12 7 12-7"/></g>`,
+  bare: (c = '#8A6A4F') => `<path d="M0 26V-6M0 6-12-10M0-2 12-18M0-12-6-26" stroke="${c}" stroke-width="4" fill="none" stroke-linecap="round"/>`,
+  blossom: (c = '#F7B6C6') => `<g fill="${c}"><circle cx="0" cy="-9" r="8"/><circle cx="9" cy="-3" r="8"/><circle cx="5" cy="8" r="8"/><circle cx="-5" cy="8" r="8"/><circle cx="-9" cy="-3" r="8"/></g><circle r="4" fill="#E9A24B"/>`,
+  petal: (c = '#F7B6C6') => `<path d="M0-8q10 6 0 16-10-10 0-16z" fill="${c}"/>`,
+  rice: (c = '#C8B04C') => `<path d="M0 22V-14M0 12q-10-4-12-14M0 4q10-4 12-14M0-4q-8-4-10-12M0-6q8-4 10-12" stroke="${c}" stroke-width="2.6" fill="none" stroke-linecap="round"/>`,
+  reed: (c = '#8FA37A') => `<path d="M-8 24Q-12 0-6-22M0 24V-26M8 24Q12 0 6-20" stroke="${c}" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="0" cy="-26" rx="3" ry="8" fill="#8A6A4F"/>`
+};
+const SLOTS = [[64, 44], [528, 96], [38, 178], [556, 238], [82, 318], [520, 372], [44, 452], [548, 506], [96, 560], [330, 40], [300, 300], [330, 560]];   // edges first, three faint ones in the middle
+const tile = (list, tint) => {
+  const g = SLOTS.map((p, i) => {
+    const [name, c, sc, rot] = list[i % list.length];
+    const jitter = ((i * 37) % 11) - 5;
+    const mid = i >= 9;
+    return `<g transform="translate(${p[0] + jitter} ${p[1] - jitter}) rotate(${rot || (i % 3 - 1) * 6}) scale(${(sc || 1) * (mid ? .8 : 1.15)})" opacity="${mid ? 0.22 : 0.62}">${I[name](c)}</g>`;
+  }).join('');
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">${g}</svg>`;
+};
+const TL = {
+  station: [['train'], ['clock'], ['suitcase'], ['cloud'], ['tower'], ['bird'], ['bus'], ['cloud']],
+  street: [['lantern'], ['bowl'], ['cup'], ['lantern', '#E9A24B'], ['bus'], ['bowl'], ['lantern'], ['cloud']],
+  city: [['building'], ['tower'], ['cloud'], ['building', '#A8B8A6'], ['bus'], ['building', '#B3A9C4'], ['tower', '#9DB7AE'], ['bird']],
+  school: [['book'], ['pencil'], ['flag'], ['round'], ['book', '#C2362B'], ['pine'], ['pencil', '#6A8FB5'], ['cloud']],
+  park: [['round'], ['bench'], ['bird'], ['cloud'], ['round', '#8FC47F'], ['sun'], ['pine'], ['bench']],
+  night: [['lantern'], ['star', '#E9B44C'], ['moon'], ['lantern', '#E9A24B'], ['star', '#B9A9D6'], ['lantern'], ['star', '#E9B44C'], ['moon']],
+  hills: [['mountain'], ['pine'], ['cloud'], ['mountain', '#B9C9B0'], ['pine', '#2C735F'], ['bird'], ['mountain'], ['cloud']],
+  river: [['wave'], ['boat'], ['reed'], ['bridge'], ['wave', '#6A8FB5'], ['reed'], ['boat', '#C2362B'], ['bird']],
+  fields: [['terrace'], ['rice'], ['sun'], ['terrace', '#7DB56C'], ['rice'], ['cloud'], ['terrace'], ['bird']],
+  trees: [['pine'], ['round'], ['pine', '#2C735F'], ['round', '#9DD08A'], ['bird'], ['pine'], ['round'], ['cloud']],
+  autumn: [['maple'], ['leaf'], ['willow'], ['maple', '#E8A24B'], ['leaf', '#C2362B'], ['bridge'], ['leaf'], ['maple']],
+  autumn2: [['leaf'], ['maple'], ['boat'], ['leaf', '#C2362B'], ['maple', '#E8A24B'], ['wave', '#8FB8B0'], ['maple'], ['leaf']],
+  winter: [['flake'], ['bare'], ['flake'], ['cloud', '#E4ECF2'], ['flake'], ['bridge', '#8FA3B5'], ['bare'], ['flake']],
+  winter2: [['bare'], ['flake'], ['mountain', '#C9D8E6'], ['flake'], ['bare'], ['flake'], ['lantern'], ['flake']],
+  spring: [['blossom'], ['petal'], ['blossom', '#FBD3DD'], ['willow', '#7DB56C'], ['petal'], ['bridge'], ['blossom'], ['petal']],
+  spring2: [['petal'], ['blossom'], ['round', '#9DD08A'], ['petal'], ['blossom', '#FBD3DD'], ['sun'], ['petal'], ['bird']]
+};
+Object.keys(TL).forEach(k => { T[k] = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(tile(TL[k])); });
+
 const out = {};
 Object.keys(S).forEach(k => { out[k] = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(S[k]); });
-const text = '/* Scenes of the themed Learn path. GENERATED by tools/path-scenes.js. Do not edit by hand. */\nwindow.SHANLU_PATH_SCENES = ' + JSON.stringify(out) + ';\n';
+const text = '/* Scenes of the themed Learn path. GENERATED by tools/path-scenes.js. Do not edit by hand. */\nwindow.SHANLU_PATH_SCENES = ' + JSON.stringify(out) + ';\nwindow.SHANLU_PATH_TILES = ' + JSON.stringify(T) + ';\n';
 fs.writeFileSync(path.join(__dirname, '..', 'data', 'path-scenes.js'), text);
 if (process.argv.includes('--svg')) Object.keys(S).forEach(k => fs.writeFileSync('/tmp/scene-' + k + '.svg', S[k]));
-console.log('wrote data/path-scenes.js (' + Object.keys(S).length + ' scenes, ' + Math.round(text.length / 1024) + ' KB)');
+if (process.argv.includes('--svg')) Object.keys(TL).forEach(k => fs.writeFileSync('/tmp/tile-' + k + '.svg', decodeURIComponent(T[k].split(',').slice(1).join(','))));
+console.log('wrote data/path-scenes.js (' + Object.keys(S).length + ' scenes, ' + Object.keys(T).length + ' tiles, ' + Math.round(text.length / 1024) + ' KB)');

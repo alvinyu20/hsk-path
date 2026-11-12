@@ -96,9 +96,11 @@ for (const erhua of [false, true]) {
     check(ids.every(i => th.units[i]) && Object.keys(th.units).length === ids.length, 'HSK ' + n + ': every unit has a theme entry, and no other');
     const pics = [th.hero].concat((th.groups || []).map(g => g.scene));
     check(pics.every(k => scenes[k] && /^data:image\/svg\+xml/.test(scenes[k])), 'HSK ' + n + ': every picture of the theme exists (' + pics.join(', ') + ')');
+    const tiles = ctx.SHANLU_PATH_TILES || {};
+    check(ids.every(i => tiles[th.units[i].tile]) && ids.every(i => (th.units[i].bg || (th.groups.find(g => ids.indexOf(g.from) <= ids.indexOf(i) && ids.indexOf(i) <= ids.indexOf(g.to)) || {}).bg || []).length === 2), 'HSK ' + n + ': every unit has a trail wallpaper and two background colours')
     const flat = [].concat.apply([], (th.groups || []).map(g => ids.slice(ids.indexOf(g.from), ids.indexOf(g.to) + 1)));
     check(!th.groups.length || flat.join() === ids.join(), 'HSK ' + n + ': the groups cover the units once, in order');
-    if (th.kind === 'rail') check(ids.every(i => th.units[i].ch && th.units[i].py && th.units[i].note && th.units[i].note.text), 'HSK 2: every station has a character, pinyin and a note');
+    if (th.kind === 'rail') check(ids.every(i => th.units[i].ch && th.units[i].py), 'HSK 2: every station has a character and pinyin');
     if (th.kind === 'day') check(ids.every(i => /^\d{1,2}:\d\d$/.test(th.units[i].time) && th.units[i].scene), 'HSK 1: every unit has a time and a scene line');
     if (th.kind === 'story') {
       const L = ids.map(i => th.units[i].lines);

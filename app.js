@@ -245,7 +245,8 @@
   // comes next. A word stop is done when every word in it has been started (here, in a web, or in Review) or its lesson was finished;
   // a grammar stop is done when its lesson was passed (80%).
   const PATH = window.SHANLU_PATH || {};
-  const PSCENE = window.SHANLU_PATH_SCENES || {};   // the pictures of the themed path (data/path-scenes.js)
+  const PSCENE = window.SHANLU_PATH_SCENES || {};
+  const PTILE = window.SHANLU_PATH_TILES || {};     // the wallpaper behind each unit's trail   // the pictures of the themed path (data/path-scenes.js)
   const PATH_LVLS = LVLS.filter(n => PATH[n] && (PATH[n].units || []).length);
   const LESSON_AT = {};
   LESSONS.forEach((L, i) => { LESSON_AT[L.id] = i; });
@@ -3336,10 +3337,10 @@
           const open = S.pu[u.id] !== undefined ? S.pu[u.id] : (!!nxt && (ui === nxt.ui || ui === nxt.ui + 1));
           return {
             id:u.id, num:th0 === 'rail' && tu ? tu.ch : ui + 1, numCls:th0 === 'rail' ? 'zh big' : '', title:u.title, blurb:u.blurb, prog:nd + ' of ' + u.stops.length, open, cls:(nd === u.stops.length ? 'done' : nxt && ui === nxt.ui ? 'cur' : ''),
+            trailStyle:tu && PTILE[tu.tile] ? 'background-image:url("' + PTILE[tu.tile] + '"),linear-gradient(180deg,' + ((tu.bg || (grp && grp.bg) || ['#EDF0EC', '#EDF0EC'])[0]) + ',' + ((tu.bg || (grp && grp.bg) || ['#EDF0EC', '#EDF0EC'])[1]) + ')' : '',
             hasKick:!!tu && th0 !== '', kick:!tu ? '' : th0 === 'day' ? tu.time : th0 === 'rail' ? 'Station ' + (ui + 1) + ' · ' + tu.py : 'Chapter ' + (ui + 1) + ' · ' + (tu.place || ''),
             hasScene:th0 === 'day' && !!tu && !!tu.scene, scene:tu && tu.scene || '',
             hasBand:first, bandImg:grp && PSCENE[grp.scene] || '', bandZh:grp && grp.zh || '', bandTitle:grp ? (grp.sub ? grp.title + ' · ' + grp.sub : grp.title) : '', bandSub:'', bandN:gN + (gN === 1 ? ' unit' : ' units'), hasBandLine:!!grp && !!grp.line, bandLine:grp && grp.line || '',
-            hasNote:th0 === 'rail' && !!tu && !!tu.note, noteKick:tu && tu.note ? tu.note.kick : '', noteText:tu && tu.note ? tu.note.text : '',
             hasDlg:open && lines.length > 0, dlg:lines.map((l, li) => ({ who:l.who, zh:l.zh, py:l.py, en:l.en, cls:l.who === '你' ? 'me' : '', playCls:S.playing === 'pd:' + u.id + li ? 'on' : '', say:() => this.say(l.zh, 'pd:' + u.id + li) })),
             isDone:nd === u.stops.length, toggleText:open ? 'Hide' : 'Show', toggle:() => this.pathUnitToggle(u.id, !open),
             stops:open ? u.stops.map((st, si) => {

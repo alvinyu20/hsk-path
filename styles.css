@@ -1908,11 +1908,6 @@ button.me .me-av{flex:none}
 .k-rail .pth-ent.done::before{background:var(--seal);border-color:var(--seal)}
 .k-rail .pth-ent.cur::before{border-color:var(--seal);box-shadow:0 0 0 6px rgba(194,54,43,.2)}
 .k-rail .pth-un .zh,.k-rail .pth-un{font-family:'Noto Serif SC',serif}
-.pth-note{position:relative;display:flex;flex-direction:column;gap:2px;padding:11px 16px;border:2px dashed var(--line);border-radius:16px;background:var(--amber-soft)}
-.pth-note::before,.pth-note::after{content:'';position:absolute;top:50%;width:16px;height:16px;margin-top:-8px;border-radius:50%;background:var(--bg)}
-.pth-note::before{left:-9px}.pth-note::after{right:-9px}
-.pth-note-k{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--amber)}
-.pth-note-t{font-size:15.5px;line-height:1.35;color:var(--ink)}
 /* HSK 3: chapters with a short chat */
 .pth-dlg{display:flex;flex-direction:column;gap:10px;padding:2px 18px 14px}
 .pth-dl{display:flex;align-items:flex-start;gap:12px}
@@ -1927,3 +1922,9 @@ button.me .me-av{flex:none}
 .pth-hear.on{background:var(--ink);color:var(--bg)}
 .pth-hear:hover{border-color:var(--ink)}
 @media (max-width:520px){.pth-head-b{padding:12px 14px;gap:8px}.pth-hero{height:120px}.pth-band-img{height:92px}.k-rail .pth-list{padding-left:34px}}
+
+/* the wallpaper of a unit's trail (set per unit from the theme); a veil keeps the labels easy to read, and a stronger one in the dark theme */
+.pth-trail{background-size:100% auto,100% 100%;background-repeat:repeat-y,no-repeat;background-position:center top}
+.pth-trail::before{content:'';position:absolute;inset:0;background:var(--panel);opacity:.3;pointer-events:none}
+.t-dark .pth-trail::before{opacity:.8}
+.pth-trail .pth-label{text-shadow:0 0 5px var(--panel),0 0 2px var(--panel),0 0 10px var(--panel)}
