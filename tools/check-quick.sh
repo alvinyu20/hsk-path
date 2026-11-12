@@ -33,9 +33,11 @@ case "$MODE" in
     last node tools/test-lrn-stale.js
     last node tools/test-write-local.js
     last node tools/test-queue-cap.js
+    last env NODE_PATH="$(npm root -g)" node tools/test-hear-homophones.js
     last python3 tools/build-char-glosses.py --check
     last node tools/test-journey-media-wikis.js
     last node tools/test-exam-media.js
+    last env NODE_PATH="$(npm root -g)" node tools/test-exam-art.js
     last node tools/test-pinyin.js
     python3 tools/check-pinyin-course.py | tail -n 1
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-journey.js

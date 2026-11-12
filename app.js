@@ -731,10 +731,15 @@
     return out;
   };
   const glossClash = (a, b) => { const x = glossBits(a), y = glossBits(b); return Object.keys(x).some(t => y[t]); };
-  const others = (zh, k, byMeaning) => {
+  // Listening cards: two words that sound exactly the same (的 / 地 / 得 are all "de", 是 / 事 / 市 are all "shì") cannot be told apart by ear,
+  // so a wrong answer must never sound like the right one. A word with several readings ("zhī / zhǐ") clashes if any of them match.
+  const soundKeys = (py) => String(py || '').toLowerCase().split(/[\/,;]/).map(r => r.replace(/[\s'’·\-]/g, '')).filter(Boolean);
+  const soundsAlike = (a, b) => { const x = soundKeys(BANK[a] && BANK[a].py); return soundKeys(BANK[b] && BANK[b].py).some(r => x.indexOf(r) >= 0); };
+  const others = (zh, k, byMeaning, byEar) => {
     const w = BANK[zh];
-    const same = shuffle(BANK_KEYS.filter(z => z !== zh && BANK[z].pos === w.pos && BANK[z].en !== w.en));
-    const rest = shuffle(BANK_KEYS.filter(z => z !== zh && BANK[z].pos !== w.pos && BANK[z].en !== w.en));
+    const fair = (z) => z !== zh && !(byEar && soundsAlike(z, zh));
+    const same = shuffle(BANK_KEYS.filter(z => fair(z) && BANK[z].pos === w.pos && BANK[z].en !== w.en));
+    const rest = shuffle(BANK_KEYS.filter(z => fair(z) && BANK[z].pos !== w.pos && BANK[z].en !== w.en));
     const all = same.concat(rest);
     if (!byMeaning) return all.slice(0, k);
     const picked = [];
@@ -743,14 +748,14 @@
     if (picked.length < k) all.forEach(z => { if (picked.length < k && picked.indexOf(z) < 0) picked.push(z); });
     return picked;
   };
-  const choiceOptions = (zh, labelOf, byMeaning) => {
-    const opts = shuffle([zh].concat(others(zh, 3, byMeaning))).map((z, i) => ({ id:ORDER_IDS[i], label:labelOf(z), zh:z }));
+  const choiceOptions = (zh, labelOf, byMeaning, byEar) => {
+    const opts = shuffle([zh].concat(others(zh, 3, byMeaning, byEar))).map((z, i) => ({ id:ORDER_IDS[i], label:labelOf(z), zh:z }));
     return { options:opts.map(o => ({ id:o.id, label:o.label })), correct:opts.find(o => o.zh === zh).id };
   };
   const exLine = (e) => e.zh + ' ' + e.py + ' (' + e.en + ')';
   const qMeaning = (zh) => { const e0 = pickEx(zh); return Object.assign({ type:'mc', kicker:'Meaning', prompt:'What does this word mean?', big:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(e0), word:zh, dim:'see' }, choiceOptions(zh, z => BANK[z].en, true)); };
-  const qHearWord = (zh, ex) => Object.assign({ type:'listen', kicker:'Listen', prompt:'Which word did you hear?', audio:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(ex || pickEx(zh)), word:zh, dim:'hear' }, choiceOptions(zh, z => z));
-  const qHearMeaning = (zh) => Object.assign({ type:'listen', kicker:'Listen', prompt:'What does this word mean?', audio:zh, optsLatin:true, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(pickEx(zh)), word:zh, dim:'hear' }, choiceOptions(zh, z => BANK[z].en, true));
+  const qHearWord = (zh, ex) => Object.assign({ type:'listen', kicker:'Listen', prompt:'Which word did you hear?', audio:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(ex || pickEx(zh)), word:zh, dim:'hear' }, choiceOptions(zh, z => z, false, true));
+  const qHearMeaning = (zh) => Object.assign({ type:'listen', kicker:'Listen', prompt:'What does this word mean?', audio:zh, optsLatin:true, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(pickEx(zh)), word:zh, dim:'hear' }, choiceOptions(zh, z => BANK[z].en, true, true));
   const TYPE_HELP = 'Write the tones as marks or numbers: nǐ hǎo or ni3 hao3. Hanzi also works.';
   const qTypePinyin = (zh, ex) => ({ type:'type', kicker:'Type it', prompt:'Type the pinyin for this word, with tones', big:zh, placeholder:'nǐ hǎo or ni3 hao3', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, ''), reveal:BANK[zh].py + ' · ' + BANK[zh].en, explain:TYPE_HELP + ' Example: ' + ex.zh + ' ' + ex.py, word:zh, dim:'prod' });
   const qSayIt = (zh, ex) => ({ type:'type', kicker:'Say it', prompt:'Say this out loud, then type its pinyin with tones', big:BANK[zh].en, bigCls:'en', sayEn:BANK[zh].en, placeholder:'nǐ hǎo or ni3 hao3', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, ''), reveal:zh + ' · ' + BANK[zh].py, explain:TYPE_HELP + ' Example: ' + ex.zh + ' ' + ex.py, word:zh, dim:'prod' });
@@ -1128,8 +1133,10 @@
   // Photos for exam pictures (data/exam-media.js, chosen by hand from Wikimedia Commons). A picture without a photo, or whose photo did not load, stays an emoji.
   const EXAM_MEDIA = window.SHANLU_EXAM_MEDIA || {};
   const exBad = {};   // photo addresses that did not load
-  const exPhoto = (e) => { const m = e ? EXAM_MEDIA[String(e).replace(/\uFE0F/g, '')] : null; return m && m.u && !exBad[m.u] ? m : null; };
-  const EX_PICNOTE = Object.keys(EXAM_MEDIA).length ? 'photos (where a clear one is free to use) and emoji stand in for them' : 'emoji stand in for them';
+  // Drawings come first (data/exam-art.js, made by tools/exam-art.js, the same look as the souvenirs); a photo or the emoji is only the fallback for a picture that has no drawing.
+  const EXAM_ART = window.SHANLU_EXAM_ART || {};
+  const exPhoto = (e) => { const k = e ? String(e).replace(/\uFE0F/g, '') : ''; const d = EXAM_ART[k]; if (d && d.u) return d; const m = k ? EXAM_MEDIA[k] : null; return m && m.u && !exBad[m.u] ? m : null; };
+  const EX_PICNOTE = Object.keys(EXAM_ART).length ? 'drawings stand in for them' : Object.keys(EXAM_MEDIA).length ? 'photos (where a clear one is free to use) and emoji stand in for them' : 'emoji stand in for them';
   const EXAM_MIN = EXAMBANK && EXAMBANK.meta ? { listening:EXAMBANK.meta.listening.minutes, reading:EXAMBANK.meta.reading.minutes } : { listening:15, reading:20 };
   const EXAM_N = EXAMBANK && EXAMBANK.meta ? { listening:EXAMBANK.meta.listening.questions, reading:EXAMBANK.meta.reading.questions } : { listening:20, reading:20 };
   // HSK 3 also has a writing section; the site treats it as practice (it is not part of the 200 points or the seal)

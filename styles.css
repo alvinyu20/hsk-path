@@ -1871,3 +1871,7 @@ button.me .me-av{flex:none}
 .sv-story{grid-column:1/-1;margin:6px 0 0;font-size:14.5px;line-height:1.45}
 .sv-found .linkbtn,.sv-detail .linkbtn{grid-column:1/-1;justify-self:start;text-align:left}
 .sv-x{color:var(--muted)}
+/* exam drawings (data/exam-art.js) are square pictures: show them whole, not cropped like the 4:3 photos */
+.ex-img[src^="data:image/svg"]{object-fit:contain;aspect-ratio:1/1;background:#f4f1e8}
+.ex-pic-photo .ex-img[src^="data:image/svg"]{width:min(230px,100%)}
+.ex-opt:has(.ex-img[src^="data:image/svg"]) .ex-img{max-width:150px;margin:0 auto}
