@@ -95,6 +95,8 @@ Then open http://localhost:8000. Progress is saved in your browser (localStorage
 
 HSK 2 packs for a Chinese AI (words, grammar claims, sentences, word webs, and questions about Alibaba) are built by `tools/make-ai-review-pack-l2.py` into `review/chinese-ai-hsk2/`. HSK 3 packs (words, grammar claims, sentences, word webs, the mock exam including the writing practice, and the practice scripts and listening clips) are built by `tools/make-ai-review-pack-l3.py` into `review/chinese-ai-hsk3/`; they have been built but not yet run past DeepSeek or Qwen.
 
+Souvenirs (the Shelf tab in Journey) are hidden in stops and found when the stop is unlocked. Their text is in `content/souvenirs.tsv` (the stories are written from general knowledge and not fact-checked); the pictures are drawn in code in `tools/souvenir-art.js`. After changing either, run `node tools/souvenir-art.js` and then `python3 tools/build-souvenirs.py` (it checks every stop and picture and makes the pinyin), then `node tools/build-site.js`.
+
 Every sentence is checked twice, once with the 儿 endings and once without, and the browser test runs in both styles.
 
 ## Credits

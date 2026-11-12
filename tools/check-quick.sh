@@ -26,6 +26,7 @@ case "$MODE" in
     python3 tools/build-journey.py --check
     last node tools/test-journey.js
     last node tools/test-journey-media.js
+    last env NODE_PATH="$(npm root -g)" node tools/test-souvenirs.js
     last node tools/test-char-glosses.js
     last node tools/test-readings.js
     last node tools/test-audio.js

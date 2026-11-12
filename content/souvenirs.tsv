@@ -1,0 +1,80 @@
+# Hidden souvenirs. One per line, tab separated: id, region, kind (A attraction, D dish, C culture), the English name of the stop that hides it, Chinese name, English name, story, and optionally pinyin (otherwise made automatically).
+# A souvenir is found when its stop is unlocked. DRAFT: written from general knowledge, not fact-checked. Pictures: tools/souvenir-art.js
+panda-plush	sichuan	A	Giant Panda Breeding Base	熊猫玩偶	Panda plush	A soft black-and-white keepsake from the base where giant pandas are raised. Wild pandas live only in the mountains of Sichuan, Shaanxi and Gansu.
+gaiwan	sichuan	C	Lidded-bowl tea	盖碗	Gaiwan (lidded tea bowl)	A saucer, a bowl and a lid. You tilt the lid to hold back the leaves and sip through the gap.
+face-mask-sichuan	sichuan	C	Face-changing in Sichuan opera	变脸面具	Face-changing mask	In Sichuan opera an actor swaps painted faces in a blink. How it is done has long been a closely guarded secret of the troupes.
+hotpot-base	sichuan	D	Chongqing hotpot	火锅底料	Hotpot base	A slab of chilies, Sichuan pepper and beef fat that melts into the broth. Take it home and you can make a little Chongqing in your own pot.
+sanxingdui-mask	sichuan	A	Sanxingdui	三星堆青铜面具	Sanxingdui bronze mask (replica)	A copy of one of the bronze masks with wide, jutting eyes found at Sanxingdui, a city of the ancient Shu people more than 3,000 years old.
+peking-opera-face	hebei	C	Peking opera	京剧脸谱	Peking opera face-paint	The colours tell you about the character: red often shows loyalty and courage, white a crafty, scheming one.
+rabbit-lord	hebei	A	Nanluoguxiang	兔儿爷	Tu'er Ye, the clay rabbit lord	A clay rabbit in armor, an old Beijing toy for the Mid-Autumn Festival. Folk tales say a rabbit once cured a plague in the city.	tùr yé
+cloisonne	hebei	C	Cloisonné	景泰蓝	Cloisonné vase	Thin copper wires are bent into patterns, filled with colored enamel and fired. The name means "Jingtai blue", after the Jingtai reign of the Ming dynasty.
+yangliuqing	hebei	C	Yangliuqing New Year prints	杨柳青年画	Yangliuqing New Year print	A chubby baby holding a carp is a wish for a year of plenty. Yangliuqing, near Tianjin, has printed and hand-painted these for centuries.
+clay-zhang	hebei	C	Clay Figure Zhang	泥人张彩塑	Clay Figure Zhang figurine	A tiny painted clay person with a lively face. The Zhang family workshop in Tianjin began in the 1800s.	nírén zhāng cǎisù
+zisha-teapot	jiangsu	A	Wuxi Ancient Canal	紫砂壶	Yixing clay teapot	Purple clay from Yixing, near Wuxi, is left unglazed. Tea lovers say a pot slowly takes on the flavor of the tea it brews.
+ah-fu	jiangsu	D	Huishan clay figures	大阿福	Ah Fu clay doll	A fat, smiling boy from the Huishan clay toys of Wuxi, kept as a lucky charm to protect children.
+suzhou-embroidery	jiangsu	C	Suzhou embroidery	苏绣	Suzhou embroidery	Silk threads split into fine strands make a kitten's fur look soft. The best Suzhou pieces are stitched so that both sides show the picture.
+yunjin	jiangsu	C	Yunjin brocade	云锦	Nanjing cloud brocade	A brocade woven with gold thread, once made for the imperial court. The name means "cloud brocade" because it shimmers like sunset clouds.
+qipao	jiangsu	C	Qipao	旗袍	Qipao keepsake	A little silk qipao on a hanger. The slim, high-collared dress became fashionable in Shanghai in the 1920s and 1930s.
+guangcai-plate	guangdong	C	Guangcai porcelain	广彩瓷盘	Guangcai porcelain plate	A plate painted in bright enamel and gold. Guangcai ware was made in Guangzhou, much of it for sale overseas.	guǎngcǎi cípán
+paper-cut	guangdong	C	Foshan paper cuts	佛山剪纸	Foshan paper cut	A red paper cut of a dancing lion. Foshan paper cuts are known for bold colors and a sparkle of metal foil.
+duan-inkstone	guangdong	C	Duan inkstone	端砚	Duan inkstone	A dark, smooth stone from Zhaoqing for grinding ink. Calligraphers have prized it since the Tang dynasty.
+wooden-dummy	guangdong	C	Wing Chun	木人桩	Wing Chun wooden dummy	A training post with three wooden arms and one leg, used to practice Wing Chun's close-range moves.
+pineapple-cake-box	taiwan	D	Pineapple cake	凤梨酥礼盒	Pineapple cake gift box	The classic present to bring home from Taiwan: a buttery pastry with a sweet pineapple filling. In Taiwanese the fruit's name is said to sound like "prosperity comes".	fènglísū lǐhé
+glove-puppet	taiwan	C	Glove puppetry	布袋戏偶	Glove puppet	A hand puppet with a carved wooden head and embroidered robes. The name, budaixi, means "cloth-bag theater".	bùdàixì’ǒu
+sky-lantern	taiwan	C	Sky lanterns	天灯	Sky lantern	Wishes are written on the paper before the lantern floats up. Pingxi, near Shifen, is the place for it.
+alishan-tea-tin	taiwan	D	Alishan tea	高山茶茶叶罐	Alishan tea tin	Tea grown high on Alishan, among cool mist. A tin like this keeps the leaves fresh.	gāoshānchá cháyèguàn
+oilpaper-umbrella	zhejiang	A	Broken Bridge	油纸伞	Oil-paper umbrella	In the Legend of the White Snake, set at West Lake, an umbrella in the rain brings the scholar Xu Xian and the white snake spirit together.
+celadon-cup	zhejiang	A	Longquan celadon	青瓷茶杯	Longquan celadon cup	A cup with a soft green glaze that people compare to jade. Longquan has made celadon for around a thousand years or more.
+huzhou-brush	zhejiang	D	Huzhou brush	湖笔	Huzhou writing brush	The Hu brush is the "brush" in the Four Treasures of the Study: Hu brush, Hui ink, Xuan paper and Duan inkstone.
+tie-dye-cloth	yunnan	C	Bai tie-dye	扎染布	Bai tie-dye cloth	Cloth is tied in knots, dipped in blue plant dye and opened to show white flower patterns. A craft of the Bai people of Dali.	zārǎnbù
+puer-cake	yunnan	D	Pu'er tea	普洱茶饼	Pu'er tea cake	Tea leaves pressed into a round cake wrapped in paper. Pu'er is a tea that people age on purpose, like wine.
+dongba-sign	yunnan	C	Dongba script	东巴文木牌	Dongba-script wooden sign	Dongba is a picture writing of the Naxi people: little drawings of birds, people and flowers stand for words.
+prayer-wheel	xizang	A	Barkhor Street	转经筒	Prayer wheel	A hand-held wheel that people spin clockwise as they walk the Barkhor circuit around the Jokhang Temple.
+khata	xizang	A	Potala Palace	哈达	Khata (ceremonial scarf)	A silk scarf offered to guests and teachers as a sign of respect and good wishes.
+tibetan-bowl	xizang	D	Tsampa	藏式木碗	Tibetan wooden bowl	A wooden bowl for mixing tsampa, roasted barley flour, with butter tea, kneaded by hand into a dough.
+atlas-scarf	xinjiang	C	Atlas silk	艾德莱斯绸围巾	Atlas silk scarf	Threads are tie-dyed before weaving, which gives this Uyghur silk its feathery, blurred patterns.	àidéláisī chóu wéijīn
+doppa	xinjiang	A	Xinjiang Grand Bazaar	花帽	Embroidered doppa cap	A small embroidered cap worn by Uyghur men and women. Shapes and patterns differ from place to place.
+rawap	xinjiang	C	Rawap	热瓦普	Rawap	A long-necked lute with a round body, played in Uyghur music, including the Twelve Muqam.
+terracotta-warrior	shaanxi	A	Terracotta Army	兵马俑	Terracotta warrior (miniature)	A pocket-size soldier. The real army was buried near Emperor Qin Shi Huang's tomb about 2,200 years ago, and it is said that no two faces match.
+shadow-puppet	shaanxi	C	Shadow puppetry	皮影	Shadow puppet	A figure cut from thin, see-through leather and moved on sticks behind a lit screen. Shaanxi is one of the homes of shadow plays.
+wild-goose-pagoda	shaanxi	A	Giant Wild Goose Pagoda	大雁塔	Giant Wild Goose Pagoda model	A little model of the pagoda built in the Tang dynasty to keep the Buddhist scriptures that the monk Xuanzang brought from India.
+rwb-bag	hongkong	A	Temple Street Night Market	红白蓝袋	Red-white-blue bag	A sturdy woven bag with red, white and blue stripes. Hong Kong people use it for everything, from shopping to moving house.	hóng-bái-lán dài
+tram	hongkong	A	Central	叮叮车	Ding ding tram	Hong Kong's double-decker trams have run since 1904 and are nicknamed for the sound of their bell.
+bird-cage	hongkong	A	Yuen Po Street Bird Garden	鸟笼	Bird cage	A small cage of bamboo or wood. Keeping songbirds is an old pastime, and this garden market is full of them.
+tulou	fujian	A	Yongding Tulou	土楼	Tulou model	A round earthen building where a whole Hakka clan lived, with rooms around a shared courtyard like a small village.
+shoushan-seal	fujian	C	Shoushan stone	寿山石印章	Shoushan stone seal	A soft, colorful stone from Shoushan near Fuzhou, much loved for carving into personal seals.
+gongfu-tea	fujian	C	Tea art	功夫茶具	Gongfu tea set	A tiny pot and small cups for brewing tea again and again. Gongfu tea is a custom of southern Fujian and Chaoshan.
+bamboo-slips	shandong	A	Confucius Temple	竹简	Bamboo slips	Before paper, books were strips of bamboo tied with cord. Early copies of the Analects, which record Confucius' sayings, would have looked like this.
+kite	shandong	A	Weifang Kite Museum	风筝	Weifang kite	Weifang calls itself the kite capital of the world and holds an international kite festival.
+st-pauls-facade	macau	A	Ruins of St. Paul's	大三巴牌坊	St. Paul's facade magnet	The stone front is all that is left of a church that burned down in 1835.	dàsānbā páifāng
+almond-cookie-tin	macau	D	Almond cookie	杏仁饼礼盒	Almond cookie tin	Crumbly almond biscuits packed in a tin are a favorite gift from Macau.	xìngrénbǐng lǐhé
+orchid-brooch	singapore	A	Singapore Botanic Gardens	胡姬花胸针	Orchid brooch	The Vanda Miss Joaquim orchid is Singapore's national flower, named after Agnes Joaquim, who grew it in her garden in the 1890s.
+nyonya-slippers	singapore	D	Nyonya kueh	娘惹珠绣鞋	Nyonya beaded slippers	Peranakan women stitched tiny glass beads into flowers and butterflies on their slippers. The craft is called kasut manek.	niángrě zhūxiùxié
+tang-sancai	henan	C	Tang sancai ceramics	唐三彩马	Tang sancai horse	Sancai means "three colors": green, amber and cream glazes. Luoyang is famous for these Tang dynasty pottery horses and camels.
+oracle-bone	henan	C	Oracle bone script	甲骨文拓片	Oracle-bone rubbing	The oldest known Chinese writing was carved on turtle shells and animal bones more than 3,000 years ago, and much of it was found at Anyang.
+chili-string	hunan	D	Fish head with chopped chilies	辣椒串	String of chilies	Hunan cooks love chili in nearly every dish, and strings of red chilies hang drying outside village houses.
+yuelu-scroll	hunan	A	Yuelu Academy	书法卷轴	Calligraphy scroll	Yuelu Academy is about a thousand years old, one of the great old schools of Chinese learning. A famous couplet hangs at its gate.
+miao-silver	guizhou	C	Miao silver	苗银手镯	Miao silver bracelet	Miao silverwork is worn on festival days, from bracelets to towering headdresses. The more silver, the finer the festival outfit.	miáoyín shǒuzhuó
+lusheng	guizhou	C	Lusheng	芦笙	Lusheng pipes	A mouth organ of bamboo pipes, played and danced to at Miao and Dong festivals.
+zhuang-ball	guangxi	C	Zhuang brocade	绣球	Embroidered ball	A silk ball with tassels that young Zhuang people toss to each other at song festivals. It is also a symbol of love.
+luosifen-pack	guangxi	D	Luosifen	螺蛳粉	Luosifen packet	Packets of river-snail rice noodles from Liuzhou travel all over China. Opening one fills the room with a sour smell that people either love or flee.	luósīfěn
+luminous-cup	gansu	D	Jiuquan luminous cups	夜光杯	Luminous cup	A thin cup cut from green stone, said to glow in the moonlight. A Tang dynasty poem about drinking wine on the frontier mentions one.
+flying-apsara	gansu	A	Mogao Caves	飞天	Flying apsara	A heavenly musician painted flying with streaming ribbons, as seen in the cave paintings at Dunhuang.
+blue-white-vase	jiangxi	C	Blue and white porcelain	青花瓷	Blue-and-white porcelain vase	Cobalt blue painted on white clay, fired at high heat. Jingdezhen was the great center for making it.
+shaiqiu	jiangxi	A	Wuyuan	晒秋	Harvest-drying baskets	In autumn, Wuyuan villagers dry peppers, pumpkins and corn on round bamboo trays set on roofs and walls. The colorful sight is called shaiqiu.
+bianzhong	hubei	A	Hubei Provincial Museum	编钟	Chime bells	Bronze bells hung in rows, like the set from the tomb of Marquis Yi of Zeng. They can still play tunes after more than 2,400 years.
+morin-khuur	neimenggu	C	Morin khuur	马头琴	Horsehead fiddle	A two-stringed fiddle with a carved horse head at the top, played on the grassland.
+yurt	neimenggu	C	Yurt	蒙古包	Yurt keepsake	A round felt tent made to be taken down and carried to fresh pasture.
+vinegar-bottle	shanxi	D	Shanxi aged vinegar	陈醋	Aged vinegar bottle	Shanxi vinegar is aged for years in jars, which gives it a dark color and a rich sour taste. Shanxi people are said to love it.
+lacquer-box	shanxi	D	Pingyao pushed-light lacquer	推光漆盒	Pingyao lacquer box	A black lacquer box polished by hand until it shines like a mirror. Pushed-light lacquerware is a craft of Pingyao.
+xiuyan-jade	liaoning	D	Xiuyan jade	岫玉	Xiuyan jade pendant	A green-yellow jade from Xiuyan county, carved into pendants and little Buddhas.
+red-handkerchief	liaoning	C	Errenzhuan	红手绢	Red handkerchief	Errenzhuan performers twirl a bright handkerchief in time with the music. It is loud, funny northeastern folk theater for two.
+ice-lantern	heilongjiang	C	Ice lanterns	冰灯	Ice lantern	A lantern made of ice with a light inside is a Harbin winter tradition, said to have begun as a custom of local farmers and fishers.
+matryoshka	heilongjiang	C	Russian influence	套娃	Nesting doll	Painted wooden dolls that open to show smaller ones. Harbin has strong Russian links, and its shops sell them.
+coconut-carving	hainan	D	Coconut	椰雕	Coconut carving	Craftspeople carve coconut shells into bowls, vases and lanterns. It is a traditional craft of Hainan.
+li-brocade	hainan	C	Li brocade	黎锦	Li brocade	Cloth woven by Li women from threads dyed in bright colors. UNESCO has recognized Li textile skills as intangible heritage.
+hui-ink	anhui	A	Huizhou Ancient City	徽墨	Hui ink stick	Ink sticks of soot and glue were a specialty of Huizhou. A good one is said to stay black for centuries.
+iron-painting	anhui	D	Wuhu iron painting	铁画	Iron painting	Pictures made by forging iron, hammered and welded into pines, plum branches and mountains. A craft of Wuhu.
+ginseng	jilin	D	Changbai ginseng	人参	Ginseng root	Changbai Mountain is famous for ginseng, a root long used in Chinese medicine. The name 人参 means "person root", for its shape.
+goji-pouch	ningxia	D	Ningxia goji berries	枸杞	Goji pouch	Ningxia is famous for goji berries, small red fruits added to soups and teas.
+salt-crystal	qinghai	A	Chaka Salt Lake	盐晶	Salt crystal	At Chaka Salt Lake a thin sheet of water over white salt mirrors the sky. A crystal of salt is its keepsake.

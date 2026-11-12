@@ -400,6 +400,11 @@
   if (JWORLD && window.SHANLU_JY_FIRST) JWORLD.prefer = window.SHANLU_JY_FIRST;   // set by tests so the first region is known
   const JMAP = window.JOURNEY_MAP || null;
   const JMEDIA = window.JOURNEY_MEDIA || {};
+  // Souvenirs: each one hides in a single stop and is found when that stop is unlocked. What you have is worked out from the stops you have
+  // seen, so nothing extra is saved and it follows you across devices (the journey itself is already kept with the person).
+  const SOUV = window.SOUVENIRS || [];
+  const SV_BY_STOP = {}; SOUV.forEach(s => { SV_BY_STOP[s.stop] = s; });
+  const svImg = (s) => s.u || (s.u = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s.svg));
   // ---- onboarding: the Welcome card, the Start here path and the guide that opens after the first flight (pref 'onb': w welcomed, s start path 'go' | 'done' | 'skip', d day finished, g guide opened) ----
   const ONB_OFF = () => { try { return !!(navigator.webdriver && !window.SHANLU_ONBOARDING); } catch (e) { return false; } };   // browser tests run without it unless they ask for it
   const onbRead = () => { const v = prefGet('onb', null); return v && typeof v === 'object' ? v : {}; };
@@ -466,7 +471,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
-      jyPing:0, jyTab:'map', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0,
+      jyPing:0, jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -2738,6 +2743,8 @@
     jyBack = () => this.setState({ jyReg:null, jySel:null, jyFilter:'all' });
     jyTabSet = (t) => this.setState({ jyTab:t, jyFilter:'all', jyMoreN:40 });
     jyFilterSet = (f) => this.setState({ jyFilter:f, jySel:null, jyMoreN:40 });
+    jySvFilterSet = (f) => this.setState({ jySvFilter:f, jySvSel:null });
+    jySvPick = (id) => { SFX.play('ok'); this.setState({ jySvSel:id }); setTimeout(() => { try { const el = document.querySelector('.sv-detail'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest', behavior:'smooth' }); } catch (e) {} }, 40); };
 
     jyView(S) {
       const base = { isJourney:S.screen === 'journey', jySyncBad:!!S.syncBadMsg && !!(FR && FR.identity && FR.identity()), jySyncText:'This device could not sync with your other devices: ' + (S.syncBadMsg || '') + ' Open Friends and tap Sync now.', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Your coins, from everything you study on every level. Spend them on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), xpPillCls:'pill xpp', jyPingShow:false, jyReadyShow:false, jyReadyN:0, jyReadyLabel:'', jyGuideShow:false };
@@ -2842,6 +2849,11 @@
           jyTkHasKm:hp.km > 0, jyTkKm:(hp.dir ? '往' + hp.dir[0] + '，' : '') + '约 ' + kmT(hp.km) + ' 公里', jyTkKmPy:(hp.dir ? 'wǎng ' + hp.dir[1] + ', ' : '') + 'yuē ' + kmT(hp.km) + ' gōnglǐ', jyTkKmEn:'about ' + kmT(hp.km) + ' km' + (hp.dir ? ' to the ' + hp.dir[2] : '') + ', in a straight line',
           jyTkLabel:'Ticket: ' + hp.from.en + ' to ' + hp.to.en + (hp.km ? ', about ' + kmT(hp.km) + ' km' : '') });
         if (hp && hp.mode === 'walk') Object.assign(out, { jyTkWalkText:'On foot in ' + hp.to.en, jyTkWalkN:'stop ' + hp.inCity + ' of ' + hp.ofCity + ' here' });
+        // a souvenir hidden in this stop: it appears the moment the stop is unlocked, and again whenever the stop is opened
+        const sv = SV_BY_STOP[stop.id] && have[stop.id] ? SV_BY_STOP[stop.id] : null;
+        out.jySvCardShow = !!sv;
+        if (sv) Object.assign(out, { jySvCardCls:rv ? 'new' : '', jySvCardTitle:rv ? 'You found a souvenir!' : 'A souvenir was hidden here', jySvCardImg:svImg(sv), jySvCardZh:sv.zh, jySvCardPy:sv.py, jySvCardEn:sv.en, jySvCardStory:sv.story,
+          jySvCardShelf:() => { SFX.play('ok'); this.setState({ jyTab:'shelf', jySvSel:sv.id, jySvFilter:'all', jyRv:null, jyOpen:null, jyFilter:'all' }); try { window.scrollTo(0, 0); } catch (e) {} } });
         // a sentence to say at this stop
         const sy = JY.sayFor(stop);
         Object.assign(out, { jySayTag:sy.tag, jySayZh:sy.zh, jySayPy:sy.py, jySayEn:sy.en, jySayIt:() => this.say(sy.zh, 'jysay:' + stop.id) });
@@ -2864,9 +2876,25 @@
       }
 
       // tabs
-      const tabNow = fm && (S.jyTab === 'stops' || S.jyTab === 'food') ? 'map' : S.jyTab;
-      out.jyTabs = (fm ? [['map', 'Map'], ['pass', 'Passport']] : [['map', 'Map'], ['stops', 'Postcards'], ['food', 'Food'], ['pass', 'Passport']]).map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', fn:() => this.jyTabSet(t[0]) }));
-      out.jyIsMap = tabNow === 'map'; out.jyIsStops = tabNow === 'stops'; out.jyIsFood = tabNow === 'food'; out.jyIsPass = tabNow === 'pass';
+      const tabNow = fm && (S.jyTab === 'stops' || S.jyTab === 'food' || S.jyTab === 'shelf') ? 'map' : S.jyTab;
+      out.jyTabs = (fm ? [['map', 'Map'], ['pass', 'Passport']] : [['map', 'Map'], ['stops', 'Postcards'], ['food', 'Food'], ['pass', 'Passport'], ['shelf', 'Shelf']]).map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', fn:() => this.jyTabSet(t[0]) }));
+      out.jyIsMap = tabNow === 'map'; out.jyIsStops = tabNow === 'stops'; out.jyIsFood = tabNow === 'food'; out.jyIsPass = tabNow === 'pass'; out.jyIsShelf = tabNow === 'shelf';
+      // the souvenir shelf (your own journey only): found when the stop that hides it is unlocked; the rest show as dark shapes with their region
+      if (tabNow === 'shelf' && !fm) {
+        const list = SOUV.filter(x => JWORLD.byStop[x.stop]); const got = list.filter(x => have[x.stop]); const fl = S.jySvFilter || 'all';
+        const sel = S.jySvSel ? list.find(x => x.id === S.jySvSel) : null;
+        out.jySvSub = got.length + ' of ' + list.length + ' found';
+        out.jySvChips = [['all', 'All', list.length], ['found', 'Found', got.length], ['hidden', 'Hidden', list.length - got.length]].map(c => ({ label:c[1], count:c[2], cls:fl === c[0] ? 'on' : '', fn:() => this.jySvFilterSet(c[0]) }));
+        const shown = list.filter(x => fl === 'all' || (fl === 'found') === !!have[x.stop]);
+        out.jySvItems = shown.map(x => { const has = !!have[x.stop]; const RR = JWORLD.byRegion[x.rid];
+          return { cls:(has ? 'got' : 'hid') + (sel && sel.id === x.id ? ' sel' : ''), img:svImg(x), name:has ? x.en : 'Hidden', zh:has ? x.zh : '?', label:has ? x.en + ', found' : 'A hidden souvenir in ' + (RR ? RR.en : 'China'), open:() => this.jySvPick(x.id) }; });
+        out.jySvNone = shown.length === 0; out.jySvNoneText = fl === 'found' ? 'Nothing here yet. Travel on: each region hides a few souvenirs in its stops.' : 'You have found them all.';
+        out.jySvSelShow = !!sel;
+        if (sel) { const has = !!have[sel.stop]; const RR = JWORLD.byRegion[sel.rid]; const SP = JWORLD.byStop[sel.stop];
+          Object.assign(out, { jySvSelCls:has ? 'got' : 'hid', jySvSelImg:svImg(sel), jySvSelZh:has ? sel.zh : '？', jySvSelPy:has ? sel.py : '', jySvSelEn:has ? sel.en : 'A hidden souvenir',
+            jySvSelStory:has ? sel.story : 'Hidden in a stop somewhere in ' + (RR ? RR.en : 'China') + '. Keep travelling there to find it.', jySvSelFound:has, jySvSelWhere:has ? 'Found at ' + SP.en + ' · ' + (RR ? RR.en : '') : '',
+            jySvSelGo:() => this.jyOpenStop(sel.stop), jySvSelClose:() => this.setState({ jySvSel:null }), jySvSelLabel:has ? sel.en + ', ' + sel.story : 'A hidden souvenir in ' + (RR ? RR.en : 'China') }); }
+      }
       const FILT = [['all', 'All'], ['S', '★ Must-see'], ['T', 'Cities'], ['A', 'Attractions'], ['D', 'Dishes'], ['C', 'Culture'], ['P', 'Airports']];
       const filterChips = (stopsSeen) => FILT.map(f => ({ label:f[1], count:f[0] === 'all' ? stopsSeen.length : stopsSeen.filter(s => f[0] === 'S' ? s.sp : s.k === f[0]).length, cls:S.jyFilter === f[0] ? 'on' : '', fn:() => this.jyFilterSet(f[0]) }));
       const pass = (s) => S.jyFilter === 'all' || (S.jyFilter === 'S' ? s.sp : s.k === S.jyFilter);
