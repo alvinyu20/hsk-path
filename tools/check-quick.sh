@@ -31,6 +31,7 @@ case "$MODE" in
     last node tools/test-audio.js
     last node tools/test-lrn-stale.js
     last node tools/test-write-local.js
+    last node tools/test-queue-cap.js
     last python3 tools/build-char-glosses.py --check
     last node tools/test-journey-media-wikis.js
     last node tools/test-exam-media.js

@@ -318,7 +318,7 @@
   // Review queue. Each item is one card: 'zh' recognise it, 'zh#p' produce it (type it with tones), 'zh#h' hear it, 'zh#l' a new word in its
   // learning phase. Every skill has its own timer, so a word can be due as one card and not as another. New words come first; then everything due,
   // weakest first but jumbled (a random nudge) so words learned together do not come back in list order. Saying cards and hearing cards are each capped at
-  // a third of the recognition cards (at least 2), so adding two directions does not double the pile in one day; the rest stay due for next time.
+  // a third of the recognition cards (at least 10), so adding two directions does not double the pile in one day; the rest stay due for next time. (The floor was 2: once the recognition cards were done, only 2 typing cards came at a time.)
   const LRN_MAX = 12;       // new words waiting in their learning phase at once; add more after these are learned
   const LEARN_STEPS = 2;    // successful recalls (after meeting the word) before it gets a real interval
   const itemOf = (it) => { const m = /^(.*?)(?:#([lph]))?$/.exec(String(it)); return { zh:m[1], t:m[2] || 's' }; };
@@ -344,7 +344,7 @@
     });
     const byKey = (a, b) => a.key - b.key;
     see.sort(byKey); prod.sort(byKey); hear.sort(byKey);
-    const cap = Math.max(2, Math.ceil(see.length / 3));
+    const cap = Math.max(10, Math.ceil(see.length / 3));
     return fresh.concat(see.concat(prod.slice(0, cap), hear.slice(0, cap)).sort(byKey).map(r => r.it));
   };
 
