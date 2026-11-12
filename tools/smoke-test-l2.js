@@ -107,7 +107,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await page.title()).includes('HSK 2'), 'the page title says HSK 2');
   const home = await text();
   check(home.includes('197 words to go'), 'the trail counts the 197 HSK 2 words');
-  check(home.includes('Listening drill') && home.includes('Say: ') && home.includes('Grammar: Comparing'), 'Today offers word webs, the listening drill, a practice script and grammar');
+  check(home.includes('Dictation drill') && (await page.locator('.tchip', { hasText: 'Speak' }).count()) === 1 && home.includes('Comparing'), 'Today offers word webs, the listening drill, a practice script and grammar');
   check(home.includes('Climb to the HSK 2 summit') && home.includes('HSK 2 exam sits at the top of your path') && (await page.locator('.rg').count()) === 4, 'the home card is the HSK 2 climb with four skill rings, and says the exam is at the top of the path');
   const st = await page.evaluate(() => ({ n: Object.keys(window.shanlu.state.ws).length, l1: !!window.shanlu.state.ws['你好'], l2: !!window.shanlu.state.ws['机场'] }));
   check(st.n === 197 && !st.l1 && st.l2, 'progress holds the 197 HSK 2 words and none of the HSK 1 words');
@@ -311,7 +311,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   const l1Words = erhuaMode ? 300 : 297; // three HSK 1 words fold into another form in plain style
   check((await text()).includes(l1Words + ' words to go'), 'switching to HSK 1 shows the HSK 1 trail');
   check(await page.evaluate((n) => Object.keys(window.shanlu.state.ws).length === n && !window.shanlu.state.ws['机场'] && Object.keys(window.shanlu.state.wlearned).length === 0, l1Words), 'HSK 1 progress is separate: none of the HSK 2 words started there');
-  check((await page.locator('.navg button.nav', { hasText: 'Talk' }).count()) === 1 && (await page.locator('main').innerText()).includes('Say: '), 'HSK 1 still offers its listening lab and practice scripts');
+  check((await page.locator('.navg button.nav', { hasText: 'Talk' }).count()) === 1 && (await page.locator('.tchip', { hasText: 'Speak' }).count()) === 1, 'HSK 1 still offers its listening lab and practice scripts');
   await openLv(page); await page.locator('.lvpanel .lvitem:has(.lvn:text-is("HSK 2"))').click();
   await page.waitForFunction(() => window.SHANLU_LEVEL === 2);
   await page.waitForSelector('.app');

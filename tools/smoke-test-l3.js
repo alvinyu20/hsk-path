@@ -97,7 +97,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(n3 === 491, 'the HSK 3 list has 491 cards (' + n3 + ')');
   const home = await text();
   check(home.includes(n3 + ' words to go'), 'the trail counts the ' + n3 + ' HSK 3 words');
-  check(home.includes('Listening drill') && home.includes('Say: ') && home.includes('Grammar: '), 'Today offers the listening drill, a practice script and a grammar lesson');
+  check(home.includes('Dictation drill') && (await page.locator('.tchip', { hasText: 'Speak' }).count()) === 1 && (await page.locator('.tchip', { hasText: 'Grammar lesson' }).count()) === 1, 'Today offers the listening drill, a practice script and a grammar lesson');
   const st = await page.evaluate(() => ({ n: Object.keys(window.shanlu.state.ws).length, l1: !!window.shanlu.state.ws['你好'], l2: !!window.shanlu.state.ws['机场'], l3: !!window.shanlu.state.ws['聪明'] }));
   check(st.n === n3 && !st.l1 && !st.l2 && st.l3, 'progress holds the HSK 3 words and none of the HSK 1 or HSK 2 words');
   check(await page.evaluate(() => !localStorage.getItem('shanlu-progress-v1') && !localStorage.getItem('shanlu-progress-v1-l2')), 'HSK 1 and HSK 2 progress are not touched by opening HSK 3');

@@ -2067,3 +2067,33 @@ button.pill:active{transform:scale(.97)}
   .app.scr-home .stats{flex-wrap:nowrap}
   .app.scr-home .stats .pill{padding:0 8px;gap:5px}
 }
+
+/* Today's plan: rows are buttons, shortcuts sit under "More ways to study" */
+.today-min{font-size:13px;margin:0 0 6px}
+button.task2{width:100%;background:none;border:0;border-top:1px solid var(--line);text-align:left;color:var(--ink);font:inherit;cursor:pointer;border-radius:0}
+button.task2:hover .task-t{text-decoration:underline}
+button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.task-go{font-size:26px;color:var(--muted);flex:none;padding-right:4px}
+.more-h{font-size:13px;font-weight:600;color:var(--muted);margin:18px 0 0;letter-spacing:.02em}
+.tchip b{display:flex;align-items:center;gap:6px}
+.tchip .tc-g{font-size:15px;color:var(--seal);max-width:none;overflow:visible}
+.tchip.done{opacity:.7}
+
+/* Shared character: a word family. The shared character is picked out in every word so the pattern is what you see. */
+.hub-en{font-size:18px;font-weight:600}
+.hub-sum{font-size:14px;color:var(--muted);margin-bottom:6px}
+.wcell{display:contents}
+.wgrp-h{grid-column:1/-1;margin:6px 0 -4px;font-size:14px;font-weight:700;letter-spacing:.02em;color:var(--muted)}
+.wcell:first-child .wgrp-h{margin-top:0}
+.wc-zh span.hub{color:var(--seal)}
+.wc-new{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.wc-eq{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px;margin:6px 0 2px;padding-top:12px;border-top:1px solid var(--line)}
+.wc-eq .part{flex-direction:column;align-items:center;gap:0;padding:6px 12px;min-width:64px;text-align:center}
+.wc-eq .part b{font-size:26px;line-height:1.2}
+.wc-eq .part i{font-style:normal;font-size:13.5px;color:var(--muted)}
+.wc-eq .part.hub i{color:var(--on-seal)}
+.wc-eq .plus{align-self:center}
+.wc-eq.hid .part i{visibility:hidden}
+.wc-res{display:flex;gap:8px;align-items:baseline}
+.wc-arrow{color:var(--muted);font-weight:700}
+.wc-en{font-size:18px;font-weight:600}

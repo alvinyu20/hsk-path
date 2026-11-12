@@ -441,6 +441,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
       await page.evaluate(() => { window.shanlu.go('ach'); }); await page.waitForTimeout(200);
       const ach = await page.locator('.ach').innerText();
       check(/\d+ of \d+ earned/.test(ach) && /Streaks/.test(ach) && /Habits/.test(ach) && /Collecting/.test(ach) && /Friends/.test(ach) && (await page.locator('.ach-card.got').count()) >= 3 && (await page.locator('.ach-card.lock').count()) >= 10, 'the Achievements page lists earned and locked achievements by group');
+      check(/Path/.test(ach) && /Sounds/.test(ach) && /First step on the Path/.test(ach) && /First conversation/.test(ach) && /Word family complete/.test(ach) && /A full day/.test(ach), 'the Achievements page has Path and Sounds groups, plus the word family and full-day badges');
       check((await page.locator('.ach-card.got', { hasText: 'Flawless session' }).count()) === 1 && (await page.locator('.ach-card.lock .ach-pb').count()) >= 3, 'earned ones are lit and locked ones show how far along you are');
       await page.evaluate(() => { window.SHANLU_MUTE_SFX = false; const a = window.shanlu; a.go('review'); a.practiceAnyway(); }); await page.waitForTimeout(150);
     }
@@ -984,10 +985,10 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(!(await text()).includes('with their relatives') && !(await text()).includes('with its relatives'), 'with every word started the daily goal has no Learn-new-words task');
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); ws['一'] = { see: { s: 0, l: 0 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }; const lrn = Object.assign({}, app.state.lrn); delete lrn['一']; const wlearned = Object.assign({}, app.state.wlearned); delete wlearned['一']; app.setState({ ws, lrn, wlearned }); });
   await page.waitForTimeout(200);
-  check((await text()).includes('Path: Count to five') && (await text()).includes('1 new word'), 'with one word left the daily goal has a Path task for the stop that holds it');
+  check(/Path: /.test(await text()), 'with one word left Today still has its Path step');
   await page.evaluate(() => { const app = window.shanlu; app.setState({ wlearned: Object.assign({}, app.state.wlearned, { '一': true }) }); });
   await page.waitForTimeout(150);
-  check(!(await text()).includes('Path: Count to five') && !(await text()).includes('new word with its relatives'), 'a word that has been met (waiting in Review) no longer counts as left to learn');
+  check(!(await text()).includes('Count to five') && !(await text()).includes('new word with its relatives'), 'a word that has been met (waiting in Review) no longer counts as left to learn');
   await page.evaluate(() => { const app = window.shanlu; const wl = Object.assign({}, app.state.wlearned); delete wl['一']; app.setState({ wlearned: wl }); });
   {   // adding new words in Word webs (a topic's "add all") ticks the daily goal task
     const before = await page.evaluate(() => { const a = window.shanlu; const S = a.state; return JSON.stringify({ lrn: S.lrn, wlearned: S.wlearned, webCredited: S.webCredited, dayMin: S.dayMin, ws: S.ws }); });

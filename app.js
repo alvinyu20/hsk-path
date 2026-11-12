@@ -296,6 +296,9 @@
   };
   const pathFirstOpen = (S) => { for (let i = 0; i < PATH_LVLS.length; i++) { if (pathNext(S, PATH_LVLS[i])) return PATH_LVLS[i]; } return PATH_LVLS.length ? PATH_LVLS[PATH_LVLS.length - 1] : 0; };
 
+  // how many path stops are done, over every level in this view: the difference since the start of the day is "steps done today"
+  const pathDoneCount = (S) => { let n = 0; PATH_LVLS.forEach(lv => (PATH_U[lv] || []).forEach(u => u.stops.forEach(st => { if (stopState(S, st) === 'done') n++; }))); return n; };
+
   const blankDim = () => ({ s:0 });
   const blankWord = () => ({ see:blankDim(), hear:blankDim(), prod:blankDim() });
   const blankWs = () => { const out = {}; Object.keys(BANK).forEach(zh => { out[zh] = blankWord(); }); return out; };
@@ -468,7 +471,7 @@
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
   const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'pbase', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
 
   // Settings that belong to the person, not the device: kept as person preferences ('set.<name>', 'level', 'erhua') so every device ends up with the same ones.
   // (The browser voice stays on the device: the voices on a phone and a laptop are different ones.)
@@ -500,10 +503,10 @@
 
   function rollDay(s) {
     const t = ymd(new Date());
-    if (s.day === t) return s.mem0 == null ? Object.assign({}, s, { mem0:memOf(s.ws).words }) : s;
+    if (s.day === t) return s.mem0 == null || s.pbase == null ? Object.assign({}, s, { mem0:s.mem0 == null ? memOf(s.ws).words : s.mem0, pbase:s.pbase == null ? pathDoneCount(s) : s.pbase }) : s;
     const rq = buildQueue(s.ws, false);
     return Object.assign({}, s, {
-      mem0:memOf(s.ws).words, day:t, dayXp:0, dayMin:0, wlearned:{}, wrated:{}, wdelta:{}, wreveal:{}, webCredited:false,
+      mem0:memOf(s.ws).words, pbase:pathDoneCount(s), day:t, dayXp:0, dayMin:0, wlearned:{}, wrated:{}, wdelta:{}, wreveal:{}, webCredited:false,
       rcomplete:false, rdone:0, rxp:0, rq, rtotal:rq.length, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rflip:false,
       gdone:false, grdone:false, tdone:false, ldone:false, spokeToday:false, sdone:false, sturn:0
     });
@@ -1341,7 +1344,7 @@
     return { play };
   })();
   // ---- milestones and achievements: each one is earned once, when its test becomes true. `m` is what achMetrics() measured; `prog` (optional) gives [now, goal] for the bar on the Achievements page ----
-  const AGROUPS = ['Streaks', 'Words', 'Grammar', 'Habits', 'Collecting', 'Journey', 'Levels', 'Friends'];
+  const AGROUPS = ['Streaks', 'Words', 'Path', 'Grammar', 'Sounds', 'Habits', 'Collecting', 'Journey', 'Levels', 'Friends'];
   const streakM = (n, icon, title, desc) => ({ id:'streak' + n, grp:'Streaks', icon, title, desc, hint:'Study ' + n + ' days in a row.', test:m => m.streak >= n, prog:m => [m.streak, n] });
   const wordsM = (n, icon, title, desc) => ({ id:'words' + n, grp:'Words', icon, title, desc, hint:'Get ' + n.toLocaleString('en-US') + ' words into memory.', test:m => m.words >= n, prog:m => [m.words, n] });
   const MILESTONES = [
@@ -1368,6 +1371,29 @@
     { id:'night', grp:'Habits', icon:'🌙', title:'Night owl', desc:'Studying late at night.', hint:'Study between 10 at night and 4 in the morning.', test:m => !!m.ev.night },
     { id:'rev100', grp:'Habits', icon:'⚡', title:'100 reviews in a day', desc:'One hundred cards answered in a single day.', hint:'Answer 100 Review cards in one day.', test:m => !!m.ev.rev100 },
     { id:'goal7', grp:'Habits', icon:'🎯', title:'Goal getter', desc:'Hit your daily goal 7 days in a row.', hint:'Reach your daily goal 7 days in a row.', test:m => m.goalRun >= 7, prog:m => [m.goalRun, 7] },
+    { id:'path1', grp:'Path', icon:'👣', title:'First step on the Path', desc:'You finished your first stop on the Path.', hint:'Finish a stop on the Path.', test:m => m.pathStops >= 1 },
+    { id:'path10', grp:'Path', icon:'🥾', title:'10 steps', desc:'Ten stops walked.', hint:'Finish 10 stops on the Path.', test:m => m.pathStops >= 10, prog:m => [m.pathStops, 10] },
+    { id:'path50', grp:'Path', icon:'🧗', title:'50 steps', desc:'Fifty stops. The trail is behind you now.', hint:'Finish 50 stops on the Path.', test:m => m.pathStops >= 50, prog:m => [m.pathStops, 50] },
+    { id:'path150', grp:'Path', icon:'🏕️', title:'150 steps', desc:'A hundred and fifty stops walked.', hint:'Finish 150 stops on the Path.', test:m => m.pathStops >= 150, prog:m => [m.pathStops, 150] },
+    { id:'pathunit1', grp:'Path', icon:'🚩', title:'First unit finished', desc:'Every stop in a unit, done.', hint:'Finish every stop in one unit of the Path.', test:m => m.pathUnits >= 1 },
+    { id:'pathunit5', grp:'Path', icon:'🗻', title:'5 units finished', desc:'Five units of the Path complete.', hint:'Finish 5 units of the Path.', test:m => m.pathUnits >= 5, prog:m => [m.pathUnits, 5] },
+    { id:'pathlevel', grp:'Path', icon:'🏔️', title:'Whole level walked', desc:'You walked every stop of a level. The summit is next.', hint:'Finish every stop of one level on the Path.', test:m => m.pathLevels >= 1 },
+    { id:'fullday', grp:'Path', icon:'📅', title:'A full day\'s plan', desc:'A Path step, your Review and your Grammar review, all in one day.', hint:'In one day: finish a Path step, a Review session and a Grammar review.', test:m => !!m.fullDay },
+    { id:'py1', grp:'Sounds', icon:'🔤', title:'First Pinyin lesson', desc:'You finished your first Pinyin and tones lesson.', hint:'Finish a lesson in Pinyin and tones.', test:m => m.pyDone >= 1 },
+    { id:'pyall', grp:'Sounds', icon:'🎼', title:'Pinyin and tones: done', desc:'Every lesson of the sound course finished.', hint:'Finish every Pinyin and tones lesson.', test:m => m.pyTotal > 0 && m.pyDone >= m.pyTotal, prog:m => [m.pyDone, m.pyTotal] },
+    { id:'scene1', grp:'Sounds', icon:'🎙️', title:'First conversation', desc:'You said a whole scene out loud.', hint:'Finish a Speak scene.', test:m => m.scenes >= 1 },
+    { id:'scene5', grp:'Sounds', icon:'🗣️', title:'5 conversations', desc:'Five scenes spoken.', hint:'Finish 5 Speak scenes.', test:m => m.scenes >= 5, prog:m => [m.scenes, 5] },
+    { id:'sceneall', grp:'Sounds', icon:'🎭', title:'Every scene', desc:'All the Speak scenes of a level, done.', hint:'Finish every Speak scene of a level.', test:m => m.scenesAll },
+    { id:'clip1', grp:'Sounds', icon:'🎧', title:'First clip', desc:'You tried your first Listening lab clip.', hint:'Try a clip in the Listening lab.', test:m => m.clips >= 1 },
+    { id:'clip10', grp:'Sounds', icon:'👂', title:'10 clips', desc:'Ten clips from the Listening lab.', hint:'Try 10 Listening lab clips.', test:m => m.clips >= 10, prog:m => [m.clips, 10] },
+    { id:'hub1', grp:'Collecting', icon:'🌐', title:'Word family complete', desc:'Every word that shares one character, started.', hint:'Start every word in one Shared character family.', test:m => m.hubs >= 1 },
+    { id:'hub10', grp:'Collecting', icon:'🪢', title:'10 word families', desc:'Ten shared characters, all their words started.', hint:'Finish 10 Shared character families.', test:m => m.hubs >= 10, prog:m => [m.hubs, 10] },
+    { id:'sv1', grp:'Collecting', icon:'🎁', title:'First souvenir', desc:'You found a souvenir hidden in one of the stops.', hint:'Unlock a Journey stop that hides a souvenir.', test:m => m.jy.sv >= 1 },
+    { id:'sv10', grp:'Collecting', icon:'🧧', title:'10 souvenirs', desc:'Ten keepsakes on the shelf.', hint:'Find 10 souvenirs.', test:m => m.jy.sv >= 10, prog:m => [m.jy.sv, 10] },
+    { id:'sv25', grp:'Collecting', icon:'🏮', title:'25 souvenirs', desc:'Twenty-five keepsakes. The shelf is filling up.', hint:'Find 25 souvenirs.', test:m => m.jy.sv >= 25, prog:m => [m.jy.sv, 25] },
+    { id:'sv50', grp:'Collecting', icon:'🪭', title:'50 souvenirs', desc:'Fifty keepsakes from all over China.', hint:'Find 50 souvenirs.', test:m => m.jy.sv >= 50, prog:m => [m.jy.sv, 50] },
+    { id:'svregion', grp:'Collecting', icon:'🧺', title:'A region\'s shelf complete', desc:'Every souvenir hidden in one region, found.', hint:'Find every souvenir of one region.', test:m => m.jy.svRegions >= 1 },
+    { id:'svall', grp:'Collecting', icon:'🏺', title:'Every souvenir', desc:'The whole shelf. Nothing is left hidden.', hint:'Find every souvenir.', test:m => m.jy.svTotal > 0 && m.jy.sv >= m.jy.svTotal, prog:m => [m.jy.sv, m.jy.svTotal] },
     { id:'topic1', grp:'Collecting', icon:'🕸️', title:'Topic complete', desc:'Every word in one topic web has been started.', hint:'Start every word of one topic. The Path and the Archive both get you there.', test:m => !!m.topic },
     { id:'jy1', grp:'Journey', icon:'✈️', title:'Boarding pass', desc:'Your first flight in. The Journey has begun.', hint:'Spend coins on your first stop.', test:m => m.jy.n >= 1 },
     { id:'jy10', grp:'Journey', icon:'🧭', title:'10 stops', desc:'Ten places, dishes and traditions discovered.', hint:'Unlock 10 stops.', test:m => m.jy.n >= 10, prog:m => [m.jy.n, 10] },
@@ -2704,11 +2730,13 @@
     // ---- Journey ----
     // numbers for the achievements
     jyCounts() {
-      const o = { n:0, stamps:0, total:JWORLD ? JWORLD.order.length : 0, dish:0, attr:0, cult:0, cities:0 };
+      const o = { n:0, stamps:0, total:JWORLD ? JWORLD.order.length : 0, dish:0, attr:0, cult:0, cities:0, sv:0, svTotal:0, svRegions:0 };
       try {
         const st = jyRead(); if (!st || !JWORLD) return o;
         o.n = st.seen.length; o.stamps = Object.keys(st.done || {}).filter(id => JWORLD.byRegion[id]).length;
         const have = {}; st.seen.forEach(id => { have[id] = 1; const s = JWORLD.byStop[id]; if (!s) return; if (s.k === 'D') o.dish++; else if (s.k === 'A') o.attr++; else if (s.k === 'C') o.cult++; });
+        const sl = SOUV.filter(x => JWORLD.byStop[x.stop]); o.svTotal = sl.length; o.sv = sl.filter(x => have[x.stop]).length;   // the souvenirs found by unlocking the stop that hides them
+        const byR = {}; sl.forEach(x => { (byR[x.rid] = byR[x.rid] || []).push(x); }); o.svRegions = Object.keys(byR).filter(r => byR[r].length > 1 && byR[r].every(x => have[x.stop])).length;
         Object.keys(JWORLD.byCity).forEach(cid => { const C = JWORLD.byCity[cid]; if (C.stops.length > 1 && C.stops.every(x => have[x.id])) o.cities++; });
       } catch (e) {}
       return o;
@@ -3051,8 +3079,8 @@
       const S = this.state; const today = ymd(new Date());
       const started = (w) => !!w && DIMS.some(k => w[k] && w[k].s > 0);
       const m = { streak:(S.lastActive === today || S.lastActive === daysAgo(1)) ? S.streak : 0, words:memOf(S.ws).words, lessons:LESSONS.filter(L => (S.gres[L.id] || 0) >= 80).length,
-        gmastered:Object.keys(S.gpt || {}).filter(id => gptInfo(S.gpt[id]).mastered).length, exams:LVL.passedList(S.exams || []) ? 1 : 0, gwrote:0, topic:false, goalRun:0, lv:{}, ev:{}, frMembers:0, frLeader:false, jy:this.jyCounts() };
-      let words = 0, lessons = 0, gm = 0;
+        gmastered:Object.keys(S.gpt || {}).filter(id => gptInfo(S.gpt[id]).mastered).length, exams:LVL.passedList(S.exams || []) ? 1 : 0, gwrote:0, topic:false, goalRun:0, lv:{}, ev:{}, frMembers:0, frLeader:false, jy:this.jyCounts(), pathStops:0, pathUnits:0, pathLevels:0, fullDay:false, pyDone:0, pyTotal:0, scenes:0, scenesAll:false, clips:0, hubs:0 };
+      let words = 0, lessons = 0, gm = 0, scenesSaved = 0, clipsSaved = 0, hubsSaved = 0;
       for (let n = 1; n <= LVL.MAX_LEVEL; n++) {
         const W = window['HSK' + n + '_WORDS'], G = window['HSK' + n + '_GRAMMAR'], B = window['HSK' + n + '_WEBS'];
         if (!W) continue;
@@ -3063,9 +3091,20 @@
         const lessonsDone = L.filter(l => ((st.gres || {})[l.id] || 0) >= 80).length; lessons += lessonsDone;
         m.lv[n] = { started:W.filter(w => started(ws[w.zh])).length, total:W.length, lessonsDone, lessonsTotal:L.length };
         Object.keys(st.gpt || {}).forEach(id => { const e = st.gpt[id]; if (gptInfo(e).mastered) gm++; if (e && (e.wok || 0) >= 1) m.gwrote++; });
+        scenesSaved += Object.keys(st.sres || {}).filter(id => st.sres[id]).length; clipsSaved += (st.clipBest || []).filter(x => x > 0).length;
+        if (B) hubsSaved += (B.hubs || []).filter(h => (h.words || []).length > 0 && h.words.every(w => started(ws[w.zh]))).length;
         if (B && (B.topics || []).some(t => (t.words || []).length > 0 && t.words.every(zh => started(ws[zh])))) m.topic = true;
       }
       m.words = Math.max(m.words, Math.round(words)); m.lessons = Math.max(m.lessons, lessons); m.gmastered = Math.max(m.gmastered, gm);
+      // the Path (this view's levels), the Pinyin course, scenes, clips and word families
+      { let stops = 0, units = 0, lvls = 0;
+        PATH_LVLS.forEach(lv => { let all = true; (PATH_U[lv] || []).forEach(u => { let d = 0; u.stops.forEach(st => { if (stopState(S, st) === 'done') { stops++; d++; } }); if (u.stops.length && d === u.stops.length) units++; else all = false; }); if (all && (PATH_U[lv] || []).length) lvls++; });
+        m.pathStops = stops; m.pathUnits = units; m.pathLevels = lvls; }
+      m.pyTotal = (PYC.lessons || []).length; m.pyDone = (PYC.lessons || []).filter(l => pyDoneAt(l.id)).length;
+      m.scenes = Math.max(scenesSaved, Object.keys(S.sres || {}).filter(id => S.sres[id]).length); m.scenesAll = HAS_SCRIPTS && SCEN.length > 0 && SCEN.every(sc => S.sres[sc.id]);
+      m.clips = Math.max(clipsSaved, (S.clipBest || []).filter(x => x > 0).length); m.hubs = Math.max(hubsSaved, HUBS.filter(h => h.words.length && h.words.every(w => started(S.ws[w.zh]))).length);
+      { const grOpen = (() => { const greg = gptReg(); return Object.keys(greg).filter(id => gptOpen(S, id)).length; })();
+        m.fullDay = S.pbase != null && pathDoneCount(S) > S.pbase && !!S.rcomplete && (!grOpen || !!S.grdone); }
       m.gwrote = Math.max(m.gwrote, Object.keys(S.gpt || {}).filter(id => ((S.gpt[id] || {}).wok || 0) >= 1).length);
       // days in a row at (or over) the daily goal, counted back from today (or from yesterday if today is not done yet)
       try {
@@ -4142,33 +4181,32 @@
       // home
       const C = 2 * Math.PI * 46;
       const ringDash = (Math.min(S.dayMin / S.mins, 1) * C).toFixed(1) + 'px ' + C.toFixed(1) + 'px';
-      const dueNow = S.rq.length;
-      const reviewMin = Math.max(2, Math.min(6, Math.round(Math.max(S.rtotal, dueNow) * 0.5)));
       const nextLesson = Math.max(0, LESSONS.findIndex(L => (S.gres[L.id] || 0) < 80));
       const nextScn = Math.max(0, SCEN.findIndex(sc => !S.sres[sc.id]));
-      const unstartedN = bankKeys.filter((zh, i) => !infos[i].started && !(S.lrn || {})[zh] && !(S.wlearned || {})[zh]).length;   // words not yet met: the Learn task only makes sense while some are left (a word already waiting in Review has been met)
-      const learnN = Math.max(1, Math.min(4, limitOf(S), unstartedN));
-      const pathToday = PATH_LVLS.length ? pathNextWord(S, pathFirstOpen(S)) : null;
-      const pathNewN = pathToday && pathToday.st.k === 'w' ? stopWords(pathToday.st).filter(z => !wStarted(S, z)).length : 0;   // the next stop on the path stands in for the learn-new-words task
       const grvAllI = (() => { const greg = gptReg(); return Object.keys(greg).filter(id => gptOpen(S, id)).map(id => gptInfo(S.gpt[id])); })();   // grammar points open to review (their lesson is passed)
       const grvOpenToday = grvAllI.length, grvDueToday = grvAllI.filter(i => i.due).length;
-      const grvTask = { glyph:'复', title:grvDueToday > 0 ? 'Grammar review: ' + grvDueToday + ' due' : 'Grammar review', meta:'A short session, weakest points first', min:4, done:S.grdone, to:'greview', show:grvOpenToday > 0, run:() => this.startGrammarReview(), daily:true };
-      const pool = [
-        { glyph:'路', title:pathToday ? 'Path: ' + stopTitle(pathToday.st) : 'Learn ' + learnN + (learnN === 1 ? ' new word with its relatives' : ' new words with their relatives'), meta:pathToday ? (pathToday.st.k === 'w' ? (pathNewN === 1 ? '1 new word' : pathNewN + ' new words') : pathToday.st.k === 's' ? 'Speaking scene' : 'Grammar lesson') : 'Archive', min:5, done:S.webCredited, to:pathToday ? 'path' : 'web', run:pathToday ? () => { this.go('path'); this.setState({ pstop:pathToday.st.id }); } : null, show:unstartedN > 0 || S.webCredited },
-        { glyph:'词', title:'Review ' + Math.max(S.rtotal, dueNow) + ' word' + (Math.max(S.rtotal, dueNow) === 1 ? '' : 's'), meta:'Words that are due', min:reviewMin, done:S.rcomplete, to:'review', show:S.rcomplete || dueNow > 0 },
-        grvTask,
-        { glyph:'听', title:'Listening drill', meta:'Dictation with a speed ladder', min:4, done:S.ldone, to:'listen', show:HAS_LISTEN },
-        { glyph:'说', title:'Say: ' + (SCEN[nextScn] || NO_SC).title, meta:'Practice script, ' + (SCEN[nextScn] || NO_SC).you.length + ' turns', min:6, done:S.spokeToday, to:'speak', show:HAS_SCRIPTS, pre:() => this.setState({ sidx:nextScn, sturn:0, sdone:false, sview:'chat' }) },
-        { glyph:'语', title:'Grammar: ' + LESSONS[nextLesson].title, meta:LESSONS[nextLesson].q.length + ' exercises', min:4, done:S.gdone, to:'grammar', pre:() => this.setState({ ggopen:null, gq:'', glesson:nextLesson }) },
-        { glyph:'测', title:LVN + ' test', meta:'Mixed questions from your words', min:3, done:S.tdone, to:'testlobby', show:testReady }
-      ].filter(t => t.show !== false);
-      let planned = 0;
-      const plan = [];
-      pool.forEach(t => { if (planned + t.min <= S.mins) { plan.push(t); planned += t.min; } });
-      if (grvTask.show !== false && plan.indexOf(grvTask) < 0) { plan.splice(Math.min(plan.length, 2), 0, grvTask); planned += grvTask.min; }   // grammar review is a daily habit: it is on the list even when a short goal has no room
-      const tasks = plan.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, xp:t.min + ' min', done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:() => { if (t.run) { t.run(); return; } if (t.pre) t.pre(); this.go(t.to); } }));
+      // Today's plan: a step on the Path comes first every day, then the words and grammar points that are due. Everything else is a shortcut under "More ways to study".
+      const pathLvNow = PATH_LVLS.length ? pathFirstOpen(S) : 0;
+      const pathStep = pathLvNow ? pathNext(S, pathLvNow) : null;   // the next stop of the path, whatever its kind
+      const pathDoneToday = Math.max(0, pathDoneCount(S) - (S.pbase == null ? pathDoneCount(S) : S.pbase));
+      const stopMeta = (st) => st.k === 'w' ? (() => { const n = stopWords(st).filter(z => !wStarted(S, z)).length; return n === 1 ? '1 new word' : n + ' new words'; })() : st.k === 's' ? 'Speaking scene' : 'Grammar lesson';
+      const dueWordsN = BANK_KEYS.filter(zh => { const i = winfo(S.ws[zh], 0); return i.started && i.dueN <= 0; }).length;   // the same count My words shows: words, not the cards left in this session
+      const planRows = [];
+      if (pathStep || pathDoneToday > 0) planRows.push({ glyph:'路', title:pathDoneToday > 0 ? 'Path: ' + (pathDoneToday === 1 ? 'a step' : pathDoneToday + ' steps') + ' done' : 'Path: ' + stopTitle(pathStep.st), meta:pathDoneToday > 0 ? (pathStep ? 'Next: ' + stopTitle(pathStep.st) : 'You have walked the whole path') : stopMeta(pathStep.st), done:pathDoneToday > 0,
+        run:pathStep ? () => { this.go('path'); this.setState({ pstop:pathStep.st.id }); } : () => this.go('path') });
+      if (dueWordsN > 0 || S.rq.length > 0 || S.rcomplete) planRows.push({ glyph:'词', title:'Review words', meta:dueWordsN > 0 ? dueWordsN + (S.rcomplete ? ' still due' : ' due') : 'All caught up', done:S.rcomplete && dueWordsN === 0,
+        run:() => { if (!S.rq.length && dueWordsN > 0) this.reviewMore(); this.go('review'); } });
+      if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + ' due' : 'Weakest points first', done:!!S.grdone, run:() => this.startGrammarReview() });
+      const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:t.run }));
+      const moreWays = [
+        pathStep && pathDoneToday > 0 ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), cls:'', fn:() => { this.go('path'); this.setState({ pstop:pathStep.st.id }); } } : null,
+        HAS_LISTEN ? { glyph:'听', label:'Listening', sub:'Dictation drill', cls:S.ldone ? 'done' : '', fn:() => this.go('listen') } : null,
+        HAS_SCRIPTS ? { glyph:'说', label:'Speak', sub:(SCEN[nextScn] || NO_SC).title, cls:S.spokeToday ? 'done' : '', fn:() => { this.setState({ sidx:nextScn, sturn:0, sdone:false, sview:'chat' }); this.go('speak'); } } : null,
+        { glyph:'语', label:'Grammar lesson', sub:LESSONS[nextLesson].title, cls:'', fn:() => { this.setState({ ggopen:null, gq:'', glesson:nextLesson }); this.go('grammar'); } },
+        testReady ? { glyph:'测', label:'Test', sub:'Mixed questions', cls:S.tdone ? 'done' : '', fn:() => this.go('testlobby') } : null,
+        { glyph:'书', label:'Library', sub:'Look things up', cls:'', fn:() => this.go('library') }
+      ].filter(Boolean);
       const minOpts = [10, 20, 30, 45].map(m => ({ label:m + ' min', cls:S.mins === m ? 'on' : '', fn:() => this.setState({ mins:m }) }));
-      const planNote = planned + ' of ' + S.mins + ' minutes planned. Grammar review is always on the list; a longer goal adds more.';
       const skills = [
         { label:'Vocabulary', detail:startedCount + ' of ' + bankKeys.length + ' words started', w:vocabPct + '%' },
         { label:'Grammar', detail:gramPassed + ' of ' + LESSONS.length + ' lessons passed', w:gramPct + '%' }
@@ -4200,19 +4238,14 @@
       const allStarted = startedCount >= totalW;
       const studiedToday = S.lastActive === today;
       const minsLeft = Math.max(0, S.mins - S.dayMin);
-      const ascCta = dueNow > 0 ? { text:'Review ' + dueNow + ' due word' + (dueNow === 1 ? '' : 's'), to:'review' }
+      const ascCta = dueWordsN > 0 ? { text:'Review ' + dueWordsN + ' due word' + (dueWordsN === 1 ? '' : 's'), to:'review' }
         : (minsLeft > 0 ? { text:'Study ' + minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's'), to:(startedCount >= totalW ? 'testlobby' : 'web') } : (startedCount >= totalW ? { text:'Test yourself', to:'testlobby' } : { text:'Learn new words', to:'web' }));
-      // Today: one big button that starts the next open task of the plan, three or four quick chips, a greeting that follows the time of day
+      // Today: one big button that starts the next open step of the plan, a greeting that follows the time of day
       const nextOpenTask = tasks.find(t => t.open), anyTaskDone = tasks.some(t => t.done);
       const planGo = nextOpenTask ? nextOpenTask.go : () => this.go(ascCta.to);
       const planGoText = nextOpenTask ? (anyTaskDone ? 'Continue today\'s plan' : 'Start today\'s plan') : ascCta.text;
       const hourNow = new Date().getHours();
       const greet = hourNow >= 5 && hourNow < 12 ? ['早上好', 'zǎoshang hǎo', 'Good morning'] : hourNow >= 12 && hourNow < 18 ? ['下午好', 'xiàwǔ hǎo', 'Good afternoon'] : ['晚上好', 'wǎnshang hǎo', 'Good evening'];
-      const wordsDueShown = S.rq.length > 0 && !S.rcomplete ? S.rq.length : 0;
-      const homeChips = [{ top:wordsDueShown + ' due', sub:'Review words', cls:wordsDueShown > 0 ? 'hot' : '', fn:() => this.go('review') }]
-        .concat(grvOpenToday > 0 ? [{ top:grvDueToday + ' due', sub:'Grammar review', cls:grvDueToday > 0 && !S.grdone ? 'hot' : '', fn:() => this.startGrammarReview() }] : [])
-        .concat(HAS_SCRIPTS ? [{ top:'1 scene', sub:'Speak', cls:'', fn:() => this.go('speak') }] : [])
-        .concat(pathToday ? [{ top:'Next stop', sub:stopTitle(pathToday.st), cls:'', fn:() => this.go('path') }] : []);
       // the climb card (desktop right column): how far up this level's path you are
       const climbN = PATH_LVLS.length && !ALL && PATH_U[LV] ? (() => { let t = 0, d = 0; PATH_U[LV].forEach(u => u.stops.forEach(st => { t++; if (stopState(S, st) === 'done') d++; })); return t ? Math.round(d / t * 100) : 0; })() : overall;
       // mist: one mountain per Word web topic; the mist thins as its words are learned
@@ -4357,7 +4390,7 @@
         return Object.assign({
           zh:w.zh, py:b.py, en:b.en,
           cls:isNew ? 'new' : 'ok', status:info.mLabel,
-          showEn:revealed, canReveal:!revealed,
+          showEn:revealed, enShown:revealed ? b.en : '?', eqCls:revealed ? '' : 'hid', isNew, canReveal:!revealed,
           canRate:S.wquiz && revealed && !rated && !(isNew && capReached),
           canAdd:!S.wquiz && isNew && !capReached,
           capHit:isNew && capReached && !rated,
@@ -4370,7 +4403,13 @@
         }, info, lvInfo(w.zh), dlt(w.zh), exFor(w.zh, revealed));
       };
       const hubNow = HUBS[S.whub];
-      const hubCards = hubNow.words.map(w => cardOf(w, hubNow.hub));
+      // the family, grouped by where the shared character sits (first, last, elsewhere) so the pattern shows: 学 + something, something + 学
+      const hubPos = (w) => w.parts[0][0] === hubNow.hub ? 0 : (w.parts[1][0] === hubNow.hub ? 1 : 2);
+      const hubGrpNames = [hubNow.hub + ' at the start', hubNow.hub + ' at the end', 'Related words'];
+      const hubSorted = hubNow.words.map((w, i) => ({ w, i, g:hubPos(w) })).sort((a, b) => a.g - b.g || a.i - b.i);
+      const hubCards = hubSorted.map((x, k) => Object.assign(cardOf(x.w, hubNow.hub), { showGrp:k === 0 || hubSorted[k - 1].g !== x.g, grpLabel:hubGrpNames[x.g] + ' (' + hubSorted.filter(y => y.g === x.g).length + ')' }));
+      const hubNewN = hubNow.words.filter(w => mini(w.zh).lv === 'new').length;
+      const hubSum = hubNow.words.length + ' words share it' + (hubNewN > 0 ? ' · ' + hubNewN + ' not in My words yet' : ' · all in My words');
       const hubOpts = HUBS.map((h, i) => ({ zh:h.hub, cls:S.whub === i ? 'on' : '', fn:() => this.setState({ whub:i, gfq:0, gfpick:null }) }));
       const gapNow = hubNow.gaps[S.gfq % hubNow.gaps.length];
       const gapDone = S.gfpick !== null;
@@ -4580,7 +4619,7 @@
         youFriends:!!(FR && FR.enabled()), youFriendsCls:'ylink' + (curScreen === 'friends' ? ' on' : ''), youSetCls:'ylink' + (curScreen === 'voice' ? ' on' : ''), youGuideCls:'ylink' + (curScreen === 'guide' ? ' on' : ''), youAchCls:'ylink' + (curScreen === 'ach' ? ' on' : ''),
         goSettings:() => this.go('voice'), goAch:() => this.go('ach'),
         goStreak:() => this.go('home'), goMem:() => this.go('words'),
-        homeHero:!welcomeShow && !startShow, planGo, planGoText, greetZh:greet[0], greetPy:greet[1], greetEn:greet[2], homeChips, climbPct:climbN + '%', climbN, climbTitle:'Climb to ' + (ALL ? 'the top' : 'the HSK ' + LV + ' summit'),
+        homeHero:!welcomeShow && !startShow, planGo, planGoText, greetZh:greet[0], greetPy:greet[1], greetEn:greet[2], moreWays, climbPct:climbN + '%', climbN, climbTitle:'Climb to ' + (ALL ? 'the top' : 'the HSK ' + LV + ' summit'),
         climbNote:ALL ? 'Each level has its own exam, at the top of its path.' : EXAMBANK ? (LVL.levelPassed(LV) ? LVN + ' is behind you.' : climbN >= 80 ? 'The exam is waiting at the top of your path.' : 'The ' + LVN + ' exam sits at the top of your path. It opens at 80%.') : 'The exam for ' + LVN + ' is not built yet.',
         artToday:artUri('banner', 'today'), artLibrary:artUri('banner', 'library'), artReview:artUri('banner', 'review'), artTalk:artUri('banner', 'talk'), artJourney:artUri('banner', 'journey'), artPath:artUri('banner', 'path'), artSummit:artUri('summit'),
         mingWave:artUri('ming', 'wave'), mingThink:artUri('ming', 'think'), mingCheer:artUri('ming', 'cheer'), mingSleep:artUri('ming', 'sleep'), mingThumbs:artUri('ming', 'thumbs'),
@@ -4628,7 +4667,7 @@
         topicHasNew:topicNew > 0 && !capReached && this.lrnRoom() > 0, topicAddAllText:(topicNew <= this.lrnRoom() ? 'Add all ' + topicNew : 'Add ' + this.lrnRoom() + ' of ' + topicNew) + ' new word' + (topicNew === 1 ? '' : 's'), topicAddAll:() => this.learnMany(topicNow.words),
         moreDue:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft > 0, hasMoreDue:dueLeft > 0, reviewMore:this.reviewMore,
         moreDueText:'Review ' + dueLeft + ' word' + (dueLeft === 1 ? '' : 's'), dueLeftText:dueLeft + ' word' + (dueLeft === 1 ? ' is' : 's are') + ' still due.', topicProgress:topicStarted + ' of ' + topicNow.words.length + ' started',
-        hubCards, hubOpts, hubZh:hubNow.hub, hubPy:hubNow.py, hubEn:hubNow.en,
+        hubCards, hubSum, hubOpts, hubZh:hubNow.hub, hubPy:hubNow.py, hubEn:hubNow.en,
         fillEn:gapNow.en, fillZh:gapNow.zh, gapOpts, gapDone, gapOptsCls:gapDone ? 'locked' : '', fillLine, gapNext:this.gapNext,
         fillReport:report('Which word fits?', gapNow.zh + ' = ' + gapNow.ans + ' / ' + gapNow.en),
         oppRows, topicChips, topicOpts, topicGroups, topicName:topicNow.name, wtq:S.wtq, onTopicSearch:(e) => this.setState({ wtq:e.target.value }), topicNoMatch, topicPos:(S.wtopic + 1) + ' of ' + TOPICS.length, topicMenuOpen:S.wtmenu ? 'true' : 'false', topicMenuShow:S.wtmenu, toggleTopicMenu:() => this.setState({ wtmenu:!this.state.wtmenu }), topicPrev:() => this.pickTopic((S.wtopic + TOPICS.length - 1) % TOPICS.length), topicNext:() => this.pickTopic((S.wtopic + 1) % TOPICS.length), tsZh:topicNow.sentence.zh, tsPy:topicNow.sentence.py, tsEn:topicNow.sentence.en,
@@ -4731,7 +4770,7 @@
         isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isGrv:S.screen === 'greview', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
 
         // home
-        ringDash, todayLine:titles.home[1], tasks, minOpts, planNote, dayMin:S.dayMin, mins:S.mins, skills, wordTarget:bankKeys.length, wmTotal:startedCount, wm,
+        ringDash, todayLine:titles.home[1], tasks, minOpts, dayMin:S.dayMin, mins:S.mins, skills, wordTarget:bankKeys.length, wmTotal:startedCount, wm,
         wMastered:(wm.mastered / bankKeys.length * 100).toFixed(1) + '%', wFamiliar:(wm.familiar / bankKeys.length * 100).toFixed(1) + '%', wLearning:(wm.learning / bankKeys.length * 100).toFixed(1) + '%',
         stairs, sysNote:sd.note,
         todayShort:S.dayMin + ' of ' + S.mins + ' min' + (S.mins > S.dayMin ? ' · ' + (S.mins - S.dayMin) + ' to go' : ' · done'),

@@ -81,11 +81,11 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await nav('Review words'); await nav('Home');
   const t10 = await page.locator('.tasks2').innerText();
   check(/Grammar review/.test(t10), 'with a passed lesson, Grammar review is on the Today list even with a 10 minute goal');
-  check(await page.locator('.tchip', { hasText: 'Grammar review' }).count() === 1, 'and has its own chip');
+  check(await page.locator('.tchip', { hasText: 'Grammar lesson' }).count() === 1 && await page.locator('.goalrow').count() === 0, 'More ways to study has a Grammar lesson shortcut, and the daily goal picker is not on Today');
   await page.evaluate(() => { window.shanlu.setState({ mins: 45 }); });
   check((await page.locator('.task2', { hasText: 'Grammar review' }).count()) === 1, 'once, with a longer goal too');
-  await page.locator('.task2', { hasText: 'Grammar review' }).locator('button').click(); await page.waitForTimeout(250);
-  check(await scr(page) === 'quiz' && await page.evaluate(() => window.shanlu.state.qmode) === 'greview', 'its Start button begins a Grammar review session');
+  await page.locator('.task2', { hasText: 'Grammar review' }).click(); await page.waitForTimeout(250);
+  check(await scr(page) === 'quiz' && await page.evaluate(() => window.shanlu.state.qmode) === 'greview', 'tapping the row begins a Grammar review session');
   // answer the session through
   for (let guard = 0; guard < 20 && !(await page.evaluate(() => window.shanlu.state.qdone)); guard++) {
     await page.evaluate(() => { const a = window.shanlu; const q = a.curQ(); a.setState({ qchecked: true, qcorrect: true }); });
@@ -98,6 +98,19 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.evaluate(() => window.shanlu.setState({ grdone: false, gdone: true }));
   await page.evaluate(() => window.shanlu.go('review')); await page.evaluate(() => window.shanlu.go('home')); await page.waitForTimeout(100);
   check(!/Done/.test(await page.locator('.task2', { hasText: 'Grammar review' }).innerText()), 'a grammar lesson does not tick the Grammar review task');
+
+  // Today's plan always starts with one step of the Path, and the due count is the one My words shows
+  await page.evaluate(() => window.shanlu.go('home')); await page.waitForTimeout(150);
+  const firstRow = await page.locator('.tasks2 .task2').first().innerText();
+  check(/Path: /.test(firstRow), 'the first row of Today\'s plan is a step of the Path');
+  check(await page.locator('.today-go').count() === 1 && await page.locator('.more-h').count() === 1 && await page.locator('.tchip').count() >= 3, 'one big button, and a row of shortcuts under More ways to study');
+  await page.evaluate(() => { const a = window.shanlu; const ws = JSON.parse(JSON.stringify(a.state.ws)); Object.keys(ws).slice(0, 30).forEach(zh => { ws[zh].see.s = 3; ws[zh].see.t = Date.now() - 86400000 * 40; }); a.setState({ ws, rq: [], rcomplete: false }); });
+  await page.waitForTimeout(150);
+  const dueToday = await page.locator('.task2', { hasText: 'Review words' }).innerText();
+  await nav('Words'.replace('Words', 'My words'));
+  const dueWords = await page.evaluate(() => (document.querySelector('main').innerText.match(/Review (\d+) due word/) || [])[1]);
+  check(dueWords && new RegExp('\\b' + dueWords + ' due').test(dueToday), 'Today shows the same number of due words as My words (' + dueWords + ')');
+  await nav('Home');
 
   // Review badge counts words and grammar together
   await page.evaluate(() => { const a = window.shanlu; const ws = JSON.parse(JSON.stringify(a.state.ws)); Object.keys(ws).slice(0, 5).forEach(zh => { ws[zh].see = { s: 2, l: 2, t: Date.now() - 9 * 86400000 }; }); a.setState({ ws, rq: Object.keys(ws).slice(0, 5), rtotal: 5, rdone: 0, rcomplete: false }); });

@@ -211,9 +211,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(/Path: /.test(home), 'the Today list has a Path task with the next stop');
     check(await page.locator('.task2', { hasText: 'Path: ' }).first().innerText().then(t => /Done/.test(t)), 'the Path task shows as done once a stop has been finished today');
     await page.evaluate(() => window.shanlu.setState({ webCredited: false })); await page.waitForTimeout(100);
-    await page.locator('.task2', { hasText: 'Path: ' }).first().locator('button').click();
+    await page.locator('.task2', { hasText: 'Path: ' }).first().click();
     await page.waitForTimeout(150);
-    check((await st(page)).screen === 'path' && await page.locator('.pth-sheet').count() === 1, 'its Start button opens the Path with that stop ready');
+    check((await st(page)).screen === 'path' && await page.locator('.pth-sheet').count() === 1, 'tapping the row opens the Path with that stop ready');
     await page.keyboard.press('Escape'); await page.waitForTimeout(60);
 
     // ---- the Account page
