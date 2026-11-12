@@ -80,6 +80,13 @@ for (const erhua of [false, true]) {
     const inPath = {}; ctx.SHANLU_PATH[n].units.forEach(u => u.stops.forEach(st => { if (st.k === 's') inPath[st.s] = (inPath[st.s] || 0) + 1; }));
     const lost = ids.filter(i => !inPath[i]); const twice = Object.keys(inPath).filter(i => inPath[i] > 1); const stray = Object.keys(inPath).filter(i => ids.indexOf(i) < 0);
     check(ids.length > 0 && lost.length === 0 && twice.length === 0 && stray.length === 0, 'HSK ' + n + ': every practice script is on the path once (' + ids.length + ')' + (lost.length ? ' missing ' + lost.join(' ') : '') + (twice.length ? ' twice ' + twice.join(' ') : '') + (stray.length ? ' unknown ' + stray.join(' ') : ''));
+    // a script comes after every word of its own "useful words" list (words of earlier levels count as known)
+    const seen = new Set(); const early = [];
+    ctx.SHANLU_PATH[n].units.forEach(u => u.stops.forEach(st => {
+      if (st.k === 'w') st.w.forEach(z => seen.add(z.replace(/儿$/, '')));
+      if (st.k === 's') { const L = SP.scenarios.find(x => x.id === st.s); L.words.forEach(w => { const own = (ctx['HSK' + n + '_WORDS'] || []).some(x => x.zh.replace(/儿$/, '') === w.zh.replace(/儿$/, '')) && !seen.has(w.zh.replace(/儿$/, '')); if (own) early.push(st.s + ':' + w.zh); }); }
+    }));
+    check(early.length === 0, 'HSK ' + n + ': no practice script comes before its useful words' + (early.length ? ' (' + early.join(' ') + ')' : ''));
     const sc = (ctx.SHANLU_SPEAK_SCENES || {});
     check(ids.every(i => sc[i] && sc[i].u && sc[i].c), 'HSK ' + n + ': every practice script has its scene picture');
   }

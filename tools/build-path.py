@@ -41,6 +41,7 @@ def build_level(n, cfg, data, problems, report):
     lessons = {g['id']: g['title'] for g in data['lessons']}
     scns = {x['id']: x['title'] for x in data.get('scenarios', [])}
     used_scns = {}
+    later = []          # practice scripts that wait for a word: (stop, word)
     place = cfg.get('place', {})
     names = cfg.get('names', {})
     splits = cfg.get('splits', {})
@@ -136,7 +137,11 @@ def build_level(n, cfg, data, problems, report):
                     problems.append('HSK %s: practice script "%s" does not exist' % (n, sid))
                     continue
                 used_scns[sid] = used_scns.get(sid, 0) + 1
-                stops.append({'id': '%s.s.%s' % (pre, sid), 'k': 's', 't': scns[sid], 's': sid})
+                sp = {'id': '%s.s.%s' % (pre, sid), 'k': 's', 't': scns[sid], 's': sid}
+                if 'after' in item:      # placed right after the stop that teaches this word, wherever in the level that is
+                    later.append((sp, item['after']))
+                else:
+                    stops.append(sp)
                 continue
             if isinstance(item, dict):
                 flush()
@@ -175,6 +180,19 @@ def build_level(n, cfg, data, problems, report):
     for g in lessons:
         if used_lessons.get(g, 0) != 1:
             problems.append('HSK %s: grammar lesson "%s" is in the path %d times (needs exactly 1)' % (n, g, used_lessons.get(g, 0)))
+    given = {}          # how many scripts were already put after the same stop (they keep the order they are written in)
+    for sp, word in later:
+        spot = None
+        for u in units:
+            for i, st in enumerate(u['stops']):
+                if st['k'] == 'w' and word in st['w']:
+                    spot = (u, st['id'], i)
+        if not spot:
+            problems.append('HSK %s: practice script "%s" waits for "%s", which is in no word stop' % (n, sp['s'], word))
+            continue
+        u, sid_, i = spot
+        k = given.get(sid_, 0); given[sid_] = k + 1
+        u['stops'].insert(i + 1 + k, sp)
     for g in scns:
         if used_scns.get(g, 0) != 1:
             problems.append('HSK %s: practice script "%s" is in the path %d times (needs exactly 1)' % (n, g, used_scns.get(g, 0)))
