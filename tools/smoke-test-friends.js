@@ -32,7 +32,7 @@ const INVITE = 'ABCD-EFGH-JKLM';
   // dormant: no server address, no Friends tab
   const off = await mk(false);
   await off.page.goto(site); await off.page.waitForSelector('.app');
-  check(await off.page.locator('nav button', { hasText: 'Friends' }).count() === 0, 'without a server address there is no Friends tab');
+  check(await off.page.locator('.navyou .ylink', { hasText: 'Friends' }).count() === 0, 'without a server address there is no Friends tab');
   await off.ctx.close();
 
   // Alvin joins from an invite link
@@ -40,7 +40,7 @@ const INVITE = 'ABCD-EFGH-JKLM';
   await A.page.goto(site + '#join=' + INVITE); await A.page.waitForSelector('.app');
   await A.page.waitForSelector('.frjoin');
   check(await A.page.locator('#fr-code').inputValue() === INVITE && (await A.page.evaluate(() => location.hash)) === '', 'an invite link opens the join form with the code filled in and clears the address');
-  check(await A.page.locator('nav button', { hasText: 'Friends' }).count() === 1, 'with a server address the Friends tab shows');
+  check(await A.page.locator('.navyou .ylink', { hasText: 'Friends' }).count() === 1, 'with a server address the Friends tab shows');
   await A.page.fill('#fr-name', 'Alvin');
   await A.page.locator('button', { hasText: 'Join group' }).click();
   await A.page.waitForSelector('.frow');
@@ -81,7 +81,7 @@ const INVITE = 'ABCD-EFGH-JKLM';
   check(await A.page.locator('.seg2 button.on', { hasText: 'Streak' }).count() === 1, 'the board can be ordered by streak');
 
   // Home card
-  await A.page.locator('nav button', { hasText: 'Home' }).click();
+  await require('./test-nav').makeNav(A.page)('Home');
   await A.page.waitForSelector('.frhome');
   check((await A.page.locator('.frhome').innerText()).includes('studied today') && await A.page.locator('.frhome .fav').count() === 2, 'Home shows who studied today');
 
@@ -103,7 +103,7 @@ const INVITE = 'ABCD-EFGH-JKLM';
   check((await text(B.page)).includes("Alvin's passport") && await B.page.locator('.jy-slot.here').count() === 1, "Alvin's passport shows the region in progress");
   await B.page.locator('.jy-fbar .linkbtn').click();
   check(await B.page.locator('.jy-now').count() === 1 && await B.page.locator('.jy-fbar').count() === 0, 'going back shows your own journey again');
-  const boardText = await (async () => { await B.page.locator('nav button', { hasText: 'Friends' }).click(); await B.page.waitForSelector('.frow'); return text(B.page); })();
+  const boardText = await (async () => { await require('./test-nav').makeNav(B.page)('Friends'); await B.page.waitForSelector('.frow'); return text(B.page); })();
   check(/1 stop traveled/.test(boardText), 'the friends board mentions the stops traveled');
 
   // spaced-out syncing: 30 quick changes cause no extra uploads
@@ -270,18 +270,18 @@ const INVITE = 'ABCD-EFGH-JKLM';
   check((await text(B.page)).includes('Tap again'), 'leaving asks for a second tap');
   await B.page.locator('button', { hasText: 'Tap again to leave' }).click();
   await B.page.waitForSelector('.frjoin');
-  await A.page.locator('nav button', { hasText: 'Friends' }).click();
+  await require('./test-nav').makeNav(A.page)('Friends');
   await A.page.locator('button', { hasText: 'Refresh' }).click();
   await A.page.waitForFunction(() => document.querySelectorAll('.frow').length === 1);
   check(await B.page.evaluate(() => !localStorage.getItem('shanlu-friends')), 'Mei left and the group list shrinks');
 
   // server gone: a message, and the rest of the app keeps working
   await mf.dispose();
-  await A.page.locator('nav button', { hasText: 'Friends' }).click();
+  await require('./test-nav').makeNav(A.page)('Friends');
   await A.page.locator('button', { hasText: 'Refresh' }).click();
   await A.page.waitForSelector('.banner.err');
   check((await text(A.page)).includes('Could not reach the friends board'), 'if the server is unreachable the app says so');
-  await A.page.locator('nav button', { hasText: 'Archive' }).click();
+  await require('./test-nav').makeNav(A.page)('Archive');
   check((await text(A.page)).length > 100 && A.errors.length === 0 && B.errors.length === 0, 'the rest of the app keeps working (no page errors: ' + A.errors.concat(B.errors).slice(0, 2).join(' | ') + ')');
 
   await browser.close(); server.close();

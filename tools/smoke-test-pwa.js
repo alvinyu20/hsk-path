@@ -51,8 +51,8 @@ function copySite() {
   check(/script-src 'self'(;|$)/.test(cspTag) && !/unsafe-eval/.test(cspTag) && !/script-src[^;]*unsafe-inline/.test(cspTag), 'the page carries a policy that allows scripts only from this site (no inline, no eval)');
   check(/connect-src[^;]*api\.anthropic\.com/.test(cspTag) && /connect-src[^;]*dashscope-intl\.aliyuncs\.com/.test(cspTag) && /connect-src[^;]*api\.github\.com/.test(cspTag) && /connect-src[^;]*shanlu-friends\.alvinyu20\.workers\.dev/.test(cspTag), 'network calls are limited to Anthropic, Alibaba, GitHub and the friends server named in config.js');
   check(!/googleapis|gstatic/.test(html) && !/googleapis|gstatic/.test(fs.readFileSync(path.join(tmp, 'styles.css'), 'utf8')), 'nothing is loaded from Google Fonts any more');
-  await page.locator('nav button', { hasText: 'Review' }).first().click().catch(() => {});
-  await page.locator('nav button', { hasText: 'Archive' }).first().click().catch(() => {});
+  await require('./test-nav').makeNav(page)('Review words').catch(() => {});
+  await require('./test-nav').makeNav(page)('Archive').catch(() => {});
   await page.waitForTimeout(300);
   const fontsOk = await page.evaluate(async () => {
     await document.fonts.ready;

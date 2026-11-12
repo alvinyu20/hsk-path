@@ -50,7 +50,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   page.on('console', m => { if (m.type() === 'error' && !/fonts\.(googleapis|gstatic)|net::ERR|status of 401/.test(m.text())) errors.push('console: ' + m.text()); });
   page.on('dialog', d => { dialogs.push(d.message()); d.accept(); });
 
-  const nav = async (label) => { await page.locator('nav button', { hasText: label }).first().click(); await page.waitForTimeout(120); };
+  const nav = require('./test-nav').makeNav(page);
   const text = async () => (await page.locator('main').innerText());
   const answer = async (right) => {
     const q = await page.evaluate(() => JSON.parse(JSON.stringify(window.shanlu.curQ())));
@@ -357,7 +357,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     check((await pA.locator('.lvbtn').innerText()).includes('All levels'), 'the All button is the selected one');
     check((await openLv(pA), (await pA.locator('.lvpanel .lvitem .lvn').allInnerTexts()).join('|').replace(/\s+/g, '') === 'HSK1|HSK2|HSK3|Alllevels'), 'the Levels menu offers HSK 1, HSK 2, HSK 3 and All levels');
     // grammar from three levels in one list
-    await pA.locator('nav button', { hasText: /^\s*Grammar\s*$/ }).first().click();
+    await require('./test-nav').makeNav(pA)('Grammar');
     await pA.waitForTimeout(150);
     check(await pA.evaluate(() => (document.querySelector('main').innerText).toLowerCase().includes('lesson 1 of ' + (window.HSK1_GRAMMAR.lessons.length + window.HSK2_GRAMMAR.lessons.length + window.HSK3_GRAMMAR.lessons.length))), 'Grammar lists the lessons of the three levels');
     check(await pA.locator('.gl .gg').count() === 15, 'Grammar is in 15 categories');
@@ -367,7 +367,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     check(await pA.locator('.gl .gp .lvtag.l3').count() >= 1 && await pA.locator('.gl .gp.rl3').count() >= 1, 'an HSK 3 lesson is found by its title and carries its HSK 3 tag and coloured edge (' + t0 + ')');
     await pA.fill('.gl .tr-search', '');
     // topics of the same name are joined across the three levels; HSK 3 words carry their tag
-    await pA.locator('nav button', { hasText: 'Archive' }).click();
+    await require('./test-nav').makeNav(pA)('Archive');
     await pA.waitForTimeout(150);
     await pA.locator('button', { hasText: /^Show all \d+ topics$/ }).click();
     await pA.waitForTimeout(100);

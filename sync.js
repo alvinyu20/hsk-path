@@ -8,7 +8,7 @@
   const DIMS = ['see', 'hear', 'prod'];
   // progress that is merged between devices; device preferences (theme, voice, hint switches, daily goal, new-word limit) stay local
   const SYNC_KEYS = ['xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'clipBest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone', 'exams', 'aiDays', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone', 'exams', 'aiDays', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
   const FILE = 'shanlu-progress.json';   // HSK 1 progress (the original file name)
   const fileFor = (level) => (level > 1 ? 'shanlu-progress-hsk' + level + '.json' : FILE);   // each level keeps its own file in the same gist
   const PERSON_FILE = 'shanlu-person.json';   // the person's own settings and notes: one file for the whole gist, whatever the level
@@ -110,11 +110,11 @@
     out.day = da > db ? da : db;
     const newer = da > db ? a : (db > da ? b : null);
     if (newer) {
-      ['dayXp', 'dayMin', 'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone'].forEach(k => { if (newer[k] !== undefined) out[k] = newer[k]; });
+      ['dayXp', 'dayMin', 'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone'].forEach(k => { if (newer[k] !== undefined) out[k] = newer[k]; });
     } else {
       out.dayXp = maxNum(a.dayXp, b.dayXp); out.dayMin = maxNum(a.dayMin, b.dayMin);
       out.wlearned = unionObj(a.wlearned, b.wlearned); out.wrated = unionObj(a.wrated, b.wrated);
-      ['gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'sdone'].forEach(k => { out[k] = !!(a[k] || b[k]); });
+      ['gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'sdone'].forEach(k => { out[k] = !!(a[k] || b[k]); });
       // words still waiting in today's review on BOTH devices (a word reviewed on either one is done)
       const qa = a.rq || [], qb = b.rq || [];
       out.rq = (a.rq && b.rq) ? qa.filter(z => qb.indexOf(z) >= 0) : (qa.length ? qa : qb);

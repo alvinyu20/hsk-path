@@ -18,7 +18,7 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   const page = await ctx.newPage();
   const errs = []; page.on('pageerror', (e) => errs.push(String(e)));
   await page.goto(url); await page.waitForSelector('.app');
-  const toLab = async () => { await page.locator('.nav', { hasText: 'Listening lab' }).first().click(); await page.waitForTimeout(300); };
+  const toLab = async () => { await page.locator('.navg button.nav', { hasText: 'Talk' }).first().click(); await page.waitForTimeout(100); await page.locator('.navsub .subl, .subnav button', { hasText: /^Listening$/ }).first().click(); await page.waitForTimeout(300); };
   await toLab();
   await page.locator('button', { hasText: /Play|Listen/ }).first().click().catch(() => {});
   await page.waitForTimeout(600);

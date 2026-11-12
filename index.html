@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="a505f38ea3">
+<meta name="shanlu-version" content="48defe4a48">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=a505f38ea3">
+<link rel="stylesheet" href="styles.css?v=48defe4a48">
 </head>
 <body>
 <div id="app"></div>
@@ -31,69 +31,6 @@
     <div><div class="bname">Shanlu</div><div class="bsub">HSK study path</div></div>
   </button>
 
-  <nav class="navs" aria-label="Main">
-    <button class="{{navHome}}" data-on-click="{{goHome}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg>
-      Home
-    </button>
-    <button class="{{navPath}}" data-on-click="{{goPath}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 17.5c7 0 1-11 8-11"/></svg>
-      Path
-    </button>
-    <button class="{{navWeb}}" data-on-click="{{goWeb}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.5"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="M10 10.5 6.5 7.5M14 10.5l3.5-3M10 13.5 6.5 16.5M14 13.5l3.5 3"/></svg>
-      Archive
-    </button>
-    <button class="{{navGrammar}}" data-on-click="{{goGrammar}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg>
-      Grammar
-    </button>
-    <button class="{{navPinyin}}" data-on-click="{{goPinyin}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18c2-1.5 3-4 3-7a3 3 0 0 1 6 0c0 3 1 5.5 3 7"/><path d="M14 6.5 17.5 4M14 10h6"/></svg>
-      Pinyin
-    </button>
-    <button class="{{navReview}}" data-on-click="{{goReview}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7" width="17" height="12" rx="2.5"/><path d="M7 3.8h10"/></svg>
-      Review words
-      <sc-if value="{{hasDue}}" hint-placeholder-val="{{ true }}"><span class="badge">{{dueCount}}</span></sc-if>
-    </button>
-    <button class="{{navGrv}}" data-on-click="{{goGrv}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M9 9.5l2 2 4-4"/></svg>
-      Grammar review
-    </button>
-    <button class="{{navListen}}" data-on-click="{{goListen}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>
-      Listening lab
-    </button>
-    <button class="{{navSpeak}}" data-on-click="{{goSpeak}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg>
-      Speak
-    </button>
-    <button class="{{navTest}}" data-on-click="{{goTest}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>
-      Tests
-    </button>
-    <button class="{{navExam}}" data-on-click="{{goExam}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20l6-10 4 6 2-3 6 7z"/><path d="M14 6l1.5-2.5L17 6"/></svg>
-      Level exam
-    </button>
-    <button class="{{navWords}}" data-on-click="{{goWords}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>
-      My words
-    </button>
-    <button class="{{navJourney}}" data-on-click="{{goJourney}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12.5l17-8.5-5 16-3.5-6.5z"/><path d="M11.5 13.5L20 4"/></svg>
-      Journey
-      <sc-if value="{{jyReadyShow}}" hint-placeholder-val="{{ false }}"><span class="badge">{{jyReadyN}}</span></sc-if>
-    </button>
-    <sc-if value="{{friendsOn}}" hint-placeholder-val="{{ false }}">
-    <button class="{{navFriends}}" data-on-click="{{goFriends}}">
-      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17.5" cy="9" r="2.5"/><path d="M16.5 14.2A5 5 0 0 1 21.5 19"/></svg>
-      Friends
-    </button>
-    </sc-if>
-  </nav>
-
   <nav class="navs navg" aria-label="Main sections">
     <button class="{{gHomeCls}}" data-on-click="{{gHome}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg>
@@ -103,20 +40,30 @@
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg>
       Learn
     </button>
+    <sc-if value="{{gLearnOpen}}" hint-placeholder-val="{{ false }}"><div class="navsub" role="group" aria-label="In this section"><sc-for list="{{subnav}}" as="o" hint-placeholder-count="3"><button class="subl {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}<sc-if value="{{o.hasN}}" hint-placeholder-val="{{ false }}"><span class="n">{{o.n}}</span></sc-if></button></sc-for></div></sc-if>
     <button class="{{gReviewCls}}" data-on-click="{{gReview}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7" width="17" height="12" rx="2.5"/><path d="M7 3.8h10"/></svg>
       Review
       <sc-if value="{{hasDue}}" hint-placeholder-val="{{ true }}"><span class="badge">{{dueCount}}</span></sc-if>
     </button>
+    <sc-if value="{{gReviewOpen}}" hint-placeholder-val="{{ false }}"><div class="navsub" role="group" aria-label="In this section"><sc-for list="{{subnav}}" as="o" hint-placeholder-count="3"><button class="subl {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}<sc-if value="{{o.hasN}}" hint-placeholder-val="{{ false }}"><span class="n">{{o.n}}</span></sc-if></button></sc-for></div></sc-if>
     <button class="{{gTalkCls}}" data-on-click="{{gTalk}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg>
-      Listen &amp; speak
+      Talk
     </button>
+    <sc-if value="{{gTalkOpen}}" hint-placeholder-val="{{ false }}"><div class="navsub" role="group" aria-label="In this section"><sc-for list="{{subnav}}" as="o" hint-placeholder-count="3"><button class="subl {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}<sc-if value="{{o.hasN}}" hint-placeholder-val="{{ false }}"><span class="n">{{o.n}}</span></sc-if></button></sc-for></div></sc-if>
     <button class="{{gJourneyCls}}" data-on-click="{{gJourney}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12.5l17-8.5-5 16-3.5-6.5z"/><path d="M11.5 13.5L20 4"/></svg>
       Journey
       <sc-if value="{{jyReadyShow}}" hint-placeholder-val="{{ false }}"><span class="badge">{{jyReadyN}}</span></sc-if>
     </button>
+  </nav>
+
+  <nav class="navyou" aria-label="You">
+    <sc-if value="{{youFriends}}" hint-placeholder-val="{{ false }}"><button type="button" class="{{youFriendsCls}}" data-on-click="{{goFriends}}">Friends</button></sc-if>
+    <button type="button" class="{{youAchCls}}" data-on-click="{{goAch}}">Achievements</button>
+    <button type="button" class="{{youSetCls}}" data-on-click="{{goSettings}}">Settings</button>
+    <sc-if value="{{guideAvail}}" hint-placeholder-val="{{ false }}"><button type="button" class="{{youGuideCls}}" data-on-click="{{onbOpenGuide}}">How Shanlu works</button></sc-if>
   </nav>
 
   <div class="streak">
@@ -133,24 +80,25 @@
     <div class="me-av zh" aria-hidden="true">{{acctInitial}}</div>
     <div class="me-t"><b>{{acctName}}</b><div class="bsub">{{lvName}} · {{overall}}% of the way</div></div>
   </button>
-  <sc-if value="{{guideAvail}}" hint-placeholder-val="{{ false }}"><button class="{{guideSideCls}}" data-on-click="{{onbOpenGuide}}">How Shanlu works</button></sc-if>
   <button class="linkbtn" data-on-click="{{toggleTheme}}">{{themeLabel}}</button>
   <button type="button" class="acct-mini zh {{acctMiniCls}}" data-on-click="{{goAcct}}" aria-label="Open your account">{{acctInitial}}</button>
 </aside>
 
 <main class="main">
   <sc-if value="{{hasBack}}" hint-placeholder-val="{{ false }}"><button type="button" class="backbar" data-on-click="{{goAcct}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Account</button></sc-if>
-  <header class="top">
-    <div>
+  <sc-if value="{{inLib}}" hint-placeholder-val="{{ false }}"><button type="button" class="crumb" data-on-click="{{goLibrary}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Library</button></sc-if>
+  <header class="top {{topCls}}">
+    <sc-if value="{{hasTopArt}}" hint-placeholder-val="{{ false }}"><img class="top-art" src="{{topArt}}" alt="" aria-hidden="true" width="360" height="120"></sc-if>
+    <div class="top-t">
       <h1 class="h1">{{title}}</h1>
-      <p class="sub">{{subtitle}}</p>
+      <sc-if value="{{subShow}}" hint-placeholder-val="{{ true }}"><p class="sub">{{subtitle}}</p></sc-if>
     </div>
     <div class="stats">
       <div class="lvmenu"><button type="button" class="pill lvbtn" aria-haspopup="true" aria-expanded="{{lvMenuOpen}}" data-on-click="{{lvMenuToggle}}">{{lvLabel}}<svg class="ic lvcaret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <sc-if value="{{lvMenuOpen}}" hint-placeholder-val="{{ false }}"><div class="lvpanel" role="menu" aria-label="Levels"><div class="lvh">Levels</div><sc-for list="{{lvItems}}" as="o" hint-placeholder-count="3"><button type="button" role="menuitem" class="lvitem {{o.cls}}" data-on-click="{{o.fn}}"><span class="lvn">{{o.label}}</span><span class="lvs">{{o.sub}}</span></button></sc-for></div></sc-if></div>
-      <span class="pill fl"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c1.1 3.4 5 5.3 5 9.9a5 5 0 0 1-10 0c0-1.8.8-3 1.8-4.1.2 1.6 1.1 2.5 2.1 2.7C10.3 8.5 11 5.5 12 2.5z"/></svg>{{streakText}}</span>
-      <button type="button" class="{{xpPillCls}}" title="{{xpTip}}" data-on-click="{{goJourney}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="5.4"/></svg>{{xpTotalText}} coins<sc-if value="{{jyReadyShow}}" hint-placeholder-val="{{ false }}"><span class="xp-ready" aria-label="{{jyReadyLabel}}">{{jyReadyN}}</span></sc-if></button>
-      <span class="pill" title="{{memTip}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.2 6.3L21 12l-6.8 2.7L12 21l-2.2-6.3L3 12l6.8-2.7z"/></svg>{{memText}}</span>
+      <button type="button" class="pill fl" title="Back to Today" data-on-click="{{goStreak}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c1.1 3.4 5 5.3 5 9.9a5 5 0 0 1-10 0c0-1.8.8-3 1.8-4.1.2 1.6 1.1 2.5 2.1 2.7C10.3 8.5 11 5.5 12 2.5z"/></svg>{{streakText}}</button>
+      <button type="button" class="{{xpPillCls}}" title="{{xpTip}}" data-on-click="{{goJourney}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="5.4"/></svg>{{xpTotalText}}<span class="pw"> coins</span><sc-if value="{{jyReadyShow}}" hint-placeholder-val="{{ false }}"><span class="xp-ready" aria-label="{{jyReadyLabel}}">{{jyReadyN}}</span></sc-if></button>
+      <button type="button" class="pill" title="{{memTip}}" data-on-click="{{goMem}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.2 6.3L21 12l-6.8 2.7L12 21l-2.2-6.3L3 12l6.8-2.7z"/></svg>{{memText}}</button>
     </div>
   </header>
   <sc-if value="{{jyPingShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="xp-ping" role="status" data-on-click="{{goJourney}}"><b>New stop unlocked</b><span>Tap to travel</span></button></sc-if>
@@ -399,11 +347,26 @@
     <sc-if value="{{startFresh}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" style="margin-top:10px" data-on-click="{{onbSkipStart}}">Skip this, I will find my own way</button></sc-if>
   </section>
   </sc-if>
+  <sc-if value="{{homeHero}}" hint-placeholder-val="{{ true }}">
+  <section class="th-hero" aria-label="Greeting">
+    <img class="th-art" src="{{artToday}}" alt="" aria-hidden="true" width="360" height="120">
+    <div class="th-in">
+      <img class="th-ming" src="{{mingWave}}" alt="" width="104" height="109">
+      <div class="th-t"><div class="th-zh zh">{{greetZh}}</div><div class="th-py">{{greetPy}} · {{greetEn}}</div></div>
+      <div class="th-lan" role="img" aria-label="Days you studied this week">
+        <sc-for list="{{week}}" as="d" hint-placeholder-count="7"><span class="lan {{d.cls}}"><img src="{{d.img}}" alt="" width="26" height="38"><i>{{d.l}}</i></span></sc-for>
+      </div>
+    </div>
+  </section>
+  </sc-if>
   <div class="hgrid2">
     <section class="card">
       <div class="today-top"><h2 class="h2">Today</h2><span class="muted">{{todayShort}}</span></div>
-      <button class="btn pri big today-go" data-on-click="{{trailCta}}">{{trailCtaText}}</button>
-      <div class="abar jade" style="margin:10px 0 8px"><i style="width: {{todayPct}}"></i></div>
+      <button class="btn pri big today-go" data-on-click="{{planGo}}">{{planGoText}}</button>
+      <div class="tchips">
+        <sc-for list="{{homeChips}}" as="c" hint-placeholder-count="3"><button type="button" class="tchip {{c.cls}}" data-on-click="{{c.fn}}"><b>{{c.top}}</b><span>{{c.sub}}</span></button></sc-for>
+      </div>
+      <div class="abar jade" style="margin:12px 0 8px"><i style="width: {{todayPct}}"></i></div>
       <div class="tasks2">
         <sc-for list="{{tasks}}" as="t" hint-placeholder-count="3">
           <div class="task2 {{t.cls}}">
@@ -428,9 +391,11 @@
       </div>
     </section>
 
-    <section class="card">
-      <h2 class="h2">{{examCardTitle}}</h2>
-      <p class="cp-note">{{examCardNote}}</p>
+    <section class="card climb">
+      <img class="climb-art" src="{{artSummit}}" alt="" aria-hidden="true" width="300" height="200">
+      <h2 class="h2">{{climbTitle}}</h2>
+      <p class="cp-note">{{climbNote}}</p>
+      <div class="abar" style="margin:4px 0 14px" role="img" aria-label="{{climbPct}} of the path"><i style="width: {{climbPct}}"></i></div>
       <div class="rings">
         <sc-for list="{{skills}}" as="s" hint-placeholder-count="4">
           <div class="rg">
@@ -439,12 +404,7 @@
           </div>
         </sc-for>
       </div>
-      <sc-if value="{{hasExamCard}}" hint-placeholder-val="{{ true }}">
-      <button class="btn big" style="margin-top:18px" data-on-click="{{goExam}}">
-        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>
-        {{examBtnText}}
-      </button>
-      </sc-if>
+      <button class="btn big" style="margin-top:18px" data-on-click="{{goPath}}">Go to the Path</button>
     </section>
   </div>
   <section>
@@ -693,7 +653,7 @@
     </sc-if>
     <sc-if value="{{emptyNew}}" hint-placeholder-val="{{ false }}">
       <div class="res">
-        <div class="stamp zh" aria-hidden="true">词</div>
+        <img class="res-ming" src="{{mingThink}}" alt="" width="132" height="139">
         <h2 class="res-h">Nothing to review yet</h2>
         <p class="res-p">Reviews start once you have learned some words. Meet your first words on the Path.</p>
         <div class="res-act"><button class="btn pri big" data-on-click="{{goPath}}">Go to the Path</button></div>
@@ -701,7 +661,7 @@
     </sc-if>
     <sc-if value="{{moreDue}}" hint-placeholder-val="{{ false }}">
       <div class="res">
-        <div class="stamp zh" aria-hidden="true">词</div>
+        <img class="res-ming" src="{{mingWave}}" alt="" width="132" height="139">
         <h2 class="res-h">More words are due</h2>
         <p class="res-p">{{dueLeftText}} Reviewing them now keeps them from fading.</p>
         <div class="res-act"><button class="btn pri big" data-on-click="{{reviewMore}}">{{moreDueText}}</button></div>
@@ -709,11 +669,11 @@
     </sc-if>
     <sc-if value="{{caughtUp}}" hint-placeholder-val="{{ false }}">
       <div class="res">
-        <div class="stamp zh" aria-hidden="true">好</div>
+        <img class="res-ming" src="{{mingThumbs}}" alt="" width="132" height="139">
         <h2 class="res-h">You are all caught up</h2>
         <p class="res-p">{{nextDueText}} Reviews are scheduled for just before you would forget a word, so there is nothing more due right now.</p>
         <div class="res-act">
-          <button class="btn pri big" data-on-click="{{goWeb}}">Learn new words</button>
+          <button class="btn pri big" data-on-click="{{goPath}}">Learn new words</button>
           <button class="btn big" data-on-click="{{practiceAnyway}}">Practice all my words anyway</button>
         </div>
       </div>
@@ -1628,6 +1588,22 @@
         </div>
       </sc-for>
       </div>
+      <sc-if value="{{pthSummit}}" hint-placeholder-val="{{ false }}">
+      <section class="card summit {{smt.cls}}" aria-label="The summit">
+        <img class="summit-art" src="{{smt.art}}" alt="" aria-hidden="true" width="300" height="200">
+        <div class="summit-b">
+          <div class="kick">The summit</div>
+          <h2 class="h2">{{smt.title}}</h2>
+          <p class="muted summit-p">{{smt.sub}}</p>
+          <sc-if value="{{smt.passed}}" hint-placeholder-val="{{ false }}"><span class="seal zh" aria-hidden="true">通过</span></sc-if>
+          <sc-if value="{{smt.locked}}" hint-placeholder-val="{{ false }}">
+            <div class="abar" role="img" aria-label="{{smt.pct}} of the path"><i style="width: {{smt.pct}}"></i></div>
+            <button type="button" class="linkbtn" data-on-click="{{smt.early}}">{{smt.hint}}</button>
+          </sc-if>
+          <sc-if value="{{smt.unlocked}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn pri big" data-on-click="{{smt.go}}">{{smt.btn}}</button></sc-if>
+        </div>
+      </section>
+      </sc-if>
     </sc-if>
     <sc-if value="{{pthNone}}" hint-placeholder-val="{{ false }}">
       <section class="card"><h2 class="h2">The path is not here yet</h2><p class="muted" style="margin:6px 0 0">Browse the Archive for now.</p></section>
@@ -1636,7 +1612,7 @@
       <div class="pth-scrim" data-on-click="{{pthClose}}"></div>
       <section class="pth-sheet" role="dialog" aria-modal="true" aria-label="{{pthSh.title}}">
         <div class="kick">{{pthSh.kick}}</div>
-        <div class="pth-sh-h"><h2 class="h2">{{pthSh.title}}</h2><button type="button" class="btn sm" data-on-click="{{pthClose}}">Close</button></div>
+        <div class="pth-sh-h"><h2 class="h2">{{pthSh.title}}</h2><sc-if value="{{pthSh.isDone}}" hint-placeholder-val="{{ false }}"><span class="seal sm zh" aria-label="Done">完成</span></sc-if><button type="button" class="btn sm" data-on-click="{{pthClose}}">Close</button></div>
         <p class="muted pth-sh-p">{{pthSh.sub}}</p>
         <sc-if value="{{pthSh.isS}}" hint-placeholder-val="{{ false }}"><ul class="pth-goals"><sc-for list="{{pthSh.goalList}}" as="g" hint-placeholder-count="3"><li>{{g.t}}</li></sc-for></ul></sc-if>
         <sc-if value="{{pthSh.isW}}" hint-placeholder-val="{{ true }}">
@@ -2101,6 +2077,27 @@
         </section>
       </sc-if>
     </sc-if>
+  </div>
+  </sc-if>
+
+  <!-- LIBRARY -->
+  <sc-if value="{{isLibrary}}" hint-placeholder-val="{{ false }}">
+  <div class="lib">
+    <sc-if value="{{libBannerShow}}" hint-placeholder-val="{{ true }}"><div class="banner lib-note" role="note">The Library is for looking things up. New words are best met in order on the Path.</div></sc-if>
+    <input class="inp lib-search" type="search" value="{{lq}}" placeholder="Look up a word" autocomplete="off" aria-label="Look up a word: Chinese, pinyin or English" data-on-input="{{onLq}}">
+    <sc-if value="{{lqHas}}" hint-placeholder-val="{{ false }}">
+      <div class="lib-res">
+        <sc-for list="{{lqRows}}" as="r" hint-placeholder-count="3">
+          <div class="lib-r"><button type="button" class="lib-rb" data-on-click="{{r.open}}"><span class="zh lib-zh">{{r.zh}}</span><span class="lib-m"><span class="wc-py">{{r.py}}</span><span class="muted">{{r.en}}</span></span></button><button class="spk {{r.pc}}" aria-label="Hear this word" data-on-click="{{r.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{lqNone}}" hint-placeholder-val="{{ false }}"><p class="muted">No word matches. Try the pinyin without tones, or the English meaning.</p></sc-if>
+    <div class="lib-tiles">
+      <sc-for list="{{libTiles}}" as="t" hint-placeholder-count="4">
+        <button type="button" class="lib-tile" data-on-click="{{t.fn}}"><span class="lib-g zh" aria-hidden="true">{{t.glyph}}</span><span class="lib-tt"><b>{{t.title}}</b><span class="muted">{{t.sub}}</span></span><svg class="ic lib-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      </sc-for>
+    </div>
   </div>
   </sc-if>
 
@@ -2602,53 +2599,54 @@
 </main>
 </div>
 </template>
-<script defer src="vendor/morphdom-umd.min.js?v=a505f38ea3"></script>
-<script defer src="runtime.js?v=a505f38ea3"></script>
-<script defer src="config.js?v=a505f38ea3"></script>
-<script defer src="friends.js?v=a505f38ea3"></script>
-<script defer src="level.js?v=a505f38ea3"></script>
-<script defer src="data/hsk1-words.js?v=a505f38ea3"></script>
-<script defer src="data/hsk1-grammar.js?v=a505f38ea3"></script>
-<script defer src="data/hsk1-webs.js?v=a505f38ea3"></script>
-<script defer src="data/hsk1-speak.js?v=a505f38ea3"></script>
-<script defer src="data/hsk1-listen.js?v=a505f38ea3"></script>
-<script defer src="data/hsk1-exam.js?v=a505f38ea3"></script>
-<script defer src="data/hsk1-erhua.js?v=a505f38ea3"></script>
-<script defer src="data/lexicon.js?v=a505f38ea3"></script>
-<script defer src="data/char-glosses.js?v=a505f38ea3"></script>
-<script defer src="data/hsk2-preview.js?v=a505f38ea3"></script>
-<script defer src="data/hsk3-preview.js?v=a505f38ea3"></script>
-<script defer src="data/hsk2-words.js?v=a505f38ea3"></script>
-<script defer src="data/hsk2-speak.js?v=a505f38ea3"></script>
-<script defer src="data/hsk2-listen.js?v=a505f38ea3"></script>
-<script defer src="data/hsk2-exam.js?v=a505f38ea3"></script>
-<script defer src="data/hsk2-grammar.js?v=a505f38ea3"></script>
-<script defer src="data/hsk2-webs.js?v=a505f38ea3"></script>
-<script defer src="data/hsk3-words.js?v=a505f38ea3"></script>
-<script defer src="data/hsk3-speak.js?v=a505f38ea3"></script>
-<script defer src="data/hsk3-listen.js?v=a505f38ea3"></script>
-<script defer src="data/hsk3-exam.js?v=a505f38ea3"></script>
-<script defer src="data/hsk3-grammar.js?v=a505f38ea3"></script>
-<script defer src="data/hsk3-webs.js?v=a505f38ea3"></script>
-<script defer src="ascent.js?v=a505f38ea3"></script>
-<script defer src="secrets.js?v=a505f38ea3"></script>
-<script defer src="sync.js?v=a505f38ea3"></script>
-<script defer src="data/audio-manifest.js?v=a505f38ea3"></script>
-<script defer src="journey.js?v=a505f38ea3"></script>
-<script defer src="data/journey.js?v=a505f38ea3"></script>
-<script defer src="data/journey-map.js?v=a505f38ea3"></script>
-<script defer src="data/journey-media.js?v=a505f38ea3"></script>
-<script defer src="data/souvenirs.js?v=a505f38ea3"></script>
-<script defer src="erhua.js?v=a505f38ea3"></script>
-<script defer src="pinyin.js?v=a505f38ea3"></script>
-<script defer src="data/pinyin-course.js?v=a505f38ea3"></script>
-<script defer src="data/pinyin-chart.js?v=a505f38ea3"></script>
-<script defer src="data/exam-media.js?v=a505f38ea3"></script>
-<script defer src="data/exam-art.js?v=a505f38ea3"></script>
-<script defer src="data/neutral-alt.js?v=a505f38ea3"></script>
-<script defer src="data/path-scenes.js?v=a505f38ea3"></script>
-<script defer src="data/speak-scenes.js?v=a505f38ea3"></script>
-<script defer src="data/path.js?v=a505f38ea3"></script>
-<script defer src="app.js?v=a505f38ea3"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=48defe4a48"></script>
+<script defer src="runtime.js?v=48defe4a48"></script>
+<script defer src="config.js?v=48defe4a48"></script>
+<script defer src="friends.js?v=48defe4a48"></script>
+<script defer src="level.js?v=48defe4a48"></script>
+<script defer src="data/hsk1-words.js?v=48defe4a48"></script>
+<script defer src="data/hsk1-grammar.js?v=48defe4a48"></script>
+<script defer src="data/hsk1-webs.js?v=48defe4a48"></script>
+<script defer src="data/hsk1-speak.js?v=48defe4a48"></script>
+<script defer src="data/hsk1-listen.js?v=48defe4a48"></script>
+<script defer src="data/hsk1-exam.js?v=48defe4a48"></script>
+<script defer src="data/hsk1-erhua.js?v=48defe4a48"></script>
+<script defer src="data/lexicon.js?v=48defe4a48"></script>
+<script defer src="data/char-glosses.js?v=48defe4a48"></script>
+<script defer src="data/hsk2-preview.js?v=48defe4a48"></script>
+<script defer src="data/hsk3-preview.js?v=48defe4a48"></script>
+<script defer src="data/hsk2-words.js?v=48defe4a48"></script>
+<script defer src="data/hsk2-speak.js?v=48defe4a48"></script>
+<script defer src="data/hsk2-listen.js?v=48defe4a48"></script>
+<script defer src="data/hsk2-exam.js?v=48defe4a48"></script>
+<script defer src="data/hsk2-grammar.js?v=48defe4a48"></script>
+<script defer src="data/hsk2-webs.js?v=48defe4a48"></script>
+<script defer src="data/hsk3-words.js?v=48defe4a48"></script>
+<script defer src="data/hsk3-speak.js?v=48defe4a48"></script>
+<script defer src="data/hsk3-listen.js?v=48defe4a48"></script>
+<script defer src="data/hsk3-exam.js?v=48defe4a48"></script>
+<script defer src="data/hsk3-grammar.js?v=48defe4a48"></script>
+<script defer src="data/hsk3-webs.js?v=48defe4a48"></script>
+<script defer src="ascent.js?v=48defe4a48"></script>
+<script defer src="secrets.js?v=48defe4a48"></script>
+<script defer src="sync.js?v=48defe4a48"></script>
+<script defer src="data/audio-manifest.js?v=48defe4a48"></script>
+<script defer src="journey.js?v=48defe4a48"></script>
+<script defer src="data/journey.js?v=48defe4a48"></script>
+<script defer src="data/journey-map.js?v=48defe4a48"></script>
+<script defer src="data/journey-media.js?v=48defe4a48"></script>
+<script defer src="data/souvenirs.js?v=48defe4a48"></script>
+<script defer src="erhua.js?v=48defe4a48"></script>
+<script defer src="pinyin.js?v=48defe4a48"></script>
+<script defer src="data/pinyin-course.js?v=48defe4a48"></script>
+<script defer src="data/pinyin-chart.js?v=48defe4a48"></script>
+<script defer src="data/exam-media.js?v=48defe4a48"></script>
+<script defer src="data/exam-art.js?v=48defe4a48"></script>
+<script defer src="data/neutral-alt.js?v=48defe4a48"></script>
+<script defer src="data/path-scenes.js?v=48defe4a48"></script>
+<script defer src="data/speak-scenes.js?v=48defe4a48"></script>
+<script defer src="data/art.js?v=48defe4a48"></script>
+<script defer src="data/path.js?v=48defe4a48"></script>
+<script defer src="app.js?v=48defe4a48"></script>
 </body>
 </html>

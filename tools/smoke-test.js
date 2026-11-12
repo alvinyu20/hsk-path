@@ -61,19 +61,8 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   page.on('dialog', d => d.accept());
 
   const shot = async (name) => { if (shots) await page.screenshot({ path: path.join(shots, name + '.png'), fullPage: true }); };
-  // desktop: the sidebar lists every screen. Phone width: five tabs, and the screens of a section in a strip under the header.
-  const PHONE_GROUP = { Home: 'Today', Path: 'Learn', Archive: 'Review', Grammar: 'Learn', Pinyin: 'Learn', 'My words': 'Review', 'Grammar review': 'Review', 'Review words': 'Review', Tests: 'Review', 'Listening lab': 'Listen & speak', Speak: 'Listen & speak', 'Level exam': 'Review', Journey: 'Journey' };
-  const ACCT_ROW = { Friends: 'Friends', Settings: 'Settings and sync', Achievements: 'Achievements', 'How Shanlu works': 'How Shanlu works' };   // reached from the Account page
-  const nav = async (label) => {
-    if (page.viewportSize().width > 900) { await page.locator('nav button', { hasText: label }).first().click(); }
-    else if (ACCT_ROW[label]) { await page.locator('.acct-mini').click(); await page.waitForTimeout(80); await page.locator('.acct-row', { hasText: ACCT_ROW[label] }).first().click(); }
-    else {
-      const g = PHONE_GROUP[label] || label;
-      await page.locator('.navg button', { hasText: g }).first().click();
-      if (g !== label && g !== 'Today') await page.locator('.subnav button', { hasText: new RegExp('^' + label + '$') }).first().click();
-    }
-    await page.waitForTimeout(120);
-  };
+  // five tabs on every screen size; the pages of a tab sit under it (sidebar on a wide window, a strip under the header on a phone)
+  const nav = require('./test-nav').makeNav(page);
   const text = async () => (await page.locator('main').innerText());
   const noSideways = () => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
 
@@ -114,10 +103,10 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
 
   await page.goto(url);
   await page.waitForSelector('.app');
-  check((await text()).includes('Welcome back'), 'home loads');
+  check((await text()).includes('Start today\'s plan'), 'home loads');
   check((await page.locator('.side').innerText()).includes('0-day streak'), 'fresh state starts at a 0-day streak');
   // Home: the trail comes first, then today and the level exam
-  check(await page.evaluate(() => { const h = document.querySelector('.home'); const f = h && h.firstElementChild; return !!f && !!f.querySelector('.today-go') && f.innerText.includes('Today') && !!h.querySelector('.trail') && f.compareDocumentPosition(h.querySelector('.trail')) & Node.DOCUMENT_POSITION_FOLLOWING; }), 'Today and its main button come first on Home; the path is below');
+  check(await page.evaluate(() => { const h = document.querySelector('.home'); const f = h && h.querySelector('.hgrid2') && h.querySelector('.hgrid2').firstElementChild; return !!f && !!f.querySelector('.today-go') && f.innerText.includes('Today') && !!h.querySelector('.trail') && f.compareDocumentPosition(h.querySelector('.trail')) & Node.DOCUMENT_POSITION_FOLLOWING; }), 'Today and its main button come first on Home; the path is below');
   check(await page.locator('.rg').count() === 4 && await page.locator('.task2').count() >= 1, 'Home shows four skill rings and the Today list');
   // The ascent: trail, mist and stairs views of the same progress
   const ws0 = await page.evaluate(() => JSON.stringify(window.shanlu.state.ws));
@@ -500,8 +489,10 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).forEach(zh => { if (ws[zh].see.s === 1 && ws[zh].see.l === 5) ws[zh].see = { s:30, l:0 }; }); app.setState({ ws, rq:[], rcomplete:false }); });
 
   // the tabs run learn -> practice -> check -> your words, and the logo goes Home
-  check(JSON.stringify(await page.locator('.navs:not(.navg) .nav').allInnerTexts().then(a => a.map(t => t.replace(/\d+$/, '').trim()))) === JSON.stringify(['Home', 'Path', 'Archive', 'Grammar', 'Pinyin', 'Review words', 'Grammar review', 'Listening lab', 'Speak', 'Tests', 'Level exam', 'My words', 'Journey']), 'the tabs are in learning order');
-  await page.locator('nav button', { hasText: /^\s*Grammar\s*$/ }).first().click();
+  check(JSON.stringify(await page.locator('.navg .nav').allInnerTexts().then(a => a.map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()))) === JSON.stringify(['Today', 'Learn', 'Review', 'Talk', 'Journey']), 'the five tabs are in learning order on a wide window too');
+  await nav('Review words');
+  check(JSON.stringify(await page.locator('.navsub .subl').allInnerTexts().then(a => a.map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()))) === JSON.stringify(['Words', 'Grammar', 'Test']), 'the open tab lists its pages under itself in the sidebar: Words, Grammar, Test');
+  await nav('Grammar');
   await page.locator('.brand').click();
   await page.waitForTimeout(120);
   check(await page.evaluate(() => window.shanlu.state.screen) === 'home', 'clicking the logo goes Home');
@@ -1384,29 +1375,29 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
 
   // phone navigation: five tabs that all fit, a strip for the screens of a section, one slim header, Today first
   await nav('Home');
-  const bar = await page.evaluate(() => { const b = document.querySelector('.navg'); const r = b.getBoundingClientRect(); return { n: b.querySelectorAll('button').length, fits: b.scrollWidth <= b.clientWidth + 1, visible: r.height > 40 && r.bottom <= window.innerHeight + 1, old: getComputedStyle(document.querySelector('.navs:not(.navg)')).display }; });
-  check(bar.n === 5 && bar.fits && bar.visible && bar.old === 'none', 'on a phone the bottom bar has five tabs that all fit, with no sideways scroll (the long list is hidden) ' + JSON.stringify(bar));
-  check((await page.locator('.navg button').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()).join('|') === 'Today|Learn|Review|Listen & speak|Journey', 'the tabs are Today, Learn, Review, Listen & speak, Journey');
+  const bar = await page.evaluate(() => { const b = document.querySelector('.navg'); const r = b.getBoundingClientRect(); return { n: b.querySelectorAll('button').length, fits: b.scrollWidth <= b.clientWidth + 1, visible: r.height > 40 && r.bottom <= window.innerHeight + 1, sub: getComputedStyle(document.querySelector('.navsub') || document.body).display }; });
+  check(bar.n === 5 && bar.fits && bar.visible, 'on a phone the bottom bar has five tabs that all fit, with no sideways scroll ' + JSON.stringify(bar));
+  check((await page.locator('.navg button.nav').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()).join('|') === 'Today|Learn|Review|Talk|Journey', 'the tabs are Today, Learn, Review, Talk, Journey');
   const homeTop = await page.evaluate(() => { const g = document.querySelector('.today-go').getBoundingClientRect(); return { y: g.bottom, h: window.innerHeight }; });
   check(homeTop.y < homeTop.h - 60, 'on a phone the main Today button is on the first screen, above the bottom bar (bottom edge at ' + Math.round(homeTop.y) + ' of ' + homeTop.h + ')');
-  await page.locator('.navg button', { hasText: 'Learn' }).click();
+  await page.locator('.navg button.nav', { hasText: 'Learn' }).click();
   await page.waitForTimeout(120);
-  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Path|Pinyin|Grammar' && ['path', 'grammar', 'pinyin'].includes(await page.evaluate(() => window.shanlu.state.screen)), 'the Learn tab opens a Learn screen, with the Path, Pinyin and Grammar one tap away');
-  await page.locator('.subnav button', { hasText: /^Grammar$/ }).click();
+  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Path|Library' && ['path', 'library'].includes(await page.evaluate(() => window.shanlu.state.screen)), 'the Learn tab opens a Learn screen, with the Path and the Library one tap away');
+  await page.locator('.subnav button', { hasText: /^Library$/ }).click();
   await page.waitForTimeout(100);
-  check((await page.evaluate(() => window.shanlu.state.screen)) === 'grammar' && (await page.locator('.navg button.on').innerText()).includes('Learn'), 'the strip switches screens inside the section and the Learn tab stays lit');
-  await page.locator('.navg button', { hasText: 'Review' }).click(); await page.waitForTimeout(100);
-  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Review words|Grammar review|Tests|Level exam|Archive|My words', 'the Review tab holds Review words, Grammar review, Tests, the Level exam, the Archive and My words');
-  await page.locator('.navg button', { hasText: 'Learn' }).click(); await page.waitForTimeout(100);
-  check((await page.evaluate(() => window.shanlu.state.screen)) === 'grammar', 'a tab returns to the screen you last used in that section');
-  await page.locator('.navg button', { hasText: 'Journey' }).click(); await page.waitForTimeout(100);
-  check((await page.evaluate(() => window.shanlu.state.screen)) === 'journey' && (await page.locator('.navg button.on').innerText()).includes('Journey'), 'the Journey tab opens the Journey and lights up');
+  check((await page.evaluate(() => window.shanlu.state.screen)) === 'library' && (await page.locator('.navg button.nav.on').innerText()).includes('Learn'), 'the strip switches screens inside the section and the Learn tab stays lit');
+  await page.locator('.navg button.nav', { hasText: 'Review' }).click(); await page.waitForTimeout(100);
+  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Words|Grammar|Test', 'the Review tab holds Words, Grammar and Test');
+  await page.locator('.navg button.nav', { hasText: 'Learn' }).click(); await page.waitForTimeout(100);
+  check((await page.evaluate(() => window.shanlu.state.screen)) === 'library', 'a tab returns to the screen you last used in that section');
+  await page.locator('.navg button.nav', { hasText: 'Journey' }).click(); await page.waitForTimeout(100);
+  check((await page.evaluate(() => window.shanlu.state.screen)) === 'journey' && (await page.locator('.navg button.nav.on').innerText()).includes('Journey'), 'the Journey tab opens the Journey and lights up');
   await page.locator('.acct-mini').click(); await page.waitForTimeout(100);
-  check((await page.evaluate(() => window.shanlu.state.screen)) === 'acct' && await page.locator('.navg button.on').count() === 0 && await page.locator('.acct-mini.on').count() === 1, 'the avatar opens the Account page; no tab is lit and the avatar is');
+  check((await page.evaluate(() => window.shanlu.state.screen)) === 'acct' && await page.locator('.navg button.nav.on').count() === 0 && await page.locator('.acct-mini.on').count() === 1, 'the avatar opens the Account page; no tab is lit and the avatar is');
   const acctRows = (await page.locator('.acct-row').allInnerTexts()).join(' ');
   check(/Settings/.test(acctRows) && /Achievements/.test(acctRows), 'Settings and Achievements branch off the Account page (' + acctRows.replace(/\n/g, ' ').slice(0, 80) + ')');
   await page.locator('.acct-row', { hasText: 'Achievements' }).click(); await page.waitForTimeout(100);
-  check(await page.locator('.backbar').isVisible() && (await page.locator('.navg button.on').count()) === 0, 'Achievements has a back link to Account, and no tab is lit');
+  check(await page.locator('.backbar').isVisible() && (await page.locator('.navg button.nav.on').count()) === 0, 'Achievements has a back link to Account, and no tab is lit');
   await page.locator('.backbar').click(); await page.waitForTimeout(100);
   check((await page.evaluate(() => window.shanlu.state.screen)) === 'acct' && !(await page.locator('.backbar').isVisible().catch(() => false)), 'the back link returns to the Account page');
   const slim = await page.evaluate(() => { const t = document.querySelector('.top').getBoundingClientRect(); return { h: t.height, pills: [...document.querySelectorAll('.stats .pill')].filter(p => p.offsetParent !== null).length }; });

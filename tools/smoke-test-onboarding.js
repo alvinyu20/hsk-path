@@ -71,7 +71,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await page.locator('button', { hasText: 'Take my first flight' }).count() === 1, 'the first flight is offered');
     await page.locator('.brand').click();
     check(await page.locator('section.ob').count() === 0, 'Home no longer shows Start here once the session is done');
-    check(/Welcome back/.test(await page.locator('h1').innerText()), 'the Home title is back to normal');
+    check(/^Today/.test(await page.locator('h1').innerText()), 'the Home title is back to normal');
     // the first flight, then the guide
     check(await page.getByText('How Shanlu works').count() === 0, 'the guide is still hidden before the flight');
     await page.locator('.pill.xpp').click();
@@ -82,7 +82,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     t = await main(page);
     check(/A day on Shanlu/.test(t) && /What each part is for/.test(t) && /Coins and the Journey/.test(t) && /Your progress and your friends/.test(t), 'the guide opens with its sections');
     check(/Your first stop is free/.test(t) && /50, 100, 200, 300, 400 and then 500 coins/.test(t), 'the guide states the coin ramp');
-    check(await page.locator('.side .linkbtn', { hasText: 'How Shanlu works' }).count() === 1, 'the sidebar keeps a link to the guide');
+    check(await page.locator('.side .ylink', { hasText: 'How Shanlu works' }).count() === 1, 'the sidebar keeps a link to the guide');
     await page.locator('.pill.xpp').click();
     check(await page.locator('.ob-banner').count() === 0, 'the prompt does not come back once the guide was opened');
     check(errors.length === 0, 'no errors: ' + errors.join(' | '));
@@ -101,7 +101,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(!(await page.locator('.acct-row').allInnerTexts()).join(' ').includes('How Shanlu works') && !(await main(page)).includes('New here, or want a reminder'), 'no guide link (Account, Today) before the flight');
     await page.evaluate(() => { const a = window.shanlu; a.go('journey'); });
     await page.locator('.jy-go').click();
-    await page.locator('.navg button', { hasText: 'Today' }).click(); await page.waitForTimeout(100);
+    await page.locator('.navg button.nav', { hasText: 'Today' }).click(); await page.waitForTimeout(100);
     check((await main(page)).includes('How Shanlu works'), 'Today has a quiet link to the guide after the flight');
     await page.locator('.acct-mini').click();
     check((await page.locator('.acct-row').allInnerTexts()).join(' ').includes('How Shanlu works'), 'the Account page lists the guide after the flight');
@@ -116,7 +116,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   {
     const { ctx, page, errors } = await open({ xp: 500 });
     check(await page.locator('section.ob').count() === 0, 'a person with progress gets no Welcome card or Start here');
-    check(/Welcome back/.test(await page.locator('h1').innerText()), 'and keeps the normal Home title');
+    check(/^Today/.test(await page.locator('h1').innerText()), 'and keeps the normal Home title');
     await ctx.close();
   }
   {

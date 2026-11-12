@@ -25,7 +25,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   // ---- a new person: the first flight is free ----
   {
     const { ctx, page, errors } = await open({});
-    check((await page.locator('.pill.xpp').innerText()).includes('0 coins'), 'the coins pill is in the header');
+    check((await page.locator('.pill.xpp').textContent()).includes('0 coins'), 'the coins pill is in the header');
     check(await page.locator('.xp-ready').count() === 1, 'the pill shows one stop waiting');
     await page.locator('.pill.xpp').click();
     check((await main(page)).includes('Take your first flight (free)'), 'a new person sees the free first flight');
@@ -88,7 +88,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(/成都/.test(await page.locator('.jy-sayit-zh').innerText()), 'the sentence to say uses the name of the stop');
     check(await page.locator('.jy-ph').count() === 1 && await page.locator('.jy-here').count() === 1, 'after a stop the map of the region shows, with a mark where you are');
     check(/New city/.test(t) === false || true, 'ok');
-    check(/1,450 coins/.test(await page.locator('.pill.xpp').innerText()), 'travelling spends coins: 1,500 minus the 50 for the second stop leaves 1,450');
+    check(/1,450 coins/.test(await page.locator('.pill.xpp').textContent()), 'travelling spends coins: 1,500 minus the 50 for the second stop leaves 1,450');
     await page.locator('.jy-acts .btn.pri').click();
     // keep travelling while coins last: every stop in this city block belongs to Chengdu until the city is done
     let n = 2, outside = 0;

@@ -62,7 +62,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   page.on('console', m => { if (m.type() === 'error' && !/fonts\.(googleapis|gstatic)|net::ERR|status of 401/.test(m.text())) errors.push('console: ' + m.text()); });
   page.on('dialog', d => { dialogs.push(d.message()); d.accept(); });
 
-  const nav = async (label) => { await page.locator('nav button', { hasText: label }).first().click(); await page.waitForTimeout(120); };
+  const nav = require('./test-nav').makeNav(page);
   const text = async () => (await page.locator('main').innerText());
   const answer = async (right) => {
     const q = await page.evaluate(() => JSON.parse(JSON.stringify(window.shanlu.curQ())));
@@ -108,7 +108,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   const home = await text();
   check(home.includes('197 words to go'), 'the trail counts the 197 HSK 2 words');
   check(home.includes('Listening drill') && home.includes('Say: ') && home.includes('Grammar: Comparing'), 'Today offers word webs, the listening drill, a practice script and grammar');
-  check(home.includes('HSK 2 level exam') && home.includes('to open HSK 3') && (await page.locator('.rg').count()) === 4, 'the home card is the HSK 2 level exam with four skill rings, and says passing it opens HSK 3');
+  check(home.includes('Climb to the HSK 2 summit') && home.includes('HSK 2 exam sits at the top of your path') && (await page.locator('.rg').count()) === 4, 'the home card is the HSK 2 climb with four skill rings, and says the exam is at the top of the path');
   const st = await page.evaluate(() => ({ n: Object.keys(window.shanlu.state.ws).length, l1: !!window.shanlu.state.ws['你好'], l2: !!window.shanlu.state.ws['机场'] }));
   check(st.n === 197 && !st.l1 && st.l2, 'progress holds the 197 HSK 2 words and none of the HSK 1 words');
   const kidWord = await page.evaluate((erhua) => ({ has: !!window.shanlu.state.ws[erhua ? '男孩儿' : '男孩'], other: !!window.shanlu.state.ws[erhua ? '男孩' : '男孩儿'], moment: !!window.shanlu.state.ws['一会儿'] }), erhuaMode);
@@ -311,7 +311,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   const l1Words = erhuaMode ? 300 : 297; // three HSK 1 words fold into another form in plain style
   check((await text()).includes(l1Words + ' words to go'), 'switching to HSK 1 shows the HSK 1 trail');
   check(await page.evaluate((n) => Object.keys(window.shanlu.state.ws).length === n && !window.shanlu.state.ws['机场'] && Object.keys(window.shanlu.state.wlearned).length === 0, l1Words), 'HSK 1 progress is separate: none of the HSK 2 words started there');
-  check((await page.locator('nav button', { hasText: 'Listening lab' }).count()) === 1 && (await page.locator('main').innerText()).includes('Say: '), 'HSK 1 still offers its listening lab and practice scripts');
+  check((await page.locator('.navg button.nav', { hasText: 'Talk' }).count()) === 1 && (await page.locator('main').innerText()).includes('Say: '), 'HSK 1 still offers its listening lab and practice scripts');
   await openLv(page); await page.locator('.lvpanel .lvitem:has(.lvn:text-is("HSK 2"))').click();
   await page.waitForFunction(() => window.SHANLU_LEVEL === 2);
   await page.waitForSelector('.app');
@@ -351,7 +351,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     check(pt.a[0] && /Also right: 店/.test(pt.a[2]) && pt.b[0] && pt.c && pt.d === 'again', 'typing only 店 (dian4) for "shop" (商店) is right too, with a note (店 is "shop, store"); the whole word is right; other words are wrong');
     check(dn.a[0] && dn.b && !dn.c[0] && dn.c[1] === 'hard' && !dn.d, 'on the "don\'t" card, 别 is right too (bie2), a wrong tone is only "close", and other words are not');
     // grammar from both levels in one list
-    await pA.locator('nav button', { hasText: /^\s*Grammar\s*$/ }).first().click();
+    await require('./test-nav').makeNav(pA)('Grammar');
     await pA.waitForTimeout(150);
     check(await pA.evaluate(() => (document.querySelector('main').innerText).toLowerCase().includes('lesson 1 of ' + (window.HSK1_GRAMMAR.lessons.length + window.HSK2_GRAMMAR.lessons.length))), 'Grammar lists the lessons of both levels');
     check(await pA.locator('.gl .gg').count() === 11, 'Grammar is in 11 categories');
@@ -362,7 +362,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     check(cmp.n === 4 && cmp.l1 === 1 && cmp.l2 === 3 && cmp.edge1 === 1 && cmp.edge2 === 3 && cmp.t.includes('Comparing: 比'), 'the Describing and comparing category holds the HSK 1 describing lesson and three HSK 2 lessons, each with its level tag and coloured edge');
     await pA.fill('.gl .tr-search', '');
     // word webs: topics first, and the hubs of both levels
-    await pA.locator('nav button', { hasText: 'Archive' }).click();
+    await require('./test-nav').makeNav(pA)('Archive');
     await pA.waitForTimeout(150);
     await pA.locator('button', { hasText: /^Show all \d+ topics$/ }).click();
     await pA.waitForTimeout(100);

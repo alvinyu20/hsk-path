@@ -58,12 +58,14 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const page = await ctx.newPage(); watch(page);
     await page.goto(url); await page.waitForSelector('.app'); await page.waitForTimeout(200);
 
-    const sideLabels = (await page.locator('.side .navs:not(.navg) .nav').allInnerTexts()).map(t => t.replace(/\d+$/, '').trim());
-    check(sideLabels.indexOf('Path') >= 0 && sideLabels.indexOf('Archive') >= 0 && sideLabels.indexOf('Word webs') < 0, 'the sidebar has Path and Archive (Word webs is now Archive): ' + sideLabels.join(', '));
-    check(sideLabels.indexOf('Path') === 1, 'Path comes right after Home');
+    const sideLabels = (await page.locator('.side .navg .nav').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim());
+    check(sideLabels.join('|') === 'Today|Learn|Review|Talk|Journey', 'the sidebar has five tabs: ' + sideLabels.join(', '));
+    const nav = require('./test-nav').makeNav(page);
+    await nav('Path');
+    check((await page.locator('.navsub .subl').allInnerTexts()).join('|') === 'Path|Library', 'the Learn tab lists Path and Library under itself');
 
     // ---- the path
-    await page.locator('.side .nav', { hasText: 'Path' }).first().click(); await page.waitForTimeout(150);
+    await nav('Path');
     check((await page.locator('.pth-unit').count()) === 13, 'HSK 1 path shows its 13 units');
     const head = await page.locator('.pth-head').innerText();
     const wordsHsk1 = await page.evaluate(() => (window.HSK1_WORDS || []).length);
@@ -198,13 +200,13 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check((await st(page)).screen === 'grammar' && await page.evaluate(() => window.shanlu.state.glesson !== null && window.shanlu.state.glesson !== undefined), 'a grammar stop opens its grammar lesson');
 
     // ---- the Archive keeps the old screens
-    await page.locator('.side .nav', { hasText: 'Archive' }).first().click(); await page.waitForTimeout(150);
-    check((await st(page)).screen === 'web', 'Archive opens the topics, word webs and pairs');
-    await page.locator('.side .nav', { hasText: 'My words' }).first().click(); await page.waitForTimeout(150);
+    await nav('Archive');
+    check((await st(page)).screen === 'web', 'the Library opens the topics, word webs and pairs');
+    await nav('My words');
     check((await st(page)).screen === 'words', 'My words is still there');
 
     // ---- Today points at the path
-    await page.locator('.side .nav', { hasText: 'Home' }).first().click(); await page.waitForTimeout(150);
+    await nav('Home');
     const home = await page.locator('main').innerText();
     check(/Path: /.test(home), 'the Today list has a Path task with the next stop');
     check(await page.locator('.task2', { hasText: 'Path: ' }).first().innerText().then(t => /Done/.test(t)), 'the Path task shows as done once a stop has been finished today');
@@ -237,16 +239,16 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const ctx = await mkCtx({ width: 390, height: 844 }, true);
     const page = await ctx.newPage(); watch(page);
     await page.goto(url); await page.waitForSelector('.app'); await page.waitForTimeout(200);
-    check((await page.locator('.navg button').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()).join('|') === 'Today|Learn|Review|Listen & speak|Journey', 'the five tabs on a phone: Today, Learn, Review, Listen & speak, Journey');
-    await page.locator('.navg button', { hasText: 'Learn' }).click(); await page.waitForTimeout(150);
-    check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Path|Pinyin|Grammar', 'Learn holds Path, Pinyin and Grammar');
+    check((await page.locator('.navg button.nav').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()).join('|') === 'Today|Learn|Review|Talk|Journey', 'the five tabs on a phone: Today, Learn, Review, Talk, Journey');
+    await page.locator('.navg button.nav', { hasText: 'Learn' }).click(); await page.waitForTimeout(150);
+    check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Path|Library', 'Learn holds Path and Library');
     check((await st(page)).screen === 'path', 'Learn opens on the Path');
     check(await noSideways(page), 'the path does not scroll sideways on a phone');
     // every label sits inside the screen
     const clipped = await page.evaluate(() => [...document.querySelectorAll('.pth-label')].filter(l => { const r = l.getBoundingClientRect(); return r.right > window.innerWidth + 1 || r.left < -1; }).length);
     check(clipped === 0, 'no stop label runs off the screen on a phone');
-    await page.locator('.navg button', { hasText: 'Review' }).click(); await page.waitForTimeout(150);
-    check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Review words|Grammar review|Tests|Level exam|Archive|My words', 'Review holds Review words, Grammar review, Tests, Level exam, Archive and My words');
+    await page.locator('.navg button.nav', { hasText: 'Review' }).click(); await page.waitForTimeout(150);
+    check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Words|Grammar|Test', 'Review holds Words, Grammar and Test');
     check(await page.locator('.acct-mini').count() === 1 && await page.locator('.acct-mini').isVisible(), 'the account avatar sits in the phone header');
     const box = await page.locator('.acct-mini').boundingBox();
     check(box && Math.abs(box.width - box.height) < 2, 'the avatar is round (' + (box ? Math.round(box.width) + 'x' + Math.round(box.height) : '?') + ')');
@@ -254,7 +256,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check((await st(page)).screen === 'acct', 'the avatar opens the Account page');
     check(await noSideways(page), 'the Account page does not scroll sideways on a phone');
     // a lesson on a phone: the bottom tabs go away, the options fit
-    await page.locator('.navg button', { hasText: 'Learn' }).click(); await page.waitForTimeout(150);
+    await page.locator('.navg button.nav', { hasText: 'Learn' }).click(); await page.waitForTimeout(150);
     await page.locator('.pth-node').first().tap(); await page.waitForTimeout(150);
     check(await noSideways(page), 'the stop sheet does not scroll sideways on a phone');
     await page.locator('.pth-sheet .pth-go').tap(); await page.waitForTimeout(150);
@@ -270,7 +272,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const page = await ctx.newPage(); watch(page);
     await page.goto(url + '?level=' + lv); await page.waitForSelector('.app'); await page.waitForTimeout(200);
     check(await page.evaluate(() => window.SHANLU_LEVEL) === lv, 'HSK ' + lv + ' is open');
-    await page.locator('.side .nav', { hasText: 'Path' }).first().click(); await page.waitForTimeout(150);
+    await require('./test-nav').makeNav(page)('Path');
     const head = await page.locator('.pth-head').innerText();
     check((await page.locator('.pth-unit').count()) === units && head.includes('0 of ' + stops + ' stops done'), 'HSK ' + lv + ' has its own path: ' + units + ' units, ' + stops + ' stops');
     const words = await page.evaluate((l) => window['HSK' + l + '_WORDS'].length, lv);

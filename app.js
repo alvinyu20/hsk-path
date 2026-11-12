@@ -57,6 +57,10 @@
   const savePerson = (notify) => { lsSet(PERSON_STORE, JSON.stringify(PERSON)); if (notify !== false) onPersonChange(); };
   const prefGet = (k, d) => (PERSON.prefs[k] && PERSON.prefs[k].v !== undefined ? PERSON.prefs[k].v : d);
   const prefSet = (k, v) => { PERSON.prefs[k] = { v, at:Date.now() }; savePerson(); };
+  // the small drawings in data/art.js (Mingming, tab banners, lanterns, the summit) as picture addresses
+  const TOPKEY = { library:'library', words:'library', grammar:'library', web:'library', pinyin:'library', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', journey:'journey' };   // which banner picture heads which page
+  const ARTC = {};
+  const artUri = (a, b) => { const k = a + (b ? '.' + b : ''); if (ARTC[k] === undefined) { const A = window.SHANLU_ART || {}; const svg = b ? (A[a] || {})[b] : A[a]; ARTC[k] = svg ? 'data:image/svg+xml;utf8,' + encodeURIComponent(svg) : ''; } return ARTC[k]; };
   // take over what older versions kept on the device only (stamp 1: older than anything set on another device)
   (() => {
     let changed = false;
@@ -464,7 +468,7 @@
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
   const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
 
   // Settings that belong to the person, not the device: kept as person preferences ('set.<name>', 'level', 'erhua') so every device ends up with the same ones.
   // (The browser voice stays on the device: the voices on a phone and a laptop are different ones.)
@@ -479,11 +483,11 @@
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
       jyPing:0, jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
-      gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
+      gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
       pyView:'list', pyLs:0, pyAns:{}, pyGain:'', pyIni:'b', pyInfo:null, typOpen:false, typIn:'', qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
-      gdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
+      gdone:false, grdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       plv:0, pstop:'', pu:{}, pl:null, plNote:'', plAlt:'', acctEdit:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
@@ -501,7 +505,7 @@
     return Object.assign({}, s, {
       mem0:memOf(s.ws).words, day:t, dayXp:0, dayMin:0, wlearned:{}, wrated:{}, wdelta:{}, wreveal:{}, webCredited:false,
       rcomplete:false, rdone:0, rxp:0, rq, rtotal:rq.length, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rflip:false,
-      gdone:false, tdone:false, ldone:false, spokeToday:false, sdone:false, sturn:0
+      gdone:false, grdone:false, tdone:false, ldone:false, spokeToday:false, sdone:false, sturn:0
     });
   }
 
@@ -1718,11 +1722,12 @@
 
     lastSub = {};
     goGroup = (id) => {   // a phone tab: back to the screen last used in that section
-      const first = { home:'home', learn:PATH_LVLS.length ? 'path' : 'pinyin', review:'review', talk:'listen', journey:'journey' }[id];
+      const first = { home:'home', learn:PATH_LVLS.length ? 'path' : 'library', review:'review', talk:'listen', journey:'journey' }[id];
       this.go(this.lastSub[id] || first);
     };
     go = (screen) => {
-      { const grp = { path:'learn', grammar:'learn', pinyin:'learn', web:'review', words:'review', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', exam:'review', journey:'journey' }[screen]; if (grp) this.lastSub[grp] = screen; }
+      { const grp = { path:'learn', library:'learn', grammar:'learn', pinyin:'learn', web:'learn', words:'learn', exam:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', journey:'journey' }[screen]; if (grp) this.lastSub[grp] = ({ words:'library', grammar:'library', web:'library', pinyin:'library', exam:'path' })[screen] || screen; }
+      { const sv = prefGet('sv', {}); if ((sv[screen] || 0) < 4) prefSet('sv', Object.assign({}, sv, { [screen]:(sv[screen] || 0) + 1 })); }   // how many times each page was opened: a page's one-line description fades after a few visits
       if (screen === 'guide' && !onbRead().g) this.onbSet({ g:Date.now() });
       if (screen === 'journey') { otherXp(true); this.jyEnsure(); this.friendsRefresh(false); }
       this.setState(screen === 'path' ? { screen, pstop:'', plNote:'', plAlt:'' } : { screen }); try { window.scrollTo(0, 0); } catch (e) {}
@@ -2639,7 +2644,7 @@
           const hist = S.testHistory.concat([{ date:new Date().toLocaleDateString('en-US', { month:'short', day:'numeric' }), score:pct }]).slice(-5);
           patch.testHistory = hist; patch.tdone = true; patch.dayMin = S.dayMin + (S.tdone ? 0 : 3);
         } else if (S.qmode === 'greview') {
-          patch.gdone = true; patch.dayMin = S.dayMin + (S.gdone ? 0 : 4);
+          patch.gdone = true; patch.grdone = true; patch.dayMin = S.dayMin + (S.gdone ? 0 : 4);   // the daily Grammar review task is its own flag, so a lesson does not tick it
         } else {
           const L = LESSONS[S.glesson];
           const gres = Object.assign({}, S.gres); gres[L.id] = Math.max(gres[L.id] || 0, pct);
@@ -3298,12 +3303,13 @@
 
     // what the Path and the stop lesson show (the same keys every time, empty when the screen is not open)
     pathVals = (S) => {
-      const sh0 = { kick:'', title:'', isW:false, isG:false, words:[], sub:'', cta:'', go:() => {}, hasNote:false, note:'', hasAlt:false, altText:'', hasBest:false, best:'' };
+      const sh0 = { kick:'', title:'', isDone:false, isW:false, isG:false, words:[], sub:'', cta:'', go:() => {}, hasNote:false, note:'', hasAlt:false, altText:'', hasBest:false, best:'' };
       const out = {
         isPath:S.screen === 'path', isPlesson:S.screen === 'plesson',
         pthHas:PATH_LVLS.length > 0, pthNone:!PATH_LVLS.length, pthHasTabs:PATH_LVLS.length > 1, pthTabs:[], pthSub:'', pthPct:'0%', pthName:'', pthBlurb:'', pthKCls:'', pthHasHero:false, pthHeroImg:'', pthHasTag:false, pthTag:'', pthRailPct:'0%',
         pthHasNext:false, pthAllDone:false, pthNextKick:'', pthNextTitle:'', pthNextSub:'', pthNextWords:'', pthNextBtn:'', pthNextGo:() => {},
-        pthUnits:[], pthSheet:false, pthSh:sh0, pthClose:this.pathClose, pthAlt:this.pathAlt
+        pthUnits:[], pthSheet:false, pthSh:sh0, pthClose:this.pathClose, pthAlt:this.pathAlt,
+        pthSummit:false, smt:{ cls:'', title:'', sub:'', btn:'', go:() => {}, locked:false, unlocked:false, passed:false, early:() => {}, art:artUri('summit'), pct:'0%', hint:'' }
       };
       if (S.screen === 'path') {
         const lv = this.pathLevel(); const us = PATH_U[lv] || []; const nxt = pathNext(S, lv);
@@ -3319,6 +3325,16 @@
         out.pthSub = nDone + ' of ' + nTotal + ' stops done · ' + wStart + ' of ' + wTotal + ' words started';
         out.pthPct = (nTotal ? Math.round(nDone / nTotal * 100) : 0) + '%';
         out.pthAllDone = !nxt && nTotal > 0;
+        // the summit: the level exam is the last stop of the path. It opens when the path is nearly done (80%); passing it plants the flag and opens the next level
+        if (EXAMBANK && !ALL && lv === LV) {
+          const frac = nTotal ? nDone / nTotal : 0, passed = LVL.levelPassed(LV), open = passed || frac >= 0.8;
+          out.pthSummit = true;
+          out.smt = {
+            cls:passed ? 'passed' : open ? 'open' : 'locked', passed, locked:!open, unlocked:open, title:LVN + ' level exam',
+            sub:passed ? LVN + ' is behind you.' + (LV < LVL.MAX_LEVEL ? ' HSK ' + (LV + 1) + ' is open.' : '') : open ? 'You are near the top. Pass listening and reading (' + LVL.PASS_PCT + '% in each) to plant the flag' + (LV < LVL.MAX_LEVEL ? ' and open HSK ' + (LV + 1) + '.' : '.') : 'The summit opens when the path is 80% done. You are at ' + Math.round(frac * 100) + '%.',
+            btn:passed ? 'Take it again' : 'See the exam', go:() => this.go('exam'), early:() => this.go('exam'), art:artUri('summit'), pct:Math.round(frac * 100) + '%', hint:open ? '' : 'Open it early'
+          };
+        }
         if (nxt) {
           const ws = stopWords(nxt.st); const state = stopState(S, nxt.st);
           out.pthHasNext = true; out.pthNextKick = 'Next on your path · Unit ' + (nxt.ui + 1) + ': ' + nxt.u.title;
@@ -3373,7 +3389,7 @@
           out.pthSheet = true;
           out.pthSh = {
             kick:'Unit ' + (hit.ui + 1) + ': ' + hit.u.title + ' · Stop ' + (hit.si + 1) + ' of ' + hit.u.stops.length,
-            title:stopTitle(st), isW:st.k === 'w', isG:st.k === 'g', isS:st.k === 's',
+            title:stopTitle(st), isW:st.k === 'w', isG:st.k === 'g', isS:st.k === 's', isDone:state === 'done',
             goalList:SC ? SC.goals.map(t => ({ t })) : [],
             words:ws.map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en, mark:wStarted(S, z) ? 'learned' : '', cls:wStarted(S, z) ? 'on' : '' })),
             sub:SC ? 'You say your lines out loud and Mingming answers. About 5 minutes. Nothing listens to you, so it is practice, not a test.' : L ? L.catBlurb || L.cat || '' : (state === 'done' ? 'You have met these words. Practise them again whenever you like.' : 'About ' + Math.max(3, Math.round(ws.filter(z => !wStarted(S, z)).length * 0.8 + 1)) + ' minutes. You meet the words, answer a few easy questions, then they join your Review.'),
@@ -4029,14 +4045,16 @@
       const startWords = START_WORDS.filter(z => BANK[z]).map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en.split(',')[0] }));
       const startDoneShow = onbOn && onb.s === 'done' && onb.d === ymd(new Date()) && S.rcomplete;   // the end of the first session: what to do next
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
-      const GROUPS = [['home', ['home']], ['learn', ['path', 'pinyin', 'grammar']], ['review', ['review', 'greview', 'testlobby', 'exam', 'web', 'words']], ['talk', ['listen', 'speak']], ['journey', ['journey']]];
-      const BRANCH = ['acct', 'friends', 'ach', 'voice', 'guide'];   // reached from the Account page (the avatar), not from a tab
-      const SUBLABEL = { path:'Path', acct:'Account', web:'Archive', grammar:'Grammar', words:'My words', pinyin:'Pinyin', review:'Review words', greview:'Grammar review', testlobby:'Tests', listen:'Listening lab', speak:'Speak', exam:'Level exam', friends:'Friends', journey:'Journey', ach:'Achievements', guide:'How Shanlu works', voice:'Settings' };
+      const GROUPS = [['home', ['home']], ['learn', ['path', 'library']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['journey', ['journey']]];
+      const SUBOF = { words:'library', grammar:'library', web:'library', pinyin:'library', exam:'path' };   // pages reached from another page of the same tab: that page stays lit
+      const BRANCH = ['acct', 'friends', 'ach', 'voice', 'guide'];   // reached from the Account page (the avatar) or the quiet "You" links, not from a tab
+      const SUBLABEL = { path:'Path', library:'Library', review:'Words', greview:'Grammar', testlobby:'Test', listen:'Listening', speak:'Speaking', home:'Today', journey:'Journey' };
       const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen === 'plesson' ? 'path' : S.screen;
-      const navGroup = BRANCH.indexOf(curScreen) >= 0 ? '' : (GROUPS.find(g => g[1].indexOf(curScreen) >= 0) || GROUPS[0])[0];
+      const hlScreen = SUBOF[curScreen] || curScreen;
+      const navGroup = BRANCH.indexOf(curScreen) >= 0 ? '' : (GROUPS.find(g => g[1].indexOf(hlScreen) >= 0) || GROUPS[0])[0];
       const inBranch = BRANCH.indexOf(curScreen) >= 0;
       const gcls = (id) => 'nav' + (navGroup === id ? ' on' : '');
-      const subnavItems = ((GROUPS.find(g => g[0] === navGroup) || [0, []])[1]).filter(id => id !== 'friends' || (FR && FR.enabled())).filter(id => id !== 'exam' || !!EXAMBANK).filter(id => id !== 'guide' || guideAvail).map(id => [id, SUBLABEL[id]]);
+      const subnavItems = ((GROUPS.find(g => g[0] === navGroup) || [0, []])[1]).map(id => [id, SUBLABEL[id]]);
 
       // friends board
       const frIdent = FR && FR.enabled() ? FR.identity() : null;
@@ -4088,9 +4106,10 @@
         });
       }
       const titles = {
-        home:welcomeShow || startShow ? ['Welcome to Shanlu', 'Five words, about five minutes. You do not pick anything.'] : ['Welcome back', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
-        review:['Review words', 'Words that are due, based on how well you remember them.'],
-        greview:['Grammar review', 'Short sessions on the grammar points you have met, weakest first, with a record for each point.'],
+        home:welcomeShow || startShow ? ['Welcome to Shanlu', 'Five words, about five minutes. You do not pick anything.'] : ['Today', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
+        review:['Review', 'Words that are due, based on how well you remember them.'],
+        library:['Library', 'Everything you can look up: words, grammar, topics and sounds.'],
+        greview:['Grammar review', 'A short daily session on the grammar points you have met, weakest first.'],
         testlobby:[LVN + ' test', 'Mixed questions from the words you have started, so you are recalling words, not just recognizing them.'],
         grammar:['Grammar', ALL ? LESSONS.length + ' lessons from every unlocked level, one at a time.' : LV === 1 ? LESSONS.length + ' lessons that cover the HSK 1 grammar outline, one at a time.' : LESSONS.length + ' lessons on the grammar of the ' + LVN + ' words, one at a time.'],
         speak:['Speaking practice', HAS_SCRIPTS ? 'Say a short conversation out loud.' : 'Talk with Mingming, the AI conversation partner.'],
@@ -4098,7 +4117,7 @@
         path:['Your path', 'Words and grammar in order, from the basics up. The next stop is always one tap away.'],
         plesson:[S.pl && STOP_BY[S.pl.id] ? stopTitle(STOP_BY[S.pl.id].st) : 'Lesson', 'Meet the words, try them, then check them.'],
         acct:['Account', 'You, your numbers, and the settings behind Shanlu.'],
-        web:['Archive', 'Every topic, word web and word pair, to browse and review. New words are best learned on your path.'],
+        web:['Topics and pairs', 'Every topic, word web and word pair, to browse and review. New words are best learned on your path.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
         pinyin:['Pinyin and tones', 'Sounds, tones and the spelling rules, with audio you can tap.'],
         ach:['Achievements', 'Things you have earned, and what is still ahead.'],
@@ -4117,7 +4136,7 @@
       const week = ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((l, i) => {
         const d = new Date(now); d.setDate(now.getDate() - dow + i);
         const key = ymd(d);
-        return { l, cls:S.activity[key] ? 'd' : (key === today ? 't' : '') };
+        return { l, cls:S.activity[key] ? 'd' : (key === today ? 't' : ''), img:artUri('lantern', S.activity[key] ? 'on' : 'off') };
       });
 
       // home
@@ -4131,9 +4150,13 @@
       const learnN = Math.max(1, Math.min(4, limitOf(S), unstartedN));
       const pathToday = PATH_LVLS.length ? pathNextWord(S, pathFirstOpen(S)) : null;
       const pathNewN = pathToday && pathToday.st.k === 'w' ? stopWords(pathToday.st).filter(z => !wStarted(S, z)).length : 0;   // the next stop on the path stands in for the learn-new-words task
+      const grvAllI = (() => { const greg = gptReg(); return Object.keys(greg).filter(id => gptOpen(S, id)).map(id => gptInfo(S.gpt[id])); })();   // grammar points open to review (their lesson is passed)
+      const grvOpenToday = grvAllI.length, grvDueToday = grvAllI.filter(i => i.due).length;
+      const grvTask = { glyph:'复', title:grvDueToday > 0 ? 'Grammar review: ' + grvDueToday + ' due' : 'Grammar review', meta:'A short session, weakest points first', min:4, done:S.grdone, to:'greview', show:grvOpenToday > 0, run:() => this.startGrammarReview(), daily:true };
       const pool = [
         { glyph:'路', title:pathToday ? 'Path: ' + stopTitle(pathToday.st) : 'Learn ' + learnN + (learnN === 1 ? ' new word with its relatives' : ' new words with their relatives'), meta:pathToday ? (pathToday.st.k === 'w' ? (pathNewN === 1 ? '1 new word' : pathNewN + ' new words') : pathToday.st.k === 's' ? 'Speaking scene' : 'Grammar lesson') : 'Archive', min:5, done:S.webCredited, to:pathToday ? 'path' : 'web', run:pathToday ? () => { this.go('path'); this.setState({ pstop:pathToday.st.id }); } : null, show:unstartedN > 0 || S.webCredited },
         { glyph:'词', title:'Review ' + Math.max(S.rtotal, dueNow) + ' word' + (Math.max(S.rtotal, dueNow) === 1 ? '' : 's'), meta:'Words that are due', min:reviewMin, done:S.rcomplete, to:'review', show:S.rcomplete || dueNow > 0 },
+        grvTask,
         { glyph:'听', title:'Listening drill', meta:'Dictation with a speed ladder', min:4, done:S.ldone, to:'listen', show:HAS_LISTEN },
         { glyph:'说', title:'Say: ' + (SCEN[nextScn] || NO_SC).title, meta:'Practice script, ' + (SCEN[nextScn] || NO_SC).you.length + ' turns', min:6, done:S.spokeToday, to:'speak', show:HAS_SCRIPTS, pre:() => this.setState({ sidx:nextScn, sturn:0, sdone:false, sview:'chat' }) },
         { glyph:'语', title:'Grammar: ' + LESSONS[nextLesson].title, meta:LESSONS[nextLesson].q.length + ' exercises', min:4, done:S.gdone, to:'grammar', pre:() => this.setState({ ggopen:null, gq:'', glesson:nextLesson }) },
@@ -4142,9 +4165,10 @@
       let planned = 0;
       const plan = [];
       pool.forEach(t => { if (planned + t.min <= S.mins) { plan.push(t); planned += t.min; } });
+      if (grvTask.show !== false && plan.indexOf(grvTask) < 0) { plan.splice(Math.min(plan.length, 2), 0, grvTask); planned += grvTask.min; }   // grammar review is a daily habit: it is on the list even when a short goal has no room
       const tasks = plan.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, xp:t.min + ' min', done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:() => { if (t.run) { t.run(); return; } if (t.pre) t.pre(); this.go(t.to); } }));
       const minOpts = [10, 20, 30, 45].map(m => ({ label:m + ' min', cls:S.mins === m ? 'on' : '', fn:() => this.setState({ mins:m }) }));
-      const planNote = planned + ' of ' + S.mins + ' minutes planned. A longer goal adds more to the list.';
+      const planNote = planned + ' of ' + S.mins + ' minutes planned. Grammar review is always on the list; a longer goal adds more.';
       const skills = [
         { label:'Vocabulary', detail:startedCount + ' of ' + bankKeys.length + ' words started', w:vocabPct + '%' },
         { label:'Grammar', detail:gramPassed + ' of ' + LESSONS.length + ' lessons passed', w:gramPct + '%' }
@@ -4178,6 +4202,19 @@
       const minsLeft = Math.max(0, S.mins - S.dayMin);
       const ascCta = dueNow > 0 ? { text:'Review ' + dueNow + ' due word' + (dueNow === 1 ? '' : 's'), to:'review' }
         : (minsLeft > 0 ? { text:'Study ' + minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's'), to:(startedCount >= totalW ? 'testlobby' : 'web') } : (startedCount >= totalW ? { text:'Test yourself', to:'testlobby' } : { text:'Learn new words', to:'web' }));
+      // Today: one big button that starts the next open task of the plan, three or four quick chips, a greeting that follows the time of day
+      const nextOpenTask = tasks.find(t => t.open), anyTaskDone = tasks.some(t => t.done);
+      const planGo = nextOpenTask ? nextOpenTask.go : () => this.go(ascCta.to);
+      const planGoText = nextOpenTask ? (anyTaskDone ? 'Continue today\'s plan' : 'Start today\'s plan') : ascCta.text;
+      const hourNow = new Date().getHours();
+      const greet = hourNow >= 5 && hourNow < 12 ? ['早上好', 'zǎoshang hǎo', 'Good morning'] : hourNow >= 12 && hourNow < 18 ? ['下午好', 'xiàwǔ hǎo', 'Good afternoon'] : ['晚上好', 'wǎnshang hǎo', 'Good evening'];
+      const wordsDueShown = S.rq.length > 0 && !S.rcomplete ? S.rq.length : 0;
+      const homeChips = [{ top:wordsDueShown + ' due', sub:'Review words', cls:wordsDueShown > 0 ? 'hot' : '', fn:() => this.go('review') }]
+        .concat(grvOpenToday > 0 ? [{ top:grvDueToday + ' due', sub:'Grammar review', cls:grvDueToday > 0 && !S.grdone ? 'hot' : '', fn:() => this.startGrammarReview() }] : [])
+        .concat(HAS_SCRIPTS ? [{ top:'1 scene', sub:'Speak', cls:'', fn:() => this.go('speak') }] : [])
+        .concat(pathToday ? [{ top:'Next stop', sub:stopTitle(pathToday.st), cls:'', fn:() => this.go('path') }] : []);
+      // the climb card (desktop right column): how far up this level's path you are
+      const climbN = PATH_LVLS.length && !ALL && PATH_U[LV] ? (() => { let t = 0, d = 0; PATH_U[LV].forEach(u => u.stops.forEach(st => { t++; if (stopState(S, st) === 'done') d++; })); return t ? Math.round(d / t * 100) : 0; })() : overall;
       // mist: one mountain per Word web topic; the mist thins as its words are learned
       const tinfo = TOPICS.map((t, i) => {
         const got = t.words.filter(zh => S.ws[zh] && winfo(S.ws[zh], 0).started).length;
@@ -4423,6 +4460,10 @@
       const rowsFiltered = rowsAll.filter(r => (S.wfilter === 'all' || r.lv === S.wfilter) && matchRow(r)).sort((a, b) => matchRank(a) - matchRank(b) || sorters[S.wsort](a, b));
       const rowsShown = rowsFiltered.slice(0, S.wshow).map(r => { const n = r.lv === 'new' ? 0 : Math.max(1, Math.min(5, Math.ceil((parseFloat(r.mW) || 0) / 20))); return Object.assign({}, r, lvInfo(r.zh), { dots:[0, 1, 2, 3, 4].map(i => ({ cls:i < n ? 'on' : '' })) }); });
       const dueAllN = rowsAll.filter(r => r.started && r.dueCls === 'due').length;
+      // Library: look a word up by Chinese, pinyin or English
+      const libQ = S.screen === 'library' ? String(S.lq || '').trim().toLowerCase() : '', libPlain = toneless(libQ);
+      const libMatches = !libQ ? [] : rowsAll.filter(r => r.zh.indexOf(libQ) >= 0 || r.en.toLowerCase().indexOf(libQ) >= 0 || (libPlain.length > 0 && toneless(r.py).indexOf(libPlain) >= 0)).slice(0, 8)
+        .map(r => ({ zh:r.zh, py:r.py, en:r.en, play:r.play, pc:r.pc, open:() => { this.go('words'); this.setState({ wq:r.zh, wshow:40 }); } }));
       const lvNow = (k) => lvCount[k] || 0;
       const moreCount = rowsFiltered.length - rowsShown.length;
       const sortOpts = [['weak', 'Weakest first'], ['due', 'Due soonest'], ['strong', 'Strongest first']].map(x => ({ label:x[1], cls:S.wsort === x[0] ? 'on' : '', fn:() => this.setState({ wsort:x[0] }) }));
@@ -4460,6 +4501,7 @@
       const grvOpenN = grvRowsAll.filter(r => r.open).length;
       const lessonName = (lid) => { const l = LESSONS.find(x => x.id === lid); return l ? l.title : ''; };
       const grvStart = grvRowsAll.filter(r => r.open && r.info.started).length, grvDue = grvRowsAll.filter(r => r.open && r.info.due).length, grvMastered = grvRowsAll.filter(r => r.open && r.info.mastered).length;
+      const wordsDueN = S.rq.length > 0 && !S.rcomplete ? S.rq.length : 0, revBadgeN = wordsDueN + grvDue;   // the Review tab counts words and grammar points together
       const grvCanWrite = aiReadyNow();
       const grvRows = (S.grvAll ? grvRowsAll : grvRowsAll.slice(0, 12)).map(r => ({
         title:r.pt.title, lv:'HSK ' + r.pt.level, hasLv:LVLS.length > 1, rw:r.open ? r.info.rm + '%' : '0%', ww:r.open ? r.info.wm + '%' : '0%', label:r.open ? r.info.label : 'Locked: pass the lesson "' + lessonName(r.pt.lesson) + '"', cls:r.open ? r.info.state + (r.info.due ? ' due' : '') : 'locked',
@@ -4530,8 +4572,28 @@
         scrCls:'scr-' + S.screen + (S.screen === 'review' || S.screen === 'listen' || S.screen === 'speak' || (S.screen === 'plesson' && S.pl && !S.pl.done) ? ' am' : ''),   // am = app mode on a phone: these screens fill the screen and do not scroll as a page
         gHomeCls:gcls('home'), gLearnCls:gcls('learn'), gReviewCls:gcls('review'), gTalkCls:gcls('talk'), gJourneyCls:gcls('journey'),
         gHome:() => this.goGroup('home'), gLearn:() => this.goGroup('learn'), gReview:() => this.goGroup('review'), gTalk:() => this.goGroup('talk'), gJourney:() => this.goGroup('journey'),
+        gLearnOpen:navGroup === 'learn', gReviewOpen:navGroup === 'review', gTalkOpen:navGroup === 'talk',
         acctMiniCls:inBranch ? 'on' : '', hasBack:inBranch && curScreen !== 'acct',
-        hasSubnav:subnavItems.length > 1, subnav:subnavItems.map(o => ({ label:o[1], cls:'on' === (curScreen === o[0] ? 'on' : '') ? 'on' : '', fn:() => this.go(o[0]) })),
+        hasSubnav:subnavItems.length > 1,
+        subnav:subnavItems.map(o => { const n = o[0] === 'review' ? wordsDueN : o[0] === 'greview' ? grvDue : 0; return { label:o[1], cls:hlScreen === o[0] ? 'on' : '', fn:() => this.go(o[0]), hasN:n > 0, n }; }),
+        inLib:['words', 'grammar', 'web', 'pinyin'].indexOf(S.screen) >= 0, goLibrary:() => this.go('library'), isLibrary:S.screen === 'library',
+        youFriends:!!(FR && FR.enabled()), youFriendsCls:'ylink' + (curScreen === 'friends' ? ' on' : ''), youSetCls:'ylink' + (curScreen === 'voice' ? ' on' : ''), youGuideCls:'ylink' + (curScreen === 'guide' ? ' on' : ''), youAchCls:'ylink' + (curScreen === 'ach' ? ' on' : ''),
+        goSettings:() => this.go('voice'), goAch:() => this.go('ach'),
+        goStreak:() => this.go('home'), goMem:() => this.go('words'),
+        homeHero:!welcomeShow && !startShow, planGo, planGoText, greetZh:greet[0], greetPy:greet[1], greetEn:greet[2], homeChips, climbPct:climbN + '%', climbN, climbTitle:'Climb to ' + (ALL ? 'the top' : 'the HSK ' + LV + ' summit'),
+        climbNote:ALL ? 'Each level has its own exam, at the top of its path.' : EXAMBANK ? (LVL.levelPassed(LV) ? LVN + ' is behind you.' : climbN >= 80 ? 'The exam is waiting at the top of your path.' : 'The ' + LVN + ' exam sits at the top of your path. It opens at 80%.') : 'The exam for ' + LVN + ' is not built yet.',
+        artToday:artUri('banner', 'today'), artLibrary:artUri('banner', 'library'), artReview:artUri('banner', 'review'), artTalk:artUri('banner', 'talk'), artJourney:artUri('banner', 'journey'), artPath:artUri('banner', 'path'), artSummit:artUri('summit'),
+        mingWave:artUri('ming', 'wave'), mingThink:artUri('ming', 'think'), mingCheer:artUri('ming', 'cheer'), mingSleep:artUri('ming', 'sleep'), mingThumbs:artUri('ming', 'thumbs'),
+        hasTopArt:!!TOPKEY[S.screen], topCls:TOPKEY[S.screen] ? 'arted' : '',
+        topArt:TOPKEY[S.screen] ? artUri('banner', TOPKEY[S.screen]) : '',
+        libTiles:[
+          { glyph:'词', title:'Words', sub:rowsAll.length + ' words · ' + startedCount + ' started', fn:() => this.go('words') },
+          { glyph:'语', title:'Grammar lessons', sub:gramPassed + ' of ' + LESSONS.length + ' passed', fn:() => this.go('grammar') },
+          { glyph:'联', title:'Topics and pairs', sub:'Word webs, topics, word pairs', fn:() => this.go('web') },
+          { glyph:'音', title:'Pinyin and tones', sub:'Sounds, tones, spelling rules', fn:() => this.go('pinyin') }
+        ],
+        lq:S.lq || '', onLq:(e) => this.setState({ lq:e.target.value }), lqHas:libMatches.length > 0, lqNone:!!libQ && libMatches.length === 0, lqRows:libMatches,
+        libBannerShow:(prefGet('sv', {}).library || 0) < 4,
         themeCls:dark ? 't-dark' : 't-light', themeLabel:dark ? 'Switch to light' : 'Switch to dark', toggleTheme:this.toggleTheme,
         noVoice:S.noVoice, week,
         ...(() => {
@@ -4625,14 +4687,14 @@
         memText:memNow.words.toLocaleString('en-US') + ' in memory', memTip:'Words you would probably recall right now: each started word counts by its recall chance. It rises when you learn and review and falls if reviews slide.',
         memWords:memNow.words.toLocaleString('en-US'), memToday:(memNow.words - (S.mem0 == null ? memNow.words : S.mem0) >= 0 ? '+' : '') + (memNow.words - (S.mem0 == null ? memNow.words : S.mem0)) + ' today', memRecall:memNow.avg + '%',
         weekMin:weekMin, weekDays:weekDays,
-        title:tt[0], subtitle:tt[1],
+        title:tt[0], subtitle:tt[1], subShow:!(['home', 'path', 'library', 'review', 'greview', 'testlobby', 'listen', 'speak', 'journey', 'words', 'web', 'grammar', 'pinyin'].indexOf(S.screen) >= 0) || (prefGet('sv', {})[S.screen] || 0) < 3 || welcomeShow || startShow,
         welcomeShow, startShow, startWords, startGoing, startFresh:!startGoing, startBtnText:startGoing ? 'Continue my first session' : 'Learn my first 5 words', startDoneShow, guideAvail, isGuide:S.screen === 'guide',
         onbSkipWelcome:this.onbSkipWelcome, onbSkipStart:this.onbSkipStart, onbStartPath:this.onbStartPath, onbOpenGuide:this.onbOpenGuide, onbFlight:this.onbFlight,
         onbFlightShow:startDoneShow && !flown, guideSideCls:'linkbtn guide-link' + (S.screen === 'guide' ? ' on' : ''),
         isAch:S.screen === 'ach', achSummary:achSummary, achPct:achPct, achItems:achItems,
         navHome:navCls('home'), navPath:navCls('path'), goPath:() => this.go('path'), navAcct:active === 'acct' ? 'on' : '', goAcct:() => this.go('acct'), navReview:navCls('review'), navTest:navCls('testlobby'), navGrv:navCls('greview'), navGrammar:navCls('grammar'), navSpeak:navCls('speak'),
         goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrv:() => this.go('greview'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
-        hasDue:S.rq.length > 0 && !S.rcomplete, dueCount:S.rq.length,
+        hasDue:revBadgeN > 0, dueCount:revBadgeN,
         exTitle:LVN + ' mock exam',
         exIntro:LV === 1 ? 'Built like the official HSK 1 sample papers: 20 listening and 20 reading questions in four parts each, about 35 minutes. No hints and no pinyin while you answer. Each exam is drawn from a bank of 120+ questions, so it is different every time.' : LV === 3 ? 'Built like the HSK 3 sample papers of the 2012 test: 40 listening questions in four parts and 30 reading questions in three parts, about 65 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Writing is separate practice. Each exam is drawn from a bank of 130+ questions, so it is different every time.' : 'Built like the HSK 2 sample papers of the 2012 test: 35 listening and 25 reading questions in four parts each, about 47 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Each exam is drawn from a bank of 140+ questions, so it is different every time.',
         exListenT:'Listening · ' + EXAM_N.listening + ' questions · ' + EXAM_MIN.listening + ' min',

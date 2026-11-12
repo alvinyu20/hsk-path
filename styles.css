@@ -868,12 +868,23 @@ button.scn:hover .scn-m{text-decoration:underline}
 .rev .q-card{max-width:640px;margin:0 auto;width:100%}
 
 /* sections: on desktop the sidebar lists every screen; on a phone five tabs open a section, and its screens sit in a strip under the header */
-.navg{display:none}
+/* the five tabs show on every screen size; on desktop the open tab lists its pages under itself, on a phone they sit in a strip under the header */
+.navg{display:flex}
+.navsub{display:flex;flex-direction:column;gap:2px;margin:-2px 0 6px 26px;padding-left:14px;border-left:2px solid var(--line)}
+.subl{display:flex;align-items:center;gap:8px;min-height:38px;padding:0 12px;border:0;border-radius:11px;background:transparent;color:var(--muted);font:inherit;font-size:15px;font-weight:600;text-align:left;cursor:pointer}
+.subl:hover{background:var(--panel2);color:var(--ink)}
+.subl.on{background:var(--panel2);color:var(--ink);box-shadow:inset 3px 0 0 var(--seal)}
+.subl .n{margin-left:auto;min-width:22px;height:22px;padding:0 7px;border-radius:99px;background:var(--seal);color:var(--on-seal);font-size:12.5px;display:grid;place-items:center}
+.navyou{display:flex;flex-direction:column;gap:0;padding-top:12px;border-top:1px solid var(--line)}
+.ylink{min-height:34px;padding:0 14px;border:0;border-radius:10px;background:transparent;color:var(--muted);font:inherit;font-size:14px;font-weight:600;text-align:left;cursor:pointer}
+.ylink:hover{background:var(--panel2);color:var(--ink)}
+.ylink.on{color:var(--ink);background:var(--panel2)}
 .subnav{display:none}
 .today-go{width:100%;margin-top:10px}
 @media (max-width:900px){
   .navs:not(.navg){display:none}
   .navg{display:flex}
+  .navsub,.navyou{display:none}
   .navg .nav{flex:1 1 0;min-width:0;padding:6px 2px;white-space:normal;line-height:1.15}
   .subnav{display:flex;align-self:flex-start;max-width:100%;overflow-x:auto;margin:0 0 14px;scrollbar-width:none}
   .subnav::-webkit-scrollbar{display:none}
@@ -1956,3 +1967,103 @@ button.me .me-av{flex:none}
 .chat.staged .dock{position:relative;z-index:1;background:var(--panel)}
 .pth-node.sp{border-radius:50% 50% 50% 10px}
 .pth-goals{margin:0 0 12px;padding-left:20px}
+
+/* ---- the 2026-11 restructure: Library, Today hero, summit, tab banners, shortcut pills ---- */
+button.pill{font:inherit;font-weight:600;color:inherit;cursor:pointer;transition:border-color .2s,transform .15s}
+button.pill:hover{border-color:var(--ink)}
+button.pill:active{transform:scale(.97)}
+.pill{height:38px;padding:0 14px;font-size:15px}
+.crumb{display:inline-flex;align-items:center;gap:2px;align-self:flex-start;min-height:38px;padding:0 12px 0 4px;margin-bottom:-18px;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:600;cursor:pointer}
+.crumb:hover{color:var(--ink)}
+.crumb .ic{width:20px;height:20px}
+.top.arted{position:relative;align-items:center;padding:16px 18px;min-height:96px;border-radius:22px;overflow:hidden;border:1px solid var(--line)}
+.top-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 65%;z-index:0}
+.app.t-dark .top-art,.app.t-dark .th-art,.app.t-dark .climb-art,.app.t-dark .summit-art{filter:brightness(.62) saturate(.9)}
+.top.arted .top-t,.top.arted .stats{position:relative;z-index:1}
+.top.arted .top-t{padding:8px 16px;border-radius:14px;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(3px)}
+.top.arted .sub{margin-top:4px;font-size:15px;max-width:34ch}
+.top.arted .top-t{max-width:min(100%,520px)}
+@media (max-width:900px){
+  .app.am .top-art{display:none}
+  .app.am .top.arted{padding:0;min-height:0;border:0;border-radius:0;overflow:visible}
+  .app.am .top.arted .top-t{padding:0;background:none;backdrop-filter:none}
+}
+
+/* Library */
+.lib{display:flex;flex-direction:column;gap:14px;max-width:780px}
+.lib-note{margin:0}
+.lib-search{width:100%;min-height:52px;font-size:17px}
+.lib-res{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;background:var(--panel);overflow:hidden}
+.lib-r{display:flex;align-items:center;gap:6px;padding:0 10px 0 0;border-bottom:1px solid var(--line)}
+.lib-r:last-child{border-bottom:0}
+.lib-rb{flex:1;min-width:0;display:flex;align-items:center;gap:14px;min-height:56px;padding:6px 14px;border:0;background:transparent;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.lib-rb:hover{background:var(--panel2)}
+.lib-zh{font-size:26px;min-width:2.4em}
+.lib-m{display:flex;flex-direction:column;min-width:0}
+.lib-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.lib-tile{display:flex;align-items:center;gap:14px;min-height:80px;padding:14px 18px;border-radius:20px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;text-align:left;cursor:pointer;box-shadow:var(--shadow);transition:transform .15s,border-color .2s}
+.lib-tile:hover{border-color:var(--ink);transform:translateY(-1px)}
+.lib-tile:active{transform:translateY(1px)}
+.lib-g{flex:none;width:50px;height:50px;border-radius:14px;background:var(--panel2);display:grid;place-items:center;font-size:27px}
+.lib-tt{display:flex;flex-direction:column;flex:1;min-width:0}
+.lib-tt b{font-size:18px}
+.lib-chev{flex:none;width:20px;height:20px;color:var(--muted)}
+
+/* Mingming in the empty states of Review */
+.res-ming{display:block;width:132px;height:auto;margin:0 auto 4px}
+
+/* Today */
+.th-hero{position:relative;overflow:hidden;border-radius:22px;border:1px solid var(--line);min-height:132px;background:var(--panel2)}
+.th-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%}
+.th-in{position:relative;display:flex;align-items:flex-end;flex-wrap:wrap;gap:14px;padding:12px 20px 0}
+.th-ming{flex:none;width:100px;height:auto;margin-bottom:-6px}
+.th-t{align-self:center;padding:8px 16px;border-radius:14px;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(3px)}
+.th-zh{font-size:32px;font-weight:700;line-height:1.1}
+.th-py{font-size:14px;color:var(--muted);margin-top:2px}
+.th-lan{margin-left:auto;align-self:center;display:flex;gap:6px;padding:6px 12px;border-radius:14px;background:color-mix(in srgb,var(--panel) 80%,transparent)}
+.lan{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:11px;font-weight:700;color:var(--muted)}
+.lan i{font-style:normal}
+.lan img{display:block;width:26px;height:auto}
+.lan.t i{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.lan.d i{color:var(--seal)}
+.tchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tchip{display:flex;flex-direction:column;align-items:flex-start;min-height:50px;padding:7px 14px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;text-align:left;cursor:pointer;max-width:100%;transition:border-color .2s}
+.tchip:hover{border-color:var(--ink)}
+.tchip b{font-size:16px}
+.tchip span{font-size:12.5px;color:var(--muted);max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tchip.hot{border-color:var(--seal)}
+.tchip.hot b{color:var(--seal)}
+.climb-art{display:block;width:100%;height:116px;object-fit:cover;border-radius:14px;margin-bottom:14px}
+
+/* the summit: the level exam at the top of the path */
+.card.summit{display:flex;align-items:stretch;gap:0;padding:0;overflow:hidden;margin-top:6px}
+.summit-art{flex:none;width:min(36%,250px);object-fit:cover}
+.summit-b{flex:1;min-width:0;padding:22px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;position:relative}
+.summit-b .abar{align-self:stretch}
+.summit-p{margin:0;max-width:56ch}
+.summit.locked .summit-art{filter:grayscale(.75) brightness(.97)}
+.seal{display:inline-grid;place-items:center;padding:2px 10px;border:3px solid var(--seal);border-radius:8px;color:var(--seal);font-size:22px;font-weight:800;letter-spacing:.12em;transform:rotate(-6deg);opacity:.92;box-shadow:inset 0 0 0 1px var(--seal)}
+.seal.sm{font-size:17px;border-width:2px;padding:0 8px}
+.summit .seal{position:absolute;top:16px;right:20px}
+@media (max-width:600px){
+  .card.summit{flex-direction:column}
+  .summit-art{width:100%;height:112px}
+  .th-ming{width:74px}
+  .th-zh{font-size:25px}
+  .th-lan{margin-left:0;width:100%;justify-content:space-between}
+  .lib-tiles{grid-template-columns:minmax(0,1fr)}
+  .top.arted{padding:10px 12px;min-height:68px}
+}
+@media (max-width:900px){
+  .pill{height:34px;padding:0 10px;gap:6px;font-size:13.5px}
+  .pill .ic{width:17px;height:17px}
+  .stats{gap:6px;flex-wrap:nowrap;max-width:100%}
+  .app.scr-home .top .top-t{display:none}
+  .app.scr-home .stats{width:100%}
+  .app.scr-home .top{justify-content:flex-start}
+}
+@media (max-width:420px){.pill .pw{display:none}.pill{padding:0 9px}}
+@media (max-width:900px){
+  .app.scr-home .stats{flex-wrap:nowrap}
+  .app.scr-home .stats .pill{padding:0 8px;gap:5px}
+}
