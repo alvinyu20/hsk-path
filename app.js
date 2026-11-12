@@ -247,6 +247,9 @@
   const PATH = window.SHANLU_PATH || {};
   const PSCENE = window.SHANLU_PATH_SCENES || {};
   const PTILE = window.SHANLU_PATH_TILES || {};     // the wallpaper behind each unit's trail   // the pictures of the themed path (data/path-scenes.js)
+  const SSCN = window.SHANLU_SPEAK_SCENES || {};     // one drawn place for each practice script (data/speak-scenes.js)
+  const SCEN_AT = {};
+  SCEN.forEach((x, i) => { SCEN_AT[x.id] = i; });
   const PATH_LVLS = LVLS.filter(n => PATH[n] && (PATH[n].units || []).length);
   const LESSON_AT = {};
   LESSONS.forEach((L, i) => { LESSON_AT[L.id] = i; });
@@ -258,6 +261,7 @@
   const stopTitle = (st) => st.t + (st.p ? ' (' + st.p[0] + ' of ' + st.p[1] + ')' : '');
   const wStarted = (S, zh) => !!(S.ws[zh] && S.ws[zh].see.s > 0) || !!(S.lrn || {})[zh] || !!(S.wlearned || {})[zh];
   const stopState = (S, st) => {   // 'done' | 'part' | 'new'
+    if (st.k === 's') return S.sres[st.s] ? 'done' : 'new';
     if (st.k === 'g') { const i = LESSON_AT[st.g]; const best = i === undefined ? 0 : (S.gres[LESSONS[i].id] || 0); return best >= 80 ? 'done' : best > 0 ? 'part' : 'new'; }
     const ws = stopWords(st); const n = ws.filter(z => wStarted(S, z)).length;
     if (!ws.length || n === ws.length || prefGet('pth.' + st.id, 0)) return 'done';
@@ -273,7 +277,7 @@
   };
   const PATH_U = {}, STOP_BY = {};
   PATH_LVLS.forEach(n => {
-    PATH_U[n] = PATH[n].units.map(u => ({ id:u.id, title:u.title, blurb:u.blurb, stops:u.stops.map(st => (st.k === 'w' ? Object.assign({}, st, { w:plainWords(st.w) }) : st)).filter(st => (st.k === 'w' ? stopWords(st).length > 0 : LESSON_AT[st.g] !== undefined)) })).filter(u => u.stops.length);
+    PATH_U[n] = PATH[n].units.map(u => ({ id:u.id, title:u.title, blurb:u.blurb, stops:u.stops.map(st => (st.k === 'w' ? Object.assign({}, st, { w:plainWords(st.w) }) : st)).filter(st => (st.k === 'w' ? stopWords(st).length > 0 : st.k === 's' ? SCEN_AT[st.s] !== undefined : LESSON_AT[st.g] !== undefined)) })).filter(u => u.stops.length);
     PATH_U[n].forEach((u, ui) => u.stops.forEach((st, si) => { STOP_BY[st.id] = { st, u, ui, si, lv:n }; }));
   });
   const pathNext = (S, lv) => {   // the first stop that is not done
@@ -475,7 +479,7 @@
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
       jyPing:0, jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
-      gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
+      gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
       pyView:'list', pyLs:0, pyAns:{}, pyGain:'', pyIni:'b', pyInfo:null, typOpen:false, typIn:'', qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
@@ -3173,7 +3177,8 @@
       if (!S.szh && !S.spy && !S.sen && t < sc.ai.length) this.say(sc.ai[t].zh, 'ai' + t);
     };
     resetSpeak = () => { this.setState({ sturn:0, sdone:false }); };
-    pickScenario = (i) => { this.setState({ sidx:i, sturn:0, sdone:false }); };
+    pickScenario = (i) => { this.setState({ sidx:i, sturn:0, sdone:false, sview:'chat' }); try { window.scrollTo(0, 0); } catch (e) {} };
+    spBack = () => { this.setState({ sview:'pick' }); try { window.scrollTo(0, 0); } catch (e) {} };
 
     // ----- the learning path and its stop lesson -----
     pathLevel = () => { const S = this.state; return S.plv && PATH_LVLS.indexOf(S.plv) >= 0 ? S.plv : pathFirstOpen(S); };
@@ -3186,6 +3191,7 @@
       const S = this.state; const hit = STOP_BY[id]; if (!hit) return;
       const st = hit.st;
       if (st.k === 'g') { this.setState({ pstop:'', plNote:'', plAlt:'', ggopen:null, gq:'', glesson:LESSON_AT[st.g] }); this.go('grammar'); return; }
+      if (st.k === 's') { this.setState({ pstop:'', plNote:'', plAlt:'', aiMode:false, sidx:SCEN_AT[st.s], sturn:0, sdone:false, sview:'chat' }); this.go('speak'); return; }
       const words = stopWords(st);
       const fresh = words.filter(z => !wStarted(S, z)); const known = words.filter(z => wStarted(S, z));
       if (fresh.length) {
@@ -3295,7 +3301,7 @@
       const sh0 = { kick:'', title:'', isW:false, isG:false, words:[], sub:'', cta:'', go:() => {}, hasNote:false, note:'', hasAlt:false, altText:'', hasBest:false, best:'' };
       const out = {
         isPath:S.screen === 'path', isPlesson:S.screen === 'plesson',
-        pthHas:PATH_LVLS.length > 0, pthHasTabs:PATH_LVLS.length > 1, pthTabs:[], pthSub:'', pthPct:'0%', pthName:'', pthBlurb:'', pthKCls:'', pthHasHero:false, pthHeroImg:'', pthHasTag:false, pthTag:'', pthRailPct:'0%',
+        pthHas:PATH_LVLS.length > 0, pthNone:!PATH_LVLS.length, pthHasTabs:PATH_LVLS.length > 1, pthTabs:[], pthSub:'', pthPct:'0%', pthName:'', pthBlurb:'', pthKCls:'', pthHasHero:false, pthHeroImg:'', pthHasTag:false, pthTag:'', pthRailPct:'0%',
         pthHasNext:false, pthAllDone:false, pthNextKick:'', pthNextTitle:'', pthNextSub:'', pthNextWords:'', pthNextBtn:'', pthNextGo:() => {},
         pthUnits:[], pthSheet:false, pthSh:sh0, pthClose:this.pathClose, pthAlt:this.pathAlt
       };
@@ -3317,9 +3323,9 @@
           const ws = stopWords(nxt.st); const state = stopState(S, nxt.st);
           out.pthHasNext = true; out.pthNextKick = 'Next on your path · Unit ' + (nxt.ui + 1) + ': ' + nxt.u.title;
           out.pthNextTitle = stopTitle(nxt.st);
-          out.pthNextSub = nxt.st.k === 'w' ? ws.length + ' words:' : 'A grammar lesson, about 4 minutes';
+          out.pthNextSub = nxt.st.k === 'w' ? ws.length + ' words:' : nxt.st.k === 's' ? 'Say it out loud with Mingming, ' + (SCEN[SCEN_AT[nxt.st.s]].you.length) + ' turns' : 'A grammar lesson, about 4 minutes';
           out.pthNextWords = nxt.st.k === 'w' ? ws.slice(0, 4).join(' · ') + (ws.length > 4 ? ' …' : '') : '';
-          out.pthNextBtn = nxt.st.k === 'g' ? 'Open the lesson' : state === 'part' ? 'Continue' : 'Start';
+          out.pthNextBtn = nxt.st.k === 'g' ? 'Open the lesson' : nxt.st.k === 's' ? 'Step into the scene' : state === 'part' ? 'Continue' : 'Start';
           out.pthNextGo = () => this.pathStart(nxt.st.id);
         }
         const unitDone = us.map(u => u.stops.every(st => stopState(S, st) === 'done'));
@@ -3347,10 +3353,10 @@
               const state = states[si]; const isCur = !!nxt && nxt.st.id === st.id; const ws = stopWords(st);
               const x = PATH_XS[si % PATH_XS.length], xp = PATH_XS[(si + PATH_XS.length - 1) % PATH_XS.length];
               return {
-                id:st.id, isW:st.k === 'w', isG:st.k === 'g', glyph:st.k === 'w' ? ws[0].charAt(0) : '语', title:stopTitle(st),
-                sub:st.k === 'w' ? ws.slice(0, 3).join(' · ') + (ws.length > 3 ? ' …' : '') : 'Grammar',
-                meta:st.k === 'w' ? ws.length + ' words' + (state === 'part' ? ' · ' + ws.filter(z => wStarted(S, z)).length + ' started' : '') : (state === 'done' ? 'Passed' : state === 'part' ? 'Best ' + (S.gres[st.g] || 0) + '%' : 'Lesson'),
-                cls:(state === 'done' ? 'done' : isCur ? 'cur' : state === 'part' ? 'part' : '') + (st.k === 'g' ? ' g' : '') + (S.pstop === st.id ? ' sel' : ''),
+                id:st.id, isW:st.k === 'w', isG:st.k === 'g', isS:st.k === 's', glyph:st.k === 'w' ? ws[0].charAt(0) : st.k === 's' ? '说' : '语', title:stopTitle(st),
+                sub:st.k === 'w' ? ws.slice(0, 3).join(' · ') + (ws.length > 3 ? ' …' : '') : st.k === 's' ? SCEN[SCEN_AT[st.s]].sub : 'Grammar',
+                meta:st.k === 'w' ? ws.length + ' words' + (state === 'part' ? ' · ' + ws.filter(z => wStarted(S, z)).length + ' started' : '') : st.k === 's' ? (state === 'done' ? 'Said it' : 'Speak · ' + SCEN[SCEN_AT[st.s]].you.length + ' turns') : (state === 'done' ? 'Passed' : state === 'part' ? 'Best ' + (S.gres[st.g] || 0) + '%' : 'Lesson'),
+                cls:(state === 'done' ? 'done' : isCur ? 'cur' : state === 'part' ? 'part' : '') + (st.k === 'g' ? ' g' : st.k === 's' ? ' sp' : '') + (S.pstop === st.id ? ' sel' : ''),
                 state, isDone:state === 'done', isCur, nodeStyle:'left:' + x + '%',
                 labelStyle:x <= 50 ? 'left:calc(' + x + '% + 50px);width:calc(' + (100 - x) + '% - 58px);text-align:left' : 'right:calc(' + (100 - x) + '% + 50px);width:calc(' + x + '% - 58px);text-align:right',
                 hasLink:si > 0, curve:'M ' + xp + ' 0 C ' + xp + ' 52 ' + x + ' 52 ' + x + ' 104', linkCls:states[si - 1] === 'done' ? 'on' : '',
@@ -3363,14 +3369,15 @@
         const hit = S.pstop ? STOP_BY[S.pstop] : null;
         if (hit) {
           const st = hit.st; const state = stopState(S, st); const ws = stopWords(st);
-          const L = st.k === 'g' ? LESSONS[LESSON_AT[st.g]] : null;
+          const L = st.k === 'g' ? LESSONS[LESSON_AT[st.g]] : null; const SC = st.k === 's' ? SCEN[SCEN_AT[st.s]] : null;
           out.pthSheet = true;
           out.pthSh = {
             kick:'Unit ' + (hit.ui + 1) + ': ' + hit.u.title + ' · Stop ' + (hit.si + 1) + ' of ' + hit.u.stops.length,
-            title:stopTitle(st), isW:st.k === 'w', isG:st.k === 'g',
+            title:stopTitle(st), isW:st.k === 'w', isG:st.k === 'g', isS:st.k === 's',
+            goalList:SC ? SC.goals.map(t => ({ t })) : [],
             words:ws.map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en, mark:wStarted(S, z) ? 'learned' : '', cls:wStarted(S, z) ? 'on' : '' })),
-            sub:L ? L.catBlurb || L.cat || '' : (state === 'done' ? 'You have met these words. Practise them again whenever you like.' : 'About ' + Math.max(3, Math.round(ws.filter(z => !wStarted(S, z)).length * 0.8 + 1)) + ' minutes. You meet the words, answer a few easy questions, then they join your Review.'),
-            cta:st.k === 'g' ? (state === 'done' ? 'Open the lesson again' : 'Open the lesson') : state === 'done' ? 'Practise again' : state === 'part' ? 'Continue' : 'Start',
+            sub:SC ? 'You say your lines out loud and Mingming answers. About 5 minutes. Nothing listens to you, so it is practice, not a test.' : L ? L.catBlurb || L.cat || '' : (state === 'done' ? 'You have met these words. Practise them again whenever you like.' : 'About ' + Math.max(3, Math.round(ws.filter(z => !wStarted(S, z)).length * 0.8 + 1)) + ' minutes. You meet the words, answer a few easy questions, then they join your Review.'),
+            cta:st.k === 's' ? (state === 'done' ? 'Say it again' : 'Step into the scene') : st.k === 'g' ? (state === 'done' ? 'Open the lesson again' : 'Open the lesson') : state === 'done' ? 'Practise again' : state === 'part' ? 'Continue' : 'Start',
             go:() => this.pathStart(st.id),
             hasNote:!!S.plNote, note:S.plNote, hasAlt:!!S.plAlt, altText:S.plAlt === 'review' ? 'Go to Review' : 'Open Settings',
             hasBest:!!L && (S.gres[L.id] || 0) > 0, best:L ? 'Best score so far: ' + (S.gres[L.id] || 0) + '%. You pass at 80%.' : ''
@@ -4125,10 +4132,10 @@
       const pathToday = PATH_LVLS.length ? pathNextWord(S, pathFirstOpen(S)) : null;
       const pathNewN = pathToday && pathToday.st.k === 'w' ? stopWords(pathToday.st).filter(z => !wStarted(S, z)).length : 0;   // the next stop on the path stands in for the learn-new-words task
       const pool = [
-        { glyph:'路', title:pathToday ? 'Path: ' + stopTitle(pathToday.st) : 'Learn ' + learnN + (learnN === 1 ? ' new word with its relatives' : ' new words with their relatives'), meta:pathToday ? (pathToday.st.k === 'w' ? (pathNewN === 1 ? '1 new word' : pathNewN + ' new words') : 'Grammar lesson') : 'Archive', min:5, done:S.webCredited, to:pathToday ? 'path' : 'web', run:pathToday ? () => { this.go('path'); this.setState({ pstop:pathToday.st.id }); } : null, show:unstartedN > 0 || S.webCredited },
+        { glyph:'路', title:pathToday ? 'Path: ' + stopTitle(pathToday.st) : 'Learn ' + learnN + (learnN === 1 ? ' new word with its relatives' : ' new words with their relatives'), meta:pathToday ? (pathToday.st.k === 'w' ? (pathNewN === 1 ? '1 new word' : pathNewN + ' new words') : pathToday.st.k === 's' ? 'Speaking scene' : 'Grammar lesson') : 'Archive', min:5, done:S.webCredited, to:pathToday ? 'path' : 'web', run:pathToday ? () => { this.go('path'); this.setState({ pstop:pathToday.st.id }); } : null, show:unstartedN > 0 || S.webCredited },
         { glyph:'词', title:'Review ' + Math.max(S.rtotal, dueNow) + ' word' + (Math.max(S.rtotal, dueNow) === 1 ? '' : 's'), meta:'Words that are due', min:reviewMin, done:S.rcomplete, to:'review', show:S.rcomplete || dueNow > 0 },
         { glyph:'听', title:'Listening drill', meta:'Dictation with a speed ladder', min:4, done:S.ldone, to:'listen', show:HAS_LISTEN },
-        { glyph:'说', title:'Say: ' + (SCEN[nextScn] || NO_SC).title, meta:'Practice script, ' + (SCEN[nextScn] || NO_SC).you.length + ' turns', min:6, done:S.spokeToday, to:'speak', show:HAS_SCRIPTS, pre:() => this.setState({ sidx:nextScn, sturn:0, sdone:false }) },
+        { glyph:'说', title:'Say: ' + (SCEN[nextScn] || NO_SC).title, meta:'Practice script, ' + (SCEN[nextScn] || NO_SC).you.length + ' turns', min:6, done:S.spokeToday, to:'speak', show:HAS_SCRIPTS, pre:() => this.setState({ sidx:nextScn, sturn:0, sdone:false, sview:'chat' }) },
         { glyph:'语', title:'Grammar: ' + LESSONS[nextLesson].title, meta:LESSONS[nextLesson].q.length + ' exercises', min:4, done:S.gdone, to:'grammar', pre:() => this.setState({ ggopen:null, gq:'', glesson:nextLesson }) },
         { glyph:'测', title:LVN + ' test', meta:'Mixed questions from your words', min:3, done:S.tdone, to:'testlobby', show:testReady }
       ].filter(t => t.show !== false);
@@ -4722,6 +4729,11 @@
         startGrammar:() => this.startQuiz('grammar'),
 
         // speak
+        spPick:S.sview === 'pick', spChat:S.sview !== 'pick', spBack:this.spBack,
+        spCards:SCEN.map((x, i) => { const im = SSCN[x.id]; return { glyph:x.glyph, title:x.title, sub:x.sub, turns:x.you.length + ' turns', img:im ? 'background-color:' + im.c + ';background-image:url("' + im.u + '")' : '', state:S.sres[x.id] ? 'Done' : '', cls:S.sres[x.id] ? 'done' : '', fn:() => this.pickScenario(i), aria:x.title + (S.sres[x.id] ? ', done' : '') }; }),
+        spDoneText:SCEN.filter(x => S.sres[x.id]).length + ' of ' + SCEN.length + ' places visited',
+        stageStyle:SSCN[sc.id] ? '--sc:' + SSCN[sc.id].c + ';--scene:url("' + SSCN[sc.id].u + '")' : '', stageCls:SSCN[sc.id] ? 'staged' : '',
+        aiStageStyle:S.aiScn >= 0 && SCEN[S.aiScn] && SSCN[SCEN[S.aiScn].id] ? '--sc:' + SSCN[SCEN[S.aiScn].id].c + ';--scene:url("' + SSCN[SCEN[S.aiScn].id].u + '")' : '', aiStageCls:S.aiScn >= 0 && SCEN[S.aiScn] && SSCN[SCEN[S.aiScn].id] ? 'staged' : '',
         msgs, typing:false, canTalk, sdone:S.sdone, target, goals, wchips, scenarios, chatGlyph:sc.glyph, chatTitle:sc.title, chatSub:sc.sub, turnsText:turns + ' turns',
         shint:S.shint, noHint:!S.shint, toggleHint:() => this.setState({ shint:!this.state.shint }),
         zhCls:S.szh ? 'on' : '', pyCls:S.spy ? 'on' : '', enCls:S.sen ? 'on' : '', listenOnly:!S.szh && !S.spy && !S.sen,

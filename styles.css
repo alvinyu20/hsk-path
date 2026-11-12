@@ -1928,3 +1928,31 @@ button.me .me-av{flex:none}
 .pth-trail::before{content:'';position:absolute;inset:0;background:var(--panel);opacity:.3;pointer-events:none}
 .t-dark .pth-trail::before{opacity:.8}
 .pth-trail .pth-label{text-shadow:0 0 5px var(--panel),0 0 2px var(--panel),0 0 10px var(--panel)}
+
+/* ----- Speak: pick a place, then step into the scene ----- */
+.spk-pick-h{margin-bottom:16px}
+.spk-pick-h p{margin:4px 0 0}
+.spk-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.spk-card{display:flex;flex-direction:column;padding:0;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden;cursor:pointer;color:var(--ink);box-shadow:var(--shadow);transition:transform .15s,border-color .15s;position:relative}
+.spk-card:hover{transform:translateY(-3px);border-color:var(--ink)}
+.spk-card-img{display:block;aspect-ratio:480/380;background-size:cover;background-position:50% 12%;background-repeat:no-repeat}
+.spk-card-b{display:flex;align-items:center;gap:12px;padding:12px 14px 14px}
+.spk-card-g{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--panel2);font-size:20px;font-weight:700;flex:none}
+.spk-card.done .spk-card-g{background:var(--jade);color:var(--on-jade)}
+.spk-card-t{flex:1;min-width:0}
+.spk-card-t b{display:block;font-size:17px}
+.spk-card-t span{display:block;font-size:14px;color:var(--muted)}
+.spk-card-s{font-size:13px;font-weight:700;color:var(--jade)}
+.spk-card.done::after{content:"";position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;background:var(--jade) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/16px no-repeat}
+
+.chat{position:relative}
+.stage{display:none}
+.stage-back{gap:4px}
+.chat.staged{overflow:clip}
+.chat.staged .stage{display:block;position:sticky;top:0;z-index:3;height:min(300px,58vw);overflow:hidden;background:var(--sc,#ddd);border-bottom:1px solid var(--line);box-shadow:0 12px 22px -16px rgba(20,33,42,.5)}
+.chat.staged .stage::before{content:"";position:absolute;inset:-24px;background:var(--scene) center/cover no-repeat;filter:blur(16px) saturate(1.05);opacity:.95}
+.chat.staged .stage::after{content:"";position:absolute;inset:0;background:var(--scene) 50% 0/auto 128% no-repeat;-webkit-mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent)}
+.chat.staged .msgs{position:relative;z-index:1}
+.chat.staged .dock{position:relative;z-index:1;background:var(--panel)}
+.pth-node.sp{border-radius:50% 50% 50% 10px}
+.pth-goals{margin:0 0 12px;padding-left:20px}

@@ -22,9 +22,9 @@ def load_levels():
 const vm=require('vm'),fs=require('fs');const ctx={window:{}};vm.createContext(ctx);
 const res={};
 for(const n of [1,2,3]){
-  for(const f of ['words','webs','grammar'])vm.runInContext(fs.readFileSync('data/hsk'+n+'-'+f+'.js','utf8'),ctx);
+  for(const f of ['words','webs','grammar','speak'])vm.runInContext(fs.readFileSync('data/hsk'+n+'-'+f+'.js','utf8'),ctx);
   const W=ctx.window['HSK'+n+'_WORDS'],T=ctx.window['HSK'+n+'_WEBS'].topics,G=ctx.window['HSK'+n+'_GRAMMAR'].lessons;
-  res[n]={words:W.map(w=>w.zh),topics:T.map(t=>({name:t.name,words:t.words})),lessons:G.map(g=>({id:g.id,title:g.title}))};
+  res[n]={words:W.map(w=>w.zh),topics:T.map(t=>({name:t.name,words:t.words})),lessons:G.map(g=>({id:g.id,title:g.title})),scenarios:((ctx.window['HSK'+n+'_SPEAK']||{}).scenarios||[]).map(x=>({id:x.id,title:x.title}))};
 }
 console.log(JSON.stringify(res));
 """], cwd=ROOT).decode('utf-8')
@@ -39,6 +39,8 @@ def build_level(n, cfg, data, problems, report):
     pre = 'h%s' % n
     topics = {t['name']: t['words'] for t in data['topics']}
     lessons = {g['id']: g['title'] for g in data['lessons']}
+    scns = {x['id']: x['title'] for x in data.get('scenarios', [])}
+    used_scns = {}
     place = cfg.get('place', {})
     names = cfg.get('names', {})
     splits = cfg.get('splits', {})
@@ -127,6 +129,15 @@ def build_level(n, cfg, data, problems, report):
             del run[:]
 
         for item in u['topics']:
+            if isinstance(item, dict) and 's' in item:   # a speaking stop: one practice script, said out loud with Mingming
+                flush()
+                sid = item['s']
+                if sid not in scns:
+                    problems.append('HSK %s: practice script "%s" does not exist' % (n, sid))
+                    continue
+                used_scns[sid] = used_scns.get(sid, 0) + 1
+                stops.append({'id': '%s.s.%s' % (pre, sid), 'k': 's', 't': scns[sid], 's': sid})
+                continue
             if isinstance(item, dict):
                 flush()
                 gid = item['g']
@@ -164,6 +175,9 @@ def build_level(n, cfg, data, problems, report):
     for g in lessons:
         if used_lessons.get(g, 0) != 1:
             problems.append('HSK %s: grammar lesson "%s" is in the path %d times (needs exactly 1)' % (n, g, used_lessons.get(g, 0)))
+    for g in scns:
+        if used_scns.get(g, 0) != 1:
+            problems.append('HSK %s: practice script "%s" is in the path %d times (needs exactly 1)' % (n, g, used_scns.get(g, 0)))
     for u in units:
         if not u['stops']:
             problems.append('HSK %s: unit "%s" has no stops' % (n, u['title']))
@@ -305,7 +319,9 @@ def main():
             nstops = sum(len(u['stops']) for u in out[n]['units'])
             ng = sum(1 for u in out[n]['units'] for s in u['stops'] if s['k'] == 'g')
             nw = sum(len(s['w']) for u in out[n]['units'] for s in u['stops'] if s['k'] == 'w')
-            print('HSK %s: %d units, %d stops (%d word stops with %d words, %d grammar stops)' % (n, len(out[n]['units']), nstops, nstops - ng, nw, ng))
+            nws = sum(1 for u in out[n]['units'] for s in u['stops'] if s['k'] == 'w')
+            nsp = sum(1 for u in out[n]['units'] for s in u['stops'] if s['k'] == 's')
+            print('HSK %s: %d units, %d stops (%d word stops with %d words, %d grammar stops, %d speak stops)' % (n, len(out[n]['units']), nstops, nws, nw, ng, nsp))
         for line in report:
             print(line)
     if verbose:

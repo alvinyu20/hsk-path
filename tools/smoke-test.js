@@ -649,7 +649,9 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
 
   // Speak
   await nav('Speak');
-  check((await page.locator('.scn').count()) === 8, 'speaking lists 8 scripts');
+  check((await page.locator('.spk-card').count()) === 8, 'speaking lists 8 places to pick from');
+  await page.locator('.spk-card').first().click();
+  check((await page.locator('.chat.staged .stage').count()) === 1 && (await page.locator('.scn').count()) === 8, 'picking a place opens its scene and the list of 8 scripts');
   for (let i = 0; i < 4; i++) await page.locator('button', { hasText: 'I said it' }).click();
   check((await text()).includes('Conversation complete'), 'the first speaking script completes');
   await page.locator('.scn').nth(1).click();
@@ -677,6 +679,8 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.reload();
   await page.waitForSelector('.app');
   await nav('Speak');
+  check((await page.locator('.spk-card').count()) === 8, 'after a reload Speak opens on the places to pick from');
+  await page.locator('.spk-card').first().click();
   check(!(await page.locator('.chat-h .seg2 button', { hasText: 'Pinyin' }).getAttribute('class') || '').includes('on'), 'the hidden pinyin and English stay hidden after a reload');
   await page.locator('.chat-h .seg2 button', { hasText: 'Pinyin' }).click();
   await page.locator('.chat-h .seg2 button', { hasText: 'English' }).click();
@@ -793,7 +797,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await nav('Grammar');
   check(await page.evaluate(() => Object.values(window.shanlu.state.gres).filter(v => v >= 80).length) >= 4, 'passed lessons survive a reload');
   await nav('Speak');
-  check((await page.locator('.scn.done').count()) >= 2, 'finished speaking scripts survive a reload');
+  check((await page.locator('.spk-card.done').count()) >= 2, 'finished speaking scripts survive a reload');
   await nav('Archive');
   check(/of 10 added today/.test(await text()), 'a chosen daily limit survives a reload');
   await nav('My words');

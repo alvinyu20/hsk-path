@@ -203,6 +203,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await page.locator('.modeseg').count()) === 1 && (await text()).includes('Practice script'), 'Speak has the practice-script switch at HSK 2');
   const scn = await page.evaluate(() => window.HSK2_SPEAK.scenarios.map(s => s.title));
   check(scn.length === 8 && (await text()).includes('Ask the way') && (await text()).includes('Order at a café'), 'the eight HSK 2 scripts are listed');
+  await page.locator('.spk-card').first().click();
   await page.locator('button', { hasText: 'I said it' }).first().click();
   check((await text()).includes('请问，车站在哪') || (await text()).includes('请问，车站在哪里'), 'an HSK 2 script plays: the first line of the first scenario shows after "I said it"');
   await nav('Level exam');

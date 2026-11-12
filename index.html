@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="744e46efda">
+<meta name="shanlu-version" content="9148fd9293">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=744e46efda">
+<link rel="stylesheet" href="styles.css?v=9148fd9293">
 </head>
 <body>
 <div id="app"></div>
@@ -1323,11 +1323,29 @@
   </div>
   </sc-if>
   <sc-if value="{{scriptMode}}" hint-placeholder-val="{{ true }}">
+  <sc-if value="{{spPick}}" hint-placeholder-val="{{ false }}">
+  <section class="spk-pick">
+    <div class="spk-pick-h"><h2 class="h2">Pick a place</h2><p class="muted">Step into a scene and say your lines out loud. {{spDoneText}}.</p></div>
+    <div class="spk-cards">
+      <sc-for list="{{spCards}}" as="c" hint-placeholder-count="4">
+        <button type="button" class="spk-card {{c.cls}}" aria-label="{{c.aria}}" data-on-click="{{c.fn}}">
+          <span class="spk-card-img" style="{{c.img}}"></span>
+          <span class="spk-card-b">
+            <span class="zh spk-card-g" aria-hidden="true">{{c.glyph}}</span>
+            <span class="spk-card-t"><b>{{c.title}}</b><span>{{c.sub}} · {{c.turns}}</span></span>
+            <span class="spk-card-s">{{c.state}}</span>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+  <sc-if value="{{spChat}}" hint-placeholder-val="{{ true }}">
   <div class="speak">
     <div class="banner">This is a practice script: you say your lines out loud yourself and nothing listens. For a real back-and-forth, use the Talk with AI tab (it needs a key in Settings). Pronunciation scoring is not built.</div>
-    <section class="chat">
+    <section class="chat {{stageCls}}">
       <div class="chat-h">
-        <div class="av zh" aria-hidden="true">明</div>
+        <button type="button" class="btn sm stage-back" data-on-click="{{spBack}}" aria-label="Back to all places"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Places</button>
         <div class="chat-t"><b>Mingming</b><span>{{chatTitle}} · {{chatVocab}}</span></div>
         <div class="seg2" role="group" aria-label="Show on screen">
           <button class="{{zhCls}}" data-on-click="{{toggleZh}}">Characters</button>
@@ -1336,6 +1354,7 @@
         </div>
       </div>
 
+      <div class="stage" style="{{stageStyle}}" aria-hidden="true"></div>
       <div class="msgs">
         <sc-for list="{{msgs}}" as="m" hint-placeholder-count="3">
           <div class="mrow {{m.who}}">
@@ -1427,6 +1446,7 @@
     </div>
   </div>
   </sc-if>
+  </sc-if>
 
   <sc-if value="{{aiModeOn}}" hint-placeholder-val="{{ false }}">
   <div class="speak">
@@ -1438,7 +1458,7 @@
     </section>
     </sc-if>
     <sc-if value="{{aiReady}}" hint-placeholder-val="{{ false }}">
-    <section class="chat">
+    <section class="chat {{aiStageCls}}">
       <div class="chat-h">
         <div class="av zh" aria-hidden="true">明</div>
         <div class="chat-t"><b>Mingming</b><span>AI conversation · {{aiToday}}</span></div>
@@ -1448,6 +1468,7 @@
           <button class="{{enCls}}" data-on-click="{{toggleEn}}">English</button>
         </div></sc-if>
       </div>
+      <div class="stage" style="{{aiStageStyle}}" aria-hidden="true"></div>
       <div class="msgs">
         <sc-for list="{{aiMsgs}}" as="m" hint-placeholder-count="3">
           <div class="mrow {{m.who}}">
@@ -1608,7 +1629,7 @@
       </sc-for>
       </div>
     </sc-if>
-    <sc-if value="{{pthHas}}" hint-placeholder-val="{{ false }}">
+    <sc-if value="{{pthNone}}" hint-placeholder-val="{{ false }}">
       <section class="card"><h2 class="h2">The path is not here yet</h2><p class="muted" style="margin:6px 0 0">Browse the Archive for now.</p></section>
     </sc-if>
     <sc-if value="{{pthSheet}}" hint-placeholder-val="{{ false }}">
@@ -1617,6 +1638,7 @@
         <div class="kick">{{pthSh.kick}}</div>
         <div class="pth-sh-h"><h2 class="h2">{{pthSh.title}}</h2><button type="button" class="btn sm" data-on-click="{{pthClose}}">Close</button></div>
         <p class="muted pth-sh-p">{{pthSh.sub}}</p>
+        <sc-if value="{{pthSh.isS}}" hint-placeholder-val="{{ false }}"><ul class="pth-goals"><sc-for list="{{pthSh.goalList}}" as="g" hint-placeholder-count="3"><li>{{g.t}}</li></sc-for></ul></sc-if>
         <sc-if value="{{pthSh.isW}}" hint-placeholder-val="{{ true }}">
           <ul class="pth-wl">
             <sc-for list="{{pthSh.words}}" as="w" hint-placeholder-count="4"><li class="{{w.cls}}"><span class="zh pth-wz">{{w.zh}}</span><span class="pth-py">{{w.py}}</span><span class="pth-en">{{w.en}}</span></li></sc-for>
@@ -2580,52 +2602,53 @@
 </main>
 </div>
 </template>
-<script defer src="vendor/morphdom-umd.min.js?v=744e46efda"></script>
-<script defer src="runtime.js?v=744e46efda"></script>
-<script defer src="config.js?v=744e46efda"></script>
-<script defer src="friends.js?v=744e46efda"></script>
-<script defer src="level.js?v=744e46efda"></script>
-<script defer src="data/hsk1-words.js?v=744e46efda"></script>
-<script defer src="data/hsk1-grammar.js?v=744e46efda"></script>
-<script defer src="data/hsk1-webs.js?v=744e46efda"></script>
-<script defer src="data/hsk1-speak.js?v=744e46efda"></script>
-<script defer src="data/hsk1-listen.js?v=744e46efda"></script>
-<script defer src="data/hsk1-exam.js?v=744e46efda"></script>
-<script defer src="data/hsk1-erhua.js?v=744e46efda"></script>
-<script defer src="data/lexicon.js?v=744e46efda"></script>
-<script defer src="data/char-glosses.js?v=744e46efda"></script>
-<script defer src="data/hsk2-preview.js?v=744e46efda"></script>
-<script defer src="data/hsk3-preview.js?v=744e46efda"></script>
-<script defer src="data/hsk2-words.js?v=744e46efda"></script>
-<script defer src="data/hsk2-speak.js?v=744e46efda"></script>
-<script defer src="data/hsk2-listen.js?v=744e46efda"></script>
-<script defer src="data/hsk2-exam.js?v=744e46efda"></script>
-<script defer src="data/hsk2-grammar.js?v=744e46efda"></script>
-<script defer src="data/hsk2-webs.js?v=744e46efda"></script>
-<script defer src="data/hsk3-words.js?v=744e46efda"></script>
-<script defer src="data/hsk3-speak.js?v=744e46efda"></script>
-<script defer src="data/hsk3-listen.js?v=744e46efda"></script>
-<script defer src="data/hsk3-exam.js?v=744e46efda"></script>
-<script defer src="data/hsk3-grammar.js?v=744e46efda"></script>
-<script defer src="data/hsk3-webs.js?v=744e46efda"></script>
-<script defer src="ascent.js?v=744e46efda"></script>
-<script defer src="secrets.js?v=744e46efda"></script>
-<script defer src="sync.js?v=744e46efda"></script>
-<script defer src="data/audio-manifest.js?v=744e46efda"></script>
-<script defer src="journey.js?v=744e46efda"></script>
-<script defer src="data/journey.js?v=744e46efda"></script>
-<script defer src="data/journey-map.js?v=744e46efda"></script>
-<script defer src="data/journey-media.js?v=744e46efda"></script>
-<script defer src="data/souvenirs.js?v=744e46efda"></script>
-<script defer src="erhua.js?v=744e46efda"></script>
-<script defer src="pinyin.js?v=744e46efda"></script>
-<script defer src="data/pinyin-course.js?v=744e46efda"></script>
-<script defer src="data/pinyin-chart.js?v=744e46efda"></script>
-<script defer src="data/exam-media.js?v=744e46efda"></script>
-<script defer src="data/exam-art.js?v=744e46efda"></script>
-<script defer src="data/neutral-alt.js?v=744e46efda"></script>
-<script defer src="data/path-scenes.js?v=744e46efda"></script>
-<script defer src="data/path.js?v=744e46efda"></script>
-<script defer src="app.js?v=744e46efda"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=9148fd9293"></script>
+<script defer src="runtime.js?v=9148fd9293"></script>
+<script defer src="config.js?v=9148fd9293"></script>
+<script defer src="friends.js?v=9148fd9293"></script>
+<script defer src="level.js?v=9148fd9293"></script>
+<script defer src="data/hsk1-words.js?v=9148fd9293"></script>
+<script defer src="data/hsk1-grammar.js?v=9148fd9293"></script>
+<script defer src="data/hsk1-webs.js?v=9148fd9293"></script>
+<script defer src="data/hsk1-speak.js?v=9148fd9293"></script>
+<script defer src="data/hsk1-listen.js?v=9148fd9293"></script>
+<script defer src="data/hsk1-exam.js?v=9148fd9293"></script>
+<script defer src="data/hsk1-erhua.js?v=9148fd9293"></script>
+<script defer src="data/lexicon.js?v=9148fd9293"></script>
+<script defer src="data/char-glosses.js?v=9148fd9293"></script>
+<script defer src="data/hsk2-preview.js?v=9148fd9293"></script>
+<script defer src="data/hsk3-preview.js?v=9148fd9293"></script>
+<script defer src="data/hsk2-words.js?v=9148fd9293"></script>
+<script defer src="data/hsk2-speak.js?v=9148fd9293"></script>
+<script defer src="data/hsk2-listen.js?v=9148fd9293"></script>
+<script defer src="data/hsk2-exam.js?v=9148fd9293"></script>
+<script defer src="data/hsk2-grammar.js?v=9148fd9293"></script>
+<script defer src="data/hsk2-webs.js?v=9148fd9293"></script>
+<script defer src="data/hsk3-words.js?v=9148fd9293"></script>
+<script defer src="data/hsk3-speak.js?v=9148fd9293"></script>
+<script defer src="data/hsk3-listen.js?v=9148fd9293"></script>
+<script defer src="data/hsk3-exam.js?v=9148fd9293"></script>
+<script defer src="data/hsk3-grammar.js?v=9148fd9293"></script>
+<script defer src="data/hsk3-webs.js?v=9148fd9293"></script>
+<script defer src="ascent.js?v=9148fd9293"></script>
+<script defer src="secrets.js?v=9148fd9293"></script>
+<script defer src="sync.js?v=9148fd9293"></script>
+<script defer src="data/audio-manifest.js?v=9148fd9293"></script>
+<script defer src="journey.js?v=9148fd9293"></script>
+<script defer src="data/journey.js?v=9148fd9293"></script>
+<script defer src="data/journey-map.js?v=9148fd9293"></script>
+<script defer src="data/journey-media.js?v=9148fd9293"></script>
+<script defer src="data/souvenirs.js?v=9148fd9293"></script>
+<script defer src="erhua.js?v=9148fd9293"></script>
+<script defer src="pinyin.js?v=9148fd9293"></script>
+<script defer src="data/pinyin-course.js?v=9148fd9293"></script>
+<script defer src="data/pinyin-chart.js?v=9148fd9293"></script>
+<script defer src="data/exam-media.js?v=9148fd9293"></script>
+<script defer src="data/exam-art.js?v=9148fd9293"></script>
+<script defer src="data/neutral-alt.js?v=9148fd9293"></script>
+<script defer src="data/path-scenes.js?v=9148fd9293"></script>
+<script defer src="data/speak-scenes.js?v=9148fd9293"></script>
+<script defer src="data/path.js?v=9148fd9293"></script>
+<script defer src="app.js?v=9148fd9293"></script>
 </body>
 </html>

@@ -20,7 +20,7 @@ const load = (erhua) => {
   const run = (f) => vm.runInContext(fs.readFileSync(path.join(root, f), 'utf8'), ctx, { filename: f });
   ['data/hsk1-words.js', 'data/hsk1-grammar.js', 'data/hsk1-webs.js', 'data/hsk1-speak.js', 'data/hsk1-listen.js', 'data/hsk1-exam.js', 'data/hsk1-erhua.js',
    'data/hsk2-words.js', 'data/hsk2-grammar.js', 'data/hsk2-webs.js', 'data/hsk2-speak.js', 'data/hsk2-listen.js', 'data/hsk2-exam.js',
-   'data/hsk3-words.js', 'data/hsk3-grammar.js', 'data/hsk3-webs.js', 'data/hsk3-speak.js', 'data/hsk3-listen.js', 'data/hsk3-exam.js', 'data/path.js'].forEach(run);
+   'data/hsk3-words.js', 'data/hsk3-grammar.js', 'data/hsk3-webs.js', 'data/hsk3-speak.js', 'data/hsk3-listen.js', 'data/hsk3-exam.js', 'data/speak-scenes.js', 'data/path.js'].forEach(run);
   const E = require(path.join(root, 'erhua.js'));
   const er = E.make(ctx.HSK1_ERHUA);
   if (!erhua) er.apply(ctx);      // plain style: the site rewrites its words before the app starts
@@ -72,6 +72,16 @@ for (const erhua of [false, true]) {
     const lost = ids.filter(i => !inPath[i]); const twice = Object.keys(inPath).filter(i => inPath[i] > 1); const stray = Object.keys(inPath).filter(i => ids.indexOf(i) < 0);
     check(ids.length > 0, 'HSK ' + n + ': the grammar data lists its lessons (' + ids.length + ')');
     check(lost.length === 0 && twice.length === 0 && stray.length === 0, 'HSK ' + n + ': every grammar lesson is on the path once' + (lost.length ? ' missing ' + lost.join(' ') : '') + (twice.length ? ' twice ' + twice.join(' ') : '') + (stray.length ? ' unknown ' + stray.join(' ') : ''));
+  }
+  // practice scripts: every script of the level is a stop of the path, once (the stop opens that script in Speak)
+  for (const n of [1, 2, 3]) {
+    const SP = ctx['HSK' + n + '_SPEAK'];
+    const ids = (SP && SP.scenarios || []).map(x => x.id);
+    const inPath = {}; ctx.SHANLU_PATH[n].units.forEach(u => u.stops.forEach(st => { if (st.k === 's') inPath[st.s] = (inPath[st.s] || 0) + 1; }));
+    const lost = ids.filter(i => !inPath[i]); const twice = Object.keys(inPath).filter(i => inPath[i] > 1); const stray = Object.keys(inPath).filter(i => ids.indexOf(i) < 0);
+    check(ids.length > 0 && lost.length === 0 && twice.length === 0 && stray.length === 0, 'HSK ' + n + ': every practice script is on the path once (' + ids.length + ')' + (lost.length ? ' missing ' + lost.join(' ') : '') + (twice.length ? ' twice ' + twice.join(' ') : '') + (stray.length ? ' unknown ' + stray.join(' ') : ''));
+    const sc = (ctx.SHANLU_SPEAK_SCENES || {});
+    check(ids.every(i => sc[i] && sc[i].u && sc[i].c), 'HSK ' + n + ': every practice script has its scene picture');
   }
   // anchors of the order: hello comes before anything else, numbers before time, and each level starts with a word stop
   const first = ctx.SHANLU_PATH[1].units[0].stops[0];

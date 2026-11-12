@@ -193,6 +193,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await nav('Speak');
   check((await page.locator('.modeseg').count()) === 1 && (await text()).includes('Practice script'), 'Speak has the practice-script switch at HSK 3');
   check((await text()).includes('Check in at a hotel') && (await text()).includes('Call a friend abroad') && await page.evaluate(() => window.HSK3_SPEAK.scenarios.length === 8 && window.HSK3_SPEAK.phrases.length === 8), 'the eight HSK 3 scripts and eight phrases are listed');
+  await page.locator('.spk-card').first().click();
   await page.locator('button', { hasText: 'I said it' }).first().click();
   check((await text()).includes('欢迎来到我们宾馆'), 'an HSK 3 script plays: the first line of the first scenario shows after "I said it"');
   await nav('Level exam');
