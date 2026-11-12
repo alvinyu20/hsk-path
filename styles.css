@@ -1875,3 +1875,55 @@ button.me .me-av{flex:none}
 .ex-img[src^="data:image/svg"]{object-fit:contain;aspect-ratio:1/1;background:#f4f1e8}
 .ex-pic-photo .ex-img[src^="data:image/svg"]{width:min(230px,100%)}
 .ex-opt:has(.ex-img[src^="data:image/svg"]) .ex-img{max-width:150px;margin:0 auto}
+
+/* ---- The themed Learn path: HSK 1 a day in a city, HSK 2 a rail line, HSK 3 a semester of chapters ---- */
+.pth-list{display:flex;flex-direction:column;gap:18px;position:relative}
+.pth-ent{display:flex;flex-direction:column;gap:12px;position:relative}
+.pth-head{overflow:hidden;padding:0;gap:0}
+.pth-head-b{display:flex;flex-direction:column;gap:12px;padding:20px 22px}
+.pth-hero{display:block;width:100%;height:150px;object-fit:cover;background:var(--panel2)}
+.pth-tag{align-self:flex-start;display:inline-flex;align-items:center;height:26px;padding:0 11px;border-radius:99px;background:var(--panel2);font-size:13px;font-weight:700;letter-spacing:.02em}
+.pth-kick{align-self:flex-start;display:inline-flex;align-items:center;height:22px;padding:0 9px;margin-bottom:3px;border-radius:99px;background:var(--amber-soft);color:var(--amber);font-size:12.5px;font-weight:700;letter-spacing:.03em}
+.pth-scene{font-size:15px;color:var(--ink);margin:2px 0 1px}
+.pth-un.big{width:48px;height:48px;font-size:28px;font-weight:600}
+.pth-band{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:22px;background:var(--panel);overflow:hidden}
+.pth-band-img{display:block;width:100%;height:112px;object-fit:cover;background:var(--panel2)}
+.pth-band-t{display:flex;align-items:center;gap:12px;padding:12px 16px 4px}
+.pth-band-t>div{flex:1;min-width:0;display:flex;flex-direction:column}
+.pth-band-t b{font:700 20px/1.15 'Bricolage Grotesque',sans-serif;letter-spacing:-.01em}
+.pth-band-zh{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:20px;font-weight:600}
+.pth-band-zh:empty{display:none}
+.pth-band-n{font-size:13px;color:var(--muted);white-space:nowrap}
+.pth-band-l{margin:0;padding:0 16px 14px;font-size:15px}
+/* HSK 2: the rail line */
+.k-rail .pth-head{background:#14212A;border-color:#14212A;color:#F8FAF7}
+.t-dark .k-rail .pth-head{background:#0A1318;border-color:var(--line)}
+.k-rail .pth-head .muted{color:#B9D9CE}
+.k-rail .pth-head .h2{color:#F8FAF7}
+.k-rail .pth-tag{background:#B9D9CE;color:#14212A}
+.k-rail .pth-head .track{background:rgba(248,250,247,.2)}
+.k-rail .pth-list{padding-left:38px}
+.k-rail .pth-list::before{content:'';position:absolute;left:11px;top:34px;bottom:34px;width:6px;border-radius:99px;background:linear-gradient(var(--seal) var(--rail),transparent var(--rail)),repeating-linear-gradient(var(--line) 0 6px,transparent 6px 14px)}
+.k-rail .pth-ent::before{content:'';position:absolute;left:-38px;top:24px;width:28px;height:28px;box-sizing:border-box;border-radius:50%;background:var(--panel);border:4px solid var(--line);z-index:1}
+.k-rail .pth-ent.done::before{background:var(--seal);border-color:var(--seal)}
+.k-rail .pth-ent.cur::before{border-color:var(--seal);box-shadow:0 0 0 6px rgba(194,54,43,.2)}
+.k-rail .pth-un .zh,.k-rail .pth-un{font-family:'Noto Serif SC',serif}
+.pth-note{position:relative;display:flex;flex-direction:column;gap:2px;padding:11px 16px;border:2px dashed var(--line);border-radius:16px;background:var(--amber-soft)}
+.pth-note::before,.pth-note::after{content:'';position:absolute;top:50%;width:16px;height:16px;margin-top:-8px;border-radius:50%;background:var(--bg)}
+.pth-note::before{left:-9px}.pth-note::after{right:-9px}
+.pth-note-k{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--amber)}
+.pth-note-t{font-size:15.5px;line-height:1.35;color:var(--ink)}
+/* HSK 3: chapters with a short chat */
+.pth-dlg{display:flex;flex-direction:column;gap:10px;padding:2px 18px 14px}
+.pth-dl{display:flex;align-items:flex-start;gap:12px}
+.pth-who{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--seal);color:var(--on-seal);font-size:16px;font-weight:700}
+.pth-dl.me .pth-who{background:var(--jade);color:var(--on-jade)}
+.pth-dl-b{flex:1;min-width:0}
+.pth-dl-zh{font-size:20px;line-height:1.3}
+.pth-dl-py{font-size:14px;color:var(--muted)}
+.pth-dl-en{font-size:14.5px}
+.pth-hear{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);display:grid;place-items:center;cursor:pointer;padding:0}
+.pth-hear .ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pth-hear.on{background:var(--ink);color:var(--bg)}
+.pth-hear:hover{border-color:var(--ink)}
+@media (max-width:520px){.pth-head-b{padding:12px 14px;gap:8px}.pth-hero{height:120px}.pth-band-img{height:92px}.k-rail .pth-list{padding-left:34px}}

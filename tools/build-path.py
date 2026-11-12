@@ -176,6 +176,113 @@ def build_level(n, cfg, data, problems, report):
 
     return {'title': cfg['title'], 'blurb': cfg['blurb'], 'units': units}
 
+PUNCT = {'，': ',', '。': '.', '！': '!', '？': '?', '、': ',', '：': ':', '；': ';'}
+PROPER = {'杭州', '西湖', '北京', '梅'}    # names get a capital letter in the pinyin
+EXTRA = {'每天', '有点', '好喝', '爬山', '看到', '带上', '多长', '下雪', '不但', '而且', '怎么样'}   # words of the lines that are not in the lists on their own
+SPLIT = {'你好'}                          # the site writes these as two words (Nǐ hǎo)
+_WORDSET = None
+
+
+def _wordset():
+    """Every word of HSK 1-3 plus the place names, used to cut a line into words."""
+    global _WORDSET
+    if _WORDSET is None:
+        out = subprocess.check_output(['node', '-e', r"""
+const vm=require('vm'),fs=require('fs');const c={window:{}};vm.createContext(c);const o=[];
+for(const n of [1,2,3]){vm.runInContext(fs.readFileSync('data/hsk'+n+'-words.js','utf8'),c);c.window['HSK'+n+'_WORDS'].forEach(w=>o.push(w.zh));}
+console.log(JSON.stringify(o));"""], cwd=ROOT).decode('utf-8')
+        _WORDSET = (set(json.loads(out)) | PROPER | EXTRA) - SPLIT
+    return _WORDSET
+
+
+def _cut(zh):
+    """Longest word first, from the left, among the words of HSK 1-3 (a character that is in no word stands alone)."""
+    ws = _wordset()
+    toks, i = [], 0
+    while i < len(zh):
+        for j in range(min(len(zh), i + 4), i, -1):
+            if zh[i:j] in ws or j == i + 1:
+                toks.append(zh[i:j])
+                i = j
+                break
+    return toks
+
+
+def make_pinyin(zh):
+    """Pinyin for a short line: pypinyin reads the whole line (so 一 and 不 change tone as they should), words are cut by _cut and
+    set apart by spaces. Punctuation sticks to the word before it; sentences and names start with a capital."""
+    from pypinyin import lazy_pinyin, Style
+    syl = lazy_pinyin(zh, style=Style.TONE)
+    assert len(syl) == len(zh), zh
+    tone = lambda x: next((d for d, ch in ((1, 'āēīōū'), (2, 'áéíóú'), (3, 'ǎěǐǒǔ'), (4, 'àèìòù')) if any(c in ch for c in x)), 0)
+    for i, ch in enumerate(zh):        # the site writes 不 and 一 as they sound (bú, yí, yì), but not the 3-3 change of nǐ hǎo; 个 after a number is neutral
+        nxt = tone(syl[i + 1]) if i + 1 < len(zh) else 0
+        if ch == '不' and nxt == 4:
+            syl[i] = 'bú'
+        elif ch == '一' and i + 1 < len(zh) and zh[i + 1] not in '月年' and (i == 0 or zh[i - 1] not in '第十二三四五六七八九'):
+            syl[i] = 'yí' if nxt == 4 else 'yì'
+        elif ch == '个' and i > 0 and zh[i - 1] in '一二两三四五六七八九十几':
+            syl[i] = 'ge'
+        elif ch == '长' and i > 0 and zh[i - 1] == '多':
+            syl[i] = 'cháng'
+        elif ch == '得' and zh[i:i + 2] == '得很':
+            syl[i] = 'de'
+        elif zh[i:i + 2] == '哪里' and ch == '里':
+            syl[i] = 'li'
+    out, at, cap = [], 0, True
+    for t in _cut(zh):
+        part = syl[at:at + len(t)]
+        at += len(t)
+        if t in PUNCT:
+            if out:
+                out[-1] += PUNCT[t]
+            cap = t in '。！？'
+            continue
+        txt = part[0]
+        for x in part[1:]:
+            txt += ('\u2019' if x[0] in 'aāáǎàoōóǒòeēéěè' else '') + x
+        if cap or t in PROPER:
+            txt = txt[:1].upper() + txt[1:]
+        cap = False
+        out.append(txt)
+    return ' '.join(out)
+
+
+def build_theme(n, th, units, problems):
+    """The look of one level's path (content/path-theme.json), checked against the level's real units."""
+    ids = [u['id'] for u in units]
+    kind = th.get('kind')
+    if kind not in ('day', 'rail', 'story'):
+        problems.append('HSK %s theme: kind must be day, rail or story' % n)
+        return None
+    for k in ('name', 'tag', 'blurb', 'hero'):
+        if not th.get(k):
+            problems.append('HSK %s theme: "%s" is missing' % (n, k))
+    tu = th.get('units', {})
+    for i in ids:
+        if i not in tu:
+            problems.append('HSK %s theme: unit %s has no entry' % (n, i))
+    for i in tu:
+        if i not in ids:
+            problems.append('HSK %s theme: "%s" is not a unit of this level' % (n, i))
+    groups = th.get('phases') or th.get('seasons') or []
+    if kind in ('day', 'story'):
+        covered = []
+        for g in groups:
+            if g['from'] not in ids or g['to'] not in ids or ids.index(g['from']) > ids.index(g['to']):
+                problems.append('HSK %s theme: group %s has a bad range' % (n, g.get('id')))
+                continue
+            covered += ids[ids.index(g['from']):ids.index(g['to']) + 1]
+        if covered != ids:
+            problems.append('HSK %s theme: the groups must cover every unit once, in order' % n)
+    out = {'kind': kind, 'name': th['name'], 'tag': th['tag'], 'blurb': th['blurb'], 'hero': th['hero'], 'groups': groups, 'units': {}}
+    for i, u in tu.items():
+        v = dict(u)
+        if 'lines' in v:
+            v['lines'] = [{'who': w, 'zh': zh, 'py': make_pinyin(zh), 'en': en} for w, zh, en in v['lines']]
+        out['units'][i] = v
+    return out
+
 
 def main():
     check = '--check' in sys.argv
@@ -185,6 +292,14 @@ def main():
     problems, report, out = [], [], {}
     for n in sorted(cfg['levels']):
         out[n] = build_level(int(n), cfg['levels'][n], data[n], problems, report)
+    theme = json.load(open(os.path.join(ROOT, 'content', 'path-theme.json'), encoding='utf-8'))['levels']
+    for n in sorted(theme):
+        if n not in out:
+            problems.append('HSK %s has a theme but no path' % n)
+            continue
+        t = build_theme(n, theme[n], out[n]['units'], problems)
+        if t:
+            out[n]['theme'] = t
     if verbose or True:
         for n in sorted(out):
             nstops = sum(len(u['stops']) for u in out[n]['units'])
@@ -209,9 +324,10 @@ def main():
         for p in problems:
             print('  ' + p)
         sys.exit(1)
-    text = ('/* The learning path (Learn > Path) for Shanlu. GENERATED by tools/build-path.py from content/path.json. Do not edit by hand.\n'
+    text = ('/* The learning path (Learn > Path) for Shanlu. GENERATED by tools/build-path.py from content/path.json and content/path-theme.json. Do not edit by hand.\n'
             ' * Each level: units, each an ordered list of stops. A stop is {id, k:"w", t:title, w:[words], p:[part, parts]?} (a small group of related words)\n'
-            ' * or {id, k:"g", t:title, g:lessonId} (one grammar lesson). Every word of the level is in exactly one word stop. */\n'
+            ' * or {id, k:"g", t:title, g:lessonId} (one grammar lesson). Every word of the level is in exactly one word stop.\n'
+            ' * theme (optional): the look of the level (kind day/rail/story, groups, per-unit scene text, notes and dialogue). */\n'
             'window.SHANLU_PATH = ' + json.dumps(out, ensure_ascii=False, separators=(',', ':')) + ';\n')
     target = os.path.join(ROOT, 'data', 'path.js')
     have = open(target, encoding='utf-8').read() if os.path.exists(target) else None

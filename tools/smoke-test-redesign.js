@@ -89,7 +89,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await m.goto(url); await m.waitForSelector('.app'); await m.waitForTimeout(300);
   await m.evaluate(() => window.shanlu.go('path')); await m.waitForTimeout(400);
   const hdr = await m.evaluate(() => { const p = document.querySelector('.pth-head, .pth-prog, .pth-bar'); return p ? p.getBoundingClientRect().height : 0; });
-  check(hdr < 150, 'the Path header on a phone is compact (' + Math.round(hdr) + 'px)');
+  const nextTop = await m.evaluate(() => { const n = document.querySelector('.pth-next'); return n ? n.getBoundingClientRect().top : 0; });
+  check(hdr < 260 && nextTop > 0 && nextTop < 560, 'the Path header on a phone is compact, and the next stop starts high on the screen (' + Math.round(hdr) + 'px header, next card at ' + Math.round(nextTop) + 'px)');   // the themed header has a picture strip
   // open the first stop's lesson
   await m.locator('.pth-next button, .pth-next .btn').first().click().catch(() => {});
   await m.waitForTimeout(600);

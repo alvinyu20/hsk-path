@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="3992e4dbe2">
+<meta name="shanlu-version" content="af8a2798df">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=3992e4dbe2">
+<link rel="stylesheet" href="styles.css?v=af8a2798df">
 </head>
 <body>
 <div id="app"></div>
@@ -1522,15 +1522,19 @@
 
   <!-- PATH -->
   <sc-if value="{{isPath}}" hint-placeholder-val="{{ false }}">
-  <div class="pth">
+  <div class="pth {{pthKCls}}">
     <sc-if value="{{pthHasTabs}}" hint-placeholder-val="{{ false }}">
       <div class="seg2" role="group" aria-label="Level"><sc-for list="{{pthTabs}}" as="t" hint-placeholder-count="3"><button class="{{t.cls}}" data-on-click="{{t.fn}}">{{t.label}}</button></sc-for></div>
     </sc-if>
     <sc-if value="{{pthHas}}" hint-placeholder-val="{{ true }}">
       <section class="card pth-head">
-        <div class="pth-head-t"><h2 class="h2">{{pthName}}</h2><span class="muted">{{pthSub}}</span></div>
-        <div class="track"><div class="fill" style="width: {{pthPct}}"></div></div>
-        <p class="muted pth-blurb">{{pthBlurb}}</p>
+        <sc-if value="{{pthHasHero}}" hint-placeholder-val="{{ false }}"><img class="pth-hero" src="{{pthHeroImg}}" alt="" width="600" height="240"></sc-if>
+        <div class="pth-head-b">
+          <sc-if value="{{pthHasTag}}" hint-placeholder-val="{{ false }}"><span class="pth-tag">{{pthTag}}</span></sc-if>
+          <div class="pth-head-t"><h2 class="h2">{{pthName}}</h2><span class="muted">{{pthSub}}</span></div>
+          <div class="track"><div class="fill" style="width: {{pthPct}}"></div></div>
+          <p class="muted pth-blurb">{{pthBlurb}}</p>
+        </div>
       </section>
       <sc-if value="{{pthHasNext}}" hint-placeholder-val="{{ true }}">
         <section class="card pth-next">
@@ -1548,14 +1552,43 @@
           <button class="btn pri big" data-on-click="{{goReview}}">Go to Review</button>
         </section>
       </sc-if>
+      <div class="pth-list" style="--rail: {{pthRailPct}}">
       <sc-for list="{{pthUnits}}" as="u" hint-placeholder-count="3">
+        <div class="pth-ent {{u.cls}}">
+        <sc-if value="{{u.hasBand}}" hint-placeholder-val="{{ false }}">
+          <section class="pth-band">
+            <img class="pth-band-img" src="{{u.bandImg}}" alt="" loading="lazy" width="600" height="240">
+            <div class="pth-band-t">
+              <span class="pth-band-zh zh">{{u.bandZh}}</span>
+              <div><b>{{u.bandTitle}}</b><span class="muted">{{u.bandSub}}</span></div>
+              <span class="pth-band-n">{{u.bandN}}</span>
+            </div>
+            <sc-if value="{{u.hasBandLine}}" hint-placeholder-val="{{ false }}"><p class="muted pth-band-l">{{u.bandLine}}</p></sc-if>
+          </section>
+        </sc-if>
         <section class="pth-unit {{u.cls}}">
           <button type="button" class="pth-uh" aria-expanded="{{u.open}}" data-on-click="{{u.toggle}}">
-            <span class="pth-un">{{u.num}}</span>
-            <span class="pth-ut"><b>{{u.title}}</b><span class="muted">{{u.blurb}}</span></span>
+            <span class="pth-un {{u.numCls}}">{{u.num}}</span>
+            <span class="pth-ut">
+              <sc-if value="{{u.hasKick}}" hint-placeholder-val="{{ false }}"><span class="pth-kick">{{u.kick}}</span></sc-if>
+              <b>{{u.title}}</b>
+              <sc-if value="{{u.hasScene}}" hint-placeholder-val="{{ false }}"><span class="pth-scene">{{u.scene}}</span></sc-if>
+              <span class="muted">{{u.blurb}}</span>
+            </span>
             <span class="pth-up">{{u.prog}}</span>
             <span class="pth-uc">{{u.toggleText}}</span>
           </button>
+          <sc-if value="{{u.hasDlg}}" hint-placeholder-val="{{ false }}">
+            <div class="pth-dlg">
+              <sc-for list="{{u.dlg}}" as="d" hint-placeholder-count="2">
+                <div class="pth-dl {{d.cls}}">
+                  <span class="pth-who zh">{{d.who}}</span>
+                  <div class="pth-dl-b"><div class="pth-dl-zh zh">{{d.zh}}</div><div class="pth-dl-py">{{d.py}}</div><div class="pth-dl-en">{{d.en}}</div></div>
+                  <button type="button" class="pth-hear {{d.playCls}}" data-on-click="{{d.say}}" aria-label="Hear this line"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
           <sc-if value="{{u.open}}" hint-placeholder-val="{{ true }}">
             <div class="pth-trail">
               <sc-for list="{{u.stops}}" as="s" hint-placeholder-count="4">
@@ -1571,7 +1604,10 @@
             </div>
           </sc-if>
         </section>
+        <sc-if value="{{u.hasNote}}" hint-placeholder-val="{{ false }}"><aside class="pth-note"><span class="pth-note-k">{{u.noteKick}}</span><span class="pth-note-t">{{u.noteText}}</span></aside></sc-if>
+        </div>
       </sc-for>
+      </div>
     </sc-if>
     <sc-if value="{{pthHas}}" hint-placeholder-val="{{ false }}">
       <section class="card"><h2 class="h2">The path is not here yet</h2><p class="muted" style="margin:6px 0 0">Browse the Archive for now.</p></section>
@@ -2545,51 +2581,52 @@
 </main>
 </div>
 </template>
-<script defer src="vendor/morphdom-umd.min.js?v=3992e4dbe2"></script>
-<script defer src="runtime.js?v=3992e4dbe2"></script>
-<script defer src="config.js?v=3992e4dbe2"></script>
-<script defer src="friends.js?v=3992e4dbe2"></script>
-<script defer src="level.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk1-words.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk1-grammar.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk1-webs.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk1-speak.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk1-listen.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk1-exam.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk1-erhua.js?v=3992e4dbe2"></script>
-<script defer src="data/lexicon.js?v=3992e4dbe2"></script>
-<script defer src="data/char-glosses.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk2-preview.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk3-preview.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk2-words.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk2-speak.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk2-listen.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk2-exam.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk2-grammar.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk2-webs.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk3-words.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk3-speak.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk3-listen.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk3-exam.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk3-grammar.js?v=3992e4dbe2"></script>
-<script defer src="data/hsk3-webs.js?v=3992e4dbe2"></script>
-<script defer src="ascent.js?v=3992e4dbe2"></script>
-<script defer src="secrets.js?v=3992e4dbe2"></script>
-<script defer src="sync.js?v=3992e4dbe2"></script>
-<script defer src="data/audio-manifest.js?v=3992e4dbe2"></script>
-<script defer src="journey.js?v=3992e4dbe2"></script>
-<script defer src="data/journey.js?v=3992e4dbe2"></script>
-<script defer src="data/journey-map.js?v=3992e4dbe2"></script>
-<script defer src="data/journey-media.js?v=3992e4dbe2"></script>
-<script defer src="data/souvenirs.js?v=3992e4dbe2"></script>
-<script defer src="erhua.js?v=3992e4dbe2"></script>
-<script defer src="pinyin.js?v=3992e4dbe2"></script>
-<script defer src="data/pinyin-course.js?v=3992e4dbe2"></script>
-<script defer src="data/pinyin-chart.js?v=3992e4dbe2"></script>
-<script defer src="data/exam-media.js?v=3992e4dbe2"></script>
-<script defer src="data/exam-art.js?v=3992e4dbe2"></script>
-<script defer src="data/neutral-alt.js?v=3992e4dbe2"></script>
-<script defer src="data/path.js?v=3992e4dbe2"></script>
-<script defer src="app.js?v=3992e4dbe2"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=af8a2798df"></script>
+<script defer src="runtime.js?v=af8a2798df"></script>
+<script defer src="config.js?v=af8a2798df"></script>
+<script defer src="friends.js?v=af8a2798df"></script>
+<script defer src="level.js?v=af8a2798df"></script>
+<script defer src="data/hsk1-words.js?v=af8a2798df"></script>
+<script defer src="data/hsk1-grammar.js?v=af8a2798df"></script>
+<script defer src="data/hsk1-webs.js?v=af8a2798df"></script>
+<script defer src="data/hsk1-speak.js?v=af8a2798df"></script>
+<script defer src="data/hsk1-listen.js?v=af8a2798df"></script>
+<script defer src="data/hsk1-exam.js?v=af8a2798df"></script>
+<script defer src="data/hsk1-erhua.js?v=af8a2798df"></script>
+<script defer src="data/lexicon.js?v=af8a2798df"></script>
+<script defer src="data/char-glosses.js?v=af8a2798df"></script>
+<script defer src="data/hsk2-preview.js?v=af8a2798df"></script>
+<script defer src="data/hsk3-preview.js?v=af8a2798df"></script>
+<script defer src="data/hsk2-words.js?v=af8a2798df"></script>
+<script defer src="data/hsk2-speak.js?v=af8a2798df"></script>
+<script defer src="data/hsk2-listen.js?v=af8a2798df"></script>
+<script defer src="data/hsk2-exam.js?v=af8a2798df"></script>
+<script defer src="data/hsk2-grammar.js?v=af8a2798df"></script>
+<script defer src="data/hsk2-webs.js?v=af8a2798df"></script>
+<script defer src="data/hsk3-words.js?v=af8a2798df"></script>
+<script defer src="data/hsk3-speak.js?v=af8a2798df"></script>
+<script defer src="data/hsk3-listen.js?v=af8a2798df"></script>
+<script defer src="data/hsk3-exam.js?v=af8a2798df"></script>
+<script defer src="data/hsk3-grammar.js?v=af8a2798df"></script>
+<script defer src="data/hsk3-webs.js?v=af8a2798df"></script>
+<script defer src="ascent.js?v=af8a2798df"></script>
+<script defer src="secrets.js?v=af8a2798df"></script>
+<script defer src="sync.js?v=af8a2798df"></script>
+<script defer src="data/audio-manifest.js?v=af8a2798df"></script>
+<script defer src="journey.js?v=af8a2798df"></script>
+<script defer src="data/journey.js?v=af8a2798df"></script>
+<script defer src="data/journey-map.js?v=af8a2798df"></script>
+<script defer src="data/journey-media.js?v=af8a2798df"></script>
+<script defer src="data/souvenirs.js?v=af8a2798df"></script>
+<script defer src="erhua.js?v=af8a2798df"></script>
+<script defer src="pinyin.js?v=af8a2798df"></script>
+<script defer src="data/pinyin-course.js?v=af8a2798df"></script>
+<script defer src="data/pinyin-chart.js?v=af8a2798df"></script>
+<script defer src="data/exam-media.js?v=af8a2798df"></script>
+<script defer src="data/exam-art.js?v=af8a2798df"></script>
+<script defer src="data/neutral-alt.js?v=af8a2798df"></script>
+<script defer src="data/path-scenes.js?v=af8a2798df"></script>
+<script defer src="data/path.js?v=af8a2798df"></script>
+<script defer src="app.js?v=af8a2798df"></script>
 </body>
 </html>
