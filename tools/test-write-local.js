@@ -37,6 +37,21 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
     if (ok) check(r.checked && r.correct, 'right without the AI: ' + t + ' for ' + m);
     else check(!r.checked && /AI key/.test(r.err), 'not the model answer, goes to the AI: ' + t + ' for ' + m);
   }
+  // a run-on, toneless pinyin answer reaches the AI split into syllables, with the model answer's pinyin beside it (Qwen could not read babarangwomaiyao as one run)
+  const ctx2 = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  await ctx2.addInitScript(() => { window.SHANLU_AUTO_SHARE = 0; localStorage.setItem('shanlu-ai', JSON.stringify({ provider:'alibaba', ali:{ key:'test-key' } })); });
+  const p2 = await ctx2.newPage(); const sent = [];
+  await p2.route('**/chat/completions', (route) => { const b = JSON.parse(route.request().postData()); sent.push(b.messages[1].content); route.fulfill({ status:200, contentType:'application/json', body:JSON.stringify({ choices:[{ message:{ content:'{"verdict":"pass","better":"","reason":""}' } }] }) }); });
+  await p2.goto(url); await p2.waitForTimeout(800);
+  const r2 = await p2.evaluate(async () => {
+    const a = window.shanlu; const q = { type:'write', big:'Dad asked me to buy medicine.', gtitle:'让', model:'爸爸让我去买药。', need:'让', pt:'g1-svo', gdim:'w' };
+    a.setState({ screen:'quiz', qmode:'greview', qi:0, qres:[], qchecked:false, qbusy:false, qerr:'', qtyped:'Babarangwomaiyao', qcorrect:false });
+    await a.checkWrite(q); return { checked:a.state.qchecked, correct:a.state.qcorrect, err:a.state.qerr };
+  });
+  check(r2.checked && r2.correct && sent.length === 1, 'a run-on pinyin answer is sent to the AI and its pass shows ' + JSON.stringify(r2));
+  check(/Ba ba rang wo mai yao/.test(sent[0] || ''), 'the AI is given the answer split into syllables: ' + (sent[0] || '').split('\n').slice(-2).join(' | '));
+  check(/Bàba ràng wǒ qù mǎi yào/.test(sent[0] || ''), 'the AI is given the pinyin of the model answer');
+  await ctx2.close();
   // the Report a mistake link on a written answer carries what was typed and the verdict
   await page.evaluate(() => {
     const a = window.shanlu; const q = { type:'write', kicker:'Write it', prompt:'Write this', big:'Please sit.', gtitle:'请, 一下 and 喂', model:'请坐。', need:'', pt:'g1-svo', gdim:'w', reveal:'请坐。', explain:'' };

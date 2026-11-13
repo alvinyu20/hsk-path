@@ -823,7 +823,7 @@
   const G_SYSTEM = [
     'You check one sentence written by a learner of Chinese (HSK 1 to 4). Reply with JSON only.',
     'You are given the English prompt, the grammar point being practised, and the learner\'s answer.',
-    'The answer may be in Chinese characters or in pinyin. Pinyin is allowed to have no tones, no tone marks, no punctuation, no capital letters, and no spaces between syllables (niyoumeiyoushouji means ni you mei you shou ji). Work out the sentence the learner meant, and judge that sentence. Never fail an answer, and never mention tones, spacing, capitals or punctuation in the reason, because of how the pinyin is written.',
+    'The answer may be in Chinese characters or in pinyin. Pinyin is allowed to have no tones, no tone marks, no punctuation, no capital letters, and no spaces between syllables (niyoumeiyoushouji means ni you mei you shou ji). Work out the sentence the learner meant, and judge that sentence. Never fail an answer, and never mention tones, spacing, capitals or punctuation in the reason, because of how the pinyin is written. Without tones one run of pinyin can be read several ways: choose the reading that makes a natural sentence matching the English prompt (for example ba ba is 爸爸, rang is 让, he is 和, you duo yuan after a place is 有多远), and judge that. If it can be read as a correct sentence, it is correct.',
     'The grammar point name may list several patterns (for example "请, 一下 and 喂"). The sentence only has to use the pattern that the English prompt calls for, not all of them.',
     'Pass the answer only if all three are true: (1) the Chinese is grammatical and natural; (2) it uses the grammar point asked for; (3) it says what the English prompt says. Different natural wording, extra detail, or a different but correct word choice is fine. Ignore punctuation and spacing.',
     'Otherwise the verdict is "fix".',
@@ -893,7 +893,12 @@
   };
   // Claude Sonnet when an Anthropic key is saved (it got all 30 test sentences right); Qwen Plus when only an Alibaba key is
   async function gAiCheck(q, text) {
-    const user = 'English prompt: ' + q.big + '\nGrammar point: ' + q.gtitle + '\nOne model answer (other natural answers are fine too): ' + q.model + '\nLearner\'s answer: ' + text;
+    // pinyin with no spaces or tones is hard to read as one run (a weaker model failed babarangwomaiyao): give it syllables, and the model answer's pinyin to line them up with
+    const pyIn = !/[一-鿿]/.test(text);
+    const split = pyIn ? pySplit(text) : '';
+    const mpy = aiPinyin(segHsk(q.model));
+    const user = 'English prompt: ' + q.big + '\nGrammar point: ' + q.gtitle + '\nOne model answer (other natural answers are fine too): ' + q.model + (mpy ? ' (' + mpy + ')' : '') +
+      (pyIn ? '\nLearner\'s answer, written in pinyin without tones: ' + text + '\nThe same split into syllables (a best guess; the split or a missing tone is never the learner\'s mistake): ' + split : '\nLearner\'s answer: ' + text);
     if (AICFG.key) {
       const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 30000);
       let res;
@@ -1021,6 +1026,37 @@
     }
     return out;
   };
+  // every toneless pinyin syllable (v = ü): used to split a run-on typed answer such as babarangwomaiyao into syllables before the AI reads it
+  const PY_SYL = new Set((
+    'a ai an ang ao ba bai ban bang bao bei ben beng bi bian biao bie bin bing bo bu ca cai can cang cao ce cen ceng cha chai chan chang chao che ' +
+    'chen cheng chi chong chou chu chua chuai chuan chuang chui chun chuo ci cong cou cu cuan cui cun cuo da dai dan dang dao de dei den deng di ' +
+    'dia dian diao die ding diu dong dou du duan dui dun duo e ei en eng er fa fan fang fei fen feng fiao fo fou fu ga gai gan gang gao ge gei ' +
+    'gen geng gong gou gu gua guai guan guang gui gun guo ha hai han hang hao he hei hen heng hong hou hu hua huai huan huang hui hun huo ji jia ' +
+    'jian jiang jiao jie jin jing jiong jiu ju juan jue jun ka kai kan kang kao ke kei ken keng kong kou ku kua kuai kuan kuang kui kun kuo la ' +
+    'lai lan lang lao le lei len leng li lia lian liang liao lie lin ling liu long lou lu luan lun luo lv lve ma mai man mang mao me mei men meng ' +
+    'mi mian miao mie min ming miu mo mou mu na nai nan nang nao ne nei nen neng ni nian niang niao nie nin ning niu nong nou nu nuan nun nuo nv ' +
+    'nve o ou pa pai pan pang pao pei pen peng pi pian piao pie pin ping po pou pu qi qia qian qiang qiao qie qin qing qiong qiu qu quan que qun ' +
+    'ran rang rao re ren reng ri rong rou ru rua ruan rui run ruo sa sai san sang sao se sen seng sha shai shan shang shao she shei shen sheng ' +
+    'shi shou shu shua shuai shuan shuang shui shun shuo si song sou su suan sui sun suo ta tai tan tang tao te tei teng ti tian tiao tie ting ' +
+    'tong tou tu tuan tui tun tuo wa wai wan wang wei wen weng wo wu xi xia xian xiang xiao xie xin xing xiong xiu xu xuan xue xun ya yan yang ' +
+    'yao ye yi yin ying yong you yu yuan yue yun za zai zan zang zao ze zei zen zeng zha zhai zhan zhang zhao zhe zhei zhen zheng zhi zhong zhou ' +
+    'zhu zhua zhuai zhuan zhuang zhui zhun zhuo zi zong zou zu zuan zui zun zuo').split(' '));
+  const pyBase = (ch) => /[üǖǘǚǜÜ]/.test(ch) ? 'v' : ch.normalize('NFD')[0].toLowerCase();
+  const pySplit = (text) => String(text || '').split(/([^A-Za-züÜāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]+)/).map(chunk => {
+    if (!/^[A-Za-züÜāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]+$/.test(chunk)) return chunk;
+    const b = Array.from(chunk).map(pyBase).join(''), n = b.length; if (n < 2) return chunk;
+    const best = new Array(n + 1).fill(null); best[0] = { c:0, from:-1 };
+    for (let i = 1; i <= n; i++) for (let j = Math.max(0, i - 6); j < i; j++) {
+      if (!best[j] || !PY_SYL.has(b.slice(j, i))) continue;
+      const c = best[j].c + 1;
+      if (!best[i] || c < best[i].c || (c === best[i].c && j < best[i].from)) best[i] = { c, from:j };   // fewest syllables; on a tie, the longer last syllable
+    }
+    if (!best[n]) return chunk;
+    const cuts = []; for (let i = n; i > 0; i = best[i].from) cuts.unshift(i);
+    const chars = Array.from(chunk); let prev = 0; const out = [];
+    cuts.forEach(e => { out.push(chars.slice(prev, e).join('')); prev = e; });
+    return out.join(' ');
+  }).join('').replace(/\s+/g, ' ').trim();
   const aiPinyin = (toks) => {
     if (toks.some(t => t.cjk && !t.py)) return '';
     const line = toks.map(t => (t.cjk ? t.py : t.t.replace('。', '.').replace('，', ',').replace('？', '?').replace('！', '!'))).join(' ').replace(/ ([,.?!])/g, '$1').replace(/\s+/g, ' ').trim();
