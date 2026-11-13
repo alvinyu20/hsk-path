@@ -676,6 +676,7 @@
       const needs = want.tones.length > 0;
       if (!got.hasTone) { if (!needs || optional) return { ok:true, grade:'good', note:'' }; partial = partial || { ok:false, grade:'hard', note:'Right sounds, but the tones count. It is ' + py.split('/')[0].trim() + '.' }; continue; }
       if (needs ? tonesEqual(got.tones, want.tones) : got.tones.length === 0) return { ok:true, grade:'good', note:'' };
+      if (needs && got.tones.length < want.tones.length && got.tones.every((v, k) => v === want.tones[k] || (k === 0 && want.tones[0] === 3 && want.tones[1] === 3 && v === 2))) { partial = partial || { ok:false, grade:'hard', note:'Right sounds, but a tone is missing: the word has ' + want.tones.length + ' syllables and you marked ' + got.tones.length + '. You typed ' + String(input).trim() + '; it is ' + py.split('/')[0].trim() + '.' }; continue; }
       partial = partial || { ok:false, grade:'hard', note:'Right sounds, wrong tone. You typed ' + String(input).trim() + '; it is ' + py.split('/')[0].trim() + '.' };
     }
     return partial || { ok:false, grade:'again', note:'Not quite. It is ' + py.split('/')[0].trim() + '.' };
@@ -725,6 +726,10 @@
     }
     const synSoft = synonymOf(q, t, true);
     if (synSoft) return { ok:false, grade:'hard', note:synSoft + ' (' + BANK[synSoft].py.split('/')[0].trim() + ') means the same, but check the tone. This card was asking for ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
+    if (q.sayEn && q.type !== 'cloze') {   // another real word with a shared meaning (时候 for 时, both "time"): say so, instead of a plain miss
+      const other = knownByPinyin(t);
+      if (other && other !== q.exp.zh && sharedSense(BANK[other].en, q.sayEn)) return { ok:false, grade:'hard', note:other + ' (' + BANK[other].py.split('/')[0].trim() + ') is a real word too: "' + BANK[other].en + '". This card asks for ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + '), "' + q.sayEn + '".' };
+    }
     if (q.type === 'cloze') {   // several words can fit a gap; a real word that is not the expected one is not marked as a plain miss
       const known = knownByPinyin(t);
       if (known && known !== q.exp.zh) return { ok:false, grade:'hard', note:'That is a real word (' + known + ') but not the one this gap was written for. Several words can fit; if yours fits the English too, use "Report a mistake" so it can be added. Expected: ' + q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ').' };
@@ -4272,7 +4277,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         path:['Your path', 'Words and grammar in order, from the basics up. The next stop is always one tap away.'],
         plesson:[S.pl && STOP_BY[S.pl.id] ? stopTitle(STOP_BY[S.pl.id].st) : 'Lesson', 'Meet the words, try them, then check them.'],
         acct:['Account', 'You, your numbers, and the settings behind Shanlu.'],
-        web:['Topics and pairs', 'Every topic, word web and word pair, to browse and review. New words are best learned on your path.'],
+        web:S.wmode === 'char' ? ['Shared character', 'Words built from the same character, side by side. New words are best learned on your path.'] : S.wmode === 'opp' ? ['Word pairs', 'Opposites and look-alike words, side by side. New words are best learned on your path.'] : ['Topics', 'Every topic, to browse and review. New words are best learned on your path.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
         pinyin:['Pinyin and tones', 'Sounds, tones and the spelling rules, with audio you can tap.'],
         ach:['Achievements', 'Things you have earned, and what is still ahead.'],
@@ -4757,10 +4762,17 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
           const nxtL = LESSONS.find(L => (S.gres[L.id] || 0) < 80);
           const nxtPy = pyL.find(l => !pyDoneAt(l.id));
           const pct = (n, d) => Math.round(n / Math.max(1, d) * 100);
+          const stMap = {}; bankKeys.forEach((zh, i) => { stMap[zh] = infos[i].started; });
+          const countSet = (list) => { const set = new Set(); list.forEach(zh => { if (stMap[zh] !== undefined) set.add(zh); }); return { n:set.size, st:[...set].filter(zh => stMap[zh]).length }; };
+          const hubC = countSet(HUBS.flatMap(h => h.words.map(w => w.zh))), oppC = countSet(OPPS.flatMap(o => [o.a, o.b]));
+          const hubStarted = hubC.st, hubWordsN = hubC.n, oppStarted = oppC.st, oppWordsN = oppC.n;
+          const openWeb = (mode) => { this.go('web'); this.setState({ wmode:mode }); };
           return [
             { key:'words', glyph:'词', title:'Words', line:startedCount + ' of ' + rowsAll.length + ' started', sub:memNow.words + ' in memory' + (dueAllN > 0 ? ', ' + dueAllN + ' due' : ''), pct:pct(startedCount, rowsAll.length) + '%', fn:() => this.go('words') },
             { key:'grammar', glyph:'语', title:'Grammar lessons', line:gramPassed + ' of ' + LESSONS.length + ' passed', sub:nxtL ? 'Next: ' + nxtL.title.split(':')[0] : 'All passed', pct:pct(gramPassed, LESSONS.length) + '%', fn:() => this.go('grammar') },
-            { key:'web', glyph:'联', title:'Topics and pairs', line:mistClear + ' of ' + TOPICS.length + ' topics finished', sub:'Word webs, topics, word pairs', pct:pct(mistClear, TOPICS.length) + '%', fn:() => this.go('web') },
+            { key:'topics', glyph:'题', title:'Topics', line:mistClear + ' of ' + TOPICS.length + ' topics finished', sub:'Words grouped by theme', pct:pct(mistClear, TOPICS.length) + '%', fn:() => openWeb('topic') },
+            { key:'char', glyph:'字', title:'Shared character', line:HUBS.length + ' characters', sub:hubStarted + ' of ' + hubWordsN + ' words started', pct:pct(hubStarted, hubWordsN) + '%', fn:() => openWeb('char') },
+            { key:'opp', glyph:'对', title:'Word pairs', line:OPPS.length + ' pairs', sub:oppStarted + ' of ' + oppWordsN + ' words started', pct:pct(oppStarted, oppWordsN) + '%', fn:() => openWeb('opp') },
             { key:'pinyin', glyph:'音', title:'Pinyin and tones', line:pyD + ' of ' + pyL.length + ' lessons done', sub:nxtPy ? 'Next: ' + nxtPy.title : 'All done', pct:pct(pyD, pyL.length) + '%', fn:() => this.go('pinyin') }
           ];
         })(),

@@ -2269,9 +2269,13 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .lib-hd .lib-g{position:relative;z-index:1;width:auto;height:auto;background:transparent;font-size:64px;font-weight:700;line-height:1}
 .lt-words{--hb:var(--jade-soft);--hc:var(--jade)}
 .lt-grammar{--hb:var(--amber-soft);--hc:var(--amber)}
-.lt-web{--hb:#DCE6F3;--hc:#1F4E8C}
+.lt-topics{--hb:#DCE6F3;--hc:#1F4E8C}
+.lt-char{--hb:#D2E7DE;--hc:#1D6B58}
+.lt-opp{--hb:#E5DDF1;--hc:#5A3E8A}
 .lt-pinyin{--hb:#F6D9D5;--hc:#9E2A20}
-.app.t-dark .lt-web{--hb:#1E3550;--hc:#9CC0EE}
+.app.t-dark .lt-topics{--hb:#1E3550;--hc:#9CC0EE}
+.app.t-dark .lt-char{--hb:#1F3F36;--hc:#8FD0B9}
+.app.t-dark .lt-opp{--hb:#34294A;--hc:#C5B0EC}
 .app.t-dark .lt-pinyin{--hb:#4A2420;--hc:#F0A39B}
 .lib-tile .lib-tt{padding:14px 18px 16px;gap:6px}
 .lib-tile .lib-tt b{font:700 21px/1.2 'Bricolage Grotesque',sans-serif}
@@ -2352,3 +2356,48 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .pp-st.no{border:3px dotted #4C6A78;color:#4C6A78;transform:rotate(-3deg)}
 @media (max-width:600px){.pp-stamps{width:100%;justify-content:space-between}.pp-st{width:78px;height:78px}}
 @media (max-width:600px){.lants-done .lan{width:20px;height:25px}.lants-done{gap:5px;margin:0 0 2px}}
+
+/* Review on a phone: the top of the screen is one compact band so the whole question card, all four answers, fits without scrolling */
+@media (max-width:700px){
+  .app.am .rev{gap:6px}
+  .app.am .rev-top{flex-wrap:nowrap;justify-content:space-between;align-items:center;gap:8px}
+  .app.am .lants-w{flex:0 1 auto;align-items:flex-start;gap:4px}
+  .app.am .lants{gap:5px;padding-top:4px}
+  .app.am .lan{width:16px;height:21px;border-radius:7px/9px}
+  .app.am .lan::before{width:8px;height:4px;margin-left:-4px;top:-4px}
+  .app.am .lan::after{height:4px;bottom:-4px}
+  .app.am .lants-w .rev-n{font-size:13px;line-height:1.1}
+  .app.am .rev-top .chip.familiar,.app.am .rev-top .runpill{flex:none}
+  .app.am .runpill{height:28px;padding:0 10px;font-size:13px}
+  .app.am .rev .q-card{margin-top:2px;padding:12px 16px 14px;overflow:visible}
+  .app.am .rev .opt{min-height:clamp(42px,6.2dvh,54px);border-bottom-width:4px}
+  .app.am .delta{padding:1px 10px;font-size:12.5px}
+}
+
+/* Talk on a phone: the place list scrolls, and the AI chat keeps room for the conversation */
+@media (max-width:700px){
+  .app.am .main > .spk-pick{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-bottom:12px}
+  .app.am .ai-dock{flex:0 1 auto;max-height:46%;overflow-y:auto;overscroll-behavior:contain;gap:6px}
+  .app.am .ai-dock > p.muted{display:none}
+  .app.am .ai-dock .sugbox{display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
+  .app.am .ai-dock .sugbox:not(.open) > .muted{display:none}
+  .app.am .ai-dock .sugbox .btn{min-height:38px;padding:0 16px;font-size:15px}
+  .app.am .ai-dock .ai-tools{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
+  .app.am .ai-dock .ai-tools .btn{min-height:40px;padding:0 20px;font-size:15px}
+  .app.am .ai-dock .ai-lsn{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;font-size:13px}
+  .app.am .ai-dock .linkbtn{font-size:14px;padding:0 4px;min-height:34px}
+  .app.am .ai-dock .muted{font-size:13px}
+  .app.am .chat .msgs{min-height:120px}
+  .app.am .spk-pick-h{margin-bottom:10px}
+  .app.am .spk-pick-h .h2{font-size:22px}
+  .app.am .spk-pick-h p{font-size:14.5px}
+  .app.am .spk-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .app.am .spk-card{border-radius:18px}
+  .app.am .spk-card-b{padding:8px 10px 10px;gap:8px;flex-wrap:wrap}
+  .app.am .spk-card-g{width:30px;height:30px;font-size:16px;border-radius:8px}
+  .app.am .spk-card-t{flex:1 1 90px}
+  .app.am .spk-card-t b{font-size:15px;line-height:1.2}
+  .app.am .spk-card-t span{font-size:12.5px;line-height:1.25}
+  .app.am .spk-card-s{flex:1 1 100%;font-size:12px}
+  .app.am .spk-card.done::after{top:6px;right:6px;width:24px;height:24px}
+}

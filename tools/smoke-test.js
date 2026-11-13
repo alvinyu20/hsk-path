@@ -163,8 +163,10 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await text()).includes('Add at least three words'), 'test is blocked until you have started words');
   check((await page.locator('button', { hasText: 'Start the test' }).count()) === 0, 'no start button while blocked');
 
-  // Word webs
+  // Word webs (the Library's Topics tile opens on Topics; this part of the test works in Shared character)
   await nav('Archive');
+  await page.evaluate(() => window.shanlu.setState({ wmode:'char' }));
+  await page.waitForTimeout(80);
   check((await text()).includes('0 added today') && !/\d+ of \d+ added today/.test(await text()), 'word webs open with no daily limit');
   const credit0 = await page.evaluate(() => { const S = window.shanlu.state; return JSON.stringify([S.xp, S.dayMin, S.streak, S.lastActive]); });
   for (let i = 0; i < 6; i++) { await page.locator('button', { hasText: 'Add to my words' }).first().click(); await page.waitForTimeout(50); }

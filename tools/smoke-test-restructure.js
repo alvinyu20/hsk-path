@@ -30,7 +30,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await page.locator('.side .navg .nav').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()).join('|') === 'Today|Learn|Review|Talk|Journey', 'five tabs in the sidebar');
   check(await page.locator('.side .navs:not(.navg)').count() === 0, 'the long flat list is gone');
   await nav('Library');
-  check(await scr(page) === 'library' && await page.locator('.lib-tile').count() === 4, 'the Library has four tiles: ' + (await page.locator('.lib-tile b').allInnerTexts()).join(', '));
+  check(await scr(page) === 'library' && await page.locator('.lib-tile').count() === 6, 'the Library has six tiles: ' + (await page.locator('.lib-tile b').allInnerTexts()).join(', '));
   check((await page.locator('.navsub .subl.on').innerText()).trim() === 'Library', 'the Library is lit under Learn');
   await page.locator('.lib-tile', { hasText: 'Grammar lessons' }).click(); await page.waitForTimeout(150);
   check(await scr(page) === 'grammar' && (await page.locator('.navsub .subl.on').innerText()).trim() === 'Library' && await page.locator('.navg .nav.on', { hasText: 'Learn' }).count() === 1, 'a Library page keeps Learn and Library lit');
@@ -42,7 +42,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('.lib-rb', { hasText: '水' }).first().click(); await page.waitForTimeout(150);
   check(await scr(page) === 'words' && (await page.locator('.wsearch').inputValue()) === '水', 'a result opens My words on that word');
   await nav('Archive');
-  check(await scr(page) === 'web', 'Topics and pairs (the old Archive) opens from the Library');
+  check(await scr(page) === 'web', 'Topics (the old Archive) opens from the Library');
   await nav('Review words');
   check(await scr(page) !== 'web' && (await page.locator('.navsub .subl').allInnerTexts()).map(t => t.replace(/\d+$/, '').trim()).join('|') === 'Words|Grammar|Test', 'Review lists Words, Grammar and Test');
   await nav('Listening lab');
