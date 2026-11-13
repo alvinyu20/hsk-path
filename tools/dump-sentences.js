@@ -72,6 +72,16 @@ if (EXAM && level === '3') {
   EXAM.W1.forEach((e, i) => add('exam:W1:' + i, e.zh, e.py, e.en, { fragment: true }));
   EXAM.W2.forEach((e, i) => add('exam:W2:' + i, e.full, e.py, e.en));
 }
+if (EXAM && level === '4') {
+  // HSK 4 layout: L1 passage + printed sentence (true/false), L2/L3 dialogue or passage + question + options, R1 blanks, R2 three pieces to put in order, R3 passage + question + options, W1 word order, W2 missing character
+  EXAM.L1.forEach((e, i) => { e.say.forEach((l, k) => add('exam:L1:' + i + '.' + k, l.zh, l.py, l.en)); add('exam:L1:' + i + ':statement', e.st.zh, e.st.py, e.st.en); });
+  ['L2', 'L3'].forEach(p => EXAM[p].forEach((e, i) => { e.say.forEach((l, k) => add('exam:' + p + ':' + i + '.' + k, l.zh, l.py, l.en)); add('exam:' + p + ':' + i + ':question', e.q.zh, e.q.py, e.q.en); e.opts.forEach((o, k) => add('exam:' + p + ':' + i + ':option' + k, o.zh, o.py, '', { levelOnly: true })); }));
+  EXAM.R1.forEach((st, a) => st.items.forEach((it, i) => add('exam:R1:' + a + '.' + i, it.full, it.py, it.en)));
+  EXAM.R2.forEach((e, i) => add('exam:R2:' + i, e.zh, e.py, e.en));
+  EXAM.R3.forEach((e, i) => { add('exam:R3:' + i + ':passage', e.zh, e.py, e.en); add('exam:R3:' + i + ':question', e.q.zh, e.q.py, e.q.en); e.opts.forEach((o, k) => add('exam:R3:' + i + ':option' + k, o.zh, o.py, '', { levelOnly: true })); });
+  EXAM.W1.forEach((e, i) => add('exam:W1:' + i, e.zh, e.py, e.en, { fragment: true }));
+  EXAM.W2.forEach((e, i) => add('exam:W2:' + i, e.full, e.py, e.en));
+}
 if (EXAM && level === '1') {
   ['L1', 'R1'].forEach(p => EXAM[p].forEach((e, i) => add('exam:' + p + ':' + i, e.zh, e.py, e.en, { fragment: true })));
   EXAM.L2.forEach((e, i) => add('exam:L2:' + i, e.zh, e.py, e.en));

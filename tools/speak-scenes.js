@@ -188,6 +188,58 @@ add('abroad', '#3B3560',
   person(180, 196, '#E9A24B', scarf(180, 196, '#C2362B')) + R(0, 380, 480, 140, '#4A4378') + R(0, 366, 480, 22, '#6B5FA0', `stroke="${INK}" stroke-width="3"`) +
   G('translate(340 366)', RR(-86, -140, 172, 120, 10, INK, 'stroke="#B9D9CE" stroke-width="5"') + RR(-78, -132, 156, 104, 6, '#6AAE9A') + C(0, -92, 20, '#F2C9A0', `stroke="${INK}" stroke-width="3"`) + P('M-30-30q30-52 60 0z', '#C2362B', `stroke="${INK}" stroke-width="3"`) + R(-92, -20, 184, 14, '#6F8793', `stroke="${INK}" stroke-width="3"`)) + cup(80, 366, 1));
 
+// ===== HSK 4 =====
+add('interview', '#5F6B73',
+  R(0, 0, 480, 520, '#DCE6EC') + window_(300, 52, 150, 170, '#A9D4EA') + cloud(338, 104, .8) + G('translate(84 96)', C(0, 0, 40, '#fff', `stroke="${INK}" stroke-width="4"`) + L('M0 0V-24M0 0l16 10', INK, 4) + C(0, 0, 3.5, INK)) + frame(36, 156, 110, 76, '#E9D9A6') +
+  person(240, 190, '#F8FAF7', coat(240, 190, '#2B3F5C') + P('M232 280h16l-4 48-4 10-4-10z', '#C2362B', `stroke="${INK}" stroke-width="3" stroke-linejoin="round"`), { glasses: true }) +
+  counter(372, '#B97D54', '#7A5A44') + G('translate(108 372)', RR(-44, -34, 88, 34, 4, '#E9D9A6', `stroke="${INK}" stroke-width="3"`) + RR(-44, -42, 34, 10, 3, '#E9D9A6', `stroke="${INK}" stroke-width="3"`) + L('M-28-18h56M-28-8h38', '#8A6A4F', 3)) + G('translate(390 372)', RR(-38, -12, 76, 12, 3, '#fff', `stroke="${INK}" stroke-width="3"`) + L('M-24-6h40', '#6A8FB5', 3)) + cup(310, 372, 1));
+
+add('rent', '#C9A47C',
+  R(0, 0, 480, 520, '#F3E6D2') + R(0, 372, 480, 148, '#C9A47C') + L('M0 372H480', '#A8845A', 4) + window_(34, 54, 150, 150, '#A9D4EA') + cloud(70, 100, .8) +
+  G('translate(400 108)', P('M-48-6L0-48 48-6z', '#C2362B', `stroke="${INK}" stroke-width="4" stroke-linejoin="round"`) + RR(-36, -6, 72, 62, 3, '#fff', `stroke="${INK}" stroke-width="4"`) + RR(-9, 20, 18, 36, 2, '#8A5A3B') + RR(-28, 6, 14, 14, 2, '#A9CBE8') + RR(14, 6, 14, 14, 2, '#A9CBE8')) +
+  RR(14, 320, 170, 76, 24, '#1D6B58', `stroke="${INK}" stroke-width="4"`) + RR(24, 290, 150, 46, 18, '#2C8A72', `stroke="${INK}" stroke-width="4"`) + plant(450, 372, 1.1) +
+  person(260, 196, '#6A8FB5', vest(260, 196, '#E9B44C')) +
+  G('translate(386 330) rotate(-24)', C(0, 0, 18, 'none', 'stroke="#E9B44C" stroke-width="8"') + C(0, 0, 18, 'none', `stroke="${INK}" stroke-width="2" opacity=".5"`) + L('M18 0H84M64 0v18M78 0v14', '#E9B44C', 8) + L('M18 0H84', INK, 1.6, 'opacity=".4"')));
+
+add('parcel', '#B79A78',
+  R(0, 0, 480, 520, '#EFE3CE') + shelf(26, 150, 150) + shelf(26, 250, 150) + RR(36, 104, 52, 46, 3, '#D9A464', `stroke="${INK}" stroke-width="3"`) + RR(96, 118, 44, 32, 3, '#C98B4A', `stroke="${INK}" stroke-width="3"`) + RR(40, 206, 64, 44, 3, '#C98B4A', `stroke="${INK}" stroke-width="3"`) + RR(112, 214, 50, 36, 3, '#D9A464', `stroke="${INK}" stroke-width="3"`) +
+  RR(300, 56, 150, 62, 8, '#1D6B58', `stroke="${INK}" stroke-width="4"`) + RR(342, 70, 66, 36, 3, '#fff') + L('M342 70l33 20 33-20', INK, 2.5) +
+  person(250, 196, '#1D6B58', vest(250, 196, '#E9B44C')) +
+  counter(372, '#D8C3A0', '#B79A78') + G('translate(104 372)', RR(-44, -22, 88, 22, 5, '#6F8793', `stroke="${INK}" stroke-width="3"`) + RR(-34, -36, 68, 14, 4, '#E4D8C2', `stroke="${INK}" stroke-width="3"`) + C(0, -11, 6, '#fff')) +
+  G('translate(392 372)', RR(-52, -58, 104, 58, 4, '#D9A464', `stroke="${INK}" stroke-width="4"`) + R(-9, -58, 18, 58, '#F2E3CB') + RR(16, -44, 30, 22, 2, '#fff', `stroke="${INK}" stroke-width="2"`) + L('M21-36h20M21-30h14', '#6A8FB5', 2.5)));
+
+add('late', '#5F6B73',
+  R(0, 0, 480, 520, '#C7DDE9') + cloud(100, 70, 1.1) + cloud(400, 110, .9) + bld(18, 160, 80, 230, '#9DB3C4') + bld(104, 210, 60, 180, '#8FA9BC') + bld(384, 150, 84, 240, '#8FA9BC') + bld(330, 230, 50, 160, '#9DB3C4') +
+  G('translate(240 66)', C(0, 0, 38, '#fff', `stroke="${INK}" stroke-width="4"`) + L('M0 0V-26M0 0l-18 10', INK, 4) + C(0, 0, 3.5, INK) + P('M-14-46l14-12 14 12z', '#C2362B', `stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"`)) +
+  person(240, 196, '#E9A24B', scarf(240, 196, '#C2362B')) + R(0, 392, 480, 128, '#5F6B73') + R(0, 386, 480, 10, '#CDBB9B', `stroke="${INK}" stroke-width="3"`) + L('M0 486H480', '#F2E3CB', 5, 'stroke-dasharray="26 18"') +
+  [[84, '#C2362B'], [240, '#E9A24B'], [396, '#3D6FA3']].map(([x, c]) => RR(x - 56, 438, 112, 36, 10, c, `stroke="${INK}" stroke-width="4"`) + RR(x - 34, 410, 68, 34, 12, c, `stroke="${INK}" stroke-width="4"`) + RR(x - 26, 417, 52, 20, 5, '#BFE0F0') + C(x - 32, 476, 12, INK) + C(x + 32, 476, 12, INK) + C(x - 32, 476, 5, '#CFD8DC') + C(x + 32, 476, 5, '#CFD8DC') + C(x + 54, 452, 4, '#F9D78A')).join(''));
+
+add('booking', '#7A4F34',
+  R(0, 0, 480, 520, '#F2D9B5') + lantern(70, 84, '#C2362B', 1.2) + lantern(410, 84, '#C2362B', 1.2) + lantern(240, 46, '#E9A24B', .9) + RR(30, 150, 100, 130, 6, '#3B3530', `stroke="#8A5A3B" stroke-width="6"`) + L('M46 180h64M46 204h48M46 228h60M46 252h36', '#F2E3CB', 4) +
+  RR(350, 150, 100, 130, 6, '#F8E4CB', `stroke="#8A5A3B" stroke-width="6"`) + C(400, 200, 26, '#C2362B') + L('M386 200h28M400 186v28', '#F8E4CB', 4) +
+  person(240, 192, '#C2362B', apron(240, 192)) + counter(372, '#B97D54', '#7A4F34') +
+  G('translate(110 372)', P('M-46-4Q-24-16 0-4Q24-16 46-4V-34Q24-46 0-34Q-24-46-46-34z', '#fff', `stroke="${INK}" stroke-width="3" stroke-linejoin="round"`) + L('M0-34V-4M-34-24h24M-34-14h20M10-24h24M10-14h18', '#8A6A4F', 2.5)) + bowl(390, 372, 1.1));
+
+add('visa', '#9CB6AA',
+  R(0, 0, 480, 520, '#E4EFEA') + G('translate(88 106)', C(0, 0, 52, '#6AAE9A', `stroke="${INK}" stroke-width="4"`) + P('M-34-18q18-12 28 6t-12 24q-18-8-16-30M10-34q22 2 26 22-8 12-26 2z', '#7DB56C') + L('M-52 0H52M0-52Q-22 0 0 52M0-52Q22 0 0 52', '#fff', 2, 'opacity=".55"')) +
+  R(386, 40, 6, 170, '#6F8793') + P('M392 46h62v44h-62z', '#C2362B', `stroke="${INK}" stroke-width="3"`) + C(423, 68, 9, '#F9D78A') +
+  person(240, 192, '#3D6FA3', vest(240, 192, '#6F8793'), { glasses: true }) + counter(372, '#E8F0EA', '#9CB6AA') +
+  G('translate(104 372)', RR(-32, -66, 64, 66, 4, '#1F3E6B', `stroke="${INK}" stroke-width="3"`) + C(0, -40, 13, 'none', 'stroke="#E9B44C" stroke-width="3"') + L('M-13-40h26M0-53V-27', '#E9B44C', 2)) +
+  G('translate(392 372)', RR(-26, -56, 52, 28, 6, '#8A5A3B', `stroke="${INK}" stroke-width="3"`) + R(-5, -30, 10, 22, '#6F8793', `stroke="${INK}" stroke-width="2"`) + RR(-22, -10, 44, 10, 3, '#C2362B', `stroke="${INK}" stroke-width="3"`)));
+
+add('coach', '#6AAE9A',
+  R(0, 0, 480, 520, '#DDEEE8') + RR(30, 60, 140, 190, 8, '#BFE0F0', `stroke="#6F8793" stroke-width="6"`) + L('M60 220L120 90M90 226L150 96', '#fff', 6, 'opacity=".6"') + G('translate(404 96)', C(0, 0, 38, '#fff', `stroke="${INK}" stroke-width="4"`) + L('M0 0V-24M0 0l18 8', INK, 4)) + R(0, 388, 480, 132, '#C9A47C') + L('M0 388H480', '#A8845A', 4) +
+  person(250, 196, '#E9A24B', '') + P('M204 176Q250 160 296 176L296 188Q250 172 204 188z', '#C2362B', `stroke="${INK}" stroke-width="3" stroke-linejoin="round"`) +
+  G('translate(96 424)', R(-44, -5, 88, 10, '#6F8793', `stroke="${INK}" stroke-width="2"`) + RR(-58, -22, 18, 44, 4, INK) + RR(40, -22, 18, 44, 4, INK) + RR(-66, -14, 10, 28, 3, '#6F8793') + RR(56, -14, 10, 28, 3, '#6F8793')) +
+  RR(160, 462, 190, 24, 8, '#6A8FB5', `stroke="${INK}" stroke-width="3"`) + G('translate(412 444)', RR(-44, -14, 88, 14, 4, '#6F8793', `stroke="${INK}" stroke-width="3"`) + RR(-30, -46, 60, 32, 5, '#E4D8C2', `stroke="${INK}" stroke-width="3"`) + L('M-18-30h36', '#C2362B', 4)));
+
+add('cheer', '#CDBB9B',
+  R(0, 0, 480, 520, '#F6E3C4') + window_(30, 50, 150, 150, '#26324F') + C(68, 92, 15, '#F9DC7C') + C(148, 80, 2.4, '#fff') + C(130, 150, 2.4, '#fff') + C(70, 160, 2.4, '#fff') + lamp(436, 130, '#F9D78A') +
+  G('translate(370 96)', P('M0-24L7-8 25-6 12 6 16 24 0 15-16 24-12 6-25-6-7-8z', '#F9D78A', `stroke="${INK}" stroke-width="3" stroke-linejoin="round"`)) +
+  person(240, 196, '#6A8FB5', scarf(240, 196, '#F9D78A')) + counter(372, '#B97D54', '#8A5A3B') +
+  G('translate(100 372)', RR(-42, -18, 84, 18, 3, '#C2362B', `stroke="${INK}" stroke-width="3"`) + RR(-36, -36, 72, 18, 3, '#3D6FA3', `stroke="${INK}" stroke-width="3"`) + RR(-46, -54, 92, 18, 3, '#E9B44C', `stroke="${INK}" stroke-width="3"`)) + cup(390, 372, 1.1) +
+  G('translate(382 262)', P('M0 14C-34-12-24-40 0-24 24-40 34-12 0 14z', '#C2362B', `stroke="${INK}" stroke-width="3.5" stroke-linejoin="round"`)));
+
 // ===== free chat =====
 add('free', '#8A5A3B',
   R(0, 0, 480, 520, '#F3DDC2') + window_(30, 56, 150, 160, '#9FD0E6') + frame(300, 54, 120, 90, '#B9D9CE') + lamp(446, 200) + plant(60, 300, 1.2) +

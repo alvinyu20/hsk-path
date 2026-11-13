@@ -84,6 +84,20 @@ window.HSK1_ERHUA = {
    "officialPy": "yíkuàir",
    "plainPy": "yíkuài",
    "twin": false
+  },
+  {
+   "official": "差点儿",
+   "plain": "差点",
+   "officialPy": "chàdiǎnr",
+   "plainPy": "chàdiǎn",
+   "twin": false
+  },
+  {
+   "official": "干活儿",
+   "plain": "干活",
+   "officialPy": "gànhuór",
+   "plainPy": "gànhuó",
+   "twin": false
   }
  ],
  "overrides": [

@@ -1,0 +1,4319 @@
+{
+ "hubs": [
+  {
+   "hub": "子",
+   "py": "zi",
+   "en": "a noun ending (not a word by itself here)",
+   "words": [
+    [
+     "鼻子",
+     "鼻",
+     "nose",
+     "子",
+     "noun ending"
+    ],
+    [
+     "袋子",
+     "袋",
+     "bag",
+     "子",
+     "noun ending"
+    ],
+    [
+     "盒子",
+     "盒",
+     "box",
+     "子",
+     "noun ending"
+    ],
+    [
+     "镜子",
+     "镜",
+     "mirror",
+     "子",
+     "noun ending"
+    ],
+    [
+     "帽子",
+     "帽",
+     "hat",
+     "子",
+     "noun ending"
+    ],
+    [
+     "袜子",
+     "袜",
+     "sock",
+     "子",
+     "noun ending"
+    ],
+    [
+     "院子",
+     "院",
+     "yard",
+     "子",
+     "noun ending"
+    ],
+    [
+     "肚子",
+     "肚",
+     "belly",
+     "子",
+     "noun ending"
+    ],
+    [
+     "牌子",
+     "牌",
+     "sign",
+     "子",
+     "noun ending"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "他的___很高，眼睛也很大。",
+     "en": "His nose is high, and his eyes are big too.",
+     "ans": "鼻子",
+     "opts": [
+      "鼻子",
+      "肚子",
+      "帽子",
+      "袜子"
+     ]
+    },
+    {
+     "zh": "我的___很饿，现在想吃饭。",
+     "en": "My stomach is very hungry, and I want to eat now.",
+     "ans": "肚子",
+     "opts": [
+      "肚子",
+      "鼻子",
+      "袋子",
+      "院子"
+     ]
+    },
+    {
+     "zh": "我家有一个大___，里面有很多花。",
+     "en": "My home has a big yard, and it has many flowers in it.",
+     "ans": "院子",
+     "opts": [
+      "院子",
+      "盒子",
+      "袋子",
+      "镜子"
+     ]
+    },
+    {
+     "zh": "她在___里看自己的新衣服。",
+     "en": "She looks at her new clothes in the mirror.",
+     "ans": "镜子",
+     "opts": [
+      "镜子",
+      "盒子",
+      "袋子",
+      "牌子"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "不",
+   "py": "bù",
+   "en": "not; no",
+   "words": [
+    [
+     "不必",
+     "不",
+     "not",
+     "必",
+     "must"
+    ],
+    [
+     "不够",
+     "不",
+     "not",
+     "够",
+     "enough"
+    ],
+    [
+     "不满",
+     "不",
+     "not",
+     "满",
+     "full"
+    ],
+    [
+     "不如",
+     "不",
+     "not",
+     "如",
+     "like"
+    ],
+    [
+     "不便",
+     "不",
+     "not",
+     "便",
+     "convenient"
+    ],
+    [
+     "不断",
+     "不",
+     "not",
+     "断",
+     "break"
+    ],
+    [
+     "不过",
+     "不",
+     "not",
+     "过",
+     "pass"
+    ],
+    [
+     "不管",
+     "不",
+     "not",
+     "管",
+     "care"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "今天的饭___，我们再点一个菜吧。",
+     "en": "The food is not enough today, so let us order one more dish.",
+     "ans": "不够",
+     "opts": [
+      "不够",
+      "不必",
+      "不满",
+      "不如"
+     ]
+    },
+    {
+     "zh": "你___来这么早，我们八点开始。",
+     "en": "You do not need to come so early; we start at eight.",
+     "ans": "不必",
+     "opts": [
+      "不必",
+      "不够",
+      "不便",
+      "不断"
+     ]
+    },
+    {
+     "zh": "这件衣服很好看，___有点贵。",
+     "en": "This piece of clothing looks nice, but it is a bit expensive.",
+     "ans": "不过",
+     "opts": [
+      "不过",
+      "不管",
+      "不断",
+      "不如"
+     ]
+    },
+    {
+     "zh": "走路___坐车快。",
+     "en": "Walking is not as fast as taking a car.",
+     "ans": "不如",
+     "opts": [
+      "不如",
+      "不必",
+      "不够",
+      "不便"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "出",
+   "py": "chū",
+   "en": "out; to go out",
+   "words": [
+    [
+     "出差",
+     "出",
+     "out",
+     "差",
+     "errand"
+    ],
+    [
+     "出口",
+     "出",
+     "out",
+     "口",
+     "mouth"
+    ],
+    [
+     "出现",
+     "出",
+     "out",
+     "现",
+     "appear"
+    ],
+    [
+     "出租",
+     "出",
+     "out",
+     "租",
+     "rent"
+    ],
+    [
+     "外出",
+     "外",
+     "outside",
+     "出",
+     "out"
+    ],
+    [
+     "演出",
+     "演",
+     "perform",
+     "出",
+     "out"
+    ],
+    [
+     "提出",
+     "提",
+     "raise",
+     "出",
+     "out"
+    ],
+    [
+     "指出",
+     "指",
+     "point",
+     "出",
+     "out"
+    ],
+    [
+     "发出",
+     "发",
+     "send",
+     "出",
+     "out"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "爸爸下个月要___，一个星期才回来。",
+     "en": "Dad will go on a business trip next month and will be back only after a week.",
+     "ans": "出差",
+     "opts": [
+      "出差",
+      "出口",
+      "出租",
+      "演出"
+     ]
+    },
+    {
+     "zh": "请走左边的___。",
+     "en": "Please take the exit on the left.",
+     "ans": "出口",
+     "opts": [
+      "出口",
+      "出差",
+      "出租",
+      "外出"
+     ]
+    },
+    {
+     "zh": "这里有很多自行车可以___。",
+     "en": "There are many bikes here that you can rent.",
+     "ans": "出租",
+     "opts": [
+      "出租",
+      "出口",
+      "出现",
+      "演出"
+     ]
+    },
+    {
+     "zh": "那个歌手今天晚上有___。",
+     "en": "That singer has a performance this evening.",
+     "ans": "演出",
+     "opts": [
+      "演出",
+      "出差",
+      "出现",
+      "发出"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "心",
+   "py": "xīn",
+   "en": "heart; mind",
+   "words": [
+    [
+     "爱心",
+     "爱",
+     "love",
+     "心",
+     "heart"
+    ],
+    [
+     "粗心",
+     "粗",
+     "rough",
+     "心",
+     "heart"
+    ],
+    [
+     "耐心",
+     "耐",
+     "endure",
+     "心",
+     "heart"
+    ],
+    [
+     "内心",
+     "内",
+     "inside",
+     "心",
+     "heart"
+    ],
+    [
+     "伤心",
+     "伤",
+     "hurt",
+     "心",
+     "heart"
+    ],
+    [
+     "细心",
+     "细",
+     "fine",
+     "心",
+     "heart"
+    ],
+    [
+     "信心",
+     "信",
+     "trust",
+     "心",
+     "heart"
+    ],
+    [
+     "心情",
+     "心",
+     "heart",
+     "情",
+     "mood"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "老师对学生很有___，从来不生气。",
+     "en": "The teacher is very patient with students and never gets angry.",
+     "ans": "耐心",
+     "opts": [
+      "耐心",
+      "粗心",
+      "信心",
+      "爱心"
+     ]
+    },
+    {
+     "zh": "他写错了三个字，真___。",
+     "en": "He wrote three characters wrong; he is really careless.",
+     "ans": "粗心",
+     "opts": [
+      "粗心",
+      "耐心",
+      "细心",
+      "伤心"
+     ]
+    },
+    {
+     "zh": "听到这个消息，她很___。",
+     "en": "Hearing this news, she is very sad.",
+     "ans": "伤心",
+     "opts": [
+      "伤心",
+      "信心",
+      "爱心",
+      "内心"
+     ]
+    },
+    {
+     "zh": "你要有___，一定能考好。",
+     "en": "You must have confidence, and you can certainly do well on the exam.",
+     "ans": "信心",
+     "opts": [
+      "信心",
+      "耐心",
+      "爱心",
+      "粗心"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "作",
+   "py": "zuò",
+   "en": "to do; to make; to write",
+   "words": [
+    [
+     "动作",
+     "动",
+     "move",
+     "作",
+     "do"
+    ],
+    [
+     "作家",
+     "作",
+     "write",
+     "家",
+     "expert"
+    ],
+    [
+     "作品",
+     "作",
+     "make",
+     "品",
+     "goods"
+    ],
+    [
+     "作文",
+     "作",
+     "write",
+     "文",
+     "writing"
+    ],
+    [
+     "作用",
+     "作",
+     "do",
+     "用",
+     "use"
+    ],
+    [
+     "作者",
+     "作",
+     "make",
+     "者",
+     "person"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "他是一位很有名的___，写了很多书。",
+     "en": "He is a very famous writer and has written many books.",
+     "ans": "作家",
+     "opts": [
+      "作家",
+      "作者",
+      "作用",
+      "动作"
+     ]
+    },
+    {
+     "zh": "这本书的___是一位老师。",
+     "en": "The author of this book is a teacher.",
+     "ans": "作者",
+     "opts": [
+      "作者",
+      "作家",
+      "作品",
+      "作文"
+     ]
+    },
+    {
+     "zh": "这个药很有___，我吃了就好了。",
+     "en": "This medicine has a good effect, and I got better after taking it.",
+     "ans": "作用",
+     "opts": [
+      "作用",
+      "动作",
+      "作品",
+      "作文"
+     ]
+    },
+    {
+     "zh": "她跳舞的___很好看。",
+     "en": "Her dance moves look very good.",
+     "ans": "动作",
+     "opts": [
+      "动作",
+      "作用",
+      "作者",
+      "作家"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "加",
+   "py": "jiā",
+   "en": "to add",
+   "words": [
+    [
+     "更加",
+     "更",
+     "more",
+     "加",
+     "add"
+    ],
+    [
+     "加班",
+     "加",
+     "add",
+     "班",
+     "shift"
+    ],
+    [
+     "加快",
+     "加",
+     "add",
+     "快",
+     "fast"
+    ],
+    [
+     "加强",
+     "加",
+     "add",
+     "强",
+     "strong"
+    ],
+    [
+     "加入",
+     "加",
+     "add",
+     "入",
+     "enter"
+    ],
+    [
+     "加油",
+     "加",
+     "add",
+     "油",
+     "fuel"
+    ],
+    [
+     "增加",
+     "增",
+     "increase",
+     "加",
+     "add"
+    ],
+    [
+     "加上",
+     "加",
+     "add",
+     "上",
+     "on"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我们今天要___，七点才能回家。",
+     "en": "We must work overtime today and can only go home at seven.",
+     "ans": "加班",
+     "opts": [
+      "加班",
+      "加入",
+      "加油",
+      "增加"
+     ]
+    },
+    {
+     "zh": "我想___这个汉语班，我可以吗？",
+     "en": "I want to join this Chinese class; can I?",
+     "ans": "加入",
+     "opts": [
+      "加入",
+      "加班",
+      "加油",
+      "加快"
+     ]
+    },
+    {
+     "zh": "比赛开始了，大家都在为我们的队___。",
+     "en": "The match has started, and everyone is cheering for our team.",
+     "ans": "加油",
+     "opts": [
+      "加油",
+      "加班",
+      "加入",
+      "增加"
+     ]
+    },
+    {
+     "zh": "这个月我的工资___了。",
+     "en": "My pay increased this month.",
+     "ans": "增加",
+     "opts": [
+      "增加",
+      "加班",
+      "加强",
+      "加快"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "理",
+   "py": "lǐ",
+   "en": "reason; to arrange",
+   "words": [
+    [
+     "办理",
+     "办",
+     "handle",
+     "理",
+     "arrange"
+    ],
+    [
+     "管理",
+     "管",
+     "manage",
+     "理",
+     "arrange"
+    ],
+    [
+     "理发",
+     "理",
+     "arrange",
+     "发",
+     "hair"
+    ],
+    [
+     "理解",
+     "理",
+     "reason",
+     "解",
+     "explain"
+    ],
+    [
+     "理想",
+     "理",
+     "reason",
+     "想",
+     "think"
+    ],
+    [
+     "修理",
+     "修",
+     "repair",
+     "理",
+     "arrange"
+    ],
+    [
+     "整理",
+     "整",
+     "tidy",
+     "理",
+     "arrange"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我的自行车坏了，我要去___一下。",
+     "en": "My bike is broken, and I will go and get it repaired.",
+     "ans": "修理",
+     "opts": [
+      "修理",
+      "整理",
+      "管理",
+      "理发"
+     ]
+    },
+    {
+     "zh": "你的房间太乱了，快去___吧。",
+     "en": "Your room is too messy; go and tidy it quickly.",
+     "ans": "整理",
+     "opts": [
+      "整理",
+      "修理",
+      "办理",
+      "理解"
+     ]
+    },
+    {
+     "zh": "他去店里___了，头发短了很多。",
+     "en": "He went to the shop for a haircut, and his hair is much shorter.",
+     "ans": "理发",
+     "opts": [
+      "理发",
+      "整理",
+      "修理",
+      "管理"
+     ]
+    },
+    {
+     "zh": "她的___是当一名老师。",
+     "en": "Her ideal is to become a teacher.",
+     "ans": "理想",
+     "opts": [
+      "理想",
+      "理解",
+      "管理",
+      "办理"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "部",
+   "py": "bù",
+   "en": "part; section",
+   "words": [
+    [
+     "北部",
+     "北",
+     "north",
+     "部",
+     "part"
+    ],
+    [
+     "南部",
+     "南",
+     "south",
+     "部",
+     "part"
+    ],
+    [
+     "东部",
+     "东",
+     "east",
+     "部",
+     "part"
+    ],
+    [
+     "西部",
+     "西",
+     "west",
+     "部",
+     "part"
+    ],
+    [
+     "部分",
+     "部",
+     "part",
+     "分",
+     "portion"
+    ],
+    [
+     "部门",
+     "部",
+     "section",
+     "门",
+     "door"
+    ],
+    [
+     "全部",
+     "全",
+     "whole",
+     "部",
+     "part"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "这个城市的___很冷，因为在北边。",
+     "en": "The northern part of this city is very cold because it is in the north.",
+     "ans": "北部",
+     "opts": [
+      "北部",
+      "南部",
+      "东部",
+      "西部"
+     ]
+    },
+    {
+     "zh": "这个___的人都很忙。",
+     "en": "The people in this department are all very busy.",
+     "ans": "部门",
+     "opts": [
+      "部门",
+      "部分",
+      "全部",
+      "西部"
+     ]
+    },
+    {
+     "zh": "我只做完了___作业，还有一些没做完。",
+     "en": "I have only finished part of the homework, and some is not done.",
+     "ans": "部分",
+     "opts": [
+      "部分",
+      "部门",
+      "全部",
+      "北部"
+     ]
+    },
+    {
+     "zh": "书里的故事我___看完了。",
+     "en": "I have read all the stories in the book.",
+     "ans": "全部",
+     "opts": [
+      "全部",
+      "部分",
+      "部门",
+      "北部"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "餐",
+   "py": "cān",
+   "en": "meal",
+   "words": [
+    [
+     "早餐",
+     "早",
+     "early",
+     "餐",
+     "meal"
+    ],
+    [
+     "午餐",
+     "午",
+     "noon",
+     "餐",
+     "meal"
+    ],
+    [
+     "晚餐",
+     "晚",
+     "evening",
+     "餐",
+     "meal"
+    ],
+    [
+     "快餐",
+     "快",
+     "fast",
+     "餐",
+     "meal"
+    ],
+    [
+     "中餐",
+     "中",
+     "Chinese",
+     "餐",
+     "meal"
+    ],
+    [
+     "聚餐",
+     "聚",
+     "gather",
+     "餐",
+     "meal"
+    ],
+    [
+     "餐厅",
+     "餐",
+     "meal",
+     "厅",
+     "hall"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我每天七点吃___，然后去上班。",
+     "en": "I eat breakfast at seven every day and then go to work.",
+     "ans": "早餐",
+     "opts": [
+      "早餐",
+      "午餐",
+      "晚餐",
+      "快餐"
+     ]
+    },
+    {
+     "zh": "十二点半是我们的___时间。",
+     "en": "Half past twelve is our lunch time.",
+     "ans": "午餐",
+     "opts": [
+      "午餐",
+      "早餐",
+      "晚餐",
+      "中餐"
+     ]
+    },
+    {
+     "zh": "这家___的菜很好吃，价格也不贵。",
+     "en": "The dishes at this restaurant are delicious, and the prices are not high either.",
+     "ans": "餐厅",
+     "opts": [
+      "餐厅",
+      "快餐",
+      "聚餐",
+      "中餐"
+     ]
+    },
+    {
+     "zh": "同事们星期五晚上一起___，大家都很高兴。",
+     "en": "The colleagues have a meal together on Friday evening, and everyone is very happy.",
+     "ans": "聚餐",
+     "opts": [
+      "聚餐",
+      "快餐",
+      "餐厅",
+      "早餐"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "点",
+   "py": "diǎn",
+   "en": "point; spot",
+   "words": [
+    [
+     "点名",
+     "点",
+     "point",
+     "名",
+     "name"
+    ],
+    [
+     "点头",
+     "点",
+     "point",
+     "头",
+     "head"
+    ],
+    [
+     "景点",
+     "景",
+     "scene",
+     "点",
+     "spot"
+    ],
+    [
+     "缺点",
+     "缺",
+     "lack",
+     "点",
+     "point"
+    ],
+    [
+     "特点",
+     "特",
+     "special",
+     "点",
+     "point"
+    ],
+    [
+     "优点",
+     "优",
+     "good",
+     "点",
+     "point"
+    ],
+    [
+     "重点",
+     "重",
+     "heavy",
+     "点",
+     "point"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "老师每天上课先___，看看谁没来。",
+     "en": "The teacher takes the roll first in every class to see who has not come.",
+     "ans": "点名",
+     "opts": [
+      "点名",
+      "点头",
+      "优点",
+      "重点"
+     ]
+    },
+    {
+     "zh": "他听了我的话，对我___笑了笑。",
+     "en": "He heard what I said, nodded at me and smiled.",
+     "ans": "点头",
+     "opts": [
+      "点头",
+      "点名",
+      "景点",
+      "特点"
+     ]
+    },
+    {
+     "zh": "这个城市有很多有名的___。",
+     "en": "This city has many famous scenic spots.",
+     "ans": "景点",
+     "opts": [
+      "景点",
+      "优点",
+      "缺点",
+      "特点"
+     ]
+    },
+    {
+     "zh": "这个手机最大的___是很便宜。",
+     "en": "The biggest strength of this phone is that it is cheap.",
+     "ans": "优点",
+     "opts": [
+      "优点",
+      "缺点",
+      "重点",
+      "点名"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "法",
+   "py": "fǎ",
+   "en": "way; method; law",
+   "words": [
+    [
+     "法律",
+     "法",
+     "law",
+     "律",
+     "rule"
+    ],
+    [
+     "看法",
+     "看",
+     "view",
+     "法",
+     "way"
+    ],
+    [
+     "说法",
+     "说",
+     "say",
+     "法",
+     "way"
+    ],
+    [
+     "无法",
+     "无",
+     "no",
+     "法",
+     "way"
+    ],
+    [
+     "想法",
+     "想",
+     "think",
+     "法",
+     "way"
+    ],
+    [
+     "语法",
+     "语",
+     "language",
+     "法",
+     "rule"
+    ],
+    [
+     "做法",
+     "做",
+     "do",
+     "法",
+     "way"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "对这个问题，你有什么___？",
+     "en": "What is your view on this problem?",
+     "ans": "看法",
+     "opts": [
+      "看法",
+      "做法",
+      "说法",
+      "语法"
+     ]
+    },
+    {
+     "zh": "他的手机坏了，所以___给我打电话。",
+     "en": "His phone is broken, so he cannot call me.",
+     "ans": "无法",
+     "opts": [
+      "无法",
+      "看法",
+      "做法",
+      "想法"
+     ]
+    },
+    {
+     "zh": "我有一个新___，你想听吗？",
+     "en": "I have a new idea; do you want to hear it?",
+     "ans": "想法",
+     "opts": [
+      "想法",
+      "看法",
+      "语法",
+      "法律"
+     ]
+    },
+    {
+     "zh": "开车的时候不能打电话，这是___。",
+     "en": "You cannot make phone calls while driving; this is the law.",
+     "ans": "法律",
+     "opts": [
+      "法律",
+      "语法",
+      "做法",
+      "说法"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "年",
+   "py": "nián",
+   "en": "year; age",
+   "words": [
+    [
+     "童年",
+     "童",
+     "child",
+     "年",
+     "years"
+    ],
+    [
+     "少年",
+     "少",
+     "young",
+     "年",
+     "years"
+    ],
+    [
+     "青年",
+     "青",
+     "green",
+     "年",
+     "years"
+    ],
+    [
+     "中年",
+     "中",
+     "middle",
+     "年",
+     "years"
+    ],
+    [
+     "老年",
+     "老",
+     "old",
+     "年",
+     "years"
+    ],
+    [
+     "年龄",
+     "年",
+     "year",
+     "龄",
+     "age"
+    ],
+    [
+     "年底",
+     "年",
+     "year",
+     "底",
+     "end"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我喜欢听奶奶说她的___。",
+     "en": "I like listening to Grandma talk about her childhood.",
+     "ans": "童年",
+     "opts": [
+      "童年",
+      "中年",
+      "青年",
+      "年龄"
+     ]
+    },
+    {
+     "zh": "他是一位___人，在公司工作。",
+     "en": "He is a middle-aged man who works at a company.",
+     "ans": "中年",
+     "opts": [
+      "中年",
+      "童年",
+      "少年",
+      "老年"
+     ]
+    },
+    {
+     "zh": "___的时候，我们公司会很忙。",
+     "en": "At the end of the year, our company will be very busy.",
+     "ans": "年底",
+     "opts": [
+      "年底",
+      "年龄",
+      "老年",
+      "青年"
+     ]
+    },
+    {
+     "zh": "你的___是多少？",
+     "en": "What is your age?",
+     "ans": "年龄",
+     "opts": [
+      "年龄",
+      "年底",
+      "童年",
+      "少年"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "感",
+   "py": "gǎn",
+   "en": "to feel",
+   "words": [
+    [
+     "感动",
+     "感",
+     "feel",
+     "动",
+     "move"
+    ],
+    [
+     "感觉",
+     "感",
+     "feel",
+     "觉",
+     "sense"
+    ],
+    [
+     "感情",
+     "感",
+     "feel",
+     "情",
+     "emotion"
+    ],
+    [
+     "感人",
+     "感",
+     "feel",
+     "人",
+     "person"
+    ],
+    [
+     "感受",
+     "感",
+     "feel",
+     "受",
+     "receive"
+    ],
+    [
+     "感谢",
+     "感",
+     "feel",
+     "谢",
+     "thank"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "你帮了我这么多，真是太___你了。",
+     "en": "You have helped me so much; I really thank you.",
+     "ans": "感谢",
+     "opts": [
+      "感谢",
+      "感动",
+      "感觉",
+      "感情"
+     ]
+    },
+    {
+     "zh": "这个电影的故事很___，我看哭了。",
+     "en": "The story of this film is very moving, and it made me cry.",
+     "ans": "感人",
+     "opts": [
+      "感人",
+      "感动",
+      "感觉",
+      "感受"
+     ]
+    },
+    {
+     "zh": "听了他的话，我很___。",
+     "en": "After hearing his words, I was very moved.",
+     "ans": "感动",
+     "opts": [
+      "感动",
+      "感谢",
+      "感觉",
+      "感人"
+     ]
+    },
+    {
+     "zh": "我___今天会下雨，你带伞了吗？",
+     "en": "I feel it will rain today; did you bring an umbrella?",
+     "ans": "感觉",
+     "opts": [
+      "感觉",
+      "感谢",
+      "感情",
+      "感受"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "信",
+   "py": "xìn",
+   "en": "letter; trust; message",
+   "words": [
+    [
+     "短信",
+     "短",
+     "short",
+     "信",
+     "message"
+    ],
+    [
+     "回信",
+     "回",
+     "reply",
+     "信",
+     "letter"
+    ],
+    [
+     "信号",
+     "信",
+     "letter",
+     "号",
+     "sign"
+    ],
+    [
+     "信息",
+     "信",
+     "message",
+     "息",
+     "news"
+    ],
+    [
+     "信心",
+     "信",
+     "trust",
+     "心",
+     "heart"
+    ],
+    [
+     "自信",
+     "自",
+     "self",
+     "信",
+     "trust"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我给朋友发了一条___，他马上回复了。",
+     "en": "I sent my friend a text message, and he replied right away.",
+     "ans": "短信",
+     "opts": [
+      "短信",
+      "回信",
+      "信号",
+      "信息"
+     ]
+    },
+    {
+     "zh": "这里手机___不好，我打不了电话。",
+     "en": "The phone signal here is not good, so I cannot make calls.",
+     "ans": "信号",
+     "opts": [
+      "信号",
+      "信息",
+      "短信",
+      "自信"
+     ]
+    },
+    {
+     "zh": "他很___，说话时一点也不紧张。",
+     "en": "He is very confident and is not nervous at all when he speaks.",
+     "ans": "自信",
+     "opts": [
+      "自信",
+      "信心",
+      "信息",
+      "回信"
+     ]
+    },
+    {
+     "zh": "我在网上找到了很多有用的___。",
+     "en": "I found a lot of useful information on the Internet.",
+     "ans": "信息",
+     "opts": [
+      "信息",
+      "信号",
+      "短信",
+      "回信"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "温",
+   "py": "wēn",
+   "en": "warm; temperature",
+   "words": [
+    [
+     "低温",
+     "低",
+     "low",
+     "温",
+     "temperature"
+    ],
+    [
+     "高温",
+     "高",
+     "high",
+     "温",
+     "temperature"
+    ],
+    [
+     "降温",
+     "降",
+     "drop",
+     "温",
+     "temperature"
+    ],
+    [
+     "气温",
+     "气",
+     "air",
+     "温",
+     "temperature"
+    ],
+    [
+     "体温",
+     "体",
+     "body",
+     "温",
+     "temperature"
+    ],
+    [
+     "温度",
+     "温",
+     "temperature",
+     "度",
+     "degree"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "今天的___很高，太热了。",
+     "en": "The temperature today is very high; it is too hot.",
+     "ans": "气温",
+     "opts": [
+      "气温",
+      "体温",
+      "低温",
+      "降温"
+     ]
+    },
+    {
+     "zh": "明天会___，你要多穿一点衣服。",
+     "en": "It will get colder tomorrow; you must wear more clothes.",
+     "ans": "降温",
+     "opts": [
+      "降温",
+      "气温",
+      "体温",
+      "高温"
+     ]
+    },
+    {
+     "zh": "我的___很正常，不用担心。",
+     "en": "My body temperature is normal, so there is no need to worry.",
+     "ans": "体温",
+     "opts": [
+      "体温",
+      "气温",
+      "温度",
+      "低温"
+     ]
+    },
+    {
+     "zh": "这个房间的___太低了，有点冷。",
+     "en": "The temperature of this room is too low, so it is a bit cold.",
+     "ans": "温度",
+     "opts": [
+      "温度",
+      "气温",
+      "高温",
+      "降温"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "数",
+   "py": "shù",
+   "en": "number",
+   "words": [
+    [
+     "多数",
+     "多",
+     "many",
+     "数",
+     "number"
+    ],
+    [
+     "少数",
+     "少",
+     "few",
+     "数",
+     "number"
+    ],
+    [
+     "分数",
+     "分",
+     "mark",
+     "数",
+     "number"
+    ],
+    [
+     "人数",
+     "人",
+     "people",
+     "数",
+     "number"
+    ],
+    [
+     "数量",
+     "数",
+     "number",
+     "量",
+     "amount"
+    ],
+    [
+     "数字",
+     "数",
+     "number",
+     "字",
+     "digit"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "这次考试我的___很高。",
+     "en": "My score on this exam is high.",
+     "ans": "分数",
+     "opts": [
+      "分数",
+      "人数",
+      "数字",
+      "数量"
+     ]
+    },
+    {
+     "zh": "来参加活动的___不多，只有十个人。",
+     "en": "The number of people coming to the event is not large; there are only ten.",
+     "ans": "人数",
+     "opts": [
+      "人数",
+      "分数",
+      "数字",
+      "数量"
+     ]
+    },
+    {
+     "zh": "___学生都喜欢这位老师。",
+     "en": "Most students like this teacher.",
+     "ans": "多数",
+     "opts": [
+      "多数",
+      "少数",
+      "数字",
+      "分数"
+     ]
+    },
+    {
+     "zh": "请把电话号码上的___写清楚。",
+     "en": "Please write the numbers in the phone number clearly.",
+     "ans": "数字",
+     "opts": [
+      "数字",
+      "分数",
+      "人数",
+      "数量"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "价",
+   "py": "jià",
+   "en": "price",
+   "words": [
+    [
+     "低价",
+     "低",
+     "low",
+     "价",
+     "price"
+    ],
+    [
+     "高价",
+     "高",
+     "high",
+     "价",
+     "price"
+    ],
+    [
+     "价格",
+     "价",
+     "price",
+     "格",
+     "standard"
+    ],
+    [
+     "价钱",
+     "价",
+     "price",
+     "钱",
+     "money"
+    ],
+    [
+     "降价",
+     "降",
+     "drop",
+     "价",
+     "price"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "这件衣服的___是两百块。",
+     "en": "The price of this piece of clothing is 200 yuan.",
+     "ans": "价格",
+     "opts": [
+      "价格",
+      "降价",
+      "低价",
+      "高价"
+     ]
+    },
+    {
+     "zh": "今天很多东西都___了，我买了三件。",
+     "en": "Many things have dropped in price today, and I bought three.",
+     "ans": "降价",
+     "opts": [
+      "降价",
+      "价格",
+      "低价",
+      "高价"
+     ]
+    },
+    {
+     "zh": "他用___买到了一辆很好的车，真便宜。",
+     "en": "He bought a very good car at a low price; it was really cheap.",
+     "ans": "低价",
+     "opts": [
+      "低价",
+      "高价",
+      "降价",
+      "价格"
+     ]
+    },
+    {
+     "zh": "这个的___是多少？",
+     "en": "What is the price of this?",
+     "ans": "价钱",
+     "opts": [
+      "价钱",
+      "降价",
+      "高价",
+      "低价"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "费",
+   "py": "fèi",
+   "en": "fee; cost; to spend",
+   "words": [
+    [
+     "费用",
+     "费",
+     "cost",
+     "用",
+     "use"
+    ],
+    [
+     "浪费",
+     "浪",
+     "waste",
+     "费",
+     "spend"
+    ],
+    [
+     "免费",
+     "免",
+     "free",
+     "费",
+     "fee"
+    ],
+    [
+     "收费",
+     "收",
+     "charge",
+     "费",
+     "fee"
+    ],
+    [
+     "学费",
+     "学",
+     "school",
+     "费",
+     "fee"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "这家餐厅的茶是___的，可以随便喝。",
+     "en": "The tea at this restaurant is free, and you can drink as much as you like.",
+     "ans": "免费",
+     "opts": [
+      "免费",
+      "收费",
+      "学费",
+      "费用"
+     ]
+    },
+    {
+     "zh": "请不要___水，我们要保护大自然。",
+     "en": "Please do not waste water; we must protect nature.",
+     "ans": "浪费",
+     "opts": [
+      "浪费",
+      "收费",
+      "免费",
+      "费用"
+     ]
+    },
+    {
+     "zh": "这个学校的___不高，一年五千块。",
+     "en": "The tuition at this school is not high: 5,000 yuan a year.",
+     "ans": "学费",
+     "opts": [
+      "学费",
+      "费用",
+      "收费",
+      "浪费"
+     ]
+    },
+    {
+     "zh": "这条高速公路___，每辆车二十块。",
+     "en": "This highway charges a fee: 20 yuan for each car.",
+     "ans": "收费",
+     "opts": [
+      "收费",
+      "免费",
+      "浪费",
+      "学费"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "员",
+   "py": "yuán",
+   "en": "member; staff",
+   "words": [
+    [
+     "队员",
+     "队",
+     "team",
+     "员",
+     "member"
+    ],
+    [
+     "会员",
+     "会",
+     "club",
+     "员",
+     "member"
+    ],
+    [
+     "人员",
+     "人",
+     "people",
+     "员",
+     "staff"
+    ],
+    [
+     "演员",
+     "演",
+     "perform",
+     "员",
+     "member"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "那位___在电影里演一位老师。",
+     "en": "That actor plays a teacher in the film.",
+     "ans": "演员",
+     "opts": [
+      "演员",
+      "队员",
+      "会员",
+      "人员"
+     ]
+    },
+    {
+     "zh": "我们球队有十五名___。",
+     "en": "Our team has fifteen members.",
+     "ans": "队员",
+     "opts": [
+      "队员",
+      "演员",
+      "会员",
+      "人员"
+     ]
+    },
+    {
+     "zh": "我是这家书店的___，买书可以打折。",
+     "en": "I am a member of this bookshop, and I can get a discount when I buy books.",
+     "ans": "会员",
+     "opts": [
+      "会员",
+      "演员",
+      "队员",
+      "人员"
+     ]
+    },
+    {
+     "zh": "公司的___都在开会。",
+     "en": "The staff of the company are all in a meeting.",
+     "ans": "人员",
+     "opts": [
+      "人员",
+      "会员",
+      "队员",
+      "演员"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "师",
+   "py": "shī",
+   "en": "teacher; expert",
+   "words": [
+    [
+     "厨师",
+     "厨",
+     "kitchen",
+     "师",
+     "expert"
+    ],
+    [
+     "教师",
+     "教",
+     "teach",
+     "师",
+     "teacher"
+    ],
+    [
+     "律师",
+     "律",
+     "law",
+     "师",
+     "expert"
+    ],
+    [
+     "师傅",
+     "师",
+     "master",
+     "傅",
+     "tutor"
+    ],
+    [
+     "师生",
+     "师",
+     "teacher",
+     "生",
+     "student"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "这家餐厅的___做的菜很好吃。",
+     "en": "The chef of this restaurant makes delicious dishes.",
+     "ans": "厨师",
+     "opts": [
+      "厨师",
+      "教师",
+      "律师",
+      "师生"
+     ]
+    },
+    {
+     "zh": "他是一名___，帮人解决法律问题。",
+     "en": "He is a lawyer who helps people solve legal problems.",
+     "ans": "律师",
+     "opts": [
+      "律师",
+      "厨师",
+      "教师",
+      "师傅"
+     ]
+    },
+    {
+     "zh": "她是学校的___，教汉语。",
+     "en": "She is a teacher at the school and teaches Chinese.",
+     "ans": "教师",
+     "opts": [
+      "教师",
+      "厨师",
+      "律师",
+      "师生"
+     ]
+    },
+    {
+     "zh": "这个班的___关系很好。",
+     "en": "The relationship between teachers and students in this class is very good.",
+     "ans": "师生",
+     "opts": [
+      "师生",
+      "教师",
+      "厨师",
+      "律师"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "车",
+   "py": "chē",
+   "en": "vehicle",
+   "words": [
+    [
+     "车速",
+     "车",
+     "vehicle",
+     "速",
+     "speed"
+    ],
+    [
+     "车位",
+     "车",
+     "vehicle",
+     "位",
+     "space"
+    ],
+    [
+     "动车",
+     "动",
+     "move",
+     "车",
+     "vehicle"
+    ],
+    [
+     "堵车",
+     "堵",
+     "block",
+     "车",
+     "vehicle"
+    ],
+    [
+     "停车",
+     "停",
+     "stop",
+     "车",
+     "vehicle"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "路上现在___了，我们可能会迟到。",
+     "en": "There is a traffic jam on the road now, so we will probably be late.",
+     "ans": "堵车",
+     "opts": [
+      "堵车",
+      "停车",
+      "动车",
+      "车速"
+     ]
+    },
+    {
+     "zh": "这里不能___，请去那边。",
+     "en": "You cannot park here; please go over there.",
+     "ans": "停车",
+     "opts": [
+      "停车",
+      "堵车",
+      "动车",
+      "车位"
+     ]
+    },
+    {
+     "zh": "坐___去很快，两个小时就到。",
+     "en": "Going by high-speed train is fast; it takes only two hours to arrive.",
+     "ans": "动车",
+     "opts": [
+      "动车",
+      "停车",
+      "堵车",
+      "车速"
+     ]
+    },
+    {
+     "zh": "高速公路上的___不能太快。",
+     "en": "The speed on the highway cannot be too fast.",
+     "ans": "车速",
+     "opts": [
+      "车速",
+      "车位",
+      "动车",
+      "堵车"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "客",
+   "py": "kè",
+   "en": "guest",
+   "words": [
+    [
+     "乘客",
+     "乘",
+     "ride",
+     "客",
+     "guest"
+    ],
+    [
+     "顾客",
+     "顾",
+     "customer",
+     "客",
+     "guest"
+    ],
+    [
+     "旅客",
+     "旅",
+     "travel",
+     "客",
+     "guest"
+    ],
+    [
+     "客厅",
+     "客",
+     "guest",
+     "厅",
+     "hall"
+    ],
+    [
+     "客气",
+     "客",
+     "guest",
+     "气",
+     "manner"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "公共汽车上的___很多，现在没有座位了。",
+     "en": "There are many passengers on the bus, and there are no seats now.",
+     "ans": "乘客",
+     "opts": [
+      "乘客",
+      "顾客",
+      "旅客",
+      "客厅"
+     ]
+    },
+    {
+     "zh": "这家商店的___很多，每天都很忙。",
+     "en": "This shop has many customers and is busy every day.",
+     "ans": "顾客",
+     "opts": [
+      "顾客",
+      "乘客",
+      "旅客",
+      "客气"
+     ]
+    },
+    {
+     "zh": "请到___坐，我去给你拿水。",
+     "en": "Please sit in the living room; I am going to get you some water.",
+     "ans": "客厅",
+     "opts": [
+      "客厅",
+      "乘客",
+      "顾客",
+      "旅客"
+     ]
+    },
+    {
+     "zh": "你不用___，请随便坐。",
+     "en": "You do not need to be polite; please sit wherever you like.",
+     "ans": "客气",
+     "opts": [
+      "客气",
+      "客厅",
+      "顾客",
+      "乘客"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "生",
+   "py": "shēng",
+   "en": "life; to be born; student",
+   "words": [
+    [
+     "考生",
+     "考",
+     "exam",
+     "生",
+     "student"
+    ],
+    [
+     "人生",
+     "人",
+     "human",
+     "生",
+     "life"
+    ],
+    [
+     "生命",
+     "生",
+     "life",
+     "命",
+     "fate"
+    ],
+    [
+     "师生",
+     "师",
+     "teacher",
+     "生",
+     "student"
+    ],
+    [
+     "卫生",
+     "卫",
+     "guard",
+     "生",
+     "life"
+    ],
+    [
+     "一生",
+     "一",
+     "one",
+     "生",
+     "life"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "明天要考试，___们都在认真复习。",
+     "en": "There will be an exam tomorrow, and the candidates are all studying seriously.",
+     "ans": "考生",
+     "opts": [
+      "考生",
+      "师生",
+      "人生",
+      "一生"
+     ]
+    },
+    {
+     "zh": "他的___很不容易，经历了很多事。",
+     "en": "His life is not easy; he has experienced many things.",
+     "ans": "人生",
+     "opts": [
+      "人生",
+      "一生",
+      "生命",
+      "考生"
+     ]
+    },
+    {
+     "zh": "这只小狗很可爱，我们要保护它的___。",
+     "en": "This little dog is cute, and we must protect its life.",
+     "ans": "生命",
+     "opts": [
+      "生命",
+      "人生",
+      "一生",
+      "卫生"
+     ]
+    },
+    {
+     "zh": "你要注意个人___，每天洗手。",
+     "en": "You must pay attention to personal hygiene and wash your hands every day.",
+     "ans": "卫生",
+     "opts": [
+      "卫生",
+      "生命",
+      "人生",
+      "师生"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "学",
+   "py": "xué",
+   "en": "to study; school",
+   "words": [
+    [
+     "教学",
+     "教",
+     "teach",
+     "学",
+     "study"
+    ],
+    [
+     "科学",
+     "科",
+     "branch",
+     "学",
+     "study"
+    ],
+    [
+     "入学",
+     "入",
+     "enter",
+     "学",
+     "school"
+    ],
+    [
+     "学费",
+     "学",
+     "school",
+     "费",
+     "fee"
+    ],
+    [
+     "学院",
+     "学",
+     "study",
+     "院",
+     "college"
+    ],
+    [
+     "自学",
+     "自",
+     "self",
+     "学",
+     "study"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "他喜欢___，一个人在家学汉语。",
+     "en": "He likes teaching himself and studies Chinese alone at home.",
+     "ans": "自学",
+     "opts": [
+      "自学",
+      "入学",
+      "教学",
+      "科学"
+     ]
+    },
+    {
+     "zh": "他今年九月要___，很高兴。",
+     "en": "He will start school in September this year and is very happy.",
+     "ans": "入学",
+     "opts": [
+      "入学",
+      "自学",
+      "科学",
+      "学院"
+     ]
+    },
+    {
+     "zh": "他对___很有兴趣，常常看这方面的书。",
+     "en": "He is very interested in science and often reads books on this subject.",
+     "ans": "科学",
+     "opts": [
+      "科学",
+      "教学",
+      "自学",
+      "学院"
+     ]
+    },
+    {
+     "zh": "这位老师的___方法很特别，学生们都很喜欢。",
+     "en": "This teacher's teaching method is special, and the students all like it.",
+     "ans": "教学",
+     "opts": [
+      "教学",
+      "入学",
+      "学费",
+      "学院"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "食",
+   "py": "shí",
+   "en": "food; to eat",
+   "words": [
+    [
+     "零食",
+     "零",
+     "odd",
+     "食",
+     "food"
+    ],
+    [
+     "美食",
+     "美",
+     "fine",
+     "食",
+     "food"
+    ],
+    [
+     "食品",
+     "食",
+     "food",
+     "品",
+     "goods"
+    ],
+    [
+     "食堂",
+     "食",
+     "food",
+     "堂",
+     "hall"
+    ],
+    [
+     "食物",
+     "食",
+     "food",
+     "物",
+     "thing"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我肚子饿了，想吃一点___。",
+     "en": "I am hungry now and want to eat some snacks.",
+     "ans": "零食",
+     "opts": [
+      "零食",
+      "食物",
+      "美食",
+      "食堂"
+     ]
+    },
+    {
+     "zh": "学校的___里有很多好吃的菜。",
+     "en": "The school canteen has many delicious dishes.",
+     "ans": "食堂",
+     "opts": [
+      "食堂",
+      "食物",
+      "美食",
+      "食品"
+     ]
+    },
+    {
+     "zh": "这个城市有很多有名的___。",
+     "en": "This city has many famous delicacies.",
+     "ans": "美食",
+     "opts": [
+      "美食",
+      "零食",
+      "食堂",
+      "食物"
+     ]
+    },
+    {
+     "zh": "小狗吃的是什么___？",
+     "en": "What kind of food does the little dog eat?",
+     "ans": "食物",
+     "opts": [
+      "食物",
+      "零食",
+      "美食",
+      "食堂"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "球",
+   "py": "qiú",
+   "en": "ball",
+   "words": [
+    [
+     "地球",
+     "地",
+     "earth",
+     "球",
+     "ball"
+    ],
+    [
+     "排球",
+     "排",
+     "row",
+     "球",
+     "ball"
+    ],
+    [
+     "球队",
+     "球",
+     "ball",
+     "队",
+     "team"
+    ],
+    [
+     "球迷",
+     "球",
+     "ball",
+     "迷",
+     "fan"
+    ],
+    [
+     "全球",
+     "全",
+     "whole",
+     "球",
+     "globe"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我们学校的___很好。",
+     "en": "Our school's team is very good.",
+     "ans": "球队",
+     "opts": [
+      "球队",
+      "球迷",
+      "排球",
+      "地球"
+     ]
+    },
+    {
+     "zh": "她每天下午和朋友打___。",
+     "en": "She plays volleyball with her friends every afternoon.",
+     "ans": "排球",
+     "opts": [
+      "排球",
+      "球队",
+      "球迷",
+      "地球"
+     ]
+    },
+    {
+     "zh": "___是我们的家，我们要保护它。",
+     "en": "The Earth is our home, and we must protect it.",
+     "ans": "地球",
+     "opts": [
+      "地球",
+      "排球",
+      "球队",
+      "全球"
+     ]
+    },
+    {
+     "zh": "看比赛的___都很兴奋。",
+     "en": "The fans watching the match are all very excited.",
+     "ans": "球迷",
+     "opts": [
+      "球迷",
+      "球队",
+      "排球",
+      "全球"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "提",
+   "py": "tí",
+   "en": "to raise; to carry",
+   "words": [
+    [
+     "提出",
+     "提",
+     "raise",
+     "出",
+     "out"
+    ],
+    [
+     "提到",
+     "提",
+     "raise",
+     "到",
+     "arrive"
+    ],
+    [
+     "提供",
+     "提",
+     "raise",
+     "供",
+     "supply"
+    ],
+    [
+     "提前",
+     "提",
+     "raise",
+     "前",
+     "front"
+    ],
+    [
+     "提醒",
+     "提",
+     "raise",
+     "醒",
+     "wake"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "老师___我们明天要考试。",
+     "en": "The teacher reminds us that we will have an exam tomorrow.",
+     "ans": "提醒",
+     "opts": [
+      "提醒",
+      "提供",
+      "提前",
+      "提出"
+     ]
+    },
+    {
+     "zh": "这家酒店为客人___免费早餐。",
+     "en": "This hotel provides free breakfast for its guests.",
+     "ans": "提供",
+     "opts": [
+      "提供",
+      "提醒",
+      "提出",
+      "提到"
+     ]
+    },
+    {
+     "zh": "比赛八点开始，你最好___到。",
+     "en": "The match begins at eight; you had better arrive early.",
+     "ans": "提前",
+     "opts": [
+      "提前",
+      "提醒",
+      "提到",
+      "提出"
+     ]
+    },
+    {
+     "zh": "他在开会时___了一个好办法。",
+     "en": "At the meeting he put forward a good method.",
+     "ans": "提出",
+     "opts": [
+      "提出",
+      "提到",
+      "提供",
+      "提醒"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "道",
+   "py": "dào",
+   "en": "road; way; to say",
+   "words": [
+    [
+     "道路",
+     "道",
+     "road",
+     "路",
+     "road"
+    ],
+    [
+     "道歉",
+     "道",
+     "say",
+     "歉",
+     "sorry"
+    ],
+    [
+     "街道",
+     "街",
+     "street",
+     "道",
+     "road"
+    ],
+    [
+     "难道",
+     "难",
+     "hard",
+     "道",
+     "say"
+    ],
+    [
+     "味道",
+     "味",
+     "taste",
+     "道",
+     "way"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "对不起，我想向你___。",
+     "en": "I am sorry; I want to apologise to you.",
+     "ans": "道歉",
+     "opts": [
+      "道歉",
+      "味道",
+      "街道",
+      "道路"
+     ]
+    },
+    {
+     "zh": "这条___很干净，也很安静。",
+     "en": "This street is very clean and also quiet.",
+     "ans": "街道",
+     "opts": [
+      "街道",
+      "道路",
+      "味道",
+      "难道"
+     ]
+    },
+    {
+     "zh": "这个菜的___很好，我还想吃。",
+     "en": "This dish tastes good, and I still want to eat.",
+     "ans": "味道",
+     "opts": [
+      "味道",
+      "街道",
+      "道路",
+      "道歉"
+     ]
+    },
+    {
+     "zh": "这里的___很好，开车很方便。",
+     "en": "The roads here are good, and driving is very convenient.",
+     "ans": "道路",
+     "opts": [
+      "道路",
+      "味道",
+      "难道",
+      "道歉"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "相",
+   "py": "xiāng",
+   "en": "each other; mutual",
+   "words": [
+    [
+     "互相",
+     "互",
+     "mutual",
+     "相",
+     "each other"
+    ],
+    [
+     "相比",
+     "相",
+     "each other",
+     "比",
+     "compare"
+    ],
+    [
+     "相反",
+     "相",
+     "mutual",
+     "反",
+     "opposite"
+    ],
+    [
+     "相同",
+     "相",
+     "mutual",
+     "同",
+     "same"
+    ],
+    [
+     "相互",
+     "相",
+     "mutual",
+     "互",
+     "mutual"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "朋友之间要___帮助。",
+     "en": "Friends must help each other.",
+     "ans": "互相",
+     "opts": [
+      "互相",
+      "相比",
+      "相同",
+      "相反"
+     ]
+    },
+    {
+     "zh": "我的想法和你的___，我不同意。",
+     "en": "My idea is the opposite of yours, and I do not agree.",
+     "ans": "相反",
+     "opts": [
+      "相反",
+      "相同",
+      "相比",
+      "互相"
+     ]
+    },
+    {
+     "zh": "这两本书的价格___，都是五十块。",
+     "en": "The prices of these two books are the same: both are 50 yuan.",
+     "ans": "相同",
+     "opts": [
+      "相同",
+      "相反",
+      "互相",
+      "相互"
+     ]
+    },
+    {
+     "zh": "和去年___，今年的雨少了。",
+     "en": "Compared with last year, this year has less rain.",
+     "ans": "相比",
+     "opts": [
+      "相比",
+      "相同",
+      "相反",
+      "相互"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "力",
+   "py": "lì",
+   "en": "strength; power",
+   "words": [
+    [
+     "力气",
+     "力",
+     "strength",
+     "气",
+     "air"
+    ],
+    [
+     "能力",
+     "能",
+     "can",
+     "力",
+     "power"
+    ],
+    [
+     "听力",
+     "听",
+     "listen",
+     "力",
+     "power"
+    ],
+    [
+     "压力",
+     "压",
+     "press",
+     "力",
+     "power"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "跑了五公里，我已经没有___了。",
+     "en": "After running five kilometres, I have no strength left.",
+     "ans": "力气",
+     "opts": [
+      "力气",
+      "能力",
+      "听力",
+      "压力"
+     ]
+    },
+    {
+     "zh": "他很有工作___，大家都很喜欢他。",
+     "en": "He has great work ability, and everyone likes him very much.",
+     "ans": "能力",
+     "opts": [
+      "能力",
+      "力气",
+      "压力",
+      "听力"
+     ]
+    },
+    {
+     "zh": "汉语考试有___和阅读两个部分。",
+     "en": "The Chinese exam has two parts: listening and reading.",
+     "ans": "听力",
+     "opts": [
+      "听力",
+      "能力",
+      "力气",
+      "压力"
+     ]
+    },
+    {
+     "zh": "最近工作很多，我的___很大。",
+     "en": "Recently there is a lot of work, and I am under great pressure.",
+     "ans": "压力",
+     "opts": [
+      "压力",
+      "能力",
+      "听力",
+      "力气"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "通",
+   "py": "tōng",
+   "en": "to go through",
+   "words": [
+    [
+     "交通",
+     "交",
+     "cross",
+     "通",
+     "through"
+    ],
+    [
+     "普通",
+     "普",
+     "common",
+     "通",
+     "through"
+    ],
+    [
+     "通知",
+     "通",
+     "through",
+     "知",
+     "know"
+    ],
+    [
+     "通过",
+     "通",
+     "through",
+     "过",
+     "pass"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "这个城市的___很方便。",
+     "en": "The transport in this city is very convenient.",
+     "ans": "交通",
+     "opts": [
+      "交通",
+      "普通",
+      "通知",
+      "通过"
+     ]
+    },
+    {
+     "zh": "这只是一个___的手机，不贵。",
+     "en": "This is only an ordinary phone, and it is not expensive.",
+     "ans": "普通",
+     "opts": [
+      "普通",
+      "交通",
+      "通知",
+      "通过"
+     ]
+    },
+    {
+     "zh": "学校___我们明天不上课。",
+     "en": "The school has notified us that there is no class tomorrow.",
+     "ans": "通知",
+     "opts": [
+      "通知",
+      "交通",
+      "普通",
+      "通过"
+     ]
+    },
+    {
+     "zh": "我___了考试，真高兴。",
+     "en": "I passed the exam, and I am really happy.",
+     "ans": "通过",
+     "opts": [
+      "通过",
+      "通知",
+      "普通",
+      "交通"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "网",
+   "py": "wǎng",
+   "en": "net; web",
+   "words": [
+    [
+     "网购",
+     "网",
+     "net",
+     "购",
+     "buy"
+    ],
+    [
+     "网页",
+     "网",
+     "net",
+     "页",
+     "page"
+    ],
+    [
+     "网友",
+     "网",
+     "net",
+     "友",
+     "friend"
+    ],
+    [
+     "网址",
+     "网",
+     "net",
+     "址",
+     "address"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我喜欢在网上___，不用出门。",
+     "en": "I like shopping online and do not need to go out.",
+     "ans": "网购",
+     "opts": [
+      "网购",
+      "网页",
+      "网友",
+      "网址"
+     ]
+    },
+    {
+     "zh": "请把这个___发给我。",
+     "en": "Please send me this web address.",
+     "ans": "网址",
+     "opts": [
+      "网址",
+      "网页",
+      "网友",
+      "网购"
+     ]
+    },
+    {
+     "zh": "这个___很慢，我等了很久。",
+     "en": "This web page is slow, and I waited a long time.",
+     "ans": "网页",
+     "opts": [
+      "网页",
+      "网址",
+      "网友",
+      "网购"
+     ]
+    },
+    {
+     "zh": "她是我的___，我们没见过面。",
+     "en": "She is my online friend, and we have never met.",
+     "ans": "网友",
+     "opts": [
+      "网友",
+      "网页",
+      "网址",
+      "网购"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "流",
+   "py": "liú",
+   "en": "to flow",
+   "words": [
+    [
+     "交流",
+     "交",
+     "exchange",
+     "流",
+     "flow"
+    ],
+    [
+     "流利",
+     "流",
+     "flow",
+     "利",
+     "smooth"
+    ],
+    [
+     "流行",
+     "流",
+     "flow",
+     "行",
+     "go"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "他的汉语说得很___。",
+     "en": "He speaks Chinese very fluently.",
+     "ans": "流利",
+     "opts": [
+      "流利",
+      "交流",
+      "流行",
+      "通过"
+     ]
+    },
+    {
+     "zh": "现在这种帽子很___。",
+     "en": "This kind of hat is popular now.",
+     "ans": "流行",
+     "opts": [
+      "流行",
+      "流利",
+      "交流",
+      "通过"
+     ]
+    },
+    {
+     "zh": "我们用汉语___吧。",
+     "en": "Let us communicate in Chinese.",
+     "ans": "交流",
+     "opts": [
+      "交流",
+      "流利",
+      "流行",
+      "通知"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "经",
+   "py": "jīng",
+   "en": "to pass through",
+   "words": [
+    [
+     "经济",
+     "经",
+     "manage",
+     "济",
+     "aid"
+    ],
+    [
+     "经历",
+     "经",
+     "pass",
+     "历",
+     "go through"
+    ],
+    [
+     "经验",
+     "经",
+     "pass",
+     "验",
+     "test"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "他有很多工作___。",
+     "en": "He has a lot of work experience.",
+     "ans": "经验",
+     "opts": [
+      "经验",
+      "经济",
+      "经历",
+      "信息"
+     ]
+    },
+    {
+     "zh": "这个国家的___越来越好。",
+     "en": "This country's economy is getting better and better.",
+     "ans": "经济",
+     "opts": [
+      "经济",
+      "经验",
+      "经历",
+      "信息"
+     ]
+    },
+    {
+     "zh": "这是一次特别的___。",
+     "en": "This is a special experience.",
+     "ans": "经历",
+     "opts": [
+      "经历",
+      "经验",
+      "经济",
+      "信息"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "常",
+   "py": "cháng",
+   "en": "often; usual",
+   "words": [
+    [
+     "平常",
+     "平",
+     "ordinary",
+     "常",
+     "usual"
+    ],
+    [
+     "日常",
+     "日",
+     "day",
+     "常",
+     "usual"
+    ],
+    [
+     "正常",
+     "正",
+     "right",
+     "常",
+     "usual"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我___六点起床。",
+     "en": "I usually get up at six.",
+     "ans": "平常",
+     "opts": [
+      "平常",
+      "日常",
+      "正常",
+      "正确"
+     ]
+    },
+    {
+     "zh": "一切都很___，不用担心。",
+     "en": "Everything is normal, so there is no need to worry.",
+     "ans": "正常",
+     "opts": [
+      "正常",
+      "平常",
+      "日常",
+      "正确"
+     ]
+    },
+    {
+     "zh": "这是他的___生活。",
+     "en": "This is his daily life.",
+     "ans": "日常",
+     "opts": [
+      "日常",
+      "平常",
+      "正常",
+      "正确"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "面",
+   "py": "miàn",
+   "en": "face; side",
+   "words": [
+    [
+     "对面",
+     "对",
+     "opposite",
+     "面",
+     "side"
+    ],
+    [
+     "方面",
+     "方",
+     "direction",
+     "面",
+     "side"
+    ],
+    [
+     "面对",
+     "面",
+     "face",
+     "对",
+     "toward"
+    ],
+    [
+     "面试",
+     "面",
+     "face",
+     "试",
+     "test"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "我家___有一家银行。",
+     "en": "There is a bank opposite my home.",
+     "ans": "对面",
+     "opts": [
+      "对面",
+      "方面",
+      "面试",
+      "面对"
+     ]
+    },
+    {
+     "zh": "他在很多___都很好。",
+     "en": "He is good in many respects.",
+     "ans": "方面",
+     "opts": [
+      "方面",
+      "对面",
+      "面试",
+      "面对"
+     ]
+    },
+    {
+     "zh": "明天我要去___，有点紧张。",
+     "en": "I will go to an interview tomorrow, and I am a bit nervous.",
+     "ans": "面试",
+     "opts": [
+      "面试",
+      "面对",
+      "对面",
+      "方面"
+     ]
+    },
+    {
+     "zh": "我们要勇敢地___困难。",
+     "en": "We must face difficulties bravely.",
+     "ans": "面对",
+     "opts": [
+      "面对",
+      "面试",
+      "方面",
+      "对面"
+     ]
+    }
+   ]
+  },
+  {
+   "hub": "难",
+   "py": "nán",
+   "en": "hard; difficult",
+   "words": [
+    [
+     "困难",
+     "困",
+     "trapped",
+     "难",
+     "hard"
+    ],
+    [
+     "难道",
+     "难",
+     "hard",
+     "道",
+     "say"
+    ],
+    [
+     "难受",
+     "难",
+     "hard",
+     "受",
+     "bear"
+    ],
+    [
+     "难忘",
+     "难",
+     "hard",
+     "忘",
+     "forget"
+    ]
+   ],
+   "gaps": [
+    {
+     "zh": "他遇到了很多___。",
+     "en": "He has run into many difficulties.",
+     "ans": "困难",
+     "opts": [
+      "困难",
+      "难受",
+      "难忘",
+      "难道"
+     ]
+    },
+    {
+     "zh": "我肚子疼，很___。",
+     "en": "My stomach hurts, and I feel very bad.",
+     "ans": "难受",
+     "opts": [
+      "难受",
+      "困难",
+      "难忘",
+      "难道"
+     ]
+    },
+    {
+     "zh": "那次旅行真让人___。",
+     "en": "That trip is really unforgettable.",
+     "ans": "难忘",
+     "opts": [
+      "难忘",
+      "难受",
+      "困难",
+      "难道"
+     ]
+    },
+    {
+     "zh": "___你不知道吗？",
+     "en": "Do you really not know?",
+     "ans": "难道",
+     "opts": [
+      "难道",
+      "困难",
+      "难受",
+      "难忘"
+     ]
+    }
+   ]
+  }
+ ],
+ "extends": [
+  {
+   "hub": "大",
+   "words": [
+    [
+     "大巴",
+     "大",
+     "big",
+     "巴",
+     "bus"
+    ],
+    [
+     "大厅",
+     "大",
+     "big",
+     "厅",
+     "hall"
+    ],
+    [
+     "大约",
+     "大",
+     "big",
+     "约",
+     "about"
+    ],
+    [
+     "大量",
+     "大",
+     "big",
+     "量",
+     "amount"
+    ],
+    [
+     "大赛",
+     "大",
+     "big",
+     "赛",
+     "contest"
+    ]
+   ]
+  },
+  {
+   "hub": "下",
+   "words": [
+    [
+     "底下",
+     "底",
+     "bottom",
+     "下",
+     "under"
+    ],
+    [
+     "零下",
+     "零",
+     "zero",
+     "下",
+     "below"
+    ],
+    [
+     "留下",
+     "留",
+     "stay",
+     "下",
+     "down"
+    ],
+    [
+     "下降",
+     "下",
+     "down",
+     "降",
+     "drop"
+    ]
+   ]
+  },
+  {
+   "hub": "中",
+   "words": [
+    [
+     "期中",
+     "期",
+     "term",
+     "中",
+     "middle"
+    ],
+    [
+     "其中",
+     "其",
+     "among",
+     "中",
+     "middle"
+    ],
+    [
+     "之中",
+     "之",
+     "of",
+     "中",
+     "middle"
+    ],
+    [
+     "中年",
+     "中",
+     "middle",
+     "年",
+     "years"
+    ],
+    [
+     "中餐",
+     "中",
+     "Chinese",
+     "餐",
+     "meal"
+    ]
+   ]
+  },
+  {
+   "hub": "时",
+   "words": [
+    [
+     "按时",
+     "按",
+     "on",
+     "时",
+     "time"
+    ],
+    [
+     "当时",
+     "当",
+     "that",
+     "时",
+     "time"
+    ],
+    [
+     "及时",
+     "及",
+     "in",
+     "时",
+     "time"
+    ],
+    [
+     "同时",
+     "同",
+     "same",
+     "时",
+     "time"
+    ],
+    [
+     "暂时",
+     "暂",
+     "brief",
+     "时",
+     "time"
+    ],
+    [
+     "准时",
+     "准",
+     "exact",
+     "时",
+     "time"
+    ]
+   ]
+  },
+  {
+   "hub": "家",
+   "words": [
+    [
+     "家具",
+     "家",
+     "home",
+     "具",
+     "tool"
+    ],
+    [
+     "家庭",
+     "家",
+     "home",
+     "庭",
+     "court"
+    ],
+    [
+     "家乡",
+     "家",
+     "home",
+     "乡",
+     "village"
+    ],
+    [
+     "家长",
+     "家",
+     "home",
+     "长",
+     "elder"
+    ],
+    [
+     "老家",
+     "老",
+     "old",
+     "家",
+     "home"
+    ]
+   ]
+  },
+  {
+   "hub": "小",
+   "words": [
+    [
+     "小吃",
+     "小",
+     "small",
+     "吃",
+     "eat"
+    ],
+    [
+     "小说",
+     "小",
+     "small",
+     "说",
+     "talk"
+    ],
+    [
+     "小组",
+     "小",
+     "small",
+     "组",
+     "group"
+    ]
+   ]
+  },
+  {
+   "hub": "好",
+   "words": [
+    [
+     "好处",
+     "好",
+     "good",
+     "处",
+     "place"
+    ],
+    [
+     "好笑",
+     "好",
+     "good",
+     "笑",
+     "laugh"
+    ],
+    [
+     "美好",
+     "美",
+     "beautiful",
+     "好",
+     "good"
+    ],
+    [
+     "友好",
+     "友",
+     "friend",
+     "好",
+     "good"
+    ],
+    [
+     "正好",
+     "正",
+     "just",
+     "好",
+     "good"
+    ],
+    [
+     "只好",
+     "只",
+     "only",
+     "好",
+     "good"
+    ]
+   ]
+  },
+  {
+   "hub": "友",
+   "words": [
+    [
+     "网友",
+     "网",
+     "net",
+     "友",
+     "friend"
+    ],
+    [
+     "友好",
+     "友",
+     "friend",
+     "好",
+     "good"
+    ],
+    [
+     "友情",
+     "友",
+     "friend",
+     "情",
+     "feeling"
+    ],
+    [
+     "友谊",
+     "友",
+     "friend",
+     "谊",
+     "friendship"
+    ]
+   ]
+  },
+  {
+   "hub": "后",
+   "words": [
+    [
+     "后悔",
+     "后",
+     "after",
+     "悔",
+     "regret"
+    ],
+    [
+     "今后",
+     "今",
+     "now",
+     "后",
+     "after"
+    ],
+    [
+     "前后",
+     "前",
+     "front",
+     "后",
+     "after"
+    ],
+    [
+     "之后",
+     "之",
+     "of",
+     "后",
+     "after"
+    ]
+   ]
+  },
+  {
+   "hub": "前",
+   "words": [
+    [
+     "目前",
+     "目",
+     "eye",
+     "前",
+     "front"
+    ],
+    [
+     "前方",
+     "前",
+     "front",
+     "方",
+     "side"
+    ],
+    [
+     "眼前",
+     "眼",
+     "eye",
+     "前",
+     "front"
+    ],
+    [
+     "之前",
+     "之",
+     "of",
+     "前",
+     "front"
+    ]
+   ]
+  },
+  {
+   "hub": "同",
+   "words": [
+    [
+     "共同",
+     "共",
+     "together",
+     "同",
+     "same"
+    ],
+    [
+     "同样",
+     "同",
+     "same",
+     "样",
+     "kind"
+    ],
+    [
+     "相同",
+     "相",
+     "mutual",
+     "同",
+     "same"
+    ]
+   ]
+  },
+  {
+   "hub": "意",
+   "words": [
+    [
+     "得意",
+     "得",
+     "get",
+     "意",
+     "mind"
+    ],
+    [
+     "故意",
+     "故",
+     "on purpose",
+     "意",
+     "mind"
+    ],
+    [
+     "意见",
+     "意",
+     "idea",
+     "见",
+     "see"
+    ]
+   ]
+  },
+  {
+   "hub": "会",
+   "words": [
+    [
+     "聚会",
+     "聚",
+     "gather",
+     "会",
+     "meeting"
+    ],
+    [
+     "社会",
+     "社",
+     "society",
+     "会",
+     "meeting"
+    ],
+    [
+     "误会",
+     "误",
+     "mistake",
+     "会",
+     "understand"
+    ],
+    [
+     "约会",
+     "约",
+     "appoint",
+     "会",
+     "meet"
+    ]
+   ]
+  },
+  {
+   "hub": "假",
+   "words": [
+    [
+     "度假",
+     "度",
+     "spend",
+     "假",
+     "holiday"
+    ],
+    [
+     "寒假",
+     "寒",
+     "cold",
+     "假",
+     "holiday"
+    ],
+    [
+     "暑假",
+     "暑",
+     "hot",
+     "假",
+     "holiday"
+    ],
+    [
+     "假日",
+     "假",
+     "holiday",
+     "日",
+     "day"
+    ]
+   ]
+  },
+  {
+   "hub": "外",
+   "words": [
+    [
+     "外套",
+     "外",
+     "outside",
+     "套",
+     "coat"
+    ],
+    [
+     "此外",
+     "此",
+     "this",
+     "外",
+     "besides"
+    ],
+    [
+     "另外",
+     "另",
+     "other",
+     "外",
+     "besides"
+    ]
+   ]
+  },
+  {
+   "hub": "方",
+   "words": [
+    [
+     "对方",
+     "对",
+     "opposite",
+     "方",
+     "side"
+    ],
+    [
+     "方式",
+     "方",
+     "way",
+     "式",
+     "style"
+    ],
+    [
+     "方面",
+     "方",
+     "side",
+     "面",
+     "side"
+    ]
+   ]
+  },
+  {
+   "hub": "到",
+   "words": [
+    [
+     "达到",
+     "达",
+     "reach",
+     "到",
+     "arrive"
+    ],
+    [
+     "到底",
+     "到",
+     "arrive",
+     "底",
+     "bottom"
+    ],
+    [
+     "到来",
+     "到",
+     "arrive",
+     "来",
+     "come"
+    ],
+    [
+     "等到",
+     "等",
+     "wait",
+     "到",
+     "arrive"
+    ]
+   ]
+  },
+  {
+   "hub": "发",
+   "words": [
+    [
+     "发出",
+     "发",
+     "send",
+     "出",
+     "out"
+    ],
+    [
+     "发送",
+     "发",
+     "send",
+     "送",
+     "deliver"
+    ],
+    [
+     "转发",
+     "转",
+     "turn",
+     "发",
+     "send"
+    ]
+   ]
+  },
+  {
+   "hub": "放",
+   "words": [
+    [
+     "播放",
+     "播",
+     "broadcast",
+     "放",
+     "put"
+    ],
+    [
+     "放弃",
+     "放",
+     "put",
+     "弃",
+     "give up"
+    ],
+    [
+     "放松",
+     "放",
+     "put",
+     "松",
+     "loose"
+    ]
+   ]
+  },
+  {
+   "hub": "看",
+   "words": [
+    [
+     "查看",
+     "查",
+     "check",
+     "看",
+     "look"
+    ],
+    [
+     "观看",
+     "观",
+     "view",
+     "看",
+     "look"
+    ],
+    [
+     "看法",
+     "看",
+     "look",
+     "法",
+     "way"
+    ]
+   ]
+  },
+  {
+   "hub": "见",
+   "words": [
+    [
+     "意见",
+     "意",
+     "idea",
+     "见",
+     "see"
+    ],
+    [
+     "少见",
+     "少",
+     "rare",
+     "见",
+     "see"
+    ]
+   ]
+  },
+  {
+   "hub": "女",
+   "words": [
+    [
+     "女性",
+     "女",
+     "female",
+     "性",
+     "nature"
+    ],
+    [
+     "母女",
+     "母",
+     "mother",
+     "女",
+     "daughter"
+    ],
+    [
+     "父女",
+     "父",
+     "father",
+     "女",
+     "daughter"
+    ],
+    [
+     "孙女",
+     "孙",
+     "grand",
+     "女",
+     "daughter"
+    ]
+   ]
+  },
+  {
+   "hub": "话",
+   "words": [
+    [
+     "话剧",
+     "话",
+     "speech",
+     "剧",
+     "play"
+    ]
+   ]
+  },
+  {
+   "hub": "地",
+   "words": [
+    [
+     "地球",
+     "地",
+     "earth",
+     "球",
+     "ball"
+    ],
+    [
+     "地址",
+     "地",
+     "place",
+     "址",
+     "address"
+    ],
+    [
+     "各地",
+     "各",
+     "each",
+     "地",
+     "place"
+    ]
+   ]
+  }
+ ],
+ "opps": [
+  {
+   "a": "优点",
+   "b": "缺点",
+   "note": "优点 is a good point and 缺点 is a point that is lacking. Both end in 点 (point)."
+  },
+  {
+   "a": "高温",
+   "b": "低温",
+   "note": "High and low temperature. Both end in 温 (temperature), and 高 and 低 are high and low."
+  },
+  {
+   "a": "高价",
+   "b": "低价",
+   "note": "A high price and a low price. 价 is price."
+  },
+  {
+   "a": "增加",
+   "b": "减少",
+   "note": "To increase and to decrease. 增加 means to add more and 减少 means to make less."
+  },
+  {
+   "a": "入口",
+   "b": "出口",
+   "note": "The way in and the way out. 口 is an opening: 入 goes in and 出 comes out."
+  },
+  {
+   "a": "成功",
+   "b": "失败",
+   "note": "To succeed and to fail."
+  },
+  {
+   "a": "正确",
+   "b": "错误",
+   "note": "Correct and wrong."
+  },
+  {
+   "a": "答应",
+   "b": "拒绝",
+   "note": "To agree to something and to refuse it."
+  },
+  {
+   "a": "支持",
+   "b": "反对",
+   "note": "To support and to oppose. 反 means against."
+  },
+  {
+   "a": "紧张",
+   "b": "轻松",
+   "note": "Tense and relaxed. 紧 is tight and 轻 is light."
+  },
+  {
+   "a": "提前",
+   "b": "推迟",
+   "note": "Earlier than planned and later than planned. 提前 moves it forward and 推迟 pushes it back."
+  },
+  {
+   "a": "南部",
+   "b": "北部",
+   "note": "The southern part and the northern part. Both end in 部 (part)."
+  },
+  {
+   "a": "东部",
+   "b": "西部",
+   "note": "The eastern part and the western part."
+  },
+  {
+   "a": "父亲",
+   "b": "母亲",
+   "note": "Father and mother. Both end in 亲 (parent).",
+   "pair": true
+  },
+  {
+   "a": "男性",
+   "b": "女性",
+   "note": "Male and female. 性 marks the sex.",
+   "pair": true
+  },
+  {
+   "a": "早餐",
+   "b": "晚餐",
+   "note": "Breakfast and dinner. 早 is early and 晚 is late."
+  },
+  {
+   "a": "浪费",
+   "b": "节约",
+   "note": "To waste and to save."
+  },
+  {
+   "a": "免费",
+   "b": "收费",
+   "note": "Free of charge and charged for. 免 means to be spared and 收 means to take in."
+  },
+  {
+   "a": "细心",
+   "b": "粗心",
+   "note": "Careful and careless. Both end in 心 (heart): 细 is fine and 粗 is rough."
+  },
+  {
+   "a": "相同",
+   "b": "相反",
+   "note": "The same and the opposite. Both start with 相."
+  },
+  {
+   "a": "无聊",
+   "b": "有趣",
+   "note": "Boring and interesting. 无 means without and 有 means to have."
+  },
+  {
+   "a": "严格",
+   "b": "随便",
+   "note": "Strict and casual."
+  },
+  {
+   "a": "多数",
+   "b": "少数",
+   "note": "The majority and the minority. 多 is many and 少 is few."
+  },
+  {
+   "a": "大量",
+   "b": "少量",
+   "note": "A large amount and a small amount."
+  },
+  {
+   "a": "轻",
+   "b": "重",
+   "note": "Light and heavy."
+  },
+  {
+   "a": "好处",
+   "b": "坏处",
+   "note": "A benefit and a harm. Both end in 处 (place, point)."
+  },
+  {
+   "a": "表扬",
+   "b": "批评",
+   "note": "To praise and to criticise."
+  },
+  {
+   "a": "增长",
+   "b": "下降",
+   "note": "To grow and to fall. Both are used for numbers."
+  },
+  {
+   "a": "赢",
+   "b": "输",
+   "note": "To win and to lose."
+  },
+  {
+   "a": "青年",
+   "b": "老年",
+   "note": "Young adulthood and old age. Both end in 年 (years)."
+  },
+  {
+   "a": "毕业",
+   "b": "入学",
+   "note": "To finish school and to start school."
+  },
+  {
+   "a": "暂时",
+   "b": "永远",
+   "note": "For a short time and for ever."
+  },
+  {
+   "a": "低于",
+   "b": "高于",
+   "note": "Lower than and higher than."
+  },
+  {
+   "a": "满",
+   "b": "空",
+   "note": "Full and empty."
+  },
+  {
+   "a": "全部",
+   "b": "部分",
+   "note": "All of it and only a part of it."
+  }
+ ]
+}

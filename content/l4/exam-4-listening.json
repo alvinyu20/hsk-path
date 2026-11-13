@@ -1,0 +1,1348 @@
+{
+ "L1": [
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "我对那家公司很满意，工资不低，同事也很友好。",
+     "en": "I am very satisfied with that company; the pay is not low, and my colleagues are friendly too."
+    }
+   ],
+   "st": [
+    "那家公司的工资很低。",
+    "The pay at that company is very low."
+   ],
+   "ok": 0
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "我弟弟最近压力很大，每天都学习到很晚。",
+     "en": "My younger brother is under great pressure recently and studies until very late every day."
+    }
+   ],
+   "st": [
+    "我弟弟最近学习很努力。",
+    "My younger brother has been studying very hard recently."
+   ],
+   "ok": 1
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "昨天堵车，我迟到了二十分钟，经理批评了我。",
+     "en": "Yesterday there was a traffic jam and I was twenty minutes late, so the manager criticised me."
+    }
+   ],
+   "st": [
+    "经理表扬了我。",
+    "The manager praised me."
+   ],
+   "ok": 0
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "这家饭馆的菜味道很好，价格也很便宜，所以顾客很多。",
+     "en": "The dishes at this restaurant taste good and the prices are cheap too, so there are many customers."
+    }
+   ],
+   "st": [
+    "这家饭馆的顾客很多。",
+    "This restaurant has many customers."
+   ],
+   "ok": 1
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "我每天坚持跑步，现在体重减少了三公斤。",
+     "en": "I keep on running every day, and my weight has now dropped by three kilograms."
+    }
+   ],
+   "st": [
+    "我的体重增加了。",
+    "My weight has increased."
+   ],
+   "ok": 0
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "明天会降温，天气会很冷，你要多穿一点衣服。",
+     "en": "It will get colder tomorrow and the weather will be very cold, so you must wear more clothes."
+    }
+   ],
+   "st": [
+    "明天会比今天冷。",
+    "Tomorrow will be colder than today."
+   ],
+   "ok": 1
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "他的汉语说得很流利，很多人以为他是中国人。",
+     "en": "He speaks Chinese very fluently, and many people think he is Chinese."
+    }
+   ],
+   "st": [
+    "他的汉语说得不好。",
+    "He does not speak Chinese well."
+   ],
+   "ok": 0
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "因为下雨，今天的比赛改到明天了。",
+     "en": "Because of the rain, today's match has been moved to tomorrow."
+    }
+   ],
+   "st": [
+    "比赛明天举行。",
+    "The match will be held tomorrow."
+   ],
+   "ok": 1
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "我先去银行，然后去超市买东西，最后回家做饭。",
+     "en": "I go to the bank first, then to the supermarket to buy things, and finally go home to cook."
+    }
+   ],
+   "st": [
+    "我最后回家。",
+    "I go home last."
+   ],
+   "ok": 1
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "这本书我看了两遍，每次都有新的感觉。",
+     "en": "I have read this book twice, and each time I get a new feeling."
+    }
+   ],
+   "st": [
+    "我只看了一遍这本书。",
+    "I have read this book only once."
+   ],
+   "ok": 0
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "他不但会唱歌，还会跳舞，大家都很喜欢他。",
+     "en": "He can not only sing but also dance, and everyone likes him a lot."
+    }
+   ],
+   "st": [
+    "大家都喜欢他。",
+    "Everyone likes him."
+   ],
+   "ok": 1
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "虽然这个工作很累，但是我很喜欢，因为我可以学到很多东西。",
+     "en": "Although this job is tiring, I like it a lot, because I can learn many things."
+    }
+   ],
+   "st": [
+    "我不喜欢这个工作。",
+    "I do not like this job."
+   ],
+   "ok": 0
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "我们公司明天上午九点开会，请大家准时到。",
+     "en": "Our company has a meeting at nine tomorrow morning; please everyone arrive on time."
+    }
+   ],
+   "st": [
+    "明天九点要开会。",
+    "There will be a meeting at nine tomorrow."
+   ],
+   "ok": 1
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "这个城市夏天很热，冬天很冷，春天和秋天最舒服。",
+     "en": "This city is hot in summer and cold in winter, and spring and autumn are the most comfortable."
+    }
+   ],
+   "st": [
+    "这个城市的春天很冷。",
+    "Spring in this city is very cold."
+   ],
+   "ok": 0
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "妹妹的房间很乱，妈妈让她今天整理好。",
+     "en": "My younger sister's room is very messy, and Mom tells her to tidy it today."
+    }
+   ],
+   "st": [
+    "妈妈让妹妹整理房间。",
+    "Mom tells my younger sister to tidy her room."
+   ],
+   "ok": 1
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "老师说，这次考试的成绩下个星期才能知道。",
+     "en": "The teacher says that the results of this exam can only be known next week."
+    }
+   ],
+   "st": [
+    "学生今天就能知道成绩。",
+    "The students can know the results today."
+   ],
+   "ok": 0
+  }
+ ],
+ "L2": [
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你的行李怎么这么重？",
+     "en": "Why is your luggage so heavy?"
+    },
+    {
+     "s": "男",
+     "zh": "我带了很多书，还有一些礼物。",
+     "en": "I brought many books and some gifts."
+    }
+   ],
+   "q": {
+    "zh": "男的行李里有什么？",
+    "en": "What is in the man's luggage?"
+   },
+   "opts": [
+    "书和礼物",
+    "衣服和鞋",
+    "吃的东西",
+    "电脑和手机"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "经理，这个月的工作我已经完成了。",
+     "en": "Manager, I have already finished this month's work."
+    },
+    {
+     "s": "女",
+     "zh": "很好，下个月的计划你也要准备一下。",
+     "en": "Good. You also need to prepare next month's plan."
+    }
+   ],
+   "q": {
+    "zh": "经理希望男的做什么？",
+    "en": "What does the manager want the man to do?"
+   },
+   "opts": [
+    "准备计划",
+    "完成工作",
+    "去出差",
+    "休息一下"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "这件外套多少钱？",
+     "en": "How much is this coat?"
+    },
+    {
+     "s": "男",
+     "zh": "原来是四百块，现在便宜了一百块。",
+     "en": "It was 400 yuan, and now it is 100 yuan cheaper."
+    }
+   ],
+   "q": {
+    "zh": "这件外套现在多少钱？",
+    "en": "How much is the coat now?"
+   },
+   "opts": [
+    "三百块",
+    "四百块",
+    "五百块",
+    "一百块"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "我明天要去参加面试，有点紧张。",
+     "en": "I have an interview to attend tomorrow, and I am a bit nervous."
+    },
+    {
+     "s": "女",
+     "zh": "别担心，你准备得很好，一定没问题。",
+     "en": "Do not worry; you have prepared well and it will certainly be fine."
+    }
+   ],
+   "q": {
+    "zh": "女的是什么意思？",
+    "en": "What does the woman mean?"
+   },
+   "opts": [
+    "让男的别担心",
+    "想和男的一起去",
+    "觉得面试很难",
+    "不想让男的去"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "这个周末你有什么打算？",
+     "en": "What are your plans for this weekend?"
+    },
+    {
+     "s": "男",
+     "zh": "我想去爬山，但是听说会下雨。",
+     "en": "I want to go hiking, but I hear it will rain."
+    }
+   ],
+   "q": {
+    "zh": "男的担心什么？",
+    "en": "What is the man worried about?"
+   },
+   "opts": [
+    "下雨",
+    "太累",
+    "迟到",
+    "没有钱"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "请问，这附近有没有银行？",
+     "en": "Excuse me, is there a bank near here?"
+    },
+    {
+     "s": "女",
+     "zh": "有，你一直往前走，第二个路口的右边就是。",
+     "en": "Yes. You go straight ahead, and it is on the right of the second crossing."
+    }
+   ],
+   "q": {
+    "zh": "男的要去哪儿？",
+    "en": "Where does the man want to go?"
+   },
+   "opts": [
+    "银行",
+    "超市",
+    "公园",
+    "医院"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你昨天为什么没来上课？",
+     "en": "Why did you not come to class yesterday?"
+    },
+    {
+     "s": "男",
+     "zh": "我感冒了，头很疼，不想起床。",
+     "en": "I had a cold, my head hurt, and I did not want to get up."
+    }
+   ],
+   "q": {
+    "zh": "男的为什么没去上课？",
+    "en": "Why did the man not go to class?"
+   },
+   "opts": [
+    "他生病了",
+    "他迟到了",
+    "他忘了",
+    "他有事"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "我们坐几点的火车？",
+     "en": "What time is the train we are taking?"
+    },
+    {
+     "s": "女",
+     "zh": "下午三点半，我们两点就要到车站。",
+     "en": "Half past three in the afternoon; we must be at the station by two."
+    }
+   ],
+   "q": {
+    "zh": "他们几点要到车站？",
+    "en": "What time must they be at the station?"
+   },
+   "opts": [
+    "两点",
+    "三点半",
+    "三点",
+    "一点半"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "这个菜太辣了，我不能吃。",
+     "en": "This dish is too spicy; I cannot eat it."
+    },
+    {
+     "s": "男",
+     "zh": "那我再给你点一个不辣的菜。",
+     "en": "Then I will order another dish for you that is not spicy."
+    }
+   ],
+   "q": {
+    "zh": "男的要做什么？",
+    "en": "What will the man do?"
+   },
+   "opts": [
+    "再点一个菜",
+    "换一家饭馆",
+    "不吃饭了",
+    "喝点水"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你的汉语进步真快！",
+     "en": "Your Chinese is improving really fast!"
+    },
+    {
+     "s": "女",
+     "zh": "谢谢，我每天都听半个小时的听力。",
+     "en": "Thank you. I practise listening for half an hour every day."
+    }
+   ],
+   "q": {
+    "zh": "女的为什么进步快？",
+    "en": "Why is the woman improving fast?"
+   },
+   "opts": [
+    "每天练习听力",
+    "住在中国",
+    "有中国朋友",
+    "看了很多书"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你今天去理发了？",
+     "en": "Did you go for a haircut today?"
+    },
+    {
+     "s": "男",
+     "zh": "对，天气太热了，短一点凉快。",
+     "en": "Yes. It is too hot; shorter hair is cooler."
+    }
+   ],
+   "q": {
+    "zh": "男的为什么去理发了？",
+    "en": "Why did the man go for a haircut?"
+   },
+   "opts": [
+    "天气太热",
+    "要去面试",
+    "朋友让他去",
+    "头发太乱"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "这次旅行你满意吗？",
+     "en": "Are you satisfied with this trip?"
+    },
+    {
+     "s": "女",
+     "zh": "风景很美，就是人太多了。",
+     "en": "The scenery is beautiful; there are just too many people."
+    }
+   ],
+   "q": {
+    "zh": "女的觉得旅行怎么样？",
+    "en": "What does the woman think of the trip?"
+   },
+   "opts": [
+    "风景好，但是人多",
+    "不太有意思",
+    "太累了",
+    "价格太贵"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你准备什么时候搬家？",
+     "en": "When are you going to move?"
+    },
+    {
+     "s": "男",
+     "zh": "房东说我下个月一号可以搬进去。",
+     "en": "The landlord says I can move in on the first of next month."
+    }
+   ],
+   "q": {
+    "zh": "男的什么时候搬家？",
+    "en": "When will the man move?"
+   },
+   "opts": [
+    "下个月一号",
+    "这个月底",
+    "下个星期",
+    "明天"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "对不起，我把你的杯子弄坏了。",
+     "en": "Sorry, I have broken your cup."
+    },
+    {
+     "s": "女",
+     "zh": "没关系，我再买一个。",
+     "en": "It does not matter; I will buy another one."
+    }
+   ],
+   "q": {
+    "zh": "女的是什么意思？",
+    "en": "What does the woman mean?"
+   },
+   "opts": [
+    "她不生气",
+    "她很生气",
+    "她想买新的手机",
+    "她要男的买一个"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "比赛的结果怎么样？",
+     "en": "What is the result of the match?"
+    },
+    {
+     "s": "男",
+     "zh": "我们队输了，不过大家都踢得很努力。",
+     "en": "Our team lost, but everyone played very hard."
+    }
+   ],
+   "q": {
+    "zh": "比赛的结果怎么样？",
+    "en": "What is the result of the match?"
+   },
+   "opts": [
+    "他们队输了",
+    "他们队赢了",
+    "没有比赛",
+    "不知道"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "这个字我写了好几遍，还是写不好。",
+     "en": "I have written this character several times and still cannot write it well."
+    },
+    {
+     "s": "女",
+     "zh": "别着急，慢慢练，你的字已经比以前好看多了。",
+     "en": "Do not worry; practise slowly. Your writing is already much nicer than before."
+    }
+   ],
+   "q": {
+    "zh": "女的觉得男的写得怎么样？",
+    "en": "What does the woman think of the man's writing?"
+   },
+   "opts": [
+    "比以前好",
+    "很差",
+    "不用练习",
+    "写得太快"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "我想申请这个学校，需要什么材料？",
+     "en": "I want to apply to this school. What materials do I need?"
+    },
+    {
+     "s": "男",
+     "zh": "要护照、照片和一张表格。",
+     "en": "You need a passport, photos and a form."
+    }
+   ],
+   "q": {
+    "zh": "女的要做什么？",
+    "en": "What does the woman want to do?"
+   },
+   "opts": [
+    "申请学校",
+    "办签证",
+    "找工作",
+    "租房子"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你的手机好像很新，是新买的吗？",
+     "en": "Your phone looks very new. Did you just buy it?"
+    },
+    {
+     "s": "女",
+     "zh": "对，是朋友送我的生日礼物。",
+     "en": "Yes, a friend gave me a birthday gift."
+    }
+   ],
+   "q": {
+    "zh": "手机是谁送的？",
+    "en": "Who gave the phone?"
+   },
+   "opts": [
+    "朋友",
+    "爸爸",
+    "妈妈",
+    "同事"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "我听说你们公司最近要加班？",
+     "en": "I hear your company will work overtime recently?"
+    },
+    {
+     "s": "男",
+     "zh": "对，这个月的工作特别多。",
+     "en": "Yes, there is especially a lot of work this month."
+    }
+   ],
+   "q": {
+    "zh": "男的这个月怎么样？",
+    "en": "How is the man's month?"
+   },
+   "opts": [
+    "工作很多",
+    "不用加班",
+    "要出差",
+    "想换工作"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "这条路上怎么这么多车？",
+     "en": "Why are there so many cars on this road?"
+    },
+    {
+     "s": "女",
+     "zh": "前面有一辆车坏了，我们可能要等一会儿。",
+     "en": "A car has broken down ahead; we will probably have to wait a while."
+    }
+   ],
+   "q": {
+    "zh": "路上为什么堵车？",
+    "en": "Why is there a traffic jam?"
+   },
+   "opts": [
+    "有车坏了",
+    "下雨了",
+    "人太多",
+    "在修路"
+   ]
+  }
+ ],
+ "L3": [
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "小高，你的汉语考试准备得怎么样了？",
+     "en": "Xiao Gao, how is your preparation for the Chinese exam going now?"
+    },
+    {
+     "s": "男",
+     "zh": "听力还可以，就是阅读有点难。",
+     "en": "Listening is fine; it is just that reading is a bit hard."
+    },
+    {
+     "s": "女",
+     "zh": "那你可以多看一些短文章。",
+     "en": "Then you can read more short articles."
+    },
+    {
+     "s": "男",
+     "zh": "好，我今天晚上就去找一些。",
+     "en": "Okay, I will go and find some tonight."
+    }
+   ],
+   "q": {
+    "zh": "男的觉得哪一部分难？",
+    "en": "Which part does the man find hard?"
+   },
+   "opts": [
+    "阅读",
+    "听力",
+    "语法",
+    "口语"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你好，我想订一个星期六的座位。",
+     "en": "Hello, I want to book a table for Saturday."
+    },
+    {
+     "s": "女",
+     "zh": "几个人？",
+     "en": "How many people?"
+    },
+    {
+     "s": "男",
+     "zh": "六个人，大概晚上七点到。",
+     "en": "Six people, arriving at about seven in the evening."
+    },
+    {
+     "s": "女",
+     "zh": "好的，我们给你们留一张大一点的桌子。",
+     "en": "Okay, we will keep a bigger table for you."
+    }
+   ],
+   "q": {
+    "zh": "女的会给男的留什么？",
+    "en": "What will the woman keep for the man?"
+   },
+   "opts": [
+    "大桌子",
+    "小桌子",
+    "两个座位",
+    "一个房间"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "这个星期六你有空吗？我想请你吃饭。",
+     "en": "Are you free this Saturday? I want to invite you to dinner."
+    },
+    {
+     "s": "男",
+     "zh": "对不起，我要去机场接朋友。",
+     "en": "Sorry, I have to go to the airport to pick up a friend."
+    },
+    {
+     "s": "女",
+     "zh": "那星期天呢？",
+     "en": "What about Sunday?"
+    },
+    {
+     "s": "男",
+     "zh": "星期天可以，我们去哪儿吃？",
+     "en": "Sunday is fine. Where shall we eat?"
+    }
+   ],
+   "q": {
+    "zh": "男的星期六要做什么？",
+    "en": "What will the man do on Saturday?"
+   },
+   "opts": [
+    "接朋友",
+    "加班",
+    "去旅行",
+    "看电影"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "这个手机怎么卖？",
+     "en": "How much is this phone?"
+    },
+    {
+     "s": "女",
+     "zh": "这个是新的，两千块。",
+     "en": "This one is new; it is 2,000 yuan."
+    },
+    {
+     "s": "男",
+     "zh": "能便宜一点吗？",
+     "en": "Can it be a bit cheaper?"
+    },
+    {
+     "s": "女",
+     "zh": "最低一千八百块，不能再低了。",
+     "en": "The lowest is 1,800 yuan; it cannot go any lower now."
+    }
+   ],
+   "q": {
+    "zh": "手机最低多少钱？",
+    "en": "What is the lowest price of the phone?"
+   },
+   "opts": [
+    "一千八百块",
+    "两千块",
+    "一千五百块",
+    "一千九百块"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你每天怎么去上班？",
+     "en": "How do you go to work every day?"
+    },
+    {
+     "s": "男",
+     "zh": "以前我坐地铁，现在我骑自行车。",
+     "en": "I used to take the subway; now I ride a bike."
+    },
+    {
+     "s": "女",
+     "zh": "为什么换了？",
+     "en": "Why did you change?"
+    },
+    {
+     "s": "男",
+     "zh": "骑车可以锻炼身体，我还不会迟到。",
+     "en": "Riding a bike is exercise, and I will not be late."
+    }
+   ],
+   "q": {
+    "zh": "男的为什么骑自行车？",
+    "en": "Why does the man ride a bike?"
+   },
+   "opts": [
+    "可以锻炼身体",
+    "地铁太贵",
+    "公司很近",
+    "不想走路"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "明天开会的时间改到下午三点了。",
+     "en": "The time of tomorrow's meeting has been moved to three in the afternoon."
+    },
+    {
+     "s": "女",
+     "zh": "为什么改时间了？",
+     "en": "Why was the time changed?"
+    },
+    {
+     "s": "男",
+     "zh": "经理明天上午要去机场接客人。",
+     "en": "The manager must go to the airport to meet guests tomorrow morning."
+    },
+    {
+     "s": "女",
+     "zh": "好的，我通知大家。",
+     "en": "Okay, I will tell everyone."
+    }
+   ],
+   "q": {
+    "zh": "开会的时间为什么改了？",
+    "en": "Why was the time of the meeting changed?"
+   },
+   "opts": [
+    "经理要接客人",
+    "要下雨",
+    "没有人来",
+    "有考试"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你看，这是我去年在海边拍的照片。",
+     "en": "You see, this is a photo I took at the seaside last year."
+    },
+    {
+     "s": "男",
+     "zh": "真漂亮！你是一个人去的吗？",
+     "en": "So beautiful! Did you go alone?"
+    },
+    {
+     "s": "女",
+     "zh": "不是，和我的同学一起去的。",
+     "en": "No, I went with my classmates."
+    },
+    {
+     "s": "男",
+     "zh": "下次也叫我吧。",
+     "en": "Call me next time too."
+    }
+   ],
+   "q": {
+    "zh": "女的和谁一起去了？",
+    "en": "Who did the woman go with?"
+   },
+   "opts": [
+    "同学",
+    "家人",
+    "同事",
+    "一个人"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "医生说我要多运动，少吃甜的。",
+     "en": "The doctor says I must exercise more and eat less sweet food."
+    },
+    {
+     "s": "女",
+     "zh": "那你以后别喝饮料了。",
+     "en": "Then you must not drink soft drinks from now on."
+    },
+    {
+     "s": "男",
+     "zh": "可是我最喜欢喝果汁。",
+     "en": "But I like juice best."
+    },
+    {
+     "s": "女",
+     "zh": "你可以自己在家做，少放一点糖。",
+     "en": "You can make it yourself at home and put in a little less sugar."
+    }
+   ],
+   "q": {
+    "zh": "女的建议男的怎么做？",
+    "en": "What does the woman suggest the man do?"
+   },
+   "opts": [
+    "在家做果汁，少放糖",
+    "每天去跑步",
+    "买更多果汁",
+    "不吃饭"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "你好，请问你们这儿需要人吗？",
+     "en": "Hello, do you need people here?"
+    },
+    {
+     "s": "男",
+     "zh": "我们需要，你有工作经验吗？",
+     "en": "We do. Do you have work experience?"
+    },
+    {
+     "s": "女",
+     "zh": "我在一家饭馆工作过两年。",
+     "en": "I worked at a restaurant for two years."
+    },
+    {
+     "s": "男",
+     "zh": "太好了，明天上午你来面试吧。",
+     "en": "Great, then you come for the interview tomorrow morning."
+    }
+   ],
+   "q": {
+    "zh": "女的明天要做什么？",
+    "en": "What will the woman do tomorrow?"
+   },
+   "opts": [
+    "来面试",
+    "来上班",
+    "交材料",
+    "付钱"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "你看起来不太舒服，怎么了？",
+     "en": "You do not look very well. What is wrong?"
+    },
+    {
+     "s": "女",
+     "zh": "我昨天晚上没睡好，一直在想工作的事。",
+     "en": "I did not sleep well last night; I kept thinking about work."
+    },
+    {
+     "s": "男",
+     "zh": "别想太多了，早点休息吧。",
+     "en": "Do not think too much; get some rest early."
+    },
+    {
+     "s": "女",
+     "zh": "好的，今天我一定早点睡。",
+     "en": "Okay, I will definitely sleep early today."
+    }
+   ],
+   "q": {
+    "zh": "女的昨天晚上怎么了？",
+    "en": "What happened to the woman yesterday evening?"
+   },
+   "opts": [
+    "没睡好",
+    "加班到很晚",
+    "看了电影",
+    "去出差了"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "女",
+     "zh": "我听说你下个月要搬家？",
+     "en": "I hear you are going to move next month?"
+    },
+    {
+     "s": "男",
+     "zh": "对，现在的房租太贵了，我想租一个便宜一点的。",
+     "en": "Yes. The rent now is too high, and I want to rent a cheaper place."
+    },
+    {
+     "s": "女",
+     "zh": "那你找到房子了吗？",
+     "en": "Have you found a place?"
+    },
+    {
+     "s": "男",
+     "zh": "还没有，我正在网上找。",
+     "en": "Not yet; I am looking online."
+    }
+   ],
+   "q": {
+    "zh": "男的为什么要搬家？",
+    "en": "Why does the man want to move?"
+   },
+   "opts": [
+    "房租太贵",
+    "房子太小",
+    "离公司太远",
+    "房东不好"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "男",
+     "zh": "我想去超市买点水果，你要不要一起去？",
+     "en": "I want to buy some fruit at the supermarket. Do you want to come along?"
+    },
+    {
+     "s": "女",
+     "zh": "好啊，我们家的香蕉和苹果都没有了。",
+     "en": "Sure. We have no bananas or apples left at home."
+    },
+    {
+     "s": "男",
+     "zh": "我们还要买点牛奶吧。",
+     "en": "We should buy some milk as well."
+    },
+    {
+     "s": "女",
+     "zh": "对，我先写下来，我们别忘了。",
+     "en": "Right. Let me write it down first so we do not forget."
+    }
+   ],
+   "q": {
+    "zh": "他们要买什么？",
+    "en": "What will they buy?"
+   },
+   "opts": [
+    "水果和牛奶",
+    "肉和菜",
+    "饮料和零食",
+    "衣服"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "小明在一家公司工作了五年，最近他决定换一个工作。他希望找一个离家近的公司，这样每天可以多睡一会儿，也有更多时间陪家人。",
+     "en": "Xiao Ming has worked at a company for five years, and recently he decided to change jobs. He hopes to find a company close to home, so that he can sleep a little longer every day and have more time with his family."
+    }
+   ],
+   "q": {
+    "zh": "小明为什么想换工作？",
+    "en": "Why does Xiao Ming want to change jobs?"
+   },
+   "opts": [
+    "想离家近一点",
+    "工资太低",
+    "不喜欢同事",
+    "工作太忙"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "我的邻居是一位老教授，他每天早上六点就起床锻炼。他说，身体健康比什么都重要，所以不管天气怎么样，他都坚持。",
+     "en": "My neighbour is an old professor, who gets up at six every morning to exercise. He says that good health matters more than anything, so he keeps it up whatever the weather is like."
+    }
+   ],
+   "q": {
+    "zh": "老教授每天早上做什么？",
+    "en": "What does the old professor do every morning?"
+   },
+   "opts": [
+    "锻炼",
+    "看报纸",
+    "读书",
+    "做饭"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "去年夏天，我和朋友一起去旅行。我们坐火车到了一个小城市，那里的风景特别美，食物也很好吃。但是我们只住了两天，我很想再去一次。",
+     "en": "Last year in summer, I went travelling with a friend. We took the train to a small city, where the scenery is especially beautiful and the food is delicious too. But we only stayed two days, and I very much want to go again."
+    }
+   ],
+   "q": {
+    "zh": "说话人为什么想再去那个城市？",
+    "en": "Why does the speaker want to go to that city again?"
+   },
+   "opts": [
+    "风景和食物都很好",
+    "朋友在那里",
+    "那里有工作",
+    "房子很便宜"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "现在很多人喜欢在网上买东西，不但方便，而且便宜。但是有些东西最好自己去商店看一看，比如衣服和鞋，因为大小可能不合适。",
+     "en": "Nowadays many people like to shop online, which is not only convenient but also cheap. But for some things it is best to go to a shop and have a look yourself, such as clothes and shoes, because the size may not fit."
+    }
+   ],
+   "q": {
+    "zh": "买衣服和鞋，说话人建议怎么做？",
+    "en": "What does the speaker suggest for buying clothes and shoes?"
+   },
+   "opts": [
+    "去商店看一看",
+    "在网上买",
+    "让朋友买",
+    "买便宜的"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "我的同事小张很爱笑，办公室里的人都喜欢和他聊天。有一次我工作压力很大，他对我说，别担心，一切会好起来的。听了他的话，我心情好多了。",
+     "en": "My colleague Xiao Zhang loves to laugh, and everyone in the office likes chatting with him. Once when I was under great work pressure, he told me not to worry and that everything will get better. After hearing his words, I felt much better."
+    }
+   ],
+   "q": {
+    "zh": "小张对说话人说了什么？",
+    "en": "What did Xiao Zhang say to the speaker?"
+   },
+   "opts": [
+    "让他别担心",
+    "让他去休息",
+    "请他吃饭",
+    "帮他工作"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "这家书店有很多不同的书，也有安静的地方可以坐下来看书。周末的时候，常常有人带着孩子来这里，孩子们一边看书，一边玩游戏。",
+     "en": "This bookshop has many different books, and also quiet places where you can sit down and read. At weekends, people often bring their children here, and the children read while playing games."
+    }
+   ],
+   "q": {
+    "zh": "周末书店里常常有谁？",
+    "en": "Who is often in the bookshop at weekends?"
+   },
+   "opts": [
+    "带着孩子的人",
+    "老师",
+    "作家",
+    "学生"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "昨天我去银行办事，那里人很多，我等了一个多小时。后来工作人员告诉我，用手机办也可以，又快又方便。以后我再也不去银行排队了。",
+     "en": "Yesterday I went to the bank to do some business, and there were many people there, so I waited more than an hour. Later the staff told me that it can also be done on a phone, which is quick and convenient. From now on I will never queue at the bank again."
+    }
+   ],
+   "q": {
+    "zh": "说话人以后会怎么办事？",
+    "en": "How will the speaker do such business from now on?"
+   },
+   "opts": [
+    "用手机办",
+    "提前去银行",
+    "请朋友帮忙",
+    "晚上去"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "妈妈让我少看电视，多看书。一开始我不想看，可是后来我发现，书里有很多有趣的故事，比电视更有意思，现在我每天晚上都看书。",
+     "en": "Mom told me to watch less TV and read more. At first I did not want to read, but later I found that books have many interesting stories, more fun than TV, and now I read every evening."
+    }
+   ],
+   "q": {
+    "zh": "现在说话人每天晚上做什么？",
+    "en": "What does the speaker do every evening now?"
+   },
+   "opts": [
+    "看书",
+    "看电视",
+    "玩游戏",
+    "听音乐"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "下个星期是我爸爸的生日，我想给他买一份礼物。我不知道他喜欢什么，所以问了妈妈。妈妈说，爸爸最近想要一个新的杯子。",
+     "en": "Next week is my dad's birthday, and I want to buy him a gift. I do not know what he likes, so I asked Mom. Mom says that Dad wants a new cup recently."
+    }
+   ],
+   "q": {
+    "zh": "说话人为什么问了妈妈？",
+    "en": "Why did the speaker ask Mom?"
+   },
+   "opts": [
+    "不知道爸爸喜欢什么",
+    "想借钱",
+    "要去旅行",
+    "没有时间"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "因为天气太热，今年来这个城市旅游的人比去年更少。很多饭馆和商店的生意都不太好，大家希望秋天能好一点。",
+     "en": "Because the weather is too hot, even fewer people come to travel in this city this year than last year. The business of many restaurants and shops is not very good, and everyone hopes that autumn will be a little better."
+    }
+   ],
+   "q": {
+    "zh": "今年旅游的人怎么样？",
+    "en": "How are the tourists this year?"
+   },
+   "opts": [
+    "比去年少",
+    "比去年多",
+    "和去年一样",
+    "不知道"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "我的汉语老师总是提醒我们，学语言不能怕错。只要多说多听，慢慢地就会进步。我听了她的话，现在敢和中国人聊天了。",
+     "en": "My Chinese teacher always reminds us that when learning a language we must not be afraid of mistakes. As long as we speak and listen more, we will slowly make progress. I listened to her, and now I dare to chat with Chinese people."
+    }
+   ],
+   "q": {
+    "zh": "老师提醒学生什么？",
+    "en": "What does the teacher remind the students?"
+   },
+   "opts": [
+    "不要怕错",
+    "多写汉字",
+    "少说话",
+    "看电视"
+   ]
+  },
+  {
+   "say": [
+    {
+     "s": "",
+     "zh": "小高每天早上骑自行车去公司，只要二十分钟。可是昨天下大雨，他只好坐公共汽车，结果因为堵车，花了一个多小时。",
+     "en": "Xiao Gao rides a bike to the company every morning, and it only takes twenty minutes. But yesterday it rained heavily, so he had to take the bus, and because of a traffic jam it took more than an hour."
+    }
+   ],
+   "q": {
+    "zh": "小高昨天为什么坐公共汽车？",
+    "en": "Why did Xiao Gao take the bus yesterday?"
+   },
+   "opts": [
+    "下大雨",
+    "自行车坏了",
+    "起晚了",
+    "想坐车"
+   ]
+  }
+ ]
+}

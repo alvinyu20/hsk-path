@@ -1,6 +1,6 @@
 # A short meaning for a character that is not a word of its own (or not yet at this level), shown in "Built from" when you meet a word.
 # char<TAB>gloss. AI-written, not reviewed by a teacher. A character that is itself a word at the learner's level uses that word's meaning instead.
-# Checked by tools/test-char-glosses.js: every character in an HSK 1-3 word must have a meaning here or be a word at or before that level.
+# Checked by tools/test-char-glosses.js: every character in an HSK 1-4 word must have a meaning here or be a word at or before that level.
 儿	child; a spoken ending
 时	time
 钟	clock
@@ -349,3 +349,293 @@
 终	end; finally
 突	sudden
 处	place
+保	to protect
+歉	sorry; regretful
+科	branch of study; science
+鼻	nose
+毕	to finish
+标	mark; standard
+格	pattern; grid; standard
+示	to show
+扬	to raise; to praise
+饼	round flat cake; biscuit
+播	to broadcast
+博	wide; rich in knowledge
+断	to break off; to decide
+论	to discuss; theory
+材	material
+观	to look at; to view
+餐	meal
+厅	hall; large room
+操	to drill; exercise
+厕	toilet
+叶	leaf
+产	to produce
+速	fast; speed
+功	achievement; skill
+诚	sincere
+惊	to startle; surprise
+厨	kitchen
+户	door; household
+误	mistake
+案	case; proposal
+达	to reach
+招	to wave; to recruit
+呼	to call out
+败	to lose; to defeat
+扰	to disturb
+印	to print; a stamp
+折	to fold; to break; to discount
+针	needle; injection
+巴	sound of "bus" (in 大巴)
+袋	bag; pocket
+导	to guide
+登	to climb; to board
+价	price; value
+温	warm; temperature
+址	site; location
+剧	play; drama
+堵	to block
+度	degree; to spend (time)
+肚	belly
+童	child
+律	rule; law
+翻	to turn over
+译	to translate
+恼	annoyed
+反	opposite; against
+式	style; way
+弃	to give up
+松	loose; relaxed
+丰	plentiful
+富	rich; abundant
+景	scenery; view
+否	not; no
+则	rule; then
+符	to match; a sign
+父	father
+母	mother
+亲	close; related; parent
+杂	mixed
+负	to bear; to carry
+责	duty; to blame
+紧	tight; urgent
+钢	steel
+胳	arm (in 胳膊)
+膊	arm (in 胳膊)
+资	money; resources
+购	to buy
+估	to guess; to estimate
+计	to count; to plan
+姑	father's sister; young woman
+娘	mother; young woman
+鼓	drum; to stir up
+励	to urge on
+键	key (on a keyboard)
+众	crowd; many
+广	wide; broad
+规	rule
+籍	register; nationality
+际	border; between
+汁	juice
+程	journey; procedure
+洋	ocean; foreign
+羞	shy
+寒	cold
+航	to sail; to fly
+盒	box
+悔	to regret
+忽	suddenly
+互	each other
+联	to join; to link
+怀	to hold in the heart; chest
+疑	to doubt
+忆	to remember
+泼	to splash
+获	to obtain
+基	base; foundation
+础	foundation
+积	to pile up
+及	to reach; and
+即	at once; namely
+划	to plan; to scratch
+技	skill
+术	art; method
+继	to continue
+续	to continue
+具	tool; utensil
+庭	courtyard; family home
+乡	countryside; hometown
+建	to build; to propose
+金	gold; money
+骄	proud
+傲	proud; arrogant
+警	to warn; police
+郊	outskirts
+授	to give; to teach
+账	account; bill
+释	to explain; to release
+尽	to the utmost; all
+禁	to forbid
+止	to stop
+精	refined; essence
+彩	colour; brilliant
+济	to help; to cross
+京	capital city
+验	to test; to check
+察	to observe
+竟	actually; unexpectedly
+竞	to compete
+争	to fight for
+镜	mirror
+究	to investigate
+例	example; rule
+拒	to resist; to refuse
+绝	to cut off; absolutely
+距	distance
+虑	to think over
+嗽	cough
+惜	to pity; to cherish
+堂	hall; main room
+肯	to be willing
+恐	afraid
+递	to hand over
+垃	rubbish (in 垃圾)
+圾	rubbish (in 垃圾)
+浪	wave; wasteful
+漫	overflowing; casual
+虎	tiger
+貌	appearance; manner
+厉	strict; fierce
+食	food; to eat
+利	sharp; benefit
+麻	hemp; numb
+馒	steamed bun (in 馒头)
+巾	cloth; towel
+帽	hat
+丽	beautiful
+密	secret; dense
+免	to avoid; to be free of
+民	people
+族	clan; ethnic group
+耐	to endure
+龄	age
+农	farming
+暖	warm
+偶	by chance; a pair
+尔	so; a word ending
+判	to judge
+批	to comment; a batch
+评	to comment; to judge
+皮	skin; leather
+肤	skin
+脾	spleen; temper
+乒	ping (in 乒乓球)
+乓	pong (in 乒乓球)
+葡	grape (in 葡萄)
+萄	grape (in 葡萄)
+普	general; common
+签	to sign; a slip
+戚	relative
+青	green; young
+况	situation
+庆	to celebrate
+迷	fan; to be lost
+消	to vanish; to cancel
+确	certain; true
+闹	noisy; to make trouble
+任	to bear; duty
+何	what; any
+散	to scatter; to loosen
+森	forest
+林	woods; forest
+品	article; goods
+伤	to hurt; wound
+微	tiny; slight
+社	society; group
+摄	to take (a photo); to absorb
+氏	clan; surname
+申	to state; to apply
+甚	very; even
+至	to arrive; most
+命	life; order
+失	to lose
+傅	master (in 师傅)
+纪	age; record
+频	frequent
+拾	to pick up
+售	to sell
+悉	to know fully
+暑	heat; hot weather
+顺	smooth; to follow
+序	order; sequence
+硕	large; a master's degree
+塑	to mould
+随	to follow; casual
+孙	grandchild
+态	manner; state
+讨	to demand; to discuss
+厌	to dislike
+供	to supply
+填	to fill in
+袜	sock
+套	cover; set
+危	danger
+险	danger; risky
+章	chapter; badge
+污	dirty
+染	to dye; to infect
+柿	persimmon
+引	to lead; to attract
+羡	to envy
+慕	to admire
+线	line; thread
+详	detailed
+伙	partner; group
+效	effect
+辛	bitter; hard
+奋	to be roused
+幸	lucky
+福	good fortune
+兄	elder brother
+许	to allow; maybe
+膏	paste; ointment
+亚	Asia (in 亚洲); second
+洲	continent
+严	strict; tight
+研	to grind; to study
+邀	to invite
+钥	key (in 钥匙)
+匙	spoon; key
+切	to cut; everything
+艺	skill; art
+象	elephant; image
+聘	to hire
+勇	brave
+永	forever
+优	excellent
+幽	quiet; hidden
+默	silent
+秀	elegant; show
+尤	especially
+谊	friendship
+愉	happy
+预	in advance
+原	origin; original
+谅	to forgive
+阅	to read
+允	to allow
+志	will; a record
+暂	for a short time
+晨	morning
+增	to increase
+支	to support; branch
+植	plant; to plant
+职	post; duty
+质	quality; substance
+围	to surround
+贺	to congratulate
+著	famous; to write
+专	special; focused
+仔	careful
+尊	to respect

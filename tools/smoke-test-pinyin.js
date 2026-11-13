@@ -161,7 +161,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
       else {
         const q = await page.evaluate(() => { const x = window.shanlu.quizQs[0]; return { correct: x.options && x.options.find(op => op.id === x.correct).label }; });
         await page.locator('.opts .opt', { hasText: q.correct }).first().click();
-        await page.locator('button', { hasText: 'Check' }).click();
+        await page.locator('button', { hasText: /^\s*Check\s*$/ }).click();
         await page.locator('button', { hasText: 'Continue' }).click();
       }
     }
@@ -187,7 +187,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
         const k = await page.evaluate(() => { const a = window.shanlu; return a.state.rq.length ? a.rKind(a.state.rq[0]) : 'none'; });
         if (k === 'none') break;
         if (k === 'intro') await page.locator('button', { hasText: 'Got it, ask me soon' }).click();
-        else { const q = await page.evaluate(() => { const x = window.shanlu.quizQs[0]; return { correct: x.options && x.options.find(op => op.id === x.correct).label }; }); await page.locator('.opts .opt', { hasText: q.correct }).first().click(); await page.locator('button', { hasText: 'Check' }).click(); await page.locator('button', { hasText: 'Continue' }).click(); }
+        else { const q = await page.evaluate(() => { const x = window.shanlu.quizQs[0]; return { correct: x.options && x.options.find(op => op.id === x.correct).label }; }); await page.locator('.opts .opt', { hasText: q.correct }).first().click(); await page.locator('button', { hasText: /^\s*Check\s*$/ }).click(); await page.locator('button', { hasText: 'Continue' }).click(); }
       }
       if (await page.locator('#answer-input').count()) check(await page.locator('.py-typ').count() === 0, 'after a reload the tutorial does not come back by itself');
     }

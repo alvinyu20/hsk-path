@@ -8,7 +8,8 @@
  *   - sw.js is an empty one (the real offline copy would cache files between test runs), unless the test asks: server(root, { sw: true }).
  *   - server(root, { level3: true }) would open HSK 3 while it is still closed on the real site (level.js gets MAX_LEVEL = 3 and index.html
  *     gets the HSK 3 data scripts). HSK 3 has been released, so both are in the real files and this option does nothing; it is kept for the
- *     next level, which can be copied from it. */
+ *     next level, which can be copied from it.
+ *   - server(root, { level4: true }) does the same for HSK 4 (MAX_LEVEL = 4 and the HSK 4 data scripts). Once HSK 4 is released it does nothing. */
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -26,16 +27,20 @@ function server(root, opts) {
     if (!f.startsWith(root) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); res.end('nope'); return; }
     const headers = { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' };
     if (o.noCache) headers['Cache-Control'] = 'no-cache';
-    if (p === '/level.js' && o.level3) {
+    if (p === '/level.js' && (o.level3 || o.level4)) {
       res.writeHead(200, headers);
-      res.end(fs.readFileSync(f, 'utf8').replace(/var MAX_LEVEL = \d;/, 'var MAX_LEVEL = 3;'));
+      res.end(fs.readFileSync(f, 'utf8').replace(/var MAX_LEVEL = \d;/, 'var MAX_LEVEL = ' + (o.level4 ? 4 : 3) + ';'));
       return;
     }
-    if (p === '/index.html' && (!o.csp || o.level3)) {
+    if (p === '/index.html' && (!o.csp || o.level3 || o.level4)) {
       let html = fs.readFileSync(f, 'utf8');
       if (!o.csp) html = html.replace(/<meta http-equiv="Content-Security-Policy"[^>]*>\n?/, '');
       if (o.level3 && html.indexOf('data/hsk3-words.js') < 0) {
         const tags = ['words', 'grammar', 'webs', 'speak', 'listen', 'exam'].filter((n) => fs.existsSync(path.join(root, 'data/hsk3-' + n + '.js'))).map((n) => '<script defer src="data/hsk3-' + n + '.js"></script>').join('\n');
+        html = html.replace(/(<script defer src="ascent\.js)/, tags + '\n$1');
+      }
+      if (o.level4 && html.indexOf('data/hsk4-words.js') < 0) {
+        const tags = ['words', 'grammar', 'webs', 'speak', 'listen', 'exam'].filter((n) => fs.existsSync(path.join(root, 'data/hsk4-' + n + '.js'))).map((n) => '<script defer src="data/hsk4-' + n + '.js"></script>').join('\n');
         html = html.replace(/(<script defer src="ascent\.js)/, tags + '\n$1');
       }
       res.writeHead(200, headers);

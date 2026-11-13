@@ -69,9 +69,11 @@ def main():
                 die('%s: blank %r is not a whole word of %r (words: %s)' % (where, b, q['zh'], '/'.join(toks)))
             if q['zh'].count(b) != 1:
                 die('%s: blank %r appears %d times in %r' % (where, b, q['zh'].count(b), q['zh']))
-            acc = {toneless(eng.word_py(b)), b}
+            # a word with several readings ("guo / guò") accepts the toneless form of each one, not all of them run together
+            alts = [toneless(a) for a in eng.word_py(b).split(' / ')]
+            acc = set(alts) | {b}
             if b.endswith('儿'):
-                acc.add(toneless(eng.word_py(b)).replace('r', 'er', 1) if toneless(eng.word_py(b)).endswith('r') else toneless(eng.word_py(b)))
+                acc.add(alts[0].replace('r', 'er', 1) if alts[0].endswith('r') else alts[0])
             out.update(type='cloze', kicker='Fill it', prompt='Type the missing word', big=q['zh'].replace(b, '___', 1), sub=q['en'],
                        placeholder='Pinyin or character', accepts=sorted(acc), reveal='%s · %s' % (b, eng.word_py(b)))
         elif t == 'spot':

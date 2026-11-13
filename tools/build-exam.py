@@ -18,11 +18,11 @@ def die(m):
 
 LV = levelcfg.LEVEL
 eng = Engine(levelcfg.known())
-if LV == 3:
-    # the HSK 3 bank is kept in three files (listening, reading, writing) so each stays readable
+if LV in (3, 4):
+    # the HSK 3 and HSK 4 banks are kept in three files (listening, reading, writing) so each stays readable
     src = {}
     for part in ('listening', 'reading', 'writing'):
-        src.update(json.load(open(os.path.join(levelcfg.CONTENT, 'exam-3-%s.json' % part), encoding='utf-8')))
+        src.update(json.load(open(os.path.join(levelcfg.CONTENT, 'exam-%d-%s.json' % (LV, part)), encoding='utf-8')))
 else:
     src = json.load(open(os.path.join(levelcfg.CONTENT, 'exam-%d.json' % LV), encoding='utf-8'))
 
@@ -234,9 +234,87 @@ def build_l3():
     print('wrote data/hsk3-exam.js: %d questions in the bank' % n)
 
 
+def build_l4():
+    from pypinyin import lazy_pinyin, Style
+    out = {}
+    # L1: a short passage and a printed sentence: does the sentence match what was said?
+    out['L1'] = []
+    for e in src['L1']:
+        out['L1'].append(dict(say=say(e['say']), st=dict(zh=e['st'][0], py=py(e['st'][0]), en=e['st'][1]), ok=bool(e['ok'])))
+    if sum(1 for e in out['L1'] if e['ok']) < 8 or sum(1 for e in out['L1'] if not e['ok']) < 8:
+        die('L1 needs at least 8 true and 8 false items')
+    # L2: a two-line conversation, a question and four answers (the first is right); L3: a longer conversation or a short passage
+    for part, nlines, least in (('L2', (2,), 15), ('L3', (1, 2, 3, 4), 20)):
+        out[part] = []
+        for i in src[part]:
+            if len(i['opts']) != 4 or len(set(i['opts'])) != 4 or len(i['say']) not in nlines:
+                die('%s needs %s lines and 4 different options: %s' % (part, nlines, i['q']['zh']))
+            out[part].append(dict(say=say(i['say']), q=dict(zh=i['q']['zh'], py=py(i['q']['zh']), en=i['q']['en']), opts=[dict(zh=o, py=py(o)) for o in i['opts']]))
+        if len(out[part]) < least:
+            die('%s needs at least %d items' % (part, least))
+    # R1: six words, five blanks (one word is not used)
+    out['R1'] = []
+    for st in src['R1']:
+        if len(st['opts']) != 6 or len(set(st['opts'])) != 6 or len(st['items']) != 5 or len(set(i['ans'] for i in st['items'])) != 5:
+            die('R1 set must have 6 words and five blanks, each with a different answer')
+        items = []
+        for i in st['items']:
+            if i['zh'].count('___') != 1:
+                die('R1 sentence needs exactly one blank: ' + i['zh'])
+            full = i['zh'].replace('___', st['opts'][i['ans']])
+            items.append(dict(zh=i['zh'], full=full, py=py(full), en=i['en'], ans=i['ans']))
+        out['R1'].append(dict(opts=[dict(zh=o, py=eng.word_py(o)) for o in st['opts']], items=items))
+    # R2: three pieces of a text to put in order (tapped, like the HSK 3 word-order practice)
+    out['R2'] = []
+    for e in src['R2']:
+        main = ''.join(e['words'])
+        if len(e['words']) != 3 or len(set(e['words'])) != 3:
+            die('R2 needs three different pieces: ' + main)
+        out['R2'].append(dict(words=e['words'], zh=main, alts=[], py=py(main), en=e['en']))
+    # R3: a passage, a question and four answers (the first is right)
+    out['R3'] = []
+    for e in src['R3']:
+        if len(e['opts']) != 4 or len(set(e['opts'])) != 4:
+            die('R3 needs 4 different options: ' + e['q']['zh'])
+        out['R3'].append(dict(zh=e['zh'], py=py(e['zh']), en=e['en'], q=dict(zh=e['q']['zh'], py=py(e['q']['zh']), en=e['q']['en']), opts=[dict(zh=o, py=py(o)) for o in e['opts']]))
+    if len(out['R3']) < 20:
+        die('R3 needs at least 20 items')
+    # W1: put the words in order (practice, typed or tapped)
+    out['W1'] = []
+    for e in src['W1']:
+        main = ''.join(e['words'])
+        alts = [''.join(a) for a in e.get('alts', [])]
+        for a in e.get('alts', []):
+            if sorted(a) != sorted(e['words']):
+                die('W1 alternative must use the same words: ' + main)
+        if len(e['words']) < 4 or main in alts:
+            die('W1 needs at least 4 words and a different order for each alternative: ' + main)
+        out['W1'].append(dict(words=e['words'], zh=main, alts=alts, py=py(main), en=e['en']))
+    # W2: write the missing character; the pinyin hint comes from pypinyin and must appear in the sentence's own pinyin
+    out['W2'] = []
+    for e in src['W2']:
+        if e['zh'].count('___') != 1 or len(e['ans']) != 1:
+            die('W2 needs one blank and a one-character answer: ' + e['zh'])
+        full = e['zh'].replace('___', e['ans'])
+        hint = lazy_pinyin(e['ans'], style=Style.TONE, v_to_u=True)[0]
+        sentence_py = py(full)
+        if hint.lower() not in sentence_py.lower().replace(' ', ''):
+            die('W2 pinyin hint %s for %s is not in the sentence pinyin: %s' % (hint, e['ans'], sentence_py))
+        out['W2'].append(dict(zh=e['zh'], full=full, ans=e['ans'], hint=hint, py=sentence_py, en=e['en']))
+    meta = dict(listening=dict(questions=45, minutes=35), reading=dict(questions=40, minutes=40), writing=dict(questions=15, minutes=25))
+    n = len(out['L1']) + len(out['L2']) + len(out['L3']) + sum(len(x['items']) for x in out['R1']) + len(out['R2']) + len(out['R3']) + len(out['W1']) + len(out['W2'])
+    with open(levelcfg.data_path('exam'), 'w', encoding='utf-8') as f:
+        f.write('/* HSK 4 mock exam question bank for Shanlu. GENERATED by tools/build-exam.py from content/l4/exam-4-*.json. Do not edit by hand.\n')
+        f.write(' * Modelled on the HSK 4 sample papers of the 2012 (HSK 2.0) test: listening 10 + 15 + 20, reading 10 + 10 + 20, writing 10 + 5. The layout of the 2025 test was not available to me. There are no pictures at this level. AI-written, not reviewed by a teacher. */\n')
+        f.write('window.HSK4_EXAM = ' + json.dumps(dict(meta=meta, **out), ensure_ascii=False, indent=1) + ';\n')
+    print('wrote data/hsk4-exam.js: %d questions in the bank' % n)
+
+
 if LV == 1:
     build_l1()
 elif LV == 2:
     build_l2()
+elif LV == 4:
+    build_l4()
 else:
     build_l3()

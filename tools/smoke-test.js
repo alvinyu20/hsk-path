@@ -87,7 +87,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
       for (let i = 0; i < n; i++) { const o = q.options[i]; if ((o.id === q.correct) === right) { target = i; break; } }
       await opts.nth(target).click();
     }
-    await page.locator('button', { hasText: 'Check' }).click();
+    await page.locator('button', { hasText: /^\s*Check\s*$/ }).click();
     await page.waitForTimeout(40);
     return q;
   };
@@ -311,7 +311,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     const q = await page.evaluate(() => { const x = window.shanlu.quizQs[0]; return { type: x.type, correct: x.options && x.options.find(op => op.id === x.correct).label, py: x.exp && x.exp.py, wrong: x.options && x.options.find(op => op.id !== x.correct).label }; });
     if (q.type === 'type') await page.fill('#answer-input', o.right ? q.py : 'zzz');
     else await page.locator('.opts .opt', { hasText: o.right ? q.correct : q.wrong }).first().click();
-    await page.locator('button', { hasText: 'Check' }).click();
+    await page.locator('button', { hasText: /^\s*Check\s*$/ }).click();
     await page.locator('button', { hasText: 'Continue' }).click();
     return st.kind;
   };
@@ -515,7 +515,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(moved, 'Another clip gives a different clip');
   const typedAns = await page.evaluate(() => window.HSK1_LISTEN.clips[window.shanlu.state.dclip].words.map(w => w.key).join(' '));
   await page.fill('#dict-input', typedAns);
-  await page.locator('button', { hasText: 'Check' }).click();
+  await page.locator('button', { hasText: /^\s*Check\s*$/ }).click();
   await page.waitForTimeout(150);
   check(/(\d+) of \1 words caught/.test(await text()), 'dictation scores a correct answer');
   await shot('07-listening');
@@ -969,7 +969,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     seen[info.kind] = true;
     if (info.kind === 'type') {   // first without tones: close but not right; then right
       await page.fill('#answer-input', await page.evaluate(() => window.shanlu.quizQs[0].exp.py.replace(/[^a-züǖ\s]/gi, (c) => c.normalize('NFD').replace(/[̀-ͯ]/g, ''))));
-      await page.locator('button', { hasText: 'Check' }).click();
+      await page.locator('button', { hasText: /^\s*Check\s*$/ }).click();
       const fb = await page.locator('.fb').innerText();
       if (!seen.noTone) { seen.noTone = /close/i.test(fb) && /tones count/i.test(fb); }
       await page.locator('button', { hasText: 'Continue' }).click();

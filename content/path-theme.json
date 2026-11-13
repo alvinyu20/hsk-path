@@ -546,6 +546,265 @@
           "tile": "spring"
         }
       }
+    },
+    "4": {
+      "kind": "terms",
+      "name": "A year in 24 terms",
+      "tag": "节气 jiéqì",
+      "blurb": "A year in China follows the 24 solar terms, from the start of spring to the great cold. Each unit is one term, and the dates move by a day from year to year.",
+      "hero": "terms-hero",
+      "seasons": [
+        {
+          "id": "spring",
+          "zh": "春",
+          "title": "Spring",
+          "sub": "Arrive and settle in",
+          "from": "h4u1",
+          "to": "h4u6",
+          "scene": "terms-spring",
+          "line": "You arrive as the thaw begins, meet your neighbours and make a home.",
+          "bg": [
+            "#E4F1DF",
+            "#F6F3E1"
+          ]
+        },
+        {
+          "id": "summer",
+          "zh": "夏",
+          "title": "Summer",
+          "sub": "The city and work",
+          "from": "h4u7",
+          "to": "h4u12",
+          "scene": "terms-summer",
+          "line": "Heat, crowds and noodles. You learn the city and start a job.",
+          "bg": [
+            "#D6EEF0",
+            "#FBF3D8"
+          ]
+        },
+        {
+          "id": "autumn",
+          "zh": "秋",
+          "title": "Autumn",
+          "sub": "Study, friends, feelings",
+          "from": "h4u13",
+          "to": "h4u18",
+          "scene": "terms-autumn",
+          "line": "Clear skies and a full diary: school, sport, friends and what everyone feels.",
+          "bg": [
+            "#F7E0C2",
+            "#FBEFD9"
+          ]
+        },
+        {
+          "id": "winter",
+          "zh": "冬",
+          "title": "Winter",
+          "sub": "Ideas and long sentences",
+          "from": "h4u19",
+          "to": "h4u24",
+          "scene": "terms-winter",
+          "line": "Short days and longer sentences: why, if, even if, and however.",
+          "bg": [
+            "#DCE7F1",
+            "#F0F4F8"
+          ]
+        }
+      ],
+      "units": {
+        "h4u1": {
+          "zh": "立春",
+          "py": "lì chūn",
+          "en": "Spring begins",
+          "date": "4 Feb",
+          "scene": "Your first day. The street is quiet, and everyone says hello.",
+          "tile": "spring"
+        },
+        "h4u2": {
+          "zh": "雨水",
+          "py": "yǔ shuǐ",
+          "en": "Rain water",
+          "date": "19 Feb",
+          "scene": "Rain on the window, and new neighbours at the door.",
+          "tile": "spring2"
+        },
+        "h4u3": {
+          "zh": "惊蛰",
+          "py": "jīng zhé",
+          "en": "Insects wake",
+          "date": "5 Mar",
+          "scene": "The first thunder wakes everything up. You start counting prices.",
+          "tile": "spring"
+        },
+        "h4u4": {
+          "zh": "春分",
+          "py": "chūn fēn",
+          "en": "Spring equinox",
+          "date": "20 Mar",
+          "scene": "Day and night are the same length. You unpack and make a home.",
+          "tile": "spring2"
+        },
+        "h4u5": {
+          "zh": "清明",
+          "py": "qīng míng",
+          "en": "Clear and bright",
+          "date": "4 Apr",
+          "scene": "A day off in the fresh air, and a good moment to sort out your time.",
+          "tile": "spring"
+        },
+        "h4u6": {
+          "zh": "谷雨",
+          "py": "gǔ yǔ",
+          "en": "Grain rain",
+          "date": "20 Apr",
+          "scene": "Soft rain for the fields. The hills are green and the air is warm.",
+          "tile": "spring2"
+        },
+        "h4u7": {
+          "zh": "立夏",
+          "py": "lì xià",
+          "en": "Summer begins",
+          "date": "5 May",
+          "scene": "The first hot days: cold drinks, street food and long dinners.",
+          "tile": "summer"
+        },
+        "h4u8": {
+          "zh": "小满",
+          "py": "xiǎo mǎn",
+          "en": "Grain fills",
+          "date": "21 May",
+          "scene": "The markets are full. You pay, you bargain, you book a table.",
+          "tile": "summer2"
+        },
+        "h4u9": {
+          "zh": "芒种",
+          "py": "máng zhòng",
+          "en": "Grain in ear",
+          "date": "6 Jun",
+          "scene": "Busy fields and busy shops. You try on clothes and compare.",
+          "tile": "summer"
+        },
+        "h4u10": {
+          "zh": "夏至",
+          "py": "xià zhì",
+          "en": "Summer solstice",
+          "date": "21 Jun",
+          "scene": "The longest day. You walk all over the city and learn to ask the way.",
+          "tile": "summer2"
+        },
+        "h4u11": {
+          "zh": "小暑",
+          "py": "xiǎo shǔ",
+          "en": "Minor heat",
+          "date": "7 Jul",
+          "scene": "Hot stations, long queues, tickets and a visa form.",
+          "tile": "summer"
+        },
+        "h4u12": {
+          "zh": "大暑",
+          "py": "dà shǔ",
+          "en": "Major heat",
+          "date": "22 Jul",
+          "scene": "The hottest days of the year. Your new job begins.",
+          "tile": "summer2"
+        },
+        "h4u13": {
+          "zh": "立秋",
+          "py": "lì qiū",
+          "en": "Autumn begins",
+          "date": "7 Aug",
+          "scene": "Evenings cool down. Phones light up, and free time fills with fun.",
+          "tile": "autumn"
+        },
+        "h4u14": {
+          "zh": "处暑",
+          "py": "chǔ shǔ",
+          "en": "End of heat",
+          "date": "23 Aug",
+          "scene": "The heat ends. You start running and look after your body.",
+          "tile": "autumn2"
+        },
+        "h4u15": {
+          "zh": "白露",
+          "py": "bái lù",
+          "en": "White dew",
+          "date": "8 Sep",
+          "scene": "Dew on the grass, and a new school term.",
+          "tile": "autumn"
+        },
+        "h4u16": {
+          "zh": "秋分",
+          "py": "qiū fēn",
+          "en": "Autumn equinox",
+          "date": "23 Sep",
+          "scene": "Day and night are equal again. You say what you think.",
+          "tile": "autumn2"
+        },
+        "h4u17": {
+          "zh": "寒露",
+          "py": "hán lù",
+          "en": "Cold dew",
+          "date": "8 Oct",
+          "scene": "Cooler nights and warmer friends: feelings, gifts and parties.",
+          "tile": "autumn"
+        },
+        "h4u18": {
+          "zh": "霜降",
+          "py": "shuāng jiàng",
+          "en": "Frost falls",
+          "date": "23 Oct",
+          "scene": "The first frost. You help, you give, you finish what you started.",
+          "tile": "autumn2"
+        },
+        "h4u19": {
+          "zh": "立冬",
+          "py": "lì dōng",
+          "en": "Winter begins",
+          "date": "7 Nov",
+          "scene": "Dumplings on every table. A good time to change something.",
+          "tile": "winter"
+        },
+        "h4u20": {
+          "zh": "小雪",
+          "py": "xiǎo xuě",
+          "en": "Minor snow",
+          "date": "22 Nov",
+          "scene": "A little snow. What is good, what is bad, what is right.",
+          "tile": "winter2"
+        },
+        "h4u21": {
+          "zh": "大雪",
+          "py": "dà xuě",
+          "en": "Major snow",
+          "date": "7 Dec",
+          "scene": "Deep snow makes everything look different, and you find words for it.",
+          "tile": "winter"
+        },
+        "h4u22": {
+          "zh": "冬至",
+          "py": "dōng zhì",
+          "en": "Winter solstice",
+          "date": "21 Dec",
+          "scene": "The longest night. You are sure of some things and not of others.",
+          "tile": "winter2"
+        },
+        "h4u23": {
+          "zh": "小寒",
+          "py": "xiǎo hán",
+          "en": "Minor cold",
+          "date": "5 Jan",
+          "scene": "Cold and clear. You give reasons, and say what you would do if.",
+          "tile": "winter"
+        },
+        "h4u24": {
+          "zh": "大寒",
+          "py": "dà hán",
+          "en": "Major cold",
+          "date": "20 Jan",
+          "scene": "The last term of the year. You tie your ideas together.",
+          "tile": "winter2"
+        }
+      }
     }
   }
 }

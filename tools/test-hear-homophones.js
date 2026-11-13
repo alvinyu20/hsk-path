@@ -15,7 +15,7 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   await page.goto(url + '?level=3'); await page.waitForSelector('.app'); await page.waitForTimeout(400);
   const res = await page.evaluate(() => {
     const a = window.shanlu; const keys = Object.keys(a.state.ws);
-    const W = [].concat(window.HSK1_WORDS || [], window.HSK2_WORDS || [], window.HSK3_WORDS || []); const by = {}; W.forEach((w) => { by[w.zh] = w; });
+    const W = [].concat(window.HSK1_WORDS || [], window.HSK2_WORDS || [], window.HSK3_WORDS || [], window.HSK4_WORDS || []); const by = {}; W.forEach((w) => { by[w.zh] = w; });
     const sk = (py) => String(py || '').toLowerCase().split(/[\/,;]/).map((r) => r.replace(/[\s'’·\-]/g, '')).filter(Boolean);
     const alike = (x, y) => { const p = sk(by[x] && by[x].py); return sk(by[y] && by[y].py).some((r) => p.indexOf(r) >= 0); };
     let n = 0; const bad = []; let homoWords = 0;

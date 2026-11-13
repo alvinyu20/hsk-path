@@ -6,7 +6,7 @@ const { chromium } = require('playwright');
 
 const root = path.join(__dirname, '..');
 const erhuaMode = process.argv.includes('--erhua');
-const server = require('./test-static').server(root);
+const server = require('./test-static').server(root, { level4: true });   // level4: opens HSK 4 even before MAX_LEVEL is raised (does nothing once it is)
 
 let failures = 0;
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };
@@ -265,10 +265,10 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await ctx.close();
   }
 
-  // ================= HSK 2 and HSK 3 have their own paths
-  for (const [lv, units, stops] of [[2, 10, 72], [3, 17, 129]]) {
+  // ================= HSK 2, HSK 3 and HSK 4 have their own paths
+  for (const [lv, units, stops] of [[2, 10, 72], [3, 17, 129], [4, 24, 219]]) {
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
-    await ctx.addInitScript((a) => { try { localStorage.setItem('shanlu-passed', JSON.stringify(a.passed)); localStorage.setItem('shanlu-level', String(a.lv)); if (a.erhua) localStorage.setItem('shanlu-erhua', 'on'); } catch (e) {} }, { passed: lv === 2 ? { 1: 1 } : { 1: 1, 2: 1 }, lv, erhua: erhuaMode });
+    await ctx.addInitScript((a) => { try { localStorage.setItem('shanlu-passed', JSON.stringify(a.passed)); localStorage.setItem('shanlu-level', String(a.lv)); if (a.erhua) localStorage.setItem('shanlu-erhua', 'on'); } catch (e) {} }, { passed: lv === 2 ? { 1: 1 } : lv === 3 ? { 1: 1, 2: 1 } : { 1: 1, 2: 1, 3: 1 }, lv, erhua: erhuaMode });
     const page = await ctx.newPage(); watch(page);
     await page.goto(url + '?level=' + lv); await page.waitForSelector('.app'); await page.waitForTimeout(200);
     check(await page.evaluate(() => window.SHANLU_LEVEL) === lv, 'HSK ' + lv + ' is open');

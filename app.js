@@ -114,6 +114,7 @@
   // "HSK 1", "HSK 1 and HSK 2", "HSK 1, HSK 2 and HSK 3": the lists the learner knows (everything up to the highest level shown)
   const LV_NAMES = Array.from({ length:TOPL }, (_, i) => 'HSK ' + (i + 1));
   const KNOWN_LISTS = LV_NAMES.length < 2 ? LV_NAMES[0] : LV_NAMES.slice(0, -1).join(', ') + ' and ' + LV_NAMES[LV_NAMES.length - 1];
+  const listJoin = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];   // "HSK 1", "HSK 1 and HSK 2", "HSK 1, HSK 2 and HSK 3"
   const LVL = window.ShanluLevel || { MAX_LEVEL:LV, PASS_PCT:80, passedEntry:() => false, passedList:() => false, softLock:() => false, levelPassed:() => false, markPassed() {}, unlocked:() => true };
   const LV_DATA = (name) => window['HSK' + LV + '_' + name];
   // In "All levels" the content of every unlocked level is joined (HSK 1 first). Words are different in every level, so nothing is shared or duplicated.
@@ -820,7 +821,7 @@
     return { rm, wm, mastered, started, state, due, rDue, wDue, label:{ mastered:'Mastered', strong:'Strong', familiar:'Familiar', learning:'Learning', new:'New' }[state] };
   };
   const G_SYSTEM = [
-    'You check one sentence written by a learner of Chinese (HSK 1 to 3). Reply with JSON only.',
+    'You check one sentence written by a learner of Chinese (HSK 1 to 4). Reply with JSON only.',
     'You are given the English prompt, the grammar point being practised, and the learner\'s answer.',
     'The answer may be in Chinese characters or in pinyin. Pinyin is allowed to have no tones, no tone marks, no punctuation, no capital letters, and no spaces between syllables (niyoumeiyoushouji means ni you mei you shou ji). Work out the sentence the learner meant, and judge that sentence. Never fail an answer, and never mention tones, spacing, capitals or punctuation in the reason, because of how the pinyin is written.',
     'The grammar point name may list several patterns (for example "请, 一下 and 喂"). The sentence only has to use the pattern that the English prompt calls for, not all of them.',
@@ -920,7 +921,7 @@
 
   // ---------- Listening lab, Meaning: hear a clip, say what it means in English, the AI checks it ----------
   const M_SYSTEM = [
-    'A learner of Mandarin (HSK 1 to 3) heard a short Chinese sentence and typed what they think it means in English. Reply with JSON only.',
+    'A learner of Mandarin (HSK 1 to 4) heard a short Chinese sentence and typed what they think it means in English. Reply with JSON only.',
     'You are given the Chinese, its pinyin, one model English translation, and the learner\'s answer.',
     'Judge only whether the learner\'s English carries the meaning of the Chinese. The wording does not have to match the model: synonyms, contractions, missing articles, spelling slips and other natural phrasings are fine, and so is a different tense where the Chinese does not show tense.',
     '"pass": the meaning is right, even if worded differently. "close": the main idea is right but one part is missing or slightly off (for example a detail such as the time, the number, who does it, or a small word like 吗 that makes it a question). "fix": the meaning is wrong, or most of it is missing.',
@@ -1067,7 +1068,7 @@
     const nextN = 'HSK ' + (TOPL + 1);                        // the level the conversation may peek at
     const up = Object.keys(PV).length > 0;
     return [
-      'You are Mingming (明明), a friendly Mandarin conversation partner for an adult English-speaking beginner who is studying for HSK ' + TOPL + (TOPL === 1 ? '' : ' (' + LV_NAMES.slice(0, -1).join(' and ') + ' words are known too)') + (up ? ' and is happy to see a little ' + nextN + ' as a preview.' : '.'),
+      'You are Mingming (明明), a friendly Mandarin conversation partner for an adult English-speaking beginner who is studying for HSK ' + TOPL + (TOPL === 1 ? '' : ' (' + listJoin(LV_NAMES.slice(0, -1)) + ' words are known too)') + (up ? ' and is happy to see a little ' + nextN + ' as a preview.' : '.'),
       'Speak Simplified Chinese. Use mainly words from this ' + known + ' word list (plus punctuation and numbers): ' + KB_KEYS.join(' ') + '.',
       up ? 'You may also use a few words from this ' + nextN + ' list as a gentle preview, at most one or two in a reply, when they make the conversation more natural and realistic or let you cover more everyday situations (cafés, travel, directions, hobbies, health, school, work): ' + Object.keys(PV).join(' ') + '. Never use a word that is on neither list.' : 'Never use a word that is not on the list.',
       'If you need a word that is ' + (up ? 'on neither list' : 'not on the list') + ', say it another way with listed words. Never write pinyin in the Chinese. When you say your own name, say 我叫明明 (the standard way to give a name), not 我是明明. ' + LSN_LEVELS[lsnLvl() - 1].spec + ' Ask at most one simple question, so the learner can answer.',
@@ -1245,7 +1246,17 @@
     W1:{ sec:'writing', n:1, inst:'Tap the words in the right order to make a sentence. Tap a word again to take it back.' },
     W2:{ sec:'writing', n:2, inst:'Type the missing character. The pinyin under the sentence tells you how it sounds.' }
   };
-  const PART = LV === 1 ? PART_1 : LV === 2 ? PART_2 : PART_3;
+  const PART_4 = {
+    L1:{ sec:'listening', n:1, inst:'Listen to the passage. Does the sentence on the screen match what you heard?' },
+    L2:{ sec:'listening', n:2, inst:'Listen to the short conversation and the question. Choose the answer.' },
+    L3:{ sec:'listening', n:3, inst:'Listen to the longer conversation and the question. Choose the answer.' },
+    R1:{ sec:'reading', n:1, inst:'Choose the word that fills the blank.' },
+    R2:{ sec:'reading', n:2, inst:'Tap the three pieces in the right order to make a sentence. Tap a piece again to take it back.' },
+    R3:{ sec:'reading', n:3, inst:'Read the passage. Choose the answer to the question.' },
+    W1:{ sec:'writing', n:1, inst:'Tap the words in the right order to make a sentence. Tap a word again to take it back.' },
+    W2:{ sec:'writing', n:2, inst:'Type the missing character. The pinyin under the sentence tells you how it sounds.' }
+  };
+  const PART = LV === 1 ? PART_1 : LV === 2 ? PART_2 : LV === 3 ? PART_3 : PART_4;
   const LETTERS = 'ABCDEF';
   const pickN = (arr, n) => shuffleArr(arr).slice(0, n);
   function shuffleArr(arr) { const x = arr.slice(); for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = x[i]; x[i] = x[j]; x[j] = t; } return x; }
@@ -1304,9 +1315,35 @@
     }
     return out;
   };
+  // HSK 4: listening 10 + 15 + 20, reading 10 + 10 + 20 (the layout of the 2012 HSK 4 sample papers; every question has four choices); writing practice 10 + 5
+  const examQsL4 = (sec) => {
+    const out = [];
+    const add = (part, q) => { out.push(Object.assign({ part, id:part + '-' + out.length, sec:PART[part].sec }, q)); };
+    const E = EXAMBANK;
+    const sayRev = (lines, q) => ({ zh:lines.map(l => l.zh).join(' ') + (q ? ' ' + q.zh : ''), py:lines.map(l => l.py).join(' ') + (q ? ' ' + q.py : ''), en:lines.map(l => l.en).join(' ') + (q ? ' ' + q.en : '') });
+    // a conversation, a question, four choices (the first one in the bank is the right one; the order is shuffled)
+    const textQ = (part, bank, n) => pickN(bank, n).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add(part, { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:sayRev(e.say, e.q), right:e.opts[0].zh }); });
+    const tfOpts = [{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }];
+    if (sec === 'listening') {
+      pickTFn(E.L1, 10).forEach(e => add('L1', { kind:'tf', text:e.st.zh, audio:audioOf(e.say), ans:e.ok ? 'T' : 'F', opts:tfOpts,
+        rev:{ zh:e.say.map(l => l.zh).join(' ') + ' / ' + e.st.zh, py:e.say.map(l => l.py).join(' ') + ' / ' + e.st.py, en:e.say.map(l => l.en).join(' ') + ' / ' + e.st.en }, right:e.ok ? 'It matches' : 'It does not match' }));
+      textQ('L2', E.L2, 15);
+      textQ('L3', E.L3, 20);
+    } else if (sec === 'reading') {
+      pickN(E.R1, 2).forEach(st => { const p1 = shuffleArr([0, 1, 2, 3, 4, 5]); st.items.forEach(it => add('R1', { kind:'match', text:it.zh, opts:p1.map((k, j) => ({ v:j, label:st.opts[k].zh })), ans:p1.indexOf(it.ans), rev:{ zh:it.full, py:it.py, en:it.en }, right:st.opts[it.ans].zh })); });
+      // three pieces of a sentence, tapped in order (never shown already in the right order)
+      pickN(E.R2, 10).forEach(e => { let order; const said = (o) => o.map(k => e.words[k]).join(''); do { order = shuffleArr(e.words.map((w, k) => k)); } while (said(order) === e.zh || (e.alts || []).indexOf(said(order)) >= 0); add('R2', { kind:'order', opts:order.map((k, j) => ({ v:j, label:e.words[k] })), ans:e.zh, alts:e.alts, rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.zh }); });
+      pickN(E.R3, 20).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); add('R3', { kind:'text', text:e.zh + '\n' + e.q.zh, opts:order.map((k, j) => ({ v:j, label:e.opts[k].zh })), ans:order.indexOf(0), rev:{ zh:e.zh + ' ' + e.q.zh, py:e.py + ' ' + e.q.py, en:e.en + ' ' + e.q.en }, right:e.opts[0].zh }); });
+    } else {
+      pickN(E.W1, 10).forEach(e => { let order; const said = (o) => o.map(k => e.words[k]).join(''); do { order = shuffleArr(e.words.map((w, k) => k)); } while (said(order) === e.zh || (e.alts || []).indexOf(said(order)) >= 0); add('W1', { kind:'order', opts:order.map((k, j) => ({ v:j, label:e.words[k] })), ans:e.zh, alts:e.alts, rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.zh }); });
+      pickN(E.W2, 5).forEach(e => add('W2', { kind:'type', text:e.zh, hint:e.hint, opts:[], ans:e.ans, rev:{ zh:e.full, py:e.py, en:e.en }, right:e.ans }));
+    }
+    return out;
+  };
   const examQs = (sec) => {
     if (LV === 2) return examQsL2(sec);
     if (LV === 3) return examQsL3(sec);
+    if (LV === 4) return examQsL4(sec);
     const out = [];
     const add = (part, q) => { out.push(Object.assign({ part, id:part + '-' + out.length, sec:PART[part].sec }, q)); };
     const E = EXAMBANK;
@@ -3437,7 +3474,7 @@
         acctEditing:!!S.acctEdit, acctNameIn:String(S.acctNameIn || ''), onAcctName:(e) => this.setState({ acctNameIn:e.target.value }),
         acctEditOpen:this.acctEditOpen, acctCancel:this.acctCancel, acctSave:this.acctSave,
         devOpen:!!S.devOpen, devExpanded:S.devOpen ? 'true' : 'false', devToggleText:S.devOpen ? 'Hide' : 'Show', toggleDev:() => this.setState({ devOpen:!this.state.devOpen }),
-        acctStamps:[1, 2, 3].filter(n => n <= (LVL.MAX_LEVEL || 3)).map(n => { const done = !!LVL.levelPassed(n); const cur = !done && n === LV; return { zh:'一二三四五六'.charAt(n - 1), cls:done ? 'got' : (cur ? 'cur' : 'no'), label:done ? 'HSK ' + n + ' passed' : (cur ? 'In progress' : 'Ahead') }; }),
+        acctStamps:[1, 2, 3, 4].filter(n => n <= (LVL.MAX_LEVEL || 4)).map(n => { const done = !!LVL.levelPassed(n); const cur = !done && n === LV; return { zh:'一二三四五六'.charAt(n - 1), cls:done ? 'got' : (cur ? 'cur' : 'no'), label:done ? 'HSK ' + n + ' passed' : (cur ? 'In progress' : 'Ahead') }; }),
         acctStats:[
           stat('Day streak', String(c.streak)), stat('Coins', c.coins), stat('Words in memory', String(c.mem)), stat('Words started', c.started + ' of ' + c.total),
           stat('Path stops done', PATH_LVLS.length ? stopsDone + ' of ' + stopsAll : 'None yet'), stat('Grammar lessons passed', gPassed + ' of ' + LESSONS.length)
@@ -3461,7 +3498,7 @@
         let nTotal = 0, nDone = 0, wTotal = 0, wStart = 0;
         us.forEach(u => u.stops.forEach(st => { nTotal++; if (stopState(S, st) === 'done') nDone++; stopWords(st).forEach(z => { wTotal++; if (wStarted(S, z)) wStart++; }); }));
         out.pthName = 'HSK ' + lv + ' path'; out.pthBlurb = (PATH[lv] || {}).blurb || '';
-        const th = (PATH[lv] || {}).theme || null;     // the look of this level: a day in a city (HSK 1), a rail line (HSK 2), a semester of chapters (HSK 3)
+        const th = (PATH[lv] || {}).theme || null;     // the look of this level: a day in a city (HSK 1), a rail line (HSK 2), a semester of chapters (HSK 3), a year of 24 solar terms (HSK 4)
         if (th) {
           out.pthKCls = 'k-' + th.kind; out.pthName = th.name; out.pthBlurb = th.blurb; out.pthHasTag = true; out.pthTag = 'HSK ' + lv + ' · ' + th.tag;
           out.pthHeroImg = PSCENE[th.hero] || ''; out.pthHasHero = !!out.pthHeroImg;
@@ -3490,7 +3527,7 @@
           out.pthNextGo = () => this.pathStart(nxt.st.id);
         }
         const unitDone = us.map(u => u.stops.every(st => stopState(S, st) === 'done'));
-        if (th && th.kind === 'rail') out.pthRailPct = (us.length > 1 ? Math.round(Math.min(unitDone.filter(Boolean).length, us.length - 1) / (us.length - 1) * 100) : 0) + '%';
+        if (th && (th.kind === 'rail' || th.kind === 'terms')) out.pthRailPct = (us.length > 1 ? Math.round(Math.min(unitDone.filter(Boolean).length, us.length - 1) / (us.length - 1) * 100) : 0) + '%';
         const seenGroup = {};
         out.pthUnits = us.map((u, ui) => {
           const states = u.stops.map(st => stopState(S, st));
@@ -3503,10 +3540,10 @@
           const nd = states.filter(x => x === 'done').length;
           const open = S.pu[u.id] !== undefined ? S.pu[u.id] : (!!nxt && (ui === nxt.ui || ui === nxt.ui + 1));
           return {
-            id:u.id, num:th0 === 'rail' && tu ? tu.ch : ui + 1, numCls:th0 === 'rail' ? 'zh big' : '', title:u.title, blurb:u.blurb, prog:nd + ' of ' + u.stops.length, open, cls:(nd === u.stops.length ? 'done' : nxt && ui === nxt.ui ? 'cur' : ''),
+            id:u.id, num:th0 === 'rail' && tu ? tu.ch : th0 === 'terms' && tu ? tu.zh : ui + 1, numCls:th0 === 'rail' ? 'zh big' : th0 === 'terms' ? 'zh term' : '', title:u.title, blurb:u.blurb, prog:nd + ' of ' + u.stops.length, open, cls:(nd === u.stops.length ? 'done' : nxt && ui === nxt.ui ? 'cur' : ''),
             trailStyle:tu && PTILE[tu.tile] ? 'background-image:url("' + PTILE[tu.tile] + '"),linear-gradient(180deg,' + ((tu.bg || (grp && grp.bg) || ['#EDF0EC', '#EDF0EC'])[0]) + ',' + ((tu.bg || (grp && grp.bg) || ['#EDF0EC', '#EDF0EC'])[1]) + ')' : '',
-            hasKick:!!tu && th0 !== '', kick:!tu ? '' : th0 === 'day' ? tu.time : th0 === 'rail' ? 'Station ' + (ui + 1) + ' · ' + tu.py : 'Chapter ' + (ui + 1) + ' · ' + (tu.place || ''),
-            hasScene:th0 === 'day' && !!tu && !!tu.scene, scene:tu && tu.scene || '',
+            hasKick:!!tu && th0 !== '', kick:!tu ? '' : th0 === 'day' ? tu.time : th0 === 'rail' ? 'Station ' + (ui + 1) + ' · ' + tu.py : th0 === 'terms' ? tu.py + ' · ' + tu.en + ' · c. ' + tu.date : 'Chapter ' + (ui + 1) + ' · ' + (tu.place || ''),
+            hasScene:(th0 === 'day' || th0 === 'terms') && !!tu && !!tu.scene, scene:tu && tu.scene || '',
             hasBand:first, bandImg:grp && PSCENE[grp.scene] || '', bandZh:grp && grp.zh || '', bandTitle:grp ? (grp.sub ? grp.title + ' · ' + grp.sub : grp.title) : '', bandSub:'', bandN:gN + (gN === 1 ? ' unit' : ' units'), hasBandLine:!!grp && !!grp.line, bandLine:grp && grp.line || '',
             hasDlg:open && lines.length > 0, dlg:lines.map((l, li) => ({ who:l.who, zh:l.zh, py:l.py, en:l.en, cls:l.who === '你' ? 'me' : '', playCls:S.playing === 'pd:' + u.id + li ? 'on' : '', say:() => this.say(l.zh, 'pd:' + u.id + li) })),
             isDone:nd === u.stops.length, toggleText:open ? 'Hide' : 'Show', toggle:() => this.pathUnitToggle(u.id, !open),
@@ -3887,7 +3924,7 @@
         out.pyInis = PY_INIS.map(i => ({ label:i === '·' ? 'none' : i, cls:S.pyIni === i ? 'on' : '', pick:() => this.pyChartIni(i) }));
         const names = Object.keys(cur).sort();
         out.pyChartNote = (S.pyIni === 'y' ? 'y is how a syllable that starts with an i or ü sound is written (yi, ya, yue). ' : S.pyIni === 'w' ? 'w is how a syllable that starts with a u sound is written (wu, wo, wei). ' : S.pyIni === '·' ? 'Syllables with no initial: they start straight with the final. ' : '')
-          + names.length + ' syllable' + (names.length === 1 ? '' : 's') + ' with this initial in HSK 1 to 3.';
+          + names.length + ' syllable' + (names.length === 1 ? '' : 's') + ' with this initial in HSK 1 to 4.';
         out.pySylls = names.map(n => ({ name:n.replace(/v/g, 'ü'), tones:[1, 2, 3, 4].map(t => {
           const e = cur[n][t]; const key = e ? 'py:chart:' + e.key : '';
           if (!e) return { cls:'off', mark:toMarks(n + t), zh:'·', label:n + t + ': no character in the lists', play:() => {} };
@@ -4953,16 +4990,16 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrv:() => this.go('greview'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
         hasDue:revBadgeN > 0, dueCount:revBadgeN,
         exTitle:LVN + ' mock exam',
-        exIntro:LV === 1 ? 'Built like the official HSK 1 sample papers: 20 listening and 20 reading questions in four parts each, about 35 minutes. No hints and no pinyin while you answer. Each exam is drawn from a bank of 120+ questions, so it is different every time.' : LV === 3 ? 'Built like the HSK 3 sample papers of the 2012 test: 40 listening questions in four parts and 30 reading questions in three parts, about 65 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Writing is separate practice. Each exam is drawn from a bank of 130+ questions, so it is different every time.' : 'Built like the HSK 2 sample papers of the 2012 test: 35 listening and 25 reading questions in four parts each, about 47 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Each exam is drawn from a bank of 140+ questions, so it is different every time.',
+        exIntro:LV === 1 ? 'Built like the official HSK 1 sample papers: 20 listening and 20 reading questions in four parts each, about 35 minutes. No hints and no pinyin while you answer. Each exam is drawn from a bank of 120+ questions, so it is different every time.' : LV === 4 ? 'Built like the HSK 4 sample papers of the 2012 test: 45 listening questions in three parts and 40 reading questions in three parts, about 75 minutes. Every question has four choices. No hints and no pinyin while you answer (the real paper has pinyin). Writing is separate practice. Each exam is drawn from a bank of 150+ questions, so it is different every time.' : LV === 3 ? 'Built like the HSK 3 sample papers of the 2012 test: 40 listening questions in four parts and 30 reading questions in three parts, about 65 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Writing is separate practice. Each exam is drawn from a bank of 130+ questions, so it is different every time.' : 'Built like the HSK 2 sample papers of the 2012 test: 35 listening and 25 reading questions in four parts each, about 47 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Each exam is drawn from a bank of 140+ questions, so it is different every time.',
         exListenT:'Listening · ' + EXAM_N.listening + ' questions · ' + EXAM_MIN.listening + ' min',
-        exListenD:LV === 1 ? 'Part 1: does the picture match? Part 2: pick the picture for a sentence. Part 3: match five conversations to pictures. Part 4: a conversation, a question, three answers. Each clip can be played twice.' : LV === 3 ? 'Part 1 (10): match conversations to pictures. Part 2 (10): does the sentence match the passage? Part 3 (10): a short conversation, a question, three answers. Part 4 (10): a longer conversation, a question, three answers. Each clip can be played twice.' : 'Part 1 (10): does the picture match the sentence? Part 2 (10): match conversations to pictures. Part 3 (10): a short conversation, a question, three answers. Part 4 (5): a longer conversation, a question, three answers. Each clip can be played twice.',
+        exListenD:LV === 1 ? 'Part 1: does the picture match? Part 2: pick the picture for a sentence. Part 3: match five conversations to pictures. Part 4: a conversation, a question, three answers. Each clip can be played twice.' : LV === 4 ? 'Part 1 (10): does the sentence match the passage? Part 2 (15): a short conversation, a question, four answers. Part 3 (20): a longer conversation, a question, four answers. Each clip can be played twice.' : LV === 3 ? 'Part 1 (10): match conversations to pictures. Part 2 (10): does the sentence match the passage? Part 3 (10): a short conversation, a question, three answers. Part 4 (10): a longer conversation, a question, three answers. Each clip can be played twice.' : 'Part 1 (10): does the picture match the sentence? Part 2 (10): match conversations to pictures. Part 3 (10): a short conversation, a question, three answers. Part 4 (5): a longer conversation, a question, three answers. Each clip can be played twice.',
         exWriteT:HAS_WRITING ? 'Writing · ' + EXAM_N.writing + ' questions · ' + EXAM_MIN.writing + ' min · practice' : '',
-        exWriteD:'Part 1 (5): tap the words in the right order. Part 2 (5): type the missing character. Practice only: it does not count toward the 200 points or the seal.',
+        exWriteD:(LV === 4 ? 'Part 1 (10): tap the words in the right order. Part 2 (5): type the missing character.' : 'Part 1 (5): tap the words in the right order. Part 2 (5): type the missing character.') + ' Practice only: it does not count toward the 200 points or the seal.',
         exReadT:'Reading · ' + EXAM_N.reading + ' questions · ' + EXAM_MIN.reading + ' min',
-        exReadD:LV === 1 ? 'Part 1: does the picture match the words? Part 2: match five sentences to pictures. Part 3: match five questions to answers. Part 4: fill five blanks from a word list.' : LV === 3 ? 'Part 1 (10): choose the reply that fits each sentence. Part 2 (10): fill blanks from a word list. Part 3 (10): read a passage and answer a question.' : 'Part 1 (5): match sentences to pictures. Part 2 (5): fill blanks from a word list. Part 3 (5): do two sentences mean the same? Part 4 (10): match questions to answers.',
+        exReadD:LV === 1 ? 'Part 1: does the picture match the words? Part 2: match five sentences to pictures. Part 3: match five questions to answers. Part 4: fill five blanks from a word list.' : LV === 4 ? 'Part 1 (10): fill blanks from word lists. Part 2 (10): put three pieces in the right order to make a sentence. Part 3 (20): read a passage and answer a question with four choices.' : LV === 3 ? 'Part 1 (10): choose the reply that fits each sentence. Part 2 (10): fill blanks from a word list. Part 3 (10): read a passage and answer a question.' : 'Part 1 (5): match sentences to pictures. Part 2 (5): fill blanks from a word list. Part 3 (5): do two sentences mean the same? Part 4 (10): match questions to answers.',
         exCreditsOn:Object.keys(EXAM_MEDIA).length > 0, exCredits:Object.keys(EXAM_MEDIA).map(k => ({ a:EXAM_MEDIA[k].a, c:EXAM_MEDIA[k].c })),
-        exNote:LV === 1 ? 'The real test has pictures; here ' + EX_PICNOTE + '. The official 2025 test is said to have 20 listening questions (about 12 minutes of audio) and 20 reading questions (20 minutes); the part-by-part layout above is from the official sample papers and I could not confirm every detail of the 2025 version. Listening gets 15 minutes here because you press play yourself.' : LV === 3 ? 'The real test has pictures; here ' + EX_PICNOTE + '. This layout follows the 2012 (HSK 2.0) sample papers. I could not find the layout of the 2025 HSK band 3 exam, so it may differ. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand; here you tap and type, and the site cannot judge a hand-written character.' : 'The real test has pictures; here ' + EX_PICNOTE + '. This layout follows the 2012 (HSK 2.0) sample papers. I could not find the layout of the 2025 HSK band 2 exam, so it may differ. Listening gets 25 minutes because you press play yourself.',
-        exScore:(LV === 1 ? 'Each question is worth 5 points, so each section is out of 100 and the total out of 200.' : LV === 3 ? 'Each section is worth 100 points, shared evenly by its questions (listening 2.5 points a question, reading about 3.3), so the total is out of 200. Writing practice is not scored in points.' : 'Each section is worth 100 points, shared evenly by its questions (listening about 2.9 points a question, reading 4), so the total is out of 200.') + ' The official ' + LVN + ' pass mark is ' + (LV === 3 ? '180 of 300, which is 60% and so 120 of the 200 here' : '120 of 200') + ' (I am not sure whether the 2025 version changed it). This site\'s ' + LVN + ' seal is stricter: ' + LVL.PASS_PCT + '% in every section of one full exam, and it opens ' + (LV < LVL.MAX_LEVEL ? 'HSK ' + (LV + 1) : 'the next level') + '.',
+        exNote:LV === 4 ? 'The real test has no pictures in the sample papers I followed, and none here. This layout follows the 2012 (HSK 2.0) HSK 4 sample papers (45 listening, 40 reading, 15 writing questions). I could not find the layout of the 2025 HSK band 4 exam, so it may differ. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand; here you tap and type, and the site cannot judge a hand-written character or a free sentence.' : LV === 1 ? 'The real test has pictures; here ' + EX_PICNOTE + '. The official 2025 test is said to have 20 listening questions (about 12 minutes of audio) and 20 reading questions (20 minutes); the part-by-part layout above is from the official sample papers and I could not confirm every detail of the 2025 version. Listening gets 15 minutes here because you press play yourself.' : LV === 3 ? 'The real test has pictures; here ' + EX_PICNOTE + '. This layout follows the 2012 (HSK 2.0) sample papers. I could not find the layout of the 2025 HSK band 3 exam, so it may differ. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand; here you tap and type, and the site cannot judge a hand-written character.' : 'The real test has pictures; here ' + EX_PICNOTE + '. This layout follows the 2012 (HSK 2.0) sample papers. I could not find the layout of the 2025 HSK band 2 exam, so it may differ. Listening gets 25 minutes because you press play yourself.',
+        exScore:(LV === 1 ? 'Each question is worth 5 points, so each section is out of 100 and the total out of 200.' : LV === 4 ? 'Each section is worth 100 points, shared evenly by its questions (listening about 2.2 points a question, reading 2.5), so the total is out of 200. Writing practice is not scored in points.' : LV === 3 ? 'Each section is worth 100 points, shared evenly by its questions (listening 2.5 points a question, reading about 3.3), so the total is out of 200. Writing practice is not scored in points.' : 'Each section is worth 100 points, shared evenly by its questions (listening about 2.9 points a question, reading 4), so the total is out of 200.') + ' The official ' + LVN + ' pass mark is ' + (LV >= 3 ? '180 of 300, which is 60% and so 120 of the 200 here' : '120 of 200') + ' (I am not sure whether the 2025 version changed it). This site\'s ' + LVN + ' seal is stricter: ' + LVL.PASS_PCT + '% in every section of one full exam, and it opens ' + (LV < LVL.MAX_LEVEL ? 'HSK ' + (LV + 1) : 'the next level') + '.',
         chatVocab:KNOWN_LISTS + ' vocabulary only', lvName:LVN, nextLvName:'HSK ' + (TOPL + 1), lvIs1:TOPL === 1, lvIs2:TOPL !== 1, hasExamCard:!!EXAMBANK, noExamCard:!EXAMBANK,
         examCardTitle:ALL ? 'Level exams' : EXAMBANK ? LVN + ' level exam' : LVN + ' progress', examCardNote:ALL ? 'Each level has its own exam. Switch to that level in the header to take it; passing it opens the next level. The rings show your progress across all the levels shown here.' : EXAMBANK ? (LVL.levelPassed(LV) ? LVN + ' exam passed.' + (LV < LVL.MAX_LEVEL ? ' HSK ' + (LV + 1) + ' is open.' : '') : (LV < LVL.MAX_LEVEL ? 'Pass the full exam (' + LVL.PASS_PCT + '% in listening and in reading) to open HSK ' + (LV + 1) + '. The rings show how ready you are.' : 'Reach ' + LVL.PASS_PCT + '% in listening and in reading to pass.')) : 'The ' + LVN + ' level exam, listening lab and practice scripts are not built yet. These rings show the parts that are.',
         examBtnText:'See the ' + LVN + ' level exam',

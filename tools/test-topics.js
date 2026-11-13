@@ -3,7 +3,7 @@
 global.window = {};
 const fs = require('fs');
 const has = (f) => fs.existsSync(__dirname + '/../data/' + f + '.js');
-const LEVELS = [1, 2, 3].filter(n => has('hsk' + n + '-words') && has('hsk' + n + '-webs'));   // a level counts once its words and word webs are built
+const LEVELS = [1, 2, 3, 4].filter(n => has('hsk' + n + '-words') && has('hsk' + n + '-webs'));   // a level counts once its words and word webs are built
 for (const n of LEVELS) for (const f of ['words', 'webs']) eval(fs.readFileSync(__dirname + '/../data/hsk' + n + '-' + f + '.js', 'utf8'));
 let failures = 0;
 const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else console.log('ok  ', m); };
@@ -37,7 +37,7 @@ check(['多', '少', '一些', '一点儿'].every(z => topicsOf(z).includes('How
 check(topicsOf('下雨').includes('Weather') && topicsOf('冷').includes('Weather'), 'weather words are together');
 check(!master.some(t => t.words.includes('篮球') && t.words.some(z => ['猫', '狗', '忙', '晴', '商场'].includes(z))), 'sports are only grouped with sports-like words');
 // grammar categories (content/categories-grammar.json): every lesson of every level is in exactly one category
-const GL = [1, 2, 3].filter(n => has('hsk' + n + '-grammar'));
+const GL = [1, 2, 3, 4].filter(n => has('hsk' + n + '-grammar'));
 for (const n of GL) eval(fs.readFileSync(__dirname + '/../data/hsk' + n + '-grammar.js', 'utf8'));
 const cats = JSON.parse(fs.readFileSync(__dirname + '/../content/categories-grammar.json', 'utf8')).categories;
 const listed = cats.flatMap(c => c.lessons);

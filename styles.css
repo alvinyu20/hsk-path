@@ -147,12 +147,13 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--jade);outline-o
   .tbar{display:flex}
   .thead .h2{display:none}
 }
-.app{--lv1:#3B6EA8;--lv1s:#DDE9F5;--lv2:var(--jade);--lv2s:var(--jade-soft);--lv3:var(--amber);--lv3s:var(--amber-soft)}
-.app.t-dark{--lv1:#86B6E8;--lv1s:#1B3350}
+.app{--lv1:#3B6EA8;--lv1s:#DDE9F5;--lv2:var(--jade);--lv2s:var(--jade-soft);--lv3:var(--amber);--lv3s:var(--amber-soft);--lv4:#7A4A9A;--lv4s:#EADDF2}
+.app.t-dark{--lv1:#86B6E8;--lv1s:#1B3350;--lv4:#C9A0E6;--lv4s:#3A2548}
 .lvtag{flex:none;align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:.02em;line-height:1;padding:3px 7px;border-radius:99px;border:1px solid var(--lvc,var(--line));color:var(--lvc,var(--muted));background:transparent}
 .lvtag.l1{--lvc:var(--lv1);--lvs:var(--lv1s)}
 .lvtag.l2{--lvc:var(--lv2);--lvs:var(--lv2s)}
 .lvtag.l3{--lvc:var(--lv3);--lvs:var(--lv3s)}
+.lvtag.l4{--lvc:var(--lv4);--lvs:var(--lv4s)}
 .lab-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px}
 .lab-n{font-size:14px}
 .cliprow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:6px 0 4px}
@@ -407,6 +408,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--jade);outline-o
 .gp.rl1{box-shadow:inset 3px 0 0 var(--lv1)}
 .gp.rl2{box-shadow:inset 3px 0 0 var(--lv2)}
 .gp.rl3{box-shadow:inset 3px 0 0 var(--lv3)}
+.gp.rl4{box-shadow:inset 3px 0 0 var(--lv4)}
 .gp{display:flex;align-items:center;gap:12px;min-height:50px;padding:6px 14px;border-radius:14px;color:var(--muted);font-weight:600}
 .gn{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--panel2);color:var(--ink);font-size:14px;font-weight:700;flex:none}
 .gp.done{color:var(--ink)}
@@ -1915,6 +1917,25 @@ button.me .me-av{flex:none}
 .k-rail .pth-ent.done::before{background:var(--seal);border-color:var(--seal)}
 .k-rail .pth-ent.cur::before{border-color:var(--seal);box-shadow:0 0 0 6px rgba(194,54,43,.2)}
 .k-rail .pth-un .zh,.k-rail .pth-un{font-family:'Noto Serif SC',serif}
+/* HSK 4: a year in 24 solar terms: an almanac page, a thread of diamonds down the left, a red seal for each term */
+.k-terms .pth-head{background:linear-gradient(180deg,#FBF1DC,#F6E6C4);border-color:#E3CFA4;color:#3A2A14}
+.t-dark .k-terms .pth-head{background:#2A2216;border-color:var(--line);color:#F4E6C8}
+.k-terms .pth-head .h2{color:#3A2A14}
+.t-dark .k-terms .pth-head .h2{color:#F4E6C8}
+.k-terms .pth-head .muted{color:#6B5532}
+.t-dark .k-terms .pth-head .muted{color:#D9C69E}
+.k-terms .pth-tag{background:var(--seal);color:var(--on-seal)}
+.k-terms .pth-head .track{background:rgba(58,42,20,.15)}
+.t-dark .k-terms .pth-head .track{background:rgba(244,230,200,.2)}
+.k-terms .pth-list{padding-left:34px}
+.k-terms .pth-list::before{content:'';position:absolute;left:11px;top:34px;bottom:34px;width:4px;border-radius:99px;background:linear-gradient(var(--seal) var(--rail),transparent var(--rail)),repeating-linear-gradient(var(--line) 0 4px,transparent 4px 12px)}
+.k-terms .pth-ent::before{content:'';position:absolute;left:-30px;top:26px;width:14px;height:14px;box-sizing:border-box;transform:rotate(45deg);background:var(--panel);border:3px solid var(--line);z-index:1}
+.k-terms .pth-ent.done::before{background:var(--seal);border-color:var(--seal)}
+.k-terms .pth-ent.cur::before{border-color:var(--seal);box-shadow:0 0 0 5px rgba(194,54,43,.2)}
+.k-terms .pth-un.term{width:46px;height:46px;border-radius:10px;font:600 19px/1 'Noto Serif SC',serif;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:0;border:2px solid var(--seal);background:var(--panel);color:var(--seal)}
+.k-terms .pth-unit.cur .pth-un.term{background:var(--seal);color:var(--on-seal)}
+.k-terms .pth-unit.done .pth-un.term{background:var(--jade);border-color:var(--jade);color:var(--on-jade)}
+.k-terms .pth-band-zh{border-radius:10px;font-family:'Noto Serif SC',serif;background:var(--seal);color:var(--on-seal)}
 /* HSK 3: chapters with a short chat */
 .pth-dlg{display:flex;flex-direction:column;gap:10px;padding:2px 18px 14px}
 .pth-dl{display:flex;align-items:flex-start;gap:12px}
@@ -1928,7 +1949,7 @@ button.me .me-av{flex:none}
 .pth-hear .ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .pth-hear.on{background:var(--ink);color:var(--bg)}
 .pth-hear:hover{border-color:var(--ink)}
-@media (max-width:520px){.pth-head-b{padding:12px 14px;gap:8px}.pth-hero{height:120px}.pth-band-img{height:92px}.k-rail .pth-list{padding-left:34px}}
+@media (max-width:520px){.pth-head-b{padding:12px 14px;gap:8px}.pth-hero{height:120px}.pth-band-img{height:92px}.k-rail .pth-list{padding-left:34px}.k-terms .pth-list{padding-left:30px}.k-terms .pth-ent::before{left:-26px}.k-terms .pth-un.term{width:40px;height:40px;font-size:16px}}
 
 /* the wallpaper of a unit's trail (set per unit from the theme); a veil keeps the labels easy to read, and a stronger one in the dark theme */
 .pth-trail{background-size:100% auto,100% 100%;background-repeat:repeat-y,no-repeat;background-position:center top}

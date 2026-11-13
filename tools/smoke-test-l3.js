@@ -72,7 +72,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
       for (let i = 0; i < n; i++) { const o = q.options[i]; if ((o.id === q.correct) === right) { target = i; break; } }
       await opts.nth(target).click();
     }
-    await page.locator('button', { hasText: 'Check' }).click();
+    await page.locator('button', { hasText: /^\s*Check\s*$/ }).click();
     await page.waitForTimeout(30);
     return q;
   };
@@ -315,7 +315,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   const sys = calls[0].system;
   check(sys.includes('HSK 1, HSK 2 and HSK 3') && sys.includes('HSK 1 and HSK 2 words are known too'), 'the instructions name all three word lists');
   check(sys.includes('机场') && sys.includes('米饭') && sys.includes('聪明') && sys.includes('担心'), 'the instructions hold the HSK 1, HSK 2 and HSK 3 words');
-  check(!sys.includes('as a gentle preview'), 'there is no next level to preview, so the instructions do not offer one');
+  check(sys.includes('as a gentle preview') && sys.includes('HSK 4 list') && sys.includes('面试'), 'at HSK 3 the instructions allow a few HSK 4 words as a preview');
   const first = await page.locator('.msgs').innerText();
   check(first.includes('你担心考试吗？') && first.includes('Nǐ dānxīn kǎoshì ma?'), 'an HSK 3 word in the reply gets its pinyin from the HSK 3 list');
   check(!first.includes('preview') && !first.includes('no pinyin'), 'HSK 3 words are not flagged as a preview or as unknown at HSK 3');
@@ -355,7 +355,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     check(await pA.evaluate(() => window.SHANLU_LEVEL) === 0 && await pA.evaluate(() => window.SHANLU_LEVELS.join()) === '1,2,3', 'the address ?level=0 shows All levels with all three levels once HSK 3 is unlocked');
     check(await pA.evaluate(() => Object.keys(window.shanlu.state.ws).length === window.HSK1_WORDS.length + window.HSK2_WORDS.length + window.HSK3_WORDS.length), 'All levels holds the words of the three levels');
     check((await pA.locator('.lvbtn').innerText()).includes('All levels'), 'the All button is the selected one');
-    check((await openLv(pA), (await pA.locator('.lvpanel .lvitem .lvn').allInnerTexts()).join('|').replace(/\s+/g, '') === 'HSK1|HSK2|HSK3|Alllevels'), 'the Levels menu offers HSK 1, HSK 2, HSK 3 and All levels');
+    check((await openLv(pA), (await pA.locator('.lvpanel .lvitem .lvn').allInnerTexts()).join('|').replace(/\s+/g, '') === 'HSK1|HSK2|HSK3|HSK4|Alllevels'), 'the Levels menu offers HSK 1, HSK 2, HSK 3, HSK 4 (locked until HSK 3 is passed) and All levels');
     // grammar from three levels in one list
     await require('./test-nav').makeNav(pA)('Grammar');
     await pA.waitForTimeout(150);

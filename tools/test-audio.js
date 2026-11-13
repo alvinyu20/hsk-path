@@ -3,19 +3,19 @@
 const path = require('path'), fs = require('fs'), cp = require('child_process');
 const root = path.join(__dirname, '..');
 global.window = {};
-[1, 2, 3].forEach((n) => require(path.join(root, 'data', 'hsk' + n + '-words.js')));
+[1, 2, 3, 4].forEach((n) => require(path.join(root, 'data', 'hsk' + n + '-words.js')));
 let bad = 0;
 const fail = (m) => { bad++; console.log('FAIL', m); };
 const list = JSON.parse(cp.execSync('node ' + path.join(__dirname, 'audio-texts.js'), { maxBuffer: 1e8 }).toString());
 const has = new Set(list.map((e) => e.voice + '|' + e.text));
-[1, 2, 3].forEach((n) => window['HSK' + n + '_WORDS'].forEach((w) => {
+[1, 2, 3, 4].forEach((n) => window['HSK' + n + '_WORDS'].forEach((w) => {
   if (!has.has('f|' + w.zh)) fail('the word ' + w.zh + ' is not in the list to record');
   if (!has.has('f|' + w.ex.zh)) fail('the example of ' + w.zh + ' is not in the list to record');
 }));
 global.window = {};
-[1, 2, 3].forEach((n) => require(path.join(root, 'data', 'hsk' + n + '-exam.js')));
+[1, 2, 3, 4].forEach((n) => require(path.join(root, 'data', 'hsk' + n + '-exam.js')));
 let male = 0;
-[1, 2, 3].forEach((n) => { const E = window['HSK' + n + '_EXAM']; Object.keys(E).filter((k) => /^L\d/.test(k)).forEach((k) => JSON.stringify(E[k], (key, v) => { if (v && Array.isArray(v.say)) v.say.forEach((l) => { if (!has.has((l.s === '男' ? 'm' : 'f') + '|' + l.zh)) fail('exam line ' + l.zh + ' (' + l.s + ') is not in the list'); if (l.s === '男') male++; }); return v; })); });
+[1, 2, 3, 4].forEach((n) => { const E = window['HSK' + n + '_EXAM']; Object.keys(E).filter((k) => /^L\d/.test(k)).forEach((k) => JSON.stringify(E[k], (key, v) => { if (v && Array.isArray(v.say)) v.say.forEach((l) => { if (!has.has((l.s === '男' ? 'm' : 'f') + '|' + l.zh)) fail('exam line ' + l.zh + ' (' + l.s + ') is not in the list'); if (l.s === '男') male++; }); return v; })); });
 if (!male) fail('no man\'s lines were found in the exams');
 // the manifest: every file it names exists
 global.window = {};

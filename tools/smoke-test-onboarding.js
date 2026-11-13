@@ -31,7 +31,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     if (st.kind === 'intro') { await page.locator('button', { hasText: 'Got it, ask me soon' }).click(); return; }
     const q = await page.evaluate(() => { const x = window.shanlu.quizQs[0]; return { type: x.type, correct: x.options && x.options.find(op => op.id === x.correct).label, py: x.exp && x.exp.py }; });
     if (q.type === 'type') await page.fill('#answer-input', q.py); else await page.locator('.opts .opt', { hasText: q.correct }).first().click();
-    await page.locator('button', { hasText: 'Check' }).click();
+    await page.locator('button', { hasText: /^\s*Check\s*$/ }).click();
     await page.locator('button', { hasText: 'Continue' }).click();
   };
 

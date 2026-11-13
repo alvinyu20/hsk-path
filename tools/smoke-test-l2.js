@@ -84,7 +84,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
       for (let i = 0; i < n; i++) { const o = q.options[i]; if ((o.id === q.correct) === right) { target = i; break; } }
       await opts.nth(target).click();
     }
-    await page.locator('button', { hasText: 'Check' }).click();
+    await page.locator('button', { hasText: /^\s*Check\s*$/ }).click();
     await page.waitForTimeout(30);
     return q;
   };

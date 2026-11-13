@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Writes data/pinyin-chart.js: the sound chart of the pinyin course ("Pinyin" screen, Learn).
 
-For every syllable + tone that occurs in the HSK 1-3 word lists it picks ONE real character to say aloud, so the person can tap a syllable and hear it.
-The character must (a) be written in an HSK 1-3 word and (b) have exactly one reading in pypinyin's dictionary
-(so the browser voice cannot choose a different reading). Single-character HSK words come first, then HSK 1 words, then HSK 2, then HSK 3.
+For every syllable + tone that occurs in the HSK 1-4 word lists it picks ONE real character to say aloud, so the person can tap a syllable and hear it.
+The character must (a) be written in an HSK 1-4 word and (b) have exactly one reading in pypinyin's dictionary
+(so the browser voice cannot choose a different reading). Single-character HSK words come first, then HSK 1 words, then HSK 2, then HSK 3 (HSK 4 only when none of those has the syllable).
 Nothing here is typed by hand: syllables come from pypinyin, glosses from the word files.
 
 Run:  python3 tools/build-pinyin-chart.py        Needs: pip install pypinyin
@@ -37,7 +37,7 @@ def short_gloss(en):
 
 def main():
     cand = {}   # 'ba1' -> list of (rank, zh, word, gloss)
-    for lv in (1, 2, 3):
+    for lv in (1, 2, 3, 4):
         for w in words(lv):
             zh, en = w['zh'], short_gloss(w['en'])
             for ch in set(zh):
@@ -50,7 +50,7 @@ def main():
                 if not re.search(r'[1-4]$', syl):
                     continue   # no neutral-tone entries
                 solo = (zh == ch)
-                rank = (0 if solo else 1, lv)
+                rank = (1 if lv > 3 else 0, 0 if solo else 1, lv)   # HSK 4 only fills syllables that HSK 1-3 do not have, so earlier picks never change
                 cand.setdefault(syl, []).append((rank, ch, zh, en))
     chart = {}
     for syl, lst in cand.items():

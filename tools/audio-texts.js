@@ -7,7 +7,7 @@
 const path = require('path');
 global.window = {};
 const D = (f) => require(path.join(__dirname, '..', 'data', f));
-[1, 2, 3].forEach((n) => ['words', 'webs', 'speak', 'listen', 'exam', 'grammar'].forEach((k) => { try { D('hsk' + n + '-' + k + '.js'); } catch (e) {} }));
+[1, 2, 3, 4].forEach((n) => ['words', 'webs', 'speak', 'listen', 'exam', 'grammar'].forEach((k) => { try { D('hsk' + n + '-' + k + '.js'); } catch (e) {} }));
 const out = new Map();   // key voice|text -> entry
 const add = (text, voice, group) => {
   text = String(text || '').trim();
@@ -15,7 +15,7 @@ const add = (text, voice, group) => {
   const k = voice + '|' + text;
   if (!out.has(k)) out.set(k, { text, voice, group });
 };
-[1, 2, 3].forEach((n) => {
+[1, 2, 3, 4].forEach((n) => {
   const N = 'HSK' + n;
   (window[N + '_WORDS'] || []).forEach((w) => {
     add(w.zh, 'f', 'words');

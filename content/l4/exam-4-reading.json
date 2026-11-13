@@ -1,0 +1,657 @@
+{
+ "R1": [
+  {
+   "opts": [
+    "其实",
+    "仍然",
+    "本来",
+    "正好",
+    "顺便",
+    "一直"
+   ],
+   "items": [
+    {
+     "zh": "你___在这儿，我正想找你呢。",
+     "en": "You are here just at the right time; I am just thinking of looking for you.",
+     "ans": 3
+    },
+    {
+     "zh": "他很累，可是___在工作。",
+     "en": "He is tired, but he is still working.",
+     "ans": 1
+    },
+    {
+     "zh": "我___想去旅行，可是没有时间。",
+     "en": "I originally wanted to travel, but I have no time.",
+     "ans": 2
+    },
+    {
+     "zh": "你去超市的时候，___帮我买点水吧。",
+     "en": "When you go to the supermarket, buy some water for me on the way.",
+     "ans": 4
+    },
+    {
+     "zh": "这个问题___不难，再想一想。",
+     "en": "Actually this problem is not difficult; think about it again.",
+     "ans": 0
+    }
+   ]
+  },
+  {
+   "opts": [
+    "而且",
+    "否则",
+    "即使",
+    "于是",
+    "不管",
+    "既然"
+   ],
+   "items": [
+    {
+     "zh": "这个电影很有意思，___演员也很好。",
+     "en": "This film is interesting, and the actors are good too.",
+     "ans": 0
+    },
+    {
+     "zh": "你要早点睡，___明天会起不来。",
+     "en": "You must go to bed early; otherwise you will not be able to get up tomorrow.",
+     "ans": 1
+    },
+    {
+     "zh": "___下雨，我们也要去。",
+     "en": "Even if it rains, we will go.",
+     "ans": 2
+    },
+    {
+     "zh": "他觉得很累，___早点回家了。",
+     "en": "He felt tired, so he went home early.",
+     "ans": 3
+    },
+    {
+     "zh": "___你同意不同意，我都要去。",
+     "en": "Whether you agree or not, I will go.",
+     "ans": 4
+    }
+   ]
+  },
+  {
+   "opts": [
+    "保护",
+    "提醒",
+    "解决",
+    "举行",
+    "增加",
+    "提供"
+   ],
+   "items": [
+    {
+     "zh": "请你___我，明天要带护照。",
+     "en": "Please remind me that I must bring my passport tomorrow.",
+     "ans": 1
+    },
+    {
+     "zh": "这个问题很难，我们一起想办法___吧。",
+     "en": "This problem is hard; let us think of a way to solve it together.",
+     "ans": 2
+    },
+    {
+     "zh": "我们要___大自然，不要乱扔垃圾。",
+     "en": "We must protect nature and not throw rubbish around.",
+     "ans": 0
+    },
+    {
+     "zh": "运动会下个星期在学校___。",
+     "en": "The sports meeting will be held at the school next week.",
+     "ans": 3
+    },
+    {
+     "zh": "学校为学生___书和电脑。",
+     "en": "The school provides books and computers for the students.",
+     "ans": 5
+    }
+   ]
+  },
+  {
+   "opts": [
+    "详细",
+    "准确",
+    "严格",
+    "热闹",
+    "轻松",
+    "复杂"
+   ],
+   "items": [
+    {
+     "zh": "周末的公园里很___，到处都是人。",
+     "en": "The park is lively at the weekend, with people everywhere.",
+     "ans": 3
+    },
+    {
+     "zh": "老师对我们很___，作业一定要按时交。",
+     "en": "The teacher is very strict with us; homework must be handed in on time.",
+     "ans": 2
+    },
+    {
+     "zh": "请你___地说一下这件事。",
+     "en": "Please tell us about this matter in detail.",
+     "ans": 0
+    },
+    {
+     "zh": "考完试以后，我觉得很___。",
+     "en": "After the exam, I feel very relaxed.",
+     "ans": 4
+    },
+    {
+     "zh": "你说的时间不___，应该是七点半。",
+     "en": "The time you mention is not accurate; it should be half past seven.",
+     "ans": 1
+    }
+   ]
+  },
+  {
+   "opts": [
+    "经验",
+    "机会",
+    "方法",
+    "习惯",
+    "印象",
+    "条件"
+   ],
+   "items": [
+    {
+     "zh": "他有很多工作___，所以公司让他当经理。",
+     "en": "He has a lot of work experience, so the company made him a manager.",
+     "ans": 0
+    },
+    {
+     "zh": "这是一个很好的___，不要错过。",
+     "en": "This is a very good opportunity; do not miss it.",
+     "ans": 1
+    },
+    {
+     "zh": "我对这个城市的___很好。",
+     "en": "I have a very good impression of this city.",
+     "ans": 4
+    },
+    {
+     "zh": "早睡早起是一个好___。",
+     "en": "Going to bed early and getting up early is a good habit.",
+     "ans": 3
+    },
+    {
+     "zh": "学习汉语有很多好___，比如多听多说。",
+     "en": "There are many good ways of learning Chinese, such as listening and speaking more.",
+     "ans": 2
+    }
+   ]
+  }
+ ],
+ "R2": [
+  {
+   "words": [
+    "他先看了看菜单，",
+    "然后点了两个菜，",
+    "最后又要了一杯水。"
+   ],
+   "en": "He first looked at the menu, then ordered two dishes, and finally asked for a glass of water as well."
+  },
+  {
+   "words": [
+    "因为明天有考试，",
+    "所以我今天晚上",
+    "要早点睡觉。"
+   ],
+   "en": "Because I have an exam tomorrow, I must go to bed early tonight."
+  },
+  {
+   "words": [
+    "虽然这家饭馆很小，",
+    "但是菜的味道很好，",
+    "所以客人很多。"
+   ],
+   "en": "Although this restaurant is small, the dishes taste good, so there are many guests."
+  },
+  {
+   "words": [
+    "如果你有时间，",
+    "就来我家玩吧，",
+    "我们一起做饭。"
+   ],
+   "en": "If you have time, come to my home to play, and we will cook together."
+  },
+  {
+   "words": [
+    "我想去中国学习，",
+    "所以现在",
+    "每天都在认真学汉语。"
+   ],
+   "en": "I want to go to China to study, so now I study Chinese seriously every day."
+  },
+  {
+   "words": [
+    "他一边听音乐，",
+    "一边做作业，",
+    "一点也不觉得累。"
+   ],
+   "en": "He listens to music while doing his homework and does not feel tired at all."
+  },
+  {
+   "words": [
+    "不管工作多忙，",
+    "他每天都",
+    "坚持锻炼身体。"
+   ],
+   "en": "No matter how busy work is, he keeps on exercising every day."
+  },
+  {
+   "words": [
+    "这个手机虽然很贵，",
+    "但是质量很好，",
+    "用了三年都没有坏。"
+   ],
+   "en": "Although this phone is expensive, the quality is very good, and it has not broken in three years of use."
+  },
+  {
+   "words": [
+    "下班以后，",
+    "我先去超市买菜，",
+    "然后回家做饭。"
+   ],
+   "en": "After work, I first go to the supermarket to buy vegetables, and then go home to cook."
+  },
+  {
+   "words": [
+    "为了不迟到，",
+    "他今天早上",
+    "六点就起床了。"
+   ],
+   "en": "In order not to be late, he got up at six this morning."
+  },
+  {
+   "words": [
+    "这家商店的东西不但便宜，",
+    "而且质量很好，",
+    "所以顾客很多。"
+   ],
+   "en": "The things in this shop are not only cheap but also of good quality, so there are many customers."
+  },
+  {
+   "words": [
+    "老师说，",
+    "只要认真复习，",
+    "大家都能通过考试。"
+   ],
+   "en": "The teacher says that as long as everyone reviews seriously, everyone can pass the exam."
+  },
+  {
+   "words": [
+    "我们先把房间整理好，",
+    "再把东西放好，",
+    "最后把垃圾拿出去。"
+   ],
+   "en": "We first tidy the room, then put things away, and finally take the rubbish out."
+  },
+  {
+   "words": [
+    "周末的时候，",
+    "我常常和朋友一起",
+    "去公园散步聊天。"
+   ],
+   "en": "At weekends, I often go with friends to the park to take a walk and chat."
+  },
+  {
+   "words": [
+    "他的汉语说得越来越好，",
+    "因为他每天",
+    "都和中国朋友聊天。"
+   ],
+   "en": "His Chinese is getting better and better, because he chats with Chinese friends every day."
+  },
+  {
+   "words": [
+    "大家听到这个消息，",
+    "都觉得",
+    "非常高兴。"
+   ],
+   "en": "Hearing this news, everyone felt very happy."
+  }
+ ],
+ "R3": [
+  {
+   "zh": "小明想买一台电脑，可是他的钱不够。他决定先去打工，等有了钱再买。",
+   "en": "Xiao Ming wants to buy a computer, but his money is not enough. He decides to go and work first, and buy it when he has the money.",
+   "q": {
+    "zh": "小明决定怎么办？",
+    "en": "What does Xiao Ming decide to do?"
+   },
+   "opts": [
+    "先打工再买",
+    "向朋友借钱",
+    "买便宜的",
+    "不买了"
+   ]
+  },
+  {
+   "zh": "我家附近新开了一家超市，东西很全，价格也比别的地方便宜。每天晚上七点以后，有些菜还会打折，所以我常常那个时候去。",
+   "en": "A new supermarket has opened near my home. It has everything, and the prices are cheaper than elsewhere. After seven every evening, some vegetables are also on sale, so I often go at that time.",
+   "q": {
+    "zh": "说话人为什么晚上去超市？",
+    "en": "Why does the speaker go to the supermarket in the evening?"
+   },
+   "opts": [
+    "有些菜打折",
+    "人比较少",
+    "离家很近",
+    "下班很晚"
+   ]
+  },
+  {
+   "zh": "小明第一次来中国，什么都觉得很新鲜。他最喜欢中国的饭菜，尤其是饺子。他说回国以后，要自己学做饺子。",
+   "en": "Xiao Ming is in China for the first time and finds everything fresh and new. He likes Chinese food best, especially dumplings. He says that after he returns to his country, he wants to learn to make dumplings himself.",
+   "q": {
+    "zh": "小明回国以后想做什么？",
+    "en": "What does Xiao Ming want to do after returning home?"
+   },
+   "opts": [
+    "做饺子",
+    "找工作",
+    "学汉语",
+    "再来旅游"
+   ]
+  },
+  {
+   "zh": "手机给我们的生活带来了很多方便，但是也有问题。有的人一整天都在看手机，不和家人说话，甚至吃饭的时候也在玩手机。",
+   "en": "Phones have brought us a lot of convenience, but they also have problems. Some people look at their phones all day and do not talk to their families, and even play with their phones while eating.",
+   "q": {
+    "zh": "说话人觉得手机有什么问题？",
+    "en": "What problem does the speaker see with phones?"
+   },
+   "opts": [
+    "让人不和家人说话",
+    "价格太贵",
+    "容易坏",
+    "没有电"
+   ]
+  },
+  {
+   "zh": "我最怕坐飞机，每次坐飞机以前都睡不着。朋友告诉我，可以听听音乐，放松一下。我试了一次，真的好多了。",
+   "en": "I am most afraid of flying, and I cannot sleep before every flight. A friend told me that I can listen to some music and relax a little. I tried it once, and it really got much better.",
+   "q": {
+    "zh": "朋友建议说话人怎么做？",
+    "en": "What does the friend suggest the speaker do?"
+   },
+   "opts": [
+    "听音乐",
+    "不坐飞机",
+    "吃药",
+    "早点睡"
+   ]
+  },
+  {
+   "zh": "这个公园里有很多树和花。春天的时候，花开了，很多人来这里拍照；秋天的时候，叶子变了颜色，也很漂亮。",
+   "en": "This park has many trees and flowers. In spring, the flowers bloom and many people come here to take photos; in autumn, the leaves change colour, which is also beautiful.",
+   "q": {
+    "zh": "这个公园什么时候有很多人拍照？",
+    "en": "When do many people take photos in this park?"
+   },
+   "opts": [
+    "春天",
+    "夏天",
+    "秋天",
+    "冬天"
+   ]
+  },
+  {
+   "zh": "老高每天早上都去公园跑步。他说，跑步让他的心情很好，晚上也睡得更好。现在他的很多朋友也跟着他一起跑。",
+   "en": "Lao Gao goes to the park to run every morning. He says running puts him in a good mood and he also sleeps better at night. Now many of his friends run with him too.",
+   "q": {
+    "zh": "老高为什么每天跑步？",
+    "en": "Why does Lao Gao run every day?"
+   },
+   "opts": [
+    "心情好，睡得好",
+    "想减少体重",
+    "医生让他跑",
+    "没有别的事"
+   ]
+  },
+  {
+   "zh": "公司要办一个活动，让每个人介绍自己的爱好。小张说他喜欢画画，小马喜欢唱歌，我喜欢做饭。大家都说，这个活动让他们更了解同事。",
+   "en": "The company will hold an event where everyone introduces their hobbies. Xiao Zhang says he likes drawing, Xiao Ma likes singing, and I like cooking. Everyone says this event helps them understand their colleagues better.",
+   "q": {
+    "zh": "这个活动让大家怎么样？",
+    "en": "What does the event do for everyone?"
+   },
+   "opts": [
+    "更了解同事",
+    "更努力工作",
+    "更爱运动",
+    "更喜欢公司"
+   ]
+  },
+  {
+   "zh": "我昨天丢了钱包，里面有一点钱和我的护照。我很着急，马上给银行打了电话。后来一个好心人把钱包送到了警察那里，警察给我打了电话。",
+   "en": "Yesterday I lost my wallet, which had a little money and my passport in it. I was very anxious and called the bank right away. Later a kind person took the wallet to the police, and the police called me.",
+   "q": {
+    "zh": "谁给说话人打了电话？",
+    "en": "Who called the speaker?"
+   },
+   "opts": [
+    "警察",
+    "银行",
+    "朋友",
+    "好心人"
+   ]
+  },
+  {
+   "zh": "这个周末有雨，我们本来打算去爬山，只好改在家里做饭。我们一起做了饺子和几个小菜，虽然没去爬山，但是大家玩得很开心。",
+   "en": "It rains this weekend, so we had planned to go hiking but had to cook at home instead. We made dumplings and a few small dishes together, and although we did not go hiking, everyone had a very good time.",
+   "q": {
+    "zh": "周末他们做了什么？",
+    "en": "What did they do at the weekend?"
+   },
+   "opts": [
+    "在家做饭",
+    "爬山",
+    "看电影",
+    "逛街"
+   ]
+  },
+  {
+   "zh": "我哥哥大学毕业以后，在一家小公司工作。三年以后，他自己开了一家公司。他说，工作中最重要的是不怕失败，不断学习。",
+   "en": "After my elder brother graduated from university, he worked at a small company. Three years later, he opened a company himself. He says that the most important thing at work is not to fear failure and to keep learning.",
+   "q": {
+    "zh": "哥哥觉得工作中最重要的是什么？",
+    "en": "What does the elder brother think is most important at work?"
+   },
+   "opts": [
+    "不怕失败",
+    "有钱",
+    "有朋友",
+    "有时间"
+   ]
+  },
+  {
+   "zh": "很多人觉得学习汉字很难，其实只要知道方法就不难了。比如，先学简单的字，再学复杂的字，每天写一点，时间长了就会记住。",
+   "en": "Many people think learning characters is hard, but actually it is not difficult once you know the method. For example, learn simple characters first and then complicated ones, write a little every day, and after a long time you will remember them.",
+   "q": {
+    "zh": "学习汉字应该先学什么？",
+    "en": "What should one learn first when learning characters?"
+   },
+   "opts": [
+    "简单的字",
+    "复杂的字",
+    "常用的词",
+    "难的字"
+   ]
+  },
+  {
+   "zh": "张先生每年都带家人去旅行。他说，旅行不但能让孩子看到不同的地方，而且能让一家人有更多时间在一起。今年他们打算去海边。",
+   "en": "Mr Zhang takes his family travelling every year. He says that travelling can not only let the children see different places but also give the family more time together. This year they plan to go to the seaside.",
+   "q": {
+    "zh": "张先生为什么带家人旅行？",
+    "en": "Why does Mr Zhang take his family travelling?"
+   },
+   "opts": [
+    "让家人多在一起",
+    "工作需要",
+    "公司免费",
+    "孩子要学习"
+   ]
+  },
+  {
+   "zh": "和我住在一起的朋友喜欢安静，我喜欢听音乐，所以我们常常不高兴。后来我们商量好了，晚上十点以后我不再听音乐。",
+   "en": "The friend who lives with me likes quiet, and I like listening to music, so we are often unhappy. Later we talked it over and agreed that after ten in the evening I no longer listen to music.",
+   "q": {
+    "zh": "他们后来怎么办？",
+    "en": "What did they do in the end?"
+   },
+   "opts": [
+    "十点以后不听音乐",
+    "搬家",
+    "分开住",
+    "买新耳机"
+   ]
+  },
+  {
+   "zh": "小美参加了学校的汉语比赛，她准备了一个月。比赛那天她很紧张，说错了一个词，不过后来越说越好，最后得了第二名。",
+   "en": "Xiao Mei took part in the school Chinese contest and prepared for a month. On the day of the contest she was very nervous and said one word wrongly, but she got better and better, and finally came second.",
+   "q": {
+    "zh": "小美最后怎么样了？",
+    "en": "How did Xiao Mei do in the end?"
+   },
+   "opts": [
+    "得了第二名",
+    "得了第一名",
+    "没有得奖",
+    "没有参加"
+   ]
+  },
+  {
+   "zh": "医生说，每天多喝水对身体很好。可是很多人工作一忙就忘了喝水。我现在在桌子上放了一个大杯子，每次看到它就想起来喝水。",
+   "en": "The doctor says drinking more water every day is good for the body. But many people forget to drink water when work gets busy. I now keep a big cup on my desk, and every time I see it I remember to drink.",
+   "q": {
+    "zh": "说话人是怎么记得喝水的？",
+    "en": "How does the speaker remember to drink water?"
+   },
+   "opts": [
+    "桌上有一个杯子",
+    "手机提醒",
+    "朋友提醒",
+    "医生打电话"
+   ]
+  },
+  {
+   "zh": "这家饭馆的厨师以前在大饭店工作，他做的面条特别好吃，所以每天都有很多人来排队。有的人甚至等一个小时，也不想去别的地方。",
+   "en": "The chef of this restaurant used to work in a big hotel, and the noodles he makes are especially delicious, so many people come to queue every day. Some people even wait an hour and do not want to go anywhere else.",
+   "q": {
+    "zh": "为什么每天有很多人来排队？",
+    "en": "Why do many people queue every day?"
+   },
+   "opts": [
+    "面条特别好吃",
+    "价格很便宜",
+    "饭馆很大",
+    "可以免费吃"
+   ]
+  },
+  {
+   "zh": "我们学校下个月有一次考试，成绩好的同学可以得到一份礼物。很多同学为了得到礼物，每天都学习到很晚。",
+   "en": "Our school has an exam next month, and students with good results can get a gift. In order to get the gift, many students study until very late every day.",
+   "q": {
+    "zh": "成绩好的同学可以得到什么？",
+    "en": "What can students with good results get?"
+   },
+   "opts": [
+    "礼物",
+    "钱",
+    "假期",
+    "电脑"
+   ]
+  },
+  {
+   "zh": "昨天晚上的演出非常精彩。演员们唱得好，跳得也好，最后观众们都站起来了，大家一起唱歌。",
+   "en": "Yesterday evening's performance was wonderful. The actors sang well and danced well too, and in the end the audience all stood up and sang together.",
+   "q": {
+    "zh": "演出结束时观众们做了什么？",
+    "en": "What did the audience do at the end of the performance?"
+   },
+   "opts": [
+    "站起来唱歌",
+    "马上离开",
+    "很不满意",
+    "睡着了"
+   ]
+  },
+  {
+   "zh": "弟弟想养一只小狗，可是妈妈不同意，因为担心他没有时间照顾。弟弟说，他每天会带小狗出去玩，还会给它洗澡。妈妈听了以后，终于点了头。",
+   "en": "My younger brother wants to keep a puppy, but Mom does not agree because she worries that he has no time to look after it. He says he will take the puppy out to play every day and also wash it. After hearing this, Mom finally nodded.",
+   "q": {
+    "zh": "妈妈最后怎么样了？",
+    "en": "What did Mom do in the end?"
+   },
+   "opts": [
+    "同意了",
+    "不同意",
+    "很生气",
+    "没说话"
+   ]
+  },
+  {
+   "zh": "我们小区附近有一条河，河边的路很安静，很多人晚上去那里散步。市里最近又修了一条新路，让大家走路更方便了。",
+   "en": "There is a river near our neighbourhood, and the road by the river is very quiet, so many people go there to walk in the evening. The city has recently built a new road, which makes walking more convenient for everyone.",
+   "q": {
+    "zh": "河边的路怎么样？",
+    "en": "What is the road by the river like?"
+   },
+   "opts": [
+    "很安静",
+    "很热闹",
+    "很脏",
+    "很危险"
+   ]
+  },
+  {
+   "zh": "小学的时候，我很怕数学，一看到数字就头疼。后来有一位老师教我用游戏学数学，我慢慢发现数学很有意思，现在它是我最喜欢的课。",
+   "en": "In primary school I was afraid of maths and got a headache at the sight of numbers. Later a teacher taught me to learn maths with games, and I slowly found that maths is interesting; now it is my favourite class.",
+   "q": {
+    "zh": "说话人现在觉得数学怎么样？",
+    "en": "What does the speaker think of maths now?"
+   },
+   "opts": [
+    "最喜欢",
+    "很难",
+    "很无聊",
+    "还是怕"
+   ]
+  },
+  {
+   "zh": "马上就要放假了，同学们都在讨论去哪儿玩。有的想去海边，有的想去爬山，我想在家好好休息。我已经很累了，需要放松一下。",
+   "en": "The holiday is about to start, and the students are all discussing where to go. Some want to go to the seaside and some want to go hiking, but I want to rest well at home. I am already very tired and need to relax.",
+   "q": {
+    "zh": "说话人放假想做什么？",
+    "en": "What does the speaker want to do during the holiday?"
+   },
+   "opts": [
+    "在家休息",
+    "去海边",
+    "爬山",
+    "去工作"
+   ]
+  },
+  {
+   "zh": "这家银行最近推出了新服务：不用去银行，在手机上就能办很多事，比如转钱、交费。很多老人也开始学习用手机，他们说比排队方便多了。",
+   "en": "This bank has recently launched a new service: you do not need to go to the bank, and you can do many things on your phone, such as transferring money and paying fees. Many old people have also started to learn to use the phone, and they say it is much more convenient than queuing.",
+   "q": {
+    "zh": "这项新服务有什么好处？",
+    "en": "What is the benefit of this new service?"
+   },
+   "opts": [
+    "不用去银行排队",
+    "价格更低",
+    "能送礼物",
+    "银行更近"
+   ]
+  }
+ ]
+}

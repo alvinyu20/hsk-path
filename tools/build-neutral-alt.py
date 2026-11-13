@@ -17,8 +17,8 @@ MARK = re.compile('[̄́̌̀]')
 def words():
     out = subprocess.check_output(['node', '-e', r"""
 const vm=require('vm'),fs=require('fs');const ctx={window:{}};vm.createContext(ctx);
-for(const f of ['hsk1-words','hsk2-words','hsk3-words'])vm.runInContext(fs.readFileSync('data/'+f+'.js','utf8'),ctx);
-console.log(JSON.stringify([].concat(ctx.window.HSK1_WORDS,ctx.window.HSK2_WORDS,ctx.window.HSK3_WORDS).map(w=>[w.zh,w.py])));
+for(const f of ['hsk1-words','hsk2-words','hsk3-words','hsk4-words'])vm.runInContext(fs.readFileSync('data/'+f+'.js','utf8'),ctx);
+console.log(JSON.stringify([].concat(ctx.window.HSK1_WORDS,ctx.window.HSK2_WORDS,ctx.window.HSK3_WORDS,ctx.window.HSK4_WORDS).map(w=>[w.zh,w.py])));
 """], cwd=ROOT).decode('utf-8')
     return json.loads(out)
 

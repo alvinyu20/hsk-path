@@ -107,3 +107,10 @@ topic-sentence:Age and growing up	meaning	小时候 is a past time word, so the 
 topic-sentence:Good, bad, right, wrong	meaning	坏了 is the normal way to say something is broken: 了 marks the change of state and English says "broken"	坏了
 topic-sentence:Roads and distance	meaning	到了 means "arrive/get there" here: 了 marks the arrival and English says "it takes ten minutes"	到了
 topic-sentence:Thinking and knowing	meaning	不要忘了 is the normal way to say "do not forget": 了 is part of the fixed phrase	不要忘了
+word-extra:不得不:1	pinyin	pypinyin reads 病了，不得不 as the word 了不得 (liǎo bu dé); here 了 is the particle le	他生病了，不得不请假。
+word:场	pinyin	一场 before 比赛 / 电影 is chǎng (measure word for games, films, shows); pypinyin gives cháng, which is the reading for 一场雨 (a spell of rain)	今天有一场足球比赛。
+word-extra:场:1	pinyin	一场 before 电影 is chǎng (measure word for films); pypinyin gives cháng	我们昨天看了一场电影。
+exam:L3:14:question	pinyin	说话人为什么: pypinyin reads 人为 as one word (rénwéi), but the sentence is 说话人 + 为什么 (wèishénme)	说话人为什么想再去那个城市？
+exam:L3:20:question	pinyin	说话人为什么: pypinyin reads 人为 as one word (rénwéi), but the sentence is 说话人 + 为什么 (wèishénme)	说话人为什么问了妈妈？
+exam:R3:1:question	pinyin	说话人为什么: pypinyin reads 人为 as one word (rénwéi), but the sentence is 说话人 + 为什么 (wèishénme)	说话人为什么晚上去超市？
+wordform:过	pinyin	过 has two readings, guo (after a verb: 去过) and guò (to pass, to spend time); the entry shows both so that a typed guò is accepted too

@@ -20,7 +20,8 @@ const load = (erhua) => {
   const run = (f) => vm.runInContext(fs.readFileSync(path.join(root, f), 'utf8'), ctx, { filename: f });
   ['data/hsk1-words.js', 'data/hsk1-grammar.js', 'data/hsk1-webs.js', 'data/hsk1-speak.js', 'data/hsk1-listen.js', 'data/hsk1-exam.js', 'data/hsk1-erhua.js',
    'data/hsk2-words.js', 'data/hsk2-grammar.js', 'data/hsk2-webs.js', 'data/hsk2-speak.js', 'data/hsk2-listen.js', 'data/hsk2-exam.js',
-   'data/hsk3-words.js', 'data/hsk3-grammar.js', 'data/hsk3-webs.js', 'data/hsk3-speak.js', 'data/hsk3-listen.js', 'data/hsk3-exam.js', 'data/speak-scenes.js', 'data/path.js'].forEach(run);
+   'data/hsk3-words.js', 'data/hsk3-grammar.js', 'data/hsk3-webs.js', 'data/hsk3-speak.js', 'data/hsk3-listen.js', 'data/hsk3-exam.js',
+   'data/hsk4-words.js', 'data/hsk4-grammar.js', 'data/hsk4-webs.js', 'data/hsk4-speak.js', 'data/hsk4-listen.js', 'data/hsk4-exam.js', 'data/speak-scenes.js', 'data/path.js'].forEach(run);
   const E = require(path.join(root, 'erhua.js'));
   const er = E.make(ctx.HSK1_ERHUA);
   if (!erhua) er.apply(ctx);      // plain style: the site rewrites its words before the app starts
@@ -37,7 +38,7 @@ const load = (erhua) => {
 for (const erhua of [false, true]) {
   const style = erhua ? '儿 endings' : 'plain forms';
   const { ctx, plainWords } = load(erhua);
-  for (const n of [1, 2, 3]) {
+  for (const n of [1, 2, 3, 4]) {
     const P = ctx.SHANLU_PATH[n];
     const tag = 'HSK ' + n + ' (' + style + ')';
     check(!!P && P.units.length > 0, tag + ': has a path');
@@ -64,7 +65,7 @@ for (const erhua of [false, true]) {
 // grammar lessons: the path must hold every lesson of its level once. The ids come from the grammar data itself.
 {
   const { ctx } = load(false);
-  for (const n of [1, 2, 3]) {
+  for (const n of [1, 2, 3, 4]) {
     const G = ctx['HSK' + n + '_GRAMMAR'];
     const list = Array.isArray(G) ? G : (G.lessons || G.items || []);
     const ids = list.map(l => l.id);
@@ -74,7 +75,7 @@ for (const erhua of [false, true]) {
     check(lost.length === 0 && twice.length === 0 && stray.length === 0, 'HSK ' + n + ': every grammar lesson is on the path once' + (lost.length ? ' missing ' + lost.join(' ') : '') + (twice.length ? ' twice ' + twice.join(' ') : '') + (stray.length ? ' unknown ' + stray.join(' ') : ''));
   }
   // practice scripts: every script of the level is a stop of the path, once (the stop opens that script in Speak)
-  for (const n of [1, 2, 3]) {
+  for (const n of [1, 2, 3, 4]) {
     const SP = ctx['HSK' + n + '_SPEAK'];
     const ids = (SP && SP.scenarios || []).map(x => x.id);
     const inPath = {}; ctx.SHANLU_PATH[n].units.forEach(u => u.stops.forEach(st => { if (st.k === 's') inPath[st.s] = (inPath[st.s] || 0) + 1; }));
@@ -96,7 +97,7 @@ for (const erhua of [false, true]) {
   const flat = (n) => [].concat.apply([], ctx.SHANLU_PATH[n].units.map(u => u.stops));
   const at = (n, z) => flat(n).findIndex(st => st.k === 'w' && st.w.indexOf(z) >= 0);
   check(at(1, '你好') < at(1, '三') && at(1, '三') < at(1, '星期'), 'HSK 1: greetings, then numbers, then days of the week');
-  check(ctx.SHANLU_PATH[2].units[0].stops[0].k === 'w' && ctx.SHANLU_PATH[3].units[0].stops[0].k === 'w', 'HSK 2 and HSK 3 start with a word stop');
+  check([2, 3, 4].every(n => ctx.SHANLU_PATH[n].units[0].stops[0].k === 'w'), 'HSK 2, HSK 3 and HSK 4 start with a word stop');
 }
 
 // the themed look (content/path-theme.json -> data/path.js theme; pictures in data/path-scenes.js)
@@ -104,8 +105,8 @@ for (const erhua of [false, true]) {
   const { ctx } = load(false);
   vm.runInContext(fs.readFileSync(path.join(root, 'data/path-scenes.js'), 'utf8'), ctx, { filename: 'data/path-scenes.js' });
   const scenes = ctx.SHANLU_PATH_SCENES || {};
-  const KINDS = { 1: 'day', 2: 'rail', 3: 'story' };
-  for (const n of [1, 2, 3]) {
+  const KINDS = { 1: 'day', 2: 'rail', 3: 'story', 4: 'terms' };
+  for (const n of [1, 2, 3, 4]) {
     const P = ctx.SHANLU_PATH[n], th = P.theme;
     check(!!th && th.kind === KINDS[n], 'HSK ' + n + ': the path has its theme (' + KINDS[n] + ')');
     if (!th) continue;
@@ -119,6 +120,12 @@ for (const erhua of [false, true]) {
     check(!th.groups.length || flat.join() === ids.join(), 'HSK ' + n + ': the groups cover the units once, in order');
     if (th.kind === 'rail') check(ids.every(i => th.units[i].ch && th.units[i].py), 'HSK 2: every station has a character and pinyin');
     if (th.kind === 'day') check(ids.every(i => /^\d{1,2}:\d\d$/.test(th.units[i].time) && th.units[i].scene), 'HSK 1: every unit has a time and a scene line');
+    if (th.kind === 'terms') {
+      const T = ids.map(i => th.units[i]);
+      check(T.length === 24 && T.every(t => t.zh && /^[\u4e00-\u9fff]{2}$/.test(t.zh) && t.py && t.en && /^\d{1,2} [A-Z][a-z]{2}$/.test(t.date) && t.scene), 'HSK 4: every unit is one of the 24 solar terms (name, pinyin, meaning, date, scene line)');
+      check(new Set(T.map(t => t.zh)).size === 24, 'HSK 4: the 24 solar terms are all different');
+      check(!/[\u4e00-\u9fff]/.test(T.map(t => t.py).join('')), 'HSK 4: the pinyin of the terms is written in letters');
+    }
     if (th.kind === 'story') {
       const L = ids.map(i => th.units[i].lines);
       check(L.every(l => l && l.length === 2 && l.every(x => x.zh && x.py && x.en && /^[\u4e00-\u9fff]$/.test(x.who))), 'HSK 3: every chapter has two chat lines with Chinese, pinyin and English');

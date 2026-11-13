@@ -3,7 +3,7 @@
 
  - every example (tap-to-hear item, sound cell, contrast pair) must have the pinyin pypinyin gives for it,
    allowing only the written-down exceptions: the neutral tone (no mark), 不 -> bú and 一 -> yí/yì (tone changes the lesson teaches);
- - an example that is an HSK 1-3 word must also have exactly the pinyin of the word lists (apart from capital letters and apostrophes);
+ - an example that is an HSK 1-4 word must also have exactly the pinyin of the word lists (apart from capital letters and apostrophes);
  - every sound cell with a first letter must really start (initial) or end (final) the pinyin it is shown with;
  - every check question has a valid answer and an explanation;
  - every chart entry says the same thing as pypinyin says for its character.
@@ -15,9 +15,9 @@ from pypinyin import lazy_pinyin, pinyin, Style
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NODE = r"""
 const vm=require('vm'),fs=require('fs');const ctx={window:{}};vm.createContext(ctx);
-for (const f of ['data/pinyin-course.js','data/pinyin-chart.js','data/hsk1-words.js','data/hsk2-words.js','data/hsk3-words.js']) vm.runInContext(fs.readFileSync(f,'utf8'),ctx);
+for (const f of ['data/pinyin-course.js','data/pinyin-chart.js','data/hsk1-words.js','data/hsk2-words.js','data/hsk3-words.js','data/hsk4-words.js']) vm.runInContext(fs.readFileSync(f,'utf8'),ctx);
 const w=ctx.window;
-console.log(JSON.stringify({course:w.SHANLU_PYCOURSE,chart:w.SHANLU_PYCHART,words:[].concat(w.HSK1_WORDS,w.HSK2_WORDS,w.HSK3_WORDS).map(x=>[x.zh,x.py])}));
+console.log(JSON.stringify({course:w.SHANLU_PYCOURSE,chart:w.SHANLU_PYCHART,words:[].concat(w.HSK1_WORDS,w.HSK2_WORDS,w.HSK3_WORDS,w.HSK4_WORDS).map(x=>[x.zh,x.py])}));
 """
 data = json.loads(subprocess.check_output(['node', '-e', NODE], cwd=ROOT).decode('utf-8'))
 errors, notes = [], []
@@ -125,7 +125,7 @@ for syl, e in data['chart'].items():
         err('chart %s: %s is not in %s' % (syl, ch, e['w']))
 
 print('lessons: %d, chart entries: %d' % (len(data['course']['lessons']), len(data['chart'])))
-print('examples that are not HSK 1-3 words (fine, but they are not from the lists): %s' % ' '.join(sorted(set(notes))))
+print('examples that are not HSK 1-4 words (fine, but they are not from the lists): %s' % ' '.join(sorted(set(notes))))
 if errors:
     print('\n'.join(errors))
     print('FAILED: %d problem(s)' % len(errors))

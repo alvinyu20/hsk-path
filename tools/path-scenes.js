@@ -1,4 +1,4 @@
-/* Draws the scenes of the themed Learn path (HSK 1 a day in a city, HSK 2 the rail line, HSK 3 a semester in Hangzhou) as 600x240 SVG pictures
+/* Draws the scenes of the themed Learn path (HSK 1 a day in a city, HSK 2 the rail line, HSK 3 a semester in Hangzhou, HSK 4 a year in 24 solar terms) as 600x240 SVG pictures
  * and writes them to data/path-scenes.js as data URIs (window.SHANLU_PATH_SCENES). No text is drawn inside the pictures (an <img> cannot load the site's fonts).
  *   node tools/path-scenes.js */
 const fs = require('fs');
@@ -152,6 +152,82 @@ S['story-hero'] = svg(`
   '<linearGradient id="lk" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8FB8B0"/><stop offset=".36" stop-color="#8FB8B0"/><stop offset=".46" stop-color="#A9C2D2"/><stop offset=".62" stop-color="#A9C2D2"/><stop offset=".72" stop-color="#9ED0D8"/><stop offset="1" stop-color="#9ED0D8"/></linearGradient>' +
   '<linearGradient id="gr" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#C89A5E"/><stop offset=".36" stop-color="#C89A5E"/><stop offset=".46" stop-color="#F4F8FA"/><stop offset=".62" stop-color="#F4F8FA"/><stop offset=".72" stop-color="#7DB56C"/><stop offset="1" stop-color="#7DB56C"/></linearGradient>');
 
+// HSK 4: spring, rice terraces with swallows and a light rain
+S['terms-spring'] = svg(`
+<rect width="${W}" height="${H}" fill="url(#sk)"/><circle cx="500" cy="52" r="26" fill="#FBE18A"/>${cloud(470, 58, 1.2, '#fff', .95)}${cloud(120, 36, .9)}
+<path d="M0 124 70 88 150 112 240 76 330 114 420 90 510 112 600 96V160H0z" fill="#B9D9CE"/>
+<path d="M0 140 100 112 200 136 300 108 410 138 510 120 600 134V170H0z" fill="#86BBA6" opacity=".75"/>
+<path d="M0 152Q150 130 300 148T600 140V240H0z" fill="#A9D68F"/><path d="M0 152Q150 130 300 148T600 140" stroke="#CDEAF0" stroke-width="5" fill="none"/>
+<path d="M0 180Q160 160 320 176T600 168V240H0z" fill="#7DB56C"/><path d="M0 180Q160 160 320 176T600 168" stroke="#CDEAF0" stroke-width="5" fill="none"/>
+<path d="M0 208Q180 192 340 206T600 200V240H0z" fill="#5FA05A"/>
+<g stroke="#2E7D4F" stroke-width="2.4" stroke-linecap="round" fill="none">${Array.from({ length: 22 }, (_, i) => { const x = 20 + i * 27, y = 192 + ((i * 7) % 5); return `<path d="M${x} ${y}v-8M${x - 3} ${y}l-3-7M${x + 3} ${y}l3-7"/>`; }).join('')}${Array.from({ length: 14 }, (_, i) => { const x = 40 + i * 41, y = 226 + ((i * 5) % 7); return `<path d="M${x} ${y}v-9M${x - 3} ${y}l-3-8M${x + 3} ${y}l3-8"/>`; }).join('')}</g>
+<g fill="none" stroke="#14212A" stroke-width="2.6" stroke-linecap="round"><path d="M108 58q6-8 12 0 6-8 12 0"/><path d="M170 84q5-7 10 0 5-7 10 0"/><path d="M52 92q5-7 10 0 5-7 10 0"/></g>
+<g stroke="#8FB8D0" stroke-width="1.8" stroke-linecap="round" opacity=".55">${Array.from({ length: 26 }, (_, i) => `<path d="M${12 + i * 23} ${20 + ((i * 37) % 110)}l-5 12"/>`).join('')}</g>
+${person(420, 150, '#1D6B58', '#14212A', 1.1)}<path d="M396 156l24-30 24 30z" fill="#E9C46A" stroke="#B88A2E" stroke-width="2"/>${person(480, 158, '#C2362B', '#6B4E3A', 1.0)}`, grad('sk', '#D5ECF4', '#F5FBF1'));
+
+// HSK 4: summer, a lotus pond with a boat and a dragonfly
+S['terms-summer'] = svg(`
+<rect width="${W}" height="${H}" fill="url(#sk)"/><circle cx="96" cy="58" r="34" fill="#F7C948"/><g stroke="#F7C948" stroke-width="4" stroke-linecap="round" opacity=".7"><path d="M96 10v-8M96 106v8M48 58h-8M144 58h8M62 24l-6-6M130 24l6-6M62 92l-6 6M130 92l6 6"/></g>
+${cloud(300, 40, 1.2)}${cloud(500, 70, .9)}
+<g fill="#5A9E7C"><circle cx="40" cy="132" r="26"/><circle cx="84" cy="126" r="30"/><circle cx="140" cy="134" r="24"/><circle cx="470" cy="130" r="28"/><circle cx="520" cy="124" r="32"/><circle cx="574" cy="134" r="26"/></g>
+<g fill="#6FB08C"><circle cx="62" cy="136" r="20"/><circle cx="496" cy="136" r="22"/><circle cx="546" cy="138" r="20"/></g>
+<rect y="140" width="${W}" height="100" fill="#7FC4B8"/><path d="M0 146h600" stroke="#BFE6E2" stroke-width="2"/>
+<g stroke="#A8DAD2" stroke-width="2.4" fill="none" stroke-linecap="round"><path d="M180 168q8-5 16 0t16 0"/><path d="M300 200q8-5 16 0t16 0"/><path d="M40 214q8-5 16 0t16 0"/><path d="M510 214q8-5 16 0t16 0"/></g>
+<g fill="#3C8670"><ellipse cx="90" cy="190" rx="44" ry="13"/><ellipse cx="206" cy="212" rx="38" ry="11"/><ellipse cx="320" cy="176" rx="40" ry="12"/><ellipse cx="540" cy="196" rx="42" ry="12"/></g>
+<g fill="#4F9E80"><ellipse cx="80" cy="186" rx="26" ry="6"/><ellipse cx="312" cy="173" rx="24" ry="5"/><ellipse cx="530" cy="193" rx="25" ry="6"/></g>
+<g><path d="M90 186q-16-4-14-24 9 6 14 24z" fill="#F2A0B8"/><path d="M90 186q16-4 14-24-9 6-14 24z" fill="#F2A0B8"/><path d="M90 186q-6-16 0-32 6 16 0 32z" fill="#F7B6C6"/><circle cx="90" cy="176" r="3.4" fill="#F7D054"/></g>
+<g><path d="M320 172q-14-4-12-22 8 6 12 22z" fill="#F2A0B8"/><path d="M320 172q14-4 12-22-8 6-12 22z" fill="#F2A0B8"/><path d="M320 172q-5-14 0-28 5 14 0 28z" fill="#F7B6C6"/><circle cx="320" cy="162" r="3" fill="#F7D054"/></g>
+<g><path d="M540 192q-14-4-12-22 8 6 12 22z" fill="#F2A0B8"/><path d="M540 192q14-4 12-22-8 6-12 22z" fill="#F2A0B8"/><path d="M540 192q-5-14 0-28 5 14 0 28z" fill="#F7B6C6"/><circle cx="540" cy="182" r="3" fill="#F7D054"/></g>
+<path d="M404 196h92q-10 20-46 20t-46-20z" fill="#8A6A4F"/><path d="M404 196h92" stroke="#5C4333" stroke-width="3"/>${person(450, 150, '#E9A24B', '#14212A', 1)}
+<g fill="none" stroke="#7DB56C" stroke-width="3.2" stroke-linecap="round"><path d="M584 20Q560 40 566 110"/><path d="M584 20Q574 52 580 120"/><path d="M584 20Q596 56 592 124"/></g>`, grad('sk', '#BEE4F0', '#FFF3CF'));
+
+// HSK 4: autumn, a harvest moon over golden fields and a persimmon tree
+S['terms-autumn'] = svg(`
+<rect width="${W}" height="${H}" fill="url(#sk)"/><circle cx="430" cy="78" r="46" fill="#FBE6B8"/><circle cx="414" cy="62" r="9" fill="#F3D79B" opacity=".6"/><circle cx="448" cy="96" r="12" fill="#F3D79B" opacity=".5"/><circle cx="450" cy="58" r="6" fill="#F3D79B" opacity=".5"/>
+<g fill="none" stroke="#7A4B3A" stroke-width="2.6" stroke-linecap="round"><path d="M300 40l8 5 8-5"/><path d="M330 56l7 4 7-4"/><path d="M270 60l7 4 7-4"/></g>
+<path d="M0 132 90 100 190 128 290 96 400 130 500 106 600 126V170H0z" fill="#C99A74" opacity=".8"/>
+<path d="M0 148 110 122 230 146 340 120 460 148 600 130V180H0z" fill="#A87050" opacity=".75"/>
+<rect y="158" width="${W}" height="82" fill="#E9C46A"/>
+<g stroke="#D4A63F" stroke-width="3" fill="none" stroke-linecap="round">${Array.from({ length: 8 }, (_, i) => `<path d="M0 ${172 + i * 9}Q150 ${164 + i * 9} 300 ${172 + i * 9}T600 ${170 + i * 9}"/>`).join('')}</g>
+<g fill="#D9A441"><path d="M330 214l-26 0 13-34z"/><path d="M416 224l-30 0 15-40z"/></g><g stroke="#8A6A4F" stroke-width="2.4" stroke-linecap="round"><path d="M317 180v-8M401 184v-9"/></g>
+<rect x="86" y="84" width="9" height="104" fill="#5C4333"/>
+<g fill="none" stroke="#5C4333" stroke-width="3" stroke-linecap="round"><path d="M90 94 52 64M90 108 132 74M90 126 48 106M90 134 136 116"/></g>
+<g fill="#EE8A2B" stroke="#C7621A" stroke-width="1.4"><circle cx="52" cy="70" r="8"/><circle cx="132" cy="80" r="8"/><circle cx="48" cy="112" r="8"/><circle cx="136" cy="122" r="8"/><circle cx="76" cy="86" r="8"/><circle cx="106" cy="100" r="8"/><circle cx="68" cy="138" r="8"/><circle cx="116" cy="140" r="8"/></g>
+<g fill="#C2362B" opacity=".9"><path d="M30 56l6 4-4 6-6-4z"/><path d="M150 60l6 4-4 6-6-4z"/><path d="M28 126l6 4-4 6-6-4z"/></g>
+${person(220, 150, '#1D6B58', '#14212A', 1.05)}${person(270, 156, '#C2362B', '#6B4E3A', 1)}<g><path d="M254 186h32l-4 16h-24z" fill="#C08A3E"/><path d="M254 186h32" stroke="#8A6A4F" stroke-width="3"/></g>`, grad('sk', '#E8B08A', '#F9E0BE'));
+
+// HSK 4: winter, a snowy village with lit windows and red lanterns
+S['terms-winter'] = svg(`
+<rect width="${W}" height="${H}" fill="url(#sk)"/><circle cx="520" cy="52" r="22" fill="#fff" opacity=".8"/>
+<path d="M0 128 90 80 180 114 280 70 380 116 470 84 560 112 600 98V170H0z" fill="#AFC1D3"/><path d="M90 80 62 106 90 98 114 110zM280 70 250 98 278 90 304 104zM470 84 442 108 470 100 494 112z" fill="#fff"/>
+<path d="M0 214Q200 184 600 214V240H0z" fill="#F4F8FA"/>
+<rect y="150" width="${W}" height="70" fill="#EEF3F8" opacity=".5"/>
+<g><rect x="60" y="124" width="104" height="70" fill="#E8D5B7"/><path d="M48 128 112 88 176 128z" fill="#5C4A42"/><path d="M52 126q60-44 120 0q-60-18-120 0z" fill="#fff"/><rect x="84" y="146" width="22" height="20" rx="2" fill="#F9D78A"/><rect x="122" y="146" width="22" height="20" rx="2" fill="#F9D78A"/><rect x="100" y="168" width="26" height="26" fill="#A5301F"/><rect x="144" y="96" width="10" height="26" fill="#6B554A"/><rect x="141" y="92" width="16" height="6" fill="#fff"/></g>
+<g stroke="#B9C4CE" stroke-width="4" fill="none" stroke-linecap="round" opacity=".7"><path d="M149 86q-6-10 2-18t-2-16"/></g>
+<g><rect x="250" y="130" width="120" height="64" fill="#E2CBA6"/><path d="M238 134 310 94 382 134z" fill="#5C4A42"/><path d="M242 132q68-46 136 0q-68-18-136 0z" fill="#fff"/><rect x="270" y="150" width="22" height="20" rx="2" fill="#F9D78A"/><rect x="328" y="150" width="22" height="20" rx="2" fill="#F9D78A"/><rect x="298" y="164" width="26" height="30" fill="#A5301F"/></g>
+${lantern(268, 134, '#C2362B', .8)}${lantern(352, 134, '#C2362B', .8)}${lantern(80, 130, '#C2362B', .7)}
+<g><path d="M470 196l-24 0 12-26z" fill="#2F6F5E"/><path d="M470 178l-30 0 15-34z" fill="#2F6F5E"/><path d="M470 156l-34 0 17-40z" fill="#2F6F5E"/><rect x="451" y="196" width="6" height="12" fill="#6B4E3A"/><path d="M453 116l-9 22h18zM456 144l-12 18h24z" fill="#fff"/></g>
+<g><path d="M540 200l-22 0 11-24z" fill="#3C8670"/><path d="M540 184l-26 0 13-30z" fill="#3C8670"/><rect x="525" y="200" width="6" height="10" fill="#6B4E3A"/><path d="M527 154l-8 18h16z" fill="#fff"/></g>
+<g fill="#fff"><circle cx="30" cy="30" r="2.6"/><circle cx="120" cy="52" r="2.2"/><circle cx="190" cy="24" r="2.8"/><circle cx="312" cy="40" r="2.2"/><circle cx="410" cy="20" r="2.6"/><circle cx="470" cy="56" r="2.4"/><circle cx="580" cy="30" r="2.2"/><circle cx="236" cy="70" r="2"/><circle cx="560" cy="90" r="2.2"/><circle cx="20" cy="110" r="2.4"/></g>
+${person(190, 164, '#C2362B', '#14212A', 1.05)}<path d="M176 189q14 8 28 0" stroke="#fff" stroke-width="5" fill="none"/>${person(410, 170, '#1D6B58', '#6B4E3A', 1)}<path d="M397 195q13 8 26 0" stroke="#E9A24B" stroke-width="5" fill="none"/>`, grad('sk', '#B9CBE0', '#EEF3F8'));
+
+// HSK 4 header: the whole year in one sky, spring on the left to winter on the right
+S['terms-hero'] = svg(`
+<rect width="${W}" height="${H}" fill="url(#sk)"/>
+<circle cx="52" cy="54" r="20" fill="#FBE18A"/><circle cx="238" cy="46" r="26" fill="#F7C948"/><circle cx="398" cy="60" r="24" fill="#FBE6B8"/><circle cx="552" cy="50" r="17" fill="#fff" opacity=".85"/>
+${cloud(120, 40, .8)}${cloud(300, 80, .7)}
+<path d="M0 126 60 96 130 118 200 90 280 116 350 92 430 118 500 94 600 114V160H0z" fill="url(#hl)"/>
+<path d="M0 214Q150 192 300 210T600 208V240H0z" fill="url(#gr)"/>
+<rect x="68" y="108" width="8" height="84" fill="#6B4E3A"/><g fill="#F7B6C6"><circle cx="50" cy="102" r="22"/><circle cx="76" cy="90" r="26"/><circle cx="102" cy="104" r="22"/><circle cx="72" cy="116" r="20"/></g><g fill="#FBD3DD"><circle cx="64" cy="94" r="8"/><circle cx="92" cy="100" r="8"/></g>
+<rect x="216" y="116" width="8" height="76" fill="#6B4E3A"/><g fill="#3C8670"><circle cx="198" cy="108" r="24"/><circle cx="226" cy="96" r="28"/><circle cx="254" cy="110" r="24"/><circle cx="224" cy="122" r="22"/></g><g fill="#4F9E80"><circle cx="212" cy="98" r="10"/><circle cx="240" cy="106" r="10"/></g>
+<rect x="372" y="112" width="8" height="80" fill="#5C4333"/><g fill="#E8A24B"><circle cx="354" cy="104" r="22"/><circle cx="380" cy="92" r="26"/><circle cx="406" cy="106" r="22"/><circle cx="376" cy="118" r="20"/></g><g fill="#C2362B" opacity=".85"><circle cx="366" cy="98" r="8"/><circle cx="396" cy="108" r="8"/></g>
+<g><path d="M530 196l-26 0 13-30z" fill="#2F6F5E"/><path d="M530 176l-32 0 16-36z" fill="#2F6F5E"/><path d="M530 150l-36 0 18-42z" fill="#2F6F5E"/><rect x="510" y="196" width="7" height="12" fill="#6B4E3A"/><path d="M512 108l-9 22h18zM515 140l-12 18h24z" fill="#fff"/></g>
+<g fill="#fff"><circle cx="460" cy="40" r="2.4"/><circle cx="492" cy="70" r="2.2"/><circle cx="570" cy="84" r="2.4"/><circle cx="440" cy="84" r="2"/><circle cx="586" cy="30" r="2.2"/></g>
+<path d="M30 224Q160 204 300 222T570 220" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round" opacity=".9"/>`,
+  '<linearGradient id="sk" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D5ECF4"/><stop offset=".25" stop-color="#E9F4EA"/><stop offset=".3" stop-color="#BEE4F0"/><stop offset=".5" stop-color="#FFF3CF"/><stop offset=".56" stop-color="#F4CE9C"/><stop offset=".72" stop-color="#F9E0BE"/><stop offset=".76" stop-color="#C9D8E6"/><stop offset="1" stop-color="#EEF3F8"/></linearGradient>' +
+  '<linearGradient id="hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#B9D9CE"/><stop offset=".25" stop-color="#9FCDB6"/><stop offset=".3" stop-color="#8BC6A5"/><stop offset=".5" stop-color="#7DBF9A"/><stop offset=".56" stop-color="#D2A06F"/><stop offset=".72" stop-color="#C99A74"/><stop offset=".76" stop-color="#D6E1EA"/><stop offset="1" stop-color="#D6E1EA"/></linearGradient>' +
+  '<linearGradient id="gr" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7DB56C"/><stop offset=".25" stop-color="#7DB56C"/><stop offset=".3" stop-color="#5FA05A"/><stop offset=".5" stop-color="#5FA05A"/><stop offset=".56" stop-color="#D9A441"/><stop offset=".72" stop-color="#D9A441"/><stop offset=".76" stop-color="#F4F8FA"/><stop offset="1" stop-color="#F4F8FA"/></linearGradient>');
+
 // ---- wallpaper tiles: the background of each unit's trail. 600x600, transparent, little icons scattered mostly along the two edges, repeated downwards ----
 const T = {};
 const I = {   // each icon is drawn around (0,0), about 50 wide
@@ -188,6 +264,9 @@ const I = {   // each icon is drawn around (0,0), about 50 wide
   blossom: (c = '#F7B6C6') => `<g fill="${c}"><circle cx="0" cy="-9" r="8"/><circle cx="9" cy="-3" r="8"/><circle cx="5" cy="8" r="8"/><circle cx="-5" cy="8" r="8"/><circle cx="-9" cy="-3" r="8"/></g><circle r="4" fill="#E9A24B"/>`,
   petal: (c = '#F7B6C6') => `<path d="M0-8q10 6 0 16-10-10 0-16z" fill="${c}"/>`,
   rice: (c = '#C8B04C') => `<path d="M0 22V-14M0 12q-10-4-12-14M0 4q10-4 12-14M0-4q-8-4-10-12M0-6q8-4 10-12" stroke="${c}" stroke-width="2.6" fill="none" stroke-linecap="round"/>`,
+  lotus: (c = '#F2A0B8') => `<ellipse cx="0" cy="14" rx="26" ry="8" fill="#3C8670" opacity=".9"/><g fill="${c}"><path d="M0 8q-14-4-12-22 8 6 12 22z"/><path d="M0 8q14-4 12-22-8 6-12 22z"/><path d="M0 8q-5-14 0-28 5 14 0 28z" opacity=".85"/></g><circle cx="0" cy="-2" r="3" fill="#F7D054"/>`,
+  fan: (c = '#C2362B') => `<path d="M-24 10A28 28 0 0 1 24 10L0 14z" fill="${c}" opacity=".85"/><path d="M0 14-17-8M0 14-6-16M0 14 6-16M0 14 17-8" stroke="#fff" stroke-width="1.8" opacity=".6"/><rect x="-2" y="12" width="4" height="14" rx="2" fill="#8A6A4F"/>`,
+  melon: (c = '#E85D5D') => `<path d="M-24-6h48a24 24 0 0 1-48 0z" fill="#3C8670"/><path d="M-21-6h42a21 21 0 0 1-42 0z" fill="#fff" opacity=".9"/><path d="M-19-6h38a19 19 0 0 1-38 0z" fill="${c}"/><g fill="#14212A"><circle cx="-8" cy="2" r="1.6"/><circle cx="0" cy="6" r="1.6"/><circle cx="8" cy="2" r="1.6"/></g>`,
   reed: (c = '#8FA37A') => `<path d="M-8 24Q-12 0-6-22M0 24V-26M8 24Q12 0 6-20" stroke="${c}" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="0" cy="-26" rx="3" ry="8" fill="#8A6A4F"/>`
 };
 const SLOTS = [[64, 44], [528, 96], [38, 178], [556, 238], [82, 318], [520, 372], [44, 452], [548, 506], [96, 560], [330, 40], [300, 300], [330, 560]];   // edges first, three faint ones in the middle
@@ -216,7 +295,9 @@ const TL = {
   winter: [['flake'], ['bare'], ['flake'], ['cloud', '#E4ECF2'], ['flake'], ['bridge', '#8FA3B5'], ['bare'], ['flake']],
   winter2: [['bare'], ['flake'], ['mountain', '#C9D8E6'], ['flake'], ['bare'], ['flake'], ['lantern'], ['flake']],
   spring: [['blossom'], ['petal'], ['blossom', '#FBD3DD'], ['willow', '#7DB56C'], ['petal'], ['bridge'], ['blossom'], ['petal']],
-  spring2: [['petal'], ['blossom'], ['round', '#9DD08A'], ['petal'], ['blossom', '#FBD3DD'], ['sun'], ['petal'], ['bird']]
+  spring2: [['petal'], ['blossom'], ['round', '#9DD08A'], ['petal'], ['blossom', '#FBD3DD'], ['sun'], ['petal'], ['bird']],
+  summer: [['sun'], ['lotus'], ['melon'], ['cloud'], ['fan'], ['wave'], ['lotus', '#F7B6C6'], ['boat']],
+  summer2: [['melon'], ['cup'], ['sun', '#F2A93B'], ['lotus'], ['fan', '#E9A24B'], ['bird'], ['wave', '#6AAE9A'], ['cloud']]
 };
 Object.keys(TL).forEach(k => { T[k] = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(tile(TL[k])); });
 

@@ -1,0 +1,709 @@
+[
+ {
+  "p": "g4-18",
+  "t": "cloze",
+  "zh": "他很累，甚至不想说话。",
+  "en": "He is tired; he does not even want to talk.",
+  "blank": "甚至",
+  "explain": "甚至 adds a stronger case."
+ },
+ {
+  "p": "g4-18",
+  "t": "order",
+  "zh": "天气很冷，甚至下雪了。",
+  "en": "It is very cold; it has even started to snow.",
+  "explain": "甚至 comes before the stronger case."
+ },
+ {
+  "p": "g4-18",
+  "t": "mc",
+  "prompt": "Which sentence says: He even forgot his own name?",
+  "options": [
+   "他甚至忘了自己的名字。",
+   "他忘了甚至自己的名字。"
+  ],
+  "correct": 0,
+  "zh": "他甚至忘了自己的名字。",
+  "en": "He even forgot his own name.",
+  "explain": "甚至 comes before the verb."
+ },
+ {
+  "p": "g4-3",
+  "t": "cloze",
+  "zh": "尽管他很忙，还是来了。",
+  "en": "Although he was busy, he still came.",
+  "blank": "尽管",
+  "explain": "尽管 gives a fact; 还是 gives the result that did not change."
+ },
+ {
+  "p": "g4-3",
+  "t": "order",
+  "zh": "尽管很难，我们还是做完了。",
+  "en": "Although it was hard, we still finished it.",
+  "explain": "尽管 + situation, 还是 + result."
+ },
+ {
+  "p": "g4-6",
+  "t": "cloze",
+  "zh": "既然你不喜欢，就别买吧。",
+  "en": "Since you do not like it, do not buy it.",
+  "blank": "既然",
+  "explain": "既然 accepts that the fact is true."
+ },
+ {
+  "p": "g4-6",
+  "t": "order",
+  "zh": "既然你想去，就去吧。",
+  "en": "Since you want to go, go.",
+  "explain": "既然 + known fact, 就 + advice."
+ },
+ {
+  "p": "g4-8",
+  "t": "order",
+  "zh": "由于太忙，因此他没有时间吃饭。",
+  "en": "Because he is too busy, he has no time to eat.",
+  "explain": "由于 + reason, 因此 + result."
+ },
+ {
+  "p": "g4-8",
+  "t": "cloze",
+  "zh": "由于身体不好，因此他不能去。",
+  "en": "Because his health is bad, he cannot go.",
+  "blank": "由于",
+  "explain": "由于 starts the reason."
+ },
+ {
+  "p": "g4-9",
+  "t": "cloze",
+  "zh": "她看见朋友，于是走了过去。",
+  "en": "She saw her friend, so she walked over.",
+  "blank": "于是",
+  "explain": "于是 links two actions in order."
+ },
+ {
+  "p": "g4-9",
+  "t": "order",
+  "zh": "他有点儿渴，于是喝了一杯水。",
+  "en": "He was a little thirsty, so he drank a glass of water.",
+  "explain": "于是 + what he did about it."
+ },
+ {
+  "p": "g4-9",
+  "t": "cloze",
+  "zh": "我很累，于是早一点睡觉了。",
+  "en": "I was tired, so I went to bed early.",
+  "blank": "于是",
+  "explain": "于是 = so, and then."
+ },
+ {
+  "p": "g4-10",
+  "t": "cloze",
+  "zh": "我想去，不过今天太累了。",
+  "en": "I want to go, but I am too tired today.",
+  "blank": "不过",
+  "explain": "不过 = but."
+ },
+ {
+  "p": "g4-11",
+  "t": "order",
+  "zh": "他很聪明，并且很努力。",
+  "en": "He is clever, and he works hard too.",
+  "explain": "并且 adds a second good thing."
+ },
+ {
+  "p": "g4-11",
+  "t": "cloze",
+  "zh": "我喜欢咖啡，而我的朋友喜欢茶。",
+  "en": "I like coffee, while my friend likes tea.",
+  "blank": "而",
+  "explain": "而 shows the two sides."
+ },
+ {
+  "p": "g4-13",
+  "t": "cloze",
+  "zh": "我不是不喜欢他，而是不了解他。",
+  "en": "It is not that I dislike him; I do not know him well.",
+  "blank": "而",
+  "explain": "而 comes before 是 and gives the true idea."
+ },
+ {
+  "p": "g4-13",
+  "t": "order",
+  "zh": "我不是累，而是饿。",
+  "en": "I am not tired; I am hungry.",
+  "explain": "不是 + wrong idea, 而是 + true idea."
+ },
+ {
+  "p": "g4-14",
+  "t": "cloze",
+  "zh": "首先要吃饭，其次要休息。",
+  "en": "First you must eat; second you must rest.",
+  "blank": "其次",
+  "explain": "其次 gives the second point."
+ },
+ {
+  "p": "g4-15",
+  "t": "cloze",
+  "zh": "他很聪明；此外，他也很努力。",
+  "en": "He is clever; in addition, he works hard too.",
+  "blank": "此外",
+  "explain": "此外 is the formal \"in addition\"."
+ },
+ {
+  "p": "g4-15",
+  "t": "order",
+  "zh": "这个城市很大；另外，人也很多。",
+  "en": "This city is big; besides, it has many people.",
+  "explain": "另外 starts the new point."
+ },
+ {
+  "p": "g4-16",
+  "t": "cloze",
+  "zh": "我爱吃甜的东西，比如水果和面包。",
+  "en": "I love sweet things, for example fruit and bread.",
+  "blank": "比如",
+  "explain": "比如 introduces examples."
+ },
+ {
+  "p": "g4-16",
+  "t": "order",
+  "zh": "他爱吃甜的东西，例如面包。",
+  "en": "He loves sweet things, for example bread.",
+  "explain": "例如 comes right before the example."
+ },
+ {
+  "p": "g4-17",
+  "t": "cloze",
+  "zh": "这个办法很好，同时也很简单。",
+  "en": "This way is good, and at the same time simple.",
+  "blank": "同时",
+  "explain": "同时 = at the same time."
+ },
+ {
+  "p": "g4-17",
+  "t": "order",
+  "zh": "她在听音乐，同时在做作业。",
+  "en": "She is listening to music and doing homework at the same time.",
+  "explain": "同时 joins the two actions."
+ },
+ {
+  "p": "g4-19",
+  "t": "cloze",
+  "zh": "没有出租车，我们只好走路回家。",
+  "en": "There are no taxis, so we have to walk home.",
+  "blank": "只好",
+  "explain": "只好 = the only thing left is to."
+ },
+ {
+  "p": "g4-19",
+  "t": "order",
+  "zh": "车坏了，他不得不走路去。",
+  "en": "His car has broken down, so he has to walk.",
+  "explain": "不得不 comes before the verb."
+ },
+ {
+  "p": "g4-20",
+  "t": "cloze",
+  "zh": "快一点走，否则就来不及了。",
+  "en": "Hurry, or it will be too late.",
+  "blank": "来不及",
+  "explain": "来不及 = too late."
+ },
+ {
+  "p": "g4-20",
+  "t": "order",
+  "zh": "现在出发还来得及。",
+  "en": "There is still time if we set off now.",
+  "explain": "来得及 = there is still time."
+ },
+ {
+  "p": "g4-21",
+  "t": "cloze",
+  "zh": "你赶紧给他打电话吧。",
+  "en": "Call him right away.",
+  "blank": "赶紧",
+  "explain": "赶紧 goes before the verb."
+ },
+ {
+  "p": "g4-21",
+  "t": "order",
+  "zh": "他赶快跑回家了。",
+  "en": "He quickly ran home.",
+  "explain": "赶快 goes before the verb."
+ },
+ {
+  "p": "g4-22",
+  "t": "cloze",
+  "zh": "难道他不知道这件事吗？",
+  "en": "Does he really not know about this?",
+  "blank": "难道",
+  "explain": "难道 shows surprise."
+ },
+ {
+  "p": "g4-22",
+  "t": "order",
+  "zh": "难道你忘了吗？",
+  "en": "Have you really forgotten?",
+  "explain": "难道 + statement + 吗."
+ },
+ {
+  "p": "g4-24",
+  "t": "cloze",
+  "zh": "他竟然一个人去了。",
+  "en": "He actually went alone.",
+  "blank": "竟然",
+  "explain": "竟然 shows surprise."
+ },
+ {
+  "p": "g4-25",
+  "t": "cloze",
+  "zh": "我本来不饿，可是看见饭就想吃了。",
+  "en": "I was not hungry at first, but I want to eat when I see food.",
+  "blank": "本来",
+  "explain": "本来 = at first."
+ },
+ {
+  "p": "g4-25",
+  "t": "order",
+  "zh": "原来这是你的书。",
+  "en": "So this is your book.",
+  "explain": "原来 starts the sentence."
+ },
+ {
+  "p": "g4-27",
+  "t": "cloze",
+  "zh": "我从来没见过他。",
+  "en": "I have never seen him.",
+  "blank": "从来",
+  "explain": "从来没 means \"never up to now\"."
+ },
+ {
+  "p": "g4-28",
+  "t": "cloze",
+  "zh": "我并不累。",
+  "en": "I am not tired at all.",
+  "blank": "并",
+  "explain": "并不 = not at all."
+ },
+ {
+  "p": "g4-28",
+  "t": "order",
+  "zh": "这并不难。",
+  "en": "This is not hard at all.",
+  "explain": "并 comes before 不."
+ },
+ {
+  "p": "g4-29",
+  "t": "cloze",
+  "zh": "冬天这里往往很冷。",
+  "en": "Here it tends to be cold in winter.",
+  "blank": "往往",
+  "explain": "往往 describes what usually happens."
+ },
+ {
+  "p": "g4-29",
+  "t": "order",
+  "zh": "学生往往不喜欢考试。",
+  "en": "Students tend not to like exams.",
+  "explain": "往往 goes before 不."
+ },
+ {
+  "p": "g4-30",
+  "t": "cloze",
+  "zh": "他偶尔喝一杯咖啡。",
+  "en": "He drinks a cup of coffee now and then.",
+  "blank": "偶尔",
+  "explain": "偶尔 = now and then."
+ },
+ {
+  "p": "g4-31",
+  "t": "cloze",
+  "zh": "他差点儿忘了带手机。",
+  "en": "He nearly forgot to bring his phone.",
+  "blank": "差点儿",
+  "explain": "差点儿 = nearly."
+ },
+ {
+  "p": "g4-31",
+  "t": "order",
+  "zh": "我差点儿睡着了。",
+  "en": "I almost fell asleep.",
+  "explain": "差点儿 goes before the verb."
+ },
+ {
+  "p": "g4-32",
+  "t": "cloze",
+  "zh": "这本书大约有两百页。",
+  "en": "This book has about two hundred pages.",
+  "blank": "大约",
+  "explain": "大约 = about."
+ },
+ {
+  "p": "g4-32",
+  "t": "order",
+  "zh": "我至少要学两年。",
+  "en": "I must study at least two years.",
+  "explain": "至少 goes before the amount."
+ },
+ {
+  "p": "g4-33",
+  "t": "cloze",
+  "zh": "这里夏天很热，尤其是八月。",
+  "en": "It is hot here in summer, especially in August.",
+  "blank": "尤其",
+  "explain": "尤其 = especially."
+ },
+ {
+  "p": "g4-33",
+  "t": "order",
+  "zh": "有十个人，其中三个是老师。",
+  "en": "There are ten people, and three of them are teachers.",
+  "explain": "其中 points back to the ten."
+ },
+ {
+  "p": "g4-34",
+  "t": "cloze",
+  "zh": "我估计他不会来。",
+  "en": "I guess he will not come.",
+  "blank": "估计",
+  "explain": "估计 = I guess."
+ },
+ {
+  "p": "g4-34",
+  "t": "cloze",
+  "zh": "这个问题肯定很难。",
+  "en": "This question is definitely hard.",
+  "blank": "肯定",
+  "explain": "肯定 = definitely."
+ },
+ {
+  "p": "g4-34",
+  "t": "order",
+  "zh": "他也许不知道。",
+  "en": "Maybe he does not know.",
+  "explain": "也许 goes before the verb."
+ },
+ {
+  "p": "g4-35",
+  "t": "cloze",
+  "zh": "你千万别告诉他。",
+  "en": "Be sure not to tell him.",
+  "blank": "千万",
+  "explain": "千万 gives a strong warning."
+ },
+ {
+  "p": "g4-35",
+  "t": "order",
+  "zh": "我无法回答。",
+  "en": "I cannot answer.",
+  "explain": "无法 goes before the verb."
+ },
+ {
+  "p": "g4-36",
+  "t": "cloze",
+  "zh": "已经很晚了，他仍然在工作。",
+  "en": "It is already late, and he is still working.",
+  "blank": "仍然",
+  "explain": "仍然 = still."
+ },
+ {
+  "p": "g4-36",
+  "t": "order",
+  "zh": "她仍然不知道这件事。",
+  "en": "She still does not know about this.",
+  "explain": "仍然 goes before 不."
+ },
+ {
+  "p": "g4-37",
+  "t": "cloze",
+  "zh": "请你继续说。",
+  "en": "Please go on speaking.",
+  "blank": "继续",
+  "explain": "继续 = go on."
+ },
+ {
+  "p": "g4-37",
+  "t": "cloze",
+  "zh": "他最终找到了工作。",
+  "en": "In the end he found a job.",
+  "blank": "最终",
+  "explain": "最终 = in the end."
+ },
+ {
+  "p": "g4-37",
+  "t": "order",
+  "zh": "我要重新开始。",
+  "en": "I will start again from the beginning.",
+  "explain": "重新 goes before the verb."
+ },
+ {
+  "p": "g4-39",
+  "t": "cloze",
+  "zh": "这里的天气多么好啊！",
+  "en": "How good the weather is here!",
+  "blank": "多么",
+  "explain": "多么 + adjective + 啊."
+ },
+ {
+  "p": "g4-39",
+  "t": "order",
+  "zh": "孩子们多么高兴啊！",
+  "en": "How happy the children are!",
+  "explain": "多么 comes before the adjective."
+ },
+ {
+  "p": "g4-40",
+  "t": "cloze",
+  "zh": "这个菜看起来一般，吃起来倒很好吃。",
+  "en": "This dish looks ordinary, but it tastes very good.",
+  "blank": "倒",
+  "explain": "倒 = contrary to what you expect."
+ },
+ {
+  "p": "g4-40",
+  "t": "order",
+  "zh": "他很忙，却还是来了。",
+  "en": "He is busy, but he still came.",
+  "explain": "却 goes before 还是."
+ },
+ {
+  "p": "g4-40",
+  "t": "cloze",
+  "zh": "我想去，他却不想去。",
+  "en": "I want to go, but he does not want to go.",
+  "blank": "却",
+  "explain": "却 turns the meaning against the first part."
+ },
+ {
+  "p": "g4-41",
+  "t": "cloze",
+  "zh": "这里的冬天更加冷。",
+  "en": "Winter here is even colder.",
+  "blank": "更加",
+  "explain": "更加 = even more."
+ },
+ {
+  "p": "g4-41",
+  "t": "order",
+  "zh": "我不如我哥哥聪明。",
+  "en": "I am not as clever as my older brother.",
+  "explain": "A 不如 B + adjective."
+ },
+ {
+  "p": "g4-56",
+  "t": "cloze",
+  "zh": "他们说了同样的话。",
+  "en": "They said the same words.",
+  "blank": "同样",
+  "explain": "同样的 + noun = the same."
+ },
+ {
+  "p": "g4-56",
+  "t": "order",
+  "zh": "这两个词的意思不相同。",
+  "en": "The meanings of these two words are not the same.",
+  "explain": "相同 comes after 不."
+ },
+ {
+  "p": "g4-42",
+  "t": "cloze",
+  "zh": "对学生来说，这个很难。",
+  "en": "For students, this is hard.",
+  "blank": "对",
+  "explain": "对 + person + 来说."
+ },
+ {
+  "p": "g4-42",
+  "t": "order",
+  "zh": "对于学习，他很认真。",
+  "en": "He is very serious about studying.",
+  "explain": "对于 + topic."
+ },
+ {
+  "p": "g4-43",
+  "t": "cloze",
+  "zh": "他通过考试了。",
+  "en": "He has passed the exam.",
+  "blank": "通过",
+  "explain": "通过 can mean \"to pass\"."
+ },
+ {
+  "p": "g4-43",
+  "t": "order",
+  "zh": "通过朋友，我找到了工作。",
+  "en": "Through a friend, I found a job.",
+  "explain": "通过 + person or means."
+ },
+ {
+  "p": "g4-44",
+  "t": "order",
+  "zh": "随着天气变冷，雨越来越多。",
+  "en": "As the weather gets cold, there is more and more rain.",
+  "explain": "随着 + change."
+ },
+ {
+  "p": "g4-44",
+  "t": "cloze",
+  "zh": "随着城市变大，路越来越多。",
+  "en": "As the city grows, there are more and more roads.",
+  "blank": "随着",
+  "explain": "随着 starts the sentence."
+ },
+ {
+  "p": "g4-45",
+  "t": "cloze",
+  "zh": "按照地图走，我们找到了银行。",
+  "en": "Following the map, we found the bank.",
+  "blank": "按照",
+  "explain": "按照 + what you follow."
+ },
+ {
+  "p": "g4-45",
+  "t": "order",
+  "zh": "作为老师，她很认真。",
+  "en": "As a teacher, she is very serious.",
+  "explain": "作为 + role."
+ },
+ {
+  "p": "g4-46",
+  "t": "cloze",
+  "zh": "和他相比，我的汉语不太好。",
+  "en": "Compared with him, my Chinese is not very good.",
+  "blank": "相比",
+  "explain": "和 … 相比 = compared with."
+ },
+ {
+  "p": "g4-47",
+  "t": "cloze",
+  "zh": "这个电影使我想起了小时候。",
+  "en": "This film reminds me of my childhood.",
+  "blank": "使",
+  "explain": "使 + person + result."
+ },
+ {
+  "p": "g4-47",
+  "t": "order",
+  "zh": "这件事使他很难过。",
+  "en": "This matter makes him very sad.",
+  "explain": "使 + person + feeling."
+ },
+ {
+  "p": "g4-49",
+  "t": "cloze",
+  "zh": "我没有任何问题。",
+  "en": "I have no questions at all.",
+  "blank": "任何",
+  "explain": "任何 + noun."
+ },
+ {
+  "p": "g4-49",
+  "t": "cloze",
+  "zh": "这里的东西，你随便吃。",
+  "en": "Eat anything here as you like.",
+  "blank": "随便",
+  "explain": "随便 = as you like."
+ },
+ {
+  "p": "g4-49",
+  "t": "order",
+  "zh": "任何人都可以帮助你。",
+  "en": "Anyone can help you.",
+  "explain": "任何 + noun + 都."
+ },
+ {
+  "p": "g4-50",
+  "t": "cloze",
+  "zh": "各国的学生都来了。",
+  "en": "Students from every country have come.",
+  "blank": "各",
+  "explain": "各 + noun = each."
+ },
+ {
+  "p": "g4-50",
+  "t": "order",
+  "zh": "所有的东西都很贵。",
+  "en": "Everything is dear.",
+  "explain": "所有 + noun + 都."
+ },
+ {
+  "p": "g4-51",
+  "t": "cloze",
+  "zh": "他吃了全部的菜。",
+  "en": "He ate all the dishes.",
+  "blank": "全部",
+  "explain": "全部 = all of it."
+ },
+ {
+  "p": "g4-51",
+  "t": "order",
+  "zh": "这个城市有许多公园。",
+  "en": "This city has many parks.",
+  "explain": "许多 + noun."
+ },
+ {
+  "p": "g4-51",
+  "t": "cloze",
+  "zh": "我只看了一部分。",
+  "en": "I only watched part of it.",
+  "blank": "部分",
+  "explain": "一部分 = a part."
+ },
+ {
+  "p": "g4-52",
+  "t": "order",
+  "zh": "有的人看书，有的人聊天。",
+  "en": "Some people read and some chat.",
+  "explain": "有的 … 有的 … splits the group."
+ },
+ {
+  "p": "g4-52",
+  "t": "order",
+  "zh": "这些书，有的好，有的不好。",
+  "en": "Of these books, some are good and some are not.",
+  "explain": "有的 … 有的 … compares the parts."
+ },
+ {
+  "p": "g4-52",
+  "t": "mc",
+  "prompt": "Which sentence says: Some students are here and some are not?",
+  "options": [
+   "有的学生在这儿，有的不在。",
+   "有的学生在这儿，有的学生不是在。"
+  ],
+  "correct": 0,
+  "zh": "有的学生在这儿，有的不在。",
+  "en": "Some students are here and some are not.",
+  "explain": "The second 有的 can stand without a noun."
+ },
+ {
+  "p": "g4-54",
+  "t": "cloze",
+  "zh": "他以前住在这里，当时他还是学生。",
+  "en": "He used to live here; at that time he was still a student.",
+  "blank": "当时",
+  "explain": "当时 points back to a time already named."
+ },
+ {
+  "p": "g4-55",
+  "t": "cloze",
+  "zh": "他先洗手，接着吃饭。",
+  "en": "He washes his hands first, then eats.",
+  "blank": "接着",
+  "explain": "接着 = then, next."
+ },
+ {
+  "p": "g4-55",
+  "t": "cloze",
+  "zh": "他从此再也不迟到了。",
+  "en": "From then on, he is never late again.",
+  "blank": "从此",
+  "explain": "从此 = from then on."
+ },
+ {
+  "p": "g4-55",
+  "t": "order",
+  "zh": "他先看书，接着写作业。",
+  "en": "He reads first, then does homework.",
+  "explain": "接着 follows the first action."
+ }
+]

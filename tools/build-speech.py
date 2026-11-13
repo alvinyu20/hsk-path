@@ -76,7 +76,11 @@ def main():
     clips = []
     for c in li['clips']:
         py, toks = eng.sentence(c['zh'])
-        words = [dict(zh=t, py=eng.word_py(t), key=toneless(eng.word_py(t))) for t in toks]
+        def reading(t):
+            # a word with several readings ("guo / guò") shows the one this sentence uses
+            alts = eng.word_py(t).split(' / ')
+            return next((a for a in alts if a in py.lower()), alts[0])
+        words = [dict(zh=t, py=reading(t), key=toneless(reading(t))) for t in toks]
         clips.append(dict(zh=c['zh'], py=py, en=c['en'], words=words, notes=c.get('notes', [])))
     tones = li['tones']
 

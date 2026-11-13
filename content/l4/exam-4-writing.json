@@ -1,0 +1,223 @@
+{
+ "W1": [
+  {
+   "words": [
+    "他",
+    "把",
+    "作业",
+    "做完",
+    "了"
+   ],
+   "en": "He has finished the homework."
+  },
+  {
+   "words": [
+    "这家",
+    "饭馆",
+    "的",
+    "菜",
+    "很",
+    "好吃"
+   ],
+   "en": "The dishes at this restaurant are very tasty."
+  },
+  {
+   "words": [
+    "我",
+    "对",
+    "汉语",
+    "很",
+    "感兴趣"
+   ],
+   "en": "I am very interested in Chinese."
+  },
+  {
+   "words": [
+    "他",
+    "被",
+    "老师",
+    "批评",
+    "了"
+   ],
+   "en": "He was criticised by the teacher."
+  },
+  {
+   "words": [
+    "这件事",
+    "比",
+    "我想的",
+    "更",
+    "复杂"
+   ],
+   "en": "This matter is more complicated than I thought."
+  },
+  {
+   "words": [
+    "无论",
+    "多忙",
+    "他",
+    "都",
+    "坚持",
+    "锻炼"
+   ],
+   "en": "No matter how busy he is, he keeps on exercising."
+  },
+  {
+   "words": [
+    "我们",
+    "一边",
+    "吃饭",
+    "一边",
+    "聊天"
+   ],
+   "en": "We chat while eating."
+  },
+  {
+   "words": [
+    "请",
+    "你",
+    "把",
+    "声音",
+    "关小",
+    "一点"
+   ],
+   "en": "Please turn the sound down a little."
+  },
+  {
+   "words": [
+    "他的",
+    "汉语",
+    "说得",
+    "越来越",
+    "流利"
+   ],
+   "en": "His Chinese is getting more and more fluent."
+  },
+  {
+   "words": [
+    "经理",
+    "让",
+    "我",
+    "准时",
+    "到",
+    "公司"
+   ],
+   "en": "The manager tells me to arrive at the company on time."
+  },
+  {
+   "words": [
+    "我",
+    "从来",
+    "没有",
+    "去过",
+    "那个",
+    "地方"
+   ],
+   "en": "I have never been to that place."
+  },
+  {
+   "words": [
+    "他们",
+    "正在",
+    "讨论",
+    "这个",
+    "问题"
+   ],
+   "en": "They are discussing this problem."
+  },
+  {
+   "words": [
+    "虽然",
+    "下雨",
+    "但是",
+    "比赛",
+    "还是",
+    "举行了"
+   ],
+   "en": "Although it rains, the match is still held."
+  },
+  {
+   "words": [
+    "请",
+    "把",
+    "这些",
+    "材料",
+    "整理",
+    "好"
+   ],
+   "en": "Please sort these materials out."
+  },
+  {
+   "words": [
+    "我",
+    "有",
+    "一个",
+    "好",
+    "办法"
+   ],
+   "en": "I have a good idea."
+  },
+  {
+   "words": [
+    "他",
+    "提前",
+    "十分钟",
+    "到了",
+    "公司"
+   ],
+   "en": "He arrived at the company ten minutes early."
+  }
+ ],
+ "W2": [
+  {
+   "zh": "他正在认___地听老师讲课。",
+   "ans": "真",
+   "en": "He is listening to the teacher's lesson seriously."
+  },
+  {
+   "zh": "这个周末我打___去爬山。",
+   "ans": "算",
+   "en": "This weekend I plan to go hiking."
+  },
+  {
+   "zh": "我有一个好___法，你想听吗？",
+   "ans": "想",
+   "en": "I have a good idea; do you want to hear it?"
+  },
+  {
+   "zh": "请把这些材___整理好。",
+   "ans": "料",
+   "en": "Please sort these materials out."
+  },
+  {
+   "zh": "他每天都坚___锻炼身体。",
+   "ans": "持",
+   "en": "He keeps on exercising every day."
+  },
+  {
+   "zh": "我对这个城市的印___很好。",
+   "ans": "象",
+   "en": "I have a very good impression of this city."
+  },
+  {
+   "zh": "他的汉语说得很流___。",
+   "ans": "利",
+   "en": "He speaks Chinese very fluently."
+  },
+  {
+   "zh": "我们一起讨___这个问题吧。",
+   "ans": "论",
+   "en": "Let us discuss this problem together."
+  },
+  {
+   "zh": "这个电影非常精___。",
+   "ans": "彩",
+   "en": "This film is very exciting."
+  },
+  {
+   "zh": "请你准___到，不要迟到。",
+   "ans": "时",
+   "en": "Please arrive on time and do not be late."
+  }
+ ]
+}

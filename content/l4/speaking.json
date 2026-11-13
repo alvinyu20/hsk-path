@@ -1,0 +1,518 @@
+{
+ "scenarios": [
+  {
+   "id": "interview",
+   "glyph": "试",
+   "title": "Go to a job interview",
+   "sub": "Work, 5 turns",
+   "goals": [
+    "Say you want to apply",
+    "Talk about your experience",
+    "Say why you want the job",
+    "Say what pay you hope for"
+   ],
+   "words": [
+    "面试",
+    "应聘",
+    "经验",
+    "工资",
+    "准时",
+    "紧张"
+   ],
+   "ai": [
+    {
+     "zh": "你好，请坐。你是来应聘的吗？",
+     "en": "Hello, please sit down. Are you here to apply for the job?"
+    },
+    {
+     "zh": "你有工作经验吗？",
+     "en": "Do you have work experience?"
+    },
+    {
+     "zh": "很好。你为什么想来我们公司？",
+     "en": "Good. Why do you want to come to our company?"
+    },
+    {
+     "zh": "好的，我们会通知你。你对工资有什么想法？",
+     "en": "Okay, we will notify you. What do you think about the pay?"
+    },
+    {
+     "zh": "好的，谢谢你来面试。",
+     "en": "Okay, thank you for coming to the interview."
+    }
+   ],
+   "you": [
+    {
+     "zh": "是的，我想应聘这个工作。",
+     "en": "Yes, I want to apply for this job."
+    },
+    {
+     "zh": "我有两年的经验。",
+     "en": "I have two years of experience."
+    },
+    {
+     "zh": "我对这个工作很有兴趣。",
+     "en": "I am very interested in this work."
+    },
+    {
+     "zh": "我希望工资不要太低。",
+     "en": "I hope the pay is not too low."
+    }
+   ]
+  },
+  {
+   "id": "rent",
+   "glyph": "租",
+   "title": "Rent a flat",
+   "sub": "Housing, 5 turns",
+   "goals": [
+    "Say how long you want to rent",
+    "Ask for a lower rent",
+    "Ask about the furniture",
+    "Ask when you can move in"
+   ],
+   "words": [
+    "租",
+    "房租",
+    "房东",
+    "家具",
+    "搬",
+    "提供"
+   ],
+   "ai": [
+    {
+     "zh": "你好，我是房东。你想租这个房子吗？",
+     "en": "Hello, I am the landlord. Do you want to rent this flat?"
+    },
+    {
+     "zh": "好的。房租一个月三千块。",
+     "en": "Okay. The rent is 3,000 yuan a month."
+    },
+    {
+     "zh": "可以，两千八百块怎么样？",
+     "en": "Okay, how about 2,800 yuan?"
+    },
+    {
+     "zh": "有，床和桌子都有，还有冰箱。",
+     "en": "Yes, there are a bed and a table, and also a fridge."
+    },
+    {
+     "zh": "下个星期一就可以。",
+     "en": "You can move in next Monday."
+    }
+   ],
+   "you": [
+    {
+     "zh": "对，我想租一年。",
+     "en": "Yes, I want to rent it for a year."
+    },
+    {
+     "zh": "房租可以便宜一点吗？",
+     "en": "Can the rent be a little cheaper?"
+    },
+    {
+     "zh": "好的。房子里有家具吗？",
+     "en": "Okay. Is there furniture in the flat?"
+    },
+    {
+     "zh": "太好了，我什么时候可以搬进来？",
+     "en": "Great, when can I move in?"
+    }
+   ]
+  },
+  {
+   "id": "parcel",
+   "glyph": "递",
+   "title": "Send a parcel",
+   "sub": "Post, 5 turns",
+   "goals": [
+    "Say you want to send a parcel",
+    "Fill in the address",
+    "Ask if it can be faster",
+    "Ask how to pay"
+   ],
+   "words": [
+    "快递",
+    "寄",
+    "地址",
+    "重",
+    "免费",
+    "提供"
+   ],
+   "ai": [
+    {
+     "zh": "你好，你要寄什么？",
+     "en": "Hello, what do you want to send?"
+    },
+    {
+     "zh": "请把地址写在这里。",
+     "en": "Please write the address here."
+    },
+    {
+     "zh": "这个有点重，三十块。",
+     "en": "This is a bit heavy: 30 yuan."
+    },
+    {
+     "zh": "可以，明天就能到。",
+     "en": "Yes, it can arrive tomorrow."
+    },
+    {
+     "zh": "你可以用手机付钱。",
+     "en": "You can pay with your phone."
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想寄一个快递。",
+     "en": "I want to send a parcel."
+    },
+    {
+     "zh": "好的，我写好了。",
+     "en": "Okay, I have written it."
+    },
+    {
+     "zh": "能快一点到吗？",
+     "en": "Can it arrive a bit faster?"
+    },
+    {
+     "zh": "好的，请问我怎么付钱？",
+     "en": "Okay, how do I pay?"
+    }
+   ]
+  },
+  {
+   "id": "late",
+   "glyph": "歉",
+   "title": "Say sorry for being late",
+   "sub": "Manners, 5 turns",
+   "goals": [
+    "Say sorry and give a reason",
+    "Explain about your phone",
+    "Thank them and promise to be on time",
+    "Ask when it starts"
+   ],
+   "words": [
+    "迟到",
+    "堵车",
+    "道歉",
+    "抱歉",
+    "原谅",
+    "理解"
+   ],
+   "ai": [
+    {
+     "zh": "你怎么现在才来？我们等了你半个小时。",
+     "en": "Why have you only come now? We waited for you for half an hour."
+    },
+    {
+     "zh": "你为什么没有提前给我打电话？",
+     "en": "Why did you not call me in advance?"
+    },
+    {
+     "zh": "好吧，这次我原谅你。",
+     "en": "All right, I forgive you this time."
+    },
+    {
+     "zh": "好，我们快点进去吧。",
+     "en": "Okay, let us go in quickly."
+    },
+    {
+     "zh": "现在就要开始了，快进去吧。",
+     "en": "It is about to begin now; hurry in."
+    }
+   ],
+   "you": [
+    {
+     "zh": "对不起，路上现在堵车了。",
+     "en": "Sorry, there is a traffic jam on the road now."
+    },
+    {
+     "zh": "我的手机没电了，真抱歉。",
+     "en": "My phone has no battery left. I am really sorry."
+    },
+    {
+     "zh": "谢谢你的理解，下次我一定准时。",
+     "en": "Thank you for understanding; next time I will certainly be on time."
+    },
+    {
+     "zh": "对了，今天的活动几点开始？",
+     "en": "By the way, what time does today's event begin?"
+    }
+   ]
+  },
+  {
+   "id": "booking",
+   "glyph": "餐",
+   "title": "Book a table for a group",
+   "sub": "Food, 5 turns",
+   "goals": [
+    "Say you want to book",
+    "Say how many people and when",
+    "Ask about a discount",
+    "Say thanks"
+   ],
+   "words": [
+    "聚餐",
+    "餐厅",
+    "订",
+    "座位",
+    "打折",
+    "结账"
+   ],
+   "ai": [
+    {
+     "zh": "你好，这里是餐厅。你要订座位吗？",
+     "en": "Hello, this is the restaurant. Do you want to book seats?"
+    },
+    {
+     "zh": "好的，几个人？什么时候来？",
+     "en": "Okay, how many people? When are you coming?"
+    },
+    {
+     "zh": "星期六晚上很多人聚餐，七点以后才有座位。",
+     "en": "Many people have group meals on Saturday evenings; there are seats only after seven."
+    },
+    {
+     "zh": "可以，我们给你们打折。",
+     "en": "Yes, we will give you a discount."
+    },
+    {
+     "zh": "不客气，星期六见。",
+     "en": "You are welcome. See you on Saturday."
+    }
+   ],
+   "you": [
+    {
+     "zh": "对，我想订一些座位。",
+     "en": "Yes, I want to book some seats."
+    },
+    {
+     "zh": "十个人，星期六晚上六点半。",
+     "en": "Ten people, Saturday evening at half past six."
+    },
+    {
+     "zh": "那就七点吧，你们可以打折吗？",
+     "en": "Then seven it is; can you give a discount?"
+    },
+    {
+     "zh": "太好了，谢谢你！",
+     "en": "Great, thank you!"
+    }
+   ]
+  },
+  {
+   "id": "visa",
+   "glyph": "证",
+   "title": "Ask about a visa",
+   "sub": "Travel, 5 turns",
+   "goals": [
+    "Say you want to apply",
+    "Hand over your passport",
+    "Ask how long it will take",
+    "Say thanks"
+   ],
+   "words": [
+    "签证",
+    "申请",
+    "护照",
+    "材料",
+    "通过",
+    "地址"
+   ],
+   "ai": [
+    {
+     "zh": "你好，请问你想办什么？",
+     "en": "Hello, what do you want to do?"
+    },
+    {
+     "zh": "好的。请把护照和照片给我。",
+     "en": "Okay. Please give me your passport and photo."
+    },
+    {
+     "zh": "你还要在表格上写好你的地址。",
+     "en": "You must also write your address on the form."
+    },
+    {
+     "zh": "一般一个星期。通过以后，我们会给你打电话。",
+     "en": "Usually one week. After it is approved, we will call you."
+    },
+    {
+     "zh": "不客气，再见。",
+     "en": "You are welcome. Goodbye."
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想申请签证。",
+     "en": "I want to apply for a visa."
+    },
+    {
+     "zh": "好的，这是我的护照。我还需要什么材料？",
+     "en": "Okay, here is my passport. What other materials do I need?"
+    },
+    {
+     "zh": "好的。签证要多长时间？",
+     "en": "Okay. How long will the visa take?"
+    },
+    {
+     "zh": "好的，非常感谢。",
+     "en": "Okay, thank you very much."
+    }
+   ]
+  },
+  {
+   "id": "coach",
+   "glyph": "练",
+   "title": "Talk to your coach",
+   "sub": "Sports, 5 turns",
+   "goals": [
+    "Say when to start",
+    "Say your weight",
+    "Ask if it will be too tiring",
+    "Promise to keep going"
+   ],
+   "words": [
+    "教练",
+    "体重",
+    "锻炼",
+    "放松",
+    "压力",
+    "坚持"
+   ],
+   "ai": [
+    {
+     "zh": "你好，我是你的教练。你想什么时候开始锻炼？",
+     "en": "Hello, I am your coach. When do you want to start exercising?"
+    },
+    {
+     "zh": "好。你现在的体重是多少？",
+     "en": "Good. What is your weight now?"
+    },
+    {
+     "zh": "你每天可以跑三十分钟，然后放松一下。",
+     "en": "You can run for thirty minutes every day and then relax a bit."
+    },
+    {
+     "zh": "不会的，运动可以让人放松。",
+     "en": "No, it will not; exercise can help people relax."
+    },
+    {
+     "zh": "太好了，加油！",
+     "en": "Great, keep it up!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想从这个星期开始。",
+     "en": "I want to start this week."
+    },
+    {
+     "zh": "我的体重是七十公斤。",
+     "en": "My weight is 70 kilograms."
+    },
+    {
+     "zh": "我工作很忙，压力很大，会不会太累？",
+     "en": "I am busy at work and under great pressure; will it be too tiring?"
+    },
+    {
+     "zh": "好的，我会坚持的。",
+     "en": "Okay, I will keep at it."
+    }
+   ]
+  },
+  {
+   "id": "cheer",
+   "glyph": "考",
+   "title": "Cheer up a friend",
+   "sub": "Friends, 5 turns",
+   "goals": [
+    "Tell your friend not to be nervous",
+    "Give your friend confidence",
+    "Give advice for tonight",
+    "Invite them out after the exam"
+   ],
+   "words": [
+    "紧张",
+    "压力",
+    "鼓励",
+    "信心",
+    "放松",
+    "复习"
+   ],
+   "ai": [
+    {
+     "zh": "明天有考试，我很紧张。",
+     "en": "There is an exam tomorrow, and I am very nervous."
+    },
+    {
+     "zh": "可是我还是担心，压力很大。",
+     "en": "But I still worry, and the pressure is great."
+    },
+    {
+     "zh": "谢谢你的鼓励。我今天晚上应该怎么复习？",
+     "en": "Thank you for your encouragement. How should I review this evening?"
+    },
+    {
+     "zh": "好的，我听你的。考完以后一起吃饭吧。",
+     "en": "Okay, I will listen to you. After the exam, let us eat together."
+    },
+    {
+     "zh": "谢谢你，我会努力的。",
+     "en": "Thank you, I will work hard."
+    }
+   ],
+   "you": [
+    {
+     "zh": "别紧张，你一直很努力。",
+     "en": "Do not be nervous; you have always worked hard."
+    },
+    {
+     "zh": "你要有信心，你一定能考好。",
+     "en": "You must have confidence; you can certainly do well."
+    },
+    {
+     "zh": "早点复习完，然后早点睡觉，放松一下。",
+     "en": "Finish reviewing early, then go to bed early and relax a bit."
+    },
+    {
+     "zh": "好啊，我请你吃饭，加油！",
+     "en": "Great, I will invite you to a meal. Come on!"
+    }
+   ]
+  }
+ ],
+ "phrases": [
+  {
+   "zh": "能不能请你再说一遍？",
+   "en": "Could you please say it once more?"
+  },
+  {
+   "zh": "这个词在这里是什么意思？",
+   "en": "What does this word mean here?"
+  },
+  {
+   "zh": "请你说得清楚一点，好吗？",
+   "en": "Please speak a little more clearly, all right?"
+  },
+  {
+   "zh": "我不太了解这个词，可以解释一下吗？",
+   "en": "I do not quite know this word; can you explain it?"
+  },
+  {
+   "zh": "你能给我举个例子吗？",
+   "en": "Can you give me an example?"
+  },
+  {
+   "zh": "对不起，我没听懂，请再说一遍。",
+   "en": "Sorry, I did not understand; please say it once more."
+  },
+  {
+   "zh": "请你把它写下来，好吗？",
+   "en": "Please write it down, all right?"
+  },
+  {
+   "zh": "我想问一下，你的意思是这个吗？",
+   "en": "I want to ask: is this what you mean?"
+  }
+ ]
+}

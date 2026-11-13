@@ -21,7 +21,7 @@ def load_levels():
     out = subprocess.check_output(['node', '-e', r"""
 const vm=require('vm'),fs=require('fs');const ctx={window:{}};vm.createContext(ctx);
 const res={};
-for(const n of [1,2,3]){
+for(const n of [1,2,3,4]){
   for(const f of ['words','webs','grammar','speak'])vm.runInContext(fs.readFileSync('data/hsk'+n+'-'+f+'.js','utf8'),ctx);
   const W=ctx.window['HSK'+n+'_WORDS'],T=ctx.window['HSK'+n+'_WEBS'].topics,G=ctx.window['HSK'+n+'_GRAMMAR'].lessons;
   res[n]={words:W.map(w=>w.zh),topics:T.map(t=>({name:t.name,words:t.words})),lessons:G.map(g=>({id:g.id,title:g.title})),scenarios:((ctx.window['HSK'+n+'_SPEAK']||{}).scenarios||[]).map(x=>({id:x.id,title:x.title}))};
@@ -216,19 +216,19 @@ _WORDSET = None
 
 
 def _wordset():
-    """Every word of HSK 1-3 plus the place names, used to cut a line into words."""
+    """Every word of HSK 1-4 plus the place names, used to cut a line into words."""
     global _WORDSET
     if _WORDSET is None:
         out = subprocess.check_output(['node', '-e', r"""
 const vm=require('vm'),fs=require('fs');const c={window:{}};vm.createContext(c);const o=[];
-for(const n of [1,2,3]){vm.runInContext(fs.readFileSync('data/hsk'+n+'-words.js','utf8'),c);c.window['HSK'+n+'_WORDS'].forEach(w=>o.push(w.zh));}
+for(const n of [1,2,3,4]){vm.runInContext(fs.readFileSync('data/hsk'+n+'-words.js','utf8'),c);c.window['HSK'+n+'_WORDS'].forEach(w=>o.push(w.zh));}
 console.log(JSON.stringify(o));"""], cwd=ROOT).decode('utf-8')
         _WORDSET = (set(json.loads(out)) | PROPER | EXTRA) - SPLIT
     return _WORDSET
 
 
 def _cut(zh):
-    """Longest word first, from the left, among the words of HSK 1-3 (a character that is in no word stands alone)."""
+    """Longest word first, from the left, among the words of HSK 1-4 (a character that is in no word stands alone)."""
     ws = _wordset()
     toks, i = [], 0
     while i < len(zh):
@@ -284,8 +284,8 @@ def build_theme(n, th, units, problems):
     """The look of one level's path (content/path-theme.json), checked against the level's real units."""
     ids = [u['id'] for u in units]
     kind = th.get('kind')
-    if kind not in ('day', 'rail', 'story'):
-        problems.append('HSK %s theme: kind must be day, rail or story' % n)
+    if kind not in ('day', 'rail', 'story', 'terms'):
+        problems.append('HSK %s theme: kind must be day, rail, story or terms' % n)
         return None
     for k in ('name', 'tag', 'blurb', 'hero'):
         if not th.get(k):
@@ -298,7 +298,7 @@ def build_theme(n, th, units, problems):
         if i not in ids:
             problems.append('HSK %s theme: "%s" is not a unit of this level' % (n, i))
     groups = th.get('phases') or th.get('seasons') or []
-    if kind in ('day', 'story'):
+    if kind in ('day', 'story', 'terms'):
         covered = []
         for g in groups:
             if g['from'] not in ids or g['to'] not in ids or ids.index(g['from']) > ids.index(g['to']):
@@ -307,6 +307,11 @@ def build_theme(n, th, units, problems):
             covered += ids[ids.index(g['from']):ids.index(g['to']) + 1]
         if covered != ids:
             problems.append('HSK %s theme: the groups must cover every unit once, in order' % n)
+    if kind == 'terms':
+        for i, u in tu.items():
+            for k in ('zh', 'py', 'en', 'date', 'scene', 'tile'):
+                if not u.get(k):
+                    problems.append('HSK %s theme: unit %s has no "%s"' % (n, i, k))
     out = {'kind': kind, 'name': th['name'], 'tag': th['tag'], 'blurb': th['blurb'], 'hero': th['hero'], 'groups': groups, 'units': {}}
     for i, u in tu.items():
         v = dict(u)
@@ -350,6 +355,8 @@ def main():
                 for s in u['stops']:
                     if s['k'] == 'g':
                         print('   [G] %s' % s['t'])
+                    elif s['k'] == 's':
+                        print('   [S] %s' % s['t'])
                     else:
                         part = ' (%d/%d)' % tuple(s['p']) if 'p' in s else ''
                         print('   %2d  %s%s: %s' % (len(s['w']), s['t'], part, ' '.join(s['w'])))

@@ -105,10 +105,10 @@ EN_TIME_BACK = [
 ]
 MEASURE_NEEDS = {'书': '本', '衣服': '件', '猫': '只', '狗': '只'}   # noun -> required measure word (instead of the all-purpose 个)
 QUESTION_WORDS = ['什么', '谁', '哪', '几', '多少', '怎么', '怎么样', '哪儿', '哪里']
-LEXICAL_NEG = ['不客气', '对不起', '没关系', '没事', '不好意思', '不见了', '不早了', '不同', '不久', '差不多', '不对', '特别', '别人', '别的']   # 别人 "other people" and 别的 "other" use 别 without a negative meaning
+LEXICAL_NEG = ['不客气', '对不起', '没关系', '没事', '不好意思', '不见了', '不早了', '不同', '来不及', '不一样', '不错', '不久', '差不多', '不对', '特别', '别人', '别的', '不断', '不便', '不得不', '不如', '不满', '不过', '不管', '不论', '不光', '不仅', '无聊', '无论', '区别', '性别', '分别', '告别', '差别', '个别']   # 别人 "other people" and 别的 "other" use 别 without a negative meaning
 PAST_EN = r"\b(ate|bought|saw|heard|went|was|were|did|drank|had|got|said|took|came|made|read|wrote|studied|worked|lived|asked|called|finished|\w+ed)\b"
-IRREGULAR_PAST = 'ate|bought|saw|heard|went|drank|had|got|said|took|came|made|wrote|was|were|did|told|sent|gave|found|lost|left|met|paid|brought|taught|began|ran|sat|stood|forgot|knew|thought|felt|kept|won|fell|spoke|woke|rode|drove|broke|bit|read|blew|grew|drew|threw|wore|chose|swam|sang|slept|spent|sold|held|led|lay|fed|hid|shook|stole|flew|dug|rang|built|caught|cut|hurt|let|lit|meant|put|set|shut|sank|sat|sent|shot|slid|spun|stuck|swept|tore|understood|woke|lent'
-PAST_ADJ = {'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured'}
+IRREGULAR_PAST = 'forgave|dreamt|ate|bought|saw|heard|went|drank|had|got|said|took|came|made|wrote|was|were|did|told|sent|gave|found|lost|left|met|paid|brought|taught|began|ran|sat|stood|forgot|knew|thought|felt|kept|won|fell|spoke|woke|rode|drove|broke|bit|read|blew|grew|drew|threw|wore|chose|swam|sang|slept|spent|sold|held|led|lay|fed|hid|shook|stole|flew|dug|rang|built|caught|cut|hurt|let|lit|meant|put|set|shut|sank|sat|sent|shot|slid|spun|stuck|swept|tore|understood|woke|lent'
+PAST_ADJ = {'repaired', 'allowed', 'compared', 'detailed', 'steamed', 'grilled', 'roasted', 'baked', 'complicated', 'irritated', 'fried', 'succeed', 'exceed', 'proceed', 'varied', 'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured', 'united', 'limited', 'advanced', 'unlimited', 'crowded', 'needed', 'wicked', 'naked', 'sacred', 'hundred'}
 
 
 def meaning_checks(zh, en):
@@ -119,23 +119,24 @@ def meaning_checks(zh, en):
     e = e.replace('excuse me', 'excuse')                       # "me" in "excuse me" is not the pronoun
     z = zh
     zc = strip_punct(zh)
+    zc = re.sub('零花钱|零钱|零食|千万|千克|十字路口', 'XXX', zc)       # 零 here is part of the word, not the number 0
 
     # want / would like
-    if re.search(r"\b(want|wants|wanted|would (?:you |he |she |they )?like|'d like|wish)\b", e) and not re.search('想|要|希望|愿意', z):
+    if re.search(r"\b(want|wants|wanted|would (?:you |he |she |they )?like|'d like|wish)\b", e) and not re.search('想|要|希望|愿意|祝', z):
         out.append(('ERROR', 'meaning', 'English says "want / would like" but the Chinese has no 想 or 要'))
-    if re.search('想', z) and not re.search(r"want|would (?:you |he |she |they )?like|'d like|think|thought|miss|feel|plan|wish|going to|will|need|hope", e):
+    if re.search('想', re.sub('理想|梦想|想法|感想|思想|联想|想象|想起', '', z)) and not re.search(r"want|would (?:you |he |she |they )?like|'d like|think|thought|miss|feel|plan|wish|going to|will|need|hope", e):
         out.append(('WARN', 'meaning', '想 in the Chinese but no want/think/miss in the English'))
-    if re.search('要', re.sub('不要|需要|重要|主要|只要|要求|必要', '', z)) and not re.search(r"want|would (?:you |he |she |they )?like|'d like|need|will|going to|about to|have|take|'ll|must|should|order|get|require", e):
+    if re.search('要', re.sub('不要|需要|重要|主要|只要|要求|必要|要是|想要', '', z)) and not re.search(r"want|would (?:you |he |she |they )?like|'d like|need|will|going to|about to|have|take|'ll|must|should|order|get|require", e):
         out.append(('WARN', 'meaning', '要 in the Chinese but no want/need/will in the English'))
     # habitual vs offer
     if re.search(r'^(would you|do you want|would he|would she)\b', e) and not re.search('想|要|可以|愿意', z):
         out.append(('ERROR', 'meaning', 'English is an offer ("would you / do you want") but the Chinese is a plain habit question (needs 想/要)'))
 
     # can / may
-    z_pot = re.search('[听看吃找买做写说记搬拿读喝走跑学爬睡等想][得不](懂|见|清楚|完|到|住|动|起|出|好|对|会|了)', z)     # 听得懂 / 听不懂: the 得 / 不 + result form already means can / cannot
-    if re.search(r"\b(can|can't|cannot|could|able to|may|allowed|know how)\b", e) and not re.search('会|能|可以|懂得', z) and not z_pot:
+    z_pot = re.search('[听看吃找买做写说记搬拿读喝走跑学爬睡等想受抬打提][得不](懂|见|清楚|完|到|住|动|起|出|好|对|会|了|通|着)', z)     # 听得懂 / 听不懂: the 得 / 不 + result form already means can / cannot
+    if re.search(r"\b(can|can't|cannot|could|able to|may|allowed|know how)\b", e) and not re.search('会|能|可以|懂得|无法|允许', z) and not z_pot:
         out.append(('ERROR', 'meaning', 'English says can/may/able but the Chinese has no 会 / 能 / 可以'))
-    z_modal = re.sub('开会|会议|晚会|运动会|机会|一会儿|一会|社会|会话|开会|学会|懂得', '', z)       # 会 inside these words is not the modal verb
+    z_modal = re.sub('开会|会议|晚会|运动会|机会|一会儿|一会|社会|会话|开会|学会|懂得|会员|家长会|大会|会面|聚会|宴会|舞会|约会|能力|误会|可能性', '', z)       # 会 inside these words is not the modal verb
     if re.search('会|能|可以', z_modal) and not re.search(r"can|could|able|may|allowed|know how|will|might|should|be able|please|fine|okay|\bok\b|all right|alright|either", e):
         out.append(('WARN', 'meaning', '会/能/可以 in the Chinese but no can/may/will in the English'))
 
@@ -168,7 +169,7 @@ def meaning_checks(zh, en):
     # (possessives like "his room" are often left out in Chinese, so only subject pronouns are checked this way)
     if re.search(r"\b(he|she)\b", e) and not re.search('他|她', z):
         out.append(('WARN', 'meaning', 'English has he/she but the Chinese has no 他/她'))
-    if re.search(r"\bi\b|\bi'm\b", e) and '我' not in z:
+    if re.search(r"\bi\b|\bi'm\b", e) and '我' not in z and not re.search('恐怕|祝', z):
         out.append(('WARN', 'meaning', 'English has "I" but the Chinese has no 我'))
     if (re.search(r"\bwe\b", e) or (re.search(r"\blet's\b", e) and '吧' not in z)) and not re.search('我们|咱们', z):
         out.append(('WARN', 'meaning', 'English has "we" but the Chinese has no 我们'))
@@ -190,6 +191,12 @@ def meaning_checks(zh, en):
         if re.search(pat, e_t) and tz not in z:
             out.append(('ERROR', 'meaning', 'English says "%s" but the Chinese has no %s' % (pat.strip('\\b'), tz)))
     zvals = set()
+    if '俩' in z:
+        zvals.add(2)         # 俩 = 两个
+    for m in re.finditer(r'([零一二两三四五六七八九十百千]+)分之([零一二两三四五六七八九十百千]+)', zc):
+        zvals.add(parse_cn(m.group(1)))      # 三分之一: both numbers count (the English says "one third")
+        zvals.add(parse_cn(m.group(2)))
+    zc = re.sub(r'([零一二两三四五六七八九十百千]+)分之([零一二两三四五六七八九十百千]+)', 'XXX', zc)
     zord = set()
     for m in re.finditer(r'[零一二两三四五六七八九十百千]+', zc):
         s, st, ed = m.group(0), m.start(), m.end()
@@ -237,7 +244,7 @@ def meaning_checks(zh, en):
     for m in re.finditer(r'([零一二三四五六七八九十]+)月', zc):
         month_nums.add(parse_cn(m.group(1)))
     for v in evals:
-        if v not in zvals and v not in zord and v not in (1,) and not any(w in e for w in ('half',)):
+        if v not in zvals and v not in zord and v not in (1,) and not ('其次' in z and v == 2) and not any(w in e for w in ('half',)):
             out.append(('WARN', 'meaning', 'number %d in the English is not in the Chinese' % v))
     if '半' in z.replace('半天', '') + ('半天' if '半天' in z and not re.search(r'\bages\b|long time|a while|for hours|half a day|half day|all day', e) else '') and not re.search(r'half|:30|thirty', e):
         out.append(('ERROR', 'meaning', '半 in the Chinese but the English does not say half'))
@@ -251,8 +258,8 @@ def meaning_checks(zh, en):
     for mw, nouns in (('本', '书字词笔杂'), ('件', '衣事'), ('口', '人')):
         for m in re.finditer(r'[零一二两三四五六七八九十几]' + mw + r'(.)', zc):
             nxt = m.group(1)
-            ok = nxt in nouns or (mw == '件' and (nxt in '新衬' or zc[m.end() - 1:m.end() + 1] in ('上衣', '大衣', '雨衣'))) or (mw == '本' and zc[m.end() - 1:m.end() + 1] == '关于')
-            if mw == '口' and nxt not in '人':
+            ok = nxt in nouns or (mw == '口' and zc[m.end() - 1:m.end() + 1] in ('流利', '气')) or (mw == '件' and (nxt in '新衬' or zc[m.end() - 1:m.end() + 1] in ('上衣', '大衣', '雨衣'))) or (mw == '本' and zc[m.end() - 1:m.end() + 1] == '关于')
+            if mw == '口' and nxt not in '人' and zc[m.end() - 1:m.end() + 1] not in ('流利', '气'):
                 ok = False
             if not ok and not (mw == '本' and nxt in '新好小大'):
                 out.append(('WARN', 'meaning', 'measure word %s followed by %s: check it fits' % (mw, nxt)))
@@ -262,9 +269,9 @@ def meaning_checks(zh, en):
         out.append(('ERROR', 'meaning', 'English says please but the Chinese has no 请'))
     if re.search(r'\bthank', e) and '谢' not in z:
         out.append(('ERROR', 'meaning', 'English says thanks but the Chinese has no 谢'))
-    if re.search(r'\bsorry\b', e) and not re.search('对不起|不好意思', z):
+    if re.search(r'\bsorry\b', e) and not re.search('对不起|不好意思|抱歉', z):
         out.append(('ERROR', 'meaning', 'English says sorry but the Chinese has no 对不起'))
-    if '请' in z.replace('请问', '').replace('请假', '').replace('请客', '') and not re.search(r'please|invite|ask|excuse', e):
+    if '请' in z.replace('请问', '').replace('请假', '').replace('请客', '').replace('邀请', '').replace('申请', '') and not re.search(r'please|invite|ask|excuse', e):
         out.append(('WARN', 'meaning', '请 in the Chinese but no please/invite in the English'))
 
     # tense hints
@@ -273,7 +280,7 @@ def meaning_checks(zh, en):
     toks_past = [w for w in re.findall(r"[a-z]+", e_tense) if re.fullmatch(r'\w+ed', w) and w not in PAST_ADJ] + [w for w in re.findall(r'[a-z]+', e) if w in ('ate', 'bought', 'saw', 'heard', 'went', 'drank', 'had', 'got', 'said', 'took', 'came', 'made', 'wrote', 'was', 'were', 'did')]
     if toks_past and not re.search('了|没|昨天|昨晚|前天|去年|上个|上星期|过|以前|从前|当时|后来|小时候|是.*的|看见|听见|才|已经|刚|以为|听说', z) and not re.search(r"\b(has|have|had been)\b", e):
         out.append(('WARN', 'meaning', 'English is in the past (%s) but the Chinese has no 了 or past time word' % toks_past[0]))
-    if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|no longer|getting|growing|about to|get to|arrive|reach|come to|soon)\b", e):
+    if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '').replace('死了', '').replace('不了', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|no longer|getting|growing|about to|get to|arrive|reach|come to|soon)\b", e):
         out.append(('WARN', 'meaning', '了 in the Chinese: English shows no completed action or change of state'))
     # ZH 在 + verb = in progress
     if re.search('正在|(?<![不要])在(看|吃|喝|做|写|读|听|打|找|玩|睡|说话)', z) and not re.search(r'\b\w+ing\b|\bright now\b|\bat\b|\bin\b', e):
@@ -353,7 +360,8 @@ def segment(zh, allowed, higher):
 # ---------------------------------------------------------------- pinyin
 TONE_MARKS = {'ā': ('a', 1), 'á': ('a', 2), 'ǎ': ('a', 3), 'à': ('a', 4), 'ē': ('e', 1), 'é': ('e', 2), 'ě': ('e', 3), 'è': ('e', 4),
               'ī': ('i', 1), 'í': ('i', 2), 'ǐ': ('i', 3), 'ì': ('i', 4), 'ō': ('o', 1), 'ó': ('o', 2), 'ǒ': ('o', 3), 'ò': ('o', 4),
-              'ū': ('u', 1), 'ú': ('u', 2), 'ǔ': ('u', 3), 'ù': ('u', 4), 'ǖ': ('v', 1), 'ǘ': ('v', 2), 'ǚ': ('v', 3), 'ǜ': ('v', 4), 'ü': ('v', 0)}
+              'ū': ('u', 1), 'ú': ('u', 2), 'ǔ': ('u', 3), 'ù': ('u', 4), 'ǖ': ('v', 1), 'ǘ': ('v', 2), 'ǚ': ('v', 3), 'ǜ': ('v', 4), 'ü': ('v', 0),
+              'ń': ('n', 2), 'ň': ('n', 3), 'ǹ': ('n', 4)}
 
 
 def split_display(py, exp):
@@ -539,7 +547,7 @@ def selftest():
             fails += 1
     # Words whose most common reading in the dictionary is NOT the one that goes with the meaning taught. The pinyin check accepts any
     # reading a dictionary lists, so these slipped through once (31 Oct 2026): 长 showed zhǎng for "long", 教 jiào for "to teach".
-    READINGS = [('长', 'cháng'), ('教', 'jiāo'), ('地', 'de'), ('得', 'de'), ('过', 'guo'), ('着', 'zhe'), ('一会儿', 'yíhuìr'), ('还是', 'háishi')]
+    READINGS = [('长', 'cháng'), ('教', 'jiāo'), ('地', 'de'), ('得', 'de'), ('过', 'guo / guò'), ('着', 'zhe'), ('一会儿', 'yíhuìr'), ('还是', 'háishi')]
     try:
         from pinyin_engine import Engine
         eng = Engine([w for w, _ in READINGS])
@@ -592,7 +600,7 @@ def main():
         for line in open(sp, encoding='utf-8'):
             p = line.rstrip('\n').split('\t')
             if len(p) >= 2 and not line.startswith('#'):
-                syn[p[0]] = p[1].split(',')
+                syn.setdefault(p[0], []).extend(p[1].split(','))      # a headword may have several lines: they add up
 
     findings = []
     for it in items:

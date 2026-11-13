@@ -1,0 +1,739 @@
+[
+ {
+  "id": "lian",
+  "title": "连…也 / 都… and 甚至: even",
+  "covers": [
+   1,
+   18
+  ],
+  "formula": [
+   "*连",
+   "Thing",
+   "*也 / 都",
+   "Verb"
+  ],
+  "explain": [
+   "连 … 也 / 都 … means 'even'. Put the surprising thing after 连, then 也 or 都 before the verb: 他连饭都没吃 'He did not even eat'. The thing after 连 is the most extreme case, one you would expect to be easy or obvious.",
+   "Most sentences are negative: 我连他的名字也不知道 'I do not even know his name'. A positive one is fine when the surprise is how easy or how small the thing is: 这个字连小孩子都能写 'Even small children can write this character'.",
+   "甚至 'even, to the point of' adds a stronger case after a weaker one: 他很累，甚至在车上睡着了 'He is tired, he even fell asleep in the car'. It often comes before 连: 他甚至连自己的名字都忘了 'He even forgot his own name'."
+  ],
+  "examples": [
+   {
+    "zh": "他连饭都没吃就走了。",
+    "en": "He left without even eating."
+   },
+   {
+    "zh": "我连他的名字也不知道。",
+    "en": "I do not even know his name."
+   },
+   {
+    "zh": "这个字很简单，连小孩子都能写。",
+    "en": "This character is easy; even small children can write it."
+   },
+   {
+    "zh": "他很忙，甚至没有时间吃饭。",
+    "en": "He is very busy; he does not even have time to eat."
+   }
+  ],
+  "mistakes": [
+   "Put 也 or 都 after the thing, before the verb. 他连饭没吃 is incomplete; say 他连饭都没吃.",
+   "Use 也 or 都, not both: 他连饭也都没吃 is wrong."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他昨天连手机都没带。",
+    "en": "He did not even bring his phone yesterday.",
+    "explain": "连 + thing + 都 + verb."
+   },
+   {
+    "t": "order",
+    "zh": "他累得甚至在车上睡着了。",
+    "en": "He was so tired that he even fell asleep in the car.",
+    "explain": "甚至 comes before the extreme case."
+   },
+   {
+    "t": "cloze",
+    "zh": "他连一句汉语都不会说。",
+    "en": "He cannot even say one sentence of Chinese.",
+    "blank": "连",
+    "explain": "连 marks the extreme case."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I do not even have time to eat?",
+    "options": [
+     "我连吃饭的时间都没有。",
+     "我吃饭连时间都没有。"
+    ],
+    "correct": 0,
+    "zh": "我连吃饭的时间都没有。",
+    "en": "I do not even have time to eat.",
+    "explain": "连 comes right before the thing that is \"even\"."
+   },
+   {
+    "t": "spot",
+    "zh": "他连饭也不吃。",
+    "en": "He does not even eat.",
+    "wrong": "他连饭也都不吃。",
+    "remove": "都",
+    "explain": "After 连 use 也 or 都, not both."
+   }
+  ]
+ },
+ {
+  "id": "jishi",
+  "title": "即使…也… and 尽管…: even if, although",
+  "covers": [
+   2,
+   3
+  ],
+  "formula": [
+   "*即使",
+   "Situation",
+   "*也 / 还是",
+   "Result"
+  ],
+  "explain": [
+   "即使 … 也 … 'even if' says that the result stays the same whatever happens: 即使下雨，我也去 'Even if it rains, I will go'. 即使 gives a situation that may or may not happen, and 也 (or 还是) comes in the second part.",
+   "尽管 … 还是 / 但是 … 'although, in spite of the fact that' is for something that is true: 尽管很累，他还是去上班了 'Although he was tired, he still went to work'. Compare 即使 (maybe it happens) with 尽管 (it really is so).",
+   "In the second part use 还是 'still' or 但是 'but'. 还是 is the more natural partner of 尽管. You can drop the English 'but', and Chinese does too: 尽管很贵，我还是买了 'Although it was dear, I still bought it'."
+  ],
+  "examples": [
+   {
+    "zh": "即使明天下雨，我也要去。",
+    "en": "Even if it rains tomorrow, I will go."
+   },
+   {
+    "zh": "即使你不喜欢，也要吃一点儿。",
+    "en": "Even if you do not like it, you must eat a little."
+   },
+   {
+    "zh": "尽管天气很冷，他还是出去跑步了。",
+    "en": "Although the weather was cold, he still went out running."
+   },
+   {
+    "zh": "尽管她很累，但是她不想休息。",
+    "en": "Although she is tired, she does not want to rest."
+   }
+  ],
+  "mistakes": [
+   "即使 is for something that may or may not happen. For something that is a fact, use 尽管: 尽管下雨了，我们还是去了.",
+   "Do not leave out 也 / 还是 in the second part. 即使下雨，我去 sounds unfinished."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "即使很晚，他也不睡觉。",
+    "en": "Even if it is late, he does not sleep.",
+    "explain": "即使 gives the situation, 也 the unchanged result."
+   },
+   {
+    "t": "order",
+    "zh": "尽管很累，我还是要学习。",
+    "en": "Although I am tired, I still want to study.",
+    "explain": "尽管 + situation, 还是 + result."
+   },
+   {
+    "t": "cloze",
+    "zh": "即使你不去，我也会去。",
+    "en": "Even if you do not go, I will go.",
+    "blank": "即使",
+    "explain": "即使 = even if."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Although it was dear, I still bought it?",
+    "options": [
+     "尽管很贵，我还是买了。",
+     "尽管很贵，所以我买了。"
+    ],
+    "correct": 0,
+    "zh": "尽管很贵，我还是买了。",
+    "en": "Although it was dear, I still bought it.",
+    "explain": "尽管 goes with 还是, not 所以."
+   },
+   {
+    "t": "spot",
+    "zh": "即使下雨，我也去。",
+    "en": "Even if it rains, I still go.",
+    "wrong": "即使下雨，所以我也去。",
+    "remove": "所以",
+    "explain": "即使 does not go with 所以; 也 is enough."
+   }
+  ]
+ },
+ {
+  "id": "buguan",
+  "title": "不管 / 无论…都…: no matter",
+  "covers": [
+   4
+  ],
+  "formula": [
+   "*不管 / 无论",
+   "Question word, or A 还是 B",
+   "*都",
+   "Result"
+  ],
+  "explain": [
+   "不管 and 无论 both mean 'no matter'. They are followed by a question word or by 'A or B', and then 都 (or 也) gives the result that does not change: 不管你去哪儿，我都跟你去 'No matter where you go, I will go with you'.",
+   "A pair like 好不好 or a list with 还是 works too: 不管天气好不好，他都去跑步 'Whether the weather is good or not, he goes running'; 不管是大的还是小的，我都喜欢 'Whether it is big or small, I like it'.",
+   "无论 is a little more formal than 不管. The second part nearly always has 都: 无论多忙，她都给妈妈打电话 'No matter how busy she is, she calls her mother'."
+  ],
+  "examples": [
+   {
+    "zh": "不管你去哪儿，我都跟你去。",
+    "en": "No matter where you go, I will go with you."
+   },
+   {
+    "zh": "不管天气好不好，他都去跑步。",
+    "en": "Whether the weather is good or not, he goes running."
+   },
+   {
+    "zh": "无论多忙，她都给妈妈打电话。",
+    "en": "No matter how busy she is, she calls her mother."
+   },
+   {
+    "zh": "不管谁来，我们都欢迎。",
+    "en": "No matter who comes, we welcome them."
+   }
+  ],
+  "mistakes": [
+   "Do not forget 都 in the result. 不管谁来，我们欢迎 is not complete; use 都 (or 也).",
+   "不管 is for something that can change: who, where, how much. For a fact, use 尽管."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "不管多忙，他都来。",
+    "en": "No matter how busy he is, he comes.",
+    "explain": "不管 + question word, 都 + result."
+   },
+   {
+    "t": "order",
+    "zh": "不管你说什么，我都相信你。",
+    "en": "No matter what you say, I believe you.",
+    "explain": "The question word 什么 stands for \"anything\"."
+   },
+   {
+    "t": "cloze",
+    "zh": "无论你在哪儿，都要给我打电话。",
+    "en": "No matter where you are, you must call me.",
+    "blank": "无论",
+    "explain": "无论 = no matter (a little more formal)."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: No matter who it is, I want to help?",
+    "options": [
+     "不管是谁，我都想帮助。",
+     "不管是谁，我才想帮助。"
+    ],
+    "correct": 0,
+    "zh": "不管是谁，我都想帮助。",
+    "en": "No matter who it is, I want to help.",
+    "explain": "不管 goes with 都."
+   },
+   {
+    "t": "spot",
+    "zh": "不管天气怎么样，我们都去。",
+    "en": "No matter what the weather is like, we go.",
+    "wrong": "不管天气怎么样，但是我们都去。",
+    "remove": "但是",
+    "explain": "Do not add 但是 after 不管."
+   }
+  ]
+ },
+ {
+  "id": "yaoshi",
+  "title": "要是…就… and 既然…就…: if, and since",
+  "covers": [
+   5,
+   6
+  ],
+  "formula": [
+   "*要是",
+   "Situation",
+   "*就",
+   "Result"
+  ],
+  "explain": [
+   "要是 … 就 … means 'if', like 如果 but more spoken: 要是明天下雨，我们就不去 'If it rains tomorrow, we will not go'. Like 如果, 要是 can come before or after the subject: 要是你累了，就休息吧 or 你要是累了，就休息吧.",
+   "The result part usually has 就. In speech 的话 can be added at the end of the first part: 你要是不想去的话，就别去 'If you do not want to go, then do not go'.",
+   "既然 … 就 … means 'since, now that'. It is for something that is already true or known: 既然你累了，就休息吧 'Since you are tired, rest'. 要是 imagines something; 既然 accepts a fact."
+  ],
+  "examples": [
+   {
+    "zh": "要是你有时间，就来我家玩。",
+    "en": "If you have time, come and play at my home."
+   },
+   {
+    "zh": "你要是不舒服，就去看医生吧。",
+    "en": "If you are not feeling well, go and see a doctor."
+   },
+   {
+    "zh": "既然你累了，就早点休息吧。",
+    "en": "Since you are tired, rest early."
+   },
+   {
+    "zh": "既然已经来了，就多坐一会儿吧。",
+    "en": "Since you have already come, sit a bit longer."
+   }
+  ],
+  "mistakes": [
+   "Do not use 要是 for facts. 要是你已经来了 is odd, because you are already here. Use 既然.",
+   "Keep 就 in the second part: 既然你累了，你就应该休息."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "要是下雨，我们就不去。",
+    "en": "If it rains, we will not go.",
+    "explain": "要是 gives the \"if\", 就 the result."
+   },
+   {
+    "t": "order",
+    "zh": "既然你已经累了，就休息吧。",
+    "en": "Since you are already tired, rest.",
+    "explain": "既然 + known fact, 就 + advice."
+   },
+   {
+    "t": "cloze",
+    "zh": "你要是有问题，就问老师。",
+    "en": "If you have a question, ask the teacher.",
+    "blank": "要是",
+    "explain": "要是 = if."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Since it is already late, let us go home?",
+    "options": [
+     "既然已经很晚了，我们就回家吧。",
+     "要是已经很晚了，我们就回家吧。"
+    ],
+    "correct": 0,
+    "zh": "既然已经很晚了，我们就回家吧。",
+    "en": "Since it is already late, let us go home.",
+    "explain": "既然 accepts a fact that is already true."
+   },
+   {
+    "t": "spot",
+    "zh": "要是你累，就休息吧。",
+    "en": "If you are tired, rest.",
+    "wrong": "要是你累，所以就休息吧。",
+    "remove": "所以",
+    "explain": "Do not add 所以 after 要是; 就 is enough."
+   }
+  ]
+ },
+ {
+  "id": "fouze",
+  "title": "否则, 由于…因此… and 于是: otherwise, because … so, and so",
+  "covers": [
+   7,
+   8,
+   9
+  ],
+  "formula": [
+   "Situation",
+   "*否则",
+   "Bad result"
+  ],
+  "explain": [
+   "否则 means 'otherwise, or else'. It starts the second part and tells what will happen if the first part is not done or not true: 快一点走，否则我们会迟到 'Hurry up, or we will be late'. What follows 否则 is nearly always something you do not want.",
+   "由于 … 因此 … 'because of …, so …' is the written form of 因为…所以…: 由于天气不好，因此我们没有出去玩 'Because the weather was bad, we did not go out to play'. 由于 gives the reason; 因此 gives the result. In speech people usually say 因为…所以….",
+   "于是 'so, and then' links two things that happen one after the other, where the second is a reaction to the first: 他很饿，于是去买了一个面包 'He was hungry, so he went and bought a bread roll'. Unlike 所以, 于是 tells a story in order."
+  ],
+  "examples": [
+   {
+    "zh": "快一点走，否则我们会迟到。",
+    "en": "Hurry up, or we will be late."
+   },
+   {
+    "zh": "你要多喝水，否则会不舒服。",
+    "en": "You must drink more water, or you will feel unwell."
+   },
+   {
+    "zh": "由于天气不好，因此我们没有出去玩。",
+    "en": "Because the weather was bad, we did not go out to play."
+   },
+   {
+    "zh": "他很饿，于是去买了一个面包。",
+    "en": "He was hungry, so he went and bought a bread roll."
+   }
+  ],
+  "mistakes": [
+   "否则 starts the second part and is followed by something unwanted. Do not use it for a good result.",
+   "因此 needs a reason before it to point back to: 由于…，因此…."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "快一点，否则你会迟到。",
+    "en": "Hurry up, or you will be late.",
+    "explain": "否则 = or else."
+   },
+   {
+    "t": "order",
+    "zh": "他很累，于是回家休息了。",
+    "en": "He was tired, so he went home to rest.",
+    "explain": "于是 = so, and then."
+   },
+   {
+    "t": "cloze",
+    "zh": "由于下雨，因此比赛晚了一个小时。",
+    "en": "Because of the rain, the game was an hour late.",
+    "blank": "因此",
+    "explain": "因此 gives the result of the reason."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Go to bed early, or you will be tired tomorrow?",
+    "options": [
+     "早一点睡觉，否则明天会很累。",
+     "早一点睡觉，于是明天会很累。"
+    ],
+    "correct": 0,
+    "zh": "早一点睡觉，否则明天会很累。",
+    "en": "Go to bed early, or you will be tired tomorrow.",
+    "explain": "否则 gives the unwanted result."
+   },
+   {
+    "t": "spot",
+    "zh": "早一点睡觉，否则明天会很累。",
+    "en": "Go to bed early, or you will be tired tomorrow.",
+    "wrong": "早一点睡觉，否则如果明天会很累。",
+    "remove": "如果",
+    "explain": "否则 already means \"if not\"; do not add 如果."
+   }
+  ]
+ },
+ {
+  "id": "ranerr",
+  "title": "然而, 不过, 并且 and 而: however, and also",
+  "covers": [
+   10,
+   11
+  ],
+  "formula": [
+   "Sentence 1",
+   "*然而 / 不过",
+   "Sentence 2 (contrast)"
+  ],
+  "explain": [
+   "然而 and 不过 both mean 'however, but'. They start the second part and turn it against the first: 这个菜很便宜，不过不太好吃 'This dish is cheap, but not very tasty'. 然而 is more formal and is used in writing; 不过 is spoken and softer than 可是 or 但是.",
+   "并且 'and also, moreover' adds a second thing that is just as true: 他会说汉语，并且说得很好 'He can speak Chinese, and he speaks it well'. It joins verbs or short clauses and is more formal than 而且.",
+   "而 joins two parts that are in contrast, two sides of one picture: 他很高，而他的弟弟不太高 'He is tall, while his younger brother is not very tall'. It is often written and often has no English word of its own."
+  ],
+  "examples": [
+   {
+    "zh": "这个菜很便宜，不过不太好吃。",
+    "en": "This dish is cheap, but not very tasty."
+   },
+   {
+    "zh": "我很想去，不过今天没有时间。",
+    "en": "I very much want to go, but I have no time today."
+   },
+   {
+    "zh": "这个地方很有名，然而去的人不多。",
+    "en": "This place is famous, but not many people go."
+   },
+   {
+    "zh": "他会说汉语，并且说得很好。",
+    "en": "He can speak Chinese, and he speaks it well."
+   }
+  ],
+  "mistakes": [
+   "Do not put 不过 or 然而 in the first part. They always start the part that contrasts.",
+   "并且 adds; it does not contrast. For a contrast use 而 or 但是."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "这件衣服很漂亮，不过有点儿贵。",
+    "en": "This piece of clothing is pretty, but a little dear.",
+    "explain": "不过 starts the part that goes against the first."
+   },
+   {
+    "t": "order",
+    "zh": "她会唱歌，并且唱得很好。",
+    "en": "She can sing, and she sings well.",
+    "explain": "并且 adds a second good thing."
+   },
+   {
+    "t": "cloze",
+    "zh": "这个地方很大，然而人很少。",
+    "en": "This place is big, but there are very few people.",
+    "blank": "然而",
+    "explain": "然而 = however (formal)."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He is tall, while his brother is not?",
+    "options": [
+     "他很高，而他的弟弟不高。",
+     "他很高，并且他的弟弟不高。"
+    ],
+    "correct": 0,
+    "zh": "他很高，而他的弟弟不高。",
+    "en": "He is tall, while his younger brother is not.",
+    "explain": "而 shows two sides; 并且 only adds."
+   },
+   {
+    "t": "spot",
+    "zh": "我很想去，不过没有时间。",
+    "en": "I very much want to go, but I have no time.",
+    "wrong": "我很想去，不过但是没有时间。",
+    "remove": "但是",
+    "explain": "Use 不过 or 但是, not both."
+   }
+  ]
+ },
+ {
+  "id": "jiyou",
+  "title": "既…又… and 不是…而是…: both … and, not … but",
+  "covers": [
+   12,
+   13
+  ],
+  "formula": [
+   "*既",
+   "Quality 1",
+   "*又",
+   "Quality 2"
+  ],
+  "explain": [
+   "既…又… 'both … and' joins two qualities or two actions of the same thing: 这个手机既便宜又好用 'This phone is both cheap and easy to use'. It is more formal than 又…又… (HSK 3), and the two parts are usually the same kind and length.",
+   "不是 … 而是 … 'not … but …' corrects an idea. Put the wrong idea after 不是 and the true one after 而是: 我不是不想去，而是没有时间 'It is not that I do not want to go; I have no time'.",
+   "The two parts match in kind: 不是你，而是他 'Not you, but him'; 不是今天，而是明天 'Not today, but tomorrow'."
+  ],
+  "examples": [
+   {
+    "zh": "这个手机既便宜又好用。",
+    "en": "This phone is both cheap and easy to use."
+   },
+   {
+    "zh": "她既聪明又努力。",
+    "en": "She is both clever and hard-working."
+   },
+   {
+    "zh": "我不是不想去，而是没有时间。",
+    "en": "It is not that I do not want to go; I have no time."
+   },
+   {
+    "zh": "他不是老师，而是医生。",
+    "en": "He is not a teacher but a doctor."
+   }
+  ],
+  "mistakes": [
+   "既 needs 又 to go with it: 既便宜，好用 is wrong.",
+   "不是…而是… needs both parts. 他不是老师，医生 is not complete."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "这个房间既大又干净。",
+    "en": "This room is both big and clean.",
+    "explain": "既 + quality, 又 + quality."
+   },
+   {
+    "t": "order",
+    "zh": "他不是学生，而是老师。",
+    "en": "He is not a student but a teacher.",
+    "explain": "不是 + wrong idea, 而是 + true idea."
+   },
+   {
+    "t": "cloze",
+    "zh": "她既会唱歌，又会跳舞。",
+    "en": "She can both sing and dance.",
+    "blank": "既",
+    "explain": "既 starts the pair."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: This is not tea but coffee?",
+    "options": [
+     "这不是茶，而是咖啡。",
+     "这不是茶，既是咖啡。"
+    ],
+    "correct": 0,
+    "zh": "这不是茶，而是咖啡。",
+    "en": "This is not tea but coffee.",
+    "explain": "不是 goes with 而是."
+   },
+   {
+    "t": "spot",
+    "zh": "这个菜既好吃又便宜。",
+    "en": "This dish is both tasty and cheap.",
+    "wrong": "这个菜既好吃又也便宜。",
+    "remove": "也",
+    "explain": "又 follows 既; do not add 也."
+   }
+  ]
+ },
+ {
+  "id": "shouxian",
+  "title": "首先…其次…, 另外, 例如 and 同时: listing and adding",
+  "covers": [
+   14,
+   15,
+   16,
+   17
+  ],
+  "formula": [
+   "*首先",
+   "Point 1",
+   "*其次",
+   "Point 2"
+  ],
+  "explain": [
+   "首先 'first of all' and 其次 'second, next' list reasons or steps in order, and 最后 'finally' ends the list: 首先要多听，其次要多说，最后要多写 'First listen a lot, second speak a lot, last write a lot'. They help you organise what you say.",
+   "另外 'besides, also' and 此外 'in addition' add one more thing. 另外 is spoken and 此外 is formal. They start the new part, followed by a comma: 这个房间很大；另外，它离学校也很近 'This room is big; besides, it is close to the school'.",
+   "例如 and 比如 'for example' introduce examples: 我喜欢运动，例如游泳、跑步 'I like sports, for example swimming and running'. 同时 'at the same time' joins two things that happen together, or two points that are both true: 他在工作，同时也在学习汉语 'He is working and at the same time studying Chinese'."
+  ],
+  "examples": [
+   {
+    "zh": "首先要多听，其次要多说。",
+    "en": "First you must listen a lot; second you must speak a lot."
+   },
+   {
+    "zh": "这个房间很大；另外，它离学校也很近。",
+    "en": "This room is big; besides, it is close to the school."
+   },
+   {
+    "zh": "我喜欢运动，例如游泳、跑步。",
+    "en": "I like sports, for example swimming and running."
+   },
+   {
+    "zh": "他在工作，同时也在学习汉语。",
+    "en": "He is working and at the same time studying Chinese."
+   }
+  ],
+  "mistakes": [
+   "其次 needs 首先 before it. Do not start a list with 其次.",
+   "例如 is followed by the examples themselves, not by a whole new idea."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "首先要认真听，其次要多练习。",
+    "en": "First you must listen carefully; second you must practise more.",
+    "explain": "首先 gives the first point, 其次 the second."
+   },
+   {
+    "t": "order",
+    "zh": "我喜欢水果，例如苹果和西瓜。",
+    "en": "I like fruit, for example apples and watermelons.",
+    "explain": "例如 comes right before the examples."
+   },
+   {
+    "t": "cloze",
+    "zh": "这家饭店很好；另外，离我家也很近。",
+    "en": "This restaurant is good; besides, it is also close to my home.",
+    "blank": "另外",
+    "explain": "另外 adds one more point."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He is working and studying at the same time?",
+    "options": [
+     "他在工作，同时也在学习。",
+     "他在工作，其次也在学习。"
+    ],
+    "correct": 0,
+    "zh": "他在工作，同时也在学习。",
+    "en": "He is working and studying at the same time.",
+    "explain": "同时 joins two things happening together."
+   },
+   {
+    "t": "spot",
+    "zh": "首先要多听，其次要多说。",
+    "en": "First you must listen a lot; second you must speak a lot.",
+    "wrong": "首先要多听，最后其次要多说。",
+    "remove": "最后",
+    "explain": "Use 其次 for the second point, not 最后 as well."
+   }
+  ]
+ },
+ {
+  "id": "budebu",
+  "title": "不得不, 来不及 and 赶快: no choice, too late, quickly",
+  "covers": [
+   19,
+   20,
+   21
+  ],
+  "formula": [
+   "Subject",
+   "*不得不",
+   "Verb"
+  ],
+  "explain": [
+   "不得不 'have no choice but to' says you do something you would rather not do, because you must: 太晚了，我不得不回家 'It is too late; I have to go home'. 只好 means almost the same, 'can only, the only thing left is to': 没有车，我们只好走路 'There is no bus, so we can only walk'. Both show that there is no other way.",
+   "来得及 'there is still time' and 来不及 'there is no time, too late' can stand alone or follow a clause: 现在走还来得及 'If we leave now, there is still time'; 来不及了 'Too late!'. They look forward at time that is left or gone.",
+   "赶快 and 赶紧 both mean 'quickly, without delay'. They go before the verb. 赶快 is often used in commands: 赶快去吧 'Go quickly'. 赶紧 is used for things that happened too: 他赶紧给医生打了电话 'He quickly called the doctor'."
+  ],
+  "examples": [
+   {
+    "zh": "太晚了，我不得不回家。",
+    "en": "It is too late; I have to go home."
+   },
+   {
+    "zh": "没有公共汽车，我们只好走路。",
+    "en": "There is no bus, so we have to walk."
+   },
+   {
+    "zh": "我们现在走还来得及。",
+    "en": "If we leave now, there is still time."
+   },
+   {
+    "zh": "你赶快去吧，别迟到。",
+    "en": "Go quickly, do not be late."
+   }
+  ],
+  "mistakes": [
+   "不得不 has two negatives but means 'have to'. Say 我不得不回家, not 我不得不要回家."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "下雨了，我们只好在家看电影。",
+    "en": "It has started to rain, so we have to watch a film at home.",
+    "explain": "只好 = the only thing left is to."
+   },
+   {
+    "t": "order",
+    "zh": "他不舒服，不得不请假。",
+    "en": "He feels unwell, so he has to ask for leave.",
+    "explain": "不得不 = have no choice but to."
+   },
+   {
+    "t": "cloze",
+    "zh": "现在时间不多了，我们赶快走吧。",
+    "en": "There is not much time now; let us go quickly.",
+    "blank": "赶快",
+    "explain": "赶快 goes before the verb."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: There is still time to go now?",
+    "options": [
+     "现在去还来得及。",
+     "现在去还来不及。"
+    ],
+    "correct": 0,
+    "zh": "现在去还来得及。",
+    "en": "There is still time to go now.",
+    "explain": "来得及 = there is still time; 来不及 = too late."
+   },
+   {
+    "t": "spot",
+    "zh": "来不及了，我们赶紧走吧。",
+    "en": "It is already too late; let us hurry.",
+    "wrong": "来不及了，我们赶紧快走吧。",
+    "remove": "快",
+    "explain": "Do not use 赶紧 and 快 together."
+   }
+  ]
+ }
+]

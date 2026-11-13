@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build data/hsk2-preview.js from content/preview-hsk2.tsv.
+"""Build data/hsk2-preview.js from content/preview-hsk2.tsv (and the same for levels 3 and 4: python3 tools/build-preview.py <dataset> 3).
 
 The AI conversation may use a few HSK 2 words as a preview. The learner is shown their pinyin and English, so the pinyin must be right:
 every entry is checked against the dataset (the word must be an HSK 2 word of the 2025 syllabus, and the syllables must match one of the
@@ -20,7 +20,7 @@ def toneless(py):
 
 def main():
     dataset = sys.argv[1] if len(sys.argv) > 1 else None
-    level = int(sys.argv[2]) if len(sys.argv) > 2 else 2   # the level being previewed: 2 (used at HSK 1) or 3 (used at HSK 2)
+    level = int(sys.argv[2]) if len(sys.argv) > 2 else 2   # the level being previewed: 2 (used at HSK 1), 3 (used at HSK 2) or 4 (used at HSK 3)
     rows = []
     for ln, line in enumerate(open(os.path.join(ROOT, 'content', 'preview-hsk%d.tsv' % level), encoding='utf-8'), 1):
         if line.startswith('#') or not line.strip():
@@ -34,7 +34,7 @@ def main():
         sys.exit('build-preview: duplicate words: %s' % sorted({z for z in zhs if zhs.count(z) > 1}))
     # a preview word must be a word the learner has not met yet: not on the site's lists for this level or below
     own = set()
-    for f in ['hsk1-official-300.txt', 'hsk2-official-197.txt'][:level - 1]:
+    for f in ['hsk1-official-300.txt', 'hsk2-official-197.txt', 'hsk3-official-491.txt'][:level - 1]:
         own |= {l.strip() for l in open(os.path.join(ROOT, 'content', f), encoding='utf-8') if l.strip()}
     for z in zhs:
         if z in own:

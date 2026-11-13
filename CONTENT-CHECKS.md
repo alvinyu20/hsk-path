@@ -95,6 +95,20 @@ HSK 3 is the third level (`content/l3/`, tools run with `LEVEL=3`). The level ch
 - **Unlocking.** HSK 3 stays behind the lock: it opens when the HSK 2 exam is passed (80% in both sections), and "open lock" in Settings still lets anyone in.
 - Nothing has been read by a person who reads Chinese. `tools/make-ai-review-pack-l3.py` builds the packs for that (`review/chinese-ai-hsk3/`); they have not yet been run past DeepSeek or Qwen.
 
+## HSK 4 (added 13 Nov 2026)
+
+HSK 4 is the fourth level (`content/l4/`, tools run with `LEVEL=4`). The level checker allows words from HSK 1 to 4 only (小明 is the one name allowed); every check runs in both the 儿 style and the plain style. What is different from the lower levels:
+- **Words: 990 cards from the 1,000 band 4 entries.** The list was read through a summarising page reader (`content/hsk4-official-1000.tsv`) and cross-checked with the open dataset's 2025 band tag; it was **not compared with the official document**. Ten entries reuse a headword from a lower level with a different sense (重 空 生 啊 等 干 两 为 着 种); they are taught in one grammar lesson ("Words you know, with a new meaning") and are not separate cards.
+- **Grammar outline is my own, not the official list** (`content/l4/grammar-outline.txt`, 58 points, 27 lessons, 135 exercises), built from the grammar of the HSK 4 words and limited to patterns that use HSK 1 to 4 words. `tools/build-grammar.py` fails if a point has no lesson. Not compared with a second source.
+- **Mock exam layout** follows the HSK 4 sample papers of the 2012 test (listening 10 + 15 + 20 = 45 questions: true/false on a passage, a short dialogue, a long dialogue; reading 10 + 10 + 20 = 40: blanks, three pieces to put in order, passages; every multiple-choice question has four options), because the 2025 layout was not available to me. There are no picture questions. The bank has 151 questions. Each section is scored out of 100; the site's lock asks for 80% in both sections. The writing practice (15 questions: 10 put words in order, 5 type one missing character) is practice only and does not count towards the seal.
+- **Pinyin readings added** in `content/pinyin-overrides.tsv` / `pinyin-reviewed.tsv`: 量 liáng, 背 bēi, 待 dāi, 血 xiě, 弹 tán, 应 yìng (in 适应, 答应), 只 zhī (after 两), 肚子 dùzi, 大夫 dàifu, 相 xiāng (相同, 互相), 好 hǎo (after a verb), 降 jiàng, and some forty neutral-tone words (部分, 窗户, 麻烦, 客气 ...). 有空 and 没空 are solid words (yǒu kòng, méi kòng). 嗯 is shown as ń; the syllabus prints ǹg or ńg (a question for a native speaker). 说话人为什么 is waived: pypinyin reads 人为 as one word.
+- **53 word boundaries were decided** in `content/lexicon-words.tsv` and `content/lexicon-split.tsv` (e.g. 大海, 钱包, 一口气 solid; 身上, 台上 written separately), and 21 segmentation ties were settled (two by a rule: 最好吃 and 一下课).
+- **Character meanings.** 290 characters that appear in HSK 4 words and are not words of their own at this level got a short English meaning for the "Built from" chips (`content/char-glosses.tsv`, AI-written, not reviewed).
+- **The Learn path** has a solar-term theme: 24 units, one per term (立春 to 大寒), each unit with its usual date and a story line. The names, dates and English meanings of the terms and the story lines were written by me from general knowledge, not checked against a source; the dates can be a day off.
+- **Unlocking.** HSK 4 stays behind the lock: it opens when the HSK 3 exam is passed (80% in both sections), and "open lock" in Settings still lets anyone in.
+- **Audio.** HSK 4 has no recorded voice files yet (the browser voice is used); `node tools/audio-texts.js` already lists its texts for the audio workflow.
+- Nothing has been read by a person who reads Chinese. `tools/make-ai-review-pack-l4.py` builds the packs for that (`review/chinese-ai-hsk4/`); they have not yet been run past DeepSeek or Qwen.
+
 ## Review log
 
 ### 30 Oct 2026, HSK 1 (300 words, 26 grammar lessons)
@@ -185,6 +199,26 @@ HSK 3 is the third level (`content/l3/`, tools run with `LEVEL=3`). The level ch
 - The official word list was read from a third-party copy of the PDF and not compared with the document from the exam body.
 - The new rewrites were read by me and by the automated rules, not by anyone else.
 - The picture questions in the exam still use emoji; replacing them with drawn pictograms is queued.
+
+### 13 Nov 2026, HSK 4 (990 words, 27 grammar lessons, 24 listening clips, mock exam, solar-term path)
+
+**Sources used**
+- Word list: the band 4 entries of the November 2025 syllabus (1,000 entries) read through a summarising page reader and cross-checked with the open dataset's 2025 band tag. Not compared with the official document. Twenty of the 990 words could not be confirmed against the dataset (窗 袋子 动车 换乘 聚餐 嗯 入住 扫码 身 使馆 售票员 头痛 网购 味 线上 线下 血 纸巾 转发 自习); they stay in the list and are left out of the HSK 3 preview words.
+- Grammar: my own outline (58 points). No second source.
+- Exam layout: the 2012 HSK 4 sample papers.
+
+**Passes done**
+- Automated rules (level, pinyin, Chinese against English, gloss, word boundaries, segmentation ties) on 6,684 items (5,595 distinct sentences): 0 errors, 0 unexplained warnings, 7 waivers (each with a reason in `content/check-waivers.tsv`), in both styles.
+- Everything that decides how the site reads the sentences was settled by hand: 53 word boundaries, 21 segmentation ties, 12 pinyin readings that pypinyin gets wrong, 290 short meanings for characters ("Built from").
+- Browser tests (`smoke-test-l4.js`) for every screen, in both styles, with all four levels together, the level lock, the exam and the writing practice; `smoke-test-path.js` opens the HSK 4 path (24 units, 219 stops).
+- Two checks that were already out of date before HSK 4 were fixed on the way: the readings self-test still expected 过 to be only "guo" (the word has listed "guo / guò" since 9 Nov), and the checker raised a pinyin alarm on the word form 过 (now waived with a reason).
+
+**Not done**
+- No human has reviewed any of it. The packs are in `review/chinese-ai-hsk4/` (24 files; the first five to send are the word list, the grammar lessons, the exam, the character meanings and the solar terms).
+- The word list was not compared with the official document; the grammar outline is not the official one.
+- No recorded voice files for HSK 4 yet (the browser voice is used); the audio workflow has to be run with the Qwen key.
+- The solar-term names, dates, English meanings and story lines are mine and not checked against a source.
+- The exam layout is from older papers; there are no picture questions at HSK 4; the writing practice cannot judge handwriting.
 
 ## Word web topics (content/topics.json)
 One shared list of topics for every level, written by hand: each topic has a group, the words (from any level), and a sentence per level. A level shows only its own words in a topic; a topic with fewer than 3 words at a level is hidden unless it is the only home of one of them (tools/topics.py). All Word web topic sentences go through the same sentence checks. `node tools/test-topics.js` checks that every word is in a topic and that known bad groupings do not come back (万 with numbers, dog/cat with animals, 从小 not with weather, left/right not with shops). When adding a word to a topic, ask: would a learner see why these words belong together? A word may sit in more than one topic.

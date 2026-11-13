@@ -2,10 +2,10 @@
  * because the typed-pinyin check accepts every reading listed there.   node tools/test-readings.js */
 const path = require('path');
 global.window = {};
-[1, 2, 3].forEach((n) => require(path.join(__dirname, '..', 'data', 'hsk' + n + '-words.js')));
+[1, 2, 3, 4].forEach((n) => require(path.join(__dirname, '..', 'data', 'hsk' + n + '-words.js')));
 const re = /\(([a-zü]*[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ][a-zü]*)\)/gi;
 let bad = 0;
-[1, 2, 3].forEach((n) => window['HSK' + n + '_WORDS'].forEach((w) => {
+[1, 2, 3, 4].forEach((n) => window['HSK' + n + '_WORDS'].forEach((w) => {
   [...w.en.matchAll(re)].forEach((m) => {
     if (w.py.split('/').map((x) => x.trim()).indexOf(m[1]) < 0) { bad++; console.log('FAIL HSK ' + n + ' ' + w.zh + ': the meaning names ' + m[1] + ' but the pinyin is "' + w.py + '"'); }
   });

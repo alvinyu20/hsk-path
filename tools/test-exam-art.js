@@ -18,7 +18,7 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
     const ART = window.SHANLU_EXAM_ART || {}; const bad = []; const missing = []; const parser = new DOMParser(); const seen = {};
     const norm = (e) => String(e).replace(/️/g, '');
     const walk = (o) => { if (Array.isArray(o)) o.forEach(walk); else if (o && typeof o === 'object') Object.keys(o).forEach((k) => { const v = o[k]; if (k === 'pic' && typeof v === 'string') seen[norm(v)] = 1; if ((k === 'opts' || k === 'o') && Array.isArray(v)) v.forEach((x) => { if (typeof x === 'string' && /\p{Extended_Pictographic}/u.test(x)) seen[norm(x)] = 1; }); walk(v); }); };
-    [1, 2, 3].forEach((n) => walk(window['HSK' + n + '_EXAM']));
+    [1, 2, 3, 4].forEach((n) => walk(window['HSK' + n + '_EXAM']));
     Object.keys(seen).forEach((k) => { if (!ART[k]) missing.push(k); });
     Object.keys(ART).forEach((k) => {
       const m = /^data:image\/svg\+xml;charset=utf-8,(.*)$/.exec(ART[k].u || ''); if (!m) { bad.push(k + ': not an svg address'); return; }

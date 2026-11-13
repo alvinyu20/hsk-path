@@ -1,5 +1,5 @@
 /* The pinyin and tones mini course ("Pinyin" screen, Learn). HAND WRITTEN; checked by tools/check-pinyin-course.py (every pinyin spelling is compared
- * with pypinyin, and every example that is an HSK 1-3 word is compared with the word lists).
+ * with pypinyin, and every example that is an HSK 1-4 word is compared with the word lists).
  * Status: written by AI, NOT yet read by a human Chinese teacher. The English comparisons for sounds ("like the p in spin") are the usual textbook
  * approximations, not exact; the tap-to-hear audio is the browser voice, which differs from device to device.
  *
@@ -145,7 +145,7 @@ window.SHANLU_PYCOURSE = {
     {
       id: 'changes', glyph: '变', title: 'Tone changes', blurb: 'Third tones in a row, and the words 不 and 一.', mins: 4,
       blocks: [
-        { t: 'p', x: 'A few tones change in connected speech. Three rules cover most of what you meet in HSK 1 to 3.' },
+        { t: 'p', x: 'A few tones change in connected speech. Three rules cover most of what you meet in HSK 1 to 4.' },
         { t: 'p', x: '1. Two third tones in a row: the first one is said as a second tone. You say ní hǎo, and you still write nǐ hǎo. This site accepts both when you type.' },
         { t: 'say', items: [
           { zh: '你好', py: 'nǐ hǎo', en: 'hello (said ní hǎo)' },

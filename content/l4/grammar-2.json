@@ -1,0 +1,731 @@
+[
+ {
+  "id": "nandao",
+  "title": "难道…吗, 到底 and 究竟: asking with force",
+  "covers": [
+   22,
+   23
+  ],
+  "formula": [
+   "*难道",
+   "Statement",
+   "*吗"
+  ],
+  "explain": [
+   "难道 … 吗 is a question that already has an answer in the speaker's mind. 难道 means 'could it be that …?' and shows surprise or doubt: 难道你不知道吗 'Do you really not know?'. It is not a real request for information.",
+   "到底 and 究竟 both mean 'on earth, exactly' in a question. They add force to the question and show you want a clear answer: 你到底想吃什么 'What on earth do you want to eat?'. 究竟 is a little more formal.",
+   "到底 also means 'in the end, after all' in a statement: 他到底还是来了 'He came after all'. Put 到底 and 究竟 before the verb or before the question word."
+  ],
+  "examples": [
+   {
+    "zh": "难道你不知道吗？",
+    "en": "Do you really not know?"
+   },
+   {
+    "zh": "难道他没有告诉你吗？",
+    "en": "Has he really not told you?"
+   },
+   {
+    "zh": "你到底想吃什么？",
+    "en": "What on earth do you want to eat?"
+   },
+   {
+    "zh": "你究竟去不去？",
+    "en": "Are you going or not, once and for all?"
+   }
+  ],
+  "mistakes": [
+   "难道 … 吗 is not a plain question. Use it when you are surprised. For a real question, use 吗 alone.",
+   "Do not use 到底 in a yes/no question with 吗: 你到底去吗 is odd. Use a question word or A-not-A: 你到底去不去."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "难道你不喜欢吗？",
+    "en": "Do you really not like it?",
+    "explain": "难道 + statement + 吗."
+   },
+   {
+    "t": "order",
+    "zh": "你到底想吃什么？",
+    "en": "What on earth do you want to eat?",
+    "explain": "到底 goes before the verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "你究竟去不去？",
+    "en": "Are you going or not, once and for all?",
+    "blank": "究竟",
+    "explain": "究竟 adds force to the question."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: What on earth is this?",
+    "options": [
+     "这到底是什么？",
+     "这是到底什么？"
+    ],
+    "correct": 0,
+    "zh": "这到底是什么？",
+    "en": "What on earth is this?",
+    "explain": "到底 comes before the verb 是."
+   },
+   {
+    "t": "spot",
+    "zh": "难道你不知道吗？",
+    "en": "Do you really not know?",
+    "wrong": "难道你到底不知道吗？",
+    "remove": "到底",
+    "explain": "难道 already adds force; do not add 到底."
+   }
+  ]
+ },
+ {
+  "id": "jingran",
+  "title": "竟然, 原来 and 本来: surprise and discovery",
+  "covers": [
+   24,
+   25
+  ],
+  "formula": [
+   "Subject",
+   "*竟然",
+   "Verb"
+  ],
+  "explain": [
+   "竟然 'to one's surprise, actually' shows you did not expect what happened: 他竟然忘了自己的生日 'He actually forgot his own birthday'. It goes before the verb and comes with something the speaker finds hard to believe.",
+   "原来 'so it turns out' marks a discovery: you have just found out the truth. 原来你在这儿 'So you are here!'; 原来他是老师 'So he is a teacher'. It usually starts the sentence.",
+   "本来 'originally, in the first place' tells what was planned or true before something changed: 我本来想去，可是下雨了 'I originally wanted to go, but it rained'."
+  ],
+  "examples": [
+   {
+    "zh": "他竟然忘了自己的生日。",
+    "en": "He actually forgot his own birthday."
+   },
+   {
+    "zh": "这么简单的题，他竟然做错了。",
+    "en": "He actually got such an easy question wrong."
+   },
+   {
+    "zh": "原来你在这儿，我找了你很久。",
+    "en": "So you are here! I looked for you for a long time."
+   },
+   {
+    "zh": "我本来想去，可是下雨了。",
+    "en": "I originally wanted to go, but it rained."
+   }
+  ],
+  "mistakes": [
+   "竟然 is for surprise, not for a plain fact. If the thing is not surprising, do not use it.",
+   "原来 is about finding out. Do not use it for something you already knew."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他竟然忘了我的名字。",
+    "en": "He actually forgot my name.",
+    "explain": "竟然 goes before the verb."
+   },
+   {
+    "t": "order",
+    "zh": "我本来想去，可是太累了。",
+    "en": "I originally wanted to go, but I was too tired.",
+    "explain": "本来 tells the first plan."
+   },
+   {
+    "t": "cloze",
+    "zh": "原来他是我们的新老师。",
+    "en": "So he is our new teacher.",
+    "blank": "原来",
+    "explain": "原来 marks a discovery."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: She actually did not come?",
+    "options": [
+     "她竟然没有来。",
+     "她没有竟然来。"
+    ],
+    "correct": 0,
+    "zh": "她竟然没有来。",
+    "en": "She actually did not come.",
+    "explain": "竟然 comes before 没有."
+   },
+   {
+    "t": "spot",
+    "zh": "他竟然不知道这件事。",
+    "en": "He actually does not know about this.",
+    "wrong": "他竟然却不知道这件事。",
+    "remove": "却",
+    "explain": "Do not add 却 after 竟然."
+   }
+  ]
+ },
+ {
+  "id": "queshi",
+  "title": "确实, 实在, 完全 and 十分: really and completely",
+  "covers": [
+   26
+  ],
+  "formula": [
+   "Subject",
+   "*确实 / 实在 / 十分",
+   "Adjective or verb"
+  ],
+  "explain": [
+   "确实 'really, indeed' confirms that something is true: 这个办法确实很好 'This way really is good'. 实在 'truly' stresses a feeling or a judgement and is often used with 太 or 不: 我实在太累了 'I am truly too tired'.",
+   "完全 'completely, entirely' goes before a verb or adjective: 我完全同意 'I completely agree'. With 不 it means 'not at all': 我完全不知道 'I have no idea at all'.",
+   "十分 'very, fully' is like 非常 or 很 but a little more formal. It goes before an adjective or a feeling: 他十分高兴 'He is very happy'."
+  ],
+  "examples": [
+   {
+    "zh": "这个办法确实很好。",
+    "en": "This way really is good."
+   },
+   {
+    "zh": "我实在太累了，想休息一下。",
+    "en": "I am really too tired and want to rest a bit."
+   },
+   {
+    "zh": "我完全同意你说的。",
+    "en": "I completely agree with what you say."
+   },
+   {
+    "zh": "他对这个工作十分满意。",
+    "en": "He is very satisfied with this job."
+   }
+  ],
+  "mistakes": [
+   "完全 and 十分 go before the verb or adjective, not after it. 我同意完全 is wrong.",
+   "确实 confirms what is true. Do not use it to ask a question; for \"is it really so?\" use 真的吗."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "这个电影确实很有意思。",
+    "en": "This film really is interesting.",
+    "explain": "确实 goes before the adjective."
+   },
+   {
+    "t": "order",
+    "zh": "我完全同意你的看法。",
+    "en": "I completely agree with your view.",
+    "explain": "完全 goes before the verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "我实在太累了，不想去。",
+    "en": "I am really too tired; I do not want to go.",
+    "blank": "实在",
+    "explain": "实在 stresses how strongly you feel."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He is very happy?",
+    "options": [
+     "他十分高兴。",
+     "他高兴十分。"
+    ],
+    "correct": 0,
+    "zh": "他十分高兴。",
+    "en": "He is very happy.",
+    "explain": "十分 goes before the adjective."
+   },
+   {
+    "t": "spot",
+    "zh": "我完全不知道这件事。",
+    "en": "I know nothing at all about this.",
+    "wrong": "我完全不是知道这件事。",
+    "remove": "是",
+    "explain": "完全不 + verb; do not add 是."
+   }
+  ]
+ },
+ {
+  "id": "conglai",
+  "title": "从来, 并 and 往往: never, not at all, tends to",
+  "covers": [
+   27,
+   28,
+   29
+  ],
+  "formula": [
+   "Subject",
+   "*从来",
+   "不 / 没",
+   "Verb"
+  ],
+  "explain": [
+   "从来 + 不 / 没 means 'never, at no time': 我从来不喝酒 'I never drink alcohol'; 他从来没去过那个地方 'He has never been to that place'. 从来不 is a habit or a rule; 从来没 + verb + 过 is experience up to now. 从来 is normally used with a negative.",
+   "并 + 不 / 没 'not at all, actually not' corrects a wrong idea: 这个菜并不贵 'This dish is not expensive at all'; 他并没有生气 'He did not actually get angry'. 并 only goes with a negative.",
+   "往往 'often, tends to' describes what usually happens in the same situation. It is a pattern, not one event: 周末他往往在家休息 'At the weekend he tends to rest at home'. Use 常常 for plain frequency and 往往 for a general rule."
+  ],
+  "examples": [
+   {
+    "zh": "我从来不喝酒。",
+    "en": "I never drink alcohol."
+   },
+   {
+    "zh": "他从来没去过那个地方。",
+    "en": "He has never been to that place."
+   },
+   {
+    "zh": "这个菜并不贵，只是有点儿辣。",
+    "en": "This dish is not expensive at all; it is just a little spicy."
+   },
+   {
+    "zh": "周末他往往在家休息。",
+    "en": "At the weekend he tends to rest at home."
+   }
+  ],
+  "mistakes": [
+   "从来 and 并 need a negative. 我从来去过 is wrong; say 我从来没去过.",
+   "往往 describes what usually happens. It is not used for the future or for a command: 明天他往往来 is wrong."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我从来不吃早饭。",
+    "en": "I never eat breakfast.",
+    "explain": "从来 + 不 + verb."
+   },
+   {
+    "t": "order",
+    "zh": "他从来没来过这里。",
+    "en": "He has never been here.",
+    "explain": "从来没 + verb + 过."
+   },
+   {
+    "t": "cloze",
+    "zh": "这件衣服并不贵。",
+    "en": "This piece of clothing is not expensive at all.",
+    "blank": "并",
+    "explain": "并 goes with 不 or 没."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Old people tend to get up early?",
+    "options": [
+     "老人往往起得很早。",
+     "老人往往明天起得很早。"
+    ],
+    "correct": 0,
+    "zh": "老人往往起得很早。",
+    "en": "Old people tend to get up early.",
+    "explain": "往往 describes a general pattern, not tomorrow."
+   },
+   {
+    "t": "spot",
+    "zh": "他并没有生气。",
+    "en": "He did not actually get angry.",
+    "wrong": "他并也没有生气。",
+    "remove": "也",
+    "explain": "Do not add 也 after 并."
+   }
+  ]
+ },
+ {
+  "id": "ouer",
+  "title": "偶尔, 不断, 老是 and 差点儿: how often, and nearly",
+  "covers": [
+   30,
+   31
+  ],
+  "formula": [
+   "Subject",
+   "*偶尔",
+   "Verb"
+  ],
+  "explain": [
+   "偶尔 'now and then, occasionally' is for something that happens rarely: 我偶尔去看电影 'I go to the cinema now and then'. 不断 'again and again, without a break' says something goes on and on: 他不断地练习 'He keeps practising'. 老是 'always, all the time' is spoken and often complains: 他老是迟到 'He is always late'.",
+   "不断 is often followed by 地 and a verb. 老是 is close to 总是 (HSK 3), but 老是 usually shows that the speaker is not happy about it.",
+   "差点儿 'almost, nearly' says that something nearly happened, but did not: 我昨天差点儿迟到 'I was almost late yesterday' (and I was not). It goes right before the verb: 他差点儿忘了 'He almost forgot'."
+  ],
+  "examples": [
+   {
+    "zh": "我偶尔去看电影。",
+    "en": "I go to the cinema now and then."
+   },
+   {
+    "zh": "他不断地练习，所以汉语越来越好。",
+    "en": "He keeps practising, so his Chinese is getting better and better."
+   },
+   {
+    "zh": "他老是迟到，老师很不高兴。",
+    "en": "He is always late, and the teacher is very unhappy."
+   },
+   {
+    "zh": "我昨天差点儿迟到。",
+    "en": "I was almost late yesterday."
+   }
+  ],
+  "mistakes": [
+   "偶尔 means rarely, so do not use it with a fixed number of times: 我偶尔去三次 is wrong.",
+   "差点儿 describes something that did not happen. 我差点儿迟到 means you were not late."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我偶尔去公园跑步。",
+    "en": "I go running in the park now and then.",
+    "explain": "偶尔 goes before the verb."
+   },
+   {
+    "t": "order",
+    "zh": "他老是忘记带手机。",
+    "en": "He always forgets to bring his phone.",
+    "explain": "老是 = all the time, and the speaker is not happy."
+   },
+   {
+    "t": "cloze",
+    "zh": "他不断地练习写汉字。",
+    "en": "He keeps practising writing characters.",
+    "blank": "不断",
+    "explain": "不断地 + verb = again and again."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I was almost late yesterday?",
+    "options": [
+     "我昨天差点儿迟到。",
+     "我昨天偶尔迟到。"
+    ],
+    "correct": 0,
+    "zh": "我昨天差点儿迟到。",
+    "en": "I was almost late yesterday.",
+    "explain": "差点儿 means it nearly happened."
+   },
+   {
+    "t": "spot",
+    "zh": "他差点儿忘了。",
+    "en": "He almost forgot.",
+    "wrong": "他差点儿是忘了。",
+    "remove": "是",
+    "explain": "差点儿 goes straight before the verb."
+   }
+  ]
+ },
+ {
+  "id": "zhishao",
+  "title": "至少, 左右, 大约, 尤其 and 其中: amounts and focus",
+  "covers": [
+   32,
+   33
+  ],
+  "formula": [
+   "*至少",
+   "Amount"
+  ],
+  "explain": [
+   "至少 'at least' goes before an amount: 我每天至少睡七个小时 'I sleep at least seven hours every day'. 左右 'about' goes after a number: 他三十岁左右 'He is about thirty'. 大约 'about, roughly' goes before it: 大约三十个人 'about thirty people'. Do not use both in one phrase.",
+   "尤其 'especially' picks out the most important case: 我喜欢水果，尤其是苹果 'I like fruit, especially apples'. 尤其 is often followed by 是 and can point at a thing, a time or a quality.",
+   "其中 'among them, of which' points back to a group you have just named: 这里有十个人，其中三个是老师 'There are ten people here, and three of them are teachers'."
+  ],
+  "examples": [
+   {
+    "zh": "我每天至少睡七个小时。",
+    "en": "I sleep at least seven hours every day."
+   },
+   {
+    "zh": "他三十岁左右，是一个医生。",
+    "en": "He is about thirty and is a doctor."
+   },
+   {
+    "zh": "我喜欢水果，尤其是苹果。",
+    "en": "I like fruit, especially apples."
+   },
+   {
+    "zh": "这里有十个人，其中三个是老师。",
+    "en": "There are ten people here, and three of them are teachers."
+   }
+  ],
+  "mistakes": [
+   "左右 goes after the number, 大约 before it. 左右三十 is wrong. Do not use 大约 and 左右 together.",
+   "其中 points back to a group you have already named. Do not use it at the start of a text."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他每天至少喝三杯水。",
+    "en": "He drinks at least three glasses of water every day.",
+    "explain": "至少 goes before the amount."
+   },
+   {
+    "t": "order",
+    "zh": "这个小城市大约有五千人。",
+    "en": "This small city has about 5,000 people.",
+    "explain": "大约 goes before the number."
+   },
+   {
+    "t": "cloze",
+    "zh": "我喜欢运动，尤其是游泳。",
+    "en": "I like sports, especially swimming.",
+    "blank": "尤其",
+    "explain": "尤其是 picks out the main case."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He is about twenty years old?",
+    "options": [
+     "他二十岁左右。",
+     "他左右二十岁。"
+    ],
+    "correct": 0,
+    "zh": "他二十岁左右。",
+    "en": "He is about twenty years old.",
+    "explain": "左右 goes after the number."
+   },
+   {
+    "t": "spot",
+    "zh": "我们有五个人，其中两个是老师。",
+    "en": "We have five people, and two of them are teachers.",
+    "wrong": "我们有五个人，在其中两个是老师。",
+    "remove": "在",
+    "explain": "其中 stands alone; do not put 在 before it."
+   }
+  ]
+ },
+ {
+  "id": "yexu",
+  "title": "也许, 恐怕, 估计, 肯定, 千万 and 无法: guessing and warning",
+  "covers": [
+   34,
+   35
+  ],
+  "formula": [
+   "*也许 / 恐怕 / 估计",
+   "Guess"
+  ],
+  "explain": [
+   "也许 'maybe, perhaps' and 估计 'I guess' show that you are not sure: 他也许在家 'He may be at home'; 我估计明天会下雨 'I guess it will rain tomorrow'. 恐怕 'I am afraid that' is a polite way to give bad news or a doubt: 恐怕我不能去 'I am afraid I cannot go'. 肯定 'definitely, certainly' shows you are sure: 他肯定知道 'He definitely knows'.",
+   "千万 'be sure to, on no account' gives a strong warning, mostly in commands: 千万别忘了 'Be sure not to forget'; 路上千万小心 'Be very careful on the road'.",
+   "无法 'unable to, there is no way to' is the formal form of 不能: 我无法回答这个问题 'I cannot answer this question'. It is followed by a verb and shows that there really is no way."
+  ],
+  "examples": [
+   {
+    "zh": "他也许在家，给他打个电话吧。",
+    "en": "Perhaps he is at home; give him a call."
+   },
+   {
+    "zh": "我估计明天会下雨。",
+    "en": "I guess it will rain tomorrow."
+   },
+   {
+    "zh": "恐怕我不能去，对不起。",
+    "en": "I am afraid I cannot go; sorry."
+   },
+   {
+    "zh": "路上千万小心。",
+    "en": "Be very careful on the road."
+   }
+  ],
+  "mistakes": [
+   "恐怕 gives bad news or a doubt. Do not use it for good news: 恐怕你会赢 sounds odd.",
+   "千万 is for warnings and commands, not for the past: 昨天我千万去了 is wrong."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他肯定知道这件事。",
+    "en": "He definitely knows about this.",
+    "explain": "肯定 shows you are sure."
+   },
+   {
+    "t": "order",
+    "zh": "今天也许会下雨。",
+    "en": "Perhaps it will rain today.",
+    "explain": "也许 = perhaps."
+   },
+   {
+    "t": "cloze",
+    "zh": "恐怕他今天不能来。",
+    "en": "I am afraid he cannot come today.",
+    "blank": "恐怕",
+    "explain": "恐怕 gives a polite doubt or bad news."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Be sure not to forget?",
+    "options": [
+     "千万别忘了。",
+     "千万忘了。"
+    ],
+    "correct": 0,
+    "zh": "千万别忘了。",
+    "en": "Be sure not to forget.",
+    "explain": "千万 goes with 别 or 不要 in a warning."
+   },
+   {
+    "t": "spot",
+    "zh": "我无法回答这个问题。",
+    "en": "I cannot answer this question.",
+    "wrong": "我无法能回答这个问题。",
+    "remove": "能",
+    "explain": "无法 already means \"cannot\"; do not add 能."
+   }
+  ]
+ },
+ {
+  "id": "reng",
+  "title": "仍然, 重新, 继续 and 最终: still, again, go on, in the end",
+  "covers": [
+   36,
+   37
+  ],
+  "formula": [
+   "Subject",
+   "*仍然",
+   "Verb"
+  ],
+  "explain": [
+   "仍然 and 仍 'still, yet' say that a situation has not changed: 他仍然住在那里 'He still lives there'. They are more formal than 还 and 还是 and go before the verb or the adjective.",
+   "重新 'anew, from the start' means to do something again in a new way: 我想重新开始 'I want to start again'. Unlike 再 or 又, 重新 means starting over. 继续 'to continue' picks up what was going on: 请继续说 'Please go on talking'.",
+   "最终 'in the end' tells the result after a long process: 他努力学习，最终通过了考试 'He studied hard and in the end passed the exam'. It is more formal than 最后 and is about the result, not about the last item in a list."
+  ],
+  "examples": [
+   {
+    "zh": "他仍然住在那个小城市里。",
+    "en": "He still lives in that small city."
+   },
+   {
+    "zh": "我想重新开始学习汉语。",
+    "en": "I want to start learning Chinese again from the beginning."
+   },
+   {
+    "zh": "请继续说，我在听。",
+    "en": "Please go on; I am listening."
+   },
+   {
+    "zh": "他努力学习，最终通过了考试。",
+    "en": "He studied hard and in the end passed the exam."
+   }
+  ],
+  "mistakes": [
+   "仍然 is for a situation that has stayed the same. For something that happens once more use 又 or 再.",
+   "重新 means starting over. For simply \"one more time\" use 再: 再说一遍."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他仍然在学校工作。",
+    "en": "He still works at the school.",
+    "explain": "仍然 goes before the verb."
+   },
+   {
+    "t": "order",
+    "zh": "我们继续上课吧。",
+    "en": "Let us continue the lesson.",
+    "explain": "继续 = go on."
+   },
+   {
+    "t": "cloze",
+    "zh": "这个作业我想重新做一次。",
+    "en": "I want to do this homework again from the start.",
+    "blank": "重新",
+    "explain": "重新 = from the start."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He still has not come?",
+    "options": [
+     "他仍然没有来。",
+     "他重新没有来。"
+    ],
+    "correct": 0,
+    "zh": "他仍然没有来。",
+    "en": "He still has not come.",
+    "explain": "仍然 says nothing has changed."
+   },
+   {
+    "t": "spot",
+    "zh": "他最终通过了考试。",
+    "en": "In the end he passed the exam.",
+    "wrong": "他最终最后通过了考试。",
+    "remove": "最后",
+    "explain": "Use 最终 or 最后, not both."
+   }
+  ]
+ },
+ {
+  "id": "shaowei",
+  "title": "稍微, 有点儿, 多么, 却 and 倒: a little, how, but",
+  "covers": [
+   38,
+   39,
+   40
+  ],
+  "formula": [
+   "Subject",
+   "*稍微 / 有点儿",
+   "Adjective"
+  ],
+  "explain": [
+   "稍微 'slightly, a little' is for a small amount or change: 请稍微等一下 'Please wait a moment'; 今天稍微热了一点儿 'Today is a little hotter'. It usually goes with 一点儿 or 一下. 有点儿 'a bit' is also small, but the speaker finds it too much: 这个有点儿贵 'This is a bit dear'.",
+   "多么 'how …!' is used in exclamations about a quality: 她唱得多么好啊 'How well she sings!'. It is followed by an adjective, and 啊 adds feeling.",
+   "却 and 倒 both turn the meaning against what you would expect, and both go before the verb. 却 'but, yet': 他很聪明，却不努力 'He is clever, but he does not work hard'. 倒 'actually, contrary to expectation': 这个菜看起来一般，吃起来倒很好吃 'This dish looks ordinary, but it tastes very good'."
+  ],
+  "examples": [
+   {
+    "zh": "请稍微等一下，我马上来。",
+    "en": "Please wait a moment; I will come right away."
+   },
+   {
+    "zh": "这件衣服有点儿贵。",
+    "en": "This piece of clothing is a bit dear."
+   },
+   {
+    "zh": "她唱得多么好啊！",
+    "en": "How well she sings!"
+   },
+   {
+    "zh": "他很聪明，却不努力。",
+    "en": "He is clever, but he does not work hard."
+   }
+  ],
+  "mistakes": [
+   "有点儿 often means \"a bit too much\", so it goes with unwelcome words: 有点儿贵, 有点儿累. It is not used with 很.",
+   "却 goes before the verb, not at the start of the sentence: 却他不努力 is wrong."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "请稍微等一下。",
+    "en": "Please wait a moment.",
+    "explain": "稍微 goes before the verb."
+   },
+   {
+    "t": "order",
+    "zh": "这个房间有点儿小。",
+    "en": "This room is a bit small.",
+    "explain": "有点儿 + unwelcome adjective."
+   },
+   {
+    "t": "cloze",
+    "zh": "她多么漂亮啊！",
+    "en": "How pretty she is!",
+    "blank": "多么",
+    "explain": "多么 + adjective + 啊 makes an exclamation."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He is clever, but he does not work hard?",
+    "options": [
+     "他很聪明，却不努力。",
+     "他很聪明，却他不努力。"
+    ],
+    "correct": 0,
+    "zh": "他很聪明，却不努力。",
+    "en": "He is clever, but he does not work hard.",
+    "explain": "却 goes before the verb."
+   },
+   {
+    "t": "spot",
+    "zh": "这个菜有点儿辣。",
+    "en": "This dish is a bit spicy.",
+    "wrong": "这个菜有点儿很辣。",
+    "remove": "很",
+    "explain": "有点儿 is not used with 很."
+   }
+  ]
+ }
+]

@@ -892,6 +892,33 @@ Examples:
 - 没事 = 没 (not) + 事 (matter)
 - 没关系 = 没 (not) + 关系 (relation)
 
+**中** (zhōng, middle; China)
+
+- 中午 = 中 (middle) + 午 (noon)
+- 中国 = 中 (middle) + 国 (country)
+- 中学 = 中 (middle) + 学 (school)
+- 中文 = 中 (China) + 文 (writing, language)
+
+**们** (men, plural ending for people)
+
+- 我们 = 我 (I) + 们 (plural)
+- 你们 = 你 (you) + 们 (plural)
+- 他们 = 他 (he) + 们 (plural)
+- 她们 = 她 (she) + 们 (plural)
+- 它们 = 它 (it) + 们 (plural)
+
+**里** (lǐ, inside; here and there)
+
+- 这里 = 这 (this) + 里 (inside, place)
+- 那里 = 那 (that) + 里 (inside, place)
+- 哪里 = 哪 (which) + 里 (inside, place)
+
+**边** (biān, side)
+
+- 外边 = 外 (outside) + 边 (side)
+- 这边 = 这 (this) + 边 (side)
+- 那边 = 那 (that) + 边 (side)
+
 ### Opposite pairs and their notes
 
 - 大 / 小: Both work with 很: 很大, 很小.

@@ -1,0 +1,731 @@
+[
+ {
+  "id": "gengjia",
+  "title": "更加, 不如, 相同 and 同样: more, less, the same",
+  "covers": [
+   41,
+   56
+  ],
+  "formula": [
+   "A",
+   "*不如",
+   "B",
+   "Adjective"
+  ],
+  "explain": [
+   "更加 'even more' is like 更 (HSK 3) but a little more formal. It goes before adjectives and some verbs: 天气更加冷了 'The weather is even colder'; 他更加努力了 'He works even harder'. It compares with an earlier state.",
+   "A 不如 B means 'A is not as good as B': 这个手机不如那个手机好用 'This phone is not as easy to use as that one'. An adjective can follow B: 我不如他高 'I am not as tall as he is'. Compare 没有 (HSK 2): 这个没有那个好.",
+   "相同 'the same, identical' and 同样 'in the same way, equally' say there is no difference: 我们的想法相同 'Our ideas are the same'; 他们同样很高兴 'They are equally happy'. 同样 can also come before a noun with 的: 同样的问题 'the same question'."
+  ],
+  "examples": [
+   {
+    "zh": "天气更加冷了，多穿一点儿衣服吧。",
+    "en": "The weather is even colder now; wear a bit more clothing."
+   },
+   {
+    "zh": "这个手机不如那个手机好用。",
+    "en": "This phone is not as easy to use as that one."
+   },
+   {
+    "zh": "我们的想法完全相同。",
+    "en": "Our ideas are exactly the same."
+   },
+   {
+    "zh": "他们对这件事同样感兴趣。",
+    "en": "They are equally interested in this matter."
+   }
+  ],
+  "mistakes": [
+   "不如 compares two things, so you need both A and B. 这个不如好 is incomplete; say 这个不如那个好.",
+   "相同 does not take 很: 很相同 is wrong. Say 完全相同 'exactly the same' or 不太相同 'not quite the same'."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他比以前更加努力了。",
+    "en": "He works even harder now than before.",
+    "explain": "更加 + adjective."
+   },
+   {
+    "t": "order",
+    "zh": "我不如他高。",
+    "en": "I am not as tall as he is.",
+    "explain": "A 不如 B + adjective."
+   },
+   {
+    "t": "cloze",
+    "zh": "这两个字的意思相同。",
+    "en": "The meaning of these two characters is the same.",
+    "blank": "相同",
+    "explain": "相同 = the same."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: This is not as good as that?",
+    "options": [
+     "这个不如那个好。",
+     "这个不如好那个。"
+    ],
+    "correct": 0,
+    "zh": "这个不如那个好。",
+    "en": "This is not as good as that.",
+    "explain": "A 不如 B + adjective."
+   },
+   {
+    "t": "spot",
+    "zh": "我们的想法相同。",
+    "en": "Our ideas are the same.",
+    "wrong": "我们的想法很相同。",
+    "remove": "很",
+    "explain": "相同 does not take 很."
+   }
+  ]
+ },
+ {
+  "id": "duiyu",
+  "title": "对于, 对…来说, 通过 and 随着: regarding, for, through, along with",
+  "covers": [
+   42,
+   43,
+   44
+  ],
+  "formula": [
+   "*对于 / 对…来说",
+   "Topic",
+   "Comment"
+  ],
+  "explain": [
+   "对于 'regarding, as for' and 对 … 来说 'for, as far as … is concerned' name the person or topic that a judgement is about: 对于这个问题，我没有意见 'On this question, I have no opinion'; 对我来说，汉字很难 'For me, characters are hard'. 对…来说 is used with people; 对于 with topics.",
+   "通过 'through, by means of' tells the way you do something: 通过看电影，他学会了很多词 'By watching films, he has learned many words'. It also means 'to pass': 他通过了考试 'He passed the exam'.",
+   "随着 'along with, as' says that one thing changes together with another: 随着天气变冷，人们穿得越来越多 'As the weather gets cold, people wear more and more'. 随着 starts the sentence and is followed by a change."
+  ],
+  "examples": [
+   {
+    "zh": "对于这个问题，我没有意见。",
+    "en": "On this question, I have no opinion."
+   },
+   {
+    "zh": "对我来说，汉字很难。",
+    "en": "For me, characters are hard."
+   },
+   {
+    "zh": "通过看电影，他学会了很多词。",
+    "en": "By watching films, he has learned many words."
+   },
+   {
+    "zh": "随着天气变冷，人们穿得越来越多。",
+    "en": "As the weather gets cold, people wear more and more."
+   }
+  ],
+  "mistakes": [
+   "对…来说 is for people: 对我来说, 对学生来说. Do not use it for a thing: 对天气来说 is wrong.",
+   "随着 needs a change after it. 随着天气 is not complete; say 随着天气变冷."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "对我来说，这个很容易。",
+    "en": "For me, this is very easy.",
+    "explain": "对 + person + 来说 gives the point of view."
+   },
+   {
+    "t": "order",
+    "zh": "通过看书，他学到了很多。",
+    "en": "By reading, he learned a lot.",
+    "explain": "通过 + action = by means of."
+   },
+   {
+    "t": "cloze",
+    "zh": "随着他的汉语越来越好，他的朋友也越来越多。",
+    "en": "As his Chinese gets better and better, he has more and more friends.",
+    "blank": "随着",
+    "explain": "随着 + change."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: On this matter, I agree?",
+    "options": [
+     "对于这件事，我同意。",
+     "这件事对于，我同意。"
+    ],
+    "correct": 0,
+    "zh": "对于这件事，我同意。",
+    "en": "On this matter, I agree.",
+    "explain": "对于 comes before the topic."
+   },
+   {
+    "t": "spot",
+    "zh": "通过看电影，他学会了很多词。",
+    "en": "By watching films, he has learned many words.",
+    "wrong": "通过看电影，他用学会了很多词。",
+    "remove": "用",
+    "explain": "通过 already means \"by means of\"; do not add 用."
+   }
+  ]
+ },
+ {
+  "id": "anzhao",
+  "title": "按照, 作为, 与…相比 and 使: according to, as, compared with, make",
+  "covers": [
+   45,
+   46,
+   47
+  ],
+  "formula": [
+   "*按照",
+   "Rule or plan",
+   "Verb"
+  ],
+  "explain": [
+   "按照 'according to, in line with' is followed by a rule, a plan or an order, and then the action: 按照老师说的做 'Do it the way the teacher said'. 按照 is about following something. 根据 (HSK 3) is about the evidence a judgement rests on. 作为 'as, in the role of' says what role someone has: 作为学生，他应该努力学习 'As a student, he should study hard'.",
+   "与 … 相比 'compared with …' compares two things. 与 is the written form of 和, and 和 … 相比 is the spoken one: 与去年相比，今年的雨多了 'Compared with last year, there is more rain this year'.",
+   "使 'to make, to cause' is followed by a person and then a feeling or a state: 这个消息使我很高兴 'This news makes me very happy'. The subject is a thing or an event, not a person who acts on purpose."
+  ],
+  "examples": [
+   {
+    "zh": "请按照老师说的做。",
+    "en": "Please do it the way the teacher says."
+   },
+   {
+    "zh": "作为学生，他应该努力学习。",
+    "en": "As a student, he should study hard."
+   },
+   {
+    "zh": "与去年相比，今年的雨多了。",
+    "en": "Compared with last year, there is more rain this year."
+   },
+   {
+    "zh": "这个消息使我很高兴。",
+    "en": "This news makes me very happy."
+   }
+  ],
+  "mistakes": [
+   "使 is followed by a person and then the result. For a person who makes someone do a job, use 让.",
+   "与…相比 needs both parts: 与去年相比, then what is different."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "请按照我说的做。",
+    "en": "Please do it the way I say.",
+    "explain": "按照 + what you follow."
+   },
+   {
+    "t": "order",
+    "zh": "作为朋友，我应该帮助你。",
+    "en": "As a friend, I should help you.",
+    "explain": "作为 + role."
+   },
+   {
+    "t": "cloze",
+    "zh": "这个好消息使大家都很高兴。",
+    "en": "This good news makes everyone happy.",
+    "blank": "使",
+    "explain": "使 + person + feeling."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Compared with last year, I am busier now?",
+    "options": [
+     "与去年相比，我更忙了。",
+     "与去年相比，我忙更了。"
+    ],
+    "correct": 0,
+    "zh": "与去年相比，我更忙了。",
+    "en": "Compared with last year, I am busier now.",
+    "explain": "与…相比 comes first."
+   },
+   {
+    "t": "spot",
+    "zh": "与去年相比，今年的雨多了。",
+    "en": "Compared with last year, there is more rain this year.",
+    "wrong": "与去年相比，今年的雨是多了。",
+    "remove": "是",
+    "explain": "相比 already makes the comparison; do not add 是."
+   }
+  ]
+ },
+ {
+  "id": "yijiu",
+  "title": "一…就… and 任何 / 随便: as soon as, any, as you like",
+  "covers": [
+   48,
+   49
+  ],
+  "formula": [
+   "*一",
+   "Action 1",
+   "*就",
+   "Action 2"
+  ],
+  "explain": [
+   "一 … 就 … links two actions that follow each other closely: 我一到家就给你打电话 'I will call you as soon as I get home'. It also means 'whenever': 他一累就想睡觉 'Whenever he is tired, he wants to sleep'. Put 一 before the first verb and 就 before the second.",
+   "The two verbs can have the same subject or different ones: 一下课，他就去打球 'As soon as class is over, he goes to play ball'.",
+   "任何 'any, whatever' is followed by a noun and then 都 or 也: 任何人都可以来 'Anyone can come'; 我没有任何问题 'I have no questions at all'. 随便 'as you like, casual' means there is no limit: 你随便坐 'Sit wherever you like'."
+  ],
+  "examples": [
+   {
+    "zh": "我一到家就给你打电话。",
+    "en": "I will call you as soon as I get home."
+   },
+   {
+    "zh": "他一累就想睡觉。",
+    "en": "Whenever he is tired, he wants to sleep."
+   },
+   {
+    "zh": "任何人都可以来。",
+    "en": "Anyone can come."
+   },
+   {
+    "zh": "你随便坐，别客气。",
+    "en": "Sit wherever you like; do not stand on ceremony."
+   }
+  ],
+  "mistakes": [
+   "Do not leave out 就 in the second part. 我一到家给你打电话 is not natural.",
+   "任何 needs 都 or 也 after the noun: 任何人可以来 is not complete."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他一下课就去打篮球。",
+    "en": "As soon as class is over, he goes to play basketball.",
+    "explain": "一 + action 1, 就 + action 2."
+   },
+   {
+    "t": "order",
+    "zh": "我一看就懂。",
+    "en": "I understand as soon as I look.",
+    "explain": "一 + verb, 就 + verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "你一到就给我打电话。",
+    "en": "Call me as soon as you arrive.",
+    "blank": "就",
+    "explain": "就 starts the second action."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Anyone can come?",
+    "options": [
+     "任何人都可以来。",
+     "任何人可以都来。"
+    ],
+    "correct": 0,
+    "zh": "任何人都可以来。",
+    "en": "Anyone can come.",
+    "explain": "任何 + noun + 都."
+   },
+   {
+    "t": "spot",
+    "zh": "他一累就想睡觉。",
+    "en": "Whenever he is tired, he wants to sleep.",
+    "wrong": "他一累所以就想睡觉。",
+    "remove": "所以",
+    "explain": "一…就… already shows the link; do not add 所以."
+   }
+  ]
+ },
+ {
+  "id": "suoyou",
+  "title": "所有, 各, 一切, 许多, 大量, 部分, 全部 and 整个: all and many",
+  "covers": [
+   50,
+   51
+  ],
+  "formula": [
+   "*所有 / 各",
+   "Noun",
+   "*都"
+  ],
+  "explain": [
+   "所有 'all, every' comes before a noun and usually goes with 的 and 都: 所有的学生都来了 'All the students have come'. 各 'each, every one of' is used with a few nouns: 各国 'every country', 各位 'everyone'. 一切 'everything, all' stands for the whole of something: 一切都很好 'Everything is fine'.",
+   "许多 'many, a lot of' and 大量 'a large amount of' say that there is a lot. 许多 goes before nouns: 许多人 'many people'. 大量 is more formal and goes with amounts: 大量的时间 'a lot of time'.",
+   "部分 'part', 全部 'all of it' and 整个 'the whole' say how much of a thing: 我只看了一部分 'I only watched part of it'; 他吃了全部的菜 'He ate all the dishes'; 整个下午 'the whole afternoon'. 整个 takes one thing as a whole; 全部 is for the whole set."
+  ],
+  "examples": [
+   {
+    "zh": "所有的学生都来了。",
+    "en": "All the students have come."
+   },
+   {
+    "zh": "一切都很好，请放心。",
+    "en": "Everything is fine; please rest assured."
+   },
+   {
+    "zh": "他有许多朋友。",
+    "en": "He has many friends."
+   },
+   {
+    "zh": "我睡了整个下午。",
+    "en": "I slept the whole afternoon."
+   }
+  ],
+  "mistakes": [
+   "所有 and 一切 usually need 都 in the sentence: 所有的学生来了 is not natural.",
+   "整个 takes one thing as a whole. For a whole set of things use 全部."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "所有的人都喜欢他。",
+    "en": "Everyone likes him.",
+    "explain": "所有 + noun + 都."
+   },
+   {
+    "t": "order",
+    "zh": "他花了大量的时间学习。",
+    "en": "He spent a lot of time studying.",
+    "explain": "大量 + noun."
+   },
+   {
+    "t": "cloze",
+    "zh": "我写了整个下午的作业。",
+    "en": "I wrote homework the whole afternoon.",
+    "blank": "整个",
+    "explain": "整个 = the whole."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Everything is fine?",
+    "options": [
+     "一切都很好。",
+     "一切很好都。"
+    ],
+    "correct": 0,
+    "zh": "一切都很好。",
+    "en": "Everything is fine.",
+    "explain": "都 goes before the verb or adjective."
+   },
+   {
+    "t": "spot",
+    "zh": "他有许多朋友。",
+    "en": "He has many friends.",
+    "wrong": "他有很许多朋友。",
+    "remove": "很",
+    "explain": "许多 already means \"many\"; do not add 很."
+   }
+  ]
+ },
+ {
+  "id": "youde",
+  "title": "有的…有的… and 互相 / 共同: some … others, each other",
+  "covers": [
+   52,
+   53
+  ],
+  "formula": [
+   "*有的",
+   "Group 1",
+   "*有的",
+   "Group 2"
+  ],
+  "explain": [
+   "有的 … 有的 … 'some … others …' splits a group into parts: 有的人喜欢夏天，有的人喜欢冬天 'Some people like summer, others like winter'. 有些 'some' works in the same pattern. You can leave out the noun after the second 有的.",
+   "互相 'each other, mutually' goes before the verb: 我们互相帮助 'We help each other'; 朋友们互相学习 'Friends learn from each other'. 互相 already means 'each other', so no object is needed.",
+   "共同 'common, together' works as an adjective or an adverb: 我们有共同的爱好 'We have a common hobby'; 大家共同努力 'Everyone works hard together'. 共同 is more formal than 一起 and stresses sharing the same goal or thing."
+  ],
+  "examples": [
+   {
+    "zh": "有的人喜欢夏天，有的人喜欢冬天。",
+    "en": "Some people like summer, others like winter."
+   },
+   {
+    "zh": "这些书，有的好，有的不好。",
+    "en": "Of these books, some are good and some are not."
+   },
+   {
+    "zh": "我们互相帮助，一起学习汉语。",
+    "en": "We help each other and study Chinese together."
+   },
+   {
+    "zh": "我们有共同的爱好。",
+    "en": "We have a common hobby."
+   }
+  ],
+  "mistakes": [
+   "有的 … 有的 … needs two or more parts. One 有的 alone does not make the pattern; say 有的…，有的….",
+   "互相 goes before the verb, not after: 我们帮助互相 is wrong."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "有的人喜欢夏天，有的人喜欢冬天。",
+    "en": "Some people like summer and some like winter.",
+    "explain": "有的 … 有的 … splits the group."
+   },
+   {
+    "t": "order",
+    "zh": "朋友们互相帮助。",
+    "en": "Friends help each other.",
+    "explain": "互相 goes before the verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "我们有共同的朋友。",
+    "en": "We have friends in common.",
+    "blank": "共同",
+    "explain": "共同的 + noun = common."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: We learn from each other?",
+    "options": [
+     "我们互相学习。",
+     "我们学习互相。"
+    ],
+    "correct": 0,
+    "zh": "我们互相学习。",
+    "en": "We learn from each other.",
+    "explain": "互相 goes before the verb."
+   },
+   {
+    "t": "spot",
+    "zh": "我们互相帮助。",
+    "en": "We help each other.",
+    "wrong": "我们互相是帮助。",
+    "remove": "是",
+    "explain": "互相 goes straight before the verb; do not add 是."
+   }
+  ]
+ },
+ {
+  "id": "zhiqian",
+  "title": "之前, 之后, 之间, 当时, 从此 and 接着: before, after, between, then",
+  "covers": [
+   54,
+   55
+  ],
+  "formula": [
+   "Time or action",
+   "*之前 / 之后"
+  ],
+  "explain": [
+   "之前 'before' and 之后 'after' go after a time or an action: 三点之前 'before three o'clock'; 吃饭之前，先洗手 'Before eating, wash your hands first'; 下课之后 'after class'. They work like 以前 and 以后 (HSK 3) but are a little more formal.",
+   "之间 'between, among' goes after two things or two limits: 房子和学校之间 'between the house and the school'; 三点到五点之间 'between three and five'. 当时 'at that time, then' points back to a time already named: 我十岁的时候搬到这里，当时这里很小 'I moved here when I was ten; at that time it was small'.",
+   "从此 'from then on' says that after one event a new situation began: 他来到这里，从此没有离开 'He came here, and from then on has not left'. 接着 'next, then' follows the action just before it: 他先吃饭，接着看电视 'He eats first, then watches TV'."
+  ],
+  "examples": [
+   {
+    "zh": "吃饭之前，先洗手。",
+    "en": "Before eating, wash your hands first."
+   },
+   {
+    "zh": "下课之后，我们去吃饭。",
+    "en": "After class, we go and eat."
+   },
+   {
+    "zh": "我十岁的时候搬到这里，当时这里很小。",
+    "en": "I moved here when I was ten; at that time it was small."
+   },
+   {
+    "zh": "他先吃饭，接着看电视。",
+    "en": "He eats first, then watches TV."
+   }
+  ],
+  "mistakes": [
+   "之前 and 之后 come after the time or action: 之前吃饭 is wrong. Say 吃饭之前.",
+   "从此 is for a turning point in the past. Do not use it for a plan; for the future say 以后."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "睡觉之前，我要洗澡。",
+    "en": "Before going to bed, I must take a shower.",
+    "explain": "之前 comes after the action."
+   },
+   {
+    "t": "order",
+    "zh": "下课之后，他去打球。",
+    "en": "After class, he goes to play ball.",
+    "explain": "之后 comes after the action."
+   },
+   {
+    "t": "cloze",
+    "zh": "房子和学校之间有一个公园。",
+    "en": "Between the house and the school there is a park.",
+    "blank": "之间",
+    "explain": "之间 goes after the two things."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He ate, and then watched TV?",
+    "options": [
+     "他吃了饭，接着看电视。",
+     "他吃了饭，从此看电视。"
+    ],
+    "correct": 0,
+    "zh": "他吃了饭，接着看电视。",
+    "en": "He ate, and then watched TV.",
+    "explain": "接着 follows the first action."
+   },
+   {
+    "t": "spot",
+    "zh": "吃饭之前，先洗手。",
+    "en": "Before eating, wash your hands first.",
+    "wrong": "吃饭之前以前，先洗手。",
+    "remove": "以前",
+    "explain": "之前 already means \"before\"; do not add 以前."
+   }
+  ]
+ },
+ {
+  "id": "shuoming",
+  "title": "说明, 表示 and 成为: shows, says, becomes",
+  "covers": [
+   57
+  ],
+  "formula": [
+   "Subject",
+   "*说明 / 表示",
+   "Result"
+  ],
+  "explain": [
+   "说明 has two uses: 'to explain' (请你说明一下 'Please explain') and 'to show that' something is true (这件事说明他很努力 'This shows that he works hard'). With a clause after it, it is a conclusion drawn from facts.",
+   "表示 'to express, to show' says what someone shows by words or acts: 他点头表示同意 'He nods to show agreement'; 他表示不同意 'He says he does not agree'. The subject is a person, or an act that shows a feeling.",
+   "成为 'to become' is followed by a noun, a job or a role: 他成为了一名医生 'He became a doctor'. For adjectives use 变得: 天气变得很冷 'The weather has become cold'."
+  ],
+  "examples": [
+   {
+    "zh": "这件事说明他很努力。",
+    "en": "This shows that he works hard."
+   },
+   {
+    "zh": "请你说明一下这个问题。",
+    "en": "Please explain this problem."
+   },
+   {
+    "zh": "他点头表示同意。",
+    "en": "He nods to show agreement."
+   },
+   {
+    "zh": "他后来成为了一名医生。",
+    "en": "Later he became a doctor."
+   }
+  ],
+  "mistakes": [
+   "成为 is followed by a noun or a role, not an adjective: 他成为很高 is wrong. Say 他变得很高.",
+   "说明 for \"explain\" needs a thing to explain; 说明 for \"show that\" needs a clause after it."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他的成绩说明他很努力。",
+    "en": "His results show that he works hard.",
+    "explain": "说明 + a conclusion."
+   },
+   {
+    "t": "order",
+    "zh": "他点头表示同意。",
+    "en": "He nods to show agreement.",
+    "explain": "表示 + what he shows."
+   },
+   {
+    "t": "cloze",
+    "zh": "她后来成为了一名老师。",
+    "en": "Later she became a teacher.",
+    "blank": "成为",
+    "explain": "成为 + role."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: This shows that it is hard?",
+    "options": [
+     "这说明这很难。",
+     "这说明很难这。"
+    ],
+    "correct": 0,
+    "zh": "这说明这很难。",
+    "en": "This shows that it is hard.",
+    "explain": "说明 + clause."
+   },
+   {
+    "t": "spot",
+    "zh": "他想成为一名医生。",
+    "en": "He wants to become a doctor.",
+    "wrong": "他想成为是一名医生。",
+    "remove": "是",
+    "explain": "成为 is followed straight by the noun; do not add 是."
+   }
+  ]
+ },
+ {
+  "id": "newmean4",
+  "title": "Words you know, with a new meaning",
+  "covers": [
+   58
+  ],
+  "formula": [
+   "*有空 kòng"
+  ],
+  "explain": [
+   "Some words you already know come back in HSK 4 with another meaning or another sound. The character is the same; the words around it tell you which one it is.",
+   "空 kòng means 'free time, a gap': 有空 'to be free', 没空 'to have no time'. 空 kōng is 'empty': 空的 'empty'. 重 chóng means 'again': 重新 'anew', 重来 'do it again'. 重 zhòng is 'heavy'. 干 gān means 'dry': 衣服干了 'The clothes are dry'; 干净 'clean' is gān too. 干 gàn is 'to do': 干什么.",
+   "等 děng at the end of a list means 'and so on, etc.': 苹果、西瓜等水果 'fruits such as apples and watermelons'. 生 also means 'raw' and 'unfamiliar': 生的 'raw', 生词 'a new word'. 种 zhòng means 'to plant': 种花 'plant flowers'. 种 zhǒng is 'kind': 这种水果.",
+   "着 zháo means 'to succeed in': 睡着 'fall asleep', 找着 'find'. 着 zhe shows a state: 门开着. 为 wéi means 'to be, to act as': 成为 'become', 作为 'as'. 为 wèi is 'for': 为你高兴. 两 liǎng is also a Chinese unit of weight, 50 grams: 二两 'two liang'. 啊 ā at the start of a sentence is a cry of surprise: 啊！是你！ 'Ah! It is you!'"
+  ],
+  "examples": [
+   {
+    "zh": "你明天有空吗？",
+    "en": "Are you free tomorrow?"
+   },
+   {
+    "zh": "衣服干了，你可以穿了。",
+    "en": "The clothes are dry now; you can wear them."
+   },
+   {
+    "zh": "我喜欢苹果、西瓜等水果。",
+    "en": "I like fruits such as apples and watermelons."
+   },
+   {
+    "zh": "他在花园里种了很多花。",
+    "en": "He planted many flowers in the garden."
+   }
+  ],
+  "mistakes": [
+   "The sound is decided by the words around: 你有空吗 is kòng, 杯子是空的 is kōng. 他睡着了 is zháo, 门开着 is zhe.",
+   "为 wèi 'for' goes before a person: 为你高兴. 成为 and 作为 use wéi."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "你明天有空吗？",
+    "en": "Are you free tomorrow?",
+    "explain": "有空 kòng = to be free."
+   },
+   {
+    "t": "order",
+    "zh": "衣服干了，你可以穿了。",
+    "en": "The clothes are dry now; you can wear them.",
+    "explain": "干 gān = dry."
+   },
+   {
+    "t": "cloze",
+    "zh": "我喜欢苹果、西瓜等水果。",
+    "en": "I like fruits such as apples and watermelons.",
+    "blank": "等",
+    "explain": "等 děng after a list = and so on."
+   },
+   {
+    "t": "cloze",
+    "zh": "他在花园里种了很多花。",
+    "en": "He planted many flowers in the garden.",
+    "blank": "种",
+    "explain": "种 zhòng = to plant."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He has fallen asleep?",
+    "options": [
+     "他睡着了。",
+     "他睡了着。"
+    ],
+    "correct": 0,
+    "zh": "他睡着了。",
+    "en": "He has fallen asleep.",
+    "explain": "睡着 zháo = to fall asleep."
+   }
+  ]
+ }
+]

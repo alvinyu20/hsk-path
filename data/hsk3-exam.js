@@ -2635,7 +2635,7 @@ window.HSK3_EXAM = {
     },
     {
      "zh": "过",
-     "py": "guo"
+     "py": "guo / guò"
     },
     {
      "zh": "的",
