@@ -57,6 +57,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
   // the switch in Account
   await page.locator('.side button.me').click(); await page.waitForTimeout(150);
+  await page.locator('.acct-dev-h').click(); await page.waitForTimeout(80);
   check((await page.locator('.acct-set', { hasText: 'Review audio' }).innerText()).includes('by themselves'), 'Account says the words play by themselves');
   await page.locator('.acct-set', { hasText: 'Review audio' }).locator('button').click(); await page.waitForTimeout(100);
   check((await page.locator('.acct-set', { hasText: 'Review audio' }).innerText()).includes('wait for a tap'), 'and the switch turns it off');

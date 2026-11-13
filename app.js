@@ -488,7 +488,7 @@
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
-      rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null,
+      rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rrun:0, rmiss:[],
       pyView:'list', pyLs:0, pyAns:{}, pyGain:'', pyIni:'b', pyInfo:null, typOpen:false, typIn:'', qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
       gdone:false, grdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       plv:0, pstop:'', pu:{}, pl:null, plNote:'', plAlt:'', acctEdit:false,
@@ -507,7 +507,7 @@
     const rq = buildQueue(s.ws, false);
     return Object.assign({}, s, {
       mem0:memOf(s.ws).words, pbase:pathDoneCount(s), day:t, dayXp:0, dayMin:0, wlearned:{}, wrated:{}, wdelta:{}, wreveal:{}, webCredited:false,
-      rcomplete:false, rdone:0, rxp:0, rq, rtotal:rq.length, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rflip:false,
+      rcomplete:false, rdone:0, rxp:0, rq, rtotal:rq.length, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rrun:0, rmiss:[], rflip:false,
       gdone:false, grdone:false, tdone:false, ldone:false, spokeToday:false, sdone:false, sturn:0
     });
   }
@@ -810,8 +810,9 @@
     const mastered = (e.wok || 0) >= 2 && w.s >= 4 && r.s >= 2;
     const started = r.s > 0 || w.s > 0;
     const state = mastered ? 'mastered' : !started ? 'new' : rm >= 55 && wm > 0 ? 'strong' : rm >= 30 ? 'familiar' : 'learning';
-    const due = (r.s > 0 && dueIn(r, 0) <= 0) || (w.s > 0 && dueIn(w, 0) <= 0);
-    return { rm, wm, mastered, started, state, due, label:{ mastered:'Mastered', strong:'Strong', familiar:'Familiar', learning:'Learning', new:'New' }[state] };
+    const rDue = r.s > 0 && dueIn(r, 0) <= 0, wDue = w.s > 0 && dueIn(w, 0) <= 0;
+    const due = rDue || (wDue && aiReadyNow());   // a writing memory only counts as due when you can write (an AI key is saved), so the count is always something a session can clear
+    return { rm, wm, mastered, started, state, due, rDue, wDue, label:{ mastered:'Mastered', strong:'Strong', familiar:'Familiar', learning:'Learning', new:'New' }[state] };
   };
   const G_SYSTEM = [
     'You check one sentence written by a learner of Chinese (HSK 1 to 3). Reply with JSON only.',
@@ -838,6 +839,10 @@
     const reg = gptReg();
     let ids = Object.keys(reg).filter(id => levels.indexOf(reg[id].level) >= 0 && reg[id].pool.length && gptOpen(S, id));
     const chosen = []; let news = 0;
+    // due points come first (weakest first, in a random order among equals), so every question you answer works the count down; only then does a session add weak and new points
+    const dueFirst = ids.filter(id => gptInfo(S.gpt[id]).due).map(id => ({ id, k:gptWeight(S.gpt[id]) * (0.6 + Math.random() * 0.8) })).sort((p, q) => q.k - p.k).map(x => x.id);
+    dueFirst.slice(0, size).forEach(id => chosen.push(id));
+    ids = ids.filter(id => chosen.indexOf(id) < 0);
     while (chosen.length < size && ids.length) {
       let rows = ids.map(id => ({ id, w:gptWeight(S.gpt[id]) * (gptInfo(S.gpt[id]).started ? 1 : (news >= 3 ? 0 : 1)) })).filter(x => x.w > 0);
       if (!rows.length) rows = ids.map(id => ({ id, w:gptWeight(S.gpt[id]) }));   // only new points are left: a first session still gets a full set
@@ -850,7 +855,7 @@
     return chosen.map(id => {
       const e = S.gpt[id] || {}; const pt = reg[id]; const info = gptInfo(e);
       const wr = pt.write;
-      const wantWrite = canWrite && wr.length && e.r && e.r.s >= 1.5 && (e.w && e.w.s > 0 ? (info.due ? Math.random() < 0.7 : Math.random() < 0.25) : Math.random() < 0.6);
+      const wantWrite = canWrite && wr.length && e.r && e.r.s >= 1.5 && (info.wDue ? (info.rDue ? Math.random() < 0.5 : true) : info.rDue ? false : (e.w && e.w.s > 0 ? Math.random() < 0.25 : Math.random() < 0.6));
       if (wantWrite) {
         const w = wr[(e.wn || 0) % wr.length];
         return { type:'write', kicker:'Write it · ' + pt.title, prompt:'Write this in Chinese (characters or pinyin)', big:w.en, bigCls:'en', placeholder:'Your own sentence', pt:id, gdim:'w', gtitle:pt.title, model:w.zh, need:w.need || '', reveal:w.zh, explain:'' };
@@ -2624,7 +2629,7 @@
       if (g.rate) { try { const t = ymd(new Date()); let d = null; try { d = JSON.parse(localStorage.getItem('shanlu-achday')); } catch (e) {} if (!d || d.d !== t) d = { d:t, n:0 }; d.n++; if (d.n >= 100) this.achEv.rev100 = 1; localStorage.setItem('shanlu-achday', JSON.stringify(d)); } catch (e) {} }
       if (finished) { const c = (counts.again || 0) + (counts.hard || 0) + (counts.good || 0) + (counts.easy || 0); if (c >= 10 && !counts.again && !counts.hard) this.achEv.perfect = 1; }
       this.setState({
-        rq:q, rflip:false, rpy:false, rdone:S.rdone + (g.done && !g.again ? 1 : 0), rstep:S.rstep + 1, rxp:S.rxp + g.gain, rcomplete:finished, rcounts:counts,
+        rq:q, rflip:false, rpy:false, rdone:S.rdone + (g.done && !g.again ? 1 : 0), rstep:S.rstep + 1, rrun:g.rate ? ((g.rate === 'again' || g.rate === 'hard') ? 0 : (S.rrun || 0) + 1) : (S.rrun || 0), rmiss:(g.rate === 'again' || g.rate === 'hard') && (S.rmiss || []).indexOf(itemOf(it).zh) < 0 ? (S.rmiss || []).concat(itemOf(it).zh).slice(0, 8) : (S.rmiss || []), rxp:S.rxp + g.gain, rcomplete:finished, rcounts:counts,
         xp:S.xp + g.gain, dayXp:S.dayXp + g.gain, dayMin:S.dayMin + (finished ? Math.max(1, Math.round(S.rtotal * 0.5)) : 0),
         ws:g.ws, lrn:g.lrn || S.lrn, rlog:g.rlog.length ? g.rlog : S.rlog, woff:0, rlast:g.rate ? { zh:itemOf(it).zh, from:g.from, to:g.to } : S.rlast,
         qchecked:false, qchoice:null, qtyped:'', qcorrect:false, qfeed:''
@@ -2660,7 +2665,7 @@
     practiceAnyway = () => {
       const q = buildQueue(this.state.ws, true, this.state.lrn);
       this.lapsed = {}; this.rvKey = null;
-      this.setState({ rq:q, rtotal:q.length, rdone:0, rxp:0, rcomplete:false, rflip:false, rpy:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, qchecked:false, qchoice:null, qtyped:'', qfeed:'' });
+      this.setState({ rq:q, rtotal:q.length, rdone:0, rxp:0, rcomplete:false, rflip:false, rpy:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rrun:0, rmiss:[], qchecked:false, qchoice:null, qtyped:'', qfeed:'' });
     };
 
     // ----- quiz engine (tests and grammar practice) -----
@@ -3382,6 +3387,8 @@
         acctSub:c.level + (since ? ' · studying since ' + since : ''),
         acctEditing:!!S.acctEdit, acctNameIn:String(S.acctNameIn || ''), onAcctName:(e) => this.setState({ acctNameIn:e.target.value }),
         acctEditOpen:this.acctEditOpen, acctCancel:this.acctCancel, acctSave:this.acctSave,
+        devOpen:!!S.devOpen, devExpanded:S.devOpen ? 'true' : 'false', devToggleText:S.devOpen ? 'Hide' : 'Show', toggleDev:() => this.setState({ devOpen:!this.state.devOpen }),
+        acctStamps:[1, 2, 3].filter(n => n <= (LVL.MAX_LEVEL || 3)).map(n => { const done = !!LVL.levelPassed(n); const cur = !done && n === LV; return { zh:'一二三四五六'.charAt(n - 1), cls:done ? 'got' : (cur ? 'cur' : 'no'), label:done ? 'HSK ' + n + ' passed' : (cur ? 'In progress' : 'Ahead') }; }),
         acctStats:[
           stat('Day streak', String(c.streak)), stat('Coins', c.coins), stat('Words in memory', String(c.mem)), stat('Words started', c.started + ' of ' + c.total),
           stat('Path stops done', PATH_LVLS.length ? stopsDone + ' of ' + stopsAll : 'None yet'), stat('Grammar lessons passed', gPassed + ' of ' + LESSONS.length)
@@ -3626,7 +3633,7 @@
       const q = buildQueue(this.state.ws, false, clean);
       if (!q.length) return;
       this.lapsed = {}; this.rvKey = null;
-      this.setState({ rq:q, rtotal:q.length, rdone:0, rxp:0, rcomplete:false, rflip:false, rpy:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, qchecked:false, qchoice:null, qtyped:'', qfeed:'' });
+      this.setState({ rq:q, rtotal:q.length, rdone:0, rxp:0, rcomplete:false, rflip:false, rpy:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rrun:0, rmiss:[], qchecked:false, qchoice:null, qtyped:'', qfeed:'' });
     };
     nextEx = (zh) => { const n = Object.assign({}, this.state.wexn); n[zh] = ((n[zh] || 0) + 1) % EXS[zh].length; this.setState({ wexn:n }); };
     toggleEx = (key) => { const x = Object.assign({}, this.state.wex); x[key] = !x[key]; this.setState({ wex:x }); };
@@ -3777,7 +3784,9 @@
       out.pyIsList = view === 'list'; out.pyIsLesson = view === 'lesson' && !!lessons[S.pyLs]; out.pyIsChart = view === 'chart';
       out.pySummary = doneN + ' of ' + lessons.length + ' lessons done';
       out.pyPct = Math.round(doneN / Math.max(1, lessons.length) * 100) + '%';
-      out.pyLessons = lessons.map((l, i) => ({ glyph:l.glyph, title:(i + 1) + '. ' + l.title, blurb:l.blurb + ' About ' + l.mins + ' min.', cls:pyDoneAt(l.id) ? 'done' : '', state:pyDoneAt(l.id) ? 'Done' : 'Start', open:() => this.pyOpen(i) }));
+      const pyFirst = lessons.findIndex(l => !pyDoneAt(l.id));
+      out.pyLessons = lessons.map((l, i) => ({ glyph:l.glyph, title:(i + 1) + '. ' + l.title, blurb:l.blurb + ' About ' + l.mins + ' min.', cls:pyDoneAt(l.id) ? 'done' : (i === pyFirst ? 'next' : ''), state:pyDoneAt(l.id) ? 'Done' : 'Start', open:() => this.pyOpen(i) }));
+      out.pySounds = [['妈', 'mā'], ['麻', 'má'], ['马', 'mǎ'], ['骂', 'mà']].map(([zh, py]) => Object.assign({ zh, py }, { cls:S.playing === 'pys:' + zh ? 'on' : '', play:() => this.pySay(zh, 'pys:' + zh) }));
       const play = (text, key) => ({ cls:S.playing === key ? 'on' : '', play:() => this.pySay(text, key) });
       if (out.pyIsLesson) {
         const les = lessons[S.pyLs];
@@ -4035,9 +4044,11 @@
         if (h.w !== null && h.w !== undefined) parts.push('Writing ' + h.w + '/' + (h.wt || 10));
         return { text:new Date(h.at).toLocaleDateString('en-US', { month:'short', day:'numeric' }) + ' · ' + what, score:h.mode === 'full' ? pts + ' / 200' : parts.join(' '), detail:h.mode === 'full' ? parts.join(' · ') : '' };
       });
+const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h => { const pts = (h.l != null ? secPts(h.l, h.lt || 20) : 0) + (h.r != null ? secPts(h.r, h.rt || 20) : 0); const pct = Math.round(pts / 2); return { pct, label:pct + '%', date:new Date(h.at).toLocaleDateString('en-US', { month:'short', day:'numeric' }), barH:Math.round(pct * 1.6) + 'px', cls:pct >= 60 ? 'pass' : '' }; });
       const v = {
         examAvailable:!!EXAMBANK, exHome:!m, exRun:!!m && m.stage === 'run', exBreak:!!m && m.stage === 'break', exResult:!!m && m.stage === 'result',
         startFull:() => this.startExam('full'), startListening:() => this.startExam('listening'), startReading:() => this.startExam('reading'), startWriting:() => this.startExam('writing'), examHasWriting:HAS_WRITING,
+        histChart:chartAll, hasChart:chartAll.length > 0, chartNote:chartAll.length > 1 ? (chartAll[chartAll.length - 1].pct >= chartAll[0].pct ? '+' : '') + (chartAll[chartAll.length - 1].pct - chartAll[0].pct) + ' points since ' + chartAll[0].date : 'Your first full exam is on the chart.',
         histRows:hist, hasHist:hist.length > 0, noHist:hist.length === 0, exClose:this.exClose, exContinue:this.exContinue
       };
       if (!m) return v;
@@ -4193,6 +4204,9 @@
       const frToday = ymd(new Date());
       const frRows = S.fr ? window.ShanluFriends.sortRows(S.fr.members.map(m => window.ShanluFriends.boardRow(m, frToday, S.fr.me)), S.frSort) : [];
       const frWeekMin = frRows.reduce((a, r) => a + r.minutes, 0);
+      const frBarMax = Math.max(100, ...frRows.map(r => r.minutes));
+      const frMe = frRows.find(r => r.isMe), frLead = frRows.slice().sort((p, q) => q.minutes - p.minutes)[0];
+      const frNudge = frMe && frLead && !frLead.isMe && frLead.minutes > frMe.minutes ? (frLead.minutes - frMe.minutes) + ' min behind ' + frLead.name : (frMe && frLead && frLead.isMe && frRows.length > 1 ? 'You lead this week' : '');
       const frGoal = Math.max(1, frRows.length) * 100;
       const frAgo = S.frAt ? Math.max(0, Math.round((Date.now() - S.frAt) / 60000)) : 0;
       const frSorts = [['week', 'This week'], ['streak', 'Streak'], ['mem', 'In memory']];
@@ -4201,11 +4215,12 @@
         frName:S.frName, frCode:S.frCode, frErr:S.frErr, frHasErr:!!S.frErr, frMsg:S.frMsg, frHasMsg:!!S.frMsg, frBusy:S.frBusy, frJoinText:S.frBusy ? 'Joining…' : 'Join group',
         onFrName:(e) => this.setState({ frName:e.target.value }), onFrCode:(e) => this.setState({ frCode:e.target.value }), friendsJoin:this.friendsJoin, frLinkIn:S.frLinkIn, onFrLink:(e) => this.setState({ frLinkIn:e.target.value }), friendsSignInLink:this.friendsSignInLink, frSignText:S.frLinkBusy ? 'Signing in…' : 'Sign in with my link',
         frLoaded:!!S.fr, frWaiting:!!frIdent && !S.fr, frMine:frIdent ? frIdent.name : '', frGroup:frIdent ? frIdent.group : '',
+        frNudge, frHasNudge:!!frNudge, frNudgeSub:frNudge.indexOf('behind') > 0 ? 'A short session closes the gap.' : 'Keep it up. The week resets on Monday.',
         frWeekMin, frGoal, frGoalPct:Math.min(100, Math.round(frWeekMin / frGoal * 100)) + '%', frGoalText:frWeekMin + ' of ' + frGoal + ' min',
         frSortOpts:frSorts.map(x => ({ label:x[1], cls:S.frSort === x[0] ? 'on' : '', fn:() => this.setState({ frSort:x[0] }) })),
         frRows:frRows.map((r, i) => ({
           name:r.name, initial:r.initial, avCls:'c' + (i % 4), isMe:r.isMe, you:r.isMe ? 'You' : r.name, hasLv:r.level > 0, lvTag:'HSK ' + r.level, lvCls:'cur l' + r.level,
-          strip:r.week.map(m => ({ cls:m > 0 ? 'on' : '' })), studied:r.studiedToday, cls:r.isMe ? 'me' : '',
+          rank:i + 1, barW:Math.min(100, Math.round(r.minutes / frBarMax * 100)) + '%', strip:r.week.map(m => ({ cls:m > 0 ? 'on' : '' })), studied:r.studiedToday, cls:r.isMe ? 'me' : '',
           minutes:r.hasStats ? r.minutes + ' min' : 'New', sub:(r.hasStats ? (r.streak > 0 ? r.streak + ' day streak' : 'No streak yet') + ' · ' + r.mem + ' in memory' + (r.jy ? ' · ' + r.jy.n + (r.jy.n === 1 ? ' stop' : ' stops') + ' traveled' : '') : 'Has not shared yet') + (r.isMe && r.cheers > 0 ? ' · ' + r.cheers + (r.cheers === 1 ? ' cheer' : ' cheers') + ' for you' : ''),
           canCheer:!r.isMe, cheerCls:r.cheered ? 'on' : '', hasCheers:r.cheers > 0, cheers:r.cheers, cheerLabel:(r.cheered ? 'You cheered ' : 'Cheer for ') + r.name, cheer:() => this.friendsCheer(r.id)
         })),
@@ -4222,20 +4237,28 @@
       };
 
       // the Achievements page: every achievement by group, earned ones lit, the rest with a hint and (where it makes sense) a bar
-      let achItems = [], achSummary = '', achPct = '0%';
+      let achItems = [], achSummary = '', achPct = '0%', achNext = [];
       if (S.screen === 'ach') {
         const have = prefGet('ach', {}) || {}; const am = this.achMetrics(); am.ev = {};
         const earnedN = MILESTONES.filter(x => have[x.id]).length;
         achSummary = earnedN + ' of ' + MILESTONES.length + ' earned'; achPct = Math.round(earnedN / MILESTONES.length * 100) + '%';
+        const af = S.achf || 'all'; const nextUp = [];
         AGROUPS.forEach(g => {
           const list = MILESTONES.filter(x => x.grp === g); if (!list.length) return;
-          achItems.push({ isHead:true, head:g, headSub:list.filter(x => have[x.id]).length + ' of ' + list.length, isCard:false });
+          const shelf = [];
           list.forEach(x => {
             const got = !!have[x.id]; let pr = null; try { pr = !got && x.prog ? x.prog(am) : null; } catch (e) {}
             const pc = pr && pr[1] > 0 ? Math.max(0, Math.min(100, Math.round(pr[0] / pr[1] * 100))) : 0;
-            achItems.push({ isHead:false, isCard:true, cls:got ? 'got' : 'lock', icon:x.icon, title:x.title, desc:got ? x.desc : x.hint, hasBar:!!pr && !got, barW:pc + '%', barTxt:pr ? Math.min(pr[0], pr[1]).toLocaleString('en-US') + ' / ' + pr[1].toLocaleString('en-US') : '', state:got ? 'Earned' : 'Not yet' });
+            if (!got && pr && pc > 0 && pc < 100) nextUp.push({ icon:x.icon, title:x.title, sub:x.hint, pc, barTxt:Math.min(pr[0], pr[1]).toLocaleString('en-US') + ' of ' + pr[1].toLocaleString('en-US'), ring:pc + '%' });
+            if (af === 'earned' && !got) return; if (af === 'locked' && got) return;
+            shelf.push({ isHead:false, isCard:true, cls:got ? 'got' : 'lock', ring:got ? '100%' : pc + '%', icon:x.icon, title:x.title, desc:got ? x.desc : x.hint, hasBar:!!pr && !got, barW:pc + '%', barTxt:pr ? Math.min(pr[0], pr[1]).toLocaleString('en-US') + ' / ' + pr[1].toLocaleString('en-US') : '', state:got ? 'Earned' : 'Not yet' });
           });
+          if (!shelf.length) return;
+          achItems.push({ isHead:true, head:g, headSub:list.filter(x => have[x.id]).length + ' of ' + list.length, isCard:false });
+          shelf.forEach(x => achItems.push(x));
         });
+        nextUp.sort((p, q) => q.pc - p.pc);
+        achNext = nextUp.slice(0, 3);
       }
       const titles = {
         home:welcomeShow || startShow ? ['Welcome to Shanlu', 'Five words, about five minutes. You do not pick anything.'] : ['Today', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
@@ -4351,7 +4374,7 @@
       const openTopic = (i) => { this.go('web'); this.setState({ wmode:'topic', wtopic:i, wgopen:null, wtq:'' }); };
       const nearBest = tinfo.filter(t => t.got > 0 && !t.clear).sort((a, b) => (a.tot - a.got) - (b.tot - b.got) || a.i - b.i)[0];
       const mistTiles = tinfo.map(t => ({
-        name:t.name, count:t.got + ' of ' + t.tot + ' words' + (t.clear ? ' · clear' : ''), clear:t.clear, near:t.near, nearText:(t.tot - t.got) + ' to clear',
+        name:t.name, count:t.got + ' of ' + t.tot + ' words' + (t.clear ? ' · clear' : ''), clear:t.clear, near:t.near, nearText:(t.tot - t.got) + ' to clear', ring:Math.round(t.got / Math.max(1, t.tot) * 100) + '%', ringTxt:Math.round(t.got / Math.max(1, t.tot) * 100),
         cls:t.near ? 'near' : '', art:AS.mist({ frac:t.got / t.tot, idx:t.i, dark:ascDark, w:212, h:84 }), go:() => openTopic(t.i)
       }));
 
@@ -4419,11 +4442,11 @@
               '\nVerdict: ' + (S.qchecked ? (S.qcorrect ? 'marked right' : 'marked wrong') : 'not checked yet') + (S.qfeed ? '\nWhat the checker said: ' + S.qfeed : ''))
           : report((isG(S.qmode) ? 'Grammar practice' : 'Test') + ' question ' + (S.qi + 1), q0.prompt + ' / ' + q0.reveal)
       };
-      const opts = (isChoice ? q0.options : []).map(o => {
+      const opts = (isChoice ? q0.options : []).map((o, oi) => {
         let cls = '';
         if (S.qchecked) { if (o.id === q0.correct) cls = 'right'; else if (o.id === S.qchoice) cls = 'wrong'; }
         else if (o.id === S.qchoice) cls = 'sel';
-        return { label:o.label, cls, lcls:isListen && !q0.optsLatin ? 'zh' : '', pick:() => { if (!this.state.qchecked) this.setState({ qchoice:o.id }); } };
+        return { label:o.label, k:oi + 1, cls, lcls:isListen && !q0.optsLatin ? 'zh' : '', pick:() => { if (!this.state.qchecked) this.setState({ qchoice:o.id }); } };
       });
       const tileState = S.qchecked ? (S.qcorrect ? 'right' : 'wrong') : '';
       const pickedTiles = (isOrder ? S.qpicked : []).map(id => ({ label:q0.tiles[id], cls:tileState, fn:() => this.unpick(id) }));
@@ -4641,9 +4664,20 @@
       }));
       const grvLvChips = (LVLS.length > 1 ? [{ label:'All', n:0 }].concat(LVLS.map(n => ({ label:'HSK ' + n, n }))) : []).map(c => ({ label:c.label, cls:(S.grvLv || 0) === c.n ? 'on' : '', fn:() => this.setState({ grvLv:c.n }) }));
       const lessonBest = S.gres[L.id];
+      // how a lesson is built decides how its formula is drawn: word order gets role colours; frames, add-ons and pick-one lists stay plain, with only the key word marked
+      const slotRole = (t) => /^(subject|pronoun|owner)/i.test(t) ? 'who' : /^(time|place|where|when|how long)/i.test(t) ? 'when' : /^(verb|action|adjective|degree|how well|result|how)/i.test(t) ? 'does' : /^(object|thing|noun|amount|number|measure|owner or)/i.test(t) ? 'thing' : '';
+      const shapeOf = (() => {
+        const ft = L.formula.map(f => f.t).join(' ');
+        if (/…/.test(L.title) && /因为|所以|不但|如果|只要|除了|先|越|虽然|一边/.test(ft)) return { k:'frame', label:'Frame with blanks', hint:'The red words are the frame. Fill the gaps with your own words.' };
+        if (L.formula.length <= 3 && L.formula.some(f => /Sentence|Statement|Situation/.test(f.t))) return { k:'add', label:'One small add-on', hint:'Take a sentence you already have and add this.' };
+        if (/\//.test(ft) && L.formula.some(f => f.k) && L.formula.length <= 3) return { k:'pick', label:'Pick one', hint:'Several words fit here. The examples show when to use each.' };
+        return { k:'slots', label:'Word order', hint:'Each colour is a job in the sentence: who, when or where, what is done, and to what.' };
+      })();
       const lesson = {
         kick:(L.cat ? L.cat + ' · ' : '') + 'Lesson ' + (S.glesson + 1) + ' of ' + LESSONS.length, hasLvTag:ALL, lvTag:'HSK ' + LESSON_LV[L.id], lvCls:(LESSON_LV[L.id] === TOPL ? 'cur' : 'old') + ' l' + LESSON_LV[L.id], title:L.title, pickLabel:(S.glesson + 1) + ' · ' + L.title,
-        formula:L.formula.map(f => ({ t:f.t, cls:(f.k ? 'k ' : '') + (f.z ? 'zh' : ''), sep:f.sep, hasSep:f.sep !== '' })),
+        formula:L.formula.map(f => ({ t:f.t, cls:(f.k ? 'k ' : '') + (f.z ? 'zh ' : '') + (!f.k && shapeOf.k === 'slots' ? slotRole(f.t) : (!f.k && shapeOf.k !== 'slots' ? 'open' : '')), sep:f.sep, hasSep:f.sep !== '' })),
+        explOpen:!S.explHide, explExpanded:S.explHide ? 'false' : 'true', explToggleText:S.explHide ? 'Show' : 'Hide', toggleExpl:() => this.setState({ explHide:!this.state.explHide }),
+        shapeCls:'sh-' + shapeOf.k, shapeLabel:shapeOf.label, shapeHint:shapeOf.hint,
         explain:L.explain.map(t => ({ t })), hasMistakes:L.mistakes.length > 0, mistakes:L.mistakes.map(t => ({ t })),
         examples:L.examples.map((e, i) => ({ zh:e.zh, py:e.py, en:e.en, pc:pc('g' + i), play:() => this.say(e.zh, 'g' + i), reportUrl:report('Grammar lesson: ' + L.title, e.zh + ' (' + e.py + ') ' + e.en) })),
         count:L.q.length + ' exercises · about ' + Math.max(2, Math.round(L.q.length * 0.7)) + ' minutes',
@@ -4718,12 +4752,24 @@
         mingWave:artUri('ming', 'wave'), mingThink:artUri('ming', 'think'), mingCheer:artUri('ming', 'cheer'), mingSleep:artUri('ming', 'sleep'), mingThumbs:artUri('ming', 'thumbs'),
         hasTopArt:!!TOPKEY[S.screen], topCls:TOPKEY[S.screen] ? 'arted' : '',
         topArt:TOPKEY[S.screen] ? artUri('banner', TOPKEY[S.screen]) : '',
-        libTiles:[
-          { glyph:'词', title:'Words', sub:rowsAll.length + ' words · ' + startedCount + ' started', fn:() => this.go('words') },
-          { glyph:'语', title:'Grammar lessons', sub:gramPassed + ' of ' + LESSONS.length + ' passed', fn:() => this.go('grammar') },
-          { glyph:'联', title:'Topics and pairs', sub:'Word webs, topics, word pairs', fn:() => this.go('web') },
-          { glyph:'音', title:'Pinyin and tones', sub:'Sounds, tones, spelling rules', fn:() => this.go('pinyin') }
-        ],
+        libTiles:(() => {
+          const pyL = PYC.lessons || [], pyD = pyL.filter(l => pyDoneAt(l.id)).length;
+          const nxtL = LESSONS.find(L => (S.gres[L.id] || 0) < 80);
+          const nxtPy = pyL.find(l => !pyDoneAt(l.id));
+          const pct = (n, d) => Math.round(n / Math.max(1, d) * 100);
+          return [
+            { key:'words', glyph:'词', title:'Words', line:startedCount + ' of ' + rowsAll.length + ' started', sub:memNow.words + ' in memory' + (dueAllN > 0 ? ', ' + dueAllN + ' due' : ''), pct:pct(startedCount, rowsAll.length) + '%', fn:() => this.go('words') },
+            { key:'grammar', glyph:'语', title:'Grammar lessons', line:gramPassed + ' of ' + LESSONS.length + ' passed', sub:nxtL ? 'Next: ' + nxtL.title.split(':')[0] : 'All passed', pct:pct(gramPassed, LESSONS.length) + '%', fn:() => this.go('grammar') },
+            { key:'web', glyph:'联', title:'Topics and pairs', line:mistClear + ' of ' + TOPICS.length + ' topics finished', sub:'Word webs, topics, word pairs', pct:pct(mistClear, TOPICS.length) + '%', fn:() => this.go('web') },
+            { key:'pinyin', glyph:'音', title:'Pinyin and tones', line:pyD + ' of ' + pyL.length + ' lessons done', sub:nxtPy ? 'Next: ' + nxtPy.title : 'All done', pct:pct(pyD, pyL.length) + '%', fn:() => this.go('pinyin') }
+          ];
+        })(),
+        wodShow:rowsAll.length > 0, ...(() => {
+          if (!rowsAll.length) return {};
+          const d = new Date(); const di = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000);
+          const w = rowsAll[(di * 7919) % rowsAll.length]; const ex = exFor(w.zh, true); const isNew = !w.started;
+          return { wodZh:w.zh, wodPy:w.py, wodEn:w.en, wodPlay:w.play, wodPc:w.pc, wodHasEx:!!ex.exZh, wodExZh:ex.exZh || '', wodExPy:ex.exPy || '', wodExEn:ex.exEn || '', wodCanAdd:isNew, wodAdd:() => this.learnWord(w.zh) };
+        })(),
         lq:S.lq || '', onLq:(e) => this.setState({ lq:e.target.value }), lqHas:libMatches.length > 0, lqNone:!!libQ && libMatches.length === 0, lqRows:libMatches,
         libBannerShow:(prefGet('sv', {}).library || 0) < 4,
         themeCls:dark ? 't-dark' : 't-light', themeLabel:dark ? 'Switch to light' : 'Switch to dark', toggleTheme:this.toggleTheme,
@@ -4769,6 +4815,8 @@
         lrnBanner:lrnLive(S.ws, S.lrn).length > 0 || !!S.lrnNote, lrnBannerText:S.lrnNote || (lrnLive(S.ws, S.lrn).length + ' new word' + (lrnLive(S.ws, S.lrn).length === 1 ? ' is' : 's are') + ' waiting in Review. Adding a word does not mean you know it yet: Review will have you recall it.'), goLearn:() => { this.go('review'); if (!this.state.rq.length || this.state.rcomplete) this.reviewMore(); },
         hasGlast:S.qmode === 'greview' && !!S.glast, glastText:S.glast ? S.glast.title + ', ' + S.glast.dim + ': ' + S.glast.from + '% → ' + S.glast.to + '%' : '', glastCls:S.glast && S.glast.to < S.glast.from ? 'down' : 'up',
         hasRlast:!!S.rlast, rlastText:S.rlast ? S.rlast.zh + ': mastery ' + S.rlast.from + '% → ' + S.rlast.to + '%' : '', rlastCls:S.rlast && S.rlast.to < S.rlast.from ? 'down' : 'up',
+        gardenStages:lvKeys.map(k => ({ key:k, label:({ new:'New', learning:'Learning', familiar:'Familiar', strong:'Strong', mastered:'Mastered' })[k], n:lvCount[k], cls:S.wfilter === k ? 'on' : '', fn:() => this.setState({ wfilter:S.wfilter === k ? 'all' : k, wshow:40 }) })),
+        thirstCls:dueAllN > 0 ? '' : 'ok', thirstTitle:dueAllN > 0 ? dueAllN + (dueAllN === 1 ? ' word is thirsty' : ' words are thirsty') : 'The garden is watered', thirstSub:dueAllN > 0 ? 'A short review waters them before they fade.' : 'Nothing is due right now.',
         wordsSumLine:lvNow('mastered') + ' mastered · ' + lvNow('strong') + ' strong · ' + lvNow('familiar') + ' familiar · ' + lvNow('learning') + ' learning · ' + lvNow('new') + ' new',
         wordsReviewText:dueAllN > 0 ? 'Review ' + dueAllN + ' due word' + (dueAllN === 1 ? '' : 's') : (startedCount >= totalW ? 'Practice all my words' : 'Learn new words'), wordsReviewGo:() => this.go(dueAllN > 0 || startedCount >= totalW ? 'review' : 'web'),
         bankCount:rowsAll.length, filters, levelSegs, sortOpts, timeOpts, rows:rowsShown, hasMoreWords:moreCount > 0, moreWordsText:'Show 40 more (' + moreCount + ' left)', showMoreWords:() => this.setState({ wshow:S.wshow + 40 }),
@@ -4839,7 +4887,8 @@
         welcomeShow, startShow, startWords, startGoing, startFresh:!startGoing, startBtnText:startGoing ? 'Continue my first session' : 'Learn my first 5 words', startDoneShow, guideAvail, isGuide:S.screen === 'guide',
         onbSkipWelcome:this.onbSkipWelcome, onbSkipStart:this.onbSkipStart, onbStartPath:this.onbStartPath, onbOpenGuide:this.onbOpenGuide, onbFlight:this.onbFlight,
         onbFlightShow:startDoneShow && !flown, guideSideCls:'linkbtn guide-link' + (S.screen === 'guide' ? ' on' : ''),
-        isAch:S.screen === 'ach', achSummary:achSummary, achPct:achPct, achItems:achItems,
+        isAch:S.screen === 'ach', achSummary:achSummary, achPct:achPct, achItems:achItems, achNext, hasAchNext:achNext.length > 0,
+        achFilters:[['all', 'All'], ['earned', 'Earned'], ['locked', 'Not yet']].map(([k, l]) => ({ label:l, cls:(S.achf || 'all') === k ? 'on' : '', fn:() => this.setState({ achf:k }) })),
         navHome:navCls('home'), navPath:navCls('path'), goPath:() => this.go('path'), navAcct:active === 'acct' ? 'on' : '', goAcct:() => this.go('acct'), navReview:navCls('review'), navTest:navCls('testlobby'), navGrv:navCls('greview'), navGrammar:navCls('grammar'), navSpeak:navCls('speak'),
         goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrv:() => this.go('greview'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
         hasDue:revBadgeN > 0, dueCount:revBadgeN,
@@ -4910,6 +4959,9 @@
         rcHead:rcHead, rcSub:rcSub, rcAcc:rcAcc, rcAccN:rcAccN, rcStreak:streakShown, hasHard:(S.rcounts.hard || 0) > 0, rcConfetti:rcAccN >= 60,
         inReview:!S.rcomplete && S.rq.length > 0, endSession:this.endSession, rcomplete:S.rcomplete, rdone:S.rdone, rtotal:S.rtotal, rxp:S.rxp, rcounts:S.rcounts,
         rPct:(S.rtotal ? Math.round(S.rdone / S.rtotal * 100) : 0) + '%',
+        lants:(() => { const lit = S.rtotal ? Math.floor(S.rdone / S.rtotal * 10) : 0; return Array.from({ length:10 }, (_, i) => ({ cls:i < lit ? 'lit' : (i === lit ? 'now' : '') })); })(),
+        rmissList:(S.rmiss || []).map(zh => ({ zh })), hasRmiss:(S.rmiss || []).length > 0,
+        rrunShow:(S.rrun || 0) >= 3, rrunText:(S.rrun || 0) + ' right in a row',
         emptyNew:!S.rcomplete && S.rq.length === 0 && startedCount === 0 && lrnCount === 0,
         newWaiting:!S.rcomplete && S.rq.length === 0 && lrnCount > 0, newWaitingText:lrnCount + ' new word' + (lrnCount === 1 ? ' is' : 's are') + ' waiting. Meet them, then recall them a few cards later and once more before you finish: about ' + Math.max(2, Math.round(lrnCount * 1.2)) + ' minutes.', newWaitingBtn:'Learn ' + lrnCount + ' new word' + (lrnCount === 1 ? '' : 's'),
         hasLrnMore:S.rcomplete && lrnCount > 0, lrnMoreText:'Learn ' + lrnCount + ' new word' + (lrnCount === 1 ? '' : 's'),

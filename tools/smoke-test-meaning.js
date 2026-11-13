@@ -71,17 +71,17 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   // a Dictation clip turns into a Meaning clip now and then
   await page.evaluate(() => { window.SHANLU_MEAN_MIX = 1; window.shanlu.setState({ lmode: 'dict' }); });
   await page.locator('button', { hasText: 'Another clip' }).click(); await page.waitForTimeout(200);
-  check((await page.locator('main').innerText()).includes('Mixed in: say what this one means') && (await page.locator('.lab-main .seg2 button.on').innerText()) === 'Meaning', 'with a key, Dictation sometimes turns a clip into a Meaning clip');
+  check((await page.locator('main').innerText()).includes('Mixed in: say what this one means') && (await page.locator('.lab-main .seg2 button.on b').innerText()) === 'Meaning', 'with a key, Dictation sometimes turns a clip into a Meaning clip');
   await page.evaluate(() => { window.SHANLU_MEAN_MIX = 0; });
   verdicts = ['pass']; await page.fill('#mean-input', 'anything'); await page.locator('button', { hasText: 'Check my answer' }).click(); await page.waitForSelector('.lfb');
   await page.locator('button', { hasText: 'Back to Dictation' }).click(); await page.waitForTimeout(200);
-  check((await page.locator('.lab-main .seg2 button.on').innerText()) === 'Dictation' && (await page.locator('main').innerText()).includes('What do you hear?'), '"Back to Dictation" returns to the usual mode');
+  check((await page.locator('.lab-main .seg2 button.on b').innerText()) === 'Dictation' && (await page.locator('main').innerText()).includes('What do you hear?'), '"Back to Dictation" returns to the usual mode');
   // the mix never happens with no key
   await page.evaluate(() => { localStorage.removeItem('shanlu-ai'); });
   await page.reload(); await page.waitForSelector('.app');
   await page.evaluate(() => { window.SHANLU_MEAN_MIX = 1; window.shanlu.go('listen'); });
   await page.locator('button', { hasText: 'Another clip' }).click(); await page.waitForTimeout(200);
-  check((await page.locator('.lab-main .seg2 button.on').innerText()) === 'Dictation', 'with no key Dictation stays Dictation');
+  check((await page.locator('.lab-main .seg2 button.on b').innerText()) === 'Dictation', 'with no key Dictation stays Dictation');
   check(errs.length === 0, 'no page errors: ' + errs.join(' | '));
   await browser.close(); server.close();
   if (failures) { console.log(failures + ' check(s) failed'); process.exit(1); }
