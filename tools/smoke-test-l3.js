@@ -109,7 +109,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await nav('Archive');
   await page.locator('button', { hasText: 'Shared character' }).click();
   const hubN = await page.evaluate(() => window.HSK3_WEBS.hubs.length);
-  check((await page.locator('[aria-label="Pick a character"] button').count()) === hubN && hubN === 36, 'HSK 3 has ' + hubN + ' shared-character groups, all listed');
+  check((await page.locator('[aria-label="Shared characters"] .ctile').count()) === hubN && hubN === 36, 'HSK 3 has ' + hubN + ' shared-character groups, all listed');
   await page.locator('button', { hasText: /^Add all \d+ new word/ }).first().click();
   await page.waitForTimeout(80);
   const added = await page.evaluate(() => Object.keys(window.shanlu.state.wlearned));
@@ -374,7 +374,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     check(await pA.locator('.mtile').count() === await pA.evaluate(() => new Set(window.HSK1_WEBS.topics.concat(window.HSK2_WEBS.topics, window.HSK3_WEBS.topics).map(t => t.name)).size), 'Word webs shows one mountain per topic name across the three levels');
     await pA.locator('button', { hasText: 'Shared character' }).click();
     await pA.waitForTimeout(100);
-    check(await pA.locator('.hubrow .pickrow .fc2').count() === await pA.evaluate(() => window.HSK1_WEBS.hubs.length + window.HSK2_WEBS.hubs.length + window.HSK3_WEBS.hubs.length), 'the shared-character picker holds the hubs of the three levels');
+    check(await pA.locator('.cidx .ctile').count() === await pA.evaluate(() => window.HSK1_WEBS.hubs.length + window.HSK2_WEBS.hubs.length + window.HSK3_WEBS.hubs.length), 'the shared-character picker holds the hubs of the three levels');
     // progress goes to each level's own save
     await pA.evaluate(() => {
       const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws));

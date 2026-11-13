@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="3d8468b9c7">
+<meta name="shanlu-version" content="820eaf6983">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=3d8468b9c7">
+<link rel="stylesheet" href="styles.css?v=820eaf6983">
 </head>
 <body>
 <div id="app"></div>
@@ -754,7 +754,7 @@
   <!-- JOURNEY -->
   <sc-if value="{{isJourney}}" hint-placeholder-val="{{ false }}">
   <div class="gram">
-  <section class="jy {{jyFlip}}" style="--jh:{{jyHue}}" aria-label="Journey">
+  <section class="jy {{jyFlip}} {{jyPlayCls}}" style="--jh:{{jyHue}}" aria-label="Journey">
     <sc-if value="{{jyOff}}" hint-placeholder-val="{{ false }}"><p class="muted">The Journey could not load. Reload the page, and if it stays like this tell Alvin.</p></sc-if>
     <sc-if value="{{jyOn}}" hint-placeholder-val="{{ true }}">
     <sc-if value="{{jySyncBad}}" hint-placeholder-val="{{ false }}"><div class="banner err" role="alert">{{jySyncText}}</div></sc-if>
@@ -773,6 +773,7 @@
       <div class="{{jyMeterCls}}" role="progressbar" aria-label="Coins toward the next stop" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{jyPctNum}}"><i style="width:{{jyPct}}"></i></div>
       <div class="jy-meter-t"><span>{{jyMeterText}}</span><span>{{jyXpTotal}}</span></div>
       <button type="button" class="btn pri jy-go" disabled="{{jyGoOff}}" data-on-click="{{jyTravel}}">{{jyGoText}}</button>
+      <sc-if value="{{jyPlayOn}}" hint-placeholder-val="{{ false }}"><span class="jy-coins" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span></sc-if>
     </div>
     </sc-if>
     <sc-if value="{{jyFriendMode}}" hint-placeholder-val="{{ false }}">
@@ -868,11 +869,12 @@
     <sc-if value="{{jyIsMap}}" hint-placeholder-val="{{ true }}">
       <sc-if value="{{jyCountry}}" hint-placeholder-val="{{ true }}">
         <div class="jy-panel">
-          <svg class="jy-map" viewBox="0 0 350 290" role="group" aria-label="Map of China, Taiwan, Hong Kong, Macau and Singapore. Choose a region.">
+          <svg class="jy-map" viewBox="0 0 350 290" role="group" aria-label="Map of China, Taiwan, Hong Kong, Macau and Singapore. Choose a region."><g class="jy-zoomg">
             <sc-for list="{{jyMapRegions}}" as="r" hint-placeholder-count="3"><g class="jy-r {{r.cls}}" style="--rh:{{r.hue}}" tabindex="0" role="button" aria-label="{{r.label}}" data-on-click="{{r.open}}"><path d="{{r.d}}"/><sc-if value="{{r.hasM}}" hint-placeholder-val="{{ false }}"><path class="mu" d="{{r.m}}"/></sc-if></g></sc-for>
             <sc-for list="{{jyArcs}}" as="a" hint-placeholder-count="1"><path class="jy-arc {{a.cls}}" style="--len:{{a.len}}" d="{{a.d}}"/></sc-for>
             <sc-for list="{{jyDots}}" as="d" hint-placeholder-count="2"><g class="jy-dot {{d.cls}}" transform="translate({{d.x}} {{d.y}})" tabindex="0" role="button" aria-label="{{d.label}}" data-on-click="{{d.open}}"><circle class="hit" r="11"/><circle class="dc" r="8"/><text y="3.5" text-anchor="middle">{{d.initial}}</text></g></sc-for>
-          </svg>
+          <sc-if value="{{jyCHereShow}}" hint-placeholder-val="{{ false }}"><g class="jy-here" transform="translate({{jyCHereX}} {{jyCHereY}})"><circle class="rip" r="9"/><circle class="rip r2" r="9"/></g></sc-if>
+            <sc-if value="{{jyPlayFly}}" hint-placeholder-val="{{ false }}"><g class="jy-plane" opacity="0" aria-hidden="true"><path d="M-6 0 L-2 -1.6 L0 -6 L1.8 -6 L0.8 -1.6 L4.5 -2.2 L6 -3.4 L6.8 -3.4 L6 0 L6.8 3.4 L6 3.4 L4.5 2.2 L0.8 1.6 L1.8 6 L0 6 L-2 1.6Z"/></g></sc-if></g></svg>
           <div class="jy-small"><span class="muted">Small regions</span><sc-for list="{{jySmall}}" as="r" hint-placeholder-count="3"><button type="button" class="jy-sm {{r.cls}}" style="--rh:{{r.hue}}" aria-label="{{r.label}}" data-on-click="{{r.open}}"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="{{r.d}}"/></svg><span>{{r.en}}</span></button></sc-for></div>
           <p class="muted jy-key">Grey: not visited. Outlined: where you are now. Filled: stamped.</p>
         </div>
@@ -886,7 +888,8 @@
             <sc-if value="{{jyProvHasM}}" hint-placeholder-val="{{ false }}"><path class="jy-out mu" d="{{jyProvM}}"/></sc-if>
             <sc-if value="{{jyRouteShow}}" hint-placeholder-val="{{ false }}"><path class="jy-route" d="{{jyRouteD}}"/></sc-if>
             <sc-if value="{{jyLegShow}}" hint-placeholder-val="{{ false }}"><path class="jy-leg" style="--len:{{jyLegLen}}" d="{{jyLegD}}"/><circle class="jy-mover" r="4.5" style="--x1:{{jyLegX1}}px;--y1:{{jyLegY1}}px;--x2:{{jyLegX2}}px;--y2:{{jyLegY2}}px"/></sc-if>
-            <sc-if value="{{jyHereShow}}" hint-placeholder-val="{{ false }}"><g class="jy-here" transform="translate({{jyHereX}} {{jyHereY}})"><circle class="rip" r="10"/></g></sc-if>
+            <sc-if value="{{jyHereShow}}" hint-placeholder-val="{{ false }}"><g class="jy-here" transform="translate({{jyHereX}} {{jyHereY}})"><circle class="rip" r="10"/><circle class="rip r2" r="10"/></g></sc-if>
+            <sc-if value="{{jyPlayLeg}}" hint-placeholder-val="{{ false }}"><g class="jy-plane" opacity="0" aria-hidden="true"><path d="M-6 0 L-2 -1.6 L0 -6 L1.8 -6 L0.8 -1.6 L4.5 -2.2 L6 -3.4 L6.8 -3.4 L6 0 L6.8 3.4 L6 3.4 L4.5 2.2 L0.8 1.6 L1.8 6 L0 6 L-2 1.6Z"/></g></sc-if>
             <sc-for list="{{jyPins}}" as="p" hint-placeholder-count="3"><g class="jy-pin {{p.cls}}" transform="translate({{p.x}} {{p.y}})" tabindex="0" role="button" aria-label="{{p.label}}" data-on-click="{{p.tap}}"><circle class="hit" r="8"/><sc-if value="{{p.isCluster}}" hint-placeholder-val="{{ false }}"><circle class="cl" r="10"/><text y="4" text-anchor="middle">{{p.count}}</text></sc-if><sc-if value="{{p.isCity}}" hint-placeholder-val="{{ false }}"><rect x="-5" y="-5" width="10" height="10" rx="1.5"/></sc-if><sc-if value="{{p.isAttr}}" hint-placeholder-val="{{ false }}"><path d="M0 -6.5 L6 4.5 L-6 4.5 Z"/></sc-if><sc-if value="{{p.isDish}}" hint-placeholder-val="{{ false }}"><circle r="5.2"/></sc-if><sc-if value="{{p.isCult}}" hint-placeholder-val="{{ false }}"><path d="M0 -6.5 L6.5 0 L0 6.5 L-6.5 0 Z"/></sc-if><sc-if value="{{p.isAir}}" hint-placeholder-val="{{ false }}"><path d="M0 -7 L1.6 -2 L7 1 L7 2.6 L1.6 1.2 L1.2 5 L3 6.2 L3 7.2 L0 6.4 L-3 7.2 L-3 6.2 L-1.2 5 L-1.6 1.2 L-7 2.6 L-7 1 L-1.6 -2 Z"/></sc-if></g></sc-for>
           </svg>
           <p class="muted jy-key">{{jyProvKey}}</p>
@@ -1810,60 +1813,53 @@
       <sc-for list="{{capOpts}}" as="c" hint-placeholder-count="4"><button class="fc2 {{c.cls}}" data-on-click="{{c.fn}}">{{c.label}}</button></sc-for>
     </div>
     </sc-if>
-    <p class="muted web-intro" style="margin:0;max-width:66ch">New words appear next to words you already know. Try to recall a word before you reveal it, even if you guess wrong.</p>
+    <p class="muted web-intro" style="margin:0;max-width:66ch">New words appear next to words you already know. To test yourself, cover one side in Study view and try to say it first.</p>
     <sc-if value="{{capNote}}" hint-placeholder-val="{{ false }}"><p class="capnote">You have reached your limit of {{capCount}} new words for today. The rest wait until tomorrow. Choose "No limit" above to keep going.</p></sc-if>
 
     <sc-if value="{{isWChar}}" hint-placeholder-val="{{ true }}">
-      <div class="hubrow">
-        <section class="card hubcard">
-          <div class="kick">The shared character</div>
-          <div class="hub-zh zh">{{hubZh}}</div>
-          <div class="hub-py">{{hubPy}}</div>
-          <div class="hub-en">{{hubEn}}</div>
-          <div class="hub-sum">{{hubSum}}</div>
-          <div class="pickrow" role="group" aria-label="Pick a character">
-            <sc-for list="{{hubOpts}}" as="h" hint-placeholder-count="3"><button class="zh fc2 {{h.cls}}" style="font-size:20px" data-on-click="{{h.fn}}">{{h.zh}}</button></sc-for>
-          </div>
-          <sc-if value="{{hubHasNew}}" hint-placeholder-val="{{ true }}"><button class="btn" style="min-height:40px;padding:0 16px;font-size:15px;align-self:flex-start" data-on-click="{{hubAddAll}}">{{hubAddAllText}}</button></sc-if>
-          <div class="seg2" role="group" aria-label="Meanings">
-            <button class="{{quizOffCls}}" data-on-click="{{setQuizOff}}">Meanings</button>
-            <button class="{{quizOnCls}}" data-on-click="{{setQuizOn}}">Quiz me</button>
-          </div>
-        </section>
-        <div class="wgrid">
-          <sc-for list="{{hubCards}}" as="w" hint-placeholder-count="4">
-            <div class="wcell">
-            <sc-if value="{{w.showGrp}}" hint-placeholder-val="{{ false }}"><h3 class="wgrp-h">{{w.grpLabel}}</h3></sc-if>
-            <div class="wc {{w.cls}}">
-              <div class="wc-top">
-                <sc-if value="{{w.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{w.lvCls}}">{{w.lvTag}}</span></sc-if>
-                <sc-if value="{{w.isNew}}" hint-placeholder-val="{{ false }}"><span class="wc-new">New</span></sc-if>
-                <button class="spk {{w.pc}}" aria-label="Hear this word" data-on-click="{{w.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+      <div class="clayout">
+        <aside class="cidx" aria-label="Shared characters">
+          <div class="kick">Pick a character</div>
+          <div class="ctiles"><sc-for list="{{hubTiles}}" as="h" hint-placeholder-count="12"><button type="button" class="ctile {{h.cls}}" aria-label="{{h.label}}" data-on-click="{{h.fn}}"><b class="zh">{{h.zh}}</b><small>{{h.n}}</small></button></sc-for></div>
+          <p class="muted tiny" style="margin:2px 2px 0">The small number is how many words use each character.</p>
+        </aside>
+        <div class="cmain">
+          <section class="card chero">
+            <div class="chero-tile zh" aria-hidden="true">{{hubZh}}</div>
+            <div class="chero-body">
+              <div class="kick">The shared character</div>
+              <div class="hub-py">{{hubPy}}</div>
+              <div class="hub-en">{{hubEn}}</div>
+              <div class="hub-sum">{{hubSum}}</div>
+              <div class="lprog"><div class="stack" role="img" aria-label="{{hubStackLabel}}"><i class="k" style="width: {{hubKnownW}}"></i><i class="l" style="width: {{hubLearnW}}"></i></div><div class="legend"><span><i class="ldot a"></i>{{hubLearnN}} learning</span><span><i class="ldot g"></i>{{hubKnownN}} known</span><span><i class="ldot"></i>{{hubNewN}} new</span></div></div>
+              <div class="ltools"><div class="lstudy"><span class="kick">Study view</span><div class="seg2" role="group" aria-label="Study view"><sc-for list="{{coverOpts}}" as="c" hint-placeholder-count="3"><button class="{{c.cls}}" data-on-click="{{c.fn}}">{{c.label}}</button></sc-for></div></div>
+                <sc-if value="{{hubHasNew}}" hint-placeholder-val="{{ true }}"><button class="btn sm" data-on-click="{{hubAddAll}}">{{hubAddAllText}}</button></sc-if>
               </div>
-              <div class="wc-zh zh"><span class="{{w.p1cls}}">{{w.p1c}}</span><span class="{{w.p2cls}}">{{w.p2c}}</span></div>
-              <div class="wc-py">{{w.py}}</div>
-              <div class="wc-eq {{w.eqCls}}" aria-label="How the word is built">
-                <span class="part {{w.p1cls}}"><b class="zh">{{w.p1c}}</b><i>{{w.p1n}}</i></span>
-                <span class="plus">+</span>
-                <span class="part {{w.p2cls}}"><b class="zh">{{w.p2c}}</b><i>{{w.p2n}}</i></span>
+            </div>
+          </section>
+          <section class="card ctable">
+            <div class="ctable-h" aria-hidden="true"><span>Word</span><span>Built from</span><span>Meaning</span><span></span></div>
+            <sc-for list="{{hubCards}}" as="w" hint-placeholder-count="4">
+              <div class="cgrp">
+                <sc-if value="{{w.showGrp}}" hint-placeholder-val="{{ false }}"><h3 class="wgrp-h">{{w.grpLabel}}</h3></sc-if>
+                <div class="crow {{w.cls}}">
+                  <div class="cr-w"><sc-if value="{{w.showZh}}" hint-placeholder-val="{{ true }}"><div class="zh cr-zh"><span class="{{w.p1cls}}">{{w.p1w}}</span><span class="{{w.p2cls}}">{{w.p2w}}</span></div><div class="lr-py"><span class="wc-py">{{w.py}}</span><button type="button" class="spk sm {{w.pc}}" aria-label="Hear this word" data-on-click="{{w.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><sc-if value="{{w.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{w.lvCls}}">{{w.lvTag}}</span></sc-if></div></sc-if><sc-if value="{{w.hideZh}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the Chinese" data-on-click="{{w.peek}}">Show</button></sc-if></div>
+                  <div class="cr-parts" aria-label="How the word is built">
+                    <span class="part {{w.p1cls}}"><b class="zh">{{w.p1c}}</b><i>{{w.p1n}}</i></span>
+                    <span class="plus" aria-hidden="true">+</span>
+                    <span class="part {{w.p2cls}}"><b class="zh">{{w.p2c}}</b><i>{{w.p2n}}</i></span>
+                  </div>
+                  <div class="cr-en"><sc-if value="{{w.showEn}}" hint-placeholder-val="{{ true }}"><span class="wc-en">{{w.en}}</span></sc-if><sc-if value="{{w.hideEn}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the meaning" data-on-click="{{w.peek}}">Show</button></sc-if>
+                    <sc-if value="{{w.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{w.exToggle}}">{{w.exLabel}}</button></sc-if>
+                    <sc-if value="{{w.exOpen}}" hint-placeholder-val="{{ false }}"><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{w.exZh}}</div><button type="button" class="spk sm {{w.exPc}}" aria-label="Hear the example sentence" data-on-click="{{w.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{w.exPy}}</div><div>{{w.exEn}}</div><sc-if value="{{w.hasExMore}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{w.exNext}}">Another example ({{w.exCount}})</button></sc-if><sc-if value="{{w.hasExNote}}" hint-placeholder-val="{{ false }}"><div class="exnote">{{w.exNote}}</div></sc-if></div></sc-if>
+                    <a class="report" href="{{w.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
+                  </div>
+                  <div class="lr-st"><sc-if value="{{w.canAdd}}" hint-placeholder-val="{{ false }}"><button type="button" class="addbtn" aria-label="Add to my words" data-on-click="{{w.learn}}">+ Add</button></sc-if><sc-if value="{{w.capHit}}" hint-placeholder-val="{{ false }}"><span class="muted tiny">Tomorrow</span></sc-if><sc-if value="{{w.notNew}}" hint-placeholder-val="{{ false }}"><span class="ldot {{w.dot}}" role="img" aria-label="{{w.mLabel}}" title="{{w.mLabel}}"></span></sc-if></div>
+                </div>
               </div>
-              <div class="wc-res"><span class="wc-arrow" aria-hidden="true">=</span><span class="wc-en">{{w.enShown}}</span></div>
-              <sc-if value="{{w.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{w.exToggle}}">{{w.exLabel}}</button></sc-if>
-              <sc-if value="{{w.exOpen}}" hint-placeholder-val="{{ false }}"><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{w.exZh}}</div><button class="spk {{w.exPc}}" aria-label="Hear the example sentence" data-on-click="{{w.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{w.exPy}}</div><div>{{w.exEn}}</div><sc-if value="{{w.hasExMore}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{w.exNext}}">Another example ({{w.exCount}})</button></sc-if><sc-if value="{{w.hasExNote}}" hint-placeholder-val="{{ false }}"><div class="exnote">{{w.exNote}}</div></sc-if></div></sc-if>
-              <sc-if value="{{w.canReveal}}" hint-placeholder-val="{{ false }}"><button class="btn" data-on-click="{{w.reveal}}">Reveal meaning</button></sc-if>
-              <sc-if value="{{w.canRate}}" hint-placeholder-val="{{ false }}">
-                <div class="rrow"><button class="btn pri" data-on-click="{{w.knew}}">I knew it</button><button class="btn" data-on-click="{{w.missed}}">I missed it</button></div>
-              </sc-if>
-              <sc-if value="{{w.canAdd}}" hint-placeholder-val="{{ false }}"><button class="btn pri" data-on-click="{{w.learn}}">Add to my words</button></sc-if>
-              <sc-if value="{{w.capHit}}" hint-placeholder-val="{{ false }}"><div class="muted" style="font-size:14.5px">This one waits until tomorrow.</div></sc-if>
-              <a class="report" href="{{w.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
-            </div>
-            </div>
-          </sc-for>
-        </div>
-      </div>
-
-      <section class="card" style="display:flex;flex-direction:column;gap:14px">
+            </sc-for>
+          </section>
+          <section class="card" style="display:flex;flex-direction:column;gap:14px">
         <div class="kick">Which word fits?</div>
         <div class="muted" style="font-size:17px">{{fillEn}}</div>
         <div class="zh" style="font-size:34px;line-height:1.3">{{fillZh}}</div>
@@ -1880,57 +1876,49 @@
         </sc-if>
         <a class="report" href="{{fillReport}}" target="_blank" rel="noopener">Report a mistake</a>
       </section>
+          <nav class="lnav" aria-label="Neighbouring characters"><button type="button" class="btn" data-on-click="{{hubPrev}}">&larr; {{hubPrevName}}</button><button type="button" class="btn" data-on-click="{{hubNext}}">{{hubNextName}} &rarr;</button></nav>
+        </div>
+      </div>
     </sc-if>
 
     <sc-if value="{{isWOpp}}" hint-placeholder-val="{{ false }}">
-      <div class="opps">
+      <div class="pbar"><sc-if value="{{hasOppTabs}}" hint-placeholder-val="{{ false }}"><div class="seg2" role="group" aria-label="Kind of pair"><sc-for list="{{oppTabs}}" as="t" hint-placeholder-count="3"><button class="{{t.cls}}" data-on-click="{{t.fn}}">{{t.label}} {{t.n}}</button></sc-for></div></sc-if><div class="lstudy"><span class="kick">Study view</span><div class="seg2" role="group" aria-label="Study view"><sc-for list="{{coverOpts}}" as="c" hint-placeholder-count="3"><button class="{{c.cls}}" data-on-click="{{c.fn}}">{{c.label}}</button></sc-for></div></div></div>
+      <div class="pgrid">
         <sc-for list="{{oppRows}}" as="o" hint-placeholder-count="6">
-          <section class="card orow">
-            <div class="opair">
-              <div class="oc">
-                <div class="oc-zh zh">{{o.azh}}</div>
-                <div class="wc-py">{{o.apy}}</div>
-                <div>{{o.aen}}</div>
-                <div class="mbar" style="width:100%"><div class="mbar-h"><span>{{o.aLabel}}</span><b>{{o.aPct}}</b></div><div class="track sm"><div class="fill {{o.aBar}}" style="width: {{o.aW}}"></div></div></div>
-                <button class="spk {{o.aPc}}" aria-label="Hear this word" data-on-click="{{o.playA}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+          <div class="pcell">
+            <sc-if value="{{o.showGrp}}" hint-placeholder-val="{{ false }}"><h3 class="wgrp-h">{{o.grpLabel}}</h3></sc-if>
+            <section class="card pcard">
+              <div class="pc-pair">
+              <div class="pc-w">
+                <sc-if value="{{o.aShowZh}}" hint-placeholder-val="{{ true }}"><div class="zh pc-zh">{{o.azh}}</div><div class="lr-py"><span class="wc-py">{{o.apy}}</span><button type="button" class="spk sm {{o.aPc}}" aria-label="Hear this word" data-on-click="{{o.aPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div></sc-if>
+                <sc-if value="{{o.aHideZh}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the Chinese" data-on-click="{{o.peek}}">Show</button></sc-if>
+                <div class="lr-en"><sc-if value="{{o.aShowEn}}" hint-placeholder-val="{{ true }}"><span>{{o.aen}}</span></sc-if><sc-if value="{{o.aHideEn}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the meaning" data-on-click="{{o.peek}}">Show</button></sc-if></div>
+                <span class="ldot {{o.aDot}}" role="img" aria-label="{{o.aStatus}}" title="{{o.aStatus}}"></span>
               </div>
               <svg class="ic oarrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>
-              <sc-if value="{{o.revealed}}" hint-placeholder-val="{{ false }}">
-                <div class="oc {{o.bCls}}">
-                  <div class="oc-zh zh">{{o.bzh}}</div>
-                  <div class="wc-py">{{o.bpy}}</div>
-                  <div>{{o.ben}}</div>
-                  <div class="mbar" style="width:100%"><div class="mbar-h"><span>{{o.bLabel}}</span><b>{{o.bPct}}</b></div><div class="track sm"><div class="fill {{o.bBar}}" style="width: {{o.bW}}"></div></div></div>
-                  <button class="spk {{o.bPc}}" aria-label="Hear this word" data-on-click="{{o.playB}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
-                </div>
-              </sc-if>
-              <sc-if value="{{o.hidden}}" hint-placeholder-val="{{ true }}">
-                <div class="oc blank">
-                  <div class="oc-zh zh">?</div>
-                  <div class="muted">{{o.hint}}</div>
-                  <button class="btn" data-on-click="{{o.reveal}}">Reveal</button>
-                </div>
-              </sc-if>
-            </div>
-            <div class="muted">{{o.note}}</div>
-            <sc-if value="{{o.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{o.exToggle}}">{{o.exLabel}}</button></sc-if>
-            <sc-if value="{{o.exOpen}}" hint-placeholder-val="{{ false }}">
-              <div class="opair exboth"><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{o.aExZh}}</div><button class="spk {{o.aExPc}}" aria-label="Hear the example sentence" data-on-click="{{o.aExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.aExPy}}</div><div>{{o.aExEn}}</div></div><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{o.bExZh}}</div><button class="spk {{o.bExPc}}" aria-label="Hear the example sentence" data-on-click="{{o.bExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.bExPy}}</div><div>{{o.bExEn}}</div></div></div>
-            </sc-if>
-            <a class="report" href="{{o.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
-            <sc-if value="{{o.hasAdd}}" hint-placeholder-val="{{ false }}">
-              <div class="rrow">
-                <sc-if value="{{o.canAddBoth}}" hint-placeholder-val="{{ false }}"><button class="btn pri" data-on-click="{{o.learnBoth}}">Add both words</button></sc-if>
-                <sc-if value="{{o.canAddA}}" hint-placeholder-val="{{ false }}"><button class="btn" data-on-click="{{o.learnA}}">Add {{o.azh}}</button></sc-if>
-                <sc-if value="{{o.canAdd}}" hint-placeholder-val="{{ false }}"><button class="btn" data-on-click="{{o.learn}}">Add {{o.bzh}}</button></sc-if>
+              <div class="pc-w">
+                <sc-if value="{{o.bShowZh}}" hint-placeholder-val="{{ true }}"><div class="zh pc-zh">{{o.bzh}}</div><div class="lr-py"><span class="wc-py">{{o.bpy}}</span><button type="button" class="spk sm {{o.bPc}}" aria-label="Hear this word" data-on-click="{{o.bPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div></sc-if>
+                <sc-if value="{{o.bHideZh}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the Chinese" data-on-click="{{o.peek}}">Show</button></sc-if>
+                <div class="lr-en"><sc-if value="{{o.bShowEn}}" hint-placeholder-val="{{ true }}"><span>{{o.ben}}</span></sc-if><sc-if value="{{o.bHideEn}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the meaning" data-on-click="{{o.peek}}">Show</button></sc-if></div>
+                <span class="ldot {{o.bDot}}" role="img" aria-label="{{o.bStatus}}" title="{{o.bStatus}}"></span>
               </div>
-            </sc-if>
-            <sc-if value="{{o.canRate}}" hint-placeholder-val="{{ false }}">
-              <div class="rrow"><button class="btn pri" data-on-click="{{o.knew}}">I knew it</button><button class="btn" data-on-click="{{o.missed}}">I missed it</button></div>
-            </sc-if>
-            <sc-if value="{{o.capHit}}" hint-placeholder-val="{{ false }}"><div class="muted" style="font-size:14.5px">This one waits until tomorrow.</div></sc-if>
-            <sc-if value="{{o.hasDelta}}" hint-placeholder-val="{{ false }}"><div class="delta {{o.deltaCls}}">{{o.deltaText}}</div></sc-if>
-          </section>
+              </div>
+              <div class="muted pc-note">{{o.note}}</div>
+              <sc-if value="{{o.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{o.exToggle}}">{{o.exLabel}}</button></sc-if>
+              <sc-if value="{{o.exOpen}}" hint-placeholder-val="{{ false }}">
+                <div class="opair exboth"><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{o.aExZh}}</div><button class="spk {{o.aExPc}}" aria-label="Hear the example sentence" data-on-click="{{o.aExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.aExPy}}</div><div>{{o.aExEn}}</div></div><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{o.bExZh}}</div><button class="spk {{o.bExPc}}" aria-label="Hear the example sentence" data-on-click="{{o.bExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.bExPy}}</div><div>{{o.bExEn}}</div></div></div>
+              </sc-if>
+              <sc-if value="{{o.hasAdd}}" hint-placeholder-val="{{ false }}">
+                <div class="rrow">
+                  <sc-if value="{{o.canAddBoth}}" hint-placeholder-val="{{ false }}"><button class="btn sm pri" data-on-click="{{o.learnBoth}}">Add both words</button></sc-if>
+                  <sc-if value="{{o.canAddA}}" hint-placeholder-val="{{ false }}"><button class="btn sm" data-on-click="{{o.learnA}}">{{o.aAddLabel}}</button></sc-if>
+                  <sc-if value="{{o.canAddB}}" hint-placeholder-val="{{ false }}"><button class="btn sm" data-on-click="{{o.learnB}}">{{o.bAddLabel}}</button></sc-if>
+                </div>
+              </sc-if>
+              <sc-if value="{{o.capHit}}" hint-placeholder-val="{{ false }}"><div class="muted" style="font-size:14.5px">The rest wait until tomorrow.</div></sc-if>
+              <a class="report" href="{{o.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
+            </section>
+          </div>
         </sc-for>
       </div>
     </sc-if>
@@ -1971,12 +1959,15 @@
       <sc-if value="{{topicNoMatch}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:6px 10px">No topic or word matches.</p></sc-if>
         </div></sc-if>
       </div>
-      <div class="thead">
-        <h2 class="h2">{{topicName}}</h2>
-        <span class="muted">{{topicProgress}}</span>
-        <sc-if value="{{topicHasNew}}" hint-placeholder-val="{{ true }}"><button class="btn sm" data-on-click="{{topicAddAll}}">{{topicAddAllText}}</button></sc-if>
-        <button type="button" class="btn sm" data-on-click="{{toggleMist}}">{{mistToggleText}}</button>
-      </div>
+      <header class="lhead">
+        <div class="kick">{{topicKick}}</div>
+        <h2 class="ltitle">{{topicName}}</h2>
+        <div class="lprog"><div class="stack" role="img" aria-label="{{topicStackLabel}}"><i class="k" style="width: {{topicKnownW}}"></i><i class="l" style="width: {{topicLearnW}}"></i></div><div class="legend"><span><i class="ldot a"></i>{{topicLearnN}} learning</span><span><i class="ldot g"></i>{{topicKnownN}} known</span><span><i class="ldot"></i>{{topicNewN}} new</span></div></div>
+        <div class="ltools"><span class="muted lcount">{{topicProgress}}</span><div class="lstudy"><span class="kick">Study view</span><div class="seg2" role="group" aria-label="Study view"><sc-for list="{{coverOpts}}" as="c" hint-placeholder-count="3"><button class="{{c.cls}}" data-on-click="{{c.fn}}">{{c.label}}</button></sc-for></div></div>
+          <sc-if value="{{topicHasNew}}" hint-placeholder-val="{{ true }}"><button class="btn sm" data-on-click="{{topicAddAll}}">{{topicAddAllText}}</button></sc-if>
+          <button type="button" class="btn sm" data-on-click="{{toggleMist}}">{{mistToggleText}}</button>
+        </div>
+      </header>
       <sc-if value="{{mistOpen}}" hint-placeholder-val="{{ false }}">
       <div class="mist-top">
         <div class="mist-sum"><span class="mseal" aria-hidden="true">熟</span><div><b>{{mistClearText}}</b><span>topics with every word started</span></div></div>
@@ -1993,20 +1984,21 @@
       </div>
       <p class="asc-note">{{mistNote}}</p>
       </sc-if>
-      <div class="tgrid">
+      <div class="lrows">
         <sc-for list="{{topicChips}}" as="c" hint-placeholder-count="7">
-          <div class="tc {{c.cls}}">
-            <sc-if value="{{c.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{c.lvCls}}">{{c.lvTag}}</span></sc-if>
-            <button class="tc-main" data-on-click="{{c.play}}" aria-label="Hear this word">
-              <span class="zh tc-zh">{{c.zh}}</span>
-              <span class="wc-py" style="font-size:17px">{{c.py}}</span>
-              <span>{{c.en}}</span>
-            </button>
-            <sc-if value="{{c.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{c.exToggle}}">{{c.exLabel}}</button></sc-if>
-            <sc-if value="{{c.exOpen}}" hint-placeholder-val="{{ false }}"><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{c.exZh}}</div><button class="spk {{c.exPc}}" aria-label="Hear the example sentence" data-on-click="{{c.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{c.exPy}}</div><div>{{c.exEn}}</div><sc-if value="{{c.hasExMore}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{c.exNext}}">Another example ({{c.exCount}})</button></sc-if><sc-if value="{{c.hasExNote}}" hint-placeholder-val="{{ false }}"><div class="exnote">{{c.exNote}}</div></sc-if></div></sc-if>
-            <div class="mbar" style="width:100%"><div class="mbar-h"><span>{{c.mLabel}}</span><b>{{c.mPct}}</b></div><div class="track sm"><div class="fill {{c.mCls}}" style="width: {{c.mW}}"></div></div></div>
-            <sc-if value="{{c.canAdd}}" hint-placeholder-val="{{ false }}"><button class="btn" style="min-height:40px;padding:0 16px;font-size:15px" data-on-click="{{c.learn}}">Add to my words</button></sc-if>
-            <sc-if value="{{c.capHit}}" hint-placeholder-val="{{ false }}"><span class="muted" style="font-size:14px">Waits until tomorrow</span></sc-if>
+          <div class="lrow {{c.cls}}">
+            <div class="lr-zh"><sc-if value="{{c.showZh}}" hint-placeholder-val="{{ true }}"><span class="zh lr-hz">{{c.zh}}</span></sc-if><sc-if value="{{c.hideZh}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the Chinese" data-on-click="{{c.peek}}">Show</button></sc-if></div>
+            <div class="lr-mid">
+              <div class="lr-py"><sc-if value="{{c.showZh}}" hint-placeholder-val="{{ true }}"><span class="wc-py">{{c.py}}</span></sc-if><button type="button" class="spk sm {{c.pc}}" aria-label="Hear this word" data-on-click="{{c.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><sc-if value="{{c.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{c.lvCls}}">{{c.lvTag}}</span></sc-if></div>
+              <div class="lr-en"><sc-if value="{{c.showEn}}" hint-placeholder-val="{{ true }}"><span>{{c.en}}</span></sc-if><sc-if value="{{c.hideEn}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the meaning" data-on-click="{{c.peek}}">Show</button></sc-if></div>
+            </div>
+            <sc-if value="{{c.hasEx}}" hint-placeholder-val="{{ true }}"><div class="lr-ex">
+              <div class="lr-exline"><sc-if value="{{c.showZh}}" hint-placeholder-val="{{ true }}"><span class="zh lr-exzh">{{c.exZh}}</span></sc-if><sc-if value="{{c.hideZh}}" hint-placeholder-val="{{ false }}"><span class="lr-ghost" aria-hidden="true">· · ·</span></sc-if><button type="button" class="spk sm {{c.exPc}}" aria-label="Hear the example sentence" data-on-click="{{c.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div>
+              <div class="lr-exsub"><sc-if value="{{c.showZh}}" hint-placeholder-val="{{ true }}"><span>{{c.exPy}}</span></sc-if><sc-if value="{{c.showEn}}" hint-placeholder-val="{{ true }}"><span class="lr-exen">{{c.exEn}}</span></sc-if></div>
+              <sc-if value="{{c.hasExMore}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{c.exNext}}">Another example ({{c.exCount}})</button></sc-if>
+              <sc-if value="{{c.hasExNote}}" hint-placeholder-val="{{ false }}"><div class="exnote">{{c.exNote}}</div></sc-if>
+            </div></sc-if>
+            <div class="lr-st"><sc-if value="{{c.canAdd}}" hint-placeholder-val="{{ false }}"><button type="button" class="addbtn" aria-label="Add to my words" data-on-click="{{c.learn}}">+ Add</button></sc-if><sc-if value="{{c.capHit}}" hint-placeholder-val="{{ false }}"><span class="muted tiny">Tomorrow</span></sc-if><sc-if value="{{c.notNew}}" hint-placeholder-val="{{ false }}"><span class="ldot {{c.dot}}" role="img" aria-label="{{c.mLabel}}" title="{{c.mLabel}}"></span></sc-if></div>
           </div>
         </sc-for>
       </div>
@@ -2018,6 +2010,7 @@
         <a class="report" href="{{tsReport}}" target="_blank" rel="noopener">Report a mistake</a>
         <button class="btn pri" style="margin-top:10px" data-on-click="{{goTopic}}">{{topicCta}}</button>
       </section>
+      <nav class="lnav" aria-label="Neighbouring topics"><button type="button" class="btn" data-on-click="{{topicPrev}}">&larr; {{topicPrevName}}</button><button type="button" class="btn" data-on-click="{{topicNext}}">{{topicNextName}} &rarr;</button></nav>
     </div>
     </div>
     </sc-if>
@@ -2710,54 +2703,54 @@
 </main>
 </div>
 </template>
-<script defer src="vendor/morphdom-umd.min.js?v=3d8468b9c7"></script>
-<script defer src="runtime.js?v=3d8468b9c7"></script>
-<script defer src="config.js?v=3d8468b9c7"></script>
-<script defer src="friends.js?v=3d8468b9c7"></script>
-<script defer src="level.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk1-words.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk1-grammar.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk1-webs.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk1-speak.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk1-listen.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk1-exam.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk1-erhua.js?v=3d8468b9c7"></script>
-<script defer src="data/lexicon.js?v=3d8468b9c7"></script>
-<script defer src="data/char-glosses.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk2-preview.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk3-preview.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk2-words.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk2-speak.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk2-listen.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk2-exam.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk2-grammar.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk2-webs.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk3-words.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk3-speak.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk3-listen.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk3-exam.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk3-grammar.js?v=3d8468b9c7"></script>
-<script defer src="data/hsk3-webs.js?v=3d8468b9c7"></script>
-<script defer src="ascent.js?v=3d8468b9c7"></script>
-<script defer src="secrets.js?v=3d8468b9c7"></script>
-<script defer src="sync.js?v=3d8468b9c7"></script>
-<script defer src="data/audio-manifest.js?v=3d8468b9c7"></script>
-<script defer src="journey.js?v=3d8468b9c7"></script>
-<script defer src="data/journey.js?v=3d8468b9c7"></script>
-<script defer src="data/journey-map.js?v=3d8468b9c7"></script>
-<script defer src="data/journey-media.js?v=3d8468b9c7"></script>
-<script defer src="data/souvenirs.js?v=3d8468b9c7"></script>
-<script defer src="erhua.js?v=3d8468b9c7"></script>
-<script defer src="pinyin.js?v=3d8468b9c7"></script>
-<script defer src="data/pinyin-course.js?v=3d8468b9c7"></script>
-<script defer src="data/pinyin-chart.js?v=3d8468b9c7"></script>
-<script defer src="data/exam-media.js?v=3d8468b9c7"></script>
-<script defer src="data/exam-art.js?v=3d8468b9c7"></script>
-<script defer src="data/neutral-alt.js?v=3d8468b9c7"></script>
-<script defer src="data/path-scenes.js?v=3d8468b9c7"></script>
-<script defer src="data/speak-scenes.js?v=3d8468b9c7"></script>
-<script defer src="data/art.js?v=3d8468b9c7"></script>
-<script defer src="data/path.js?v=3d8468b9c7"></script>
-<script defer src="app.js?v=3d8468b9c7"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=820eaf6983"></script>
+<script defer src="runtime.js?v=820eaf6983"></script>
+<script defer src="config.js?v=820eaf6983"></script>
+<script defer src="friends.js?v=820eaf6983"></script>
+<script defer src="level.js?v=820eaf6983"></script>
+<script defer src="data/hsk1-words.js?v=820eaf6983"></script>
+<script defer src="data/hsk1-grammar.js?v=820eaf6983"></script>
+<script defer src="data/hsk1-webs.js?v=820eaf6983"></script>
+<script defer src="data/hsk1-speak.js?v=820eaf6983"></script>
+<script defer src="data/hsk1-listen.js?v=820eaf6983"></script>
+<script defer src="data/hsk1-exam.js?v=820eaf6983"></script>
+<script defer src="data/hsk1-erhua.js?v=820eaf6983"></script>
+<script defer src="data/lexicon.js?v=820eaf6983"></script>
+<script defer src="data/char-glosses.js?v=820eaf6983"></script>
+<script defer src="data/hsk2-preview.js?v=820eaf6983"></script>
+<script defer src="data/hsk3-preview.js?v=820eaf6983"></script>
+<script defer src="data/hsk2-words.js?v=820eaf6983"></script>
+<script defer src="data/hsk2-speak.js?v=820eaf6983"></script>
+<script defer src="data/hsk2-listen.js?v=820eaf6983"></script>
+<script defer src="data/hsk2-exam.js?v=820eaf6983"></script>
+<script defer src="data/hsk2-grammar.js?v=820eaf6983"></script>
+<script defer src="data/hsk2-webs.js?v=820eaf6983"></script>
+<script defer src="data/hsk3-words.js?v=820eaf6983"></script>
+<script defer src="data/hsk3-speak.js?v=820eaf6983"></script>
+<script defer src="data/hsk3-listen.js?v=820eaf6983"></script>
+<script defer src="data/hsk3-exam.js?v=820eaf6983"></script>
+<script defer src="data/hsk3-grammar.js?v=820eaf6983"></script>
+<script defer src="data/hsk3-webs.js?v=820eaf6983"></script>
+<script defer src="ascent.js?v=820eaf6983"></script>
+<script defer src="secrets.js?v=820eaf6983"></script>
+<script defer src="sync.js?v=820eaf6983"></script>
+<script defer src="data/audio-manifest.js?v=820eaf6983"></script>
+<script defer src="journey.js?v=820eaf6983"></script>
+<script defer src="data/journey.js?v=820eaf6983"></script>
+<script defer src="data/journey-map.js?v=820eaf6983"></script>
+<script defer src="data/journey-media.js?v=820eaf6983"></script>
+<script defer src="data/souvenirs.js?v=820eaf6983"></script>
+<script defer src="erhua.js?v=820eaf6983"></script>
+<script defer src="pinyin.js?v=820eaf6983"></script>
+<script defer src="data/pinyin-course.js?v=820eaf6983"></script>
+<script defer src="data/pinyin-chart.js?v=820eaf6983"></script>
+<script defer src="data/exam-media.js?v=820eaf6983"></script>
+<script defer src="data/exam-art.js?v=820eaf6983"></script>
+<script defer src="data/neutral-alt.js?v=820eaf6983"></script>
+<script defer src="data/path-scenes.js?v=820eaf6983"></script>
+<script defer src="data/speak-scenes.js?v=820eaf6983"></script>
+<script defer src="data/art.js?v=820eaf6983"></script>
+<script defer src="data/path.js?v=820eaf6983"></script>
+<script defer src="app.js?v=820eaf6983"></script>
 </body>
 </html>

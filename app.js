@@ -494,7 +494,7 @@
       plv:0, pstop:'', pu:{}, pl:null, plNote:'', plAlt:'', acctEdit:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
-      wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, syncKeys:prefGet('syncKeys', false) === true, aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), lsnNote:'', memOn:memOn(), memFacts:memFacts().slice(), aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, aiTesting:false, syncTesting:false, frTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
+      wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wcover:'all', wpeek:{}, jyPlay:'', jyPlayStamp:false, wopptab:'all', wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, syncKeys:prefGet('syncKeys', false) === true, aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), lsnNote:'', memOn:memOn(), memFacts:memFacts().slice(), aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, aiTesting:false, syncTesting:false, frTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0, mtyped:'', mchecked:false, mbusy:false, mres:null, merr:'', mpeek:0, mmix:false, mbest:{},
       tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
@@ -2822,9 +2822,51 @@
       SFX.play(r.ev.indexOf('stamp') >= 0 || r.ev.indexOf('arrive') >= 0 ? 'fly' : 'ok');
       // a flight shows on the map of the whole country; a ride or a walk shows on the map of the region you are in
       const flew = r.ev.indexOf('arrive') >= 0;
-      this.setState({ jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next, from, k:(this.jyK = ((this.jyK || 0) + 1) % 2) }, jyOpen:null, jyTab:'map', jySel:null, jyFilter:'all', jyReg:flew || !JMAP.regions[r.stop.rid] ? null : r.stop.rid });
+      const playMode = this.jyMotionOk() ? (flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk')) : '';
+      this.setState({ jyPlay:playMode, jyPlayStamp:r.ev.indexOf('stamp') >= 0, jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next, from, k:(this.jyK = ((this.jyK || 0) + 1) % 2) }, jyOpen:null, jyTab:'map', jySel:null, jyFilter:'all', jyReg:flew || !JMAP.regions[r.stop.rid] ? null : r.stop.rid });
       try { window.scrollTo(0, 0); } catch (e) {}
+      if (playMode) this.jyPlayRun(playMode);
       this.checkMilestones();
+    };
+    // The travel moment: pay, take off, land, postcard, stamp. It plays once per trip and never loops. Any tap or key skips to the finished picture.
+    jyMotionOk = () => !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    jyPlayRun = (mode) => {
+      const t0 = (this.jyPlayAt = Date.now());
+      clearTimeout(this.jyPlayTimer); clearTimeout(this.jyPlaneTimer); if (this.jyPlayOff) this.jyPlayOff();
+      this.jyPlayTimer = setTimeout(() => this.jyPlayEnd(t0), ({ fly:5600, leg:3900, walk:1900 })[mode] || 1900);
+      const skip = () => this.jyPlayEnd(t0);
+      const arm = setTimeout(() => { document.addEventListener('pointerdown', skip); document.addEventListener('keydown', skip); }, 450);
+      this.jyPlayOff = () => { clearTimeout(arm); document.removeEventListener('pointerdown', skip); document.removeEventListener('keydown', skip); this.jyPlayOff = null; };
+      if (mode === 'walk') return;
+      // the trail draws for exactly the length of its path, so the plane and the red line stay together
+      requestAnimationFrame(() => { try { const p = document.querySelector(mode === 'fly' ? '.jy-map .jy-arc.new' : '.jy-map .jy-leg'); if (p && p.getTotalLength) p.style.setProperty('--len', Math.ceil(p.getTotalLength()) + 1); } catch (e) {} });
+      this.jyPlaneTimer = setTimeout(() => { if (this.jyPlayAt === t0) this.jyPlane(mode, t0); }, mode === 'fly' ? 1000 : 700);
+    };
+    jyPlayEnd = (t0) => {
+      if (t0 !== this.jyPlayAt) return;
+      clearTimeout(this.jyPlayTimer); clearTimeout(this.jyPlaneTimer); if (this.jyPlayOff) this.jyPlayOff();
+      if (this.state.jyPlay) this.setState({ jyPlay:'' });
+    };
+    // a plane glides along the new route with the same easing as the line that draws behind it
+    jyPlane = (mode, t0) => {
+      const svg = document.querySelector('.jy-map'); if (!svg) return;
+      const path = svg.querySelector(mode === 'fly' ? '.jy-arc.new' : '.jy-leg');
+      if (!path || !path.getTotalLength) return;
+      const L = path.getTotalLength(); const dur = mode === 'fly' ? 2000 : 1200; const start = performance.now();
+      const ease = (x) => { let lo = 0, hi = 1, t = x; for (let i = 0; i < 18; i++) { t = (lo + hi) / 2; const bx = 3 * t * Math.pow(1 - t, 2) * .45 + 3 * t * t * (1 - t) * .3 + t * t * t; if (bx < x) lo = t; else hi = t; } return 3 * t * Math.pow(1 - t, 2) * .05 + 3 * t * t * (1 - t) * 1 + t * t * t; };
+      const step = (now) => {
+        const pl = document.querySelector('.jy-map .jy-plane');   // looked up each frame: the page may redraw while the plane flies
+        if (!pl) return;
+        if (this.jyPlayAt !== t0 || !this.state.jyPlay) { pl.setAttribute('opacity', '0'); return; }
+        const k = Math.min(1, (now - start) / dur); const e = ease(k);
+        const p = path.getPointAtLength(L * e), q = path.getPointAtLength(Math.min(L, L * e + 1.5));
+        const ang = Math.atan2(q.y - p.y, q.x - p.x) * 180 / Math.PI;
+        const sc = mode === 'fly' ? .8 + .5 * Math.sin(Math.PI * k) : 1;
+        pl.setAttribute('transform', 'translate(' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ') rotate(' + ang.toFixed(1) + ') scale(' + sc.toFixed(2) + ')');
+        pl.setAttribute('opacity', k < 1 ? '1' : '0');
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
     };
     // ---- onboarding ----
     onbSet = (p) => { prefSet('onb', Object.assign({}, onbRead(), p)); this.setState({ onbV:(this.state.onbV || 0) + 1 }); };
@@ -2865,7 +2907,7 @@
       if (S.screen !== 'journey') return base;
       const have = {}; st.seen.forEach(id => { have[id] = 1; });
       const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
-      const out = Object.assign(base, { jyOn:true, jyFlip:S.jyRv && S.jyRv.k ? 'kb' : 'ka' });
+      const out = Object.assign(base, { jyOn:true, jyFlip:S.jyRv && S.jyRv.k ? 'kb' : 'ka', jyPlayCls:S.jyPlay ? 'jy-playing jyp-' + S.jyPlay + (S.jyPlayStamp ? ' jyp-st' : '') : '', jyPlayOn:!!S.jyPlay, jyPlayFly:S.jyPlay === 'fly', jyPlayLeg:S.jyPlay === 'leg' });
 
       // friends: the people in your group who have started travelling. Looking at one shows their map and passport in place of yours.
       const fMembers = S.fr && S.fr.members ? S.fr.members.filter(m => m.id !== S.fr.me && m.stats && m.stats.jy && m.stats.jy.n > 0) : [];
@@ -3030,6 +3072,8 @@
             out.jyArcs.push({ d:'M' + r1(a[0]) + ' ' + r1(a[1]) + ' Q' + r1(mx) + ' ' + r1(my) + ' ' + r1(b[0]) + ' ' + r1(b[1]), len:Math.ceil(len * 1.25), cls:rv && rv.ev.indexOf('arrive') >= 0 && i === rr.length - 1 ? 'new' : '' });
           }
         }
+        out.jyCHereShow = false;
+        if (!fm && vs.started && vs.seen && vs.seen.length) { const ls = JWORLD.byStop[vs.seen[vs.seen.length - 1]]; const lc = ls && JWORLD.byCity[ls.cid]; if (lc) { const xy = JY.projectCountry(lc.lat, lc.lon); out.jyCHereShow = true; out.jyCHereX = Math.round(Math.max(6, Math.min(344, xy[0])) * 10) / 10; out.jyCHereY = Math.round(Math.max(6, Math.min(284, xy[1])) * 10) / 10; } }
         out.jySmall = JY.SMALL.map(id => Object.assign(mk(id), { d:JMAP.insets[id] || '' }));
       } else {
         const id = S.jyReg; const RR = JWORLD.byRegion[id]; const mp = JMAP.regions[id];
@@ -4502,74 +4546,74 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
           hasExMore:(EXS[zh] || []).length > 1, exNext:() => this.nextEx(zh), exCount:(((S.wexn[zh] || 0) % (EXS[zh] || [0]).length) + 1) + ' of ' + (EXS[zh] || []).length, hasExNote:!!NOTE[zh], exNote:NOTE[zh] || '' };
       };
       const dlt = (zh) => { const d = S.wdelta[zh]; return d ? { hasDelta:true, deltaText:'Mastery ' + d.from + '% → ' + d.to + '%', deltaCls:d.to >= d.from ? 'up' : 'down' } : { hasDelta:false, deltaText:'', deltaCls:'' }; };
-      const cardOf = (w, hubZh) => {
-        const b = BANK[w.zh];
-        const info = mini(w.zh);
-        const isNew = info.lv === 'new';
-        const revealed = !S.wquiz || !!S.wreveal[w.zh];
-        const rated = !!S.wrated[w.zh];
-        return Object.assign({
-          zh:w.zh, py:b.py, en:b.en,
-          cls:isNew ? 'new' : 'ok', status:info.mLabel,
-          showEn:revealed, enShown:revealed ? b.en : '?', eqCls:revealed ? '' : 'hid', isNew, canReveal:!revealed,
-          canRate:S.wquiz && revealed && !rated && !(isNew && capReached),
-          canAdd:!S.wquiz && isNew && !capReached,
-          capHit:isNew && capReached && !rated,
-          p1c:w.parts[0][0], p1n:w.parts[0][1], p1cls:w.parts[0][0] === hubZh ? 'hub' : '',
-          p2c:w.parts[1][0], p2n:w.parts[1][1], p2cls:w.parts[1][0] === hubZh ? 'hub' : '',
-          pc:pc('w' + w.zh), play:() => this.sayAi(w.zh, 'w' + w.zh),
-          reveal:() => this.revealWord(w.zh), learn:() => this.learnWord(w.zh),
-          knew:() => this.rateWeb(w.zh, true), missed:() => this.rateWeb(w.zh, false),
-          reportUrl:report('Word web card', w.zh + ' (' + b.py + ') ' + b.en + '; parts ' + w.parts.map(p => p[0] + '=' + p[1]).join(', '))
-        }, info, lvInfo(w.zh), dlt(w.zh), exFor(w.zh, revealed));
+      // Library pages: words are shown to read. "Study view" covers one side; tapping a covered side shows it for that entry only.
+      const cvMode = S.wcover === 'en' || S.wcover === 'zh' ? S.wcover : 'all';
+      const coverOf = (key) => { const open = cvMode === 'all' || !!(S.wpeek || {})[key]; return { showZh:open || cvMode !== 'zh', hideZh:!open && cvMode === 'zh', showEn:open || cvMode !== 'en', hideEn:!open && cvMode === 'en', peek:() => this.setState({ wpeek:Object.assign({}, S.wpeek, { [key]:true }) }) }; };
+      const dotOf = (info) => info.lv === 'new' ? '' : (info.lv === 'learning' ? 'a' : 'g');
+      const stackOf = (zhs) => { let l = 0, k = 0, n = 0; zhs.forEach(z => { const i = mini(z); if (i.lv === 'new') n++; else if (i.lv === 'learning') l++; else k++; }); const t = zhs.length || 1; return { l, k, n, kw:(k / t * 100).toFixed(1) + '%', lw:(l / t * 100).toFixed(1) + '%', label:k + ' known, ' + l + ' learning, ' + n + ' new' }; };
+      const wordRow = (zh, key) => {
+        const b = BANK[zh]; const info = mini(zh); const isNew = info.lv === 'new'; const ex = exOf(zh);
+        return Object.assign({}, info, lvInfo(zh), {
+          zh, py:b.py, en:b.en, cls:isNew ? 'new' : 'ok', dot:dotOf(info), notNew:!isNew, isNew, canAdd:isNew && !capReached, capHit:isNew && capReached,
+          pc:pc('w' + zh), play:() => this.sayAi(zh, 'w' + zh), learn:() => this.learnWord(zh),
+          hasEx:!!ex.zh, exZh:ex.zh, exPy:ex.py, exEn:ex.en, exPlay:() => this.sayAi(ex.zh, 'x' + zh), exPc:pc('x' + zh),
+          hasExMore:(EXS[zh] || []).length > 1, exNext:() => this.nextEx(zh), exCount:(((S.wexn[zh] || 0) % (EXS[zh] || [0]).length) + 1) + ' of ' + (EXS[zh] || []).length, hasExNote:!!NOTE[zh], exNote:NOTE[zh] || ''
+        }, coverOf(key || zh));
       };
+      const coverOpts = [['all', 'Show all'], ['en', 'Cover English'], ['zh', 'Cover Chinese']].map(x => ({ label:x[1], cls:cvMode === x[0] ? 'on' : '', fn:() => this.setState({ wcover:x[0], wpeek:{} }) }));
       const hubNow = HUBS[S.whub];
       // the family, grouped by where the shared character sits (first, last, elsewhere) so the pattern shows: 学 + something, something + 学
       const hubPos = (w) => w.parts[0][0] === hubNow.hub ? 0 : (w.parts[1][0] === hubNow.hub ? 1 : 2);
       const hubGrpNames = [hubNow.hub + ' at the start', hubNow.hub + ' at the end', 'Related words'];
       const hubSorted = hubNow.words.map((w, i) => ({ w, i, g:hubPos(w) })).sort((a, b) => a.g - b.g || a.i - b.i);
-      const hubCards = hubSorted.map((x, k) => Object.assign(cardOf(x.w, hubNow.hub), { showGrp:k === 0 || hubSorted[k - 1].g !== x.g, grpLabel:hubGrpNames[x.g] + ' (' + hubSorted.filter(y => y.g === x.g).length + ')' }));
+      const hubCards = hubSorted.map((x, k) => {
+        const w = x.w; const r = wordRow(w.zh); const hz = hubNow.hub;
+        const hideP = (c) => (r.hideZh && c !== hz) ? '?' : c;
+        return Object.assign(r, { showGrp:k === 0 || hubSorted[k - 1].g !== x.g, grpLabel:hubGrpNames[x.g] + ' (' + hubSorted.filter(y => y.g === x.g).length + ')',
+          p1w:w.parts[0][0], p2w:w.parts[1][0],
+          p1c:hideP(w.parts[0][0]), p1n:r.hideEn ? '·' : w.parts[0][1], p1cls:w.parts[0][0] === hz ? 'hub' : '',
+          p2c:hideP(w.parts[1][0]), p2n:r.hideEn ? '·' : w.parts[1][1], p2cls:w.parts[1][0] === hz ? 'hub' : '',
+          reportUrl:report('Word web card', w.zh + ' (' + BANK[w.zh].py + ') ' + BANK[w.zh].en + '; parts ' + w.parts.map(p => p[0] + '=' + p[1]).join(', '))
+        }, exFor(w.zh, r.showZh && r.showEn));
+      });
       const hubNewN = hubNow.words.filter(w => mini(w.zh).lv === 'new').length;
       const hubSum = hubNow.words.length + ' words share it' + (hubNewN > 0 ? ' · ' + hubNewN + ' not in My words yet' : ' · all in My words');
-      const hubOpts = HUBS.map((h, i) => ({ zh:h.hub, cls:S.whub === i ? 'on' : '', fn:() => this.setState({ whub:i, gfq:0, gfpick:null }) }));
+      const hubTiles = HUBS.map((h, i) => { const st = stackOf(h.words.map(w => w.zh)); return { zh:h.hub, n:h.words.length, label:h.hub + ', ' + h.words.length + ' words' + (st.n === 0 ? ', all started' : ''), cls:(S.whub === i ? 'on ' : '') + (st.n === 0 ? 'done' : (st.k + st.l > 0 ? 'part' : '')), fn:() => this.setState({ whub:i, gfq:0, gfpick:null, wpeek:{} }) }; });
+      const hubStack = stackOf(hubNow.words.map(w => w.zh));
       const gapNow = hubNow.gaps[S.gfq % hubNow.gaps.length];
       const gapDone = S.gfpick !== null;
       const gapOpts = seededShuffle(gapNow.opts, GAP_SEED + S.whub * 131 + (S.gfq % hubNow.gaps.length) * 17).map(zh => ({ zh, py:BANK[zh].py, cls:!gapDone ? '' : (zh === gapNow.ans ? 'right' : (zh === S.gfpick ? 'wrong' : '')), fn:() => this.gapPick(zh) }));
       const fillLine = !gapDone ? '' : (S.gfpick === gapNow.ans ? 'Right. ' : 'Not quite. ') + gapNow.ans + ' (' + BANK[gapNow.ans].py + ') means ' + BANK[gapNow.ans].en + '.';
-      const oppRows = OPPS.map(o => {
-        const A = BANK[o.a];
-        const B = BANK[o.b];
-        const ia = mini(o.a);
-        const ib = mini(o.b);
-        const rev = !!S.wreveal[o.b];
-        const bNew = ib.lv === 'new';
-        const rated = !!S.wrated[o.b];
+      const oppTabsAll = [['all', 'All', OPPS.length], ['opp', 'Opposites', OPPS.filter(o => !o.pair).length], ['pair', 'Partners', OPPS.filter(o => o.pair).length]];
+      const oppTabs = !OPPS.some(o => o.pair) ? [] : oppTabsAll.filter(t => t[2] > 0).map(t => ({ label:t[1], n:t[2], cls:S.wopptab === t[0] ? 'on' : '', fn:() => this.setState({ wopptab:t[0] }) }));
+      const oppSorted = OPPS.filter(o => S.wopptab === 'opp' ? !o.pair : (S.wopptab === 'pair' ? !!o.pair : true)).map((o, i) => ({ o, i })).sort((x, y) => (x.o.pair ? 1 : 0) - (y.o.pair ? 1 : 0) || x.i - y.i);
+      const oppRows = oppSorted.map(({ o }, k) => {
+        const A = BANK[o.a]; const B = BANK[o.b];
+        const key = o.a + '|' + o.b;
+        const ra = wordRow(o.a, key); const rb = wordRow(o.b, key);
+        const side = (r, p) => ({ [p + 'zh']:r.zh, [p + 'py']:r.py, [p + 'en']:r.en, [p + 'Dot']:r.dot, [p + 'Status']:r.mLabel, [p + 'Pc']:r.pc, [p + 'Play']:r.play, [p + 'ShowZh']:r.showZh, [p + 'HideZh']:r.hideZh, [p + 'ShowEn']:r.showEn, [p + 'HideEn']:r.hideEn });
+        const open = ra.showZh && ra.showEn;
+        const exAvail = open && !!(exOf(o.a).zh || exOf(o.b).zh);
+        const isPair = !!o.pair; const prevPair = k > 0 && !!oppSorted[k - 1].o.pair;
         return Object.assign({
-          azh:A.zh, apy:A.py, aen:A.en, bzh:B.zh, bpy:B.py, ben:B.en, note:o.note,
-          revealed:rev, hidden:!rev, hint:(o.pair ? 'The partner of ' : 'The opposite of ') + A.en,
-          aPc:pc('w' + A.zh), bPc:pc('w' + B.zh),
-          playA:() => this.sayAi(A.zh, 'w' + A.zh), playB:() => this.sayAi(B.zh, 'w' + B.zh),
-          reveal:() => this.revealWord(B.zh),
-          canAdd:rev && bNew && !capReached, canRate:rev && !bNew && !rated, capHit:rev && bNew && capReached && !rated,
-          hasExBtn:rev, exOpen:rev && !!S.wex[A.zh + B.zh], exLabel:(rev && S.wex[A.zh + B.zh]) ? 'Hide examples' : 'Show examples', exToggle:() => this.toggleEx(A.zh + B.zh),
+          note:o.note, peek:ra.peek,
+          showGrp:k === 0 || isPair !== prevPair, grpLabel:isPair ? 'Partners (' + oppSorted.filter(y => !!y.o.pair).length + ')' : 'Opposites (' + oppSorted.filter(y => !y.o.pair).length + ')',
+          aAddLabel:open ? 'Add ' + A.zh : 'Add left word', bAddLabel:open ? 'Add ' + B.zh : 'Add right word',
+          hasExBtn:exAvail, exOpen:exAvail && !!S.wex[A.zh + B.zh], exLabel:(exAvail && S.wex[A.zh + B.zh]) ? 'Hide examples' : 'Show examples', exToggle:() => this.toggleEx(A.zh + B.zh),
           aExZh:exOf(A.zh).zh, aExPy:exOf(A.zh).py, aExEn:exOf(A.zh).en, bExZh:exOf(B.zh).zh, bExPy:exOf(B.zh).py, bExEn:exOf(B.zh).en,
           aExPlay:() => this.sayAi(exOf(A.zh).zh, 'x' + A.zh), bExPlay:() => this.sayAi(exOf(B.zh).zh, 'x' + B.zh), aExPc:pc('x' + A.zh), bExPc:pc('x' + B.zh),
-          canAddA:ia.lv === 'new' && !capReached, hasAdd:(ia.lv === 'new' || (rev && bNew)) && !capReached,
-          canAddBoth:rev && ia.lv === 'new' && bNew && !capReached && (limitOf(S) - webCount >= 2),
-          learnA:() => this.learnWord(A.zh), learnBoth:() => this.learnMany([A.zh, B.zh]),
-          learn:() => this.learnWord(B.zh), knew:() => this.rateWeb(B.zh, true), missed:() => this.rateWeb(B.zh, false),
-          aLabel:ia.mLabel, aPct:ia.mPct, aW:ia.mW, aBar:ia.mCls, bLabel:ib.mLabel, bPct:ib.mPct, bW:ib.mW, bBar:ib.mCls, bCls:bNew ? 'new' : 'ok',
+          canAddA:ra.canAdd, canAddB:rb.canAdd, hasAdd:ra.canAdd || rb.canAdd,
+          canAddBoth:ra.canAdd && rb.canAdd && (limitOf(S) - webCount >= 2),
+          learnA:() => this.learnWord(A.zh), learnB:() => this.learnWord(B.zh), learnBoth:() => this.learnMany([A.zh, B.zh]),
+          capHit:(ra.capHit || rb.capHit),
           reportUrl:report('Pairs and opposites', A.zh + ' / ' + B.zh + ': ' + o.note)
-        }, dlt(B.zh));
+        }, side(ra, 'a'), side(rb, 'b'));
       });
       const topicNow = TOPICS[S.wtopic];
-      const topicChips = topicNow.words.map(zh => {
-        const b = BANK[zh];
-        const info = mini(zh);
-        const isNew = info.lv === 'new';
-        return Object.assign({ zh, py:b.py, en:b.en, cls:isNew ? 'new' : 'ok', canAdd:isNew && !capReached, capHit:isNew && capReached,
-          play:() => this.sayAi(zh, 'w' + zh), learn:() => this.learnWord(zh) }, info, lvInfo(zh), exFor(zh, true));
-      });
+      const topicChips = topicNow.words.map(zh => wordRow(zh));
+      const topicStack = stackOf(topicNow.words);
+      const grpTopics = TOPICS.map((t, i) => i).filter(i => TOPICS[i].group === topicNow.group);
+      const topicKick = topicNow.group + ' · topic ' + (grpTopics.indexOf(S.wtopic) + 1) + ' of ' + grpTopics.length;
       const topicStarted = topicNow.words.filter(zh => mini(zh).started).length;
       const topicOpts = TOPICS.map((t, i) => ({ label:t.name, count:tinfo[i].got + '/' + tinfo[i].tot, cls:(S.wtopic === i ? 'on' : '') + (tinfo[i].clear ? ' clear' : ''), fn:() => this.pickTopic(i) }));
       // two tiers: a group opens to show its topics. The group of the topic you are on is open by default; a search opens every group that matches.
@@ -4811,14 +4855,18 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         isWChar:S.wmode === 'char', isWOpp:S.wmode === 'opp', isWTopic:S.wmode === 'topic',
         wCharCls:S.wmode === 'char' ? 'on' : '', wOppCls:S.wmode === 'opp' ? 'on' : '', wTopicCls:S.wmode === 'topic' ? 'on' : '',
         setWChar:() => this.setState({ wmode:'char' }), setWOpp:() => this.setState({ wmode:'opp' }), setWTopic:() => this.setState({ wmode:'topic' }),
-        quizOffCls:S.wquiz ? '' : 'on', quizOnCls:S.wquiz ? 'on' : '',
-        setQuizOff:() => this.setState({ wquiz:false }), setQuizOn:() => this.setState({ wquiz:true }),
+        coverOpts, oppTabs, hasOppTabs:oppTabs.length > 0,
+        topicKick, topicLearnN:topicStack.l, topicKnownN:topicStack.k, topicNewN:topicStack.n, topicKnownW:topicStack.kw, topicLearnW:topicStack.lw, topicStackLabel:topicStack.label,
+        hubLearnN:hubStack.l, hubKnownN:hubStack.k, hubNewN:hubStack.n, hubKnownW:hubStack.kw, hubLearnW:hubStack.lw, hubStackLabel:hubStack.label,
+        topicPrevName:TOPICS[(S.wtopic + TOPICS.length - 1) % TOPICS.length].name, topicNextName:TOPICS[(S.wtopic + 1) % TOPICS.length].name,
+        hubPrevName:HUBS[(S.whub + HUBS.length - 1) % HUBS.length].hub, hubNextName:HUBS[(S.whub + 1) % HUBS.length].hub,
+        hubPrev:() => this.setState({ whub:(S.whub + HUBS.length - 1) % HUBS.length, gfq:0, gfpick:null, wpeek:{} }), hubNext:() => this.setState({ whub:(S.whub + 1) % HUBS.length, gfq:0, gfpick:null, wpeek:{} }),
         webCountText:limitOf(S) === Infinity ? webCount + ' added today' : webCount + ' of ' + S.nlimit + ' added today', capNote:capReached, capCount:S.nlimit, capOpts,
         hubHasNew:hubNew > 0 && !capReached && this.lrnRoom() > 0, hubAddAllText:(hubNew <= this.lrnRoom() ? 'Add all ' + hubNew : 'Add ' + this.lrnRoom() + ' of ' + hubNew) + ' new word' + (hubNew === 1 ? '' : 's'), hubAddAll:() => this.learnMany(hubNow.words.map(w => w.zh)),
         topicHasNew:topicNew > 0 && !capReached && this.lrnRoom() > 0, topicAddAllText:(topicNew <= this.lrnRoom() ? 'Add all ' + topicNew : 'Add ' + this.lrnRoom() + ' of ' + topicNew) + ' new word' + (topicNew === 1 ? '' : 's'), topicAddAll:() => this.learnMany(topicNow.words),
         moreDue:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft > 0, hasMoreDue:dueLeft > 0, reviewMore:this.reviewMore,
         moreDueText:'Review ' + dueLeft + ' word' + (dueLeft === 1 ? '' : 's'), dueLeftText:dueLeft + ' word' + (dueLeft === 1 ? ' is' : 's are') + ' still due.', topicProgress:topicStarted + ' of ' + topicNow.words.length + ' started',
-        hubCards, hubSum, hubOpts, hubZh:hubNow.hub, hubPy:hubNow.py, hubEn:hubNow.en,
+        hubCards, hubSum, hubTiles, hubZh:hubNow.hub, hubPy:hubNow.py, hubEn:hubNow.en,
         fillEn:gapNow.en, fillZh:gapNow.zh, gapOpts, gapDone, gapOptsCls:gapDone ? 'locked' : '', fillLine, gapNext:this.gapNext,
         fillReport:report('Which word fits?', gapNow.zh + ' = ' + gapNow.ans + ' / ' + gapNow.en),
         oppRows, topicChips, topicOpts, topicGroups, topicName:topicNow.name, wtq:S.wtq, onTopicSearch:(e) => this.setState({ wtq:e.target.value }), topicNoMatch, topicPos:(S.wtopic + 1) + ' of ' + TOPICS.length, topicMenuOpen:S.wtmenu ? 'true' : 'false', topicMenuShow:S.wtmenu, toggleTopicMenu:() => this.setState({ wtmenu:!this.state.wtmenu }), topicPrev:() => this.pickTopic((S.wtopic + TOPICS.length - 1) % TOPICS.length), topicNext:() => this.pickTopic((S.wtopic + 1) % TOPICS.length), tsZh:topicNow.sentence.zh, tsPy:topicNow.sentence.py, tsEn:topicNow.sentence.en,

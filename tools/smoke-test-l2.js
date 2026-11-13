@@ -120,7 +120,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   // ---- word webs
   await nav('Archive');
   await page.locator('button', { hasText: 'Shared character' }).click();
-  check((await page.locator('[aria-label="Pick a character"] button').count()) === 17, 'HSK 2 has 17 shared-character groups');
+  check((await page.locator('[aria-label="Shared characters"] .ctile').count()) === 17, 'HSK 2 has 17 shared-character groups');
   await page.locator('button', { hasText: /^Add all \d+ new word/ }).first().click();
   await page.waitForTimeout(80);
   const added = await page.evaluate(() => Object.keys(window.shanlu.state.wlearned));
@@ -371,7 +371,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     await pA.locator('.trail-rail .tr-gh', { hasText: /^.?\s*People/ }).click();
     await pA.locator('.trail-rail .trl', { hasText: /^Family/ }).click();
     await pA.waitForTimeout(150);
-    const fam = await pA.evaluate(() => { const a = window.HSK1_WEBS.topics.find(t => t.name === 'Family').words.length, b = window.HSK2_WEBS.topics.find(t => t.name === 'Family').words.length; const t = document.querySelector('.tgrid').innerText; return { a, b, n: document.querySelectorAll('.tgrid .tc').length, cur: document.querySelectorAll('.tgrid .lvtag.cur').length, old: document.querySelectorAll('.tgrid .lvtag.old').length, has: t.includes('爷爷') && t.includes('爸爸') }; });
+    const fam = await pA.evaluate(() => { const a = window.HSK1_WEBS.topics.find(t => t.name === 'Family').words.length, b = window.HSK2_WEBS.topics.find(t => t.name === 'Family').words.length; const t = document.querySelector('.lrows').innerText; return { a, b, n: document.querySelectorAll('.lrows .lrow').length, cur: document.querySelectorAll('.lrows .lvtag.cur').length, old: document.querySelectorAll('.lrows .lvtag.old').length, has: t.includes('爷爷') && t.includes('爸爸') }; });
     check(fam.has && fam.n === fam.a + fam.b && fam.cur === fam.b && fam.old === fam.a, 'the Family topic holds the HSK 1 and HSK 2 family words together, tagged by level (' + fam.a + ' + ' + fam.b + ')');
     check(await pA.locator('.tr-g').count() >= 8 && await pA.locator('.tr-gh', { hasText: /Time/ }).count() === 1 && await pA.locator('.tr-gh.open').count() === 1, 'the topics are in a two-tier list: groups that open to show their topics (one open at a time)');
     await pA.fill('.trail-rail .tr-search', '猫');
@@ -379,7 +379,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     await pA.fill('.trail-rail .tr-search', '');
     await pA.locator('button', { hasText: 'Shared character' }).click();
     await pA.waitForTimeout(100);
-    check(await pA.locator('.hubrow .pickrow .fc2').count() === await pA.evaluate(() => window.HSK1_WEBS.hubs.length + window.HSK2_WEBS.hubs.length), 'the shared-character picker holds the hubs of both levels');
+    check(await pA.locator('.cidx .ctile').count() === await pA.evaluate(() => window.HSK1_WEBS.hubs.length + window.HSK2_WEBS.hubs.length), 'the shared-character picker holds the hubs of both levels');
     // random listening clips lean strongly towards the current (highest) level
     const share = await pA.evaluate(() => { const app = window.shanlu; let cur = 0; const n1 = window.HSK1_LISTEN.clips.length; for (let i = 0; i < 600; i++) { app.newClip(); if (app.state.dclip >= n1) cur++; } return cur / 600; });
     check(share > 0.65 && share < 0.95, 'in All levels about 4 in 5 listening clips come from the current level (' + share.toFixed(2) + ')');

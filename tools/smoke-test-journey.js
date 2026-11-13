@@ -11,7 +11,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const site = 'http://127.0.0.1:' + server.address().port + '/';
   const browser = await chromium.launch();
   const open = async (opts) => {
-    const ctx = await browser.newContext({ viewport: opts.viewport || { width: 1100, height: 900 } });
+    const ctx = await browser.newContext({ viewport: opts.viewport || { width: 1100, height: 900 }, reducedMotion: opts.reduced ? 'reduce' : 'no-preference' });
     await ctx.route(/wikimedia\.org/, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64') }));   // photos come from Wikimedia: a stand-in picture keeps the test offline
     if (opts.xp != null) await ctx.addInitScript((o) => { if (!localStorage.getItem('shanlu-progress-v1')) localStorage.setItem('shanlu-progress-v1', JSON.stringify({ xp:o.xp, dayXp: 0 })); window.SHANLU_MUTE_SFX = true; window.SHANLU_JY_FIRST = o.first; }, { xp:opts.xp, first:opts.first || 'sichuan' });
     else await ctx.addInitScript(() => { window.SHANLU_MUTE_SFX = true; window.SHANLU_JY_FIRST = 'sichuan'; });
@@ -47,6 +47,11 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     // the background tint follows the region
     const hue = await page.locator('.jy').evaluate(el => getComputedStyle(el).getPropertyValue('--jh').trim());
     check(hue === '8', 'Sichuan has its own colour (hue 8), got ' + hue);
+    // the travel moment plays once, and a key press skips to the finished picture
+    check(await page.locator('.jy.jy-playing.jyp-fly').count() === 1 && await page.locator('.jy-coins').count() === 1, 'the flight starts the travel moment (coins fly, then the map, then the postcard)');
+    await page.waitForTimeout(600); await page.keyboard.press('Shift'); await page.waitForTimeout(150);
+    check(await page.locator('.jy-playing').count() === 0 && await page.locator('.jy-coins').count() === 0, 'a key press skips the travel moment to the finished picture');
+    check(await page.locator('.jy-here .rip').count() === 2, 'two quiet rings mark where you are on the country map');
     await page.locator('.jy-acts .btn.pri').click();
     check(await page.locator('.jy-card').count() === 0, 'the card closes');
     // stops list and passport
@@ -164,6 +169,16 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.jy-sstamp').first().click();
     check(await page.locator('.jy-card.sp').count() === 1 && await page.locator('.jy-tk').count() === 0, 'a must-see stamp opens its stop, with no ticket on a stop opened later');
     check(errors.length === 0, 'no errors on the long trip: ' + errors.join(' | '));
+    await ctx.close();
+  }
+
+  // ---- reduced motion: no travel moment, the picture simply appears ----
+  {
+    const { ctx, page, errors } = await open({ reduced: true });
+    await page.locator('.pill.xpp').click();
+    await page.locator('.jy-go').click(); await page.waitForTimeout(150);
+    check(await page.locator('.jy-playing').count() === 0 && await page.locator('.jy-coins').count() === 0 && await page.locator('.jy-card').count() === 1, 'with reduced motion the flight shows the finished picture at once');
+    check(errors.length === 0, 'no errors with reduced motion: ' + errors.join(' | '));
     await ctx.close();
   }
 
