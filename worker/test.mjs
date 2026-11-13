@@ -9,7 +9,7 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
 export async function makeWorker(bindings = {}) {
   return new Miniflare({
     modules: true, scriptPath: path.join(here, 'worker.js'), compatibilityDate: '2024-09-01', d1Databases: { DB: 'test-db-' + Math.random().toString(36).slice(2) },
-    bindings: Object.assign({ INVITE_CODE: 'ABCD-EFGH-JKLM', ADMIN_KEY: 'admin-secret-key', GROUP_NAME: 'Test crew', ALLOWED_ORIGINS: 'https://friends.example' }, bindings),
+    bindings: Object.assign({ ADMIN_KEY: 'admin-secret-key', GROUP_NAME: 'Test crew', ALLOWED_ORIGINS: 'https://friends.example' }, bindings),
   });
 }
 const api = (mf) => async (method, p, { body, token, headers } = {}) => {
@@ -28,18 +28,16 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   check((await call('GET', '/api/health')).json.ok === true, 'health check answers');
 
   // joining
-  check((await call('POST', '/api/join', { body: { invite: 'WRONG', name: 'Mei' } })).status === 403, 'a wrong invite code is refused');
-  check((await call('POST', '/api/join', { body: { name: 'Mei' } })).status === 403, 'a missing invite code is refused');
-  check((await call('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: '   ' } })).status === 400, 'a blank name is refused');
+  check((await call('POST', '/api/join', { body: { name: '   ' } })).status === 400, 'a blank name is refused');
   check((await call('POST', '/api/join', { body: 'not json' })).status === 400, 'broken JSON is refused');
   check((await call('POST', '/api/join', { body: { invite: 'x'.repeat(5000), name: 'a' } })).status === 413, 'an oversized request is refused');
-  const a = await call('POST', '/api/join', { body: { invite: 'abcd efgh-jklm', name: '  Alvin  ' } });
-  check(a.status === 201 && /^[0-9a-f]{16}$/.test(a.json.id) && /^[0-9a-f]{48}$/.test(a.json.key) && a.json.name === 'Alvin' && a.json.group === 'Test crew', 'the invite works in any case and spacing, and returns an id, a secret key and the group name');
+  const a = await call('POST', '/api/join', { body: { name: '  Alvin  ' } });
+  check(a.status === 201 && /^[0-9a-f]{16}$/.test(a.json.id) && /^[0-9a-f]{48}$/.test(a.json.key) && a.json.name === 'Alvin' && a.json.group === 'Test crew', 'joining is open: a first name is all it takes, and it returns an id, a secret key and the group name');
   const A = a.json.id + '.' + a.json.key;
-  const b = await call('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: '<img src=x onerror=alert(1)>Mei\u0007' } });
+  const b = await call('POST', '/api/join', { body: { name: '<img src=x onerror=alert(1)>Mei\u0007' } });
   check(b.status === 201 && !/[<>\u0007]/.test(b.json.name), 'angle brackets and control characters are removed from names (' + b.json.name + ')');
   const B = b.json.id + '.' + b.json.key;
-  check((await call('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'x'.repeat(100) } })).json.name.length === 20, 'names are cut to 20 characters');
+  check((await call('POST', '/api/join', { body: { name: 'x'.repeat(100) } })).json.name.length === 20, 'names are cut to 20 characters');
 
   // keys
   check((await call('GET', '/api/group')).status === 401, 'the group list needs a key');
@@ -121,12 +119,16 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   // limits and switches
   const small = await makeWorker({ MAX_MEMBERS: '2' });
   const c2 = api(small);
-  await c2('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'a' } }); await c2('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'b' } });
-  check((await c2('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'c' } })).status === 409, 'the group stops at the member limit');
+  await c2('POST', '/api/join', { body: { name: 'a' } }); await c2('POST', '/api/join', { body: { name: 'b' } });
+  check((await c2('POST', '/api/join', { body: { name: 'c' } })).status === 409, 'the group stops at the member limit');
   await small.dispose();
-  const off = await makeWorker({ INVITE_CODE: '' });
-  check((await api(off)('POST', '/api/join', { body: { invite: '', name: 'a' } })).status === 503, 'joining is off until an invite code is set');
-  await off.dispose();
+  // an optional INVITE_CODE closes the group to new people (the site's own join form does not ask for one)
+  const closed = await makeWorker({ INVITE_CODE: 'ABCD-EFGH-JKLM' });
+  const cc = api(closed);
+  check((await cc('POST', '/api/join', { body: { invite: 'WRONG', name: 'Mei' } })).status === 403, 'with INVITE_CODE set, a wrong code is refused');
+  check((await cc('POST', '/api/join', { body: { name: 'Mei' } })).status === 403, 'with INVITE_CODE set, a missing code is refused');
+  check((await cc('POST', '/api/join', { body: { invite: 'abcd efgh-jklm', name: 'Mei' } })).status === 201, 'with INVITE_CODE set, the code works in any case and spacing');
+  await closed.dispose();
   const open = await makeWorker({ ALLOWED_ORIGINS: '*' });
   check((await api(open)('GET', '/api/health', { headers: { Origin: 'https://anything.example' } })).headers.get('access-control-allow-origin') === '*', 'ALLOWED_ORIGINS=* allows any site');
   await open.dispose();
@@ -134,7 +136,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   // saved progress must be real JSON of a known shape (the Worker now parses it; sizes are held to what the free plan's 10 ms allows)
   const pw = await makeWorker();
   const cp = api(pw);
-  const P = (await cp('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'Pat' } })).json; const PT = P.id + '.' + P.key;
+  const P = (await cp('POST', '/api/join', { body: { name: 'Pat' } })).json; const PT = P.id + '.' + P.key;
   const put = (body, q) => cp('PUT', '/api/me/progress' + (q || ''), { token: PT, body });
   check((await put('{"v":1,"levels":{broken}}')).status === 400 && (await put('{"v":1,"levels":[]}')).status === 400 && (await put('{"v":1,"levels":{},"person":[]}')).status === 400, 'text that only starts and ends like progress, or has the wrong shape, is refused');
   check((await put('{"v":2,"gz":"not base64!"}')).status === 400 && (await put('{"v":2,"gz":"QUJD","extra":1}')).status === 400 && (await put('{"v":3,"gz":"QUJD"}')).status === 400, 'a compressed save must be exactly {v:2, gz:<base64>}');
@@ -145,7 +147,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   check((await put('{"v":1,"levels":{"1":{"xp":5}},"person":{"prefs":{}}}')).status === 200 && (await cp('GET', '/api/me/progress', { token: PT })).json.progress.levels[1].xp === 5, 'a normal save with the person\'s settings works');
 
   // saving with a base version: a device that did not see the latest save is told so
-  const Q = (await cp('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'Quin' } })).json; const QT = Q.id + '.' + Q.key;
+  const Q = (await cp('POST', '/api/join', { body: { name: 'Quin' } })).json; const QT = Q.id + '.' + Q.key;
   const qput = (body, q) => cp('PUT', '/api/me/progress' + (q || ''), { token: QT, body });
   const v1 = await qput({ v: 1, levels: { 1: { xp: 1 } } }, '?base=0');
   check(v1.status === 200 && v1.json.updated > 0, 'the first save with base 0 works and reports its version number');
@@ -161,8 +163,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   check(race.filter((r) => r.status === 200).length === 1 && race.filter((r) => r.status === 412).length === 3, 'four devices saving at the same moment from the same version: exactly one wins');
   await pw.dispose();
 
-  // too many wrong invite codes
-  const jw = await makeWorker();
+  // too many wrong invite codes (only when INVITE_CODE is set)
+  const jw = await makeWorker({ INVITE_CODE: 'ABCD-EFGH-JKLM' });
   const cj = api(jw);
   let last = 0; for (let i = 0; i < 8; i++) last = (await cj('POST', '/api/join', { body: { invite: 'WRONG-' + i, name: 'x' } })).status;
   check(last === 403, 'eight wrong codes are each answered "wrong code"');
@@ -170,9 +172,17 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   check((await cj('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'Real' } })).status === 429, 'and so is the right code, from that same network, for the next hour');
   check((await cj('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'Real' }, headers: { 'CF-Connecting-IP': '203.0.113.9' } })).status === 201, 'a different network is not affected');
   await jw.dispose();
+  // open joining is limited too: 20 joins an hour from one network
+  const ow = await makeWorker({ MAX_MEMBERS: '60' });
+  const co = api(ow);
+  let lastOpen = 0; for (let i = 0; i < 20; i++) lastOpen = (await co('POST', '/api/join', { body: { name: 'N' + i } })).status;
+  check(lastOpen === 201, 'twenty people can join from one network in an hour');
+  check((await co('POST', '/api/join', { body: { name: 'Extra' } })).status === 429, 'the twenty-first is answered "slow down"');
+  check((await co('POST', '/api/join', { body: { name: 'Elsewhere' }, headers: { 'CF-Connecting-IP': '203.0.113.9' } })).status === 201, 'a different network is not affected');
+  await ow.dispose();
 
-  // single-use invite codes
-  const iw = await makeWorker({ MAX_MEMBERS: '3' });
+  // single-use invite codes (only used when INVITE_CODE is set)
+  const iw = await makeWorker({ MAX_MEMBERS: '3', INVITE_CODE: 'ABCD-EFGH-JKLM' });
   const ci = api(iw);
   check((await ci('POST', '/api/admin/invites')).status === 401 && (await ci('POST', '/api/admin/invites', { headers: { 'X-Admin-Key': 'nope' } })).status === 401, 'making single-use codes needs the admin key');
   const inv = await ci('POST', '/api/admin/invites', { headers: { 'X-Admin-Key': 'admin-secret-key' } });
@@ -190,9 +200,9 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const stale = await ci('POST', '/api/join', { body: { invite: inv3, name: 'Late' } });
   check(stale.status === 403, 'a single-use code older than 7 days no longer works');
   await iw.dispose();
-  const fw = await makeWorker({ MAX_MEMBERS: '1', INVITE_CODE: '' });
+  const fw = await makeWorker({ MAX_MEMBERS: '1', INVITE_CODE: 'ZZZZ-ZZZZ-ZZZZ' });
   const cf = api(fw);
-  check((await cf('POST', '/api/join', { body: { invite: 'ANYTHING', name: 'a' } })).status === 503, 'with no standing code and no single-use codes waiting, joining is off');
+  check((await cf('POST', '/api/join', { body: { invite: 'ANYTHING', name: 'a' } })).status === 403, 'with a standing code set, an unknown code is refused');
   const f1 = (await cf('POST', '/api/admin/invites', { headers: { 'X-Admin-Key': 'admin-secret-key' } })).json.code;
   const f2 = (await cf('POST', '/api/admin/invites', { headers: { 'X-Admin-Key': 'admin-secret-key' } })).json.code;
   check((await cf('POST', '/api/join', { body: { invite: f1, name: 'First' } })).status === 201, 'a single-use code alone is enough to join');
@@ -203,7 +213,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   // the group size is held even under a rush
   const rw = await makeWorker({ MAX_MEMBERS: '2' });
   const cr = api(rw);
-  const rush = await Promise.all([1, 2, 3, 4, 5, 6].map((i) => cr('POST', '/api/join', { body: { invite: 'ABCD-EFGH-JKLM', name: 'P' + i } })));
+  const rush = await Promise.all([1, 2, 3, 4, 5, 6].map((i) => cr('POST', '/api/join', { body: { name: 'P' + i } })));
   const dbr = await rw.getD1Database('DB');
   check(rush.filter((r) => r.status === 201).length === 2 && rush.filter((r) => r.status === 409).length === 4 && (await dbr.prepare('SELECT COUNT(*) AS n FROM members').first()).n === 2, 'six people joining at once into a group of two: exactly two get in');
   await rw.dispose();

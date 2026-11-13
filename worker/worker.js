@@ -2,22 +2,24 @@
  *
  * What it stores per person: a first name, a few study totals that friends can see (see cleanStats), and that person's own saved progress
  * (so every one of their devices ends up with the same progress). Only the person's own key can read their progress; friends never get it.
- * How people get in: an invite code (a secret you set) is checked once when someone joins. They get back a secret key that the app keeps on their
- * device (and in "their link" for a second device). The key is stored here only as a hash. There are no passwords and no accounts.
+ * How people get in: anyone who opens the site can join by typing a first name (joining is open; the limits below keep it from being abused). They get
+ * back a secret key that the app keeps on their device (and in "their link" for a second device). The key is stored here only as a hash. There are no
+ * passwords and no accounts. If you ever want joining to need a code again, set INVITE_CODE (below) and the app's join form will be refused until it is removed.
  *
  * Setup is in worker/README.md. Everything in this file is one piece so it can be pasted into the Cloudflare dashboard as-is.
  *
  * Settings (Worker "Variables and Secrets"):
- *   INVITE_CODE      secret   the code friends need to join (12+ random letters and numbers)
+ *   INVITE_CODE      secret   OPTIONAL. Leave it out and anyone can join. Set it (12+ random letters and numbers) and joining needs that code: the site's own
+ *                             join form no longer asks for one, so set it only to close the group to new people
  *   ADMIN_KEY        secret   lets you list and remove people (a long random string)
  *   GROUP_NAME       text     shown on the Friends screen, for example "Shanlu crew"
  *   ALLOWED_ORIGINS  text     the address of the site, for example https://alvinyu20.github.io  (comma separated; "*" allows any site)
- *   MAX_MEMBERS      text     optional, default 12
+ *   MAX_MEMBERS      text     optional, default 12 (raise it if more people will join; the group stops growing at this number)
  * Binding: a D1 database named DB.
  *
  * Safety features (all on by default, nothing to set up):
- *   - wrong invite codes are rate-limited per network address (8 per hour) and for the whole server (60 per hour);
- *   - "single-use" invite codes can be made with the admin key (POST /api/admin/invites), valid 7 days, and stop working after one join;
+ *   - joining is rate-limited per network address (8 per hour) and for the whole server (60 per hour), and the group stops at MAX_MEMBERS;
+ *   - if INVITE_CODE is set, wrong codes count against the same limit, and "single-use" codes can be made with the admin key (POST /api/admin/invites), valid 7 days;
  *   - saving progress checks the body is real JSON of a known shape, and an optional ?base=<version> makes the save fail with 412 if another
  *     device saved in between (so no device silently overwrites another).
  */
@@ -32,6 +34,7 @@ const DAY_MS = 864e5;
 const MAX_PROGRESS = 700000;       // characters, for the compressed form {"v":2,"gz":"..."}; a person's whole saved progress is about 100,000 before compression
 const MAX_PROGRESS_PLAIN = 400000; // the plain form is parsed here, so it is held lower (400,000 characters parse in about 2 ms; the free plan allows 10 ms of CPU)
 const JOIN_TRIES_PER_IP = 8, JOIN_TRIES_ALL = 60, TRY_WINDOW_MS = 36e5, INVITE_LIFE_MS = 7 * DAY_MS;
+const OPEN_JOINS_PER_IP = 20, OPEN_JOINS_ALL = 200;   // open joining: people who joined in the last hour (a household or a class on one network is fine)
 
 let schemaReady = null;
 function ensureSchema(env) {
@@ -134,24 +137,25 @@ async function handle(req, env) {
     const body = await readJson(req, 2048);
     if (body.tooBig) return fail(req, env, 413, 'too_big');
     if (body.bad) return fail(req, env, 400, 'bad_json');
-    // too many wrong codes from one network (or from everywhere): stop answering for a while
+    // too many tries (wrong codes, or joins when joining is open) from one network, or from everywhere: stop answering for a while
     const ip = (await sha256('ip:' + (req.headers.get('CF-Connecting-IP') || 'unknown'))).slice(0, 16);
-    const tries = await env.DB.prepare('SELECT COALESCE(SUM(ip_hash = ?), 0) AS mine, COUNT(*) AS total FROM join_fails WHERE at > ?').bind(ip, now - TRY_WINDOW_MS).first();
+    // rows in join_fails are one per wrong code (ip_hash = the network) and, when joining is open, one per join ('j' + the network: a letter that no hex hash starts with)
+    const jip = 'j' + ip.slice(0, 15);
+    const tries = await env.DB.prepare("SELECT COALESCE(SUM(ip_hash = ?), 0) AS mine, COALESCE(SUM(ip_hash NOT LIKE 'j%'), 0) AS total, COALESCE(SUM(ip_hash = ?), 0) AS jmine, COALESCE(SUM(ip_hash LIKE 'j%'), 0) AS jall FROM join_fails WHERE at > ?").bind(ip, jip, now - TRY_WINDOW_MS).first();
     if (tries.mine >= JOIN_TRIES_PER_IP || tries.total >= JOIN_TRIES_ALL) return fail(req, env, 429, 'slow_down');
+    if (!env.INVITE_CODE && (tries.jmine >= OPEN_JOINS_PER_IP || tries.jall >= OPEN_JOINS_ALL)) return fail(req, env, 429, 'slow_down');
+    // joining is open unless INVITE_CODE is set (then a standing code, or a single-use code made with the admin key, is needed)
+    const open = !env.INVITE_CODE;
     const given = normCode(body.value.invite);
     const codeHash = await sha256(given);
-    const isStatic = !!env.INVITE_CODE && !!given && safeEq(codeHash, await sha256(normCode(env.INVITE_CODE)));
+    const isStatic = !open && !!given && safeEq(codeHash, await sha256(normCode(env.INVITE_CODE)));
     let oneTime = false;
-    if (!isStatic && given) {
+    if (!open && !isStatic && given) {
       // a single-use code: marking it used is one statement, so two people cannot both use it
       const used = await env.DB.prepare('UPDATE invites SET used_at = ? WHERE code_hash = ? AND used_at IS NULL AND created_at > ?').bind(now, codeHash, now - INVITE_LIFE_MS).run();
       oneTime = !!(used.meta && used.meta.changes === 1);
     }
-    if (!isStatic && !oneTime) {
-      if (!env.INVITE_CODE) {   // no standing code: joining is off unless single-use codes are waiting
-        const open = await env.DB.prepare('SELECT COUNT(*) AS n FROM invites WHERE used_at IS NULL AND created_at > ?').bind(now - INVITE_LIFE_MS).first();
-        if (!open.n) return fail(req, env, 503, 'joining_is_off');
-      }
+    if (!open && !isStatic && !oneTime) {
       await env.DB.batch([env.DB.prepare('INSERT INTO join_fails (ip_hash, at) VALUES (?, ?)').bind(ip, now), env.DB.prepare('DELETE FROM join_fails WHERE at < ?').bind(now - TRY_WINDOW_MS)]);
       return fail(req, env, 403, 'bad_invite');
     }
@@ -163,6 +167,7 @@ async function handle(req, env) {
     // the room check and the insert are one statement, so the group can never go over its size
     const ins = await env.DB.prepare('INSERT INTO members (id, name, key_hash, created_at, updated_at, stats) SELECT ?, ?, ?, ?, ?, NULL WHERE (SELECT COUNT(*) FROM members) < ?').bind(id, name, await sha256(key), now, now, max).run();
     if (!ins.meta || ins.meta.changes !== 1) { await release(); return fail(req, env, 409, 'group_full'); }
+    if (open) await env.DB.batch([env.DB.prepare('INSERT INTO join_fails (ip_hash, at) VALUES (?, ?)').bind(jip, now), env.DB.prepare('DELETE FROM join_fails WHERE at < ?').bind(now - TRY_WINDOW_MS)]);   // open joining counts every join toward the hourly limit
     return reply(req, env, { id, key, name, group: String(env.GROUP_NAME || 'Study group') }, 201);
   }
 

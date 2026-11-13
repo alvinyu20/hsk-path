@@ -21,9 +21,9 @@ check(F.sortRows([{ name: 'x', minutes: 5, streak: 9, mem: 1 }, { name: 'y', min
 check(F.initial('  mei') === 'M' && F.initial('') === '?' && F.initial('小明') === '小', 'the avatar letter is the first character');
 
 const KEY = '0123456789abcdef', SECRET = 'f'.repeat(48);
-check(eq(F.parseHash('#join=ABCD-EFGH-JKLM'), { join: 'ABCD-EFGH-JKLM' }) && eq(F.parseHash('#me=' + KEY + '.' + SECRET), { me: { id: KEY, key: SECRET } }), 'invite and personal links are read from the address');
+check(eq(F.parseHash('#me=' + KEY + '.' + SECRET), { me: { id: KEY, key: SECRET } }) && eq(F.parseHash('#join=ABCD-EFGH-JKLM'), {}), 'personal links are read from the address, and old invite links are ignored');
 check(eq(F.parseHash('#join=<script>'), {}) && eq(F.parseHash('#me=zz.zz'), {}) && eq(F.parseHash(''), {}) && eq(F.parseHash('#something'), {}), 'anything else in the address is ignored');
-check(F.makeLink('https://x.example/app/?a=1#old', { id: KEY, key: SECRET }) === 'https://x.example/app/?a=1#me=' + KEY + '.' + SECRET && F.inviteLink('https://x.example/app/#z', 'CODE') === 'https://x.example/app/#join=CODE', 'links are built on the site address without the old # part');
+check(F.makeLink('https://x.example/app/?a=1#old', { id: KEY, key: SECRET }) === 'https://x.example/app/?a=1#me=' + KEY + '.' + SECRET, 'links are built on the site address without the old # part');
 
 // the client with a fake server
 const store = {}; const storage = { getItem: (k) => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); }, removeItem: (k) => { delete store[k]; } };
@@ -31,17 +31,17 @@ const log = []; let nextStatus = 200, nextJson = {};
 const fakeFetch = async (url, o) => { log.push({ url, method: o.method, auth: o.headers.Authorization, body: o.body }); if (nextStatus === 0) throw new Error('offline'); return { ok: nextStatus < 400, status: nextStatus, json: async () => nextJson }; };
 (async () => {
   const off = F.make({ storage, fetch: fakeFetch, url: () => '' });
-  check(off.enabled() === false && (await off.join('x', 'y').catch((e) => e.code)) === 'off', 'without a server address nothing is sent');
+  check(off.enabled() === false && (await off.join('y').catch((e) => e.code)) === 'off', 'without a server address nothing is sent');
   const c = F.make({ storage, fetch: fakeFetch, url: () => 'https://w.example/' });
   check(c.enabled() && c.identity() === null && (await c.push({}) === null), 'before joining there is no identity and nothing is pushed');
   nextJson = { id: KEY, key: SECRET, name: 'Mei', group: 'Crew' }; nextStatus = 201;
-  await c.join('abcd', 'Mei');
+  await c.join('Mei');
   check(log[0].url === 'https://w.example/api/join' && log[0].method === 'POST' && !log[0].auth && c.identity().name === 'Mei' && c.identity().key === SECRET, 'joining posts to the server (no double slash) and keeps the key');
   nextStatus = 200; nextJson = { ok: true };
   await c.push({ a: 1 }, { keepalive: true });
   check(log[1].auth === 'Bearer ' + KEY + '.' + SECRET && log[1].method === 'PUT' && JSON.parse(log[1].body).stats.a === 1, 'later requests carry the key as a bearer header');
   nextStatus = 403; nextJson = { error: 'bad_invite' };
-  check((await c.join('x', 'y').catch((e) => e)).message.includes('invite code does not work'), 'a refused invite becomes a clear message');
+  check((await c.join('y').catch((e) => e)).message.includes('closed to new people'), 'a server closed with INVITE_CODE gives a clear message');
   nextStatus = 0;
   check((await c.group().catch((e) => e.code)) === 'network', 'no connection is reported as a network problem');
   nextStatus = 401; nextJson = { error: 'unauthorized' };

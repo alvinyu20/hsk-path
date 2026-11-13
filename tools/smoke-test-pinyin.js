@@ -14,6 +14,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const open = async (opts) => {
     opts = opts || {};
     const ctx = opts.ctx || await browser.newContext({ viewport: opts.viewport || { width: 1100, height: 900 } });
+    await ctx.route(/wikimedia\.org/, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64') }));   // a new person now lands on the Journey, whose photos come from Wikimedia
     await ctx.addInitScript((o) => {
       window.SHANLU_MUTE_SFX = true; window.SHANLU_AUTO_SHARE = 0;
       if (o.onb) window.SHANLU_ONBOARDING = 1;
@@ -150,7 +151,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   // ---- the typing tutorial ----
   {
     const { ctx, page, errors } = await open({ onb: true });
-    await page.locator('button', { hasText: 'Skip, I will look around' }).click();
+    await page.evaluate(() => { window.shanlu.onbSet({ p: 'done', w: Date.now() }); window.shanlu.go('home'); });   // the first-visit flow is covered by smoke-test-onboarding.js
     await page.locator('button', { hasText: 'Learn my first 5 words' }).click();
     // go through cards until the first typed question
     let guard = 0;

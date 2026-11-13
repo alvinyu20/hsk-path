@@ -1,5 +1,5 @@
 /* Friends board: the browser side of worker/worker.js. No page code in here, so tools/test-friends.js can run it too.
- * Identity: there is no sign-in. Joining with an invite gives a secret key that is kept on this device (localStorage) and can be carried to
+ * Identity: there is no sign-in. Joining (just a first name) gives a secret key that is kept on this device (localStorage) and can be carried to
  * another device as a link (#me=id.key). The key sits in the part of the address after "#", which browsers never send to the website host.
  * Only study totals are ever sent (see statsFor in app.js); the server also throws away everything else. */
 (function (root, factory) {
@@ -44,17 +44,14 @@
     return rows.slice().sort((a, b) => (b[key] - a[key]) || (b.minutes - a.minutes) || a.name.localeCompare(b.name));
   }
 
-  // "#join=CODE" (an invite) or "#me=id.key" (come back on another device) in the address
+  // "#me=id.key" (come back on another device) in the address. (Invite links, #join=CODE, are gone: joining is open.)
   function parseHash(hash) {
     const h = String(hash || '').replace(/^#/, '');
-    let m = /(?:^|&)join=([A-Za-z0-9-]{4,40})(?:&|$)/.exec(h);
-    if (m) return { join: m[1] };
-    m = /(?:^|&)me=([0-9a-f]{16})\.([0-9a-f]{48})(?:&|$)/.exec(h);
+    const m = /(?:^|&)me=([0-9a-f]{16})\.([0-9a-f]{48})(?:&|$)/.exec(h);
     if (m) return { me: { id: m[1], key: m[2] } };
     return {};
   }
   const makeLink = (base, who) => String(base).replace(/#.*$/, '') + '#me=' + who.id + '.' + who.key;
-  const inviteLink = (base, code) => String(base).replace(/#.*$/, '') + '#join=' + code;
 
   // ---- saving the progress bundle on the server ----
   // Small bundles are sent as plain JSON ({"v":1,"levels":...}). A big one (many levels) is gzipped and sent as {"v":2,"gz":"<base64>"} so it
@@ -106,13 +103,13 @@
       return json;
     }
     const messageFor = (code, status) => ({
-      bad_invite: 'That invite code does not work. Ask for a new link.', name_needed: 'Type your first name.', group_full: 'This group is full.',
+      bad_invite: 'The friends server is closed to new people right now (it has an INVITE_CODE set). Ask Alvin to remove it.', name_needed: 'Type your first name.', group_full: 'This group is full.',
       joining_is_off: 'Joining is switched off for now.', slow_down: 'Too many wrong codes from this network. Try again in an hour.', conflict: 'Your progress changed on another device while saving.', bad_progress: 'The server did not accept the saved progress format.', unauthorized: 'This device is not signed in to the group any more.', too_big: 'That was too big to send.',
     }[code] || (status === 429 ? 'The friends board is busy. Try again later.' : 'The friends board had a problem. Try again later.'));
 
     return {
       enabled, identity, forget, baseUrl,
-      async join(invite, name) { const r = await call('POST', '/api/join', { invite, name }); save({ id: r.id, key: r.key, name: r.name, group: r.group }); return r; },
+      async join(name) { const r = await call('POST', '/api/join', { name }); save({ id: r.id, key: r.key, name: r.name, group: r.group }); return r; },
       // coming back on another device with a #me link: check the key really works before keeping it
       async restore(who) { const g = await call('GET', '/api/group', undefined, who); const me = g.members.find((m) => m.id === who.id); save({ id: who.id, key: who.key, name: me ? me.name : '', group: g.group.name }); return g; },
       async group() { const id = identity(); if (!id) throw Object.assign(new Error('Not joined.'), { code: 'not_joined' }); const g = await call('GET', '/api/group', undefined, id); save(Object.assign({}, id, { group: g.group.name })); return g; },
@@ -151,5 +148,5 @@
     };
   }
 
-  return { make, encodeProgress, decodeProgress, GZ_FROM, shiftWeek, effectiveStreak, weekTotal, boardRow, sortRows, parseHash, makeLink, inviteLink, initial, ymd, daysBetween, STORE };
+  return { make, encodeProgress, decodeProgress, GZ_FROM, shiftWeek, effectiveStreak, weekTotal, boardRow, sortRows, parseHash, makeLink, initial, ymd, daysBetween, STORE };
 });

@@ -419,7 +419,7 @@
   const SOUV = window.SOUVENIRS || [];
   const SV_BY_STOP = {}; SOUV.forEach(s => { SV_BY_STOP[s.stop] = s; });
   const svImg = (s) => s.u || (s.u = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s.svg));
-  // ---- onboarding: the Welcome card, the Start here path and the guide that opens after the first flight (pref 'onb': w welcomed, s start path 'go' | 'done' | 'skip', d day finished, g guide opened) ----
+  // ---- onboarding: the first-visit flow (intro pop-up on the Journey, the first free flight, five guide cards, where to start, name and friends), then the Start here path (pref 'onb': p flow step 'intro' | 'fly' | 'level' | 'me' | 'done', l what they chose ('new' | 'some'), w flow finished, s start path 'go' | 'done' | 'skip', d day finished, g reference page opened, px sounds card dismissed) ----
   const ONB_OFF = () => { try { return !!(navigator.webdriver && !window.SHANLU_ONBOARDING); } catch (e) { return false; } };   // browser tests run without it unless they ask for it
   const onbRead = () => { const v = prefGet('onb', null); return v && typeof v === 'object' ? v : {}; };
   const START_WORDS = ['你好', '谢谢', '我', '你', '是'];   // the same five for everyone: a greeting, thanks, I, you, and the verb to be
@@ -484,8 +484,8 @@
     try { dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
-      fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', frCode:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
-      jyPing:0, jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0,
+      fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
+      jyPing:0, jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -1737,7 +1737,7 @@
       return { changed, conflict:false };
     };
     friendsFailed = (e) => {
-      if (e && e.status === 401) { FR.forget(); this.setState({ fr:null, frErr:'This device is not in the group any more. Open your invite link to join again.' }); return; }
+      if (e && e.status === 401) { FR.forget(); this.setState({ fr:null, frErr:'This device is not in the group any more. Join again from Friends.' }); return; }
       this.setState({ frErr:(e && e.message) || 'Could not reach the friends board.' });
     };
     friendsRefresh = async (force) => {
@@ -1753,8 +1753,8 @@
       if (S.frBusy || !FR) return;
       this.setState({ frBusy:true, frErr:'' });
       try {
-        await FR.join(S.frCode, S.frName);
-        this.setState({ frBusy:false, frName:'', frCode:'', frMsg:'' });
+        await FR.join(S.frName);
+        this.setState({ frBusy:false, frName:'', frMsg:'' });
         await this.friendsPush({});
         await this.friendsRefresh(true);
       } catch (e) { this.setState({ frBusy:false, frErr:(e && e.message) || 'Could not join.' }); }
@@ -1781,7 +1781,7 @@
         const r = await FR.ping();
         let msg = 'The friends server answers (' + r.ms + ' ms).';
         if (r.signedIn === true) msg += ' This device is signed in' + (r.group ? ' to ' + r.group : '') + '.';
-        else if (r.signedIn === false) { this.setState({ frTesting:false, frMsg:'', frErr:'The server answers, but it no longer accepts this device. Open your personal link again, or ask for a new invite.' }); return; }
+        else if (r.signedIn === false) { this.setState({ frTesting:false, frMsg:'', frErr:'The server answers, but it no longer accepts this device. Open your personal link again, or join again from Friends.' }); return; }
         this.setState({ frTesting:false, frMsg:msg });
       } catch (e) { this.setState({ frTesting:false, frMsg:'', frErr:(e && e.message) || 'Could not reach the friends server.' }); }
     };
@@ -1798,15 +1798,12 @@
       const link = window.ShanluFriends.makeLink(location.href, id);
       try { await navigator.clipboard.writeText(link); this.setState({ frCopied:true }); setTimeout(() => this.setState({ frCopied:false }), 2500); } catch (e) { try { window.prompt('Copy your link', link); } catch (e2) {} }
     };
-    // an invite link (#join=CODE) opens the join form; a personal link (#me=...) signs this device in
+    // a personal link (#me=...) signs this device in (invite links no longer exist: joining is open)
     friendsBoot = async () => {
       if (!FR || !FR.enabled()) return;
       const hit = window.ShanluFriends.parseHash(location.hash);
-      if (hit.join || hit.me) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
-      if (hit.join) {
-        if (FR.identity()) this.setState({ screen:'friends', frMsg:'This device is already in the group.' });
-        else this.setState({ screen:'friends', frCode:hit.join });
-      } else if (hit.me) {
+      if (hit.me) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+      if (hit.me) {
         const cur = FR.identity();
         if (cur && cur.id !== hit.me.id && !window.confirm('This device is already in the group as ' + (cur.name || 'someone') + '. Replace that with the link you opened?')) { this.setState({ screen:'friends' }); return; }
         try { const g = await FR.restore(hit.me); this.setState({ screen:'friends', fr:g, frAt:Date.now(), frMsg:'Signed in on this device.', frErr:'' }); await this.friendsPush({}); }
@@ -2907,8 +2904,7 @@
     };
     // ---- onboarding ----
     onbSet = (p) => { prefSet('onb', Object.assign({}, onbRead(), p)); this.setState({ onbV:(this.state.onbV || 0) + 1 }); };
-    onbSkipWelcome = () => this.onbSet({ w:Date.now() });
-    onbSkipStart = () => this.onbSet({ w:Date.now(), s:'skip' });
+    onbSkipStart = () => this.onbSet({ s:'skip' });
     // the first session: five fixed words go into the learning phase, then Review runs them (introduction, a choice, then typing)
     onbStartPath = () => {
       const S = this.state;
@@ -2920,6 +2916,55 @@
       this.go('review'); this.reviewMore();
     };
     onbOpenGuide = () => { this.go('guide'); };
+    // ---- the first-visit flow ----
+    // intro pop-up -> the free first flight on the Journey -> five guide cards -> where to start -> name and friends (or stay a guest) -> Home with Start here
+    obIntroGo = () => { this.onbSet({ p:'fly' }); this.go('journey'); };
+    obFlySkip = () => this.onbSet({ p:'done', w:Date.now() });
+    obBackOpen = () => this.setState({ obBack:true, frErr:'', frMsg:'' });
+    obBackClose = () => this.setState({ obBack:false, frErr:'' });
+    // back on a new device: the personal link from the first device (Friends > "Copy my link") brings the progress here
+    obBackGo = async () => {
+      await this.friendsSignInLink();
+      if (FR && FR.identity && FR.identity()) { this.setState({ obBack:false }); this.onbSet({ p:'done', w:Date.now() }); this.go('home'); }
+    };
+    obBackFile = () => { try { const el = document.getElementById('import-file'); if (el) el.click(); } catch (e) {} };
+    obCardGo = (d) => {
+      const n = this.state.obCard + d;
+      if (n < 0) return;
+      if (n > 4) { this.onbSet({ p:'level' }); this.setState({ obCard:0 }); return; }
+      this.setState({ obCard:n });
+    };
+    obGuideSkip = () => { this.onbSet({ p:'level' }); this.setState({ obCard:0 }); };
+    obPickLvl = (k) => this.setState({ obLvl:k });
+    obLevelGo = () => this.onbSet({ p:'me', l:this.state.obLvl === 'some' ? 'some' : 'new' });
+    obMeBack = () => this.onbSet({ p:'level' });
+    obJoinToggle = () => this.setState({ obJoin:!this.state.obJoin });
+    obMeGo = async (guest) => {
+      const S = this.state; if (S.obBusy) return;
+      const name = String(S.obName || '').replace(/\s+/g, ' ').trim().slice(0, 20);
+      const join = !guest && S.obJoin && !!FR && FR.enabled() && !FR.identity();
+      if (join && !name) { this.setState({ obErr:'Type your first name to join the group, or stay a guest.' }); return; }
+      if (!guest && name) prefSet('name', name);
+      this.setState({ mins:S.obGoal || S.mins, obErr:'' });
+      if (join) {
+        this.setState({ obBusy:true });
+        try { await FR.join(name); await this.friendsPush({}); await this.friendsRefresh(true); }
+        catch (e) { this.setState({ obBusy:false, obErr:((e && e.message) || 'Could not join the group.') + ' Try again, or stay a guest and join later from Friends.' }); return; }
+        this.setState({ obBusy:false });
+      }
+      this.onbSet({ p:'done', w:Date.now() });
+      this.go('home');
+    };
+    obSoundsGo = () => { const l = (PYC.lessons || [])[0]; this.onbSet({ px:Date.now() }); if (l) this.pyOpenId(l.id); else this.go('pinyin'); };
+    obSoundsLater = () => this.onbSet({ px:Date.now() });
+    // a person who is new and has nothing yet starts on the Journey (with the intro pop-up) rather than Home
+    onbBoot = () => {
+      const S = this.state; const onb = onbRead();
+      if (ONB_OFF() || LV !== 1 || onb.w || onb.p === 'done' || S.screen !== 'home' || totalXp(S) > 0) return;
+      const started = Object.keys(S.ws || {}).some(z => S.ws[z] && S.ws[z].see && S.ws[z].see.s > 0);
+      if (started || Object.keys(S.lrn || {}).length) return;
+      this.go('journey');
+    };
     onbFlight = () => { this.go('journey'); };
     jyCloseCard = () => this.setState({ jyRv:null, jyOpen:null });
     jyOpenStop = (id) => { SFX.play('ok'); this.setState({ jyOpen:id, jyRv:null }); try { window.scrollTo(0, 0); } catch (e) {} };
@@ -2931,11 +2976,10 @@
     jySvPick = (id) => { SFX.play('ok'); this.setState({ jySvSel:id }); setTimeout(() => { try { const el = document.querySelector('.sv-detail'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest', behavior:'smooth' }); } catch (e) {} }, 40); };
 
     jyView(S) {
-      const base = { isJourney:S.screen === 'journey', jySyncBad:!!S.syncBadMsg && !!(FR && FR.identity && FR.identity()), jySyncText:'This device could not sync with your other devices: ' + (S.syncBadMsg || '') + ' Open Friends and tap Sync now.', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Your coins, from everything you study on every level. Spend them on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), xpPillCls:'pill xpp', jyPingShow:false, jyReadyShow:false, jyReadyN:0, jyReadyLabel:'', jyGuideShow:false };
+      const base = { isJourney:S.screen === 'journey', jySyncBad:!!S.syncBadMsg && !!(FR && FR.identity && FR.identity()), jySyncText:'This device could not sync with your other devices: ' + (S.syncBadMsg || '') + ' Open Friends and tap Sync now.', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Your coins, from everything you study on every level. Spend them on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), xpPillCls:'pill xpp', jyPingShow:false, jyReadyShow:false, jyReadyN:0, jyReadyLabel:'' };
       if (!JWORLD || !JMAP) return Object.assign(base, { jyOff:S.screen === 'journey' });
       const st = jyRead() || JY.fresh();   // only read here;
       base.xpTotalText = coinBalance(S, st).toLocaleString('en-US');
-      base.jyGuideShow = S.screen === 'journey' && !ONB_OFF() && !onbRead().g && st.seen.length > 0;   // you have flown: here is how the site works the screen saves it when it opens and after every stop
       const xp = totalXp(S); const mt = JY.meter(xp, st); const bal = coinBalance(S, st); base.xpTotalText = bal.toLocaleString('en-US');
       const META = JY.META;
       const rName = (id) => (JWORLD.byRegion[id] ? JWORLD.byRegion[id].en : (META[id] ? META[id][1] : id));
@@ -4267,9 +4311,23 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const onb = onbRead(); const onbOn = !ONB_OFF() && LV === 1;
       const noProg = totalXp(S) === 0 && startedCount === 0 && Object.keys(S.lrn || {}).length === 0;
       const flown = (() => { const j = jyRead(); return !!(j && j.seen && j.seen.length); })();   // the first flight has happened
-      const guideAvail = flown;
-      const welcomeShow = onbOn && S.screen === 'home' && !onb.w && noProg;
-      const startShow = onbOn && S.screen === 'home' && !welcomeShow && ((!onb.s && noProg) || (onb.s === 'go' && !S.rcomplete));
+      const guideAvail = true;   // the reference page is always one tap away
+      // the first-visit flow: which step is on screen ('' once it is over, or for anyone with progress)
+      const flowOn = onbOn && noProg && !onb.w && onb.p !== 'done';
+      let obPh = flowOn ? (onb.p || 'intro') : '';
+      if (obPh === 'fly' && flown) obPh = 'guide';
+      const obCards = [
+        { zh:'见', tag:'Meet', title:'Meet a few words at a time', body:'Each stop on the Path brings a handful of related words. You meet each one, then try it. Meeting a word is not the same as knowing it.', chips:['Path', 'Archive'] },
+        { zh:'记', tag:'Recall', title:'Review brings them back in time', body:'Pick the meaning, then type it. Review returns each word just as you are about to forget it. Be honest with the buttons: Again, Hard, Good or Easy.', chips:['Review', 'My words'] },
+        { zh:'用', tag:'Use', title:'Then use them', body:'Grammar lessons, listening and speaking practice. Today on Home plans a short session around your daily goal.', chips:['Grammar', 'Listening', 'Speak'] },
+        { zh:'路', tag:'Coins and Journey', title:'Coins take you somewhere real', body:'Everything you study earns coins. Spend them travelling to places across China. Your first stop was free, and you have already taken it.', chips:['Journey', 'Passport'] },
+        { zh:'友', tag:'Yours to keep', title:'Saved here, shared only if you say so', body:'Your progress lives in this browser, with a backup and sync in Settings. A friends group only ever sees your study totals.', chips:['Backup', 'Sync', 'Friends'] }
+      ];
+      const obC = obCards[Math.max(0, Math.min(4, S.obCard || 0))];
+      const frOn = !!(FR && FR.enabled());
+      const pyN = (PYC.lessons || []).filter(l => pyDoneAt(l.id)).length;
+      const obSoundsShow = onbOn && S.screen === 'home' && !flowOn && onb.l === 'new' && !onb.px && pyN === 0 && (PYC.lessons || []).length > 0 && noProg;
+      const startShow = onbOn && S.screen === 'home' && !flowOn && ((!onb.s && noProg) || (onb.s === 'go' && !S.rcomplete));
       const startGoing = onb.s === 'go' && S.rq.length > 0 && !S.rcomplete;
       const startWords = START_WORDS.filter(z => BANK[z]).map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en.split(',')[0] }));
       const startDoneShow = onbOn && onb.s === 'done' && onb.d === ymd(new Date()) && S.rcomplete;   // the end of the first session: what to do next
@@ -4298,8 +4356,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const frSorts = [['week', 'This week'], ['streak', 'Streak'], ['mem', 'In memory']];
       const frVals = {
         frJoined:!!frIdent, frNotJoined:!!(FR && FR.enabled()) && !frIdent, frOff:!(FR && FR.enabled()),
-        frName:S.frName, frCode:S.frCode, frErr:S.frErr, frHasErr:!!S.frErr, frMsg:S.frMsg, frHasMsg:!!S.frMsg, frBusy:S.frBusy, frJoinText:S.frBusy ? 'Joining…' : 'Join group',
-        onFrName:(e) => this.setState({ frName:e.target.value }), onFrCode:(e) => this.setState({ frCode:e.target.value }), friendsJoin:this.friendsJoin, frLinkIn:S.frLinkIn, onFrLink:(e) => this.setState({ frLinkIn:e.target.value }), friendsSignInLink:this.friendsSignInLink, frSignText:S.frLinkBusy ? 'Signing in…' : 'Sign in with my link',
+        frName:S.frName, frErr:S.frErr, frHasErr:!!S.frErr, frMsg:S.frMsg, frHasMsg:!!S.frMsg, frBusy:S.frBusy, frJoinText:S.frBusy ? 'Joining…' : 'Join group',
+        onFrName:(e) => this.setState({ frName:e.target.value }), friendsJoin:this.friendsJoin, frLinkIn:S.frLinkIn, onFrLink:(e) => this.setState({ frLinkIn:e.target.value }), friendsSignInLink:this.friendsSignInLink, frSignText:S.frLinkBusy ? 'Signing in…' : 'Sign in with my link',
         frLoaded:!!S.fr, frWaiting:!!frIdent && !S.fr, frMine:frIdent ? frIdent.name : '', frGroup:frIdent ? frIdent.group : '',
         frNudge, frHasNudge:!!frNudge, frNudgeSub:frNudge.indexOf('behind') > 0 ? 'A short session closes the gap.' : 'Keep it up. The week resets on Monday.',
         frWeekMin, frGoal, frGoalPct:Math.min(100, Math.round(frWeekMin / frGoal * 100)) + '%', frGoalText:frWeekMin + ' of ' + frGoal + ' min',
@@ -4347,7 +4405,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         achNext = nextUp.slice(0, 3);
       }
       const titles = {
-        home:welcomeShow || startShow ? ['Welcome to Shanlu', 'Five words, about five minutes. You do not pick anything.'] : ['Today', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
+        home:startShow ? ['Welcome to Shanlu', 'Five words, about five minutes. You do not pick anything.'] : ['Today', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
         review:['Review', 'Words that are due, based on how well you remember them.'],
         library:['Library', 'Everything you can look up: words, grammar, topics and sounds.'],
         greview:['Grammar review', 'A short daily session on the grammar points you have met, weakest first.'],
@@ -4832,7 +4890,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         youFriends:!!(FR && FR.enabled()), youFriendsCls:'ylink' + (curScreen === 'friends' ? ' on' : ''), youSetCls:'ylink' + (curScreen === 'voice' ? ' on' : ''), youGuideCls:'ylink' + (curScreen === 'guide' ? ' on' : ''), youAchCls:'ylink' + (curScreen === 'ach' ? ' on' : ''),
         goSettings:() => this.go('voice'), goAch:() => this.go('ach'),
         goStreak:() => this.go('home'), goMem:() => this.go('words'),
-        homeHero:!welcomeShow && !startShow, planGo, planGoText, greetZh:greet[0], greetPy:greet[1], greetEn:greet[2], moreWays, climbPct:climbN + '%', climbN, climbTitle:'Climb to ' + (ALL ? 'the top' : 'the HSK ' + LV + ' summit'),
+        homeHero:!startShow, planGo, planGoText, greetZh:greet[0], greetPy:greet[1], greetEn:greet[2], moreWays, climbPct:climbN + '%', climbN, climbTitle:'Climb to ' + (ALL ? 'the top' : 'the HSK ' + LV + ' summit'),
         climbNote:ALL ? 'Each level has its own exam, at the top of its path.' : EXAMBANK ? (LVL.levelPassed(LV) ? LVN + ' is behind you.' : climbN >= 80 ? 'The exam is waiting at the top of your path.' : 'The ' + LVN + ' exam sits at the top of your path. It opens at 80%.') : 'The exam for ' + LVN + ' is not built yet.',
         artToday:artUri('banner', 'today'), artLibrary:artUri('banner', 'library'), artReview:artUri('banner', 'review'), artTalk:artUri('banner', 'talk'), artJourney:artUri('banner', 'journey'), artPath:artUri('banner', 'path'), artSummit:artUri('summit'),
         mingWave:artUri('ming', 'wave'), mingThink:artUri('ming', 'think'), mingCheer:artUri('ming', 'cheer'), mingSleep:artUri('ming', 'sleep'), mingThumbs:artUri('ming', 'thumbs'),
@@ -4980,9 +5038,20 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         memText:memNow.words.toLocaleString('en-US') + ' in memory', memTip:'Words you would probably recall right now: each started word counts by its recall chance. It rises when you learn and review and falls if reviews slide.',
         memWords:memNow.words.toLocaleString('en-US'), memToday:(memNow.words - (S.mem0 == null ? memNow.words : S.mem0) >= 0 ? '+' : '') + (memNow.words - (S.mem0 == null ? memNow.words : S.mem0)) + ' today', memRecall:memNow.avg + '%',
         weekMin:weekMin, weekDays:weekDays,
-        title:tt[0], subtitle:tt[1], subShow:!(['home', 'path', 'library', 'review', 'greview', 'testlobby', 'listen', 'speak', 'journey', 'words', 'web', 'grammar', 'pinyin'].indexOf(S.screen) >= 0) || (prefGet('sv', {})[S.screen] || 0) < 3 || welcomeShow || startShow,
-        welcomeShow, startShow, startWords, startGoing, startFresh:!startGoing, startBtnText:startGoing ? 'Continue my first session' : 'Learn my first 5 words', startDoneShow, guideAvail, isGuide:S.screen === 'guide',
-        onbSkipWelcome:this.onbSkipWelcome, onbSkipStart:this.onbSkipStart, onbStartPath:this.onbStartPath, onbOpenGuide:this.onbOpenGuide, onbFlight:this.onbFlight,
+        title:tt[0], subtitle:tt[1], subShow:!(['home', 'path', 'library', 'review', 'greview', 'testlobby', 'listen', 'speak', 'journey', 'words', 'web', 'grammar', 'pinyin'].indexOf(S.screen) >= 0) || (prefGet('sv', {})[S.screen] || 0) < 3 || startShow,
+        obIntroShow:obPh === 'intro' && !S.obBack, obBackShow:obPh === 'intro' && !!S.obBack, obFlyShow:obPh === 'fly' && S.screen === 'journey',
+        obGuideShow:obPh === 'guide' && !S.jyPlay, obLevelShow:obPh === 'level', obMeShow:obPh === 'me',
+        obIntroGo:this.obIntroGo, obFlySkip:this.obFlySkip, obBackOpen:this.obBackOpen, obBackClose:this.obBackClose, obBackGo:this.obBackGo, obBackFile:this.obBackFile, obFrOn:frOn,
+        obLinkIn:S.frLinkIn, onObLink:(e) => this.setState({ frLinkIn:e.target.value }), obLinkText:S.frLinkBusy ? 'Signing in…' : 'Bring my progress here', obHasErr:!!S.frErr, obErrText:S.frErr,
+        obCZh:obC.zh, obCTag:obC.tag, obCTitle:obC.title, obCBody:obC.body, obCChips:obC.chips, obCCount:((S.obCard || 0) + 1) + ' of 5', obCArt:'obm-art a' + (S.obCard || 0),
+        obCDots:obCards.map((_, i) => ({ cls:'obm-dot' + (i === (S.obCard || 0) ? ' on' : '') })), obCPrev:(S.obCard || 0) > 0, obCBtn:(S.obCard || 0) === 4 ? 'Choose where to start' : 'Next', obCardNext:() => this.obCardGo(1), obCardPrev:() => this.obCardGo(-1), obGuideSkip:this.obGuideSkip,
+        obLvlOpts:[['new', 'I am brand new to Chinese', 'Start with the sounds of Chinese (pinyin and tones, about 30 minutes), then your first words.', 'Recommended if Chinese is new to you'], ['some', 'I know a little', 'Go straight to HSK 1 words. The pinyin course is always there if you want it.', '']].map(([k, t, d, tag]) => ({ k, t, d, tag, hasTag:!!tag, cls:'obm-opt' + (S.obLvl === k ? ' on' : ''), pressed:S.obLvl === k ? 'true' : 'false', fn:() => this.obPickLvl(k) })), obLevelGo:this.obLevelGo,
+        obName:S.obName, onObName:(e) => this.setState({ obName:e.target.value }), obFrShow:frOn && !(FR && FR.identity()), obJoinChk:S.obJoin ? 'true' : 'false', obJoinCls:'obm-chk' + (S.obJoin ? ' on' : ''), obJoinToggle:this.obJoinToggle,
+        obGoals:[10, 20, 30, 45].map(m => ({ label:m + ' min', cls:(S.obGoal || S.mins) === m ? 'on' : '', fn:() => this.setState({ obGoal:m }) })), obHasMeErr:!!S.obErr, obMeErr:S.obErr, obMeBusy:S.obBusy, obGoText:S.obBusy ? 'Joining…' : ((S.obJoin && frOn && !(FR && FR.identity())) ? 'Save and join the group' : 'Save and start'), obMeGo:() => this.obMeGo(false), obGuideGo:() => this.obMeGo(true), obMeBack:this.obMeBack,
+        guideLevels:[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => ({ n, h:(46 + n * 22) + 'px', cls:'gd-rg' + (n <= 4 ? ' on' : '') })),
+        obSoundsShow, obSoundsGo:this.obSoundsGo, obSoundsLater:this.obSoundsLater, pyTotal:(PYC.lessons || []).length,
+        startShow, startWords, startGoing, startFresh:!startGoing, startBtnText:startGoing ? 'Continue my first session' : 'Learn my first 5 words', startDoneShow, guideAvail, isGuide:S.screen === 'guide',
+        onbSkipStart:this.onbSkipStart, onbStartPath:this.onbStartPath, onbOpenGuide:this.onbOpenGuide, onbFlight:this.onbFlight,
         onbFlightShow:startDoneShow && !flown, guideSideCls:'linkbtn guide-link' + (S.screen === 'guide' ? ' on' : ''),
         isAch:S.screen === 'ach', achSummary:achSummary, achPct:achPct, achItems:achItems, achNext, hasAchNext:achNext.length > 0,
         achFilters:[['all', 'All'], ['earned', 'Earned'], ['locked', 'Not yet']].map(([k, l]) => ({ label:l, cls:(S.achf || 'all') === k ? 'on' : '', fn:() => this.setState({ achf:k }) })),
@@ -5183,6 +5252,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
   app.settingsSeed();
   app.settingsApply();
   app.friendsBoot();
+  app.onbBoot();
   // a failed save raises the banner; the next successful save clears it
   onSaveState = (bad) => { try { app.setState({ saveFail:bad, saveInfo:bad ? saveInfo : '' }); } catch (e) {} };
   if (saveFailed) onSaveState(true);

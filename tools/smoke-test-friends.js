@@ -9,12 +9,12 @@ const types = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css',
 const server = require('./test-static').server(root);
 let failures = 0;
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };
-const INVITE = 'ABCD-EFGH-JKLM';
 
 (async () => {
   if (!fs.existsSync(path.join(root, 'worker', 'node_modules', 'miniflare'))) { console.log('skipped: run "cd worker && npm install" first'); process.exit(0); }
   await new Promise(r => server.listen(0, r));
   const site = 'http://127.0.0.1:' + server.address().port + '/';
+  const openFriends = async (pg, hash) => { await pg.goto(site + (hash || '')); await pg.waitForSelector('.app'); await pg.locator('.navyou .ylink', { hasText: 'Friends' }).click(); await pg.waitForSelector('.frjoin'); };
   const { makeWorker } = await import(path.join(root, 'worker', 'test.mjs'));
   const mf = await makeWorker({ ALLOWED_ORIGINS: 'http://127.0.0.1:' + server.address().port });
   const api = String(await mf.ready).replace(/\/$/, '');
@@ -35,11 +35,10 @@ const INVITE = 'ABCD-EFGH-JKLM';
   check(await off.page.locator('.navyou .ylink', { hasText: 'Friends' }).count() === 0, 'without a server address there is no Friends tab');
   await off.ctx.close();
 
-  // Alvin joins from an invite link
+  // Alvin joins: the plain site address is enough, and the form asks for a first name only
   const A = await mk();
-  await A.page.goto(site + '#join=' + INVITE); await A.page.waitForSelector('.app');
-  await A.page.waitForSelector('.frjoin');
-  check(await A.page.locator('#fr-code').inputValue() === INVITE && (await A.page.evaluate(() => location.hash)) === '', 'an invite link opens the join form with the code filled in and clears the address');
+  await openFriends(A.page);
+  check(await A.page.locator('#fr-code').count() === 0 && await A.page.locator('#fr-name').count() === 1, 'the join form asks for a first name and nothing else (no invite code)');
   check(await A.page.locator('.navyou .ylink', { hasText: 'Friends' }).count() === 1, 'with a server address the Friends tab shows');
   await A.page.fill('#fr-name', 'Alvin');
   await A.page.locator('button', { hasText: 'Join group' }).click();
@@ -61,7 +60,7 @@ const INVITE = 'ABCD-EFGH-JKLM';
 
   // Mei joins; her name is shown as plain text
   const B = await mk();
-  await B.page.goto(site + '#join=' + INVITE.toLowerCase()); await B.page.waitForSelector('.frjoin');
+  await openFriends(B.page, '#join=OLD-INVITE-LINK');   // an old invite link is simply ignored
   await B.page.fill('#fr-name', '<b>Mei</b> & co');
   await B.page.locator('button', { hasText: 'Join group' }).click();
   await B.page.waitForSelector('.frow');
@@ -257,14 +256,6 @@ const INVITE = 'ABCD-EFGH-JKLM';
   check((await text(P.page)).includes('Signed in on this device') && await P.page.locator('.frow').count() === 2, 'a pasted personal link signs the device in');
   await P.ctx.close();
 
-  // wrong invite
-  const D = await mk();
-  await D.page.goto(site + '#join=WRONG-CODE-HERE'); await D.page.waitForSelector('.frjoin');
-  await D.page.fill('#fr-name', 'Eve'); await D.page.locator('button', { hasText: 'Join group' }).click();
-  await D.page.waitForSelector('.banner.err');
-  check((await text(D.page)).includes('invite code does not work') && await D.page.evaluate(() => !localStorage.getItem('shanlu-friends')), 'a wrong invite code is refused with a clear message');
-  await D.ctx.close();
-
   // leaving
   await B.page.locator('button', { hasText: 'Leave group' }).click();
   check((await text(B.page)).includes('Tap again'), 'leaving asks for a second tap');
@@ -274,6 +265,46 @@ const INVITE = 'ABCD-EFGH-JKLM';
   await A.page.locator('button', { hasText: 'Refresh' }).click();
   await A.page.waitForFunction(() => document.querySelectorAll('.frow').length === 1);
   check(await B.page.evaluate(() => !localStorage.getItem('shanlu-friends')), 'Mei left and the group list shrinks');
+
+  // a brand-new person joins the group from the first-visit flow: a checkbox and a first name, no code
+  {
+    const Z = await mk();
+    await Z.ctx.route(/wikimedia\.org/, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64') }));
+    await Z.ctx.addInitScript(() => { window.SHANLU_ONBOARDING = 1; window.SHANLU_JY_FIRST = 'sichuan'; });
+    await Z.page.goto(site); await Z.page.waitForSelector('.obm');
+    await Z.page.locator('button', { hasText: 'Take my first step' }).click();
+    await Z.page.locator('.jy-go').click();
+    await Z.page.waitForSelector('.obm-guide', { timeout: 20000 });
+    await Z.page.waitForTimeout(900);
+    await Z.page.locator('.obm-bar button', { hasText: 'Skip' }).click();
+    await Z.page.locator('button', { hasText: 'Continue' }).click();
+    check(await Z.page.locator('.obm-chk.on').count() === 1 && /Join the study group/.test(await Z.page.locator('.obm').innerText()), 'with a friends server the name step offers a ticked "Join the study group" box');
+    check(/Save and join the group/.test(await Z.page.locator('.obm-main').innerText()), 'and the button says what it will do');
+    await Z.page.locator('button', { hasText: 'Save and join the group' }).click();
+    check(/first name/.test(await Z.page.locator('.obm .banner.err').innerText()), 'joining without a name asks for one');
+    await Z.page.locator('#ob-name').fill('Zed');
+    await Z.page.locator('button', { hasText: 'Save and join the group' }).click();
+    await Z.page.waitForFunction(() => !document.querySelector('.obm') && window.shanlu.state.screen === 'home');
+    const joined = await Z.page.evaluate(() => { const v = JSON.parse(localStorage.getItem('shanlu-friends') || 'null'); return v && v.name; });
+    check(joined === 'Zed', 'the new person is in the group under that name');
+    await require('./test-nav').makeNav(Z.page)('Friends');
+    await Z.page.waitForSelector('.frow');
+    check(await Z.page.locator('.frow').count() === 2 && (await text(Z.page)).includes('Alvin'), 'and sees the group (Alvin and themselves)');
+    // the other box: unticked means a guest with a saved name only
+    const Y = await mk();
+    await Y.ctx.route(/wikimedia\.org/, (r) => r.fulfill({ status: 200, contentType: 'image/png', body: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64') }));
+    await Y.ctx.addInitScript(() => { window.SHANLU_ONBOARDING = 1; });
+    await Y.page.goto(site); await Y.page.waitForSelector('.obm');
+    await Y.page.evaluate(() => window.shanlu.onbSet({ p: 'me' }));
+    await Y.page.locator('#ob-name').fill('Yan');
+    await Y.page.locator('.obm-chk').click();
+    check(await Y.page.locator('.obm-chk.on').count() === 0 && /Save and start/.test(await Y.page.locator('.obm-main').innerText()), 'unticking the box turns the button back to "Save and start"');
+    await Y.page.locator('button', { hasText: 'Save and start' }).click();
+    await Y.page.waitForFunction(() => !document.querySelector('.obm'));
+    check(await Y.page.evaluate(() => !localStorage.getItem('shanlu-friends')) && await Y.page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-person')).prefs.name.v) === 'Yan', 'a name without the box keeps this person out of the group');
+    check(Z.errors.length === 0 && Y.errors.length === 0, 'no page errors in the first-visit join: ' + Z.errors.concat(Y.errors).slice(0, 2).join(' | '));
+    await Z.ctx.close(); await Y.ctx.close();
+  }
 
   // server gone: a message, and the rest of the app keeps working
   await mf.dispose();
