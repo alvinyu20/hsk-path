@@ -14,7 +14,7 @@
   ],
   "explain": [
    "更加 'even more' is like 更 (HSK 3) but a little more formal. It goes before adjectives and some verbs: 天气更加冷了 'The weather is even colder'; 他更加努力了 'He works even harder'. It compares with an earlier state.",
-   "A 不如 B means 'A is not as good as B': 这个手机不如那个手机好用 'This phone is not as easy to use as that one'. An adjective can follow B: 我不如他高 'I am not as tall as he is'. Compare 没有 (HSK 2): 这个没有那个好.",
+   "A 不如 B means 'A is not as good as B': 这个手机不如那个手机好用 'This phone is not as easy to use as that one'. An adjective can follow B: 我不如他高 'I am not as tall as he is'. Compare 没有 (HSK 2): 这个没有那个好. 不如 can also suggest a better choice, 'might as well': 不如去睡觉吧 'we may as well go to sleep'.",
    "相同 'the same, identical' and 同样 'in the same way, equally' say there is no difference: 我们的想法相同 'Our ideas are the same'; 他们同样很高兴 'They are equally happy'. 同样 can also come before a noun with 的: 同样的问题 'the same question'."
   ],
   "examples": [
@@ -526,7 +526,7 @@
   ],
   "mistakes": [
    "之前 and 之后 come after the time or action: 之前吃饭 is wrong. Say 吃饭之前.",
-   "从此 is for a turning point in the past. Do not use it for a plan; for the future say 以后."
+   "从此 mostly marks a turning point in the past. For a plan, 以后 is the safer word, although 从此我要努力学习 is also possible."
   ],
   "q": [
    {
@@ -632,11 +632,11 @@
     "t": "mc",
     "prompt": "Which sentence says: This shows that it is hard?",
     "options": [
-     "这说明这很难。",
+     "这说明这个很难。",
      "这说明很难这。"
     ],
     "correct": 0,
-    "zh": "这说明这很难。",
+    "zh": "这说明这个很难。",
     "en": "This shows that it is hard.",
     "explain": "说明 + clause."
    },

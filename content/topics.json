@@ -48,7 +48,7 @@
      "en": "Excuse me, where is the restroom?"
     },
     "4": {
-     "zh": "我向老师道歉，老师很客气地原谅了我。",
+     "zh": "我向老师道歉，老师原谅了我。",
      "en": "I apologised to the teacher, and the teacher kindly forgave me."
     }
    }
@@ -152,7 +152,7 @@
      "en": "There are so many people here today!"
     },
     "4": {
-     "zh": "我家对面有一个公园，周围的树很多。",
+     "zh": "我家对面有一个公园，公园周围有很多树。",
      "en": "There is a park opposite my home, and there are many trees around it."
     }
    }
@@ -736,7 +736,8 @@
     "招聘",
     "面试",
     "售票员",
-    "院长"
+    "院长",
+    "申请"
    ],
    "sentences": {
     "1": {
@@ -1201,7 +1202,6 @@
     "味",
     "味道",
     "熟",
-    "吃惊",
     "饼干"
    ],
    "sentences": {
@@ -1218,7 +1218,7 @@
      "en": "I am hungry now. Please give me the menu, because I want to try this dish."
     },
     "4": {
-     "zh": "我喜欢在食堂吃午餐，那里的味道不错。",
+     "zh": "我喜欢在食堂吃午餐，那里的菜味道不错。",
      "en": "I like to eat lunch in the canteen; the taste there is good."
     }
    }
@@ -1289,10 +1289,7 @@
     "果汁",
     "汽水",
     "酸奶",
-    "茶叶",
-    "干杯",
-    "倒",
-    "吸"
+    "茶叶"
    ],
    "sentences": {
     "1": {
@@ -1466,7 +1463,6 @@
     "眼镜",
     "背包",
     "装",
-    "皮肤",
     "表"
    ],
    "sentences": {
@@ -2033,8 +2029,7 @@
     "台",
     "琴",
     "钢琴",
-    "镜子",
-    "光"
+    "镜子"
    ],
    "sentences": {
     "3": {
@@ -2255,7 +2250,7 @@
      "en": "Before the exam you should review well, so that you can improve your grades."
     },
     "4": {
-     "zh": "高考以后，他想学一个好专业。",
+     "zh": "高考以后，他想选一个好专业。",
      "en": "After the college entrance exam, he wants to study a good major."
     }
    }
@@ -2386,9 +2381,7 @@
     "广播",
     "联系",
     "寄",
-    "快递",
-    "下降",
-    "用于"
+    "快递"
    ],
    "sentences": {
     "1": {
@@ -2507,8 +2500,6 @@
     "云",
     "下降",
     "降",
-    "烟",
-    "光",
     "亮"
    ],
    "sentences": {
@@ -2525,7 +2516,7 @@
      "en": "It is windy today and the weather is nicely cool, so you do not need to bring an umbrella."
     },
     "4": {
-     "zh": "今天阳光很好，气温也很暖和。",
+     "zh": "今天阳光很好，天气也很暖和。",
      "en": "The sun is good today, and the temperature is warm too."
     }
    }
@@ -2629,7 +2620,7 @@
      "en": "Tomorrow we are going to the zoo to see the giant pandas."
     },
     "4": {
-     "zh": "熊和老虎都住在大自然里。",
+     "zh": "熊和老虎都生活在大自然里。",
      "en": "Bears and tigers both live in nature."
     }
    }
@@ -2838,7 +2829,7 @@
      "en": "I often watch the news, and I also like listening to music."
     },
     "4": {
-     "zh": "观众们很喜欢这个电视剧，演员也很著名。",
+     "zh": "观众们很喜欢这部电视剧，演员也很著名。",
      "en": "The audience like this TV series very much, and the actors are famous too."
     }
    }
@@ -3431,7 +3422,8 @@
     "失去",
     "推出",
     "获得",
-    "取得"
+    "取得",
+    "使"
    ],
    "sentences": {
     "3": {
@@ -4063,9 +4055,7 @@
     "不得不",
     "只好",
     "无法",
-    "值得",
-    "应聘",
-    "申请"
+    "值得"
    ],
    "sentences": {
     "1": {
@@ -4146,7 +4136,6 @@
     "不管",
     "无论",
     "不论",
-    "用来",
     "由于",
     "因此",
     "于是"
@@ -4203,8 +4192,8 @@
      "en": "It looks like it will probably rain tomorrow, so you must bring an umbrella."
     },
     "4": {
-     "zh": "他也许在家，肯定是在睡觉。",
-     "en": "Perhaps he is at home; he is surely sleeping."
+     "zh": "他也许在家，可能在睡觉。",
+     "en": "Perhaps he is at home; he may be sleeping."
     }
    }
   },
@@ -4289,8 +4278,7 @@
     "寄",
     "提出",
     "解释",
-    "举例",
-    "使"
+    "举例"
    ],
    "sentences": {
     "1": {

@@ -551,7 +551,7 @@
       "kind": "terms",
       "name": "A year in 24 terms",
       "tag": "节气 jiéqì",
-      "blurb": "A year in China follows the 24 solar terms, from the start of spring to the great cold. Each unit is one term, and the dates move by a day from year to year.",
+      "blurb": "A year in China follows the 24 solar terms, from the start of spring to the great cold. Each unit is one term, and the dates can differ by a day from year to year.",
       "hero": "terms-hero",
       "seasons": [
         {
@@ -631,7 +631,7 @@
         "h4u3": {
           "zh": "惊蛰",
           "py": "jīng zhé",
-          "en": "Insects wake",
+          "en": "Awakening of insects",
           "date": "5 Mar",
           "scene": "The first thunder wakes everything up. You start counting prices.",
           "tile": "spring"
@@ -649,7 +649,7 @@
           "py": "qīng míng",
           "en": "Clear and bright",
           "date": "4 Apr",
-          "scene": "A day off in the fresh air, and a good moment to sort out your time.",
+          "scene": "Families visit the graves, then walk out into the fresh air. A good moment to sort out your time.",
           "tile": "spring"
         },
         "h4u6": {
@@ -671,9 +671,9 @@
         "h4u8": {
           "zh": "小满",
           "py": "xiǎo mǎn",
-          "en": "Grain fills",
+          "en": "Grain buds",
           "date": "21 May",
-          "scene": "The markets are full. You pay, you bargain, you book a table.",
+          "scene": "The wheat is filling out. You pay, you bargain, you book a table.",
           "tile": "summer2"
         },
         "h4u9": {
@@ -761,7 +761,7 @@
           "py": "lì dōng",
           "en": "Winter begins",
           "date": "7 Nov",
-          "scene": "Dumplings on every table. A good time to change something.",
+          "scene": "In the north, many families eat dumplings. A good time to change something.",
           "tile": "winter"
         },
         "h4u20": {
@@ -801,7 +801,7 @@
           "py": "dà hán",
           "en": "Major cold",
           "date": "20 Jan",
-          "scene": "The last term of the year. You tie your ideas together.",
+          "scene": "The last of the 24 terms. You tie your ideas together.",
           "tile": "winter2"
         }
       }

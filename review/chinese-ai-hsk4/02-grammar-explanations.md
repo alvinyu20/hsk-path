@@ -27,7 +27,7 @@ Lessons:
 - 即使 … 也 … 'even if' says that the result stays the same whatever happens: 即使下雨，我也去 'Even if it rains, I will go'. 即使 gives a situation that may or may not happen, and 也 (or 还是) comes in the second part.
 - 尽管 … 还是 / 但是 … 'although, in spite of the fact that' is for something that is true: 尽管很累，他还是去上班了 'Although he was tired, he still went to work'. Compare 即使 (maybe it happens) with 尽管 (it really is so).
 - In the second part use 还是 'still' or 但是 'but'. 还是 is the more natural partner of 尽管. You can drop the English 'but', and Chinese does too: 尽管很贵，我还是买了 'Although it was dear, I still bought it'.
-- (common mistake) 即使 is for something that may or may not happen. For something that is a fact, use 尽管: 尽管下雨了，我们还是去了.
+- (common mistake) 即使 is mostly for something that may or may not happen. For something that is a fact, 尽管 is the usual choice: 尽管下雨了，我们还是去了.
 - (common mistake) Do not leave out 也 / 还是 in the second part. 即使下雨，我去 sounds unfinished.
 - example: 即使明天下雨，我也要去。 / Even if it rains tomorrow, I will go.
 - example: 即使你不喜欢，也要吃一点。 / Even if you do not like it, you must eat a little.
@@ -50,7 +50,7 @@ Lessons:
 - The result part usually has 就. In speech 的话 can be added at the end of the first part: 你要是不想去的话，就别去 'If you do not want to go, then do not go'.
 - 既然 … 就 … means 'since, now that'. It is for something that is already true or known: 既然你累了，就休息吧 'Since you are tired, rest'. 要是 imagines something; 既然 accepts a fact.
 - (common mistake) Do not use 要是 for facts. 要是你已经来了 is odd, because you are already here. Use 既然.
-- (common mistake) Keep 就 in the second part: 既然你累了，你就应该休息.
+- (common mistake) Keep 就 in the second part when you can: 既然你累了，你就应该休息 (就 is common, but not always needed).
 - example: 要是你有时间，就来我家玩。 / If you have time, come and play at my home.
 - example: 你要是不舒服，就去看医生吧。 / If you are not feeling well, go and see a doctor.
 - example: 既然你累了，就早点休息吧。 / Since you are tired, rest early.
@@ -144,7 +144,7 @@ Lessons:
 - example: 他对这个工作十分满意。 / He is very satisfied with this job.
 
 ### Lesson 13: 从来, 并 and 往往: never, not at all, tends to
-- 从来 + 不 / 没 means 'never, at no time': 我从来不喝酒 'I never drink alcohol'; 他从来没去过那个地方 'He has never been to that place'. 从来不 is a habit or a rule; 从来没 + verb + 过 is experience up to now. 从来 is normally used with a negative.
+- 从来 + 不 / 没 means 'never, at no time': 我从来不喝酒 'I never drink alcohol'; 他从来没去过那个地方 'He has never been to that place'. 从来不 is a habit or a rule; 从来没 + verb + 过 is experience up to now. 从来 is mostly used with a negative; a positive use such as 他从来都很准时 also exists.
 - 并 + 不 / 没 'not at all, actually not' corrects a wrong idea: 这个菜并不贵 'This dish is not expensive at all'; 他并没有生气 'He did not actually get angry'. 并 only goes with a negative.
 - 往往 'often, tends to' describes what usually happens in the same situation. It is a pattern, not one event: 周末他往往在家休息 'At the weekend he tends to rest at home'. Use 常常 for plain frequency and 往往 for a general rule.
 - (common mistake) 从来 and 并 need a negative. 我从来去过 is wrong; say 我从来没去过.
@@ -211,7 +211,7 @@ Lessons:
 
 ### Lesson 19: 更加, 不如, 相同 and 同样: more, less, the same
 - 更加 'even more' is like 更 (HSK 3) but a little more formal. It goes before adjectives and some verbs: 天气更加冷了 'The weather is even colder'; 他更加努力了 'He works even harder'. It compares with an earlier state.
-- A 不如 B means 'A is not as good as B': 这个手机不如那个手机好用 'This phone is not as easy to use as that one'. An adjective can follow B: 我不如他高 'I am not as tall as he is'. Compare 没有 (HSK 2): 这个没有那个好.
+- A 不如 B means 'A is not as good as B': 这个手机不如那个手机好用 'This phone is not as easy to use as that one'. An adjective can follow B: 我不如他高 'I am not as tall as he is'. Compare 没有 (HSK 2): 这个没有那个好. 不如 can also suggest a better choice, 'might as well': 不如去睡觉吧 'we may as well go to sleep'.
 - 相同 'the same, identical' and 同样 'in the same way, equally' say there is no difference: 我们的想法相同 'Our ideas are the same'; 他们同样很高兴 'They are equally happy'. 同样 can also come before a noun with 的: 同样的问题 'the same question'.
 - (common mistake) 不如 compares two things, so you need both A and B. 这个不如好 is incomplete; say 这个不如那个好.
 - (common mistake) 相同 does not take 很: 很相同 is wrong. Say 完全相同 'exactly the same' or 不太相同 'not quite the same'.
@@ -280,7 +280,7 @@ Lessons:
 - 之间 'between, among' goes after two things or two limits: 房子和学校之间 'between the house and the school'; 三点到五点之间 'between three and five'. 当时 'at that time, then' points back to a time already named: 我十岁的时候搬到这里，当时这里很小 'I moved here when I was ten; at that time it was small'.
 - 从此 'from then on' says that after one event a new situation began: 他来到这里，从此没有离开 'He came here, and from then on has not left'. 接着 'next, then' follows the action just before it: 他先吃饭，接着看电视 'He eats first, then watches TV'.
 - (common mistake) 之前 and 之后 come after the time or action: 之前吃饭 is wrong. Say 吃饭之前.
-- (common mistake) 从此 is for a turning point in the past. Do not use it for a plan; for the future say 以后.
+- (common mistake) 从此 mostly marks a turning point in the past. For a plan, 以后 is the safer word, although 从此我要努力学习 is also possible.
 - example: 吃饭之前，先洗手。 / Before eating, wash your hands first.
 - example: 下课之后，我们去吃饭。 / After class, we go and eat.
 - example: 我十岁的时候搬到这里，当时这里很小。 / I moved here when I was ten; at that time it was small.

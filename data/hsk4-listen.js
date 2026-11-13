@@ -186,8 +186,8 @@ window.HSK4_LISTEN = {
    ]
   },
   {
-   "zh": "这家餐厅的味道很特别，价格也不高。",
-   "py": "Zhè jiā cāntīng de wèidào hěn tèbié, jiàgé yě bù gāo.",
+   "zh": "这家餐厅的菜味道很特别，价格也不高。",
+   "py": "Zhè jiā cāntīng de cài wèidào hěn tèbié, jiàgé yě bù gāo.",
    "en": "The flavour at this restaurant is special, and the prices are not high either.",
    "words": [
     {
@@ -209,6 +209,11 @@ window.HSK4_LISTEN = {
      "zh": "的",
      "py": "de",
      "key": "de"
+    },
+    {
+     "zh": "菜",
+     "py": "cài",
+     "key": "cai"
     },
     {
      "zh": "味道",
@@ -254,7 +259,7 @@ window.HSK4_LISTEN = {
   {
    "zh": "如果你有困难，可以给我打电话。",
    "py": "Rúguǒ nǐ yǒu kùnnan, kěyǐ gěi wǒ dǎ diànhuà.",
-   "en": "If you have a difficulty, you can call me.",
+   "en": "If you have any difficulty, you can call me.",
    "words": [
     {
      "zh": "如果",
@@ -761,7 +766,7 @@ window.HSK4_LISTEN = {
     }
    ],
    "notes": [
-    "整理 zhěnglǐ: two third tones in a row, so 整 rises (say zhéngli).",
+    "整理 zhěnglǐ: two third tones in a row, so 整 rises (say zhénglǐ).",
     "材料 cáiliào: a rise, then a fall."
    ]
   },

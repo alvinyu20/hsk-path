@@ -140,13 +140,13 @@ Sentences (Chinese / English):
 126. 你的感受对我很重要。  /  Your feelings are important to me.
 127. 在国外，我感受到了不同的文化。  /  Abroad, I experienced a different culture.
 128. 我要感谢我的老师。  /  I want to thank my teacher.
-129. 感谢大家今天来参加。  /  Thank you all for coming today.
+129. 感谢大家今天来参加活动。  /  Thank you all for coming today.
 130. 工人们正在工厂里干活。  /  The workers are working in the factory.
 131. 干活的时候，要注意安全。  /  When working, you need to pay attention to safety.
 132. 女儿每天练习钢琴。  /  My daughter practises the piano every day.
 133. 钢琴声很好听。  /  The sound of the piano is lovely.
 134. 高价的东西不一定好。  /  Expensive things are not necessarily good.
-135. 我不会用高价买这个。  /  I will not pay a high price for this.
+135. 我不会花高价买这个。  /  I will not pay a high price for this.
 136. 高考以前，学生们都很紧张。  /  Before the college entrance exam, students are all very nervous.
 137. 去年高考，她考得很好。  /  Last year in the college entrance exam she did very well.
 138. 高速上的车很多。  /  There are many cars on the expressway.
@@ -204,15 +204,15 @@ Sentences (Chinese / English):
 190. 这个姑娘长得很漂亮。  /  This girl is very pretty.
 191. 这位姑娘，请问你找谁？  /  Young lady, excuse me, who are you looking for?
 192. 谢谢你的鼓励。  /  Thank you for your encouragement.
-193. 父母鼓励了他去参加比赛。  /  His parents encouraged him to join the contest.
+193. 父母鼓励他去参加比赛。  /  His parents encourage him to join the contest.
 194. 请顾客排队。  /  Please ask customers to queue.
 195. 刚才有一位顾客说这件衣服太大了。  /  Just now a customer said this piece of clothing is too big.
 196. 你是不是故意迟到的？  /  Did you come late on purpose?
-197. 刚才我不是故意打扰你。  /  Just now I did not mean to disturb you.
+197. 刚才我不是故意打扰你的。  /  Just now I did not mean to disturb you.
 198. 他挂了电话，就出门了。  /  He hung up the phone and went out.
 199. 我把照片挂在了床边。  /  I hung the photo by the bed.
 200. 这是最关键的一步。  /  This is the most crucial step.
-201. 关键时候，他总是帮我。  /  At the crucial moment, he always helps me.
+201. 关键时刻，他总是帮我。  /  At the crucial moment, he always helps me.
 202. 观看比赛的人都很兴奋。  /  Those watching the match are all excited.
 203. 我们在电视上观看了这场比赛。  /  We watched this match on TV.
 204. 这部电影有很多观众。  /  This film has a lot of viewers.

@@ -20,7 +20,7 @@ Also check: do the practice conversations sound like something people really say
 - 学习者：我有两年的经验。  /  I have two years of experience.
 - 对方：很好。你为什么想来我们公司？  /  Good. Why do you want to come to our company?
 - 学习者：我对这个工作很有兴趣。  /  I am very interested in this work.
-- 对方：好的，我们会通知你。你对工资有什么想法？  /  Okay, we will notify you. What do you think about the pay?
+- 对方：好的。你对工资有什么要求？  /  Okay. What are your salary requirements?
 - 学习者：我希望工资不要太低。  /  I hope the pay is not too low.
 - 对方：好的，谢谢你来面试。  /  Okay, thank you for coming to the interview.
 ### Rent a flat (Housing, 5 turns)
@@ -45,7 +45,7 @@ Also check: do the practice conversations sound like something people really say
 - 对方：你可以用手机付钱。  /  You can pay with your phone.
 ### Say sorry for being late (Manners, 5 turns)
 - 对方：你怎么现在才来？我们等了你半个小时。  /  Why have you only come now? We waited for you for half an hour.
-- 学习者：对不起，路上现在堵车了。  /  Sorry, there is a traffic jam on the road now.
+- 学习者：对不起，路上堵车了。  /  Sorry, there is a traffic jam on the road now.
 - 对方：你为什么没有提前给我打电话？  /  Why did you not call me in advance?
 - 学习者：我的手机没电了，真抱歉。  /  My phone has no battery left. I am really sorry.
 - 对方：好吧，这次我原谅你。  /  All right, I forgive you this time.
@@ -55,7 +55,7 @@ Also check: do the practice conversations sound like something people really say
 - 对方：现在就要开始了，快进去吧。  /  It is about to begin now; hurry in.
 ### Book a table for a group (Food, 5 turns)
 - 对方：你好，这里是餐厅。你要订座位吗？  /  Hello, this is the restaurant. Do you want to book seats?
-- 学习者：对，我想订一些座位。  /  Yes, I want to book some seats.
+- 学习者：对，我想订几个座位。  /  Yes, I want to book some seats.
 - 对方：好的，几个人？什么时候来？  /  Okay, how many people? When are you coming?
 - 学习者：十个人，星期六晚上六点半。  /  Ten people, Saturday evening at half past six.
 - 对方：星期六晚上很多人聚餐，七点以后才有座位。  /  Many people have group meals on Saturday evenings; there are seats only after seven.
@@ -68,7 +68,7 @@ Also check: do the practice conversations sound like something people really say
 - 学习者：我想申请签证。  /  I want to apply for a visa.
 - 对方：好的。请把护照和照片给我。  /  Okay. Please give me your passport and photo.
 - 学习者：好的，这是我的护照。我还需要什么材料？  /  Okay, here is my passport. What other materials do I need?
-- 对方：你还要在表格上写好你的地址。  /  You must also write your address on the form.
+- 对方：你还要在表格上写清楚你的地址。  /  You must also write your address on the form.
 - 学习者：好的。签证要多长时间？  /  Okay. How long will the visa take?
 - 对方：一般一个星期。通过以后，我们会给你打电话。  /  Usually one week. After it is approved, we will call you.
 - 学习者：好的，非常感谢。  /  Okay, thank you very much.
@@ -114,10 +114,10 @@ Also check: do the practice conversations sound like something people really say
 - 老师批评了他，但是也表扬了他的努力。  /  The teacher criticised him, but also praised his effort.
     note: 批评 pīpíng: a high tone, then a rise.
     note: 表扬 biǎoyáng: 表 only dips before the rising 扬.
-- 这家餐厅的味道很特别，价格也不高。  /  The flavour at this restaurant is special, and the prices are not high either.
+- 这家餐厅的菜味道很特别，价格也不高。  /  The flavour at this restaurant is special, and the prices are not high either.
     note: 味道 wèidào: both syllables fall.
     note: 特别 tèbié: a fall, then a rise.
-- 如果你有困难，可以给我打电话。  /  If you have a difficulty, you can call me.
+- 如果你有困难，可以给我打电话。  /  If you have any difficulty, you can call me.
     note: 困难 kùnnan: the second syllable is light and short.
     note: 打电话 dǎ diànhuà: a dip, then fall, fall.
 - 他的汉语说得越来越流利了。  /  His Chinese is getting more and more fluent.
@@ -142,7 +142,7 @@ Also check: do the practice conversations sound like something people really say
     note: 故意 gùyì: both syllables fall.
     note: 担心 dānxīn: both syllables are high and flat.
 - 请把这些材料整理好，下午交给我。  /  Please sort these materials out and hand them to me this afternoon.
-    note: 整理 zhěnglǐ: two third tones in a row, so 整 rises (say zhéngli).
+    note: 整理 zhěnglǐ: two third tones in a row, so 整 rises (say zhénglǐ).
     note: 材料 cáiliào: a rise, then a fall.
 - 虽然他很累，但是仍然坚持工作。  /  Although he is tired, he still keeps on working.
     note: 仍然 réngrán: both syllables rise.

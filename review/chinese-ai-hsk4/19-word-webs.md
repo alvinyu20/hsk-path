@@ -167,7 +167,7 @@ Also check: is each part meaning (for example 机 = machine inside 耳机, 关�
 
 ### Shared character 费 (fèi): fee; cost; to spend
 - 费用 = 费 (cost) + 用 (use)
-- 浪费 = 浪 (waste) + 费 (spend)
+- 浪费 = 浪 (loose) + 费 (spend)
 - 免费 = 免 (free) + 费 (fee)
 - 收费 = 收 (charge) + 费 (fee)
 - 学费 = 学 (school) + 费 (fee)
@@ -194,7 +194,7 @@ Also check: is each part meaning (for example 机 = machine inside 耳机, 关�
 
 ### Shared character 客 (kè): guest
 - 乘客 = 乘 (ride) + 客 (guest)
-- 顾客 = 顾 (customer) + 客 (guest)
+- 顾客 = 顾 (look after) + 客 (guest)
 - 旅客 = 旅 (travel) + 客 (guest)
 - 客厅 = 客 (guest) + 厅 (hall)
 - 客气 = 客 (guest) + 气 (manner)
@@ -346,7 +346,7 @@ Also check: is each part meaning (for example 机 = machine inside 耳机, 关�
 - Neighbours, visitors and colleagues: 房东 师傅 上门 客厅 对方 师生 队员 队长 队 球队 负责人 院长
 - Family: 父母 父亲 母亲 父女 父子 母女 母子 孙女 孙子 兄弟 亲戚 家庭 家长 老家 家乡 院子 一生
 - Age and growing up: 童年 中年 老年 青年 少年 年龄 一生 人生 成为 养成 活 死 生 生命 儿童
-- Work and jobs: 大夫 护士 律师 厨师 教师 教授 记者 作家 导游 警察 交警 演员 歌手 工人 师傅 教练 职业 当 应聘 招聘 面试 售票员 院长
+- Work and jobs: 大夫 护士 律师 厨师 教师 教授 记者 作家 导游 警察 交警 演员 歌手 工人 师傅 教练 职业 当 应聘 招聘 面试 售票员 院长 申请
 - Workplace and business: 办公 办理 办事 部门 打工 加班 干活 经济 生意 小组 组 单位 工厂 厂 工资 奖金 收入 负责 负责人 职业 应聘 招聘 面试 任务 会员 市场 商品 货 安排 活动
 - Days, weeks and years: 日期 日子 月份 年底 期末 期中 世纪 目前 末 日常 今后 将来 假日 节假日 年龄 一生
 - Seasons: 寒假 暑假 寒冷 暖和 凉 气温 气候 低温 高温 降温
@@ -355,12 +355,12 @@ Also check: is each part meaning (for example 机 = machine inside 耳机, 关�
 - How long and how late: 及时 迟 来不及 来得及 推迟 暂时 永远 暂停 提前 一生 赶 赶上 赶快 赶紧 按时 准时
 - When and how often: 偶尔 老是 往往 不断 从来 目前 当时 日常 永远 再次 已 忽然 最终
 - Before, after and just now: 之前 之后 之间 之中 以内 今后 将来 将 将要 从此 接着 最终 忽然 当时 已 前后 末 再次 此外
-- Food and meals: 早餐 午餐 晚餐 中餐 快餐 美食 食品 食物 食堂 餐厅 厨房 厨师 聚餐 汤 油 盐 烤 酸 咸 辣 苦 香 鲜 味 味道 熟 吃惊 饼干
+- Food and meals: 早餐 午餐 晚餐 中餐 快餐 美食 食品 食物 食堂 餐厅 厨房 厨师 聚餐 汤 油 盐 烤 酸 咸 辣 苦 香 鲜 味 味道 熟 饼干
 - Fruit, sweets and snacks: 葡萄 西红柿 巧克力 饼干 馒头 零食 小吃 月饼 酸奶 鲜
-- Drinks: 白酒 葡萄酒 果汁 汽水 酸奶 茶叶 干杯 倒 吸
+- Drinks: 白酒 葡萄酒 果汁 汽水 酸奶 茶叶
 - Dishes and containers: 盒子 袋子 桶 刀 塑料 纸巾 擦 倒
 - Money and shopping: 价格 价钱 低价 高价 打折 降价 免费 付 支付 现金 零钱 零花钱 购买 购物 网购 商品 货 顾客 逛 结账 租 房租 收费 费 费用 学费 赚 收入 工资 奖金 存 质量 牌子 牌 值 值得 数 节约 浪费
-- Clothes and accessories: 毛衣 外套 帽子 皮鞋 袜子 毛巾 戴 脱 眼镜 背包 装 皮肤 表
+- Clothes and accessories: 毛衣 外套 帽子 皮鞋 袜子 毛巾 戴 脱 眼镜 背包 装 表
 - Places around town: 剧院 健身房 加油站 市场 学院 院子 大厅 操场 厕所 郊区 市区 景点 景区 区 单位 街道 城 厂 工厂 食堂 餐厅 旅馆 使馆 入口 出口
 - City and neighbourhood: 街道 城 区 郊区 市区 村 农村 省 首都 国际 全球 各地 社会 民族 北部 南部 东部 西部 地址 公共
 - North, south, east and west: 北部 南部 东部 西部 前方 对面 底下 内 亚洲
@@ -368,14 +368,14 @@ Also check: is each part meaning (for example 机 = machine inside 耳机, 关�
 - Transport and tickets: 大巴 动车 电动车 乘 乘坐 乘客 换乘 登机 航班 降落 转机 售票员 加油站 签证 安检 出行 出租 趟 列 排队 座位
 - Travel and countries: 旅馆 旅客 旅行 度假 景点 景区 景色 风景 美景 参观 游玩 导游 入住 目的地 国籍 签证 使馆 国际 亚洲 首都 全球 海洋 地球 出差 出行 外出
 - At home: 厨房 客厅 窗 窗户 家具 家庭 房东 房租 镜子 钥匙 院子 垃圾 收拾 整理 乱 挂 毛巾 牙膏 桶
-- Furniture and appliances: 家具 打印机 电动车 台 琴 钢琴 镜子 光
+- Furniture and appliances: 家具 打印机 电动车 台 琴 钢琴 镜子
 - School: 教师 教授 教学 教育 课程 课堂 院长 学院 学费 入学 师生 食堂 操场 预习 自习 自学 功课 毕业 毕业生 考生 教练 点名
 - School subjects and culture: 科学 科技 艺术 语法 口语 听力 阅读 京剧 功夫 话剧 民族 教育 文字 作文 作品
 - Studying and exams: 高考 期末 期中 考生 报考 报名 笔试 面试 试题 分数 合格 毕业 毕业生 本科 硕士 博士 研究生 专业 奖学金 学费 入学 答案 答 错误 成功 失败 赢 输 取得 达到 获得 获奖 预习 自习 自学 总结 基础 奖 赢得
 - Chinese and writing: 词语 语法 口语 文字 作文 文章 篇 阅读 翻译 填写 表格 普通话 说法 举例 例子 例如 答案 日记 作品 作家 作者 小说 杂志 流利 说明书
-- Phones, email and the internet: 互联网 网购 网页 网友 网址 视频 信号 信息 短信 密码 扫码 回复 回信 转发 发送 发出 打印 打印机 复印 科技 技术 线上 线下 文件 图片 查找 查看 播放 广播 联系 寄 快递 下降 用于
+- Phones, email and the internet: 互联网 网购 网页 网友 网址 视频 信号 信息 短信 密码 扫码 回复 回信 转发 发送 发出 打印 打印机 复印 科技 技术 线上 线下 文件 图片 查找 查看 播放 广播 联系 寄 快递
 - Daily routine: 日常 早晨 夜晚 醒 困 整理 收拾 散步 理发 健身 按时 养成 垃圾 牙膏 毛巾 日记 做梦 躺
-- Weather: 气候 气温 温度 暖和 寒冷 凉 低温 高温 降温 阳光 云 下降 降 烟 光 亮
+- Weather: 气候 气温 温度 暖和 寒冷 凉 低温 高温 降温 阳光 云 下降 降 亮
 - Mountains, rivers and plants: 森林 树林 植物 叶子 江 桥 土 火 鲜花 棵 自然 大自然 空气 海洋 地球 云 阳光 农村 村 流
 - Animals and nature: 熊 老虎 森林 植物 大自然 自然 环保 污染 空气 海洋 地球 星星 土 叶子
 - Hobbies and fun: 钢琴 弹 琴 歌声 歌手 排球 乒乓球 球队 球迷 健身 逛 游玩 度假 旅行 聚会 约会 拍 开玩笑 好笑 笑话 有趣 浪漫 做梦 梦 梦想 热闹 赢 输 大赛 参赛 活动
@@ -389,7 +389,7 @@ Also check: is each part meaning (for example 机 = machine inside 耳机, 关�
 - Character and manner: 诚实 勇敢 活泼 礼貌 客气 耐心 冷静 懒 笨 粗心 细心 自信 积极 友好 幽默 优秀 脾气 性格 态度 骄傲 害羞 严格 仔细 信心 故意 厉害 帅 随便
 - Thinking and knowing: 看法 想法 意见 主意 建议 计划 目标 目的 理想 梦想 判断 怀疑 考虑 理解 猜 知识 经验 经历 印象 估计 回忆 讨论 研究 总结 信息 调查 反对 熟悉
 - Everyday actions: 按 拉 推 抱 敲 擦 弄 提 取 挂 扔 吹 脱 戴 倒 压 抬 举 转 装 修 修理 排 存 留 留下 吸 闻 躺 抬头 点头 逛 散步 掉 落 打印 复印 订 约 租 拍 邀请 寄 交 付 背 待
-- Change, choice and trying: 改 改变 定 放弃 接受 拒绝 答应 取消 推迟 增加 减少 减轻 加快 加强 降低 下降 增长 养成 适应 产生 引起 起到 作用 效果 安排 重新 获取 积累 失去 推出 获得 取得
+- Change, choice and trying: 改 改变 定 放弃 接受 拒绝 答应 取消 推迟 增加 减少 减轻 加快 加强 降低 下降 增长 养成 适应 产生 引起 起到 作用 效果 安排 重新 获取 积累 失去 推出 获得 取得 使
 - Seeing, hearing, speaking: 观看 收听 谈 讨论 喊 提到 提出 指出 解释 说明 表示 表现 表扬 批评 翻译 回复 回信 通知 提醒 闻 响 指
 - Meeting people: 约 约会 邀请 陪 交流 联系 打招呼 打扰 参观 上门 聚会 聚 面对 交 对方 误会 商量 尊重
 - Moving your body: 抬 举 躺 转 推 拉 抱 敲 吹 赶 逛 散步 乘 动作
@@ -401,12 +401,12 @@ Also check: is each part meaning (for example 机 = machine inside 耳机, 关�
 - Same and different: 相同 同样 相反 区别 各种 多样 特点 另 另外 相比 不如 低于 高于 普通 平常 符合 普遍
 - Things and matters: 材料 资料 货 商品 情况 条件 方面 方式 内容 原因 结果 过程 关键 重点 规定 任务 目标 作品 作用 力气 能力 气 光 烟 图 图片 表格 牌 数字 标准 顺序 样子 做法
 - Be, have, be at: 有着 无 缺 缺少 剩 存 成为 当 叫作 算 现有
-- Can, want, may, don't: 敢 能够 能否 允许 禁止 不必 不得不 只好 无法 值得 应聘 申请
+- Can, want, may, don't: 敢 能够 能否 允许 禁止 不必 不得不 只好 无法 值得
 - Not and don't: 无 无法 不必 禁止 不便 不满 不够 并 少见 不如 不管 不论
-- If, only if, in order to: 要是 既然 否则 即使 尽管 不管 无论 不论 用来 由于 因此 于是
+- If, only if, in order to: 要是 既然 否则 即使 尽管 不管 无论 不论 由于 因此 于是
 - Certainly and probably: 肯定 也许 恐怕 估计 确实 实在 大约 至少 左右 正好 难道 竟然 原来 本来 实际 实际上 基本 基本上 差点 千万
 - Still, only and even: 仍 仍然 仅 仅仅 甚至 就是 只好 继续 重新 再次 稍 稍微 随便 任何 千万 顺便 至少 左右 大约 现有
-- Helping, giving and telling: 支持 鼓励 保护 提供 发送 交流 通知 提醒 建议 邀请 陪 负责 管理 管 感谢 祝贺 接受 付 交 寄 提出 解释 举例 使
+- Helping, giving and telling: 支持 鼓励 保护 提供 发送 交流 通知 提醒 建议 邀请 陪 负责 管理 管 感谢 祝贺 接受 付 交 寄 提出 解释 举例
 - Comparing: 相比 不如 低于 高于 超过 更加 相同 同样 相反 区别
 - Very, too, most: 十分 尤其 更加 大大 多么 真正 稍 稍微 完全 实在 确实 全 好好 专门
 - And, also, all, together: 并且 而 此外 另外 再说 加上 既 不光 不仅 与 互相 相互 共同 全部 全都 一切 所有 整个 各种 共 同时

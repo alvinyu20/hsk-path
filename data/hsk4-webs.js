@@ -138,8 +138,8 @@ window.HSK4_WEBS = {
      ]
     },
     {
-     "en": "My stomach is very hungry, and I want to eat now.",
-     "zh": "我的___很饿，现在想吃饭。",
+     "en": "I am hungry and want to eat now.",
+     "zh": "我___饿了，现在想吃饭。",
      "ans": "肚子",
      "opts": [
       "肚子",
@@ -764,8 +764,8 @@ window.HSK4_WEBS = {
      ]
     },
     {
-     "en": "This medicine has a good effect, and I got better after taking it.",
-     "zh": "这个药很有___，我吃了就好了。",
+     "en": "This medicine really works; I got better after taking it.",
+     "zh": "这个药很起___，我吃了就好了。",
      "ans": "作用",
      "opts": [
       "作用",
@@ -1187,8 +1187,8 @@ window.HSK4_WEBS = {
    ],
    "gaps": [
     {
-     "en": "The northern part of this city is very cold because it is in the north.",
-     "zh": "这个城市的___很冷，因为在北边。",
+     "en": "This city is in the north of China; winters are cold and it often snows.",
+     "zh": "这个城市在中国的___，冬天很冷，常常下雪。",
      "ans": "北部",
      "opts": [
       "北部",
@@ -2438,8 +2438,8 @@ window.HSK4_WEBS = {
      ]
     },
     {
-     "en": "What is the price of this?",
-     "zh": "这个的___是多少？",
+     "en": "What is the price of this piece of clothing?",
+     "zh": "这件衣服的___是多少？",
      "ans": "价钱",
      "opts": [
       "价钱",
@@ -2473,7 +2473,7 @@ window.HSK4_WEBS = {
      "parts": [
       [
        "浪",
-       "waste"
+       "loose"
       ],
       [
        "费",
@@ -2932,7 +2932,7 @@ window.HSK4_WEBS = {
      "parts": [
       [
        "顾",
-       "customer"
+       "look after"
       ],
       [
        "客",
@@ -3135,8 +3135,8 @@ window.HSK4_WEBS = {
      ]
     },
     {
-     "en": "This little dog is cute, and we must protect its life.",
-     "zh": "这只小狗很可爱，我们要保护它的___。",
+     "en": "A little dog's life matters too, so we must look after it well.",
+     "zh": "小狗的___也很重要，我们要好好照顾它。",
      "ans": "生命",
      "opts": [
       "生命",
@@ -3950,8 +3950,8 @@ window.HSK4_WEBS = {
      ]
     },
     {
-     "en": "He has great work ability, and everyone likes him very much.",
-     "zh": "他很有工作___，大家都很喜欢他。",
+     "en": "He is very capable at work, and everyone likes him very much.",
+     "zh": "他工作___很强，大家都很喜欢他。",
      "ans": "能力",
      "opts": [
       "能力",
@@ -4150,7 +4150,7 @@ window.HSK4_WEBS = {
    "gaps": [
     {
      "en": "I like shopping online and do not need to go out.",
-     "zh": "我喜欢在网上___，不用出门。",
+     "zh": "我喜欢___，不用出门。",
      "ans": "网购",
      "opts": [
       "网购",
@@ -6114,8 +6114,8 @@ window.HSK4_WEBS = {
    "to": "speak",
    "cta": "Use these in a conversation",
    "sentence": {
-    "zh": "我向老师道歉，老师很客气地原谅了我。",
-    "py": "Wǒ xiàng lǎoshī dàoqiàn, lǎoshī hěn kèqi de yuánliàng le wǒ.",
+    "zh": "我向老师道歉，老师原谅了我。",
+    "py": "Wǒ xiàng lǎoshī dàoqiàn, lǎoshī yuánliàng le wǒ.",
     "en": "I apologised to the teacher, and the teacher kindly forgave me."
    },
    "words": [
@@ -6164,8 +6164,8 @@ window.HSK4_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我家对面有一个公园，周围的树很多。",
-    "py": "Wǒ jiā duìmiàn yǒu yí ge gōngyuán, zhōuwéi de shù hěn duō.",
+    "zh": "我家对面有一个公园，公园周围有很多树。",
+    "py": "Wǒ jiā duìmiàn yǒu yí ge gōngyuán, gōngyuán zhōuwéi yǒu hěn duō shù.",
     "en": "There is a park opposite my home, and there are many trees around it."
    },
    "words": [
@@ -6514,7 +6514,8 @@ window.HSK4_WEBS = {
     "招聘",
     "面试",
     "售票员",
-    "院长"
+    "院长",
+    "申请"
    ]
   },
   {
@@ -6764,8 +6765,8 @@ window.HSK4_WEBS = {
    "to": "speak",
    "cta": "Use these when you order food or drinks",
    "sentence": {
-    "zh": "我喜欢在食堂吃午餐，那里的味道不错。",
-    "py": "Wǒ xǐhuan zài shítáng chī wǔcān, nàlǐ de wèidào búcuò.",
+    "zh": "我喜欢在食堂吃午餐，那里的菜味道不错。",
+    "py": "Wǒ xǐhuan zài shítáng chī wǔcān, nàlǐ de cài wèidào búcuò.",
     "en": "I like to eat lunch in the canteen; the taste there is good."
    },
    "words": [
@@ -6795,7 +6796,6 @@ window.HSK4_WEBS = {
     "味",
     "味道",
     "熟",
-    "吃惊",
     "饼干"
    ]
   },
@@ -6840,10 +6840,7 @@ window.HSK4_WEBS = {
     "果汁",
     "汽水",
     "酸奶",
-    "茶叶",
-    "干杯",
-    "倒",
-    "吸"
+    "茶叶"
    ]
   },
   {
@@ -6944,7 +6941,6 @@ window.HSK4_WEBS = {
     "眼镜",
     "背包",
     "装",
-    "皮肤",
     "表"
    ]
   },
@@ -7200,8 +7196,7 @@ window.HSK4_WEBS = {
     "台",
     "琴",
     "钢琴",
-    "镜子",
-    "光"
+    "镜子"
    ]
   },
   {
@@ -7276,8 +7271,8 @@ window.HSK4_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "高考以后，他想学一个好专业。",
-    "py": "Gāokǎo yǐhòu, tā xiǎng xué yí ge hǎo zhuānyè.",
+    "zh": "高考以后，他想选一个好专业。",
+    "py": "Gāokǎo yǐhòu, tā xiǎng xuǎn yí ge hǎo zhuānyè.",
     "en": "After the college entrance exam, he wants to study a good major."
    },
    "words": [
@@ -7404,9 +7399,7 @@ window.HSK4_WEBS = {
     "广播",
     "联系",
     "寄",
-    "快递",
-    "下降",
-    "用于"
+    "快递"
    ]
   },
   {
@@ -7448,8 +7441,8 @@ window.HSK4_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "今天阳光很好，气温也很暖和。",
-    "py": "Jīntiān yángguāng hěn hǎo, qìwēn yě hěn nuǎnhuo.",
+    "zh": "今天阳光很好，天气也很暖和。",
+    "py": "Jīntiān yángguāng hěn hǎo, tiānqì yě hěn nuǎnhuo.",
     "en": "The sun is good today, and the temperature is warm too."
    },
    "words": [
@@ -7466,8 +7459,6 @@ window.HSK4_WEBS = {
     "云",
     "下降",
     "降",
-    "烟",
-    "光",
     "亮"
    ]
   },
@@ -7512,8 +7503,8 @@ window.HSK4_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "熊和老虎都住在大自然里。",
-    "py": "Xióng hé lǎohǔ dōu zhù zài dàzìrán lǐ.",
+    "zh": "熊和老虎都生活在大自然里。",
+    "py": "Xióng hé lǎohǔ dōu shēnghuó zài dàzìrán lǐ.",
     "en": "Bears and tigers both live in nature."
    },
    "words": [
@@ -7613,8 +7604,8 @@ window.HSK4_WEBS = {
    "to": "listen",
    "cta": "Train your ear",
    "sentence": {
-    "zh": "观众们很喜欢这个电视剧，演员也很著名。",
-    "py": "Guānzhòngmen hěn xǐhuan zhège diànshìjù, yǎnyuán yě hěn zhùmíng.",
+    "zh": "观众们很喜欢这部电视剧，演员也很著名。",
+    "py": "Guānzhòngmen hěn xǐhuan zhè bù diànshìjù, yǎnyuán yě hěn zhùmíng.",
     "en": "The audience like this TV series very much, and the actors are famous too."
    },
    "words": [
@@ -8024,7 +8015,8 @@ window.HSK4_WEBS = {
     "失去",
     "推出",
     "获得",
-    "取得"
+    "取得",
+    "使"
    ]
   },
   {
@@ -8423,9 +8415,7 @@ window.HSK4_WEBS = {
     "不得不",
     "只好",
     "无法",
-    "值得",
-    "应聘",
-    "申请"
+    "值得"
    ]
   },
   {
@@ -8474,7 +8464,6 @@ window.HSK4_WEBS = {
     "不管",
     "无论",
     "不论",
-    "用来",
     "由于",
     "因此",
     "于是"
@@ -8487,9 +8476,9 @@ window.HSK4_WEBS = {
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
-    "zh": "他也许在家，肯定是在睡觉。",
-    "py": "Tā yěxǔ zài jiā, kěndìng shì zài shuìjiào.",
-    "en": "Perhaps he is at home; he is surely sleeping."
+    "zh": "他也许在家，可能在睡觉。",
+    "py": "Tā yěxǔ zài jiā, kěnéng zài shuìjiào.",
+    "en": "Perhaps he is at home; he may be sleeping."
    },
    "words": [
     "肯定",
@@ -8582,8 +8571,7 @@ window.HSK4_WEBS = {
     "寄",
     "提出",
     "解释",
-    "举例",
-    "使"
+    "举例"
    ]
   },
   {

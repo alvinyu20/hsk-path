@@ -35,7 +35,7 @@ Words (word | pinyin | part of speech | English):
 21. 北部 | běibù | n | northern part; the north of a place
 22. 倍 | bèi | m | times; -fold (a multiple)
 23. 本科 | běnkē | n | undergraduate course; bachelor's degree
-24. 本来 | běnlái | adv | originally; at first; should have
+24. 本来 | běnlái | adv | originally; at first (本来应该 = should have)
 25. 笨 | bèn | adj | stupid; clumsy | note: 笨 sounds harsh about another person. It is usually used of oneself or as a joke.
 26. 鼻子 | bízi | n | nose
 27. 笔试 | bǐshì | v | to take a written exam; a written exam

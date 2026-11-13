@@ -33,8 +33,8 @@
      "en": "Good. Why do you want to come to our company?"
     },
     {
-     "zh": "好的，我们会通知你。你对工资有什么想法？",
-     "en": "Okay, we will notify you. What do you think about the pay?"
+     "zh": "好的。你对工资有什么要求？",
+     "en": "Okay. What are your salary requirements?"
     },
     {
      "zh": "好的，谢谢你来面试。",
@@ -223,7 +223,7 @@
    ],
    "you": [
     {
-     "zh": "对不起，路上现在堵车了。",
+     "zh": "对不起，路上堵车了。",
      "en": "Sorry, there is a traffic jam on the road now."
     },
     {
@@ -283,7 +283,7 @@
    ],
    "you": [
     {
-     "zh": "对，我想订一些座位。",
+     "zh": "对，我想订几个座位。",
      "en": "Yes, I want to book some seats."
     },
     {
@@ -329,7 +329,7 @@
      "en": "Okay. Please give me your passport and photo."
     },
     {
-     "zh": "你还要在表格上写好你的地址。",
+     "zh": "你还要在表格上写清楚你的地址。",
      "en": "You must also write your address on the form."
     },
     {

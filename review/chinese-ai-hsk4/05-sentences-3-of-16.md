@@ -230,5 +230,5 @@ Sentences (Chinese / English):
 216. 我们在学校食堂吃午饭。  /  We eat lunch in the school canteen.
 217. 这里的食物很好吃。  /  The food here is delicious.
 218. 我实在太累了。  /  I am really too tired.
-219. 前面的十字路口向右走。  /  Turn right at the crossroads ahead.
+219. 在前面的十字路口向右走。  /  Turn right at the crossroads ahead.
 220. 这个消息使大家很高兴。  /  This news makes everyone happy.

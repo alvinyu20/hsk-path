@@ -60,7 +60,17 @@
     "坚持",
     "锻炼"
    ],
-   "en": "No matter how busy he is, he keeps on exercising."
+   "en": "No matter how busy he is, he keeps on exercising.",
+   "alts": [
+    [
+     "他",
+     "无论",
+     "多忙",
+     "都",
+     "坚持",
+     "锻炼"
+    ]
+   ]
   },
   {
    "words": [
@@ -123,7 +133,16 @@
     "这个",
     "问题"
    ],
-   "en": "They are discussing this problem."
+   "en": "They are discussing this problem.",
+   "alts": [
+    [
+     "这个",
+     "问题",
+     "他们",
+     "正在",
+     "讨论"
+    ]
+   ]
   },
   {
    "words": [

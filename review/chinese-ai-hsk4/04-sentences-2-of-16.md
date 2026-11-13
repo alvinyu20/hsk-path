@@ -24,7 +24,7 @@ Sentences (Chinese / English):
 10. 非常感谢你的帮助。  /  Thank you very much for your help.
 11. 爷爷在地里干活。  /  Grandpa is working in the field.
 12. 她会弹钢琴。  /  She can play the piano.
-13. 他用高价买了这幅画。  /  He bought this painting at a high price.
+13. 他花高价买了这幅画。  /  He bought this painting at a high price.
 14. 他明年参加高考。  /  He is taking the college entrance exam next year.
 15. 我们开车走高速。  /  We drive on the expressway.
 16. 夏天的高温让人很难受。  /  The high temperatures in summer make people feel awful.
@@ -39,7 +39,7 @@ Sentences (Chinese / English):
 25. 超市里有各种水果。  /  The supermarket has all kinds of fruit.
 26. 下雨以后，天气更加冷了。  /  After the rain, the weather got even colder.
 27. 这家工厂有五百个工人。  /  This factory has 500 workers.
-28. 他从小学功夫。  /  He has learned kung fu since he was little.
+28. 他从小就学功夫。  /  He has learned kung fu since he was little.
 29. 坐公共交通很方便。  /  Taking public transport is very convenient.
 30. 孩子们回家以后先做功课。  /  Children do their homework first when they get home.
 31. 这里离机场有二十公里。  /  It is twenty kilometres from here to the airport.
@@ -60,7 +60,7 @@ Sentences (Chinese / English):
 46. 关键是你要努力。  /  The key is that you must work hard.
 47. 欢迎大家观看今天的比赛。  /  Everyone is welcome to watch today's match.
 48. 观众们都站起来了。  /  The audience all stood up.
-49. 别管我，我自己能做。  /  Do not worry about me; I can do it myself.
+49. 别管我，我自己能做。  /  Do not mind me; I can do it myself.
 50. 公司需要有人来管理这些文件。  /  The company needs someone to manage these documents.
 51. 窗外的光很亮。  /  The light outside the window is very bright.
 52. 我每天早上听广播。  /  I listen to the radio every morning.
@@ -129,12 +129,12 @@ Sentences (Chinese / English):
 115. 我想加入学校的足球队。  /  I want to join the school football team.
 116. 天气很冷，加上又下雨，我们就没出门。  /  It was cold, and on top of that it rained, so we did not go out.
 117. 我有一个幸福的家庭。  /  I have a happy family.
-118. 我很想我的家乡。  /  I miss my hometown very much.
+118. 我离开家乡很久了，很想它。  /  I have been away from my hometown for a long time and miss it.
 119. 加油！你一定能赢。  /  Come on! You can surely win.
 120. 前面有一个加油站。  /  There is a petrol station ahead.
 121. 学校请家长来开会。  /  The school invites parents to a meeting.
 122. 这个包是假的。  /  This bag is fake.
-123. 这里的价格很便宜。  /  Prices here are cheap.
+123. 这里的价格很低。  /  Prices here are low.
 124. 这个价钱你觉得怎么样？  /  What do you think of this price?
 125. 假日里，公园里有很多人。  /  On holidays there are many people in the park.
 126. 十减三是七。  /  Ten minus three is seven.
@@ -159,7 +159,7 @@ Sentences (Chinese / English):
 145. 我为你感到骄傲。  /  I am proud of you.
 146. 交警在路口看着来往的车。  /  The traffic police are watching the cars come and go at the crossing.
 147. 我们用汉语交流。  /  We communicate in Chinese.
-148. 他住在郊区，上班很远。  /  He lives in the suburbs and has a long way to work.
+148. 他住在郊区，上班的路很远。  /  He lives in the suburbs and has a long way to work.
 149. 这里的交通很方便。  /  Transport here is very convenient.
 150. 他是我们的足球教练。  /  He is our football coach.
 151. 她是一位小学教师。  /  She is a primary school teacher.
@@ -231,4 +231,4 @@ Sentences (Chinese / English):
 217. 这杯咖啡太苦了。  /  This coffee is too bitter.
 218. 他中午常常吃快餐。  /  He often eats fast food at noon.
 219. 我的快递到了。  /  My parcel has arrived.
-220. 这个城市发展得很快速。  /  This city is developing rapidly.
+220. 这个城市在快速发展。  /  This city is developing rapidly.

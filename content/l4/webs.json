@@ -82,8 +82,8 @@
      ]
     },
     {
-     "zh": "我的___很饿，现在想吃饭。",
-     "en": "My stomach is very hungry, and I want to eat now.",
+     "zh": "我___饿了，现在想吃饭。",
+     "en": "I am hungry and want to eat now.",
      "ans": "肚子",
      "opts": [
       "肚子",
@@ -522,8 +522,8 @@
      ]
     },
     {
-     "zh": "这个药很有___，我吃了就好了。",
-     "en": "This medicine has a good effect, and I got better after taking it.",
+     "zh": "这个药很起___，我吃了就好了。",
+     "en": "This medicine really works; I got better after taking it.",
      "ans": "作用",
      "opts": [
       "作用",
@@ -813,8 +813,8 @@
    ],
    "gaps": [
     {
-     "zh": "这个城市的___很冷，因为在北边。",
-     "en": "The northern part of this city is very cold because it is in the north.",
+     "zh": "这个城市在中国的___，冬天很冷，常常下雪。",
+     "en": "This city is in the north of China; winters are cold and it often snows.",
      "ans": "北部",
      "opts": [
       "北部",
@@ -1722,8 +1722,8 @@
      ]
     },
     {
-     "zh": "这个的___是多少？",
-     "en": "What is the price of this?",
+     "zh": "这件衣服的___是多少？",
+     "en": "What is the price of this piece of clothing?",
      "ans": "价钱",
      "opts": [
       "价钱",
@@ -1749,7 +1749,7 @@
     [
      "浪费",
      "浪",
-     "waste",
+     "loose",
      "费",
      "spend"
     ],
@@ -2094,7 +2094,7 @@
     [
      "顾客",
      "顾",
-     "customer",
+     "look after",
      "客",
      "guest"
     ],
@@ -2239,8 +2239,8 @@
      ]
     },
     {
-     "zh": "这只小狗很可爱，我们要保护它的___。",
-     "en": "This little dog is cute, and we must protect its life.",
+     "zh": "小狗的___也很重要，我们要好好照顾它。",
+     "en": "A little dog's life matters too, so we must look after it well.",
      "ans": "生命",
      "opts": [
       "生命",
@@ -2844,8 +2844,8 @@
      ]
     },
     {
-     "zh": "他很有工作___，大家都很喜欢他。",
-     "en": "He has great work ability, and everyone likes him very much.",
+     "zh": "他工作___很强，大家都很喜欢他。",
+     "en": "He is very capable at work, and everyone likes him very much.",
      "ans": "能力",
      "opts": [
       "能力",
@@ -2995,7 +2995,7 @@
    ],
    "gaps": [
     {
-     "zh": "我喜欢在网上___，不用出门。",
+     "zh": "我喜欢___，不用出门。",
      "en": "I like shopping online and do not need to go out.",
      "ans": "网购",
      "opts": [

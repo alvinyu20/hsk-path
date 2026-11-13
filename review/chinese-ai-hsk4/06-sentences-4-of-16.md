@@ -16,7 +16,7 @@ Sentences (Chinese / English):
 2. 请不要使用手机。  /  Please do not use your phone.
 3. 我去市场买菜。  /  I go to the market to buy vegetables.
 4. 我想知道你是否有时间。  /  I want to know whether you have time.
-5. 这件衣服很适合你。  /  This coat suits you very well.
+5. 这件衣服很适合你。  /  This outfit suits you very well.
 6. 现在是二十一世纪。  /  It is the 21st century now.
 7. 我在手机上看视频。  /  I watch videos on my phone.
 8. 我家离市区很远。  /  My home is far from the city centre.
@@ -42,7 +42,7 @@ Sentences (Chinese / English):
 28. 请写下这几个数字。  /  Please write down these numbers.
 29. 他长得很帅。  /  He is very handsome.
 30. 你去超市，顺便帮我买点水果。  /  While you are at the supermarket, pick up some fruit for me.
-31. 祝你工作顺利。  /  I wish you a smooth working life.
+31. 祝你工作顺利。  /  I hope your work goes smoothly.
 32. 请按顺序排队。  /  Please line up in order.
 33. 这个说法不对。  /  This way of saying it is wrong.
 34. 请说明你的想法。  /  Please explain your ideas.
@@ -131,7 +131,7 @@ Sentences (Chinese / English):
 117. 你误会我了。  /  You have misunderstood me.
 118. 请深吸一口气。  /  Please take a deep breath.
 119. 中国的西部有很多山。  /  There are many mountains in western China.
-120. 我喜欢吃西红柿鸡蛋。  /  I like eating tomato and egg.
+120. 我喜欢吃西红柿鸡蛋面。  /  I like eating tomato and egg noodles.
 121. 这个节目吸引了很多人。  /  This programme attracted many people.
 122. 她的手指很细。  /  Her fingers are thin.
 123. 她做事很细心。  /  She is very careful in what she does.
@@ -182,7 +182,7 @@ Sentences (Chinese / English):
 168. 公园里有许多人。  /  There are many people in the park.
 169. 这个学校的学费很高。  /  The tuition at this school is high.
 170. 他在音乐学院学习。  /  He studies at a music college.
-171. 请不要压坏花。  /  Please do not crush the flowers.
+171. 请不要把花压坏。  /  Please do not crush the flowers.
 172. 工作压力很大。  /  The pressure from work is great.
 173. 牙膏用完了。  /  The toothpaste has run out.
 174. 中国在亚洲。  /  China is in Asia.
@@ -218,7 +218,7 @@ Sentences (Chinese / English):
 204. 这件事引起了大家的注意。  /  This matter attracted everyone's attention.
 205. 我对这个城市的印象很好。  /  I have a good impression of this city.
 206. 我们队赢了。  /  Our team won.
-207. 这家店赢得了很多客人。  /  This shop has won many customers.
+207. 这家店赢得了很多客人的喜爱。  /  This shop has won the love of many customers.
 208. 我想应聘这个工作。  /  I want to apply for this job.
 209. 这个孩子很勇敢。  /  This child is very brave.
 210. 我永远不会忘记你。  /  I will never forget you.

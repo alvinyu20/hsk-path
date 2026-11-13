@@ -55,7 +55,7 @@ Sentences (Chinese / English):
 41. 周末我们进城买东西。  /  At the weekend we go into town to buy things.
 42. 我们乘火车回了家。  /  We took the train home.
 43. 五乘二是十。  /  Five times two is ten.
-44. 这个办法成功了。  /  This method succeeded.
+44. 他的计划成功了。  /  His plan succeeded.
 45. 成功的人都很努力。  /  Successful people all work very hard.
 46. 乘客请带好自己的行李。  /  Passengers, please keep your luggage with you.
 47. 司机帮一位乘客拿了行李。  /  The driver helped a passenger with his luggage.
@@ -145,7 +145,7 @@ Sentences (Chinese / English):
 131. 他感冒了，要去医院打针。  /  He has a cold and needs to go to hospital for an injection.
 132. 这辆大巴有五十个座位。  /  This coach has fifty seats.
 133. 大巴两个小时一班。  /  A coach runs every two hours.
-134. 这件事大大地影响了他。  /  This matter greatly affected him.
+134. 这件事大大影响了他。  /  This matter greatly affected him.
 135. 看书可以大大增加你的知识。  /  Reading can greatly increase your knowledge.
 136. 这位大夫看病很认真。  /  This doctor is very serious when seeing patients.
 137. 请大夫给他看一看。  /  Please ask the doctor to take a look at him.
@@ -195,7 +195,7 @@ Sentences (Chinese / English):
 181. 等到放假，我们去旅游吧。  /  Let's go travelling once the holiday starts.
 182. 他低着头，不说话。  /  He keeps his head down and does not speak.
 183. 房间里的温度太低了。  /  The temperature in the room is too low.
-184. 他用低价买到了这台电脑。  /  He bought this computer at a low price.
+184. 这台电脑是他低价买的。  /  He bought this computer at a low price.
 185. 低价的东西不一定不好。  /  Cheap things are not necessarily bad.
 186. 低温天气里，请多穿衣服。  /  In low-temperature weather, please wear more clothes.
 187. 冰箱里的低温可以让食物放得更久。  /  The low temperature in a fridge can keep food longer.

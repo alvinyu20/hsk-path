@@ -7,7 +7,7 @@
     "本来",
     "正好",
     "顺便",
-    "一直"
+    "千万"
    ],
    "items": [
     {
@@ -31,8 +31,8 @@
      "ans": 4
     },
     {
-     "zh": "这个问题___不难，再想一想。",
-     "en": "Actually this problem is not difficult; think about it again.",
+     "zh": "他看起来很年轻，___已经四十岁了。",
+     "en": "He looks young, but actually he is already forty.",
      "ans": 0
     }
    ]
@@ -301,9 +301,9 @@
   },
   {
    "words": [
-    "他的汉语说得越来越好，",
     "因为他每天",
-    "都和中国朋友聊天。"
+    "都和中国朋友聊天，",
+    "所以他的汉语越来越好。"
    ],
    "en": "His Chinese is getting better and better, because he chats with Chinese friends every day."
   },

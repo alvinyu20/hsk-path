@@ -42,9 +42,9 @@ window.HSK4_EXAM = {
     }
    ],
    "st": {
-    "zh": "我弟弟最近学习很努力。",
-    "py": "Wǒ dìdi zuìjìn xuéxí hěn nǔlì.",
-    "en": "My younger brother has been studying very hard recently."
+    "zh": "我弟弟最近每天学习到很晚。",
+    "py": "Wǒ dìdi zuìjìn měitiān xuéxí dào hěn wǎn.",
+    "en": "My younger brother has been studying until very late every day recently."
    },
    "ok": true
   },
@@ -2089,8 +2089,8 @@ window.HSK4_EXAM = {
      "py": "shùnbiàn"
     },
     {
-     "zh": "一直",
-     "py": "yìzhí"
+     "zh": "千万",
+     "py": "qiānwàn"
     }
    ],
    "items": [
@@ -2123,10 +2123,10 @@ window.HSK4_EXAM = {
      "ans": 4
     },
     {
-     "zh": "这个问题___不难，再想一想。",
-     "full": "这个问题其实不难，再想一想。",
-     "py": "Zhège wèntí qíshí bù nán, zài xiǎng yì xiǎng.",
-     "en": "Actually this problem is not difficult; think about it again.",
+     "zh": "他看起来很年轻，___已经四十岁了。",
+     "full": "他看起来很年轻，其实已经四十岁了。",
+     "py": "Tā kàn qǐlái hěn niánqīng, qíshí yǐjīng sìshí suì le.",
+     "en": "He looks young, but actually he is already forty.",
      "ans": 0
     }
    ]
@@ -2549,13 +2549,13 @@ window.HSK4_EXAM = {
   },
   {
    "words": [
-    "他的汉语说得越来越好，",
     "因为他每天",
-    "都和中国朋友聊天。"
+    "都和中国朋友聊天，",
+    "所以他的汉语越来越好。"
    ],
-   "zh": "他的汉语说得越来越好，因为他每天都和中国朋友聊天。",
+   "zh": "因为他每天都和中国朋友聊天，所以他的汉语越来越好。",
    "alts": [],
-   "py": "Tā de Hànyǔ shuō de yuè lái yuè hǎo, yīnwèi tā měitiān dōu hé Zhōngguó péngyou liáo tiān.",
+   "py": "Yīnwèi tā měitiān dōu hé Zhōngguó péngyou liáo tiān, suǒyǐ tā de Hànyǔ yuè lái yuè hǎo.",
    "en": "His Chinese is getting better and better, because he chats with Chinese friends every day."
   },
   {
@@ -3321,7 +3321,9 @@ window.HSK4_EXAM = {
     "锻炼"
    ],
    "zh": "无论多忙他都坚持锻炼",
-   "alts": [],
+   "alts": [
+    "他无论多忙都坚持锻炼"
+   ],
    "py": "Wúlùn duō máng tā dōu jiānchí duànliàn",
    "en": "No matter how busy he is, he keeps on exercising."
   },
@@ -3402,7 +3404,9 @@ window.HSK4_EXAM = {
     "问题"
    ],
    "zh": "他们正在讨论这个问题",
-   "alts": [],
+   "alts": [
+    "这个问题他们正在讨论"
+   ],
    "py": "Tāmen zhèngzài tǎolùn zhège wèntí",
    "en": "They are discussing this problem."
   },

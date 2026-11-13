@@ -19,7 +19,7 @@ Sentences (Chinese / English):
 5. 友谊是最重要的。  /  Friendship is the most important.
 6. 这个城市有着很长的历史。  /  This city has a very long history.
 7. 祝你周末愉快。  /  I wish you a pleasant weekend.
-8. 天下雨了，于是我们回家了。  /  It rained, so we went home.
+8. 下雨了，于是我们回家了。  /  It rained, so we went home.
 9. 他与朋友一起去。  /  He goes with his friends.
 10. 汉语语法不难。  /  Chinese grammar is not hard.
 11. 上课前要预习。  /  You must preview before class.
@@ -125,7 +125,7 @@ Sentences (Chinese / English):
 111. 爱情不是生活的全部。  /  Love is not the whole of life.
 112. 这些孩子需要大家的爱心。  /  These children need everyone's kindness.
 113. 老师用爱心照顾每个学生。  /  The teacher takes care of every student with a caring heart.
-114. 安检的人很多，我们排了半个小时的队。  /  There were many people at the security check, and we queued for half an hour.
+114. 过安检的人很多，我们排了半个小时的队。  /  There were many people at the security check, and we queued for half an hour.
 115. 请把手机放在这里，然后过安检。  /  Please put your phone here and then go through security.
 116. 周末你有什么安排？  /  What are your plans for the weekend?
 117. 你的时间怎么安排？  /  How are you arranging your time?

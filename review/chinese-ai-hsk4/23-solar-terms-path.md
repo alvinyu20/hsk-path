@@ -14,7 +14,7 @@ Please check: (1) the 24 term names, their order and their usual dates (which of
 
 The HSK 4 Learn path is a year told through the 24 solar terms (节气), one term for each unit. The term names are real; the dates are the usual ones (they can move by a day); the short story line for each unit is mine.
 
-Path title: A year in 24 terms | tag: 节气 jiéqì | blurb: A year in China follows the 24 solar terms, from the start of spring to the great cold. Each unit is one term, and the dates move by a day from year to year.
+Path title: A year in 24 terms | tag: 节气 jiéqì | blurb: A year in China follows the 24 solar terms, from the start of spring to the great cold. Each unit is one term, and the dates can differ by a day from year to year.
 Season 春: Spring · Arrive and settle in — You arrive as the thaw begins, meet your neighbours and make a home.
 Season 夏: Summer · The city and work — Heat, crowds and noodles. You learn the city and start a job.
 Season 秋: Autumn · Study, friends, feelings — Clear skies and a full diary: school, sport, friends and what everyone feels.
@@ -23,12 +23,12 @@ Season 冬: Winter · Ideas and long sentences — Short days and longer sentenc
 Each line: number | term (characters, pinyin, English meaning, usual date) | unit title | the line the learner reads | what the unit teaches
 1 | 立春 lì chūn · Spring begins · c. 4 Feb | Hello, new neighbours | Your first day. The street is quiet, and everyone says hello. | Greet people, say who you are, and ask the first questions.
 2 | 雨水 yǔ shuǐ · Rain water · c. 19 Feb | People around you | Rain on the window, and new neighbours at the door. | Name the people you meet: neighbours, colleagues, visitors and friends.
-3 | 惊蛰 jīng zhé · Insects wake · c. 5 Mar | Numbers and amounts | The first thunder wakes everything up. You start counting prices. | Count, measure and say how much: numbers, measure words, weight, length and money.
+3 | 惊蛰 jīng zhé · Awakening of insects · c. 5 Mar | Numbers and amounts | The first thunder wakes everything up. You start counting prices. | Count, measure and say how much: numbers, measure words, weight, length and money.
 4 | 春分 chūn fēn · Spring equinox · c. 20 Mar | Home and family | Day and night are the same length. You unpack and make a home. | Talk about your family, your age, your home and your daily routine.
-5 | 清明 qīng míng · Clear and bright · c. 4 Apr | Time and routine | A day off in the fresh air, and a good moment to sort out your time. | Say when, how long and how often, and what came before and after.
+5 | 清明 qīng míng · Clear and bright · c. 4 Apr | Time and routine | Families visit the graves, then walk out into the fresh air. A good moment to sort out your time. | Say when, how long and how often, and what came before and after.
 6 | 谷雨 gǔ yǔ · Grain rain · c. 20 Apr | Weather and the outdoors | Soft rain for the fields. The hills are green and the air is warm. | Seasons, weather, mountains, rivers, plants and animals.
 7 | 立夏 lì xià · Summer begins · c. 5 May | Food and drink | The first hot days: cold drinks, street food and long dinners. | Eat out, name dishes, fruit and drinks.
-8 | 小满 xiǎo mǎn · Grain fills · c. 21 May | Money and shopping | The markets are full. You pay, you bargain, you book a table. | Shop, pay, bargain and book a table.
+8 | 小满 xiǎo mǎn · Grain buds · c. 21 May | Money and shopping | The wheat is filling out. You pay, you bargain, you book a table. | Shop, pay, bargain and book a table.
 9 | 芒种 máng zhòng · Grain in ear · c. 6 Jun | Clothes and comparing | Busy fields and busy shops. You try on clothes and compare. | Choose clothes, compare things and say how much more or less.
 10 | 夏至 xià zhì · Summer solstice · c. 21 Jun | Out in the city | The longest day. You walk all over the city and learn to ask the way. | Name places in a city, give directions and talk about distance.
 11 | 小暑 xiǎo shǔ · Minor heat · c. 7 Jul | On the road | Hot stations, long queues, tickets and a visa form. | Buy tickets, ride transport, travel abroad and follow the rules.
@@ -39,9 +39,9 @@ Each line: number | term (characters, pinyin, English meaning, usual date) | uni
 16 | 秋分 qiū fēn · Autumn equinox · c. 23 Sep | Thinking and saying | Day and night are equal again. You say what you think. | Say what you think, know, see and hear.
 17 | 寒露 hán lù · Cold dew · c. 8 Oct | Feelings and friends | Cooler nights and warmer friends: feelings, gifts and parties. | Feelings, character, parties and gifts.
 18 | 霜降 shuāng jiàng · Frost falls · c. 23 Oct | Doing and helping | The first frost. You help, you give, you finish what you started. | Everyday actions, helping, giving and telling.
-19 | 立冬 lì dōng · Winter begins · c. 7 Nov | Change and choice | Dumplings on every table. A good time to change something. | Change things, choose, try, and say what you can or must do.
+19 | 立冬 lì dōng · Winter begins · c. 7 Nov | Change and choice | In the north, many families eat dumplings. A good time to change something. | Change things, choose, try, and say what you can or must do.
 20 | 小雪 xiǎo xuě · Minor snow · c. 22 Nov | Right and wrong | A little snow. What is good, what is bad, what is right. | Good and bad, right and wrong, clean and safe.
 21 | 大雪 dà xuě · Major snow · c. 7 Dec | Describing things | Deep snow makes everything look different, and you find words for it. | Size, speed, difficulty and what is the same or different.
 22 | 冬至 dōng zhì · Winter solstice · c. 21 Dec | Certainly, still and even | The longest night. You are sure of some things and not of others. | Say what is certain or likely, what is still going on, and even.
 23 | 小寒 xiǎo hán · Minor cold · c. 5 Jan | If, because, so | Cold and clear. You give reasons, and say what you would do if. | Give conditions and reasons.
-24 | 大寒 dà hán · Major cold · c. 20 Jan | Joining ideas | The last term of the year. You tie your ideas together. | Link sentences: and, but, both, first then. The last lesson takes a second look at words you already know.
+24 | 大寒 dà hán · Major cold · c. 20 Jan | Joining ideas | The last of the 24 terms. You tie your ideas together. | Link sentences: and, but, both, first then. The last lesson takes a second look at words you already know.

@@ -34,7 +34,7 @@ Sentences (Chinese / English):
 20. 我的背包里有一本书和一件衣服。  /  My backpack has a book and a piece of clothing.
 21. 中国北部的冬天很冷。  /  Winters in the north of China are very cold.
 22. 他的工资是我的两倍。  /  His salary is twice mine.
-23. 他在美国读本科。  /  He is studying for his bachelor's degree in Beijing.
+23. 他在美国读本科。  /  He is studying for his bachelor's degree in the United States.
 24. 我本来想去，可是太累了。  /  I originally wanted to go, but I was too tired.
 25. 我真笨，连这个也不会。  /  I am so stupid, I cannot even do this.
 26. 他的鼻子很高。  /  He has a high nose.

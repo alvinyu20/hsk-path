@@ -56,9 +56,9 @@ window.HSK4_SPEAK = {
      "en": "Good. Why do you want to come to our company?"
     },
     {
-     "zh": "好的，我们会通知你。你对工资有什么想法？",
-     "py": "Hǎo de, wǒmen huì tōngzhī nǐ. Nǐ duì gōngzī yǒu shénme xiǎngfǎ?",
-     "en": "Okay, we will notify you. What do you think about the pay?"
+     "zh": "好的。你对工资有什么要求？",
+     "py": "Hǎo de. Nǐ duì gōngzī yǒu shénme yāoqiú?",
+     "en": "Okay. What are your salary requirements?"
     },
     {
      "zh": "好的，谢谢你来面试。",
@@ -329,8 +329,8 @@ window.HSK4_SPEAK = {
    ],
    "you": [
     {
-     "zh": "对不起，路上现在堵车了。",
-     "py": "Duìbuqǐ, lùshang xiànzài dǔchē le.",
+     "zh": "对不起，路上堵车了。",
+     "py": "Duìbuqǐ, lùshang dǔchē le.",
      "en": "Sorry, there is a traffic jam on the road now."
     },
     {
@@ -416,8 +416,8 @@ window.HSK4_SPEAK = {
    ],
    "you": [
     {
-     "zh": "对，我想订一些座位。",
-     "py": "Duì, wǒ xiǎng dìng yìxiē zuòwèi.",
+     "zh": "对，我想订几个座位。",
+     "py": "Duì, wǒ xiǎng dìng jǐ ge zuòwèi.",
      "en": "Yes, I want to book some seats."
     },
     {
@@ -486,8 +486,8 @@ window.HSK4_SPEAK = {
      "en": "Okay. Please give me your passport and photo."
     },
     {
-     "zh": "你还要在表格上写好你的地址。",
-     "py": "Nǐ hái yào zài biǎogé shàng xiě hǎo nǐ de dìzhǐ.",
+     "zh": "你还要在表格上写清楚你的地址。",
+     "py": "Nǐ hái yào zài biǎogé shàng xiě qīngchu nǐ de dìzhǐ.",
      "en": "You must also write your address on the form."
     },
     {

@@ -23,7 +23,7 @@ Nothing on the HSK 4 side has been checked by a person who reads Chinese; these 
 | 15-sentences-13-of-16.md | 220 example, exercise, dialogue and listening sentences |
 | 16-sentences-14-of-16.md | 220 example, exercise, dialogue and listening sentences |
 | 17-sentences-15-of-16.md | 220 example, exercise, dialogue and listening sentences |
-| 18-sentences-16-of-16.md | 212 example, exercise, dialogue and listening sentences |
+| 18-sentences-16-of-16.md | 210 example, exercise, dialogue and listening sentences |
 | 19-word-webs.md | character meanings inside words, the opposite pairs and notes, the topic groups |
 | 20-exam.md | the mock exam: true/false, dialogues, blanks, ordering, passages and the writing practice |
 | 21-scripts-and-clips.md | the 8 practice conversations, the phrases, the 24 listening clips and their notes |
