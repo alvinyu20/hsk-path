@@ -64,8 +64,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await page.locator('.obm-nav button', { hasText: 'Back' }).count() === 1, 'the cards can go back');
     await page.locator('.obm-nav .pri').click();
     let t = await dlg(page).innerText();
-    check(/Where are you starting/.test(t) && /I am brand new to Chinese/.test(t) && /I know a little/.test(t) && /Test out of a level/.test(t) && /Coming soon/.test(t), 'then where to start, with test-out shown as coming soon');
-    check(await page.locator('.obm-opt.soon').isDisabled(), 'test-out cannot be chosen yet');
+    check(/Where are you starting/.test(t) && /I am brand new to Chinese/.test(t) && /I know a little/.test(t) && /Test out of a level/.test(t) && !/Coming soon/.test(t), 'then where to start, with test-out as a real choice');
+    check(await page.locator('.obm-opt', { hasText: 'Test out of a level' }).isEnabled(), 'test-out can be chosen (tools/smoke-test-placement.js runs it)');
     check(await page.locator('.obm-opt.on').innerText().then(x => /brand new/.test(x)), 'brand new is the preselected, recommended choice');
     check(/sounds of Chinese/.test(t) && /pinyin and tones/.test(t), 'it says that a beginner starts with the sounds');
     await page.locator('button', { hasText: 'Continue' }).click();

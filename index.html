@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="928c1f1a41">
+<meta name="shanlu-version" content="eb910b7896">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=928c1f1a41">
+<link rel="stylesheet" href="styles.css?v=eb910b7896">
 </head>
 <body>
 <div id="app"></div>
@@ -103,7 +103,8 @@
   </header>
   <sc-if value="{{jyPingShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="xp-ping" role="status" data-on-click="{{goJourney}}"><b>New stop unlocked</b><span>Tap to travel</span></button></sc-if>
   <sc-if value="{{msShow}}" hint-placeholder-val="{{ false }}"><div class="mstoast" role="status" aria-live="polite" data-on-click="{{msClose}}"><span class="ms-ic" aria-hidden="true">{{msIcon}}</span><div class="ms-t"><b>{{msTitle}}</b><span>{{msDesc}}</span></div><span class="ms-more">{{msMore}}</span><button type="button" class="ms-x" aria-label="Dismiss" data-on-click="{{msClose}}">×</button></div></sc-if>
-  <sc-if value="{{lvMsgShow}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">{{lvMsgText}}<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" data-on-click="{{lvMsgGo}}">{{lvMsgGoText}}</button><button class="btn" data-on-click="{{lvMsgClose}}">Dismiss</button></div></div></sc-if>
+  <sc-if value="{{pcNoteShow}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">{{pcNoteText}}<div style="margin-top:10px"><button class="btn" data-on-click="{{pcNoteClose}}">Got it</button></div></div></sc-if>
+  <sc-if value="{{lvMsgShow}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">{{lvMsgText}}<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" data-on-click="{{lvMsgGo}}">{{lvMsgGoText}}</button><button class="btn" data-on-click="{{lvMsgCheck}}">Check my level</button><button class="btn" data-on-click="{{lvMsgClose}}">Dismiss</button></div></div></sc-if>
   <sc-if value="{{hasSubnav}}" hint-placeholder-val="{{ false }}"><div class="seg2 subnav" role="group" aria-label="In this section"><sc-for list="{{subnav}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div></sc-if>
   <sc-if value="{{saveFail}}" hint-placeholder-val="{{ false }}"><div class="banner bad" role="alert">This device could not save your progress. Its storage may be full or blocked (a private tab does this). What you do now can be lost when you close the page, so download a backup.<div style="margin-top:10px"><button class="btn pri" data-on-click="{{exportData}}">Download a backup</button></div><div class="muted" style="margin-top:8px;font-size:13px">{{saveInfo}}</div></div></sc-if>
   <sc-if value="{{swReady}}" hint-placeholder-val="{{ false }}"><div class="banner" role="status">A new version of Shanlu is ready.<div style="margin-top:10px"><button class="btn pri" data-on-click="{{updateNow}}">Reload now</button></div></div></sc-if>
@@ -296,6 +297,9 @@
       <div class="lvlist" role="group" aria-label="Level"><sc-for list="{{lvItems}}" as="o" hint-placeholder-count="3"><button type="button" class="lvitem {{o.cls}}" data-on-click="{{o.fn}}"><span class="lvn">{{o.label}}</span><span class="lvs">{{o.sub}}</span></button></sc-for></div>
       <div style="margin:16px 0 0;font-weight:600">HSK version shown on your path</div>
       <div class="seg2" style="margin-top:8px;display:inline-flex" role="group" aria-label="HSK version"><button class="{{sys2Cls}}" data-on-click="{{setSys2}}">HSK 2.0 · 6 levels</button><button class="{{sys3Cls}}" data-on-click="{{setSys3}}">HSK 3.0 · 9 levels</button></div>
+      <div style="margin:16px 0 0;font-weight:600">Already know some Chinese?</div>
+      <p class="muted" style="margin:6px 0 0;font-size:15px">A short check (about 3 minutes) finds the levels you know, so you can start higher. Words you skip come back in Review, about 20 a day.</p>
+      <div style="margin-top:8px"><button class="btn" data-on-click="{{pcOpenMenu}}">Check my level</button></div>
       <div style="margin:16px 0 0;font-weight:600">Level lock</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{lockOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
       <p class="muted" style="margin:8px 0 0;font-size:15px">Locked is the default. The level exams are AI-written and AI-checked, and the pictures use emoji that look different on different devices, so if an unclear question holds you back, switching the lock to open is fine: the exam then only earns the level's seal.</p>
@@ -1016,7 +1020,7 @@
           <div class="kick">Levels</div>
           <h3 class="gd-h2">Nine HSK levels, one ladder</h3>
           <p>HSK 1 to 4 are built, and 5 to 9 are on the way. To open the next level, pass the mock exam with 80% in both listening and reading. Switch level any time from the HSK menu at the top, or choose All levels to study everything you have unlocked together.</p>
-          <p class="gd-small">Already know the early levels? A short check to test out of a level is coming.</p>
+          <p class="gd-small">Already know the early levels? <button class="linkbtn" data-on-click="{{pcOpenMenu}}">Check my level</button>: about 3 minutes, and you start higher.</p>
         </div>
         <div class="gd-rungs" role="img" aria-label="Nine HSK levels: 1 to 4 available, 5 to 9 coming">
           <sc-for list="{{guideLevels}}" as="v" hint-placeholder-count="9"><div class="{{v.cls}}" style="height:{{v.h}}"><b>{{v.n}}</b></div></sc-for>
@@ -2779,12 +2783,12 @@
   <div class="obm-wrap"><div class="obm-scrim"></div>
     <div class="obm" role="dialog" aria-modal="true" aria-labelledby="obm-t-level">
       <h2 class="obm-h" id="obm-t-level">Where are you starting?</h2>
-      <p class="obm-p">You begin at HSK 1 either way. This only decides what we show you first.</p>
+      <p class="obm-p">This only decides what we show you first. You can run the level check again any time from Settings.</p>
       <div class="obm-opts" role="group" aria-label="Where you are starting">
         <sc-for list="{{obLvlOpts}}" as="o" hint-placeholder-count="2">
           <button type="button" class="{{o.cls}}" aria-pressed="{{o.pressed}}" data-on-click="{{o.fn}}"><b>{{o.t}}</b><span>{{o.d}}</span><sc-if value="{{o.hasTag}}" hint-placeholder-val="{{ false }}"><i class="obm-tag">{{o.tag}}</i></sc-if></button>
         </sc-for>
-        <button type="button" class="obm-opt soon" disabled><b>Test out of a level</b><span>A short check on the level you pick, so you can skip what you already know. For now, begin at HSK 1: each level exam opens the next level.</span><i class="obm-tag">Coming soon</i></button>
+        <button type="button" class="{{obTestCls}}" aria-pressed="{{obTestPressed}}" data-on-click="{{obTestPick}}"><b>Test out of a level</b><span>A short check (about 3 minutes) on the level you pick, so you can skip what you already know. After your name, you take it.</span></button>
       </div>
       <button class="btn pri big obm-main" data-on-click="{{obLevelGo}}">Continue</button>
     </div>
@@ -2811,63 +2815,112 @@
     </div>
   </div>
   </sc-if>
+  <sc-if value="{{pcShow}}" hint-placeholder-val="{{ false }}">
+  <div class="obm-wrap pc-wrap"><div class="obm-scrim"></div>
+    <div class="obm pc" role="dialog" aria-modal="true" aria-label="Level check">
+      <sc-if value="{{pcClaimShow}}" hint-placeholder-val="{{ false }}">
+        <h2 class="obm-h">Test out of a level</h2>
+        <p class="obm-p">Pick the highest level you think you already know. We start there and work down, about 3 minutes. It only decides where you start: nothing is certified.</p>
+        <div class="obm-opts" role="group" aria-label="The highest level you know">
+          <sc-for list="{{pcClaims}}" as="o" hint-placeholder-count="4">
+            <button type="button" class="{{o.cls}}" aria-pressed="{{o.pressed}}" data-on-click="{{o.fn}}"><b>{{o.t}}</b><span>{{o.d}}</span></button>
+          </sc-for>
+        </div>
+        <button class="btn pri big obm-main" data-on-click="{{pcStart}}">Start the check</button>
+        <button class="linkbtn obm-link" data-on-click="{{pcCancel}}">{{pcCancelText}}</button>
+      </sc-if>
+      <sc-if value="{{pcAskShow}}" hint-placeholder-val="{{ false }}">
+        <div class="obm-bar"><span class="kick">{{pcLabel}}</span><button class="linkbtn" data-on-click="{{pcCancel}}">Stop</button></div>
+        <div class="pc-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{pcPctN}}"><i style="width:{{pcPct}}"></i></div>
+        <sc-if value="{{pcIsWord}}" hint-placeholder-val="{{ false }}">
+          <p class="obm-note pc-q">What does this word mean?</p>
+          <div class="pc-zh zh" lang="zh">{{pcZh}}</div>
+          <sc-if value="{{pcPyOn}}" hint-placeholder-val="{{ false }}"><div class="pc-py">{{pcPy}}</div></sc-if>
+          <button class="linkbtn pc-pybtn" data-on-click="{{pcPyToggle}}">{{pcPyText}}</button>
+        </sc-if>
+        <sc-if value="{{pcIsGrammar}}" hint-placeholder-val="{{ false }}"><h2 class="obm-h pc-prompt">{{pcPrompt}}</h2></sc-if>
+        <div class="obm-opts" role="group" aria-label="Answers">
+          <sc-for list="{{pcOpts}}" as="o" hint-placeholder-count="4">
+            <button type="button" class="obm-opt pc-ans" data-on-click="{{o.fn}}"><b class="{{o.cls}}">{{o.t}}</b></button>
+          </sc-for>
+        </div>
+        <button class="btn big obm-main" data-on-click="{{pcDontKnow}}">I don't know</button>
+        <p class="obm-note pc-tip">Not sure? "I don't know" is better than guessing: it helps us place you more accurately.</p>
+      </sc-if>
+      <sc-if value="{{pcResultShow}}" hint-placeholder-val="{{ false }}">
+        <h2 class="obm-h">{{pcResHead}}</h2>
+        <p class="obm-p">{{pcResLead}}</p>
+        <sc-if value="{{pcResPlaced}}" hint-placeholder-val="{{ false }}">
+          <ul class="pc-list">
+            <li>{{pcResWords}}</li>
+            <li>This is an estimate. Passing the level exam is what earns the seal.</li>
+          </ul>
+        </sc-if>
+        <button class="btn pri big obm-main" data-on-click="{{pcResGo}}">{{pcResGoText}}</button>
+        <sc-if value="{{pcResPlaced}}" hint-placeholder-val="{{ false }}"><button class="linkbtn obm-link" data-on-click="{{pcCancel}}">Not now</button></sc-if>
+        <sc-if value="{{pcResRetry}}" hint-placeholder-val="{{ false }}"><button class="linkbtn obm-link" data-on-click="{{pcRetry}}">Try a different level</button></sc-if>
+      </sc-if>
+    </div>
+  </div>
+  </sc-if>
 </div>
 </template>
-<script defer src="vendor/morphdom-umd.min.js?v=928c1f1a41"></script>
-<script defer src="runtime.js?v=928c1f1a41"></script>
-<script defer src="config.js?v=928c1f1a41"></script>
-<script defer src="friends.js?v=928c1f1a41"></script>
-<script defer src="level.js?v=928c1f1a41"></script>
-<script defer src="data/hsk1-words.js?v=928c1f1a41"></script>
-<script defer src="data/hsk1-grammar.js?v=928c1f1a41"></script>
-<script defer src="data/hsk1-webs.js?v=928c1f1a41"></script>
-<script defer src="data/hsk1-speak.js?v=928c1f1a41"></script>
-<script defer src="data/hsk1-listen.js?v=928c1f1a41"></script>
-<script defer src="data/hsk1-exam.js?v=928c1f1a41"></script>
-<script defer src="data/hsk1-erhua.js?v=928c1f1a41"></script>
-<script defer src="data/lexicon.js?v=928c1f1a41"></script>
-<script defer src="data/char-glosses.js?v=928c1f1a41"></script>
-<script defer src="data/hsk2-preview.js?v=928c1f1a41"></script>
-<script defer src="data/hsk3-preview.js?v=928c1f1a41"></script>
-<script defer src="data/hsk4-preview.js?v=928c1f1a41"></script>
-<script defer src="data/hsk2-words.js?v=928c1f1a41"></script>
-<script defer src="data/hsk2-speak.js?v=928c1f1a41"></script>
-<script defer src="data/hsk2-listen.js?v=928c1f1a41"></script>
-<script defer src="data/hsk2-exam.js?v=928c1f1a41"></script>
-<script defer src="data/hsk2-grammar.js?v=928c1f1a41"></script>
-<script defer src="data/hsk2-webs.js?v=928c1f1a41"></script>
-<script defer src="data/hsk3-words.js?v=928c1f1a41"></script>
-<script defer src="data/hsk3-speak.js?v=928c1f1a41"></script>
-<script defer src="data/hsk3-listen.js?v=928c1f1a41"></script>
-<script defer src="data/hsk3-exam.js?v=928c1f1a41"></script>
-<script defer src="data/hsk3-grammar.js?v=928c1f1a41"></script>
-<script defer src="data/hsk3-webs.js?v=928c1f1a41"></script>
-<script defer src="data/hsk4-words.js?v=928c1f1a41"></script>
-<script defer src="data/hsk4-speak.js?v=928c1f1a41"></script>
-<script defer src="data/hsk4-listen.js?v=928c1f1a41"></script>
-<script defer src="data/hsk4-exam.js?v=928c1f1a41"></script>
-<script defer src="data/hsk4-grammar.js?v=928c1f1a41"></script>
-<script defer src="data/hsk4-webs.js?v=928c1f1a41"></script>
-<script defer src="ascent.js?v=928c1f1a41"></script>
-<script defer src="secrets.js?v=928c1f1a41"></script>
-<script defer src="sync.js?v=928c1f1a41"></script>
-<script defer src="data/audio-manifest.js?v=928c1f1a41"></script>
-<script defer src="journey.js?v=928c1f1a41"></script>
-<script defer src="data/journey.js?v=928c1f1a41"></script>
-<script defer src="data/journey-map.js?v=928c1f1a41"></script>
-<script defer src="data/journey-media.js?v=928c1f1a41"></script>
-<script defer src="data/souvenirs.js?v=928c1f1a41"></script>
-<script defer src="erhua.js?v=928c1f1a41"></script>
-<script defer src="pinyin.js?v=928c1f1a41"></script>
-<script defer src="data/pinyin-course.js?v=928c1f1a41"></script>
-<script defer src="data/pinyin-chart.js?v=928c1f1a41"></script>
-<script defer src="data/exam-media.js?v=928c1f1a41"></script>
-<script defer src="data/exam-art.js?v=928c1f1a41"></script>
-<script defer src="data/neutral-alt.js?v=928c1f1a41"></script>
-<script defer src="data/path-scenes.js?v=928c1f1a41"></script>
-<script defer src="data/speak-scenes.js?v=928c1f1a41"></script>
-<script defer src="data/art.js?v=928c1f1a41"></script>
-<script defer src="data/path.js?v=928c1f1a41"></script>
-<script defer src="app.js?v=928c1f1a41"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=eb910b7896"></script>
+<script defer src="runtime.js?v=eb910b7896"></script>
+<script defer src="config.js?v=eb910b7896"></script>
+<script defer src="friends.js?v=eb910b7896"></script>
+<script defer src="level.js?v=eb910b7896"></script>
+<script defer src="placement.js?v=eb910b7896"></script>
+<script defer src="data/hsk1-words.js?v=eb910b7896"></script>
+<script defer src="data/hsk1-grammar.js?v=eb910b7896"></script>
+<script defer src="data/hsk1-webs.js?v=eb910b7896"></script>
+<script defer src="data/hsk1-speak.js?v=eb910b7896"></script>
+<script defer src="data/hsk1-listen.js?v=eb910b7896"></script>
+<script defer src="data/hsk1-exam.js?v=eb910b7896"></script>
+<script defer src="data/hsk1-erhua.js?v=eb910b7896"></script>
+<script defer src="data/lexicon.js?v=eb910b7896"></script>
+<script defer src="data/char-glosses.js?v=eb910b7896"></script>
+<script defer src="data/hsk2-preview.js?v=eb910b7896"></script>
+<script defer src="data/hsk3-preview.js?v=eb910b7896"></script>
+<script defer src="data/hsk4-preview.js?v=eb910b7896"></script>
+<script defer src="data/hsk2-words.js?v=eb910b7896"></script>
+<script defer src="data/hsk2-speak.js?v=eb910b7896"></script>
+<script defer src="data/hsk2-listen.js?v=eb910b7896"></script>
+<script defer src="data/hsk2-exam.js?v=eb910b7896"></script>
+<script defer src="data/hsk2-grammar.js?v=eb910b7896"></script>
+<script defer src="data/hsk2-webs.js?v=eb910b7896"></script>
+<script defer src="data/hsk3-words.js?v=eb910b7896"></script>
+<script defer src="data/hsk3-speak.js?v=eb910b7896"></script>
+<script defer src="data/hsk3-listen.js?v=eb910b7896"></script>
+<script defer src="data/hsk3-exam.js?v=eb910b7896"></script>
+<script defer src="data/hsk3-grammar.js?v=eb910b7896"></script>
+<script defer src="data/hsk3-webs.js?v=eb910b7896"></script>
+<script defer src="data/hsk4-words.js?v=eb910b7896"></script>
+<script defer src="data/hsk4-speak.js?v=eb910b7896"></script>
+<script defer src="data/hsk4-listen.js?v=eb910b7896"></script>
+<script defer src="data/hsk4-exam.js?v=eb910b7896"></script>
+<script defer src="data/hsk4-grammar.js?v=eb910b7896"></script>
+<script defer src="data/hsk4-webs.js?v=eb910b7896"></script>
+<script defer src="ascent.js?v=eb910b7896"></script>
+<script defer src="secrets.js?v=eb910b7896"></script>
+<script defer src="sync.js?v=eb910b7896"></script>
+<script defer src="data/audio-manifest.js?v=eb910b7896"></script>
+<script defer src="journey.js?v=eb910b7896"></script>
+<script defer src="data/journey.js?v=eb910b7896"></script>
+<script defer src="data/journey-map.js?v=eb910b7896"></script>
+<script defer src="data/journey-media.js?v=eb910b7896"></script>
+<script defer src="data/souvenirs.js?v=eb910b7896"></script>
+<script defer src="erhua.js?v=eb910b7896"></script>
+<script defer src="pinyin.js?v=eb910b7896"></script>
+<script defer src="data/pinyin-course.js?v=eb910b7896"></script>
+<script defer src="data/pinyin-chart.js?v=eb910b7896"></script>
+<script defer src="data/exam-media.js?v=eb910b7896"></script>
+<script defer src="data/exam-art.js?v=eb910b7896"></script>
+<script defer src="data/neutral-alt.js?v=eb910b7896"></script>
+<script defer src="data/path-scenes.js?v=eb910b7896"></script>
+<script defer src="data/speak-scenes.js?v=eb910b7896"></script>
+<script defer src="data/art.js?v=eb910b7896"></script>
+<script defer src="data/path.js?v=eb910b7896"></script>
+<script defer src="app.js?v=eb910b7896"></script>
 </body>
 </html>

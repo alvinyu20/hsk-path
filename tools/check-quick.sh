@@ -33,6 +33,7 @@ case "$MODE" in
     last node tools/test-audio.js
     last node tools/test-lrn-stale.js
     last node tools/test-write-local.js
+    last node tools/test-placement.js
     last node tools/test-queue-cap.js
     last env NODE_PATH="$(npm root -g)" node tools/test-hear-homophones.js
     last python3 tools/build-char-glosses.py --check
@@ -43,6 +44,7 @@ case "$MODE" in
     python3 tools/check-pinyin-course.py | tail -n 1
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-journey.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-onboarding.js
+    last env NODE_PATH="$(npm root -g)" node tools/smoke-test-placement.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-pinyin.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-path.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-review-audio.js

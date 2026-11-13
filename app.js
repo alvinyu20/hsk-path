@@ -115,7 +115,7 @@
   const LV_NAMES = Array.from({ length:TOPL }, (_, i) => 'HSK ' + (i + 1));
   const KNOWN_LISTS = LV_NAMES.length < 2 ? LV_NAMES[0] : LV_NAMES.slice(0, -1).join(', ') + ' and ' + LV_NAMES[LV_NAMES.length - 1];
   const listJoin = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];   // "HSK 1", "HSK 1 and HSK 2", "HSK 1, HSK 2 and HSK 3"
-  const LVL = window.ShanluLevel || { MAX_LEVEL:LV, PASS_PCT:80, passedEntry:() => false, passedList:() => false, softLock:() => false, levelPassed:() => false, markPassed() {}, unlocked:() => true };
+  const LVL = window.ShanluLevel || { MAX_LEVEL:LV, PASS_PCT:80, passedEntry:() => false, passedList:() => false, softLock:() => false, placed:() => 0, levelPassed:() => false, markPassed() {}, unlocked:() => true };
   const LV_DATA = (name) => window['HSK' + LV + '_' + name];
   // In "All levels" the content of every unlocked level is joined (HSK 1 first). Words are different in every level, so nothing is shared or duplicated.
   const LV_ALL = (name) => LVLS.map(n => window['HSK' + n + '_' + name]).filter(Boolean);
@@ -214,13 +214,15 @@
   // means fewer reviews and more forgetting. A word's interval in days is its stability times retK (1.0 at 90%). A person's setting: it follows them.
   const retention = () => { const r = Number(prefGet('retention', 0.9)); return r >= 0.75 && r <= 0.95 ? r : 0.9; };
   const retK = () => (1 / (retention() * retention()) - 1) * 81 / 19;
-  const dueIn = (d, off) => d.s * retK() - lOf(d) - (off || 0);
+  // A word the level check marked "probably known" carries pk, the day it may first come back (the check releases 20 a day); one answer in Review removes it.
+  const dueIn = (d, off) => { const base = d.s * retK() - lOf(d) - (off || 0); return d.pk ? Math.max(base, (d.pk - Date.now()) / DAY_MS - (off || 0)) : base; };
   // One answer changes a skill's stability (s) and its difficulty (d, 1 to 10, starts at 5). The growth factors and the lapse rule are hand-set, not fitted.
   // o.relearn: the card is being answered again in the same session after a lapse. That is relearning, so the stability does not grow
   // (before this, a word forgotten at 90 days came back at 31 days and then jumped to 50 days after one Good).
   const bump = (d, r, o) => {
     const R = retr(d);
     const dif = d.d || 5;
+    const confirm = !!d.pk && (r === 'good' || r === 'easy');   // "probably known" and right: the person knew it already, so the first interval is long, not a new word's 1 or 3 days
     const grow = (f) => 1 + (f - 1) * Math.max(0.5, 1.3 - 0.06 * dif);   // harder cards grow more slowly, easier ones a little faster
     let s = d.s, nd = dif;
     if (r === 'again') { s = s > 0 ? Math.max(0.4, Math.min(s * 0.35, 6)) : 0.4; nd = Math.min(10, dif + 0.8); }
@@ -228,6 +230,7 @@
     else if (r === 'hard') { s = s > 0 ? Math.max(0.8, s * grow(1.25)) : 1; nd = Math.min(10, dif + 0.3); }
     else if (r === 'good') { s = s > 0 ? s * grow(2.2 + 1.4 * (1 - R)) : 1.5; nd = dif + (5 - dif) * 0.05; }   // on time (recall 90%) a Good makes the interval about 2.3 times longer (it was 1.7: three timers per word brought words back too often)
     else { s = s > 0 ? s * grow(3.2 + 1.8 * (1 - R)) : 3; nd = Math.max(1, dif - 0.5); }
+    if (confirm) s = Math.max(s, r === 'easy' ? 45 : 20);
     return { s, t:Date.now(), d:Math.round(nd * 100) / 100 };
   };
   const fmtInterval = (s) => { const d = s * retK(); return d < 1 ? 'Today' : d < 1.5 ? 'Tomorrow' : d < 45 ? 'In ' + Math.round(d) + ' days' : 'In ' + Math.round(d / 30) + ' months'; };
@@ -266,6 +269,7 @@
   const stopTitle = (st) => st.t + (st.p ? ' (' + st.p[0] + ' of ' + st.p[1] + ')' : '');
   const wStarted = (S, zh) => !!(S.ws[zh] && S.ws[zh].see.s > 0) || !!(S.lrn || {})[zh] || !!(S.wlearned || {})[zh];
   const stopState = (S, st) => {   // 'done' | 'part' | 'new'
+    const home = STOP_BY[st.id]; if (home && home.lv <= LVL.placed()) return 'done';   // a level the person tested out of (the level check): its stops are behind them
     if (st.k === 's') return S.sres[st.s] ? 'done' : 'new';
     if (st.k === 'g') { const i = LESSON_AT[st.g]; const best = i === undefined ? 0 : (S.gres[LESSONS[i].id] || 0); return best >= 80 ? 'done' : best > 0 ? 'part' : 'new'; }
     const ws = stopWords(st); const n = ws.filter(z => wStarted(S, z)).length;
@@ -364,7 +368,7 @@
 
   // "Words in memory": every started word counts by its chance of being recalled right now, so the number rises when you learn and review
   // and falls when reviews slide. (XP points are still counted inside, only to keep the streak, but they are no longer shown.)
-  const memOf = (ws) => { let sum = 0, n = 0; Object.keys(ws).forEach(z => { const i = winfo(ws[z], 0); if (i.started) { sum += i.recallN / 100; n++; } }); return { words:Math.round(sum), n, avg:n ? Math.round(100 * sum / n) : 0 }; };
+  const memOf = (ws) => { let sum = 0, n = 0; Object.keys(ws).forEach(z => { const i = winfo(ws[z], 0); if (i.started && !(ws[z].see && ws[z].see.pk)) { sum += i.recallN / 100; n++; } }); return { words:Math.round(sum), n, avg:n ? Math.round(100 * sum / n) : 0 }; };
 
   // ---------- friends board (optional; stays hidden until config.js has the server address) ----------
   const FR = window.ShanluFriends ? window.ShanluFriends.make() : null;
@@ -485,7 +489,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
-      jyPing:0, jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
+      jyPing:0, jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -586,6 +590,9 @@
       saved = Object.assign({}, saved, readSplit());
     }
     const st = rollDay(mergeSaved(freshState(), saved));
+    // right after the level check the path jumps ahead: today's "steps done" and "words in memory" start again from there, so the check does not count as a day's work
+    try { if (localStorage.getItem('shanlu-rebase') === '1') { localStorage.removeItem('shanlu-rebase'); st.pbase = pathDoneCount(st); st.mem0 = memOf(st.ws).words; } } catch (e) {}
+    try { const m = JSON.parse(localStorage.getItem('shanlu-placed-msg')); if (m && m.at) { localStorage.removeItem('shanlu-placed-msg'); st.pcNote = 'Level check done: you start at HSK ' + m.at + '. ' + (m.n ? m.n.toLocaleString('en-US') + ' words of ' + (m.top > 1 ? 'HSK 1 to ' + m.top : 'HSK 1') + ' come back in Review, about ' + m.perDay + ' a day from tomorrow, so any slips are caught.' : 'The levels before it are open.'); } } catch (e) {}
     // a saved Review queue can hold a word this view does not have (a word of a locked level, or one that was renamed): drawing it threw and froze the page
     if (Array.isArray(st.rq)) { const n0 = st.rq.length; st.rq = st.rq.filter(z => BANK[itemOf(z).zh] && !staleNew(z, st.ws, st.lrn)); if (n0 && !st.rq.length) st.rcomplete = true; }
     st.dclip = pickClip(st.clipBest, []);   // the Listening lab opens on a random clip, not always the first
@@ -2972,7 +2979,7 @@
     };
     obGuideSkip = () => { this.onbSet({ p:'level' }); this.setState({ obCard:0 }); };
     obPickLvl = (k) => this.setState({ obLvl:k });
-    obLevelGo = () => this.onbSet({ p:'me', l:this.state.obLvl === 'some' ? 'some' : 'new' });
+    obLevelGo = () => this.onbSet({ p:'me', l:this.state.obLvl === 'new' ? 'new' : 'some', ts:this.state.obLvl === 'test' ? 1 : 0 });   // test out: the name step comes first, then the check (the first-visit steps end when words are skipped)
     obMeBack = () => this.onbSet({ p:'level' });
     obJoinToggle = () => this.setState({ obJoin:!this.state.obJoin });
     obMeGo = async (guest) => {
@@ -2988,11 +2995,69 @@
         catch (e) { this.setState({ obBusy:false, obErr:((e && e.message) || 'Could not join the group.') + ' Try again, or stay a guest and join later from Friends.' }); return; }
         this.setState({ obBusy:false });
       }
-      this.onbSet({ p:'done', w:Date.now() });
+      const test = !!onbRead().ts;
+      this.onbSet({ p:'done', w:Date.now(), ts:0 });
       this.go('home');
+      if (test) this.pcOpen('onb', 1);
     };
     obSoundsGo = () => { const l = (PYC.lessons || [])[0]; this.onbSet({ px:Date.now() }); if (l) this.pyOpenId(l.id); else this.go('pinyin'); };
     obSoundsLater = () => this.onbSet({ px:Date.now() });
+    // ---- the level check ("test out", placement.js): pick the highest level you know, answer a short ladder of questions, start higher ----
+    plData = () => ({ max:LVL.MAX_LEVEL, words:(n) => window['HSK' + n + '_WORDS'] || [], grammar:(n) => (window['HSK' + n + '_GRAMMAR'] || {}).lessons || [] });
+    pcOpen = (from, claim) => {
+      if (!window.ShanluPlacement) return;
+      const c = claim || Math.max(1, ALL ? TOPL : LV);
+      this.setState({ pcs:{ step:'claim', claim:Math.max(1, Math.min(LVL.MAX_LEVEL, c)), from:from || 'menu', run:null, py:false } });
+      try { window.scrollTo(0, 0); } catch (e) {}
+    };
+    pcPick = (n) => { if (this.state.pcs) this.setState({ pcs:Object.assign({}, this.state.pcs, { claim:n }) }); };
+    pcStart = () => {
+      const p = this.state.pcs; if (!p || !window.ShanluPlacement) return;
+      const run = window.ShanluPlacement.newRun(p.claim, this.plData());
+      this.setState({ pcs:Object.assign({}, p, { step:run.done ? 'result' : 'ask', run }) });
+    };
+    pcAnswer = (i) => {
+      const p = this.state.pcs; if (!p || p.step !== 'ask' || !p.run || p.run.done) return;
+      window.ShanluPlacement.answer(p.run, i);
+      this.setState({ pcs:Object.assign({}, p, { step:p.run.done ? 'result' : 'ask' }) });
+    };
+    pcPyToggle = () => { const p = this.state.pcs; if (p) this.setState({ pcs:Object.assign({}, p, { py:!p.py }) }); };
+    pcCancel = () => this.setState({ pcs:null });
+    // nothing passed: start at HSK 1. In the first-visit steps that person is most likely new to Chinese, so the "sounds of Chinese" card is offered
+    pcStartLow = () => { const p = this.state.pcs; if (p && p.from === 'onb') this.onbSet({ l:'new' }); this.setState({ pcs:null }); };
+    pcRetry = () => { const p = this.state.pcs; if (p) this.setState({ pcs:Object.assign({}, p, { step:'claim', run:null }) }); };
+    // save the result: the words of the levels that passed go into those levels' own saves (as "probably known", 20 a day), the level opens,
+    // and the page reloads on All levels so the skipped words can come back in Review
+    pcApply = () => {
+      const p = this.state.pcs; const PL = window.ShanluPlacement;
+      if (!p || !p.run || !p.run.outcome || p.run.outcome.passedTop < 1 || !PL) { this.setState({ pcs:null }); return; }
+      const out = p.run.outcome;
+      this.persistNow();
+      const plan = PL.seedPlan(p.run, this.plData(), Date.now());
+      let probably = 0;
+      Object.keys(plan).forEach(k => {
+        const n = Number(k); const st = readStore(n) || {};
+        const ws = Object.assign({}, st.ws || {});
+        PL.applyPlan(ws, plan[k]);
+        Object.keys(plan[k]).forEach(z => { if (plan[k][z].pk && ws[z] && ws[z].see && ws[z].see.pk) probably++; });
+        st.ws = ws;
+        lsSet(storeKey(n), JSON.stringify(st));
+      });
+      const placed = Math.max(LVL.placed(), out.passedTop);
+      prefSet('placed', placed);
+      const stay = ALL || LV >= out.placedAt;   // someone already at or past that level stays where they are
+      const view = stay ? (ALL ? 0 : LV) : 0;
+      if (view === 0 && !ALL) {   // All levels starts from the highest level's save: give that save the streak and settings (not the XP, which every save adds up on its own)
+        const S0 = this.state; const st = readStore(out.placedAt) || {};
+        ['streak', 'lastActive', 'activity', 'mins', 'nlimit', 'theme', 'sys', 'voiceId', 'speed', 'ascView'].forEach(k => { if (st[k] === undefined && S0[k] !== undefined) st[k] = S0[k]; });
+        lsSet(storeKey(out.placedAt), JSON.stringify(st));
+      }
+      try { localStorage.setItem('shanlu-level', String(view)); localStorage.setItem('shanlu-rebase', '1'); localStorage.setItem('shanlu-placed-msg', JSON.stringify({ at:out.placedAt, top:out.passedTop, n:probably, perDay:PL.PER_DAY })); } catch (e) {}
+      prefSet('level', view);
+      this.frozen = true; clearTimeout(this.saveTimer);   // the leaving page must not write its old progress over the new words
+      this.setState({ pcs:null });
+      window.location.reload();
+    };
     // a person who is new and has nothing yet starts on the Journey (with the intro pop-up) rather than Home
     onbBoot = () => {
       const S = this.state; const onb = onbRead();
@@ -3010,6 +3075,41 @@
     jyFilterSet = (f) => this.setState({ jyFilter:f, jySel:null, jyMoreN:40 });
     jySvFilterSet = (f) => this.setState({ jySvFilter:f, jySvSel:null });
     jySvPick = (id) => { SFX.play('ok'); this.setState({ jySvSel:id }); setTimeout(() => { try { const el = document.querySelector('.sv-detail'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest', behavior:'smooth' }); } catch (e) {} }, 40); };
+
+    pcVals(S) {
+      const p = S.pcs; const PL = window.ShanluPlacement; const MAX = LVL.MAX_LEVEL;
+      const cum = []; let tot = 0; for (let n = 1; n <= MAX; n++) { tot += (window['HSK' + n + '_WORDS'] || []).length; cum[n] = Math.round(tot / 10) * 10; }
+      const v = {
+        pcShow:!!p, pcClaimShow:!!p && p.step === 'claim', pcAskShow:false, pcResultShow:false,
+        pcClaims:Array.from({ length:MAX }, (_, i) => i + 1).map(n => ({ t:'HSK ' + n, d:n === 1 ? 'The first ' + cum[1].toLocaleString('en-US') + ' words' : 'HSK 1 to ' + n + ', about ' + cum[n].toLocaleString('en-US') + ' words in all', cls:'obm-opt' + (p && p.claim === n ? ' on' : ''), pressed:p && p.claim === n ? 'true' : 'false', fn:() => this.pcPick(n) })),
+        pcStart:this.pcStart, pcCancel:this.pcCancel, pcRetry:this.pcRetry, pcCancelText:p && p.from === 'onb' ? 'Skip, start at HSK 1' : 'Not now',
+        pcLabel:'', pcPctN:0, pcPct:'0%', pcIsWord:false, pcIsGrammar:false, pcZh:'', pcPy:'', pcPyOn:false, pcPyText:'', pcPyToggle:this.pcPyToggle, pcPrompt:'', pcOpts:[], pcDontKnow:() => this.pcAnswer(-1),
+        pcResHead:'', pcResLead:'', pcResPlaced:false, pcResWords:'', pcResGo:this.pcCancel, pcResGoText:'', pcResRetry:false,
+        pcOpenMenu:() => this.pcOpen('menu')
+      };
+      if (!p || !PL || !p.run) return v;
+      if (p.step === 'ask' && !p.run.done) {
+        const it = PL.current(p.run); const pr = PL.progress(p.run);
+        if (it) Object.assign(v, {
+          pcAskShow:true, pcLabel:pr.label + ' · ' + pr.n + ' of ' + pr.of, pcPctN:pr.pct, pcPct:pr.pct + '%',
+          pcIsWord:it.k === 'v', pcIsGrammar:it.k === 'g', pcZh:it.zh || '', pcPy:it.py || '', pcPyOn:!!p.py, pcPyText:p.py ? 'Hide pinyin' : 'Show pinyin', pcPrompt:it.prompt || '',
+          pcOpts:it.opts.map((o, i) => ({ t:o, cls:it.k === 'g' ? 'zh' : '', fn:() => this.pcAnswer(i) }))
+        });
+      }
+      if (p.step === 'result' && p.run.outcome) {
+        const o = p.run.outcome; const placed = o.passedTop >= 1;
+        const range = o.passedTop > 1 ? 'HSK 1 to ' + o.passedTop : 'HSK 1';
+        let words = 0; for (let n = 1; n <= o.passedTop; n++) words += (window['HSK' + n + '_WORDS'] || []).length;
+        Object.assign(v, {
+          pcResultShow:true, pcResPlaced:placed,
+          pcResHead:placed ? (o.passedTop >= MAX ? 'You know every level here' : 'You are ready for HSK ' + o.placedAt) : 'Start at HSK 1',
+          pcResLead:placed ? 'You passed the check for ' + range + (o.passedTop >= MAX ? ', the highest level on the site so far.' : ', so you can start at HSK ' + o.placedAt + '.') : 'We could not confirm a level this time. That is fine: HSK 1 starts from the first words, and you can run the check again any time from Settings.',
+          pcResWords:'About ' + words.toLocaleString('en-US') + ' words are marked probably known. They come back in Review, ' + PL.PER_DAY + ' a day starting tomorrow, and one you miss goes back to learning. We open All levels so they show up.',
+          pcResGo:placed ? this.pcApply : this.pcStartLow, pcResGoText:placed ? 'Start at HSK ' + o.placedAt : (p.from === 'onb' ? 'Start at HSK 1' : 'Close'), pcResRetry:!placed
+        });
+      }
+      return v;
+    }
 
     jyView(S) {
       const base = { isJourney:S.screen === 'journey', jySyncBad:!!S.syncBadMsg && !!(FR && FR.identity && FR.identity()), jySyncText:'This device could not sync with your other devices: ' + (S.syncBadMsg || '') + ' Open Friends and tap Sync now.', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Your coins, from everything you study on every level. Spend them on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), xpPillCls:'pill xpp', jyPingShow:false, jyReadyShow:false, jyReadyN:0, jyReadyLabel:'' };
@@ -5122,10 +5222,10 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
           }
           return { label:'HSK ' + n, sub, cls:(!ALL && LV === n ? 'on' : '') + (open ? '' : ' locked'), isOn:!ALL && LV === n, fn:() => { this.setState({ lvMenu:false }); if (open) this.switchLevel(n); else this.setState({ lvMsg:n }); } };
         }),
-        lvMsgShow:S.lvMsg > 0 && (S.lvMsg === 99 ? LVL.unlockedLevels().length < 2 : !LVL.unlocked(S.lvMsg)) ? true : false, lvMsgText:S.lvMsg === 99 ? 'All levels shows every level you have unlocked together, so it needs at least two. Pass the HSK 1 level exam (at least ' + LVL.PASS_PCT + '% in listening and in reading; each section can be taken separately) to unlock HSK 2. Already know HSK 1? Take the exam now to test out. You can also set all levels open in Settings.' : 'HSK ' + S.lvMsg + ' is locked. It opens when you pass the HSK ' + (S.lvMsg - 1) + ' level exam: at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading (each section can be taken separately and retaken). Already know HSK ' + (S.lvMsg - 1) + '? Take the exam now to test out. You can also set all levels open in Settings.',
+        lvMsgShow:S.lvMsg > 0 && (S.lvMsg === 99 ? LVL.unlockedLevels().length < 2 : !LVL.unlocked(S.lvMsg)) ? true : false, lvMsgText:S.lvMsg === 99 ? 'All levels shows every level you have unlocked together, so it needs at least two. Pass the HSK 1 level exam (at least ' + LVL.PASS_PCT + '% in listening and in reading; each section can be taken separately) to unlock HSK 2. Already know HSK 1? Check your level (about 3 minutes) to start higher, or take the exam to earn its seal. You can also set all levels open in Settings.' : 'HSK ' + S.lvMsg + ' is locked. It opens when you pass the HSK ' + (S.lvMsg - 1) + ' level exam: at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading (each section can be taken separately and retaken). Already know HSK ' + (S.lvMsg - 1) + '? Check your level (about 3 minutes) to start higher, or take the exam to earn its seal. You can also set all levels open in Settings.',
         lvMsgGo:() => { const tgt = S.lvMsg === 99 ? 1 : S.lvMsg - 1; this.setState({ lvMsg:0 }); if (LV === tgt) this.go('exam'); else { try { localStorage.setItem('shanlu-level', String(tgt)); } catch (e) {} prefSet('level', tgt); window.location.reload(); } },
         lvMsgClose:() => this.setState({ lvMsg:0 }), lvMsgGoText:LV === (S.lvMsg === 99 ? 1 : S.lvMsg - 1) ? 'Go to the HSK ' + LV + ' exam' : 'Open HSK ' + (S.lvMsg === 99 ? 1 : S.lvMsg - 1),
-        lvNote:'You are studying ' + LVN + '. Each level keeps its own progress on this device and its own copy when you sync. ' + (LVL.softLock() ? 'The lock is set to open: every level can be studied, and passing an exam only earns that level\'s seal.' : 'A level opens when you pass the exam of the level before it: at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading. You can sit each section on its own and retake it; your best result for each section counts. If you already know a level, take its exam now to test out (a lock on a button means it is not open yet).'),
+        lvNote:'You are studying ' + LVN + '. Each level keeps its own progress on this device and its own copy when you sync. ' + (LVL.softLock() ? 'The lock is set to open: every level can be studied, and passing an exam only earns that level\'s seal.' : 'A level opens when you pass the exam of the level before it: at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading. You can sit each section on its own and retake it; your best result for each section counts. If you already know a level, check your level below to start higher (the check opens levels but earns no seal), or take the level exam. A lock on a button means it is not open yet.'),
         lockOpts:[[false, 'Locked until the exam is passed'], [true, 'All levels open']].map(o => ({ label:o[1], cls:LVL.softLock() === o[0] ? 'on' : '', fn:() => this.setLock(o[0]) })),
         isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isGrv:S.screen === 'greview', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
 
@@ -5224,6 +5324,10 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         ...this.voiceVals(),
         ...this.examVals(),
         ...this.aiVals(),
+        ...this.pcVals(S),
+        obTestCls:'obm-opt' + (S.obLvl === 'test' ? ' on' : ''), obTestPressed:S.obLvl === 'test' ? 'true' : 'false', obTestPick:() => this.obPickLvl('test'),
+        lvMsgCheck:() => { const m = S.lvMsg; this.setState({ lvMsg:0 }); this.pcOpen('menu', m === 99 || !m ? 1 : m - 1); },
+        pcNoteShow:!!S.pcNote, pcNoteText:S.pcNote, pcNoteClose:() => this.setState({ pcNote:'' }),
         syncOn:S.syncOn, syncOff:!S.syncOn, syncBusy:S.syncBusy, syncMsg:S.syncMsg, hasSyncMsg:!!S.syncMsg, syncMsgCls:S.syncBad ? 'bad' : 'good',
         syncInput:S.syncInput, onSyncInput:(e) => this.setState({ syncInput:e.target.value }), syncConnect:this.syncConnect, syncNow:() => this.syncNow(true), syncTest:this.syncTest, syncTestLabel:S.syncTesting ? 'Testing…' : 'Test connection', syncDisconnect:this.syncDisconnect,
         syncAtText:S.syncAt ? 'Last synced ' + new Date(S.syncAt).toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }) + '.' : 'Not synced yet.',
