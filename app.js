@@ -470,7 +470,7 @@
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
-  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'misses', 'testHistory', 'ws',
+  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'mbest', 'misses', 'testHistory', 'ws',
     'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'pbase', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
 
   // Settings that belong to the person, not the device: kept as person preferences ('set.<name>', 'level', 'erhua') so every device ends up with the same ones.
@@ -495,7 +495,7 @@
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
       wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wquiz:false, wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, syncKeys:prefGet('syncKeys', false) === true, aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), lsnNote:'', memOn:memOn(), memFacts:memFacts().slice(), aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, aiTesting:false, syncTesting:false, frTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
-      lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0,
+      lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0, mtyped:'', mchecked:false, mbusy:false, mres:null, merr:'', mpeek:0, mmix:false, mbest:{},
       tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
     };
@@ -903,6 +903,53 @@
       try { data = await aliPost(body); }
       catch (e) { if (e.status === 400 && /response_format|json/i.test(e.detail || '')) { delete body.response_format; data = await aliPost(body); } else throw e; }
       return Object.assign(gParse(aiText(data)), { by:'qwen' });
+    }
+    throw new Error('No AI key is saved on this device.');
+  }
+
+
+  // ---------- Listening lab, Meaning: hear a clip, say what it means in English, the AI checks it ----------
+  const M_SYSTEM = [
+    'A learner of Mandarin (HSK 1 to 3) heard a short Chinese sentence and typed what they think it means in English. Reply with JSON only.',
+    'You are given the Chinese, its pinyin, one model English translation, and the learner\'s answer.',
+    'Judge only whether the learner\'s English carries the meaning of the Chinese. The wording does not have to match the model: synonyms, contractions, missing articles, spelling slips and other natural phrasings are fine, and so is a different tense where the Chinese does not show tense.',
+    '"pass": the meaning is right, even if worded differently. "close": the main idea is right but one part is missing or slightly off (for example a detail such as the time, the number, who does it, or a small word like 吗 that makes it a question). "fix": the meaning is wrong, or most of it is missing.',
+    'Do not be generous when a key word is wrong: "drink" for "eat", "tomorrow" for "yesterday", "I" for "you", a statement for a question, or a missing 不 or 没 all change the meaning.',
+    'Format: {"verdict":"pass" or "close" or "fix","reason":"one short sentence in plain English. For close or fix, say what part to look at again, without just repeating the model answer. For pass, an empty string."}'
+  ].join('\n');
+  const mParse = (text) => {
+    const i = text.indexOf('{'), j = text.lastIndexOf('}');
+    if (i < 0 || j <= i) throw new Error('The reply was not in the expected format.');
+    const o = JSON.parse(text.slice(i, j + 1)); const v = String(o.verdict || '').toLowerCase();
+    if (v !== 'pass' && v !== 'close' && v !== 'fix') throw new Error('The reply was not in the expected format.');
+    return { verdict:v, reason:String(o.reason || '') };
+  };
+  const mNorm = (t) => String(t || '').toLowerCase().replace(/[’']/g, '\'').replace(/\b(i|you|he|she|we|they|it|that|what|there|who|where|how|let)'(m|re|s|ll|ve|d)\b/g, (m0, a, b) => a + ' ' + ({ m:'am', re:'are', s:'is', ll:'will', ve:'have', d:'would' })[b]).replace(/\b(don|doesn|didn|isn|aren|can|won)'t\b/g, (m0, a) => (a === 'can' ? 'cannot' : a === 'won' ? 'will not' : a + ' not')).replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
+  // the learner wrote the model answer, give or take punctuation, capitals and contractions: right, no AI needed
+  const meanLocal = (clip, text) => (mNorm(text) && mNorm(text) === mNorm(clip.en) ? { verdict:'pass', reason:'' } : null);
+  // Claude Haiku when an Anthropic key is saved; Qwen when only an Alibaba key is
+  async function mAiCheck(clip, text) {
+    const user = 'Chinese: ' + clip.zh + '\nPinyin: ' + clip.py + '\nModel English: ' + clip.en + '\nLearner\'s English: ' + text;
+    if (AICFG.key) {
+      const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 30000);
+      let res;
+      try {
+        res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', signal:ctl.signal,
+          headers:{ 'x-api-key':AICFG.key, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true', 'content-type':'application/json' },
+          body:JSON.stringify({ model:'claude-haiku-5-5', max_tokens:200, system:M_SYSTEM, messages:[{ role:'user', content:user }] }) });
+      } catch (e) { throw new Error('Could not reach the AI service. Check your connection.'); } finally { clearTimeout(tm); }
+      if (res.status === 401) throw new Error('The API key was rejected. Check it in Settings.');
+      if (res.status === 429) throw new Error('Too many requests right now. Wait a moment.');
+      if (!res.ok) throw new Error('The AI service had a problem (' + res.status + ').');
+      const d = await res.json();
+      return Object.assign(mParse((d.content || []).filter(b => b.type === 'text').map(b => b.text).join('')), { by:'Claude' });
+    }
+    if (aliCfg().key) {
+      const body = { model:'qwen-plus', max_tokens:200, messages:[{ role:'system', content:M_SYSTEM }, { role:'user', content:user }], response_format:{ type:'json_object' } };
+      let data;
+      try { data = await aliPost(body); }
+      catch (e) { if (e.status === 400 && /response_format|json/i.test(e.detail || '')) { delete body.response_format; data = await aliPost(body); } else throw e; }
+      return Object.assign(mParse(aiText(data)), { by:'Qwen' });
     }
     throw new Error('No AI key is saved on this device.');
   }
@@ -1384,6 +1431,8 @@
     { id:'scene1', grp:'Sounds', icon:'🎙️', title:'First conversation', desc:'You said a whole scene out loud.', hint:'Finish a Speak scene.', test:m => m.scenes >= 1 },
     { id:'scene5', grp:'Sounds', icon:'🗣️', title:'5 conversations', desc:'Five scenes spoken.', hint:'Finish 5 Speak scenes.', test:m => m.scenes >= 5, prog:m => [m.scenes, 5] },
     { id:'sceneall', grp:'Sounds', icon:'🎭', title:'Every scene', desc:'All the Speak scenes of a level, done.', hint:'Finish every Speak scene of a level.', test:m => m.scenesAll },
+    { id:'mean1', grp:'Sounds', icon:'💡', title:'First translation', desc:'You heard a clip and said what it means in English.', hint:'Get a clip right in the Meaning mode of the Listening lab.', test:m => m.meanings >= 1 },
+    { id:'mean10', grp:'Sounds', icon:'🌟', title:'10 translations', desc:'Ten clips understood without reading a thing.', hint:'Get 10 clips right in the Meaning mode.', test:m => m.meanings >= 10, prog:m => [m.meanings, 10] },
     { id:'clip1', grp:'Sounds', icon:'🎧', title:'First clip', desc:'You tried your first Listening lab clip.', hint:'Try a clip in the Listening lab.', test:m => m.clips >= 1 },
     { id:'clip10', grp:'Sounds', icon:'👂', title:'10 clips', desc:'Ten clips from the Listening lab.', hint:'Try 10 Listening lab clips.', test:m => m.clips >= 10, prog:m => [m.clips, 10] },
     { id:'hub1', grp:'Collecting', icon:'🌐', title:'Word family complete', desc:'Every word that shares one character, started.', hint:'Start every word in one Shared character family.', test:m => m.hubs >= 1 },
@@ -3079,7 +3128,7 @@
       const S = this.state; const today = ymd(new Date());
       const started = (w) => !!w && DIMS.some(k => w[k] && w[k].s > 0);
       const m = { streak:(S.lastActive === today || S.lastActive === daysAgo(1)) ? S.streak : 0, words:memOf(S.ws).words, lessons:LESSONS.filter(L => (S.gres[L.id] || 0) >= 80).length,
-        gmastered:Object.keys(S.gpt || {}).filter(id => gptInfo(S.gpt[id]).mastered).length, exams:LVL.passedList(S.exams || []) ? 1 : 0, gwrote:0, topic:false, goalRun:0, lv:{}, ev:{}, frMembers:0, frLeader:false, jy:this.jyCounts(), pathStops:0, pathUnits:0, pathLevels:0, fullDay:false, pyDone:0, pyTotal:0, scenes:0, scenesAll:false, clips:0, hubs:0 };
+        gmastered:Object.keys(S.gpt || {}).filter(id => gptInfo(S.gpt[id]).mastered).length, exams:LVL.passedList(S.exams || []) ? 1 : 0, gwrote:0, topic:false, goalRun:0, lv:{}, ev:{}, frMembers:0, frLeader:false, jy:this.jyCounts(), pathStops:0, pathUnits:0, pathLevels:0, fullDay:false, pyDone:0, pyTotal:0, meanings:0, scenes:0, scenesAll:false, clips:0, hubs:0 };
       let words = 0, lessons = 0, gm = 0, scenesSaved = 0, clipsSaved = 0, hubsSaved = 0;
       for (let n = 1; n <= LVL.MAX_LEVEL; n++) {
         const W = window['HSK' + n + '_WORDS'], G = window['HSK' + n + '_GRAMMAR'], B = window['HSK' + n + '_WEBS'];
@@ -3102,6 +3151,7 @@
         m.pathStops = stops; m.pathUnits = units; m.pathLevels = lvls; }
       m.pyTotal = (PYC.lessons || []).length; m.pyDone = (PYC.lessons || []).filter(l => pyDoneAt(l.id)).length;
       m.scenes = Math.max(scenesSaved, Object.keys(S.sres || {}).filter(id => S.sres[id]).length); m.scenesAll = HAS_SCRIPTS && SCEN.length > 0 && SCEN.every(sc => S.sres[sc.id]);
+      m.meanings = Object.keys(S.mbest || {}).filter(z => S.mbest[z] >= 2).length;
       m.clips = Math.max(clipsSaved, (S.clipBest || []).filter(x => x > 0).length); m.hubs = Math.max(hubsSaved, HUBS.filter(h => h.words.length && h.words.every(w => started(S.ws[w.zh]))).length);
       { const grOpen = (() => { const greg = gptReg(); return Object.keys(greg).filter(id => gptOpen(S, id)).length; })();
         m.fullDay = S.pbase != null && pathDoneCount(S) > S.pbase && !!S.rcomplete && (!grOpen || !!S.grdone); }
@@ -3635,7 +3685,50 @@
       patch.xp = S.xp + hits; patch.dayXp = S.dayXp + hits;
       this.setState(patch);
     };
-    nextClip = () => { this.newClip({ dplays:0, dtyped:'', dchecked:false, dmarks:[], dreveal:0 }); };
+    nextClip = () => {
+      const S = this.state; const mix = window.SHANLU_MEAN_MIX == null ? 0.25 : window.SHANLU_MEAN_MIX;
+      // now and then a Dictation clip turns into "what does it mean?", checked by the AI (only when a key is saved)
+      const toMean = S.lmode === 'dict' && S.aiOn && CLIPS.length > 3 && Math.random() < mix;
+      this.newClip(Object.assign({ dplays:0, dtyped:'', dchecked:false, dmarks:[], dreveal:0, mtyped:'', mchecked:false, mbusy:false, mres:null, merr:'', mpeek:0 }, toMean ? { lmode:'mean', mmix:true } : {}));
+    };
+    // ----- Meaning: say what the clip means in English -----
+    setMean = () => this.setState({ lmode:'mean', mmix:false });
+    nextMean = () => {
+      const back = this.state.mmix;
+      this.newClip({ dplays:0, mtyped:'', mchecked:false, mbusy:false, mres:null, merr:'', mpeek:0, mmix:false, dtyped:'', dchecked:false, dmarks:[], dreveal:0, lmode:back ? 'dict' : 'mean' });
+    };
+    mFinish = (verdict, reason, by) => {
+      const S = this.state; const clip = CLIPS[S.dclip]; if (!clip || (S.mchecked && !(S.mres && S.mres.verdict === 'self'))) return;   // a self-rated answer may still be settled once
+      const peeked = S.mpeek > 0; const n = clip.words.length;
+      const patch = { mchecked:true, mbusy:false, merr:'', mres:{ verdict, reason:reason || '', by:by || '', peeked } };
+      const gain = peeked ? 0 : verdict === 'pass' ? n : verdict === 'close' ? Math.ceil(n / 2) : 0;
+      if (!peeked && verdict === 'pass') {   // understanding the whole clip counts for the hearing skill of its words
+        let wsNext = S.ws;
+        clip.words.forEach(w => { if (wsNext[w.zh]) { const cur = wsNext[w.zh]; wsNext = Object.assign({}, wsNext); wsNext[w.zh] = { see:cur.see, hear:bump(cur.hear, 'good'), prod:cur.prod }; } });
+        patch.ws = wsNext;
+      }
+      const score = verdict === 'pass' ? 2 : verdict === 'close' ? 1 : 0;
+      if (score) { const mb = Object.assign({}, S.mbest); mb[clip.zh] = Math.max(mb[clip.zh] || 0, peeked ? 1 : score); patch.mbest = mb; }
+      if (!S.ldone) { patch.ldone = true; patch.dayMin = S.dayMin + 4; }
+      patch.xp = S.xp + gain; patch.dayXp = S.dayXp + gain;
+      this.setState(patch);
+    };
+    checkMean = async () => {
+      const S = this.state; if (S.mchecked || S.mbusy) return;
+      const clip = CLIPS[S.dclip]; const text = S.mtyped.trim(); if (!clip || !text) return;
+      if (/[一-鿿]/.test(text)) { this.setState({ merr:'Answer in English: what does the clip mean?' }); return; }
+      const local = meanLocal(clip, text);
+      if (local) { this.mFinish(local.verdict, '', ''); return; }
+      if (!S.aiOn) { this.setState({ mchecked:true, mres:{ verdict:'self', reason:'', by:'', peeked:S.mpeek > 0 }, merr:'' }); return; }
+      this.setState({ mbusy:true, merr:'' });
+      const idx = S.dclip;
+      let r;
+      try { r = await mAiCheck(clip, text); }
+      catch (e) { if (this.state.dclip === idx) this.setState({ mbusy:false, merr:e.message || 'The check did not work. Try again.' }); return; }
+      if (this.state.dclip !== idx || this.state.mchecked) return;
+      this.mFinish(r.verdict, r.reason, r.by);
+    };
+    mSelfRate = (right) => this.mFinish(right ? 'pass' : 'fix', '', 'self');
     playTone = () => {
       const S = this.state;
       let idx = S.tidx;
@@ -4693,7 +4786,23 @@
         navListen:navCls('listen'), goListen:() => this.go('listen'), isListen:S.screen === 'listen' && HAS_LISTEN, isListenNA:S.screen === 'listen' && !HAS_LISTEN,
         isDict:S.lmode === 'dict', isTone:S.lmode === 'tone',
         lDictCls:S.lmode === 'dict' ? 'on' : '', lToneCls:S.lmode === 'tone' ? 'on' : '',
-        setDict:() => this.setState({ lmode:'dict' }), setTone:() => this.setState({ lmode:'tone' }),
+        setDict:() => this.setState({ lmode:'dict', mmix:false }), setTone:() => this.setState({ lmode:'tone' }),
+        // Meaning: say what the clip means
+        isMean:S.lmode === 'mean', lMeanCls:S.lmode === 'mean' ? 'on' : '', setMean:this.setMean,
+        mStep:S.mchecked ? 'Now read it, then listen again' : (S.dplays === 0 ? 'Listen without help' : 'Say what it means'),
+        mMixTag:S.mmix, mTyped:S.mtyped, mInpCls:S.mchecked ? 'locked' : '',
+        onMType:(e) => { if (!this.state.mchecked && !this.state.mbusy) this.setState({ mtyped:e.target.value, merr:'' }); },
+        onMEnter:(e) => { if (e.key === 'Enter') { if (this.state.mchecked && !(this.state.mres && this.state.mres.verdict === 'self')) this.nextMean(); else this.checkMean(); } },
+        mNotChecked:!S.mchecked, mChecked:S.mchecked, mBusy:S.mbusy, mCheckText:S.mbusy ? 'Checking…' : 'Check my answer',
+        mCheckCls:S.mtyped.trim() && !S.mbusy ? '' : 'dis', mCheckAria:S.mtyped.trim() && !S.mbusy ? 'false' : 'true', checkMean:this.checkMean,
+        hasMErr:!!S.merr, mErr:S.merr, nextMean:this.nextMean, mNextText:S.mmix ? 'Back to Dictation' : 'Next clip',
+        mCanPeek:!S.mchecked && S.mpeek < 2, mPeekLabel:S.mpeek === 0 ? 'Peek at the pinyin' : 'Peek at the characters', mPeek:() => this.setState({ mpeek:Math.min(2, this.state.mpeek + 1) }),
+        mShowPy:S.mpeek >= 1 || S.mchecked, mShowZh:S.mpeek >= 2 || S.mchecked, mPy:clip.py, mZh:clip.zh, mModel:clip.en,
+        mHasRes:!!S.mres, mVerdict:!S.mres ? '' : ({ pass:'Right', close:'Close', fix:'Not quite', self:'Check it yourself' })[S.mres.verdict], mVerdictCls:!S.mres ? '' : ({ pass:'ok', close:'close', fix:'miss', self:'' })[S.mres.verdict],
+        mSelfPending:!!S.mres && S.mres.verdict === 'self', mSelfYes:() => this.mSelfRate(true), mSelfNo:() => this.mSelfRate(false),
+        mHasReason:!!S.mres && !!S.mres.reason, mReason:S.mres ? S.mres.reason : '',
+        mPeeked:!!S.mres && S.mres.peeked && S.mres.verdict !== 'self', mBy:S.mres && S.mres.by && S.mres.by !== 'self' ? 'Checked by ' + S.mres.by + '.' : '', mHasBy:!!S.mres && !!S.mres.by && S.mres.by !== 'self',
+        mNoAi:!S.aiOn,
         stepText:S.dchecked ? 'Step 3 of 3 · Read it, then listen again' : (S.dplays === 0 ? 'Step 1 of 3 · Listen without help' : 'Step 2 of 3 · Type what you heard'),
         clipBadge:clipBest > 0 ? 'Best so far ' + Math.round(clipBest * 100) + '%' : 'New clip', clipBadgeCls:clipBest >= 0.99 ? 'done' : (clipBest > 0 ? 'again' : 'new'),
         clipTried:clipsTried + ' of ' + CLIPS.length + ' clips tried', skipClip:this.nextClip, canSkip:!S.dchecked,

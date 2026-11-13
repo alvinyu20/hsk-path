@@ -2097,3 +2097,12 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .wc-res{display:flex;gap:8px;align-items:baseline}
 .wc-arrow{color:var(--muted);font-weight:700}
 .wc-en{font-size:18px;font-weight:600}
+
+/* Listening lab, Meaning */
+.mix-tag{display:inline-block;align-self:flex-start;font-size:13px;font-weight:700;letter-spacing:.03em;color:var(--seal);border:1px solid var(--seal);border-radius:999px;padding:3px 10px}
+.m-err{margin:0;color:var(--seal);font-weight:600}
+.m-text{margin:0}
+.mv{margin:0}
+.mv.ok{color:var(--jade)}
+.mv.close{color:var(--ink)}
+.mv.miss{color:var(--seal)}

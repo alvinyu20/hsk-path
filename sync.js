@@ -7,7 +7,7 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   const DIMS = ['see', 'hear', 'prod'];
   // progress that is merged between devices; device preferences (theme, voice, hint switches, daily goal, new-word limit) stay local
-  const SYNC_KEYS = ['xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'clipBest', 'misses', 'testHistory', 'ws',
+  const SYNC_KEYS = ['xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'clipBest', 'mbest', 'misses', 'testHistory', 'ws',
     'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone', 'exams', 'aiDays', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
   const FILE = 'shanlu-progress.json';   // HSK 1 progress (the original file name)
   const fileFor = (level) => (level > 1 ? 'shanlu-progress-hsk' + level + '.json' : FILE);   // each level keeps its own file in the same gist
@@ -77,6 +77,7 @@
     Object.keys(Object.assign({}, a.gpt || {}, b.gpt || {})).forEach(id => { const x = (a.gpt || {})[id], y = (b.gpt || {})[id]; out.gpt[id] = !x ? y : !y ? x : ((x.at || 0) !== (y.at || 0) ? ((x.at || 0) > (y.at || 0) ? x : y) : (JSON.stringify(x) >= JSON.stringify(y) ? x : y)); });
     out.sres = unionObj(a.sres, b.sres);
     out.misses = maxObj(a.misses, b.misses);
+    out.mbest = maxObj(a.mbest, b.mbest);
     const n = Math.max((a.clipBest || []).length, (b.clipBest || []).length);
     out.clipBest = []; for (let i = 0; i < n; i++) out.clipBest.push(maxNum((a.clipBest || [])[i], (b.clipBest || [])[i]));
     // tests and exams: keep every attempt once, newest last

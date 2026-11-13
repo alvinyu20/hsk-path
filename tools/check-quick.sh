@@ -53,6 +53,7 @@ case "$MODE" in
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-friends.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-pwa.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-lab-voice.js
+    last env NODE_PATH="$(npm root -g)" node tools/smoke-test-meaning.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-audio.js
     NODE_PATH="$(npm root -g)" node tools/smoke-test.js
     NODE_PATH="$(npm root -g)" node tools/smoke-test-l2.js

@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="350b42cb76">
+<meta name="shanlu-version" content="1172c5cae3">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=350b42cb76">
+<link rel="stylesheet" href="styles.css?v=1172c5cae3">
 </head>
 <body>
 <div id="app"></div>
@@ -2144,6 +2144,7 @@
     <div class="lab-main">
       <div class="seg2" role="group" aria-label="Lab mode" style="align-self:flex-start">
         <button class="{{lDictCls}}" data-on-click="{{setDict}}">Dictation</button>
+        <button class="{{lMeanCls}}" data-on-click="{{setMean}}">Meaning</button>
         <button class="{{lShadowCls}}" data-on-click="{{setShadow}}">Shadowing</button>
         <button class="{{lToneCls}}" data-on-click="{{setTone}}">Tone trainer</button>
       </div>
@@ -2213,6 +2214,75 @@
               <button class="btn {{clearCls}}" data-on-click="{{clearPlay}}">Hear it slow and clear</button>
               <button class="btn {{natCls}}" data-on-click="{{naturalPlay}}">Hear it faster</button>
             </div>
+            <a class="report" href="{{clipReport}}" target="_blank" rel="noopener">Report a mistake</a>
+          </section>
+        </sc-if>
+      </sc-if>
+
+      <sc-if value="{{isMean}}" hint-placeholder-val="{{ false }}">
+        <section class="card dict">
+          <div class="lab-top"><div class="kick">{{mStep}}</div><span class="muted lab-n">{{clipTried}}</span></div>
+          <sc-if value="{{mMixTag}}" hint-placeholder-val="{{ false }}"><div class="mix-tag">Mixed in: say what this one means</div></sc-if>
+          <div class="dict-top">
+            <button class="listen sm {{clipPlayCls}}" data-on-click="{{playClip}}" aria-label="Play the clip">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+            </button>
+            <div>
+              <h2 class="h2" style="font-size:26px">What does it mean?</h2>
+              <div class="cliprow"><span class="chip cb {{clipBadgeCls}}">{{clipBadge}}</span><sc-if value="{{hasClipLv}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{clipLvCls}}">{{clipLv}}</span></sc-if></div>
+              <div class="muted">{{playedText}} {{rateHint}}</div>
+            </div>
+          </div>
+          <div>
+            <div class="kick" style="margin-bottom:8px">Speed ladder</div>
+            <div class="ladder" role="group" aria-label="Playback speed">
+              <sc-for list="{{rateOpts}}" as="r" hint-placeholder-count="4"><button class="lad {{r.cls}}" data-on-click="{{r.fn}}">{{r.label}}</button></sc-for>
+            </div>
+          </div>
+          <input id="mean-input" class="inp {{mInpCls}}" type="text" value="{{mTyped}}" placeholder="Type what it means, in English." autocomplete="off" aria-label="What it means" data-on-input="{{onMType}}" data-on-keydown="{{onMEnter}}">
+          <sc-if value="{{hasMErr}}" hint-placeholder-val="{{ false }}"><p class="m-err" role="alert">{{mErr}}</p></sc-if>
+          <sc-if value="{{mShowPy}}" hint-placeholder-val="{{ false }}"><div class="m-text"><span class="muted">{{mPy}}</span></div></sc-if>
+          <sc-if value="{{mShowZh}}" hint-placeholder-val="{{ false }}"><div class="m-text zh" style="font-size:30px;line-height:1.3">{{mZh}}</div></sc-if>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+            <sc-if value="{{mNotChecked}}" hint-placeholder-val="{{ true }}">
+              <button class="btn pri big {{mCheckCls}}" aria-disabled="{{mCheckAria}}" data-on-click="{{checkMean}}">{{mCheckText}}</button>
+            </sc-if>
+            <sc-if value="{{mChecked}}" hint-placeholder-val="{{ false }}">
+              <button class="btn ink big" data-on-click="{{nextMean}}">{{mNextText}}</button>
+            </sc-if>
+            <sc-if value="{{mCanPeek}}" hint-placeholder-val="{{ true }}"><button class="btn" data-on-click="{{mPeek}}">{{mPeekLabel}}</button></sc-if>
+            <sc-if value="{{mNotChecked}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" data-on-click="{{nextMean}}">Another clip</button></sc-if>
+          </div>
+          <sc-if value="{{mNoAi}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0;font-size:15px">No AI key is saved on this device, so you will rate your own answer. Add one in Settings to have it checked for you.</p></sc-if>
+        </section>
+
+        <sc-if value="{{mHasRes}}" hint-placeholder-val="{{ false }}">
+          <section class="card lfb">
+            <div class="lfb-h">
+              <div>
+                <h2 class="h2 mv {{mVerdictCls}}">{{mVerdict}}</h2>
+                <sc-if value="{{mHasReason}}" hint-placeholder-val="{{ false }}"><div>{{mReason}}</div></sc-if>
+              </div>
+            </div>
+            <p style="margin:0">It means: <b>{{mModel}}</b></p>
+            <sc-if value="{{mSelfPending}}" hint-placeholder-val="{{ false }}">
+              <div class="acts" style="justify-content:flex-start">
+                <button class="btn pri" data-on-click="{{mSelfYes}}">I had it</button>
+                <button class="btn" data-on-click="{{mSelfNo}}">Not quite</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{mPeeked}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0;font-size:15px">You peeked, so this one earns no points. Try it without the help next time.</p></sc-if>
+            <div class="acts" style="justify-content:flex-start">
+              <button class="btn {{clearCls}}" data-on-click="{{clearPlay}}">Hear it slow and clear</button>
+              <button class="btn {{natCls}}" data-on-click="{{naturalPlay}}">Hear it faster</button>
+            </div>
+            <div>
+              <div class="kick" style="margin-bottom:6px">What to listen for</div>
+              <ul class="lnotes">
+                <sc-for list="{{notes}}" as="n" hint-placeholder-count="2"><li>{{n.t}}</li></sc-for>
+              </ul>
+            </div>
+            <sc-if value="{{mHasBy}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0;font-size:14px">{{mBy}}</p></sc-if>
             <a class="report" href="{{clipReport}}" target="_blank" rel="noopener">Report a mistake</a>
           </section>
         </sc-if>
@@ -2589,54 +2659,54 @@
 </main>
 </div>
 </template>
-<script defer src="vendor/morphdom-umd.min.js?v=350b42cb76"></script>
-<script defer src="runtime.js?v=350b42cb76"></script>
-<script defer src="config.js?v=350b42cb76"></script>
-<script defer src="friends.js?v=350b42cb76"></script>
-<script defer src="level.js?v=350b42cb76"></script>
-<script defer src="data/hsk1-words.js?v=350b42cb76"></script>
-<script defer src="data/hsk1-grammar.js?v=350b42cb76"></script>
-<script defer src="data/hsk1-webs.js?v=350b42cb76"></script>
-<script defer src="data/hsk1-speak.js?v=350b42cb76"></script>
-<script defer src="data/hsk1-listen.js?v=350b42cb76"></script>
-<script defer src="data/hsk1-exam.js?v=350b42cb76"></script>
-<script defer src="data/hsk1-erhua.js?v=350b42cb76"></script>
-<script defer src="data/lexicon.js?v=350b42cb76"></script>
-<script defer src="data/char-glosses.js?v=350b42cb76"></script>
-<script defer src="data/hsk2-preview.js?v=350b42cb76"></script>
-<script defer src="data/hsk3-preview.js?v=350b42cb76"></script>
-<script defer src="data/hsk2-words.js?v=350b42cb76"></script>
-<script defer src="data/hsk2-speak.js?v=350b42cb76"></script>
-<script defer src="data/hsk2-listen.js?v=350b42cb76"></script>
-<script defer src="data/hsk2-exam.js?v=350b42cb76"></script>
-<script defer src="data/hsk2-grammar.js?v=350b42cb76"></script>
-<script defer src="data/hsk2-webs.js?v=350b42cb76"></script>
-<script defer src="data/hsk3-words.js?v=350b42cb76"></script>
-<script defer src="data/hsk3-speak.js?v=350b42cb76"></script>
-<script defer src="data/hsk3-listen.js?v=350b42cb76"></script>
-<script defer src="data/hsk3-exam.js?v=350b42cb76"></script>
-<script defer src="data/hsk3-grammar.js?v=350b42cb76"></script>
-<script defer src="data/hsk3-webs.js?v=350b42cb76"></script>
-<script defer src="ascent.js?v=350b42cb76"></script>
-<script defer src="secrets.js?v=350b42cb76"></script>
-<script defer src="sync.js?v=350b42cb76"></script>
-<script defer src="data/audio-manifest.js?v=350b42cb76"></script>
-<script defer src="journey.js?v=350b42cb76"></script>
-<script defer src="data/journey.js?v=350b42cb76"></script>
-<script defer src="data/journey-map.js?v=350b42cb76"></script>
-<script defer src="data/journey-media.js?v=350b42cb76"></script>
-<script defer src="data/souvenirs.js?v=350b42cb76"></script>
-<script defer src="erhua.js?v=350b42cb76"></script>
-<script defer src="pinyin.js?v=350b42cb76"></script>
-<script defer src="data/pinyin-course.js?v=350b42cb76"></script>
-<script defer src="data/pinyin-chart.js?v=350b42cb76"></script>
-<script defer src="data/exam-media.js?v=350b42cb76"></script>
-<script defer src="data/exam-art.js?v=350b42cb76"></script>
-<script defer src="data/neutral-alt.js?v=350b42cb76"></script>
-<script defer src="data/path-scenes.js?v=350b42cb76"></script>
-<script defer src="data/speak-scenes.js?v=350b42cb76"></script>
-<script defer src="data/art.js?v=350b42cb76"></script>
-<script defer src="data/path.js?v=350b42cb76"></script>
-<script defer src="app.js?v=350b42cb76"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=1172c5cae3"></script>
+<script defer src="runtime.js?v=1172c5cae3"></script>
+<script defer src="config.js?v=1172c5cae3"></script>
+<script defer src="friends.js?v=1172c5cae3"></script>
+<script defer src="level.js?v=1172c5cae3"></script>
+<script defer src="data/hsk1-words.js?v=1172c5cae3"></script>
+<script defer src="data/hsk1-grammar.js?v=1172c5cae3"></script>
+<script defer src="data/hsk1-webs.js?v=1172c5cae3"></script>
+<script defer src="data/hsk1-speak.js?v=1172c5cae3"></script>
+<script defer src="data/hsk1-listen.js?v=1172c5cae3"></script>
+<script defer src="data/hsk1-exam.js?v=1172c5cae3"></script>
+<script defer src="data/hsk1-erhua.js?v=1172c5cae3"></script>
+<script defer src="data/lexicon.js?v=1172c5cae3"></script>
+<script defer src="data/char-glosses.js?v=1172c5cae3"></script>
+<script defer src="data/hsk2-preview.js?v=1172c5cae3"></script>
+<script defer src="data/hsk3-preview.js?v=1172c5cae3"></script>
+<script defer src="data/hsk2-words.js?v=1172c5cae3"></script>
+<script defer src="data/hsk2-speak.js?v=1172c5cae3"></script>
+<script defer src="data/hsk2-listen.js?v=1172c5cae3"></script>
+<script defer src="data/hsk2-exam.js?v=1172c5cae3"></script>
+<script defer src="data/hsk2-grammar.js?v=1172c5cae3"></script>
+<script defer src="data/hsk2-webs.js?v=1172c5cae3"></script>
+<script defer src="data/hsk3-words.js?v=1172c5cae3"></script>
+<script defer src="data/hsk3-speak.js?v=1172c5cae3"></script>
+<script defer src="data/hsk3-listen.js?v=1172c5cae3"></script>
+<script defer src="data/hsk3-exam.js?v=1172c5cae3"></script>
+<script defer src="data/hsk3-grammar.js?v=1172c5cae3"></script>
+<script defer src="data/hsk3-webs.js?v=1172c5cae3"></script>
+<script defer src="ascent.js?v=1172c5cae3"></script>
+<script defer src="secrets.js?v=1172c5cae3"></script>
+<script defer src="sync.js?v=1172c5cae3"></script>
+<script defer src="data/audio-manifest.js?v=1172c5cae3"></script>
+<script defer src="journey.js?v=1172c5cae3"></script>
+<script defer src="data/journey.js?v=1172c5cae3"></script>
+<script defer src="data/journey-map.js?v=1172c5cae3"></script>
+<script defer src="data/journey-media.js?v=1172c5cae3"></script>
+<script defer src="data/souvenirs.js?v=1172c5cae3"></script>
+<script defer src="erhua.js?v=1172c5cae3"></script>
+<script defer src="pinyin.js?v=1172c5cae3"></script>
+<script defer src="data/pinyin-course.js?v=1172c5cae3"></script>
+<script defer src="data/pinyin-chart.js?v=1172c5cae3"></script>
+<script defer src="data/exam-media.js?v=1172c5cae3"></script>
+<script defer src="data/exam-art.js?v=1172c5cae3"></script>
+<script defer src="data/neutral-alt.js?v=1172c5cae3"></script>
+<script defer src="data/path-scenes.js?v=1172c5cae3"></script>
+<script defer src="data/speak-scenes.js?v=1172c5cae3"></script>
+<script defer src="data/art.js?v=1172c5cae3"></script>
+<script defer src="data/path.js?v=1172c5cae3"></script>
+<script defer src="app.js?v=1172c5cae3"></script>
 </body>
 </html>
