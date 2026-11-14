@@ -35,14 +35,18 @@
   const ALI_MODELS = [['qwen-flash', 'qwen-flash: fastest and cheapest'], ['qwen-plus', 'qwen-plus: smarter, costs more']];
   const ALI_ASR_MODEL = 'qwen3-asr-flash';
   const aliCfg = () => AICFG.ali || {};
-  const aiProviderNow = () => (AICFG.provider === 'alibaba' && aliCfg().key ? 'alibaba' : 'anthropic');
-  const aiReadyNow = () => (aiProviderNow() === 'alibaba' ? !!aliCfg().key : !!AICFG.key);
-  const asrModeNow = () => (AICFG.asr === 'alibaba' && aliCfg().key ? 'alibaba' : 'browser');
+  // Alibaba Qwen can be used two ways: with a key saved on this device (called straight from the browser), or, for a person in the study group who has
+  // no key, through the friends server (it holds one shared key and gives each person a daily allowance, see relayPost below)
+  const aliOwn = () => !!aliCfg().key;
+  const aliUsable = () => aliOwn() || relayOn();
+  const aiProviderNow = () => (((AICFG.provider === 'alibaba' || !AICFG.key) && aliUsable()) ? 'alibaba' : 'anthropic');
+  const aiReadyNow = () => (aiProviderNow() === 'alibaba' ? aliUsable() : !!AICFG.key);
+  const asrModeNow = () => (AICFG.asr === 'alibaba' && aliUsable() ? 'alibaba' : 'browser');
   const aliBase = () => { const ws = String(aliCfg().ws || '').trim(); return ws ? 'https://' + ws + '.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1' : 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1'; };
   // Qwen text-to-speech (Alibaba Model Studio, Singapore): the voice that reads Mingming's lines when an Alibaba key is saved
   const ALI_TTS_MODEL = 'qwen3-tts-flash';
   const TTS_VOICES = [['Cherry', 'Cherry: woman, friendly'], ['Serena', 'Serena: woman, gentle'], ['Maia', 'Maia: woman, warm'], ['Neil', 'Neil: man, clear news-reader style'], ['Kai', 'Kai: man, calm']];
-  const ttsModeNow = () => (aliCfg().key && AICFG.ttsMode !== 'browser' ? 'qwen' : 'browser');
+  const ttsModeNow = () => (aliUsable() && AICFG.ttsMode !== 'browser' ? 'qwen' : 'browser');
   const ttsVoiceNow = () => (TTS_VOICES.some(v => v[0] === AICFG.ttsVoice) ? AICFG.ttsVoice : 'Maia');
   const aliApi = () => aliBase().replace('/compatible-mode/v1', '/api/v1');
   // ---- the person's own settings and notes follow them to every device (when they are in the study group): the listening level, what
@@ -920,11 +924,11 @@
       const d = await res.json();
       return Object.assign(gParse((d.content || []).filter(b => b.type === 'text').map(b => b.text).join('')), { by:'claude' });
     }
-    if (aliCfg().key) {
+    if (aliUsable()) {
       const body = { model:'qwen-plus', max_tokens:300, messages:[{ role:'system', content:G_SYSTEM }, { role:'user', content:user }], response_format:{ type:'json_object' } };
       let data;
-      try { data = await aliPost(body); }
-      catch (e) { if (e.status === 400 && /response_format|json/i.test(e.detail || '')) { delete body.response_format; data = await aliPost(body); } else throw e; }
+      try { data = await aliPost(body, 'grammar'); }
+      catch (e) { if (e.status === 400 && /response_format|json/i.test(e.detail || '')) { delete body.response_format; data = await aliPost(body, 'grammar'); } else throw e; }
       return Object.assign(gParse(aiText(data)), { by:'qwen' });
     }
     throw new Error('No AI key is saved on this device.');
@@ -967,11 +971,11 @@
       const d = await res.json();
       return Object.assign(mParse((d.content || []).filter(b => b.type === 'text').map(b => b.text).join('')), { by:'Claude' });
     }
-    if (aliCfg().key) {
+    if (aliUsable()) {
       const body = { model:'qwen-plus', max_tokens:200, messages:[{ role:'system', content:M_SYSTEM }, { role:'user', content:user }], response_format:{ type:'json_object' } };
       let data;
-      try { data = await aliPost(body); }
-      catch (e) { if (e.status === 400 && /response_format|json/i.test(e.detail || '')) { delete body.response_format; data = await aliPost(body); } else throw e; }
+      try { data = await aliPost(body, 'meaning'); }
+      catch (e) { if (e.status === 400 && /response_format|json/i.test(e.detail || '')) { delete body.response_format; data = await aliPost(body, 'meaning'); } else throw e; }
       return Object.assign(mParse(aiText(data)), { by:'Qwen' });
     }
     throw new Error('No AI key is saved on this device.');
@@ -1132,8 +1136,60 @@
     return { zh:o.reply.zh, en:o.reply.en || '', sug:o.suggest && typeof o.suggest.zh === 'string' && o.suggest.zh.trim() ? { zh:o.suggest.zh.trim(), en:o.suggest.en || '' } : null, fb:o.feedback && o.feedback.level === 'fix' ? { better:o.feedback.better || '', why:o.feedback.why || '' } : null,
       understood:o.feedback && typeof o.feedback.understood === 'boolean' ? o.feedback.understood : null, remember:Array.isArray(o.remember) ? o.remember.filter(x => typeof x === 'string').slice(0, 2) : [] };
   };
+  // ---- the shared AI (friends server): status is kept on this device ({ on, used, limit, left, day, at }) so the AI features appear offline too ----
+  const RELAY_KEY = 'shanlu-relay';
+  const relayGet = () => { try { return JSON.parse(localStorage.getItem(RELAY_KEY) || 'null'); } catch (e) { return null; } };
+  const relayPut = (v) => { try { localStorage.setItem(RELAY_KEY, JSON.stringify(v)); } catch (e) {} };
+  function relayOn() {
+    try { if (!FR || !FR.enabled() || !FR.identity()) return false; const c = relayGet(); return !!(c && c.on && Date.now() - c.at < 7 * 864e5); } catch (e) { return false; }
+  }
+  // asks the server (on start, after joining, and when Settings opens). Returns true when what the page should offer has changed.
+  async function relayRefresh() {
+    if (!FR || !FR.enabled() || !FR.identity()) return false;
+    const before = relayOn();
+    try { const s = await FR.aiStatus(); relayPut({ on:!!s.on, blocked:!!s.blocked, used:s.used, limit:s.limit, left:s.left, day:s.day, at:Date.now() }); }
+    catch (e) { if (e && (e.status === 404 || e.status === 401)) relayPut({ on:false, at:Date.now() }); }   // an older server (no shared AI) or a key it no longer knows; a lost connection keeps what was saved
+    return relayOn() !== before;
+  }
+  const relayUsed = (ai) => { const c = relayGet(); if (c && ai) relayPut(Object.assign({}, c, { used:ai.used, limit:ai.limit, left:ai.left })); };
+  // what a refused or failed shared-AI call says (the err.status / err.detail pair mirrors aliPost, so its retry rules keep working)
+  function relayError(e) {
+    const code = e && e.code, j = (e && e.json) || {}, c = relayGet() || {};
+    let msg;
+    if (code === 'ai_limit') { relayPut(Object.assign({}, c, { left:0 })); msg = 'You have used today\'s AI allowance' + (c.limit ? ' (' + c.limit + ' calls)' : '') + '. It starts again after midnight Pacific time. Until then the browser\'s own voice and recogniser still work.'; }
+    else if (code === 'ai_busy') msg = 'The whole group has used up the shared AI for today. It starts again after midnight Pacific time.';
+    else if (code === 'ai_off') { relayPut(Object.assign({}, c, { on:false })); msg = 'The shared AI is switched off for you. Ask Alvin, or save a key of your own in Settings.'; }
+    else if (code === 'ai_not_set_up') { relayPut(Object.assign({}, c, { on:false })); msg = 'The shared AI is not switched on yet.'; }
+    else if (code === 'network') msg = 'Could not reach the AI service. Check your connection.';
+    else if (code === 'upstream') msg = 'Alibaba had a problem' + (j.upstream ? ' (' + j.upstream + ')' : '') + (j.detail ? ': ' + j.detail : '') + '.';
+    else msg = (e && e.message) || 'The shared AI had a problem.';
+    const err = new Error(msg);
+    if (code === 'upstream' && j.upstream) { err.status = j.upstream; err.detail = j.detail || ''; }
+    err.code = code;
+    return err;
+  }
+  // the line in Settings about the shared AI
+  function relayShown() {
+    if (!FR || !FR.enabled() || !FR.identity()) return { show:false, text:'' };
+    const c = relayGet();
+    if (relayOn()) {
+      const used = c.used || 0, lim = c.limit || 0;
+      return { show:true, text:'Your study group\'s shared AI is on, so Mingming, answer checking, the voice recogniser and the voice work without a key of your own. ' +
+        (lim ? 'Today you have used ' + used + ' of ' + lim + ' calls (a chat message, an answer check, a recording or a spoken line is one call each). ' : '') +
+        'The allowance starts again after midnight Pacific time.' + (aliOwn() ? ' You also have a key of your own: it is used first, and then nothing counts against the allowance.' : '') };
+    }
+    if (c && c.blocked) return { show:true, text:'The study group\'s shared AI is switched off for you. Ask Alvin, or save a key of your own below.' };
+    return { show:false, text:'' };
+  }
+  async function relayPost(body, feature) {
+    if (!relayOn()) throw new Error('No Alibaba key is saved on this device.');
+    const b = Object.assign({}, body);
+    if (feature !== 'asr' && !/^qwen-(flash|plus)$/.test(b.model || '')) b.model = 'qwen-flash';   // the shared key serves two chat models only
+    try { const r = await FR.aiChat(feature, b); relayUsed(r.ai); return r.data; } catch (e) { throw relayError(e); }
+  }
   // Alibaba Cloud Model Studio (OpenAI-compatible endpoint). Used for the conversation and for the voice recogniser.
-  async function aliPost(body) {
+  async function aliPost(body, feature) {
+    if (!aliOwn()) return relayPost(body, feature || 'chat');
     let res;
     try {
       res = await fetch(aliBase() + '/chat/completions', { method:'POST', headers:{ 'Authorization':'Bearer ' + aliCfg().key, 'content-type':'application/json' }, body:JSON.stringify(body) });
@@ -1155,8 +1211,8 @@
     if (aiProviderNow() === 'alibaba') {
       const body = { model:aliCfg().model || 'qwen-flash', max_tokens:600, messages:[{ role:'system', content:aiSystem(scn) }].concat(history), response_format:{ type:'json_object' } };
       let data;
-      try { data = await aliPost(body); }
-      catch (e) { if (e.status === 400 && /response_format|json/i.test(e.detail || '')) { delete body.response_format; data = await aliPost(body); } else throw e; }
+      try { data = await aliPost(body, 'chat'); }
+      catch (e) { if (e.status === 400 && /response_format|json/i.test(e.detail || '')) { delete body.response_format; data = await aliPost(body, 'chat'); } else throw e; }
       const text = aiText(data);
       return { raw:text, parsed:aiParse(text) };
     }
@@ -1201,8 +1257,8 @@
     const body = { model:ALI_ASR_MODEL, stream:false, asr_options:{ enable_itn:false, language:'zh' },
       messages:[{ role:'user', content:[{ type:'input_audio', input_audio:{ data:'data:audio/wav;base64,' + b64 } }] }] };
     let data;
-    try { data = await aliPost(body); }
-    catch (e) { if (e.status === 400 && /language|asr_options/i.test(e.detail || '')) { delete body.asr_options.language; data = await aliPost(body); } else throw e; }
+    try { data = await aliPost(body, 'asr'); }
+    catch (e) { if (e.status === 400 && /language|asr_options/i.test(e.detail || '')) { delete body.asr_options.language; data = await aliPost(body, 'asr'); } else throw e; }
     return aiText(data).trim();
   }
 
@@ -1221,6 +1277,14 @@
 
   // one line of text -> a link to a WAV file (valid for 24 hours); the page plays it with an <audio> element, so no cross-site download is needed
   async function aliTTS(text, voice) {
+    if (!aliOwn()) {   // no key of your own: the friends server makes the line
+      if (!relayOn()) throw new Error('No Alibaba key is saved on this device.');
+      let r; try { r = await FR.aiTts(text.slice(0, 600), voice); } catch (e) { throw relayError(e); }
+      relayUsed(r.ai);
+      const u = r.data && r.data.output && r.data.output.audio && r.data.output.audio.url;
+      if (!u) throw new Error('Alibaba answered but sent no audio link.');
+      return String(u).replace(/^http:\/\//, 'https://');
+    }
     let res;
     try {
       res = await fetch(aliApi() + '/services/aigc/multimodal-generation/generation', { method:'POST', headers:{ 'Authorization':'Bearer ' + aliCfg().key, 'content-type':'application/json' },
@@ -1791,6 +1855,12 @@
       try { const g = await FR.group(); this.setState({ fr:g, frAt:Date.now(), frBusy:false, frErr:'' }); }
       catch (e) { this.setState({ frBusy:false }); this.friendsFailed(e); }
     };
+    // the shared AI (see relayRefresh): ask the friends server whether this person can use it, then let the AI screens know
+    relayCheck = async () => {
+      let changed = false; try { changed = await relayRefresh(); } catch (e) {}
+      this.setState({ relayAt:Date.now(), aiOn:aiReadyNow(), aiProvider:aiProviderNow(), asrMode:asrModeNow(), ttsMode:ttsModeNow() });
+      return changed;
+    };
     friendsJoin = async () => {
       const S = this.state;
       if (S.frBusy || !FR) return;
@@ -1798,6 +1868,7 @@
       try {
         await FR.join(S.frName);
         this.setState({ frBusy:false, frName:'', frMsg:'' });
+        this.relayCheck();
         await this.friendsPush({});
         await this.friendsRefresh(true);
       } catch (e) { this.setState({ frBusy:false, frErr:(e && e.message) || 'Could not join.' }); }
@@ -1812,6 +1883,7 @@
       try {
         const g = await FR.restore({ id:m[1], key:m[2] });
         this.setState({ frLinkBusy:false, frLinkIn:'', fr:g, frAt:Date.now(), frMsg:'Signed in on this device.', frErr:'' });
+        this.relayCheck();
         await this.friendsPush({});
         await this.friendsRefresh(true);
       } catch (e) { this.setState({ frLinkBusy:false, frErr:(e && e.message) || 'That link does not work.' }); }
@@ -1833,7 +1905,7 @@
     };
     friendsLeave = async () => {
       if (!this.state.frLeaveAsk) { this.setState({ frLeaveAsk:true }); return; }
-      try { await FR.leave(); this.setState({ fr:null, frLeaveAsk:false, frErr:'', frMsg:'You left the group.' }); } catch (e) { this.setState({ frLeaveAsk:false }); this.friendsFailed(e); }
+      try { await FR.leave(); this.setState({ fr:null, frLeaveAsk:false, frErr:'', frMsg:'You left the group.', aiOn:aiReadyNow(), aiProvider:aiProviderNow(), asrMode:asrModeNow(), ttsMode:ttsModeNow() }); } catch (e) { this.setState({ frLeaveAsk:false }); this.friendsFailed(e); }
     };
     friendsCopyLink = async () => {
       const id = FR && FR.identity();
@@ -1849,10 +1921,10 @@
       if (hit.me) {
         const cur = FR.identity();
         if (cur && cur.id !== hit.me.id && !window.confirm('This device is already in the group as ' + (cur.name || 'someone') + '. Replace that with the link you opened?')) { this.setState({ screen:'friends' }); return; }
-        try { const g = await FR.restore(hit.me); this.setState({ screen:'friends', fr:g, frAt:Date.now(), frMsg:'Signed in on this device.', frErr:'' }); await this.friendsPush({}); }
+        try { const g = await FR.restore(hit.me); this.setState({ screen:'friends', fr:g, frAt:Date.now(), frMsg:'Signed in on this device.', frErr:'' }); this.relayCheck(); await this.friendsPush({}); }
         catch (e) { this.setState({ screen:'friends', frErr:(e && e.message) || 'That link does not work.' }); }
       }
-      if (FR.identity()) { await this.friendsRefresh(false); this.friendsProgressSync().catch(() => {}); setTimeout(() => this.friendsPush({ minGap:5 * 60 * 1000 }), 1500); }
+      if (FR.identity()) { this.relayCheck(); await this.friendsRefresh(false); this.friendsProgressSync().catch(() => {}); setTimeout(() => this.friendsPush({ minGap:5 * 60 * 1000 }), 1500); }
     };
 
     // All levels: hand each level its own part of the progress, leaving the rest of that level's save alone
@@ -1892,6 +1964,7 @@
       { const sv = prefGet('sv', {}); if ((sv[screen] || 0) < 4) prefSet('sv', Object.assign({}, sv, { [screen]:(sv[screen] || 0) + 1 })); }   // how many times each page was opened: a page's one-line description fades after a few visits
       if (screen === 'guide' && !onbRead().g) this.onbSet({ g:Date.now() });
       if (screen === 'journey') { otherXp(true); this.jyEnsure(); this.friendsRefresh(false); }
+      if ((screen === 'voice' || screen === 'speak') && FR && FR.identity()) this.relayCheck();
       this.setState(screen === 'path' ? { screen, pstop:'', plNote:'', plAlt:'' } : { screen }); try { window.scrollTo(0, 0); } catch (e) {}
       if (screen === 'speak' && !HAS_SCRIPTS) { const S = this.state; if (S.aiOn && !S.aim.length && !S.aiBusy) this.aiStart(S.aiScn); }   // no scripts at this level: go straight to the AI conversation
       // on phones the tab bar scrolls sideways: keep the current tab in view
@@ -2421,7 +2494,7 @@
     };
     aiReveal = (k) => { const a = this.state.aim.slice(); if (!a[k]) return; a[k] = Object.assign({}, a[k], { rev:true }); this.setState({ aim:a }); };
     setTtsMode = (m) => {
-      if (m === 'qwen' && !aliCfg().key) { this.setState({ aliNote:'Save an Alibaba key first, then Qwen can speak for Mingming.' }); return; }
+      if (m === 'qwen' && !aliUsable()) { this.setState({ aliNote:'Save an Alibaba key first, then Qwen can speak for Mingming.' }); return; }
       AICFG.ttsMode = m; saveAiCfg(); prefSet('ttsMode', m); this.ttsWarned = false; this.setState({ ttsMode:ttsModeNow() });
     };
     setTtsVoice = (v) => { AICFG.ttsVoice = v; saveAiCfg(); prefSet('ttsVoice', v); this.setState({ ttsVoice:ttsVoiceNow() }); if (ttsModeNow() === 'qwen') this.sayAi('你好，我是明明。我们说中文吧。', 'ttsdemo'); };
@@ -2444,7 +2517,7 @@
     // which service writes Mingming's lines
     viewProvider = (p) => { this.setState({ aiTab:p, aiNote:'', aliNote:'' }); };   // which settings form is shown; nothing else changes
     setProvider = (p) => {
-      const has = p === 'alibaba' ? !!aliCfg().key : !!AICFG.key;
+      const has = p === 'alibaba' ? aliUsable() : !!AICFG.key;
       if (!has) return;
       AICFG.provider = p; saveAiCfg(); prefSet('provider', p);
       this.setState({ aiTab:p, aiProvider:aiProviderNow(), aiOn:aiReadyNow(), aim:[], aiNote:'', aliNote:'', aiErr:'' });
@@ -2504,7 +2577,7 @@
       this.setState({ aliTesting:false, aliNote:lines.join(' ') });
     };
     setAsr = (m) => {
-      if (m === 'alibaba' && !aliCfg().key) { this.setState({ aliNote:'Save an Alibaba key first, then you can use it to hear you.' }); return; }
+      if (m === 'alibaba' && !aliUsable()) { this.setState({ aliNote:'Save an Alibaba key first, then you can use it to hear you.' }); return; }
       AICFG.asr = m; saveAiCfg(); prefSet('asr', m); this.setState({ asrMode:asrModeNow() });
     };
     // recording for Alibaba's recogniser: stops by itself after a pause once you have spoken (or when you tap again)
@@ -3722,7 +3795,7 @@
           return {
             id:u.id, num:th0 === 'rail' && tu ? tu.ch : th0 === 'terms' && tu ? tu.zh : ui + 1, numCls:th0 === 'rail' ? 'zh big' : th0 === 'terms' ? 'zh term' : '', title:u.title, blurb:u.blurb, prog:nd + ' of ' + u.stops.length, open, cls:(nd === u.stops.length ? 'done' : nxt && ui === nxt.ui ? 'cur' : ''),
             trailStyle:tu && PTILE[tu.tile] ? 'background-image:url("' + PTILE[tu.tile] + '"),linear-gradient(180deg,' + ((tu.bg || (grp && grp.bg) || ['#EDF0EC', '#EDF0EC'])[0]) + ',' + ((tu.bg || (grp && grp.bg) || ['#EDF0EC', '#EDF0EC'])[1]) + ')' : '',
-            hasKick:!!tu && th0 !== '', kick:!tu ? '' : th0 === 'day' ? tu.time : th0 === 'rail' ? 'Station ' + (ui + 1) + ' · ' + tu.py : th0 === 'terms' ? tu.py + ' · ' + tu.en + ' · c. ' + tu.date : 'Chapter ' + (ui + 1) + ' · ' + (tu.place || ''),
+            hasKick:!!tu && th0 !== '' && th0 !== 'day', kick:!tu ? '' : th0 === 'day' ? '' : th0 === 'rail' ? 'Station ' + (ui + 1) + ' · ' + tu.py : th0 === 'terms' ? tu.py + ' · ' + tu.en + ' · c. ' + tu.date : 'Chapter ' + (ui + 1) + ' · ' + (tu.place || ''),
             hasScene:(th0 === 'day' || th0 === 'terms') && !!tu && !!tu.scene, scene:tu && tu.scene || '',
             hasBand:first, bandImg:grp && PSCENE[grp.scene] || '', bandZh:grp && grp.zh || '', bandTitle:grp ? (grp.sub ? grp.title + ' · ' + grp.sub : grp.title) : '', bandSub:'', bandN:gN + (gN === 1 ? ' unit' : ' units'), hasBandLine:!!grp && !!grp.line, bandLine:grp && grp.line || '',
             hasDlg:open && lines.length > 0, dlg:lines.map((l, li) => ({ who:l.who, zh:l.zh, py:l.py, en:l.en, cls:l.who === '你' ? 'me' : '', playCls:S.playing === 'pd:' + u.id + li ? 'on' : '', say:() => this.say(l.zh, 'pd:' + u.id + li) })),
@@ -4274,7 +4347,7 @@
         memOnLabel:S.memOn ? 'On: Mingming remembers' : 'Off: nothing is kept', memCls:S.memOn ? 'on' : '', memToggle:this.memToggle, memClear:this.memClear, hasMemFacts:S.memFacts.length > 0, noMemFacts:S.memFacts.length === 0,
         memList:S.memFacts.map((f, i) => ({ t:f.t, d:f.d || '', forget:() => this.memForget(i) })),
         aiVo:vo, aiNotVo:!vo, aiVoToggleLabel:vo ? 'Type instead' : 'Voice only', aiVoToggle:this.aiVoToggle, aiCanVo:hasMic0,
-        ttsOpts:[['qwen', 'Alibaba Qwen voice (needs the Alibaba key)'], ['browser', 'This browser\'s own voice']].map(o => ({ label:o[1], cls:S.ttsMode === o[0] ? 'on' : '', fn:() => this.setTtsMode(o[0]) })),
+        ttsOpts:[['qwen', 'Alibaba Qwen voice (needs an Alibaba key or the group\'s shared AI)'], ['browser', 'This browser\'s own voice']].map(o => ({ label:o[1], cls:S.ttsMode === o[0] ? 'on' : '', fn:() => this.setTtsMode(o[0]) })),
         ttsVoiceOpts:TTS_VOICES.map(v => ({ label:v[1], cls:S.ttsVoice === v[0] ? 'on' : '', fn:() => this.setTtsVoice(v[0]) })), ttsIsQwen:S.ttsMode === 'qwen',
         sugClosed:!!sg && !sg.open, sugOpen:!!sg && sg.open, sugZh:sg ? sg.zh : '', sugPy:sg ? sg.py : '', sugEn:sg ? sg.en : '',
         hasAlts:S.aiAlts.length > 0, altList:S.aiAlts.map(t => ({ t, fn:() => this.aiPickAlt(t) })), sugShow:this.aiShowSug, sugUse:this.aiUseSug, sugPc:S.playing === 'sug' ? 'on' : '', sugPlay:() => sg && this.sayAi(sg.zh, 'sug'),
@@ -4289,12 +4362,13 @@
         aiModelOpts:AI_MODELS.map(m => ({ label:m[1], cls:S.aiModel === m[0] ? 'on' : '', fn:() => this.aiSetModel(m[0]) })), aiNote:S.aiNote, hasAiNote:!!S.aiNote,
         provAnthropic:S.aiTab !== 'alibaba', provAlibaba:S.aiTab === 'alibaba',
         provOpts:[['anthropic', 'Claude (Anthropic)'], ['alibaba', 'Qwen (Alibaba)']].map(o => ({ label:o[1] + (S.aiProvider === o[0] && S.aiOn ? ' · in use' : ''), cls:S.aiTab === o[0] ? 'on' : '', fn:() => this.viewProvider(o[0]) })),
+        hasRelay:relayShown().show, relayText:relayShown().text,
         aliSet:S.aliOn, aliUnset:!S.aliOn, aliKeyInput:S.aliKeyInput, onAliKeyInput:(e) => this.setState({ aliKeyInput:e.target.value }),
         aliWsInput:S.aliWsInput, onAliWsInput:(e) => this.setState({ aliWsInput:e.target.value }), aliModelInput:S.aliModelInput, onAliModelInput:(e) => this.setState({ aliModelInput:e.target.value }),
         aliModelOpts:ALI_MODELS.map(m => ({ label:m[1], cls:S.aliModelInput === m[0] ? 'on' : '', fn:() => this.aliPreset(m[0]) })),
         aliCanUse:S.aliOn && S.aiProvider !== 'alibaba', aiCanUse:!!AICFG.key && S.aiProvider === 'alibaba', useAli:() => this.setProvider('alibaba'), useAnth:() => this.setProvider('anthropic'),
         aiTestKey:this.aiTestKey, aiTestLabel:S.aiTesting ? 'Testing…' : 'Test connection', aliSaveKey:this.aliSaveKey, aliRemoveKey:this.aliRemoveKey, aliTest:this.aliTest, aliTestLabel:S.aliTesting ? 'Testing…' : 'Test connection', aliNote:S.aliNote, hasAliNote:!!S.aliNote,
-        asrOpts:[['browser', 'This browser\'s own recogniser'], ['alibaba', 'Alibaba Qwen3-ASR (needs the Alibaba key)']].map(o => ({ label:o[1], cls:S.asrMode === o[0] ? 'on' : '', fn:() => this.setAsr(o[0]) }))
+        asrOpts:[['browser', 'This browser\'s own recogniser'], ['alibaba', 'Alibaba Qwen3-ASR (needs an Alibaba key or the group\'s shared AI)']].map(o => ({ label:o[1], cls:S.asrMode === o[0] ? 'on' : '', fn:() => this.setAsr(o[0]) }))
       };
     }
 
@@ -4452,12 +4526,13 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const flowOn = onbOn && noProg && !onb.w && onb.p !== 'done';
       let obPh = flowOn ? (onb.p || 'intro') : '';
       if (obPh === 'fly' && flown) obPh = 'guide';
+      // each card shows a real screenshot of the screen it talks about (tour/*.jpg, made by tools/make-tour-shots.js); w and h are its size in pixels
       const obCards = [
-        { zh:'见', tag:'Meet', title:'Meet a few words at a time', body:'Each stop on the Path brings a handful of related words. You meet each one, then try it. Meeting a word is not the same as knowing it.', chips:['Path', 'Archive'] },
-        { zh:'记', tag:'Recall', title:'Review brings them back in time', body:'Pick the meaning, then type it. Review returns each word just as you are about to forget it. Be honest with the buttons: Again, Hard, Good or Easy.', chips:['Review', 'My words'] },
-        { zh:'用', tag:'Use', title:'Then use them', body:'Grammar lessons, listening and speaking practice. Today on Home plans a short session around your daily goal.', chips:['Grammar', 'Listening', 'Speak'] },
-        { zh:'路', tag:'Coins and Journey', title:'Coins take you somewhere real', body:'Everything you study earns coins. Spend them travelling to places across China. Your first stop was free, and you have already taken it.', chips:['Journey', 'Passport'] },
-        { zh:'友', tag:'Yours to keep', title:'Saved here, shared only if you say so', body:'Your progress lives in this browser, with a backup and sync in Settings. A friends group only ever sees your study totals.', chips:['Backup', 'Sync', 'Friends'] }
+        { zh:'见', tag:'Meet', title:'Meet a few words at a time', body:'The Path winds through small stops: a handful of related words, then a Grammar lesson, then Speaking practice. You meet each word, then try it. Meeting a word is not the same as knowing it.', chips:['Path', 'Grammar', 'Speaking', 'Archive'], img:'tour/path.jpg', w:748, h:760, alt:'The Path: a winding trail of word stops, grammar stops and speaking stops, some done and some still ahead' },
+        { zh:'记', tag:'Recall', title:'Review brings them back in time', body:'Pick the meaning, then type it. Review returns each word just as you are about to forget it. Be honest with the buttons: Again, Hard, Good or Easy.', chips:['Review', 'My words'], img:'tour/review.jpg', w:748, h:802, alt:'A Review card showing a word, its meaning and the Again, Hard, Good and Easy buttons' },
+        { zh:'用', tag:'Use', title:'Then use them', body:'Grammar lessons, listening and speaking practice. Today on Home plans a short session around your daily goal.', chips:['Grammar', 'Listening', 'Speak'], img:'tour/today.jpg', w:748, h:722, alt:'Today on Home: the daily goal, the plan button and more ways to study' },
+        { zh:'路', tag:'Coins and Journey', title:'Coins take you somewhere real', body:'Everything you study earns coins. Spend them travelling to places across China, and collect passport stamps and souvenirs along the way. Your first stop was free, and you have already taken it.', chips:['Journey', 'Passport stamps', 'Souvenirs'], img:'tour/journey.jpg', w:748, h:847, alt:'A map of China with stamped regions and flight lines, a passport page of stamps and a shelf of souvenirs' },
+        { zh:'友', tag:'Yours to keep', title:'Saved here, shared only if you say so', body:'Your progress lives in this browser, with a backup and sync in Settings. A friends group only ever sees your study totals.', chips:['Backup', 'Sync', 'Friends'], img:'tour/friends.jpg', w:748, h:723, alt:'The Friends board: three people with their minutes this week and streaks' }
       ];
       const obC = obCards[Math.max(0, Math.min(4, S.obCard || 0))];
       const frOn = !!(FR && FR.enabled());
@@ -5179,7 +5254,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         obGuideShow:obPh === 'guide' && !S.jyPlay, obLevelShow:obPh === 'level', obMeShow:obPh === 'me',
         obIntroGo:this.obIntroGo, obFlySkip:this.obFlySkip, obBackOpen:this.obBackOpen, obBackClose:this.obBackClose, obBackGo:this.obBackGo, obBackFile:this.obBackFile, obFrOn:frOn,
         obLinkIn:S.frLinkIn, onObLink:(e) => this.setState({ frLinkIn:e.target.value }), obLinkText:S.frLinkBusy ? 'Signing in…' : 'Bring my progress here', obHasErr:!!S.frErr, obErrText:S.frErr,
-        obCZh:obC.zh, obCTag:obC.tag, obCTitle:obC.title, obCBody:obC.body, obCChips:obC.chips, obCCount:((S.obCard || 0) + 1) + ' of 5', obCArt:'obm-art a' + (S.obCard || 0),
+        obCZh:obC.zh, obCTag:obC.tag, obCTitle:obC.title, obCBody:obC.body, obCChips:obC.chips, obCCount:((S.obCard || 0) + 1) + ' of 5', obCArt:'a' + (S.obCard || 0), obCShot:'aspect-ratio:' + obC.w + '/' + obC.h, obCImg:'background-image:url(' + obC.img + ')', obCAlt:obC.alt,
         obCDots:obCards.map((_, i) => ({ cls:'obm-dot' + (i === (S.obCard || 0) ? ' on' : '') })), obCPrev:(S.obCard || 0) > 0, obCBtn:(S.obCard || 0) === 4 ? 'Choose where to start' : 'Next', obCardNext:() => this.obCardGo(1), obCardPrev:() => this.obCardGo(-1), obGuideSkip:this.obGuideSkip,
         obLvlOpts:[['new', 'I am brand new to Chinese', 'Start with the sounds of Chinese (pinyin and tones, about 30 minutes), then your first words.', 'Recommended if Chinese is new to you'], ['some', 'I know a little', 'Go straight to HSK 1 words. The pinyin course is always there if you want it.', '']].map(([k, t, d, tag]) => ({ k, t, d, tag, hasTag:!!tag, cls:'obm-opt' + (S.obLvl === k ? ' on' : ''), pressed:S.obLvl === k ? 'true' : 'false', fn:() => this.obPickLvl(k) })), obLevelGo:this.obLevelGo,
         obName:S.obName, onObName:(e) => this.setState({ obName:e.target.value }), obFrShow:frOn && !(FR && FR.identity()), obJoinChk:S.obJoin ? 'true' : 'false', obJoinCls:'obm-chk' + (S.obJoin ? ' on' : ''), obJoinToggle:this.obJoinToggle,

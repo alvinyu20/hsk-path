@@ -6,11 +6,11 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 let failures = 0;
 const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else console.log('ok  ', m); };
 
-export async function makeWorker(bindings = {}) {
-  return new Miniflare({
+export async function makeWorker(bindings = {}, extra = {}) {
+  return new Miniflare(Object.assign({
     modules: true, scriptPath: path.join(here, 'worker.js'), compatibilityDate: '2024-09-01', d1Databases: { DB: 'test-db-' + Math.random().toString(36).slice(2) },
     bindings: Object.assign({ ADMIN_KEY: 'admin-secret-key', GROUP_NAME: 'Test crew', ALLOWED_ORIGINS: 'https://friends.example' }, bindings),
-  });
+  }, extra));
 }
 const api = (mf) => async (method, p, { body, token, headers } = {}) => {
   const h = Object.assign({ Origin: 'https://friends.example' }, headers || {});
@@ -217,6 +217,84 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const dbr = await rw.getD1Database('DB');
   check(rush.filter((r) => r.status === 201).length === 2 && rush.filter((r) => r.status === 409).length === 4 && (await dbr.prepare('SELECT COUNT(*) AS n FROM members').first()).n === 2, 'six people joining at once into a group of two: exactly two get in');
   await rw.dispose();
+
+  // ---- shared AI: the relay to Qwen (the upstream is a stub; no real key is used) ----
+  const seen = [];
+  let upstreamMode = 'ok';
+  const stub = async (req) => {
+    const body = await req.json().catch(() => null);
+    seen.push({ url: req.url, auth: req.headers.get('authorization'), body });
+    if (upstreamMode === 'down') return new Response(JSON.stringify({ error: { message: 'Service unavailable' } }), { status: 503, headers: { 'Content-Type': 'application/json' } });
+    if (/generation$/.test(req.url)) return new Response(JSON.stringify({ output: { audio: { url: 'http://audio.example/x.wav' } } }), { headers: { 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ choices: [{ message: { content: '{"verdict":"pass"}' } }] }), { headers: { 'Content-Type': 'application/json' } });
+  };
+  const aiw = await makeWorker({ ALI_KEY: 'test-ali-key', AI_DAILY_LIMIT: '5', AI_GLOBAL_DAILY_LIMIT: '8', AI_TIMEZONE: 'America/Los_Angeles' }, { outboundService: stub });
+  const ca = api(aiw);
+  const aj1 = (await ca('POST', '/api/join', { body: { name: 'One' } })).json, aj2 = (await ca('POST', '/api/join', { body: { name: 'Two' } })).json;
+  const T1 = aj1.id + '.' + aj1.key, T2 = aj2.id + '.' + aj2.key;
+  const chatBody = (o) => ({ feature: 'meaning', body: Object.assign({ model: 'qwen-plus', max_tokens: 200, messages: [{ role: 'system', content: 's' }, { role: 'user', content: 'u' }], response_format: { type: 'json_object' } }, o || {}) });
+  check((await ca('GET', '/api/ai/status')).status === 401, 'the AI status needs a key');
+  check((await ca('POST', '/api/ai/chat', { body: chatBody() })).status === 401, 'an AI call needs a key');
+  const st0 = (await ca('GET', '/api/ai/status', { token: T1 })).json;
+  check(st0.on === true && st0.used === 0 && st0.limit === 5 && st0.left === 5 && /^\d{4}-\d{2}-\d{2}$/.test(st0.day), 'the status shows the daily limit and nothing used yet');
+  const r1 = await ca('POST', '/api/ai/chat', { token: T1, body: chatBody() });
+  check(r1.status === 200 && r1.json.data.choices[0].message.content.includes('pass') && r1.json.ai.used === 1 && r1.json.ai.left === 4, 'a chat call is passed on and counted');
+  check(seen[0].auth === 'Bearer test-ali-key' && seen[0].url.includes('dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions') && seen[0].body.model === 'qwen-plus' && seen[0].body.max_tokens === 200, 'the Worker adds the key and sends the Singapore address');
+  check(!JSON.stringify(r1.json).includes('test-ali-key'), 'the key never comes back to the app');
+  check((await ca('POST', '/api/ai/chat', { token: T1, body: chatBody({ model: 'qwen-max' }) })).status === 400, 'a model that is not on the list is refused');
+  check((await ca('POST', '/api/ai/chat', { token: T1, body: chatBody({ model: 'qwen3-asr-flash' }) })).status === 400, 'the voice-recognition model cannot be used for chat');
+  check((await ca('POST', '/api/ai/chat', { token: T1, body: Object.assign(chatBody(), { feature: 'free' }) })).status === 400, 'an unknown feature name is refused');
+  check((await ca('POST', '/api/ai/chat', { token: T1, body: 'oops' })).status === 400, 'a broken request is refused');
+  check((await ca('POST', '/api/ai/chat', { token: T1, body: chatBody({ messages: [{ role: 'user', content: 'x'.repeat(70000) }] }) })).status === 413, 'a huge chat request is refused');
+  await ca('POST', '/api/ai/chat', { token: T1, body: chatBody({ max_tokens: 99999 }) });
+  check(seen[seen.length - 1].body.max_tokens === 800, 'the answer length is capped');
+  const asr = await ca('POST', '/api/ai/chat', { token: T1, body: { feature: 'asr', body: { model: 'qwen3-asr-flash', messages: [{ role: 'user', content: [{ type: 'input_audio', input_audio: { data: 'data:audio/wav;base64,' + 'A'.repeat(200000) } }] }], asr_options: { enable_itn: true, language: 'zh' } } } });
+  check(asr.status === 200 && seen[seen.length - 1].body.asr_options.enable_itn === false && seen[seen.length - 1].body.asr_options.language === 'zh', 'voice recognition passes on a longer clip');
+  const tts = await ca('POST', '/api/ai/tts', { token: T1, body: { text: '你好', voice: 'Cherry' } });
+  check(tts.status === 200 && tts.json.data.output.audio.url.includes('audio.example') && seen[seen.length - 1].body.input.voice === 'Cherry' && seen[seen.length - 1].body.model === 'qwen3-tts-flash', 'a spoken line is made and counted');
+  await ca('POST', '/api/ai/chat', { token: T1, body: chatBody({ model: 'qwen-flash' }) });
+  const st1 = (await ca('GET', '/api/ai/status', { token: T1 })).json;
+  check(st1.used === 5 && st1.left === 0, 'every kind of call counts toward the same daily total (5 used)');
+  const over = await ca('POST', '/api/ai/chat', { token: T1, body: chatBody() });
+  check(over.status === 429 && over.json.error === 'ai_limit' && seen.length === 5, 'past the daily limit the call is refused before it reaches Alibaba');
+  check((await ca('POST', '/api/ai/chat', { token: T2, body: chatBody() })).status === 200, 'another person still has their own allowance');
+  upstreamMode = 'down';
+  const aBad = await ca('POST', '/api/ai/chat', { token: T2, body: chatBody() });
+  check(aBad.status === 502 && aBad.json.error === 'upstream' && aBad.json.upstream === 503, 'a failure at Alibaba is reported as such');
+  check((await ca('GET', '/api/ai/status', { token: T2 })).json.used === 1, 'a call that Alibaba could not answer is not counted');
+  upstreamMode = 'ok';
+  await ca('POST', '/api/ai/chat', { token: T2, body: chatBody() });
+  await ca('POST', '/api/ai/chat', { token: T2, body: chatBody() });
+  const aj3 = (await ca('POST', '/api/join', { body: { name: 'Three' } })).json; const T3 = aj3.id + '.' + aj3.key;
+  const glob = await ca('POST', '/api/ai/chat', { token: T3, body: chatBody() });
+  check(glob.status === 429 && glob.json.error === 'ai_busy', 'the whole-group ceiling stops everyone once it is reached (5 + 3 = 8)');
+  const rep = (await ca('GET', '/api/admin/ai', { headers: { 'X-Admin-Key': 'admin-secret-key' } })).json;
+  check(rep.limit === 5 && rep.group_limit === 8 && rep.on === true && rep.today.some((r) => r.name === 'One' && r.feature === 'meaning') && rep.today.some((r) => r.feature === 'asr') && rep.today.some((r) => r.feature === 'tts') && rep.week.length === 1 && rep.week[0].n === 8 && rep.week[0].people === 2, 'the admin report shows today per person and feature, and the week');
+  check((await ca('GET', '/api/admin/ai')).status === 401, 'the admin report needs the admin key');
+  check(!JSON.stringify(rep).includes('test-ali-key'), 'the admin report never shows the key');
+  check((await ca('POST', '/api/admin/ai/' + aj3.id, { headers: { 'X-Admin-Key': 'admin-secret-key' } })).json.blocked === true, 'the admin can switch one person off');
+  const offr = await ca('POST', '/api/ai/chat', { token: T3, body: chatBody() });
+  check(offr.status === 403 && offr.json.error === 'ai_off' && (await ca('GET', '/api/ai/status', { token: T3 })).json.on === false, 'a person who is switched off is refused and shown as off');
+  check((await ca('DELETE', '/api/admin/ai/' + aj3.id, { headers: { 'X-Admin-Key': 'admin-secret-key' } })).json.blocked === false && (await ca('GET', '/api/ai/status', { token: T3 })).json.on === true, '...and can be switched back on');
+  // the fire-at-once case: many calls together never go past the limit
+  const rushw = await makeWorker({ ALI_KEY: 'k', AI_DAILY_LIMIT: '3' }, { outboundService: stub });
+  const cru = api(rushw);
+  const jr = (await cru('POST', '/api/join', { body: { name: 'R' } })).json; const TR = jr.id + '.' + jr.key;
+  const burst = await Promise.all([1, 2, 3, 4, 5, 6, 7, 8].map(() => cru('POST', '/api/ai/chat', { token: TR, body: chatBody() })));
+  check(burst.filter((r) => r.status === 200).length === 3 && burst.filter((r) => r.status === 429).length === 5, 'eight calls at once with a limit of 3: exactly 3 go through');
+  await rushw.dispose();
+  // not set up: no key at the Worker
+  const nokey = await makeWorker({}, { outboundService: stub });
+  const cn = api(nokey); const jn = (await cn('POST', '/api/join', { body: { name: 'N' } })).json; const TN = jn.id + '.' + jn.key;
+  const stn = (await cn('GET', '/api/ai/status', { token: TN })).json;
+  check(stn.on === false && stn.limit === 200, 'with no ALI_KEY the AI is reported off (default limit 200)');
+  check((await cn('POST', '/api/ai/chat', { token: TN, body: chatBody() })).status === 503, 'with no ALI_KEY a call answers "not set up"');
+  await nokey.dispose();
+  const zero = await makeWorker({ ALI_KEY: 'k', AI_DAILY_LIMIT: '0' }, { outboundService: stub });
+  const cz = api(zero); const jz = (await cz('POST', '/api/join', { body: { name: 'Z' } })).json;
+  check((await cz('GET', '/api/ai/status', { token: jz.id + '.' + jz.key })).json.on === false, 'a limit of 0 switches the shared AI off');
+  await zero.dispose();
+  await aiw.dispose();
 
   console.log(failures ? failures + ' worker check(s) failed' : 'all worker checks passed');
   process.exit(failures ? 1 : 0);

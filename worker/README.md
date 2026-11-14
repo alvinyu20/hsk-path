@@ -36,6 +36,18 @@ Menu names change now and then; look for the closest match.
    Commit and push. After the site updates, the Friends tab appears.
 8. Send each friend the plain site address, `https://alvinyu20.github.io/hsk-path/`. On their first visit they are asked for a first name and whether to join the study group (or they can join later from Friends). There are no invite links any more.
 
+## Shared AI for the group (optional)
+
+With one Alibaba key kept on this Worker, everyone in the group can use the AI features (Mingming chat, grammar and meaning answer checking, the voice recogniser and Mingming's voice) **without a key of their own**. The app sends each request to the Worker, the Worker adds the key, counts the call and passes Alibaba's answer back. The key never reaches anybody's browser. Without it nothing changes: the AI stays "bring your own key". Claude (Anthropic) is not shared: it is only used with a person's own key.
+
+**Turn it on:** in the Worker's Settings, Variables and Secrets, add a **secret** `ALI_KEY` (a Model Studio key from the Singapore region; the same kind you paste in the app's Settings). If your key needs a workspace ID, add a text variable `ALI_WS`. Then paste the new `worker.js` into the Worker and Deploy (the two new tables are made on their own). Friends see "Your study group's shared AI is on" in Settings, with how much of today's allowance they have used.
+
+**The allowance:** one number per person per day, counted across all the AI features together. A chat message, an answer check, a voice recording and a spoken line are one call each (a spoken line that was made before and kept on the device is not asked for again). The default is **200 a day**; change it with the text variable `AI_DAILY_LIMIT` (`0` switches the shared AI off). A second number protects your Alibaba bill: `AI_GLOBAL_DAILY_LIMIT` (default 1000) is the most the whole group can use in a day. The day ends at midnight in `AI_TIMEZONE` (default `America/Los_Angeles`). A call that Alibaba could not answer is not counted. The Worker only passes on the two chat models `qwen-flash` and `qwen-plus`, the Qwen3-ASR model and the Qwen3-TTS model, caps the answer length and refuses anything else.
+
+**Watching the usage:** in a terminal, `curl -H "X-Admin-Key: YOUR_ADMIN_KEY" https://YOUR-WORKER.workers.dev/api/admin/ai` shows today's calls per person and per feature, and the totals for the last 7 days (to see whether 200 fits). To switch one person off: `curl -X POST -H "X-Admin-Key: ..." https://YOUR-WORKER.workers.dev/api/admin/ai/PERSON_ID` (ids are in `/api/admin/members`); `-X DELETE` switches them back on.
+
+**Worth knowing:** joining the group is open (a first name is enough), so anyone who finds the site's address can join and get an allowance. The group-wide limit above is what caps the cost, and the app's own free-quota setting in Model Studio is a second safety net. If that worries you, setting `INVITE_CODE` closes the group to new people (the app's join form is then refused until you remove it again).
+
 ## Updating a Worker you already set up
 
 Whenever `worker.js` changes, paste the whole new file over the old one (**Edit code**) and **Deploy**. Nothing else changes: the variables, the database and everyone's links stay.

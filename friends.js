@@ -99,10 +99,11 @@
       try { res = await doFetch(baseUrl() + path, Object.assign({ method, headers, body: body === undefined ? undefined : (raw ? body : JSON.stringify(body)) }, extra || {})); }
       catch (e) { throw Object.assign(new Error('Could not reach the friends board. Check your connection. If it is fine, the server may not allow this site: its ALLOWED_ORIGINS setting must be exactly ' + (typeof location !== 'undefined' ? location.origin : 'the site address') + '.'), { code: 'network' }); }
       let json = null; try { json = await res.json(); } catch (e) {}
-      if (!res.ok) throw Object.assign(new Error(messageFor(json && json.error, res.status)), { code: (json && json.error) || ('http_' + res.status), status: res.status });
+      if (!res.ok) throw Object.assign(new Error(messageFor(json && json.error, res.status)), { code: (json && json.error) || ('http_' + res.status), status: res.status, json });
       return json;
     }
     const messageFor = (code, status) => ({
+      ai_limit: 'You have used all of today\'s AI allowance.', ai_busy: 'The group has used up the shared AI for today.', ai_off: 'The shared AI is switched off for you.', ai_not_set_up: 'The shared AI is not switched on yet.', upstream: 'The AI service had a problem.',
       bad_invite: 'The friends server is closed to new people right now (it has an INVITE_CODE set). Ask Alvin to remove it.', name_needed: 'Type your first name.', group_full: 'This group is full.',
       joining_is_off: 'Joining is switched off for now.', slow_down: 'Too many wrong codes from this network. Try again in an hour.', conflict: 'Your progress changed on another device while saving.', bad_progress: 'The server did not accept the saved progress format.', unauthorized: 'This device is not signed in to the group any more.', too_big: 'That was too big to send.',
     }[code] || (status === 429 ? 'The friends board is busy. Try again later.' : 'The friends board had a problem. Try again later.'));
@@ -143,6 +144,10 @@
         catch (e) { if (e.status === 401) return { reachable: true, signedIn: false, ms }; throw e; }
       },
       async rename(name) { const id = identity(); const r = await call('PUT', '/api/me', { name }, id); save(Object.assign({}, id, { name: r.name })); return r; },
+      // the shared AI: the Worker holds the Alibaba key, counts each call against the person's daily allowance and passes the answer back
+      async aiStatus() { return call('GET', '/api/ai/status', undefined, identity()); },
+      async aiChat(feature, body) { return call('POST', '/api/ai/chat', { feature, body }, identity()); },
+      async aiTts(text, voice) { return call('POST', '/api/ai/tts', { text, voice }, identity()); },
       async cheer(to) { return call('POST', '/api/cheer', { to }, identity()); },
       async leave() { const id = identity(); if (id) { try { await call('DELETE', '/api/me', undefined, id); } catch (e) { if (e.status !== 401) throw e; } } forget(); },
     };

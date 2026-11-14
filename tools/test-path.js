@@ -119,7 +119,7 @@ for (const erhua of [false, true]) {
     const flat = [].concat.apply([], (th.groups || []).map(g => ids.slice(ids.indexOf(g.from), ids.indexOf(g.to) + 1)));
     check(!th.groups.length || flat.join() === ids.join(), 'HSK ' + n + ': the groups cover the units once, in order');
     if (th.kind === 'rail') check(ids.every(i => th.units[i].ch && th.units[i].py), 'HSK 2: every station has a character and pinyin');
-    if (th.kind === 'day') check(ids.every(i => /^\d{1,2}:\d\d$/.test(th.units[i].time) && th.units[i].scene), 'HSK 1: every unit has a time and a scene line');
+    if (th.kind === 'day') check(ids.every(i => th.units[i].scene && !('time' in th.units[i])), 'HSK 1: every unit has a scene line and no clock time');
     if (th.kind === 'terms') {
       const T = ids.map(i => th.units[i]);
       check(T.length === 24 && T.every(t => t.zh && /^[\u4e00-\u9fff]{2}$/.test(t.zh) && t.py && t.en && /^\d{1,2} [A-Z][a-z]{2}$/.test(t.date) && t.scene), 'HSK 4: every unit is one of the 24 solar terms (name, pinyin, meaning, date, scene line)');

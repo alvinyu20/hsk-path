@@ -63,67 +63,54 @@
       ],
       "units": {
         "h1u1": {
-          "time": "7:40",
           "scene": "The train pulls in and your host is waving on the platform.",
           "tile": "station"
         },
         "h1u2": {
-          "time": "8:10",
           "scene": "In the taxi queue your host asks who you are, and you ask what things are.",
           "tile": "street"
         },
         "h1u3": {
-          "time": "8:40",
           "scene": "At the front desk: your name, and what is this and that.",
           "tile": "city"
         },
         "h1u4": {
-          "time": "9:30",
           "scene": "Your room number, the price of the room, how many bags.",
           "tile": "city"
         },
         "h1u5": {
-          "time": "11:30",
           "scene": "Your host introduces friends and family.",
           "tile": "park"
         },
         "h1u6": {
-          "time": "12:00",
           "scene": "The menu is on the wall: big, small, hot, good.",
           "tile": "street"
         },
         "h1u7": {
-          "time": "12:30",
           "scene": "What time is it? When is the next bus? Plan the day.",
           "tile": "station"
         },
         "h1u8": {
-          "time": "13:00",
           "scene": "Order lunch, ask the price, pay.",
           "tile": "street"
         },
         "h1u9": {
-          "time": "14:30",
           "scene": "Where is the school? How do we get there?",
           "tile": "city"
         },
         "h1u10": {
-          "time": "15:30",
           "scene": "Your first Chinese class, and a phone full of new apps.",
           "tile": "school"
         },
         "h1u11": {
-          "time": "16:30",
           "scene": "After class: the weather, hobbies, how you feel.",
           "tile": "park"
         },
         "h1u12": {
-          "time": "18:30",
           "scene": "At the night market: what you do, can do and want to do.",
           "tile": "night"
         },
         "h1u13": {
-          "time": "20:00",
           "scene": "Dinner with everyone, and a sentence that joins it all together.",
           "tile": "night"
         }

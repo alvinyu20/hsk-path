@@ -15,6 +15,14 @@
  *   GROUP_NAME       text     shown on the Friends screen, for example "Shanlu crew"
  *   ALLOWED_ORIGINS  text     the address of the site, for example https://alvinyu20.github.io  (comma separated; "*" allows any site)
  *   MAX_MEMBERS      text     optional, default 12 (raise it if more people will join; the group stops growing at this number)
+ *   ALI_KEY          secret   OPTIONAL. An Alibaba Model Studio (Qwen, Singapore) API key. With it, everyone in the group can use the AI features
+ *                             (Mingming chat, answer checking, voice recognition, voice) without a key of their own: the app sends the request here
+ *                             and the Worker adds the key. Leave it out and the AI stays bring-your-own-key.
+ *   ALI_WS           text     optional, your Model Studio workspace ID if your key needs one (see the Alibaba section in the app's Settings)
+ *   AI_DAILY_LIMIT   text     optional, default 200: AI calls per person per day, counted across every AI feature (a chat turn, an answer check, a voice
+ *                             recognition and a spoken line are one each). 0 switches the shared AI off.
+ *   AI_GLOBAL_DAILY_LIMIT text optional, default 1000: AI calls per day for the whole group together (a safety ceiling for your Alibaba bill)
+ *   AI_TIMEZONE      text     optional, default America/Los_Angeles: the day for the AI limit starts and ends at midnight in this time zone
  * Binding: a D1 database named DB.
  *
  * Safety features (all on by default, nothing to set up):
@@ -36,6 +44,17 @@ const MAX_PROGRESS_PLAIN = 400000; // the plain form is parsed here, so it is he
 const JOIN_TRIES_PER_IP = 8, JOIN_TRIES_ALL = 60, TRY_WINDOW_MS = 36e5, INVITE_LIFE_MS = 7 * DAY_MS;
 const OPEN_JOINS_PER_IP = 20, OPEN_JOINS_ALL = 200;   // open joining: people who joined in the last hour (a household or a class on one network is fine)
 
+// ---- shared AI (the relay to Alibaba Qwen) ----
+const AI_FEATURES = ['chat', 'grammar', 'meaning', 'asr', 'tts'];            // what a call is counted under (the admin report shows each)
+const AI_CHAT_MODELS = ['qwen-flash', 'qwen-plus'], AI_ASR_MODEL = 'qwen3-asr-flash', AI_TTS_MODEL = 'qwen3-tts-flash';
+const AI_VOICES = ['Cherry', 'Serena', 'Maia', 'Neil', 'Kai'];
+const AI_MAX_TOKENS = 800, AI_CHAT_BYTES = 60000, AI_ASR_BYTES = 1500000, AI_TTS_CHARS = 600, AI_KEEP_DAYS = 90;
+const aiTz = (env) => { const z = String(env.AI_TIMEZONE || 'America/Los_Angeles'); try { new Intl.DateTimeFormat('en-CA', { timeZone: z }); return z; } catch (e) { return 'America/Los_Angeles'; } };
+const aiDay = (env, now) => new Intl.DateTimeFormat('en-CA', { timeZone: aiTz(env), year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(now));
+const aiNum = (x, dflt) => { const n = parseInt(x, 10); return Number.isFinite(n) && n >= 0 ? n : dflt; };
+const aiLimits = (env) => ({ person: aiNum(env.AI_DAILY_LIMIT, 200), group: aiNum(env.AI_GLOBAL_DAILY_LIMIT, 1000) });
+const aiBase = (env) => { const ws = String(env.ALI_WS || '').trim(); return /^[A-Za-z0-9-]{3,60}$/.test(ws) ? 'https://' + ws + '.ap-southeast-1.maas.aliyuncs.com' : 'https://dashscope-intl.aliyuncs.com'; };
+
 let schemaReady = null;
 function ensureSchema(env) {
   if (!schemaReady) {
@@ -45,6 +64,9 @@ function ensureSchema(env) {
       env.DB.prepare('CREATE TABLE IF NOT EXISTS progress (member_id TEXT PRIMARY KEY, data TEXT NOT NULL, updated_at INTEGER NOT NULL)'),
       env.DB.prepare('CREATE TABLE IF NOT EXISTS join_fails (ip_hash TEXT NOT NULL, at INTEGER NOT NULL)'),
       env.DB.prepare('CREATE TABLE IF NOT EXISTS invites (code_hash TEXT PRIMARY KEY, created_at INTEGER NOT NULL, used_at INTEGER)'),
+      // shared AI: calls counted per person, per day and per feature; and the people the admin has switched off
+      env.DB.prepare('CREATE TABLE IF NOT EXISTS ai_usage (member_id TEXT NOT NULL, day TEXT NOT NULL, feature TEXT NOT NULL, n INTEGER NOT NULL, PRIMARY KEY (member_id, day, feature))'),
+      env.DB.prepare('CREATE TABLE IF NOT EXISTS ai_block (member_id TEXT PRIMARY KEY, at INTEGER NOT NULL)'),
     ]).catch((e) => { schemaReady = null; throw e; });
   }
   return schemaReady;
@@ -186,9 +208,24 @@ async function handle(req, env) {
       await env.DB.prepare('INSERT INTO invites (code_hash, created_at, used_at) VALUES (?, ?, NULL)').bind(await sha256(normCode(code)), now).run();
       return reply(req, env, { code, valid_days: 7 }, 201);
     }
+    if (path === '/api/admin/ai' && req.method === 'GET') {
+      // today's calls per person and feature, and the totals of the last 7 days (to see whether the limit fits)
+      const lim = aiLimits(env), day = aiDay(env, now), from = aiDay(env, now - 6 * DAY_MS);
+      const today = (await env.DB.prepare('SELECT u.member_id AS id, COALESCE(m.name, \'(left)\') AS name, u.feature AS feature, u.n AS n FROM ai_usage u LEFT JOIN members m ON m.id = u.member_id WHERE u.day = ? ORDER BY u.member_id, u.feature').bind(day).all()).results;
+      const week = (await env.DB.prepare('SELECT day, SUM(n) AS n, COUNT(DISTINCT member_id) AS people FROM ai_usage WHERE day >= ? GROUP BY day ORDER BY day').bind(from).all()).results;
+      const blocked = (await env.DB.prepare('SELECT member_id AS id FROM ai_block').all()).results.map((r) => r.id);
+      return reply(req, env, { on: !!env.ALI_KEY, day, tz: aiTz(env), limit: lim.person, group_limit: lim.group, today, week, blocked });
+    }
+    const aiOff = /^\/api\/admin\/ai\/([0-9a-f]{16})$/.exec(path);
+    if (aiOff && (req.method === 'POST' || req.method === 'DELETE')) {
+      // POST switches this person's shared AI off, DELETE switches it back on
+      if (req.method === 'POST') await env.DB.prepare('INSERT INTO ai_block (member_id, at) VALUES (?, ?) ON CONFLICT(member_id) DO NOTHING').bind(aiOff[1], now).run();
+      else await env.DB.prepare('DELETE FROM ai_block WHERE member_id = ?').bind(aiOff[1]).run();
+      return reply(req, env, { ok: true, blocked: req.method === 'POST' });
+    }
     const del = /^\/api\/admin\/members\/([0-9a-f]{16})$/.exec(path);
     if (del && req.method === 'DELETE') {
-      await env.DB.batch([env.DB.prepare('DELETE FROM cheers WHERE from_id = ? OR to_id = ?').bind(del[1], del[1]), env.DB.prepare('DELETE FROM progress WHERE member_id = ?').bind(del[1]), env.DB.prepare('DELETE FROM members WHERE id = ?').bind(del[1])]);
+      await env.DB.batch([env.DB.prepare('DELETE FROM cheers WHERE from_id = ? OR to_id = ?').bind(del[1], del[1]), env.DB.prepare('DELETE FROM progress WHERE member_id = ?').bind(del[1]), env.DB.prepare('DELETE FROM ai_block WHERE member_id = ?').bind(del[1]), env.DB.prepare('DELETE FROM members WHERE id = ?').bind(del[1])]);
       return reply(req, env, { ok: true });
     }
     return fail(req, env, 404, 'not_found');
@@ -196,6 +233,69 @@ async function handle(req, env) {
 
   const me = await whoAmI(req, env);
   if (!me) return fail(req, env, 401, 'unauthorized');
+
+  // ---- shared AI: the app sends its Qwen requests here; the Worker adds the key, counts the call and passes the answer back ----
+  if (path.startsWith('/api/ai/')) {
+    const lim = aiLimits(env), day = aiDay(env, now);
+    const blocked = !!(await env.DB.prepare('SELECT 1 AS x FROM ai_block WHERE member_id = ?').bind(me.id).first());
+    const usedBy = async () => (await env.DB.prepare('SELECT COALESCE(SUM(n), 0) AS n FROM ai_usage WHERE member_id = ? AND day = ?').bind(me.id, day).first()).n;
+    if (path === '/api/ai/status' && req.method === 'GET') {
+      const used = await usedBy();
+      return reply(req, env, { on: !!env.ALI_KEY && lim.person > 0 && !blocked, blocked, used, limit: lim.person, left: Math.max(0, lim.person - used), day, tz: aiTz(env) });
+    }
+    const isChat = path === '/api/ai/chat', isTts = path === '/api/ai/tts';
+    if ((isChat || isTts) && req.method === 'POST') {
+      if (!env.ALI_KEY || lim.person <= 0) return fail(req, env, 503, 'ai_not_set_up');
+      if (blocked) return fail(req, env, 403, 'ai_off');
+      const text = await req.text();
+      if (text.length > AI_ASR_BYTES) return fail(req, env, 413, 'too_big');
+      let doc = null; try { doc = JSON.parse(text); } catch (e) { doc = null; }
+      if (!doc || typeof doc !== 'object' || Array.isArray(doc)) return fail(req, env, 400, 'bad_json');
+      let feature = '', upstreamUrl = '', upstreamBody = null;
+      if (isChat) {
+        feature = String(doc.feature || '');
+        const b = doc.body;
+        if (!['chat', 'grammar', 'meaning', 'asr'].includes(feature) || !b || typeof b !== 'object' || !Array.isArray(b.messages) || b.messages.length < 1 || b.messages.length > 40) return fail(req, env, 400, 'bad_request');
+        if (feature === 'asr' ? b.model !== AI_ASR_MODEL : !AI_CHAT_MODELS.includes(b.model)) return fail(req, env, 400, 'bad_model');
+        if (feature !== 'asr' && text.length > AI_CHAT_BYTES) return fail(req, env, 413, 'too_big');
+        upstreamBody = { model: b.model, messages: b.messages, stream: false };
+        if (feature !== 'asr') upstreamBody.max_tokens = Math.max(1, Math.min(AI_MAX_TOKENS, Math.round(Number(b.max_tokens)) || 300));
+        if (b.response_format && b.response_format.type === 'json_object') upstreamBody.response_format = { type: 'json_object' };
+        if (feature === 'asr' && b.asr_options && typeof b.asr_options === 'object') upstreamBody.asr_options = { enable_itn: false, language: b.asr_options.language === 'zh' ? 'zh' : undefined };
+        upstreamUrl = aiBase(env) + '/compatible-mode/v1/chat/completions';
+      } else {
+        feature = 'tts';
+        const t = typeof doc.text === 'string' ? doc.text.trim().slice(0, AI_TTS_CHARS) : '';
+        if (!t) return fail(req, env, 400, 'bad_request');
+        upstreamBody = { model: AI_TTS_MODEL, input: { text: t, voice: AI_VOICES.includes(doc.voice) ? doc.voice : 'Maia', language_type: 'Chinese' } };
+        upstreamUrl = aiBase(env) + '/api/v1/services/aigc/multimodal-generation/generation';
+      }
+      // count first, in one statement that also checks both limits, so two calls at once cannot both slip under
+      const ins = await env.DB.prepare('INSERT INTO ai_usage (member_id, day, feature, n) SELECT ?1, ?2, ?3, 1 WHERE (SELECT COALESCE(SUM(n), 0) FROM ai_usage WHERE member_id = ?1 AND day = ?2) < ?4 AND (SELECT COALESCE(SUM(n), 0) FROM ai_usage WHERE day = ?2) < ?5 ON CONFLICT(member_id, day, feature) DO UPDATE SET n = n + 1')
+        .bind(me.id, day, feature, lim.person, lim.group).run();
+      if (!ins.meta || ins.meta.changes !== 1) {
+        const mine = await usedBy();
+        return fail(req, env, 429, mine >= lim.person ? 'ai_limit' : 'ai_busy');
+      }
+      const refund = () => env.DB.prepare('UPDATE ai_usage SET n = MAX(0, n - 1) WHERE member_id = ? AND day = ? AND feature = ?').bind(me.id, day, feature).run();
+      const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), 25000);
+      let up, data = null;
+      try {
+        up = await fetch(upstreamUrl, { method: 'POST', signal: ctl.signal, headers: { Authorization: 'Bearer ' + env.ALI_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(upstreamBody) });
+        try { data = await up.json(); } catch (e) { data = null; }
+      } catch (e) { await refund(); return reply(req, env, { error: 'upstream', upstream: 0, detail: 'no answer' }, 502); } finally { clearTimeout(timer); }
+      if (!up.ok) {
+        await refund();
+        const detail = String((data && ((data.error && (data.error.message || data.error.code)) || data.message || data.code)) || '').slice(0, 200);
+        return reply(req, env, { error: 'upstream', upstream: up.status, detail }, 502);
+      }
+      const used = await usedBy();
+      // old usage rows are dropped now and then (about one call in fifty), so the table stays small
+      if (Math.random() < 0.02) await env.DB.prepare('DELETE FROM ai_usage WHERE day < ?').bind(aiDay(env, now - AI_KEEP_DAYS * DAY_MS)).run();
+      return reply(req, env, { ai: { used, limit: lim.person, left: Math.max(0, lim.person - used) }, data });
+    }
+    return fail(req, env, 404, 'not_found');
+  }
 
   if (path === '/api/group' && req.method === 'GET') {
     const rows = (await env.DB.prepare('SELECT id, name, created_at, updated_at, stats FROM members ORDER BY created_at').all()).results;
@@ -266,7 +366,7 @@ async function handle(req, env) {
   }
 
   if (path === '/api/me' && req.method === 'DELETE') {
-    await env.DB.batch([env.DB.prepare('DELETE FROM cheers WHERE from_id = ? OR to_id = ?').bind(me.id, me.id), env.DB.prepare('DELETE FROM progress WHERE member_id = ?').bind(me.id), env.DB.prepare('DELETE FROM members WHERE id = ?').bind(me.id)]);
+    await env.DB.batch([env.DB.prepare('DELETE FROM cheers WHERE from_id = ? OR to_id = ?').bind(me.id, me.id), env.DB.prepare('DELETE FROM progress WHERE member_id = ?').bind(me.id), env.DB.prepare('DELETE FROM ai_block WHERE member_id = ?').bind(me.id), env.DB.prepare('DELETE FROM members WHERE id = ?').bind(me.id)]);
     return reply(req, env, { ok: true });
   }
 

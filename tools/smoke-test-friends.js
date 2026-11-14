@@ -130,9 +130,14 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     ws['谢谢'].see = { s: 4, l: 0, t: Date.now() };
     app.setState({ ws, dayMin: app.state.dayMin + 20 }); app.persistNow();   // studies 20 more minutes on this device
   });
-  await E.page.evaluate(() => window.shanlu.friendsPush({}));
-  await A.page.evaluate(() => window.shanlu.friendsPush({}));
-  await E.page.evaluate(() => window.shanlu.friendsPush({}));
+  // a push that finds another sync still running does nothing, so push again (a few times) until the first device has the word
+  for (let i = 0; i < 6; i++) {
+    await E.page.evaluate(() => window.shanlu.friendsPush({}));
+    await A.page.evaluate(() => window.shanlu.friendsPush({}));
+    await E.page.evaluate(() => window.shanlu.friendsPush({}));
+    if (await A.page.evaluate(() => window.shanlu.state.ws['谢谢'].see.s === 4)) break;
+    await A.page.waitForTimeout(700);
+  }
   const dbg = (pg) => pg.evaluate(() => ['shanlu-progress-v1', 'shanlu-progress-v1-l2', 'shanlu-progress-v1-all'].map(k => { const s = JSON.parse(localStorage.getItem(k) || 'null'); return s ? [k.slice(-6), s.day, s.dayMin, JSON.stringify(s.minLog), JSON.stringify(s.minDev)] : [k.slice(-6), null]; }));
   if (process.env.DBG) { console.log('A', JSON.stringify(await dbg(A.page))); console.log('E', JSON.stringify(await dbg(E.page))); }
   const sa = await A.page.evaluate(() => window.shanlu.friendStats()), se = await E.page.evaluate(() => window.shanlu.friendStats());
@@ -304,6 +309,41 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await Y.page.evaluate(() => !localStorage.getItem('shanlu-friends')) && await Y.page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-person')).prefs.name.v) === 'Yan', 'a name without the box keeps this person out of the group');
     check(Z.errors.length === 0 && Y.errors.length === 0, 'no page errors in the first-visit join: ' + Z.errors.concat(Y.errors).slice(0, 2).join(' | '));
     await Z.ctx.close(); await Y.ctx.close();
+  }
+
+  // the shared AI: a friend with no key of their own uses Qwen through the server (the upstream is a stub)
+  {
+    const aiMf = await makeWorker({ ALLOWED_ORIGINS: 'http://127.0.0.1:' + server.address().port, ALI_KEY: 'test-ali-key' }, {
+      outboundService: async () => new Response(JSON.stringify({ output: { audio: { url: 'http://audio.example/x.wav' } }, choices: [{ message: { content: 'OK' } }] }), { headers: { 'Content-Type': 'application/json' } }),
+    });
+    const aiApi = String(await aiMf.ready).replace(/\/$/, '');
+    const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    await ctx.addInitScript((u) => { window.SHANLU_FRIENDS_URL = u; }, aiApi);
+    const R = await ctx.newPage(); const rErrors = []; R.on('pageerror', e => rErrors.push(String(e)));
+    await R.goto(site); await R.waitForSelector('.app');
+    check(await R.evaluate(() => window.shanlu.state.aiOn) === false, 'before joining the group, with no key, the AI features are off');
+    await R.locator('.navyou .ylink', { hasText: 'Friends' }).click(); await R.waitForSelector('#fr-name');
+    await R.fill('#fr-name', 'Rae'); await R.locator('button', { hasText: 'Join group' }).click(); await R.waitForSelector('.frow');
+    await R.waitForFunction(() => window.shanlu.state.aiOn === true, null, { timeout: 8000 });
+    check(await R.evaluate(() => window.shanlu.state.aiProvider) === 'alibaba', 'after joining, with the server holding a key, the AI features switch on with no key saved');
+    await R.evaluate(() => window.shanlu.go('voice'));
+    await R.waitForFunction(() => document.body.innerText.includes('shared AI is on'), null, { timeout: 8000 });
+    check(/0 of 200 calls/.test(await R.locator('main').innerText()), 'Settings says the shared AI is on and 0 of 200 calls are used');
+    check(await R.evaluate(() => !JSON.parse(localStorage.getItem('shanlu-ai') || '{}').key && !(JSON.parse(localStorage.getItem('shanlu-ai') || '{}').ali || {}).key), 'no key was stored on this device');
+    await R.evaluate(() => window.shanlu.setTtsVoice('Cherry'));   // asks the server for one spoken line
+    await R.waitForTimeout(1500);
+    await R.evaluate(() => window.shanlu.relayCheck());
+    await R.waitForFunction(() => document.body.innerText.includes('1 of 200 calls'), null, { timeout: 8000 });
+    check(true, 'a spoken line went through the server and counted (1 of 200)');
+    await R.evaluate(() => window.shanlu.setAsr('alibaba'));
+    check(await R.evaluate(() => window.shanlu.state.asrMode) === 'alibaba', 'the voice recogniser can be switched to Qwen without a key');
+    // leaving the group takes the shared AI away
+    await R.evaluate(() => window.shanlu.setState({ frLeaveAsk: true }));
+    await R.evaluate(() => window.shanlu.friendsLeave());
+    await R.waitForFunction(() => !localStorage.getItem('shanlu-friends'), null, { timeout: 8000 });
+    check(await R.evaluate(() => window.shanlu.state.aiOn) === false, 'after leaving the group the shared AI is gone again');
+    check(rErrors.length === 0, 'no page errors with the shared AI: ' + rErrors.slice(0, 2).join(' | '));
+    await ctx.close(); await aiMf.dispose();
   }
 
   // server gone: a message, and the rest of the app keeps working
