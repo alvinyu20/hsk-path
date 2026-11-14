@@ -74,7 +74,9 @@ if (!/shanlu-version/.test(out) || !/Content-Security-Policy/.test(out)) { conso
 
 // ---- sw.js ----
 const assets = ['index.html'].concat(files.map((f) => (scripts.concat(styles).indexOf(f) >= 0 ? f + '?v=' + VERSION : f)));
-const sw = read('tools/sw-template.js').replace('__VERSION__', VERSION).replace('__ASSETS__', JSON.stringify(assets, null, 2));
+// the size of every file as the browser should receive it: the offline copy checks them, so a half-updated mix from the network is never kept
+const sizes = {}; assets.forEach((a) => { sizes[a] = a === 'index.html' ? Buffer.byteLength(out) : fs.statSync(path.join(root, a.replace(/\?v=[0-9a-f]+$/, ''))).size; });
+const sw = read('tools/sw-template.js').replace('__VERSION__', VERSION).replace('__ASSETS__', JSON.stringify(assets, null, 2)).replace('__SIZES__', JSON.stringify(sizes));
 
 const stale = [];
 if (out !== html) stale.push('index.html');
