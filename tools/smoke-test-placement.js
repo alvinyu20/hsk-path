@@ -159,6 +159,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const { ctx, page, errors } = await open({ onb: true });
     await page.locator('button', { hasText: 'Take my first step' }).click();
     await page.locator('.jy-go').click();
+    await page.locator('.jy-trip-go').click();
     await page.waitForSelector('.obm-guide', { timeout: 20000 }); await page.waitForTimeout(900);
     await page.locator('.obm-bar button', { hasText: 'Skip' }).click();
     check(/Where are you starting/.test(await dlg(page).innerText()), 'the level step is shown');
@@ -186,6 +187,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const { ctx, page, errors } = await open({ onb: true });
     await page.locator('button', { hasText: 'Take my first step' }).click();
     await page.locator('.jy-go').click();
+    await page.locator('.jy-trip-go').click();
     await page.waitForSelector('.obm-guide', { timeout: 20000 }); await page.waitForTimeout(900);
     await page.locator('.obm-bar button', { hasText: 'Skip' }).click();
     await dlg(page).locator('.obm-opt', { hasText: 'Test out of a level' }).click();

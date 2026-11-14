@@ -213,7 +213,10 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.evaluate(() => window.shanlu.setState({ webCredited: false })); await page.waitForTimeout(100);
     await page.locator('.task2', { hasText: 'Path: ' }).first().click();
     await page.waitForTimeout(150);
+    check((await st(page)).screen === 'path' && await page.locator('.pth-sheet').count() === 0, 'the Path opens and glides to the stop first');
+    await page.waitForFunction(() => document.querySelectorAll('.pth-sheet').length === 1, null, { timeout: 4000 }).catch(() => {});
     check((await st(page)).screen === 'path' && await page.locator('.pth-sheet').count() === 1, 'tapping the row opens the Path with that stop ready');
+    { const r = await page.evaluate(() => { const e = document.querySelector('.pth-node.cur'); if (!e) return null; const b = e.getBoundingClientRect(); return (b.top + b.bottom) / 2 / innerHeight; }); check(r !== null && r > 0.2 && r < 0.8, 'the stop you are on is centred on the screen (at ' + (r === null ? 'n/a' : Math.round(r * 100) + '%') + ' of the height)'); }
     await page.keyboard.press('Escape'); await page.waitForTimeout(60);
 
     // ---- the Account page

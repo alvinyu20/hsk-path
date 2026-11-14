@@ -493,7 +493,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
-      jyPing:0, jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
+      jyPing:0, avPick:false, jyTrip:'', jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -852,9 +852,13 @@
   // a session: weak and due points first, a few new ones, and (when an AI key is saved) a sentence of your own for points you already recognise
   // a grammar point joins Grammar review once its lesson is passed (80%), like a word joins Review words once it is learned
   const gptOpen = (S, id) => { const p = gptReg()[id]; return !!p && ((S.gres || {})[p.lesson] || 0) >= 80; };
-  const gptSession = (S, levels, size, canWrite) => {
+  // due for review: a started point whose memory is due, or an open point never reviewed yet (its first review)
+  const gptDueNow = (S, id) => { const i = gptInfo(S.gpt[id]); return i.due || !i.started; };
+  const G_DUE_MAX = 20;   // one session covers at most this many due points; "Go again" carries on with the rest
+  const gptSession = (S, levels, size, canWrite, dueOnly) => {
     const reg = gptReg();
     let ids = Object.keys(reg).filter(id => levels.indexOf(reg[id].level) >= 0 && reg[id].pool.length && gptOpen(S, id));
+    if (dueOnly) { ids = ids.filter(id => gptDueNow(S, id)); size = Math.min(size, ids.length); }
     const chosen = []; let news = 0;
     // due points come first (weakest first, in a random order among equals), so every question you answer works the count down; only then does a session add weak and new points
     const dueFirst = ids.filter(id => gptInfo(S.gpt[id]).due).map(id => ({ id, k:gptWeight(S.gpt[id]) * (0.6 + Math.random() * 0.8) })).sort((p, q) => q.k - p.k).map(x => x.id);
@@ -2973,7 +2977,7 @@
       // a flight shows on the map of the whole country; a ride or a walk shows on the map of the region you are in
       const flew = r.ev.indexOf('arrive') >= 0;
       const playMode = this.jyMotionOk() ? (flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk')) : '';
-      this.setState({ jyPlay:playMode, jyPlayStamp:r.ev.indexOf('stamp') >= 0, jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next, from, k:(this.jyK = ((this.jyK || 0) + 1) % 2) }, jyOpen:null, jyTab:'map', jySel:null, jyFilter:'all', jyReg:flew || !JMAP.regions[r.stop.rid] ? null : r.stop.rid });
+      this.setState({ jyTrip:flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk'), jyPlay:playMode, jyPlayStamp:r.ev.indexOf('stamp') >= 0, jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next, from, k:(this.jyK = ((this.jyK || 0) + 1) % 2) }, jyOpen:null, jyTab:'map', jySel:null, jyFilter:'all', jyReg:flew || !JMAP.regions[r.stop.rid] ? null : r.stop.rid });
       try { window.scrollTo(0, 0); } catch (e) {}
       if (playMode) this.jyPlayRun(playMode);
       this.checkMilestones();
@@ -2989,7 +2993,7 @@
       this.jyPlayOff = () => { clearTimeout(arm); document.removeEventListener('pointerdown', skip); document.removeEventListener('keydown', skip); this.jyPlayOff = null; };
       if (mode === 'walk') return;
       // the trail draws for exactly the length of its path, so the plane and the red line stay together
-      requestAnimationFrame(() => { try { const p = document.querySelector(mode === 'fly' ? '.jy-map .jy-arc.new' : '.jy-map .jy-leg'); if (p && p.getTotalLength) p.style.setProperty('--len', Math.ceil(p.getTotalLength()) + 1); } catch (e) {} });
+      requestAnimationFrame(() => { try { document.querySelectorAll(mode === 'fly' ? '.jy-map .jy-arc.new' : '.jy-map .jy-leg').forEach(p => { if (p.getTotalLength) p.style.setProperty('--len', Math.ceil(p.getTotalLength()) + 1); }); } catch (e) {} });
       this.jyPlaneTimer = setTimeout(() => { if (this.jyPlayAt === t0) this.jyPlane(mode, t0); }, mode === 'fly' ? 1000 : 700);
     };
     jyPlayEnd = (t0) => {
@@ -2999,13 +3003,13 @@
     };
     // a plane glides along the new route with the same easing as the line that draws behind it
     jyPlane = (mode, t0) => {
-      const svg = document.querySelector('.jy-map'); if (!svg) return;
+      const svg = document.querySelector('.jy-trip .jy-map') || document.querySelector('.jy-map'); if (!svg) return;
       const path = svg.querySelector(mode === 'fly' ? '.jy-arc.new' : '.jy-leg');
       if (!path || !path.getTotalLength) return;
       const L = path.getTotalLength(); const dur = mode === 'fly' ? 2000 : 1200; const start = performance.now();
       const ease = (x) => { let lo = 0, hi = 1, t = x; for (let i = 0; i < 18; i++) { t = (lo + hi) / 2; const bx = 3 * t * Math.pow(1 - t, 2) * .45 + 3 * t * t * (1 - t) * .3 + t * t * t; if (bx < x) lo = t; else hi = t; } return 3 * t * Math.pow(1 - t, 2) * .05 + 3 * t * t * (1 - t) * 1 + t * t * t; };
       const step = (now) => {
-        const pl = document.querySelector('.jy-map .jy-plane');   // looked up each frame: the page may redraw while the plane flies
+        const pl = document.querySelector('.jy-trip .jy-plane') || document.querySelector('.jy-map .jy-plane');   // looked up each frame: the page may redraw while the plane flies
         if (!pl) return;
         if (this.jyPlayAt !== t0 || !this.state.jyPlay) { pl.setAttribute('opacity', '0'); return; }
         const k = Math.min(1, (now - start) / dur); const e = ease(k);
@@ -3140,7 +3144,13 @@
       this.go('journey');
     };
     onbFlight = () => { this.go('journey'); };
-    jyCloseCard = () => this.setState({ jyRv:null, jyOpen:null });
+    jyCloseCard = () => this.setState({ jyRv:null, jyOpen:null, jyTrip:'' });
+    // the travel window: the trip plays in the middle of the screen; closing it shows the new stop's card
+    jyTripClose = () => {
+      this.jyPlayAt = 0; clearTimeout(this.jyPlayTimer); clearTimeout(this.jyPlaneTimer); if (this.jyPlayOff) this.jyPlayOff();
+      this.setState({ jyTrip:'', jyPlay:'' });
+      requestAnimationFrame(() => { try { const el = document.querySelector('.jy-card'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'start', behavior:this.jyMotionOk() ? 'smooth' : 'auto' }); } catch (e) {} });
+    };
     jyOpenStop = (id) => { SFX.play('ok'); this.setState({ jyOpen:id, jyRv:null }); try { window.scrollTo(0, 0); } catch (e) {} };
     jyShowReg = (id) => this.setState({ jyTab:'map', jyReg:id, jySel:null, jyFilter:'all', jyOpen:null, jyRv:null });
     jyBack = () => this.setState({ jyReg:null, jySel:null, jyFilter:'all' });
@@ -3197,7 +3207,7 @@
       if (S.screen !== 'journey') return base;
       const have = {}; st.seen.forEach(id => { have[id] = 1; });
       const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
-      const out = Object.assign(base, { jyOn:true, jyFlip:S.jyRv && S.jyRv.k ? 'kb' : 'ka', jyPlayCls:S.jyPlay ? 'jy-playing jyp-' + S.jyPlay + (S.jyPlayStamp ? ' jyp-st' : '') : '', jyPlayOn:!!S.jyPlay, jyPlayFly:S.jyPlay === 'fly', jyPlayLeg:S.jyPlay === 'leg' });
+      const out = Object.assign(base, { jyTripShow:!!S.jyTrip && !!S.jyRv && !S.jyFriend, jyTripFly:S.jyTrip === 'fly', jyTripLeg:S.jyTrip === 'leg', jyTripKicker:S.jyTrip === 'fly' ? 'Flying to' : S.jyTrip === 'leg' ? 'On the train to' : 'Walking to', jyTripLabel:'Travelling to a new stop', jyTripClose:this.jyTripClose, jyOn:true, jyFlip:S.jyRv && S.jyRv.k ? 'kb' : 'ka', jyPlayCls:S.jyPlay ? 'jy-playing jyp-' + S.jyPlay + (S.jyPlayStamp ? ' jyp-st' : '') : '', jyPlayOn:!!S.jyPlay, jyPlayFly:S.jyPlay === 'fly', jyPlayLeg:S.jyPlay === 'leg' });
 
       // friends: the people in your group who have started travelling. Looking at one shows their map and passport in place of yours.
       const fMembers = S.fr && S.fr.members ? S.fr.members.filter(m => m.id !== S.fr.me && m.stats && m.stats.jy && m.stats.jy.n > 0) : [];
@@ -3278,6 +3288,7 @@
         const hp = rv ? JY.hop(JWORLD, st, rv.from, stop.id, rv.ev) : null;
         const kmT = (n) => n.toLocaleString('en-US');
         out.jyTkFly = !!hp && hp.mode === 'fly'; out.jyTkRide = !!hp && hp.mode === 'ride'; out.jyTkWalk = !!hp && hp.mode === 'walk';
+        if (S.jyTrip) { out.jyTripFly = !!hp && hp.mode === 'fly' && S.jyTrip === 'fly'; out.jyTripLeg = !!hp && hp.mode === 'ride' && S.jyTrip === 'leg'; out.jyTripKicker = hp && hp.mode === 'fly' ? 'Flying to' : hp && hp.mode === 'ride' ? 'On the train to' : 'Walking to'; }
         if (hp && hp.mode === 'fly') Object.assign(out, { jyTkFromCode:hp.from ? hp.from.code || '···' : '家', jyTkFromZh:hp.from ? hp.from.zh : '', jyTkFromPy:hp.from ? hp.from.py : 'jiā · home',
           jyTkToCode:hp.to.code || '···', jyTkToZh:hp.to.zh, jyTkToPy:hp.to.py, jyTkToEn:hp.to.en, jyTkNo:'SL ' + String(hp.no).padStart(3, '0'), jyTkDate:hp.date,
           jyTkHasKm:hp.km > 0, jyTkKm:'约 ' + kmT(hp.km) + ' 公里', jyTkKmEn:'about ' + kmT(hp.km) + ' km',
@@ -3554,7 +3565,8 @@
     startGrammarReview = () => {
       const S = this.state;
       const levels = S.grvLv ? [S.grvLv] : LVLS.slice();
-      const list = gptSession(S, levels, 8, aiReadyNow());
+      let list = gptSession(S, levels, G_DUE_MAX, aiReadyNow(), true);   // only what is due, like the word review
+      if (!list.length) list = gptSession(S, levels, 8, aiReadyNow(), false);   // nothing due: a short practice set of the weakest points
       if (!list.length) return;
       this.quizQs = list;
       this.rvKey = null; this.setState({ screen:'quiz', qmode:'greview', glast:null, qi:0, qpicked:[], qtyped:'', qchoice:null, qfeed:'', qerr:'', qbusy:false, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false });
@@ -3611,17 +3623,33 @@
         patch.dayMin = S.dayMin + (S.spokeToday ? 0 : 6); patch.spokeToday = true;
       }
       this.setState(patch);
-      // listening only: Mingming's next line plays by itself (this runs inside your tap, so the browser allows the sound)
-      if (!S.szh && !S.spy && !S.sen && t < sc.ai.length) this.say(sc.ai[t].zh, 'ai' + t);
+      // Mingming's next line plays by itself (this runs inside your tap, so the browser allows the sound)
+      if (t < sc.ai.length) this.say(sc.ai[t].zh, 'ai' + t);
     };
-    resetSpeak = () => { this.setState({ sturn:0, sdone:false }); };
-    pickScenario = (i) => { this.setState({ sidx:i, sturn:0, sdone:false, sview:'chat' }); try { window.scrollTo(0, 0); } catch (e) {} };
+    // the opening line of a script plays as soon as it opens (always called from a tap)
+    sayOpen = (i) => { const sc = SCEN[i]; if (sc && sc.ai && sc.ai.length) this.say(sc.ai[0].zh, 'ai0'); };
+    resetSpeak = () => { this.setState({ sturn:0, sdone:false }); this.sayOpen(this.state.sidx); };
+    pickScenario = (i) => { this.setState({ sidx:i, sturn:0, sdone:false, sview:'chat' }); this.sayOpen(i); try { window.scrollTo(0, 0); } catch (e) {} };
     spBack = () => { this.setState({ sview:'pick' }); try { window.scrollTo(0, 0); } catch (e) {} };
 
     // ----- the learning path and its stop lesson -----
     pathLevel = () => { const S = this.state; return S.plv && PATH_LVLS.indexOf(S.plv) >= 0 ? S.plv : pathFirstOpen(S); };
     pathSetLevel = (n) => { this.setState({ plv:n, pstop:'', plNote:'', plAlt:'' }); };
     pathUnitToggle = (id, open) => { const pu = Object.assign({}, this.state.pu); pu[id] = open; this.setState({ pu }); };
+    // "Continue" from Today: the path opens, glides to the stop you are on and centres it, then the stop opens
+    pathContinue = (id) => {
+      this.go('path');
+      const smooth = this.jyMotionOk();
+      const open = () => { if (this.state.screen === 'path') this.setState({ pstop:id }); };
+      const run = (n) => {
+        if (this.state.screen !== 'path') return;
+        const el = document.querySelector('.pth-node.cur');
+        if (!el) { if (n < 12) setTimeout(() => run(n + 1), 50); else open(); return; }
+        try { el.scrollIntoView({ behavior:smooth ? 'smooth' : 'auto', block:'center' }); } catch (e) {}
+        if (smooth) setTimeout(open, 750); else open();
+      };
+      requestAnimationFrame(() => run(0));
+    };
     pathSelect = (id) => { this.setState({ pstop:id, plNote:'', plAlt:'' }); };
     pathClose = () => { this.setState({ pstop:'', plNote:'', plAlt:'' }); };
     // open a stop: a word stop starts its lesson (unless the daily limit or the waiting words say wait), a grammar stop opens its lesson
@@ -3629,7 +3657,7 @@
       const S = this.state; const hit = STOP_BY[id]; if (!hit) return;
       const st = hit.st;
       if (st.k === 'g') { this.setState({ pstop:'', plNote:'', plAlt:'', ggopen:null, gq:'', glesson:LESSON_AT[st.g] }); this.go('grammar'); return; }
-      if (st.k === 's') { this.setState({ pstop:'', plNote:'', plAlt:'', aiMode:false, sidx:SCEN_AT[st.s], sturn:0, sdone:false, sview:'chat' }); this.go('speak'); return; }
+      if (st.k === 's') { this.setState({ pstop:'', plNote:'', plAlt:'', aiMode:false, sidx:SCEN_AT[st.s], sturn:0, sdone:false, sview:'chat' }); this.go('speak'); this.sayOpen(SCEN_AT[st.s]); return; }
       const words = stopWords(st);
       const fresh = words.filter(z => !wStarted(S, z)); const known = words.filter(z => wStarted(S, z));
       if (fresh.length) {
@@ -3713,6 +3741,10 @@
       let stopsDone = 0, stopsAll = 0;
       PATH_LVLS.forEach(n => (PATH_U[n] || []).forEach(u => u.stops.forEach(st => { stopsAll++; if (stopState(S, st) === 'done') stopsDone++; })));
       const gPassed = LESSONS.filter(L => (S.gres[L.id] || 0) >= 80).length;
+      // the picture: a souvenir you have found on the Journey (only found ones can be chosen); saved as a person setting, so it follows you
+      const jst = jyRead(); const seenAv = {}; (jst ? jst.seen : []).forEach(id => { seenAv[id] = 1; });
+      const foundSv = SOUV.filter(sv => seenAv[sv.stop]);
+      const avId = String(prefGet('av', '') || ''); const avSv = foundSv.find(sv => sv.id === avId) || null;
       const stat = (label, value) => ({ label, value });
       const links = [
         { glyph:'设', title:'Settings and sync', sub:'Keep one progress on every device, choose the level and the voice, saved data and backups.', go:() => this.go('voice') },
@@ -3723,6 +3755,10 @@
       return {
         isAcct:S.screen === 'acct', acctShowName:!S.acctEdit,
         acctName:name || 'Learner', acctInitial:name ? name.charAt(0).toUpperCase() : '学', acctHasName:!!name,
+        hasAv:!!avSv, noAv:!avSv, avUrl:avSv ? svImg(avSv) : '', avAlt:avSv ? 'Your picture: ' + avSv.en : '',
+        avPickOpen:!!S.avPick, avToggle:() => this.setState({ avPick:!this.state.avPick }), avNone:foundSv.length === 0, avHas:foundSv.length > 0,
+        avPicks:foundSv.map(sv => ({ url:svImg(sv), en:sv.en, cls:sv.id === avId ? 'on' : '', fn:() => { SFX.play('ok'); prefSet('av', sv.id); this.setState({ avPick:false, vtick:(this.state.vtick || 0) + 1 }); } })),
+        avInitialCls:avSv ? '' : 'on', avUseInitial:() => { prefSet('av', ''); this.setState({ avPick:false, vtick:(this.state.vtick || 0) + 1 }); },
         acctSub:c.level + (since ? ' · studying since ' + since : ''),
         acctEditing:!!S.acctEdit, acctNameIn:String(S.acctNameIn || ''), onAcctName:(e) => this.setState({ acctNameIn:e.target.value }),
         acctEditOpen:this.acctEditOpen, acctCancel:this.acctCancel, acctSave:this.acctSave,
@@ -4619,7 +4655,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         home:startShow ? ['Welcome to Shanlu', 'Five words, about five minutes. You do not pick anything.'] : ['Today', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
         review:['Review', 'Words that are due, based on how well you remember them.'],
         library:['Library', 'Everything you can look up: words, grammar, topics and sounds.'],
-        greview:['Grammar review', 'A short daily session on the grammar points you have met, weakest first.'],
+        greview:['Grammar review', 'The grammar points that are due, like the word review. When nothing is due you get a short practice set.'],
         testlobby:[LVN + ' test', 'Mixed questions from the words you have started, so you are recalling words, not just recognizing them.'],
         grammar:['Grammar', ALL ? LESSONS.length + ' lessons from every unlocked level, one at a time.' : LV === 1 ? LESSONS.length + ' lessons that cover the HSK 1 grammar outline, one at a time.' : LESSONS.length + ' lessons on the grammar of the ' + LVN + ' words, one at a time.'],
         speak:['Speaking practice', HAS_SCRIPTS ? 'Say a short conversation out loud.' : 'Talk with Mingming, the AI conversation partner.'],
@@ -4654,7 +4690,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const ringDash = (Math.min(S.dayMin / S.mins, 1) * C).toFixed(1) + 'px ' + C.toFixed(1) + 'px';
       const nextLesson = Math.max(0, LESSONS.findIndex(L => (S.gres[L.id] || 0) < 80));
       const nextScn = Math.max(0, SCEN.findIndex(sc => !S.sres[sc.id]));
-      const grvAllI = (() => { const greg = gptReg(); return Object.keys(greg).filter(id => gptOpen(S, id)).map(id => gptInfo(S.gpt[id])); })();   // grammar points open to review (their lesson is passed)
+      const grvAllI = (() => { const greg = gptReg(); return Object.keys(greg).filter(id => gptOpen(S, id)).map(id => ({ due:gptDueNow(S, id) })); })();   // grammar points open to review (their lesson is passed)
       const grvOpenToday = grvAllI.length, grvDueToday = grvAllI.filter(i => i.due).length;
       // Today's plan: a step on the Path comes first every day, then the words and grammar points that are due. Everything else is a shortcut under "More ways to study".
       const pathLvNow = PATH_LVLS.length ? pathFirstOpen(S) : 0;
@@ -4664,15 +4700,15 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const dueWordsN = BANK_KEYS.filter(zh => { const i = winfo(S.ws[zh], 0); return i.started && i.dueN <= 0; }).length;   // the same count My words shows: words, not the cards left in this session
       const planRows = [];
       if (pathStep || pathDoneToday > 0) planRows.push({ glyph:'路', title:pathDoneToday > 0 ? 'Path: ' + (pathDoneToday === 1 ? 'a step' : pathDoneToday + ' steps') + ' done' : 'Path: ' + stopTitle(pathStep.st), meta:pathDoneToday > 0 ? (pathStep ? 'Next: ' + stopTitle(pathStep.st) : 'You have walked the whole path') : stopMeta(pathStep.st), done:pathDoneToday > 0,
-        run:pathStep ? () => { this.go('path'); this.setState({ pstop:pathStep.st.id }); } : () => this.go('path') });
+        run:pathStep ? () => this.pathContinue(pathStep.st.id) : () => this.go('path') });
       if (dueWordsN > 0 || S.rq.length > 0 || S.rcomplete) planRows.push({ glyph:'词', title:'Review words', meta:dueWordsN > 0 ? dueWordsN + (S.rcomplete ? ' still due' : ' due') : 'All caught up', done:S.rcomplete && dueWordsN === 0,
         run:() => { if (!S.rq.length && dueWordsN > 0) this.reviewMore(); this.go('review'); } });
-      if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + ' due' : 'Weakest points first', done:!!S.grdone, run:() => this.startGrammarReview() });
+      if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + ' due' : 'Nothing due, short practice', done:!!S.grdone, run:() => this.startGrammarReview() });
       const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:t.run }));
       const moreWays = [
-        pathStep && pathDoneToday > 0 ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), cls:'', fn:() => { this.go('path'); this.setState({ pstop:pathStep.st.id }); } } : null,
+        pathStep && pathDoneToday > 0 ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), cls:'', fn:() => this.pathContinue(pathStep.st.id) } : null,
         HAS_LISTEN ? { glyph:'听', label:'Listening', sub:'Dictation drill', cls:S.ldone ? 'done' : '', fn:() => this.go('listen') } : null,
-        HAS_SCRIPTS ? { glyph:'说', label:'Speak', sub:(SCEN[nextScn] || NO_SC).title, cls:S.spokeToday ? 'done' : '', fn:() => { this.setState({ sidx:nextScn, sturn:0, sdone:false, sview:'chat' }); this.go('speak'); } } : null,
+        HAS_SCRIPTS ? { glyph:'说', label:'Speak', sub:(SCEN[nextScn] || NO_SC).title, cls:S.spokeToday ? 'done' : '', fn:() => { this.setState({ sidx:nextScn, sturn:0, sdone:false, sview:'chat' }); this.go('speak'); this.sayOpen(nextScn); } } : null,
         { glyph:'语', label:'Grammar lesson', sub:LESSONS[nextLesson].title, cls:'', fn:() => { this.setState({ ggopen:null, gq:'', glesson:nextLesson }); this.go('grammar'); } },
         testReady ? { glyph:'测', label:'Test', sub:'Mixed questions', cls:S.tdone ? 'done' : '', fn:() => this.go('testlobby') } : null,
         { glyph:'书', label:'Library', sub:'Look things up', cls:'', fn:() => this.go('library') }
@@ -5010,7 +5046,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       }).sort((a, b) => a.rank - b.rank);
       const grvOpenN = grvRowsAll.filter(r => r.open).length;
       const lessonName = (lid) => { const l = LESSONS.find(x => x.id === lid); return l ? l.title : ''; };
-      const grvStart = grvRowsAll.filter(r => r.open && r.info.started).length, grvDue = grvRowsAll.filter(r => r.open && r.info.due).length, grvMastered = grvRowsAll.filter(r => r.open && r.info.mastered).length;
+      const grvStart = grvRowsAll.filter(r => r.open && r.info.started).length, grvDue = grvRowsAll.filter(r => r.open && (r.info.due || !r.info.started)).length, grvMastered = grvRowsAll.filter(r => r.open && r.info.mastered).length;
       const wordsDueN = S.rq.length > 0 && !S.rcomplete ? S.rq.length : 0, revBadgeN = wordsDueN + grvDue;   // the Review tab counts words and grammar points together
       const grvCanWrite = aiReadyNow();
       const grvRows = (S.grvAll ? grvRowsAll : grvRowsAll.slice(0, 12)).map(r => ({
@@ -5251,7 +5287,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         weekMin:weekMin, weekDays:weekDays,
         title:tt[0], subtitle:tt[1], subShow:!(['home', 'path', 'library', 'review', 'greview', 'testlobby', 'listen', 'speak', 'journey', 'words', 'web', 'grammar', 'pinyin'].indexOf(S.screen) >= 0) || (prefGet('sv', {})[S.screen] || 0) < 3 || startShow,
         obIntroShow:obPh === 'intro' && !S.obBack, obBackShow:obPh === 'intro' && !!S.obBack, obFlyShow:obPh === 'fly' && S.screen === 'journey',
-        obGuideShow:obPh === 'guide' && !S.jyPlay, obLevelShow:obPh === 'level', obMeShow:obPh === 'me',
+        obGuideShow:obPh === 'guide' && !S.jyPlay && !(S.jyTrip && S.jyRv), obLevelShow:obPh === 'level', obMeShow:obPh === 'me',
         obIntroGo:this.obIntroGo, obFlySkip:this.obFlySkip, obBackOpen:this.obBackOpen, obBackClose:this.obBackClose, obBackGo:this.obBackGo, obBackFile:this.obBackFile, obFrOn:frOn,
         obLinkIn:S.frLinkIn, onObLink:(e) => this.setState({ frLinkIn:e.target.value }), obLinkText:S.frLinkBusy ? 'Signing in…' : 'Bring my progress here', obHasErr:!!S.frErr, obErrText:S.frErr,
         obCZh:obC.zh, obCTag:obC.tag, obCTitle:obC.title, obCBody:obC.body, obCChips:obC.chips, obCCount:((S.obCard || 0) + 1) + ' of 5', obCArt:'a' + (S.obCard || 0), obCShot:'aspect-ratio:' + obC.w + '/' + obC.h, obCImg:'background-image:url(' + obC.img + ')', obCAlt:obC.alt,
@@ -5360,7 +5396,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
 
         // grammar
         grvLvChips, hasGrvChips:grvLvChips.length > 0, grvSub:grvOpenN + ' of ' + grvRowsAll.length + ' points open · ' + grvStart + ' started · ' + grvDue + ' due · ' + grvMastered + ' mastered',
-        grvStartLabel:grvOpenN === 0 ? 'Pass a grammar lesson to unlock' : grvDue > 0 ? 'Review ' + grvDue + ' due, and more' : 'Start grammar review', grvStart:() => (grvOpenN === 0 ? this.go('grammar') : this.startGrammarReview()), grvGoReview:() => this.go('greview'), 
+        grvStartLabel:grvOpenN === 0 ? 'Pass a grammar lesson to unlock' : grvDue > 0 ? 'Review ' + grvDue + ' due' : 'Nothing due: practise anyway', grvStart:() => (grvOpenN === 0 ? this.go('grammar') : this.startGrammarReview()), grvGoReview:() => this.go('greview'), 
         grvNote:grvOpenN === 0 ? 'Grammar points join this review once you pass their lesson (80% or more in the lesson practice), just as words join Review words once you have learned them.' : grvCanWrite ? 'It also asks you to write your own sentence. Claude checks it, and that is how a point becomes mastered.' : 'Add an AI key in Settings to unlock writing your own sentences. Without one you can still review, but no point can reach Mastered.',
         grvToggleLabel:S.grvOpen ? 'Hide tracker' : 'Show tracker', grvToggle:() => this.setState({ grvOpen:!S.grvOpen }), grvOpen:!!S.grvOpen, grvRows,
         grvMoreShow:!!S.grvOpen && grvRowsAll.length > 12, grvMoreLabel:S.grvAll ? 'Show fewer' : 'Show all ' + grvRowsAll.length, grvMore:() => this.setState({ grvAll:!S.grvAll }),
@@ -5460,7 +5496,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
     }
   });
   document.addEventListener('click', (e) => { try { if (window.shanlu && window.shanlu.state.lvMenu && !(e.target.closest && e.target.closest('.lvmenu'))) window.shanlu.setState({ lvMenu:false }); } catch (err) {} });
-  document.addEventListener('keydown', (e) => { try { if (e.key === 'Escape' && window.shanlu && window.shanlu.state.lvMenu) window.shanlu.setState({ lvMenu:false }); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.pstop) window.shanlu.pathClose(); } catch (err) {} });
+  document.addEventListener('keydown', (e) => { try { if (e.key === 'Escape' && window.shanlu && window.shanlu.state.jyTrip && window.shanlu.state.jyRv) window.shanlu.jyTripClose(); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.lvMenu) window.shanlu.setState({ lvMenu:false }); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.pstop) window.shanlu.pathClose(); } catch (err) {} });
   // after a mouse click on a Review button, drop the focus so Space and Enter go to the card, not back to that button
   document.addEventListener('click', (e) => { try { const b = e.target && e.target.closest && e.target.closest('.rev button'); if (b && e.detail > 0) b.blur(); } catch (err) {} });
   window.addEventListener('pagehide', () => { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); });

@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       scope:
-        description: 'What to make: words, examples, lab, exams, extra, core (words+examples+lab+exams) or all'
+        description: 'What to make: words, examples, lab, exams, extra, journey, core (words+examples+lab+exams) or all'
         default: 'words'
       level:
         description: 'Only the texts that this HSK level uses: 1, 2, 3 or 4 (empty = every level)'

@@ -279,6 +279,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await Z.page.goto(site); await Z.page.waitForSelector('.obm');
     await Z.page.locator('button', { hasText: 'Take my first step' }).click();
     await Z.page.locator('.jy-go').click();
+    await Z.page.locator('.jy-trip-go').click();
     await Z.page.waitForSelector('.obm-guide', { timeout: 20000 });
     await Z.page.waitForTimeout(900);
     await Z.page.locator('.obm-bar button', { hasText: 'Skip' }).click();

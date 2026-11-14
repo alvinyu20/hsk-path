@@ -113,7 +113,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await nav('Home');
 
   // Review badge counts words and grammar together
-  await page.evaluate(() => { const a = window.shanlu; const ws = JSON.parse(JSON.stringify(a.state.ws)); Object.keys(ws).slice(0, 5).forEach(zh => { ws[zh].see = { s: 2, l: 2, t: Date.now() - 9 * 86400000 }; }); a.setState({ ws, rq: Object.keys(ws).slice(0, 5), rtotal: 5, rdone: 0, rcomplete: false }); });
+  await page.evaluate(() => { const a = window.shanlu; const ws = JSON.parse(JSON.stringify(a.state.ws)); Object.keys(ws).slice(0, 5).forEach(zh => { ws[zh].see = { s: 2, l: 2, t: Date.now() - 9 * 86400000 }; }); a.setState({ ws, rq: Object.keys(ws).slice(0, 5), rtotal: 5, rdone: 0, rcomplete: false, gres: {} }); });
   await page.waitForTimeout(100);
   check(/5/.test(await page.locator('.navg .nav', { hasText: 'Review' }).innerText()), 'the Review tab shows a due count');
 

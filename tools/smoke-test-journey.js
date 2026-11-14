@@ -4,6 +4,8 @@ const { chromium } = require('playwright');
 const root = path.join(__dirname, '..');
 const server = require('./test-static').server(root);
 let failures = 0;
+// the travel window covers the page until it is closed
+const closeTrip = async (page) => { const b = page.locator('.jy-trip-go'); if (await b.count()) await b.click(); await page.waitForTimeout(80); };
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };
 
 (async () => {
@@ -35,7 +37,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(/Welcome to Sichuan/.test(t) && /TFU/.test(t) && /Chéngdū Tiānfǔ Guójì Jīchǎng/.test(t), 'the airport arrival card shows the code and pinyin');
     check(/Boarding pass/.test(await page.locator('.mstoast').innerText().catch(() => '')), 'the Boarding pass achievement shows');
     // the flight in comes with a boarding pass (from home, the first time) and a sentence to say at the airport
-    const pass = await page.locator('.jy-tk.fly').innerText().catch(() => '');
+    const pass = await page.locator('.jy-card .jy-tk.fly').innerText().catch(() => '');
     check(/登机牌/.test(pass) && /TFU/.test(pass) && /成都/.test(pass) && /家/.test(pass) && /SL 001/.test(pass), 'the first flight shows a boarding pass from home to TFU: ' + pass.replace(/\s+/g, ' '));
     const say = await page.locator('.jy-sayit').innerText();
     check(/Say it there/i.test(say) && /[\u4e00-\u9fff]+[。？！]/.test(say) && /At the airport/i.test(say), 'the card has a sentence to say there: ' + say.replace(/\s+/g, ' '));
@@ -51,6 +53,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await page.locator('.jy.jy-playing.jyp-fly').count() === 1 && await page.locator('.jy-coins').count() === 1, 'the flight starts the travel moment (coins fly, then the map, then the postcard)');
     await page.waitForTimeout(600); await page.keyboard.press('Shift'); await page.waitForTimeout(150);
     check(await page.locator('.jy-playing').count() === 0 && await page.locator('.jy-coins').count() === 0, 'a key press skips the travel moment to the finished picture');
+    check(await page.locator('.jy-trip').count() === 1 && await page.locator('.jy-trip .jy-map').count() === 1, 'the trip plays in a window in the middle of the screen, with the map and the ticket');
+    await closeTrip(page);
     check(await page.locator('.jy-here .rip').count() === 2, 'two quiet rings mark where you are on the country map');
     await page.locator('.jy-acts .btn.pri').click();
     check(await page.locator('.jy-card').count() === 0, 'the card closes');
@@ -81,15 +85,15 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   {
     const { ctx, page, errors } = await open({ xp: 1500 });
     await page.locator('.pill.xpp').click();
-    await page.locator('.jy-go').click();   // flight in
+    await page.locator('.jy-go').click(); await closeTrip(page);   // flight in
     const want = ['Chengdu Tianfu International Airport', 'Chengdu'];
     let t = await main(page);
     check(/Welcome to Sichuan/.test(t), 'arrival first');
     await page.locator('.jy-acts .btn.pri').click();
-    await page.locator('.jy-go').click();   // second stop: the main city
+    await page.locator('.jy-go').click(); await closeTrip(page);   // second stop: the main city
     t = await page.locator('.jy-card').innerText();
     check(/CITY/i.test(t) && /Chengdu/.test(t) && /成都/.test(t), 'the second stop is the main city, Chengdu');
-    check(await page.locator('.jy-tk.walk').count() === 1 && /走路/.test(await page.locator('.jy-tk.walk').innerText()), 'a stop in the same city is reached on foot');
+    check(await page.locator('.jy-card .jy-tk.walk').count() === 1 && /走路/.test(await page.locator('.jy-card .jy-tk.walk').innerText()), 'a stop in the same city is reached on foot');
     check(/成都/.test(await page.locator('.jy-sayit-zh').innerText()), 'the sentence to say uses the name of the stop');
     check(await page.locator('.jy-ph').count() === 1 && await page.locator('.jy-here').count() === 1, 'after a stop the map of the region shows, with a mark where you are');
     check(/New city/.test(t) === false || true, 'ok');
@@ -99,7 +103,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     let n = 2, outside = 0;
     for (let i = 0; i < 12; i++) {
       if (await page.locator('.jy-go[disabled]').count()) break;
-      await page.locator('.jy-go').click(); n++;
+      await page.locator('.jy-go').click(); await closeTrip(page); n++;
       const place = await page.locator('.jy-place').innerText();
       if (!/Chengdu/.test(place)) outside++;
       await page.locator('.jy-acts .btn.pri').click();
@@ -142,15 +146,15 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.pill.xpp').click();
     let ride = '', cityStamp = false, star = false, second = '', n = 0;
     for (let i = 0; i < 70 && !second; i++) {
-      await page.locator('.jy-go').click(); n++;
+      await page.locator('.jy-go').click(); await closeTrip(page); n++;
       while (await page.locator('.ms-x').count()) await page.locator('.ms-x').first().click();
       if (await page.locator('.jy-cstamp.big').count()) cityStamp = true;
       if (await page.locator('.jy-starnote').count()) star = true;
-      if (!ride && await page.locator('.jy-tk.ride').count()) {
-        ride = (await page.locator('.jy-tk.ride').innerText()).replace(/\s+/g, ' ');
+      if (!ride && await page.locator('.jy-card .jy-tk.ride').count()) {
+        ride = (await page.locator('.jy-card .jy-tk.ride').innerText()).replace(/\s+/g, ' ');
         check(await page.locator('.jy-route').count() === 1 && await page.locator('.jy-leg').count() === 1, 'the ride is drawn on the region map: the route, and the new leg');
       }
-      if (n > 1 && await page.locator('.jy-tk.fly').count()) second = (await page.locator('.jy-tk.fly').innerText()).replace(/\s+/g, ' ');
+      if (n > 1 && await page.locator('.jy-card .jy-tk.fly').count()) second = (await page.locator('.jy-card .jy-tk.fly').innerText()).replace(/\s+/g, ' ');
       else await page.locator('.jy-acts .btn.pri').click();
     }
     check(/车票/.test(ride) && /澳门半岛/.test(ride) && /公里/.test(ride) && /km/.test(ride), 'moving to the next city shows a ticket with the two cities and the distance: ' + ride);
@@ -167,7 +171,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.jy-passmore').click();
     check(await page.locator('.jy-slot').count() === 31, 'the rest of the regions unfold on request');
     await page.locator('.jy-sstamp').first().click();
-    check(await page.locator('.jy-card.sp').count() === 1 && await page.locator('.jy-tk').count() === 0, 'a must-see stamp opens its stop, with no ticket on a stop opened later');
+    check(await page.locator('.jy-card.sp').count() === 1 && await page.locator('.jy-card .jy-tk').count() === 0, 'a must-see stamp opens its stop, with no ticket on a stop opened later');
     check(errors.length === 0, 'no errors on the long trip: ' + errors.join(' | '));
     await ctx.close();
   }
@@ -176,7 +180,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   {
     const { ctx, page, errors } = await open({ reduced: true });
     await page.locator('.pill.xpp').click();
-    await page.locator('.jy-go').click(); await page.waitForTimeout(150);
+    await page.locator('.jy-go').click(); await closeTrip(page); await page.waitForTimeout(150);
     check(await page.locator('.jy-playing').count() === 0 && await page.locator('.jy-coins').count() === 0 && await page.locator('.jy-card').count() === 1, 'with reduced motion the flight shows the finished picture at once');
     check(errors.length === 0, 'no errors with reduced motion: ' + errors.join(' | '));
     await ctx.close();
@@ -186,7 +190,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   {
     const { ctx, page, errors } = await open({ xp: 800, viewport: { width: 390, height: 844 } });
     await page.locator('.pill.xpp').click();
-    await page.locator('.jy-go').click(); await page.waitForTimeout(100);
+    await page.locator('.jy-go').click(); await closeTrip(page); await page.waitForTimeout(100);
     { const over = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth); check(over <= 1, 'the card with its boarding pass fits a phone width (overflow ' + over + 'px)'); }
     for (const tab of ['Map', 'Postcards', 'Food', 'Passport']) {
       await page.locator('.jy-tabs button', { hasText: tab }).click();

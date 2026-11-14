@@ -122,7 +122,7 @@ def main():
     a = ap.parse_args()
     a.voice_f = a.voice_f or 'longanhuan_v3.1'
     a.voice_m = a.voice_m or 'xunanchuan_v3.1'
-    scopes = CORE if a.scope == 'core' else ({'words', 'examples', 'lab', 'exams', 'extra'} if a.scope == 'all' else set(a.scope.split(',')))
+    scopes = CORE if a.scope == 'core' else ({'words', 'examples', 'lab', 'exams', 'extra', 'journey'} if a.scope == 'all' else set(a.scope.split(',')))
     texts = json.loads(subprocess.run(['node', os.path.join(ROOT, 'tools', 'audio-texts.js')], capture_output=True, check=True, cwd=ROOT).stdout)
     texts = [e for e in texts if e['group'] in scopes]
     if a.level.strip():

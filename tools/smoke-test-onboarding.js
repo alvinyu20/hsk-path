@@ -38,6 +38,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const toGuide = async (page) => {   // intro -> first step -> first flight -> the guide cards
     await page.locator('button', { hasText: 'Take my first step' }).click();
     await page.locator('.jy-go').click();
+    await page.locator('.jy-trip-go').click();
     await page.waitForSelector('.obm-guide', { timeout: 20000 });
     await page.waitForTimeout(900);
   };
@@ -54,6 +55,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.reload(); await page.waitForSelector('.app');
     check(await dlg(page).count() === 0 && await page.locator('.ob-banner').count() === 1, 'a reload keeps the person at the first flight, without the intro again');
     await page.locator('.jy-go').click();
+    await page.locator('.jy-trip-go').click();
     await page.waitForSelector('.obm-guide', { timeout: 20000 }); await page.waitForTimeout(900);
     check(/1 of 5/i.test(await dlg(page).innerText()) && /Meet a few words at a time/.test(await dlg(page).innerText()), 'after the first flight the guide cards start with Meet');
     const titles = [], shots = [], bodies = [];

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* Lists every text the site reads aloud, with the voice it uses, as JSON: [{text, voice, group}].
  *   voice: "f" (the woman's voice) or "m" (the man's voice: exam lines spoken by 男)
- *   group: words | examples | lab | exams | extra
+ *   group: words | examples | lab | exams | extra | journey
  *   lv: the levels (1-4) whose data uses the text
  * Usage: node tools/audio-texts.js [--summary]       (tools/make-audio.py reads this)
  * The exam rules mirror app.js: a line spoken by 男 is the man's voice, 女 and lines with no speaker are the woman's. */
@@ -55,6 +55,15 @@ const add = (text, voice, group) => {
     walk(EX[part], true);
   });
 });
+// Journey: every stop name (the speaker button on a stop card) and the sentence "to say at this stop" (JY.sayFor picks it from the stop, so it is the same every time)
+try {
+  global.window = global.window || {};
+  const JY = require(path.join(__dirname, '..', 'journey.js'));
+  require(path.join(__dirname, '..', 'data', 'journey.js'));
+  const W = JY.build(window.JOURNEY);
+  cur = 0;
+  Object.keys(W.byStop).forEach((id) => { const s = W.byStop[id]; add(s.zh, 'f', 'journey'); try { add(JY.sayFor(s).zh, 'f', 'journey'); } catch (e) { console.error('no sentence for ' + id); } });
+} catch (err) { console.error('journey texts not added: ' + err.message); }
 // The 儿 switch: the app shows (and looks the recording up by) the PLAIN form by default (哪里, 有点), while the data files hold the official 儿 form (哪儿, 有点儿).
 // So every text that the switch changes is listed in both forms; otherwise a learner on the default setting would hear the browser voice for those lines.
 try {

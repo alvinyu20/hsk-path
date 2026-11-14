@@ -2731,3 +2731,48 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 }
 /* the quiz options have no key badge (it only belongs to the word review; unpositioned it floated in the middle of the card) */
 .quiz .optk{display:none}
+
+/* phone polish: stat pills never wrap their words; Listening lab mode cards keep their padding; the clip card has no dead gap */
+.pill{white-space:nowrap}
+.stats .pill{flex:0 0 auto}
+@media (max-width:900px){
+  .app.scr-home .stats{flex-wrap:wrap}
+}
+@media (max-width:700px){
+  .app.am .lab-main > .seg2.labtiles{padding:0;gap:8px}
+  .app.am .lab-main > .seg2.labtiles button{min-height:0;padding:12px 14px 12px;gap:6px;border-radius:18px;font-size:inherit}
+  .app.am .labtiles .lt-g{width:36px;height:36px;font-size:19px;flex:0 0 auto}
+  .app.am .labtiles b{font-size:16px}
+  .app.am .labtiles .lt-d{font-size:13px;line-height:1.3;padding-bottom:1px}
+  .app.am .dict .wave{display:none}
+  .app.am .dict-top{align-items:center;gap:14px}
+  .app.am .dict .lab-top{gap:2px 12px}
+  .app.am .dict .linkbtn{padding:6px 2px}
+  .app.am .dict .lad{box-sizing:border-box;height:36px}
+}
+
+/* Journey: the travel window (the trip plays in the middle of the screen, then "See your new stop") */
+.jy-trip-bg{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:14px;background:rgba(14,22,28,.58);overflow:auto;animation:jytripbg .25s ease both}
+.jy-trip{width:min(520px,100%);max-height:calc(100dvh - 28px);overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:26px;background:var(--panel);box-shadow:0 18px 50px rgba(0,0,0,.35);animation:jytripin .4s cubic-bezier(.2,.9,.3,1) both}
+.jy-trip-h{display:flex;flex-direction:column;gap:2px;text-align:center}
+.jy-trip-h small{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.jy-trip-h b{font-size:30px;line-height:1.15}
+.jy-trip-h span{font-size:14px;color:var(--muted)}
+.jy-trip .jy-map.tripmap{width:100%;height:auto;max-height:42dvh;pointer-events:none;border-radius:16px;background:var(--bg)}
+.jy-trip .jy-tk{margin:0}
+.jy-trip .jy-trip-go{align-self:stretch;flex:0 0 auto}
+@keyframes jytripbg{from{opacity:0}to{opacity:1}}
+@keyframes jytripin{from{opacity:0;transform:translateY(18px) scale(.94)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.jy-trip,.jy-trip-bg{animation:none}}
+
+/* the picture: a souvenir can replace the initial */
+.me-av,.acct-av,.acct-mini{overflow:hidden}
+.me-av img,.acct-av img,.acct-mini img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+.acct-pp .acct-av img{background:#F4EFE3}
+.av-pick{flex:1 1 100%;display:flex;flex-direction:column;gap:10px;padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.1);align-self:stretch}
+.av-pick-h{font-weight:700;font-size:14px}
+.av-pick-n{margin:0;font-size:14px;opacity:.85}
+.av-pick-g{display:flex;flex-wrap:wrap;gap:10px;padding:4px;max-height:240px;overflow-y:auto;overscroll-behavior:contain}
+.av-it{width:56px;height:56px;padding:0;border-radius:50%;border:3px solid transparent;background:#F4EFE3;color:#1D3B4A;font-size:26px;font-weight:700;display:grid;place-items:center;cursor:pointer;overflow:hidden}
+.av-it img{width:100%;height:100%;object-fit:cover;display:block}
+.av-it.on{border-color:var(--seal,#C0352B);box-shadow:0 0 0 2px #fff}
