@@ -574,11 +574,11 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await page.locator('.gl .gp').count()) < 26 && (await page.locator('.gl .gg.open').count()) === 1, 'only the open category shows its lessons');
   check((await text()).toLowerCase().includes('lesson 1 of 26'), 'the first lesson is open');
   await page.evaluate(() => { window.shanlu.go('greview'); }); await page.waitForTimeout(150);
-  check((await page.locator('.grv').count()) === 1 && (await page.locator('.grv-go .btn.pri').count()) === 1, 'the Review section has a Grammar review panel');
-  check(/unlock/.test(await page.locator('.grv-go .btn.pri').innerText()), 'before any grammar lesson is passed, Grammar review is locked and says so');
+  check(/Nothing to review yet/.test(await page.locator('.res-h').innerText()) && !(await page.locator('.grv').count()), 'Grammar review has no lobby page: before a lesson is passed it just says there is nothing to review yet');
+  check(/once you pass its lesson/.test(await page.locator('.res-p').innerText()), 'before any grammar lesson is passed, Grammar review is locked and says so');
   const gl = await page.evaluate(() => { const a = window.shanlu; const L = Object.keys(window.HSK1_GRAMMAR.points.reduce((o, p) => { o[p.lesson] = 1; return o; }, {}))[0]; a.setState({ gres: Object.assign({}, a.state.gres, { [L]: 90 }) }); return L; });
   await page.waitForTimeout(150);
-  await page.locator('.grv-go .btn.pri').click(); await page.waitForTimeout(150);
+  await page.evaluate(() => window.shanlu.go('greview')); await page.waitForTimeout(150);
   check(await page.evaluate((L) => { const S = window.shanlu.state; const ok = window.shanlu.quizQs.length > 0 && window.shanlu.quizQs.every(q => window.HSK1_GRAMMAR.points.find(p => p.id === q.pt).lesson === L); return S.qmode === 'greview' && S.screen === 'quiz' && ok; }, gl), 'once a lesson is passed, Start grammar review asks only about the points of passed lessons');
   {   // after each grammar-review card the point's percentage change is shown, as in Review words
     await page.evaluate(() => { const a = window.shanlu; const pid = a.quizQs[0].pt; a.gptRecord(pid, 'r', true, 'good'); a.gptRecord(pid, 'r', true, 'good'); }); await page.waitForTimeout(150);

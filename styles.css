@@ -2822,3 +2822,62 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .app.am .quiz .q-lants .lan::before{width:8px;height:4px;margin-left:-4px;top:-4px}
 .app.am .quiz .q-lants .lan::after{height:4px;bottom:-4px}
 .app.am .quiz .q-lants .rev-n{font-size:13px;line-height:1.1}
+
+/* Talk with AI: pictures in the situation list, and on a phone a "Situation" bar that opens the list as a sheet */
+.scn-th{flex:none;width:54px;height:42px;border-radius:10px;background-size:cover;background-position:center top;background-color:var(--panel2);box-shadow:inset 0 0 0 1px var(--line)}
+.sit-bar{display:none}
+.sit-wrap{position:fixed;left:0;top:0;right:0;bottom:0;z-index:70;display:flex;align-items:flex-end;justify-content:center}
+.sit-scrim{position:absolute;left:0;top:0;right:0;bottom:0;border:0;background:rgba(15,26,32,.5);cursor:pointer}
+.sit-sheet{position:relative;width:100%;max-width:560px;max-height:80vh;max-height:80dvh;overflow-y:auto;overscroll-behavior:contain;background:var(--panel);border-radius:22px 22px 0 0;padding:14px 16px calc(16px + env(safe-area-inset-bottom));box-shadow:0 -12px 36px rgba(15,26,32,.25)}
+.sit-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+.sit-sheet .scn.cur .scn-m{color:var(--seal)}
+@media (max-width:700px){
+  .app.am .speak .sit-bar{display:flex;align-items:center;gap:10px;flex:0 0 auto;width:100%;padding:6px 12px;border:0;border-bottom:1px solid var(--line);background:var(--panel);font:inherit;color:inherit;text-align:left;cursor:pointer}
+  .sit-bar .sit-th{flex:none;width:44px;height:34px;border-radius:8px;background-size:cover;background-position:center top;background-color:var(--panel2);box-shadow:inset 0 0 0 1px var(--line)}
+  .sit-bar .sit-l{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.15}
+  .sit-bar .sit-l .muted{font-size:12px}
+  .sit-bar .sit-l b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sit-bar .sit-c{flex:none;font-weight:700;font-size:14px;color:var(--seal);text-decoration:underline}
+}
+
+/* Journey card: province progress bar beside the stop count, the latest stop, and no coin text (the coins live in the button) */
+.jy-sub{display:flex;align-items:center;gap:10px}
+.jy-prov{flex:0 0 72px;height:6px;border-radius:99px;background:var(--panel2);overflow:hidden}
+.jy-prov i{display:block;height:100%;border-radius:99px;background:var(--jfill)}
+.jy-last{display:flex;flex-direction:column;align-items:flex-start;gap:1px;width:100%;margin:2px 0;padding:9px 12px;border-radius:14px;border:1px solid var(--line);background:var(--panel2);text-align:left;cursor:pointer;color:var(--ink)}
+.jy-last:hover{border-color:var(--ink)}
+.jy-last-k{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.jy-last-n{font-size:16px;font-weight:600}.jy-last-n .zh{font-size:18px;margin-right:4px}
+.jy-last-s{font-size:13px;color:var(--muted)}
+
+/* Grammar points in the Library: the same garden as the words */
+.gtrack .wr2 .gi{width:34px;height:34px;flex:none}
+.grv-pt{padding:10px 18px}
+.grv-pt-t{font-weight:600;font-size:15.5px;line-height:1.3}
+.grv-pt-s{display:grid;grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr);gap:0 8px;align-items:center;margin-top:5px;font-size:12px;color:var(--muted)}
+.grv-pt .grv-pt-x{font-size:12.5px;margin-top:2px}
+.grv-pt.locked{opacity:.55}.grv-pt.locked .grv-bar i{width:0!important}
+.grv-pt.due .grv-pt-x::after{content:" · due"}
+.gtrack .wtools{margin:12px 0}
+@media (max-width:600px){.grv-pt{gap:10px;padding:10px 12px}.gtrack .wr2 .gi{width:28px;height:28px}}
+
+/* a one-line note about tones: needed in Words review, not in Grammar review */
+.tone-note{margin:4px 0 0;padding:5px 12px;border-radius:12px;background:var(--amber-soft);font-size:12.5px;line-height:1.3;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tone-note.opt{background:var(--panel2)}
+.tone-note b{font-weight:700}
+.gtrack .wrows2{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.gtrack .wr2.grv-pt{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"gi m tag";align-items:center;gap:6px 12px;padding:12px 14px}
+.gtrack .wr2.grv-pt .gi{grid-area:gi;width:34px;height:34px}
+.gtrack .wr2.grv-pt .wr2-m{grid-area:m}
+.gtrack .wr2.grv-pt .lvtag{display:inline-block;grid-area:tag;align-self:start}
+@media (max-width:600px){.gtrack .wrows2{grid-template-columns:1fr}}
+
+/* the municipalities (Beijing, Tianjin, Shanghai, Chongqing) are part of the province the Journey files them under: they take its colour instead of leaving a hole */
+.jy-r path.mu{fill:var(--panel2);stroke:var(--panel);stroke-width:.5;stroke-dasharray:1.5 1.2}
+.jy-r.done path.mu{fill:hsl(var(--rh) 55% 58%)}
+.t-dark .jy-r.done path.mu{fill:hsl(var(--rh) 45% 42%)}
+.jy-r.here path.mu{fill:hsl(var(--rh) 60% 82%)}
+.t-dark .jy-r.here path.mu{fill:hsl(var(--rh) 40% 30%)}
+.jy-r.next path.mu{fill:hsl(var(--rh) 40% 88%)}
+.t-dark .jy-r.next path.mu{fill:hsl(var(--rh) 30% 24%)}
+.jy-out.mu{fill:var(--jbg)}

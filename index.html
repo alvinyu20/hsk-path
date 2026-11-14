@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="333c389862">
+<meta name="shanlu-version" content="0fe9d9892b">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=333c389862">
+<link rel="stylesheet" href="styles.css?v=0fe9d9892b">
 </head>
 <body>
 <div id="app"></div>
@@ -497,6 +497,7 @@
         <sc-if value="{{rrunShow}}" hint-placeholder-val="{{ false }}"><span class="runpill"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg>{{rrunText}}</span></sc-if>
       </div>
       <div class="dgoal" title="Your daily goal, in minutes"><span>{{dgText}}</span><div class="dbar"><i style="width:{{dgPct}}"></i></div><button type="button" class="rev-end" data-on-click="{{endSession}}">End session</button></div>
+      <p class="tone-note {{toneNoteCls}}">{{toneNote}}</p>
       <sc-if value="{{hasRlast}}" hint-placeholder-val="{{ false }}"><div class="delta {{rlastCls}}">{{rlastText}}</div></sc-if>
       <p class="kbhint">{{kbHint}}</p>
 
@@ -808,10 +809,10 @@
       <div class="jy-now-t">
         <span class="jy-lab">{{jyNowLabel}}</span>
         <b class="jy-where"><span class="zh">{{jyNowZh}}</span> {{jyNowEn}}</b>
-        <span class="jy-sub">{{jyNowSub}}</span>
+        <span class="jy-sub"><sc-if value="{{jyProvShow}}" hint-placeholder-val="{{ false }}"><span class="jy-prov" aria-hidden="true"><i style="width:{{jyProvW}}"></i></span></sc-if>{{jyNowSub}}</span>
       </div>
-      <div class="{{jyMeterCls}}" role="progressbar" aria-label="Coins toward the next stop" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{jyPctNum}}"><i style="width:{{jyPct}}"></i></div>
-      <div class="jy-meter-t"><span>{{jyMeterText}}</span><span>{{jyXpTotal}}</span></div>
+      <sc-if value="{{jyLastShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="jy-last" data-on-click="{{jyLastOpen}}"><span class="jy-last-k">Latest stop</span><span class="jy-last-n"><b class="zh">{{jyLastZh}}</b> {{jyLastEn}}</span><span class="jy-last-s">{{jyLastKind}}</span></button></sc-if>
+      <div class="{{jyMeterCls}}" role="progressbar" aria-label="{{jyMeterLabel}}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{jyPctNum}}"><i style="width:{{jyPct}}"></i></div>
       <button type="button" class="btn pri jy-go" disabled="{{jyGoOff}}" data-on-click="{{jyTravel}}">{{jyGoText}}</button>
       <sc-if value="{{jyPlayOn}}" hint-placeholder-val="{{ false }}"><span class="jy-coins" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span></sc-if>
     </div>
@@ -1268,33 +1269,73 @@
   </div>
   </sc-if>
   <sc-if value="{{isGrv}}" hint-placeholder-val="{{ false }}">
-  <div class="gram">
-    <section class="grv" aria-label="Grammar review">
-      <div class="grv-h"><b>Grammar review</b><span class="muted">{{grvSub}}</span></div>
-      <sc-if value="{{hasGrvChips}}" hint-placeholder-val="{{ true }}">
-        <div class="grv-lv"><sc-for list="{{grvLvChips}}" as="c" hint-placeholder-count="4"><button type="button" class="grv-chip {{c.cls}}" data-on-click="{{c.fn}}">{{c.label}}</button></sc-for></div>
-      </sc-if>
-      <p class="grv-note">{{grvNote}}</p>
-      <div class="grv-go"><button type="button" class="btn pri" data-on-click="{{grvStart}}">{{grvStartLabel}}</button><button type="button" class="btn" data-on-click="{{grvToggle}}">{{grvToggleLabel}}</button></div>
-      <sc-if value="{{grvOpen}}" hint-placeholder-val="{{ false }}">
-        <div class="grv-rows">
-          <sc-for list="{{grvRows}}" as="r" hint-placeholder-count="4">
-            <div class="grv-row {{r.cls}}">
-              <div class="grv-t"><span>{{r.title}}</span><sc-if value="{{r.hasLv}}" hint-placeholder-val="{{ false }}"><span class="grv-lv-tag">{{r.lv}}</span></sc-if><span class="grv-st">{{r.label}}</span></div>
-              <div class="grv-bars"><span class="grv-bl">Recognise</span><span class="grv-bar"><i style="width:{{r.rw}}"></i></span><span class="grv-bv">{{r.rtxt}}</span><span class="grv-bl">Write</span><span class="grv-bar w"><i style="width:{{r.ww}}"></i></span><span class="grv-bv">{{r.wtxt}}</span></div>
-            </div>
-          </sc-for>
-          <sc-if value="{{grvMoreShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="btn" data-on-click="{{grvMore}}">{{grvMoreLabel}}</button></sc-if>
+  <div class="rev">
+    <sc-if value="{{grvLocked}}" hint-placeholder-val="{{ false }}">
+      <div class="res">
+        <img class="res-ming" src="{{mingThink}}" alt="" width="132" height="139">
+        <h2 class="res-h">Nothing to review yet</h2>
+        <p class="res-p">A grammar point joins Review once you pass its lesson (80% or more in the lesson practice), just as words join once you have learned them.</p>
+        <div class="res-act"><button class="btn pri big" data-on-click="{{goGrammar}}">Go to grammar lessons</button></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{grvMoreDue}}" hint-placeholder-val="{{ false }}">
+      <div class="res">
+        <img class="res-ming" src="{{mingWave}}" alt="" width="132" height="139">
+        <h2 class="res-h">More points are due</h2>
+        <p class="res-p">{{grvDueText}} Reviewing them now keeps them from fading.</p>
+        <div class="res-act"><button class="btn pri big" data-on-click="{{gtReview}}">{{gtReviewText}}</button></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{grvCaught}}" hint-placeholder-val="{{ false }}">
+      <div class="res">
+        <img class="res-ming" src="{{mingThumbs}}" alt="" width="132" height="139">
+        <h2 class="res-h">You are all caught up</h2>
+        <p class="res-p">{{grvNextText}} Grammar points come back just before you would forget them, so there is nothing more due right now.</p>
+        <div class="res-act">
+          <button class="btn pri big" data-on-click="{{goGrammar}}">Learn a new grammar lesson</button>
+          <button class="btn big" data-on-click="{{gtReview}}">Practise points anyway</button>
+          <button class="btn big" data-on-click="{{gtOpenTracker}}">See my grammar points</button>
         </div>
-      </sc-if>
+      </div>
+    </sc-if>
+  </div>
+  </sc-if>
+
+  <!-- GRAMMAR POINTS (the record of every point, in the Library, in the same garden as the words) -->
+  <sc-if value="{{isGtrack}}" hint-placeholder-val="{{ false }}">
+  <div class="wlist gtrack">
+    <section class="card wsum">
+      <div class="wsum-l" style="flex-basis:100%">
+        <h2 class="h2">{{gtCount}}</h2>
+        <div class="garden" role="group" aria-label="Show grammar points by stage">
+          <sc-for list="{{gtGarden}}" as="g" hint-placeholder-count="5"><button type="button" class="gcell {{g.cls}}" data-on-click="{{g.fn}}"><i class="gi gi-{{g.key}}" aria-hidden="true"></i><b>{{g.n}}</b><span>{{g.label}}</span></button></sc-for>
+        </div>
+        <div class="thirst {{gtThirstCls}}"><i class="gi gi-learning" aria-hidden="true"></i><div class="thirst-t"><b>{{gtThirstTitle}}</b><span>{{gtThirstSub}}</span></div><button class="btn pri" data-on-click="{{gtReview}}">{{gtReviewText}}</button></div>
+      </div>
     </section>
+    <sc-if value="{{hasGrvChips}}" hint-placeholder-val="{{ true }}">
+      <div class="wtools"><div class="fchips2"><sc-for list="{{grvLvChips}}" as="c" hint-placeholder-count="4"><button type="button" class="fc2 {{c.cls}}" data-on-click="{{c.fn}}">{{c.label}}</button></sc-for></div></div>
+    </sc-if>
+    <div class="wrows2 grv-pts">
+      <sc-for list="{{grvRows}}" as="r" hint-placeholder-count="6">
+        <div class="wr2 grv-pt {{r.cls}}">
+          <i class="gi gi-{{r.stage}}" aria-hidden="true" title="{{r.label}}"></i>
+          <div class="wr2-m"><div class="grv-pt-t">{{r.title}}</div>
+            <div class="grv-pt-s"><span class="grv-pt-l">Recognise</span><span class="grv-bar"><i style="width:{{r.rw}}"></i></span><span class="grv-pt-l">Write</span><span class="grv-bar w"><i style="width:{{r.ww}}"></i></span></div>
+            <div class="muted grv-pt-x">{{r.label}}</div></div>
+          <sc-if value="{{r.hasLv}}" hint-placeholder-val="{{ false }}"><span class="lvtag">{{r.lv}}</span></sc-if>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{gtNone}}" hint-placeholder-val="{{ false }}"><p class="muted">No grammar points at this stage yet.</p></sc-if>
+    <sc-if value="{{grvMoreShow}}" hint-placeholder-val="{{ false }}"><p><button type="button" class="btn" data-on-click="{{grvMore}}">{{grvMoreLabel}}</button></p></sc-if>
   </div>
   </sc-if>
 
   <!-- GRAMMAR -->
   <sc-if value="{{isGrammar}}" hint-placeholder-val="{{ false }}">
   <div class="gram">
-    <p class="grv-link"><button type="button" class="btn" data-on-click="{{grvGoReview}}">Grammar review: practise points and see your record</button></p>
+    <p class="grv-link"><button type="button" class="btn" data-on-click="{{gtOpenTracker}}">Grammar points: see your record for each one</button></p>
     <button type="button" class="gpick" data-on-click="{{toggleGramPick}}" aria-expanded="{{gramPickOpen}}"><span>{{lesson.pickLabel}}</span><span aria-hidden="true">▾</span></button>
     <div class="gl {{gramListCls}}">
       <input class="inp wsearch tr-search" type="search" value="{{gq}}" placeholder="Find a lesson" autocomplete="off" aria-label="Find a lesson" data-on-input="{{onGramSearch}}">
@@ -1516,6 +1557,7 @@
           <button class="{{enCls}}" data-on-click="{{toggleEn}}">English</button>
         </div></sc-if>
       </div>
+      <button type="button" class="sit-bar" aria-haspopup="dialog" data-on-click="{{aiPickToggle}}"><span class="sit-th" style="{{aiSitImg}}"></span><span class="sit-l"><span class="muted">Situation</span><b>{{aiSitLabel}}</b></span><span class="sit-c">Change</span></button>
       <div class="stage" style="{{aiStageStyle}}" aria-hidden="true"></div>
       <div class="msgs">
         <sc-for list="{{aiMsgs}}" as="m" hint-placeholder-count="3">
@@ -1574,12 +1616,23 @@
         <sc-if value="{{aiNotVo}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:0;font-size:14.5px">Tap Speak and talk at a normal pace: it keeps listening through short pauses and stops by itself after a moment (or tap again to stop). What it hears lands in the box: check it, fix it if needed, then press Send. Pinyin comes from this site's own word list. The AI can make mistakes too.</p></sc-if>
       </div>
     </section>
+    <sc-if value="{{aiPickOpen}}" hint-placeholder-val="{{ false }}">
+    <div class="sit-wrap" role="dialog" aria-modal="true" aria-label="Pick a situation">
+      <button type="button" class="sit-scrim" aria-label="Close" data-on-click="{{aiPickClose}}"></button>
+      <div class="sit-sheet">
+        <div class="sit-h"><h2 class="h2">Pick a situation</h2><button type="button" class="btn sm" data-on-click="{{aiPickClose}}">Close</button></div>
+        <sc-for list="{{aiScnList}}" as="s" hint-placeholder-count="4">
+          <button type="button" class="scn {{s.cls}}" data-on-click="{{s.fn}}"><span class="scn-th" style="{{s.img}}"></span><div class="scn-m">{{s.title}}<span>{{s.sub}}</span></div></button>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
     <div class="sidep">
       <section class="card">
         <h2 class="h2">Pick a situation</h2>
         <div style="margin-top:8px">
           <sc-for list="{{aiScnList}}" as="s" hint-placeholder-count="4">
-            <button type="button" class="scn {{s.cls}}" data-on-click="{{s.fn}}"><div class="scn-m">{{s.title}}<span>{{s.sub}}</span></div></button>
+            <button type="button" class="scn {{s.cls}}" data-on-click="{{s.fn}}"><span class="scn-th" style="{{s.img}}"></span><div class="scn-m">{{s.title}}<span>{{s.sub}}</span></div></button>
           </sc-for>
         </div>
       </section>
@@ -2668,6 +2721,7 @@
         <span class="chip combo {{comboCls}}">Combo ×{{qcombo}}</span>
       </div>
 
+      <sc-if value="{{qToneShow}}" hint-placeholder-val="{{ false }}"><p class="tone-note"><b>No tones needed here.</b> Pinyin without tone marks is fine.</p></sc-if>
       <sc-if value="{{hasGlast}}" hint-placeholder-val="{{ false }}"><div class="delta {{glastCls}}">{{glastText}}</div></sc-if>
       <div class="q-card {{qAnim}}">
         <div class="kick">{{q.kicker}}</div>
@@ -2928,63 +2982,63 @@
   </sc-if>
 </div>
 </template>
-<script defer src="boot-check.js?v=333c389862"></script>
-<script defer src="vendor/morphdom-umd.min.js?v=333c389862"></script>
-<script defer src="runtime.js?v=333c389862"></script>
-<script defer src="config.js?v=333c389862"></script>
-<script defer src="friends.js?v=333c389862"></script>
-<script defer src="level.js?v=333c389862"></script>
-<script defer src="placement.js?v=333c389862"></script>
-<script defer src="data/hsk1-words.js?v=333c389862"></script>
-<script defer src="data/hsk1-grammar.js?v=333c389862"></script>
-<script defer src="data/hsk1-webs.js?v=333c389862"></script>
-<script defer src="data/hsk1-speak.js?v=333c389862"></script>
-<script defer src="data/hsk1-listen.js?v=333c389862"></script>
-<script defer src="data/hsk1-exam.js?v=333c389862"></script>
-<script defer src="data/hsk1-erhua.js?v=333c389862"></script>
-<script defer src="data/lexicon.js?v=333c389862"></script>
-<script defer src="data/char-glosses.js?v=333c389862"></script>
-<script defer src="data/hsk2-preview.js?v=333c389862"></script>
-<script defer src="data/hsk3-preview.js?v=333c389862"></script>
-<script defer src="data/hsk4-preview.js?v=333c389862"></script>
-<script defer src="data/hsk2-words.js?v=333c389862"></script>
-<script defer src="data/hsk2-speak.js?v=333c389862"></script>
-<script defer src="data/hsk2-listen.js?v=333c389862"></script>
-<script defer src="data/hsk2-exam.js?v=333c389862"></script>
-<script defer src="data/hsk2-grammar.js?v=333c389862"></script>
-<script defer src="data/hsk2-webs.js?v=333c389862"></script>
-<script defer src="data/hsk3-words.js?v=333c389862"></script>
-<script defer src="data/hsk3-speak.js?v=333c389862"></script>
-<script defer src="data/hsk3-listen.js?v=333c389862"></script>
-<script defer src="data/hsk3-exam.js?v=333c389862"></script>
-<script defer src="data/hsk3-grammar.js?v=333c389862"></script>
-<script defer src="data/hsk3-webs.js?v=333c389862"></script>
-<script defer src="data/hsk4-words.js?v=333c389862"></script>
-<script defer src="data/hsk4-speak.js?v=333c389862"></script>
-<script defer src="data/hsk4-listen.js?v=333c389862"></script>
-<script defer src="data/hsk4-exam.js?v=333c389862"></script>
-<script defer src="data/hsk4-grammar.js?v=333c389862"></script>
-<script defer src="data/hsk4-webs.js?v=333c389862"></script>
-<script defer src="ascent.js?v=333c389862"></script>
-<script defer src="secrets.js?v=333c389862"></script>
-<script defer src="sync.js?v=333c389862"></script>
-<script defer src="data/audio-manifest.js?v=333c389862"></script>
-<script defer src="journey.js?v=333c389862"></script>
-<script defer src="data/journey.js?v=333c389862"></script>
-<script defer src="data/journey-map.js?v=333c389862"></script>
-<script defer src="data/journey-media.js?v=333c389862"></script>
-<script defer src="data/souvenirs.js?v=333c389862"></script>
-<script defer src="erhua.js?v=333c389862"></script>
-<script defer src="pinyin.js?v=333c389862"></script>
-<script defer src="data/pinyin-course.js?v=333c389862"></script>
-<script defer src="data/pinyin-chart.js?v=333c389862"></script>
-<script defer src="data/exam-media.js?v=333c389862"></script>
-<script defer src="data/exam-art.js?v=333c389862"></script>
-<script defer src="data/neutral-alt.js?v=333c389862"></script>
-<script defer src="data/path-scenes.js?v=333c389862"></script>
-<script defer src="data/speak-scenes.js?v=333c389862"></script>
-<script defer src="data/art.js?v=333c389862"></script>
-<script defer src="data/path.js?v=333c389862"></script>
-<script defer src="app.js?v=333c389862"></script>
+<script defer src="boot-check.js?v=0fe9d9892b"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=0fe9d9892b"></script>
+<script defer src="runtime.js?v=0fe9d9892b"></script>
+<script defer src="config.js?v=0fe9d9892b"></script>
+<script defer src="friends.js?v=0fe9d9892b"></script>
+<script defer src="level.js?v=0fe9d9892b"></script>
+<script defer src="placement.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk1-words.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk1-grammar.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk1-webs.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk1-speak.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk1-listen.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk1-exam.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk1-erhua.js?v=0fe9d9892b"></script>
+<script defer src="data/lexicon.js?v=0fe9d9892b"></script>
+<script defer src="data/char-glosses.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk2-preview.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk3-preview.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk4-preview.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk2-words.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk2-speak.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk2-listen.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk2-exam.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk2-grammar.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk2-webs.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk3-words.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk3-speak.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk3-listen.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk3-exam.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk3-grammar.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk3-webs.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk4-words.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk4-speak.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk4-listen.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk4-exam.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk4-grammar.js?v=0fe9d9892b"></script>
+<script defer src="data/hsk4-webs.js?v=0fe9d9892b"></script>
+<script defer src="ascent.js?v=0fe9d9892b"></script>
+<script defer src="secrets.js?v=0fe9d9892b"></script>
+<script defer src="sync.js?v=0fe9d9892b"></script>
+<script defer src="data/audio-manifest.js?v=0fe9d9892b"></script>
+<script defer src="journey.js?v=0fe9d9892b"></script>
+<script defer src="data/journey.js?v=0fe9d9892b"></script>
+<script defer src="data/journey-map.js?v=0fe9d9892b"></script>
+<script defer src="data/journey-media.js?v=0fe9d9892b"></script>
+<script defer src="data/souvenirs.js?v=0fe9d9892b"></script>
+<script defer src="erhua.js?v=0fe9d9892b"></script>
+<script defer src="pinyin.js?v=0fe9d9892b"></script>
+<script defer src="data/pinyin-course.js?v=0fe9d9892b"></script>
+<script defer src="data/pinyin-chart.js?v=0fe9d9892b"></script>
+<script defer src="data/exam-media.js?v=0fe9d9892b"></script>
+<script defer src="data/exam-art.js?v=0fe9d9892b"></script>
+<script defer src="data/neutral-alt.js?v=0fe9d9892b"></script>
+<script defer src="data/path-scenes.js?v=0fe9d9892b"></script>
+<script defer src="data/speak-scenes.js?v=0fe9d9892b"></script>
+<script defer src="data/art.js?v=0fe9d9892b"></script>
+<script defer src="data/path.js?v=0fe9d9892b"></script>
+<script defer src="app.js?v=0fe9d9892b"></script>
 </body>
 </html>

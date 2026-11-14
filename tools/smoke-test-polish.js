@@ -25,7 +25,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     if (mode === 'none') ids.forEach(id => { gpt[id] = { r: { s: 40, t: Date.now() }, rn: 1, rok: 1 }; });                       // all reviewed just now: nothing due
     if (mode === 'two') ids.forEach((id, i) => { gpt[id] = i < 2 ? { r: { s: 1, t: Date.now() - 20 * 864e5 }, rn: 1, rok: 1 } : { r: { s: 40, t: Date.now() }, rn: 1, rok: 1 }; });   // two overdue
     a.setState({ gres: g, gpt });
-    a.go('greview'); a.startGrammarReview();
+    a.go('greview'); a.startGrammarReview(true);
     return { n: a.quizQs.length, total: ids.length };
   }, mode);
   const two = await prep('two');
@@ -33,9 +33,10 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const none = await prep('none');
   check(none.n > 0 && none.n <= 8, 'with nothing due a short practice set is offered instead (got ' + none.n + ')');
   await page.evaluate(() => window.shanlu.go('greview')); await page.waitForTimeout(300);
-  const lab = await page.evaluate(() => { return document.querySelector('.grv-go .btn.pri') ? document.querySelector('.grv-go .btn.pri').textContent : ''; });
-  check(/Nothing due/.test(lab), 'the Grammar review button says nothing is due: ' + lab);
-  await page.evaluate(() => window.shanlu.startGrammarReview()); await page.waitForTimeout(300);
+  const lab = await page.evaluate(() => ({ scr: window.shanlu.state.screen, h: (document.querySelector('.res-h') || {}).textContent, btn: [...document.querySelectorAll('.res-act .btn')].map(b => b.textContent.trim()) }));
+  check(lab.scr === 'greview' && /all caught up/.test(lab.h) && lab.btn.some(b => /Practise points anyway/.test(b)) && lab.btn.some(b => /grammar points/.test(b)), 'with nothing due, Grammar review shows the all-caught-up page, not a lobby (' + JSON.stringify(lab) + ')');
+  await page.evaluate(() => window.shanlu.startGrammarReview(true)); await page.waitForTimeout(300);
+  check(/No tones needed/.test(await page.locator('.tone-note').innerText()), 'Grammar review says tones are not needed');
   const fit = await page.evaluate(() => ({ doc: document.documentElement.scrollHeight, vh: innerHeight, am: document.querySelector('.app').classList.contains('am') }));
   check(fit.am && fit.doc <= fit.vh + 1, 'the Grammar review session fits the phone screen without page scrolling (' + fit.doc + ' of ' + fit.vh + ')');
   // lantern progress like the word Review
@@ -44,7 +45,25 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   const lanHalf = await page.evaluate(() => { const a = window.shanlu; const n = a.quizQs.length; const half = Math.floor(n / 2); a.setState({ qres: Array.from({ length: half }, () => true) }); return new Promise(r => setTimeout(() => r({ n, half, lit: document.querySelectorAll('.q-lants .lan.lit').length, txt: document.querySelector('.q-lants .rev-n').textContent, w: document.documentElement.scrollWidth, vw: innerWidth }), 200)); });
   check(lanHalf.lit === Math.floor(lanHalf.half / lanHalf.n * 10) && lanHalf.lit > 0 && lanHalf.txt.indexOf(lanHalf.half + ' of ' + lanHalf.n) === 0 && lanHalf.w <= lanHalf.vw, 'lanterns light as questions are answered (' + JSON.stringify(lanHalf) + ')');
   await page.screenshot({ path: '/tmp/lay/grv-lanterns.png' });
-  const other = await page.evaluate(() => { const a = window.shanlu; a.go('grammar'); const l = (window.HSK1_GRAMMAR.lessons || [])[0]; return !!l; });
+  await page.evaluate(() => window.shanlu.go('gtrack')); await page.waitForTimeout(300);
+  const gt = await page.evaluate(() => ({ cells: document.querySelectorAll('.gtrack .gcell').length, rows: document.querySelectorAll('.gtrack .grv-pt').length, crumb: !!document.querySelector('.crumb') && getComputedStyle(document.querySelector('.crumb')).display !== 'none', side: document.documentElement.scrollWidth <= innerWidth + 1 }));
+  check(gt.cells === 5 && gt.rows > 10 && gt.crumb && gt.side, 'the Library has a Grammar points garden with the five stages and a row per point (' + JSON.stringify(gt) + ')');
+  await page.locator('.gtrack .gcell').nth(4).click(); await page.waitForTimeout(150);
+  check(await page.evaluate(() => [...document.querySelectorAll('.gtrack .grv-pt')].every(r => r.classList.contains('mastered'))), 'tapping a stage in the garden filters the points');
+  await page.evaluate(() => window.shanlu.go('library')); await page.waitForTimeout(200);
+  check(await page.locator('.lib-tile.lt-gpoints').count() === 1, 'the Library lists Grammar points beside Words');
+  // Talk with AI on a phone: Free chat has a picture, and a Situation bar opens a list to pick from
+  await page.evaluate(() => { const a = window.shanlu; a.aiAsk = async () => {}; a.say = () => {}; a.setState({ aiOn: true, aiMode: true, aiScn: -1, aim: [{ who: 'ai', zh: '你好', en: 'Hello', py: 'nǐ hǎo', outside: [], pv: [] }] }); a.go('speak'); });
+  await page.waitForTimeout(400);
+  const sit = await page.evaluate(() => ({ bar: !!document.querySelector('.sit-bar') && getComputedStyle(document.querySelector('.sit-bar')).display !== 'none', label: (document.querySelector('.sit-l b') || {}).textContent, staged: document.querySelector('.chat').classList.contains('staged') }));
+  check(sit.bar && sit.label === 'Free chat' && sit.staged, 'Talk with AI: Free chat has a picture and a Situation bar is on the phone screen (' + JSON.stringify(sit) + ')');
+  await page.locator('.sit-bar').click(); await page.waitForTimeout(250);
+  const rows = await page.evaluate(() => ({ n: document.querySelectorAll('.sit-sheet .scn').length, thumbs: document.querySelectorAll('.sit-sheet .scn-th').length }));
+  check(rows.n > 5 && rows.thumbs === rows.n, 'the Situation list opens with a picture for each row (' + JSON.stringify(rows) + ')');
+  await page.locator('.sit-sheet .scn').nth(2).click(); await page.waitForTimeout(250);
+  const picked = await page.evaluate(() => ({ scn: window.shanlu.state.aiScn, open: !!document.querySelector('.sit-sheet') }));
+  check(picked.scn === 1 && !picked.open, 'picking a situation starts it and closes the list (' + JSON.stringify(picked) + ')');
+  await page.evaluate(() => window.shanlu.go('home'));
 
   // ---- Practice Script: Mingming's lines play by themselves ----
   await page.evaluate(() => { const a = window.shanlu; window.__said = []; a.say = (t, k) => { window.__said.push(k); }; a.go('speak'); a.pickScenario(0); });

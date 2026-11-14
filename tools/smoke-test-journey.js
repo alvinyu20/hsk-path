@@ -75,7 +75,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await page.locator('.pill.xpp.ready').count() === 1, 'the coins pill glows once enough coins are earned for a stop');
     check(/New stop unlocked/.test(await page.locator('.xp-ping').innerText().catch(() => '')), 'a small note says a new stop is unlocked');
     await page.locator('.xp-ping').click();
-    check(await page.locator('.jy-meter.ready').count() === 1 && /1 stop ready/.test(await main(page)), 'the Journey bar glows and says one stop is ready');
+    check(await page.locator('.jy-meter.ready').count() === 1 && /1 stop ready/.test(await page.locator('.jy-meter').getAttribute('aria-label')), 'the Journey bar glows and says one stop is ready');
+    { const now = await page.locator('.jy-now').innerText(); check(await page.locator('.jy-last').count() === 1 && /latest stop/i.test(now) && await page.locator('.jy-prov').count() === 1 && !/earned in total|coins to spend|coins for the next/.test(now), 'the Journey card shows the latest stop and a province bar, with no coin text outside the button'); }
     check(await page.locator('.xp-ping').count() === 0, 'the note goes away on the Journey screen');
     check(errors.length === 0, 'no errors: ' + errors.join(' | '));
     await ctx.close();

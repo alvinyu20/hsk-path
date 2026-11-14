@@ -62,7 +62,7 @@
   const prefGet = (k, d) => (PERSON.prefs[k] && PERSON.prefs[k].v !== undefined ? PERSON.prefs[k].v : d);
   const prefSet = (k, v) => { PERSON.prefs[k] = { v, at:Date.now() }; savePerson(); };
   // the small drawings in data/art.js (Mingming, tab banners, lanterns, the summit) as picture addresses
-  const TOPKEY = { library:'library', words:'library', grammar:'library', web:'library', pinyin:'library', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', journey:'journey' };   // which banner picture heads which page
+  const TOPKEY = { library:'library', words:'library', gtrack:'library', grammar:'library', web:'library', pinyin:'library', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', journey:'journey' };   // which banner picture heads which page
   const ARTC = {};
   const artUri = (a, b) => { const k = a + (b ? '.' + b : ''); if (ARTC[k] === undefined) { const A = window.SHANLU_ART || {}; const svg = b ? (A[a] || {})[b] : A[a]; ARTC[k] = svg ? 'data:image/svg+xml;utf8,' + encodeURIComponent(svg) : ''; } return ARTC[k]; };
   // take over what older versions kept on the device only (stamp 1: older than anything set on another device)
@@ -260,6 +260,8 @@
   const PSCENE = window.SHANLU_PATH_SCENES || {};
   const PTILE = window.SHANLU_PATH_TILES || {};     // the wallpaper behind each unit's trail   // the pictures of the themed path (data/path-scenes.js)
   const SSCN = window.SHANLU_SPEAK_SCENES || {};     // one drawn place for each practice script (data/speak-scenes.js)
+  const aiSceneOf = (S) => (S.aiScn >= 0 ? (SCEN[S.aiScn] ? SSCN[SCEN[S.aiScn].id] : null) : SSCN.free);   // the drawn place behind the chat (Free chat has its own)
+  const scnImg = (im) => (im ? 'background-color:' + im.c + ';background-image:url("' + im.u + '")' : '');
   const SCEN_AT = {};
   SCEN.forEach((x, i) => { SCEN_AT[x.id] = i; });
   const PATH_LVLS = LVLS.filter(n => PATH[n] && (PATH[n].units || []).length);
@@ -493,7 +495,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
-      jyPing:0, avPick:false, jyTrip:'', jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
+      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -1965,8 +1967,9 @@
       this.go(this.lastSub[id] || first);
     };
     go = (screen) => {
-      { const grp = { path:'learn', library:'learn', grammar:'learn', pinyin:'learn', web:'learn', words:'learn', exam:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', journey:'journey' }[screen]; if (grp) this.lastSub[grp] = ({ words:'library', grammar:'library', web:'library', pinyin:'library', exam:'path' })[screen] || screen; }
+      { const grp = { path:'learn', library:'learn', grammar:'learn', gtrack:'learn', pinyin:'learn', web:'learn', words:'learn', exam:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', journey:'journey' }[screen]; if (grp) this.lastSub[grp] = ({ words:'library', grammar:'library', gtrack:'library', web:'library', pinyin:'library', exam:'path' })[screen] || screen; }
       { const sv = prefGet('sv', {}); if ((sv[screen] || 0) < 4) prefSet('sv', Object.assign({}, sv, { [screen]:(sv[screen] || 0) + 1 })); }   // how many times each page was opened: a page's one-line description fades after a few visits
+      if (screen === 'greview') { this.startGrammarReview(false); return; }   // no lobby: like the word review, you are taken straight into what is due
       if (screen === 'guide' && !onbRead().g) this.onbSet({ g:Date.now() });
       if (screen === 'journey') { otherXp(true); this.jyEnsure(); this.friendsRefresh(false); }
       if ((screen === 'voice' || screen === 'speak') && FR && FR.identity()) this.relayCheck();
@@ -3248,16 +3251,18 @@
       else if (!st.started) Object.assign(out, { jyNowLabel:'Next flight', jyNowZh:R.zh, jyNowEn:R.en, jyNowSub:'Fly in to ' + (R.air ? R.air.en + (R.air.code ? '' : '') : R.cities[0].en) + '.' });
       else {
         const rs = JY.regionStats(JWORLD, st, R.id); const C = st.cur && JWORLD.byCity[st.cur];
-        Object.assign(out, { jyNowLabel:'Exploring', jyNowZh:R.zh, jyNowEn:R.en, jyNowSub:rs.got + ' of ' + rs.total + ' stops' + (C ? ' · now in ' + C.en : '') });
+        Object.assign(out, { jyNowLabel:'Exploring', jyNowZh:R.zh, jyNowEn:R.en, jyNowSub:rs.got + ' of ' + rs.total + ' stops', jyProvW:Math.round(rs.got / Math.max(1, rs.total) * 100) + '%', jyProvShow:true });
       }
+      // the stop you reached last, so you can see (and reopen) where you are without finding it on the map
+      { const lastId = st.seen && st.seen.length ? st.seen[st.seen.length - 1] : null; const LS = lastId ? JWORLD.byStop[lastId] : null; const LC = LS ? JWORLD.byCity[LS.cid] : null;
+        Object.assign(out, { jyLastShow:!!LS && !done, jyLastZh:LS ? LS.zh : '', jyLastEn:LS ? LS.en : '', jyLastKind:LS ? LS.kind + (LC ? ' · ' + LC.en : '') : '', jyLastOpen:() => { if (lastId) this.jyOpenStop(lastId); } }); }
       // a picture of the region you are in (or about to fly to) on top of the card: the same province photo its airport stop shows
       { const a0 = R ? (R.cities[0].air || R.cities[0].first) : null; const hero = a0 && JMEDIA[a0.id] && JMEDIA[a0.id].u ? JMEDIA[a0.id] : null;
         Object.assign(out, { jyHeroShow:!!hero, jyHeroUrl:hero ? hero.u : '', jyHeroAlt:hero ? (hero.a || R.en) : '', jyHeroCredit:hero ? hero.c : '' }); }
       // three lines about a region: on its airport card, and under its map
       const introOf = (RR) => (RR && RR.intro && RR.intro.length === 3 ? [{ k:'The land', t:RR.intro[0] }, { k:'The table', t:RR.intro[1] }, { k:'Good to know', t:RR.intro[2] }] : []);
       out.jyPct = (done ? 100 : mt.pct) + '%'; out.jyPctNum = done ? 100 : mt.pct;
-      out.jyMeterCls = 'jy-meter' + (mt.ready > 0 && !done ? ' ready' : ''); out.jyMeterText = done ? 'Journey complete' : mt.ready > 0 ? plural(mt.ready, 'stop', 'stops') + ' ready' : mt.into + ' of ' + mt.nextCost + ' coins for the next stop';
-      out.jyXpTotal = bal.toLocaleString('en-US') + ' coins to spend · ' + xp.toLocaleString('en-US') + ' earned in total';
+      out.jyMeterCls = 'jy-meter' + (mt.ready > 0 && !done ? ' ready' : ''); out.jyMeterLabel = done ? 'Journey complete' : mt.ready > 0 ? plural(mt.ready, 'stop', 'stops') + ' ready' : mt.into + ' of ' + mt.nextCost + ' coins toward the next stop';
       out.jyGoOff = done || mt.ready < 1; out.jyGoText = done ? 'All done' : mt.ready > 0 ? (st.n === 0 ? 'Take your first flight (free)' : st.started ? 'Travel to the next stop' : 'Board the flight') : mt.toGo + ' more coins to go';
       out.jyTravel = this.jyTravel;
 
@@ -3563,12 +3568,12 @@
     pick = (id) => { const S = this.state; if (S.qchecked || S.qpicked.indexOf(id) >= 0) return; this.setState({ qpicked:S.qpicked.concat([id]) }); };
     unpick = (id) => { const S = this.state; if (S.qchecked) return; this.setState({ qpicked:S.qpicked.filter(x => x !== id) }); };
     // ----- grammar review: points, not lessons -----
-    startGrammarReview = () => {
+    startGrammarReview = (force) => {
       const S = this.state;
-      const levels = S.grvLv ? [S.grvLv] : LVLS.slice();
+      const levels = LVLS.slice();
       let list = gptSession(S, levels, G_DUE_MAX, aiReadyNow(), true);   // only what is due, like the word review
-      if (!list.length) list = gptSession(S, levels, 8, aiReadyNow(), false);   // nothing due: a short practice set of the weakest points
-      if (!list.length) return;
+      if (!list.length && force) list = gptSession(S, levels, 8, aiReadyNow(), false);   // asked to practise anyway: a short set of the weakest points
+      if (!list.length) { this.setState({ screen:'greview', qdone:false }); try { window.scrollTo(0, 0); } catch (e) {} return; }   // nothing due (or nothing unlocked yet): the all-caught-up page
       this.quizQs = list;
       this.rvKey = null; this.setState({ screen:'quiz', qmode:'greview', glast:null, qi:0, qpicked:[], qtyped:'', qchoice:null, qfeed:'', qerr:'', qbusy:false, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false });
       try { window.scrollTo(0, 0); } catch (e) {}
@@ -4393,7 +4398,7 @@
         aiNoKey:aiEff && !S.aiOn, aiReady:aiEff && S.aiOn, aiMsgs:msgs, aiBusy:S.aiBusy, aiErr:S.aiErr, hasAiErr:!!S.aiErr,
         aiInput:S.aiInput, onAiInput:(e) => this.setState({ aiInput:e.target.value }), onAiKey:(e) => { if (e.key === 'Enter') this.aiSend(); },
         aiSend:this.aiSend, aiMic:this.aiMic, aiHasMic:hasMic, aiNoMic:!hasMic, aiMicLabel:S.asrBusy ? 'Transcribing…' : (S.aiListen ? 'Listening… tap to stop' : 'Speak'), aiMicCls:S.aiListen ? 'on' : (vo ? 'pri' : ''),
-        aiScnList:[{ title:'Free chat', sub:'Anything simple', cls:S.aiScn === -1 ? 'cur' : '', fn:() => this.aiStart(-1) }].concat(AISCN.map((x, i) => ({ title:x.title, sub:x.sub, cls:S.aiScn === i ? 'cur' : '', fn:() => this.aiStart(i) }))),
+        aiScnList:[{ title:'Free chat', sub:'Anything simple', cls:S.aiScn === -1 ? 'cur' : '', img:scnImg(SSCN.free), fn:() => { this.setState({ aiPick:false }); this.aiStart(-1); } }].concat(AISCN.map((x, i) => ({ title:x.title, sub:x.sub, cls:S.aiScn === i ? 'cur' : '', img:scnImg(SSCN[x.id]), fn:() => { this.setState({ aiPick:false }); this.aiStart(i); } }))),
         aiToday:(S.aiDays[ymd(new Date())] || 0) + ' messages today · ' + (S.aiProvider === 'alibaba' ? 'Qwen' : 'Claude'), aiSimpler:this.aiSimpler,
         aiSet:!!AICFG.key, aiUnset:!AICFG.key, aiKeyInput:S.aiKeyInput, onAiKeyInput:(e) => this.setState({ aiKeyInput:e.target.value }), aiSaveKey:this.aiSaveKey, aiRemoveKey:this.aiRemoveKey,
         aiModelOpts:AI_MODELS.map(m => ({ label:m[1], cls:S.aiModel === m[0] ? 'on' : '', fn:() => this.aiSetModel(m[0]) })), aiNote:S.aiNote, hasAiNote:!!S.aiNote,
@@ -4581,7 +4586,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const startDoneShow = onbOn && onb.s === 'done' && onb.d === ymd(new Date()) && S.rcomplete;   // the end of the first session: what to do next
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
       const GROUPS = [['home', ['home']], ['learn', ['path', 'library']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['journey', ['journey']]];
-      const SUBOF = { words:'library', grammar:'library', web:'library', pinyin:'library', exam:'path' };   // pages reached from another page of the same tab: that page stays lit
+      const SUBOF = { words:'library', grammar:'library', gtrack:'library', web:'library', pinyin:'library', exam:'path' };   // pages reached from another page of the same tab: that page stays lit
       const BRANCH = ['acct', 'friends', 'ach', 'voice', 'guide'];   // reached from the Account page (the avatar) or the quiet "You" links, not from a tab
       const SUBLABEL = { path:'Path', library:'Library', review:'Words', greview:'Grammar', testlobby:'Test', listen:'Listening', speak:'Speaking', home:'Today', journey:'Journey' };
       const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen === 'plesson' ? 'path' : S.screen;
@@ -4656,7 +4661,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         home:startShow ? ['Welcome to Shanlu', 'Five words, about five minutes. You do not pick anything.'] : ['Today', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
         review:['Review', 'Words that are due, based on how well you remember them.'],
         library:['Library', 'Everything you can look up: words, grammar, topics and sounds.'],
-        greview:['Grammar review', 'The grammar points that are due, like the word review. When nothing is due you get a short practice set.'],
+        greview:['Grammar review', 'The grammar points that are due, like the word review.'],
+        gtrack:['Grammar points', 'How well you know each grammar point, and when it needs a refresh.'],
         testlobby:[LVN + ' test', 'Mixed questions from the words you have started, so you are recalling words, not just recognizing them.'],
         grammar:['Grammar', ALL ? LESSONS.length + ' lessons from every unlocked level, one at a time.' : LV === 1 ? LESSONS.length + ' lessons that cover the HSK 1 grammar outline, one at a time.' : LESSONS.length + ' lessons on the grammar of the ' + LVN + ' words, one at a time.'],
         speak:['Speaking practice', HAS_SCRIPTS ? 'Say a short conversation out loud.' : 'Talk with Mingming, the AI conversation partner.'],
@@ -4704,7 +4710,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         run:pathStep ? () => this.pathContinue(pathStep.st.id) : () => this.go('path') });
       if (dueWordsN > 0 || S.rq.length > 0 || S.rcomplete) planRows.push({ glyph:'词', title:'Review words', meta:dueWordsN > 0 ? dueWordsN + (S.rcomplete ? ' still due' : ' due') : 'All caught up', done:S.rcomplete && dueWordsN === 0,
         run:() => { if (!S.rq.length && dueWordsN > 0) this.reviewMore(); this.go('review'); } });
-      if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + ' due' : 'Nothing due, short practice', done:!!S.grdone, run:() => this.startGrammarReview() });
+      if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + ' due' : 'Nothing due, short practice', done:!!S.grdone, run:() => this.startGrammarReview(true) });
       const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:t.run }));
       const moreWays = [
         pathStep && pathDoneToday > 0 ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), cls:'', fn:() => this.pathContinue(pathStep.st.id) } : null,
@@ -5052,8 +5058,12 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const grvStart = grvRowsAll.filter(r => r.open && r.info.started).length, grvDue = grvRowsAll.filter(r => r.open && (r.info.due || !r.info.started)).length, grvMastered = grvRowsAll.filter(r => r.open && r.info.mastered).length;
       const wordsDueN = S.rq.length > 0 && !S.rcomplete ? S.rq.length : 0, revBadgeN = wordsDueN + grvDue;   // the Review tab counts words and grammar points together
       const grvCanWrite = aiReadyNow();
-      const grvRows = (S.grvAll ? grvRowsAll : grvRowsAll.slice(0, 12)).map(r => ({
-        title:r.pt.title, lv:'HSK ' + r.pt.level, hasLv:LVLS.length > 1, rw:r.open ? r.info.rm + '%' : '0%', ww:r.open ? r.info.wm + '%' : '0%', label:r.open ? r.info.label : 'Locked: pass the lesson "' + lessonName(r.pt.lesson) + '"', cls:r.open ? r.info.state + (r.info.due ? ' due' : '') : 'locked',
+      const GSTAGES = ['new', 'learning', 'familiar', 'strong', 'mastered'], GSTAGE_LABEL = { new:'New', learning:'Learning', familiar:'Familiar', strong:'Strong', mastered:'Mastered' };
+      const gOpenRows = grvRowsAll.filter(r => r.open);
+      const gStageN = {}; GSTAGES.forEach(k => { gStageN[k] = gOpenRows.filter(r => r.info.state === k).length; });
+      const gShown = grvRowsAll.filter(r => !S.gtf || S.gtf === 'all' || (r.open && r.info.state === S.gtf));
+      const grvRows = (S.grvAll ? gShown : gShown.slice(0, 20)).map(r => ({
+        title:r.pt.title, lv:'HSK ' + r.pt.level, hasLv:LVLS.length > 1, stage:r.open ? r.info.state : 'locked', rw:r.open ? r.info.rm + '%' : '0%', ww:r.open ? r.info.wm + '%' : '0%', label:r.open ? r.info.label : 'Locked: pass the lesson "' + lessonName(r.pt.lesson) + '"', cls:r.open ? r.info.state + (r.info.due ? ' due' : '') : 'locked',
         rtxt:r.open ? r.info.rm + '%' : '–', wtxt:!r.open ? '–' : r.pt.write.length ? (r.info.wm > 0 ? r.info.wm + '%' : 'not yet') : '–'
       }));
       const grvLvChips = (LVLS.length > 1 ? [{ label:'All', n:0 }].concat(LVLS.map(n => ({ label:'HSK ' + n, n }))) : []).map(c => ({ label:c.label, cls:(S.grvLv || 0) === c.n ? 'on' : '', fn:() => this.setState({ grvLv:c.n }) }));
@@ -5136,7 +5146,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         acctMiniCls:inBranch ? 'on' : '', hasBack:inBranch && curScreen !== 'acct',
         hasSubnav:subnavItems.length > 1,
         subnav:subnavItems.map(o => { const n = o[0] === 'review' ? wordsDueN : o[0] === 'greview' ? grvDue : 0; return { label:o[1], cls:hlScreen === o[0] ? 'on' : '', fn:() => this.go(o[0]), hasN:n > 0, n }; }),
-        inLib:['words', 'grammar', 'web', 'pinyin'].indexOf(S.screen) >= 0, goLibrary:() => this.go('library'), isLibrary:S.screen === 'library',
+        inLib:['words', 'gtrack', 'grammar', 'web', 'pinyin'].indexOf(S.screen) >= 0, goLibrary:() => this.go('library'), isLibrary:S.screen === 'library',
         youFriends:!!(FR && FR.enabled()), youFriendsCls:'ylink' + (curScreen === 'friends' ? ' on' : ''), youSetCls:'ylink' + (curScreen === 'voice' ? ' on' : ''), youGuideCls:'ylink' + (curScreen === 'guide' ? ' on' : ''), youAchCls:'ylink' + (curScreen === 'ach' ? ' on' : ''),
         goSettings:() => this.go('voice'), goAch:() => this.go('ach'),
         goStreak:() => this.go('home'), goMem:() => this.go('words'),
@@ -5159,6 +5169,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
           return [
             { key:'words', glyph:'词', title:'Words', line:startedCount + ' of ' + rowsAll.length + ' started', sub:memNow.words + ' in memory' + (dueAllN > 0 ? ', ' + dueAllN + ' due' : ''), pct:pct(startedCount, rowsAll.length) + '%', fn:() => this.go('words') },
             { key:'grammar', glyph:'语', title:'Grammar lessons', line:gramPassed + ' of ' + LESSONS.length + ' passed', sub:nxtL ? 'Next: ' + nxtL.title.split(':')[0] : 'All passed', pct:pct(gramPassed, LESSONS.length) + '%', fn:() => this.go('grammar') },
+            { key:'gpoints', glyph:'点', title:'Grammar points', line:grvStart + ' of ' + grvRowsAll.length + ' started', sub:grvDue > 0 ? grvDue + ' due' : 'Your record for each point', pct:Math.round(grvStart / Math.max(1, grvRowsAll.length) * 100) + '%', fn:() => this.go('gtrack') },
             { key:'topics', glyph:'题', title:'Topics', line:mistClear + ' of ' + TOPICS.length + ' topics finished', sub:'Words grouped by theme', pct:pct(mistClear, TOPICS.length) + '%', fn:() => openWeb('topic') },
             { key:'char', glyph:'字', title:'Shared character', line:HUBS.length + ' characters', sub:hubStarted + ' of ' + hubWordsN + ' words started', pct:pct(hubStarted, hubWordsN) + '%', fn:() => openWeb('char') },
             { key:'opp', glyph:'对', title:'Word pairs', line:OPPS.length + ' pairs', sub:oppStarted + ' of ' + oppWordsN + ' words started', pct:pct(oppStarted, oppWordsN) + '%', fn:() => openWeb('opp') },
@@ -5288,7 +5299,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         memText:memNow.words.toLocaleString('en-US') + ' in memory', memTip:'Words you would probably recall right now: each started word counts by its recall chance. It rises when you learn and review and falls if reviews slide.',
         memWords:memNow.words.toLocaleString('en-US'), memToday:(memNow.words - (S.mem0 == null ? memNow.words : S.mem0) >= 0 ? '+' : '') + (memNow.words - (S.mem0 == null ? memNow.words : S.mem0)) + ' today', memRecall:memNow.avg + '%',
         weekMin:weekMin, weekDays:weekDays,
-        title:tt[0], subtitle:tt[1], subShow:!(['home', 'path', 'library', 'review', 'greview', 'testlobby', 'listen', 'speak', 'journey', 'words', 'web', 'grammar', 'pinyin'].indexOf(S.screen) >= 0) || (prefGet('sv', {})[S.screen] || 0) < 3 || startShow,
+        title:tt[0], subtitle:tt[1], subShow:!(['home', 'path', 'library', 'review', 'greview', 'testlobby', 'listen', 'speak', 'journey', 'words', 'gtrack', 'web', 'grammar', 'pinyin'].indexOf(S.screen) >= 0) || (prefGet('sv', {})[S.screen] || 0) < 3 || startShow,
         obIntroShow:obPh === 'intro' && !S.obBack, obBackShow:obPh === 'intro' && !!S.obBack, obFlyShow:obPh === 'fly' && S.screen === 'journey',
         obGuideShow:obPh === 'guide' && !S.jyPlay && !(S.jyTrip && S.jyRv), obLevelShow:obPh === 'level', obMeShow:obPh === 'me',
         obIntroGo:this.obIntroGo, obFlySkip:this.obFlySkip, obBackOpen:this.obBackOpen, obBackClose:this.obBackClose, obBackGo:this.obBackGo, obBackFile:this.obBackFile, obFrOn:frOn,
@@ -5341,7 +5352,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         lvMsgClose:() => this.setState({ lvMsg:0 }), lvMsgGoText:LV === (S.lvMsg === 99 ? 1 : S.lvMsg - 1) ? 'Go to the HSK ' + LV + ' exam' : 'Open HSK ' + (S.lvMsg === 99 ? 1 : S.lvMsg - 1),
         lvNote:'You are studying ' + LVN + '. Each level keeps its own progress on this device and its own copy when you sync. ' + (LVL.softLock() ? 'The lock is set to open: every level can be studied, and passing an exam only earns that level\'s seal.' : 'A level opens when you pass the exam of the level before it: at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading. You can sit each section on its own and retake it; your best result for each section counts. If you already know a level, check your level below to start higher (the check opens levels but earns no seal), or take the level exam. A lock on a button means it is not open yet.'),
         lockOpts:[[false, 'Locked until the exam is passed'], [true, 'All levels open']].map(o => ({ label:o[1], cls:LVL.softLock() === o[0] ? 'on' : '', fn:() => this.setLock(o[0]) })),
-        isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isGrv:S.screen === 'greview', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
+        isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isGrv:S.screen === 'greview', isGtrack:S.screen === 'gtrack', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
 
         // home
         ringDash, todayLine:titles.home[1], tasks, minOpts, dayMin:S.dayMin, mins:S.mins, skills, wordTarget:bankKeys.length, wmTotal:startedCount, wm,
@@ -5377,6 +5388,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         rPct:(S.rtotal ? Math.round(S.rdone / S.rtotal * 100) : 0) + '%',
         lants:(() => { const lit = S.rtotal ? Math.floor(S.rdone / S.rtotal * 10) : 0; return Array.from({ length:10 }, (_, i) => ({ cls:i < lit ? 'lit' : (i === lit ? 'now' : '') })); })(),
         rmissList:(S.rmiss || []).map(zh => ({ zh })), hasRmiss:(S.rmiss || []).length > 0,
+        toneNote:tonesOptional() ? 'Tones are optional for you in typed pinyin.' : 'Tones count in typed pinyin: nǐ or ni3.', toneNoteCls:tonesOptional() ? 'opt' : '', qToneShow:S.qmode === 'greview',
         rrunShow:(S.rrun || 0) >= 3, rrunText:(S.rrun || 0) + ' right in a row',
         emptyNew:!S.rcomplete && S.rq.length === 0 && startedCount === 0 && lrnCount === 0,
         newWaiting:!S.rcomplete && S.rq.length === 0 && lrnCount > 0, newWaitingText:lrnCount + ' new word' + (lrnCount === 1 ? ' is' : 's are') + ' waiting. Meet them, then recall them a few cards later and once more before you finish: about ' + Math.max(2, Math.round(lrnCount * 1.2)) + ' minutes.', newWaitingBtn:'Learn ' + lrnCount + ' new word' + (lrnCount === 1 ? '' : 's'),
@@ -5401,8 +5413,13 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         grvLvChips, hasGrvChips:grvLvChips.length > 0, grvSub:grvOpenN + ' of ' + grvRowsAll.length + ' points open · ' + grvStart + ' started · ' + grvDue + ' due · ' + grvMastered + ' mastered',
         grvStartLabel:grvOpenN === 0 ? 'Pass a grammar lesson to unlock' : grvDue > 0 ? 'Review ' + grvDue + ' due' : 'Nothing due: practise anyway', grvStart:() => (grvOpenN === 0 ? this.go('grammar') : this.startGrammarReview()), grvGoReview:() => this.go('greview'), 
         grvNote:grvOpenN === 0 ? 'Grammar points join this review once you pass their lesson (80% or more in the lesson practice), just as words join Review words once you have learned them.' : grvCanWrite ? 'It also asks you to write your own sentence. Claude checks it, and that is how a point becomes mastered.' : 'Add an AI key in Settings to unlock writing your own sentences. Without one you can still review, but no point can reach Mastered.',
-        grvToggleLabel:S.grvOpen ? 'Hide tracker' : 'Show tracker', grvToggle:() => this.setState({ grvOpen:!S.grvOpen }), grvOpen:!!S.grvOpen, grvRows,
-        grvMoreShow:!!S.grvOpen && grvRowsAll.length > 12, grvMoreLabel:S.grvAll ? 'Show fewer' : 'Show all ' + grvRowsAll.length, grvMore:() => this.setState({ grvAll:!S.grvAll }),
+        grvRows, gtGarden:GSTAGES.map(k => ({ key:k, label:GSTAGE_LABEL[k], n:gStageN[k], cls:S.gtf === k ? 'on' : '', fn:() => this.setState({ gtf:S.gtf === k ? 'all' : k, grvAll:false }) })),
+        gtCount:gOpenRows.length + ' of ' + grvRowsAll.length + ' points open', gtNone:gShown.length === 0,
+        gtThirstCls:grvDue > 0 ? '' : 'ok', gtThirstTitle:grvOpenN === 0 ? 'No points yet' : grvDue > 0 ? grvDue + (grvDue === 1 ? ' point is thirsty' : ' points are thirsty') : 'The garden is watered', gtThirstSub:grvOpenN === 0 ? 'A point joins this garden once you pass its lesson.' : grvDue > 0 ? 'A short review waters them before they fade.' : 'Nothing is due right now.',
+        gtReviewText:grvOpenN === 0 ? 'Go to grammar lessons' : grvDue > 0 ? 'Review ' + grvDue + ' due' : 'Practise anyway', gtReview:() => (grvOpenN === 0 ? this.go('grammar') : this.startGrammarReview(true)), gtOpenTracker:() => this.go('gtrack'),
+        grvLocked:grvOpenN === 0, grvCaught:grvOpenN > 0 && grvDue === 0, grvMoreDue:grvOpenN > 0 && grvDue > 0,
+        grvDueText:grvDue + (grvDue === 1 ? ' point is' : ' points are') + ' still due.', grvNextText:(() => { const ds = gOpenRows.filter(r => r.info.started).map(r => { const e = S.gpt[r.id] || {}; return Math.min(e.r && e.r.s > 0 ? dueIn(e.r, 0) : 1e9, e.w && e.w.s > 0 && grvCanWrite ? dueIn(e.w, 0) : 1e9); }).filter(d => d < 1e8); if (!ds.length) return ''; const d = Math.min(...ds); return d < 1 ? 'Next point to review: later today.' : 'Next point to review: in ' + Math.ceil(d) + (Math.ceil(d) === 1 ? ' day.' : ' days.'); })(),
+        grvMoreShow:gShown.length > 20, grvMoreLabel:S.grvAll ? 'Show fewer' : 'Show all ' + gShown.length, grvMore:() => this.setState({ grvAll:!S.grvAll }),
         lessonGroups, gramNoMatch, gq:S.gq, onGramSearch:(e) => this.setState({ gq:e.target.value }), lesson, gramPickOpen:S.gramPick ? 'true' : 'false', gramListCls:S.gramPick ? 'open' : '', toggleGramPick:() => this.setState({ gramPick:!S.gramPick }),
         startGrammar:() => this.startQuiz('grammar'),
 
@@ -5411,7 +5428,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         spCards:SCEN.map((x, i) => { const im = SSCN[x.id]; return { glyph:x.glyph, title:x.title, sub:x.sub, turns:x.you.length + ' turns', img:im ? 'background-color:' + im.c + ';background-image:url("' + im.u + '")' : '', state:S.sres[x.id] ? 'Done' : '', cls:S.sres[x.id] ? 'done' : '', fn:() => this.pickScenario(i), aria:x.title + (S.sres[x.id] ? ', done' : '') }; }),
         spDoneText:SCEN.filter(x => S.sres[x.id]).length + ' of ' + SCEN.length + ' places visited',
         stageStyle:SSCN[sc.id] ? '--sc:' + SSCN[sc.id].c + ';--scene:url("' + SSCN[sc.id].u + '")' : '', stageCls:SSCN[sc.id] ? 'staged' : '',
-        aiStageStyle:S.aiScn >= 0 && SCEN[S.aiScn] && SSCN[SCEN[S.aiScn].id] ? '--sc:' + SSCN[SCEN[S.aiScn].id].c + ';--scene:url("' + SSCN[SCEN[S.aiScn].id].u + '")' : '', aiStageCls:S.aiScn >= 0 && SCEN[S.aiScn] && SSCN[SCEN[S.aiScn].id] ? 'staged' : '',
+        aiStageStyle:aiSceneOf(S) ? '--sc:' + aiSceneOf(S).c + ';--scene:url("' + aiSceneOf(S).u + '")' : '', aiStageCls:aiSceneOf(S) ? 'staged' : '',
+        aiSitLabel:S.aiScn >= 0 && SCEN[S.aiScn] ? SCEN[S.aiScn].title : 'Free chat', aiPickOpen:!!S.aiPick, aiPickToggle:() => this.setState({ aiPick:!this.state.aiPick }), aiPickClose:() => this.setState({ aiPick:false }), aiSitImg:scnImg(aiSceneOf(S)),
         msgs, typing:false, canTalk, sdone:S.sdone, target, goals, wchips, scenarios, chatGlyph:sc.glyph, chatTitle:sc.title, chatSub:sc.sub, turnsText:turns + ' turns',
         shint:S.shint, noHint:!S.shint, toggleHint:() => this.setState({ shint:!this.state.shint }),
         zhCls:S.szh ? 'on' : '', pyCls:S.spy ? 'on' : '', enCls:S.sen ? 'on' : '', listenOnly:!S.szh && !S.spy && !S.sen,
@@ -5431,7 +5449,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         next:this.next, nextLabel:S.qi + 1 >= total ? 'See results' : 'Continue',
         qcombo:S.qcombo, comboCls:S.qcombo >= 2 ? 'on' : '', exitQuiz:this.exitQuiz,
         resTitle, resSub, resScore:S.qscore + '/' + total, qbest:S.qbest, resGain,
-        again:() => (S.qmode === 'greview' ? this.startGrammarReview() : this.startQuiz(S.qmode)),
+        again:() => (S.qmode === 'greview' ? this.startGrammarReview(true) : this.startQuiz(S.qmode)),
 
         // footer
         exportData:this.exportData, importData:this.importData, resetAll:this.resetAll, goVoice:this.goVoice,
