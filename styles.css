@@ -2813,3 +2813,12 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
   .app.am .rev > .btn,.app.am .rev .rate,.app.am .rev .fb{position:relative;z-index:3}
   .app.am .rev .q-card{margin-bottom:12px}
 }
+
+/* Grammar review: lantern progress like the word Review */
+.q-top .q-lants{flex:1 1 0;min-width:0}
+.app.am .quiz .q-lants{align-items:flex-start;gap:4px}
+.app.am .quiz .q-lants .lants{gap:5px;padding-top:4px;min-width:0;flex-wrap:nowrap}
+.app.am .quiz .q-lants .lan{width:16px;height:21px;border-radius:7px/9px;flex:0 1 16px;min-width:8px}
+.app.am .quiz .q-lants .lan::before{width:8px;height:4px;margin-left:-4px;top:-4px}
+.app.am .quiz .q-lants .lan::after{height:4px;bottom:-4px}
+.app.am .quiz .q-lants .rev-n{font-size:13px;line-height:1.1}

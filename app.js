@@ -4848,6 +4848,10 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         return { label, isTok:true, isPunct:false, cls, pick:() => { if (!this.state.qchecked) this.setState({ qchoice:id }); } };
       }).concat(isSpot && q0.punct ? [{ label:q0.punct, isTok:false, isPunct:true, cls:'', pick:() => {} }] : []);
       const segs = qs.map((_, i) => ({ cls:S.qres[i] === true ? 'ok' : S.qres[i] === false ? 'miss' : (i === S.qi ? 'cur' : '') }));
+      // Grammar review shows lanterns like the word Review: one per tenth of the session, lit as cards are answered
+      const qAnswered = qs.reduce((n, _, i) => n + (S.qres[i] === true || S.qres[i] === false ? 1 : 0), 0);
+      const qLitN = qs.length ? Math.floor(qAnswered / qs.length * 10) : 0;
+      const qLants = Array.from({ length:10 }, (_, i) => ({ cls:i < qLitN ? 'lit' : (i === qLitN ? 'now' : '') }));
       const canCheck = this.canCheck();
       const total = qs.length;
       const acc = Math.round(S.qscore / total * 100);
@@ -5416,7 +5420,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         sayIt:this.sayIt, resetSpeak:this.resetSpeak,
 
         // quiz
-        inQuestions:!S.qdone, qdone:S.qdone, q, segs, opts, optsCls:S.qchecked ? 'locked' : '', pickedTiles, noPicked:S.qpicked.length === 0, bankTiles, spotTokens,
+        inQuestions:!S.qdone, qdone:S.qdone, q, segs, qLanShow:S.qmode === 'greview', qSegShow:S.qmode !== 'greview', qLants, qAnswered, qTotal:qs.length, opts, optsCls:S.qchecked ? 'locked' : '', pickedTiles, noPicked:S.qpicked.length === 0, bankTiles, spotTokens,
         qAnim:S.qi % 2 === 0 ? 'qa' : 'qb', qtyped:S.qtyped, inpCls:S.qchecked ? (S.qcorrect ? 'locked right' : 'locked wrong') : '',
         onType:(e) => { if (!this.state.qchecked) this.setState({ qtyped:e.target.value }); },
         onEnter:(e) => { if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229 && !e.repeat) this.primary(); },

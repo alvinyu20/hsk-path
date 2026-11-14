@@ -38,6 +38,13 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.evaluate(() => window.shanlu.startGrammarReview()); await page.waitForTimeout(300);
   const fit = await page.evaluate(() => ({ doc: document.documentElement.scrollHeight, vh: innerHeight, am: document.querySelector('.app').classList.contains('am') }));
   check(fit.am && fit.doc <= fit.vh + 1, 'the Grammar review session fits the phone screen without page scrolling (' + fit.doc + ' of ' + fit.vh + ')');
+  // lantern progress like the word Review
+  const lan0 = await page.evaluate(() => ({ n: document.querySelectorAll('.q-lants .lan').length, lit: document.querySelectorAll('.q-lants .lan.lit').length, segs: document.querySelectorAll('.q-top .segs').length, txt: (document.querySelector('.q-lants .rev-n') || {}).textContent }));
+  check(lan0.n === 10 && lan0.lit === 0 && lan0.segs === 0, 'Grammar review shows ten lanterns, none lit at the start, and no segment bar (' + JSON.stringify(lan0) + ')');
+  const lanHalf = await page.evaluate(() => { const a = window.shanlu; const n = a.quizQs.length; const half = Math.floor(n / 2); a.setState({ qres: Array.from({ length: half }, () => true) }); return new Promise(r => setTimeout(() => r({ n, half, lit: document.querySelectorAll('.q-lants .lan.lit').length, txt: document.querySelector('.q-lants .rev-n').textContent, w: document.documentElement.scrollWidth, vw: innerWidth }), 200)); });
+  check(lanHalf.lit === Math.floor(lanHalf.half / lanHalf.n * 10) && lanHalf.lit > 0 && lanHalf.txt.indexOf(lanHalf.half + ' of ' + lanHalf.n) === 0 && lanHalf.w <= lanHalf.vw, 'lanterns light as questions are answered (' + JSON.stringify(lanHalf) + ')');
+  await page.screenshot({ path: '/tmp/lay/grv-lanterns.png' });
+  const other = await page.evaluate(() => { const a = window.shanlu; a.go('grammar'); const l = (window.HSK1_GRAMMAR.lessons || [])[0]; return !!l; });
 
   // ---- Practice Script: Mingming's lines play by themselves ----
   await page.evaluate(() => { const a = window.shanlu; window.__said = []; a.say = (t, k) => { window.__said.push(k); }; a.go('speak'); a.pickScenario(0); });
