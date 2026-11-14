@@ -5396,7 +5396,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         cairnSub:allStarted ? 'Take the level exam when you feel ready.' : startedCount + ' of ' + nextM + '. A few cards and it is yours.', cairnPct:(allStarted ? 100 : Math.round((startedCount - prevM) / (nextM - prevM) * 100)) + '%',
         fireBig:streakShown > 0 ? streakShown + ' day' + (streakShown === 1 ? '' : 's') : 'No streak yet',
         fireSub:studiedToday ? 'You studied today. Come back tomorrow to keep it going.' : (streakShown > 0 ? 'Study today to keep the streak going.' : 'Study today to start one.'),
-        dcShow:S.dcN > 0, dcCls:S.dcPaid ? 'got' : '', dcText:S.dcPaid ? 'Daily clear done: +' + DAILY_BONUS + ' coins earned' : 'Clear everything due today for +' + DAILY_BONUS + ' coins · ' + dcLeft + ' left',
+        dcShow:S.dcN > 0, dcCls:S.dcPaid ? 'got' : '', dcText:S.dcPaid ? '✓ Daily clear · +' + DAILY_BONUS + ' coins' : 'Clear all due: +' + DAILY_BONUS + ' coins · ' + dcLeft + ' to go',
         todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed. Anything else is a bonus.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
         trailCta:() => this.go(ascCta.to), trailCtaText:ascCta.text,
         trailNote:'Levels are placed on the path, not to scale. The path counts the ' + LVN + ' words you have started; grammar, listening and speaking count towards the level exam.',
