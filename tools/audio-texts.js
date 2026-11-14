@@ -55,7 +55,17 @@ const add = (text, voice, group) => {
     walk(EX[part], true);
   });
 });
-const list = [...out.values()];
+// The 儿 switch: the app shows (and looks the recording up by) the PLAIN form by default (哪里, 有点), while the data files hold the official 儿 form (哪儿, 有点儿).
+// So every text that the switch changes is listed in both forms; otherwise a learner on the default setting would hear the browser voice for those lines.
+try {
+  require(path.join(__dirname, '..', 'data', 'hsk1-erhua.js'));
+  const ER = require(path.join(__dirname, '..', 'erhua.js')).make(window.HSK1_ERHUA);
+  [...out.values()].forEach((e) => {
+    const plain = ER.zh(e.text);
+    if (plain && plain !== e.text) { cur = 0; const before = out.size; add(plain, e.voice, e.group); const t = out.get(e.voice + '|' + plain); e.lv.forEach((l) => { if (!t.lv.includes(l)) t.lv.push(l); }); t.erhua = true; }
+  });
+} catch (err) { console.error('erhua forms not added: ' + err.message); }
+const list = [...out.values()].map((e) => { e.lv = e.lv.filter((l) => l > 0).sort(); return e; });
 if (process.argv.includes('--summary')) {
   const cnt = (s) => [...s].filter((c) => /[一-鿿]/.test(c)).length;
   const by = {};

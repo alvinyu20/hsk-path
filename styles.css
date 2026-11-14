@@ -979,6 +979,11 @@ button.scn:hover .scn-m{text-decoration:underline}
   .app.am .opts{gap:8px}
   .app.am .opt{min-height:clamp(42px,6.4dvh,56px);font-size:17px;border-radius:14px}
   .app.am .opt .zh{font-size:26px}
+  /* a question card must fit without scrolling, so the options take only the room their text needs, and the Words / Grammar / Test strip steps aside while a question is up
+     (End session is still there, and the strip is back between questions of a flip card) */
+  .app.am .q-card .opts{gap:6px}
+  .app.am .q-card .opt{min-height:0;padding-top:9px;padding-bottom:9px;line-height:1.2}
+  .app.am.rq .subnav{display:none}
   .app.am .listen{width:clamp(64px,11dvh,92px);height:clamp(64px,11dvh,92px)}
   .app.am .listen svg{width:34px;height:34px}
   .app.am .rev > .btn.pri.big{min-height:48px}
@@ -1546,6 +1551,11 @@ button.me:hover,button.me.on{background:var(--panel2)}
 .pl-ch{display:inline-flex;flex-direction:column;align-items:center;padding:6px 14px;border-radius:14px;background:var(--bg);border:1px solid var(--line)}
 .pl-ch .zh{font-size:26px;line-height:1.2}
 .pl-ch small{color:var(--muted);font-size:13px}
+/* "Built from": the label and the parts stay on one row; a part's English wraps inside its own box instead of pushing the next part to a new row */
+.pl-built{flex-wrap:nowrap;align-items:stretch;gap:8px;width:100%}
+.pl-built > .kick{flex:0 0 auto;align-self:center;max-width:3.6em;line-height:1.25;text-align:left}
+.pl-built .pl-ch{flex:1 1 0;min-width:0;justify-content:center;padding:6px 8px;text-align:center}
+.pl-built .pl-ch small{line-height:1.2;overflow-wrap:anywhere}
 .pl-ex{width:100%;text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-top:0}
 .pl-ex .btn{margin-top:8px}
 .pl-exz .hl{color:var(--seal)}
@@ -2690,3 +2700,34 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
   .pc-tip{display:none}
   .pc .obm-main{margin-top:2px}
 }
+
+/* Review question cards on a phone: the card is never squeezed below its content (that made the options spill over the Check button), the options take only the
+   room their text needs, and a long meaning is set a little smaller */
+@media (max-width:700px){
+  .app.am .rev .q-card{flex:1 0 auto}
+  .app.am .rev .q-card .opts{gap:6px}
+  .app.am .rev .q-card .opt{min-height:0;padding-top:9px;padding-bottom:9px;line-height:1.2}
+  .app.am .rev .q-card .opt .long{font-size:14.5px;line-height:1.2}
+  .app.am.rq .subnav{display:none}
+}
+
+/* phone: grammar review, grammar practice and the level test (the quiz screen) fit the screen like the word review does */
+@media (max-width:700px){
+  .app.am .main > .quiz:not(.pl){flex:1 1 auto;min-height:0;max-width:none;gap:8px;overflow-y:auto;overscroll-behavior:contain}
+  .app.am.scr-quiz .subnav{display:none}
+  .app.am .quiz:not(.pl) .q-top{flex:0 0 auto;gap:10px}
+  .app.am .quiz:not(.pl) .q-top .btn{min-height:36px;padding:0 12px}
+  .app.am .quiz:not(.pl) .q-top .chip{height:26px;font-size:12px}
+  .app.am .quiz:not(.pl) > .btn.big{flex:0 0 auto;min-height:48px;align-self:stretch !important}
+  .app.am .quiz:not(.pl) > .fb-x{flex:0 0 auto}
+  .app.am .quiz:not(.pl) .q-card{flex:1 1 auto;min-height:0;padding:12px 16px 14px;gap:8px;overflow-y:auto;overscroll-behavior:contain}
+  .app.am .quiz:not(.pl) .q-sub{font-size:15px;margin-top:-2px}
+  .app.am .quiz:not(.pl) .ans-line{min-height:54px;padding:4px 0 8px;gap:6px}
+  .app.am .quiz:not(.pl) .bank{gap:8px;min-height:0}
+  .app.am .quiz:not(.pl) .tile{min-height:46px;padding:0 14px;font-size:22px;border-radius:13px}
+  .app.am .quiz:not(.pl) .spot{gap:8px;padding:2px 0}
+  .app.am .quiz:not(.pl) .tok{min-height:52px;min-width:52px;padding:0 12px;font-size:28px;border-radius:14px}
+  .app.am .quiz:not(.pl) .res{flex:1 1 auto;min-height:0}
+}
+/* the quiz options have no key badge (it only belongs to the word review; unpositioned it floated in the middle of the card) */
+.quiz .optk{display:none}
