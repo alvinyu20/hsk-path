@@ -2881,3 +2881,7 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .jy-r.next path.mu{fill:hsl(var(--rh) 40% 88%)}
 .t-dark .jy-r.next path.mu{fill:hsl(var(--rh) 30% 24%)}
 .jy-out.mu{fill:var(--jbg)}
+
+/* the daily clear bonus line on Today */
+.dc-note{margin:0 0 8px;padding:6px 12px;border-radius:12px;background:var(--amber-soft);font-size:13.5px;font-weight:600}
+.dc-note.got{background:var(--jade-soft)}

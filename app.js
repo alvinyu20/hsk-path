@@ -219,7 +219,15 @@
   const retention = () => { const r = Number(prefGet('retention', 0.9)); return r >= 0.75 && r <= 0.95 ? r : 0.9; };
   const retK = () => (1 / (retention() * retention()) - 1) * 81 / 19;
   // A word the level check marked "probably known" carries pk, the day it may first come back (the check releases 20 a day); one answer in Review removes it.
-  const dueIn = (d, off) => { const base = d.s * retK() - lOf(d) - (off || 0); return d.pk ? Math.max(base, (d.pk - Date.now()) / DAY_MS - (off || 0)) : base; };
+  // Due dates count in whole days, switching over at local midnight: what comes due later today is already due this morning (so the day's list is
+  // fixed when the day starts), and what you reviewed today does not come back until tomorrow at the earliest. dueIn() is days until due; <= 0 means due.
+  const dayStartMs = () => { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()).getTime(); };
+  const dueIn = (d, off) => {
+    let base = d.s * retK() - lOf(d) - (off || 0); if (d.pk) base = Math.max(base, (d.pk - Date.now()) / DAY_MS - (off || 0));
+    base -= (dayStartMs() + DAY_MS - Date.now()) / DAY_MS;   // the rest of today counts as already here
+    if (!off && d.t && d.t >= dayStartMs()) base = Math.max(base, 1e-6);   // reviewed today: not before tomorrow
+    return base;
+  };
   // One answer changes a skill's stability (s) and its difficulty (d, 1 to 10, starts at 5). The growth factors and the lapse rule are hand-set, not fitted.
   // o.relearn: the card is being answered again in the same session after a lapse. That is relearning, so the stability does not grow
   // (before this, a word forgotten at 90 days came back at 31 days and then jumped to 50 days after one Good).
@@ -482,7 +490,7 @@
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
   const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'mbest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'pbase', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'pbase', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch', 'dcN', 'dcPaid'];
 
   // Settings that belong to the person, not the device: kept as person preferences ('set.<name>', 'level', 'erhua') so every device ends up with the same ones.
   // (The browser voice stays on the device: the voices on a phone and a laptop are different ones.)
@@ -514,13 +522,21 @@
 
   function rollDay(s) {
     const t = ymd(new Date());
-    if (s.day === t) return s.mem0 == null || s.pbase == null ? Object.assign({}, s, { mem0:s.mem0 == null ? memOf(s.ws).words : s.mem0, pbase:s.pbase == null ? pathDoneCount(s) : s.pbase }) : s;
+    if (s.day === t) return s.mem0 == null || s.pbase == null || s.dcN == null ? Object.assign({}, s, { mem0:s.mem0 == null ? memOf(s.ws).words : s.mem0, pbase:s.pbase == null ? pathDoneCount(s) : s.pbase, dcN:s.dcN == null ? dueCountsNow(s).n : s.dcN, dcPaid:!!s.dcPaid }) : s;
     const rq = buildQueue(s.ws, false);
     return Object.assign({}, s, {
       mem0:memOf(s.ws).words, pbase:pathDoneCount(s), day:t, dayXp:0, dayMin:0, wlearned:{}, wrated:{}, wdelta:{}, wreveal:{}, webCredited:false,
       rcomplete:false, rdone:0, rxp:0, rq, rtotal:rq.length, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rrun:0, rmiss:[], rflip:false,
-      gdone:false, grdone:false, tdone:false, ldone:false, spokeToday:false, sdone:false, sturn:0
+      gdone:false, grdone:false, tdone:false, ldone:false, spokeToday:false, sdone:false, sturn:0,
+      dcN:dueCountsNow(s).n, dcPaid:false   // how much was due when the day began, and whether the 100-coin bonus for clearing it has been paid
     });
+  }
+  // what is due right now: started words (any of their cards) and grammar points open to review. Used for the daily clear bonus.
+  const DAILY_BONUS = 100;
+  function dueCountsNow(S) {
+    let w = 0; BANK_KEYS.forEach(zh => { const x = S.ws && S.ws[zh]; if (x && DIMS.every(k => x[k])) { const i = winfo(x, 0); if (i.started && i.dueN <= 0) w++; } });
+    let g = 0; try { const greg = gptReg(); Object.keys(greg).forEach(id => { if (gptOpen(S, id) && gptDueNow(S, id)) g++; }); } catch (e) {}
+    return { w, g, n:w + g };
   }
 
   // When the 儿 switch changes, the words that are renamed (面条儿 <-> 面条, 一点儿 <-> 一点 ...) keep their progress.
@@ -1706,6 +1722,16 @@
       if (!this.fromPerson) SETTING_KEYS.forEach(k => { if (patch[k] !== undefined && patch[k] !== S[k]) prefSet('set.' + k, patch[k]); });   // a setting the person changed travels to their other devices
       super.setState(patch);
       this.persistSoon();
+      if (!this.state.dcPaid && (patch.rcomplete || patch.qdone || patch.screen === 'home' || patch.screen === 'greview')) { clearTimeout(this.dcT); this.dcT = setTimeout(() => { try { this.dailyClear(); } catch (e) {} }, 80); }
+    }
+    dueCounts = () => dueCountsNow(this.state);
+    // Clearing everything that was due today (words and grammar points) pays a one-time bonus; a day with nothing due pays nothing
+    dailyClear() {
+      const S = this.state;
+      if (S.dcPaid || !(S.dcN > 0) || S.day !== ymd(new Date()) || S.screen === 'quiz' && !S.qdone) return;
+      if (dueCountsNow(S).n > 0) return;
+      this.setState({ xp:S.xp + DAILY_BONUS, dayXp:S.dayXp + DAILY_BONUS, dcPaid:true, msQueue:(S.msQueue || []).concat([{ icon:'🌟', title:'Daily clear: +' + DAILY_BONUS + ' coins', desc:'Everything that was due today is done.' }]) });
+      SFX.play('ach'); this.msArm();
     }
     persistSoon() {
       if (!this.persistAsked && this.state.xp > 0) this.ensurePersist(true);
@@ -4711,6 +4737,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       if (dueWordsN > 0 || S.rq.length > 0 || S.rcomplete) planRows.push({ glyph:'词', title:'Review words', meta:dueWordsN > 0 ? dueWordsN + (S.rcomplete ? ' still due' : ' due') : 'All caught up', done:S.rcomplete && dueWordsN === 0,
         run:() => { if (!S.rq.length && dueWordsN > 0) this.reviewMore(); this.go('review'); } });
       if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + ' due' : 'Nothing due, short practice', done:!!S.grdone, run:() => this.startGrammarReview(true) });
+      const dcLeft = dueCountsNow(S).n;
       const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:t.run }));
       const moreWays = [
         pathStep && pathDoneToday > 0 ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), cls:'', fn:() => this.pathContinue(pathStep.st.id) } : null,
@@ -5369,6 +5396,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         cairnSub:allStarted ? 'Take the level exam when you feel ready.' : startedCount + ' of ' + nextM + '. A few cards and it is yours.', cairnPct:(allStarted ? 100 : Math.round((startedCount - prevM) / (nextM - prevM) * 100)) + '%',
         fireBig:streakShown > 0 ? streakShown + ' day' + (streakShown === 1 ? '' : 's') : 'No streak yet',
         fireSub:studiedToday ? 'You studied today. Come back tomorrow to keep it going.' : (streakShown > 0 ? 'Study today to keep the streak going.' : 'Study today to start one.'),
+        dcShow:S.dcN > 0, dcCls:S.dcPaid ? 'got' : '', dcText:S.dcPaid ? 'Daily clear done: +' + DAILY_BONUS + ' coins earned' : 'Clear everything due today for +' + DAILY_BONUS + ' coins · ' + dcLeft + ' left',
         todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed. Anything else is a bonus.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
         trailCta:() => this.go(ascCta.to), trailCtaText:ascCta.text,
         trailNote:'Levels are placed on the path, not to scale. The path counts the ' + LVN + ' words you have started; grammar, listening and speaking count towards the level exam.',
@@ -5418,7 +5446,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         gtThirstCls:grvDue > 0 ? '' : 'ok', gtThirstTitle:grvOpenN === 0 ? 'No points yet' : grvDue > 0 ? grvDue + (grvDue === 1 ? ' point is thirsty' : ' points are thirsty') : 'The garden is watered', gtThirstSub:grvOpenN === 0 ? 'A point joins this garden once you pass its lesson.' : grvDue > 0 ? 'A short review waters them before they fade.' : 'Nothing is due right now.',
         gtReviewText:grvOpenN === 0 ? 'Go to grammar lessons' : grvDue > 0 ? 'Review ' + grvDue + ' due' : 'Practise anyway', gtReview:() => (grvOpenN === 0 ? this.go('grammar') : this.startGrammarReview(true)), gtOpenTracker:() => this.go('gtrack'),
         grvLocked:grvOpenN === 0, grvCaught:grvOpenN > 0 && grvDue === 0, grvMoreDue:grvOpenN > 0 && grvDue > 0,
-        grvDueText:grvDue + (grvDue === 1 ? ' point is' : ' points are') + ' still due.', grvNextText:(() => { const ds = gOpenRows.filter(r => r.info.started).map(r => { const e = S.gpt[r.id] || {}; return Math.min(e.r && e.r.s > 0 ? dueIn(e.r, 0) : 1e9, e.w && e.w.s > 0 && grvCanWrite ? dueIn(e.w, 0) : 1e9); }).filter(d => d < 1e8); if (!ds.length) return ''; const d = Math.min(...ds); return d < 1 ? 'Next point to review: later today.' : 'Next point to review: in ' + Math.ceil(d) + (Math.ceil(d) === 1 ? ' day.' : ' days.'); })(),
+        grvDueText:grvDue + (grvDue === 1 ? ' point is' : ' points are') + ' still due.', grvNextText:(() => { const ds = gOpenRows.filter(r => r.info.started).map(r => { const e = S.gpt[r.id] || {}; return Math.min(e.r && e.r.s > 0 ? dueIn(e.r, 0) : 1e9, e.w && e.w.s > 0 && grvCanWrite ? dueIn(e.w, 0) : 1e9); }).filter(d => d < 1e8); if (!ds.length) return ''; const d = Math.min(...ds); return d <= 1 ? 'Next point to review: tomorrow.' : 'Next point to review: in ' + Math.ceil(d) + ' days.'; })(),
         grvMoreShow:gShown.length > 20, grvMoreLabel:S.grvAll ? 'Show fewer' : 'Show all ' + gShown.length, grvMore:() => this.setState({ grvAll:!S.grvAll }),
         lessonGroups, gramNoMatch, gq:S.gq, onGramSearch:(e) => this.setState({ gq:e.target.value }), lesson, gramPickOpen:S.gramPick ? 'true' : 'false', gramListCls:S.gramPick ? 'open' : '', toggleGramPick:() => this.setState({ gramPick:!S.gramPick }),
         startGrammar:() => this.startQuiz('grammar'),
@@ -5547,6 +5575,9 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
   // coming back to the app (switching from another app or device): pick up what the other devices did, at most once a minute
   let lastBack = 0;
   document.addEventListener('visibilitychange', () => { try { if (document.visibilityState === 'visible' && Date.now() - lastBack > 60000 && FR && FR.identity && FR.identity()) { lastBack = Date.now(); app.friendsProgressSync().catch(() => {}); } } catch (e) {} });
+  // the day's due list is fixed at midnight: when the page is open across it, or comes back to the front the next morning, start the new day
+  { const midnight = () => { const n = new Date(); setTimeout(() => { try { app.setState({ day:app.state.day }); } catch (e) {} midnight(); }, new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1).getTime() - n.getTime() + 1500); }; midnight(); }
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { try { if (app.state.day !== ymd(new Date())) app.setState({ day:app.state.day }); } catch (e) {} } });
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); } else { app._schedule(); if (SYNCCFG.token) app.syncNow(false); } });
   const fileInput = document.getElementById('import-file');
   if (fileInput) {
