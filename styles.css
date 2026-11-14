@@ -2885,3 +2885,55 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 /* the daily clear bonus line on Today */
 .dc-note{margin:0 0 8px;padding:6px 12px;border-radius:12px;background:var(--amber-soft);font-size:13.5px;font-weight:600}
 .dc-note.got{background:var(--jade-soft)}
+
+/* PHONES: the page title lives in the top bar (between Shanlu and your picture), so the picture banners and title rows are gone; tighter gaps all round */
+.m-title{display:none}
+@media (max-width:700px){
+  .m-title{display:block;flex:1 1 0;min-width:0;padding:0 8px;text-align:center;font:700 15.5px/1.2 'Bricolage Grotesque',system-ui,sans-serif;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .side .bsub{display:none}
+  .app:not(.scr-home) .top{display:none}
+  .main{gap:12px}
+  .subnav{margin:0}
+  .main{padding-top:10px}
+  /* Today: a slim greeting */
+  .th-hero{min-height:0;border-radius:18px}
+  .th-in{flex-wrap:nowrap;align-items:center;gap:8px;padding:6px 10px}
+  .th-ming{width:46px;margin-bottom:0}
+  .th-t{flex:1 1 auto;min-width:0;padding:4px 10px}
+  .th-zh{font-size:20px}
+  .th-py{font-size:12px;margin-top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .th-lan{display:none}
+  /* Listening lab: the four modes are one slim row, names only */
+  .seg2.labtiles{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  .labtiles button,.app.am .lab-main > .seg2.labtiles button{flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 2px 5px;border-radius:14px;border-width:1.5px;border-bottom-width:3px;text-align:center}
+  .labtiles .lt-d{display:none}
+  .labtiles .lt-g,.app.am .labtiles .lt-g{width:26px;height:26px;font-size:15px;border-radius:8px}
+  .labtiles b,.app.am .labtiles b{font-size:12px;line-height:1.1}
+}
+@media (max-width:700px){
+  .th-hero{min-height:58px}
+  .th-in{min-height:58px;padding:5px 10px}
+  .th-ming{width:44px;height:46px;object-fit:contain;margin:0}
+  .th-zh{font-size:21px;line-height:1.15}
+}
+@media (max-width:900px){.app{align-content:flex-start}}   /* a short page no longer stretches the top bar to fill the screen */
+@media (max-width:700px){
+  /* a Library page already has its "Library" link: the Path / Library switch is only on the two main pages */
+  .app.scr-words .subnav,.app.scr-gtrack .subnav,.app.scr-grammar .subnav,.app.scr-web .subnav,.app.scr-pinyin .subnav{display:none}
+  /* test lobby: the four question types as compact rows */
+  .lob .fmt{gap:6px}
+  .lob .fmt-r{padding:8px 10px;gap:10px}
+  .lob .fmt-g{width:32px;height:32px;font-size:17px}
+  .lob .fmt-t{font-size:15px}.lob .fmt-d{font-size:12.5px;line-height:1.25}
+  /* speaking: pick-a-place pictures are shorter */
+  .spk-card-img{aspect-ratio:480/250;background-position:50% 20%}
+  .spk-card-b{padding:8px 10px 10px;gap:8px}
+  .spk-cards{gap:10px}
+}
+@media (max-width:700px){ .side{flex:0 0 100%;width:100%;max-width:100%;min-width:0;box-sizing:border-box} }
+/* phones: nothing slides sideways, in the review screens most of all */
+@media (max-width:700px){
+  html,body{overflow-x:hidden;overscroll-behavior-x:none}
+  .app{overflow-x:clip;max-width:100vw}
+  .app.am .main{overflow-x:hidden;touch-action:pan-y;overscroll-behavior-x:none}
+}

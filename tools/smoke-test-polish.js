@@ -52,6 +52,12 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(await page.evaluate(() => [...document.querySelectorAll('.gtrack .grv-pt')].every(r => r.classList.contains('mastered'))), 'tapping a stage in the garden filters the points');
   await page.evaluate(() => window.shanlu.go('library')); await page.waitForTimeout(200);
   check(await page.locator('.lib-tile.lt-gpoints').count() === 1, 'the Library lists Grammar points beside Words');
+  // the page title sits in the top bar on phones, with no picture banner above the page
+  await page.evaluate(() => window.shanlu.go('library')); await page.waitForTimeout(250);
+  const hd = await page.evaluate(() => { const m = document.querySelector('.m-title'); const s = document.querySelector('.side').getBoundingClientRect(); const first = document.querySelector('.main').firstElementChild; return { title: m && m.textContent.trim(), vis: !!m && getComputedStyle(m).display !== 'none', topH: Math.round(s.height), art: [...document.querySelectorAll('.top-art')].some(a => a.getBoundingClientRect().height > 0), firstTop: Math.round(first.getBoundingClientRect().top) }; });
+  check(hd.title === 'Library' && hd.vis && hd.topH <= 70 && !hd.art && hd.firstTop < 100, 'on a phone the page title is in the top bar and there is no picture banner (' + JSON.stringify(hd) + ')');
+  await page.evaluate(() => window.shanlu.go('friends')); await page.waitForTimeout(250);
+  check(await page.evaluate(() => document.querySelector('.side').getBoundingClientRect().height <= 70), 'a short page does not stretch the top bar');
   // Talk with AI on a phone: Free chat has a picture, and a Situation bar opens a list to pick from
   await page.evaluate(() => { const a = window.shanlu; a.aiAsk = async () => {}; a.say = () => {}; a.setState({ aiOn: true, aiMode: true, aiScn: -1, aim: [{ who: 'ai', zh: '你好', en: 'Hello', py: 'nǐ hǎo', outside: [], pv: [] }] }); a.go('speak'); });
   await page.waitForTimeout(400);
@@ -88,8 +94,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
   // ---- Listening lab fits and keeps its padding ----
   await page.evaluate(() => window.shanlu.go('listen')); await page.waitForTimeout(300);
-  const tile = await page.evaluate(() => { const b = document.querySelector('.labtiles button'); const s = getComputedStyle(b); const h = b.querySelector('.lt-d').getBoundingClientRect(), r = b.getBoundingClientRect(); return { pad: parseFloat(s.paddingTop), gap: r.bottom - h.bottom }; });
-  check(tile.pad >= 10 && tile.gap >= 10, 'the Listening mode cards keep their padding on a phone (top ' + tile.pad + ', below the text ' + tile.gap.toFixed(1) + ')');
+  const tile = await page.evaluate(() => { const b = document.querySelector('.labtiles button'); const s = getComputedStyle(b); const h = b.querySelector('b').getBoundingClientRect(), r = b.getBoundingClientRect(); return { pad: parseFloat(s.paddingTop), gap: r.bottom - h.bottom, h: r.height }; });
+  check(tile.pad >= 5 && tile.gap >= 4 && tile.h <= 80, 'the Listening mode cards keep their padding on a phone (top ' + tile.pad + ', below the text ' + tile.gap.toFixed(1) + ')');
 
   check(errors.length === 0, 'no page errors: ' + errors.join(' | '));
   await browser.close(); server.close();

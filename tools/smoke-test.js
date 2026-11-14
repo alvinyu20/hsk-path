@@ -1410,7 +1410,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   const slim = await page.evaluate(() => { const t = document.querySelector('.top').getBoundingClientRect(); return { h: t.height, pills: [...document.querySelectorAll('.stats .pill')].filter(p => p.offsetParent !== null).length }; });
   check(slim.h < 90 && slim.pills === 0, 'the header is one slim row on a phone, with no repeated streak and memory chips outside Today (' + Math.round(slim.h) + ' px)');
   await nav('Home');
-  check((await page.evaluate(() => [...document.querySelectorAll('.stats > .pill')].filter(p => p.offsetParent !== null).length)) === 3, 'Today still shows the streak, XP and memory chips');
+  check((await page.evaluate(() => [...document.querySelectorAll('.stats > .pill')].filter(p => p.offsetParent !== null).length)) === 2, 'Today still shows the streak and coin chips');
   await page.setViewportSize({ width: 1280, height: 900 });
 
   check(errors.length === 0, 'no console or page errors' + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));

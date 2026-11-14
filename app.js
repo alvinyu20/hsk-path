@@ -3797,8 +3797,8 @@
         devOpen:!!S.devOpen, devExpanded:S.devOpen ? 'true' : 'false', devToggleText:S.devOpen ? 'Hide' : 'Show', toggleDev:() => this.setState({ devOpen:!this.state.devOpen }),
         acctStamps:[1, 2, 3, 4].filter(n => n <= (LVL.MAX_LEVEL || 4)).map(n => { const done = !!LVL.levelPassed(n); const cur = !done && n === LV; return { zh:'一二三四五六'.charAt(n - 1), cls:done ? 'got' : (cur ? 'cur' : 'no'), label:done ? 'HSK ' + n + ' passed' : (cur ? 'In progress' : 'Ahead') }; }),
         acctStats:[
-          stat('Day streak', String(c.streak)), stat('Coins', c.coins), stat('Words in memory', String(c.mem)), stat('Words started', c.started + ' of ' + c.total),
-          stat('Path stops done', PATH_LVLS.length ? stopsDone + ' of ' + stopsAll : 'None yet'), stat('Grammar lessons passed', gPassed + ' of ' + LESSONS.length)
+          stat('Day streak', String(c.streak)), stat('Coins', c.coins), stat('Words in memory', String(c.mem)), stat('Words started', String(c.started)),
+          stat('Path stops', PATH_LVLS.length ? String(stopsDone) : '0'), stat('Grammar lessons', String(gPassed))
         ],
         acctLinks:links
       };
