@@ -348,10 +348,10 @@
   const staleNew = (z, ws, lrn) => { const m = itemOf(z); return m.t === 'l' && !(lrn && lrn[m.zh]) && !!(ws && ws[m.zh] && ws[m.zh].see && ws[m.zh].see.s > 0); };
   // the words really waiting in their learning phase: a word that is already learned (it has an interval, e.g. marked as known elsewhere) or is not in this view's list
   // can never be served as a new card, so it must not count (it made "Learn N new words" appear after a finished session and used up the 12-word limit)
-  const lrnLive = (ws, lrn) => Object.keys(lrn || {}).filter(z => BANK[z] && ws && ws[z] && !(ws[z].see.s > 0));
-  const lrnPrune = (ws, lrn) => { const o = {}; Object.keys(lrn || {}).forEach(z => { if (!(ws && ws[z] && ws[z].see.s > 0)) o[z] = lrn[z]; }); return o; };
+  const lrnLive = (ws, lrn) => Object.keys(lrn || {}).filter(z => BANK[z] && ws && ws[z] && !(ws[z].see && ws[z].see.s > 0));
+  const lrnPrune = (ws, lrn) => { const o = {}; Object.keys(lrn || {}).forEach(z => { if (!(ws && ws[z] && ws[z].see && ws[z].see.s > 0)) o[z] = lrn[z]; }); return o; };
   const buildQueue = (ws, anyway, lrn) => {
-    const fresh = Object.keys(lrn || {}).filter(zh => BANK[zh] && ws[zh] && !(ws[zh].see.s > 0)).map(zh => zh + '#l');
+    const fresh = Object.keys(lrn || {}).filter(zh => BANK[zh] && ws[zh] && !(ws[zh].see && ws[zh].see.s > 0)).map(zh => zh + '#l');
     const see = [], prod = [], hear = [];
     Object.keys(ws).forEach(zh => {
       const w = ws[zh];
@@ -525,6 +525,7 @@
   // The three 儿 words that already have their own plain twin on the list (这儿/这里 ...) are separate words and are not merged.
   function carryOverErhua(S) {
     if (!ERHUA) return;
+    fillWs(S.ws);   // saved and synced words keep only the skills that were started: give every word all three before anything reads them
     const blank = (w) => !w || ['see', 'hear', 'prod'].every(k => !w[k] || !(w[k].s > 0));
     const maps = ['wlearned', 'wrated', 'wreveal', 'wdelta', 'wex', 'misses'];
     ERHUA.pairs.filter(p => !p.twin).forEach(p => {
