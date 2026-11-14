@@ -2,6 +2,7 @@
 /* Lists every text the site reads aloud, with the voice it uses, as JSON: [{text, voice, group}].
  *   voice: "f" (the woman's voice) or "m" (the man's voice: exam lines spoken by 男)
  *   group: words | examples | lab | exams | extra
+ *   lv: the levels (1-4) whose data uses the text
  * Usage: node tools/audio-texts.js [--summary]       (tools/make-audio.py reads this)
  * The exam rules mirror app.js: a line spoken by 男 is the man's voice, 女 and lines with no speaker are the woman's. */
 const path = require('path');
@@ -9,13 +10,17 @@ global.window = {};
 const D = (f) => require(path.join(__dirname, '..', 'data', f));
 [1, 2, 3, 4].forEach((n) => ['words', 'webs', 'speak', 'listen', 'exam', 'grammar'].forEach((k) => { try { D('hsk' + n + '-' + k + '.js'); } catch (e) {} }));
 const out = new Map();   // key voice|text -> entry
+let cur = 0;             // the level whose data is being read; each entry lists every level it appears in (lv), so a text shared by HSK 3 and 4 counts for both
 const add = (text, voice, group) => {
   text = String(text || '').trim();
   if (!text || !/[一-鿿]/.test(text)) return;
   const k = voice + '|' + text;
-  if (!out.has(k)) out.set(k, { text, voice, group });
+  if (!out.has(k)) out.set(k, { text, voice, group, lv: [] });
+  const e = out.get(k);
+  if (!e.lv.includes(cur)) e.lv.push(cur);
 };
 [1, 2, 3, 4].forEach((n) => {
+  cur = n;
   const N = 'HSK' + n;
   (window[N + '_WORDS'] || []).forEach((w) => {
     add(w.zh, 'f', 'words');

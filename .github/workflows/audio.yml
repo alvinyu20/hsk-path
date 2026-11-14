@@ -10,6 +10,9 @@ on:
       scope:
         description: 'What to make: words, examples, lab, exams, extra, core (words+examples+lab+exams) or all'
         default: 'words'
+      level:
+        description: 'Only the texts that this HSK level uses: 1, 2, 3 or 4 (empty = every level)'
+        default: ''
       limit:
         description: 'Make at most this many new files (0 = no limit)'
         default: '0'
@@ -46,18 +49,20 @@ jobs:
       - name: Say what will be made
         env:
           SCOPE: ${{ inputs.scope }}
+          LEVEL: ${{ inputs.level }}
           LIMIT: ${{ inputs.limit }}
         run: |
-          python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --dry-run
+          python3 tools/make-audio.py --scope "$SCOPE" --level "$LEVEL" --limit "$LIMIT" --dry-run
       - name: Make the audio
         env:
           DASHSCOPE_API_KEY: ${{ secrets.DASHSCOPE_API_KEY }}
           SCOPE: ${{ inputs.scope }}
+          LEVEL: ${{ inputs.level }}
           LIMIT: ${{ inputs.limit }}
           REDO: ${{ inputs.redo }}
           VOICE_F: ${{ inputs.voice_f }}
           VOICE_M: ${{ inputs.voice_m }}
-        run: python3 tools/make-audio.py --scope "$SCOPE" --limit "$LIMIT" --redo "$REDO" --voice-f "$VOICE_F" --voice-m "$VOICE_M" --workers 2
+        run: python3 tools/make-audio.py --scope "$SCOPE" --level "$LEVEL" --limit "$LIMIT" --redo "$REDO" --voice-f "$VOICE_F" --voice-m "$VOICE_M" --workers 2
       - name: Save the files and the list
         if: always()
         env:

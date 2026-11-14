@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Make recorded audio with the Qwen voice, once, so the site plays files instead of paying for a voice on every tap.
 
-  DASHSCOPE_API_KEY=...  python3 tools/make-audio.py --scope core [--limit 50] [--workers 2] [--dry-run]
+  DASHSCOPE_API_KEY=...  python3 tools/make-audio.py --scope core [--level 4] [--limit 50] [--workers 2] [--dry-run]
   then:                   python3 tools/build-audio.py
 
 What it does: reads the list from `node tools/audio-texts.js` and asks Alibaba's Qwen-Audio 3.1 flash (qwen-audio-3.1-tts-flash, Model Studio, Singapore) for each text
@@ -114,6 +114,7 @@ def main():
     ap.add_argument('--scope', default='core')
     ap.add_argument('--limit', type=int, default=0, help='make at most this many new files (0 = no limit)')
     ap.add_argument('--workers', type=int, default=2)
+    ap.add_argument('--level', default='', help='only the texts that HSK level N (1-4) uses, e.g. --level 4 (a text shared with a lower level counts for both; empty = every level)')
     ap.add_argument('--voice-f', default='')
     ap.add_argument('--voice-m', default='')
     ap.add_argument('--redo', default='', help='comma-separated texts to make again')
@@ -124,6 +125,9 @@ def main():
     scopes = CORE if a.scope == 'core' else ({'words', 'examples', 'lab', 'exams', 'extra'} if a.scope == 'all' else set(a.scope.split(',')))
     texts = json.loads(subprocess.run(['node', os.path.join(ROOT, 'tools', 'audio-texts.js')], capture_output=True, check=True, cwd=ROOT).stdout)
     texts = [e for e in texts if e['group'] in scopes]
+    if a.level.strip():
+        lv = int(a.level.strip())
+        texts = [e for e in texts if lv in e.get('lv', [])]
     os.makedirs(AUDIO, exist_ok=True)
     index = json.load(open(INDEX, encoding='utf-8')) if os.path.exists(INDEX) else {}
     redo = {t.strip() for t in a.redo.split(',') if t.strip()}
