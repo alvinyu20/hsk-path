@@ -54,8 +54,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await nav('Library');
   await page.locator('.stats button.pill.fl').click(); await page.waitForTimeout(100);
   check(await scr(page) === 'home', 'the streak pill goes to Today');
-  await page.locator('.stats .pill', { hasText: 'memory' }).click(); await page.waitForTimeout(100);
-  check(await scr(page) === 'words', 'the memory pill goes to My words');
+  check(await page.locator('.stats .pill', { hasText: 'memory' }).count() === 0, 'the header has no "in memory" pill');
   await page.locator('.stats button.xpp').click(); await page.waitForTimeout(100);
   check(await scr(page) === 'journey', 'the coins pill goes to the Journey');
 

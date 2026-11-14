@@ -983,7 +983,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   // the honesty check compares self-ratings with the cards that were checked for you
   await page.evaluate(() => { const app = window.shanlu; const t = Date.now(); const log = []; for (let i = 0; i < 10; i++) log.push([t + i, 'w', 's', 'g', 'f']); for (let i = 0; i < 10; i++) log.push([t + 20 + i, 'w', 's', i < 4 ? 'g' : 'a', 'c']); app.setState({ rlog: log, rcomplete: true, rq: [] }); });
   await nav('Review words');
-  check((await text()).includes('Honesty check') && (await text()).includes('marked 100% of your flip cards') && (await text()).includes('got 40% right') && (await text()).includes('a little generous'), 'the finished screen compares your self-ratings with your checked answers');
+  check((await text()).includes('rated 100% of flip cards') && (await text()).includes('got 40% right') && (await text()).includes('tap Again or Hard'), 'the finished screen compares your self-ratings with your checked answers');
   await page.evaluate(() => window.shanlu.setState({ rcomplete: false, rq: [], rlog: [] }));
   // the daily goal offers "Learn new words" only while some words are not started
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).forEach(z => { ws[z].see = { s: 3, l: 0, t: Date.now() }; ws[z].prod = { s: 3, l: 0, t: Date.now() }; }); app.setState({ ws, rq: [], rcomplete: false, webCredited: false, screen: 'home' }); });

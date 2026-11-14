@@ -4796,10 +4796,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       }
       const lrnCount = lrnLive(S.ws, S.lrn).length;
       const cal = (() => { let fN = 0, fOk = 0, aN = 0, aOk = 0; (S.rlog || []).slice(-300).forEach(e => { const ok = e[3] === 'g' || e[3] === 'e'; if (e[4] === 'f') { fN++; if (ok) fOk++; } else { aN++; if (ok) aOk++; } }); return { fN, fOk, aN, aOk }; })();
-      const calText = cal.fN >= 6 && cal.aN >= 6
-        ? 'Honesty check: you marked ' + Math.round(100 * cal.fOk / cal.fN) + '% of your flip cards Good or Easy. On the cards the site checked for you (' + cal.aN + ' recently) you got ' + Math.round(100 * cal.aOk / cal.aN) + '% right.' +
-          (100 * cal.fOk / cal.fN - 100 * cal.aOk / cal.aN >= 15 ? ' Your self-ratings may be a little generous: when unsure, tap Again or Hard.' : '')
-        : '';
+      const calGap = cal.fN >= 6 && cal.aN >= 6 ? 100 * cal.fOk / cal.fN - 100 * cal.aOk / cal.aN : 0;
+      const calText = calGap >= 15 ? 'You rated ' + Math.round(100 * cal.fOk / cal.fN) + '% of flip cards Good or Easy, but got ' + Math.round(100 * cal.aOk / cal.aN) + '% right on the checked ones. When unsure, tap Again or Hard.' : '';   // shown only when the self-ratings run well ahead of the checked cards
       const rw = BANK[rzh];
       const rexL = EXS[rzh]; const rex = rexL[(strHash(rzh) + Math.floor(Date.now() / 864e5) + S.rstep) % rexL.length];
       const cinfo = winfo(S.ws[rzh], 0);

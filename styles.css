@@ -2776,3 +2776,40 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .av-it{width:56px;height:56px;padding:0;border-radius:50%;border:3px solid transparent;background:#F4EFE3;color:#1D3B4A;font-size:26px;font-weight:700;display:grid;place-items:center;cursor:pointer;overflow:hidden}
 .av-it img{width:100%;height:100%;object-fit:cover;display:block}
 .av-it.on{border-color:var(--seal,#C0352B);box-shadow:0 0 0 2px #fff}
+
+/* Account card and goals on a phone: the picture beside the name, the two links on one line, the four goal choices in one row */
+.pp-links{display:flex;flex-wrap:wrap;align-items:center;gap:0 10px}
+.pp-links .linkbtn{align-self:auto}
+.acct-pp .pp-links{color:#A9C2CC}
+@media (max-width:600px){
+  .acct-pp{flex-wrap:wrap;gap:12px 16px;padding:18px 18px 16px;border-radius:24px}
+  .acct-pp .acct-av{width:68px;height:68px;font-size:34px}
+  .acct-pp .acct-who{flex:1 1 0;min-width:0;gap:2px}
+  .pp-name{font-size:26px;line-height:1.1;margin:0}
+  .pp-sub{font-size:14px}
+  .pp-links .linkbtn{min-height:0;padding:4px 0;font-size:14px}
+  .pp-stamps{gap:6px}
+  .pp-st{width:68px;height:68px}
+  .pp-st span{font-size:8px;padding:0 3px;letter-spacing:.03em}
+  .acct-set .pickrow[aria-label="Daily study goal"]{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;width:100%}
+  .acct-set .pickrow[aria-label="Daily study goal"] .fc2{padding:0 4px;min-width:0;white-space:nowrap;font-size:14px;justify-content:center}
+}
+
+/* No sideways scrolling anywhere on a phone: strips that used to scroll now wrap or shrink, and nothing can be pushed wider than the screen */
+@media (max-width:900px){
+  .fchips2{flex-wrap:wrap;overflow-x:visible}
+  .ctiles{flex-wrap:wrap;overflow-x:visible}
+}
+@media (max-width:700px){
+  html,body{max-width:100%;overflow-x:clip;overscroll-behavior-x:none}
+  .stairs{overflow-x:visible}
+  .step{flex:1 1 0;min-width:0}
+  .app.am .main{overflow:hidden;overflow:clip}   /* clip, not hidden: a hidden box can still be nudged sideways by focus or scrolling into view */
+  /* Review: the header row shrinks its lanterns instead of getting wider than the screen */
+  .app.am .rev-top,.app.am .lants-w{min-width:0}
+  .app.am .lants{min-width:0;flex-wrap:nowrap}
+  .app.am .lants .lan{flex:0 1 16px;min-width:8px}
+  /* Review: the layered cards behind the question card never sit on top of the Check / answer buttons */
+  .app.am .rev > .btn,.app.am .rev .rate,.app.am .rev .fb{position:relative;z-index:3}
+  .app.am .rev .q-card{margin-bottom:12px}
+}

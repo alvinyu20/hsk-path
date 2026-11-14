@@ -53,7 +53,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.evaluate(() => { const P = JSON.parse(localStorage.getItem('shanlu-person')); P.prefs.jy.v.seen = P.prefs.jy.v.seen.concat(window.SOUVENIRS.slice(0, 2).map(s => s.stop)); P.prefs.jy.at = Date.now() + 1000; localStorage.setItem('shanlu-person', JSON.stringify(P)); });
   await page.reload(); await page.waitForSelector('.app');
   await page.evaluate(() => window.shanlu.go('acct')); await page.waitForTimeout(200);
-  await page.locator('text=Change my picture').click();
+  await page.locator('text=Change picture').click();
   check(await page.locator('.av-it').count() === 3, 'the picker offers the initial and the 2 souvenirs found, not the other souvenirs: ' + await page.locator('.av-it').count());
   await page.locator('.av-it').nth(1).click(); await page.waitForTimeout(200);
   check(await page.locator('.acct-av img').count() === 1 && await page.locator('.acct-mini img').count() === 1, 'the chosen souvenir replaces the initial');

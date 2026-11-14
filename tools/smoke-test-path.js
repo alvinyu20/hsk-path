@@ -226,7 +226,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const acct = await page.locator('.acct').innerText();
     check(acct.includes('Learner') && acct.includes('Your numbers') && acct.includes('Settings and sync') && acct.includes('Achievements'), 'the Account page has the name, the numbers and the links');
     check(/Path stops done/.test(acct) && /Words started/.test(acct), 'it shows the path progress');
-    await page.locator('.acct button', { hasText: 'Change my name' }).click(); await page.waitForTimeout(80);
+    await page.locator('.acct button', { hasText: 'Change name' }).click(); await page.waitForTimeout(80);
     await page.locator('.acct input').fill('Alvin'); await page.locator('.acct .acct-btns button', { hasText: 'Save' }).click(); await page.waitForTimeout(120);
     check((await page.locator('.acct').innerText()).includes('Alvin') && (await page.locator('.side button.me').innerText()).includes('Alvin'), 'a name can be set, and shows in the sidebar');
     await page.locator('.acct .acct-row', { hasText: 'Settings and sync' }).click(); await page.waitForTimeout(150);
