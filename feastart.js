@@ -217,7 +217,9 @@
   // ---- a look of its own for every dish: two dishes that share a drawing still differ by a flip, a tilt, a size, a tint and a small extra on the table.
   // `n` (optional) forces the variant so that dishes with the same drawing in one room are guaranteed to differ.
   const TINTS = ['', '<feColorMatrix type="hueRotate" values="-18"/>', '<feColorMatrix type="hueRotate" values="18"/>', '<feColorMatrix type="saturate" values="1.4"/>', '<feColorMatrix type="saturate" values=".68"/><feComponentTransfer><feFuncR type="linear" slope="1.07"/><feFuncG type="linear" slope="1.07"/><feFuncB type="linear" slope="1.07"/></feComponentTransfer>', '<feColorMatrix type="hueRotate" values="-34"/>'];
-  const TINT_DEFS = '<defs>' + TINTS.map((f, i) => f ? '<filter id="fzt' + i + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' + f + '</filter>' : '').join('') + '</defs>';
+  // a soft studio light on every dish: a faint specular shine along the rims and curves, so bowls and plates read as round things
+  const LIT = '<filter id="fzlit" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceAlpha" stdDeviation="2.6" result="b"/><feDiffuseLighting in="b" surfaceScale="3.2" diffuseConstant="1.12" lighting-color="#fff" result="df"><feDistantLight azimuth="235" elevation="58"/></feDiffuseLighting><feComposite in="SourceGraphic" in2="df" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="sh"/><feComposite in="sh" in2="SourceAlpha" operator="in"/></filter>';
+  const TINT_DEFS = '<defs>' + LIT + TINTS.map((f, i) => f ? '<filter id="fzt' + i + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' + f + '</filter>' : '').join('') + '</defs>';
   const EXTRA = {
     table: [
       '',
@@ -235,9 +237,13 @@
     const forced = n != null, h = hash((it.id || it.zh || '') + 'v'), k = it.zone === 'shelf' ? 'shelf' : it.drink ? 'drink' : 'table', ex = EXTRA[k];
     const fl = forced ? (n % 2) : (h & 1), tilt = forced ? [0, -3, 3, -5, 5, 2][n % 6] : ((h >>> 1) % 9) - 4, sc = forced ? [1, .96, 1.04, .94, 1.06, .98][n % 6] : .95 + ((h >>> 5) % 11) / 100;
     const gi = forced ? n % ex.length : (h >>> 9) % (ex.length + 1) % ex.length, ti = forced ? (n * 2 + (h % 2)) % TINTS.length : (h >>> 13) % (k === 'shelf' ? 4 : TINTS.length);
-    let g = draw(it.arch, it.p);
-    g = '<g transform="rotate(' + tilt + ') scale(' + (fl ? -sc : sc) + ' ' + sc + ')">' + g + '</g>';
+    let g = draw(it.arch, it.p), steam = '';
+    g = g.replace(/<g class="fz-stm"[\s\S]*?<\/g>/g, (m) => { steam += m; return ''; });   // steam stays outside the light filter
+    // the flip and tilt sit inside the filters: Chromium paints a plain mirrored group with a filter on it solid black
+    const T = '<g transform="rotate(' + tilt + ') scale(' + (fl ? -sc : sc) + ' ' + sc + ')">';
+    g = '<g filter="url(#fzlit)">' + T + g + '</g></g>';
     if (ti) g = '<g filter="url(#fzt' + ti + ')">' + g + '</g>';
+    g += T + steam + '</g>';
     const e = ex[gi] || '';
     return (k === 'drink' && gi === 4 ? '' : '') + g + (e ? '<g transform="scale(' + (fl ? -1 : 1) + ' 1)">' + e + '</g>' : '');
   }

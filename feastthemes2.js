@@ -13,6 +13,7 @@
 
   // ---- Heilongjiang: a Harbin winter hall, frosted window onto onion domes in the snow, glowing ice lanterns
   TH.heilongjiang = {
+    nolight: true,
     shelf: { x: 452, w: 206, y: 176, style: SL('#2A4A6A', '#6A8AAA', 'rgba(10,20,40,.55)') },
     room: (K) => K.R(0, 0, 680, 250, '#233A5A') + K.R(0, 0, 680, 30, '#16263E') + K.floor(250, 'plank', '#4A3A2A', '#352818') +
       K.win(34, 52, 330, 178, { frame: '#16263E', fw: 8, lat: 'grid', latc: '#16263E', n: 4, lw: 3, view: (x, y, w, h) => K.V.night(x, y, w, h) + K.R(x, y + h * .82, w, h * .18, '#E8F0F6') + [[.3, .5, 18], [.6, .44, 24], [.82, .56, 14]].map(d => K.R(x + w * d[0] - d[2] * .6, y + h * d[1], d[2] * 1.2, h * .4, '#C9D4DE') + K.E(x + w * d[0], y + h * d[1], d[2] * .8, d[2] * 1.1, '#E8B648', 'stroke="none"') + K.L('M' + (x + w * d[0]) + ' ' + (y + h * d[1] - d[2]) + 'v-8', '#E8B648', 2)).join('') + K.rep(16, i => K.C(x + (i * 41) % w, y + (i * 29) % h, 1.6, '#fff', 'stroke="none"')) }) +
@@ -156,6 +157,7 @@
 
   // ---- Hong Kong: a cha chaan teng, green tile walls, red leatherette booths, ceiling fans, neon and a night skyline
   TH.hongkong = {
+    nolight: true,
     shelf: { x: 452, w: 206, y: 176, style: SL('#2E6A56', '#E8E0C8', 'rgba(10,40,30,.4)') },
     room: (K) => K.wall(0, 250, 'tile', '#CFE3D6', '#9ABBA8') + K.R(0, 150, 680, 100, '#2E6A56') + K.R(0, 146, 680, 6, '#E8E0C8') + K.rep(17, i => K.R(i * 40 + 3, 156, 34, 90, 'none', 'stroke="#4E8A76" stroke-width="1.4"')) + K.floor(250, 'check', '#EDEBE4', '#2A2A2A') +
       K.win(40, 50, 260, 120, { frame: '#E8E0C8', fw: 6, lat: 'cross', latc: '#E8E0C8', lw: 3, view: (x, y, w, h) => K.V.skyline(x, y, w, h, null, true) + K.rep(6, i => K.R(x + 10 + i * 40, y + 20 + (i % 3) * 18, 14, 5, ['#FF4A6A', '#4AE0FF', '#FFD04A'][i % 3], 'stroke="none"')) }) +
