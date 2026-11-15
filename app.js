@@ -5519,7 +5519,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         webCapOpen:S.webCapOpen, toggleCapOpen:() => this.setState({ webCapOpen:!S.webCapOpen }),
         ascSub:'Every word you learn moves you along the path, all the way to HSK 9.',
         trailD:{ src:trD.src, alt:trailAlt, labels:asLabels(trD).concat([youLabel(trD)]) }, trailP:{ src:trP.src, alt:trailAlt, labels:asLabels(trP).concat(trP.hideYou ? [] : [youLabel(trP)]) },
-        dcShow:S.dcN > 0, dcCls:S.dcPaid ? 'got' : '', dcText:S.dcPaid ? '✓ Daily clear · +' + DAILY_BONUS + ' coins' : 'Clear all due: +' + DAILY_BONUS + ' coins · ' + dcLeft + ' to go',
+        dcShow:S.dcN > 0, dcCls:S.dcPaid ? 'got' : '', dcText:S.dcPaid ? '✓ Everything due is cleared · +' + DAILY_BONUS + ' coins' : 'Bonus: +' + DAILY_BONUS + ' coins when everything due is cleared · ' + dcLeft + ' left',
         todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed. Anything else is a bonus.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
         mistClearText:mistClear + ' of ' + TOPICS.length + ' fully started', mistTiles, mistHasNear:!!nearBest, mistOpen:S.wmist, toggleMist:() => this.setState({ wmist:!this.state.wmist }), mistToggleText:S.wmist ? 'Hide the topic map' : 'Show all ' + TOPICS.length + ' topics',
         mistNearText:nearBest ? 'Finish ' + nearBest.name + ' (' + (nearBest.tot - nearBest.got) + ' to go)' : '', mistNearGo:() => nearBest && openTopic(nearBest.i),

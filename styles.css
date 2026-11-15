@@ -2995,8 +2995,8 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .subrow .lvseg{align-self:center;max-width:100%}
 .subrow .lib-search{flex:1 1 130px;min-width:0;width:auto;min-height:44px;font-size:16px;padding-top:0;padding-bottom:0}
 @media (max-width:900px){ .subrow .subnav{margin:0;align-self:center} }
-.dc-note{display:flex;align-items:center;gap:6px;padding:4px 10px;font-size:12.5px;font-weight:600;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:99px;width:fit-content;max-width:100%}
-.dc-note.got{color:var(--jade-d,var(--jade));background:var(--jade-soft);border-color:transparent}
+.dc-note{margin:10px 2px 0;padding:0;font-size:13px;font-weight:500;line-height:1.35;color:var(--muted);background:transparent;border:0;border-radius:0}   /* a quiet line under the plan, not a chip */
+.dc-note.got{color:var(--jade-d,var(--jade));background:transparent}
 
 /* ===== Journey: stamps, passport book, postcard wall, food diary (stampart.js draws the little pictures) ===== */
 .st-art{display:block;width:42px;height:42px;object-fit:contain}
@@ -3314,3 +3314,6 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
   .jy-tabs.seg2 button{min-height:32px;padding:0 14px;font-size:14px}
   .jy-tabarr{width:28px;height:28px;margin-top:-14px}
 }
+
+/* the Library search box is the same height as the pill bar next to it */
+@media (max-width:700px){ .subrow .lib-search{min-height:40px;height:40px} }

@@ -21,6 +21,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
       const bars = await page.evaluate(() => [...document.querySelectorAll('.subnav, .jy-tabw')].filter(e => e.offsetParent).map(e => [Math.round(e.getBoundingClientRect().height), Math.round(e.querySelector('button').getBoundingClientRect().height)]));
       check(bars.length >= 1 && bars.every(b => b[0] === 40 && b[1] === 32), W + 'px ' + sc + ': pill bar is 40px with 32px buttons (' + JSON.stringify(bars) + ')');
     }
+    await page.evaluate(() => window.shanlu.go('library')); await page.waitForTimeout(250);
+    const sb = await page.evaluate(() => Math.round(document.querySelector('.lib-search').getBoundingClientRect().height));
+    check(sb === 40, W + 'px: the Library search box is as tall as the pill bar next to it (' + sb + 'px)');
     // the HSK level pill appears once a second level is open; it must match too
     const lv = await page.evaluate(() => { window.shanlu.go('path'); const m = document.querySelector('main'); const d = document.createElement('div'); d.className = 'seg2 lvseg'; d.innerHTML = '<button>HSK 1</button><button class="on">HSK 2</button>'; m.insertBefore(d, m.firstChild); const r = [Math.round(d.getBoundingClientRect().height), Math.round(d.firstChild.getBoundingClientRect().height)]; d.remove(); return r; });
     check(lv[0] === 40 && lv[1] === 32, W + 'px: the HSK level pill is 40px with 32px buttons (' + JSON.stringify(lv) + ')');
