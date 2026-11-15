@@ -71,7 +71,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.jy-tabs button', { hasText: 'Food' }).click();
     check(await page.locator('.fz-card .fz-hit').count() >= 5 && await page.locator('.fz-card .fz-hit:not(.hid)').count() === 0 && /^0 of \d+ found/.test(await page.locator('.fz-foot span').first().innerText()), 'the Food diary shows the whole table of a province you have reached, with every dish still a silhouette');
     check(!/Food diary|dishes ·/.test(await main(page)), 'the Food diary has no heading or summary line');
-    await page.locator('.jy-tabs button', { hasText: 'Map' }).click();
+    check(await page.locator('.jy-now').count() === 0, 'the road card shows only on the Explore tab');
+    await page.locator('.jy-tabs button', { hasText: 'Explore' }).click();
     check(await page.locator('.jy-now .jy-road svg').count() === 1 && /A flight|A new city|A sight|A dish|A cultural stop/.test(await page.locator('.jy-now .jy-road').innerHTML().then(h => h.replace(/<[^>]+>/g, ' '))), 'with no card open, the main card shows the road ahead over a scene of the province, and the next stop names only its kind');
     await page.locator('.jy-tabs button', { hasText: 'Passport' }).click();
     t = await main(page); check(/Regions\s*0 \/ 31/.test(t) && !/regions stamped/.test(t), 'the passport cover counts 31 regions and no words sit above the book: ' + t.match(/Regions\s*\d+ \/ \d+/));

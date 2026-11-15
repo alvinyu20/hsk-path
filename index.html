@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="e0a3b0d9ad">
+<meta name="shanlu-version" content="ec2e9c0581">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=e0a3b0d9ad">
+<link rel="stylesheet" href="styles.css?v=ec2e9c0581">
 </head>
 <body>
 <div id="app"></div>
@@ -343,6 +343,34 @@
     <sc-if value="{{startFresh}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" style="margin-top:10px" data-on-click="{{onbSkipStart}}">Skip this, I will find my own way</button></sc-if>
   </section>
   </sc-if>
+  <sc-if value="{{dayDone}}" hint-placeholder-val="{{ false }}">
+  <div class="fin">
+    <section class="fin-top" aria-label="Today is cleared">
+      <div class="fin-h">
+        <img src="{{mingCheer}}" alt="" aria-hidden="true" width="72" height="76">
+        <div><div class="fin-zh zh">今天完成了</div><h2 class="fin-t">Today is cleared</h2></div>
+      </div>
+      <div class="fin-tiles">
+        <div class="fin-tile"><b>{{finMin}}</b><span>{{finGoal}}</span></div>
+        <div class="fin-tile"><b>{{finCoins}}</b><span>coins today</span></div>
+        <div class="fin-tile"><b>{{finStreak}}</b><span>{{finStreakSub}}</span></div>
+      </div>
+    </section>
+    <section class="card fin-tm" aria-label="Tomorrow">
+      <div class="today-top"><h2 class="h2">Tomorrow</h2><span class="muted">{{finLight}}</span></div>
+      <div class="fin-week" role="img" aria-label="The last six days and tomorrow's lantern, which is not lit yet">
+        <sc-for list="{{finWeek}}" as="d" hint-placeholder-count="7"><span class="fw-d {{d.cls}}"><span class="fw-ring"><img src="{{d.img}}" alt="" width="26" height="38"></span><i>{{d.l}}</i></span></sc-for>
+      </div>
+      <p class="cp-note" style="margin:0">{{finDue}}</p>
+    </section>
+    <section class="card fin-bonus" aria-label="Still have energy">
+      <div class="fin-kick">STILL HAVE ENERGY?</div>
+      <sc-if value="{{jyHomeLine}}" hint-placeholder-val="{{ false }}"><div class="fin-line">{{jyHomeLine}}</div><div class="fin-bar" aria-hidden="true"><i style="width: {{jyHomePct}}"></i></div></sc-if>
+      <sc-if value="{{finBonusShow}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn pri big fin-go" data-on-click="{{finBonusGo}}"><b>Bonus round</b><small>{{finBonusSub}}</small></button></sc-if>
+      <div class="fin-row"><sc-for list="{{finMore}}" as="c" hint-placeholder-count="3"><button type="button" class="btn" data-on-click="{{c.fn}}">{{c.label}}</button></sc-for></div>
+    </section>
+  </div>
+  </sc-if>
   <sc-if value="{{homeHero}}" hint-placeholder-val="{{ true }}">
   <section class="th-hero" aria-label="Greeting">
     <img class="th-art" src="{{artToday}}" alt="" aria-hidden="true" width="360" height="120">
@@ -356,6 +384,7 @@
   </section>
   </sc-if>
   <div class="hgrid2">
+    <sc-if value="{{planShow}}" hint-placeholder-val="{{ true }}">
     <section class="card">
       <div class="today-top"><h2 class="h2">Today</h2><span class="muted">{{todayShort}}</span></div>
       <button class="btn pri big today-go" data-on-click="{{planGo}}">{{planGoText}}</button>
@@ -379,7 +408,7 @@
         <sc-for list="{{moreWays}}" as="c" hint-placeholder-count="5"><button type="button" class="tchip {{c.cls}}" data-on-click="{{c.fn}}"><b><span class="zh tc-g" aria-hidden="true">{{c.glyph}}</span>{{c.label}}</b><span>{{c.sub}}</span></button></sc-for>
       </div>
     </section>
-
+    </sc-if>
   </div>
   <section>
     <div class="asc-h">
@@ -683,7 +712,7 @@
   <!-- JOURNEY -->
   <sc-if value="{{isJourney}}" hint-placeholder-val="{{ false }}">
   <div class="gram">
-  <section class="jy {{jyFlip}} {{jyPlayCls}}" style="--jh:{{jyHue}}" aria-label="Journey">
+  <section class="jy {{jyFlip}} {{jyPlayCls}} {{jyExCls}}" style="--jh:{{jyHue}}" aria-label="Journey">
     <sc-if value="{{jyOff}}" hint-placeholder-val="{{ false }}"><p class="muted">The Journey could not load. Reload the page, and if it stays like this tell Alvin.</p></sc-if>
     <sc-if value="{{jyOn}}" hint-placeholder-val="{{ true }}">
     <sc-if value="{{jySyncBad}}" hint-placeholder-val="{{ false }}"><div class="banner err" role="alert">{{jySyncText}}</div></sc-if>
@@ -734,8 +763,10 @@
     </div>
     </sc-if>
 
+    <div class="seg2 jy-tabs" role="group" aria-label="Journey views" style="--tc:{{jyTabCols}}; --td:{{jyTabColsWide}}"><sc-for list="{{jyTabs}}" as="t" hint-placeholder-count="6"><button type="button" aria-pressed="{{t.sel}}" class="{{t.cls}}" data-on-click="{{t.fn}}">{{t.label}}</button></sc-for></div>
+
     <div class="jy-side">
-    <sc-if value="{{jyMine}}" hint-placeholder-val="{{ true }}">
+    <sc-if value="{{jyNowShow}}" hint-placeholder-val="{{ true }}">
     <div class="jy-now">
       <sc-if value="{{jyRoadShow}}" hint-placeholder-val="{{ false }}"><div class="jy-road"><sc-html value="{{jyRoadSvg}}"></sc-html></div></sc-if>
       <sc-if value="{{jyHeroShow}}" hint-placeholder-val="{{ false }}"><div class="jy-hero"><img src="{{jyHeroUrl}}" alt="{{jyHeroAlt}}" referrerpolicy="no-referrer"><details class="jy-credit"><summary aria-label="Photo credit">©</summary><span>{{jyHeroCredit}}</span></details></div></sc-if>
@@ -837,7 +868,6 @@
     </sc-if>
     </div>
     <div class="jy-main">
-    <div class="seg2 jy-tabs" role="group" aria-label="Journey views"><sc-for list="{{jyTabs}}" as="t" hint-placeholder-count="3"><button type="button" class="{{t.cls}}" data-on-click="{{t.fn}}">{{t.label}}</button></sc-for></div>
 
     <sc-if value="{{jyIsMap}}" hint-placeholder-val="{{ true }}">
       <sc-if value="{{jyCountry}}" hint-placeholder-val="{{ true }}">
@@ -2961,69 +2991,69 @@
   </sc-if>
 </div>
 </template>
-<script defer src="boot-check.js?v=e0a3b0d9ad"></script>
-<script defer src="vendor/morphdom-umd.min.js?v=e0a3b0d9ad"></script>
-<script defer src="runtime.js?v=e0a3b0d9ad"></script>
-<script defer src="config.js?v=e0a3b0d9ad"></script>
-<script defer src="friends.js?v=e0a3b0d9ad"></script>
-<script defer src="level.js?v=e0a3b0d9ad"></script>
-<script defer src="placement.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk1-words.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk1-grammar.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk1-webs.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk1-speak.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk1-listen.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk1-exam.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk1-erhua.js?v=e0a3b0d9ad"></script>
-<script defer src="data/lexicon.js?v=e0a3b0d9ad"></script>
-<script defer src="data/char-glosses.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk2-preview.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk3-preview.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk4-preview.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk2-words.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk2-speak.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk2-listen.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk2-exam.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk2-grammar.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk2-webs.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk3-words.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk3-speak.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk3-listen.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk3-exam.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk3-grammar.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk3-webs.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk4-words.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk4-speak.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk4-listen.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk4-exam.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk4-grammar.js?v=e0a3b0d9ad"></script>
-<script defer src="data/hsk4-webs.js?v=e0a3b0d9ad"></script>
-<script defer src="ascent.js?v=e0a3b0d9ad"></script>
-<script defer src="secrets.js?v=e0a3b0d9ad"></script>
-<script defer src="sync.js?v=e0a3b0d9ad"></script>
-<script defer src="data/audio-manifest.js?v=e0a3b0d9ad"></script>
-<script defer src="jyscene.js?v=e0a3b0d9ad"></script>
-<script defer src="journey.js?v=e0a3b0d9ad"></script>
-<script defer src="stampart.js?v=e0a3b0d9ad"></script>
-<script defer src="feastart.js?v=e0a3b0d9ad"></script>
-<script defer src="feastscene.js?v=e0a3b0d9ad"></script>
-<script defer src="feastthemes.js?v=e0a3b0d9ad"></script>
-<script defer src="feastthemes2.js?v=e0a3b0d9ad"></script>
-<script defer src="data/journey.js?v=e0a3b0d9ad"></script>
-<script defer src="data/journey-map.js?v=e0a3b0d9ad"></script>
-<script defer src="data/journey-media.js?v=e0a3b0d9ad"></script>
-<script defer src="data/souvenirs.js?v=e0a3b0d9ad"></script>
-<script defer src="erhua.js?v=e0a3b0d9ad"></script>
-<script defer src="pinyin.js?v=e0a3b0d9ad"></script>
-<script defer src="data/pinyin-course.js?v=e0a3b0d9ad"></script>
-<script defer src="data/pinyin-chart.js?v=e0a3b0d9ad"></script>
-<script defer src="data/exam-media.js?v=e0a3b0d9ad"></script>
-<script defer src="data/exam-art.js?v=e0a3b0d9ad"></script>
-<script defer src="data/neutral-alt.js?v=e0a3b0d9ad"></script>
-<script defer src="data/path-scenes.js?v=e0a3b0d9ad"></script>
-<script defer src="data/speak-scenes.js?v=e0a3b0d9ad"></script>
-<script defer src="data/art.js?v=e0a3b0d9ad"></script>
-<script defer src="data/path.js?v=e0a3b0d9ad"></script>
-<script defer src="app.js?v=e0a3b0d9ad"></script>
+<script defer src="boot-check.js?v=ec2e9c0581"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=ec2e9c0581"></script>
+<script defer src="runtime.js?v=ec2e9c0581"></script>
+<script defer src="config.js?v=ec2e9c0581"></script>
+<script defer src="friends.js?v=ec2e9c0581"></script>
+<script defer src="level.js?v=ec2e9c0581"></script>
+<script defer src="placement.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk1-words.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk1-grammar.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk1-webs.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk1-speak.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk1-listen.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk1-exam.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk1-erhua.js?v=ec2e9c0581"></script>
+<script defer src="data/lexicon.js?v=ec2e9c0581"></script>
+<script defer src="data/char-glosses.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk2-preview.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk3-preview.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk4-preview.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk2-words.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk2-speak.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk2-listen.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk2-exam.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk2-grammar.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk2-webs.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk3-words.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk3-speak.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk3-listen.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk3-exam.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk3-grammar.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk3-webs.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk4-words.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk4-speak.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk4-listen.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk4-exam.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk4-grammar.js?v=ec2e9c0581"></script>
+<script defer src="data/hsk4-webs.js?v=ec2e9c0581"></script>
+<script defer src="ascent.js?v=ec2e9c0581"></script>
+<script defer src="secrets.js?v=ec2e9c0581"></script>
+<script defer src="sync.js?v=ec2e9c0581"></script>
+<script defer src="data/audio-manifest.js?v=ec2e9c0581"></script>
+<script defer src="jyscene.js?v=ec2e9c0581"></script>
+<script defer src="journey.js?v=ec2e9c0581"></script>
+<script defer src="stampart.js?v=ec2e9c0581"></script>
+<script defer src="feastart.js?v=ec2e9c0581"></script>
+<script defer src="feastscene.js?v=ec2e9c0581"></script>
+<script defer src="feastthemes.js?v=ec2e9c0581"></script>
+<script defer src="feastthemes2.js?v=ec2e9c0581"></script>
+<script defer src="data/journey.js?v=ec2e9c0581"></script>
+<script defer src="data/journey-map.js?v=ec2e9c0581"></script>
+<script defer src="data/journey-media.js?v=ec2e9c0581"></script>
+<script defer src="data/souvenirs.js?v=ec2e9c0581"></script>
+<script defer src="erhua.js?v=ec2e9c0581"></script>
+<script defer src="pinyin.js?v=ec2e9c0581"></script>
+<script defer src="data/pinyin-course.js?v=ec2e9c0581"></script>
+<script defer src="data/pinyin-chart.js?v=ec2e9c0581"></script>
+<script defer src="data/exam-media.js?v=ec2e9c0581"></script>
+<script defer src="data/exam-art.js?v=ec2e9c0581"></script>
+<script defer src="data/neutral-alt.js?v=ec2e9c0581"></script>
+<script defer src="data/path-scenes.js?v=ec2e9c0581"></script>
+<script defer src="data/speak-scenes.js?v=ec2e9c0581"></script>
+<script defer src="data/art.js?v=ec2e9c0581"></script>
+<script defer src="data/path.js?v=ec2e9c0581"></script>
+<script defer src="app.js?v=ec2e9c0581"></script>
 </body>
 </html>

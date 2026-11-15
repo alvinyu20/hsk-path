@@ -1218,7 +1218,9 @@ html,body,.app,button,a,input,select,textarea,label,[role=button]{touch-action:m
 .jy-meter i{display:block;height:100%;border-radius:99px;background:var(--jfill);transition:width .4s}
 .jy-meter-t{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
 .jy-go{align-self:flex-start}
-.jy-tabs{align-self:flex-start;max-width:100%;overflow-x:auto;background:var(--panel)}
+.jy-tabs{display:grid;grid-template-columns:repeat(var(--tc,3),minmax(0,1fr));gap:4px;width:100%;box-sizing:border-box;padding:4px;border-radius:22px;background:var(--panel)}
+.jy-tabs button{min-width:0;min-height:44px;padding:0 4px;border-radius:18px;font-size:16px;white-space:nowrap}
+@media (min-width:700px){.jy-tabs{grid-template-columns:repeat(var(--td,6),minmax(0,1fr))}}
 .jy-tabs button.on{background:var(--jfill);color:#fff}
 .t-dark .jy-tabs button.on{color:#0E1920}
 .jy-panel{display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:20px;background:var(--panel);border:1px solid var(--line)}
@@ -1629,10 +1631,12 @@ button.me .me-av{flex:none}
 .jy-dot text{font-size:8.5px;font-weight:700;fill:var(--ink);pointer-events:none}
 .jy-dot.me text{fill:var(--on-seal);font-size:8px}
 .jy-dot:hover .dc,.jy-dot:focus-visible .dc{stroke-width:2.4}
-.jy-now{order:1}.jy-fbar{order:1}.jy-card{order:2}.jy-tabs{order:3}.jy-main > .jy-panel{order:4}
+.jy-tabs{order:0}.jy-fbar{order:-1}.jy-now{order:1}.jy-card{order:2}.jy-main > .jy-panel{order:4}
+/* Explore is the road card on a phone; the map beside it only shows on a wide screen, where it has room */
+@media (max-width:999px){.jy-ex .jy-main > *{display:none}}
 @media (min-width:1000px){
   .jy{display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);gap:18px 24px;align-items:start;padding:20px}
-  .jy > .banner{grid-column:1 / -1}
+  .jy > .banner,.jy > .jy-tabs{grid-column:1 / -1}
   .jy-side{display:flex;flex-direction:column;gap:14px}
   .jy-main{display:flex;flex-direction:column;gap:14px;min-width:0}
   /* a stop card can be taller than the screen, so with a card open the page scrolls and the map keeps you company; with no card the short left column stays put beside a long list */
@@ -1850,7 +1854,6 @@ button.me .me-av{flex:none}
 @media (max-width:600px){
   .jy-hero{height:112px}
   .jy-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}
-  .jy-tabs button{padding:0 7px}
   .jy-table-h small{margin-left:0;flex-basis:100%}
 }
 /* ---- Journey: small motions (all off for people who ask for less motion) ---- */
@@ -3202,7 +3205,7 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .fz-pop-b{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
 .sv-cell .sv-name:empty,.sv-cell .sv-zh:empty{display:none}
 .sv-cell.hid{justify-content:center}
-@media (max-width:380px){.jy-tabs button{padding:0 5px;font-size:14px}}
+@media (max-width:380px){.jy-tabs button{font-size:15px}}
 @media (max-width:380px){.jy-chips.cmp{gap:5px}.jy-chips.cmp .jy-chip{padding:0 8px;gap:4px;font-size:12.5px}}
 .pp-cv-who{font-size:14px;opacity:.9}
 .pp-cv-facts{display:flex;flex-direction:column;gap:6px;width:min(100%,190px);margin:2px 0 4px}
@@ -3252,3 +3255,33 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 @keyframes jysmpop{0%,100%{transform:none}35%{transform:scale(1.12)}}
 @keyframes jyfill{0%{fill:var(--panel2);stroke-width:.7}45%{fill:hsl(var(--rh) 80% 68%);stroke:var(--ink);stroke-width:1.6}100%{stroke-width:.7}}
 @media (prefers-reduced-motion:reduce){.jy-done,.jd-seal,.jd-h,.jd-sub,.jd-stat,.jd-count,.jd-go,.jd-skip,.jy-done-bg,.jy-r.fillnew path{animation:none!important}.jd-confetti,.jd-seal::after{display:none}}
+
+/* the finished day on Today: cleared card, tomorrow's lantern, a bonus round */
+.fin{display:grid;gap:12px}
+.fin-top{display:grid;gap:14px;padding:16px;border-radius:22px;background:var(--jade-soft);border:1px solid var(--line)}
+.fin-h{display:flex;align-items:center;gap:12px}
+.fin-h img{flex:none;width:72px;height:76px}
+.fin-zh{font-size:22px;font-weight:700;color:var(--jade)}
+.fin-t{margin:0;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:28px;font-weight:700;line-height:1.1}
+.fin-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.fin-tile{display:flex;flex-direction:column;gap:1px;padding:10px;border-radius:14px;background:var(--panel);min-width:0}
+.fin-tile b{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:22px;font-weight:700;line-height:1.15}
+.fin-tile span{font-size:13px;color:var(--muted)}
+.fin-tm,.fin-bonus{display:grid;gap:12px}
+.fin-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.fw-d{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;color:var(--muted)}
+.fw-d i{font-style:normal}
+.fw-d.nx i{font-weight:700;color:var(--amber)}
+.fw-ring{display:flex;align-items:center;justify-content:center;width:34px;height:38px;border-radius:12px}
+.fw-d.nx .fw-ring{animation:finRing 2s ease-in-out infinite}
+@keyframes finRing{0%,100%{box-shadow:0 0 0 0 rgba(224,165,38,.6)}50%{box-shadow:0 0 0 6px rgba(224,165,38,0)}}
+.fin-kick{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--muted)}
+.fin-line{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:20px;font-weight:700;line-height:1.2}
+.fin-bar{height:12px;border-radius:99px;background:var(--line);overflow:hidden}
+.fin-bar i{display:block;height:100%;border-radius:99px;background:#E0A526}
+.fin-go{flex-direction:column;gap:1px;width:100%;min-height:58px;padding:8px 18px}
+.fin-go b{font-size:18px}
+.fin-go small{font-size:14px;font-weight:500}
+.fin-row{display:flex;gap:8px}
+.fin-row .btn{flex:1;min-width:0;padding:0 8px}
+@media (prefers-reduced-motion:reduce){.fw-d.nx .fw-ring{animation:none}}

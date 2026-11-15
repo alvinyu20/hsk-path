@@ -517,7 +517,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
-      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
+      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyTab:'explore', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -3022,7 +3022,7 @@
       // a flight shows on the map of the whole country; a ride or a walk shows on the map of the region you are in
       const flew = r.ev.indexOf('arrive') >= 0;
       const playMode = this.jyMotionOk() ? (flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk')) : '';
-      this.setState({ jyTrip:flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk'), jyPlay:playMode, jyPlayStamp:r.ev.indexOf('stamp') >= 0, jyDone:r.ev.indexOf('stamp') >= 0 ? { rid:r.region, next:r.next, all:r.ev.indexOf('all') >= 0 } : null, jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next, from, cost, k:(this.jyK = ((this.jyK || 0) + 1) % 2) }, jyOpen:null, jyTab:'map', jySel:null, jyFilter:'all', jyReg:flew || !JMAP.regions[r.stop.rid] ? null : r.stop.rid });
+      this.setState({ jyTrip:flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk'), jyPlay:playMode, jyPlayStamp:r.ev.indexOf('stamp') >= 0, jyDone:r.ev.indexOf('stamp') >= 0 ? { rid:r.region, next:r.next, all:r.ev.indexOf('all') >= 0 } : null, jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next, from, cost, k:(this.jyK = ((this.jyK || 0) + 1) % 2) }, jyOpen:null, jyTab:'explore', jySel:null, jyFilter:'all', jyReg:flew || !JMAP.regions[r.stop.rid] ? null : r.stop.rid });   // (stays on Explore, where Travel is; the Map tab opens on that province)
       try { window.scrollTo(0, 0); } catch (e) {}
       if (playMode) this.jyPlayRun(playMode);
       this.checkMilestones();
@@ -3233,7 +3233,7 @@
     };
     jyView(S) {
       if (S.jyFoodNew && !(S.screen === 'journey' && S.jyTab === 'food')) setTimeout(() => { this.jyFoodSeenKey = ''; if (this.state.jyFoodNew && !(this.state.screen === 'journey' && this.state.jyTab === 'food')) this.setState({ jyFoodNew:null }); }, 0);
-      const base = { isJourney:S.screen === 'journey', jySyncBad:!!S.syncBadMsg && !!(FR && FR.identity && FR.identity()), jySyncText:'This device could not sync with your other devices: ' + (S.syncBadMsg || '') + ' Open Friends and tap Sync now.', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Your coins, from everything you study on every level. Spend them on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), xpPillCls:'pill xpp', jyPingShow:false, jyReadyShow:false, jyReadyN:0, jyReadyLabel:'' };
+      const base = { isJourney:S.screen === 'journey', jySyncBad:!!S.syncBadMsg && !!(FR && FR.identity && FR.identity()), jySyncText:'This device could not sync with your other devices: ' + (S.syncBadMsg || '') + ' Open Friends and tap Sync now.', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Your coins, from everything you study on every level. Spend them on the Journey.', goJourney:() => { this.setState({ jyTab:'explore' }); this.go('journey'); }, navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), xpPillCls:'pill xpp', jyPingShow:false, jyReadyShow:false, jyReadyN:0, jyReadyLabel:'' };
       if (!JWORLD || !JMAP) return Object.assign(base, { jyOff:S.screen === 'journey' });
       const st = jyRead() || JY.fresh();   // only read here;
       base.xpTotalText = coinBalance(S, st).toLocaleString('en-US');
@@ -3262,10 +3262,10 @@
         return { place, rid, stop:stop && stop.k !== 'P' && stop.k !== 'T' ? stop.en : '', xy };
       };
       const fWhere = (m) => hereOf(m.stats.jy);
-      Object.assign(out, { jyMine:!fm, jyFriendMode:!!fm, jyFriendsShow:!fm && fMembers.length > 0,
+      Object.assign(out, { jyMine:!fm, jyFriendMode:!!fm, jyFriendsShow:!fm && fMembers.length > 0 && S.jyTab === 'explore',
         jyFriends:fMembers.map((m, i) => { const w = fWhere(m); return { name:m.name, initial:window.ShanluFriends.initial(m.name), cls:'c' + (i % 4), sub:(w ? 'Now in ' + w.place + (w.stop ? ' · at ' + w.stop : '') + ' · ' : '') + plural(m.stats.jy.n, 'stop', 'stops') + ' · ' + plural(stampCount(m.stats.jy), 'stamp', 'stamps'),
           open:() => { SFX.play('ok'); this.setState({ jyFriend:m.id, jyTab:'map', jyReg:null, jySel:null, jyOpen:null, jyRv:null }); try { window.scrollTo(0, 0); } catch (e) {} } }; }),
-        jyFriendBack:() => this.setState({ jyFriend:null, jyTab:'map' }), jyDots:[], jyHasDots:false });
+        jyFriendBack:() => this.setState({ jyFriend:null, jyTab:'explore' }), jyDots:[], jyHasDots:false });
       // everyone's place on the country map (you and your friends), spread out a little where several are in the same city
       if (!fm) {
         const raw = [];
@@ -3307,7 +3307,7 @@
           const seenSv = {}; st.seen.forEach(id => { seenSv[id] = 1; }); const avSv0 = SOUV.find(sv => sv.id === String(prefGet('av', '') || '') && seenSv[sv.stop]) || null;
           road = JS.svg(R.id, { done:st.started ? Math.min(2, rs0.got) : 0, mid:sqLive.length > 1 || (sqLive.length > 0 && cqLive.length > 0) || (!sqLive.length && cqLive.length > 1) ? 1 : 0, next:{ kind:nk, label:NK[nk] }, goal, pct:mt.pct / 100, ready:mt.ready > 0,
             avatar:avSv0 ? svImg(avSv0) : '', home:!st.started && st.n === 0, meLabel:!st.started && st.n > 0 ? 'Ready to fly' : '' }, 'Your road in ' + R.en + '. Next: ' + NK[nk]);
-          out.jyNextKind = NK[nk]; out.jyGoalShow = true; out.jyGoalZh = goal.zh; out.jyGoalText = goal.label; out.jyGoalCls = goal.kind;
+          out.jyNextKind = NK[nk]; out.jyHomeLine = (mt.ready > 0 ? 'Enough coins for your next stop: ' : mt.toGo + ' coins from your next stop: ') + NK[nk].toLowerCase(); out.jyHomePct = Math.round(mt.pct) + '%'; out.jyGoalShow = true; out.jyGoalZh = goal.zh; out.jyGoalText = goal.label; out.jyGoalCls = goal.kind;
         }
         Object.assign(out, { jyRoadShow:!!road, jyRoadSvg:road, jyGoalShow:!!road }); if (road) out.jyHeroShow = false; }
       // a region just finished: the celebration pop-up (it waits until the travel moment has flowed into the stop page)
@@ -3397,9 +3397,11 @@
       }
 
       // tabs
-      const tabNow = fm && (S.jyTab === 'stops' || S.jyTab === 'food' || S.jyTab === 'shelf') ? 'map' : S.jyTab;
-      out.jyTabs = (fm ? [['map', 'Map'], ['pass', 'Passport']] : [['map', 'Map'], ['pass', 'Passport'], ['shelf', 'Souvenirs'], ['stops', 'Postcards'], ['food', 'Food']]).map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', fn:() => this.jyTabSet(t[0]) }));
-      out.jyIsMap = tabNow === 'map'; out.jyIsStops = tabNow === 'stops'; out.jyIsFood = tabNow === 'food'; out.jyIsPass = tabNow === 'pass'; out.jyIsShelf = tabNow === 'shelf';
+      const tabNow = fm && (S.jyTab === 'stops' || S.jyTab === 'food' || S.jyTab === 'shelf' || S.jyTab === 'explore') ? 'map' : S.jyTab;
+      const tabList = fm ? [['map', 'Map'], ['pass', 'Passport']] : [['explore', 'Explore'], ['map', 'Map'], ['pass', 'Passport'], ['shelf', 'Souvenirs'], ['stops', 'Postcards'], ['food', 'Food']];
+      out.jyTabCols = Math.min(3, tabList.length); out.jyTabColsWide = tabList.length;   // a grid, not a scrolling strip: 3 across on a phone (two rows), all in one row on wide screens
+      out.jyTabs = tabList.map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', sel:tabNow === t[0] ? 'true' : 'false', fn:() => this.jyTabSet(t[0]) }));
+      out.jyIsExplore = tabNow === 'explore'; out.jyExCls = tabNow === 'explore' ? 'jy-ex' : ''; out.jyNowShow = !fm && tabNow === 'explore'; out.jyIsMap = tabNow === 'map' || tabNow === 'explore'; out.jyIsStops = tabNow === 'stops'; out.jyIsFood = tabNow === 'food'; out.jyIsPass = tabNow === 'pass'; out.jyIsShelf = tabNow === 'shelf';
       // the souvenir shelf (your own journey only): found when the stop that hides it is unlocked; the rest show as dark shapes with their region
       if (tabNow === 'shelf' && !fm) {
         const list = SOUV.filter(x => JWORLD.byStop[x.stop]); const got = list.filter(x => have[x.stop]); const fl = S.jySvFilter || 'all';
@@ -4837,8 +4839,17 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const pathDoneToday = Math.max(0, pathDoneCount(S) - (S.pbase == null ? pathDoneCount(S) : S.pbase));
       const stopMeta = (st) => st.k === 'w' ? (() => { const n = stopWords(st).filter(z => !wStarted(S, z)).length; return n === 1 ? '1 new word' : n + ' new words'; })() : st.k === 's' ? 'Speaking scene' : 'Grammar lesson';
       const dueWordsN = BANK_KEYS.filter(zh => { const i = winfo(S.ws[zh], 0); return i.started && i.dueN <= 0; }).length;   // the same count My words shows: words, not the cards left in this session
+      // How many Path steps today's plan asks for: the daily goal minus the time the due reviews will take, at about 5 minutes a step. Reviews are counted from what was due when the day began
+      // (about 18 seconds each, a rough average of a word and a grammar point), so the number does not move while you review. At least 1, at most 4; a big backlog (40+ due) keeps it at 1.
+      // These are estimates, not measured. Steps beyond the target are a bonus: they stay open under "More ways to study" and on the finished-day card.
+      const PATH_STEP_MIN = 5, PATH_STEPS_MAX = 4, PATH_BACKLOG = 40;
+      const dueAtStart = S.dcN != null ? S.dcN : dueCountsNow(S).n;
+      const pathTarget = dueAtStart >= PATH_BACKLOG ? 1 : Math.max(1, Math.min(PATH_STEPS_MAX, Math.round((S.mins - dueAtStart * 0.3) / PATH_STEP_MIN)));
+      const pathAllDone = pathDoneToday >= pathTarget || (!pathStep && pathDoneToday > 0);
       const planRows = [];
-      if (pathStep || pathDoneToday > 0) planRows.push({ glyph:'路', title:pathDoneToday > 0 ? 'Path: ' + (pathDoneToday === 1 ? 'a step' : pathDoneToday + ' steps') + ' done' : 'Path: ' + stopTitle(pathStep.st), meta:pathDoneToday > 0 ? (pathStep ? 'Next: ' + stopTitle(pathStep.st) : 'You have walked the whole path') : stopMeta(pathStep.st), done:pathDoneToday > 0,
+      if (pathStep || pathDoneToday > 0) planRows.push({ glyph:'路',
+        title:pathAllDone ? 'Path: ' + (pathDoneToday === 1 ? 'a step' : pathDoneToday + ' steps') + ' done' : (pathTarget === 1 ? 'Path: ' + stopTitle(pathStep.st) : 'Path: ' + pathTarget + ' steps today'),
+        meta:pathAllDone ? (pathStep ? 'Next: ' + stopTitle(pathStep.st) : 'You have walked the whole path') : (pathTarget === 1 ? stopMeta(pathStep.st) : pathDoneToday + ' of ' + pathTarget + ' done · Next: ' + stopTitle(pathStep.st)), done:pathAllDone,
         run:pathStep ? () => this.pathContinue(pathStep.st.id) : () => this.go('path') });
       if (dueWordsN > 0 || S.rq.length > 0 || S.rcomplete) planRows.push({ glyph:'词', title:'Review words', meta:dueWordsN > 0 ? dueWordsN + (S.rcomplete ? ' still due' : ' due') : 'All caught up', done:S.rcomplete && dueWordsN === 0,
         run:() => { if (!S.rq.length && dueWordsN > 0) this.reviewMore(); this.go('review'); } });
@@ -4846,13 +4857,33 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const dcLeft = dueCountsNow(S).n;
       const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:t.run }));
       const moreWays = [
-        pathStep && pathDoneToday > 0 ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), cls:'', fn:() => this.pathContinue(pathStep.st.id) } : null,
+        pathStep && pathAllDone ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), cls:'', fn:() => this.pathContinue(pathStep.st.id) } : null,
         HAS_LISTEN ? { glyph:'听', label:'Listening', sub:'Dictation drill', cls:S.ldone ? 'done' : '', fn:() => this.go('listen') } : null,
         HAS_SCRIPTS ? { glyph:'说', label:'Speak', sub:(SCEN[nextScn] || NO_SC).title, cls:S.spokeToday ? 'done' : '', fn:() => { this.setState({ sidx:nextScn, sturn:0, sdone:false, sview:'chat' }); this.go('speak'); this.sayOpen(nextScn); } } : null,
         { glyph:'语', label:'Grammar lesson', sub:LESSONS[nextLesson].title, cls:'', fn:() => { this.setState({ ggopen:null, gq:'', glesson:nextLesson }); this.go('grammar'); } },
         testReady ? { glyph:'测', label:'Test', sub:'Mixed questions', cls:S.tdone ? 'done' : '', fn:() => this.go('testlobby') } : null,
         { glyph:'书', label:'Library', sub:'Look things up', cls:'', fn:() => this.go('library') }
       ].filter(Boolean);
+      // The finished day: once every task of today's plan is done, Today shows this in place of the greeting and the plan (tomorrow's lantern, what is due tomorrow, a bonus round)
+      const dayDone = !startShow && tasks.length > 0 && tasks.every(t => t.done);
+      const finV = {};
+      if (dayDone) {
+        const stk = Math.max(1, streakShown);
+        const nowD = new Date();
+        const finWeek = [-5, -4, -3, -2, -1, 0, 1].map(o => {
+          const d = new Date(nowD); d.setDate(nowD.getDate() + o); const key = ymd(d);
+          return { l:['S', 'M', 'T', 'W', 'T', 'F', 'S'][d.getDay()], img:artUri('lantern', o <= 0 && (S.activity[key] || o === 0) ? 'on' : 'off'), nx:o === 1, cls:o === 1 ? 'nx' : '' };
+        });
+        const dueTomorrow = BANK_KEYS.filter(zh => { const x = S.ws && S.ws[zh]; if (!x || !DIMS.every(k => x[k])) return false; const i = winfo(x, 1); return i.started && i.dueN <= 0; }).length;
+        const bonusGo = pathStep ? () => this.pathContinue(pathStep.st.id) : null;
+        Object.assign(finV, {
+          finMin:S.dayMin + ' min', finGoal:'goal ' + S.mins + ' min', finCoins:'+' + (S.dayXp || 0), finStreak:'Day ' + stk, finStreakSub:stk === 1 ? 'streak started' : 'in a row',
+          finLight:'Light day ' + (stk + 1), finWeek,
+          finDue:dueTomorrow > 0 ? dueTomorrow + (dueTomorrow === 1 ? ' word comes' : ' words come') + ' due tomorrow. Catch ' + (dueTomorrow === 1 ? 'it' : 'them') + ' and the streak grows.' : 'Nothing is due tomorrow yet. One Path step keeps your streak going.',
+          finBonusShow:!!bonusGo, finBonusGo:bonusGo || (() => {}), finBonusSub:pathStep ? 'Path: ' + stopTitle(pathStep.st) : '',
+          finMore:['Listening', 'Speak'].map(l => moreWays.find(c => c.label === l)).filter(Boolean).map(c => ({ label:c.label, fn:c.fn })).concat([{ label:'Journey', fn:() => this.go('journey') }])
+        });
+      }
       const minOpts = [10, 20, 30, 45].map(m => ({ label:m + ' min', cls:S.mins === m ? 'on' : '', fn:() => this.setState({ mins:m }) }));
       const skills = [
         { label:'Vocabulary', detail:startedCount + ' of ' + bankKeys.length + ' words started', w:vocabPct + '%' },
@@ -5276,7 +5307,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         youFriends:!!(FR && FR.enabled()), youFriendsCls:'ylink' + (curScreen === 'friends' ? ' on' : ''), youSetCls:'ylink' + (curScreen === 'voice' ? ' on' : ''), youGuideCls:'ylink' + (curScreen === 'guide' ? ' on' : ''), youAchCls:'ylink' + (curScreen === 'ach' ? ' on' : ''),
         goSettings:() => this.go('voice'), goAch:() => this.go('ach'),
         goStreak:() => this.go('home'), goMem:() => this.go('words'),
-        homeHero:!startShow, planGo, planGoText, greetZh:greet[0], greetPy:greet[1], greetEn:greet[2], moreWays, climbPct:climbN + '%', climbN, climbTitle:'Climb to ' + (ALL ? 'the top' : 'the HSK ' + LV + ' summit'),
+        homeHero:!startShow && !dayDone, planShow:!dayDone, dayDone, ...finV, planGo, planGoText, greetZh:greet[0], greetPy:greet[1], greetEn:greet[2], moreWays, climbPct:climbN + '%', climbN, climbTitle:'Climb to ' + (ALL ? 'the top' : 'the HSK ' + LV + ' summit'),
         climbNote:ALL ? 'Each level has its own exam, at the top of its path.' : EXAMBANK ? (LVL.levelPassed(LV) ? LVN + ' is behind you.' : climbN >= 80 ? 'The exam is waiting at the top of your path.' : 'The ' + LVN + ' exam sits at the top of your path. It opens at 80%.') : 'The exam for ' + LVN + ' is not built yet.',
         artToday:artUri('banner', 'today'), artLibrary:artUri('banner', 'library'), artReview:artUri('banner', 'review'), artTalk:artUri('banner', 'talk'), artJourney:artUri('banner', 'journey'), artPath:artUri('banner', 'path'), artSummit:artUri('summit'),
         mingWave:artUri('ming', 'wave'), mingThink:artUri('ming', 'think'), mingCheer:artUri('ming', 'cheer'), mingSleep:artUri('ming', 'sleep'), mingThumbs:artUri('ming', 'thumbs'),
