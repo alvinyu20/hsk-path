@@ -33,6 +33,7 @@ W.regions.forEach((r) => {
     if (n[0] === 0) rooms[res.svg] = id;
   });
   const full = F.scene(id, ds, 0);
+  ok(full.looks === ds.length, id + ' draws every dish differently (' + full.looks + ' looks for ' + ds.length + ' dishes)');
   ok(full.pages >= 1 && (ds.length <= 18 || full.pages >= 1), id + ' has courses');
   const hits = (full.svg.match(/class="fz-hit"/g) || []).length;
   ok(hits > 0 && hits <= F.TABLE_CAP + F.SHELF_CAP + 2, id + ' shows a sensible number of dishes per course (' + hits + ')');

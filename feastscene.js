@@ -161,6 +161,9 @@
     const th = FEAST_THEMES[rid] || FEAST_THEMES._default;
 
     const items = found.map(f => Object.assign({}, f, FE.classify(f, f.kind)));
+    // dishes that share a drawing in this room are made to differ: the second gets one variant, the third another, and so on
+    const seenDraw = {};
+    items.forEach(it => { const key = FE.draw(it.arch, it.p); it.vn = seenDraw[key] = (seenDraw[key] == null ? -1 : seenDraw[key]) + 1; });
     const pages = pagesFor(items), pg = Math.max(0, Math.min(pages - 1, page || 0));
     const slice = (arr) => { const per = Math.ceil(arr.length / pages) || 1; return arr.slice(pg * per, pg * per + per); };
     const tb = slice(items.filter(x => x.zone === 'table')), sh = slice(items.filter(x => x.zone === 'shelf'));
@@ -168,7 +171,7 @@
     // shelf and what is on it
     const sf = th.shelf, shelfItems = [];
     s += shelfUnit(sf);
-    sh.forEach((it, i) => { const row = i < 5 ? 0 : 1, col = i % 5, n = Math.min(5, sh.length - row * 5), x = sf.x + sf.w * ((col + .5) / 5), y = sf.y + row * 62 + 0; shelfItems.push(hot(it, gsc(x, y, .46, FE.draw(it.arch, it.p)), x, y, 36, 34)); });
+    sh.forEach((it, i) => { const row = i < 5 ? 0 : 1, col = i % 5, n = Math.min(5, sh.length - row * 5), x = sf.x + sf.w * ((col + .5) / 5), y = sf.y + row * 62 + 0; shelfItems.push(hot(it, gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null)), x, y, 36, 34)); });
     s += shelfItems.join('');
     if (th.back) s += th.back(KIT);
     s += th.table.draw(KIT);
@@ -177,9 +180,9 @@
     const slots = layoutRows(rest.length, th.table.rows, !!centre), placed = [];
     if (centre) placed.push({ it: centre, x: 340, y: th.table.rows[1][0] + 6, k: 1.15 });
     rest.forEach((it, i) => { const sl = slots[i]; if (!sl) return; placed.push({ it, x: sl[0], y: sl[1], k: SC[sl[2]] * (it.drink ? .85 : 1) * (it.arch === 'hotpot' ? .9 : 1) }); });
-    placed.sort((a, b) => a.y - b.y).forEach(o => { s += hot(o.it, '<g>' + gsc(o.x, o.y, o.k, '<ellipse cx="0" cy="1" rx="42" ry="8" fill="#000" opacity=".22" stroke="none"/>' + FE.draw(o.it.arch, o.it.p)) + '</g>', o.x, o.y, 80 * o.k, 70 * o.k); });
+    placed.sort((a, b) => a.y - b.y).forEach(o => { s += hot(o.it, '<g>' + gsc(o.x, o.y, o.k, '<ellipse cx="0" cy="1" rx="42" ry="8" fill="#000" opacity=".22" stroke="none"/>' + FE.drawVar(o.it, o.it.vn ? o.it.vn : null)) + '</g>', o.x, o.y, 80 * o.k, 70 * o.k); });
     if (th.front) s += th.front(KIT);
-    return { svg: s, pages, page: pg, shown: tb.length + sh.length, total: items.length };
+    return { svg: s, pages, page: pg, shown: tb.length + sh.length, total: items.length, looks: new Set(items.map(it => FE.drawVar(it, it.vn ? it.vn : null))).size };
   }
   function shelfUnit(sf) {
     const st = sf.style || {}, c = st.c || '#6B4423', c2 = st.c2 || '#8A5A2B', bk = st.bk || 'rgba(0,0,0,.35)';
@@ -194,7 +197,7 @@
   // the finished picture. land = the cropped landscape frame used when the table is opened full screen. id keeps the clip path unique on the page.
   function wrap(res, id, land) {
     const vb = land ? '0 112 680 328' : '0 0 680 440', c = 'fzc-' + id;
-    return '<svg class="fz-svg" viewBox="' + vb + '" preserveAspectRatio="xMidYMid meet" role="img" aria-hidden="true" overflow="hidden"><clipPath id="' + c + '"><rect y="' + (land ? 112 : 0) + '" width="680" height="' + (land ? 328 : 440) + '"/></clipPath><g clip-path="url(#' + c + ')">' + res.svg + '</g></svg>';
+    return '<svg class="fz-svg" viewBox="' + vb + '" preserveAspectRatio="xMidYMid meet" role="img" aria-hidden="true" overflow="hidden">'+FE.TINT_DEFS+'<clipPath id="' + c + '"><rect y="' + (land ? 112 : 0) + '" width="680" height="' + (land ? 328 : 440) + '"/></clipPath><g clip-path="url(#' + c + ')">' + res.svg + '</g></svg>';
   }
   const FEAST_THEMES = {};
   const api = { scene, wrap, portrait, pagesFor, KIT, THEMES: FEAST_THEMES, TABLE_CAP, SHELF_CAP };

@@ -213,6 +213,34 @@
     return { arch: r[0], p, zone: (kind === 'buy' || kind === 'ask') ? 'shelf' : 'table', drink: kind === 'drink' };
   }
   function draw(arch, p) { const f = A[arch] || A.soup; return f(p || { h: 0 }); }
-  const api = { ARCH: Object.keys(A), draw, classify, dishArch, drinkArch, buyArch, askArch, hash, OL };
+
+  // ---- a look of its own for every dish: two dishes that share a drawing still differ by a flip, a tilt, a size, a tint and a small extra on the table.
+  // `n` (optional) forces the variant so that dishes with the same drawing in one room are guaranteed to differ.
+  const TINTS = ['', '<feColorMatrix type="hueRotate" values="-18"/>', '<feColorMatrix type="hueRotate" values="18"/>', '<feColorMatrix type="saturate" values="1.4"/>', '<feColorMatrix type="saturate" values=".68"/><feComponentTransfer><feFuncR type="linear" slope="1.07"/><feFuncG type="linear" slope="1.07"/><feFuncB type="linear" slope="1.07"/></feComponentTransfer>', '<feColorMatrix type="hueRotate" values="-34"/>'];
+  const TINT_DEFS = '<defs>' + TINTS.map((f, i) => f ? '<filter id="fzt' + i + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' + f + '</filter>' : '').join('') + '</defs>';
+  const EXTRA = {
+    table: [
+      '',
+      E(34, -2, 10, 3.5, WH) + E(34, -3.5, 7, 2, '#7a2f1a', N),
+      L('M24 -1l22 -4M24 3l22 -3', '#8A5A2B', 2),
+      E(-34, -3, 8, 3.5, WH) + L('M-27 -3L-11 -7', '#E8E0CC', 3.4),
+      Pg('M28 -1a9 9 0 0 1 18 0Z', '#9BC53D') + Pg('M31 -1a6 6 0 0 1 12 0Z', '#D8EC8A', N),
+      Pg('M-44 -2q8 -9 20 -4q-10 1 -20 4Z', '#C0392B') + Pg('M-32 -1q8 -8 18 -5q-9 1 -18 5Z', '#D6502E'),
+      E(-34, -2, 10, 3.5, WH) + dots([[-38, -4], [-34, -5], [-30, -4], [-36, -3], [-32, -3]], '#6FA84A', 2)
+    ],
+    drink: ['', Pg('M28 -1a9 9 0 0 1 18 0Z', '#9BC53D') + Pg('M31 -1a6 6 0 0 1 12 0Z', '#D8EC8A', N), E(-34, -2, 10, 3.5, WH) + dots([[-38, -4], [-34, -5], [-30, -4]], '#B8782E', 2.4), Pg('M24 0L46 0L35 -9Z', '#E9DFC8'), E(34, -2, 9, 3, '#C79A5A')],
+    shelf: ['', C(28, -6, 5, '#C0392B') + L('M28 -11l-4 -9', '#8A5A2B', 1.4), C(28, -6, 5, '#2F5F9E') + L('M28 -11l-4 -9', '#8A5A2B', 1.4), C(28, -6, 5, '#D9A441') + L('M28 -11l-4 -9', '#8A5A2B', 1.4), R(-30, -9, 60, 5, 'rgba(192,57,43,.9)', 'stroke="none"')]
+  };
+  function drawVar(it, n) {
+    const forced = n != null, h = hash((it.id || it.zh || '') + 'v'), k = it.zone === 'shelf' ? 'shelf' : it.drink ? 'drink' : 'table', ex = EXTRA[k];
+    const fl = forced ? (n % 2) : (h & 1), tilt = forced ? [0, -3, 3, -5, 5, 2][n % 6] : ((h >>> 1) % 9) - 4, sc = forced ? [1, .96, 1.04, .94, 1.06, .98][n % 6] : .95 + ((h >>> 5) % 11) / 100;
+    const gi = forced ? n % ex.length : (h >>> 9) % (ex.length + 1) % ex.length, ti = forced ? (n * 2 + (h % 2)) % TINTS.length : (h >>> 13) % (k === 'shelf' ? 4 : TINTS.length);
+    let g = draw(it.arch, it.p);
+    g = '<g transform="rotate(' + tilt + ') scale(' + (fl ? -sc : sc) + ' ' + sc + ')">' + g + '</g>';
+    if (ti) g = '<g filter="url(#fzt' + ti + ')">' + g + '</g>';
+    const e = ex[gi] || '';
+    return (k === 'drink' && gi === 4 ? '' : '') + g + (e ? '<g transform="scale(' + (fl ? -1 : 1) + ' 1)">' + e + '</g>' : '');
+  }
+  const api = { ARCH: Object.keys(A), draw, drawVar, TINT_DEFS, classify, dishArch, drinkArch, buyArch, askArch, hash, OL };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.FEAST = Object.assign(root.FEAST || {}, api);
 })(typeof window !== 'undefined' ? window : globalThis);

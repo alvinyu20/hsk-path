@@ -3198,7 +3198,7 @@
     jyShowReg = (id) => this.setState({ jyTab:'map', jyReg:id, jySel:null, jyFilter:'all', jyOpen:null, jyRv:null });
     jyBack = () => this.setState({ jyReg:null, jySel:null, jyFilter:'all' });
     jyPgGo = (d, cur, total) => { const to = Math.max(0, Math.min(total - 1, cur + d)); if (to === cur) return; SFX.play('ok'); this.setState({ jyPg:to }); };
-    jyTabSet = (t) => this.setState({ jyTab:t, jyFilter:'all', jyMoreN:40, jyFlip:null, jyFoodOv:false, jyFoodPop:null });
+    jyTabSet = (t) => this.setState({ jyTab:t, jyFilter:'all', jyMoreN:40, jyFlip:null, jyPg:null, jyFoodOv:false, jyFoodPop:null });
     jyFilterSet = (f) => this.setState({ jyFilter:f, jySel:null, jyMoreN:40 });
     jySvFilterSet = (f) => this.setState({ jySvFilter:f, jySvSel:null });
     jySvPick = (id) => { SFX.play('ok'); this.setState({ jySvSel:id }); setTimeout(() => { try { const el = document.querySelector('.sv-detail'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest', behavior:'smooth' }); } catch (e) {} }, 40); };
@@ -3378,16 +3378,16 @@
         const list = SOUV.filter(x => JWORLD.byStop[x.stop]); const got = list.filter(x => have[x.stop]); const fl = S.jySvFilter || 'all';
         const sel = S.jySvSel ? list.find(x => x.id === S.jySvSel) : null;
         out.jySvSub = got.length + ' of ' + list.length + ' found';
-        out.jySvChips = [['all', 'All', list.length], ['found', 'Found', got.length], ['hidden', 'Hidden', list.length - got.length]].map(c => ({ label:c[1], count:c[2], cls:fl === c[0] ? 'on' : '', fn:() => this.jySvFilterSet(c[0]) }));
+        out.jySvChips = [['all', 'All', list.length], ['found', 'Found', got.length], ['hidden', 'Not found yet', list.length - got.length]].map(c => ({ label:c[1], count:c[2], cls:fl === c[0] ? 'on' : '', fn:() => this.jySvFilterSet(c[0]) }));
         const shown = list.filter(x => fl === 'all' || (fl === 'found') === !!have[x.stop]);
         out.jySvItems = shown.map(x => { const has = !!have[x.stop]; const RR = JWORLD.byRegion[x.rid];
-          return { cls:(has ? 'got' : 'hid') + (sel && sel.id === x.id ? ' sel' : ''), img:svImg(x), name:has ? x.en : 'Hidden', zh:has ? x.zh : '?', label:has ? x.en + ', found' : 'A hidden souvenir in ' + (RR ? RR.en : 'China'), open:() => this.jySvPick(x.id) }; });
+          return { cls:(has ? 'got' : 'hid') + (sel && sel.id === x.id ? ' sel' : ''), img:svImg(x), name:has ? x.en : '', zh:has ? x.zh : '', label:has ? x.en + ', found' : 'A souvenir still to find in ' + (RR ? RR.en : 'China'), open:() => this.jySvPick(x.id) }; });
         out.jySvNone = shown.length === 0; out.jySvNoneText = fl === 'found' ? 'Nothing here yet. Travel on: each region hides a few souvenirs in its stops.' : 'You have found them all.';
         out.jySvSelShow = !!sel;
         if (sel) { const has = !!have[sel.stop]; const RR = JWORLD.byRegion[sel.rid]; const SP = JWORLD.byStop[sel.stop];
-          Object.assign(out, { jySvSelCls:has ? 'got' : 'hid', jySvSelImg:svImg(sel), jySvSelZh:has ? sel.zh : '？', jySvSelPy:has ? sel.py : '', jySvSelEn:has ? sel.en : 'A hidden souvenir',
-            jySvSelStory:has ? sel.story : 'Hidden in a stop somewhere in ' + (RR ? RR.en : 'China') + '. Keep travelling there to find it.', jySvSelFound:has, jySvSelWhere:has ? 'Found at ' + SP.en + ' · ' + (RR ? RR.en : '') : '',
-            jySvSelGo:() => this.jyOpenStop(sel.stop), jySvSelClose:() => this.setState({ jySvSel:null }), jySvSelLabel:has ? sel.en + ', ' + sel.story : 'A hidden souvenir in ' + (RR ? RR.en : 'China') }); }
+          Object.assign(out, { jySvSelCls:has ? 'got' : 'hid', jySvSelImg:svImg(sel), jySvSelZh:has ? sel.zh : '', jySvSelPy:has ? sel.py : '', jySvSelEn:has ? sel.en : 'Still to find',
+            jySvSelStory:has ? sel.story : 'Waiting in a stop somewhere in ' + (RR ? RR.en : 'China') + '. Keep travelling there to find it.', jySvSelFound:has, jySvSelWhere:has ? 'Found at ' + SP.en + ' · ' + (RR ? RR.en : '') : '',
+            jySvSelGo:() => this.jyOpenStop(sel.stop), jySvSelClose:() => this.setState({ jySvSel:null }), jySvSelLabel:has ? sel.en + ', ' + sel.story : 'A souvenir still to find in ' + (RR ? RR.en : 'China') }); }
       }
       const FILT = [['all', 'All'], ['S', '★ Must-see'], ['T', 'Cities'], ['A', 'Attractions'], ['D', 'Dishes'], ['C', 'Culture'], ['P', 'Airports']];
       const filterChips = (stopsSeen, noDish) => FILT.filter(f => !(noDish && f[0] === 'D')).map(f => ({ label:f[1], count:f[0] === 'all' ? stopsSeen.length : stopsSeen.filter(s => f[0] === 'S' ? s.sp : s.k === f[0]).length, cls:S.jyFilter === f[0] ? 'on' : '', fn:() => this.jyFilterSet(f[0]) }));
@@ -3557,7 +3557,7 @@
             city:{ items:cityItems, per:6, head:'城', title:'Cities', none:'None yet. Your first one comes when you see every stop in a city.', sub:() => cs.length + ' city stamps' },
             star:{ items:starItems, per:6, head:'★', title:'Must-sees', none:'None yet. Gold stops are the must-sees.', sub:() => ms.length + ' must-sees' } }[sec];
           const per = SEC.per, np = Math.max(1, Math.ceil(SEC.items.length / per)), total = np + 1;
-          const auto = sec === 'reg' ? (SEC.items.length ? Math.floor((SEC.items.length - 1) / per) + 1 : 1) : 1;
+          const auto = 0;   // the passport always opens on its cover
           const cur = Math.max(0, Math.min(total - 1, S.jyPg == null ? auto : S.jyPg));
           const stampedN = ids.filter(id => vs.done[id]).length;
           out.jyPsecs = fm ? [] : [['reg', 'Regions'], ['city', 'Cities'], ['star', 'Must-sees']].map(x => ({ label:x[1], cls:'pp-mark ' + x[0] + (sec === x[0] ? ' on' : ''), pressed:sec === x[0] ? 'true' : 'false', fn:() => { if (sec !== x[0]) { SFX.play('ok'); this.setState({ jyPsec:x[0], jyPg:null }); } } }));
