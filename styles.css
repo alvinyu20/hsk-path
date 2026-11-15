@@ -2311,18 +2311,19 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .app.t-dark .lt-pinyin{--hb:#4A2420;--hc:#F0A39B}
 .lib-tile .lib-tt{padding:14px 18px 16px;gap:6px}
 .lib-tile .lib-tt b{font:700 21px/1.2 'Bricolage Grotesque',sans-serif}
-.lib-ln{font-weight:700;font-size:16px}
-.lib-bar{display:block;height:8px;border-radius:99px;background:var(--panel2);overflow:hidden}
-.lib-bar i{display:block;height:100%;border-radius:99px;background:var(--hc)}
 .lib-sb{font-size:14px}
-.wod{flex:1 1 260px;display:flex;flex-direction:column;gap:6px;padding:22px;border-radius:26px}
-.wod-zh{font-size:84px;line-height:1.1;font-weight:700}
-.wod-py{font:700 20px 'Bricolage Grotesque',sans-serif}
-.wod-en{font-size:18px}
-.wod-ex{border-top:1px solid var(--line);margin-top:8px;padding-top:12px}
-.wod-ex .zh{font-size:22px}
-.wod-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
-@media (max-width:600px){.lib-cols .lib-tiles{grid-template-columns:minmax(0,1fr)}.lib-hd{height:88px}.lib-hd .lib-g{font-size:48px}}
+/* compact row tiles at every width */
+.lib-cols .lib-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.lib-tile{flex-direction:row;align-items:center;border-radius:20px;border-bottom-width:4px}
+.lib-hd{flex:none;width:64px;align-self:stretch;height:auto;min-height:64px}
+.lib-hd::before{width:56px;height:56px;left:-18px;top:-22px}
+.lib-hd::after{width:44px;height:44px;right:-10px;bottom:-18px}
+.lib-hd .lib-g{font-size:32px}
+.lib-tile .lib-tt{padding:10px 14px;gap:2px}
+.lib-tile .lib-tt b{font-size:17px}
+.lib-sb{font-size:13.5px}
+@media (max-width:600px){.lib-cols .lib-tiles{grid-template-columns:minmax(0,1fr);gap:10px}}
+
 
 /* ===== Topics and pairs: progress rings, softer new-word cards ===== */
 .mtile{padding-bottom:13px;border-bottom-width:4px}

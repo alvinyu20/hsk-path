@@ -5324,20 +5324,14 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
           const hubStarted = hubC.st, hubWordsN = hubC.n, oppStarted = oppC.st, oppWordsN = oppC.n;
           const openWeb = (mode) => { this.go('web'); this.setState({ wmode:mode }); };
           return [
-            { key:'words', glyph:'词', title:'Words', line:startedCount + ' of ' + rowsAll.length + ' started', sub:memNow.words + ' in memory' + (dueAllN > 0 ? ', ' + dueAllN + ' due' : ''), pct:pct(startedCount, rowsAll.length) + '%', fn:() => this.go('words') },
-            { key:'grammar', glyph:'语', title:'Grammar lessons', line:gramPassed + ' of ' + LESSONS.length + ' passed', sub:nxtL ? 'Next: ' + nxtL.title.split(':')[0] : 'All passed', pct:pct(gramPassed, LESSONS.length) + '%', fn:() => this.go('grammar') },
-            { key:'gpoints', glyph:'点', title:'Grammar points', line:grvStart + ' of ' + grvRowsAll.length + ' started', sub:grvDue > 0 ? grvDue + ' due' : 'Your record for each point', pct:Math.round(grvStart / Math.max(1, grvRowsAll.length) * 100) + '%', fn:() => this.go('gtrack') },
-            { key:'topics', glyph:'题', title:'Topics', line:mistClear + ' of ' + TOPICS.length + ' topics finished', sub:'Words grouped by theme', pct:pct(mistClear, TOPICS.length) + '%', fn:() => openWeb('topic') },
-            { key:'char', glyph:'字', title:'Shared character', line:HUBS.length + ' characters', sub:hubStarted + ' of ' + hubWordsN + ' words started', pct:pct(hubStarted, hubWordsN) + '%', fn:() => openWeb('char') },
-            { key:'opp', glyph:'对', title:'Word pairs', line:OPPS.length + ' pairs', sub:oppStarted + ' of ' + oppWordsN + ' words started', pct:pct(oppStarted, oppWordsN) + '%', fn:() => openWeb('opp') },
-            { key:'pinyin', glyph:'音', title:'Pinyin and tones', line:pyD + ' of ' + pyL.length + ' lessons done', sub:nxtPy ? 'Next: ' + nxtPy.title : 'All done', pct:pct(pyD, pyL.length) + '%', fn:() => this.go('pinyin') }
+            { key:'words', glyph:'词', title:'Words', sub:'How well you know each word', fn:() => this.go('words') },
+            { key:'grammar', glyph:'语', title:'Grammar lessons', sub:'Step-by-step lessons', fn:() => this.go('grammar') },
+            { key:'gpoints', glyph:'点', title:'Grammar points', sub:'Your record for each point', fn:() => this.go('gtrack') },
+            { key:'topics', glyph:'题', title:'Topics', sub:'Words grouped by theme', fn:() => openWeb('topic') },
+            { key:'char', glyph:'字', title:'Shared character', sub:'Words built from the same character', fn:() => openWeb('char') },
+            { key:'opp', glyph:'对', title:'Word pairs', sub:'Opposites and look-alike words', fn:() => openWeb('opp') },
+            { key:'pinyin', glyph:'音', title:'Pinyin and tones', sub:'Sounds, tones and spelling rules', fn:() => this.go('pinyin') }
           ];
-        })(),
-        wodShow:rowsAll.length > 0, ...(() => {
-          if (!rowsAll.length) return {};
-          const d = new Date(); const di = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000);
-          const w = rowsAll[(di * 7919) % rowsAll.length]; const ex = exFor(w.zh, true); const isNew = !w.started;
-          return { wodZh:w.zh, wodPy:w.py, wodEn:w.en, wodPlay:w.play, wodPc:w.pc, wodHasEx:!!ex.exZh, wodExZh:ex.exZh || '', wodExPy:ex.exPy || '', wodExEn:ex.exEn || '', wodCanAdd:isNew, wodAdd:() => this.learnWord(w.zh) };
         })(),
         lq:S.lq || '', onLq:(e) => this.setState({ lq:e.target.value }), lqHas:libMatches.length > 0, lqNone:!!libQ && libMatches.length === 0, lqRows:libMatches,
         libBannerShow:(prefGet('sv', {}).library || 0) < 4,
