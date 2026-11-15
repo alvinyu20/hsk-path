@@ -1218,8 +1218,6 @@ html,body,.app,button,a,input,select,textarea,label,[role=button]{touch-action:m
 .jy-meter i{display:block;height:100%;border-radius:99px;background:var(--jfill);transition:width .4s}
 .jy-meter-t{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
 .jy-go{align-self:flex-start}
-.jy-tabs{display:grid;grid-template-columns:repeat(var(--tc,6),minmax(0,1fr));gap:2px;width:100%;box-sizing:border-box;padding:4px;border-radius:22px;background:var(--panel)}
-.jy-tabs button{min-width:0;min-height:44px;padding:0 2px;border-radius:18px;font-size:clamp(10.5px,3.1vw,16px);white-space:nowrap;overflow:hidden}   /* all views in one row: the type scales with the screen */
 .jy-tabs button.on{background:var(--jfill);color:#fff}
 .t-dark .jy-tabs button.on{color:#0E1920}
 .jy-panel{display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:20px;background:var(--panel);border:1px solid var(--line)}
@@ -1630,12 +1628,12 @@ button.me .me-av{flex:none}
 .jy-dot text{font-size:8.5px;font-weight:700;fill:var(--ink);pointer-events:none}
 .jy-dot.me text{fill:var(--on-seal);font-size:8px}
 .jy-dot:hover .dc,.jy-dot:focus-visible .dc{stroke-width:2.4}
-.jy-tabs{order:0}.jy-fbar{order:-1}.jy-now{order:1}.jy-card{order:2}.jy-main > .jy-panel{order:4}
+.jy-tabw{order:0}.jy-fbar{order:-1}.jy-now{order:1}.jy-card{order:2}.jy-main > .jy-panel{order:4}
 /* Explore is the road card on a phone; the map beside it only shows on a wide screen, where it has room */
 @media (max-width:999px){.jy-ex .jy-main > *{display:none}}
 @media (min-width:1000px){
   .jy{display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);gap:18px 24px;align-items:start;padding:20px}
-  .jy > .banner,.jy > .jy-tabs{grid-column:1 / -1}
+  .jy > .banner,.jy > .jy-tabw{grid-column:1 / -1}
   .jy-side{display:flex;flex-direction:column;gap:14px}
   .jy-main{display:flex;flex-direction:column;gap:14px;min-width:0}
   /* a stop card can be taller than the screen, so with a card open the page scrolls and the map keeps you company; with no card the short left column stays put beside a long list */
@@ -2643,7 +2641,7 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .obm-guide .obm-p{min-height:3em}
 .obm-shot{position:relative;width:100%;max-height:min(46vh,430px);border-radius:20px;overflow:hidden;background:var(--bg);box-shadow:inset 0 0 0 1px var(--line);display:grid;place-items:center}
 .obm-shot > b{font:700 110px/1 'Noto Serif SC','Songti SC',serif;opacity:.22}
-.obm-shot.a0 > b{color:var(--jade)}.obm-shot.a1 > b{color:var(--jade)}.obm-shot.a2 > b{color:var(--ink)}.obm-shot.a3 > b{color:var(--seal)}.obm-shot.a4 > b{color:var(--ink)}
+.obm-shot.a0 > b{color:var(--jade)}.obm-shot.a1 > b{color:var(--jade)}.obm-shot.a2 > b{color:var(--ink)}.obm-shot.a3 > b{color:var(--seal)}.obm-shot.a4 > b{color:var(--ink)}.obm-shot.a5 > b{color:var(--seal)}
 .obm-shot-img{position:absolute;inset:0;background-position:center;background-repeat:no-repeat;background-size:contain}
 .obm-guide > *{flex:none}
 .obm-tagrow{display:flex;align-items:center;gap:10px}
@@ -3291,7 +3289,28 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
   .app .side .bname{font-size:16px;line-height:1.1}
   .app .side .bsub{display:none}
 }
+
+/* Journey views: the same pill bar as Path / Library (46px), in one row that scrolls sideways; fades and arrows show there is more */
+.jy-tabw{position:relative;border-radius:99px;background:var(--panel);width:100%;box-sizing:border-box}
+.jy-tabs.seg2{display:flex;gap:2px;width:100%;box-sizing:border-box;padding:4px;border-radius:99px;background:transparent;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scroll-snap-type:x proximity}
+.jy-tabs.seg2::-webkit-scrollbar{display:none}
+.jy-tabs.seg2 button{flex:0 0 auto;min-height:38px;padding:0 18px;font-size:15px;white-space:nowrap;scroll-snap-align:center}
+@media (min-width:700px){.jy-tabs.seg2 button{flex:1 0 auto}}
+.jy-tabarr{display:none;position:absolute;top:50%;z-index:2;width:30px;height:30px;margin-top:-15px;padding:0;border:0;border-radius:50%;background:var(--panel);color:var(--ink);box-shadow:0 1px 6px rgba(0,0,0,.25);align-items:center;justify-content:center;cursor:pointer}
+.jy-tabarr .ic{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.jy-tabarr.l{left:6px}.jy-tabarr.r{right:6px}
+.jy-tabw.has-l .jy-tabarr.l,.jy-tabw.has-r .jy-tabarr.r{display:flex}
+.jy-tabw.has-l::before,.jy-tabw.has-r::after{content:'';position:absolute;top:0;bottom:0;width:58px;z-index:1;pointer-events:none}
+.jy-tabw.has-l::before{left:0;border-radius:99px 0 0 99px;background:linear-gradient(to left,transparent,var(--panel) 75%)}
+.jy-tabw.has-r::after{right:0;border-radius:0 99px 99px 0;background:linear-gradient(to right,transparent,var(--panel) 75%)}
+.jy-tabw.has-r .jy-tabarr.r .ic{animation:jyNudge 1.6s ease-in-out infinite}
+@keyframes jyNudge{0%,60%,100%{transform:translateX(0)}30%{transform:translateX(3px)}}
+@media (prefers-reduced-motion:reduce){.jy-tabw.has-r .jy-tabarr.r .ic{animation:none}}
+/* every in-page pill bar on a phone is the size Review and Talk use: 40px bar, 32px buttons, 14px type */
 @media (max-width:700px){
-  .jy-tabs{width:calc(100% + 16px);margin:0 -8px;padding:3px;gap:1px}
-  .jy-tabs button{font-size:clamp(10px,3.05vw,16px);padding:0 1px}
+  .app .subnav button{min-height:32px;padding:0 14px;font-size:14px}
+  .app .lvseg{padding:4px}
+  .app .lvseg button{min-height:32px;padding:0 14px;font-size:14px}
+  .jy-tabs.seg2 button{min-height:32px;padding:0 14px;font-size:14px}
+  .jy-tabarr{width:28px;height:28px;margin-top:-14px}
 }

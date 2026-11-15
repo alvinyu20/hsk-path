@@ -451,7 +451,7 @@
   const FZ_KEY = 'shanlu-feast-seen'; const fzRead = () => { try { return JSON.parse(localStorage.getItem(FZ_KEY) || '{}') || {}; } catch (e) { return {}; } };
   const SV_BY_STOP = {}; SOUV.forEach(s => { SV_BY_STOP[s.stop] = s; });
   const svImg = (s) => s.u || (s.u = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s.svg));
-  // ---- onboarding: the first-visit flow (intro pop-up on the Journey, the first free flight, five guide cards, where to start, name and friends), then the Start here path (pref 'onb': p flow step 'intro' | 'fly' | 'level' | 'me' | 'done', l what they chose ('new' | 'some'), w flow finished, s start path 'go' | 'done' | 'skip', d day finished, g reference page opened, px sounds card dismissed) ----
+  // ---- onboarding: the first-visit flow (intro pop-up on the Journey, the first free flight, six guide cards, where to start, name and friends), then the Start here path (pref 'onb': p flow step 'intro' | 'fly' | 'level' | 'me' | 'done', l what they chose ('new' | 'some'), w flow finished, s start path 'go' | 'done' | 'skip', d day finished, g reference page opened, px sounds card dismissed) ----
   const ONB_OFF = () => { try { return !!(navigator.webdriver && !window.SHANLU_ONBOARDING); } catch (e) { return false; } };   // browser tests run without it unless they ask for it
   const onbRead = () => { const v = prefGet('onb', null); return v && typeof v === 'object' ? v : {}; };
   const START_WORDS = ['你好', '谢谢', '我', '你', '是'];   // the same five for everyone: a greeting, thanks, I, you, and the verb to be
@@ -3072,7 +3072,7 @@
     obCardGo = (d) => {
       const n = this.state.obCard + d;
       if (n < 0) return;
-      if (n > 4) { this.onbSet({ p:'level' }); this.setState({ obCard:0 }); return; }
+      if (n > 5) { this.onbSet({ p:'level' }); this.setState({ obCard:0 }); return; }   // six guide cards
       this.setState({ obCard:n });
     };
     obGuideSkip = () => { this.onbSet({ p:'level' }); this.setState({ obCard:0 }); };
@@ -3398,7 +3398,7 @@
       // tabs
       const tabNow = fm && (S.jyTab === 'stops' || S.jyTab === 'food' || S.jyTab === 'shelf' || S.jyTab === 'explore') ? 'map' : S.jyTab;
       const tabList = fm ? [['map', 'Map'], ['pass', 'Passport']] : [['explore', 'Explore'], ['map', 'Map'], ['pass', 'Passport'], ['shelf', 'Souvenirs'], ['stops', 'Postcards'], ['food', 'Food']];
-      out.jyTabCols = tabList.length; out.jyTabColsWide = tabList.length;   // a grid, not a scrolling strip: 3 across on a phone (two rows), all in one row on wide screens
+         // a grid, not a scrolling strip: 3 across on a phone (two rows), all in one row on wide screens
       out.jyTabs = tabList.map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', sel:tabNow === t[0] ? 'true' : 'false', fn:() => this.jyTabSet(t[0]) }));
       out.jyIsExplore = tabNow === 'explore'; out.jyExCls = tabNow === 'explore' ? 'jy-ex' : ''; out.jyNowShow = !fm && tabNow === 'explore'; out.jyIsMap = tabNow === 'map' || tabNow === 'explore'; out.jyIsStops = tabNow === 'stops'; out.jyIsFood = tabNow === 'food'; out.jyIsPass = tabNow === 'pass'; out.jyIsShelf = tabNow === 'shelf';
       // the souvenir shelf (your own journey only): found when the stop that hides it is unlocked; the rest show as dark shapes with their region
@@ -4707,9 +4707,10 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         { zh:'记', tag:'Recall', title:'Review brings them back in time', body:'Pick the meaning, then type it. Review returns each word just as you are about to forget it. Be honest with the buttons: Again, Hard, Good or Easy.', chips:['Review', 'My words'], img:'tour/review.jpg', w:748, h:802, alt:'A Review card showing a word, its meaning and the Again, Hard, Good and Easy buttons' },
         { zh:'用', tag:'Use', title:'Then use them', body:'Grammar lessons, listening and speaking practice. Today on Home plans a short session around your daily goal.', chips:['Grammar', 'Listening', 'Speak'], img:'tour/today.jpg', w:748, h:722, alt:'Today on Home: the daily goal, the plan button and more ways to study' },
         { zh:'路', tag:'Coins and Journey', title:'Coins take you somewhere real', body:'Everything you study earns coins. Spend them travelling to places across China, and collect passport stamps and souvenirs along the way. Your first stop was free, and you have already taken it.', chips:['Journey', 'Passport stamps', 'Souvenirs'], img:'tour/journey.jpg', w:748, h:847, alt:'A map of China with stamped regions and flight lines, a passport page of stamps and a shelf of souvenirs' },
-        { zh:'友', tag:'Yours to keep', title:'Saved here, shared only if you say so', body:'Your progress lives in this browser, with a backup and sync in Settings. A friends group only ever sees your study totals.', chips:['Backup', 'Sync', 'Friends'], img:'tour/friends.jpg', w:748, h:723, alt:'The Friends board: three people with their minutes this week and streaks' }
+        { zh:'友', tag:'Yours to keep', title:'Saved here, shared only if you say so', body:'Your progress lives in this browser, with a backup and sync in Settings. A friends group only ever sees your study totals.', chips:['Backup', 'Sync', 'Friends'], img:'tour/friends.jpg', w:748, h:723, alt:'The Friends board: three people with their minutes this week and streaks' },
+        { zh:'家', tag:'Like an app', title:'Put Shanlu on your Home Screen', body:'In Safari, tap Share, then Add to Home Screen. In Chrome, tap Share in the top right, then Add to Home Screen. Shanlu gets its own icon, and in Safari it opens full screen, like an app.', chips:['Safari', 'Chrome', 'iPhone and iPad'], img:'tour/homescreen.svg', w:748, h:640, alt:'Three steps: tap Share, choose Add to Home Screen, then open Shanlu from its red icon on your Home Screen' }
       ];
-      const obC = obCards[Math.max(0, Math.min(4, S.obCard || 0))];
+      const obC = obCards[Math.max(0, Math.min(obCards.length - 1, S.obCard || 0))];
       const frOn = !!(FR && FR.enabled());
       const pyN = (PYC.lessons || []).filter(l => pyDoneAt(l.id)).length;
       const obSoundsShow = onbOn && S.screen === 'home' && !flowOn && onb.l === 'new' && !onb.px && pyN === 0 && (PYC.lessons || []).length > 0 && noProg;
@@ -5460,8 +5461,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         obGuideShow:obPh === 'guide' && !S.jyPlay && !(S.jyTrip && S.jyRv), obLevelShow:obPh === 'level', obMeShow:obPh === 'me',
         obIntroGo:this.obIntroGo, obFlySkip:this.obFlySkip, obBackOpen:this.obBackOpen, obBackClose:this.obBackClose, obBackGo:this.obBackGo, obBackFile:this.obBackFile, obFrOn:frOn,
         obLinkIn:S.frLinkIn, onObLink:(e) => this.setState({ frLinkIn:e.target.value }), obLinkText:S.frLinkBusy ? 'Signing in…' : 'Bring my progress here', obHasErr:!!S.frErr, obErrText:S.frErr,
-        obCZh:obC.zh, obCTag:obC.tag, obCTitle:obC.title, obCBody:obC.body, obCChips:obC.chips, obCCount:((S.obCard || 0) + 1) + ' of 5', obCArt:'a' + (S.obCard || 0), obCShot:'aspect-ratio:' + obC.w + '/' + obC.h, obCImg:'background-image:url(' + obC.img + ')', obCAlt:obC.alt,
-        obCDots:obCards.map((_, i) => ({ cls:'obm-dot' + (i === (S.obCard || 0) ? ' on' : '') })), obCPrev:(S.obCard || 0) > 0, obCBtn:(S.obCard || 0) === 4 ? 'Choose where to start' : 'Next', obCardNext:() => this.obCardGo(1), obCardPrev:() => this.obCardGo(-1), obGuideSkip:this.obGuideSkip,
+        obCZh:obC.zh, obCTag:obC.tag, obCTitle:obC.title, obCBody:obC.body, obCChips:obC.chips, obCCount:((S.obCard || 0) + 1) + ' of ' + obCards.length, obCArt:'a' + (S.obCard || 0), obCShot:'aspect-ratio:' + obC.w + '/' + obC.h, obCImg:'background-image:url(' + obC.img + ')', obCAlt:obC.alt,
+        obCDots:obCards.map((_, i) => ({ cls:'obm-dot' + (i === (S.obCard || 0) ? ' on' : '') })), obCPrev:(S.obCard || 0) > 0, obCBtn:(S.obCard || 0) === obCards.length - 1 ? 'Choose where to start' : 'Next', obCardNext:() => this.obCardGo(1), obCardPrev:() => this.obCardGo(-1), obGuideSkip:this.obGuideSkip,
         obLvlOpts:[['new', 'I am brand new to Chinese', 'Start with the sounds of Chinese (pinyin and tones, about 30 minutes), then your first words.', 'Recommended if Chinese is new to you'], ['some', 'I know a little', 'Go straight to HSK 1 words. The pinyin course is always there if you want it.', '']].map(([k, t, d, tag]) => ({ k, t, d, tag, hasTag:!!tag, cls:'obm-opt' + (S.obLvl === k ? ' on' : ''), pressed:S.obLvl === k ? 'true' : 'false', fn:() => this.obPickLvl(k) })), obLevelGo:this.obLevelGo,
         obName:S.obName, onObName:(e) => this.setState({ obName:e.target.value }), obFrShow:frOn && !(FR && FR.identity()), obJoinChk:S.obJoin ? 'true' : 'false', obJoinCls:'obm-chk' + (S.obJoin ? ' on' : ''), obJoinToggle:this.obJoinToggle,
         obGoals:[10, 20, 30, 45].map(m => ({ label:m + ' min', cls:(S.obGoal || S.mins) === m ? 'on' : '', fn:() => this.setState({ obGoal:m }) })), obHasMeErr:!!S.obErr, obMeErr:S.obErr, obMeBusy:S.obBusy, obGoText:S.obBusy ? 'Joining…' : ((S.obJoin && frOn && !(FR && FR.identity())) ? 'Save and join the group' : 'Save and start'), obMeGo:() => this.obMeGo(false), obGuideGo:() => this.obMeGo(true), obMeBack:this.obMeBack,
@@ -5664,6 +5665,21 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       }
     }
   });
+  // Journey view bar: one row that scrolls sideways. Edge fades and arrows (has-l / has-r) tell you more views are off-screen; the chosen view is brought into sight.
+  const jyTabsSync = () => {
+    try {
+      const sc = document.querySelector('.jy-tabs'); if (!sc) return;
+      const w = sc.parentNode, max = sc.scrollWidth - sc.clientWidth;
+      w.classList.toggle('has-l', sc.scrollLeft > 2); w.classList.toggle('has-r', max > 2 && sc.scrollLeft < max - 2);
+      const on = sc.querySelector('button.on'), key = on ? on.textContent : '';
+      if (sc.dataset.seen !== key && sc.clientWidth > 0) { sc.dataset.seen = key; if (on && (on.offsetLeft < sc.scrollLeft || on.offsetLeft + on.offsetWidth > sc.scrollLeft + sc.clientWidth)) { sc.scrollLeft = on.offsetLeft - (sc.clientWidth - on.offsetWidth) / 2; w.classList.toggle('has-l', sc.scrollLeft > 2); w.classList.toggle('has-r', sc.scrollLeft < max - 2); } }
+    } catch (err) {}
+  };
+  let jyTabsQ = 0; const jyTabsSoon = () => { if (!jyTabsQ) jyTabsQ = requestAnimationFrame(() => { jyTabsQ = 0; jyTabsSync(); }); };
+  document.addEventListener('scroll', (e) => { if (e.target && e.target.classList && e.target.classList.contains('jy-tabs')) jyTabsSoon(); }, true);
+  window.addEventListener('resize', jyTabsSoon);
+  try { new MutationObserver(jyTabsSoon).observe(document.documentElement, { childList:true, subtree:true, attributes:true, attributeFilter:['class'] }); } catch (err) {}
+  document.addEventListener('click', (e) => { try { const a = e.target.closest && e.target.closest('[data-jy-scroll]'); if (a) { const sc = document.querySelector('.jy-tabs'); if (sc) sc.scrollBy({ left:Number(a.getAttribute('data-jy-scroll')) * Math.max(120, sc.clientWidth * 0.6), behavior:'smooth' }); } } catch (err) {} });
   document.addEventListener('click', (e) => { try { const h = e.target.closest && e.target.closest('.fz-hit'); if (h && window.shanlu && window.shanlu.state.jyFoodOv) { e.stopPropagation(); window.shanlu.setState({ jyFoodPop:h.getAttribute('data-id') }); } } catch (err) {} }, true);
   document.addEventListener('click', (e) => { try { if (window.shanlu && window.shanlu.state.lvMenu && !(e.target.closest && e.target.closest('.lvmenu'))) window.shanlu.setState({ lvMenu:false }); } catch (err) {} });
   document.addEventListener('keydown', (e) => { try { if (e.key === 'Escape' && window.shanlu && window.shanlu.state.jyTrip && window.shanlu.state.jyRv) window.shanlu.jyTripClose(); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.lvMenu) window.shanlu.setState({ lvMenu:false }); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.jyFoodOv) { if (window.shanlu.state.jyFoodPop) window.shanlu.setState({ jyFoodPop:null }); else window.shanlu.setState({ jyFoodOv:false }); } if (e.key === 'Escape' && window.shanlu && window.shanlu.state.pstop) window.shanlu.pathClose(); } catch (err) {} });

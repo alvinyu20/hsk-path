@@ -1,4 +1,4 @@
-/* Retakes the five preview pictures of the first-visit tour (tour/*.jpg) from the running site, on a phone-sized screen with test progress.
+/* Retakes the five preview pictures of the first-visit tour (tour/*.jpg; the sixth card, tour/homescreen.svg, is drawn by hand) from the running site, on a phone-sized screen with test progress.
  * Needs Playwright, Python with Pillow, and "cd worker && npm install" (the Friends picture uses the test server, with made-up friends).
  * Usage: NODE_PATH=$(npm root -g) node tools/make-tour-shots.js
  * Journey regions and souvenirs are random each time. Look at the pictures before you commit them. */

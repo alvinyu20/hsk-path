@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="748" height="640" viewBox="0 0 748 640" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs><filter id="sh" x="-10%" y="-10%" width="120%" height="125%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#14202a" flood-opacity=".14"/></filter></defs>
+  <!-- three steps -->
+  <g filter="url(#sh)">
+    <rect x="16" y="40" width="222" height="560" rx="30" fill="#F8FAF7" stroke="#D3DCD6" stroke-width="2"/>
+    <rect x="263" y="40" width="222" height="560" rx="30" fill="#F8FAF7" stroke="#D3DCD6" stroke-width="2"/>
+    <rect x="510" y="40" width="222" height="560" rx="30" fill="#F8FAF7" stroke="#D3DCD6" stroke-width="2"/>
+  </g>
+  <!-- step numbers -->
+  <g fill="#14202a"><circle cx="127" cy="92" r="26"/><circle cx="374" cy="92" r="26"/><circle cx="621" cy="92" r="26"/></g>
+  <g fill="#fff" font-size="30" font-weight="700" text-anchor="middle"><text x="127" y="103">1</text><text x="374" y="103">2</text><text x="621" y="103">3</text></g>
+  <!-- 1: the Share button -->
+  <rect x="67" y="170" width="120" height="120" rx="30" fill="#E3EAE5"/>
+  <g fill="none" stroke="#1B6EF3" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M127 214 V133 M127 133 l-24 24 M127 133 l24 24" transform="translate(0 55)"/>
+    <path d="M100 226 H92 a10 10 0 0 0 -10 10 V262 a10 10 0 0 0 10 10 H162 a10 10 0 0 0 10 -10 V236 a10 10 0 0 0 -10 -10 H154"/>
+  </g>
+  <!-- 2: Add to Home Screen -->
+  <rect x="314" y="170" width="120" height="120" rx="30" fill="#E3EAE5"/>
+  <g fill="none" stroke="#14202a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="338" y="194" width="72" height="72" rx="14"/>
+    <path d="M374 214 V246 M358 230 H390"/>
+  </g>
+  <!-- 3: the app icon on a home screen -->
+  <rect x="561" y="170" width="120" height="120" rx="30" fill="#CFE6DA"/>
+  <g>
+    <rect x="573" y="182" width="96" height="96" rx="22" fill="#C2362B"/>
+    <g fill="none" stroke="#fff" stroke-width="38" stroke-linecap="round" stroke-linejoin="round" transform="translate(573 182) scale(.1875)">
+      <path d="M150 206 V350 H362 V206"/><path d="M256 128 V350"/>
+    </g>
+  </g>
+  <!-- captions -->
+  <g fill="#14202a" font-size="30" font-weight="700" text-anchor="middle">
+    <text x="127" y="372">Tap</text><text x="127" y="414">Share</text>
+    <text x="374" y="372">Choose</text><text x="374" y="414">Add to</text><text x="374" y="456">Home Screen</text>
+    <text x="621" y="372">Open it</text><text x="621" y="414">like an app</text>
+  </g>
+  <g fill="#53646E" font-size="23" text-anchor="middle">
+    <text x="127" y="480">Safari: bottom bar</text>
+    <text x="127" y="512">Chrome: top right</text>
+    <text x="621" y="480">Safari: full screen,</text>
+    <text x="621" y="512">no browser bars</text>
+  </g>
+  <!-- arrows between -->
+  <g fill="none" stroke="#53646E" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M244 230 l12 12 -12 12" transform="translate(0 -12)"/><path d="M491 230 l12 12 -12 12" transform="translate(0 -12)"/></g>
+</svg>

@@ -53,8 +53,11 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   await page.locator('.pill.xpp').click(); await page.waitForTimeout(300);
   const tabs = await page.locator('.jy-tabs button').allInnerTexts();
   check(tabs.indexOf('Souvenirs') >= 0, 'Journey has a Souvenirs tab (' + tabs.join(', ') + ')');
-  const tabBox = await page.evaluate(() => { const t = document.querySelector('.jy-tabs'); return { sw: t.scrollWidth, cw: t.clientWidth }; });
-  check(tabBox.sw <= tabBox.cw + 2, 'all tabs fit on a phone without scrolling (' + tabBox.sw + ' in ' + tabBox.cw + ')');
+  const tabBox = await page.evaluate(() => { const w = document.querySelector('.jy-tabw'), t = document.querySelector('.jy-tabs'); return { h: Math.round(w.getBoundingClientRect().height), cw: t.clientWidth, sw: t.scrollWidth, doc: document.documentElement.scrollWidth, vw: innerWidth, hint: w.classList.contains('has-r'), arrow: getComputedStyle(document.querySelector('.jy-tabarr.r')).display }; });
+  check(tabBox.h === 40 && tabBox.doc <= tabBox.vw, 'the views bar is as tall as the other bars (' + tabBox.h + 'px) and the page does not scroll sideways');
+  check(tabBox.sw > tabBox.cw && tabBox.hint && tabBox.arrow !== 'none', 'six views do not fit a phone, so the bar scrolls and shows a fade and an arrow for more (' + tabBox.sw + ' in ' + tabBox.cw + ')');
+  await page.locator('.jy-tabarr.r').click(); await page.waitForTimeout(600);
+  check(await page.evaluate(() => document.querySelector('.jy-tabs').scrollLeft > 50 && document.querySelector('.jy-tabw').classList.contains('has-l')), 'the arrow scrolls the bar along and a left arrow appears');
   await page.locator('.jy-tabs button', { hasText: 'Souvenirs' }).click(); await page.waitForTimeout(300);
   check((await page.locator('.sv-cell').count()) === exp.total, 'the shelf shows every souvenir (' + exp.total + ')');
   check((await page.locator('.sv-cell.got').count()) === exp.got && exp.got >= 2, 'found souvenirs are shown in colour (' + exp.got + ')');

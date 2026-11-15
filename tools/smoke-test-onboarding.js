@@ -1,4 +1,4 @@
-/* Browser test for the first-visit experience: intro pop-up on the Journey, the free first flight, the five guide cards, where to start, name and friends, then Start here and the what-next panel; plus the "How Shanlu works" reference page.
+/* Browser test for the first-visit experience: intro pop-up on the Journey, the free first flight, the six guide cards, where to start, name and friends, then Start here and the what-next panel; plus the "How Shanlu works" reference page.
  * Usage: NODE_PATH=$(npm root -g) node tools/smoke-test-onboarding.js */
 const path = require('path');
 const { chromium } = require('playwright');
@@ -57,19 +57,20 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.jy-go').click();
     await page.locator('.jy-trip-go').click();
     await page.waitForSelector('.obm-guide', { timeout: 20000 }); await page.waitForTimeout(900);
-    check(/1 of 5/i.test(await dlg(page).innerText()) && /Meet a few words at a time/.test(await dlg(page).innerText()), 'after the first flight the guide cards start with Meet');
+    check(/1 of 6/i.test(await dlg(page).innerText()) && /Meet a few words at a time/.test(await dlg(page).innerText()), 'after the first flight the guide cards start with Meet');
     const titles = [], shots = [], bodies = [];
     const peek = async () => {
       titles.push(await page.locator('.obm-h').innerText()); bodies.push(await page.locator('.obm-guide .obm-p').innerText());
       const u = await page.locator('.obm-shot-img').evaluate((e) => (/url\("?([^")]+)"?\)/.exec(e.style.backgroundImage) || [])[1]);
-      const ok = await page.evaluate(async (x) => { const r = await fetch(x); const b = await r.blob(); return r.ok && b.type === 'image/jpeg' && b.size > 20000; }, u);
+      const ok = await page.evaluate(async (x) => { const r = await fetch(x); const b = await r.blob(); return r.ok && (b.type === 'image/jpeg' || b.type === 'image/svg+xml') && b.size > 1500; }, u);
       shots.push({ u, ok, alt: await page.locator('.obm-shot').getAttribute('aria-label') });
     };
-    for (let i = 0; i < 4; i++) { await peek(); await page.locator('.obm-nav .pri').click(); }
+    for (let i = 0; i < 5; i++) { await peek(); await page.locator('.obm-nav .pri').click(); }
     await peek();
-    check(shots.length === 5 && shots.every((x) => x.ok && x.alt && x.alt.length > 20) && new Set(shots.map((x) => x.u)).size === 5, 'every card has its own real screenshot, and it loads: ' + shots.map((x) => x.u).join(', '));
+    check(shots.length === 6 && shots.every((x) => x.ok && x.alt && x.alt.length > 20) && new Set(shots.map((x) => x.u)).size === 6, 'every card has its own picture, and it loads: ' + shots.map((x) => x.u).join(', '));
     check(/Grammar/.test(bodies[0]) && /Speaking/.test(bodies[0]) && /stamps/.test(bodies[3]) && /souvenirs/.test(bodies[3]), 'the Path card says it has Grammar and Speaking; the Journey card says you collect stamps and souvenirs');
-    check(titles.length === 5 && new Set(titles).size === 5, 'five different cards: ' + titles.join(' | '));
+    check(titles.length === 6 && new Set(titles).size === 6, 'six different cards: ' + titles.join(' | '));
+    check(/Home Screen/.test(titles[5]) && /Safari/.test(bodies[5]) && /Chrome/.test(bodies[5]) && /Share/.test(bodies[5]) && /Add to Home Screen/.test(bodies[5]), 'the sixth card shows how to add Shanlu to the Home Screen from Safari and Chrome: ' + titles[5]);
     check(/Choose where to start/.test(await page.locator('.obm-nav .pri').innerText()), 'the last card offers Choose where to start');
     check(await page.locator('.obm-nav button', { hasText: 'Back' }).count() === 1, 'the cards can go back');
     await page.locator('.obm-nav .pri').click();
