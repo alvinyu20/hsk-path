@@ -62,7 +62,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await nav('Library');
   check(await imgsOk(page, '.top-art'), 'the tab banner picture draws');
   await nav('Home');
-  check(await imgsOk(page, '.th-ming') && await imgsOk(page, '.th-art') && await imgsOk(page, '.lan img') && await imgsOk(page, '.climb-art'), 'Mingming, the banner, the lanterns and the summit picture draw on Today');
+  check(await imgsOk(page, '.th-ming') && await imgsOk(page, '.th-art') && await imgsOk(page, '.lan img'), 'Mingming, the banner and the lanterns draw on Today');
   const g = await page.locator('.th-zh').innerText();
   check(['早上好', '下午好', '晚上好'].includes(g.trim()), 'the greeting follows the time of day: ' + g.trim());
   check(await page.locator('.lan').count() === 7, 'the week is seven lanterns');

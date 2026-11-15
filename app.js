@@ -4829,18 +4829,11 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       ].concat(HAS_LISTEN ? [{ label:'Listening', detail:clipsTried + ' of ' + CLIPS.length + ' clips tried', w:listenPct + '%' }] : [])
         .concat(HAS_SCRIPTS ? [{ label:'Speaking', detail:spkDone + ' of ' + SCEN.length + ' scripts done', w:spkPct + '%' }] : []);
       skills.forEach(k => { const n = parseInt(k.w, 10) || 0; k.pctN = n; k.dash = (n / 100 * 138.23).toFixed(1) + ' 138.23'; });
-      const lvList = sd.levels.slice((ALL ? TOPL : LV) - 1);   // this level first, then the ones above it
-      const lvN = lvList.length;
-      const stairs = lvList.map((lv, i) => ({
-        label:'HSK ' + lv[0], words:lv[1] ? lv[1] + ' words' : 'Advanced', h:(172 + i * (lvN > 7 ? 24 : 32)) + 'px',
-        cls:i === 0 ? 'cur' : 'lock', isCur:i === 0, isLock:i !== 0,
-        fillH:i === 0 ? overall + '%' : '0%', status:i === 0 ? overall + '% done' : (i <= 2 ? 'In review' : 'Locked')
-      }));
+      const lvList = SYS['3.0'].levels.slice((ALL ? TOPL : LV) - 1);   // this level first, then every one above it, up to HSK 9
 
       // the ascent: trail and mist views (art in ascent.js)
       const AS = window.ShanluAscent;
       const ascDark = S.theme === 'dark';
-      const ascV = ['trail', 'stairs'].includes(S.ascView) ? S.ascView : 'trail';
       const apct = (v, tot) => (v / tot * 100).toFixed(2) + '%';
       const asLabels = (t) => t.labels.map(l => ({ left:apct(l.x, t.w), top:apct(l.y, t.h), cls:l.center ? 'c' : '', kind:l.kind, text:l.text, sub:l.sub, hasSub:!!l.sub }));
       const totalW = bankKeys.length;
@@ -5459,22 +5452,12 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         // home
         ringDash, todayLine:titles.home[1], tasks, minOpts, dayMin:S.dayMin, mins:S.mins, skills, wordTarget:bankKeys.length, wmTotal:startedCount, wm,
         wMastered:(wm.mastered / bankKeys.length * 100).toFixed(1) + '%', wFamiliar:(wm.familiar / bankKeys.length * 100).toFixed(1) + '%', wLearning:(wm.learning / bankKeys.length * 100).toFixed(1) + '%',
-        stairs, sysNote:sd.note,
         todayShort:S.dayMin + ' of ' + S.mins + ' min' + (S.mins > S.dayMin ? ' · ' + (S.mins - S.dayMin) + ' to go' : ' · done'),
         webCapOpen:S.webCapOpen, toggleCapOpen:() => this.setState({ webCapOpen:!S.webCapOpen }),
-        ascTrail:ascV === 'trail', ascStairs:ascV === 'stairs', ascHasSys:false,
-        ascTrailCls:ascV === 'trail' ? 'on' : '', ascStairsCls:ascV === 'stairs' ? 'on' : '',
-        setAscTrail:() => this.setState({ ascView:'trail' }), setAscStairs:() => this.setState({ ascView:'stairs' }),
-        ascSub:ascV === 'trail' ? 'Every word you learn moves you along the path.' : 'Pass each level exam to move on to the next level.',
+        ascSub:'Every word you learn moves you along the path, all the way to HSK 9.',
         trailD:{ src:trD.src, alt:trailAlt, labels:asLabels(trD).concat([youLabel(trD)]) }, trailP:{ src:trP.src, alt:trailAlt, labels:asLabels(trP).concat(trP.hideYou ? [] : [youLabel(trP)]) },
-        cairnBig:allStarted ? 'All ' + totalW + ' started' : toGo + ' word' + (toGo === 1 ? '' : 's') + ' to go',
-        cairnSub:allStarted ? 'Take the level exam when you feel ready.' : startedCount + ' of ' + nextM + '. A few cards and it is yours.', cairnPct:(allStarted ? 100 : Math.round((startedCount - prevM) / (nextM - prevM) * 100)) + '%',
-        fireBig:streakShown > 0 ? streakShown + ' day' + (streakShown === 1 ? '' : 's') : 'No streak yet',
-        fireSub:studiedToday ? 'You studied today. Come back tomorrow to keep it going.' : (streakShown > 0 ? 'Study today to keep the streak going.' : 'Study today to start one.'),
         dcShow:S.dcN > 0, dcCls:S.dcPaid ? 'got' : '', dcText:S.dcPaid ? '✓ Daily clear · +' + DAILY_BONUS + ' coins' : 'Clear all due: +' + DAILY_BONUS + ' coins · ' + dcLeft + ' to go',
         todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed. Anything else is a bonus.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
-        trailCta:() => this.go(ascCta.to), trailCtaText:ascCta.text,
-        trailNote:'Levels are placed on the path, not to scale. The path counts the ' + LVN + ' words you have started; grammar, listening and speaking count towards the level exam.',
         mistClearText:mistClear + ' of ' + TOPICS.length + ' fully started', mistTiles, mistHasNear:!!nearBest, mistOpen:S.wmist, toggleMist:() => this.setState({ wmist:!this.state.wmist }), mistToggleText:S.wmist ? 'Hide the topic map' : 'Show all ' + TOPICS.length + ' topics',
         mistNearText:nearBest ? 'Finish ' + nearBest.name + ' (' + (nearBest.tot - nearBest.got) + ' to go)' : '', mistNearGo:() => nearBest && openTopic(nearBest.i),
         mistNote:'A topic is fully started when you have started every word in it.',

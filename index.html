@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="742513e46c">
+<meta name="shanlu-version" content="ef7b5185d8">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=742513e46c">
+<link rel="stylesheet" href="styles.css?v=ef7b5185d8">
 </head>
 <body>
 <div id="app"></div>
@@ -380,21 +380,6 @@
       </div>
     </section>
 
-    <section class="card climb">
-      <img class="climb-art" src="{{artSummit}}" alt="" aria-hidden="true" width="300" height="200">
-      <h2 class="h2">{{climbTitle}}</h2>
-      <p class="cp-note">{{climbNote}}</p>
-      <div class="abar" style="margin:4px 0 14px" role="img" aria-label="{{climbPct}} of the path"><i style="width: {{climbPct}}"></i></div>
-      <div class="rings">
-        <sc-for list="{{skills}}" as="s" hint-placeholder-count="4">
-          <div class="rg">
-            <svg viewBox="0 0 56 56" role="img" aria-label="{{s.label}} {{s.pctN}} percent"><circle class="rg-bg" cx="28" cy="28" r="22"></circle><circle class="rg-fg" cx="28" cy="28" r="22" transform="rotate(-90 28 28)" style="stroke-dasharray: {{s.dash}}"></circle></svg>
-            <div><b>{{s.label}}</b><span>{{s.detail}}</span></div>
-          </div>
-        </sc-for>
-      </div>
-      <button class="btn big" style="margin-top:18px" data-on-click="{{goPath}}">Go to the Path</button>
-    </section>
   </div>
   <section>
     <div class="asc-h">
@@ -402,74 +387,23 @@
         <h2 class="h2">Your path</h2>
         <p class="muted" style="margin:4px 0 0;font-size:16px">{{ascSub}}</p>
       </div>
-      <div class="seg2" role="group" aria-label="How to show your path">
-        <button class="{{ascTrailCls}}" data-on-click="{{setAscTrail}}">Trail</button>
-        <button class="{{ascStairsCls}}" data-on-click="{{setAscStairs}}">Stairs</button>
-      </div>
     </div>
-    <sc-if value="{{ascHasSys}}" hint-placeholder-val="{{ true }}">
-      <div class="asc-sys"><div class="seg2" role="group" aria-label="HSK version">
-        <button class="{{sys2Cls}}" data-on-click="{{setSys2}}">HSK 2.0 · 6 levels</button>
-        <button class="{{sys3Cls}}" data-on-click="{{setSys3}}">HSK 3.0 · 9 levels</button>
-      </div></div>
-    </sc-if>
-
-    <sc-if value="{{ascTrail}}" hint-placeholder-val="{{ true }}">
-      <div class="trail">
-        <div class="trail-d">
-          <img class="trail-img" src="{{trailD.src}}" alt="{{trailD.alt}}" width="1124" height="380">
-          <button class="btn pri big trail-go" data-on-click="{{trailCta}}">{{trailCtaText}}</button>
-          <sc-for list="{{trailD.labels}}" as="l" hint-placeholder-count="4">
+    <div class="trail">
+      <div class="trail-d">
+        <img class="trail-img" src="{{trailD.src}}" alt="{{trailD.alt}}" width="1124" height="380">
+        <sc-for list="{{trailD.labels}}" as="l" hint-placeholder-count="4">
+          <div class="apill {{l.kind}} {{l.cls}}" style="left: {{l.left}}; top: {{l.top}}"><b>{{l.text}}</b><sc-if value="{{l.hasSub}}" hint-placeholder-val="{{ true }}"><span>{{l.sub}}</span></sc-if></div>
+        </sc-for>
+      </div>
+      <div class="trail-p">
+        <div class="trail-pin">
+          <img class="trail-img" src="{{trailP.src}}" alt="{{trailP.alt}}" width="342" height="470">
+          <sc-for list="{{trailP.labels}}" as="l" hint-placeholder-count="4">
             <div class="apill {{l.kind}} {{l.cls}}" style="left: {{l.left}}; top: {{l.top}}"><b>{{l.text}}</b><sc-if value="{{l.hasSub}}" hint-placeholder-val="{{ true }}"><span>{{l.sub}}</span></sc-if></div>
           </sc-for>
         </div>
-        <div class="trail-p">
-          <div class="trail-pin">
-            <img class="trail-img" src="{{trailP.src}}" alt="{{trailP.alt}}" width="342" height="470">
-            <sc-for list="{{trailP.labels}}" as="l" hint-placeholder-count="4">
-              <div class="apill {{l.kind}} {{l.cls}}" style="left: {{l.left}}; top: {{l.top}}"><b>{{l.text}}</b><sc-if value="{{l.hasSub}}" hint-placeholder-val="{{ true }}"><span>{{l.sub}}</span></sc-if></div>
-            </sc-for>
-          </div>
-        </div>
       </div>
-      <div class="astats">
-        <div class="astat first">
-          <div class="astat-k"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4M6 5h11l-2.5 3.5L17 12H6"/></svg>Next milestone</div>
-          <div class="astat-v">{{cairnBig}}</div>
-          <div class="astat-s">{{cairnSub}}</div>
-          <div class="abar"><i style="width: {{cairnPct}}"></i></div>
-        </div>
-        <div class="astat">
-          <div class="astat-k fire"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3.2 5 5.2 5 10a5 5 0 0 1-10 0c0-2 .9-3.2 2-4.2 0 2 .9 3 2 3 0-3-1-6 1-8.8z"/></svg>Streak</div>
-          <div class="astat-v">{{fireBig}}</div>
-          <div class="astat-s">{{fireSub}}</div>
-        </div>
-      </div>
-      <button class="btn pri big trail-cta" data-on-click="{{trailCta}}">{{trailCtaText}}</button>
-      <p class="asc-note">{{trailNote}}</p>
-    </sc-if>
-
-    <sc-if value="{{ascStairs}}" hint-placeholder-val="{{ false }}">
-    <div class="stairs">
-      <sc-for list="{{stairs}}" as="s" hint-placeholder-count="6">
-        <div class="step">
-          <sc-if value="{{s.isCur}}" hint-placeholder-val="{{ false }}">
-            <span class="flagpill"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4M6 5h11l-2.5 3.5L17 12H6"/></svg>You are here</span>
-          </sc-if>
-          <div class="blk {{s.cls}}" style="height: {{s.h}}">
-            <div class="bf" style="height: {{s.fillH}}"></div>
-            <sc-if value="{{s.isLock}}" hint-placeholder-val="{{ true }}">
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>
-            </sc-if>
-            <div class="blk-n">{{s.label}}</div>
-            <div class="blk-w">{{s.words}}</div>
-            <div class="blk-s">{{s.status}}</div>
-          </div>
-        </div>
-      </sc-for>
     </div>
-    <p class="asc-note">{{sysNote}}</p>
-    </sc-if>
   </section>
   <sc-if value="{{frHomeShow}}" hint-placeholder-val="{{ false }}">
   <button type="button" class="card frhome" data-on-click="{{goFriendsHome}}">
@@ -3032,68 +2966,68 @@
   </sc-if>
 </div>
 </template>
-<script defer src="boot-check.js?v=742513e46c"></script>
-<script defer src="vendor/morphdom-umd.min.js?v=742513e46c"></script>
-<script defer src="runtime.js?v=742513e46c"></script>
-<script defer src="config.js?v=742513e46c"></script>
-<script defer src="friends.js?v=742513e46c"></script>
-<script defer src="level.js?v=742513e46c"></script>
-<script defer src="placement.js?v=742513e46c"></script>
-<script defer src="data/hsk1-words.js?v=742513e46c"></script>
-<script defer src="data/hsk1-grammar.js?v=742513e46c"></script>
-<script defer src="data/hsk1-webs.js?v=742513e46c"></script>
-<script defer src="data/hsk1-speak.js?v=742513e46c"></script>
-<script defer src="data/hsk1-listen.js?v=742513e46c"></script>
-<script defer src="data/hsk1-exam.js?v=742513e46c"></script>
-<script defer src="data/hsk1-erhua.js?v=742513e46c"></script>
-<script defer src="data/lexicon.js?v=742513e46c"></script>
-<script defer src="data/char-glosses.js?v=742513e46c"></script>
-<script defer src="data/hsk2-preview.js?v=742513e46c"></script>
-<script defer src="data/hsk3-preview.js?v=742513e46c"></script>
-<script defer src="data/hsk4-preview.js?v=742513e46c"></script>
-<script defer src="data/hsk2-words.js?v=742513e46c"></script>
-<script defer src="data/hsk2-speak.js?v=742513e46c"></script>
-<script defer src="data/hsk2-listen.js?v=742513e46c"></script>
-<script defer src="data/hsk2-exam.js?v=742513e46c"></script>
-<script defer src="data/hsk2-grammar.js?v=742513e46c"></script>
-<script defer src="data/hsk2-webs.js?v=742513e46c"></script>
-<script defer src="data/hsk3-words.js?v=742513e46c"></script>
-<script defer src="data/hsk3-speak.js?v=742513e46c"></script>
-<script defer src="data/hsk3-listen.js?v=742513e46c"></script>
-<script defer src="data/hsk3-exam.js?v=742513e46c"></script>
-<script defer src="data/hsk3-grammar.js?v=742513e46c"></script>
-<script defer src="data/hsk3-webs.js?v=742513e46c"></script>
-<script defer src="data/hsk4-words.js?v=742513e46c"></script>
-<script defer src="data/hsk4-speak.js?v=742513e46c"></script>
-<script defer src="data/hsk4-listen.js?v=742513e46c"></script>
-<script defer src="data/hsk4-exam.js?v=742513e46c"></script>
-<script defer src="data/hsk4-grammar.js?v=742513e46c"></script>
-<script defer src="data/hsk4-webs.js?v=742513e46c"></script>
-<script defer src="ascent.js?v=742513e46c"></script>
-<script defer src="secrets.js?v=742513e46c"></script>
-<script defer src="sync.js?v=742513e46c"></script>
-<script defer src="data/audio-manifest.js?v=742513e46c"></script>
-<script defer src="journey.js?v=742513e46c"></script>
-<script defer src="stampart.js?v=742513e46c"></script>
-<script defer src="feastart.js?v=742513e46c"></script>
-<script defer src="feastscene.js?v=742513e46c"></script>
-<script defer src="feastthemes.js?v=742513e46c"></script>
-<script defer src="feastthemes2.js?v=742513e46c"></script>
-<script defer src="data/journey.js?v=742513e46c"></script>
-<script defer src="data/journey-map.js?v=742513e46c"></script>
-<script defer src="data/journey-media.js?v=742513e46c"></script>
-<script defer src="data/souvenirs.js?v=742513e46c"></script>
-<script defer src="erhua.js?v=742513e46c"></script>
-<script defer src="pinyin.js?v=742513e46c"></script>
-<script defer src="data/pinyin-course.js?v=742513e46c"></script>
-<script defer src="data/pinyin-chart.js?v=742513e46c"></script>
-<script defer src="data/exam-media.js?v=742513e46c"></script>
-<script defer src="data/exam-art.js?v=742513e46c"></script>
-<script defer src="data/neutral-alt.js?v=742513e46c"></script>
-<script defer src="data/path-scenes.js?v=742513e46c"></script>
-<script defer src="data/speak-scenes.js?v=742513e46c"></script>
-<script defer src="data/art.js?v=742513e46c"></script>
-<script defer src="data/path.js?v=742513e46c"></script>
-<script defer src="app.js?v=742513e46c"></script>
+<script defer src="boot-check.js?v=ef7b5185d8"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=ef7b5185d8"></script>
+<script defer src="runtime.js?v=ef7b5185d8"></script>
+<script defer src="config.js?v=ef7b5185d8"></script>
+<script defer src="friends.js?v=ef7b5185d8"></script>
+<script defer src="level.js?v=ef7b5185d8"></script>
+<script defer src="placement.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk1-words.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk1-grammar.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk1-webs.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk1-speak.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk1-listen.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk1-exam.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk1-erhua.js?v=ef7b5185d8"></script>
+<script defer src="data/lexicon.js?v=ef7b5185d8"></script>
+<script defer src="data/char-glosses.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk2-preview.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk3-preview.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk4-preview.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk2-words.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk2-speak.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk2-listen.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk2-exam.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk2-grammar.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk2-webs.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk3-words.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk3-speak.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk3-listen.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk3-exam.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk3-grammar.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk3-webs.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk4-words.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk4-speak.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk4-listen.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk4-exam.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk4-grammar.js?v=ef7b5185d8"></script>
+<script defer src="data/hsk4-webs.js?v=ef7b5185d8"></script>
+<script defer src="ascent.js?v=ef7b5185d8"></script>
+<script defer src="secrets.js?v=ef7b5185d8"></script>
+<script defer src="sync.js?v=ef7b5185d8"></script>
+<script defer src="data/audio-manifest.js?v=ef7b5185d8"></script>
+<script defer src="journey.js?v=ef7b5185d8"></script>
+<script defer src="stampart.js?v=ef7b5185d8"></script>
+<script defer src="feastart.js?v=ef7b5185d8"></script>
+<script defer src="feastscene.js?v=ef7b5185d8"></script>
+<script defer src="feastthemes.js?v=ef7b5185d8"></script>
+<script defer src="feastthemes2.js?v=ef7b5185d8"></script>
+<script defer src="data/journey.js?v=ef7b5185d8"></script>
+<script defer src="data/journey-map.js?v=ef7b5185d8"></script>
+<script defer src="data/journey-media.js?v=ef7b5185d8"></script>
+<script defer src="data/souvenirs.js?v=ef7b5185d8"></script>
+<script defer src="erhua.js?v=ef7b5185d8"></script>
+<script defer src="pinyin.js?v=ef7b5185d8"></script>
+<script defer src="data/pinyin-course.js?v=ef7b5185d8"></script>
+<script defer src="data/pinyin-chart.js?v=ef7b5185d8"></script>
+<script defer src="data/exam-media.js?v=ef7b5185d8"></script>
+<script defer src="data/exam-art.js?v=ef7b5185d8"></script>
+<script defer src="data/neutral-alt.js?v=ef7b5185d8"></script>
+<script defer src="data/path-scenes.js?v=ef7b5185d8"></script>
+<script defer src="data/speak-scenes.js?v=ef7b5185d8"></script>
+<script defer src="data/art.js?v=ef7b5185d8"></script>
+<script defer src="data/path.js?v=ef7b5185d8"></script>
+<script defer src="app.js?v=ef7b5185d8"></script>
 </body>
 </html>

@@ -107,16 +107,16 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await page.locator('.side').innerText()).includes('0-day streak'), 'fresh state starts at a 0-day streak');
   // Home: the trail comes first, then today and the level exam
   check(await page.evaluate(() => { const h = document.querySelector('.home'); const f = h && h.querySelector('.hgrid2') && h.querySelector('.hgrid2').firstElementChild; return !!f && !!f.querySelector('.today-go') && f.innerText.includes('Today') && !!h.querySelector('.trail') && f.compareDocumentPosition(h.querySelector('.trail')) & Node.DOCUMENT_POSITION_FOLLOWING; }), 'Today and its main button come first on Home; the path is below');
-  check(await page.locator('.rg').count() === 4 && await page.locator('.task2').count() >= 1, 'Home shows four skill rings and the Today list');
+  check(await page.locator('.rg').count() === 0 && await page.locator('.climb').count() === 0 && await page.locator('.task2').count() >= 1, 'Home has the Today list and no Climb card or skill rings');
   // The ascent: trail, mist and stairs views of the same progress
   const ws0 = await page.evaluate(() => JSON.stringify(window.shanlu.state.ws));
-  check((await text()).toLowerCase().includes('next milestone') && (await text()).includes('10 words to go'), 'your path opens on the trail: ten words to the first milestone on a fresh start');
+  check(await page.locator('.astat, .trail-cta, .trail-go, .asc-note, .stairs').count() === 0 && await page.locator('.seg2 button', { hasText: /^(Trail|Stairs)$/ }).count() === 0, 'Home keeps only the mountain trail: no milestone or streak cards, no Learn button under it, no footnote, no Stairs view');
   check(await page.locator('.trail-d .apill.next').count() === 1 && (await page.locator('.trail-d .apill.next').innerText()).includes('HSK 1 exam'), 'the trail names the next camp');
   check((await page.locator('.trail-d img').getAttribute('src')).startsWith('data:image/svg+xml'), 'the trail art is drawn from the progress');
   const learnN = async (n) => page.evaluate((n) => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).slice(0, n).forEach(zh => { ws[zh].see = { s:2, l:2, t:Date.now() }; }); app.setState({ ws }); }, n);
   await learnN(96);
   await page.waitForTimeout(150);
-  check((await text()).includes('4 words to go') && (await text()).includes('96 of 100'), 'after 96 words the next milestone (100) is 4 words away');
+  check((await page.locator('.trail-d .apill.you').innerText()).includes('96 words kept'), 'after 96 words the trail marks you at 96 words kept');
   check((await page.locator('.trail-d .apill.you').innerText()).includes('96 words kept'), 'the trail says where you are');
   check(await page.locator('.seg2 button', { hasText: /^Mist$/ }).count() === 0 && await page.locator('.mtile').count() === 0, 'Home no longer has a Mist view');
   await nav('Archive');
@@ -136,23 +136,12 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await text()).includes('Numbers') && await page.evaluate(() => window.shanlu.state.screen === 'web' && window.shanlu.state.wmode === 'topic' && window.shanlu.state.wtopic === 4), 'tapping a mountain opens that topic in the Word webs');
   await page.evaluate(() => { window.shanlu.setState({ wmode:'char', wtopic:0 }); });
   await nav('Home');
-  await page.locator('.seg2 button', { hasText: /^Stairs$/ }).click();
-  check(await page.locator('.stairs .step').count() === 9, 'the stairs view is still there');
-  check(await page.locator('.seg2 button', { hasText: /^HSK 2.0/ }).count() === 0, 'the HSK 2.0 / 3.0 switch is not on the home screen (it is in Settings)');
+  check(await page.locator('.trail-d .apill.near, .trail-d .apill.far').count() === 8 && (await page.locator('.trail-d').innerText()).includes('HSK 9'), 'the trail runs up to HSK 9: eight more camps after the next one');
   await page.evaluate(() => window.shanlu.setState({ sys: '2.0' }));
   await page.waitForTimeout(80);
-  check(await page.locator('.stairs .step').count() === 6, 'the HSK 2.0 / 3.0 switch still changes the stairs');
+  check((await page.locator('.trail-d').innerText()).includes('HSK 9'), 'it still runs to HSK 9 when the HSK 2.0 setting is on');
   await page.evaluate(() => window.shanlu.setState({ sys: '3.0' }));
   await page.waitForTimeout(80);
-  await page.locator('.seg2 button', { hasText: /^Trail$/ }).click();
-  await page.evaluate(() => window.shanlu.setState({ sys: '2.0' }));
-  await page.waitForTimeout(80);
-  check(await page.locator('.trail-d .apill.near, .trail-d .apill.far').count() === 5 && !(await page.locator('.trail-d').innerText()).includes('HSK 7'), 'with HSK 2.0 the trail has six camps');
-  await page.evaluate(() => window.shanlu.setState({ sys: '3.0' }));
-  await page.waitForTimeout(80);
-  await page.evaluate(() => { window.shanlu.setState({ ascView:'stairs' }); window.shanlu.persistNow(); });
-  check(await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-progress-v1')).ascView === 'stairs'), 'the view choice is saved');
-  await page.evaluate(() => { window.shanlu.setState({ ascView:'trail' }); });
   check(await page.evaluate((N) => window.HSK1_WORDS.length === N && window.HSK1_WORDS.every(w => w.ex && w.ex.zh && w.py && w.en), WORD_COUNT), 'all ' + WORD_COUNT + ' words are loaded with a gloss, pinyin and an example');
   await shot('01-home');
 

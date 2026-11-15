@@ -760,7 +760,7 @@ button.scn:hover .scn-m{text-decoration:underline}
 
 /* Home: trail first, then today and the level exam */
 .home{display:flex;flex-direction:column;gap:22px}
-.hgrid2{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:18px;align-items:start}
+.hgrid2{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:start}
 .today-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
 .tasks2{display:flex;flex-direction:column}
 .task2{display:flex;align-items:center;gap:14px;min-height:60px;padding:6px 0;border-top:1px solid var(--line)}
