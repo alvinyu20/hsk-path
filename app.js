@@ -3371,7 +3371,7 @@
 
       // tabs
       const tabNow = fm && (S.jyTab === 'stops' || S.jyTab === 'food' || S.jyTab === 'shelf') ? 'map' : S.jyTab;
-      out.jyTabs = (fm ? [['map', 'Map'], ['pass', 'Passport']] : [['map', 'Map'], ['pass', 'Passport'], ['shelf', 'Shelf'], ['stops', 'Postcards'], ['food', 'Food']]).map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', fn:() => this.jyTabSet(t[0]) }));
+      out.jyTabs = (fm ? [['map', 'Map'], ['pass', 'Passport']] : [['map', 'Map'], ['pass', 'Passport'], ['shelf', 'Souvenirs'], ['stops', 'Postcards'], ['food', 'Food']]).map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', fn:() => this.jyTabSet(t[0]) }));
       out.jyIsMap = tabNow === 'map'; out.jyIsStops = tabNow === 'stops'; out.jyIsFood = tabNow === 'food'; out.jyIsPass = tabNow === 'pass'; out.jyIsShelf = tabNow === 'shelf';
       // the souvenir shelf (your own journey only): found when the stop that hides it is unlocked; the rest show as dark shapes with their region
       if (tabNow === 'shelf' && !fm) {
@@ -3379,7 +3379,7 @@
         const sel = S.jySvSel ? list.find(x => x.id === S.jySvSel) : null;
         out.jySvSub = got.length + ' of ' + list.length + ' found';
         out.jySvChips = [['all', 'All', list.length], ['found', 'Found', got.length], ['hidden', 'Not found yet', list.length - got.length]].map(c => ({ label:c[1], count:c[2], cls:fl === c[0] ? 'on' : '', fn:() => this.jySvFilterSet(c[0]) }));
-        const shown = list.filter(x => fl === 'all' || (fl === 'found') === !!have[x.stop]);
+        const shown = list.filter(x => fl === 'all' || (fl === 'found') === !!have[x.stop]).sort((a, b) => a.en.localeCompare(b.en, 'en', { sensitivity:'base' }) || (a.id < b.id ? -1 : 1));
         out.jySvItems = shown.map(x => { const has = !!have[x.stop]; const RR = JWORLD.byRegion[x.rid];
           return { cls:(has ? 'got' : 'hid') + (sel && sel.id === x.id ? ' sel' : ''), img:svImg(x), name:has ? x.en : '', zh:has ? x.zh : '', label:has ? x.en + ', found' : 'A souvenir still to find in ' + (RR ? RR.en : 'China'), open:() => this.jySvPick(x.id) }; });
         out.jySvNone = shown.length === 0; out.jySvNoneText = fl === 'found' ? 'Nothing here yet. Travel on: each region hides a few souvenirs in its stops.' : 'You have found them all.';
@@ -3389,7 +3389,7 @@
             jySvSelStory:has ? sel.story : 'Waiting in a stop somewhere in ' + (RR ? RR.en : 'China') + '. Keep travelling there to find it.', jySvSelFound:has, jySvSelWhere:has ? 'Found at ' + SP.en + ' · ' + (RR ? RR.en : '') : '',
             jySvSelGo:() => this.jyOpenStop(sel.stop), jySvSelClose:() => this.setState({ jySvSel:null }), jySvSelLabel:has ? sel.en + ', ' + sel.story : 'A souvenir still to find in ' + (RR ? RR.en : 'China') }); }
       }
-      const FILT = [['all', 'All'], ['S', '★ Must-see'], ['T', 'Cities'], ['A', 'Attractions'], ['D', 'Dishes'], ['C', 'Culture'], ['P', 'Airports']];
+      const FILT = [['all', 'All'], ['S', '★ Must-see'], ['T', 'Cities'], ['A', 'Sights'], ['D', 'Dishes'], ['C', 'Culture'], ['P', 'Airports']];
       const filterChips = (stopsSeen, noDish) => FILT.filter(f => !(noDish && f[0] === 'D')).map(f => ({ label:f[1], count:f[0] === 'all' ? stopsSeen.length : stopsSeen.filter(s => f[0] === 'S' ? s.sp : s.k === f[0]).length, cls:S.jyFilter === f[0] ? 'on' : '', fn:() => this.jyFilterSet(f[0]) }));
       const pass = (s) => S.jyFilter === 'all' || (S.jyFilter === 'S' ? s.sp : s.k === S.jyFilter);
       const rowOf = (s, cls) => ({ kind:(s.sp ? '★ ' : '') + ({ T:'City', A:'Sight', D:'Dish', C:'Culture', P:'Airport' })[s.k], zh:s.zh, en:s.en, where:JWORLD.byRegion[s.rid].en + ' · ' + JWORLD.byCity[s.cid].en, cls:(cls || '') + (s.sp ? ' sp' : ''), open:() => this.jyOpenStop(s.id) });
@@ -3473,7 +3473,7 @@
             hasPhoto:has, noPhoto:!has, url:has ? ph.u : '', art:jyStopArt(s, RR.hue, dk), credit:has && ph.c ? ph.c : '', ft:fl ? '-1' : '0', kt:fl ? '0' : '-1', kh:fl ? 'false' : 'true',
             label:'Postcard: ' + s.en + ', ' + CC.en + (s.sp ? ', a must-see' : '') + '. Tap to turn it over.', flip:() => { SFX.play('ok'); this.setState({ jyFlip:fl ? null : s.id }); }, open:() => this.jyOpenStop(s.id) }; }) : [];
         out.jyMoreShow = shown.length > S.jyMoreN; out.jyMore = () => this.setState({ jyMoreN:S.jyMoreN + 40 });
-        out.jyStopsNote = all.length ? plural(shown.length, 'postcard', 'postcards') + (S.jyFilter === 'all' ? ', newest first. Tap a postcard to turn it over.' : ' of this kind, newest first.') : 'No postcards yet. Every stop you reach sends one here.';
+        out.jyStopsNoteShow = !all.length; out.jyStopsNote = 'No postcards yet. Every stop you reach sends one here.';
       }
 
       // food diary: everything from the dish lists that you have found, written up as one menu per province (the newest province first)
@@ -3560,7 +3560,9 @@
           const auto = 0;   // the passport always opens on its cover
           const cur = Math.max(0, Math.min(total - 1, S.jyPg == null ? auto : S.jyPg));
           const stampedN = ids.filter(id => vs.done[id]).length;
-          out.jyPsecs = fm ? [] : [['reg', 'Regions'], ['city', 'Cities'], ['star', 'Must-sees']].map(x => ({ label:x[1], cls:'pp-mark ' + x[0] + (sec === x[0] ? ' on' : ''), pressed:sec === x[0] ? 'true' : 'false', fn:() => { if (sec !== x[0]) { SFX.play('ok'); this.setState({ jyPsec:x[0], jyPg:null }); } } }));
+          // a bookmark opens its section on the page that holds the newest stamps (regions run in order, so that is the last one stamped or in progress; cities and must-sees are newest first)
+          const regLast = regItems.reduce((a, x, i) => x.cls === 'empty' ? a : i, 0), regPg = Math.floor(regLast / 4) + 1;
+          out.jyPsecs = fm ? [] : [['reg', 'Regions'], ['city', 'Cities'], ['star', 'Must-sees']].map(x => ({ label:x[1], cls:'pp-mark ' + x[0] + (sec === x[0] ? ' on' : ''), pressed:sec === x[0] ? 'true' : 'false', fn:() => { if (sec !== x[0] || cur === 0) { SFX.play('ok'); this.setState({ jyPsec:x[0], jyPg:x[0] === 'reg' ? regPg : 1 }); } } }));
           out.jyPsecShow = !fm; out.jyPassMoreShow = out.jyPassMoreShow && sec === 'reg';
           out.jyPages = [{ cover:true, isPage:false, cls:(cur > 0 ? 'turned' : 'cur') + ' cv', z:cur > 0 ? 0 : total, hid:cur > 0 ? 'true' : 'false', sub:SEC.sub(stampedN), title:'', no:'', tab:'-1', stamps:[], cstamps:[], sstamps:[], isReg:false, isCity:false, isStar:false, none:false, noneText:'' }].concat(Array.from({ length:np }, (_, p) => {
             const idx = p + 1, mine = SEC.items.slice(p * per, p * per + per);

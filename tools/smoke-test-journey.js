@@ -174,15 +174,15 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const t = await main(page);
     check(/1 of 31 regions stamped/.test(t) && /3 city stamps/.test(t) && /4 must-sees/.test(t), 'the passport counts regions, city stamps and must-sees: ' + (t.match(/\d+ of 31 regions[^\n]*/) || [''])[0]);
     check(await page.locator('.pp-mark').count() === 3, 'the passport has a bookmark on the side for regions, cities and must-sees');
+    check(await page.locator('.pp-pg.cv.cur').count() === 1, 'the passport is on its cover before a bookmark is tapped');
     await page.locator('.pp-mark.city').click(); await page.waitForTimeout(150);
-    await page.locator('.pp-arrow[aria-label="Next page"]').click(); await page.waitForTimeout(150);
+    check(await page.locator('.pp-pg.cv.cur').count() === 0 && await page.locator('.pp-pg.cur .jy-cstamp').count() >= 1, 'tapping the Cities bookmark opens the cities page, not the cover');
     check(await page.locator('.pp-pg.cur .jy-cstamp.got').count() === 3 && await page.locator('.pp-pg.cur .jy-cstamp .st-art').count() === 3 && await page.evaluate(() => [...document.querySelectorAll('.pp-pg.cur .st-art')].every(i => /^data:image\/svg\+xml/.test(i.getAttribute('src')))), 'Macau gives three city stamps, each with a landmark');
     await page.locator('.pp-mark.star').click(); await page.waitForTimeout(150);
-    check(await page.locator('.pp-pg.cv.cur').count() === 1, 'a section of the passport opens on its cover');
-    await page.locator('.pp-arrow[aria-label="Next page"]').click(); await page.waitForTimeout(150);
+    check(await page.locator('.pp-pg.cv.cur').count() === 0 && await page.locator('.pp-mark.star.on').count() === 1, 'tapping a bookmark in the book goes straight to that section\'s page');
     check(await page.locator('.pp-pg.cur .jy-sstamp').count() === 4 && await page.locator('.pp-pg.cur .jy-sstamp .st-art').count() === 4, 'Macau gives four must-see stamps, each with a picture');
     await page.locator('.pp-mark.reg').click(); await page.waitForTimeout(150);
-    await page.locator('.pp-arrow[aria-label="Next page"]').click(); await page.waitForTimeout(150);
+    check(await page.locator('.pp-pg.cv.cur').count() === 0, 'the Regions bookmark opens a page of regions');
     check(await page.locator('.jy-slot').count() === 2, 'the passport shows the regions you have been to: ' + await page.locator('.jy-slot').count());
     await page.locator('.jy-passmore').click();
     check(await page.locator('.jy-slot').count() === 31, 'the rest of the regions unfold on request');
@@ -198,7 +198,6 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
       check(await page.locator('.pp-pg.cv.turned').count() === 1 && await page.locator('.pp-pg.cur .jy-slot').count() >= 1, 'the next arrow turns the cover over to the first page of stamps');
       check(await page.locator('.pp-pg[aria-hidden="true"]').count() === (await page.locator('.pp-pg').count()) - 1, 'only the open page is readable by a screen reader'); }
     await page.locator('.pp-mark.star').click(); await page.waitForTimeout(150);
-    await page.locator('.pp-arrow[aria-label="Next page"]').click(); await page.waitForTimeout(150);
     await page.locator('.pp-pg.cur .jy-sstamp').first().click();
     check(await page.locator('.jy-card.sp').count() === 1 && await page.locator('.jy-card .jy-tk').count() === 0, 'a must-see stamp opens its stop, with no ticket on a stop opened later');
     // the Food diary is one menu per province, and the postcard wall leaves the dishes to it

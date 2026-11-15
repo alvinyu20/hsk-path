@@ -52,21 +52,25 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   await page.reload(); await page.waitForSelector('.app');
   await page.locator('.pill.xpp').click(); await page.waitForTimeout(300);
   const tabs = await page.locator('.jy-tabs button').allInnerTexts();
-  check(tabs.indexOf('Shelf') >= 0, 'Journey has a Shelf tab (' + tabs.join(', ') + ')');
+  check(tabs.indexOf('Souvenirs') >= 0, 'Journey has a Souvenirs tab (' + tabs.join(', ') + ')');
   const tabBox = await page.evaluate(() => { const t = document.querySelector('.jy-tabs'); return { sw: t.scrollWidth, cw: t.clientWidth }; });
   check(tabBox.sw <= tabBox.cw + 2, 'all tabs fit on a phone without scrolling (' + tabBox.sw + ' in ' + tabBox.cw + ')');
-  await page.locator('.jy-tabs button', { hasText: 'Shelf' }).click(); await page.waitForTimeout(300);
+  await page.locator('.jy-tabs button', { hasText: 'Souvenirs' }).click(); await page.waitForTimeout(300);
   check((await page.locator('.sv-cell').count()) === exp.total, 'the shelf shows every souvenir (' + exp.total + ')');
   check((await page.locator('.sv-cell.got').count()) === exp.got && exp.got >= 2, 'found souvenirs are shown in colour (' + exp.got + ')');
   check((await page.locator('.sv-cell.hid').count()) === exp.total - exp.got, 'the rest stay hidden');
   const hidTxt = await page.evaluate(() => { const c = document.querySelector('.sv-cell.hid'); const s = window.SOUVENIRS.find((x) => c.getAttribute('aria-label').indexOf(x.en) >= 0 || c.innerText.indexOf(x.en) >= 0); return { name: c.querySelector('.sv-name').textContent, leak: !!s }; });
-  check(/hidden/i.test(hidTxt.name) && !hidTxt.leak, 'a hidden souvenir does not give its name away (' + hidTxt.name + ')');
+  check(hidTxt.name.trim() === '' && !hidTxt.leak, 'a hidden souvenir shows no label and does not give its name away (' + hidTxt.name + ')');
+  const lay = await page.evaluate(() => { const g = getComputedStyle(document.querySelector('.sv-grid')); const c = document.querySelector('.sv-cell'); const names = [...document.querySelectorAll('.sv-cell.got .sv-name')].map((n) => n.textContent.trim()); const rects = [...document.querySelectorAll('.sv-cell')].slice(0, 6).map((n) => n.getBoundingClientRect()); return { cg: g.columnGap, rg: g.rowGap, after: getComputedStyle(c, '::after').content, names, hGap: Math.round(rects[1].left - rects[0].right), vGap: Math.round(rects[3].top - rects[0].bottom) }; });
+  check(lay.cg === lay.rg && lay.hGap === lay.vGap, 'souvenir tiles have equal horizontal and vertical gaps (' + lay.cg + ' x ' + lay.rg + ', measured ' + lay.hGap + ' x ' + lay.vGap + ')');
+  check(lay.after === 'none' || lay.after === 'normal', 'no brown shelf board under the souvenirs');
+  check(lay.names.length >= 2 && lay.names.every((n, i) => i === 0 || lay.names[i - 1].localeCompare(n, 'en', { sensitivity: 'base' }) <= 0), 'souvenirs are in alphabetical order (' + lay.names.join(', ') + ')');
   await page.locator('.sv-cell.got').first().click(); await page.waitForTimeout(500);
   check((await page.locator('.sv-detail').count()) === 1 && /[一-鿿]/.test(await page.locator('.sv-detail .zh').innerText()), 'tapping a found souvenir opens its card');
   await page.locator('.sv-cell.hid').first().click(); await page.waitForTimeout(400);
   const hidDetail = await page.evaluate(() => (document.querySelector('.sv-detail') || { innerText: '' }).innerText);
   check(!/[一-鿿]/.test(hidDetail.replace(/[?？]/g, '')), 'tapping a hidden one shows no Chinese or English name');
-  await page.locator('.jy-chip', { hasText: 'Found' }).click(); await page.waitForTimeout(300);
+  await page.locator('.jy-chip', { hasText: /^Found/ }).click(); await page.waitForTimeout(300);
   check((await page.locator('.sv-cell').count()) === exp.got && (await page.locator('.sv-cell.hid').count()) === 0, 'the Found filter lists only found souvenirs');
 
   // ---- arriving at a souvenir stop ----
