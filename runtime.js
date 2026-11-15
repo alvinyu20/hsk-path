@@ -50,6 +50,11 @@
         if (holeValue(n.getAttribute('value'), scope)) renderNodes(n.childNodes, scope, ctx, out);
         continue;
       }
+      if (tag === 'sc-html') {   // a string of ready-made markup from our own code (the feast table drawings), put in as it is
+        const v = holeValue(n.getAttribute('value'), scope);
+        if (v) out.push(String(v));
+        continue;
+      }
       if (tag === 'sc-for') {
         const list = holeValue(n.getAttribute('list'), scope) || [];
         const as = n.getAttribute('as');

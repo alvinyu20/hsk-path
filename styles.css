@@ -3122,3 +3122,34 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .pp-shell .pp-book{aspect-ratio:3 / 4.7}
 .pp-front .jy-sstamp{width:98px;min-height:106px;padding:8px 4px 9px}
 .pp-front .jy-sstamp .st-art{width:38px;height:38px;margin-top:3px}
+
+/* ---- Food diary: the feast table (a themed room per province; see feastscene.js) ---- */
+.fz-chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;margin:0 -2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.fz-chips::-webkit-scrollbar{display:none}
+.fz-chip{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:0;min-height:44px;padding:5px 14px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;cursor:pointer;line-height:1.2}
+.fz-chip b{font-size:17px;font-weight:600}.fz-chip span{font-size:11.5px;color:var(--mute)}
+.fz-chip[aria-pressed="true"]{background:var(--seal);color:var(--on-seal);border-color:transparent}.fz-chip[aria-pressed="true"] span{color:inherit;opacity:.85}
+.fz-card{position:relative;display:block;border-radius:16px;overflow:hidden;background:#222;cursor:pointer;box-shadow:0 10px 26px -14px rgba(0,0,0,.5);-webkit-tap-highlight-color:transparent}
+.fz-card .fz-svg{display:block;width:100%;height:auto;aspect-ratio:680/440}
+.fz-badge{position:absolute;right:10px;bottom:10px;padding:5px 11px;border-radius:99px;background:rgba(0,0,0,.55);color:#fff;font-size:12.5px;font-weight:600;pointer-events:none}
+.fz-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px;color:var(--mute)}
+.fz-pg{display:inline-flex;align-items:center;gap:8px}
+.fz-pgb{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:22px;line-height:1;cursor:pointer}.fz-pgb:disabled{opacity:.35;cursor:default}
+.fz-list{margin-top:2px}.fz-list > summary{cursor:pointer;font-size:14.5px;font-weight:600;padding:8px 0;color:var(--mute)}
+.fz-none{margin:0}
+.fz-stm{animation:fzsteam 3.2s ease-in-out infinite;transform-box:fill-box}
+@keyframes fzsteam{0%,100%{opacity:.25}50%{opacity:.9}}
+/* the full-screen view: turned on its side when the phone is held upright */
+.fz-ov{position:fixed;inset:0;z-index:200;background:#000;overflow:hidden}
+.fz-rot{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.fz-svg{overflow:hidden}
+.fz-rot .fz-svg{width:100%;height:100%}
+@media (orientation:portrait){.fz-rot{inset:auto;top:0;left:100%;width:100vh;width:100dvh;height:100vw;height:100dvw;transform-origin:0 0;transform:rotate(90deg)}}
+.fz-x{position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;font-size:20px;cursor:pointer;z-index:2}
+.fz-hint{position:absolute;left:12px;bottom:10px;padding:5px 12px;border-radius:99px;background:rgba(0,0,0,.55);color:#fff;font-size:13px;pointer-events:none}
+.fz-pop{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;display:flex;gap:14px;align-items:center;width:min(86%,520px);max-height:88%;overflow:auto;padding:14px 16px;border-radius:18px;background:var(--panel,#fff);color:var(--ink,#222);box-shadow:0 20px 50px rgba(0,0,0,.55)}
+.fz-pop-art{flex:0 0 34%}.fz-pop-art svg{display:block;width:100%;height:auto;background:#2a2320;border-radius:12px}
+.fz-pop-t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.fz-pop-t b{font-size:26px;font-weight:600}.fz-py{font-size:14px;color:var(--mute)}.fz-pop-t em{font-style:normal;font-weight:600;font-size:16px}.fz-pop-t small{font-size:12.5px;color:var(--mute)}
+.fz-pop-t p{margin:6px 0 0;font-size:13.5px;line-height:1.4}.fz-fun{color:var(--mute)}.fz-pop-t p:empty{display:none}
+.fz-pop-b{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}

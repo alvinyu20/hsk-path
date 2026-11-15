@@ -516,7 +516,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
-      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
+      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -3198,7 +3198,7 @@
     jyShowReg = (id) => this.setState({ jyTab:'map', jyReg:id, jySel:null, jyFilter:'all', jyOpen:null, jyRv:null });
     jyBack = () => this.setState({ jyReg:null, jySel:null, jyFilter:'all' });
     jyPgGo = (d, cur, total) => { const to = Math.max(0, Math.min(total - 1, cur + d)); if (to === cur) return; SFX.play('ok'); this.setState({ jyPg:to }); };
-    jyTabSet = (t) => this.setState({ jyTab:t, jyFilter:'all', jyMoreN:40, jyFlip:null });
+    jyTabSet = (t) => this.setState({ jyTab:t, jyFilter:'all', jyMoreN:40, jyFlip:null, jyFoodOv:false, jyFoodPop:null });
     jyFilterSet = (f) => this.setState({ jyFilter:f, jySel:null, jyMoreN:40 });
     jySvFilterSet = (f) => this.setState({ jySvFilter:f, jySvSel:null });
     jySvPick = (id) => { SFX.play('ok'); this.setState({ jySvSel:id }); setTimeout(() => { try { const el = document.querySelector('.sv-detail'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest', behavior:'smooth' }); } catch (e) {} }, 40); };
@@ -3491,7 +3491,31 @@
             return { zh:g[0], py:g[1], en:g[2], items:items.map(item) }; }).filter(g => g.items.length);
           return { zh:R.zh, py:R.py, en:R.en, hue, sub:mine.length === total ? 'All ' + total + ' found' : mine.length + ' of ' + total + ' found', groups };
         });
-        out.jyTables = S.jyTab === 'food' ? tables : []; out.jyFoodNone = tables.length === 0;
+        out.jyTables = S.jyTab === 'food' ? tables : []; out.jyFoodNone = tables.length === 0; out.jyFoodHas = tables.length > 0;
+        // the feast table: one themed room per province, with every dish you have found set out in it
+        out.jyFoodChips = []; out.jyFoodSvg = ''; out.jyFoodOvSvg = ''; out.jyFoodOvShow = false; out.jyFoodPopShow = false; out.jyFoodMulti = false;
+        if (S.jyTab === 'food' && tables.length && window.FEAST) {
+          const rids = order.slice().reverse(), rid = rids.indexOf(S.jyFoodRid) >= 0 ? S.jyFoodRid : rids[0], R = JWORLD.byRegion[rid];
+          const found = byR[rid].map(x => ({ id:x.id, zh:x.zh, py:x.py, en:x.en, kind:JY.sayKind(x), sp:!!x.sp }));
+          const total = R.stops.filter(x => x.k === 'D').length, n0 = Math.max(0, Math.min(window.FEAST.pagesFor(found.map(f => Object.assign({}, f, window.FEAST.classify(f, f.kind)))) - 1, S.jyFoodPg || 0));
+          const sc = window.FEAST.scene(rid, found, n0);
+          out.jyFoodChips = rids.map(r => { const RR = JWORLD.byRegion[r]; return { zh:RR.zh, en:RR.en, n:byR[r].length, pressed:r === rid, pick:() => this.setState({ jyFoodRid:r, jyFoodPg:0, jyFoodPop:null }) }; });
+          out.jyFoodSvg = window.FEAST.wrap(sc, 'c', false);
+          out.jyFoodLabel = 'The ' + R.en + ' table with ' + plural(found.length, 'dish', 'dishes') + ' on it. Tap to look closer.';
+          out.jyFoodCount = (found.length === total ? 'All ' + total + ' found' : found.length + ' of ' + total + ' found') + ' · ' + R.en;
+          out.jyFoodMulti = sc.pages > 1; out.jyFoodCourse = 'Course ' + (sc.page + 1) + ' of ' + sc.pages; out.jyFoodPrevOff = sc.page <= 0; out.jyFoodNextOff = sc.page >= sc.pages - 1;
+          out.jyFoodPrev = () => this.setState({ jyFoodPg:Math.max(0, sc.page - 1), jyFoodPop:null }); out.jyFoodNext = () => this.setState({ jyFoodPg:Math.min(sc.pages - 1, sc.page + 1), jyFoodPop:null });
+          out.jyFoodOpenFn = () => { SFX.play('ok'); this.setState({ jyFoodOv:true, jyFoodPop:null }); };
+          out.jyFoodKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); out.jyFoodOpenFn(); } };
+          out.jyFoodOvShow = !!S.jyFoodOv; out.jyFoodClose = () => this.setState({ jyFoodOv:false, jyFoodPop:null });
+          if (S.jyFoodOv) {
+            out.jyFoodOvSvg = window.FEAST.wrap(sc, 'o', true);
+            const ps = S.jyFoodPop && JWORLD.byStop[S.jyFoodPop];
+            if (ps && ps.rid === rid) { const PC = JWORLD.byCity[ps.cid], kd = JY.sayKind(ps);
+              Object.assign(out, { jyFoodPopShow:true, jyPopArt:window.FEAST.portrait(ps, kd), jyPopZh:ps.zh, jyPopPy:ps.py, jyPopEn:ps.en, jyPopWhere:(PC ? PC.en + ' · ' : '') + R.en, jyPopKind:(ps.sp ? '★ Must-see · ' : '') + ({ dish:'Dish', near:'Dish', drink:'Drink', buy:'Local specialty', ask:'Local specialty' })[kd],
+                jyPopNote:ps.note || '', jyPopFun:ps.fun || '', jyPopClose:() => this.setState({ jyFoodPop:null }), jyPopOpen:() => { this.setState({ jyFoodOv:false, jyFoodPop:null }); this.jyOpenStop(ps.id); } }); }
+          }
+        }
         out.jyFoodSub = tables.length ? plural(tally[0], 'dish', 'dishes') + ' · ' + plural(tally[1], 'drink', 'drinks') + ' · ' + plural(tally[2], 'local specialty', 'local specialties') + ', in ' + plural(tables.length, 'province', 'provinces') : 'Nothing on your table yet. Every dish you find on your travels is written down here, one menu per province.';
       }
 
@@ -5587,8 +5611,9 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       }
     }
   });
+  document.addEventListener('click', (e) => { try { const h = e.target.closest && e.target.closest('.fz-hit'); if (h && window.shanlu && window.shanlu.state.jyFoodOv) { e.stopPropagation(); window.shanlu.setState({ jyFoodPop:h.getAttribute('data-id') }); } } catch (err) {} }, true);
   document.addEventListener('click', (e) => { try { if (window.shanlu && window.shanlu.state.lvMenu && !(e.target.closest && e.target.closest('.lvmenu'))) window.shanlu.setState({ lvMenu:false }); } catch (err) {} });
-  document.addEventListener('keydown', (e) => { try { if (e.key === 'Escape' && window.shanlu && window.shanlu.state.jyTrip && window.shanlu.state.jyRv) window.shanlu.jyTripClose(); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.lvMenu) window.shanlu.setState({ lvMenu:false }); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.pstop) window.shanlu.pathClose(); } catch (err) {} });
+  document.addEventListener('keydown', (e) => { try { if (e.key === 'Escape' && window.shanlu && window.shanlu.state.jyTrip && window.shanlu.state.jyRv) window.shanlu.jyTripClose(); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.lvMenu) window.shanlu.setState({ lvMenu:false }); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.jyFoodOv) { if (window.shanlu.state.jyFoodPop) window.shanlu.setState({ jyFoodPop:null }); else window.shanlu.setState({ jyFoodOv:false }); } if (e.key === 'Escape' && window.shanlu && window.shanlu.state.pstop) window.shanlu.pathClose(); } catch (err) {} });
   // after a mouse click on a Review button, drop the focus so Space and Enter go to the card, not back to that button
   document.addEventListener('click', (e) => { try { const b = e.target && e.target.closest && e.target.closest('.rev button'); if (b && e.detail > 0) b.blur(); } catch (err) {} });
   window.addEventListener('pagehide', () => { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); });

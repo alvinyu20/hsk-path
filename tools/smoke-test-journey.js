@@ -198,8 +198,17 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await page.locator('.jy-card.sp').count() === 1 && await page.locator('.jy-card .jy-tk').count() === 0, 'a must-see stamp opens its stop, with no ticket on a stop opened later');
     // the Food diary is one menu per province, and the postcard wall leaves the dishes to it
     await page.locator('.jy-tabs button', { hasText: 'Food' }).click();
-    check(await page.locator('.fd-views').count() === 0 && await page.locator('.fd-menu').count() >= 1 && await page.locator('.fd-menu .jy-dish').count() >= 1, 'the Food diary is a menu with dishes, with no layout switch');
-    check(await page.locator('.fd-menu').count() === (await page.evaluate(() => new Set([...document.querySelectorAll('.fd-menu .jy-table-h b.zh')].map(e => e.textContent)).size)), 'the Food diary has one menu per province');
+    check(await page.locator('.fz-card').count() === 1 && await page.locator('.fz-card .fz-hit').count() >= 1 && await page.locator('.fz-chip').count() >= 1, 'the Food diary is a feast table with dishes on it, one chip per province');
+    check(await page.locator('.fz-chip').count() === (await page.evaluate(() => new Set([...document.querySelectorAll('.fz-chip b.zh')].map(e => e.textContent)).size)), 'the Food diary has one table per province');
+    check(await page.locator('.fd-menu .jy-dish').count() >= 1, 'the menu as a list is still there under the table');
+    await page.locator('.fz-card').click(); await page.waitForTimeout(150);
+    check(await page.locator('.fz-ov .fz-hit').count() >= 1, 'tapping the table opens it full screen');
+    await page.locator('.fz-ov .fz-hit').first().click({ force: true }); await page.waitForTimeout(150);
+    check(await page.locator('.fz-pop .zh').count() === 1 && (await page.locator('.fz-pop .zh').innerText()).length > 0, 'tapping a dish shows what it is');
+    await page.locator('.fz-pop .btn', { hasText: 'Close' }).click(); await page.waitForTimeout(80);
+    check(await page.locator('.fz-pop').count() === 0 && await page.locator('.fz-ov').count() === 1, 'the dish popup closes and leaves the table open');
+    await page.locator('.fz-x').click(); await page.waitForTimeout(80);
+    check(await page.locator('.fz-ov').count() === 0, 'the full-screen table closes');
     await page.locator('.jy-tabs button', { hasText: 'Postcards' }).click();
     check(await page.locator('.jy-chip', { hasText: 'Dishes' }).count() === 0, 'the postcard wall has no Dishes filter');
     check(errors.length === 0, 'no errors on the long trip: ' + errors.join(' | '));
