@@ -135,6 +135,7 @@
   // The gradients have fixed ids: every picture on the page carries the same copy, so it does not matter which one is found first.
   const SIL = '<filter id="fzsil" color-interpolation-filters="sRGB" x="-10%" y="-10%" width="120%" height="120%"><feColorMatrix type="matrix" values="0 0 0 0 .16 0 0 0 0 .1 0 0 0 0 .08 0 0 0 1 0"/></filter>';
   const LIGHT_DEFS = '<defs>' + SIL +
+    '<radialGradient id="fzaura"><stop offset="0" stop-color="#FFE9A8" stop-opacity=".34"/><stop offset=".6" stop-color="#FFD27A" stop-opacity=".14"/><stop offset="1" stop-color="#FFD27A" stop-opacity="0"/></radialGradient>' +
     '<radialGradient id="fzglow"><stop offset="0" stop-color="#FFEDB8" stop-opacity=".34"/><stop offset=".55" stop-color="#FFD98A" stop-opacity=".1"/><stop offset="1" stop-color="#FFD98A" stop-opacity="0"/></radialGradient>' +
     '<radialGradient id="fzsh"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset=".55" stop-color="#000" stop-opacity=".22"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>' +
     '<radialGradient id="fzvig" cx=".5" cy=".56" r=".78"><stop offset=".5" stop-color="#120804" stop-opacity="0"/><stop offset="1" stop-color="#120804" stop-opacity=".5"/></radialGradient>' +
@@ -166,6 +167,9 @@
   const SC = [.64, .78, .94], TABLE_CAP = 18, SHELF_CAP = 10;
   const gsc = (x, y, k, p) => '<g transform="translate(' + x + ' ' + y + ') scale(' + k + ')" stroke="' + OL + '" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">' + p + '</g>';
   const hot = (it, inner, x, y, w, h) => '<g class="fz-hit' + (it.hid ? ' hid' : '') + '" data-id="' + it.id + '">' + inner + '<rect x="' + (x - w / 2) + '" y="' + (y - h) + '" width="' + w + '" height="' + (h + 8) + '" fill="rgba(0,0,0,0)"/></g>';
+  // a dish found since the table was last opened joins it: its dark shape pops into colour (the shape fades, the dish drops in) and a puff of steam rises
+  const puff = (it, x, y, k) => { let o = ''; for (let i = 0; i < 3; i++) o += '<circle class="fz-puff" style="--d:' + (+it.fd + .25 + i * .12).toFixed(2) + 's" cx="' + (x + (i - 1) * 15 * k) + '" cy="' + (y - 40 * k) + '" r="' + (5.5 * k) + '" fill="#FFF6E0"/>'; return '<g pointer-events="none">' + o + '</g>'; };
+  const joined = (it, solid, silhouette, x, y, k) => it.fresh && !it.hid && it.fd != null ? '<g class="fz-new" style="--d:' + it.fd + 's">' + solid + '</g><g class="fz-sil" style="--d:' + it.fd + 's" pointer-events="none"><g filter="url(#fzsil)" opacity=".5">' + silhouette + '</g></g>' + puff(it, x, y, k) : solid;
   function layoutRows(n, rows, hasCentre) {
     // spread n dishes over the three rows in proportion to how many fit; the centre piece takes the middle of the middle row
     const cap = rows.map((r, i) => Math.max(2, Math.floor(2 * r[1] / (74 * SC[i]))));
@@ -195,6 +199,7 @@
 
     const items = found.map(f => Object.assign({}, f, FE.classify(f, f.kind)));
     // dishes that share a drawing in this room are made to differ: the second gets one variant, the third another, and so on
+    let fi = 0; items.forEach(it => { if (it.fresh && !it.hid) it.fd = Math.min(2.4, .25 + fi++ * .32).toFixed(2); });
     const seenDraw = {};
     items.forEach(it => { const key = FE.draw(it.arch, it.p); it.vn = seenDraw[key] = (seenDraw[key] == null ? -1 : seenDraw[key]) + 1; });
     const pages = pagesFor(items), pg = Math.max(0, Math.min(pages - 1, page || 0));
@@ -206,7 +211,7 @@
     // shelf and what is on it
     const sf = th.shelf, shelfItems = [];
     s += shelfUnit(sf);
-    sh.forEach((it, i) => { const row = i < 5 ? 0 : 1, col = i % 5, n = Math.min(5, sh.length - row * 5), x = sf.x + sf.w * ((col + .5) / 5), y = sf.y + row * 62 + 0; shelfItems.push(hot(it, E(x, y + 1, 19, 4.4, 'url(#fzsh)', N) + (it.hid ? '<g filter="url(#fzsil)" opacity=".5">' + gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null, true)) + '</g>' : gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null))), x, y, 36, 34)); });
+    sh.forEach((it, i) => { const row = i < 5 ? 0 : 1, col = i % 5, n = Math.min(5, sh.length - row * 5), x = sf.x + sf.w * ((col + .5) / 5), y = sf.y + row * 62 + 0; shelfItems.push(hot(it, E(x, y + 1, 19, 4.4, 'url(#fzsh)', N) + (it.hid ? '<g filter="url(#fzsil)" opacity=".5">' + gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null, true)) + '</g>' : joined(it, gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null)), gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null, true)), x, y, .46)), x, y, 36, 34)); });
     s += shelfItems.join('');
     if (th.back) s += th.back(KIT);
     s += th.table.draw(KIT);
@@ -224,7 +229,9 @@
     const slots = layoutRows(rest.length, th.table.rows, !!centre), placed = [];
     if (centre) placed.push({ it: centre, x: 340, y: th.table.rows[1][0] + 6, k: 1.15 });
     rest.forEach((it, i) => { const sl = slots[i]; if (!sl) return; placed.push({ it, x: sl[0], y: sl[1], k: SC[sl[2]] * (it.drink ? .85 : 1) * (it.arch === 'hotpot' ? .9 : 1) }); });
-    placed.sort((a, b) => a.y - b.y).forEach(o => { const sh = '<ellipse cx="0" cy="2" rx="58" ry="12" fill="url(#fzsh)" stroke="none"/>'; s += hot(o.it, o.it.hid ? '<g>' + gsc(o.x, o.y, o.k, sh) + '<g filter="url(#fzsil)" opacity=".5">' + gsc(o.x, o.y, o.k, FE.drawVar(o.it, o.it.vn ? o.it.vn : null, true)) + '</g></g>' : '<g>' + gsc(o.x, o.y, o.k, sh + FE.drawVar(o.it, o.it.vn ? o.it.vn : null)) + '</g>', o.x, o.y, 80 * o.k, 70 * o.k); });
+    // the featured dish glows softly: a warm halo on the table behind it, and a few motes of light
+    if (centre) { const ax = 340, ay = th.table.rows[1][0] - 4; s += '<g pointer-events="none" class="fz-aura">' + E(ax, ay, 132, 74, 'url(#fzaura)', N) + E(ax, ay + 2, 82, 44, 'url(#fzaura)', 'opacity=".9" stroke="none"') + [[-74, -52, 2.2], [66, -58, 1.8], [-96, -14, 1.6], [102, -22, 2], [-38, -70, 1.5], [30, -76, 1.7]].map(m => C(ax + m[0], ay + m[1], m[2], '#FFE9A8', 'opacity=".7" stroke="none"')).join('') + '</g>'; }
+    placed.sort((a, b) => a.y - b.y).forEach(o => { const sh = '<ellipse cx="0" cy="2" rx="58" ry="12" fill="url(#fzsh)" stroke="none"/>'; s += hot(o.it, o.it.hid ? '<g>' + gsc(o.x, o.y, o.k, sh) + '<g filter="url(#fzsil)" opacity=".5">' + gsc(o.x, o.y, o.k, FE.drawVar(o.it, o.it.vn ? o.it.vn : null, true)) + '</g></g>' : joined(o.it, '<g>' + gsc(o.x, o.y, o.k, sh + FE.drawVar(o.it, o.it.vn ? o.it.vn : null)) + '</g>', gsc(o.x, o.y, o.k, FE.drawVar(o.it, o.it.vn ? o.it.vn : null, true)), o.x, o.y, o.k), o.x, o.y, 80 * o.k, 70 * o.k); });
     if (th.front) s += th.front(KIT);
     s += '<g pointer-events="none">' + R(0, 0, 680, 440, 'url(#fzvig)', N) + R(0, 0, 680, 140, 'url(#fzceil)', N) + '</g>';
     return { svg: s,

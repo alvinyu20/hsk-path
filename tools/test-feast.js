@@ -50,4 +50,16 @@ W.regions.forEach((r) => {
 ok(Object.keys(rooms).length === W.regions.length, 'every province has a room of its own (' + Object.keys(rooms).length + ' of ' + W.regions.length + ')');
 ok(/<svg/.test(F.portrait(dishes[0], J.sayKind(dishes[0]))), 'a single dish can be drawn for the popup');
 ok(F.wrap(F.scene('sichuan', [], 0), 'o', true).indexOf('viewBox="0 112 680 328"') > 0, 'the full-screen view is cropped to landscape');
+// the featured dish glows, and a dish found since the table was last opened plays its arrival (shape fades, dish drops in, steam rises)
+W.regions.forEach((r) => {
+  const id = r.id || r, R = W.byRegion[id], ds = R.stops.filter((s) => s.k === 'D').map((s) => ({ id: s.id, zh: s.zh, py: s.py, en: s.en, kind: J.sayKind(s), sp: !!s.sp }));
+  if (ds.length < 3) return;
+  const plain = F.scene(id, ds, 0), fresh = F.scene(id, ds.map((d, i) => Object.assign({}, d, { fresh: i < 2 })), 0);
+  ok(plain.svg.indexOf('fz-aura') > 0, id + ' gives its featured dish a soft halo');
+  ok(plain.svg.indexOf('fz-new') < 0 && plain.svg.indexOf('fz-puff') < 0, id + ' plays no arrival when nothing is new');
+  ok(fresh.svg.indexOf('fz-new') > 0 && fresh.svg.indexOf('fz-sil') > 0 && fresh.svg.indexOf('fz-puff') > 0, id + ' plays the arrival for new dishes');
+  const hid = F.scene(id, ds.map((d) => Object.assign({}, d, { fresh: true, hid: true })), 0);
+  ok(hid.svg.indexOf('fz-new') < 0, id + ' does not animate dishes that are still unfound');
+  ok(fresh.svg.indexOf('undefined') < 0 && fresh.svg.indexOf('NaN') < 0, id + ' draws the arrival cleanly');
+});
 if (bad) { console.log(bad + ' feast test(s) failed'); process.exit(1); } console.log('feast tests ok');

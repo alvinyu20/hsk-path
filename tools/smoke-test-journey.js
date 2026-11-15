@@ -5,7 +5,8 @@ const root = path.join(__dirname, '..');
 const server = require('./test-static').server(root);
 let failures = 0;
 // the travel window covers the page until it is closed
-const closeTrip = async (page) => { const b = page.locator('.jy-trip-go'); if (await b.count()) await b.click(); await page.waitForTimeout(80); };
+let sawDone = 0;
+const closeTrip = async (page) => { const b = page.locator('.jy-trip-go'); if (await b.count()) await b.click(); await page.waitForTimeout(80); const d = page.locator('.jd-skip'); if (await d.count()) { sawDone++; await d.click(); await page.waitForTimeout(40); } };
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };
 
 (async () => {
@@ -43,17 +44,17 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(/Say it there/i.test(say) && /[\u4e00-\u9fff]+[。？！]/.test(say) && /At the airport/i.test(say), 'the card has a sentence to say there: ' + say.replace(/\s+/g, ' '));
     { const it = await page.locator('.jy-card .jy-intro').innerText().catch(() => '');
       check(/Sichuan in three lines/.test(it) && /THE LAND/i.test(it) && /THE TABLE/i.test(it) && /GOOD TO KNOW/i.test(it) && /must-sees? to find/.test(it), 'the airport card has the three lines about the region: ' + it.replace(/\s+/g, ' ').slice(0, 80)); }
-    check(await page.locator('.jy-now .jy-hero').count() === 0, 'the same province picture is not shown twice on the airport card');
+    check(await page.locator('.jy-now .jy-hero').count() === 0, 'the province photo is not shown above the road');
     check(await page.locator('.jy-go[disabled]').count() === 1, 'the next stop is not free');
     check(/50 more coins to go/.test(t), 'the next stop costs 50 coins');
     // the background tint follows the region
     const hue = await page.locator('.jy').evaluate(el => getComputedStyle(el).getPropertyValue('--jh').trim());
     check(hue === '8', 'Sichuan has its own colour (hue 8), got ' + hue);
     // the travel moment plays once, and a key press skips to the finished picture
-    check(await page.locator('.jy.jy-playing.jyp-fly').count() === 1 && await page.locator('.jy-coins').count() === 1, 'the flight starts the travel moment (coins fly, then the map, then the postcard)');
-    await page.waitForTimeout(600); await page.keyboard.press('Shift'); await page.waitForTimeout(150);
-    check(await page.locator('.jy-playing').count() === 0 && await page.locator('.jy-coins').count() === 0, 'a key press skips the travel moment to the finished picture');
-    check(await page.locator('.jy-trip').count() === 1 && await page.locator('.jy-trip .jy-map').count() === 1, 'the trip plays in a window in the middle of the screen, with the map and the ticket');
+    check(await page.locator('.jy.jy-playing.jyp-fly').count() === 1 && await page.locator('.jy-coins').count() === 1 && await page.locator('.jy-trip.m1.play').count() === 1, 'the flight starts the travel moment (coins fly into the price bar, the button wakes, the postcard flips, the stamp lands)');
+    check(await page.locator('.jy-trip .m1-front').count() === 1 && (await page.locator('.jy-trip .m1-front').innerText()).includes('?'), 'the front of the postcard is a mystery that names only the kind of place');
+    await page.waitForTimeout(600); await page.keyboard.press('Shift'); await page.waitForTimeout(250);
+    check(await page.locator('.jy-playing').count() === 0 && await page.locator('.jy-trip').count() === 0 && await page.locator('.jy-card').count() === 1, 'a key press skips the travel moment and goes straight to the stop page');
     await closeTrip(page);
     check(await page.locator('.jy-here .rip').count() === 2, 'two quiet rings mark where you are on the country map');
     await page.locator('.jy-acts .btn.pri').click();
@@ -71,7 +72,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await page.locator('.fz-card .fz-hit').count() >= 5 && await page.locator('.fz-card .fz-hit:not(.hid)').count() === 0 && /^0 of \d+ found/.test(await page.locator('.fz-foot span').first().innerText()), 'the Food diary shows the whole table of a province you have reached, with every dish still a silhouette');
     check(!/Food diary|dishes ·/.test(await main(page)), 'the Food diary has no heading or summary line');
     await page.locator('.jy-tabs button', { hasText: 'Map' }).click();
-    check(await page.locator('.jy-now .jy-hero img').count() === 1, 'with no card open, the main card has a picture of the province on top');
+    check(await page.locator('.jy-now .jy-road svg').count() === 1 && /A flight|A new city|A sight|A dish|A cultural stop/.test(await page.locator('.jy-now .jy-road').innerHTML().then(h => h.replace(/<[^>]+>/g, ' '))), 'with no card open, the main card shows the road ahead over a scene of the province, and the next stop names only its kind');
     await page.locator('.jy-tabs button', { hasText: 'Passport' }).click();
     t = await main(page); check(/Regions\s*0 \/ 31/.test(t) && !/regions stamped/.test(t), 'the passport cover counts 31 regions and no words sit above the book: ' + t.match(/Regions\s*\d+ \/ \d+/));
     check(await page.locator('.jy-slot.here').count() === 1, 'the region you are in shows as in progress in the passport');
@@ -170,6 +171,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(star, 'a must-see stop says its gold stamp is in the passport');
     check(/MFM/.test(second) && /SL 002/.test(second) && /公里/.test(second), 'the next flight leaves from Macau with the distance: ' + second);
     check(await page.locator('.jy-arc').count() === 1, 'the flight is drawn on the map of the whole country');
+    check(sawDone === 1, 'finishing a region opens the celebration pop-up once (saw ' + sawDone + ')');
     await page.locator('.jy-acts .btn.pri').click();
     await page.locator('.jy-tabs button', { hasText: 'Passport' }).click();
     const t = await main(page);

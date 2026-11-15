@@ -28,6 +28,7 @@ case "$MODE" in
     last node tools/test-journey.js
     last node tools/test-stampart.js
     last node tools/test-feast.js
+    last node tools/test-jyscene.js
     last node tools/test-journey-media.js
     last env NODE_PATH="$(npm root -g)" node tools/test-souvenirs.js
     last node tools/test-char-glosses.js

@@ -448,6 +448,7 @@
   // Souvenirs: each one hides in a single stop and is found when that stop is unlocked. What you have is worked out from the stops you have
   // seen, so nothing extra is saved and it follows you across devices (the journey itself is already kept with the person).
   const SOUV = window.SOUVENIRS || [];
+  const FZ_KEY = 'shanlu-feast-seen'; const fzRead = () => { try { return JSON.parse(localStorage.getItem(FZ_KEY) || '{}') || {}; } catch (e) { return {}; } };
   const SV_BY_STOP = {}; SOUV.forEach(s => { SV_BY_STOP[s.stop] = s; });
   const svImg = (s) => s.u || (s.u = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s.svg));
   // ---- onboarding: the first-visit flow (intro pop-up on the Journey, the first free flight, five guide cards, where to start, name and friends), then the Start here path (pref 'onb': p flow step 'intro' | 'fly' | 'level' | 'me' | 'done', l what they chose ('new' | 'some'), w flow finished, s start path 'go' | 'done' | 'skip', d day finished, g reference page opened, px sounds card dismissed) ----
@@ -3012,15 +3013,16 @@
       const S = this.state; const st0 = this.jyEnsure(); if (!st0 || !st0.reg) return;
       if (JY.meter(totalXp(S), st0).ready < 1) return;
       const from = st0.seen.length ? st0.seen[st0.seen.length - 1] : null;
+      const cost = JY.meter(totalXp(S), st0).nextCost;   // what this stop costs, shown as the coins that fly in
       const r = JY.step(JWORLD, st0, JY.rngFor(st0), ymd(new Date()));
       if (!r.stop) return;
       prefSet('jy', r.st);
       this.friendsTick();
-      SFX.play(r.ev.indexOf('stamp') >= 0 || r.ev.indexOf('arrive') >= 0 ? 'fly' : 'ok');
+      SFX.play(r.ev.indexOf('arrive') >= 0 ? 'fly' : 'ok');
       // a flight shows on the map of the whole country; a ride or a walk shows on the map of the region you are in
       const flew = r.ev.indexOf('arrive') >= 0;
       const playMode = this.jyMotionOk() ? (flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk')) : '';
-      this.setState({ jyTrip:flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk'), jyPlay:playMode, jyPlayStamp:r.ev.indexOf('stamp') >= 0, jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next, from, k:(this.jyK = ((this.jyK || 0) + 1) % 2) }, jyOpen:null, jyTab:'map', jySel:null, jyFilter:'all', jyReg:flew || !JMAP.regions[r.stop.rid] ? null : r.stop.rid });
+      this.setState({ jyTrip:flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk'), jyPlay:playMode, jyPlayStamp:r.ev.indexOf('stamp') >= 0, jyDone:r.ev.indexOf('stamp') >= 0 ? { rid:r.region, next:r.next, all:r.ev.indexOf('all') >= 0 } : null, jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next, from, cost, k:(this.jyK = ((this.jyK || 0) + 1) % 2) }, jyOpen:null, jyTab:'map', jySel:null, jyFilter:'all', jyReg:flew || !JMAP.regions[r.stop.rid] ? null : r.stop.rid });
       try { window.scrollTo(0, 0); } catch (e) {}
       if (playMode) this.jyPlayRun(playMode);
       this.checkMilestones();
@@ -3029,41 +3031,18 @@
     jyMotionOk = () => !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     jyPlayRun = (mode) => {
       const t0 = (this.jyPlayAt = Date.now());
-      clearTimeout(this.jyPlayTimer); clearTimeout(this.jyPlaneTimer); if (this.jyPlayOff) this.jyPlayOff();
-      this.jyPlayTimer = setTimeout(() => this.jyPlayEnd(t0), ({ fly:5600, leg:3900, walk:1900 })[mode] || 1900);
-      const skip = () => this.jyPlayEnd(t0);
-      const arm = setTimeout(() => { document.addEventListener('pointerdown', skip); document.addEventListener('keydown', skip); }, 450);
-      this.jyPlayOff = () => { clearTimeout(arm); document.removeEventListener('pointerdown', skip); document.removeEventListener('keydown', skip); this.jyPlayOff = null; };
-      if (mode === 'walk') return;
-      // the trail draws for exactly the length of its path, so the plane and the red line stay together
-      requestAnimationFrame(() => { try { document.querySelectorAll(mode === 'fly' ? '.jy-map .jy-arc.new' : '.jy-map .jy-leg').forEach(p => { if (p.getTotalLength) p.style.setProperty('--len', Math.ceil(p.getTotalLength()) + 1); }); } catch (e) {} });
-      this.jyPlaneTimer = setTimeout(() => { if (this.jyPlayAt === t0) this.jyPlane(mode, t0); }, mode === 'fly' ? 1000 : 700);
+      clearTimeout(this.jyPlayTimer); if (this.jyPlayOff) this.jyPlayOff();
+      this.jyPlayTimer = setTimeout(() => this.jyPlayEnd(t0), 4300);   // coins in, button wakes, postcard flips, stamp lands, a short rest, then the stop's page
+      // a tap (counted on the click, so the tap cannot fall through to what is underneath) or a key skips to the stop page; the button does its own closing
+      const skip = (e) => { if (e && e.target && e.target.closest && e.target.closest('.jy-trip-go')) return; if (e && e.type === 'click') { e.stopPropagation(); e.preventDefault(); } this.jyPlayEnd(t0); };
+      const arm = setTimeout(() => { document.addEventListener('click', skip, true); document.addEventListener('keydown', skip); }, 450);
+      this.jyPlayOff = () => { clearTimeout(arm); document.removeEventListener('click', skip, true); document.removeEventListener('keydown', skip); this.jyPlayOff = null; };
     };
+    // when the moment is over (or skipped with a tap) it flows straight into the stop's page
     jyPlayEnd = (t0) => {
       if (t0 !== this.jyPlayAt) return;
-      clearTimeout(this.jyPlayTimer); clearTimeout(this.jyPlaneTimer); if (this.jyPlayOff) this.jyPlayOff();
-      if (this.state.jyPlay) this.setState({ jyPlay:'' });
-    };
-    // a plane glides along the new route with the same easing as the line that draws behind it
-    jyPlane = (mode, t0) => {
-      const svg = document.querySelector('.jy-trip .jy-map') || document.querySelector('.jy-map'); if (!svg) return;
-      const path = svg.querySelector(mode === 'fly' ? '.jy-arc.new' : '.jy-leg');
-      if (!path || !path.getTotalLength) return;
-      const L = path.getTotalLength(); const dur = mode === 'fly' ? 2000 : 1200; const start = performance.now();
-      const ease = (x) => { let lo = 0, hi = 1, t = x; for (let i = 0; i < 18; i++) { t = (lo + hi) / 2; const bx = 3 * t * Math.pow(1 - t, 2) * .45 + 3 * t * t * (1 - t) * .3 + t * t * t; if (bx < x) lo = t; else hi = t; } return 3 * t * Math.pow(1 - t, 2) * .05 + 3 * t * t * (1 - t) * 1 + t * t * t; };
-      const step = (now) => {
-        const pl = document.querySelector('.jy-trip .jy-plane') || document.querySelector('.jy-map .jy-plane');   // looked up each frame: the page may redraw while the plane flies
-        if (!pl) return;
-        if (this.jyPlayAt !== t0 || !this.state.jyPlay) { pl.setAttribute('opacity', '0'); return; }
-        const k = Math.min(1, (now - start) / dur); const e = ease(k);
-        const p = path.getPointAtLength(L * e), q = path.getPointAtLength(Math.min(L, L * e + 1.5));
-        const ang = Math.atan2(q.y - p.y, q.x - p.x) * 180 / Math.PI;
-        const sc = mode === 'fly' ? .8 + .5 * Math.sin(Math.PI * k) : 1;
-        pl.setAttribute('transform', 'translate(' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ') rotate(' + ang.toFixed(1) + ') scale(' + sc.toFixed(2) + ')');
-        pl.setAttribute('opacity', k < 1 ? '1' : '0');
-        if (k < 1) requestAnimationFrame(step);
-      };
-      requestAnimationFrame(step);
+      clearTimeout(this.jyPlayTimer); if (this.jyPlayOff) this.jyPlayOff();
+      if (this.state.jyTrip) this.jyTripClose(); else if (this.state.jyPlay) this.setState({ jyPlay:'' });
     };
     // ---- onboarding ----
     onbSet = (p) => { prefSet('onb', Object.assign({}, onbRead(), p)); this.setState({ onbV:(this.state.onbV || 0) + 1 }); };
@@ -3191,10 +3170,19 @@
     // the travel window: the trip plays in the middle of the screen; closing it shows the new stop's card
     jyTripClose = () => {
       this.jyPlayAt = 0; clearTimeout(this.jyPlayTimer); clearTimeout(this.jyPlaneTimer); if (this.jyPlayOff) this.jyPlayOff();
-      this.setState({ jyTrip:'', jyPlay:'' });
+      const anim = this.jyMotionOk(); this.setState({ jyTrip:'', jyPlay:'', jyCardIn:anim });
+      if (anim) { clearTimeout(this.jyInTimer); this.jyInTimer = setTimeout(() => { if (this.state.jyCardIn) this.setState({ jyCardIn:false }); }, 1100); }
       requestAnimationFrame(() => { try { const el = document.querySelector('.jy-card'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'start', behavior:this.jyMotionOk() ? 'smooth' : 'auto' }); } catch (e) {} });
     };
     jyOpenStop = (id) => { SFX.play('ok'); this.setState({ jyOpen:id, jyRv:null }); try { window.scrollTo(0, 0); } catch (e) {} };
+    // a finished region: the pop-up closes, or takes you to the country map where the province fills in with its colour
+    jyDoneClose = () => { SFX.play('ok'); this.setState({ jyDone:null }); };
+    jyDoneMap = () => {
+      const rid = this.state.jyDone && this.state.jyDone.rid; SFX.play('ok');
+      this.setState({ jyDone:null, jyTab:'map', jyReg:null, jySel:null, jyOpen:null, jyRv:null, jyTrip:'', jyFill:rid || null });
+      clearTimeout(this.jyFillTimer); this.jyFillTimer = setTimeout(() => { if (this.state.jyFill) this.setState({ jyFill:null }); }, 3200);
+      requestAnimationFrame(() => { try { const m = document.querySelector(JY.SMALL.indexOf(rid) >= 0 && rid !== 'singapore' ? '.jy-small' : '.jy-map'); if (m && m.scrollIntoView) m.scrollIntoView({ block:'center', behavior:'auto' }); } catch (e) {} });
+    };
     jyShowReg = (id) => this.setState({ jyTab:'map', jyReg:id, jySel:null, jyFilter:'all', jyOpen:null, jyRv:null });
     jyBack = () => this.setState({ jyReg:null, jySel:null, jyFilter:'all' });
     jyPgGo = (d, cur, total) => { const to = Math.max(0, Math.min(total - 1, cur + d)); if (to === cur) return; SFX.play('ok'); this.setState({ jyPg:to }); };
@@ -3238,7 +3226,13 @@
       return v;
     }
 
+    // the feast table remembers (on this device) which dishes it has already shown, so only newly found ones play their arrival
+    jyFoodSeen = (rid, fresh, nowIds) => {
+      const key = rid + ':' + nowIds.length; if (this.jyFoodSeenKey === key) return; this.jyFoodSeenKey = key;
+      setTimeout(() => { try { const m = fzRead(); m[rid] = nowIds; localStorage.setItem(FZ_KEY, JSON.stringify(m)); } catch (e) {} if (fresh && this.state.jyTab === 'food') this.setState({ jyFoodNew:{ rid, ids:fresh } }); }, 0);
+    };
     jyView(S) {
+      if (S.jyFoodNew && !(S.screen === 'journey' && S.jyTab === 'food')) setTimeout(() => { this.jyFoodSeenKey = ''; if (this.state.jyFoodNew && !(this.state.screen === 'journey' && this.state.jyTab === 'food')) this.setState({ jyFoodNew:null }); }, 0);
       const base = { isJourney:S.screen === 'journey', jySyncBad:!!S.syncBadMsg && !!(FR && FR.identity && FR.identity()), jySyncText:'This device could not sync with your other devices: ' + (S.syncBadMsg || '') + ' Open Friends and tap Sync now.', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Your coins, from everything you study on every level. Spend them on the Journey.', goJourney:() => this.go('journey'), navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), xpPillCls:'pill xpp', jyPingShow:false, jyReadyShow:false, jyReadyN:0, jyReadyLabel:'' };
       if (!JWORLD || !JMAP) return Object.assign(base, { jyOff:S.screen === 'journey' });
       const st = jyRead() || JY.fresh();   // only read here;
@@ -3251,7 +3245,7 @@
       if (S.screen !== 'journey') return base;
       const have = {}; st.seen.forEach(id => { have[id] = 1; });
       const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
-      const out = Object.assign(base, { jyTripShow:!!S.jyTrip && !!S.jyRv && !S.jyFriend, jyTripFly:S.jyTrip === 'fly', jyTripLeg:S.jyTrip === 'leg', jyTripKicker:S.jyTrip === 'fly' ? 'Flying to' : S.jyTrip === 'leg' ? 'On the train to' : 'Walking to', jyTripLabel:'Travelling to a new stop', jyTripClose:this.jyTripClose, jyOn:true, jyFlip:S.jyRv && S.jyRv.k ? 'kb' : 'ka', jyPlayCls:S.jyPlay ? 'jy-playing jyp-' + S.jyPlay + (S.jyPlayStamp ? ' jyp-st' : '') : '', jyPlayOn:!!S.jyPlay, jyPlayFly:S.jyPlay === 'fly', jyPlayLeg:S.jyPlay === 'leg' });
+      const out = Object.assign(base, { jyTripShow:!!S.jyTrip && !!S.jyRv && !S.jyFriend, jyTripFly:S.jyTrip === 'fly', jyTripLeg:S.jyTrip === 'leg', jyTripKicker:S.jyTrip === 'fly' ? 'Flying to' : S.jyTrip === 'leg' ? 'On the train to' : 'Walking to', jyTripLabel:'Travelling to a new stop', jyTripClose:this.jyTripClose, jyOn:true, jyFlip:S.jyRv && S.jyRv.k ? 'kb' : 'ka', jyPlayCls:(S.jyPlay ? 'jy-playing jyp-' + S.jyPlay + (S.jyPlayStamp ? ' jyp-st' : '') : '') + (S.jyCardIn ? ' jy-in' : ''), jyPlayOn:!!S.jyPlay, jyPlayFly:S.jyPlay === 'fly', jyPlayLeg:S.jyPlay === 'leg' });
 
       // friends: the people in your group who have started travelling. Looking at one shows their map and passport in place of yours.
       const fMembers = S.fr && S.fr.members ? S.fr.members.filter(m => m.id !== S.fr.me && m.stats && m.stats.jy && m.stats.jy.n > 0) : [];
@@ -3299,6 +3293,35 @@
       // a picture of the region you are in (or about to fly to) on top of the card: the same province photo its airport stop shows
       { const a0 = R ? (R.cities[0].air || R.cities[0].first) : null; const hero = a0 && JMEDIA[a0.id] && JMEDIA[a0.id].u ? JMEDIA[a0.id] : null;
         Object.assign(out, { jyHeroShow:!!hero, jyHeroUrl:hero ? hero.u : '', jyHeroAlt:hero ? (hero.a || R.en) : '', jyHeroCredit:hero ? hero.c : '' }); }
+      // the road ahead: a landscape of the region you are in (or about to fly to) with your next stop on it. The next stop shows its category only, never which stop it is.
+      { const JS = window.JYSCENE; const NK = { P:'A flight', T:'A new city', A:'A sight', D:'A dish', C:'A cultural stop' };
+        let road = '';
+        if (JS && R && !done && !fm) {
+          const sqLive = (st.sq || []).filter(id => JWORLD.byStop[id] && !have[id]); const cqLive = (st.cq || []).filter(id => JWORLD.byCity[id]);
+          let nk = 'A';
+          if (!st.started) nk = R.cities[0].air ? 'P' : 'T'; else if (sqLive.length) nk = JWORLD.byStop[sqLive[0]].k; else if (cqLive.length) nk = 'T'; else { const rest = R.stops.find(s => !have[s.id]); nk = rest ? rest.k : 'A'; }
+          const rs0 = JY.regionStats(JWORLD, st, R.id); const CC0 = st.cur && JWORLD.byCity[st.cur];
+          const goal = !st.started ? { kind:'region', zh:R.zh.slice(0, 2), label:rs0.total + ' stops in ' + R.en }
+            : sqLive.length && CC0 ? { kind:'city', zh:CC0.zh.slice(0, 1), label:sqLive.length + ' left in ' + CC0.en }
+            : { kind:'region', zh:R.zh.slice(0, 2), label:(rs0.total - rs0.got) + ' to stamp ' + R.en };
+          const seenSv = {}; st.seen.forEach(id => { seenSv[id] = 1; }); const avSv0 = SOUV.find(sv => sv.id === String(prefGet('av', '') || '') && seenSv[sv.stop]) || null;
+          road = JS.svg(R.id, { done:st.started ? Math.min(2, rs0.got) : 0, mid:sqLive.length > 1 || (sqLive.length > 0 && cqLive.length > 0) || (!sqLive.length && cqLive.length > 1) ? 1 : 0, next:{ kind:nk, label:NK[nk] }, goal, pct:mt.pct / 100, ready:mt.ready > 0,
+            avatar:avSv0 ? svImg(avSv0) : '', home:!st.started && st.n === 0, meLabel:!st.started && st.n > 0 ? 'Ready to fly' : '' }, 'Your road in ' + R.en + '. Next: ' + NK[nk]);
+          out.jyNextKind = NK[nk]; out.jyGoalShow = true; out.jyGoalZh = goal.zh; out.jyGoalText = goal.label; out.jyGoalCls = goal.kind;
+        }
+        Object.assign(out, { jyRoadShow:!!road, jyRoadSvg:road, jyGoalShow:!!road }); if (road) out.jyHeroShow = false; }
+      // a region just finished: the celebration pop-up (it waits until the travel moment has flowed into the stop page)
+      { const dn = S.jyDone && !S.jyTrip && !fm && JWORLD.byRegion[S.jyDone.rid] ? S.jyDone : null; out.jyDoneShow = !!dn;
+        if (dn) {
+          const DR = JWORLD.byRegion[dn.rid]; const rs = JY.regionStats(JWORLD, st, dn.rid); const hueD = DR.hue != null ? DR.hue : (META[dn.rid] ? META[dn.rid][2] : 200);
+          const svT = SOUV.filter(x => JWORLD.byStop[x.stop] && JWORLD.byStop[x.stop].rid === dn.rid); const svG = svT.filter(x => have[x.stop]).length;
+          const stampedN = Object.keys(st.done).filter(id => JWORLD.byRegion[id]).length, allN = JWORLD.order.length;
+          const conf = []; const cc = ['#C2362B', '#E0A526', '#2F78C4', '#3E9B4F', '#B044D0', '#FF8A5C']; for (let i = 0; i < 30; i++) { const h = (i * 2654435761) >>> 0; conf.push({ x:((h % 100) + (i % 3) * .3).toFixed(1) + '%', c:cc[i % cc.length], d:(((h >>> 7) % 90) / 100).toFixed(2) + 's', r:(((h >>> 13) % 360) - 180) + 'deg', w:6 + (h >>> 19) % 6 }); }
+          Object.assign(out, { jyDoneLabel:DR.en + ' complete', jyDoneZh:DR.zh, jyDoneEn:DR.en, jyDoneHue:hueD, jyDoneArt:window.JYSCENE ? '<svg class="jd-scene" viewBox="0 0 360 150" preserveAspectRatio="xMidYMin slice" aria-hidden="true">' + window.JYSCENE.scene(dn.rid) + '</svg>' : '',
+            jyDoneTitle:dn.all ? 'Every region stamped!' : DR.en + ' complete!', jyDoneSub:dn.all ? 'You have been everywhere. Well travelled.' : 'You have seen every stop. Your passport is stamped.',
+            jyDoneStats:[{ n:String(rs.got), l:rs.got === 1 ? 'stop' : 'stops' }, { n:String(DR.cities.length), l:DR.cities.length === 1 ? 'city' : 'cities' }, { n:rs.byKind.Dish[0] + '/' + rs.byKind.Dish[1], l:'dishes' }, { n:svT.length ? svG + '/' + svT.length : String(stampedN), l:svT.length ? 'souvenirs' : 'stamps' }],
+            jyDoneCount:stampedN + ' of ' + allN + ' regions stamped', jyDoneNextShow:!!dn.next && !dn.all, jyDoneNext:dn.next ? 'Next flight: ' + rName(dn.next) : '', jyDoneConf:conf, jyDoneClose:this.jyDoneClose, jyDoneMap:this.jyDoneMap, jyDoneMapText:'See ' + DR.en + ' fill in on the map' });
+        } }
       // three lines about a region: on its airport card, and under its map
       const introOf = (RR) => (RR && RR.intro && RR.intro.length === 3 ? [{ k:'The land', t:RR.intro[0] }, { k:'The table', t:RR.intro[1] }, { k:'Good to know', t:RR.intro[2] }] : []);
       out.jyPct = (done ? 100 : mt.pct) + '%'; out.jyPctNum = done ? 100 : mt.pct;
@@ -3322,7 +3345,6 @@
           if (ev.indexOf('city') >= 0 && ev.indexOf('arrive') < 0) banners.push({ t:'New city: ' + CC.en, d:'Its stops will unlock one by one.' });
           if (ev.indexOf('muni') >= 0) banners.push({ t:CC.muni + ' is its own municipality.', d:(CR.munis && CR.munis[CC.muni]) || (CC.muni + ' is a municipality of its own, not part of ' + CR.en + '.') });
           if (ev.indexOf('citydone') >= 0 && ev.indexOf('stamp') < 0) banners.push({ t:CC.en + ' complete!', d:'You have seen every stop here. Its city stamp is in your passport.' });
-          if (ev.indexOf('stamp') >= 0) banners.push({ t:CR.en + ' complete!', d:'Your passport is stamped.' + (rv.next ? ' Next flight: ' + rName(rv.next) + '.' : '') });
           if (ev.indexOf('all') >= 0) banners.push({ t:'Every region stamped!', d:'You have been everywhere. Well travelled.' });
         }
         Object.assign(out, { jyBanners:banners, jyBannerShow:banners.length > 0, jyStampShow:!!rv && rv.ev.indexOf('stamp') >= 0, jyKindCls:'k' + stop.k + (stop.sp ? ' sp' : ''),
@@ -3334,6 +3356,11 @@
         const hp = rv ? JY.hop(JWORLD, st, rv.from, stop.id, rv.ev) : null;
         const kmT = (n) => n.toLocaleString('en-US');
         out.jyTkFly = !!hp && hp.mode === 'fly'; out.jyTkRide = !!hp && hp.mode === 'ride'; out.jyTkWalk = !!hp && hp.mode === 'walk';
+        { const KL = { P:'A flight', T:'A new city', A:'A sight', D:'A dish', C:'A cultural stop' }; const cost = rv && rv.cost ? rv.cost : 0; const arriveEv = !!rv && rv.ev.indexOf('arrive') >= 0;
+          Object.assign(out, { jyM1Cls:S.jyPlay ? 'play' : 'rest', jyM1PayText:cost > 0 ? 'The price of this stop' : 'Your first flight is free', jyM1PayCoins:cost > 0 ? cost.toLocaleString('en-US') + ' coins' : 'Free',
+            jyM1GoText:arriveEv ? (st.n === 1 ? 'Take your first flight (free)' : 'Board the flight') : 'Travel to the next stop',
+            jyM1Kind:KL[stop.k] || 'A stop', jyM1Icon:window.JYSCENE ? window.JYSCENE.kindSvg(stop.k) : '', jyM1Alt:'A mystery stop, then ' + stop.en,
+            jyM1StampZh:CC.zh.slice(0, 2), jyM1StampEn:'ARRIVED' }); }
         if (S.jyTrip) { out.jyTripFly = !!hp && hp.mode === 'fly' && S.jyTrip === 'fly'; out.jyTripLeg = !!hp && hp.mode === 'ride' && S.jyTrip === 'leg'; out.jyTripKicker = hp && hp.mode === 'fly' ? 'Flying to' : hp && hp.mode === 'ride' ? 'On the train to' : 'Walking to'; }
         if (hp && hp.mode === 'fly') Object.assign(out, { jyTkFromCode:hp.from ? hp.from.code || '···' : '家', jyTkFromZh:hp.from ? hp.from.zh : '', jyTkFromPy:hp.from ? hp.from.py : 'jiā · home',
           jyTkToCode:hp.to.code || '···', jyTkToZh:hp.to.zh, jyTkToPy:hp.to.py, jyTkToEn:hp.to.en, jyTkNo:'SL ' + String(hp.no).padStart(3, '0'), jyTkDate:hp.date,
@@ -3402,7 +3429,7 @@
           const has = !!JWORLD.byRegion[id]; const m = JMAP.regions[id]; const en = rName(id); const stt = has ? status(id) : 'none';
           const hue = has ? JWORLD.byRegion[id].hue : META[id][2];
           const word = stt === 'done' ? 'stamped' : stt === 'here' ? (fm ? 'there now' : 'you are here') : stt === 'next' ? 'next flight' : has ? 'not visited yet' : 'coming soon';
-          return { id, cls:stt + (has ? '' : ' na') + (JY.SMALL.indexOf(id) >= 0 && id !== 'singapore' ? ' tiny' : ''), hue, d:m.cd || '', m:m.cm || '', hasM:!!m.cm, label:en + ', ' + word, en, open:has && !fm ? () => this.jyShowReg(id) : () => {} };
+          return { id, cls:stt + (S.jyFill === id && stt === 'done' ? ' fillnew' : '') + (has ? '' : ' na') + (JY.SMALL.indexOf(id) >= 0 && id !== 'singapore' ? ' tiny' : ''), hue, d:m.cd || '', m:m.cm || '', hasM:!!m.cm, label:en + ', ' + word, en, open:has && !fm ? () => this.jyShowReg(id) : () => {} };
         };
         out.jyMapRegions = regs.filter(id => JMAP.regions[id].cd && id !== 'singapore').map(mk);
         // the flights so far: an arc from each region to the next one flown to (the newest one draws itself)
@@ -3498,7 +3525,11 @@
         if (S.jyTab === 'food' && vis.length && window.FEAST) {
           const rids = vis.slice().reverse(), rid = rids.indexOf(S.jyFoodRid) >= 0 ? S.jyFoodRid : rids[0], R = JWORLD.byRegion[rid];
           // the whole table is laid out from the start; dishes you have not met yet are dark shapes
-          const found = R.stops.filter(x => x.k === 'D').map(x => ({ id:x.id, zh:x.zh, py:x.py, en:x.en, kind:JY.sayKind(x), sp:!!x.sp, hid:!have[x.id] }));
+          // dishes found since this table was last opened join it with a little motion; this device remembers which it has shown (see jyFoodSeen)
+          const nowIds = R.stops.filter(x => x.k === 'D' && have[x.id]).map(x => x.id);
+          let fresh = S.jyFoodNew && S.jyFoodNew.rid === rid ? S.jyFoodNew.ids : null;
+          if (!fresh) { const known = {}; (fzRead()[rid] || []).forEach(id => { known[id] = 1; }); const ids = nowIds.filter(id => !known[id]); if (ids.length) { fresh = {}; ids.forEach(id => { fresh[id] = 1; }); } this.jyFoodSeen(rid, fresh, nowIds); }
+          const found = R.stops.filter(x => x.k === 'D').map(x => ({ id:x.id, zh:x.zh, py:x.py, en:x.en, kind:JY.sayKind(x), sp:!!x.sp, hid:!have[x.id], fresh:!!(fresh && fresh[x.id]) }));
           const nFound = found.filter(f => !f.hid).length;
           const total = found.length, n0 = Math.max(0, Math.min(window.FEAST.pagesFor(found.map(f => Object.assign({}, f, window.FEAST.classify(f, f.kind)))) - 1, S.jyFoodPg || 0));
           const sc = window.FEAST.scene(rid, found, n0);

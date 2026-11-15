@@ -20,7 +20,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.evaluate(() => { const a = window.shanlu; a.say = () => {}; const ws = JSON.parse(JSON.stringify(a.state.ws)); const keys = Object.keys(ws).slice(0, 12); keys.forEach(z => ['see', 'hear', 'prod'].forEach(k => { ws[z][k] = { s: 2, l: 2, t: Date.now() - 5 * 864e5 }; })); a.setState({ ws, xp: 5000, streak: 4 }); window.__keys = keys; });
     const wide = () => page.evaluate(() => {
       const vw = innerWidth, out = [];
-      document.querySelectorAll('.app *').forEach(e => { const b = e.getBoundingClientRect(); if (b.width && b.height && (b.right > vw + 1 || b.left < -1)) out.push((e.tagName + '.' + String(e.className)).slice(0, 50)); });
+      document.querySelectorAll('.app *').forEach(e => { if (e.closest('.jy-road, .jd-art, .jd-confetti')) return; /* clipped pictures: their shapes may reach past the frame */ const b = e.getBoundingClientRect(); if (b.width && b.height && (b.right > vw + 1 || b.left < -1)) out.push((e.tagName + '.' + String(e.className)).slice(0, 50)); });
       return { doc: document.documentElement.scrollWidth > vw, off: out.slice(0, 3) };
     });
     const bad = [];
