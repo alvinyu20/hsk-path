@@ -3291,7 +3291,7 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 }
 
 /* Journey views: the same pill bar as Path / Library (46px), in one row that scrolls sideways; fades and arrows show there is more */
-.jy-tabw{position:relative;border-radius:99px;background:var(--panel);width:100%;box-sizing:border-box}
+:is(.jy-tabw,.hs-wrap){position:relative;border-radius:99px;background:var(--panel);width:100%;box-sizing:border-box}
 .jy-tabs.seg2{display:flex;gap:2px;width:100%;box-sizing:border-box;padding:4px;border-radius:99px;background:transparent;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scroll-snap-type:x proximity}
 .jy-tabs.seg2::-webkit-scrollbar{display:none}
 .jy-tabs.seg2 button{flex:0 0 auto;min-height:38px;padding:0 18px;font-size:15px;white-space:nowrap;scroll-snap-align:center}
@@ -3299,13 +3299,13 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .jy-tabarr{display:none;position:absolute;top:50%;z-index:2;width:30px;height:30px;margin-top:-15px;padding:0;border:0;border-radius:50%;background:var(--panel);color:var(--ink);box-shadow:0 1px 6px rgba(0,0,0,.25);align-items:center;justify-content:center;cursor:pointer}
 .jy-tabarr .ic{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 .jy-tabarr.l{left:6px}.jy-tabarr.r{right:6px}
-.jy-tabw.has-l .jy-tabarr.l,.jy-tabw.has-r .jy-tabarr.r{display:flex}
-.jy-tabw.has-l::before,.jy-tabw.has-r::after{content:'';position:absolute;top:0;bottom:0;width:58px;z-index:1;pointer-events:none}
-.jy-tabw.has-l::before{left:0;border-radius:99px 0 0 99px;background:linear-gradient(to left,transparent,var(--panel) 75%)}
-.jy-tabw.has-r::after{right:0;border-radius:0 99px 99px 0;background:linear-gradient(to right,transparent,var(--panel) 75%)}
-.jy-tabw.has-r .jy-tabarr.r .ic{animation:jyNudge 1.6s ease-in-out infinite}
+:is(.jy-tabw,.hs-wrap).has-l .jy-tabarr.l,:is(.jy-tabw,.hs-wrap).has-r .jy-tabarr.r{display:flex}
+:is(.jy-tabw,.hs-wrap).has-l::before,:is(.jy-tabw,.hs-wrap).has-r::after{content:'';position:absolute;top:0;bottom:0;width:58px;z-index:1;pointer-events:none}
+:is(.jy-tabw,.hs-wrap).has-l::before{left:0;border-radius:99px 0 0 99px;background:linear-gradient(to left,transparent,var(--cue,var(--panel)) 75%)}
+:is(.jy-tabw,.hs-wrap).has-r::after{right:0;border-radius:0 99px 99px 0;background:linear-gradient(to right,transparent,var(--cue,var(--panel)) 75%)}
+:is(.jy-tabw,.hs-wrap).has-r .jy-tabarr.r .ic{animation:jyNudge 1.6s ease-in-out infinite}
 @keyframes jyNudge{0%,60%,100%{transform:translateX(0)}30%{transform:translateX(3px)}}
-@media (prefers-reduced-motion:reduce){.jy-tabw.has-r .jy-tabarr.r .ic{animation:none}}
+@media (prefers-reduced-motion:reduce){:is(.jy-tabw,.hs-wrap).has-r .jy-tabarr.r .ic{animation:none}}
 /* every in-page pill bar on a phone is the size Review and Talk use: 40px bar, 32px buttons, 14px type */
 @media (max-width:700px){
   .app .subnav button{min-height:32px;padding:0 14px;font-size:14px}
@@ -3317,3 +3317,12 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 
 /* the Library search box is the same height as the pill bar next to it */
 @media (max-width:700px){ .subrow .lib-search{min-height:40px;height:40px} }
+
+/* map filters (All, Must-see, Cities, ...): the same scrolling pill bar, in the pill-bar look of Path | Library */
+.hs-wrap{--cue:var(--panel2);position:relative;border-radius:99px;background:var(--panel2);width:100%;min-width:0;box-sizing:border-box}
+.hs-scroll.seg2{display:flex;gap:2px;width:100%;box-sizing:border-box;padding:4px;border-radius:99px;background:transparent;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scroll-snap-type:x proximity}
+.hs-scroll.seg2::-webkit-scrollbar{display:none}
+.hs-scroll .jy-chip{flex:0 0 auto;min-height:32px;padding:0 14px;gap:5px;border:0;border-radius:99px;background:transparent;color:var(--muted);font-size:14px;white-space:nowrap;scroll-snap-align:center}
+.hs-scroll .jy-chip i{color:var(--muted)}
+.hs-scroll .jy-chip.on{background:var(--panel);color:var(--ink);box-shadow:var(--shadow)}
+.hs-scroll .jy-chip.on i{color:var(--muted);opacity:1}

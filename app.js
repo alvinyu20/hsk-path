@@ -5668,18 +5668,20 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
   // Journey view bar: one row that scrolls sideways. Edge fades and arrows (has-l / has-r) tell you more views are off-screen; the chosen view is brought into sight.
   const jyTabsSync = () => {
     try {
-      const sc = document.querySelector('.jy-tabs'); if (!sc) return;
-      const w = sc.parentNode, max = sc.scrollWidth - sc.clientWidth;
-      w.classList.toggle('has-l', sc.scrollLeft > 2); w.classList.toggle('has-r', max > 2 && sc.scrollLeft < max - 2);
-      const on = sc.querySelector('button.on'), key = on ? on.textContent : '';
-      if (sc.dataset.seen !== key && sc.clientWidth > 0) { sc.dataset.seen = key; if (on && (on.offsetLeft < sc.scrollLeft || on.offsetLeft + on.offsetWidth > sc.scrollLeft + sc.clientWidth)) { sc.scrollLeft = on.offsetLeft - (sc.clientWidth - on.offsetWidth) / 2; w.classList.toggle('has-l', sc.scrollLeft > 2); w.classList.toggle('has-r', sc.scrollLeft < max - 2); } }
+      document.querySelectorAll('.jy-tabw, .hs-wrap').forEach((w) => {
+        const sc = w.firstElementChild; if (!sc) return;
+        const max = sc.scrollWidth - sc.clientWidth;
+        w.classList.toggle('has-l', sc.scrollLeft > 2); w.classList.toggle('has-r', max > 2 && sc.scrollLeft < max - 2);
+        const on = sc.querySelector('.on'), key = on ? on.textContent : '';
+        if (sc.dataset.seen !== key && sc.clientWidth > 0) { sc.dataset.seen = key; if (on && (on.offsetLeft < sc.scrollLeft || on.offsetLeft + on.offsetWidth > sc.scrollLeft + sc.clientWidth)) { sc.scrollLeft = on.offsetLeft - (sc.clientWidth - on.offsetWidth) / 2; w.classList.toggle('has-l', sc.scrollLeft > 2); w.classList.toggle('has-r', sc.scrollLeft < max - 2); } }
+      });
     } catch (err) {}
   };
   let jyTabsQ = 0; const jyTabsSoon = () => { if (!jyTabsQ) jyTabsQ = requestAnimationFrame(() => { jyTabsQ = 0; jyTabsSync(); }); };
-  document.addEventListener('scroll', (e) => { if (e.target && e.target.classList && e.target.classList.contains('jy-tabs')) jyTabsSoon(); }, true);
+  document.addEventListener('scroll', (e) => { if (e.target && e.target.classList && (e.target.classList.contains('jy-tabs') || e.target.classList.contains('hs-scroll'))) jyTabsSoon(); }, true);
   window.addEventListener('resize', jyTabsSoon);
   try { new MutationObserver(jyTabsSoon).observe(document.documentElement, { childList:true, subtree:true, attributes:true, attributeFilter:['class'] }); } catch (err) {}
-  document.addEventListener('click', (e) => { try { const a = e.target.closest && e.target.closest('[data-jy-scroll]'); if (a) { const sc = document.querySelector('.jy-tabs'); if (sc) sc.scrollBy({ left:Number(a.getAttribute('data-jy-scroll')) * Math.max(120, sc.clientWidth * 0.6), behavior:'smooth' }); } } catch (err) {} });
+  document.addEventListener('click', (e) => { try { const a = e.target.closest && e.target.closest('[data-jy-scroll]'); if (a) { const sc = a.parentNode.firstElementChild; if (sc) sc.scrollBy({ left:Number(a.getAttribute('data-jy-scroll')) * Math.max(120, sc.clientWidth * 0.6), behavior:'smooth' }); } } catch (err) {} });
   document.addEventListener('click', (e) => { try { const h = e.target.closest && e.target.closest('.fz-hit'); if (h && window.shanlu && window.shanlu.state.jyFoodOv) { e.stopPropagation(); window.shanlu.setState({ jyFoodPop:h.getAttribute('data-id') }); } } catch (err) {} }, true);
   document.addEventListener('click', (e) => { try { if (window.shanlu && window.shanlu.state.lvMenu && !(e.target.closest && e.target.closest('.lvmenu'))) window.shanlu.setState({ lvMenu:false }); } catch (err) {} });
   document.addEventListener('keydown', (e) => { try { if (e.key === 'Escape' && window.shanlu && window.shanlu.state.jyTrip && window.shanlu.state.jyRv) window.shanlu.jyTripClose(); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.lvMenu) window.shanlu.setState({ lvMenu:false }); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.jyFoodOv) { if (window.shanlu.state.jyFoodPop) window.shanlu.setState({ jyFoodPop:null }); else window.shanlu.setState({ jyFoodOv:false }); } if (e.key === 'Escape' && window.shanlu && window.shanlu.state.pstop) window.shanlu.pathClose(); } catch (err) {} });
