@@ -60,7 +60,13 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await page.locator('.jy-card').count() === 0, 'the card closes');
     // stops list and passport
     await page.locator('.jy-tabs button', { hasText: 'Postcards' }).click();
-    check(/Chengdu Tianfu International Airport/.test(await main(page)) && await page.locator('.jy-pc').count() >= 1, 'the Postcards tab has the airport as a postcard');
+    check(/Chengdu Tianfu International Airport/.test(await main(page)) && await page.locator('.pcard').count() >= 1, 'the Postcards tab has the airport as a postcard');
+    { const front = await page.locator('.pcard-f').first().innerText();
+      check(front.trim() === '' && await page.locator('.pcard-f').first().evaluate(b => !b.querySelector('.pcard-k')), 'a postcard has no text on its front');
+      await page.locator('.pcard-f').first().click(); await page.waitForTimeout(120);
+      check(await page.locator('.pcard.flip').count() === 1 && /Chengdu Tianfu International Airport/.test(await page.locator('.pcard.flip .pcard-k').innerText()), 'tapping a postcard turns it over to its message');
+      await page.locator('.pcard.flip .pcard-k').click({ position:{ x:6, y:6 } }); await page.waitForTimeout(120);
+      check(await page.locator('.pcard.flip').count() === 0, 'tapping the back turns it face-up again'); }
     await page.locator('.jy-tabs button', { hasText: 'Food' }).click();
     check(/Nothing on your table yet/.test(await main(page)), 'the Food diary starts empty');
     await page.locator('.jy-tabs button', { hasText: 'Map' }).click();
@@ -171,8 +177,30 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await page.locator('.jy-slot').count() === 2, 'the passport shows the regions you have been to: ' + await page.locator('.jy-slot').count());
     await page.locator('.jy-passmore').click();
     check(await page.locator('.jy-slot').count() === 31, 'the rest of the regions unfold on request');
+    // the stamps carry little drawings: a landmark in each city stamp, a picture in each must-see, the arrival shape on the region stamp
+    check(await page.locator('.jy-cstamp .st-art').count() >= 3 && await page.locator('.jy-sstamp .st-art').count() === 4 && await page.evaluate(() => [...document.querySelectorAll('.jy-cstamp .st-art, .jy-sstamp .st-art')].every(i => /^data:image\/svg\+xml/.test(i.getAttribute('src')))), 'city stamps show a landmark and must-sees show a picture');
+    check(/ARRIVAL/.test(await page.locator('.pp-pg.cur .jy-stamp').first().innerText().catch(() => '')) || /ARRIVAL/.test(await page.locator('.jy-stamp').first().innerText()), 'the region stamp is an arrival stamp');
+    // the passport is a book: a cover, then pages that turn
+    { const pg0 = await page.evaluate(() => ({ pages:document.querySelectorAll('.pp-pg').length, cur:[...document.querySelectorAll('.pp-pg')].findIndex(p => p.classList.contains('cur')), cover:document.querySelectorAll('.pp-pg.cv').length }));
+      check(pg0.cover === 1 && pg0.pages >= 2, 'the passport has a cover and at least one page (' + JSON.stringify(pg0) + ')');
+      for (let i = 0; i < 12 && !(await page.locator('.pp-arrow[aria-label="Previous page"]').isDisabled()); i++) { await page.locator('.pp-arrow[aria-label="Previous page"]').click(); await page.waitForTimeout(60); }
+      await page.waitForTimeout(120);
+      check(await page.locator('.pp-pg.cv.cur').count() === 1 && await page.locator('.pp-arrow[aria-label="Previous page"]').isDisabled(), 'the previous arrow turns back to the cover and then stops');
+      await page.locator('.pp-arrow[aria-label="Next page"]').click(); await page.waitForTimeout(150);
+      check(await page.locator('.pp-pg.cv.turned').count() === 1 && await page.locator('.pp-pg.cur .jy-slot').count() >= 1, 'the next arrow turns the cover over to the first page of stamps');
+      check(await page.locator('.pp-pg[aria-hidden="true"]').count() === (await page.locator('.pp-pg').count()) - 1, 'only the open page is readable by a screen reader'); }
     await page.locator('.jy-sstamp').first().click();
     check(await page.locator('.jy-card.sp').count() === 1 && await page.locator('.jy-card .jy-tk').count() === 0, 'a must-see stamp opens its stop, with no ticket on a stop opened later');
+    // the Food diary has three views: a menu per city, a tray, and tasting cards
+    await page.locator('.jy-tabs button', { hasText: 'Food' }).click();
+    { const vs = page.locator('.fd-views button'); check(await vs.count() === 3, 'the Food diary offers three views');
+      check(await page.locator('.fd-menu').count() >= 1 && await page.locator('.fd-tray, .fd-tasting').count() === 0, 'the Food diary opens on the menu');
+      await vs.nth(1).click(); await page.waitForTimeout(100);
+      check(await page.locator('.fd-tray .fd-plate').count() >= 1 && await page.locator('.fd-menu').count() === 0, 'the tray view shows the dishes as plates');
+      await vs.nth(2).click(); await page.waitForTimeout(100);
+      check(await page.locator('.fd-tasting .fd-tcard').count() >= 1 && await page.locator('.fd-tray').count() === 0, 'the tasting view shows a card per dish');
+      const over = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth); check(over <= 1, 'the tasting view fits a phone width (overflow ' + over + 'px)');
+      await vs.nth(0).click(); }
     check(errors.length === 0, 'no errors on the long trip: ' + errors.join(' | '));
     await ctx.close();
   }

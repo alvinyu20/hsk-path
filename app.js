@@ -432,6 +432,16 @@
   if (JWORLD && window.SHANLU_JY_FIRST) JWORLD.prefer = window.SHANLU_JY_FIRST;   // set by tests so the first region is known
   const JMAP = window.JOURNEY_MAP || null;
   const JMEDIA = window.JOURNEY_MEDIA || {};
+  const JART = window.JYART || null;
+  // an ink drawing for a stop, a city or a must-see, drawn in the region's colour (lighter ink in the dark theme)
+  const jyInk = (hue, dark, gold) => gold ? (dark ? 'hsl(40 85% 64%)' : 'hsl(34 78% 34%)') : (dark ? 'hsl(' + hue + ' 60% 76%)' : 'hsl(' + hue + ' 58% 34%)');
+  const jyArt = (key, hue, dark, gold) => (JART ? JART.url(key[0], key[1], hue, jyInk(hue, dark, gold)) : '');
+  // swiping the passport turns its pages
+  { let sx = 0, sy = 0, on = false;
+    document.addEventListener('touchstart', (e) => { const b = e.target.closest && e.target.closest('.pp-book'); on = !!b; if (b && e.touches[0]) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; } }, { passive:true });
+    document.addEventListener('touchend', (e) => { if (!on) return; on = false; const t = e.changedTouches && e.changedTouches[0]; if (!t) return; const dx = t.clientX - sx, dy = t.clientY - sy;
+      if (Math.abs(dx) > 40 && Math.abs(dy) < 60) { const btn = document.querySelector('.pp-arrow[aria-label="' + (dx < 0 ? 'Next' : 'Previous') + ' page"]'); if (btn && !btn.disabled) btn.click(); } }, { passive:true }); }
+  const jyStopArt = (s, hue, dark) => (JART && s ? jyArt(JART.stopKey(s, JWORLD && JWORLD.byCity[s.cid]), hue, dark, !!s.sp) : '');
   // Souvenirs: each one hides in a single stop and is found when that stop is unlocked. What you have is worked out from the stops you have
   // seen, so nothing extra is saved and it follows you across devices (the journey itself is already kept with the person).
   const SOUV = window.SOUVENIRS || [];
@@ -503,7 +513,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
-      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
+      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyTab:'map', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPg:null, jyFlip:null, jyFoodView:'menu', jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -3184,7 +3194,8 @@
     jyOpenStop = (id) => { SFX.play('ok'); this.setState({ jyOpen:id, jyRv:null }); try { window.scrollTo(0, 0); } catch (e) {} };
     jyShowReg = (id) => this.setState({ jyTab:'map', jyReg:id, jySel:null, jyFilter:'all', jyOpen:null, jyRv:null });
     jyBack = () => this.setState({ jyReg:null, jySel:null, jyFilter:'all' });
-    jyTabSet = (t) => this.setState({ jyTab:t, jyFilter:'all', jyMoreN:40 });
+    jyPgGo = (d, cur, total) => { const to = Math.max(0, Math.min(total - 1, cur + d)); if (to === cur) return; SFX.play('ok'); this.setState({ jyPg:to }); };
+    jyTabSet = (t) => this.setState({ jyTab:t, jyFilter:'all', jyMoreN:40, jyFlip:null });
     jyFilterSet = (f) => this.setState({ jyFilter:f, jySel:null, jyMoreN:40 });
     jySvFilterSet = (f) => this.setState({ jySvFilter:f, jySvSel:null });
     jySvPick = (id) => { SFX.play('ok'); this.setState({ jySvSel:id }); setTimeout(() => { try { const el = document.querySelector('.sv-detail'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest', behavior:'smooth' }); } catch (e) {} }, 40); };
@@ -3339,7 +3350,7 @@
         Object.assign(out, { jySayTag:sy.tag, jySayZh:sy.zh, jySayPy:sy.py, jySayEn:sy.en, jySayIt:() => this.say(sy.zh, 'jysay:' + stop.id) });
         // stamps earned by this stop: the city is finished, or the stop is a must-see
         const cityDone = !!rv && rv.ev.indexOf('citydone') >= 0 && rv.ev.indexOf('stamp') < 0;
-        Object.assign(out, { jyCityStampShow:cityDone, jyCityStampZh:CC.zh, jyCityStampCls:CC.zh.length > 4 ? 'long' : CC.zh.length === 4 ? 'l4' : '', jyCityStampEn:CC.en, jyCityStampHue:CR.hue, jyStarNote:!!rv && stop.sp });
+        Object.assign(out, { jyCityStampShow:cityDone, jyCityStampZh:CC.zh, jyCityStampCls:CC.zh.length > 4 ? 'long' : CC.zh.length === 4 ? 'l4' : '', jyCityStampEn:CC.en, jyCityStampHue:CR.hue, jyCityStampArt:cityDone && JART ? jyArt(JART.cityKey(CC), CR.hue, S.theme === 'dark') : '', jyStarNote:!!rv && stop.sp, jyStarArt:!!rv && stop.sp ? jyStopArt(stop, CR.hue, S.theme === 'dark') : '' });
         const intro = stop.k === 'P' ? introOf(CR) : [];
         Object.assign(out, { jyIntroShow:intro.length > 0, jyIntro:intro, jyIntroTitle:CR.en + ' in three lines', jyIntroCount:plural(CR.cities.length, 'city', 'cities') + ' · ' + CR.stops.length + ' stops · ' + plural(CR.stops.filter(x => x.sp).length, 'must-see', 'must-sees') + ' to find' });
         // a finished region: an album of its pictures, the must-sees first
@@ -3351,7 +3362,7 @@
         // the airport card already shows the province picture: don't show the same one twice
         if (out.jyHeroShow && out.jyPhotoUrl === out.jyHeroUrl) out.jyHeroShow = false;
         if (rv && rv.ev.indexOf('stamp') >= 0) {
-          Object.assign(out, { jyStampHue:CR.hue, jyStampZh:CR.zh, jyStampEn:CR.en, jyStampCode:CR.air && CR.air.code ? CR.air.code : '', jyStampDate:st.done[CR.id] || '' });
+          Object.assign(out, { jyStampHue:CR.hue, jyStampZh:CR.zh, jyStampEn:CR.en, jyStampCode:CR.air && CR.air.code ? CR.air.code : '', jyStampDate:st.done[CR.id] || '', jyStampPlane:jyArt(['plane', 0], CR.hue, S.theme === 'dark') });
         }
       }
 
@@ -3452,24 +3463,39 @@
         if (S.jyTab === 'stops') out.jyFilters = filterChips(all);
         // every stop you have reached is a postcard: its photo (or its name, where there is no photo yet), gold for a must-see
         const KN = { T:'City', A:'Sight', D:'Dish', C:'Culture', P:'Airport' };
-        out.jyCards = S.jyTab === 'stops' ? shown.slice(0, S.jyMoreN).map(s => { const ph = JMEDIA[s.id]; const has = !!(ph && ph.u); const RR = JWORLD.byRegion[s.rid];
-          return { kind:(s.sp ? '★ ' : '') + KN[s.k], zh:s.zh, en:s.en, where:JWORLD.byCity[s.cid].en + ' · ' + RR.en, hue:RR.hue, cls:'k' + s.k + (s.sp ? ' sp' : '') + (s.zh.length > 6 ? ' long' : ''), hasPhoto:has, noPhoto:!has, url:has ? ph.u : '', label:'Postcard: ' + s.en + ', ' + JWORLD.byCity[s.cid].en + (s.sp ? ', a must-see' : ''), open:() => this.jyOpenStop(s.id) }; }) : [];
+        const dk = S.theme === 'dark';
+        const hsh = (str) => { let h = 0; for (let k = 0; k < str.length; k++) h = (h * 31 + str.charCodeAt(k)) | 0; return Math.abs(h); };
+        out.jyCards = S.jyTab === 'stops' ? shown.slice(0, S.jyMoreN).map(s => { const ph = JMEDIA[s.id]; const has = !!(ph && ph.u); const RR = JWORLD.byRegion[s.rid]; const CC = JWORLD.byCity[s.cid]; const fl = S.jyFlip === s.id;
+          return { kind:(s.sp ? '★ ' : '') + KN[s.k], zh:s.zh, py:s.py, en:s.en, where:CC.en + ' · ' + RR.en, hue:RR.hue, rot:(((hsh(s.id) % 7) - 3) * 0.9).toFixed(1), cls:'k' + s.k + (s.sp ? ' sp' : '') + (fl ? ' flip' : '') + (s.zh.length > 6 ? ' long' : ''),
+            hasPhoto:has, noPhoto:!has, url:has ? ph.u : '', art:jyStopArt(s, RR.hue, dk), credit:has && ph.c ? ph.c : '', ft:fl ? '-1' : '0', kt:fl ? '0' : '-1', kh:fl ? 'false' : 'true',
+            label:'Postcard: ' + s.en + ', ' + CC.en + (s.sp ? ', a must-see' : '') + '. Tap to turn it over.', flip:() => { SFX.play('ok'); this.setState({ jyFlip:fl ? null : s.id }); }, open:() => this.jyOpenStop(s.id) }; }) : [];
         out.jyMoreShow = shown.length > S.jyMoreN; out.jyMore = () => this.setState({ jyMoreN:S.jyMoreN + 40 });
-        out.jyStopsNote = all.length ? plural(shown.length, 'postcard', 'postcards') + (S.jyFilter === 'all' ? ', newest first. Tap one to read it again.' : ' of this kind, newest first.') : 'No postcards yet. Every stop you reach sends one here.';
+        out.jyStopsNote = all.length ? plural(shown.length, 'postcard', 'postcards') + (S.jyFilter === 'all' ? ', newest first. Tap a postcard to turn it over.' : ' of this kind, newest first.') : 'No postcards yet. Every stop you reach sends one here.';
       }
 
-      // food diary: everything from the dish lists that you have found, written up as one menu per city (the newest city first)
+      // food diary: everything from the dish lists that you have found, written up as one menu per city (the newest city first), laid out as a menu, a tray of plates or tasting cards
       {
+        const dk = S.theme === 'dark';
+        const heatOf = (x) => { const t = (x.en + ' ' + x.note + ' ' + x.fun).toLowerCase();
+          if (/numbing|fiery|very (hot|spicy)|extremely spicy|mala\b|chili oil|red oil|hot ?pot/.test(t)) return 3;
+          if (/spicy|chili|chilli|pepper|hot and sour|piquant/.test(t)) return 2;
+          if (/sour|pungent|mustard|ginger|garlic|wasabi|tingl|curry|peppery/.test(t)) return 1; return 0; };
+        const HL = ['Not spicy', 'A little kick', 'Spicy', 'Very spicy'];
         const order = [], byC = {};
         st.seen.forEach(i => { const s = JWORLD.byStop[i]; if (!s || s.k !== 'D') return; if (!byC[s.cid]) { byC[s.cid] = []; order.push(s.cid); } byC[s.cid].push(s); });
         const G = [['菜', 'cài', 'Dishes', ['dish', 'near']], ['饮料', 'yǐnliào', 'Drinks', ['drink']], ['特产', 'tèchǎn', 'Local specialties', ['buy', 'ask']]];
         const tally = [0, 0, 0];
         const tables = order.slice().reverse().map(cid => {
-          const C = JWORLD.byCity[cid], mine = byC[cid], total = C.stops.filter(x => x.k === 'D').length;
+          const C = JWORLD.byCity[cid], mine = byC[cid], total = C.stops.filter(x => x.k === 'D').length, hue = JWORLD.byRegion[C.rid].hue;
+          const item = (x) => { const ph = JMEDIA[x.id]; const has = !!(ph && ph.u); const h = heatOf(x);
+            return { zh:x.zh, py:x.py, en:x.en, cls:x.sp ? 'sp' : '', label:x.en + (x.sp ? ', a must-see' : ''), art:jyStopArt(x, hue, dk), hasPhoto:has, noPhoto:!has, url:has ? ph.u : '', heatLabel:HL[h], h1:h >= 1 ? 'on' : '', h2:h >= 2 ? 'on' : '', h3:h >= 3 ? 'on' : '', open:() => this.jyOpenStop(x.id) }; };
           const groups = G.map((g, gi) => { const items = mine.filter(x => g[3].indexOf(JY.sayKind(x)) >= 0); tally[gi] += items.length;
-            return { zh:g[0], py:g[1], en:g[2], items:items.map(x => ({ zh:x.zh, py:x.py, en:x.en, cls:x.sp ? 'sp' : '', label:x.en + (x.sp ? ', a must-see' : ''), open:() => this.jyOpenStop(x.id) })) }; }).filter(g => g.items.length);
-          return { zh:C.zh, py:C.py, en:C.en, hue:JWORLD.byRegion[C.rid].hue, sub:mine.length === total ? 'All ' + total + ' found' : mine.length + ' of ' + total + ' found', groups };
+            return { zh:g[0], py:g[1], en:g[2], items:items.map(item) }; }).filter(g => g.items.length);
+          return { zh:C.zh, py:C.py, en:C.en, hue, sub:mine.length === total ? 'All ' + total + ' found' : mine.length + ' of ' + total + ' found', groups, all:mine.map(item) };
         });
+        const fv = S.jyFoodView || 'menu';
+        out.jyFoodViews = [['menu', 'Menu'], ['tray', 'Tray'], ['taste', 'Tasting']].map(v => ({ label:v[1], cls:fv === v[0] ? 'on' : '', fn:() => { SFX.play('ok'); this.setState({ jyFoodView:v[0] }); } }));
+        out.jyFdMenu = fv === 'menu'; out.jyFdTray = fv === 'tray'; out.jyFdTaste = fv === 'taste';
         out.jyTables = S.jyTab === 'food' ? tables : []; out.jyFoodNone = tables.length === 0;
         out.jyFoodSub = tables.length ? plural(tally[0], 'dish', 'dishes') + ' · ' + plural(tally[1], 'drink', 'drinks') + ' · ' + plural(tally[2], 'local specialty', 'local specialties') + ', in ' + plural(tables.length, 'city', 'cities') : 'Nothing on your table yet. Every dish you find on your travels is written down here, one menu per city.';
       }
@@ -3492,11 +3518,11 @@
           const curC = st.started && st.cur && JWORLD.byCity[st.cur] && !cs.some(c => c.cid === st.cur) ? JWORLD.byCity[st.cur] : null;
           out.jyCityStamps = (curC ? [{ C:curC, here:true }] : []).concat(cs.map(c => ({ C:JWORLD.byCity[c.cid], here:false }))).map(o => {
             const got = o.C.stops.filter(x => have[x.id]).length;
-            return { zh:o.C.zh, en:o.C.en, hue:JWORLD.byRegion[o.C.rid].hue, cls:(o.here ? 'here' : 'got') + (o.C.zh.length > 4 ? ' long' : o.C.zh.length === 4 ? ' l4' : ''), sub:o.here ? got + ' / ' + o.C.stops.length : '', label:o.C.en + (o.here ? ', ' + got + ' of ' + o.C.stops.length + ' stops seen' : ', city stamp'), open:() => this.jyShowReg(o.C.rid) };
+            return { art:JART ? jyArt(JART.cityKey(o.C), JWORLD.byRegion[o.C.rid].hue, S.theme === 'dark') : '', zh:o.C.zh, en:o.C.en, hue:JWORLD.byRegion[o.C.rid].hue, cls:(o.here ? 'here' : 'got') + (o.C.zh.length > 4 ? ' long' : o.C.zh.length === 4 ? ' l4' : ''), sub:o.here ? got + ' / ' + o.C.stops.length : '', label:o.C.en + (o.here ? ', ' + got + ' of ' + o.C.stops.length + ' stops seen' : ', city stamp'), open:() => this.jyShowReg(o.C.rid) };
           });
           out.jyCityNone = out.jyCityStamps.length === 0; out.jyCitySub = cs.length + ' of ' + nCities + ' cities · see every stop in a city to earn its stamp';
           const ms = JY.mustSeen(JWORLD, st).reverse(); const nStar = Object.keys(JWORLD.byStop).filter(k => JWORLD.byStop[k].sp).length;
-          out.jyStarStamps = ms.map(x => ({ zh:x.zh, en:x.en, label:'Must-see: ' + x.en, open:() => this.jyOpenStop(x.id) }));
+          out.jyStarStamps = ms.map(x => ({ art:jyStopArt(x, JWORLD.byRegion[x.rid].hue, S.theme === 'dark'), zh:x.zh, en:x.en, label:'Must-see: ' + x.en, open:() => this.jyOpenStop(x.id) }));
           out.jyStarNone = ms.length === 0; out.jyStarSub = ms.length + ' of ' + nStar + ' must-sees · the best of each region';
           out.jyPassSub += ' · ' + plural(cs.length, 'city stamp', 'city stamps') + ' · ' + plural(ms.length, 'must-see', 'must-sees');
         }
@@ -3505,6 +3531,21 @@
           return { hue:has ? RR.hue : META[id][2], cls:got ? 'got' : here ? 'here' : 'empty', zh:got || here ? (has ? RR.zh : META[id][0]) : '?', en:got || here ? rName(id) : 'Not yet', code:got || here ? (has && RR.air ? RR.air.code : '') : '', date:got ? vs.done[id] : here ? 'In progress' : '',
             label:got ? rName(id) + ', stamped' : here ? rName(id) + ', in progress' : 'Not visited yet', open:has && (got || here) && !fm ? () => this.jyShowReg(id) : () => {} };
         });
+        // the passport is a little book: a cover, then four regions to a page. Page N-1 and earlier are turned over.
+        {
+          const items = out.jyStamps.map(x => Object.assign({}, x, { plane:jyArt(['plane', 0], x.hue, S.theme === 'dark') }));
+          const per = 4, np = Math.max(1, Math.ceil(items.length / per)), total = np + 1;
+          const auto = items.length ? Math.floor((items.length - 1) / per) + 1 : 0;
+          const cur = Math.max(0, Math.min(total - 1, S.jyPg == null ? auto : S.jyPg));
+          const stampedN = ids.filter(id => vs.done[id]).length;
+          out.jyPages = [{ cover:true, isPage:false, cls:(cur > 0 ? 'turned' : 'cur') + ' cv', z:cur > 0 ? 0 : total, hid:cur > 0 ? 'true' : 'false', sub:stampedN + ' of ' + ids.length + ' regions', title:'', no:'', tab:'-1', stamps:[] }].concat(Array.from({ length:np }, (_, p) => {
+            const idx = p + 1, mine = items.slice(p * per, p * per + per);
+            return { cover:false, isPage:true, cls:idx < cur ? 'turned' : idx === cur ? 'cur' : 'next', z:idx < cur ? idx : total - idx, hid:idx === cur ? 'false' : 'true', sub:'', title:'Page ' + idx, no:idx + ' / ' + np, tab:idx === cur ? '0' : '-1', stamps:mine };
+          }));
+          out.jyPgNo = cur + 1; out.jyPgTotal = total; out.jyPgFirst = cur === 0; out.jyPgLast = cur === total - 1;
+          out.jyPgDots = Array.from({ length:total }, (_, k) => ({ cls:k === cur ? 'on' : '' }));
+          out.jyPgPrev = () => this.jyPgGo(-1, cur, total); out.jyPgNext = () => this.jyPgGo(1, cur, total);
+        }
       }
       return out;
     }
