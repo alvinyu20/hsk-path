@@ -335,7 +335,10 @@
     const lv = levelOf(m);
     const recall = started.length ? Math.round(100 * started.reduce((a, k) => a + retr(w[k], off), 0) / started.length) : 0;
     // A word is due when any of its skills is due: recognising it (see), saying it (prod) or hearing it (hear); Review practises all three.
-    const dueN = started.length ? Math.min.apply(null, started.map(k => dueIn(w[k], off))) : 9999;
+    // (Saying a word only joins a review once you recognise it twice, the same rule buildQueue uses, so a word whose only due skill is one that cannot be asked yet is not "due":
+    // it was counted as due, "Review N words" showed, and tapping it started nothing because the queue was empty.)
+    const askable = started.filter(k => k !== 'prod' || w.see.s >= 2);
+    const dueN = started.length ? (askable.length ? Math.min.apply(null, askable.map(k => dueIn(w[k], off))) : Math.max(1, Math.min.apply(null, started.map(k => dueIn(w[k], off))))) : 9999;
     let due = 'Not started';
     if (started.length) due = dueN <= 0 ? 'Due now' : (dueN < 1.5 ? 'Due tomorrow' : (dueN < 60 ? 'Due in ' + Math.round(dueN) + ' days' : 'Due in ' + Math.round(dueN / 30) + ' months'));
     return {

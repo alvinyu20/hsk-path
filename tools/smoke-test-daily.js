@@ -32,6 +32,18 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   check(c.w === 0, 'a word reviewed a minute ago with a short interval does not come straight back (' + JSON.stringify(c) + ')');
   c = await setWord(5 * DAY, 2);
   check(c.w === 1, 'an overdue word is due');
+  // a word counts as due only when Review can really ask it: saying a word joins a review once you recognise it twice (a lapse resets the recognition card, which used to leave
+  // "Review 6 words" on screen with nothing behind it)
+  const setSkills = (see, prod) => ev(({ see, prod }) => { const a = window.shanlu; const S = a.state; const zh = Object.keys(S.ws)[0];
+    const ws = Object.assign({}, S.ws); ws[zh] = Object.assign({}, ws[zh], { see: Object.assign({ d: 5 }, see), hear: { s: 0, d: 5 }, prod: Object.assign({ d: 5 }, prod) });
+    a.setState({ ws, rq: [], rcomplete: false }); return a.dueCounts(); }, { see, prod });
+  c = await setSkills({ s: 1, t: Date.now() - 60e3 }, { s: 3, t: Date.now() - 9 * DAY });
+  check(c.w === 0, 'a word whose only due skill is saying it, before it is recognised twice, is not counted as due (' + JSON.stringify(c) + ')');
+  c = await setSkills({ s: 2, t: Date.now() - 60e3 }, { s: 3, t: Date.now() - 9 * DAY });
+  check(c.w === 1, 'once it is recognised twice its overdue saying card counts as due (' + JSON.stringify(c) + ')');
+  await ev(() => window.shanlu.reviewMore());
+  check(await ev(() => window.shanlu.state.rq.length) >= 1, 'every due word gives Review something to ask');
+  await ev(() => window.shanlu.setState({ rq: [], rcomplete: false }));
   // the daily clear bonus
   const x0 = await ev(() => window.shanlu.state.xp);
   await ev(() => { const a = window.shanlu; a.setState({ dcN: 1, dcPaid: false, day: (function (n) { const p = (v) => String(v).padStart(2, '0'); return n.getFullYear() + '-' + p(n.getMonth() + 1) + '-' + p(n.getDate()); })(new Date()) }); a.dailyClear(); });
