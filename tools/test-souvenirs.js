@@ -70,6 +70,7 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   await page.locator('.sv-cell.hid').first().click(); await page.waitForTimeout(400);
   const hidDetail = await page.evaluate(() => (document.querySelector('.sv-detail') || { innerText: '' }).innerText);
   check(!/[一-鿿]/.test(hidDetail.replace(/[?？]/g, '')), 'tapping a hidden one shows no Chinese or English name');
+  check((await page.locator('.jy-chip').count()) === 2 && !(await page.locator('.sv-panel .jy-pass-h').count()) && !/Not found yet|of \d+ found|^Souvenirs/m.test(await page.locator('.sv-panel').innerText()), 'Souvenirs has only All and Found, and no heading or count');
   await page.locator('.jy-chip', { hasText: /^Found/ }).click(); await page.waitForTimeout(300);
   check((await page.locator('.sv-cell').count()) === exp.got && (await page.locator('.sv-cell.hid').count()) === 0, 'the Found filter lists only found souvenirs');
 

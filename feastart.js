@@ -233,10 +233,11 @@
     drink: ['', Pg('M28 -1a9 9 0 0 1 18 0Z', '#9BC53D') + Pg('M31 -1a6 6 0 0 1 12 0Z', '#D8EC8A', N), E(-34, -2, 10, 3.5, WH) + dots([[-38, -4], [-34, -5], [-30, -4]], '#B8782E', 2.4), Pg('M24 0L46 0L35 -9Z', '#E9DFC8'), E(34, -2, 9, 3, '#C79A5A')],
     shelf: ['', C(28, -6, 5, '#C0392B') + L('M28 -11l-4 -9', '#8A5A2B', 1.4), C(28, -6, 5, '#2F5F9E') + L('M28 -11l-4 -9', '#8A5A2B', 1.4), C(28, -6, 5, '#D9A441') + L('M28 -11l-4 -9', '#8A5A2B', 1.4), R(-30, -9, 60, 5, 'rgba(192,57,43,.9)', 'stroke="none"')]
   };
-  function drawVar(it, n) {
+  function drawVar(it, n, sil) {
     const forced = n != null, h = hash((it.id || it.zh || '') + 'v'), k = it.zone === 'shelf' ? 'shelf' : it.drink ? 'drink' : 'table', ex = EXTRA[k];
     const fl = forced ? (n % 2) : (h & 1), tilt = forced ? [0, -3, 3, -5, 5, 2][n % 6] : ((h >>> 1) % 9) - 4, sc = forced ? [1, .96, 1.04, .94, 1.06, .98][n % 6] : .95 + ((h >>> 5) % 11) / 100;
     const gi = forced ? n % ex.length : (h >>> 9) % (ex.length + 1) % ex.length, ti = forced ? (n * 2 + (h % 2)) % TINTS.length : (h >>> 13) % (k === 'shelf' ? 4 : TINTS.length);
+    if (sil) return '<g transform="rotate(' + (forced ? [0, -3, 3, -5, 5, 2][n % 6] : ((h >>> 1) % 9) - 4) + ') scale(' + ((forced ? (n % 2) : (h & 1)) ? -1 : 1) + ' 1)">' + draw(it.arch, it.p).replace(/<g class="fz-stm"[\s\S]*?<\/g>/g, '') + '</g>';   // an unfound dish: just its shape, no light, tint, steam or extras
     let g = draw(it.arch, it.p), steam = '';
     g = g.replace(/<g class="fz-stm"[\s\S]*?<\/g>/g, (m) => { steam += m; return ''; });   // steam stays outside the light filter
     // the flip and tilt sit inside the filters: Chromium paints a plain mirrored group with a filter on it solid black

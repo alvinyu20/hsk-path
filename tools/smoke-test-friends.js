@@ -99,7 +99,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(await B.page.locator('.jy-tabs button').count() === 2, 'a friend\'s journey has a Map and a Passport, no Stops');
   check(await B.page.locator('.jy-r.here').count() === 1, "the region Alvin is exploring is marked on the map");
   await B.page.locator('.jy-tabs button', { hasText: 'Passport' }).click();
-  check((await text(B.page)).includes("Alvin's passport") && await B.page.locator('.jy-slot.here').count() === 1, "Alvin's passport shows the region in progress");
+  check((await B.page.locator('.pp-cv-who').innerText()).includes('Alvin') && await B.page.locator('.jy-slot.here').count() === 1, "Alvin's passport cover has his name, and it shows the region in progress");
   await B.page.locator('.jy-fbar .linkbtn').click();
   check(await B.page.locator('.jy-now').count() === 1 && await B.page.locator('.jy-fbar').count() === 0, 'going back shows your own journey again');
   const boardText = await (async () => { await require('./test-nav').makeNav(B.page)('Friends'); await B.page.waitForSelector('.frow'); return text(B.page); })();

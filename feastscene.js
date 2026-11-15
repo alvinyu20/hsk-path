@@ -133,7 +133,8 @@
 
   // ---------- light and table settings (shared by every room) ----------
   // The gradients have fixed ids: every picture on the page carries the same copy, so it does not matter which one is found first.
-  const LIGHT_DEFS = '<defs>' +
+  const SIL = '<filter id="fzsil" color-interpolation-filters="sRGB" x="-10%" y="-10%" width="120%" height="120%"><feColorMatrix type="matrix" values="0 0 0 0 .16 0 0 0 0 .1 0 0 0 0 .08 0 0 0 1 0"/></filter>';
+  const LIGHT_DEFS = '<defs>' + SIL +
     '<radialGradient id="fzglow"><stop offset="0" stop-color="#FFEDB8" stop-opacity=".34"/><stop offset=".55" stop-color="#FFD98A" stop-opacity=".1"/><stop offset="1" stop-color="#FFD98A" stop-opacity="0"/></radialGradient>' +
     '<radialGradient id="fzsh"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset=".55" stop-color="#000" stop-opacity=".22"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>' +
     '<radialGradient id="fzvig" cx=".5" cy=".56" r=".78"><stop offset=".5" stop-color="#120804" stop-opacity="0"/><stop offset="1" stop-color="#120804" stop-opacity=".5"/></radialGradient>' +
@@ -164,7 +165,7 @@
   // ---------- layout ----------
   const SC = [.64, .78, .94], TABLE_CAP = 18, SHELF_CAP = 10;
   const gsc = (x, y, k, p) => '<g transform="translate(' + x + ' ' + y + ') scale(' + k + ')" stroke="' + OL + '" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">' + p + '</g>';
-  const hot = (it, inner, x, y, w, h) => '<g class="fz-hit" data-id="' + it.id + '">' + inner + '<rect x="' + (x - w / 2) + '" y="' + (y - h) + '" width="' + w + '" height="' + (h + 8) + '" fill="rgba(0,0,0,0)"/></g>';
+  const hot = (it, inner, x, y, w, h) => '<g class="fz-hit' + (it.hid ? ' hid' : '') + '" data-id="' + it.id + '">' + inner + '<rect x="' + (x - w / 2) + '" y="' + (y - h) + '" width="' + w + '" height="' + (h + 8) + '" fill="rgba(0,0,0,0)"/></g>';
   function layoutRows(n, rows, hasCentre) {
     // spread n dishes over the three rows in proportion to how many fit; the centre piece takes the middle of the middle row
     const cap = rows.map((r, i) => Math.max(2, Math.floor(2 * r[1] / (74 * SC[i]))));
@@ -205,7 +206,7 @@
     // shelf and what is on it
     const sf = th.shelf, shelfItems = [];
     s += shelfUnit(sf);
-    sh.forEach((it, i) => { const row = i < 5 ? 0 : 1, col = i % 5, n = Math.min(5, sh.length - row * 5), x = sf.x + sf.w * ((col + .5) / 5), y = sf.y + row * 62 + 0; shelfItems.push(hot(it, E(x, y + 1, 19, 4.4, 'url(#fzsh)', N) + gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null)), x, y, 36, 34)); });
+    sh.forEach((it, i) => { const row = i < 5 ? 0 : 1, col = i % 5, n = Math.min(5, sh.length - row * 5), x = sf.x + sf.w * ((col + .5) / 5), y = sf.y + row * 62 + 0; shelfItems.push(hot(it, E(x, y + 1, 19, 4.4, 'url(#fzsh)', N) + (it.hid ? '<g filter="url(#fzsil)" opacity=".5">' + gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null, true)) + '</g>' : gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null))), x, y, 36, 34)); });
     s += shelfItems.join('');
     if (th.back) s += th.back(KIT);
     s += th.table.draw(KIT);
@@ -218,12 +219,12 @@
           for (let i = 0; i < 7; i++) { const t = .35 + ((i * 37) % 60) / 100, u = ((i * 53 + 11) % 100) / 100; lb += C(x0 + (x1 - x0) * u + dx * t, y0 + (400 - y0) * t, 1.1 + (i % 3) * .4, '#fff', 'opacity=".55" stroke="none"'); } });
         if (lb) s += '<defs><clipPath id="' + lc + '"><rect y="' + fy + '" width="680" height="' + (440 - fy) + '"/></clipPath></defs><g clip-path="url(#' + lc + ')" pointer-events="none">' + lb + '</g>'; }
       (th.light || []).forEach(l => { s += Pg('M' + l[0] + ' ' + l[2] + 'H' + l[1] + 'L' + (l[1] + (l[3] || 90)) + ' ' + (l[4] || 400) + 'H' + (l[0] + (l[3] || 90) - 30) + 'Z', 'url(#fzbeam)', 'opacity="' + (l[5] || .7) + '" stroke="none"'); }); }
-    // the centre piece: the first must-see on this page
-    const ci = tb.findIndex(x => x.sp), centre = ci >= 0 ? tb[ci] : null, rest = tb.filter(x => x !== centre);
+    // the centre piece: the first must-see on this page (a page without one features its first dish that is not a drink)
+    const ci = tb.some(x => x.sp) ? tb.findIndex(x => x.sp) : tb.findIndex(x => !x.drink), centre = ci >= 0 ? tb[ci] : null, rest = tb.filter(x => x !== centre);
     const slots = layoutRows(rest.length, th.table.rows, !!centre), placed = [];
     if (centre) placed.push({ it: centre, x: 340, y: th.table.rows[1][0] + 6, k: 1.15 });
     rest.forEach((it, i) => { const sl = slots[i]; if (!sl) return; placed.push({ it, x: sl[0], y: sl[1], k: SC[sl[2]] * (it.drink ? .85 : 1) * (it.arch === 'hotpot' ? .9 : 1) }); });
-    placed.sort((a, b) => a.y - b.y).forEach(o => { s += hot(o.it, '<g>' + gsc(o.x, o.y, o.k, '<ellipse cx="0" cy="2" rx="58" ry="12" fill="url(#fzsh)" stroke="none"/>' + FE.drawVar(o.it, o.it.vn ? o.it.vn : null)) + '</g>', o.x, o.y, 80 * o.k, 70 * o.k); });
+    placed.sort((a, b) => a.y - b.y).forEach(o => { const sh = '<ellipse cx="0" cy="2" rx="58" ry="12" fill="url(#fzsh)" stroke="none"/>'; s += hot(o.it, o.it.hid ? '<g>' + gsc(o.x, o.y, o.k, sh) + '<g filter="url(#fzsil)" opacity=".5">' + gsc(o.x, o.y, o.k, FE.drawVar(o.it, o.it.vn ? o.it.vn : null, true)) + '</g></g>' : '<g>' + gsc(o.x, o.y, o.k, sh + FE.drawVar(o.it, o.it.vn ? o.it.vn : null)) + '</g>', o.x, o.y, 80 * o.k, 70 * o.k); });
     if (th.front) s += th.front(KIT);
     s += '<g pointer-events="none">' + R(0, 0, 680, 440, 'url(#fzvig)', N) + R(0, 0, 680, 140, 'url(#fzceil)', N) + '</g>';
     return { svg: s,
@@ -238,7 +239,7 @@
     return s;
   }
   // one dish on its own, for the popup
-  function portrait(stop, kind) { const c = FE.classify(stop, kind); return '<svg viewBox="-62 -92 124 100" aria-hidden="true">' + gsc(0, 0, 1.25, '<ellipse cx="0" cy="1" rx="46" ry="8" fill="#000" opacity=".2" stroke="none"/>' + FE.draw(c.arch, c.p)) + '</svg>'; }
+  function portrait(stop, kind, sil) { const c = FE.classify(stop, kind), sh = '<ellipse cx="0" cy="1" rx="46" ry="8" fill="#000" opacity=".2" stroke="none"/>'; return '<svg viewBox="-62 -92 124 100" aria-hidden="true"><defs>' + SIL + '</defs>' + (sil ? gsc(0, 0, 1.25, sh) + '<g filter="url(#fzsil)" opacity=".5">' + gsc(0, 0, 1.25, FE.draw(c.arch, c.p).replace(/<g class="fz-stm"[\s\S]*?<\/g>/g, '')) + '</g>' : gsc(0, 0, 1.25, sh + FE.draw(c.arch, c.p))) + '</svg>'; }
   // the finished picture. land = the cropped landscape frame used when the table is opened full screen. id keeps the clip path unique on the page.
   function wrap(res, id, land) {
     const vb = land ? '0 112 680 328' : '0 0 680 440', c = 'fzc-' + id;

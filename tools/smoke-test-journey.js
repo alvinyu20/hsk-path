@@ -68,11 +68,12 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
       await page.locator('.pstc.flip .pcard-k').click({ position:{ x:6, y:6 } }); await page.waitForTimeout(120);
       check(await page.locator('.pstc.flip').count() === 0, 'tapping the back turns it face-up again'); }
     await page.locator('.jy-tabs button', { hasText: 'Food' }).click();
-    check(/Nothing on your table yet/.test(await main(page)), 'the Food diary starts empty');
+    check(await page.locator('.fz-card .fz-hit').count() >= 5 && await page.locator('.fz-card .fz-hit:not(.hid)').count() === 0 && /^0 of \d+ found/.test(await page.locator('.fz-foot span').first().innerText()), 'the Food diary shows the whole table of a province you have reached, with every dish still a silhouette');
+    check(!/Food diary|dishes ·/.test(await main(page)), 'the Food diary has no heading or summary line');
     await page.locator('.jy-tabs button', { hasText: 'Map' }).click();
     check(await page.locator('.jy-now .jy-hero img').count() === 1, 'with no card open, the main card has a picture of the province on top');
     await page.locator('.jy-tabs button', { hasText: 'Passport' }).click();
-    t = await main(page); check(/0 of 31 regions stamped/.test(t), 'the passport counts 31 regions: ' + t.match(/\d+ of \d+ regions stamped/));
+    t = await main(page); check(/Regions\s*0 \/ 31/.test(t) && !/regions stamped/.test(t), 'the passport cover counts 31 regions and no words sit above the book: ' + t.match(/Regions\s*\d+ \/ \d+/));
     check(await page.locator('.jy-slot.here').count() === 1, 'the region you are in shows as in progress in the passport');
     // a stop gets paid for: the pill and the bar glow, and a small note says so
     await page.locator('.brand').click();
@@ -172,7 +173,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.jy-acts .btn.pri').click();
     await page.locator('.jy-tabs button', { hasText: 'Passport' }).click();
     const t = await main(page);
-    check(/1 of 31 regions stamped/.test(t) && /3 city stamps/.test(t) && /4 must-sees/.test(t), 'the passport counts regions, city stamps and must-sees: ' + (t.match(/\d+ of 31 regions[^\n]*/) || [''])[0]);
+    check(/Regions\s*1 \/ 31/.test(t) && /Cities\s*3 \/ \d+/.test(t) && /Must-sees\s*4 \/ \d+/.test(t), 'the passport cover counts regions, city stamps and must-sees: ' + (t.match(/Regions[\s\S]*Must-sees\s*\d+ \/ \d+/) || [''])[0].replace(/\s+/g, ' '));
     check(await page.locator('.pp-mark').count() === 3, 'the passport has a bookmark on the side for regions, cities and must-sees');
     check(await page.locator('.pp-pg.cv.cur').count() === 1, 'the passport is on its cover before a bookmark is tapped');
     await page.locator('.pp-mark.city').click(); await page.waitForTimeout(150);
@@ -205,9 +206,17 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await page.locator('.fz-card').count() === 1 && await page.locator('.fz-card .fz-hit').count() >= 1 && await page.locator('.fz-chip').count() >= 1, 'the Food diary is a feast table with dishes on it, one chip per province');
     check(await page.locator('.fz-chip').count() === (await page.evaluate(() => new Set([...document.querySelectorAll('.fz-chip b.zh')].map(e => e.textContent)).size)), 'the Food diary has one table per province');
     check(await page.locator('.fd-menu .jy-dish').count() >= 1, 'the menu as a list is still there under the table');
+    const pickChip = async (sel) => { for (let i = 0, n = await page.locator('.fz-chip').count(); i < n && !(await page.locator(sel).count()); i++) { await page.locator('.fz-chip').nth(i).click(); await page.waitForTimeout(120); } };
+    await pickChip('.fz-card .fz-hit.hid');   // a province with dishes still to find
     await page.locator('.fz-card').click(); await page.waitForTimeout(150);
     check(await page.locator('.fz-ov .fz-hit').count() >= 1, 'tapping the table opens it full screen');
-    await page.locator('.fz-ov .fz-hit').first().click({ force: true }); await page.waitForTimeout(150);
+    await page.locator('.fz-ov .fz-hit.hid').first().click({ force: true }); await page.waitForTimeout(150);
+    check(await page.locator('.fz-pop').count() === 1 && /Not found yet/.test(await page.locator('.fz-pop').innerText()) && !/[一-鿿]/.test(await page.locator('.fz-pop').innerText()) && await page.locator('.fz-pop .btn', { hasText: 'Open this stop' }).count() === 0, 'tapping a silhouette says it is not found yet, with no name');
+    await page.locator('.fz-pop .btn', { hasText: 'Close' }).click(); await page.waitForTimeout(80);
+    await page.locator('.fz-x').click(); await page.waitForTimeout(80);
+    await pickChip('.fz-card .fz-hit:not(.hid)');   // a province with a dish you have found
+    await page.locator('.fz-card').click(); await page.waitForTimeout(150);
+    await page.locator('.fz-ov .fz-hit:not(.hid)').first().click({ force: true }); await page.waitForTimeout(150);
     check(await page.locator('.fz-pop .zh').count() === 1 && (await page.locator('.fz-pop .zh').innerText()).length > 0, 'tapping a dish shows what it is');
     await page.locator('.fz-pop .btn', { hasText: 'Close' }).click(); await page.waitForTimeout(80);
     check(await page.locator('.fz-pop').count() === 0 && await page.locator('.fz-ov').count() === 1, 'the dish popup closes and leaves the table open');

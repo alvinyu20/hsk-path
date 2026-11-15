@@ -37,6 +37,12 @@ W.regions.forEach((r) => {
   ok(full.pages >= 1 && (ds.length <= 18 || full.pages >= 1), id + ' has courses');
   const hits = (full.svg.match(/class="fz-hit"/g) || []).length;
   ok(hits > 0 && hits <= F.TABLE_CAP + F.SHELF_CAP + 2, id + ' shows a sensible number of dishes per course (' + hits + ')');
+  ok(full.svg.indexOf('scale(1.15)') >= 0, id + ' has a featured dish in the middle of the table');
+  // dishes you have not found are dark shapes, and nothing moves when you find one
+  const half = ds.map((d, i) => Object.assign({}, d, { hid: i % 2 === 0 })), hs = F.scene(id, half, 0), ids1 = (hs.svg.match(/data-id="[^"]+"/g) || []).sort().join(), ids2 = (full.svg.match(/data-id="[^"]+"/g) || []).sort().join();
+  ok((hs.svg.match(/class="fz-hit hid"/g) || []).length === (hs.svg.match(/filter="url\(#fzsil\)"/g) || []).length && (hs.svg.match(/class="fz-hit hid"/g) || []).length > 0, id + ' draws unfound dishes as silhouettes');
+  ok(ids1 === ids2 && hs.pages === full.pages, id + ' keeps the same dishes and courses whether or not they are found');
+  ok(hs.svg.indexOf('undefined') < 0 && hs.svg.indexOf('NaN') < 0, id + ' draws silhouettes cleanly');
   // paging reaches every dish exactly once
   const seenIds = new Set(); for (let p = 0; p < full.pages; p++) (F.scene(id, ds, p).svg.match(/data-id="[^"]+"/g) || []).forEach((m) => seenIds.add(m));
   ok(seenIds.size === ds.length, id + ' shows every dish across its courses (' + seenIds.size + ' of ' + ds.length + ')');

@@ -3377,8 +3377,7 @@
       if (tabNow === 'shelf' && !fm) {
         const list = SOUV.filter(x => JWORLD.byStop[x.stop]); const got = list.filter(x => have[x.stop]); const fl = S.jySvFilter || 'all';
         const sel = S.jySvSel ? list.find(x => x.id === S.jySvSel) : null;
-        out.jySvSub = got.length + ' of ' + list.length + ' found';
-        out.jySvChips = [['all', 'All', list.length], ['found', 'Found', got.length], ['hidden', 'Not found yet', list.length - got.length]].map(c => ({ label:c[1], count:c[2], cls:fl === c[0] ? 'on' : '', fn:() => this.jySvFilterSet(c[0]) }));
+                out.jySvChips = [['all', 'All', list.length], ['found', 'Found', got.length]].map(c => ({ label:c[1], count:c[2], cls:fl === c[0] ? 'on' : '', fn:() => this.jySvFilterSet(c[0]) }));
         const shown = list.filter(x => fl === 'all' || (fl === 'found') === !!have[x.stop]).sort((a, b) => a.en.localeCompare(b.en, 'en', { sensitivity:'base' }) || (a.id < b.id ? -1 : 1));
         out.jySvItems = shown.map(x => { const has = !!have[x.stop]; const RR = JWORLD.byRegion[x.rid];
           return { cls:(has ? 'got' : 'hid') + (sel && sel.id === x.id ? ' sel' : ''), img:svImg(x), name:has ? x.en : '', zh:has ? x.zh : '', label:has ? x.en + ', found' : 'A souvenir still to find in ' + (RR ? RR.en : 'China'), open:() => this.jySvPick(x.id) }; });
@@ -3483,6 +3482,8 @@
         st.seen.forEach(i => { const s = JWORLD.byStop[i]; if (!s || s.k !== 'D') return; if (!byR[s.rid]) { byR[s.rid] = []; order.push(s.rid); } byR[s.rid].push(s); });
         const G = [['菜', 'cài', 'Dishes', ['dish', 'near']], ['饮料', 'yǐnliào', 'Drinks', ['drink']], ['特产', 'tèchǎn', 'Local specialties', ['buy', 'ask']]];
         const tally = [0, 0, 0];
+        const vis = [], seenR = {};   // every region you have been to, in the order you got there
+        st.seen.forEach(i => { const s = JWORLD.byStop[i]; if (!s || seenR[s.rid]) return; seenR[s.rid] = 1; vis.push(s.rid); });
         const tables = order.slice().reverse().map(rid => {
           const R = JWORLD.byRegion[rid], mine = byR[rid], total = R.stops.filter(x => x.k === 'D').length, hue = R.hue;
           const item = (x) => { const C = JWORLD.byCity[x.cid];
@@ -3491,18 +3492,20 @@
             return { zh:g[0], py:g[1], en:g[2], items:items.map(item) }; }).filter(g => g.items.length);
           return { zh:R.zh, py:R.py, en:R.en, hue, sub:mine.length === total ? 'All ' + total + ' found' : mine.length + ' of ' + total + ' found', groups };
         });
-        out.jyTables = S.jyTab === 'food' ? tables : []; out.jyFoodNone = tables.length === 0; out.jyFoodHas = tables.length > 0;
+        out.jyTables = S.jyTab === 'food' ? tables : []; out.jyFoodNone = vis.length === 0; out.jyFoodHas = vis.length > 0; out.jyTablesShow = tables.length > 0;
         // the feast table: one themed room per province, with every dish you have found set out in it
         out.jyFoodChips = []; out.jyFoodSvg = ''; out.jyFoodOvSvg = ''; out.jyFoodOvShow = false; out.jyFoodPopShow = false; out.jyFoodMulti = false;
-        if (S.jyTab === 'food' && tables.length && window.FEAST) {
-          const rids = order.slice().reverse(), rid = rids.indexOf(S.jyFoodRid) >= 0 ? S.jyFoodRid : rids[0], R = JWORLD.byRegion[rid];
-          const found = byR[rid].map(x => ({ id:x.id, zh:x.zh, py:x.py, en:x.en, kind:JY.sayKind(x), sp:!!x.sp }));
-          const total = R.stops.filter(x => x.k === 'D').length, n0 = Math.max(0, Math.min(window.FEAST.pagesFor(found.map(f => Object.assign({}, f, window.FEAST.classify(f, f.kind)))) - 1, S.jyFoodPg || 0));
+        if (S.jyTab === 'food' && vis.length && window.FEAST) {
+          const rids = vis.slice().reverse(), rid = rids.indexOf(S.jyFoodRid) >= 0 ? S.jyFoodRid : rids[0], R = JWORLD.byRegion[rid];
+          // the whole table is laid out from the start; dishes you have not met yet are dark shapes
+          const found = R.stops.filter(x => x.k === 'D').map(x => ({ id:x.id, zh:x.zh, py:x.py, en:x.en, kind:JY.sayKind(x), sp:!!x.sp, hid:!have[x.id] }));
+          const nFound = found.filter(f => !f.hid).length;
+          const total = found.length, n0 = Math.max(0, Math.min(window.FEAST.pagesFor(found.map(f => Object.assign({}, f, window.FEAST.classify(f, f.kind)))) - 1, S.jyFoodPg || 0));
           const sc = window.FEAST.scene(rid, found, n0);
-          out.jyFoodChips = rids.map(r => { const RR = JWORLD.byRegion[r]; return { zh:RR.zh, en:RR.en, n:byR[r].length, pressed:r === rid, pick:() => this.setState({ jyFoodRid:r, jyFoodPg:0, jyFoodPop:null }) }; });
+          out.jyFoodChips = rids.map(r => { const RR = JWORLD.byRegion[r]; return { zh:RR.zh, en:RR.en, n:(byR[r] || []).length, pressed:r === rid, pick:() => this.setState({ jyFoodRid:r, jyFoodPg:0, jyFoodPop:null }) }; });
           out.jyFoodSvg = window.FEAST.wrap(sc, 'c', false);
-          out.jyFoodLabel = 'The ' + R.en + ' table with ' + plural(found.length, 'dish', 'dishes') + ' on it. Tap to look closer.';
-          out.jyFoodCount = (found.length === total ? 'All ' + total + ' found' : found.length + ' of ' + total + ' found') + ' · ' + R.en;
+          out.jyFoodLabel = 'The ' + R.en + ' table, ' + nFound + ' of ' + total + ' dishes found. Tap to look closer.';
+          out.jyFoodCount = (nFound === total ? 'All ' + total + ' found' : nFound + ' of ' + total + ' found') + ' · ' + R.en;
           out.jyFoodMulti = sc.pages > 1; out.jyFoodCourse = 'Course ' + (sc.page + 1) + ' of ' + sc.pages; out.jyFoodPrevOff = sc.page <= 0; out.jyFoodNextOff = sc.page >= sc.pages - 1;
           out.jyFoodPrev = () => this.setState({ jyFoodPg:Math.max(0, sc.page - 1), jyFoodPop:null }); out.jyFoodNext = () => this.setState({ jyFoodPg:Math.min(sc.pages - 1, sc.page + 1), jyFoodPop:null });
           out.jyFoodOpenFn = () => { SFX.play('ok'); this.setState({ jyFoodOv:true, jyFoodPop:null }); };
@@ -3511,12 +3514,14 @@
           if (S.jyFoodOv) {
             out.jyFoodOvSvg = window.FEAST.wrap(sc, 'o', true);
             const ps = S.jyFoodPop && JWORLD.byStop[S.jyFoodPop];
-            if (ps && ps.rid === rid) { const PC = JWORLD.byCity[ps.cid], kd = JY.sayKind(ps);
-              Object.assign(out, { jyFoodPopShow:true, jyPopArt:window.FEAST.portrait(ps, kd), jyPopZh:ps.zh, jyPopPy:ps.py, jyPopEn:ps.en, jyPopWhere:(PC ? PC.en + ' · ' : '') + R.en, jyPopKind:(ps.sp ? '★ Must-see · ' : '') + ({ dish:'Dish', near:'Dish', drink:'Drink', buy:'Local specialty', ask:'Local specialty' })[kd],
+            if (ps && ps.rid === rid && !have[ps.id]) {
+              Object.assign(out, { jyFoodPopShow:true, jyPopArt:window.FEAST.portrait(ps, JY.sayKind(ps), true), jyPopZh:'', jyPopPy:'', jyPopEn:'Not found yet', jyPopWhere:'Somewhere in ' + R.en + '. Keep travelling to find it.', jyPopNote:'', jyPopFun:'', jyPopCanOpen:false, jyPopClose:() => this.setState({ jyFoodPop:null }), jyPopOpen:() => {} });
+            } else if (ps && ps.rid === rid) { const PC = JWORLD.byCity[ps.cid], kd = JY.sayKind(ps);
+              Object.assign(out, { jyFoodPopShow:true, jyPopCanOpen:true, jyPopArt:window.FEAST.portrait(ps, kd), jyPopZh:ps.zh, jyPopPy:ps.py, jyPopEn:ps.en, jyPopWhere:(PC ? PC.en + ' · ' : '') + R.en + ' · ' + (ps.sp ? '★ Must-see · ' : '') + ({ dish:'Dish', near:'Dish', drink:'Drink', buy:'Local specialty', ask:'Local specialty' })[kd],
                 jyPopNote:ps.note || '', jyPopFun:ps.fun || '', jyPopClose:() => this.setState({ jyFoodPop:null }), jyPopOpen:() => { this.setState({ jyFoodOv:false, jyFoodPop:null }); this.jyOpenStop(ps.id); } }); }
           }
         }
-        out.jyFoodSub = tables.length ? plural(tally[0], 'dish', 'dishes') + ' · ' + plural(tally[1], 'drink', 'drinks') + ' · ' + plural(tally[2], 'local specialty', 'local specialties') + ', in ' + plural(tables.length, 'province', 'provinces') : 'Nothing on your table yet. Every dish you find on your travels is written down here, one menu per province.';
+        out.jyFoodSub = 'Nothing here yet. Once you land in a province, its table appears, and every dish you find fills it in.';
       }
 
       // passport: stamped regions first (in the order earned), then the one you are in, then the rest
@@ -3560,13 +3565,14 @@
           const auto = 0;   // the passport always opens on its cover
           const cur = Math.max(0, Math.min(total - 1, S.jyPg == null ? auto : S.jyPg));
           const stampedN = ids.filter(id => vs.done[id]).length;
+          const facts = [{ k:'Regions', v:stampedN + ' / ' + ids.length }].concat(fm ? [] : [{ k:'Cities', v:cs.length + ' / ' + Object.keys(JWORLD.byCity).length }, { k:'Must-sees', v:ms.length + ' / ' + Object.keys(JWORLD.byStop).filter(k => JWORLD.byStop[k].sp).length }]);
           // a bookmark opens its section on the page that holds the newest stamps (regions run in order, so that is the last one stamped or in progress; cities and must-sees are newest first)
           const regLast = regItems.reduce((a, x, i) => x.cls === 'empty' ? a : i, 0), regPg = Math.floor(regLast / 4) + 1;
           out.jyPsecs = fm ? [] : [['reg', 'Regions'], ['city', 'Cities'], ['star', 'Must-sees']].map(x => ({ label:x[1], cls:'pp-mark ' + x[0] + (sec === x[0] ? ' on' : ''), pressed:sec === x[0] ? 'true' : 'false', fn:() => { if (sec !== x[0] || cur === 0) { SFX.play('ok'); this.setState({ jyPsec:x[0], jyPg:x[0] === 'reg' ? regPg : 1 }); } } }));
           out.jyPsecShow = !fm; out.jyPassMoreShow = out.jyPassMoreShow && sec === 'reg';
-          out.jyPages = [{ cover:true, isPage:false, cls:(cur > 0 ? 'turned' : 'cur') + ' cv', z:cur > 0 ? 0 : total, hid:cur > 0 ? 'true' : 'false', sub:SEC.sub(stampedN), title:'', no:'', tab:'-1', stamps:[], cstamps:[], sstamps:[], isReg:false, isCity:false, isStar:false, none:false, noneText:'' }].concat(Array.from({ length:np }, (_, p) => {
+          out.jyPages = [{ cover:true, isPage:false, cls:(cur > 0 ? 'turned' : 'cur') + ' cv', z:cur > 0 ? 0 : total, hid:cur > 0 ? 'true' : 'false', sub:'', facts, who:fm ? fm.name : '', title:'', no:'', tab:'-1', stamps:[], cstamps:[], sstamps:[], isReg:false, isCity:false, isStar:false, none:false, noneText:'' }].concat(Array.from({ length:np }, (_, p) => {
             const idx = p + 1, mine = SEC.items.slice(p * per, p * per + per);
-            return { cover:false, isPage:true, cls:idx < cur ? 'turned' : idx === cur ? 'cur' : 'next', z:idx < cur ? idx : total - idx, hid:idx === cur ? 'false' : 'true', sub:'', title:SEC.title, head:SEC.head, no:idx + ' / ' + np, tab:idx === cur ? '0' : '-1',
+            return { cover:false, isPage:true, cls:idx < cur ? 'turned' : idx === cur ? 'cur' : 'next', z:idx < cur ? idx : total - idx, hid:idx === cur ? 'false' : 'true', sub:'', facts:[], who:'', title:SEC.title, head:SEC.head, no:idx + ' / ' + np, tab:idx === cur ? '0' : '-1',
               isReg:sec === 'reg', isCity:sec === 'city', isStar:sec === 'star', stamps:sec === 'reg' ? mine : [], cstamps:sec === 'city' ? mine : [], sstamps:sec === 'star' ? mine : [], none:SEC.items.length === 0, noneText:SEC.none };
           }));
           out.jyPgNo = cur + 1; out.jyPgTotal = total; out.jyPgFirst = cur === 0; out.jyPgLast = cur === total - 1; out.jyPgSec = SEC.title;
