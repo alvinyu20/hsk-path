@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="d50e1217b0">
+<meta name="shanlu-version" content="c4f5f7856b">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=d50e1217b0">
+<link rel="stylesheet" href="styles.css?v=c4f5f7856b">
 </head>
 <body>
 <div id="app"></div>
@@ -30,9 +30,7 @@
     <div class="mark zh" aria-hidden="true">山</div>
     <div><div class="bname">Shanlu</div><div class="bsub">HSK study path</div></div>
   </button>
-  <sc-if value="{{jyMenuShow}}" hint-placeholder-val="{{ false }}"><div class="m-title jyok"><div class="jymenu"><button type="button" class="jyt" aria-haspopup="true" aria-expanded="{{jyMenuOpen}}" data-on-click="{{jyMenuToggle}}">{{title}}<svg class="ic jycaret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-    <sc-if value="{{jyMenuOpen}}" hint-placeholder-val="{{ false }}"><div class="lvpanel jypanel jy-tabs" role="menu" aria-label="Journey views"><sc-for list="{{jyTabs}}" as="t" hint-placeholder-count="6"><button type="button" role="menuitemradio" aria-checked="{{t.sel}}" class="lvitem {{t.cls}}" data-on-click="{{t.fn}}"><span class="lvn">{{t.label}}</span></button></sc-for></div></sc-if></div></div></sc-if>
-  <sc-if value="{{jyMenuHide}}" hint-placeholder-val="{{ true }}"><div class="m-title" aria-hidden="true">{{title}}</div></sc-if>
+  <div class="m-title" aria-hidden="true">{{title}}</div>
 
   <nav class="navs navg" aria-label="Main sections">
     <button class="{{gHomeCls}}" data-on-click="{{gHome}}">
@@ -93,9 +91,7 @@
   <header class="top {{topCls}}">
     <sc-if value="{{hasTopArt}}" hint-placeholder-val="{{ false }}"><img class="top-art" src="{{topArt}}" alt="" aria-hidden="true" width="360" height="120"></sc-if>
     <div class="top-t">
-      <sc-if value="{{jyMenuShow}}" hint-placeholder-val="{{ false }}"><div class="jymenu"><h1 class="h1"><button type="button" class="jyt" aria-haspopup="true" aria-expanded="{{jyMenuOpen}}" data-on-click="{{jyMenuToggle}}">{{title}}<svg class="ic jycaret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h1>
-        <sc-if value="{{jyMenuOpen}}" hint-placeholder-val="{{ false }}"><div class="lvpanel jypanel jy-tabs" role="menu" aria-label="Journey views"><sc-for list="{{jyTabs}}" as="t" hint-placeholder-count="6"><button type="button" role="menuitemradio" aria-checked="{{t.sel}}" class="lvitem {{t.cls}}" data-on-click="{{t.fn}}"><span class="lvn">{{t.label}}</span></button></sc-for></div></sc-if></div></sc-if>
-      <sc-if value="{{jyMenuHide}}" hint-placeholder-val="{{ true }}"><h1 class="h1">{{title}}</h1></sc-if>
+      <h1 class="h1">{{title}}</h1>
       <sc-if value="{{subShow}}" hint-placeholder-val="{{ true }}"><p class="sub">{{subtitle}}</p></sc-if>
     </div>
     <div class="stats">
@@ -767,6 +763,7 @@
     </div>
     </sc-if>
 
+    <div class="seg2 jy-tabs" role="group" aria-label="Journey views" style="--tc:{{jyTabCols}}; --td:{{jyTabColsWide}}"><sc-for list="{{jyTabs}}" as="t" hint-placeholder-count="6"><button type="button" aria-pressed="{{t.sel}}" class="{{t.cls}}" data-on-click="{{t.fn}}">{{t.label}}</button></sc-for></div>
 
     <div class="jy-side">
     <sc-if value="{{jyNowShow}}" hint-placeholder-val="{{ true }}">
@@ -1299,7 +1296,7 @@
         <img class="res-ming" src="{{mingWave}}" alt="" width="132" height="139">
         <h2 class="res-h">More points are due</h2>
         <p class="res-p">{{grvDueText}} Reviewing them now keeps them from fading.</p>
-        <div class="res-act"><button class="btn pri big" data-on-click="{{gtReview}}">{{gtReviewText}}</button></div>
+        <div class="res-act"><button class="btn pri big" data-on-click="{{gtReview}}">{{grvMoreText}}</button></div>
       </div>
     </sc-if>
     <sc-if value="{{grvCaught}}" hint-placeholder-val="{{ false }}">
@@ -2994,69 +2991,69 @@
   </sc-if>
 </div>
 </template>
-<script defer src="boot-check.js?v=d50e1217b0"></script>
-<script defer src="vendor/morphdom-umd.min.js?v=d50e1217b0"></script>
-<script defer src="runtime.js?v=d50e1217b0"></script>
-<script defer src="config.js?v=d50e1217b0"></script>
-<script defer src="friends.js?v=d50e1217b0"></script>
-<script defer src="level.js?v=d50e1217b0"></script>
-<script defer src="placement.js?v=d50e1217b0"></script>
-<script defer src="data/hsk1-words.js?v=d50e1217b0"></script>
-<script defer src="data/hsk1-grammar.js?v=d50e1217b0"></script>
-<script defer src="data/hsk1-webs.js?v=d50e1217b0"></script>
-<script defer src="data/hsk1-speak.js?v=d50e1217b0"></script>
-<script defer src="data/hsk1-listen.js?v=d50e1217b0"></script>
-<script defer src="data/hsk1-exam.js?v=d50e1217b0"></script>
-<script defer src="data/hsk1-erhua.js?v=d50e1217b0"></script>
-<script defer src="data/lexicon.js?v=d50e1217b0"></script>
-<script defer src="data/char-glosses.js?v=d50e1217b0"></script>
-<script defer src="data/hsk2-preview.js?v=d50e1217b0"></script>
-<script defer src="data/hsk3-preview.js?v=d50e1217b0"></script>
-<script defer src="data/hsk4-preview.js?v=d50e1217b0"></script>
-<script defer src="data/hsk2-words.js?v=d50e1217b0"></script>
-<script defer src="data/hsk2-speak.js?v=d50e1217b0"></script>
-<script defer src="data/hsk2-listen.js?v=d50e1217b0"></script>
-<script defer src="data/hsk2-exam.js?v=d50e1217b0"></script>
-<script defer src="data/hsk2-grammar.js?v=d50e1217b0"></script>
-<script defer src="data/hsk2-webs.js?v=d50e1217b0"></script>
-<script defer src="data/hsk3-words.js?v=d50e1217b0"></script>
-<script defer src="data/hsk3-speak.js?v=d50e1217b0"></script>
-<script defer src="data/hsk3-listen.js?v=d50e1217b0"></script>
-<script defer src="data/hsk3-exam.js?v=d50e1217b0"></script>
-<script defer src="data/hsk3-grammar.js?v=d50e1217b0"></script>
-<script defer src="data/hsk3-webs.js?v=d50e1217b0"></script>
-<script defer src="data/hsk4-words.js?v=d50e1217b0"></script>
-<script defer src="data/hsk4-speak.js?v=d50e1217b0"></script>
-<script defer src="data/hsk4-listen.js?v=d50e1217b0"></script>
-<script defer src="data/hsk4-exam.js?v=d50e1217b0"></script>
-<script defer src="data/hsk4-grammar.js?v=d50e1217b0"></script>
-<script defer src="data/hsk4-webs.js?v=d50e1217b0"></script>
-<script defer src="ascent.js?v=d50e1217b0"></script>
-<script defer src="secrets.js?v=d50e1217b0"></script>
-<script defer src="sync.js?v=d50e1217b0"></script>
-<script defer src="data/audio-manifest.js?v=d50e1217b0"></script>
-<script defer src="jyscene.js?v=d50e1217b0"></script>
-<script defer src="journey.js?v=d50e1217b0"></script>
-<script defer src="stampart.js?v=d50e1217b0"></script>
-<script defer src="feastart.js?v=d50e1217b0"></script>
-<script defer src="feastscene.js?v=d50e1217b0"></script>
-<script defer src="feastthemes.js?v=d50e1217b0"></script>
-<script defer src="feastthemes2.js?v=d50e1217b0"></script>
-<script defer src="data/journey.js?v=d50e1217b0"></script>
-<script defer src="data/journey-map.js?v=d50e1217b0"></script>
-<script defer src="data/journey-media.js?v=d50e1217b0"></script>
-<script defer src="data/souvenirs.js?v=d50e1217b0"></script>
-<script defer src="erhua.js?v=d50e1217b0"></script>
-<script defer src="pinyin.js?v=d50e1217b0"></script>
-<script defer src="data/pinyin-course.js?v=d50e1217b0"></script>
-<script defer src="data/pinyin-chart.js?v=d50e1217b0"></script>
-<script defer src="data/exam-media.js?v=d50e1217b0"></script>
-<script defer src="data/exam-art.js?v=d50e1217b0"></script>
-<script defer src="data/neutral-alt.js?v=d50e1217b0"></script>
-<script defer src="data/path-scenes.js?v=d50e1217b0"></script>
-<script defer src="data/speak-scenes.js?v=d50e1217b0"></script>
-<script defer src="data/art.js?v=d50e1217b0"></script>
-<script defer src="data/path.js?v=d50e1217b0"></script>
-<script defer src="app.js?v=d50e1217b0"></script>
+<script defer src="boot-check.js?v=c4f5f7856b"></script>
+<script defer src="vendor/morphdom-umd.min.js?v=c4f5f7856b"></script>
+<script defer src="runtime.js?v=c4f5f7856b"></script>
+<script defer src="config.js?v=c4f5f7856b"></script>
+<script defer src="friends.js?v=c4f5f7856b"></script>
+<script defer src="level.js?v=c4f5f7856b"></script>
+<script defer src="placement.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk1-words.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk1-grammar.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk1-webs.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk1-speak.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk1-listen.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk1-exam.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk1-erhua.js?v=c4f5f7856b"></script>
+<script defer src="data/lexicon.js?v=c4f5f7856b"></script>
+<script defer src="data/char-glosses.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk2-preview.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk3-preview.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk4-preview.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk2-words.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk2-speak.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk2-listen.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk2-exam.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk2-grammar.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk2-webs.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk3-words.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk3-speak.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk3-listen.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk3-exam.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk3-grammar.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk3-webs.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk4-words.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk4-speak.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk4-listen.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk4-exam.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk4-grammar.js?v=c4f5f7856b"></script>
+<script defer src="data/hsk4-webs.js?v=c4f5f7856b"></script>
+<script defer src="ascent.js?v=c4f5f7856b"></script>
+<script defer src="secrets.js?v=c4f5f7856b"></script>
+<script defer src="sync.js?v=c4f5f7856b"></script>
+<script defer src="data/audio-manifest.js?v=c4f5f7856b"></script>
+<script defer src="jyscene.js?v=c4f5f7856b"></script>
+<script defer src="journey.js?v=c4f5f7856b"></script>
+<script defer src="stampart.js?v=c4f5f7856b"></script>
+<script defer src="feastart.js?v=c4f5f7856b"></script>
+<script defer src="feastscene.js?v=c4f5f7856b"></script>
+<script defer src="feastthemes.js?v=c4f5f7856b"></script>
+<script defer src="feastthemes2.js?v=c4f5f7856b"></script>
+<script defer src="data/journey.js?v=c4f5f7856b"></script>
+<script defer src="data/journey-map.js?v=c4f5f7856b"></script>
+<script defer src="data/journey-media.js?v=c4f5f7856b"></script>
+<script defer src="data/souvenirs.js?v=c4f5f7856b"></script>
+<script defer src="erhua.js?v=c4f5f7856b"></script>
+<script defer src="pinyin.js?v=c4f5f7856b"></script>
+<script defer src="data/pinyin-course.js?v=c4f5f7856b"></script>
+<script defer src="data/pinyin-chart.js?v=c4f5f7856b"></script>
+<script defer src="data/exam-media.js?v=c4f5f7856b"></script>
+<script defer src="data/exam-art.js?v=c4f5f7856b"></script>
+<script defer src="data/neutral-alt.js?v=c4f5f7856b"></script>
+<script defer src="data/path-scenes.js?v=c4f5f7856b"></script>
+<script defer src="data/speak-scenes.js?v=c4f5f7856b"></script>
+<script defer src="data/art.js?v=c4f5f7856b"></script>
+<script defer src="data/path.js?v=c4f5f7856b"></script>
+<script defer src="app.js?v=c4f5f7856b"></script>
 </body>
 </html>

@@ -51,12 +51,11 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   });
   await page.reload(); await page.waitForSelector('.app');
   await page.locator('.pill.xpp').click(); await page.waitForTimeout(300);
-  await page.locator('.jyt:visible').click(); await page.waitForTimeout(200);
-  const tabs = await page.locator('.jy-tabs:visible button').allInnerTexts();
+  const tabs = await page.locator('.jy-tabs button').allInnerTexts();
   check(tabs.indexOf('Souvenirs') >= 0, 'Journey has a Souvenirs tab (' + tabs.join(', ') + ')');
-  const tabBox = await page.evaluate(() => { const t = [...document.querySelectorAll('.jy-tabs')].find(e => e.offsetParent).getBoundingClientRect(); return { l: t.left, r: t.right, vw: innerWidth }; });
-  check(tabBox.l >= 0 && tabBox.r <= tabBox.vw, 'the views menu fits on the phone (' + Math.round(tabBox.l) + ' to ' + Math.round(tabBox.r) + ' of ' + tabBox.vw + ')');
-  await page.locator('.jy-tabs:visible button', { hasText: 'Souvenirs' }).click(); await page.waitForTimeout(300);
+  const tabBox = await page.evaluate(() => { const t = document.querySelector('.jy-tabs'); return { sw: t.scrollWidth, cw: t.clientWidth }; });
+  check(tabBox.sw <= tabBox.cw + 2, 'all tabs fit on a phone without scrolling (' + tabBox.sw + ' in ' + tabBox.cw + ')');
+  await page.locator('.jy-tabs button', { hasText: 'Souvenirs' }).click(); await page.waitForTimeout(300);
   check((await page.locator('.sv-cell').count()) === exp.total, 'the shelf shows every souvenir (' + exp.total + ')');
   check((await page.locator('.sv-cell.got').count()) === exp.got && exp.got >= 2, 'found souvenirs are shown in colour (' + exp.got + ')');
   check((await page.locator('.sv-cell.hid').count()) === exp.total - exp.got, 'the rest stay hidden');
