@@ -1336,13 +1336,12 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.locator('button', { hasText: 'Settings' }).first().click();
   await page.locator('button', { hasText: 'Remove the key' }).click();
   check(!(await page.evaluate(() => localStorage.getItem('shanlu-ai') && JSON.parse(localStorage.getItem('shanlu-ai')).key)), 'the key can be removed');
-  await page.locator('button', { hasText: 'Back to home' }).click();
-
-  // export
+  // export (its link now sits only on Account and Settings, so do it before leaving Settings)
   const dl = page.waitForEvent('download');
   await page.locator('button', { hasText: 'Export progress' }).click();
   const d = await dl;
   check(/shanlu-progress-\d{4}-\d{2}-\d{2}\.json/.test(d.suggestedFilename()), 'export downloads a progress file');
+  await page.locator('button', { hasText: 'Back to home' }).click();
 
   // dark mode + phone width
   await page.locator('button', { hasText: 'Switch to dark' }).click();

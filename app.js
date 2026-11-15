@@ -3399,8 +3399,7 @@
       // tabs
       const tabNow = fm && (S.jyTab === 'stops' || S.jyTab === 'food' || S.jyTab === 'shelf' || S.jyTab === 'explore') ? 'map' : S.jyTab;
       const tabList = fm ? [['map', 'Map'], ['pass', 'Passport']] : [['explore', 'Explore'], ['map', 'Map'], ['pass', 'Passport'], ['shelf', 'Souvenirs'], ['stops', 'Postcards'], ['food', 'Food']];
-      out.jyTabCols = Math.min(3, tabList.length); out.jyTabColsWide = tabList.length;   // a grid, not a scrolling strip: 3 across on a phone (two rows), all in one row on wide screens
-      out.jyTabs = tabList.map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', sel:tabNow === t[0] ? 'true' : 'false', fn:() => this.jyTabSet(t[0]) }));
+      out.jyTabs = tabList.map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', sel:tabNow === t[0] ? 'true' : 'false', fn:() => { this.setState({ jyMenu:false }); this.jyTabSet(t[0]); } }));   // the six views live in a dropdown under the Journey title
       out.jyIsExplore = tabNow === 'explore'; out.jyExCls = tabNow === 'explore' ? 'jy-ex' : ''; out.jyNowShow = !fm && tabNow === 'explore'; out.jyIsMap = tabNow === 'map' || tabNow === 'explore'; out.jyIsStops = tabNow === 'stops'; out.jyIsFood = tabNow === 'food'; out.jyIsPass = tabNow === 'pass'; out.jyIsShelf = tabNow === 'shelf';
       // the souvenir shelf (your own journey only): found when the stop that hides it is unlocked; the rest show as dark shapes with their region
       if (tabNow === 'shelf' && !fm) {
@@ -5492,6 +5491,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         examBtnText:'See the ' + LVN + ' level exam',
         examNaTitle:ALL ? 'Level exams are taken one level at a time' : LVN + ' mock exam: not built yet',
         examNaText:ALL ? 'Each mock exam belongs to one level. Switch to that level in the header, take its exam there, and passing it opens the next level. Everything else on this page mixes all the levels you have unlocked.' : 'The mock exam is modelled on the official HSK 1 sample papers and exists for HSK 1 only so far. For ' + LVN + ', the Tests screen gives mixed questions from the words you have started, and Grammar has practice for every lesson.',
+        footShow:S.screen === 'acct' || S.screen === 'voice',   // the AI note and the Settings / Export / Import / Reset links appear only on Account and Settings
+        jyMenuShow:S.screen === 'journey', jyMenuHide:S.screen !== 'journey', jyMenuOpen:S.screen === 'journey' && !!S.jyMenu, jyMenuToggle:() => this.setState({ jyMenu:!S.jyMenu, lvMenu:false }),
         lvLabel:ALL ? 'All levels' : 'HSK ' + LV, lvMenuOpen:!!S.lvMenu, lvMenuToggle:() => this.setState({ lvMenu:!S.lvMenu }),
         lvItems:Array.from({ length:LVL.MAX_LEVEL }, (_, i) => i + 1).concat([0]).map(n => {
           if (n === 0) { const openAll = LVL.unlockedLevels().length >= 2; return { label:'All levels', sub:openAll ? 'Every level you have opened, together' : 'Opens when two levels are unlocked', cls:(ALL ? 'on' : '') + (openAll ? '' : ' locked'), isOn:ALL, fn:() => { this.setState({ lvMenu:false }); if (openAll) this.switchLevel(0); else this.setState({ lvMsg:99 }); } }; }
@@ -5665,8 +5666,9 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
     }
   });
   document.addEventListener('click', (e) => { try { const h = e.target.closest && e.target.closest('.fz-hit'); if (h && window.shanlu && window.shanlu.state.jyFoodOv) { e.stopPropagation(); window.shanlu.setState({ jyFoodPop:h.getAttribute('data-id') }); } } catch (err) {} }, true);
+  document.addEventListener('click', (e) => { try { if (window.shanlu && window.shanlu.state.jyMenu && !(e.target.closest && e.target.closest('.jymenu'))) window.shanlu.setState({ jyMenu:false }); } catch (err) {} });
   document.addEventListener('click', (e) => { try { if (window.shanlu && window.shanlu.state.lvMenu && !(e.target.closest && e.target.closest('.lvmenu'))) window.shanlu.setState({ lvMenu:false }); } catch (err) {} });
-  document.addEventListener('keydown', (e) => { try { if (e.key === 'Escape' && window.shanlu && window.shanlu.state.jyTrip && window.shanlu.state.jyRv) window.shanlu.jyTripClose(); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.lvMenu) window.shanlu.setState({ lvMenu:false }); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.jyFoodOv) { if (window.shanlu.state.jyFoodPop) window.shanlu.setState({ jyFoodPop:null }); else window.shanlu.setState({ jyFoodOv:false }); } if (e.key === 'Escape' && window.shanlu && window.shanlu.state.pstop) window.shanlu.pathClose(); } catch (err) {} });
+  document.addEventListener('keydown', (e) => { try { if (e.key === 'Escape' && window.shanlu && window.shanlu.state.jyTrip && window.shanlu.state.jyRv) window.shanlu.jyTripClose(); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.jyMenu) window.shanlu.setState({ jyMenu:false }); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.lvMenu) window.shanlu.setState({ lvMenu:false }); if (e.key === 'Escape' && window.shanlu && window.shanlu.state.jyFoodOv) { if (window.shanlu.state.jyFoodPop) window.shanlu.setState({ jyFoodPop:null }); else window.shanlu.setState({ jyFoodOv:false }); } if (e.key === 'Escape' && window.shanlu && window.shanlu.state.pstop) window.shanlu.pathClose(); } catch (err) {} });
   // after a mouse click on a Review button, drop the focus so Space and Enter go to the card, not back to that button
   document.addEventListener('click', (e) => { try { const b = e.target && e.target.closest && e.target.closest('.rev button'); if (b && e.detail > 0) b.blur(); } catch (err) {} });
   window.addEventListener('pagehide', () => { app.persistNow(); app.friendsPush({ minGap:2 * 60 * 1000, keepalive:true }); });

@@ -96,9 +96,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await B.page.locator('.jy-fr').innerText()).includes('Alvin') && /1 stop/.test(await B.page.locator('.jy-fr').innerText()), 'Mei sees Alvin on the Journey with his stop count');
   await B.page.locator('.jy-fr').click();
   check(await B.page.locator('.jy-fbar').count() === 1 && (await B.page.locator('.jy-fbar').innerText()).includes("Alvin's journey") && await B.page.locator('.jy-now').count() === 0, "Alvin's journey replaces Mei's own panel");
-  check(await B.page.locator('.jy-tabs button').count() === 2, 'a friend\'s journey has a Map and a Passport, no Stops');
+  await B.page.locator('.jyt:visible').click(); check(await B.page.locator('.jy-tabs:visible button').count() === 2, 'a friend\'s journey has a Map and a Passport, no Stops'); await B.page.keyboard.press('Escape');
   check(await B.page.locator('.jy-r.here').count() === 1, "the region Alvin is exploring is marked on the map");
-  await B.page.locator('.jy-tabs button', { hasText: 'Passport' }).click();
+  await B.page.locator('.jyt:visible').click(); await B.page.locator('.jy-tabs:visible button', { hasText: 'Passport' }).click();
   check((await B.page.locator('.pp-cv-who').innerText()).includes('Alvin') && await B.page.locator('.jy-slot.here').count() === 1, "Alvin's passport cover has his name, and it shows the region in progress");
   await B.page.locator('.jy-fbar .linkbtn').click();
   check(await B.page.locator('.jy-now').count() === 1 && await B.page.locator('.jy-fbar').count() === 0, 'going back shows your own journey again');

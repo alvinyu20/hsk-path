@@ -1218,11 +1218,6 @@ html,body,.app,button,a,input,select,textarea,label,[role=button]{touch-action:m
 .jy-meter i{display:block;height:100%;border-radius:99px;background:var(--jfill);transition:width .4s}
 .jy-meter-t{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
 .jy-go{align-self:flex-start}
-.jy-tabs{display:grid;grid-template-columns:repeat(var(--tc,3),minmax(0,1fr));gap:4px;width:100%;box-sizing:border-box;padding:4px;border-radius:22px;background:var(--panel)}
-.jy-tabs button{min-width:0;min-height:44px;padding:0 4px;border-radius:18px;font-size:16px;white-space:nowrap}
-@media (min-width:700px){.jy-tabs{grid-template-columns:repeat(var(--td,6),minmax(0,1fr))}}
-.jy-tabs button.on{background:var(--jfill);color:#fff}
-.t-dark .jy-tabs button.on{color:#0E1920}
 .jy-panel{display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:20px;background:var(--panel);border:1px solid var(--line)}
 .jy-map{width:100%;height:auto;max-height:62vh;display:block}
 .jy-r path{fill:var(--panel2);stroke:var(--panel);stroke-width:.7;stroke-linejoin:round;transition:fill .25s}
@@ -1631,12 +1626,12 @@ button.me .me-av{flex:none}
 .jy-dot text{font-size:8.5px;font-weight:700;fill:var(--ink);pointer-events:none}
 .jy-dot.me text{fill:var(--on-seal);font-size:8px}
 .jy-dot:hover .dc,.jy-dot:focus-visible .dc{stroke-width:2.4}
-.jy-tabs{order:0}.jy-fbar{order:-1}.jy-now{order:1}.jy-card{order:2}.jy-main > .jy-panel{order:4}
+.jy-fbar{order:-1}.jy-now{order:1}.jy-card{order:2}.jy-main > .jy-panel{order:4}
 /* Explore is the road card on a phone; the map beside it only shows on a wide screen, where it has room */
 @media (max-width:999px){.jy-ex .jy-main > *{display:none}}
 @media (min-width:1000px){
   .jy{display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);gap:18px 24px;align-items:start;padding:20px}
-  .jy > .banner,.jy > .jy-tabs{grid-column:1 / -1}
+  .jy > .banner{grid-column:1 / -1}
   .jy-side{display:flex;flex-direction:column;gap:14px}
   .jy-main{display:flex;flex-direction:column;gap:14px;min-width:0}
   /* a stop card can be taller than the screen, so with a card open the page scrolls and the map keeps you company; with no card the short left column stays put beside a long list */
@@ -2011,8 +2006,8 @@ button.pill:active{transform:scale(.97)}
 .crumb{display:inline-flex;align-items:center;gap:2px;align-self:flex-start;min-height:38px;padding:0 12px 0 4px;margin-bottom:-18px;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:600;cursor:pointer}
 .crumb:hover{color:var(--ink)}
 .crumb .ic{width:20px;height:20px}
-.top.arted{position:relative;align-items:center;padding:16px 18px;min-height:96px;border-radius:22px;overflow:hidden;border:1px solid var(--line)}
-.top-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 65%;z-index:0}
+.top.arted{position:relative;align-items:center;padding:16px 18px;min-height:96px;border-radius:22px;border:1px solid var(--line)}
+.top-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 65%;z-index:0;border-radius:inherit}
 .app.t-dark .top-art,.app.t-dark .th-art,.app.t-dark .climb-art,.app.t-dark .summit-art{filter:brightness(.62) saturate(.9)}
 .top.arted .top-t,.top.arted .stats{position:relative;z-index:1}
 .top.arted .top-t{padding:8px 16px;border-radius:14px;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(3px)}
@@ -3205,7 +3200,6 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .fz-pop-b{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
 .sv-cell .sv-name:empty,.sv-cell .sv-zh:empty{display:none}
 .sv-cell.hid{justify-content:center}
-@media (max-width:380px){.jy-tabs button{font-size:15px}}
 @media (max-width:380px){.jy-chips.cmp{gap:5px}.jy-chips.cmp .jy-chip{padding:0 8px;gap:4px;font-size:12.5px}}
 .pp-cv-who{font-size:14px;opacity:.9}
 .pp-cv-facts{display:flex;flex-direction:column;gap:6px;width:min(100%,190px);margin:2px 0 4px}
@@ -3285,3 +3279,23 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .fin-row{display:flex;gap:8px}
 .fin-row .btn{flex:1;min-width:0;padding:0 8px}
 @media (prefers-reduced-motion:reduce){.fw-d.nx .fw-ring{animation:none}}
+
+/* Journey views dropdown: the six tabs open from the page title */
+.jymenu{position:relative;display:inline-block;max-width:100%}
+.jyt{display:inline-flex;align-items:center;gap:8px;margin:0;padding:0;border:0;background:none;color:inherit;font:inherit;letter-spacing:inherit;cursor:pointer;text-align:left;border-radius:12px}
+.jyt:focus-visible{outline:3px solid var(--accent,#c8372d);outline-offset:4px}
+.jycaret{width:.62em;height:.62em;flex:none;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s}
+.jyt[aria-expanded="true"] .jycaret{transform:rotate(180deg)}
+.jypanel{left:0;right:auto;top:calc(100% + 10px);min-width:230px;padding:8px;font-family:inherit}
+.jypanel .lvitem{min-height:48px;justify-content:center;font-size:17px;font-weight:600}
+.jypanel .lvitem.on{background:var(--ink);color:var(--panel);box-shadow:none}
+@media (prefers-reduced-motion:reduce){.jycaret{transition:none}}
+
+/* on a phone the title is the centred word in the top bar; the page's own heading is hidden there */
+.m-title.jyok{overflow:visible}
+.m-title .jyt{font:inherit;color:inherit;justify-content:center;gap:6px;min-height:44px;padding:0 10px}
+.m-title .jyt .jycaret{width:12px;height:12px}
+.m-title .jypanel{left:50%;transform:translateX(-50%);top:calc(100% + 2px);font-size:16px;white-space:normal;text-align:left}
+.m-title .jymenu{display:inline-block}
+@media (min-width:901px){.m-title.jyok{display:none}}
+@media (max-width:900px){.app.am .top .jymenu{display:none}}
