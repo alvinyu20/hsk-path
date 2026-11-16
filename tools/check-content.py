@@ -108,7 +108,7 @@ QUESTION_WORDS = ['什么', '谁', '哪', '几', '多少', '怎么', '怎么样'
 LEXICAL_NEG = ['不客气', '对不起', '没关系', '没事', '不好意思', '不见了', '不早了', '不同', '来不及', '不一样', '不错', '不久', '差不多', '不对', '特别', '别人', '别的', '不断', '不便', '不得不', '不如', '不满', '不过', '不管', '不论', '不光', '不仅', '无聊', '无论', '区别', '性别', '分别', '告别', '差别', '个别', '不利', '不幸', '不良', '不得了', '不小心', '不礼貌', '不少', '没电', '无数', '无限', '无奈', '无效', '无关', '无法', '不足', '不然', '不安', '不满意']   # 别人 "other people" and 别的 "other" use 别 without a negative meaning
 PAST_EN = r"\b(ate|bought|saw|heard|went|was|were|did|drank|had|got|said|took|came|made|read|wrote|studied|worked|lived|asked|called|finished|\w+ed)\b"
 IRREGULAR_PAST = 'overtook|forgave|dreamt|ate|bought|saw|heard|went|drank|had|got|said|took|came|made|wrote|was|were|did|told|sent|gave|found|lost|left|met|paid|brought|taught|began|ran|sat|stood|forgot|knew|thought|felt|kept|won|fell|spoke|woke|rode|drove|broke|bit|read|blew|grew|drew|threw|wore|chose|swam|sang|slept|spent|sold|held|led|lay|fed|hid|shook|stole|flew|dug|rang|built|caught|cut|hurt|let|lit|meant|put|set|shut|sank|sat|sent|shot|slid|spun|stuck|swept|tore|understood|woke|lent'
-PAST_ADJ = {'congested', 'stored', 'developed', 'coloured', 'colored', 'produced', 'repaired', 'allowed', 'compared', 'detailed', 'steamed', 'grilled', 'roasted', 'baked', 'complicated', 'irritated', 'fried', 'succeed', 'exceed', 'proceed', 'varied', 'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured', 'united', 'limited', 'advanced', 'unlimited', 'crowded', 'needed', 'wicked', 'naked', 'sacred', 'hundred'}
+PAST_ADJ = {'congested', 'stored', 'developed', 'coloured', 'colored', 'produced', 'repaired', 'allowed', 'compared', 'detailed', 'steamed', 'grilled', 'roasted', 'baked', 'complicated', 'irritated', 'fried', 'succeed', 'exceed', 'proceed', 'varied', 'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured', 'united', 'limited', 'advanced', 'unlimited', 'crowded', 'needed', 'wicked', 'naked', 'sacred', 'hundred', 'shared', 'fixed', 'expected'}
 
 
 def meaning_checks(zh, en):
@@ -137,7 +137,7 @@ def meaning_checks(zh, en):
     if re.search(r"\b(can|can't|cannot|could|able to|may|allowed|know how)\b", e) and not re.search('会|能|可以|懂得|无法|允许', z) and not z_pot and not re.search('知道怎么|不知怎么|懂怎么', z):
         out.append(('ERROR', 'meaning', 'English says can/may/able but the Chinese has no 会 / 能 / 可以'))
     z_modal = re.sub('开会|会议|晚会|运动会|机会|一会儿|一会|社会|会话|开会|学会|懂得|会员|家长会|大会|会面|聚会|宴会|舞会|约会|能力|误会|可能性|会上|会场|会后|会前|国会|协会|商会|博览会|展览会|发布会|座谈会|研讨会|能源|能量|才能|本能|性能|功能|智能', '', z)       # 会 inside these words is not the modal verb
-    if re.search('会|能|可以', z_modal) and not re.search(r"can|could|able|may|allowed|know how|will|might|should|be able|please|fine|okay|\bok\b|all right|alright|either|good at|skilled|clever at|great at|capable", e):
+    if re.search('会|能|可以', z_modal) and not re.search(r"can|could|able|may|allowed|know how|will|would|might|should|be able|please|fine|okay|\bok\b|all right|alright|either|good at|skilled|clever at|great at|capable", e):
         out.append(('WARN', 'meaning', '会/能/可以 in the Chinese but no can/may/will in the English'))
 
     # negation
@@ -276,9 +276,11 @@ def meaning_checks(zh, en):
 
     # tense hints
     e = e.replace('had better', 'HADBETTER')
-    e_tense = re.sub(r"\b(?:is|are|am|be|'s|'re|'m)\s+(?:\w+ly\s+)?\w+ed\b", ' ', e)       # "is loved", "are interested": a present passive or state, not a past tense
+    e_tense = re.sub(r"\b(?:is|are|am|be|'s|'re|'m)\s+(?:(?:\w+ly|often|usually|always|also|not|never|still|just)\s+)?(?:\w+ed|made up)\b", ' ', e)       # "is loved", "are interested": a present passive or state, not a past tense
+    e_tense = e_tense.replace('made up', ' ')
+    e = e.replace('made up', 'MADEUP')
     toks_past = [w for w in re.findall(r"[a-z]+", e_tense) if re.fullmatch(r'\w+ed', w) and w not in PAST_ADJ] + [w for w in re.findall(r'[a-z]+', e) if w in ('ate', 'bought', 'saw', 'heard', 'went', 'drank', 'had', 'got', 'said', 'took', 'came', 'made', 'wrote', 'was', 'were', 'did')]
-    if toks_past and not re.search('了|没|曾|当年|昨天|昨晚|前天|去年|上个|上星期|过|以前|从前|当时|后来|小时候|是.*的|看见|听见|才|已经|刚|以为|听说', z) and not re.search(r"\b(has|have|had been)\b", e):
+    if toks_past and not re.search('了|没|曾|当年|古代|昨天|昨晚|前天|去年|上个|上星期|过|以前|从前|当时|后来|小时候|是.*的|看见|听见|才|已经|刚|以为|听说', z) and not re.search(r"\b(has|have|had been)\b", e):
         out.append(('WARN', 'meaning', 'English is in the past (%s) but the Chinese has no 了 or past time word' % toks_past[0]))
     if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '').replace('死了', '').replace('不了', '').replace('充满了', '').replace('不得了', '').replace('了不起', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|any longer|no longer|getting|growing|about to|get to|arrive|arrives|arriving|arrival|reach|reaches|come to|soon)\b", e):
         out.append(('WARN', 'meaning', '了 in the Chinese: English shows no completed action or change of state'))
