@@ -112,6 +112,8 @@ function cleanStats(s) {
   const out = { v: 1, asOf, last7, streak, lastActive, mem, levels: levels(s.levels), passed: levels(s.passed) };
   const jy = cleanJourney(s.jy);
   if (jy) out.jy = jy;
+  // the picture a person chose: a souvenir id such as panda-plush. Only that plain shape is kept, so nothing else can be tucked in.
+  if (typeof s.av === 'string' && /^[a-z0-9-]{1,32}$/.test(s.av)) out.av = s.av;
   return out;
 }
 

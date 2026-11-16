@@ -412,6 +412,7 @@
     const levels = LVL.unlockedLevels ? LVL.unlockedLevels() : [LV];
     const out = { asOf:today, last7, streak:Math.min(streak, 9999), lastActive, mem, levels, passed:levels.filter(n => LVL.levelPassed(n)) };
     try { const jy = jyShare(); if (jy) out.jy = jy; } catch (e) {}
+    try { const av = String(prefGet('av', '') || ''); if (av && SOUV_BY[av]) out.av = av; } catch (e) {}   // your picture: friends see the same souvenir (an id, nothing else)
     return out;
   };
   // What friends can see of the Journey: how many stops, which regions are stamped (and when), the region you are in, stops per region, and the stop you reached last (an id, so
@@ -451,6 +452,8 @@
   const FZ_KEY = 'shanlu-feast-seen'; const fzRead = () => { try { return JSON.parse(localStorage.getItem(FZ_KEY) || '{}') || {}; } catch (e) { return {}; } };
   const SV_BY_STOP = {}; SOUV.forEach(s => { SV_BY_STOP[s.stop] = s; });
   const svImg = (s) => s.u || (s.u = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s.svg));
+  const SOUV_BY = {}; SOUV.forEach(sv => { SOUV_BY[sv.id] = sv; });
+  const avUrlOf = (id) => { const sv = id && SOUV_BY[String(id)]; return sv ? svImg(sv) : ''; };   // a picture by souvenir id (yours or a friend's); '' when there is none or the id is unknown
   // ---- onboarding: the first-visit flow (intro pop-up on the Journey, the first free flight, six guide cards, where to start, name and friends), then the Start here path (pref 'onb': p flow step 'intro' | 'fly' | 'level' | 'me' | 'done', l what they chose ('new' | 'some'), w flow finished, s start path 'go' | 'done' | 'skip', d day finished, g reference page opened, px sounds card dismissed) ----
   const ONB_OFF = () => { try { return !!(navigator.webdriver && !window.SHANLU_ONBOARDING); } catch (e) { return false; } };   // browser tests run without it unless they ask for it
   const onbRead = () => { const v = prefGet('onb', null); return v && typeof v === 'object' ? v : {}; };
@@ -3274,7 +3277,7 @@
       };
       const fWhere = (m) => hereOf(m.stats.jy);
       Object.assign(out, { jyMine:!fm, jyFriendMode:!!fm, jyFriendsShow:!fm && fMembers.length > 0 && S.jyTab === 'explore',
-        jyFriends:fMembers.map((m, i) => { const w = fWhere(m); return { name:m.name, initial:window.ShanluFriends.initial(m.name), cls:'c' + (i % 4), sub:(w ? 'Now in ' + w.place + (w.stop ? ' · at ' + w.stop : '') + ' · ' : '') + plural(m.stats.jy.n, 'stop', 'stops') + ' · ' + plural(stampCount(m.stats.jy), 'stamp', 'stamps'),
+        jyFriends:fMembers.map((m, i) => { const w = fWhere(m); return { name:m.name, initial:window.ShanluFriends.initial(m.name), avUrl:avUrlOf(m.stats.av), hasAv:!!avUrlOf(m.stats.av), noAv:!avUrlOf(m.stats.av), cls:'c' + (i % 4), sub:(w ? 'Now in ' + w.place + (w.stop ? ' · at ' + w.stop : '') + ' · ' : '') + plural(m.stats.jy.n, 'stop', 'stops') + ' · ' + plural(stampCount(m.stats.jy), 'stamp', 'stamps'),
           open:() => { SFX.play('ok'); this.setState({ jyFriend:m.id, jyTab:'map', jyReg:null, jySel:null, jyOpen:null, jyRv:null }); try { window.scrollTo(0, 0); } catch (e) {} } }; }),
         jyFriendBack:() => this.setState({ jyFriend:null, jyTab:'explore' }), jyDots:[], jyHasDots:false });
       // everyone's place on the country map (you and your friends), spread out a little where several are in the same city
@@ -3290,10 +3293,10 @@
               jyMeImg:avSv1 ? svImg(avSv1) : '', jyMeHasImg:!!avSv1, jyMeNoImg:!avSv1, jyMeRef:'#jic-' + (JY_ICON[st.reg] || JY_ICONS[Array.from(st.reg).reduce((n, ch) => n + ch.charCodeAt(0), 0) % JY_ICONS.length]),
               jyMeText:st.started ? 'You are here' : 'Start here', jyMeLabel:(st.started ? 'You are in ' : 'You start in ') + rName(st.reg) + '.' });
           } }
-        fMembers.forEach((m, i) => { const w = fWhere(m); if (w && w.xy) raw.push({ w, name:m.name, initial:window.ShanluFriends.initial(m.name), cls:'c' + (i % 4), open:() => this.setState({ jyFriend:m.id, jyTab:'map', jyReg:null, jySel:null, jyOpen:null, jyRv:null }) }); });
+        fMembers.forEach((m, i) => { const w = fWhere(m); if (w && w.xy) raw.push({ w, name:m.name, initial:window.ShanluFriends.initial(m.name), av:avUrlOf(m.stats.av), cls:'c' + (i % 4), open:() => this.setState({ jyFriend:m.id, jyTab:'map', jyReg:null, jySel:null, jyOpen:null, jyRv:null }) }); });
         const groups = {}; raw.forEach(r => { const k = Math.round(r.w.xy[0] / 9) + ',' + Math.round(r.w.xy[1] / 9); (groups[k] = groups[k] || []).push(r); });
         const dots = [];
-        Object.keys(groups).forEach(k => { const g = groups[k]; g.forEach((r, j) => { const a = g.length > 1 ? j * 2 * Math.PI / g.length - Math.PI / 2 : 0; const rad = g.length > 1 ? 8 : 0; dots.push({ x:Math.round((r.w.xy[0] + Math.cos(a) * rad) * 10) / 10, y:Math.round((r.w.xy[1] + Math.sin(a) * rad) * 10) / 10, initial:r.initial === 'You' ? '我' : r.initial, cls:r.cls, label:(r.name === 'You' ? 'You are' : r.name + ' is') + ' in ' + r.w.place, open:r.open }); }); });
+        Object.keys(groups).forEach(k => { const g = groups[k]; g.forEach((r, j) => { const a = g.length > 1 ? j * 2 * Math.PI / g.length - Math.PI / 2 : 0; const rad = g.length > 1 ? 8 : 0; dots.push({ x:Math.round((r.w.xy[0] + Math.cos(a) * rad) * 10) / 10, y:Math.round((r.w.xy[1] + Math.sin(a) * rad) * 10) / 10, initial:r.initial === 'You' ? '我' : r.initial, avUrl:r.av, hasAv:!!r.av, noAv:!r.av, cls:r.cls, label:(r.name === 'You' ? 'You are' : r.name + ' is') + ' in ' + r.w.place, open:r.open }); }); });
         out.jyHasDots = dots.length > 0; out.jyDots = out.jyHasDots ? dots : [];
       }
       if (fm) { const fw = fWhere(fm); Object.assign(out, { jyFriendName:fm.name, jyFriendSub:(fw ? 'Now in ' + fw.place + ' · ' : '') + plural(fm.stats.jy.n, 'stop', 'stops') + ' · ' + stampCount(fm.stats.jy) + ' of ' + Object.keys(JY.META).length + ' regions stamped' }); }
@@ -3918,8 +3921,8 @@
         acctName:name || 'Learner', acctInitial:name ? name.charAt(0).toUpperCase() : '学', acctHasName:!!name,
         hasAv:!!avSv, noAv:!avSv, avUrl:avSv ? svImg(avSv) : '', avAlt:avSv ? 'Your picture: ' + avSv.en : '',
         avPickOpen:!!S.avPick, avToggle:() => this.setState({ avPick:!this.state.avPick }), avNone:foundSv.length === 0, avHas:foundSv.length > 0,
-        avPicks:foundSv.map(sv => ({ url:svImg(sv), en:sv.en, cls:sv.id === avId ? 'on' : '', fn:() => { SFX.play('ok'); prefSet('av', sv.id); this.setState({ avPick:false, vtick:(this.state.vtick || 0) + 1 }); } })),
-        avInitialCls:avSv ? '' : 'on', avUseInitial:() => { prefSet('av', ''); this.setState({ avPick:false, vtick:(this.state.vtick || 0) + 1 }); },
+        avPicks:foundSv.map(sv => ({ url:svImg(sv), en:sv.en, cls:sv.id === avId ? 'on' : '', fn:() => { SFX.play('ok'); prefSet('av', sv.id); this.friendsPush(); this.setState({ avPick:false, vtick:(this.state.vtick || 0) + 1 }); } })),
+        avInitialCls:avSv ? '' : 'on', avUseInitial:() => { prefSet('av', ''); this.friendsPush(); this.setState({ avPick:false, vtick:(this.state.vtick || 0) + 1 }); },
         acctSub:c.level + (since ? ' · studying since ' + since : ''),
         acctEditing:!!S.acctEdit, acctNameIn:String(S.acctNameIn || ''), onAcctName:(e) => this.setState({ acctNameIn:e.target.value }),
         acctEditOpen:this.acctEditOpen, acctCancel:this.acctCancel, acctSave:this.acctSave,
@@ -4772,13 +4775,13 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         frWeekMin, frGoal, frGoalPct:Math.min(100, Math.round(frWeekMin / frGoal * 100)) + '%', frGoalText:frWeekMin + ' of ' + frGoal + ' min',
         frSortOpts:frSorts.map(x => ({ label:x[1], cls:S.frSort === x[0] ? 'on' : '', fn:() => this.setState({ frSort:x[0] }) })),
         frRows:frRows.map((r, i) => ({
-          name:r.name, initial:r.initial, avCls:'c' + (i % 4), isMe:r.isMe, you:r.isMe ? 'You' : r.name, hasLv:r.level > 0, lvTag:'HSK ' + r.level, lvCls:'cur l' + r.level,
+          name:r.name, initial:r.initial, avCls:'c' + (i % 4), avUrl:avUrlOf(r.isMe ? prefGet('av', '') : r.av), hasAv:!!avUrlOf(r.isMe ? prefGet('av', '') : r.av), noAv:!avUrlOf(r.isMe ? prefGet('av', '') : r.av), isMe:r.isMe, you:r.isMe ? 'You' : r.name, hasLv:r.level > 0, lvTag:'HSK ' + r.level, lvCls:'cur l' + r.level,
           rank:i + 1, barW:Math.min(100, Math.round(r.minutes / frBarMax * 100)) + '%', strip:r.week.map(m => ({ cls:m > 0 ? 'on' : '' })), studied:r.studiedToday, cls:r.isMe ? 'me' : '',
           minutes:r.hasStats ? r.minutes + ' min' : 'New', sub:(r.hasStats ? (r.streak > 0 ? r.streak + ' day streak' : 'No streak yet') + ' · ' + r.mem + ' in memory' + (r.jy ? ' · ' + r.jy.n + (r.jy.n === 1 ? ' stop' : ' stops') + ' traveled' : '') : 'Has not shared yet') + (r.isMe && r.cheers > 0 ? ' · ' + r.cheers + (r.cheers === 1 ? ' cheer' : ' cheers') + ' for you' : ''),
           canCheer:!r.isMe, cheerCls:r.cheered ? 'on' : '', hasCheers:r.cheers > 0, cheers:r.cheers, cheerLabel:(r.cheered ? 'You cheered ' : 'Cheer for ') + r.name, cheer:() => this.friendsCheer(r.id)
         })),
         frStudied:frRows.filter(r => r.studiedToday).length, frCount:frRows.length,
-        frAvatars:frRows.slice(0, 8).map((r, i) => ({ initial:r.initial, cls:'fav c' + (i % 4) + (r.studiedToday ? ' done' : ' idle'), name:r.name + (r.studiedToday ? ' studied today' : ' has not studied today') })),
+        frAvatars:frRows.slice(0, 8).map((r, i) => ({ initial:r.initial, avUrl:avUrlOf(r.isMe ? prefGet('av', '') : r.av), hasAv:!!avUrlOf(r.isMe ? prefGet('av', '') : r.av), noAv:!avUrlOf(r.isMe ? prefGet('av', '') : r.av), cls:'fav c' + (i % 4) + (r.studiedToday ? ' done' : ' idle'), name:r.name + (r.studiedToday ? ' studied today' : ' has not studied today') })),
         frHomeShow:!!frIdent && !!S.fr && S.screen === 'home', frHomeText:frRows.filter(r => r.studiedToday).length + ' of ' + frRows.length + ' studied today',
         goFriendsHome:() => { this.go('friends'); this.friendsRefresh(false); },
         frSyncText:S.syncBadMsg ? 'Your progress could not sync: ' + S.syncBadMsg : (this.syncInfo && this.syncInfo.ok ? 'Progress last synced on this device ' + (Math.round((Date.now() - this.syncInfo.at) / 60000) < 1 ? 'just now' : Math.round((Date.now() - this.syncInfo.at) / 60000) + ' min ago') + '.' : 'Progress has not synced on this device yet in this session.'),
@@ -4868,15 +4871,21 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const dueAtStart = S.dcN != null ? S.dcN : dueCountsNow(S).n;
       const pathTarget = dueAtStart >= PATH_BACKLOG ? 1 : Math.max(1, Math.min(PATH_STEPS_MAX, Math.round((S.mins - dueAtStart * 0.3) / PATH_STEP_MIN)));
       const pathAllDone = pathDoneToday >= pathTarget || (!pathStep && pathDoneToday > 0);
+      // A brand-new person's first day: nothing on the Path was done before today and no earlier day has any activity. Then the Path row lists the day's first stops by name,
+      // so a new account sees the whole kick-off set at once (the same stops the Path starts with, in order; nothing is picked for them).
+      const pathFirstDay = !!pathLvNow && pathTarget >= 2 && (S.pbase == null ? pathDoneCount(S) : S.pbase) === 0 && Object.keys(S.activity || {}).every(k => !S.activity[k] || k >= today);
+      const pathFirstList = [];
+      if (pathFirstDay) { (PATH_U[pathLvNow] || []).forEach(u => u.stops.forEach(st => { if (pathFirstList.length < pathTarget) pathFirstList.push({ n:pathFirstList.length + 1, title:stopTitle(st), kind:stopMeta(st), cls:stopState(S, st) === 'done' ? 'done' : '' }); })); }
       const planRows = [];
       if (pathStep || pathDoneToday > 0) planRows.push({ glyph:'路',
         title:pathAllDone ? 'Path: ' + (pathDoneToday === 1 ? 'a step' : pathDoneToday + ' steps') + ' done' : (pathTarget === 1 ? 'Path: ' + stopTitle(pathStep.st) : 'Path: ' + pathTarget + ' steps today'),
-        meta:pathAllDone ? (pathStep ? 'Next: ' + stopTitle(pathStep.st) : 'You have walked the whole path') : (pathTarget === 1 ? stopMeta(pathStep.st) : pathDoneToday + ' of ' + pathTarget + ' done · Next: ' + stopTitle(pathStep.st)), done:pathAllDone,
+        meta:pathAllDone ? (pathStep ? 'Next: ' + stopTitle(pathStep.st) : 'You have walked the whole path') : (pathTarget === 1 ? stopMeta(pathStep.st) : pathFirstList.length > 1 ? 'Your first ' + pathFirstList.length + ' stops · ' + Math.min(pathDoneToday, pathFirstList.length) + ' of ' + pathFirstList.length + ' done' : pathDoneToday + ' of ' + pathTarget + ' done · Next: ' + stopTitle(pathStep.st)), done:pathAllDone,
+        stops:pathFirstList.length > 1 ? pathFirstList : [],
         run:pathStep ? () => this.pathContinue(pathStep.st.id) : () => this.go('path') });
       if (dueWordsN > 0 || S.rq.length > 0 || S.rcomplete) planRows.push({ glyph:'词', title:'Review words', meta:dueWordsN > 0 ? dueWordsN + (S.rcomplete ? ' still due' : ' due') : 'All caught up', done:S.rcomplete && dueWordsN === 0,
         run:() => { if (!S.rq.length && dueWordsN > 0) this.reviewMore(); this.go('review'); } });
       if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + (S.grdone ? ' still due' : ' due') : 'Nothing due, short practice', done:!!S.grdone && grvDueToday === 0, run:() => this.startGrammarReview(true) });
-      const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:t.run }));
+      const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:t.run, stops:t.stops || [], hasStops:!!(t.stops && t.stops.length) }));
       const moreWays = [
         pathStep && pathAllDone ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), cls:'', fn:() => this.pathContinue(pathStep.st.id) } : null,
         HAS_LISTEN ? { glyph:'听', label:'Listening', sub:'Dictation drill', cls:S.ldone ? 'done' : '', fn:() => this.go('listen') } : null,

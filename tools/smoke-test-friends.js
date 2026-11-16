@@ -347,6 +347,32 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await ctx.close(); await aiMf.dispose();
   }
 
+  // pictures: what a person chose as their picture shows next to their name for everyone in the group (initials for those who chose none)
+  {
+    const D = await mk();
+    await D.ctx.addInitScript(() => { try { if (!localStorage.getItem('shanlu-person')) localStorage.setItem('shanlu-person', JSON.stringify({ prefs: { av: { v: 'panda-plush', at: 1 } } })); } catch (e) {} });
+    await openFriends(D.page);
+    await D.page.fill('#fr-name', 'Dee');
+    await D.page.locator('button', { hasText: 'Join group' }).click();
+    await D.page.waitForSelector('.frow');
+    const dStats = await D.page.evaluate(() => window.shanlu.friendStats());
+    check(dStats.av === 'panda-plush', 'the shared totals carry the picture a person chose (and only that id)');
+    check(await D.page.locator('.frow.me .fav img').count() === 1, 'your own row shows your picture');
+    await D.page.evaluate(() => window.shanlu.friendsPush({}));
+    const E = await mk();   // someone else joins afterwards and looks at the board
+    await openFriends(E.page);
+    await E.page.fill('#fr-name', 'Eve');
+    await E.page.locator('button', { hasText: 'Join group' }).click();
+    await E.page.waitForSelector('.frow');
+    check(await E.page.locator('.frow', { hasText: 'Dee' }).locator('.fav img').count() === 1, "a friend sees Dee's picture on the board");
+    check(await E.page.locator('.frow.me .fav img').count() === 0 && (await E.page.locator('.frow.me .fav').innerText()).trim() === 'E', 'someone who chose no picture keeps their initial');
+    await E.page.evaluate(() => window.shanlu.go('home'));
+    check(await E.page.locator('.fravs .fav img').count() === 1, "Dee's picture shows in the friends strip on Home too");
+    check(D.errors.length === 0 && E.errors.length === 0, 'no page errors with pictures: ' + D.errors.concat(E.errors).slice(0, 2).join(' | '));
+    await E.ctx.close();
+    await D.ctx.close();
+  }
+
   // server gone: a message, and the rest of the app keeps working
   await mf.dispose();
   await require('./test-nav').makeNav(A.page)('Friends');

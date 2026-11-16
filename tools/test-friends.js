@@ -18,6 +18,7 @@ check(rows[0].isMe && rows[0].minutes === 10 && rows[1].minutes === 70 && rows[1
 check(rows[2].hasStats === false && rows[2].minutes === 0 && rows[2].streak === 0, 'someone who has not shared yet shows as empty');
 check(F.sortRows(rows, 'week').map((r) => r.name).join() === 'Bo,Ana,Cy', 'rows are ordered by minutes this week');
 check(F.sortRows([{ name: 'x', minutes: 5, streak: 9, mem: 1 }, { name: 'y', minutes: 50, streak: 1, mem: 99 }], 'streak')[0].name === 'x' && F.sortRows([{ name: 'x', minutes: 5, streak: 9, mem: 1 }, { name: 'y', minutes: 50, streak: 1, mem: 99 }], 'mem')[0].name === 'y', 'rows can be ordered by streak or words in memory');
+check(F.boardRow(member('d', 'Di', [0, 0, 0, 0, 0, 0, 0], { stats: { v: 1, asOf: '2026-11-03', last7: [0, 0, 0, 0, 0, 0, 0], streak: 0, lastActive: '', mem: 0, levels: [1], passed: [], av: 'panda-plush' } }), '2026-11-03', 'a').av === 'panda-plush' && rows[0].av === '' && rows[2].av === '', 'a board row carries the picture a person chose (empty when they chose none or have not shared)');
 check(F.initial('  mei') === 'M' && F.initial('') === '?' && F.initial('小明') === '小', 'the avatar letter is the first character');
 
 const KEY = '0123456789abcdef', SECRET = 'f'.repeat(48);

@@ -67,6 +67,10 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const gJy = (await call('GET', '/api/group', { token: B })).json;
   const jyMine = gJy.members.find((m) => m.id === a.json.id).stats.jy;
   check(jyMine && jyMine.n === 42 && jyMine.here === 'sichuan' && JSON.stringify(jyMine.done) === '{"guangdong":"2026-11-03"}' && jyMine.per.sichuan === 12 && jyMine.per.guangdong === 5000 && !('stops' in jyMine), 'Journey totals are kept in shape and anything else is dropped');
+  await call('PUT', '/api/me', { token: A, body: { stats: stats({ av: 'panda-plush' }) } });
+  check((await call('GET', '/api/group', { token: B })).json.members.find((m) => m.id === a.json.id).stats.av === 'panda-plush', 'the picture a person chose (a souvenir id) is shared with the group');
+  await call('PUT', '/api/me', { token: A, body: { stats: stats({ av: '<img src=x onerror=1>' }) } });
+  check(!('av' in (await call('GET', '/api/group', { token: B })).json.members.find((m) => m.id === a.json.id).stats), 'a picture that is not a plain souvenir id is thrown away');
   await call('PUT', '/api/me', { token: A, body: { stats: stats({ jy: 'lots' }) } });
   check(!('jy' in (await call('GET', '/api/group', { token: B })).json.members.find((m) => m.id === a.json.id).stats), 'a bad Journey part is ignored without refusing the study totals');
   check((await call('PUT', '/api/me', { token: B, body: { stats: stats() } })).status === 200 && (await call('PUT', '/api/me', { token: B, body: { name: 'Mei K' } })).json.name === 'Mei K', 'a person can rename themselves without resending totals');
