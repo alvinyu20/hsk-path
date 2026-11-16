@@ -1,0 +1,171 @@
+[
+  {
+    "id": "guyu",
+    "title": "过于, 稍, 够…的 and 可: too, a little, quite, really",
+    "covers": [30, 31, 32, 33],
+    "formula": ["Subject", "*过于", "Adjective / verb"],
+    "explain": [
+      "过于 'too, excessively' goes before an adjective or a verb and says that something goes past the right amount: 这个问题过于简单 'This question is too simple'; 你不要过于担心 'Do not worry too much'. It is more formal than 太, and it usually sounds like a complaint, so do not use it for praise.",
+      "稍 'a little, slightly' goes before a verb or an adjective: 请稍等一下 'Please wait a moment'; 这件衣服稍大一点儿 'This piece of clothing is a little big'. With an adjective, add 一点儿 or 一些 to show the amount. 稍 is mostly written; 稍微 (HSK 4) is the everyday form.",
+      "够 … 的 'quite, rather' puts an adjective between 够 and 的 and adds a feeling of surprise or complaint: 今天够冷的 'It is quite cold today'; 这个问题够难的 'This question is quite hard'. 够 alone just means 'enough'.",
+      "可 'really, indeed' adds force in speech to a warning, a promise or an opinion: 你可要小心啊 'You must be careful'; 这可是个好机会 'This really is a good chance'; 这件事可不容易 'This really is not easy'. This 可 is not the 可 that means 'but'. It often comes with 要, 别, 是, 不 or 真."
+    ],
+    "examples": [
+      {"zh": "这个问题过于简单。", "en": "This question is too simple."},
+      {"zh": "请稍等一下。", "en": "Please wait a moment."},
+      {"zh": "今天够冷的，多穿一点儿吧。", "en": "It is quite cold today; wear a bit more."},
+      {"zh": "你可要小心啊！", "en": "You must be careful!"}
+    ],
+    "mistakes": [
+      "过于 sounds like a complaint. For something good, say 非常 or 很: 非常好, not 过于好.",
+      "Do not stack two degree words. 过于太 is wrong; use one of them."
+    ],
+    "q": [
+      {"t": "order", "zh": "这个问题过于简单。", "en": "This question is too simple.", "explain": "过于 + adjective."},
+      {"t": "order", "zh": "请稍等一下。", "en": "Please wait a moment.", "explain": "稍 + verb."},
+      {"t": "cloze", "zh": "今天够冷的，多穿一点儿吧。", "en": "It is quite cold today; wear a bit more.", "blank": "够", "explain": "够 + adjective + 的 = quite."},
+      {"t": "mc", "prompt": "Which sentence says: You must be careful?", "options": ["你可要小心啊！", "你可小心要啊！"], "correct": 0, "zh": "你可要小心啊！", "en": "You must be careful!", "explain": "可 + 要 + verb."},
+      {"t": "spot", "zh": "你不要过于担心。", "en": "Do not worry too much.", "wrong": "你不要过于太担心。", "remove": "太", "explain": "Use only one degree word."}
+    ]
+  },
+  {
+    "id": "shichang",
+    "title": "将要, 时常, 时刻, 立刻 and 立即: about to, often, always, at once",
+    "covers": [34, 35, 36],
+    "formula": ["Subject", "*将要", "Verb"],
+    "explain": [
+      "将要 'be about to, will soon' goes before a verb: 比赛将要开始 'The match is about to start'; 我们将要搬到新家 'We will move to a new home soon'. 将要 is formal and usually does not end with 了. In speech, say 快要 … 了 or 就要 … 了 (HSK 3).",
+      "时常 'often' goes before the verb: 他时常去公园跑步 'He often goes to the park to run'. 经常 (HSK 3) is the everyday word. 时刻 as an adverb means 'at every moment, always', and stresses doing something all the time: 我们要时刻注意安全 'We must pay attention to safety at all times'.",
+      "立刻 and 立即 'at once, immediately' go before the verb: 听到电话响，他立刻跑了过去 'Hearing the phone ring, he ran over at once'; 请立即回家 'Please go home at once'. 立即 is more formal and is common in orders and notices. In speech, 马上 (HSK 3) is the usual word."
+    ],
+    "examples": [
+      {"zh": "比赛将要开始。", "en": "The match is about to start."},
+      {"zh": "他时常去公园跑步。", "en": "He often goes to the park to run."},
+      {"zh": "我们要时刻注意安全。", "en": "We must pay attention to safety at all times."},
+      {"zh": "听到电话响，他立刻跑了过去。", "en": "Hearing the phone ring, he ran over at once."}
+    ],
+    "mistakes": [
+      "将要 does not usually take 了 at the end. For 'is about to start', say 比赛快要开始了.",
+      "立刻 and 立即 go before the verb, not after it: 他立刻跑了过去, not 他跑了过去立刻."
+    ],
+    "q": [
+      {"t": "order", "zh": "比赛将要开始。", "en": "The match is about to start.", "explain": "将要 + verb."},
+      {"t": "order", "zh": "请立即回家。", "en": "Please go home at once.", "explain": "立即 goes before the verb."},
+      {"t": "cloze", "zh": "他时常去公园跑步。", "en": "He often goes to the park to run.", "blank": "时常", "explain": "时常 = often."},
+      {"t": "mc", "prompt": "Which sentence says: We must pay attention to safety at all times?", "options": ["我们要时刻注意安全。", "我们要注意安全时刻。"], "correct": 0, "zh": "我们要时刻注意安全。", "en": "We must pay attention to safety at all times.", "explain": "时刻 goes before the verb."},
+      {"t": "spot", "zh": "听到电话响，他立刻跑了过去。", "en": "Hearing the phone ring, he ran over at once.", "wrong": "听到电话响，他立刻马上跑了过去。", "remove": "马上", "explain": "立刻 and 马上 mean the same; use one."}
+    ]
+  },
+  {
+    "id": "jianjian",
+    "title": "渐渐, 始终 and 连续: gradually, all along, in a row",
+    "covers": [37, 38, 39],
+    "formula": ["Subject", "*渐渐", "Verb / adjective", "*了"],
+    "explain": [
+      "渐渐 and 逐渐 'gradually, little by little' show a change that comes slowly. They go before the verb or adjective and often end with 了: 天渐渐黑了 'It is getting dark'; 他的汉语逐渐好起来了 'His Chinese has gradually got better'. 逐步 'step by step' is for planned progress: 公司逐步扩大了 'The company has gradually grown bigger'.",
+      "始终 'all along, from start to finish' says that something never changed: 他始终没有告诉我这件事 'He never told me about this'; 她始终相信自己会成功 'She always believes she will succeed'. It often goes with 没 or 不 for 'never at any point'. 一直 (HSK 3) is the everyday word.",
+      "连续 'in a row' goes with a number of days, times or years: 他连续三天没有睡觉 'He did not sleep for three days in a row'. 持续 'go on, last' stresses one stretch that does not stop: 雨持续下了一个星期 'The rain went on for a week'. 连续 counts events one after another; 持续 is a single long stretch."
+    ],
+    "examples": [
+      {"zh": "天渐渐黑了。", "en": "It is getting dark."},
+      {"zh": "他的汉语逐渐好起来了。", "en": "His Chinese has gradually got better."},
+      {"zh": "她始终相信自己会成功。", "en": "She always believes she will succeed."},
+      {"zh": "他连续三天没有睡觉。", "en": "He did not sleep for three days in a row."}
+    ],
+    "mistakes": [
+      "渐渐 and 逐渐 need a change. 天渐渐黑了 is right; for a fixed fact, 他渐渐是老师 is wrong.",
+      "持续 does not go with a count of separate events. Say 他连续三次来我家, not 他持续三次来我家."
+    ],
+    "q": [
+      {"t": "order", "zh": "天渐渐黑了。", "en": "It is getting dark.", "explain": "渐渐 + change + 了."},
+      {"t": "order", "zh": "他连续三天没有睡觉。", "en": "He did not sleep for three days in a row.", "explain": "连续 + number of days."},
+      {"t": "cloze", "zh": "她始终相信自己会成功。", "en": "She always believes she will succeed.", "blank": "始终", "explain": "始终 = all along."},
+      {"t": "mc", "prompt": "Which sentence says: The rain went on for a week?", "options": ["雨持续下了一个星期。", "雨持续了下一个星期。"], "correct": 0, "zh": "雨持续下了一个星期。", "en": "The rain went on for a week.", "explain": "持续 + verb + length of time."},
+      {"t": "spot", "zh": "公司逐步扩大了。", "en": "The company has gradually grown bigger.", "wrong": "公司逐步渐渐扩大了。", "remove": "渐渐", "explain": "逐步 and 渐渐 mean the same; use one."}
+    ]
+  },
+  {
+    "id": "suihou",
+    "title": "再次, 随后, 此后, 先后 and 陆续: again, afterwards, one after another",
+    "covers": [40, 41, 42],
+    "formula": ["Subject", "*再次", "Verb"],
+    "explain": [
+      "再次 'once more, again' goes before the verb. It is more formal than 又 or 再, and it can look back or ahead: 我再次见到了老朋友 'I saw my old friend again'; 请再次检查 'Please check again'.",
+      "随后, 此后 and 此时 tie an event to a point in time. 随后 'soon after, then' follows straight after something: 他先吃了饭，随后就去上班了 'He ate first and then went to work'. 此后 'from then on, after that' starts a stretch of time after that point: 此后，他每天都来这里 'After that, he comes here every day'. 此时 'at this moment' points to one moment: 此时，天已经黑了 'At this moment, it was already dark'.",
+      "先后 and 陆续 'one after another' need more than one person, thing or time. 先后 gives the order, often with a number: 他先后去过三个国家 'He has been to three countries, one after another'. 陆续 stresses a steady stream, not all at once: 客人们陆续到了 'The guests arrived one after another'."
+    ],
+    "examples": [
+      {"zh": "我再次见到了老朋友。", "en": "I saw my old friend again."},
+      {"zh": "他先吃了饭，随后就去上班了。", "en": "He ate first and then went to work."},
+      {"zh": "此时，天已经黑了。", "en": "At this moment, it was already dark."},
+      {"zh": "客人们陆续到了。", "en": "The guests arrived one after another."}
+    ],
+    "mistakes": [
+      "随后 follows straight after the first event. For a gap of weeks or years, 后来 is better.",
+      "先后 and 陆续 need more than one. 客人们陆续到了 is right; 他陆续到了 is wrong, because one person cannot arrive 'one after another'."
+    ],
+    "q": [
+      {"t": "order", "zh": "请再次检查。", "en": "Please check again.", "explain": "再次 goes before the verb."},
+      {"t": "order", "zh": "此时，天已经黑了。", "en": "At this moment, it was already dark.", "explain": "此时 starts the clause."},
+      {"t": "cloze", "zh": "客人们陆续到了。", "en": "The guests arrived one after another.", "blank": "陆续", "explain": "陆续 = one after another."},
+      {"t": "mc", "prompt": "Which sentence says: He has been to three countries, one after another?", "options": ["他先后去过三个国家。", "他去过先后三个国家。"], "correct": 0, "zh": "他先后去过三个国家。", "en": "He has been to three countries, one after another.", "explain": "先后 goes before the verb."},
+      {"t": "spot", "zh": "他先吃了饭，随后就去上班了。", "en": "He ate first and then went to work.", "wrong": "他先吃了饭，随后然后就去上班了。", "remove": "然后", "explain": "随后 and 然后 both mean 'then'; use one."}
+    ]
+  },
+  {
+    "id": "jianzhi",
+    "title": "简直, 绝对, 根本 and 难以: simply, absolutely, at all, hard to",
+    "covers": [43, 44, 45, 46],
+    "formula": ["Subject", "*根本", "不 / 没", "Verb"],
+    "explain": [
+      "简直 'simply, practically' adds strong feeling to an adjective or a verb. The speaker sounds amazed or is exaggerating: 今天简直太热了 'Today is simply too hot'; 这里的风景简直像画一样 'The scenery here is simply like a painting'. It shows a feeling, not a fact, so it goes with words like 太, 像 and 是.",
+      "绝对 'absolutely' marks something as certain. With a negative it means 'never, under no circumstances': 这件事绝对不能告诉别人 'This absolutely cannot be told to anyone'. With a positive, it means 'for sure': 你绝对可以相信他 'You can absolutely trust him'. 这个答案绝对没有错 'There is absolutely no mistake in this answer'.",
+      "根本 'at all' goes before 不 or 没 and denies in full: 我根本不知道这件事 'I do not know about this at all'; 他根本没来 'He did not come at all'. In a positive sentence, 根本 is not 'completely'; as a noun it means 'root, basis'.",
+      "难以 'hard to' goes before a verb of two syllables: 这个问题难以解决 'This problem is hard to solve'; 那次旅行让我难以忘记 'That trip is hard for me to forget'. It is more formal than 很难 and is used for things like understanding, believing and accepting, not for plain physical actions."
+    ],
+    "examples": [
+      {"zh": "今天简直太热了。", "en": "Today is simply too hot."},
+      {"zh": "这件事绝对不能告诉别人。", "en": "This absolutely cannot be told to anyone."},
+      {"zh": "我根本不知道这件事。", "en": "I do not know about this at all."},
+      {"zh": "这个问题难以解决。", "en": "This problem is hard to solve."}
+    ],
+    "mistakes": [
+      "根本 needs a negative. 我根本不知道 is right; 我根本知道 is wrong.",
+      "难以 goes before a verb of two syllables. Say 难以理解 but 很难学, not 难以学."
+    ],
+    "q": [
+      {"t": "order", "zh": "今天简直太热了。", "en": "Today is simply too hot.", "explain": "简直 + feeling."},
+      {"t": "order", "zh": "我根本不知道这件事。", "en": "I do not know about this at all.", "explain": "根本 + 不 + verb."},
+      {"t": "cloze", "zh": "这件事绝对不能告诉别人。", "en": "This absolutely cannot be told to anyone.", "blank": "绝对", "explain": "绝对 + negative = absolutely not."},
+      {"t": "mc", "prompt": "Which sentence says: This problem is hard to solve?", "options": ["这个问题难以解决。", "这个问题解决难以。"], "correct": 0, "zh": "这个问题难以解决。", "en": "This problem is hard to solve.", "explain": "难以 goes before the verb."},
+      {"t": "spot", "zh": "他根本没来。", "en": "He did not come at all.", "wrong": "他根本是没来。", "remove": "是", "explain": "Do not put 是 between 根本 and 没."}
+    ]
+  },
+  {
+    "id": "jinliang",
+    "title": "尽量, 尽力 and 万一: as far as possible, do your best, in case",
+    "covers": [47, 48],
+    "formula": ["Subject", "*尽量", "Verb"],
+    "explain": [
+      "尽量 'as much as possible, to the fullest extent' goes before a verb and sets a goal for how much or how well: 请尽量早点来 'Please come as early as possible'; 我会尽量少吃甜的 'I will eat as little sweet food as possible'. 尽力 'do all one can' is about how hard someone tries: 我会尽力帮你 'I will do my best to help you'. 尽量 is about the degree you reach; 尽力 is about the effort you give.",
+      "万一 'in case, if by any chance' brings in something unlikely, and usually unwelcome, that might happen. A plan or a request follows, often with 就: 万一下雨，我们就在家看电影 'In case it rains, we will watch a movie at home'; 万一你没找到我，就给我打电话 'In case you do not manage to find me, call me'."
+    ],
+    "examples": [
+      {"zh": "请尽量早点来。", "en": "Please come as early as possible."},
+      {"zh": "我会尽量少吃甜的。", "en": "I will eat as little sweet food as possible."},
+      {"zh": "我会尽力帮你。", "en": "I will do my best to help you."},
+      {"zh": "万一下雨，我们就在家看电影。", "en": "In case it rains, we will watch a movie at home."}
+    ],
+    "mistakes": [
+      "尽量 and 尽力 are not swapped freely. Say 尽量少吃, 'eat as little as possible', not 尽力少吃.",
+      "万一 is for something unlikely. For an ordinary 'if', use 如果: 如果明天有空，我们去看电影."
+    ],
+    "q": [
+      {"t": "order", "zh": "请尽量早点来。", "en": "Please come as early as possible.", "explain": "尽量 + verb phrase."},
+      {"t": "order", "zh": "我会尽力帮你。", "en": "I will do my best to help you.", "explain": "尽力 + verb."},
+      {"t": "cloze", "zh": "万一下雨，我们就在家看电影。", "en": "In case it rains, we will watch a movie at home.", "blank": "万一", "explain": "万一 = in case."},
+      {"t": "mc", "prompt": "Which sentence says: I will eat as little sweet food as possible?", "options": ["我会尽量少吃甜的。", "我会少吃尽量甜的。"], "correct": 0, "zh": "我会尽量少吃甜的。", "en": "I will eat as little sweet food as possible.", "explain": "尽量 goes before the verb phrase."},
+      {"t": "spot", "zh": "万一你没找到我，就给我打电话。", "en": "In case you do not manage to find me, call me.", "wrong": "万一你如果没找到我，就给我打电话。", "remove": "如果", "explain": "万一 already means 'if by chance'; do not add 如果."}
+    ]
+  }
+]
