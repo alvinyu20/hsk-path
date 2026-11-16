@@ -169,13 +169,16 @@ class Engine:
         """Returns (pinyin string, list of word tokens without punctuation)."""
         toks = self.tokens(zh)
         parts = []
-        for t in toks:
+        for ti, t in enumerate(toks):
             if t in P_MAP:
                 parts.append(('p', t, P_MAP[t]))
             elif t in ('—', '——'):
                 parts.append(('d', t, '—'))
             elif t == '了' and parts and parts[-1][0] == 'w' and parts[-1][1] == '不':
                 parts.append(('w', t, 'liǎo'))        # verb + 不 + 了 (走不了, 吃不了): "cannot", read liǎo, not le
+            elif (t == '了' and len(parts) >= 2 and parts[-1][0] == 'w' and parts[-1][1] == '得' and parts[-2][0] == 'w'
+                  and (ti + 1 >= len(toks) or toks[ti + 1] in P_MAP or toks[ti + 1] in ('吗', '呢', '吧'))):
+                parts.append(('w', t, 'liǎo'))        # verb + 得 + 了 at the end of a clause (吃得了吗, 做得了): "can", read liǎo
             else:
                 parts.append(('w', t, self.word_py(t)))
         merged = []
