@@ -94,7 +94,7 @@ SINGLE_PRON = [
     ('他', r"\b(he|him|his|he's)\b"), ('她', r"\b(she|her|hers|she's)\b"), ('它', r"\b(it|its|it's)\b"),
 ]
 TIME_WORDS = [
-    ('今天', r'today|this (morning|evening)|tonight'), ('明天', r'tomorrow'), ('昨天', r'yesterday'), ('今年', r'this year'),
+    ('今天', r'today|this (morning|evening)|tonight'), ('明天', r'tomorrow'), ('昨天', r'yesterday|last night'), ('今年', r'this year'),
     ('明年', r'next year'), ('去年', r'last year'), ('早上', r'morning'), ('上午', r'morning'), ('中午', r'noon|midday|lunch'),
     ('下午', r'afternoon'), ('晚上', r'evening|night|tonight|dinner'), ('白天', r'day|daytime'),
     ('星期天', r'sunday'), ('星期日', r'sunday'), ('前天', r'dbyx'), ('后天', r'datx|day after'),
@@ -105,7 +105,7 @@ EN_TIME_BACK = [
 ]
 MEASURE_NEEDS = {'书': '本', '衣服': '件', '猫': '只', '狗': '只'}   # noun -> required measure word (instead of the all-purpose 个)
 QUESTION_WORDS = ['什么', '谁', '哪', '几', '多少', '怎么', '怎么样', '哪儿', '哪里']
-LEXICAL_NEG = ['不客气', '对不起', '没关系', '没事', '不好意思', '不见了', '不早了', '不同', '来不及', '不一样', '不错', '不久', '差不多', '不对', '特别', '别人', '别的', '不断', '不便', '不得不', '不如', '不满', '不过', '不管', '不论', '不光', '不仅', '无聊', '无论', '区别', '性别', '分别', '告别', '差别', '个别']   # 别人 "other people" and 别的 "other" use 别 without a negative meaning
+LEXICAL_NEG = ['不客气', '对不起', '没关系', '没事', '不好意思', '不见了', '不早了', '不同', '来不及', '不一样', '不错', '不久', '差不多', '不对', '特别', '别人', '别的', '不断', '不便', '不得不', '不如', '不满', '不过', '不管', '不论', '不光', '不仅', '无聊', '无论', '区别', '性别', '分别', '告别', '差别', '个别', '不利', '不幸', '不良', '不得了', '不小心', '无数', '无限', '无奈', '无效', '无关', '无法', '不足', '不然', '不安', '不满意']   # 别人 "other people" and 别的 "other" use 别 without a negative meaning
 PAST_EN = r"\b(ate|bought|saw|heard|went|was|were|did|drank|had|got|said|took|came|made|read|wrote|studied|worked|lived|asked|called|finished|\w+ed)\b"
 IRREGULAR_PAST = 'forgave|dreamt|ate|bought|saw|heard|went|drank|had|got|said|took|came|made|wrote|was|were|did|told|sent|gave|found|lost|left|met|paid|brought|taught|began|ran|sat|stood|forgot|knew|thought|felt|kept|won|fell|spoke|woke|rode|drove|broke|bit|read|blew|grew|drew|threw|wore|chose|swam|sang|slept|spent|sold|held|led|lay|fed|hid|shook|stole|flew|dug|rang|built|caught|cut|hurt|let|lit|meant|put|set|shut|sank|sat|sent|shot|slid|spun|stuck|swept|tore|understood|woke|lent'
 PAST_ADJ = {'repaired', 'allowed', 'compared', 'detailed', 'steamed', 'grilled', 'roasted', 'baked', 'complicated', 'irritated', 'fried', 'succeed', 'exceed', 'proceed', 'varied', 'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured', 'united', 'limited', 'advanced', 'unlimited', 'crowded', 'needed', 'wicked', 'naked', 'sacred', 'hundred'}
@@ -134,10 +134,10 @@ def meaning_checks(zh, en):
 
     # can / may
     z_pot = re.search('[听看吃找买做写说记搬拿读喝走跑学爬睡等想受抬打提][得不](懂|见|清楚|完|到|住|动|起|出|好|对|会|了|通|着)', z)     # 听得懂 / 听不懂: the 得 / 不 + result form already means can / cannot
-    if re.search(r"\b(can|can't|cannot|could|able to|may|allowed|know how)\b", e) and not re.search('会|能|可以|懂得|无法|允许', z) and not z_pot:
+    if re.search(r"\b(can|can't|cannot|could|able to|may|allowed|know how)\b", e) and not re.search('会|能|可以|懂得|无法|允许', z) and not z_pot and not re.search('知道怎么|不知怎么|懂怎么', z):
         out.append(('ERROR', 'meaning', 'English says can/may/able but the Chinese has no 会 / 能 / 可以'))
-    z_modal = re.sub('开会|会议|晚会|运动会|机会|一会儿|一会|社会|会话|开会|学会|懂得|会员|家长会|大会|会面|聚会|宴会|舞会|约会|能力|误会|可能性', '', z)       # 会 inside these words is not the modal verb
-    if re.search('会|能|可以', z_modal) and not re.search(r"can|could|able|may|allowed|know how|will|might|should|be able|please|fine|okay|\bok\b|all right|alright|either", e):
+    z_modal = re.sub('开会|会议|晚会|运动会|机会|一会儿|一会|社会|会话|开会|学会|懂得|会员|家长会|大会|会面|聚会|宴会|舞会|约会|能力|误会|可能性|会上|会场|会后|会前|国会|协会|商会|博览会|展览会|发布会|座谈会|研讨会|能源|能量|才能|本能|性能|功能|智能', '', z)       # 会 inside these words is not the modal verb
+    if re.search('会|能|可以', z_modal) and not re.search(r"can|could|able|may|allowed|know how|will|might|should|be able|please|fine|okay|\bok\b|all right|alright|either|good at|skilled|clever at|great at|capable", e):
         out.append(('WARN', 'meaning', '会/能/可以 in the Chinese but no can/may/will in the English'))
 
     # negation
@@ -246,7 +246,7 @@ def meaning_checks(zh, en):
     for v in evals:
         if v not in zvals and v not in zord and v not in (1,) and not ('其次' in z and v == 2) and not any(w in e for w in ('half',)):
             out.append(('WARN', 'meaning', 'number %d in the English is not in the Chinese' % v))
-    if '半' in z.replace('半天', '') + ('半天' if '半天' in z and not re.search(r'\bages\b|long time|a while|for hours|half a day|half day|all day', e) else '') and not re.search(r'half|:30|thirty', e):
+    if '半' in z.replace('半天', '').replace('半夜', '').replace('半路', '').replace('半岛', '') + ('半天' if '半天' in z and not re.search(r'\bages\b|long time|a while|for hours|half a day|half day|all day', e) else '') and not re.search(r'half|:30|thirty', e):
         out.append(('ERROR', 'meaning', '半 in the Chinese but the English does not say half'))
     if re.search(r'\bhalf\b', e) and '半' not in z:
         out.append(('ERROR', 'meaning', 'English says half but the Chinese has no 半'))
@@ -280,7 +280,7 @@ def meaning_checks(zh, en):
     toks_past = [w for w in re.findall(r"[a-z]+", e_tense) if re.fullmatch(r'\w+ed', w) and w not in PAST_ADJ] + [w for w in re.findall(r'[a-z]+', e) if w in ('ate', 'bought', 'saw', 'heard', 'went', 'drank', 'had', 'got', 'said', 'took', 'came', 'made', 'wrote', 'was', 'were', 'did')]
     if toks_past and not re.search('了|没|昨天|昨晚|前天|去年|上个|上星期|过|以前|从前|当时|后来|小时候|是.*的|看见|听见|才|已经|刚|以为|听说', z) and not re.search(r"\b(has|have|had been)\b", e):
         out.append(('WARN', 'meaning', 'English is in the past (%s) but the Chinese has no 了 or past time word' % toks_past[0]))
-    if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '').replace('死了', '').replace('不了', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|no longer|getting|growing|about to|get to|arrive|reach|come to|soon)\b", e):
+    if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '').replace('死了', '').replace('不了', '').replace('不得了', '').replace('了不起', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|no longer|getting|growing|about to|get to|arrive|reach|come to|soon)\b", e):
         out.append(('WARN', 'meaning', '了 in the Chinese: English shows no completed action or change of state'))
     # ZH 在 + verb = in progress
     if re.search('正在|(?<![不要])在(看|吃|喝|做|写|读|听|打|找|玩|睡|说话)', z) and not re.search(r'\b\w+ing\b|\bright now\b|\bat\b|\bin\b', e):
