@@ -57,6 +57,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await page.locator('.jy-playing').count() === 0 && await page.locator('.jy-trip').count() === 0 && await page.locator('.jy-card').count() === 1, 'a key press skips the travel moment and goes straight to the stop page');
     await closeTrip(page);
     check(await page.locator('.jy-here .rip').count() === 2, 'two quiet rings mark where you are on the country map');
+    check(await page.locator('.jy-me').count() === 1 && /You (are|start)/.test(await page.locator('.jy-me .cap').textContent()), 'your avatar sits on the country map, labelled');
     await page.locator('.jy-acts .btn.pri').click();
     check(await page.locator('.jy-card').count() === 0, 'the card closes');
     // stops list and passport

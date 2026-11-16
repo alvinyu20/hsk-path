@@ -3281,12 +3281,20 @@
       if (!fm) {
         const raw = [];
         const me = st.started && st.seen.length ? hereOf({ here:st.reg, at:st.seen[st.seen.length - 1] }) : null;
-        if (me && me.xy) raw.push({ w:me, name:'You', initial:'You', cls:'me', open:() => this.jyShowReg(st.reg) });
+        // you: your picture (or the region's landmark) on the map, from the very first day
+        { const mr0 = JMAP.regions[st.reg]; const xy0 = me && me.xy ? me.xy : (mr0 && mr0.cc ? mr0.cc : null);
+          out.jyMeShow = !!xy0;
+          if (xy0) {
+            const seenSv0 = {}; st.seen.forEach(id => { seenSv0[id] = 1; }); const avSv1 = SOUV.find(sv => sv.id === String(prefGet('av', '') || '') && seenSv0[sv.stop]) || null;
+            Object.assign(out, { jyMeX:Math.round(Math.max(15, Math.min(335, xy0[0])) * 10) / 10, jyMeY:Math.round(Math.max(15, Math.min(272, xy0[1])) * 10) / 10,
+              jyMeImg:avSv1 ? svImg(avSv1) : '', jyMeHasImg:!!avSv1, jyMeNoImg:!avSv1, jyMeRef:'#jic-' + (JY_ICON[st.reg] || JY_ICONS[Array.from(st.reg).reduce((n, ch) => n + ch.charCodeAt(0), 0) % JY_ICONS.length]),
+              jyMeText:st.started ? 'You are here' : 'Start here', jyMeLabel:(st.started ? 'You are in ' : 'You start in ') + rName(st.reg) + '.' });
+          } }
         fMembers.forEach((m, i) => { const w = fWhere(m); if (w && w.xy) raw.push({ w, name:m.name, initial:window.ShanluFriends.initial(m.name), cls:'c' + (i % 4), open:() => this.setState({ jyFriend:m.id, jyTab:'map', jyReg:null, jySel:null, jyOpen:null, jyRv:null }) }); });
         const groups = {}; raw.forEach(r => { const k = Math.round(r.w.xy[0] / 9) + ',' + Math.round(r.w.xy[1] / 9); (groups[k] = groups[k] || []).push(r); });
         const dots = [];
         Object.keys(groups).forEach(k => { const g = groups[k]; g.forEach((r, j) => { const a = g.length > 1 ? j * 2 * Math.PI / g.length - Math.PI / 2 : 0; const rad = g.length > 1 ? 8 : 0; dots.push({ x:Math.round((r.w.xy[0] + Math.cos(a) * rad) * 10) / 10, y:Math.round((r.w.xy[1] + Math.sin(a) * rad) * 10) / 10, initial:r.initial === 'You' ? '我' : r.initial, cls:r.cls, label:(r.name === 'You' ? 'You are' : r.name + ' is') + ' in ' + r.w.place, open:r.open }); }); });
-        out.jyHasDots = dots.length > 1 || (dots.length === 1 && fMembers.length > 0); out.jyDots = out.jyHasDots ? dots : [];
+        out.jyHasDots = dots.length > 0; out.jyDots = out.jyHasDots ? dots : [];
       }
       if (fm) { const fw = fWhere(fm); Object.assign(out, { jyFriendName:fm.name, jyFriendSub:(fw ? 'Now in ' + fw.place + ' · ' : '') + plural(fm.stats.jy.n, 'stop', 'stops') + ' · ' + stampCount(fm.stats.jy) + ' of ' + Object.keys(JY.META).length + ' regions stamped' }); }
 

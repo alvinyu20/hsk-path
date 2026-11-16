@@ -3483,3 +3483,13 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 @keyframes chAmt{from{opacity:0;transform:translateX(-12px) scale(.4)}}
 @keyframes chFade{from{opacity:0;transform:translateY(6px)}}
 @media (prefers-reduced-motion:reduce){.ch-go .ch-c{display:none}}
+
+/* you, on the country map: your picture (or the region's landmark) in a ring, from day one */
+.jy-me{pointer-events:none}
+.jy-me .bg{fill:#fff;stroke:#E07A3B;stroke-width:2}
+.jy-me .pul{fill:none;stroke:#E07A3B;stroke-width:1.6;transform-box:fill-box;transform-origin:center;opacity:0;animation:jymepul 2.2s ease-out infinite}
+.jy-me .bob{animation:jymebob 1.8s ease-in-out infinite}
+.jy-me .cap{font:700 9.5px 'Bricolage Grotesque',system-ui,sans-serif;fill:#14212A;stroke:#fff;stroke-width:2.6px;paint-order:stroke;stroke-linejoin:round;pointer-events:none}
+@keyframes jymepul{from{transform:scale(1);opacity:.8}to{transform:scale(1.9);opacity:0}}
+@keyframes jymebob{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.6px)}}
+.t-dark .jy-me .cap{fill:#E8EFEB;stroke:#0F2030}
