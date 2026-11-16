@@ -1,5 +1,944 @@
 {
- "R1": [],
- "R2": [],
- "R3": []
+ "R1": [
+  {
+   "zh": "读书是一种很好的习惯。很多人___工作很忙，就没有时间读书。其实，只要你___每天抽出半个小时，一年就能读完好几本书。读书不但能增加知识，还能让人变得更___。在书里，你可以认识不同的人，了解不同的生活，这对我们的成长很有___。所以，不管多忙，都应该给自己留一点读书的___。",
+   "en": "Reading is a very good habit. Many people say that because they are very busy at work, they have no time to read. In fact, as long as you keep setting aside half an hour every day, you can finish quite a few books in a year. Reading not only increases knowledge but can also make people cleverer. In books, you can get to know different people and learn about different lives, which is very helpful for our growth. So, however busy you are, you should leave a little time for reading.",
+   "blanks": [
+    [
+     "因为",
+     "虽然",
+     "无论",
+     "即使"
+    ],
+    [
+     "坚持",
+     "放弃",
+     "避免",
+     "拒绝"
+    ],
+    [
+     "聪明",
+     "粗心",
+     "麻烦",
+     "害羞"
+    ],
+    [
+     "帮助",
+     "困难",
+     "兴趣",
+     "精神"
+    ],
+    [
+     "时间",
+     "距离",
+     "目的",
+     "感情"
+    ]
+   ]
+  },
+  {
+   "zh": "去年夏天，我和朋友去海边旅游。出发前，我们做了很详细的___，订好了酒店和车票。可是到了那里，天气突然变了，下了三天大雨，我们哪里也去不了。___这样，我们还是玩得很开心，每天在酒店里聊天、打牌。回家的时候，朋友说：“旅行最重要的不是去什么地方，___是和谁一起去。”我觉得他说得很___。___有机会，我们还会再一起去旅行。",
+   "en": "In the summer of last year, a friend and I went on a trip to the seaside. Before setting off, we made a very detailed plan and booked the hotel and the tickets. But when we got there, the weather suddenly changed and it rained heavily for three days, so we could not go anywhere. Even so, we still had a lot of fun, chatting and playing cards in the hotel every day. When we went home, my friend said, \"The most important thing about travelling is not where you go but who you go with.\" I think he is quite right. As long as we have the chance, we will go travelling together again.",
+   "blanks": [
+    [
+     "计划",
+     "办法",
+     "印象",
+     "经验"
+    ],
+    [
+     "尽管",
+     "因为",
+     "如果",
+     "所以"
+    ],
+    [
+     "而",
+     "又",
+     "却",
+     "才"
+    ],
+    [
+     "对",
+     "干净",
+     "熟悉",
+     "方便"
+    ],
+    [
+     "只要",
+     "虽然",
+     "无论",
+     "因为"
+    ]
+   ]
+  },
+  {
+   "zh": "现在很多孩子从小就___手机，一玩就是几个小时。这样不但会影响眼睛，___会影响学习。专家建议，父母应该给孩子规定使用手机的时间，每天不要超过一个小时。另外，父母自己也要少玩手机，多___孩子。只有这样，孩子才能养成___的习惯，___成长。",
+   "en": "Nowadays many children are in contact with phones from an early age and spend hours playing on them. This not only harms their eyes but also affects their studies. Experts suggest that parents should set a time limit for children's phone use, no more than an hour a day. In addition, parents themselves should play less on their phones and spend more time with their children. Only in this way can children develop good habits and grow up healthily.",
+   "blanks": [
+    [
+     "接触",
+     "保护",
+     "发展",
+     "解决"
+    ],
+    [
+     "而且",
+     "但是",
+     "因此",
+     "或者"
+    ],
+    [
+     "陪",
+     "骗",
+     "追",
+     "怪"
+    ],
+    [
+     "良好",
+     "传统",
+     "明显",
+     "特殊"
+    ],
+    [
+     "健康",
+     "临时",
+     "直接",
+     "巨大"
+    ]
+   ]
+  },
+  {
+   "zh": "这几年，我们城市的变化非常大。街道变宽了，高楼变多了，到处都是商店和饭馆。但是，空气却不如以前___了，特别是冬天，___有很多天看不见蓝天。为了改善空气质量，政府要求工厂___新技术，也___大家少开车，多坐公共汽车和地铁。如果每个人都能从小事做起，我们的城市就会变得___美丽。",
+   "en": "In recent years, our city has changed a great deal. The streets have become wider, there are more tall buildings, and there are shops and restaurants everywhere. But the air is not as fresh as before, especially in winter, when there are often many days when the blue sky cannot be seen. To improve air quality, the government requires factories to adopt new technology and also encourages people to drive less and take more buses and the underground. If everyone starts with small things, our city will become even more beautiful.",
+   "blanks": [
+    [
+     "新鲜",
+     "热闹",
+     "方便",
+     "安静"
+    ],
+    [
+     "常常",
+     "一旦",
+     "难道",
+     "既然"
+    ],
+    [
+     "采用",
+     "缺乏",
+     "避免",
+     "反对"
+    ],
+    [
+     "鼓励",
+     "拒绝",
+     "怀疑",
+     "影响"
+    ],
+    [
+     "更加",
+     "一直",
+     "曾经",
+     "刚刚"
+    ]
+   ]
+  },
+  {
+   "zh": "很多现代人睡得太少，原因是工作压力大，___晚上喜欢玩手机。睡眠长期不足不但会让人精神不好，还会引起许多___。专家建议，成年人每天应该睡七到八个小时，而且最好每天在同一个时间睡觉和起床，让身体慢慢___。睡觉前一小时，最好不要看手机，也不要喝咖啡或茶，可以听听轻音乐，让自己___下来。只要坚持一段时间，睡眠就会有明显的___。",
+   "en": "Many modern people sleep too little, because of work pressure or because they like playing on their phones at night. A long-term lack of sleep not only makes people feel low but also causes many illnesses. Experts suggest that adults should sleep seven to eight hours a day and, preferably, go to bed and get up at the same time every day, letting the body gradually adapt. In the hour before bed, it is best not to look at your phone or drink coffee or tea; you can listen to light music and let yourself relax. If you keep it up for a while, your sleep will improve clearly.",
+   "blanks": [
+    [
+     "或者",
+     "而且",
+     "虽然",
+     "所以"
+    ],
+    [
+     "疾病",
+     "表情",
+     "礼貌",
+     "关系"
+    ],
+    [
+     "适应",
+     "解决",
+     "联系",
+     "修理"
+    ],
+    [
+     "放松",
+     "紧张",
+     "生气",
+     "骄傲"
+    ],
+    [
+     "改善",
+     "失望",
+     "距离",
+     "规定"
+    ]
+   ]
+  },
+  {
+   "zh": "过年是中国最重要的传统节日。每到过年，___离家多远，人们总会想办法回到家人身边。除夕晚上，一家人坐在一起吃饭、聊天，非常热闹。大人们会给孩子们___，___他们在新的一年里平平安安。过年期间，人们还会互相___，说一些好听的话，比如“新年快乐”。这些习惯已经有很多年的历史，反映了中国人对___的重视。",
+   "en": "The Chinese New Year is the most important traditional festival in China. Every New Year, however far away from home they are, people always try to get back to their families. On New Year's Eve evening, the whole family sits together to eat and chat, and it is very lively. Adults give the children red envelopes, hoping that they will be safe and well in the new year. During the New Year period, people also greet each other and say some kind words, for example \"Happy New Year\". These customs have a history of many years and reflect how much Chinese people value family.",
+   "blanks": [
+    [
+     "不管",
+     "只有",
+     "虽然",
+     "因为"
+    ],
+    [
+     "红包",
+     "药",
+     "票",
+     "信"
+    ],
+    [
+     "希望",
+     "同意",
+     "后悔",
+     "害怕"
+    ],
+    [
+     "问好",
+     "抱怨",
+     "批评",
+     "吵架"
+    ],
+    [
+     "家庭",
+     "房子",
+     "电脑",
+     "交通"
+    ]
+   ]
+  },
+  {
+   "zh": "我刚上大学的时候，非常不习惯。班里的同学来自不同的地方，说话的习惯也不一样，我常常听不懂。有一次，我___不知道怎么借书，在图书馆里站了很久。一位同学看到了，主动___我，还告诉我怎么使用电脑查书。从那以后，我们变成了好朋友。现在回想起来，那段日子虽然有点___，但也让我学会了怎么和别人___。我相信，只要___主动开口，就一定能交到朋友。",
+   "en": "When I first started university, I was not used to it at all. The students in my class came from different places and had different ways of speaking, and I often could not understand them. Once, because I did not know how to borrow a book, I stood in the library for a long time. A classmate saw me and offered to help me, and even told me how to look up books on the computer. From then on, we became good friends. Looking back now, those days were a bit hard, but they also taught me how to communicate with others. I believe that as long as you are willing to speak first, you will certainly make friends.",
+   "blanks": [
+    [
+     "因为",
+     "为了",
+     "虽然",
+     "否则"
+    ],
+    [
+     "帮助",
+     "通知",
+     "打听",
+     "表扬"
+    ],
+    [
+     "辛苦",
+     "轻松",
+     "方便",
+     "舒服"
+    ],
+    [
+     "交流",
+     "结婚",
+     "比赛",
+     "拥抱"
+    ],
+    [
+     "愿意",
+     "必须",
+     "应该",
+     "可能"
+    ]
+   ]
+  },
+  {
+   "zh": "我从小就喜欢踢足球，___个子不高，在学校的球队里总是坐在场边。教练对我说：“个子矮不是问题，___是你有没有努力的决心。”从那以后，我每天比别人多练习一个小时，一年后，我___有机会参加比赛了。这件事让我明白，努力比天分更___。无论遇到什么困难，只要不放弃，就一定会有___。",
+   "en": "I have loved playing football since I was a child, but I am not tall, and in the school team I always sat on the sideline. The coach said to me, \"Being short is not the problem; the key is whether you have the determination to work hard.\" From then on, I practised an hour more than the others every day, and a year later I finally had the chance to play in matches. This taught me that hard work is more important than talent. Whatever difficulties you meet, as long as you do not give up, you will certainly gain something.",
+   "blanks": [
+    [
+     "可是",
+     "因此",
+     "而且",
+     "所以"
+    ],
+    [
+     "关键",
+     "办法",
+     "机会",
+     "规定"
+    ],
+    [
+     "终于",
+     "竟然",
+     "曾经",
+     "刚刚"
+    ],
+    [
+     "重要",
+     "危险",
+     "简单",
+     "安静"
+    ],
+    [
+     "收获",
+     "污染",
+     "命令",
+     "地震"
+    ]
+   ]
+  }
+ ],
+ "R2": [
+  {
+   "zh": "小明每天坐地铁上班，路上要花一个小时。他觉得路上的时间太长了，所以打算搬到公司附近住。",
+   "en": "Xiao Ming takes the underground to work every day, and the journey takes an hour. He thinks the time on the road is too long, so he plans to move to live near the company.",
+   "opts": [
+    "小明想搬到公司附近",
+    "小明开车上班",
+    "小明喜欢坐地铁",
+    "小明的公司离家很近"
+   ]
+  },
+  {
+   "zh": "这家商店的东西很便宜，但是质量不太好，很多顾客买了以后都要退货。",
+   "en": "The things in this shop are very cheap, but the quality is not very good, and many customers want to return their goods after buying them.",
+   "opts": [
+    "很多顾客买了东西后又退回来",
+    "商店的东西很贵",
+    "商店的东西质量很好",
+    "顾客都很满意"
+   ]
+  },
+  {
+   "zh": "我平时喜欢在网上看电影，不太去电影院，因为电影院的票比较贵，而且离我家很远。",
+   "en": "I usually like watching films online and do not go to the cinema much, because tickets at the cinema are rather expensive and it is far from my home.",
+   "opts": [
+    "他很少去电影院",
+    "他每天都去电影院",
+    "他家离电影院很近",
+    "电影院的票很便宜"
+   ]
+  },
+  {
+   "zh": "为了准备下个月的考试，小红每天晚上都在图书馆学习到十点才回家。",
+   "en": "To prepare for next month's exam, Xiao Hong studies in the library every evening until ten o'clock before going home.",
+   "opts": [
+    "小红每天晚上在图书馆学习",
+    "小红已经考完试了",
+    "小红在家里学习",
+    "小红学习到十二点"
+   ]
+  },
+  {
+   "zh": "这个城市的冬天很冷，但是家里有空调，所以人们在家里只穿很少的衣服。",
+   "en": "The winters in this city are very cold, but homes have air conditioning, so people wear very few clothes at home.",
+   "opts": [
+    "冬天家里不冷",
+    "冬天家里很冷",
+    "人们冬天不出门",
+    "这个城市没有冬天"
+   ]
+  },
+  {
+   "zh": "老张今年六十岁了，退休以后，他每个星期和朋友一起打两次球。",
+   "en": "Lao Zhang has turned sixty this year. Since retiring, he plays ball twice a week with friends.",
+   "opts": [
+    "老张已经退休了",
+    "老张每天都打球",
+    "老张还在工作",
+    "老张今年七十岁"
+   ]
+  },
+  {
+   "zh": "医生说，每天走路一个小时对身体好，但是走得太久也会让腿受伤。所以，每个人应该根据自己的身体情况来决定走多久。",
+   "en": "The doctor says that walking for an hour a day is good for the body, but walking for too long can also hurt the legs. So everyone should decide how long to walk according to their own physical condition.",
+   "opts": [
+    "走多久要看自己的身体",
+    "走得越久越好",
+    "每个人都应该走一个小时",
+    "走路对身体不好"
+   ]
+  },
+  {
+   "zh": "很多人觉得做饭很麻烦，所以经常点外卖。但是外卖常常太油、太咸，吃多了对健康不好。",
+   "en": "Many people think cooking is troublesome, so they often order takeaway. But takeaway is often too oily and too salty, and eating too much of it is not good for health.",
+   "opts": [
+    "外卖吃多了对健康不好",
+    "做饭比点外卖更麻烦",
+    "外卖又便宜又健康",
+    "很多人不喜欢外卖"
+   ]
+  },
+  {
+   "zh": "这本书一共有十个故事，每个故事都很短，最长的也只有五页，适合在地铁上读。",
+   "en": "This book has ten stories in all. Every story is very short, and even the longest has only five pages, so it is suitable for reading on the underground.",
+   "opts": [
+    "每个故事都很短",
+    "书里只有五个故事",
+    "这本书很长",
+    "不适合在地铁上读"
+   ]
+  },
+  {
+   "zh": "小时候，我家离学校很远，每天要走四十分钟的路。虽然很累，但是我在路上认识了很多朋友。",
+   "en": "When I was a child, my home was far from school, and I had to walk for forty minutes every day. Although it was tiring, I got to know many friends on the way.",
+   "opts": [
+    "作者在路上认识了很多朋友",
+    "作者家离学校很近",
+    "作者每天坐公共汽车",
+    "作者不喜欢走路"
+   ]
+  },
+  {
+   "zh": "这家公司推出了一个新的旅游计划，价格比以前便宜，但是要多走两天。",
+   "en": "This company has launched a new travel plan. The price is cheaper than before, but it takes two more days.",
+   "opts": [
+    "新计划的价格更便宜",
+    "新计划的时间更短",
+    "新计划比以前更贵",
+    "公司没有新计划"
+   ]
+  },
+  {
+   "zh": "因为天气不好，原来明天的运动会改到下个星期六了。请大家记住新的时间，别来错了。",
+   "en": "Because the weather is not good, the sports meeting originally planned for tomorrow has been moved to next Saturday. Please remember the new time, everyone, and do not come at the wrong time.",
+   "opts": [
+    "运动会改到下个星期六",
+    "运动会取消了",
+    "运动会改到后天",
+    "运动会明天举行"
+   ]
+  },
+  {
+   "zh": "我的邻居是一位老奶奶，一个人住。我常常帮她买菜，她有时候给我做好吃的饺子，我们就像一家人一样。",
+   "en": "My neighbour is an old lady who lives alone. I often help her buy vegetables, and she sometimes makes delicious dumplings for me. We are just like one family.",
+   "opts": [
+    "他们互相照顾，像一家人",
+    "奶奶和孩子住在一起",
+    "作者不常见到奶奶",
+    "奶奶不喜欢作者"
+   ]
+  },
+  {
+   "zh": "这个手机的电池用得很久，一次可以用两天。但是它的屏幕太小，看视频的时候不太舒服。",
+   "en": "This phone's battery lasts a long time, and it can be used for two days at a time. But its screen is too small, so it is not very comfortable for watching videos.",
+   "opts": [
+    "这个手机的屏幕比较小",
+    "这个手机的电池不好",
+    "这个手机的屏幕很大",
+    "这个手机很便宜"
+   ]
+  },
+  {
+   "zh": "上个星期我参加了一次活动，和几个同学一起去看望住在附近的老人。老人们都很高兴，还给我们讲了很多过去的故事。",
+   "en": "Last week I took part in an activity and went with several classmates to visit old people living nearby. The old people were all very happy and told us many stories of the past.",
+   "opts": [
+    "老人们给他们讲了过去的故事",
+    "他们去了医院",
+    "老人们不高兴",
+    "活动是下个星期"
+   ]
+  },
+  {
+   "zh": "他开了十年出租车，对这个城市的路特别熟悉。现在有了手机地图，他说，乘客有时候知道得比他更清楚。",
+   "en": "He has driven a taxi for ten years and knows this city's roads especially well. Now that there are phone maps, he says that passengers sometimes know things more clearly than he does.",
+   "opts": [
+    "乘客有时候比他更清楚路",
+    "他刚开始开出租车",
+    "他不喜欢手机地图",
+    "他对路不熟悉"
+   ]
+  },
+  {
+   "zh": "这种水果又甜又便宜，但是不容易保存，买回家后最好马上吃完。",
+   "en": "This kind of fruit is both sweet and cheap, but it is not easy to keep, so it is best to finish it right after taking it home.",
+   "opts": [
+    "买回家后最好马上吃完",
+    "这种水果很贵",
+    "这种水果可以放很久",
+    "这种水果不甜"
+   ]
+  },
+  {
+   "zh": "为了减少用纸，公司决定下个月开始所有的会议材料都用电子版，不再打印。",
+   "en": "To reduce paper use, the company has decided that from next month all meeting materials will be electronic versions and will no longer be printed.",
+   "opts": [
+    "会议材料用电子版",
+    "公司要多用纸",
+    "会议取消了",
+    "会议材料继续打印"
+   ]
+  },
+  {
+   "zh": "小张的爷爷喜欢养花，家里有很多花。每天早上，爷爷都会先给花浇水，再去公园散步。",
+   "en": "Xiao Zhang's grandfather likes growing flowers and has many flowers at home. Every morning, grandfather will first water the flowers and then go for a walk in the park.",
+   "opts": [
+    "爷爷每天早上先浇花",
+    "爷爷不喜欢花",
+    "爷爷每天晚上浇花",
+    "爷爷家里只有几朵花"
+   ]
+  },
+  {
+   "zh": "研究发现，经常和朋友聊天的人比不爱说话的人更快乐。所以，当你心情不好的时候，最好给朋友打个电话。",
+   "en": "Research has found that people who often chat with friends are happier than people who do not like talking. So, when you are in a bad mood, it is best to call a friend.",
+   "opts": [
+    "和朋友聊天能让人更快乐",
+    "不爱说话的人更快乐",
+    "心情不好时不要打电话",
+    "朋友越多越快乐"
+   ]
+  }
+ ],
+ "R3": [
+  {
+   "zh": "第一次参加面试的时候，小高非常紧张。负责面试的人突然问他：“你最大的缺点是什么？”他想了想，诚实地回答：“我有时候做事太慢，不过我会认真做好每一件事。”最后，公司给了他这份工作。经理说，诚实比完美的回答更重要。",
+   "en": "When Xiao Gao went to an interview for the first time, he was very nervous. The person doing the interview suddenly asked him, \"What is your biggest weakness?\" He thought for a moment and answered honestly, \"Sometimes I work too slowly, but I will do every task carefully.\" In the end, the company gave him the job. The manager said that honesty is more important than a perfect answer.",
+   "q": {
+    "zh": "公司为什么给了小高这份工作？",
+    "en": "Why did the company give Xiao Gao the job?"
+   },
+   "opts": [
+    "他的回答很诚实",
+    "他的回答很完美",
+    "他没有缺点",
+    "他做事很快"
+   ]
+  },
+  {
+   "zh": "为了减少汽车带来的污染，很多城市开始提供公共自行车。人们可以在一个地方借车，在另一个地方还车，非常方便。可是也有一些问题：有的车被人弄坏了，有的车站没有车，有的车站又没有地方还车。管理部门正在想办法解决这些问题。",
+   "en": "To reduce the pollution brought by cars, many cities have started to offer public bicycles. People can borrow a bike in one place and return it in another, which is very convenient. But there are also some problems: some bikes have been damaged, some stations have no bikes, and some stations have no place to return them. The management department is thinking of ways to solve these problems.",
+   "q": {
+    "zh": "关于公共自行车，可以知道什么？",
+    "en": "What can be learned about public bicycles?"
+   },
+   "opts": [
+    "有些车站没有车",
+    "不需要还车",
+    "只能在一个地方用",
+    "没有任何问题"
+   ]
+  },
+  {
+   "zh": "奶奶七十岁了，去年开始学用智能手机。刚开始她总是按错，孙子给她讲了很多次。现在，她已经会发短信，还能和在国外的孙子视频聊天。奶奶说，学会用手机以后，她觉得和孩子们的距离近多了。",
+   "en": "Grandmother is seventy. She started learning to use a smartphone last year. At first she always pressed the wrong buttons, and her grandson explained it to her many times. Now she can already send text messages and can even video-chat with her grandson abroad. Grandmother says that after learning to use the phone, she feels much closer to the children.",
+   "q": {
+    "zh": "奶奶为什么觉得和孩子们更近了？",
+    "en": "Why does grandmother now feel closer to the children?"
+   },
+   "opts": [
+    "能用手机和他们联系",
+    "搬到了他们家附近",
+    "孩子们常常回家",
+    "她会说外语"
+   ]
+  },
+  {
+   "zh": "很多人害怕失败，所以不敢尝试新的东西。其实，失败并不可怕，可怕的是因为一次失败就不再尝试。每一次失败都会告诉我们哪里做得不够好，只要认真想一想，就能离成功更近一步。",
+   "en": "Many people are afraid of failure, so they do not dare to try new things. In fact, failure is not terrible; what is terrible is to stop trying because of one failure. Each failure tells us where we are not doing well enough, and if we think about it carefully, we can get one step closer to success.",
+   "q": {
+    "zh": "这篇文章的主要意思是什么？",
+    "en": "What is the main idea of this article?"
+   },
+   "opts": [
+    "不要因为失败就放弃",
+    "失败很可怕",
+    "成功不需要努力",
+    "不要尝试新东西"
+   ]
+  },
+  {
+   "zh": "医生建议，有时间的话，最好多爬楼梯，少坐电梯。爬楼梯不但能锻炼身体，还能帮助减肥。不过，对于腿不好的人来说，一次爬太多层楼可能会受伤，所以应该慢慢来。",
+   "en": "Doctors suggest that if you have time, you had better climb stairs more and take the lift less. Climbing stairs can not only exercise the body but also help with losing weight. However, for people with bad legs, climbing too many floors at once may cause injury, so they should take it slowly.",
+   "q": {
+    "zh": "对腿不好的人来说，爬楼梯应该怎么样？",
+    "en": "How should people whose legs are not good climb stairs?"
+   },
+   "opts": [
+    "慢慢来",
+    "越多越好",
+    "不要锻炼",
+    "只坐电梯"
+   ]
+  },
+  {
+   "zh": "那天下雨，一位乘客在出租车上忘了一个包。司机发现以后，马上打开包，找到了乘客的电话，然后把包送了回去。乘客非常感动，要给司机一些钱，可是司机没有收，他说这是他应该做的。",
+   "en": "On that rainy day, a passenger left a bag in a taxi. After finding it, the driver immediately opened the bag, found the passenger's phone number, and then took the bag back to him. The passenger was very moved and wanted to give the driver some money, but the driver did not accept it. He said this was what he should do.",
+   "q": {
+    "zh": "司机为什么没有收钱？",
+    "en": "Why did the driver not accept the money?"
+   },
+   "opts": [
+    "他觉得这是应该做的",
+    "乘客没有钱",
+    "他不认识乘客",
+    "他没有找到电话"
+   ]
+  },
+  {
+   "zh": "自从我们小区开始要求大家把垃圾分开放以后，越来越多的人学会了把可以重新使用的东西单独放好。有人说这样很麻烦，也有人说，每个人多花一分钟，对环境就是一点帮助。现在，大部分邻居已经习惯了。",
+   "en": "Since our community began to require everyone to separate their rubbish, more and more people have learned to put things that can be reused in a separate place. Some say that this is troublesome; others say that if everyone spends one more minute, it helps the environment a little. Now most neighbours have got used to it.",
+   "q": {
+    "zh": "小区要求分开放垃圾以后，有什么变化？",
+    "en": "What changes have there been since the community began requiring rubbish to be separated?"
+   },
+   "opts": [
+    "越来越多的人学会了分开放",
+    "大家都反对",
+    "垃圾箱变少了",
+    "没有人关心"
+   ]
+  },
+  {
+   "zh": "很多人觉得每天一定要喝八杯水，其实这个数字并不适合每个人。身体大的人、运动多的人需要的水更多，而天气凉的时候需要的就少一些。最好的办法是口渴了就喝，不用每次都去数。",
+   "en": "Many people think that they must drink eight glasses of water a day, but in fact this number does not suit everyone. People with larger bodies and people who exercise a lot need more water, while less is needed when the weather is cool. The best way is to drink when you are thirsty, without counting every time.",
+   "q": {
+    "zh": "说话人认为怎样喝水最好？",
+    "en": "How does the speaker think it is best to drink water?"
+   },
+   "opts": [
+    "口渴了再喝",
+    "每天一定喝八杯",
+    "少喝水",
+    "只在运动后喝"
+   ]
+  },
+  {
+   "zh": "搬家的时候，我在一个旧箱子里找到了很多照片。有我小时候的，也有爸爸年轻时候拍的。看着这些照片，我想起了很多事情，一边看一边笑，结果一个下午都没有收拾。到了晚上，妈妈打来电话，问我收拾得怎么样了，我只好说还没开始呢。",
+   "en": "When moving, I found many photos in an old box. Some were from my childhood, and some were taken when my father was young. Looking at these photos, I remembered many things and laughed as I looked, with the result that I packed nothing all afternoon. In the evening, my mother called to ask how the packing was going, and I had to say that I had not started yet.",
+   "q": {
+    "zh": "作者一个下午为什么没有收拾？",
+    "en": "Why did the author not pack all afternoon?"
+   },
+   "opts": [
+    "一直在看照片",
+    "去看朋友了",
+    "身体不舒服",
+    "找不到箱子"
+   ]
+  },
+  {
+   "zh": "有人说，真正的朋友应该每天联系。我不这么想。我有一个大学同学，我们一年只见一两次，但是每次见面，都像昨天刚分开一样，什么都能聊。我觉得，好朋友不一定要常常见面，重要的是在需要的时候，对方一定在。",
+   "en": "Some people say that real friends should keep in touch every day. I do not think so. I have a university classmate; we see each other only once or twice a year, but every time we meet, it is as if we had just parted yesterday, and we can talk about anything. I think good friends do not have to meet often; what matters is that the other person is there when needed.",
+   "q": {
+    "zh": "作者认为好朋友最重要的是什么？",
+    "en": "What does the author think is most important about good friends?"
+   },
+   "opts": [
+    "需要的时候对方在身边",
+    "每天联系",
+    "住得很近",
+    "经常见面"
+   ]
+  },
+  {
+   "zh": "小张以前总是觉得时间不够用。后来他养成了一个习惯：每天早上花十分钟把那天要做的事写下来，按重要程度排好顺序。一个月以后，他发现自己不但完成的事情变多了，而且心情也轻松了不少。",
+   "en": "Xiao Zhang used to feel that he never had enough time. Later he developed a habit: every morning he spends ten minutes writing down what he has to do that day and arranging it in order of importance. A month later, he found that not only was he getting more done, but he also felt much more relaxed.",
+   "q": {
+    "zh": "小张的新习惯是什么？",
+    "en": "What is Xiao Zhang's new habit?"
+   },
+   "opts": [
+    "早上把要做的事写下来",
+    "晚上早点睡",
+    "每天运动十分钟",
+    "少看手机"
+   ]
+  },
+  {
+   "zh": "周末的时候，城市公园里人特别多。有的老人在树下聊天，有的年轻人在草地上拍照，还有许多父母带着孩子在河边玩。对忙了一个星期的人们来说，公园是一个放松的好地方。",
+   "en": "At weekends there are especially many people in the city park. Some old people chat under the trees, some young people take photos on the grass, and many parents bring their children to play by the river. For people who have been busy for a week, the park is a good place to relax.",
+   "q": {
+    "zh": "对人们来说，公园是什么？",
+    "en": "What is the park to people?"
+   },
+   "opts": [
+    "放松的好地方",
+    "工作的地方",
+    "安静的学校",
+    "买东西的地方"
+   ]
+  },
+  {
+   "zh": "大学毕业以后，他一个人骑自行车去了很多地方。路上，他遇到过大雨，也丢过钱包，但是每次都有陌生人帮助他。他说，这次旅行让他明白了，世界上的好人比想象的多得多。",
+   "en": "After graduating from university, he cycled alone to many places. On the way he met heavy rain and lost his wallet, but each time a stranger helped him. He said that this trip made him understand that there are many more good people in the world than imagined.",
+   "q": {
+    "zh": "这次旅行让他明白了什么？",
+    "en": "What did this trip make him understand?"
+   },
+   "opts": [
+    "好人比想象的多",
+    "一个人旅行很危险",
+    "钱最重要",
+    "下雨天不能骑车"
+   ]
+  },
+  {
+   "zh": "现在大家出门都用手机地图，很少再向别人问路了。地图当然很方便，可是有时候也会出错。有一次，我按地图走了二十分钟，结果走到了一个没有路的地方。后来问了一位老爷爷，才找到正确的方向。",
+   "en": "Nowadays everyone uses phone maps when going out and rarely asks others for directions. Maps are of course convenient, but sometimes they also make mistakes. Once, I followed the map and walked for twenty minutes, and ended up at a place with no road. Later I asked an old man and only then found the right direction.",
+   "q": {
+    "zh": "作者想说明什么？",
+    "en": "What does the author want to show?"
+   },
+   "opts": [
+    "地图有时候也会出错",
+    "地图比问路好",
+    "老人不用地图",
+    "不应该出门"
+   ]
+  },
+  {
+   "zh": "很多学生喜欢在咖啡店里学习，他们觉得那里比图书馆轻松。研究发现，适当的背景声音确实能帮助人集中注意力，但是声音太大反而会让人分心。所以，选择咖啡店的时候，最好找一家安静一点的。",
+   "en": "Many students like studying in cafés, because they feel it is more relaxed than in a library. Research has found that suitable background sound can indeed help people concentrate, but too much noise makes people lose focus. So when choosing a café, it is best to find a quieter one.",
+   "q": {
+    "zh": "选咖啡店学习的时候，应该怎么选？",
+    "en": "How should one choose a café for studying?"
+   },
+   "opts": [
+    "选安静一点的",
+    "选声音大的",
+    "选最便宜的",
+    "选离家最近的"
+   ]
+  },
+  {
+   "zh": "儿子今年七岁，上个周末，他第一次一个人去超市买牛奶。我们站在门口看着他，心里既担心又骄傲。十分钟以后，他拿着牛奶和找回的零钱，高兴地跑了回来。“妈妈，我是不是长大了？”他问。",
+   "en": "My son is seven this year. Last weekend, he went to the supermarket alone for the first time to buy milk. We stood at the door watching him, feeling both worried and proud. Ten minutes later, he came running back happily with the milk and the change. \"Mum, have I grown up?\" he asked.",
+   "q": {
+    "zh": "孩子回来以后怎么样？",
+    "en": "How is the child after coming back?"
+   },
+   "opts": [
+    "很高兴",
+    "很生气",
+    "很害怕",
+    "很累"
+   ]
+  },
+  {
+   "zh": "老师在我的作文本上写了几个字：“你的想法很特别，如果字再写得清楚一点就更好了。”我看了很高兴，因为老师先表扬了我，然后才提出建议。从那以后，我每次写字都很认真。",
+   "en": "The teacher wrote a few words in my composition book: \"Your ideas are very special, and it would be even better if your handwriting were a bit clearer.\" I was happy to read it, because the teacher praised me first and only then made a suggestion. Since then, I have been very careful every time I write.",
+   "q": {
+    "zh": "作者为什么看了很高兴？",
+    "en": "Why was the author happy to read it?"
+   },
+   "opts": [
+    "老师先表扬了他",
+    "老师给了他高分",
+    "老师说他的字最好",
+    "老师送了他礼物"
+   ]
+  },
+  {
+   "zh": "我们小区的停车位太少了，每天晚上，很多车只能停在路边。邻居们为这件事开了一次会，大家决定在旁边修一个停车场。虽然每家要多交一点钱，但是没有人反对。",
+   "en": "There are too few parking spaces in our community, and every evening many cars can only park at the roadside. The neighbours held a meeting about this, and everyone decided to build a car park next door. Although each household has to pay a little more, no one objects.",
+   "q": {
+    "zh": "大家决定怎么解决停车问题？",
+    "en": "What does everyone decide to do about the parking problem?"
+   },
+   "opts": [
+    "在旁边修停车场",
+    "不再买车",
+    "把车停在公司",
+    "搬到别的小区"
+   ]
+  },
+  {
+   "zh": "有的公司规定，中午必须休息半个小时。一开始，员工们觉得没有必要，可是试了一个月以后，大家发现下午的工作效率提高了，也不那么容易累了。现在，中午休息已经是这家公司的一个好习惯。",
+   "en": "Some companies require that employees rest for half an hour at noon. At first the employees felt it was unnecessary, but after trying it for a month, everyone found that their afternoon work efficiency had improved and they did not tire so easily. Now resting at noon is already a good habit at this company.",
+   "q": {
+    "zh": "试了一个月以后，有什么变化？",
+    "en": "What changes were there after a month of trying?"
+   },
+   "opts": [
+    "下午的工作效率提高了",
+    "员工们更累了",
+    "公司取消了午休",
+    "工作时间变长了"
+   ]
+  },
+  {
+   "zh": "我楼上的邻居喜欢晚上练习唱歌，常常到十一点还没停。我一开始很生气，想去找他。后来我写了一张小纸条放在他门口，说我晚上要早点睡，希望他能小声一点。第二天晚上，歌声真的小多了，我也不再生气了。",
+   "en": "The neighbour above me likes practising singing in the evening, and often has not stopped by eleven. At first I was very angry and wanted to go and find him. Later I wrote a small note and put it at his door, saying that I have to go to bed early at night and hoped he could be a bit quieter. The next evening, the singing really was much quieter, and I was no longer angry.",
+   "q": {
+    "zh": "作者是怎么解决问题的？",
+    "en": "How did the author solve the problem?"
+   },
+   "opts": [
+    "给邻居写了一张纸条",
+    "找了警察",
+    "搬了家",
+    "和邻居大声吵架"
+   ]
+  },
+  {
+   "zh": "我以前从来不做饭，总觉得妈妈做饭很简单。直到我一个人在外地工作，才发现做一顿饭有多不容易：要买菜、洗菜、切菜，还要考虑做什么才好吃。现在，每次打电话回家，我都会先说一句“妈妈，您辛苦了”。",
+   "en": "I never used to cook and always thought cooking was easy for Mum. Only when I worked alone in another city did I find out how hard it is to make a meal: you have to buy, wash and cut vegetables, and think about what to cook so that it tastes good. Now, every time I call home, I first say \"Mum, you have worked hard\".",
+   "q": {
+    "zh": "作者为什么对妈妈说“您辛苦了”？",
+    "en": "Why does the author say \"you have worked hard\" to Mum?"
+   },
+   "opts": [
+    "他明白了做饭不容易",
+    "妈妈生病了",
+    "他要回家了",
+    "他想学做菜"
+   ]
+  },
+  {
+   "zh": "很多人旅行的时候喜欢带很多东西，结果路上又累又麻烦。有经验的人会建议：只带最需要的东西，其他的到了那里再买。这样不但轻松，还能省下一些钱，因为当地的东西往往更便宜。",
+   "en": "Many people like to take a lot of things when travelling, with the result that the journey is tiring and troublesome. Experienced people suggest taking only the things you need most and buying the rest when you get there. In this way, not only is it easier, but you can also save some money, because local goods are often cheaper.",
+   "q": {
+    "zh": "有经验的人建议怎么做？",
+    "en": "What do experienced people suggest doing?"
+   },
+   "opts": [
+    "只带最需要的东西",
+    "带很多东西",
+    "什么都不带",
+    "带很多钱"
+   ]
+  },
+  {
+   "zh": "我以前喜欢买书，家里的书越来越多，没有地方放。后来我办了一张图书馆的借书证，看完就还，又方便又不占地方。不过，对于特别喜欢的书，我还是会买下来，因为我想一遍一遍地读。",
+   "en": "I used to like buying books, and the books at home kept increasing with no place to put them. Later I got a library card, so that I return books once I have read them, which is both convenient and takes up no space. However, for books I especially like, I will still buy them, because I want to read them again and again.",
+   "q": {
+    "zh": "作者什么时候还会买书？",
+    "en": "When will the author still buy books?"
+   },
+   "opts": [
+    "特别喜欢的书",
+    "图书馆没有的书",
+    "很便宜的书",
+    "朋友推荐的书"
+   ]
+  },
+  {
+   "zh": "有一天，同事小张没有和我打招呼，我以为他不高兴了，一整天都很不舒服。后来才知道，他那天没戴眼镜，根本没看见我。我忍不住笑了，也明白了一个道理：别人的行为，不一定和我们有关。",
+   "en": "One day, my colleague Xiao Zhang did not say hello to me. I thought he was unhappy and felt uncomfortable all day. Later I found out that he was not wearing his glasses that day and simply had not seen me. I could not help laughing, and I also understood a truth: other people's behaviour is not necessarily related to us.",
+   "q": {
+    "zh": "小张为什么没有和作者打招呼？",
+    "en": "Why did Xiao Zhang not say hello to the author?"
+   },
+   "opts": [
+    "他没看见作者",
+    "他不高兴",
+    "他很忙",
+    "他生病了"
+   ]
+  },
+  {
+   "zh": "刚开始锻炼的时候，不要给自己定太高的目标。比如，每天跑五公里对新手来说太难了，很容易放弃。不如先从每天走半个小时开始，等身体适应了，再慢慢增加。这样才能让运动变成一种长期的习惯。",
+   "en": "When you first start exercising, do not set yourself too high a goal. For example, running five kilometres a day is too hard for a beginner, and it is easy to give up. It is better to start by walking for half an hour a day and then, once the body has adapted, increase it gradually. Only in this way can exercise become a long-term habit.",
+   "q": {
+    "zh": "对新手来说，最好怎么开始？",
+    "en": "How is it best for a beginner to start?"
+   },
+   "opts": [
+    "先每天走半个小时",
+    "每天跑五公里",
+    "一次练很长时间",
+    "不要运动"
+   ]
+  },
+  {
+   "zh": "有人喜欢在网上买东西，有人更喜欢去商店。网上买东西方便，价格也往往低一些；去商店可以自己看一看、摸一摸，也可以马上拿走。我的做法是：衣服和鞋去商店试了再买，其他的东西在网上买。",
+   "en": "Some people like shopping online, and others prefer going to shops. Buying online is convenient and the price is often a little lower; in shops you can look at and touch things yourself and take them away at once. My approach is to try on clothes and shoes in shops before buying and to buy everything else online.",
+   "q": {
+    "zh": "作者是怎么买东西的？",
+    "en": "How does the author shop?"
+   },
+   "opts": [
+    "衣服和鞋去商店买，其他的在网上买",
+    "什么都去商店买",
+    "什么都在网上买",
+    "只买便宜的"
+   ]
+  },
+  {
+   "zh": "学外语最好的办法不是背很多单词，而是多开口说。很多人学了很多年，却不敢和外国人说话，因为怕说错。其实，说错并不丢脸，每一次错误都是一次学习的机会。只要敢说，进步就会很快。",
+   "en": "The best way to learn a foreign language is not to memorise a lot of words but to speak more. Many people have studied for many years but dare not talk with foreigners, because they are afraid of making mistakes. In fact, making mistakes is not embarrassing; every mistake is a chance to learn. As long as you dare to speak, you will make progress quickly.",
+   "q": {
+    "zh": "作者认为学外语最好的办法是什么？",
+    "en": "What does the author think is the best way to learn a foreign language?"
+   },
+   "opts": [
+    "多开口说",
+    "背很多单词",
+    "看很多书",
+    "只在家里学习"
+   ]
+  },
+  {
+   "zh": "我们学校最近开展了节约用水的活动。老师请同学们每天记录自己用了多少水，一个星期以后再比较。结果大家发现，刷牙的时候把水关上，一个人一天就能省下很多水。很多同学说，原来节约用水并不难。",
+   "en": "Our school recently launched a water-saving campaign. The teacher asked students to record how much water they used each day and to compare it a week later. As a result, everyone found that turning off the water while brushing teeth can save a lot of water per person per day. Many students said that saving water turns out not to be difficult.",
+   "q": {
+    "zh": "这次活动后，同学们发现了什么？",
+    "en": "What did the students find after this campaign?"
+   },
+   "opts": [
+    "节约用水并不难",
+    "用水越来越多",
+    "刷牙不需要水",
+    "老师不关心"
+   ]
+  },
+  {
+   "zh": "通知：因为要整理图书，学校图书馆下周一到周三暂停开放，周四恢复。需要借书的同学，请在本周五以前来借，也可以先在网上预约。如果需要还书，可以把书放在门口的还书处。",
+   "en": "Notice: Because books are being sorted out, the school library will be closed from Monday to Wednesday next week and will reopen on Thursday. Students who need to borrow books, please come before this Friday; you can also make a reservation online first. If you need to return books, you can put them at the return point at the door.",
+   "q": {
+    "zh": "图书馆什么时候重新开放？",
+    "en": "When will the library reopen?"
+   },
+   "opts": [
+    "下周四",
+    "下周一",
+    "本周五",
+    "下周三"
+   ]
+  },
+  {
+   "zh": "昨天的篮球比赛非常精彩。上半场我们队一直落后，可是下半场大家越打越好，最后一分钟，小高投进了一个三分球，我们以一分的优势赢了比赛。所有人都兴奋得跳了起来。",
+   "en": "Yesterday's basketball game was very exciting. In the first half our team was behind throughout, but in the second half everyone played better and better, and in the last minute Xiao Gao scored a three-pointer and we won the game by one point. Everyone jumped up with excitement.",
+   "q": {
+    "zh": "昨天比赛的结果是什么？",
+    "en": "What was the result of yesterday's game?"
+   },
+   "opts": [
+    "他们队赢了一分",
+    "他们队输了",
+    "平局",
+    "比赛取消了"
+   ]
+  },
+  {
+   "zh": "很多孩子不喜欢吃蔬菜。有的父母要求孩子必须吃，结果孩子越来越讨厌。有一位妈妈的做法不一样：她带孩子一起去菜市场买菜，让孩子自己选，再让孩子帮忙洗菜。慢慢地，孩子对蔬菜有了兴趣，也愿意吃了。",
+   "en": "Many children do not like eating vegetables. Some parents require their children to eat them, and the children come to dislike them more and more. One mother does it differently: she takes her child to the market to buy vegetables, lets the child choose, and then lets the child help wash them. Gradually the child became interested in vegetables and was willing to eat them.",
+   "q": {
+    "zh": "那位妈妈是怎么让孩子吃蔬菜的？",
+    "en": "How did that mother get her child to eat vegetables?"
+   },
+   "opts": [
+    "让孩子参与买菜和洗菜",
+    "要求孩子必须吃",
+    "不让孩子吃别的",
+    "给孩子零用钱"
+   ]
+  },
+  {
+   "zh": "一位老教授退休以后，每天早上都去大学校园里散步。年轻的学生们常常看到他一个人坐在树下看书，可是没有人知道他曾经是这所大学最有名的教授之一。有一天，一个学生向他请教问题，教授耐心地回答了，学生这才知道他的身份。",
+   "en": "After retiring, an old professor goes for a walk on the university campus every morning. The young students often see him sitting under a tree reading by himself, but no one knows that he was once one of the most famous professors at this university. One day a student asked him a question, the professor answered patiently, and only then did the student learn his identity.",
+   "q": {
+    "zh": "学生是怎么知道教授的身份的？",
+    "en": "How did the student find out the professor's identity?"
+   },
+   "opts": [
+    "向他请教问题以后",
+    "看了报纸",
+    "老师告诉了他",
+    "在书上看到的"
+   ]
+  }
+ ]
 }

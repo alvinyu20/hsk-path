@@ -108,7 +108,7 @@ QUESTION_WORDS = ['什么', '谁', '哪', '几', '多少', '怎么', '怎么样'
 LEXICAL_NEG = ['了不起', '不客气', '对不起', '没关系', '没事', '不好意思', '不见了', '不早了', '不同', '来不及', '不一样', '不错', '不久', '差不多', '不对', '特别', '别人', '别的', '不断', '不便', '不得不', '不如', '不满', '不过', '不管', '不论', '不光', '不仅', '无聊', '无论', '区别', '性别', '分别', '告别', '差别', '个别', '不利', '不幸', '不良', '不得了', '不小心', '不礼貌', '不少', '没电', '无数', '无限', '无奈', '无效', '无关', '无法', '不足', '不然', '不安', '不满意', '舍不得', '说不定', '要不']   # 别人 "other people" and 别的 "other" use 别 without a negative meaning
 PAST_EN = r"\b(ate|bought|saw|heard|went|was|were|did|drank|had|got|said|took|came|made|read|wrote|studied|worked|lived|asked|called|finished|\w+ed)\b"
 IRREGULAR_PAST = 'overcame|overtook|forgave|dreamt|ate|bought|saw|heard|went|drank|had|got|said|took|came|made|wrote|was|were|did|told|sent|gave|found|lost|left|met|paid|brought|taught|began|ran|sat|stood|forgot|knew|thought|felt|kept|won|fell|spoke|woke|rode|drove|broke|bit|read|blew|grew|drew|threw|wore|chose|swam|sang|slept|spent|sold|held|led|lay|fed|hid|shook|stole|flew|dug|rang|built|caught|cut|hurt|let|lit|meant|put|set|shut|sank|sat|sent|shot|slid|spun|stuck|swept|tore|understood|woke|lent|rose|beat|cast'
-PAST_ADJ = {'congested', 'stored', 'developed', 'coloured', 'colored', 'produced', 'repaired', 'allowed', 'compared', 'detailed', 'steamed', 'grilled', 'roasted', 'baked', 'complicated', 'irritated', 'fried', 'succeed', 'exceed', 'proceed', 'varied', 'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured', 'united', 'limited', 'advanced', 'unlimited', 'crowded', 'needed', 'wicked', 'naked', 'sacred', 'hundred', 'shared', 'fixed', 'expected', 'recycled', 'boxed', 'imported', 'boiled', 'conflicted', 'balanced', 'hearted', 'skilled', 'devoted', 'absorbed', 'slanted', 'printed', 'unexpected'}
+PAST_ADJ = {'congested', 'stored', 'developed', 'coloured', 'colored', 'produced', 'repaired', 'allowed', 'compared', 'detailed', 'steamed', 'grilled', 'roasted', 'baked', 'complicated', 'irritated', 'fried', 'succeed', 'exceed', 'proceed', 'varied', 'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured', 'united', 'limited', 'advanced', 'unlimited', 'crowded', 'needed', 'wicked', 'naked', 'sacred', 'hundred', 'shared', 'fixed', 'expected', 'recycled', 'boxed', 'imported', 'boiled', 'conflicted', 'balanced', 'hearted', 'skilled', 'devoted', 'absorbed', 'slanted', 'printed', 'unexpected', 'experienced'}
 
 
 def meaning_checks(zh, en):
@@ -463,6 +463,40 @@ def _pinyin_variant(chars, py, pick):
     return out
 
 
+def _greedy_pick(chars, py):
+    """For a long text: walk along the shown pinyin and, at a character that has reviewed readings, take the reading that matches what is shown (letters first, then tone)."""
+    s = re.sub(r"[\s'.,!?;:\"—/-]", '', py)
+    letters, tones = [], []
+    for ch in s.lower():
+        if ch in TONE_MARKS:
+            letters.append(TONE_MARKS[ch][0])
+            tones.append(TONE_MARKS[ch][1])
+        else:
+            letters.append(ch)
+            tones.append(0)
+    exp = lazy_pinyin(''.join(chars), style=Style.TONE3, v_to_u=False, neutral_tone_with_five=True)
+    pick, pos = {}, 0
+    for k, ch in enumerate(chars):
+        cands = [(None, exp[k])] + [(r, r) for r in REVIEWED.get(ch, [])]
+        hits = []
+        for r, full in cands:
+            syl = re.sub(r'\d', '', full).replace('ü', 'v')
+            tone = int((re.findall(r'\d', full) or ['0'])[0])
+            tone = 0 if tone == 5 else tone
+            if syl == 'er' and pos < len(letters) and letters[pos] == 'r' and (pos + 1 >= len(letters) or letters[pos + 1] != 'e'):
+                hits.append((r, 1, tone))
+            elif ''.join(letters[pos:pos + len(syl)]) == syl:
+                hits.append((r, len(syl), tone))
+        if not hits:
+            return pick            # the letters stop matching here: let the normal check report it
+        shown = next((tones[j] for j in range(pos, pos + hits[0][1]) if tones[j]), 0)
+        best = next((h for h in hits if h[2] == shown), hits[0])
+        if best[0]:
+            pick[k] = best[0]
+        pos += best[1]
+    return pick
+
+
 def pinyin_check(zh, py):
     if not py:
         return []
@@ -472,6 +506,12 @@ def pinyin_check(zh, py):
         return best
     # Characters with a reviewed reading (content/pinyin-reviewed.tsv) may be shown with either reading; take the reading that fits.
     spots = [k for k, c in enumerate(chars) if c in REVIEWED]
+    if len(spots) > 6:
+        # a long passage has too many reviewed characters (了 都 地 长 ...) to try every combination: read the shown pinyin from left to right instead
+        pick = _greedy_pick(chars, py)
+        if pick:
+            best = _pinyin_variant(chars, py, pick)
+        return best
     if spots and len(spots) <= 6:
         import itertools
         for choice in itertools.product(*[[None] + REVIEWED[chars[k]] for k in spots]):

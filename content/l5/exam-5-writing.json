@@ -1,4 +1,404 @@
 {
- "W1": [],
- "W2": []
+ "W1": [
+  {
+   "words": [
+    "他",
+    "把",
+    "所有的",
+    "作业",
+    "都",
+    "做完",
+    "了"
+   ],
+   "en": "He has finished all of the homework."
+  },
+  {
+   "words": [
+    "这家公司",
+    "的",
+    "产品",
+    "在",
+    "国外",
+    "很",
+    "受欢迎"
+   ],
+   "en": "This company's products are very popular abroad.",
+   "alts": [
+    [
+     "在",
+     "国外",
+     "这家公司",
+     "的",
+     "产品",
+     "很",
+     "受欢迎"
+    ]
+   ]
+  },
+  {
+   "words": [
+    "虽然",
+    "天气",
+    "很冷",
+    "但是",
+    "他",
+    "还是",
+    "坚持",
+    "锻炼"
+   ],
+   "en": "Although the weather is cold, he still keeps exercising.",
+   "alts": [
+    [
+     "天气",
+     "虽然",
+     "很冷",
+     "但是",
+     "他",
+     "还是",
+     "坚持",
+     "锻炼"
+    ]
+   ]
+  },
+  {
+   "words": [
+    "这件事",
+    "让",
+    "我",
+    "感到",
+    "非常",
+    "吃惊"
+   ],
+   "en": "This matter makes me feel very surprised."
+  },
+  {
+   "words": [
+    "我们",
+    "应该",
+    "珍惜",
+    "每一次",
+    "学习",
+    "的",
+    "机会"
+   ],
+   "en": "We should cherish every chance to learn."
+  },
+  {
+   "words": [
+    "他的",
+    "汉语",
+    "说得",
+    "比",
+    "我",
+    "流利"
+   ],
+   "en": "His Chinese is more fluent than mine."
+  },
+  {
+   "words": [
+    "经过",
+    "大家",
+    "的",
+    "努力",
+    "问题",
+    "终于",
+    "解决",
+    "了"
+   ],
+   "en": "Through everyone's efforts, the problem has finally been solved.",
+   "alts": [
+    [
+     "问题",
+     "经过",
+     "大家",
+     "的",
+     "努力",
+     "终于",
+     "解决",
+     "了"
+    ]
+   ]
+  },
+  {
+   "words": [
+    "这个",
+    "周末",
+    "我",
+    "打算",
+    "去",
+    "参加",
+    "朋友",
+    "的",
+    "婚礼"
+   ],
+   "en": "This weekend I plan to go to a friend's wedding.",
+   "alts": [
+    [
+     "我",
+     "这个",
+     "周末",
+     "打算",
+     "去",
+     "参加",
+     "朋友",
+     "的",
+     "婚礼"
+    ]
+   ]
+  },
+  {
+   "words": [
+    "请",
+    "你",
+    "帮",
+    "我",
+    "检查",
+    "一下",
+    "这份",
+    "材料"
+   ],
+   "en": "Please help me check these materials."
+  },
+  {
+   "words": [
+    "他",
+    "被",
+    "公司",
+    "派",
+    "到",
+    "国外",
+    "工作",
+    "了"
+   ],
+   "en": "He has been sent by the company to work abroad."
+  },
+  {
+   "words": [
+    "这座",
+    "城市",
+    "给",
+    "我",
+    "留下",
+    "了",
+    "深刻",
+    "的",
+    "印象"
+   ],
+   "en": "This city left a deep impression on me."
+  },
+  {
+   "words": [
+    "无论",
+    "遇到",
+    "什么",
+    "困难",
+    "我们",
+    "都",
+    "不",
+    "放弃"
+   ],
+   "en": "No matter what difficulties we meet, we do not give up.",
+   "alts": [
+    [
+     "我们",
+     "无论",
+     "遇到",
+     "什么",
+     "困难",
+     "都",
+     "不",
+     "放弃"
+    ]
+   ]
+  },
+  {
+   "words": [
+    "除了",
+    "苹果",
+    "他",
+    "还",
+    "喜欢",
+    "吃",
+    "香蕉"
+   ],
+   "en": "Besides apples, he also likes eating bananas.",
+   "alts": [
+    [
+     "他",
+     "除了",
+     "苹果",
+     "还",
+     "喜欢",
+     "吃",
+     "香蕉"
+    ]
+   ]
+  },
+  {
+   "words": [
+    "他们",
+    "正在",
+    "讨论",
+    "下个月",
+    "的",
+    "旅行",
+    "计划"
+   ],
+   "en": "They are discussing next month's travel plan.",
+   "alts": [
+    [
+     "下个月",
+     "的",
+     "旅行",
+     "计划",
+     "他们",
+     "正在",
+     "讨论"
+    ]
+   ]
+  },
+  {
+   "words": [
+    "这条",
+    "裤子",
+    "比",
+    "那条",
+    "长",
+    "一点"
+   ],
+   "en": "This pair of trousers is a little longer than that pair."
+  },
+  {
+   "words": [
+    "你",
+    "的",
+    "建议",
+    "对",
+    "我",
+    "很",
+    "有",
+    "帮助"
+   ],
+   "en": "Your advice is very helpful to me."
+  },
+  {
+   "words": [
+    "他",
+    "连",
+    "自己的",
+    "名字",
+    "都",
+    "写错",
+    "了"
+   ],
+   "en": "He even wrote his own name wrongly."
+  },
+  {
+   "words": [
+    "为了",
+    "健康",
+    "他",
+    "每天",
+    "早上",
+    "都",
+    "去",
+    "跑步"
+   ],
+   "en": "For the sake of his health, he goes running every morning.",
+   "alts": [
+    [
+     "他",
+     "为了",
+     "健康",
+     "每天",
+     "早上",
+     "都",
+     "去",
+     "跑步"
+    ]
+   ]
+  }
+ ],
+ "W2": [
+  {
+   "zh": "请你把窗户关___，外面风很大。",
+   "ans": "上",
+   "en": "Please close the window; it is very windy outside."
+  },
+  {
+   "zh": "妈妈每天都很辛___，既要工作又要照顾孩子。",
+   "ans": "苦",
+   "en": "Mum works hard every day, as she has to work and also look after the children."
+  },
+  {
+   "zh": "他不但会说汉语，而___还会写汉字。",
+   "ans": "且",
+   "en": "He can not only speak Chinese but also write Chinese characters."
+  },
+  {
+   "zh": "如果你有问题，可以随___来问我。",
+   "ans": "时",
+   "en": "If you have a question, you can come and ask me at any time."
+  },
+  {
+   "zh": "我想买一张去上海的火车___。",
+   "ans": "票",
+   "en": "I want to buy a train ticket to Shanghai."
+  },
+  {
+   "zh": "他每天坚___锻炼，所以身体很好。",
+   "ans": "持",
+   "en": "He keeps exercising every day, so his health is good."
+  },
+  {
+   "zh": "请大家保持安___，不要大声说话。",
+   "ans": "静",
+   "en": "Please keep quiet, everyone, and do not talk loudly."
+  },
+  {
+   "zh": "这件事对我们来说非常重___。",
+   "ans": "要",
+   "en": "This matter is very important to us."
+  },
+  {
+   "zh": "这个城市的交___很方便，到处都有地铁。",
+   "ans": "通",
+   "en": "The transport in this city is very convenient, with underground trains everywhere."
+  },
+  {
+   "zh": "他的考试成___很好，所以非常高兴。",
+   "ans": "绩",
+   "en": "His exam results are very good, so he is very happy."
+  },
+  {
+   "zh": "他特别喜欢旅行，去过很多国___。",
+   "ans": "家",
+   "en": "He loves travelling very much and has been to many countries."
+  },
+  {
+   "zh": "我已经习___了这里的生活。",
+   "ans": "惯",
+   "en": "I have already got used to life here."
+  },
+  {
+   "zh": "他的房间收拾得很干___。",
+   "ans": "净",
+   "en": "His room is tidied up very cleanly."
+  },
+  {
+   "zh": "老师让我们回答这个问___。",
+   "ans": "题",
+   "en": "The teacher asks us to answer this question."
+  },
+  {
+   "zh": "周末的时候，我常常去公园散___。",
+   "ans": "步",
+   "en": "At weekends, I often go for a walk in the park."
+  },
+  {
+   "zh": "他对工作非常认___。",
+   "ans": "真",
+   "en": "He is very serious about his work."
+  }
+ ]
 }
