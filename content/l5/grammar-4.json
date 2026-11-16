@@ -78,7 +78,7 @@
       {"t": "order", "zh": "这家饭店有吃有喝。", "en": "This restaurant has food and drink.", "explain": "有 + A + 有 + B."},
       {"t": "order", "zh": "他坐也不是，站也不是。", "en": "He does not know whether to sit or stand.", "explain": "X也不是，Y也不是."},
       {"t": "cloze", "zh": "他坐也不是，站也不是，不知道该怎么办。", "en": "He does not know whether to sit or stand, and does not know what to do.", "blank": "站", "explain": "X也不是，Y也不是 pairs two actions that both fail: 坐 and 站."},
-      {"t": "mc", "prompt": "Which sentence says: This restaurant has food and drink, and music too?", "options": ["这家饭店有吃有喝，还有音乐。", "这家饭店有吃喝有，还有音乐。"], "correct": 0, "zh": "这家饭店有吃有喝，还有音乐。", "en": "This restaurant has food and drink, and music too.", "explain": "有 comes before each part."},
+      {"t": "mc", "prompt": "Which sentence says: I am not going today: first, the weather is bad; second, I am a bit tired?", "options": ["今天我不去了，一来天气不好，二来我有点累。", "今天我不去了，一来二来天气不好，我有点累。"], "correct": 0, "zh": "今天我不去了，一来天气不好，二来我有点累。", "en": "I am not going today: first, the weather is bad; second, I am a bit tired.", "explain": "一来 and 二来 each start one reason."},
       {"t": "spot", "zh": "他们有说有笑地走进了教室。", "en": "They walked into the classroom talking and laughing.", "wrong": "他们有说有笑的地走进了教室。", "remove": "的", "explain": "The adverb ending is 地, with no 的 before it."}
     ]
   },

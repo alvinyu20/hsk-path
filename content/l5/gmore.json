@@ -1,0 +1,385 @@
+[
+ {
+  "p": "g5-1",
+  "t": "mc",
+  "prompt": "Which sentence says: Once you have decided, do not change it?",
+  "options": [
+   "一旦你决定了，就不要改变。",
+   "一旦你决定了，不要就改变。"
+  ],
+  "correct": 0,
+  "zh": "一旦你决定了，就不要改变。",
+  "en": "Once you have decided, do not change it.",
+  "explain": "就 comes before the result."
+ },
+ {
+  "p": "g5-1",
+  "t": "spot",
+  "zh": "一旦天黑，我们就回家。",
+  "en": "Once it gets dark, we will go home.",
+  "wrong": "如果一旦天黑，我们就回家。",
+  "remove": "如果",
+  "explain": "一旦 already means once or if; do not add 如果."
+ },
+ {
+  "p": "g5-2",
+  "t": "cloze",
+  "zh": "他很努力，从而取得了好成绩。",
+  "en": "He worked hard and so achieved good results.",
+  "blank": "从而",
+  "explain": "从而 + result."
+ },
+ {
+  "p": "g5-3",
+  "t": "mc",
+  "prompt": "Which sentence says: Tomorrow we will either take the train or take a plane?",
+  "options": [
+   "明天我们或是坐火车，或是坐飞机。",
+   "明天我们或是坐火车，还是坐飞机。"
+  ],
+  "correct": 0,
+  "zh": "明天我们或是坐火车，或是坐飞机。",
+  "en": "Tomorrow we will either take the train or take a plane.",
+  "explain": "或是 pairs with 或是."
+ },
+ {
+  "p": "g5-3",
+  "t": "order",
+  "zh": "明天他或是来，或是打电话。",
+  "en": "Tomorrow he will either come or call.",
+  "explain": "或是 + choice, 或是 + choice."
+ },
+ {
+  "p": "g5-4",
+  "t": "order",
+  "zh": "去也好，不去也好。",
+  "en": "Whether one goes or not, it is all the same.",
+  "explain": "X也好，Y也好."
+ },
+ {
+  "p": "g5-4",
+  "t": "mc",
+  "prompt": "Which sentence says: Whether it is rice or noodles, I like them both?",
+  "options": [
+   "吃米饭也好，吃面条也好，我都喜欢。",
+   "吃米饭也好，吃面条好，我都喜欢。"
+  ],
+  "correct": 0,
+  "zh": "吃米饭也好，吃面条也好，我都喜欢。",
+  "en": "Whether it is rice or noodles, I like them both.",
+  "explain": "Each part ends with 也好."
+ },
+ {
+  "p": "g5-4",
+  "t": "cloze",
+  "zh": "坐车也好，走路也好，我都行。",
+  "en": "Whether by bus or on foot, I am fine with either.",
+  "blank": "都",
+  "explain": "都 sums up both choices."
+ },
+ {
+  "p": "g5-5",
+  "t": "order",
+  "zh": "加上我，一共五个人。",
+  "en": "Counting me, there are five people in all.",
+  "explain": "加上 = adding."
+ },
+ {
+  "p": "g5-5",
+  "t": "spot",
+  "zh": "我们买了书、笔以及本子。",
+  "en": "We bought books, pens and notebooks.",
+  "wrong": "我们买了书、笔以及和本子。",
+  "remove": "和",
+  "explain": "以及 already joins the last item."
+ },
+ {
+  "p": "g5-7",
+  "t": "cloze",
+  "zh": "没有努力，就没有成功。",
+  "en": "Without effort, there is no success.",
+  "blank": "成功",
+  "explain": "没有 A，就没有 B."
+ },
+ {
+  "p": "g5-7",
+  "t": "mc",
+  "prompt": "Which sentence says: Without friends, there is no happiness?",
+  "options": [
+   "没有朋友，就没有快乐。",
+   "没有朋友，就有快乐。"
+  ],
+  "correct": 0,
+  "zh": "没有朋友，就没有快乐。",
+  "en": "Without friends, there is no happiness.",
+  "explain": "The second part is also 没有."
+ },
+ {
+  "p": "g5-7",
+  "t": "spot",
+  "zh": "没有空气，就没有生命。",
+  "en": "Without air, there is no life.",
+  "wrong": "没有空气，就不没有生命。",
+  "remove": "不",
+  "explain": "No 不 before 没有."
+ },
+ {
+  "p": "g5-8",
+  "t": "mc",
+  "prompt": "Which sentence says: He leaves early so as to catch the train?",
+  "options": [
+   "他早点出门，以便赶上火车。",
+   "他早点出门，便以赶上火车。"
+  ],
+  "correct": 0,
+  "zh": "他早点出门，以便赶上火车。",
+  "en": "He leaves early so as to catch the train.",
+  "explain": "以便 + the aim."
+ },
+ {
+  "p": "g5-9",
+  "t": "order",
+  "zh": "我们以学校为中心。",
+  "en": "We take the school as the centre.",
+  "explain": "以 + thing + 为 + role."
+ },
+ {
+  "p": "g5-9",
+  "t": "spot",
+  "zh": "他以考上大学为目标。",
+  "en": "He takes getting into university as his goal.",
+  "wrong": "他以考上大学为是目标。",
+  "remove": "是",
+  "explain": "以 … 为 … has no 是."
+ },
+ {
+  "p": "g5-10",
+  "t": "cloze",
+  "zh": "我给他钱，他反而生气了。",
+  "en": "I gave him money, but he got angry instead.",
+  "blank": "反而",
+  "explain": "反而 = the opposite happened."
+ },
+ {
+  "p": "g5-10",
+  "t": "mc",
+  "prompt": "Which sentence says: The weather did not get better; instead it got colder?",
+  "options": [
+   "天气不但没好，反而更冷了。",
+   "天气不但没好，更冷反而了。"
+  ],
+  "correct": 0,
+  "zh": "天气不但没好，反而更冷了。",
+  "en": "The weather did not get better; instead it got colder.",
+  "explain": "反而 comes before 更冷."
+ },
+ {
+  "p": "g5-11",
+  "t": "order",
+  "zh": "快走吧，不然会晚。",
+  "en": "Hurry up, otherwise it will be late.",
+  "explain": "不然 = otherwise."
+ },
+ {
+  "p": "g5-11",
+  "t": "spot",
+  "zh": "多穿一点衣服，不然容易感冒。",
+  "en": "Wear more clothes, otherwise it is easy to catch a cold.",
+  "wrong": "多穿一点衣服，不然要是容易感冒。",
+  "remove": "要是",
+  "explain": "不然 already means otherwise."
+ },
+ {
+  "p": "g5-12",
+  "t": "order",
+  "zh": "他毕竟还小。",
+  "en": "He is still young after all.",
+  "explain": "毕竟 goes before the verb or adjective."
+ },
+ {
+  "p": "g5-12",
+  "t": "mc",
+  "prompt": "Which sentence says: A child is a child after all?",
+  "options": [
+   "孩子毕竟是孩子。",
+   "孩子是毕竟孩子。"
+  ],
+  "correct": 0,
+  "zh": "孩子毕竟是孩子。",
+  "en": "A child is a child after all.",
+  "explain": "毕竟 comes before 是."
+ },
+ {
+  "p": "g5-12",
+  "t": "spot",
+  "zh": "他毕竟只是个学生。",
+  "en": "He is only a student after all.",
+  "wrong": "他毕竟都只是个学生。",
+  "remove": "都",
+  "explain": "No 都 after 毕竟."
+ },
+ {
+  "p": "g5-13",
+  "t": "cloze",
+  "zh": "我想他会来，他果然来了。",
+  "en": "I thought he would come, and sure enough he came.",
+  "blank": "果然",
+  "explain": "果然 = as expected."
+ },
+ {
+  "p": "g5-13",
+  "t": "mc",
+  "prompt": "Which sentence says: The weather forecast said rain, and sure enough it rained?",
+  "options": [
+   "天气预报说有雨，果然下雨了。",
+   "天气预报说有雨，下雨果然了。"
+  ],
+  "correct": 0,
+  "zh": "天气预报说有雨，果然下雨了。",
+  "en": "The weather forecast said rain, and sure enough it rained.",
+  "explain": "果然 comes before the verb."
+ },
+ {
+  "p": "g5-13",
+  "t": "spot",
+  "zh": "这家饭店果然很好吃。",
+  "en": "This restaurant is indeed very tasty.",
+  "wrong": "这家饭店果然是很好吃。",
+  "remove": "是",
+  "explain": "No 是 before the adjective."
+ },
+ {
+  "p": "g5-14",
+  "t": "cloze",
+  "zh": "他居然不认识我。",
+  "en": "Surprisingly, he does not know me.",
+  "blank": "居然",
+  "explain": "居然 = to one's surprise."
+ },
+ {
+  "p": "g5-15",
+  "t": "order",
+  "zh": "他似乎很累。",
+  "en": "He seems very tired.",
+  "explain": "似乎 = seems."
+ },
+ {
+  "p": "g5-15",
+  "t": "mc",
+  "prompt": "Which sentence says: It seems he did not hear?",
+  "options": [
+   "他仿佛没听见。",
+   "他没仿佛听见。"
+  ],
+  "correct": 0,
+  "zh": "他仿佛没听见。",
+  "en": "It seems he did not hear.",
+  "explain": "仿佛 comes before 没."
+ },
+ {
+  "p": "g5-15",
+  "t": "spot",
+  "zh": "他似乎不太高兴。",
+  "en": "He seems not very happy.",
+  "wrong": "他似乎好像不太高兴。",
+  "remove": "好像",
+  "explain": "Use one word for 'seems'."
+ },
+ {
+  "p": "g5-16",
+  "t": "cloze",
+  "zh": "从这里来看，山很高。",
+  "en": "Seen from here, the mountain is very high.",
+  "blank": "从",
+  "explain": "从 + place + 来看."
+ },
+ {
+  "p": "g5-16",
+  "t": "spot",
+  "zh": "从我的经验来看，这个办法不错。",
+  "en": "From my experience, this method is good.",
+  "wrong": "从我的经验来看了，这个办法不错。",
+  "remove": "了",
+  "explain": "No 了 after 来看."
+ },
+ {
+  "p": "g5-17",
+  "t": "cloze",
+  "zh": "拿他来说，他很爱运动。",
+  "en": "Take him, for example: he loves sport.",
+  "blank": "拿",
+  "explain": "拿 + example + 来说."
+ },
+ {
+  "p": "g5-17",
+  "t": "mc",
+  "prompt": "Which sentence says: Take study, for example: he is better than me?",
+  "options": [
+   "拿学习来说，他比我好。",
+   "拿学习说来，他比我好。"
+  ],
+  "correct": 0,
+  "zh": "拿学习来说，他比我好。",
+  "en": "Take study, for example: he is better than me.",
+  "explain": "来说"
+ },
+ {
+  "p": "g5-17",
+  "t": "spot",
+  "zh": "拿北边来说，那里很冷。",
+  "en": "Take the north, for example: it is cold there.",
+  "wrong": "拿北边来说，那里是很冷。",
+  "remove": "是",
+  "explain": "No 是 before the adjective."
+ },
+ {
+  "p": "g5-18",
+  "t": "order",
+  "zh": "在他看来，这很容易。",
+  "en": "In his view, this is easy.",
+  "explain": "在 + person + 看来."
+ },
+ {
+  "p": "g5-18",
+  "t": "mc",
+  "prompt": "Which sentence says: In my view, he is right?",
+  "options": [
+   "在我看来，他是对的。",
+   "在看来我，他是对的。"
+  ],
+  "correct": 0,
+  "zh": "在我看来，他是对的。",
+  "en": "In my view, he is right.",
+  "explain": "在 + person + 看来."
+ },
+ {
+  "p": "g5-19",
+  "t": "cloze",
+  "zh": "总之，这件事很重要。",
+  "en": "In short, this matter is important.",
+  "blank": "总之",
+  "explain": "总之 sums up."
+ },
+ {
+  "p": "g5-20",
+  "t": "mc",
+  "prompt": "Which sentence says: Up to now, we have bought three books?",
+  "options": [
+   "到现在为止，我们已经买了三本书。",
+   "从现在为止，我们已经买了三本书。"
+  ],
+  "correct": 0,
+  "zh": "到现在为止，我们已经买了三本书。",
+  "en": "Up to now, we have bought three books.",
+  "explain": "为止 goes with 到."
+ },
+ {
+  "p": "g5-20",
+  "t": "spot",
+  "zh": "到五点为止，我都在学校。",
+  "en": "Until five o'clock, I will be at school.",
+  "wrong": "到五点为止了，我都在学校。",
+  "remove": "了",
+  "explain": "No 了 after 为止."
+ }
+]
