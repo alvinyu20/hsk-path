@@ -1,6 +1,6 @@
 # A short meaning for a character that is not a word of its own (or not yet at this level), shown in "Built from" when you meet a word.
 # char<TAB>gloss. AI-written, not reviewed by a teacher. A character that is itself a word at the learner's level uses that word's meaning instead.
-# Checked by tools/test-char-glosses.js: every character in an HSK 1-4 word must have a meaning here or be a word at or before that level.
+# Checked by tools/test-char-glosses.js: every character in an HSK 1-5 word must have a meaning here or be a word at or before that level.
 儿	child; a spoken ending
 时	time
 钟	clock
@@ -639,3 +639,275 @@
 专	special; focused
 仔	careful
 尊	to respect
+慰	to comfort
+熬	to endure; to stay up
+傍	near; by
+裹	to wrap
+括	to include; to enclose
+贝	shell; treasured thing
+暴	violent; fierce
+怨	to blame; to resent
+彼	that; the other
+喻	to compare; to illustrate
+避	to avoid
+闭	to close; to shut
+幕	curtain; screen
+拨	to dial; to push aside
+玻	glass (in 玻璃)
+璃	glass (in 玻璃)
+补	to add; to make up
+充	to fill; full
+良	good
+裁	to cut; to decide
+采	to pick; to gather
+访	to visit; to call on
+叉	fork; to cross
+途	way; route
+祸	disaster
+厢	compartment; side room
+彻	thorough
+赞	to praise; to approve
+承	to bear; to take on
+立	to stand; to set up
+橙	orange (fruit or colour)
+尺	ruler; a unit of length
+翅	wing
+膀	wing; upper arm
+虫	insect; bug
+宠	to dote on; to pamper
+版	edition; version
+席	seat; place at a meeting
+夕	evening; eve
+统	system; to unify
+创	to create; to begin
+汇	to gather; to remit
+辞	to resign; to say goodbye
+刺	to prick; to stimulate
+促	to urge; to speed up
+销	to sell; to cancel
+款	sum of money
+措	to arrange; to handle
+施	to carry out; to apply
+扮	to dress up; to play a part
+胆	courage; nerve
+厦	large building
+型	type; model
+独	alone; single
+致	to bring about; to reach
+敌	enemy
+震	to shake
+器	device; tool
+豆	bean
+腐	rotten (in 豆腐)
+浆	thick liquid (in 豆浆)
+伍	troops; a group in rank
+维	to maintain; dimension
+布	cloth; to announce
+番	foreign; a turn (in 番茄)
+茄	tomato (in 番茄)
+繁	many; complex
+荣	glory; to flourish
+返	to return
+映	to reflect
+范	pattern; limit
+仿	to imitate; as if
+佛	Buddha; as if (in 仿佛)
+纷	many and mixed
+析	to analyse; to split
+享	to enjoy
+斗	to fight; to struggle
+疯	mad; crazy
+狂	wild; mad
+俗	custom; common
+妇	woman; wife
+制	to make; to control
+革	to change; leather
+善	good; kind
+档	grade; file
+曲	song; bent
+恭	respectful
+寓	to live in; residence
+贡	to offer; tribute
+献	to offer; to present
+沟	ditch; channel
+构	to build; structure
+掌	palm; to hold
+固	firm; solid
+冠	crown; first place
+军	army
+临	to face; to be near
+泛	wide; to float
+模	model; pattern
+柜	cabinet; cupboard
+敏	quick; sensitive
+猴	monkey
+蝴	butterfly (in 蝴蝶)
+蝶	butterfly
+胡	reckless; (in 胡同) lane
+缓	slow; to ease
+恢	to restore; to recover
+率	rate; ratio
+伴	companion
+烈	fierce; strong
+肌	muscle; flesh
+疾	illness; fast
+诊	to examine (a patient)
+载	to record; to load
+嘉	fine; good
+驾	to drive; to ride
+驶	to drive; to sail
+艰	hard; difficult
+肥	fat; fertile
+渐	gradually
+设	to set up; to design
+筑	to build; to construct
+述	to tell; to state
+触	to touch
+阶	step; stage
+谨	careful; cautious
+慎	careful
+神	god; spirit
+营	to run; to manage
+橘	tangerine
+巨	huge; giant
+控	to control
+昆	insect (in 昆虫)
+扩	to expand
+源	source
+劳	work; labour
+姥	mother's mother (in 姥姥)
+婆	old woman; grandma
+似	like; similar
+厘	hundredth (centi-)
+润	moist; profit
+益	benefit; profit
+恋	to love; to long for
+粮	grain
+灵	quick; clever
+域	region; area
+浏	to browse (in 浏览)
+览	to look at
+陆	land; continent
+逻	logic (in 逻辑)
+辑	logic (in 逻辑); to edit
+碌	busy (in 忙碌)
+矛	spear
+盾	shield
+玫	rose (in 玫瑰)
+瑰	rose (in 玫瑰)
+媒	go-between; medium
+魅	charm
+秘	secret
+描	to describe; to draw
+显	to show; clear
+糊	blurred; paste
+陌	strange; unfamiliar
+木	wood; tree
+欧	Europe (in 欧洲)
+培	to cultivate
+训	to train; to teach
+衡	to weigh; balance
+均	equal; even
+屏	screen
+迹	mark; trace
+余	left over; spare
+企	to hope for; to plan
+悄	quiet; silent
+勤	diligent
+绪	mood; thread
+趋	to tend towards
+势	power; situation
+乏	lacking; tired
+燃	to burn
+币	currency; money
+漠	desert; cold
+擅	to be good at
+舍	house; to give up
+置	to place; to set
+肖	to resemble
+眠	sleep
+践	to practise; to tread
+石	stone
+卷	roll; exam paper
+蔬	vegetable
+鼠	mouse; rat
+属	to belong to
+私	private; personal
+索	rope; to search
+宿	to stay overnight
+损	to damage; to lose
+缩	to shrink; to draw back
+殊	special; different
+征	sign; to seek
+倡	to advocate
+战	war; to fight
+兔	rabbit
+荐	to recommend
+拖	to drag; to pull
+形	shape; form
+络	net; network
+威	power; might
+胁	to threaten
+违	to go against
+唯	only; alone
+尾	tail; end
+伟	great; big
+未	not yet
+稳	steady; stable
+卧	to lie down
+奈	to endure (in 无奈)
+限	limit; to limit
+蹈	to tread (in 舞蹈)
+武	martial; military
+状	form; condition
+橡	rubber tree; oak
+协	to unite; to assist
+郎	young man
+欣	glad; joyful
+虚	empty; modest
+宣	to declare; to announce
+询	to ask; to inquire
+寻	to seek; to look for
+迅	fast; swift
+押	to pledge; to keep in custody
+鸭	duck
+齿	tooth
+延	to extend; to delay
+肃	solemn; stern
+依	to rely on; according to
+疗	to treat; to cure
+旦	dawn; day
+遗	to leave behind; to lose
+憾	regret
+义	meaning; justice
+素	plain; element
+拥	to hug; to have
+惠	favour; benefit
+悠	long (in time); leisurely
+局	office; bureau
+犹	still; as if
+豫	to hesitate (in 犹豫)
+幼	young; little
+娱	to amuse; joy
+玉	jade
+召	to summon; to call
+扣	to deduct; to fasten
+哲	wise
+珍	precious; rare
+政	politics; government
+府	government office
+执	to carry out; to hold
+智	wisdom; clever
+慧	bright; wise
+华	splendid; Chinese
+逐	one by one; to chase
+竹	bamboo
+饰	to decorate; ornament
+姿	posture
+咨	to consult
+综	to combine; to sum up
+阻	to block; to hinder
+织	to weave
+佳	good; fine
+敬	to respect
+遵	to follow; to obey
