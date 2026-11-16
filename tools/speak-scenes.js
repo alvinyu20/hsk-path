@@ -240,6 +240,74 @@ add('cheer', '#CDBB9B',
   G('translate(100 372)', RR(-42, -18, 84, 18, 3, '#C2362B', `stroke="${INK}" stroke-width="3"`) + RR(-36, -36, 72, 18, 3, '#3D6FA3', `stroke="${INK}" stroke-width="3"`) + RR(-46, -54, 92, 18, 3, '#E9B44C', `stroke="${INK}" stroke-width="3"`)) + cup(390, 372, 1.1) +
   G('translate(382 262)', P('M0 14C-34-12-24-40 0-24 24-40 34-12 0 14z', '#C2362B', `stroke="${INK}" stroke-width="3.5" stroke-linejoin="round"`)));
 
+const pagodaSvg = () => [0, 1, 2, 3, 4].map(i => { const w = 40 - i * 7, y = -i * 26; return R(-w + 6, y - 16, 2 * w - 12, 16, '#EBDCC0', `stroke="${INK}" stroke-width="2"`) + P(`M${-w - 10} ${y - 15}Q${-w} ${y - 18} ${-w + 6} ${y - 30}H${w - 6}Q${w} ${y - 18} ${w + 10} ${y - 15}z`, '#7A3B22', `stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"`); }).join('') + R(-2, -148, 4, 20, '#7A3B22');
+// ===== HSK 5 =====
+const cap = (x, y) => P(`M${x - 40} ${y - 44}Q${x} ${y - 90} ${x + 40} ${y - 44}L${x + 34} ${y - 30}H${x - 34}z`, '#fff', `stroke="${INK}" stroke-width="4" stroke-linejoin="round"`) + R(x - 5, y - 70, 10, 26, '#C2362B') + R(x - 13, y - 62, 26, 10, '#C2362B');
+const mask = (x, y) => L(`M${x - 40} ${y + 6}L${x - 26} ${y + 16}M${x + 40} ${y + 6}L${x + 26} ${y + 16}`, INK, 3) + RR(x - 28, y + 10, 56, 32, 10, '#CFE9F2', `stroke="${INK}" stroke-width="3.5"`) + L(`M${x - 18} ${y + 22}H${x + 18}M${x - 18} ${y + 30}H${x + 18}`, '#8FB8C8', 2.5);
+const hardhat = (x, y) => P(`M${x - 48} ${y - 36}Q${x - 44} ${y - 84} ${x} ${y - 84}Q${x + 44} ${y - 84} ${x + 48} ${y - 36}z`, '#F2B632', `stroke="${INK}" stroke-width="4" stroke-linejoin="round"`) + RR(x - 58, y - 40, 116, 12, 6, '#F2B632', `stroke="${INK}" stroke-width="4"`) + R(x - 5, y - 82, 10, 40, '#E39A18');
+const sunhat = (x, y) => E(x, y - 42, 84, 16, '#F2D07A', `stroke="${INK}" stroke-width="4"`) + P(`M${x - 44} ${y - 44}Q${x - 40} ${y - 88} ${x} ${y - 88}Q${x + 40} ${y - 88} ${x + 44} ${y - 44}z`, '#F2D07A', `stroke="${INK}" stroke-width="4" stroke-linejoin="round"`) + R(x - 44, y - 56, 88, 9, '#C2362B');
+const heart = (x, y, s = 1, c = '#C2362B') => G(`translate(${x} ${y}) scale(${s})`, P('M0 14C-34-12-24-40 0-24 24-40 34-12 0 14z', c, `stroke="${INK}" stroke-width="3.5" stroke-linejoin="round"`));
+const box = (x, y, w, h) => RR(x, y, w, h, 3, '#D9A464', `stroke="${INK}" stroke-width="3"`) + R(x + w / 2 - 7, y, 14, h, '#EBC48C') ;
+
+add('refund', '#9A7A5C',
+  R(0, 0, 480, 520, '#F3E6D2') + shelf(26, 160, 150) + shelf(300, 160, 150) + RR(36, 112, 48, 48, 3, '#D9A464', `stroke="${INK}" stroke-width="3"`) + RR(94, 124, 44, 36, 3, '#C98B4A', `stroke="${INK}" stroke-width="3"`) + RR(312, 114, 56, 46, 3, '#C98B4A', `stroke="${INK}" stroke-width="3"`) + RR(380, 128, 52, 32, 3, '#D9A464', `stroke="${INK}" stroke-width="3"`) +
+  G('translate(240 78)', RR(-72, -38, 144, 76, 12, '#C2362B', `stroke="${INK}" stroke-width="4"`) + L('M-26 8a26 26 0 1 1 10 22', '#fff', 8) + P('M-36 30l-4-24 22 10z', '#fff')) +
+  person(240, 196, '#C2362B', vest(240, 196, '#F8FAF7')) + counter(372, '#D8C3A0', '#9A7A5C') +
+  G('translate(110 372)', P('M-30 0h60l-6-46h-48z', '#8FA3B5', `stroke="${INK}" stroke-width="3.5" stroke-linejoin="round"`) + RR(-14, -58, 28, 12, 4, '#6F8793', `stroke="${INK}" stroke-width="3"`) + P('M30-34q24-6 22-26', 'none', `stroke="${INK}" stroke-width="5"`) + L('M-6-44l6 14-8 10 8 12', '#C2362B', 3.5)) +
+  G('translate(392 372)', P('M-26 0V-70h52V0l-8-7-8 7-9-7-9 7-9-7-9 7z', '#fff', `stroke="${INK}" stroke-width="3" stroke-linejoin="round"`) + L('M-15-54h30M-15-42h30M-15-30h18', '#6A8FB5', 3) + C(10, -20, 8, 'none', 'stroke="#C2362B" stroke-width="3"')));
+
+add('clinic', '#A9C9CF',
+  R(0, 0, 480, 520, '#DCEEF2') + RR(300, 46, 150, 76, 8, '#14212A', `stroke="#6F8793" stroke-width="5"`) + [0, 1, 2].map(i => RR(318 + i * 44, 62, 34, 44, 4, 'none', 'stroke="#7BE0A2" stroke-width="3.5"') + L(`M${326 + i * 44} 84h18`, '#7BE0A2', 3.5)).join('') +
+  G('translate(80 96)', RR(-40, -40, 80, 80, 12, '#fff', `stroke="${INK}" stroke-width="4"`) + R(-8, -28, 16, 56, '#2C8A72') + R(-28, -8, 56, 16, '#2C8A72')) + RR(30, 170, 130, 12, 5, '#8FA3B5', `stroke="${INK}" stroke-width="3"`) + L('M44 182v56M146 182v56', '#6F8793', 5) +
+  person(240, 192, '#2C8A72', '', { hat: cap(240, 192) + mask(240, 192) }) + counter(372, '#E8F0EA', '#A9C9CF') +
+  RR(110, 238, 260, 134, 8, '#BFE0F0', `stroke="#6F8793" stroke-width="4" opacity=".4"`) +
+  G('translate(100 372)', RR(-34, -52, 68, 52, 5, '#fff', `stroke="${INK}" stroke-width="3"`) + RR(-12, -58, 24, 10, 3, '#8FA3B5', `stroke="${INK}" stroke-width="2.5"`) + L('M-22-34h44M-22-22h30', '#6AAE9A', 3.5)) +
+  G('translate(392 372)', L('M-30-14l50-24', '#fff', 8) + L('M-30-14l50-24', INK, 2, 'opacity=".5"') + C(-32, -13, 9, '#C2362B', `stroke="${INK}" stroke-width="3"`)));
+
+add('bank', '#8E9AAA',
+  R(0, 0, 480, 520, '#E6ECF4') + G('translate(94 116)', C(0, 0, 70, '#8E9AAA', `stroke="${INK}" stroke-width="5"`) + C(0, 0, 50, '#B9C4D2', `stroke="${INK}" stroke-width="3"`) + C(0, 0, 14, '#E9B44C', `stroke="${INK}" stroke-width="3"`) + L('M0-48V-14M0 14V48M-48 0H-14M14 0H48M-34-34L-10-10M10 10L34 34M-34 34L-10 10M10-10L34-34', INK, 4)) +
+  RR(350, 54, 100, 160, 10, '#3A4A5E', `stroke="${INK}" stroke-width="4"`) + RR(364, 70, 72, 48, 5, '#9FD0E6', `stroke="${INK}" stroke-width="3"`) + RR(380, 132, 40, 8, 2, '#14212A') + G('translate(400 168)', [0, 1, 2].map(r => [0, 1, 2].map(c => RR(-24 + c * 18, r * 12, 12, 8, 2, '#C9D3DF')).join('')).join('')) +
+  person(240, 192, '#1F3E6B', coat(240, 192, '#2B3F5C') + P('M232 280h16l-4 48-4 10-4-10z', '#E9B44C', `stroke="${INK}" stroke-width="3" stroke-linejoin="round"`), { glasses: true }) + counter(372, '#E8F0EA', '#8E9AAA') +
+  G('translate(104 372)', RR(-34, -52, 68, 52, 5, '#1F3E6B', `stroke="${INK}" stroke-width="3"`) + C(0, -28, 13, 'none', 'stroke="#E9B44C" stroke-width="3"') + L('M-13-28h26M0-41V-15', '#E9B44C', 2)) +
+  G('translate(392 372)', [0, 1, 2].map(i => E(0, -6 - i * 9, 22, 7, '#E9B44C', `stroke="${INK}" stroke-width="2.5"`)).join('') + RR(-54, -22, 26, 18, 3, '#F8FAF7', `stroke="${INK}" stroke-width="2.5"`) + C(-41, -13, 4, '#6A8FB5')));
+
+add('meeting', '#6F7B83',
+  R(0, 0, 480, 520, '#E4EBF0') + window_(30, 50, 140, 160, '#A9D4EA') + bld(40, 130, 34, 80, '#8FA9BC') + bld(86, 100, 40, 110, '#7E98AE') + bld(134, 142, 28, 68, '#9DB3C4') + cloud(110, 84, .7) +
+  RR(262, 40, 190, 128, 8, '#fff', `stroke="#6F8793" stroke-width="6"`) + [[286, 130, 38], [326, 112, 56], [366, 96, 72], [406, 82, 86]].map(([x, y, h]) => RR(x, 156 - h, 28, h, 3, '#6A8FB5', `stroke="${INK}" stroke-width="2.5"`)).join('') + L('M282 140L342 112 384 100 440 70', '#C2362B', 5) + P('M440 70l-18 3 8 14z', '#C2362B') +
+  person(240, 200, '#F8FAF7', coat(240, 200, '#2B3F5C'), { glasses: true }) + counter(380, '#C9926B', '#7A5A44') +
+  G('translate(110 380)', RR(-48, -8, 96, 8, 3, '#6F8793', `stroke="${INK}" stroke-width="3"`) + P('M-40-8L-32-44H32L40-8z', '#8FA3B5', `stroke="${INK}" stroke-width="3" stroke-linejoin="round"`) + RR(-27, -39, 54, 28, 2, '#BFE0F0') + C(0, -25, 5, '#fff')) + cup(250, 380, 1) + cup(310, 380, 1) +
+  G('translate(398 380)', RR(-40, -40, 80, 40, 4, '#fff', `stroke="${INK}" stroke-width="3"`) + L('M-26-28h52M-26-18h36M-26-8h44', '#6A8FB5', 3)));
+
+add('repair', '#C9A47C',
+  R(0, 0, 480, 520, '#F3E6D2') + R(0, 0, 480, 262, '#DCEBEE') + [0, 1, 2, 3, 4, 5, 6, 7].map(i => L(`M${i * 60} 0V262`, '#fff', 2, 'opacity=".7"')).join('') + [1, 2, 3, 4].map(i => L(`M0 ${i * 52}H480`, '#fff', 2, 'opacity=".7"')).join('') +
+  RR(0, 70, 480, 18, 4, '#8FA3B5', `stroke="${INK}" stroke-width="3"`) + RR(60, 66, 26, 26, 3, '#6F8793', `stroke="${INK}" stroke-width="3"`) + P('M72 94q-10 20 0 30t0 18', 'none', `stroke="#4FA8E8" stroke-width="6" stroke-linecap="round"`) + [[72, 160], [66, 190], [78, 214]].map(([x, y]) => P(`M${x} ${y - 10}q8 10 0 18-8-8 0-18z`, '#4FA8E8', `stroke="${INK}" stroke-width="2"`)).join('') + E(72, 246, 30, 8, '#4FA8E8', 'opacity=".55"') +
+  G('translate(400 150)', RR(-60, -6, 120, 36, 8, '#fff', `stroke="${INK}" stroke-width="4"`) + R(-8, -50, 16, 44, '#8FA3B5', `stroke="${INK}" stroke-width="3"`) + P('M-8-50h36q10 0 10 12', 'none', `stroke="${INK}" stroke-width="6"`)) +
+  person(250, 200, '#3D6FA3', vest(250, 200, '#E9A24B'), { hat: hardhat(250, 200) }) + counter(380, '#D8C3A0', '#C9A47C') +
+  G('translate(110 380)', RR(-52, -34, 104, 34, 6, '#C2362B', `stroke="${INK}" stroke-width="4"`) + P('M-18-34v-12q0-6 6-6h24q6 0 6 6v12', 'none', `stroke="${INK}" stroke-width="5"`) + R(-52, -22, 104, 5, INK, 'opacity=".25"')) +
+  G('translate(392 380) rotate(-18)', L('M0 0V-62', '#8FA3B5', 12) + L('M0 0V-62', INK, 2, 'opacity=".4"') + P('M-18-62a18 18 0 1 1 36 0v-6a8 8 0 1 0-36 0z', '#8FA3B5', `stroke="${INK}" stroke-width="3"`)));
+
+add('guide', '#8FA37A',
+  R(0, 0, 480, 520, '#CFE8F2') + cloud(90, 70, 1.1) + cloud(380, 56, .9) + P('M0 250 90 150 150 200 240 110 330 210 400 140 480 220V300H0z', '#8DB8A0') + P('M240 110 270 150 250 170 226 140z', '#fff', 'opacity=".5"') +
+  G('translate(392 150)', pagodaSvg()) + tree(40, 220, 1.2, '#5FA06A') + tree(440, 240, 1.1, '#4D9A82') + bird(300, 60) +
+  person(236, 196, '#E9A24B', scarf(236, 196, '#F8FAF7'), { hat: sunhat(236, 196) }) +
+  G('translate(398 340)', L('M0 0V-230', '#6B4E3A', 7) + P('M0-230h74l-16 24 16 24H0z', '#C2362B', `stroke="${INK}" stroke-width="3"`)) +
+  R(0, 372, 480, 148, '#A8B79A') + R(0, 366, 480, 22, '#CDBB9B', `stroke="${INK}" stroke-width="3"`) + [20, 90, 160, 330, 400, 460].map(x => RR(x, 388, 14, 40, 3, '#B8A688', `stroke="${INK}" stroke-width="2.5"`)).join('') +
+  G('translate(100 372)', RR(-46, -64, 92, 64, 4, '#F8E4CB', `stroke="${INK}" stroke-width="4"`) + L('M-30-44q14-12 26 2t24-10M-30-22h56', '#6AAE9A', 3.5) + C(8, -32, 5, '#C2362B')));
+
+add('volunteer', '#CDBB9B',
+  R(0, 0, 480, 520, '#F6E8D0') + L('M0 36Q120 76 240 36T480 36', '#E9A24B', 5) + [[40, '#C2362B'], [110, '#1D6B58'], [180, '#E9A24B'], [250, '#6A8FB5'], [320, '#C2362B'], [390, '#1D6B58'], [450, '#E9A24B']].map(([x, c], i) => P(`M${x - 14} ${44 + (i % 2) * 8}h28l-14 26z`, c, `stroke="${INK}" stroke-width="2"`)).join('') +
+  RR(56, 80, 368, 52, 8, '#C2362B', `stroke="${INK}" stroke-width="5"`) + heart(240, 106, 1, '#fff') + G('translate(100 106)', heart(0, 0, .6, '#F9D78A')) + G('translate(380 106)', heart(0, 0, .6, '#F9D78A')) + G('translate(160 106)', heart(0, 0, .45, '#F9D78A')) + G('translate(320 106)', heart(0, 0, .45, '#F9D78A')) +
+  person(240, 196, '#6A8FB5', vest(240, 196, '#C2362B') + heart(240, 330, .7, '#fff')) + counter(372, '#D8C3A0', '#B79A78') +
+  G('translate(110 372)', RR(-50, -62, 100, 62, 4, '#D9A464', `stroke="${INK}" stroke-width="4"`) + RR(-26, -70, 52, 10, 3, '#B97D54', `stroke="${INK}" stroke-width="3"`) + heart(0, -30, .7)) +
+  G('translate(392 372)', RR(-36, -46, 72, 46, 4, '#fff', `stroke="${INK}" stroke-width="3"`) + RR(-14, -52, 28, 10, 3, '#8FA3B5', `stroke="${INK}" stroke-width="2.5"`) + L('M-24-30h48M-24-18h34', '#6A8FB5', 3) + L('M30-4L54-30', '#C2362B', 5)));
+
+add('contract', '#7A5A44',
+  R(0, 0, 480, 520, '#E9E1D3') + G('translate(80 100)', RR(-46, -48, 92, 96, 6, '#fff', `stroke="#6F8793" stroke-width="5"`) + P('M-30 6a30 30 0 0 1 60 0z', '#C2362B', `stroke="${INK}" stroke-width="3"`) + L('M0 6V34q0 8 8 8', INK, 4) + L('M-30 6q10-8 15 0t15 0 15 0', INK, 2)) +
+  G('translate(400 104)', C(0, 0, 44, '#fff', `stroke="${INK}" stroke-width="5"`) + L('M0 0V-26M0 0L24 12', INK, 5) + C(0, 0, 4, INK) + [0, 1, 2, 3].map(i => L(`M${(Math.sin(i * Math.PI / 2) * 36).toFixed(1)} ${(-Math.cos(i * Math.PI / 2) * 36).toFixed(1)}l0 0`, INK, 6)).join('')) +
+  person(240, 196, '#F8FAF7', coat(240, 196, '#2B3F5C') + P('M232 280h16l-4 48-4 10-4-10z', '#C2362B', `stroke="${INK}" stroke-width="3" stroke-linejoin="round"`), { glasses: true }) + counter(372, '#B97D54', '#7A5A44') +
+  G('translate(150 372)', P('M-60 0l8-70h104l8 70z', '#fff', `stroke="${INK}" stroke-width="3.5" stroke-linejoin="round"`) + L('M-40-52h80M-42-40h84M-44-28h60', '#8FA3B5', 3) + L('M8-14q10-14 18 0t14-4t12 4', '#3D6FA3', 3.5)) +
+  G('translate(300 372)', L('M0 0l-6-56', '#14212A', 8) + P('M-6-56l-4-8h6z', '#E9B44C')) + G('translate(380 372)', RR(-24, -14, 48, 14, 3, '#8E1F18', `stroke="${INK}" stroke-width="3"`) + RR(-10, -42, 20, 28, 4, '#C2362B', `stroke="${INK}" stroke-width="3"`) + RR(-14, -48, 28, 8, 3, '#8E1F18', `stroke="${INK}" stroke-width="3"`)));
+
 // ===== free chat =====
 add('free', '#8A5A3B',
   R(0, 0, 480, 520, '#F3DDC2') + window_(30, 56, 150, 160, '#9FD0E6') + frame(300, 54, 120, 90, '#B9D9CE') + lamp(446, 200) + plant(60, 300, 1.2) +

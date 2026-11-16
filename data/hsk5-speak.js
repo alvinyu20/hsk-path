@@ -90,7 +90,7 @@ window.HSK5_SPEAK = {
    ]
   },
   {
-   "id": "doctor",
+   "id": "clinic",
    "glyph": "诊",
    "title": "See a doctor",
    "sub": "Health, 5 turns",

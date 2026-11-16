@@ -1,4 +1,4 @@
-/* Draws the scenes of the themed Learn path (HSK 1 a day in a city, HSK 2 the rail line, HSK 3 a semester in Hangzhou, HSK 4 a year in 24 solar terms) as 600x240 SVG pictures
+/* Draws the scenes of the themed Learn path (HSK 1 a day in a city, HSK 2 the rail line, HSK 3 a semester in Hangzhou, HSK 4 a year in 24 solar terms, HSK 5 a climb up the five great mountains) as 600x240 SVG pictures
  * and writes them to data/path-scenes.js as data URIs (window.SHANLU_PATH_SCENES). No text is drawn inside the pictures (an <img> cannot load the site's fonts).
  *   node tools/path-scenes.js */
 const fs = require('fs');
@@ -228,6 +228,117 @@ ${cloud(120, 40, .8)}${cloud(300, 80, .7)}
   '<linearGradient id="hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#B9D9CE"/><stop offset=".25" stop-color="#9FCDB6"/><stop offset=".3" stop-color="#8BC6A5"/><stop offset=".5" stop-color="#7DBF9A"/><stop offset=".56" stop-color="#D2A06F"/><stop offset=".72" stop-color="#C99A74"/><stop offset=".76" stop-color="#D6E1EA"/><stop offset="1" stop-color="#D6E1EA"/></linearGradient>' +
   '<linearGradient id="gr" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7DB56C"/><stop offset=".25" stop-color="#7DB56C"/><stop offset=".3" stop-color="#5FA05A"/><stop offset=".5" stop-color="#5FA05A"/><stop offset=".56" stop-color="#D9A441"/><stop offset=".72" stop-color="#D9A441"/><stop offset=".76" stop-color="#F4F8FA"/><stop offset="1" stop-color="#F4F8FA"/></linearGradient>');
 
+// ---- HSK 5: a climb up the five great mountains ----
+const hall = (x, y, s = 1, wall = '#F2DFC0', roof = '#8E1F18', trim = '#C2362B') => `<g transform="translate(${x} ${y}) scale(${s})"><rect x="-26" y="-26" width="52" height="26" fill="${wall}"/><rect x="-26" y="-26" width="52" height="3" fill="${trim}"/><rect x="-5" y="-17" width="10" height="17" fill="#5C4333"/><rect x="-21" y="-20" width="8" height="9" fill="#A9CBE8" opacity=".85"/><rect x="13" y="-20" width="8" height="9" fill="#A9CBE8" opacity=".85"/><path d="M-42-22Q-30-25-23-37L-11-45H11L23-37Q30-25 42-22z" fill="${roof}"/><path d="M-11-45 0-52 11-45z" fill="${roof}"/><path d="M-42-22Q-30-25-23-37" stroke="#14212A" stroke-width="1.2" fill="none" opacity=".35"/></g>`;
+const pagoda = (x, y, s = 1, wall = '#E8D8BC', roof = '#7A6A5A', tiers = 5) => { let t = ''; for (let i = 0; i < tiers; i++) { const w = 26 - i * 4, yy = -i * 15; t += `<rect x="${-w + 4}" y="${yy - 10}" width="${2 * w - 8}" height="10" fill="${wall}"/><path d="M${-w - 6} ${yy - 9}Q${-w} ${yy - 11} ${-w + 5} ${yy - 19}H${w - 5}Q${w} ${yy - 11} ${w + 6} ${yy - 9}z" fill="${roof}"/>`; } return `<g transform="translate(${x} ${y}) scale(${s})">${t}<rect x="-1.5" y="${-tiers * 15 - 18}" width="3" height="${12}" fill="${roof}"/></g>`; };
+const pailou = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})"><rect x="-34" y="-34" width="5" height="34" fill="#A9231B"/><rect x="-2.5" y="-42" width="5" height="42" fill="#A9231B"/><rect x="29" y="-34" width="5" height="34" fill="#A9231B"/><rect x="-38" y="-30" width="76" height="5" fill="#C2362B"/><rect x="-10" y="-38" width="20" height="4" fill="#E9B44C"/><path d="M-44-34Q-36-36-32-42H-24Q-20-36-14-34z" fill="#3E5A4B"/><path d="M-16-42Q-8-45-3-52H3Q8-45 16-42z" fill="#3E5A4B"/><path d="M14-34Q20-36 24-42H32Q36-36 44-34z" fill="#3E5A4B"/></g>`;
+const flagpole = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0V-34" stroke="#4A3A2E" stroke-width="2.4"/><path d="M0-34h18l-5 5 5 5H0z" fill="#C2362B"/></g>`;
+const pine2 = (x, y, s = 1, c = '#2C735F') => `<g transform="translate(${x} ${y}) scale(${s})"><rect x="-1.5" y="-4" width="3" height="10" fill="#6B4E3A"/><path d="M0-34-9-14h18z" fill="${c}"/><path d="M0-24-12-4h24z" fill="${c}"/><path d="M0-14-15 4h30z" fill="${c}"/></g>`;
+const mist = (y, o = .55, c = '#fff') => `<path d="M0 ${y}Q80 ${y - 14} 170 ${y}T340 ${y}T510 ${y - 4}T600 ${y}V${y + 22}H0z" fill="${c}" opacity="${o}"/>`;
+const stairs = (pts, c = '#F8EBD0', w = 3.5) => `<path d="M${pts.map(p => p.join(' ')).join(' L')}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="${w * 1.2} ${w * .9}"/>`;
+
+// Mount Tai: sunrise over a sea of cloud, a stair climbing to a flag
+S['peaks-tai'] = svg(`
+<rect width="${W}" height="${H}" fill="url(#sk)"/>
+<circle cx="470" cy="150" r="44" fill="#F7C948" opacity=".35"/><circle cx="470" cy="150" r="30" fill="#F7B038"/>
+<path d="M60 240 150 130 188 150 238 84 270 100 312 56 350 96 392 130 440 240z" fill="#7C8F6E"/>
+<path d="M312 56 350 96 392 130 440 240H318z" fill="#667859"/>
+<path d="M238 84 270 100 312 56 300 150 262 200z" fill="#93A582" opacity=".7"/>
+${stairs([[196, 236], [236, 222], [200, 204], [248, 188], [214, 170], [262, 154], [240, 136], [284, 122], [270, 104], [306, 82], [312, 64]])}
+${flagpole(312, 58, .8)}
+${pine2(176, 176, 1, '#2C5A42')}${pine2(380, 168, .9, '#3C6A4E')}${pine2(410, 190, 1.1, '#2C5A42')}
+${pailou(140, 174, .8)}
+<g fill="#fff"><ellipse cx="60" cy="214" rx="80" ry="16" opacity=".95"/><ellipse cx="200" cy="228" rx="110" ry="18"/><ellipse cx="350" cy="220" rx="100" ry="16" opacity=".95"/><ellipse cx="500" cy="226" rx="110" ry="18"/><ellipse cx="560" cy="204" rx="70" ry="13" opacity=".9"/><ellipse cx="270" cy="206" rx="46" ry="9" opacity=".85"/></g>
+${cloud(90, 48, 1, '#fff', .8)}${cloud(220, 30, .7, '#fff', .7)}${cloud(540, 52, .9, '#FFF6E6', .85)}
+<g fill="#4A5C65"><path d="M430 60q8-10 16 0 8-10 16 0" stroke="#4A5C65" stroke-width="2.4" fill="none"/></g>`, grad('sk', '#F3A66C', '#FCEBD3'));
+
+// Mount Hua: sheer granite, a chain, red ribbons, a thin stair
+S['peaks-hua'] = svg(`
+<rect width="${W}" height="${H}" fill="url(#sk)"/>
+<path d="M0 240V190L40 160 70 176 110 140 150 170 180 150 210 240z" fill="#B8C2C8" opacity=".6"/>
+<path d="M360 240 380 150 410 120 440 80 470 110 500 90 530 130 560 110 600 150V240z" fill="#B4BEC6" opacity=".7"/>
+<path d="M210 240 232 128 262 112 280 40 304 20 330 54 346 40 372 100 384 240z" fill="#C9D0D5"/>
+<path d="M304 20 330 54 346 40 372 100 384 240H318l4-120z" fill="#8D98A3"/>
+<path d="M280 40 304 20 318 120 296 240H210l22-112 30-16z" fill="#DCE1E4"/>
+<g stroke="#7B8691" stroke-width="2" fill="none" opacity=".55"><path d="M262 112 270 190"/><path d="M330 54 336 150"/><path d="M304 20 308 90"/><path d="M350 90 356 200"/></g>
+${stairs([[300, 236], [286, 214], [304, 196], [290, 176], [310, 158], [298, 138], [314, 120], [304, 100], [318, 80], [312, 60]], '#fff', 3)}
+<path d="M326 232 312 170 320 120 306 70" fill="none" stroke="#4A4A4A" stroke-width="1.8" stroke-dasharray="1 3"/>
+<g fill="#C2362B"><rect x="316" y="196" width="3" height="9"/><rect x="310" y="158" width="3" height="9"/><rect x="316" y="118" width="3" height="9"/><rect x="309" y="82" width="3" height="9"/><rect x="321" y="212" width="3" height="9"/></g>
+${pine2(234, 134, .8, '#2F6246')}${pine2(366, 120, .8, '#2F6246')}${pine2(256, 188, .9, '#3C7A58')}${pine2(352, 188, .9, '#3C7A58')}${pine2(200, 236, 1.1, '#2F6246')}${pine2(412, 236, 1.1, '#2F6246')}
+${mist(206, .7)}${mist(226, .85)}
+${cloud(80, 52, 1.1, '#fff', .9)}${cloud(500, 40, 1, '#fff', .9)}${cloud(420, 90, .7, '#fff', .7)}
+<path d="M60 90q8-10 16 0 8-10 16 0M540 130q6-8 12 0 6-8 12 0" stroke="#4A5C65" stroke-width="2.4" fill="none"/>`, grad('sk', '#AFC4D4', '#EAF0EE'));
+
+// Mount Heng (south): green hills, a red temple, mist
+S['peaks-hengs'] = svg(`
+<rect width="${W}" height="${H}" fill="url(#sk)"/><circle cx="90" cy="54" r="24" fill="#FBE9A0"/>
+<path d="M0 150Q60 80 140 110T260 90T390 60T520 100T600 84V240H0z" fill="#B7DCB9"/>
+<path d="M0 180Q80 120 170 150T330 120T480 140T600 120V240H0z" fill="#8DC79A"/>
+${mist(150, .6)}
+<path d="M0 214Q100 168 210 196T400 178T600 190V240H0z" fill="#5EA67C"/>
+${hall(388, 138, 1.05)}
+<path d="M338 140q28 4 52 0t52 0" stroke="#D9C9A8" stroke-width="5" fill="none" opacity=".0"/>
+<rect x="352" y="138" width="72" height="5" fill="#8A6A4F"/>
+${stairs([[300, 236], [330, 214], [304, 200], [350, 186], [330, 170], [372, 160], [388, 142]], '#F4EAD0', 3)}
+<g>${[[60, 190, 1.2], [110, 176, 1], [150, 200, 1.3], [470, 168, 1], [520, 190, 1.4], [570, 172, 1.1], [236, 176, .9]].map(([x, y, s]) => `<g transform="translate(${x} ${y}) scale(${s})"><rect x="-2" y="2" width="4" height="14" fill="#7A5A44"/><circle cx="0" cy="-6" r="14" fill="#2F7F5E"/><circle cx="-5" cy="-10" r="6" fill="#4F9E7C" opacity=".8"/></g>`).join('')}</g>
+${mist(222, .8)}
+${cloud(250, 40, 1, '#fff', .85)}${cloud(500, 48, .8, '#fff', .8)}
+<path d="M200 70q8-10 16 0 8-10 16 0" stroke="#4A5C65" stroke-width="2.4" fill="none"/>`, grad('sk', '#DDEFC8', '#F6FAEA'));
+
+// Mount Heng (north): a cliff with a temple held up by wooden posts
+S['peaks-hengn'] = svg(`
+<rect width="${W}" height="${H}" fill="url(#sk)"/>
+<path d="M0 240V170L50 140 100 160 150 120 200 150 240 240z" fill="#C7C0DD" opacity=".7"/>
+<path d="M250 240 266 40 300 22 480 30 520 60 540 240z" fill="#7F77A3"/>
+<path d="M266 40 300 22 480 30 520 60 540 240H470L440 120 300 90 290 240H250z" fill="#6A6290" opacity=".75"/>
+<path d="M300 22 480 30 520 60 500 70 440 56 300 52z" fill="#A79FC8" opacity=".6"/>
+<g stroke="#5A5282" stroke-width="2" opacity=".5" fill="none"><path d="M330 60 340 200"/><path d="M420 50 430 180"/><path d="M360 70 366 140"/></g>
+<rect x="316" y="132" width="132" height="6" fill="#5C4333"/>
+<g fill="#6B4E3A"><rect x="330" y="138" width="4" height="48"/><rect x="368" y="138" width="4" height="62"/><rect x="408" y="138" width="4" height="54"/><rect x="440" y="138" width="4" height="40"/></g>
+<path d="M336 186 368 170M372 200 408 176" stroke="#6B4E3A" stroke-width="3"/>
+${hall(350, 132, .8, '#F0D9B2', '#4A5A63', '#C2362B')}${hall(418, 132, .9, '#F0D9B2', '#4A5A63', '#C2362B')}
+<rect x="372" y="106" width="34" height="26" fill="#EAD2A8"/><path d="M366 108Q378 106 382 96H398Q402 106 412 108z" fill="#4A5A63"/><path d="M386 96 392 88 398 96z" fill="#4A5A63"/>
+<path d="M344 134 370 122M404 130 412 110" stroke="#C2362B" stroke-width="2"/>
+${pine2(260, 232, 1.2, '#2F5A55')}${pine2(300, 236, 1, '#3C706A')}${pine2(500, 236, 1.2, '#2F5A55')}${pine2(560, 236, 1, '#3C706A')}${pine2(80, 200, 1, '#3C706A')}
+${mist(200, .75)}${mist(224, .9)}
+${cloud(110, 50, 1, '#fff', .85)}${cloud(560, 40, .8, '#fff', .8)}${cloud(230, 90, .7, '#fff', .7)}`, grad('sk', '#C9C3E3', '#F3F0F8'));
+
+// Mount Song: a forest of little pagodas, a temple, golden hills
+S['peaks-song'] = svg(`
+<rect width="${W}" height="${H}" fill="url(#sk)"/><circle cx="520" cy="56" r="26" fill="#FBE6A4"/>
+<path d="M0 150 70 100 120 124 190 70 250 110 330 84 410 120 480 96 600 130V240H0z" fill="#D8B77A"/>
+<path d="M190 70 250 110 230 130 200 100z" fill="#E8CD96" opacity=".7"/>
+<path d="M0 190Q100 140 200 170T400 150T600 170V240H0z" fill="#BBA060"/>
+${pagoda(300, 140, 1.2, '#EBDCC0', '#6F6252', 7)}
+${hall(460, 160, 1.1, '#F2DFC0', '#7A3B22', '#B8402A')}
+${hall(120, 168, .9, '#F2DFC0', '#7A3B22', '#B8402A')}
+<path d="M0 204Q150 190 300 204T600 200V240H0z" fill="#A58A4C"/>
+${[[40, 214, .8], [78, 220, .95], [118, 214, .7], [160, 224, 1], [208, 216, .8], [250, 228, 1.05], [330, 226, .9], [372, 216, .75], [414, 226, 1], [510, 222, .8], [550, 216, .65], [584, 228, 1]].map(([x, y, s], i) => pagoda(x, y, s * .55, i % 2 ? '#D9CFBC' : '#C9BFAA', '#5E564C', 3 + (i % 3))).join('')}
+${pine2(20, 196, 1.2, '#4C7A4A')}${pine2(560, 190, 1.3, '#4C7A4A')}${pine2(400, 176, .9, '#4C7A4A')}${pine2(200, 188, .9, '#4C7A4A')}
+${mist(176, .45, '#FFF6DA')}
+${cloud(110, 44, 1, '#fff', .85)}${cloud(380, 36, .8, '#fff', .8)}
+<path d="M240 52q8-10 16 0 8-10 16 0" stroke="#6F5E44" stroke-width="2.4" fill="none"/>`, grad('sk', '#F6DFAE', '#FBF3DF'));
+
+// The five great mountains, dawn light, the centre one highest
+S['peaks-hero'] = svg(`
+<rect width="${W}" height="${H}" fill="url(#sk)"/>
+<circle cx="526" cy="136" r="52" fill="#F7C948" opacity=".35"/><circle cx="526" cy="136" r="34" fill="#F7B038"/>
+<path d="M0 240V138L36 102 60 118 92 66 112 84 140 90 170 240z" fill="#B3BDC6"/>
+<path d="M92 66 112 84 140 90 170 240H120z" fill="#8F9AA6"/>
+<path d="M120 240 150 140 200 100 250 128 290 240z" fill="#A79FC8"/>
+<path d="M200 100 250 128 290 240H220z" fill="#8077A6"/>
+<path d="M210 240 270 120 300 56 334 36 370 80 400 130 450 240z" fill="#E4C98C"/>
+<path d="M334 36 370 80 400 130 450 240H320z" fill="#C7A55E"/>
+<path d="M360 240 410 150 450 128 490 156 540 240z" fill="#8DC79A"/>
+<path d="M450 128 490 156 540 240H460z" fill="#5EA67C"/>
+<path d="M440 240 480 160 520 120 570 150 600 140V240z" fill="#8A7B64"/>
+<path d="M520 120 570 150 600 140V240H540z" fill="#6E6150"/>
+${flagpole(334, 38, .7)}
+${mist(176, .75)}${mist(204, .9)}
+<path d="M0 226Q150 206 300 224T600 220V240H0z" fill="#fff" opacity=".95"/>
+${cloud(70, 44, 1, '#fff', .85)}${cloud(250, 26, .7, '#fff', .8)}${cloud(420, 54, .9, '#FFF6E6', .85)}
+<path d="M180 50q8-10 16 0 8-10 16 0M470 32q6-8 12 0 6-8 12 0" stroke="#4A5C65" stroke-width="2.4" fill="none"/>`, grad('sk', '#F6B88A', '#FDF1DC'));
+
 // ---- wallpaper tiles: the background of each unit's trail. 600x600, transparent, little icons scattered mostly along the two edges, repeated downwards ----
 const T = {};
 const I = {   // each icon is drawn around (0,0), about 50 wide
@@ -267,6 +378,14 @@ const I = {   // each icon is drawn around (0,0), about 50 wide
   lotus: (c = '#F2A0B8') => `<ellipse cx="0" cy="14" rx="26" ry="8" fill="#3C8670" opacity=".9"/><g fill="${c}"><path d="M0 8q-14-4-12-22 8 6 12 22z"/><path d="M0 8q14-4 12-22-8 6-12 22z"/><path d="M0 8q-5-14 0-28 5 14 0 28z" opacity=".85"/></g><circle cx="0" cy="-2" r="3" fill="#F7D054"/>`,
   fan: (c = '#C2362B') => `<path d="M-24 10A28 28 0 0 1 24 10L0 14z" fill="${c}" opacity=".85"/><path d="M0 14-17-8M0 14-6-16M0 14 6-16M0 14 17-8" stroke="#fff" stroke-width="1.8" opacity=".6"/><rect x="-2" y="12" width="4" height="14" rx="2" fill="#8A6A4F"/>`,
   melon: (c = '#E85D5D') => `<path d="M-24-6h48a24 24 0 0 1-48 0z" fill="#3C8670"/><path d="M-21-6h42a21 21 0 0 1-42 0z" fill="#fff" opacity=".9"/><path d="M-19-6h38a19 19 0 0 1-38 0z" fill="${c}"/><g fill="#14212A"><circle cx="-8" cy="2" r="1.6"/><circle cx="0" cy="6" r="1.6"/><circle cx="8" cy="2" r="1.6"/></g>`,
+  peak: (c = '#A9B7BF') => `<path d="M-28 22 -10-24 0-10 8-22 28 22z" fill="${c}"/><path d="M-10-24-18-6-10-10 -4-2z" fill="#fff" opacity=".7"/>`,
+  stairs: (c = '#8FA3B5') => `<path d="M-24 22h12v-10h12v-10h12v-10h12v-10" fill="none" stroke="${c}" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>`,
+  gate: (c = '#C2362B') => `<rect x="-20" y="-6" width="4" height="26" fill="${c}"/><rect x="16" y="-6" width="4" height="26" fill="${c}"/><rect x="-24" y="-10" width="48" height="5" fill="${c}"/><path d="M-30-10Q-20-12-16-20H16Q20-12 30-10z" fill="#3E5A4B"/>`,
+  pagoda: (c = '#8F8576') => `<g fill="${c}"><path d="M-14 22h28v-10h-28z"/><path d="M-20 12Q-14 10-12 4H12Q14 10 20 12z"/><path d="M-12 2h24v-8h-24z"/><path d="M-17-6Q-12-8-10-14H10Q12-8 17-6z"/><path d="M-9-14h18v-7h-18z"/><path d="M-13-21Q-9-23-7-28H7Q9-23 13-21z"/><rect x="-1.5" y="-38" width="3" height="10"/></g>`,
+  temple: (c = '#B8402A') => `<rect x="-17" y="2" width="34" height="18" fill="#F2DFC0"/><rect x="-4" y="8" width="8" height="12" fill="#5C4333"/><path d="M-28 4Q-20 2-15-8L-7-14H7L15-8Q20 2 28 4z" fill="${c}"/><path d="M-7-14 0-20 7-14z" fill="${c}"/>`,
+  cliff: (c = '#8C84AE') => `<path d="M-18 24V-18L-8-26H14L20-14V24z" fill="${c}"/><path d="M-8-26 14-26 20-14 6-18z" fill="#fff" opacity=".25"/><path d="M-6-8 4-4M-10 6 8 10" stroke="#fff" stroke-width="2" opacity=".35"/>`,
+  chain: (c = '#6F8793') => `<path d="M-14-24 2-2-12 24" fill="none" stroke="${c}" stroke-width="3" stroke-dasharray="2 5" stroke-linecap="round"/><rect x="-2" y="-12" width="5" height="11" fill="#C2362B"/><rect x="-8" y="8" width="5" height="11" fill="#C2362B"/>`,
+  stilt: (c = '#4A5A63') => `<rect x="-24" y="-2" width="48" height="5" fill="#8A6A4F"/><path d="M-16 3v22M0 3v22M16 3v22" stroke="#8A6A4F" stroke-width="3.4"/><rect x="-14" y="-12" width="28" height="10" fill="#F0D9B2"/><path d="M-22-10Q-14-12-10-20H10Q14-12 22-10z" fill="${c}"/>`,
   reed: (c = '#8FA37A') => `<path d="M-8 24Q-12 0-6-22M0 24V-26M8 24Q12 0 6-20" stroke="${c}" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="0" cy="-26" rx="3" ry="8" fill="#8A6A4F"/>`
 };
 const SLOTS = [[64, 44], [528, 96], [38, 178], [556, 238], [82, 318], [520, 372], [44, 452], [548, 506], [96, 560], [330, 40], [300, 300], [330, 560]];   // edges first, three faint ones in the middle
@@ -297,6 +416,16 @@ const TL = {
   spring: [['blossom'], ['petal'], ['blossom', '#FBD3DD'], ['willow', '#7DB56C'], ['petal'], ['bridge'], ['blossom'], ['petal']],
   spring2: [['petal'], ['blossom'], ['round', '#9DD08A'], ['petal'], ['blossom', '#FBD3DD'], ['sun'], ['petal'], ['bird']],
   summer: [['sun'], ['lotus'], ['melon'], ['cloud'], ['fan'], ['wave'], ['lotus', '#F7B6C6'], ['boat']],
+  tai: [['peak', '#8FA37A'], ['stairs'], ['pine'], ['cloud'], ['gate'], ['flag'], ['sun'], ['bird']],
+  tai2: [['stairs', '#B49B7A'], ['peak', '#A9B79A'], ['cloud'], ['pine', '#2C735F'], ['lantern'], ['peak', '#8FA37A'], ['gate'], ['bird']],
+  hua: [['peak', '#A9B7BF'], ['chain'], ['pine', '#2F6246'], ['cloud'], ['peak', '#C4CDD2'], ['stairs', '#9AA8B2'], ['bird'], ['chain']],
+  hua2: [['cliff', '#9AA8B2'], ['pine', '#2F6246'], ['chain'], ['cloud'], ['stairs', '#9AA8B2'], ['peak', '#B6C1C8'], ['pine'], ['bird']],
+  hengs: [['round', '#6FBF8F'], ['temple'], ['cloud'], ['pine', '#3C8670'], ['wave', '#8FC8A8'], ['round', '#9DD08A'], ['temple', '#C2362B'], ['bird']],
+  hengs2: [['temple', '#C2362B'], ['round', '#5EA67C'], ['wave', '#8FC8A8'], ['cloud'], ['round', '#9DD08A'], ['stairs', '#B8C8A8'], ['pine'], ['bird']],
+  hengn: [['cliff', '#8C84AE'], ['stilt'], ['pine', '#3C706A'], ['cloud'], ['cliff', '#A79FC8'], ['bird'], ['stilt'], ['cloud']],
+  hengn2: [['stilt'], ['cliff', '#A79FC8'], ['cloud'], ['pine', '#2F5A55'], ['cliff', '#8C84AE'], ['stairs', '#A79FC8'], ['pine', '#3C706A'], ['bird']],
+  song: [['pagoda'], ['temple', '#7A3B22'], ['pine', '#4C7A4A'], ['cloud'], ['pagoda', '#A39A8A'], ['sun', '#F2C86A'], ['pagoda'], ['bird']],
+  song2: [['pagoda', '#A39A8A'], ['book', '#B8402A'], ['pine', '#4C7A4A'], ['temple', '#7A3B22'], ['pagoda'], ['cloud'], ['flag'], ['pagoda', '#A39A8A']],
   summer2: [['melon'], ['cup'], ['sun', '#F2A93B'], ['lotus'], ['fan', '#E9A24B'], ['bird'], ['wave', '#6AAE9A'], ['cloud']]
 };
 Object.keys(TL).forEach(k => { T[k] = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(tile(TL[k])); });

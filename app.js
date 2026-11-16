@@ -3951,7 +3951,7 @@
         let nTotal = 0, nDone = 0, wTotal = 0, wStart = 0;
         us.forEach(u => u.stops.forEach(st => { nTotal++; if (stopState(S, st) === 'done') nDone++; stopWords(st).forEach(z => { wTotal++; if (wStarted(S, z)) wStart++; }); }));
         out.pthName = 'HSK ' + lv + ' path'; out.pthBlurb = (PATH[lv] || {}).blurb || '';
-        const th = (PATH[lv] || {}).theme || null;     // the look of this level: a day in a city (HSK 1), a rail line (HSK 2), a semester of chapters (HSK 3), a year of 24 solar terms (HSK 4)
+        const th = (PATH[lv] || {}).theme || null;     // the look of this level: a day in a city (HSK 1), a rail line (HSK 2), a semester of chapters (HSK 3), a year of 24 solar terms (HSK 4), a climb up the five great mountains (HSK 5)
         if (th) {
           out.pthKCls = 'k-' + th.kind; out.pthName = th.name; out.pthBlurb = th.blurb; out.pthHasTag = true; out.pthTag = 'HSK ' + lv + ' · ' + th.tag;
           out.pthHeroImg = PSCENE[th.hero] || ''; out.pthHasHero = !!out.pthHeroImg;
@@ -3980,7 +3980,7 @@
           out.pthNextGo = () => this.pathStart(nxt.st.id);
         }
         const unitDone = us.map(u => u.stops.every(st => stopState(S, st) === 'done'));
-        if (th && (th.kind === 'rail' || th.kind === 'terms')) out.pthRailPct = (us.length > 1 ? Math.round(Math.min(unitDone.filter(Boolean).length, us.length - 1) / (us.length - 1) * 100) : 0) + '%';
+        if (th && (th.kind === 'rail' || th.kind === 'terms' || th.kind === 'peaks')) out.pthRailPct = (us.length > 1 ? Math.round(Math.min(unitDone.filter(Boolean).length, us.length - 1) / (us.length - 1) * 100) : 0) + '%';
         const seenGroup = {};
         out.pthUnits = us.map((u, ui) => {
           const states = u.stops.map(st => stopState(S, st));
@@ -3993,10 +3993,10 @@
           const nd = states.filter(x => x === 'done').length;
           const open = S.pu[u.id] !== undefined ? S.pu[u.id] : (!!nxt && (ui === nxt.ui || ui === nxt.ui + 1));
           return {
-            id:u.id, num:th0 === 'rail' && tu ? tu.ch : th0 === 'terms' && tu ? tu.zh : ui + 1, numCls:th0 === 'rail' ? 'zh big' : th0 === 'terms' ? 'zh term' : '', title:u.title, blurb:u.blurb, prog:nd + ' of ' + u.stops.length, open, cls:(nd === u.stops.length ? 'done' : nxt && ui === nxt.ui ? 'cur' : ''),
+            id:u.id, num:th0 === 'rail' && tu ? tu.ch : th0 === 'terms' && tu ? tu.zh : ui + 1, numCls:th0 === 'rail' ? 'zh big' : th0 === 'terms' ? 'zh term' : th0 === 'peaks' ? 'pk' : '', title:u.title, blurb:u.blurb, prog:nd + ' of ' + u.stops.length, open, cls:(nd === u.stops.length ? 'done' : nxt && ui === nxt.ui ? 'cur' : ''),
             trailStyle:tu && PTILE[tu.tile] ? 'background-image:url("' + PTILE[tu.tile] + '"),linear-gradient(180deg,' + ((tu.bg || (grp && grp.bg) || ['#EDF0EC', '#EDF0EC'])[0]) + ',' + ((tu.bg || (grp && grp.bg) || ['#EDF0EC', '#EDF0EC'])[1]) + ')' : '',
-            hasKick:!!tu && th0 !== '' && th0 !== 'day', kick:!tu ? '' : th0 === 'day' ? '' : th0 === 'rail' ? 'Station ' + (ui + 1) + ' · ' + tu.py : th0 === 'terms' ? tu.py + ' · ' + tu.en + ' · c. ' + tu.date : 'Chapter ' + (ui + 1) + ' · ' + (tu.place || ''),
-            hasScene:(th0 === 'day' || th0 === 'terms') && !!tu && !!tu.scene, scene:tu && tu.scene || '',
+            hasKick:!!tu && th0 !== '' && th0 !== 'day', kick:!tu ? '' : th0 === 'day' ? '' : th0 === 'rail' ? 'Station ' + (ui + 1) + ' · ' + tu.py : th0 === 'terms' ? tu.py + ' · ' + tu.en + ' · c. ' + tu.date : th0 === 'peaks' ? tu.stage + ' · ' + tu.zh + ' · ' + tu.py + ' · ' + tu.en : 'Chapter ' + (ui + 1) + ' · ' + (tu.place || ''),
+            hasScene:(th0 === 'day' || th0 === 'terms' || th0 === 'peaks') && !!tu && !!tu.scene, scene:tu && tu.scene || '',
             hasBand:first, bandImg:grp && PSCENE[grp.scene] || '', bandZh:grp && grp.zh || '', bandTitle:grp ? (grp.sub ? grp.title + ' · ' + grp.sub : grp.title) : '', bandSub:'', bandN:gN + (gN === 1 ? ' unit' : ' units'), hasBandLine:!!grp && !!grp.line, bandLine:grp && grp.line || '',
             hasDlg:open && lines.length > 0, dlg:lines.map((l, li) => ({ who:l.who, zh:l.zh, py:l.py, en:l.en, cls:l.who === '你' ? 'me' : '', playCls:S.playing === 'pd:' + u.id + li ? 'on' : '', say:() => this.say(l.zh, 'pd:' + u.id + li) })),
             isDone:nd === u.stops.length, toggleText:open ? 'Hide' : 'Show', toggle:() => this.pathUnitToggle(u.id, !open),

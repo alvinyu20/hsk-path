@@ -1951,6 +1951,25 @@ button.me .me-av{flex:none}
 .k-terms .pth-unit.cur .pth-un.term{background:var(--seal);color:var(--on-seal)}
 .k-terms .pth-unit.done .pth-un.term{background:var(--jade);border-color:var(--jade);color:var(--on-jade)}
 .k-terms .pth-band-zh{border-radius:10px;font-family:'Noto Serif SC',serif;background:var(--seal);color:var(--on-seal)}
+/* HSK 5: a climb up the five great mountains: a misty trail down the left, a stone marker for each stage */
+.k-peaks .pth-head{background:linear-gradient(180deg,#E9F1EB,#D6E5DB);border-color:#B8CDBE;color:#1F3A2E}
+.t-dark .k-peaks .pth-head{background:#18241E;border-color:var(--line);color:#DDEBE1}
+.k-peaks .pth-head .h2{color:#1F3A2E}
+.t-dark .k-peaks .pth-head .h2{color:#DDEBE1}
+.k-peaks .pth-head .muted{color:#4A6657}
+.t-dark .k-peaks .pth-head .muted{color:#A9C2B2}
+.k-peaks .pth-tag{background:var(--jade);color:var(--on-jade)}
+.k-peaks .pth-head .track{background:rgba(31,58,46,.15)}
+.t-dark .k-peaks .pth-head .track{background:rgba(221,235,225,.2)}
+.k-peaks .pth-list{padding-left:34px}
+.k-peaks .pth-list::before{content:'';position:absolute;left:11px;top:34px;bottom:34px;width:5px;border-radius:99px;background:linear-gradient(var(--jade) var(--rail),transparent var(--rail)),repeating-linear-gradient(var(--line) 0 8px,transparent 8px 13px)}
+.k-peaks .pth-ent::before{content:'';position:absolute;left:-32px;top:25px;width:18px;height:16px;box-sizing:border-box;background:var(--line);clip-path:polygon(50% 0,100% 100%,0 100%);z-index:1}
+.k-peaks .pth-ent.done::before{background:var(--jade)}
+.k-peaks .pth-ent.cur::before{background:var(--seal);filter:drop-shadow(0 0 4px rgba(194,54,43,.5))}
+.k-peaks .pth-un.pk{width:44px;height:44px;border-radius:12px 12px 6px 6px;font:700 18px/1 'Noto Serif SC',serif;border:2px solid var(--jade);background:var(--panel);color:var(--jade)}
+.k-peaks .pth-unit.cur .pth-un.pk{background:var(--seal);border-color:var(--seal);color:var(--on-seal)}
+.k-peaks .pth-unit.done .pth-un.pk{background:var(--jade);color:var(--on-jade)}
+.k-peaks .pth-band-zh{border-radius:10px;font-family:'Noto Serif SC',serif;background:var(--jade);color:var(--on-jade)}
 /* HSK 3: chapters with a short chat */
 .pth-dlg{display:flex;flex-direction:column;gap:10px;padding:2px 18px 14px}
 .pth-dl{display:flex;align-items:flex-start;gap:12px}
@@ -1964,7 +1983,7 @@ button.me .me-av{flex:none}
 .pth-hear .ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .pth-hear.on{background:var(--ink);color:var(--bg)}
 .pth-hear:hover{border-color:var(--ink)}
-@media (max-width:520px){.pth-head-b{padding:12px 14px;gap:8px}.pth-hero{height:120px}.pth-band-img{height:92px}.k-rail .pth-list{padding-left:34px}.k-terms .pth-list{padding-left:30px}.k-terms .pth-ent::before{left:-26px}.k-terms .pth-un.term{width:40px;height:40px;font-size:16px}}
+@media (max-width:520px){.pth-head-b{padding:12px 14px;gap:8px}.pth-hero{height:120px}.pth-band-img{height:92px}.k-rail .pth-list{padding-left:34px}.k-terms .pth-list{padding-left:30px}.k-terms .pth-ent::before{left:-26px}.k-peaks .pth-list{padding-left:30px}.k-peaks .pth-ent::before{left:-28px}.k-peaks .pth-un.pk{width:40px;height:40px;font-size:16px}.k-terms .pth-un.term{width:40px;height:40px;font-size:16px}}
 
 /* the wallpaper of a unit's trail (set per unit from the theme); a veil keeps the labels easy to read, and a stronger one in the dark theme */
 .pth-trail{background-size:100% auto,100% 100%;background-repeat:repeat-y,no-repeat;background-position:center top}
