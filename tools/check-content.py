@@ -105,10 +105,10 @@ EN_TIME_BACK = [
 ]
 MEASURE_NEEDS = {'书': '本', '衣服': '件', '猫': '只', '狗': '只'}   # noun -> required measure word (instead of the all-purpose 个)
 QUESTION_WORDS = ['什么', '谁', '哪', '几', '多少', '怎么', '怎么样', '哪儿', '哪里']
-LEXICAL_NEG = ['不客气', '对不起', '没关系', '没事', '不好意思', '不见了', '不早了', '不同', '来不及', '不一样', '不错', '不久', '差不多', '不对', '特别', '别人', '别的', '不断', '不便', '不得不', '不如', '不满', '不过', '不管', '不论', '不光', '不仅', '无聊', '无论', '区别', '性别', '分别', '告别', '差别', '个别', '不利', '不幸', '不良', '不得了', '不小心', '无数', '无限', '无奈', '无效', '无关', '无法', '不足', '不然', '不安', '不满意']   # 别人 "other people" and 别的 "other" use 别 without a negative meaning
+LEXICAL_NEG = ['不客气', '对不起', '没关系', '没事', '不好意思', '不见了', '不早了', '不同', '来不及', '不一样', '不错', '不久', '差不多', '不对', '特别', '别人', '别的', '不断', '不便', '不得不', '不如', '不满', '不过', '不管', '不论', '不光', '不仅', '无聊', '无论', '区别', '性别', '分别', '告别', '差别', '个别', '不利', '不幸', '不良', '不得了', '不小心', '不礼貌', '不少', '无数', '无限', '无奈', '无效', '无关', '无法', '不足', '不然', '不安', '不满意']   # 别人 "other people" and 别的 "other" use 别 without a negative meaning
 PAST_EN = r"\b(ate|bought|saw|heard|went|was|were|did|drank|had|got|said|took|came|made|read|wrote|studied|worked|lived|asked|called|finished|\w+ed)\b"
 IRREGULAR_PAST = 'overtook|forgave|dreamt|ate|bought|saw|heard|went|drank|had|got|said|took|came|made|wrote|was|were|did|told|sent|gave|found|lost|left|met|paid|brought|taught|began|ran|sat|stood|forgot|knew|thought|felt|kept|won|fell|spoke|woke|rode|drove|broke|bit|read|blew|grew|drew|threw|wore|chose|swam|sang|slept|spent|sold|held|led|lay|fed|hid|shook|stole|flew|dug|rang|built|caught|cut|hurt|let|lit|meant|put|set|shut|sank|sat|sent|shot|slid|spun|stuck|swept|tore|understood|woke|lent'
-PAST_ADJ = {'developed', 'coloured', 'colored', 'produced', 'repaired', 'allowed', 'compared', 'detailed', 'steamed', 'grilled', 'roasted', 'baked', 'complicated', 'irritated', 'fried', 'succeed', 'exceed', 'proceed', 'varied', 'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured', 'united', 'limited', 'advanced', 'unlimited', 'crowded', 'needed', 'wicked', 'naked', 'sacred', 'hundred'}
+PAST_ADJ = {'stored', 'developed', 'coloured', 'colored', 'produced', 'repaired', 'allowed', 'compared', 'detailed', 'steamed', 'grilled', 'roasted', 'baked', 'complicated', 'irritated', 'fried', 'succeed', 'exceed', 'proceed', 'varied', 'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured', 'united', 'limited', 'advanced', 'unlimited', 'crowded', 'needed', 'wicked', 'naked', 'sacred', 'hundred'}
 
 
 def meaning_checks(zh, en):
@@ -258,10 +258,10 @@ def meaning_checks(zh, en):
     for mw, nouns in (('本', '书字词笔杂'), ('件', '衣事'), ('口', '人')):
         for m in re.finditer(r'[零一二两三四五六七八九十几]' + mw + r'(.)', zc):
             nxt = m.group(1)
-            ok = nxt in nouns or (mw == '口' and zc[m.end() - 1:m.end() + 1] in ('流利', '气')) or (mw == '件' and (nxt in '新衬' or zc[m.end() - 1:m.end() + 1] in ('上衣', '大衣', '雨衣'))) or (mw == '本' and zc[m.end() - 1:m.end() + 1] == '关于')
+            ok = nxt in nouns or (mw == '口' and zc[m.end() - 1:m.end() + 1] in ('流利', '气')) or (mw == '件' and (nxt in '新衬大小好' or zc[m.end() - 1:m.end() + 1] in ('上衣', '大衣', '雨衣'))) or (mw == '本' and zc[m.end() - 1:m.end() + 1] == '关于')
             if mw == '口' and nxt not in '人' and zc[m.end() - 1:m.end() + 1] not in ('流利', '气'):
                 ok = False
-            if not ok and not (mw == '本' and nxt in '新好小大'):
+            if not ok and not (mw == '本' and nxt in '新好小大老旧厚薄'):
                 out.append(('WARN', 'meaning', 'measure word %s followed by %s: check it fits' % (mw, nxt)))
 
     # please, thanks, sorry, hello
@@ -280,7 +280,7 @@ def meaning_checks(zh, en):
     toks_past = [w for w in re.findall(r"[a-z]+", e_tense) if re.fullmatch(r'\w+ed', w) and w not in PAST_ADJ] + [w for w in re.findall(r'[a-z]+', e) if w in ('ate', 'bought', 'saw', 'heard', 'went', 'drank', 'had', 'got', 'said', 'took', 'came', 'made', 'wrote', 'was', 'were', 'did')]
     if toks_past and not re.search('了|没|曾|昨天|昨晚|前天|去年|上个|上星期|过|以前|从前|当时|后来|小时候|是.*的|看见|听见|才|已经|刚|以为|听说', z) and not re.search(r"\b(has|have|had been)\b", e):
         out.append(('WARN', 'meaning', 'English is in the past (%s) but the Chinese has no 了 or past time word' % toks_past[0]))
-    if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '').replace('死了', '').replace('不了', '').replace('不得了', '').replace('了不起', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|any longer|no longer|getting|growing|about to|get to|arrive|reach|come to|soon)\b", e):
+    if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '').replace('死了', '').replace('不了', '').replace('充满了', '').replace('不得了', '').replace('了不起', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|any longer|no longer|getting|growing|about to|get to|arrive|reach|come to|soon)\b", e):
         out.append(('WARN', 'meaning', '了 in the Chinese: English shows no completed action or change of state'))
     # ZH 在 + verb = in progress
     if re.search('正在|(?<![不要])在(看|吃|喝|做|写|读|听|打|找|玩|睡|说话)', z) and not re.search(r'\b\w+ing\b|\bright now\b|\bat\b|\bin\b', e):
