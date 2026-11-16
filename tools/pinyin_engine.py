@@ -174,6 +174,8 @@ class Engine:
                 parts.append(('p', t, P_MAP[t]))
             elif t in ('—', '——'):
                 parts.append(('d', t, '—'))
+            elif t == '了' and parts and parts[-1][0] == 'w' and parts[-1][1] == '不':
+                parts.append(('w', t, 'liǎo'))        # verb + 不 + 了 (走不了, 吃不了): "cannot", read liǎo, not le
             else:
                 parts.append(('w', t, self.word_py(t)))
         merged = []
