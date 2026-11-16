@@ -107,8 +107,8 @@ MEASURE_NEEDS = {'书': '本', '衣服': '件', '猫': '只', '狗': '只'}   # 
 QUESTION_WORDS = ['什么', '谁', '哪', '几', '多少', '怎么', '怎么样', '哪儿', '哪里']
 LEXICAL_NEG = ['不客气', '对不起', '没关系', '没事', '不好意思', '不见了', '不早了', '不同', '来不及', '不一样', '不错', '不久', '差不多', '不对', '特别', '别人', '别的', '不断', '不便', '不得不', '不如', '不满', '不过', '不管', '不论', '不光', '不仅', '无聊', '无论', '区别', '性别', '分别', '告别', '差别', '个别', '不利', '不幸', '不良', '不得了', '不小心', '不礼貌', '不少', '没电', '无数', '无限', '无奈', '无效', '无关', '无法', '不足', '不然', '不安', '不满意']   # 别人 "other people" and 别的 "other" use 别 without a negative meaning
 PAST_EN = r"\b(ate|bought|saw|heard|went|was|were|did|drank|had|got|said|took|came|made|read|wrote|studied|worked|lived|asked|called|finished|\w+ed)\b"
-IRREGULAR_PAST = 'overtook|forgave|dreamt|ate|bought|saw|heard|went|drank|had|got|said|took|came|made|wrote|was|were|did|told|sent|gave|found|lost|left|met|paid|brought|taught|began|ran|sat|stood|forgot|knew|thought|felt|kept|won|fell|spoke|woke|rode|drove|broke|bit|read|blew|grew|drew|threw|wore|chose|swam|sang|slept|spent|sold|held|led|lay|fed|hid|shook|stole|flew|dug|rang|built|caught|cut|hurt|let|lit|meant|put|set|shut|sank|sat|sent|shot|slid|spun|stuck|swept|tore|understood|woke|lent'
-PAST_ADJ = {'congested', 'stored', 'developed', 'coloured', 'colored', 'produced', 'repaired', 'allowed', 'compared', 'detailed', 'steamed', 'grilled', 'roasted', 'baked', 'complicated', 'irritated', 'fried', 'succeed', 'exceed', 'proceed', 'varied', 'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured', 'united', 'limited', 'advanced', 'unlimited', 'crowded', 'needed', 'wicked', 'naked', 'sacred', 'hundred', 'shared', 'fixed', 'expected', 'recycled', 'boxed', 'imported'}
+IRREGULAR_PAST = 'overcame|overtook|forgave|dreamt|ate|bought|saw|heard|went|drank|had|got|said|took|came|made|wrote|was|were|did|told|sent|gave|found|lost|left|met|paid|brought|taught|began|ran|sat|stood|forgot|knew|thought|felt|kept|won|fell|spoke|woke|rode|drove|broke|bit|read|blew|grew|drew|threw|wore|chose|swam|sang|slept|spent|sold|held|led|lay|fed|hid|shook|stole|flew|dug|rang|built|caught|cut|hurt|let|lit|meant|put|set|shut|sank|sat|sent|shot|slid|spun|stuck|swept|tore|understood|woke|lent'
+PAST_ADJ = {'congested', 'stored', 'developed', 'coloured', 'colored', 'produced', 'repaired', 'allowed', 'compared', 'detailed', 'steamed', 'grilled', 'roasted', 'baked', 'complicated', 'irritated', 'fried', 'succeed', 'exceed', 'proceed', 'varied', 'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured', 'united', 'limited', 'advanced', 'unlimited', 'crowded', 'needed', 'wicked', 'naked', 'sacred', 'hundred', 'shared', 'fixed', 'expected', 'recycled', 'boxed', 'imported', 'boiled'}
 
 
 def meaning_checks(zh, en):
@@ -119,14 +119,14 @@ def meaning_checks(zh, en):
     e = e.replace('excuse me', 'excuse')                       # "me" in "excuse me" is not the pronoun
     z = zh
     zc = strip_punct(zh)
-    zc = re.sub('零花钱|零钱|零食|千万|千克|十字路口|二维码', 'XXX', zc).replace('二手', '旧手')   # 二 in 二手 / 二维码 is not a number       # 零 here is part of the word, not the number 0
+    zc = re.sub('零花钱|零钱|零食|千万|千克|十字路口|二维码|老百姓|百姓|百货', 'XXX', zc).replace('二手', '旧手')   # 二 in 二手 / 二维码 is not a number       # 零 here is part of the word, not the number 0
 
     # want / would like
     if re.search(r"\b(want|wants|wanted|would (?:you |he |she |they )?like|'d like|wish)\b", e) and not re.search('想|要|希望|愿意|祝', z):
         out.append(('ERROR', 'meaning', 'English says "want / would like" but the Chinese has no 想 or 要'))
     if re.search('想', re.sub('理想|梦想|想法|感想|思想|联想|想象|想起', '', z)) and not re.search(r"want|would (?:you |he |she |they )?like|'d like|think|thought|miss|feel|plan|wish|going to|will|need|hope", e):
         out.append(('WARN', 'meaning', '想 in the Chinese but no want/think/miss in the English'))
-    if re.search('要', re.sub('不要|需要|重要|主要|只要|要求|必要|要是|想要', '', z)) and not re.search(r"want|would (?:you |he |she |they )?like|'d like|need|will|going to|about to|have|take|'ll|must|should|order|get|require", e):
+    if re.search('要', re.sub('不要|需要|重要|主要|只要|要求|必要|要是|想要', '', z)) and not re.search(r"want|would (?:you |he |she |they )?like|'d like|need|will|going to|about to|have|take|'ll|must|should|order|get|require|has to|had to|supposed to", e):
         out.append(('WARN', 'meaning', '要 in the Chinese but no want/need/will in the English'))
     # habitual vs offer
     if re.search(r'^(would you|do you want|would he|would she)\b', e) and not re.search('想|要|可以|愿意', z):
@@ -267,7 +267,7 @@ def meaning_checks(zh, en):
     # please, thanks, sorry, hello
     if re.search(r'\bplease\b', e) and '请' not in z:
         out.append(('ERROR', 'meaning', 'English says please but the Chinese has no 请'))
-    if re.search(r'\bthank', e) and '谢' not in z:
+    if re.search(r'\bthank', e) and '谢' not in z and not (re.search(r'thanks to', e) and re.search('亏|靠|因为|由于', z)):
         out.append(('ERROR', 'meaning', 'English says thanks but the Chinese has no 谢'))
     if re.search(r'\bsorry\b', e) and not re.search('对不起|不好意思|抱歉', z):
         out.append(('ERROR', 'meaning', 'English says sorry but the Chinese has no 对不起'))
@@ -279,6 +279,7 @@ def meaning_checks(zh, en):
     e_tense = re.sub(r"\b(?:is|are|am|be|'s|'re|'m)\s+(?:(?:\w+ly|often|usually|always|also|not|never|still|just)\s+)?(?:\w+ed|made up)\b", ' ', e)       # "is loved", "are interested": a present passive or state, not a past tense
     e_tense = e_tense.replace('made up', ' ')
     e = e.replace('made up', 'MADEUP')
+    e = re.sub(r"\b(?:is|are) said\b", 'IS REPORTED', e)       # "it is said" (据说) is not a past tense
     toks_past = [w for w in re.findall(r"[a-z]+", e_tense) if re.fullmatch(r'\w+ed', w) and w not in PAST_ADJ] + [w for w in re.findall(r'[a-z]+', e) if w in ('ate', 'bought', 'saw', 'heard', 'went', 'drank', 'had', 'got', 'said', 'took', 'came', 'made', 'wrote', 'was', 'were', 'did')]
     if toks_past and re.search(r'\bif\b', e) and re.search('如果|假如|要是|假设|若', z):
         toks_past = []      # "if I were / if you had": the English past is the unreal conditional, not a past time
