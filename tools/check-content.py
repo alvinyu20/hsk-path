@@ -119,7 +119,7 @@ def meaning_checks(zh, en):
     e = e.replace('excuse me', 'excuse')                       # "me" in "excuse me" is not the pronoun
     z = zh
     zc = strip_punct(zh)
-    zc = re.sub('零花钱|零钱|零食|千万|千克|十字路口', 'XXX', zc)       # 零 here is part of the word, not the number 0
+    zc = re.sub('零花钱|零钱|零食|千万|千克|十字路口|二维码', 'XXX', zc).replace('二手', '旧手')   # 二 in 二手 / 二维码 is not a number       # 零 here is part of the word, not the number 0
 
     # want / would like
     if re.search(r"\b(want|wants|wanted|would (?:you |he |she |they )?like|'d like|wish)\b", e) and not re.search('想|要|希望|愿意|祝', z):
@@ -235,7 +235,7 @@ def meaning_checks(zh, en):
         zvals.add(parse_cn(m.group(1)))
     for m in re.finditer(r'([零一二三四五六七八九十]+)[号日]', zc):
         zvals.add(parse_cn(m.group(1)))
-    evals = en_number_set(en)
+    evals = en_number_set(re.sub(r'second-hand|second hand|secondhand', 'used', en, flags=re.I))
     evals.discard(1)
     for v in zvals:
         if v != 1 and v not in evals:
@@ -261,7 +261,7 @@ def meaning_checks(zh, en):
             ok = nxt in nouns or (mw == '口' and zc[m.end() - 1:m.end() + 1] in ('流利', '气')) or (mw == '件' and (nxt in '新衬大小好' or zc[m.end() - 1:m.end() + 1] in ('上衣', '大衣', '雨衣'))) or (mw == '本' and zc[m.end() - 1:m.end() + 1] == '关于')
             if mw == '口' and nxt not in '人' and zc[m.end() - 1:m.end() + 1] not in ('流利', '气'):
                 ok = False
-            if not ok and not (mw == '本' and nxt in '新好小大老旧厚薄'):
+            if not ok and not (mw == '本' and nxt in '新好小大老旧厚薄二'):
                 out.append(('WARN', 'meaning', 'measure word %s followed by %s: check it fits' % (mw, nxt)))
 
     # please, thanks, sorry, hello
@@ -280,7 +280,7 @@ def meaning_checks(zh, en):
     toks_past = [w for w in re.findall(r"[a-z]+", e_tense) if re.fullmatch(r'\w+ed', w) and w not in PAST_ADJ] + [w for w in re.findall(r'[a-z]+', e) if w in ('ate', 'bought', 'saw', 'heard', 'went', 'drank', 'had', 'got', 'said', 'took', 'came', 'made', 'wrote', 'was', 'were', 'did')]
     if toks_past and not re.search('了|没|曾|当年|昨天|昨晚|前天|去年|上个|上星期|过|以前|从前|当时|后来|小时候|是.*的|看见|听见|才|已经|刚|以为|听说', z) and not re.search(r"\b(has|have|had been)\b", e):
         out.append(('WARN', 'meaning', 'English is in the past (%s) but the Chinese has no 了 or past time word' % toks_past[0]))
-    if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '').replace('死了', '').replace('不了', '').replace('充满了', '').replace('不得了', '').replace('了不起', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|any longer|no longer|getting|growing|about to|get to|arrive|reach|come to|soon)\b", e):
+    if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '').replace('死了', '').replace('不了', '').replace('充满了', '').replace('不得了', '').replace('了不起', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|any longer|no longer|getting|growing|about to|get to|arrive|arrives|arriving|arrival|reach|reaches|come to|soon)\b", e):
         out.append(('WARN', 'meaning', '了 in the Chinese: English shows no completed action or change of state'))
     # ZH 在 + verb = in progress
     if re.search('正在|(?<![不要])在(看|吃|喝|做|写|读|听|打|找|玩|睡|说话)', z) and not re.search(r'\b\w+ing\b|\bright now\b|\bat\b|\bin\b', e):
