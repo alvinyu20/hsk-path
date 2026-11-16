@@ -124,7 +124,7 @@ def meaning_checks(zh, en):
     zc = re.sub('零花钱|零钱|零食|千万|千克|十字路口|二维码|老百姓|百姓|百货|四处|四周|四面|五颜六色', 'XXX', zc).replace('二手', '旧手')   # 二 in 二手 / 二维码 is not a number       # 零 here is part of the word, not the number 0
 
     # want / would like
-    if re.search(r"\b(want|wants|wanted|would (?:you |he |she |they )?like|'d like|wish)\b", e) and not re.search('想|要|希望|愿意|祝', z):
+    if re.search(r"\b(want|wants|wanted|would (?:you |he |she |they )?like|'d like|wish)\b", e) and not re.search('想|要|希望|愿|祝', z):
         out.append(('ERROR', 'meaning', 'English says "want / would like" but the Chinese has no 想 or 要'))
     if re.search('想', re.sub('理想|梦想|想法|感想|思想|联想|想象|想起', '', z)) and not re.search(r"want|would (?:you |he |she |they )?like|'d like|think|thought|miss|feel|plan|wish|going to|will|need|hope", e):
         out.append(('WARN', 'meaning', '想 in the Chinese but no want/think/miss in the English'))
@@ -136,7 +136,7 @@ def meaning_checks(zh, en):
 
     # can / may
     z_pot = re.search('[听看吃找买做写说记搬拿读喝走跑学爬睡等想受抬打提挤忘忍放][得不](懂|见|清楚|完|到|住|动|起|出|好|对|会|了|通|着|上|进|下)', z)     # 听得懂 / 听不懂: the 得 / 不 + result form already means can / cannot
-    if re.search(r"\b(can|can't|cannot|could|able to|may|allowed|know how)\b", e) and not re.search('会|能|可以|懂得|无法|允许|没法|没办法', z) and not z_pot and not re.search('知道怎么|不知怎么|懂怎么', z):
+    if re.search(r"\b(can|can't|cannot|could|able to|may|allowed|know how)\b", e) and not re.search('会|能|可以|可见|懂得|无法|允许|没法|没办法', z) and not z_pot and not re.search('知道怎么|不知怎么|懂怎么', z):
         out.append(('ERROR', 'meaning', 'English says can/may/able but the Chinese has no 会 / 能 / 可以'))
     z_modal = re.sub('开会|会议|晚会|运动会|机会|一会儿|一会|社会|会话|开会|学会|懂得|会员|家长会|大会|会面|聚会|宴会|舞会|约会|能力|误会|可能性|会上|会场|会后|会前|国会|协会|商会|博览会|展览会|发布会|座谈会|研讨会|能源|能量|才能|本能|性能|功能|智能|技能|职能|万能|能干|省会|体会', '', z)       # 会 inside these words is not the modal verb
     if re.search('会|能|可以', z_modal) and not re.search(r"can|could|able|may|allowed|know how|will|would|might|should|be able|please|fine|okay|\bok\b|all right|alright|either|good at|skilled|clever at|great at|capable", e):
@@ -148,7 +148,7 @@ def meaning_checks(zh, en):
         zneg = zneg.replace(p, '')
     zneg = re.sub(r'(.{1,2})[不没]\1', '', zneg)   # A-not-A questions: 是不是, 有没有, 喜欢不喜欢
     zneg = zneg.replace('不要', '不要')
-    en_neg = re.search(r"\b(not|no|never|don't|doesn't|isn't|aren't|won't|can't|cannot|didn't|nothing|nobody|without|isn't)\b|n't", e)
+    en_neg = re.search(r"\b(not|no|never|don't|doesn't|isn't|aren't|won't|can't|cannot|didn't|nothing|nobody|without|isn't)\b|n't", re.sub(r"\boh,? no\b", "", e, flags=re.I))
     en_neg_soft = re.search(r"\b(unhappy|unpleasant|unable|unwell|uncomfortable|unfriendly|stopped|stops?|hardly|any more|anymore|no longer)\b", e)   # 不开心 "unhappy", 不说话了 "stopped talking"
     if re.search('不|没|别|无', zneg) and not en_neg and not en_neg_soft and not re.search(r"\b(don't|do not|never|few|little|nothing|nobody)\b", e):
         # 没有 meaning "don't have" always shows up as a negative; 没 in 没事 is stripped above
