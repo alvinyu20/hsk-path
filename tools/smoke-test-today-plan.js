@@ -70,10 +70,35 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(await page.locator('.fin-go').count() === 1 && /Bonus round/.test(fin) && /Path: /.test(fin), 'a Bonus round button names the next Path step');
   check((await page.locator('.fin-row .btn').allInnerTexts()).map(t => t.trim()).join('|').endsWith('Journey'), 'and shortcuts end with the Journey: ' + (await page.locator('.fin-row .btn').allInnerTexts()).join('|'));
   check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'the card fits the phone width');
+  // the treasure chest: closed until tapped, one tap opens it and pays once
+  check(await page.locator('.fin-chest .ch.ch-closed').count() === 1 && /Tap the chest to open it/.test(await page.locator('.fin-chest').innerText()), 'the finished-day card shows a closed treasure chest to tap');
+  const x0 = await page.evaluate(() => window.shanlu.state.xp);
+  await page.locator('.ch-btn').click(); await page.waitForTimeout(150);
+  const o1 = await page.evaluate(() => ({ xp: window.shanlu.state.xp, paid: window.shanlu.state.dcPaid, amt: window.shanlu.state.dcAmt, sfx: (window.__sfxLog || []).join('|') }));
+  check(o1.paid && [50, 100, 200, 500].includes(o1.amt) && o1.xp === x0 + o1.amt && /chest/.test(o1.sfx), 'tapping opens it, pays 50, 100, 200 or 500 coins and plays the chest sound: ' + JSON.stringify(o1));
+  check(await page.locator('.ch.ch-open.ch-go').count() === 1 && (await page.locator('.ch-amt').innerText()).trim() === '+' + o1.amt && await page.locator('.ch-c').count() === 9, 'the opening animation runs and shows +' + o1.amt);
+  await page.waitForTimeout(5000);
+  check(await page.locator('.ch.ch-open').count() === 1 && await page.locator('.ch-go').count() === 0 && /opened/.test(await page.locator('.ch-btn').getAttribute('aria-label')), 'afterwards it stays open and still shows what it held');
+  await page.evaluate(() => window.shanlu.openChest(0.95)); 
+  check(await page.evaluate(() => window.shanlu.state.xp) === x0 + o1.amt, 'a chest is paid once a day');
+  // the odds: 40% 50 coins, 30% 100, 20% 200, 10% 500
+  const odds = [];
+  for (const r of [0, 0.39, 0.4, 0.69, 0.7, 0.89, 0.9, 0.999]) { await page.evaluate(() => window.shanlu.setState({ dcPaid: false, dcAmt: 0 })); await page.evaluate(r => window.shanlu.openChest(r), r); odds.push(await page.evaluate(() => window.shanlu.state.dcAmt)); }
+  check(odds.join(',') === '50,50,100,100,200,200,500,500', 'the roll maps to 40% 50, 30% 100, 20% 200, 10% 500: ' + odds.join(','));
+  const draws = await page.evaluate(() => { const a = window.shanlu; const c = { 50: 0, 100: 0, 200: 0, 500: 0 }; for (let i = 0; i < 4000; i++) { a.setState({ dcPaid: false, dcAmt: 0 }); a.openChest(); c[a.state.dcAmt]++; } return c; });
+  check(Math.abs(draws[50] / 4000 - 0.4) < 0.04 && Math.abs(draws[100] / 4000 - 0.3) < 0.04 && Math.abs(draws[200] / 4000 - 0.2) < 0.04 && Math.abs(draws[500] / 4000 - 0.1) < 0.03, 'a few thousand real draws land near those odds: ' + JSON.stringify(draws));
+  await page.evaluate(() => window.shanlu.setState({ dcPaid: false, dcAmt: 0, chestGo: false, dayXp: 340 })); await home();
+  check(await page.locator('.ch.ch-closed').count() === 1, 'a new chest is closed again (reset for the next check)');
   await shot('finished-light');
   // something still due again: the plan comes back
   await page.evaluate(() => window.shanlu.setState({ ws: window.__wsDue, rcomplete: false })); await home();
   check(await page.locator('.fin').count() === 0 && await page.locator('.tasks2').count() === 1, 'when a task opens again (a word comes due) the plan returns');
+  // regression: a grammar review that ended with points still due must not finish the day (the chest used to show with 3 points left)
+  const gres0 = await page.evaluate(() => window.shanlu.state.gres);
+  await page.evaluate(() => { const a = window.shanlu; const L = Object.keys(window.HSK1_GRAMMAR.points.reduce((o, p) => { o[p.lesson] = 1; return o; }, {}))[0]; a.setState({ gres: Object.assign({}, a.state.gres, { [L]: 90 }), grdone: true, rcomplete: true }); }); await home();
+  const gr = (await page.locator('.tasks2 .task2', { hasText: 'Grammar review' }).first().innerText()).replace(/\s+/g, ' ');
+  check(await page.locator('.fin').count() === 0 && /still due/.test(gr) && !/Done/.test(gr), 'a finished grammar session with points still due keeps the plan open: ' + gr);
+  await page.evaluate(g => window.shanlu.setState({ gres: g }), gres0); await home();
   await page.evaluate(() => window.shanlu.setState({ ws: window.__wsClean, rcomplete: true })); await home();
   // tomorrow's due words are counted: find how long ago a 1-day-stability word was seen so that it is not due today but is by tomorrow
   let found = false;

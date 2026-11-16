@@ -504,7 +504,7 @@
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
   const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'mbest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'pbase', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch', 'dcN', 'dcPaid'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'pbase', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch', 'dcN', 'dcPaid', 'dcAmt'];
 
   // Settings that belong to the person, not the device: kept as person preferences ('set.<name>', 'level', 'erhua') so every device ends up with the same ones.
   // (The browser voice stays on the device: the voices on a phone and a laptop are different ones.)
@@ -536,17 +536,25 @@
 
   function rollDay(s) {
     const t = ymd(new Date());
-    if (s.day === t) return s.mem0 == null || s.pbase == null || s.dcN == null ? Object.assign({}, s, { mem0:s.mem0 == null ? memOf(s.ws).words : s.mem0, pbase:s.pbase == null ? pathDoneCount(s) : s.pbase, dcN:s.dcN == null ? dueCountsNow(s).n : s.dcN, dcPaid:!!s.dcPaid }) : s;
+    if (s.day === t) return s.mem0 == null || s.pbase == null || s.dcN == null ? Object.assign({}, s, { mem0:s.mem0 == null ? memOf(s.ws).words : s.mem0, pbase:s.pbase == null ? pathDoneCount(s) : s.pbase, dcN:s.dcN == null ? dueCountsNow(s).n : s.dcN, dcPaid:!!s.dcPaid, dcAmt:s.dcAmt || 0 }) : s;
     const rq = buildQueue(s.ws, false);
     return Object.assign({}, s, {
       mem0:memOf(s.ws).words, pbase:pathDoneCount(s), day:t, dayXp:0, dayMin:0, wlearned:{}, wrated:{}, wdelta:{}, wreveal:{}, webCredited:false,
       rcomplete:false, rdone:0, rxp:0, rq, rtotal:rq.length, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rrun:0, rmiss:[], rflip:false,
       gdone:false, grdone:false, tdone:false, ldone:false, spokeToday:false, sdone:false, sturn:0,
-      dcN:dueCountsNow(s).n, dcPaid:false   // how much was due when the day began, and whether the 100-coin bonus for clearing it has been paid
+      dcN:dueCountsNow(s).n, dcPaid:false, dcAmt:0   // how much was due when the day began; whether today's treasure chest has been opened, and what was in it
     });
   }
   // what is due right now: started words (any of their cards) and grammar points open to review. Used for the daily clear bonus.
-  const DAILY_BONUS = 100;
+  // The treasure chest that opens once a day when today's plan is finished: 40% 50 coins, 30% 100, 20% 200, 10% 500 (average 140).
+  const CHEST = [
+    { to:0.4, amt:50, tier:'t50', line:'A handful of coins' },
+    { to:0.7, amt:100, tier:'t100', line:'A fine haul' },
+    { to:0.9, amt:200, tier:'t200', line:'A big haul!' },
+    { to:1.01, amt:500, tier:'t500', line:'Jackpot!' }
+  ];
+  const chestRoll = (r) => CHEST.find(c => r < c.to) || CHEST[0];
+  const chestFor = (amt) => CHEST.find(c => c.amt === amt) || CHEST[0];
   function dueCountsNow(S) {
     let w = 0; BANK_KEYS.forEach(zh => { const x = S.ws && S.ws[zh]; if (x && DIMS.every(k => x[k])) { const i = winfo(x, 0); if (i.started && i.dueN <= 0) w++; } });
     let g = 0; try { const greg = gptReg(); Object.keys(greg).forEach(id => { if (gptOpen(S, id) && gptDueNow(S, id)) g++; }); } catch (e) {}
@@ -1566,6 +1574,7 @@
       bad:  (c, t) => { tone(c, 262, t, 0.16, 'triangle', 0.1); tone(c, 196, t + 0.1, 0.24, 'triangle', 0.1); },
       done: (c, t) => { [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(c, f, t + i * 0.11, 0.3, 'sine', 0.1)); tone(c, 1046.5, t + 0.44, 0.5, 'triangle', 0.06); },
       ach:  (c, t) => { [783.99, 987.77, 1174.66, 1567.98].forEach((f, i) => tone(c, f, t + i * 0.09, 0.45, 'sine', 0.09)); },
+      chest:(c, t) => { tone(c, 110, t, 0.18, 'sawtooth', 0.05); tone(c, 165, t + 0.1, 0.16, 'sawtooth', 0.04); [1046.5, 1318.5, 1568, 2093, 1568, 2093, 2637].forEach((f, i) => tone(c, f, t + 0.55 + i * 0.07, 0.3, 'triangle', 0.07)); tone(c, 784, t + 0.55, 0.9, 'sine', 0.06); },
       fly:  (c, t) => { [392, 523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(c, f, t + i * 0.08, 0.4, 'triangle', 0.08)); tone(c, 1318.5, t + 0.5, 0.6, 'sine', 0.07); }
     };
     const play = (name, force) => {
@@ -1736,16 +1745,16 @@
       if (!this.fromPerson) SETTING_KEYS.forEach(k => { if (patch[k] !== undefined && patch[k] !== S[k]) prefSet('set.' + k, patch[k]); });   // a setting the person changed travels to their other devices
       super.setState(patch);
       this.persistSoon();
-      if (!this.state.dcPaid && (patch.rcomplete || patch.qdone || patch.screen === 'home' || patch.screen === 'greview')) { clearTimeout(this.dcT); this.dcT = setTimeout(() => { try { this.dailyClear(); } catch (e) {} }, 80); }
     }
     dueCounts = () => dueCountsNow(this.state);
-    // Clearing everything that was due today (words and grammar points) pays a one-time bonus; a day with nothing due pays nothing
-    dailyClear() {
+    // Today's treasure chest: opens once, when everything in today's plan is done. The coins are paid at the tap; the animation only shows them.
+    openChest = (roll) => {
       const S = this.state;
-      if (S.dcPaid || !(S.dcN > 0) || S.day !== ymd(new Date()) || S.screen === 'quiz' && !S.qdone) return;
-      if (dueCountsNow(S).n > 0) return;
-      this.setState({ xp:S.xp + DAILY_BONUS, dayXp:S.dayXp + DAILY_BONUS, dcPaid:true, msQueue:(S.msQueue || []).concat([{ icon:'🌟', title:'Daily clear: +' + DAILY_BONUS + ' coins', desc:'Everything that was due today is done.' }]) });
-      SFX.play('ach'); this.msArm();
+      if (S.dcPaid || S.day !== ymd(new Date()) || dueCountsNow(S).n > 0) return;
+      const c = chestRoll(typeof roll === 'number' ? roll : Math.random());
+      this.setState({ xp:S.xp + c.amt, dayXp:S.dayXp + c.amt, dcPaid:true, dcAmt:c.amt, chestGo:true });
+      SFX.play('chest');
+      clearTimeout(this.chT); this.chT = setTimeout(() => { try { this.setState({ chestGo:false }); } catch (e) {} }, 4600);
     }
     persistSoon() {
       if (!this.persistAsked && this.state.xp > 0) this.ensurePersist(true);
@@ -3653,7 +3662,7 @@
       m.meanings = Object.keys(S.mbest || {}).filter(z => S.mbest[z] >= 2).length;
       m.clips = Math.max(clipsSaved, (S.clipBest || []).filter(x => x > 0).length); m.hubs = Math.max(hubsSaved, HUBS.filter(h => h.words.length && h.words.every(w => started(S.ws[w.zh]))).length);
       { const grOpen = (() => { const greg = gptReg(); return Object.keys(greg).filter(id => gptOpen(S, id)).length; })();
-        m.fullDay = S.pbase != null && pathDoneCount(S) > S.pbase && !!S.rcomplete && (!grOpen || !!S.grdone); }
+        m.fullDay = S.pbase != null && pathDoneCount(S) > S.pbase && !!S.rcomplete && (!grOpen || (!!S.grdone && !Object.keys(gptReg()).some(id => gptOpen(S, id) && gptDueNow(S, id)))); }
       m.gwrote = Math.max(m.gwrote, Object.keys(S.gpt || {}).filter(id => ((S.gpt[id] || {}).wok || 0) >= 1).length);
       // days in a row at (or over) the daily goal, counted back from today (or from yesterday if today is not done yet)
       try {
@@ -4858,8 +4867,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         run:pathStep ? () => this.pathContinue(pathStep.st.id) : () => this.go('path') });
       if (dueWordsN > 0 || S.rq.length > 0 || S.rcomplete) planRows.push({ glyph:'词', title:'Review words', meta:dueWordsN > 0 ? dueWordsN + (S.rcomplete ? ' still due' : ' due') : 'All caught up', done:S.rcomplete && dueWordsN === 0,
         run:() => { if (!S.rq.length && dueWordsN > 0) this.reviewMore(); this.go('review'); } });
-      if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + ' due' : 'Nothing due, short practice', done:!!S.grdone, run:() => this.startGrammarReview(true) });
-      const dcLeft = dueCountsNow(S).n;
+      if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + (S.grdone ? ' still due' : ' due') : 'Nothing due, short practice', done:!!S.grdone && grvDueToday === 0, run:() => this.startGrammarReview(true) });
       const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:t.run }));
       const moreWays = [
         pathStep && pathAllDone ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), cls:'', fn:() => this.pathContinue(pathStep.st.id) } : null,
@@ -4886,6 +4894,9 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
           finLight:'Light day ' + (stk + 1), finWeek,
           finDue:dueTomorrow > 0 ? dueTomorrow + (dueTomorrow === 1 ? ' word comes' : ' words come') + ' due tomorrow. Catch ' + (dueTomorrow === 1 ? 'it' : 'them') + ' and the streak grows.' : 'Nothing is due tomorrow yet. One Path step keeps your streak going.',
           finBonusShow:!!bonusGo, finBonusGo:bonusGo || (() => {}), finBonusSub:pathStep ? 'Path: ' + stopTitle(pathStep.st) : '',
+          chestCls:S.dcPaid ? 'ch-open' + (S.chestGo ? ' ch-go' : '') + ' ' + chestFor(S.dcAmt).tier : 'ch-closed', chestOpened:!!S.dcPaid, chestTap:() => this.openChest(),
+          chestAmt:'+' + (S.dcAmt || 0), chestLine:S.dcPaid ? chestFor(S.dcAmt).line : 'Tap the chest to open it',
+          chestLabel:S.dcPaid ? 'Treasure chest, opened: ' + (S.dcAmt || 0) + ' coins' : 'Open today\'s treasure chest',
           finMore:['Listening', 'Speak'].map(l => moreWays.find(c => c.label === l)).filter(Boolean).map(c => ({ label:c.label, fn:c.fn })).concat([{ label:'Journey', fn:() => this.go('journey') }])
         });
       }
@@ -5518,7 +5529,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         webCapOpen:S.webCapOpen, toggleCapOpen:() => this.setState({ webCapOpen:!S.webCapOpen }),
         ascSub:'Every word you learn moves you along the path, all the way to HSK 9.',
         trailD:{ src:trD.src, alt:trailAlt, labels:asLabels(trD).concat([youLabel(trD)]) }, trailP:{ src:trP.src, alt:trailAlt, labels:asLabels(trP).concat(trP.hideYou ? [] : [youLabel(trP)]) },
-        dcShow:S.dcN > 0, dcCls:S.dcPaid ? 'got' : '', dcText:S.dcPaid ? '✓ Everything due is cleared · +' + DAILY_BONUS + ' coins' : 'Bonus: +' + DAILY_BONUS + ' coins when everything due is cleared · ' + dcLeft + ' left',
+        dcShow:tasks.length > 0, dcCls:S.dcPaid ? 'got' : '', dcText:S.dcPaid ? '✓ Treasure chest opened · +' + (S.dcAmt || 0) + ' coins' : 'Finish today\'s plan to open a treasure chest · ' + tasks.filter(t => !t.done).length + ' left',
+
         todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed. Anything else is a bonus.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
         mistClearText:mistClear + ' of ' + TOPICS.length + ' fully started', mistTiles, mistHasNear:!!nearBest, mistOpen:S.wmist, toggleMist:() => this.setState({ wmist:!this.state.wmist }), mistToggleText:S.wmist ? 'Hide the topic map' : 'Show all ' + TOPICS.length + ' topics',
         mistNearText:nearBest ? 'Finish ' + nearBest.name + ' (' + (nearBest.tot - nearBest.got) + ' to go)' : '', mistNearGo:() => nearBest && openTopic(nearBest.i),

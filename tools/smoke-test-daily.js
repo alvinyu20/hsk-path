@@ -1,4 +1,4 @@
-/* Browser test: due dates switch over at midnight (the day's list is fixed), and clearing everything due pays a one-time 100-coin bonus.
+/* Browser test: due dates switch over at midnight (the day's list is fixed), and the daily treasure chest pays once.
  * Usage: NODE_PATH=$(npm root -g) node tools/smoke-test-daily.js */
 const path = require('path');
 const { chromium } = require('playwright');
@@ -44,23 +44,25 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   await ev(() => window.shanlu.reviewMore());
   check(await ev(() => window.shanlu.state.rq.length) >= 1, 'every due word gives Review something to ask');
   await ev(() => window.shanlu.setState({ rq: [], rcomplete: false }));
-  // the daily clear bonus
+  // the daily treasure chest (a new one each day, paid once, only when nothing is due)
+  const today = () => ev(() => { const p = (v) => String(v).padStart(2, '0'); const n = new Date(); return n.getFullYear() + '-' + p(n.getMonth() + 1) + '-' + p(n.getDate()); });
   const x0 = await ev(() => window.shanlu.state.xp);
-  await ev(() => { const a = window.shanlu; a.setState({ dcN: 1, dcPaid: false, day: (function (n) { const p = (v) => String(v).padStart(2, '0'); return n.getFullYear() + '-' + p(n.getMonth() + 1) + '-' + p(n.getDate()); })(new Date()) }); a.dailyClear(); });
-  check(await ev(() => window.shanlu.state.xp) === x0 && !(await ev(() => window.shanlu.state.dcPaid)), 'no bonus while something is still due');
+  await ev(async (d) => { const a = window.shanlu; a.setState({ dcN: 1, dcPaid: false, dcAmt: 0, day: d }); }, await today());
+  await setWord(5 * DAY, 2);   // something is due
+  await ev(() => window.shanlu.openChest(0.5));
+  check(await ev(() => window.shanlu.state.xp) === x0 && !(await ev(() => window.shanlu.state.dcPaid)), 'the chest will not open while something is still due');
   await setWord(60e3, 5);   // reviewed just now: nothing due
-  await ev(() => window.shanlu.dailyClear()); await page.waitForTimeout(100);
-  const x1 = await ev(() => ({ xp: window.shanlu.state.xp, paid: window.shanlu.state.dcPaid, toast: (window.shanlu.state.msQueue || []).map(m => m.title).join('|') }));
-  check(x1.xp === x0 + 100 && x1.paid && /Daily clear/.test(x1.toast), 'clearing everything due pays 100 coins and says so (' + JSON.stringify(x1) + ')');
-  await ev(() => window.shanlu.dailyClear());
-  check(await ev(() => window.shanlu.state.xp) === x1.xp, 'the bonus is paid once a day');
-  await ev(() => { const a = window.shanlu; a.setState({ dcN: 0, dcPaid: false }); a.dailyClear(); });
-  check(await ev(() => window.shanlu.state.xp) === x1.xp && !(await ev(() => window.shanlu.state.dcPaid)), 'a day that started with nothing due pays no bonus');
+  await ev(() => window.shanlu.openChest(0.5)); await page.waitForTimeout(100);
+  const x1 = await ev(() => ({ xp: window.shanlu.state.xp, paid: window.shanlu.state.dcPaid, amt: window.shanlu.state.dcAmt }));
+  check(x1.xp === x0 + 100 && x1.paid && x1.amt === 100, 'with nothing due the chest opens and pays (a 0.5 roll is 100 coins): ' + JSON.stringify(x1));
+  await ev(() => window.shanlu.openChest(0.95));
+  check(await ev(() => window.shanlu.state.xp) === x1.xp, 'the chest is paid once a day');
+  check(await ev(() => !window.shanlu.dailyClear), 'clearing everything due no longer pays by itself');
   // a new day starts again, with the count of what is due
   await setWord(5 * DAY, 2);
-  await ev(() => { const a = window.shanlu; a.setState({ day: '2000-01-01', dcPaid: true, dcN: 0 }); a.go('home'); }); await page.waitForTimeout(300);
-  const nd = await ev(() => ({ paid: window.shanlu.state.dcPaid, n: window.shanlu.state.dcN, note: (document.querySelector('.dc-note') || {}).textContent }));
-  check(nd.paid === false && nd.n === 1 && /\+100 coins/.test(nd.note || ''), 'a new day resets the bonus and counts what is due (' + JSON.stringify(nd) + ')');
+  await ev(() => { const a = window.shanlu; a.setState({ day: '2000-01-01', dcPaid: true, dcAmt: 200, dcN: 0 }); a.go('home'); }); await page.waitForTimeout(300);
+  const nd = await ev(() => ({ paid: window.shanlu.state.dcPaid, amt: window.shanlu.state.dcAmt, n: window.shanlu.state.dcN, note: (document.querySelector('.dc-note') || {}).textContent }));
+  check(nd.paid === false && nd.n === 1 && nd.amt === 0 && /treasure chest/i.test(nd.note || ''), 'a new day resets the chest and counts what is due (' + JSON.stringify(nd) + ')');
   check(errs.length === 0, 'no page errors: ' + errs.join(' | '));
   await browser.close(); server.close();
   if (failures) { console.log(failures + ' failed'); process.exit(1); }

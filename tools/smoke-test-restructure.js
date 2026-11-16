@@ -87,7 +87,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(await scr(page) === 'quiz' && await page.evaluate(() => window.shanlu.state.qmode) === 'greview', 'tapping the row begins a Grammar review session');
   // answer the session through
   for (let guard = 0; guard < 20 && !(await page.evaluate(() => window.shanlu.state.qdone)); guard++) {
-    await page.evaluate(() => { const a = window.shanlu; const q = a.curQ(); a.setState({ qchecked: true, qcorrect: true }); });
+    await page.evaluate(() => { const a = window.shanlu; const q = a.curQ(); if (q && q.pt) a.gptRecord(q.pt, 'r', true, 'good', q.gpool); a.setState({ qchecked: true, qcorrect: true }); });   // answer it for real, so the point is no longer due
     await page.evaluate(() => { const a = window.shanlu; const S = a.state; if (!S.qdone) { if (S.qi + 1 >= a.quizQs.length) a.setState({ qdone: true, gdone: true, grdone: true }); else a.setState({ qi: S.qi + 1, qchecked: false }); } });
   }
   await page.evaluate(() => window.shanlu.go('home')); await page.waitForTimeout(150);
