@@ -121,7 +121,7 @@ def meaning_checks(zh, en):
     zc = strip_punct(zh)
     if re.search(r'\bboth\b|\bon two sides\b', e):
         zc = re.sub('两边|两旁|两侧|两岸|两头', 'XXX', zc)       # 两边 = both sides: the English says "both"
-    zc = re.sub('零花钱|零钱|零食|千万|千克|十字路口|二维码|老百姓|百姓|百货|四处|四周|四面', 'XXX', zc).replace('二手', '旧手')   # 二 in 二手 / 二维码 is not a number       # 零 here is part of the word, not the number 0
+    zc = re.sub('零花钱|零钱|零食|千万|千克|十字路口|二维码|老百姓|百姓|百货|四处|四周|四面|五颜六色', 'XXX', zc).replace('二手', '旧手')   # 二 in 二手 / 二维码 is not a number       # 零 here is part of the word, not the number 0
 
     # want / would like
     if re.search(r"\b(want|wants|wanted|would (?:you |he |she |they )?like|'d like|wish)\b", e) and not re.search('想|要|希望|愿意|祝', z):
@@ -438,6 +438,8 @@ def _pinyin_variant(chars, py, pick):
     one_at = set()
     for w in ONE_WORDS:
         for m in re.finditer(re.escape(w), zc):
+            if m.start() > 0 and zc[m.start() - 1] in '万统唯同第':
+                continue          # 万一下雨: this 一 ends 万一 and keeps tone 1, as in 统一 唯一 同一 第一
             one_at.add(m.start())
     for k, (syl, t) in enumerate(disp):
         if k + 1 >= len(disp) or t == 0 or disp[k + 1][1] == 0:
