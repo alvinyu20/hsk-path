@@ -36,7 +36,23 @@
     "嗯",
     "拒绝",
     "答应",
-    "邀请"
+    "邀请",
+    "哎",
+    "哎呀",
+    "恭喜",
+    "光临",
+    "贵姓",
+    "一路顺风",
+    "告别",
+    "握手",
+    "拥抱",
+    "迎接",
+    "迎",
+    "尊敬",
+    "看望",
+    "请教",
+    "好运",
+    "嘉宾"
    ],
    "sentences": {
     "1": {
@@ -50,6 +66,10 @@
     "4": {
      "zh": "我向老师道歉，老师原谅了我。",
      "en": "I apologised to the teacher, and the teacher kindly forgave me."
+    },
+    "5": {
+     "zh": "恭喜！我们握手告别，一路顺风！",
+     "en": "Congratulations! We shake hands and say goodbye. Have a good trip!"
     }
    }
   },
@@ -84,7 +104,16 @@
     "各个",
     "各位",
     "对方",
-    "任何"
+    "任何",
+    "本人",
+    "彼此",
+    "各自",
+    "他人",
+    "自身",
+    "某",
+    "其",
+    "其余",
+    "个人"
    ],
    "sentences": {
     "1": {
@@ -102,6 +131,10 @@
     "4": {
      "zh": "各位同学，任何问题都可以问我。",
      "en": "Everyone, you can ask me any question."
+    },
+    "5": {
+     "zh": "我们各自有工作，但彼此常常联系。",
+     "en": "We each have our own work, but we often keep in touch with each other."
     }
    }
   },
@@ -140,7 +173,18 @@
     "之中",
     "当时",
     "从中",
-    "底"
+    "底",
+    "此后",
+    "此前",
+    "此时",
+    "如此",
+    "如何",
+    "如下",
+    "当前",
+    "当地",
+    "本地",
+    "当年",
+    "当中"
    ],
    "sentences": {
     "1": {
@@ -154,6 +198,10 @@
     "4": {
      "zh": "我家对面有一个公园，公园周围有很多树。",
      "en": "There is a park opposite my home, and there are many trees around it."
+    },
+    "5": {
+     "zh": "如下就是当地的规定。",
+     "en": "The following is the local rule."
     }
    }
   },
@@ -182,7 +230,8 @@
     "究竟",
     "到底",
     "是否",
-    "能否"
+    "能否",
+    "如何"
    ],
    "sentences": {
     "1": {
@@ -235,7 +284,23 @@
     "许多",
     "多样",
     "一切",
-    "所有"
+    "所有",
+    "亿",
+    "甲",
+    "乙",
+    "总数",
+    "总共",
+    "整整",
+    "将近",
+    "上下",
+    "大于",
+    "小于",
+    "等于",
+    "计算",
+    "统计",
+    "平均",
+    "比例",
+    "首次"
    ],
    "sentences": {
     "1": {
@@ -249,6 +314,10 @@
     "4": {
      "zh": "这个班有二十个学生，多数是女生。",
      "en": "There are twenty students in this class, and most of them are girls."
+    },
+    "5": {
+     "zh": "这个城市的人口将近一亿。",
+     "en": "The population of this city is nearly one hundred million."
     }
    }
   },
@@ -303,7 +372,32 @@
     "至少",
     "多样",
     "分为",
-    "其中"
+    "其中",
+    "大批",
+    "大多",
+    "个别",
+    "众多",
+    "无数",
+    "足够",
+    "充足",
+    "充分",
+    "不足",
+    "缺乏",
+    "极其",
+    "全体",
+    "整体",
+    "总体",
+    "全面",
+    "相当",
+    "有限",
+    "无限",
+    "其余",
+    "过度",
+    "过分",
+    "广泛",
+    "齐",
+    "占",
+    "广大"
    ],
    "sentences": {
     "1": {
@@ -321,6 +415,10 @@
     "4": {
      "zh": "我的钱不够，只买了一部分。",
      "en": "My money is not enough, so I only bought part of it."
+    },
+    "5": {
+     "zh": "大批游客来到这里，这里足够热闹。",
+     "en": "A large number of tourists come here, so it is lively enough."
     }
    }
   },
@@ -373,7 +471,24 @@
     "座",
     "倍",
     "秒",
-    "俩"
+    "俩",
+    "册",
+    "朵",
+    "副",
+    "伙",
+    "架",
+    "颗",
+    "届",
+    "批",
+    "匹",
+    "群",
+    "束",
+    "所",
+    "套",
+    "团",
+    "阵",
+    "支",
+    "根"
    ],
    "sentences": {
     "1": {
@@ -391,6 +506,10 @@
     "4": {
      "zh": "我昨天看了一部电影，吃了一顿很好的饭。",
      "en": "Yesterday I watched a film and had a very good meal."
+    },
+    "5": {
+     "zh": "他送了我一束花、一套书和一副手套。",
+     "en": "He gave me a bunch of flowers, a set of books and a pair of gloves."
     }
    }
   },
@@ -411,7 +530,14 @@
     "摄氏度",
     "秒",
     "零下",
-    "量"
+    "量",
+    "吨",
+    "厘米",
+    "度",
+    "人民币",
+    "重量",
+    "长度",
+    "尺子"
    ],
    "sentences": {
     "3": {
@@ -421,6 +547,10 @@
     "4": {
      "zh": "他每天跑五公里，体重已经减了两千克。",
      "en": "He runs five kilometres every day, and he has already lost two kilograms."
+    },
+    "5": {
+     "zh": "这把尺子长三十厘米。",
+     "en": "This ruler is thirty centimetres long."
     }
    }
   },
@@ -442,7 +572,20 @@
     "性别",
     "身份证",
     "证件",
-    "证"
+    "证",
+    "名称",
+    "名片",
+    "贵姓",
+    "签名",
+    "签字",
+    "身份",
+    "简历",
+    "本人",
+    "个人",
+    "住址",
+    "签",
+    "知名",
+    "私人"
    ],
    "sentences": {
     "1": {
@@ -456,6 +599,10 @@
     "4": {
      "zh": "请填写你的年龄和国籍。",
      "en": "Please fill in your age and nationality."
+    },
+    "5": {
+     "zh": "请在这里签名，再写上你的住址。",
+     "en": "Please sign here and write down your address."
     }
    }
   },
@@ -518,7 +665,29 @@
     "毕业生",
     "研究生",
     "教授",
-    "大夫"
+    "大夫",
+    "男子",
+    "女子",
+    "妇女",
+    "成人",
+    "路人",
+    "行人",
+    "熟人",
+    "敌人",
+    "大妈",
+    "大爷",
+    "小姐",
+    "太太",
+    "新郎",
+    "新娘",
+    "新人",
+    "主人",
+    "人物",
+    "嘉宾",
+    "伙伴",
+    "对手",
+    "选手",
+    "私人"
    ],
    "sentences": {
     "1": {
@@ -536,6 +705,10 @@
     "4": {
      "zh": "这位歌手和那位演员都是我喜欢的。",
      "en": "This singer and that actor are both people I like."
+    },
+    "5": {
+     "zh": "路人都看着那位新娘和新郎。",
+     "en": "The passers-by are all looking at the bride and groom."
     }
    }
   },
@@ -561,7 +734,17 @@
     "队",
     "球队",
     "负责人",
-    "院长"
+    "院长",
+    "物业",
+    "居民",
+    "社区",
+    "接待",
+    "访问",
+    "看望",
+    "嘉宾",
+    "客户",
+    "熟人",
+    "路人"
    ],
    "sentences": {
     "3": {
@@ -571,6 +754,10 @@
     "4": {
      "zh": "房东叫师傅来修我家的窗户。",
      "en": "The landlord told the repairman to come and fix the window of my home."
+    },
+    "5": {
+     "zh": "物业和居民一起接待嘉宾。",
+     "en": "The property management and the residents receive the guests together."
     }
    }
   },
@@ -616,7 +803,23 @@
     "老家",
     "家乡",
     "院子",
-    "一生"
+    "一生",
+    "儿女",
+    "子女",
+    "亲人",
+    "亲情",
+    "亲朋好友",
+    "姥姥",
+    "姥爷",
+    "外公",
+    "外婆",
+    "老公",
+    "老婆",
+    "夫妇",
+    "家务",
+    "宝贝",
+    "一代",
+    "亲"
    ],
    "sentences": {
     "1": {
@@ -634,6 +837,36 @@
     "4": {
      "zh": "我父母的老家在农村，亲戚很多。",
      "en": "My parents' old home is in the countryside, and there are many relatives."
+    },
+    "5": {
+     "zh": "姥姥和姥爷很爱他们的儿女。",
+     "en": "Grandma and Grandpa love their children very much."
+    }
+   }
+  },
+  {
+   "name": "Love and marriage",
+   "group": "People",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "婚礼",
+    "离婚",
+    "恋爱",
+    "失恋",
+    "分手",
+    "新郎",
+    "新娘",
+    "新人",
+    "夫妇",
+    "老公",
+    "老婆",
+    "对象"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "他们恋爱三年，今年举行婚礼。",
+     "en": "They have been in love for three years and are having their wedding this year."
     }
    }
   },
@@ -670,7 +903,23 @@
     "死",
     "生",
     "生命",
-    "儿童"
+    "儿童",
+    "成年",
+    "成人",
+    "成长",
+    "成熟",
+    "年纪",
+    "年代",
+    "一代",
+    "幼儿园",
+    "退休",
+    "去世",
+    "儿女",
+    "子女",
+    "初",
+    "代",
+    "命",
+    "命运"
    ],
    "sentences": {
     "1": {
@@ -688,6 +937,10 @@
     "4": {
      "zh": "他从童年开始，就爱唱歌。",
      "en": "He has loved singing since childhood."
+    },
+    "5": {
+     "zh": "孩子在幼儿园长大，成熟得很快。",
+     "en": "The child grows up in kindergarten and matures quickly."
     }
    }
   },
@@ -737,7 +990,50 @@
     "面试",
     "售票员",
     "院长",
-    "申请"
+    "申请",
+    "保安",
+    "导演",
+    "飞行员",
+    "工程师",
+    "公务员",
+    "秘书",
+    "乘务员",
+    "裁判",
+    "主任",
+    "老板",
+    "职工",
+    "员工",
+    "商人",
+    "农民",
+    "主席",
+    "志愿者",
+    "专家",
+    "学者",
+    "人才",
+    "创业",
+    "辞职",
+    "离职",
+    "失业",
+    "就业",
+    "实习",
+    "聘请",
+    "培训",
+    "劳动",
+    "事业",
+    "职场",
+    "从事",
+    "担任",
+    "待遇",
+    "主持",
+    "代表",
+    "各行各业",
+    "领",
+    "领导",
+    "派",
+    "项目",
+    "承担",
+    "咨询",
+    "工程"
    ],
    "sentences": {
     "1": {
@@ -755,6 +1051,10 @@
     "4": {
      "zh": "大夫和护士都很辛苦。",
      "en": "The doctor and the nurse both work very hard."
+    },
+    "5": {
+     "zh": "她是一名工程师，现在担任部门主任。",
+     "en": "She is an engineer and now serves as department director."
     }
    }
   },
@@ -793,12 +1093,36 @@
     "商品",
     "货",
     "安排",
-    "活动"
+    "活动",
+    "企业",
+    "机构",
+    "业务",
+    "客户",
+    "客服",
+    "合同",
+    "商务",
+    "商业",
+    "商家",
+    "经营",
+    "营业",
+    "开业",
+    "总部",
+    "中介",
+    "签订",
+    "协议",
+    "资格",
+    "团队",
+    "员工",
+    "职工"
    ],
    "sentences": {
     "4": {
      "zh": "他每天加班，工资也不高。",
      "en": "He works overtime every day, and the pay is not high either."
+    },
+    "5": {
+     "zh": "公司和客户签订了新合同。",
+     "en": "The company signed a new contract with a client."
     }
    }
   },
@@ -847,7 +1171,17 @@
     "假日",
     "节假日",
     "年龄",
-    "一生"
+    "一生",
+    "年初",
+    "季度",
+    "学年",
+    "周年",
+    "今日",
+    "近日",
+    "年代",
+    "当年",
+    "近年来",
+    "以来"
    ],
    "sentences": {
     "1": {
@@ -865,6 +1199,10 @@
     "4": {
      "zh": "我们的期末考试在一月的最后一个星期。",
      "en": "Our end-of-term exam is in the last week of January."
+    },
+    "5": {
+     "zh": "年初和年底，我们都很忙。",
+     "en": "At the beginning and the end of the year we are all very busy."
     }
    }
   },
@@ -927,7 +1265,16 @@
     "庆祝",
     "聚会",
     "聚",
-    "外出"
+    "外出",
+    "除夕",
+    "元旦",
+    "国庆",
+    "压岁钱",
+    "年夜饭",
+    "纪念日",
+    "周年",
+    "生肖",
+    "纪念"
    ],
    "sentences": {
     "3": {
@@ -937,6 +1284,10 @@
     "4": {
      "zh": "节假日里，朋友们常常聚会。",
      "en": "On holidays, friends often get together."
+    },
+    "5": {
+     "zh": "除夕，我们一家人一起吃年夜饭。",
+     "en": "On New Year's Eve, our whole family has the big dinner together."
     }
    }
   },
@@ -976,7 +1327,17 @@
     "晚餐",
     "时间表",
     "目前",
-    "末"
+    "末",
+    "半夜",
+    "傍晚",
+    "夜间",
+    "早晚",
+    "熬夜",
+    "闹钟",
+    "时差",
+    "日历",
+    "时刻",
+    "此时"
    ],
    "sentences": {
     "1": {
@@ -990,6 +1351,10 @@
     "4": {
      "zh": "我早晨七点吃早餐，晚上八点吃晚餐。",
      "en": "I eat breakfast at seven in the morning and dinner at eight in the evening."
+    },
+    "5": {
+     "zh": "他常常熬夜，半夜才睡觉。",
+     "en": "He often stays up late and only goes to bed at midnight."
     }
    }
   },
@@ -1020,7 +1385,23 @@
     "赶快",
     "赶紧",
     "按时",
-    "准时"
+    "准时",
+    "长久",
+    "长期",
+    "短期",
+    "长远",
+    "久远",
+    "持续",
+    "期间",
+    "延长",
+    "缩短",
+    "到期",
+    "过期",
+    "定期",
+    "保质期",
+    "临时",
+    "悠久",
+    "时期"
    ],
    "sentences": {
     "3": {
@@ -1030,6 +1411,10 @@
     "4": {
      "zh": "快一点，我们还来得及赶上火车。",
      "en": "Hurry up; we are still in time to catch the train."
+    },
+    "5": {
+     "zh": "这次活动将持续很长时间。",
+     "en": "This event will continue for a long time."
     }
    }
   },
@@ -1072,7 +1457,23 @@
     "再次",
     "已",
     "忽然",
-    "最终"
+    "最终",
+    "曾",
+    "曾经",
+    "从不",
+    "时常",
+    "通常",
+    "反复",
+    "一旦",
+    "随时",
+    "早已",
+    "至今",
+    "从前",
+    "偶然",
+    "定期",
+    "重复",
+    "改天",
+    "连续"
    ],
    "sentences": {
     "1": {
@@ -1090,6 +1491,10 @@
     "4": {
      "zh": "我偶尔去看电影，但是从来不迟到。",
      "en": "I go to the cinema now and then, but I am never late."
+    },
+    "5": {
+     "zh": "他从不迟到，通常来得很早。",
+     "en": "He never arrives late and usually comes very early."
     }
    }
   },
@@ -1130,7 +1535,31 @@
     "前后",
     "末",
     "再次",
-    "此外"
+    "此外",
+    "此后",
+    "此前",
+    "随后",
+    "先后",
+    "陆续",
+    "最初",
+    "早期",
+    "初期",
+    "中期",
+    "近期",
+    "近代",
+    "古代",
+    "事先",
+    "未来",
+    "如今",
+    "自从",
+    "以来",
+    "近年来",
+    "即将",
+    "刚好",
+    "立刻",
+    "立即",
+    "连续",
+    "前途"
    ],
    "sentences": {
     "3": {
@@ -1140,6 +1569,10 @@
     "4": {
      "zh": "之前我很忙，之后就轻松多了。",
      "en": "Before, I was busy; after that it was much easier."
+    },
+    "5": {
+     "zh": "此前我没见过他，此后我们常常见面。",
+     "en": "I had not met him before this; after this we often meet."
     }
    }
   },
@@ -1202,7 +1635,30 @@
     "味",
     "味道",
     "熟",
-    "饼干"
+    "饼干",
+    "餐饮",
+    "盒饭",
+    "火锅",
+    "烧烤",
+    "西餐",
+    "主食",
+    "饮食",
+    "营养",
+    "大米",
+    "粮食",
+    "豆腐",
+    "油条",
+    "饼",
+    "口味",
+    "美味",
+    "海鲜",
+    "食用",
+    "特产",
+    "酸甜苦辣",
+    "年夜饭",
+    "夜市",
+    "点心",
+    "浓"
    ],
    "sentences": {
     "1": {
@@ -1220,6 +1676,10 @@
     "4": {
      "zh": "我喜欢在食堂吃午餐，那里的菜味道不错。",
      "en": "I like to eat lunch in the canteen; the taste there is good."
+    },
+    "5": {
+     "zh": "他最喜欢火锅，我喜欢西餐。",
+     "en": "He likes hot pot best, and I like Western food."
     }
    }
   },
@@ -1247,7 +1707,15 @@
     "小吃",
     "月饼",
     "酸奶",
-    "鲜"
+    "鲜",
+    "橙子",
+    "橘子",
+    "梨",
+    "桃",
+    "点心",
+    "甜品",
+    "雪糕",
+    "果实"
    ],
    "sentences": {
     "3": {
@@ -1261,6 +1729,38 @@
     "4": {
      "zh": "我爱吃葡萄和饼干，也爱吃巧克力。",
      "en": "I love eating grapes and biscuits, and I also love chocolate."
+    },
+    "5": {
+     "zh": "橘子和梨都很甜，雪糕更甜。",
+     "en": "Tangerines and pears are both very sweet, and ice lollies are even sweeter."
+    }
+   }
+  },
+  {
+   "name": "Vegetables and cooking",
+   "group": "Food and shopping",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "蔬菜",
+    "番茄",
+    "黄瓜",
+    "土豆",
+    "玉米",
+    "豆腐",
+    "豆浆",
+    "炒",
+    "煮",
+    "炸",
+    "切",
+    "烧",
+    "加热",
+    "冻"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "先把番茄切好，再炒一下。",
+     "en": "First cut the tomato well, then stir-fry it."
     }
    }
   },
@@ -1289,7 +1789,12 @@
     "果汁",
     "汽水",
     "酸奶",
-    "茶叶"
+    "茶叶",
+    "豆浆",
+    "开水",
+    "酒吧",
+    "醉",
+    "吸管"
    ],
    "sentences": {
     "1": {
@@ -1307,6 +1812,10 @@
     "4": {
      "zh": "朋友们喝着葡萄酒，一起干杯。",
      "en": "The friends drink wine and cheer together."
+    },
+    "5": {
+     "zh": "她喝了一杯豆浆，不喝酒。",
+     "en": "She drank a cup of soy milk and does not drink alcohol."
     }
    }
   },
@@ -1329,7 +1838,14 @@
     "塑料",
     "纸巾",
     "擦",
-    "倒"
+    "倒",
+    "锅",
+    "盆",
+    "叉子",
+    "吸管",
+    "包装",
+    "玻璃",
+    "口袋"
    ],
    "sentences": {
     "3": {
@@ -1343,6 +1859,10 @@
     "4": {
      "zh": "盒子里有一把刀，还有两个袋子。",
      "en": "In the box there is a knife, and there are also two bags."
+    },
+    "5": {
+     "zh": "把锅里的汤倒进盆里。",
+     "en": "Pour the soup in the pot into the basin."
     }
    }
   },
@@ -1411,7 +1931,42 @@
     "值得",
     "数",
     "节约",
-    "浪费"
+    "浪费",
+    "便利店",
+    "促销",
+    "折扣",
+    "优惠",
+    "售价",
+    "出售",
+    "退还",
+    "赠送",
+    "赠",
+    "押金",
+    "涨价",
+    "物价",
+    "人民币",
+    "汇率",
+    "日用品",
+    "名牌",
+    "品牌",
+    "货物",
+    "电商",
+    "二手",
+    "打包",
+    "配送",
+    "运费",
+    "商家",
+    "保险",
+    "话费",
+    "存款",
+    "账户",
+    "花费",
+    "包裹",
+    "领取",
+    "买卖",
+    "用品",
+    "预订",
+    "预约"
    ],
    "sentences": {
     "1": {
@@ -1429,6 +1984,10 @@
     "4": {
      "zh": "这家商店打折，价格很低，我买了很多东西。",
      "en": "This shop has a sale and the prices are low, so I bought a lot of things."
+    },
+    "5": {
+     "zh": "今天有折扣，也有优惠，东西便宜很多。",
+     "en": "Today there are discounts and special offers, so things are much cheaper."
     }
    }
   },
@@ -1463,7 +2022,18 @@
     "眼镜",
     "背包",
     "装",
-    "表"
+    "表",
+    "服装",
+    "西装",
+    "牛仔裤",
+    "手套",
+    "围巾",
+    "领带",
+    "拖鞋",
+    "打扮",
+    "样式",
+    "口袋",
+    "配"
    ],
    "sentences": {
     "1": {
@@ -1481,6 +2051,10 @@
     "4": {
      "zh": "他戴上帽子和眼镜，穿上了毛衣。",
      "en": "He put on a hat and glasses and put on a sweater."
+    },
+    "5": {
+     "zh": "他穿西装，戴领带，还戴手套。",
+     "en": "He wears a suit, a tie and gloves."
     }
    }
   },
@@ -1541,7 +2115,30 @@
     "旅馆",
     "使馆",
     "入口",
-    "出口"
+    "出口",
+    "博物馆",
+    "邮局",
+    "酒吧",
+    "广场",
+    "剧场",
+    "法院",
+    "派出所",
+    "海关",
+    "幼儿园",
+    "大厦",
+    "胡同",
+    "夜市",
+    "车库",
+    "站台",
+    "便利店",
+    "实验室",
+    "病房",
+    "门诊",
+    "场所",
+    "库",
+    "设施",
+    "房屋",
+    "现场"
    ],
    "sentences": {
     "1": {
@@ -1559,6 +2156,10 @@
     "4": {
      "zh": "剧院在市区，工厂在郊区。",
      "en": "The theatre is in the urban area, and the factory is in the suburbs."
+    },
+    "5": {
+     "zh": "博物馆和邮局都在广场旁边。",
+     "en": "The museum and the post office are both next to the square."
     }
    }
   },
@@ -1595,7 +2196,26 @@
     "东部",
     "西部",
     "地址",
-    "公共"
+    "公共",
+    "城区",
+    "社区",
+    "地区",
+    "区域",
+    "县",
+    "乡",
+    "乡村",
+    "山区",
+    "省份",
+    "省会",
+    "大厦",
+    "胡同",
+    "物业",
+    "公寓",
+    "住房",
+    "建筑",
+    "故乡",
+    "居住",
+    "房屋"
    ],
    "sentences": {
     "3": {
@@ -1605,6 +2225,10 @@
     "4": {
      "zh": "这个城市的街道很干净，人也很友好。",
      "en": "The streets of this city are very clean, and the people are friendly too."
+    },
+    "5": {
+     "zh": "这个社区在城区，离地铁站很近。",
+     "en": "This community is in the urban area, very close to the subway station."
     }
    }
   },
@@ -1643,7 +2267,44 @@
     "以下",
     "以外",
     "到处",
-    "中"
+    "中",
+    "背后",
+    "内部",
+    "外部",
+    "里头",
+    "当中",
+    "在内",
+    "地下",
+    "地面",
+    "空中",
+    "天上",
+    "四周",
+    "四处",
+    "位置",
+    "位于",
+    "靠",
+    "靠近",
+    "隔",
+    "沿",
+    "朝",
+    "面向",
+    "向上",
+    "绕",
+    "围",
+    "上下",
+    "顺",
+    "方",
+    "分布",
+    "户外",
+    "接近",
+    "空间",
+    "排列",
+    "围绕",
+    "现场",
+    "在场",
+    "直",
+    "中心",
+    "天空"
    ],
    "sentences": {
     "1": {
@@ -1657,6 +2318,10 @@
     "3": {
      "zh": "我家在公园和学校中间，附近到处都是树。",
      "en": "My home is between the park and the school, and there are trees everywhere nearby."
+    },
+    "5": {
+     "zh": "书架在房间内部，靠近窗台。",
+     "en": "The bookshelf is inside the room, close to the windowsill."
     }
    }
   },
@@ -1729,7 +2394,21 @@
     "出发",
     "离开",
     "经过",
-    "来自"
+    "来自",
+    "前来",
+    "前往",
+    "到达",
+    "返回",
+    "往返",
+    "前进",
+    "退",
+    "退出",
+    "一路",
+    "步行",
+    "行走",
+    "停留",
+    "消失",
+    "移动"
    ],
    "sentences": {
     "1": {
@@ -1743,6 +2422,10 @@
     "3": {
      "zh": "我们八点出发，经过公园，离开这个城市。",
      "en": "We set off at eight, go past the park and leave this city."
+    },
+    "5": {
+     "zh": "他前往机场，一路上没有堵车。",
+     "en": "He goes to the airport and there is no traffic jam all the way."
     }
    }
   },
@@ -1781,7 +2464,23 @@
     "远离",
     "步",
     "公里",
-    "通"
+    "通",
+    "铁路",
+    "路线",
+    "行程",
+    "距",
+    "长途",
+    "通行",
+    "行走",
+    "行驶",
+    "步行",
+    "迷路",
+    "台阶",
+    "跑道",
+    "陆地",
+    "行人",
+    "路人",
+    "线路"
    ],
    "sentences": {
     "1": {
@@ -1799,6 +2498,10 @@
     "4": {
      "zh": "高速公路上堵车了，距离不远，但是很慢。",
      "en": "There is a traffic jam on the highway now; the distance is not far, but it is slow."
+    },
+    "5": {
+     "zh": "这条铁路的路线很长，行程要两天。",
+     "en": "This railway route is very long, and the journey takes two days."
     }
    }
   },
@@ -1852,7 +2555,28 @@
     "趟",
     "列",
     "排队",
-    "座位"
+    "座位",
+    "车辆",
+    "车厢",
+    "车主",
+    "车祸",
+    "车库",
+    "驾驶",
+    "驾照",
+    "列车",
+    "救护车",
+    "超速",
+    "站台",
+    "汽油",
+    "电动",
+    "飞行",
+    "乘务员",
+    "飞行员",
+    "铁路",
+    "运输",
+    "往返",
+    "行驶",
+    "运"
    ],
    "sentences": {
     "1": {
@@ -1870,6 +2594,10 @@
     "4": {
      "zh": "乘客们都在排队等大巴。",
      "en": "The passengers are all queuing for the coach."
+    },
+    "5": {
+     "zh": "他有驾照，但是车祸后不再驾驶。",
+     "en": "He has a driving licence, but after the car accident he no longer drives."
     }
    }
   },
@@ -1922,7 +2650,17 @@
     "地球",
     "出差",
     "出行",
-    "外出"
+    "外出",
+    "海外",
+    "欧洲",
+    "非洲",
+    "旅行社",
+    "游览",
+    "住宿",
+    "行程",
+    "海关",
+    "中外",
+    "中华"
    ],
    "sentences": {
     "1": {
@@ -1940,6 +2678,10 @@
     "4": {
      "zh": "我们去旅行，参观了很多景点。",
      "en": "We went travelling and visited many scenic spots."
+    },
+    "5": {
+     "zh": "旅行社安排我们去欧洲游览。",
+     "en": "The travel agency arranges for us to tour Europe."
     }
    }
   },
@@ -1987,7 +2729,28 @@
     "挂",
     "毛巾",
     "牙膏",
-    "桶"
+    "桶",
+    "被子",
+    "床单",
+    "窗台",
+    "柜子",
+    "书架",
+    "书房",
+    "卧室",
+    "阳台",
+    "台灯",
+    "装修",
+    "家务",
+    "住房",
+    "公寓",
+    "拖鞋",
+    "灯光",
+    "房屋",
+    "居住",
+    "墙",
+    "锁",
+    "舒适",
+    "装饰"
    ],
    "sentences": {
     "1": {
@@ -2005,6 +2768,10 @@
     "4": {
      "zh": "我家的客厅很大，窗户也很大。",
      "en": "The living room of my home is big, and the windows are big too."
+    },
+    "5": {
+     "zh": "卧室里有被子，书房里有书架。",
+     "en": "There is a quilt in the bedroom and a bookshelf in the study."
     }
    }
   },
@@ -2029,7 +2796,17 @@
     "台",
     "琴",
     "钢琴",
-    "镜子"
+    "镜子",
+    "电器",
+    "家电",
+    "电池",
+    "柜子",
+    "书架",
+    "台灯",
+    "闹钟",
+    "灯光",
+    "铃",
+    "扇子"
    ],
    "sentences": {
     "3": {
@@ -2047,6 +2824,10 @@
     "4": {
      "zh": "我们家有新家具和一台大电视。",
      "en": "Our home has new furniture and a big TV."
+    },
+    "5": {
+     "zh": "台灯和闹钟都要用电池。",
+     "en": "The desk lamp and the alarm clock both need batteries."
     }
    }
   },
@@ -2109,7 +2890,31 @@
     "毕业生",
     "考生",
     "教练",
-    "点名"
+    "点名",
+    "教材",
+    "试卷",
+    "宿舍",
+    "学分",
+    "学科",
+    "学历",
+    "学年",
+    "幼儿园",
+    "录取",
+    "及格",
+    "报到",
+    "注册",
+    "学者",
+    "论文",
+    "实习",
+    "培训",
+    "单元",
+    "讲座",
+    "橡皮",
+    "图书",
+    "图画",
+    "中级",
+    "领域",
+    "初级"
    ],
    "sentences": {
     "1": {
@@ -2127,6 +2932,10 @@
     "4": {
      "zh": "教师在课堂上点名，学生们都到了。",
      "en": "The teacher takes the roll in class, and the students have all arrived."
+    },
+    "5": {
+     "zh": "他的论文写好了，学分也够了。",
+     "en": "His paper is finished and he has enough credits."
     }
    }
   },
@@ -2157,7 +2966,27 @@
     "教育",
     "文字",
     "作文",
-    "作品"
+    "作品",
+    "地理",
+    "化学",
+    "物理",
+    "哲学",
+    "文学",
+    "医学",
+    "美术",
+    "语文",
+    "逻辑",
+    "理论",
+    "书法",
+    "国画",
+    "武术",
+    "舞蹈",
+    "戏剧",
+    "诗",
+    "诗人",
+    "神话",
+    "毛笔",
+    "学术"
    ],
    "sentences": {
     "3": {
@@ -2167,6 +2996,10 @@
     "4": {
      "zh": "我喜欢科学和艺术，不太喜欢语法。",
      "en": "I like science and art, and I do not like grammar very much."
+    },
+    "5": {
+     "zh": "他喜欢文学和哲学，也喜欢书法。",
+     "en": "He likes literature and philosophy, and also likes calligraphy."
     }
    }
   },
@@ -2234,7 +3067,32 @@
     "总结",
     "基础",
     "奖",
-    "赢得"
+    "赢得",
+    "测试",
+    "题目",
+    "提问",
+    "及格",
+    "录取",
+    "记忆",
+    "概括",
+    "思考",
+    "掌握",
+    "训练",
+    "实践",
+    "实习",
+    "请教",
+    "指导",
+    "参考",
+    "论文",
+    "试卷",
+    "学历",
+    "调研",
+    "集中",
+    "培养",
+    "问卷",
+    "吸收",
+    "分类",
+    "提交"
    ],
    "sentences": {
     "1": {
@@ -2252,6 +3110,10 @@
     "4": {
      "zh": "高考以后，他想选一个好专业。",
      "en": "After the college entrance exam, he wants to study a good major."
+    },
+    "5": {
+     "zh": "这次测试的题目不难，大家都及格了。",
+     "en": "The questions in this test are not hard, and everyone has passed."
     }
    }
   },
@@ -2305,7 +3167,27 @@
     "小说",
     "杂志",
     "流利",
-    "说明书"
+    "说明书",
+    "词汇",
+    "读音",
+    "发音",
+    "拼音",
+    "语音",
+    "字母",
+    "语气",
+    "写作",
+    "念",
+    "标题",
+    "歌词",
+    "书法",
+    "毛笔",
+    "用法",
+    "描述",
+    "比喻",
+    "出版",
+    "印刷",
+    "主题",
+    "话题"
    ],
    "sentences": {
     "1": {
@@ -2323,6 +3205,10 @@
     "4": {
      "zh": "我每天阅读文章，也学习新的词语。",
      "en": "I read articles every day and also learn new words."
+    },
+    "5": {
+     "zh": "他的发音很好，词汇也很多。",
+     "en": "His pronunciation is very good, and his vocabulary is large too."
     }
    }
   },
@@ -2381,7 +3267,49 @@
     "广播",
     "联系",
     "寄",
-    "快递"
+    "快递",
+    "拨打",
+    "占线",
+    "话费",
+    "充电",
+    "充值",
+    "点赞",
+    "二维码",
+    "登录",
+    "下载",
+    "上传",
+    "删",
+    "删除",
+    "浏览",
+    "搜",
+    "搜索",
+    "键盘",
+    "鼠标",
+    "屏幕",
+    "软件",
+    "硬件",
+    "网络",
+    "账号",
+    "账户",
+    "在线",
+    "平台",
+    "用户",
+    "留言",
+    "邮寄",
+    "信封",
+    "邮票",
+    "邮局",
+    "直播",
+    "包裹",
+    "电子版",
+    "复制",
+    "键",
+    "接收",
+    "录",
+    "录音",
+    "输入",
+    "提交",
+    "相册"
    ],
    "sentences": {
     "1": {
@@ -2399,6 +3327,10 @@
     "4": {
      "zh": "我给朋友发了一条短信，他马上回复了。",
      "en": "I sent a text message to my friend, and he replied right away."
+    },
+    "5": {
+     "zh": "先登录账号，再下载软件。",
+     "en": "First log in to the account, then download the software."
     }
    }
   },
@@ -2443,7 +3375,17 @@
     "毛巾",
     "日记",
     "做梦",
-    "躺"
+    "躺",
+    "熬夜",
+    "睡眠",
+    "失眠",
+    "家务",
+    "日用品",
+    "休闲",
+    "日历",
+    "闹钟",
+    "闲",
+    "忙碌"
    ],
    "sentences": {
     "1": {
@@ -2461,6 +3403,10 @@
     "4": {
      "zh": "我早晨七点醒，然后整理房间。",
      "en": "I wake up at seven in the morning and then tidy my room."
+    },
+    "5": {
+     "zh": "他睡眠不好，常常失眠。",
+     "en": "He does not sleep well and often has insomnia."
     }
    }
   },
@@ -2500,7 +3446,19 @@
     "云",
     "下降",
     "降",
-    "亮"
+    "亮",
+    "暴雨",
+    "降水",
+    "雨水",
+    "雾",
+    "升温",
+    "预报",
+    "晒",
+    "湿",
+    "滑",
+    "阵",
+    "天空",
+    "温暖"
    ],
    "sentences": {
     "1": {
@@ -2518,6 +3476,10 @@
     "4": {
      "zh": "今天阳光很好，天气也很暖和。",
      "en": "The sun is good today, and the temperature is warm too."
+    },
+    "5": {
+     "zh": "昨天下了暴雨，今天有雾。",
+     "en": "There was heavy rain yesterday and there is fog today."
     }
    }
   },
@@ -2554,7 +3516,25 @@
     "阳光",
     "农村",
     "村",
-    "流"
+    "流",
+    "河流",
+    "湖",
+    "池",
+    "沙漠",
+    "沙子",
+    "陆地",
+    "石头",
+    "树木",
+    "竹子",
+    "种子",
+    "根",
+    "玫瑰",
+    "果实",
+    "生长",
+    "土地",
+    "洞",
+    "种植",
+    "天空"
    ],
    "sentences": {
     "3": {
@@ -2568,6 +3548,40 @@
     "4": {
      "zh": "森林里有很多植物，江里有很多水。",
      "en": "There are many plants in the forest, and there is a lot of water in the river."
+    },
+    "5": {
+     "zh": "湖边有很多树木和竹子。",
+     "en": "There are many trees and bamboo by the lake."
+    }
+   }
+  },
+  {
+   "name": "Materials and substances",
+   "group": "Daily life and fun",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "玻璃",
+    "木头",
+    "石头",
+    "黄金",
+    "沙子",
+    "灰",
+    "物质",
+    "成分",
+    "含量",
+    "水分",
+    "汽油",
+    "燃烧",
+    "热量",
+    "软",
+    "硬",
+    "回收"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "这个杯子是玻璃做的，不是木头做的。",
+     "en": "This cup is made of glass, not of wood."
     }
    }
   },
@@ -2604,7 +3618,23 @@
     "地球",
     "星星",
     "土",
-    "叶子"
+    "叶子",
+    "大象",
+    "猴子",
+    "兔子",
+    "猪",
+    "鸭子",
+    "蛇",
+    "蝴蝶",
+    "昆虫",
+    "虫子",
+    "翅膀",
+    "尾巴",
+    "宠物",
+    "咬",
+    "生物",
+    "龙",
+    "生存"
    ],
    "sentences": {
     "1": {
@@ -2622,6 +3652,10 @@
     "4": {
      "zh": "熊和老虎都生活在大自然里。",
      "en": "Bears and tigers both live in nature."
+    },
+    "5": {
+     "zh": "大象的尾巴比猴子的短。",
+     "en": "An elephant's tail is shorter than a monkey's."
     }
    }
   },
@@ -2639,7 +3673,20 @@
     "红茶",
     "绿茶",
     "蓝",
-    "黄色"
+    "黄色",
+    "黑",
+    "红",
+    "灰色",
+    "紫",
+    "青",
+    "彩色",
+    "色彩",
+    "五颜六色",
+    "灰",
+    "淡",
+    "暗",
+    "光明",
+    "光线"
    ],
    "sentences": {
     "1": {
@@ -2653,6 +3700,10 @@
     "3": {
      "zh": "天很蓝，花是黄色的。",
      "en": "The sky is very blue and the flowers are yellow."
+    },
+    "5": {
+     "zh": "他有黑裤子，也有紫衣服。",
+     "en": "He has black trousers and also purple clothes."
     }
    }
   },
@@ -2710,7 +3761,23 @@
     "输",
     "大赛",
     "参赛",
-    "活动"
+    "活动",
+    "乐趣",
+    "娱乐",
+    "休闲",
+    "摄影",
+    "合影",
+    "玩具",
+    "气球",
+    "鼓",
+    "游览",
+    "欣赏",
+    "拍摄",
+    "户外",
+    "划",
+    "赏",
+    "业余",
+    "相册"
    ],
    "sentences": {
     "1": {
@@ -2728,6 +3795,10 @@
     "4": {
      "zh": "他喜欢弹钢琴，也喜欢参加活动。",
      "en": "He likes playing the piano and also likes taking part in activities."
+    },
+    "5": {
+     "zh": "我喜欢摄影，休闲时去户外拍照。",
+     "en": "I like photography, and in my free time I go outdoors to take photos."
     }
    }
   },
@@ -2757,7 +3828,21 @@
     "鲜花",
     "巧克力",
     "热闹",
-    "愉快"
+    "愉快",
+    "婚礼",
+    "嘉宾",
+    "赠送",
+    "赠",
+    "压岁钱",
+    "福",
+    "好运",
+    "光临",
+    "合影",
+    "掌声",
+    "鼓掌",
+    "恭喜",
+    "纪念",
+    "运气"
    ],
    "sentences": {
     "3": {
@@ -2767,6 +3852,10 @@
     "4": {
      "zh": "朋友聚会时，大家一起干杯庆祝。",
      "en": "When friends have a party, everyone cheers together to celebrate."
+    },
+    "5": {
+     "zh": "婚礼上，嘉宾送了很多礼物，大家鼓掌。",
+     "en": "At the wedding, the guests gave many gifts and everyone applauded."
     }
    }
   },
@@ -2813,7 +3902,25 @@
     "演",
     "拍",
     "流行",
-    "著名"
+    "著名",
+    "导演",
+    "影片",
+    "影视",
+    "纪录片",
+    "动画",
+    "歌词",
+    "歌曲",
+    "明星",
+    "电视台",
+    "直播",
+    "报道",
+    "采访",
+    "媒体",
+    "收看",
+    "集",
+    "画面",
+    "角色",
+    "音量"
    ],
    "sentences": {
     "1": {
@@ -2831,6 +3938,92 @@
     "4": {
      "zh": "观众们很喜欢这部电视剧，演员也很著名。",
      "en": "The audience like this TV series very much, and the actors are famous too."
+    },
+    "5": {
+     "zh": "这部影片的歌曲很好听，导演也很有名。",
+     "en": "The songs in this film are very nice, and the director is very famous too."
+    }
+   }
+  },
+  {
+   "name": "Arts and performance",
+   "group": "Daily life and fun",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "戏",
+    "戏剧",
+    "舞台",
+    "舞蹈",
+    "诗",
+    "诗人",
+    "美术",
+    "国画",
+    "工艺",
+    "创作",
+    "鼓",
+    "欣赏",
+    "展览",
+    "展出",
+    "展示",
+    "博物馆",
+    "剧场",
+    "书法",
+    "毛笔",
+    "角色",
+    "掌声",
+    "鼓掌",
+    "风格",
+    "经典",
+    "生动",
+    "手工",
+    "象征",
+    "展现",
+    "装饰",
+    "图画",
+    "图书",
+    "主题"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "舞台上的舞蹈很美，观众都鼓掌。",
+     "en": "The dance on the stage is beautiful, and the audience all applauds."
+    }
+   }
+  },
+  {
+   "name": "History and tradition",
+   "group": "Daily life and fun",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "传统",
+    "传说",
+    "古代",
+    "古老",
+    "古",
+    "久远",
+    "悠久",
+    "近代",
+    "现代",
+    "现代化",
+    "风俗",
+    "龙",
+    "生肖",
+    "神话",
+    "书法",
+    "国画",
+    "毛笔",
+    "武术",
+    "流传",
+    "经典",
+    "时代",
+    "象征"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "这是一个古老的传说，也是中国的传统。",
+     "en": "This is an ancient legend and also a Chinese tradition."
     }
    }
   },
@@ -2882,7 +4075,33 @@
     "操场",
     "体重",
     "减轻",
-    "竞争"
+    "竞争",
+    "比分",
+    "裁判",
+    "决赛",
+    "冠军",
+    "选手",
+    "跑道",
+    "跳高",
+    "跳远",
+    "赛场",
+    "领先",
+    "胜",
+    "胜利",
+    "开幕",
+    "开幕式",
+    "闭幕式",
+    "体力",
+    "肌肉",
+    "减肥",
+    "对手",
+    "武术",
+    "队伍",
+    "激烈",
+    "奖励",
+    "挑战",
+    "争",
+    "争取"
    ],
    "sentences": {
     "1": {
@@ -2900,6 +4119,10 @@
     "4": {
      "zh": "教练让队员们每天跑步。",
      "en": "The coach has the team members run every day."
+    },
+    "5": {
+     "zh": "决赛的比分很接近，裁判很公平。",
+     "en": "The score in the final is very close, and the referee is very fair."
     }
    }
   },
@@ -2932,12 +4155,352 @@
     "保证",
     "危险",
     "安检",
-    "使馆"
+    "使馆",
+    "法院",
+    "违法",
+    "违反",
+    "合法",
+    "罚",
+    "罚款",
+    "规则",
+    "权利",
+    "权",
+    "义务",
+    "制度",
+    "制定",
+    "制订",
+    "遵守",
+    "批准",
+    "证据",
+    "手续",
+    "证书",
+    "报警",
+    "派出所",
+    "保安",
+    "限制",
+    "自由",
+    "自动"
    ],
    "sentences": {
     "4": {
      "zh": "法律规定，开车的时候不可以打电话。",
      "en": "The law says you cannot make phone calls while driving."
+    },
+    "5": {
+     "zh": "违反规则的人要被罚款。",
+     "en": "People who break the rules have to pay a fine."
+    }
+   }
+  },
+  {
+   "name": "Society and community",
+   "group": "Society and world",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "社区",
+    "居民",
+    "市民",
+    "人民",
+    "大众",
+    "老百姓",
+    "人群",
+    "人类",
+    "群体",
+    "集体",
+    "团队",
+    "成员",
+    "志愿者",
+    "公务员",
+    "妇女",
+    "中华民族",
+    "代表",
+    "地位",
+    "独立",
+    "队伍",
+    "人口",
+    "人力",
+    "组织"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "志愿者和居民一起帮助社区的老人。",
+     "en": "Volunteers and residents help the old people in the community together."
+    }
+   }
+  },
+  {
+   "name": "Government and politics",
+   "group": "Society and world",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "政府",
+    "政治",
+    "总统",
+    "主席",
+    "公务员",
+    "人民",
+    "改革",
+    "制度",
+    "公布",
+    "宣布",
+    "召开",
+    "大会",
+    "批准",
+    "执行",
+    "实施",
+    "实行"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "政府公布了新制度，人民都很关心。",
+     "en": "The government announced a new system, and the people are all concerned."
+    }
+   }
+  },
+  {
+   "name": "Economy and finance",
+   "group": "Society and world",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "资金",
+    "税",
+    "汇率",
+    "物价",
+    "价值",
+    "消费",
+    "消费者",
+    "需求",
+    "存款",
+    "账户",
+    "押金",
+    "租金",
+    "涨",
+    "涨价",
+    "上涨",
+    "交易",
+    "亏",
+    "赔",
+    "欠",
+    "捐",
+    "花费",
+    "保险",
+    "投入",
+    "信用",
+    "富",
+    "富有",
+    "穷",
+    "负担",
+    "分配",
+    "利润",
+    "成本",
+    "资源",
+    "节省",
+    "利益",
+    "挣",
+    "买卖"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "物价上涨，消费者买得更少了。",
+     "en": "Prices are rising, and consumers are buying less now."
+    }
+   }
+  },
+  {
+   "name": "Business and industry",
+   "group": "Society and world",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "产",
+    "产量",
+    "产品",
+    "产业",
+    "工业",
+    "农业",
+    "行业",
+    "品牌",
+    "名牌",
+    "品质",
+    "品种",
+    "生产",
+    "制造",
+    "制作",
+    "加工",
+    "销售",
+    "销量",
+    "研发",
+    "研制",
+    "成本",
+    "利润",
+    "出售",
+    "进口",
+    "引进",
+    "推广",
+    "促销",
+    "电商",
+    "经营",
+    "营业",
+    "业务",
+    "农民",
+    "种植"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "这家企业生产的产品卖得很好。",
+     "en": "The products that this company produces sell very well."
+    }
+   }
+  },
+  {
+   "name": "Science and technology",
+   "group": "Society and world",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "科研",
+    "实验",
+    "实验室",
+    "研发",
+    "研制",
+    "发明",
+    "创新",
+    "机器",
+    "机器人",
+    "高科技",
+    "智能",
+    "人工",
+    "软件",
+    "硬件",
+    "数据",
+    "系统",
+    "程序",
+    "计算机",
+    "设备",
+    "电池",
+    "试验",
+    "测",
+    "测试",
+    "开发",
+    "生物",
+    "安装",
+    "操作",
+    "调研",
+    "工具",
+    "功能",
+    "结构",
+    "设置",
+    "显示",
+    "先进",
+    "新型",
+    "应用",
+    "工程",
+    "自动"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "实验室里的机器人是一项新发明。",
+     "en": "The robot in the laboratory is a new invention."
+    }
+   }
+  },
+  {
+   "name": "News and media",
+   "group": "Society and world",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "报道",
+    "采访",
+    "媒体",
+    "直播",
+    "宣传",
+    "发布",
+    "公布",
+    "宣布",
+    "标题",
+    "报告",
+    "好评",
+    "点赞",
+    "收看",
+    "记录",
+    "纪录片",
+    "传播",
+    "出版",
+    "传",
+    "传递",
+    "发表",
+    "录",
+    "录音"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "电视台直播了这条新闻，媒体都来报道。",
+     "en": "The TV station broadcast this news live, and the media all came to report."
+    }
+   }
+  },
+  {
+   "name": "Information and records",
+   "group": "Society and world",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "记录",
+    "纪录",
+    "记载",
+    "登记",
+    "注册",
+    "数据",
+    "统计",
+    "简历",
+    "证书",
+    "账号",
+    "标志",
+    "分类",
+    "排列",
+    "问卷"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "请先登记和注册，再提交简历。",
+     "en": "Please register first, then submit the CV."
+    }
+   }
+  },
+  {
+   "name": "Risks and problems",
+   "group": "Society and world",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "风险",
+    "威胁",
+    "危害",
+    "破坏",
+    "损害",
+    "损失",
+    "事故",
+    "车祸",
+    "意外",
+    "紧急",
+    "急需",
+    "矛盾",
+    "失误",
+    "地震",
+    "丢失",
+    "面临",
+    "骗",
+    "抢",
+    "应对"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "这次事故造成了很大的损失。",
+     "en": "This accident caused a big loss."
     }
    }
   },
@@ -2975,7 +4538,26 @@
     "抬头",
     "点头",
     "眼前",
-    "眼镜"
+    "眼镜",
+    "大脑",
+    "肌肉",
+    "牙齿",
+    "手指",
+    "嘴巴",
+    "眼",
+    "腰",
+    "胃",
+    "人体",
+    "脸色",
+    "身材",
+    "眼泪",
+    "泪",
+    "泪水",
+    "汗水",
+    "脚步",
+    "目光",
+    "姿势",
+    "表情"
    ],
    "sentences": {
     "1": {
@@ -2993,6 +4575,10 @@
     "4": {
      "zh": "他的鼻子很大，胳膊也很长。",
      "en": "His nose is big, and his arms are long too."
+    },
+    "5": {
+     "zh": "他的脸色不好，手指上有汗水。",
+     "en": "His complexion is not good, and there is sweat on his fingers."
     }
    }
   },
@@ -3037,7 +4623,45 @@
     "汗",
     "卫生",
     "减轻",
-    "减"
+    "减",
+    "病房",
+    "病情",
+    "疾病",
+    "流感",
+    "过敏",
+    "急诊",
+    "门诊",
+    "手术",
+    "药品",
+    "药物",
+    "中药",
+    "中医",
+    "医疗",
+    "医学",
+    "诊断",
+    "治疗",
+    "治",
+    "着凉",
+    "疼痛",
+    "伤",
+    "伤害",
+    "失眠",
+    "呼吸",
+    "抢救",
+    "救护车",
+    "救",
+    "减肥",
+    "好转",
+    "缓解",
+    "恢复",
+    "预防",
+    "消化",
+    "营养",
+    "挂号",
+    "精力",
+    "弱",
+    "吸收",
+    "生存"
    ],
    "sentences": {
     "1": {
@@ -3055,6 +4679,10 @@
     "4": {
      "zh": "我一直咳嗽，头也很痛，所以去看了大夫。",
      "en": "I keep coughing and my head hurts, so I went to see the doctor."
+    },
+    "5": {
+     "zh": "医生说他的疾病好转了，不用做手术。",
+     "en": "The doctor says his illness has improved and he does not need an operation."
     }
    }
   },
@@ -3128,7 +4756,52 @@
     "内心",
     "受不了",
     "无聊",
-    "吸引"
+    "吸引",
+    "唉",
+    "安慰",
+    "抱怨",
+    "同情",
+    "惊喜",
+    "好奇",
+    "痛苦",
+    "遗憾",
+    "犹豫",
+    "乐观",
+    "消极",
+    "情感",
+    "情绪",
+    "心态",
+    "想念",
+    "期待",
+    "热爱",
+    "在乎",
+    "舍不得",
+    "满足",
+    "无奈",
+    "疯狂",
+    "恋爱",
+    "失恋",
+    "微笑",
+    "表情",
+    "沉默",
+    "承受",
+    "刺激",
+    "动人",
+    "精神",
+    "精力",
+    "决心",
+    "可怕",
+    "迷",
+    "强烈",
+    "热烈",
+    "忍",
+    "享受",
+    "信任",
+    "亲爱",
+    "亲切",
+    "温暖",
+    "激烈",
+    "舍得"
    ],
    "sentences": {
     "1": {
@@ -3146,6 +4819,10 @@
     "4": {
      "zh": "听到这个消息，我很激动，也很感动。",
      "en": "Hearing this news, I am very excited, and it moves me a lot."
+    },
+    "5": {
+     "zh": "这个礼物让她很惊喜。",
+     "en": "This gift is a pleasant surprise for her."
     }
    }
   },
@@ -3188,7 +4865,37 @@
     "故意",
     "厉害",
     "帅",
-    "随便"
+    "随便",
+    "大胆",
+    "胆小",
+    "勤奋",
+    "善良",
+    "谨慎",
+    "调皮",
+    "虚心",
+    "真诚",
+    "热心",
+    "能干",
+    "主动",
+    "自觉",
+    "傻",
+    "勇气",
+    "个性",
+    "魅力",
+    "品质",
+    "坚强",
+    "平静",
+    "严肃",
+    "敏感",
+    "丑",
+    "讲究",
+    "独立",
+    "可靠",
+    "了不起",
+    "骗",
+    "行为",
+    "专心",
+    "决心"
    ],
    "sentences": {
     "3": {
@@ -3198,6 +4905,10 @@
     "4": {
      "zh": "他很诚实，也很勇敢，大家都喜欢他。",
      "en": "He is very honest and also very brave, and everyone likes him."
+    },
+    "5": {
+     "zh": "他很勤奋，也很善良，大家都喜欢他。",
+     "en": "He is diligent and kind, and everyone likes him."
     }
    }
   },
@@ -3260,7 +4971,50 @@
     "信息",
     "调查",
     "反对",
-    "熟悉"
+    "熟悉",
+    "思考",
+    "思想",
+    "思维",
+    "观点",
+    "观念",
+    "概念",
+    "理论",
+    "逻辑",
+    "意识",
+    "想象",
+    "认",
+    "承认",
+    "否认",
+    "否定",
+    "疑问",
+    "预测",
+    "预计",
+    "结论",
+    "分析",
+    "理由",
+    "道理",
+    "意义",
+    "常识",
+    "记忆",
+    "智慧",
+    "体会",
+    "本质",
+    "当成",
+    "当作",
+    "看作",
+    "视为",
+    "角度",
+    "具体",
+    "命运",
+    "命",
+    "明确",
+    "评",
+    "深刻",
+    "深入",
+    "心理",
+    "意味着",
+    "注重",
+    "忽视"
    ],
    "sentences": {
     "1": {
@@ -3278,6 +5032,38 @@
     "4": {
      "zh": "我的想法和你的看法不一样。",
      "en": "My idea is different from your view."
+    },
+    "5": {
+     "zh": "他的思想和观点都很特别。",
+     "en": "His thinking and views are both very special."
+    }
+   }
+  },
+  {
+   "name": "Opinions and attitudes",
+   "group": "Body and mind",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "赞成",
+    "承认",
+    "否认",
+    "否定",
+    "提倡",
+    "强调",
+    "观点",
+    "观念",
+    "客观",
+    "主观",
+    "公平",
+    "合理",
+    "评价",
+    "意味着"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "我赞成这个意见，但是他否认了。",
+     "en": "I agree with this opinion, but he denied it."
     }
    }
   },
@@ -3352,7 +5138,42 @@
     "交",
     "付",
     "背",
-    "待"
+    "待",
+    "搞",
+    "滚",
+    "摔",
+    "碰",
+    "撞",
+    "挡",
+    "堵",
+    "安装",
+    "操作",
+    "催",
+    "存放",
+    "打破",
+    "丢失",
+    "断",
+    "堆",
+    "分离",
+    "合",
+    "划",
+    "系",
+    "浇",
+    "结",
+    "漏",
+    "抢",
+    "扇",
+    "扇子",
+    "收集",
+    "碎",
+    "投",
+    "移",
+    "移动",
+    "寻找",
+    "行动",
+    "追",
+    "配",
+    "动手"
    ],
    "sentences": {
     "1": {
@@ -3370,6 +5191,44 @@
     "4": {
      "zh": "他推开窗户，把垃圾扔了。",
      "en": "He pushed open the window and threw away the rubbish."
+    },
+    "5": {
+     "zh": "他搞错了，把水洒在地上。",
+     "en": "He got it wrong and spilled the water on the floor."
+    }
+   }
+  },
+  {
+   "name": "Hands and handling",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "抓",
+    "捡",
+    "剪",
+    "拆",
+    "插",
+    "摸",
+    "抽",
+    "摇",
+    "摘",
+    "扶",
+    "递",
+    "填",
+    "贴",
+    "握",
+    "伸",
+    "洒",
+    "挥",
+    "翻",
+    "拼",
+    "剪刀"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "她摘了一朵花，递给我。",
+     "en": "She picked a flower and handed it to me."
     }
    }
   },
@@ -3423,7 +5282,31 @@
     "推出",
     "获得",
     "取得",
-    "使"
+    "使",
+    "尝试",
+    "试用",
+    "试验",
+    "转变",
+    "变动",
+    "更换",
+    "更新",
+    "替",
+    "代替",
+    "挑",
+    "挑选",
+    "调整",
+    "改革",
+    "改进",
+    "改善",
+    "改正",
+    "修改",
+    "调",
+    "补充",
+    "利用",
+    "全新",
+    "运用",
+    "作出",
+    "处理"
    ],
    "sentences": {
     "3": {
@@ -3433,6 +5316,110 @@
     "4": {
      "zh": "他改变了计划，决定放弃。",
      "en": "He changed his plan and decided to give up."
+    },
+    "5": {
+     "zh": "我们更换了方案，还尝试了新办法。",
+     "en": "We changed the plan and also tried a new method."
+    }
+   }
+  },
+  {
+   "name": "Building and making",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "建",
+    "建立",
+    "建设",
+    "建造",
+    "建筑",
+    "修建",
+    "创造",
+    "创新",
+    "创作",
+    "制作",
+    "制造",
+    "设计",
+    "发明",
+    "造",
+    "装修",
+    "开发",
+    "盖",
+    "维修",
+    "形成",
+    "完善"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "工人正在建造一座新建筑。",
+     "en": "The workers are building a new building."
+    }
+   }
+  },
+  {
+   "name": "Plans and methods",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "方案",
+    "措施",
+    "手段",
+    "程序",
+    "模式",
+    "形式",
+    "手续",
+    "规则",
+    "原则",
+    "采取",
+    "采用",
+    "处理",
+    "固定",
+    "规律",
+    "约定",
+    "依据"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "这个方案有三项措施，手段也很新。",
+     "en": "This plan has three measures, and the means are also new."
+    }
+   }
+  },
+  {
+   "name": "Causes and results",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "造成",
+    "导致",
+    "促使",
+    "促进",
+    "后果",
+    "成果",
+    "因素",
+    "来源",
+    "出自",
+    "反应",
+    "反映",
+    "引进",
+    "达成",
+    "带动",
+    "令",
+    "使得",
+    "体现",
+    "推动",
+    "推进",
+    "规律",
+    "刺激",
+    "参与"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "大雨造成了堵车，导致我迟到了。",
+     "en": "The heavy rain caused a traffic jam and made me late."
     }
    }
   },
@@ -3482,7 +5469,35 @@
     "提醒",
     "闻",
     "响",
-    "指"
+    "指",
+    "观察",
+    "讲话",
+    "讲述",
+    "谈话",
+    "发言",
+    "演讲",
+    "询问",
+    "打听",
+    "称赞",
+    "骂",
+    "劝",
+    "说服",
+    "打断",
+    "提起",
+    "称为",
+    "转告",
+    "响声",
+    "掌声",
+    "称",
+    "表达",
+    "表明",
+    "形容",
+    "据说",
+    "请求",
+    "传",
+    "传递",
+    "话题",
+    "咨询"
    ],
    "sentences": {
     "1": {
@@ -3500,6 +5515,10 @@
     "4": {
      "zh": "老师表扬了他，也提醒他要认真。",
      "en": "The teacher praised him and also reminded him that he must be careful."
+    },
+    "5": {
+     "zh": "他讲述了自己的故事，大家都认真地听。",
+     "en": "He told his own story, and everyone listened carefully."
     }
    }
   },
@@ -3531,7 +5550,33 @@
     "对方",
     "误会",
     "商量",
-    "尊重"
+    "尊重",
+    "相处",
+    "交往",
+    "接触",
+    "接待",
+    "碰见",
+    "陪伴",
+    "看望",
+    "握手",
+    "拥抱",
+    "迎接",
+    "迎",
+    "沟通",
+    "合作",
+    "交换",
+    "参与",
+    "出席",
+    "对待",
+    "互动",
+    "集合",
+    "配合",
+    "联合",
+    "密切",
+    "紧密",
+    "陌生",
+    "双方",
+    "人际"
    ],
    "sentences": {
     "3": {
@@ -3541,6 +5586,10 @@
     "4": {
      "zh": "我和朋友约好了见面，他会陪我一起去。",
      "en": "My friend and I have arranged to meet, and he will go with me."
+    },
+    "5": {
+     "zh": "他们相处得很好，常常互相陪伴。",
+     "en": "They get along very well and often keep each other company."
     }
    }
   },
@@ -3574,7 +5623,19 @@
     "逛",
     "散步",
     "乘",
-    "动作"
+    "动作",
+    "低头",
+    "躲",
+    "藏",
+    "冲",
+    "登",
+    "摔",
+    "挤",
+    "弯",
+    "伸",
+    "摇",
+    "划",
+    "用力"
    ],
    "sentences": {
     "1": {
@@ -3592,6 +5653,10 @@
     "4": {
      "zh": "他抬起头，转身，慢慢走了。",
      "en": "He raised his head, turned around and slowly walked off."
+    },
+    "5": {
+     "zh": "他低着头，躲在门后面。",
+     "en": "He keeps his head down, hiding behind the door."
     }
    }
   },
@@ -3633,7 +5698,28 @@
     "举行",
     "期",
     "出现",
-    "错过"
+    "错过",
+    "发起",
+    "开展",
+    "开通",
+    "开业",
+    "开幕",
+    "创业",
+    "召开",
+    "成立",
+    "设立",
+    "等待",
+    "等候",
+    "持续",
+    "抓紧",
+    "尽快",
+    "到期",
+    "即将",
+    "关闭",
+    "开放",
+    "展开",
+    "止",
+    "集合"
    ],
    "sentences": {
     "1": {
@@ -3651,6 +5737,10 @@
     "4": {
      "zh": "活动成功举行了，我们都很高兴。",
      "en": "The event was held successfully, and we were all very happy."
+    },
+    "5": {
+     "zh": "大会明天开幕，我们都在等待。",
+     "en": "The conference opens tomorrow, and we are all waiting."
     }
    }
   },
@@ -3691,7 +5781,41 @@
     "少量",
     "大量",
     "空",
-    "丰富"
+    "丰富",
+    "长度",
+    "宽度",
+    "厚度",
+    "强度",
+    "深度",
+    "高度",
+    "面积",
+    "宽",
+    "窄",
+    "广",
+    "薄",
+    "浅",
+    "大型",
+    "小型",
+    "巨大",
+    "高大",
+    "缓慢",
+    "迅速",
+    "加速",
+    "缩短",
+    "缩小",
+    "扩大",
+    "规模",
+    "超",
+    "超出",
+    "沉",
+    "平",
+    "紧",
+    "轻重",
+    "深厚",
+    "深远",
+    "广大",
+    "广泛",
+    "直"
    ],
    "sentences": {
     "1": {
@@ -3709,6 +5833,65 @@
     "4": {
      "zh": "这条河很深，水流得很快。",
      "en": "This river is deep, and the water flows fast."
+    },
+    "5": {
+     "zh": "这条路宽度不够，车开得很缓慢。",
+     "en": "This road is not wide enough, and cars drive very slowly."
+    }
+   }
+  },
+  {
+   "name": "Rising and increasing",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "升",
+    "上升",
+    "上涨",
+    "涨",
+    "涨价",
+    "升温",
+    "升级",
+    "增",
+    "增进",
+    "增强",
+    "提升",
+    "加深",
+    "加速",
+    "扩大",
+    "普及",
+    "完善",
+    "超"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "天气升温，水果的价格也上涨了。",
+     "en": "The weather is warming up, and the price of fruit has gone up too."
+    }
+   }
+  },
+  {
+   "name": "Shape and appearance",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "外观",
+    "外形",
+    "形象",
+    "形状",
+    "斜",
+    "圆",
+    "样式",
+    "身材",
+    "原",
+    "原有"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "这个杯子的外形是圆的，样式很新。",
+     "en": "The shape of this cup is round, and the style is new."
     }
    }
   },
@@ -3763,7 +5946,43 @@
     "巧",
     "著名",
     "厉害",
-    "丰富"
+    "丰富",
+    "优良",
+    "优质",
+    "优美",
+    "完美",
+    "良好",
+    "糟",
+    "糟糕",
+    "不良",
+    "有害",
+    "有益",
+    "有利",
+    "不利",
+    "失误",
+    "毛病",
+    "不幸",
+    "幸运",
+    "宝",
+    "宝贵",
+    "珍贵",
+    "珍惜",
+    "丑",
+    "臭",
+    "丰富多彩",
+    "怪",
+    "高档",
+    "高级",
+    "了不起",
+    "模糊",
+    "适当",
+    "突出",
+    "完整",
+    "先进",
+    "最佳",
+    "出色",
+    "生动",
+    "真实"
    ],
    "sentences": {
     "1": {
@@ -3781,6 +6000,62 @@
     "4": {
      "zh": "这个电影非常精彩，演员也很优秀。",
      "en": "This film is very exciting, and the actors are excellent too."
+    },
+    "5": {
+     "zh": "这里的环境优美，空气也很良好。",
+     "en": "The environment here is beautiful, and the air is good too."
+    }
+   }
+  },
+  {
+   "name": "Skills and achievements",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "成就",
+    "成果",
+    "本领",
+    "技能",
+    "实力",
+    "优势",
+    "资格",
+    "贡献",
+    "奋斗",
+    "进步",
+    "勤奋",
+    "擅长",
+    "善于",
+    "熟练",
+    "能干",
+    "把握",
+    "长处",
+    "短处",
+    "达成",
+    "出色",
+    "发挥",
+    "高效",
+    "克服",
+    "控制",
+    "力",
+    "力量",
+    "强大",
+    "实现",
+    "收获",
+    "体验",
+    "挑战",
+    "伟大",
+    "效率",
+    "有力",
+    "争",
+    "争取",
+    "追求",
+    "承担"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "他很勤奋，取得了很大的成就。",
+     "en": "He is diligent and has achieved great success."
     }
    }
   },
@@ -3808,7 +6083,17 @@
     "垃圾",
     "擦",
     "收拾",
-    "着火"
+    "着火",
+    "安",
+    "平安",
+    "静",
+    "吵",
+    "闹",
+    "保安",
+    "安全带",
+    "平静",
+    "整齐",
+    "舒适"
    ],
    "sentences": {
     "3": {
@@ -3818,6 +6103,10 @@
     "4": {
      "zh": "请不要乱扔垃圾，我们要保护大自然。",
      "en": "Please do not throw rubbish around; we must protect nature."
+    },
+    "5": {
+     "zh": "夜里很安静，保安说这里很平安。",
+     "en": "It is very quiet at night, and the security guard says it is safe here."
     }
    }
   },
@@ -3856,7 +6145,18 @@
     "好处",
     "难受",
     "顺利",
-    "直接"
+    "直接",
+    "难得",
+    "难度",
+    "难以",
+    "艰苦",
+    "实用",
+    "适用",
+    "用途",
+    "有益",
+    "便利",
+    "灵活",
+    "具体"
    ],
    "sentences": {
     "3": {
@@ -3866,6 +6166,10 @@
     "4": {
      "zh": "这个问题很复杂，不容易解释。",
      "en": "This problem is complicated and not easy to explain."
+    },
+    "5": {
+     "zh": "这个办法很实用，难度也不大。",
+     "en": "This method is very practical, and the difficulty is not great."
     }
    }
   },
@@ -3896,7 +6200,34 @@
     "普通",
     "平常",
     "符合",
-    "普遍"
+    "普遍",
+    "差别",
+    "差距",
+    "相似",
+    "类似",
+    "一致",
+    "同一",
+    "同",
+    "彼此",
+    "对比",
+    "单一",
+    "单独",
+    "特殊",
+    "独特",
+    "特有",
+    "不符",
+    "单",
+    "反",
+    "特色",
+    "特征",
+    "统一",
+    "相关",
+    "平衡",
+    "陌生",
+    "紧密",
+    "密切",
+    "原",
+    "原有"
    ],
    "sentences": {
     "3": {
@@ -3906,6 +6237,10 @@
     "4": {
      "zh": "这两本书的内容相同，但是价格不同。",
      "en": "The content of these two books is the same, but the prices are different."
+    },
+    "5": {
+     "zh": "这两个词意思相似，但是有差别。",
+     "en": "These two words have similar meanings, but there is a difference."
     }
    }
   },
@@ -3964,7 +6299,33 @@
     "标准",
     "顺序",
     "样子",
-    "做法"
+    "做法",
+    "事件",
+    "事实",
+    "事物",
+    "事故",
+    "大事",
+    "物品",
+    "物质",
+    "现象",
+    "状况",
+    "标志",
+    "表面",
+    "对象",
+    "类",
+    "类型",
+    "种类",
+    "领域",
+    "秘密",
+    "奇迹",
+    "情景",
+    "神秘",
+    "细节",
+    "现实",
+    "性质",
+    "一次性",
+    "重大",
+    "固定"
    ],
    "sentences": {
     "1": {
@@ -3982,6 +6343,67 @@
     "4": {
      "zh": "请把材料和表格给我。",
      "en": "Please give me the materials and the form."
+    },
+    "5": {
+     "zh": "这件大事的事实很清楚。",
+     "en": "The facts of this major matter are very clear."
+    }
+   }
+  },
+  {
+   "name": "Situations and trends",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "趋势",
+    "形势",
+    "现状",
+    "状态",
+    "状况",
+    "阶段",
+    "环节",
+    "范围",
+    "规模",
+    "程度",
+    "级",
+    "背景",
+    "发达",
+    "繁荣",
+    "重大",
+    "稳定"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "现在的形势很好，发展趋势也不错。",
+     "en": "The present situation is very good, and the trend is also good."
+    }
+   }
+  },
+  {
+   "name": "Keeping and protecting",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "保",
+    "保持",
+    "保存",
+    "保留",
+    "爱护",
+    "维持",
+    "守",
+    "防",
+    "防止",
+    "避免",
+    "预防",
+    "阻止",
+    "保安"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "我们要保护环境，保持干净。",
+     "en": "We must protect the environment and keep it clean."
     }
    }
   },
@@ -4005,7 +6427,23 @@
     "当",
     "叫作",
     "算",
-    "现有"
+    "现有",
+    "具有",
+    "具备",
+    "拥有",
+    "属于",
+    "存在",
+    "含有",
+    "包含",
+    "包括",
+    "含",
+    "充满",
+    "处",
+    "处于",
+    "构成",
+    "显得",
+    "在于",
+    "组成"
    ],
    "sentences": {
     "1": {
@@ -4019,6 +6457,10 @@
     "4": {
      "zh": "他的钱不多，现在只剩一百块。",
      "en": "He does not have much money, and now only a hundred yuan is left."
+    },
+    "5": {
+     "zh": "这个公司拥有很多员工，包括外国人。",
+     "en": "This company has many employees, including foreigners."
     }
    }
   },
@@ -4055,7 +6497,17 @@
     "不得不",
     "只好",
     "无法",
-    "值得"
+    "值得",
+    "愿",
+    "愿望",
+    "敢于",
+    "擅长",
+    "善于",
+    "应当",
+    "需",
+    "必需",
+    "必要",
+    "没法儿"
    ],
    "sentences": {
     "1": {
@@ -4073,6 +6525,10 @@
     "4": {
      "zh": "他无法回答，只好说不知道。",
      "en": "He is unable to answer, so he can only say he does not know."
+    },
+    "5": {
+     "zh": "他擅长游泳，也愿意教别人。",
+     "en": "He is good at swimming and is willing to teach others."
     }
    }
   },
@@ -4097,7 +6553,15 @@
     "少见",
     "不如",
     "不管",
-    "不论"
+    "不论",
+    "无关",
+    "无效",
+    "无奈",
+    "无数",
+    "从不",
+    "不要紧",
+    "不得了",
+    "没法儿"
    ],
    "sentences": {
     "1": {
@@ -4111,6 +6575,10 @@
     "4": {
      "zh": "他并不生气，只是有点儿不满。",
      "en": "He is not angry at all, just a little unhappy."
+    },
+    "5": {
+     "zh": "这件事和他无关，他也很无奈。",
+     "en": "This matter has nothing to do with him, and he is helpless too."
     }
    }
   },
@@ -4138,7 +6606,13 @@
     "不论",
     "由于",
     "因此",
-    "于是"
+    "于是",
+    "假如",
+    "万一",
+    "哪怕",
+    "要不",
+    "要不是",
+    "一旦"
    ],
    "sentences": {
     "3": {
@@ -4148,6 +6622,10 @@
     "4": {
      "zh": "不管明天下不下雨，我们都要去。",
      "en": "Whether or not it rains tomorrow, we must go."
+    },
+    "5": {
+     "zh": "假如下雨，我们就改天去。",
+     "en": "If it rains, we will go another day."
     }
    }
   },
@@ -4184,7 +6662,24 @@
     "基本",
     "基本上",
     "差点儿",
-    "千万"
+    "千万",
+    "必",
+    "必然",
+    "的确",
+    "绝对",
+    "果然",
+    "居然",
+    "显然",
+    "明显",
+    "或许",
+    "说不定",
+    "似乎",
+    "仿佛",
+    "偶然",
+    "根本",
+    "确保",
+    "确定",
+    "确认"
    ],
    "sentences": {
     "3": {
@@ -4194,6 +6689,10 @@
     "4": {
      "zh": "他也许在家，可能在睡觉。",
      "en": "Perhaps he is at home; he may be sleeping."
+    },
+    "5": {
+     "zh": "他的确很聪明，也许会成功。",
+     "en": "He is indeed very clever and may well succeed."
     }
    }
   },
@@ -4222,12 +6721,23 @@
     "至少",
     "左右",
     "大约",
-    "现有"
+    "现有",
+    "依然",
+    "始终",
+    "至今",
+    "反而",
+    "反正",
+    "毕竟",
+    "唯一"
    ],
    "sentences": {
     "4": {
      "zh": "他仍然很年轻，仅仅二十岁。",
      "en": "He is still young, only twenty years old."
+    },
+    "5": {
+     "zh": "毕竟他还是个孩子，依然需要帮助。",
+     "en": "After all he is still a child and still needs help."
     }
    }
   },
@@ -4278,7 +6788,14 @@
     "寄",
     "提出",
     "解释",
-    "举例"
+    "举例",
+    "分享",
+    "共享",
+    "付出",
+    "奖励",
+    "推荐",
+    "依靠",
+    "有助于"
    ],
    "sentences": {
     "1": {
@@ -4296,6 +6813,10 @@
     "4": {
      "zh": "老师鼓励了我，还建议我多读书。",
      "en": "The teacher encouraged me and also suggested that I read more."
+    },
+    "5": {
+     "zh": "他付出很多，还和大家分享经验。",
+     "en": "He puts in a lot and also shares his experience with everyone."
     }
    }
   },
@@ -4319,7 +6840,11 @@
     "相同",
     "同样",
     "相反",
-    "区别"
+    "区别",
+    "对比",
+    "相对",
+    "比例",
+    "较"
    ],
    "sentences": {
     "2": {
@@ -4333,6 +6858,10 @@
     "4": {
      "zh": "这个比那个更加便宜，但是质量不如那个。",
      "en": "This one is even cheaper than that one, but the quality is not as good as that one."
+    },
+    "5": {
+     "zh": "和那家店对比，这家店的价格相对便宜。",
+     "en": "Compared with that shop, the prices in this shop are relatively cheap."
     }
    }
   },
@@ -4368,7 +6897,17 @@
     "确实",
     "全",
     "好好",
-    "专门"
+    "专门",
+    "极其",
+    "过度",
+    "过分",
+    "过于",
+    "格外",
+    "相当",
+    "超级",
+    "彻底",
+    "简直",
+    "进一步"
    ],
    "sentences": {
     "1": {
@@ -4386,6 +6925,52 @@
     "4": {
      "zh": "他十分高兴，尤其是看到大家都来了。",
      "en": "He is very happy, especially because everyone has come."
+    },
+    "5": {
+     "zh": "他过于紧张，彻底忘了要说的话。",
+     "en": "He is too nervous and completely forgot what he wanted to say."
+    }
+   }
+  },
+  {
+   "name": "How things are done",
+   "group": "Grammar words",
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "words": [
+    "白",
+    "悄悄",
+    "轻易",
+    "亲自",
+    "单独",
+    "独自",
+    "连忙",
+    "急忙",
+    "纷纷",
+    "逐步",
+    "逐渐",
+    "渐渐",
+    "尽快",
+    "尽量",
+    "随手",
+    "随意",
+    "全力",
+    "大力",
+    "反复",
+    "分别",
+    "一路",
+    "立即",
+    "立刻",
+    "时常",
+    "随时",
+    "随后",
+    "尽力",
+    "便"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "他悄悄地走进来，亲自把门关上。",
+     "en": "He walks in quietly and closes the door himself."
     }
    }
   },
@@ -4426,7 +7011,20 @@
     "整个",
     "各种",
     "共",
-    "同时"
+    "同时",
+    "以及",
+    "及",
+    "全体",
+    "整体",
+    "总体",
+    "总共",
+    "各自",
+    "共享",
+    "综合",
+    "结合",
+    "联合",
+    "连接",
+    "组合"
    ],
    "sentences": {
     "1": {
@@ -4444,6 +7042,10 @@
     "4": {
      "zh": "我们互相帮助，共同努力。",
      "en": "We help each other and work hard together."
+    },
+    "5": {
+     "zh": "老师以及全体同学一起参加了活动。",
+     "en": "The teacher and all the students together took part in the activity."
     }
    }
   },
@@ -4495,7 +7097,19 @@
     "要是",
     "既然",
     "加上",
-    "顺便"
+    "顺便",
+    "不然",
+    "从而",
+    "因而",
+    "或是",
+    "可见",
+    "总之",
+    "正如",
+    "以及",
+    "由此",
+    "如同",
+    "结合",
+    "如"
    ],
    "sentences": {
     "1": {
@@ -4513,6 +7127,10 @@
     "4": {
      "zh": "他很累，不过还是继续工作，甚至不吃午饭。",
      "en": "He is tired, but he still keeps working, and does not even eat lunch."
+    },
+    "5": {
+     "zh": "他努力学习，因而取得了好成绩。",
+     "en": "He studied hard and therefore got good results."
     }
    }
   },
@@ -4544,7 +7162,19 @@
     "随着",
     "作为",
     "连",
-    "当"
+    "当",
+    "沿",
+    "朝",
+    "据",
+    "以",
+    "自从",
+    "至",
+    "随",
+    "凭",
+    "靠",
+    "针对",
+    "凭借",
+    "依据"
    ],
    "sentences": {
     "1": {
@@ -4562,6 +7192,10 @@
     "4": {
      "zh": "随着时间过去，我对汉语越来越有信心。",
      "en": "As time passes, I have more and more confidence in Chinese."
+    },
+    "5": {
+     "zh": "沿着这条路一直走，能到火车站。",
+     "en": "Going straight along this road, one can get to the train station."
     }
    }
   },
@@ -4583,7 +7217,12 @@
     "地",
     "之",
     "此",
-    "嗯"
+    "嗯",
+    "似的",
+    "呀",
+    "哦",
+    "哈",
+    "哎"
    ],
    "sentences": {
     "1": {
@@ -4597,6 +7236,10 @@
     "4": {
      "zh": "这件事我们之后再谈，好吗？",
      "en": "We will talk about this matter later, all right?"
+    },
+    "5": {
+     "zh": "哎呀，我的手机怎么不见了？",
+     "en": "Oh dear, where has my phone gone?"
     }
    }
   },
@@ -4615,7 +7258,11 @@
     "感",
     "部",
     "区",
-    "费"
+    "费",
+    "化",
+    "品",
+    "式",
+    "族"
    ],
    "sentences": {
     "3": {
@@ -4625,6 +7272,10 @@
     "4": {
      "zh": "这位作者很有名，读者们都喜欢他。",
      "en": "This author is famous, and readers all like him."
+    },
+    "5": {
+     "zh": "这位上班族住在现代化的城市。",
+     "en": "This office worker lives in a city that is modernising."
     }
    }
   }
