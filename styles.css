@@ -3418,8 +3418,10 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .jy .pstc:nth-child(4n)::before{background:#C9E6B8;width:52px;margin-left:-26px;transform:rotate(3deg)}
 .jy .pcard-f,.jy .pcard-k{border-radius:10px;box-shadow:0 6px 12px -6px rgba(20,33,42,.45)}
 .jy .pcard-f{background:#fff}
-.jy .pcard-f{padding:8px 8px 26px}
-.jy .pcard-f > img,.jy .pcard-f .pcard-art{border-radius:6px}
+.jy .pcard-f{display:flex;flex-direction:column;gap:5px;padding:8px 8px 6px}
+.jy .pcard-f > img,.jy .pcard-f .pcard-art{flex:1 1 auto;min-height:0;width:100%;height:auto;border-radius:6px}
+.jy .pcard-cap{flex:none;display:flex;align-items:center;justify-content:center;height:32px;text-align:center;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:13px;font-weight:700;line-height:1.1;color:#14212A}
+.jy .pcard-cap span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .jy .pstc.sp .pcard-f{box-shadow:0 0 0 3px #F2B531,0 6px 12px -6px rgba(20,33,42,.45)}
 .jy .pstc.sp::after{content:"★";position:absolute;left:-7px;top:-7px;width:24px;height:24px;display:grid;place-items:center;border-radius:50%;background:#F2B531;color:#fff;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.3);z-index:4;pointer-events:none}
 

@@ -63,7 +63,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.jy-tabs button', { hasText: 'Postcards' }).click();
     check(/Chengdu Tianfu International Airport/.test(await main(page)) && await page.locator('.pstc').count() >= 1, 'the Postcards tab has the airport as a postcard');
     { const front = await page.locator('.pcard-f').first().innerText();
-      check(front.trim() === '' && await page.locator('.pcard-f').first().evaluate(b => !b.querySelector('.pcard-k')), 'a postcard has no text on its front');
+      const cardEn = await page.locator('.pstc').first().locator('.pcard-en').innerText();
+      check(front.trim() === cardEn.trim() && cardEn.trim().length > 0 && await page.locator('.pcard-f').first().evaluate(b => !b.querySelector('.pcard-k')), 'a postcard front carries only the English name in its white border (' + front.trim() + ')');
       await page.locator('.pcard-f').first().click(); await page.waitForTimeout(120);
       check(await page.locator('.pstc.flip').count() === 1 && /Chengdu Tianfu International Airport/.test(await page.locator('.pstc.flip .pcard-k').innerText()), 'tapping a postcard turns it over to its message');
       await page.locator('.pstc.flip .pcard-k').click({ position:{ x:6, y:6 } }); await page.waitForTimeout(120);
