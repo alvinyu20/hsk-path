@@ -3327,3 +3327,103 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .hs-scroll .jy-chip i{color:var(--muted)}
 .hs-scroll .jy-chip.on{background:var(--panel);color:var(--ink);box-shadow:var(--shadow)}
 .hs-scroll .jy-chip.on i{color:var(--muted);opacity:1}
+
+/* ===== Journey: paper atlas theme (parchment, ink and red seals). The road scene, the passport book and the feast scene keep their own art. ===== */
+.jy{--ppbg:#EFE6D2;--pp:#F5EAD0;--pp2:#EBDDB9;--ppb:#E4D6B6;--ppl:#CDBB93;--ppe:#A9885A;--ppi:#2B2116;--ppm:#5E4B33;--ppr:#C2362B;--pprd:#8F2119;--ppcard:#FBF3DE;
+  --jbg:var(--ppbg);--jfill:var(--ppr);--jink:#5B3F2A;--panel:var(--pp);--panel2:var(--pp2);--line:var(--ppl);--ink:var(--ppi);--muted:var(--ppm);--seal:var(--ppr);
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .1 0 0 0 .14 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  color:var(--ppi);border:1px solid var(--ppl);background:var(--ppbg) var(--grain)}
+.t-dark .jy{--ppbg:#1E1812;--pp:#2B2318;--pp2:#352B1D;--ppb:#3A2E1F;--ppl:#4B3E2B;--ppe:#7A6440;--ppi:#F1E6CF;--ppm:#BFAF8E;--ppr:#E2574A;--pprd:#9F2F25;--ppcard:#33291B;--jink:#D9C49A;
+  color-scheme:dark}
+.jy .jy-now,.jy .jy-panel,.jy .jy-card{background:var(--pp) var(--grain);border:1px solid var(--ppe);box-shadow:0 0 0 3px var(--ppbg),0 0 0 4px rgba(169,136,90,.55)}
+.jy .jy-now{border-radius:20px}
+.jy .jy-road,.jy .jy-hero{border-radius:19px 19px 0 0}
+.jy .jy-road::after{content:"";position:absolute;inset:0;border-bottom:1px solid var(--ppe);pointer-events:none}
+.jy .jy-where,.jy .jy-ph b,.jy .jy-pass-h b{color:var(--ppi)}
+.jy .jy-lab,.jy .jy-last-k{color:var(--ppm);letter-spacing:.1em}
+/* the views bar and the filter bars: paper pills, a red seal for the chosen one */
+.jy .jy-tabw{--cue:var(--ppb)}
+.jy .jy-tabs.seg2,.jy .hs-wrap,.jy .hs-scroll{background:var(--ppb);box-shadow:inset 0 0 0 1px rgba(169,136,90,.35)}
+.jy .jy-tabs button{color:var(--ppm)}
+.jy .jy-tabs button.on{background:var(--ppr);color:#fff;box-shadow:0 1px 3px rgba(60,30,10,.3)}
+.t-dark .jy .jy-tabs button.on{color:#1B0907}
+.jy .hs-wrap{--cue:var(--ppb)}
+.jy .hs-scroll .jy-chip{color:var(--ppi)}
+.jy .hs-scroll .jy-chip.on{background:var(--ppi);color:var(--pp);box-shadow:0 1px 3px rgba(60,30,10,.3)}
+.jy .jy-chip{background:var(--pp);border-color:var(--ppl);color:var(--ppi)}
+.jy .jy-chip.on{background:var(--ppi);color:var(--pp);border-color:var(--ppi)}
+.jy .jy-tabarr{background:var(--pp);color:var(--ppi);border:1px solid var(--ppe)}
+/* Explore: a red progress line, the latest stop as a ledger entry, a seal-red travel button */
+.jy .jy-meter,.jy .jy-prov{background:var(--ppb)}
+.jy .jy-meter i,.jy .jy-prov i{background:var(--ppr)}
+.jy .jy-goal{background:var(--pp2);border:1px solid var(--ppl)}
+.jy .jy-last{border:1px dashed var(--ppe);background:var(--pp2);border-radius:6px}
+.jy .jy-last:hover{border-color:var(--ppi)}
+.jy .btn.pri{background:var(--ppr);border-color:var(--ppr);color:#fff;box-shadow:0 3px 0 var(--pprd);border-radius:99px}
+.t-dark .jy .btn.pri{color:#1B0907}
+.jy .btn.pri:active{transform:translateY(2px);box-shadow:0 1px 0 var(--pprd)}
+.jy .btn:not(.pri){background:var(--pp);border-color:var(--ppe);color:var(--ppi)}
+.jy .linkbtn{color:var(--ppr)}
+.t-dark .jy .linkbtn{color:#F08C80}
+.jy .muted,.jy .jy-key{color:var(--ppm)}
+/* the map */
+.jy .jy-grat path{fill:none;stroke:#B89B62;stroke-opacity:.28;stroke-width:.6}
+.t-dark .jy .jy-grat path{stroke:#7A6440;stroke-opacity:.35}
+.jy .jy-r path{fill:#E4D3AC;stroke:#B79F72;stroke-width:.6;stroke-linejoin:round}
+.t-dark .jy .jy-r path{fill:#3A2F20;stroke:#5B4A30}
+.jy .jy-r path.mu{fill:none;stroke:#5B3F2A;stroke-width:.4;stroke-dasharray:1.5 1.2}
+.jy .jy-r.done path:not(.mu){fill:hsl(var(--rh) 38% 66%);stroke:#5B3F2A;stroke-width:.9}
+.t-dark .jy .jy-r.done path:not(.mu){fill:hsl(var(--rh) 32% 40%);stroke:#D9C49A}
+.jy .jy-r.here path:not(.mu){fill:hsl(var(--rh) 45% 82%);stroke:var(--ppi);stroke-width:1.5}
+.t-dark .jy .jy-r.here path:not(.mu){fill:hsl(var(--rh) 35% 34%);stroke:#F1E6CF}
+.jy .jy-r.next path:not(.mu){fill:#EBDDB9;stroke:var(--ppi);stroke-width:1.1;stroke-dasharray:3 2}
+.t-dark .jy .jy-r.next path:not(.mu){fill:#3F3322}
+.jy .jy-r:hover path:not(.mu),.jy .jy-r:focus-visible path:not(.mu){stroke:var(--ppr);stroke-width:1.4}
+.jy-seal rect{fill:#C2362B;fill-opacity:.92}
+.jy-seal text{fill:#F7E7CC;font-weight:700;pointer-events:none}
+.t-dark .jy-seal rect{fill:#E2574A}
+.t-dark .jy-seal text{fill:#1B0907}
+.jy-orn circle{fill:#F7EBD0;fill-opacity:.75;stroke:#8A6B3E;stroke-width:.8}
+.jy-orn .n{fill:#8A6B3E}.jy-orn .e{fill:#B79F72}.jy-orn .r{fill:#C2362B}
+.jy-orn text{fill:#5B3F2A;font:700 8px 'Noto Serif SC',serif}
+.jy-orn .c1{fill:#F7EBD0;stroke:#8A6B3E;stroke-width:1}.jy-orn .c2{fill:none;stroke:#8A6B3E;stroke-width:.5}
+.jy-orn .t1{font:700 15px 'Noto Serif SC',serif;fill:#2B2116}
+.jy-orn .t2{font:700 8px 'Bricolage Grotesque',sans-serif;letter-spacing:1.4px;fill:#2B2116}.jy-orn .t3{font:500 8px 'Bricolage Grotesque',sans-serif;letter-spacing:1.4px;fill:#8A6B3E}
+.t-dark .jy-orn circle{fill:#2B2318;fill-opacity:.85}.t-dark .jy-orn text{fill:#D9C49A}
+.t-dark .jy-orn .c1{fill:#2B2318;stroke:#7A6440}.t-dark .jy-orn .c2{stroke:#7A6440}.t-dark .jy-orn .t1,.t-dark .jy-orn .t2{fill:#F1E6CF}.t-dark .jy-orn .t3{fill:#BFAF8E}
+.jy .jy-out{fill:#EBDDB9;stroke:#5B3F2A;stroke-width:1.3}
+.t-dark .jy .jy-out{fill:#3A2F20;stroke:#D9C49A}
+.jy .jy-out.mu,.jy-out.mu{fill:#EBDDB9}
+.t-dark .jy .jy-out.mu{fill:#3A2F20}
+.jy .jy-route{stroke:var(--ppr);stroke-width:1.9}
+.jy .jy-pin rect,.jy .jy-pin path,.jy .jy-pin circle:not(.hit){stroke:var(--pp)}
+.jy .jy-sm{background:var(--pp);border-color:var(--ppl);color:var(--ppi)}
+.jy .jy-sm path{fill:var(--ppb);stroke:var(--ppl)}
+.jy .jy-sm.done path{fill:hsl(var(--rh) 38% 66%);stroke:#5B3F2A}
+.t-dark .jy .jy-sm.done path{fill:hsl(var(--rh) 32% 40%)}
+/* souvenirs: numbered specimens in a collector's cabinet */
+.jy .sv-panel{padding-top:16px}
+.jy .sv-cell{position:relative;border-radius:6px;padding:20px 4px 8px}
+.jy .sv-cell.got{background:var(--ppcard);border:1px solid var(--ppe);box-shadow:0 2px 0 rgba(90,60,20,.25)}
+.jy .sv-cell.hid{background:transparent;border:1.5px dashed var(--ppl);color:var(--ppm)}
+.jy .sv-cell.hid .sv-img{opacity:.1}
+.jy .sv-cell.sel{box-shadow:0 0 0 2px var(--ppr)}
+.jy .sv-no{position:absolute;left:7px;top:5px;font-size:10px;font-weight:700;letter-spacing:.06em;color:#8A6B3E}
+.t-dark .jy .sv-no{color:#BFAF8E}
+.jy .sv-zh{color:var(--ppr);font-weight:600}
+.t-dark .jy .sv-zh{color:#F08C80}
+.jy .sv-name{color:var(--ppi)}
+.jy .sv-detail,.jy .sv-found{background:var(--ppcard);border-color:var(--ppe);border-radius:6px;box-shadow:0 0 0 3px var(--ppbg),0 0 0 4px rgba(169,136,90,.55)}
+.jy .sv-detail.hid{border-style:dashed}
+/* postcards: airmail borders, a stamp and a postmark on the photo side. The pictures are the real ones. */
+.jy .pcw{background:radial-gradient(circle at 18% 8%,rgba(255,255,255,.35),transparent 55%),#F1E4C8;box-shadow:inset 0 0 40px rgba(120,80,30,.18);border:1px solid var(--ppl)}
+.t-dark .jy .pcw{background:radial-gradient(circle at 18% 8%,rgba(255,255,255,.05),transparent 55%),#241D14;box-shadow:inset 0 0 30px rgba(0,0,0,.4)}
+.jy .pstc::before{display:none}
+.jy .pstc.sp::before,.jy .pstc.sp:nth-child(n)::before{display:grid;place-items:center;content:"★";top:-8px;left:-8px;width:24px;height:24px;margin:0;transform:none;border-radius:50%;background:#E8A526;border:0;color:#fff;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.35);z-index:4}
+.jy .pcard-f,.jy .pcard-k{border-radius:2px}
+.jy .pcard-f{padding:6px;background:repeating-linear-gradient(135deg,#C2362B 0 9px,#F5EAD0 9px 15px,#2F5AA8 15px 24px,#F5EAD0 24px 30px)}
+.jy .pcard-f > img,.jy .pcard-f .pcard-art{border:3px solid #FBF3DE;border-radius:0;box-sizing:border-box}
+.jy .pcard-f::after{content:"山";position:absolute;right:13px;top:13px;width:24px;height:28px;display:grid;place-items:center;background:#FBF3DE;border:1.5px dotted #8A6B3E;color:#C2362B;font:700 14px 'Noto Serif SC',serif;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.jy .pcard-f::before{content:"山路";position:absolute;right:30px;top:20px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;border:1.5px solid rgba(194,54,43,.75);box-shadow:inset 0 0 0 3px transparent,inset 0 0 0 4px rgba(194,54,43,.45);color:rgba(194,54,43,.85);font:700 9px 'Noto Serif SC',serif;transform:rotate(-14deg);z-index:2;pointer-events:none}
+.jy .pstc.sp .pcard-f{box-shadow:0 0 0 2.5px hsl(42 88% 54%),0 10px 14px -8px rgba(40,25,10,.55)}
+@media (max-width:600px){ .jy .pcard-f::before{width:30px;height:30px;right:28px;top:19px;font-size:8px} .jy .pcard-f::after{width:22px;height:26px;right:12px;top:12px} }

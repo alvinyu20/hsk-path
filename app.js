@@ -3408,7 +3408,7 @@
                 out.jySvChips = [['all', 'All', list.length], ['found', 'Found', got.length]].map(c => ({ label:c[1], count:c[2], cls:fl === c[0] ? 'on' : '', fn:() => this.jySvFilterSet(c[0]) }));
         const shown = list.filter(x => fl === 'all' || (fl === 'found') === !!have[x.stop]).sort((a, b) => a.en.localeCompare(b.en, 'en', { sensitivity:'base' }) || (a.id < b.id ? -1 : 1));
         out.jySvItems = shown.map(x => { const has = !!have[x.stop]; const RR = JWORLD.byRegion[x.rid];
-          return { cls:(has ? 'got' : 'hid') + (sel && sel.id === x.id ? ' sel' : ''), img:svImg(x), name:has ? x.en : '', zh:has ? x.zh : '', label:has ? x.en + ', found' : 'A souvenir still to find in ' + (RR ? RR.en : 'China'), open:() => this.jySvPick(x.id) }; });
+          return { no:'No. ' + String(list.indexOf(x) + 1).padStart(2, '0'), cls:(has ? 'got' : 'hid') + (sel && sel.id === x.id ? ' sel' : ''), img:svImg(x), name:has ? x.en : '', zh:has ? x.zh : '', label:has ? x.en + ', found' : 'A souvenir still to find in ' + (RR ? RR.en : 'China'), open:() => this.jySvPick(x.id) }; });
         out.jySvNone = shown.length === 0; out.jySvNoneText = fl === 'found' ? 'Nothing here yet. Travel on: each region hides a few souvenirs in its stops.' : 'You have found them all.';
         out.jySvSelShow = !!sel;
         if (sel) { const has = !!have[sel.stop]; const RR = JWORLD.byRegion[sel.rid]; const SP = JWORLD.byStop[sel.stop];
@@ -3433,6 +3433,11 @@
           return { id, cls:stt + (S.jyFill === id && stt === 'done' ? ' fillnew' : '') + (has ? '' : ' na') + (JY.SMALL.indexOf(id) >= 0 && id !== 'singapore' ? ' tiny' : ''), hue, d:m.cd || '', m:m.cm || '', hasM:!!m.cm, label:en + ', ' + word, en, open:has && !fm ? () => this.jyShowReg(id) : () => {} };
         };
         out.jyMapRegions = regs.filter(id => JMAP.regions[id].cd && id !== 'singapore').map(mk);
+        // a red seal on every stamped region (paper atlas look): the name cut in two short lines
+        out.jySeals = regs.filter(id => JMAP.regions[id].cd && JMAP.regions[id].cc && JWORLD.byRegion[id] && vs.done[id] && JY.SMALL.indexOf(id) < 0 && META[id]).map(id => {
+          const zh = META[id][0]; const h = Math.ceil(zh.length / 2); const l1 = zh.slice(0, h), l2 = zh.slice(h); const fs = Math.max(l1.length, l2.length) > 1 ? 5.2 : 6.8; const w = Math.max(l1.length, l2.length) * fs + 5;
+          return { x:JMAP.regions[id].cc[0], y:JMAP.regions[id].cc[1], rot:((id.length * 7) % 11) - 5, l1, l2: l2 || '', fs, w:Math.round(w * 10) / 10, rx:Math.round(-w * 5) / 10, ty1:l2 ? -1 : 2.4, ty2:6, label:zh };
+        });
         // the flights so far: an arc from each region to the next one flown to (the newest one draws itself)
         out.jyArcs = [];
         if (!fm) {
