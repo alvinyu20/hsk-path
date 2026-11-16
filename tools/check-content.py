@@ -105,10 +105,10 @@ EN_TIME_BACK = [
 ]
 MEASURE_NEEDS = {'书': '本', '衣服': '件', '猫': '只', '狗': '只'}   # noun -> required measure word (instead of the all-purpose 个)
 QUESTION_WORDS = ['什么', '谁', '哪', '几', '多少', '怎么', '怎么样', '哪儿', '哪里']
-LEXICAL_NEG = ['不客气', '对不起', '没关系', '没事', '不好意思', '不见了', '不早了', '不同', '来不及', '不一样', '不错', '不久', '差不多', '不对', '特别', '别人', '别的', '不断', '不便', '不得不', '不如', '不满', '不过', '不管', '不论', '不光', '不仅', '无聊', '无论', '区别', '性别', '分别', '告别', '差别', '个别', '不利', '不幸', '不良', '不得了', '不小心', '不礼貌', '不少', '无数', '无限', '无奈', '无效', '无关', '无法', '不足', '不然', '不安', '不满意']   # 别人 "other people" and 别的 "other" use 别 without a negative meaning
+LEXICAL_NEG = ['不客气', '对不起', '没关系', '没事', '不好意思', '不见了', '不早了', '不同', '来不及', '不一样', '不错', '不久', '差不多', '不对', '特别', '别人', '别的', '不断', '不便', '不得不', '不如', '不满', '不过', '不管', '不论', '不光', '不仅', '无聊', '无论', '区别', '性别', '分别', '告别', '差别', '个别', '不利', '不幸', '不良', '不得了', '不小心', '不礼貌', '不少', '没电', '无数', '无限', '无奈', '无效', '无关', '无法', '不足', '不然', '不安', '不满意']   # 别人 "other people" and 别的 "other" use 别 without a negative meaning
 PAST_EN = r"\b(ate|bought|saw|heard|went|was|were|did|drank|had|got|said|took|came|made|read|wrote|studied|worked|lived|asked|called|finished|\w+ed)\b"
 IRREGULAR_PAST = 'overtook|forgave|dreamt|ate|bought|saw|heard|went|drank|had|got|said|took|came|made|wrote|was|were|did|told|sent|gave|found|lost|left|met|paid|brought|taught|began|ran|sat|stood|forgot|knew|thought|felt|kept|won|fell|spoke|woke|rode|drove|broke|bit|read|blew|grew|drew|threw|wore|chose|swam|sang|slept|spent|sold|held|led|lay|fed|hid|shook|stole|flew|dug|rang|built|caught|cut|hurt|let|lit|meant|put|set|shut|sank|sat|sent|shot|slid|spun|stuck|swept|tore|understood|woke|lent'
-PAST_ADJ = {'stored', 'developed', 'coloured', 'colored', 'produced', 'repaired', 'allowed', 'compared', 'detailed', 'steamed', 'grilled', 'roasted', 'baked', 'complicated', 'irritated', 'fried', 'succeed', 'exceed', 'proceed', 'varied', 'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured', 'united', 'limited', 'advanced', 'unlimited', 'crowded', 'needed', 'wicked', 'naked', 'sacred', 'hundred'}
+PAST_ADJ = {'congested', 'stored', 'developed', 'coloured', 'colored', 'produced', 'repaired', 'allowed', 'compared', 'detailed', 'steamed', 'grilled', 'roasted', 'baked', 'complicated', 'irritated', 'fried', 'succeed', 'exceed', 'proceed', 'varied', 'used', 'aged', 'related', 'pleased', 'satisfied', 'scared', 'worried', 'annoyed', 'relaxed', 'delighted', 'disappointed', 'tired', 'excited', 'interested', 'married', 'bored', 'surprised', 'crowded', 'need', 'seed', 'speed', 'red', 'bed', 'weed', 'indeed', 'hundred', 'thousand', 'based', 'connected', 'assured', 'united', 'limited', 'advanced', 'unlimited', 'crowded', 'needed', 'wicked', 'naked', 'sacred', 'hundred'}
 
 
 def meaning_checks(zh, en):
@@ -278,7 +278,7 @@ def meaning_checks(zh, en):
     e = e.replace('had better', 'HADBETTER')
     e_tense = re.sub(r"\b(?:is|are|am|be|'s|'re|'m)\s+(?:\w+ly\s+)?\w+ed\b", ' ', e)       # "is loved", "are interested": a present passive or state, not a past tense
     toks_past = [w for w in re.findall(r"[a-z]+", e_tense) if re.fullmatch(r'\w+ed', w) and w not in PAST_ADJ] + [w for w in re.findall(r'[a-z]+', e) if w in ('ate', 'bought', 'saw', 'heard', 'went', 'drank', 'had', 'got', 'said', 'took', 'came', 'made', 'wrote', 'was', 'were', 'did')]
-    if toks_past and not re.search('了|没|曾|昨天|昨晚|前天|去年|上个|上星期|过|以前|从前|当时|后来|小时候|是.*的|看见|听见|才|已经|刚|以为|听说', z) and not re.search(r"\b(has|have|had been)\b", e):
+    if toks_past and not re.search('了|没|曾|当年|昨天|昨晚|前天|去年|上个|上星期|过|以前|从前|当时|后来|小时候|是.*的|看见|听见|才|已经|刚|以为|听说', z) and not re.search(r"\b(has|have|had been)\b", e):
         out.append(('WARN', 'meaning', 'English is in the past (%s) but the Chinese has no 了 or past time word' % toks_past[0]))
     if '了' in z.replace('了解', '').replace('别忘了', '').replace('不要忘了', '').replace('为了', '').replace('除了', '').replace('极了', '').replace('怎么了', '').replace('多了', '').replace('死了', '').replace('不了', '').replace('充满了', '').replace('不得了', '').replace('了不起', '') and '太' not in z and not re.search(r"\b(\w+ed|" + IRREGULAR_PAST + r"|is now|are now|has|have|already|now|'s|turned|become|became|got|over|finished|ill|sick|snowed|raining|late|broken|any more|anymore|any longer|no longer|getting|growing|about to|get to|arrive|reach|come to|soon)\b", e):
         out.append(('WARN', 'meaning', '了 in the Chinese: English shows no completed action or change of state'))
@@ -489,11 +489,24 @@ def gloss_keys(gloss, extra):
     return keys
 
 
+IRREG_FORMS = {w.split(':')[0]: tuple(w.split(':')[1].split('|')) for w in (
+    'take:took|taken lead:led freeze:froze|frozen hold:held break:broke|broken get:got|gotten see:saw|seen go:went|gone give:gave|given '
+    'run:ran find:found buy:bought speak:spoke|spoken begin:began|begun lose:lost send:sent think:thought teach:taught write:wrote|written '
+    'eat:ate|eaten drink:drank|drunk sit:sat stand:stood tell:told say:said make:made come:came know:knew|known feel:felt keep:kept '
+    'leave:left meet:met pay:paid bring:brought build:built catch:caught choose:chose|chosen draw:drew|drawn drive:drove|driven fall:fell|fallen '
+    'fly:flew|flown forget:forgot|forgotten grow:grew|grown hide:hid|hidden rise:rose|risen sell:sold shake:shook|shaken shoot:shot '
+    'sing:sang|sung sleep:slept spend:spent steal:stole swim:swam throw:threw|thrown understand:understood wake:woke|woken wear:wore|worn win:won '
+    'overtake:overtook|overtaken'.split())}
+
+
 def en_has_key(en_tokens, key):
     k = key.lower()
-    stem = k[:-1] if k.endswith('e') and len(k) > 3 else k
-    stem = stem if len(stem) >= 3 else k
-    return any(t == k or t.startswith(stem) for t in en_tokens)
+    stems = {k[:-1] if k.endswith('e') and len(k) > 3 else k}
+    if k.endswith('y') and len(k) > 3:
+        stems.add(k[:-1])                      # enemy -> enemies, pastry -> pastries
+    stems = {s if len(s) >= 3 else k for s in stems}
+    forms = IRREG_FORMS.get(k, ())             # irregular verbs: take -> took, lead -> led
+    return any(t == k or t in forms or any(t.startswith(s) for s in stems) for t in en_tokens)
 
 
 def load_words_for_gloss(level):
