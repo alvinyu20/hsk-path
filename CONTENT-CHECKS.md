@@ -109,6 +109,16 @@ HSK 4 is the fourth level (`content/l4/`, tools run with `LEVEL=4`). The level c
 - **Audio.** HSK 4 has no recorded voice files yet (the browser voice is used); `node tools/audio-texts.js` already lists its texts for the audio workflow.
 - Nothing has been read by a person who reads Chinese. `tools/make-ai-review-pack-l4.py` builds the packs for that (`review/chinese-ai-hsk4/`); they have not yet been run past DeepSeek or Qwen.
 
+## HSK 5 (grammar part written 16 Nov 2026; the rest of the level is still being built)
+
+HSK 5 is the fifth level (`content/l5/`, tools run with `LEVEL=5`). The level checker allows words and characters from HSK 1 to 5 only. What is different from the lower levels:
+- **Words: 1,579 cards for the 1,600 band 5 entries.** 16 entries reuse a headword from a lower level with a different sense or reading (为 倒 别 喂 头 好 当 才 数 本 省 看 背 行 量 面); they are taught in one grammar lesson (`newmean5`, "Words you know, with a new meaning") and are not separate cards. 5 entries are one spelling with two readings (称 处 调 系 批); each is one card that notes both readings.
+- **Grammar outline is my own** (`content/l5/grammar-outline.txt`, 78 points, 32 lessons, 160 exercises, 156 extra exercises, 156 write prompts). It is built from the grammar of the HSK 5 words, my own list, and two open grammar sites (mandarintemple.com HSK 5 pages and the Chinese Grammar Wiki). It is limited to patterns that can be written with HSK 1 to 5 words, so some patterns are not taught (see below).
+- **Not taught, on purpose.** Patterns whose key word is above HSK 5 (大都 不时 偏偏 无非 以免 与否 呗 则 兼 and similar); patterns already taught at HSK 4 (随着 尽管 即使 要是…否则 差点儿 竟然 不得不); and very abstract points. The pattern 把 + verb + 成 (翻译成, 写成, 切成) cannot be shown because 成 is a level 6 character, so only 当作 / 当成 / 看作 / 变成 / 成为 are taught.
+- **Explanations cross-checked against the Chinese Grammar Wiki (16 Nov 2026):** 反而 (second half of the sentence, result opposite to what you expect, no comma after it), 毕竟 (reason or fact that explains), 万一 (unlikely and usually unwelcome), 再也不 / 再也没 (never again; 不 for a decision, 没 for what did not happen), 凭 (on the basis of), 够…的 (also checked on mandarintemple.com; the wording was widened to "surprise, sympathy or complaint"), 简直 / 根本 / 难以 (three web searches). All other grammar explanations rely on my own knowledge and the outline's examples. They were written by me and have not been read by a teacher.
+- **Pinyin rules added to the engine:** 了 after a verb + 得 at the end of a clause reads liǎo (吃得了吗); 将 read jiāng in the formal 把 use (`content/pinyin-reviewed.tsv`). Words with a second reading that pypinyin gets wrong went to `content/lexicon-words.tsv` (摔倒 上当 看家 看门 数数 背书 对称 中文系 水面 本月 安全性 重要性 积极性 可能性 之一 上海).
+- **Extra exercises are now level-checked.** `DUMP_EXTRAS=1` makes `tools/dump-sentences.js` include the review-point extras. HSK 5 runs with it on. Found on the way: the extras of HSK 2 to 4 were never run through the sentence checker (with them included: 4 errors for HSK 2, 2 for HSK 3, 2 for HSK 4, plus a handful of warnings, for example 常常 in an HSK 2 extra and 早点儿 with a stray 儿). They are not fixed yet; the check for those levels still runs without extras.
+
 ## Review log
 
 ### 30 Oct 2026, HSK 1 (300 words, 26 grammar lessons)

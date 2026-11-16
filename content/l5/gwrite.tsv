@@ -1,0 +1,157 @@
+# point id <TAB> English prompt <TAB> a model answer <TAB> words the answer needs (a+b = all, a|b = any)
+g5-1	Once it starts to rain, we will go home.	一旦下雨，我们就回家。	一旦+就
+g5-1	Once you have learned it, you will not forget it.	一旦学会了，你就不会忘记。	一旦+就
+g5-2	He worked hard, so he passed the exam.	他很努力，因而通过了考试。	因而|从而
+g5-2	She exercises often, and so she stays healthy.	她经常运动，因而身体很好。	因而|从而
+g5-3	On weekends I either read or watch films.	周末我或是看书，或是看电影。	或是
+g5-3	Tomorrow we will either take a car or walk.	明天我们或是坐车，或是走路。	或是
+g5-4	Whether it rains or not, I will go.	下雨也好，不下雨也好，我都去。	也好+都
+g5-4	Whether it is rice or noodles, I like both.	米饭也好，面条也好，我都喜欢。	也好+都
+g5-5	It was cold, and on top of that it was late, so I did not go.	天气冷，加上时间晚，我没去。	加上
+g5-5	I bought apples, bananas and watermelon.	我买了苹果、香蕉以及西瓜。	以及
+g5-6	However tired I am, I will finish the work.	再累，我也要完成工作。	再+也
+g5-6	However far it is, we will go.	再远，我们也要去。	再+也
+g5-7	Without friends, there is no happiness.	没有朋友，就没有快乐。	没有+就
+g5-7	Without health, there is nothing.	没有健康，就没有一切。	没有+就
+g5-8	He studies Chinese in order to work in China.	他学汉语，为的是去中国工作。	为的是|以便
+g5-8	Please give me your phone number so that I will call you.	请给我你的电话号码，以便我给你打电话。	以便|为的是
+g5-9	We take the school as the centre.	我们以学校为中心。	以+为
+g5-9	He takes getting into university as his goal.	他以考上大学为目标。	以+为
+g5-10	I helped him, but he got angry instead.	我帮了他，他反而生气了。	反而
+g5-10	The rain did not stop; instead it got heavier.	雨没有停，反而更大了。	反而
+g5-11	Hurry up, otherwise we will be late.	快一点，不然我们会迟到。	不然|要不
+g5-11	Go to bed early, otherwise you will be tired tomorrow.	早点睡，不然明天你会很累。	不然|要不
+g5-12	He is only a child after all.	他毕竟还是个孩子。	毕竟
+g5-12	After all, she is your friend.	毕竟她是你的朋友。	毕竟
+g5-13	I said it would rain, and sure enough it did.	我说会下雨，果然下雨了。	果然
+g5-13	Sure enough, he came.	他果然来了。	果然
+g5-14	He actually forgot his own birthday.	他居然忘了自己的生日。	居然
+g5-14	To my surprise, she did not come.	她居然没来。	居然
+g5-15	He seems very tired.	他似乎很累。	似乎|仿佛
+g5-15	It looks as if it is going to rain.	天仿佛要下雨了。	似乎|仿佛
+g5-16	Judging from the weather, it will rain tomorrow.	从天气来看，明天会下雨。	从+来看
+g5-16	Judging from his results, he studies well.	从他的成绩来看，他学得很好。	从+来看
+g5-17	Take me, for example: I like sport.	拿我来说，我喜欢运动。	拿+来说
+g5-17	Take Shanghai, for example: it is very big.	拿上海来说，它很大。	拿+来说
+g5-18	In my view, this plan is good.	在我看来，这个计划很好。	在+看来
+g5-18	In the teacher's view, he is right.	在老师看来，他是对的。	在+看来
+g5-19	In short, we must work hard.	总之，我们要努力。	总之
+g5-19	From this it can be seen that he is very kind.	由此可见，他很好。	由此
+g5-20	Up to now, I have learned fifty words.	到现在为止，我学了五十个词。	到+为止
+g5-20	The class runs until Friday.	课到星期五为止。	到+为止
+g5-21	He got into university through his own effort.	他凭自己的努力考上了大学。	凭|凭借
+g5-21	On what grounds do you say this?	你凭什么这样说？	凭
+g5-22	According to the rules, you must come early.	依据规定，你要早来。	依据|根据
+g5-22	According to the weather, we are no longer going.	依据天气，我们不去了。	依据|根据
+g5-23	He lives by selling fruit.	他靠卖水果生活。	靠|依靠
+g5-23	Children rely on their parents.	孩子依靠父母。	靠|依靠
+g5-24	Please put the book on the table.	请将书放在桌子上。	将|把
+g5-24	He told everyone about this matter.	他将这件事告诉了大家。	将|把
+g5-25	I will take care of this matter.	这件事由我来做。	由
+g5-25	It is up to you to decide.	由你决定。	由
+g5-26	What I know is this.	我所知道的就是这些。	所
+g5-26	Everything he said is true.	他所说的都是真的。	所
+g5-27	This news makes everyone very happy.	这个消息令大家很高兴。	令|使|让
+g5-27	His words move me very much.	他的话令我很感动。	令|使|让
+g5-28	We understand each other.	我们彼此了解。	彼此
+g5-28	The classmates help each other.	同学们彼此帮助。	彼此
+g5-29	He works so hard.	他如此努力。	如此
+g5-29	That is how things are.	事情就是如此。	如此
+g5-30	This question is too simple.	这个问题过于简单。	过于
+g5-30	Do not worry too much.	不要过于担心。	过于
+g5-31	Please wait a moment.	请稍等一下。	稍
+g5-31	This one is a little big.	这个稍大一点。	稍
+g5-32	It is quite cold today.	今天够冷的。	够+的
+g5-32	He is quite busy.	他够忙的。	够+的
+g5-33	You must be careful.	你可要小心。	可
+g5-33	This really is not easy.	这可不容易。	可
+g5-34	The match is about to start.	比赛将要开始。	将要|就要|快要
+g5-34	We will move house soon.	我们将要搬家。	将要|就要|快要
+g5-35	He often goes to the park.	他时常去公园。	时常|经常
+g5-35	We must pay attention to safety at all times.	我们要时刻注意安全。	时刻
+g5-36	Please come at once.	请立刻来。	立刻|立即
+g5-36	He ran over at once.	他立即跑了过去。	立刻|立即
+g5-37	It is getting dark.	天渐渐黑了。	渐渐|逐渐
+g5-37	His Chinese is gradually getting better.	他的汉语渐渐好起来了。	渐渐|逐渐
+g5-38	He has never told me.	他始终没有告诉我。	始终
+g5-38	She has always believed in herself.	她始终相信自己。	始终
+g5-39	It rained for three days in a row.	连续下了三天雨。	连续
+g5-39	The rain went on for a week.	雨持续下了一个星期。	持续
+g5-40	I saw him again.	我再次见到了他。	再次
+g5-40	Please check again.	请再次检查。	再次
+g5-41	He ate first and then went to work.	他先吃了饭，随后去上班了。	随后|此后
+g5-41	After that, he comes here every day.	此后，他每天都来这里。	此后|随后
+g5-42	The guests arrived one after another.	客人们陆续到了。	陆续|先后
+g5-42	He has been to three countries, one after another.	他先后去过三个国家。	先后|陆续
+g5-43	Today is simply too hot.	今天简直太热了。	简直
+g5-43	This place is simply like a painting.	这里简直像一幅画。	简直
+g5-44	This is absolutely not true.	这绝对不是真的。	绝对
+g5-44	You can absolutely trust him.	你绝对可以相信他。	绝对
+g5-45	I do not know about this at all.	我根本不知道这件事。	根本
+g5-45	He did not come at all.	他根本没来。	根本
+g5-46	This problem is hard to solve.	这个问题难以解决。	难以
+g5-46	His words are hard to believe.	他的话让人难以相信。	难以
+g5-47	Please come as early as possible.	请尽量早点来。	尽量
+g5-47	I will do my best to help you.	我会尽力帮你。	尽力
+g5-48	In case it rains, we will stay at home.	万一下雨，我们就在家。	万一
+g5-48	In case you do not manage to find me, call me.	万一你没找到我，就给我打电话。	万一
+g5-49	I will not trust him any more.	我再也不会相信他了。	再也
+g5-49	He never came back again.	他再也没回来过。	再也
+g5-50	However hard I try, I do not manage to open the door.	我怎么也打不开门。	怎么+也|都
+g5-50	However hard I try, I do not manage to think of his name.	我怎么都想不起来他的名字。	怎么+都|也
+g5-51	He walks back and forth in the room.	他在房间里走来走去。	来+去
+g5-51	After thinking it over and over, I decided to go.	我想来想去，还是决定去了。	来+去
+g5-52	He fell asleep while watching.	他看着看着就睡着了。	着
+g5-52	We were walking when it began to rain.	我们走着走着，下起雨来了。	着
+g5-53	He leaves the moment he says so.	他说走就走。	说+就
+g5-53	Let us get to it right away.	说干就干。	说+就
+g5-54	This place has mountains and water.	这里有山有水。	有
+g5-54	They walked in, talking and laughing.	他们有说有笑地走了进来。	有说+有笑
+g5-55	Sitting is wrong and standing is wrong; I do not know what to do.	我坐也不是，站也不是，不知道该怎么办。	也不是
+g5-55	Speaking is not right and keeping quiet is not right.	说也不是，不说也不是。	也不是
+g5-56	I am not going: first it is far, second I am tired.	我不去，一来太远，二来我累了。	一来+二来
+g5-56	I like this city: first it is pretty, second the people are kind.	我喜欢这个城市，一来很漂亮，二来人很好。	一来+二来
+g5-57	Look how tired you are!	看你累的！	看你+的
+g5-57	Look how worried you are!	看你急的！	看你+的
+g5-58	Why the hurry? It is still early.	急什么急？时间还早。	什么
+g5-58	What is there to fear?	怕什么怕？	什么
+g5-59	Never mind money; we are friends.	什么钱不钱的，我们是朋友。	什么+不
+g5-59	Never mind trouble; it is a small thing.	什么麻烦不麻烦的，这是小事。	什么+不
+g5-60	He is extremely happy.	他高兴得不得了。	不得了
+g5-60	It is terribly hot today.	今天热得不得了。	不得了
+g5-61	The scenery is extremely beautiful.	风景美极了。	极了|得很
+g5-61	He is very tired.	他累得很。	极了|得很
+g5-62	He was so happy that he jumped up.	他高兴得跳了起来。	得
+g5-62	He was so busy that he had no time to eat.	他忙得没有时间吃饭。	得
+g5-63	There is so much food that I will not manage to finish it.	菜太多了，我吃不了。	不了|得了
+g5-63	Will you manage to carry it?	你拿得了吗？	得了|不了
+g5-64	The weather is getting hot.	天气热起来了。	起来
+g5-64	Please keep talking.	请你说下去。	下去
+g5-65	This city has a long history.	这座城市有着很长的历史。	有着
+g5-65	He has rich experience.	他有着丰富的经验。	有着
+g5-66	He treats me as a friend.	他把我当作朋友。	当作|当成|看作
+g5-66	We regard him as our teacher.	我们把他看作老师。	看作|当作|当成
+g5-67	The meal has been cooked.	饭做好了。	好了
+g5-67	The problem has been solved.	问题解决了。	解决
+g5-68	A new classmate has joined our class.	我们班来了一位新同学。	来了
+g5-68	I have lost a book.	我丢了一本书。	丢了
+g5-69	We will meet at the school gate tomorrow.	我们明天在学校门口见面。	明天+在
+g5-69	The children play happily in the yard.	孩子们在院子里高兴地玩。	在+地
+g5-70	I go to the shop to buy things.	我去商店买东西。	去+买
+g5-70	He goes to Shanghai by plane.	他坐飞机去上海。	坐+去
+g5-71	Compared with last year, there is more rain this year.	跟去年相比，今年雨多了。	相比
+g5-71	Compared with him, my Chinese is a little worse.	跟他相比，我的汉语差一点。	相比
+g5-72	He is three years older than me.	他比我大三岁。	比+岁
+g5-72	This book is a bit more expensive than that one.	这本书比那本贵一点。	比+一点
+g5-73	There is a flower on the table.	桌子上有一朵花。	朵
+g5-73	A painting hangs on the wall.	墙上挂着一幅画。	幅
+g5-74	Safety is very important.	安全性很重要。	性
+g5-74	The chance of this is small.	这个可能性很小。	性
+g5-75	Welcome to our company.	欢迎来到本公司。	本
+g5-75	This month we are very busy.	本月我们很忙。	本
+g5-76	He is one of my best friends.	他是我最好的朋友之一。	之一
+g5-76	Shanghai is one of the biggest cities in China.	上海是中国最大的城市之一。	之一
+g5-77	I do not know whether he agrees.	我不知道他是否同意。	是否
+g5-77	Please tell me whether you are free.	请告诉我你是否有空。	是否
+g5-78	Please count how many books there are.	请数数有几本书。	数
+g5-78	He feeds the fish every evening.	他每天晚上喂鱼。	喂
