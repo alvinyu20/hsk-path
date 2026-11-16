@@ -12,10 +12,12 @@
   {"name": "Where and direction", "blurb": "Where something is or happens, distance, and which way things move.", "lessons": ["zai", "loc", "li", "dao", "direction", "direction2"]},
   {"name": "Happening now and soon", "blurb": "Actions in progress, states that continue, and things about to happen.", "lessons": ["prog", "zhe", "yao"]},
   {"name": "Finished and past", "blurb": "Done, changed, already, experienced, just now, early or late, and describing how a past event happened.", "lessons": ["le1", "le2", "guo", "yijing", "shide", "cai", "gang", "zaiyou"]},
-  {"name": "Joining people and ideas", "blurb": "With, together, also, then, because and although, first and then, and at the same time: link people, actions and sentences.", "lessons": ["hedui", "adv", "seq", "gen", "yinwei", "xian", "budan", "ranerr", "jiyou", "shouxian", "youde"]},
-  {"name": "Conditions, reasons and topics", "blurb": "If, as long as, only if, except, in order to, and \"about\": set conditions and link ideas.", "lessons": ["ruguo", "zhiyao", "chule", "weile", "yaoshi", "fouze", "duiyu", "anzhao"]},
-  {"name": "Opinions, advice and guesses", "blurb": "Say what you think, give advice, say what must be done, and say how sure you are.", "lessons": ["should", "guess", "finally", "budebu", "nandao", "jingran", "queshi", "yexu", "shuoming"]},
+  {"name": "Joining people and ideas", "blurb": "With, together, also, then, because and although, first and then, and at the same time: link people, actions and sentences.", "lessons": ["hedui", "adv", "seq", "gen", "yinwei", "xian", "budan", "ranerr", "jiyou", "shouxian", "youde", "huoshi"]},
+  {"name": "Conditions, reasons and topics", "blurb": "If, as long as, only if, except, in order to, and \"about\": set conditions and link ideas.", "lessons": ["ruguo", "zhiyao", "chule", "weile", "yaoshi", "fouze", "duiyu", "anzhao", "yidan", "zaiye", "weideshi"]},
+  {"name": "Opinions, advice and guesses", "blurb": "Say what you think, give advice, say what must be done, and say how sure you are.", "lessons": ["should", "guess", "finally", "budebu", "nandao", "jingran", "queshi", "yexu", "shuoming", "fanerr", "guoran"]},
   {"name": "Words with more than one job", "blurb": "Words you know that do another job or have another sound: 只 (zhī, zhǐ), 什么 and 谁 meaning \"any\", and 得, 地, 还, 会 and 长.", "lessons": ["zhi", "qword2", "newmean", "newmean4"]},
-  {"name": "Even, although and no matter", "blurb": "Say that something is true even when you would not expect it: even, even if, although and no matter what.", "lessons": ["lian", "jishi", "buguan"]}
+  {"name": "Even, although and no matter", "blurb": "Say that something is true even when you would not expect it: even, even if, although and no matter what.", "lessons": ["lian", "jishi", "buguan"]},
+  {"name": "Reasons, results and basis", "blurb": "Say what you judge from, what something rests on, and what follows from it: judging from, from this, in short, by, on the basis of.", "lessons": ["congkan", "youci", "ping"]},
+  {"name": "Formal and written style", "blurb": "Written and formal ways to say things you already know in speech: 将, 由, 所, 令, 彼此 and 如此.", "lessons": ["jiang", "ling", "bici"]}
  ]
 }

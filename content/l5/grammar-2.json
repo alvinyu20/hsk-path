@@ -1,0 +1,167 @@
+[
+  {
+    "id": "congkan",
+    "title": "从…来看, 拿…来说 and 在…看来: judging from, for example, in one's view",
+    "covers": [16, 17, 18],
+    "formula": ["*从", "Evidence", "*来看", "Judgement"],
+    "explain": [
+      "从 … 来看 'judging from …' gives the basis for a judgement. Put what you look at between 从 and 来看: 从天气来看，明天会下雨 'Judging from the weather, it will rain tomorrow'; 从他的成绩来看，他学得很好 'Judging from his results, he is studying well'.",
+      "拿 … 来说 'take … for example, as for …' picks one case to show a general point: 拿我来说，我每天都跑步 'Take me, for example: I run every day'. The case after 拿 is a person or a thing, and the main sentence says something about it.",
+      "在 … 看来 'in … view, as … sees it' gives an opinion. What follows 在 is a person or a group: 在我看来，这个计划太难了 'In my view, this plan is too hard'. 在 … 看来 is a person's opinion; 从 … 来看 is about the evidence you look at."
+    ],
+    "examples": [
+      {"zh": "从天气来看，明天会下雨。", "en": "Judging from the weather, it will rain tomorrow."},
+      {"zh": "从他的成绩来看，他学得很好。", "en": "Judging from his results, he is studying well."},
+      {"zh": "拿我来说，我每天都跑步。", "en": "Take me, for example: I run every day."},
+      {"zh": "在我看来，这个计划太难了。", "en": "In my view, this plan is too hard."}
+    ],
+    "mistakes": [
+      "来看 closes the 从 phrase: 从天气来看 is right; 从来看天气 is wrong.",
+      "在 … 看来 needs a person or a group: 在老师看来 'in the teacher's view'. Do not put a thing there: 在天气看来 is wrong."
+    ],
+    "q": [
+      {"t": "order", "zh": "从天气来看，明天会下雨。", "en": "Judging from the weather, it will rain tomorrow.", "explain": "从 + evidence + 来看."},
+      {"t": "order", "zh": "拿我来说，我每天都跑步。", "en": "Take me, for example: I run every day.", "explain": "拿 + example + 来说."},
+      {"t": "cloze", "zh": "在我看来，这个计划太难了。", "en": "In my view, this plan is too hard.", "blank": "在", "explain": "在 + person + 看来 = in someone's view."},
+      {"t": "mc", "prompt": "Which sentence says: Judging from his results, he is studying well?", "options": ["从他的成绩来看，他学得很好。", "从来看他的成绩，他学得很好。"], "correct": 0, "zh": "从他的成绩来看，他学得很好。", "en": "Judging from his results, he is studying well.", "explain": "来看 comes after the evidence."},
+      {"t": "spot", "zh": "在老师看来，这个办法很好。", "en": "In the teacher's view, this method is good.", "wrong": "在老师的看来，这个办法很好。", "remove": "的", "explain": "Do not put 的 inside 在 … 看来."}
+    ]
+  },
+  {
+    "id": "youci",
+    "title": "由此, 总之 and 到…为止: from this, in short, up to",
+    "covers": [19, 20],
+    "formula": ["Fact", "，", "*由此可见", "Conclusion"],
+    "explain": [
+      "由此 'from this, hence' leads to a conclusion drawn from what was just said, mostly in writing. 由此可见 'from this it can be seen' is the usual set phrase: 他每天学习五个小时，由此可见，他很努力 'He studies five hours a day; from this it can be seen that he works hard'. 总之 'in short, anyway' sums up several points and starts the closing sentence: 总之，我们要努力学习 'In short, we must study hard'.",
+      "到 … 为止 'up to …, until …' marks an end point. The thing after 到 is a time or a stage: 到今天为止，我已经学了一百个词 'Up to today, I have learned one hundred words'; 活动到下周五为止 'The event runs until next Friday'. 为 is read wéi here."
+    ],
+    "examples": [
+      {"zh": "他每天学习五个小时，由此可见，他很努力。", "en": "He studies five hours a day; from this it can be seen that he works hard."},
+      {"zh": "总之，我们要努力学习。", "en": "In short, we must study hard."},
+      {"zh": "到今天为止，我已经学了一百个词。", "en": "Up to today, I have learned one hundred words."},
+      {"zh": "活动到下周五为止。", "en": "The event runs until next Friday."}
+    ],
+    "mistakes": [
+      "由此 and 总之 are more written than 所以. In a casual chat, 所以 sounds more natural.",
+      "为止 only goes with 到: say 到今天为止, not 从今天为止."
+    ],
+    "q": [
+      {"t": "order", "zh": "总之，我们要努力学习。", "en": "In short, we must study hard.", "explain": "总之 starts the closing sentence."},
+      {"t": "order", "zh": "活动到下周五为止。", "en": "The event runs until next Friday.", "explain": "到 + time + 为止."},
+      {"t": "cloze", "zh": "到今天为止，我已经学了一百个词。", "en": "Up to today, I have learned one hundred words.", "blank": "到", "explain": "到 … 为止 = up to …."},
+      {"t": "mc", "prompt": "Which sentence says: He studies five hours a day; from this it can be seen that he works hard?", "options": ["他每天学习五个小时，由此可见，他很努力。", "他每天学习五个小时，由此看他，很努力。"], "correct": 0, "zh": "他每天学习五个小时，由此可见，他很努力。", "en": "He studies five hours a day; from this it can be seen that he works hard.", "explain": "由此可见 is the set phrase."},
+      {"t": "spot", "zh": "总之，我们要努力学习。", "en": "In short, we must study hard.", "wrong": "所以总之，我们要努力学习。", "remove": "所以", "explain": "总之 already sums up; do not add 所以."}
+    ]
+  },
+  {
+    "id": "ping",
+    "title": "凭, 依据 and 靠 / 依靠: relying on",
+    "covers": [21, 22, 23],
+    "formula": ["Subject", "*凭 / 依据 / 靠", "What it rests on", "Verb"],
+    "explain": [
+      "凭 'on the strength of, by' + noun says what makes something possible: 他凭努力考上了大学 'He got into university by working hard'. 凭借 is the formal form: 他凭借自己的经验解决了问题 'He solved the problem by means of his own experience'. 凭什么 asks 'on what grounds?' and sounds sharp: 你凭什么这样说？ 'What gives you the right to say this?'",
+      "依据 'on the basis of' + noun is written: 依据这个规定，大家都要早点来 'According to this rule, everyone must come early'. 依据 is also a noun, 'basis': 这个办法没有依据 'This method has no basis'. 根据 (HSK 3) is the everyday word.",
+      "靠 and 依靠 'rely on, depend on' say whom or what one depends on: 他靠写文章生活 'He lives by writing articles'; 孩子需要依靠父母 'Children need to rely on their parents'. 靠 also means 'to lean on': 靠在墙上 'lean on the wall'."
+    ],
+    "examples": [
+      {"zh": "他凭努力考上了大学。", "en": "He got into university by working hard."},
+      {"zh": "他凭借自己的经验解决了问题。", "en": "He solved the problem by means of his own experience."},
+      {"zh": "依据这个规定，大家都要早点来。", "en": "According to this rule, everyone must come early."},
+      {"zh": "他靠写文章生活。", "en": "He lives by writing articles."}
+    ],
+    "mistakes": [
+      "凭 goes before the verb, with what it rests on right after it: 他凭努力考上了大学. 他考上了大学凭努力 is wrong.",
+      "凭什么 is a sharp 'on what grounds?'. For a polite question, use 为什么."
+    ],
+    "q": [
+      {"t": "order", "zh": "他凭努力考上了大学。", "en": "He got into university by working hard.", "explain": "凭 + what it rests on + verb."},
+      {"t": "order", "zh": "他靠写文章生活。", "en": "He lives by writing articles.", "explain": "靠 + what one depends on."},
+      {"t": "cloze", "zh": "依据这个规定，大家都要早点来。", "en": "According to this rule, everyone must come early.", "blank": "依据", "explain": "依据 + rule = on the basis of."},
+      {"t": "mc", "prompt": "Which sentence says: Children need to rely on their parents?", "options": ["孩子需要依靠父母。", "孩子需要父母依靠。"], "correct": 0, "zh": "孩子需要依靠父母。", "en": "Children need to rely on their parents.", "explain": "依靠 + the one relied on."},
+      {"t": "spot", "zh": "他凭努力考上了大学。", "en": "He got into university by working hard.", "wrong": "他凭是努力考上了大学。", "remove": "是", "explain": "Do not put 是 after 凭."}
+    ]
+  },
+  {
+    "id": "jiang",
+    "title": "将, 由 and 所…的: formal 把, by, what someone …",
+    "covers": [24, 25, 26],
+    "formula": ["Subject", "*将", "Thing", "Verb + more"],
+    "explain": [
+      "将 is a formal 把 in writing: 请将书放在桌子上 'Please put the book on the table'; 他将这件事告诉了大家 'He told everyone about this'. The pattern is the same as 把: 将 + thing + verb + something extra after the verb.",
+      "由 'by, up to' tells who is responsible: 这件事由他来做 'He will take care of this'; 由你决定 'It is up to you'. It also names who does a job in a formal sentence: 这次会议由经理主持 'This meeting is chaired by the manager'.",
+      "所 + verb + 的 turns a verb into 'what someone …': 这是我所知道的 'This is what I know'; 他所说的都是真的 'Everything he says is true'. 所 is formal; in speech say 我知道的 or 他说的."
+    ],
+    "examples": [
+      {"zh": "请将书放在桌子上。", "en": "Please put the book on the table."},
+      {"zh": "这件事由他来做。", "en": "He will take care of this."},
+      {"zh": "这次会议由经理主持。", "en": "This meeting is chaired by the manager."},
+      {"zh": "他所说的都是真的。", "en": "Everything he says is true."}
+    ],
+    "mistakes": [
+      "将 is for writing and formal speech. In daily talk, 把 is more natural: 请把书放在桌子上.",
+      "Do not use 由 for transport. Say 坐火车 'go by train', not 由火车."
+    ],
+    "q": [
+      {"t": "order", "zh": "请将书放在桌子上。", "en": "Please put the book on the table.", "explain": "将 + thing + verb + place."},
+      {"t": "order", "zh": "这次会议由经理主持。", "en": "This meeting is chaired by the manager.", "explain": "由 + the person in charge."},
+      {"t": "cloze", "zh": "他所说的都是真的。", "en": "Everything he says is true.", "blank": "所", "explain": "所 + verb + 的 = what someone …."},
+      {"t": "mc", "prompt": "Which sentence says: He will take care of this?", "options": ["这件事由他来做。", "这件事他由来做。"], "correct": 0, "zh": "这件事由他来做。", "en": "He will take care of this.", "explain": "由 comes before the person."},
+      {"t": "spot", "zh": "请将书放在桌子上。", "en": "Please put the book on the table.", "wrong": "请将把书放在桌子上。", "remove": "把", "explain": "将 and 把 do not go together."}
+    ]
+  },
+  {
+    "id": "ling",
+    "title": "令, 使 and 让: make someone feel",
+    "covers": [27],
+    "formula": ["Cause", "*令 / 使 / 让", "Person", "Feeling"],
+    "explain": [
+      "令 + person + feeling means 'make someone feel …', in writing: 这个消息令大家很高兴 'This news makes everyone very happy'; 他的话令我很感动 'His words move me very much'. 使 (HSK 4) works the same way and is formal too: 这个结果使老师很满意 'This result makes the teacher very satisfied'. 让 is the everyday word: 这个消息让我很高兴.",
+      "令人 + adjective is a fixed way to say 'it makes people …': 令人吃惊 'surprising', 令人满意 'satisfying', 令人担心 'worrying'. The person who feels it must come after 令, 使 or 让."
+    ],
+    "examples": [
+      {"zh": "这个消息令大家很高兴。", "en": "This news makes everyone very happy."},
+      {"zh": "他的话令我很感动。", "en": "His words move me very much."},
+      {"zh": "这件事令人吃惊。", "en": "This matter is surprising."},
+      {"zh": "这个结果使老师很满意。", "en": "This result makes the teacher very satisfied."}
+    ],
+    "mistakes": [
+      "令 is for writing. In speech use 让: 这个消息让我很高兴.",
+      "A person must come after 令, 使 or 让. 这个消息令很高兴 is wrong, because it does not say who is happy."
+    ],
+    "q": [
+      {"t": "order", "zh": "这个消息令大家很高兴。", "en": "This news makes everyone very happy.", "explain": "令 + person + feeling."},
+      {"t": "order", "zh": "这件事令人吃惊。", "en": "This matter is surprising.", "explain": "令人 + adjective."},
+      {"t": "cloze", "zh": "这个结果使老师很满意。", "en": "This result makes the teacher very satisfied.", "blank": "使", "explain": "使 + person + feeling."},
+      {"t": "mc", "prompt": "Which sentence says: This news makes me very happy?", "options": ["这个消息让我很高兴。", "这个消息让很高兴我。"], "correct": 0, "zh": "这个消息让我很高兴。", "en": "This news makes me very happy.", "explain": "The person comes before the feeling."},
+      {"t": "spot", "zh": "他的话令我很感动。", "en": "His words move me very much.", "wrong": "他的话令我让很感动。", "remove": "让", "explain": "Use only one of 令 and 让."}
+    ]
+  },
+  {
+    "id": "bici",
+    "title": "彼此 and 如此: each other, so",
+    "covers": [28, 29],
+    "formula": ["Subject", "*彼此", "Verb"],
+    "explain": [
+      "彼此 'each other, one another' shows that both sides do the same thing to each other: 我们彼此了解 'We understand each other'; 同学们彼此帮助 'The classmates help each other'. It is like 互相 (HSK 4) but more formal. 对方 (HSK 4) points to one person on the other side: 我了解对方 'I understand the other person'.",
+      "如此 'so, like this' stands for a degree or way that was just mentioned: 他如此努力，一定会成功 'He works so hard that he will surely succeed'; 事情就是如此 'That is how things are'. 如此 is written; in speech say 这么 or 这样."
+    ],
+    "examples": [
+      {"zh": "我们彼此了解。", "en": "We understand each other."},
+      {"zh": "同学们彼此帮助。", "en": "The classmates help each other."},
+      {"zh": "他如此努力，一定会成功。", "en": "He works so hard that he will surely succeed."},
+      {"zh": "事情就是如此。", "en": "That is how things are."}
+    ],
+    "mistakes": [
+      "彼此 already means 'each other', so do not add 互相: 彼此互相帮助 repeats the idea.",
+      "如此 is formal. In daily speech say 这么 or 这样: 他这么努力."
+    ],
+    "q": [
+      {"t": "order", "zh": "我们彼此了解。", "en": "We understand each other.", "explain": "彼此 + verb."},
+      {"t": "order", "zh": "事情就是如此。", "en": "That is how things are.", "explain": "如此 = like this."},
+      {"t": "cloze", "zh": "他如此努力，一定会成功。", "en": "He works so hard that he will surely succeed.", "blank": "如此", "explain": "如此 = so, to such a degree."},
+      {"t": "mc", "prompt": "Which sentence says: The classmates help each other?", "options": ["同学们彼此帮助。", "同学们帮助彼此帮助。"], "correct": 0, "zh": "同学们彼此帮助。", "en": "The classmates help each other.", "explain": "彼此 comes before the verb."},
+      {"t": "spot", "zh": "同学们彼此帮助。", "en": "The classmates help each other.", "wrong": "同学们彼此互相帮助。", "remove": "互相", "explain": "彼此 already means 'each other'."}
+    ]
+  }
+]

@@ -1,0 +1,166 @@
+[
+  {
+    "id": "yidan",
+    "title": "一旦…就…, 因而 and 从而: once, so, and so",
+    "covers": [1, 2],
+    "formula": ["*一旦", "Condition", "*就", "Result"],
+    "explain": [
+      "一旦 … 就 … means 'once, if it ever happens': as soon as the condition is true, the result follows. It is used for something that is not certain but, if it happens, matters a lot: 一旦下雨，比赛就会停 'Once it rains, the match will stop'. It often points to a worry or a rule, and it sounds more serious than 要是.",
+      "因而 'so, for that reason' and 从而 'and so, thereby' join a result to what came before, mostly in writing. 因而 gives the result of a reason: 他经常运动，因而身体很好 'He often exercises, so his health is good'. 从而 adds a second step that follows from the first action, often a good result: 多读书可以提高水平，从而找到更好的工作 'Reading more can raise one's level, and so help one find a better job'."
+    ],
+    "examples": [
+      {"zh": "一旦下雨，比赛就会停。", "en": "Once it rains, the match will stop."},
+      {"zh": "你一旦开始，就不能放弃。", "en": "Once you start, you cannot give up."},
+      {"zh": "他经常运动，因而身体很好。", "en": "He often exercises, so his health is good."},
+      {"zh": "多读书可以提高水平，从而找到更好的工作。", "en": "Reading more can raise one's level, and so help one find a better job."}
+    ],
+    "mistakes": [
+      "一旦 suggests that the condition is serious or unlikely. For an everyday 'if', use 如果 or 要是: 如果你有空，就来看我。",
+      "从而 needs a first action before it. Do not use it after 因为: 因为他很忙，从而没来 is wrong; say 因为他很忙，所以没来 or 他很忙，因而没来."
+    ],
+    "q": [
+      {"t": "order", "zh": "你一旦开始，就不能放弃。", "en": "Once you start, you cannot give up.", "explain": "一旦 + condition + 就 + result."},
+      {"t": "order", "zh": "他经常运动，因而身体很好。", "en": "He often exercises, so his health is good.", "explain": "因而 introduces the result."},
+      {"t": "cloze", "zh": "一旦发现问题，我们就告诉你。", "en": "Once we find a problem, we will tell you.", "blank": "一旦", "explain": "一旦 starts the condition."},
+      {"t": "mc", "prompt": "Which sentence says: He was busy yesterday, so he did not come?", "options": ["他昨天很忙，因而没来。", "因为他昨天很忙，从而没来。"], "correct": 0, "zh": "他昨天很忙，因而没来。", "en": "He was busy yesterday, so he did not come.", "explain": "从而 cannot follow 因为; 因而 gives the result."},
+      {"t": "spot", "zh": "因为他昨天很忙，没有来。", "en": "Because he was busy yesterday, he did not come.", "wrong": "因为他昨天很忙，从而没有来。", "remove": "从而", "explain": "After 因为, do not use 从而."}
+    ]
+  },
+  {
+    "id": "huoshi",
+    "title": "或是…或是…, …也好…也好 and 加上: either, whether, plus",
+    "covers": [3, 4, 5],
+    "formula": ["*或是", "A", "*或是", "B"],
+    "explain": [
+      "或是 … 或是 … means 'either … or …', listing choices that all work: 周末我或是看书，或是看电影 'At the weekend I either read or watch films'. The first 或是 can be dropped: 你可以喝茶或是咖啡 'You can have tea or coffee'. 或是 is the same as 或者, a little more written. It is for statements; in a question use 还是.",
+      "… 也好，… 也好 means 'whether … or …': the result is the same whichever one you pick. Put 也好 after each choice and use 都 in the result: 买也好，不买也好，我都没意见 'Whether to buy or not, I have no opinion'.",
+      "加上 'on top of that, plus' adds one more reason: 天气不好，加上时间太晚，我们就不去了 'The weather is bad and, on top of that, it is too late, so we are not going'. 以及 'and, as well as' joins things of the same kind, often the last two in a list: 苹果、香蕉以及西瓜 'apples, bananas and watermelons'."
+    ],
+    "examples": [
+      {"zh": "周末我或是看书，或是看电影。", "en": "At the weekend I either read or watch films."},
+      {"zh": "买也好，不买也好，我都没意见。", "en": "Whether to buy or not, I have no opinion."},
+      {"zh": "天气不好，加上时间太晚，我们就不去了。", "en": "The weather is bad and, on top of that, it is too late, so we are not going."},
+      {"zh": "桌子上有苹果、香蕉以及西瓜。", "en": "There are apples, bananas and watermelons on the table."}
+    ],
+    "mistakes": [
+      "Use 或是 in statements and 还是 in questions: 你喝茶还是咖啡？ is right; 你喝茶或是咖啡？ is wrong.",
+      "也好 needs a result that is the same either way, so put 都 in the result: 去也好，不去也好，我都没意见."
+    ],
+    "q": [
+      {"t": "order", "zh": "周末我或是看书，或是看电影。", "en": "At the weekend I either read or watch films.", "explain": "或是 A，或是 B."},
+      {"t": "cloze", "zh": "买也好，不买也好，我都没意见。", "en": "Whether to buy or not, I have no opinion.", "blank": "都", "explain": "After …也好，…也好, the result takes 都."},
+      {"t": "cloze", "zh": "天气不好，加上时间太晚，我们没去。", "en": "The weather was bad and, on top of that, it was too late, so we did not go.", "blank": "加上", "explain": "加上 adds one more reason."},
+      {"t": "mc", "prompt": "Which sentence says: I like apples, bananas and watermelons?", "options": ["我喜欢苹果、香蕉以及西瓜。", "我喜欢苹果、香蕉还是西瓜。"], "correct": 0, "zh": "我喜欢苹果、香蕉以及西瓜。", "en": "I like apples, bananas and watermelons.", "explain": "以及 means 'and'; 还是 asks a question."},
+      {"t": "spot", "zh": "你喝茶还是咖啡？", "en": "Do you drink tea or coffee?", "wrong": "你喝茶或是还是咖啡？", "remove": "或是", "explain": "In a question use 还是 alone."}
+    ]
+  },
+  {
+    "id": "zaiye",
+    "title": "再…也… and 没有…就没有…: however, without",
+    "covers": [6, 7],
+    "formula": ["*再", "Adjective / Verb", "*也", "Result"],
+    "explain": [
+      "再 … 也 … means 'however …, still …': whatever the degree, the result does not change. 再 goes before an adjective or a verb and 也 before the result: 再累，我也要完成工作 'However tired I am, I still need to finish the work'; 这个东西再贵，他也想买 'However expensive this thing is, he still wants to buy it'. Here 再 does not mean 'again'.",
+      "没有 … 就没有 … means 'without …, there is no …': the first thing is the base of the second. 没有水，就没有生命 'Without water, there is no life'; 没有你的帮助，就没有我的今天 'Without your help, there would be no me today'."
+    ],
+    "examples": [
+      {"zh": "再累，我也要完成工作。", "en": "However tired I am, I still need to finish the work."},
+      {"zh": "这个东西再贵，他也想买。", "en": "However expensive this thing is, he still wants to buy it."},
+      {"zh": "没有水，就没有生命。", "en": "Without water, there is no life."},
+      {"zh": "没有你的帮助，就没有我的今天。", "en": "Without your help, there would be no me today."}
+    ],
+    "mistakes": [
+      "Keep 也 in the result. 再累，我要完成工作 loses the meaning 'however'; say 再累，我也要完成工作.",
+      "再 already means 'however', so do not add 很 after it: 再冷 is right, 再很冷 is wrong."
+    ],
+    "q": [
+      {"t": "order", "zh": "再累，我也要完成工作。", "en": "However tired I am, I still need to finish the work.", "explain": "再 + adjective, 也 + result."},
+      {"t": "order", "zh": "没有水，就没有生命。", "en": "Without water, there is no life.", "explain": "没有 … 就没有 …."},
+      {"t": "cloze", "zh": "路再远，我们也要走。", "en": "However far the road is, we still have to walk.", "blank": "再", "explain": "再 means 'however' here."},
+      {"t": "mc", "prompt": "Which sentence says: However expensive this thing is, he still wants to buy it?", "options": ["这个东西再贵，他也想买。", "这个东西再贵，他想买也。"], "correct": 0, "zh": "这个东西再贵，他也想买。", "en": "However expensive this thing is, he still wants to buy it.", "explain": "也 goes before the verb."},
+      {"t": "spot", "zh": "再冷，我们也要去。", "en": "However cold it is, we still have to go.", "wrong": "再很冷，我们也要去。", "remove": "很", "explain": "再 already means 'however'; do not add 很."}
+    ]
+  },
+  {
+    "id": "weideshi",
+    "title": "为的是, 以便 and 以…为…: in order to, take … as …",
+    "covers": [8, 9],
+    "formula": ["Action", "*为的是 / 以便", "Purpose"],
+    "explain": [
+      "为的是 + purpose says why someone does something that you have just mentioned: 他每天跑步，为的是身体健康 'He runs every day in order to be healthy'. The action comes first, the purpose second. 以便 'so that' also puts the purpose second but is more formal and the purpose becomes possible because of the action: 请留下电话号码，以便我们找你 'Please leave your phone number so that we can find you'.",
+      "以 … 为 … means 'take … as …'. 以 … 为中心 is 'with … as the centre': 以学校为中心，附近有很多商店 'With the school as the centre, there are many shops nearby'. 以 … 为目标 is 'with … as the goal': 他以考上大学为目标，每天都很努力 'He takes getting into university as his goal and works hard every day'. 为 is read wéi here."
+    ],
+    "examples": [
+      {"zh": "他每天跑步，为的是身体健康。", "en": "He runs every day in order to be healthy."},
+      {"zh": "请留下电话号码，以便我们联系你。", "en": "Please leave your phone number so that we will contact you."},
+      {"zh": "以学校为中心，附近有很多商店。", "en": "With the school as the centre, there are many shops nearby."},
+      {"zh": "他以考上大学为目标，每天都很努力。", "en": "He takes getting into university as his goal and works hard every day."}
+    ],
+    "mistakes": [
+      "为的是 comes after the action. 为的是身体健康，他每天跑步 is back to front in this pattern; say 他每天跑步，为的是身体健康.",
+      "为的是 already means 'in order to', so do not add 为了 after it. In 以 … 为 …, 为 is read wéi: say 以学校为中心, not 以学校是中心."
+    ],
+    "q": [
+      {"t": "order", "zh": "他每天跑步，为的是身体健康。", "en": "He runs every day in order to be healthy.", "explain": "Action first, then 为的是 + purpose."},
+      {"t": "order", "zh": "请留下电话号码，以便我们联系你。", "en": "Please leave your phone number so that we will contact you.", "explain": "以便 introduces the purpose."},
+      {"t": "cloze", "zh": "以学校为中心，附近有很多商店。", "en": "With the school as the centre, there are many shops nearby.", "blank": "以", "explain": "以 … 为中心 = with … as the centre."},
+      {"t": "mc", "prompt": "Which sentence says: He takes getting into university as his goal?", "options": ["他以考上大学为目标。", "他为目标以考上大学。"], "correct": 0, "zh": "他以考上大学为目标。", "en": "He takes getting into university as his goal.", "explain": "以 + thing + 为目标."},
+      {"t": "spot", "zh": "他学汉语，为的是去中国工作。", "en": "He studies Chinese in order to work in China.", "wrong": "他学汉语，为的是为了去中国工作。", "remove": "为了", "explain": "为的是 already means 'in order to'."}
+    ]
+  },
+  {
+    "id": "fanerr",
+    "title": "反而, 不然 / 要不 and 毕竟: on the contrary, otherwise, after all",
+    "covers": [10, 11, 12],
+    "formula": ["Expected result", "*反而", "Opposite result"],
+    "explain": [
+      "反而 'on the contrary, instead' shows a result that is the opposite of what you would expect: 雨不但没停，反而更大了 'The rain did not stop; on the contrary, it got heavier'. It goes before the verb or adjective in the second half and often follows 不但没 / 没有.",
+      "不然 and 要不 'otherwise, or else' warn what will happen if the first thing is not done: 快一点，不然我们会迟到 'Be quick, or we will be late'. 要不 also suggests another idea: 要不我们明天再去吧？ 'Or shall we go again tomorrow?'. 否则 (HSK 4) does the same job and sounds more formal.",
+      "毕竟 'after all' reminds the listener of a basic fact that explains or excuses something: 他毕竟还是个孩子，别生气 'He is only a child after all; do not be angry'. It goes before the verb or the noun phrase."
+    ],
+    "examples": [
+      {"zh": "雨不但没停，反而更大了。", "en": "The rain did not stop; on the contrary, it got heavier."},
+      {"zh": "快一点，不然我们会迟到。", "en": "Be quick, or we will be late."},
+      {"zh": "要不我们明天再去吧？", "en": "Or shall we go again tomorrow?"},
+      {"zh": "他毕竟还是个孩子，别生气。", "en": "He is only a child after all; do not be angry."}
+    ],
+    "mistakes": [
+      "Use 反而 only when the result goes against what you expect. 吃了药，他反而好了 is odd; say 吃了药，他反而更不舒服了.",
+      "不然 comes after the thing you should do and before the bad result: 快一点，不然会迟到. Do not put the warning first."
+    ],
+    "q": [
+      {"t": "order", "zh": "雨不但没停，反而更大了。", "en": "The rain did not stop; on the contrary, it got heavier.", "explain": "不但没 … 反而 …."},
+      {"t": "order", "zh": "快一点，不然我们会迟到。", "en": "Be quick, or we will be late.", "explain": "不然 + the bad result."},
+      {"t": "cloze", "zh": "他毕竟还是个孩子。", "en": "He is only a child after all.", "blank": "毕竟", "explain": "毕竟 = after all."},
+      {"t": "mc", "prompt": "Which sentence says: Be quick, or we will be late?", "options": ["快一点，不然我们会迟到。", "不然我们会迟到，快一点。"], "correct": 0, "zh": "快一点，不然我们会迟到。", "en": "Be quick, or we will be late.", "explain": "Say what to do first, then 不然 + the bad result."},
+      {"t": "spot", "zh": "雨不但没停，反而更大了。", "en": "The rain did not stop; on the contrary, it got heavier.", "wrong": "雨不但没停，反而却更大了。", "remove": "却", "explain": "反而 already means 'on the contrary'; do not add 却."}
+    ]
+  },
+  {
+    "id": "guoran",
+    "title": "果然, 居然 and 似乎: as expected, unexpectedly, it seems",
+    "covers": [13, 14, 15],
+    "formula": ["Subject", "*果然 / 居然", "Verb"],
+    "explain": [
+      "果然 'sure enough, as expected' says that something turned out just as you thought: 我说今天会下雨，果然下雨了 'I said it would rain today, and sure enough it rained'. 居然 'unexpectedly, actually' is the opposite: you did not expect it. 他居然忘了自己的生日 'He actually forgot his own birthday'. 居然 is like 竟然 (HSK 4) and a little more common in speech.",
+      "似乎 'it seems, seemingly' makes a careful guess from what you see: 他今天似乎不太高兴 'He seems not very happy today'. 仿佛 'as if' compares, and often ends with 似的: 她仿佛没听见似的，继续看书 'She keeps reading as if she did not hear'."
+    ],
+    "examples": [
+      {"zh": "我说今天会下雨，果然下雨了。", "en": "I said it would rain today, and sure enough it rained."},
+      {"zh": "他居然忘了自己的生日。", "en": "He actually forgot his own birthday."},
+      {"zh": "他今天似乎不太高兴。", "en": "He seems not very happy today."},
+      {"zh": "她仿佛没听见似的，继续看书。", "en": "She keeps reading as if she did not hear."}
+    ],
+    "mistakes": [
+      "果然 is for what you expected. If you are surprised, use 居然 or 竟然: 他居然没来 'He actually did not come'.",
+      "似乎 is for a guess, not for a fact you know. Do not say 他似乎是我的老师 when you know he is."
+    ],
+    "q": [
+      {"t": "order", "zh": "我说今天会下雨，果然下雨了。", "en": "I said it would rain today, and sure enough it rained.", "explain": "果然 = it turned out as expected."},
+      {"t": "order", "zh": "他居然忘了自己的生日。", "en": "He actually forgot his own birthday.", "explain": "居然 shows surprise."},
+      {"t": "cloze", "zh": "他今天似乎不太高兴。", "en": "He seems not very happy today.", "blank": "似乎", "explain": "似乎 = it seems."},
+      {"t": "mc", "prompt": "Which sentence says: To my surprise, he did not come?", "options": ["他居然没来。", "他果然没来。"], "correct": 0, "zh": "他居然没来。", "en": "To my surprise, he did not come.", "explain": "居然 = unexpectedly; 果然 = as expected."},
+      {"t": "spot", "zh": "他居然把钱忘在家里了。", "en": "He actually left his money at home.", "wrong": "他居然果然把钱忘在家里了。", "remove": "果然", "explain": "居然 and 果然 do not go together."}
+    ]
+  }
+]
