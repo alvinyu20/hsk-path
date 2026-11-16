@@ -239,6 +239,10 @@ class Engine:
         for i, p in enumerate(parts):
             if p[0] == 'w' and p[1] in PROPER:
                 parts[i] = ('w', p[1], p[2][:1].upper() + p[2][1:])
+        # 呀: yā when it opens a clause (呀，你怎么在这儿？ surprise); a soft "ya" after a word (好呀 = 好啊)
+        for i, p in enumerate(parts):
+            if p[0] == 'w' and p[1] == '呀':
+                parts[i] = ('w', p[1], 'yā' if i == 0 or parts[i - 1][0] in ('p', 'd') else 'ya')
         # 不 and 一 tone changes
         for i, p in enumerate(parts):
             if p[0] == 'w' and len(p[1]) > 1 and p[1].endswith('不') and (p[2].endswith('bù') or p[2].endswith('bú')):
