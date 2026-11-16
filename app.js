@@ -547,6 +547,9 @@
   }
   // what is due right now: started words (any of their cards) and grammar points open to review. Used for the daily clear bonus.
   // The treasure chest that opens once a day when today's plan is finished: 40% 50 coins, 30% 100, 20% 200, 10% 500 (average 140).
+  // the landmark badge each stamped region wears on the Journey map (the drawings are in index.html as #jic-<name>)
+  const JY_ICONS = ['pagoda', 'mountain', 'boat', 'lantern', 'wall', 'yurt'];
+  const JY_ICON = { neimenggu:'yurt', xinjiang:'yurt', qinghai:'yurt', ningxia:'yurt', sichuan:'panda', shaanxi:'pagoda', shandong:'mountain', zhejiang:'boat', hebei:'wall', beijing:'wall', gansu:'wall', liaoning:'wall', jiangsu:'lantern', shanxi:'lantern', shanghai:'lantern', guangdong:'lantern', chongqing:'lantern', henan:'pagoda', hubei:'boat', hunan:'boat', guangxi:'boat', fujian:'boat', hainan:'boat', xizang:'mountain', yunnan:'mountain', guizhou:'mountain', heilongjiang:'mountain', jilin:'mountain', anhui:'mountain', jiangxi:'pagoda', tianjin:'pagoda' };
   const CHEST = [
     { to:0.4, amt:50, tier:'t50', line:'A handful of coins' },
     { to:0.7, amt:100, tier:'t100', line:'A fine haul' },
@@ -3417,7 +3420,7 @@
                 out.jySvChips = [['all', 'All', list.length], ['found', 'Found', got.length]].map(c => ({ label:c[1], count:c[2], cls:fl === c[0] ? 'on' : '', fn:() => this.jySvFilterSet(c[0]) }));
         const shown = list.filter(x => fl === 'all' || (fl === 'found') === !!have[x.stop]).sort((a, b) => a.en.localeCompare(b.en, 'en', { sensitivity:'base' }) || (a.id < b.id ? -1 : 1));
         out.jySvItems = shown.map(x => { const has = !!have[x.stop]; const RR = JWORLD.byRegion[x.rid];
-          return { no:'No. ' + String(list.indexOf(x) + 1).padStart(2, '0'), cls:(has ? 'got' : 'hid') + (sel && sel.id === x.id ? ' sel' : ''), img:svImg(x), name:has ? x.en : '', zh:has ? x.zh : '', label:has ? x.en + ', found' : 'A souvenir still to find in ' + (RR ? RR.en : 'China'), open:() => this.jySvPick(x.id) }; });
+          return { cls:(has ? 'got' : 'hid') + (sel && sel.id === x.id ? ' sel' : ''), img:svImg(x), name:has ? x.en : '', zh:has ? x.zh : '', label:has ? x.en + ', found' : 'A souvenir still to find in ' + (RR ? RR.en : 'China'), open:() => this.jySvPick(x.id) }; });
         out.jySvNone = shown.length === 0; out.jySvNoneText = fl === 'found' ? 'Nothing here yet. Travel on: each region hides a few souvenirs in its stops.' : 'You have found them all.';
         out.jySvSelShow = !!sel;
         if (sel) { const has = !!have[sel.stop]; const RR = JWORLD.byRegion[sel.rid]; const SP = JWORLD.byStop[sel.stop];
@@ -3442,11 +3445,8 @@
           return { id, cls:stt + (S.jyFill === id && stt === 'done' ? ' fillnew' : '') + (has ? '' : ' na') + (JY.SMALL.indexOf(id) >= 0 && id !== 'singapore' ? ' tiny' : ''), hue, d:m.cd || '', m:m.cm || '', hasM:!!m.cm, label:en + ', ' + word, en, open:has && !fm ? () => this.jyShowReg(id) : () => {} };
         };
         out.jyMapRegions = regs.filter(id => JMAP.regions[id].cd && id !== 'singapore').map(mk);
-        // a red seal on every stamped region (paper atlas look): the name cut in two short lines
-        out.jySeals = regs.filter(id => JMAP.regions[id].cd && JMAP.regions[id].cc && JWORLD.byRegion[id] && vs.done[id] && JY.SMALL.indexOf(id) < 0 && META[id]).map(id => {
-          const zh = META[id][0]; const h = Math.ceil(zh.length / 2); const l1 = zh.slice(0, h), l2 = zh.slice(h); const fs = Math.max(l1.length, l2.length) > 1 ? 5.2 : 6.8; const w = Math.max(l1.length, l2.length) * fs + 5;
-          return { x:JMAP.regions[id].cc[0], y:JMAP.regions[id].cc[1], rot:((id.length * 7) % 11) - 5, l1, l2: l2 || '', fs, w:Math.round(w * 10) / 10, rx:Math.round(-w * 5) / 10, ty1:l2 ? -1 : 2.4, ty2:6, label:zh };
-        });
+        // a little landmark badge on every stamped region (illustrated look): yurt, panda, pagoda, mountain, boat, wall or lantern
+        out.jyIcons = regs.filter(id => JMAP.regions[id].cd && JMAP.regions[id].cc && vs.done[id] && JY.SMALL.indexOf(id) < 0).map(id => ({ x:JMAP.regions[id].cc[0], y:JMAP.regions[id].cc[1], ref:'#jic-' + (JY_ICON[id] || JY_ICONS[Array.from(id).reduce((n, ch) => n + ch.charCodeAt(0), 0) % JY_ICONS.length]) }));
         // the flights so far: an arc from each region to the next one flown to (the newest one draws itself)
         out.jyArcs = [];
         if (!fm) {
@@ -4882,17 +4882,11 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const finV = {};
       if (dayDone) {
         const stk = Math.max(1, streakShown);
-        const nowD = new Date();
-        const finWeek = [-5, -4, -3, -2, -1, 0, 1].map(o => {
-          const d = new Date(nowD); d.setDate(nowD.getDate() + o); const key = ymd(d);
-          return { l:['S', 'M', 'T', 'W', 'T', 'F', 'S'][d.getDay()], img:artUri('lantern', o <= 0 && (S.activity[key] || o === 0) ? 'on' : 'off'), nx:o === 1, cls:o === 1 ? 'nx' : '' };
-        });
         const dueTomorrow = BANK_KEYS.filter(zh => { const x = S.ws && S.ws[zh]; if (!x || !DIMS.every(k => x[k])) return false; const i = winfo(x, 1); return i.started && i.dueN <= 0; }).length;
         const bonusGo = pathStep ? () => this.pathContinue(pathStep.st.id) : null;
         Object.assign(finV, {
+          finTmr:'Tomorrow: ' + (dueTomorrow > 0 ? dueTomorrow + (dueTomorrow === 1 ? ' word comes' : ' words come') + ' due' : 'nothing due yet') + ' · Light day ' + (stk + 1),
           finMin:S.dayMin + ' min', finGoal:'goal ' + S.mins + ' min', finCoins:'+' + (S.dayXp || 0), finStreak:'Day ' + stk, finStreakSub:stk === 1 ? 'streak started' : 'in a row',
-          finLight:'Light day ' + (stk + 1), finWeek,
-          finDue:dueTomorrow > 0 ? dueTomorrow + (dueTomorrow === 1 ? ' word comes' : ' words come') + ' due tomorrow. Catch ' + (dueTomorrow === 1 ? 'it' : 'them') + ' and the streak grows.' : 'Nothing is due tomorrow yet. One Path step keeps your streak going.',
           finBonusShow:!!bonusGo, finBonusGo:bonusGo || (() => {}), finBonusSub:pathStep ? 'Path: ' + stopTitle(pathStep.st) : '',
           chestCls:S.dcPaid ? 'ch-open' + (S.chestGo ? ' ch-go' : '') + ' ' + chestFor(S.dcAmt).tier : 'ch-closed', chestOpened:!!S.dcPaid, chestTap:() => this.openChest(),
           chestAmt:'+' + (S.dcAmt || 0) + ' coins',

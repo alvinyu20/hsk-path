@@ -64,9 +64,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check(await page.locator('.th-hero').count() === 0 && await page.locator('.tasks2').count() === 0 && await page.locator('.today-go').count() === 0, 'it replaces the greeting and the plan card');
   const fin = (await page.locator('.fin').innerText()).replace(/\s+/g, ' ');
   check(/Today is cleared/.test(fin) && /26 min/.test(fin) && /goal 20 min/.test(fin) && /\+340/.test(fin) && /coins today/.test(fin) && /Day 3/.test(fin) && /in a row/.test(fin), 'it shows the real minutes, goal, coins and streak: ' + fin.slice(0, 120));
-  check(/Light day 4/.test(fin), 'tomorrow lights day 4 of the streak');
-  check(await page.locator('.fw-d').count() === 7 && await page.locator('.fw-d.nx').count() === 1, 'the lantern row has 7 days and one marked next');
-  check(/Nothing is due tomorrow|come[s]? due tomorrow/.test(fin), 'it says what is due tomorrow: ' + (fin.match(/(Nothing is due[^.]*\.|\d+ words? comes? due[^.]*\.)/) || [''])[0]);
+  check(/Light day 4/.test(fin) && await page.locator('.fin-tmr').count() === 1 && await page.locator('.fin-tm').count() === 0, 'a single small line mentions tomorrow (light day 4), not a card');
+  check(/Tomorrow: (nothing due yet|\d+ words? comes? due)/.test(fin), 'the small line says what is due tomorrow');
   check(await page.locator('.fin-go').count() === 1 && /Bonus round/.test(fin) && /Path: /.test(fin), 'a Bonus round button names the next Path step');
   check((await page.locator('.fin-row .btn').allInnerTexts()).map(t => t.trim()).join('|').endsWith('Journey'), 'and shortcuts end with the Journey: ' + (await page.locator('.fin-row .btn').allInnerTexts()).join('|'));
   check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'the card fits the phone width');
@@ -105,7 +104,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   for (const ago of [0.1, 0.3, 0.5, 0.7, 0.9, 1.1]) {
     await page.evaluate((ago) => { const a = window.shanlu; const ws = JSON.parse(JSON.stringify(window.__wsClean)); Object.keys(ws).slice(0, 7).forEach(zh => { ['see', 'hear', 'prod'].forEach(k => { ws[zh][k].s = 1; ws[zh][k].t = Date.now() - 86400000 * ago; }); }); a.setState({ ws }); }, ago);
     await home();
-    if (await page.locator('.fin').count() && /\d+ words? comes? due tomorrow/.test(await page.locator('.fin').innerText())) { found = true; break; }
+    if (await page.locator('.fin').count() && /Tomorrow: \d+ words? comes? due/.test(await page.locator('.fin').innerText())) { found = true; break; }
   }
   check(found, 'with words due by tomorrow (and none today), the card says how many');
 

@@ -3264,7 +3264,8 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .fin-tile{display:flex;flex-direction:column;gap:1px;padding:10px;border-radius:14px;background:var(--panel);min-width:0}
 .fin-tile b{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:22px;font-weight:700;line-height:1.15}
 .fin-tile span{font-size:13px;color:var(--muted)}
-.fin-tm,.fin-bonus{display:grid;gap:12px}
+.fin-bonus{display:grid;gap:12px}
+.fin-tmr{margin:2px 0 0;text-align:center;font-size:12.5px;color:var(--muted)}
 .fin-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
 .fw-d{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;color:var(--muted)}
 .fw-d i{font-style:normal}
@@ -3328,105 +3329,99 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .hs-scroll .jy-chip.on{background:var(--panel);color:var(--ink);box-shadow:var(--shadow)}
 .hs-scroll .jy-chip.on i{color:var(--muted);opacity:1}
 
-/* ===== Journey: paper atlas theme (parchment, ink and red seals). The road scene, the passport book and the feast scene keep their own art. ===== */
-.jy{--ppbg:#EFE6D2;--pp:#F5EAD0;--pp2:#EBDDB9;--ppb:#E4D6B6;--ppl:#CDBB93;--ppe:#A9885A;--ppi:#2B2116;--ppm:#5E4B33;--ppr:#C2362B;--pprd:#8F2119;--ppcard:#FBF3DE;
-  --jbg:var(--ppbg);--jfill:var(--ppr);--jink:#5B3F2A;--panel:var(--pp);--panel2:var(--pp2);--line:var(--ppl);--ink:var(--ppi);--muted:var(--ppm);--seal:var(--ppr);
-  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .1 0 0 0 .14 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  color:var(--ppi);border:1px solid var(--ppl);background:var(--ppbg) var(--grain)}
-.t-dark .jy{--ppbg:#1E1812;--pp:#2B2318;--pp2:#352B1D;--ppb:#3A2E1F;--ppl:#4B3E2B;--ppe:#7A6440;--ppi:#F1E6CF;--ppm:#BFAF8E;--ppr:#E2574A;--pprd:#9F2F25;--ppcard:#33291B;--jink:#D9C49A;
-  color-scheme:dark}
-.jy .jy-now,.jy .jy-panel,.jy .jy-card{background:var(--pp) var(--grain);border:1px solid var(--ppe);box-shadow:0 0 0 3px var(--ppbg),0 0 0 4px rgba(169,136,90,.55)}
-.jy .jy-now{border-radius:20px}
-.jy .jy-road,.jy .jy-hero{border-radius:19px 19px 0 0}
-.jy .jy-road::after{content:"";position:absolute;inset:0;border-bottom:1px solid var(--ppe);pointer-events:none}
-.jy .jy-where,.jy .jy-ph b,.jy .jy-pass-h b{color:var(--ppi)}
-.jy .jy-lab,.jy .jy-last-k{color:var(--ppm);letter-spacing:.1em}
-/* the views bar and the filter bars: paper pills, a red seal for the chosen one */
-.jy .jy-tabw{--cue:var(--ppb)}
-.jy .jy-tabs.seg2,.jy .hs-wrap,.jy .hs-scroll{background:var(--ppb);box-shadow:inset 0 0 0 1px rgba(169,136,90,.35)}
-.jy .jy-tabs button{color:var(--ppm)}
-.jy .jy-tabs button.on{background:var(--ppr);color:#fff;box-shadow:0 1px 3px rgba(60,30,10,.3)}
-.t-dark .jy .jy-tabs button.on{color:#1B0907}
-.jy .hs-wrap{--cue:var(--ppb)}
-.jy .hs-scroll .jy-chip{color:var(--ppi)}
-.jy .hs-scroll .jy-chip.on{background:var(--ppi);color:var(--pp);box-shadow:0 1px 3px rgba(60,30,10,.3)}
-.jy .jy-chip{background:var(--pp);border-color:var(--ppl);color:var(--ppi)}
-.jy .jy-chip.on{background:var(--ppi);color:var(--pp);border-color:var(--ppi)}
-.jy .jy-tabarr{background:var(--pp);color:var(--ppi);border:1px solid var(--ppe)}
-/* Explore: a red progress line, the latest stop as a ledger entry, a seal-red travel button */
-.jy .jy-meter,.jy .jy-prov{background:var(--ppb)}
-.jy .jy-meter i,.jy .jy-prov i{background:var(--ppr)}
-.jy .jy-goal{background:var(--pp2);border:1px solid var(--ppl)}
-.jy .jy-last{border:1px dashed var(--ppe);background:var(--pp2);border-radius:6px}
-.jy .jy-last:hover{border-color:var(--ppi)}
-.jy .btn.pri{background:var(--ppr);border-color:var(--ppr);color:#fff;box-shadow:0 3px 0 var(--pprd);border-radius:99px}
-.t-dark .jy .btn.pri{color:#1B0907}
-.jy .btn.pri:active{transform:translateY(2px);box-shadow:0 1px 0 var(--pprd)}
-.jy .btn:not(.pri){background:var(--pp);border-color:var(--ppe);color:var(--ppi)}
-.jy .linkbtn{color:var(--ppr)}
-.t-dark .jy .linkbtn{color:#F08C80}
-.jy .muted,.jy .jy-key{color:var(--ppm)}
-/* the map */
-.jy .jy-grat path{fill:none;stroke:#B89B62;stroke-opacity:.28;stroke-width:.6}
-.t-dark .jy .jy-grat path{stroke:#7A6440;stroke-opacity:.35}
-.jy .jy-r path{fill:#E4D3AC;stroke:#B79F72;stroke-width:.6;stroke-linejoin:round}
-.t-dark .jy .jy-r path{fill:#3A2F20;stroke:#5B4A30}
-.jy .jy-r path.mu{fill:none;stroke:#5B3F2A;stroke-width:.4;stroke-dasharray:1.5 1.2}
-.jy .jy-r.done path:not(.mu){fill:hsl(var(--rh) 38% 66%);stroke:#5B3F2A;stroke-width:.9}
-.t-dark .jy .jy-r.done path:not(.mu){fill:hsl(var(--rh) 32% 40%);stroke:#D9C49A}
-.jy .jy-r.here path:not(.mu){fill:hsl(var(--rh) 45% 82%);stroke:var(--ppi);stroke-width:1.5}
-.t-dark .jy .jy-r.here path:not(.mu){fill:hsl(var(--rh) 35% 34%);stroke:#F1E6CF}
-.jy .jy-r.next path:not(.mu){fill:#EBDDB9;stroke:var(--ppi);stroke-width:1.1;stroke-dasharray:3 2}
-.t-dark .jy .jy-r.next path:not(.mu){fill:#3F3322}
-.jy .jy-r:hover path:not(.mu),.jy .jy-r:focus-visible path:not(.mu){stroke:var(--ppr);stroke-width:1.4}
-.jy-seal rect{fill:#C2362B;fill-opacity:.92}
-.jy-seal text{fill:#F7E7CC;font-weight:700;pointer-events:none}
-.t-dark .jy-seal rect{fill:#E2574A}
-.t-dark .jy-seal text{fill:#1B0907}
-.jy-orn circle{fill:#F7EBD0;fill-opacity:.75;stroke:#8A6B3E;stroke-width:.8}
-.jy-orn .n{fill:#8A6B3E}.jy-orn .e{fill:#B79F72}.jy-orn .r{fill:#C2362B}
-.jy-orn text{fill:#5B3F2A;font:700 8px 'Noto Serif SC',serif}
-.jy-orn .c1{fill:#F7EBD0;stroke:#8A6B3E;stroke-width:1}.jy-orn .c2{fill:none;stroke:#8A6B3E;stroke-width:.5}
-.jy-orn .t1{font:700 15px 'Noto Serif SC',serif;fill:#2B2116}
-.jy-orn .t2{font:700 8px 'Bricolage Grotesque',sans-serif;letter-spacing:1.4px;fill:#2B2116}.jy-orn .t3{font:500 8px 'Bricolage Grotesque',sans-serif;letter-spacing:1.4px;fill:#8A6B3E}
-.t-dark .jy-orn circle{fill:#2B2318;fill-opacity:.85}.t-dark .jy-orn text{fill:#D9C49A}
-.t-dark .jy-orn .c1{fill:#2B2318;stroke:#7A6440}.t-dark .jy-orn .c2{stroke:#7A6440}.t-dark .jy-orn .t1,.t-dark .jy-orn .t2{fill:#F1E6CF}.t-dark .jy-orn .t3{fill:#BFAF8E}
-.jy .jy-out{fill:#EBDDB9;stroke:#5B3F2A;stroke-width:1.3}
-.t-dark .jy .jy-out{fill:#3A2F20;stroke:#D9C49A}
-.jy .jy-out.mu,.jy-out.mu{fill:#EBDDB9}
-.t-dark .jy .jy-out.mu{fill:#3A2F20}
-.jy .jy-route{stroke:var(--ppr);stroke-width:1.9}
-.jy .jy-pin rect,.jy .jy-pin path,.jy .jy-pin circle:not(.hit){stroke:var(--pp)}
-.jy .jy-sm{background:var(--pp);border-color:var(--ppl);color:var(--ppi)}
-.jy .jy-sm path{fill:var(--ppb);stroke:var(--ppl)}
-.jy .jy-sm.done path{fill:hsl(var(--rh) 38% 66%);stroke:#5B3F2A}
-.t-dark .jy .jy-sm.done path{fill:hsl(var(--rh) 32% 40%)}
-/* souvenirs: numbered specimens in a collector's cabinet */
-.jy .sv-panel{padding-top:16px}
-.jy .sv-cell{position:relative;border-radius:6px;padding:20px 4px 8px}
-.jy .sv-cell.got{background:var(--ppcard);border:1px solid var(--ppe);box-shadow:0 2px 0 rgba(90,60,20,.25)}
-.jy .sv-cell.hid{background:transparent;border:1.5px dashed var(--ppl);color:var(--ppm)}
-.jy .sv-cell.hid .sv-img{opacity:.1}
-.jy .sv-cell.sel{box-shadow:0 0 0 2px var(--ppr)}
-.jy .sv-no{position:absolute;left:7px;top:5px;font-size:10px;font-weight:700;letter-spacing:.06em;color:#8A6B3E}
-.t-dark .jy .sv-no{color:#BFAF8E}
-.jy .sv-zh{color:var(--ppr);font-weight:600}
-.t-dark .jy .sv-zh{color:#F08C80}
-.jy .sv-name{color:var(--ppi)}
-.jy .sv-detail,.jy .sv-found{background:var(--ppcard);border-color:var(--ppe);border-radius:6px;box-shadow:0 0 0 3px var(--ppbg),0 0 0 4px rgba(169,136,90,.55)}
-.jy .sv-detail.hid{border-style:dashed}
-/* postcards: airmail borders, a stamp and a postmark on the photo side. The pictures are the real ones. */
-.jy .pcw{background:radial-gradient(circle at 18% 8%,rgba(255,255,255,.35),transparent 55%),#F1E4C8;box-shadow:inset 0 0 40px rgba(120,80,30,.18);border:1px solid var(--ppl)}
-.t-dark .jy .pcw{background:radial-gradient(circle at 18% 8%,rgba(255,255,255,.05),transparent 55%),#241D14;box-shadow:inset 0 0 30px rgba(0,0,0,.4)}
-.jy .pstc::before{display:none}
-.jy .pstc.sp::before,.jy .pstc.sp:nth-child(n)::before{display:grid;place-items:center;content:"★";top:-8px;left:-8px;width:24px;height:24px;margin:0;transform:none;border-radius:50%;background:#E8A526;border:0;color:#fff;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.35);z-index:4}
-.jy .pcard-f,.jy .pcard-k{border-radius:2px}
-.jy .pcard-f{padding:6px;background:repeating-linear-gradient(135deg,#C2362B 0 9px,#F5EAD0 9px 15px,#2F5AA8 15px 24px,#F5EAD0 24px 30px)}
-.jy .pcard-f > img,.jy .pcard-f .pcard-art{border:3px solid #FBF3DE;border-radius:0;box-sizing:border-box}
-.jy .pcard-f::after{content:"山";position:absolute;right:13px;top:13px;width:24px;height:28px;display:grid;place-items:center;background:#FBF3DE;border:1.5px dotted #8A6B3E;color:#C2362B;font:700 14px 'Noto Serif SC',serif;box-shadow:0 1px 2px rgba(0,0,0,.25)}
-.jy .pcard-f::before{content:"山路";position:absolute;right:30px;top:20px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;border:1.5px solid rgba(194,54,43,.75);box-shadow:inset 0 0 0 3px transparent,inset 0 0 0 4px rgba(194,54,43,.45);color:rgba(194,54,43,.85);font:700 9px 'Noto Serif SC',serif;transform:rotate(-14deg);z-index:2;pointer-events:none}
-.jy .pstc.sp .pcard-f{box-shadow:0 0 0 2.5px hsl(42 88% 54%),0 10px 14px -8px rgba(40,25,10,.55)}
-@media (max-width:600px){ .jy .pcard-f::before{width:30px;height:30px;right:28px;top:19px;font-size:8px} .jy .pcard-f::after{width:22px;height:26px;right:12px;top:12px} }
+/* ===== Journey: illustrated adventure theme (a friendly picture-book world). The road scene, the passport book and the feast room keep their own art. ===== */
+.jy{--ib:#EDF0EC;--ipn:#fff;--ipn2:#E2E9E4;--il:#CCD6CF;--ii:#14212A;--im:#4A5C65;--ig:#8BC864;--ig2:#5FA64A;--io:#E07A3B;--iod:#A9531F;--ij:#1D6B58;
+  --jbg:var(--ib);--jfill:var(--ig2);--jink:var(--ij);--panel:var(--ipn);--panel2:var(--ipn2);--line:var(--il);--ink:var(--ii);--muted:var(--im);--bg:#F8FAF7;
+  background:var(--ib);color:var(--ii)}
+.t-dark .jy{--ib:#14201D;--ipn:#1E2E29;--ipn2:#2A3D37;--il:#33483F;--ii:#EAF3EE;--im:#A3B8AE;--ig:#8BC864;--ig2:#6DB955;--io:#E07A3B;--iod:#8E4416;--ij:#7FD3B0;--bg:#182622;color-scheme:dark}
+.jy .jy-now,.jy .jy-panel,.jy .jy-card{border-radius:24px;border:1px solid var(--il);box-shadow:0 10px 24px -16px rgba(0,0,0,.4)}
+.jy .jy-road,.jy .jy-hero{border-radius:23px 23px 0 0}
+.jy .jy-where{font-size:28px;line-height:1.1}.jy .jy-where .zh{font-size:28px}
+/* the views bar and the filter bars: a green pill for the chosen view */
+.jy .jy-tabs.seg2,.jy .hs-wrap,.jy .hs-scroll{background:var(--ipn2)}
+.jy .jy-tabw,.jy .hs-wrap{--cue:var(--ipn2)}
+.jy .jy-tabs button.on{background:var(--ig);color:#14212A;font-weight:700}
+.jy .jy-tabarr{background:var(--ipn);color:var(--ii);border:1px solid var(--il)}
+.t-dark .jy .jy-tabs button.on{color:#10210B}
+/* Explore: a green progress bar, a green goal pill, a ledger-like latest stop, a chunky orange button */
+.jy .jy-meter{height:12px;background:var(--ipn2)}
+.jy .jy-prov{flex-basis:96px;height:10px;background:var(--ipn2)}
+.jy .jy-meter i,.jy .jy-prov i{background:linear-gradient(90deg,#8BC864,#5FA64A)}
+.jy .jy-goal{background:#DFF1D5;color:#1D6B58}
+.t-dark .jy .jy-goal{background:#24402F;color:#9BE0B4}
+.jy .jy-last{border-radius:16px;background:#F3F7F4}
+.t-dark .jy .jy-last{background:var(--ipn2)}
+.jy .jy-last-n{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-weight:700;font-size:17px}
+.jy .jy-go{align-self:stretch;width:100%}
+.jy .btn.pri{background:var(--io);border-color:var(--io);color:#fff;border-radius:25px;min-height:50px;font-size:16px;font-weight:700;box-shadow:0 4px 0 var(--iod)}
+.jy .btn.pri:active:not([disabled]){transform:translateY(2px);box-shadow:0 2px 0 var(--iod)}
+.jy .btn.pri[disabled]{opacity:.55}
+.jy .linkbtn{color:var(--ij)}
+/* the map: a pale sea with waves, pastel land with white borders, a landmark badge on every stamped region, drifting clouds */
+.jy .jy-map{border-radius:18px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='14'%3E%3Cpath d='M0 8Q6.5 3 13 8T26 8' stroke='white' stroke-opacity='.6' fill='none' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"),linear-gradient(#D9EEF2,#BBDDE6)}
+.t-dark .jy .jy-map{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='14'%3E%3Cpath d='M0 8Q6.5 3 13 8T26 8' stroke='white' stroke-opacity='.1' fill='none' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"),linear-gradient(#1B3943,#142C34)}
+.jy .jy-r path{fill:#E9F0DE;stroke:#fff;stroke-width:1.3}
+.jy .jy-r path.mu{fill:none;stroke:#fff;stroke-width:.5}
+.jy .jy-r.done path:not(.mu){fill:hsl(var(--rh) 52% 76%)}
+.jy .jy-r.here path:not(.mu){fill:hsl(var(--rh) 52% 84%);stroke:#fff;stroke-width:1.6}
+.jy .jy-r.next path:not(.mu){fill:#F2F6E8;stroke:#2F7A63;stroke-width:1.4;stroke-dasharray:3 2.4}
+.jy .jy-r:hover path:not(.mu),.jy .jy-r:focus-visible path:not(.mu){stroke:var(--io);stroke-width:1.6}
+.t-dark .jy .jy-r path{fill:#2B3F36;stroke:#162420}
+.t-dark .jy .jy-r path.mu{stroke:#162420}
+.t-dark .jy .jy-r.done path:not(.mu){fill:hsl(var(--rh) 34% 42%)}
+.t-dark .jy .jy-r.here path:not(.mu){fill:hsl(var(--rh) 38% 52%);stroke:#EAF3EE}
+.t-dark .jy .jy-r.next path:not(.mu){fill:#344A3F;stroke:#7FD3B0}
+.jy .jy-arc{stroke:var(--io);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1 4;opacity:1}
+.jy .jy-arc.new{stroke:var(--io);stroke-width:1.8;stroke-dasharray:var(--len)}
+.jy .jy-here .rip{stroke:var(--io)}
+.jy-ic{pointer-events:none}
+.jy-ic circle{fill:#fff;fill-opacity:.9;stroke:#E07A3B;stroke-width:1.1}
+.jy-sky{pointer-events:none}
+.jy-sky .jy-cl path{fill:#fff;fill-opacity:.92}
+.jy-sky .jy-cl{animation:jycl 15s ease-in-out infinite alternate}
+.jy-sky .jy-cl.b{animation-duration:20s;animation-direction:alternate-reverse}
+@keyframes jycl{to{transform:translateX(12px)}}
+.jy-star path{fill:#fff;stroke:#14212A;stroke-width:.8;stroke-linejoin:round}
+.t-dark .jy-sky .jy-cl path{fill-opacity:.18}
+.t-dark .jy-star path{fill:#EAF3EE;stroke:#0E1920}
+.jy .jy-out{fill:hsl(var(--jh) 45% 84%);stroke:#fff;stroke-width:2}
+.jy .jy-out.mu{fill:none;stroke-width:1;stroke-dasharray:3 2.5}
+.t-dark .jy .jy-out{fill:hsl(var(--jh) 28% 34%);stroke:#162420}
+.jy .jy-sm path{fill:#DCE6D0;stroke:#fff}
+.jy .jy-sm.done path{fill:hsl(var(--rh) 52% 76%)}
+.jy .jy-sm.here path{fill:hsl(var(--rh) 52% 84%);stroke:#14212A}
+.t-dark .jy .jy-sm path{fill:#2B3F36;stroke:#162420}
+.t-dark .jy .jy-sm.done path{fill:hsl(var(--rh) 34% 42%)}
+.t-dark .jy .jy-sm.here path{fill:hsl(var(--rh) 38% 52%);stroke:#EAF3EE}
+/* souvenirs: cream cards on a dotted board */
+.jy .sv-panel{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='8' cy='8' r='1.3' fill='%23E9DAB6'/%3E%3C/svg%3E") 0 0/16px 16px,#F6EEDC;border:1px solid #E4D3AD;padding:16px 14px 10px}
+.t-dark .jy .sv-panel{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='8' cy='8' r='1.3' fill='%23463C26'/%3E%3C/svg%3E") 0 0/16px 16px,#2A2418;border-color:#4B3F27}
+.jy .sv-panel .jy-pass-h b{color:#5A3A18}
+.t-dark .jy .sv-panel .jy-pass-h b{color:#E8D2A8}
+.jy .sv-grid{gap:10px}
+.jy .sv-cell{padding:10px 4px 8px;background:#FFFBF0;border:1px solid #E4D3AD;border-radius:16px;box-shadow:0 3px 0 #E4D3AD}
+.t-dark .jy .sv-cell{background:#352D1E;border-color:#4B3F27;box-shadow:0 3px 0 #4B3F27}
+.jy .sv-img{filter:drop-shadow(0 3px 2px rgba(80,50,20,.3))}
+.jy .sv-name{color:#5A3A18}.jy .sv-zh{color:#8C5E2B;font-weight:600}
+.t-dark .jy .sv-name{color:#E8D2A8}.t-dark .jy .sv-zh{color:#C99A5C}
+.jy .sv-cell.hid{background:transparent;border:2px dashed #E4D3AD;box-shadow:none}
+.t-dark .jy .sv-cell.hid{border-color:#4B3F27}
+.jy .sv-cell.hid .sv-img{filter:brightness(0);opacity:.1}
+.jy .sv-cell.sel{box-shadow:0 3px 0 #E4D3AD,0 0 0 2px var(--io)}
+.jy .sv-found,.jy .sv-detail{border-radius:20px;background:var(--ipn)}
+/* postcards: taped polaroids pinned on a cream board; the pictures are the real ones */
+.jy .pcw{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='8' cy='8' r='1.3' fill='%23E9DAB6'/%3E%3C/svg%3E") 0 0/16px 16px,#F8E9C8;border:1px solid #E7D2A2;border-radius:24px;box-shadow:none}
+.t-dark .jy .pcw{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='8' cy='8' r='1.3' fill='%23463C26'/%3E%3C/svg%3E") 0 0/16px 16px,#2F2819;border-color:#4B3F27}
+.jy .pstc::before{top:-8px;width:52px;height:16px;margin-left:-26px;border-radius:3px;border:0;background:#F6B6A0;opacity:.92;box-shadow:none}
+.jy .pstc:nth-child(4n+2)::before{background:#B7DDE6;width:52px;margin-left:-26px;transform:rotate(3deg)}
+.jy .pstc:nth-child(4n+3)::before{background:#F8E08E;width:52px;margin-left:-26px;transform:rotate(-3deg)}
+.jy .pstc:nth-child(4n)::before{background:#C9E6B8;width:52px;margin-left:-26px;transform:rotate(3deg)}
+.jy .pcard-f,.jy .pcard-k{border-radius:10px;box-shadow:0 6px 12px -6px rgba(20,33,42,.45)}
+.jy .pcard-f{background:#fff}
+.jy .pcard-f{padding:8px 8px 26px}
+.jy .pcard-f > img,.jy .pcard-f .pcard-art{border-radius:6px}
+.jy .pstc.sp .pcard-f{box-shadow:0 0 0 3px #F2B531,0 6px 12px -6px rgba(20,33,42,.45)}
+.jy .pstc.sp::after{content:"★";position:absolute;left:-7px;top:-7px;width:24px;height:24px;display:grid;place-items:center;border-radius:50%;background:#F2B531;color:#fff;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.3);z-index:4;pointer-events:none}
 
 /* ===== Today's treasure chest (finished-day card). The open look is the base style, so with reduced motion the chest simply shows opened. ===== */
 .ch{display:flex;align-items:center;gap:10px;padding:6px 14px 6px 8px;border-radius:14px;background:radial-gradient(ellipse at 18% 50%,rgba(255,214,102,.28),transparent 62%),var(--panel)}
