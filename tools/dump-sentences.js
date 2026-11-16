@@ -82,6 +82,15 @@ if (EXAM && level === '4') {
   EXAM.W1.forEach((e, i) => add('exam:W1:' + i, e.zh, e.py, e.en, { fragment: true }));
   EXAM.W2.forEach((e, i) => add('exam:W2:' + i, e.full, e.py, e.en));
 }
+if (EXAM && level === '5') {
+  // HSK 5 bank: conversations/passages, questions and options (options are level-checked only), cloze passages, statements, passages, ordering and missing-character items
+  ['L1', 'L2'].forEach(p => EXAM[p].forEach((e, i) => { e.say.forEach((l, k) => add('exam:' + p + ':' + i + '.' + k, l.zh, l.py, l.en)); add('exam:' + p + ':' + i + ':question', e.q.zh, e.q.py, e.q.en); e.opts.forEach((o, k) => add('exam:' + p + ':' + i + ':option' + k, o.zh, o.py, '', { levelOnly: true })); }));
+  EXAM.R1.forEach((e, i) => { add('exam:R1:' + i, e.full, e.py, e.en); e.blanks.forEach((b, j) => b.forEach((o, k) => add('exam:R1:' + i + ':blank' + j + 'option' + k, o.zh, '', '', { levelOnly: true }))); });
+  EXAM.R2.forEach((e, i) => { add('exam:R2:' + i + ':passage', e.zh, e.py, e.en); e.opts.forEach((o, k) => add('exam:R2:' + i + ':option' + k, o.zh, o.py, '', { levelOnly: true })); });
+  EXAM.R3.forEach((e, i) => { add('exam:R3:' + i + ':passage', e.zh, e.py, e.en); add('exam:R3:' + i + ':question', e.q.zh, e.q.py, e.q.en); e.opts.forEach((o, k) => add('exam:R3:' + i + ':option' + k, o.zh, o.py, '', { levelOnly: true })); });
+  EXAM.W1.forEach((e, i) => add('exam:W1:' + i, e.zh, e.py, e.en, { fragment: true }));
+  EXAM.W2.forEach((e, i) => add('exam:W2:' + i, e.full, e.py, e.en));
+}
 if (EXAM && level === '1') {
   ['L1', 'R1'].forEach(p => EXAM[p].forEach((e, i) => add('exam:' + p + ':' + i, e.zh, e.py, e.en, { fragment: true })));
   EXAM.L2.forEach((e, i) => add('exam:L2:' + i, e.zh, e.py, e.en));

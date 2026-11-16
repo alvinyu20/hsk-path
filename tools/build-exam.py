@@ -18,8 +18,8 @@ def die(m):
 
 LV = levelcfg.LEVEL
 eng = Engine(levelcfg.known())
-if LV in (3, 4):
-    # the HSK 3 and HSK 4 banks are kept in three files (listening, reading, writing) so each stays readable
+if LV in (3, 4, 5):
+    # the HSK 3, HSK 4 and HSK 5 banks are kept in three files (listening, reading, writing) so each stays readable
     src = {}
     for part in ('listening', 'reading', 'writing'):
         src.update(json.load(open(os.path.join(levelcfg.CONTENT, 'exam-%d-%s.json' % (LV, part)), encoding='utf-8')))
@@ -310,11 +310,92 @@ def build_l4():
     print('wrote data/hsk4-exam.js: %d questions in the bank' % n)
 
 
+def build_l5():
+    # PARTIAL=1 lets the bank be built while it is still being written (no minimum sizes, missing parts are empty)
+    partial = bool(os.environ.get('PARTIAL'))
+    S = lambda k: src.get(k, []) if partial else src[k]
+    from pypinyin import lazy_pinyin, Style
+    out = {}
+    # L1: a short two-line conversation, a question and four answers (the first is right); L2: a longer conversation or a short passage
+    for part, nlines, least in (('L1', (2,), 28), ('L2', (1, 2, 3, 4, 5, 6), 32)):
+        out[part] = []
+        for i in src[part]:
+            if len(i['opts']) != 4 or len(set(i['opts'])) != 4 or len(i['say']) not in nlines:
+                die('%s needs %s lines and 4 different options: %s' % (part, nlines, i['q']['zh']))
+            out[part].append(dict(say=say(i['say']), q=dict(zh=i['q']['zh'], py=py(i['q']['zh']), en=i['q']['en']), opts=[dict(zh=o, py=py(o)) for o in i['opts']]))
+        if not partial and len(out[part]) < least:
+            die('%s needs at least %d items' % (part, least))
+    # R1: a passage with five blanks (___), each blank with four words to choose from (the first is right)
+    out['R1'] = []
+    for e in S('R1'):
+        if e['zh'].count('___') != 5 or len(e['blanks']) != 5:
+            die('R1 passage needs five blanks and five lists of words: ' + e['zh'][:20])
+        full = e['zh']
+        for b in e['blanks']:
+            if len(b) != 4 or len(set(b)) != 4:
+                die('R1 blank needs 4 different words: ' + str(b))
+            full = full.replace('___', b[0], 1)
+        out['R1'].append(dict(zh=e['zh'], full=full, py=py(full), en=e['en'], blanks=[[dict(zh=o, py=eng.word_py(o)) for o in b] for b in e['blanks']]))
+    if not partial and len(out['R1']) < 6:
+        die('R1 needs at least 6 passages')
+    # R2: a short text and four statements (the first is the one that agrees with the text)
+    out['R2'] = []
+    for e in S('R2'):
+        if len(e['opts']) != 4 or len(set(e['opts'])) != 4:
+            die('R2 needs 4 different statements: ' + e['zh'][:20])
+        out['R2'].append(dict(zh=e['zh'], py=py(e['zh']), en=e['en'], opts=[dict(zh=o, py=py(o)) for o in e['opts']]))
+    if not partial and len(out['R2']) < 16:
+        die('R2 needs at least 16 items')
+    # R3: a passage, a question and four answers (the first is right)
+    out['R3'] = []
+    for e in S('R3'):
+        if len(e['opts']) != 4 or len(set(e['opts'])) != 4:
+            die('R3 needs 4 different options: ' + e['q']['zh'])
+        out['R3'].append(dict(zh=e['zh'], py=py(e['zh']), en=e['en'], q=dict(zh=e['q']['zh'], py=py(e['q']['zh']), en=e['q']['en']), opts=[dict(zh=o, py=py(o)) for o in e['opts']]))
+    if not partial and len(out['R3']) < 28:
+        die('R3 needs at least 28 items')
+    # W1: put the words in order (practice, typed or tapped)
+    out['W1'] = []
+    for e in S('W1'):
+        main = ''.join(e['words'])
+        alts = [''.join(a) for a in e.get('alts', [])]
+        for a in e.get('alts', []):
+            if sorted(a) != sorted(e['words']):
+                die('W1 alternative must use the same words: ' + main)
+        if len(e['words']) < 4 or main in alts:
+            die('W1 needs at least 4 words and a different order for each alternative: ' + main)
+        out['W1'].append(dict(words=e['words'], zh=main, alts=alts, py=py(main), en=e['en']))
+    if not partial and len(out['W1']) < 16:
+        die('W1 needs at least 16 items')
+    # W2: write the missing character; the pinyin hint comes from pypinyin and must appear in the sentence's own pinyin
+    out['W2'] = []
+    for e in S('W2'):
+        if e['zh'].count('___') != 1 or len(e['ans']) != 1:
+            die('W2 needs one blank and a one-character answer: ' + e['zh'])
+        full = e['zh'].replace('___', e['ans'])
+        hint = lazy_pinyin(e['ans'], style=Style.TONE, v_to_u=True)[0]
+        sentence_py = py(full)
+        if hint.lower() not in sentence_py.lower().replace(' ', ''):
+            die('W2 pinyin hint %s for %s is not in the sentence pinyin: %s' % (hint, e['ans'], sentence_py))
+        out['W2'].append(dict(zh=e['zh'], full=full, ans=e['ans'], hint=hint, py=sentence_py, en=e['en']))
+    if not partial and len(out['W2']) < 10:
+        die('W2 needs at least 10 items')
+    meta = dict(listening=dict(questions=45, minutes=35), reading=dict(questions=45, minutes=45), writing=dict(questions=15, minutes=30))
+    n = len(out['L1']) + len(out['L2']) + 5 * len(out['R1']) + len(out['R2']) + len(out['R3']) + len(out['W1']) + len(out['W2'])
+    with open(levelcfg.data_path('exam'), 'w', encoding='utf-8') as f:
+        f.write('/* HSK 5 mock exam question bank for Shanlu. GENERATED by tools/build-exam.py from content/l5/exam-5-*.json. Do not edit by hand.\n')
+        f.write(' * Modelled on the HSK 5 sample papers of the 2012 (HSK 2.0) test: listening 20 + 25, reading 15 + 10 + 20, writing practice 10 + 5. The layout of the 2025 test was not available to me. There are no pictures at this level. AI-written, not reviewed by a teacher. */\n')
+        f.write('window.HSK5_EXAM = ' + json.dumps(dict(meta=meta, **out), ensure_ascii=False, indent=1) + ';\n')
+    print('wrote data/hsk5-exam.js: %d questions in the bank' % n)
+
+
 if LV == 1:
     build_l1()
 elif LV == 2:
     build_l2()
 elif LV == 4:
     build_l4()
+elif LV == 5:
+    build_l5()
 else:
     build_l3()
