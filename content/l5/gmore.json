@@ -381,5 +381,1120 @@
   "wrong": "到五点为止了，我都在学校。",
   "remove": "了",
   "explain": "No 了 after 为止."
+ },
+ {
+  "p": "g5-21",
+  "t": "cloze",
+  "zh": "他凭自己的努力成功了。",
+  "en": "He succeeded through his own effort.",
+  "blank": "凭",
+  "explain": "凭 + what it rests on."
+ },
+ {
+  "p": "g5-21",
+  "t": "mc",
+  "prompt": "Which sentence says: On what grounds do you say this?",
+  "options": [
+   "你凭什么这样说？",
+   "你什么凭这样说？"
+  ],
+  "correct": 0,
+  "zh": "你凭什么这样说？",
+  "en": "On what grounds do you say this?",
+  "explain": "凭什么 asks on what grounds."
+ },
+ {
+  "p": "g5-22",
+  "t": "order",
+  "zh": "依据规定，我们要早来。",
+  "en": "According to the rules, we must come early.",
+  "explain": "依据 + rule."
+ },
+ {
+  "p": "g5-22",
+  "t": "mc",
+  "prompt": "Which sentence says: According to the weather, it will rain tomorrow?",
+  "options": [
+   "依据天气，明天会下雨。",
+   "天气依据，明天会下雨。"
+  ],
+  "correct": 0,
+  "zh": "依据天气，明天会下雨。",
+  "en": "According to the weather, it will rain tomorrow.",
+  "explain": "依据 comes before what it rests on."
+ },
+ {
+  "p": "g5-22",
+  "t": "spot",
+  "zh": "依据他的经验，这个办法可以用。",
+  "en": "According to his experience, this method can be used.",
+  "wrong": "依据根据他的经验，这个办法可以用。",
+  "remove": "根据",
+  "explain": "依据 and 根据 mean the same; use one."
+ },
+ {
+  "p": "g5-23",
+  "t": "cloze",
+  "zh": "我们靠自己的力量完成了工作。",
+  "en": "We finished the work through our own strength.",
+  "blank": "靠",
+  "explain": "靠 + what one relies on."
+ },
+ {
+  "p": "g5-23",
+  "t": "spot",
+  "zh": "他靠卖水果生活。",
+  "en": "He lives by selling fruit.",
+  "wrong": "他靠是卖水果生活。",
+  "remove": "是",
+  "explain": "No 是 after 靠."
+ },
+ {
+  "p": "g5-24",
+  "t": "cloze",
+  "zh": "他将这件事告诉了大家。",
+  "en": "He told everyone about this.",
+  "blank": "将",
+  "explain": "将 is a formal 把."
+ },
+ {
+  "p": "g5-24",
+  "t": "mc",
+  "prompt": "Which sentence says: Please close the door properly?",
+  "options": [
+   "请将门关好。",
+   "请关好将门。"
+  ],
+  "correct": 0,
+  "zh": "请将门关好。",
+  "en": "Please close the door properly.",
+  "explain": "将 comes before the thing."
+ },
+ {
+  "p": "g5-25",
+  "t": "cloze",
+  "zh": "这件事由我来做。",
+  "en": "I will take care of this.",
+  "blank": "由",
+  "explain": "由 + the person in charge."
+ },
+ {
+  "p": "g5-25",
+  "t": "spot",
+  "zh": "今天的会议由他主持。",
+  "en": "Today's meeting is chaired by him.",
+  "wrong": "今天的会议由是他主持。",
+  "remove": "是",
+  "explain": "No 是 after 由."
+ },
+ {
+  "p": "g5-26",
+  "t": "order",
+  "zh": "这是我所想的。",
+  "en": "This is what I think.",
+  "explain": "所 + verb + 的."
+ },
+ {
+  "p": "g5-26",
+  "t": "mc",
+  "prompt": "Which sentence says: I have told you everything I know?",
+  "options": [
+   "我所知道的都告诉你了。",
+   "我知道所的都告诉你了。"
+  ],
+  "correct": 0,
+  "zh": "我所知道的都告诉你了。",
+  "en": "I have told you everything I know.",
+  "explain": "所 comes before the verb."
+ },
+ {
+  "p": "g5-26",
+  "t": "spot",
+  "zh": "他所做的都是对的。",
+  "en": "Everything he does is right.",
+  "wrong": "他所把做的都是对的。",
+  "remove": "把",
+  "explain": "所 + verb + 的 has no 把."
+ },
+ {
+  "p": "g5-28",
+  "t": "cloze",
+  "zh": "他们彼此不认识。",
+  "en": "They do not know each other.",
+  "blank": "彼此",
+  "explain": "彼此 = each other."
+ },
+ {
+  "p": "g5-29",
+  "t": "mc",
+  "prompt": "Which sentence says: He was so happy that he jumped up?",
+  "options": [
+   "他如此高兴，跳了起来。",
+   "他高兴如此，跳了起来。"
+  ],
+  "correct": 0,
+  "zh": "他如此高兴，跳了起来。",
+  "en": "He was so happy that he jumped up.",
+  "explain": "如此 comes before the adjective."
+ },
+ {
+  "p": "g5-29",
+  "t": "spot",
+  "zh": "事情不应该如此。",
+  "en": "Things should not be like this.",
+  "wrong": "事情不应该如此这样。",
+  "remove": "这样",
+  "explain": "如此 already means like this."
+ },
+ {
+  "p": "g5-30",
+  "t": "cloze",
+  "zh": "你过于相信别人。",
+  "en": "You trust other people too much.",
+  "blank": "过于",
+  "explain": "过于 = too much."
+ },
+ {
+  "p": "g5-30",
+  "t": "mc",
+  "prompt": "Which sentence says: He is too nervous?",
+  "options": [
+   "他过于紧张。",
+   "他紧张过于。"
+  ],
+  "correct": 0,
+  "zh": "他过于紧张。",
+  "en": "He is too nervous.",
+  "explain": "过于 comes before the adjective."
+ },
+ {
+  "p": "g5-31",
+  "t": "cloze",
+  "zh": "这条路稍远一点儿。",
+  "en": "This road is a little far.",
+  "blank": "稍",
+  "explain": "稍 + adjective + 一点儿."
+ },
+ {
+  "p": "g5-31",
+  "t": "mc",
+  "prompt": "Which sentence says: Please sit for a moment?",
+  "options": [
+   "请稍坐一会儿。",
+   "请坐稍一会儿。"
+  ],
+  "correct": 0,
+  "zh": "请稍坐一会儿。",
+  "en": "Please sit for a moment.",
+  "explain": "稍 comes before the verb."
+ },
+ {
+  "p": "g5-31",
+  "t": "spot",
+  "zh": "天气稍冷一点儿。",
+  "en": "The weather is a bit cold.",
+  "wrong": "天气稍很冷一点儿。",
+  "remove": "很",
+  "explain": "No 很 after 稍."
+ },
+ {
+  "p": "g5-32",
+  "t": "order",
+  "zh": "他够忙的。",
+  "en": "He is quite busy.",
+  "explain": "够 + adjective + 的."
+ },
+ {
+  "p": "g5-32",
+  "t": "mc",
+  "prompt": "Which sentence says: This matter is quite troublesome?",
+  "options": [
+   "这件事够麻烦的。",
+   "这件事麻烦够的。"
+  ],
+  "correct": 0,
+  "zh": "这件事够麻烦的。",
+  "en": "This matter is quite troublesome.",
+  "explain": "够 comes before the adjective."
+ },
+ {
+  "p": "g5-32",
+  "t": "spot",
+  "zh": "今天够热的。",
+  "en": "It is quite hot today.",
+  "wrong": "今天够很热的。",
+  "remove": "很",
+  "explain": "No 很 after 够."
+ },
+ {
+  "p": "g5-33",
+  "t": "order",
+  "zh": "你可别忘了。",
+  "en": "Whatever you do, do not forget!",
+  "explain": "可 adds force."
+ },
+ {
+  "p": "g5-33",
+  "t": "cloze",
+  "zh": "他可真聪明！",
+  "en": "He really is clever!",
+  "blank": "可",
+  "explain": "可 adds emphasis."
+ },
+ {
+  "p": "g5-33",
+  "t": "spot",
+  "zh": "这件事可不容易。",
+  "en": "This really is not easy.",
+  "wrong": "这件事可很不容易。",
+  "remove": "很",
+  "explain": "No 很 after 可."
+ },
+ {
+  "p": "g5-34",
+  "t": "cloze",
+  "zh": "新学期将要开始。",
+  "en": "The new term is about to start.",
+  "blank": "将要",
+  "explain": "将要 = about to."
+ },
+ {
+  "p": "g5-34",
+  "t": "mc",
+  "prompt": "Which sentence says: We will move house soon?",
+  "options": [
+   "我们将要搬家。",
+   "我们搬家将要。"
+  ],
+  "correct": 0,
+  "zh": "我们将要搬家。",
+  "en": "We will move house soon.",
+  "explain": "将要 comes before the verb."
+ },
+ {
+  "p": "g5-34",
+  "t": "spot",
+  "zh": "他将要去上海。",
+  "en": "He is about to go to Shanghai.",
+  "wrong": "他将要快去上海。",
+  "remove": "快",
+  "explain": "将要 already means about to."
+ },
+ {
+  "p": "g5-35",
+  "t": "order",
+  "zh": "他时常迟到。",
+  "en": "He is often late.",
+  "explain": "时常 comes before the verb."
+ },
+ {
+  "p": "g5-35",
+  "t": "spot",
+  "zh": "他时刻记得这件事。",
+  "en": "He always remembers this matter.",
+  "wrong": "他时刻很记得这件事。",
+  "remove": "很",
+  "explain": "No 很 before the verb."
+ },
+ {
+  "p": "g5-36",
+  "t": "cloze",
+  "zh": "请立刻给他打电话。",
+  "en": "Please call him at once.",
+  "blank": "立刻",
+  "explain": "立刻 = at once."
+ },
+ {
+  "p": "g5-36",
+  "t": "mc",
+  "prompt": "Which sentence says: He answered at once?",
+  "options": [
+   "他立即回答了。",
+   "他回答立即了。"
+  ],
+  "correct": 0,
+  "zh": "他立即回答了。",
+  "en": "He answered at once.",
+  "explain": "立即 comes before the verb."
+ },
+ {
+  "p": "g5-37",
+  "t": "cloze",
+  "zh": "孩子渐渐长大了。",
+  "en": "The child is gradually growing up.",
+  "blank": "渐渐",
+  "explain": "渐渐 + change."
+ },
+ {
+  "p": "g5-37",
+  "t": "mc",
+  "prompt": "Which sentence says: The weather is gradually getting cold?",
+  "options": [
+   "天气逐渐冷了。",
+   "天气冷逐渐了。"
+  ],
+  "correct": 0,
+  "zh": "天气逐渐冷了。",
+  "en": "The weather is gradually getting cold.",
+  "explain": "逐渐 comes before the change."
+ },
+ {
+  "p": "g5-38",
+  "t": "order",
+  "zh": "他始终没有来。",
+  "en": "He has not come all along.",
+  "explain": "始终 + 没有."
+ },
+ {
+  "p": "g5-38",
+  "t": "mc",
+  "prompt": "Which sentence says: He has never agreed?",
+  "options": [
+   "他始终不同意。",
+   "他不始终同意。"
+  ],
+  "correct": 0,
+  "zh": "他始终不同意。",
+  "en": "He has never agreed.",
+  "explain": "始终 comes before 不."
+ },
+ {
+  "p": "g5-38",
+  "t": "spot",
+  "zh": "她始终很安静。",
+  "en": "She has been quiet all along.",
+  "wrong": "她始终是很安静。",
+  "remove": "是",
+  "explain": "No 是 before the adjective."
+ },
+ {
+  "p": "g5-39",
+  "t": "cloze",
+  "zh": "他连续两天没有吃饭。",
+  "en": "He did not eat for two days in a row.",
+  "blank": "连续",
+  "explain": "连续 + number of days."
+ },
+ {
+  "p": "g5-39",
+  "t": "spot",
+  "zh": "大雪持续了三天。",
+  "en": "Heavy snow went on for three days.",
+  "wrong": "大雪持续了连续三天。",
+  "remove": "连续",
+  "explain": "持续 and 连续 do not go together."
+ },
+ {
+  "p": "g5-40",
+  "t": "cloze",
+  "zh": "他再次回到了家乡。",
+  "en": "He returned to his home town again.",
+  "blank": "再次",
+  "explain": "再次 = once more."
+ },
+ {
+  "p": "g5-40",
+  "t": "mc",
+  "prompt": "Which sentence says: We met again?",
+  "options": [
+   "我们再次见面了。",
+   "我们见面再次了。"
+  ],
+  "correct": 0,
+  "zh": "我们再次见面了。",
+  "en": "We met again.",
+  "explain": "再次 comes before the verb."
+ },
+ {
+  "p": "g5-40",
+  "t": "spot",
+  "zh": "请再次试一下。",
+  "en": "Please try once more.",
+  "wrong": "请再次又试一下。",
+  "remove": "又",
+  "explain": "再次 already means again."
+ },
+ {
+  "p": "g5-41",
+  "t": "cloze",
+  "zh": "他吃完饭，随后就去睡觉了。",
+  "en": "He finished eating and then went to sleep.",
+  "blank": "随后",
+  "explain": "随后 = soon after."
+ },
+ {
+  "p": "g5-41",
+  "t": "mc",
+  "prompt": "Which sentence says: After that, he never came again?",
+  "options": [
+   "此后，他再也没来过。",
+   "再也此后，他没来过。"
+  ],
+  "correct": 0,
+  "zh": "此后，他再也没来过。",
+  "en": "After that, he never came again.",
+  "explain": "此后 starts the clause."
+ },
+ {
+  "p": "g5-42",
+  "t": "order",
+  "zh": "客人们陆续离开了。",
+  "en": "The guests left one after another.",
+  "explain": "陆续 comes before the verb."
+ },
+ {
+  "p": "g5-42",
+  "t": "spot",
+  "zh": "他先后换了三份工作。",
+  "en": "He changed three jobs one after another.",
+  "wrong": "他先后一起换了三份工作。",
+  "remove": "一起",
+  "explain": "先后 and 一起 do not go together."
+ },
+ {
+  "p": "g5-43",
+  "t": "cloze",
+  "zh": "这里简直像一幅画。",
+  "en": "This place is simply like a painting.",
+  "blank": "简直",
+  "explain": "简直 adds a strong feeling."
+ },
+ {
+  "p": "g5-43",
+  "t": "mc",
+  "prompt": "Which sentence says: His Chinese is simply too good?",
+  "options": [
+   "他的汉语简直太好了。",
+   "他的汉语太简直好了。"
+  ],
+  "correct": 0,
+  "zh": "他的汉语简直太好了。",
+  "en": "His Chinese is simply too good.",
+  "explain": "简直 comes before 太."
+ },
+ {
+  "p": "g5-43",
+  "t": "spot",
+  "zh": "今天简直太冷了。",
+  "en": "Today is simply too cold.",
+  "wrong": "今天简直很太冷了。",
+  "remove": "很",
+  "explain": "Do not stack two degree words."
+ },
+ {
+  "p": "g5-44",
+  "t": "order",
+  "zh": "这绝对不是真的。",
+  "en": "This is absolutely not true.",
+  "explain": "绝对 + 不."
+ },
+ {
+  "p": "g5-44",
+  "t": "mc",
+  "prompt": "Which sentence says: You can absolutely relax?",
+  "options": [
+   "你绝对可以放心。",
+   "你绝对放心可以。"
+  ],
+  "correct": 0,
+  "zh": "你绝对可以放心。",
+  "en": "You can absolutely relax.",
+  "explain": "绝对 comes before 可以."
+ },
+ {
+  "p": "g5-44",
+  "t": "cloze",
+  "zh": "我绝对相信你。",
+  "en": "I absolutely trust you.",
+  "blank": "绝对",
+  "explain": "绝对 = for sure."
+ },
+ {
+  "p": "g5-45",
+  "t": "cloze",
+  "zh": "我根本没见过他。",
+  "en": "I have not seen him at all.",
+  "blank": "根本",
+  "explain": "根本 + 没 = not at all."
+ },
+ {
+  "p": "g5-45",
+  "t": "mc",
+  "prompt": "Which sentence says: He does not like it here at all?",
+  "options": [
+   "他根本不喜欢这里。",
+   "他不根本喜欢这里。"
+  ],
+  "correct": 0,
+  "zh": "他根本不喜欢这里。",
+  "en": "He does not like it here at all.",
+  "explain": "根本 comes before 不."
+ },
+ {
+  "p": "g5-46",
+  "t": "order",
+  "zh": "这个消息难以相信。",
+  "en": "This news is hard to believe.",
+  "explain": "难以 + verb."
+ },
+ {
+  "p": "g5-46",
+  "t": "cloze",
+  "zh": "这种感觉难以说明。",
+  "en": "This feeling is hard to explain.",
+  "blank": "难以",
+  "explain": "难以 = hard to."
+ },
+ {
+  "p": "g5-46",
+  "t": "spot",
+  "zh": "他的想法难以理解。",
+  "en": "His idea is hard to understand.",
+  "wrong": "他的想法很难以理解。",
+  "remove": "很",
+  "explain": "No 很 before 难以."
+ },
+ {
+  "p": "g5-47",
+  "t": "spot",
+  "zh": "请尽量说慢一点。",
+  "en": "Please speak as slowly as possible.",
+  "wrong": "请尽量尽力说慢一点。",
+  "remove": "尽力",
+  "explain": "Use one of 尽量 and 尽力."
+ },
+ {
+  "p": "g5-48",
+  "t": "order",
+  "zh": "万一他不来，我们就走。",
+  "en": "In case he does not come, we will leave.",
+  "explain": "万一 + situation, 就 + plan."
+ },
+ {
+  "p": "g5-48",
+  "t": "mc",
+  "prompt": "Which sentence says: In case you get lost, call me?",
+  "options": [
+   "万一你迷路了，就给我打电话。",
+   "万一你迷路了，就我给打电话。"
+  ],
+  "correct": 0,
+  "zh": "万一你迷路了，就给我打电话。",
+  "en": "In case you get lost, call me.",
+  "explain": "给 goes before the person."
+ },
+ {
+  "p": "g5-49",
+  "t": "mc",
+  "prompt": "Which sentence says: He will not come any more?",
+  "options": [
+   "他再也不来了。",
+   "他不再也来了。"
+  ],
+  "correct": 0,
+  "zh": "他再也不来了。",
+  "en": "He will not come any more.",
+  "explain": "再也 comes before 不."
+ },
+ {
+  "p": "g5-49",
+  "t": "spot",
+  "zh": "我再也没见过他。",
+  "en": "I have never seen him again.",
+  "wrong": "我再也没是见过他。",
+  "remove": "是",
+  "explain": "No 是 after 没."
+ },
+ {
+  "p": "g5-50",
+  "t": "cloze",
+  "zh": "他怎么都不听我的。",
+  "en": "No matter what I say, he does not listen to me.",
+  "blank": "怎么",
+  "explain": "怎么 + 都 + 不."
+ },
+ {
+  "p": "g5-51",
+  "t": "mc",
+  "prompt": "Which sentence says: He thought it over and over but had no way?",
+  "options": [
+   "他想来想去，没有办法。",
+   "他想去想来，没有办法。"
+  ],
+  "correct": 0,
+  "zh": "他想来想去，没有办法。",
+  "en": "He thought it over and over but had no way.",
+  "explain": "A来A去: 想来想去."
+ },
+ {
+  "p": "g5-51",
+  "t": "spot",
+  "zh": "孩子们跑来跑去。",
+  "en": "The children run about.",
+  "wrong": "孩子们跑来是跑去。",
+  "remove": "是",
+  "explain": "No 是 inside A来A去."
+ },
+ {
+  "p": "g5-52",
+  "t": "order",
+  "zh": "他听着听着笑了。",
+  "en": "He laughed as he listened.",
+  "explain": "A着A着 + new event."
+ },
+ {
+  "p": "g5-52",
+  "t": "cloze",
+  "zh": "孩子听着听着哭了。",
+  "en": "The child began to cry while listening.",
+  "blank": "哭",
+  "explain": "The new event comes after A着A着."
+ },
+ {
+  "p": "g5-52",
+  "t": "spot",
+  "zh": "她看着看着睡着了。",
+  "en": "She fell asleep while watching.",
+  "wrong": "她看着看着是睡着了。",
+  "remove": "是",
+  "explain": "No 是 after A着A着."
+ },
+ {
+  "p": "g5-53",
+  "t": "cloze",
+  "zh": "他说笑就笑。",
+  "en": "He laughs at the drop of a hat.",
+  "blank": "说",
+  "explain": "说 + A + 就 + A."
+ },
+ {
+  "p": "g5-53",
+  "t": "mc",
+  "prompt": "Which sentence says: Go right away; do not wait any more?",
+  "options": [
+   "说走就走，别等了。",
+   "说就走走，别等了。"
+  ],
+  "correct": 0,
+  "zh": "说走就走，别等了。",
+  "en": "Go right away; do not wait any more.",
+  "explain": "说 + A + 就 + A."
+ },
+ {
+  "p": "g5-54",
+  "t": "cloze",
+  "zh": "这里有山有水。",
+  "en": "This place has mountains and water.",
+  "blank": "山",
+  "explain": "有 + A + 有 + B."
+ },
+ {
+  "p": "g5-54",
+  "t": "mc",
+  "prompt": "Which sentence says: They talk and laugh?",
+  "options": [
+   "他们有说有笑。",
+   "他们有说笑有。"
+  ],
+  "correct": 0,
+  "zh": "他们有说有笑。",
+  "en": "They talk and laugh.",
+  "explain": "有 comes before each verb."
+ },
+ {
+  "p": "g5-55",
+  "t": "mc",
+  "prompt": "Which sentence says: Staying is not right and leaving is not right?",
+  "options": [
+   "留也不是，走也不是。",
+   "留也不是，走是也不。"
+  ],
+  "correct": 0,
+  "zh": "留也不是，走也不是。",
+  "en": "Staying is not right and leaving is not right.",
+  "explain": "X也不是，Y也不是."
+ },
+ {
+  "p": "g5-55",
+  "t": "spot",
+  "zh": "吃也不是，不吃也不是。",
+  "en": "Neither eating nor not eating is right.",
+  "wrong": "吃也不是，不吃也都不是。",
+  "remove": "都",
+  "explain": "No 都 inside 也不是."
+ },
+ {
+  "p": "g5-56",
+  "t": "order",
+  "zh": "一来远，二来贵。",
+  "en": "First it is far; second it is dear.",
+  "explain": "一来 + reason, 二来 + reason."
+ },
+ {
+  "p": "g5-56",
+  "t": "cloze",
+  "zh": "我不去，一来太远，二来太累。",
+  "en": "I am not going: first it is too far, second I am too tired.",
+  "blank": "累",
+  "explain": "二来 gives the second reason."
+ },
+ {
+  "p": "g5-56",
+  "t": "spot",
+  "zh": "一来天气好，二来人不多。",
+  "en": "First the weather is good; second there are not many people.",
+  "wrong": "一来天气好，二来是人不多。",
+  "remove": "是",
+  "explain": "No 是 after 二来."
+ },
+ {
+  "p": "g5-57",
+  "t": "cloze",
+  "zh": "看你高兴的！",
+  "en": "Look how happy you are!",
+  "blank": "看",
+  "explain": "看你 + adjective + 的."
+ },
+ {
+  "p": "g5-57",
+  "t": "mc",
+  "prompt": "Which sentence says: Look how tired you are; have a rest now?",
+  "options": [
+   "看你累的，快休息吧。",
+   "看累你的，快休息吧。"
+  ],
+  "correct": 0,
+  "zh": "看你累的，快休息吧。",
+  "en": "Look how tired you are; have a rest now.",
+  "explain": "看你 + adjective + 的."
+ },
+ {
+  "p": "g5-58",
+  "t": "cloze",
+  "zh": "哭什么哭？没事的。",
+  "en": "Why cry? It is nothing.",
+  "blank": "什么",
+  "explain": "X + 什么 + X."
+ },
+ {
+  "p": "g5-58",
+  "t": "spot",
+  "zh": "跑什么跑？时间还早。",
+  "en": "Why run? It is still early.",
+  "wrong": "跑什么跑了？时间还早。",
+  "remove": "了",
+  "explain": "No 了 in X什么X."
+ },
+ {
+  "p": "g5-59",
+  "t": "order",
+  "zh": "什么累不累的。",
+  "en": "Never mind whether it is tiring.",
+  "explain": "什么 + A + 不 + A + 的."
+ },
+ {
+  "p": "g5-59",
+  "t": "mc",
+  "prompt": "Which sentence says: Never mind whether it is dear; I buy it if I like it?",
+  "options": [
+   "什么贵不贵的，我喜欢就买。",
+   "什么贵的不贵，我喜欢就买。"
+  ],
+  "correct": 0,
+  "zh": "什么贵不贵的，我喜欢就买。",
+  "en": "Never mind whether it is dear; I buy it if I like it.",
+  "explain": "什么 + A + 不 + A + 的."
+ },
+ {
+  "p": "g5-59",
+  "t": "spot",
+  "zh": "什么好不好的，先试一试。",
+  "en": "Never mind whether it is good or not; try it first.",
+  "wrong": "什么也好不好的，先试一试。",
+  "remove": "也",
+  "explain": "No 也 after 什么."
+ },
+ {
+  "p": "g5-60",
+  "t": "cloze",
+  "zh": "孩子饿得不得了。",
+  "en": "The child is terribly hungry.",
+  "blank": "不得了",
+  "explain": "得 + 不得了 = extremely."
+ },
+ {
+  "p": "g5-60",
+  "t": "spot",
+  "zh": "我忙得不得了。",
+  "en": "I am terribly busy.",
+  "wrong": "我忙得很不得了。",
+  "remove": "很",
+  "explain": "不得了 already means extremely."
+ },
+ {
+  "p": "g5-61",
+  "t": "mc",
+  "prompt": "Which sentence says: This dish is extremely tasty?",
+  "options": [
+   "这个菜好吃极了。",
+   "这个菜极了好吃。"
+  ],
+  "correct": 0,
+  "zh": "这个菜好吃极了。",
+  "en": "This dish is extremely tasty.",
+  "explain": "极了 follows the adjective."
+ },
+ {
+  "p": "g5-63",
+  "t": "order",
+  "zh": "这个我拿不了。",
+  "en": "I will not manage to carry this.",
+  "explain": "V + 不了 = cannot manage."
+ },
+ {
+  "p": "g5-63",
+  "t": "mc",
+  "prompt": "Which sentence says: Will you manage to carry it by yourself?",
+  "options": [
+   "你一个人拿得了吗？",
+   "你一个人拿了得吗？"
+  ],
+  "correct": 0,
+  "zh": "你一个人拿得了吗？",
+  "en": "Will you manage to carry it by yourself?",
+  "explain": "得了 follows the verb."
+ },
+ {
+  "p": "g5-63",
+  "t": "spot",
+  "zh": "这么多作业，我做不了。",
+  "en": "There is so much homework that I will not manage to do it.",
+  "wrong": "这么多作业，我做很不了。",
+  "remove": "很",
+  "explain": "No 很 inside 做不了."
+ },
+ {
+  "p": "g5-65",
+  "t": "mc",
+  "prompt": "Which sentence says: This company has a very long history?",
+  "options": [
+   "这家公司有着很长的历史。",
+   "这家公司着有很长的历史。"
+  ],
+  "correct": 0,
+  "zh": "这家公司有着很长的历史。",
+  "en": "This company has a very long history.",
+  "explain": "有着 stays together."
+ },
+ {
+  "p": "g5-66",
+  "t": "cloze",
+  "zh": "大家都把他当作老师。",
+  "en": "Everyone treats him as a teacher.",
+  "blank": "当作",
+  "explain": "把 + noun + 当作 + noun."
+ },
+ {
+  "p": "g5-66",
+  "t": "spot",
+  "zh": "我把这里看作自己的家。",
+  "en": "I regard this place as my own home.",
+  "wrong": "我把这里很看作自己的家。",
+  "remove": "很",
+  "explain": "No 很 inside 把 … 看作."
+ },
+ {
+  "p": "g5-67",
+  "t": "mc",
+  "prompt": "Which sentence says: The room has been swept clean?",
+  "options": [
+   "房间打扫干净了。",
+   "房间干净打扫了。"
+  ],
+  "correct": 0,
+  "zh": "房间打扫干净了。",
+  "en": "The room has been swept clean.",
+  "explain": "The result comes after the verb."
+ },
+ {
+  "p": "g5-68",
+  "t": "cloze",
+  "zh": "我们公司来了很多新人。",
+  "en": "Many new people have joined our company.",
+  "blank": "来",
+  "explain": "Place + 来了 + new people."
+ },
+ {
+  "p": "g5-68",
+  "t": "spot",
+  "zh": "昨天丢了一只猫。",
+  "en": "A cat went missing yesterday.",
+  "wrong": "昨天丢了是一只猫。",
+  "remove": "是",
+  "explain": "No 是 after 丢了."
+ },
+ {
+  "p": "g5-69",
+  "t": "mc",
+  "prompt": "Which sentence says: They played in the park yesterday?",
+  "options": [
+   "他们昨天在公园里玩。",
+   "他们在公园里昨天玩。"
+  ],
+  "correct": 0,
+  "zh": "他们昨天在公园里玩。",
+  "en": "They played in the park yesterday.",
+  "explain": "Time comes before place."
+ },
+ {
+  "p": "g5-69",
+  "t": "spot",
+  "zh": "我每天在家学习汉语。",
+  "en": "I study Chinese at home every day.",
+  "wrong": "我每天在家的学习汉语。",
+  "remove": "的",
+  "explain": "No 的 before the verb."
+ },
+ {
+  "p": "g5-70",
+  "t": "cloze",
+  "zh": "我们坐车去学校。",
+  "en": "We go to school by car.",
+  "blank": "去",
+  "explain": "Means first, then the aim."
+ },
+ {
+  "p": "g5-71",
+  "t": "mc",
+  "prompt": "Which sentence says: Compared with before, he has changed a lot?",
+  "options": [
+   "跟以前相比，他变了很多。",
+   "以前相比，他变了很多。"
+  ],
+  "correct": 0,
+  "zh": "跟以前相比，他变了很多。",
+  "en": "Compared with before, he has changed a lot.",
+  "explain": "相比 needs 跟."
+ },
+ {
+  "p": "g5-71",
+  "t": "spot",
+  "zh": "跟北方相比，南方更热。",
+  "en": "Compared with the north, the south is hotter.",
+  "wrong": "跟北方还相比，南方更热。",
+  "remove": "还",
+  "explain": "No 还 between 跟 … and 相比."
+ },
+ {
+  "p": "g5-72",
+  "t": "cloze",
+  "zh": "他比我小两岁。",
+  "en": "He is two years younger than me.",
+  "blank": "小",
+  "explain": "比 + person + adjective + amount."
+ },
+ {
+  "p": "g5-74",
+  "t": "order",
+  "zh": "安全性很重要。",
+  "en": "Safety is very important.",
+  "explain": "Adjective + 性 = noun."
+ },
+ {
+  "p": "g5-74",
+  "t": "mc",
+  "prompt": "Which sentence says: The chance of this happening is not great?",
+  "options": [
+   "这件事的可能性不大。",
+   "这件事的性可能不大。"
+  ],
+  "correct": 0,
+  "zh": "这件事的可能性不大。",
+  "en": "The chance of this happening is not great.",
+  "explain": "可能性 stays together."
+ },
+ {
+  "p": "g5-74",
+  "t": "spot",
+  "zh": "这个问题的重要性不小。",
+  "en": "The importance of this question is not small.",
+  "wrong": "这个问题的重要性是不小。",
+  "remove": "是",
+  "explain": "No 是 before the adjective."
+ },
+ {
+  "p": "g5-75",
+  "t": "cloze",
+  "zh": "本月的天气很好。",
+  "en": "The weather this month is very good.",
+  "blank": "本月",
+  "explain": "本 + noun = this."
+ },
+ {
+  "p": "g5-75",
+  "t": "mc",
+  "prompt": "Which sentence says: He is a local?",
+  "options": [
+   "他是本地人。",
+   "他是地本人。"
+  ],
+  "correct": 0,
+  "zh": "他是本地人。",
+  "en": "He is a local.",
+  "explain": "本 comes before the noun."
+ },
+ {
+  "p": "g5-75",
+  "t": "spot",
+  "zh": "本公司有一百个人。",
+  "en": "Our company has one hundred people.",
+  "wrong": "本公司的有一百个人。",
+  "remove": "的",
+  "explain": "No 的 after 本公司."
+ },
+ {
+  "p": "g5-76",
+  "t": "cloze",
+  "zh": "这是最好的办法之一。",
+  "en": "This is one of the best methods.",
+  "blank": "之一",
+  "explain": "之一 follows the group."
+ },
+ {
+  "p": "g5-76",
+  "t": "mc",
+  "prompt": "Which sentence says: He is one of the tallest students in our class?",
+  "options": [
+   "他是我们班最高的学生之一。",
+   "他是之一我们班最高的学生。"
+  ],
+  "correct": 0,
+  "zh": "他是我们班最高的学生之一。",
+  "en": "He is one of the tallest students in our class.",
+  "explain": "之一 comes after the group."
+ },
+ {
+  "p": "g5-76",
+  "t": "spot",
+  "zh": "上海是大城市之一。",
+  "en": "Shanghai is one of the big cities.",
+  "wrong": "上海是大城市的之一。",
+  "remove": "的",
+  "explain": "No 的 before 之一."
+ },
+ {
+  "p": "g5-77",
+  "t": "order",
+  "zh": "我想知道他是否来。",
+  "en": "I want to know whether he is coming.",
+  "explain": "是否 goes before the verb."
+ },
+ {
+  "p": "g5-77",
+  "t": "cloze",
+  "zh": "你是否会说汉语？",
+  "en": "Can you speak Chinese?",
+  "blank": "是否",
+  "explain": "是否 = whether (a formal question)."
  }
 ]
