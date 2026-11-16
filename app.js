@@ -4895,7 +4895,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
           finDue:dueTomorrow > 0 ? dueTomorrow + (dueTomorrow === 1 ? ' word comes' : ' words come') + ' due tomorrow. Catch ' + (dueTomorrow === 1 ? 'it' : 'them') + ' and the streak grows.' : 'Nothing is due tomorrow yet. One Path step keeps your streak going.',
           finBonusShow:!!bonusGo, finBonusGo:bonusGo || (() => {}), finBonusSub:pathStep ? 'Path: ' + stopTitle(pathStep.st) : '',
           chestCls:S.dcPaid ? 'ch-open' + (S.chestGo ? ' ch-go' : '') + ' ' + chestFor(S.dcAmt).tier : 'ch-closed', chestOpened:!!S.dcPaid, chestTap:() => this.openChest(),
-          chestAmt:'+' + (S.dcAmt || 0), chestLine:S.dcPaid ? chestFor(S.dcAmt).line : 'Tap the chest to open it',
+          chestAmt:'+' + (S.dcAmt || 0) + ' coins',
           chestLabel:S.dcPaid ? 'Treasure chest, opened: ' + (S.dcAmt || 0) + ' coins' : 'Open today\'s treasure chest',
           finMore:['Listening', 'Speak'].map(l => moreWays.find(c => c.label === l)).filter(Boolean).map(c => ({ label:c.label, fn:c.fn })).concat([{ label:'Journey', fn:() => this.go('journey') }])
         });

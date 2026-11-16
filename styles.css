@@ -3429,9 +3429,8 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 @media (max-width:600px){ .jy .pcard-f::before{width:30px;height:30px;right:28px;top:19px;font-size:8px} .jy .pcard-f::after{width:22px;height:26px;right:12px;top:12px} }
 
 /* ===== Today's treasure chest (finished-day card). The open look is the base style, so with reduced motion the chest simply shows opened. ===== */
-.fin-chest{display:grid;justify-items:center;text-align:center;gap:4px;padding:34px 16px 16px;overflow:hidden;background:radial-gradient(ellipse at 50% 38%,rgba(255,214,102,.2),transparent 68%),var(--panel)}
-.ch{display:grid;justify-items:center;gap:4px;width:100%}
-.ch-btn{position:relative;display:block;width:min(270px,82%);padding:0;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent;font:inherit;color:inherit}
+.ch{display:flex;align-items:center;gap:10px;padding:6px 14px 6px 8px;border-radius:14px;background:radial-gradient(ellipse at 18% 50%,rgba(255,214,102,.28),transparent 62%),var(--panel)}
+.ch-btn{position:relative;flex:none;display:block;width:104px;padding:0;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent;font:inherit;color:inherit}
 .ch-btn:focus-visible{outline:3px solid var(--amber);outline-offset:6px;border-radius:18px}
 .ch-open .ch-btn{cursor:default;pointer-events:none}
 .ch-svg{position:relative;z-index:1;display:block;width:100%;height:auto;overflow:visible;transform-origin:50% 90%}
@@ -3447,14 +3446,14 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .ch-rays{opacity:0;transform-origin:100px 80px}
 .ch-lid{transform-origin:30px 86px}
 .ch-glow{position:absolute;left:12%;top:24%;width:76%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,214,102,.95),rgba(255,214,102,0) 66%);opacity:.0;pointer-events:none}
-.ch-c{z-index:2;position:absolute;left:calc(50% - 8px);top:44%;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFE58A,#F2B21B 60%,#B7791F);border:1.5px solid #B7791F;display:none;pointer-events:none}
-.ch-amt{z-index:2;position:absolute;left:0;right:0;top:-6px;display:none;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-weight:800;font-size:46px;line-height:1;color:#B7791F;text-shadow:0 2px 0 rgba(255,255,255,.55),0 0 18px rgba(255,200,60,.8);pointer-events:none}
-.t-dark .ch-amt{color:#FFD76A;text-shadow:0 2px 0 rgba(0,0,0,.4),0 0 18px rgba(255,200,60,.55)}
-.ch-line{margin:0;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-weight:700;font-size:20px;line-height:1.2}
-.ch-sub{margin:0;font-size:13px;max-width:30em}
+.ch-c{z-index:2;position:absolute;left:calc(50% - 5px);top:42%;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFE58A,#F2B21B 60%,#B7791F);border:1.5px solid #B7791F;display:none;pointer-events:none}
+.ch-txt{display:grid;gap:1px;min-width:0}
+.ch-title{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.15}
+.ch-amt{display:none;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-weight:800;font-size:28px;line-height:1.1;color:#B7791F}
+.t-dark .ch-amt{color:#FFD76A}
 /* closed: it wobbles a little and glows, asking to be tapped */
 .ch-closed .ch-svg{animation:chIdle 2.8s ease-in-out infinite}
-.ch-closed .ch-glow{opacity:.4;animation:chPulse 2.8s ease-in-out infinite}
+.ch-closed .ch-glow{opacity:.5;animation:chPulse 2.8s ease-in-out infinite}
 .ch-closed .ch-btn:active .ch-svg{transform:scale(.96)}
 @keyframes chIdle{0%,60%,100%{transform:rotate(0)}66%{transform:rotate(-2.6deg) translateY(-2px)}72%{transform:rotate(2.6deg)}78%{transform:rotate(-1.8deg)}84%{transform:rotate(0)}}
 @keyframes chPulse{0%,100%{opacity:.25;transform:scale(.9)}50%{opacity:.55;transform:scale(1)}}
@@ -3464,7 +3463,7 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .ch-open .ch-glow{opacity:.85}
 .ch-open .ch-amt{display:block}
 .ch-open .ch-rays{animation:chSpin 18s linear infinite}
-.ch-t200 .ch-glow{opacity:.95}.ch-t500 .ch-amt{font-size:56px;color:#C2362B}.t-dark .ch-t500 .ch-amt{color:#FFB547}
+.ch-t200 .ch-glow{opacity:.95}.ch-t500 .ch-amt{font-size:34px;color:#C2362B}.t-dark .ch-t500 .ch-amt{color:#FFB547}
 .ch-t500 .ch-rays path{fill:rgba(255,190,60,.5)}
 @keyframes chSpin{to{transform:rotate(360deg)}}
 /* the opening: a shake, the lid pops, light and coins burst out, the amount pops in */
@@ -3476,14 +3475,14 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .ch-go .ch-glow{animation:chGlow .9s ease-out .55s both}
 .ch-go .ch-c{display:block;animation:chCoin 1.6s cubic-bezier(.2,.75,.4,1) calc(.58s + var(--dl)) both}
 .ch-go .ch-amt{animation:chAmt .7s cubic-bezier(.3,1.7,.5,1) 1.05s both}
-.ch-go .ch-line{animation:chFade .5s ease 1.35s both}
+.ch-go .ch-title{animation:chFade .4s ease .9s both}
 @keyframes chShake{0%{transform:rotate(0)}15%{transform:rotate(-5deg)}35%{transform:rotate(5deg)}55%{transform:rotate(-4deg)}75%{transform:rotate(3deg)}100%{transform:rotate(0)}}
 @keyframes chLid{from{transform:rotate(0)}}
 @keyframes chIn{from{opacity:0}}
 @keyframes chPile{from{opacity:0;transform:translateY(16px)}}
 @keyframes chRays{from{opacity:0}}
 @keyframes chGlow{from{opacity:0;transform:scale(.2)}}
-@keyframes chCoin{0%{opacity:0;transform:translate(0,0) scale(.4) rotate(0)}10%{opacity:1}55%{opacity:1;transform:translate(calc(var(--dx)*1.1),calc(var(--dy)*.8)) scale(1) rotate(var(--rt))}100%{opacity:0;transform:translate(calc(var(--dx)*1.35),calc(var(--dy)*.1 + 44px)) scale(.9) rotate(calc(var(--rt)*1.6))}}
-@keyframes chAmt{from{opacity:0;transform:translateY(30px) scale(.3)}}
+@keyframes chCoin{0%{opacity:0;transform:translate(0,0) scale(.4) rotate(0)}10%{opacity:1}55%{opacity:1;transform:translate(calc(var(--dx)*.42),calc(var(--dy)*.34)) scale(1) rotate(var(--rt))}100%{opacity:0;transform:translate(calc(var(--dx)*.52),calc(var(--dy)*.04 + 18px)) scale(.9) rotate(calc(var(--rt)*1.6))}}
+@keyframes chAmt{from{opacity:0;transform:translateX(-12px) scale(.4)}}
 @keyframes chFade{from{opacity:0;transform:translateY(6px)}}
 @media (prefers-reduced-motion:reduce){.ch-go .ch-c{display:none}}

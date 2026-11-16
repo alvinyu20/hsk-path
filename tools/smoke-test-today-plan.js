@@ -71,12 +71,12 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await page.locator('.fin-row .btn').allInnerTexts()).map(t => t.trim()).join('|').endsWith('Journey'), 'and shortcuts end with the Journey: ' + (await page.locator('.fin-row .btn').allInnerTexts()).join('|'));
   check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'the card fits the phone width');
   // the treasure chest: closed until tapped, one tap opens it and pays once
-  check(await page.locator('.fin-chest .ch.ch-closed').count() === 1 && /Tap the chest to open it/.test(await page.locator('.fin-chest').innerText()), 'the finished-day card shows a closed treasure chest to tap');
+  check(await page.locator('.fin-top .ch.ch-closed').count() === 1 && /Bonus reward/.test(await page.locator('.fin-top .ch').innerText()) && !/Tap the chest/.test(await page.locator('.fin').innerText()), 'the Today is cleared card holds a closed chest labelled Bonus reward');
   const x0 = await page.evaluate(() => window.shanlu.state.xp);
   await page.locator('.ch-btn').click(); await page.waitForTimeout(150);
   const o1 = await page.evaluate(() => ({ xp: window.shanlu.state.xp, paid: window.shanlu.state.dcPaid, amt: window.shanlu.state.dcAmt, sfx: (window.__sfxLog || []).join('|') }));
   check(o1.paid && [50, 100, 200, 500].includes(o1.amt) && o1.xp === x0 + o1.amt && /chest/.test(o1.sfx), 'tapping opens it, pays 50, 100, 200 or 500 coins and plays the chest sound: ' + JSON.stringify(o1));
-  check(await page.locator('.ch.ch-open.ch-go').count() === 1 && (await page.locator('.ch-amt').innerText()).trim() === '+' + o1.amt && await page.locator('.ch-c').count() === 9, 'the opening animation runs and shows +' + o1.amt);
+  check(await page.locator('.ch.ch-open.ch-go').count() === 1 && (await page.locator('.ch-amt').innerText()).trim() === '+' + o1.amt + ' coins' && await page.locator('.ch-c').count() === 9, 'the opening animation runs and shows +' + o1.amt);
   await page.waitForTimeout(5000);
   check(await page.locator('.ch.ch-open').count() === 1 && await page.locator('.ch-go').count() === 0 && /opened/.test(await page.locator('.ch-btn').getAttribute('aria-label')), 'afterwards it stays open and still shows what it held');
   await page.evaluate(() => window.shanlu.openChest(0.95)); 
