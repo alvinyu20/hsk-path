@@ -2685,7 +2685,7 @@ window.HSK4_EXAM = {
   },
   {
    "zh": "我最怕坐飞机，每次坐飞机以前都睡不着。朋友告诉我，可以听听音乐，放松一下。我试了一次，真的好多了。",
-   "py": "Wǒ zuì pà zuò fēijī, měi cì zuò fēijī yǐqián dōu shuì bù zhe. Péngyou gàosu wǒ, kěyǐ tīng tīng yīnyuè, fàngsōng yíxià. Wǒ shì le yí cì, zhēn de hǎoduō le.",
+   "py": "Wǒ zuì pà zuò fēijī, měi cì zuò fēijī yǐqián dōu shuì bù zháo. Péngyou gàosu wǒ, kěyǐ tīng tīng yīnyuè, fàngsōng yíxià. Wǒ shì le yí cì, zhēn de hǎoduō le.",
    "en": "I am most afraid of flying, and I cannot sleep before every flight. A friend told me that I can listen to some music and relax a little. I tried it once, and it really got much better.",
    "q": {
     "zh": "朋友建议说话人怎么做？",

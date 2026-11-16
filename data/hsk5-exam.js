@@ -1018,7 +1018,7 @@ window.HSK5_EXAM = {
     },
     {
      "zh": "他睡不着",
-     "py": "Tā shuì bù zhe"
+     "py": "Tā shuì bù zháo"
     },
     {
      "zh": "他在看比赛",
@@ -2177,7 +2177,7 @@ window.HSK5_EXAM = {
     {
      "s": "",
      "zh": "很多人以为喝咖啡会让人睡不着，其实这和每个人的身体有关。有的人晚上喝了咖啡仍然睡得很香，有的人下午喝一杯就会整夜睡不着。所以，你需要了解自己的身体，再决定喝多少。",
-     "py": "Hěn duō rén yǐwéi hē kāfēi huì ràng rén shuì bù zhe, qíshí zhè hé měi gèrén de shēntǐ yǒuguān. Yǒude rén wǎnshang hē le kāfēi réngrán shuì de hěn xiāng, yǒude rén xiàwǔ hē yì bēi jiù huì zhěng yè shuì bù zhe. Suǒyǐ, nǐ xūyào liǎojiě zìjǐ de shēntǐ, zài juédìng hē duōshǎo.",
+     "py": "Hěn duō rén yǐwéi hē kāfēi huì ràng rén shuì bù zháo, qíshí zhè hé měi gèrén de shēntǐ yǒuguān. Yǒude rén wǎnshang hē le kāfēi réngrán shuì de hěn xiāng, yǒude rén xiàwǔ hē yì bēi jiù huì zhěng yè shuì bù zháo. Suǒyǐ, nǐ xūyào liǎojiě zìjǐ de shēntǐ, zài juédìng hē duōshǎo.",
      "en": "Many people think that drinking coffee keeps you from sleeping, but in fact this depends on each person's body. Some people drink coffee in the evening and still sleep soundly; others drink one cup in the afternoon and cannot sleep all night. So you need to understand your own body and then decide how much to drink."
     }
    ],
@@ -2197,7 +2197,7 @@ window.HSK5_EXAM = {
     },
     {
      "zh": "每个人都睡不着",
-     "py": "Měi gèrén dōu shuì bù zhe"
+     "py": "Měi gèrén dōu shuì bù zháo"
     },
     {
      "zh": "最好不要喝",

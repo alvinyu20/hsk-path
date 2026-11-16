@@ -179,6 +179,8 @@ class Engine:
             elif (t == '了' and len(parts) >= 2 and parts[-1][0] == 'w' and parts[-1][1] == '得' and parts[-2][0] == 'w'
                   and (ti + 1 >= len(toks) or toks[ti + 1] in P_MAP or toks[ti + 1] in ('吗', '呢', '吧'))):
                 parts.append(('w', t, 'liǎo'))        # verb + 得 + 了 at the end of a clause (吃得了吗, 做得了): "can", read liǎo
+            elif t == '着' and len(parts) >= 2 and parts[-1][0] == 'w' and parts[-1][1] in ('不', '得') and parts[-2][0] == 'w':
+                parts.append(('w', t, 'zháo'))        # verb + 不/得 + 着 (睡不着, 找不着, 睡得着): "can / cannot", read zháo, not zhe
             else:
                 parts.append(('w', t, self.word_py(t)))
         merged = []

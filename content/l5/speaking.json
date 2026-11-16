@@ -1,0 +1,222 @@
+{
+ "scenarios": [
+  {
+   "id": "refund",
+   "glyph": "退",
+   "title": "Return a faulty product",
+   "sub": "Shopping, 5 turns",
+   "goals": [
+    "Say what you bought and what went wrong",
+    "Explain the problem",
+    "Show that you have your receipt",
+    "Ask for your money back"
+   ],
+   "words": ["退", "质量", "赔", "保证", "解决", "道歉"],
+   "ai": [
+    {"zh": "你好，请问我可以帮你做什么？", "en": "Hello, what can I do to help you?"},
+    {"zh": "真对不起。具体是什么问题？", "en": "Very sorry about that. What exactly is the problem?"},
+    {"zh": "好的。你还留着买东西时的小票吗？", "en": "Okay. Have you kept the receipt from when you bought it?"},
+    {"zh": "我们可以给你换一个新的，也可以把钱退给你。你想怎么办？", "en": "We can give you a new one, or we can give you your money back. What would you like?"},
+    {"zh": "好的，请你在这里签一下名，钱很快就会退给你。", "en": "Okay, please sign here, and the money will be returned to you soon."}
+   ],
+   "you": [
+    {"zh": "你好，我上周在这里买了一部手机，可是它坏了。", "en": "Hello, I bought a phone here last week, but it is broken."},
+    {"zh": "它昨天突然不能开机了，我什么办法都试过了。", "en": "It suddenly could not be turned on yesterday, and I have tried every method."},
+    {"zh": "我留着，小票在这里。", "en": "I have, and the receipt is here."},
+    {"zh": "我想退货，因为这部手机的质量不太好。", "en": "I want to return it, because the quality of this phone is not very good."}
+   ]
+  },
+  {
+   "id": "doctor",
+   "glyph": "诊",
+   "title": "See a doctor",
+   "sub": "Health, 5 turns",
+   "goals": [
+    "Say what is wrong",
+    "Say how long it has lasted and about the fever",
+    "Answer about allergies and ask about an injection",
+    "Ask what you should do to get better"
+   ],
+   "words": ["挂号", "发烧", "咳嗽", "过敏", "检查", "严重"],
+   "ai": [
+    {"zh": "你好，请坐。你哪里不舒服？", "en": "Hello, please sit down. Where do you feel unwell?"},
+    {"zh": "咳嗽几天了？有没有发烧？", "en": "How many days have you been coughing? Have you had a fever?"},
+    {"zh": "我先给你检查一下。不太严重，可能是感冒了。你对药过敏吗？", "en": "Let me examine you first. It is not very serious; it may be a cold. Are you allergic to any medicine?"},
+    {"zh": "不用打针，我给你开三天的药，每天吃三次。", "en": "You do not need an injection. I will give you three days of medicine, to be taken three times a day."},
+    {"zh": "要多休息，多喝水。三天以后再来检查一下。", "en": "You must rest more and drink more water. Come back for a check in three days."}
+   ],
+   "you": [
+    {"zh": "医生，我一直咳嗽，晚上睡不好。", "en": "Doctor, I keep coughing, and I do not sleep well at night."},
+    {"zh": "已经三天了，我昨天晚上有点发烧。", "en": "It has been three days, and last night I had a bit of a fever."},
+    {"zh": "我对药不过敏。需要打针吗？", "en": "I am not allergic to medicine. Do I need an injection?"},
+    {"zh": "好的，谢谢医生。我回家以后应该注意什么？", "en": "Okay, thank you, doctor. What should I pay attention to when I get home?"}
+   ]
+  },
+  {
+   "id": "bank",
+   "glyph": "银",
+   "title": "Open a bank account",
+   "sub": "Money, 5 turns",
+   "goals": [
+    "Say you want to open an account",
+    "Ask how to fill in the form",
+    "Say you have chosen a password",
+    "Ask about fees"
+   ],
+   "words": ["业务", "账户", "存款", "手续", "密码", "身份证"],
+   "ai": [
+    {"zh": "你好，请问你要办理什么业务？", "en": "Hello, what business would you like to do?"},
+    {"zh": "好的。请把你的身份证给我，再填一下这张表格。", "en": "Okay. Please give me your ID card and fill in this form."},
+    {"zh": "这里写名字和电话。写好以后，请你想一个六位数的密码。", "en": "Write your name and phone number here. After that, please think of a six-digit password."},
+    {"zh": "可以，手续已经办好了。你的银行卡三天以后就能拿到。", "en": "Yes. The procedure has already been done. You can get your bank card in three days."},
+    {"zh": "不用，存款超过一百块就不收费。", "en": "No. If your deposit is over a hundred yuan, there is no charge."}
+   ],
+   "you": [
+    {"zh": "你好，我想开一个新的银行账户。", "en": "Hello, I want to open a new bank account."},
+    {"zh": "好的。这张表格我应该怎么填？", "en": "Okay. How should I fill in this form?"},
+    {"zh": "好了，我想好密码了。现在可以输入吗？", "en": "Done, I have thought of a password. Can I enter it now?"},
+    {"zh": "请问，我每个月要付手续费吗？", "en": "Excuse me, do I have to pay a service charge every month?"}
+   ]
+  },
+  {
+   "id": "meeting",
+   "glyph": "议",
+   "title": "Share an idea at a meeting",
+   "sub": "Meetings, 5 turns",
+   "goals": [
+    "Offer your idea",
+    "Explain how it would work",
+    "Answer the worry about money",
+    "Support the decision and suggest a schedule"
+   ],
+   "words": ["方案", "宣传", "吸引", "成本", "同意", "意见"],
+   "ai": [
+    {"zh": "大家好，今天我们来讨论一下新产品的宣传方案。谁先说？", "en": "Hello, everyone. Today we will discuss the publicity plan for the new product. Who will speak first?"},
+    {"zh": "这个想法不错。你有具体的方案吗？", "en": "That is a good idea. Do you have a concrete plan?"},
+    {"zh": "不过这样会花很多钱。你有没有考虑过成本？", "en": "But this will cost a lot of money. Have you thought about the cost?"},
+    {"zh": "好，我同意先试一下。其他人还有什么意见？", "en": "Good, I agree to try it first. What other opinions does anyone have?"},
+    {"zh": "好，那就这样决定。谢谢大家。", "en": "Good, let us decide it that way. Thank you, everyone."}
+   ],
+   "you": [
+    {"zh": "我先说。我觉得我们可以在网上做宣传，因为现在很多人都在网上买东西。", "en": "I will go first. I think we can advertise online, because many people shop online now."},
+    {"zh": "有。我们可以请一些有名的人介绍产品，这样更容易吸引顾客。", "en": "Yes. We can ask some famous people to introduce the product, which makes it easier to attract customers."},
+    {"zh": "我考虑过了。我们可以先少做一点，如果效果好，再多做一些。", "en": "I have. We can do a little first, and if the results are good, do more."},
+    {"zh": "我也同意。不过我们要定一个时间表，这样才能按时完成。", "en": "I agree too. But we need to set a schedule, so that we can finish on time."}
+   ]
+  },
+  {
+   "id": "repair",
+   "glyph": "修",
+   "title": "Report a problem in your flat",
+   "sub": "Housing, 5 turns",
+   "goals": [
+    "Say what is broken",
+    "Say how long it has been broken",
+    "Agree on a time to come",
+    "Ask for a phone call"
+   ],
+   "words": ["物业", "维修", "师傅", "安排", "修理", "坏"],
+   "ai": [
+    {"zh": "你好，这里是物业，请问有什么事？", "en": "Hello, this is the property office. What is the matter?"},
+    {"zh": "好的。请问是什么时候开始坏的？", "en": "Okay. When did it start to go wrong?"},
+    {"zh": "真不好意思。我们马上安排师傅去看一下。你什么时候在家？", "en": "I am really sorry. We will arrange for a repairman to take a look right away. When are you at home?"},
+    {"zh": "好的，师傅四点左右到。如果要换新的，可能需要你付一点钱，可以吗？", "en": "Okay, the repairman will arrive at about four. If a new part is needed, you may have to pay a little. Is that all right?"},
+    {"zh": "会的，他到楼下的时候会给你打电话。", "en": "Yes, he will call you when he gets downstairs."}
+   ],
+   "you": [
+    {"zh": "你好，我住在三号楼。我家的空调坏了，一点也不冷。", "en": "Hello, I live in building three. The air conditioner at my home is broken and does not cool at all."},
+    {"zh": "昨天晚上就不行了，现在家里热得我睡不好。", "en": "It stopped working last night, and now it is so hot at home that I cannot sleep well."},
+    {"zh": "我下午三点以后都在家，请师傅那个时候来吧。", "en": "I am at home after three in the afternoon, so please ask the repairman to come then."},
+    {"zh": "可以。请问师傅来之前，会先给我打电话吗？", "en": "That is fine. Will the repairman call me first, before coming?"}
+   ]
+  },
+  {
+   "id": "guide",
+   "glyph": "导",
+   "title": "Ask a tour guide",
+   "sub": "Travel, 5 turns",
+   "goals": [
+    "Ask about the route for the day",
+    "Ask about tickets",
+    "Ask where and when to meet",
+    "Ask what to do if you get lost"
+   ],
+   "words": ["导游", "景点", "路线", "集合", "迷路", "包括"],
+   "ai": [
+    {"zh": "大家好，我是你们的导游。今天我们会去三个景点，请大家跟着我。", "en": "Hello, everyone. I am your tour guide. Today we will visit three sights, so please follow me."},
+    {"zh": "上午我们参观古城，中午吃饭，下午爬山。", "en": "In the morning we visit the old town, at noon we eat, and in the afternoon we climb the mountain."},
+    {"zh": "古城的门票包括在内，山上的要自己买，一个人五十块。", "en": "The ticket for the old town is included, but you must buy the one for the mountain yourselves, fifty yuan each."},
+    {"zh": "下午两点，我们在山下的停车场集合。请大家一定要准时。", "en": "At two in the afternoon, we meet at the car park at the foot of the mountain. Everyone must be on time, please."},
+    {"zh": "请记下我的电话。有问题就给我打电话，我会马上去找你。", "en": "Please note down my phone number. If there is a problem, call me and I will come and find you at once."}
+   ],
+   "you": [
+    {"zh": "导游，请问今天的路线是怎么样的？", "en": "Guide, excuse me, what is today's route like?"},
+    {"zh": "旅行费用包括门票吗？", "en": "Does the cost of the trip include the tickets?"},
+    {"zh": "好的。下午我们几点在哪里集合？", "en": "Okay. At what time and where do we meet in the afternoon?"},
+    {"zh": "如果我不小心迷路了，应该怎么联系你？", "en": "If I get lost by accident, how should I contact you?"}
+   ]
+  },
+  {
+   "id": "volunteer",
+   "glyph": "愿",
+   "title": "Sign up as a volunteer",
+   "sub": "Community, 5 turns",
+   "goals": [
+    "Say you want to volunteer",
+    "Say which activity you like and why",
+    "Say when you are free",
+    "Ask what you need to bring"
+   ],
+   "words": ["志愿者", "报名", "组织", "活动", "免费", "捐"],
+   "ai": [
+    {"zh": "你好，欢迎来到社区服务中心。请问你有什么事？", "en": "Hello, welcome to the community service centre. What brings you here?"},
+    {"zh": "太好了！你对哪种活动比较有兴趣？我们有照顾老人、教孩子学习，还有整理大家捐来的旧书。", "en": "Great! Which kind of activity are you more interested in? We have looking after old people, teaching children, and sorting the old books people have donated."},
+    {"zh": "那太合适了。你每个星期有多少时间？", "en": "That is just right. How much time do you have each week?"},
+    {"zh": "可以。这个活动是免费的，你只需要填一下这张报名表。", "en": "That is fine. The activity is free, and you only need to fill in this sign-up form."},
+    {"zh": "不用，你自己来就行。下个星期六见！", "en": "No need, just come yourself. See you next Saturday!"}
+   ],
+   "you": [
+    {"zh": "你好，我想报名当志愿者。", "en": "Hello, I would like to sign up as a volunteer."},
+    {"zh": "我对教孩子学习比较有兴趣，因为我会说两种语言。", "en": "I am more interested in teaching children, because I can speak two languages."},
+    {"zh": "我每个星期六上午都有空，可以吗？", "en": "I am free every Saturday morning. Is that all right?"},
+    {"zh": "好的。请问我还需要带什么东西？", "en": "Okay. Excuse me, what else do I need to bring?"}
+   ]
+  },
+  {
+   "id": "contract",
+   "glyph": "签",
+   "title": "Sign a work contract",
+   "sub": "Contracts, 5 turns",
+   "goals": [
+    "Ask about the trial period",
+    "Ask about insurance",
+    "Ask about overtime pay",
+    "Say you are ready to sign"
+   ],
+   "words": ["合同", "试用", "保险", "加班", "待遇", "签"],
+   "ai": [
+    {"zh": "你好，欢迎加入我们公司。这是你的工作合同，请你先看一下。", "en": "Hello, welcome to our company. This is your work contract, so please take a look at it first."},
+    {"zh": "试用期是三个月。试用期的工资是正式工资的一半。", "en": "The trial period is three months. The pay during the trial period is half of the full pay."},
+    {"zh": "有。公司会给你买保险，你不用自己付钱。", "en": "Yes. The company will buy insurance for you, and you do not have to pay yourself."},
+    {"zh": "有时候需要加班，不过加班的话，我们会多付工资。", "en": "Sometimes you will need to work overtime, but if you do, we will pay you more."},
+    {"zh": "可以，请在最后一页签上你的名字，再写上今天的日期。", "en": "You may. Please sign your name on the last page and write today's date."}
+   ],
+   "you": [
+    {"zh": "谢谢。请问，试用期是多长时间？", "en": "Thank you. Excuse me, how long is the trial period?"},
+    {"zh": "好的。那公司有保险吗？", "en": "Okay. And does the company provide insurance?"},
+    {"zh": "明白了。请问我平时需要加班吗？加班的话，公司会多给钱吗？", "en": "I see. Do I need to work overtime normally? If I do, will the company pay more?"},
+    {"zh": "好的，我没有问题了。我现在可以签名吗？", "en": "Okay, I have no more questions. Can I sign now?"}
+   ]
+  }
+ ],
+ "phrases": [
+  {"zh": "不好意思，我没听清楚，能请你重新说一遍吗？", "en": "Sorry, I did not hear clearly. Could you say it once more, please?"},
+  {"zh": "你的意思是不是说，我们明天再讨论？", "en": "Do you mean that we will discuss it again tomorrow?"},
+  {"zh": "请你说得慢一点，我想记下来。", "en": "Please speak a little more slowly; I want to write it down."},
+  {"zh": "这个词我不太了解，你能解释一下吗？", "en": "I do not quite understand this word. Could you explain it?"},
+  {"zh": "我觉得你说得很有道理，不过我有不同的看法。", "en": "I think what you say makes a lot of sense, but I see it differently."},
+  {"zh": "我先说一下我的想法，请大家提意见。", "en": "Let me say my thoughts first, and please give your opinions, everyone."},
+  {"zh": "如果有时间的话，我们可以再讨论一下细节。", "en": "If there is time, we can discuss the details again."},
+  {"zh": "谢谢你的耐心，我学到了很多。", "en": "Thank you for your patience; I have learned a lot."}
+ ]
+}
