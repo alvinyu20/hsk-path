@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build data/hsk2-preview.js from content/preview-hsk2.tsv (and the same for levels 3 and 4: python3 tools/build-preview.py <dataset> 3).
+"""Build data/hsk2-preview.js from content/preview-hsk2.tsv (and the same for levels 3, 4 and 5: python3 tools/build-preview.py <dataset> 3).
 
 The AI conversation may use a few HSK 2 words as a preview. The learner is shown their pinyin and English, so the pinyin must be right:
 every entry is checked against the dataset (the word must be an HSK 2 word of the 2025 syllabus, and the syllables must match one of the
@@ -15,12 +15,12 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def toneless(py):
     s = unicodedata.normalize('NFD', py)
     s = ''.join(c for c in s if not unicodedata.combining(c))
-    return re.sub(r"[\s'/-]", '', s).lower().replace('ü', 'u')
+    return re.sub(r"[\s'/\-0-9]", '', s).lower().replace('ü', 'u')
 
 
 def main():
     dataset = sys.argv[1] if len(sys.argv) > 1 else None
-    level = int(sys.argv[2]) if len(sys.argv) > 2 else 2   # the level being previewed: 2 (used at HSK 1), 3 (used at HSK 2) or 4 (used at HSK 3)
+    level = int(sys.argv[2]) if len(sys.argv) > 2 else 2   # the level being previewed: 2 (used at HSK 1), 3 (used at HSK 2), 4 (used at HSK 3) or 5 (used at HSK 4)
     rows = []
     for ln, line in enumerate(open(os.path.join(ROOT, 'content', 'preview-hsk%d.tsv' % level), encoding='utf-8'), 1):
         if line.startswith('#') or not line.strip():
@@ -34,7 +34,7 @@ def main():
         sys.exit('build-preview: duplicate words: %s' % sorted({z for z in zhs if zhs.count(z) > 1}))
     # a preview word must be a word the learner has not met yet: not on the site's lists for this level or below
     own = set()
-    for f in ['hsk1-official-300.txt', 'hsk2-official-197.txt', 'hsk3-official-491.txt'][:level - 1]:
+    for f in ['hsk1-official-300.txt', 'hsk2-official-197.txt', 'hsk3-official-491.txt', 'hsk4-official-990.txt'][:level - 1]:
         own |= {l.strip() for l in open(os.path.join(ROOT, 'content', f), encoding='utf-8') if l.strip()}
     for z in zhs:
         if z in own:
@@ -49,11 +49,22 @@ def main():
         lvl = {w['simplified'] for w in data if tag in w['level'] and not any(t in w['level'] for t in newer)}
         # plain forms of the 儿 words are listed too; they belong to the same word
         extra_ok = {z[:-1] for z in zhs if z.endswith('儿')} | {z + '儿' for z in zhs if z + '儿' in lvl}
+        # HSK 5: a few words of the official 2025 list are not in the dataset; their pinyin is checked against content/hsk5-official-1600.tsv instead
+        official = {}
+        if level == 5:
+            for l in open(os.path.join(ROOT, 'content', 'hsk5-official-1600.tsv'), encoding='utf-8'):
+                p = l.rstrip('\n').split('|')
+                if len(p) >= 3:
+                    official.setdefault(p[1], set()).add(toneless(p[2]))
         for z, py, en in rows:
             if z not in by and z in extra_ok:
                 continue
+            if z not in by and z in official:
+                if toneless(py) not in official[z]:
+                    sys.exit('build-preview: pinyin of %s (%s) does not match the official list (%s)' % (z, py, sorted(official[z])))
+                continue
             if z not in by:
-                sys.exit('build-preview: %s is not in the dataset' % z)
+                sys.exit('build-preview: %s is not in the dataset or the official list' % z)
             if z not in lvl and z not in extra_ok:
                 sys.exit('build-preview: %s is not an HSK %d word of the newest syllabus' % (z, level))
             readings = {toneless(f['transcriptions']['pinyin']) for w in by[z] for f in w['forms']}
