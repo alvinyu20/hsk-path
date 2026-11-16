@@ -1,0 +1,114 @@
+[
+  {
+    "id": "xiangbi",
+    "title": "跟…相比 and 比 + amount: compared with, three years older",
+    "covers": [71, 72],
+    "formula": ["*跟", "Standard", "*相比", "，", "Subject", "Difference"],
+    "explain": [
+      "跟 … 相比 'compared with …' puts the thing you compare against first, then says how the main subject differs: 跟去年相比，今年的雨多了 'Compared with last year, there is more rain this year'; 跟他相比，我的汉语差多了 'Compared with him, my Chinese is much worse'. 与 and 和 can replace 跟; 与 is the most formal.",
+      "In a 比 sentence, the amount goes after the adjective to say by how much: 他比我大三岁 'He is three years older than me'; 这本书比那本贵很多 'This book is much more expensive than that one'; 我比他高一点儿 'I am a bit taller than him'; 这条路比那条长五公里 'This road is five kilometres longer than that one'. Do not put 很 before the adjective in a 比 sentence."
+    ],
+    "examples": [
+      {"zh": "跟去年相比，今年的雨多了。", "en": "Compared with last year, there is more rain this year."},
+      {"zh": "跟他相比，我的汉语差多了。", "en": "Compared with him, my Chinese is much worse."},
+      {"zh": "他比我大三岁。", "en": "He is three years older than me."},
+      {"zh": "这本书比那本贵很多。", "en": "This book is much more expensive than that one."}
+    ],
+    "mistakes": [
+      "相比 needs 跟, 与 or 和 before the thing compared: 跟去年相比 is right; 去年相比 is wrong.",
+      "Do not put 很 before the adjective in a 比 sentence: 他比我很大 is wrong. Put the amount after it: 他比我大三岁."
+    ],
+    "q": [
+      {"t": "order", "zh": "他比我大三岁。", "en": "He is three years older than me.", "explain": "比 + person + adjective + amount."},
+      {"t": "order", "zh": "跟去年相比，雨多了。", "en": "Compared with last year, there is more rain.", "explain": "跟 + standard + 相比."},
+      {"t": "cloze", "zh": "跟去年相比，今年的雨多了。", "en": "Compared with last year, there is more rain this year.", "blank": "相比", "explain": "跟 … 相比 = compared with …."},
+      {"t": "mc", "prompt": "Which sentence says: This book is much more expensive than that one?", "options": ["这本书比那本贵很多。", "这本书比那本很贵多。"], "correct": 0, "zh": "这本书比那本贵很多。", "en": "This book is much more expensive than that one.", "explain": "The amount goes after the adjective."},
+      {"t": "spot", "zh": "他比我大三岁。", "en": "He is three years older than me.", "wrong": "他比我很大三岁。", "remove": "很", "explain": "No 很 in a 比 sentence."}
+    ]
+  },
+  {
+    "id": "mw5",
+    "title": "朵, 幅, 颗, 匹, 扇, 册 and 届: new measure words",
+    "covers": [73],
+    "formula": ["Number", "*朵 / 幅 / 颗 / 匹 / 扇", "Noun"],
+    "explain": [
+      "Each noun has its own measure word, so learn the pair together. 朵 is for flowers and clouds: 一朵花 'a flower'. 幅 is for paintings, pictures and cloth: 一幅画 'a painting'. 颗 is for small round things such as stars, hearts and sweets: 一颗星星 'a star'. 匹 is for horses: 一匹马 'a horse'. 扇 is for doors and windows: 一扇门 'a door'.",
+      "册 is for volumes and copies of books: 第二册课本 'the second volume of the textbook'. 届 is for sessions, such as a competition, a meeting or a graduating class, and goes with 第 and a number: 第三届运动会 'the third sports meeting'. The sentence 墙上挂着一幅画 'A painting hangs on the wall' shows the usual order: place, verb, number, measure word, noun."
+    ],
+    "examples": [
+      {"zh": "桌子上有一朵花。", "en": "There is a flower on the table."},
+      {"zh": "墙上挂着一幅画。", "en": "A painting hangs on the wall."},
+      {"zh": "他骑着一匹马。", "en": "He is riding a horse."},
+      {"zh": "那扇门是开着的。", "en": "That door is open."}
+    ],
+    "mistakes": [
+      "Measure words are not interchangeable: a door is 一扇门, not 一朵门. Learn each noun with its measure word.",
+      "届 is only for sessions and classes (第三届), not for ordinary times: say 三次, not 三届, for 'three times'."
+    ],
+    "q": [
+      {"t": "order", "zh": "桌子上有一朵花。", "en": "There is a flower on the table.", "explain": "一朵花 = a flower."},
+      {"t": "order", "zh": "天上有很多颗星星。", "en": "There are many stars in the sky.", "explain": "颗 goes with 星星."},
+      {"t": "cloze", "zh": "墙上挂着一幅画。", "en": "A painting hangs on the wall.", "blank": "幅", "explain": "幅 is the measure word for 画."},
+      {"t": "mc", "prompt": "Which sentence says: He is riding a horse?", "options": ["他骑着一匹马。", "他骑着一扇马。"], "correct": 0, "zh": "他骑着一匹马。", "en": "He is riding a horse.", "explain": "匹 is the measure word for horses."},
+      {"t": "spot", "zh": "我们学校的第三届运动会开始了。", "en": "The third sports meeting of our school has started.", "wrong": "我们学校的第三届个运动会开始了。", "remove": "个", "explain": "届 is already the measure word; do not add 个."}
+    ]
+  },
+  {
+    "id": "xing",
+    "title": "性, 本, 之一 and 是否: -ness, this, one of, whether",
+    "covers": [74, 75, 76, 77],
+    "formula": ["Adjective / noun", "*性"],
+    "explain": [
+      "性 after an adjective or a noun makes an abstract noun, like '-ness' or '-ity': 重要性 'importance', 安全性 'safety', 积极性 'enthusiasm', 可能性 'possibility'. 这件事的重要性不用多说 'The importance of this matter needs no more words'; 这个办法的可能性很小 'The chance of this method working is very small'.",
+      "本 'this, our' before a noun is formal and points to the speaker's own group or the current time: 欢迎来到本公司 'Welcome to our company'; 本月我们很忙 'This month we are very busy'.",
+      "之一 'one of' follows the group: 上海是中国最大的城市之一 'Shanghai is one of China's biggest cities'; 他是我最好的朋友之一 'He is one of my best friends'. The group before 之一 often has 最 or a number.",
+      "是否 'whether or not' is the formal form of 是不是 or 有没有 in an indirect question: 我不知道他是否同意 'I do not know whether he agrees'; 请告诉我你是否有空 'Please tell me whether you are free'. Do not add 吗 after it."
+    ],
+    "examples": [
+      {"zh": "这件事的重要性不用多说。", "en": "The importance of this matter needs no more words."},
+      {"zh": "欢迎来到本公司。", "en": "Welcome to our company."},
+      {"zh": "他是我最好的朋友之一。", "en": "He is one of my best friends."},
+      {"zh": "我不知道他是否同意。", "en": "I do not know whether he agrees."}
+    ],
+    "mistakes": [
+      "是否 already asks the question, so do not add 吗: 我不知道他是否同意 is right; 我不知道他是否同意吗 is wrong.",
+      "之一 comes after the whole group. Say 上海是中国最大的城市之一, not 上海是之一中国最大的城市."
+    ],
+    "q": [
+      {"t": "order", "zh": "他是我最好的朋友之一。", "en": "He is one of my best friends.", "explain": "Group + 之一."},
+      {"t": "order", "zh": "欢迎来到本公司。", "en": "Welcome to our company.", "explain": "本 + noun = our."},
+      {"t": "cloze", "zh": "这个办法的可能性很小。", "en": "The chance of this method working is very small.", "blank": "可能性", "explain": "可能 + 性 = possibility."},
+      {"t": "mc", "prompt": "Which sentence says: I do not know whether he agrees?", "options": ["我不知道他是否同意。", "我不知道他同意是否。"], "correct": 0, "zh": "我不知道他是否同意。", "en": "I do not know whether he agrees.", "explain": "是否 goes before the verb."},
+      {"t": "spot", "zh": "请告诉我你是否有空。", "en": "Please tell me whether you are free.", "wrong": "请告诉我你是否有空吗。", "remove": "吗", "explain": "是否 already asks the question; do not add 吗."}
+    ]
+  },
+  {
+    "id": "newmean5",
+    "title": "Words you know, with a new meaning",
+    "covers": [78],
+    "formula": ["*看家 kān"],
+    "explain": [
+      "Some words you already know come back in HSK 5 with another meaning or another sound. The character is the same; the words around it tell you which one it is.",
+      "A new sound. 看 kān means 'to look after, to guard': 看家 'guard the house', 看门 'keep the door'; 看 kàn is 'to look'. 当 dàng means 'to treat as': 当作 'treat as', 上当 'be fooled'; 当 dāng is 'when, to be'. 倒 dǎo means 'to fall over': 摔倒 'fall down'; 倒 dào is 'to pour' or 'backwards'. 数 shǔ means 'to count': 数数 'count'; 数 shù is 'a number': 数字. 背 bèi means 'the back' and 'to recite': 背书 'recite a lesson', 背后 'behind'; 背 bēi is 'to carry on the back': 背书包. 好 hào means 'to like': 爱好 'hobby', 好奇 'curious'; 好 hǎo is 'good'. 行 háng means 'a row, a line of work': 行业 'industry', 银行 'bank'; 行 xíng is 'OK'. 量 liàng means 'amount': 数量 'quantity'; 量 liáng is 'to measure'. 为 wéi means 'to be, as': 成为 'become', 作为 'as'; 为 wèi is 'for'. 头 is neutral, tou, as a suffix: 木头 'wood', 石头 'stone', 里头 'inside'; on its own, 头 tóu is 'head'.",
+      "The same sound, a new meaning. 才 cái also means 'talent': 人才 'talented person', 天才 'genius'. 本 běn means 'this, one's own': 本月 'this month', 本地 'local'. 别 bié also means 'to part': 告别 'say goodbye', 分别 'part'. 喂 wèi means 'to feed': 喂鱼 'feed the fish'. 省 shěng means 'to save': 省钱 'save money'. 面 miàn means 'surface, side': 水面 'the water surface', 方面 'aspect'.",
+      "Five more come in pairs. 称 is chēng 'to weigh, to call' and chèn 'to match': 对称 'symmetrical'. 处 is chǔ 'to be in, to deal with' and chù 'a place, a point': 好处 'benefit', 到处 'everywhere'. 调 is diào 'to transfer, to investigate' and tiáo 'to adjust': 空调 'air conditioner'. 系 is jì 'to fasten' and xì 'a system, a department': 中文系 'the Chinese department'. 批 is pī 'a batch' and 'to approve'."
+    ],
+    "examples": [
+      {"zh": "我们家的狗会看家。", "en": "Our dog can guard the house."},
+      {"zh": "请你数数这里有几本书。", "en": "Please count how many books there are here."},
+      {"zh": "你要小心，别上当。", "en": "You must be careful; do not be fooled."},
+      {"zh": "他摔倒了。", "en": "He fell down."}
+    ],
+    "mistakes": [
+      "The sound is decided by the words around it: 看家 is kān but 看书 is kàn; 摔倒 is dǎo but 倒水 is dào; 数数 is shǔ but 数字 is shù.",
+      "头 after 木, 石 or 里 is neutral: 木头 mùtou. On its own, or in 头发, it is tóu, 'head'."
+    ],
+    "q": [
+      {"t": "order", "zh": "他每天早上在教室里背书。", "en": "He recites his lessons in the classroom every morning.", "explain": "背 bèi = to recite."},
+      {"t": "order", "zh": "我想省一点钱。", "en": "I want to save a little money.", "explain": "省 shěng = to save."},
+      {"t": "cloze", "zh": "孩子们对什么都很好奇。", "en": "Children are curious about everything.", "blank": "好奇", "explain": "好 hào = to like; 好奇 = curious."},
+      {"t": "mc", "prompt": "Which sentence says: He feeds the fish every evening?", "options": ["他每天晚上喂鱼。", "他每天晚上鱼喂。"], "correct": 0, "zh": "他每天晚上喂鱼。", "en": "He feeds the fish every evening.", "explain": "喂 wèi = to feed."},
+      {"t": "spot", "zh": "这个行业很辛苦。", "en": "This line of work is very hard.", "wrong": "这个行业是很辛苦。", "remove": "是", "explain": "Do not put 是 before an adjective."}
+    ]
+  }
+]

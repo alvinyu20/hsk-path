@@ -1,13 +1,13 @@
 {
  "note": "Grammar lessons of every level, grouped by what they help you say. Categories are shown in this order; inside a category the lessons run HSK 1 first, then HSK 2, then HSK 3, then HSK 4 (the order of the lesson files).",
  "categories": [
-  {"name": "Building a sentence", "blurb": "The skeleton of a sentence: who does what, 是, 有, 的 and pronouns.", "lessons": ["order", "shi", "you", "pron", "de"]},
-  {"name": "Doing things to things", "blurb": "Move things and say what happens to them or whether the action works out: 把, 被 and 听得懂 / 听不懂.", "lessons": ["ba", "bei", "potential"]},
-  {"name": "Describing and comparing", "blurb": "Say what something is like, compare things, say how much, and say how well or how completely something is done.", "lessons": ["adj", "bi", "de2", "result", "degree", "yiyang", "yue", "nan", "shaowei", "gengjia", "guyu", "jianzhi", "bude", "zhuangtai"]},
+  {"name": "Building a sentence", "blurb": "The skeleton of a sentence: who does what, 是, 有, 的 and pronouns.", "lessons": ["order", "shi", "you", "pron", "de", "adverbials"]},
+  {"name": "Doing things to things", "blurb": "Move things and say what happens to them or whether the action works out: 把, 被 and 听得懂 / 听不懂.", "lessons": ["ba", "bei", "potential", "qilai", "youzhe", "notional"]},
+  {"name": "Describing and comparing", "blurb": "Say what something is like, compare things, say how much, and say how well or how completely something is done.", "lessons": ["adj", "bi", "de2", "result", "degree", "yiyang", "yue", "nan", "shaowei", "gengjia", "guyu", "jianzhi", "bude", "zhuangtai", "xiangbi"]},
   {"name": "Questions", "blurb": "Yes/no questions, question words, either-or questions, and softening with 吧 and 呢.", "lessons": ["ma", "qword", "anota", "bane", "haishi", "huozhe"]},
   {"name": "Saying no, asking and telling", "blurb": "Say no, make polite requests, and tell someone not to do something.", "lessons": ["neg", "request", "rang", "zaiye2"]},
   {"name": "Wanting and being able", "blurb": "Want, can, may, hope and get ready.", "lessons": ["want", "modal", "modal2", "jinliang"]},
-  {"name": "Numbers and counting", "blurb": "Measure words, numbers, money, age, halves, rough numbers, and how much or how many.", "lessons": ["measure", "num", "some", "mw", "num2", "zhishao", "suoyou"]},
+  {"name": "Numbers and counting", "blurb": "Measure words, numbers, money, age, halves, rough numbers, and how much or how many.", "lessons": ["measure", "num", "some", "mw", "num2", "zhishao", "suoyou", "mw5"]},
   {"name": "Time and how often", "blurb": "Dates and clock time, how often something happens, when, and for how long.", "lessons": ["time", "mei", "duo", "yizhi", "time3", "duration", "conglai", "ouer", "reng", "zhiqian", "yijiu", "shichang", "jianjian", "suihou"]},
   {"name": "Where and direction", "blurb": "Where something is or happens, distance, and which way things move.", "lessons": ["zai", "loc", "li", "dao", "direction", "direction2"]},
   {"name": "Happening now and soon", "blurb": "Actions in progress, states that continue, and things about to happen.", "lessons": ["prog", "zhe", "yao"]},
@@ -15,10 +15,10 @@
   {"name": "Joining people and ideas", "blurb": "With, together, also, then, because and although, first and then, and at the same time: link people, actions and sentences.", "lessons": ["hedui", "adv", "seq", "gen", "yinwei", "xian", "budan", "ranerr", "jiyou", "shouxian", "youde", "huoshi"]},
   {"name": "Conditions, reasons and topics", "blurb": "If, as long as, only if, except, in order to, and \"about\": set conditions and link ideas.", "lessons": ["ruguo", "zhiyao", "chule", "weile", "yaoshi", "fouze", "duiyu", "anzhao", "yidan", "zaiye", "weideshi"]},
   {"name": "Opinions, advice and guesses", "blurb": "Say what you think, give advice, say what must be done, and say how sure you are.", "lessons": ["should", "guess", "finally", "budebu", "nandao", "jingran", "queshi", "yexu", "shuoming", "fanerr", "guoran"]},
-  {"name": "Words with more than one job", "blurb": "Words you know that do another job or have another sound: 只 (zhī, zhǐ), 什么 and 谁 meaning \"any\", and 得, 地, 还, 会 and 长.", "lessons": ["zhi", "qword2", "newmean", "newmean4"]},
+  {"name": "Words with more than one job", "blurb": "Words you know that do another job or have another sound: 只 (zhī, zhǐ), 什么 and 谁 meaning \"any\", and 得, 地, 还, 会 and 长.", "lessons": ["zhi", "qword2", "newmean", "newmean4", "newmean5"]},
   {"name": "Even, although and no matter", "blurb": "Say that something is true even when you would not expect it: even, even if, although and no matter what.", "lessons": ["lian", "jishi", "buguan"]},
   {"name": "Reasons, results and basis", "blurb": "Say what you judge from, what something rests on, and what follows from it: judging from, from this, in short, by, on the basis of.", "lessons": ["congkan", "youci", "ping"]},
-  {"name": "Formal and written style", "blurb": "Written and formal ways to say things you already know in speech: 将, 由, 所, 令, 彼此 and 如此.", "lessons": ["jiang", "ling", "bici"]},
+  {"name": "Formal and written style", "blurb": "Written and formal ways to say things you already know in speech: 将, 由, 所, 令, 彼此 and 如此.", "lessons": ["jiang", "ling", "bici", "xing"]},
   {"name": "Fixed patterns and sayings", "blurb": "Patterns you can fill in and use like a saying: A来A去, 有A有B, 一来…二来…, 看你…的 and X什么X.", "lessons": ["laiqu", "youa", "kan"]}
  ]
 }
