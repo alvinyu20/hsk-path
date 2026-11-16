@@ -241,6 +241,11 @@ class Engine:
                 parts[i] = ('w', p[1], p[2][:1].upper() + p[2][1:])
         # 不 and 一 tone changes
         for i, p in enumerate(parts):
+            if p[0] == 'w' and len(p[1]) > 1 and p[1].endswith('不') and (p[2].endswith('bù') or p[2].endswith('bú')):
+                nxt = parts[i + 1] if i + 1 < len(parts) else None
+                nxt_tone = tone_of(nxt[2]) if nxt and nxt[0] == 'w' else 0
+                parts[i] = ('w', p[1], p[2][:-2] + ('bú' if nxt_tone == 4 else 'bù'))       # 从不骗人 cóng bú piàn rén, 并不是 bìng bú shì: a 不 that ends a word still changes tone
+                continue
             if p[0] != 'w' or p[1] not in ('不', '一'):
                 continue
             nxt = parts[i + 1] if i + 1 < len(parts) else None
