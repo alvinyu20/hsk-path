@@ -317,8 +317,8 @@
  {
   "p": "g2-22",
   "t": "cloze",
-  "zh": "妈妈让我早点儿睡。",
-  "en": "Mom told me to go to bed earlier.",
+  "zh": "爸爸让我早点睡觉。",
+  "en": "Dad tells me to go to bed early.",
   "blank": "让",
   "explain": "让 + person + verb."
  },
@@ -497,7 +497,7 @@
   "p": "g2-33",
   "t": "cloze",
   "zh": "这个手机三万块。",
-  "en": "This phone costs thirty thousand.",
+  "en": "This phone costs 30,000 yuan.",
   "blank": "万",
   "explain": "万 means ten thousand."
  },
@@ -539,8 +539,8 @@
  {
   "p": "g2-35",
   "t": "order",
-  "zh": "他在家的时候，常常看书。",
-  "en": "When he is at home, he often reads.",
+  "zh": "他在家的时候，爱看书。",
+  "en": "When he is at home, he likes to read.",
   "explain": "…的时候 sets the time of the second part."
  },
  {
@@ -567,7 +567,7 @@
   "p": "g2-36",
   "t": "order",
   "zh": "你想想，再说。",
-  "en": "Think first, then speak.",
+  "en": "You think it over, then speak.",
   "explain": "A doubled verb is short and light."
  },
  {

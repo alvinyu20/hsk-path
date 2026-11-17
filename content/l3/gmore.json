@@ -125,7 +125,7 @@
  {
   "p": "g3-12",
   "t": "order",
-  "zh": "根据天气，我们明天不去了。",
+  "zh": "根据天气，我们明天不去。",
   "en": "According to the weather, we are not going tomorrow.",
   "explain": "根据 + source starts the sentence."
  },
@@ -133,7 +133,7 @@
   "p": "g3-12",
   "t": "cloze",
   "zh": "根据老师说的，明天不考试。",
-  "en": "According to what the teacher said, there is no test tomorrow.",
+  "en": "According to what the teacher says, there is no test tomorrow.",
   "blank": "根据",
   "explain": "根据 introduces where the information comes from."
  },
@@ -500,8 +500,8 @@
  {
   "p": "g3-39",
   "t": "cloze",
-  "zh": "你应该早点儿睡。",
-  "en": "You should go to bed earlier.",
+  "zh": "你应该早点睡觉。",
+  "en": "You should go to bed early.",
   "blank": "应该",
   "explain": "应该 means should."
  },
@@ -509,7 +509,7 @@
   "p": "g3-39",
   "t": "order",
   "zh": "我该回家了。",
-  "en": "I should go home.",
+  "en": "I should go home now.",
   "explain": "该 also means should."
  },
  {
@@ -544,8 +544,8 @@
  {
   "p": "g3-41",
   "t": "order",
-  "zh": "你最好早点儿睡。",
-  "en": "You had better go to bed earlier.",
+  "zh": "你最好别吃太多。",
+  "en": "You had better not eat too much.",
   "explain": "最好 comes before the verb."
  },
  {
@@ -645,14 +645,14 @@
  {
   "p": "g3-48",
   "t": "mc",
-  "prompt": "Which sentence says: Sit wherever you like?",
+  "prompt": "Which sentence says: Sit wherever you want?",
   "options": [
    "你想坐哪儿就坐哪儿。",
    "你想坐哪儿就坐什么。"
   ],
   "correct": 0,
   "zh": "你想坐哪儿就坐哪儿。",
-  "en": "Sit wherever you like.",
+  "en": "Sit wherever you want.",
   "explain": "Use the same question word twice."
  },
  {

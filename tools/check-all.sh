@@ -108,12 +108,12 @@ last env LEVEL=5 python3 -W ignore tools/build-webs.py
 last env LEVEL=5 python3 -W ignore tools/build-speech.py
 last env LEVEL=5 python3 -W ignore tools/build-exam.py
 echo "   exam style (with 儿 endings)"
-DUMP_EXTRAS=1 node tools/dump-sentences.js 5 > /tmp/shanlu-sentences-l5.json
+node tools/dump-sentences.js 5 > /tmp/shanlu-sentences-l5.json
 python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l5.json --level 5 --dataset "$DATASET"
 LEVEL=5 python3 -W ignore tools/check-lexicon.py "$DATASET" /tmp/shanlu-sentences-l5.json
 LEVEL=5 python3 -W ignore tools/check-ties.py /tmp/shanlu-sentences-l5.json
 echo "   plain style (no 儿 endings, the default)"
-DUMP_EXTRAS=1 node tools/dump-sentences.js 5 --plain > /tmp/shanlu-sentences-l5-plain.json
+node tools/dump-sentences.js 5 --plain > /tmp/shanlu-sentences-l5-plain.json
 python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l5-plain.json --level 5 --dataset "$DATASET" --plain
 
 echo "== 4. regenerate the teacher review packet and the list of everything that changes in plain style"

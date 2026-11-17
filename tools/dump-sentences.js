@@ -109,8 +109,8 @@ if (GRAM) {
       (q.levelOnly || []).forEach((t, j) => add('lesson:' + L.id + ':exercise' + (i + 1) + ':wrong' + j, t, '', '', { levelOnly: true }));
       cjkRuns(q.explain).forEach((t, j) => add('lesson:' + L.id + ':exercise' + (i + 1) + ':explain' + j, t, '', '', { levelOnly: true }));
     });
-    // the extra review exercises (gmore.json). Only when DUMP_EXTRAS=1: HSK 2-4 extras were never run through check-content (17 findings), so the lower levels stay as they were until they are fixed.
-    (process.env.DUMP_EXTRAS ? (L.qx || []) : []).forEach((q, i) => {
+    // the extra review exercises (gmore.json): every level, so the review questions go through the same checks as the lessons
+    (L.qx || []).forEach((q, i) => {
       add('lesson:' + L.id + ':extra' + (i + 1), q.sentence.zh, q.sentence.py, q.sentence.en);
       (q.levelOnly || []).forEach((t, j) => add('lesson:' + L.id + ':extra' + (i + 1) + ':wrong' + j, t, '', '', { levelOnly: true }));
     });

@@ -118,10 +118,10 @@ case "$MODE" in
     last env LEVEL=5 python3 -W ignore tools/build-webs.py
     last env LEVEL=5 python3 -W ignore tools/build-speech.py
     last env LEVEL=5 python3 -W ignore tools/build-exam.py
-    DUMP_EXTRAS=1 node tools/dump-sentences.js 5 > /tmp/shanlu-sentences-l5.json
+    node tools/dump-sentences.js 5 > /tmp/shanlu-sentences-l5.json
     python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l5.json --level 5 --dataset "$DATASET"
     LEVEL=5 python3 -W ignore tools/check-ties.py /tmp/shanlu-sentences-l5.json
-    DUMP_EXTRAS=1 node tools/dump-sentences.js 5 --plain > /tmp/shanlu-sentences-l5-plain.json
+    node tools/dump-sentences.js 5 --plain > /tmp/shanlu-sentences-l5-plain.json
     python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l5-plain.json --level 5 --dataset "$DATASET" --plain
     NODE_PATH="$(npm root -g)" node tools/smoke-test-l5.js ;;
   full) sh tools/check-all.sh "$DATASET" ;;

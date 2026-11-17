@@ -159,8 +159,8 @@
  {
   "p": "g4-16",
   "t": "cloze",
-  "zh": "我爱吃甜的东西，比如水果和面包。",
-  "en": "I love sweet things, for example fruit and bread.",
+  "zh": "我爱吃甜的东西，比如西瓜。",
+  "en": "I love sweet things, for example watermelon.",
   "blank": "比如",
   "explain": "比如 introduces examples."
  },
@@ -213,7 +213,7 @@
   "p": "g4-20",
   "t": "order",
   "zh": "现在出发还来得及。",
-  "en": "There is still time if we set off now.",
+  "en": "There is still time to set off now.",
   "explain": "来得及 = there is still time."
  },
  {
@@ -334,7 +334,7 @@
   "p": "g4-32",
   "t": "cloze",
   "zh": "这本书大约有两百页。",
-  "en": "This book has about two hundred pages.",
+  "en": "This book has about 200 pages.",
   "blank": "大约",
   "explain": "大约 = about."
  },

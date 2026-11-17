@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Builds ready-to-upload review packs for a Chinese AI model for HSK 5 (review/chinese-ai-hsk5/*.md) from what the learner sees (plain style).
-Run:  DUMP_EXTRAS=1 node tools/dump-sentences.js 5 --plain > /tmp/p5.json && python3 tools/make-ai-review-pack-l5.py /tmp/p5.json
+Run:  node tools/dump-sentences.js 5 --plain > /tmp/p5.json && python3 tools/make-ai-review-pack-l5.py /tmp/p5.json
 Pack order: word list and glosses, grammar lessons, sentences in batches, word webs, the mock exam, practice scripts and clips,
 the meanings shown under each character ("Built from"), then the 39 stops of the Five Great Mountains path.
 """
