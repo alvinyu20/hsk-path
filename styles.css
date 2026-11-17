@@ -3669,3 +3669,10 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .psg-fast{margin:0;font-size:14px;color:var(--muted);padding:8px 12px;border-radius:12px;background:var(--bg)}
 .psg-fast.on{background:var(--jade-soft);color:var(--ink)}
 .psg-fast.off{background:var(--amber-soft);color:var(--ink)}
+/* phones: the Journey views bar sits where the other pages' section bar sits (12px from the side, 8px under the header). The Journey
+   panel's own padding and the wider page margin pushed it 14px in and 12px down; its background is the page's, so the padding only added space */
+@media (max-width:900px){
+  .app.scr-journey .main{padding-top:8px;padding-left:12px;padding-right:12px}
+  .app.scr-journey .jy{padding:0;border-radius:0;background:transparent}
+  .app.scr-journey .jy-tabw{margin-bottom:-6px}
+}
