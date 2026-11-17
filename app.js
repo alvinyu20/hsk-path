@@ -559,6 +559,22 @@
     { to:0.9, amt:200, tier:'t200', line:'A big haul!' },
     { to:1.01, amt:500, tier:'t500', line:'Jackpot!' }
   ];
+  // "How to earn coins": one row per way to earn, with the amount the code actually pays (shown from the Journey travel button)
+  const COIN_WAYS = () => [
+    ['宝', 'Treasure chest', 'Finish today\'s plan to open it', CHEST.map(c => c.amt).join(', ')],
+    ['考', 'Pass a level exam', 'Paid once for each level', LVL.PASS_COINS.toLocaleString('en-US')],
+    ['语', 'Grammar practice and tests', 'Each right answer; more on a streak', '10 to 18'],
+    ['写', 'Write your own sentence', 'When it is right', '12'],
+    ['路', 'Path word stop', 'The first time you finish it', String(STOP_COINS)],
+    ['音', 'Pinyin lesson', 'The first time you finish it', String(PY_COINS)],
+    ['说', 'Speaking conversation', 'Each one you finish', '10'],
+    ['复', 'Review', 'Each card (a new word: 3 per step, 5 when it sticks)', '2 to 5'],
+    ['听', 'Listening lab', 'Each word you catch or understand', '1 a word'],
+    ['跟', 'Shadowing', 'After three rounds of a clip', '6'],
+    ['网', 'Word webs', 'A word you knew (1 if not)', '3'],
+    ['聊', 'AI chat', 'Each message you send', '2'],
+    ['试', 'Practice exam', 'Each right answer', '2']
+  ];
   const chestRoll = (r) => CHEST.find(c => r < c.to) || CHEST[0];
   const chestFor = (amt) => CHEST.find(c => c.amt === amt) || CHEST[0];
   function dueCountsNow(S) {
@@ -3073,10 +3089,18 @@
       return st;
     }
     // spend the XP: unlock the next stop
+    // the coin guide: what each activity pays, the stop prices, and (from Journey) how far the next stop is
+    coinHelpOpen = () => {
+      const S = this.state; const st = JWORLD ? this.jyEnsure() : null; let need = '';
+      if (st && st.reg) { const mt = JY.meter(totalXp(S), st); if (mt.ready < 1 && mt.toGo > 0) need = 'You have ' + coinBalance(S, st).toLocaleString('en-US') + ' coins. Your next stop costs ' + mt.nextCost.toLocaleString('en-US') + ', so you need ' + mt.toGo.toLocaleString('en-US') + ' more.'; }
+      this.setState({ coinHelp:{ need } });
+    };
+    coinHelpClose = () => this.setState({ coinHelp:null });
+    coinHelpToday = () => { this.setState({ coinHelp:null }); this.go('home'); };
     jyTravel = () => {
       if (!JWORLD) return;
       const S = this.state; const st0 = this.jyEnsure(); if (!st0 || !st0.reg) return;
-      if (JY.meter(totalXp(S), st0).ready < 1) return;
+      if (JY.meter(totalXp(S), st0).ready < 1) { this.coinHelpOpen(); return; }
       const from = st0.seen.length ? st0.seen[st0.seen.length - 1] : null;
       const cost = JY.meter(totalXp(S), st0).nextCost;   // what this stop costs, shown as the coins that fly in
       const r = JY.step(JWORLD, st0, JY.rngFor(st0), ymd(new Date()));
@@ -3399,7 +3423,8 @@
       const introOf = (RR) => (RR && RR.intro && RR.intro.length === 3 ? [{ k:'The land', t:RR.intro[0] }, { k:'The table', t:RR.intro[1] }, { k:'Good to know', t:RR.intro[2] }] : []);
       out.jyPct = (done ? 100 : mt.pct) + '%'; out.jyPctNum = done ? 100 : mt.pct;
       out.jyMeterCls = 'jy-meter' + (mt.ready > 0 && !done ? ' ready' : ''); out.jyMeterLabel = done ? 'Journey complete' : mt.ready > 0 ? plural(mt.ready, 'stop', 'stops') + ' ready' : mt.into + ' of ' + mt.nextCost + ' coins toward the next stop';
-      out.jyGoOff = done || mt.ready < 1; out.jyGoText = done ? 'All done' : mt.ready > 0 ? (st.n === 0 ? 'Take your first flight (free)' : st.started ? 'Travel to the next stop' : 'Board the flight') : mt.toGo + ' more coins to go';
+      out.jyGoOff = done; out.jyGoCls = 'btn jy-go' + (!done && mt.ready < 1 ? ' short' : ' pri'); out.jyGoText = done ? 'All done' : mt.ready > 0 ? (st.n === 0 ? 'Take your first flight (free)' : st.started ? 'Travel to the next stop' : 'Board the flight') : 'How to earn ' + mt.toGo.toLocaleString('en-US') + ' more coins';
+      out.jyEarnShow = !done && mt.ready > 0; out.jyEarnOpen = this.coinHelpOpen;
       out.jyTravel = this.jyTravel;
 
       // the tint follows the region on screen: the one being looked at, else the one you are in
@@ -5536,6 +5561,9 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         weekMin:weekMin, weekDays:weekDays,
         title:tt[0], subtitle:tt[1], subShow:!(['home', 'path', 'library', 'review', 'greview', 'testlobby', 'listen', 'speak', 'journey', 'words', 'gtrack', 'web', 'grammar', 'pinyin'].indexOf(S.screen) >= 0) || (prefGet('sv', {})[S.screen] || 0) < 3 || startShow,
         obIntroShow:obPh === 'intro' && !S.obBack, obBackShow:obPh === 'intro' && !!S.obBack, obFlyShow:obPh === 'fly' && S.screen === 'journey',
+        coinHelpShow:!!S.coinHelp && !S.jyPlay, coinNeed:S.coinHelp ? S.coinHelp.need : '', coinNeedShow:!!(S.coinHelp && S.coinHelp.need),
+        coinRows:COIN_WAYS().map(r => ({ zh:r[0], t:r[1], d:r[2], amt:r[3] })), coinHelpClose:this.coinHelpClose, coinHelpToday:this.coinHelpToday,
+        coinPrices:'Prices: your first flight is free, then ' + JY.LADDER.join(', ') + ' coins, and ' + JY.FLAT + ' for every stop after that. Coins you spend still count as earned, so your total in Account never goes down.',
         obGuideShow:obPh === 'guide' && !S.jyPlay && !(S.jyTrip && S.jyRv), obLevelShow:obPh === 'level', obMeShow:obPh === 'me',
         obIntroGo:this.obIntroGo, obFlySkip:this.obFlySkip, obBackOpen:this.obBackOpen, obBackClose:this.obBackClose, obBackGo:this.obBackGo, obBackFile:this.obBackFile, obFrOn:frOn,
         obLinkIn:S.frLinkIn, onObLink:(e) => this.setState({ frLinkIn:e.target.value }), obLinkText:S.frLinkBusy ? 'Signing in…' : 'Bring my progress here', obHasErr:!!S.frErr, obErrText:S.frErr,
