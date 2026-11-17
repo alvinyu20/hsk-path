@@ -125,12 +125,10 @@
  },
  {
   "p": "g3-3",
-  "t": "spot",
+  "t": "order",
   "zh": "如果你累了，就休息吧。",
   "en": "If you are tired, rest.",
-  "wrong": "如果因为你累了，就休息吧。",
-  "remove": "因为",
-  "explain": "如果 already gives the condition; do not add 因为."
+  "explain": "如果 gives the condition; 就 starts the result."
  },
  {
   "p": "g3-4",
@@ -707,12 +705,10 @@
  },
  {
   "p": "g3-14",
-  "t": "spot",
+  "t": "order",
   "zh": "先坐火车，再坐飞机。",
   "en": "First take the train, then the plane.",
-  "wrong": "先坐火车，再然后坐飞机。",
-  "remove": "然后",
-  "explain": "再 already means then; do not add 然后."
+  "explain": "先 comes first, then 再 for the next step."
  },
  {
   "p": "g3-15",
@@ -1536,12 +1532,10 @@
  },
  {
   "p": "g3-30",
-  "t": "spot",
+  "t": "order",
   "zh": "汉语不容易学。",
   "en": "Chinese is not easy to learn.",
-  "wrong": "汉语不很容易学。",
-  "remove": "很",
-  "explain": "In a negative, put 不 right before 容易; do not add 很."
+  "explain": "不 goes right before 容易."
  },
  {
   "p": "g3-31",
@@ -2235,9 +2229,9 @@
   "t": "spot",
   "zh": "她好像很高兴。",
   "en": "She seems very happy.",
-  "wrong": "她好像是很高兴。",
-  "remove": "是",
-  "explain": "好像 is followed by the description directly; do not add 是."
+  "wrong": "她好像了很高兴。",
+  "remove": "了",
+  "explain": "好像 is followed by the description directly; do not add 了."
  },
  {
   "p": "g3-44",
@@ -2285,9 +2279,9 @@
   "t": "spot",
   "zh": "大概有二十个人。",
   "en": "There are probably about 20 people.",
-  "wrong": "大概可能有二十个人。",
-  "remove": "可能",
-  "explain": "大概 already means probably; do not add 可能."
+  "wrong": "大概有二十个了人。",
+  "remove": "了",
+  "explain": "Do not put 了 between the measure word and the noun."
  },
  {
   "p": "g3-45",
@@ -2334,12 +2328,10 @@
  },
  {
   "p": "g3-45",
-  "t": "spot",
+  "t": "order",
   "zh": "他几乎忘了。",
   "en": "He almost forgot.",
-  "wrong": "他几乎差不多忘了。",
-  "remove": "差不多",
-  "explain": "几乎 already means almost; do not add 差不多."
+  "explain": "几乎 goes before the verb."
  },
  {
   "p": "g3-46",
@@ -2701,11 +2693,9 @@
  },
  {
   "p": "g3-52",
-  "t": "spot",
+  "t": "order",
   "zh": "我得去医院。",
   "en": "I have to go to the hospital.",
-  "wrong": "我得要去医院。",
-  "remove": "要",
-  "explain": "得 already means must; do not add 要."
+  "explain": "得 means must and goes before the verb."
  }
 ]

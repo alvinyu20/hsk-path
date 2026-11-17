@@ -1788,7 +1788,7 @@ window.HSK3_LISTEN = {
    ],
    "notes": [
     "好看 hǎokàn: 好 only dips before the falling 看.",
-    "看看 kàn kàn: the second 看 is light and short."
+    "看看 kànkan: the second 看 is light and short."
    ]
   },
   {
@@ -2063,7 +2063,7 @@ window.HSK3_LISTEN = {
   },
   {
    "zh": "我给你买了一把雨伞。",
-   "py": "Wǒ gěi nǐ mǎi le yì bǎ yǔ sǎn.",
+   "py": "Wǒ gěi nǐ mǎi le yì bǎ yǔsǎn.",
    "en": "I bought you an umbrella.",
    "words": [
     {
@@ -2102,19 +2102,14 @@ window.HSK3_LISTEN = {
      "key": "ba"
     },
     {
-     "zh": "雨",
-     "py": "yǔ",
-     "key": "yu"
-    },
-    {
-     "zh": "伞",
-     "py": "sǎn",
-     "key": "san"
+     "zh": "雨伞",
+     "py": "yǔsǎn",
+     "key": "yusan"
     }
    ],
    "notes": [
     "一把 yì bǎ: 一 is said yì before the dipping 把.",
-    "雨伞 yǔ sǎn: two third tones in a row, so 雨 rises (say yú sǎn)."
+    "雨伞 yǔsǎn: two third tones in a row, so 雨 rises (say yú sǎn)."
    ]
   },
   {

@@ -11,25 +11,6 @@ If a part has no problems, answer "No problems found".
 ---
 
 
-### g3-34  verb + 了 + duration  (lesson: How long: 学了两年 and 三年没见了)
-
-A142. **choose**. English: I slept for 8 hours.
-   - right: 我睡了八个小时。  (Wǒ shuì le bā ge xiǎoshí.)
-   - wrong: 我睡了小时八个。
-   - note shown to the learner: verb + 了 + duration.
-A143. **fill**. 我们玩___一个下午。  (Wǒmen wán le yí ge xiàwǔ.)
-   - English: We played for an afternoon.
-   - blank: 了
-   - note shown to the learner: verb + 了 + duration.
-A144. **build**. 她学了三年汉语。  (Tā xué le sān nián Hànyǔ.)
-   - English: She studied Chinese for 3 years.
-   - note shown to the learner: verb + 了 + duration + thing.
-A145. **spot**. sentence with the extra word: 他等了过两个小时。
-   - extra word: 过
-   - correct sentence: 他等了两个小时。  (Tā děng le liǎng ge xiǎoshí.)
-   - English: He waited for 2 hours.
-   - note shown to the learner: 了 marks the finished action; do not add 过 here.
-
 ### g3-35  duration + 没 + verb + 了  (lesson: How long: 学了两年 and 三年没见了)
 
 A146. **choose**. English: I have not taken a shower for 3 days.
@@ -199,11 +180,11 @@ A180. **fill**. 他___生病了。  (Tā hǎoxiàng shēngbìng le.)
 A181. **build**. 看来他不会来了。  (Kànlái tā bú huì lái le.)
    - English: It seems he will not come any more.
    - note shown to the learner: 看来 starts the guess.
-A182. **spot**. sentence with the extra word: 她好像是很高兴。
-   - extra word: 是
+A182. **spot**. sentence with the extra word: 她好像了很高兴。
+   - extra word: 了
    - correct sentence: 她好像很高兴。  (Tā hǎoxiàng hěn gāoxìng.)
    - English: She seems very happy.
-   - note shown to the learner: 好像 is followed by the description directly; do not add 是.
+   - note shown to the learner: 好像 is followed by the description directly; do not add 了.
 
 ### g3-44  大概, 其实 and 当然  (lesson: 好像, 看起来, 大概, 其实 and 当然)
 
@@ -218,11 +199,11 @@ A184. **fill**. 你___可以用我的手机。  (Nǐ dāngrán kěyǐ yòng wǒ 
 A185. **build**. 其实他不太忙。  (Qíshí tā bú tài máng.)
    - English: Actually he is not very busy.
    - note shown to the learner: 其实 starts the true fact.
-A186. **spot**. sentence with the extra word: 大概可能有二十个人。
-   - extra word: 可能
+A186. **spot**. sentence with the extra word: 大概有二十个了人。
+   - extra word: 了
    - correct sentence: 大概有二十个人。  (Dàgài yǒu èrshí ge rén.)
    - English: There are probably about 20 people.
-   - note shown to the learner: 大概 already means probably; do not add 可能.
+   - note shown to the learner: Do not put 了 between the measure word and the noun.
 
 ### g3-45  终于 and 几乎  (lesson: 终于, 几乎, 突然, 马上 and 一定)
 
@@ -237,11 +218,9 @@ A188. **fill**. 他___每天都迟到。  (Tā jīhū měitiān dōu chídào.)
 A189. **build**. 我终于买到了票。  (Wǒ zhōngyú mǎi dào le piào.)
    - English: I have finally bought a ticket.
    - note shown to the learner: 终于 comes before the verb.
-A190. **spot**. sentence with the extra word: 他几乎差不多忘了。
-   - extra word: 差不多
-   - correct sentence: 他几乎忘了。  (Tā jīhū wàng le.)
+A190. **build**. 他几乎忘了。  (Tā jīhū wàng le.)
    - English: He almost forgot.
-   - note shown to the learner: 几乎 already means almost; do not add 差不多.
+   - note shown to the learner: 几乎 goes before the verb.
 
 ### g3-46  突然, 马上 and 一定  (lesson: 终于, 几乎, 突然, 马上 and 一定)
 
@@ -374,11 +353,9 @@ A217. **fill**. 我们明天下午___。  (Wǒmen míngtiān xiàwǔ kāihuì.)
 A218. **build**. 你得早一点起床。  (Nǐ děi zǎo yì diǎn qǐchuáng.)
    - English: You must get up a bit earlier.
    - note shown to the learner: 得 can mean must.
-A219. **spot**. sentence with the extra word: 我得要去医院。
-   - extra word: 要
-   - correct sentence: 我得去医院。  (Wǒ děi qù yīyuàn.)
+A219. **build**. 我得去医院。  (Wǒ děi qù yīyuàn.)
    - English: I have to go to the hospital.
-   - note shown to the learner: 得 already means must; do not add 要.
+   - note shown to the learner: 得 means must and goes before the verb.
 
 
 ## B. "Write your own sentence" prompts
@@ -649,8 +626,8 @@ B58. English: He runs much faster than me.
 
 ### g3-30  难 and 容易 + verb
 
-B59. English: This book is easy to read.
-   - model answer: 这本书很容易看。
+B59. English: This book is easy to understand.
+   - model answer: 这本书很容易看懂。
    - required: 容易
 B60. English: This question is hard to understand.
    - model answer: 这个问题很难懂。

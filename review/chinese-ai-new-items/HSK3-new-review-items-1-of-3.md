@@ -79,11 +79,9 @@ A13. **fill**. 你没有时间___，就明天再来吧。  (Nǐ méiyǒu shíji�
 A14. **build**. 如果他不来，我就走。  (Rúguǒ tā bù lái, wǒ jiù zǒu.)
    - English: If he does not come, I will leave.
    - note shown to the learner: 如果 + situation, 就 + result.
-A15. **spot**. sentence with the extra word: 如果因为你累了，就休息吧。
-   - extra word: 因为
-   - correct sentence: 如果你累了，就休息吧。  (Rúguǒ nǐ lèi le, jiù xiūxi ba.)
+A15. **build**. 如果你累了，就休息吧。  (Rúguǒ nǐ lèi le, jiù xiūxi ba.)
    - English: If you are tired, rest.
-   - note shown to the learner: 如果 already gives the condition; do not add 因为.
+   - note shown to the learner: 如果 gives the condition; 就 starts the result.
 
 ### g3-4  不但…而且…  (lesson: 不但…而且…, 而且, 可是 and 然后)
 
@@ -295,11 +293,9 @@ A59. **fill**. 我先吃早饭，___去上班。  (Wǒ xiān chī zǎofàn, zài
 A60. **build**. 他先买票，再进去。  (Tā xiān mǎi piào, zài jìnqù.)
    - English: He buys a ticket first, then goes in.
    - note shown to the learner: 先 + first action, 再 + second action.
-A61. **spot**. sentence with the extra word: 先坐火车，再然后坐飞机。
-   - extra word: 然后
-   - correct sentence: 先坐火车，再坐飞机。  (Xiān zuò huǒchē, zài zuò fēijī.)
+A61. **build**. 先坐火车，再坐飞机。  (Xiān zuò huǒchē, zài zuò fēijī.)
    - English: First take the train, then the plane.
-   - note shown to the learner: 再 already means then; do not add 然后.
+   - note shown to the learner: 先 comes first, then 再 for the next step.
 
 ### g3-15  一边…一边…  (lesson: 先…再…, 一边…一边… and 又…又…)
 
@@ -607,11 +603,9 @@ A126. **fill**. 这个字很___读。  (Zhège zì hěn nán dú.)
 A127. **build**. 这个手机很容易用。  (Zhège shǒujī hěn róngyì yòng.)
    - English: This phone is easy to use.
    - note shown to the learner: 容易 + verb.
-A128. **spot**. sentence with the extra word: 汉语不很容易学。
-   - extra word: 很
-   - correct sentence: 汉语不容易学。  (Hànyǔ bù róngyì xué.)
+A128. **build**. 汉语不容易学。  (Hànyǔ bù róngyì xué.)
    - English: Chinese is not easy to learn.
-   - note shown to the learner: In a negative, put 不 right before 容易; do not add 很.
+   - note shown to the learner: 不 goes right before 容易.
 
 ### g3-31  verb + 得 / 不 + complement  (lesson: 听得懂 and 听不懂: can or cannot)
 
@@ -672,3 +666,22 @@ A141. **spot**. sentence with the extra word: 他向朋友给说了再见。
    - correct sentence: 他向朋友说了再见。  (Tā xiàng péngyou shuō le zàijiàn.)
    - English: He said goodbye to his friend.
    - note shown to the learner: 向 already points to the person; do not add 给.
+
+### g3-34  verb + 了 + duration  (lesson: How long: 学了两年 and 三年没见了)
+
+A142. **choose**. English: I slept for 8 hours.
+   - right: 我睡了八个小时。  (Wǒ shuì le bā ge xiǎoshí.)
+   - wrong: 我睡了小时八个。
+   - note shown to the learner: verb + 了 + duration.
+A143. **fill**. 我们玩___一个下午。  (Wǒmen wán le yí ge xiàwǔ.)
+   - English: We played for an afternoon.
+   - blank: 了
+   - note shown to the learner: verb + 了 + duration.
+A144. **build**. 她学了三年汉语。  (Tā xué le sān nián Hànyǔ.)
+   - English: She studied Chinese for 3 years.
+   - note shown to the learner: verb + 了 + duration + thing.
+A145. **spot**. sentence with the extra word: 他等了过两个小时。
+   - extra word: 过
+   - correct sentence: 他等了两个小时。  (Tā děng le liǎng ge xiǎoshí.)
+   - English: He waited for 2 hours.
+   - note shown to the learner: 了 marks the finished action; do not add 过 here.

@@ -46,10 +46,10 @@ C9. 我得回家了，明天见。  (Wǒ děi huí jiā le, míngtiān jiàn.)
    - English: I have to go home now; see you tomorrow.
    - note 1: 得 děi: said děi here (have to), a dip, not de or dé.
    - note 2: 明天 míngtiān: a rise, then a high tone.
-C10. 这个电影很好看，你应该去看看。  (Zhège diànyǐng hěn hǎokàn, nǐ yīnggāi qù kàn kàn.)
+C10. 这个电影很好看，你应该去看看。  (Zhège diànyǐng hěn hǎokàn, nǐ yīnggāi qù kànkan.)
    - English: This film is very good to watch; you should go and see it.
    - note 1: 好看 hǎokàn: 好 only dips before the falling 看.
-   - note 2: 看看 kàn kàn: the second 看 is light and short.
+   - note 2: 看看 kànkan: the second 看 is light and short.
 C11. 这个包太大了，你能帮我吗？  (Zhège bāo tài dà le, nǐ néng bāng wǒ ma?)
    - English: This bag is too big; can you help me?
    - note 1: 你能 nǐ néng: 你 only dips before the rising 能.
@@ -70,10 +70,10 @@ C15. 你想喝茶还是喝咖啡？  (Nǐ xiǎng hē chá háishi hē kāfēi?)
    - English: Do you want to drink tea or coffee?
    - note 1: 还是 háishi: 还 is said hái here (or), and 是 is light.
    - note 2: 想喝 xiǎng hē: 想 only dips before the high 喝.
-C16. 我给你买了一把雨伞。  (Wǒ gěi nǐ mǎi le yì bǎ yǔ sǎn.)
+C16. 我给你买了一把雨伞。  (Wǒ gěi nǐ mǎi le yì bǎ yǔsǎn.)
    - English: I bought you an umbrella.
    - note 1: 一把 yì bǎ: 一 is said yì before the dipping 把.
-   - note 2: 雨伞 yǔ sǎn: two third tones in a row, so 雨 rises (say yú sǎn).
+   - note 2: 雨伞 yǔsǎn: two third tones in a row, so 雨 rises (say yú sǎn).
 C17. 他一直在看书，一点也不累。  (Tā yìzhí zài kàn shū, yì diǎn yě bú lèi.)
    - English: He has been reading all along and is not tired at all.
    - note 1: 一直 yìzhí: 一 is said yì before the rising 直.
