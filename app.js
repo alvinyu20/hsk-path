@@ -5509,7 +5509,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
 
       return {
         focusCls:(S.exm && (S.exm.stage === 'run' || S.exm.stage === 'break') && S.screen === 'exam') || (S.screen === 'quiz' && !S.qdone) || (S.screen === 'plesson' && S.pl && !S.pl.done) ? 'focus' : '',
-        scrCls:'scr-' + S.screen + (S.screen === 'review' || S.screen === 'listen' || S.screen === 'speak' || S.screen === 'quiz' || S.screen === 'passage' || (S.screen === 'plesson' && S.pl && !S.pl.done) ? ' am' : '') + (S.screen === 'review' && S.rq.length && rAuto ? ' rq' : ''),   // am = app mode on a phone: these screens fill the screen and do not scroll as a page
+        scrCls:'scr-' + S.screen + (S.screen === 'review' || S.screen === 'listen' || S.screen === 'speak' || S.screen === 'quiz' || (S.screen === 'plesson' && S.pl && !S.pl.done) ? ' am' : '') + (S.screen === 'review' && S.rq.length && rAuto ? ' rq' : ''),   // am = app mode on a phone: these screens fill the screen and do not scroll as a page
         gHomeCls:gcls('home'), gLearnCls:gcls('learn'), gReviewCls:gcls('review'), gTalkCls:gcls('talk'), gJourneyCls:gcls('journey'),
         gHome:() => this.goGroup('home'), gLearn:() => this.goGroup('learn'), gReview:() => this.goGroup('review'), gTalk:() => this.goGroup('talk'), gJourney:() => this.goGroup('journey'),
         gLearnOpen:navGroup === 'learn', gReviewOpen:navGroup === 'review', gTalkOpen:navGroup === 'talk',
