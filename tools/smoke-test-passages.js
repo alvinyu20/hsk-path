@@ -5,6 +5,8 @@ const { chromium } = require('playwright');
 const root = path.join(__dirname, '..');
 const server = require('./test-static').server(root);
 let failures = 0;
+// on a phone the tab bar is fixed at the bottom: bring a button to the middle of the screen before tapping it (a person scrolls the same way)
+const tap = async (loc) => { await loc.evaluate(e => e.scrollIntoView({ block: 'center' })); await loc.click(); };
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };
 (async () => {
   await new Promise(r => server.listen(0, r));
@@ -37,37 +39,37 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     let t = await page.locator('.psg-card').innerText();
     check(/A family photo/.test(t) && /Listen first/.test(t) && await page.locator('.psg-play .btn.pri[disabled]').count() === 1, 'the passage opens on its scene, and Answer waits until it has been played' + tag);
     check(!/小明，这是你家人吗/.test(t), 'no text of the conversation is shown before the questions' + tag);
-    await page.locator('.psg-play .btn', { hasText: 'Play the conversation' }).click();
-    await page.locator('.psg-play .btn', { hasText: 'Answer the questions' }).click();
+    await tap(page.locator('.psg-play .btn', { hasText: 'Play the conversation' }));
+    await tap(page.locator('.psg-play .btn', { hasText: 'Answer the questions' }));
     // answer: right, wrong, right
     const plan = [true, false, true];
     for (let i = 0; i < plan.length; i++) {
       await page.waitForSelector('.psg-qzh');
       const k = await page.evaluate((want) => { const g = window.shanlu.state.psg; const o = g.ord[g.qi]; return want ? o.indexOf(0) : o.findIndex(x => x !== 0); }, plan[i]);
-      await page.locator('.psg-opts .opt').nth(k).click();
+      await tap(page.locator('.psg-opts .opt').nth(k));
       const a = await page.locator('.psg-ans').innerText();
       check(plan[i] ? /^Right/.test(a) : /^Not quite/.test(a), 'question ' + (i + 1) + ' is marked ' + (plan[i] ? 'right' : 'wrong') + ' and shows the line with the answer' + tag);
-      await page.locator('.psg-ansb .btn.pri').click();
+      await tap(page.locator('.psg-ansb .btn.pri'));
     }
     t = await page.locator('.psg-card').innerText();
     check(/2 of 3 right/.test(t) && /\+20 coins/.test(t), 'the result: 2 of 3 right, +20 coins the first time' + tag);
     check(await page.locator('.psg-tr li').count() === 5 && /小明，这是你家人吗/.test(t), 'the transcript shows every line after the questions' + tag);
-    await page.locator('.psg-tog .linkbtn', { hasText: 'Show English' }).click();
+    await tap(page.locator('.psg-tog .linkbtn', { hasText: 'Show English' }));
     check(/Is this your family/i.test(await page.locator('.psg-tr').innerText()), 'English can be shown under each line' + tag);
     const xp1 = await page.evaluate(() => window.shanlu.state.xp);
     check(xp1 === 20, 'coins were added (' + xp1 + ')' + tag);
     // again: all right, but only 2 a right answer now
-    await page.locator('.psg-ansb .btn', { hasText: 'Listen and answer again' }).click();
-    await page.locator('.psg-play .btn', { hasText: 'Play the conversation' }).click();
-    await page.locator('.psg-play .btn', { hasText: 'Answer the questions' }).click();
+    await tap(page.locator('.psg-ansb .btn', { hasText: 'Listen and answer again' }));
+    await tap(page.locator('.psg-play .btn', { hasText: 'Play the conversation' }));
+    await tap(page.locator('.psg-play .btn', { hasText: 'Answer the questions' }));
     for (let i = 0; i < 3; i++) {
       const k = await page.evaluate(() => { const g = window.shanlu.state.psg; return g.ord[g.qi].indexOf(0); });
-      await page.locator('.psg-opts .opt').nth(k).click(); await page.locator('.psg-ansb .btn.pri').click();
+      await tap(page.locator('.psg-opts .opt').nth(k)); await tap(page.locator('.psg-ansb .btn.pri'));
     }
     t = await page.locator('.psg-card').innerText();
     check(/3 of 3 right/.test(t) && /\+6 coins/.test(t), 'a second time pays 2 a right answer (no farming)' + tag);
     // the Path stop is done
-    await page.locator('.psg-ansb .btn', { hasText: 'Back to the Path' }).click();
+    await tap(page.locator('.psg-ansb .btn', { hasText: 'Back to the Path' }));
     const st = await page.evaluate(() => { const b = (window.shanlu.state); return true; });
     const pref = await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-person') || '{}').prefs['psg.p1-family']);
     check(pref && pref.v && pref.v.b === 3 && pref.v.n === 2, 'the best result is saved with the person (best 3, twice)' + tag);
