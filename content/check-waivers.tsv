@@ -140,3 +140,6 @@ passage:p5-volunteer:line2	meaning	去了 + plan ("once you get there") is a fut
 passage:p3-fever:line3	meaning	……就好了 means "will be fine then" (a new state in the future); 了 is not a past action	没事，我休息一下就好了。
 passage:p4-misunderstanding:q1	meaning	那天 ("that day") already puts it in the past; no 了 is needed with 在 (the style without 儿)	那天男的在哪里？
 passage:p4-online:line0	meaning	(是)……的 asks where something already done happened; it needs no 了 (the style without 儿)	你这件外套真好看，在哪里买的？
+word-extra:万一:1	meaning	万一天冷了: 了 marks the change (it turns cold), which English says with "gets cold"	多带一件衣服吧，万一天冷了。
+clip:29	pinyin	调小 is tiáo (to adjust the volume), not diào (to transfer); pypinyin reads diào	请把声音调小一点，孩子已经睡着了。
+word-extra:音量:1	pinyin	调小 is tiáo (to adjust the volume), not diào (to transfer); pypinyin reads diào	请把音量调小一点。

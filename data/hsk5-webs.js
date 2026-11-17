@@ -1481,8 +1481,8 @@ window.HSK5_WEBS = {
      ]
     },
     {
-     "en": "The media reported this matter, and many people know about it now.",
-     "zh": "这件事___报道了，很多人都知道了。",
+     "en": "After the media reported this matter, many people knew about it.",
+     "zh": "这件事___报道以后，很多人都知道了。",
      "ans": "媒体",
      "opts": [
       "媒体",
@@ -2153,7 +2153,7 @@ window.HSK5_WEBS = {
     },
     {
      "en": "The evening party is hosted by a famous person.",
-     "zh": "晚会由一位有名的人___。",
+     "zh": "晚会由一位名人___。",
      "ans": "主持",
      "opts": [
       "主持",
@@ -2456,7 +2456,7 @@ window.HSK5_WEBS = {
    "gaps": [
     {
      "en": "This factory makes cars and sells many every year.",
-     "zh": "这家工厂___汽车，每年卖出很多。",
+     "zh": "这家工厂___汽车，每年卖出很多辆。",
      "ans": "制造",
      "opts": [
       "制造",
@@ -2743,8 +2743,8 @@ window.HSK5_WEBS = {
    ],
    "gaps": [
     {
-     "en": "This community is very convenient, with supermarkets and a hospital nearby.",
-     "zh": "这个小区很___，附近有超市和医院。",
+     "en": "Life in this community is very convenient, with supermarkets and a hospital nearby.",
+     "zh": "在这个小区生活很___，附近有超市和医院。",
      "ans": "便利",
      "opts": [
       "便利",

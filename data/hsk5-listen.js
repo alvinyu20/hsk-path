@@ -1753,7 +1753,7 @@ window.HSK5_LISTEN = {
   },
   {
    "zh": "请把声音调小一点，孩子已经睡着了。",
-   "py": "Qǐng bǎ shēngyīn diào xiǎo yì diǎn, háizi yǐjīng shuìzháo le.",
+   "py": "Qǐng bǎ shēngyīn tiáo xiǎo yì diǎn, háizi yǐjīng shuìzháo le.",
    "en": "Please turn the volume down a little; the child has already fallen asleep.",
    "words": [
     {

@@ -1011,8 +1011,8 @@
      ]
     },
     {
-     "zh": "这件事___报道了，很多人都知道了。",
-     "en": "The media reported this matter, and many people know about it now.",
+     "zh": "这件事___报道以后，很多人都知道了。",
+     "en": "After the media reported this matter, many people knew about it.",
      "ans": "媒体",
      "opts": [
       "媒体",
@@ -1460,7 +1460,7 @@
      ]
     },
     {
-     "zh": "晚会由一位有名的人___。",
+     "zh": "晚会由一位名人___。",
      "en": "The evening party is hosted by a famous person.",
      "ans": "主持",
      "opts": [
@@ -1667,7 +1667,7 @@
    ],
    "gaps": [
     {
-     "zh": "这家工厂___汽车，每年卖出很多。",
+     "zh": "这家工厂___汽车，每年卖出很多辆。",
      "en": "This factory makes cars and sells many every year.",
      "ans": "制造",
      "opts": [
@@ -1871,8 +1871,8 @@
    ],
    "gaps": [
     {
-     "zh": "这个小区很___，附近有超市和医院。",
-     "en": "This community is very convenient, with supermarkets and a hospital nearby.",
+     "zh": "在这个小区生活很___，附近有超市和医院。",
+     "en": "Life in this community is very convenient, with supermarkets and a hospital nearby.",
      "ans": "便利",
      "opts": [
       "便利",

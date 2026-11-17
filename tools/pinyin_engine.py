@@ -255,6 +255,12 @@ class Engine:
                 first = i == 0 or parts[i - 1][0] != 'w'
                 # the word entry lists both readings ("guo / guò"); a sentence gets exactly one
                 parts[i] = ('w', '过', 'guò' if first or nxt in ('得', '马路', '生日', '日子') else 'guo')
+        # 调: diào (to transfer, the HSK 5 card); tiáo (to adjust) right before a size or level word: 调小 调大 调高 调低 调好
+        for i, p in enumerate(parts):
+            if p[0] == 'w' and p[1] == '调':
+                nxt = parts[i + 1][1] if i + 1 < len(parts) and parts[i + 1][0] == 'w' else ''
+                if nxt[:1] in ('小', '大', '高', '低', '好'):
+                    parts[i] = ('w', '调', 'tiáo')
         # 得: děi ("must") before a verb after a pronoun, a time word, an adverb like 也 还 都 就 先 or at the start of a clause;
         #     dé ("to get") in 得了 + a number (他考试得了一百分); de (the particle) after a verb (跑得很快), which is the default reading
         for i, p in enumerate(parts):
