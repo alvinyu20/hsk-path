@@ -191,6 +191,198 @@
     "可能 kěnéng: 可 is a third tone before a rising tone, so it only dips.",
     "打电话 dǎ diànhuà: 打 dips, then two falling tones."
    ]
+  },
+  {
+   "zh": "你的生日是几月几号？",
+   "en": "What month and day is your birthday?",
+   "notes": [
+    "生日 shēngrì: high and flat, then falling.",
+    "几月 jǐ yuè and 几号 jǐ hào: 几 only dips before a falling tone."
+   ]
+  },
+  {
+   "zh": "我弟弟比我小两岁。",
+   "en": "My younger brother is two years younger than me.",
+   "notes": [
+    "两岁 liǎng suì: with a measure word, \"two\" is 两 liǎng, not 二 èr.",
+    "弟弟 dìdi: the second syllable is light and short."
+   ]
+  },
+  {
+   "zh": "这件衣服很便宜，我想买两件。",
+   "en": "This piece of clothing is cheap; I want to buy two.",
+   "notes": [
+    "便宜 piányi: the last syllable is light and short.",
+    "两件 liǎng jiàn: 两 is a third tone before a fall, so it only dips."
+   ]
+  },
+  {
+   "zh": "你喜欢看书还是看电视？",
+   "en": "Do you like reading books or watching TV?",
+   "notes": [
+    "还是 háishi: 还 is said hái here (or), and 是 is light.",
+    "看书 kàn shū: a fall, then high and flat."
+   ]
+  },
+  {
+   "zh": "请问，我去火车站怎么走？",
+   "en": "Excuse me, how do I get to the train station?",
+   "notes": [
+    "怎么 zěnme: 么 is light and short.",
+    "火车站 huǒchēzhàn: a dip, a high tone, then a fall."
+   ]
+  },
+  {
+   "zh": "我昨天晚上睡得很晚。",
+   "en": "I went to bed very late last night.",
+   "notes": [
+    "晚上 wǎnshang: 上 is light and short.",
+    "睡得很晚 shuì de hěn wǎn: 得 is light; 很晚 are two third tones, so 很 rises: hén wǎn."
+   ]
+  },
+  {
+   "zh": "我有一个哥哥和两个姐姐。",
+   "en": "I have one older brother and two older sisters.",
+   "notes": [
+    "一个 yí ge: 一 is said yí before the fourth tone, and 个 is light.",
+    "两个 liǎng ge: 两 dips, and 个 is light."
+   ]
+  },
+  {
+   "zh": "他在商店买了一本书。",
+   "en": "He bought a book at the shop.",
+   "notes": [
+    "一本 yì běn: 一 is said yì before the third tone 本.",
+    "买了 mǎi le: 买 dips, and 了 is light."
+   ]
+  },
+  {
+   "zh": "外面下雨了，我们别出去了。",
+   "en": "It has started to rain outside, so let us not go out.",
+   "notes": [
+    "外面 wàimiàn: both syllables fall.",
+    "别出去了 bié chūqù le: 别 rises, 出去 is high and flat then falling, and 了 is light."
+   ]
+  },
+  {
+   "zh": "你们几点下课？我们四点下课。",
+   "en": "What time do you finish class? We finish class at four.",
+   "notes": [
+    "下课 xiàkè: both syllables fall.",
+    "几点 jǐ diǎn: two third tones, so 几 rises: jí diǎn."
+   ]
+  },
+  {
+   "zh": "我家在医院旁边，离学校不远。",
+   "en": "My home is next to the hospital, and not far from the school.",
+   "notes": [
+    "旁边 pángbiān: a rise, then high and flat.",
+    "不远 bù yuǎn: 不 stays bù before a third tone."
+   ]
+  },
+  {
+   "zh": "他唱歌唱得很好听。",
+   "en": "He sings very nicely.",
+   "notes": [
+    "唱歌 chàng gē: a fall, then high and flat.",
+    "好听 hǎotīng: 好 only dips before the high 听."
+   ]
+  },
+  {
+   "zh": "我想吃一个面包，再喝一杯牛奶。",
+   "en": "I want to eat a piece of bread and then drink a glass of milk.",
+   "notes": [
+    "一个 yí ge: 一 is said yí before the fourth tone, and 个 is light.",
+    "一杯 yì bēi: 一 is said yì before the high tone 杯."
+   ]
+  },
+  {
+   "zh": "你明天想做什么？",
+   "en": "What do you want to do tomorrow?",
+   "notes": [
+    "明天 míngtiān: a rise, then high and flat.",
+    "做什么 zuò shénme: a fall, a rise, then a light 么."
+   ]
+  },
+  {
+   "zh": "他跑得比我快，但是我游得比他快。",
+   "en": "He runs faster than me, but I swim faster than him.",
+   "notes": [
+    "比他 bǐ tā: 比 only dips before the high 他.",
+    "游得 yóu de: a rise, then a light de."
+   ]
+  },
+  {
+   "zh": "我已经给你打了三次电话。",
+   "en": "I have already called you three times.",
+   "notes": [
+    "给你 gěi nǐ: two third tones in a row, so 给 rises: géi nǐ.",
+    "三次 sān cì: high and flat, then falling."
+   ]
+  },
+  {
+   "zh": "你要多喝水，少喝咖啡。",
+   "en": "You need to drink more water and less coffee.",
+   "notes": [
+    "少喝 shǎo hē: 少 only dips before the high 喝.",
+    "咖啡 kāfēi: both syllables are high and flat."
+   ]
+  },
+  {
+   "zh": "我觉得今天的菜很好吃。",
+   "en": "I think the food today is delicious.",
+   "notes": [
+    "觉得 juéde: 觉 is said jué here (to feel), a rise, and 得 is light.",
+    "好吃 hǎochī: 好 only dips before the high 吃."
+   ]
+  },
+  {
+   "zh": "妈妈在做饭，爸爸在看电视。",
+   "en": "Mom is cooking and Dad is watching TV.",
+   "notes": [
+    "在 zài before a verb shows the action is going on: 在做饭, 在看电视.",
+    "电视 diànshì: both syllables fall."
+   ]
+  },
+  {
+   "zh": "我的手表慢了五分钟。",
+   "en": "My watch has gone five minutes slow.",
+   "notes": [
+    "手表 shǒubiǎo: two third tones, so 手 rises: shóubiǎo.",
+    "五分钟 wǔ fēnzhōng: 五 only dips before the high 分."
+   ]
+  },
+  {
+   "zh": "我们八点在学校门口见面。",
+   "en": "We will meet at the school gate at eight.",
+   "notes": [
+    "见面 jiàn miàn: both syllables fall.",
+    "学校 xuéxiào: a rise, then a fall."
+   ]
+  },
+  {
+   "zh": "你知道那个人是谁？",
+   "en": "Do you know who that person is?",
+   "notes": [
+    "知道 zhīdào: high and flat, then falling.",
+    "谁 shéi: a rise."
+   ]
+  },
+  {
+   "zh": "我的朋友在中国学习汉语。",
+   "en": "My friend studies Chinese in China.",
+   "notes": [
+    "中国 Zhōngguó: a high tone, then a rise.",
+    "汉语 hànyǔ: a fall, then a dip."
+   ]
+  },
+  {
+   "zh": "他的眼睛很大，个子也很高。",
+   "en": "His eyes are very big, and he is tall too.",
+   "notes": [
+    "眼睛 yǎnjing: the last syllable is light and short.",
+    "很大 hěn dà: 很 only dips before the falling 大."
+   ]
   }
  ],
  "tones": [
