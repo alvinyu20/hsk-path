@@ -11,28 +11,6 @@ If a part has no problems, answer "No problems found".
 ---
 
 
-### g4-32  至少, 左右 and 大约  (lesson: 至少, 左右, 大约, 尤其 and 其中: amounts and focus)
-
-A127. **choose**. English: This piece of clothing is about 500 yuan.
-   - right: 这件衣服大约五百块。  (Zhè jiàn yīfu dàyuē wǔ bǎi kuài.)
-   - wrong: 这件衣服五百块大约。
-   - note shown to the learner: 大约 comes before the number.
-A128. **fill**. 他三十岁___。  (Tā sānshí suì zuǒyòu.)
-   - English: He is about 30 years old.
-   - blank: 左右
-   - note shown to the learner: 左右 comes after the number.
-A129. **build**. 我至少睡八个小时。  (Wǒ zhìshǎo shuì bā ge xiǎoshí.)
-   - English: I sleep at least 8 hours.
-   - note shown to the learner: 至少 comes before the verb.
-A130. **build**. 教室里大约有二十个学生。  (Jiàoshì lǐ dàyuē yǒu èrshí ge xuésheng.)
-   - English: There are about 20 students in the classroom.
-   - note shown to the learner: 大约 comes before the number.
-A131. **spot**. sentence with the extra word: 他每天至少大约学习两个小时。
-   - extra word: 大约
-   - correct sentence: 他每天至少学习两个小时。  (Tā měitiān zhìshǎo xuéxí liǎng ge xiǎoshí.)
-   - English: He studies at least 2 hours every day.
-   - note shown to the learner: 至少 means at least; do not add 大约 (about).
-
 ### g4-33  尤其 and 其中  (lesson: 至少, 左右, 大约, 尤其 and 其中: amounts and focus)
 
 A132. **choose**. English: I like animals, especially dogs.
@@ -110,11 +88,9 @@ A147. **fill**. 已经十点了，她___没睡。  (Yǐjīng shí diǎn le, tā 
 A148. **build**. 他仍然住在这里。  (Tā réngrán zhù zài zhèlǐ.)
    - English: He still lives here.
    - note shown to the learner: 仍然 comes before the verb.
-A149. **spot**. sentence with the extra word: 我仍然还不明白。
-   - extra word: 还
-   - correct sentence: 我仍然不明白。  (Wǒ réngrán bù míngbai.)
+A149. **build**. 我仍然不明白。  (Wǒ réngrán bù míngbai.)
    - English: I still do not understand.
-   - note shown to the learner: 仍然 already means still; do not add 还.
+   - note shown to the learner: 仍然 goes before 不.
 
 ### g4-37  重新, 继续 and 最终  (lesson: 仍然, 重新, 继续 and 最终: still, again, go on, in the end)
 
@@ -431,11 +407,11 @@ A216. **build**. 有的学生走路，有的学生坐车。  (Yǒude xuésheng z
 A217. **build**. 有的菜很辣，有的菜不辣。  (Yǒude cài hěn là, yǒude cài bú là.)
    - English: Some dishes are spicy and some are not.
    - note shown to the learner: 有的 … 有的 … sets two groups side by side.
-A218. **spot**. sentence with the extra word: 有的人喜欢跑步，有的人是喜欢游泳。
-   - extra word: 是
+A218. **spot**. sentence with the extra word: 有的人喜欢跑步，有的人了喜欢游泳。
+   - extra word: 了
    - correct sentence: 有的人喜欢跑步，有的人喜欢游泳。  (Yǒude rén xǐhuan pǎobù, yǒude rén xǐhuan yóuyǒng.)
    - English: Some people like running and some like swimming.
-   - note shown to the learner: Do not add 是 before the verb here.
+   - note shown to the learner: Do not put 了 before the verb here.
 
 ### g4-53  互相 and 共同  (lesson: 有的…有的… and 互相 / 共同: some … others, each other)
 
@@ -708,3 +684,57 @@ B29. English: I have class today; besides, I also have to go to a meeting.
 B30. English: The room is big; in addition, it is clean.
    - model answer: 这个房间很大；此外，也很干净。
    - required: 另外|此外
+
+### g4-16  例如 and 比如
+
+B31. English: She likes fruit, for example bananas and watermelons.
+   - model answer: 她喜欢水果，例如香蕉和西瓜。
+   - required: 例如|比如
+B32. English: There are many places you can go, for example the park and the library.
+   - model answer: 有很多地方可以去，比如公园和图书馆。
+   - required: 例如|比如
+
+### g4-17  同时
+
+B33. English: I am watching TV, and at the same time I am eating.
+   - model answer: 我在看电视，同时也在吃饭。
+   - required: 同时
+B34. English: She is smart, and at the same time warm.
+   - model answer: 她很聪明，同时也很热情。
+   - required: 同时
+
+### g4-18  甚至
+
+B35. English: I even forgot his name.
+   - model answer: 我甚至忘了他的名字。
+   - required: 甚至
+B36. English: It is very hot; I do not even want to eat.
+   - model answer: 天气很热，我甚至不想吃饭。
+   - required: 甚至
+
+### g4-19  不得不 and 只好
+
+B37. English: The bus did not come, so we had to walk.
+   - model answer: 公共汽车没来，我们只好走路。
+   - required: 只好
+B38. English: He is ill, so he has to stay at home.
+   - model answer: 他生病了，不得不在家休息。
+   - required: 不得不
+
+### g4-20  来得及 and 来不及
+
+B39. English: I have no time to buy a ticket.
+   - model answer: 我来不及买票。
+   - required: 来不及
+B40. English: Run a little faster, and you will still be in time.
+   - model answer: 跑快一点，还来得及。
+   - required: 来得及
+
+### g4-21  赶快 and 赶紧
+
+B41. English: Hurry up and eat.
+   - model answer: 你赶快吃吧。
+   - required: 赶快|赶紧
+B42. English: She quickly said sorry.
+   - model answer: 她赶紧说对不起。
+   - required: 赶快|赶紧

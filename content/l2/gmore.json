@@ -969,12 +969,10 @@
  },
  {
   "p": "g2-18",
-  "t": "spot",
+  "t": "order",
   "zh": "虽然下雨，但是我去学校。",
   "en": "Although it is raining, I go to school.",
-  "wrong": "虽然因为下雨，但是我去学校。",
-  "remove": "因为",
-  "explain": "Do not use 因为 with 虽然."
+  "explain": "虽然 starts the first part and 但是 the second."
  },
  {
   "p": "g2-19",

@@ -50,11 +50,9 @@ A6. **fill**. 即使他不同意，我___要做。  (Jíshǐ tā bù tóngyì, w
 A7. **build**. 即使你不说，我也知道。  (Jíshǐ nǐ bù shuō, wǒ yě zhīdào.)
    - English: Even if you do not say it, I know.
    - note shown to the learner: 即使 comes first, 也 comes before the verb.
-A8. **spot**. sentence with the extra word: 即使因为很累，我也要工作。
-   - extra word: 因为
-   - correct sentence: 即使很累，我也要工作。  (Jíshǐ hěn lèi, wǒ yě yào gōngzuò.)
+A8. **build**. 即使很累，我也要工作。  (Jíshǐ hěn lèi, wǒ yě yào gōngzuò.)
    - English: Even if I am tired, I will work.
-   - note shown to the learner: 即使 already starts the situation; do not add 因为.
+   - note shown to the learner: 即使 starts the situation; 也 comes before the verb.
 
 ### g4-3  尽管…还是 / 但是…  (lesson: 即使…也… and 尽管…: even if, although)
 
@@ -69,11 +67,9 @@ A10. **fill**. 尽管他不喜欢，___吃了。  (Jǐnguǎn tā bù xǐhuan, h�
 A11. **build**. 尽管很贵，他还是买了。  (Jǐnguǎn hěn guì, tā háishi mǎi le.)
    - English: Although it was dear, he still bought it.
    - note shown to the learner: 尽管 first, 还是 before the verb.
-A12. **spot**. sentence with the extra word: 尽管因为下雨，我们还是去了。
-   - extra word: 因为
-   - correct sentence: 尽管下雨，我们还是去了。  (Jǐnguǎn xiàyǔ, wǒmen háishi qù le.)
+A12. **build**. 尽管下雨，我们还是去了。  (Jǐnguǎn xiàyǔ, wǒmen háishi qù le.)
    - English: Although it rained, we still went.
-   - note shown to the learner: 尽管 already gives the fact; do not add 因为.
+   - note shown to the learner: 尽管 gives the fact; 还是 starts the result.
 
 ### g4-4  不管 / 无论…都…  (lesson: 不管 / 无论…都…: no matter)
 
@@ -302,7 +298,7 @@ A60. **build**. 他会唱歌；另外，他也会跳舞。  (Tā huì chàng gē
    - note shown to the learner: 另外 adds another point.
 A61. **spot**. sentence with the extra word: 他喜欢看书；此外，但是他也喜欢画画。
    - extra word: 但是
-   - correct sentence: 他喜欢看书；此外，他也喜欢画画。  (Tā xǐhuan kàn shū; cǐwài, tā yě xǐhuan huà huà.)
+   - correct sentence: 他喜欢看书；此外，他也喜欢画画。  (Tā xǐhuan kàn shū; cǐwài, tā yě xǐhuan huàhua.)
    - English: He likes reading; in addition, he likes drawing too.
    - note shown to the learner: 此外 adds; it does not contrast, so do not add 但是.
 
@@ -319,11 +315,9 @@ A63. **fill**. 他会做很多菜，___鱼和鸡蛋。  (Tā huì zuò hěn duō
 A64. **build**. 我喜欢运动，比如跑步和游泳。  (Wǒ xǐhuan yùndòng, bǐrú pǎobù hé yóuyǒng.)
    - English: I like sports, for example running and swimming.
    - note shown to the learner: 比如 + examples.
-A65. **spot**. sentence with the extra word: 我喜欢动物，比如是猫和狗。
-   - extra word: 是
-   - correct sentence: 我喜欢动物，比如猫和狗。  (Wǒ xǐhuan dòngwù, bǐrú māo hé gǒu.)
+A65. **build**. 我喜欢动物，比如猫和狗。  (Wǒ xǐhuan dòngwù, bǐrú māo hé gǒu.)
    - English: I like animals, for example cats and dogs.
-   - note shown to the learner: The examples follow 比如 directly; do not add 是.
+   - note shown to the learner: The examples follow 比如 directly.
 
 ### g4-17  同时  (lesson: 首先…其次…, 另外, 例如 and 同时: listing and adding)
 
@@ -414,11 +408,9 @@ A83. **fill**. 天要下雨了，我们___回家吧。  (Tiān yào xiàyǔ le, 
 A84. **build**. 他赶快站起来了。  (Tā gǎnkuài zhàn qǐlái le.)
    - English: He quickly stood up.
    - note shown to the learner: 赶快 comes before the verb.
-A85. **spot**. sentence with the extra word: 你赶紧快去吧。
-   - extra word: 快
-   - correct sentence: 你赶紧去吧。  (Nǐ gǎnjǐn qù ba.)
+A85. **build**. 你赶紧去吧。  (Nǐ gǎnjǐn qù ba.)
    - English: You had better go right away.
-   - note shown to the learner: 赶紧 already means quickly; do not add 快.
+   - note shown to the learner: 赶紧 goes before the verb.
 
 ### g4-22  难道…吗  (lesson: 难道…吗, 到底 and 究竟: asking with force)
 
@@ -588,11 +580,9 @@ A120. **fill**. 我___看一看电视。  (Wǒ ǒu'ěr kàn yí kàn diànshì.)
 A121. **build**. 他不断地问问题。  (Tā búduàn de wèn wèntí.)
    - English: He keeps asking questions.
    - note shown to the learner: 不断地 comes before the verb.
-A122. **spot**. sentence with the extra word: 她老是一直忘记带钥匙。
-   - extra word: 一直
-   - correct sentence: 她老是忘记带钥匙。  (Tā lǎoshì wàngjì dài yàoshi.)
+A122. **build**. 她老是忘记带钥匙。  (Tā lǎoshì wàngjì dài yàoshi.)
    - English: She is always forgetting to bring her key.
-   - note shown to the learner: 老是 already means always; do not add 一直.
+   - note shown to the learner: 老是 goes before the verb.
 
 ### g4-31  差点儿  (lesson: 偶尔, 不断, 老是 and 差点儿: how often, and nearly)
 
@@ -612,3 +602,25 @@ A126. **spot**. sentence with the extra word: 他差点儿几乎睡着了。
    - correct sentence: 他差点儿睡着了。  (Tā chàdiǎnr shuìzháo le.)
    - English: He almost fell asleep.
    - note shown to the learner: 差点儿 already means almost; do not add 几乎.
+
+### g4-32  至少, 左右 and 大约  (lesson: 至少, 左右, 大约, 尤其 and 其中: amounts and focus)
+
+A127. **choose**. English: This piece of clothing is about 500 yuan.
+   - right: 这件衣服大约五百块。  (Zhè jiàn yīfu dàyuē wǔ bǎi kuài.)
+   - wrong: 这件衣服五百块大约。
+   - note shown to the learner: 大约 comes before the number.
+A128. **fill**. 他三十岁___。  (Tā sānshí suì zuǒyòu.)
+   - English: He is about 30 years old.
+   - blank: 左右
+   - note shown to the learner: 左右 comes after the number.
+A129. **build**. 我至少睡八个小时。  (Wǒ zhìshǎo shuì bā ge xiǎoshí.)
+   - English: I sleep at least 8 hours.
+   - note shown to the learner: 至少 comes before the verb.
+A130. **build**. 教室里大约有二十个学生。  (Jiàoshì lǐ dàyuē yǒu èrshí ge xuésheng.)
+   - English: There are about 20 students in the classroom.
+   - note shown to the learner: 大约 comes before the number.
+A131. **spot**. sentence with the extra word: 他每天至少大约学习两个小时。
+   - extra word: 大约
+   - correct sentence: 他每天至少学习两个小时。  (Tā měitiān zhìshǎo xuéxí liǎng ge xiǎoshí.)
+   - English: He studies at least 2 hours every day.
+   - note shown to the learner: 至少 means at least; do not add 大约 (about).

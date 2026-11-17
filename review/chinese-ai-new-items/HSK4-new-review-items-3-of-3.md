@@ -11,60 +11,6 @@ If a part has no problems, answer "No problems found".
 ---
 
 
-### g4-16  例如 and 比如
-
-B31. English: She likes fruit, for example bananas and watermelons.
-   - model answer: 她喜欢水果，例如香蕉和西瓜。
-   - required: 例如|比如
-B32. English: There are many places you can go, for example the park and the library.
-   - model answer: 有很多地方可以去，比如公园和图书馆。
-   - required: 例如|比如
-
-### g4-17  同时
-
-B33. English: I am watching TV and eating at the same time.
-   - model answer: 我同时看电视和吃饭。
-   - required: 同时
-B34. English: She is smart, and at the same time warm.
-   - model answer: 她很聪明，同时也很热情。
-   - required: 同时
-
-### g4-18  甚至
-
-B35. English: I even forgot his name.
-   - model answer: 我甚至忘了他的名字。
-   - required: 甚至
-B36. English: It is very hot; I do not even want to eat.
-   - model answer: 天气很热，我甚至不想吃饭。
-   - required: 甚至
-
-### g4-19  不得不 and 只好
-
-B37. English: The bus did not come, so we had to walk.
-   - model answer: 公共汽车没来，我们只好走路。
-   - required: 只好
-B38. English: He is ill, so he has to stay at home.
-   - model answer: 他生病了，不得不在家休息。
-   - required: 不得不
-
-### g4-20  来得及 and 来不及
-
-B39. English: I have no time to buy a ticket.
-   - model answer: 我来不及买票。
-   - required: 来不及
-B40. English: Run a little faster, and you will still be in time.
-   - model answer: 跑快一点，还来得及。
-   - required: 来得及
-
-### g4-21  赶快 and 赶紧
-
-B41. English: Hurry up and eat.
-   - model answer: 你赶快吃吧。
-   - required: 赶快|赶紧
-B42. English: She quickly said sorry.
-   - model answer: 她赶紧说对不起。
-   - required: 赶快|赶紧
-
 ### g4-22  难道…吗
 
 B43. English: Do you really not know him?
@@ -197,7 +143,7 @@ B71. English: He still does not know.
    - model answer: 他仍然不知道。
    - required: 仍然|仍
 B72. English: The shop is still open.
-   - model answer: 商店仍然开门。
+   - model answer: 商店仍然开着门。
    - required: 仍然|仍
 
 ### g4-37  重新, 继续 and 最终
@@ -253,14 +199,14 @@ B83. English: He is even busier than before.
 B84. English: For old people, this phone is too small.
    - model answer: 对老人来说，这个手机太小了。
    - required: 来说|对于
-B85. English: As for this matter, I do not know.
-   - model answer: 对于这件事，我不知道。
+B85. English: As for this matter, I am not very clear.
+   - model answer: 对于这件事，我不太清楚。
    - required: 对于|来说
 
 ### g4-43  通过
 
-B86. English: I improve my Chinese by watching TV.
-   - model answer: 我通过看电视提高汉语。
+B86. English: I raise my level of Chinese by watching TV.
+   - model answer: 我通过看电视提高汉语水平。
    - required: 通过
 B87. English: She passed the test.
    - model answer: 她通过了考试。
@@ -331,8 +277,8 @@ B101. English: Everything here is good.
 
 ### g4-51  许多, 大量, 部分, 全部 and 整个
 
-B102. English: I watched TV the whole afternoon.
-   - model answer: 我看了整个下午的电视。
+B102. English: I slept the whole afternoon.
+   - model answer: 我睡了整个下午。
    - required: 整
 B103. English: There are many cars on the road.
    - model answer: 路上有许多车。

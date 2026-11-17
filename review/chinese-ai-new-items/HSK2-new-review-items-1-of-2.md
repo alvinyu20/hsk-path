@@ -366,11 +366,9 @@ A73. **fill**. 虽然他很忙，___他来了。  (Suīrán tā hěn máng, dàn
 A74. **build**. 虽然菜很贵，但是很好吃。  (Suīrán cài hěn guì, dànshì hěn hǎochī.)
    - English: Although the food is expensive, it is delicious.
    - note shown to the learner: 虽然 … 但是 ….
-A75. **spot**. sentence with the extra word: 虽然因为下雨，但是我去学校。
-   - extra word: 因为
-   - correct sentence: 虽然下雨，但是我去学校。  (Suīrán xiàyǔ, dànshì wǒ qù xuéxiào.)
+A75. **build**. 虽然下雨，但是我去学校。  (Suīrán xiàyǔ, dànshì wǒ qù xuéxiào.)
    - English: Although it is raining, I go to school.
-   - note shown to the learner: Do not use 因为 with 虽然.
+   - note shown to the learner: 虽然 starts the first part and 但是 the second.
 
 ### g2-19  还是 (A or B?)  (lesson: 还是: A or B?)
 

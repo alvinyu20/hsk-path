@@ -66,12 +66,10 @@
  },
  {
   "p": "g4-2",
-  "t": "spot",
+  "t": "order",
   "zh": "即使很累，我也要工作。",
   "en": "Even if I am tired, I will work.",
-  "wrong": "即使因为很累，我也要工作。",
-  "remove": "因为",
-  "explain": "即使 already starts the situation; do not add 因为."
+  "explain": "即使 starts the situation; 也 comes before the verb."
  },
  {
   "p": "g4-3",
@@ -118,12 +116,10 @@
  },
  {
   "p": "g4-3",
-  "t": "spot",
+  "t": "order",
   "zh": "尽管下雨，我们还是去了。",
   "en": "Although it rained, we still went.",
-  "wrong": "尽管因为下雨，我们还是去了。",
-  "remove": "因为",
-  "explain": "尽管 already gives the fact; do not add 因为."
+  "explain": "尽管 gives the fact; 还是 starts the result."
  },
  {
   "p": "g4-4",
@@ -735,12 +731,10 @@
  },
  {
   "p": "g4-16",
-  "t": "spot",
+  "t": "order",
   "zh": "我喜欢动物，比如猫和狗。",
   "en": "I like animals, for example cats and dogs.",
-  "wrong": "我喜欢动物，比如是猫和狗。",
-  "remove": "是",
-  "explain": "The examples follow 比如 directly; do not add 是."
+  "explain": "The examples follow 比如 directly."
  },
  {
   "p": "g4-17",
@@ -1008,12 +1002,10 @@
  },
  {
   "p": "g4-21",
-  "t": "spot",
+  "t": "order",
   "zh": "你赶紧去吧。",
   "en": "You had better go right away.",
-  "wrong": "你赶紧快去吧。",
-  "remove": "快",
-  "explain": "赶紧 already means quickly; do not add 快."
+  "explain": "赶紧 goes before the verb."
  },
  {
   "p": "g4-22",
@@ -1432,12 +1424,10 @@
  },
  {
   "p": "g4-30",
-  "t": "spot",
+  "t": "order",
   "zh": "她老是忘记带钥匙。",
   "en": "She is always forgetting to bring her key.",
-  "wrong": "她老是一直忘记带钥匙。",
-  "remove": "一直",
-  "explain": "老是 already means always; do not add 一直."
+  "explain": "老是 goes before the verb."
  },
  {
   "p": "g4-31",
@@ -1774,12 +1764,10 @@
  },
  {
   "p": "g4-36",
-  "t": "spot",
+  "t": "order",
   "zh": "我仍然不明白。",
   "en": "I still do not understand.",
-  "wrong": "我仍然还不明白。",
-  "remove": "还",
-  "explain": "仍然 already means still; do not add 还."
+  "explain": "仍然 goes before 不."
  },
  {
   "p": "g4-37",
@@ -2653,9 +2641,9 @@
   "t": "spot",
   "zh": "有的人喜欢跑步，有的人喜欢游泳。",
   "en": "Some people like running and some like swimming.",
-  "wrong": "有的人喜欢跑步，有的人是喜欢游泳。",
-  "remove": "是",
-  "explain": "Do not add 是 before the verb here."
+  "wrong": "有的人喜欢跑步，有的人了喜欢游泳。",
+  "remove": "了",
+  "explain": "Do not put 了 before the verb here."
  },
  {
   "p": "g4-53",
