@@ -1,0 +1,22 @@
+# spot the extra word: second words that were looked at and do NOT give a correct sentence when removed (tools/check-spot-alternatives.py)
+# wrong sentence <TAB> word <TAB> why
+他很太高兴。	很	without 很: 他太高兴 needs 了 (他太高兴了) to stand alone
+她对我很太好。	很	without 很: 她对我太好 needs 了 (她对我太好了) to stand alone
+妈妈去超市来买菜。	去	without it: 妈妈超市来买菜。 (not a correct sentence)
+他坐着了看书。	着	without it: 他坐了看书。 (not a correct sentence)
+谁都也想去。	都	without it: 谁也想去。 (not a correct sentence)
+这个菜很挺好吃的。	挺	without it: 这个菜很好吃的。 (not a correct sentence)
+这个房间很挺大的。	挺	without it: 这个房间很大的。 (not a correct sentence)
+他比我很更高。	更	without it: 他比我很高。 (not a correct sentence)
+由于因为他很忙因此没有来。	由于	without it: 因为他很忙因此没有来。 (not a correct sentence)
+由于因为他很忙因此没有来。	因此	without it: 由于因为他很忙没有来。 (not a correct sentence)
+大人也好还是孩子也好都喜欢他。	也	without it: 大人好还是孩子也好都喜欢他。 (not a correct sentence)
+大人也好还是孩子也好都喜欢他。	也	without it: 大人也好还是孩子好都喜欢他。 (not a correct sentence)
+大人也好还是孩子也好都喜欢他。	都	without it: 大人也好还是孩子也好喜欢他。 (not a correct sentence)
+天不但没热反而很更冷了。	更	without it: 天不但没热反而很冷了。 (not a correct sentence)
+今天简直很太冷了。	太	without it: 今天简直很冷了。 (not a correct sentence)
+这里简直非常太安静了。	太	without it: 这里简直非常安静了。 (not a correct sentence)
+她再也又不哭了。	再	without it: 她也又不哭了。 (not a correct sentence)
+她再也又不哭了。	也	without it: 她再又不哭了。 (not a correct sentence)
+吃也不是不吃也都不是。	也	without it: 吃不是不吃也都不是。 (not a correct sentence)
+吃也不是不吃也都不是。	也	without it: 吃也不是不吃都不是。 (not a correct sentence)

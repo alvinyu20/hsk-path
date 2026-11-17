@@ -249,7 +249,10 @@
   "en": "I like drinking tea the most.",
   "wrong": "我最很爱喝茶。",
   "remove": "很",
-  "explain": "最 already means most; do not add 很."
+  "explain": "最 already means most; do not add 很.",
+  "also": [
+   "最"
+  ]
  },
  {
   "p": "g2-5",
@@ -322,7 +325,10 @@
   "en": "It is so hot today.",
   "wrong": "今天很这么热。",
   "remove": "很",
-  "explain": "这么 already means so; do not add 很."
+  "explain": "这么 already means so; do not add 很.",
+  "also": [
+   "这么"
+  ]
  },
  {
   "p": "g2-6",

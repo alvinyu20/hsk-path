@@ -81,8 +81,16 @@ def main():
             if q['remove'] not in wtoks or q['wrong'].count(q['remove']) != 1:
                 die('%s: %r is not a single word of %r (words: %s)' % (where, q['remove'], q['wrong'], '/'.join(wtoks)))
             punct = q['wrong'][-1] if q['wrong'][-1] in P_MAP else ''
+            # also: other words whose removal ALSO leaves a correct sentence (很非常快: either 很 or 非常 can go); tapping one is marked right
+            also = []
+            for w in q.get('also', []):
+                if w not in wtoks or q['wrong'].count(w) != 1 or w == q['remove']:
+                    die('%s: the "also" word %r is not a single word of %r (words: %s)' % (where, w, q['wrong'], '/'.join(wtoks)))
+                also.append(wtoks.index(w))
             out.update(type='spot', kicker='Spot the mistake', prompt='Tap the word that does not belong', tokens=wtoks, punct=punct,
                        spot=wtoks.index(q['remove']), reveal=q['zh'], levelOnly=[q['wrong']])
+            if also:
+                out['also'] = also
         elif t == 'mc':
             opts = q['options']
             if q['zh'] not in opts or opts[q['correct']] != q['zh']:

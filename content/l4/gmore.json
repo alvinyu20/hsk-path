@@ -34,7 +34,10 @@
   "en": "He does not even know one character.",
   "wrong": "他连一个字都也不认识。",
   "remove": "也",
-  "explain": "Use 都 or 也 after the thing, not both."
+  "explain": "Use 都 or 也 after the thing, not both.",
+  "also": [
+   "都"
+  ]
  },
  {
   "p": "g4-2",
@@ -401,7 +404,10 @@
   "en": "He was tired, so he went to sleep.",
   "wrong": "他很累，所以于是睡觉了。",
   "remove": "所以",
-  "explain": "于是 already means so; do not add 所以."
+  "explain": "于是 already means so; do not add 所以.",
+  "also": [
+   "于是"
+  ]
  },
  {
   "p": "g4-10",
@@ -1235,7 +1241,10 @@
   "en": "He is very happy.",
   "wrong": "他十分非常高兴。",
   "remove": "非常",
-  "explain": "十分 already means very; do not add 非常."
+  "explain": "十分 already means very; do not add 非常.",
+  "also": [
+   "十分"
+  ]
  },
  {
   "p": "g4-27",
@@ -1665,7 +1674,10 @@
   "en": "He definitely does not know.",
   "wrong": "他肯定也许不知道。",
   "remove": "也许",
-  "explain": "肯定 and 也许 have opposite strength; do not use both."
+  "explain": "肯定 and 也许 have opposite strength; do not use both.",
+  "also": [
+   "肯定"
+  ]
  },
  {
   "p": "g4-35",
@@ -2800,7 +2812,10 @@
   "en": "He does homework first, then watches TV.",
   "wrong": "他先写作业，接着然后看电视。",
   "remove": "然后",
-  "explain": "接着 already means then; do not add 然后."
+  "explain": "接着 already means then; do not add 然后.",
+  "also": [
+   "接着"
+  ]
  },
  {
   "p": "g4-56",

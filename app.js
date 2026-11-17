@@ -889,7 +889,7 @@
       const base = { kicker:q.kicker, prompt:q.prompt, reveal:q.reveal, explain:q.explain, py:q.sentence && q.sentence.py ? q.sentence.py : '' };
       if (q.type === 'order') return orderQ(q.toks, base);
       if (q.type === 'cloze') return Object.assign(base, { type:'cloze', big:q.big, sub:q.sub, placeholder:q.placeholder, accepts:q.accepts });
-      if (q.type === 'spot') return Object.assign(base, { type:'spot', tokens:q.tokens, punct:q.punct, spot:q.spot });
+      if (q.type === 'spot') return Object.assign(base, { type:'spot', tokens:q.tokens, punct:q.punct, spot:q.spot, also:q.also || [] });
       const opts = shuffle(q.options.map(o => o.label));
       return Object.assign(base, { type:'mc', options:opts.map((label, i) => ({ id:ORDER_IDS[i], label })), correct:ORDER_IDS[opts.indexOf(q.reveal)] });
     }
@@ -3010,7 +3010,10 @@
       if (q.type === 'type' || q.type === 'cloze') { const r = checkTyped(q, S.qtyped); ok = !!r.ok; grade = ok ? 'good' : (r.grade || 'again'); feed = r.note || ''; }
       else if (q.type === 'listen' || q.type === 'mc') ok = S.qchoice === q.correct;
       else if (q.type === 'order') ok = S.qpicked.map(id => q.tiles[id]).join('|') === q.toks.join('|');
-      else if (q.type === 'spot') ok = S.qchoice === q.spot;
+      else if (q.type === 'spot') {
+        ok = S.qchoice === q.spot || (q.also || []).indexOf(S.qchoice) >= 0;
+        if (ok && S.qchoice !== q.spot) feed = 'Also right: the sentence works without ' + q.tokens[S.qchoice] + ' too. The model answer leaves out ' + q.tokens[q.spot] + '.';   // a second word that can go
+      }
       if (q.rv) { this.rAnswer(q, ok, grade, feed); return; }   // a Review card: the answer goes to the word's memory and the review log, not to a test score
       if (q.pt) this.gptRecord(q.pt, 'r', ok, grade, q.gpool);   // a grammar-review card: the point's own memory moves on
       const gain = ok ? 10 + Math.min(S.qcombo, 4) * 2 : 0;
@@ -5145,7 +5148,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const bankTiles = (isOrder ? q0.tiles : []).map((label, id) => ({ label, cls:S.qpicked.indexOf(id) >= 0 ? 'ghost' : '', fn:() => this.pick(id) }));
       const spotTokens = (isSpot ? q0.tokens : []).map((label, id) => {
         let cls = '';
-        if (S.qchecked) { if (id === q0.spot) cls = 'right'; else if (id === S.qchoice) cls = 'wrong'; }
+        if (S.qchecked) { if (id === q0.spot || (id === S.qchoice && (q0.also || []).indexOf(id) >= 0)) cls = 'right'; else if (id === S.qchoice) cls = 'wrong'; }
         else if (id === S.qchoice) cls = 'sel';
         return { label, isTok:true, isPunct:false, cls, pick:() => { if (!this.state.qchecked) this.setState({ qchoice:id }); } };
       }).concat(isSpot && q0.punct ? [{ label:q0.punct, isTok:false, isPunct:true, cls:'', pick:() => {} }] : []);

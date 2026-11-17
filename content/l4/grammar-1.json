@@ -76,7 +76,7 @@
     "zh": "他连饭也不吃。",
     "en": "He does not even eat.",
     "wrong": "他连饭也都不吃。",
-    "remove": "都",
+    "remove": "都", "also": ["也"],
     "explain": "After 连 use 也 or 都, not both."
    }
   ]
@@ -566,7 +566,7 @@
     "zh": "这个菜既好吃又便宜。",
     "en": "This dish is both tasty and cheap.",
     "wrong": "这个菜既好吃又也便宜。",
-    "remove": "也",
+    "remove": "也", "also": ["又"],
     "explain": "又 follows 既; do not add 也."
    }
   ]
@@ -731,7 +731,7 @@
     "zh": "来不及了，我们赶紧走吧。",
     "en": "It is already too late; let us hurry.",
     "wrong": "来不及了，我们赶紧快走吧。",
-    "remove": "快",
+    "remove": "快", "also": ["赶紧"],
     "explain": "Do not use 赶紧 and 快 together."
    }
   ]

@@ -107,7 +107,7 @@
       {"t": "order", "zh": "这次会议由经理主持。", "en": "This meeting is chaired by the manager.", "explain": "由 + the person in charge."},
       {"t": "cloze", "zh": "他所说的都是真的。", "en": "Everything he says is true.", "blank": "所", "explain": "所 + verb + 的 = what someone …."},
       {"t": "mc", "prompt": "Which sentence says: He will take care of this?", "options": ["这件事由他来做。", "这件事他由来做。"], "correct": 0, "zh": "这件事由他来做。", "en": "He will take care of this.", "explain": "由 comes before the person."},
-      {"t": "spot", "zh": "请将书放在桌子上。", "en": "Please put the book on the table.", "wrong": "请将把书放在桌子上。", "remove": "把", "explain": "将 and 把 do not go together."}
+      {"t": "spot", "zh": "请将书放在桌子上。", "en": "Please put the book on the table.", "wrong": "请将把书放在桌子上。", "remove": "把", "also": ["将"], "explain": "将 and 把 do not go together."}
     ]
   },
   {

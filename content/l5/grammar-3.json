@@ -53,7 +53,7 @@
       {"t": "order", "zh": "请立即回家。", "en": "Please go home at once.", "explain": "立即 goes before the verb."},
       {"t": "cloze", "zh": "他时常去公园跑步。", "en": "He often goes to the park to run.", "blank": "时常", "explain": "时常 = often."},
       {"t": "mc", "prompt": "Which sentence says: We must pay attention to safety at all times?", "options": ["我们要时刻注意安全。", "我们要注意安全时刻。"], "correct": 0, "zh": "我们要时刻注意安全。", "en": "We must pay attention to safety at all times.", "explain": "时刻 goes before the verb."},
-      {"t": "spot", "zh": "听到电话响，他立刻跑了过去。", "en": "Hearing the phone ring, he ran over at once.", "wrong": "听到电话响，他立刻马上跑了过去。", "remove": "马上", "explain": "立刻 and 马上 mean the same; use one."}
+      {"t": "spot", "zh": "听到电话响，他立刻跑了过去。", "en": "Hearing the phone ring, he ran over at once.", "wrong": "听到电话响，他立刻马上跑了过去。", "remove": "马上", "also": ["立刻"], "explain": "立刻 and 马上 mean the same; use one."}
     ]
   },
   {

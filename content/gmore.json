@@ -225,7 +225,10 @@
   "en": "This bun is a bit expensive.",
   "wrong": "这个包子很有点儿贵。",
   "remove": "很",
-  "explain": "Do not use 很 and 有点儿 together."
+  "explain": "Do not use 很 and 有点儿 together.",
+  "also": [
+   "有点儿"
+  ]
  },
  {
   "p": "g1-ma",
@@ -1174,7 +1177,10 @@
   "en": "My younger brother can write.",
   "wrong": "弟弟会能写字。",
   "remove": "能",
-  "explain": "Do not use 会 and 能 together."
+  "explain": "Do not use 会 and 能 together.",
+  "also": [
+   "会"
+  ]
  },
  {
   "p": "g1-neng",
@@ -1239,7 +1245,10 @@
   "en": "I cannot drink tea.",
   "wrong": "我不能会喝茶。",
   "remove": "会",
-  "explain": "Do not use 能 and 会 together."
+  "explain": "Do not use 能 and 会 together.",
+  "also": [
+   "能"
+  ]
  },
  {
   "p": "g1-keyi",
@@ -1304,7 +1313,10 @@
   "en": "You may go home.",
   "wrong": "你可以会回家。",
   "remove": "会",
-  "explain": "Do not use 可以 and 会 together."
+  "explain": "Do not use 可以 and 会 together.",
+  "also": [
+   "可以"
+  ]
  },
  {
   "p": "g1-dou",
@@ -1369,7 +1381,10 @@
   "en": "They are all at home.",
   "wrong": "她们都也在家。",
   "remove": "也",
-  "explain": "Use 都 here; do not add 也."
+  "explain": "Use 都 here; do not add 也.",
+  "also": [
+   "都"
+  ]
  },
  {
   "p": "g1-ye",
@@ -1414,7 +1429,10 @@
   "en": "My younger brother is a student too.",
   "wrong": "弟弟还也是学生。",
   "remove": "还",
-  "explain": "Use 也 for too; do not add 还."
+  "explain": "Use 也 for too; do not add 还.",
+  "also": [
+   "也"
+  ]
  },
  {
   "p": "g1-hai",
@@ -1479,7 +1497,10 @@
   "en": "Mom is still cooking.",
   "wrong": "妈妈还也在做饭。",
   "remove": "也",
-  "explain": "Use 还 for still; do not add 也."
+  "explain": "Use 还 for still; do not add 也.",
+  "also": [
+   "还"
+  ]
  },
  {
   "p": "g1-anota",
@@ -1792,7 +1813,10 @@
   "en": "You and I are both students.",
   "wrong": "我和你都也是学生。",
   "remove": "也",
-  "explain": "Use 都 for both; do not add 也."
+  "explain": "Use 都 for both; do not add 也.",
+  "also": [
+   "都"
+  ]
  },
  {
   "p": "g1-dui",

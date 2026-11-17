@@ -1617,7 +1617,10 @@
   "en": "He is so happy.",
   "wrong": "他如此很高兴。",
   "remove": "很",
-  "explain": "如此 already means so; do not add 很."
+  "explain": "如此 already means so; do not add 很.",
+  "also": [
+   "如此"
+  ]
  },
  {
   "p": "g5-30",

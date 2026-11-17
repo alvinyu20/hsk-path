@@ -723,7 +723,7 @@
     "zh": "这个菜有点儿辣。",
     "en": "This dish is a bit spicy.",
     "wrong": "这个菜有点儿很辣。",
-    "remove": "很",
+    "remove": "很", "also": ["有点儿"],
     "explain": "有点儿 is not used with 很."
    }
   ]

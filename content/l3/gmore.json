@@ -1227,7 +1227,10 @@
   "en": "I have always lived here.",
   "wrong": "我一直常常住在这里。",
   "remove": "常常",
-  "explain": "一直 already means all along; do not add 常常 (often)."
+  "explain": "一直 already means all along; do not add 常常 (often).",
+  "also": [
+   "一直"
+  ]
  },
  {
   "p": "g3-25",
@@ -1350,7 +1353,10 @@
   "en": "We often go to the park.",
   "wrong": "我们常常总是去公园。",
   "remove": "总是",
-  "explain": "常常 means often; do not add 总是 (always)."
+  "explain": "常常 means often; do not add 总是 (always).",
+  "also": [
+   "常常"
+  ]
  },
  {
   "p": "g3-27",
@@ -1447,7 +1453,10 @@
   "en": "These two characters are different.",
   "wrong": "这两个字不一样同。",
   "remove": "一样",
-  "explain": "不同 and 不一样 both mean different; use only one."
+  "explain": "不同 and 不一样 both mean different; use only one.",
+  "also": [
+   "同"
+  ]
  },
  {
   "p": "g3-29",
@@ -1726,7 +1735,10 @@
   "en": "He waited for 2 hours.",
   "wrong": "他等了过两个小时。",
   "remove": "过",
-  "explain": "了 marks the finished action; do not add 过 here."
+  "explain": "了 marks the finished action; do not add 过 here.",
+  "also": [
+   "了"
+  ]
  },
  {
   "p": "g3-35",
@@ -2024,7 +2036,10 @@
   "en": "We should help him.",
   "wrong": "我们应该必须帮助他。",
   "remove": "必须",
-  "explain": "应该 and 必须 differ in strength; use only one."
+  "explain": "应该 and 必须 differ in strength; use only one.",
+  "also": [
+   "应该"
+  ]
  },
  {
   "p": "g3-40",
@@ -2134,7 +2149,10 @@
   "en": "You had better rest more.",
   "wrong": "你最好应该多休息。",
   "remove": "应该",
-  "explain": "最好 already gives advice; do not add 应该."
+  "explain": "最好 already gives advice; do not add 应该.",
+  "also": [
+   "最好"
+  ]
  },
  {
   "p": "g3-42",
@@ -2428,7 +2446,10 @@
   "en": "I do not know anyone.",
   "wrong": "我谁都也不认识。",
   "remove": "也",
-  "explain": "Use 都 or 也 after the question word, not both."
+  "explain": "Use 都 or 也 after the question word, not both.",
+  "also": [
+   "都"
+  ]
  },
  {
   "p": "g3-48",
@@ -2545,7 +2566,10 @@
   "en": "He does not have a single friend.",
   "wrong": "他一个朋友都也没有。",
   "remove": "都",
-  "explain": "Use 也 or 都, not both."
+  "explain": "Use 也 or 都, not both.",
+  "also": [
+   "也"
+  ]
  },
  {
   "p": "g3-50",

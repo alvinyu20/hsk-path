@@ -57,12 +57,12 @@ clip_py = {c['zh']: c['py'] for c in LISTEN}
 
 HEAD = """你好！我正在做一个 HSK %(lv)d 学习网站（学习者已学过 HSK 1 到 %(prev)d 的词，现在学 HSK %(lv)d 的新词）。下面是我新加的练习题：语法复习题、“自己写句子”的提示和答案、听力短句。请你以中国母语者和汉语老师的身份检查。
 **只报告有问题的地方**，不要夸奖，也不要重复没问题的内容。对每个问题，请写：编号 / 原文 / 哪里不好（简单中文，再加一句英文）/ 更自然的说法（只用 HSK 1 到 HSK %(lv)d 的词）。
-需要特别注意：1) 不自然或不地道的说法；2) 语法错误；3) 英文翻译和中文意思不一致；4) 书面语被当成口语教（或口语被当成书面语）；5) 对 HSK %(lv)d 来说太难的词；6) 拼音是否正确（多音字、轻声、词与词之间的空格）；7) 选择题里“错误的选项”是不是真的错（不能是另一种也说得通的说法）；8) “找出多余的词”题里，去掉那个词以后句子是否真的正确，而带着它的句子是否真的不对；9) 听力短句后面两条“听什么”的说明（声调、变调、多音字、轻声）是否准确。
+需要特别注意：1) 不自然或不地道的说法；2) 语法错误；3) 英文翻译和中文意思不一致；4) 书面语被当成口语教（或口语被当成书面语）；5) 对 HSK %(lv)d 来说太难的词；6) 拼音是否正确（多音字、轻声、词与词之间的空格）；7) 选择题里“错误的选项”是不是真的错（不能是另一种也说得通的说法）；8) “找出多余的词”题里，去掉那个词以后句子是否真的正确，而带着它的句子是否真的不对；如果去掉句子里另一个词也能得到正确的句子，请指出那个词（我们会把它也算对）；9) 听力短句后面两条“听什么”的说明（声调、变调、多音字、轻声）是否准确。
 如果某一部分全部没问题，请回答“没有发现问题”。
 
 Hello! I am building an HSK %(lv)d study site (learners know HSK 1 to %(prev)d and are now learning HSK %(lv)d). Below are the NEW practice items I just added: grammar review questions, "write your own sentence" prompts with a model answer, and listening clips. Please act as a native speaker and Chinese teacher and check them.
 **Report only the problems**, no praise and no repeating good items. For each problem give: number / the item / what is wrong (simple Chinese plus one line of English) / a more natural version (using only HSK 1 to %(lv)d words).
-Please watch for: 1) unnatural or non-idiomatic wording; 2) grammar mistakes; 3) English that does not match the Chinese; 4) written style taught as spoken (or the reverse); 5) words too hard for HSK %(lv)d; 6) wrong pinyin (words with more than one reading, neutral tones, spaces between words); 7) in multiple-choice items, the "wrong" option must really be wrong (not another way that also works); 8) in "spot the extra word" items, the sentence without the word must be correct and the sentence with it must really be wrong; 9) the two "what to listen for" notes under each clip (tones, tone changes, readings, light syllables) must be accurate.
+Please watch for: 1) unnatural or non-idiomatic wording; 2) grammar mistakes; 3) English that does not match the Chinese; 4) written style taught as spoken (or the reverse); 5) words too hard for HSK %(lv)d; 6) wrong pinyin (words with more than one reading, neutral tones, spaces between words); 7) in multiple-choice items, the "wrong" option must really be wrong (not another way that also works); 8) in "spot the extra word" items, the sentence without the word must be correct and the sentence with it must really be wrong; if removing a DIFFERENT word also leaves a correct sentence, name that word (we will accept it too); 9) the two "what to listen for" notes under each clip (tones, tone changes, readings, light syllables) must be accurate.
 If a part has no problems, answer "No problems found".
 
 ---
@@ -92,7 +92,7 @@ for pid, items in by_point.items():
         elif t == 'order':
             u.append('A%d. **build**. %s  (%s)\n   - English: %s\n   - note shown to the learner: %s' % (n, zh, py, m['en'], m['explain']))
         else:
-            u.append('A%d. **spot**. sentence with the extra word: %s\n   - extra word: %s\n   - correct sentence: %s  (%s)\n   - English: %s\n   - note shown to the learner: %s' % (n, m['wrong'], m['remove'], zh, py, m['en'], m['explain']))
+            u.append('A%d. **spot**. sentence with the extra word: %s\n   - extra word: %s%s\n   - correct sentence: %s  (%s)\n   - English: %s\n   - note shown to the learner: %s' % (n, m['wrong'], m['remove'], ('  (also accepted: ' + ', '.join(m['also']) + ')') if m.get('also') else '', zh, py, m['en'], m['explain']))
     units.append('\n'.join(u))
 
 units.append('\n\n## B. "Write your own sentence" prompts\n\nThe learner sees the English, writes a Chinese sentence, and is checked for the required words (a+b: all of them; a|b: any one). The model answer is shown afterwards.\n')
