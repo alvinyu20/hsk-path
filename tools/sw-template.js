@@ -9,19 +9,23 @@ const VERSION = '__VERSION__';
 const CACHE = 'shanlu-' + VERSION;
 const ASSETS = __ASSETS__;   // addresses relative to this file, as the page requests them (with ?v=)
 
-const SIZES = __SIZES__;   // the exact size of each file of this version
-// every stored file must have the size this version expects: a stale copy from a network cache (a site update still spreading) is fetched again
-// under a changed address; if it is still wrong the install fails, so the old version keeps running and the next check tries again
-const sizeOf = (res) => res.clone().arrayBuffer().then((b) => b.byteLength);
+const HASHES = __HASHES__;   // the SHA-1 of each file of this version
+// every stored file must have the content this version expects: a stale copy from a network cache (a site update still spreading) is fetched
+// again under a changed address; if it is still wrong the install fails, so the old version keeps running and the next check tries again.
+// A file that did not change since the version already stored (same address, same content) is copied from that copy, not downloaded.
+const hex = (buf) => Array.from(new Uint8Array(buf)).map((x) => x.toString(16).padStart(2, '0')).join('');
+const shaOf = (res) => res.clone().arrayBuffer().then((b) => crypto.subtle.digest('SHA-1', b)).then(hex);
 const fetchRight = (u) => {
-  const want = SIZES[u];
+  const want = HASHES[u];
   const get = (addr) => fetch(new Request(addr, { cache: 'reload' })).then((r) => (r.ok ? r : Promise.reject(new Error('HTTP ' + r.status + ' ' + addr))));
-  return get(u).then((r) => sizeOf(r).then((n) => (n === want ? r : get(u + (u.indexOf('?') >= 0 ? '&' : '?') + 'r=' + Date.now()).then((r2) => sizeOf(r2).then((n2) => (n2 === want ? r2 : Promise.reject(new Error('wrong size ' + u + ' ' + n2 + ' not ' + want))))))));
+  return get(u).then((r) => shaOf(r).then((h) => (h === want ? r : get(u + (u.indexOf('?') >= 0 ? '&' : '?') + 'r=' + Date.now()).then((r2) => shaOf(r2).then((h2) => (h2 === want ? r2 : Promise.reject(new Error('wrong content ' + u))))))));
 };
+// the same file in an earlier offline copy, if its content is exactly right
+const reuse = (u) => caches.keys().then((keys) => keys.filter((k) => k.indexOf('shanlu-') === 0 && k !== CACHE).reduce((p, k) => p.then((hit) => hit || caches.open(k).then((c) => c.match(new Request(u))).then((r) => (r ? shaOf(r).then((h) => (h === HASHES[u] ? r : null)) : null))), Promise.resolve(null)));
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE)
-      .then((cache) => Promise.all(ASSETS.map((u) => fetchRight(u).then((r) => cache.put(new Request(u), r)))))
+      .then((cache) => Promise.all(ASSETS.map((u) => (u === 'index.html' ? Promise.resolve(null) : reuse(u)).then((old) => old || fetchRight(u)).then((r) => cache.put(new Request(u), r)))))
       .then(() => self.skipWaiting())   // the new copy takes over at once, so a phone stuck on a bad copy gets the good one on its next start
       .catch((err) => caches.delete(CACHE).then(() => { throw err; }))
   );

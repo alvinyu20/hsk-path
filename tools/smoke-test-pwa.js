@@ -116,12 +116,16 @@ function copySite() {
   // a new version: downloaded in the background, switched only on the person's say-so
   fs.appendFileSync(path.join(tmp, 'app.js'), '\n// a later version\n');
   execFileSync('node', [path.join(tmp, 'tools', 'build-site.js')], { stdio: 'pipe' });
+  const fetched = []; const onReq = (req) => { fetched.push(req.url.split('?')[0]); }; srv.on('request', onReq);   // what the update downloads
   const newVersion = (/shanlu-version" content="([0-9a-f]+)"/.exec(fs.readFileSync(path.join(tmp, 'index.html'), 'utf8')) || [])[1];
   check(newVersion && newVersion !== sw1.version, 'a changed script gets a new version number (' + sw1.version + ' to ' + newVersion + ')');
   await page.evaluate(() => window.shanlu.swReg.update());
   await page.waitForSelector('text=A new version of Shanlu is ready');
   const stillOld = await page.evaluate(() => document.querySelector('meta[name="shanlu-version"]').content);
   check(stillOld === sw1.version, 'the new version waits: the open page keeps its own matching files until Reload is pressed');
+  srv.off('request', onReq);
+  const big = fetched.filter((u) => /\.(js|css|woff2|png)$/.test(u) && !/^\/(sw|app)\.js$/.test(u));
+  check(fetched.some((u) => u === '/app.js') && big.length === 0, 'the update downloads only the changed file (app.js) and the page, not the unchanged ones (' + (big.length ? big.length + ' others: ' + big.slice(0, 4).join(' ') : 'nothing else') + ')');
   await page.locator('button', { hasText: 'Reload now' }).click();
   await page.waitForFunction((v) => document.querySelector('meta[name="shanlu-version"]') && document.querySelector('meta[name="shanlu-version"]').content === v, newVersion);
   await page.waitForSelector('.app');
