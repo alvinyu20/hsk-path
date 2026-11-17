@@ -261,7 +261,7 @@ window.HSK5_EXAM = {
     {
      "s": "男",
      "zh": "好的，你再想想，最后一次用它是在哪儿？",
-     "py": "Hǎo de, nǐ zài xiǎng xiǎng, zuìhòu yí cì yòng tā shì zài nǎr?",
+     "py": "Hǎo de, nǐ zài xiǎngxiang, zuìhòu yí cì yòng tā shì zài nǎr?",
      "en": "Okay. Think again: where is the last place you used it?"
     }
    ],
@@ -495,7 +495,7 @@ window.HSK5_EXAM = {
     {
      "s": "男",
      "zh": "还没有，我得先看看天气预报。",
-     "py": "Hái méiyǒu, wǒ děi xiān kàn kàn tiānqì yùbào.",
+     "py": "Hái méiyǒu, wǒ děi xiān kànkan tiānqì yùbào.",
      "en": "Not yet. I need to check the weather forecast first."
     }
    ],
@@ -534,7 +534,7 @@ window.HSK5_EXAM = {
     {
      "s": "女",
      "zh": "那我们再看看那边的，有浅一点的。",
-     "py": "Nà wǒmen zài kàn kàn nàbiān de, yǒu qiǎn yì diǎn de.",
+     "py": "Nà wǒmen zài kànkan nàbiān de, yǒu qiǎn yì diǎn de.",
      "en": "Then let us look at those over there. There are lighter ones."
     }
    ],
@@ -1790,7 +1790,7 @@ window.HSK5_EXAM = {
     {
      "s": "",
      "zh": "现在很多年轻人喜欢在网上买东西，既方便又便宜。不过，网上的东西看不到摸不到，有时候和图片上的不太一样。所以买之前，最好先看看别人的评价。",
-     "py": "Xiànzài hěn duō niánqīng rén xǐhuan zài wǎngshàng mǎi dōngxi, jì fāngbiàn yòu piányi. Búguò, wǎngshàng de dōngxi kàn bú dào mō bú dào, yǒu shíhou hé túpiàn shàng de bú tài yíyàng. Suǒyǐ mǎi zhīqián, zuìhǎo xiān kàn kàn biérén de píngjià.",
+     "py": "Xiànzài hěn duō niánqīng rén xǐhuan zài wǎngshàng mǎi dōngxi, jì fāngbiàn yòu piányi. Búguò, wǎngshàng de dōngxi kàn bú dào mō bú dào, yǒu shíhou hé túpiàn shàng de bú tài yíyàng. Suǒyǐ mǎi zhīqián, zuìhǎo xiān kànkan biérén de píngjià.",
      "en": "Nowadays many young people like buying things online, which is both convenient and cheap. However, online goods can be neither seen nor touched, and sometimes they are not quite the same as in the pictures. So before buying, it is best to read what other people say about them first."
     }
    ],
@@ -1810,7 +1810,7 @@ window.HSK5_EXAM = {
     },
     {
      "zh": "去商店试试",
-     "py": "Qù shāngdiàn shì shì"
+     "py": "Qù shāngdiàn shìshi"
     },
     {
      "zh": "等打折再买",
@@ -1997,7 +1997,7 @@ window.HSK5_EXAM = {
     {
      "s": "女",
      "zh": "你先量一下体温，再张开嘴让我看看。",
-     "py": "Nǐ xiān liáng yíxià tǐwēn, zài zhāng kāi zuǐ ràng wǒ kàn kàn.",
+     "py": "Nǐ xiān liáng yíxià tǐwēn, zài zhāng kāi zuǐ ràng wǒ kànkan.",
      "en": "Take your temperature first, then open your mouth and let me have a look."
     },
     {
@@ -2048,7 +2048,7 @@ window.HSK5_EXAM = {
     {
      "s": "男",
      "zh": "我想去海边，晒晒太阳。",
-     "py": "Wǒ xiǎng qù hǎibiān, shài shài tàiyáng.",
+     "py": "Wǒ xiǎng qù hǎibiān, shàishai tàiyáng.",
      "en": "I want to go to the seaside and get some sun."
     },
     {
@@ -2396,7 +2396,7 @@ window.HSK5_EXAM = {
     {
      "s": "男",
      "zh": "那我们明天去找老师谈谈吧。",
-     "py": "Nà wǒmen míngtiān qù zhǎo lǎoshī tán tán ba.",
+     "py": "Nà wǒmen míngtiān qù zhǎo lǎoshī tántan ba.",
      "en": "Then let us go and talk to the teacher tomorrow."
     }
    ],
@@ -2447,7 +2447,7 @@ window.HSK5_EXAM = {
     {
      "s": "女",
      "zh": "是啊，所以我打算再看看别的。",
-     "py": "Shì a, suǒyǐ wǒ dǎsuàn zài kàn kàn biéde.",
+     "py": "Shì a, suǒyǐ wǒ dǎsuàn zài kànkan biéde.",
      "en": "Yes, so I plan to look at others."
     }
    ],
@@ -3175,7 +3175,7 @@ window.HSK5_EXAM = {
   {
    "zh": "很多现代人睡得太少，原因是工作压力大，___晚上喜欢玩手机。睡眠长期不足不但会让人精神不好，还会引起许多___。专家建议，成年人每天应该睡七到八个小时，而且最好每天在同一个时间睡觉和起床，让身体慢慢___。睡觉前一小时，最好不要看手机，也不要喝咖啡或茶，可以听听轻音乐，让自己___下来。只要坚持一段时间，睡眠就会有明显的___。",
    "full": "很多现代人睡得太少，原因是工作压力大，或者晚上喜欢玩手机。睡眠长期不足不但会让人精神不好，还会引起许多疾病。专家建议，成年人每天应该睡七到八个小时，而且最好每天在同一个时间睡觉和起床，让身体慢慢适应。睡觉前一小时，最好不要看手机，也不要喝咖啡或茶，可以听听轻音乐，让自己放松下来。只要坚持一段时间，睡眠就会有明显的改善。",
-   "py": "Hěn duō xiàndài rén shuì de tài shǎo, yuányīn shì gōngzuò yālì dà, huòzhě wǎnshang xǐhuan wán shǒujī. Shuìmián chángqī bùzú búdàn huì ràng rén jīngshen bù hǎo, hái huì yǐnqǐ xǔduō jíbìng. Zhuānjiā jiànyì, chéngnián rén měitiān yīnggāi shuì qī dào bā ge xiǎoshí, érqiě zuìhǎo měitiān zài tóngyī ge shíjiān shuìjiào hé qǐchuáng, ràng shēntǐ màn màn shìyìng. Shuìjiào qián yì xiǎoshí, zuìhǎo búyào kàn shǒujī, yě búyào hē kāfēi huò chá, kěyǐ tīng tīng qīng yīnyuè, ràng zìjǐ fàngsōng xiàlái. Zhǐyào jiānchí yí duàn shíjiān, shuìmián jiù huì yǒu míngxiǎn de gǎishàn.",
+   "py": "Hěn duō xiàndài rén shuì de tài shǎo, yuányīn shì gōngzuò yālì dà, huòzhě wǎnshang xǐhuan wán shǒujī. Shuìmián chángqī bùzú búdàn huì ràng rén jīngshen bù hǎo, hái huì yǐnqǐ xǔduō jíbìng. Zhuānjiā jiànyì, chéngnián rén měitiān yīnggāi shuì qī dào bā ge xiǎoshí, érqiě zuìhǎo měitiān zài tóngyī ge shíjiān shuìjiào hé qǐchuáng, ràng shēntǐ màn màn shìyìng. Shuìjiào qián yì xiǎoshí, zuìhǎo búyào kàn shǒujī, yě búyào hē kāfēi huò chá, kěyǐ tīngting qīng yīnyuè, ràng zìjǐ fàngsōng xiàlái. Zhǐyào jiānchí yí duàn shíjiān, shuìmián jiù huì yǒu míngxiǎn de gǎishàn.",
    "en": "Many modern people sleep too little, because of work pressure or because they like playing on their phones at night. A long-term lack of sleep not only makes people feel low but also causes many illnesses. Experts suggest that adults should sleep seven to eight hours a day and, preferably, go to bed and get up at the same time every day, letting the body gradually adapt. In the hour before bed, it is best not to look at your phone or drink coffee or tea; you can listen to light music and let yourself relax. If you keep it up for a while, your sleep will improve clearly.",
    "blanks": [
     [

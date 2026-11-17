@@ -400,7 +400,7 @@ window.HSK3_SPEAK = {
     },
     {
      "zh": "可以。你先把票给我看看。",
-     "py": "Kěyǐ. Nǐ xiān bǎ piào gěi wǒ kàn kàn.",
+     "py": "Kěyǐ. Nǐ xiān bǎ piào gěi wǒ kànkan.",
      "en": "Yes, you can. First show me your ticket."
     },
     {

@@ -27,6 +27,16 @@ TONES = {'ā': 1, 'ē': 1, 'ī': 1, 'ō': 1, 'ū': 1, 'ǖ': 1, 'á': 2, 'é': 2,
 EXTRA_TOKENS = ['杯']
 
 
+# verbs that are said twice to mean "do it a little" (看看, 想想 ...); the second syllable is light
+REDUP_VERBS = set('看走学想画问数听试说尝聊晒谈逛')
+_PLAIN = {c: b for b, cs in {'a': 'āáǎà', 'e': 'ēéěè', 'i': 'īíǐì', 'o': 'ōóǒò', 'u': 'ūúǔù'}.items() for c in cs}
+
+
+def strip_tone(syl):
+    """xiǎng -> xiang (the light tone is written with no mark)."""
+    return ''.join(_PLAIN.get(ch, ch) for ch in syl)
+
+
 def tone_of(syl):
     for ch in syl:
         if ch in TONES:
@@ -264,6 +274,13 @@ class Engine:
         for i, p in enumerate(parts):
             if p[0] == 'w' and p[1] == '呀':
                 parts[i] = ('w', p[1], 'yā' if i == 0 or parts[i - 1][0] in ('p', 'd') else 'ya')
+        # a verb said twice ("a little") has a light second syllable: xiǎngxiang, zǒuzou, wènwen (not 天天, 常常: those are full tones)
+        i = 1
+        while i < len(parts):
+            if parts[i][0] == 'w' and parts[i - 1][0] == 'w' and parts[i][1] == parts[i - 1][1] and parts[i][1] in REDUP_VERBS:
+                parts[i - 1:i + 1] = [('w', parts[i][1] * 2, parts[i - 1][2] + strip_tone(parts[i][2]))]
+            else:
+                i += 1
         # 不 and 一 tone changes
         for i, p in enumerate(parts):
             if p[0] == 'w' and len(p[1]) > 1 and p[1].endswith('不') and (p[2].endswith('bù') or p[2].endswith('bú')):

@@ -36,15 +36,15 @@ A157. **choose**. English: Let us rest a bit.
    - right: 我们休息休息吧。  (Wǒmen xiūxi xiūxi ba.)
    - wrong: 我们休息休吧。
    - note shown to the learner: A two-syllable verb is doubled whole.
-A158. **build**. 我们想想这个问题。  (Wǒmen xiǎng xiǎng zhège wèntí.)
+A158. **build**. 我们想想这个问题。  (Wǒmen xiǎngxiang zhège wèntí.)
    - English: Let us think about this question.
    - note shown to the learner: A doubled verb means a little.
-A159. **build**. 我想去外面走走。  (Wǒ xiǎng qù wàimiàn zǒu zǒu.)
+A159. **build**. 我想去外面走走。  (Wǒ xiǎng qù wàimiàn zǒuzou.)
    - English: I want to go outside for a walk.
    - note shown to the learner: A doubled verb means a little.
 A160. **spot**. sentence with the extra word: 你很问问老师。
    - extra word: 很
-   - correct sentence: 你问问老师。  (Nǐ wèn wèn lǎoshī.)
+   - correct sentence: 你问问老师。  (Nǐ wènwen lǎoshī.)
    - English: Ask the teacher.
    - note shown to the learner: Do not put 很 before a doubled verb.
 
@@ -122,7 +122,7 @@ B14. English: It is far from here to the school.
 B15. English: Please go to the left.
    - model answer: 请往左走。
    - required: 往
-B16. English: Go straight ahead and turn right.
+B16. English: Go straight ahead, then go right.
    - model answer: 往前走，再往右走。
    - required: 往
 

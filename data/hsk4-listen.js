@@ -1027,7 +1027,7 @@ window.HSK4_LISTEN = {
   },
   {
    "zh": "听说这部电影非常有名，我想去看看。",
-   "py": "Tīngshuō zhè bù diànyǐng fēicháng yǒumíng, wǒ xiǎng qù kàn kàn.",
+   "py": "Tīngshuō zhè bù diànyǐng fēicháng yǒumíng, wǒ xiǎng qù kànkan.",
    "en": "I hear this film is very famous, and I want to go and see it.",
    "words": [
     {

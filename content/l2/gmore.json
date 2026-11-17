@@ -772,9 +772,9 @@
   "t": "spot",
   "zh": "老师已经来了。",
   "en": "The teacher has already come.",
-  "wrong": "老师已经没来了。",
-  "remove": "没",
-  "explain": "Do not use 已经 with something that has not happened."
+  "wrong": "老师已经很来了。",
+  "remove": "很",
+  "explain": "Do not put 很 before a verb like 来."
  },
  {
   "p": "g2-15",
@@ -1051,12 +1051,10 @@
  },
  {
   "p": "g2-20",
-  "t": "spot",
+  "t": "order",
   "zh": "他吃得很快。",
   "en": "He eats very fast.",
-  "wrong": "他吃得很非常快。",
-  "remove": "非常",
-  "explain": "Do not use 很 and 非常 together."
+  "explain": "得 comes right after the verb, then 很 and the adjective."
  },
  {
   "p": "g2-21",
@@ -1425,12 +1423,10 @@
  },
  {
   "p": "g2-27",
-  "t": "spot",
+  "t": "order",
   "zh": "他回家去了。",
   "en": "He has gone home.",
-  "wrong": "他回家来去了。",
-  "remove": "来",
-  "explain": "Do not use both 来 and 去 for one move."
+  "explain": "Say 来 or 去 after 回家, not both."
  },
  {
   "p": "g2-27",
@@ -1638,7 +1634,7 @@
   "en": "Mom might be at school.",
   "wrong": "妈妈可能太在学校。",
   "remove": "太",
-  "explain": "可能 already says maybe; do not add 太."
+  "explain": "太 means too, so it does not fit before 在 here."
  },
  {
   "p": "g2-31b",
@@ -1873,12 +1869,10 @@
  },
  {
   "p": "g2-33",
-  "t": "spot",
+  "t": "order",
   "zh": "他有二十多个朋友。",
   "en": "He has more than twenty friends.",
-  "wrong": "他有二十多几个朋友。",
-  "remove": "几",
-  "explain": "多 already means more than; do not add 几."
+  "explain": "多 after the number means more than."
  },
  {
   "p": "g2-34",

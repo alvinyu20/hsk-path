@@ -2386,7 +2386,7 @@ window.HSK2_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "我的爱好是画画和跳舞，很有意思。",
-    "py": "Wǒ de àihào shì huà huà hé tiàowǔ, hěn yǒuyìsi.",
+    "py": "Wǒ de àihào shì huàhua hé tiàowǔ, hěn yǒuyìsi.",
     "en": "My hobbies are drawing and dancing, and they are very interesting."
    },
    "words": [

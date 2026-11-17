@@ -2685,7 +2685,7 @@ window.HSK4_EXAM = {
   },
   {
    "zh": "我最怕坐飞机，每次坐飞机以前都睡不着。朋友告诉我，可以听听音乐，放松一下。我试了一次，真的好多了。",
-   "py": "Wǒ zuì pà zuò fēijī, měi cì zuò fēijī yǐqián dōu shuì bù zháo. Péngyou gàosu wǒ, kěyǐ tīng tīng yīnyuè, fàngsōng yíxià. Wǒ shì le yí cì, zhēn de hǎoduō le.",
+   "py": "Wǒ zuì pà zuò fēijī, měi cì zuò fēijī yǐqián dōu shuì bù zháo. Péngyou gàosu wǒ, kěyǐ tīngting yīnyuè, fàngsōng yíxià. Wǒ shì le yí cì, zhēn de hǎoduō le.",
    "en": "I am most afraid of flying, and I cannot sleep before every flight. A friend told me that I can listen to some music and relax a little. I tried it once, and it really got much better.",
    "q": {
     "zh": "朋友建议说话人怎么做？",
@@ -2769,7 +2769,7 @@ window.HSK4_EXAM = {
   },
   {
    "zh": "公司要办一个活动，让每个人介绍自己的爱好。小张说他喜欢画画，小马喜欢唱歌，我喜欢做饭。大家都说，这个活动让他们更了解同事。",
-   "py": "Gōngsī yào bàn yí ge huódòng, ràng měi ge rén jièshào zìjǐ de àihào. Xiǎo zhāng shuō tā xǐhuan huà huà, xiǎo mǎ xǐhuan chàng gē, wǒ xǐhuan zuòfàn. Dàjiā dōu shuō, zhège huódòng ràng tāmen gèng liǎojiě tóngshì.",
+   "py": "Gōngsī yào bàn yí ge huódòng, ràng měi ge rén jièshào zìjǐ de àihào. Xiǎo zhāng shuō tā xǐhuan huàhua, xiǎo mǎ xǐhuan chàng gē, wǒ xǐhuan zuòfàn. Dàjiā dōu shuō, zhège huódòng ràng tāmen gèng liǎojiě tóngshì.",
    "en": "The company will hold an event where everyone introduces their hobbies. Xiao Zhang says he likes drawing, Xiao Ma likes singing, and I like cooking. Everyone says this event helps them understand their colleagues better.",
    "q": {
     "zh": "这个活动让大家怎么样？",

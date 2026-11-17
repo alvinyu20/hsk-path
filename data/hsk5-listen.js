@@ -2317,7 +2317,7 @@ window.HSK5_LISTEN = {
   },
   {
    "zh": "他从小就喜欢画画，现在是一名画家。",
-   "py": "Tā cóngxiǎo jiù xǐhuan huà huà, xiànzài shì yì míng huàjiā.",
+   "py": "Tā cóngxiǎo jiù xǐhuan huàhua, xiànzài shì yì míng huàjiā.",
    "en": "He has liked drawing since childhood, and now he is an artist.",
    "words": [
     {
@@ -2754,7 +2754,7 @@ window.HSK5_LISTEN = {
   },
   {
    "zh": "这个包太贵了，我打算再看看别的。",
-   "py": "Zhège bāo tài guì le, wǒ dǎsuàn zài kàn kàn biéde.",
+   "py": "Zhège bāo tài guì le, wǒ dǎsuàn zài kànkan biéde.",
    "en": "This bag is too expensive; I plan to look at some others.",
    "words": [
     {

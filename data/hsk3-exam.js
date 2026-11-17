@@ -1564,7 +1564,7 @@ window.HSK3_EXAM = {
     {
      "s": "女",
      "zh": "那你先去商店看看吧。",
-     "py": "Nà nǐ xiān qù shāngdiàn kàn kàn ba.",
+     "py": "Nà nǐ xiān qù shāngdiàn kànkan ba.",
      "en": "Then you had better go and look in a shop first."
     }
    ],
@@ -3198,7 +3198,7 @@ window.HSK3_EXAM = {
    ],
    "zh": "请把你的护照给我看看",
    "alts": [],
-   "py": "Qǐng bǎ nǐ de hùzhào gěi wǒ kàn kàn",
+   "py": "Qǐng bǎ nǐ de hùzhào gěi wǒ kànkan",
    "en": "Please show me your passport."
   },
   {

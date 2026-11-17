@@ -290,11 +290,11 @@ A58. **fill**. 孩子___睡觉了。  (Háizi yǐjīng shuìjiào le.)
    - English: The child has already gone to sleep.
    - blank: 已经
    - note shown to the learner: 已经 … 了 means already.
-A59. **spot**. sentence with the extra word: 老师已经没来了。
-   - extra word: 没
+A59. **spot**. sentence with the extra word: 老师已经很来了。
+   - extra word: 很
    - correct sentence: 老师已经来了。  (Lǎoshī yǐjīng lái le.)
    - English: The teacher has already come.
-   - note shown to the learner: Do not use 已经 with something that has not happened.
+   - note shown to the learner: Do not put 很 before a verb like 来.
 
 ### g2-15  就 (as early as, then)  (lesson: 已经…了 and 就: already, and sooner than expected)
 
@@ -408,11 +408,9 @@ A82. **fill**. 妈妈做饭做___很好。  (Māma zuòfàn zuò de hěn hǎo.)
 A83. **build**. 他开车开得很慢。  (Tā kāichē kāi de hěn màn.)
    - English: He drives very slowly.
    - note shown to the learner: verb + 得 + how well.
-A84. **spot**. sentence with the extra word: 他吃得很非常快。
-   - extra word: 非常
-   - correct sentence: 他吃得很快。  (Tā chī de hěn kuài.)
+A84. **build**. 他吃得很快。  (Tā chī de hěn kuài.)
    - English: He eats very fast.
-   - note shown to the learner: Do not use 很 and 非常 together.
+   - note shown to the learner: 得 comes right after the verb, then 很 and the adjective.
 
 ### g2-21  地 (how, before a verb)  (lesson: 得 and 地: how an action is done)
 
@@ -545,11 +543,9 @@ A111. **fill**. 快___吧，太晚了。  (Kuài huíqù ba, tài wǎn le.)
 A112. **build**. 妈妈从外面回来了。  (Māma cóng wàimiàn huílái le.)
    - English: Mom has come back from outside.
    - note shown to the learner: verb + 来 means towards the speaker.
-A113. **spot**. sentence with the extra word: 他回家来去了。
-   - extra word: 来
-   - correct sentence: 他回家去了。  (Tā huí jiā qù le.)
+A113. **build**. 他回家去了。  (Tā huí jiā qù le.)
    - English: He has gone home.
-   - note shown to the learner: Do not use both 来 and 去 for one move.
+   - note shown to the learner: Say 来 or 去 after 回家, not both.
 A114. **fill**. 孩子们都___进来了。  (Háizimen dōu pǎo jìnlái le.)
    - English: The children all ran in.
    - blank: 跑
@@ -637,7 +633,7 @@ A132. **spot**. sentence with the extra word: 妈妈可能太在学校。
    - extra word: 太
    - correct sentence: 妈妈可能在学校。  (Māma kěnéng zài xuéxiào.)
    - English: Mom might be at school.
-   - note shown to the learner: 可能 already says maybe; do not add 太.
+   - note shown to the learner: 太 means too, so it does not fit before 在 here.
 
 ### g2-31b  希望 (hope)  (lesson: 可能, 希望 and 准备)
 
@@ -709,11 +705,9 @@ A146. **fill**. 我们班有二十___个学生。  (Wǒmen bān yǒu èrshí du�
 A147. **build**. 他今年四十多岁了。  (Tā jīnnián sìshí duō suì le.)
    - English: He is over forty this year.
    - note shown to the learner: number + 多 + measure word.
-A148. **spot**. sentence with the extra word: 他有二十多几个朋友。
-   - extra word: 几
-   - correct sentence: 他有二十多个朋友。  (Tā yǒu èrshí duō ge péngyou.)
+A148. **build**. 他有二十多个朋友。  (Tā yǒu èrshí duō ge péngyou.)
    - English: He has more than twenty friends.
-   - note shown to the learner: 多 already means more than; do not add 几.
+   - note shown to the learner: 多 after the number means more than.
 
 ### g2-34  多 + adjective questions (多大, 多高, 多远)  (lesson: 多 questions, …的时候 and doubled verbs)
 

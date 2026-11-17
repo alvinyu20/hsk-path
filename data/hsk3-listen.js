@@ -728,7 +728,7 @@ window.HSK3_LISTEN = {
   },
   {
    "zh": "请把你的护照给我看看。",
-   "py": "Qǐng bǎ nǐ de hùzhào gěi wǒ kàn kàn.",
+   "py": "Qǐng bǎ nǐ de hùzhào gěi wǒ kànkan.",
    "en": "Please show me your passport.",
    "words": [
     {
@@ -1737,7 +1737,7 @@ window.HSK3_LISTEN = {
   },
   {
    "zh": "这个电影很好看，你应该去看看。",
-   "py": "Zhège diànyǐng hěn hǎokàn, nǐ yīnggāi qù kàn kàn.",
+   "py": "Zhège diànyǐng hěn hǎokàn, nǐ yīnggāi qù kànkan.",
    "en": "This film is very good to watch; you should go and see it.",
    "words": [
     {
