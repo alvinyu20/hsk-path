@@ -121,3 +121,22 @@ passage:p2-coffee:line1	meaning	喝了睡不着 is a condition ("once I drink it
 passage:p2-doctor:line1	meaning	是……的 (here without 是) asks about the time of something that already happened; it does not need 了	你什么时候开始疼的？
 passage:p2-doctor:q1	meaning	是……的 (here without 是) asks about the time of something that already happened; it does not need 了	男的什么时候开始疼的？
 passage:p2-way:line3	meaning	就到了 means "and then you are there" (了 of a new situation about the future); the English "you will be there" says the same	不远，走路五分钟就到了。
+passage:p3-maths:line0	meaning	考得怎么样 asks how an exam that is over went: V得 needs no 了, and the English is past because the exam is over	这次数学考试你考得怎么样？
+passage:p3-wind:line4	meaning	别……了 is a warning ("do not go and catch a cold"); 了 here is not a finished action	对，带上伞，别感冒了。
+passage:p4-forest:line3	meaning	零下 means "below zero" (minus); the English says minus 3, which is the same thing	最冷的时候零下三摄氏度，还可能下雪。
+passage:p4-flight:q3	meaning	如果错过了 is a condition about the future ("if she has missed it"); 了 marks the missing happening first, not the past	如果错过了航班，女的会怎么样？
+passage:p4-meeting:line4	meaning	什么 here means "any" (什么材料吗 = any material?), so 吗 is right	好的，需要我准备什么材料吗？
+passage:p4-misunderstanding:q1	meaning	那天 ("that day") already puts it in the past; no 了 is needed with 在	那天男的在哪儿？
+passage:p4-online:line0	meaning	(是)……的 asks where something already done happened; it needs no 了	你这件外套真好看，在哪儿买的？
+passage:p4-plastic:q2	meaning	要 + amount means "costs" (要多少钱), not "want"	超市的袋子要多少钱？
+passage:p4-signal:line5	meaning	要看 means "it depends on", not "want to see"	要看是什么问题。如果修理太贵，还不如买一个新的。
+passage:p5-login:line0	meaning	V不了 (注册不了) is the "cannot" form of a verb; it needs no 能	我想在这个软件上买火车票，可是注册不了。
+passage:p5-login:q1	meaning	V不了 (注册不了) is the "cannot" form of a verb; it needs no 能	女的为什么注册不了？
+passage:p5-accident:line2	meaning	asked about an accident that has already happened; Chinese needs no 了 for 严重 or 有人受伤	严重吗？有人受伤吗？
+passage:p5-accident:q2	meaning	asked about an accident that has already happened; Chinese needs no 了 for 严重	车祸严重吗？
+passage:p5-hotpot:q2	meaning	没有……了 means "no more / run out"; the English "no more of" says the same	冰箱里没有什么了？
+passage:p5-noise:q1	meaning	……的时候 tells the time of something already done; 了 is not needed	女的去找邻居的时候，邻居怎么说？
+passage:p5-volunteer:line2	meaning	去了 + plan ("once you get there") is a future sequence; 了 marks the first step, not the past	你们去了要做什么？
+passage:p3-fever:line3	meaning	……就好了 means "will be fine then" (a new state in the future); 了 is not a past action	没事，我休息一下就好了。
+passage:p4-misunderstanding:q1	meaning	那天 ("that day") already puts it in the past; no 了 is needed with 在 (the style without 儿)	那天男的在哪里？
+passage:p4-online:line0	meaning	(是)……的 asks where something already done happened; it needs no 了 (the style without 儿)	你这件外套真好看，在哪里买的？

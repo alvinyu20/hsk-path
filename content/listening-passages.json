@@ -1799,6 +1799,3202 @@
      "line": 4
     }
    ]
+  },
+  {
+   "id": "p3-move",
+   "level": 3,
+   "title": "Moving house",
+   "scene": "A woman asks a friend about his new flat.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "我听说你下个月要搬家？",
+     "en": "I heard you will move house next month?"
+    },
+    {
+     "s": "男",
+     "zh": "对，新房子离公司很近，坐地铁二十分钟就到。",
+     "en": "Yes. The new place is very close to my company: it only takes twenty minutes by metro."
+    },
+    {
+     "s": "女",
+     "zh": "那太方便了。新房子大吗？",
+     "en": "That is really convenient. Is the new place big?"
+    },
+    {
+     "s": "男",
+     "zh": "不太大，但是很安静，附近还有一个公园。",
+     "en": "Not very big, but it is quiet, and there is a park nearby too."
+    },
+    {
+     "s": "女",
+     "zh": "星期六我去帮你搬东西吧？",
+     "en": "Shall I come and help you move things on Saturday?"
+    },
+    {
+     "s": "男",
+     "zh": "太好了！星期六上午九点，你能来吗？",
+     "en": "Great! Nine on Saturday morning: can you come?"
+    },
+    {
+     "s": "女",
+     "zh": "没问题。",
+     "en": "No problem."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的什么时候搬家？",
+     "en": "When is the man moving?",
+     "opts": [
+      "下个月",
+      "下个星期",
+      "明天",
+      "今年冬天"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "新房子离公司怎么样？",
+     "en": "How far is the new place from his company?",
+     "opts": [
+      "很近",
+      "很远",
+      "有点儿远",
+      "就在公司旁边"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "新房子附近有什么？",
+     "en": "What is near the new place?",
+     "opts": [
+      "一个公园",
+      "一个银行",
+      "一个学校",
+      "一个医院"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的什么时候去帮男的？",
+     "en": "When will the woman go to help the man?",
+     "opts": [
+      "星期六上午",
+      "星期天上午",
+      "星期六下午",
+      "星期五晚上"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p3-weight",
+   "level": 3,
+   "title": "Five kilos lighter",
+   "scene": "A man notices that his friend looks thinner.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "你最近是不是瘦了？",
+     "en": "Have you lost weight recently?"
+    },
+    {
+     "s": "女",
+     "zh": "是啊，我瘦了五公斤。",
+     "en": "Yes, I have lost five kilos."
+    },
+    {
+     "s": "男",
+     "zh": "你是怎么做到的？",
+     "en": "How did you do it?"
+    },
+    {
+     "s": "女",
+     "zh": "我每天早上去公园跑步，晚上不吃米饭，多吃水果。",
+     "en": "Every morning I go running in the park, and in the evening I eat no rice and more fruit."
+    },
+    {
+     "s": "男",
+     "zh": "你坚持多久了？",
+     "en": "How long have you kept it up?"
+    },
+    {
+     "s": "女",
+     "zh": "快三个月了。",
+     "en": "It has been almost three months."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的瘦了多少？",
+     "en": "How much weight has the woman lost?",
+     "opts": [
+      "五公斤",
+      "三公斤",
+      "五斤",
+      "十公斤"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的每天早上做什么？",
+     "en": "What does the woman do every morning?",
+     "opts": [
+      "去公园跑步",
+      "去游泳",
+      "打篮球",
+      "去爬山"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的晚上不吃什么？",
+     "en": "What does the woman not eat in the evening?",
+     "opts": [
+      "米饭",
+      "水果",
+      "面条",
+      "鸡蛋"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的坚持多久了？",
+     "en": "How long has the woman kept it up?",
+     "opts": [
+      "快三个月了",
+      "三个星期",
+      "半年",
+      "一年"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p3-season",
+   "level": 3,
+   "title": "Spring or autumn",
+   "scene": "Two friends talk about their favourite season.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "你最喜欢哪个季节？",
+     "en": "Which season do you like best?"
+    },
+    {
+     "s": "男",
+     "zh": "我最喜欢秋天，不冷也不热，很凉快。",
+     "en": "I like autumn best: it is not cold and not hot, but nice and cool."
+    },
+    {
+     "s": "女",
+     "zh": "我喜欢春天，公园里的花都开了。",
+     "en": "I like spring, when the flowers in the park have all come out."
+    },
+    {
+     "s": "男",
+     "zh": "但是春天风很大。",
+     "en": "But spring is very windy."
+    },
+    {
+     "s": "女",
+     "zh": "那也没关系。夏天太热，冬天太冷，还是春天好。",
+     "en": "That does not matter. Summer is too hot and winter is too cold, so spring is still the nicest."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的最喜欢哪个季节？",
+     "en": "Which season does the man like best?",
+     "opts": [
+      "秋天",
+      "春天",
+      "夏天",
+      "冬天"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "男的为什么喜欢这个季节？",
+     "en": "Why does the man like this season?",
+     "opts": [
+      "不冷也不热",
+      "花很多",
+      "可以游泳",
+      "可以看雪"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的为什么喜欢春天？",
+     "en": "Why does the woman like spring?",
+     "opts": [
+      "公园里的花开了",
+      "风很大",
+      "很凉快",
+      "可以放假"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "男的说春天怎么样？",
+     "en": "What does the man say about spring?",
+     "opts": [
+      "风很大",
+      "太热了",
+      "太冷了",
+      "雨太多了"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "p3-exercise",
+   "level": 3,
+   "title": "Three times a week",
+   "scene": "A man asks a woman about exercise.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "你一个星期锻炼几次？",
+     "en": "How many times a week do you exercise?"
+    },
+    {
+     "s": "女",
+     "zh": "三次，每次一个小时。",
+     "en": "Three times, an hour each time."
+    },
+    {
+     "s": "男",
+     "zh": "你都做什么运动？",
+     "en": "What sports do you do?"
+    },
+    {
+     "s": "女",
+     "zh": "我常常跑步，有时候也去游泳。",
+     "en": "I often go running, and sometimes I also go swimming."
+    },
+    {
+     "s": "男",
+     "zh": "我也想开始锻炼，但是工作太忙了。",
+     "en": "I want to start exercising too, but work is too busy."
+    },
+    {
+     "s": "女",
+     "zh": "每天走路半个小时也不错啊。",
+     "en": "Even walking for half an hour every day is good."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的一个星期锻炼几次？",
+     "en": "How many times a week does the woman exercise?",
+     "opts": [
+      "三次",
+      "两次",
+      "四次",
+      "五次"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的每次锻炼多久？",
+     "en": "How long does the woman exercise each time?",
+     "opts": [
+      "一个小时",
+      "半个小时",
+      "两个小时",
+      "四十分钟"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的常常做什么运动？",
+     "en": "What sport does the woman often do?",
+     "opts": [
+      "跑步",
+      "游泳",
+      "打球",
+      "爬山"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的说男的可以做什么？",
+     "en": "What does the woman say the man could do?",
+     "opts": [
+      "每天走路半个小时",
+      "每天跑步",
+      "去游泳",
+      "少工作一点儿"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p3-menu",
+   "level": 3,
+   "title": "Today's new dish",
+   "scene": "A waiter helps a woman order for her family.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "服务员，请给我们菜单。",
+     "en": "Waiter, please bring us the menu."
+    },
+    {
+     "s": "男",
+     "zh": "好的。今天我们的新菜是鱼，您要不要尝一尝？",
+     "en": "Sure. Today our new dish is fish. Would you like to try it?"
+    },
+    {
+     "s": "女",
+     "zh": "好啊，来一个鱼，再来一碗米饭和两杯茶。",
+     "en": "OK, one fish, plus a bowl of rice and two cups of tea."
+    },
+    {
+     "s": "男",
+     "zh": "还要别的吗？",
+     "en": "Do you need anything else?"
+    },
+    {
+     "s": "女",
+     "zh": "有甜的吗？孩子喜欢吃甜的。",
+     "en": "Do you have anything sweet? The child likes sweet things."
+    },
+    {
+     "s": "男",
+     "zh": "我们有蛋糕和冰激凌。",
+     "en": "We have cake and ice cream."
+    },
+    {
+     "s": "女",
+     "zh": "那来一个冰激凌吧。",
+     "en": "Then one ice cream."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "今天的新菜是什么？",
+     "en": "What is today's new dish?",
+     "opts": [
+      "鱼",
+      "鸡",
+      "羊肉",
+      "蛋糕"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的要了几杯茶？",
+     "en": "How many cups of tea did the woman order?",
+     "opts": [
+      "两杯",
+      "一杯",
+      "三杯",
+      "四杯"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "谁喜欢吃甜的？",
+     "en": "Who likes sweet things?",
+     "opts": [
+      "孩子",
+      "女的",
+      "男的",
+      "服务员"
+     ],
+     "line": 4
+    },
+    {
+     "zh": "最后女的要了什么甜的？",
+     "en": "Which sweet thing did the woman order in the end?",
+     "opts": [
+      "冰激凌",
+      "蛋糕",
+      "西瓜",
+      "糖"
+     ],
+     "line": 6
+    }
+   ]
+  },
+  {
+   "id": "p3-bank",
+   "level": 3,
+   "title": "Is there a bank nearby?",
+   "scene": "A man asks a woman for directions.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "请问，附近有银行吗？",
+     "en": "Excuse me, is there a bank nearby?"
+    },
+    {
+     "s": "女",
+     "zh": "有，你往前走，到第二个路口往右走。",
+     "en": "Yes. You go straight ahead and turn right at the second junction."
+    },
+    {
+     "s": "男",
+     "zh": "是在红绿灯那儿吗？",
+     "en": "Is that where the traffic lights are?"
+    },
+    {
+     "s": "女",
+     "zh": "对，过了红绿灯，银行就在路边，在一个超市旁边。",
+     "en": "Yes. Once you have passed the traffic lights, the bank is right by the road, next to a supermarket."
+    },
+    {
+     "s": "男",
+     "zh": "走过去要多久？",
+     "en": "How long does it take to walk there?"
+    },
+    {
+     "s": "女",
+     "zh": "差不多十分钟吧。",
+     "en": "About ten minutes."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的想找什么？",
+     "en": "What does the man want to find?",
+     "opts": [
+      "银行",
+      "超市",
+      "地铁站",
+      "医院"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "在第几个路口往右走？",
+     "en": "At which junction do you turn right?",
+     "opts": [
+      "第二个",
+      "第一个",
+      "第三个",
+      "第四个"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "银行在什么旁边？",
+     "en": "What is the bank next to?",
+     "opts": [
+      "一个超市",
+      "一个医院",
+      "一个公园",
+      "一个学校"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "走过去要多久？",
+     "en": "How long does it take to walk there?",
+     "opts": [
+      "差不多十分钟",
+      "五分钟",
+      "二十分钟",
+      "半个小时"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p3-delay",
+   "level": 3,
+   "title": "The flight is late",
+   "scene": "A couple wait at the airport.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "你的护照带了吗？",
+     "en": "Did you bring your passport?"
+    },
+    {
+     "s": "男",
+     "zh": "带了，在我的包里。",
+     "en": "Yes, I brought it. It is in my bag."
+    },
+    {
+     "s": "女",
+     "zh": "我们的飞机几点起飞？",
+     "en": "What time does our plane take off?"
+    },
+    {
+     "s": "男",
+     "zh": "飞机是十点的，但是我刚才听说晚点了，要十一点半才起飞。",
+     "en": "The flight is at ten, but I just heard it is late: it will only take off at half past eleven."
+    },
+    {
+     "s": "女",
+     "zh": "还有两个多小时，我们先去吃饭吧。",
+     "en": "There are still over two hours. Let's go and eat first."
+    },
+    {
+     "s": "男",
+     "zh": "好，行李我来拿。",
+     "en": "OK, I will carry the luggage."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的护照在哪儿？",
+     "en": "Where is the man's passport?",
+     "opts": [
+      "他的包里",
+      "女的包里",
+      "家里",
+      "行李箱里"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "飞机现在几点起飞？",
+     "en": "What time will the plane take off now?",
+     "opts": [
+      "十一点半",
+      "十点",
+      "十一点",
+      "十二点半"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "为什么飞机不是十点起飞？",
+     "en": "Why will the plane not take off at ten?",
+     "opts": [
+      "飞机晚点了",
+      "天气不好",
+      "他们迟到了",
+      "他们没有票"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "他们现在要去做什么？",
+     "en": "What are they going to do now?",
+     "opts": [
+      "吃饭",
+      "买票",
+      "回家",
+      "打电话"
+     ],
+     "line": 4
+    }
+   ]
+  },
+  {
+   "id": "p3-maths",
+   "level": 3,
+   "title": "Seventy in maths",
+   "scene": "Two classmates talk about a maths exam.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "这次数学考试你考得怎么样？",
+     "en": "How was your result in this maths exam?"
+    },
+    {
+     "s": "女",
+     "zh": "不太好，我只考了七十分。",
+     "en": "Not very well. I only got 70."
+    },
+    {
+     "s": "男",
+     "zh": "是不是题太难了？",
+     "en": "Were the questions too hard?"
+    },
+    {
+     "s": "女",
+     "zh": "题不难，是我没有认真复习。最近每天晚上都在玩游戏。",
+     "en": "They were not hard; I did not revise properly. Recently I have been playing games every evening."
+    },
+    {
+     "s": "男",
+     "zh": "下次考试前，我们一起去图书馆复习吧。",
+     "en": "Before the next exam, let's revise together at the library."
+    },
+    {
+     "s": "女",
+     "zh": "好啊，谢谢你。",
+     "en": "Good idea, thank you."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的数学考了多少分？",
+     "en": "What score did the woman get in maths?",
+     "opts": [
+      "七十分",
+      "九十分",
+      "六十分",
+      "八十分"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的觉得为什么没考好？",
+     "en": "In the woman's view, why did the exam not go well?",
+     "opts": [
+      "她没有认真复习",
+      "题太难了",
+      "她生病了",
+      "她迟到了"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的最近每天晚上做什么？",
+     "en": "What has the woman been doing every evening recently?",
+     "opts": [
+      "玩游戏",
+      "看书",
+      "做作业",
+      "锻炼"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "男的说下次去哪儿复习？",
+     "en": "Where does the man say they will revise next time?",
+     "opts": [
+      "图书馆",
+      "教室",
+      "男的家",
+      "公园"
+     ],
+     "line": 4
+    }
+   ]
+  },
+  {
+   "id": "p3-wind",
+   "level": 3,
+   "title": "Wind and rain",
+   "scene": "A woman stops a man from cycling in bad weather.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "外面刮大风了，还下雨。",
+     "en": "It is very windy outside, and it is raining too."
+    },
+    {
+     "s": "男",
+     "zh": "真的？我今天要骑自行车去上班。",
+     "en": "Really? Today I am going to cycle to work."
+    },
+    {
+     "s": "女",
+     "zh": "别骑了，不安全。",
+     "en": "Do not ride any more; it is not safe."
+    },
+    {
+     "s": "男",
+     "zh": "那我坐地铁吧。",
+     "en": "Then I will take the metro."
+    },
+    {
+     "s": "女",
+     "zh": "对，带上伞，别感冒了。",
+     "en": "Right. Take an umbrella and do not catch a cold."
+    },
+    {
+     "s": "男",
+     "zh": "好，谢谢你关心我。",
+     "en": "OK, thank you for caring about me."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "外面天气怎么样？",
+     "en": "What is the weather like outside?",
+     "opts": [
+      "刮大风，还下雨",
+      "很热",
+      "下雪了",
+      "很好"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "男的一开始想怎么去上班？",
+     "en": "At first, how does the man want to get to work?",
+     "opts": [
+      "骑自行车",
+      "坐地铁",
+      "开车",
+      "走路"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "男的最后怎么去上班？",
+     "en": "How does the man get to work in the end?",
+     "opts": [
+      "坐地铁",
+      "骑自行车",
+      "坐出租车",
+      "走路"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的让男的带什么？",
+     "en": "What does the woman tell the man to take?",
+     "opts": [
+      "伞",
+      "雨衣",
+      "大衣",
+      "水"
+     ],
+     "line": 4
+    }
+   ]
+  },
+  {
+   "id": "p3-party",
+   "level": 3,
+   "title": "The New Year party",
+   "scene": "Two classmates talk about a school party.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "明天晚上的新年晚会你参加吗？",
+     "en": "Are you going to the New Year party tomorrow evening?"
+    },
+    {
+     "s": "女",
+     "zh": "参加，我还要表演一个节目。",
+     "en": "Yes, and I am also going to perform."
+    },
+    {
+     "s": "男",
+     "zh": "真的？你表演什么？",
+     "en": "Really? What are you performing?"
+    },
+    {
+     "s": "女",
+     "zh": "我和两个同学一起唱中文歌。",
+     "en": "Two classmates and I are singing Chinese songs together."
+    },
+    {
+     "s": "男",
+     "zh": "太好了！晚会几点开始？",
+     "en": "Great! What time does the party start?"
+    },
+    {
+     "s": "女",
+     "zh": "七点，在学校的体育馆。",
+     "en": "At seven, in the school sports hall."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "晚会是什么时候？",
+     "en": "When is the party?",
+     "opts": [
+      "明天晚上",
+      "今天晚上",
+      "明天上午",
+      "后天晚上"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "女的要表演什么？",
+     "en": "What is the woman going to perform?",
+     "opts": [
+      "唱中文歌",
+      "跳舞",
+      "讲故事",
+      "画画"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的和谁一起表演？",
+     "en": "Who is the woman performing with?",
+     "opts": [
+      "两个同学",
+      "老师",
+      "一个朋友",
+      "她妹妹"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "晚会在哪儿？",
+     "en": "Where is the party?",
+     "opts": [
+      "学校的体育馆",
+      "学校的教室",
+      "图书馆",
+      "公园"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p3-fever",
+   "level": 3,
+   "title": "A fever",
+   "scene": "A woman sees that a friend is unwell.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "你怎么了？看起来不太舒服。",
+     "en": "What is wrong with you? You do not look very well."
+    },
+    {
+     "s": "男",
+     "zh": "我可能发烧了，头也很疼。",
+     "en": "I might have a fever, and my head hurts a lot too."
+    },
+    {
+     "s": "女",
+     "zh": "你去医院检查一下吧。",
+     "en": "You should go to the hospital for a check-up."
+    },
+    {
+     "s": "男",
+     "zh": "没事，我休息一下就好了。",
+     "en": "It is nothing. I will be fine after a rest."
+    },
+    {
+     "s": "女",
+     "zh": "别这样，发烧要马上看医生。我跟你一起去。",
+     "en": "Do not be like that: with a fever you should see a doctor right away. I will go with you."
+    },
+    {
+     "s": "男",
+     "zh": "好吧，那我们现在就去。",
+     "en": "All right, then let's go now."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的怎么了？",
+     "en": "What is wrong with the man?",
+     "opts": [
+      "发烧了，头疼",
+      "牙疼",
+      "腿疼",
+      "太饿了"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的让男的做什么？",
+     "en": "What does the woman tell the man to do?",
+     "opts": [
+      "去医院检查",
+      "回家睡觉",
+      "多喝水",
+      "吃点儿东西"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "男的一开始想怎么做？",
+     "en": "At first, what does the man want to do?",
+     "opts": [
+      "休息一下",
+      "去医院",
+      "吃药",
+      "去上班"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "谁和男的一起去医院？",
+     "en": "Who is going to the hospital with the man?",
+     "opts": [
+      "女的",
+      "男的的妈妈",
+      "没有人",
+      "医生"
+     ],
+     "line": 4
+    }
+   ]
+  },
+  {
+   "id": "p3-study-abroad",
+   "level": 3,
+   "title": "Next year in China",
+   "scene": "A man asks a woman about her plans.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "你明年有什么打算？",
+     "en": "What are your plans for next year?"
+    },
+    {
+     "s": "女",
+     "zh": "我打算去中国留学，为了提高我的汉语水平。",
+     "en": "I plan to study in China, to improve my Chinese."
+    },
+    {
+     "s": "男",
+     "zh": "如果去中国，你想去哪个城市？",
+     "en": "If you go to China, which city do you want to go to?"
+    },
+    {
+     "s": "女",
+     "zh": "我想去南方，因为我怕冷。",
+     "en": "I want to go to the south, because I am afraid of the cold."
+    },
+    {
+     "s": "男",
+     "zh": "那你要先准备好护照和钱。",
+     "en": "Then you need to get your passport and money ready first."
+    },
+    {
+     "s": "女",
+     "zh": "对，我现在每个周末都在饭馆工作。",
+     "en": "Right. I work at a restaurant every weekend now."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的明年打算做什么？",
+     "en": "What does the woman plan to do next year?",
+     "opts": [
+      "去中国留学",
+      "去中国旅游",
+      "找工作",
+      "学数学"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的为什么要去中国？",
+     "en": "Why does the woman want to go to China?",
+     "opts": [
+      "提高汉语水平",
+      "看朋友",
+      "工作",
+      "旅游"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的想去哪儿？",
+     "en": "Where does the woman want to go?",
+     "opts": [
+      "南方",
+      "北方",
+      "东北",
+      "西北"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的为什么想去南方？",
+     "en": "Why does the woman want to go to the south?",
+     "opts": [
+      "她怕冷",
+      "南方的菜好吃",
+      "她的朋友在南方",
+      "南方比较近"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "p4-neighbour",
+   "level": 4,
+   "title": "The new neighbour",
+   "scene": "A woman who has just moved in meets her neighbour.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "你好，我是新搬来的邻居，就住在你对面。",
+     "en": "Hello, I am the new neighbour who has just moved in. I live right across from you."
+    },
+    {
+     "s": "男",
+     "zh": "欢迎欢迎！我在这儿住了三年了，有什么需要可以找我。",
+     "en": "Welcome! I have lived here for three years. If you need anything, you can come to me."
+    },
+    {
+     "s": "女",
+     "zh": "谢谢！请问附近哪儿有超市？",
+     "en": "Thank you! Excuse me, where is there a supermarket nearby?"
+    },
+    {
+     "s": "男",
+     "zh": "出了小区往左走，大概五百米就有一个大超市，晚上十一点才关门。",
+     "en": "Leave the estate and turn left; about 500 metres on there is a big supermarket. It does not close until eleven at night."
+    },
+    {
+     "s": "女",
+     "zh": "太好了。还有，垃圾我应该放在哪儿？",
+     "en": "Great. Also, where should I put the rubbish?"
+    },
+    {
+     "s": "男",
+     "zh": "楼下有四个垃圾桶，要按颜色放。",
+     "en": "There are four bins downstairs, and you have to sort it by colour."
+    },
+    {
+     "s": "女",
+     "zh": "好的，我会注意的。以后有问题我再找你。",
+     "en": "OK, I will be careful about it. If I have a problem later, I will come to you again."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的住在哪儿？",
+     "en": "Where does the woman live?",
+     "opts": [
+      "男的对面",
+      "男的楼上",
+      "男的楼下",
+      "小区外面"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "男的在这儿住了多久？",
+     "en": "How long has the man lived here?",
+     "opts": [
+      "三年",
+      "两年",
+      "五年",
+      "半年"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "超市晚上几点关门？",
+     "en": "What time does the supermarket close at night?",
+     "opts": [
+      "十一点",
+      "十点",
+      "十二点",
+      "九点"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "垃圾应该怎么放？",
+     "en": "How should the rubbish be put out?",
+     "opts": [
+      "按颜色放",
+      "放在超市旁边",
+      "放在门口",
+      "放在小区外面"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p4-interview",
+   "level": 4,
+   "title": "After the interview",
+   "scene": "A woman asks a friend about his job interview.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "我听说你昨天去面试了，怎么样？",
+     "en": "I heard you had an interview yesterday. How did it go?"
+    },
+    {
+     "s": "男",
+     "zh": "还不错，经理问了我很多问题，我都回答得很流利。",
+     "en": "Not bad. The manager asked me a lot of questions, and I answered all of them fluently."
+    },
+    {
+     "s": "女",
+     "zh": "那家公司的工资高吗？",
+     "en": "Is the pay at that company high?"
+    },
+    {
+     "s": "男",
+     "zh": "比我现在的工资高一千块，但是经常要加班。",
+     "en": "It is 1,000 yuan more than my pay now, but you often have to work overtime."
+    },
+    {
+     "s": "女",
+     "zh": "加班有加班费吗？",
+     "en": "Is there overtime pay?"
+    },
+    {
+     "s": "男",
+     "zh": "有。他们说下个星期会通知我结果。",
+     "en": "Yes. They say they will let me know the result next week."
+    },
+    {
+     "s": "女",
+     "zh": "祝你成功！",
+     "en": "I wish you success!"
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的昨天做什么了？",
+     "en": "What did the man do yesterday?",
+     "opts": [
+      "去面试了",
+      "去上班了",
+      "去加班了",
+      "去旅行了"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "那家公司的工资怎么样？",
+     "en": "What is the pay like at that company?",
+     "opts": [
+      "比男的现在的高一千块",
+      "比男的现在的低一千块",
+      "和男的现在的一样",
+      "比男的现在的高两千块"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "那家公司有什么缺点？",
+     "en": "What is the downside of that company?",
+     "opts": [
+      "经常要加班",
+      "离家太远",
+      "工资太低",
+      "经理不好"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "男的什么时候能知道结果？",
+     "en": "When will the man know the result?",
+     "opts": [
+      "下个星期",
+      "明天",
+      "下个月",
+      "这个周末"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p4-rent",
+   "level": 4,
+   "title": "Renting a flat",
+   "scene": "A man asks an agent about a flat for rent.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "这个房子一个月房租多少钱？",
+     "en": "How much is the rent for this flat a month?"
+    },
+    {
+     "s": "女",
+     "zh": "四千五百块，水电费不在房租里，要自己付。",
+     "en": "It is 4,500 yuan. Water and electricity are not in the rent; you need to pay them yourself."
+    },
+    {
+     "s": "男",
+     "zh": "有点儿贵。厨房和客厅大吗？",
+     "en": "That is a bit expensive. Are the kitchen and living room big?"
+    },
+    {
+     "s": "女",
+     "zh": "客厅很大，厨房小一点儿，但是很干净，家具都是新的。",
+     "en": "The living room is big and the kitchen is a little smaller, but it is very clean, and all the furniture is new."
+    },
+    {
+     "s": "男",
+     "zh": "离地铁站远吗？",
+     "en": "Is it far from the metro station?"
+    },
+    {
+     "s": "女",
+     "zh": "走路只要五分钟。",
+     "en": "It is only five minutes on foot."
+    },
+    {
+     "s": "男",
+     "zh": "那我想先看看，明天下午可以吗？",
+     "en": "Then I would like to see it first. Is tomorrow afternoon OK?"
+    },
+    {
+     "s": "女",
+     "zh": "可以，我跟房东说一下。",
+     "en": "Sure, I will tell the landlord."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "房租一个月多少钱？",
+     "en": "How much is the rent a month?",
+     "opts": [
+      "四千五百块",
+      "四千块",
+      "五千块",
+      "五千四百块"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "水电费怎么付？",
+     "en": "How are water and electricity paid?",
+     "opts": [
+      "自己付",
+      "房东付",
+      "不用付",
+      "在房租里"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "哪儿小一点儿？",
+     "en": "Which room is a little smaller?",
+     "opts": [
+      "厨房",
+      "客厅",
+      "卫生间",
+      "房间"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "男的什么时候去看房子？",
+     "en": "When will the man go and see the flat?",
+     "opts": [
+      "明天下午",
+      "今天下午",
+      "明天上午",
+      "后天下午"
+     ],
+     "line": 6
+    }
+   ]
+  },
+  {
+   "id": "p4-flight",
+   "level": 4,
+   "title": "Will I make my flight?",
+   "scene": "A woman in a taxi is worried about her flight.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "师傅，我要赶下午三点的航班，来得及吗？",
+     "en": "Driver, I need to catch a three o'clock flight this afternoon. Is there enough time?"
+    },
+    {
+     "s": "男",
+     "zh": "现在一点半，路上如果不堵车，我们一个小时就能到。",
+     "en": "It is half past one now. If there is no traffic jam, we can get there in an hour."
+    },
+    {
+     "s": "女",
+     "zh": "可是现在路上车挺多的。",
+     "en": "But there are quite a lot of cars on the road now."
+    },
+    {
+     "s": "男",
+     "zh": "别着急，我走高速，高速上车少。",
+     "en": "Do not worry. I will take the motorway; there are fewer cars on it."
+    },
+    {
+     "s": "女",
+     "zh": "太感谢了。如果错过了这个航班，我今天就不能回家了。",
+     "en": "Thank you so much. If I miss this flight, I will not be able to go home today."
+    },
+    {
+     "s": "男",
+     "zh": "放心吧，一定来得及。",
+     "en": "Relax, there is definitely enough time."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的要坐几点的航班？",
+     "en": "What time is the flight the woman will take?",
+     "opts": [
+      "下午三点",
+      "下午一点半",
+      "下午两点半",
+      "晚上三点"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "如果不堵车，多久能到？",
+     "en": "If there is no traffic jam, how long will it take?",
+     "opts": [
+      "一个小时",
+      "半个小时",
+      "两个小时",
+      "一个半小时"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "师傅打算怎么走？",
+     "en": "Which way does the driver plan to go?",
+     "opts": [
+      "走高速",
+      "走小路",
+      "从市区走",
+      "先去地铁站"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "如果错过了航班，女的会怎么样？",
+     "en": "What will happen if the woman misses her flight?",
+     "opts": [
+      "今天不能回家了",
+      "要多付钱",
+      "要住旅馆",
+      "没有关系"
+     ],
+     "line": 4
+    }
+   ]
+  },
+  {
+   "id": "p4-online",
+   "level": 4,
+   "title": "Bought online",
+   "scene": "A man asks a woman about her new coat.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "你这件外套真好看，在哪儿买的？",
+     "en": "Your coat looks really nice. Where did you buy it?"
+    },
+    {
+     "s": "女",
+     "zh": "我是在网上买的，那时候在打折，只花了三百块。",
+     "en": "I bought it online. It was being sold at a discount then, so I only spent 300 yuan."
+    },
+    {
+     "s": "男",
+     "zh": "这么便宜！质量怎么样？",
+     "en": "That cheap! What is the quality like?"
+    },
+    {
+     "s": "女",
+     "zh": "还可以。但是网购有时候也会买到质量不好的东西。",
+     "en": "It is OK. But when you shop online, sometimes you also buy things whose quality is not good."
+    },
+    {
+     "s": "男",
+     "zh": "对，我上次买的鞋，穿了一个星期就破了。",
+     "en": "True. The shoes I bought last time fell apart after a week."
+    },
+    {
+     "s": "女",
+     "zh": "所以买之前要先看看别人怎么说。",
+     "en": "So before you buy, you should first look at what other people say."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的外套是在哪儿买的？",
+     "en": "Where did the woman buy her coat?",
+     "opts": [
+      "网上",
+      "商场",
+      "超市",
+      "朋友送的"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "外套花了多少钱？",
+     "en": "How much did the coat cost?",
+     "opts": [
+      "三百块",
+      "三千块",
+      "一百块",
+      "五百块"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "男的上次买的鞋怎么了？",
+     "en": "What happened to the shoes the man bought last time?",
+     "opts": [
+      "穿了一个星期就破了",
+      "太小了",
+      "太贵了",
+      "颜色不好"
+     ],
+     "line": 4
+    },
+    {
+     "zh": "女的说网购前要做什么？",
+     "en": "What does the woman say you need to do before shopping online?",
+     "opts": [
+      "先看看别人怎么说",
+      "先去商场看",
+      "先问朋友",
+      "先付钱"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p4-checkup",
+   "level": 4,
+   "title": "After the check-up",
+   "scene": "A woman asks a friend why he stopped going to the gym.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "你最近怎么不去健身房了？",
+     "en": "Why have you stopped going to the gym recently?"
+    },
+    {
+     "s": "男",
+     "zh": "我工作压力太大，每天都加班，没有时间。",
+     "en": "Work is too stressful. I work overtime every day and have no time."
+    },
+    {
+     "s": "女",
+     "zh": "上个月体检的结果怎么样？",
+     "en": "What were the results of last month's check-up?"
+    },
+    {
+     "s": "男",
+     "zh": "医生说我的体重增加了五公斤，要多运动，少吃油多的东西。",
+     "en": "The doctor said my weight has gone up by five kilos, and that I should exercise more and eat less oily food."
+    },
+    {
+     "s": "女",
+     "zh": "那你每天下班以后去散步吧，半个小时也好。",
+     "en": "Then you should go for a walk every day after work; even half an hour is good."
+    },
+    {
+     "s": "男",
+     "zh": "好，我从今天开始。",
+     "en": "OK, I will start today."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的为什么不去健身房了？",
+     "en": "Why has the man stopped going to the gym?",
+     "opts": [
+      "工作压力大，没有时间",
+      "健身房太远",
+      "他受伤了",
+      "健身房太贵"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "男的体重增加了多少？",
+     "en": "How much weight has the man put on?",
+     "opts": [
+      "五公斤",
+      "三公斤",
+      "十公斤",
+      "五斤"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "医生让男的怎么做？",
+     "en": "What does the doctor tell the man to do?",
+     "opts": [
+      "多运动，少吃油多的东西",
+      "多休息",
+      "少加班",
+      "多吃水果"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的建议男的每天做什么？",
+     "en": "What does the woman suggest the man do every day?",
+     "opts": [
+      "下班以后散步",
+      "早上跑步",
+      "去游泳",
+      "去健身房"
+     ],
+     "line": 4
+    }
+   ]
+  },
+  {
+   "id": "p4-meeting",
+   "level": 4,
+   "title": "The meeting is moved",
+   "scene": "A man calls to ask about tomorrow's meeting.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "你好，我想问一下，明天的会议还按时开吗？",
+     "en": "Hello, I would like to ask: is tomorrow's meeting still on time?"
+    },
+    {
+     "s": "女",
+     "zh": "不好意思，我正要通知你，会议推迟到下星期三了。",
+     "en": "Sorry, I was just about to let you know: the meeting has been put back to next Wednesday."
+    },
+    {
+     "s": "男",
+     "zh": "时间呢？还是上午九点吗？",
+     "en": "And the time? Is it still nine in the morning?"
+    },
+    {
+     "s": "女",
+     "zh": "改到下午两点了，地点没有变，还是在三楼的会议室。",
+     "en": "It has been moved to two in the afternoon. The place has not changed: it is still the meeting room on the third floor."
+    },
+    {
+     "s": "男",
+     "zh": "好的，需要我准备什么材料吗？",
+     "en": "OK. Do I need to prepare any material?"
+    },
+    {
+     "s": "女",
+     "zh": "请把上个月的调查结果打印出来，每人一份。",
+     "en": "Please print out last month's survey results, one copy for each person."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "会议推迟到什么时候了？",
+     "en": "When has the meeting been put back to?",
+     "opts": [
+      "下星期三",
+      "明天",
+      "下星期二",
+      "下个月"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "会议几点开？",
+     "en": "What time is the meeting?",
+     "opts": [
+      "下午两点",
+      "上午九点",
+      "下午三点",
+      "上午十点"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "会议在哪儿开？",
+     "en": "Where is the meeting?",
+     "opts": [
+      "三楼的会议室",
+      "二楼的会议室",
+      "经理的办公室",
+      "楼下的餐厅"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "男的要准备什么？",
+     "en": "What does the man need to prepare?",
+     "opts": [
+      "打印上个月的调查结果",
+      "写一封信",
+      "订午餐",
+      "买水果"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p4-misunderstanding",
+   "level": 4,
+   "title": "A misunderstanding",
+   "scene": "A woman asks a man about a quarrel with a friend.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "你和小明还在生气吗？",
+     "en": "Are you and Xiaoming still angry with each other?"
+    },
+    {
+     "s": "男",
+     "zh": "已经没事了，其实是一个误会。",
+     "en": "It is all fine now. It was actually a misunderstanding."
+    },
+    {
+     "s": "女",
+     "zh": "怎么回事？",
+     "en": "What is going on?"
+    },
+    {
+     "s": "男",
+     "zh": "他生日那天我没给他打电话，他以为我忘了。",
+     "en": "I did not call him on his birthday, and he thought I had forgotten."
+    },
+    {
+     "s": "男",
+     "zh": "其实我那天在飞机上，手机关机了。",
+     "en": "Actually I was on a plane that day, and my phone was switched off."
+    },
+    {
+     "s": "女",
+     "zh": "那你跟他解释了吗？",
+     "en": "So did you explain it to him?"
+    },
+    {
+     "s": "男",
+     "zh": "解释了，也跟他道歉了，他已经原谅我了。",
+     "en": "I did, and I also apologised. He has already forgiven me."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "小明为什么生气了？",
+     "en": "Why did Xiaoming get angry?",
+     "opts": [
+      "男的在他生日那天没给他打电话",
+      "男的忘了还他钱",
+      "男的约会迟到了",
+      "男的没去他的聚会"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "那天男的在哪儿？",
+     "en": "Where was the man that day?",
+     "opts": [
+      "飞机上",
+      "医院",
+      "办公室",
+      "家里"
+     ],
+     "line": 4
+    },
+    {
+     "zh": "男的为什么没打电话？",
+     "en": "Why did the man not call?",
+     "opts": [
+      "手机关机了",
+      "他忘了",
+      "他太忙了",
+      "他生病了"
+     ],
+     "line": 4
+    },
+    {
+     "zh": "现在小明怎么样了？",
+     "en": "How are things with Xiaoming now?",
+     "opts": [
+      "已经原谅男的了",
+      "还在生气",
+      "不想见男的",
+      "去旅行了"
+     ],
+     "line": 6
+    }
+   ]
+  },
+  {
+   "id": "p4-scholarship",
+   "level": 4,
+   "title": "A scholarship",
+   "scene": "A woman tells a friend good news about university.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "你申请的那个大学有消息了吗？",
+     "en": "Is there any news from the university you applied to?"
+    },
+    {
+     "s": "女",
+     "zh": "有了！我申请成功了，而且还拿到了奖学金。",
+     "en": "Yes! My application was successful, and I got a scholarship too."
+    },
+    {
+     "s": "男",
+     "zh": "太棒了！你学什么专业？",
+     "en": "Brilliant! What subject are you studying?"
+    },
+    {
+     "s": "女",
+     "zh": "教育专业。我将来想当老师。",
+     "en": "Education. In the future I want to be a teacher."
+    },
+    {
+     "s": "男",
+     "zh": "学费贵吗？",
+     "en": "Are the fees expensive?"
+    },
+    {
+     "s": "女",
+     "zh": "奖学金能付一半的学费，剩下的我打算自己打工赚。",
+     "en": "The scholarship can pay half of the fees; the rest I plan to earn myself with a part-time job."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的申请成功了吗？",
+     "en": "Was the woman's application successful?",
+     "opts": [
+      "成功了",
+      "还没有消息",
+      "失败了",
+      "她没有申请"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的还拿到了什么？",
+     "en": "What else did the woman get?",
+     "opts": [
+      "奖学金",
+      "工作",
+      "签证",
+      "奖金"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的学什么专业？",
+     "en": "What subject is the woman studying?",
+     "opts": [
+      "教育",
+      "经济",
+      "法律",
+      "科学"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "剩下的学费女的打算怎么办？",
+     "en": "How does the woman plan to pay the rest of the fees?",
+     "opts": [
+      "自己打工赚",
+      "让父母付",
+      "向银行借",
+      "不读了"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p4-plastic",
+   "level": 4,
+   "title": "Another bag",
+   "scene": "A woman sees a man buy a bag at the supermarket again.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "你怎么又在超市买袋子了？",
+     "en": "Why have you bought a bag at the supermarket again?"
+    },
+    {
+     "s": "男",
+     "zh": "我忘记带袋子了。",
+     "en": "I forgot to bring a bag."
+    },
+    {
+     "s": "女",
+     "zh": "这种袋子用一次就扔，太浪费了，对环境也不好。",
+     "en": "This kind of bag is used once and thrown away. It is so wasteful, and it is not good for the environment either."
+    },
+    {
+     "s": "男",
+     "zh": "你说得对。可是超市的袋子不是免费的，也就几毛钱。",
+     "en": "You are right. But the supermarket's bags are not free, and they only cost a few jiao."
+    },
+    {
+     "s": "女",
+     "zh": "不是钱的问题。如果每个人少用一个，我们一年就能减少很多垃圾。",
+     "en": "It is not about the money. If everyone used one less, we could cut a lot of rubbish in a year."
+    },
+    {
+     "s": "男",
+     "zh": "好吧，以后我把袋子放在车里，就不会忘记了。",
+     "en": "All right. From now on I will keep a bag in the car, so I will not forget."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的忘记带什么了？",
+     "en": "What did the man forget to bring?",
+     "opts": [
+      "袋子",
+      "钱",
+      "手机",
+      "钥匙"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的觉得这种袋子怎么样？",
+     "en": "What does the woman think of this kind of bag?",
+     "opts": [
+      "太浪费，对环境不好",
+      "很方便",
+      "太贵了",
+      "没有关系"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "超市的袋子要多少钱？",
+     "en": "How much does a supermarket bag cost?",
+     "opts": [
+      "几毛钱",
+      "几块钱",
+      "不要钱",
+      "十块钱"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "男的以后打算怎么做？",
+     "en": "What does the man plan to do from now on?",
+     "opts": [
+      "把袋子放在车里",
+      "不去超市了",
+      "买很多袋子",
+      "让女的带袋子"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p4-forest",
+   "level": 4,
+   "title": "The forest in the snow",
+   "scene": "Two friends plan a weekend trip.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "这个周末我们去森林公园玩吧，听说那里的景色特别漂亮。",
+     "en": "Let's go to the forest park this weekend. I hear the scenery there is especially pretty."
+    },
+    {
+     "s": "女",
+     "zh": "好啊，但是新闻说周末要降温。",
+     "en": "Sure, but the news says it will get colder at the weekend."
+    },
+    {
+     "s": "男",
+     "zh": "会多冷？",
+     "en": "How cold will it get?"
+    },
+    {
+     "s": "女",
+     "zh": "最冷的时候零下三摄氏度，还可能下雪。",
+     "en": "At its coldest, minus 3 degrees Celsius, and it might snow."
+    },
+    {
+     "s": "男",
+     "zh": "下雪更好啊，雪里的森林一定很漂亮。我们多穿一点儿衣服就行了。",
+     "en": "Snow is even better: a forest in the snow must be beautiful. We just need to wear more clothes."
+    },
+    {
+     "s": "女",
+     "zh": "好吧，那我们星期六早上八点出发。",
+     "en": "All right, then we will set off at eight on Saturday morning."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "他们周末想去哪儿？",
+     "en": "Where do they want to go at the weekend?",
+     "opts": [
+      "森林公园",
+      "海边",
+      "动物园",
+      "山上的小村"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "周末天气怎么样？",
+     "en": "What will the weather be like at the weekend?",
+     "opts": [
+      "要降温，可能下雪",
+      "很热",
+      "下大雨",
+      "刮大风"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "最冷的时候是多少摄氏度？",
+     "en": "How cold will it be at its coldest?",
+     "opts": [
+      "零下三摄氏度",
+      "零上三摄氏度",
+      "零下十三摄氏度",
+      "零摄氏度"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "他们什么时候出发？",
+     "en": "When will they set off?",
+     "opts": [
+      "星期六早上八点",
+      "星期天早上八点",
+      "星期六晚上八点",
+      "星期五早上八点"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p4-signal",
+   "level": 4,
+   "title": "No signal",
+   "scene": "A woman's phone suddenly stops working.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "我的手机突然没有信号了，也不能上网了。",
+     "en": "My phone suddenly has no signal, and I cannot go online any more."
+    },
+    {
+     "s": "男",
+     "zh": "你先关机，再重新开机试试。",
+     "en": "You first switch it off, then switch it on again and try."
+    },
+    {
+     "s": "女",
+     "zh": "我试过了，还是不行。",
+     "en": "I tried. It still does not work."
+    },
+    {
+     "s": "男",
+     "zh": "那可能是手机坏了，你去修理店看看吧。",
+     "en": "Then maybe the phone is broken. You should take it to a repair shop."
+    },
+    {
+     "s": "女",
+     "zh": "修理要多少钱？",
+     "en": "How much will the repair cost?"
+    },
+    {
+     "s": "男",
+     "zh": "要看是什么问题。如果修理太贵，还不如买一个新的。",
+     "en": "It depends on the problem. If the repair is too expensive, you might as well buy a new one."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的手机怎么了？",
+     "en": "What is wrong with the woman's phone?",
+     "opts": [
+      "没有信号，不能上网",
+      "没有电了",
+      "掉在水里了",
+      "打不开了"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "男的让女的先做什么？",
+     "en": "What does the man tell the woman to do first?",
+     "opts": [
+      "关机再开机",
+      "买新手机",
+      "去修理店",
+      "给别人打电话"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的试了以后怎么样？",
+     "en": "What happened when the woman tried?",
+     "opts": [
+      "还是不行",
+      "好了",
+      "更不好了",
+      "她没有试"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "男的说如果修理太贵怎么办？",
+     "en": "What does the man say to do if the repair is too expensive?",
+     "opts": [
+      "买一个新的",
+      "借别人的",
+      "不用手机了",
+      "再等等"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p5-grandpa",
+   "level": 5,
+   "title": "Grandpa's mornings",
+   "scene": "A woman talks about her grandfather.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "我爷爷今年七十五岁了，已经退休十五年了。",
+     "en": "My grandpa is 75 this year and has already been retired for 15 years."
+    },
+    {
+     "s": "女",
+     "zh": "他每天早上六点起床，先去公园散步，然后回家练书法。",
+     "en": "He gets up at six every morning, first goes for a walk in the park, and then comes home to practise calligraphy."
+    },
+    {
+     "s": "女",
+     "zh": "他说练书法能让人心里平静。",
+     "en": "He says practising calligraphy can make people feel calm inside."
+    },
+    {
+     "s": "女",
+     "zh": "周末的时候，我们全家都会回去陪伴他。",
+     "en": "At weekends our whole family will go back to keep him company."
+    },
+    {
+     "s": "女",
+     "zh": "爷爷说，他最希望全家人都身体健康。",
+     "en": "Grandpa says what he hopes for most is for the whole family to be healthy."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "爷爷退休多少年了？",
+     "en": "How many years has Grandpa been retired?",
+     "opts": [
+      "十五年",
+      "七十五年",
+      "五年",
+      "十年"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "爷爷每天早上先做什么？",
+     "en": "What does Grandpa do first every morning?",
+     "opts": [
+      "去公园散步",
+      "练书法",
+      "去买菜",
+      "看新闻"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "爷爷觉得练书法有什么好处？",
+     "en": "What does Grandpa think is good about practising calligraphy?",
+     "opts": [
+      "能让人心里平静",
+      "能锻炼身体",
+      "能交朋友",
+      "能赚钱"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "周末全家人会做什么？",
+     "en": "What will the whole family do at weekends?",
+     "opts": [
+      "回去陪伴爷爷",
+      "去公园散步",
+      "一起去旅行",
+      "一起练书法"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "爷爷最希望什么？",
+     "en": "What does Grandpa hope for most?",
+     "opts": [
+      "全家人身体健康",
+      "去国外旅行",
+      "写一本书",
+      "搬到城里住"
+     ],
+     "line": 4
+    }
+   ]
+  },
+  {
+   "id": "p5-hotpot",
+   "level": 5,
+   "title": "Hotpot tonight",
+   "scene": "A couple decide what to have for dinner.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "今天晚上咱们吃什么？",
+     "en": "What shall we have tonight?"
+    },
+    {
+     "s": "女",
+     "zh": "天气这么冷，吃火锅吧。",
+     "en": "It is so cold, let's have hotpot."
+    },
+    {
+     "s": "男",
+     "zh": "好主意。咱们家里有什么？",
+     "en": "Good idea. What do we have at home?"
+    },
+    {
+     "s": "女",
+     "zh": "冰箱里有豆腐、土豆和一些蔬菜，不过没有肉了。",
+     "en": "There is tofu, potatoes and some vegetables in the fridge, but no meat left."
+    },
+    {
+     "s": "男",
+     "zh": "那我去楼下的便利店买一些牛肉和羊肉。",
+     "en": "Then I will go to the convenience store downstairs and buy some beef and lamb."
+    },
+    {
+     "s": "女",
+     "zh": "顺便买一些饮料，再买一些面条。火锅最后煮面条最好吃了。",
+     "en": "Get some drinks while you are there, and some noodles too. Noodles cooked in the hotpot at the end taste the best."
+    },
+    {
+     "s": "男",
+     "zh": "行，我十分钟就回来。",
+     "en": "OK, I will be back in ten minutes."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "他们晚上吃什么？",
+     "en": "What are they having tonight?",
+     "opts": [
+      "火锅",
+      "面条",
+      "烧烤",
+      "饺子"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "为什么女的想吃这个？",
+     "en": "Why does the woman want to have this?",
+     "opts": [
+      "天气很冷",
+      "家里有很多肉",
+      "很便宜",
+      "男的喜欢"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "冰箱里没有什么了？",
+     "en": "What is there no more of in the fridge?",
+     "opts": [
+      "肉",
+      "豆腐",
+      "土豆",
+      "蔬菜"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "男的去哪儿买东西？",
+     "en": "Where does the man go to buy things?",
+     "opts": [
+      "楼下的便利店",
+      "大超市",
+      "菜市场",
+      "网上"
+     ],
+     "line": 4
+    },
+    {
+     "zh": "女的让男的顺便买什么？",
+     "en": "What does the woman ask the man to buy on the way?",
+     "opts": [
+      "饮料和面条",
+      "鸡肉",
+      "水果",
+      "豆腐"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p5-flat",
+   "level": 5,
+   "title": "A flat of my own",
+   "scene": "A man talks to an agent about renting a flat.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "我想租一套公寓，一个人住。",
+     "en": "I would like to rent a flat to live in by myself."
+    },
+    {
+     "s": "女",
+     "zh": "您每个月的租金最多能接受多少？",
+     "en": "What is the most you can accept for the rent each month?"
+    },
+    {
+     "s": "男",
+     "zh": "最好不超过五千。",
+     "en": "Ideally not more than 5,000."
+    },
+    {
+     "s": "女",
+     "zh": "这套离地铁站很近，面积不大，可是刚刚装修过，家具和家电都是新的。",
+     "en": "This one is very close to the metro station. It is not big, but it has just been redecorated, and the furniture and appliances are all new."
+    },
+    {
+     "s": "女",
+     "zh": "租金四千八百块。",
+     "en": "The rent is 4,800 yuan."
+    },
+    {
+     "s": "男",
+     "zh": "押金我要付多少？",
+     "en": "How much do I need to pay as a deposit?"
+    },
+    {
+     "s": "女",
+     "zh": "押金是一个月的租金。如果没问题，我们明天就可以签合同。",
+     "en": "The deposit is one month's rent. If there is no problem, we can sign the contract tomorrow."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的想租什么？",
+     "en": "What does the man want to rent?",
+     "opts": [
+      "一套公寓",
+      "一间办公室",
+      "一个车库",
+      "一个商店"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "男的希望租金最多是多少？",
+     "en": "What is the most the man hopes to pay in rent?",
+     "opts": [
+      "五千",
+      "四千八",
+      "六千",
+      "三千"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "这套公寓有什么特点？",
+     "en": "What is special about this flat?",
+     "opts": [
+      "刚刚装修过",
+      "面积很大",
+      "离地铁站很远",
+      "没有家具"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "这套公寓的租金是多少？",
+     "en": "How much is the rent for this flat?",
+     "opts": [
+      "四千八百块",
+      "五千块",
+      "四千块",
+      "五千八百块"
+     ],
+     "line": 4
+    },
+    {
+     "zh": "押金是多少？",
+     "en": "How much is the deposit?",
+     "opts": [
+      "一个月的租金",
+      "两个月的租金",
+      "五千块",
+      "不要押金"
+     ],
+     "line": 6
+    }
+   ]
+  },
+  {
+   "id": "p5-sale",
+   "level": 5,
+   "title": "Fifth birthday sale",
+   "scene": "An announcement in a shop.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "各位顾客，欢迎光临。",
+     "en": "Dear customers, welcome."
+    },
+    {
+     "s": "女",
+     "zh": "为了庆祝本店开业五周年，从今天到这个星期日，所有商品都打折，原来一百块的，现在只要八十块。",
+     "en": "To celebrate our shop's fifth anniversary, from today until this Sunday, everything is on sale: what used to cost 100 yuan now costs only 80."
+    },
+    {
+     "s": "女",
+     "zh": "会员每买一百块，还可以再少付十块。",
+     "en": "Members can also pay 10 yuan less for every 100 yuan they spend."
+    },
+    {
+     "s": "女",
+     "zh": "另外，购物满五百元，就赠送一个漂亮的杯子。",
+     "en": "In addition, if you spend 500 yuan, you will get a pretty cup as a gift."
+    },
+    {
+     "s": "女",
+     "zh": "活动期间，每天营业到晚上十点。祝您购物愉快！",
+     "en": "During the sale, the shop is open until ten every evening. Wishing you happy shopping!"
+    }
+   ],
+   "qs": [
+    {
+     "zh": "这家店为什么做活动？",
+     "en": "Why is the shop holding this sale?",
+     "opts": [
+      "庆祝开业五周年",
+      "新年快到了",
+      "商品太多了",
+      "换了新老板"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "活动到什么时候结束？",
+     "en": "When does the sale end?",
+     "opts": [
+      "这个星期日",
+      "下个星期日",
+      "明天",
+      "这个月底"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "会员可以享受什么优惠？",
+     "en": "What extra offer can members get?",
+     "opts": [
+      "每买一百块再少付十块",
+      "免费送货",
+      "送一个杯子",
+      "所有东西都半价"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "购物满多少元送杯子？",
+     "en": "How much do you need to spend to get a cup?",
+     "opts": [
+      "五百元",
+      "一百元",
+      "八百元",
+      "一千元"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "活动期间每天营业到几点？",
+     "en": "Until what time is the shop open each day during the sale?",
+     "opts": [
+      "晚上十点",
+      "晚上九点",
+      "晚上十一点",
+      "晚上八点"
+     ],
+     "line": 4
+    }
+   ]
+  },
+  {
+   "id": "p5-accident",
+   "level": 5,
+   "title": "An accident on the way",
+   "scene": "A woman explains why she is late.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "你怎么这么晚才到？",
+     "en": "Why are you so late?"
+    },
+    {
+     "s": "女",
+     "zh": "别提了，前面发生了一起车祸，我在路上堵了一个多小时。",
+     "en": "Do not ask. There was a car accident ahead, and I was stuck on the road for over an hour."
+    },
+    {
+     "s": "男",
+     "zh": "严重吗？有人受伤吗？",
+     "en": "Was it serious? Was anyone hurt?"
+    },
+    {
+     "s": "女",
+     "zh": "不太严重，两辆车撞在一起，司机都没事。",
+     "en": "Not very serious. Two cars hit each other, and both drivers are fine."
+    },
+    {
+     "s": "女",
+     "zh": "交警说其中一辆车超速了。",
+     "en": "The traffic police said one of the cars was speeding."
+    },
+    {
+     "s": "男",
+     "zh": "超速很危险，肯定要罚款吧？",
+     "en": "Speeding is dangerous. There must be a fine?"
+    },
+    {
+     "s": "女",
+     "zh": "我听说司机不仅要罚款，还可能会被暂停驾照。",
+     "en": "I heard the driver will not only have to pay a fine, but the licence may also be suspended."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的为什么来晚了？",
+     "en": "Why is the woman late?",
+     "opts": [
+      "路上发生了车祸，堵车了",
+      "她起床晚了",
+      "她迷路了",
+      "她的车坏了"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "路上堵了多久？",
+     "en": "How long was the road blocked?",
+     "opts": [
+      "一个多小时",
+      "半个小时",
+      "两个多小时",
+      "十几分钟"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "车祸严重吗？",
+     "en": "Was the accident serious?",
+     "opts": [
+      "不太严重，司机都没事",
+      "很严重",
+      "有一个司机受伤了",
+      "女的不知道"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "交警说为什么发生了车祸？",
+     "en": "What did the traffic police say caused the accident?",
+     "opts": [
+      "一辆车超速了",
+      "路太滑了",
+      "司机喝酒了",
+      "下大雨了"
+     ],
+     "line": 4
+    },
+    {
+     "zh": "超速的司机可能会怎么样？",
+     "en": "What may happen to the speeding driver?",
+     "opts": [
+      "被罚款，还可能被暂停驾照",
+      "只是被罚款",
+      "没有什么事",
+      "要去医院"
+     ],
+     "line": 6
+    }
+   ]
+  },
+  {
+   "id": "p5-login",
+   "level": 5,
+   "title": "Forgot the password",
+   "scene": "A man helps a woman with an app.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "我想在这个软件上买火车票，可是注册不了。",
+     "en": "I want to buy train tickets in this app, but I cannot register."
+    },
+    {
+     "s": "男",
+     "zh": "屏幕上显示什么？",
+     "en": "What does the screen show?"
+    },
+    {
+     "s": "女",
+     "zh": "它说我的手机号码已经注册过了。",
+     "en": "It says my phone number has already been registered."
+    },
+    {
+     "s": "男",
+     "zh": "你是不是以前用过这个软件？你可以用手机号码登录试试。",
+     "en": "Did you use this app before? You can try logging in with your phone number."
+    },
+    {
+     "s": "女",
+     "zh": "可是我忘记密码了。",
+     "en": "But I have forgotten the password."
+    },
+    {
+     "s": "男",
+     "zh": "没关系，点“忘记密码”，它会给你的手机发一个号码，输入以后就能设置新密码。",
+     "en": "No problem. Tap \"forgot password\", and it will send a number to your phone. After you type it in, you can set a new password."
+    },
+    {
+     "s": "女",
+     "zh": "好了，我登录成功了！",
+     "en": "There, I have logged in!"
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的想在软件上做什么？",
+     "en": "What does the woman want to do in the app?",
+     "opts": [
+      "买火车票",
+      "买飞机票",
+      "预订酒店",
+      "下载电影"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "女的为什么注册不了？",
+     "en": "Why can the woman not register?",
+     "opts": [
+      "她的手机号码已经注册过了",
+      "网络不好",
+      "软件太旧了",
+      "手机没电了"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "男的让女的怎么做？",
+     "en": "What does the man tell the woman to do?",
+     "opts": [
+      "用手机号码登录",
+      "重新下载软件",
+      "换一个手机号码",
+      "给客服打电话"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的后来遇到了什么问题？",
+     "en": "What problem did the woman run into next?",
+     "opts": [
+      "忘记密码了",
+      "没有钱了",
+      "手机坏了",
+      "没有信号"
+     ],
+     "line": 4
+    },
+    {
+     "zh": "最后怎么样了？",
+     "en": "What happened in the end?",
+     "opts": [
+      "登录成功了",
+      "还是登录不了",
+      "她放弃了",
+      "她给客服打了电话"
+     ],
+     "line": 6
+    }
+   ]
+  },
+  {
+   "id": "p5-quit",
+   "level": 5,
+   "title": "Leaving the job",
+   "scene": "A man asks a friend why she quit her job.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "我听说你辞职了？",
+     "en": "I heard you quit your job?"
+    },
+    {
+     "s": "女",
+     "zh": "对，我在那家公司实习了一年，后来又工作了两年，可是待遇一直没有提高。",
+     "en": "Yes. I was an intern at that company for a year and then worked there for two more years, but the pay and conditions never got better."
+    },
+    {
+     "s": "男",
+     "zh": "那你接下来打算做什么？",
+     "en": "So what do you plan to do next?"
+    },
+    {
+     "s": "女",
+     "zh": "我已经投了几份简历，有一家科技公司约我下周面试。",
+     "en": "I have already sent out a few CVs, and a tech company has asked me to an interview next week."
+    },
+    {
+     "s": "男",
+     "zh": "科技公司的发展前途不错。",
+     "en": "Tech companies have good prospects."
+    },
+    {
+     "s": "女",
+     "zh": "是啊，而且离我家很近，不用每天挤地铁了。",
+     "en": "Yes, and it is very close to my home, so I will not have to squeeze onto the metro every day."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的在原来的公司一共待了几年？",
+     "en": "How many years in total was the woman at her old company?",
+     "opts": [
+      "三年",
+      "一年",
+      "两年",
+      "四年"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "女的为什么辞职了？",
+     "en": "Why did the woman quit?",
+     "opts": [
+      "待遇一直没有提高",
+      "离家太远",
+      "同事不好",
+      "工作太累"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "哪家公司约女的面试？",
+     "en": "Which company has asked the woman to an interview?",
+     "opts": [
+      "一家科技公司",
+      "一家银行",
+      "一所学校",
+      "一家医院"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的什么时候去面试？",
+     "en": "When is the woman's interview?",
+     "opts": [
+      "下周",
+      "明天",
+      "这个周末",
+      "下个月"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "新公司有什么好处？",
+     "en": "What is good about the new company?",
+     "opts": [
+      "离女的家很近",
+      "工资很高",
+      "不用加班",
+      "可以出国"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p5-noise",
+   "level": 5,
+   "title": "Noisy neighbours",
+   "scene": "A woman tells a friend about her sleepless nights.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "楼上的邻居每天晚上都很吵，我已经好几天睡不好了。",
+     "en": "The neighbours upstairs are noisy every night, and I have not slept well for days."
+    },
+    {
+     "s": "男",
+     "zh": "你跟他们沟通过吗？",
+     "en": "Have you talked it over with them?"
+    },
+    {
+     "s": "女",
+     "zh": "我上个星期去过一次，他们说家里有孩子，没办法。",
+     "en": "I went once last week. They said they have children at home and cannot help it."
+    },
+    {
+     "s": "男",
+     "zh": "那你可以给物业打电话，让物业跟他们说。",
+     "en": "Then you could call the property management and get them to talk to the neighbours."
+    },
+    {
+     "s": "女",
+     "zh": "我打过了，物业说会解决，可是到现在一点儿变化都没有。",
+     "en": "I did. The property management said they would sort it out, but so far nothing has changed at all."
+    },
+    {
+     "s": "男",
+     "zh": "那你可以晚上戴着耳机听音乐。",
+     "en": "Then you could wear headphones and listen to music at night."
+    },
+    {
+     "s": "女",
+     "zh": "我只能先这样了。",
+     "en": "I can only leave it like that for now."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的为什么睡不好？",
+     "en": "Why can the woman not sleep well?",
+     "opts": [
+      "楼上的邻居很吵",
+      "她工作压力大",
+      "她生病了",
+      "外面在修路"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "女的去找邻居的时候，邻居怎么说？",
+     "en": "What did the neighbours say when the woman went to see them?",
+     "opts": [
+      "家里有孩子，没办法",
+      "马上就不吵了",
+      "他们一点儿也不吵",
+      "让她去找物业"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "男的建议女的找谁？",
+     "en": "Who does the man suggest the woman contact?",
+     "opts": [
+      "物业",
+      "警察",
+      "邻居的孩子",
+      "房东"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "物业说了以后怎么样？",
+     "en": "What happened after the property management promised to act?",
+     "opts": [
+      "一点儿变化都没有",
+      "已经不吵了",
+      "邻居搬走了",
+      "物业不管"
+     ],
+     "line": 4
+    },
+    {
+     "zh": "男的最后建议女的做什么？",
+     "en": "What does the man suggest at the end?",
+     "opts": [
+      "晚上戴着耳机听音乐",
+      "搬家",
+      "报警",
+      "再去找邻居"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p5-sleep",
+   "level": 5,
+   "title": "Sleep well",
+   "scene": "A doctor gives advice on a radio programme.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "很多年轻人习惯熬夜，晚上玩手机玩到一两点。",
+     "en": "Many young people are used to staying up late, playing on their phones until one or two at night."
+    },
+    {
+     "s": "男",
+     "zh": "时间长了，就容易失眠，第二天也没有精神。",
+     "en": "Over time it is easy to get insomnia, and the next day you have no energy."
+    },
+    {
+     "s": "男",
+     "zh": "一般来说，成年人每天最好睡七到八个小时。",
+     "en": "Generally speaking, it is best for adults to sleep seven to eight hours a day."
+    },
+    {
+     "s": "男",
+     "zh": "睡觉前一个小时最好不要看手机，可以看看书或者听听轻松的音乐。",
+     "en": "It is best not to look at your phone in the hour before bed; you could read or listen to some relaxing music."
+    },
+    {
+     "s": "男",
+     "zh": "另外，晚饭不要吃得太饱，也不要喝咖啡和浓茶。",
+     "en": "Also, do not eat too much at dinner, and do not drink coffee or strong tea."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "很多年轻人有什么习惯？",
+     "en": "What habit do many young people have?",
+     "opts": [
+      "熬夜",
+      "早起",
+      "不吃早饭",
+      "经常运动"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "熬夜时间长了会怎么样？",
+     "en": "What can happen if you stay up late for a long time?",
+     "opts": [
+      "容易失眠，没有精神",
+      "容易发胖",
+      "眼睛不好",
+      "没有朋友"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "成年人每天最好睡多久？",
+     "en": "How long is it best for adults to sleep each day?",
+     "opts": [
+      "七到八个小时",
+      "五到六个小时",
+      "十个小时",
+      "六到七个小时"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "睡觉前一个小时最好不要做什么？",
+     "en": "What is it best not to do in the hour before bed?",
+     "opts": [
+      "看手机",
+      "看书",
+      "听音乐",
+      "洗澡"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "晚饭应该怎么吃？",
+     "en": "How should you eat at dinner?",
+     "opts": [
+      "不要吃得太饱",
+      "多吃肉",
+      "不吃",
+      "多喝咖啡"
+     ],
+     "line": 4
+    }
+   ]
+  },
+  {
+   "id": "p5-volunteer",
+   "level": 5,
+   "title": "Visiting the elderly",
+   "scene": "A man tells a friend about his weekend plans.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "这个周末你有什么安排？",
+     "en": "What are your plans for this weekend?"
+    },
+    {
+     "s": "男",
+     "zh": "我报名参加了社区的志愿者活动，去看望附近的老人。",
+     "en": "I have signed up for a community volunteer activity: visiting the elderly people nearby."
+    },
+    {
+     "s": "女",
+     "zh": "你们去了要做什么？",
+     "en": "What will you do when you get there?"
+    },
+    {
+     "s": "男",
+     "zh": "帮他们打扫卫生，陪他们聊天儿，还教他们用智能手机。",
+     "en": "Help them clean, keep them company and chat, and also teach them to use smartphones."
+    },
+    {
+     "s": "女",
+     "zh": "听起来很有意义。下次能带我一起去吗？",
+     "en": "That sounds really worthwhile. Can you take me with you next time?"
+    },
+    {
+     "s": "男",
+     "zh": "当然可以，下个月还有一次，我提前告诉你。",
+     "en": "Of course. There is another one next month; I will tell you in advance."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的这个周末要做什么？",
+     "en": "What will the man do this weekend?",
+     "opts": [
+      "参加志愿者活动",
+      "去旅行",
+      "加班",
+      "去看病"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "他们去看望谁？",
+     "en": "Who are they visiting?",
+     "opts": [
+      "附近的老人",
+      "学校的孩子",
+      "医院的病人",
+      "新来的邻居"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "他们会教老人做什么？",
+     "en": "What will they teach the elderly people to do?",
+     "opts": [
+      "用智能手机",
+      "做饭",
+      "写书法",
+      "跳舞"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的想做什么？",
+     "en": "What does the woman want to do?",
+     "opts": [
+      "下次一起去",
+      "给老人送礼物",
+      "自己组织活动",
+      "她不想去"
+     ],
+     "line": 4
+    },
+    {
+     "zh": "下一次活动是什么时候？",
+     "en": "When is the next activity?",
+     "opts": [
+      "下个月",
+      "下个星期",
+      "明天",
+      "明年"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p5-museum",
+   "level": 5,
+   "title": "Welcome to the museum",
+   "scene": "A guide speaks to a tour group.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "各位游客，大家好，欢迎来到本市的历史博物馆。",
+     "en": "Hello, everyone, and welcome to the city's history museum."
+    },
+    {
+     "s": "女",
+     "zh": "我们这个城市已经有两千多年的历史了。",
+     "en": "Our city already has a history of over 2,000 years."
+    },
+    {
+     "s": "女",
+     "zh": "一楼展出的是古代人用过的工具和生活用品。",
+     "en": "On the first floor are tools and everyday things that people used in ancient times."
+    },
+    {
+     "s": "女",
+     "zh": "二楼是书法和国画展览，很多作品都非常珍贵。",
+     "en": "The second floor has an exhibition of calligraphy and Chinese painting; many of the works are very precious."
+    },
+    {
+     "s": "女",
+     "zh": "参观的时候请不要拍照，也不要用手摸这些东西。",
+     "en": "During the visit, please do not take photos, and do not touch these things with your hands."
+    },
+    {
+     "s": "女",
+     "zh": "参观结束以后，可以在一楼的商店买一些小礼物。",
+     "en": "After the visit, you can buy some small gifts in the shop on the first floor."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "这个城市有多少年的历史？",
+     "en": "How long is this city's history?",
+     "opts": [
+      "两千多年",
+      "一千多年",
+      "两百多年",
+      "五千多年"
+     ],
+     "line": 1
+    },
+    {
+     "zh": "一楼展出什么？",
+     "en": "What is on the first floor?",
+     "opts": [
+      "古代人用过的工具和生活用品",
+      "书法和国画",
+      "现代艺术",
+      "老照片"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "二楼有什么展览？",
+     "en": "What exhibition is on the second floor?",
+     "opts": [
+      "书法和国画",
+      "古代的工具",
+      "中国的历史",
+      "世界的地图"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "参观的时候不能做什么？",
+     "en": "What may you not do during the visit?",
+     "opts": [
+      "拍照",
+      "说话",
+      "喝水",
+      "坐下"
+     ],
+     "line": 4
+    },
+    {
+     "zh": "在哪儿可以买小礼物？",
+     "en": "Where can you buy small gifts?",
+     "opts": [
+      "一楼的商店",
+      "二楼的商店",
+      "门口",
+      "网上"
+     ],
+     "line": 5
+    }
+   ]
+  },
+  {
+   "id": "p5-move-south",
+   "level": 5,
+   "title": "To go or not to go",
+   "scene": "A man is unsure whether to take a job far away.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "我在犹豫要不要去南方工作。",
+     "en": "I am hesitating over whether or not I want to go and work in the south."
+    },
+    {
+     "s": "女",
+     "zh": "那边的工资不是比这边高很多吗？",
+     "en": "Is the pay there not much higher than here?"
+    },
+    {
+     "s": "男",
+     "zh": "是高不少，可是我父母年纪大了，我不想离他们太远。",
+     "en": "It is quite a lot higher, but my parents are getting old, and I do not want to be too far from them."
+    },
+    {
+     "s": "女",
+     "zh": "坐高铁回来也就四个多小时，周末也能回家。",
+     "en": "It is only a little over four hours back by high-speed train, so you could come home at weekends."
+    },
+    {
+     "s": "男",
+     "zh": "你说得对，可是工作一忙，我说不定一个月都回不了一次。",
+     "en": "You are right, but once work gets busy, I might not even get back once a month."
+    },
+    {
+     "s": "女",
+     "zh": "反正还有时间考虑，你跟父母商量一下再决定吧。毕竟这是你自己的事。",
+     "en": "Anyway, there is still time to think it over. Talk to your parents and then decide. After all, it is your own decision."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的在犹豫什么？",
+     "en": "What is the man hesitating over?",
+     "opts": [
+      "要不要去南方工作",
+      "要不要辞职",
+      "要不要买房子",
+      "要不要结婚"
+     ],
+     "line": 0
+    },
+    {
+     "zh": "南方的工资怎么样？",
+     "en": "What is the pay like in the south?",
+     "opts": [
+      "比这边高不少",
+      "和这边一样",
+      "比这边低",
+      "男的不知道"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "男的为什么犹豫？",
+     "en": "Why is the man hesitating?",
+     "opts": [
+      "父母年纪大了，他不想离他们太远",
+      "南方太热了",
+      "他不喜欢那边的工作",
+      "他没有钱"
+     ],
+     "line": 2
+    },
+    {
+     "zh": "坐高铁回来要多久？",
+     "en": "How long does the high-speed train take to get back?",
+     "opts": [
+      "四个多小时",
+      "两个多小时",
+      "六个多小时",
+      "一个多小时"
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的建议男的怎么做？",
+     "en": "What does the woman suggest the man do?",
+     "opts": [
+      "跟父母商量一下再决定",
+      "马上去南方",
+      "别去南方",
+      "问问老板"
+     ],
+     "line": 5
+    }
+   ]
   }
  ]
 }

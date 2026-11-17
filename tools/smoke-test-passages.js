@@ -22,7 +22,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     // placement: every passage of HSK 1 and 2 is a stop, after the stop that teaches its last word
     const place = await page.evaluate(() => {
       const P = window.SHANLU_PATH, ps = window.SHANLU_PASSAGES, out = { n: 0, bad: [] };
-      ['1', '2'].forEach(L => {
+      ['1', '2', '3', '4', '5'].forEach(L => {
         const flat = []; P[L].units.forEach(u => u.stops.forEach(s => flat.push(s)));
         (ps[L] || []).forEach(p => {
           const at = flat.findIndex(s => s.k === 'l' && s.l === p.id); if (at < 0) { out.bad.push(p.id + ' missing'); return; }
@@ -32,7 +32,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
       });
       return out;
     });
-    check(place.n >= 24 && place.bad.length === 0, 'every HSK 1 and 2 passage is on the Path after all of its words' + tag + ' (' + place.n + ')' + (place.bad.length ? ': ' + place.bad.slice(0, 3).join('; ') : ''));
+    check(place.n >= 60 && place.bad.length === 0, 'every passage (HSK 1 to 5) is on the Path after all of its words' + tag + ' (' + place.n + ')' + (place.bad.length ? ': ' + place.bad.slice(0, 3).join('; ') : ''));
     // open one from the Path code (the same call the stop's button makes)
     await page.evaluate(() => window.shanlu.pathStart('h1.l.p1-family'));
     await page.waitForSelector('.psg-card');
