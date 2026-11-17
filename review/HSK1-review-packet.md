@@ -714,6 +714,78 @@ Examples:
    - 饭 fàn appears twice (饭店, 吃饭). The tone is the same: falling.
 24. 你的汉语很好。  Nǐ de Hànyǔ hěn hǎo.  — Your Chinese is very good.
    - 很 hěn before 好 hǎo: two third tones, so 很 sounds like hén.
+25. 我家有四口人。  Wǒ jiā yǒu sì kǒu rén.  — There are four people in my family.
+   - 四口人 sì kǒu rén: a fall, a dip, then a rise.
+   - 家 jiā is high and flat: 我家 wǒ jiā.
+26. 你妈妈在家吗？  Nǐ māma zài jiā ma?  — Is your mom at home?
+   - 你 nǐ is a third tone before the high tone 妈, so it only dips.
+   - 妈妈 māma: the second 妈 is light and short.
+27. 我想喝一杯水。  Wǒ xiǎng hē yì bēi shuǐ.  — I want to drink a glass of water.
+   - 我想 wǒ xiǎng: two third tones in a row, so 我 sounds like wó.
+   - 一 becomes yì before the high tone 杯: 一杯 yì bēi.
+28. 他不在家，他在学校。  Tā bú zài jiā, tā zài xuéxiào.  — He is not at home; he is at school.
+   - 不在 bú zài: 不 changes to bú before the fourth tone 在.
+   - 学校 xuéxiào: a rise, then a fall.
+29. 这个包子很好吃。  Zhège bāozi hěn hǎochī.  — This bun is very tasty.
+   - 很好 hěn hǎo: two third tones, so 很 sounds like hén.
+   - 这个 zhège: 个 is light and short.
+30. 我有两个哥哥。  Wǒ yǒu liǎng ge gēge.  — I have two older brothers.
+   - 我有 wǒ yǒu: two third tones in a row, so 我 sounds like wó.
+   - 哥哥 gēge: the second 哥 is light and short.
+31. 你今天忙吗？  Nǐ jīntiān máng ma?  — Are you busy today?
+   - 你 nǐ is a third tone before the high tone 今, so it only dips.
+   - 忙 máng rises, and 吗 ma is light.
+32. 我们明天去商店。  Wǒmen míngtiān qù shāngdiàn.  — We are going to the shop tomorrow.
+   - 我们 wǒmen: 们 is light and short.
+   - 商店 shāngdiàn: high and flat, then a fall.
+33. 他今年十八岁。  Tā jīnnián shíbā suì.  — He is eighteen this year.
+   - 十八 shíbā: a rise, then high and flat.
+   - 岁 suì falls: 十八岁 shíbā suì.
+34. 请你坐这儿。  Qǐng nǐ zuò zhèr.  — Please sit here.
+   - 请你 qǐng nǐ: two third tones in a row, so 请 sounds like qíng.
+   - 这儿 zhèr is one beat: the 儿 merges into the syllable.
+35. 我昨天没去学校。  Wǒ zuótiān méi qù xuéxiào.  — I did not go to school yesterday.
+   - 没 méi rises: 没去 méi qù.
+   - 昨天 zuótiān: a rise, then high and flat.
+36. 你喜欢吃面包吗？  Nǐ xǐhuan chī miànbāo ma?  — Do you like eating bread?
+   - 你喜欢 nǐ xǐhuan: two third tones in a row, so 你 sounds like ní.
+   - 面包 miànbāo: a fall, then high and flat.
+37. 妈妈在做饭呢。  Māma zài zuòfàn ne.  — Mom is cooking.
+   - 呢 ne is light and short at the end.
+   - 做饭 zuòfàn: both syllables fall.
+38. 这个杯子多少钱？  Zhège bēizi duōshǎo qián?  — How much is this cup?
+   - 多少 duōshǎo: high and flat, then a dip.
+   - 钱 qián rises at the end.
+39. 我哥哥会开车。  Wǒ gēge huì kāichē.  — My older brother can drive.
+   - 我哥哥 wǒ gēge: 我 only dips before the high tone 哥.
+   - 开车 kāichē: both syllables are high and flat.
+40. 你想在哪儿吃饭？  Nǐ xiǎng zài nǎr chī fàn?  — Where do you want to eat?
+   - 哪儿 nǎr is one beat, with the 儿 merged in.
+   - 想在 xiǎng zài: 想 only dips before the falling tone 在.
+41. 他是我的老师，也是我的朋友。  Tā shì wǒ de lǎoshī, yě shì wǒ de péngyou.  — He is my teacher, and also my friend.
+   - 也是 yě shì: 也 is a third tone before a fall, so it only dips.
+   - 朋友 péngyou: the last syllable is light.
+42. 我在商店买了两件衣服。  Wǒ zài shāngdiàn mǎi le liǎng jiàn yīfu.  — I bought two pieces of clothing at the shop.
+   - 了 le is light and quick after 买 mǎi.
+   - 衣服 yīfu: the second syllable is light.
+43. 你昨天晚上几点睡觉？  Nǐ zuótiān wǎnshang jǐ diǎn shuìjiào?  — What time did you go to sleep last night?
+   - 几点 jǐ diǎn: two third tones, so 几 sounds like jí.
+   - 晚上 wǎnshang: 上 is light and short.
+44. 今天太热了，我想喝水。  Jīntiān tài rè le, wǒ xiǎng hē shuǐ.  — It is too hot today; I want to drink water.
+   - 太热 tài rè: both syllables fall.
+   - 了 le is light at the end of 太热了.
+45. 请问，你是中国人吗？  Qǐngwèn, nǐ shì Zhōngguó rén ma?  — Excuse me, are you Chinese?
+   - 中国人 Zhōngguó rén: high and flat, rising, then rising again.
+   - 你是 nǐ shì: 你 only dips before the falling tone 是.
+46. 我们都喜欢看电影。  Wǒmen dōu xǐhuan kàn diànyǐng.  — We all like watching films.
+   - 都 dōu is high and flat; it means all and sits before the verb: 都喜欢.
+   - 电影 diànyǐng: a fall, then a dip.
+47. 弟弟正在看电视。  Dìdi zhèngzài kàn diànshì.  — My younger brother is watching TV.
+   - 弟弟 dìdi: the second 弟 is light and short.
+   - 正在 zhèngzài: both syllables fall.
+48. 你在做什么？  Nǐ zài zuò shénme?  — What are you doing?
+   - 做什么 zuò shénme: a fall, a rise, then a light 么.
+   - 在 zài is a quick fall before the verb.
 
 ## 5. Word webs
 

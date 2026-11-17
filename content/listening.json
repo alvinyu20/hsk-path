@@ -1,34 +1,396 @@
 {
-"clips":[
- {"zh":"你好，我叫小明。","en":"Hello, my name is Xiaoming.","notes":["你好 is said ní hǎo: two third tones in a row, so the first one rises.","叫 jiào falls sharply, then 小明 is said as one name."]},
- {"zh":"你想喝什么？","en":"What do you want to drink?","notes":["Two third tones in a row: 你 nǐ sounds like ní before 想 xiǎng.","什么 shénme is said quickly, and the 么 gets very light."]},
- {"zh":"今天天气很好。","en":"The weather is very nice today.","notes":["很 hěn before 好 hǎo: two third tones, so 很 sounds like hén.","今天 and 天气 are short and run together at normal speed."]},
- {"zh":"我想买一个杯子。","en":"I want to buy a cup.","notes":["一 becomes yí before the fourth tone 个.","个 is often said short and light, almost like ge."]},
- {"zh":"你在哪儿工作？","en":"Where do you work?","notes":["哪儿 nǎr is one beat: the 儿 merges into the syllable.","Listen for 在 zài as a quick falling tone between two longer words."]},
- {"zh":"现在几点？","en":"What time is it now?","notes":["几点 jǐ diǎn: two third tones in a row, so 几 sounds like jí."]},
- {"zh":"我七点起床。","en":"I get up at seven.","notes":["Before a second-tone syllable, a third tone stays low and does not rise: 起 qǐ in 起床 qǐchuáng."]},
- {"zh":"明天你去学校吗？","en":"Are you going to school tomorrow?","notes":["吗 is very light and short at the end of the question."]},
- {"zh":"我不是老师。","en":"I am not a teacher.","notes":["不 changes to bú before the fourth tone 是 shì: bú shì."]},
- {"zh":"这是我妈妈的手机。","en":"This is my mother's phone.","notes":["的 is very light: de.","妈妈 māma: the second 妈 is light and short."]},
- {"zh":"谢谢你！","en":"Thank you!","notes":["谢谢 xièxie: the second 谢 is light and short."]},
- {"zh":"对不起，我不知道。","en":"Sorry, I don't know.","notes":["对不起 duìbuqǐ: 不 is light here.","In 不知道, 不 is bù before the first tone 知 zhī."]},
- {"zh":"我们去吃饭吧。","en":"Let's go and eat.","notes":["吧 is light at the end: ba."]},
- {"zh":"你有时间吗？","en":"Do you have time?","notes":["你 nǐ and 有 yǒu are both third tones, so 你 sounds like ní."]},
- {"zh":"我喜欢喝茶。","en":"I like drinking tea.","notes":["我 wǒ before 喜 xǐ: two third tones, so 我 sounds like wó.","喜欢 xǐhuan: the 欢 is light."]},
- {"zh":"她在学校学习汉语。","en":"She studies Chinese at school.","notes":["Listen for 学校 xuéxiào versus 学习 xuéxí: the first syllable is the same, the second is different."]},
- {"zh":"一个苹果三块钱。","en":"One apple costs three yuan.","notes":["一 becomes yí before the fourth tone 个.","三块钱 sān kuài qián: the numbers run together at normal speed."]},
- {"zh":"我今年二十岁。","en":"I am 20 years old this year.","notes":["二十 èrshí is said as one word, so 十 is short."]},
- {"zh":"请问，学校在哪儿？","en":"Excuse me, where is the school?","notes":["请问 qǐngwèn: the third tone 请 stays low before the fourth tone 问."]},
- {"zh":"我买了一本书。","en":"I bought a book.","notes":["了 is light and quick: le.","一 becomes yì before the third tone 本."]},
- {"zh":"你吃饭了吗？","en":"Have you eaten?","notes":["了 and 吗 are both light: le ma."]},
- {"zh":"天冷了。","en":"It has turned cold.","notes":["冷 lěng is a third tone, and 了 is light and short after it."]},
- {"zh":"我们在饭店吃饭。","en":"We eat at a restaurant.","notes":["饭 fàn appears twice (饭店, 吃饭). The tone is the same: falling."]},
- {"zh":"你的汉语很好。","en":"Your Chinese is very good.","notes":["很 hěn before 好 hǎo: two third tones, so 很 sounds like hén."]}
-],
-"tones":[
- {"zh":"妈","py":"mā","label":"High and flat"},
- {"zh":"麻","py":"má","label":"Rising"},
- {"zh":"马","py":"mǎ","label":"Dips, then rises"},
- {"zh":"骂","py":"mà","label":"Falling"}
-]
+ "clips": [
+  {
+   "zh": "你好，我叫小明。",
+   "en": "Hello, my name is Xiaoming.",
+   "notes": [
+    "你好 is said ní hǎo: two third tones in a row, so the first one rises.",
+    "叫 jiào falls sharply, then 小明 is said as one name."
+   ]
+  },
+  {
+   "zh": "你想喝什么？",
+   "en": "What do you want to drink?",
+   "notes": [
+    "Two third tones in a row: 你 nǐ sounds like ní before 想 xiǎng.",
+    "什么 shénme is said quickly, and the 么 gets very light."
+   ]
+  },
+  {
+   "zh": "今天天气很好。",
+   "en": "The weather is very nice today.",
+   "notes": [
+    "很 hěn before 好 hǎo: two third tones, so 很 sounds like hén.",
+    "今天 and 天气 are short and run together at normal speed."
+   ]
+  },
+  {
+   "zh": "我想买一个杯子。",
+   "en": "I want to buy a cup.",
+   "notes": [
+    "一 becomes yí before the fourth tone 个.",
+    "个 is often said short and light, almost like ge."
+   ]
+  },
+  {
+   "zh": "你在哪儿工作？",
+   "en": "Where do you work?",
+   "notes": [
+    "哪儿 nǎr is one beat: the 儿 merges into the syllable.",
+    "Listen for 在 zài as a quick falling tone between two longer words."
+   ]
+  },
+  {
+   "zh": "现在几点？",
+   "en": "What time is it now?",
+   "notes": [
+    "几点 jǐ diǎn: two third tones in a row, so 几 sounds like jí."
+   ]
+  },
+  {
+   "zh": "我七点起床。",
+   "en": "I get up at seven.",
+   "notes": [
+    "Before a second-tone syllable, a third tone stays low and does not rise: 起 qǐ in 起床 qǐchuáng."
+   ]
+  },
+  {
+   "zh": "明天你去学校吗？",
+   "en": "Are you going to school tomorrow?",
+   "notes": [
+    "吗 is very light and short at the end of the question."
+   ]
+  },
+  {
+   "zh": "我不是老师。",
+   "en": "I am not a teacher.",
+   "notes": [
+    "不 changes to bú before the fourth tone 是 shì: bú shì."
+   ]
+  },
+  {
+   "zh": "这是我妈妈的手机。",
+   "en": "This is my mother's phone.",
+   "notes": [
+    "的 is very light: de.",
+    "妈妈 māma: the second 妈 is light and short."
+   ]
+  },
+  {
+   "zh": "谢谢你！",
+   "en": "Thank you!",
+   "notes": [
+    "谢谢 xièxie: the second 谢 is light and short."
+   ]
+  },
+  {
+   "zh": "对不起，我不知道。",
+   "en": "Sorry, I don't know.",
+   "notes": [
+    "对不起 duìbuqǐ: 不 is light here.",
+    "In 不知道, 不 is bù before the first tone 知 zhī."
+   ]
+  },
+  {
+   "zh": "我们去吃饭吧。",
+   "en": "Let's go and eat.",
+   "notes": [
+    "吧 is light at the end: ba."
+   ]
+  },
+  {
+   "zh": "你有时间吗？",
+   "en": "Do you have time?",
+   "notes": [
+    "你 nǐ and 有 yǒu are both third tones, so 你 sounds like ní."
+   ]
+  },
+  {
+   "zh": "我喜欢喝茶。",
+   "en": "I like drinking tea.",
+   "notes": [
+    "我 wǒ before 喜 xǐ: two third tones, so 我 sounds like wó.",
+    "喜欢 xǐhuan: the 欢 is light."
+   ]
+  },
+  {
+   "zh": "她在学校学习汉语。",
+   "en": "She studies Chinese at school.",
+   "notes": [
+    "Listen for 学校 xuéxiào versus 学习 xuéxí: the first syllable is the same, the second is different."
+   ]
+  },
+  {
+   "zh": "一个苹果三块钱。",
+   "en": "One apple costs three yuan.",
+   "notes": [
+    "一 becomes yí before the fourth tone 个.",
+    "三块钱 sān kuài qián: the numbers run together at normal speed."
+   ]
+  },
+  {
+   "zh": "我今年二十岁。",
+   "en": "I am 20 years old this year.",
+   "notes": [
+    "二十 èrshí is said as one word, so 十 is short."
+   ]
+  },
+  {
+   "zh": "请问，学校在哪儿？",
+   "en": "Excuse me, where is the school?",
+   "notes": [
+    "请问 qǐngwèn: the third tone 请 stays low before the fourth tone 问."
+   ]
+  },
+  {
+   "zh": "我买了一本书。",
+   "en": "I bought a book.",
+   "notes": [
+    "了 is light and quick: le.",
+    "一 becomes yì before the third tone 本."
+   ]
+  },
+  {
+   "zh": "你吃饭了吗？",
+   "en": "Have you eaten?",
+   "notes": [
+    "了 and 吗 are both light: le ma."
+   ]
+  },
+  {
+   "zh": "天冷了。",
+   "en": "It has turned cold.",
+   "notes": [
+    "冷 lěng is a third tone, and 了 is light and short after it."
+   ]
+  },
+  {
+   "zh": "我们在饭店吃饭。",
+   "en": "We eat at a restaurant.",
+   "notes": [
+    "饭 fàn appears twice (饭店, 吃饭). The tone is the same: falling."
+   ]
+  },
+  {
+   "zh": "你的汉语很好。",
+   "en": "Your Chinese is very good.",
+   "notes": [
+    "很 hěn before 好 hǎo: two third tones, so 很 sounds like hén."
+   ]
+  },
+  {
+   "zh": "我家有四口人。",
+   "en": "There are four people in my family.",
+   "notes": [
+    "四口人 sì kǒu rén: a fall, a dip, then a rise.",
+    "家 jiā is high and flat: 我家 wǒ jiā."
+   ]
+  },
+  {
+   "zh": "你妈妈在家吗？",
+   "en": "Is your mom at home?",
+   "notes": [
+    "你 nǐ is a third tone before the high tone 妈, so it only dips.",
+    "妈妈 māma: the second 妈 is light and short."
+   ]
+  },
+  {
+   "zh": "我想喝一杯水。",
+   "en": "I want to drink a glass of water.",
+   "notes": [
+    "我想 wǒ xiǎng: two third tones in a row, so 我 sounds like wó.",
+    "一 becomes yì before the high tone 杯: 一杯 yì bēi."
+   ]
+  },
+  {
+   "zh": "他不在家，他在学校。",
+   "en": "He is not at home; he is at school.",
+   "notes": [
+    "不在 bú zài: 不 changes to bú before the fourth tone 在.",
+    "学校 xuéxiào: a rise, then a fall."
+   ]
+  },
+  {
+   "zh": "这个包子很好吃。",
+   "en": "This bun is very tasty.",
+   "notes": [
+    "很好 hěn hǎo: two third tones, so 很 sounds like hén.",
+    "这个 zhège: 个 is light and short."
+   ]
+  },
+  {
+   "zh": "我有两个哥哥。",
+   "en": "I have two older brothers.",
+   "notes": [
+    "我有 wǒ yǒu: two third tones in a row, so 我 sounds like wó.",
+    "哥哥 gēge: the second 哥 is light and short."
+   ]
+  },
+  {
+   "zh": "你今天忙吗？",
+   "en": "Are you busy today?",
+   "notes": [
+    "你 nǐ is a third tone before the high tone 今, so it only dips.",
+    "忙 máng rises, and 吗 ma is light."
+   ]
+  },
+  {
+   "zh": "我们明天去商店。",
+   "en": "We are going to the shop tomorrow.",
+   "notes": [
+    "我们 wǒmen: 们 is light and short.",
+    "商店 shāngdiàn: high and flat, then a fall."
+   ]
+  },
+  {
+   "zh": "他今年十八岁。",
+   "en": "He is eighteen this year.",
+   "notes": [
+    "十八 shíbā: a rise, then high and flat.",
+    "岁 suì falls: 十八岁 shíbā suì."
+   ]
+  },
+  {
+   "zh": "请你坐这儿。",
+   "en": "Please sit here.",
+   "notes": [
+    "请你 qǐng nǐ: two third tones in a row, so 请 sounds like qíng.",
+    "这儿 zhèr is one beat: the 儿 merges into the syllable."
+   ]
+  },
+  {
+   "zh": "我昨天没去学校。",
+   "en": "I did not go to school yesterday.",
+   "notes": [
+    "没 méi rises: 没去 méi qù.",
+    "昨天 zuótiān: a rise, then high and flat."
+   ]
+  },
+  {
+   "zh": "你喜欢吃面包吗？",
+   "en": "Do you like eating bread?",
+   "notes": [
+    "你喜欢 nǐ xǐhuan: two third tones in a row, so 你 sounds like ní.",
+    "面包 miànbāo: a fall, then high and flat."
+   ]
+  },
+  {
+   "zh": "妈妈在做饭呢。",
+   "en": "Mom is cooking.",
+   "notes": [
+    "呢 ne is light and short at the end.",
+    "做饭 zuòfàn: both syllables fall."
+   ]
+  },
+  {
+   "zh": "这个杯子多少钱？",
+   "en": "How much is this cup?",
+   "notes": [
+    "多少 duōshǎo: high and flat, then a dip.",
+    "钱 qián rises at the end."
+   ]
+  },
+  {
+   "zh": "我哥哥会开车。",
+   "en": "My older brother can drive.",
+   "notes": [
+    "我哥哥 wǒ gēge: 我 only dips before the high tone 哥.",
+    "开车 kāichē: both syllables are high and flat."
+   ]
+  },
+  {
+   "zh": "你想在哪儿吃饭？",
+   "en": "Where do you want to eat?",
+   "notes": [
+    "哪儿 nǎr is one beat, with the 儿 merged in.",
+    "想在 xiǎng zài: 想 only dips before the falling tone 在."
+   ]
+  },
+  {
+   "zh": "他是我的老师，也是我的朋友。",
+   "en": "He is my teacher, and also my friend.",
+   "notes": [
+    "也是 yě shì: 也 is a third tone before a fall, so it only dips.",
+    "朋友 péngyou: the last syllable is light."
+   ]
+  },
+  {
+   "zh": "我在商店买了两件衣服。",
+   "en": "I bought two pieces of clothing at the shop.",
+   "notes": [
+    "了 le is light and quick after 买 mǎi.",
+    "衣服 yīfu: the second syllable is light."
+   ]
+  },
+  {
+   "zh": "你昨天晚上几点睡觉？",
+   "en": "What time did you go to sleep last night?",
+   "notes": [
+    "几点 jǐ diǎn: two third tones, so 几 sounds like jí.",
+    "晚上 wǎnshang: 上 is light and short."
+   ]
+  },
+  {
+   "zh": "今天太热了，我想喝水。",
+   "en": "It is too hot today; I want to drink water.",
+   "notes": [
+    "太热 tài rè: both syllables fall.",
+    "了 le is light at the end of 太热了."
+   ]
+  },
+  {
+   "zh": "请问，你是中国人吗？",
+   "en": "Excuse me, are you Chinese?",
+   "notes": [
+    "中国人 Zhōngguó rén: high and flat, rising, then rising again.",
+    "你是 nǐ shì: 你 only dips before the falling tone 是."
+   ]
+  },
+  {
+   "zh": "我们都喜欢看电影。",
+   "en": "We all like watching films.",
+   "notes": [
+    "都 dōu is high and flat; it means all and sits before the verb: 都喜欢.",
+    "电影 diànyǐng: a fall, then a dip."
+   ]
+  },
+  {
+   "zh": "弟弟正在看电视。",
+   "en": "My younger brother is watching TV.",
+   "notes": [
+    "弟弟 dìdi: the second 弟 is light and short.",
+    "正在 zhèngzài: both syllables fall."
+   ]
+  },
+  {
+   "zh": "你在做什么？",
+   "en": "What are you doing?",
+   "notes": [
+    "做什么 zuò shénme: a fall, a rise, then a light 么.",
+    "在 zài is a quick fall before the verb."
+   ]
+  }
+ ],
+ "tones": [
+  {
+   "zh": "妈",
+   "py": "mā",
+   "label": "High and flat"
+  },
+  {
+   "zh": "麻",
+   "py": "má",
+   "label": "Rising"
+  },
+  {
+   "zh": "马",
+   "py": "mǎ",
+   "label": "Dips, then rises"
+  },
+  {
+   "zh": "骂",
+   "py": "mà",
+   "label": "Falling"
+  }
+ ]
 }

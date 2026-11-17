@@ -786,6 +786,915 @@ window.HSK1_LISTEN = {
    "notes": [
     "很 hěn before 好 hǎo: two third tones, so 很 sounds like hén."
    ]
+  },
+  {
+   "zh": "我家有四口人。",
+   "py": "Wǒ jiā yǒu sì kǒu rén.",
+   "en": "There are four people in my family.",
+   "words": [
+    {
+     "zh": "我",
+     "py": "wǒ",
+     "key": "wo"
+    },
+    {
+     "zh": "家",
+     "py": "jiā",
+     "key": "jia"
+    },
+    {
+     "zh": "有",
+     "py": "yǒu",
+     "key": "you"
+    },
+    {
+     "zh": "四",
+     "py": "sì",
+     "key": "si"
+    },
+    {
+     "zh": "口",
+     "py": "kǒu",
+     "key": "kou"
+    },
+    {
+     "zh": "人",
+     "py": "rén",
+     "key": "ren"
+    }
+   ],
+   "notes": [
+    "四口人 sì kǒu rén: a fall, a dip, then a rise.",
+    "家 jiā is high and flat: 我家 wǒ jiā."
+   ]
+  },
+  {
+   "zh": "你妈妈在家吗？",
+   "py": "Nǐ māma zài jiā ma?",
+   "en": "Is your mom at home?",
+   "words": [
+    {
+     "zh": "你",
+     "py": "nǐ",
+     "key": "ni"
+    },
+    {
+     "zh": "妈妈",
+     "py": "māma",
+     "key": "mama"
+    },
+    {
+     "zh": "在",
+     "py": "zài",
+     "key": "zai"
+    },
+    {
+     "zh": "家",
+     "py": "jiā",
+     "key": "jia"
+    },
+    {
+     "zh": "吗",
+     "py": "ma",
+     "key": "ma"
+    }
+   ],
+   "notes": [
+    "你 nǐ is a third tone before the high tone 妈, so it only dips.",
+    "妈妈 māma: the second 妈 is light and short."
+   ]
+  },
+  {
+   "zh": "我想喝一杯水。",
+   "py": "Wǒ xiǎng hē yì bēi shuǐ.",
+   "en": "I want to drink a glass of water.",
+   "words": [
+    {
+     "zh": "我",
+     "py": "wǒ",
+     "key": "wo"
+    },
+    {
+     "zh": "想",
+     "py": "xiǎng",
+     "key": "xiang"
+    },
+    {
+     "zh": "喝",
+     "py": "hē",
+     "key": "he"
+    },
+    {
+     "zh": "一",
+     "py": "yī",
+     "key": "yi"
+    },
+    {
+     "zh": "杯",
+     "py": "bēi",
+     "key": "bei"
+    },
+    {
+     "zh": "水",
+     "py": "shuǐ",
+     "key": "shui"
+    }
+   ],
+   "notes": [
+    "我想 wǒ xiǎng: two third tones in a row, so 我 sounds like wó.",
+    "一 becomes yì before the high tone 杯: 一杯 yì bēi."
+   ]
+  },
+  {
+   "zh": "他不在家，他在学校。",
+   "py": "Tā bú zài jiā, tā zài xuéxiào.",
+   "en": "He is not at home; he is at school.",
+   "words": [
+    {
+     "zh": "他",
+     "py": "tā",
+     "key": "ta"
+    },
+    {
+     "zh": "不",
+     "py": "bù",
+     "key": "bu"
+    },
+    {
+     "zh": "在",
+     "py": "zài",
+     "key": "zai"
+    },
+    {
+     "zh": "家",
+     "py": "jiā",
+     "key": "jia"
+    },
+    {
+     "zh": "他",
+     "py": "tā",
+     "key": "ta"
+    },
+    {
+     "zh": "在",
+     "py": "zài",
+     "key": "zai"
+    },
+    {
+     "zh": "学校",
+     "py": "xuéxiào",
+     "key": "xuexiao"
+    }
+   ],
+   "notes": [
+    "不在 bú zài: 不 changes to bú before the fourth tone 在.",
+    "学校 xuéxiào: a rise, then a fall."
+   ]
+  },
+  {
+   "zh": "这个包子很好吃。",
+   "py": "Zhège bāozi hěn hǎochī.",
+   "en": "This bun is very tasty.",
+   "words": [
+    {
+     "zh": "这个",
+     "py": "zhège",
+     "key": "zhege"
+    },
+    {
+     "zh": "包子",
+     "py": "bāozi",
+     "key": "baozi"
+    },
+    {
+     "zh": "很",
+     "py": "hěn",
+     "key": "hen"
+    },
+    {
+     "zh": "好吃",
+     "py": "hǎochī",
+     "key": "haochi"
+    }
+   ],
+   "notes": [
+    "很好 hěn hǎo: two third tones, so 很 sounds like hén.",
+    "这个 zhège: 个 is light and short."
+   ]
+  },
+  {
+   "zh": "我有两个哥哥。",
+   "py": "Wǒ yǒu liǎng ge gēge.",
+   "en": "I have two older brothers.",
+   "words": [
+    {
+     "zh": "我",
+     "py": "wǒ",
+     "key": "wo"
+    },
+    {
+     "zh": "有",
+     "py": "yǒu",
+     "key": "you"
+    },
+    {
+     "zh": "两",
+     "py": "liǎng",
+     "key": "liang"
+    },
+    {
+     "zh": "个",
+     "py": "gè",
+     "key": "ge"
+    },
+    {
+     "zh": "哥哥",
+     "py": "gēge",
+     "key": "gege"
+    }
+   ],
+   "notes": [
+    "我有 wǒ yǒu: two third tones in a row, so 我 sounds like wó.",
+    "哥哥 gēge: the second 哥 is light and short."
+   ]
+  },
+  {
+   "zh": "你今天忙吗？",
+   "py": "Nǐ jīntiān máng ma?",
+   "en": "Are you busy today?",
+   "words": [
+    {
+     "zh": "你",
+     "py": "nǐ",
+     "key": "ni"
+    },
+    {
+     "zh": "今天",
+     "py": "jīntiān",
+     "key": "jintian"
+    },
+    {
+     "zh": "忙",
+     "py": "máng",
+     "key": "mang"
+    },
+    {
+     "zh": "吗",
+     "py": "ma",
+     "key": "ma"
+    }
+   ],
+   "notes": [
+    "你 nǐ is a third tone before the high tone 今, so it only dips.",
+    "忙 máng rises, and 吗 ma is light."
+   ]
+  },
+  {
+   "zh": "我们明天去商店。",
+   "py": "Wǒmen míngtiān qù shāngdiàn.",
+   "en": "We are going to the shop tomorrow.",
+   "words": [
+    {
+     "zh": "我们",
+     "py": "wǒmen",
+     "key": "women"
+    },
+    {
+     "zh": "明天",
+     "py": "míngtiān",
+     "key": "mingtian"
+    },
+    {
+     "zh": "去",
+     "py": "qù",
+     "key": "qu"
+    },
+    {
+     "zh": "商店",
+     "py": "shāngdiàn",
+     "key": "shangdian"
+    }
+   ],
+   "notes": [
+    "我们 wǒmen: 们 is light and short.",
+    "商店 shāngdiàn: high and flat, then a fall."
+   ]
+  },
+  {
+   "zh": "他今年十八岁。",
+   "py": "Tā jīnnián shíbā suì.",
+   "en": "He is eighteen this year.",
+   "words": [
+    {
+     "zh": "他",
+     "py": "tā",
+     "key": "ta"
+    },
+    {
+     "zh": "今年",
+     "py": "jīnnián",
+     "key": "jinnian"
+    },
+    {
+     "zh": "十",
+     "py": "shí",
+     "key": "shi"
+    },
+    {
+     "zh": "八",
+     "py": "bā",
+     "key": "ba"
+    },
+    {
+     "zh": "岁",
+     "py": "suì",
+     "key": "sui"
+    }
+   ],
+   "notes": [
+    "十八 shíbā: a rise, then high and flat.",
+    "岁 suì falls: 十八岁 shíbā suì."
+   ]
+  },
+  {
+   "zh": "请你坐这儿。",
+   "py": "Qǐng nǐ zuò zhèr.",
+   "en": "Please sit here.",
+   "words": [
+    {
+     "zh": "请",
+     "py": "qǐng",
+     "key": "qing"
+    },
+    {
+     "zh": "你",
+     "py": "nǐ",
+     "key": "ni"
+    },
+    {
+     "zh": "坐",
+     "py": "zuò",
+     "key": "zuo"
+    },
+    {
+     "zh": "这儿",
+     "py": "zhèr",
+     "key": "zher"
+    }
+   ],
+   "notes": [
+    "请你 qǐng nǐ: two third tones in a row, so 请 sounds like qíng.",
+    "这儿 zhèr is one beat: the 儿 merges into the syllable."
+   ]
+  },
+  {
+   "zh": "我昨天没去学校。",
+   "py": "Wǒ zuótiān méi qù xuéxiào.",
+   "en": "I did not go to school yesterday.",
+   "words": [
+    {
+     "zh": "我",
+     "py": "wǒ",
+     "key": "wo"
+    },
+    {
+     "zh": "昨天",
+     "py": "zuótiān",
+     "key": "zuotian"
+    },
+    {
+     "zh": "没",
+     "py": "méi",
+     "key": "mei"
+    },
+    {
+     "zh": "去",
+     "py": "qù",
+     "key": "qu"
+    },
+    {
+     "zh": "学校",
+     "py": "xuéxiào",
+     "key": "xuexiao"
+    }
+   ],
+   "notes": [
+    "没 méi rises: 没去 méi qù.",
+    "昨天 zuótiān: a rise, then high and flat."
+   ]
+  },
+  {
+   "zh": "你喜欢吃面包吗？",
+   "py": "Nǐ xǐhuan chī miànbāo ma?",
+   "en": "Do you like eating bread?",
+   "words": [
+    {
+     "zh": "你",
+     "py": "nǐ",
+     "key": "ni"
+    },
+    {
+     "zh": "喜欢",
+     "py": "xǐhuan",
+     "key": "xihuan"
+    },
+    {
+     "zh": "吃",
+     "py": "chī",
+     "key": "chi"
+    },
+    {
+     "zh": "面包",
+     "py": "miànbāo",
+     "key": "mianbao"
+    },
+    {
+     "zh": "吗",
+     "py": "ma",
+     "key": "ma"
+    }
+   ],
+   "notes": [
+    "你喜欢 nǐ xǐhuan: two third tones in a row, so 你 sounds like ní.",
+    "面包 miànbāo: a fall, then high and flat."
+   ]
+  },
+  {
+   "zh": "妈妈在做饭呢。",
+   "py": "Māma zài zuòfàn ne.",
+   "en": "Mom is cooking.",
+   "words": [
+    {
+     "zh": "妈妈",
+     "py": "māma",
+     "key": "mama"
+    },
+    {
+     "zh": "在",
+     "py": "zài",
+     "key": "zai"
+    },
+    {
+     "zh": "做饭",
+     "py": "zuòfàn",
+     "key": "zuofan"
+    },
+    {
+     "zh": "呢",
+     "py": "ne",
+     "key": "ne"
+    }
+   ],
+   "notes": [
+    "呢 ne is light and short at the end.",
+    "做饭 zuòfàn: both syllables fall."
+   ]
+  },
+  {
+   "zh": "这个杯子多少钱？",
+   "py": "Zhège bēizi duōshǎo qián?",
+   "en": "How much is this cup?",
+   "words": [
+    {
+     "zh": "这个",
+     "py": "zhège",
+     "key": "zhege"
+    },
+    {
+     "zh": "杯子",
+     "py": "bēizi",
+     "key": "beizi"
+    },
+    {
+     "zh": "多少",
+     "py": "duōshǎo",
+     "key": "duoshao"
+    },
+    {
+     "zh": "钱",
+     "py": "qián",
+     "key": "qian"
+    }
+   ],
+   "notes": [
+    "多少 duōshǎo: high and flat, then a dip.",
+    "钱 qián rises at the end."
+   ]
+  },
+  {
+   "zh": "我哥哥会开车。",
+   "py": "Wǒ gēge huì kāichē.",
+   "en": "My older brother can drive.",
+   "words": [
+    {
+     "zh": "我",
+     "py": "wǒ",
+     "key": "wo"
+    },
+    {
+     "zh": "哥哥",
+     "py": "gēge",
+     "key": "gege"
+    },
+    {
+     "zh": "会",
+     "py": "huì",
+     "key": "hui"
+    },
+    {
+     "zh": "开车",
+     "py": "kāichē",
+     "key": "kaiche"
+    }
+   ],
+   "notes": [
+    "我哥哥 wǒ gēge: 我 only dips before the high tone 哥.",
+    "开车 kāichē: both syllables are high and flat."
+   ]
+  },
+  {
+   "zh": "你想在哪儿吃饭？",
+   "py": "Nǐ xiǎng zài nǎr chī fàn?",
+   "en": "Where do you want to eat?",
+   "words": [
+    {
+     "zh": "你",
+     "py": "nǐ",
+     "key": "ni"
+    },
+    {
+     "zh": "想",
+     "py": "xiǎng",
+     "key": "xiang"
+    },
+    {
+     "zh": "在",
+     "py": "zài",
+     "key": "zai"
+    },
+    {
+     "zh": "哪儿",
+     "py": "nǎr",
+     "key": "nar"
+    },
+    {
+     "zh": "吃",
+     "py": "chī",
+     "key": "chi"
+    },
+    {
+     "zh": "饭",
+     "py": "fàn",
+     "key": "fan"
+    }
+   ],
+   "notes": [
+    "哪儿 nǎr is one beat, with the 儿 merged in.",
+    "想在 xiǎng zài: 想 only dips before the falling tone 在."
+   ]
+  },
+  {
+   "zh": "他是我的老师，也是我的朋友。",
+   "py": "Tā shì wǒ de lǎoshī, yě shì wǒ de péngyou.",
+   "en": "He is my teacher, and also my friend.",
+   "words": [
+    {
+     "zh": "他",
+     "py": "tā",
+     "key": "ta"
+    },
+    {
+     "zh": "是",
+     "py": "shì",
+     "key": "shi"
+    },
+    {
+     "zh": "我",
+     "py": "wǒ",
+     "key": "wo"
+    },
+    {
+     "zh": "的",
+     "py": "de",
+     "key": "de"
+    },
+    {
+     "zh": "老师",
+     "py": "lǎoshī",
+     "key": "laoshi"
+    },
+    {
+     "zh": "也",
+     "py": "yě",
+     "key": "ye"
+    },
+    {
+     "zh": "是",
+     "py": "shì",
+     "key": "shi"
+    },
+    {
+     "zh": "我",
+     "py": "wǒ",
+     "key": "wo"
+    },
+    {
+     "zh": "的",
+     "py": "de",
+     "key": "de"
+    },
+    {
+     "zh": "朋友",
+     "py": "péngyou",
+     "key": "pengyou"
+    }
+   ],
+   "notes": [
+    "也是 yě shì: 也 is a third tone before a fall, so it only dips.",
+    "朋友 péngyou: the last syllable is light."
+   ]
+  },
+  {
+   "zh": "我在商店买了两件衣服。",
+   "py": "Wǒ zài shāngdiàn mǎi le liǎng jiàn yīfu.",
+   "en": "I bought two pieces of clothing at the shop.",
+   "words": [
+    {
+     "zh": "我",
+     "py": "wǒ",
+     "key": "wo"
+    },
+    {
+     "zh": "在",
+     "py": "zài",
+     "key": "zai"
+    },
+    {
+     "zh": "商店",
+     "py": "shāngdiàn",
+     "key": "shangdian"
+    },
+    {
+     "zh": "买",
+     "py": "mǎi",
+     "key": "mai"
+    },
+    {
+     "zh": "了",
+     "py": "le",
+     "key": "le"
+    },
+    {
+     "zh": "两",
+     "py": "liǎng",
+     "key": "liang"
+    },
+    {
+     "zh": "件",
+     "py": "jiàn",
+     "key": "jian"
+    },
+    {
+     "zh": "衣服",
+     "py": "yīfu",
+     "key": "yifu"
+    }
+   ],
+   "notes": [
+    "了 le is light and quick after 买 mǎi.",
+    "衣服 yīfu: the second syllable is light."
+   ]
+  },
+  {
+   "zh": "你昨天晚上几点睡觉？",
+   "py": "Nǐ zuótiān wǎnshang jǐ diǎn shuìjiào?",
+   "en": "What time did you go to sleep last night?",
+   "words": [
+    {
+     "zh": "你",
+     "py": "nǐ",
+     "key": "ni"
+    },
+    {
+     "zh": "昨天",
+     "py": "zuótiān",
+     "key": "zuotian"
+    },
+    {
+     "zh": "晚上",
+     "py": "wǎnshang",
+     "key": "wanshang"
+    },
+    {
+     "zh": "几",
+     "py": "jǐ",
+     "key": "ji"
+    },
+    {
+     "zh": "点",
+     "py": "diǎn",
+     "key": "dian"
+    },
+    {
+     "zh": "睡觉",
+     "py": "shuìjiào",
+     "key": "shuijiao"
+    }
+   ],
+   "notes": [
+    "几点 jǐ diǎn: two third tones, so 几 sounds like jí.",
+    "晚上 wǎnshang: 上 is light and short."
+   ]
+  },
+  {
+   "zh": "今天太热了，我想喝水。",
+   "py": "Jīntiān tài rè le, wǒ xiǎng hē shuǐ.",
+   "en": "It is too hot today; I want to drink water.",
+   "words": [
+    {
+     "zh": "今天",
+     "py": "jīntiān",
+     "key": "jintian"
+    },
+    {
+     "zh": "太",
+     "py": "tài",
+     "key": "tai"
+    },
+    {
+     "zh": "热",
+     "py": "rè",
+     "key": "re"
+    },
+    {
+     "zh": "了",
+     "py": "le",
+     "key": "le"
+    },
+    {
+     "zh": "我",
+     "py": "wǒ",
+     "key": "wo"
+    },
+    {
+     "zh": "想",
+     "py": "xiǎng",
+     "key": "xiang"
+    },
+    {
+     "zh": "喝",
+     "py": "hē",
+     "key": "he"
+    },
+    {
+     "zh": "水",
+     "py": "shuǐ",
+     "key": "shui"
+    }
+   ],
+   "notes": [
+    "太热 tài rè: both syllables fall.",
+    "了 le is light at the end of 太热了."
+   ]
+  },
+  {
+   "zh": "请问，你是中国人吗？",
+   "py": "Qǐngwèn, nǐ shì Zhōngguó rén ma?",
+   "en": "Excuse me, are you Chinese?",
+   "words": [
+    {
+     "zh": "请问",
+     "py": "qǐngwèn",
+     "key": "qingwen"
+    },
+    {
+     "zh": "你",
+     "py": "nǐ",
+     "key": "ni"
+    },
+    {
+     "zh": "是",
+     "py": "shì",
+     "key": "shi"
+    },
+    {
+     "zh": "中国",
+     "py": "Zhōngguó",
+     "key": "zhongguo"
+    },
+    {
+     "zh": "人",
+     "py": "rén",
+     "key": "ren"
+    },
+    {
+     "zh": "吗",
+     "py": "ma",
+     "key": "ma"
+    }
+   ],
+   "notes": [
+    "中国人 Zhōngguó rén: high and flat, rising, then rising again.",
+    "你是 nǐ shì: 你 only dips before the falling tone 是."
+   ]
+  },
+  {
+   "zh": "我们都喜欢看电影。",
+   "py": "Wǒmen dōu xǐhuan kàn diànyǐng.",
+   "en": "We all like watching films.",
+   "words": [
+    {
+     "zh": "我们",
+     "py": "wǒmen",
+     "key": "women"
+    },
+    {
+     "zh": "都",
+     "py": "dōu",
+     "key": "dou"
+    },
+    {
+     "zh": "喜欢",
+     "py": "xǐhuan",
+     "key": "xihuan"
+    },
+    {
+     "zh": "看",
+     "py": "kàn",
+     "key": "kan"
+    },
+    {
+     "zh": "电影",
+     "py": "diànyǐng",
+     "key": "dianying"
+    }
+   ],
+   "notes": [
+    "都 dōu is high and flat; it means all and sits before the verb: 都喜欢.",
+    "电影 diànyǐng: a fall, then a dip."
+   ]
+  },
+  {
+   "zh": "弟弟正在看电视。",
+   "py": "Dìdi zhèngzài kàn diànshì.",
+   "en": "My younger brother is watching TV.",
+   "words": [
+    {
+     "zh": "弟弟",
+     "py": "dìdi",
+     "key": "didi"
+    },
+    {
+     "zh": "正在",
+     "py": "zhèngzài",
+     "key": "zhengzai"
+    },
+    {
+     "zh": "看",
+     "py": "kàn",
+     "key": "kan"
+    },
+    {
+     "zh": "电视",
+     "py": "diànshì",
+     "key": "dianshi"
+    }
+   ],
+   "notes": [
+    "弟弟 dìdi: the second 弟 is light and short.",
+    "正在 zhèngzài: both syllables fall."
+   ]
+  },
+  {
+   "zh": "你在做什么？",
+   "py": "Nǐ zài zuò shénme?",
+   "en": "What are you doing?",
+   "words": [
+    {
+     "zh": "你",
+     "py": "nǐ",
+     "key": "ni"
+    },
+    {
+     "zh": "在",
+     "py": "zài",
+     "key": "zai"
+    },
+    {
+     "zh": "做",
+     "py": "zuò",
+     "key": "zuo"
+    },
+    {
+     "zh": "什么",
+     "py": "shénme",
+     "key": "shenme"
+    }
+   ],
+   "notes": [
+    "做什么 zuò shénme: a fall, a rise, then a light 么.",
+    "在 zài is a quick fall before the verb."
+   ]
   }
  ],
  "tones": [

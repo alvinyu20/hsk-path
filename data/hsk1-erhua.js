@@ -113,6 +113,14 @@ window.HSK1_ERHUA = {
    "to": "哪里 nǎli: the 里 is short and light, like a quick second beat."
   },
   {
+   "from": "这儿 zhèr is one beat: the 儿 merges into the syllable.",
+   "to": "这里 zhèlǐ: the 里 is short and light, like a quick second beat."
+  },
+  {
+   "from": "哪儿 nǎr is one beat, with the 儿 merged in.",
+   "to": "哪里 nǎli: the 里 is short and light, like a quick second beat."
+  },
+  {
    "from": "孩儿",
    "to": "孩"
   }

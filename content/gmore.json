@@ -28,11 +28,330 @@
   "explain": "In Chinese the object comes after the verb."
  },
  {
+  "p": "g1-svo",
+  "t": "mc",
+  "prompt": "Which sentence says: I eat rice?",
+  "options": [
+   "我吃米饭。",
+   "我米饭吃。"
+  ],
+  "correct": 0,
+  "zh": "我吃米饭。",
+  "en": "I eat rice.",
+  "explain": "Subject, verb, then object."
+ },
+ {
+  "p": "g1-svo",
+  "t": "cloze",
+  "zh": "爸爸喝水。",
+  "en": "Dad drinks water.",
+  "blank": "喝",
+  "explain": "Subject + verb + object."
+ },
+ {
+  "p": "g1-svo",
+  "t": "order",
+  "zh": "哥哥看电影。",
+  "en": "My older brother watches a film.",
+  "explain": "Subject + verb + object."
+ },
+ {
+  "p": "g1-svo",
+  "t": "spot",
+  "zh": "我学汉语。",
+  "en": "I study Chinese.",
+  "wrong": "我很学汉语。",
+  "remove": "很",
+  "explain": "Do not put 很 before a plain verb."
+ },
+ {
+  "p": "g1-timeplace",
+  "t": "mc",
+  "prompt": "Which sentence says: We eat at home tomorrow?",
+  "options": [
+   "我们明天在家吃饭。",
+   "我们在家吃饭明天。"
+  ],
+  "correct": 0,
+  "zh": "我们明天在家吃饭。",
+  "en": "We eat at home tomorrow.",
+  "explain": "Time and place come before the verb."
+ },
+ {
+  "p": "g1-timeplace",
+  "t": "cloze",
+  "zh": "他明天下午去商店。",
+  "en": "He goes to the shop tomorrow afternoon.",
+  "blank": "下午",
+  "explain": "The time comes before the verb."
+ },
+ {
+  "p": "g1-timeplace",
+  "t": "order",
+  "zh": "爸爸晚上在家看电视。",
+  "en": "Dad watches TV at home in the evening.",
+  "explain": "Time, then place, then the verb."
+ },
+ {
+  "p": "g1-timeplace",
+  "t": "spot",
+  "zh": "他明天去商店。",
+  "en": "He goes to the shop tomorrow.",
+  "wrong": "他明天去商店下午。",
+  "remove": "下午",
+  "explain": "A time goes before the verb, not at the end."
+ },
+ {
+  "p": "g1-shi",
+  "t": "mc",
+  "prompt": "Which sentence says: It is hot today?",
+  "options": [
+   "今天很热。",
+   "今天是很热。"
+  ],
+  "correct": 0,
+  "zh": "今天很热。",
+  "en": "It is hot today.",
+  "explain": "Do not put 是 before an adjective."
+ },
+ {
+  "p": "g1-shi",
+  "t": "cloze",
+  "zh": "这是我的手机。",
+  "en": "This is my phone.",
+  "blank": "是",
+  "explain": "A 是 B means A is B."
+ },
+ {
+  "p": "g1-shi",
+  "t": "order",
+  "zh": "那是我妈妈的车。",
+  "en": "That is my mom's car.",
+  "explain": "A 是 B."
+ },
+ {
+  "p": "g1-shi",
+  "t": "spot",
+  "zh": "他是医生。",
+  "en": "He is a doctor.",
+  "wrong": "他是很医生。",
+  "remove": "很",
+  "explain": "Do not put 很 before a noun."
+ },
+ {
+  "p": "g1-shi",
+  "t": "cloze",
+  "zh": "她不是我的同学。",
+  "en": "She is not my classmate.",
+  "blank": "不",
+  "explain": "不 comes before 是."
+ },
+ {
+  "p": "g1-hen",
+  "t": "mc",
+  "prompt": "Which sentence says: This cup is very big?",
+  "options": [
+   "这个杯子很大。",
+   "这个杯子是很大。"
+  ],
+  "correct": 0,
+  "zh": "这个杯子很大。",
+  "en": "This cup is very big.",
+  "explain": "Do not put 是 before an adjective."
+ },
+ {
+  "p": "g1-hen",
+  "t": "cloze",
+  "zh": "这个电影真好看！",
+  "en": "This film is really good!",
+  "blank": "真",
+  "explain": "真 means really."
+ },
+ {
+  "p": "g1-hen",
+  "t": "order",
+  "zh": "这个杯子太贵了！",
+  "en": "This cup is too expensive!",
+  "explain": "太 … 了 shows too or so."
+ },
+ {
+  "p": "g1-hen",
+  "t": "spot",
+  "zh": "他很高兴。",
+  "en": "He is very happy.",
+  "wrong": "他是很高兴。",
+  "remove": "是",
+  "explain": "Do not put 是 before an adjective."
+ },
+ {
   "p": "g1-youdianr",
   "t": "order",
   "zh": "今天有点儿冷。",
   "en": "It is a bit cold today.",
   "explain": "有点儿 comes before the adjective."
+ },
+ {
+  "p": "g1-youdianr",
+  "t": "mc",
+  "prompt": "Which sentence says: I am a bit busy?",
+  "options": [
+   "我有点儿忙。",
+   "我忙有点儿。"
+  ],
+  "correct": 0,
+  "zh": "我有点儿忙。",
+  "en": "I am a bit busy.",
+  "explain": "有点儿 comes before the adjective."
+ },
+ {
+  "p": "g1-youdianr",
+  "t": "cloze",
+  "zh": "这个房间有点儿冷。",
+  "en": "This room is a bit cold.",
+  "blank": "有点儿",
+  "explain": "有点儿 comes before the adjective."
+ },
+ {
+  "p": "g1-youdianr",
+  "t": "order",
+  "zh": "今天有点儿热。",
+  "en": "It is a bit hot today.",
+  "explain": "有点儿 comes before the adjective."
+ },
+ {
+  "p": "g1-youdianr",
+  "t": "spot",
+  "zh": "这个包子有点儿贵。",
+  "en": "This bun is a bit expensive.",
+  "wrong": "这个包子很有点儿贵。",
+  "remove": "很",
+  "explain": "Do not use 很 and 有点儿 together."
+ },
+ {
+  "p": "g1-ma",
+  "t": "mc",
+  "prompt": "Which sentence says: Are you a student??",
+  "options": [
+   "你是学生吗？",
+   "你吗是学生？"
+  ],
+  "correct": 0,
+  "zh": "你是学生吗？",
+  "en": "Are you a student?",
+  "explain": "吗 comes at the end."
+ },
+ {
+  "p": "g1-ma",
+  "t": "cloze",
+  "zh": "你家有猫吗？",
+  "en": "Do you have a cat at home?",
+  "blank": "吗",
+  "explain": "吗 turns a statement into a yes/no question."
+ },
+ {
+  "p": "g1-ma",
+  "t": "order",
+  "zh": "你喝茶吗？",
+  "en": "Do you drink tea?",
+  "explain": "Statement + 吗."
+ },
+ {
+  "p": "g1-ma",
+  "t": "spot",
+  "zh": "你去学校吗？",
+  "en": "Are you going to school?",
+  "wrong": "你去什么学校吗？",
+  "remove": "什么",
+  "explain": "Do not use 吗 with a question word."
+ },
+ {
+  "p": "g1-qword",
+  "t": "mc",
+  "prompt": "Which sentence says: What do you drink??",
+  "options": [
+   "你喝什么？",
+   "你什么喝？"
+  ],
+  "correct": 0,
+  "zh": "你喝什么？",
+  "en": "What do you drink?",
+  "explain": "The question word takes the place of the answer."
+ },
+ {
+  "p": "g1-qword",
+  "t": "cloze",
+  "zh": "你家有几口人？",
+  "en": "How many people are in your family?",
+  "blank": "几",
+  "explain": "几 asks about small numbers."
+ },
+ {
+  "p": "g1-qword",
+  "t": "order",
+  "zh": "你们几点上课？",
+  "en": "What time do you have class?",
+  "explain": "几点 asks the time."
+ },
+ {
+  "p": "g1-qword",
+  "t": "order",
+  "zh": "这是什么？",
+  "en": "What is this?",
+  "explain": "什么 takes the place of the answer."
+ },
+ {
+  "p": "g1-qword",
+  "t": "spot",
+  "zh": "你有几个孩子？",
+  "en": "How many children do you have?",
+  "wrong": "你有几个孩子吗？",
+  "remove": "吗",
+  "explain": "Do not use 吗 with a question word."
+ },
+ {
+  "p": "g1-qword",
+  "t": "cloze",
+  "zh": "你们谁是学生？",
+  "en": "Who among you is a student?",
+  "blank": "谁",
+  "explain": "谁 asks who."
+ },
+ {
+  "p": "g1-neg",
+  "t": "mc",
+  "prompt": "Which sentence says: I do not have a phone?",
+  "options": [
+   "我没有手机。",
+   "我不有手机。"
+  ],
+  "correct": 0,
+  "zh": "我没有手机。",
+  "en": "I do not have a phone.",
+  "explain": "Negate 有 with 没."
+ },
+ {
+  "p": "g1-neg",
+  "t": "cloze",
+  "zh": "他昨天没去学校。",
+  "en": "He did not go to school yesterday.",
+  "blank": "没",
+  "explain": "没 says something did not happen."
+ },
+ {
+  "p": "g1-neg",
+  "t": "order",
+  "zh": "妈妈不在家。",
+  "en": "Mom is not at home.",
+  "explain": "不 comes before 在."
+ },
+ {
+  "p": "g1-neg",
+  "t": "spot",
+  "zh": "我没有钱。",
+  "en": "I have no money.",
+  "wrong": "我不没有钱。",
+  "remove": "不",
+  "explain": "Do not put 不 before 没."
  },
  {
   "p": "g1-buyao",
@@ -63,6 +382,223 @@
   "explain": "不要 comes before the verb."
  },
  {
+  "p": "g1-buyao",
+  "t": "mc",
+  "prompt": "Which sentence says: Do not eat this!?",
+  "options": [
+   "不要吃这个！",
+   "不要这个吃！"
+  ],
+  "correct": 0,
+  "zh": "不要吃这个！",
+  "en": "Do not eat this!",
+  "explain": "不要 comes before the verb."
+ },
+ {
+  "p": "g1-buyao",
+  "t": "cloze",
+  "zh": "不要在这儿玩。",
+  "en": "Do not play here.",
+  "blank": "不要",
+  "explain": "不要 means do not."
+ },
+ {
+  "p": "g1-buyao",
+  "t": "order",
+  "zh": "不要给他钱。",
+  "en": "Do not give him money.",
+  "explain": "不要 + verb."
+ },
+ {
+  "p": "g1-buyao",
+  "t": "spot",
+  "zh": "不要喝水。",
+  "en": "Do not drink water.",
+  "wrong": "不要很喝水。",
+  "remove": "很",
+  "explain": "不要 goes right before the verb."
+ },
+ {
+  "p": "g1-you",
+  "t": "mc",
+  "prompt": "Which sentence says: He has two cats?",
+  "options": [
+   "他有两只猫。",
+   "他有猫两只。"
+  ],
+  "correct": 0,
+  "zh": "他有两只猫。",
+  "en": "He has two cats.",
+  "explain": "有 + number + measure word + noun."
+ },
+ {
+  "p": "g1-you",
+  "t": "cloze",
+  "zh": "我家有一只猫和一只狗。",
+  "en": "My family has a cat and a dog.",
+  "blank": "有",
+  "explain": "有 shows what someone has."
+ },
+ {
+  "p": "g1-you",
+  "t": "order",
+  "zh": "你有没有时间？",
+  "en": "Do you have time?",
+  "explain": "有没有 asks yes or no."
+ },
+ {
+  "p": "g1-you",
+  "t": "spot",
+  "zh": "你有没有弟弟？",
+  "en": "Do you have a younger brother?",
+  "wrong": "你有没有弟弟吗？",
+  "remove": "吗",
+  "explain": "Do not add 吗 to 有没有."
+ },
+ {
+  "p": "g1-you",
+  "t": "cloze",
+  "zh": "我没有时间。",
+  "en": "I have no time.",
+  "blank": "没有",
+  "explain": "没有 is the negative of 有."
+ },
+ {
+  "p": "g1-pron",
+  "t": "mc",
+  "prompt": "Which sentence says: You are my friends?",
+  "options": [
+   "你们是我的朋友。",
+   "你是们我的朋友。"
+  ],
+  "correct": 0,
+  "zh": "你们是我的朋友。",
+  "en": "You are my friends.",
+  "explain": "们 comes right after the pronoun."
+ },
+ {
+  "p": "g1-pron",
+  "t": "cloze",
+  "zh": "他们在学校学习汉语。",
+  "en": "They study Chinese at school.",
+  "blank": "他们",
+  "explain": "们 makes a pronoun plural."
+ },
+ {
+  "p": "g1-pron",
+  "t": "order",
+  "zh": "老师们都很忙。",
+  "en": "The teachers are all busy.",
+  "explain": "们 shows more than one."
+ },
+ {
+  "p": "g1-pron",
+  "t": "spot",
+  "zh": "这里有五个学生。",
+  "en": "There are five students here.",
+  "wrong": "这里有五个学生们。",
+  "remove": "们",
+  "explain": "Do not add 们 after a number."
+ },
+ {
+  "p": "g1-pron",
+  "t": "cloze",
+  "zh": "您想喝茶吗？",
+  "en": "Would you like some tea?",
+  "blank": "您",
+  "explain": "您 is the polite word for you."
+ },
+ {
+  "p": "g1-de",
+  "t": "mc",
+  "prompt": "Which sentence says: This is my mom's phone?",
+  "options": [
+   "这是我妈妈的手机。",
+   "这是我妈妈手机的。"
+  ],
+  "correct": 0,
+  "zh": "这是我妈妈的手机。",
+  "en": "This is my mom's phone.",
+  "explain": "的 comes between the owner and the thing."
+ },
+ {
+  "p": "g1-de",
+  "t": "cloze",
+  "zh": "他是我哥哥的同学。",
+  "en": "He is my older brother's classmate.",
+  "blank": "的",
+  "explain": "的 shows who it belongs to."
+ },
+ {
+  "p": "g1-de",
+  "t": "order",
+  "zh": "这个是你的杯子吗？",
+  "en": "Is this your cup?",
+  "explain": "owner + 的 + thing."
+ },
+ {
+  "p": "g1-de",
+  "t": "spot",
+  "zh": "姐姐的衣服很漂亮。",
+  "en": "My older sister's clothes are pretty.",
+  "wrong": "姐姐的是衣服很漂亮。",
+  "remove": "是",
+  "explain": "Do not add 是 after 的."
+ },
+ {
+  "p": "g1-de",
+  "t": "cloze",
+  "zh": "这是谁的书？",
+  "en": "Whose book is this?",
+  "blank": "的",
+  "explain": "谁的 asks whose."
+ },
+ {
+  "p": "g1-measure",
+  "t": "mc",
+  "prompt": "Which sentence says: He has three dogs?",
+  "options": [
+   "他有三只狗。",
+   "他有三个狗。"
+  ],
+  "correct": 0,
+  "zh": "他有三只狗。",
+  "en": "He has three dogs.",
+  "explain": "Use 只 for animals."
+ },
+ {
+  "p": "g1-measure",
+  "t": "cloze",
+  "zh": "我想买两件衣服。",
+  "en": "I want to buy two pieces of clothing.",
+  "blank": "件",
+  "explain": "件 counts clothes."
+ },
+ {
+  "p": "g1-measure",
+  "t": "order",
+  "zh": "那只猫很小。",
+  "en": "That cat is very small.",
+  "explain": "那 + measure word + noun."
+ },
+ {
+  "p": "g1-measure",
+  "t": "spot",
+  "zh": "我有一本书。",
+  "en": "I have a book.",
+  "wrong": "我有一个本书。",
+  "remove": "个",
+  "explain": "Use 本 for books; do not add 个."
+ },
+ {
+  "p": "g1-measure",
+  "t": "cloze",
+  "zh": "你要几个包子？",
+  "en": "How many buns do you want?",
+  "blank": "个",
+  "explain": "几 + measure word + noun."
+ },
+ {
   "p": "g1-liang",
   "t": "cloze",
   "zh": "我有两个杯子。",
@@ -76,6 +612,43 @@
   "zh": "我家有两个人。",
   "en": "There are two people in my home.",
   "explain": "两 + measure word."
+ },
+ {
+  "p": "g1-liang",
+  "t": "mc",
+  "prompt": "Which sentence says: I have two dogs?",
+  "options": [
+   "我有两只狗。",
+   "我有二只狗。"
+  ],
+  "correct": 0,
+  "zh": "我有两只狗。",
+  "en": "I have two dogs.",
+  "explain": "Say 两 before a measure word."
+ },
+ {
+  "p": "g1-liang",
+  "t": "cloze",
+  "zh": "他有两个女儿。",
+  "en": "He has two daughters.",
+  "blank": "两",
+  "explain": "两 goes before a measure word."
+ },
+ {
+  "p": "g1-liang",
+  "t": "order",
+  "zh": "我们有两个老师。",
+  "en": "We have two teachers.",
+  "explain": "两 + measure word + noun."
+ },
+ {
+  "p": "g1-liang",
+  "t": "spot",
+  "zh": "她有两个儿子。",
+  "en": "She has two sons.",
+  "wrong": "她有二两个儿子。",
+  "remove": "二",
+  "explain": "Use 两, not 二, before a measure word."
  },
  {
   "p": "g1-money",
@@ -106,6 +679,43 @@
   "explain": "多少钱 asks the price."
  },
  {
+  "p": "g1-money",
+  "t": "mc",
+  "prompt": "Which sentence says: This apple is three yuan?",
+  "options": [
+   "这个苹果三块钱。",
+   "这个苹果钱三块。"
+  ],
+  "correct": 0,
+  "zh": "这个苹果三块钱。",
+  "en": "This apple is three yuan.",
+  "explain": "The number and 块 come before 钱."
+ },
+ {
+  "p": "g1-money",
+  "t": "cloze",
+  "zh": "这本书十五块钱。",
+  "en": "This book is fifteen yuan.",
+  "blank": "块",
+  "explain": "number + 块 + 钱."
+ },
+ {
+  "p": "g1-money",
+  "t": "order",
+  "zh": "一个包子两块钱。",
+  "en": "One bun is two yuan.",
+  "explain": "number + 块 + 钱."
+ },
+ {
+  "p": "g1-money",
+  "t": "spot",
+  "zh": "这个手机一千块。",
+  "en": "This phone is 1,000 yuan.",
+  "wrong": "这个手机很一千块。",
+  "remove": "很",
+  "explain": "Do not put 很 before a price."
+ },
+ {
   "p": "g1-age",
   "t": "cloze",
   "zh": "我儿子今年六岁。",
@@ -132,6 +742,43 @@
   "zh": "他今年七岁。",
   "en": "He is seven this year.",
   "explain": "The number comes before 岁."
+ },
+ {
+  "p": "g1-age",
+  "t": "mc",
+  "prompt": "Which sentence says: My daughter is three this year?",
+  "options": [
+   "我女儿今年三岁。",
+   "我女儿三岁今年。"
+  ],
+  "correct": 0,
+  "zh": "我女儿今年三岁。",
+  "en": "My daughter is three this year.",
+  "explain": "今年 comes before the age."
+ },
+ {
+  "p": "g1-age",
+  "t": "cloze",
+  "zh": "你弟弟今年几岁？",
+  "en": "How old is your younger brother this year?",
+  "blank": "几",
+  "explain": "几岁 asks the age of a child."
+ },
+ {
+  "p": "g1-age",
+  "t": "order",
+  "zh": "我今年十八岁。",
+  "en": "I am eighteen this year.",
+  "explain": "number + 岁."
+ },
+ {
+  "p": "g1-age",
+  "t": "spot",
+  "zh": "他今年五岁。",
+  "en": "He is five this year.",
+  "wrong": "他今年是五岁。",
+  "remove": "是",
+  "explain": "Do not add 是 before an age."
  },
  {
   "p": "g1-di",
@@ -162,11 +809,85 @@
   "explain": "第 comes before the number."
  },
  {
+  "p": "g1-di",
+  "t": "mc",
+  "prompt": "Which sentence says: This is my first book?",
+  "options": [
+   "这是我的第一本书。",
+   "这是第一我的本书。"
+  ],
+  "correct": 0,
+  "zh": "这是我的第一本书。",
+  "en": "This is my first book.",
+  "explain": "第 + number + measure word."
+ },
+ {
+  "p": "g1-di",
+  "t": "cloze",
+  "zh": "我是第四个。",
+  "en": "I am the fourth.",
+  "blank": "第",
+  "explain": "第 makes a number into an order."
+ },
+ {
+  "p": "g1-di",
+  "t": "order",
+  "zh": "他是第三个学生。",
+  "en": "He is the third student.",
+  "explain": "第 + number + measure word."
+ },
+ {
+  "p": "g1-di",
+  "t": "spot",
+  "zh": "她是第二个老师。",
+  "en": "She is the second teacher.",
+  "wrong": "她是第二个的老师。",
+  "remove": "的",
+  "explain": "Do not add 的 after the measure word."
+ },
+ {
   "p": "g1-clock",
   "t": "order",
   "zh": "现在三点十分。",
   "en": "It is ten past three now.",
   "explain": "The hour comes first, then the minutes."
+ },
+ {
+  "p": "g1-clock",
+  "t": "mc",
+  "prompt": "Which sentence says: I get up at seven?",
+  "options": [
+   "我七点起床。",
+   "我起床七点。"
+  ],
+  "correct": 0,
+  "zh": "我七点起床。",
+  "en": "I get up at seven.",
+  "explain": "The time comes before the verb."
+ },
+ {
+  "p": "g1-clock",
+  "t": "cloze",
+  "zh": "他九点去学校。",
+  "en": "He goes to school at nine.",
+  "blank": "点",
+  "explain": "number + 点 gives the time."
+ },
+ {
+  "p": "g1-clock",
+  "t": "order",
+  "zh": "妈妈六点做饭。",
+  "en": "Mom cooks at six.",
+  "explain": "The time comes before the verb."
+ },
+ {
+  "p": "g1-clock",
+  "t": "spot",
+  "zh": "我们十点睡觉。",
+  "en": "We go to sleep at ten.",
+  "wrong": "我们十点的睡觉。",
+  "remove": "的",
+  "explain": "Do not put 的 after the time."
  },
  {
   "p": "g1-date",
@@ -182,6 +903,170 @@
   "zh": "明天是八月二号。",
   "en": "Tomorrow is the second of August.",
   "explain": "Month first, then the day."
+ },
+ {
+  "p": "g1-date",
+  "t": "mc",
+  "prompt": "Which sentence says: Yesterday was Sunday?",
+  "options": [
+   "昨天是星期天。",
+   "昨天星期天是。"
+  ],
+  "correct": 0,
+  "zh": "昨天是星期天。",
+  "en": "Yesterday was Sunday.",
+  "explain": "A 是 B."
+ },
+ {
+  "p": "g1-date",
+  "t": "cloze",
+  "zh": "今天是三月八号。",
+  "en": "Today is March 8th.",
+  "blank": "号",
+  "explain": "month + 月, day + 号."
+ },
+ {
+  "p": "g1-date",
+  "t": "order",
+  "zh": "明天是星期五。",
+  "en": "Tomorrow is Friday.",
+  "explain": "A 是 B."
+ },
+ {
+  "p": "g1-date",
+  "t": "spot",
+  "zh": "今天是十月一号。",
+  "en": "Today is October 1st.",
+  "wrong": "今天是在十月一号。",
+  "remove": "在",
+  "explain": "Do not add 在 to a date."
+ },
+ {
+  "p": "g1-zai",
+  "t": "mc",
+  "prompt": "Which sentence says: Dad works at the company?",
+  "options": [
+   "爸爸在公司工作。",
+   "爸爸工作在公司。"
+  ],
+  "correct": 0,
+  "zh": "爸爸在公司工作。",
+  "en": "Dad works at the company.",
+  "explain": "在 + place comes before the verb."
+ },
+ {
+  "p": "g1-zai",
+  "t": "cloze",
+  "zh": "我的手机在桌子上。",
+  "en": "My phone is on the table.",
+  "blank": "在",
+  "explain": "在 shows where something is."
+ },
+ {
+  "p": "g1-zai",
+  "t": "order",
+  "zh": "姐姐在商店买衣服。",
+  "en": "My older sister buys clothes at the shop.",
+  "explain": "在 + place comes before the verb."
+ },
+ {
+  "p": "g1-zai",
+  "t": "spot",
+  "zh": "我在家看电视。",
+  "en": "I watch TV at home.",
+  "wrong": "我在家去看电视。",
+  "remove": "去",
+  "explain": "Do not add 去 after 在 + place."
+ },
+ {
+  "p": "g1-zai",
+  "t": "cloze",
+  "zh": "你在哪儿工作？",
+  "en": "Where do you work?",
+  "blank": "在",
+  "explain": "在 + 哪儿 asks where."
+ },
+ {
+  "p": "g1-loc",
+  "t": "mc",
+  "prompt": "Which sentence says: There is a book on the table?",
+  "options": [
+   "桌子上有一本书。",
+   "桌子上在一本书。"
+  ],
+  "correct": 0,
+  "zh": "桌子上有一本书。",
+  "en": "There is a book on the table.",
+  "explain": "Use 有 for there is, not 在."
+ },
+ {
+  "p": "g1-loc",
+  "t": "cloze",
+  "zh": "杯子在桌子上。",
+  "en": "The cup is on the table.",
+  "blank": "上",
+  "explain": "place + 上 means on."
+ },
+ {
+  "p": "g1-loc",
+  "t": "order",
+  "zh": "商店里有两个人。",
+  "en": "There are two people in the shop.",
+  "explain": "place + 里 + 有."
+ },
+ {
+  "p": "g1-loc",
+  "t": "spot",
+  "zh": "椅子上有一只猫。",
+  "en": "There is a cat on the chair.",
+  "wrong": "椅子上在有一只猫。",
+  "remove": "在",
+  "explain": "Do not use 在 for there is."
+ },
+ {
+  "p": "g1-loc",
+  "t": "cloze",
+  "zh": "你的手机在家里。",
+  "en": "Your phone is at home.",
+  "blank": "里",
+  "explain": "place + 里 means in."
+ },
+ {
+  "p": "g1-xiang",
+  "t": "mc",
+  "prompt": "Which sentence says: I want to watch a film?",
+  "options": [
+   "我想看电影。",
+   "我想电影看。"
+  ],
+  "correct": 0,
+  "zh": "我想看电影。",
+  "en": "I want to watch a film.",
+  "explain": "想 comes before the verb."
+ },
+ {
+  "p": "g1-xiang",
+  "t": "cloze",
+  "zh": "她想买一件衣服。",
+  "en": "She wants to buy a piece of clothing.",
+  "blank": "想",
+  "explain": "想 + verb means want to."
+ },
+ {
+  "p": "g1-xiang",
+  "t": "order",
+  "zh": "你想喝什么？",
+  "en": "What would you like to drink?",
+  "explain": "想 + verb."
+ },
+ {
+  "p": "g1-xiang",
+  "t": "spot",
+  "zh": "我想去商店。",
+  "en": "I want to go to the shop.",
+  "wrong": "我想很去商店。",
+  "remove": "很",
+  "explain": "很 goes before 想: 我很想去."
  },
  {
   "p": "g1-yao",
@@ -212,12 +1097,86 @@
   "explain": "要 comes before the verb."
  },
  {
+  "p": "g1-yao",
+  "t": "mc",
+  "prompt": "Which sentence says: I would like two buns?",
+  "options": [
+   "我要两个包子。",
+   "我两个要包子。"
+  ],
+  "correct": 0,
+  "zh": "我要两个包子。",
+  "en": "I would like two buns.",
+  "explain": "要 comes before what you want."
+ },
+ {
+  "p": "g1-yao",
+  "t": "cloze",
+  "zh": "我要这个。",
+  "en": "I would like this one.",
+  "blank": "要",
+  "explain": "要 + thing means would like."
+ },
+ {
+  "p": "g1-yao",
+  "t": "order",
+  "zh": "你要米饭吗？",
+  "en": "Do you want rice?",
+  "explain": "要 + thing."
+ },
+ {
+  "p": "g1-yao",
+  "t": "spot",
+  "zh": "我要一个苹果。",
+  "en": "I would like an apple.",
+  "wrong": "我很要一个苹果。",
+  "remove": "很",
+  "explain": "Do not put 很 before 要 + thing."
+ },
+ {
   "p": "g1-hui",
   "t": "cloze",
   "zh": "我会说汉语。",
   "en": "I can speak Chinese.",
   "blank": "会",
   "explain": "会 means know how to."
+ },
+ {
+  "p": "g1-hui",
+  "t": "mc",
+  "prompt": "Which sentence says: I can drive?",
+  "options": [
+   "我会开车。",
+   "我开车会。"
+  ],
+  "correct": 0,
+  "zh": "我会开车。",
+  "en": "I can drive.",
+  "explain": "会 comes before the verb."
+ },
+ {
+  "p": "g1-hui",
+  "t": "cloze",
+  "zh": "他会唱歌。",
+  "en": "He can sing.",
+  "blank": "会",
+  "explain": "会 means know how to."
+ },
+ {
+  "p": "g1-hui",
+  "t": "order",
+  "zh": "你会写你的名字吗？",
+  "en": "Can you write your name?",
+  "explain": "会 comes before the verb."
+ },
+ {
+  "p": "g1-hui",
+  "t": "spot",
+  "zh": "弟弟会写字。",
+  "en": "My younger brother can write.",
+  "wrong": "弟弟会能写字。",
+  "remove": "能",
+  "explain": "Do not use 会 and 能 together."
  },
  {
   "p": "g1-neng",
@@ -248,6 +1207,43 @@
   "explain": "不 comes before 能."
  },
  {
+  "p": "g1-neng",
+  "t": "mc",
+  "prompt": "Which sentence says: I can go to the shop today?",
+  "options": [
+   "我今天能去商店。",
+   "我今天去能商店。"
+  ],
+  "correct": 0,
+  "zh": "我今天能去商店。",
+  "en": "I can go to the shop today.",
+  "explain": "能 comes before the verb."
+ },
+ {
+  "p": "g1-neng",
+  "t": "cloze",
+  "zh": "他今天不能上课。",
+  "en": "He cannot have class today.",
+  "blank": "能",
+  "explain": "不能 means cannot."
+ },
+ {
+  "p": "g1-neng",
+  "t": "order",
+  "zh": "你能给我一杯水吗？",
+  "en": "Can you give me a glass of water?",
+  "explain": "能 comes before the verb."
+ },
+ {
+  "p": "g1-neng",
+  "t": "spot",
+  "zh": "我不能喝茶。",
+  "en": "I cannot drink tea.",
+  "wrong": "我不能会喝茶。",
+  "remove": "会",
+  "explain": "Do not use 能 and 会 together."
+ },
+ {
   "p": "g1-keyi",
   "t": "cloze",
   "zh": "我可以坐这儿吗？",
@@ -274,6 +1270,43 @@
   "zh": "我可以看书吗？",
   "en": "May I read?",
   "explain": "可以 goes before the verb."
+ },
+ {
+  "p": "g1-keyi",
+  "t": "mc",
+  "prompt": "Which sentence says: May I go home??",
+  "options": [
+   "我可以回家吗？",
+   "我可以吗回家？"
+  ],
+  "correct": 0,
+  "zh": "我可以回家吗？",
+  "en": "May I go home?",
+  "explain": "可以 comes before the verb and 吗 at the end."
+ },
+ {
+  "p": "g1-keyi",
+  "t": "cloze",
+  "zh": "你可以问老师。",
+  "en": "You may ask the teacher.",
+  "blank": "可以",
+  "explain": "可以 means may."
+ },
+ {
+  "p": "g1-keyi",
+  "t": "order",
+  "zh": "我可以给你打电话吗？",
+  "en": "May I call you?",
+  "explain": "可以 comes before the verb."
+ },
+ {
+  "p": "g1-keyi",
+  "t": "spot",
+  "zh": "你可以回家。",
+  "en": "You may go home.",
+  "wrong": "你可以会回家。",
+  "remove": "会",
+  "explain": "Do not use 可以 and 会 together."
  },
  {
   "p": "g1-dou",
@@ -304,6 +1337,88 @@
   "explain": "都 goes before the verb."
  },
  {
+  "p": "g1-dou",
+  "t": "mc",
+  "prompt": "Which sentence says: We all go to school?",
+  "options": [
+   "我们都去学校。",
+   "我们去都学校。"
+  ],
+  "correct": 0,
+  "zh": "我们都去学校。",
+  "en": "We all go to school.",
+  "explain": "都 comes before the verb."
+ },
+ {
+  "p": "g1-dou",
+  "t": "cloze",
+  "zh": "他们都是我的朋友。",
+  "en": "They are all my friends.",
+  "blank": "都",
+  "explain": "都 means all."
+ },
+ {
+  "p": "g1-dou",
+  "t": "order",
+  "zh": "我们都想喝茶。",
+  "en": "We all want to drink tea.",
+  "explain": "都 comes before the verb."
+ },
+ {
+  "p": "g1-dou",
+  "t": "spot",
+  "zh": "她们都在家。",
+  "en": "They are all at home.",
+  "wrong": "她们都也在家。",
+  "remove": "也",
+  "explain": "Use 都 here; do not add 也."
+ },
+ {
+  "p": "g1-ye",
+  "t": "cloze",
+  "zh": "我也是学生。",
+  "en": "I am a student too.",
+  "blank": "也",
+  "explain": "也 goes before the verb."
+ },
+ {
+  "p": "g1-ye",
+  "t": "mc",
+  "prompt": "Which sentence says: He is at school too?",
+  "options": [
+   "他也在学校。",
+   "他在也学校。"
+  ],
+  "correct": 0,
+  "zh": "他也在学校。",
+  "en": "He is at school too.",
+  "explain": "也 comes before the verb."
+ },
+ {
+  "p": "g1-ye",
+  "t": "cloze",
+  "zh": "妈妈也会做饭。",
+  "en": "Mom can cook too.",
+  "blank": "也",
+  "explain": "也 means too."
+ },
+ {
+  "p": "g1-ye",
+  "t": "order",
+  "zh": "我也想去商店。",
+  "en": "I want to go to the shop too.",
+  "explain": "也 comes before the verb."
+ },
+ {
+  "p": "g1-ye",
+  "t": "spot",
+  "zh": "弟弟也是学生。",
+  "en": "My younger brother is a student too.",
+  "wrong": "弟弟还也是学生。",
+  "remove": "还",
+  "explain": "Use 也 for too; do not add 还."
+ },
+ {
   "p": "g1-hai",
   "t": "cloze",
   "zh": "我还想喝一杯。",
@@ -332,11 +1447,130 @@
   "explain": "还 goes before 想."
  },
  {
+  "p": "g1-hai",
+  "t": "mc",
+  "prompt": "Which sentence says: He is still sleeping?",
+  "options": [
+   "他还在睡觉。",
+   "他在还睡觉。"
+  ],
+  "correct": 0,
+  "zh": "他还在睡觉。",
+  "en": "He is still sleeping.",
+  "explain": "还 comes before the verb."
+ },
+ {
+  "p": "g1-hai",
+  "t": "cloze",
+  "zh": "我还有一个问题。",
+  "en": "I have one more question.",
+  "blank": "还",
+  "explain": "还 means still or also."
+ },
+ {
+  "p": "g1-hai",
+  "t": "order",
+  "zh": "你还想吃什么？",
+  "en": "What else do you want to eat?",
+  "explain": "还 + 想 + verb."
+ },
+ {
+  "p": "g1-hai",
+  "t": "spot",
+  "zh": "妈妈还在做饭。",
+  "en": "Mom is still cooking.",
+  "wrong": "妈妈还也在做饭。",
+  "remove": "也",
+  "explain": "Use 还 for still; do not add 也."
+ },
+ {
+  "p": "g1-anota",
+  "t": "mc",
+  "prompt": "Which sentence says: Are you going to school??",
+  "options": [
+   "你去不去学校？",
+   "你去不去学校吗？"
+  ],
+  "correct": 0,
+  "zh": "你去不去学校？",
+  "en": "Are you going to school?",
+  "explain": "Do not add 吗 to an A-not-A question."
+ },
+ {
+  "p": "g1-anota",
+  "t": "cloze",
+  "zh": "你想不想去？",
+  "en": "Do you want to go?",
+  "blank": "不",
+  "explain": "verb + 不 + verb asks yes or no."
+ },
+ {
+  "p": "g1-anota",
+  "t": "order",
+  "zh": "他有没有手机？",
+  "en": "Does he have a phone?",
+  "explain": "有没有 asks yes or no."
+ },
+ {
+  "p": "g1-anota",
+  "t": "spot",
+  "zh": "你吃不吃米饭？",
+  "en": "Do you eat rice?",
+  "wrong": "你吃不吃米饭吗？",
+  "remove": "吗",
+  "explain": "Do not add 吗 to an A-not-A question."
+ },
+ {
+  "p": "g1-anota",
+  "t": "cloze",
+  "zh": "你会不会说汉语？",
+  "en": "Can you speak Chinese?",
+  "blank": "不",
+  "explain": "verb + 不 + verb asks yes or no."
+ },
+ {
   "p": "g1-ba",
   "t": "order",
   "zh": "我们去看电影吧。",
   "en": "Let us go and see a film.",
   "explain": "吧 comes at the end to suggest."
+ },
+ {
+  "p": "g1-ba",
+  "t": "mc",
+  "prompt": "Which sentence says: Let us eat?",
+  "options": [
+   "我们吃饭吧。",
+   "我们吧吃饭。"
+  ],
+  "correct": 0,
+  "zh": "我们吃饭吧。",
+  "en": "Let us eat.",
+  "explain": "吧 comes at the end."
+ },
+ {
+  "p": "g1-ba",
+  "t": "cloze",
+  "zh": "我们坐出租车去吧。",
+  "en": "Let us go by taxi.",
+  "blank": "吧",
+  "explain": "吧 makes a suggestion."
+ },
+ {
+  "p": "g1-ba",
+  "t": "order",
+  "zh": "你明天来吧。",
+  "en": "You come tomorrow, then.",
+  "explain": "吧 comes at the end."
+ },
+ {
+  "p": "g1-ba",
+  "t": "spot",
+  "zh": "我们喝茶吧。",
+  "en": "Let us have tea.",
+  "wrong": "我们喝茶吧吗。",
+  "remove": "吗",
+  "explain": "Do not use 吧 and 吗 together."
  },
  {
   "p": "g1-ne",
@@ -352,6 +1586,215 @@
   "zh": "我的杯子呢？",
   "en": "Where is my cup?",
   "explain": "呢 asks where something is."
+ },
+ {
+  "p": "g1-ne",
+  "t": "mc",
+  "prompt": "Which sentence says: I want tea; and you??",
+  "options": [
+   "我想喝茶，你呢？",
+   "我想喝茶，你吗？"
+  ],
+  "correct": 0,
+  "zh": "我想喝茶，你呢？",
+  "en": "I want tea; and you?",
+  "explain": "呢 asks and you."
+ },
+ {
+  "p": "g1-ne",
+  "t": "cloze",
+  "zh": "我的手机呢？",
+  "en": "Where is my phone?",
+  "blank": "呢",
+  "explain": "noun + 呢 asks where it is."
+ },
+ {
+  "p": "g1-ne",
+  "t": "order",
+  "zh": "我在学校，你呢？",
+  "en": "I am at school; and you?",
+  "explain": "呢 asks and you."
+ },
+ {
+  "p": "g1-ne",
+  "t": "spot",
+  "zh": "妈妈在家，爸爸呢？",
+  "en": "Mom is at home; where is Dad?",
+  "wrong": "妈妈在家，爸爸呢吗？",
+  "remove": "吗",
+  "explain": "Do not use 吗 with 呢."
+ },
+ {
+  "p": "g1-prog",
+  "t": "mc",
+  "prompt": "Which sentence says: Dad is watching TV?",
+  "options": [
+   "爸爸在看电视。",
+   "爸爸看电视在。"
+  ],
+  "correct": 0,
+  "zh": "爸爸在看电视。",
+  "en": "Dad is watching TV.",
+  "explain": "在 comes before the verb."
+ },
+ {
+  "p": "g1-prog",
+  "t": "cloze",
+  "zh": "孩子们正在玩。",
+  "en": "The children are playing right now.",
+  "blank": "正在",
+  "explain": "正在 shows it is happening now."
+ },
+ {
+  "p": "g1-prog",
+  "t": "order",
+  "zh": "我在给妈妈打电话。",
+  "en": "I am calling my mom.",
+  "explain": "在 comes before the verb."
+ },
+ {
+  "p": "g1-prog",
+  "t": "spot",
+  "zh": "我正在学习。",
+  "en": "I am studying right now.",
+  "wrong": "我不正在学习。",
+  "remove": "不",
+  "explain": "For not doing it, say 没在: 我没在学习."
+ },
+ {
+  "p": "g1-prog",
+  "t": "cloze",
+  "zh": "他在睡觉呢。",
+  "en": "He is sleeping.",
+  "blank": "呢",
+  "explain": "呢 at the end shows it is going on."
+ },
+ {
+  "p": "g1-le1",
+  "t": "mc",
+  "prompt": "Which sentence says: I watched a film yesterday?",
+  "options": [
+   "我昨天看了一个电影。",
+   "我看了昨天一个电影。"
+  ],
+  "correct": 0,
+  "zh": "我昨天看了一个电影。",
+  "en": "I watched a film yesterday.",
+  "explain": "The time comes before the verb."
+ },
+ {
+  "p": "g1-le1",
+  "t": "cloze",
+  "zh": "他喝了三杯茶。",
+  "en": "He drank three cups of tea.",
+  "blank": "了",
+  "explain": "了 comes right after the verb."
+ },
+ {
+  "p": "g1-le1",
+  "t": "order",
+  "zh": "妈妈买了一些水果。",
+  "en": "Mom bought some fruit.",
+  "explain": "verb + 了 + amount + object."
+ },
+ {
+  "p": "g1-le1",
+  "t": "spot",
+  "zh": "我吃了一个包子。",
+  "en": "I ate a bun.",
+  "wrong": "我没吃了一个包子。",
+  "remove": "没",
+  "explain": "Do not use 没 and 了 together."
+ },
+ {
+  "p": "g1-le1",
+  "t": "cloze",
+  "zh": "我昨天去了医院。",
+  "en": "I went to the hospital yesterday.",
+  "blank": "了",
+  "explain": "了 shows it is done."
+ },
+ {
+  "p": "g1-le2",
+  "t": "mc",
+  "prompt": "Which sentence says: It is nine o'clock now?",
+  "options": [
+   "现在九点了。",
+   "九点现在了。"
+  ],
+  "correct": 0,
+  "zh": "现在九点了。",
+  "en": "It is nine o'clock now.",
+  "explain": "了 at the end shows a change."
+ },
+ {
+  "p": "g1-le2",
+  "t": "cloze",
+  "zh": "我女儿三岁了。",
+  "en": "My daughter is three now.",
+  "blank": "了",
+  "explain": "了 at the end shows a change."
+ },
+ {
+  "p": "g1-le2",
+  "t": "order",
+  "zh": "他不在家了。",
+  "en": "He is not at home any more.",
+  "explain": "不 … 了 means not any more."
+ },
+ {
+  "p": "g1-le2",
+  "t": "spot",
+  "zh": "弟弟不高兴了。",
+  "en": "My younger brother is not happy any more.",
+  "wrong": "弟弟不是高兴了。",
+  "remove": "是",
+  "explain": "Do not put 是 before an adjective."
+ },
+ {
+  "p": "g1-le2",
+  "t": "cloze",
+  "zh": "我不想去了。",
+  "en": "I do not want to go any more.",
+  "blank": "了",
+  "explain": "不 … 了 means not any more."
+ },
+ {
+  "p": "g1-he",
+  "t": "mc",
+  "prompt": "Which sentence says: My older sister and I are at home?",
+  "options": [
+   "我和姐姐在家。",
+   "我和在家姐姐。"
+  ],
+  "correct": 0,
+  "zh": "我和姐姐在家。",
+  "en": "My older sister and I are at home.",
+  "explain": "和 joins two things."
+ },
+ {
+  "p": "g1-he",
+  "t": "cloze",
+  "zh": "他和我都喜欢茶。",
+  "en": "He and I both like tea.",
+  "blank": "和",
+  "explain": "和 joins two things."
+ },
+ {
+  "p": "g1-he",
+  "t": "order",
+  "zh": "爸爸和哥哥看电视。",
+  "en": "Dad and my older brother watch TV.",
+  "explain": "A 和 B."
+ },
+ {
+  "p": "g1-he",
+  "t": "spot",
+  "zh": "我和你都是学生。",
+  "en": "You and I are both students.",
+  "wrong": "我和你都也是学生。",
+  "remove": "也",
+  "explain": "Use 都 for both; do not add 也."
  },
  {
   "p": "g1-dui",
@@ -382,6 +1825,43 @@
   "explain": "对 + person comes before 很好."
  },
  {
+  "p": "g1-dui",
+  "t": "mc",
+  "prompt": "Which sentence says: Dad is very good to me?",
+  "options": [
+   "爸爸对我很好。",
+   "爸爸很对我好。"
+  ],
+  "correct": 0,
+  "zh": "爸爸对我很好。",
+  "en": "Dad is very good to me.",
+  "explain": "对 + person comes before the adjective."
+ },
+ {
+  "p": "g1-dui",
+  "t": "cloze",
+  "zh": "妈妈对孩子很好。",
+  "en": "Mom is very good to the child.",
+  "blank": "对",
+  "explain": "对 + person means toward."
+ },
+ {
+  "p": "g1-dui",
+  "t": "order",
+  "zh": "他对朋友很好。",
+  "en": "He is very good to his friends.",
+  "explain": "对 + person + adjective."
+ },
+ {
+  "p": "g1-dui",
+  "t": "spot",
+  "zh": "她对我很好。",
+  "en": "She is very good to me.",
+  "wrong": "她对我是很好。",
+  "remove": "是",
+  "explain": "Do not put 是 before an adjective."
+ },
+ {
   "p": "g1-serial",
   "t": "order",
   "zh": "他坐车去学校。",
@@ -402,6 +1882,43 @@
   "explain": "Actions follow the order they happen in."
  },
  {
+  "p": "g1-serial",
+  "t": "mc",
+  "prompt": "Which sentence says: I go to the shop to buy fruit?",
+  "options": [
+   "我去商店买水果。",
+   "我买水果去商店。"
+  ],
+  "correct": 0,
+  "zh": "我去商店买水果。",
+  "en": "I go to the shop to buy fruit.",
+  "explain": "Keep the order of events."
+ },
+ {
+  "p": "g1-serial",
+  "t": "cloze",
+  "zh": "他坐火车去学校。",
+  "en": "He goes to school by train.",
+  "blank": "坐",
+  "explain": "The first action comes first."
+ },
+ {
+  "p": "g1-serial",
+  "t": "order",
+  "zh": "我们去饭店吃饭。",
+  "en": "We go to a restaurant to eat.",
+  "explain": "Keep the order of events."
+ },
+ {
+  "p": "g1-serial",
+  "t": "spot",
+  "zh": "妈妈去超市买菜。",
+  "en": "Mom goes to the supermarket to buy food.",
+  "wrong": "妈妈去超市来买菜。",
+  "remove": "来",
+  "explain": "Do not add 来 between the two actions."
+ },
+ {
   "p": "g1-give",
   "t": "cloze",
   "zh": "他给我一本书。",
@@ -410,11 +1927,85 @@
   "explain": "给 + person + thing."
  },
  {
+  "p": "g1-give",
+  "t": "mc",
+  "prompt": "Which sentence says: Mom gives me an apple?",
+  "options": [
+   "妈妈给我一个苹果。",
+   "妈妈一个苹果给我。"
+  ],
+  "correct": 0,
+  "zh": "妈妈给我一个苹果。",
+  "en": "Mom gives me an apple.",
+  "explain": "给 + person + thing."
+ },
+ {
+  "p": "g1-give",
+  "t": "cloze",
+  "zh": "我问他一个问题。",
+  "en": "I ask him a question.",
+  "blank": "他",
+  "explain": "问 + person + question."
+ },
+ {
+  "p": "g1-give",
+  "t": "order",
+  "zh": "我给朋友打电话。",
+  "en": "I call my friend.",
+  "explain": "给 + person + verb."
+ },
+ {
+  "p": "g1-give",
+  "t": "spot",
+  "zh": "哥哥给我两本书。",
+  "en": "My older brother gives me two books.",
+  "wrong": "哥哥给我是两本书。",
+  "remove": "是",
+  "explain": "Do not add 是 after 给 + person."
+ },
+ {
   "p": "g1-qing",
   "t": "order",
   "zh": "请你坐这儿。",
   "en": "Please sit here.",
   "explain": "请 comes at the start of the polite request."
+ },
+ {
+  "p": "g1-qing",
+  "t": "mc",
+  "prompt": "Which sentence says: Please have some tea?",
+  "options": [
+   "请喝茶。",
+   "喝茶请。"
+  ],
+  "correct": 0,
+  "zh": "请喝茶。",
+  "en": "Please have some tea.",
+  "explain": "请 comes before the verb."
+ },
+ {
+  "p": "g1-qing",
+  "t": "cloze",
+  "zh": "请你给我一杯水。",
+  "en": "Please give me a glass of water.",
+  "blank": "请",
+  "explain": "请 comes before the verb."
+ },
+ {
+  "p": "g1-qing",
+  "t": "order",
+  "zh": "喂，你是谁？",
+  "en": "Hello, who are you?",
+  "explain": "喂 starts a phone call."
+ },
+ {
+  "p": "g1-qing",
+  "t": "spot",
+  "zh": "请问，这是什么？",
+  "en": "Excuse me, what is this?",
+  "wrong": "请问，这是什么吗？",
+  "remove": "吗",
+  "explain": "Do not use 吗 with a question word."
  },
  {
   "p": "g1-yixia",
@@ -432,6 +2023,43 @@
   "explain": "一下 goes after the verb."
  },
  {
+  "p": "g1-yixia",
+  "t": "mc",
+  "prompt": "Which sentence says: I will have a listen?",
+  "options": [
+   "我听一下。",
+   "我一下听。"
+  ],
+  "correct": 0,
+  "zh": "我听一下。",
+  "en": "I will have a listen.",
+  "explain": "一下 comes after the verb."
+ },
+ {
+  "p": "g1-yixia",
+  "t": "cloze",
+  "zh": "请你说一下。",
+  "en": "Please say a few words.",
+  "blank": "一下",
+  "explain": "一下 makes it short and light."
+ },
+ {
+  "p": "g1-yixia",
+  "t": "order",
+  "zh": "你看一下这个。",
+  "en": "Take a look at this.",
+  "explain": "verb + 一下."
+ },
+ {
+  "p": "g1-yixia",
+  "t": "spot",
+  "zh": "我想休息一下。",
+  "en": "I want to rest a moment.",
+  "wrong": "我想休息的一下。",
+  "remove": "的",
+  "explain": "Do not put 的 before 一下."
+ },
+ {
   "p": "g1-yixie",
   "t": "cloze",
   "zh": "我想买一些水果。",
@@ -440,11 +2068,40 @@
   "explain": "一些 means some."
  },
  {
-  "p": "g1-ye",
+  "p": "g1-yixie",
+  "t": "mc",
+  "prompt": "Which sentence says: I want to eat a little rice?",
+  "options": [
+   "我想吃一点儿米饭。",
+   "我想吃米饭一点儿。"
+  ],
+  "correct": 0,
+  "zh": "我想吃一点儿米饭。",
+  "en": "I want to eat a little rice.",
+  "explain": "一点儿 comes before the noun."
+ },
+ {
+  "p": "g1-yixie",
   "t": "cloze",
-  "zh": "我也是学生。",
-  "en": "I am a student too.",
-  "blank": "也",
-  "explain": "也 goes before the verb."
+  "zh": "我有一些朋友。",
+  "en": "I have some friends.",
+  "blank": "一些",
+  "explain": "一些 means some."
+ },
+ {
+  "p": "g1-yixie",
+  "t": "order",
+  "zh": "有的学生在看书。",
+  "en": "Some students are reading.",
+  "explain": "有的 + noun."
+ },
+ {
+  "p": "g1-yixie",
+  "t": "spot",
+  "zh": "我想买一些衣服。",
+  "en": "I want to buy some clothes.",
+  "wrong": "我想买一些的衣服。",
+  "remove": "的",
+  "explain": "Do not put 的 after 一些."
  }
 ]

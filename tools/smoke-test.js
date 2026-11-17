@@ -494,7 +494,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(await page.evaluate(() => window.shanlu.state.screen) === 'home', 'clicking the logo goes Home');
   // Listening lab
   await nav('Listening lab');
-  check(await page.evaluate(() => window.HSK1_LISTEN.clips.length) >= 20, 'there are at least 20 listening clips');
+  check(await page.evaluate(() => window.HSK1_LISTEN.clips.length) >= 48, 'there are at least 48 listening clips');
   await page.locator('button.listen').click();
   // the lab opens on a random clip (never numbered), and "Another clip" gives a different one
   check(!(await text()).includes('Clip 1 of') && (await text()).includes('What do you hear?') && (await text()).includes('clips tried'), 'the Listening lab shows no clip numbers');
