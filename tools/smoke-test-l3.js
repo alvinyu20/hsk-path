@@ -355,7 +355,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     check(await pA.evaluate(() => window.SHANLU_LEVEL) === 0 && await pA.evaluate(() => window.SHANLU_LEVELS.join()) === '1,2,3', 'the address ?level=0 shows All levels with all three levels once HSK 3 is unlocked');
     check(await pA.evaluate(() => Object.keys(window.shanlu.state.ws).length === window.HSK1_WORDS.length + window.HSK2_WORDS.length + window.HSK3_WORDS.length), 'All levels holds the words of the three levels');
     check((await pA.locator('.lvbtn').innerText()).includes('All levels'), 'the All button is the selected one');
-    check((await openLv(pA), (await pA.locator('.lvpanel .lvitem .lvn').allInnerTexts()).join('|').replace(/\s+/g, '') === 'HSK1|HSK2|HSK3|HSK4|Alllevels'), 'the Levels menu offers HSK 1, HSK 2, HSK 3, HSK 4 (locked until HSK 3 is passed) and All levels');
+    check((await openLv(pA), (await pA.locator('.lvpanel .lvitem .lvn').allInnerTexts()).join('|').replace(/\s+/g, '') === 'HSK1|HSK2|HSK3|HSK4|HSK5|Alllevels'), 'the Levels menu offers HSK 1 to HSK 5 (HSK 4 and HSK 5 locked until the level before is passed) and All levels');
     // grammar from three levels in one list
     await require('./test-nav').makeNav(pA)('Grammar');
     await pA.waitForTimeout(150);

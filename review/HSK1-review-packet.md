@@ -28,6 +28,19 @@ This packet holds all the Chinese on the Shanlu study site for HSK 1 (the 300-wo
 15. **房间里有一个电视。** (word:房间): Is 一个电视 fine in speech, or should it be 一台电视?
 16. **我上学时，爸爸送我。** (word:时): Does 我上学时 mean "when I go to school (every day)" or "when I was a student"? Qwen says it leans to the second; is 我去上学的时候 clearer?
 17. **我今天头很疼。** (word:疼): Is 我很疼 (no body part) odd? Qwen says yes; I replaced it with a headache sentence to be safe.
+18. **这家店的手机保一年。** (word:保): Is 手机保一年 natural for "the phone has a one-year warranty", or would a shop say 手机保修一年 / 保修期一年? (保 on its own as "to guarantee" before a time length)
+19. **池里有很多红色的小鱼。** (word:池): Is 池里 natural for "in the pond", or would people say 池子里 / 池塘里? (池 on its own)
+20. **他今天很有精神。** (word:精神): The card teaches only the lively / energy sense (jīngshen). Is 他今天很有精神 the most natural example for it? The other sense, spirit (jīngshén), is only in the note: is the card balanced enough for HSK 5?
+21. **这个队的实力很强。** (word:实力): The card glosses 实力 as "strength; real ability". Is "capability" a better gloss, and is 这个队的实力很强 natural?
+22. **这个城市的人口增了很多。** (word:增): Is 增了 (on its own, without 加) natural in speech here, or would people say 增加了 / 多了? The card is a single-character entry.
+23. **他是这支球队的队长。** (word:支): Is 支 normal as the measure word for a team (一支球队) at this level, or do learners more often meet it only with pens (一支笔)?
+24. **他作出了一个重要的决定。** (word:作出): Is 作出 natural here, or would a native speaker write 做出了一个重要的决定? Same for 作出了回答 and 作出了最大的努力.
+25. **这件事令人吃惊。** (grammar:ling): Is 令人 + adjective (令人吃惊, 令人满意) natural in speech, or mainly in writing and the news? And is 他的话令我很感动 (令 + a named person) fine, or would you say 让我很感动 / 使我很感动?
+26. **今天够冷的，多穿一点吧。** (grammar:guyu): 够 + adjective + 的: the lesson says it shows surprise, sympathy or complaint ("quite cold, isn't it"). Is that the right description, and is 够冷的 natural for a simple comment on the weather?
+27. **比赛将要开始。** (grammar:jiang): 将要 + verb: the lesson calls it formal and says it usually does not end with 了. Is that accurate? Is 将要 more common in news and announcements than in speech (where 快要 / 就要 is used)?
+28. **看你累的，快去休息吧。** (grammar:kan): 看你…的 ("look how tired you are"): is 看你累的 natural, and is the lesson right that 看你说的 can also mean "come on, don't say that" (a gentle complaint)?
+29. **什么钱不钱的，我们是朋友！** (grammar:kan): 什么 + A + 不 + A + 的: is 什么钱不钱的 a natural way to wave something aside, and do people say it with other nouns (什么麻烦不麻烦的)?
+30. **我想来想去，还是决定去了。** (grammar:laiqu): A来A去: is 想来想去 natural for "thinking it over and over", and does the lesson overstate it when it says the verb can be any verb that can repeat (走来走去, 找来找去, 说来说去)?
 
 ## 2. Grammar lessons (26)
 

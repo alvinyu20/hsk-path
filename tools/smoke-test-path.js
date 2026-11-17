@@ -6,7 +6,7 @@ const { chromium } = require('playwright');
 
 const root = path.join(__dirname, '..');
 const erhuaMode = process.argv.includes('--erhua');
-const server = require('./test-static').server(root, { level4: true });   // level4: opens HSK 4 even before MAX_LEVEL is raised (does nothing once it is)
+const server = require('./test-static').server(root);   // HSK 4 and HSK 5 are released, so the site runs with the real MAX_LEVEL (the level4 option would lower it to 4)
 
 let failures = 0;
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };
@@ -208,10 +208,11 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     // ---- Today points at the path
     await nav('Home');
     const home = await page.locator('main').innerText();
-    check(/Path: /.test(home), 'the Today list has a Path task with the next stop');
-    check(await page.locator('.task2', { hasText: 'Path: ' }).first().innerText().then(t => /Done/.test(t)), 'the Path task shows as done once a stop has been finished today');
+    // The day's plan is cleared by now (a stop was finished), so Today shows the cleared card; its Bonus round button carries the next stop. (Before the 14 Nov Home redesign this was a Path row marked Done.)
+    check(/Path: /.test(home), 'Today offers the next Path stop');
+    check(home.includes('Today is cleared') && await page.locator('.fin-go', { hasText: 'Path: ' }).count() === 1, 'once a stop has been finished today, Today is cleared and the Bonus round names the next stop');
     await page.evaluate(() => window.shanlu.setState({ webCredited: false })); await page.waitForTimeout(100);
-    await page.locator('.task2', { hasText: 'Path: ' }).first().click();
+    await page.locator('.fin-go', { hasText: 'Path: ' }).first().click();
     await page.waitForTimeout(150);
     check((await st(page)).screen === 'path' && await page.locator('.pth-sheet').count() === 0, 'the Path opens and glides to the stop first');
     await page.waitForFunction(() => document.querySelectorAll('.pth-sheet').length === 1, null, { timeout: 4000 }).catch(() => {});
@@ -268,10 +269,10 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await ctx.close();
   }
 
-  // ================= HSK 2, HSK 3 and HSK 4 have their own paths
-  for (const [lv, units, stops] of [[2, 10, 72], [3, 17, 129], [4, 24, 220]]) {
+  // ================= HSK 2 to HSK 5 have their own paths
+  for (const [lv, units, stops] of [[2, 10, 72], [3, 17, 129], [4, 24, 220], [5, 39, 331]]) {
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
-    await ctx.addInitScript((a) => { try { localStorage.setItem('shanlu-passed', JSON.stringify(a.passed)); localStorage.setItem('shanlu-level', String(a.lv)); if (a.erhua) localStorage.setItem('shanlu-erhua', 'on'); } catch (e) {} }, { passed: lv === 2 ? { 1: 1 } : lv === 3 ? { 1: 1, 2: 1 } : { 1: 1, 2: 1, 3: 1 }, lv, erhua: erhuaMode });
+    await ctx.addInitScript((a) => { try { localStorage.setItem('shanlu-passed', JSON.stringify(a.passed)); localStorage.setItem('shanlu-level', String(a.lv)); if (a.erhua) localStorage.setItem('shanlu-erhua', 'on'); } catch (e) {} }, { passed: lv === 2 ? { 1: 1 } : lv === 3 ? { 1: 1, 2: 1 } : lv === 4 ? { 1: 1, 2: 1, 3: 1 } : { 1: 1, 2: 1, 3: 1, 4: 1 }, lv, erhua: erhuaMode });
     const page = await ctx.newPage(); watch(page);
     await page.goto(url + '?level=' + lv); await page.waitForSelector('.app'); await page.waitForTimeout(200);
     check(await page.evaluate(() => window.SHANLU_LEVEL) === lv, 'HSK ' + lv + ' is open');

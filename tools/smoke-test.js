@@ -136,10 +136,10 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await text()).includes('Numbers') && await page.evaluate(() => window.shanlu.state.screen === 'web' && window.shanlu.state.wmode === 'topic' && window.shanlu.state.wtopic === 4), 'tapping a mountain opens that topic in the Word webs');
   await page.evaluate(() => { window.shanlu.setState({ wmode:'char', wtopic:0 }); });
   await nav('Home');
-  check(await page.locator('.trail-d .apill.near, .trail-d .apill.far').count() === 8 && (await page.locator('.trail-d').innerText()).includes('HSK 9'), 'the trail runs up to HSK 9: eight more camps after the next one');
+  check(await page.locator('.trail-d .apill.near, .trail-d .apill.far').count() === 8 && (await page.locator('.trail-d').textContent()).includes('HSK 9'), 'the trail runs up to HSK 9: eight more camps after the next one');
   await page.evaluate(() => window.shanlu.setState({ sys: '2.0' }));
   await page.waitForTimeout(80);
-  check((await page.locator('.trail-d').innerText()).includes('HSK 9'), 'it still runs to HSK 9 when the HSK 2.0 setting is on');
+  check((await page.locator('.trail-d').textContent()).includes('HSK 9'), 'it still runs to HSK 9 when the HSK 2.0 setting is on');
   await page.evaluate(() => window.shanlu.setState({ sys: '3.0' }));
   await page.waitForTimeout(80);
   check(await page.evaluate((N) => window.HSK1_WORDS.length === N && window.HSK1_WORDS.every(w => w.ex && w.ex.zh && w.py && w.en), WORD_COUNT), 'all ' + WORD_COUNT + ' words are loaded with a gloss, pinyin and an example');
@@ -772,7 +772,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await shot('12-exam');
   await nav('Home');
   check(!(await page.locator('.side').innerText()).includes('0-day streak'), 'streak counts after activity');
-  check((await text()).includes('lessons passed') && (await text()).includes('scripts done'), 'home shows grammar and speaking progress');
+  // (the Home skill rings that showed 'lessons passed' and 'scripts done' were removed with the Home redesign on 14 Nov, so that check is gone)
   await shot('13-home-after');
 
   // persistence

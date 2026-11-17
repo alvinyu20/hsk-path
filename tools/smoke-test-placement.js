@@ -42,7 +42,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('button', { hasText: 'Check my level' }).first().click();
     check(await dlg(page).count() === 1 && /Test out of a level/.test(await dlg(page).innerText()), 'Settings opens the level check');
     const claims = await dlg(page).locator('.obm-opt').allInnerTexts();
-    check(claims.length === 4 && /HSK 1/.test(claims[0]) && /300 words/.test(claims[0]) && /HSK 4/.test(claims[3]), 'it asks for the highest level you know, HSK 1 to 4, with word counts: ' + claims.map((x) => x.split('\n')[0]).join(', '));
+    check(claims.length === 5 && /HSK 1/.test(claims[0]) && /300 words/.test(claims[0]) && /HSK 5/.test(claims[4]), 'it asks for the highest level you know, HSK 1 to 5, with word counts: ' + claims.map((x) => x.split('\n')[0]).join(', '));
     await dlg(page).locator('.obm-opt', { hasText: 'HSK 2' }).click();
     await dlg(page).locator('button', { hasText: 'Start the check' }).click();
     check(/HSK 2 · 1 of 16/i.test(await dlg(page).innerText()), 'the first stage starts with 16 questions: ' + (await dlg(page).locator('.kick').first().innerText()));

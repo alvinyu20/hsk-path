@@ -16,7 +16,8 @@ P_MAP = {'，': ',', '。': '.', '？': '?', '！': '!', '、': ',', '：': ':',
 NUMBER_PREV = '第月期十二三四五六七八九零'
 DIGITS = '二三四五六七八九'
 NUM_CHARS = '一二两三四五六七八九十百千零'
-PROPER = {'中国', '汉语', '中文', '小明'}
+GEREN_AFTER = NUM_CHARS + '万每几'        # a token ending in one of these makes 个 a measure word (一个人, 每个人, 第一个人, 三十个人)
+PROPER = {'中国', '汉语', '中文', '小明', '美国', '日本', '西藏'}
 DEI_PREV = {'我', '你', '他', '她', '它', '我们', '你们', '他们', '她们', '大家', '也', '还', '都', '就', '先', '再', '今天', '明天', '现在', '晚上', '早上', '下午', '中午', '以后'}   # before 得 these make it děi
 ZHI_ONLY_NEXT = '是有能会想要好在可需用知爱喜吃去来看说做' + ''     # after 这/那 these start a verb, so 只 means "only"
 ATTACH = {'们'}
@@ -126,7 +127,10 @@ class Engine:
         self.lex = {}
         lp = os.path.join(C, 'lexicon-words.tsv')
         if os.path.exists(lp):
+            lvl = int(os.environ.get('LEVEL', '1'))
             for _, r in read_tsv(lp):
+                if len(r) > 3 and r[3].strip().isdigit() and lvl < int(r[3]):
+                    continue    # joined only from that level on: in an earlier level it would steal a cut (新手表, 和平常, 半天才)
                 if r[0] and r[0] not in entries:
                     self.lex[r[0]] = r[1] if len(r) > 1 else ''
                     entries[r[0]] = 1000 * len(r[0]) ** 3 + 500
@@ -151,8 +155,20 @@ class Engine:
             return sandhi_word(z, self.lex[z])
         return sandhi_word(z, join_syl(lazy_pinyin(z, style=Style.TONE, v_to_u=True)))
 
+    @staticmethod
+    def _measure_geren(toks):
+        """个人 (an individual) is on the HSK 5 list, so from HSK 5 on the cutter would join 一个人, 两个人, 每个人 into 个人.
+        After a number, 每 or 几 the 个 is a measure word and 人 is "person": yí ge rén, měi ge rén (as at HSK 1 to 4)."""
+        out = []
+        for t in toks:
+            if t == '个人' and out and out[-1][-1] in GEREN_AFTER:
+                out += ['个', '人']
+            else:
+                out.append(t)
+        return out
+
     def tokens(self, zh):
-        return [t for t in self.tk.cut(zh, HMM=False) if t.strip()]
+        return self._measure_geren([t for t in self.tk.cut(zh, HMM=False) if t.strip()])
 
     def tokens_right(self, zh):
         """The cut with ties going the other way (see _TokenizerRight)."""
@@ -160,7 +176,7 @@ class Engine:
             import copy
             self._tk_right = copy.copy(self.tk)
             self._tk_right.__class__ = _TokenizerRight
-        return [t for t in self._tk_right.cut(zh, HMM=False) if t.strip()]
+        return self._measure_geren([t for t in self._tk_right.cut(zh, HMM=False) if t.strip()])
 
     def word_tokens(self, zh):
         return [t for t in self.tokens(zh) if t not in P_MAP and t not in ('—', '——')]

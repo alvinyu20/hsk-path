@@ -27,7 +27,7 @@ window.HSK5_EXAM = {
     {
      "s": "男",
      "zh": "好的，请问您需要单人间还是双人间？",
-     "py": "Hǎo de, qǐngwèn nín xūyào dān rén jiān háishi shuāng rén jiān?",
+     "py": "Hǎo de, qǐngwèn nín xūyào dānrénjiān háishi shuāngrénjiān?",
      "en": "Certainly. Do you need a single room or a double room?"
     }
    ],
@@ -1119,7 +1119,7 @@ window.HSK5_EXAM = {
     {
      "s": "女",
      "zh": "比我想象的简单，大部分题我都会做。",
-     "py": "Bǐ wǒ xiǎngxiàng de jiǎndān, dà bùfen tí wǒ dōu huì zuò.",
+     "py": "Bǐ wǒ xiǎngxiàng de jiǎndān, dàbùfen tí wǒ dōu huì zuò.",
      "en": "It is easier than I expected. I can do most of the questions."
     }
    ],
@@ -1442,7 +1442,7 @@ window.HSK5_EXAM = {
     {
      "s": "男",
      "zh": "可以，请您七天之内寄回来，我们给您换大一号的。",
-     "py": "Kěyǐ, qǐng nín qī tiān zhī nèi jì huílái, wǒmen gěi nín huàn dà yí hào de.",
+     "py": "Kěyǐ, qǐng nín qī tiān zhīnèi jì huílái, wǒmen gěi nín huàn dà yí hào de.",
      "en": "Yes. Please send them back within seven days, and we will change them for you for a size larger."
     },
     {
@@ -1493,7 +1493,7 @@ window.HSK5_EXAM = {
     {
      "s": "女",
      "zh": "我还没决定，美国和日本都不错。",
-     "py": "Wǒ hái méi juédìng, měi guó hé rì běn dōu búcuò.",
+     "py": "Wǒ hái méi juédìng, Měiguó hé Rìběn dōu búcuò.",
      "en": "I have not decided yet. The United States and Japan are both good."
     },
     {
@@ -1874,7 +1874,7 @@ window.HSK5_EXAM = {
     {
      "s": "",
      "zh": "我小时候特别怕黑，晚上一个人不敢睡觉。后来奶奶告诉我，黑夜只是没有光，没有什么可怕的。从那以后，我慢慢就不怕了。现在我已经长大了，可是奶奶告诉我的事，我一直记得。",
-     "py": "Wǒ xiǎoshíhou tèbié pà hēi, wǎnshang yí gèrén bù gǎn shuìjiào. Hòulái nǎinai gàosu wǒ, hēi yè zhǐshì méiyǒu guāng, méiyǒu shénme kěpà de. Cóng nà yǐhòu, wǒ màn màn jiù bú pà le. Xiànzài wǒ yǐjīng zhǎngdà le, kěshì nǎinai gàosu wǒ de shì, wǒ yìzhí jìde.",
+     "py": "Wǒ xiǎoshíhou tèbié pà hēi, wǎnshang yí ge rén bù gǎn shuìjiào. Hòulái nǎinai gàosu wǒ, hēiyè zhǐshì méiyǒu guāng, méiyǒu shénme kěpà de. Cóng nà yǐhòu, wǒ màn màn jiù bú pà le. Xiànzài wǒ yǐjīng zhǎngdà le, kěshì nǎinai gàosu wǒ de shì, wǒ yìzhí jìde.",
      "en": "When I was a child, I was especially afraid of the dark and did not dare to sleep alone at night. Later my grandmother told me that night is just a lack of light and there is nothing to be afraid of. From then on, I gradually stopped being afraid. Now I have grown up, but I have always remembered what grandmother said."
     }
    ],
@@ -2126,7 +2126,7 @@ window.HSK5_EXAM = {
     {
      "s": "男",
      "zh": "你怎么一个人坐在这儿不说话？",
-     "py": "Nǐ zěnme yí gèrén zuò zài zhèr bù shuōhuà?",
+     "py": "Nǐ zěnme yí ge rén zuò zài zhèr bù shuōhuà?",
      "en": "Why are you sitting here by yourself without saying a word?"
     },
     {
@@ -2144,7 +2144,7 @@ window.HSK5_EXAM = {
     {
      "s": "女",
      "zh": "我想先工作两年，积累一些经验，再决定要不要读书。",
-     "py": "Wǒ xiǎng xiān gōngzuò liǎng nián, jīlěi yìxiē jīngyàn, zài juédìng yàobú yào dúshū.",
+     "py": "Wǒ xiǎng xiān gōngzuò liǎng nián, jīlěi yìxiē jīngyàn, zài juédìng yào búyào dúshū.",
      "en": "I want to work for two years first and gain some experience, and then decide whether to study."
     }
    ],
@@ -2177,7 +2177,7 @@ window.HSK5_EXAM = {
     {
      "s": "",
      "zh": "很多人以为喝咖啡会让人睡不着，其实这和每个人的身体有关。有的人晚上喝了咖啡仍然睡得很香，有的人下午喝一杯就会整夜睡不着。所以，你需要了解自己的身体，再决定喝多少。",
-     "py": "Hěn duō rén yǐwéi hē kāfēi huì ràng rén shuì bù zháo, qíshí zhè hé měi gèrén de shēntǐ yǒuguān. Yǒude rén wǎnshang hē le kāfēi réngrán shuì de hěn xiāng, yǒude rén xiàwǔ hē yì bēi jiù huì zhěng yè shuì bù zháo. Suǒyǐ, nǐ xūyào liǎojiě zìjǐ de shēntǐ, zài juédìng hē duōshǎo.",
+     "py": "Hěn duō rén yǐwéi hē kāfēi huì ràng rén shuì bù zháo, qíshí zhè hé měi ge rén de shēntǐ yǒuguān. Yǒude rén wǎnshang hē le kāfēi réngrán shuì de hěn xiāng, yǒude rén xiàwǔ hē yì bēi jiù huì zhěng yè shuì bù zháo. Suǒyǐ, nǐ xūyào liǎojiě zìjǐ de shēntǐ, zài juédìng hē duōshǎo.",
      "en": "Many people think that drinking coffee keeps you from sleeping, but in fact this depends on each person's body. Some people drink coffee in the evening and still sleep soundly; others drink one cup in the afternoon and cannot sleep all night. So you need to understand your own body and then decide how much to drink."
     }
    ],
@@ -2197,7 +2197,7 @@ window.HSK5_EXAM = {
     },
     {
      "zh": "每个人都睡不着",
-     "py": "Měi gèrén dōu shuì bù zháo"
+     "py": "Měi ge rén dōu shuì bù zháo"
     },
     {
      "zh": "最好不要喝",
@@ -2261,7 +2261,7 @@ window.HSK5_EXAM = {
     {
      "s": "",
      "zh": "大家好，欢迎收听今天的天气预报。今天白天，北方大部分地区有大风，南方有小雨，气温比昨天低五度左右。出门的朋友请多穿一件衣服，别忘了带伞。",
-     "py": "Dàjiā hǎo, huānyíng shōutīng jīntiān de tiānqì yùbào. Jīntiān báitiān, běifāng dà bùfen dìqū yǒu dà fēng, nánfāng yǒu xiǎo yǔ, qìwēn bǐ zuótiān dī wǔ dù zuǒyòu. Chūmén de péngyou qǐng duō chuān yí jiàn yīfu, bié wàng le dài sǎn.",
+     "py": "Dàjiā hǎo, huānyíng shōutīng jīntiān de tiānqì yùbào. Jīntiān báitiān, běifāng dàbùfen dìqū yǒu dà fēng, nánfāng yǒu xiǎo yǔ, qìwēn bǐ zuótiān dī wǔ dù zuǒyòu. Chūmén de péngyou qǐng duō chuān yí jiàn yīfu, bié wàng le dài sǎn.",
      "en": "Hello, everyone, and welcome to today's weather forecast. During the day today, most of the north will have strong winds and the south light rain, with temperatures about five degrees lower than yesterday. If you are going out, please wear an extra layer, and do not forget your umbrella."
     }
    ],
@@ -2324,7 +2324,7 @@ window.HSK5_EXAM = {
    "opts": [
     {
      "zh": "两个人的身份证",
-     "py": "Liǎng gèrén de shēnfènzhèng"
+     "py": "Liǎng ge rén de shēnfènzhèng"
     },
     {
      "zh": "一张照片",
@@ -2738,7 +2738,7 @@ window.HSK5_EXAM = {
     {
      "s": "男",
      "zh": "现在全场打折，价格已经很低了。",
-     "py": "Xiànzài quán chǎng dǎzhé, jiàgé yǐjīng hěn dī le.",
+     "py": "Xiànzài quánchǎng dǎzhé, jiàgé yǐjīng hěn dī le.",
      "en": "Everything in the shop is discounted now, and the prices are already very low."
     },
     {
@@ -3077,7 +3077,7 @@ window.HSK5_EXAM = {
   {
    "zh": "这几年，我们城市的变化非常大。街道变宽了，高楼变多了，到处都是商店和饭馆。但是，空气却不如以前___了，特别是冬天，___有很多天看不见蓝天。为了改善空气质量，政府要求工厂___新技术，也___大家少开车，多坐公共汽车和地铁。如果每个人都能从小事做起，我们的城市就会变得___美丽。",
    "full": "这几年，我们城市的变化非常大。街道变宽了，高楼变多了，到处都是商店和饭馆。但是，空气却不如以前新鲜了，特别是冬天，常常有很多天看不见蓝天。为了改善空气质量，政府要求工厂采用新技术，也鼓励大家少开车，多坐公共汽车和地铁。如果每个人都能从小事做起，我们的城市就会变得更加美丽。",
-   "py": "Zhè jǐ nián, wǒmen chéngshì de biànhuà fēicháng dà. Jiēdào biàn kuān le, gāo lóu biàn duō le, dàochù dōu shì shāngdiàn hé fànguǎn. Dànshì, kōngqì què bùrú yǐqián xīnxiān le, tèbié shì dōngtiān, chángcháng yǒu hěn duō tiān kàn bújiàn lán tiān. Wèile gǎishàn kōngqì zhìliàng, zhèngfǔ yāoqiú gōngchǎng cǎiyòng xīn jìshù, yě gǔlì dàjiā shǎo kāichē, duō zuò gōnggòng qìchē hé dìtiě. Rúguǒ měi gèrén dōu néng cóngxiǎo shì zuò qǐ, wǒmen de chéngshì jiù huì biàn de gèngjiā měilì.",
+   "py": "Zhè jǐ nián, wǒmen chéngshì de biànhuà fēicháng dà. Jiēdào biàn kuān le, gāo lóu biàn duō le, dàochù dōu shì shāngdiàn hé fànguǎn. Dànshì, kōngqì què bùrú yǐqián xīnxiān le, tèbié shì dōngtiān, chángcháng yǒu hěn duō tiān kàn bújiàn lántiān. Wèile gǎishàn kōngqì zhìliàng, zhèngfǔ yāoqiú gōngchǎng cǎiyòng xīn jìshù, yě gǔlì dàjiā shǎo kāichē, duō zuò gōnggòng qìchē hé dìtiě. Rúguǒ měi ge rén dōu néng cóngxiǎo shì zuò qǐ, wǒmen de chéngshì jiù huì biàn de gèngjiā měilì.",
    "en": "In recent years, our city has changed a great deal. The streets have become wider, there are more tall buildings, and there are shops and restaurants everywhere. But the air is not as fresh as before, especially in winter, when there are often many days when the blue sky cannot be seen. To improve air quality, the government requires factories to adopt new technology and also encourages people to drive less and take more buses and the underground. If everyone starts with small things, our city will become even more beautiful.",
    "blanks": [
     [
@@ -3469,7 +3469,7 @@ window.HSK5_EXAM = {
   {
    "zh": "我从小就喜欢踢足球，___个子不高，在学校的球队里总是坐在场边。教练对我说：“个子矮不是问题，___是你有没有努力的决心。”从那以后，我每天比别人多练习一个小时，一年后，我___有机会参加比赛了。这件事让我明白，努力比天分更___。无论遇到什么困难，只要不放弃，就一定会有___。",
    "full": "我从小就喜欢踢足球，可是个子不高，在学校的球队里总是坐在场边。教练对我说：“个子矮不是问题，关键是你有没有努力的决心。”从那以后，我每天比别人多练习一个小时，一年后，我终于有机会参加比赛了。这件事让我明白，努力比天分更重要。无论遇到什么困难，只要不放弃，就一定会有收获。",
-   "py": "Wǒ cóngxiǎo jiù xǐhuan tī zúqiú, kěshì gèzi bù gāo, zài xuéxiào de qiúduì lǐ zǒngshì zuò zàichǎng biān. Jiàoliàn duì wǒ shuō: \" gèzi ǎi bú shì wèntí, guānjiàn shì nǐ yǒu méiyǒu nǔlì de juéxīn. \" cóng nà yǐhòu, wǒ měitiān bǐ biérén duō liànxí yí ge xiǎoshí, yì nián hòu, wǒ zhōngyú yǒu jīhuì cānjiā bǐsài le. Zhè jiàn shì ràng wǒ míngbai, nǔlì bǐ tiān fēn gèng zhòngyào. Wúlùn yùdào shénme kùnnan, zhǐyào bú fàngqì, jiù yídìng huì yǒu shōuhuò.",
+   "py": "Wǒ cóngxiǎo jiù xǐhuan tī zúqiú, kěshì gèzi bù gāo, zài xuéxiào de qiúduì lǐ zǒngshì zuò zàichǎng biān. Jiàoliàn duì wǒ shuō: \" gèzi ǎi bú shì wèntí, guānjiàn shì nǐ yǒu méiyǒu nǔlì de juéxīn. \" cóng nà yǐhòu, wǒ měitiān bǐ biérén duō liànxí yí ge xiǎoshí, yì nián hòu, wǒ zhōngyú yǒu jīhuì cānjiā bǐsài le. Zhè jiàn shì ràng wǒ míngbai, nǔlì bǐ tiānfèn gèng zhòngyào. Wúlùn yùdào shénme kùnnan, zhǐyào bú fàngqì, jiù yídìng huì yǒu shōuhuò.",
    "en": "I have loved playing football since I was a child, but I am not tall, and in the school team I always sat on the sideline. The coach said to me, \"Being short is not the problem; the key is whether you have the determination to work hard.\" From then on, I practised an hour more than the others every day, and a year later I finally had the chance to play in matches. This taught me that hard work is more important than talent. Whatever difficulties you meet, as long as you do not give up, you will certainly gain something.",
    "blanks": [
     [
@@ -3706,7 +3706,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "医生说，每天走路一个小时对身体好，但是走得太久也会让腿受伤。所以，每个人应该根据自己的身体情况来决定走多久。",
-   "py": "Yīshēng shuō, měitiān zǒulù yí ge xiǎoshí duì shēntǐ hǎo, dànshì zǒu de tài jiǔ yě huì ràng tuǐ shòushāng. Suǒyǐ, měi gèrén yīnggāi gēnjù zìjǐ de shēntǐ qíngkuàng lái juédìng zǒu duō jiǔ.",
+   "py": "Yīshēng shuō, měitiān zǒulù yí ge xiǎoshí duì shēntǐ hǎo, dànshì zǒu de tài jiǔ yě huì ràng tuǐ shòushāng. Suǒyǐ, měi ge rén yīnggāi gēnjù zìjǐ de shēntǐ qíngkuàng lái juédìng zǒu duō jiǔ.",
    "en": "The doctor says that walking for an hour a day is good for the body, but walking for too long can also hurt the legs. So everyone should decide how long to walk according to their own physical condition.",
    "opts": [
     {
@@ -3719,7 +3719,7 @@ window.HSK5_EXAM = {
     },
     {
      "zh": "每个人都应该走一个小时",
-     "py": "Měi gèrén dōu yīnggāi zǒu yí ge xiǎoshí"
+     "py": "Měi ge rén dōu yīnggāi zǒu yí ge xiǎoshí"
     },
     {
      "zh": "走路对身体不好",
@@ -3844,7 +3844,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "我的邻居是一位老奶奶，一个人住。我常常帮她买菜，她有时候给我做好吃的饺子，我们就像一家人一样。",
-   "py": "Wǒ de línjū shì yí wèi lǎo nǎinai, yí gèrén zhù. Wǒ chángcháng bāng tā mǎi cài, tā yǒu shíhou gěi wǒ zuò hǎochī de jiǎozi, wǒmen jiù xiàng yìjiārén yíyàng.",
+   "py": "Wǒ de línjū shì yí wèi lǎo nǎinai, yí ge rén zhù. Wǒ chángcháng bāng tā mǎi cài, tā yǒu shíhou gěi wǒ zuò hǎochī de jiǎozi, wǒmen jiù xiàng yìjiārén yíyàng.",
    "en": "My neighbour is an old lady who lives alone. I often help her buy vegetables, and she sometimes makes delicious dumplings for me. We are just like one family.",
    "opts": [
     {
@@ -4198,7 +4198,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "自从我们小区开始要求大家把垃圾分开放以后，越来越多的人学会了把可以重新使用的东西单独放好。有人说这样很麻烦，也有人说，每个人多花一分钟，对环境就是一点帮助。现在，大部分邻居已经习惯了。",
-   "py": "Zìcóng wǒmen xiǎoqū kāishǐ yāoqiú dàjiā bǎ lājī fēnkāi fàng yǐhòu, yuè lái yuè duō de rén xuéhuì le bǎ kěyǐ chóngxīn shǐyòng de dōngxi dāndú fàng hǎo. Yǒu rén shuō zhèyàng hěn máfan, yě yǒu rén shuō, měi gèrén duō huā yì fēnzhōng, duì huánjìng jiùshì yì diǎn bāngzhù. Xiànzài, dà bùfen línjū yǐjīng xíguàn le.",
+   "py": "Zìcóng wǒmen xiǎoqū kāishǐ yāoqiú dàjiā bǎ lājī fēnkāi fàng yǐhòu, yuè lái yuè duō de rén xuéhuì le bǎ kěyǐ chóngxīn shǐyòng de dōngxi dāndú fàng hǎo. Yǒu rén shuō zhèyàng hěn máfan, yě yǒu rén shuō, měi ge rén duō huā yì fēnzhōng, duì huánjìng jiùshì yì diǎn bāngzhù. Xiànzài, dàbùfen línjū yǐjīng xíguàn le.",
    "en": "Since our community began to require everyone to separate their rubbish, more and more people have learned to put things that can be reused in a separate place. Some say that this is troublesome; others say that if everyone spends one more minute, it helps the environment a little. Now most neighbours have got used to it.",
    "q": {
     "zh": "小区要求分开放垃圾以后，有什么变化？",
@@ -4226,7 +4226,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "很多人觉得每天一定要喝八杯水，其实这个数字并不适合每个人。身体大的人、运动多的人需要的水更多，而天气凉的时候需要的就少一些。最好的办法是口渴了就喝，不用每次都去数。",
-   "py": "Hěn duō rén juéde měitiān yídìng yào hē bā bēi shuǐ, qíshí zhège shùzì bìng bú shìhé měi gèrén. Shēntǐ dà de rén, yùndòng duō de rén xūyào de shuǐ gèng duō, ér tiānqì liáng de shíhou xūyào de jiù shǎo yìxiē. Zuìhǎo de bànfǎ shì kǒu kě le jiù hē, búyòng měi cì dōu qù shù.",
+   "py": "Hěn duō rén juéde měitiān yídìng yào hē bā bēi shuǐ, qíshí zhège shùzì bìng bú shìhé měi ge rén. Shēntǐ dà de rén, yùndòng duō de rén xūyào de shuǐ gèng duō, ér tiānqì liáng de shíhou xūyào de jiù shǎo yìxiē. Zuìhǎo de bànfǎ shì kǒu kě le jiù hē, búyòng měi cì dōu qù shù.",
    "en": "Many people think that they must drink eight glasses of water a day, but in fact this number does not suit everyone. People with larger bodies and people who exercise a lot need more water, while less is needed when the weather is cool. The best way is to drink when you are thirsty, without counting every time.",
    "q": {
     "zh": "说话人认为怎样喝水最好？",
@@ -4366,7 +4366,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "大学毕业以后，他一个人骑自行车去了很多地方。路上，他遇到过大雨，也丢过钱包，但是每次都有陌生人帮助他。他说，这次旅行让他明白了，世界上的好人比想象的多得多。",
-   "py": "Dàxué bìyè yǐhòu, tā yí gèrén qí zìxíngchē qù le hěn duō dìfang. Lùshang, tā yùdào guo dà yǔ, yě diū guo qiánbāo, dànshì měi cì dōu yǒu mòshēng rén bāngzhù tā. Tā shuō, zhè cì lǚxíng ràng tā míngbai le, shìjiè shàng de hǎo rén bǐ xiǎngxiàng de duō de duō.",
+   "py": "Dàxué bìyè yǐhòu, tā yí ge rén qí zìxíngchē qù le hěn duō dìfang. Lùshang, tā yùdào guo dà yǔ, yě diū guo qiánbāo, dànshì měi cì dōu yǒu mòshēng rén bāngzhù tā. Tā shuō, zhè cì lǚxíng ràng tā míngbai le, shìjiè shàng de hǎorén bǐ xiǎngxiàng de duō de duō.",
    "en": "After graduating from university, he cycled alone to many places. On the way he met heavy rain and lost his wallet, but each time a stranger helped him. He said that this trip made him understand that there are many more good people in the world than imagined.",
    "q": {
     "zh": "这次旅行让他明白了什么？",
@@ -4376,11 +4376,11 @@ window.HSK5_EXAM = {
    "opts": [
     {
      "zh": "好人比想象的多",
-     "py": "Hǎo rén bǐ xiǎngxiàng de duō"
+     "py": "Hǎorén bǐ xiǎngxiàng de duō"
     },
     {
      "zh": "一个人旅行很危险",
-     "py": "Yí gèrén lǚxíng hěn wēixiǎn"
+     "py": "Yí ge rén lǚxíng hěn wēixiǎn"
     },
     {
      "zh": "钱最重要",
@@ -4450,7 +4450,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "儿子今年七岁，上个周末，他第一次一个人去超市买牛奶。我们站在门口看着他，心里既担心又骄傲。十分钟以后，他拿着牛奶和找回的零钱，高兴地跑了回来。“妈妈，我是不是长大了？”他问。",
-   "py": "Érzi jīnnián qī suì, shàng ge zhōumò, tā dì yī cì yí gèrén qù chāoshì mǎi niúnǎi. Wǒmen zhàn zài ménkǒu kàn zhe tā, xīnlǐ jì dānxīn yòu jiāo'ào. Shí fēnzhōng yǐhòu, tā ná zhe niúnǎi hé zhǎo huí de língqián, gāoxìng de pǎo le huílái. \" māma, wǒ shì bú shì zhǎngdà le? \" tā wèn.",
+   "py": "Érzi jīnnián qī suì, shàng ge zhōumò, tā dì yī cì yí ge rén qù chāoshì mǎi niúnǎi. Wǒmen zhàn zài ménkǒu kàn zhe tā, xīnlǐ jì dānxīn yòu jiāo'ào. Shí fēnzhōng yǐhòu, tā ná zhe niúnǎi hé zhǎo huí de língqián, gāoxìng de pǎo le huílái. \" māma, wǒ shì bú shì zhǎngdà le? \" tā wèn.",
    "en": "My son is seven this year. Last weekend, he went to the supermarket alone for the first time to buy milk. We stood at the door watching him, feeling both worried and proud. Ten minutes later, he came running back happily with the milk and the change. \"Mum, have I grown up?\" he asked.",
    "q": {
     "zh": "孩子回来以后怎么样？",
@@ -4506,7 +4506,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "我们小区的停车位太少了，每天晚上，很多车只能停在路边。邻居们为这件事开了一次会，大家决定在旁边修一个停车场。虽然每家要多交一点钱，但是没有人反对。",
-   "py": "Wǒmen xiǎoqū de tíngchē wèi tài shǎo le, měitiān wǎnshang, hěn duō chē zhǐnéng tíng zài lùbiān. Línjūmen wèi zhè jiàn shì kāi le yí cì huì, dàjiā juédìng zài pángbiān xiū yí ge tíngchēchǎng. Suīrán měi jiā yào duō jiāo yì diǎn qián, dànshì méiyǒu rén fǎnduì.",
+   "py": "Wǒmen xiǎoqū de tíngchēwèi tài shǎo le, měitiān wǎnshang, hěn duō chē zhǐnéng tíng zài lùbiān. Línjūmen wèi zhè jiàn shì kāi le yí cì huì, dàjiā juédìng zài pángbiān xiū yí ge tíngchēchǎng. Suīrán měi jiā yào duō jiāo yì diǎn qián, dànshì méiyǒu rén fǎnduì.",
    "en": "There are too few parking spaces in our community, and every evening many cars can only park at the roadside. The neighbours held a meeting about this, and everyone decided to build a car park next door. Although each household has to pay a little more, no one objects.",
    "q": {
     "zh": "大家决定怎么解决停车问题？",
@@ -4590,7 +4590,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "我以前从来不做饭，总觉得妈妈做饭很简单。直到我一个人在外地工作，才发现做一顿饭有多不容易：要买菜、洗菜、切菜，还要考虑做什么才好吃。现在，每次打电话回家，我都会先说一句“妈妈，您辛苦了”。",
-   "py": "Wǒ yǐqián cónglái bú zuòfàn, zǒng juéde māma zuòfàn hěn jiǎndān. Zhídào wǒ yí gèrén zài wàidì gōngzuò, cái fāxiàn zuò yí dùn fàn yǒu duō bù róngyì: yào mǎi cài, xǐ cài, qiē cài, hái yào kǎolǜ zuò shénme cái hǎochī. Xiànzài, měi cì dǎ diànhuà huí jiā, wǒ dōu huì xiān shuō yí jù \" māma, nín xīnkǔ le \".",
+   "py": "Wǒ yǐqián cónglái bú zuòfàn, zǒng juéde māma zuòfàn hěn jiǎndān. Zhídào wǒ yí ge rén zài wàidì gōngzuò, cái fāxiàn zuò yí dùn fàn yǒu duō bù róngyì: yào mǎi cài, xǐ cài, qiē cài, hái yào kǎolǜ zuò shénme cái hǎochī. Xiànzài, měi cì dǎ diànhuà huí jiā, wǒ dōu huì xiān shuō yí jù \" māma, nín xīnkǔ le \".",
    "en": "I never used to cook and always thought cooking was easy for Mum. Only when I worked alone in another city did I find out how hard it is to make a meal: you have to buy, wash and cut vegetables, and think about what to cook so that it tastes good. Now, every time I call home, I first say \"Mum, you have worked hard\".",
    "q": {
     "zh": "作者为什么对妈妈说“您辛苦了”？",
@@ -4701,13 +4701,13 @@ window.HSK5_EXAM = {
    ]
   },
   {
-   "zh": "刚开始锻炼的时候，不要给自己定太高的目标。比如，每天跑五公里对新手来说太难了，很容易放弃。不如先从每天走半个小时开始，等身体适应了，再慢慢增加。这样才能让运动变成一种长期的习惯。",
-   "py": "Gāng kāishǐ duànliàn de shíhou, búyào gěi zìjǐ dìng tài gāo de mùbiāo. Bǐrú, měitiān pǎo wǔ gōnglǐ duì xīn shǒu lái shuō tài nán le, hěn róngyì fàngqì. Bùrú xiān cóng měitiān zǒu bàn ge xiǎoshí kāishǐ, děng shēntǐ shìyìng le, zài màn màn zēngjiā. Zhèyàng cái néng ràng yùndòng biànchéng yì zhǒng chángqī de xíguàn.",
-   "en": "When you first start exercising, do not set yourself too high a goal. For example, running five kilometres a day is too hard for a beginner, and it is easy to give up. It is better to start by walking for half an hour a day and then, once the body has adapted, increase it gradually. Only in this way can exercise become a long-term habit.",
+   "zh": "刚开始锻炼的时候，不要给自己定太高的目标。比如，每天跑五公里对刚开始的人来说太难了，很容易放弃。不如先从每天走半个小时开始，等身体适应了，再慢慢增加。这样才能让运动变成一种长期的习惯。",
+   "py": "Gāng kāishǐ duànliàn de shíhou, búyào gěi zìjǐ dìng tài gāo de mùbiāo. Bǐrú, měitiān pǎo wǔ gōnglǐ duì gāng kāishǐ de rén lái shuō tài nán le, hěn róngyì fàngqì. Bùrú xiān cóng měitiān zǒu bàn ge xiǎoshí kāishǐ, děng shēntǐ shìyìng le, zài màn màn zēngjiā. Zhèyàng cái néng ràng yùndòng biànchéng yì zhǒng chángqī de xíguàn.",
+   "en": "When you first start exercising, do not set yourself too high a goal. For example, running five kilometres a day is too hard for someone who has only just started, and it is easy to give up. It is better to start by walking for half an hour a day and then, once the body has adapted, increase it gradually. Only in this way can exercise become a long-term habit.",
    "q": {
-    "zh": "对新手来说，最好怎么开始？",
-    "py": "Duì xīn shǒu lái shuō, zuìhǎo zěnme kāishǐ?",
-    "en": "How is it best for a beginner to start?"
+    "zh": "对刚开始锻炼的人来说，最好怎么开始？",
+    "py": "Duì gāng kāishǐ duànliàn de rén lái shuō, zuìhǎo zěnme kāishǐ?",
+    "en": "For someone who has just started exercising, how is it best to begin?"
    },
    "opts": [
     {
@@ -4786,7 +4786,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "我们学校最近开展了节约用水的活动。老师请同学们每天记录自己用了多少水，一个星期以后再比较。结果大家发现，刷牙的时候把水关上，一个人一天就能省下很多水。很多同学说，原来节约用水并不难。",
-   "py": "Wǒmen xuéxiào zuìjìn kāizhǎn le jiéyuē yòng shuǐ de huódòng. Lǎoshī qǐng tóngxuémen měitiān jìlù zìjǐ yòng le duōshǎo shuǐ, yí ge xīngqī yǐhòu zài bǐjiào. Jiéguǒ dàjiā fāxiàn, shuā yá de shíhou bǎ shuǐ guān shàng, yí gèrén yì tiān jiù néng shěng xià hěn duō shuǐ. Hěn duō tóngxué shuō, yuánlái jiéyuē yòng shuǐ bìng bù nán.",
+   "py": "Wǒmen xuéxiào zuìjìn kāizhǎn le jiéyuē yòng shuǐ de huódòng. Lǎoshī qǐng tóngxuémen měitiān jìlù zìjǐ yòng le duōshǎo shuǐ, yí ge xīngqī yǐhòu zài bǐjiào. Jiéguǒ dàjiā fāxiàn, shuā yá de shíhou bǎ shuǐ guān shàng, yí ge rén yì tiān jiù néng shěng xià hěn duō shuǐ. Hěn duō tóngxué shuō, yuánlái jiéyuē yòng shuǐ bìng bù nán.",
    "en": "Our school recently launched a water-saving campaign. The teacher asked students to record how much water they used each day and to compare it a week later. As a result, everyone found that turning off the water while brushing teeth can save a lot of water per person per day. Many students said that saving water turns out not to be difficult.",
    "q": {
     "zh": "这次活动后，同学们发现了什么？",
@@ -4870,7 +4870,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "很多孩子不喜欢吃蔬菜。有的父母要求孩子必须吃，结果孩子越来越讨厌。有一位妈妈的做法不一样：她带孩子一起去菜市场买菜，让孩子自己选，再让孩子帮忙洗菜。慢慢地，孩子对蔬菜有了兴趣，也愿意吃了。",
-   "py": "Hěn duō háizi bù xǐhuan chī shūcài. Yǒude fùmǔ yāoqiú háizi bìxū chī, jiéguǒ háizi yuè lái yuè tǎoyàn. Yǒu yí wèi māma de zuòfǎ bù yíyàng: tā dài háizi yìqǐ qù cài shìchǎng mǎi cài, ràng háizi zìjǐ xuǎn, zài ràng háizi bāngmáng xǐ cài. Màn màn de, háizi duì shūcài yǒu le xìngqù, yě yuànyì chī le.",
+   "py": "Hěn duō háizi bù xǐhuan chī shūcài. Yǒude fùmǔ yāoqiú háizi bìxū chī, jiéguǒ háizi yuè lái yuè tǎoyàn. Yǒu yí wèi māma de zuòfǎ bù yíyàng: tā dài háizi yìqǐ qù càishìchǎng mǎi cài, ràng háizi zìjǐ xuǎn, zài ràng háizi bāngmáng xǐ cài. Màn màn de, háizi duì shūcài yǒu le xìngqù, yě yuànyì chī le.",
    "en": "Many children do not like eating vegetables. Some parents require their children to eat them, and the children come to dislike them more and more. One mother does it differently: she takes her child to the market to buy vegetables, lets the child choose, and then lets the child help wash them. Gradually the child became interested in vegetables and was willing to eat them.",
    "q": {
     "zh": "那位妈妈是怎么让孩子吃蔬菜的？",
@@ -4898,7 +4898,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "一位老教授退休以后，每天早上都去大学校园里散步。年轻的学生们常常看到他一个人坐在树下看书，可是没有人知道他曾经是这所大学最有名的教授之一。有一天，一个学生向他请教问题，教授耐心地回答了，学生这才知道他的身份。",
-   "py": "Yí wèi lǎo jiàoshòu tuìxiū yǐhòu, měitiān zǎoshang dōu qù dàxué xiàoyuán lǐ sànbù. Niánqīng de xuéshengmen chángcháng kàn dào tā yí gèrén zuò zài shù xià kàn shū, kěshì méiyǒu rén zhīdào tā céngjīng shì zhè suǒ dàxué zuì yǒumíng de jiàoshòu zhīyī. Yǒu yì tiān, yí ge xuésheng xiàng tā qǐngjiào wèntí, jiàoshòu nàixīn de huídá le, xuésheng zhè cái zhīdào tā de shēnfèn.",
+   "py": "Yí wèi lǎo jiàoshòu tuìxiū yǐhòu, měitiān zǎoshang dōu qù dàxué xiàoyuán lǐ sànbù. Niánqīng de xuéshengmen chángcháng kàn dào tā yí ge rén zuò zài shù xià kàn shū, kěshì méiyǒu rén zhīdào tā céngjīng shì zhè suǒ dàxué zuì yǒumíng de jiàoshòu zhīyī. Yǒu yì tiān, yí ge xuésheng xiàng tā qǐngjiào wèntí, jiàoshòu nàixīn de huídá le, xuésheng zhè cái zhīdào tā de shēnfèn.",
    "en": "After retiring, an old professor goes for a walk on the university campus every morning. The young students often see him sitting under a tree reading by himself, but no one knows that he was once one of the most famous professors at this university. One day a student asked him a question, the professor answered patiently, and only then did the student learn his identity.",
    "q": {
     "zh": "学生是怎么知道教授的身份的？",

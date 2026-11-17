@@ -10,7 +10,7 @@ const { chromium } = require('playwright');
 
 const root = path.join(__dirname, '..');
 const erhuaMode = process.argv.includes('--erhua');
-const server = require('./test-static').server(root, { level4: true });   // level4: opens HSK 4 even before MAX_LEVEL is raised (does nothing once it is)
+const server = require('./test-static').server(root);   // HSK 4 and HSK 5 are released, so the site runs with the real MAX_LEVEL (the level4 option would lower it to 4)
 
 let failures = 0;
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };
@@ -318,7 +318,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   const sys = calls[0].system;
   check(sys.includes('HSK 1, HSK 2, HSK 3 and HSK 4') && sys.includes('HSK 1, HSK 2 and HSK 3 words are known too'), 'the instructions name all four word lists');
   check(sys.includes('机场') && sys.includes('米饭') && sys.includes('聪明') && sys.includes('面试'), 'the instructions hold the HSK 1, HSK 2, HSK 3 and HSK 4 words');
-  check(!sys.includes('as a gentle preview'), 'there is no next level to preview, so the instructions do not offer one');
+  check(sys.includes('as a gentle preview') && sys.includes('HSK 5 list') && sys.includes('安全带'), 'at HSK 4 the instructions allow a few HSK 5 words as a preview');
   const first = await page.locator('.msgs').innerText();
   check(first.includes('你想去面试吗？') && first.includes('Nǐ xiǎng qù miànshì ma?'), 'an HSK 4 word in the reply gets its pinyin from the HSK 4 list');
   check(!first.includes('preview') && !first.includes('no pinyin'), 'HSK 4 words are not flagged as a preview or as unknown at HSK 4');
@@ -358,7 +358,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     check(await pA.evaluate(() => window.SHANLU_LEVEL) === 0 && await pA.evaluate(() => window.SHANLU_LEVELS.join()) === '1,2,3,4', 'the address ?level=0 shows All levels with all four levels once HSK 4 is unlocked');
     check(await pA.evaluate(() => Object.keys(window.shanlu.state.ws).length === window.HSK1_WORDS.length + window.HSK2_WORDS.length + window.HSK3_WORDS.length + window.HSK4_WORDS.length), 'All levels holds the words of the four levels');
     check((await pA.locator('.lvbtn').innerText()).includes('All levels'), 'the All button is the selected one');
-    check((await openLv(pA), (await pA.locator('.lvpanel .lvitem .lvn').allInnerTexts()).join('|').replace(/\s+/g, '') === 'HSK1|HSK2|HSK3|HSK4|Alllevels'), 'the Levels menu offers HSK 1, HSK 2, HSK 3, HSK 4 and All levels');
+    check((await openLv(pA), (await pA.locator('.lvpanel .lvitem .lvn').allInnerTexts()).join('|').replace(/\s+/g, '') === 'HSK1|HSK2|HSK3|HSK4|HSK5|Alllevels'), 'the Levels menu offers HSK 1 to HSK 5 (HSK 5 locked until HSK 4 is passed) and All levels');
     // grammar from four levels in one list
     await require('./test-nav').makeNav(pA)('Grammar');
     await pA.waitForTimeout(150);

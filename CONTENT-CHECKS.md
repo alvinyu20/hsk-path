@@ -109,7 +109,7 @@ HSK 4 is the fourth level (`content/l4/`, tools run with `LEVEL=4`). The level c
 - **Audio.** HSK 4 has no recorded voice files yet (the browser voice is used); `node tools/audio-texts.js` already lists its texts for the audio workflow.
 - Nothing has been read by a person who reads Chinese. `tools/make-ai-review-pack-l4.py` builds the packs for that (`review/chinese-ai-hsk4/`); they have not yet been run past DeepSeek or Qwen.
 
-## HSK 5 (grammar part written 16 Nov 2026; the rest of the level is still being built)
+## HSK 5 (added 16 Nov 2026)
 
 HSK 5 is the fifth level (`content/l5/`, tools run with `LEVEL=5`). The level checker allows words and characters from HSK 1 to 5 only. What is different from the lower levels:
 - **Words: 1,579 cards for the 1,600 band 5 entries.** 16 entries reuse a headword from a lower level with a different sense or reading (为 倒 别 喂 头 好 当 才 数 本 省 看 背 行 量 面); they are taught in one grammar lesson (`newmean5`, "Words you know, with a new meaning") and are not separate cards. 5 entries are one spelling with two readings (称 处 调 系 批); each is one card that notes both readings.
@@ -118,6 +118,13 @@ HSK 5 is the fifth level (`content/l5/`, tools run with `LEVEL=5`). The level ch
 - **Explanations cross-checked against the Chinese Grammar Wiki (16 Nov 2026):** 反而 (second half of the sentence, result opposite to what you expect, no comma after it), 毕竟 (reason or fact that explains), 万一 (unlikely and usually unwelcome), 再也不 / 再也没 (never again; 不 for a decision, 没 for what did not happen), 凭 (on the basis of), 够…的 (also checked on mandarintemple.com; the wording was widened to "surprise, sympathy or complaint"), 简直 / 根本 / 难以 (three web searches). All other grammar explanations rely on my own knowledge and the outline's examples. They were written by me and have not been read by a teacher.
 - **Pinyin rules added to the engine:** 了 after a verb + 得 at the end of a clause reads liǎo (吃得了吗); 将 read jiāng in the formal 把 use (`content/pinyin-reviewed.tsv`). Words with a second reading that pypinyin gets wrong went to `content/lexicon-words.tsv` (摔倒 上当 看家 看门 数数 背书 对称 中文系 水面 本月 安全性 重要性 积极性 可能性 之一 上海).
 - **Extra exercises are now level-checked.** `DUMP_EXTRAS=1` makes `tools/dump-sentences.js` include the review-point extras. HSK 5 runs with it on. Found on the way: the extras of HSK 2 to 4 were never run through the sentence checker (with them included: 4 errors for HSK 2, 2 for HSK 3, 2 for HSK 4, plus a handful of warnings, for example 常常 in an HSK 2 extra and 早点儿 with a stray 儿). They are not fixed yet; the check for those levels still runs without extras.
+- **Word webs and character meanings.** 105 topics, 40 shared-character groups and 36 opposite pairs (`content/l5/webs.json`, topics in the shared `content/topics.json`); every one of the 1,579 words is in a topic. 272 characters that appear in HSK 5 words and are not words of their own at this level got a short English meaning for the "Built from" chips (`content/char-glosses.tsv`, AI-written, not reviewed).
+- **Listening, speaking, exam.** 24 listening clips and 8 practice scripts (`content/l5/listening.json`, `speaking.json`); an ask-a-teacher list; a preview list of HSK 5 words for HSK 4 learners (`content/preview-hsk5.tsv`). **Mock exam: 45 listening (20 short dialogues + 25 longer ones), 45 reading (3 cloze passages with 5 blanks each + 10 matching a text to a sentence + 20 passages), writing practice 15 (10 word-order + 5 type the missing character); bank of 192 questions.** The layout is my own, in the spirit of the 2012 papers; the official 2025 HSK 5 paper is different and its writing part is handwritten, which the site cannot judge.
+- **The Learn path** is a pilgrimage up the Five Great Mountains (五岳): 39 units and 331 stops, five mountains (Tai, Hua, Heng in the south, Heng in the north, Song), and the level exam is the summit. The stop names are real places (岱宗坊, 红门宫 ...) written by me from general knowledge, **not checked against a source**.
+- **A reward for passing a level.** The first time the HSK 5 exam is passed (80% in listening and in reading, in one sitting or in two) the learner gets 5,000 coins, once per level. The receipt is the person preference `lvlpass.N` (it is synced between devices and a reset of one level does not clear it). Levels passed before the feature existed pay on their next pass. `ShanluLevel.passBonus` holds the rule and `smoke-test-l5.js` tests it.
+- **Word boundaries decided for HSK 5** (found by `check-lexicon.py` and `check-ties.py` on the full item set, extras included): 74 words written solid and 10 deliberately split in `content/lexicon-words.tsv` and `content/lexicon-split.tsv`, 15 words that win a cut in `content/segment-prefer.tsv`, 63 cuts approved one by one in `content/segment-reviewed.tsv`. The engine's cut was **wrong** in about 25 sentences until the preferences were added (的话 + 费 for 话费, 从不 + 同, 说明 + 天, 书包 + 含, 地面 + 对, 常见 + 面 ...).
+- **Engine fixes found while doing it.** (1) **个人 is a headword from HSK 5 on, so the cutter joined 一个人, 两个人 and 每个人 ("yí gèrén", about 60 sentences).** Now a 个人 after a number, 每 or 几 is cut as 个 + 人 (`yí ge rén`, as at HSK 1 to 4). (2) 美国 (and 日本, 西藏) were cut per character and written in lower case ("měi guó") in HSK 4 and HSK 5; they are now solid words with a capital letter. (3) A lexicon word can now carry a first level (fourth column): 和平 and 天才 join only from HSK 5, because in HSK 3 and 4 they would steal 和平常 and 半天才. **A lexicon word beats an HSK word of the same length** (+500), so 新手 was left out (it would have turned 新手机 and 新手套 into 新手 + 机/套) and the one HSK 5 text that used it was reworded. (4) 没法儿 is in the 儿 table (plain style: 没法).
+- **Known and not fixed.** 中国人 is written "Zhōngguó rén" at every level (外国人 is solid); standard spelling is Zhōngguórén. The HSK 2 to 4 review-point extras are not level-checked (see above).
 
 ## Review log
 
@@ -229,6 +236,26 @@ HSK 5 is the fifth level (`content/l5/`, tools run with `LEVEL=5`). The level ch
 - No recorded voice files for HSK 4 yet (the browser voice is used); the audio workflow has to be run with the Qwen key.
 - The solar-term names, dates, English meanings and story lines are mine and not checked against a source.
 - The exam layout is from older papers; there are no picture questions at HSK 4; the writing practice cannot judge handwriting.
+
+### 16 Nov 2026, HSK 5 (1,579 words, 32 grammar lessons, 24 listening clips, mock exam, Five Great Mountains path)
+
+**Sources used**
+- Word list: the band 5 entries of the November 2025 syllabus (1,600 entries, 1,579 distinct spellings), from three sources that agree (a full table, the `hsk30` package extracted from the official PDF, and the open dataset's 2025 band tag). Not compared with the official document by a person.
+- Grammar: my own outline (78 points) built from the HSK 5 words and two open grammar sites; nine explanations (反而 毕竟 万一 再也不 凭 简直 根本 难以 够…的) were cross-checked against the Chinese Grammar Wiki, the rest rest on my own knowledge.
+- Exam layout: my own (see above).
+
+**Passes done**
+- Automated rules (level, pinyin, Chinese against English, gloss, word boundaries, segmentation ties) on 14,562 items (5,413 distinct sentences visible to the learner, extras and write prompts included): 0 errors, 0 unexplained warnings, 1 waiver, in both styles. The extras of HSK 2 to 4 were never run through the checker (found on the way, not fixed).
+- The official pinyin was compared with what the site shows for every word (`tools/audit-official-pinyin-l5.py`): 43 differences, all fixed except the 10 headwords that HSK 5 reuses from a lower level.
+- Everything that decides how the site reads the sentences was settled by hand: 84 word boundaries, 63 segmentation cuts approved and about 25 wrong ones fixed, 272 short meanings for characters, and the pinyin readings and neutral tones found by the official-pinyin audit.
+- Browser tests (`smoke-test-l5.js`, 97 checks) in both styles, for every screen, the exam (45 + 45 + writing practice), the level lock, all five levels together and the 5,000-coin reward; `smoke-test-path.js` opens the HSK 5 path.
+- Engine bugs found and fixed: 不 before a tone-4 syllable after another character (从不), 着 as zháo (睡不着), 得了 / 不了 as liǎo, 个人 joined in 一个人, 美国 cut per character. HSK 1 to 4 data were rebuilt after each change; the only change was 美国 → Měiguó in four HSK 4 sentences and the 着 fix.
+
+**Not done**
+- No human has reviewed any of it. The packs are in `review/chinese-ai-hsk5/` (24 files: three word-list files, grammar, 14 sentence batches, word webs, exam, scripts and clips, character meanings, mountains). Send first: the grammar lessons, the exam, the word list, the character meanings and the mountains.
+- The word list was not compared with the official document; the grammar outline is not the official one; the exam is not the official layout.
+- No recorded voice files for HSK 5 yet (the browser voice is used); the audio workflow has to be run.
+- The Five Great Mountains stop names, the story lines and the English names are mine and not checked against a source.
 
 ## Word web topics (content/topics.json)
 One shared list of topics for every level, written by hand: each topic has a group, the words (from any level), and a sentence per level. A level shows only its own words in a topic; a topic with fewer than 3 words at a level is hidden unless it is the only home of one of them (tools/topics.py). All Word web topic sentences go through the same sentence checks. `node tools/test-topics.js` checks that every word is in a topic and that known bad groupings do not come back (万 with numbers, dog/cat with animals, 从小 not with weather, left/right not with shops). When adding a word to a topic, ask: would a learner see why these words belong together? A word may sit in more than one topic.

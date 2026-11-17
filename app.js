@@ -119,7 +119,7 @@
   const LV_NAMES = Array.from({ length:TOPL }, (_, i) => 'HSK ' + (i + 1));
   const KNOWN_LISTS = LV_NAMES.length < 2 ? LV_NAMES[0] : LV_NAMES.slice(0, -1).join(', ') + ' and ' + LV_NAMES[LV_NAMES.length - 1];
   const listJoin = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];   // "HSK 1", "HSK 1 and HSK 2", "HSK 1, HSK 2 and HSK 3"
-  const LVL = window.ShanluLevel || { MAX_LEVEL:LV, PASS_PCT:80, passedEntry:() => false, passedList:() => false, softLock:() => false, placed:() => 0, levelPassed:() => false, markPassed() {}, unlocked:() => true };
+  const LVL = window.ShanluLevel || { MAX_LEVEL:LV, PASS_PCT:80, PASS_COINS:5000, passBonus:() => 0, passedEntry:() => false, passedList:() => false, softLock:() => false, placed:() => 0, levelPassed:() => false, markPassed() {}, unlocked:() => true };
   const LV_DATA = (name) => window['HSK' + LV + '_' + name];
   // In "All levels" the content of every unlocked level is joined (HSK 1 first). Words are different in every level, so nothing is shared or duplicated.
   const LV_ALL = (name) => LVLS.map(n => window['HSK' + n + '_' + name]).filter(Boolean);
@@ -879,7 +879,7 @@
     return { rm, wm, mastered, started, state, due, rDue, wDue, label:{ mastered:'Mastered', strong:'Strong', familiar:'Familiar', learning:'Learning', new:'New' }[state] };
   };
   const G_SYSTEM = [
-    'You check one sentence written by a learner of Chinese (HSK 1 to 4). Reply with JSON only.',
+    'You check one sentence written by a learner of Chinese (HSK 1 to 5). Reply with JSON only.',
     'You are given the English prompt, the grammar point being practised, and the learner\'s answer.',
     'The answer may be in Chinese characters or in pinyin. Pinyin is allowed to have no tones, no tone marks, no punctuation, no capital letters, and no spaces between syllables (niyoumeiyoushouji means ni you mei you shou ji). Work out the sentence the learner meant, and judge that sentence. Never fail an answer, and never mention tones, spacing, capitals or punctuation in the reason, because of how the pinyin is written. Without tones one run of pinyin can be read several ways: choose the reading that makes a natural sentence matching the English prompt (for example ba ba is 爸爸, rang is 让, he is 和, you duo yuan after a place is 有多远), and judge that. If it can be read as a correct sentence, it is correct.',
     'The grammar point name may list several patterns (for example "请, 一下 and 喂"). The sentence only has to use the pattern that the English prompt calls for, not all of them.',
@@ -988,7 +988,7 @@
 
   // ---------- Listening lab, Meaning: hear a clip, say what it means in English, the AI checks it ----------
   const M_SYSTEM = [
-    'A learner of Mandarin (HSK 1 to 4) heard a short Chinese sentence and typed what they think it means in English. Reply with JSON only.',
+    'A learner of Mandarin (HSK 1 to 5) heard a short Chinese sentence and typed what they think it means in English. Reply with JSON only.',
     'You are given the Chinese, its pinyin, one model English translation, and the learner\'s answer.',
     'Judge only whether the learner\'s English carries the meaning of the Chinese. The wording does not have to match the model: synonyms, contractions, missing articles, spelling slips and other natural phrasings are fine, and so is a different tense where the Chinese does not show tense.',
     '"pass": the meaning is right, even if worded differently. "close": the main idea is right but one part is missing or slightly off (for example a detail such as the time, the number, who does it, or a small word like 吗 that makes it a question). "fix": the meaning is wrong, or most of it is missing.',
@@ -1414,7 +1414,16 @@
     W1:{ sec:'writing', n:1, inst:'Tap the words in the right order to make a sentence. Tap a word again to take it back.' },
     W2:{ sec:'writing', n:2, inst:'Type the missing character. The pinyin under the sentence tells you how it sounds.' }
   };
-  const PART = LV === 1 ? PART_1 : LV === 2 ? PART_2 : LV === 3 ? PART_3 : PART_4;
+  const PART_5 = {
+    L1:{ sec:'listening', n:1, inst:'Listen to the short conversation and the question. Choose the answer.' },
+    L2:{ sec:'listening', n:2, inst:'Listen to the longer conversation and the question. Choose the answer.' },
+    R1:{ sec:'reading', n:1, inst:'Read the passage. Choose the word that fills each numbered blank.' },
+    R2:{ sec:'reading', n:2, inst:'Read the passage. Choose the sentence that matches it.' },
+    R3:{ sec:'reading', n:3, inst:'Read the passage. Choose the answer to the question.' },
+    W1:{ sec:'writing', n:1, inst:'Tap the words in the right order to make a sentence. Tap a word again to take it back.' },
+    W2:{ sec:'writing', n:2, inst:'Type the missing character. The pinyin under the sentence tells you how it sounds.' }
+  };
+  const PART = LV === 1 ? PART_1 : LV === 2 ? PART_2 : LV === 3 ? PART_3 : LV === 4 ? PART_4 : PART_5;
   const LETTERS = 'ABCDEF';
   const pickN = (arr, n) => shuffleArr(arr).slice(0, n);
   function shuffleArr(arr) { const x = arr.slice(); for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = x[i]; x[i] = x[j]; x[j] = t; } return x; }
@@ -1498,7 +1507,38 @@
     }
     return out;
   };
+  // HSK 5: listening 20 + 25, reading 15 + 10 + 20 (the layout of the 2012 HSK 5 sample papers; every question has four choices); writing practice 10 + 5
+  const examQsL5 = (sec) => {
+    const out = [];
+    const add = (part, q) => { out.push(Object.assign({ part, id:part + '-' + out.length, sec:PART[part].sec }, q)); };
+    const E = EXAMBANK;
+    const sayRev = (lines, q) => ({ zh:lines.map(l => l.zh).join(' ') + (q ? ' ' + q.zh : ''), py:lines.map(l => l.py).join(' ') + (q ? ' ' + q.py : ''), en:lines.map(l => l.en).join(' ') + (q ? ' ' + q.en : '') });
+    // a conversation, a question, four choices (the first one in the bank is the right one; the order is shuffled)
+    const textQ = (part, bank, n) => pickN(bank, n).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add(part, { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:sayRev(e.say, e.q), right:e.opts[0].zh }); });
+    if (sec === 'listening') {
+      textQ('L1', E.L1, 20);
+      textQ('L2', E.L2, 25);
+    } else if (sec === 'reading') {
+      // three passages, five numbered blanks each; one question per blank, with the whole passage in view (the blank asked about is marked 【 】)
+      pickN(E.R1, 3).forEach(p => {
+        const parts = p.zh.split('___'), fulls = p.full;
+        p.blanks.forEach((bl, k) => {
+          const text = parts.map((seg, i) => seg + (i < parts.length - 1 ? (i === k ? '【' + (i + 1) + '】' : '（' + (i + 1) + '）') : '')).join('');
+          const order = shuffleArr(bl.map((o, j) => j));
+          add('R1', { kind:'text', text:text + '\n\nChoose the word for blank 【' + (k + 1) + '】.', opts:order.map((j, n) => ({ v:n, label:bl[j].zh })), ans:order.indexOf(0), rev:{ zh:'(' + (k + 1) + ') ' + bl[0].zh + ' · ' + fulls, py:'(' + (k + 1) + ') ' + bl[0].py + ' · ' + p.py, en:'(' + (k + 1) + ') ' + p.en }, right:bl[0].zh });
+        });
+      });
+      // a short passage, four sentences: which one matches it?
+      pickN(E.R2, 10).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); add('R2', { kind:'text', text:e.zh, opts:order.map((k, j) => ({ v:j, label:e.opts[k].zh })), ans:order.indexOf(0), rev:{ zh:e.zh + ' → ' + e.opts[0].zh, py:e.py + ' → ' + e.opts[0].py, en:e.en }, right:e.opts[0].zh }); });
+      pickN(E.R3, 20).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); add('R3', { kind:'text', text:e.zh + '\n' + e.q.zh, opts:order.map((k, j) => ({ v:j, label:e.opts[k].zh })), ans:order.indexOf(0), rev:{ zh:e.zh + ' ' + e.q.zh, py:e.py + ' ' + e.q.py, en:e.en + ' ' + e.q.en }, right:e.opts[0].zh }); });
+    } else {
+      pickN(E.W1, 10).forEach(e => { let order; const said = (o) => o.map(k => e.words[k]).join(''); do { order = shuffleArr(e.words.map((w, k) => k)); } while (said(order) === e.zh || (e.alts || []).indexOf(said(order)) >= 0); add('W1', { kind:'order', opts:order.map((k, j) => ({ v:j, label:e.words[k] })), ans:e.zh, alts:e.alts, rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.zh }); });
+      pickN(E.W2, 5).forEach(e => add('W2', { kind:'type', text:e.zh, hint:e.hint, opts:[], ans:e.ans, rev:{ zh:e.full, py:e.py, en:e.en }, right:e.ans }));
+    }
+    return out;
+  };
   const examQs = (sec) => {
+    if (LV === 5) return examQsL5(sec);
     if (LV === 2) return examQsL2(sec);
     if (LV === 3) return examQsL3(sec);
     if (LV === 4) return examQsL4(sec);
@@ -1853,9 +1893,12 @@
       if (!FR || !FR.enabled() || !FR.identity() || !SY) return { changed:false, conflict:false };
       this.persistNow();
       const levels = Object.keys(LVL.PROGRESS_KEYS || {}).map(Number);
+      const got = await FR.getProgress();
+      // This device's progress is read only now, after the wait for the server: a word or a minute saved while the request was out is in it,
+      // so the merge below cannot write an older copy over it (reading before the wait lost that change whenever the server had news).
+      this.persistNow();
       const local = {};
       levels.forEach(n => { const st = readStore(n); if (st) local[n] = SY.pick(st); });
-      const got = await FR.getProgress();
       const remote = (got && got.progress && got.progress.levels) || {};
       const merged = {}; let pushNeeded = !(got && got.progress), changed = false;
       // Coins earned while the "All levels" view is open are kept in that view's own saved copy, which is not one of the levels above:
@@ -2304,9 +2347,13 @@
       }
       if (m.mode === 'full' && m.sec === 'listening') { this.exPatch({ stage:'break', results }); return; }
       const entry = { at:Date.now(), mode:m.mode, l:results.listening ? results.listening.correct : null, r:results.reading ? results.reading.correct : null, lt:results.listening ? results.listening.total : null, rt:results.reading ? results.reading.total : null };
-      if (LVL.passedList(this.state.exams.concat([entry]))) LVL.markPassed(LV);   // passing both sections (together or one at a time) opens the next level straight away
-      const day = ymd(new Date());
-      this.setState({ exm:Object.assign({}, m, { stage:'result', results }), exams:this.state.exams.concat([entry]).slice(-20), dayMin:this.state.dayMin + (m.mode === 'full' ? 30 : 15), xp:this.state.xp + Math.round(correct * 2), dayXp:this.state.dayXp + Math.round(correct * 2) });
+      const sittings = this.state.exams.concat([entry]);
+      // passing both sections (together or one at a time) opens the next level straight away, and pays PASS_COINS once for this level (the person pref 'lvlpass.N' is the receipt; it travels with the person, so a second device or a reset cannot pay it again)
+      const bonus = LVL.passBonus(LV, sittings, prefGet('lvlpass.' + LV, 0));
+      if (LVL.passedList(sittings)) LVL.markPassed(LV);
+      if (bonus > 0) prefSet('lvlpass.' + LV, Date.now());
+      const gain = Math.round(correct * 2) + bonus;
+      this.setState({ exm:Object.assign({}, m, { stage:'result', results, bonus }), exams:sittings.slice(-20), dayMin:this.state.dayMin + (m.mode === 'full' ? 30 : 15), xp:this.state.xp + gain, dayXp:this.state.dayXp + gain });
       try { window.scrollTo(0, 0); } catch (e) {}
     };
     exContinue = () => { const m = this.state.exm; if (m) this.exBegin({ mode:'full', sec:'reading', results:m.results }); };
@@ -3927,7 +3974,7 @@
         acctEditing:!!S.acctEdit, acctNameIn:String(S.acctNameIn || ''), onAcctName:(e) => this.setState({ acctNameIn:e.target.value }),
         acctEditOpen:this.acctEditOpen, acctCancel:this.acctCancel, acctSave:this.acctSave,
         devOpen:!!S.devOpen, devExpanded:S.devOpen ? 'true' : 'false', devToggleText:S.devOpen ? 'Hide' : 'Show', toggleDev:() => this.setState({ devOpen:!this.state.devOpen }),
-        acctStamps:[1, 2, 3, 4].filter(n => n <= (LVL.MAX_LEVEL || 4)).map(n => { const done = !!LVL.levelPassed(n); const cur = !done && n === LV; return { zh:'一二三四五六'.charAt(n - 1), cls:done ? 'got' : (cur ? 'cur' : 'no'), label:done ? 'HSK ' + n + ' passed' : (cur ? 'In progress' : 'Ahead') }; }),
+        acctStamps:[1, 2, 3, 4, 5].filter(n => n <= (LVL.MAX_LEVEL || 5)).map(n => { const done = !!LVL.levelPassed(n); const cur = !done && n === LV; return { zh:'一二三四五六'.charAt(n - 1), cls:done ? 'got' : (cur ? 'cur' : 'no'), label:done ? 'HSK ' + n + ' passed' : (cur ? 'In progress' : 'Ahead') }; }),
         acctStats:[
           stat('Day streak', String(c.streak)), stat('Coins', c.coins), stat('Words in memory', String(c.mem)), stat('Words started', String(c.started)),
           stat('Path stops', PATH_LVLS.length ? String(stopsDone) : '0'), stat('Grammar lessons', String(gPassed))
@@ -4633,7 +4680,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
           exSecs:secs, exFull:m.mode === 'full', exSingle:m.mode !== 'full', exTotal200:total + ' / 200', exPassReal:total >= 120,
           exVerdict:m.mode === 'writing' ? 'Writing is practice here. The site cannot mark handwriting, so it is not part of the 200 points or the seal.' : m.mode === 'full' ? (total >= 120 ? 'At or above 120 of 200, the pass mark of the official ' + LVN + ' test.' : 'Below 120 of 200, the pass mark of the official ' + LVN + ' test.') : 'One section only. The official pass mark is on the total of both sections.',
           exUnlock:seal && m.mode === 'full' && LV < LVL.MAX_LEVEL, exUnlockText:'You passed the ' + LVN + ' level exam. HSK ' + (LV + 1) + ' is now open.', exUnlockGo:() => this.switchLevel(LV + 1), exUnlockGoText:'Go to HSK ' + (LV + 1),
-          exSeal:seal, exNoSeal:!seal, exSealText:m.mode === 'writing' ? 'Writing practice does not count toward the seal. The seal needs ' + LVL.PASS_PCT + '% in listening and in reading.' : seal ? (m.mode === 'full' ? 'You reached ' + LVL.PASS_PCT + '% in every section. That is this site\'s bar for the ' + LVN + ' seal.' : 'You reached ' + LVL.PASS_PCT + '% in the section you took. Take the full exam to open the next level.') : 'The seal here needs 80% in every section. Review the questions below and try again.',
+          exBonus:(m.bonus || 0) > 0, exBonusText:'+' + (m.bonus || 0).toLocaleString('en-US') + ' coins for passing ' + LVN + '.', exSealZh:'一二三四五六'.charAt(LV - 1) || '一', exSeal:seal, exNoSeal:!seal, exSealText:m.mode === 'writing' ? 'Writing practice does not count toward the seal. The seal needs ' + LVL.PASS_PCT + '% in listening and in reading.' : seal ? (m.mode === 'full' ? 'You reached ' + LVL.PASS_PCT + '% in every section. That is this site\'s bar for the ' + LVN + ' seal.' : 'You reached ' + LVL.PASS_PCT + '% in the section you took. Take the full exam to open the next level.') : 'The seal here needs 80% in every section. Review the questions below and try again.',
           exWrong:wrong.map(w => ({ n:w.n, part:'Part ' + PART[w.q.part].n, zh:w.q.rev.zh, py:w.q.rev.py, en:w.q.rev.en, pic:w.q.rev.pic || '', hasPic:!!w.q.rev.pic && !exPhoto(w.q.rev.pic), hasPhoto:!!exPhoto(w.q.rev.pic), photo:exPhoto(w.q.rev.pic) ? exPhoto(w.q.rev.pic).u : '', photoAlt:exPhoto(w.q.rev.pic) ? exPhoto(w.q.rev.pic).a : '',
             right:w.q.right, yours:w.yours === undefined ? 'No answer' : (w.q.kind === 'order' || w.q.kind === 'type') ? String(w.yours) : (w.q.opts.find(o => o.v === w.yours) || { label:'' }).label })), hasWrong:wrong.length > 0, perfect:wrong.length === 0,
           exAgain:() => this.startExam(m.mode)
@@ -4825,7 +4872,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         testlobby:[LVN + ' test', 'Mixed questions from the words you have started, so you are recalling words, not just recognizing them.'],
         grammar:['Grammar', ALL ? LESSONS.length + ' lessons from every unlocked level, one at a time.' : LV === 1 ? LESSONS.length + ' lessons that cover the HSK 1 grammar outline, one at a time.' : LESSONS.length + ' lessons on the grammar of the ' + LVN + ' words, one at a time.'],
         speak:['Speaking practice', HAS_SCRIPTS ? 'Say a short conversation out loud.' : 'Talk with Mingming, the AI conversation partner.'],
-        exam:[ALL ? 'Level exams' : LVN + ' level exam', ALL ? 'Each exam belongs to one level.' : LV === 1 ? 'Pass every section to climb to HSK 2.' : 'Not built yet for ' + LVN + '.'],
+        exam:[ALL ? 'Level exams' : LVN + ' level exam', ALL ? 'Each exam belongs to one level.' : EXAMBANK ? (LV < LVL.MAX_LEVEL ? 'Pass every section to climb to HSK ' + (LV + 1) + '.' : 'Pass every section to earn the ' + LVN + ' seal.') : 'Not built yet for ' + LVN + '.'],
         path:['Your path', 'Words and grammar in order, from the basics up. The next stop is always one tap away.'],
         plesson:[S.pl && STOP_BY[S.pl.id] ? stopTitle(STOP_BY[S.pl.id].st) : 'Lesson', 'Meet the words, try them, then check them.'],
         acct:['Account', 'You, your numbers, and the settings behind Shanlu.'],
@@ -5498,16 +5545,16 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         goHome:() => this.go('home'), goReview:() => this.go('review'), goTest:() => this.go('testlobby'), goGrv:() => this.go('greview'), goGrammar:() => this.go('grammar'), goSpeak:() => this.go('speak'),
         hasDue:revBadgeN > 0, dueCount:revBadgeN,
         exTitle:LVN + ' mock exam',
-        exIntro:LV === 1 ? 'Built like the official HSK 1 sample papers: 20 listening and 20 reading questions in four parts each, about 35 minutes. No hints and no pinyin while you answer. Each exam is drawn from a bank of 120+ questions, so it is different every time.' : LV === 4 ? 'Built like the HSK 4 sample papers of the 2012 test: 45 listening questions in three parts and 40 reading questions in three parts, about 75 minutes. Every question has four choices. No hints and no pinyin while you answer (the real paper has pinyin). Writing is separate practice. Each exam is drawn from a bank of 150+ questions, so it is different every time.' : LV === 3 ? 'Built like the HSK 3 sample papers of the 2012 test: 40 listening questions in four parts and 30 reading questions in three parts, about 65 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Writing is separate practice. Each exam is drawn from a bank of 130+ questions, so it is different every time.' : 'Built like the HSK 2 sample papers of the 2012 test: 35 listening and 25 reading questions in four parts each, about 47 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Each exam is drawn from a bank of 140+ questions, so it is different every time.',
+        exIntro:LV === 5 ? 'Built like the HSK 5 sample papers of the 2012 test: 45 listening questions in two parts and 45 reading questions in three parts, about 80 minutes. Every question has four choices. No hints and no pinyin while you answer. Writing is separate practice. Each exam is drawn from a bank of 190+ questions, so it is different every time.' : LV === 1 ? 'Built like the official HSK 1 sample papers: 20 listening and 20 reading questions in four parts each, about 35 minutes. No hints and no pinyin while you answer. Each exam is drawn from a bank of 120+ questions, so it is different every time.' : LV === 4 ? 'Built like the HSK 4 sample papers of the 2012 test: 45 listening questions in three parts and 40 reading questions in three parts, about 75 minutes. Every question has four choices. No hints and no pinyin while you answer (the real paper has pinyin). Writing is separate practice. Each exam is drawn from a bank of 150+ questions, so it is different every time.' : LV === 3 ? 'Built like the HSK 3 sample papers of the 2012 test: 40 listening questions in four parts and 30 reading questions in three parts, about 65 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Writing is separate practice. Each exam is drawn from a bank of 130+ questions, so it is different every time.' : 'Built like the HSK 2 sample papers of the 2012 test: 35 listening and 25 reading questions in four parts each, about 47 minutes. No hints and no pinyin while you answer (the real paper has pinyin). Each exam is drawn from a bank of 140+ questions, so it is different every time.',
         exListenT:'Listening · ' + EXAM_N.listening + ' questions · ' + EXAM_MIN.listening + ' min',
-        exListenD:LV === 1 ? 'Part 1: does the picture match? Part 2: pick the picture for a sentence. Part 3: match five conversations to pictures. Part 4: a conversation, a question, three answers. Each clip can be played twice.' : LV === 4 ? 'Part 1 (10): does the sentence match the passage? Part 2 (15): a short conversation, a question, four answers. Part 3 (20): a longer conversation, a question, four answers. Each clip can be played twice.' : LV === 3 ? 'Part 1 (10): match conversations to pictures. Part 2 (10): does the sentence match the passage? Part 3 (10): a short conversation, a question, three answers. Part 4 (10): a longer conversation, a question, three answers. Each clip can be played twice.' : 'Part 1 (10): does the picture match the sentence? Part 2 (10): match conversations to pictures. Part 3 (10): a short conversation, a question, three answers. Part 4 (5): a longer conversation, a question, three answers. Each clip can be played twice.',
+        exListenD:LV === 5 ? 'Part 1 (20): a short conversation, a question, four answers. Part 2 (25): a longer conversation, a question, four answers. Each clip can be played twice.' : LV === 1 ? 'Part 1: does the picture match? Part 2: pick the picture for a sentence. Part 3: match five conversations to pictures. Part 4: a conversation, a question, three answers. Each clip can be played twice.' : LV === 4 ? 'Part 1 (10): does the sentence match the passage? Part 2 (15): a short conversation, a question, four answers. Part 3 (20): a longer conversation, a question, four answers. Each clip can be played twice.' : LV === 3 ? 'Part 1 (10): match conversations to pictures. Part 2 (10): does the sentence match the passage? Part 3 (10): a short conversation, a question, three answers. Part 4 (10): a longer conversation, a question, three answers. Each clip can be played twice.' : 'Part 1 (10): does the picture match the sentence? Part 2 (10): match conversations to pictures. Part 3 (10): a short conversation, a question, three answers. Part 4 (5): a longer conversation, a question, three answers. Each clip can be played twice.',
         exWriteT:HAS_WRITING ? 'Writing · ' + EXAM_N.writing + ' questions · ' + EXAM_MIN.writing + ' min · practice' : '',
-        exWriteD:(LV === 4 ? 'Part 1 (10): tap the words in the right order. Part 2 (5): type the missing character.' : 'Part 1 (5): tap the words in the right order. Part 2 (5): type the missing character.') + ' Practice only: it does not count toward the 200 points or the seal.',
+        exWriteD:(LV >= 4 ? 'Part 1 (10): tap the words in the right order. Part 2 (5): type the missing character.' : 'Part 1 (5): tap the words in the right order. Part 2 (5): type the missing character.') + ' Practice only: it does not count toward the 200 points or the seal.',
         exReadT:'Reading · ' + EXAM_N.reading + ' questions · ' + EXAM_MIN.reading + ' min',
-        exReadD:LV === 1 ? 'Part 1: does the picture match the words? Part 2: match five sentences to pictures. Part 3: match five questions to answers. Part 4: fill five blanks from a word list.' : LV === 4 ? 'Part 1 (10): fill blanks from word lists. Part 2 (10): put three pieces in the right order to make a sentence. Part 3 (20): read a passage and answer a question with four choices.' : LV === 3 ? 'Part 1 (10): choose the reply that fits each sentence. Part 2 (10): fill blanks from a word list. Part 3 (10): read a passage and answer a question.' : 'Part 1 (5): match sentences to pictures. Part 2 (5): fill blanks from a word list. Part 3 (5): do two sentences mean the same? Part 4 (10): match questions to answers.',
+        exReadD:LV === 5 ? 'Part 1 (15): read three passages and fill five numbered blanks in each. Part 2 (10): read a short passage and choose the sentence that matches it. Part 3 (20): read a passage and answer a question with four choices.' : LV === 1 ? 'Part 1: does the picture match the words? Part 2: match five sentences to pictures. Part 3: match five questions to answers. Part 4: fill five blanks from a word list.' : LV === 4 ? 'Part 1 (10): fill blanks from word lists. Part 2 (10): put three pieces in the right order to make a sentence. Part 3 (20): read a passage and answer a question with four choices.' : LV === 3 ? 'Part 1 (10): choose the reply that fits each sentence. Part 2 (10): fill blanks from a word list. Part 3 (10): read a passage and answer a question.' : 'Part 1 (5): match sentences to pictures. Part 2 (5): fill blanks from a word list. Part 3 (5): do two sentences mean the same? Part 4 (10): match questions to answers.',
         exCreditsOn:Object.keys(EXAM_MEDIA).length > 0, exCredits:Object.keys(EXAM_MEDIA).map(k => ({ a:EXAM_MEDIA[k].a, c:EXAM_MEDIA[k].c })),
-        exNote:LV === 4 ? 'The real test has no pictures in the sample papers I followed, and none here. This layout follows the 2012 (HSK 2.0) HSK 4 sample papers (45 listening, 40 reading, 15 writing questions). I could not find the layout of the 2025 HSK band 4 exam, so it may differ. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand; here you tap and type, and the site cannot judge a hand-written character or a free sentence.' : LV === 1 ? 'The real test has pictures; here ' + EX_PICNOTE + '. The official 2025 test is said to have 20 listening questions (about 12 minutes of audio) and 20 reading questions (20 minutes); the part-by-part layout above is from the official sample papers and I could not confirm every detail of the 2025 version. Listening gets 15 minutes here because you press play yourself.' : LV === 3 ? 'The real test has pictures; here ' + EX_PICNOTE + '. This layout follows the 2012 (HSK 2.0) sample papers. I could not find the layout of the 2025 HSK band 3 exam, so it may differ. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand; here you tap and type, and the site cannot judge a hand-written character.' : 'The real test has pictures; here ' + EX_PICNOTE + '. This layout follows the 2012 (HSK 2.0) sample papers. I could not find the layout of the 2025 HSK band 2 exam, so it may differ. Listening gets 25 minutes because you press play yourself.',
-        exScore:(LV === 1 ? 'Each question is worth 5 points, so each section is out of 100 and the total out of 200.' : LV === 4 ? 'Each section is worth 100 points, shared evenly by its questions (listening about 2.2 points a question, reading 2.5), so the total is out of 200. Writing practice is not scored in points.' : LV === 3 ? 'Each section is worth 100 points, shared evenly by its questions (listening 2.5 points a question, reading about 3.3), so the total is out of 200. Writing practice is not scored in points.' : 'Each section is worth 100 points, shared evenly by its questions (listening about 2.9 points a question, reading 4), so the total is out of 200.') + ' The official ' + LVN + ' pass mark is ' + (LV >= 3 ? '180 of 300, which is 60% and so 120 of the 200 here' : '120 of 200') + ' (I am not sure whether the 2025 version changed it). This site\'s ' + LVN + ' seal is stricter: ' + LVL.PASS_PCT + '% in every section of one full exam, and it opens ' + (LV < LVL.MAX_LEVEL ? 'HSK ' + (LV + 1) : 'the next level') + '.',
+        exNote:LV === 5 ? 'There are no pictures in this exam. This layout follows the 2012 (HSK 2.0) HSK 5 sample papers (45 listening, 45 reading, 10 writing questions). I could not find the layout of the 2025 HSK band 5 exam, so it may differ. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand and includes writing a short passage; here you tap and type 15 practice questions, and the site cannot judge a hand-written character or a free text.' : LV === 4 ? 'The real test has no pictures in the sample papers I followed, and none here. This layout follows the 2012 (HSK 2.0) HSK 4 sample papers (45 listening, 40 reading, 15 writing questions). I could not find the layout of the 2025 HSK band 4 exam, so it may differ. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand; here you tap and type, and the site cannot judge a hand-written character or a free sentence.' : LV === 1 ? 'The real test has pictures; here ' + EX_PICNOTE + '. The official 2025 test is said to have 20 listening questions (about 12 minutes of audio) and 20 reading questions (20 minutes); the part-by-part layout above is from the official sample papers and I could not confirm every detail of the 2025 version. Listening gets 15 minutes here because you press play yourself.' : LV === 3 ? 'The real test has pictures; here ' + EX_PICNOTE + '. This layout follows the 2012 (HSK 2.0) sample papers. I could not find the layout of the 2025 HSK band 3 exam, so it may differ. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand; here you tap and type, and the site cannot judge a hand-written character.' : 'The real test has pictures; here ' + EX_PICNOTE + '. This layout follows the 2012 (HSK 2.0) sample papers. I could not find the layout of the 2025 HSK band 2 exam, so it may differ. Listening gets 25 minutes because you press play yourself.',
+        exScore:(LV === 5 ? 'Each section is worth 100 points, shared evenly by its questions (about 2.2 points a question in listening and in reading), so the total is out of 200. Writing practice is not scored in points.' : LV === 1 ? 'Each question is worth 5 points, so each section is out of 100 and the total out of 200.' : LV === 4 ? 'Each section is worth 100 points, shared evenly by its questions (listening about 2.2 points a question, reading 2.5), so the total is out of 200. Writing practice is not scored in points.' : LV === 3 ? 'Each section is worth 100 points, shared evenly by its questions (listening 2.5 points a question, reading about 3.3), so the total is out of 200. Writing practice is not scored in points.' : 'Each section is worth 100 points, shared evenly by its questions (listening about 2.9 points a question, reading 4), so the total is out of 200.') + ' The official ' + LVN + ' pass mark is ' + (LV >= 3 ? '180 of 300, which is 60% and so 120 of the 200 here' : '120 of 200') + ' (I am not sure whether the 2025 version changed it). This site\'s ' + LVN + ' seal is stricter: ' + LVL.PASS_PCT + '% in every section of one full exam, and it opens ' + (LV < LVL.MAX_LEVEL ? 'HSK ' + (LV + 1) : 'the next level') + '.',
         chatVocab:KNOWN_LISTS + ' vocabulary only', lvName:LVN, nextLvName:'HSK ' + (TOPL + 1), lvIs1:TOPL === 1, lvIs2:TOPL !== 1, hasExamCard:!!EXAMBANK, noExamCard:!EXAMBANK,
         examCardTitle:ALL ? 'Level exams' : EXAMBANK ? LVN + ' level exam' : LVN + ' progress', examCardNote:ALL ? 'Each level has its own exam. Switch to that level in the header to take it; passing it opens the next level. The rings show your progress across all the levels shown here.' : EXAMBANK ? (LVL.levelPassed(LV) ? LVN + ' exam passed.' + (LV < LVL.MAX_LEVEL ? ' HSK ' + (LV + 1) + ' is open.' : '') : (LV < LVL.MAX_LEVEL ? 'Pass the full exam (' + LVL.PASS_PCT + '% in listening and in reading) to open HSK ' + (LV + 1) + '. The rings show how ready you are.' : 'Reach ' + LVL.PASS_PCT + '% in listening and in reading to pass.')) : 'The ' + LVN + ' level exam, listening lab and practice scripts are not built yet. These rings show the parts that are.',
         examBtnText:'See the ' + LVN + ' level exam',

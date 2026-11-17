@@ -6,6 +6,7 @@
 #   sh tools/check-quick.sh l2 /path/to/complete.json        # only HSK 2: build, sentence checks and the HSK 2 browser pass (for changes to content/l2)
 #   sh tools/check-quick.sh l3 /path/to/complete.json        # only HSK 3: build, sentence checks and the HSK 3 browser pass (for changes to content/l3)
 #   sh tools/check-quick.sh l4 /path/to/complete.json        # only HSK 4: build, sentence checks and the HSK 4 browser pass (for changes to content/l4)
+#   sh tools/check-quick.sh l5 /path/to/complete.json        # only HSK 5: the same for content/l5
 #   sh tools/check-quick.sh full /path/to/complete.json      # everything (use before a bigger release or when unsure)
 set -e
 cd "$(dirname "$0")/.."
@@ -70,6 +71,7 @@ case "$MODE" in
     NODE_PATH="$(npm root -g)" node tools/smoke-test-l2.js
     NODE_PATH="$(npm root -g)" node tools/smoke-test-l3.js
     NODE_PATH="$(npm root -g)" node tools/smoke-test-l4.js
+    NODE_PATH="$(npm root -g)" node tools/smoke-test-l5.js
     echo "ui checks passed (plain style only; run 'full' to also check the 儿-style pass and the content)" ;;
   l2)
     last env LEVEL=2 python3 -W ignore tools/build-words.py
@@ -109,6 +111,19 @@ case "$MODE" in
     node tools/dump-sentences.js 4 --plain > /tmp/shanlu-sentences-l4-plain.json
     python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l4-plain.json --level 4 --dataset "$DATASET" --plain
     NODE_PATH="$(npm root -g)" node tools/smoke-test-l4.js ;;
+  l5)
+    last env LEVEL=5 python3 -W ignore tools/build-words.py
+    last env LEVEL=5 python3 -W ignore tools/build-grammar.py
+    last env LEVEL=5 python3 -W ignore tools/check-grammar-vocab.py
+    last env LEVEL=5 python3 -W ignore tools/build-webs.py
+    last env LEVEL=5 python3 -W ignore tools/build-speech.py
+    last env LEVEL=5 python3 -W ignore tools/build-exam.py
+    DUMP_EXTRAS=1 node tools/dump-sentences.js 5 > /tmp/shanlu-sentences-l5.json
+    python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l5.json --level 5 --dataset "$DATASET"
+    LEVEL=5 python3 -W ignore tools/check-ties.py /tmp/shanlu-sentences-l5.json
+    DUMP_EXTRAS=1 node tools/dump-sentences.js 5 --plain > /tmp/shanlu-sentences-l5-plain.json
+    python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l5-plain.json --level 5 --dataset "$DATASET" --plain
+    NODE_PATH="$(npm root -g)" node tools/smoke-test-l5.js ;;
   full) sh tools/check-all.sh "$DATASET" ;;
-  *) echo "usage: check-quick.sh content|ui|l2|l3|l4|full [dataset]"; exit 2 ;;
+  *) echo "usage: check-quick.sh content|ui|l2|l3|l4|l5|full [dataset]"; exit 2 ;;
 esac

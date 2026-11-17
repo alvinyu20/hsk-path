@@ -5,7 +5,7 @@ these words per character). Run it after editing content/lexicon-words.tsv:  pyt
 """
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-os.environ.setdefault('LEVEL', '2')
+os.environ['LEVEL'] = '5'      # the runtime list holds every word, whatever level a word is joined from
 import levelcfg
 from pinyin_engine import Engine, read_tsv, C, ROOT
 

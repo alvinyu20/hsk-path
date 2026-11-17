@@ -26,7 +26,7 @@ function copySite() {
   catch (e) { check(false, 'the stamp step is out of date: run node tools/build-site.js'); }
 
   const tmp = copySite();
-  const srv = server(tmp, { csp: true, sw: true, realConfig: true, noCache: true });
+  const srv = server(tmp, { csp: true, sw: true, realConfig: true, realAudio: true, noCache: true });
   await new Promise((r) => srv.listen(0, r));
   const site = 'http://127.0.0.1:' + srv.address().port + '/';
   const browser = await chromium.launch();

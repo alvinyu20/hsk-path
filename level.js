@@ -8,9 +8,10 @@
 (function () {
   var LEVEL_KEY = 'shanlu-level';
   var PASSED_KEY = 'shanlu-passed';              // { "1": time } remembered even if that level's progress is later reset
-  var PROGRESS_KEYS = { 1: 'shanlu-progress-v1', 2: 'shanlu-progress-v1-l2', 3: 'shanlu-progress-v1-l3', 4: 'shanlu-progress-v1-l4' };
-  var MAX_LEVEL = 4;                            // the highest level that is open to learners (a level is added here only after it has passed every check)
+  var PROGRESS_KEYS = { 1: 'shanlu-progress-v1', 2: 'shanlu-progress-v1-l2', 3: 'shanlu-progress-v1-l3', 4: 'shanlu-progress-v1-l4', 5: 'shanlu-progress-v1-l5' };
+  var MAX_LEVEL = 5;                            // the highest level that is open to learners (a level is added here only after it has passed every check)
   var PASS_PCT = 80;
+  var PASS_COINS = 5000;                        // coins for passing a level exam, paid once per level (app.js remembers it in the person pref 'lvlpass.N')
   var DEFAULT_SIZE = { l: 20, r: 20 };          // exam entries saved before the totals were recorded were HSK 1: 20 + 20 questions
 
   function read(key) { try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; } }
@@ -50,6 +51,8 @@
   // "placed": the highest level the person tested out of with the level check (a person's setting, saved by app.js as the preference 'placed').
   // Levels up to the one after it are open. It opens levels, it does not count as passing an exam, so it earns no seal.
   function placed() { var p = read('shanlu-person'); var v = p && p.prefs && p.prefs.placed && p.prefs.placed.v; return typeof v === 'number' && v > 0 ? Math.min(Math.floor(v), MAX_LEVEL) : 0; }
+  // the coins owed for a level exam: PASS_COINS the first time the saved sittings in `list` pass level n, 0 when it was paid before (paidAt is the saved time of that payment) or the level is not open to learners
+  function passBonus(n, list, paidAt) { return n >= 1 && n <= MAX_LEVEL && !paidAt && passedList(list) ? PASS_COINS : 0; }
   function unlocked(n) { return n <= 1 || (n <= MAX_LEVEL && (softLock() || n <= placed() + 1 || levelPassed(n - 1))); }
 
   function unlockedLevels() { var out = []; for (var n = 1; n <= MAX_LEVEL; n++) if (unlocked(n)) out.push(n); return out; }
@@ -78,6 +81,6 @@
   window.SHANLU_LEVEL = level;
   window.SHANLU_LEVELS = level === 0 ? all : [level];   // the levels whose content this page shows
   window.SHANLU_LOCKED = wanted > level && level > 0 ? wanted : 0;   // the level that was asked for but is still locked
-  window.ShanluLevel = { MAX_LEVEL: MAX_LEVEL, PASS_PCT: PASS_PCT, passedEntry: passedEntry, passedList: passedList, bestSections: bestSections, softLock: softLock, levelPassed: levelPassed, markPassed: markPassed, unlocked: unlocked, placed: placed, unlockedLevels: unlockedLevels, PROGRESS_KEYS: PROGRESS_KEYS };
+  window.ShanluLevel = { MAX_LEVEL: MAX_LEVEL, PASS_PCT: PASS_PCT, PASS_COINS: PASS_COINS, passBonus: passBonus, passedEntry: passedEntry, passedList: passedList, bestSections: bestSections, softLock: softLock, levelPassed: levelPassed, markPassed: markPassed, unlocked: unlocked, placed: placed, unlockedLevels: unlockedLevels, PROGRESS_KEYS: PROGRESS_KEYS };
   if (document.title) document.title = 'Shanlu · ' + (level === 0 ? 'all levels' : 'HSK ' + level) + ' study path';
 })();

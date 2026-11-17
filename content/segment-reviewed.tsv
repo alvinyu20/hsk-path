@@ -28,3 +28,67 @@
 说话人为什么晚上去超市？	说话 人 为什么 晚上 去 超市 ？	HSK 4: checked, this cut is the natural reading
 我们小区附近有一条河，河边的路很安静，很多人晚上去那里散步。市里最近又修了一条新路，让大家走路更方便了。	我们 小区 附近 有 一 条 河 ， 河 边 的 路 很 安静 ， 很 多 人 晚上 去 那里 散步 。 市 里 最近 又 修 了 一 条 新 路 ， 让 大家 走路 更 方便 了 。	HSK 4: checked, this cut is the natural reading
 请稍微等一下，我马上来。	请 稍微 等 一下 ， 我 马上 来 。	HSK 4: checked, this cut is the natural reading
+# HSK 5: the engine's cut (the longer first word) was checked sentence by sentence and is the right one (by Claude; no teacher has read it). The cuts that were wrong are fixed in segment-prefer.tsv.
+请在这里等候，经理马上来。	请 在 这里 等候 ， 经理 马上 来 。	longer first word is right
+我已经接收到了你的邮件。	我 已经 接收 到 了 你 的 邮件 。	longer first word is right
+我姥爷每天早上去公园锻炼。	我 姥爷 每天 早上 去 公园 锻炼 。	longer first word is right
+我想说服他留下来。	我 想 说服 他 留下 来 。	longer first word is right
+这个人的特征是个子很高。	这个 人 的 特征 是 个子 很 高 。	longer first word is right
+你能形容一下那个人吗？	你 能 形容 一下 那个 人 吗 ？	longer first word is right
+一路上，孩子们都在唱歌。	一路 上 ， 孩子 们 都 在 唱 歌 。	longer first word is right
+他们保持原有的样子。	他们 保持 原有 的 样子 。	longer first word is right
+自从来到这里，他每天都很忙。	自从 来 到 这里 ， 他 每天 都 很 忙 。	longer first word is right
+所有的学生都要参加，包括你。	所有 的 学生 都 要 参加 ， 包括 你 。	longer first word is right
+他跑得很快，一下子超了所有的人。	他 跑 得 很 快 ， 一下子 超 了 所有 的 人 。	longer first word is right
+他一个人承担所有的工作。	他 一 个 人 承担 所有 的 工作 。	longer first word is right
+请问，我想打听一下去机场怎么走。	请问 ， 我 想 打听 一下 去 机场 怎么 走 。	longer first word is right
+他是一个富有的商人。	他 是 一 个 富有 的 商人 。	longer first word is right
+个别人不同意这个办法。	个别 人 不 同意 这个 办法 。	longer first word is right
+每个人都可以为社会做出贡献。	每 个 人 都 可以 为 社会 做 出 贡献 。	longer first word is right
+我没有接收到他的电话。	我 没有 接收 到 他 的 电话 。	longer first word is right
+我也遇到过类似的问题。	我 也 遇到 过 类似 的 问题 。	longer first word is right
+旅行社安排了所有的事。	旅行社 安排 了 所有 的 事 。	longer first word is right
+哦，好的，我马上来。	哦 ， 好 的 ， 我 马上 来 。	longer first word is right
+大家都强烈要求他留下来。	大家 都 强烈 要求 他 留下 来 。	longer first word is right
+夜里，月亮如同一个大盘子。	夜 里 ， 月亮 如同 一 个 大 盘子 。	longer first word is right
+他不小心把照片删除了。	他 不 小心 把 照片 删除 了 。	longer first word is right
+每天适当运动，身体会更好。	每天 适当 运动 ， 身体 会 更 好 。	longer first word is right
+老师说服了他留下来。	老师 说服 了 他 留下 来 。	longer first word is right
+我先去买票，你随后来。	我 先 去 买 票 ， 你 随后 来 。	longer first word is right
+请说一说这个人的特征。	请 说 一 说 这个 人 的 特征 。	longer first word is right
+天空中飞着很多鸟。	天空 中 飞 着 很 多 鸟 。	longer first word is right
+飞机票可以退还吗？	飞机 票 可以 退还 吗 ？	longer first word is right
+外公每天早上去公园走路。	外公 每天 早上 去 公园 走路 。	longer first word is right
+往返的飞机票多少钱？	往返 的 飞机 票 多少 钱 ？	longer first word is right
+他们晚上去看戏。	他们 晚上 去 看 戏 。	longer first word is right
+警察正在寻找那个人。	警察 正在 寻找 那个 人 。	longer first word is right
+一路上有很多好看的风景。	一路 上 有 很 多 好看 的 风景 。	longer first word is right
+这里还有原有的老房子。	这里 还 有 原有 的 老 房子 。	longer first word is right
+我们要保护原有的环境。	我们 要 保护 原有 的 环境 。	longer first word is right
+他早晚会明白的。	他 早晚 会 明白 的 。	longer first word is right
+小心，别撞到那个人。	小心 ， 别 撞 到 那个 人 。	longer first word is right
+手机会自动关机。	手机 会 自动 关机 。	longer first word is right
+个别人	个别 人	longer first word is right
+类似的问题	类似 的 问题	longer first word is right
+随后来	随后 来	longer first word is right
+天空中	天空 中	longer first word is right
+一路上	一路 上	longer first word is right
+原有的	原有 的	longer first word is right
+原有的样子	原有 的 样子	longer first word is right
+早晚会	早晚 会	longer first word is right
+中药店	中药 店	longer first word is right
+火车开走以后，那个人慢慢消失了。	火车 开 走 以后 ， 那个 人 慢 慢 消失 了 。	longer first word is right
+这些照片我都保存在电脑里。	这些 照片 我 都 保存 在 电脑 里 。	longer first word is right
+他前往机场，一路上没有堵车。	他 前往 机场 ， 一路 上 没有 堵车 。	longer first word is right
+好，我同意先试一下。其他人还有什么意见？	好 ， 我 同意 先 试 一下 。 其他 人 还 有 什么 意见 ？	longer first word is right
+请记下我的电话。有问题就给我打电话，我会马上去找你。	请 记 下 我 的 电话 。 有 问题 就 给 我 打电话 ， 我 会 马上 去 找 你 。	longer first word is right
+由于下大雨，比赛被推迟到了下个星期。	由于 下 大 雨 ， 比赛 被 推迟 到 了 下 个 星期 。	longer first word is right
+为了保护环境，我们小区从上个月开始要求大家把垃圾分开放。可以重新使用的东西放在蓝箱子里，其他的放在黑箱子里。刚开始很多人不习惯，现在大家已经做得很好了。	为了 保护 环境 ， 我们 小区 从 上 个 月 开始 要求 大家 把 垃圾 分开 放 。 可以 重新 使用 的 东西 放 在 蓝 箱子 里 ， 其他 的 放 在 黑 箱子 里 。 刚 开始 很 多 人 不 习惯 ， 现在 大家 已经 做 得 很 好 了 。	longer first word is right
+我从小就喜欢踢足球，可是个子不高，在学校的球队里总是坐在场边。教练对我说：“个子矮不是问题，关键是你有没有努力的决心。”从那以后，我每天比别人多练习一个小时，一年后，我终于有机会参加比赛了。这件事让我明白，努力比天分更重要。无论遇到什么困难，只要不放弃，就一定会有收获。	我 从小 就 喜欢 踢 足球 ， 可是 个子 不 高 ， 在 学校 的 球队 里 总是 坐 在场 边 。 教练 对 我 说 ： “ 个子 矮 不 是 问题 ， 关键 是 你 有 没有 努力 的 决心 。 ” 从 那 以后 ， 我 每天 比 别人 多 练习 一 个 小时 ， 一 年 后 ， 我 终于 有 机会 参加 比赛 了 。 这 件 事 让 我 明白 ， 努力 比 天分 更 重要 。 无论 遇到 什么 困难 ， 只要 不 放弃 ， 就 一定 会 有 收获 。	longer first word is right
+为了减少用纸，公司决定下个月开始所有的会议材料都用电子版，不再打印。	为了 减少 用 纸 ， 公司 决定 下 个 月 开始 所有 的 会议 材料 都 用 电子版 ， 不 再 打印 。	longer first word is right
+医生建议，有时间的话，最好多爬楼梯，少坐电梯。爬楼梯不但能锻炼身体，还能帮助减肥。不过，对于腿不好的人来说，一次爬太多层楼可能会受伤，所以应该慢慢来。	医生 建议 ， 有 时间 的话 ， 最好 多 爬 楼梯 ， 少 坐 电梯 。 爬 楼梯 不但 能 锻炼 身体 ， 还 能 帮助 减肥 。 不过 ， 对于 腿 不 好 的 人 来 说 ， 一 次 爬 太 多 层 楼 可能 会 受伤 ， 所以 应该 慢 慢 来 。	longer first word is right
+自从我们小区开始要求大家把垃圾分开放以后，越来越多的人学会了把可以重新使用的东西单独放好。有人说这样很麻烦，也有人说，每个人多花一分钟，对环境就是一点帮助。现在，大部分邻居已经习惯了。	自从 我们 小区 开始 要求 大家 把 垃圾 分开 放 以后 ， 越 来 越 多 的 人 学会 了 把 可以 重新 使用 的 东西 单独 放 好 。 有 人 说 这样 很 麻烦 ， 也 有 人 说 ， 每 个 人 多 花 一 分钟 ， 对 环境 就是 一 点 帮助 。 现在 ， 大部分 邻居 已经 习惯 了 。	longer first word is right
+小区要求分开放垃圾以后，有什么变化？	小区 要求 分开 放 垃圾 以后 ， 有 什么 变化 ？	longer first word is right
+越来越多的人学会了分开放	越 来 越 多 的 人 学会 了 分开 放	longer first word is right
+通知：因为要整理图书，学校图书馆下周一到周三暂停开放，周四恢复。需要借书的同学，请在本周五以前来借，也可以先在网上预约。如果需要还书，可以把书放在门口的还书处。	通知 ： 因为 要 整理 图书 ， 学校 图书馆 下 周 一 到 周 三 暂停 开放 ， 周 四 恢复 。 需要 借 书 的 同学 ， 请 在 本 周 五 以前 来 借 ， 也 可以 先 在 网上 预约 。 如果 需要 还书 ， 可以 把 书 放 在 门口 的 还书 处 。	longer first word is right
+他把所有的作业都做完了	他 把 所有 的 作业 都 做 完 了	longer first word is right

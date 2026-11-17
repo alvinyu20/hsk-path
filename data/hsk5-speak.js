@@ -69,7 +69,7 @@ window.HSK5_SPEAK = {
    "you": [
     {
      "zh": "你好，我上周在这里买了一部手机，可是它坏了。",
-     "py": "Nǐ hǎo, wǒ shàng zhōu zài zhèlǐ mǎi le yí bù shǒujī, kěshì tā huài le.",
+     "py": "Nǐ hǎo, wǒ shàngzhōu zài zhèlǐ mǎi le yí bù shǒujī, kěshì tā huài le.",
      "en": "Hello, I bought a phone here last week, but it is broken."
     },
     {
@@ -258,7 +258,7 @@ window.HSK5_SPEAK = {
     },
     {
      "zh": "请问，我每个月要付手续费吗？",
-     "py": "Qǐngwèn, wǒ měi ge yuè yào fù shǒuxù fèi ma?",
+     "py": "Qǐngwèn, wǒ měi ge yuè yào fù shǒuxùfèi ma?",
      "en": "Excuse me, do I have to pay a service charge every month?"
     }
    ]
@@ -487,7 +487,7 @@ window.HSK5_SPEAK = {
     },
     {
      "zh": "古城的门票包括在内，山上的要自己买，一个人五十块。",
-     "py": "Gǔ chéng de ménpiào bāokuò zàinèi, shān shàng de yào zìjǐ mǎi, yí gèrén wǔshí kuài.",
+     "py": "Gǔ chéng de ménpiào bāokuò zàinèi, shān shàng de yào zìjǐ mǎi, yí ge rén wǔshí kuài.",
      "en": "The ticket for the old town is included, but you must buy the one for the mountain yourselves, fifty yuan each."
     },
     {
@@ -656,7 +656,7 @@ window.HSK5_SPEAK = {
     },
     {
      "zh": "试用期是三个月。试用期的工资是正式工资的一半。",
-     "py": "Shìyòng qī shì sān ge yuè. Shìyòng qī de gōngzī shì zhèngshì gōngzī de yíbàn.",
+     "py": "Shìyòngqī shì sān ge yuè. Shìyòngqī de gōngzī shì zhèngshì gōngzī de yíbàn.",
      "en": "The trial period is three months. The pay during the trial period is half of the full pay."
     },
     {
@@ -678,7 +678,7 @@ window.HSK5_SPEAK = {
    "you": [
     {
      "zh": "谢谢。请问，试用期是多长时间？",
-     "py": "Xièxie. Qǐngwèn, shìyòng qī shì duō cháng shíjiān?",
+     "py": "Xièxie. Qǐngwèn, shìyòngqī shì duō cháng shíjiān?",
      "en": "Thank you. Excuse me, how long is the trial period?"
     },
     {

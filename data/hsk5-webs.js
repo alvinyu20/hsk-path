@@ -12262,7 +12262,7 @@ window.HSK5_WEBS = {
    "cta": "Practise the grammar",
    "sentence": {
     "zh": "这位上班族住在现代化的城市。",
-    "py": "Zhè wèi shàngbān zú zhù zài xiàndàihuà de chéngshì.",
+    "py": "Zhè wèi shàngbānzú zhù zài xiàndàihuà de chéngshì.",
     "en": "This office worker lives in a city that is modernising."
    },
    "words": [

@@ -98,6 +98,13 @@ window.HSK1_ERHUA = {
    "officialPy": "gànhuór",
    "plainPy": "gànhuó",
    "twin": false
+  },
+  {
+   "official": "没法儿",
+   "plain": "没法",
+   "officialPy": "méifǎr",
+   "plainPy": "méifǎ",
+   "twin": false
   }
  ],
  "overrides": [
