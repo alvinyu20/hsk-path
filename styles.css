@@ -1643,6 +1643,8 @@ button.me .me-av{flex:none}
   .jy:has(.jy-card) .jy-main{position:sticky;top:16px}
   .jy-friendsp{order:3}
   .jy-map{max-height:calc(100vh - 230px);margin:0 auto}
+  .jy-mapw{width:min(100%,calc((100vh - 230px) * 350 / 290))}
+  .jy-mapw.prov{width:min(100%,calc((100vh - 230px) * 1.2))}
   .jy-card .jy-photo img{max-height:200px}
 }
 
@@ -3408,8 +3410,46 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .jy .btn.pri[disabled]{opacity:.55}
 .jy .linkbtn{color:var(--ij)}
 /* the map: a pale sea with waves, pastel land with white borders, a landmark badge on every stamped region, drifting clouds */
-.jy .jy-map{border-radius:18px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='14'%3E%3Cpath d='M0 8Q6.5 3 13 8T26 8' stroke='white' stroke-opacity='.6' fill='none' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"),linear-gradient(#D9EEF2,#BBDDE6)}
-.t-dark .jy .jy-map{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='14'%3E%3Cpath d='M0 8Q6.5 3 13 8T26 8' stroke='white' stroke-opacity='.1' fill='none' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"),linear-gradient(#1B3943,#142C34)}
+.jy .jy-map{background:none}
+/* The map is lively but quiet: the sea's waves drift, clouds sail across, a few birds pass, a plane crosses now and then, a boat bobs
+   (country map). These live in their own layers over and under the map (.jy-sea, .jy-fx) and move only with transform, so the map itself
+   is never redrawn. Positions are in % so they scale with the map. With reduced motion everything stays still in a resting place. */
+.jy-mapw{position:relative;width:min(100%,calc(62vh * 350 / 290));aspect-ratio:350/290;margin:0 auto;border-radius:18px;overflow:hidden;isolation:isolate}
+.jy-mapw.prov{width:min(100%,calc(62vh * 1.2));aspect-ratio:360/300}
+.jy-mapw .jy-map{position:relative;z-index:1;width:100%;height:100%;max-height:none;margin:0}
+.jy-sea{position:absolute;inset:0;z-index:0;background:linear-gradient(#D9EEF2,#BBDDE6)}
+.jy-waves{position:absolute;top:0;bottom:0;left:0;right:-26px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='14'%3E%3Cpath d='M0 8Q6.5 3 13 8T26 8' stroke='white' stroke-opacity='.6' fill='none' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");animation:jywav 9s linear infinite;will-change:transform}
+@keyframes jywav{to{transform:translateX(-26px)}}
+.t-dark .jy-sea{background:linear-gradient(#1B3943,#142C34)}
+.t-dark .jy-waves{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='14'%3E%3Cpath d='M0 8Q6.5 3 13 8T26 8' stroke='white' stroke-opacity='.1' fill='none' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E")}
+.jy-fx{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.jy-fx i{position:absolute;display:block}
+.jy-ct{left:0;width:100%;transform:translateX(var(--x0));animation:jydrift var(--t) linear var(--d) infinite;will-change:transform}
+.jy-cloud{position:relative !important;width:var(--w);aspect-ratio:34/21;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-11 -12 34 21'%3E%3Cpath d='M0 8Q-10 8 -9 1Q-8 -5 -1 -4Q1 -11 9 -9Q15 -8 15 -2Q22 -2 21 4Q20 8 14 8Z' fill='white'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.9}
+.jy-ct.c1{top:9%;--w:11%;--t:90s;--d:-24s;--x0:8%}
+.jy-ct.c2{top:3%;--w:8%;--t:120s;--d:-75s;--x0:32%}
+.jy-ct.c3{top:6%;--w:10%;--t:105s;--d:-6s;--x0:82%}
+.jy-ct.c4{top:85%;--w:9%;--t:130s;--d:-48s;--x0:88%}
+.jy-ct.c5{top:84%;--w:10%;--t:110s;--d:-96s;--x0:8%}
+@keyframes jydrift{from{transform:translateX(-16%)}to{transform:translateX(100%)}}
+.t-dark .jy-cloud{opacity:.16}
+/* birds: three small wings that flap, crossing slowly near the top */
+.jy-bt{left:0;top:19%;width:100%;height:4%;transform:translateX(var(--x0,20%));animation:jybirds 75s linear -20s infinite;will-change:transform}
+.jy-bird{left:0;top:0;width:3.2%;aspect-ratio:20/8;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 8'%3E%3Cpath d='M1 6Q5.5 0 10 5Q14.5 0 19 6' fill='none' stroke='%2333424B' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.55;transform-origin:50% 60%;animation:jyflap .55s ease-in-out infinite alternate}
+.jy-bird.b2{left:4%;top:55%;width:2.6%;animation-delay:-.25s}
+.jy-bird.b3{left:1.8%;top:-45%;width:2.2%;animation-delay:-.4s}
+@keyframes jyflap{to{transform:scaleY(.45)}}
+@keyframes jybirds{0%{transform:translate(-8%,0)}50%{transform:translate(46%,-60%)}100%{transform:translate(104%,10%)}}
+.t-dark .jy-bird{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 8'%3E%3Cpath d='M1 6Q5.5 0 10 5Q14.5 0 19 6' fill='none' stroke='%23CFE3DA' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");opacity:.45}
+/* a plane crosses from the lower left to the upper right about every 40 seconds, then is gone for a while */
+.jy-pt{inset:0;transform:translate(88%,38%);animation:jyfly 42s linear -32s infinite;will-change:transform}
+.jy-fly{left:0;top:0;width:4.6%;aspect-ratio:1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-8 -8 16 16'%3E%3Cpath transform='rotate(149)' d='M-6 0L-2 -1.6L0 -6L1.8 -6L.8 -1.6L4.5 -2.2L6 -3.4L6.8 -3.4L6 0L6.8 3.4L6 3.4L4.5 2.2L.8 1.6L1.8 6L0 6L-2 1.6Z' fill='%23fff' stroke='%2314212A' stroke-width='.8' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+@keyframes jyfly{0%{transform:translate(-6%,80%);opacity:1}32%{transform:translate(104%,8%);opacity:1}32.1%,100%{transform:translate(104%,8%);opacity:0}}
+.t-dark .jy-fly{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-8 -8 16 16'%3E%3Cpath transform='rotate(149)' d='M-6 0L-2 -1.6L0 -6L1.8 -6L.8 -1.6L4.5 -2.2L6 -3.4L6.8 -3.4L6 0L6.8 3.4L6 3.4L4.5 2.2L.8 1.6L1.8 6L0 6L-2 1.6Z' fill='%23EAF3EE' stroke='%230E1920' stroke-width='.8' stroke-linejoin='round'/%3E%3C/svg%3E")}
+/* a little boat in the East China Sea, rocking on the waves (country map only) */
+.jy-boat{left:91.5%;top:56%;width:5%;aspect-ratio:1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v13' stroke='%2314212A' stroke-width='1.3'/%3E%3Cpath d='M12.6 4l6.4 10.5h-6.4z' fill='%23fff' stroke='%2314212A' stroke-width='1.1' stroke-linejoin='round'/%3E%3Cpath d='M11.4 6.5L6.5 14.5h4.9z' fill='%23F3C9A8' stroke='%2314212A' stroke-width='1.1' stroke-linejoin='round'/%3E%3Cpath d='M3.5 16.5h17l-2.6 4H6.1z' fill='%23C2362B' stroke='%2314212A' stroke-width='1.1' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;transform-origin:50% 85%;animation:jybob 4.6s ease-in-out infinite alternate}
+@keyframes jybob{from{transform:rotate(-5deg) translateY(0)}to{transform:rotate(5deg) translateY(-6%)}}
+@media (prefers-reduced-motion:reduce){.jy-pt{opacity:1}}
 .jy .jy-r path{fill:#E9F0DE;stroke:#fff;stroke-width:1.3}
 .jy .jy-r path.mu{fill:none;stroke:#fff;stroke-width:.5}
 .jy .jy-r.done path:not(.mu){fill:hsl(var(--rh) 52% 76%)}
@@ -3426,14 +3466,6 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .jy .jy-here .rip{stroke:var(--io)}
 .jy-ic{pointer-events:none}
 .jy-ic circle{fill:#fff;fill-opacity:.9;stroke:#E07A3B;stroke-width:1.1}
-.jy-sky{pointer-events:none}
-.jy-sky .jy-cl path{fill:#fff;fill-opacity:.92}
-.jy-sky .jy-cl{animation:jycl 15s ease-in-out infinite alternate}
-.jy-sky .jy-cl.b{animation-duration:20s;animation-direction:alternate-reverse}
-@keyframes jycl{to{transform:translateX(12px)}}
-.jy-star path{fill:#fff;stroke:#14212A;stroke-width:.8;stroke-linejoin:round}
-.t-dark .jy-sky .jy-cl path{fill-opacity:.18}
-.t-dark .jy-star path{fill:#EAF3EE;stroke:#0E1920}
 .jy .jy-out{fill:hsl(var(--jh) 45% 84%);stroke:#fff;stroke-width:2}
 .jy .jy-out.mu{fill:none;stroke-width:1;stroke-dasharray:3 2.5}
 .t-dark .jy .jy-out{fill:hsl(var(--jh) 28% 34%);stroke:#162420}
