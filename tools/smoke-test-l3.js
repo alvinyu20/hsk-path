@@ -176,7 +176,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   // ---- listening lab and practice scripts
   await nav('Listening lab');
   check((await text()).includes('Dictation') && (await text()).includes('Shadowing') && (await text()).includes('Tone trainer'), 'the HSK 3 listening lab has dictation, shadowing and the tone trainer');
-  check(await page.evaluate(() => window.HSK3_LISTEN.clips.length === 24 && window.HSK3_LISTEN.clips.every(c => c.words.length >= 4 && c.notes.length >= 2)), 'there are 24 HSK 3 clips, each with words to dictate and two notes');
+  check(await page.evaluate(() => window.HSK3_LISTEN.clips.length === 48 && window.HSK3_LISTEN.clips.every(c => c.words.length >= 4 && c.notes.length >= 2)), 'there are 48 HSK 3 clips, each with words to dictate and two notes');
   await page.locator('button[aria-label="Play the clip"]').first().click();
   await page.waitForTimeout(400);
   check(await page.evaluate(() => window.__spoken.length > 0 && window.HSK3_LISTEN.clips.some(c => window.__spoken.some(x => x.text === c.zh))), 'a dictation clip is read aloud');

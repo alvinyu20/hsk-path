@@ -1,5 +1,138 @@
 [
  {
+  "p": "g3-1",
+  "t": "mc",
+  "prompt": "Which sentence says: Please turn on the light?",
+  "options": [
+   "请把灯打开。",
+   "请灯把打开。"
+  ],
+  "correct": 0,
+  "zh": "请把灯打开。",
+  "en": "Please turn on the light.",
+  "explain": "把 comes before the thing, then the verb."
+ },
+ {
+  "p": "g3-1",
+  "t": "cloze",
+  "zh": "他把水果洗干净了。",
+  "en": "He washed the fruit clean.",
+  "blank": "把",
+  "explain": "把 + thing + verb + result."
+ },
+ {
+  "p": "g3-1",
+  "t": "order",
+  "zh": "我把书放在包里了。",
+  "en": "I have put the book in the bag.",
+  "explain": "把 + thing + verb + where."
+ },
+ {
+  "p": "g3-1",
+  "t": "order",
+  "zh": "请把这个送给他。",
+  "en": "Please give this to him.",
+  "explain": "把 + thing + verb."
+ },
+ {
+  "p": "g3-1",
+  "t": "spot",
+  "zh": "他把饭吃完了。",
+  "en": "He has finished the meal.",
+  "wrong": "他把饭被吃完了。",
+  "remove": "被",
+  "explain": "把 and 被 do not go together in one sentence."
+ },
+ {
+  "p": "g3-2",
+  "t": "mc",
+  "prompt": "Which sentence says: My cake was eaten by a friend?",
+  "options": [
+   "我的蛋糕被朋友吃了。",
+   "我的蛋糕朋友被吃了。"
+  ],
+  "correct": 0,
+  "zh": "我的蛋糕被朋友吃了。",
+  "en": "My cake was eaten by a friend.",
+  "explain": "被 comes before the doer."
+ },
+ {
+  "p": "g3-2",
+  "t": "cloze",
+  "zh": "那本书被他借走了。",
+  "en": "That book was borrowed by him.",
+  "blank": "被",
+  "explain": "thing + 被 + doer + verb."
+ },
+ {
+  "p": "g3-2",
+  "t": "order",
+  "zh": "我的钱被他花完了。",
+  "en": "My money was all spent by him.",
+  "explain": "thing + 被 + doer + verb."
+ },
+ {
+  "p": "g3-2",
+  "t": "order",
+  "zh": "门被风关上了。",
+  "en": "The door was closed by the wind.",
+  "explain": "thing + 被 + doer + verb."
+ },
+ {
+  "p": "g3-2",
+  "t": "spot",
+  "zh": "饭被他吃完了。",
+  "en": "The meal was finished by him.",
+  "wrong": "饭被他把吃完了。",
+  "remove": "把",
+  "explain": "被 and 把 do not go together; use only one."
+ },
+ {
+  "p": "g3-3",
+  "t": "mc",
+  "prompt": "Which sentence says: If the weather is not good, we will watch a film at home?",
+  "options": [
+   "如果天气不好，我们就在家看电影。",
+   "如果天气不好，我们在家就看电影。"
+  ],
+  "correct": 0,
+  "zh": "如果天气不好，我们就在家看电影。",
+  "en": "If the weather is not good, we will watch a film at home.",
+  "explain": "就 comes right before the result."
+ },
+ {
+  "p": "g3-3",
+  "t": "cloze",
+  "zh": "如果你想去，就告诉我。",
+  "en": "If you want to go, tell me.",
+  "blank": "如果",
+  "explain": "如果 + situation, 就 + result."
+ },
+ {
+  "p": "g3-3",
+  "t": "cloze",
+  "zh": "你没有时间的话，就明天再来吧。",
+  "en": "If you do not have time, then come again tomorrow.",
+  "blank": "的话",
+  "explain": "的话 can end the if part."
+ },
+ {
+  "p": "g3-3",
+  "t": "order",
+  "zh": "如果他不来，我就走。",
+  "en": "If he does not come, I will leave.",
+  "explain": "如果 + situation, 就 + result."
+ },
+ {
+  "p": "g3-3",
+  "t": "spot",
+  "zh": "如果你累了，就休息吧。",
+  "en": "If you are tired, rest.",
+  "wrong": "如果因为你累了，就休息吧。",
+  "remove": "因为",
+  "explain": "如果 already gives the condition; do not add 因为."
+ },
+ {
   "p": "g3-4",
   "t": "order",
   "zh": "他不但会说汉语，而且会写汉字。",
@@ -15,12 +148,86 @@
   "explain": "不但…而且… adds a second quality."
  },
  {
+  "p": "g3-4",
+  "t": "mc",
+  "prompt": "Which sentence says: This book is not only interesting but also cheap?",
+  "options": [
+   "这本书不但有意思，而且很便宜。",
+   "这本书不但有意思，很便宜而且。"
+  ],
+  "correct": 0,
+  "zh": "这本书不但有意思，而且很便宜。",
+  "en": "This book is not only interesting but also cheap.",
+  "explain": "而且 comes at the start of the second part."
+ },
+ {
+  "p": "g3-4",
+  "t": "cloze",
+  "zh": "这个房间不但大，而且很干净。",
+  "en": "This room is not only big but also clean.",
+  "blank": "而且",
+  "explain": "不但 + A, 而且 + B."
+ },
+ {
+  "p": "g3-4",
+  "t": "order",
+  "zh": "他不但聪明，而且努力。",
+  "en": "He is not only clever but also hardworking.",
+  "explain": "不但 + A, 而且 + B."
+ },
+ {
+  "p": "g3-4",
+  "t": "spot",
+  "zh": "他不但喜欢运动，而且喜欢看书。",
+  "en": "He not only likes sport but also likes reading.",
+  "wrong": "他不但喜欢运动，但是而且喜欢看书。",
+  "remove": "但是",
+  "explain": "而且 already adds a point; do not add 但是 (but)."
+ },
+ {
   "p": "g3-5",
   "t": "cloze",
   "zh": "我很累，可是不想休息。",
   "en": "I am tired, but I do not want to rest.",
   "blank": "可是",
   "explain": "可是 shows a contrast: tired, but still no rest."
+ },
+ {
+  "p": "g3-5",
+  "t": "mc",
+  "prompt": "Which sentence says: I very much want to go, but I am too busy today?",
+  "options": [
+   "我很想去，可是今天太忙了。",
+   "我很想去，今天太忙了可是。"
+  ],
+  "correct": 0,
+  "zh": "我很想去，可是今天太忙了。",
+  "en": "I very much want to go, but I am too busy today.",
+  "explain": "可是 starts the second part."
+ },
+ {
+  "p": "g3-5",
+  "t": "cloze",
+  "zh": "他吃了饭，然后去上班。",
+  "en": "He ate, and then went to work.",
+  "blank": "然后",
+  "explain": "然后 means and then."
+ },
+ {
+  "p": "g3-5",
+  "t": "order",
+  "zh": "这个菜很好吃，而且很便宜。",
+  "en": "This dish is tasty, and it is cheap too.",
+  "explain": "而且 adds a second good point."
+ },
+ {
+  "p": "g3-5",
+  "t": "spot",
+  "zh": "我想去，可是没有钱。",
+  "en": "I want to go, but I have no money.",
+  "wrong": "我想去，可是但是没有钱。",
+  "remove": "但是",
+  "explain": "可是 already means but; do not add 但是."
  },
  {
   "p": "g3-6",
@@ -43,6 +250,43 @@
   "explain": "只要 goes with 就. 才 goes with 只有."
  },
  {
+  "p": "g3-6",
+  "t": "mc",
+  "prompt": "Which sentence says: As long as you rest well, you will get better?",
+  "options": [
+   "只要你好好休息，就会好的。",
+   "只要你好好休息，会好的就。"
+  ],
+  "correct": 0,
+  "zh": "只要你好好休息，就会好的。",
+  "en": "As long as you rest well, you will get better.",
+  "explain": "就 comes right before the result."
+ },
+ {
+  "p": "g3-6",
+  "t": "cloze",
+  "zh": "只要明天不下雨，我们就去公园。",
+  "en": "As long as it does not rain tomorrow, we will go to the park.",
+  "blank": "就",
+  "explain": "只要 + condition, 就 + result."
+ },
+ {
+  "p": "g3-6",
+  "t": "order",
+  "zh": "只要有钱，他就买。",
+  "en": "As long as he has money, he buys.",
+  "explain": "只要 + condition, 就 + result."
+ },
+ {
+  "p": "g3-6",
+  "t": "spot",
+  "zh": "只要你同意，我就做。",
+  "en": "As long as you agree, I will do it.",
+  "wrong": "只要你同意，我就才做。",
+  "remove": "才",
+  "explain": "只要…就… goes with 就; do not use 才 here."
+ },
+ {
   "p": "g3-7",
   "t": "spot",
   "zh": "只有你去，我才去。",
@@ -50,6 +294,87 @@
   "wrong": "只有你去，我就才去。",
   "remove": "就",
   "explain": "只有 goes with 才, never 就."
+ },
+ {
+  "p": "g3-7",
+  "t": "mc",
+  "prompt": "Which sentence says: Only by listening a lot can one understand?",
+  "options": [
+   "只有多听，才能听懂。",
+   "只有多听，能听懂才。"
+  ],
+  "correct": 0,
+  "zh": "只有多听，才能听懂。",
+  "en": "Only by listening a lot can one understand.",
+  "explain": "才 comes before the result verb."
+ },
+ {
+  "p": "g3-7",
+  "t": "cloze",
+  "zh": "只有等到明天，我才有时间。",
+  "en": "Only by waiting until tomorrow will I have time.",
+  "blank": "才",
+  "explain": "只有 + condition, 才 + result."
+ },
+ {
+  "p": "g3-7",
+  "t": "order",
+  "zh": "只有天晴，我们才出去玩。",
+  "en": "Only if it is sunny will we go out to play.",
+  "explain": "只有 + condition, 才 + result."
+ },
+ {
+  "p": "g3-7",
+  "t": "spot",
+  "zh": "只有坐火车，我才能去。",
+  "en": "Only by train can I go.",
+  "wrong": "只有坐火车，我就才能去。",
+  "remove": "就",
+  "explain": "只有…才… goes with 才; do not use 就 here."
+ },
+ {
+  "p": "g3-8",
+  "t": "mc",
+  "prompt": "Which sentence says: Except for Saturday, I go to work every day?",
+  "options": [
+   "除了星期六，我每天都上班。",
+   "除了星期六，我每天上班都。"
+  ],
+  "correct": 0,
+  "zh": "除了星期六，我每天都上班。",
+  "en": "Except for Saturday, I go to work every day.",
+  "explain": "都 comes before the verb."
+ },
+ {
+  "p": "g3-8",
+  "t": "cloze",
+  "zh": "除了鱼，我还要鸡蛋。",
+  "en": "Besides fish, I also want eggs.",
+  "blank": "除了",
+  "explain": "除了 + A, 还 + B means besides."
+ },
+ {
+  "p": "g3-8",
+  "t": "order",
+  "zh": "除了我，大家都没来。",
+  "en": "Except me, no one came.",
+  "explain": "除了 + the exception, then 都."
+ },
+ {
+  "p": "g3-8",
+  "t": "order",
+  "zh": "除了看电视，他还喜欢听音乐。",
+  "en": "Besides watching TV, he also likes listening to music.",
+  "explain": "除了 + A, 还 + B."
+ },
+ {
+  "p": "g3-8",
+  "t": "spot",
+  "zh": "除了他，我们都去了。",
+  "en": "Except him, we all went.",
+  "wrong": "除了只他，我们都去了。",
+  "remove": "只",
+  "explain": "除了 already marks the exception; do not add 只."
  },
  {
   "p": "g3-9",
@@ -80,6 +405,43 @@
   "explain": "为了 comes first, before the purpose."
  },
  {
+  "p": "g3-9",
+  "t": "mc",
+  "prompt": "Which sentence says: For the sake of good health, he runs every day?",
+  "options": [
+   "为了身体好，他每天跑步。",
+   "为了他每天跑步，身体好。"
+  ],
+  "correct": 0,
+  "zh": "为了身体好，他每天跑步。",
+  "en": "For the sake of good health, he runs every day.",
+  "explain": "为了 + purpose comes first."
+ },
+ {
+  "p": "g3-9",
+  "t": "cloze",
+  "zh": "为了买这本书，我走了很远。",
+  "en": "In order to buy this book, I walked a long way.",
+  "blank": "为了",
+  "explain": "为了 + purpose."
+ },
+ {
+  "p": "g3-9",
+  "t": "order",
+  "zh": "为了考试，他每天都学习。",
+  "en": "For the exam, he studies every day.",
+  "explain": "为了 + purpose, then what is done."
+ },
+ {
+  "p": "g3-9",
+  "t": "spot",
+  "zh": "为了家人，她很努力工作。",
+  "en": "For her family, she works very hard.",
+  "wrong": "为了因为家人，她很努力工作。",
+  "remove": "因为",
+  "explain": "为了 gives the purpose; do not add 因为 (because)."
+ },
+ {
   "p": "g3-10",
   "t": "order",
   "zh": "他为朋友买了一个手机。",
@@ -108,6 +470,43 @@
   "explain": "为 + person goes before the verb."
  },
  {
+  "p": "g3-10",
+  "t": "mc",
+  "prompt": "Which sentence says: Dad prepared lunch for us?",
+  "options": [
+   "爸爸为我们准备了午饭。",
+   "爸爸准备了为我们午饭。"
+  ],
+  "correct": 0,
+  "zh": "爸爸为我们准备了午饭。",
+  "en": "Dad prepared lunch for us.",
+  "explain": "为 + person comes before the verb."
+ },
+ {
+  "p": "g3-10",
+  "t": "cloze",
+  "zh": "我为你买了一件礼物。",
+  "en": "I bought a present for you.",
+  "blank": "为",
+  "explain": "为 + person + verb."
+ },
+ {
+  "p": "g3-10",
+  "t": "order",
+  "zh": "他为大家唱了歌。",
+  "en": "He sang for everyone.",
+  "explain": "为 + person + verb."
+ },
+ {
+  "p": "g3-10",
+  "t": "spot",
+  "zh": "妈妈为我做了蛋糕。",
+  "en": "Mom made a cake for me.",
+  "wrong": "妈妈为给我做了蛋糕。",
+  "remove": "给",
+  "explain": "为 and 给 both point to the person; use only one."
+ },
+ {
   "p": "g3-11",
   "t": "cloze",
   "zh": "我想看一本关于中国的书。",
@@ -121,6 +520,43 @@
   "zh": "这是一本关于音乐的书。",
   "en": "This is a book about music.",
   "explain": "关于 + topic + 的 comes before the noun."
+ },
+ {
+  "p": "g3-11",
+  "t": "mc",
+  "prompt": "Which sentence says: This is a film about travelling?",
+  "options": [
+   "这是关于旅游的电影。",
+   "这是旅游关于的电影。"
+  ],
+  "correct": 0,
+  "zh": "这是关于旅游的电影。",
+  "en": "This is a film about travelling.",
+  "explain": "关于 comes before the topic."
+ },
+ {
+  "p": "g3-11",
+  "t": "cloze",
+  "zh": "关于这个问题，我不知道。",
+  "en": "About this question, I do not know.",
+  "blank": "关于",
+  "explain": "关于 + topic."
+ },
+ {
+  "p": "g3-11",
+  "t": "order",
+  "zh": "我有关于这件事的问题。",
+  "en": "I have a question about this matter.",
+  "explain": "关于 + topic + 的 + noun."
+ },
+ {
+  "p": "g3-11",
+  "t": "spot",
+  "zh": "这是一本关于历史的书。",
+  "en": "This is a book about history.",
+  "wrong": "这是一本关于讲历史的书。",
+  "remove": "讲",
+  "explain": "关于 is followed by the topic itself, not a verb."
  },
  {
   "p": "g3-12",
@@ -151,6 +587,88 @@
   "explain": "根据 comes before what it is based on."
  },
  {
+  "p": "g3-12",
+  "t": "mc",
+  "prompt": "Which sentence says: According to what he says, this is cheap?",
+  "options": [
+   "根据他说的，这个很便宜。",
+   "他说的根据，这个很便宜。"
+  ],
+  "correct": 0,
+  "zh": "根据他说的，这个很便宜。",
+  "en": "According to what he says, this is cheap.",
+  "explain": "根据 comes before the source."
+ },
+ {
+  "p": "g3-12",
+  "t": "cloze",
+  "zh": "根据医生说的，你要多休息。",
+  "en": "According to what the doctor says, you must rest more.",
+  "blank": "根据",
+  "explain": "根据 + source, then what follows."
+ },
+ {
+  "p": "g3-12",
+  "t": "order",
+  "zh": "根据地图，我们走错了。",
+  "en": "According to the map, we have gone the wrong way.",
+  "explain": "根据 + source, then what follows."
+ },
+ {
+  "p": "g3-12",
+  "t": "spot",
+  "zh": "根据他的电话，他已经到了。",
+  "en": "According to his call, he has already arrived.",
+  "wrong": "根据从他的电话，他已经到了。",
+  "remove": "从",
+  "explain": "根据 means according to; do not add 从."
+ },
+ {
+  "p": "g3-13",
+  "t": "mc",
+  "prompt": "Which sentence says: Do you drink tea or coffee??",
+  "options": [
+   "你喝茶还是喝咖啡？",
+   "你喝茶或者喝咖啡？"
+  ],
+  "correct": 0,
+  "zh": "你喝茶还是喝咖啡？",
+  "en": "Do you drink tea or coffee?",
+  "explain": "In a question, use 还是."
+ },
+ {
+  "p": "g3-13",
+  "t": "cloze",
+  "zh": "星期六或者星期天，我都可以去。",
+  "en": "Saturday or Sunday, I can go either day.",
+  "blank": "或者",
+  "explain": "或者 gives a choice in a statement."
+ },
+ {
+  "p": "g3-13",
+  "t": "cloze",
+  "zh": "你想走路去，还是坐出租车去？",
+  "en": "Do you want to walk there, or take a taxi?",
+  "blank": "还是",
+  "explain": "还是 asks which one."
+ },
+ {
+  "p": "g3-13",
+  "t": "order",
+  "zh": "你们坐飞机还是坐火车？",
+  "en": "Are you going by plane or by train?",
+  "explain": "还是 asks which one."
+ },
+ {
+  "p": "g3-13",
+  "t": "spot",
+  "zh": "你想喝水还是牛奶？",
+  "en": "Do you want water or milk?",
+  "wrong": "你想喝水还是或者牛奶？",
+  "remove": "或者",
+  "explain": "In a question, use 还是 alone; do not add 或者."
+ },
+ {
   "p": "g3-14",
   "t": "spot",
   "zh": "先喝水，再吃饭。",
@@ -158,6 +676,43 @@
   "wrong": "先喝水，吃再饭。",
   "remove": "再",
   "explain": "再 comes before the second action."
+ },
+ {
+  "p": "g3-14",
+  "t": "mc",
+  "prompt": "Which sentence says: Do homework first, then watch TV?",
+  "options": [
+   "先做作业，再看电视。",
+   "先做作业，看电视再。"
+  ],
+  "correct": 0,
+  "zh": "先做作业，再看电视。",
+  "en": "Do homework first, then watch TV.",
+  "explain": "再 comes before the second action."
+ },
+ {
+  "p": "g3-14",
+  "t": "cloze",
+  "zh": "我先吃早饭，再去上班。",
+  "en": "I will eat breakfast first, then go to work.",
+  "blank": "再",
+  "explain": "先 + first action, 再 + second action."
+ },
+ {
+  "p": "g3-14",
+  "t": "order",
+  "zh": "他先买票，再进去。",
+  "en": "He buys a ticket first, then goes in.",
+  "explain": "先 + first action, 再 + second action."
+ },
+ {
+  "p": "g3-14",
+  "t": "spot",
+  "zh": "先坐火车，再坐飞机。",
+  "en": "First take the train, then the plane.",
+  "wrong": "先坐火车，再然后坐飞机。",
+  "remove": "然后",
+  "explain": "再 already means then; do not add 然后."
  },
  {
   "p": "g3-15",
@@ -187,6 +742,42 @@
   "explain": "Each 一边 goes before its verb."
  },
  {
+  "p": "g3-15",
+  "t": "mc",
+  "prompt": "Which sentence says: She listens to music while cooking?",
+  "options": [
+   "她一边做饭，一边听音乐。",
+   "她一边做饭，听音乐一边。"
+  ],
+  "correct": 0,
+  "zh": "她一边做饭，一边听音乐。",
+  "en": "She listens to music while cooking.",
+  "explain": "一边 comes before each verb."
+ },
+ {
+  "p": "g3-15",
+  "t": "order",
+  "zh": "我一边洗澡，一边唱歌。",
+  "en": "I sing while taking a shower.",
+  "explain": "一边 + action, 一边 + action."
+ },
+ {
+  "p": "g3-15",
+  "t": "order",
+  "zh": "他一边走，一边看手机。",
+  "en": "He looks at his phone while walking.",
+  "explain": "一边 + action, 一边 + action."
+ },
+ {
+  "p": "g3-15",
+  "t": "spot",
+  "zh": "我一边吃饭，一边看书。",
+  "en": "I read while eating.",
+  "wrong": "我一边吃饭，才一边看书。",
+  "remove": "才",
+  "explain": "一边…一边… joins two actions at the same time; do not add 才."
+ },
+ {
   "p": "g3-16",
   "t": "order",
   "zh": "这个房间又大又漂亮。",
@@ -208,6 +799,86 @@
   "wrong": "她很又高又漂亮。",
   "remove": "很",
   "explain": "又…又… already describes the degree, so no 很."
+ },
+ {
+  "p": "g3-16",
+  "t": "mc",
+  "prompt": "Which sentence says: This piece of clothing is both nice-looking and cheap?",
+  "options": [
+   "这件衣服又好看又便宜。",
+   "这件衣服又好看便宜又。"
+  ],
+  "correct": 0,
+  "zh": "这件衣服又好看又便宜。",
+  "en": "This piece of clothing is both nice-looking and cheap.",
+  "explain": "又 comes before each quality."
+ },
+ {
+  "p": "g3-16",
+  "t": "order",
+  "zh": "他又累又饿。",
+  "en": "He is both tired and hungry.",
+  "explain": "又 + quality, 又 + quality."
+ },
+ {
+  "p": "g3-16",
+  "t": "order",
+  "zh": "这个地方又远又贵。",
+  "en": "This place is both far and dear.",
+  "explain": "又 + quality, 又 + quality."
+ },
+ {
+  "p": "g3-16",
+  "t": "spot",
+  "zh": "她又聪明又漂亮。",
+  "en": "She is both clever and pretty.",
+  "wrong": "她又很聪明又漂亮。",
+  "remove": "很",
+  "explain": "Do not put 很 after 又."
+ },
+ {
+  "p": "g3-17",
+  "t": "mc",
+  "prompt": "Which sentence says: I watched that film again yesterday?",
+  "options": [
+   "我昨天又看了那个电影。",
+   "我昨天再看了那个电影。"
+  ],
+  "correct": 0,
+  "zh": "我昨天又看了那个电影。",
+  "en": "I watched that film again yesterday.",
+  "explain": "For something that already happened again, use 又."
+ },
+ {
+  "p": "g3-17",
+  "t": "cloze",
+  "zh": "明天我再给你打电话。",
+  "en": "I will call you again tomorrow.",
+  "blank": "再",
+  "explain": "再 is for something that has not happened yet."
+ },
+ {
+  "p": "g3-17",
+  "t": "order",
+  "zh": "我想再看一遍。",
+  "en": "I want to watch it once more.",
+  "explain": "再 + verb."
+ },
+ {
+  "p": "g3-17",
+  "t": "order",
+  "zh": "他又忘了带手机。",
+  "en": "He forgot to bring his phone again.",
+  "explain": "又 is for something that already happened again."
+ },
+ {
+  "p": "g3-17",
+  "t": "spot",
+  "zh": "我们明天再见。",
+  "en": "We will see each other again tomorrow.",
+  "wrong": "我们明天又再见。",
+  "remove": "又",
+  "explain": "For something that has not happened yet, use 再, not 又."
  },
  {
   "p": "g3-18",
@@ -237,6 +908,79 @@
   "explain": "Use 越 twice, not 越 and 很."
  },
  {
+  "p": "g3-18",
+  "t": "mc",
+  "prompt": "Which sentence says: The more he runs, the faster he gets?",
+  "options": [
+   "他越跑越快。",
+   "他跑越越快。"
+  ],
+  "correct": 0,
+  "zh": "他越跑越快。",
+  "en": "The more he runs, the faster he gets.",
+  "explain": "越 comes before each verb or quality."
+ },
+ {
+  "p": "g3-18",
+  "t": "order",
+  "zh": "雪越下越大。",
+  "en": "The snow falls harder and harder.",
+  "explain": "越 + verb, 越 + quality."
+ },
+ {
+  "p": "g3-18",
+  "t": "order",
+  "zh": "他越想越生气。",
+  "en": "The more he thinks, the angrier he gets.",
+  "explain": "越 + verb, 越 + quality."
+ },
+ {
+  "p": "g3-18",
+  "t": "spot",
+  "zh": "我越学越喜欢。",
+  "en": "The more I study, the more I like it.",
+  "wrong": "我越学越很喜欢。",
+  "remove": "很",
+  "explain": "Do not put 很 after the second 越."
+ },
+ {
+  "p": "g3-19",
+  "t": "mc",
+  "prompt": "Which sentence says: I have more and more friends?",
+  "options": [
+   "我的朋友越来越多。",
+   "我的朋友来越越多。"
+  ],
+  "correct": 0,
+  "zh": "我的朋友越来越多。",
+  "en": "I have more and more friends.",
+  "explain": "The word is 越来越, in that order."
+ },
+ {
+  "p": "g3-19",
+  "t": "cloze",
+  "zh": "他的汉语越来越好了。",
+  "en": "His Chinese is getting better and better.",
+  "blank": "来",
+  "explain": "越来越 + quality shows a steady change."
+ },
+ {
+  "p": "g3-19",
+  "t": "order",
+  "zh": "我越来越喜欢这里。",
+  "en": "I like it here more and more.",
+  "explain": "越来越 comes before the verb."
+ },
+ {
+  "p": "g3-19",
+  "t": "spot",
+  "zh": "天气越来越热。",
+  "en": "The weather gets hotter and hotter.",
+  "wrong": "天气越来越很热。",
+  "remove": "很",
+  "explain": "Do not put 很 after 越来越."
+ },
+ {
   "p": "g3-20",
   "t": "cloze",
   "zh": "他十二点才吃饭。",
@@ -258,6 +1002,43 @@
   "explain": "才 means later than expected. 就 means earlier."
  },
  {
+  "p": "g3-20",
+  "t": "mc",
+  "prompt": "Which sentence says: He does not get home until ten in the evening?",
+  "options": [
+   "他晚上十点才回家。",
+   "他晚上十点回家才。"
+  ],
+  "correct": 0,
+  "zh": "他晚上十点才回家。",
+  "en": "He does not get home until ten in the evening.",
+  "explain": "才 comes after the time, before the verb."
+ },
+ {
+  "p": "g3-20",
+  "t": "cloze",
+  "zh": "我昨天十二点才睡觉。",
+  "en": "I did not go to bed until twelve yesterday.",
+  "blank": "才",
+  "explain": "time + 才 + verb means late."
+ },
+ {
+  "p": "g3-20",
+  "t": "order",
+  "zh": "他三点才吃午饭。",
+  "en": "He does not eat lunch until three.",
+  "explain": "time + 才 + verb means late."
+ },
+ {
+  "p": "g3-20",
+  "t": "spot",
+  "zh": "他九点才起床。",
+  "en": "He does not get up until nine.",
+  "wrong": "他九点才就起床。",
+  "remove": "就",
+  "explain": "才 and 就 are opposites; do not use both."
+ },
+ {
   "p": "g3-21",
   "t": "spot",
   "zh": "我们六点就到了。",
@@ -267,12 +1048,86 @@
   "explain": "就 comes before the verb."
  },
  {
+  "p": "g3-21",
+  "t": "mc",
+  "prompt": "Which sentence says: He was at school as early as seven?",
+  "options": [
+   "他七点就到学校了。",
+   "他七点才到学校了。"
+  ],
+  "correct": 0,
+  "zh": "他七点就到学校了。",
+  "en": "He was at school as early as seven.",
+  "explain": "For early, use 就."
+ },
+ {
+  "p": "g3-21",
+  "t": "cloze",
+  "zh": "我们五点就起床了。",
+  "en": "We got up as early as five.",
+  "blank": "就",
+  "explain": "time + 就 + verb means early."
+ },
+ {
+  "p": "g3-21",
+  "t": "order",
+  "zh": "她六点就出门了。",
+  "en": "She went out as early as six.",
+  "explain": "time + 就 + verb means early."
+ },
+ {
+  "p": "g3-21",
+  "t": "spot",
+  "zh": "他八点就走了。",
+  "en": "He had already left at eight.",
+  "wrong": "他八点就才走了。",
+  "remove": "才",
+  "explain": "就 and 才 are opposites; do not use both."
+ },
+ {
   "p": "g3-22",
   "t": "cloze",
   "zh": "我刚买了一个手机。",
   "en": "I have just bought a phone.",
   "blank": "刚",
   "explain": "刚 comes right before the verb."
+ },
+ {
+  "p": "g3-22",
+  "t": "mc",
+  "prompt": "Which sentence says: I have just finished eating?",
+  "options": [
+   "我刚吃完饭。",
+   "我吃完饭刚。"
+  ],
+  "correct": 0,
+  "zh": "我刚吃完饭。",
+  "en": "I have just finished eating.",
+  "explain": "刚 comes before the verb."
+ },
+ {
+  "p": "g3-22",
+  "t": "cloze",
+  "zh": "她刚下班。",
+  "en": "She has just got off work.",
+  "blank": "刚",
+  "explain": "刚 + verb means just."
+ },
+ {
+  "p": "g3-22",
+  "t": "order",
+  "zh": "我们刚刚到。",
+  "en": "We have just arrived.",
+  "explain": "刚刚 comes before the verb."
+ },
+ {
+  "p": "g3-22",
+  "t": "spot",
+  "zh": "他刚走。",
+  "en": "He has just left.",
+  "wrong": "他刚才刚走。",
+  "remove": "刚才",
+  "explain": "刚 already means just; do not add 刚才."
  },
  {
   "p": "g3-23",
@@ -290,6 +1145,43 @@
   "explain": "刚才 means a moment ago."
  },
  {
+  "p": "g3-23",
+  "t": "mc",
+  "prompt": "Which sentence says: Who came just now??",
+  "options": [
+   "刚才谁来了？",
+   "谁来了刚才？"
+  ],
+  "correct": 0,
+  "zh": "刚才谁来了？",
+  "en": "Who came just now?",
+  "explain": "刚才 is a time word; it comes first or before the verb."
+ },
+ {
+  "p": "g3-23",
+  "t": "cloze",
+  "zh": "刚才我在洗澡。",
+  "en": "I was taking a shower just now.",
+  "blank": "刚才",
+  "explain": "刚才 means just now."
+ },
+ {
+  "p": "g3-23",
+  "t": "order",
+  "zh": "刚才他去哪儿了？",
+  "en": "Where did he go just now?",
+  "explain": "刚才 + the question."
+ },
+ {
+  "p": "g3-23",
+  "t": "spot",
+  "zh": "刚才我看见他了。",
+  "en": "I saw him just now.",
+  "wrong": "刚才我在看见他了。",
+  "remove": "在",
+  "explain": "看见 is a result verb; do not put 在 before it."
+ },
+ {
   "p": "g3-24",
   "t": "cloze",
   "zh": "他一直在家。",
@@ -303,6 +1195,43 @@
   "zh": "我一直很喜欢汉语。",
   "en": "I have always liked Chinese.",
   "explain": "一直 comes before the verb or adjective."
+ },
+ {
+  "p": "g3-24",
+  "t": "mc",
+  "prompt": "Which sentence says: The weather has been cold all along?",
+  "options": [
+   "天气一直很冷。",
+   "天气很冷一直。"
+  ],
+  "correct": 0,
+  "zh": "天气一直很冷。",
+  "en": "The weather has been cold all along.",
+  "explain": "一直 comes before the verb or quality."
+ },
+ {
+  "p": "g3-24",
+  "t": "cloze",
+  "zh": "他一直在等你。",
+  "en": "He has been waiting for you all along.",
+  "blank": "一直",
+  "explain": "一直 means all along."
+ },
+ {
+  "p": "g3-24",
+  "t": "order",
+  "zh": "我们一直走，不要休息。",
+  "en": "We keep walking and do not rest.",
+  "explain": "一直 comes before the verb."
+ },
+ {
+  "p": "g3-24",
+  "t": "spot",
+  "zh": "我一直住在这里。",
+  "en": "I have always lived here.",
+  "wrong": "我一直常常住在这里。",
+  "remove": "常常",
+  "explain": "一直 already means all along; do not add 常常 (often)."
  },
  {
   "p": "g3-25",
@@ -324,6 +1253,43 @@
   "zh": "他总是在家。",
   "en": "He is always at home.",
   "explain": "总是 goes before 在."
+ },
+ {
+  "p": "g3-25",
+  "t": "mc",
+  "prompt": "Which sentence says: I always forget his name?",
+  "options": [
+   "我老是忘记他的名字。",
+   "我忘记老是他的名字。"
+  ],
+  "correct": 0,
+  "zh": "我老是忘记他的名字。",
+  "en": "I always forget his name.",
+  "explain": "老是 comes before the verb."
+ },
+ {
+  "p": "g3-25",
+  "t": "cloze",
+  "zh": "我总是坐地铁上班。",
+  "en": "I always take the metro to work.",
+  "blank": "总是",
+  "explain": "总是 means always."
+ },
+ {
+  "p": "g3-25",
+  "t": "order",
+  "zh": "他总是第一个到。",
+  "en": "He is always the first to arrive.",
+  "explain": "总是 comes before the verb."
+ },
+ {
+  "p": "g3-25",
+  "t": "spot",
+  "zh": "他老是很晚才回家。",
+  "en": "He always gets home very late.",
+  "wrong": "他老是常常很晚才回家。",
+  "remove": "常常",
+  "explain": "老是 already means always; do not add 常常."
  },
  {
   "p": "g3-26",
@@ -354,6 +1320,88 @@
   "explain": "常常 goes before the verb."
  },
  {
+  "p": "g3-26",
+  "t": "mc",
+  "prompt": "Which sentence says: I usually do not drink coffee?",
+  "options": [
+   "我平时不喝咖啡。",
+   "我不平时喝咖啡。"
+  ],
+  "correct": 0,
+  "zh": "我平时不喝咖啡。",
+  "en": "I usually do not drink coffee.",
+  "explain": "平时 comes before 不."
+ },
+ {
+  "p": "g3-26",
+  "t": "cloze",
+  "zh": "他常常给我打电话。",
+  "en": "He often calls me.",
+  "blank": "常常",
+  "explain": "常常 means often."
+ },
+ {
+  "p": "g3-26",
+  "t": "order",
+  "zh": "我一般七点吃早饭。",
+  "en": "I usually eat breakfast at seven.",
+  "explain": "一般 means usually."
+ },
+ {
+  "p": "g3-26",
+  "t": "spot",
+  "zh": "我们常常去公园。",
+  "en": "We often go to the park.",
+  "wrong": "我们常常总是去公园。",
+  "remove": "总是",
+  "explain": "常常 means often; do not add 总是 (always)."
+ },
+ {
+  "p": "g3-27",
+  "t": "mc",
+  "prompt": "Which sentence says: Today is even colder than yesterday?",
+  "options": [
+   "今天比昨天更冷。",
+   "今天更比昨天冷。"
+  ],
+  "correct": 0,
+  "zh": "今天比昨天更冷。",
+  "en": "Today is even colder than yesterday.",
+  "explain": "更 comes right before the quality word."
+ },
+ {
+  "p": "g3-27",
+  "t": "cloze",
+  "zh": "这个菜好吃极了。",
+  "en": "This dish is extremely tasty.",
+  "blank": "极",
+  "explain": "quality + 极了 means extremely."
+ },
+ {
+  "p": "g3-27",
+  "t": "cloze",
+  "zh": "这件衣服挺漂亮的。",
+  "en": "This piece of clothing is quite pretty.",
+  "blank": "挺",
+  "explain": "挺 + quality + 的 means quite."
+ },
+ {
+  "p": "g3-27",
+  "t": "order",
+  "zh": "我比较喜欢这个。",
+  "en": "I rather like this one.",
+  "explain": "比较 comes before the verb."
+ },
+ {
+  "p": "g3-27",
+  "t": "spot",
+  "zh": "这个房间挺大的。",
+  "en": "This room is quite big.",
+  "wrong": "这个房间很挺大的。",
+  "remove": "很",
+  "explain": "挺 already means quite; do not add 很."
+ },
+ {
   "p": "g3-28",
   "t": "order",
   "zh": "我的手机跟你的一样。",
@@ -369,12 +1417,212 @@
   "explain": "一样 + adjective says they are equal."
  },
  {
+  "p": "g3-28",
+  "t": "mc",
+  "prompt": "Which sentence says: I am the same age as him?",
+  "options": [
+   "我跟他一样大。",
+   "我跟一样他大。"
+  ],
+  "correct": 0,
+  "zh": "我跟他一样大。",
+  "en": "I am the same age as him.",
+  "explain": "A 跟 B 一样 + quality."
+ },
+ {
+  "p": "g3-28",
+  "t": "cloze",
+  "zh": "他的手机跟我的不一样。",
+  "en": "His phone is not the same as mine.",
+  "blank": "跟",
+  "explain": "A 跟 B 一样 or 不一样."
+ },
+ {
+  "p": "g3-28",
+  "t": "order",
+  "zh": "他的名字跟我的一样。",
+  "en": "His name is the same as mine.",
+  "explain": "A 跟 B 一样."
+ },
+ {
+  "p": "g3-28",
+  "t": "spot",
+  "zh": "这两个字不同。",
+  "en": "These two characters are different.",
+  "wrong": "这两个字不一样同。",
+  "remove": "一样",
+  "explain": "不同 and 不一样 both mean different; use only one."
+ },
+ {
   "p": "g3-29",
   "t": "cloze",
   "zh": "今天比昨天更热。",
   "en": "Today is even hotter than yesterday.",
   "blank": "更",
   "explain": "比 + 更 means even more."
+ },
+ {
+  "p": "g3-29",
+  "t": "mc",
+  "prompt": "Which sentence says: My older brother is much taller than me?",
+  "options": [
+   "哥哥比我高多了。",
+   "哥哥高比我多了。"
+  ],
+  "correct": 0,
+  "zh": "哥哥比我高多了。",
+  "en": "My older brother is much taller than me.",
+  "explain": "比 comes before the person you compare with."
+ },
+ {
+  "p": "g3-29",
+  "t": "cloze",
+  "zh": "这个比那个还贵。",
+  "en": "This one is even more expensive than that one.",
+  "blank": "还",
+  "explain": "比 + thing + 还 + quality."
+ },
+ {
+  "p": "g3-29",
+  "t": "order",
+  "zh": "他比我大两岁。",
+  "en": "He is 2 years older than me.",
+  "explain": "A 比 B + quality + amount."
+ },
+ {
+  "p": "g3-29",
+  "t": "spot",
+  "zh": "今天比昨天冷多了。",
+  "en": "Today is much colder than yesterday.",
+  "wrong": "今天比昨天很冷多了。",
+  "remove": "很",
+  "explain": "Do not put 很 in a 比 sentence."
+ },
+ {
+  "p": "g3-30",
+  "t": "mc",
+  "prompt": "Which sentence says: This question is hard to answer?",
+  "options": [
+   "这个问题很难回答。",
+   "这个问题回答很难。"
+  ],
+  "correct": 0,
+  "zh": "这个问题很难回答。",
+  "en": "This question is hard to answer.",
+  "explain": "难 comes before the verb."
+ },
+ {
+  "p": "g3-30",
+  "t": "cloze",
+  "zh": "夏天的菜很容易坏。",
+  "en": "In summer, food goes bad easily.",
+  "blank": "容易",
+  "explain": "容易 + verb means easy to."
+ },
+ {
+  "p": "g3-30",
+  "t": "cloze",
+  "zh": "这个字很难读。",
+  "en": "This character is hard to read.",
+  "blank": "难",
+  "explain": "难 + verb means hard to."
+ },
+ {
+  "p": "g3-30",
+  "t": "order",
+  "zh": "这个手机很容易用。",
+  "en": "This phone is easy to use.",
+  "explain": "容易 + verb."
+ },
+ {
+  "p": "g3-30",
+  "t": "spot",
+  "zh": "汉语不容易学。",
+  "en": "Chinese is not easy to learn.",
+  "wrong": "汉语不很容易学。",
+  "remove": "很",
+  "explain": "In a negative, put 不 right before 容易; do not add 很."
+ },
+ {
+  "p": "g3-31",
+  "t": "mc",
+  "prompt": "Which sentence says: He speaks very clearly?",
+  "options": [
+   "他说得很清楚。",
+   "他说很清楚得。"
+  ],
+  "correct": 0,
+  "zh": "他说得很清楚。",
+  "en": "He speaks very clearly.",
+  "explain": "verb + 得 + quality."
+ },
+ {
+  "p": "g3-31",
+  "t": "cloze",
+  "zh": "这个字我写不好。",
+  "en": "I cannot write this character well.",
+  "blank": "不",
+  "explain": "verb + 不 + result means cannot."
+ },
+ {
+  "p": "g3-31",
+  "t": "order",
+  "zh": "我们坐不下。",
+  "en": "There is no room for all of us to sit.",
+  "explain": "verb + 不 + result."
+ },
+ {
+  "p": "g3-31",
+  "t": "order",
+  "zh": "她唱得很好听。",
+  "en": "She sings very pleasantly.",
+  "explain": "verb + 得 + how well."
+ },
+ {
+  "p": "g3-31",
+  "t": "spot",
+  "zh": "我买不到票。",
+  "en": "I cannot get a ticket.",
+  "wrong": "我买会不到票。",
+  "remove": "会",
+  "explain": "不 goes right between the verb and the result."
+ },
+ {
+  "p": "g3-32",
+  "t": "mc",
+  "prompt": "Which sentence says: He walked out of the house?",
+  "options": [
+   "他从家里走出来了。",
+   "他从家里出走来了。"
+  ],
+  "correct": 0,
+  "zh": "他从家里走出来了。",
+  "en": "He walked out of the house.",
+  "explain": "verb + 出来 means out toward the speaker."
+ },
+ {
+  "p": "g3-32",
+  "t": "cloze",
+  "zh": "大家都站起来了。",
+  "en": "Everyone stood up.",
+  "blank": "起来",
+  "explain": "起来 after a verb shows the start of an action or going up."
+ },
+ {
+  "p": "g3-32",
+  "t": "order",
+  "zh": "他走回来了。",
+  "en": "He has walked back.",
+  "explain": "verb + 回来."
+ },
+ {
+  "p": "g3-32",
+  "t": "spot",
+  "zh": "大家都坐下来了。",
+  "en": "Everyone sat down.",
+  "wrong": "大家都坐下来去了。",
+  "remove": "去",
+  "explain": "下来 already gives the direction; do not add 去."
  },
  {
   "p": "g3-33",
@@ -405,12 +1653,86 @@
   "explain": "向 + person comes before the verb."
  },
  {
+  "p": "g3-33",
+  "t": "mc",
+  "prompt": "Which sentence says: Please go to the right?",
+  "options": [
+   "请向右走。",
+   "请走向右。"
+  ],
+  "correct": 0,
+  "zh": "请向右走。",
+  "en": "Please go to the right.",
+  "explain": "向 + direction comes before the verb."
+ },
+ {
+  "p": "g3-33",
+  "t": "cloze",
+  "zh": "他向我借了钱。",
+  "en": "He borrowed money from me.",
+  "blank": "向",
+  "explain": "向 + person + verb."
+ },
+ {
+  "p": "g3-33",
+  "t": "order",
+  "zh": "我向老师问了一个问题。",
+  "en": "I asked the teacher a question.",
+  "explain": "向 + person + verb."
+ },
+ {
+  "p": "g3-33",
+  "t": "spot",
+  "zh": "他向朋友说了再见。",
+  "en": "He said goodbye to his friend.",
+  "wrong": "他向朋友给说了再见。",
+  "remove": "给",
+  "explain": "向 already points to the person; do not add 给."
+ },
+ {
   "p": "g3-34",
   "t": "cloze",
   "zh": "我看了一个小时电视。",
   "en": "I watched TV for an hour.",
   "blank": "了",
   "explain": "了 goes right after the verb, before the length of time."
+ },
+ {
+  "p": "g3-34",
+  "t": "mc",
+  "prompt": "Which sentence says: I slept for 8 hours?",
+  "options": [
+   "我睡了八个小时。",
+   "我睡了小时八个。"
+  ],
+  "correct": 0,
+  "zh": "我睡了八个小时。",
+  "en": "I slept for 8 hours.",
+  "explain": "verb + 了 + duration."
+ },
+ {
+  "p": "g3-34",
+  "t": "cloze",
+  "zh": "我们玩了一个下午。",
+  "en": "We played for an afternoon.",
+  "blank": "了",
+  "explain": "verb + 了 + duration."
+ },
+ {
+  "p": "g3-34",
+  "t": "order",
+  "zh": "她学了三年汉语。",
+  "en": "She studied Chinese for 3 years.",
+  "explain": "verb + 了 + duration + thing."
+ },
+ {
+  "p": "g3-34",
+  "t": "spot",
+  "zh": "他等了两个小时。",
+  "en": "He waited for 2 hours.",
+  "wrong": "他等了过两个小时。",
+  "remove": "过",
+  "explain": "了 marks the finished action; do not add 过 here."
  },
  {
   "p": "g3-35",
@@ -432,6 +1754,80 @@
   "zh": "我一年没见他了。",
   "en": "I have not seen him for a year.",
   "explain": "The time comes before 没."
+ },
+ {
+  "p": "g3-35",
+  "t": "mc",
+  "prompt": "Which sentence says: I have not taken a shower for 3 days?",
+  "options": [
+   "我三天没洗澡了。",
+   "我没三天洗澡了。"
+  ],
+  "correct": 0,
+  "zh": "我三天没洗澡了。",
+  "en": "I have not taken a shower for 3 days.",
+  "explain": "duration comes before 没."
+ },
+ {
+  "p": "g3-35",
+  "t": "cloze",
+  "zh": "他两年没回家了。",
+  "en": "He has not been home for 2 years.",
+  "blank": "没",
+  "explain": "duration + 没 + verb + 了."
+ },
+ {
+  "p": "g3-35",
+  "t": "order",
+  "zh": "我们一个星期没见面了。",
+  "en": "We have not met for a week.",
+  "explain": "duration + 没 + verb + 了."
+ },
+ {
+  "p": "g3-35",
+  "t": "spot",
+  "zh": "我一个月没看电影了。",
+  "en": "I have not seen a film for a month.",
+  "wrong": "我一个月才没看电影了。",
+  "remove": "才",
+  "explain": "Do not add 才; 没 … 了 says how long something has not happened."
+ },
+ {
+  "p": "g3-36",
+  "t": "mc",
+  "prompt": "Which sentence says: Before going to bed, I will wash my hands?",
+  "options": [
+   "睡觉以前，我要洗手。",
+   "睡觉，我要以前洗手。"
+  ],
+  "correct": 0,
+  "zh": "睡觉以前，我要洗手。",
+  "en": "Before going to bed, I will wash my hands.",
+  "explain": "以前 comes right after the action."
+ },
+ {
+  "p": "g3-36",
+  "t": "cloze",
+  "zh": "来中国以前，他不会说汉语。",
+  "en": "Before coming to China, he could not speak Chinese.",
+  "blank": "以前",
+  "explain": "action + 以前 means before."
+ },
+ {
+  "p": "g3-36",
+  "t": "order",
+  "zh": "下课以后，我们去吃饭。",
+  "en": "After class, we go to eat.",
+  "explain": "action + 以后 means after."
+ },
+ {
+  "p": "g3-36",
+  "t": "spot",
+  "zh": "三年以前，我住在这里。",
+  "en": "Three years ago, I lived here.",
+  "wrong": "三年以前，我住在这里以后。",
+  "remove": "以后",
+  "explain": "Use 以前 or 以后, not both."
  },
  {
   "p": "g3-37",
@@ -460,6 +1856,43 @@
   "zh": "最后他来了。",
   "en": "In the end he came.",
   "explain": "最后 usually comes first."
+ },
+ {
+  "p": "g3-37",
+  "t": "mc",
+  "prompt": "Which sentence says: He went to the supermarket first and later to the bank?",
+  "options": [
+   "他先去了超市，后来去了银行。",
+   "他先去了超市，去了后来银行。"
+  ],
+  "correct": 0,
+  "zh": "他先去了超市，后来去了银行。",
+  "en": "He went to the supermarket first and later to the bank.",
+  "explain": "后来 comes before the second action."
+ },
+ {
+  "p": "g3-37",
+  "t": "cloze",
+  "zh": "我们先吃饭，然后去看电影。",
+  "en": "We eat first, and then go to see a film.",
+  "blank": "然后",
+  "explain": "先 + A, 然后 + B."
+ },
+ {
+  "p": "g3-37",
+  "t": "order",
+  "zh": "最后我们都累了。",
+  "en": "In the end we were all tired.",
+  "explain": "最后 means in the end."
+ },
+ {
+  "p": "g3-37",
+  "t": "spot",
+  "zh": "后来他回国了。",
+  "en": "Later he went back to his country.",
+  "wrong": "后来然后他回国了。",
+  "remove": "然后",
+  "explain": "后来 already means later; do not add 然后."
  },
  {
   "p": "g3-38",
@@ -498,6 +1931,43 @@
   "explain": "The time word comes before 没."
  },
  {
+  "p": "g3-38",
+  "t": "mc",
+  "prompt": "Which sentence says: I went to the hospital the day before yesterday?",
+  "options": [
+   "前天我去了医院。",
+   "我去了医院前天。"
+  ],
+  "correct": 0,
+  "zh": "前天我去了医院。",
+  "en": "I went to the hospital the day before yesterday.",
+  "explain": "The time word comes before the verb."
+ },
+ {
+  "p": "g3-38",
+  "t": "cloze",
+  "zh": "后年我想去中国。",
+  "en": "The year after next, I want to go to China.",
+  "blank": "后年",
+  "explain": "后年 means the year after next."
+ },
+ {
+  "p": "g3-38",
+  "t": "order",
+  "zh": "他最近很忙。",
+  "en": "He has been busy recently.",
+  "explain": "最近 means recently."
+ },
+ {
+  "p": "g3-38",
+  "t": "spot",
+  "zh": "前年我去了中国。",
+  "en": "The year before last, I went to China.",
+  "wrong": "前年昨天我去了中国。",
+  "remove": "昨天",
+  "explain": "Use only one time word: 前年 already gives the time."
+ },
+ {
   "p": "g3-39",
   "t": "cloze",
   "zh": "你应该早点睡觉。",
@@ -526,12 +1996,86 @@
   "explain": "应该 comes before the verb."
  },
  {
+  "p": "g3-39",
+  "t": "mc",
+  "prompt": "Which sentence says: You should drink more water?",
+  "options": [
+   "你应该多喝水。",
+   "你多喝水应该。"
+  ],
+  "correct": 0,
+  "zh": "你应该多喝水。",
+  "en": "You should drink more water.",
+  "explain": "应该 comes before the verb."
+ },
+ {
+  "p": "g3-39",
+  "t": "cloze",
+  "zh": "我该走了，再见。",
+  "en": "I should go now; goodbye.",
+  "blank": "该",
+  "explain": "该 can mean should."
+ },
+ {
+  "p": "g3-39",
+  "t": "order",
+  "zh": "学生应该认真学习。",
+  "en": "Students should study seriously.",
+  "explain": "应该 comes before the verb."
+ },
+ {
+  "p": "g3-39",
+  "t": "spot",
+  "zh": "我们应该帮助他。",
+  "en": "We should help him.",
+  "wrong": "我们应该必须帮助他。",
+  "remove": "必须",
+  "explain": "应该 and 必须 differ in strength; use only one."
+ },
+ {
   "p": "g3-40",
   "t": "cloze",
   "zh": "你不用来了。",
   "en": "You do not need to come.",
   "blank": "不用",
   "explain": "不用 means there is no need."
+ },
+ {
+  "p": "g3-40",
+  "t": "mc",
+  "prompt": "Which sentence says: We must go right away?",
+  "options": [
+   "我们必须马上走。",
+   "我们必须走马上。"
+  ],
+  "correct": 0,
+  "zh": "我们必须马上走。",
+  "en": "We must go right away.",
+  "explain": "必须 comes before the verb."
+ },
+ {
+  "p": "g3-40",
+  "t": "cloze",
+  "zh": "你不用买票，进去吧。",
+  "en": "You do not need to buy a ticket; go in.",
+  "blank": "不用",
+  "explain": "不用 means no need."
+ },
+ {
+  "p": "g3-40",
+  "t": "order",
+  "zh": "我需要一杯水。",
+  "en": "I need a glass of water.",
+  "explain": "需要 + thing."
+ },
+ {
+  "p": "g3-40",
+  "t": "spot",
+  "zh": "你不用等我。",
+  "en": "You do not need to wait for me.",
+  "wrong": "你不用必须等我。",
+  "remove": "必须",
+  "explain": "不用 means no need; do not add 必须 (must)."
  },
  {
   "p": "g3-41",
@@ -562,6 +2106,88 @@
   "explain": "Time comes before the verb."
  },
  {
+  "p": "g3-41",
+  "t": "mc",
+  "prompt": "Which sentence says: It is cold; you had better rest at home?",
+  "options": [
+   "天很冷，你最好在家休息。",
+   "天很冷，你休息在家最好。"
+  ],
+  "correct": 0,
+  "zh": "天很冷，你最好在家休息。",
+  "en": "It is cold; you had better rest at home.",
+  "explain": "最好 comes before the advice."
+ },
+ {
+  "p": "g3-41",
+  "t": "cloze",
+  "zh": "你最好现在就去。",
+  "en": "You had better go now.",
+  "blank": "最好",
+  "explain": "最好 gives advice."
+ },
+ {
+  "p": "g3-41",
+  "t": "order",
+  "zh": "我们最好早一点走。",
+  "en": "We had better leave a bit earlier.",
+  "explain": "最好 comes before the verb."
+ },
+ {
+  "p": "g3-41",
+  "t": "spot",
+  "zh": "你最好多休息。",
+  "en": "You had better rest more.",
+  "wrong": "你最好应该多休息。",
+  "remove": "应该",
+  "explain": "最好 already gives advice; do not add 应该."
+ },
+ {
+  "p": "g3-42",
+  "t": "mc",
+  "prompt": "Which sentence says: I have only one younger sister?",
+  "options": [
+   "我只有一个妹妹。",
+   "我有只一个妹妹。"
+  ],
+  "correct": 0,
+  "zh": "我只有一个妹妹。",
+  "en": "I have only one younger sister.",
+  "explain": "只 comes before the verb."
+ },
+ {
+  "p": "g3-42",
+  "t": "cloze",
+  "zh": "他只是一个学生。",
+  "en": "He is just a student.",
+  "blank": "只是",
+  "explain": "只是 means just."
+ },
+ {
+  "p": "g3-42",
+  "t": "cloze",
+  "zh": "下雨了，我们只能在家。",
+  "en": "It is raining, so we can only stay at home.",
+  "blank": "只能",
+  "explain": "只能 means can only."
+ },
+ {
+  "p": "g3-42",
+  "t": "order",
+  "zh": "他只吃了一点儿。",
+  "en": "He only ate a little.",
+  "explain": "只 comes before the verb."
+ },
+ {
+  "p": "g3-42",
+  "t": "spot",
+  "zh": "我只能等。",
+  "en": "I can only wait.",
+  "wrong": "我只能才等。",
+  "remove": "才",
+  "explain": "只能 already limits it; do not add 才."
+ },
+ {
   "p": "g3-43",
   "t": "cloze",
   "zh": "他好像很累。",
@@ -577,6 +2203,43 @@
   "explain": "看起来 means it looks like."
  },
  {
+  "p": "g3-43",
+  "t": "mc",
+  "prompt": "Which sentence says: The weather looks good?",
+  "options": [
+   "天气看起来很好。",
+   "天气看很好起来。"
+  ],
+  "correct": 0,
+  "zh": "天气看起来很好。",
+  "en": "The weather looks good.",
+  "explain": "看起来 stays together before the description."
+ },
+ {
+  "p": "g3-43",
+  "t": "cloze",
+  "zh": "他好像生病了。",
+  "en": "He seems to have fallen ill.",
+  "blank": "好像",
+  "explain": "好像 means seems."
+ },
+ {
+  "p": "g3-43",
+  "t": "order",
+  "zh": "看来他不会来了。",
+  "en": "It seems he will not come any more.",
+  "explain": "看来 starts the guess."
+ },
+ {
+  "p": "g3-43",
+  "t": "spot",
+  "zh": "她好像很高兴。",
+  "en": "She seems very happy.",
+  "wrong": "她好像是很高兴。",
+  "remove": "是",
+  "explain": "好像 is followed by the description directly; do not add 是."
+ },
+ {
   "p": "g3-44",
   "t": "mc",
   "prompt": "Which sentence says: Of course I know?",
@@ -588,6 +2251,43 @@
   "zh": "我当然知道。",
   "en": "Of course I know.",
   "explain": "当然 comes before the verb."
+ },
+ {
+  "p": "g3-44",
+  "t": "mc",
+  "prompt": "Which sentence says: He will probably arrive around ten?",
+  "options": [
+   "大概十点，他会到。",
+   "他会到十点大概。"
+  ],
+  "correct": 0,
+  "zh": "大概十点，他会到。",
+  "en": "He will probably arrive around ten.",
+  "explain": "大概 comes before the time."
+ },
+ {
+  "p": "g3-44",
+  "t": "cloze",
+  "zh": "你当然可以用我的手机。",
+  "en": "Of course you can use my phone.",
+  "blank": "当然",
+  "explain": "当然 means of course."
+ },
+ {
+  "p": "g3-44",
+  "t": "order",
+  "zh": "其实他不太忙。",
+  "en": "Actually he is not very busy.",
+  "explain": "其实 starts the true fact."
+ },
+ {
+  "p": "g3-44",
+  "t": "spot",
+  "zh": "大概有二十个人。",
+  "en": "There are probably about 20 people.",
+  "wrong": "大概可能有二十个人。",
+  "remove": "可能",
+  "explain": "大概 already means probably; do not add 可能."
  },
  {
   "p": "g3-45",
@@ -605,12 +2305,86 @@
   "explain": "几乎 means almost."
  },
  {
+  "p": "g3-45",
+  "t": "mc",
+  "prompt": "Which sentence says: We finally found him?",
+  "options": [
+   "我们终于找到了他。",
+   "我们找到了终于他。"
+  ],
+  "correct": 0,
+  "zh": "我们终于找到了他。",
+  "en": "We finally found him.",
+  "explain": "终于 comes before the verb."
+ },
+ {
+  "p": "g3-45",
+  "t": "cloze",
+  "zh": "他几乎每天都迟到。",
+  "en": "He is late almost every day.",
+  "blank": "几乎",
+  "explain": "几乎 means almost."
+ },
+ {
+  "p": "g3-45",
+  "t": "order",
+  "zh": "我终于买到了票。",
+  "en": "I have finally bought a ticket.",
+  "explain": "终于 comes before the verb."
+ },
+ {
+  "p": "g3-45",
+  "t": "spot",
+  "zh": "他几乎忘了。",
+  "en": "He almost forgot.",
+  "wrong": "他几乎差不多忘了。",
+  "remove": "差不多",
+  "explain": "几乎 already means almost; do not add 差不多."
+ },
+ {
   "p": "g3-46",
   "t": "cloze",
   "zh": "他突然不说话了。",
   "en": "He suddenly stopped talking.",
   "blank": "突然",
   "explain": "突然 means suddenly."
+ },
+ {
+  "p": "g3-46",
+  "t": "mc",
+  "prompt": "Which sentence says: The weather suddenly got cold?",
+  "options": [
+   "天气突然变冷了。",
+   "天气变冷突然了。"
+  ],
+  "correct": 0,
+  "zh": "天气突然变冷了。",
+  "en": "The weather suddenly got cold.",
+  "explain": "突然 comes before the verb or quality."
+ },
+ {
+  "p": "g3-46",
+  "t": "cloze",
+  "zh": "请等一下，我马上来。",
+  "en": "Please wait a moment; I will come right away.",
+  "blank": "马上",
+  "explain": "马上 means right away."
+ },
+ {
+  "p": "g3-46",
+  "t": "order",
+  "zh": "你一定要来。",
+  "en": "You must come, definitely.",
+  "explain": "一定 comes before the verb."
+ },
+ {
+  "p": "g3-46",
+  "t": "spot",
+  "zh": "他突然哭了。",
+  "en": "He suddenly cried.",
+  "wrong": "他突然马上哭了。",
+  "remove": "马上",
+  "explain": "突然 means suddenly; do not add 马上 (right away)."
  },
  {
   "p": "g3-47",
@@ -626,6 +2400,43 @@
   "en": "I did not eat anything.",
   "blank": "都",
   "explain": "什么 + 都 + 没 means not anything."
+ },
+ {
+  "p": "g3-47",
+  "t": "mc",
+  "prompt": "Which sentence says: Everyone likes him?",
+  "options": [
+   "谁都喜欢他。",
+   "都谁喜欢他。"
+  ],
+  "correct": 0,
+  "zh": "谁都喜欢他。",
+  "en": "Everyone likes him.",
+  "explain": "谁 + 都 + verb."
+ },
+ {
+  "p": "g3-47",
+  "t": "cloze",
+  "zh": "我什么都不知道。",
+  "en": "I do not know anything.",
+  "blank": "都",
+  "explain": "question word + 都 + 不 means nothing, nobody, nowhere."
+ },
+ {
+  "p": "g3-47",
+  "t": "order",
+  "zh": "哪儿都很贵。",
+  "en": "It is expensive everywhere.",
+  "explain": "question word + 都."
+ },
+ {
+  "p": "g3-47",
+  "t": "spot",
+  "zh": "我谁都不认识。",
+  "en": "I do not know anyone.",
+  "wrong": "我谁都也不认识。",
+  "remove": "也",
+  "explain": "Use 都 or 也 after the question word, not both."
  },
  {
   "p": "g3-48",
@@ -656,6 +2467,43 @@
   "explain": "Use the same question word twice."
  },
  {
+  "p": "g3-48",
+  "t": "mc",
+  "prompt": "Which sentence says: Do it however you want?",
+  "options": [
+   "你想怎么做就怎么做。",
+   "你想怎么做就做怎么。"
+  ],
+  "correct": 0,
+  "zh": "你想怎么做就怎么做。",
+  "en": "Do it however you want.",
+  "explain": "The same question word comes back in the same place."
+ },
+ {
+  "p": "g3-48",
+  "t": "cloze",
+  "zh": "你想什么时候来就什么时候来。",
+  "en": "Come whenever you want.",
+  "blank": "就",
+  "explain": "想 + question word + 就 + the same question word."
+ },
+ {
+  "p": "g3-48",
+  "t": "order",
+  "zh": "你想买什么就买什么。",
+  "en": "Buy whatever you want.",
+  "explain": "想 + question word + 就 + the same question word."
+ },
+ {
+  "p": "g3-48",
+  "t": "spot",
+  "zh": "你想吃哪个就吃哪个。",
+  "en": "Eat whichever you want.",
+  "wrong": "你想吃哪个就才吃哪个。",
+  "remove": "才",
+  "explain": "Do not add 才 between the two parts."
+ },
+ {
   "p": "g3-49",
   "t": "cloze",
   "zh": "我一个字也不认识。",
@@ -669,6 +2517,43 @@
   "zh": "他一点儿也不累。",
   "en": "He is not tired at all.",
   "explain": "一点儿 + 也 + 不."
+ },
+ {
+  "p": "g3-49",
+  "t": "mc",
+  "prompt": "Which sentence says: I have not drunk a single glass of water?",
+  "options": [
+   "我一杯水也没喝。",
+   "我也一杯水没喝。"
+  ],
+  "correct": 0,
+  "zh": "我一杯水也没喝。",
+  "en": "I have not drunk a single glass of water.",
+  "explain": "一 + measure word + 也 + 没."
+ },
+ {
+  "p": "g3-49",
+  "t": "cloze",
+  "zh": "房间里一个人也没有。",
+  "en": "There is not a single person in the room.",
+  "blank": "也",
+  "explain": "一 + measure word + 也 + 没 or 不 means not even one."
+ },
+ {
+  "p": "g3-49",
+  "t": "order",
+  "zh": "我一天也没休息。",
+  "en": "I have not rested for a single day.",
+  "explain": "一 + measure word + 也 + 没."
+ },
+ {
+  "p": "g3-49",
+  "t": "spot",
+  "zh": "他一个朋友也没有。",
+  "en": "He does not have a single friend.",
+  "wrong": "他一个朋友都也没有。",
+  "remove": "都",
+  "explain": "Use 也 or 都, not both."
  },
  {
   "p": "g3-50",
@@ -692,6 +2577,43 @@
   "explain": "半 comes after 一个."
  },
  {
+  "p": "g3-50",
+  "t": "mc",
+  "prompt": "Which sentence says: I slept for half an hour?",
+  "options": [
+   "我睡了半个小时。",
+   "我睡了个半小时。"
+  ],
+  "correct": 0,
+  "zh": "我睡了半个小时。",
+  "en": "I slept for half an hour.",
+  "explain": "半个 + noun."
+ },
+ {
+  "p": "g3-50",
+  "t": "cloze",
+  "zh": "现在是三点半。",
+  "en": "It is half past three now.",
+  "blank": "半",
+  "explain": "time + 半 means half past."
+ },
+ {
+  "p": "g3-50",
+  "t": "order",
+  "zh": "他学了两个半小时。",
+  "en": "He studied for 2 and a half hours.",
+  "explain": "number + 个半 + noun."
+ },
+ {
+  "p": "g3-50",
+  "t": "spot",
+  "zh": "我吃了半个苹果。",
+  "en": "I ate half an apple.",
+  "wrong": "我吃了半的个苹果。",
+  "remove": "的",
+  "explain": "Do not put 的 between 半 and 个."
+ },
+ {
   "p": "g3-51",
   "t": "mc",
   "prompt": "Which sentence says: There are about seven or eight books?",
@@ -703,5 +2625,87 @@
   "zh": "这里有七八本书。",
   "en": "There are about seven or eight books.",
   "explain": "Put two numbers side by side, then the measure word."
+ },
+ {
+  "p": "g3-51",
+  "t": "mc",
+  "prompt": "Which sentence says: There are four or five students in this class?",
+  "options": [
+   "这个班有四五个学生。",
+   "这个班有四十五个学生。"
+  ],
+  "correct": 0,
+  "zh": "这个班有四五个学生。",
+  "en": "There are four or five students in this class.",
+  "explain": "Two numbers side by side show an approximate number."
+ },
+ {
+  "p": "g3-51",
+  "t": "cloze",
+  "zh": "二十岁以下的人不能进去。",
+  "en": "People under 20 cannot go in.",
+  "blank": "以下",
+  "explain": "number + 以下 means below."
+ },
+ {
+  "p": "g3-51",
+  "t": "order",
+  "zh": "他有五六本书。",
+  "en": "He has five or six books.",
+  "explain": "Two numbers side by side show an approximate number."
+ },
+ {
+  "p": "g3-51",
+  "t": "spot",
+  "zh": "我三四天没见他了。",
+  "en": "I have not seen him for 3 or 4 days.",
+  "wrong": "我三四天一共没见他了。",
+  "remove": "一共",
+  "explain": "三四 already shows it is approximate; do not add 一共 (altogether)."
+ },
+ {
+  "p": "g3-52",
+  "t": "mc",
+  "prompt": "Which sentence says: I will give you back this book tomorrow?",
+  "options": [
+   "这本书我明天还你。",
+   "这本书明天我你还。"
+  ],
+  "correct": 0,
+  "zh": "这本书我明天还你。",
+  "en": "I will give you back this book tomorrow.",
+  "explain": "还 can mean give back."
+ },
+ {
+  "p": "g3-52",
+  "t": "cloze",
+  "zh": "他的头发长得很快。",
+  "en": "His hair grows very fast.",
+  "blank": "长得",
+  "explain": "长 can mean grow."
+ },
+ {
+  "p": "g3-52",
+  "t": "cloze",
+  "zh": "我们明天下午开会。",
+  "en": "We have a meeting tomorrow afternoon.",
+  "blank": "开会",
+  "explain": "开 can mean hold, as in 开会."
+ },
+ {
+  "p": "g3-52",
+  "t": "order",
+  "zh": "你得早一点起床。",
+  "en": "You must get up a bit earlier.",
+  "explain": "得 can mean must."
+ },
+ {
+  "p": "g3-52",
+  "t": "spot",
+  "zh": "我得去医院。",
+  "en": "I have to go to the hospital.",
+  "wrong": "我得要去医院。",
+  "remove": "要",
+  "explain": "得 already means must; do not add 要."
  }
 ]
