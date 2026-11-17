@@ -1,5 +1,5 @@
 {
- "note": "Listening passages (Path stops of kind l). Each is a short dialogue: lines spoken by 女 (the woman's voice) or 男 (the man's voice), then questions in Chinese with four options (the first option in the file is the right one; the site shuffles them). line = the index of the line that holds the answer (it is played again after the question is answered). Words: only words of this level and the levels below. The Path places each passage right after the stop that teaches the last of its words (tools/build-path.py). Built by tools/build-passages.py into data/passages.js; AI-written, checked by tools/check-content.py, not yet reviewed by a person.",
+ "note": "Listening passages (Path stops of kind l). Each is a short dialogue: lines spoken by 女 (the woman's voice) or 男 (the man's voice), then questions in Chinese with four options (the first option in the file is the right one; the site shuffles them). line = the index of the line that holds (or a list of indexes when the answer needs two lines) the answer (it is played again after the question is answered). Words: only words of this level and the levels below. The Path places each passage right after the stop that teaches the last of its words (tools/build-path.py). Built by tools/build-passages.py into data/passages.js; AI-written, checked by tools/check-content.py, not yet reviewed by a person.",
  "passages": [
   {
    "id": "p1-family",
@@ -9,7 +9,7 @@
    "lines": [
     {
      "s": "女",
-     "zh": "小明，这是你家人吗？",
+     "zh": "小明，这是你的家人吗？",
      "en": "Xiaoming, is this your family?"
     },
     {
@@ -179,7 +179,10 @@
       "牛奶",
       "茶"
      ],
-     "line": 0
+     "line": [
+      0,
+      4
+     ]
     },
     {
      "zh": "女的买几个？",
@@ -452,7 +455,10 @@
       "很冷",
       "不下雨"
      ],
-     "line": 1
+     "line": [
+      1,
+      3
+     ]
     },
     {
      "zh": "明天冷吗？",
@@ -1003,8 +1009,8 @@
     },
     {
      "s": "女",
-     "zh": "太长了。有没有小一点儿的？",
-     "en": "It is too long. Do you have a slightly smaller one?"
+     "zh": "太大了。有没有小一点儿的？",
+     "en": "It is too big. Do you have a slightly smaller one?"
     },
     {
      "s": "男",
@@ -1055,10 +1061,10 @@
      "zh": "第一件衣服怎么样？",
      "en": "What is the first piece of clothing like?",
      "opts": [
-      "太长了",
+      "太大了",
       "太贵了",
       "颜色不好",
-      "太小了"
+      "太长了"
      ],
      "line": 4
     }
@@ -2154,7 +2160,7 @@
     },
     {
      "s": "女",
-     "zh": "好啊，来一个鱼，再来一碗米饭和两杯茶。",
+     "zh": "好啊，来一条鱼，再来一碗米饭和两杯茶。",
      "en": "OK, one fish, plus a bowl of rice and two cups of tea."
     },
     {
@@ -2248,8 +2254,8 @@
     },
     {
      "s": "女",
-     "zh": "对，过了红绿灯，银行就在路边，在一个超市旁边。",
-     "en": "Yes. Once you have passed the traffic lights, the bank is right by the road, next to a supermarket."
+     "zh": "对，过了红绿灯，银行就在路边，旁边有一个超市。",
+     "en": "Yes. Once you have passed the traffic lights, the bank is right by the road, with a supermarket next to it."
     },
     {
      "s": "男",
@@ -2485,8 +2491,8 @@
    "lines": [
     {
      "s": "女",
-     "zh": "外面刮大风了，还下雨。",
-     "en": "It is very windy outside, and it is raining too."
+     "zh": "外面刮大风了，还在下雨。",
+     "en": "It is very windy outside, and it is raining."
     },
     {
      "s": "男",
@@ -2519,7 +2525,7 @@
      "zh": "外面天气怎么样？",
      "en": "What is the weather like outside?",
      "opts": [
-      "刮大风，还下雨",
+      "刮大风，还在下雨",
       "很热",
       "下雪了",
       "很好"
@@ -2742,8 +2748,8 @@
     },
     {
      "s": "女",
-     "zh": "我打算去中国留学，为了提高我的汉语水平。",
-     "en": "I plan to study in China, to improve my Chinese."
+     "zh": "为了提高我的汉语水平，我打算去中国留学。",
+     "en": "To improve my Chinese, I plan to study in China."
     },
     {
      "s": "男",
@@ -3130,7 +3136,7 @@
       "下午三点",
       "下午一点半",
       "下午两点半",
-      "晚上三点"
+      "下午四点"
      ],
      "line": 0
     },
@@ -3192,8 +3198,8 @@
     },
     {
      "s": "女",
-     "zh": "还可以。但是网购有时候也会买到质量不好的东西。",
-     "en": "It is OK. But when you shop online, sometimes you also buy things whose quality is not good."
+     "zh": "还可以。但是在网上买，有时候也会买到质量不好的东西。",
+     "en": "It is OK. But when you buy online, sometimes you also get things whose quality is not good."
     },
     {
      "s": "男",
@@ -3241,8 +3247,8 @@
      "line": 4
     },
     {
-     "zh": "女的说网购前要做什么？",
-     "en": "What does the woman say you need to do before shopping online?",
+     "zh": "女的说在网上买东西以前要做什么？",
+     "en": "What does the woman say you should do before buying online?",
      "opts": [
       "先看看别人怎么说",
       "先去商场看",
@@ -3736,7 +3742,10 @@
       "下大雨",
       "刮大风"
      ],
-     "line": 1
+     "line": [
+      1,
+      3
+     ]
     },
     {
      "zh": "最冷的时候是多少摄氏度？",
@@ -4264,8 +4273,8 @@
     },
     {
      "s": "女",
-     "zh": "我听说司机不仅要罚款，还可能会被暂停驾照。",
-     "en": "I heard the driver will not only have to pay a fine, but the licence may also be suspended."
+     "zh": "我听说司机不仅要罚款，还可能有一段时间不能开车了。",
+     "en": "I heard the driver will not only have to pay a fine, but may also not be allowed to drive for a while."
     }
    ],
    "qs": [
@@ -4317,7 +4326,7 @@
      "zh": "超速的司机可能会怎么样？",
      "en": "What may happen to the speeding driver?",
      "opts": [
-      "被罚款，还可能被暂停驾照",
+      "被罚款，还可能一段时间不能开车",
       "只是被罚款",
       "没有什么事",
       "要去医院"
@@ -4359,8 +4368,8 @@
     },
     {
      "s": "男",
-     "zh": "没关系，点“忘记密码”，它会给你的手机发一个号码，输入以后就能设置新密码。",
-     "en": "No problem. Tap \"forgot password\", and it will send a number to your phone. After you type it in, you can set a new password."
+     "zh": "没关系，点“忘记密码”，它会给你的手机发一条短信，里面有几个数字，输入以后就能设置新密码。",
+     "en": "No problem. Tap \"forgot password\", and it will send a text message to your phone with a few numbers in it. After you type them in, you can set a new password."
     },
     {
      "s": "女",

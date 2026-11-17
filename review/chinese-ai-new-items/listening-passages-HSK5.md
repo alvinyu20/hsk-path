@@ -174,8 +174,8 @@ A woman explains why she is late.
    - The traffic police said one of the cars was speeding.
 6. 男：超速很危险，肯定要罚款吧？  (Chāosù hěn wēixiǎn, kěndìng yào fákuǎn ba?)
    - Speeding is dangerous. There must be a fine?
-7. 女：我听说司机不仅要罚款，还可能会被暂停驾照。  (Wǒ tīngshuō sījī bùjǐn yào fákuǎn, hái kěnéng huì bèi zàntíng jiàzhào.)
-   - I heard the driver will not only have to pay a fine, but the licence may also be suspended.
+7. 女：我听说司机不仅要罚款，还可能有一段时间不能开车了。  (Wǒ tīngshuō sījī bùjǐn yào fákuǎn, hái kěnéng yǒu yí duàn shíjiān bù néng kāichē le.)
+   - I heard the driver will not only have to pay a fine, but may also not be allowed to drive for a while.
 
 Q1. 女的为什么来晚了？  (Nǚ de wèishénme lái wǎn le?)
    - English: Why is the woman late?
@@ -195,7 +195,7 @@ Q4. 交警说为什么发生了车祸？  (Jiāojǐng shuō wèishénme fāshēn
    - answer in line 5
 Q5. 超速的司机可能会怎么样？  (Chāosù de sījī kěnéng huì zěnmeyàng?)
    - English: What may happen to the speeding driver?
-   - options: ✓ 被罚款，还可能被暂停驾照 / 只是被罚款 / 没有什么事 / 要去医院
+   - options: ✓ 被罚款，还可能一段时间不能开车 / 只是被罚款 / 没有什么事 / 要去医院
    - answer in line 7
 
 ## P6. HSK 5 · Forgot the password (p5-login)
@@ -211,8 +211,8 @@ A man helps a woman with an app.
    - Did you use this app before? You can try logging in with your phone number.
 5. 女：可是我忘记密码了。  (Kěshì wǒ wàngjì mìmǎ le.)
    - But I have forgotten the password.
-6. 男：没关系，点“忘记密码”，它会给你的手机发一个号码，输入以后就能设置新密码。  (Méiguānxi, diǎn " wàngjì mìmǎ ", tā huì gěi nǐ de shǒujī fā yí ge hàomǎ, shūrù yǐhòu jiù néng shèzhì xīn mìmǎ.)
-   - No problem. Tap "forgot password", and it will send a number to your phone. After you type it in, you can set a new password.
+6. 男：没关系，点“忘记密码”，它会给你的手机发一条短信，里面有几个数字，输入以后就能设置新密码。  (Méiguānxi, diǎn " wàngjì mìmǎ ", tā huì gěi nǐ de shǒujī fā yì tiáo duǎnxìn, lǐmiàn yǒu jǐ ge shùzì, shūrù yǐhòu jiù néng shèzhì xīn mìmǎ.)
+   - No problem. Tap "forgot password", and it will send a text message to your phone with a few numbers in it. After you type them in, you can set a new password.
 7. 女：好了，我登录成功了！  (Hǎo le, wǒ dēnglù chénggōng le!)
    - There, I have logged in!
 

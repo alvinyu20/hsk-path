@@ -4107,7 +4107,8 @@
     };
 
     // ----- listening passages (a Path stop of kind "l") -----
-    psgLines = (p, only) => (only == null ? p.lines : [p.lines[only]]).map(l => ({ text:l.zh, pitch:l.s === '男' ? 0.8 : 1.25 }));
+    // only: one line index, or a list (a question whose answer needs two lines points at both)
+    psgLines = (p, only) => (only == null ? p.lines : [].concat(only).map(i => p.lines[i]).filter(Boolean)).map(l => ({ text:l.zh, pitch:l.s === '男' ? 0.8 : 1.25 }));
     psgOpen = (id) => {
       const p = PSG_BY[id]; if (!p) return;
       this.stopNative();
@@ -4160,7 +4161,7 @@
       if (S.screen !== 'passage' || !p) return out;
       const n = p.qs.length; const q = p.qs[Math.min(g.qi, n - 1)]; const ord = g.ord[Math.min(g.qi, n - 1)];
       const who = (s) => (s === '男' ? '男' : '女');
-      const line = p.lines[q.line] || p.lines[0];
+      const ansLines = [].concat(q.line).map(i => p.lines[i]).filter(Boolean); if (!ansLines.length) ansLines.push(p.lines[0]);
       const okNow = g.checked && ord[g.pick] === 0;
       Object.assign(out, {
         isPassage:true, psgBack:this.psgBack, psgKick:'Listening · HSK ' + p.lv, psgTitle:p.title, psgScene:p.scene, psgQn:n,
@@ -4181,11 +4182,11 @@
         psgOpts:ord.map((oi, k) => ({ k:k + 1, zh:q.opts[oi].zh, py:q.opts[oi].py, pick:() => this.psgPick(k),
           cls:g.checked ? (oi === 0 ? 'right' : k === g.pick ? 'wrong' : '') : '' })),
         psgChecked:g.stage === 'qs' && g.checked, psgAnsCls:okNow ? 'right' : 'wrong', psgVerdict:okNow ? 'Right! You heard it here:' : 'Not quite. The answer is ' + q.opts[0].zh + '. You can hear it here:',
-        psgLineWho:who(line.s), psgLineZh:line.zh, psgLinePy:line.py, psgHearLine:this.psgHearLine,
+        psgAnsLines:ansLines.map(l => ({ who:who(l.s), zh:l.zh, py:l.py })), psgHearLine:this.psgHearLine, psgHearText:ansLines.length > 1 ? 'Hear those lines' : 'Hear that line',
         psgNext:this.psgNext, psgNextText:g.qi + 1 < n ? 'Next question' : 'See how you did',
         psgScore:(g.right || 0) + ' of ' + n + ' right',
         psgScoreSub:g.gain ? '+' + g.gain + ' coins' + ([g.first && g.right === n ? 'all right: +' + PSG_BONUS : '', g.fast ? 'fast ear: +' + PSG_FAST_BONUS : ''].filter(Boolean).map(x => ' (' + x + ')').join('')) : 'No coins this time',
-        psgLines:p.lines.map((l, i) => ({ who:who(l.s), zh:l.zh, py:l.py, en:l.en, cls:p.qs.some(x => x.line === i) ? 'ans' : '',
+        psgLines:p.lines.map((l, i) => ({ who:who(l.s), zh:l.zh, py:l.py, en:l.en, cls:p.qs.some(x => [].concat(x.line).indexOf(i) >= 0) ? 'ans' : '',
           play:() => { this.ttsUnlock(); this.speakLines(this.psgLines(p, i), 'psgl', psgSpeed()); } })),
         psgAgain:this.psgAgain, psgReport:report('Listening passage ' + p.id, p.title)
       });

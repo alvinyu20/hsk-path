@@ -1,9 +1,9 @@
-以下是我为 HSK 1 and 2 学习网站写的“听力短文”（一段对话，然后用中文回答问题）。学习者先听录音（看不到文字），再回答问题。
+以下是我为 HSK 1 and 2 学习网站写的“听力短文”（一段对话或一个人说的一段话，然后用中文回答问题）。学习者先听录音（看不到文字），再回答问题。
 请你作为母语者和中文老师检查。**只列出有问题的地方**，不用表扬，也不用重复没问题的内容。每个问题请写：编号 / 原文 / 问题是什么（简单的中文，加一行英文）/ 更自然的说法（只用 HSK 1 到 HSK 2 的词）。
 需要特别注意：1) 对话是否自然、像真的生活里的对话；2) 语法错误；3) 英文翻译和中文意思不一致；4) 每个问题是否只有一个正确答案（标 ✓ 的那个），其他三个选项是否确实错，但又不是一眼就能排除；5) 问题能不能只靠听这段对话回答；6) “答案在第几句”是否指对了那一句；7) 对 HSK 1 and 2 来说太难的词；8) 拼音（多音字、轻声、变调、词与词之间的空格）。
 如果全部没问题，请回答“没有发现问题”。
 
-Hello! These are "listening passages" for an HSK study site (HSK 1 and 2): a short dialogue that the learner hears without seeing the text, then questions in Chinese with four options. Please act as a native speaker and Chinese teacher and check them.
+Hello! These are "listening passages" for an HSK study site (HSK 1 and 2): a short dialogue or talk that the learner hears without seeing the text, then questions in Chinese with four options. Please act as a native speaker and Chinese teacher and check them.
 **Report only the problems**, no praise. For each problem give: number / the item / what is wrong (simple Chinese plus one line of English) / a more natural version (HSK 1 to 2 words only).
 Please watch for: 1) unnatural dialogue; 2) grammar mistakes; 3) English that does not match the Chinese; 4) each question must have exactly one right answer (the one marked ✓), and the other three must really be wrong but not silly; 5) every question must be answerable from the dialogue alone; 6) "answer in line N" must point at the right line; 7) words too hard for the level; 8) pinyin (multiple readings, neutral tones, tone changes, spaces between words).
 If there are no problems, answer "No problems found".
@@ -14,7 +14,7 @@ If there are no problems, answer "No problems found".
 ## P1. HSK 1 · A family photo (p1-family)
 Xiaoming shows a friend his family.
 
-1. 女：小明，这是你家人吗？  (Xiǎomíng, zhè shì nǐ jiārén ma?)
+1. 女：小明，这是你的家人吗？  (Xiǎomíng, zhè shì nǐ de jiārén ma?)
    - Xiaoming, is this your family?
 2. 男：是。这是我爸爸，这是我妈妈。  (Shì. Zhè shì wǒ bàba, zhè shì wǒ māma.)
    - Yes. This is my dad, and this is my mum.
@@ -82,7 +82,7 @@ A woman buys fruit at a small shop.
 Q1. 女的买什么？  (Nǚ de mǎi shénme?)
    - English: What does the woman buy?
    - options: ✓ 苹果 / 面包 / 牛奶 / 茶
-   - answer in line 1
+   - answer in lines 1 and 5
 Q2. 女的买几个？  (Nǚ de mǎi jǐ ge?)
    - English: How many does the woman buy?
    - options: ✓ 五个 / 三个 / 两个 / 十个
@@ -190,7 +190,7 @@ Q1. 今天天气怎么样？  (Jīntiān tiānqì zěnmeyàng?)
 Q2. 明天天气怎么样？  (Míngtiān tiānqì zěnmeyàng?)
    - English: What will the weather be like tomorrow?
    - options: ✓ 下雨，很热 / 下雪，很冷 / 很冷 / 不下雨
-   - answer in line 2
+   - answer in lines 2 and 4
 Q3. 明天冷吗？  (Míngtiān lěng ma?)
    - English: Will it be cold tomorrow?
    - options: ✓ 不冷 / 很冷 / 有点儿冷 / 非常冷
@@ -408,8 +408,8 @@ A woman looks for a birthday present in a shop.
    - She likes red and white.
 4. 男：这件白色的怎么样？  (Zhè jiàn báisè de zěnmeyàng?)
    - How about this white one?
-5. 女：太长了。有没有小一点儿的？  (Tài cháng le. Yǒu méiyǒu xiǎo yìdiǎnr de?)
-   - It is too long. Do you have a slightly smaller one?
+5. 女：太大了。有没有小一点儿的？  (Tài dà le. Yǒu méiyǒu xiǎo yìdiǎnr de?)
+   - It is too big. Do you have a slightly smaller one?
 6. 男：有，这件小一点儿，也是白色的。  (Yǒu, zhè jiàn xiǎo yìdiǎnr, yě shì báisè de.)
    - Yes, this one is a little smaller, and it is white too.
 7. 女：好，我就要这件。  (Hǎo, wǒ jiù yào zhè jiàn.)
@@ -429,7 +429,7 @@ Q3. 女的妈妈喜欢什么颜色？  (Nǚ de māma xǐhuan shénme yánsè?)
    - answer in line 3
 Q4. 第一件衣服怎么样？  (Dì yī jiàn yīfu zěnmeyàng?)
    - English: What is the first piece of clothing like?
-   - options: ✓ 太长了 / 太贵了 / 颜色不好 / 太小了
+   - options: ✓ 太大了 / 太贵了 / 颜色不好 / 太长了
    - answer in line 5
 
 ## P16. HSK 2 · Too long at the computer (p2-doctor)

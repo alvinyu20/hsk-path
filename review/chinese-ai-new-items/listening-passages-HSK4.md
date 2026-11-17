@@ -136,7 +136,7 @@ A woman in a taxi is worried about her flight.
 
 Q1. 女的要坐几点的航班？  (Nǚ de yào zuò jǐ diǎn de hángbān?)
    - English: What time is the flight the woman will take?
-   - options: ✓ 下午三点 / 下午一点半 / 下午两点半 / 晚上三点
+   - options: ✓ 下午三点 / 下午一点半 / 下午两点半 / 下午四点
    - answer in line 1
 Q2. 如果不堵车，多久能到？  (Rúguǒ bù dǔchē, duō jiǔ néng dào?)
    - English: If there is no traffic jam, how long will it take?
@@ -160,8 +160,8 @@ A man asks a woman about her new coat.
    - I bought it online. It was being sold at a discount then, so I only spent 300 yuan.
 3. 男：这么便宜！质量怎么样？  (Zhème piányi! Zhìliàng zěnmeyàng?)
    - That cheap! What is the quality like?
-4. 女：还可以。但是网购有时候也会买到质量不好的东西。  (Hái kěyǐ. Dànshì wǎnggòu yǒu shíhou yě huì mǎi dào zhìliàng bù hǎo de dōngxi.)
-   - It is OK. But when you shop online, sometimes you also buy things whose quality is not good.
+4. 女：还可以。但是在网上买，有时候也会买到质量不好的东西。  (Hái kěyǐ. Dànshì zài wǎngshàng mǎi, yǒu shíhou yě huì mǎi dào zhìliàng bù hǎo de dōngxi.)
+   - It is OK. But when you buy online, sometimes you also get things whose quality is not good.
 5. 男：对，我上次买的鞋，穿了一个星期就破了。  (Duì, wǒ shàngcì mǎi de xié, chuān le yí ge xīngqī jiù pò le.)
    - True. The shoes I bought last time fell apart after a week.
 6. 女：所以买之前要先看看别人怎么说。  (Suǒyǐ mǎi zhīqián yào xiān kànkan biérén zěnme shuō.)
@@ -179,8 +179,8 @@ Q3. 男的上次买的鞋怎么了？  (Nán de shàngcì mǎi de xié zěnme le
    - English: What happened to the shoes the man bought last time?
    - options: ✓ 穿了一个星期就破了 / 太小了 / 太贵了 / 颜色不好
    - answer in line 5
-Q4. 女的说网购前要做什么？  (Nǚ de shuō wǎnggòu qián yào zuò shénme?)
-   - English: What does the woman say you need to do before shopping online?
+Q4. 女的说在网上买东西以前要做什么？  (Nǚ de shuō zài wǎngshàng mǎi dōngxi yǐqián yào zuò shénme?)
+   - English: What does the woman say you should do before buying online?
    - options: ✓ 先看看别人怎么说 / 先去商场看 / 先问朋友 / 先付钱
    - answer in line 6
 
@@ -374,7 +374,7 @@ Q1. 他们周末想去哪儿？  (Tāmen zhōumò xiǎng qù nǎr?)
 Q2. 周末天气怎么样？  (Zhōumò tiānqì zěnmeyàng?)
    - English: What will the weather be like at the weekend?
    - options: ✓ 要降温，可能下雪 / 很热 / 下大雨 / 刮大风
-   - answer in line 2
+   - answer in lines 2 and 4
 Q3. 最冷的时候是多少摄氏度？  (Zuì lěng de shíhou shì duōshǎo shèshìdù?)
    - English: How cold will it be at its coldest?
    - options: ✓ 零下三摄氏度 / 零上三摄氏度 / 零下十三摄氏度 / 零摄氏度

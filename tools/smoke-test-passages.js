@@ -38,7 +38,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.waitForSelector('.psg-card');
     let t = await page.locator('.psg-card').innerText();
     check(/A family photo/.test(t) && /Listen first/.test(t) && await page.locator('.psg-play .btn.pri[disabled]').count() === 1, 'the passage opens on its scene, and Answer waits until it has been played' + tag);
-    check(!/小明，这是你家人吗/.test(t), 'no text of the conversation is shown before the questions' + tag);
+    check(!/小明，这是你的家人吗/.test(t), 'no text of the conversation is shown before the questions' + tag);
     await tap(page.locator('.psg-play .btn', { hasText: 'Play the conversation' }));
     await tap(page.locator('.psg-play .btn', { hasText: 'Answer the questions' }));
     // answer: right, wrong, right
@@ -53,7 +53,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     }
     t = await page.locator('.psg-card').innerText();
     check(/2 of 3 right/.test(t) && /\+20 coins/.test(t), 'the result: 2 of 3 right, +20 coins the first time' + tag);
-    check(await page.locator('.psg-tr li').count() === 5 && /小明，这是你家人吗/.test(t), 'the transcript shows every line after the questions' + tag);
+    check(await page.locator('.psg-tr li').count() === 5 && /小明，这是你的家人吗/.test(t), 'the transcript shows every line after the questions' + tag);
     await tap(page.locator('.psg-tog .linkbtn', { hasText: 'Show English' }));
     check(/Is this your family/i.test(await page.locator('.psg-tr').innerText()), 'English can be shown under each line' + tag);
     const xp1 = await page.evaluate(() => window.shanlu.state.xp);
@@ -97,6 +97,14 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await tap(page.locator('.psg-play .btn', { hasText: 'Play the conversation' }));
     check(await page.evaluate(() => window.shanlu.state.psg.minRate === 0.8), 'a slower listen is remembered for this try' + tag);
     await page.evaluate(() => window.shanlu.psgSetSpeed(1));
+    // a question whose answer needs two lines shows both and plays both (p1-fruit Q1: the apples are in line 1, the buying in line 5)
+    await page.evaluate(() => window.shanlu.pathStart('h1.l.p1-fruit')); await page.waitForSelector('.psg-card');
+    await tap(page.locator('.psg-play .btn', { hasText: 'Play the conversation' }));
+    await tap(page.locator('.psg-play .btn', { hasText: 'Answer the questions' }));
+    { const k = await page.evaluate(() => { const g = window.shanlu.state.psg; return g.ord[g.qi].indexOf(0); });
+      await tap(page.locator('.psg-opts .opt').nth(k)); }
+    const two = await page.locator('.psg-ans .psg-ansl').allInnerTexts();
+    check(two.length === 2 && /苹果多少钱/.test(two[0]) && /我买五个/.test(two[1]) && await page.locator('.psg-ansb .btn', { hasText: 'Hear those lines' }).count() === 1, 'an answer that needs two lines shows both (' + two.join(' / ').replace(/\s+/g, ' ') + ')' + tag);
     check(errors.length === 0, 'no page errors' + tag + ' ' + errors.join(' | '));
     await ctx.close();
   }

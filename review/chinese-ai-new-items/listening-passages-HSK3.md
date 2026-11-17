@@ -150,7 +150,7 @@ A waiter helps a woman order for her family.
    - Waiter, please bring us the menu.
 2. 男：好的。今天我们的新菜是鱼，您要不要尝一尝？  (Hǎo de. Jīntiān wǒmen de xīn cài shì yú, nín yào búyào cháng yì cháng?)
    - Sure. Today our new dish is fish. Would you like to try it?
-3. 女：好啊，来一个鱼，再来一碗米饭和两杯茶。  (Hǎo a, lái yí ge yú, zài lái yì wǎn mǐfàn hé liǎng bēi chá.)
+3. 女：好啊，来一条鱼，再来一碗米饭和两杯茶。  (Hǎo a, lái yì tiáo yú, zài lái yì wǎn mǐfàn hé liǎng bēi chá.)
    - OK, one fish, plus a bowl of rice and two cups of tea.
 4. 男：还要别的吗？  (Hái yào biéde ma?)
    - Do you need anything else?
@@ -187,8 +187,8 @@ A man asks a woman for directions.
    - Yes. You go straight ahead and turn right at the second junction.
 3. 男：是在红绿灯那儿吗？  (Shì zài hónglǜdēng nàr ma?)
    - Is that where the traffic lights are?
-4. 女：对，过了红绿灯，银行就在路边，在一个超市旁边。  (Duì, guo le hónglǜdēng, yínháng jiù zài lùbiān, zài yí ge chāoshì pángbiān.)
-   - Yes. Once you have passed the traffic lights, the bank is right by the road, next to a supermarket.
+4. 女：对，过了红绿灯，银行就在路边，旁边有一个超市。  (Duì, guò le hónglǜdēng, yínháng jiù zài lùbiān, pángbiān yǒu yí ge chāoshì.)
+   - Yes. Once you have passed the traffic lights, the bank is right by the road, with a supermarket next to it.
 5. 男：走过去要多久？  (Zǒu guòqù yào duō jiǔ?)
    - How long does it take to walk there?
 6. 女：差不多十分钟吧。  (Chàbuduō shí fēnzhōng ba.)
@@ -280,8 +280,8 @@ Q4. 男的说下次去哪儿复习？  (Nán de shuō xiàcì qù nǎr fùxí?)
 ## P9. HSK 3 · Wind and rain (p3-wind)
 A woman stops a man from cycling in bad weather.
 
-1. 女：外面刮大风了，还下雨。  (Wàimiàn guā dà fēng le, hái xiàyǔ.)
-   - It is very windy outside, and it is raining too.
+1. 女：外面刮大风了，还在下雨。  (Wàimiàn guā dà fēng le, hái zài xiàyǔ.)
+   - It is very windy outside, and it is raining.
 2. 男：真的？我今天要骑自行车去上班。  (Zhēn de? Wǒ jīntiān yào qí zìxíngchē qù shàngbān.)
    - Really? Today I am going to cycle to work.
 3. 女：别骑了，不安全。  (Bié qí le, bù ānquán.)
@@ -295,7 +295,7 @@ A woman stops a man from cycling in bad weather.
 
 Q1. 外面天气怎么样？  (Wàimiàn tiānqì zěnmeyàng?)
    - English: What is the weather like outside?
-   - options: ✓ 刮大风，还下雨 / 很热 / 下雪了 / 很好
+   - options: ✓ 刮大风，还在下雨 / 很热 / 下雪了 / 很好
    - answer in line 1
 Q2. 男的一开始想怎么去上班？  (Nán de yì kāishǐ xiǎng zěnme qù shàngbān?)
    - English: At first, how does the man want to get to work?
@@ -381,8 +381,8 @@ A man asks a woman about her plans.
 
 1. 男：你明年有什么打算？  (Nǐ míngnián yǒu shénme dǎsuàn?)
    - What are your plans for next year?
-2. 女：我打算去中国留学，为了提高我的汉语水平。  (Wǒ dǎsuàn qù Zhōngguó liúxué, wèile tígāo wǒ de Hànyǔ shuǐpíng.)
-   - I plan to study in China, to improve my Chinese.
+2. 女：为了提高我的汉语水平，我打算去中国留学。  (Wèile tígāo wǒ de Hànyǔ shuǐpíng, wǒ dǎsuàn qù Zhōngguó liúxué.)
+   - To improve my Chinese, I plan to study in China.
 3. 男：如果去中国，你想去哪个城市？  (Rúguǒ qù Zhōngguó, nǐ xiǎng qù nǎge chéngshì?)
    - If you go to China, which city do you want to go to?
 4. 女：我想去南方，因为我怕冷。  (Wǒ xiǎng qù nánfāng, yīnwèi wǒ pà lěng.)

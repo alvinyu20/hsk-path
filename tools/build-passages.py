@@ -57,7 +57,8 @@ def main():
             w = '%s question %d' % (where, j + 1)
             opts = q.get('opts') or []
             if len(opts) != 4 or len(set(opts)) != 4: problems.append(w + ': needs 4 different options')
-            if not isinstance(q.get('line'), int) or not 0 <= q['line'] < len(lines): problems.append(w + ': line must point at a line of the passage')
+            ql = q.get('line'); ql = ql if isinstance(ql, list) else [ql]   # one line, or a list when the answer needs two lines
+            if not ql or not all(isinstance(x, int) and 0 <= x < len(p.get('lines', [])) for x in ql) or len(set(ql)) != len(ql): problems.append(w + ': line must point at a line of the passage (or a list of lines)')
             if not q.get('zh') or not q.get('en'): problems.append(w + ': needs zh and en'); continue
             py, toks = eng.sentence(q['zh'])
             for t in toks:

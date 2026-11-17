@@ -39,7 +39,7 @@ Sentences (Chinese / English):
 19. 太好了！明天见！  /  Great! See you tomorrow!
 20. 请说慢一点。  /  Please speak a little slower.
 21. 请再说一遍。  /  Please say it one more time.
-22. 小明，这是你家人吗？  /  Xiaoming, is this your family?
+22. 小明，这是你的家人吗？  /  Xiaoming, is this your family?
 23. 是。这是我爸爸，这是我妈妈。  /  Yes. This is my dad, and this is my mum.
 24. 这个小朋友是谁？  /  Who is this child?
 25. 她是我妹妹，她八岁。  /  She is my younger sister. She is eight.

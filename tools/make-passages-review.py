@@ -33,7 +33,7 @@ for lv in levels:
         out.append('')
         for j, q in enumerate(p['qs']):
             opts = ' / '.join(('✓ ' if n == 0 else '') + o['zh'] for n, o in enumerate(q['opts']))
-            out.append('Q%d. %s  (%s)\n   - English: %s\n   - options: %s\n   - answer in line %d' % (j + 1, q['zh'], q['py'], q['en'], opts, q['line'] + 1))
+            out.append('Q%d. %s  (%s)\n   - English: %s\n   - options: %s\n   - answer in %s' % (j + 1, q['zh'], q['py'], q['en'], opts, ('line %d' % (q['line'] + 1)) if isinstance(q['line'], int) else 'lines ' + ' and '.join(str(x + 1) for x in q['line'])))
 dest = os.path.join(ROOT, 'review', 'chinese-ai-new-items', 'listening-passages-HSK%s.md' % '-'.join(levels))
 open(dest, 'w', encoding='utf-8').write('\n'.join(out) + '\n')
 print('wrote %s (%d passages, %d bytes)' % (os.path.relpath(dest, ROOT), k, os.path.getsize(dest)))

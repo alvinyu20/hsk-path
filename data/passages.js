@@ -12,8 +12,8 @@ window.SHANLU_PASSAGES = {
    "lines": [
     {
      "s": "女",
-     "zh": "小明，这是你家人吗？",
-     "py": "Xiǎomíng, zhè shì nǐ jiārén ma?",
+     "zh": "小明，这是你的家人吗？",
+     "py": "Xiǎomíng, zhè shì nǐ de jiārén ma?",
      "en": "Xiaoming, is this your family?"
     },
     {
@@ -119,6 +119,7 @@ window.SHANLU_PASSAGES = {
     "这",
     "是",
     "你",
+    "的",
     "家人",
     "吗",
     "我",
@@ -332,7 +333,10 @@ window.SHANLU_PASSAGES = {
        "py": "Chá"
       }
      ],
-     "line": 0
+     "line": [
+      0,
+      4
+     ]
     },
     {
      "zh": "女的买几个？",
@@ -886,7 +890,10 @@ window.SHANLU_PASSAGES = {
        "py": "Bú xiàyǔ"
       }
      ],
-     "line": 1
+     "line": [
+      1,
+      3
+     ]
     },
     {
      "zh": "明天冷吗？",
@@ -1946,9 +1953,9 @@ window.SHANLU_PASSAGES = {
     },
     {
      "s": "女",
-     "zh": "太长了。有没有小一点儿的？",
-     "py": "Tài cháng le. Yǒu méiyǒu xiǎo yìdiǎnr de?",
-     "en": "It is too long. Do you have a slightly smaller one?"
+     "zh": "太大了。有没有小一点儿的？",
+     "py": "Tài dà le. Yǒu méiyǒu xiǎo yìdiǎnr de?",
+     "en": "It is too big. Do you have a slightly smaller one?"
     },
     {
      "s": "男",
@@ -2042,8 +2049,8 @@ window.SHANLU_PASSAGES = {
      "en": "What is the first piece of clothing like?",
      "opts": [
       {
-       "zh": "太长了",
-       "py": "Tài cháng le"
+       "zh": "太大了",
+       "py": "Tài dà le"
       },
       {
        "zh": "太贵了",
@@ -2054,8 +2061,8 @@ window.SHANLU_PASSAGES = {
        "py": "Yánsè bù hǎo"
       },
       {
-       "zh": "太小了",
-       "py": "Tài xiǎo le"
+       "zh": "太长了",
+       "py": "Tài cháng le"
       }
      ],
      "line": 4
@@ -2067,7 +2074,6 @@ window.SHANLU_PASSAGES = {
     "颜色",
     "红色",
     "白色",
-    "长",
     "就"
    ]
   },
@@ -4027,8 +4033,8 @@ window.SHANLU_PASSAGES = {
     },
     {
      "s": "女",
-     "zh": "好啊，来一个鱼，再来一碗米饭和两杯茶。",
-     "py": "Hǎo a, lái yí ge yú, zài lái yì wǎn mǐfàn hé liǎng bēi chá.",
+     "zh": "好啊，来一条鱼，再来一碗米饭和两杯茶。",
+     "py": "Hǎo a, lái yì tiáo yú, zài lái yì wǎn mǐfàn hé liǎng bēi chá.",
      "en": "OK, one fish, plus a bowl of rice and two cups of tea."
     },
     {
@@ -4191,9 +4197,9 @@ window.SHANLU_PASSAGES = {
     },
     {
      "s": "女",
-     "zh": "对，过了红绿灯，银行就在路边，在一个超市旁边。",
-     "py": "Duì, guo le hónglǜdēng, yínháng jiù zài lùbiān, zài yí ge chāoshì pángbiān.",
-     "en": "Yes. Once you have passed the traffic lights, the bank is right by the road, next to a supermarket."
+     "zh": "对，过了红绿灯，银行就在路边，旁边有一个超市。",
+     "py": "Duì, guò le hónglǜdēng, yínháng jiù zài lùbiān, pángbiān yǒu yí ge chāoshì.",
+     "en": "Yes. Once you have passed the traffic lights, the bank is right by the road, with a supermarket next to it."
     },
     {
      "s": "男",
@@ -4628,9 +4634,9 @@ window.SHANLU_PASSAGES = {
    "lines": [
     {
      "s": "女",
-     "zh": "外面刮大风了，还下雨。",
-     "py": "Wàimiàn guā dà fēng le, hái xiàyǔ.",
-     "en": "It is very windy outside, and it is raining too."
+     "zh": "外面刮大风了，还在下雨。",
+     "py": "Wàimiàn guā dà fēng le, hái zài xiàyǔ.",
+     "en": "It is very windy outside, and it is raining."
     },
     {
      "s": "男",
@@ -4670,8 +4676,8 @@ window.SHANLU_PASSAGES = {
      "en": "What is the weather like outside?",
      "opts": [
       {
-       "zh": "刮大风，还下雨",
-       "py": "Guā dà fēng, hái xiàyǔ"
+       "zh": "刮大风，还在下雨",
+       "py": "Guā dà fēng, hái zài xiàyǔ"
       },
       {
        "zh": "很热",
@@ -5085,9 +5091,9 @@ window.SHANLU_PASSAGES = {
     },
     {
      "s": "女",
-     "zh": "我打算去中国留学，为了提高我的汉语水平。",
-     "py": "Wǒ dǎsuàn qù Zhōngguó liúxué, wèile tígāo wǒ de Hànyǔ shuǐpíng.",
-     "en": "I plan to study in China, to improve my Chinese."
+     "zh": "为了提高我的汉语水平，我打算去中国留学。",
+     "py": "Wèile tígāo wǒ de Hànyǔ shuǐpíng, wǒ dǎsuàn qù Zhōngguó liúxué.",
+     "en": "To improve my Chinese, I plan to study in China."
     },
     {
      "s": "男",
@@ -5214,10 +5220,10 @@ window.SHANLU_PASSAGES = {
    ],
    "words": [
     "打算",
-    "留学",
     "为了",
     "提高",
     "水平",
+    "留学",
     "如果",
     "城市",
     "南方",
@@ -5767,8 +5773,8 @@ window.SHANLU_PASSAGES = {
        "py": "Xiàwǔ liǎng diǎn bàn"
       },
       {
-       "zh": "晚上三点",
-       "py": "Wǎnshang sān diǎn"
+       "zh": "下午四点",
+       "py": "Xiàwǔ sì diǎn"
       }
      ],
      "line": 0
@@ -5883,9 +5889,9 @@ window.SHANLU_PASSAGES = {
     },
     {
      "s": "女",
-     "zh": "还可以。但是网购有时候也会买到质量不好的东西。",
-     "py": "Hái kěyǐ. Dànshì wǎnggòu yǒu shíhou yě huì mǎi dào zhìliàng bù hǎo de dōngxi.",
-     "en": "It is OK. But when you shop online, sometimes you also buy things whose quality is not good."
+     "zh": "还可以。但是在网上买，有时候也会买到质量不好的东西。",
+     "py": "Hái kěyǐ. Dànshì zài wǎngshàng mǎi, yǒu shíhou yě huì mǎi dào zhìliàng bù hǎo de dōngxi.",
+     "en": "It is OK. But when you buy online, sometimes you also get things whose quality is not good."
     },
     {
      "s": "男",
@@ -5974,9 +5980,9 @@ window.SHANLU_PASSAGES = {
      "line": 4
     },
     {
-     "zh": "女的说网购前要做什么？",
-     "py": "Nǚ de shuō wǎnggòu qián yào zuò shénme?",
-     "en": "What does the woman say you need to do before shopping online?",
+     "zh": "女的说在网上买东西以前要做什么？",
+     "py": "Nǚ de shuō zài wǎngshàng mǎi dōngxi yǐqián yào zuò shénme?",
+     "en": "What does the woman say you should do before buying online?",
      "opts": [
       {
        "zh": "先看看别人怎么说",
@@ -6002,7 +6008,6 @@ window.SHANLU_PASSAGES = {
     "外套",
     "打折",
     "质量",
-    "网购",
     "破",
     "之前"
    ]
@@ -6866,7 +6871,10 @@ window.SHANLU_PASSAGES = {
        "py": "Guā dà fēng"
       }
      ],
-     "line": 1
+     "line": [
+      1,
+      3
+     ]
     },
     {
      "zh": "最冷的时候是多少摄氏度？",
@@ -7818,9 +7826,9 @@ window.SHANLU_PASSAGES = {
     },
     {
      "s": "女",
-     "zh": "我听说司机不仅要罚款，还可能会被暂停驾照。",
-     "py": "Wǒ tīngshuō sījī bùjǐn yào fákuǎn, hái kěnéng huì bèi zàntíng jiàzhào.",
-     "en": "I heard the driver will not only have to pay a fine, but the licence may also be suspended."
+     "zh": "我听说司机不仅要罚款，还可能有一段时间不能开车了。",
+     "py": "Wǒ tīngshuō sījī bùjǐn yào fákuǎn, hái kěnéng yǒu yí duàn shíjiān bù néng kāichē le.",
+     "en": "I heard the driver will not only have to pay a fine, but may also not be allowed to drive for a while."
     }
    ],
    "qs": [
@@ -7926,8 +7934,8 @@ window.SHANLU_PASSAGES = {
      "en": "What may happen to the speeding driver?",
      "opts": [
       {
-       "zh": "被罚款，还可能被暂停驾照",
-       "py": "Bèi fákuǎn, hái kěnéng bèi zàntíng jiàzhào"
+       "zh": "被罚款，还可能一段时间不能开车",
+       "py": "Bèi fákuǎn, hái kěnéng yí duàn shíjiān bù néng kāichē"
       },
       {
        "zh": "只是被罚款",
@@ -7950,8 +7958,7 @@ window.SHANLU_PASSAGES = {
     "堵",
     "撞",
     "超速",
-    "罚款",
-    "驾照"
+    "罚款"
    ]
   },
   {
@@ -7992,9 +7999,9 @@ window.SHANLU_PASSAGES = {
     },
     {
      "s": "男",
-     "zh": "没关系，点“忘记密码”，它会给你的手机发一个号码，输入以后就能设置新密码。",
-     "py": "Méiguānxi, diǎn \" wàngjì mìmǎ \", tā huì gěi nǐ de shǒujī fā yí ge hàomǎ, shūrù yǐhòu jiù néng shèzhì xīn mìmǎ.",
-     "en": "No problem. Tap \"forgot password\", and it will send a number to your phone. After you type it in, you can set a new password."
+     "zh": "没关系，点“忘记密码”，它会给你的手机发一条短信，里面有几个数字，输入以后就能设置新密码。",
+     "py": "Méiguānxi, diǎn \" wàngjì mìmǎ \", tā huì gěi nǐ de shǒujī fā yì tiáo duǎnxìn, lǐmiàn yǒu jǐ ge shùzì, shūrù yǐhòu jiù néng shèzhì xīn mìmǎ.",
+     "en": "No problem. Tap \"forgot password\", and it will send a text message to your phone with a few numbers in it. After you type them in, you can set a new password."
     },
     {
      "s": "女",
