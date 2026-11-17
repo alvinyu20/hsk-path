@@ -849,6 +849,30 @@
   const qMeaning = (zh) => { const e0 = pickEx(zh); return Object.assign({ type:'mc', kicker:'Meaning', prompt:'What does this word mean?', big:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(e0), word:zh, dim:'see' }, choiceOptions(zh, z => BANK[z].en, true)); };
   const qHearWord = (zh, ex) => Object.assign({ type:'listen', kicker:'Listen', prompt:'Which word did you hear?', audio:zh, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(ex || pickEx(zh)), word:zh, dim:'hear' }, choiceOptions(zh, z => z, false, true));
   const qHearMeaning = (zh) => Object.assign({ type:'listen', kicker:'Listen', prompt:'What does this word mean?', audio:zh, optsLatin:true, reveal:zh + ' · ' + BANK[zh].py + ' · ' + BANK[zh].en, explain:exLine(pickEx(zh)), word:zh, dim:'hear' }, choiceOptions(zh, z => BANK[z].en, true, true));
+  // "Hear the sentence": a listening card for a word you already hear well. One of its example sentences is played (recorded audio only,
+  // so every device hears the same voice), and you pick what the whole sentence means. Wrong answers are other example sentences, the ones
+  // that share the most words with it first, so the word alone is not always enough; a wrong answer never means the same thing in English.
+  const recorded = (zh) => !!(window.SHANLU_AUDIO && Object.prototype.hasOwnProperty.call(window.SHANLU_AUDIO, zh));
+  const enKey = (s) => String(s || '').toLowerCase().replace(/o'clock/g, '').replace(/\b(a|an|the)\b/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  let SENT_POOL = null;
+  const sentPool = () => {
+    if (SENT_POOL) return SENT_POOL;
+    const seen = {}; SENT_POOL = [];
+    BANK_KEYS.forEach(z => (EXS[z] || []).forEach(e => { if (e && e.zh && !seen[e.zh] && e.en) { seen[e.zh] = 1; SENT_POOL.push(e); } }));
+    return SENT_POOL;
+  };
+  const hearSentenceEx = (zh, seed) => { const l = (EXS[zh] || []).filter(e => e && e.zh && e.en && recorded(e.zh)); return l.length ? l[seed % l.length] : null; };
+  const qHearSentence = (zh, e) => {
+    const key = enKey(e.en); const toks = {}; (e.toks || []).forEach(t => { toks[t] = 1; });
+    const cands = sentPool().filter(x => x.zh !== e.zh && enKey(x.en) !== key && enKey(x.en).indexOf(key) < 0 && key.indexOf(enKey(x.en)) < 0)
+      .map(x => ({ x, sc:(x.toks || []).filter(t => toks[t]).length + Math.random() * 1.5 })).sort((a, b) => b.sc - a.sc).slice(0, 10);
+    const picked = [];
+    shuffle(cands).forEach(c => { const k = enKey(c.x.en); if (picked.length < 3 && !picked.some(p => { const pk = enKey(p.en); return pk === k || pk.indexOf(k) >= 0 || k.indexOf(pk) >= 0 || pk.split(' ').slice(0, 4).join(' ') === k.split(' ').slice(0, 4).join(' '); })) picked.push(c.x); });
+    const opts = shuffle([e].concat(picked)).map((x, i) => ({ id:ORDER_IDS[i], label:x.en, zh:x.zh }));
+    return { type:'listen', kicker:'Hear the sentence', prompt:'What does this sentence mean?', audio:e.zh, optsLatin:true, sentence:true,
+      reveal:e.zh + ' · ' + e.py, explain:'The word: ' + zh + ' ' + BANK[zh].py + ' (' + BANK[zh].en + ')', word:zh, dim:'hear',
+      options:opts.map(o => ({ id:o.id, label:o.label })), correct:opts.find(o => o.zh === e.zh).id };
+  };
   const TYPE_HELP = 'Write the tones as marks or numbers: nǐ hǎo or ni3 hao3. Hanzi also works.';
   const qTypePinyin = (zh, ex) => ({ type:'type', kicker:'Type it', prompt:'Type the pinyin for this word, with tones', big:zh, placeholder:'nǐ hǎo or ni3 hao3', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, ''), reveal:BANK[zh].py + ' · ' + BANK[zh].en, explain:TYPE_HELP + ' Example: ' + ex.zh + ' ' + ex.py, word:zh, dim:'prod' });
   const qSayIt = (zh, ex) => ({ type:'type', kicker:'Say it', prompt:'Say this out loud, then type its pinyin with tones', big:BANK[zh].en, bigCls:'en', sayEn:BANK[zh].en, placeholder:'nǐ hǎo or ni3 hao3', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, ''), reveal:zh + ' · ' + BANK[zh].py, explain:TYPE_HELP + ' Example: ' + ex.zh + ' ' + ex.py, word:zh, dim:'prod' });
@@ -2865,7 +2889,13 @@
     };
     rQuestion = (it, kind) => {
       const m = itemOf(it); const ex = pickEx(m.zh);
-      const q = kind === 'choice' ? qMeaning(m.zh) : kind === 'audio' ? qHearMeaning(m.zh) : m.t === 'l' ? qTypePinyin(m.zh, ex) : qSayIt(m.zh, ex);
+      let q;
+      if (kind === 'audio') {
+        // a word you already hear well (hearing stability of 3 days or more) gets a whole sentence about half the time
+        const S = this.state; const hs = S.ws[m.zh] && S.ws[m.zh].hear ? S.ws[m.zh].hear.s || 0 : 0; const seed = strHash(m.zh) + Math.floor(Date.now() / 864e5) + S.rstep;
+        const se = hs >= 3 && (window.SHANLU_SENT_SHARE != null ? (seed % 100) < window.SHANLU_SENT_SHARE : seed % 2 === 0) ? hearSentenceEx(m.zh, seed) : null;
+        q = se ? qHearSentence(m.zh, se) : qHearMeaning(m.zh);
+      } else q = kind === 'choice' ? qMeaning(m.zh) : m.t === 'l' ? qTypePinyin(m.zh, ex) : qSayIt(m.zh, ex);
       return Object.assign(q, { rv:true, rit:it, reportUrl:report('Review card for ' + m.zh, m.zh + ' ' + BANK[m.zh].py + ' ' + BANK[m.zh].en) });
     };
     // one answer: changes the word's memory (or its learning step) and the log; returns what the queue should do next

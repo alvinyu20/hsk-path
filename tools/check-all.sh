@@ -144,5 +144,7 @@ if [ "$2" != "--no-browser" ]; then
   NODE_PATH="$(npm root -g)" node tools/smoke-test-l5.js --erhua
   echo "== 5k. the grammar review shows every exercise of a point before it repeats one"
   NODE_PATH="$(npm root -g)" node tools/smoke-test-grv-variety.js
+  echo "== 5l. Review plays whole sentences for words you already hear well"
+  NODE_PATH="$(npm root -g)" node tools/smoke-test-hear-sentence.js
 fi
 echo "all checks passed (this does not replace review by a person who reads Chinese)"
