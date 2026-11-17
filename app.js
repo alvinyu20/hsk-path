@@ -3100,7 +3100,7 @@
     jyTravel = () => {
       if (!JWORLD) return;
       const S = this.state; const st0 = this.jyEnsure(); if (!st0 || !st0.reg) return;
-      if (JY.meter(totalXp(S), st0).ready < 1) { this.coinHelpOpen(); return; }
+      if (JY.meter(totalXp(S), st0).ready < 1) return;
       const from = st0.seen.length ? st0.seen[st0.seen.length - 1] : null;
       const cost = JY.meter(totalXp(S), st0).nextCost;   // what this stop costs, shown as the coins that fly in
       const r = JY.step(JWORLD, st0, JY.rngFor(st0), ymd(new Date()));
@@ -3423,8 +3423,8 @@
       const introOf = (RR) => (RR && RR.intro && RR.intro.length === 3 ? [{ k:'The land', t:RR.intro[0] }, { k:'The table', t:RR.intro[1] }, { k:'Good to know', t:RR.intro[2] }] : []);
       out.jyPct = (done ? 100 : mt.pct) + '%'; out.jyPctNum = done ? 100 : mt.pct;
       out.jyMeterCls = 'jy-meter' + (mt.ready > 0 && !done ? ' ready' : ''); out.jyMeterLabel = done ? 'Journey complete' : mt.ready > 0 ? plural(mt.ready, 'stop', 'stops') + ' ready' : mt.into + ' of ' + mt.nextCost + ' coins toward the next stop';
-      out.jyGoOff = done; out.jyGoCls = 'btn jy-go' + (!done && mt.ready < 1 ? ' short' : ' pri'); out.jyGoText = done ? 'All done' : mt.ready > 0 ? (st.n === 0 ? 'Take your first flight (free)' : st.started ? 'Travel to the next stop' : 'Board the flight') : 'How to earn ' + mt.toGo.toLocaleString('en-US') + ' more coins';
-      out.jyEarnShow = !done && mt.ready > 0; out.jyEarnOpen = this.coinHelpOpen;
+      out.jyGoOff = done || mt.ready < 1; out.jyGoText = done ? 'All done' : mt.ready > 0 ? (st.n === 0 ? 'Take your first flight (free)' : st.started ? 'Travel to the next stop' : 'Board the flight') : mt.toGo + ' more coins to go';
+      out.jyEarnShow = !done && mt.ready < 1; out.jyEarnOpen = this.coinHelpOpen;   // short of coins: a small button beside the travel button opens the coin guide
       out.jyTravel = this.jyTravel;
 
       // the tint follows the region on screen: the one being looked at, else the one you are in

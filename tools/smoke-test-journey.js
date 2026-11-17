@@ -45,8 +45,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     { const it = await page.locator('.jy-card .jy-intro').innerText().catch(() => '');
       check(/Sichuan in three lines/.test(it) && /THE LAND/i.test(it) && /THE TABLE/i.test(it) && /GOOD TO KNOW/i.test(it) && /must-sees? to find/.test(it), 'the airport card has the three lines about the region: ' + it.replace(/\s+/g, ' ').slice(0, 80)); }
     check(await page.locator('.jy-now .jy-hero').count() === 0, 'the province photo is not shown above the road');
-    check(await page.locator('.jy-go.short').count() === 1 && await page.locator('.jy-go[disabled]').count() === 0, 'the next stop is not free, and the button stays tappable');
-    check(/How to earn 50 more coins/.test(t), 'the next stop costs 50 coins, and the button says how many more to earn');
+    check(await page.locator('.jy-go[disabled]').count() === 1 && await page.locator('.jy-earn').count() === 1, 'the next stop is not free, and a small "How to earn?" button sits beside the travel button');
+    check(/50 more coins to go/.test(t), 'the next stop costs 50 coins');
     // the background tint follows the region
     const hue = await page.locator('.jy').evaluate(el => getComputedStyle(el).getPropertyValue('--jh').trim());
     check(hue === '8', 'Sichuan has its own colour (hue 8), got ' + hue);
@@ -60,7 +60,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await page.locator('.jy-me').count() === 1 && /You (are|start)/.test(await page.locator('.jy-me .cap').textContent()), 'your avatar sits on the country map, labelled');
     await page.locator('.jy-acts .btn.pri').click();
     check(await page.locator('.jy-card').count() === 0, 'the card closes');
-    await page.locator('.jy-go').click();
+    await page.locator('.jy-earn').click();
     { const g = await page.locator('.coin-help').innerText().catch(() => '');
       check(/How to earn coins/.test(g) && /Treasure chest/.test(g) && /50 more/.test(g) && /first flight is free/.test(g), 'tapping it opens the coin guide with what is still needed: ' + g.replace(/\s+/g, ' ').slice(0, 120)); }
     await page.locator('.coin-help .obm-bar .linkbtn').click();
@@ -119,7 +119,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     // keep travelling while coins last: every stop in this city block belongs to Chengdu until the city is done
     let n = 2, outside = 0;
     for (let i = 0; i < 12; i++) {
-      if (await page.locator('.jy-go.short, .jy-go[disabled]').count()) break;
+      if (await page.locator('.jy-go[disabled]').count()) break;
       await page.locator('.jy-go').click(); await closeTrip(page); n++;
       const place = await page.locator('.jy-place').innerText();
       if (!/Chengdu/.test(place)) outside++;
