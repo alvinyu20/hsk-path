@@ -97,9 +97,9 @@
   "t": "spot",
   "zh": "他明天去商店。",
   "en": "He goes to the shop tomorrow.",
-  "wrong": "他明天去商店下午。",
-  "remove": "下午",
-  "explain": "A time goes before the verb, not at the end."
+  "wrong": "他明天在去商店。",
+  "remove": "在",
+  "explain": "Do not put 在 before 去: the place comes right after 去."
  },
  {
   "p": "g1-shi",
@@ -107,12 +107,12 @@
   "prompt": "Which sentence says: It is hot today?",
   "options": [
    "今天很热。",
-   "今天是很热。"
+   "今天热很。"
   ],
   "correct": 0,
   "zh": "今天很热。",
   "en": "It is hot today.",
-  "explain": "Do not put 是 before an adjective."
+  "explain": "很 comes before the adjective."
  },
  {
   "p": "g1-shi",
@@ -152,12 +152,12 @@
   "prompt": "Which sentence says: This cup is very big?",
   "options": [
    "这个杯子很大。",
-   "这个杯子是很大。"
+   "这个杯子大很。"
   ],
   "correct": 0,
   "zh": "这个杯子很大。",
   "en": "This cup is very big.",
-  "explain": "Do not put 是 before an adjective."
+  "explain": "很 comes before the adjective."
  },
  {
   "p": "g1-hen",
@@ -179,9 +179,9 @@
   "t": "spot",
   "zh": "他很高兴。",
   "en": "He is very happy.",
-  "wrong": "他是很高兴。",
-  "remove": "是",
-  "explain": "Do not put 是 before an adjective."
+  "wrong": "他很太高兴。",
+  "remove": "太",
+  "explain": "Do not use 很 and 太 together."
  },
  {
   "p": "g1-youdianr",
@@ -258,10 +258,10 @@
  {
   "p": "g1-ma",
   "t": "spot",
-  "zh": "你去学校吗？",
-  "en": "Are you going to school?",
+  "zh": "你去什么学校？",
+  "en": "Which school do you go to?",
   "wrong": "你去什么学校吗？",
-  "remove": "什么",
+  "remove": "吗",
   "explain": "Do not use 吗 with a question word."
  },
  {
@@ -776,9 +776,9 @@
   "t": "spot",
   "zh": "他今年五岁。",
   "en": "He is five this year.",
-  "wrong": "他今年是五岁。",
-  "remove": "是",
-  "explain": "Do not add 是 before an age."
+  "wrong": "他今年五个岁。",
+  "remove": "个",
+  "explain": "Do not put 个 between the number and 岁."
  },
  {
   "p": "g1-di",
@@ -841,9 +841,9 @@
   "t": "spot",
   "zh": "她是第二个老师。",
   "en": "She is the second teacher.",
-  "wrong": "她是第二个的老师。",
-  "remove": "的",
-  "explain": "Do not add 的 after the measure word."
+  "wrong": "她是第二个很老师。",
+  "remove": "很",
+  "explain": "Do not put 很 before a noun."
  },
  {
   "p": "g1-clock",
@@ -1061,12 +1061,10 @@
  },
  {
   "p": "g1-xiang",
-  "t": "spot",
-  "zh": "我想去商店。",
-  "en": "I want to go to the shop.",
-  "wrong": "我想很去商店。",
-  "remove": "很",
-  "explain": "很 goes before 想: 我很想去."
+  "t": "order",
+  "zh": "我很想去商店。",
+  "en": "I really want to go to the shop.",
+  "explain": "很 goes before 想."
  },
  {
   "p": "g1-yao",
@@ -1747,9 +1745,9 @@
   "t": "spot",
   "zh": "弟弟不高兴了。",
   "en": "My younger brother is not happy any more.",
-  "wrong": "弟弟不是高兴了。",
-  "remove": "是",
-  "explain": "Do not put 是 before an adjective."
+  "wrong": "弟弟不有高兴了。",
+  "remove": "有",
+  "explain": "Do not put 有 before an adjective."
  },
  {
   "p": "g1-le2",
@@ -1857,9 +1855,9 @@
   "t": "spot",
   "zh": "她对我很好。",
   "en": "She is very good to me.",
-  "wrong": "她对我是很好。",
-  "remove": "是",
-  "explain": "Do not put 是 before an adjective."
+  "wrong": "她对我很太好。",
+  "remove": "太",
+  "explain": "Do not use 很 and 太 together."
  },
  {
   "p": "g1-serial",

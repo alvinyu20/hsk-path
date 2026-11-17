@@ -50,18 +50,18 @@ A6. **fill**. 他明天___去商店。  (Tā míngtiān xiàwǔ qù shāngdiàn.
 A7. **build**. 爸爸晚上在家看电视。  (Bàba wǎnshang zài jiā kàn diànshì.)
    - English: Dad watches TV at home in the evening.
    - note shown to the learner: Time, then place, then the verb.
-A8. **spot**. sentence with the extra word: 他明天去商店下午。
-   - extra word: 下午
+A8. **spot**. sentence with the extra word: 他明天在去商店。
+   - extra word: 在
    - correct sentence: 他明天去商店。  (Tā míngtiān qù shāngdiàn.)
    - English: He goes to the shop tomorrow.
-   - note shown to the learner: A time goes before the verb, not at the end.
+   - note shown to the learner: Do not put 在 before 去: the place comes right after 去.
 
 ### g1-shi  是: A is B  (lesson: 是: A is B)
 
 A9. **choose**. English: It is hot today.
    - right: 今天很热。  (Jīntiān hěn rè.)
-   - wrong: 今天是很热。
-   - note shown to the learner: Do not put 是 before an adjective.
+   - wrong: 今天热很。
+   - note shown to the learner: 很 comes before the adjective.
 A10. **fill**. 这___我的手机。  (Zhè shì wǒ de shǒujī.)
    - English: This is my phone.
    - blank: 是
@@ -83,8 +83,8 @@ A13. **fill**. 她___是我的同学。  (Tā bú shì wǒ de tóngxué.)
 
 A14. **choose**. English: This cup is very big.
    - right: 这个杯子很大。  (Zhège bēizi hěn dà.)
-   - wrong: 这个杯子是很大。
-   - note shown to the learner: Do not put 是 before an adjective.
+   - wrong: 这个杯子大很。
+   - note shown to the learner: 很 comes before the adjective.
 A15. **fill**. 这个电影___好看！  (Zhège diànyǐng zhēn hǎokàn!)
    - English: This film is really good!
    - blank: 真
@@ -92,11 +92,11 @@ A15. **fill**. 这个电影___好看！  (Zhège diànyǐng zhēn hǎokàn!)
 A16. **build**. 这个杯子太贵了！  (Zhège bēizi tài guì le!)
    - English: This cup is too expensive!
    - note shown to the learner: 太 … 了 shows too or so.
-A17. **spot**. sentence with the extra word: 他是很高兴。
-   - extra word: 是
+A17. **spot**. sentence with the extra word: 他很太高兴。
+   - extra word: 太
    - correct sentence: 他很高兴。  (Tā hěn gāoxìng.)
    - English: He is very happy.
-   - note shown to the learner: Do not put 是 before an adjective.
+   - note shown to the learner: Do not use 很 and 太 together.
 
 ### g1-youdianr  有点儿 (a bit, and not in a good way)  (lesson: Describing things: 很, 太, 真, 非常, 有点儿)
 
@@ -131,9 +131,9 @@ A24. **build**. 你喝茶吗？  (Nǐ hē chá ma?)
    - English: Do you drink tea?
    - note shown to the learner: Statement + 吗.
 A25. **spot**. sentence with the extra word: 你去什么学校吗？
-   - extra word: 什么
-   - correct sentence: 你去学校吗？  (Nǐ qù xuéxiào ma?)
-   - English: Are you going to school?
+   - extra word: 吗
+   - correct sentence: 你去什么学校？  (Nǐ qù shénme xuéxiào?)
+   - English: Which school do you go to?
    - note shown to the learner: Do not use 吗 with a question word.
 
 ### g1-qword  Question words: 什么, 谁, 哪儿, 几, 多少  (lesson: Question words: 什么, 谁, 哪儿, 几, 多少, 怎么)
@@ -343,11 +343,11 @@ A69. **fill**. 你弟弟今年___岁？  (Nǐ dìdi jīnnián jǐ suì?)
 A70. **build**. 我今年十八岁。  (Wǒ jīnnián shíbā suì.)
    - English: I am eighteen this year.
    - note shown to the learner: number + 岁.
-A71. **spot**. sentence with the extra word: 他今年是五岁。
-   - extra word: 是
+A71. **spot**. sentence with the extra word: 他今年五个岁。
+   - extra word: 个
    - correct sentence: 他今年五岁。  (Tā jīnnián wǔ suì.)
    - English: He is five this year.
-   - note shown to the learner: Do not add 是 before an age.
+   - note shown to the learner: Do not put 个 between the number and 岁.
 
 ### g1-di  第 (ordinal numbers)  (lesson: Numbers, 两, money, age and 第)
 
@@ -362,11 +362,11 @@ A73. **fill**. 我是___四个。  (Wǒ shì dì sì ge.)
 A74. **build**. 他是第三个学生。  (Tā shì dì sān ge xuésheng.)
    - English: He is the third student.
    - note shown to the learner: 第 + number + measure word.
-A75. **spot**. sentence with the extra word: 她是第二个的老师。
-   - extra word: 的
+A75. **spot**. sentence with the extra word: 她是第二个很老师。
+   - extra word: 很
    - correct sentence: 她是第二个老师。  (Tā shì dì èr ge lǎoshī.)
    - English: She is the second teacher.
-   - note shown to the learner: Do not add 的 after the measure word.
+   - note shown to the learner: Do not put 很 before a noun.
 
 ### g1-clock  Telling the time  (lesson: Time, dates and days)
 
@@ -465,11 +465,9 @@ A95. **fill**. 她___买一件衣服。  (Tā xiǎng mǎi yí jiàn yīfu.)
 A96. **build**. 你想喝什么？  (Nǐ xiǎng hē shénme?)
    - English: What would you like to drink?
    - note shown to the learner: 想 + verb.
-A97. **spot**. sentence with the extra word: 我想很去商店。
-   - extra word: 很
-   - correct sentence: 我想去商店。  (Wǒ xiǎng qù shāngdiàn.)
-   - English: I want to go to the shop.
-   - note shown to the learner: 很 goes before 想: 我很想去.
+A97. **build**. 我很想去商店。  (Wǒ hěn xiǎng qù shāngdiàn.)
+   - English: I really want to go to the shop.
+   - note shown to the learner: 很 goes before 想.
 
 ### g1-yao  要: want, would like  (lesson: 想 and 要: wanting and offering)
 
@@ -724,11 +722,11 @@ A150. **fill**. 我女儿三岁___。  (Wǒ nǚ'ér sān suì le.)
 A151. **build**. 他不在家了。  (Tā bú zài jiā le.)
    - English: He is not at home any more.
    - note shown to the learner: 不 … 了 means not any more.
-A152. **spot**. sentence with the extra word: 弟弟不是高兴了。
-   - extra word: 是
+A152. **spot**. sentence with the extra word: 弟弟不有高兴了。
+   - extra word: 有
    - correct sentence: 弟弟不高兴了。  (Dìdi bù gāoxìng le.)
    - English: My younger brother is not happy any more.
-   - note shown to the learner: Do not put 是 before an adjective.
+   - note shown to the learner: Do not put 有 before an adjective.
 A153. **fill**. 我不想去___。  (Wǒ bù xiǎng qù le.)
    - English: I do not want to go any more.
    - blank: 了
@@ -766,11 +764,11 @@ A159. **fill**. 妈妈___孩子很好。  (Māma duì háizi hěn hǎo.)
 A160. **build**. 他对朋友很好。  (Tā duì péngyou hěn hǎo.)
    - English: He is very good to his friends.
    - note shown to the learner: 对 + person + adjective.
-A161. **spot**. sentence with the extra word: 她对我是很好。
-   - extra word: 是
+A161. **spot**. sentence with the extra word: 她对我很太好。
+   - extra word: 太
    - correct sentence: 她对我很好。  (Tā duì wǒ hěn hǎo.)
    - English: She is very good to me.
-   - note shown to the learner: Do not put 是 before an adjective.
+   - note shown to the learner: Do not use 很 and 太 together.
 
 ### g1-serial  Two actions in a row  (lesson: Two actions in a row, and giving)
 

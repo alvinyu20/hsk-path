@@ -105,7 +105,7 @@ Sentences (Chinese / English):
 85. 她是你的朋友吗？  /  Is she your friend?
 86. 你家有猫吗？  /  Do you have a cat at home?
 87. 你喝茶吗？  /  Do you drink tea?
-88. 你去学校吗？  /  Are you going to school?
+88. 你去什么学校？  /  Which school do you go to?
 89. 你在哪里学习？  /  Where do you study?
 90. 你有几个朋友？  /  How many friends do you have?
 91. 你们的老师是谁？  /  Who is your teacher?
@@ -235,6 +235,6 @@ Sentences (Chinese / English):
 215. 我不想去学校。  /  I don't want to go to school.
 216. 我想看电影。  /  I want to watch a film.
 217. 她想买一件衣服。  /  She wants to buy a piece of clothing.
-218. 我想去商店。  /  I want to go to the shop.
+218. 我很想去商店。  /  I really want to go to the shop.
 219. 我要一杯茶。  /  I would like a cup of tea.
 220. 你要什么？  /  What would you like?
