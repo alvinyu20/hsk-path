@@ -115,3 +115,4 @@ exam:L3:20:question	pinyin	说话人为什么: pypinyin reads 人为 as one word
 exam:R3:1:question	pinyin	说话人为什么: pypinyin reads 人为 as one word (rénwéi), but the sentence is 说话人 + 为什么 (wèishénme)	说话人为什么晚上去超市？
 wordform:过	pinyin	过 has two readings, guo (after a verb: 去过) and guò (to pass, to spend time); the entry shows both so that a typed guò is accepted too
 lesson:mw:extra5	meaning	三万 is 30,000: the checker reads 万 as a separate number, so it cannot match "30,000"; the English is right	三万
+clip:33	pinyin	场 in 一场比赛 (a match) is chǎng, third tone; pypinyin gives cháng, the reading for 一场雨 (a spell of rain)	一场

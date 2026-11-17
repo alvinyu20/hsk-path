@@ -196,5 +196,6 @@ window.SHANLU_LEXICON = {
 "西藏": "xīzàng",
 "大多数": "dàduōshù",
 "整整齐齐": "zhěngzhěngqíqí",
-"一下子": "yíxiàzi"
+"一下子": "yíxiàzi",
+"好事": "hǎoshì"
 };

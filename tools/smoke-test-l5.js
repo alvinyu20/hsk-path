@@ -178,7 +178,7 @@ const startState = (o) => { try { if (!localStorage.getItem('shanlu-passed')) lo
   // ---- listening lab and practice scripts
   await nav('Listening lab');
   check((await text()).includes('Dictation') && (await text()).includes('Shadowing') && (await text()).includes('Tone trainer'), 'the HSK 5 listening lab has dictation, shadowing and the tone trainer');
-  check(await page.evaluate(() => window.HSK5_LISTEN.clips.length === 24 && window.HSK5_LISTEN.clips.every(c => c.words.length >= 4 && c.notes.length >= 2)), 'there are 24 HSK 5 clips, each with words to dictate and two notes');
+  check(await page.evaluate(() => window.HSK5_LISTEN.clips.length === 48 && window.HSK5_LISTEN.clips.every(c => c.words.length >= 4 && c.notes.length >= 2)), 'there are 48 HSK 5 clips, each with words to dictate and two notes');
   await page.locator('button[aria-label="Play the clip"]').first().click();
   await page.waitForTimeout(400);
   check(await page.evaluate(() => window.__spoken.length > 0 && window.HSK5_LISTEN.clips.some(c => window.__spoken.some(x => x.text === c.zh))), 'a dictation clip is read aloud');
