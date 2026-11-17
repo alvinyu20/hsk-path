@@ -198,5 +198,6 @@ window.SHANLU_LEXICON = {
 "整整齐齐": "zhěngzhěngqíqí",
 "一下子": "yíxiàzi",
 "好事": "hǎoshì",
-"雨伞": "yǔsǎn"
+"雨伞": "yǔsǎn",
+"好奇心": "hàoqíxīn"
 };

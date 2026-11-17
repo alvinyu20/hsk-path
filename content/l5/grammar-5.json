@@ -88,7 +88,7 @@
     "covers": [69, 70],
     "formula": ["Subject", "Time", "Place", "Manner", "Verb"],
     "explain": [
-      "Time, place and manner words all go before the verb, in this order: who, when, where, how, what. 我们明天下午在学校门口见面 'We will meet at the school gate tomorrow afternoon'; 他每天早上在公园里认真地跑步 'Every morning he runs seriously in the park'. A manner word ending in 地 sits right before the verb: 孩子们在院子里高兴地玩 'The children play happily in the yard'.",
+      "Time, place and manner words all go before the verb, in this order: who, when, where, how, then the verb (and what comes after it). 我们明天下午在学校门口见面 'We will meet at the school gate tomorrow afternoon'; 他每天早上在公园里认真地跑步 'Every morning he runs seriously in the park'. A manner word ending in 地 sits right before the verb: 孩子们在院子里高兴地玩 'The children play happily in the yard'.",
       "Serial verbs put two or more verbs one after another, in the order they happen, with one subject and nothing between them. 我去商店买东西 'I go to the shop to buy things'; 他坐飞机去上海 'He goes to Shanghai by plane'; 他打开门走了出去 'He opened the door and walked out'. The first verb often shows the way or the means, and the last shows the aim. 了 goes after the verb that ends the chain."
     ],
     "examples": [

@@ -117,7 +117,7 @@
     "formula": ["Cause", "*令 / 使 / 让", "Person", "Feeling"],
     "explain": [
       "令 + person + feeling means 'make someone feel …', in writing: 这个消息令大家很高兴 'This news makes everyone very happy'; 他的话令我很感动 'His words move me very much'. 使 (HSK 4) works the same way and is formal too: 这个结果使老师很满意 'This result makes the teacher very satisfied'. 让 is the everyday word: 这个消息让我很高兴.",
-      "令人 + adjective is a fixed way to say 'it makes people …': 令人吃惊 'surprising', 令人满意 'satisfying', 令人担心 'worrying'. The person who feels it must come after 令, 使 or 让."
+      "令人 + adjective is a fixed way to say 'it makes people …': 令人吃惊 'surprising', 令人满意 'satisfying', 令人担心 'worrying'. In 令人 the 人 means people in general, so no one is named. With 使 or 让 you can name the person: 这个消息让我很高兴 'This news made me very happy'."
     ],
     "examples": [
       {"zh": "这个消息令大家很高兴。", "en": "This news makes everyone very happy."},
@@ -127,7 +127,7 @@
     ],
     "mistakes": [
       "令 is for writing. In speech use 让: 这个消息让我很高兴.",
-      "A person must come after 令, 使 or 让. 这个消息令很高兴 is wrong, because it does not say who is happy."
+      "Something must come right after 令, 使 or 让: 人, 我, 大家 and so on. 这个消息令很高兴 is wrong, because nothing follows 令 to say who is happy."
     ],
     "q": [
       {"t": "order", "zh": "这个消息令大家很高兴。", "en": "This news makes everyone very happy.", "explain": "令 + person + feeling."},

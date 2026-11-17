@@ -3,7 +3,7 @@
   {
    "hub": "业",
    "py": "yè",
-   "en": "business; industry",
+   "en": "trade; industry; job",
    "words": [
     [
      "工业",
@@ -370,7 +370,7 @@
     [
      "应用",
      "应",
-     "answer",
+     "apply",
      "用",
      "use"
     ],
@@ -405,7 +405,7 @@
     [
      "运用",
      "运",
-     "move",
+     "wield",
      "用",
      "use"
     ]
@@ -569,7 +569,7 @@
   {
    "hub": "度",
    "py": "dù",
-   "en": "degree; measure",
+   "en": "degree; measure; period",
    "words": [
     [
      "长度",
@@ -929,14 +929,14 @@
     [
      "体验",
      "体",
-     "body",
+     "personally",
      "验",
      "test"
     ],
     [
      "体会",
      "体",
-     "body",
+     "personally",
      "会",
      "understand"
     ],
@@ -1031,7 +1031,7 @@
     [
      "宠物",
      "宠",
-     "pet",
+     "dote on",
      "物",
      "thing"
     ],
@@ -2230,7 +2230,7 @@
     [
      "果然",
      "果",
-     "really",
+     "indeed",
      "然",
      "so"
     ],
@@ -2346,7 +2346,7 @@
     [
      "情景",
      "情",
-     "feeling",
+     "situation",
      "景",
      "scene"
     ],
@@ -3032,7 +3032,7 @@
     [
      "装修",
      "装",
-     "dress",
+     "decorate",
      "修",
      "repair"
     ]
