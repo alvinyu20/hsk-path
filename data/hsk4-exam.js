@@ -117,7 +117,7 @@ window.HSK4_EXAM = {
     {
      "s": "",
      "zh": "他的汉语说得很流利，很多人以为他是中国人。",
-     "py": "Tā de Hànyǔ shuō de hěn liúlì, hěn duō rén yǐwéi tā shì Zhōngguó rén.",
+     "py": "Tā de Hànyǔ shuō de hěn liúlì, hěn duō rén yǐwéi tā shì Zhōngguórén.",
      "en": "He speaks Chinese very fluently, and many people think he is Chinese."
     }
    ],
@@ -2003,7 +2003,7 @@ window.HSK4_EXAM = {
     {
      "s": "",
      "zh": "我的汉语老师总是提醒我们，学语言不能怕错。只要多说多听，慢慢地就会进步。我听了她的话，现在敢和中国人聊天了。",
-     "py": "Wǒ de Hànyǔ lǎoshī zǒngshì tíxǐng wǒmen, xué yǔyán bù néng pà cuò. Zhǐyào duō shuō duō tīng, màn màn de jiù huì jìn bù. Wǒ tīng le tā dehuà, xiànzài gǎn hé Zhōngguó rén liáo tiān le.",
+     "py": "Wǒ de Hànyǔ lǎoshī zǒngshì tíxǐng wǒmen, xué yǔyán bù néng pà cuò. Zhǐyào duō shuō duō tīng, màn màn de jiù huì jìn bù. Wǒ tīng le tā dehuà, xiànzài gǎn hé Zhōngguórén liáo tiān le.",
      "en": "My Chinese teacher always reminds us that when learning a language we must not be afraid of mistakes. As long as we speak and listen more, we will slowly make progress. I listened to her, and now I dare to chat with Chinese people."
     }
    ],

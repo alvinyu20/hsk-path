@@ -6243,26 +6243,14 @@ window.HSK4_WEBS = {
     "en": "My money is not enough, so I only bought part of it."
    },
    "words": [
-    "够",
-    "不够",
-    "满",
-    "全",
-    "全部",
-    "全都",
-    "整",
-    "整个",
     "共",
     "许多",
     "大量",
     "少量",
     "少数",
     "多数",
-    "部分",
     "人数",
     "数量",
-    "缺",
-    "缺少",
-    "剩",
     "增加",
     "减少",
     "减",
@@ -6272,14 +6260,54 @@ window.HSK4_WEBS = {
     "大约",
     "至少",
     "多样",
-    "分为",
+    "分为"
+   ]
+  },
+  {
+   "name": "Enough and not enough",
+   "group": "Basics",
+   "order": 6,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我们的钱不够，只剩一百块了。",
+    "py": "Wǒmen de qián búgòu, zhǐ shèng yì bǎi kuài le.",
+    "en": "We do not have enough money; there are only a hundred yuan left."
+   },
+   "words": [
+    "够",
+    "不够",
+    "缺",
+    "缺少",
+    "剩"
+   ]
+  },
+  {
+   "name": "Whole and part",
+   "group": "Basics",
+   "order": 7,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "全部的学生都来了，整个教室都满了。",
+    "py": "Quánbù de xuésheng dōu lái le, zhěnggè jiàoshì dōu mǎn le.",
+    "en": "All the students have come, and the whole classroom is full."
+   },
+   "words": [
+    "满",
+    "全",
+    "全部",
+    "全都",
+    "整",
+    "整个",
+    "部分",
     "其中"
    ]
   },
   {
    "name": "Measure words",
    "group": "Basics",
-   "order": 6,
+   "order": 8,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6312,7 +6340,7 @@ window.HSK4_WEBS = {
   {
    "name": "Units: weight, length and money",
    "group": "Basics",
-   "order": 7,
+   "order": 9,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6333,7 +6361,7 @@ window.HSK4_WEBS = {
   {
    "name": "Names and introductions",
    "group": "People",
-   "order": 8,
+   "order": 10,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6354,7 +6382,7 @@ window.HSK4_WEBS = {
   {
    "name": "People",
    "group": "People",
-   "order": 9,
+   "order": 11,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6397,7 +6425,7 @@ window.HSK4_WEBS = {
   {
    "name": "Neighbours, visitors and colleagues",
    "group": "People",
-   "order": 10,
+   "order": 12,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6423,7 +6451,7 @@ window.HSK4_WEBS = {
   {
    "name": "Family",
    "group": "People",
-   "order": 11,
+   "order": 13,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6454,7 +6482,7 @@ window.HSK4_WEBS = {
   {
    "name": "Age and growing up",
    "group": "People",
-   "order": 13,
+   "order": 15,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6481,15 +6509,15 @@ window.HSK4_WEBS = {
    ]
   },
   {
-   "name": "Work and jobs",
+   "name": "Jobs and professions",
    "group": "People",
-   "order": 14,
+   "order": 17,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "大夫和护士都很辛苦。",
-    "py": "Dàifu hé hùshi dōu hěn xīnkǔ.",
-    "en": "The doctor and the nurse both work very hard."
+    "zh": "我哥哥是律师，我姐姐是护士。",
+    "py": "Wǒ gēge shì lǜshī, wǒ jiějie shì hùshi.",
+    "en": "My older brother is a lawyer, and my older sister is a nurse."
    },
    "words": [
     "大夫",
@@ -6508,20 +6536,33 @@ window.HSK4_WEBS = {
     "工人",
     "师傅",
     "教练",
-    "职业",
-    "当",
+    "售票员",
+    "院长"
+   ]
+  },
+  {
+   "name": "Finding and leaving a job",
+   "group": "People",
+   "order": 18,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "他去一家公司应聘，明天要面试。",
+    "py": "Tā qù yì jiā gōngsī yìngpìn, míngtiān yào miànshì.",
+    "en": "He is applying for a job at a company and will have an interview tomorrow."
+   },
+   "words": [
     "应聘",
     "招聘",
     "面试",
-    "售票员",
-    "院长",
-    "申请"
+    "申请",
+    "职业"
    ]
   },
   {
    "name": "Workplace and business",
    "group": "People",
-   "order": 15,
+   "order": 19,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6534,9 +6575,6 @@ window.HSK4_WEBS = {
     "办理",
     "办事",
     "部门",
-    "打工",
-    "加班",
-    "干活儿",
     "经济",
     "生意",
     "小组",
@@ -6544,28 +6582,45 @@ window.HSK4_WEBS = {
     "单位",
     "工厂",
     "厂",
+    "职业",
+    "应聘",
+    "招聘",
+    "面试",
+    "会员",
+    "市场",
+    "商品",
+    "货",
+    "活动"
+   ]
+  },
+  {
+   "name": "Working hours and pay",
+   "group": "People",
+   "order": 20,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "他经常加班，可是工资不高。",
+    "py": "Tā jīngcháng jiābān, kěshì gōngzī bù gāo.",
+    "en": "He often works overtime, but his wages are not high."
+   },
+   "words": [
     "工资",
     "奖金",
     "收入",
     "负责",
     "负责人",
-    "职业",
-    "应聘",
-    "招聘",
-    "面试",
     "任务",
-    "会员",
-    "市场",
-    "商品",
-    "货",
     "安排",
-    "活动"
+    "加班",
+    "打工",
+    "干活儿"
    ]
   },
   {
    "name": "Days, weeks and years",
    "group": "Time",
-   "order": 16,
+   "order": 21,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6595,7 +6650,7 @@ window.HSK4_WEBS = {
   {
    "name": "Seasons",
    "group": "Time",
-   "order": 17,
+   "order": 22,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6619,7 +6674,7 @@ window.HSK4_WEBS = {
   {
    "name": "Holidays and time off",
    "group": "Time",
-   "order": 18,
+   "order": 23,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6644,7 +6699,7 @@ window.HSK4_WEBS = {
   {
    "name": "Clock and time of day",
    "group": "Time",
-   "order": 19,
+   "order": 24,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6671,7 +6726,7 @@ window.HSK4_WEBS = {
   {
    "name": "How long and how late",
    "group": "Time",
-   "order": 20,
+   "order": 25,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6701,7 +6756,7 @@ window.HSK4_WEBS = {
   {
    "name": "When and how often",
    "group": "Time",
-   "order": 21,
+   "order": 26,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6728,7 +6783,7 @@ window.HSK4_WEBS = {
   {
    "name": "Before, after and just now",
    "group": "Time",
-   "order": 22,
+   "order": 27,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6761,7 +6816,7 @@ window.HSK4_WEBS = {
   {
    "name": "Food and meals",
    "group": "Food and shopping",
-   "order": 23,
+   "order": 28,
    "to": "speak",
    "cta": "Use these when you order food or drinks",
    "sentence": {
@@ -6802,7 +6857,7 @@ window.HSK4_WEBS = {
   {
    "name": "Fruit, sweets and snacks",
    "group": "Food and shopping",
-   "order": 24,
+   "order": 29,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6826,7 +6881,7 @@ window.HSK4_WEBS = {
   {
    "name": "Drinks",
    "group": "Food and shopping",
-   "order": 26,
+   "order": 31,
    "to": "speak",
    "cta": "Use these when you order food or drinks",
    "sentence": {
@@ -6846,7 +6901,7 @@ window.HSK4_WEBS = {
   {
    "name": "Dishes and containers",
    "group": "Food and shopping",
-   "order": 27,
+   "order": 32,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6868,13 +6923,39 @@ window.HSK4_WEBS = {
   {
    "name": "Money and shopping",
    "group": "Food and shopping",
-   "order": 28,
+   "order": 33,
    "to": "speak",
    "cta": "Use these when you ask a price",
    "sentence": {
     "zh": "这家商店打折，价格很低，我买了很多东西。",
     "py": "Zhè jiā shāngdiàn dǎzhé, jiàgé hěn dī, wǒ mǎi le hěn duō dōngxi.",
     "en": "This shop has a sale and the prices are low, so I bought a lot of things."
+   },
+   "words": [
+    "购买",
+    "购物",
+    "商品",
+    "货",
+    "顾客",
+    "逛",
+    "租",
+    "房租",
+    "质量",
+    "牌子",
+    "牌",
+    "数"
+   ]
+  },
+  {
+   "name": "Prices and paying",
+   "group": "Food and shopping",
+   "order": 34,
+   "to": "speak",
+   "cta": "Use these when you ask a price",
+   "sentence": {
+    "zh": "这件衣服在打折，价格很便宜。",
+    "py": "Zhè jiàn yīfu zài dǎzhé, jiàgé hěn piányi.",
+    "en": "This piece of clothing is on sale, and the price is very cheap."
    },
    "words": [
     "价格",
@@ -6889,31 +6970,32 @@ window.HSK4_WEBS = {
     "现金",
     "零钱",
     "零花钱",
-    "购买",
-    "购物",
-    "网购",
-    "商品",
-    "货",
-    "顾客",
-    "逛",
     "结账",
-    "租",
-    "房租",
     "收费",
     "费",
     "费用",
     "学费",
+    "值",
+    "值得"
+   ]
+  },
+  {
+   "name": "Earning and saving",
+   "group": "Food and shopping",
+   "order": 35,
+   "to": "speak",
+   "cta": "Use these when you ask a price",
+   "sentence": {
+    "zh": "他的工资不高，可是他很会节约。",
+    "py": "Tā de gōngzī bù gāo, kěshì tā hěn huì jiéyuē.",
+    "en": "His wages are not high, but he is very good at saving."
+   },
+   "words": [
     "赚",
     "收入",
     "工资",
     "奖金",
     "存",
-    "质量",
-    "牌子",
-    "牌",
-    "值",
-    "值得",
-    "数",
     "节约",
     "浪费"
    ]
@@ -6921,7 +7003,7 @@ window.HSK4_WEBS = {
   {
    "name": "Clothes and accessories",
    "group": "Food and shopping",
-   "order": 29,
+   "order": 37,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6947,7 +7029,7 @@ window.HSK4_WEBS = {
   {
    "name": "Places around town",
    "group": "Places and travel",
-   "order": 30,
+   "order": 38,
    "to": "speak",
    "cta": "Use these to ask where something is",
    "sentence": {
@@ -6986,7 +7068,7 @@ window.HSK4_WEBS = {
   {
    "name": "City and neighbourhood",
    "group": "Places and travel",
-   "order": 31,
+   "order": 39,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7020,7 +7102,7 @@ window.HSK4_WEBS = {
   {
    "name": "North, south, east and west",
    "group": "Places and travel",
-   "order": 33,
+   "order": 42,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7043,7 +7125,7 @@ window.HSK4_WEBS = {
   {
    "name": "Roads and distance",
    "group": "Places and travel",
-   "order": 35,
+   "order": 44,
    "to": "speak",
    "cta": "Use these to ask where something is",
    "sentence": {
@@ -7073,7 +7155,7 @@ window.HSK4_WEBS = {
   {
    "name": "Transport and tickets",
    "group": "Places and travel",
-   "order": 36,
+   "order": 45,
    "to": "speak",
    "cta": "Use these to ask where something is",
    "sentence": {
@@ -7108,7 +7190,7 @@ window.HSK4_WEBS = {
   {
    "name": "Travel and countries",
    "group": "Places and travel",
-   "order": 37,
+   "order": 46,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7148,7 +7230,7 @@ window.HSK4_WEBS = {
   {
    "name": "At home",
    "group": "Places and travel",
-   "order": 38,
+   "order": 47,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7181,7 +7263,7 @@ window.HSK4_WEBS = {
   {
    "name": "Furniture and appliances",
    "group": "Places and travel",
-   "order": 39,
+   "order": 48,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7202,7 +7284,7 @@ window.HSK4_WEBS = {
   {
    "name": "School",
    "group": "School and language",
-   "order": 40,
+   "order": 49,
    "to": "listen",
    "cta": "Train your ear",
    "sentence": {
@@ -7238,7 +7320,7 @@ window.HSK4_WEBS = {
   {
    "name": "School subjects and culture",
    "group": "School and language",
-   "order": 41,
+   "order": 50,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7267,7 +7349,7 @@ window.HSK4_WEBS = {
   {
    "name": "Studying and exams",
    "group": "School and language",
-   "order": 42,
+   "order": 51,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7276,19 +7358,39 @@ window.HSK4_WEBS = {
     "en": "After the college entrance exam, he wants to study a good major."
    },
    "words": [
-    "高考",
     "期末",
     "期中",
     "考生",
-    "报考",
     "报名",
     "笔试",
     "面试",
     "试题",
     "分数",
     "合格",
-    "毕业",
-    "毕业生",
+    "答案",
+    "答",
+    "错误",
+    "预习",
+    "自习",
+    "自学",
+    "总结",
+    "基础"
+   ]
+  },
+  {
+   "name": "University and degrees",
+   "group": "School and language",
+   "order": 52,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "他在大学读研究生，明年毕业。",
+    "py": "Tā zài dàxué dú yánjiūshēng, míngnián bìyè.",
+    "en": "He is a graduate student at university and will graduate next year."
+   },
+   "words": [
+    "高考",
+    "报考",
     "本科",
     "硕士",
     "博士",
@@ -7297,9 +7399,22 @@ window.HSK4_WEBS = {
     "奖学金",
     "学费",
     "入学",
-    "答案",
-    "答",
-    "错误",
+    "毕业",
+    "毕业生"
+   ]
+  },
+  {
+   "name": "Winning and succeeding",
+   "group": "School and language",
+   "order": 53,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我们赢了比赛，获得了第一名。",
+    "py": "Wǒmen yíng le bǐsài, huòdé le dì yī míng.",
+    "en": "We won the match and took first place."
+   },
+   "words": [
     "成功",
     "失败",
     "赢",
@@ -7308,11 +7423,6 @@ window.HSK4_WEBS = {
     "达到",
     "获得",
     "获奖",
-    "预习",
-    "自习",
-    "自学",
-    "总结",
-    "基础",
     "奖",
     "赢得"
    ]
@@ -7320,7 +7430,7 @@ window.HSK4_WEBS = {
   {
    "name": "Chinese and writing",
    "group": "School and language",
-   "order": 43,
+   "order": 54,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7359,7 +7469,7 @@ window.HSK4_WEBS = {
   {
    "name": "Phones, email and the internet",
    "group": "School and language",
-   "order": 44,
+   "order": 55,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7368,17 +7478,10 @@ window.HSK4_WEBS = {
     "en": "I sent a text message to my friend, and he replied right away."
    },
    "words": [
-    "互联网",
     "网购",
-    "网页",
-    "网友",
-    "网址",
-    "视频",
     "信号",
     "信息",
     "短信",
-    "密码",
-    "扫码",
     "回复",
     "回信",
     "转发",
@@ -7389,11 +7492,8 @@ window.HSK4_WEBS = {
     "复印",
     "科技",
     "技术",
-    "线上",
-    "线下",
     "文件",
     "图片",
-    "查找",
     "查看",
     "播放",
     "广播",
@@ -7403,9 +7503,33 @@ window.HSK4_WEBS = {
    ]
   },
   {
+   "name": "Online life",
+   "group": "School and language",
+   "order": 56,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我的网友给我发了一个视频。",
+    "py": "Wǒ de wǎngyǒu gěi wǒ fā le yí ge shìpín.",
+    "en": "My online friend sent me a video."
+   },
+   "words": [
+    "互联网",
+    "网页",
+    "网友",
+    "网址",
+    "视频",
+    "密码",
+    "扫码",
+    "线上",
+    "线下",
+    "查找"
+   ]
+  },
+  {
    "name": "Daily routine",
    "group": "Daily life and fun",
-   "order": 45,
+   "order": 57,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7437,7 +7561,7 @@ window.HSK4_WEBS = {
   {
    "name": "Weather",
    "group": "Daily life and fun",
-   "order": 46,
+   "order": 58,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7465,7 +7589,7 @@ window.HSK4_WEBS = {
   {
    "name": "Mountains, rivers and plants",
    "group": "Daily life and fun",
-   "order": 47,
+   "order": 59,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7499,7 +7623,7 @@ window.HSK4_WEBS = {
   {
    "name": "Animals and nature",
    "group": "Daily life and fun",
-   "order": 49,
+   "order": 61,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7527,7 +7651,7 @@ window.HSK4_WEBS = {
   {
    "name": "Hobbies and fun",
    "group": "Daily life and fun",
-   "order": 51,
+   "order": 63,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7536,11 +7660,6 @@ window.HSK4_WEBS = {
     "en": "He likes playing the piano and also likes taking part in activities."
    },
    "words": [
-    "钢琴",
-    "弹",
-    "琴",
-    "歌声",
-    "歌手",
     "排球",
     "乒乓球",
     "球队",
@@ -7550,17 +7669,8 @@ window.HSK4_WEBS = {
     "游玩",
     "度假",
     "旅行",
-    "聚会",
-    "约会",
     "拍",
-    "开玩笑",
-    "好笑",
-    "笑话",
     "有趣",
-    "浪漫",
-    "做梦",
-    "梦",
-    "梦想",
     "热闹",
     "赢",
     "输",
@@ -7570,9 +7680,51 @@ window.HSK4_WEBS = {
    ]
   },
   {
+   "name": "Music and singing",
+   "group": "Daily life and fun",
+   "order": 64,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "她会弹钢琴，也是一个歌手。",
+    "py": "Tā huì tán gāngqín, yě shì yí ge gēshǒu.",
+    "en": "She can play the piano, and she is also a singer."
+   },
+   "words": [
+    "钢琴",
+    "弹",
+    "琴",
+    "歌声",
+    "歌手"
+   ]
+  },
+  {
+   "name": "Parties, jokes and dreams",
+   "group": "Daily life and fun",
+   "order": 65,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "周末的聚会很热闹，大家都在讲笑话。",
+    "py": "Zhōumò de jùhuì hěn rènao, dàjiā dōu zài jiǎng xiàohua.",
+    "en": "The party at the weekend is lively, and everyone is telling jokes."
+   },
+   "words": [
+    "聚会",
+    "约会",
+    "开玩笑",
+    "好笑",
+    "笑话",
+    "浪漫",
+    "做梦",
+    "梦",
+    "梦想"
+   ]
+  },
+  {
    "name": "Parties and gifts",
    "group": "Daily life and fun",
-   "order": 52,
+   "order": 66,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7600,7 +7752,7 @@ window.HSK4_WEBS = {
   {
    "name": "Movies, music, TV and news",
    "group": "Daily life and fun",
-   "order": 53,
+   "order": 67,
    "to": "listen",
    "cta": "Train your ear",
    "sentence": {
@@ -7639,7 +7791,7 @@ window.HSK4_WEBS = {
   {
    "name": "Sports and exercise",
    "group": "Daily life and fun",
-   "order": 56,
+   "order": 71,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7675,7 +7827,7 @@ window.HSK4_WEBS = {
   {
    "name": "Rules and law",
    "group": "Daily life and fun",
-   "order": 57,
+   "order": 72,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7713,7 +7865,7 @@ window.HSK4_WEBS = {
   {
    "name": "Parts of the body",
    "group": "Body and mind",
-   "order": 66,
+   "order": 84,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7741,7 +7893,7 @@ window.HSK4_WEBS = {
   {
    "name": "Health and illness",
    "group": "Body and mind",
-   "order": 67,
+   "order": 85,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7756,10 +7908,8 @@ window.HSK4_WEBS = {
     "头痛",
     "难受",
     "受伤",
-    "体检",
     "体温",
     "体重",
-    "打针",
     "大夫",
     "护士",
     "健身",
@@ -7769,13 +7919,15 @@ window.HSK4_WEBS = {
     "汗",
     "卫生",
     "减轻",
-    "减"
+    "减",
+    "打针",
+    "体检"
    ]
   },
   {
    "name": "Feelings",
    "group": "Body and mind",
-   "order": 68,
+   "order": 87,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7784,22 +7936,13 @@ window.HSK4_WEBS = {
     "en": "Hearing this news, I am very excited, and it moves me a lot."
    },
    "words": [
-    "感动",
-    "感觉",
-    "感情",
-    "感人",
-    "感受",
     "感谢",
-    "感",
     "激动",
     "兴奋",
-    "紧张",
     "骄傲",
     "得意",
     "失望",
     "伤心",
-    "烦",
-    "烦恼",
     "吃惊",
     "害羞",
     "愉快",
@@ -7808,29 +7951,80 @@ window.HSK4_WEBS = {
     "后悔",
     "羡慕",
     "心情",
+    "讨厌",
+    "不满"
+   ]
+  },
+  {
+   "name": "Love and friendship",
+   "group": "Body and mind",
+   "order": 88,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "他是一个很有爱心的人，对朋友很友好。",
+    "py": "Tā shì yí ge hěn yǒu àixīn de rén, duì péngyou hěn yǒuhǎo.",
+    "en": "He is a very kind-hearted person and very friendly to his friends."
+   },
+   "words": [
     "爱情",
     "爱心",
     "友情",
     "友谊",
-    "友好",
-    "冷静",
-    "讨厌",
-    "不满",
+    "友好"
+   ]
+  },
+  {
+   "name": "Stress and calm",
+   "group": "Body and mind",
+   "order": 89,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "考试以前我很紧张，压力很大，需要放松一下。",
+    "py": "Kǎoshì yǐqián wǒ hěn jǐnzhāng, yālì hěn dà, xūyào fàngsōng yíxià.",
+    "en": "Before the exam I am very nervous and under a lot of pressure, so I need to relax a little."
+   },
+   "words": [
+    "紧张",
     "压力",
     "放松",
     "轻松",
     "辛苦",
-    "难忘",
-    "内心",
+    "冷静",
+    "烦",
+    "烦恼",
     "受不了",
-    "无聊",
+    "无聊"
+   ]
+  },
+  {
+   "name": "Being moved",
+   "group": "Body and mind",
+   "order": 90,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "这个故事很感人，大家都很感动。",
+    "py": "Zhège gùshi hěn gǎnrén, dàjiā dōu hěn gǎndòng.",
+    "en": "This story is very touching, and everyone is deeply touched by it."
+   },
+   "words": [
+    "感动",
+    "感觉",
+    "感情",
+    "感人",
+    "感受",
+    "感",
+    "内心",
+    "难忘",
     "吸引"
    ]
   },
   {
    "name": "Character and manner",
    "group": "Body and mind",
-   "order": 69,
+   "order": 91,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7872,7 +8066,7 @@ window.HSK4_WEBS = {
   {
    "name": "Thinking and knowing",
    "group": "Body and mind",
-   "order": 70,
+   "order": 92,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7881,40 +8075,68 @@ window.HSK4_WEBS = {
     "en": "My idea is different from your view."
    },
    "words": [
-    "看法",
-    "想法",
-    "意见",
-    "主意",
-    "建议",
-    "计划",
-    "目标",
-    "目的",
-    "理想",
-    "梦想",
-    "判断",
     "怀疑",
-    "考虑",
     "理解",
     "猜",
     "知识",
     "经验",
     "经历",
     "印象",
-    "估计",
     "回忆",
     "讨论",
     "研究",
     "总结",
     "信息",
     "调查",
-    "反对",
     "熟悉"
+   ]
+  },
+  {
+   "name": "Opinions and ideas",
+   "group": "Body and mind",
+   "order": 93,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我有一个想法，大家有意见吗？",
+    "py": "Wǒ yǒu yí ge xiǎngfǎ, dàjiā yǒu yìjiàn ma?",
+    "en": "I have an idea. Does anyone have an opinion on it?"
+   },
+   "words": [
+    "看法",
+    "想法",
+    "意见",
+    "主意",
+    "建议",
+    "判断",
+    "反对"
+   ]
+  },
+  {
+   "name": "Plans and goals",
+   "group": "Body and mind",
+   "order": 94,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我的目标是明年去中国，我已经有了计划。",
+    "py": "Wǒ de mùbiāo shì míngnián qù Zhōngguó, wǒ yǐjīng yǒu le jìhuà.",
+    "en": "My goal is to go to China next year, and I already have a plan."
+   },
+   "words": [
+    "计划",
+    "目标",
+    "目的",
+    "理想",
+    "梦想",
+    "估计",
+    "考虑"
    ]
   },
   {
    "name": "Everyday actions",
    "group": "Actions and descriptions",
-   "order": 72,
+   "order": 96,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7923,32 +8145,10 @@ window.HSK4_WEBS = {
     "en": "He pushed open the window and threw away the rubbish."
    },
    "words": [
-    "按",
-    "拉",
-    "推",
-    "抱",
-    "敲",
-    "擦",
     "弄",
-    "提",
-    "取",
-    "挂",
-    "扔",
-    "吹",
     "脱",
     "戴",
-    "倒",
-    "压",
-    "抬",
-    "举",
-    "转",
-    "装",
-    "修",
-    "修理",
     "排",
-    "存",
-    "留",
-    "留下",
     "吸",
     "闻",
     "躺",
@@ -7956,26 +8156,76 @@ window.HSK4_WEBS = {
     "点头",
     "逛",
     "散步",
+    "拍",
+    "待"
+   ]
+  },
+  {
+   "name": "Hands and objects",
+   "group": "Actions and descriptions",
+   "order": 97,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "请把门推开，再把桌子擦一下。",
+    "py": "Qǐng bǎ mén tuī kāi, zài bǎ zhuōzi cā yíxià.",
+    "en": "Please push the door open, then wipe the table."
+   },
+   "words": [
+    "按",
+    "拉",
+    "推",
+    "抱",
+    "敲",
+    "擦",
+    "提",
+    "取",
+    "挂",
+    "扔",
+    "吹",
+    "抬",
+    "举",
+    "转",
+    "装",
+    "倒",
+    "压",
+    "背",
     "掉",
-    "落",
-    "打印",
-    "复印",
+    "落"
+   ]
+  },
+  {
+   "name": "Errands and arrangements",
+   "group": "Actions and descriptions",
+   "order": 98,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我订了两张票，明天还要去打印材料。",
+    "py": "Wǒ dìng le liǎng zhāng piào, míngtiān hái yào qù dǎyìn cáiliào.",
+    "en": "I have booked two tickets, and tomorrow I still have to go and print the materials."
+   },
+   "words": [
     "订",
     "约",
     "租",
-    "拍",
     "邀请",
     "寄",
     "交",
     "付",
-    "背",
-    "待"
+    "打印",
+    "复印",
+    "修",
+    "修理",
+    "存",
+    "留",
+    "留下"
    ]
   },
   {
    "name": "Change, choice and trying",
    "group": "Actions and descriptions",
-   "order": 74,
+   "order": 100,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7987,20 +8237,6 @@ window.HSK4_WEBS = {
     "改",
     "改变",
     "定",
-    "放弃",
-    "接受",
-    "拒绝",
-    "答应",
-    "取消",
-    "推迟",
-    "增加",
-    "减少",
-    "减轻",
-    "加快",
-    "加强",
-    "降低",
-    "下降",
-    "增长",
     "养成",
     "适应",
     "产生",
@@ -8020,9 +8256,51 @@ window.HSK4_WEBS = {
    ]
   },
   {
+   "name": "More and less",
+   "group": "Actions and descriptions",
+   "order": 101,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我们要减少浪费，增加收入。",
+    "py": "Wǒmen yào jiǎnshǎo làngfèi, zēngjiā shōurù.",
+    "en": "We need to reduce waste and increase income."
+   },
+   "words": [
+    "增加",
+    "减少",
+    "减轻",
+    "加快",
+    "加强",
+    "降低",
+    "下降",
+    "增长"
+   ]
+  },
+  {
+   "name": "Saying yes and no",
+   "group": "Actions and descriptions",
+   "order": 102,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "他答应了我，可是后来又取消了。",
+    "py": "Tā dāying le wǒ, kěshì hòulái yòu qǔxiāo le.",
+    "en": "He promised me, but later he cancelled."
+   },
+   "words": [
+    "接受",
+    "拒绝",
+    "答应",
+    "放弃",
+    "取消",
+    "推迟"
+   ]
+  },
+  {
    "name": "Seeing, hearing, speaking",
    "group": "Actions and descriptions",
-   "order": 78,
+   "order": 107,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8058,7 +8336,7 @@ window.HSK4_WEBS = {
   {
    "name": "Meeting people",
    "group": "Actions and descriptions",
-   "order": 79,
+   "order": 108,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8090,7 +8368,7 @@ window.HSK4_WEBS = {
   {
    "name": "Moving your body",
    "group": "Actions and descriptions",
-   "order": 80,
+   "order": 109,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8118,7 +8396,7 @@ window.HSK4_WEBS = {
   {
    "name": "Starting, finishing, waiting",
    "group": "Actions and descriptions",
-   "order": 81,
+   "order": 110,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8156,7 +8434,7 @@ window.HSK4_WEBS = {
   {
    "name": "Size, length and speed",
    "group": "Actions and descriptions",
-   "order": 82,
+   "order": 111,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8173,15 +8451,9 @@ window.HSK4_WEBS = {
     "轻",
     "重",
     "快速",
-    "加快",
-    "速度",
-    "车速",
     "高速",
-    "降低",
-    "增加",
     "强",
     "大大",
-    "距离",
     "少量",
     "大量",
     "空",
@@ -8189,9 +8461,43 @@ window.HSK4_WEBS = {
    ]
   },
   {
+   "name": "Measurements",
+   "group": "Actions and descriptions",
+   "order": 112,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "这辆车的速度很快。",
+    "py": "Zhè liàng chē de sùdù hěn kuài.",
+    "en": "This car is very fast."
+   },
+   "words": [
+    "距离",
+    "速度",
+    "车速"
+   ]
+  },
+  {
+   "name": "Growing and shrinking",
+   "group": "Actions and descriptions",
+   "order": 113,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "我们要加快速度。",
+    "py": "Wǒmen yào jiākuài sùdù.",
+    "en": "We need to speed up."
+   },
+   "words": [
+    "加快",
+    "降低",
+    "增加"
+   ]
+  },
+  {
    "name": "Good, bad, right, wrong",
    "group": "Actions and descriptions",
-   "order": 85,
+   "order": 116,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8200,12 +8506,6 @@ window.HSK4_WEBS = {
     "en": "This film is very exciting, and the actors are excellent too."
    },
    "words": [
-    "棒",
-    "美",
-    "美丽",
-    "美好",
-    "精彩",
-    "优秀",
     "合格",
     "正确",
     "错误",
@@ -8225,15 +8525,35 @@ window.HSK4_WEBS = {
     "重视",
     "可惜",
     "巧",
-    "著名",
-    "厉害",
     "丰富"
+   ]
+  },
+  {
+   "name": "Excellent and precious",
+   "group": "Actions and descriptions",
+   "order": 117,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "这个电影非常精彩，演员也很优秀。",
+    "py": "Zhège diànyǐng fēicháng jīngcǎi, yǎnyuán yě hěn yōuxiù.",
+    "en": "This film is wonderful, and the actors are excellent too."
+   },
+   "words": [
+    "棒",
+    "美",
+    "美丽",
+    "美好",
+    "精彩",
+    "优秀",
+    "著名",
+    "厉害"
    ]
   },
   {
    "name": "Clean, quiet and safe",
    "group": "Actions and descriptions",
-   "order": 87,
+   "order": 121,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8262,7 +8582,7 @@ window.HSK4_WEBS = {
   {
    "name": "Easy, hard and useful",
    "group": "Actions and descriptions",
-   "order": 88,
+   "order": 122,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8294,7 +8614,7 @@ window.HSK4_WEBS = {
   {
    "name": "Same and different",
    "group": "Actions and descriptions",
-   "order": 89,
+   "order": 123,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8325,7 +8645,7 @@ window.HSK4_WEBS = {
   {
    "name": "Things and matters",
    "group": "Actions and descriptions",
-   "order": 90,
+   "order": 124,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8338,16 +8658,7 @@ window.HSK4_WEBS = {
     "资料",
     "货",
     "商品",
-    "情况",
-    "条件",
-    "方面",
-    "方式",
     "内容",
-    "原因",
-    "结果",
-    "过程",
-    "关键",
-    "重点",
     "规定",
     "任务",
     "目标",
@@ -8358,21 +8669,58 @@ window.HSK4_WEBS = {
     "气",
     "光",
     "烟",
+    "样子",
+    "做法"
+   ]
+  },
+  {
+   "name": "Situations and conditions",
+   "group": "Actions and descriptions",
+   "order": 125,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "你知道这件事的原因和结果吗？",
+    "py": "Nǐ zhīdào zhè jiàn shì de yuányīn hé jiéguǒ ma?",
+    "en": "Do you know the cause and the result of this matter?"
+   },
+   "words": [
+    "情况",
+    "条件",
+    "方面",
+    "方式",
+    "原因",
+    "结果",
+    "过程",
+    "关键",
+    "重点"
+   ]
+  },
+  {
+   "name": "Forms, kinds and numbers",
+   "group": "Actions and descriptions",
+   "order": 126,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "请按顺序把这些图片放好。",
+    "py": "Qǐng àn shùnxù bǎ zhèxiē túpiàn fàng hǎo.",
+    "en": "Please put these pictures in order."
+   },
+   "words": [
     "图",
     "图片",
     "表格",
     "牌",
     "数字",
     "标准",
-    "顺序",
-    "样子",
-    "做法"
+    "顺序"
    ]
   },
   {
    "name": "Be, have, be at",
    "group": "Grammar words",
-   "order": 93,
+   "order": 129,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8397,7 +8745,7 @@ window.HSK4_WEBS = {
   {
    "name": "Can, want, may, don't",
    "group": "Grammar words",
-   "order": 94,
+   "order": 130,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8421,7 +8769,7 @@ window.HSK4_WEBS = {
   {
    "name": "Not and don't",
    "group": "Grammar words",
-   "order": 95,
+   "order": 131,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8447,7 +8795,7 @@ window.HSK4_WEBS = {
   {
    "name": "If, only if, in order to",
    "group": "Grammar words",
-   "order": 96,
+   "order": 132,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8472,7 +8820,7 @@ window.HSK4_WEBS = {
   {
    "name": "Certainly and probably",
    "group": "Grammar words",
-   "order": 97,
+   "order": 133,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8506,7 +8854,7 @@ window.HSK4_WEBS = {
   {
    "name": "Still, only and even",
    "group": "Grammar words",
-   "order": 98,
+   "order": 134,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8540,7 +8888,7 @@ window.HSK4_WEBS = {
   {
    "name": "Helping, giving and telling",
    "group": "Actions and descriptions",
-   "order": 99,
+   "order": 135,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8577,7 +8925,7 @@ window.HSK4_WEBS = {
   {
    "name": "Comparing",
    "group": "Grammar words",
-   "order": 100,
+   "order": 136,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8601,7 +8949,7 @@ window.HSK4_WEBS = {
   {
    "name": "Very, too, most",
    "group": "Grammar words",
-   "order": 101,
+   "order": 137,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8629,7 +8977,7 @@ window.HSK4_WEBS = {
   {
    "name": "And, also, all, together",
    "group": "Grammar words",
-   "order": 103,
+   "order": 139,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8664,7 +9012,7 @@ window.HSK4_WEBS = {
   {
    "name": "Linking ideas",
    "group": "Grammar words",
-   "order": 104,
+   "order": 140,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8706,7 +9054,7 @@ window.HSK4_WEBS = {
   {
    "name": "To, from, than, with",
    "group": "Grammar words",
-   "order": 105,
+   "order": 141,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8730,7 +9078,7 @@ window.HSK4_WEBS = {
   {
    "name": "Little helper words",
    "group": "Grammar words",
-   "order": 106,
+   "order": 142,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8747,7 +9095,7 @@ window.HSK4_WEBS = {
   {
    "name": "Word endings",
    "group": "Grammar words",
-   "order": 107,
+   "order": 143,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {

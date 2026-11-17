@@ -203,5 +203,7 @@ window.SHANLU_LEXICON = {
 "羊肉": "yángròu",
 "行李箱": "xínglǐxiāng",
 "小路": "xiǎolù",
-"上次": "shàngcì"
+"上次": "shàngcì",
+"中国人": "zhōngguórén",
+"天天": "tiāntiān"
 };

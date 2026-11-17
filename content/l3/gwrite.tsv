@@ -9,7 +9,7 @@ g3-2	The book was taken away by the teacher.	书被老师拿走了。	被
 g3-2	My cake was eaten by my brother.	我的蛋糕被哥哥吃了。	被
 g3-3	If it rains tomorrow, I will not go.	如果明天下雨，我就不去。	如果+就
 g3-3	If you are tired, then rest.	你累的话，就休息吧。	的话
-g3-3	If you are free, call me.	如果你有空，就给我打电话。	如果+就
+g3-3	If you have time, call me.	如果你有时间，就给我打电话。	如果+就
 g3-3	If it is hot, I will drink cold water.	如果很热，我就喝冷水。	如果+就
 g3-4	This dish is not only cheap but also tasty.	这个菜不但便宜，而且好吃。	不但+而且
 g3-4	She can not only sing but also dance.	她不但会唱歌，而且会跳舞。	不但+而且
@@ -44,7 +44,7 @@ g3-11	I have a question about this word.	我有一个关于这个词的问题。
 g3-11	I want to watch a film about animals.	我想看关于动物的电影。	关于
 g3-11	This is a story about a cat.	这是一个关于猫的故事。	关于
 g3-12	According to the map, the bank is ahead.	根据地图，银行在前面。	根据
-g3-12	According to what the teacher said, the test is on Friday.	根据老师说的，考试在星期五。	根据
+g3-12	According to what the teacher says, the test is on Friday.	根据老师说的，考试在星期五。	根据
 g3-12	According to the map, the shop is on the left.	根据地图，商店在左边。	根据
 g3-12	According to my watch, it is eight o'clock now.	根据我的手表，现在八点。	根据
 g3-13	I want tea or coffee.	我想喝茶或者咖啡。	或者
@@ -130,7 +130,7 @@ g3-32	He came back.	他回来了。	回来
 g3-33	The children ran toward the teacher.	孩子们向老师跑去了。	向
 g3-33	Please go to the left.	请向左走。	向
 g3-33	Please look ahead.	请向前看。	向
-g3-33	I said sorry to him.	我向他说对不起。	向
+g3-33	I said sorry to him.	我向他说了对不起。	向
 g3-34	I studied Chinese for two years.	我学了两年汉语。	了
 g3-34	He waited for an hour.	他等了一个小时。	了
 g3-34	I waited for twenty minutes.	我等了二十分钟。	了
@@ -169,7 +169,7 @@ g3-42	I only have 10 yuan.	我只有十块钱。	只
 g3-42	We can only wait here.	我们只能在这里等。	只
 g3-43	He seems not to be at home.	他好像不在家。	好像
 g3-43	This dish looks delicious.	这个菜看起来很好吃。	看起来|好像
-g3-43	It looks like it will rain.	看起来要下雨了。	看起来|看来
+g3-43	It looks like it is going to rain.	看起来要下雨了。	看起来|看来
 g3-43	He seems to know.	他好像知道。	好像
 g3-44	It is probably nine o'clock now.	现在大概九点了。	大概
 g3-44	Actually I am not a teacher.	其实我不是老师。	其实|当然
@@ -188,7 +188,7 @@ g3-47	I do not want to go anywhere.	我哪儿都不想去。	都
 g3-47	Anyone can come.	谁都可以来。	都
 g3-47	I did not buy anything.	我什么都没买。	都
 g3-48	Eat whatever you want.	你想吃什么就吃什么。	什么+就
-g3-48	Go wherever you like.	你想去哪儿就去哪儿。	哪儿+就
+g3-48	Go wherever you want to go.	你想去哪儿就去哪儿。	哪儿+就
 g3-48	Eat as much as you want.	你想吃多少就吃多少。	多少+就
 g3-48	Choose whichever you like.	你喜欢哪个就买哪个。	哪+就
 g3-49	There is not a single person here.	这里一个人也没有。	也
@@ -205,5 +205,5 @@ g3-51	I have two or three friends here.	我在这里有两三个朋友。	两三
 g3-51	People under 18 cannot come in.	十八岁以下的人不能进来。	以上|以下
 g3-52	I have to go.	我得走了。	得
 g3-52	The child has grown up.	孩子长大了。	长
-g3-52	I have to study tonight.	我今晚得学习。	得
+g3-52	I have to study this evening.	我今天晚上得学习。	得
 g3-52	The flowers grow very fast.	花长得很快。	长

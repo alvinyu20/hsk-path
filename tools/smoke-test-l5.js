@@ -125,7 +125,7 @@ const startState = (o) => { try { if (!localStorage.getItem('shanlu-passed')) lo
   await page.waitForTimeout(80);
   const topicInfo = await page.evaluate(() => ({ n: window.HSK5_WEBS.topics.length, words: new Set([].concat(...window.HSK5_WEBS.topics.map(t => t.words))).size, small: window.HSK5_WEBS.topics.filter(t => t.words.length < 3).length }));
   const railN = (await page.locator('.trail-rail .tr-gn').allInnerTexts()).reduce((a, t) => a + parseInt(t, 10), 0);
-  check(topicInfo.n === 105 && railN === topicInfo.n, 'the topics screen lists the HSK 5 topics (' + topicInfo.n + ')');
+  check(topicInfo.n === 136 && railN === topicInfo.n, 'the topics screen lists the HSK 5 topics (' + topicInfo.n + ')');
   check(topicInfo.words === n5, 'every one of the ' + n5 + ' HSK 5 words is in a topic (' + topicInfo.words + ')');
   check(await page.evaluate(() => window.HSK5_WEBS.hubs.every(h => h.gaps.every(g => g.opts.includes(g.ans)))), 'every fill-in gap has its answer among its options');
 

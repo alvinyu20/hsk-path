@@ -78,7 +78,7 @@ Examples:
 - 我是学生。  Wǒ shì xuésheng.  — I am a student.
 - 他是我的朋友。  Tā shì wǒ de péngyou.  — He is my friend.
 - 她不是老师。  Tā bú shì lǎoshī.  — She is not a teacher.
-- 你是中国人吗？  Nǐ shì Zhōngguó rén ma?  — Are you Chinese?
+- 你是中国人吗？  Nǐ shì Zhōngguórén ma?  — Are you Chinese?
 
 ### 3. Describing things: 很, 太, 真, 非常, 有点儿
 
@@ -774,7 +774,7 @@ Examples:
 44. 今天太热了，我想喝水。  Jīntiān tài rè le, wǒ xiǎng hē shuǐ.  — It is too hot today; I want to drink water.
    - 太热 tài rè: both syllables fall.
    - 了 le is light at the end of 太热了.
-45. 请问，你是中国人吗？  Qǐngwèn, nǐ shì Zhōngguó rén ma?  — Excuse me, are you Chinese?
+45. 请问，你是中国人吗？  Qǐngwèn, nǐ shì Zhōngguórén ma?  — Excuse me, are you Chinese?
    - 中国人 Zhōngguó rén: high and flat, rising, then rising again.
    - 你是 nǐ shì: 你 only dips before the falling tone 是.
 46. 我们都喜欢看电影。  Wǒmen dōu xǐhuan kàn diànyǐng.  — We all like watching films.
@@ -1270,7 +1270,7 @@ Examples:
 | 前 | qián | front, before | 商店在学校前边。 | Shāngdiàn zài xuéxiào qiánbian. | The shop is in front of the school. |
 | 后 | hòu | back, behind, after | 医院在学校后边。 | Yīyuàn zài xuéxiào hòubian. | The hospital is behind the school. |
 | 边 | biān | side (as in 这边, 那边) | 我家在学校那边。 | Wǒ jiā zài xuéxiào nàbiān. | My home is over by the school. |
-| 是 | shì | to be | 你是中国人吗？ | Nǐ shì Zhōngguó rén ma? | Are you Chinese? |
+| 是 | shì | to be | 你是中国人吗？ | Nǐ shì Zhōngguórén ma? | Are you Chinese? |
 | 有 | yǒu | to have; there is | 桌子上有一本书。 | Zhuōzi shàng yǒu yì běn shū. | There is a book on the table. |
 | 去 | qù | to go | 我去商店。 | Wǒ qù shāngdiàn. | I am going to the store. |
 | 来 | lái | to come | 你明天来学校吗？ | Nǐ míngtiān lái xuéxiào ma? | Are you coming to school tomorrow? |

@@ -23,7 +23,7 @@ P_MAP = {'，': ',', '。': '.', '？': '?', '！': '!', '、': ',', '：': ':',
 NUMBER_PREV = '第月期十二三四五六七八九零'
 DIGITS = '二三四五六七八九'
 NUM_CHARS = '一二两三四五六七八九十百千零'
-PROPER = {'中国', '汉语', '中文', '小明', '美国', '日本', '西藏'}     # capitalised in pinyin
+PROPER = {'中国', '中国人', '汉语', '中文', '小明', '美国', '日本', '西藏'}     # capitalised in pinyin
 ATTACH = {'们'}                              # suffix written together with the word before it
 
 TONES = {'ā': 1, 'ē': 1, 'ī': 1, 'ō': 1, 'ū': 1, 'ǖ': 1, 'á': 2, 'é': 2, 'í': 2, 'ó': 2, 'ú': 2, 'ǘ': 2,

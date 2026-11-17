@@ -1559,7 +1559,7 @@ window.HSK1_LISTEN = {
   },
   {
    "zh": "请问，你是中国人吗？",
-   "py": "Qǐngwèn, nǐ shì Zhōngguó rén ma?",
+   "py": "Qǐngwèn, nǐ shì Zhōngguórén ma?",
    "en": "Excuse me, are you Chinese?",
    "words": [
     {
@@ -1578,14 +1578,9 @@ window.HSK1_LISTEN = {
      "key": "shi"
     },
     {
-     "zh": "中国",
-     "py": "Zhōngguó",
-     "key": "zhongguo"
-    },
-    {
-     "zh": "人",
-     "py": "rén",
-     "key": "ren"
+     "zh": "中国人",
+     "py": "zhōngguórén",
+     "key": "zhongguoren"
     },
     {
      "zh": "吗",

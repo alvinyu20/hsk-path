@@ -14,7 +14,7 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   await ctx.addInitScript(() => { window.SHANLU_AUTO_SHARE = 0; });
   const page = await ctx.newPage(); const errs = []; page.on('pageerror', (e) => errs.push(e.message));
   await page.goto(url); await page.waitForTimeout(800);
-  const learn = () => page.evaluate(() => (document.body.innerText.match(/Learn \d+ new words?/g) || []).length);
+  const learn = () => page.evaluate(() => (document.body.innerText.match(/Review \d+ words?/g) || []).length);
   // two words that are learned, but still listed as learning (as after marking a word known in another place), one that really is waiting
   const zs = await page.evaluate(() => {
     const a = window.shanlu; const ws = JSON.parse(JSON.stringify(a.state.ws));
@@ -25,7 +25,7 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
     return fresh;
   });
   await page.waitForTimeout(300);
-  check((await page.evaluate(() => (document.body.innerText.match(/Learn (\d+) new word/) || [])[1])) === '1', 'only the word that is really waiting is offered ("Learn 1 new word", not 3)');
+  check((await page.evaluate(() => (document.body.innerText.match(/Review (\d+) words?/) || [])[1])) === '1', 'only the word that is really waiting is offered ("Review 1 word", not 3)');
   check((await page.evaluate(() => window.shanlu.lrnRoom())) === 11, 'learned words do not use up the 12-word limit');
   // starting the lesson drops the stale entries and serves the real word
   await page.evaluate(() => window.shanlu.reviewMore());
@@ -35,7 +35,7 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   // and when nothing is really waiting there is no "Learn new words" prompt at all
   await page.evaluate((z) => { const a = window.shanlu; const ws = JSON.parse(JSON.stringify(a.state.ws)); ws[z] = { see: { s: 2, t: Date.now(), d: 5 }, hear: ws[z].hear, prod: { s: 1, t: Date.now(), d: 5 } }; a.setState({ ws, lrn: { [z]: { st: 0, m: 0, at: Date.now() } }, rq: [], rcomplete: true, screen: 'review' }); }, zs[2]);
   await page.waitForTimeout(300);
-  check((await learn()) === 0, 'no "Learn N new words" when only already-learned words are listed as learning');
+  check((await learn()) === 0, 'no "Review N words" when only already-learned words are listed as learning');
   // a saved game with such entries is cleaned when it loads
   await page.evaluate(() => { window.shanlu.persistNow(); const k = Object.keys(localStorage).filter((x) => /^shanlu-progress/.test(x)).find((x) => { try { return JSON.parse(localStorage.getItem(x)).lrn; } catch (e) { return false; } }); const o = JSON.parse(localStorage.getItem(k)); const z = Object.keys(o.ws).find((w) => o.ws[w].see && o.ws[w].see.s > 0); o.lrn = Object.assign({}, o.lrn, { [z]: { st: 1, m: 0, at: Date.now() } }); localStorage.setItem(k, JSON.stringify(o)); window.__stale = z; });
   await page.reload(); await page.waitForTimeout(800);

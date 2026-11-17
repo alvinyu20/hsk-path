@@ -334,26 +334,14 @@
     "好多",
     "一共",
     "差不多",
-    "够",
-    "不够",
-    "满",
-    "全",
-    "全部",
-    "全都",
-    "整",
-    "整个",
     "共",
     "许多",
     "大量",
     "少量",
     "少数",
     "多数",
-    "部分",
     "人数",
     "数量",
-    "缺",
-    "缺少",
-    "剩",
     "增加",
     "减少",
     "减",
@@ -364,26 +352,13 @@
     "至少",
     "多样",
     "分为",
-    "其中",
     "大批",
     "大多",
     "个别",
     "众多",
     "无数",
-    "足够",
-    "充足",
-    "充分",
-    "不足",
-    "缺乏",
     "极其",
-    "全体",
-    "整体",
-    "总体",
-    "全面",
     "相当",
-    "有限",
-    "无限",
-    "其余",
     "过度",
     "过分",
     "广泛",
@@ -411,6 +386,59 @@
     "5": {
      "zh": "大批游客来到这里，这里足够热闹。",
      "en": "A large number of tourists come here, so it is lively enough."
+    }
+   }
+  },
+  {
+   "name": "Enough and not enough",
+   "group": "Basics",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "够",
+    "不够",
+    "缺",
+    "缺少",
+    "剩",
+    "足够",
+    "充足",
+    "充分",
+    "不足",
+    "缺乏",
+    "有限",
+    "无限"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "我们的钱不够，只剩一百块了。",
+     "en": "We do not have enough money; there are only a hundred yuan left."
+    }
+   }
+  },
+  {
+   "name": "Whole and part",
+   "group": "Basics",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "满",
+    "全",
+    "全部",
+    "全都",
+    "整",
+    "整个",
+    "部分",
+    "其中",
+    "全体",
+    "整体",
+    "总体",
+    "全面",
+    "其余"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "全部的学生都来了，整个教室都满了。",
+     "en": "All the students have come, and the whole classroom is full."
     }
    }
   },
@@ -950,63 +978,13 @@
     "开会",
     "服务",
     "同事",
-    "大夫",
-    "护士",
-    "律师",
-    "厨师",
-    "教师",
-    "教授",
-    "记者",
-    "作家",
-    "导游",
-    "警察",
-    "交警",
-    "演员",
-    "歌手",
-    "工人",
-    "师傅",
-    "教练",
-    "职业",
     "当",
-    "应聘",
-    "招聘",
-    "面试",
-    "售票员",
-    "院长",
-    "申请",
-    "保安",
-    "导演",
-    "飞行员",
-    "工程师",
-    "公务员",
-    "秘书",
-    "乘务员",
-    "裁判",
-    "主任",
-    "老板",
     "职工",
     "员工",
-    "商人",
-    "农民",
-    "主席",
-    "志愿者",
-    "专家",
-    "学者",
     "人才",
-    "创业",
-    "辞职",
-    "离职",
-    "失业",
-    "就业",
-    "实习",
-    "聘请",
-    "培训",
     "劳动",
-    "事业",
-    "职场",
     "从事",
     "担任",
-    "待遇",
     "主持",
     "代表",
     "各行各业",
@@ -1042,6 +1020,92 @@
    }
   },
   {
+   "name": "Jobs and professions",
+   "group": "People",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "大夫",
+    "护士",
+    "律师",
+    "厨师",
+    "教师",
+    "教授",
+    "记者",
+    "作家",
+    "导游",
+    "警察",
+    "交警",
+    "演员",
+    "歌手",
+    "工人",
+    "师傅",
+    "教练",
+    "售票员",
+    "院长",
+    "保安",
+    "导演",
+    "飞行员",
+    "工程师",
+    "公务员",
+    "秘书",
+    "乘务员",
+    "裁判",
+    "主任",
+    "老板",
+    "商人",
+    "农民",
+    "主席",
+    "志愿者",
+    "专家",
+    "学者"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "我哥哥是律师，我姐姐是护士。",
+     "en": "My older brother is a lawyer, and my older sister is a nurse."
+    },
+    "5": {
+     "zh": "他是一名工程师，他的妻子是秘书。",
+     "en": "He is an engineer, and his wife is a secretary."
+    }
+   }
+  },
+  {
+   "name": "Finding and leaving a job",
+   "group": "People",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "应聘",
+    "招聘",
+    "面试",
+    "申请",
+    "职业",
+    "创业",
+    "辞职",
+    "离职",
+    "失业",
+    "就业",
+    "实习",
+    "聘请",
+    "培训",
+    "待遇",
+    "职场",
+    "事业"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "他去一家公司应聘，明天要面试。",
+     "en": "He is applying for a job at a company and will have an interview tomorrow."
+    },
+    "5": {
+     "zh": "她辞职以后自己创业了。",
+     "en": "After she resigned, she started her own business."
+    }
+   }
+  },
+  {
    "name": "Workplace and business",
    "group": "People",
    "to": "review",
@@ -1051,9 +1115,6 @@
     "办理",
     "办事",
     "部门",
-    "打工",
-    "加班",
-    "干活儿",
     "经济",
     "生意",
     "小组",
@@ -1061,21 +1122,14 @@
     "单位",
     "工厂",
     "厂",
-    "工资",
-    "奖金",
-    "收入",
-    "负责",
-    "负责人",
     "职业",
     "应聘",
     "招聘",
     "面试",
-    "任务",
     "会员",
     "市场",
     "商品",
     "货",
-    "安排",
     "活动",
     "企业",
     "机构",
@@ -1106,6 +1160,30 @@
     "5": {
      "zh": "公司和客户签订了新合同。",
      "en": "The company signed a new contract with a client."
+    }
+   }
+  },
+  {
+   "name": "Working hours and pay",
+   "group": "People",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "工资",
+    "奖金",
+    "收入",
+    "负责",
+    "负责人",
+    "任务",
+    "安排",
+    "加班",
+    "打工",
+    "干活儿"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "他经常加班，可是工资不高。",
+     "en": "He often works overtime, but his wages are not high."
     }
    }
   },
@@ -1879,76 +1957,26 @@
     "银行卡",
     "卡",
     "礼物",
-    "价格",
-    "价钱",
-    "低价",
-    "高价",
-    "打折",
-    "降价",
-    "免费",
-    "付",
-    "支付",
-    "现金",
-    "零钱",
-    "零花钱",
     "购买",
     "购物",
-    "网购",
     "商品",
     "货",
     "顾客",
     "逛",
-    "结账",
     "租",
     "房租",
-    "收费",
-    "费",
-    "费用",
-    "学费",
-    "赚",
-    "收入",
-    "工资",
-    "奖金",
-    "存",
     "质量",
     "牌子",
     "牌",
-    "值",
-    "值得",
     "数",
-    "节约",
-    "浪费",
     "便利店",
-    "促销",
-    "折扣",
-    "优惠",
-    "售价",
     "出售",
-    "退还",
     "赠送",
     "赠",
-    "押金",
-    "涨价",
-    "物价",
-    "人民币",
-    "汇率",
     "日用品",
     "名牌",
     "品牌",
     "货物",
-    "电商",
-    "二手",
-    "打包",
-    "配送",
-    "运费",
-    "商家",
-    "保险",
-    "话费",
-    "存款",
-    "账户",
-    "花费",
-    "包裹",
-    "领取",
     "买卖",
     "用品",
     "预订",
@@ -1974,6 +2002,106 @@
     "5": {
      "zh": "今天有折扣，也有优惠，东西便宜很多。",
      "en": "Today there are discounts and special offers, so things are much cheaper."
+    }
+   }
+  },
+  {
+   "name": "Prices and paying",
+   "group": "Food and shopping",
+   "to": "speak",
+   "cta": "Use these when you ask a price",
+   "words": [
+    "价格",
+    "价钱",
+    "低价",
+    "高价",
+    "打折",
+    "降价",
+    "免费",
+    "付",
+    "支付",
+    "现金",
+    "零钱",
+    "零花钱",
+    "结账",
+    "收费",
+    "费",
+    "费用",
+    "学费",
+    "值",
+    "值得",
+    "促销",
+    "折扣",
+    "优惠",
+    "售价",
+    "涨价",
+    "物价",
+    "人民币",
+    "汇率",
+    "押金",
+    "话费",
+    "花费",
+    "退还"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "这件衣服在打折，价格很便宜。",
+     "en": "This piece of clothing is on sale, and the price is very cheap."
+    },
+    "5": {
+     "zh": "最近物价上涨了，很多东西都涨价了。",
+     "en": "Prices have risen recently, and many things have gone up."
+    }
+   }
+  },
+  {
+   "name": "Earning and saving",
+   "group": "Food and shopping",
+   "to": "speak",
+   "cta": "Use these when you ask a price",
+   "words": [
+    "赚",
+    "收入",
+    "工资",
+    "奖金",
+    "存",
+    "节约",
+    "浪费",
+    "存款",
+    "账户",
+    "保险"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "他的工资不高，可是他很会节约。",
+     "en": "His wages are not high, but he is very good at saving."
+    }
+   }
+  },
+  {
+   "name": "Online shopping and delivery",
+   "group": "Food and shopping",
+   "to": "speak",
+   "cta": "Use these when you ask a price",
+   "words": [
+    "网购",
+    "电商",
+    "二手",
+    "打包",
+    "配送",
+    "运费",
+    "商家",
+    "包裹",
+    "领取"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "现在很多人喜欢网购。",
+     "en": "Now many people like to shop online."
+    },
+    "5": {
+     "zh": "我在网上买了一个二手电脑，运费是商家付的。",
+     "en": "I bought a second-hand computer online, and the seller paid for the delivery."
     }
    }
   },
@@ -2269,25 +2397,12 @@
     "四周",
     "四处",
     "位置",
-    "位于",
-    "靠",
-    "靠近",
-    "隔",
-    "沿",
-    "朝",
-    "面向",
-    "向上",
-    "绕",
-    "围",
     "上下",
-    "顺",
     "方",
     "分布",
     "户外",
-    "接近",
     "空间",
     "排列",
-    "围绕",
     "现场",
     "在场",
     "直",
@@ -2309,6 +2424,33 @@
     "5": {
      "zh": "书架在房间内部，靠近窗台。",
      "en": "The bookshelf is inside the room, close to the windowsill."
+    }
+   }
+  },
+  {
+   "name": "Near, along and around",
+   "group": "Places and travel",
+   "to": "speak",
+   "cta": "Use these to ask where something is",
+   "words": [
+    "靠",
+    "靠近",
+    "隔",
+    "沿",
+    "朝",
+    "面向",
+    "向上",
+    "绕",
+    "围",
+    "顺",
+    "围绕",
+    "接近",
+    "位于"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "我家靠近公园，顺着这条路一直走就到了。",
+     "en": "My home is near the park; just keep walking along this road and you will arrive."
     }
    }
   },
@@ -3013,50 +3155,27 @@
     "回答",
     "查",
     "提高",
-    "高考",
     "期末",
     "期中",
     "考生",
-    "报考",
     "报名",
     "笔试",
     "面试",
     "试题",
     "分数",
     "合格",
-    "毕业",
-    "毕业生",
-    "本科",
-    "硕士",
-    "博士",
-    "研究生",
-    "专业",
-    "奖学金",
-    "学费",
-    "入学",
     "答案",
     "答",
     "错误",
-    "成功",
-    "失败",
-    "赢",
-    "输",
-    "取得",
-    "达到",
-    "获得",
-    "获奖",
     "预习",
     "自习",
     "自学",
     "总结",
     "基础",
-    "奖",
-    "赢得",
     "测试",
     "题目",
     "提问",
     "及格",
-    "录取",
     "记忆",
     "概括",
     "思考",
@@ -3067,9 +3186,7 @@
     "请教",
     "指导",
     "参考",
-    "论文",
     "试卷",
-    "学历",
     "调研",
     "集中",
     "培养",
@@ -3098,6 +3215,72 @@
     "5": {
      "zh": "这次测试的题目不难，大家都及格了。",
      "en": "The questions in this test are not hard, and everyone has passed."
+    }
+   }
+  },
+  {
+   "name": "University and degrees",
+   "group": "School and language",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "高考",
+    "报考",
+    "本科",
+    "硕士",
+    "博士",
+    "研究生",
+    "专业",
+    "奖学金",
+    "学费",
+    "入学",
+    "毕业",
+    "毕业生",
+    "录取",
+    "论文",
+    "学历"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "他在大学读研究生，明年毕业。",
+     "en": "He is a graduate student at university and will graduate next year."
+    },
+    "5": {
+     "zh": "她被上海的一所大学录取了。",
+     "en": "She was admitted to a university in Shanghai."
+    }
+   }
+  },
+  {
+   "name": "Winning and succeeding",
+   "group": "School and language",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "成功",
+    "失败",
+    "赢",
+    "输",
+    "取得",
+    "达到",
+    "获得",
+    "获奖",
+    "奖",
+    "赢得",
+    "成就",
+    "成果",
+    "收获",
+    "达成",
+    "实现"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "我们赢了比赛，获得了第一名。",
+     "en": "We won the match and took first place."
+    },
+    "5": {
+     "zh": "经过一年的努力，他取得了很大的成就。",
+     "en": "After a year of hard work, he achieved a great deal."
     }
    }
   },
@@ -3220,17 +3403,10 @@
     "电子书",
     "笔记本",
     "信",
-    "互联网",
     "网购",
-    "网页",
-    "网友",
-    "网址",
-    "视频",
     "信号",
     "信息",
     "短信",
-    "密码",
-    "扫码",
     "回复",
     "回信",
     "转发",
@@ -3241,11 +3417,8 @@
     "复印",
     "科技",
     "技术",
-    "线上",
-    "线下",
     "文件",
     "图片",
-    "查找",
     "查看",
     "播放",
     "广播",
@@ -3257,29 +3430,12 @@
     "话费",
     "充电",
     "充值",
-    "点赞",
-    "二维码",
-    "登录",
-    "下载",
-    "上传",
-    "删",
-    "删除",
-    "浏览",
-    "搜",
-    "搜索",
     "键盘",
     "鼠标",
     "屏幕",
     "软件",
     "硬件",
     "网络",
-    "账号",
-    "账户",
-    "在线",
-    "平台",
-    "用户",
-    "留言",
-    "直播",
     "包裹",
     "电子版",
     "复制",
@@ -3310,6 +3466,51 @@
     "5": {
      "zh": "先登录账号，再下载软件。",
      "en": "First log in to the account, then download the software."
+    }
+   }
+  },
+  {
+   "name": "Online life",
+   "group": "School and language",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "互联网",
+    "网页",
+    "网友",
+    "网址",
+    "视频",
+    "密码",
+    "扫码",
+    "线上",
+    "线下",
+    "查找",
+    "点赞",
+    "二维码",
+    "登录",
+    "下载",
+    "上传",
+    "删",
+    "删除",
+    "浏览",
+    "搜",
+    "搜索",
+    "账号",
+    "账户",
+    "在线",
+    "平台",
+    "用户",
+    "留言",
+    "直播"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "我的网友给我发了一个视频。",
+     "en": "My online friend sent me a video."
+    },
+    "5": {
+     "zh": "你可以先登录，再下载这个软件。",
+     "en": "You can log in first, then download this software."
     }
    }
   },
@@ -3704,11 +3905,6 @@
     "相机",
     "照片",
     "照",
-    "钢琴",
-    "弹",
-    "琴",
-    "歌声",
-    "歌手",
     "排球",
     "乒乓球",
     "球队",
@@ -3718,17 +3914,8 @@
     "游玩",
     "度假",
     "旅行",
-    "聚会",
-    "约会",
     "拍",
-    "开玩笑",
-    "好笑",
-    "笑话",
     "有趣",
-    "浪漫",
-    "做梦",
-    "梦",
-    "梦想",
     "热闹",
     "赢",
     "输",
@@ -3742,7 +3929,6 @@
     "合影",
     "玩具",
     "气球",
-    "鼓",
     "游览",
     "欣赏",
     "拍摄",
@@ -3772,6 +3958,49 @@
     "5": {
      "zh": "我喜欢摄影，休闲时去户外拍照。",
      "en": "I like photography, and in my free time I go outdoors to take photos."
+    }
+   }
+  },
+  {
+   "name": "Music and singing",
+   "group": "Daily life and fun",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "钢琴",
+    "弹",
+    "琴",
+    "歌声",
+    "歌手",
+    "鼓"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "她会弹钢琴，也是一个歌手。",
+     "en": "She can play the piano, and she is also a singer."
+    }
+   }
+  },
+  {
+   "name": "Parties, jokes and dreams",
+   "group": "Daily life and fun",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "聚会",
+    "约会",
+    "开玩笑",
+    "好笑",
+    "笑话",
+    "浪漫",
+    "做梦",
+    "梦",
+    "梦想"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "周末的聚会很热闹，大家都在讲笑话。",
+     "en": "The party at the weekend is lively, and everyone is telling jokes."
     }
    }
   },
@@ -3929,30 +4158,16 @@
     "舞蹈",
     "诗",
     "诗人",
-    "美术",
-    "国画",
-    "工艺",
     "创作",
     "鼓",
-    "欣赏",
-    "展览",
-    "展出",
-    "展示",
-    "博物馆",
     "剧场",
-    "书法",
-    "毛笔",
     "角色",
     "掌声",
     "鼓掌",
     "风格",
     "经典",
     "生动",
-    "手工",
     "象征",
-    "展现",
-    "装饰",
-    "图画",
     "图书",
     "主题"
    ],
@@ -3960,6 +4175,34 @@
     "5": {
      "zh": "舞台上的舞蹈很美，观众都鼓掌。",
      "en": "The dance on the stage is beautiful, and the audience all applauds."
+    }
+   }
+  },
+  {
+   "name": "Fine art and crafts",
+   "group": "Daily life and fun",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "展览",
+    "展出",
+    "展示",
+    "展现",
+    "博物馆",
+    "欣赏",
+    "书法",
+    "毛笔",
+    "国画",
+    "美术",
+    "图画",
+    "工艺",
+    "手工",
+    "装饰"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "博物馆里正在展出书法作品。",
+     "en": "The museum is exhibiting works of calligraphy."
     }
    }
   },
@@ -4243,20 +4486,10 @@
    "words": [
     "资金",
     "税",
-    "汇率",
-    "物价",
-    "价值",
-    "消费",
-    "消费者",
-    "需求",
     "存款",
     "账户",
     "押金",
     "租金",
-    "涨",
-    "涨价",
-    "上涨",
-    "交易",
     "亏",
     "赔",
     "欠",
@@ -4270,13 +4503,10 @@
     "穷",
     "负担",
     "分配",
-    "利润",
-    "成本",
     "资源",
     "节省",
     "利益",
-    "挣",
-    "买卖"
+    "挣"
    ],
    "sentences": {
     "5": {
@@ -4286,26 +4516,42 @@
    }
   },
   {
+   "name": "Prices and markets",
+   "group": "Society and world",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "汇率",
+    "物价",
+    "价值",
+    "消费",
+    "消费者",
+    "需求",
+    "涨",
+    "涨价",
+    "上涨",
+    "交易",
+    "利润",
+    "成本",
+    "买卖"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "最近物价上涨，消费者买东西更小心了。",
+     "en": "Prices have been rising recently, and consumers are more careful when they buy things."
+    }
+   }
+  },
+  {
    "name": "Business and industry",
    "group": "Society and world",
    "to": "review",
    "cta": "Review your words",
    "words": [
-    "产",
-    "产量",
-    "产品",
-    "产业",
-    "工业",
-    "农业",
-    "行业",
     "品牌",
     "名牌",
     "品质",
     "品种",
-    "生产",
-    "制造",
-    "制作",
-    "加工",
     "销售",
     "销量",
     "研发",
@@ -4320,14 +4566,39 @@
     "电商",
     "经营",
     "营业",
-    "业务",
-    "农民",
-    "种植"
+    "业务"
    ],
    "sentences": {
     "5": {
      "zh": "这家企业生产的产品卖得很好。",
      "en": "The products that this company produces sell very well."
+    }
+   }
+  },
+  {
+   "name": "Industry and production",
+   "group": "Society and world",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "产",
+    "产量",
+    "产品",
+    "产业",
+    "工业",
+    "农业",
+    "行业",
+    "生产",
+    "制造",
+    "制作",
+    "加工",
+    "种植",
+    "农民"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "这家工厂生产的产品质量很好。",
+     "en": "The products this factory produces are of very good quality."
     }
    }
   },
@@ -4344,11 +4615,36 @@
     "研制",
     "发明",
     "创新",
+    "高科技",
+    "人工",
+    "试验",
+    "测",
+    "测试",
+    "开发",
+    "生物",
+    "调研",
+    "工具",
+    "结构",
+    "先进",
+    "新型",
+    "应用",
+    "工程"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "实验室里的机器人是一项新发明。",
+     "en": "The robot in the laboratory is a new invention."
+    }
+   }
+  },
+  {
+   "name": "Computers and machines",
+   "group": "Society and world",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
     "机器",
     "机器人",
-    "高科技",
-    "智能",
-    "人工",
     "软件",
     "硬件",
     "数据",
@@ -4357,29 +4653,18 @@
     "计算机",
     "设备",
     "电池",
-    "试验",
-    "测",
-    "测试",
-    "开发",
-    "生物",
+    "智能",
+    "自动",
     "安装",
     "操作",
-    "调研",
-    "工具",
-    "功能",
-    "结构",
     "设置",
-    "显示",
-    "先进",
-    "新型",
-    "应用",
-    "工程",
-    "自动"
+    "功能",
+    "显示"
    ],
    "sentences": {
     "5": {
-     "zh": "实验室里的机器人是一项新发明。",
-     "en": "The robot in the laboratory is a new invention."
+     "zh": "这台电脑的软件和硬件都很新。",
+     "en": "This computer's software and hardware are both very new."
     }
    }
   },
@@ -4586,10 +4871,8 @@
     "头痛",
     "难受",
     "受伤",
-    "体检",
     "体温",
     "体重",
-    "打针",
     "大夫",
     "护士",
     "健身",
@@ -4600,32 +4883,16 @@
     "卫生",
     "减轻",
     "减",
-    "病房",
     "病情",
     "疾病",
     "流感",
     "过敏",
-    "急诊",
-    "门诊",
-    "手术",
-    "药品",
-    "药物",
-    "中药",
-    "中医",
-    "医疗",
-    "医学",
-    "诊断",
-    "治疗",
-    "治",
     "着凉",
     "疼痛",
     "伤",
     "伤害",
     "失眠",
     "呼吸",
-    "抢救",
-    "救护车",
-    "救",
     "减肥",
     "好转",
     "缓解",
@@ -4633,11 +4900,12 @@
     "预防",
     "消化",
     "营养",
-    "挂号",
     "精力",
     "弱",
     "吸收",
-    "生存"
+    "生存",
+    "打针",
+    "体检"
    ],
    "sentences": {
     "1": {
@@ -4659,6 +4927,43 @@
     "5": {
      "zh": "医生说他的疾病好转了，不用做手术。",
      "en": "The doctor says his illness has improved and he does not need an operation."
+    }
+   }
+  },
+  {
+   "name": "Hospitals and treatment",
+   "group": "Body and mind",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "打针",
+    "体检",
+    "病房",
+    "急诊",
+    "门诊",
+    "手术",
+    "药品",
+    "药物",
+    "中药",
+    "中医",
+    "医疗",
+    "医学",
+    "诊断",
+    "治疗",
+    "治",
+    "挂号",
+    "抢救",
+    "救护车",
+    "救"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "我今天去医院体检，护士给我打了针。",
+     "en": "Today I went to the hospital for a check-up, and the nurse gave me an injection."
+    },
+    "5": {
+     "zh": "医生给他做了手术，他现在在病房里休息。",
+     "en": "The doctor operated on him, and he is now resting in the ward."
     }
    }
   },
@@ -4692,22 +4997,13 @@
     "心里",
     "急",
     "喜爱",
-    "感动",
-    "感觉",
-    "感情",
-    "感人",
-    "感受",
     "感谢",
-    "感",
     "激动",
     "兴奋",
-    "紧张",
     "骄傲",
     "得意",
     "失望",
     "伤心",
-    "烦",
-    "烦恼",
     "吃惊",
     "害羞",
     "愉快",
@@ -4716,67 +5012,20 @@
     "后悔",
     "羡慕",
     "心情",
-    "爱情",
-    "爱心",
-    "友情",
-    "友谊",
-    "友好",
-    "冷静",
     "讨厌",
     "不满",
-    "压力",
-    "放松",
-    "轻松",
-    "辛苦",
-    "难忘",
-    "内心",
-    "受不了",
-    "无聊",
-    "吸引",
     "唉",
-    "安慰",
-    "抱怨",
-    "同情",
     "惊喜",
     "好奇",
     "痛苦",
     "遗憾",
-    "犹豫",
-    "乐观",
-    "消极",
-    "情感",
-    "情绪",
-    "心态",
-    "想念",
     "期待",
-    "热爱",
-    "在乎",
-    "舍不得",
     "满足",
-    "无奈",
     "疯狂",
-    "恋爱",
-    "失恋",
-    "微笑",
-    "表情",
-    "沉默",
-    "承受",
-    "刺激",
-    "动人",
-    "精神",
-    "精力",
     "决心",
     "可怕",
     "迷",
-    "强烈",
-    "热烈",
-    "忍",
-    "享受",
-    "信任",
-    "亲爱",
-    "亲切",
-    "温暖",
-    "舍得"
+    "享受"
    ],
    "sentences": {
     "1": {
@@ -4798,6 +5047,116 @@
     "5": {
      "zh": "这个礼物让她很惊喜。",
      "en": "This gift is a pleasant surprise for her."
+    }
+   }
+  },
+  {
+   "name": "Love and friendship",
+   "group": "Body and mind",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "爱情",
+    "爱心",
+    "友情",
+    "友谊",
+    "友好",
+    "恋爱",
+    "失恋",
+    "想念",
+    "亲爱",
+    "亲切",
+    "温暖",
+    "信任",
+    "同情",
+    "安慰",
+    "热爱",
+    "在乎",
+    "舍不得",
+    "舍得"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "他是一个很有爱心的人，对朋友很友好。",
+     "en": "He is a very kind-hearted person and very friendly to his friends."
+    },
+    "5": {
+     "zh": "我很想念家人，也很在乎他们。",
+     "en": "I miss my family very much, and I care about them a lot."
+    }
+   }
+  },
+  {
+   "name": "Stress and calm",
+   "group": "Body and mind",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "紧张",
+    "压力",
+    "放松",
+    "轻松",
+    "辛苦",
+    "冷静",
+    "烦",
+    "烦恼",
+    "受不了",
+    "无聊",
+    "承受",
+    "忍",
+    "无奈",
+    "犹豫",
+    "抱怨",
+    "情绪",
+    "心态",
+    "消极",
+    "乐观"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "考试以前我很紧张，压力很大，需要放松一下。",
+     "en": "Before the exam I am very nervous and under a lot of pressure, so I need to relax a little."
+    },
+    "5": {
+     "zh": "他的情绪不太好，常常抱怨工作太累。",
+     "en": "His mood is not very good, and he often complains that work is too tiring."
+    }
+   }
+  },
+  {
+   "name": "Being moved",
+   "group": "Body and mind",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "感动",
+    "感觉",
+    "感情",
+    "感人",
+    "感受",
+    "感",
+    "内心",
+    "难忘",
+    "吸引",
+    "动人",
+    "情感",
+    "表情",
+    "微笑",
+    "沉默",
+    "刺激",
+    "强烈",
+    "热烈",
+    "精神",
+    "精力"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "这个故事很感人，大家都很感动。",
+     "en": "This story is very touching, and everyone is deeply touched by it."
+    },
+    "5": {
+     "zh": "这个电影很动人，很多人看了都很感动。",
+     "en": "This film is very moving, and many people were moved when they saw it."
     }
    }
   },
@@ -4915,79 +5274,42 @@
     "注意",
     "发现",
     "关注",
-    "看法",
-    "想法",
-    "意见",
-    "主意",
-    "建议",
-    "计划",
-    "目标",
-    "目的",
-    "理想",
-    "梦想",
-    "判断",
     "怀疑",
-    "考虑",
     "理解",
     "猜",
     "知识",
     "经验",
     "经历",
     "印象",
-    "估计",
     "回忆",
     "讨论",
     "研究",
     "总结",
     "信息",
     "调查",
-    "反对",
     "熟悉",
     "思考",
-    "思想",
-    "思维",
-    "观点",
-    "观念",
-    "概念",
-    "理论",
-    "逻辑",
     "意识",
     "想象",
     "认",
-    "承认",
-    "否认",
-    "否定",
     "疑问",
-    "预测",
-    "预计",
-    "结论",
     "分析",
-    "理由",
-    "道理",
-    "意义",
     "常识",
     "记忆",
     "智慧",
     "体会",
-    "本质",
     "当成",
     "当作",
     "看作",
     "视为",
-    "角度",
     "具体",
-    "命运",
-    "命",
     "明确",
-    "评",
     "深刻",
     "深入",
     "心理",
-    "意味着",
     "注重",
     "忽视",
-    "专心",
-    "决心"
+    "专心"
    ],
    "sentences": {
     "1": {
@@ -5009,6 +5331,75 @@
     "5": {
      "zh": "他的思想和观点都很特别。",
      "en": "His thinking and views are both very special."
+    }
+   }
+  },
+  {
+   "name": "Opinions and ideas",
+   "group": "Body and mind",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "看法",
+    "想法",
+    "意见",
+    "主意",
+    "建议",
+    "判断",
+    "反对",
+    "观点",
+    "观念",
+    "概念",
+    "理论",
+    "逻辑",
+    "思想",
+    "思维",
+    "结论",
+    "理由",
+    "道理",
+    "角度",
+    "评",
+    "否认",
+    "否定",
+    "承认",
+    "意义",
+    "本质",
+    "意味着"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "我有一个想法，大家有意见吗？",
+     "en": "I have an idea. Does anyone have an opinion on it?"
+    },
+    "5": {
+     "zh": "他的观点很有道理，可是我有不同的看法。",
+     "en": "His point of view makes a lot of sense, but I see it differently."
+    }
+   }
+  },
+  {
+   "name": "Plans and goals",
+   "group": "Body and mind",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "计划",
+    "目标",
+    "目的",
+    "理想",
+    "梦想",
+    "估计",
+    "考虑",
+    "预测",
+    "预计",
+    "决心",
+    "命运",
+    "命"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "我的目标是明年去中国，我已经有了计划。",
+     "en": "My goal is to go to China next year, and I already have a plan."
     }
    }
   },
@@ -5065,32 +5456,10 @@
     "关",
     "接",
     "分开",
-    "按",
-    "拉",
-    "推",
-    "抱",
-    "敲",
-    "擦",
     "弄",
-    "提",
-    "取",
-    "挂",
-    "扔",
-    "吹",
     "脱",
     "戴",
-    "倒",
-    "压",
-    "抬",
-    "举",
-    "转",
-    "装",
-    "修",
-    "修理",
     "排",
-    "存",
-    "留",
-    "留下",
     "吸",
     "闻",
     "躺",
@@ -5098,57 +5467,17 @@
     "点头",
     "逛",
     "散步",
-    "掉",
-    "落",
-    "打印",
-    "复印",
-    "订",
-    "约",
-    "租",
     "拍",
-    "邀请",
-    "寄",
-    "交",
-    "付",
-    "背",
     "待",
     "搞",
-    "滚",
-    "摔",
-    "碰",
-    "撞",
-    "挡",
-    "堵",
-    "安装",
-    "操作",
-    "催",
-    "存放",
-    "打破",
-    "丢失",
-    "断",
-    "堆",
     "分离",
-    "合",
-    "划",
-    "系",
-    "浇",
-    "结",
-    "漏",
-    "抢",
-    "扇",
-    "扇子",
-    "收集",
-    "碎",
-    "投",
     "移",
     "移动",
-    "寻找",
     "行动",
     "追",
     "配",
     "动手",
-    "骗",
-    "邮寄"
+    "骗"
    ],
    "sentences": {
     "1": {
@@ -5170,6 +5499,100 @@
     "5": {
      "zh": "他搞错了，把水洒在地上。",
      "en": "He got it wrong and spilled the water on the floor."
+    }
+   }
+  },
+  {
+   "name": "Hands and objects",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "按",
+    "拉",
+    "推",
+    "抱",
+    "敲",
+    "擦",
+    "提",
+    "取",
+    "挂",
+    "扔",
+    "吹",
+    "抬",
+    "举",
+    "转",
+    "装",
+    "倒",
+    "压",
+    "背",
+    "掉",
+    "落",
+    "滚",
+    "摔",
+    "碰",
+    "撞",
+    "挡",
+    "堵",
+    "堆",
+    "系",
+    "结",
+    "抢",
+    "投",
+    "扇",
+    "扇子",
+    "浇",
+    "碎",
+    "断",
+    "打破",
+    "合",
+    "划",
+    "漏"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "请把门推开，再把桌子擦一下。",
+     "en": "Please push the door open, then wipe the table."
+    },
+    "5": {
+     "zh": "他不小心撞到了桌子，杯子掉在地上摔碎了。",
+     "en": "He bumped into the table by accident, and the cup fell to the floor and broke."
+    }
+   }
+  },
+  {
+   "name": "Errands and arrangements",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "订",
+    "约",
+    "租",
+    "邀请",
+    "寄",
+    "交",
+    "付",
+    "打印",
+    "复印",
+    "修",
+    "修理",
+    "存",
+    "留",
+    "留下",
+    "邮寄",
+    "存放",
+    "安装",
+    "操作",
+    "催",
+    "收集",
+    "寻找",
+    "丢失"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "我订了两张票，明天还要去打印材料。",
+     "en": "I have booked two tickets, and tomorrow I still have to go and print the materials."
     }
    }
   },
@@ -5228,20 +5651,6 @@
     "改",
     "改变",
     "定",
-    "放弃",
-    "接受",
-    "拒绝",
-    "答应",
-    "取消",
-    "推迟",
-    "增加",
-    "减少",
-    "减轻",
-    "加快",
-    "加强",
-    "降低",
-    "下降",
-    "增长",
     "养成",
     "适应",
     "产生",
@@ -5261,22 +5670,11 @@
     "尝试",
     "试用",
     "试验",
-    "转变",
-    "变动",
-    "更换",
-    "更新",
     "替",
     "代替",
     "挑",
     "挑选",
-    "调整",
-    "改革",
-    "改进",
-    "改善",
-    "改正",
-    "修改",
     "调",
-    "补充",
     "利用",
     "全新",
     "运用",
@@ -5295,6 +5693,73 @@
     "5": {
      "zh": "我们更换了方案，还尝试了新办法。",
      "en": "We changed the plan and also tried a new method."
+    }
+   }
+  },
+  {
+   "name": "More and less",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "增加",
+    "减少",
+    "减轻",
+    "加快",
+    "加强",
+    "降低",
+    "下降",
+    "增长"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "我们要减少浪费，增加收入。",
+     "en": "We need to reduce waste and increase income."
+    }
+   }
+  },
+  {
+   "name": "Saying yes and no",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "接受",
+    "拒绝",
+    "答应",
+    "放弃",
+    "取消",
+    "推迟"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "他答应了我，可是后来又取消了。",
+     "en": "He promised me, but later he cancelled."
+    }
+   }
+  },
+  {
+   "name": "Improving and fixing",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "改革",
+    "改进",
+    "改善",
+    "改正",
+    "修改",
+    "调整",
+    "更新",
+    "更换",
+    "转变",
+    "变动",
+    "补充"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "公司正在改善工作环境。",
+     "en": "The company is improving the working environment."
     }
    }
   },
@@ -5741,26 +6206,13 @@
     "轻",
     "重",
     "快速",
-    "加快",
-    "速度",
-    "车速",
     "高速",
-    "降低",
-    "增加",
     "强",
     "大大",
-    "距离",
     "少量",
     "大量",
     "空",
     "丰富",
-    "长度",
-    "宽度",
-    "厚度",
-    "强度",
-    "深度",
-    "高度",
-    "面积",
     "宽",
     "窄",
     "广",
@@ -5772,13 +6224,6 @@
     "高大",
     "缓慢",
     "迅速",
-    "加速",
-    "缩短",
-    "缩小",
-    "扩大",
-    "规模",
-    "超",
-    "超出",
     "沉",
     "平",
     "紧",
@@ -5809,6 +6254,62 @@
     "5": {
      "zh": "这条路宽度不够，车开得很缓慢。",
      "en": "This road is not wide enough, and cars drive very slowly."
+    }
+   }
+  },
+  {
+   "name": "Measurements",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "距离",
+    "速度",
+    "车速",
+    "长度",
+    "宽度",
+    "厚度",
+    "强度",
+    "深度",
+    "高度",
+    "面积",
+    "规模"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "这辆车的速度很快。",
+     "en": "This car is very fast."
+    },
+    "5": {
+     "zh": "这条河的宽度和深度都不一样。",
+     "en": "The width and depth of this river are not the same everywhere."
+    }
+   }
+  },
+  {
+   "name": "Growing and shrinking",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "加快",
+    "降低",
+    "增加",
+    "加速",
+    "缩短",
+    "缩小",
+    "扩大",
+    "超",
+    "超出"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "我们要加快速度。",
+     "en": "We need to speed up."
+    },
+    "5": {
+     "zh": "公司想扩大规模，缩短工作时间。",
+     "en": "The company wants to expand and shorten working hours."
     }
    }
   },
@@ -5895,12 +6396,6 @@
     "难看",
     "奇怪",
     "旧",
-    "棒",
-    "美",
-    "美丽",
-    "美好",
-    "精彩",
-    "优秀",
     "合格",
     "正确",
     "错误",
@@ -5920,14 +6415,7 @@
     "重视",
     "可惜",
     "巧",
-    "著名",
-    "厉害",
     "丰富",
-    "优良",
-    "优质",
-    "优美",
-    "完美",
-    "良好",
     "糟",
     "糟糕",
     "不良",
@@ -5939,24 +6427,12 @@
     "毛病",
     "不幸",
     "幸运",
-    "宝",
-    "宝贵",
-    "珍贵",
-    "珍惜",
     "丑",
     "臭",
-    "丰富多彩",
     "怪",
-    "高档",
-    "高级",
-    "了不起",
     "模糊",
     "适当",
-    "突出",
     "完整",
-    "先进",
-    "最佳",
-    "出色",
     "生动",
     "真实"
    ],
@@ -5984,22 +6460,59 @@
    }
   },
   {
+   "name": "Excellent and precious",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "棒",
+    "美",
+    "美丽",
+    "美好",
+    "精彩",
+    "优秀",
+    "著名",
+    "厉害",
+    "优良",
+    "优质",
+    "优美",
+    "完美",
+    "良好",
+    "宝",
+    "宝贵",
+    "珍贵",
+    "珍惜",
+    "高档",
+    "高级",
+    "了不起",
+    "突出",
+    "先进",
+    "最佳",
+    "出色",
+    "丰富多彩"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "这个电影非常精彩，演员也很优秀。",
+     "en": "This film is wonderful, and the actors are excellent too."
+    },
+    "5": {
+     "zh": "这是一次很宝贵的机会，我们要珍惜。",
+     "en": "This is a very precious chance, and we should treasure it."
+    }
+   }
+  },
+  {
    "name": "Skills and achievements",
    "group": "Actions and descriptions",
    "to": "review",
    "cta": "Review your words",
    "words": [
-    "成就",
-    "成果",
     "本领",
     "技能",
-    "实力",
-    "优势",
     "资格",
     "贡献",
-    "奋斗",
     "进步",
-    "勤奋",
     "擅长",
     "善于",
     "熟练",
@@ -6007,22 +6520,29 @@
     "把握",
     "长处",
     "短处",
-    "达成",
     "出色",
     "发挥",
     "高效",
-    "克服",
-    "控制",
-    "力",
-    "力量",
-    "强大",
-    "实现",
-    "收获",
     "体验",
+    "效率"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "他很勤奋，取得了很大的成就。",
+     "en": "He is diligent and has achieved great success."
+    }
+   }
+  },
+  {
+   "name": "Effort and ambition",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "奋斗",
+    "勤奋",
+    "克服",
     "挑战",
-    "伟大",
-    "效率",
-    "有力",
     "争",
     "争取",
     "追求",
@@ -6030,8 +6550,30 @@
    ],
    "sentences": {
     "5": {
-     "zh": "他很勤奋，取得了很大的成就。",
-     "en": "He is diligent and has achieved great success."
+     "zh": "为了实现梦想，他一直在努力奋斗。",
+     "en": "To make his dream come true, he has kept on striving hard."
+    }
+   }
+  },
+  {
+   "name": "Strength and power",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "力",
+    "力量",
+    "强大",
+    "有力",
+    "伟大",
+    "实力",
+    "优势",
+    "控制"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "这个队的实力很强大。",
+     "en": "This team is very strong."
     }
    }
   },
@@ -6247,16 +6789,7 @@
     "资料",
     "货",
     "商品",
-    "情况",
-    "条件",
-    "方面",
-    "方式",
     "内容",
-    "原因",
-    "结果",
-    "过程",
-    "关键",
-    "重点",
     "规定",
     "任务",
     "目标",
@@ -6267,38 +6800,20 @@
     "气",
     "光",
     "烟",
-    "图",
-    "图片",
-    "表格",
-    "牌",
-    "数字",
-    "标准",
-    "顺序",
     "样子",
     "做法",
     "事件",
-    "事实",
     "事物",
     "事故",
     "大事",
     "物品",
     "物质",
-    "现象",
-    "状况",
     "标志",
     "表面",
-    "对象",
-    "类",
-    "类型",
-    "种类",
-    "领域",
     "秘密",
     "奇迹",
     "情景",
     "神秘",
-    "细节",
-    "现实",
-    "性质",
     "一次性",
     "重大",
     "固定",
@@ -6327,6 +6842,69 @@
     "5": {
      "zh": "这件大事的事实很清楚。",
      "en": "The facts of this major matter are very clear."
+    }
+   }
+  },
+  {
+   "name": "Situations and conditions",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "情况",
+    "条件",
+    "方面",
+    "方式",
+    "原因",
+    "结果",
+    "过程",
+    "关键",
+    "重点",
+    "现象",
+    "状况",
+    "事实",
+    "现实",
+    "性质",
+    "细节"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "你知道这件事的原因和结果吗？",
+     "en": "Do you know the cause and the result of this matter?"
+    },
+    "5": {
+     "zh": "我们要了解事实，注意每一个细节。",
+     "en": "We need to understand the facts and pay attention to every detail."
+    }
+   }
+  },
+  {
+   "name": "Forms, kinds and numbers",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "图",
+    "图片",
+    "表格",
+    "牌",
+    "数字",
+    "标准",
+    "顺序",
+    "类",
+    "类型",
+    "种类",
+    "领域",
+    "对象"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "请按顺序把这些图片放好。",
+     "en": "Please put these pictures in order."
+    },
+    "5": {
+     "zh": "这家店有很多种类的水果。",
+     "en": "This shop has many kinds of fruit."
     }
    }
   },

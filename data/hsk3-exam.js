@@ -1173,7 +1173,7 @@ window.HSK3_EXAM = {
     },
     {
      "zh": "他的朋友是中国人",
-     "py": "Tā de péngyou shì Zhōngguó rén"
+     "py": "Tā de péngyou shì Zhōngguórén"
     }
    ]
   },

@@ -207,6 +207,11 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
     // ---- Today points at the path
     await nav('Home');
+    // the stop's new words are now part of word review: Today asks for them in its Review words row
+    const pre = await page.locator('main').innerText();
+    check(/Review words/.test(pre) && /\d+ to review/.test(pre), 'after a stop, its new words show up in Today\'s Review words row');
+    await page.evaluate(() => { const a = window.shanlu; const ws = JSON.parse(JSON.stringify(a.state.ws)); Object.keys(a.state.lrn || {}).forEach(z => { if (ws[z]) ws[z].see = Object.assign({}, ws[z].see, { s: 2, t: Date.now() }); }); a.setState({ ws, lrn: {}, rcomplete: true }); });
+    await page.waitForTimeout(150);
     const home = await page.locator('main').innerText();
     // The day's plan is cleared by now (a stop was finished), so Today shows the cleared card; its Bonus round button carries the next stop. (Before the 14 Nov Home redesign this was a Path row marked Done.)
     check(/Path: /.test(home), 'Today offers the next Path stop');
@@ -270,7 +275,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   }
 
   // ================= HSK 2 to HSK 5 have their own paths
-  for (const [lv, units, stops] of [[2, 10, 84], [3, 17, 141], [4, 24, 232], [5, 39, 342]]) {
+  for (const [lv, units, stops] of [[2, 10, 84], [3, 17, 141], [4, 24, 235], [5, 39, 349]]) {
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
     await ctx.addInitScript((a) => { try { localStorage.setItem('shanlu-passed', JSON.stringify(a.passed)); localStorage.setItem('shanlu-level', String(a.lv)); if (a.erhua) localStorage.setItem('shanlu-erhua', 'on'); } catch (e) {} }, { passed: lv === 2 ? { 1: 1 } : lv === 3 ? { 1: 1, 2: 1 } : lv === 4 ? { 1: 1, 2: 1, 3: 1 } : { 1: 1, 2: 1, 3: 1, 4: 1 }, lv, erhua: erhuaMode });
     const page = await ctx.newPage(); watch(page);

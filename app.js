@@ -333,6 +333,7 @@
   // Fast-ear challenge: listen only at 1.25× before answering and get every question right: PSG_FAST_BONUS more, once per passage.
   const PSG_SPEEDS = [0.8, 1, 1.25], PSG_FAST = 1.25, PSG_FAST_BONUS = 10;
   const psgSpeed = () => { const v = Number(prefGet('psgSpeed', 1)); return PSG_SPEEDS.indexOf(v) >= 0 ? v : 1; };
+  const wPage = () => (prefGet('wview', 'cards') === 'list' ? 100 : 40);   // My words shows this many at a time (the compact list shows more)
   const psgRes = (id) => prefGet('psg.' + id, null);
   const PATH_U = {}, STOP_BY = {};
   PATH_LVLS.forEach(n => {
@@ -558,7 +559,7 @@
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
       jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyTab:'explore', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
-      gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:40, clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
+      gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:wPage(), clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rrun:0, rmiss:[],
       pyView:'list', pyLs:0, pyAns:{}, pyGain:'', pyIni:'b', pyInfo:null, typOpen:false, typIn:'', qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
@@ -3997,7 +3998,7 @@
       if (fresh.length) {
         const lim = limitOf(S);
         if (Object.keys(S.wlearned).length + fresh.length > lim) { this.setState({ pstop:id, plNote:'That would go past your limit of ' + lim + ' new words for today. Raise the limit in Settings, or come back tomorrow.', plAlt:'settings' }); return; }
-        if (this.lrnRoom() < fresh.length) { this.setState({ pstop:id, plNote:'You already have ' + lrnLive(S.ws, S.lrn).length + ' new words waiting. Learn those in Review first, then come back for these.', plAlt:'review' }); return; }
+        if (this.lrnRoom() < fresh.length) { this.setState({ pstop:id, plNote:'You already have ' + lrnLive(S.ws, S.lrn).length + ' words from the Path waiting in Review. Review those first, then come back for these.', plAlt:'review' }); return; }
       }
       const steps = plBuild(fresh.length ? fresh : words, fresh.length ? known : []);
       this.setState({ screen:'plesson', pstop:'', plNote:'', plAlt:'', pl:{ id, steps, i:0, pick:null, checked:false, ok:0, bad:0, missed:{}, fresh, replay:!fresh.length, leave:false, done:false, gain:0 } });
@@ -4387,7 +4388,7 @@
     learnWord = (zh) => {
       const S = this.state;
       if (S.wlearned[zh] || S.lrn[zh] || S.ws[zh].see.s > 0 || Object.keys(S.wlearned).length >= limitOf(S)) return;
-      if (!this.lrnRoom()) { this.setState({ lrnNote:'You already have ' + LRN_MAX + ' new words waiting. Learn those in Review first, then add more.' }); return; }
+      if (!this.lrnRoom()) { this.setState({ lrnNote:'You already have ' + LRN_MAX + ' new words waiting in Review. Review those first, then add more.' }); return; }
       const wl = Object.assign({}, S.wlearned); wl[zh] = true;
       this.setState(this.webCredit({ lrn:this.toLearning(zh, false), wlearned:wl, lrnNote:'' }));
     };
@@ -4398,7 +4399,7 @@
       if (wasNew && !S.wlearned[zh] && Object.keys(S.wlearned).length >= limitOf(S)) return;
       const wr = Object.assign({}, S.wrated); wr[zh] = true;
       if (wasNew) {   // a word met here for the first time still has to be recalled in Review ("I knew it" skips the introduction)
-        if (!this.lrnRoom()) { this.setState({ lrnNote:'You already have ' + LRN_MAX + ' new words waiting. Learn those in Review first, then add more.' }); return; }
+        if (!this.lrnRoom()) { this.setState({ lrnNote:'You already have ' + LRN_MAX + ' new words waiting in Review. Review those first, then add more.' }); return; }
         const wl = Object.assign({}, S.wlearned); wl[zh] = true;
         this.setState(this.webCredit({ lrn:this.toLearning(zh, ok), wlearned:wl, wrated:wr, lrnNote:'' }));
         return;
@@ -4420,9 +4421,10 @@
         if (wl[zh] || lrn[zh] || S.ws[zh].see.s > 0 || Object.keys(wl).length >= lim || room <= 0) return;
         lrn[zh] = { st:-1, m:0, at:Date.now() }; wl[zh] = true; room--; n++;
       });
-      if (!n) { if (!this.lrnRoom()) this.setState({ lrnNote:'You already have ' + LRN_MAX + ' new words waiting. Learn those in Review first, then add more.' }); return; }
+      if (!n) { if (!this.lrnRoom()) this.setState({ lrnNote:'You already have ' + LRN_MAX + ' new words waiting in Review. Review those first, then add more.' }); return; }
       this.setState(this.webCredit({ lrn, wlearned:wl, lrnNote:'' }));
     };
+    setWordView = (v) => { if (v !== 'cards' && v !== 'list') return; prefSet('wview', v); this.setState({ wshow:Math.max(this.state.wshow || 0, v === 'list' ? 100 : 40) }); };
     reviewMore = () => {
       const clean = lrnPrune(this.state.ws, this.state.lrn);
       if (Object.keys(clean).length !== Object.keys(this.state.lrn || {}).length) this.setState({ lrn:clean });   // drop "learning" entries of words that are already learned
@@ -5122,6 +5124,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const pathDoneToday = Math.max(0, pathDoneCount(S) - (S.pbase == null ? pathDoneCount(S) : S.pbase));
       const stopMeta = (st) => st.k === 'w' ? (() => { const n = stopWords(st).filter(z => !wStarted(S, z)).length; return n === 1 ? '1 new word' : n + ' new words'; })() : st.k === 's' ? 'Speaking scene' : st.k === 'l' ? 'Listening' : 'Grammar lesson';
       const dueWordsN = BANK_KEYS.filter(zh => { const i = winfo(S.ws[zh], 0); return i.started && i.dueN <= 0; }).length;   // the same count My words shows: words, not the cards left in this session
+      const pathNewN = lrnLive(S.ws, S.lrn).length;   // words just learned on the Path (or added from Word webs): they are part of word review, first in the queue
+      const toReviewN = dueWordsN + pathNewN;
       // How many Path steps today's plan asks for: the daily goal minus the time the due reviews will take, at about 5 minutes a step. Reviews are counted from what was due when the day began
       // (about 18 seconds each, a rough average of a word and a grammar point), so the number does not move while you review. At least 1, at most 4; a big backlog (40+ due) keeps it at 1.
       // These are estimates, not measured. Steps beyond the target are a bonus: they stay open under "More ways to study" and on the finished-day card.
@@ -5140,8 +5144,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         meta:pathAllDone ? (pathStep ? 'Next: ' + stopTitle(pathStep.st) : 'You have walked the whole path') : (pathTarget === 1 ? stopMeta(pathStep.st) : pathFirstList.length > 1 ? 'Your first ' + pathFirstList.length + ' stops · ' + Math.min(pathDoneToday, pathFirstList.length) + ' of ' + pathFirstList.length + ' done' : pathDoneToday + ' of ' + pathTarget + ' done · Next: ' + stopTitle(pathStep.st)), done:pathAllDone,
         stops:pathFirstList.length > 1 ? pathFirstList : [],
         run:pathStep ? () => this.pathContinue(pathStep.st.id) : () => this.go('path') });
-      if (dueWordsN > 0 || S.rq.length > 0 || S.rcomplete) planRows.push({ glyph:'词', title:'Review words', meta:dueWordsN > 0 ? dueWordsN + (S.rcomplete ? ' still due' : ' due') : 'All caught up', done:S.rcomplete && dueWordsN === 0,
-        run:() => { if (!S.rq.length && dueWordsN > 0) this.reviewMore(); this.go('review'); } });
+      if (toReviewN > 0 || S.rq.length > 0 || S.rcomplete) planRows.push({ glyph:'词', title:'Review words', meta:toReviewN > 0 ? toReviewN + (S.rcomplete ? ' still to review' : ' to review') : 'All caught up', done:S.rcomplete && toReviewN === 0,
+        run:() => { if (!S.rq.length && toReviewN > 0) this.reviewMore(); this.go('review'); } });
       if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + (S.grdone ? ' still due' : ' due') : 'Nothing due, short practice', done:!!S.grdone && grvDueToday === 0, run:() => this.startGrammarReview(true) });
       const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:t.run, stops:t.stops || [], hasStops:!!(t.stops && t.stops.length) }));
       const moreWays = [
@@ -5194,7 +5198,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const allStarted = startedCount >= totalW;
       const studiedToday = S.lastActive === today;
       const minsLeft = Math.max(0, S.mins - S.dayMin);
-      const ascCta = dueWordsN > 0 ? { text:'Review ' + dueWordsN + ' due word' + (dueWordsN === 1 ? '' : 's'), to:'review' }
+      const ascCta = toReviewN > 0 ? { text:'Review ' + toReviewN + ' word' + (toReviewN === 1 ? '' : 's'), to:'review' }
         : (minsLeft > 0 ? { text:'Study ' + minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's'), to:(startedCount >= totalW ? 'testlobby' : 'web') } : (startedCount >= totalW ? { text:'Test yourself', to:'testlobby' } : { text:'Learn new words', to:'web' }));
       // Today: one big button that starts the next open step of the plan, a greeting that follows the time of day
       const nextOpenTask = tasks.find(t => t.open), anyTaskDone = tasks.some(t => t.done);
@@ -5446,7 +5450,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const lvCount = {};
       lvKeys.forEach(k => { lvCount[k] = rowsAll.filter(r => r.lv === k).length; });
       const filters = [{ key:'all', label:'All', n:rowsAll.length }].concat(lvKeys.map(k => ({ key:k, label:LEVEL_LABEL[k], n:lvCount[k] })))
-        .map(f => ({ label:f.label, n:f.n, cls:S.wfilter === f.key ? 'on' : '', fn:() => this.setState({ wfilter:f.key, wshow:40 }) }));
+        .map(f => ({ label:f.label, n:f.n, cls:S.wfilter === f.key ? 'on' : '', fn:() => this.setState({ wfilter:f.key, wshow:wPage() }) }));
       const levelSegs = lvKeys.map(k => ({ cls:'lv-' + k, w:(lvCount[k] / rowsAll.length * 100).toFixed(1) + '%' }));
       const sorters = { weak:(a, b) => a.recallN - b.recallN, due:(a, b) => a.dueN - b.dueN, strong:(a, b) => b.m - a.m };
       const qWords = S.wq.trim().toLowerCase();
@@ -5455,15 +5459,18 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       // exact matches (the character itself, or the whole English gloss) come first, then the chosen sort order
       const matchRank = (r) => (!qWords ? 0 : (r.zh === qWords || r.en.toLowerCase() === qWords || r.en.toLowerCase().split(/[,;(]\s*/)[0].trim() === qWords ? 0 : 1));
       const rowsFiltered = rowsAll.filter(r => (S.wfilter === 'all' || r.lv === S.wfilter) && matchRow(r)).sort((a, b) => matchRank(a) - matchRank(b) || sorters[S.wsort](a, b));
-      const rowsShown = rowsFiltered.slice(0, S.wshow).map(r => { const n = r.lv === 'new' ? 0 : Math.max(1, Math.min(5, Math.ceil((parseFloat(r.mW) || 0) / 20))); return Object.assign({}, r, lvInfo(r.zh), { dots:[0, 1, 2, 3, 4].map(i => ({ cls:i < n ? 'on' : '' })) }); });
-      const dueAllN = rowsAll.filter(r => r.started && r.dueCls === 'due').length;
+      const rowsShown = rowsFiltered.slice(0, Math.max(S.wshow, wPage())).map(r => { const n = r.lv === 'new' ? 0 : Math.max(1, Math.min(5, Math.ceil((parseFloat(r.mW) || 0) / 20))); return Object.assign({}, r, lvInfo(r.zh), { dots:[0, 1, 2, 3, 4].map(i => ({ cls:i < n ? 'on' : '' })) }); });
+      const dueAllN = rowsAll.filter(r => r.started && r.dueCls === 'due').length + lrnLive(S.ws, S.lrn).filter(z => !(rowsAll.find(r => r.zh === z) || {}).started).length;   // due words plus the ones just learned on the Path
       // Library: look a word up by Chinese, pinyin or English
       const libQ = S.screen === 'library' ? String(S.lq || '').trim().toLowerCase() : '', libPlain = toneless(libQ);
       const libMatches = !libQ ? [] : rowsAll.filter(r => r.zh.indexOf(libQ) >= 0 || r.en.toLowerCase().indexOf(libQ) >= 0 || (libPlain.length > 0 && toneless(r.py).indexOf(libPlain) >= 0)).slice(0, 8)
-        .map(r => ({ zh:r.zh, py:r.py, en:r.en, play:r.play, pc:r.pc, open:() => { this.go('words'); this.setState({ wq:r.zh, wshow:40 }); } }));
+        .map(r => ({ zh:r.zh, py:r.py, en:r.en, play:r.play, pc:r.pc, open:() => { this.go('words'); this.setState({ wq:r.zh, wshow:wPage() }); } }));
       const lvNow = (k) => lvCount[k] || 0;
       const moreCount = rowsFiltered.length - rowsShown.length;
       const sortOpts = [['weak', 'Weakest first'], ['due', 'Due soonest'], ['strong', 'Strongest first']].map(x => ({ label:x[1], cls:S.wsort === x[0] ? 'on' : '', fn:() => this.setState({ wsort:x[0] }) }));
+      // My words as big cards or a compact list (one line a word); saved with the person, so it follows them to other devices
+      const wview = wPage() === 100 ? 'list' : 'cards';
+      const viewOpts = [['cards', 'Cards'], ['list', 'List']].map(x => ({ label:x[1], cls:wview === x[0] ? 'on' : '', pressed:wview === x[0] ? 'true' : 'false', fn:() => this.setWordView(x[0]) }));
       const timeOpts = [[0, 'Today'], [7, 'In 1 week'], [30, 'In 1 month']].map(x => ({ label:x[1], cls:S.woff === x[0] ? 'on' : '', fn:() => this.setState({ woff:x[0] }) }));
 
       // grammar
@@ -5659,8 +5666,10 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         webCountText:limitOf(S) === Infinity ? webCount + ' added today' : webCount + ' of ' + S.nlimit + ' added today', capNote:capReached, capCount:S.nlimit, capOpts,
         hubHasNew:hubNew > 0 && !capReached && this.lrnRoom() > 0, hubAddAllText:(hubNew <= this.lrnRoom() ? 'Add all ' + hubNew : 'Add ' + this.lrnRoom() + ' of ' + hubNew) + ' new word' + (hubNew === 1 ? '' : 's'), hubAddAll:() => this.learnMany(hubNow.words.map(w => w.zh)),
         topicHasNew:topicNew > 0 && !capReached && this.lrnRoom() > 0, topicAddAllText:(topicNew <= this.lrnRoom() ? 'Add all ' + topicNew : 'Add ' + this.lrnRoom() + ' of ' + topicNew) + ' new word' + (topicNew === 1 ? '' : 's'), topicAddAll:() => this.learnMany(topicNow.words),
-        moreDue:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft > 0, hasMoreDue:dueLeft > 0, reviewMore:this.reviewMore,
-        moreDueText:'Review ' + dueLeft + ' word' + (dueLeft === 1 ? '' : 's'), dueLeftText:dueLeft + ' word' + (dueLeft === 1 ? ' is' : 's are') + ' still due.', topicProgress:topicStarted + ' of ' + topicNow.words.length + ' started',
+        moreDue:!S.rcomplete && S.rq.length === 0 && (dueLeft > 0 || lrnLive(S.ws, S.lrn).length > 0), hasMoreDue:dueLeft > 0 || lrnLive(S.ws, S.lrn).length > 0, reviewMore:this.reviewMore,
+        moreDueText:'Review ' + (dueLeft + lrnLive(S.ws, S.lrn).length) + ' word' + (dueLeft + lrnLive(S.ws, S.lrn).length === 1 ? '' : 's'),
+        dueLeftText:(() => { const n = lrnLive(S.ws, S.lrn).length; const all = dueLeft + n;
+          return n && dueLeft ? all + ' words are ready: ' + n + ' new and ' + dueLeft + ' due.' : n ? n + ' new word' + (n === 1 ? ' is' : 's are') + ' ready.' : dueLeft + ' word' + (dueLeft === 1 ? ' is' : 's are') + ' due.'; })(), topicProgress:topicStarted + ' of ' + topicNow.words.length + ' started',
         hubCards, hubSum, hubTiles, hubZh:hubNow.hub, hubPy:hubNow.py, hubEn:hubNow.en,
         fillEn:gapNow.en, fillZh:gapNow.zh, gapOpts, gapDone, gapOptsCls:gapDone ? 'locked' : '', fillLine, gapNext:this.gapNext,
         fillReport:report('Which word fits?', gapNow.zh + ' = ' + gapNow.ans + ' / ' + gapNow.en),
@@ -5670,12 +5679,12 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         lrnBanner:lrnLive(S.ws, S.lrn).length > 0 || !!S.lrnNote, lrnBannerText:S.lrnNote || (lrnLive(S.ws, S.lrn).length + ' new word' + (lrnLive(S.ws, S.lrn).length === 1 ? ' is' : 's are') + ' waiting in Review. Adding a word does not mean you know it yet: Review will have you recall it.'), goLearn:() => { this.go('review'); if (!this.state.rq.length || this.state.rcomplete) this.reviewMore(); },
         hasGlast:S.qmode === 'greview' && !!S.glast, glastText:S.glast ? S.glast.title + ', ' + S.glast.dim + ': ' + S.glast.from + '% → ' + S.glast.to + '%' : '', glastCls:S.glast && S.glast.to < S.glast.from ? 'down' : 'up',
         hasRlast:!!S.rlast, rlastText:S.rlast ? S.rlast.zh + ': mastery ' + S.rlast.from + '% → ' + S.rlast.to + '%' : '', rlastCls:S.rlast && S.rlast.to < S.rlast.from ? 'down' : 'up',
-        gardenStages:lvKeys.map(k => ({ key:k, label:({ new:'New', learning:'Learning', familiar:'Familiar', strong:'Strong', mastered:'Mastered' })[k], n:lvCount[k], cls:S.wfilter === k ? 'on' : '', fn:() => this.setState({ wfilter:S.wfilter === k ? 'all' : k, wshow:40 }) })),
+        gardenStages:lvKeys.map(k => ({ key:k, label:({ new:'New', learning:'Learning', familiar:'Familiar', strong:'Strong', mastered:'Mastered' })[k], n:lvCount[k], cls:S.wfilter === k ? 'on' : '', fn:() => this.setState({ wfilter:S.wfilter === k ? 'all' : k, wshow:wPage() }) })),
         thirstCls:dueAllN > 0 ? '' : 'ok', thirstTitle:dueAllN > 0 ? dueAllN + (dueAllN === 1 ? ' word is thirsty' : ' words are thirsty') : 'The garden is watered', thirstSub:dueAllN > 0 ? 'A short review waters them before they fade.' : 'Nothing is due right now.',
         wordsSumLine:lvNow('mastered') + ' mastered · ' + lvNow('strong') + ' strong · ' + lvNow('familiar') + ' familiar · ' + lvNow('learning') + ' learning · ' + lvNow('new') + ' new',
-        wordsReviewText:dueAllN > 0 ? 'Review ' + dueAllN + ' due word' + (dueAllN === 1 ? '' : 's') : (startedCount >= totalW ? 'Practice all my words' : 'Learn new words'), wordsReviewGo:() => this.go(dueAllN > 0 || startedCount >= totalW ? 'review' : 'web'),
-        bankCount:rowsAll.length, filters, levelSegs, sortOpts, timeOpts, rows:rowsShown, hasMoreWords:moreCount > 0, moreWordsText:'Show 40 more (' + moreCount + ' left)', showMoreWords:() => this.setState({ wshow:S.wshow + 40 }),
-        wq:S.wq, onWSearch:(e) => this.setState({ wq:e.target.value, wshow:40 }), noRows:rowsShown.length === 0,
+        wordsReviewText:dueAllN > 0 ? 'Review ' + dueAllN + ' word' + (dueAllN === 1 ? '' : 's') : (startedCount >= totalW ? 'Practice all my words' : 'Learn new words'), wordsReviewGo:() => this.go(dueAllN > 0 || startedCount >= totalW ? 'review' : 'web'),
+        bankCount:rowsAll.length, filters, levelSegs, sortOpts, viewOpts, wrowsCls:wview === 'list' ? 'compact' : '', timeOpts, rows:rowsShown, hasMoreWords:moreCount > 0, moreWordsText:'Show ' + Math.min(moreCount, wview === 'list' ? 100 : 40) + ' more (' + moreCount + ' left)', showMoreWords:() => this.setState({ wshow:S.wshow + (wview === 'list' ? 100 : 40) }),
+        wq:S.wq, onWSearch:(e) => this.setState({ wq:e.target.value, wshow:wPage() }), noRows:rowsShown.length === 0,
 
         // shadowing
         isShadow:S.lmode === 'shadow', lShadowCls:S.lmode === 'shadow' ? 'on' : '', setShadow:() => this.setState({ lmode:'shadow' }),
@@ -5826,8 +5835,6 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         toneNote:tonesOptional() ? 'Tones are optional for you in typed pinyin.' : 'Tones count in typed pinyin: nǐ or ni3.', toneNoteCls:tonesOptional() ? 'opt' : '', qToneShow:S.qmode === 'greview',
         rrunShow:(S.rrun || 0) >= 3, rrunText:(S.rrun || 0) + ' right in a row',
         emptyNew:!S.rcomplete && S.rq.length === 0 && startedCount === 0 && lrnCount === 0,
-        newWaiting:!S.rcomplete && S.rq.length === 0 && lrnCount > 0, newWaitingText:lrnCount + ' new word' + (lrnCount === 1 ? ' is' : 's are') + ' waiting. Meet them, then recall them a few cards later and once more before you finish: about ' + Math.max(2, Math.round(lrnCount * 1.2)) + ' minutes.', newWaitingBtn:'Learn ' + lrnCount + ' new word' + (lrnCount === 1 ? '' : 's'),
-        hasLrnMore:S.rcomplete && lrnCount > 0, lrnMoreText:'Learn ' + lrnCount + ' new word' + (lrnCount === 1 ? '' : 's'),
         hasCalib:!!calText, calText,
         caughtUp:!S.rcomplete && S.rq.length === 0 && startedCount > 0 && dueLeft === 0 && lrnCount === 0, nextDueText, practiceAnyway:this.practiceAnyway,
         card, flip:this.flip, rflip:rflipV, flipCls:rflipV ? 'flip' : '', flipLabel:rflipV ? 'Flip the card back' : 'Show the answer',

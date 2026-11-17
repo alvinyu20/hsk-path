@@ -305,9 +305,9 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     return st.kind;
   };
   await nav('Review words');
-  check((await text()).includes('New words are waiting'), 'review offers the added words as new words waiting, not as due reviews');
+  check((await text()).includes('Words to review') && /\d+ new words? (is|are) ready/.test(await text()), 'review offers the added words in the one review card, as new words');
   const lrnN = await page.evaluate(() => Object.keys(window.shanlu.state.lrn).length);
-  await page.locator('button', { hasText: /^Learn \d+ new word/ }).click();
+  await page.locator('.res button', { hasText: /^Review \d+ words?$/ }).click();
   await page.waitForTimeout(100);
   const firstKind = await page.evaluate(() => window.shanlu.rKind(window.shanlu.state.rq[0]));
   check(firstKind === 'intro' && (await page.locator('.rates .rate').count()) === 0 && (await page.locator('button', { hasText: 'Got it, ask me soon' }).count()) === 1, 'a new word is first introduced (answer showing), with no grading buttons');
@@ -323,7 +323,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(JSON.stringify(midAfter.rq) === JSON.stringify(midBefore.rq) && midAfter.lrn === midBefore.lrn && midAfter.total === midBefore.total, 'after a refresh in the middle of a session the queue and every new word\'s step are exactly as they were');
   check(await page.evaluate(() => { const q = window.shanlu.state.rq.slice(0, 2).concat(['nope#l']); return JSON.stringify(window.shanlu.cleanQueue(q)) === JSON.stringify(q.slice(0, 2)); }), 'a sync keeps the new-word, typed and heard cards of the queue and drops only unknown words');
   await nav('Review words');
-  check(!(await text()).includes('New words are waiting') && (await page.evaluate(() => window.shanlu.state.rq.length)) === midBefore.rq.length, 'Review picks the session up where it was left, not from the start');
+  check(!(await text()).includes('Words to review') && (await page.evaluate(() => window.shanlu.state.rq.length)) === midBefore.rq.length, 'Review picks the session up where it was left, not from the start');
   const lkinds = [];
   for (let i = 0; i < lrnN * 6 && !(await text()).includes('cards done'); i++) lkinds.push(await driveCard());
   check((await text()).includes('cards done') && lkinds.includes('intro') && lkinds.includes('choice') && lkinds.includes('type'), 'a new word goes intro, then a check it can fail, then typed recall, before the session ends (' + [...new Set(lkinds)].join(', ') + ')');
@@ -473,7 +473,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   // make 100 words due: there is no cap, all 100 are in one round, in a jumbled order
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).slice(0, 100).forEach(zh => { ws[zh].see = { s:1, l:5 }; }); app.setState({ ws, rq:[], rcomplete:false }); window.__listOrder = Object.keys(ws).slice(0, 100); });
   await nav('Review words');
-  check((await text()).includes('More words are due') && (await text()).includes('Review 100 words'), 'all due words are offered in one round, with no limit');
+  check((await text()).includes('Words to review') && (await text()).includes('Review 100 words'), 'all due words are offered in one round, with no limit');
   await page.locator('button', { hasText: 'Review 100 words' }).click();
   await page.waitForTimeout(100);
   const rq = await page.evaluate(() => window.shanlu.state.rq.slice());

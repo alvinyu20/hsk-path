@@ -6,8 +6,8 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-data" content="data/hsk1-words.js?v=f0aa112006 data/hsk1-grammar.js?v=fcc2111080 data/hsk1-webs.js?v=3d73754cd5 data/hsk1-speak.js?v=1a0bc4fd8d data/hsk1-listen.js?v=8b33595511 data/hsk1-exam.js?v=2460446034 data/hsk2-words.js?v=f24b343438 data/hsk2-grammar.js?v=b650779edf data/hsk2-webs.js?v=bd40dfb3f8 data/hsk2-speak.js?v=f61eb12760 data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=e50c0d2d1e data/hsk3-words.js?v=f36114bd5b data/hsk3-grammar.js?v=a31f58814e data/hsk3-webs.js?v=659d815530 data/hsk3-speak.js?v=82ca84cf78 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=ecb723a9f8 data/hsk4-words.js?v=bb101fa8a3 data/hsk4-grammar.js?v=a985e4d7be data/hsk4-webs.js?v=40fae01a92 data/hsk4-speak.js?v=432fbea51b data/hsk4-listen.js?v=01759df1a7 data/hsk4-exam.js?v=8da4c278e2 data/hsk5-words.js?v=5b9eea9a33 data/hsk5-grammar.js?v=e8cb65ff76 data/hsk5-webs.js?v=3931d23d5f data/hsk5-speak.js?v=bf5d83b889 data/hsk5-listen.js?v=913f36994a data/hsk5-exam.js?v=123c40afa0">
-<meta name="shanlu-version" content="91386d5403">
+<meta name="shanlu-data" content="data/hsk1-words.js?v=2951ddbd46 data/hsk1-grammar.js?v=9c7c234f4d data/hsk1-webs.js?v=c55e460971 data/hsk1-speak.js?v=1a0bc4fd8d data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=f29670a542 data/hsk2-words.js?v=f24b343438 data/hsk2-grammar.js?v=05ee2d31cd data/hsk2-webs.js?v=52c0bbe813 data/hsk2-speak.js?v=f61eb12760 data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=e50c0d2d1e data/hsk3-words.js?v=f36114bd5b data/hsk3-grammar.js?v=1860405177 data/hsk3-webs.js?v=8da1c1c5d2 data/hsk3-speak.js?v=82ca84cf78 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=a1a2c3002f data/hsk4-words.js?v=bb101fa8a3 data/hsk4-grammar.js?v=6fbd7785de data/hsk4-webs.js?v=a719c781b1 data/hsk4-speak.js?v=432fbea51b data/hsk4-listen.js?v=01759df1a7 data/hsk4-exam.js?v=a11b98cc1a data/hsk5-words.js?v=98078db53c data/hsk5-grammar.js?v=e58b486b4d data/hsk5-webs.js?v=b0d1cee39f data/hsk5-speak.js?v=bf5d83b889 data/hsk5-listen.js?v=913f36994a data/hsk5-exam.js?v=4b0ade90d3">
+<meta name="shanlu-version" content="45944dc592">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=b809961c68">
+<link rel="stylesheet" href="styles.css?v=b1d44425af">
 </head>
 <body>
 <div id="app"></div>
@@ -627,14 +627,6 @@
       </sc-if>
     </sc-if>
 
-    <sc-if value="{{newWaiting}}" hint-placeholder-val="{{ false }}">
-      <div class="res">
-        <div class="stamp zh" aria-hidden="true">词</div>
-        <h2 class="res-h">New words are waiting</h2>
-        <p class="res-p">{{newWaitingText}}</p>
-        <div class="res-act"><button class="btn pri big" data-on-click="{{reviewMore}}">{{newWaitingBtn}}</button></div>
-      </div>
-    </sc-if>
     <sc-if value="{{emptyNew}}" hint-placeholder-val="{{ false }}">
       <div class="res">
         <img class="res-ming" src="{{mingThink}}" alt="" width="132" height="139">
@@ -646,7 +638,7 @@
     <sc-if value="{{moreDue}}" hint-placeholder-val="{{ false }}">
       <div class="res">
         <img class="res-ming" src="{{mingWave}}" alt="" width="132" height="139">
-        <h2 class="res-h">More words are due</h2>
+        <h2 class="res-h">Words to review</h2>
         <p class="res-p">{{dueLeftText}} Reviewing them now keeps them from fading.</p>
         <div class="res-act"><button class="btn pri big" data-on-click="{{reviewMore}}">{{moreDueText}}</button></div>
       </div>
@@ -693,7 +685,6 @@
         </div>
         </sc-if>
         <div class="res-act">
-          <sc-if value="{{hasLrnMore}}" hint-placeholder-val="{{ false }}"><button class="btn pri big" data-on-click="{{reviewMore}}">{{lrnMoreText}}</button></sc-if>
           <sc-if value="{{hasMoreDue}}" hint-placeholder-val="{{ false }}"><button class="btn pri big" data-on-click="{{reviewMore}}">{{moreDueText}}</button></sc-if>
           <button class="btn big" data-on-click="{{goTest}}">Test these words</button>
           <button class="btn big" data-on-click="{{goHome}}">Back to home</button>
@@ -2374,8 +2365,11 @@
       <div class="seg2" role="group" aria-label="Sort words">
         <sc-for list="{{sortOpts}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
       </div>
+      <div class="seg2 wview" role="group" aria-label="Show words as">
+        <sc-for list="{{viewOpts}}" as="o" hint-placeholder-count="2"><button class="{{o.cls}}" aria-pressed="{{o.pressed}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
+      </div>
     </div>
-    <div class="wrows2">
+    <div class="wrows2 {{wrowsCls}}">
       <sc-for list="{{rows}}" as="r" hint-placeholder-count="8">
         <div class="wr2">
           <div class="wr2-zh zh">{{r.zh}}</div>
@@ -3094,9 +3088,9 @@
 <script defer src="friends.js?v=f51b3f7ce5"></script>
 <script defer src="level.js?v=1b9a0aa0f9"></script>
 <script defer src="placement.js?v=8b6f2b8170"></script>
-<script defer src="data/levels-index.js?v=147bdfcfa4"></script>
+<script defer src="data/levels-index.js?v=4054c21807"></script>
 <script defer src="data/hsk1-erhua.js?v=161afeaf51"></script>
-<script defer src="data/lexicon.js?v=7ec6ab255e"></script>
+<script defer src="data/lexicon.js?v=21564f1edf"></script>
 <script defer src="data/char-glosses.js?v=070dcbd1b1"></script>
 <script defer src="data/hsk2-preview.js?v=d6932ab547"></script>
 <script defer src="data/hsk3-preview.js?v=ea834dcdc3"></script>
@@ -3128,7 +3122,7 @@
 <script defer src="data/speak-scenes.js?v=8fc79e5d01"></script>
 <script defer src="data/art.js?v=1dd8dd9d7b"></script>
 <script defer src="data/passages.js?v=94e56b118a"></script>
-<script defer src="data/path.js?v=bc89fe639a"></script>
-<script defer src="app.js?v=328f410161"></script>
+<script defer src="data/path.js?v=925023841f"></script>
+<script defer src="app.js?v=4375fabbc3"></script>
 </body>
 </html>

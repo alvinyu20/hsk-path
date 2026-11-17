@@ -2250,6 +2250,20 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .wr2 .wr2-due.due{background:var(--amber-soft);color:var(--amber)}
 .wr2 .wr2-play{grid-area:play;justify-self:end;align-self:end}
 @media (max-width:600px){.garden{gap:6px}.gcell{padding:10px 2px 8px}.gcell .gi{width:30px;height:30px}.gcell b{font-size:18px}.wrows2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* My words, compact list: one line a word (Cards / List under Sort by) */
+.wl-bar .wview{margin-left:auto}
+.wrows2.compact{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--panel)}
+.wrows2.compact .wr2{display:flex;align-items:center;gap:12px;min-height:54px;padding:6px 10px 6px 14px;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent}
+.wrows2.compact .wr2:first-child{border-top:0}
+.wrows2.compact .wr2-zh{font-size:24px;width:auto;min-width:2.2em;flex:none}
+.wrows2.compact .wr2 .gi{width:20px;height:20px;flex:none}
+.wrows2.compact .wr2-m{flex:1 1 0;min-width:0;padding-right:0}
+.wrows2.compact .wr2-m .wc-py{font-size:15px;line-height:1.25}
+.wrows2.compact .wr2-m .muted{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px;line-height:1.25}
+.wrows2.compact .wr2 .wr2-due{flex:none;padding:2px 8px;font-size:12px}
+.wrows2.compact .wr2 .wr2-play{flex:none;width:38px;height:38px;min-width:38px;min-height:38px}
+.wrows2.compact .wr2 .wr2-play .ic{width:18px;height:18px}
+@media (max-width:600px){.wl-bar{gap:8px}.wl-bar .wview{margin-left:0}.wl-bar .wview button{padding:0 14px}}
 
 /* ===== Grammar lesson: the formula follows the shape of the lesson ===== */
 .les-hero{display:flex;flex-direction:column;gap:14px;padding:22px 26px}

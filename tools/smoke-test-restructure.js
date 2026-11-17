@@ -107,8 +107,21 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.waitForTimeout(150);
   const dueToday = await page.locator('.task2', { hasText: 'Review words' }).innerText();
   await nav('Words'.replace('Words', 'My words'));
-  const dueWords = await page.evaluate(() => (document.querySelector('main').innerText.match(/Review (\d+) due word/) || [])[1]);
-  check(dueWords && new RegExp('\\b' + dueWords + ' due').test(dueToday), 'Today shows the same number of due words as My words (' + dueWords + ')');
+  const dueWords = await page.evaluate(() => (document.querySelector('main').innerText.match(/Review (\d+) words?\b/) || [])[1]);
+  check(dueWords && new RegExp('\\b' + dueWords + ' to review').test(dueToday), 'Today shows the same number of due words as My words (' + dueWords + ')');
+  // My words: Cards or a compact List (one line a word), remembered with the person
+  check(await page.locator('.wview button', { hasText: 'Cards' }).getAttribute('aria-pressed') === 'true' && await page.locator('.wrows2.compact').count() === 0, 'My words starts as cards');
+  await page.locator('.wview button', { hasText: 'List' }).click();
+  const listH = await page.evaluate(() => { const r = document.querySelector('.wrows2.compact .wr2'); return r ? r.getBoundingClientRect().height : 0; });
+  const listN = await page.locator('.wrows2.compact .wr2').count();
+  const pv = await page.evaluate(() => { const p = JSON.parse(localStorage.getItem('shanlu-person') || '{}').prefs || {}; return p.wview && p.wview.v; });
+  check(listH > 0 && listH < 70 && listN >= 1 && pv === 'list', 'List shows one short line a word (' + Math.round(listH) + 'px, ' + listN + ' shown) and is saved with the person');
+  await page.locator('.wview button', { hasText: 'Cards' }).click();
+  // words just learned on the Path are part of word review: one card, one button, counted together with the due words
+  const one = await page.evaluate(() => { const a = window.shanlu; const S = a.state; const fresh = Object.keys(S.ws).filter(z => !(S.ws[z].see && S.ws[z].see.s > 0)).slice(0, 3); const lrn = {}; fresh.forEach(z => { lrn[z] = { st: 0, m: 0, at: Date.now() }; }); a.setState({ lrn, rq: [], rcomplete: false }); a.go('review'); return fresh.length; });
+  await page.waitForTimeout(200);
+  const rv = await page.locator('main').innerText();
+  check(!/New words are waiting/.test(rv) && /Words to review/.test(rv) && (rv.match(/Review \d+ words?/g) || []).length === 1 && new RegExp(one + ' new and \\d+ due').test(rv), 'Review shows one card for new and due words together (' + ((rv.match(/\d+ words are ready[^.]*\./) || [''])[0]) + ')');
   await nav('Home');
 
   // Review badge counts words and grammar together

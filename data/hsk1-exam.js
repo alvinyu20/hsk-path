@@ -1414,7 +1414,7 @@ window.HSK1_EXAM = {
     },
     {
      "zh": "我是中国人。",
-     "py": "Wǒ shì Zhōngguó rén.",
+     "py": "Wǒ shì Zhōngguórén.",
      "en": "I am Chinese."
     },
     {

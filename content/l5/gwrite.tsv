@@ -30,7 +30,7 @@ g5-7	Without time, there is no chance.	没有时间，就没有机会。	没有+
 g5-8	He studies Chinese in order to work in China.	他学汉语，为的是去中国工作。	为的是|以便
 g5-8	Please give me your phone number so that I will call you.	请给我你的电话号码，以便我给你打电话。	以便|为的是
 g5-8	He saves money in order to travel.	他存钱，为的是去旅行。	为的是|以便
-g5-8	Please come early so that we can start on time.	请早点来，以便我们按时开始。	以便|为的是
+g5-8	Please come early so that we start on time.	请早点来，以便我们按时开始。	以便|为的是
 g5-9	We take the school as the centre.	我们以学校为中心。	以+为
 g5-9	He takes getting into university as his goal.	他以考上大学为目标。	以+为
 g5-9	She takes becoming a teacher as her goal.	她以当老师为目标。	以+为
@@ -38,14 +38,14 @@ g5-9	We take the library as the centre.	我们以图书馆为中心。	以+为
 g5-10	I helped him, but he got angry instead.	我帮了他，他反而生气了。	反而
 g5-10	The rain did not stop; instead it got heavier.	雨没有停，反而更大了。	反而
 g5-10	I slept a lot, but I felt more tired instead.	我睡了很多，反而更累了。	反而
-g5-10	He did not thank me; instead he got angry.	他没有谢我，反而生气了。	反而
+g5-10	He did not say thank you; instead he got angry.	他没有说谢谢，反而生气了。	反而
 g5-11	Hurry up, otherwise we will be late.	快一点，不然我们会迟到。	不然|要不
 g5-11	Go to bed early, otherwise you will be tired tomorrow.	早点睡，不然明天你会很累。	不然|要不
 g5-11	Study hard, otherwise you will not pass the exam.	好好学习，不然你不会通过考试。	不然|要不
-g5-11	How about eating noodles today?	要不今天我们吃面条吧？	要不
+g5-11	How about we eat noodles today?	要不今天我们吃面条吧？	要不
 g5-12	He is only a child after all.	他毕竟还是个孩子。	毕竟
 g5-12	After all, she is your friend.	毕竟她是你的朋友。	毕竟
-g5-12	After all, it was only a game.	毕竟只是一个游戏。	毕竟
+g5-12	After all, it is only a game.	毕竟只是一个游戏。	毕竟
 g5-12	He is young after all, so do not be angry.	他毕竟还年轻，别生气。	毕竟
 g5-13	I said it would rain, and sure enough it did.	我说会下雨，果然下雨了。	果然
 g5-13	Sure enough, he came.	他果然来了。	果然
@@ -69,7 +69,7 @@ g5-17	Take my brother, for example: he plays football every day.	拿我哥哥来
 g5-17	Take this book, for example: it is very interesting.	拿这本书来说，它很有意思。	拿+来说
 g5-18	In my view, this plan is good.	在我看来，这个计划很好。	在+看来
 g5-18	In the teacher's view, he is right.	在老师看来，他是对的。	在+看来
-g5-18	In my view, this film is boring.	在我看来，这个电影没有意思。	在+看来
+g5-18	In my view, this film is not interesting.	在我看来，这个电影没有意思。	在+看来
 g5-18	In the children's view, this game is fun.	在孩子们看来，这个游戏很有意思。	在+看来
 g5-19	In short, we must work hard.	总之，我们要努力。	总之
 g5-19	From this it can be seen that he is very kind.	由此可见，他很好。	由此
@@ -202,7 +202,7 @@ g5-50	However hard he tries, he cannot learn it.	他怎么都学不会。	怎么
 g5-51	He walks back and forth in the room.	他在房间里走来走去。	来+去
 g5-51	After thinking it over and over, I decided to go.	我想来想去，还是决定去了。	来+去
 g5-51	The children run back and forth in the garden.	孩子们在花园里跑来跑去。	来+去
-g5-51	After thinking it over and over, he said no.	他想来想去，还是不同意。	来+去
+g5-51	He thinks it over and over, but he still does not agree.	他想来想去，还是不同意。	来+去
 g5-52	He fell asleep while watching.	他看着看着就睡着了。	着
 g5-52	We were walking when it began to rain.	我们走着走着，下起雨来了。	着
 g5-52	While reading, she fell asleep.	她读着读着就睡着了。	着
@@ -218,7 +218,7 @@ g5-54	They eat while talking and laughing.	他们有说有笑地吃饭。	有说
 g5-55	Sitting is wrong and standing is wrong; I do not know what to do.	我坐也不是，站也不是，不知道该怎么办。	也不是
 g5-55	Speaking is not right and keeping quiet is not right.	说也不是，不说也不是。	也不是
 g5-55	Buying is wrong and not buying is wrong.	买也不是，不买也不是。	也不是
-g5-55	Going is wrong and staying is wrong.	去也不是，留也不是。	也不是
+g5-55	It is not right to go, and it is not right to stay.	去也不是，留也不是。	也不是
 g5-56	I am not going: first it is far, second I am tired.	我不去，一来太远，二来我累了。	一来+二来
 g5-56	I like this city: first it is pretty, second the people are kind.	我喜欢这个城市，一来很漂亮，二来人很好。	一来+二来
 g5-56	I do not buy it: first it is expensive, second I do not need it.	我不买，一来太贵，二来我不需要。	一来+二来

@@ -143,3 +143,11 @@ passage:p4-online:line0	meaning	(是)……的 asks where something already done
 word-extra:万一:1	meaning	万一天冷了: 了 marks the change (it turns cold), which English says with "gets cold"	多带一件衣服吧，万一天冷了。
 clip:29	pinyin	调小 is tiáo (to adjust the volume), not diào (to transfer); pypinyin reads diào	请把声音调小一点，孩子已经睡着了。
 word-extra:音量:1	pinyin	调小 is tiáo (to adjust the volume), not diào (to transfer); pypinyin reads diào	请把音量调小一点。
+write:g2-35:2	meaning	小的时候 sets the time in the past, so the English past is right	我小的时候，喜欢喝牛奶。
+write:g2-35:3	meaning	在学校的时候 sets the time in the past, so the English past is right	我在学校的时候，喜欢运动。
+write:g3-49:2	meaning	一口 is "one bite" (口 counts mouthfuls), so 一口也没吃 is right	我一口也没吃。
+write:g3-49:4	meaning	一口饭 is "a bite of food" (口 counts mouthfuls)	她一口饭也没吃。
+write:g4-21:3	meaning	an order: English drops the "you" of 你赶快吃吧	你赶快吃吧。
+write:g4-55:2	meaning	来到 + 从此 tell a story in the past; Chinese needs no 了 here	他来到这个城市，从此住在这里。
+write:g5-48:3	meaning	请你 is the polite "please"; English drops the "you"	万一我迟到，请你等我。
+write:g2-33:1	meaning	两万 is 20,000; the checker reads it as 2	这个包两万块。

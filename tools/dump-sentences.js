@@ -127,4 +127,6 @@ if (GRAM) {
     cjkRuns(L.title).forEach((t, j) => add('lesson:' + L.id + ':title' + j, t, '', '', { levelOnly: true }));
   });
 }
+// the write-your-own model answers (gwrite.tsv, shown after the learner writes their own): level and meaning (they have no pinyin)
+if (GRAM) (GRAM.points || []).forEach(p => (p.write || []).forEach((w, i) => add('write:' + p.id + ':' + (i + 1), w.zh, '', w.en)));
 process.stdout.write(JSON.stringify(out, null, 1));
