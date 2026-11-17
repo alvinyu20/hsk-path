@@ -928,8 +928,11 @@
         const w = wr[(e.wn || 0) % wr.length];
         return { type:'write', kicker:'Write it · ' + pt.title, prompt:'Write this in Chinese (characters or pinyin)', big:w.en, bigCls:'en', placeholder:'Your own sentence', pt:id, gdim:'w', gtitle:pt.title, model:w.zh, need:w.need || '', reveal:w.zh, explain:'' };
       }
-      let k = Math.floor(Math.random() * pt.pool.length);
-      if (pt.pool.length > 1 && k === (e.li || 0) % pt.pool.length) k = (k + 1) % pt.pool.length;
+      // an exercise this point showed lately (e.sn: the last few it used) is not shown again until the others have had a turn; when all have been seen, start again but not with the last one
+      const np = pt.pool.length; const lastSeen = Array.isArray(e.sn) ? e.sn : [];
+      let cand = []; for (let i = 0; i < np; i++) if (lastSeen.indexOf(i) < 0) cand.push(i);
+      if (!cand.length) for (let i = 0; i < np; i++) if (np < 2 || i !== (e.li || 0) % np) cand.push(i);
+      const k = cand[Math.floor(Math.random() * cand.length)];
       return Object.assign(prepQ(pt.pool[k]), { pt:id, gdim:'r', gpool:k, gtitle:pt.title });
     });
   };
@@ -3791,7 +3794,11 @@
       const from = gptInfo(e0)[key === 'w' ? 'wm' : 'rm'];
       e[key] = bump(cur, ok ? 'good' : (grade === 'hard' ? 'hard' : 'again'));
       e[key + 'n'] = (e[key + 'n'] || 0) + 1; if (ok) e[key + 'ok'] = (e[key + 'ok'] || 0) + 1;
-      if (pool !== undefined) e.li = pool;
+      if (pool !== undefined) {
+        e.li = pool;
+        const np = ((gptReg()[pid] || {}).pool || []).length;
+        e.sn = (Array.isArray(e.sn) ? e.sn : []).filter(i => i !== pool).concat(pool).slice(-Math.max(1, Math.floor(np * 0.6)));   // the exercises used lately, so the next one is a different one
+      }
       e.at = Date.now();
       const reg = gptReg()[pid]; const to = gptInfo(e)[key === 'w' ? 'wm' : 'rm'];
       this.setState({ gpt:Object.assign({}, S.gpt, { [pid]: e }), glast:{ title:reg ? reg.title : 'This point', dim:key === 'w' ? 'writing' : 'recognising', from, to } });
