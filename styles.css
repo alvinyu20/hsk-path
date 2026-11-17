@@ -2032,14 +2032,18 @@ button.pill:active{transform:scale(.97)}
 .top.arted{position:relative;align-items:center;padding:16px 18px;min-height:96px;border-radius:22px;overflow:hidden;border:1px solid var(--line)}
 .top-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 65%;z-index:0}
 .app.t-dark .top-art,.app.t-dark .th-art,.app.t-dark .climb-art,.app.t-dark .summit-art{filter:brightness(.62) saturate(.9)}
-.top.arted .top-t,.top.arted .stats{position:relative;z-index:1}
-.top.arted .top-t{padding:8px 16px;border-radius:14px;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(3px)}
+.top.arted .top-t,.top.arted .stats{position:relative;z-index:2}
+/* the title sits straight on the picture: a soft wash from the left keeps it readable without a box around it */
+.top.arted::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,var(--panel) 0%,color-mix(in srgb,var(--panel) 82%,transparent) 34%,color-mix(in srgb,var(--panel) 0%,transparent) 66%)}
+.top.arted .top-t{padding:4px 6px}
+.top.arted .h1{text-shadow:0 1px 0 color-mix(in srgb,var(--panel) 60%,transparent)}
 .top.arted .sub{margin-top:4px;font-size:15px;max-width:34ch}
 .top.arted .top-t{max-width:min(100%,520px)}
 @media (max-width:900px){
   .app.am .top-art{display:none}
   .app.am .top.arted{padding:0;min-height:0;border:0;border-radius:0;overflow:visible}
   .app.am .top.arted .top-t{padding:0;background:none;backdrop-filter:none}
+  .app.am .top.arted::before{display:none}
 }
 
 /* Library */
@@ -3541,3 +3545,24 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .coin-t b{font-size:15.5px}
 .coin-t small{font-size:13.5px;color:var(--muted)}
 .coin-amt{flex:none;font-weight:700;color:var(--jade);font-variant-numeric:tabular-nums;text-align:right;max-width:40%}
+/* the "stops ready" badge: one place only (the Journey tab), labelled on the desktop sidebar ("5 ready"), a number on the phone tab bar */
+.nav .badge.jyb{width:auto;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center}
+.nav .badge .bw{font-weight:600;margin-left:.28em}
+@media (max-width:900px){.nav .badge .bw{display:none}}
+/* Today, "Your memory": three short rows on a phone instead of three narrow columns */
+@media (max-width:600px){
+  .today-mem .res-stats{grid-template-columns:1fr;gap:8px}
+  .today-mem .res-stats .stat{display:flex;align-items:baseline;gap:12px;padding:12px 14px}
+  .today-mem .res-stats .stat b{flex:none;min-width:3.2em;font-size:26px}
+  .today-mem .today-top{flex-direction:column;align-items:flex-start;gap:2px}
+  .today-mem .today-top .h2{white-space:nowrap}
+  .today-mem .res-stats .stat span{font-size:15px}
+}
+/* Path on a wide screen: the walk on the left, the level card and "next on your path" on the right (the next stop stays in view) */
+@media (min-width:1240px){
+  .pth{max-width:1180px;display:grid;grid-template-columns:minmax(0,1fr) 340px;align-items:start;column-gap:24px;row-gap:18px}
+  .pth > *{grid-column:1}
+  .pth > .pth-head{grid-column:2;grid-row:1}
+  .pth > .pth-next{grid-column:2;grid-row:2;position:sticky;top:20px}
+  .pth > .pth-list{grid-column:1;grid-row:1 / span 40}
+}

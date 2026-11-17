@@ -29,7 +29,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   {
     const { ctx, page, errors } = await open({});
     check((await page.locator('.pill.xpp').textContent()).includes('0 coins'), 'the coins pill is in the header');
-    check(await page.locator('.xp-ready').count() === 1, 'the pill shows one stop waiting');
+    check(await page.locator('.xp-ready').count() === 0 && await page.locator('.nav .badge.jyb').count() === 1 && /1 stop ready/.test(await page.locator('.nav .badge.jyb').getAttribute('aria-label')), 'one stop waiting shows once, on the Journey tab, with a label');
     await page.locator('.pill.xpp').click();
     check((await main(page)).includes('Take your first flight (free)'), 'a new person sees the free first flight');
     check(await page.locator('.jy-go[disabled]').count() === 0, 'the first flight button is enabled at 0 coins');

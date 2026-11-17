@@ -6,7 +6,7 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-version" content="08930c65ab">
+<meta name="shanlu-version" content="6cb75414cf">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=3109c94639">
+<link rel="stylesheet" href="styles.css?v=4513877029">
 </head>
 <body>
 <div id="app"></div>
@@ -65,7 +65,7 @@
     <button class="{{gJourneyCls}}" data-on-click="{{gJourney}}">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12.5l17-8.5-5 16-3.5-6.5z"/><path d="M11.5 13.5L20 4"/></svg>
       Journey
-      <sc-if value="{{jyReadyShow}}" hint-placeholder-val="{{ false }}"><span class="badge">{{jyReadyN}}</span></sc-if>
+      <sc-if value="{{jyReadyShow}}" hint-placeholder-val="{{ false }}"><span class="badge jyb" title="{{jyReadyLabel}}" aria-label="{{jyReadyLabel}}">{{jyReadyN}}<span class="bw"> ready</span></span></sc-if>
     </button>
   </nav>
 
@@ -107,7 +107,7 @@
       <div class="lvmenu"><button type="button" class="pill lvbtn" aria-haspopup="true" aria-expanded="{{lvMenuOpen}}" data-on-click="{{lvMenuToggle}}">{{lvLabel}}<svg class="ic lvcaret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <sc-if value="{{lvMenuOpen}}" hint-placeholder-val="{{ false }}"><div class="lvpanel" role="menu" aria-label="Levels"><div class="lvh">Levels</div><sc-for list="{{lvItems}}" as="o" hint-placeholder-count="3"><button type="button" role="menuitem" class="lvitem {{o.cls}}" data-on-click="{{o.fn}}"><span class="lvn">{{o.label}}</span><span class="lvs">{{o.sub}}</span></button></sc-for></div></sc-if></div>
       <button type="button" class="pill fl" title="Back to Today" data-on-click="{{goStreak}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c1.1 3.4 5 5.3 5 9.9a5 5 0 0 1-10 0c0-1.8.8-3 1.8-4.1.2 1.6 1.1 2.5 2.1 2.7C10.3 8.5 11 5.5 12 2.5z"/></svg>{{streakText}}</button>
-      <button type="button" class="{{xpPillCls}}" title="{{xpTip}}" data-on-click="{{goJourney}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="5.4"/></svg>{{xpTotalText}}<span class="pw"> coins</span><sc-if value="{{jyReadyShow}}" hint-placeholder-val="{{ false }}"><span class="xp-ready" aria-label="{{jyReadyLabel}}">{{jyReadyN}}</span></sc-if></button>
+      <button type="button" class="{{xpPillCls}}" title="{{xpTip}}" data-on-click="{{goJourney}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="5.4"/></svg>{{xpTotalText}}<span class="pw"> coins</span></button>
     </div>
   </header>
   <sc-if value="{{jyPingShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="xp-ping" role="status" data-on-click="{{goJourney}}"><b>New stop unlocked</b><span>Tap to travel</span></button></sc-if>
@@ -469,7 +469,7 @@
     <div class="fravs"><sc-for list="{{frAvatars}}" as="a" hint-placeholder-count="5"><span class="{{a.cls}}" title="{{a.name}}"><sc-if value="{{a.hasAv}}" hint-placeholder-val="{{ false }}"><img src="{{a.avUrl}}" alt=""></sc-if><sc-if value="{{a.noAv}}" hint-placeholder-val="{{ true }}">{{a.initial}}</sc-if></span></sc-for></div>
   </button>
   </sc-if>
-  <section class="card">
+  <section class="card today-mem">
     <div class="today-top"><h2 class="h2">Your memory</h2><span class="muted">What you can recall, not points</span></div>
     <div class="res-stats" style="max-width:none;margin-top:12px">
       <div class="stat"><b>{{memWords}}</b><span>words in memory now ({{memToday}})</span></div>

@@ -485,7 +485,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.evaluate(() => { const app = window.shanlu; const ws = JSON.parse(JSON.stringify(app.state.ws)); Object.keys(ws).forEach(zh => { if (ws[zh].see.s === 1 && ws[zh].see.l === 5) ws[zh].see = { s:30, l:0 }; }); app.setState({ ws, rq:[], rcomplete:false }); });
 
   // the tabs run learn -> practice -> check -> your words, and the logo goes Home
-  check(JSON.stringify(await page.locator('.navg .nav').allInnerTexts().then(a => a.map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()))) === JSON.stringify(['Today', 'Learn', 'Review', 'Talk', 'Journey']), 'the five tabs are in learning order on a wide window too');
+  check(JSON.stringify(await page.locator('.navg .nav').allInnerTexts().then(a => a.map(t => t.replace(/\s+/g, ' ').replace(/\d+( ready)?$/, '').trim()))) === JSON.stringify(['Today', 'Learn', 'Review', 'Talk', 'Journey']), 'the five tabs are in learning order on a wide window too');
   await nav('Review words');
   check(JSON.stringify(await page.locator('.navsub .subl').allInnerTexts().then(a => a.map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()))) === JSON.stringify(['Words', 'Grammar', 'Test']), 'the open tab lists its pages under itself in the sidebar: Words, Grammar, Test');
   await nav('Grammar');
