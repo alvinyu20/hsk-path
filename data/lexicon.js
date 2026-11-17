@@ -199,5 +199,9 @@ window.SHANLU_LEXICON = {
 "一下子": "yíxiàzi",
 "好事": "hǎoshì",
 "雨伞": "yǔsǎn",
-"好奇心": "hàoqíxīn"
+"好奇心": "hàoqíxīn",
+"羊肉": "yángròu",
+"行李箱": "xínglǐxiāng",
+"小路": "xiǎolù",
+"上次": "shàngcì"
 };

@@ -312,3 +312,9 @@ The scripts used to double the practice items now live in `tools/` instead of a 
 - Browser test: `tools/smoke-test-passages.js` (placement, no text before the questions, right and wrong answers, transcript, coins, the repeat rate, the saved result), in check-all and CI.
 - **Hear the sentence** (Review): a word whose hearing is stable for 3 days or more gets, about half the time, a recorded example sentence instead of the word alone; you pick what the whole sentence means. Only sentences with a recording are used (HSK 1 to 4 now; HSK 5 examples are not recorded yet). Test: `tools/smoke-test-hear-sentence.js`.
 
+### 17 Nov 2026, listening passages for HSK 3, 4 and 5 (branch `passages-hsk3-5`, not on the site yet)
+- 12 passages per level added to `content/listening-passages.json`: HSK 3 dialogues with 4 questions, HSK 4 dialogues with 4 questions, HSK 5 dialogues, announcements and a radio talk with 5 questions (one asks for a small sum: an internship year plus two years of work). All lines, questions and options pass `check-content.py` in both styles; 16 false alarms waived with reasons (V不了 = cannot, 要看 = depends, 要 + price, 零下 = minus, 别……了, (是)……的 and so on); 4 nouns joined in `content/lexicon-words.tsv` (羊肉, 行李箱, 小路, 上次); 7 word cuts approved (早上 去, 推迟 到, 多少 年, 飞机 票, 马上 去).
+- Placement: some lines were simplified (但是 for 可是/不过, 如果 for 要是, no 按照/肯定/好像) so the passages spread over the Path instead of all landing in the last units: HSK 3 units 5 to 16, HSK 4 units 8 to 20, HSK 5 units 8 to 37.
+- Kept on a branch on purpose: Alvin wants the DeepSeek check first, because a changed line means a new recording. No audio made yet. Review files: `review/chinese-ai-new-items/listening-passages-HSK3.md`, `-HSK4.md`, `-HSK5.md` (one message each).
+- To put them live after the review: apply the fixes, merge the branch into main, run check-all, then start the audio workflow with scope `passages` (it only records lines that have no recording yet).
+
