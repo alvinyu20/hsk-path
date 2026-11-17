@@ -928,9 +928,10 @@
         const w = wr[(e.wn || 0) % wr.length];
         return { type:'write', kicker:'Write it · ' + pt.title, prompt:'Write this in Chinese (characters or pinyin)', big:w.en, bigCls:'en', placeholder:'Your own sentence', pt:id, gdim:'w', gtitle:pt.title, model:w.zh, need:w.need || '', reveal:w.zh, explain:'' };
       }
-      // an exercise this point showed lately (e.sn: the last few it used) is not shown again until the others have had a turn; when all have been seen, start again but not with the last one
-      const np = pt.pool.length; const lastSeen = Array.isArray(e.sn) ? e.sn : [];
-      let cand = []; for (let i = 0; i < np; i++) if (lastSeen.indexOf(i) < 0) cand.push(i);
+      // every exercise of a point comes up once per round (e.sc: the ones shown in this round) before any comes again, and not one shown lately (e.sn: the last few it used); a new round starts when all have had a turn
+      const np = pt.pool.length; const lastSeen = Array.isArray(e.sn) ? e.sn : []; const inRound = Array.isArray(e.sc) ? e.sc : [];
+      let cand = []; for (let i = 0; i < np; i++) if (lastSeen.indexOf(i) < 0 && inRound.indexOf(i) < 0) cand.push(i);
+      if (!cand.length) for (let i = 0; i < np; i++) if (lastSeen.indexOf(i) < 0) cand.push(i);
       if (!cand.length) for (let i = 0; i < np; i++) if (np < 2 || i !== (e.li || 0) % np) cand.push(i);
       const k = cand[Math.floor(Math.random() * cand.length)];
       return Object.assign(prepQ(pt.pool[k]), { pt:id, gdim:'r', gpool:k, gtitle:pt.title });
@@ -3798,6 +3799,8 @@
         e.li = pool;
         const np = ((gptReg()[pid] || {}).pool || []).length;
         e.sn = (Array.isArray(e.sn) ? e.sn : []).filter(i => i !== pool).concat(pool).slice(-Math.max(1, Math.floor(np * 0.6)));   // the exercises used lately, so the next one is a different one
+        const round = (Array.isArray(e.sc) ? e.sc : []).filter(i => i < np && i !== pool).concat(pool);
+        e.sc = round.length >= np ? [] : round;   // the exercises shown in this round; empty again once every one has had a turn
       }
       e.at = Date.now();
       const reg = gptReg()[pid]; const to = gptInfo(e)[key === 'w' ? 'wm' : 'rm'];

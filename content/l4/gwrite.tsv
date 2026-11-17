@@ -1,119 +1,237 @@
 # point id <TAB> English prompt <TAB> a model answer <TAB> words the answer needs (a+b = all, a|b = any)
 g4-1	He does not even know my name.	他连我的名字都不知道。	连+都|连+也
 g4-1	He does not even drink water.	他连水都不喝。	连+都|连+也
+g4-1	She does not even eat breakfast.	她连早饭都不吃。	连+都|连+也
+g4-1	I do not even have a phone.	我连手机也没有。	连+都|连+也
 g4-2	Even if it is dear, I will buy it.	即使很贵，我也会买。	即使+也
 g4-2	Even if you do not come, I will go.	即使你不来，我也去。	即使+也
+g4-2	Even if it rains, we will go to the park.	即使下雨，我们也去公园。	即使+也
+g4-2	Even if he is busy, he will come to see you.	即使他很忙，他也会来看你。	即使+也
 g4-3	Although it is late, he is still working.	尽管很晚，他还是在工作。	尽管+还是|尽管+但是
 g4-3	Although she is busy, she still helps me.	尽管她很忙，还是帮我。	尽管+还是|尽管+但是
+g4-3	Although he is old, he still plays football often.	尽管他年纪很大，还是常常踢足球。	尽管+还是|尽管+但是
+g4-3	Although it was hard, she still did not give up.	尽管很难，她还是没有放弃。	尽管+还是|尽管+但是
 g4-4	No matter what he says, I do not believe it.	不管他说什么，我都不相信。	不管+都|无论+都
 g4-4	No matter how far it is, we walk there.	不管多远，我们都走路去。	不管+都|无论+都
+g4-4	No matter how tired he is, he goes to class.	不管多累，他都去上课。	不管+都|无论+都
+g4-4	No matter who comes, we are happy.	不管谁来，我们都很高兴。	不管+都|无论+都
 g4-5	If you are free, come and see me.	要是你有空，就来看我。	要是+就
 g4-5	If it is cold, wear more clothes.	要是冷，就多穿一点儿衣服。	要是+就
+g4-5	If you have time, help me.	要是你有时间，就帮我吧。	要是+就
+g4-5	If it is not dear, I will buy it.	要是不贵，我就买。	要是+就
 g4-6	Since you are here, eat with us.	既然你来了，就跟我们一起吃吧。	既然+就
 g4-6	Since you like it, buy it.	既然你喜欢，就买吧。	既然+就
+g4-6	Since it is raining, do not go out.	既然下雨了，就别出去了。	既然+就
+g4-6	Since you have already bought it, use it.	既然你已经买了，就用吧。	既然+就
 g4-7	Wear more clothes, or you will be cold.	多穿一点儿衣服，否则你会冷。	否则
 g4-7	Study hard, or you will not pass the exam.	要努力学习，否则不能通过考试。	否则
+g4-7	Come earlier tomorrow, or you will have no seat.	明天早一点来，否则你会没有座位。	否则
+g4-7	Listen carefully, or you will not understand.	要认真听，否则你会听不懂。	否则
 g4-8	Because he is ill, he cannot come to school.	由于他生病了，因此不能来学校。	由于+因此
 g4-8	Because there are many people, we wait a long time.	由于人很多，因此我们等了很久。	由于+因此
+g4-8	Because it was too hot, we did not go out.	由于太热，因此我们没有出去。	由于+因此
+g4-8	Because she studied hard, she passed the exam.	由于她学习很努力，因此通过了考试。	由于+因此
 g4-9	He was thirsty, so he drank some water.	他很渴，于是喝了一点儿水。	于是
 g4-9	I was tired, so I went to bed.	我很累，于是去睡觉了。	于是
+g4-9	It was cold, so I put on more clothes.	天很冷，于是我多穿了一件衣服。	于是
+g4-9	He had no time, so he did not go.	他没有时间，于是没去。	于是
 g4-10	I want to buy it, but it is too expensive.	我想买，不过太贵了。	不过|然而
 g4-10	He is very busy, but he still comes to see me.	他很忙，不过还是来看我。	不过|然而
+g4-10	I like this bag, but it is too dear.	我喜欢这个包，不过太贵了。	不过|然而
+g4-10	The food was good, but there were too many people.	菜很好吃，然而人太多了。	不过|然而
 g4-11	She is kind, and she works hard.	她很好，并且很努力。	并且
 g4-11	I drink coffee, while he drinks tea.	我喝咖啡，而他喝茶。	而
+g4-11	He is tall, and he plays basketball well.	他很高，并且篮球打得很好。	并且
+g4-11	My sister likes cats, while I like dogs.	我姐姐喜欢猫，而我喜欢狗。	而
 g4-12	She is both pretty and clever.	她既漂亮又聪明。	既+又
 g4-12	This book is both interesting and useful.	这本书既有意思又有用。	既+又
+g4-12	This city is both big and beautiful.	这个城市既大又漂亮。	既+又
+g4-12	She is both tired and hungry.	她既累又饿。	既+又
 g4-13	It is not Monday but Tuesday today.	今天不是星期一，而是星期二。	不是+而是
 g4-13	I am not angry; I am just tired.	我不是生气，而是累了。	不是+而是
+g4-13	He is not a student but a doctor.	他不是学生，而是医生。	不是+而是
+g4-13	This is not water but tea.	这不是水，而是茶。	不是+而是
 g4-14	First, wash your hands; second, eat.	首先要洗手，其次要吃饭。	首先+其次
 g4-14	First I must finish my homework; second I must clean my room.	首先我要做完作业，其次我要打扫房间。	首先+其次
+g4-14	First think it through; second begin.	首先要想好，其次再开始。	首先+其次
+g4-14	First you need money; second you need time.	首先要有钱，其次要有时间。	首先+其次
 g4-15	The clothes are nice; besides, they are cheap.	这件衣服很好看；另外，也很便宜。	另外|此外
 g4-15	He speaks Chinese; in addition, he writes characters.	他会说汉语；此外，他也会写汉字。	另外|此外
+g4-15	I have class today; besides, I also have to go to a meeting.	我今天有课；另外，我还要去开会。	另外|此外
+g4-15	The room is big; in addition, it is clean.	这个房间很大；此外，也很干净。	另外|此外
 g4-16	I like fruit, for example apples.	我喜欢水果，例如苹果。	例如|比如
 g4-16	I have many hobbies, for example reading and swimming.	我有很多爱好，比如看书和游泳。	例如|比如
+g4-16	She likes fruit, for example bananas and watermelons.	她喜欢水果，例如香蕉和西瓜。	例如|比如
+g4-16	There are many places you can go, for example the park and the library.	有很多地方可以去，比如公园和图书馆。	例如|比如
 g4-17	He works and studies at the same time.	他同时工作和学习。	同时
 g4-17	This plan is cheap and at the same time good.	这个办法很便宜，同时也很好。	同时
+g4-17	I am watching TV and eating at the same time.	我同时看电视和吃饭。	同时
+g4-17	She is smart, and at the same time warm.	她很聪明，同时也很热情。	同时
 g4-18	I am so busy that I even forget to eat.	我很忙，甚至忘了吃饭。	甚至
 g4-18	It is cold, and it even snows.	天很冷，甚至下雪了。	甚至
+g4-18	I even forgot his name.	我甚至忘了他的名字。	甚至
+g4-18	It is very hot; I do not even want to eat.	天气很热，我甚至不想吃饭。	甚至
 g4-19	I am too tired, so I have to rest.	我太累了，不得不休息。	不得不
 g4-19	The shop is closed, so we have to go home.	商店关门了，我们只好回家。	只好
+g4-19	The bus did not come, so we had to walk.	公共汽车没来，我们只好走路。	只好
+g4-19	He is ill, so he has to stay at home.	他生病了，不得不在家休息。	不得不
 g4-20	Go now, and you will still be in time.	现在去，还来得及。	来得及
 g4-20	I have no time to eat now.	我现在来不及吃饭。	来不及
+g4-20	I have no time to buy a ticket.	我来不及买票。	来不及
+g4-20	Run a little faster, and you will still be in time.	跑快一点，还来得及。	来得及
 g4-21	Please come quickly.	请你赶快来。	赶快|赶紧
 g4-21	He quickly went to see the doctor.	他赶紧去看医生了。	赶快|赶紧
+g4-21	Hurry up and eat.	你赶快吃吧。	赶快|赶紧
+g4-21	She quickly said sorry.	她赶紧说对不起。	赶快|赶紧
 g4-22	Do not tell me you are not coming?	难道你不来吗？	难道
 g4-22	Could it be that he is not at home?	难道他不在家吗？	难道
+g4-22	Do you really not know him?	难道你不认识他吗？	难道
+g4-22	Is it really so hard?	难道这么难吗？	难道
 g4-23	What on earth are you doing?	你到底在做什么？	到底|究竟
 g4-23	Who on earth is he?	他究竟是谁？	到底|究竟
+g4-23	Where on earth is my phone?	我的手机到底在哪儿？	到底|究竟
+g4-23	Which one do you want, once and for all?	你究竟要哪一个？	到底|究竟
 g4-24	She actually forgot to bring her phone.	她竟然忘了带手机。	竟然
 g4-24	He actually got up at five.	他竟然五点就起床了。	竟然
+g4-24	He actually came on foot.	他竟然走路来了。	竟然
+g4-24	I actually did not see you.	我竟然没有看见你。	竟然
 g4-25	So it turns out you are his brother.	原来你是他的哥哥。	原来
 g4-25	I originally wanted to buy it, but it was too expensive.	我本来想买，可是太贵了。	本来
+g4-25	So it was you who called me.	原来是你给我打的电话。	原来
+g4-25	I originally did not want to eat, but now I am hungry.	我本来不想吃，现在饿了。	本来
 g4-26	He is completely right.	他说得完全对。	完全
 g4-26	She is very happy today.	她今天十分高兴。	十分
+g4-26	I really have no time.	我实在没有时间。	实在
+g4-26	This really is good.	这个确实很好。	确实
 g4-27	He never says thank you.	他从来不说谢谢。	从来
 g4-27	I have never eaten this.	我从来没吃过这个。	从来
+g4-27	He never drinks tea.	他从来不喝茶。	从来
+g4-27	I have never been to that city.	我从来没去过那个城市。	从来
 g4-28	I am not angry at all.	我并不生气。	并
 g4-28	It is not hot at all today.	今天并不热。	并
+g4-28	I did not actually go.	我并没有去。	并
+g4-28	This is not expensive at all.	这并不贵。	并
 g4-29	In summer people tend to eat less.	夏天人们往往吃得很少。	往往
 g4-29	He tends to get up late at the weekend.	周末他往往起得很晚。	往往
+g4-29	Young people tend to like music.	年轻人往往喜欢音乐。	往往
+g4-29	He tends to be late on Mondays.	星期一他往往迟到。	往往
 g4-30	She occasionally calls her mother.	她偶尔给妈妈打电话。	偶尔
 g4-30	He is always playing games.	他老是玩游戏。	老是
+g4-30	I occasionally eat out.	我偶尔在外面吃饭。	偶尔
+g4-30	He keeps learning new words.	他不断学习新词。	不断
 g4-31	I almost forgot my homework.	我差点儿忘了作业。	差点儿
 g4-31	I almost bought it.	我差点儿买了。	差点儿
+g4-31	I almost lost my phone.	我差点儿丢了手机。	差点儿
+g4-31	She almost cried.	她差点儿哭了。	差点儿
 g4-32	I need at least ten minutes.	我至少需要十分钟。	至少
 g4-32	There are about forty people.	大约有四十个人。	大约|左右
+g4-32	It takes about half an hour.	大约要半个小时。	大约|左右
+g4-32	I need at least 1 day.	我至少需要一天。	至少
 g4-33	I like fruit, especially watermelon.	我喜欢水果，尤其是西瓜。	尤其
 g4-33	There are six people here, and two of them are doctors.	这里有六个人，其中两个是医生。	其中
+g4-33	I like Chinese food, especially noodles.	我喜欢中国菜，尤其是面条。	尤其
+g4-33	There are four dishes, and two of them are fish.	有四个菜，其中两个是鱼。	其中
 g4-34	Maybe he is at school.	他也许在学校。	也许|恐怕|估计|肯定
 g4-34	I guess he will be late.	我估计他会迟到。	估计
+g4-34	I am afraid I cannot go.	恐怕我不能去。	恐怕
+g4-34	He definitely lost his phone.	他肯定丢了手机。	肯定
 g4-35	Be sure not to be late.	千万别迟到。	千万
 g4-35	I cannot go home today.	今天我无法回家。	无法
+g4-35	Be sure to bring the key.	千万要带上钥匙。	千万
+g4-35	I cannot find him.	我无法找到他。	无法
 g4-36	She still lives with her parents.	她仍然跟爸爸妈妈住在一起。	仍然|仍
 g4-36	It is still raining outside.	外面仍然在下雨。	仍然|仍
+g4-36	He still does not know.	他仍然不知道。	仍然|仍
+g4-36	The shop is still open.	商店仍然开门。	仍然|仍
 g4-37	Let us continue tomorrow.	我们明天继续吧。	继续
 g4-37	I want to do it again from the start.	我想重新做一次。	重新
 g4-37	In the end, he found his phone.	他最终找到了手机。	最终
+g4-37	Please continue.	请你继续。	继续
+g4-37	Let us start again.	我们重新开始吧。	重新
+g4-37	In the end, she passed the test.	最终她通过了考试。	最终
 g4-38	I am a bit tired.	我有点儿累。	有点儿
 g4-38	Please wait a moment.	请你稍微等一等。	稍微
+g4-38	I am a bit sleepy.	我有点儿困。	有点儿
+g4-38	Please speak a little slower.	请稍微说慢一点。	稍微
 g4-39	How cold it is today!	今天多么冷啊！	多么
 g4-39	How clever he is!	他多么聪明啊！	多么
+g4-39	How tasty this dish is!	这个菜多么好吃啊！	多么
+g4-39	How happy I am today!	我今天多么高兴啊！	多么
 g4-40	He is rich, but he is not happy.	他很有钱，却不高兴。	却|倒
 g4-40	I like it, but my mother does not.	我喜欢，妈妈却不喜欢。	却|倒
+g4-40	I called, but he did not answer.	我打了电话，他却没接。	却|倒
+g4-40	She is young, but she knows a lot.	她很年轻，却知道很多。	却|倒
 g4-41	My Chinese is not as good as his.	我的汉语不如他好。	不如
 g4-41	It is even hotter today.	今天更加热了。	更加
+g4-41	This book is not as interesting as that one.	这本书不如那本有意思。	不如
+g4-41	He is even busier than before.	他比以前更加忙。	更加
 g4-42	For me, Chinese is not hard.	对我来说，汉语不难。	来说|对于
 g4-42	As for this, I have no opinion.	对于这个，我没有意见。	对于|来说
+g4-42	For old people, this phone is too small.	对老人来说，这个手机太小了。	来说|对于
+g4-42	As for this matter, I do not know.	对于这件事，我不知道。	对于|来说
 g4-43	By listening to music, I learn Chinese.	通过听音乐，我学汉语。	通过
 g4-43	He passed the exam.	他通过了考试。	通过
+g4-43	I improve my Chinese by watching TV.	我通过看电视提高汉语。	通过
+g4-43	She passed the test.	她通过了考试。	通过
 g4-44	As the weather gets hot, we often go swimming.	随着天气变热，我们常常去游泳。	随着
 g4-44	As the city gets bigger, there are more and more cars.	随着城市变大，车越来越多。	随着
+g4-44	As time goes by, I miss home more and more.	随着时间过去，我越来越想家。	随着
+g4-44	As the weather gets cold, we wear more clothes.	随着天气变冷，我们穿得更多了。	随着
 g4-45	Please go according to the map.	请按照地图走。	按照
 g4-45	As a mother, she loves her children very much.	作为妈妈，她很爱孩子。	作为
+g4-45	As an old friend, I want to help you.	作为老朋友，我想帮助你。	作为
+g4-45	Please do it according to the rules.	请按照规定做。	按照
 g4-46	Compared with this one, that one is cheaper.	和这个相比，那个便宜一点儿。	相比
 g4-46	Compared with last year, I am busier.	与去年相比，我更忙了。	相比
+g4-46	Compared with my phone, his phone is bigger.	和我的手机相比，他的手机更大。	相比
+g4-46	Compared with last month, I am not very busy.	与上个月相比，我不太忙。	相比
 g4-47	This news makes her sad.	这个消息使她很难过。	使
 g4-47	Music makes me happy.	音乐使我很高兴。	使
+g4-47	The weather makes people tired.	这样的天气使人很累。	使
+g4-47	This song makes me think of home.	这首歌使我想起了家。	使
 g4-48	As soon as I get up, I drink water.	我一起床就喝水。	一+就
 g4-48	As soon as he sees me, he laughs.	他一看见我就笑。	一+就
+g4-48	As soon as the class ends, we go home.	一下课，我们就回家。	一+就
+g4-48	As soon as she drinks coffee, she feels better.	她一喝咖啡就觉得好一点。	一+就
 g4-49	Any student can come.	任何学生都可以来。	任何
 g4-49	Eat as you like.	你随便吃吧。	随便
+g4-49	Anyone can learn Chinese.	任何人都可以学汉语。	任何
+g4-49	Sit anywhere you like.	你随便坐吧。	随便
 g4-50	All the books are here.	所有的书都在这儿。	所有
 g4-50	Everything is ready.	一切都准备好了。	一切
+g4-50	All the students like her.	所有的学生都喜欢她。	所有
+g4-50	Everything here is good.	这里的一切都很好。	一切
 g4-51	There are many people in the park.	公园里有许多人。	许多|大量
 g4-51	I read the whole book.	我看完了整本书。	整
+g4-51	I watched TV the whole afternoon.	我看了整个下午的电视。	整
+g4-51	There are many cars on the road.	路上有许多车。	许多|大量
 g4-52	Some like fish and some like meat.	有的人喜欢鱼，有的人喜欢肉。	有的
 g4-52	Some of my friends are teachers and some are doctors.	我的朋友有的是老师，有的是医生。	有的
+g4-52	Some of the shops are open and some are closed.	有的商店开门，有的商店关门。	有的
+g4-52	Some of the students are male and some are female.	有的学生是男的，有的学生是女的。	有的
 g4-53	The two of us learn from each other.	我们两个人互相学习。	互相
 g4-53	We work hard together.	我们共同努力。	共同
+g4-53	The two of us respect each other.	我们互相尊重。	互相
+g4-53	We have the same goal.	我们有共同的目标。	共同
 g4-54	Before the exam, I must sleep well.	考试之前，我要睡好。	之前
 g4-54	After work, I go home.	下班之后，我回家。	之后
+g4-54	Before I eat, I must wash my hands.	我吃饭之前，要洗手。	之前
+g4-54	After the meeting, he went home.	开会之后，他回家了。	之后
 g4-55	She finished work, then went home.	她做完工作，接着回家了。	接着
 g4-55	He came to this city and from then on lived here.	他来到这个城市，从此住在这里。	从此
+g4-55	He took a taxi and then went to the airport.	他打车，接着去了机场。	接着
+g4-55	From then on, he does not drink coffee any more.	从此他不喝咖啡了。	从此
 g4-56	These two bags are the same.	这两个包相同。	相同|同样
 g4-56	They have the same problem.	他们有同样的问题。	相同|同样
+g4-56	The price of these two clothes is the same.	这两件衣服的价格相同。	相同|同样
+g4-56	I have the same phone.	我有同样的手机。	相同|同样
 g4-57	She became a doctor.	她成为了一名医生。	成为
 g4-57	Please explain this word.	请说明一下这个词。	说明|表示
+g4-57	He became a good friend of mine.	他成为了我的好朋友。	成为
+g4-57	This shows that he is right.	这说明他是对的。	说明|表示
 g4-58	Are you free this weekend?	这个周末你有空吗？	空
 g4-58	I planted some flowers.	我种了一些花。	种
 g4-58	He fell asleep in the car.	他在车上睡着了。	睡着
+g4-58	The clothes are dry.	衣服干了。	干
+g4-58	Are you free today?	你今天有空吗？	空
+g4-58	He planted a tree.	他种了一棵树。	种

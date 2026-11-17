@@ -1,5 +1,5 @@
 /* Browser test: the grammar review does not show the same exercise of a point again and again.
- * One open point, one question per session: every exercise of the point must come up before any of the lately shown ones repeats.
+ * One open point, one question per session: every exercise of the point comes up once in every round of that many questions, and none repeats within the lately shown ones.
  * Runs for HSK 1 to 5 (all levels are opened first).
  * Usage: node tools/smoke-test-grv-variety.js   (needs Playwright) */
 const path = require('path');
@@ -41,6 +41,8 @@ const startState = (o) => { try { if (!localStorage.getItem('shanlu-passed')) lo
       for (let i = 0; i + win <= picks.length; i++) { if (new Set(picks.slice(i, i + win)).size !== win) ok = false; }
       check(ok, 'HSK ' + L + ' ' + id + ' (pool of ' + np + '): no exercise repeats within ' + win + ' questions in a row: ' + picks.join(' '));
       check(new Set(picks).size === np, 'HSK ' + L + ' ' + id + ': every one of its ' + np + ' exercises was shown');
+      let rounds = true; for (let i = 0; i + np <= picks.length; i += np) { if (new Set(picks.slice(i, i + np)).size !== np) rounds = false; }
+      check(rounds, 'HSK ' + L + ' ' + id + ': each round of ' + np + ' questions shows every exercise exactly once');
     }
     await ctx.close();
   }
