@@ -1,4 +1,4 @@
-# Sentences, batch 4 of 7 (220 sentences)
+# Sentences, batch 4 of 8 (220 sentences)
 
 Copy everything below the line.
 

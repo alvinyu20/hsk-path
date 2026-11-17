@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* Lists every text the site reads aloud, with the voice it uses, as JSON: [{text, voice, group}].
  *   voice: "f" (the woman's voice) or "m" (the man's voice: exam lines spoken by 男)
- *   group: words | examples | lab | exams | extra | journey
+ *   group: words | examples | lab | exams | extra | journey | passages
  *   lv: the levels (1-5) whose data uses the text
  * Usage: node tools/audio-texts.js [--summary]       (tools/make-audio.py reads this)
  * The exam rules mirror app.js: a line spoken by 男 is the man's voice, 女 and lines with no speaker are the woman's. */
@@ -55,6 +55,11 @@ const add = (text, voice, group) => {
     walk(EX[part], true);
   });
 });
+// Listening passages (Path stops): every line, in the voice of its speaker (男 the man's voice, 女 the woman's)
+try {
+  require(path.join(__dirname, '..', 'data', 'passages.js'));
+  Object.keys(window.SHANLU_PASSAGES || {}).forEach((n) => { cur = +n; window.SHANLU_PASSAGES[n].forEach((p) => p.lines.forEach((l) => add(l.zh, l.s === '男' ? 'm' : 'f', 'passages'))); });
+} catch (err) { console.error('passages not added: ' + err.message); }
 // Journey: every stop name (the speaker button on a stop card) and the sentence "to say at this stop" (JY.sayFor picks it from the stop, so it is the same every time)
 try {
   global.window = global.window || {};

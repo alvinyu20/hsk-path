@@ -285,6 +285,7 @@
   const stopState = (S, st) => {   // 'done' | 'part' | 'new'
     const home = STOP_BY[st.id]; if (home && home.lv <= LVL.placed()) return 'done';   // a level the person tested out of (the level check): its stops are behind them
     if (st.k === 's') return S.sres[st.s] ? 'done' : 'new';
+    if (st.k === 'l') return psgRes(st.l) ? 'done' : 'new';
     if (st.k === 'g') { const i = LESSON_AT[st.g]; const best = i === undefined ? 0 : (S.gres[LESSONS[i].id] || 0); return best >= 80 ? 'done' : best > 0 ? 'part' : 'new'; }
     const ws = stopWords(st); const n = ws.filter(z => wStarted(S, z)).length;
     if (!ws.length || n === ws.length || prefGet('pth.' + st.id, 0)) return 'done';
@@ -298,9 +299,15 @@
     arr.forEach(z => { if (ERHUA.twins.indexOf(z) >= 0) return; const q = ERHUA.zh(z); if (out.indexOf(q) < 0) out.push(q); });
     return out;
   };
+  // Listening passages (data/passages.js): a short dialogue, then questions in Chinese. A Path stop of kind "l"; the result is a person pref
+  // 'psg.<id>' = { b: best right answers, n: times finished } (it travels with the person, like the other Path receipts).
+  const PSG_BY = {};
+  Object.keys(window.SHANLU_PASSAGES || {}).forEach(n => (window.SHANLU_PASSAGES[n] || []).forEach(p => { PSG_BY[p.id] = p; }));
+  const PSG_COIN = 10, PSG_BONUS = 10, PSG_AGAIN = 2;   // first time: 10 per right answer and 10 more when all are right; after that 2 per right answer
+  const psgRes = (id) => prefGet('psg.' + id, null);
   const PATH_U = {}, STOP_BY = {};
   PATH_LVLS.forEach(n => {
-    PATH_U[n] = PATH[n].units.map(u => ({ id:u.id, title:u.title, blurb:u.blurb, stops:u.stops.map(st => (st.k === 'w' ? Object.assign({}, st, { w:plainWords(st.w) }) : st)).filter(st => (st.k === 'w' ? stopWords(st).length > 0 : st.k === 's' ? SCEN_AT[st.s] !== undefined : LESSON_AT[st.g] !== undefined)) })).filter(u => u.stops.length);
+    PATH_U[n] = PATH[n].units.map(u => ({ id:u.id, title:u.title, blurb:u.blurb, stops:u.stops.map(st => (st.k === 'w' ? Object.assign({}, st, { w:plainWords(st.w) }) : st)).filter(st => (st.k === 'w' ? stopWords(st).length > 0 : st.k === 's' ? SCEN_AT[st.s] !== undefined : st.k === 'l' ? !!PSG_BY[st.l] : LESSON_AT[st.g] !== undefined)) })).filter(u => u.stops.length);
     PATH_U[n].forEach((u, ui) => u.stops.forEach((st, si) => { STOP_BY[st.id] = { st, u, ui, si, lv:n }; }));
   });
   const pathNext = (S, lv) => {   // the first stop that is not done
@@ -567,6 +574,7 @@
     ['写', 'Write your own sentence', 'When it is right', '12'],
     ['路', 'Path word stop', 'The first time you finish it', String(STOP_COINS)],
     ['音', 'Pinyin lesson', 'The first time you finish it', String(PY_COINS)],
+    ['听', 'Listening passage (Path)', 'Each right answer the first time, +10 when all are right (2 later)', '10'],
     ['说', 'Speaking conversation', 'Each one you finish', '10'],
     ['复', 'Review', 'Each card (a new word: 3 per step, 5 when it sticks)', '2 to 5'],
     ['听', 'Listening lab', 'Each word you catch or understand', '1 a word'],
@@ -3937,6 +3945,7 @@
       const st = hit.st;
       if (st.k === 'g') { this.setState({ pstop:'', plNote:'', plAlt:'', ggopen:null, gq:'', glesson:LESSON_AT[st.g] }); this.go('grammar'); return; }
       if (st.k === 's') { this.setState({ pstop:'', plNote:'', plAlt:'', aiMode:false, sidx:SCEN_AT[st.s], sturn:0, sdone:false, sview:'chat' }); this.go('speak'); this.sayOpen(SCEN_AT[st.s]); return; }
+      if (st.k === 'l') { this.setState({ pstop:'', plNote:'', plAlt:'' }); this.psgOpen(st.l); return; }
       const words = stopWords(st);
       const fresh = words.filter(z => !wStarted(S, z)); const known = words.filter(z => wStarted(S, z));
       if (fresh.length) {
@@ -4051,6 +4060,67 @@
       };
     };
 
+    // ----- listening passages (a Path stop of kind "l") -----
+    psgLines = (p, only) => (only == null ? p.lines : [p.lines[only]]).map(l => ({ text:l.zh, pitch:l.s === '男' ? 0.8 : 1.25 }));
+    psgOpen = (id) => {
+      const p = PSG_BY[id]; if (!p) return;
+      this.stopNative();
+      this.setState({ psg:{ id, stage:'intro', played:false, qi:0, pick:null, checked:false, ans:[], ord:p.qs.map(() => shuffle([0, 1, 2, 3])), py:false, en:false, gain:0, right:0, t0:Date.now() } });
+      this.go('passage');
+    };
+    psgPlay = () => { const S = this.state; const g = S.psg; const p = g && PSG_BY[g.id]; if (!p) return; this.ttsUnlock(); this.speakLines(this.psgLines(p), 'psg'); if (!g.played) this.setState({ psg:Object.assign({}, g, { played:true }) }); };
+    psgAsk = () => { const g = this.state.psg; if (g && g.played) { this.stopNative(); this.setState({ psg:Object.assign({}, g, { stage:'qs' }) }); } };
+    psgPick = (k) => {
+      const S = this.state; const g = S.psg; const p = g && PSG_BY[g.id]; if (!p || g.checked) return;
+      const ok = g.ord[g.qi][k] === 0;
+      SFX.play(ok ? 'ok' : 'bad');
+      this.setState({ psg:Object.assign({}, g, { pick:k, checked:true, ans:g.ans.concat([ok]) }) });
+    };
+    psgHearLine = () => { const g = this.state.psg; const p = g && PSG_BY[g.id]; if (!p) return; this.ttsUnlock(); this.speakLines(this.psgLines(p, p.qs[g.qi].line), 'psgl'); };
+    psgNext = () => {
+      const S = this.state; const g = S.psg; const p = g && PSG_BY[g.id]; if (!p || !g.checked) return;
+      if (g.qi + 1 < p.qs.length) { this.setState({ psg:Object.assign({}, g, { qi:g.qi + 1, pick:null, checked:false }) }); return; }
+      const right = g.ans.filter(Boolean).length, n = p.qs.length; const prev = psgRes(p.id);
+      const gain = prev ? right * PSG_AGAIN : right * PSG_COIN + (right === n ? PSG_BONUS : 0);   // the first time pays most, so a passage is not a coin farm
+      prefSet('psg.' + p.id, { b:Math.max(prev ? prev.b : 0, right), n:(prev ? prev.n : 0) + 1 });
+      if (right === n) SFX.play('ok');
+      this.setState({ psg:Object.assign({}, g, { stage:'done', right, gain, first:!prev }), xp:S.xp + gain, dayXp:S.dayXp + gain, dayMin:S.dayMin + Math.max(2, Math.round((Date.now() - g.t0) / 60000)) });
+    };
+    psgAgain = () => { const g = this.state.psg; if (g) this.psgOpen(g.id); };
+    psgBack = () => { this.stopNative(); this.go('path'); };
+    psgTog = (k) => { const g = this.state.psg; if (g) this.setState({ psg:Object.assign({}, g, { [k]:!g[k] }) }); };
+    psgVals = (S) => {
+      const g = S.psg; const p = g && PSG_BY[g.id];
+      const out = { isPassage:false, psgIntro:false, psgIsQ:false, psgIsDone:false, psgOpts:[], psgLines:[], psgChecked:false };
+      if (S.screen !== 'passage' || !p) return out;
+      const n = p.qs.length; const q = p.qs[Math.min(g.qi, n - 1)]; const ord = g.ord[Math.min(g.qi, n - 1)];
+      const who = (s) => (s === '男' ? '男' : '女');
+      const line = p.lines[q.line] || p.lines[0];
+      const okNow = g.checked && ord[g.pick] === 0;
+      Object.assign(out, {
+        isPassage:true, psgBack:this.psgBack, psgKick:'Listening · HSK ' + p.lv, psgTitle:p.title, psgScene:p.scene, psgQn:n,
+        psgStep:g.stage === 'qs' ? 'Question ' + (g.qi + 1) + ' of ' + n : g.stage === 'done' ? 'Done' : p.lines.length + ' lines',
+        psgIntro:g.stage === 'intro', psgIsQ:g.stage === 'qs', psgIsDone:g.stage === 'done',
+        psgPlay:this.psgPlay, psgPlayCls:(g.stage === 'intro' && !g.played ? 'pri' : '') + (S.playing === 'psg' ? ' on' : ''),
+        psgPlayText:S.playing === 'psg' ? 'Playing…' : g.played ? 'Play the conversation again' : 'Play the conversation',
+        psgAsk:this.psgAsk, psgAskOff:!g.played,
+        psgShowPy:!!g.py, psgShowEn:!!g.en, psgTogPy:() => this.psgTog('py'), psgTogEn:() => this.psgTog('en'),
+        psgPyBtn:g.py ? 'Hide pinyin' : 'Show pinyin', psgEnBtn:g.en ? 'Hide English' : 'Show English',
+        psgQzh:q.zh, psgQpy:q.py, psgQen:q.en,
+        psgOpts:ord.map((oi, k) => ({ k:k + 1, zh:q.opts[oi].zh, py:q.opts[oi].py, pick:() => this.psgPick(k),
+          cls:g.checked ? (oi === 0 ? 'right' : k === g.pick ? 'wrong' : '') : '' })),
+        psgChecked:g.stage === 'qs' && g.checked, psgAnsCls:okNow ? 'right' : 'wrong', psgVerdict:okNow ? 'Right! You heard it here:' : 'Not quite. The answer is ' + q.opts[0].zh + '. You can hear it here:',
+        psgLineWho:who(line.s), psgLineZh:line.zh, psgLinePy:line.py, psgHearLine:this.psgHearLine,
+        psgNext:this.psgNext, psgNextText:g.qi + 1 < n ? 'Next question' : 'See how you did',
+        psgScore:(g.right || 0) + ' of ' + n + ' right',
+        psgScoreSub:g.gain ? '+' + g.gain + ' coins' + (g.first && g.right === n ? ' (all right: +' + PSG_BONUS + ' bonus)' : '') : 'No coins this time',
+        psgLines:p.lines.map((l, i) => ({ who:who(l.s), zh:l.zh, py:l.py, en:l.en, cls:p.qs.some(x => x.line === i) ? 'ans' : '',
+          play:() => { this.ttsUnlock(); this.speakLines(this.psgLines(p, i), 'psgl'); } })),
+        psgAgain:this.psgAgain, psgReport:report('Listening passage ' + p.id, p.title)
+      });
+      return out;
+    };
+
     // what the Path and the stop lesson show (the same keys every time, empty when the screen is not open)
     pathVals = (S) => {
       const sh0 = { kick:'', title:'', isDone:false, isW:false, isG:false, words:[], sub:'', cta:'', go:() => {}, hasNote:false, note:'', hasAlt:false, altText:'', hasBest:false, best:'' };
@@ -4089,9 +4159,9 @@
           const ws = stopWords(nxt.st); const state = stopState(S, nxt.st);
           out.pthHasNext = true; out.pthNextKick = 'Next on your path · Unit ' + (nxt.ui + 1) + ': ' + nxt.u.title;
           out.pthNextTitle = stopTitle(nxt.st);
-          out.pthNextSub = nxt.st.k === 'w' ? ws.length + ' words:' : nxt.st.k === 's' ? 'Say it out loud with Mingming, ' + (SCEN[SCEN_AT[nxt.st.s]].you.length) + ' turns' : 'A grammar lesson, about 4 minutes';
+          out.pthNextSub = nxt.st.k === 'w' ? ws.length + ' words:' : nxt.st.k === 's' ? 'Say it out loud with Mingming, ' + (SCEN[SCEN_AT[nxt.st.s]].you.length) + ' turns' : nxt.st.k === 'l' ? 'Listen to a conversation, then answer ' + PSG_BY[nxt.st.l].qs.length + ' questions' : 'A grammar lesson, about 4 minutes';
           out.pthNextWords = nxt.st.k === 'w' ? ws.slice(0, 4).join(' · ') + (ws.length > 4 ? ' …' : '') : '';
-          out.pthNextBtn = nxt.st.k === 'g' ? 'Open the lesson' : nxt.st.k === 's' ? 'Step into the scene' : state === 'part' ? 'Continue' : 'Start';
+          out.pthNextBtn = nxt.st.k === 'g' ? 'Open the lesson' : nxt.st.k === 's' ? 'Step into the scene' : nxt.st.k === 'l' ? 'Start listening' : state === 'part' ? 'Continue' : 'Start';
           out.pthNextGo = () => this.pathStart(nxt.st.id);
         }
         const unitDone = us.map(u => u.stops.every(st => stopState(S, st) === 'done'));
@@ -4119,10 +4189,10 @@
               const state = states[si]; const isCur = !!nxt && nxt.st.id === st.id; const ws = stopWords(st);
               const x = PATH_XS[si % PATH_XS.length], xp = PATH_XS[(si + PATH_XS.length - 1) % PATH_XS.length];
               return {
-                id:st.id, isW:st.k === 'w', isG:st.k === 'g', isS:st.k === 's', glyph:st.k === 'w' ? ws[0].charAt(0) : st.k === 's' ? '说' : '语', title:stopTitle(st),
-                sub:st.k === 'w' ? ws.slice(0, 3).join(' · ') + (ws.length > 3 ? ' …' : '') : st.k === 's' ? SCEN[SCEN_AT[st.s]].sub : 'Grammar',
-                meta:st.k === 'w' ? ws.length + ' words' + (state === 'part' ? ' · ' + ws.filter(z => wStarted(S, z)).length + ' started' : '') : st.k === 's' ? (state === 'done' ? 'Said it' : 'Speak · ' + SCEN[SCEN_AT[st.s]].you.length + ' turns') : (state === 'done' ? 'Passed' : state === 'part' ? 'Best ' + (S.gres[st.g] || 0) + '%' : 'Lesson'),
-                cls:(state === 'done' ? 'done' : isCur ? 'cur' : state === 'part' ? 'part' : '') + (st.k === 'g' ? ' g' : st.k === 's' ? ' sp' : '') + (S.pstop === st.id ? ' sel' : ''),
+                id:st.id, isW:st.k === 'w', isG:st.k === 'g', isS:st.k === 's', glyph:st.k === 'w' ? ws[0].charAt(0) : st.k === 's' ? '说' : st.k === 'l' ? '听' : '语', title:stopTitle(st),
+                sub:st.k === 'w' ? ws.slice(0, 3).join(' · ') + (ws.length > 3 ? ' …' : '') : st.k === 's' ? SCEN[SCEN_AT[st.s]].sub : st.k === 'l' ? 'Listening' : 'Grammar',
+                meta:st.k === 'l' ? (state === 'done' ? 'Heard it · ' + (psgRes(st.l) || {}).b + ' of ' + PSG_BY[st.l].qs.length + ' right' : 'Listen · ' + PSG_BY[st.l].qs.length + ' questions') : st.k === 'w' ? ws.length + ' words' + (state === 'part' ? ' · ' + ws.filter(z => wStarted(S, z)).length + ' started' : '') : st.k === 's' ? (state === 'done' ? 'Said it' : 'Speak · ' + SCEN[SCEN_AT[st.s]].you.length + ' turns') : (state === 'done' ? 'Passed' : state === 'part' ? 'Best ' + (S.gres[st.g] || 0) + '%' : 'Lesson'),
+                cls:(state === 'done' ? 'done' : isCur ? 'cur' : state === 'part' ? 'part' : '') + (st.k === 'g' ? ' g' : st.k === 's' ? ' sp' : st.k === 'l' ? ' sp ls' : '') + (S.pstop === st.id ? ' sel' : ''),
                 state, isDone:state === 'done', isCur, nodeStyle:'left:' + x + '%',
                 labelStyle:x <= 50 ? 'left:calc(' + x + '% + 50px);width:calc(' + (100 - x) + '% - 58px);text-align:left' : 'right:calc(' + (100 - x) + '% + 50px);width:calc(' + x + '% - 58px);text-align:right',
                 hasLink:si > 0, curve:'M ' + xp + ' 0 C ' + xp + ' 52 ' + x + ' 52 ' + x + ' 104', linkCls:states[si - 1] === 'done' ? 'on' : '',
@@ -4135,18 +4205,18 @@
         const hit = S.pstop ? STOP_BY[S.pstop] : null;
         if (hit) {
           const st = hit.st; const state = stopState(S, st); const ws = stopWords(st);
-          const L = st.k === 'g' ? LESSONS[LESSON_AT[st.g]] : null; const SC = st.k === 's' ? SCEN[SCEN_AT[st.s]] : null;
+          const L = st.k === 'g' ? LESSONS[LESSON_AT[st.g]] : null; const SC = st.k === 's' ? SCEN[SCEN_AT[st.s]] : null; const PS = st.k === 'l' ? PSG_BY[st.l] : null;
           out.pthSheet = true;
           out.pthSh = {
             kick:'Unit ' + (hit.ui + 1) + ': ' + hit.u.title + ' · Stop ' + (hit.si + 1) + ' of ' + hit.u.stops.length,
             title:stopTitle(st), isW:st.k === 'w', isG:st.k === 'g', isS:st.k === 's', isDone:state === 'done',
             goalList:SC ? SC.goals.map(t => ({ t })) : [],
             words:ws.map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en, mark:wStarted(S, z) ? 'learned' : '', cls:wStarted(S, z) ? 'on' : '' })),
-            sub:SC ? 'You say your lines out loud and Mingming answers. About 5 minutes. Nothing listens to you, so it is practice, not a test.' : L ? L.catBlurb || L.cat || '' : (state === 'done' ? 'You have met these words. Practise them again whenever you like.' : 'About ' + Math.max(3, Math.round(ws.filter(z => !wStarted(S, z)).length * 0.8 + 1)) + ' minutes. You meet the words, answer a few easy questions, then they join your Review.'),
-            cta:st.k === 's' ? (state === 'done' ? 'Say it again' : 'Step into the scene') : st.k === 'g' ? (state === 'done' ? 'Open the lesson again' : 'Open the lesson') : state === 'done' ? 'Practise again' : state === 'part' ? 'Continue' : 'Start',
+            sub:PS ? PS.scene + ' Listen to the conversation (as often as you like), then answer ' + PS.qs.length + ' questions in Chinese. About 3 minutes.' : SC ? 'You say your lines out loud and Mingming answers. About 5 minutes. Nothing listens to you, so it is practice, not a test.' : L ? L.catBlurb || L.cat || '' : (state === 'done' ? 'You have met these words. Practise them again whenever you like.' : 'About ' + Math.max(3, Math.round(ws.filter(z => !wStarted(S, z)).length * 0.8 + 1)) + ' minutes. You meet the words, answer a few easy questions, then they join your Review.'),
+            cta:st.k === 'l' ? (state === 'done' ? 'Listen again' : 'Start listening') : st.k === 's' ? (state === 'done' ? 'Say it again' : 'Step into the scene') : st.k === 'g' ? (state === 'done' ? 'Open the lesson again' : 'Open the lesson') : state === 'done' ? 'Practise again' : state === 'part' ? 'Continue' : 'Start',
             go:() => this.pathStart(st.id),
             hasNote:!!S.plNote, note:S.plNote, hasAlt:!!S.plAlt, altText:S.plAlt === 'review' ? 'Go to Review' : 'Open Settings',
-            hasBest:!!L && (S.gres[L.id] || 0) > 0, best:L ? 'Best score so far: ' + (S.gres[L.id] || 0) + '%. You pass at 80%.' : ''
+            hasBest:(!!L && (S.gres[L.id] || 0) > 0) || (!!PS && !!psgRes(PS.id)), best:L ? 'Best score so far: ' + (S.gres[L.id] || 0) + '%. You pass at 80%.' : PS && psgRes(PS.id) ? 'Best so far: ' + psgRes(PS.id).b + ' of ' + PS.qs.length + ' right.' : ''
           };
         }
       }
@@ -4830,7 +4900,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const rcPick = (list) => list[(S.rtotal + (S.rdone || 0)) % list.length];
       const rcHead = rcAccN >= 90 ? rcPick(['Flawless focus!', 'Superb session!', 'That was sharp!']) : rcAccN >= 70 ? rcPick(['Great session!', 'Nicely done!', 'Solid work!']) : rcAccN >= 40 ? rcPick(['Session complete!', 'Good effort, that counts!', 'You showed up, and it shows!']) : rcPick(['Done, and the misses are the learning', 'Tough one, and you finished it', 'Hard words are where memory grows']);
       const rcSub = rcAccN >= 90 ? 'Almost everything stuck. Those words will come back after longer gaps.' : rcAccN >= 70 ? 'Most of it is sticking. The ones you missed will be back soon.' : 'Words you missed will come back sooner. Seeing them again is how they stick.';
-      const active = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen === 'plesson' ? 'path' : S.screen;
+      const active = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen === 'plesson' || S.screen === 'passage' ? 'path' : S.screen;
       const navCls = (k) => 'nav' + (active === k ? ' on' : '');
       // onboarding: who sees what (the browser tests run without it; see ONB_OFF)
       const onb = onbRead(); const onbOn = !ONB_OFF() && LV === 1;
@@ -4863,7 +4933,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const SUBOF = { words:'library', grammar:'library', gtrack:'library', web:'library', pinyin:'library', exam:'path' };   // pages reached from another page of the same tab: that page stays lit
       const BRANCH = ['acct', 'friends', 'ach', 'voice', 'guide'];   // reached from the Account page (the avatar) or the quiet "You" links, not from a tab
       const SUBLABEL = { path:'Path', library:'Library', review:'Words', greview:'Grammar', testlobby:'Test', listen:'Listening', speak:'Speaking', home:'Today', journey:'Journey' };
-      const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen === 'plesson' ? 'path' : S.screen;
+      const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen === 'plesson' || S.screen === 'passage' ? 'path' : S.screen;
       const hlScreen = SUBOF[curScreen] || curScreen;
       const navGroup = BRANCH.indexOf(curScreen) >= 0 ? '' : (GROUPS.find(g => g[1].indexOf(hlScreen) >= 0) || GROUPS[0])[0];
       const inBranch = BRANCH.indexOf(curScreen) >= 0;
@@ -4943,6 +5013,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         exam:[ALL ? 'Level exams' : LVN + ' level exam', ALL ? 'Each exam belongs to one level.' : EXAMBANK ? (LV < LVL.MAX_LEVEL ? 'Pass every section to climb to HSK ' + (LV + 1) + '.' : 'Pass every section to earn the ' + LVN + ' seal.') : 'Not built yet for ' + LVN + '.'],
         path:['Your path', 'Words and grammar in order, from the basics up. The next stop is always one tap away.'],
         plesson:[S.pl && STOP_BY[S.pl.id] ? stopTitle(STOP_BY[S.pl.id].st) : 'Lesson', 'Meet the words, try them, then check them.'],
+        passage:['Listening', 'Hear a conversation, then answer questions about it in Chinese.'],
         acct:['Account', 'You, your numbers, and the settings behind Shanlu.'],
         web:S.wmode === 'char' ? ['Shared character', 'Words built from the same character, side by side. New words are best learned on your path.'] : S.wmode === 'opp' ? ['Word pairs', 'Opposites and look-alike words, side by side. New words are best learned on your path.'] : ['Topics', 'Every topic, to browse and review. New words are best learned on your path.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
@@ -4977,7 +5048,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const pathLvNow = PATH_LVLS.length ? pathFirstOpen(S) : 0;
       const pathStep = pathLvNow ? pathNext(S, pathLvNow) : null;   // the next stop of the path, whatever its kind
       const pathDoneToday = Math.max(0, pathDoneCount(S) - (S.pbase == null ? pathDoneCount(S) : S.pbase));
-      const stopMeta = (st) => st.k === 'w' ? (() => { const n = stopWords(st).filter(z => !wStarted(S, z)).length; return n === 1 ? '1 new word' : n + ' new words'; })() : st.k === 's' ? 'Speaking scene' : 'Grammar lesson';
+      const stopMeta = (st) => st.k === 'w' ? (() => { const n = stopWords(st).filter(z => !wStarted(S, z)).length; return n === 1 ? '1 new word' : n + ' new words'; })() : st.k === 's' ? 'Speaking scene' : st.k === 'l' ? 'Listening' : 'Grammar lesson';
       const dueWordsN = BANK_KEYS.filter(zh => { const i = winfo(S.ws[zh], 0); return i.started && i.dueN <= 0; }).length;   // the same count My words shows: words, not the cards left in this session
       // How many Path steps today's plan asks for: the daily goal minus the time the due reviews will take, at about 5 minutes a step. Reviews are counted from what was due when the day began
       // (about 18 seconds each, a rough average of a word and a grammar point), so the number does not move while you review. At least 1, at most 4; a big backlog (40+ due) keeps it at 1.
@@ -5438,7 +5509,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
 
       return {
         focusCls:(S.exm && (S.exm.stage === 'run' || S.exm.stage === 'break') && S.screen === 'exam') || (S.screen === 'quiz' && !S.qdone) || (S.screen === 'plesson' && S.pl && !S.pl.done) ? 'focus' : '',
-        scrCls:'scr-' + S.screen + (S.screen === 'review' || S.screen === 'listen' || S.screen === 'speak' || S.screen === 'quiz' || (S.screen === 'plesson' && S.pl && !S.pl.done) ? ' am' : '') + (S.screen === 'review' && S.rq.length && rAuto ? ' rq' : ''),   // am = app mode on a phone: these screens fill the screen and do not scroll as a page
+        scrCls:'scr-' + S.screen + (S.screen === 'review' || S.screen === 'listen' || S.screen === 'speak' || S.screen === 'quiz' || S.screen === 'passage' || (S.screen === 'plesson' && S.pl && !S.pl.done) ? ' am' : '') + (S.screen === 'review' && S.rq.length && rAuto ? ' rq' : ''),   // am = app mode on a phone: these screens fill the screen and do not scroll as a page
         gHomeCls:gcls('home'), gLearnCls:gcls('learn'), gReviewCls:gcls('review'), gTalkCls:gcls('talk'), gJourneyCls:gcls('journey'),
         gHome:() => this.goGroup('home'), gLearn:() => this.goGroup('learn'), gReview:() => this.goGroup('review'), gTalk:() => this.goGroup('talk'), gJourney:() => this.goGroup('journey'),
         gLearnOpen:navGroup === 'learn', gReviewOpen:navGroup === 'review', gTalkOpen:navGroup === 'talk',
@@ -5499,6 +5570,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         goFriends:() => { this.go('friends'); this.friendsRefresh(false); },
         ...frVals,
         ...this.pathVals(S),
+        ...this.psgVals(S),
         ...this.acctVals(S, { level:LVN, streak:streakShown, coins:totalXp(S).toLocaleString('en-US'), mem:memNow.words, started:startedCount, total:bankKeys.length, guide:guideAvail }),
         ...this.jyView(S),
         isWChar:S.wmode === 'char', isWOpp:S.wmode === 'opp', isWTopic:S.wmode === 'topic',
@@ -5795,6 +5867,15 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       if (e.repeat && (e.key === ' ' || e.key === 'Enter')) { e.preventDefault(); return; }   // holding a key must not race through cards
       if ((e.key === ' ' || e.key === 'Enter') && t && (t.tagName === 'BUTTON' || t.tagName === 'A')) return;   // a focused button handles its own Space and Enter
       if (app.kbReview(e)) e.preventDefault();
+    } else if (S.screen === 'passage' && S.psg) {   // listening passage: P plays, 1-4 answer, Enter goes on
+      const g = S.psg;
+      if (e.repeat) return;
+      if ((e.key === ' ' || e.key === 'Enter') && t && (t.tagName === 'BUTTON' || t.tagName === 'A')) return;
+      if (e.key === 'p' || e.key === 'P') { e.preventDefault(); app.psgPlay(); }
+      else if (g.stage === 'intro' && e.key === 'Enter' && g.played) { e.preventDefault(); app.psgAsk(); }
+      else if (g.stage === 'qs' && !g.checked && /^[1-4]$/.test(e.key)) { e.preventDefault(); app.psgPick(Number(e.key) - 1); }
+      else if (g.stage === 'qs' && g.checked && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); app.psgNext(); }
+      else if (g.stage === 'qs' && g.checked && (e.key === 'h' || e.key === 'H')) { e.preventDefault(); app.psgHearLine(); }
     } else if (S.screen === 'exam' && S.exm && S.exm.stage === 'run') {
       const m = S.exm;
       if (e.key === 'ArrowRight') { e.preventDefault(); app.exGo(m.i + 1); }

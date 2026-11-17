@@ -13,6 +13,7 @@ const plain = process.argv.includes('--plain');   // dump what the learner sees 
 const dir = path.join(__dirname, '..', 'data');
 const files = fs.readdirSync(dir).filter(f => new RegExp('^hsk' + level + '(-.*)?\\.js$').test(f));
 files.forEach(f => require(path.join(dir, f)));
+if (fs.existsSync(path.join(dir, 'passages.js'))) require(path.join(dir, 'passages.js'));   // listening passages (every level in one file)
 
 if (plain) { require(path.join(dir, 'hsk1-erhua.js')); const E = require(path.join(__dirname, '..', 'erhua.js')); E.make(window.HSK1_ERHUA).apply(window); }
 
@@ -43,6 +44,14 @@ if (SPEAK) {
   });
   SPEAK.phrases.forEach((e, i) => add('phrase:' + i, e.zh, e.py, e.en));
 }
+// listening passages of this level: every line and question is a full sentence (level, pinyin, meaning); the options are checked for level and pinyin
+((window.SHANLU_PASSAGES || {})[level] || []).forEach(p => {
+  p.lines.forEach((l, i) => add('passage:' + p.id + ':line' + i, l.zh, l.py, l.en));
+  p.qs.forEach((q, i) => {
+    add('passage:' + p.id + ':q' + i, q.zh, q.py, q.en);
+    q.opts.forEach((o, j) => add('passage:' + p.id + ':q' + i + ':opt' + j, o.zh, o.py, '', { levelOnly: true }));
+  });
+});
 if (LISTEN) {
   LISTEN.clips.forEach((c, i) => {
     add('clip:' + i, c.zh, c.py, c.en);

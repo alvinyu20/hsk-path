@@ -6,13 +6,14 @@ Each file asks the model to report **problems only**, so the answers stay short.
 | File | What it checks |
 |---|---|
 | 01-grammar-explanations.md | all 26 grammar lessons (explanations, mistakes, examples) |
-| 02-sentences-1-of-7.md | 220 example, exercise and script sentences |
-| 03-sentences-2-of-7.md | 220 example, exercise and script sentences |
-| 04-sentences-3-of-7.md | 220 example, exercise and script sentences |
-| 05-sentences-4-of-7.md | 220 example, exercise and script sentences |
-| 06-sentences-5-of-7.md | 220 example, exercise and script sentences |
-| 07-sentences-6-of-7.md | 220 example, exercise and script sentences |
-| 08-sentences-7-of-7.md | 161 example, exercise and script sentences |
-| 09-exam.md | the mock exam sentences and picture questions |
+| 02-sentences-1-of-8.md | 220 example, exercise and script sentences |
+| 03-sentences-2-of-8.md | 220 example, exercise and script sentences |
+| 04-sentences-3-of-8.md | 220 example, exercise and script sentences |
+| 05-sentences-4-of-8.md | 220 example, exercise and script sentences |
+| 06-sentences-5-of-8.md | 220 example, exercise and script sentences |
+| 07-sentences-6-of-8.md | 220 example, exercise and script sentences |
+| 08-sentences-7-of-8.md | 220 example, exercise and script sentences |
+| 09-sentences-8-of-8.md | 30 example, exercise and script sentences |
+| 10-exam.md | the mock exam sentences and picture questions |
 
 The 13 questions from before are in review/ask-a-chinese-ai.md (already answered).

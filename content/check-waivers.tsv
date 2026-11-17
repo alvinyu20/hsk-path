@@ -116,3 +116,8 @@ exam:R3:1:question	pinyin	说话人为什么: pypinyin reads 人为 as one word 
 wordform:过	pinyin	过 has two readings, guo (after a verb: 去过) and guò (to pass, to spend time); the entry shows both so that a typed guò is accepted too
 lesson:mw:extra13	meaning	三万 is 30,000: the checker reads 万 as a separate number, so it cannot match "30,000"; the English is right	三万
 clip:33	pinyin	场 in 一场比赛 (a match) is chǎng, third tone; pypinyin gives cháng, the reading for 一场雨 (a spell of rain)	一场
+passage:p2-class:line4	meaning	老师说 + what was said is natural without 了 when you report a message; the English uses "said" because the class is over	老师说下个星期一考试，你要好好准备。
+passage:p2-coffee:line1	meaning	喝了睡不着 is a condition ("once I drink it, I cannot sleep"); 了 marks the first action finishing, not the past	我晚上不喝咖啡，喝了睡不着。
+passage:p2-doctor:line1	meaning	是……的 (here without 是) asks about the time of something that already happened; it does not need 了	你什么时候开始疼的？
+passage:p2-doctor:q1	meaning	是……的 (here without 是) asks about the time of something that already happened; it does not need 了	男的什么时候开始疼的？
+passage:p2-way:line3	meaning	就到了 means "and then you are there" (了 of a new situation about the future); the English "you will be there" says the same	不远，走路五分钟就到了。

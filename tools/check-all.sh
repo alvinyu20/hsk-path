@@ -22,6 +22,7 @@ last python3 -W ignore tools/build-speech.py
 last python3 -W ignore tools/build-lexicon.py
 last python3 -W ignore tools/build-erhua.py
 last python3 -W ignore tools/build-exam.py
+last python3 -W ignore tools/build-passages.py
 last python3 -W ignore tools/build-path.py
 last python3 -W ignore tools/build-preview.py "$DATASET"
 last python3 -W ignore tools/build-preview.py "$DATASET" 3
@@ -147,6 +148,8 @@ if [ "$2" != "--no-browser" ]; then
   NODE_PATH="$(npm root -g)" node tools/smoke-test-l5.js --erhua
   echo "== 5k. the grammar review shows every exercise of a point before it repeats one"
   NODE_PATH="$(npm root -g)" node tools/smoke-test-grv-variety.js
+  echo "== 5m. listening passages: placed on the Path after their words, listen / answer / transcript, coins"
+  NODE_PATH="$(npm root -g)" node tools/smoke-test-passages.js
   echo "== 5l. Review plays whole sentences for words you already hear well"
   NODE_PATH="$(npm root -g)" node tools/smoke-test-hear-sentence.js
 fi

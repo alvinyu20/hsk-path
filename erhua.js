@@ -100,6 +100,7 @@
         win[name] = w;
       };
       webs('HSK1_WEBS');
+      if (win.SHANLU_PASSAGES) win.SHANLU_PASSAGES = walk(win.SHANLU_PASSAGES);   // the listening passages (every level)
       // HSK 2 to HSK 5 data (same table: the official level-2 list prints 男孩儿, 女孩儿, 小孩儿 and 一会儿; HSK 3 sentences use 哪儿, 一点儿 ...)
       [2, 3, 4, 5].forEach(n => {
         ['WORDS', 'GRAMMAR', 'LISTEN', 'EXAM'].forEach(k => { if (win['HSK' + n + '_' + k]) win['HSK' + n + '_' + k] = walk(win['HSK' + n + '_' + k]); });

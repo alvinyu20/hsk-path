@@ -26,6 +26,7 @@ for(const n of [1,2,3,4,5]){
   const W=ctx.window['HSK'+n+'_WORDS'],T=ctx.window['HSK'+n+'_WEBS'].topics,G=ctx.window['HSK'+n+'_GRAMMAR'].lessons;
   res[n]={words:W.map(w=>w.zh),topics:T.map(t=>({name:t.name,words:t.words})),lessons:G.map(g=>({id:g.id,title:g.title})),scenarios:((ctx.window['HSK'+n+'_SPEAK']||{}).scenarios||[]).map(x=>({id:x.id,title:x.title}))};
 }
+if(fs.existsSync('data/passages.js')){vm.runInContext(fs.readFileSync('data/passages.js','utf8'),ctx);const PS=ctx.window.SHANLU_PASSAGES||{};for(const n of [1,2,3,4,5])res[n].passages=(PS[n]||[]).map(p=>({id:p.id,title:p.title,words:p.words}));}
 console.log(JSON.stringify(res));
 """], cwd=ROOT).decode('utf-8')
     return json.loads(out)
@@ -193,6 +194,26 @@ def build_level(n, cfg, data, problems, report):
         u, sid_, i = spot
         k = given.get(sid_, 0); given[sid_] = k + 1
         u['stops'].insert(i + 1 + k, sp)
+    # listening passages (data/passages.js): each goes right after the stop that teaches the last of its words, so every word in it has been met
+    pos = {}
+    k = 0
+    for u in units:
+        for i, st in enumerate(u['stops']):
+            k += 1
+            if st['k'] == 'w':
+                for w in st['w']:
+                    pos[w] = (k, u, st['id'])
+    for p in data.get('passages', []):
+        hits = [pos[w] for w in p['words'] if w in pos]
+        lp = {'id': '%s.l.%s' % (pre, p['id']), 'k': 'l', 't': p['title'], 'l': p['id']}
+        if not hits:
+            problems.append('HSK %s: listening passage "%s" uses no word of the level, so it has no place on the path' % (n, p['id']))
+            continue
+        _, u, sid_ = max(hits, key=lambda h: h[0])
+        i = [s['id'] for s in u['stops']].index(sid_)
+        while i + 1 < len(u['stops']) and u['stops'][i + 1]['k'] in ('s', 'l'):   # after any speaking scene or passage already waiting there
+            i += 1
+        u['stops'].insert(i + 1, lp)
     for g in scns:
         if used_scns.get(g, 0) != 1:
             problems.append('HSK %s: practice script "%s" is in the path %d times (needs exactly 1)' % (n, g, used_scns.get(g, 0)))
