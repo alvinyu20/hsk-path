@@ -27,7 +27,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   // ---------------- desktop
   const page = await open(1280, 900);
   const nav = makeNav(page);
-  check((await page.locator('.side .navg .nav').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()).join('|') === 'Today|Learn|Review|Talk|Journey', 'five tabs in the sidebar');
+  check((await page.locator('.side .navg .nav').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+( ready)?$/, '').trim()).join('|') === 'Today|Learn|Review|Talk|Journey', 'five tabs in the sidebar');
   check(await page.locator('.side .navs:not(.navg)').count() === 0, 'the long flat list is gone');
   await nav('Library');
   check(await scr(page) === 'library' && await page.locator('.lib-tile').count() === 7, 'the Library has seven tiles: ' + (await page.locator('.lib-tile b').allInnerTexts()).join(', '));

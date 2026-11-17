@@ -82,5 +82,56 @@
   window.SHANLU_LEVELS = level === 0 ? all : [level];   // the levels whose content this page shows
   window.SHANLU_LOCKED = wanted > level && level > 0 ? wanted : 0;   // the level that was asked for but is still locked
   window.ShanluLevel = { MAX_LEVEL: MAX_LEVEL, PASS_PCT: PASS_PCT, PASS_COINS: PASS_COINS, passBonus: passBonus, passedEntry: passedEntry, passedList: passedList, bestSections: bestSections, softLock: softLock, levelPassed: levelPassed, markPassed: markPassed, unlocked: unlocked, placed: placed, unlockedLevels: unlockedLevels, PROGRESS_KEYS: PROGRESS_KEYS };
+
+  // ---- the level files: only the level(s) this page shows are loaded at start ----
+  // Each level has six files (data/hskN-words.js, -grammar, -webs, -speak, -listen, -exam). index.html names them in <meta name="shanlu-data">
+  // with their version addresses, and they are loaded from here instead of from <script> tags, so HSK 1 does not download HSK 5's 2 MB.
+  // app.js starts once they have run (ShanluData.start). Other levels' files are loaded on demand (the level check) with ShanluData.need;
+  // what the page needs to know about the other levels without them is in data/levels-index.js.
+  var KINDS = ['words', 'grammar', 'webs', 'speak', 'listen', 'exam'];
+  var ADDR = {}, hasMeta = false;
+  try {
+    var meta = document.querySelector('meta[name="shanlu-data"]');
+    if (meta) { hasMeta = true; (meta.getAttribute('content') || '').split(/\s+/).forEach(function (a) { if (a) ADDR[a.split('?')[0]] = a; }); }
+  } catch (e) {}
+  var fileState = {}, waiters = {};   // file -> 'loading' | 'ok' | 'fail'; file -> callbacks
+  function loadFile(f, cb) {
+    if (fileState[f] === 'ok' || fileState[f] === 'fail') { cb(fileState[f] === 'ok'); return; }
+    (waiters[f] = waiters[f] || []).push(cb);
+    if (fileState[f]) return;
+    fileState[f] = 'loading';
+    var s = document.createElement('script');
+    s.src = ADDR[f] || f;
+    s.async = false;   // files run in the order they were asked for
+    var done = function (ok) { fileState[f] = ok ? 'ok' : 'fail'; var w = waiters[f]; waiters[f] = []; w.forEach(function (fn) { fn(ok); }); };
+    s.onload = function () { done(true); };
+    s.onerror = function () { done(false); };
+    (document.head || document.documentElement).appendChild(s);
+  }
+  function filesOf(levels, kinds) {
+    var out = [];
+    levels.forEach(function (n) { (kinds || KINDS).forEach(function (k) { var f = 'data/hsk' + n + '-' + k + '.js'; if (ADDR[f] || (!hasMeta && n <= MAX_LEVEL)) out.push(f); }); });
+    return out;
+  }
+  // load the files of `levels` (all six kinds, or only `kinds`), then cb(allLoaded, newlyLoadedGlobalNames)
+  function need(levels, kinds, cb) {
+    var fs = filesOf(levels, kinds), left = fs.length, all = true, fresh = [];
+    if (!left) { cb(true, fresh); return; }
+    fs.forEach(function (f) {
+      var before = fileState[f];
+      loadFile(f, function (ok) {
+        all = all && ok;
+        if (ok && before !== 'ok') { var m = /hsk(\d)-(\w+)\.js$/.exec(f); if (m) fresh.push('HSK' + m[1] + '_' + m[2].toUpperCase()); }
+        if (--left === 0) cb(all, fresh);
+      });
+    });
+  }
+  var startFns = [], started = false;
+  need(window.SHANLU_LEVELS, null, function () { started = true; startFns.splice(0).forEach(function (fn) { fn(); }); });
+  window.ShanluData = {
+    need: need,
+    has: function (n, kind) { return fileState['data/hsk' + n + '-' + kind + '.js'] === 'ok'; },
+    start: function (fn) { if (started) fn(); else startFns.push(fn); }
+  };
   if (document.title) document.title = 'Shanlu · ' + (level === 0 ? 'all levels' : 'HSK ' + level) + ' study path';
 })();

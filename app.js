@@ -2,7 +2,8 @@
  * State lives in one object. Progress is saved in this browser (localStorage) and can be exported to a file.
  * Content comes from data/hsk1.js. The page template is in index.html and rendered by runtime.js.
  */
-(function () {
+// app.js starts once the level files have loaded (level.js: ShanluData.start)
+(window.ShanluData ? window.ShanluData.start : (fn) => fn())(function () {
   // "儿 endings" switch (see erhua.js). Plain forms are the default; the setting is read here, before any content is used.
   const AI_STORE = 'shanlu-ai';   // { key, model } lives only on this device
   let AICFG = {};
@@ -121,6 +122,30 @@
   const listJoin = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];   // "HSK 1", "HSK 1 and HSK 2", "HSK 1, HSK 2 and HSK 3"
   const LVL = window.ShanluLevel || { MAX_LEVEL:LV, PASS_PCT:80, PASS_COINS:5000, passBonus:() => 0, passedEntry:() => false, passedList:() => false, softLock:() => false, placed:() => 0, levelPassed:() => false, markPassed() {}, unlocked:() => true };
   const LV_DATA = (name) => window['HSK' + LV + '_' + name];
+  // Any level, loaded or not: its words, lesson ids and the words of its word families and topics. The page loads only the level(s) it shows
+  // (level.js); for the others this reads data/levels-index.js and applies the 儿 setting the same way erhua.js does for loaded files.
+  const IDX = window.SHANLU_INDEX || {};
+  const LEVEL_INFO = {};
+  const levelInfo = (n) => {
+    const W = window['HSK' + n + '_WORDS'];
+    if (W) {
+      const G = window['HSK' + n + '_GRAMMAR'] || {}, B = window['HSK' + n + '_WEBS'] || {};
+      return { words:W, lessons:(G.lessons || []).map(l => l.id), hubs:(B.hubs || []).map(h => (h.words || []).map(x => x.zh)), topics:(B.topics || []).map(t => t.words || []) };
+    }
+    if (LEVEL_INFO[n]) return LEVEL_INFO[n];
+    const d = IDX[n];
+    if (!d) return { words:[], lessons:[], hubs:[], topics:[] };
+    const plain = !!ERHUA && !ERHUA_ON;
+    const zh = (z) => (plain ? ERHUA.zh(z) : z);
+    const keep = (z) => !plain || ERHUA.twins.indexOf(z) < 0;
+    const list = (a) => a.filter(keep).map(zh).filter((z, i, all) => all.indexOf(z) === i);
+    LEVEL_INFO[n] = {
+      words:d.w.filter(w => n > 1 || keep(w[0])).map(w => ({ zh:zh(w[0]), py:plain ? ERHUA.py(w[1]) : w[1], en:w[2], pos:w[3] })),
+      lessons:d.l.slice(), hubs:d.h.map(list), topics:d.t.map(list)
+    };
+    return LEVEL_INFO[n];
+  };
+  const levelWords = (n) => levelInfo(n).words;
   // In "All levels" the content of every unlocked level is joined (HSK 1 first). Words are different in every level, so nothing is shared or duplicated.
   const LV_ALL = (name) => LVLS.map(n => window['HSK' + n + '_' + name]).filter(Boolean);
   const JOIN = (name, key) => [].concat.apply([], LV_ALL(name).map(d => d[key] || []));
@@ -304,6 +329,10 @@
   const PSG_BY = {};
   Object.keys(window.SHANLU_PASSAGES || {}).forEach(n => (window.SHANLU_PASSAGES[n] || []).forEach(p => { PSG_BY[p.id] = p; }));
   const PSG_COIN = 10, PSG_BONUS = 10, PSG_AGAIN = 2;   // first time: 10 per right answer and 10 more when all are right; after that 2 per right answer
+  // passage speed (its own setting, saved as the person pref 'psgSpeed'; absolute, not a multiple of the voice speed in Settings).
+  // Fast-ear challenge: listen only at 1.25× before answering and get every question right: PSG_FAST_BONUS more, once per passage.
+  const PSG_SPEEDS = [0.8, 1, 1.25], PSG_FAST = 1.25, PSG_FAST_BONUS = 10;
+  const psgSpeed = () => { const v = Number(prefGet('psgSpeed', 1)); return PSG_SPEEDS.indexOf(v) >= 0 ? v : 1; };
   const psgRes = (id) => prefGet('psg.' + id, null);
   const PATH_U = {}, STOP_BY = {};
   PATH_LVLS.forEach(n => {
@@ -574,7 +603,7 @@
     ['写', 'Write your own sentence', 'When it is right', '12'],
     ['路', 'Path word stop', 'The first time you finish it', String(STOP_COINS)],
     ['音', 'Pinyin lesson', 'The first time you finish it', String(PY_COINS)],
-    ['听', 'Listening passage (Path)', 'Each right answer the first time, +10 when all are right (2 later)', '10'],
+    ['听', 'Listening passage (Path)', 'Each right answer the first time, +10 when all are right (2 later), +10 once for all right at 1.25× speed', '10'],
     ['说', 'Speaking conversation', 'Each one you finish', '10'],
     ['复', 'Review', 'Each card (a new word: 3 per step, 5 when it sticks)', '2 to 5'],
     ['听', 'Listening lab', 'Each word you catch or understand', '1 a word'],
@@ -1108,7 +1137,7 @@
   // ---------- talking with an AI (bring-your-own-key, straight from the browser) ----------
   // every word the conversation may use: this level's words, plus the earlier levels' words (at HSK 2 that is HSK 1 too)
   const KB = {};
-  for (let n = 1; n < (ALL ? TOPL : LV); n++) (window['HSK' + n + '_WORDS'] || []).forEach(w => { KB[w.zh] = { py:w.py, en:w.en }; });
+  for (let n = 1; n < (ALL ? TOPL : LV); n++) levelWords(n).forEach(w => { KB[w.zh] = { py:w.py, en:w.en }; });
   WORDS.forEach(w => { KB[w.zh] = { py:w.py, en:w.en }; });
   const CHAR_GLOSS = window.CHAR_GLOSSES || {};
   const KB_KEYS = Object.keys(KB);
@@ -2307,11 +2336,12 @@
       this.speakLines(q.audio, 'exq');
     };
     // several lines in a row (a conversation); the second voice is pitched higher where the browser allows it
-    speakLines = (lines, key) => {
+    // rate (optional): a playback speed for these lines instead of the voice speed in Settings (the listening passages have their own)
+    speakLines = (lines, key, rate) => {
       const files = lines.map(l => this.nativeFile(l.text, l.pitch < 0.95 ? 'm' : ''));
-      if (files.length && files.every(Boolean)) { this.speakFiles(lines, files, key); return; }
-      if (ttsModeNow() === 'qwen') { this.speakLinesQwen(lines, key); return; }
-      this.speakLinesBrowser(lines, key);
+      if (files.length && files.every(Boolean)) { this.speakFiles(lines, files, key, rate); return; }
+      if (ttsModeNow() === 'qwen') { this.speakLinesQwen(lines, key, rate); return; }
+      this.speakLinesBrowser(lines, key, rate);
     };
     // exam conversations with the Qwen voices: a woman and a man, the same on every device (the browser voice differs from device to device)
     ttsUrl = async (text, voice) => {
@@ -2320,16 +2350,17 @@
       return c.url;
     };
     // a conversation from recordings (one <audio> element, so a phone that allowed the first line allows the rest)
-    speakFiles = async (lines, files, key) => {
+    speakFiles = async (lines, files, key, rate) => {
       this.stopNative(); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
       const tok = ++this.ttsTok;
+      this.ttsRate = rate || 0;   // read for every line, so a speed change while it plays applies to the next lines too
       this.setState({ playing:key });
       const sleep = (ms) => new Promise(r => setTimeout(r, ms));
       try {
         if (!this.ttsEl) this.ttsEl = new Audio();
         const a = this.ttsEl;
         for (let i = 0; i < files.length; i++) {
-          await new Promise((res, rej) => { a.onended = res; a.onerror = () => rej(new Error('the recording could not be played')); a.src = files[i]; a.playbackRate = this.state.speed || 1; try { a.preservesPitch = true; } catch (e) {} const pr = a.play(); if (pr && pr.catch) pr.catch(rej); });
+          await new Promise((res, rej) => { a.onended = res; a.onerror = () => rej(new Error('the recording could not be played')); a.src = files[i]; a.playbackRate = this.ttsRate || this.state.speed || 1; try { a.preservesPitch = true; } catch (e) {} const pr = a.play(); if (pr && pr.catch) pr.catch(rej); });
           if (tok !== this.ttsTok) return;
           if (i < files.length - 1) await sleep(250);
         }
@@ -2337,12 +2368,13 @@
       } catch (e) {
         if (tok !== this.ttsTok) return;
         if (this.state.playing === key) this.setState({ playing:null });
-        if (ttsModeNow() === 'qwen') this.speakLinesQwen(lines, key); else this.speakLinesBrowser(lines, key);
+        if (ttsModeNow() === 'qwen') this.speakLinesQwen(lines, key, rate); else this.speakLinesBrowser(lines, key, rate);
       }
     };
-    speakLinesQwen = async (lines, key) => {
+    speakLinesQwen = async (lines, key, rate) => {
       this.stopNative(); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
       const tok = ++this.ttsTok;
+      this.ttsRate = rate || 0;
       this.setState({ playing:key });
       const voiceFor = (l) => (l.pitch > 1.05 ? 'Maia' : l.pitch < 0.95 ? 'Kai' : ttsVoiceNow());
       const sleep = (ms) => new Promise(r => setTimeout(r, ms));
@@ -2353,25 +2385,25 @@
         for (let i = 0; i < lines.length; i++) {
           const url = await this.ttsUrl(lines[i].text, voiceFor(lines[i]));
           if (tok !== this.ttsTok) return;
-          await new Promise((res, rej) => { a.onended = res; a.onerror = () => rej(new Error('the audio could not be played')); a.src = url; a.playbackRate = this.state.speed || 1; try { a.preservesPitch = true; } catch (e) {} a.play().catch(rej); });
+          await new Promise((res, rej) => { a.onended = res; a.onerror = () => rej(new Error('the audio could not be played')); a.src = url; a.playbackRate = this.ttsRate || this.state.speed || 1; try { a.preservesPitch = true; } catch (e) {} a.play().catch(rej); });
           if (tok !== this.ttsTok) return;
           if (i < lines.length - 1) await sleep(250);
         }
         if (tok === this.ttsTok && this.state.playing === key) this.setState({ playing:null });
       } catch (e) {
         if (tok !== this.ttsTok) return;
-        this.ttsFail(e); this.speakLinesBrowser(lines, key);
+        this.ttsFail(e); this.speakLinesBrowser(lines, key, rate);
       }
     };
-    speakLinesBrowser = (lines, key) => {
+    speakLinesBrowser = (lines, key, rate) => {
       try {
         if (!window.speechSynthesis) return;
         const zh = pickVoice(this.state.voiceId);
         this.speakWhenReady((ss) => {
-          lines.forEach(l => { const u = new SpeechSynthesisUtterance(l.text); u.lang = zh ? zh.lang : 'zh-CN'; u.rate = this.state.speed || 1; u.pitch = l.pitch || 1; if (zh) u.voice = zh; ss.speak(u); });
+          lines.forEach(l => { const u = new SpeechSynthesisUtterance(l.text); u.lang = zh ? zh.lang : 'zh-CN'; u.rate = rate || this.state.speed || 1; u.pitch = l.pitch || 1; if (zh) u.voice = zh; ss.speak(u); });
         });
       } catch (e) {}
-      const ms = lines.reduce((n, l) => n + l.text.length * 330 + 500, 0);
+      const ms = lines.reduce((n, l) => n + l.text.length * 330 + 500, 0) / (rate || this.state.speed || 1);
       this.setState({ playing:key });
       this.later(() => { if (this.state.playing === key) this.setState({ playing:null }); }, ms);
     };
@@ -3241,7 +3273,21 @@
     };
     pcPick = (n) => { if (this.state.pcs) this.setState({ pcs:Object.assign({}, this.state.pcs, { claim:n }) }); };
     pcStart = () => {
-      const p = this.state.pcs; if (!p || !window.ShanluPlacement) return;
+      const p = this.state.pcs; if (!p || !window.ShanluPlacement || p.loading) return;
+      // the check asks questions from the claimed level down to HSK 1, and plans the level above too: their full files are loaded first
+      const lvls = Array.from({ length:Math.min(p.claim + 1, LVL.MAX_LEVEL) }, (_, i) => i + 1);
+      const D = window.ShanluData;
+      if (D && lvls.some(n => !window['HSK' + n + '_WORDS'] || !window['HSK' + n + '_GRAMMAR'])) {
+        this.setState({ pcs:Object.assign({}, p, { loading:true, loadFail:false }) });
+        D.need(lvls, ['words', 'grammar'], (ok, fresh) => {
+          if (ERHUA && !ERHUA_ON && fresh.length) ERHUA.apply(window, fresh);
+          const q = this.state.pcs; if (!q) return;
+          if (!ok) { this.setState({ pcs:Object.assign({}, q, { loading:false, loadFail:true }) }); return; }
+          this.setState({ pcs:Object.assign({}, q, { loading:false }) });
+          this.pcStart();
+        });
+        return;
+      }
       const run = window.ShanluPlacement.newRun(p.claim, this.plData());
       this.setState({ pcs:Object.assign({}, p, { step:run.done ? 'result' : 'ask', run }) });
     };
@@ -3323,11 +3369,11 @@
 
     pcVals(S) {
       const p = S.pcs; const PL = window.ShanluPlacement; const MAX = LVL.MAX_LEVEL;
-      const cum = []; let tot = 0; for (let n = 1; n <= MAX; n++) { tot += (window['HSK' + n + '_WORDS'] || []).length; cum[n] = Math.round(tot / 10) * 10; }
+      const cum = []; let tot = 0; for (let n = 1; n <= MAX; n++) { tot += levelWords(n).length; cum[n] = Math.round(tot / 10) * 10; }
       const v = {
         pcShow:!!p, pcClaimShow:!!p && p.step === 'claim', pcAskShow:false, pcResultShow:false,
         pcClaims:Array.from({ length:MAX }, (_, i) => i + 1).map(n => ({ t:'HSK ' + n, d:n === 1 ? 'The first ' + cum[1].toLocaleString('en-US') + ' words' : 'HSK 1 to ' + n + ', about ' + cum[n].toLocaleString('en-US') + ' words in all', cls:'obm-opt' + (p && p.claim === n ? ' on' : ''), pressed:p && p.claim === n ? 'true' : 'false', fn:() => this.pcPick(n) })),
-        pcStart:this.pcStart, pcCancel:this.pcCancel, pcRetry:this.pcRetry, pcCancelText:p && p.from === 'onb' ? 'Skip, start at HSK 1' : 'Not now',
+        pcStart:this.pcStart, pcStartText:p && p.loading ? 'Loading the questions…' : 'Start the check', pcLoadFail:!!(p && p.loadFail), pcCancel:this.pcCancel, pcRetry:this.pcRetry, pcCancelText:p && p.from === 'onb' ? 'Skip, start at HSK 1' : 'Not now',
         pcLabel:'', pcPctN:0, pcPct:'0%', pcIsWord:false, pcIsGrammar:false, pcZh:'', pcPy:'', pcPyOn:false, pcPyText:'', pcPyToggle:this.pcPyToggle, pcPrompt:'', pcOpts:[], pcDontKnow:() => this.pcAnswer(-1),
         pcResHead:'', pcResLead:'', pcResPlaced:false, pcResWords:'', pcResGo:this.pcCancel, pcResGoText:'', pcResRetry:false,
         pcOpenMenu:() => this.pcOpen('menu')
@@ -3344,7 +3390,7 @@
       if (p.step === 'result' && p.run.outcome) {
         const o = p.run.outcome; const placed = o.passedTop >= 1;
         const range = o.passedTop > 1 ? 'HSK 1 to ' + o.passedTop : 'HSK 1';
-        let words = 0; for (let n = 1; n <= o.passedTop; n++) words += (window['HSK' + n + '_WORDS'] || []).length;
+        let words = 0; for (let n = 1; n <= o.passedTop; n++) words += levelWords(n).length;
         Object.assign(v, {
           pcResultShow:true, pcResPlaced:placed,
           pcResHead:placed ? (o.passedTop >= MAX ? 'You know every level here' : 'You are ready for HSK ' + o.placedAt) : 'Start at HSK 1',
@@ -3767,18 +3813,18 @@
         gmastered:Object.keys(S.gpt || {}).filter(id => gptInfo(S.gpt[id]).mastered).length, exams:LVL.passedList(S.exams || []) ? 1 : 0, gwrote:0, topic:false, goalRun:0, lv:{}, ev:{}, frMembers:0, frLeader:false, jy:this.jyCounts(), pathStops:0, pathUnits:0, pathLevels:0, fullDay:false, pyDone:0, pyTotal:0, meanings:0, scenes:0, scenesAll:false, clips:0, hubs:0 };
       let words = 0, lessons = 0, gm = 0, scenesSaved = 0, clipsSaved = 0, hubsSaved = 0;
       for (let n = 1; n <= LVL.MAX_LEVEL; n++) {
-        const W = window['HSK' + n + '_WORDS'], G = window['HSK' + n + '_GRAMMAR'], B = window['HSK' + n + '_WEBS'];
-        if (!W) continue;
-        const st = readStore(n); if (!st) { m.lv[n] = { started:0, total:W.length, lessonsDone:0, lessonsTotal:G ? (G.lessons || []).length : 0 }; continue; }
+        const I = levelInfo(n), W = I.words;
+        if (!W.length) continue;
+        const st = readStore(n); if (!st) { m.lv[n] = { started:0, total:W.length, lessonsDone:0, lessonsTotal:I.lessons.length }; continue; }
         const ws = st.ws || {};
         try { words += memOf(fillWs(JSON.parse(JSON.stringify(ws)))).words; } catch (e) {}
-        const L = G ? (G.lessons || []) : [];
-        const lessonsDone = L.filter(l => ((st.gres || {})[l.id] || 0) >= 80).length; lessons += lessonsDone;
+        const L = I.lessons;
+        const lessonsDone = L.filter(id => ((st.gres || {})[id] || 0) >= 80).length; lessons += lessonsDone;
         m.lv[n] = { started:W.filter(w => started(ws[w.zh])).length, total:W.length, lessonsDone, lessonsTotal:L.length };
         Object.keys(st.gpt || {}).forEach(id => { const e = st.gpt[id]; if (gptInfo(e).mastered) gm++; if (e && (e.wok || 0) >= 1) m.gwrote++; });
         scenesSaved += Object.keys(st.sres || {}).filter(id => st.sres[id]).length; clipsSaved += (st.clipBest || []).filter(x => x > 0).length;
-        if (B) hubsSaved += (B.hubs || []).filter(h => (h.words || []).length > 0 && h.words.every(w => started(ws[w.zh]))).length;
-        if (B && (B.topics || []).some(t => (t.words || []).length > 0 && t.words.every(zh => started(ws[zh])))) m.topic = true;
+        hubsSaved += I.hubs.filter(h => h.length > 0 && h.every(z => started(ws[z]))).length;
+        if (I.topics.some(t => t.length > 0 && t.every(zh => started(ws[zh])))) m.topic = true;
       }
       m.words = Math.max(m.words, Math.round(words)); m.lessons = Math.max(m.lessons, lessons); m.gmastered = Math.max(m.gmastered, gm);
       // the Path (this view's levels), the Pinyin course, scenes, clips and word families
@@ -4065,10 +4111,28 @@
     psgOpen = (id) => {
       const p = PSG_BY[id]; if (!p) return;
       this.stopNative();
-      this.setState({ psg:{ id, stage:'intro', played:false, qi:0, pick:null, checked:false, ans:[], ord:p.qs.map(() => shuffle([0, 1, 2, 3])), py:false, en:false, gain:0, right:0, t0:Date.now() } });
+      this.setState({ psg:{ id, stage:'intro', played:false, qi:0, pick:null, checked:false, ans:[], ord:p.qs.map(() => shuffle([0, 1, 2, 3])), py:false, en:false, gain:0, right:0, t0:Date.now(), minRate:0 } });
       this.go('passage');
     };
-    psgPlay = () => { const S = this.state; const g = S.psg; const p = g && PSG_BY[g.id]; if (!p) return; this.ttsUnlock(); this.speakLines(this.psgLines(p), 'psg'); if (!g.played) this.setState({ psg:Object.assign({}, g, { played:true }) }); };
+    psgPlay = () => {
+      const S = this.state; const g = S.psg; const p = g && PSG_BY[g.id]; if (!p) return;
+      const r = psgSpeed();
+      this.ttsUnlock(); this.speakLines(this.psgLines(p), 'psg', r);
+      // the slowest speed heard before the questions decides the fast-ear challenge
+      const minRate = g.stage === 'intro' ? (g.minRate ? Math.min(g.minRate, r) : r) : g.minRate;
+      if (!g.played || minRate !== g.minRate) this.setState({ psg:Object.assign({}, g, { played:true, minRate }) });
+    };
+    psgSetSpeed = (r) => {
+      if (PSG_SPEEDS.indexOf(r) < 0 || r === psgSpeed()) return;
+      prefSet('psgSpeed', r);
+      const S = this.state; const g = S.psg;
+      const live = S.playing === 'psg' || S.playing === 'psgl';
+      if (live) { this.ttsRate = r; try { if (this.ttsEl) { this.ttsEl.playbackRate = r; this.ttsEl.preservesPitch = true; } } catch (e) {} }
+      // slowing down while the conversation plays before the questions counts as hearing it slower
+      const minRate = g && g.stage === 'intro' && live && S.playing === 'psg' && g.minRate ? Math.min(g.minRate, r) : g ? g.minRate : 0;
+      this.setState(g ? { psg:Object.assign({}, g, { minRate }) } : {});
+    };
+    psgSpeedStep = () => { const i = PSG_SPEEDS.indexOf(psgSpeed()); this.psgSetSpeed(PSG_SPEEDS[(i + 1) % PSG_SPEEDS.length]); };
     psgAsk = () => { const g = this.state.psg; if (g && g.played) { this.stopNative(); this.setState({ psg:Object.assign({}, g, { stage:'qs' }) }); } };
     psgPick = (k) => {
       const S = this.state; const g = S.psg; const p = g && PSG_BY[g.id]; if (!p || g.checked) return;
@@ -4076,15 +4140,16 @@
       SFX.play(ok ? 'ok' : 'bad');
       this.setState({ psg:Object.assign({}, g, { pick:k, checked:true, ans:g.ans.concat([ok]) }) });
     };
-    psgHearLine = () => { const g = this.state.psg; const p = g && PSG_BY[g.id]; if (!p) return; this.ttsUnlock(); this.speakLines(this.psgLines(p, p.qs[g.qi].line), 'psgl'); };
+    psgHearLine = () => { const g = this.state.psg; const p = g && PSG_BY[g.id]; if (!p) return; this.ttsUnlock(); this.speakLines(this.psgLines(p, p.qs[g.qi].line), 'psgl', psgSpeed()); };
     psgNext = () => {
       const S = this.state; const g = S.psg; const p = g && PSG_BY[g.id]; if (!p || !g.checked) return;
       if (g.qi + 1 < p.qs.length) { this.setState({ psg:Object.assign({}, g, { qi:g.qi + 1, pick:null, checked:false }) }); return; }
       const right = g.ans.filter(Boolean).length, n = p.qs.length; const prev = psgRes(p.id);
-      const gain = prev ? right * PSG_AGAIN : right * PSG_COIN + (right === n ? PSG_BONUS : 0);   // the first time pays most, so a passage is not a coin farm
-      prefSet('psg.' + p.id, { b:Math.max(prev ? prev.b : 0, right), n:(prev ? prev.n : 0) + 1 });
+      const fast = right === n && g.minRate >= PSG_FAST && !(prev && prev.f);   // the fast-ear challenge, once per passage
+      const gain = (prev ? right * PSG_AGAIN : right * PSG_COIN + (right === n ? PSG_BONUS : 0)) + (fast ? PSG_FAST_BONUS : 0);   // the first time pays most, so a passage is not a coin farm
+      prefSet('psg.' + p.id, Object.assign({ b:Math.max(prev ? prev.b : 0, right), n:(prev ? prev.n : 0) + 1 }, fast || (prev && prev.f) ? { f:1 } : {}));
       if (right === n) SFX.play('ok');
-      this.setState({ psg:Object.assign({}, g, { stage:'done', right, gain, first:!prev }), xp:S.xp + gain, dayXp:S.dayXp + gain, dayMin:S.dayMin + Math.max(2, Math.round((Date.now() - g.t0) / 60000)) });
+      this.setState({ psg:Object.assign({}, g, { stage:'done', right, gain, first:!prev, fast }), xp:S.xp + gain, dayXp:S.dayXp + gain, dayMin:S.dayMin + Math.max(2, Math.round((Date.now() - g.t0) / 60000)) });
     };
     psgAgain = () => { const g = this.state.psg; if (g) this.psgOpen(g.id); };
     psgBack = () => { this.stopNative(); this.go('path'); };
@@ -4104,6 +4169,12 @@
         psgPlay:this.psgPlay, psgPlayCls:(g.stage === 'intro' && !g.played ? 'pri' : '') + (S.playing === 'psg' ? ' on' : ''),
         psgPlayText:S.playing === 'psg' ? 'Playing…' : g.played ? 'Play the conversation again' : 'Play the conversation',
         psgAsk:this.psgAsk, psgAskOff:!g.played,
+        psgSpeeds:PSG_SPEEDS.map(r => ({ label:String(r).replace(/^0\./, '0.') + '×', cls:r === psgSpeed() ? 'on' : '', pressed:r === psgSpeed() ? 'true' : 'false', fn:() => this.psgSetSpeed(r) })),
+        psgFastShow:g.stage === 'intro' && !(psgRes(p.id) || {}).f,
+        psgFastCls:g.played && g.minRate && g.minRate < PSG_FAST ? 'off' : (g.played ? 'on' : ''),
+        psgFastText:g.played && g.minRate && g.minRate < PSG_FAST ? 'Fast-ear challenge is off this time: you listened below 1.25×. Try it again later from the Path.'
+          : g.played ? 'Fast-ear challenge on: get every question right for +' + PSG_FAST_BONUS + ' coins.'
+          : 'Fast-ear challenge: listen only at 1.25× before you answer, get every question right, and earn +' + PSG_FAST_BONUS + ' coins (once per passage).',
         psgShowPy:!!g.py, psgShowEn:!!g.en, psgTogPy:() => this.psgTog('py'), psgTogEn:() => this.psgTog('en'),
         psgPyBtn:g.py ? 'Hide pinyin' : 'Show pinyin', psgEnBtn:g.en ? 'Hide English' : 'Show English',
         psgQzh:q.zh, psgQpy:q.py, psgQen:q.en,
@@ -4113,9 +4184,9 @@
         psgLineWho:who(line.s), psgLineZh:line.zh, psgLinePy:line.py, psgHearLine:this.psgHearLine,
         psgNext:this.psgNext, psgNextText:g.qi + 1 < n ? 'Next question' : 'See how you did',
         psgScore:(g.right || 0) + ' of ' + n + ' right',
-        psgScoreSub:g.gain ? '+' + g.gain + ' coins' + (g.first && g.right === n ? ' (all right: +' + PSG_BONUS + ' bonus)' : '') : 'No coins this time',
+        psgScoreSub:g.gain ? '+' + g.gain + ' coins' + ([g.first && g.right === n ? 'all right: +' + PSG_BONUS : '', g.fast ? 'fast ear: +' + PSG_FAST_BONUS : ''].filter(Boolean).map(x => ' (' + x + ')').join('')) : 'No coins this time',
         psgLines:p.lines.map((l, i) => ({ who:who(l.s), zh:l.zh, py:l.py, en:l.en, cls:p.qs.some(x => x.line === i) ? 'ans' : '',
-          play:() => { this.ttsUnlock(); this.speakLines(this.psgLines(p, i), 'psgl'); } })),
+          play:() => { this.ttsUnlock(); this.speakLines(this.psgLines(p, i), 'psgl', psgSpeed()); } })),
         psgAgain:this.psgAgain, psgReport:report('Listening passage ' + p.id, p.title)
       });
       return out;
@@ -5526,6 +5597,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         mingWave:artUri('ming', 'wave'), mingThink:artUri('ming', 'think'), mingCheer:artUri('ming', 'cheer'), mingSleep:artUri('ming', 'sleep'), mingThumbs:artUri('ming', 'thumbs'),
         hasTopArt:!!TOPKEY[S.screen], topCls:TOPKEY[S.screen] ? 'arted' : '',
         topArt:TOPKEY[S.screen] ? artUri('banner', TOPKEY[S.screen]) : '',
+        topArtWide:TOPKEY[S.screen] ? (artUri('bannerw', TOPKEY[S.screen]) || artUri('banner', TOPKEY[S.screen])) : '',   // drawn for a wide header: the scene sits between the title and the pills
+        topArtBack:TOPKEY[S.screen] ? (artUri('bannerb', TOPKEY[S.screen]) || artUri('banner', TOPKEY[S.screen])) : '',   // the same without its scene, for a header with no room between the title and the pills
         libTiles:(() => {
           const pyL = PYC.lessons || [], pyD = pyL.filter(l => pyDoneAt(l.id)).length;
           const nxtL = LESSONS.find(L => (S.gres[L.id] || 0) < 80);
@@ -5710,7 +5783,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
           const open = LVL.unlocked(n);
           let sub = 'Locked: pass the HSK ' + (n - 1) + ' exam';
           if (open) {
-            let got = 0; const tot = (window['HSK' + n + '_WORDS'] || []).length;
+            let got = 0; const tot = levelWords(n).length;
             try { const ws = n === LV && !ALL ? S.ws : ((readStore(n) || {}).ws || {}); Object.keys(ws).forEach(z => { if (ws[z] && ws[z].see && ws[z].see.s > 0) got++; }); } catch (e) {}
             sub = got + ' of ' + tot + ' words in memory';
           }
@@ -5872,6 +5945,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       if (e.repeat) return;
       if ((e.key === ' ' || e.key === 'Enter') && t && (t.tagName === 'BUTTON' || t.tagName === 'A')) return;
       if (e.key === 'p' || e.key === 'P') { e.preventDefault(); app.psgPlay(); }
+      else if (e.key === 's' || e.key === 'S') { e.preventDefault(); app.psgSpeedStep(); }
       else if (g.stage === 'intro' && e.key === 'Enter' && g.played) { e.preventDefault(); app.psgAsk(); }
       else if (g.stage === 'qs' && !g.checked && /^[1-4]$/.test(e.key)) { e.preventDefault(); app.psgPick(Number(e.key) - 1); }
       else if (g.stage === 'qs' && g.checked && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); app.psgNext(); }
@@ -5950,4 +6024,4 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
     });
   }
   try { if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = () => { app.setState({ vtick:app.state.vtick + 1 }); }; } catch (e) {}
-})();
+});

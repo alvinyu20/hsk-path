@@ -2039,6 +2039,17 @@ button.pill:active{transform:scale(.97)}
 .top.arted .h1{text-shadow:0 1px 0 color-mix(in srgb,var(--panel) 60%,transparent)}
 .top.arted .sub{margin-top:4px;font-size:15px;max-width:34ch}
 .top.arted .top-t{max-width:min(100%,520px)}
+/* phones and tablets use the small picture. A desktop header uses a wide one pinned to the right edge, so its scene sits between the title
+   and the pills; between 901 and 1259px there is no room between them, so it shows the background alone (data/art.js bannerw / bannerb) */
+.top-art-w,.top-art-b{display:none}
+@media (min-width:901px){
+  .top-art-n{display:none}
+  .top-art-b{display:block;object-position:right center}
+}
+@media (min-width:1260px){
+  .top-art-b{display:none}
+  .top-art-w{display:block;object-position:right center}
+}
 @media (max-width:900px){
   .app.am .top-art{display:none}
   .app.am .top.arted{padding:0;min-height:0;border:0;border-radius:0;overflow:visible}
@@ -3606,3 +3617,9 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .psg-play .btn[disabled]{opacity:.45;cursor:default;box-shadow:none}
 .psg-how .kbhint{display:none;text-align:left;font-size:inherit}
 @media (hover:hover) and (pointer:fine){.psg-how .kbhint{display:inline}}
+.psg-speed{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.psg-speed .fc2{min-height:36px;padding:0 12px;font-variant-numeric:tabular-nums}
+.psg-spl{font-size:14px;margin-right:2px}
+.psg-fast{margin:0;font-size:14px;color:var(--muted);padding:8px 12px;border-radius:12px;background:var(--bg)}
+.psg-fast.on{background:var(--jade-soft);color:var(--ink)}
+.psg-fast.off{background:var(--amber-soft);color:var(--ink)}

@@ -35,6 +35,12 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     }
   };
 
+  // "Start the check": the other levels' files load first (level.js loads only the shown level at start), then the first question shows
+  const startCheck = async (page) => {
+    await dlg(page).locator('button', { hasText: 'Start the check' }).click();
+    await page.waitForFunction(() => { const p = window.shanlu.state.pcs; return !p || (!p.loading && p.step !== 'claim'); }, null, { timeout: 15000 });
+  };
+
   // ---- from Settings: pass HSK 1 and 2, get placed at HSK 3 ----
   {
     const { ctx, page, errors } = await open();
@@ -44,7 +50,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const claims = await dlg(page).locator('.obm-opt').allInnerTexts();
     check(claims.length === 5 && /HSK 1/.test(claims[0]) && /300 words/.test(claims[0]) && /HSK 5/.test(claims[4]), 'it asks for the highest level you know, HSK 1 to 5, with word counts: ' + claims.map((x) => x.split('\n')[0]).join(', '));
     await dlg(page).locator('.obm-opt', { hasText: 'HSK 2' }).click();
-    await dlg(page).locator('button', { hasText: 'Start the check' }).click();
+    await startCheck(page);
     check(/HSK 2 · 1 of 16/i.test(await dlg(page).innerText()), 'the first stage starts with 16 questions: ' + (await dlg(page).locator('.kick').first().innerText()));
     const isWord = await dlg(page).locator('.pc-zh').count() === 1;
     check(isWord || await dlg(page).locator('.pc-prompt').count() === 1, 'a question shows a word or a grammar prompt');
@@ -57,7 +63,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     // start over, cleanly, and answer everything right
     await page.evaluate(() => window.shanlu.pcRetry());
     await dlg(page).locator('.obm-opt', { hasText: 'HSK 2' }).click();
-    await dlg(page).locator('button', { hasText: 'Start the check' }).click();
+    await startCheck(page);
     await sit(page, 'right');
     const res = await dlg(page).innerText();
     check(/You are ready for HSK 3/.test(res) && /HSK 1 to 2/.test(res), 'passing HSK 2 places you at HSK 3: ' + res.split('\n').slice(0, 2).join(' | '));
@@ -113,7 +119,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   {
     const { ctx, page, errors } = await open();
     await page.evaluate(() => window.shanlu.pcOpen('menu', 3));
-    await dlg(page).locator('button', { hasText: 'Start the check' }).click();
+    await startCheck(page);
     await sit(page, 'dk');
     const res = await dlg(page).innerText();
     check(/Start at HSK 1/.test(res) && /could not confirm/.test(res) && /Try a different level/.test(res), 'a beginner is started at HSK 1 and can try another level: ' + res.split('\n')[0]);
@@ -140,7 +146,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   {
     const { ctx, page, errors } = await open({ store: JSON.stringify({ ws: { 你好: { see: { s: 9, t: Date.now() - 864e5, d: 4 } } }, xp: 50 }) });
     await page.evaluate(() => window.shanlu.pcOpen('menu', 1));
-    await dlg(page).locator('button', { hasText: 'Start the check' }).click();
+    await startCheck(page);
     await sit(page, 'right');
     check(/You are ready for HSK 2/.test(await dlg(page).innerText()), 'passing HSK 1 places you at HSK 2');
     await dlg(page).locator('button', { hasText: 'Start at HSK 2' }).click();
@@ -172,7 +178,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.waitForTimeout(300);
     check(/Test out of a level/.test(await dlg(page).innerText()) && await dlg(page).locator('button', { hasText: 'Skip, start at HSK 1' }).count() === 1, 'then the level check opens, with a way to skip it');
     await dlg(page).locator('.obm-opt').nth(0).click();
-    await dlg(page).locator('button', { hasText: 'Start the check' }).click();
+    await startCheck(page);
     await sit(page, 'right');
     await dlg(page).locator('button', { hasText: 'Start at HSK 2' }).click();
     await page.waitForLoadState('load'); await page.waitForSelector('.app'); await page.waitForTimeout(700);
@@ -210,7 +216,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
       return b;
     };
     await fits('the level choice');
-    await dlg(page).locator('button', { hasText: 'Start the check' }).click(); await page.waitForTimeout(600);
+    await startCheck(page); await page.waitForTimeout(600);
     const q = await fits('a question');
     check(q.sw <= q.ch + 2, 'a question needs no scrolling: ' + q.sw + ' of ' + q.ch);
     await sit(page, 'dk'); await page.waitForTimeout(600);

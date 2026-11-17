@@ -74,18 +74,13 @@
     const uniq = (arr, f) => { const seen = {}; return arr.filter(x => { const id = f ? f(x) : x; if (seen[id]) return false; seen[id] = true; return true; }); };
 
     // Rewrites the HSK 1 data on `win` in place. Returns the list of dropped words.
-    function apply(win) {
-      const words = (win.HSK1_WORDS || []).filter(w => twins.indexOf(w.zh) < 0);
-      win.HSK1_WORDS = walk(words);
-      if (win.HSK1_GRAMMAR) win.HSK1_GRAMMAR = walk(win.HSK1_GRAMMAR);
-      if (win.HSK1_SPEAK) {
-        win.HSK1_SPEAK = walk(win.HSK1_SPEAK);
-        win.HSK1_SPEAK.scenarios.forEach(s => { s.words = uniq(s.words, w => w.zh); });
-      }
-      if (win.HSK1_LISTEN) win.HSK1_LISTEN = walk(win.HSK1_LISTEN);
-      if (win.HSK1_EXAM) win.HSK1_EXAM = walk(win.HSK1_EXAM);
+    // `only` (optional): the names of the globals to rewrite, for level files loaded later (level.js loads other levels on demand);
+    // without it every level's data that is present is rewritten, and the listening passages too.
+    function apply(win, only) {
+      const want = (name) => !!win[name] && (!only || only.indexOf(name) >= 0);
+      if (want('HSK1_WORDS')) win.HSK1_WORDS = walk(win.HSK1_WORDS.filter(w => twins.indexOf(w.zh) < 0));
       const webs = (name) => {
-        if (!win[name]) return;
+        if (!want(name)) return;
         // the 儿 word of a twin pair is dropped, so the plain twin keeps its own entry (and its own character parts)
         const w0 = JSON.parse(JSON.stringify(win[name]));
         w0.hubs.forEach(h => { h.words = h.words.filter(x => twins.indexOf(x.zh) < 0); });
@@ -99,14 +94,14 @@
         w.opps = uniq(w.opps, o => o.a + '|' + o.b);
         win[name] = w;
       };
-      webs('HSK1_WEBS');
-      if (win.SHANLU_PASSAGES) win.SHANLU_PASSAGES = walk(win.SHANLU_PASSAGES);   // the listening passages (every level)
+      if (!only && win.SHANLU_PASSAGES) win.SHANLU_PASSAGES = walk(win.SHANLU_PASSAGES);   // the listening passages (every level)
       // HSK 2 to HSK 5 data (same table: the official level-2 list prints 男孩儿, 女孩儿, 小孩儿 and 一会儿; HSK 3 sentences use 哪儿, 一点儿 ...)
-      [2, 3, 4, 5].forEach(n => {
-        ['WORDS', 'GRAMMAR', 'LISTEN', 'EXAM'].forEach(k => { if (win['HSK' + n + '_' + k]) win['HSK' + n + '_' + k] = walk(win['HSK' + n + '_' + k]); });
-        if (win['HSK' + n + '_SPEAK']) {
-          win['HSK' + n + '_SPEAK'] = walk(win['HSK' + n + '_SPEAK']);
-          win['HSK' + n + '_SPEAK'].scenarios.forEach(s => { s.words = uniq(s.words, w => w.zh); });
+      [1, 2, 3, 4, 5].forEach(n => {
+        ['WORDS', 'GRAMMAR', 'LISTEN', 'EXAM'].forEach(k => { const name = 'HSK' + n + '_' + k; if (n > 1 || k !== 'WORDS') { if (want(name)) win[name] = walk(win[name]); } });
+        const sp = 'HSK' + n + '_SPEAK';
+        if (want(sp)) {
+          win[sp] = walk(win[sp]);
+          win[sp].scenarios.forEach(s => { s.words = uniq(s.words, w => w.zh); });
         }
         webs('HSK' + n + '_WEBS');
       });

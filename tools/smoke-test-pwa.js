@@ -111,6 +111,14 @@ function copySite() {
   check(offline.verb && offline.text > 50, 'with no connection the site still opens');
   await page.goto(site + '?level=1'); await page.waitForSelector('.app');
   check(await page.locator('.app').count() === 1, '...also from an address with ?level=');
+  // only the shown level's files load at start (level.js); another level's files load on demand, from the offline copy too
+  const lazy = await page.evaluate(() => new Promise((res) => {
+    const levelFiles = performance.getEntriesByType('resource').map((e) => (/data\/(hsk\d-\w+)\.js/.exec(e.name) || [])[1]).filter((f) => f && !/erhua|preview/.test(f));
+    const before = !!window.HSK3_WORDS;
+    window.ShanluData.need([3], ['words', 'grammar'], (ok) => res({ levelFiles, before, ok, after: !!window.HSK3_WORDS && !!window.HSK3_GRAMMAR }));
+  }));
+  check(lazy.levelFiles.length === 6 && lazy.levelFiles.every((f) => /^hsk1-/.test(f)) && !lazy.before, 'HSK 1 loads only its own six level files at start (' + lazy.levelFiles.join(', ') + ')');
+  check(lazy.ok && lazy.after, 'with no connection another level\'s files still load from the offline copy (the level check needs them)');
   await ctx.setOffline(false);
 
   // a new version: downloaded in the background, switched only on the person's say-so

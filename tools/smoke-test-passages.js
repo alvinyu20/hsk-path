@@ -73,6 +73,30 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const st = await page.evaluate(() => { const b = (window.shanlu.state); return true; });
     const pref = await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-person') || '{}').prefs['psg.p1-family']);
     check(pref && pref.v && pref.v.b === 3 && pref.v.n === 2, 'the best result is saved with the person (best 3, twice)' + tag);
+    // speed: 0.8×, 1× and 1.25× buttons; the fast-ear challenge pays once for all right after listening only at 1.25×
+    await page.evaluate(() => window.shanlu.pathStart('h1.l.p1-family')); await page.waitForSelector('.psg-card');
+    const spd = await page.locator('.psg-speed .fc2').allInnerTexts();
+    check(spd.join(' ') === '0.8× 1× 1.25×' && await page.locator('.psg-speed .fc2.on').innerText() === '1×', 'the passage has its own speed buttons, 1× to start (' + spd.join(' ') + ')' + tag);
+    check(/Fast-ear challenge: listen only at 1\.25×/.test(await page.locator('.psg-fast').innerText()), 'the fast-ear challenge is explained before playing' + tag);
+    await tap(page.locator('.psg-speed .fc2', { hasText: '1.25×' }));
+    await tap(page.locator('.psg-play .btn', { hasText: 'Play the conversation' }));
+    check(await page.evaluate(() => window.shanlu.state.psg.minRate === 1.25) && /challenge on/.test(await page.locator('.psg-fast').innerText()), 'playing at 1.25× turns the challenge on' + tag);
+    await tap(page.locator('.psg-play .btn', { hasText: 'Answer the questions' }));
+    for (let i = 0; i < 3; i++) {
+      const k = await page.evaluate(() => { const g = window.shanlu.state.psg; return g.ord[g.qi].indexOf(0); });
+      await tap(page.locator('.psg-opts .opt').nth(k)); await tap(page.locator('.psg-ansb .btn.pri'));
+    }
+    t = await page.locator('.psg-card').innerText();
+    check(/3 of 3 right/.test(t) && /\+16 coins/.test(t) && /fast ear: \+10/.test(t), 'all right at 1.25× pays the fast-ear bonus: 6 + 10 (' + (/\+\d+ coins[^\n]*/.exec(t) || [''])[0] + ')' + tag);
+    const pp = await page.evaluate(() => { const pr = JSON.parse(localStorage.getItem('shanlu-person') || '{}').prefs; return { sp: pr.psgSpeed && pr.psgSpeed.v, f: pr['psg.p1-family'] && pr['psg.p1-family'].v.f }; });
+    check(pp.sp === 1.25 && pp.f === 1, 'the chosen speed and the earned challenge are saved with the person' + tag);
+    // once earned, it is not offered or paid again; slowing down before the questions switches it off
+    await tap(page.locator('.psg-ansb .btn', { hasText: 'Listen and answer again' }));
+    check(await page.locator('.psg-fast').count() === 0 && await page.locator('.psg-speed .fc2.on').innerText() === '1.25×', 'the challenge is not offered again, and the speed is remembered' + tag);
+    await page.evaluate(() => window.shanlu.psgSetSpeed(0.8));
+    await tap(page.locator('.psg-play .btn', { hasText: 'Play the conversation' }));
+    check(await page.evaluate(() => window.shanlu.state.psg.minRate === 0.8), 'a slower listen is remembered for this try' + tag);
+    await page.evaluate(() => window.shanlu.psgSetSpeed(1));
     check(errors.length === 0, 'no page errors' + tag + ' ' + errors.join(' | '));
     await ctx.close();
   }

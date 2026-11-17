@@ -82,6 +82,50 @@ def banner(kind, w=360, h=120):
         b+='<g transform="translate(262 52) rotate(18)"><path d="M0 0 l-34-6 l-8 6 l10 4 l-4 8 l6 0 l6-7 l24 6z" fill="#fff" %s/></g><circle cx="40" cy="76" r="8" fill="%s" %s/><circle cx="318" cy="70" r="8" fill="%s" %s/>'%(_o(2.8),SEAL,_o(2.4),GOLD,_o(2.4))
     return '<svg viewBox="0 0 %d %d" width="%d" height="%d" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice">%s</svg>'%(360,120,w,h,b)
 
+# wide banners for a desktop header (1080x120, drawn from the right edge: app.js / styles.css show them with object-position right).
+# The level, streak and coin pills cover about the right third, the title the left third: the scene itself sits at x 400 to 690,
+# and the rest is only background (sky, desk, street, shelf) so nothing important hides under the pills.
+def _wave(y, amp, c, period=180):
+    d='M0 %d'%y; x=0
+    while x<1080: d+=' Q%d %d %d %d'%(x+period//2, y-amp if (x//period)%2==0 else y+amp//2, x+period, y); x+=period
+    return '<path d="%s V120H0z" fill="%s"/>'%(d,c)
+def banner_wide(kind, scene=True):
+    # scene=False: the background alone, for a header too narrow to fit anything between the title and the pills
+    W=1080; b=''
+    if kind=='journey':
+        b+='<rect width="1080" height="120" fill="#BFE0EE"/>'+_wave(96,14,'#9FCBB4',220)
+        b+='<g fill="#fff" opacity=".7"><ellipse cx="140" cy="30" rx="26" ry="9"/><ellipse cx="900" cy="26" rx="30" ry="10"/><ellipse cx="1010" cy="44" rx="20" ry="7"/></g>'
+        dx=364
+        f='<g transform="translate(%d 0)"><path d="M40 76 Q130 20 250 56" fill="none" stroke="#fff" stroke-width="3.2" stroke-dasharray="3 9" stroke-linecap="round"/>'%dx
+        f+='<g transform="translate(262 52) rotate(18)"><path d="M0 0 l-34-6 l-8 6 l10 4 l-4 8 l6 0 l6-7 l24 6z" fill="#fff" %s/></g><circle cx="40" cy="76" r="8" fill="%s" %s/><circle cx="318" cy="70" r="8" fill="%s" %s/></g>'%(_o(2.8),SEAL,_o(2.4),GOLD,_o(2.4))
+        if scene: b+=f
+    elif kind=='review':
+        b+='<rect width="1080" height="120" fill="#F3E2C6"/><rect y="84" width="1080" height="36" fill="#B97D54"/><rect y="82" width="1080" height="6" fill="#8A5A3B"/>'
+        dx=334; f='<g transform="translate(%d 0)">'%dx
+        for i,(x,r,c) in enumerate(((120,-10,'#fff'),(150,4,'#FBF3E4'),(180,14,'#fff'))): f+='<g transform="translate(%d 56) rotate(%d)"><rect x="-26" y="-34" width="52" height="68" rx="6" fill="%s" %s/><text x="0" y="8" text-anchor="middle" font-size="26" font-family="Noto Serif SC,serif" fill="%s" font-weight="700">%s</text></g>'%(x+110,r,c,_o(3),INK,'词学好'[i])
+        f+='<rect x="332" y="40" width="6" height="44" fill="#6F8793"/><path d="M314 40h42l-10-30h-22z" fill="#F9D78A" %s/></g>'%_o(3)
+        if scene: b+=f
+    elif kind=='talk':
+        b+='<rect width="1080" height="120" fill="#DCEBE3"/><rect y="92" width="1080" height="28" fill="#B8C6BE"/>'
+        import random; random.seed(5); x=8
+        while x<1072:   # a quiet street of low houses (background)
+            bw=random.choice((40,46,52,58)); bh=random.choice((34,42,50,58)); c=random.choice(('#E9A24B','#6E9FB8','#C2362B','#9DB8A8','#D9C3A0'))
+            b+='<rect x="%d" y="%d" width="%d" height="%d" fill="%s" opacity=".55"/>'%(x,92-bh,bw,bh,c); x+=bw+random.choice((10,18,26))
+        dx=375; f='<g transform="translate(%d 0)">'%dx
+        f+='<g %s><path d="M120 22 h96 a14 14 0 0 1 14 14 v18 a14 14 0 0 1-14 14 h-62 l-18 14 v-14 h-16 a14 14 0 0 1-14-14 v-18 a14 14 0 0 1 14-14z" fill="#fff"/></g><text x="168" y="54" text-anchor="middle" font-size="22" font-family="Noto Serif SC,serif" font-weight="700" fill="%s">你好！</text>'%(_o(3.4),INK)
+        f+='<g %s><path d="M226 48 h70 a12 12 0 0 1 12 12 v14 a12 12 0 0 1-12 12 h-8 v12 l-14-12 h-48 a12 12 0 0 1-12-12 v-14 a12 12 0 0 1 12-12z" fill="%s"/></g><circle cx="244" cy="74" r="3.4" fill="#fff"/><circle cx="258" cy="74" r="3.4" fill="#fff"/><circle cx="272" cy="74" r="3.4" fill="#fff"/></g>'%(_o(3.4),JADE)
+        if scene: b+=f
+    elif kind=='library':
+        b+='<rect width="1080" height="120" fill="#EADFC9"/><rect y="52" width="1080" height="7" fill="#8A5A3B"/><rect y="108" width="1080" height="12" fill="#8A5A3B"/>'
+        import random; random.seed(3)
+        for row,(y0,hh) in enumerate(((10,42),(66,42))):
+            x=14+row*10
+            while x<1060:
+                bw=random.choice((16,20,24,18)); bh=hh-random.choice((0,4,8)); c=random.choice(('#C2362B','#1D6B58','#E9A24B','#3C5A8A','#8A5A3B','#6FA98F'))
+                b+='<rect x="%d" y="%d" width="%d" height="%d" rx="2" fill="%s" %s/>'%(x,y0+hh-bh,bw,bh,c,_o(2.4)); x+=bw+3
+        if scene: b+='<g transform="translate(%d 74) rotate(-8)"><rect x="0" y="0" width="40" height="30" rx="4" fill="#fff" %s/><text x="20" y="22" text-anchor="middle" font-size="18" font-family="Noto Serif SC,serif" font-weight="700" fill="%s">字</text></g>'%(650,_o(2.6),SEAL)
+    return '<svg viewBox="0 0 %d 120" width="%d" height="120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMaxYMid slice">%s</svg>'%(W,W,b)
+
 def lantern(lit=True, size=44, c=SEAL):
     f=c if lit else '#D7DFDA'
     glow='<circle cx="22" cy="28" r="22" fill="#F9D78A" opacity=".55"/>' if lit else ''
@@ -117,6 +161,8 @@ def _notext(svg):
 art = {
     'ming': {p: _ns(mingming(p, 200)) for p in ('wave', 'think', 'cheer', 'sleep', 'thumbs')},
     'banner': {k: _notext(banner(k, 360, 120)) for k in ('today', 'path', 'review', 'talk', 'library', 'journey')},
+    'bannerw': {k: _notext(banner_wide(k)) for k in ('review', 'talk', 'library', 'journey')},
+    'bannerb': {k: _notext(banner_wide(k, False)) for k in ('review', 'talk', 'library', 'journey')},
     'lantern': {'on': _ns(lantern(True, 44)), 'off': _ns(lantern(False, 44))},
     'summit': _notext(summit(300, 200)),
 }
