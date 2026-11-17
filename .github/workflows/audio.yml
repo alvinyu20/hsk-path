@@ -11,7 +11,7 @@ on:
         description: 'What to make: words, examples, lab, exams, extra, journey, core (words+examples+lab+exams) or all'
         default: 'words'
       level:
-        description: 'Only the texts that this HSK level uses: 1, 2, 3 or 4 (empty = every level)'
+        description: 'Only the texts that this HSK level uses: 1, 2, 3, 4 or 5 (empty = every level)'
         default: ''
       limit:
         description: 'Make at most this many new files (0 = no limit)'
