@@ -5076,7 +5076,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         achNext = nextUp.slice(0, 3);
       }
       const titles = {
-        home:startShow ? ['Welcome to Shanlu', 'Five words, about five minutes. You do not pick anything.'] : ['Today', S.dayMin >= S.mins ? 'Daily goal reached. Anything else is a bonus.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
+        home:startShow ? ['Welcome to Shanlu', 'Five words, about five minutes. You do not pick anything.'] : ['Today', S.dayMin >= S.mins ? 'Your ' + S.mins + ' minutes are done for today.' : (S.mins - S.dayMin) + ' min to go for today\'s goal.'],
         review:['Review', 'Words that are due, based on how well you remember them.'],
         library:['Library', 'Everything you can look up: words, grammar, topics and sounds.'],
         greview:['Grammar review', 'The grammar points that are due, like the word review.'],
@@ -5815,7 +5815,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         trailD:{ src:trD.src, alt:trailAlt, labels:asLabels(trD).concat([youLabel(trD)]) }, trailP:{ src:trP.src, alt:trailAlt, labels:asLabels(trP).concat(trP.hideYou ? [] : [youLabel(trP)]) },
         dcShow:tasks.length > 0, dcCls:S.dcPaid ? 'got' : '', dcText:S.dcPaid ? '✓ Treasure chest opened · +' + (S.dcAmt || 0) + ' coins' : 'Finish today\'s plan to open a treasure chest · ' + tasks.filter(t => !t.done).length + ' left',
 
-        todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed. Anything else is a bonus.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
+        todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed: ' + S.mins + ' minutes done.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
         mistClearText:mistClear + ' of ' + TOPICS.length + ' fully started', mistTiles, mistHasNear:!!nearBest, mistOpen:S.wmist, toggleMist:() => this.setState({ wmist:!this.state.wmist }), mistToggleText:S.wmist ? 'Hide the topic map' : 'Show all ' + TOPICS.length + ' topics',
         mistNearText:nearBest ? 'Finish ' + nearBest.name + ' (' + (nearBest.tot - nearBest.got) + ' to go)' : '', mistNearGo:() => nearBest && openTopic(nearBest.i),
         mistNote:'A topic is fully started when you have started every word in it.',
@@ -5824,7 +5824,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
 
         // review
         msShow:(S.msQueue || []).length > 0, msIcon:(S.msQueue || [])[0] ? S.msQueue[0].icon : '', msTitle:(S.msQueue || [])[0] ? S.msQueue[0].title : '', msDesc:(S.msQueue || [])[0] ? S.msQueue[0].desc : '', msMore:(S.msQueue || []).length > 1 ? '+' + (S.msQueue.length - 1) + ' more' : '', msClose:() => { const q = (this.state.msQueue || []).slice(1); this.setState({ msQueue:q }); if (q.length) this.msArm(); else clearTimeout(this.msTimer); },
-        dgPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%', dgText:S.dayMin >= S.mins ? 'Daily goal reached. Everything now is a bonus.' : 'Daily goal: ' + S.dayMin + ' of ' + S.mins + ' min', dgDone:S.dayMin >= S.mins,
+        dgPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%', dgText:S.dayMin >= S.mins ? S.mins + '-minute goal reached (' + S.dayMin + ' min today)' : 'Daily goal: ' + S.dayMin + ' of ' + S.mins + ' min', dgDone:S.dayMin >= S.mins,
         autoplayLabel:prefGet('autoplay', true) !== false ? 'Words play by themselves. Turn off' : 'Words wait for a tap. Turn on', autoplayToggle:() => { prefSet('autoplay', prefGet('autoplay', true) === false); this.setState({ soundTick:(this.state.soundTick || 0) + 1 }); },
         soundOn:prefGet('sound', true) !== false, soundLabel:prefGet('sound', true) !== false ? 'Sounds are on. Turn off' : 'Sounds are off. Turn on', soundToggle:() => { const on = prefGet('sound', true) !== false; prefSet('sound', !on); this.setState({ soundTick:(this.state.soundTick || 0) + 1 }); if (!on) SFX.play('ok', true); }, soundTest:() => SFX.play('ok', true), soundTestDone:() => SFX.play('done', true),
         rcHead:rcHead, rcSub:rcSub, rcAcc:rcAcc, rcAccN:rcAccN, rcStreak:streakShown, hasHard:(S.rcounts.hard || 0) > 0, rcConfetti:rcAccN >= 60,
