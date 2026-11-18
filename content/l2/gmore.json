@@ -786,7 +786,7 @@
   "p": "g2-15",
   "t": "cloze",
   "zh": "我们十点就睡觉了。",
-  "en": "We were asleep by ten.",
+  "en": "We went to bed as early as ten.",
   "blank": "就",
   "explain": "就 means as early as."
  },
@@ -916,8 +916,8 @@
  {
   "p": "g2-17",
   "t": "cloze",
-  "zh": "因为路很远，所以我坐出租车。",
-  "en": "Because the road is far, I take a taxi.",
+  "zh": "因为那儿很远，所以我坐出租车。",
+  "en": "Because it is far, I take a taxi.",
   "blank": "所以",
   "explain": "因为 gives the reason and 所以 gives the result."
  },
@@ -1548,14 +1548,14 @@
  {
   "p": "g2-30",
   "t": "mc",
-  "prompt": "Which sentence says: Everyone is here?",
+  "prompt": "Which sentence says: Everyone likes him?",
   "options": [
-   "谁都在这儿。",
-   "谁在都这儿。"
+   "谁都喜欢他。",
+   "谁喜欢都他。"
   ],
   "correct": 0,
-  "zh": "谁都在这儿。",
-  "en": "Everyone is here.",
+  "zh": "谁都喜欢他。",
+  "en": "Everyone likes him.",
   "explain": "都 comes right after the question word."
  },
  {

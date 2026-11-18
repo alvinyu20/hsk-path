@@ -4197,8 +4197,8 @@ window.SHANLU_PASSAGES = {
     },
     {
      "s": "女",
-     "zh": "对，过了红绿灯，银行就在路边，旁边有一个超市。",
-     "py": "Duì, guò le hónglǜdēng, yínháng jiù zài lùbiān, pángbiān yǒu yí ge chāoshì.",
+     "zh": "对，过了红绿灯，银行就在路边，银行旁边有一个超市。",
+     "py": "Duì, guò le hónglǜdēng, yínháng jiù zài lùbiān, yínháng pángbiān yǒu yí ge chāoshì.",
      "en": "Yes. Once you have passed the traffic lights, the bank is right by the road, with a supermarket next to it."
     },
     {

@@ -535,8 +535,8 @@
  {
   "p": "g3-11",
   "t": "cloze",
-  "zh": "关于这个问题，我不知道。",
-  "en": "About this question, I do not know.",
+  "zh": "关于这个问题，我不太清楚。",
+  "en": "I am not too sure about this question.",
   "blank": "关于",
   "explain": "关于 + topic."
  },
@@ -559,8 +559,8 @@
  {
   "p": "g3-12",
   "t": "order",
-  "zh": "根据天气，我们明天不去。",
-  "en": "According to the weather, we are not going tomorrow.",
+  "zh": "根据这张地图，银行就在前面。",
+  "en": "According to this map, the bank is just ahead.",
   "explain": "根据 + source starts the sentence."
  },
  {
@@ -1647,11 +1647,11 @@
   "t": "mc",
   "prompt": "Which sentence says: He smiled at me?",
   "options": [
-   "他向我笑了。",
-   "他笑向我了。"
+   "他向我笑了笑。",
+   "他笑了笑向我。"
   ],
   "correct": 0,
-  "zh": "他向我笑了。",
+  "zh": "他向我笑了笑。",
   "en": "He smiled at me.",
   "explain": "向 + person comes before the verb."
  },

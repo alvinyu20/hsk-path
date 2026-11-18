@@ -28,7 +28,7 @@ EXTRA_TOKENS = ['杯']
 
 
 # verbs that are said twice to mean "do it a little" (看看, 想想 ...); the second syllable is light
-REDUP_VERBS = set('看走学想画问数听试说尝聊晒谈逛')
+REDUP_VERBS = set('看走学想画问数听试说尝聊晒谈逛练')
 # verbs said as V一V (走一走 "take a little walk"): the 一 between them is light, yi
 V1V_VERBS = REDUP_VERBS | set('等洗读写找摸闻动坐跳笑查量比练算猜擦停歇讲念唱跑翻拍转挑选')
 _PLAIN = {c: b for b, cs in {'a': 'āáǎà', 'e': 'ēéěè', 'i': 'īíǐì', 'o': 'ōóǒò', 'u': 'ūúǔù'}.items() for c in cs}
@@ -291,6 +291,11 @@ class Engine:
                 parts[i - 1:i + 1] = [('w', parts[i][1] * 2, parts[i - 1][2] + strip_tone(parts[i][2]))]
             else:
                 i += 1
+        # V了V (笑了笑, 想了想 "did it briefly"): the second verb is light, xiào le xiao
+        for i in range(1, len(parts) - 1):
+            a, b, c = parts[i - 1], parts[i], parts[i + 1]
+            if b[0] == 'w' and b[1] == '了' and a[0] == 'w' and c[0] == 'w' and a[1] == c[1] and a[1] in V1V_VERBS:
+                parts[i + 1] = ('w', c[1], strip_tone(c[2]))
         # 不 and 一 tone changes
         for i, p in enumerate(parts):
             if p[0] == 'w' and len(p[1]) > 1 and p[1].endswith('不') and (p[2].endswith('bù') or p[2].endswith('bú')):

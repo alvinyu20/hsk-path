@@ -1542,7 +1542,7 @@
      "en": "What are you doing? I am watching TV."
     },
     "2": {
-     "zh": "我已经吃饭了，你经常在这里吃饭吗？",
+     "zh": "我已经吃过饭了，你经常在这里吃饭吗？",
      "en": "I have already eaten; do you often eat here?"
     },
     "3": {
@@ -6160,12 +6160,12 @@
    ],
    "sentences": {
     "1": {
-     "zh": "请等一下，我做完就开始。",
-     "en": "Please wait a moment; I will start as soon as I finish."
+     "zh": "请等一下，我吃完饭就开始学习。",
+     "en": "Please wait a moment; I will start studying as soon as I finish eating."
     },
     "2": {
-     "zh": "请等一下，我做完就开始。",
-     "en": "Please wait a moment; I will start as soon as I finish."
+     "zh": "请等一下，我看完这本书就开始做饭。",
+     "en": "Please wait a moment; I will start cooking as soon as I finish this book."
     },
     "3": {
      "zh": "只要坚持，你就一定能完成。",

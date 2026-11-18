@@ -152,3 +152,4 @@ write:g4-55:2	meaning	来到 + 从此 tell a story in the past; Chinese needs no
 write:g5-48:3	meaning	请你 is the polite "please"; English drops the "you"	万一我迟到，请你等我。
 write:g2-33:1	meaning	两万 is 20,000; the checker reads it as 2	这个包两万块。
 lesson:fanerr:extra7	meaning	Chinese drops the subject of 迟到 (we will be late) in speech	快走吧，不然会迟到。
+word-extra:丢:2	meaning	别…了 warns against an outcome (losing the phone); 了 is not a completed action	小心，别把手机丢了。

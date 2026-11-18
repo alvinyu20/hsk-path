@@ -2401,7 +2401,7 @@ window.HSK4_EXAM = {
    ],
    "zh": "他先看了看菜单，然后点了两个菜，最后又要了一杯水。",
    "alts": [],
-   "py": "Tā xiān kàn le kàn càidān, ránhòu diǎn le liǎng ge cài, zuìhòu yòu yào le yì bēi shuǐ.",
+   "py": "Tā xiān kàn le kan càidān, ránhòu diǎn le liǎng ge cài, zuìhòu yòu yào le yì bēi shuǐ.",
    "en": "He first looked at the menu, then ordered two dishes, and finally asked for a glass of water as well."
   },
   {

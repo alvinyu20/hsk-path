@@ -4030,7 +4030,7 @@ window.HSK5_EXAM = {
  "R3": [
   {
    "zh": "第一次参加面试的时候，小高非常紧张。负责面试的人突然问他：“你最大的缺点是什么？”他想了想，诚实地回答：“我有时候做事太慢，不过我会认真做好每一件事。”最后，公司给了他这份工作。经理说，诚实比完美的回答更重要。",
-   "py": "Dì yī cì cānjiā miànshì de shíhou, xiǎo gāo fēicháng jǐnzhāng. Fùzé miànshì de rén tūrán wèn tā: \" nǐ zuì dà de quēdiǎn shì shénme? \" tā xiǎng le xiǎng, chéngshí de huídá: \" wǒ yǒu shíhou zuò shì tài màn, búguò wǒ huì rènzhēn zuò hǎo měi yí jiàn shì. \" zuìhòu, gōngsī gěi le tā zhè fèn gōngzuò. Jīnglǐ shuō, chéngshí bǐ wánměi de huídá gèng zhòngyào.",
+   "py": "Dì yī cì cānjiā miànshì de shíhou, xiǎo gāo fēicháng jǐnzhāng. Fùzé miànshì de rén tūrán wèn tā: \" nǐ zuì dà de quēdiǎn shì shénme? \" tā xiǎng le xiang, chéngshí de huídá: \" wǒ yǒu shíhou zuò shì tài màn, búguò wǒ huì rènzhēn zuò hǎo měi yí jiàn shì. \" zuìhòu, gōngsī gěi le tā zhè fèn gōngzuò. Jīnglǐ shuō, chéngshí bǐ wánměi de huídá gèng zhòngyào.",
    "en": "When Xiao Gao went to an interview for the first time, he was very nervous. The person doing the interview suddenly asked him, \"What is your biggest weakness?\" He thought for a moment and answered honestly, \"Sometimes I work too slowly, but I will do every task carefully.\" In the end, the company gave him the job. The manager said that honesty is more important than a perfect answer.",
    "q": {
     "zh": "公司为什么给了小高这份工作？",

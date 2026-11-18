@@ -2001,8 +2001,8 @@ window.HSK2_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我已经吃饭了，你经常在这里吃饭吗？",
-    "py": "Wǒ yǐjīng chī fàn le, nǐ jīngcháng zài zhèlǐ chī fàn ma?",
+    "zh": "我已经吃过饭了，你经常在这里吃饭吗？",
+    "py": "Wǒ yǐjīng chī guo fàn le, nǐ jīngcháng zài zhèlǐ chī fàn ma?",
     "en": "I have already eaten; do you often eat here?"
    },
    "words": [
@@ -2544,9 +2544,9 @@ window.HSK2_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "请等一下，我做完就开始。",
-    "py": "Qǐng děng yíxià, wǒ zuò wán jiù kāishǐ.",
-    "en": "Please wait a moment; I will start as soon as I finish."
+    "zh": "请等一下，我看完这本书就开始做饭。",
+    "py": "Qǐng děng yíxià, wǒ kàn wán zhè běn shū jiù kāishǐ zuòfàn.",
+    "en": "Please wait a moment; I will start cooking as soon as I finish this book."
    },
    "words": [
     "开始",
