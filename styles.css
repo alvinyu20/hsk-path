@@ -3676,3 +3676,45 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
   .app.scr-journey .jy{padding:0;border-radius:0;background:transparent}
   .app.scr-journey .jy-tabw{margin-bottom:-6px}
 }
+/* the Journey card's landscape (jyscene.js) moves a little: clouds drift, the sun's glow breathes, water flows, prayer flags and lanterns
+   sway, palms and bamboo lean, stars twinkle, birds cross the day skies, the horses of Inner Mongolia wander. Slow and small on purpose;
+   reduced motion stops all of it */
+.jr-svg{contain:paint}
+.jr-svg .js-cl{animation:jscl 26s ease-in-out infinite alternate}
+.jr-svg .js-cl.k1{animation-duration:34s;animation-direction:alternate-reverse}
+.jr-svg .js-cl.k2{animation-duration:21s;animation-delay:-9s}
+@keyframes jscl{from{transform:translateX(-9px)}to{transform:translateX(11px)}}
+.jr-svg .js-glow{transform-box:fill-box;transform-origin:center;animation:jsglow 4.5s ease-in-out infinite alternate}
+.jr-svg .js-glow.g2{animation-delay:-2s}
+@keyframes jsglow{to{transform:scale(1.12)}}
+.jr-svg .js-wv{animation:jswv 8s linear infinite}
+.jr-svg .js-wv.r{animation-duration:11s;animation-direction:reverse}
+@keyframes jswv{to{transform:translateX(-28px)}}
+.jr-svg .js-fl{transform-box:fill-box;transform-origin:50% 0;animation:jsfl 3.4s ease-in-out infinite alternate}
+@keyframes jsfl{from{transform:rotate(-1.6deg)}to{transform:rotate(1.6deg)}}
+.jr-svg .js-ln{transform-box:fill-box;transform-origin:50% 0;animation:jsln 2.9s ease-in-out infinite alternate}
+.jr-svg .js-ln.k1{animation-delay:-1.4s}
+@keyframes jsln{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+.jr-svg .js-sw{transform-box:fill-box;transform-origin:50% 100%;animation:jssw 5.5s ease-in-out infinite alternate}
+.jr-svg .js-sw.k1{animation-delay:-2.7s}
+@keyframes jssw{from{transform:rotate(-1.4deg)}to{transform:rotate(1.4deg)}}
+.jr-svg .js-tw{animation:jstw 2.6s ease-in-out infinite alternate}
+.jr-svg .js-tw.t1{animation-duration:3.4s;animation-delay:-1.1s}
+.jr-svg .js-tw.t2{animation-duration:4.2s;animation-delay:-2.3s}
+@keyframes jstw{to{opacity:.15}}
+.jr-svg .js-birds{animation:jsbirds 36s linear -14s infinite}
+@keyframes jsbirds{0%{transform:translate(-30px,6px)}100%{transform:translate(390px,-10px)}}
+.jr-svg .js-bd{transform-box:fill-box;transform-origin:50% 70%;animation:jsflap .5s ease-in-out infinite alternate}
+.jr-svg .js-bd + .js-bd{animation-delay:-.22s}
+@keyframes jsflap{to{transform:scaleY(.4)}}
+.jr-svg .js-hz{animation:jshz 9s ease-in-out infinite alternate}
+.jr-svg .js-hz:nth-child(2){animation-duration:12s;animation-delay:-5s}
+.jr-svg .js-hz:nth-child(3){animation-duration:10s;animation-direction:alternate-reverse}
+@keyframes jshz{0%,30%{transform:translateX(0)}100%{transform:translateX(6px)}}
+.jr-svg .js-fl.k1{animation-delay:-1.7s}
+.jr-svg .js-fall{animation:jsfall 1.8s ease-in-out infinite alternate}
+.jr-svg .js-fall.t1{animation-delay:-.6s}.jr-svg .js-fall.t2{animation-delay:-1.2s}
+@keyframes jsfall{to{opacity:.6}}
+.jr-svg .js-mist{transform-box:fill-box;transform-origin:center;animation:jsmist 4s ease-in-out infinite alternate}
+.jr-svg .js-mist.m2{animation-delay:-2s}
+@keyframes jsmist{to{transform:scale(1.08,1.2)}}
