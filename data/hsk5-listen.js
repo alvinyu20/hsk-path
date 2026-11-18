@@ -1946,7 +1946,7 @@ window.HSK5_LISTEN = {
   },
   {
    "zh": "为了身体健康，他每天早上都去公园走一走。",
-   "py": "Wèile shēntǐ jiànkāng, tā měitiān zǎoshang dōu qù gōngyuán zǒu yì zǒu.",
+   "py": "Wèile shēntǐ jiànkāng, tā měitiān zǎoshang dōu qù gōngyuán zǒu yi zǒu.",
    "en": "For the sake of his health, he goes for a walk in the park every morning.",
    "words": [
     {

@@ -29,6 +29,8 @@ EXTRA_TOKENS = ['杯']
 
 # verbs that are said twice to mean "do it a little" (看看, 想想 ...); the second syllable is light
 REDUP_VERBS = set('看走学想画问数听试说尝聊晒谈逛')
+# verbs said as V一V (走一走 "take a little walk"): the 一 between them is light, yi
+V1V_VERBS = REDUP_VERBS | set('等洗读写找摸闻动坐跳笑查量比练算猜擦停歇讲念唱跑翻拍转挑选')
 _PLAIN = {c: b for b, cs in {'a': 'āáǎà', 'e': 'ēéěè', 'i': 'īíǐì', 'o': 'ōóǒò', 'u': 'ūúǔù'}.items() for c in cs}
 
 
@@ -303,6 +305,8 @@ class Engine:
             prev = parts[i - 1][1] if i > 0 and parts[i - 1][0] == 'w' else ''
             if p[1] == '不':
                 parts[i] = ('w', p[1], 'bú' if nxt_tone == 4 else 'bù')
+            elif prev and nxt and nxt[0] == 'w' and prev == nxt[1] and prev in V1V_VERBS:
+                parts[i] = ('w', p[1], 'yi')   # V一V (走一走, 看一看): the 一 is light; not 一个一个 or 一天一天 (个, 天 are not verbs)
             elif nxt is None or nxt[0] != 'w' or (prev and prev[-1] in NUMBER_PREV):
                 parts[i] = ('w', p[1], 'yī')
             else:

@@ -205,5 +205,7 @@ window.SHANLU_LEXICON = {
 "小路": "xiǎolù",
 "上次": "shàngcì",
 "中国人": "zhōngguórén",
-"天天": "tiāntiān"
+"天天": "tiāntiān",
+"以便": "yǐbiàn",
+"为的是": "wèideshì"
 };

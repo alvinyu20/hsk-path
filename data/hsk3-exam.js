@@ -2900,7 +2900,7 @@ window.HSK3_EXAM = {
   },
   {
    "zh": "你好，我是小明。我的电脑坏了，下午你有时间帮我看一看吗？",
-   "py": "Nǐ hǎo, wǒ shì Xiǎomíng. Wǒ de diànnǎo huài le, xiàwǔ nǐ yǒu shíjiān bāng wǒ kàn yí kàn ma?",
+   "py": "Nǐ hǎo, wǒ shì Xiǎomíng. Wǒ de diànnǎo huài le, xiàwǔ nǐ yǒu shíjiān bāng wǒ kàn yi kàn ma?",
    "en": "Hello, this is Xiao Ming. My computer is broken. Do you have time this afternoon to take a look at it for me?",
    "q": {
     "zh": "小明想让别人做什么？",

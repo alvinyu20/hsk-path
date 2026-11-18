@@ -1772,7 +1772,7 @@ window.HSK4_EXAM = {
     {
      "s": "",
      "zh": "现在很多人喜欢在网上买东西，不但方便，而且便宜。但是有些东西最好自己去商店看一看，比如衣服和鞋，因为大小可能不合适。",
-     "py": "Xiànzài hěn duō rén xǐhuan zài wǎngshàng mǎi dōngxi, búdàn fāngbiàn, érqiě piányi. Dànshì yǒuxiē dōngxi zuìhǎo zìjǐ qù shāngdiàn kàn yí kàn, bǐrú yīfu hé xié, yīnwèi dàxiǎo kěnéng bù héshì.",
+     "py": "Xiànzài hěn duō rén xǐhuan zài wǎngshàng mǎi dōngxi, búdàn fāngbiàn, érqiě piányi. Dànshì yǒuxiē dōngxi zuìhǎo zìjǐ qù shāngdiàn kàn yi kàn, bǐrú yīfu hé xié, yīnwèi dàxiǎo kěnéng bù héshì.",
      "en": "Nowadays many people like to shop online, which is not only convenient but also cheap. But for some things it is best to go to a shop and have a look yourself, such as clothes and shoes, because the size may not fit."
     }
    ],
@@ -1784,7 +1784,7 @@ window.HSK4_EXAM = {
    "opts": [
     {
      "zh": "去商店看一看",
-     "py": "Qù shāngdiàn kàn yí kàn"
+     "py": "Qù shāngdiàn kàn yi kàn"
     },
     {
      "zh": "在网上买",

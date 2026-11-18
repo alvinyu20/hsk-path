@@ -2276,8 +2276,8 @@
      ]
     },
     {
-     "zh": "这是一个___，我不是故意的。",
-     "en": "This is a coincidence; I do not mean it.",
+     "zh": "我们是___认识的，那天我们都在等车。",
+     "en": "We met by chance; that day we were both waiting for the bus.",
      "ans": "偶然",
      "opts": [
       "偶然",
@@ -2367,8 +2367,8 @@
    ],
    "gaps": [
     {
-     "zh": "她的___很高兴，一定有好消息。",
-     "en": "She looks very happy; she must have good news.",
+     "zh": "看她的___，一定有好消息。",
+     "en": "Judging by her expression, she must have good news.",
      "ans": "表情",
      "opts": [
       "表情",
@@ -2955,8 +2955,8 @@
      ]
     },
     {
-     "zh": "她给大家留下了很好的___。",
-     "en": "She left everyone with a very good image.",
+     "zh": "这位演员的___很好，很多人喜欢他。",
+     "en": "This actor has a very good image, and many people like him.",
      "ans": "形象",
      "opts": [
       "形象",
@@ -3303,8 +3303,8 @@
    ],
    "gaps": [
     {
-     "zh": "她是一位有名的___，很多人喜欢她。",
-     "en": "She is a famous star, and many people like her.",
+     "zh": "她是一位电影___，很多人喜欢她。",
+     "en": "She is a film star, and many people like her.",
      "ans": "明星",
      "opts": [
       "明星",
@@ -3413,8 +3413,8 @@
      ]
     },
     {
-     "zh": "我用手机___了老师的话。",
-     "en": "I recorded the teacher's words on my phone.",
+     "zh": "我用手机___，把老师的话都录了下来。",
+     "en": "I made a recording on my phone and recorded everything the teacher said.",
      "ans": "录音",
      "opts": [
       "录音",
@@ -3691,8 +3691,8 @@
      ]
     },
     {
-     "zh": "经常运动可以___身体。",
-     "en": "Regular exercise can strengthen the body.",
+     "zh": "这次比赛___了他的信心。",
+     "en": "This competition strengthened his confidence.",
      "ans": "增强",
      "opts": [
       "增强",
@@ -3786,8 +3786,8 @@
      ]
     },
     {
-     "zh": "学校___了一个新的图书馆。",
-     "en": "The school set up a new library.",
+     "zh": "这家公司在上海___了一个新的办公室。",
+     "en": "This company has set up a new office in Shanghai.",
      "ans": "设立",
      "opts": [
       "设立",
@@ -3870,7 +3870,7 @@
      ]
     },
     {
-     "zh": "这个___的时间是一个月。",
+     "zh": "这次___持续一个月。",
      "en": "This exhibition lasts one month.",
      "ans": "展览",
      "opts": [
@@ -3892,8 +3892,8 @@
      ]
     },
     {
-     "zh": "学校要___一次汉语比赛。",
-     "en": "The school will launch a Chinese competition.",
+     "zh": "学校经常___各种活动，学生都很喜欢。",
+     "en": "The school often runs all kinds of activities, and the students like them.",
      "ans": "开展",
      "opts": [
       "开展",

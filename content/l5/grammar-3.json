@@ -81,7 +81,7 @@
       {"t": "order", "zh": "他连续三天没有睡觉。", "en": "He did not sleep for three days in a row.", "explain": "连续 + number of days."},
       {"t": "cloze", "zh": "她始终相信自己会成功。", "en": "She always believes she will succeed.", "blank": "始终", "explain": "始终 = all along."},
       {"t": "mc", "prompt": "Which sentence says: The rain went on for a week?", "options": ["雨持续下了一个星期。", "雨持续了下一个星期。"], "correct": 0, "zh": "雨持续下了一个星期。", "en": "The rain went on for a week.", "explain": "持续 + verb + length of time."},
-      {"t": "spot", "zh": "公司逐步扩大了。", "en": "The company has gradually grown bigger.", "wrong": "公司逐步渐渐扩大了。", "remove": "渐渐", "explain": "逐步 and 渐渐 mean the same; use one."}
+      {"t": "spot", "zh": "公司逐步扩大了规模。", "en": "The company has gradually expanded.", "wrong": "公司逐步渐渐扩大了规模。", "remove": "渐渐", "explain": "逐步 and 渐渐 mean the same; use one."}
     ]
   },
   {

@@ -701,8 +701,8 @@ window.HSK5_SPEAK = {
  ],
  "phrases": [
   {
-   "zh": "不好意思，我没听清楚，能请你重新说一遍吗？",
-   "py": "Bùhǎoyìsi, wǒ méi tīng qīngchu, néng qǐng nǐ chóngxīn shuō yí biàn ma?",
+   "zh": "不好意思，我没听清楚，能请你再说一遍吗？",
+   "py": "Bùhǎoyìsi, wǒ méi tīng qīngchu, néng qǐng nǐ zàishuō yí biàn ma?",
    "en": "Sorry, I did not hear clearly. Could you say it once more, please?"
   },
   {

@@ -1928,7 +1928,7 @@ window.HSK4_LISTEN = {
   },
   {
    "zh": "这个办法不错，我们可以试一试。",
-   "py": "Zhège bànfǎ búcuò, wǒmen kěyǐ shì yí shì.",
+   "py": "Zhège bànfǎ búcuò, wǒmen kěyǐ shì yi shì.",
    "en": "This way is not bad; we can try it.",
    "words": [
     {

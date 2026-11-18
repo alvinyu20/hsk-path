@@ -4028,7 +4028,7 @@ window.SHANLU_PASSAGES = {
     {
      "s": "男",
      "zh": "好的。今天我们的新菜是鱼，您要不要尝一尝？",
-     "py": "Hǎo de. Jīntiān wǒmen de xīn cài shì yú, nín yào búyào cháng yì cháng?",
+     "py": "Hǎo de. Jīntiān wǒmen de xīn cài shì yú, nín yào búyào cháng yi cháng?",
      "en": "Sure. Today our new dish is fish. Would you like to try it?"
     },
     {

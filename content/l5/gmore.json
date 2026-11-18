@@ -163,8 +163,8 @@
  {
   "p": "g5-4",
   "t": "order",
-  "zh": "去也好，不去也好。",
-  "en": "Whether one goes or not, it is all the same.",
+  "zh": "去也好，不去也好，都行。",
+  "en": "Going or not going, either is fine.",
   "explain": "X也好，Y也好."
  },
  {
@@ -369,8 +369,8 @@
  {
   "p": "g5-7",
   "t": "order",
-  "zh": "没有老师，就没有学生。",
-  "en": "Without teachers, there are no students.",
+  "zh": "没有努力，就没有成功。",
+  "en": "Without effort, there is no success.",
   "explain": "没有 A，就没有 B."
  },
  {
@@ -400,7 +400,7 @@
   "t": "cloze",
   "zh": "请告诉我你的电话，以便我能找到你。",
   "en": "Please tell me your phone number so that I can find you.",
-  "blank": "以",
+  "blank": "以便",
   "explain": "以便 + purpose, after the action."
  },
  {
@@ -546,8 +546,8 @@
  {
   "p": "g5-11",
   "t": "order",
-  "zh": "快走吧，不然会晚。",
-  "en": "Hurry up, otherwise it will be late.",
+  "zh": "快走吧，不然会迟到。",
+  "en": "Hurry up, otherwise we will be late.",
   "explain": "不然 = otherwise."
  },
  {
@@ -843,10 +843,10 @@
  {
   "p": "g5-16",
   "t": "cloze",
-  "zh": "从这里来看，山很高。",
-  "en": "Seen from here, the mountain is very high.",
+  "zh": "从他的成绩来看，他学习很努力。",
+  "en": "Judging from his grades, he studies very hard.",
   "blank": "从",
-  "explain": "从 + place + 来看."
+  "explain": "从 + what you judge by + 来看."
  },
  {
   "p": "g5-16",
@@ -1190,14 +1190,14 @@
  {
   "p": "g5-22",
   "t": "mc",
-  "prompt": "Which sentence says: According to the weather, it will rain tomorrow?",
+  "prompt": "Which sentence says: According to the weather forecast, it will rain tomorrow?",
   "options": [
-   "依据天气，明天会下雨。",
-   "天气依据，明天会下雨。"
+   "依据天气预报，明天会下雨。",
+   "天气预报依据，明天会下雨。"
   ],
   "correct": 0,
-  "zh": "依据天气，明天会下雨。",
-  "en": "According to the weather, it will rain tomorrow.",
+  "zh": "依据天气预报，明天会下雨。",
+  "en": "According to the weather forecast, it will rain tomorrow.",
   "explain": "依据 comes before what it rests on."
  },
  {
@@ -1233,8 +1233,8 @@
  {
   "p": "g5-22",
   "t": "order",
-  "zh": "依据老师的话，他做对了。",
-  "en": "According to the teacher's words, he did it right.",
+  "zh": "依据这些数据，他的看法是对的。",
+  "en": "Based on these figures, his view is correct.",
   "explain": "依据 + basis, then the conclusion."
  },
  {
@@ -1563,14 +1563,14 @@
  {
   "p": "g5-29",
   "t": "mc",
-  "prompt": "Which sentence says: He was so happy that he jumped up?",
+  "prompt": "Which sentence says: He is so happy because he got into university?",
   "options": [
-   "他如此高兴，跳了起来。",
-   "他高兴如此，跳了起来。"
+   "他如此高兴，是因为考上了大学。",
+   "他高兴如此，是因为考上了大学。"
   ],
   "correct": 0,
-  "zh": "他如此高兴，跳了起来。",
-  "en": "He was so happy that he jumped up.",
+  "zh": "他如此高兴，是因为考上了大学。",
+  "en": "He is so happy because he got into university.",
   "explain": "如此 comes before the adjective."
  },
  {
@@ -1704,9 +1704,9 @@
  {
   "p": "g5-31",
   "t": "spot",
-  "zh": "天气稍冷一点儿。",
-  "en": "The weather is a bit cold.",
-  "wrong": "天气稍很冷一点儿。",
+  "zh": "今天比昨天稍冷一点儿。",
+  "en": "Today is a little colder than yesterday.",
+  "wrong": "今天比昨天稍很冷一点儿。",
   "remove": "很",
   "explain": "No 很 after 稍."
  },
@@ -1870,9 +1870,9 @@
   "t": "spot",
   "zh": "这件事可不简单。",
   "en": "This matter is really not simple.",
-  "wrong": "这件事可太不简单。",
-  "remove": "太",
-  "explain": "可 already stresses; do not add 太."
+  "wrong": "这件事可不了简单。",
+  "remove": "了",
+  "explain": "可 + 不 + adjective: nothing goes between 不 and the adjective."
  },
  {
   "p": "g5-34",
@@ -2674,12 +2674,12 @@
   "prompt": "Which sentence says: I will watch as little TV as possible?",
   "options": [
    "我会尽量少看电视。",
-   "我会尽力少看电视。"
+   "我会少尽量看电视。"
   ],
   "correct": 0,
   "zh": "我会尽量少看电视。",
   "en": "I will watch as little TV as possible.",
-  "explain": "Say 尽量少, not 尽力少."
+  "explain": "尽量 goes before 少: 尽量少看, not 少尽量看."
  },
  {
   "p": "g5-47",
@@ -4187,9 +4187,9 @@
  {
   "p": "g5-75",
   "t": "spot",
-  "zh": "本公司有一百个人。",
-  "en": "Our company has one hundred people.",
-  "wrong": "本公司的有一百个人。",
+  "zh": "本公司有一百名员工。",
+  "en": "Our company has one hundred employees.",
+  "wrong": "本公司的有一百名员工。",
   "remove": "的",
   "explain": "No 的 after 本公司."
  },

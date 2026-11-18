@@ -68,8 +68,8 @@
      "en": "I apologised to the teacher, and the teacher kindly forgave me."
     },
     "5": {
-     "zh": "恭喜！我们握手告别，一路顺风！",
-     "en": "Congratulations! We shake hands and say goodbye. Have a good trip!"
+     "zh": "恭喜你！我们握手告别，祝你一路顺风！",
+     "en": "Congratulations to you! We shake hands and say goodbye. I wish you a good trip!"
     }
    }
   },
@@ -192,8 +192,8 @@
      "en": "There is a park opposite my home, and there are many trees around it."
     },
     "5": {
-     "zh": "如下就是当地的规定。",
-     "en": "The following is the local rule."
+     "zh": "当地的规定如下。",
+     "en": "The local rules are as follows."
     }
    }
   },
@@ -384,8 +384,8 @@
      "en": "My money is not enough, so I only bought part of it."
     },
     "5": {
-     "zh": "大批游客来到这里，这里足够热闹。",
-     "en": "A large number of tourists come here, so it is lively enough."
+     "zh": "大批游客来到这里，这里非常热闹。",
+     "en": "A large number of tourists come here, so it is very lively."
     }
    }
   },
@@ -950,8 +950,8 @@
      "en": "He has loved singing since childhood."
     },
     "5": {
-     "zh": "孩子在幼儿园长大，成熟得很快。",
-     "en": "The child grows up in kindergarten and matures quickly."
+     "zh": "孩子上了中学以后，变得成熟了很多。",
+     "en": "After starting middle school, the child became much more mature."
     }
    }
   },
@@ -2167,8 +2167,8 @@
      "en": "He put on a hat and glasses and put on a sweater."
     },
     "5": {
-     "zh": "他穿西装，戴领带，还戴手套。",
-     "en": "He wears a suit, a tie and gloves."
+     "zh": "他穿西装，系领带，还戴手套。",
+     "en": "He wears a suit and a tie, and gloves too."
     }
    }
   },
@@ -2422,8 +2422,8 @@
      "en": "My home is between the park and the school, and there are trees everywhere nearby."
     },
     "5": {
-     "zh": "书架在房间内部，靠近窗台。",
-     "en": "The bookshelf is inside the room, close to the windowsill."
+     "zh": "书架在房间里，靠近窗台。",
+     "en": "The bookshelf is in the room, close to the windowsill."
     }
    }
   },
@@ -3374,7 +3374,7 @@
      "en": "I read articles every day and also learn new words."
     },
     "5": {
-     "zh": "他的发音很好，词汇也很多。",
+     "zh": "他的发音很好，词汇量也很大。",
      "en": "His pronunciation is very good, and his vocabulary is large too."
     }
    }
@@ -3956,8 +3956,8 @@
      "en": "He likes playing the piano and also likes taking part in activities."
     },
     "5": {
-     "zh": "我喜欢摄影，休闲时去户外拍照。",
-     "en": "I like photography, and in my free time I go outdoors to take photos."
+     "zh": "我喜欢摄影，有空的时候去户外拍照。",
+     "en": "I like photography, and when I have free time I go outdoors to take photos."
     }
    }
   },
@@ -4838,8 +4838,8 @@
      "en": "His nose is big, and his arms are long too."
     },
     "5": {
-     "zh": "他的脸色不好，手指上有汗水。",
-     "en": "His complexion is not good, and there is sweat on his fingers."
+     "zh": "他的脸色不好，手上有汗。",
+     "en": "He does not look well, and his hands are sweaty."
     }
    }
   },
@@ -4925,8 +4925,8 @@
      "en": "I keep coughing and my head hurts, so I went to see the doctor."
     },
     "5": {
-     "zh": "医生说他的疾病好转了，不用做手术。",
-     "en": "The doctor says his illness has improved and he does not need an operation."
+     "zh": "医生说他的病情好转了，不用做手术。",
+     "en": "The doctor says his condition has improved and he does not need an operation."
     }
    }
   },
@@ -5426,8 +5426,8 @@
    ],
    "sentences": {
     "5": {
-     "zh": "我赞成这个意见，但是他否认了。",
-     "en": "I agree with this opinion, but he denied it."
+     "zh": "我问他是不是他做的，他否认了。",
+     "en": "I asked him whether he did it, and he denied it."
     }
    }
   },
@@ -5792,7 +5792,7 @@
    ],
    "sentences": {
     "5": {
-     "zh": "工人正在建造一座新建筑。",
+     "zh": "工人正在建一座新楼。",
      "en": "The workers are building a new building."
     }
    }
@@ -5822,8 +5822,8 @@
    ],
    "sentences": {
     "5": {
-     "zh": "这个方案有三项措施，手段也很新。",
-     "en": "This plan has three measures, and the means are also new."
+     "zh": "这个方案有三项措施，方法也很新。",
+     "en": "This plan has three measures, and the methods are new too."
     }
    }
   },
@@ -6252,7 +6252,7 @@
      "en": "This river is deep, and the water flows fast."
     },
     "5": {
-     "zh": "这条路宽度不够，车开得很缓慢。",
+     "zh": "这条路不够宽，车开得很慢。",
      "en": "This road is not wide enough, and cars drive very slowly."
     }
    }
@@ -6339,8 +6339,8 @@
    ],
    "sentences": {
     "5": {
-     "zh": "天气升温，水果的价格也上涨了。",
-     "en": "The weather is warming up, and the price of fruit has gone up too."
+     "zh": "天气变暖和了，水果的价格也上涨了。",
+     "en": "The weather has turned warm, and the price of fruit has gone up too."
     }
    }
   },
@@ -6367,8 +6367,8 @@
    ],
    "sentences": {
     "5": {
-     "zh": "这个杯子的外形是圆的，样式很新。",
-     "en": "The shape of this cup is round, and the style is new."
+     "zh": "这个杯子是圆的，样式很新。",
+     "en": "This cup is round, and its style is new."
     }
    }
   },
@@ -6454,7 +6454,7 @@
      "en": "This film is very exciting, and the actors are excellent too."
     },
     "5": {
-     "zh": "这里的环境优美，空气也很良好。",
+     "zh": "这里的环境优美，空气也很好。",
      "en": "The environment here is beautiful, and the air is good too."
     }
    }
@@ -6623,7 +6623,7 @@
      "en": "Please do not throw rubbish around; we must protect nature."
     },
     "5": {
-     "zh": "夜里很安静，保安说这里很平安。",
+     "zh": "夜里很安静，保安说这里很安全。",
      "en": "It is very quiet at night, and the security guard says it is safe here."
     }
    }
@@ -6840,8 +6840,8 @@
      "en": "Please give me the materials and the form."
     },
     "5": {
-     "zh": "这件大事的事实很清楚。",
-     "en": "The facts of this major matter are very clear."
+     "zh": "这件事的经过很清楚。",
+     "en": "How this matter happened is very clear."
     }
    }
   },
@@ -7421,7 +7421,7 @@
      "en": "This one is even cheaper than that one, but the quality is not as good as that one."
     },
     "5": {
-     "zh": "和那家店对比，这家店的价格相对便宜。",
+     "zh": "和那家店相比，这家店的价格相对便宜。",
      "en": "Compared with that shop, the prices in this shop are relatively cheap."
     }
    }
@@ -7835,8 +7835,8 @@
      "en": "This author is famous, and readers all like him."
     },
     "5": {
-     "zh": "这位上班族住在现代化的城市。",
-     "en": "This office worker lives in a city that is modernising."
+     "zh": "这位上班族住在一个现代化的城市。",
+     "en": "This office worker lives in a modern city."
     }
    }
   }

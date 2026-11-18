@@ -1,0 +1,33 @@
+你好！我正在做一个 HSK 学习网站。下面是网站上 HSK 5 的句子（中文 / 英文），都是新写的或改过的，你还没有看过。学习者已学过 HSK 1 到 4 的词，现在学 HSK 5。
+请你作为母语者和中文老师检查。**只列出有问题的地方**，不用表扬，也不用重复没问题的内容。每个问题请写：编号 / 原文 / 问题是什么（简单的中文，再加一句英文）/ 更自然的说法（只用 HSK 1 到 5 的词）。
+需要特别注意：1) 不自然或不地道的说法；2) 语法错误；3) 英文翻译和中文意思不一致；4) 书面语被当成口语教；5) 对 HSK 5 来说太难的词。“___”是填空题的空，答案在后面。
+如果全部没问题，请回答“没有发现问题”。
+
+Hello! These are HSK 5 sentences from my study site (Chinese / English) that are new or changed since you last checked; you have not seen them. Learners know HSK 1 to 4 and are learning HSK 5. Please act as a native speaker and Chinese teacher.
+**Report only the problems**, no praise. For each problem give: number / the item / what is wrong (simple Chinese plus one line of English) / a more natural version (HSK 1 to 5 words only).
+Please watch for: 1) unnatural wording; 2) grammar mistakes; 3) English that does not match the Chinese; 4) written style taught as spoken; 5) words too hard for HSK 5. "___" is a blank, its answer follows.
+If there are no problems, answer "No problems found".
+
+---
+375. 现在很多孩子从小就接触手机，一玩就是几个小时。这样不但会影响眼睛，而且会影响学习。专家建议，父母应该给孩子规定使用手机的时间，每天不要超过一个小时。另外，父母自己也要少玩手机，多陪孩子。只有这样，孩子才能养成良好的习惯，健康成长。  /  Nowadays many children are in contact with phones from an early age and spend hours playing on them. This not only harms their eyes but also affects their studies. Experts suggest that parents should set a time limit for children's phone use, no more than an hour a day. In addition, parents themselves should play less on their phones and spend more time with their children. Only in this way can children develop good habits and grow up healthily.
+376. 这几年，我们城市的变化非常大。街道变宽了，高楼变多了，到处都是商店和饭馆。但是，空气却不如以前新鲜了，特别是冬天，常常有很多天看不见蓝天。为了改善空气质量，政府要求工厂采用新技术，也鼓励大家少开车，多坐公共汽车和地铁。如果每个人都能从小事做起，我们的城市就会变得更加美丽。  /  In recent years, our city has changed a great deal. The streets have become wider, there are more tall buildings, and there are shops and restaurants everywhere. But the air is not as fresh as before, especially in winter, when there are often many days when the blue sky cannot be seen. To improve air quality, the government requires factories to adopt new technology and also encourages people to drive less and take more buses and the underground. If everyone starts with small things, our city will become even more beautiful.
+377. 很多现代人睡得太少，原因是工作压力大，或者晚上喜欢玩手机。睡眠长期不足不但会让人精神不好，还会引起许多疾病。专家建议，成年人每天应该睡七到八个小时，而且最好每天在同一个时间睡觉和起床，让身体慢慢适应。睡觉前一小时，最好不要看手机，也不要喝咖啡或茶，可以听听轻音乐，让自己放松下来。只要坚持一段时间，睡眠就会有明显的改善。  /  Many modern people sleep too little, because of work pressure or because they like playing on their phones at night. A long-term lack of sleep not only makes people feel low but also causes many illnesses. Experts suggest that adults should sleep seven to eight hours a day and, preferably, go to bed and get up at the same time every day, letting the body gradually adapt. In the hour before bed, it is best not to look at your phone or drink coffee or tea; you can listen to light music and let yourself relax. If you keep it up for a while, your sleep will improve clearly.
+378. 过年是中国最重要的传统节日。每到过年，不管离家多远，人们总会想办法回到家人身边。除夕晚上，一家人坐在一起吃饭、聊天，非常热闹。大人们会给孩子们红包，希望他们在新的一年里平平安安。过年期间，人们还会互相问好，说一些好听的话，比如“新年快乐”。这些习惯已经有很多年的历史，反映了中国人对家庭的重视。  /  The Chinese New Year is the most important traditional festival in China. Every New Year, however far away from home they are, people always try to get back to their families. On New Year's Eve evening, the whole family sits together to eat and chat, and it is very lively. Adults give the children red envelopes, hoping that they will be safe and well in the new year. During the New Year period, people also greet each other and say some kind words, for example "Happy New Year". These customs have a history of many years and reflect how much Chinese people value family.
+379. 我刚上大学的时候，非常不习惯。班里的同学来自不同的地方，说话的习惯也不一样，我常常听不懂。有一次，我因为不知道怎么借书，在图书馆里站了很久。一位同学看到了，主动帮助我，还告诉我怎么使用电脑查书。从那以后，我们变成了好朋友。现在回想起来，那段日子虽然有点辛苦，但也让我学会了怎么和别人交流。我相信，只要愿意主动开口，就一定能交到朋友。  /  When I first started university, I was not used to it at all. The students in my class came from different places and had different ways of speaking, and I often could not understand them. Once, because I did not know how to borrow a book, I stood in the library for a long time. A classmate saw me and offered to help me, and even told me how to look up books on the computer. From then on, we became good friends. Looking back now, those days were a bit hard, but they also taught me how to communicate with others. I believe that as long as you are willing to speak first, you will certainly make friends.
+380. 我从小就喜欢踢足球，可是个子不高，在学校的球队里总是坐在场边。教练对我说：“个子矮不是问题，关键是你有没有努力的决心。”从那以后，我每天比别人多练习一个小时，一年后，我终于有机会参加比赛了。这件事让我明白，努力比天分更重要。无论遇到什么困难，只要不放弃，就一定会有收获。  /  I have loved playing football since I was a child, but I am not tall, and in the school team I always sat on the sideline. The coach said to me, "Being short is not the problem; the key is whether you have the determination to work hard." From then on, I practised an hour more than the others every day, and a year later I finally had the chance to play in matches. This taught me that hard work is more important than talent. Whatever difficulties you meet, as long as you do not give up, you will certainly gain something.
+381. 请你把窗户关上，外面风很大。  /  Please close the window; it is very windy outside.
+382. 妈妈每天都很辛苦，既要工作又要照顾孩子。  /  Mum works hard every day, needing both to work and to look after the children.
+383. 他不但会说汉语，而且还会写汉字。  /  He can not only speak Chinese but also write Chinese characters.
+384. 如果你有问题，可以随时来问我。  /  If you have a question, you can come and ask me at any time.
+385. 我想买一张去上海的火车票。  /  I want to buy a train ticket to Shanghai.
+386. 他每天坚持锻炼，所以身体很好。  /  He keeps exercising every day, so his health is good.
+387. 请大家保持安静，不要大声说话。  /  Please keep quiet, everyone, and do not talk loudly.
+388. 这件事对我们来说非常重要。  /  This matter is very important to us.
+389. 这个城市的交通很方便，到处都有地铁。  /  The transport in this city is very convenient, with underground trains everywhere.
+390. 他的考试成绩很好，所以非常高兴。  /  His exam results are very good, so he is very happy.
+391. 他特别喜欢旅行，去过很多国家。  /  He loves travelling very much and has been to many countries.
+392. 我已经习惯了这里的生活。  /  I have already got used to life here.
+393. 他的房间收拾得很干净。  /  His room is tidied up very cleanly.
+394. 老师让我们回答这个问题。  /  The teacher asks us to answer this question.
+395. 周末的时候，我常常去公园散步。  /  At weekends, I often go for a walk in the park.
+396. 他对工作非常认真。  /  He is very serious about his work.

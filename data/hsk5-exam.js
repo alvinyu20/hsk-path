@@ -2699,7 +2699,7 @@ window.HSK5_EXAM = {
     {
      "s": "",
      "zh": "老师常常对我们说，读书不能只看快慢，更重要的是想一想。一本书如果读得很快，却什么也没记住，还不如慢慢读。每读完一部分，最好用自己的话说一说里面写了什么。",
-     "py": "Lǎoshī chángcháng duì wǒmen shuō, dúshū bù néng zhǐ kàn kuài màn, gèng zhòngyào de shì xiǎng yì xiǎng. Yì běn shū rúguǒ dú de hěn kuài, què shénme yě méi jì zhù, hái bùrú màn màn dú. Měi dú wán yí bùfen, zuìhǎo yòng zìjǐ dehuà shuō yì shuō lǐmiàn xiě le shénme.",
+     "py": "Lǎoshī chángcháng duì wǒmen shuō, dúshū bù néng zhǐ kàn kuài màn, gèng zhòngyào de shì xiǎng yi xiǎng. Yì běn shū rúguǒ dú de hěn kuài, què shénme yě méi jì zhù, hái bùrú màn màn dú. Měi dú wán yí bùfen, zuìhǎo yòng zìjǐ dehuà shuō yi shuō lǐmiàn xiě le shénme.",
      "en": "The teacher often tells us that when reading, you should not look only at speed; what matters more is to think. If you read a book very fast but remember nothing, you had better read slowly. After finishing each part, it is best to say in your own words what was written in it."
     }
    ],
@@ -2711,7 +2711,7 @@ window.HSK5_EXAM = {
    "opts": [
     {
      "zh": "读完后用自己的话说一说",
-     "py": "Dú wán hòu yòng zìjǐ dehuà shuō yì shuō"
+     "py": "Dú wán hòu yòng zìjǐ dehuà shuō yi shuō"
     },
     {
      "zh": "越快越好",
@@ -4114,7 +4114,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "很多人害怕失败，所以不敢尝试新的东西。其实，失败并不可怕，可怕的是因为一次失败就不再尝试。每一次失败都会告诉我们哪里做得不够好，只要认真想一想，就能离成功更近一步。",
-   "py": "Hěn duō rén hàipà shībài, suǒyǐ bù gǎn chángshì xīn de dōngxi. Qíshí, shībài bìng bù kěpà, kěpà de shì yīnwèi yí cì shībài jiù bú zài chángshì. Měi yí cì shībài dōu huì gàosu wǒmen nǎlǐ zuò de búgòu hǎo, zhǐyào rènzhēn xiǎng yì xiǎng, jiù néng lí chénggōng gèng jìn yí bù.",
+   "py": "Hěn duō rén hàipà shībài, suǒyǐ bù gǎn chángshì xīn de dōngxi. Qíshí, shībài bìng bù kěpà, kěpà de shì yīnwèi yí cì shībài jiù bú zài chángshì. Měi yí cì shībài dōu huì gàosu wǒmen nǎlǐ zuò de búgòu hǎo, zhǐyào rènzhēn xiǎng yi xiǎng, jiù néng lí chénggōng gèng jìn yí bù.",
    "en": "Many people are afraid of failure, so they do not dare to try new things. In fact, failure is not terrible; what is terrible is to stop trying because of one failure. Each failure tells us where we are not doing well enough, and if we think about it carefully, we can get one step closer to success.",
    "q": {
     "zh": "这篇文章的主要意思是什么？",
@@ -4730,7 +4730,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "有人喜欢在网上买东西，有人更喜欢去商店。网上买东西方便，价格也往往低一些；去商店可以自己看一看、摸一摸，也可以马上拿走。我的做法是：衣服和鞋去商店试了再买，其他的东西在网上买。",
-   "py": "Yǒu rén xǐhuan zài wǎngshàng mǎi dōngxi, yǒu rén gèng xǐhuan qù shāngdiàn. Wǎngshàng mǎi dōngxi fāngbiàn, jiàgé yě wǎngwǎng dī yìxiē; qù shāngdiàn kěyǐ zìjǐ kàn yí kàn, mō yì mō, yě kěyǐ mǎshàng ná zǒu. Wǒ de zuòfǎ shì: yīfu hé xié qù shāngdiàn shì le zài mǎi, qítā de dōngxi zài wǎngshàng mǎi.",
+   "py": "Yǒu rén xǐhuan zài wǎngshàng mǎi dōngxi, yǒu rén gèng xǐhuan qù shāngdiàn. Wǎngshàng mǎi dōngxi fāngbiàn, jiàgé yě wǎngwǎng dī yìxiē; qù shāngdiàn kěyǐ zìjǐ kàn yi kàn, mō yi mō, yě kěyǐ mǎshàng ná zǒu. Wǒ de zuòfǎ shì: yīfu hé xié qù shāngdiàn shì le zài mǎi, qítā de dōngxi zài wǎngshàng mǎi.",
    "en": "Some people like shopping online, and others prefer going to shops. Buying online is convenient and the price is often a little lower; in shops you can look at and touch things yourself and take them away at once. My approach is to try on clothes and shoes in shops before buying and to buy everything else online.",
    "q": {
     "zh": "作者是怎么买东西的？",

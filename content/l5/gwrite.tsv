@@ -86,7 +86,7 @@ g5-21	On what grounds are you angry with me?	你凭什么生我的气？	凭
 g5-22	According to the rules, you must come early.	依据规定，你要早来。	依据|根据
 g5-22	According to the weather, we are no longer going.	依据天气，我们不去了。	依据|根据
 g5-22	According to the rules, students cannot eat here.	依据规定，学生不能在这里吃东西。	依据|根据
-g5-22	According to the news, it will snow tomorrow.	依据新闻，明天会下雪。	依据|根据
+g5-22	According to the new rule, students cannot bring phones.	依据新的规定，学生不能带手机。	依据|根据
 g5-23	He lives by selling fruit.	他靠卖水果生活。	靠|依靠
 g5-23	Children rely on their parents.	孩子依靠父母。	靠|依靠
 g5-23	We must rely on ourselves.	我们要靠自己。	靠|依靠
@@ -146,14 +146,14 @@ g5-36	Please answer at once.	请立即回答。	立刻|立即
 g5-37	It is getting dark.	天渐渐黑了。	渐渐|逐渐
 g5-37	His Chinese is gradually getting better.	他的汉语渐渐好起来了。	渐渐|逐渐
 g5-37	He is gradually getting used to life here.	他渐渐习惯了这里的生活。	渐渐|逐渐
-g5-37	The city has gradually grown bigger.	这个城市逐渐大起来了。	渐渐|逐渐
+g5-37	The city has gradually grown bigger.	这个城市逐渐变大了。	渐渐|逐渐
 g5-38	He has never told me.	他始终没有告诉我。	始终
 g5-38	She has always believed in herself.	她始终相信自己。	始终
 g5-38	She has never changed her mind.	她始终没有改变主意。	始终
 g5-38	He always believes that he can win.	他始终相信自己能赢。	始终
 g5-39	It rained for three days in a row.	连续下了三天雨。	连续
 g5-39	The rain went on for a week.	雨持续下了一个星期。	持续
-g5-39	He was ill for three days in a row.	他连续三天生病了。	连续
+g5-39	He was ill for three days in a row.	他连续病了三天。	连续
 g5-39	The snow went on for two days.	雪持续下了两天。	持续
 g5-40	I saw him again.	我再次见到了他。	再次
 g5-40	Please check again.	请再次检查。	再次
@@ -306,7 +306,7 @@ g5-76	She is one of the best doctors.	她是最好的医生之一。	之一
 g5-77	I do not know whether he agrees.	我不知道他是否同意。	是否
 g5-77	Please tell me whether you are free.	请告诉我你是否有空。	是否
 g5-77	I do not know whether she is at home.	我不知道她是否在家。	是否
-g5-77	Please ask him whether he is free.	请问他是否有空。	是否
+g5-77	Please ask him for me whether he is free.	请帮我问一下他是否有空。	是否
 g5-78	Please count how many books there are.	请数数有几本书。	数
 g5-78	He feeds the fish every evening.	他每天晚上喂鱼。	喂
 g5-78	He was fooled.	他上当了。	上当

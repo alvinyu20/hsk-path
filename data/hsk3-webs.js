@@ -4703,7 +4703,7 @@ window.HSK3_WEBS = {
    "cta": "Use these when you order food or drinks",
    "sentence": {
     "zh": "我饿了，请给我菜单，我想尝一尝这个菜。",
-    "py": "Wǒ è le, qǐng gěi wǒ càidān, wǒ xiǎng cháng yì cháng zhège cài.",
+    "py": "Wǒ è le, qǐng gěi wǒ càidān, wǒ xiǎng cháng yi cháng zhège cài.",
     "en": "I am hungry now. Please give me the menu, because I want to try this dish."
    },
    "words": [
@@ -5501,7 +5501,7 @@ window.HSK3_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "这件太小了，我想换一件衣服，再试一试。",
-    "py": "Zhè jiàn tài xiǎo le, wǒ xiǎng huàn yí jiàn yīfu, zài shì yí shì.",
+    "py": "Zhè jiàn tài xiǎo le, wǒ xiǎng huàn yí jiàn yīfu, zài shì yi shì.",
     "en": "This one is too small, so I want to change it for another garment and try it on."
    },
    "words": [

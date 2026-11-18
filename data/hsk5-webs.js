@@ -3304,8 +3304,8 @@ window.HSK5_WEBS = {
      ]
     },
     {
-     "en": "This is a coincidence; I do not mean it.",
-     "zh": "这是一个___，我不是故意的。",
+     "en": "We met by chance; that day we were both waiting for the bus.",
+     "zh": "我们是___认识的，那天我们都在等车。",
      "ans": "偶然",
      "opts": [
       "偶然",
@@ -3437,8 +3437,8 @@ window.HSK5_WEBS = {
    ],
    "gaps": [
     {
-     "en": "She looks very happy; she must have good news.",
-     "zh": "她的___很高兴，一定有好消息。",
+     "en": "Judging by her expression, she must have good news.",
+     "zh": "看她的___，一定有好消息。",
      "ans": "表情",
      "opts": [
       "表情",
@@ -4247,8 +4247,8 @@ window.HSK5_WEBS = {
      ]
     },
     {
-     "en": "She left everyone with a very good image.",
-     "zh": "她给大家留下了很好的___。",
+     "en": "This actor has a very good image, and many people like him.",
+     "zh": "这位演员的___很好，很多人喜欢他。",
      "ans": "形象",
      "opts": [
       "形象",
@@ -4721,8 +4721,8 @@ window.HSK5_WEBS = {
    ],
    "gaps": [
     {
-     "en": "She is a famous star, and many people like her.",
-     "zh": "她是一位有名的___，很多人喜欢她。",
+     "en": "She is a film star, and many people like her.",
+     "zh": "她是一位电影___，很多人喜欢她。",
      "ans": "明星",
      "opts": [
       "明星",
@@ -4861,8 +4861,8 @@ window.HSK5_WEBS = {
      ]
     },
     {
-     "en": "I recorded the teacher's words on my phone.",
-     "zh": "我用手机___了老师的话。",
+     "en": "I made a recording on my phone and recorded everything the teacher said.",
+     "zh": "我用手机___，把老师的话都录了下来。",
      "ans": "录音",
      "opts": [
       "录音",
@@ -5241,8 +5241,8 @@ window.HSK5_WEBS = {
      ]
     },
     {
-     "en": "Regular exercise can strengthen the body.",
-     "zh": "经常运动可以___身体。",
+     "en": "This competition strengthened his confidence.",
+     "zh": "这次比赛___了他的信心。",
      "ans": "增强",
      "opts": [
       "增强",
@@ -5372,8 +5372,8 @@ window.HSK5_WEBS = {
      ]
     },
     {
-     "en": "The school set up a new library.",
-     "zh": "学校___了一个新的图书馆。",
+     "en": "This company has set up a new office in Shanghai.",
+     "zh": "这家公司在上海___了一个新的办公室。",
      "ans": "设立",
      "opts": [
       "设立",
@@ -5493,7 +5493,7 @@ window.HSK5_WEBS = {
     },
     {
      "en": "This exhibition lasts one month.",
-     "zh": "这个___的时间是一个月。",
+     "zh": "这次___持续一个月。",
      "ans": "展览",
      "opts": [
       "展览",
@@ -5514,8 +5514,8 @@ window.HSK5_WEBS = {
      ]
     },
     {
-     "en": "The school will launch a Chinese competition.",
-     "zh": "学校要___一次汉语比赛。",
+     "en": "The school often runs all kinds of activities, and the students like them.",
+     "zh": "学校经常___各种活动，学生都很喜欢。",
      "ans": "开展",
      "opts": [
       "开展",
@@ -8819,9 +8819,9 @@ window.HSK5_WEBS = {
    "to": "speak",
    "cta": "Use these in a conversation",
    "sentence": {
-    "zh": "恭喜！我们握手告别，一路顺风！",
-    "py": "Gōngxǐ! Wǒmen wòshǒu gàobié, yílùshùnfēng!",
-    "en": "Congratulations! We shake hands and say goodbye. Have a good trip!"
+    "zh": "恭喜你！我们握手告别，祝你一路顺风！",
+    "py": "Gōngxǐ nǐ! Wǒmen wòshǒu gàobié, zhù nǐ yílùshùnfēng!",
+    "en": "Congratulations to you! We shake hands and say goodbye. I wish you a good trip!"
    },
    "words": [
     "哎",
@@ -8871,9 +8871,9 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "如下就是当地的规定。",
-    "py": "Rúxià jiùshì dāngdì de guīdìng.",
-    "en": "The following is the local rule."
+    "zh": "当地的规定如下。",
+    "py": "Dāngdì de guīdìng rúxià.",
+    "en": "The local rules are as follows."
    },
    "words": [
     "如此",
@@ -8919,9 +8919,9 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "大批游客来到这里，这里足够热闹。",
-    "py": "Dàpī yóukè lái dào zhèlǐ, zhèlǐ zúgòu rènao.",
-    "en": "A large number of tourists come here, so it is lively enough."
+    "zh": "大批游客来到这里，这里非常热闹。",
+    "py": "Dàpī yóukè lái dào zhèlǐ, zhèlǐ fēicháng rènao.",
+    "en": "A large number of tourists come here, so it is very lively."
    },
    "words": [
     "大批",
@@ -9174,9 +9174,9 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "孩子在幼儿园长大，成熟得很快。",
-    "py": "Háizi zài yòu'éryuán zhǎngdà, chéngshú de hěn kuài.",
-    "en": "The child grows up in kindergarten and matures quickly."
+    "zh": "孩子上了中学以后，变得成熟了很多。",
+    "py": "Háizi shàng le zhōngxué yǐhòu, biàn de chéngshú le hěn duō.",
+    "en": "After starting middle school, the child became much more mature."
    },
    "words": [
     "成年",
@@ -9711,9 +9711,9 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "他穿西装，戴领带，还戴手套。",
-    "py": "Tā chuān xīzhuāng, dài lǐngdài, hái dài shǒutào.",
-    "en": "He wears a suit, a tie and gloves."
+    "zh": "他穿西装，系领带，还戴手套。",
+    "py": "Tā chuān xīzhuāng, jì lǐngdài, hái dài shǒutào.",
+    "en": "He wears a suit and a tie, and gloves too."
    },
    "words": [
     "服装",
@@ -9808,9 +9808,9 @@ window.HSK5_WEBS = {
    "to": "speak",
    "cta": "Use these to ask where something is",
    "sentence": {
-    "zh": "书架在房间内部，靠近窗台。",
-    "py": "Shūjià zài fángjiān nèibù, kàojìn chuāngtái.",
-    "en": "The bookshelf is inside the room, close to the windowsill."
+    "zh": "书架在房间里，靠近窗台。",
+    "py": "Shūjià zài fángjiān lǐ, kàojìn chuāngtái.",
+    "en": "The bookshelf is in the room, close to the windowsill."
    },
    "words": [
     "背后",
@@ -10189,8 +10189,8 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "他的发音很好，词汇也很多。",
-    "py": "Tā de fāyīn hěn hǎo, cíhuì yě hěn duō.",
+    "zh": "他的发音很好，词汇量也很大。",
+    "py": "Tā de fāyīn hěn hǎo, cíhuì liáng yě hěn dà.",
     "en": "His pronunciation is very good, and his vocabulary is large too."
    },
    "words": [
@@ -10451,9 +10451,9 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我喜欢摄影，休闲时去户外拍照。",
-    "py": "Wǒ xǐhuan shèyǐng, xiūxián shí qù hùwài pāizhào.",
-    "en": "I like photography, and in my free time I go outdoors to take photos."
+    "zh": "我喜欢摄影，有空的时候去户外拍照。",
+    "py": "Wǒ xǐhuan shèyǐng, yǒukòng de shíhou qù hùwài pāizhào.",
+    "en": "I like photography, and when I have free time I go outdoors to take photos."
    },
    "words": [
     "乐趣",
@@ -11071,9 +11071,9 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "他的脸色不好，手指上有汗水。",
-    "py": "Tā de liǎnsè bù hǎo, shǒuzhǐ shàng yǒu hànshuǐ.",
-    "en": "His complexion is not good, and there is sweat on his fingers."
+    "zh": "他的脸色不好，手上有汗。",
+    "py": "Tā de liǎnsè bù hǎo, shǒu shàng yǒu hàn.",
+    "en": "He does not look well, and his hands are sweaty."
    },
    "words": [
     "大脑",
@@ -11104,9 +11104,9 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "医生说他的疾病好转了，不用做手术。",
-    "py": "Yīshēng shuō tā de jíbìng hǎozhuǎn le, búyòng zuò shǒushù.",
-    "en": "The doctor says his illness has improved and he does not need an operation."
+    "zh": "医生说他的病情好转了，不用做手术。",
+    "py": "Yīshēng shuō tā de bìngqíng hǎozhuǎn le, búyòng zuò shǒushù.",
+    "en": "The doctor says his condition has improved and he does not need an operation."
    },
    "words": [
     "病情",
@@ -11397,9 +11397,9 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我赞成这个意见，但是他否认了。",
-    "py": "Wǒ zànchéng zhège yìjiàn, dànshì tā fǒurèn le.",
-    "en": "I agree with this opinion, but he denied it."
+    "zh": "我问他是不是他做的，他否认了。",
+    "py": "Wǒ wèn tā shì bú shì tā zuò de, tā fǒurèn le.",
+    "en": "I asked him whether he did it, and he denied it."
    },
    "words": [
     "赞成",
@@ -11590,8 +11590,8 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "工人正在建造一座新建筑。",
-    "py": "Gōngrén zhèngzài jiànzào yí zuò xīn jiànzhù.",
+    "zh": "工人正在建一座新楼。",
+    "py": "Gōngrén zhèngzài jiàn yí zuò xīn lóu.",
     "en": "The workers are building a new building."
    },
    "words": [
@@ -11624,9 +11624,9 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "这个方案有三项措施，手段也很新。",
-    "py": "Zhège fāng'àn yǒu sān xiàng cuòshī, shǒuduàn yě hěn xīn.",
-    "en": "This plan has three measures, and the means are also new."
+    "zh": "这个方案有三项措施，方法也很新。",
+    "py": "Zhège fāng'àn yǒu sān xiàng cuòshī, fāngfǎ yě hěn xīn.",
+    "en": "This plan has three measures, and the methods are new too."
    },
    "words": [
     "方案",
@@ -11830,8 +11830,8 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "这条路宽度不够，车开得很缓慢。",
-    "py": "Zhè tiáo lù kuāndù búgòu, chē kāi de hěn huǎnmàn.",
+    "zh": "这条路不够宽，车开得很慢。",
+    "py": "Zhè tiáo lù búgòu kuān, chē kāi de hěn màn.",
     "en": "This road is not wide enough, and cars drive very slowly."
    },
    "words": [
@@ -11906,9 +11906,9 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "天气升温，水果的价格也上涨了。",
-    "py": "Tiānqì shēngwēn, shuǐguǒ de jiàgé yě shàngzhǎng le.",
-    "en": "The weather is warming up, and the price of fruit has gone up too."
+    "zh": "天气变暖和了，水果的价格也上涨了。",
+    "py": "Tiānqì biàn nuǎnhuo le, shuǐguǒ de jiàgé yě shàngzhǎng le.",
+    "en": "The weather has turned warm, and the price of fruit has gone up too."
    },
    "words": [
     "升",
@@ -11937,9 +11937,9 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "这个杯子的外形是圆的，样式很新。",
-    "py": "Zhège bēizi de wàixíng shì yuán de, yàngshì hěn xīn.",
-    "en": "The shape of this cup is round, and the style is new."
+    "zh": "这个杯子是圆的，样式很新。",
+    "py": "Zhège bēizi shì yuán de, yàngshì hěn xīn.",
+    "en": "This cup is round, and its style is new."
    },
    "words": [
     "外观",
@@ -11965,8 +11965,8 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "这里的环境优美，空气也很良好。",
-    "py": "Zhèlǐ de huánjìng yōuměi, kōngqì yě hěn liánghǎo.",
+    "zh": "这里的环境优美，空气也很好。",
+    "py": "Zhèlǐ de huánjìng yōuměi, kōngqì yě hěn hǎo.",
     "en": "The environment here is beautiful, and the air is good too."
    },
    "words": [
@@ -12104,8 +12104,8 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "夜里很安静，保安说这里很平安。",
-    "py": "Yè lǐ hěn ānjìng, bǎo'ān shuō zhèlǐ hěn píng'ān.",
+    "zh": "夜里很安静，保安说这里很安全。",
+    "py": "Yè lǐ hěn ānjìng, bǎo'ān shuō zhèlǐ hěn ānquán.",
     "en": "It is very quiet at night, and the security guard says it is safe here."
    },
    "words": [
@@ -12194,9 +12194,9 @@ window.HSK5_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "这件大事的事实很清楚。",
-    "py": "Zhè jiàn dàshì de shìshí hěn qīngchu.",
-    "en": "The facts of this major matter are very clear."
+    "zh": "这件事的经过很清楚。",
+    "py": "Zhè jiàn shì de jīngguò hěn qīngchu.",
+    "en": "How this matter happened is very clear."
    },
    "words": [
     "事件",
@@ -12495,8 +12495,8 @@ window.HSK5_WEBS = {
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
-    "zh": "和那家店对比，这家店的价格相对便宜。",
-    "py": "Hé nà jiā diàn duìbǐ, zhè jiā diàn de jiàgé xiāngduì piányi.",
+    "zh": "和那家店相比，这家店的价格相对便宜。",
+    "py": "Hé nà jiā diàn xiāngbǐ, zhè jiā diàn de jiàgé xiāngduì piányi.",
     "en": "Compared with that shop, the prices in this shop are relatively cheap."
    },
    "words": [
@@ -12677,9 +12677,9 @@ window.HSK5_WEBS = {
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
-    "zh": "这位上班族住在现代化的城市。",
-    "py": "Zhè wèi shàngbānzú zhù zài xiàndàihuà de chéngshì.",
-    "en": "This office worker lives in a city that is modernising."
+    "zh": "这位上班族住在一个现代化的城市。",
+    "py": "Zhè wèi shàngbānzú zhù zài yí ge xiàndàihuà de chéngshì.",
+    "en": "This office worker lives in a modern city."
    },
    "words": [
     "化",
