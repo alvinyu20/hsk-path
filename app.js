@@ -552,10 +552,8 @@
   const SETTING_DEFAULT = { sys:'3.0', mins:20, nlimit:0, speed:1, ascView:'trail' };
 
   function freshState() {
-    let dark = false;
-    try { dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
     return {
-      screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:dark ? 'dark' : 'light',
+      screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:'light',   // light to start, whatever the device's setting; dark only when chosen
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
       jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyTab:'explore', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
       xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
@@ -695,6 +693,9 @@
       saved = Object.assign({}, saved, readSplit());
     }
     const st = rollDay(mergeSaved(freshState(), saved));
+    // until 17 Nov the theme followed the device's dark setting and was saved as if chosen: such a dark theme goes back to light, once.
+    // A theme picked with the switch is marked (themeSet) and kept.
+    try { if (!localStorage.getItem('shanlu-theme-v2:' + KEY)) { localStorage.setItem('shanlu-theme-v2:' + KEY, '1'); if (st.theme === 'dark' && !prefGet('themeSet', false)) st.theme = 'light'; } } catch (e) {}
     // right after the level check the path jumps ahead: today's "steps done" and "words in memory" start again from there, so the check does not count as a day's work
     try { if (localStorage.getItem('shanlu-rebase') === '1') { localStorage.removeItem('shanlu-rebase'); st.pbase = pathDoneCount(st); st.mem0 = memOf(st.ws).words; } } catch (e) {}
     try { const m = JSON.parse(localStorage.getItem('shanlu-placed-msg')); if (m && m.at) { localStorage.removeItem('shanlu-placed-msg'); st.pcNote = 'Level check done: you start at HSK ' + m.at + '. ' + (m.n ? m.n.toLocaleString('en-US') + ' words of ' + (m.top > 1 ? 'HSK 1 to ' + m.top : 'HSK 1') + ' come back in Review, about ' + m.perDay + ' a day from tomorrow, so any slips are caught.' : 'The levels before it are open.'); } } catch (e) {}
@@ -4760,7 +4761,7 @@
       prefSet('level', n);
       window.location.reload();
     };
-    toggleTheme = () => { this.setState({ theme:this.state.theme === 'dark' ? 'light' : 'dark' }); };
+    toggleTheme = () => { prefSet('themeSet', true); this.setState({ theme:this.state.theme === 'dark' ? 'light' : 'dark' }); };
 
     aiVals() {
       const S = this.state;

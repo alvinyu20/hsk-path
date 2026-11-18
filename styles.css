@@ -538,7 +538,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--jade);outline-o
 .gp .soon{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--muted)}
 .gp.cur .soon{color:var(--bg)}
 body{background:#EDF0EC}
-@media (prefers-color-scheme:dark){body{background:#0E1920}}
+/* (the page used to start dark on a dark device; it now starts light, so the page behind it stays light too) */
 
 /* data-driven lists (added for the full HSK 1 build) */
 .pickrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
