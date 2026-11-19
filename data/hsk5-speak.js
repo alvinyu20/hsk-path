@@ -41,8 +41,8 @@ window.HSK5_SPEAK = {
    ],
    "ai": [
     {
-     "zh": "你好，请问我可以帮你做什么？",
-     "py": "Nǐ hǎo, qǐngwèn wǒ kěyǐ bāng nǐ zuò shénme?",
+     "zh": "您好，请问我可以帮您做什么？",
+     "py": "Nín hǎo, qǐngwèn wǒ kěyǐ bāng nín zuò shénme?",
      "en": "Hello, what can I do to help you?"
     },
     {
@@ -51,18 +51,18 @@ window.HSK5_SPEAK = {
      "en": "Very sorry about that. What exactly is the problem?"
     },
     {
-     "zh": "好的。你还留着买东西时的小票吗？",
-     "py": "Hǎo de. Nǐ hái liú zhe mǎi dōngxi shí de xiǎo piào ma?",
+     "zh": "好的。您还留着买东西时的小票吗？",
+     "py": "Hǎo de. Nín hái liú zhe mǎi dōngxi shí de xiǎo piào ma?",
      "en": "Okay. Have you kept the receipt from when you bought it?"
     },
     {
-     "zh": "我们可以给你换一个新的，也可以把钱退给你。你想怎么办？",
-     "py": "Wǒmen kěyǐ gěi nǐ huàn yí ge xīn de, yě kěyǐ bǎ qián tuì gěi nǐ. Nǐ xiǎng zěnmebàn?",
+     "zh": "我们可以给您换一个新的，也可以把钱退给您。您想怎么办？",
+     "py": "Wǒmen kěyǐ gěi nín huàn yí ge xīn de, yě kěyǐ bǎ qián tuì gěi nín. Nín xiǎng zěnmebàn?",
      "en": "We can give you a new one, or we can give you your money back. What would you like?"
     },
     {
-     "zh": "好的，请你在这里签一下名，钱很快就会退给你。",
-     "py": "Hǎo de, qǐng nǐ zài zhèlǐ qiān yíxià míng, qián hěn kuài jiù huì tuì gěi nǐ.",
+     "zh": "好的，请您在这里签一下名，钱很快就会退给您。",
+     "py": "Hǎo de, qǐng nín zài zhèlǐ qiān yíxià míng, qián hěn kuài jiù huì tuì gěi nín.",
      "en": "Okay, please sign here, and the money will be returned to you soon."
     }
    ],
@@ -235,9 +235,9 @@ window.HSK5_SPEAK = {
      "en": "Yes. The procedure has already been done. You can get your bank card in three days."
     },
     {
-     "zh": "不用，存款超过一百块就不收费。",
-     "py": "Búyòng, cúnkuǎn chāoguò yì bǎi kuài jiù bù shōufèi.",
-     "en": "No. If your deposit is over a hundred yuan, there is no charge."
+     "zh": "不用，卡里的钱超过一百块就不收费。",
+     "py": "Búyòng, kǎ lǐ de qián chāoguò yì bǎi kuài jiù bù shōufèi.",
+     "en": "No. If there is over a hundred yuan on your card, there is no charge."
     }
    ],
    "you": [
@@ -568,8 +568,8 @@ window.HSK5_SPEAK = {
      "en": "Hello, welcome to the community service centre. What brings you here?"
     },
     {
-     "zh": "太好了！你对哪种活动比较有兴趣？我们有照顾老人、教孩子学习，还有整理大家捐来的旧书。",
-     "py": "Tài hǎo le! Nǐ duì nǎ zhǒng huódòng bǐjiào yǒu xìngqù? Wǒmen yǒu zhàogù lǎorén, jiāo háizi xuéxí, hái yǒu zhěnglǐ dàjiā juān lái de jiù shū.",
+     "zh": "太好了！你对哪种活动比较有兴趣？我们的活动有照顾老人、教孩子学习，还有整理大家捐来的旧书。",
+     "py": "Tài hǎo le! Nǐ duì nǎ zhǒng huódòng bǐjiào yǒu xìngqù? Wǒmen de huódòng yǒu zhàogù lǎorén, jiāo háizi xuéxí, hái yǒu zhěnglǐ dàjiā juān lái de jiù shū.",
      "en": "Great! Which kind of activity are you more interested in? We have looking after old people, teaching children, and sorting the old books people have donated."
     },
     {

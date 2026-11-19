@@ -143,6 +143,17 @@
      "朋友",
      "的",
      "婚礼"
+    ],
+    [
+     "我",
+     "打算",
+     "这个",
+     "周末",
+     "去",
+     "参加",
+     "朋友",
+     "的",
+     "婚礼"
     ]
    ]
   },
@@ -366,7 +377,7 @@
    "en": "The transport in this city is very convenient, with underground trains everywhere."
   },
   {
-   "zh": "他的考试成___很好，所以非常高兴。",
+   "zh": "他的考试成___很好，所以他非常高兴。",
    "ans": "绩",
    "en": "His exam results are very good, so he is very happy."
   },

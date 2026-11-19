@@ -796,7 +796,7 @@
     "5": {
       "kind": "peaks",
       "name": "The Five Great Mountains",
-      "tag": "五岳 wǔ yuè",
+      "tag": "五岳 wǔyuè",
       "blurb": "For more than two thousand years, pilgrims have climbed the Five Great Mountains of China. You climb them in turn, from Mount Tai in the east to Mount Song in the centre. Each unit is one stop on a trail, and the level exam is the summit.",
       "hero": "peaks-hero",
       "seasons": [
@@ -874,7 +874,7 @@
       "units": {
         "h5u1": {
           "zh": "岱宗坊",
-          "py": "dài zōng fāng",
+          "py": "Dàizōng Fāng",
           "en": "Daizong Archway",
           "stage": "Start",
           "scene": "The first archway. You are at the foot of Mount Tai, and the path goes up.",
@@ -882,7 +882,7 @@
         },
         "h5u2": {
           "zh": "红门宫",
-          "py": "hóng mén gōng",
+          "py": "Hóngmén Gōng",
           "en": "Red Gate Palace",
           "stage": "Gate",
           "scene": "A red gate and a crowd of walkers. Everyone has someone with them.",
@@ -890,7 +890,7 @@
         },
         "h5u3": {
           "zh": "万仙楼",
-          "py": "wàn xiān lóu",
+          "py": "Wànxiān Lóu",
           "en": "Ten Thousand Immortals Tower",
           "stage": "Tower",
           "scene": "An old stone tower by the path. You count the steps as you go up.",
@@ -898,7 +898,7 @@
         },
         "h5u4": {
           "zh": "经石峪",
-          "py": "jīng shí yù",
+          "py": "Jīngshí Yù",
           "en": "Sutra Stone Valley",
           "stage": "Valley",
           "scene": "Words are carved on a huge flat rock. Time passes slowly here.",
@@ -906,7 +906,7 @@
         },
         "h5u5": {
           "zh": "中天门",
-          "py": "zhōng tiān mén",
+          "py": "Zhōngtiān Mén",
           "en": "Midway Gate",
           "stage": "Halfway",
           "scene": "Halfway up. You rest, drink tea and look at how far you have come.",
@@ -914,7 +914,7 @@
         },
         "h5u6": {
           "zh": "十八盘",
-          "py": "shí bā pán",
+          "py": "Shíbā Pán",
           "en": "Eighteen Turns",
           "stage": "Steep steps",
           "scene": "The steepest stairs of the climb. Time to eat well and keep going.",
@@ -922,7 +922,7 @@
         },
         "h5u7": {
           "zh": "南天门",
-          "py": "nán tiān mén",
+          "py": "Nántiān Mén",
           "en": "South Heavenly Gate",
           "stage": "Gate",
           "scene": "The gate in the clouds. Beyond it is a little street with shops and lamps.",
@@ -930,7 +930,7 @@
         },
         "h5u8": {
           "zh": "玉皇顶",
-          "py": "yù huáng dǐng",
+          "py": "Yùhuáng Dǐng",
           "en": "Jade Emperor Peak",
           "stage": "Summit",
           "scene": "The top of Mount Tai. The whole plain lies below you, and the sun comes up.",
@@ -938,7 +938,7 @@
         },
         "h5u9": {
           "zh": "玉泉院",
-          "py": "yù quán yuàn",
+          "py": "Yùquán Yuàn",
           "en": "Jade Spring Courtyard",
           "stage": "Start",
           "scene": "A quiet courtyard at the foot of Mount Hua. The path starts beside a spring.",
@@ -946,7 +946,7 @@
         },
         "h5u10": {
           "zh": "青柯坪",
-          "py": "qīng kē píng",
+          "py": "Qīngkē Píng",
           "en": "Green Branch Flat",
           "stage": "Rest",
           "scene": "A flat place among pines. Last chance to ask the way before the cliffs.",
@@ -954,7 +954,7 @@
         },
         "h5u11": {
           "zh": "回心石",
-          "py": "huí xīn shí",
+          "py": "Huíxīn Shí",
           "en": "Turn-Back Stone",
           "stage": "Stone",
           "scene": "A big stone where many walkers stop and think. You decide to go on.",
@@ -962,15 +962,15 @@
         },
         "h5u12": {
           "zh": "千尺幢",
-          "py": "qiān chǐ zhuàng",
-          "en": "Thousand-Foot Shaft",
+          "py": "Qiānchǐ Zhuàng",
+          "en": "Thousand-Foot Precipice",
           "stage": "Steep steps",
           "scene": "A very narrow stair cut into the rock. You go up slowly, holding the chain.",
           "tile": "hua2"
         },
         "h5u13": {
           "zh": "百尺峡",
-          "py": "bǎi chǐ xiá",
+          "py": "Bǎichǐ Xiá",
           "en": "Hundred-Foot Gorge",
           "stage": "Gorge",
           "scene": "A narrow gorge between two cliffs. The path is short, and there is no room to talk.",
@@ -978,7 +978,7 @@
         },
         "h5u14": {
           "zh": "苍龙岭",
-          "py": "cāng lóng lǐng",
+          "py": "Cānglóng Lǐng",
           "en": "Azure Dragon Ridge",
           "stage": "Ridge",
           "scene": "A thin ridge with air on both sides. Everyone speaks softly here.",
@@ -986,7 +986,7 @@
         },
         "h5u15": {
           "zh": "金锁关",
-          "py": "jīn suǒ guān",
+          "py": "Jīnsuǒ Guān",
           "en": "Golden Lock Pass",
           "stage": "Pass",
           "scene": "Walkers have hung padlocks and red ribbons on the chains here to keep their wishes safe.",
@@ -994,7 +994,7 @@
         },
         "h5u16": {
           "zh": "南峰",
-          "py": "nán fēng",
+          "py": "Nán Fēng",
           "en": "South Peak",
           "stage": "Summit",
           "scene": "The highest of the five peaks of Mount Hua, with cloud below and cliffs all around.",
@@ -1002,55 +1002,55 @@
         },
         "h5u17": {
           "zh": "南岳大庙",
-          "py": "nán yuè dà miào",
+          "py": "Nányuè Dàmiào",
           "en": "Great Temple of the Southern Mountain",
           "stage": "Temple",
           "scene": "A big red temple at the foot of Mount Heng in the south. The air smells of incense and tea.",
           "tile": "hengs"
         },
         "h5u18": {
-          "zh": "磨镜台",
-          "py": "mó jìng tái",
-          "en": "Mirror-Polishing Terrace",
-          "stage": "Terrace",
-          "scene": "Legend says a monk once polished a brick here to show a student what patience is.",
+          "zh": "半山亭",
+          "py": "Bànshān Tíng",
+          "en": "Halfway Pavilion",
+          "stage": "Halfway",
+          "scene": "Halfway up, a pavilion with a wide view. Walkers stretch their legs and keep moving.",
           "tile": "hengs2"
         },
         "h5u19": {
-          "zh": "福严寺",
-          "py": "fú yán sì",
-          "en": "Fuyan Temple",
-          "stage": "Temple",
-          "scene": "A quiet old temple among tall trees. Feelings are easier to name here.",
+          "zh": "磨镜台",
+          "py": "Mójìng Tái",
+          "en": "Mirror-Polishing Terrace",
+          "stage": "Terrace",
+          "scene": "Legend says a monk once polished a brick here to show a student what patience is. Feelings are easier to name here.",
           "tile": "hengs"
         },
         "h5u20": {
-          "zh": "藏经殿",
-          "py": "zàng jīng diàn",
-          "en": "Scripture Hall",
-          "stage": "Hall",
-          "scene": "A hall in the forest where old books were kept. People choose their words with care.",
+          "zh": "福严寺",
+          "py": "Fúyán Sì",
+          "en": "Fuyan Temple",
+          "stage": "Temple",
+          "scene": "A quiet old temple among tall trees. People speak gently and choose their words with care.",
           "tile": "hengs2"
         },
         "h5u21": {
-          "zh": "方广寺",
-          "py": "fāng guǎng sì",
-          "en": "Fangguang Temple",
-          "stage": "Temple",
-          "scene": "A wooden temple above a stream. A good place to sit and think.",
+          "zh": "藏经殿",
+          "py": "Zàngjīng Diàn",
+          "en": "Scripture Hall",
+          "stage": "Hall",
+          "scene": "A hall in the forest where old books were kept. A good place to sit and think.",
           "tile": "hengs"
         },
         "h5u22": {
-          "zh": "半山亭",
-          "py": "bàn shān tíng",
-          "en": "Halfway Pavilion",
-          "stage": "Halfway",
-          "scene": "A pavilion with a wide view. Walkers tell each other what they have seen.",
+          "zh": "方广寺",
+          "py": "Fāngguǎng Sì",
+          "en": "Fangguang Temple",
+          "stage": "Temple",
+          "scene": "A wooden temple above a stream. Walkers tell each other what they have seen and heard.",
           "tile": "hengs2"
         },
         "h5u23": {
           "zh": "上封寺",
-          "py": "shàng fēng sì",
+          "py": "Shàngfēng Sì",
           "en": "Shangfeng Temple",
           "stage": "Temple",
           "scene": "A temple near the top where the wind is cold and pilgrims light incense.",
@@ -1058,7 +1058,7 @@
         },
         "h5u24": {
           "zh": "祝融峰",
-          "py": "zhù róng fēng",
+          "py": "Zhùróng Fēng",
           "en": "Zhurong Peak",
           "stage": "Summit",
           "scene": "The highest peak of Mount Heng in the south. The view goes on for miles.",
@@ -1066,7 +1066,7 @@
         },
         "h5u25": {
           "zh": "金龙峡",
-          "py": "jīn lóng xiá",
+          "py": "Jīnlóng Xiá",
           "en": "Golden Dragon Gorge",
           "stage": "Gorge",
           "scene": "A narrow gorge where the road to the northern mountain begins.",
@@ -1074,23 +1074,23 @@
         },
         "h5u26": {
           "zh": "悬空寺",
-          "py": "xuán kōng sì",
+          "py": "Xuánkōng Sì",
           "en": "Hanging Temple",
           "stage": "Temple",
           "scene": "A temple built into a cliff and held up by wooden posts. It has stood for about 1,500 years.",
           "tile": "hengn2"
         },
         "h5u27": {
-          "zh": "翠屏山",
-          "py": "cuì píng shān",
-          "en": "Green Screen Mountain",
+          "zh": "翠屏峰",
+          "py": "Cuìpíng Fēng",
+          "en": "Green Screen Peak",
           "stage": "Cliff",
-          "scene": "Steep green cliffs stand like a folding screen behind the temple.",
+          "scene": "The steep green cliffs of Cuiping Peak stand like a folding screen behind the temple.",
           "tile": "hengn"
         },
         "h5u28": {
           "zh": "北岳庙",
-          "py": "běi yuè miào",
+          "py": "Běiyuè Miào",
           "en": "Northern Mountain Temple",
           "stage": "Temple",
           "scene": "A grand temple of the north mountain, where people came to ask for a good year.",
@@ -1098,7 +1098,7 @@
         },
         "h5u29": {
           "zh": "会仙府",
-          "py": "huì xiān fǔ",
+          "py": "Huìxiān Fǔ",
           "en": "Immortals' Meeting Hall",
           "stage": "Hall",
           "scene": "A hall tucked into the rock. People plan, change their minds and choose a path here.",
@@ -1106,7 +1106,7 @@
         },
         "h5u30": {
           "zh": "虎风口",
-          "py": "hǔ fēng kǒu",
+          "py": "Hǔfēng Kǒu",
           "en": "Tiger Wind Pass",
           "stage": "Pass",
           "scene": "A gap in the rock where the wind howls. Everything seems to rise and change.",
@@ -1114,7 +1114,7 @@
         },
         "h5u31": {
           "zh": "果老岭",
-          "py": "guǒ lǎo lǐng",
+          "py": "Guǒlǎo Lǐng",
           "en": "Guolao Ridge",
           "stage": "Ridge",
           "scene": "A long ridge named after the old man who is said to ride his donkey backwards.",
@@ -1122,7 +1122,7 @@
         },
         "h5u32": {
           "zh": "天峰岭",
-          "py": "tiān fēng lǐng",
+          "py": "Tiānfēng Lǐng",
           "en": "Heavenly Peak Ridge",
           "stage": "Summit",
           "scene": "The top of Mount Heng in the north. The air is thin and clear.",
@@ -1130,7 +1130,7 @@
         },
         "h5u33": {
           "zh": "中岳庙",
-          "py": "zhōng yuè miào",
+          "py": "Zhōngyuè Miào",
           "en": "Central Mountain Temple",
           "stage": "Temple",
           "scene": "A huge temple at the foot of Mount Song, the middle of the five mountains.",
@@ -1138,7 +1138,7 @@
         },
         "h5u34": {
           "zh": "嵩阳书院",
-          "py": "sōng yáng shū yuàn",
+          "py": "Sōngyáng Shūyuàn",
           "en": "Songyang Academy",
           "stage": "School",
           "scene": "An old academy where scholars taught under very old cypress trees.",
@@ -1146,7 +1146,7 @@
         },
         "h5u35": {
           "zh": "观星台",
-          "py": "guān xīng tái",
+          "py": "Guānxīng Tái",
           "en": "Star-Watching Tower",
           "stage": "Tower",
           "scene": "An old brick observatory, built to measure the sun's shadow and the length of the year.",
@@ -1154,15 +1154,15 @@
         },
         "h5u36": {
           "zh": "少林寺",
-          "py": "shào lín sì",
+          "py": "Shàolín Sì",
           "en": "Shaolin Temple",
           "stage": "Temple",
-          "scene": "The famous temple of martial arts. Courage, patience and daily practice.",
+          "scene": "Across town on Shaoshi Mountain, the western half of Mount Song: the famous temple of martial arts. Courage, patience and daily practice.",
           "tile": "song2"
         },
         "h5u37": {
           "zh": "塔林",
-          "py": "tǎ lín",
+          "py": "Tǎlín",
           "en": "Pagoda Forest",
           "stage": "Forest",
           "scene": "More than two hundred little stone pagodas stand together like trees, one for each monk.",
@@ -1170,7 +1170,7 @@
         },
         "h5u38": {
           "zh": "达摩洞",
-          "py": "dá mó dòng",
+          "py": "Dámó Dòng",
           "en": "Damo's Cave",
           "stage": "Cave",
           "scene": "A cave on the hillside where the monk Bodhidharma is said to have sat facing the wall for nine years.",
@@ -1178,10 +1178,10 @@
         },
         "h5u39": {
           "zh": "峻极峰",
-          "py": "jùn jí fēng",
+          "py": "Jùnjí Fēng",
           "en": "Junji Peak",
           "stage": "Summit",
-          "scene": "The highest peak of Mount Song. You have come all the way from the east, and the last view is the whole centre of China.",
+          "scene": "Back on Taishi Mountain, the eastern half: Junji Peak, the traditional summit of Mount Song. You have come all the way from the east, and the last view is the whole centre of China.",
           "tile": "song"
         }
       }

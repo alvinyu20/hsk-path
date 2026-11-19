@@ -77,8 +77,8 @@ window.HSK5_EXAM = {
    },
    "opts": [
     {
-     "zh": "太长了",
-     "py": "Tài cháng le"
+     "zh": "有点儿长",
+     "py": "Yǒudiǎnr cháng"
     },
     {
      "zh": "太短了",
@@ -98,9 +98,9 @@ window.HSK5_EXAM = {
    "say": [
     {
      "s": "女",
-     "zh": "明天的会议改到下午三点了，你记一下。",
-     "py": "Míngtiān de huìyì gǎi dào xiàwǔ sān diǎn le, nǐ jì yíxià.",
-     "en": "Tomorrow's meeting has been moved to three in the afternoon. You should make a note of it."
+     "zh": "明天的会议从上午改到下午三点了，你记一下。",
+     "py": "Míngtiān de huìyì cóng shàngwǔ gǎi dào xiàwǔ sān diǎn le, nǐ jì yíxià.",
+     "en": "Tomorrow's meeting has been moved from the morning to three in the afternoon. You should make a note of it."
     },
     {
      "s": "男",
@@ -1237,9 +1237,9 @@ window.HSK5_EXAM = {
     },
     {
      "s": "男",
-     "zh": "我姓高，在上海大学毕业了，专业是经济。",
-     "py": "Wǒ xìng gāo, zài Shànghǎi dàxué bìyè le, zhuānyè shì jīngjì.",
-     "en": "My surname is Gao. I have graduated from Shanghai University, and my major is economics."
+     "zh": "我姓高，上海大学毕业，专业是经济。",
+     "py": "Wǒ xìng gāo, Shànghǎi dàxué bìyè, zhuānyè shì jīngjì.",
+     "en": "My surname is Gao. I graduated from Shanghai University, and my major is economics."
     },
     {
      "s": "女",
@@ -1306,9 +1306,9 @@ window.HSK5_EXAM = {
     }
    ],
    "q": {
-    "zh": "飞机为什么没有登机？",
-    "py": "Fēijī wèishénme méiyǒu dēngjī?",
-    "en": "Why has the plane not started boarding?"
+    "zh": "为什么还没有登机？",
+    "py": "Wèishénme hái méiyǒu dēngjī?",
+    "en": "Why has boarding not started yet?"
    },
    "opts": [
     {
@@ -2188,8 +2188,8 @@ window.HSK5_EXAM = {
    },
    "opts": [
     {
-     "zh": "影响因人而不同",
-     "py": "Yǐngxiǎng yīn rén ér bùtóng"
+     "zh": "对每个人的影响不一样",
+     "py": "Duì měi ge rén de yǐngxiǎng bù yíyàng"
     },
     {
      "zh": "晚上不能喝",
@@ -5051,7 +5051,8 @@ window.HSK5_EXAM = {
    ],
    "zh": "这个周末我打算去参加朋友的婚礼",
    "alts": [
-    "我这个周末打算去参加朋友的婚礼"
+    "我这个周末打算去参加朋友的婚礼",
+    "我打算这个周末去参加朋友的婚礼"
    ],
    "py": "Zhège zhōumò wǒ dǎsuàn qù cānjiā péngyou de hūnlǐ",
    "en": "This weekend I plan to go to a friend's wedding."
@@ -5295,11 +5296,11 @@ window.HSK5_EXAM = {
    "en": "The transport in this city is very convenient, with underground trains everywhere."
   },
   {
-   "zh": "他的考试成___很好，所以非常高兴。",
-   "full": "他的考试成绩很好，所以非常高兴。",
+   "zh": "他的考试成___很好，所以他非常高兴。",
+   "full": "他的考试成绩很好，所以他非常高兴。",
    "ans": "绩",
    "hint": "jì",
-   "py": "Tā de kǎoshì chéngjì hěn hǎo, suǒyǐ fēicháng gāoxìng.",
+   "py": "Tā de kǎoshì chéngjì hěn hǎo, suǒyǐ tā fēicháng gāoxìng.",
    "en": "His exam results are very good, so he is very happy."
   },
   {

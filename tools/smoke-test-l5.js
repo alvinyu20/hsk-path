@@ -197,7 +197,7 @@ const startState = (o) => { try { if (!localStorage.getItem('shanlu-passed')) lo
   check((await text()).includes('Return a faulty product') && (await text()).includes('Sign a work contract') && await page.evaluate(() => window.HSK5_SPEAK.scenarios.length === 8 && window.HSK5_SPEAK.phrases.length === 8), 'the eight HSK 5 scripts and eight phrases are listed');
   await page.locator('.spk-card').first().click();
   await page.locator('button', { hasText: 'I said it' }).first().click();
-  check((await text()).includes('我可以帮你做什么'), 'an HSK 5 script plays: the first line of the first scenario shows after "I said it"');
+  check((await text()).includes('我可以帮您做什么'), 'an HSK 5 script plays: the first line of the first scenario shows after "I said it"');
 
   // ---- the level exam
   await nav('Level exam');

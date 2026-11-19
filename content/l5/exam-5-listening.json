@@ -42,7 +42,7 @@
     "en": "What does the man think of the trousers?"
    },
    "opts": [
-    "太长了",
+    "有点儿长",
     "太短了",
     "太贵了",
     "颜色不好"
@@ -52,8 +52,8 @@
    "say": [
     {
      "s": "女",
-     "zh": "明天的会议改到下午三点了，你记一下。",
-     "en": "Tomorrow's meeting has been moved to three in the afternoon. You should make a note of it."
+     "zh": "明天的会议从上午改到下午三点了，你记一下。",
+     "en": "Tomorrow's meeting has been moved from the morning to three in the afternoon. You should make a note of it."
     },
     {
      "s": "男",
@@ -755,8 +755,8 @@
     },
     {
      "s": "男",
-     "zh": "我姓高，在上海大学毕业了，专业是经济。",
-     "en": "My surname is Gao. I have graduated from Shanghai University, and my major is economics."
+     "zh": "我姓高，上海大学毕业，专业是经济。",
+     "en": "My surname is Gao. I graduated from Shanghai University, and my major is economics."
     },
     {
      "s": "女",
@@ -804,8 +804,8 @@
     }
    ],
    "q": {
-    "zh": "飞机为什么没有登机？",
-    "en": "Why has the plane not started boarding?"
+    "zh": "为什么还没有登机？",
+    "en": "Why has boarding not started yet?"
    },
    "opts": [
     "天气不好",
@@ -1368,7 +1368,7 @@
     "en": "What does the speaker mean about drinking coffee?"
    },
    "opts": [
-    "影响因人而不同",
+    "对每个人的影响不一样",
     "晚上不能喝",
     "每个人都睡不着",
     "最好不要喝"

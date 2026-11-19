@@ -13,11 +13,11 @@
    ],
    "words": ["退", "质量", "赔", "保证", "解决", "道歉"],
    "ai": [
-    {"zh": "你好，请问我可以帮你做什么？", "en": "Hello, what can I do to help you?"},
+    {"zh": "您好，请问我可以帮您做什么？", "en": "Hello, what can I do to help you?"},
     {"zh": "真对不起。具体是什么问题？", "en": "Very sorry about that. What exactly is the problem?"},
-    {"zh": "好的。你还留着买东西时的小票吗？", "en": "Okay. Have you kept the receipt from when you bought it?"},
-    {"zh": "我们可以给你换一个新的，也可以把钱退给你。你想怎么办？", "en": "We can give you a new one, or we can give you your money back. What would you like?"},
-    {"zh": "好的，请你在这里签一下名，钱很快就会退给你。", "en": "Okay, please sign here, and the money will be returned to you soon."}
+    {"zh": "好的。您还留着买东西时的小票吗？", "en": "Okay. Have you kept the receipt from when you bought it?"},
+    {"zh": "我们可以给您换一个新的，也可以把钱退给您。您想怎么办？", "en": "We can give you a new one, or we can give you your money back. What would you like?"},
+    {"zh": "好的，请您在这里签一下名，钱很快就会退给您。", "en": "Okay, please sign here, and the money will be returned to you soon."}
    ],
    "you": [
     {"zh": "你好，我上周在这里买了一部手机，可是它坏了。", "en": "Hello, I bought a phone here last week, but it is broken."},
@@ -69,7 +69,7 @@
     {"zh": "好的。请把你的身份证给我，再填一下这张表格。", "en": "Okay. Please give me your ID card and fill in this form."},
     {"zh": "这里写名字和电话。写好以后，请你想一个六位数的密码。", "en": "Write your name and phone number here. After that, please think of a six-digit password."},
     {"zh": "可以，手续已经办好了。你的银行卡三天以后就能拿到。", "en": "Yes. The procedure has already been done. You can get your bank card in three days."},
-    {"zh": "不用，存款超过一百块就不收费。", "en": "No. If your deposit is over a hundred yuan, there is no charge."}
+    {"zh": "不用，卡里的钱超过一百块就不收费。", "en": "No. If there is over a hundred yuan on your card, there is no charge."}
    ],
    "you": [
     {"zh": "你好，我想开一个新的银行账户。", "en": "Hello, I want to open a new bank account."},
@@ -170,7 +170,7 @@
    "words": ["志愿者", "报名", "组织", "活动", "免费", "捐"],
    "ai": [
     {"zh": "你好，欢迎来到社区服务中心。请问你有什么事？", "en": "Hello, welcome to the community service centre. What brings you here?"},
-    {"zh": "太好了！你对哪种活动比较有兴趣？我们有照顾老人、教孩子学习，还有整理大家捐来的旧书。", "en": "Great! Which kind of activity are you more interested in? We have looking after old people, teaching children, and sorting the old books people have donated."},
+    {"zh": "太好了！你对哪种活动比较有兴趣？我们的活动有照顾老人、教孩子学习，还有整理大家捐来的旧书。", "en": "Great! Which kind of activity are you more interested in? We have looking after old people, teaching children, and sorting the old books people have donated."},
     {"zh": "那太合适了。你每个星期有多少时间？", "en": "That is just right. How much time do you have each week?"},
     {"zh": "可以。这个活动是免费的，你只需要填一下这张报名表。", "en": "That is fine. The activity is free, and you only need to fill in this sign-up form."},
     {"zh": "不用，你自己来就行。下个星期六见！", "en": "No need, just come yourself. See you next Saturday!"}
