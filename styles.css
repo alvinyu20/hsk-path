@@ -915,8 +915,9 @@ button.scn:hover .scn-m{text-decoration:underline}
   .app.am .main{flex:1 1 auto;min-height:0;padding:8px 12px calc(76px + env(safe-area-inset-bottom));gap:8px;overflow:hidden}
   /* the title is already on the tab; keep the level switch and the section strip, both slim */
   .app.am .top{flex:0 0 auto}
-  .app.am .top .h1{display:none}
-  .app.am .top > div:first-child{display:none}
+  /* hidden from view but kept for screen readers: every page keeps one level-one heading */
+  .app.am .top .h1{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+  .app.am .top > div:first-child{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
   .app.am .stats{width:100%;justify-content:flex-start}
   .app.am .lvseg button{min-height:30px;padding:0 12px;font-size:13.5px}
   .app.am .subnav{flex:0 0 auto;margin:0}
@@ -2128,7 +2129,7 @@ button.pill:active{transform:scale(.97)}
   .pill{height:34px;padding:0 10px;gap:6px;font-size:13.5px}
   .pill .ic{width:17px;height:17px}
   .stats{gap:6px;flex-wrap:nowrap;max-width:100%}
-  .app.scr-home .top .top-t{display:none}
+  .app.scr-home .top .top-t{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
   .app.scr-home .stats{width:100%}
   .app.scr-home .top{justify-content:flex-start}
 }
@@ -2438,7 +2439,7 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .pp-st span{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;padding:0 6px}
 .pp-st.got{border:4px double #E9A59E;color:#F3B8B1}
 .pp-st.cur{border:3px dashed #A9C2CC;color:#A9C2CC;transform:rotate(5deg)}
-.pp-st.no{border:3px dotted #4C6A78;color:#4C6A78;transform:rotate(-3deg)}
+.pp-st.no{border:3px dotted #4C6A78;color:#8FAAB6;transform:rotate(-3deg)}
 @media (max-width:600px){.pp-stamps{width:100%;justify-content:space-between}.pp-st{width:78px;height:78px}}
 @media (max-width:600px){.lants-done .lan{width:20px;height:25px}.lants-done{gap:5px;margin:0 0 2px}}
 
@@ -2757,6 +2758,7 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .gd-chips span{display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:99px;background:var(--jade-soft);font-size:14px;font-weight:700}
 .gd-coins{display:flex;flex-wrap:wrap;gap:28px;align-items:center;padding:32px;border-radius:30px;background:var(--ink);color:var(--bg)}
 .gd-coins .kick{color:var(--j2,#9FB2BA)}
+.t-dark .gd-coins .kick{color:var(--jade-soft)}
 .gd-coins-t{flex:1 1 340px;display:flex;flex-direction:column;gap:10px}
 .gd-coins-t p{margin:0;font-size:17px;opacity:.92}
 .gd-coins-t .gd-small{font-size:15px;opacity:.75}
@@ -2765,6 +2767,7 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .gd-rung b{font:700 24px/1 'Bricolage Grotesque',sans-serif}
 .gd-rung span{font-size:13px;font-weight:600;opacity:.85}
 .gd-rung.free{background:var(--seal);color:var(--on-seal)}
+.gd-rung.free span{opacity:1}
 .gd-tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
 .gd-tool{display:flex;gap:14px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:18px}
 .gd-tg{flex:none;width:50px;height:50px;border-radius:14px;background:var(--jade-soft);color:var(--jade);display:grid;place-items:center;font-size:27px;font-weight:700;line-height:1}
@@ -2778,11 +2781,15 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .gd-rg{flex:1;min-width:0;display:flex;align-items:flex-end;justify-content:center;padding:0 0 10px;border-radius:12px 12px 5px 5px;border:2px dashed var(--line);color:var(--muted)}
 .gd-rg b{font:700 20px/1 'Bricolage Grotesque',sans-serif}
 .gd-rg.on{border:0;background:var(--jade);color:var(--on-jade)}
+.gd-about{display:flex;flex-direction:column;gap:10px;padding:30px;border-radius:30px;background:var(--panel);border:1px solid var(--line);scroll-margin-top:70px}
+.gd-list{margin:4px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:10px;max-width:72ch}
+.gd-list li{font-size:16.5px;color:var(--muted);line-height:1.5}
+.gd-list b{color:var(--ink)}
 .gd-end{display:flex}
 .gd-me{flex:1;display:flex;flex-direction:column;gap:10px;padding:30px;border-radius:30px;background:var(--panel);border:1px solid var(--line)}
 .gd-me .gd-big{color:var(--seal);font-size:56px}
 .gd-me p{margin:0;font-size:17px;color:var(--muted);max-width:68ch}
-@media (max-width:640px){.gd-h1{font-size:34px}.gd-seal{width:96px;height:96px;font-size:60px;border-radius:22px}.gd-coins,.gd-levels,.gd-me{padding:22px}.gd-rungs{min-height:200px}}
+@media (max-width:640px){.gd-h1{font-size:34px}.gd-seal{width:96px;height:96px;font-size:60px;border-radius:22px}.gd-coins,.gd-levels,.gd-me,.gd-about{padding:22px}.gd-rungs{min-height:200px}}
 
 /* The level check ("test out"): one question at a time inside the same pop-up as the first-visit steps */
 .pc{gap:12px}
@@ -2993,7 +3000,7 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .dc-note.got{background:var(--jade-soft)}
 
 /* PHONES: the page title lives in the top bar (between Shanlu and your picture), so the picture banners and title rows are gone; tighter gaps all round */
-.m-title{display:none}
+.m-title{display:none;margin:0}
 @media (max-width:700px){
   .m-title{display:block;flex:1 1 0;min-width:0;padding:0 8px;text-align:center;font:700 15.5px/1.2 'Bricolage Grotesque',system-ui,sans-serif;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .side .bsub{display:none}
@@ -3401,11 +3408,12 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .jy .jy-meter i,.jy .jy-prov i{background:linear-gradient(90deg,#8BC864,#5FA64A)}
 .jy .jy-goal{background:#DFF1D5;color:#1D6B58}
 .t-dark .jy .jy-goal{background:#24402F;color:#9BE0B4}
+.t-dark .jy .jy-goal b{color:#FF8A7E;border-color:#FF8A7E}
 .jy .jy-last{border-radius:16px;background:#F3F7F4}
 .t-dark .jy .jy-last{background:var(--ipn2)}
 .jy .jy-last-n{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-weight:700;font-size:17px}
 .jy .jy-go{align-self:stretch;width:100%}
-.jy .btn.pri{background:var(--io);border-color:var(--io);color:#fff;border-radius:25px;min-height:50px;font-size:16px;font-weight:700;box-shadow:0 4px 0 var(--iod)}
+.jy .btn.pri{background:#B85A1F;border-color:#B85A1F;color:#fff;border-radius:25px;min-height:50px;font-size:16px;font-weight:700;box-shadow:0 4px 0 #7A3A10}
 .jy .btn.pri:active:not([disabled]){transform:translateY(2px);box-shadow:0 2px 0 var(--iod)}
 .jy .btn.pri[disabled]{opacity:.55}
 .jy .linkbtn{color:var(--ij)}
@@ -3718,3 +3726,6 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .jr-svg .js-mist{transform-box:fill-box;transform-origin:center;animation:jsmist 4s ease-in-out infinite alternate}
 .jr-svg .js-mist.m2{animation-delay:-2s}
 @keyframes jsmist{to{transform:scale(1.08,1.2)}}
+
+/* text for screen readers only */
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}

@@ -49,7 +49,14 @@ const indexJs = (() => {
 const indexStale = !exists('data/levels-index.js') || read('data/levels-index.js') !== indexJs;
 if (indexStale && !check) fs.writeFileSync(path.join(root, 'data/levels-index.js'), indexJs);
 
-let html = read('index.html');
+const srcHtml = read('index.html');
+// Chinese text is marked lang="zh-Hans" (screen readers read it as Chinese, and the browser picks simplified-Chinese glyph shapes).
+// Every element whose class list has the word zh gets it here, so a new one cannot be forgotten.
+const addLang = (h) => h.replace(/<([a-zA-Z][\w-]*)(\s[^<>]*?\bclass="([^"]*)"[^<>]*)>/g, (m, tag, attrs, cls) => {
+  if (cls.split(/\s+/).indexOf('zh') < 0 || /\slang="/.test(attrs)) return m;
+  return '<' + tag + ' lang="zh-Hans"' + attrs + '>';
+}).replace(/\slang="zh"/g, ' lang="zh-Hans"');
+let html = addLang(srcHtml);
 
 // ---- which files does the page load? ----
 const scripts = [];
@@ -122,13 +129,13 @@ const sw = read('tools/sw-template.js').replace('__VERSION__', VERSION).replace(
 
 const stale = [];
 if (indexStale) stale.push('data/levels-index.js');
-if (out !== html) stale.push('index.html');
+if (out !== srcHtml) stale.push('index.html');
 if (!exists('sw.js') || read('sw.js') !== sw) stale.push('sw.js');
 if (check) {
   if (stale.length) { console.error('Out of date: ' + stale.join(', ') + '. Run: node tools/build-site.js'); process.exit(1); }
   console.log('site stamp is current (version ' + VERSION + ', ' + assets.length + ' files)');
   process.exit(0);
 }
-if (out !== html) fs.writeFileSync(path.join(root, 'index.html'), out);
+if (out !== srcHtml) fs.writeFileSync(path.join(root, 'index.html'), out);
 if (!exists('sw.js') || read('sw.js') !== sw) fs.writeFileSync(path.join(root, 'sw.js'), sw);
 console.log((stale.length ? 'updated ' + stale.join(', ') : 'nothing to change') + ' (version ' + VERSION + ', ' + assets.length + ' files)');

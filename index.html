@@ -7,7 +7,7 @@
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="shanlu-data" content="data/hsk1-words.js?v=2951ddbd46 data/hsk1-grammar.js?v=9c7c234f4d data/hsk1-webs.js?v=c55e460971 data/hsk1-speak.js?v=1a0bc4fd8d data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=f29670a542 data/hsk2-words.js?v=f24b343438 data/hsk2-grammar.js?v=3bdcfab282 data/hsk2-webs.js?v=a19112d83b data/hsk2-speak.js?v=f61eb12760 data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=e50c0d2d1e data/hsk3-words.js?v=b926f66ed7 data/hsk3-grammar.js?v=124e381156 data/hsk3-webs.js?v=8cd2eefb5d data/hsk3-speak.js?v=82ca84cf78 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=29e8aab26b data/hsk4-words.js?v=dd870dceb5 data/hsk4-grammar.js?v=1e2dd82126 data/hsk4-webs.js?v=a719c781b1 data/hsk4-speak.js?v=432fbea51b data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=257a4e159a data/hsk5-words.js?v=932440eb6a data/hsk5-grammar.js?v=9652096e29 data/hsk5-webs.js?v=09b4d2f03c data/hsk5-speak.js?v=f58e180d1a data/hsk5-listen.js?v=657e83574f data/hsk5-exam.js?v=a2f534a282">
-<meta name="shanlu-version" content="6e98731f37">
+<meta name="shanlu-version" content="2d9dda4992">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=17beae9db2">
+<link rel="stylesheet" href="styles.css?v=e7f6286329">
 </head>
 <body>
 <div id="app"></div>
@@ -36,11 +36,11 @@
 <div class="app {{themeCls}} {{focusCls}} {{scrCls}}">
 
 <aside class="side">
-  <button type="button" class="brand" data-on-click="{{goHome}}" aria-label="Shanlu: go to Home">
-    <div class="mark zh" aria-hidden="true">山</div>
-    <div><div class="bname">Shanlu</div><div class="bsub">HSK study path</div></div>
+  <button type="button" class="brand" data-on-click="{{goHome}}">
+    <div lang="zh-Hans" class="mark zh" aria-hidden="true">山</div>
+    <div><div class="bname">Shanlu</div><div class="bsub">HSK study path</div><span class="sr-only">: go to Home</span></div>
   </button>
-  <div class="m-title" aria-hidden="true">{{title}}</div>
+  <h1 class="m-title">{{title}}</h1>
 
   <nav class="navs navg" aria-label="Main sections">
     <button class="{{gHomeCls}}" data-on-click="{{gHome}}">
@@ -87,12 +87,12 @@
     </div>
   </div>
 
-  <button type="button" class="me {{navAcct}}" data-on-click="{{goAcct}}" aria-label="Open your account">
-    <div class="me-av zh" aria-hidden="true"><sc-if value="{{hasAv}}" hint-placeholder-val="{{ false }}"><img src="{{avUrl}}" alt=""></sc-if><sc-if value="{{noAv}}" hint-placeholder-val="{{ true }}">{{acctInitial}}</sc-if></div>
-    <div class="me-t"><b>{{acctName}}</b><div class="bsub">{{lvName}} · {{overall}}% of the way</div></div>
+  <button type="button" class="me {{navAcct}}" data-on-click="{{goAcct}}">
+    <div lang="zh-Hans" class="me-av zh" aria-hidden="true"><sc-if value="{{hasAv}}" hint-placeholder-val="{{ false }}"><img src="{{avUrl}}" alt=""></sc-if><sc-if value="{{noAv}}" hint-placeholder-val="{{ true }}">{{acctInitial}}</sc-if></div>
+    <div class="me-t"><b>{{acctName}}</b><div class="bsub">{{lvName}} · {{overall}}% of the way</div><span class="sr-only">: open your account</span></div>
   </button>
   <button class="linkbtn" data-on-click="{{toggleTheme}}">{{themeLabel}}</button>
-  <button type="button" class="acct-mini zh {{acctMiniCls}}" data-on-click="{{goAcct}}" aria-label="Open your account"><sc-if value="{{hasAv}}" hint-placeholder-val="{{ false }}"><img src="{{avUrl}}" alt=""></sc-if><sc-if value="{{noAv}}" hint-placeholder-val="{{ true }}">{{acctInitial}}</sc-if></button>
+  <button lang="zh-Hans" type="button" class="acct-mini zh {{acctMiniCls}}" data-on-click="{{goAcct}}" aria-label="Open your account"><sc-if value="{{hasAv}}" hint-placeholder-val="{{ false }}"><img src="{{avUrl}}" alt=""></sc-if><sc-if value="{{noAv}}" hint-placeholder-val="{{ true }}">{{acctInitial}}</sc-if></button>
 </aside>
 
 <main class="main">
@@ -178,7 +178,7 @@
       </div>
       <sc-if value="{{provAnthropic}}" hint-placeholder-val="{{ true }}">
       <sc-if value="{{aiCanUse}}" hint-placeholder-val="{{ false }}"><div style="margin-top:12px"><button class="btn pri" data-on-click="{{useAnth}}">Use Claude for conversation</button></div></sc-if>
-      <p class="muted" style="margin:12px 0 0;font-size:16px">Claude is billed separately from a Claude.ai subscription: create a key at console.anthropic.com and add some credit there. Each message costs only a small fraction of a cent on the cheaper model, but I could not look up current prices from here, so check them on that site.</p>
+      <p class="muted" style="margin:12px 0 0;font-size:16px">Claude is billed separately from a Claude.ai subscription: create a key at console.anthropic.com and add some credit there. Each message costs a small fraction of a cent on the cheaper model; check current prices on that site.</p>
       <p class="muted" style="margin:10px 0 0;font-size:14.5px">The key is stored on this device only. It is sent straight from your browser to Anthropic and is not synced or exported. Anyone who can use this browser can use the key, so set a spending limit on the key's account.</p>
       <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
         <sc-for list="{{aiModelOpts}}" as="m" hint-placeholder-count="2"><button class="fc2 {{m.cls}}" data-on-click="{{m.fn}}">{{m.label}}</button></sc-for>
@@ -316,7 +316,7 @@
       <div style="margin-top:8px"><button class="btn" data-on-click="{{pcOpenMenu}}">Check my level</button></div>
       <div style="margin:16px 0 0;font-weight:600">Level lock</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{lockOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
-      <p class="muted" style="margin:8px 0 0;font-size:15px">Locked is the default. The level exams are AI-written and AI-checked, and the pictures use emoji that look different on different devices, so if an unclear question holds you back, switching the lock to open is fine: the exam then only earns the level's seal.</p>
+      <p class="muted" style="margin:8px 0 0;font-size:15px">Locked is the default. If an unclear exam question holds you back, switch to open: the exam then only earns the level's seal.</p>
     </section>
     <sc-if value="{{erhuaAvailable}}" hint-placeholder-val="{{ true }}">
     <section class="card" style="margin-top:20px">
@@ -329,6 +329,11 @@
       </div>
     </section>
     </sc-if>
+    <section class="card" style="margin-top:20px">
+      <h2 class="h2">About and accuracy</h2>
+      <p class="muted" style="margin:6px 0 0;font-size:16px">Where the words, sentences, audio and exams come from, and how they were checked.</p>
+      <div style="margin-top:12px"><button class="btn" data-on-click="{{goAbout}}">Read about the content</button></div>
+    </section>
   </div>
   </sc-if>
 
@@ -337,7 +342,7 @@
   <div class="home">
   <sc-if value="{{obSoundsShow}}" hint-placeholder-val="{{ false }}">
   <section class="card ob ob-sounds" aria-label="The sounds of Chinese">
-    <div class="ob-top"><div class="mark zh" aria-hidden="true">拼</div><div><h2 class="h2">First, the sounds of Chinese</h2><p class="muted" style="margin:2px 0 0">Recommended if Chinese is new to you</p></div></div>
+    <div class="ob-top"><div lang="zh-Hans" class="mark zh" aria-hidden="true">拼</div><div><h2 class="h2">First, the sounds of Chinese</h2><p class="muted" style="margin:2px 0 0">Recommended if Chinese is new to you</p></div></div>
     <p class="cp-note" style="margin-top:14px">Pinyin spells how Chinese sounds, and the four tones change a word's meaning. {{pyTotal}} short lessons, about 30 minutes in all. Tap any sound to hear it. You can stop and come back at any time.</p>
     <div class="ob-act"><button class="btn pri big" data-on-click="{{obSoundsGo}}">Start the sounds course</button><button class="btn big" data-on-click="{{obSoundsLater}}">Later, words first</button></div>
   </section>
@@ -347,7 +352,7 @@
     <div class="today-top"><h2 class="h2">Start here</h2><span class="muted">About 5 minutes</span></div>
     <p class="cp-note" style="margin-top:8px">Your first session is five everyday words, the same for everyone. You meet each one, pick its meaning, then type it. Nothing to set up.</p>
     <div class="ob-words" aria-label="The five words">
-      <sc-for list="{{startWords}}" as="w" hint-placeholder-count="5"><span class="ob-w"><b class="zh">{{w.zh}}</b><i>{{w.py}}</i><span>{{w.en}}</span></span></sc-for>
+      <sc-for list="{{startWords}}" as="w" hint-placeholder-count="5"><span class="ob-w"><b lang="zh-Hans" class="zh">{{w.zh}}</b><i>{{w.py}}</i><span>{{w.en}}</span></span></sc-for>
     </div>
     <div class="ob-act"><button class="btn pri big" data-on-click="{{onbStartPath}}">{{startBtnText}}</button></div>
     <sc-if value="{{startFresh}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" style="margin-top:10px" data-on-click="{{onbSkipStart}}">Skip this, I will find my own way</button></sc-if>
@@ -358,7 +363,7 @@
     <section class="fin-top" aria-label="Today is cleared">
       <div class="fin-h">
         <img src="{{mingCheer}}" alt="" aria-hidden="true" width="72" height="76">
-        <div><div class="fin-zh zh">今天完成了</div><h2 class="fin-t">Today is cleared</h2></div>
+        <div><div lang="zh-Hans" class="fin-zh zh">今天完成了</div><h2 class="fin-t">Today is cleared</h2></div>
       </div>
       <div class="fin-tiles">
         <div class="fin-tile"><b>{{finMin}}</b><span>{{finGoal}}</span></div>
@@ -405,7 +410,7 @@
     <img class="th-art" src="{{artToday}}" alt="" aria-hidden="true" width="360" height="120">
     <div class="th-in">
       <img class="th-ming" src="{{mingWave}}" alt="" width="104" height="109">
-      <div class="th-t"><div class="th-zh zh">{{greetZh}}</div><div class="th-py">{{greetPy}} · {{greetEn}}</div></div>
+      <div class="th-t"><div lang="zh-Hans" class="th-zh zh">{{greetZh}}</div><div class="th-py">{{greetPy}} · {{greetEn}}</div></div>
       <div class="th-lan" role="img" aria-label="Days you studied this week">
         <sc-for list="{{week}}" as="d" hint-placeholder-count="7"><span class="lan {{d.cls}}"><img src="{{d.img}}" alt="" width="26" height="38"><i>{{d.l}}</i></span></sc-for>
       </div>
@@ -421,7 +426,7 @@
       <div class="tasks2">
         <sc-for list="{{tasks}}" as="t" hint-placeholder-count="3">
           <button type="button" class="task2 {{t.cls}}" data-on-click="{{t.go}}">
-            <div class="task2-ico zh">{{t.glyph}}</div>
+            <div lang="zh-Hans" class="task2-ico zh">{{t.glyph}}</div>
             <div class="task-m">
               <div class="task-t">{{t.title}}</div>
               <div class="task-s">{{t.meta}}</div>
@@ -435,7 +440,7 @@
       <sc-if value="{{dcShow}}" hint-placeholder-val="{{ false }}"><p class="dc-note {{dcCls}}">{{dcText}}</p></sc-if>
       <h3 class="more-h">More ways to study</h3>
       <div class="tchips">
-        <sc-for list="{{moreWays}}" as="c" hint-placeholder-count="5"><button type="button" class="tchip {{c.cls}}" data-on-click="{{c.fn}}"><b><span class="zh tc-g" aria-hidden="true">{{c.glyph}}</span>{{c.label}}</b><span>{{c.sub}}</span></button></sc-for>
+        <sc-for list="{{moreWays}}" as="c" hint-placeholder-count="5"><button type="button" class="tchip {{c.cls}}" data-on-click="{{c.fn}}"><b><span lang="zh-Hans" class="zh tc-g" aria-hidden="true">{{c.glyph}}</span>{{c.label}}</b><span>{{c.sub}}</span></button></sc-for>
       </div>
     </section>
     </sc-if>
@@ -507,12 +512,12 @@
               <rect x="2" y="2" width="196" height="196" rx="8" fill="none" stroke="currentColor" stroke-width="2"></rect>
               <path d="M100 2v196M2 100h196" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 7"></path>
             </svg>
-            <div class="zh fc-hz {{card.sizeCls}}">{{card.zh}}</div>
+            <div lang="zh-Hans" class="zh fc-hz {{card.sizeCls}}">{{card.zh}}</div>
             <sc-if value="{{rpyShow}}" hint-placeholder-val="{{ false }}"><div class="fc-fpy">{{card.py}}</div></sc-if>
             <div class="fc-tip">Say it out loud, then tap to check</div>
           </div>
           <div class="fc-face fc-back">
-            <div class="fc-bh"><span class="zh">{{card.zh}}</span><span class="chip {{card.stage}}">{{card.stageLabel}}</span></div>
+            <div class="fc-bh"><span lang="zh-Hans" class="zh">{{card.zh}}</span><span class="chip {{card.stage}}">{{card.stageLabel}}</span></div>
             <div class="fc-py">{{card.py}}</div>
             <div class="fc-en">{{card.en}}</div>
             <div class="mbar">
@@ -521,7 +526,7 @@
               <div class="mbar-s"><span>{{card.recallText}}</span><span class="{{card.dueCls}}">{{card.due}}</span></div>
             </div>
             <div class="exbox">
-              <div class="zh">{{card.exZh}}</div>
+              <div lang="zh-Hans" class="zh">{{card.exZh}}</div>
               <div class="py">{{card.exPy}}</div>
               <div class="en">{{card.exEn}}</div>
               <sc-if value="{{card.hasNote}}" hint-placeholder-val="{{ false }}"><div class="exnote">{{card.note}}</div></sc-if>
@@ -573,7 +578,7 @@
         <div class="q-card {{qAnim}}">
           <div class="kick">{{q.kicker}}</div>
           <h2 class="q-prompt">{{q.prompt}}</h2>
-          <sc-if value="{{q.hasBig}}" hint-placeholder-val="{{ true }}"><sc-if value="{{q.bigZh}}" hint-placeholder-val="{{ true }}"><div class="zh q-big {{q.bigCls}}">{{q.big}}</div></sc-if><sc-if value="{{q.bigEn}}" hint-placeholder-val="{{ false }}"><div class="q-big q-en">{{q.big}}</div></sc-if></sc-if>
+          <sc-if value="{{q.hasBig}}" hint-placeholder-val="{{ true }}"><sc-if value="{{q.bigZh}}" hint-placeholder-val="{{ true }}"><div lang="zh-Hans" class="zh q-big {{q.bigCls}}">{{q.big}}</div></sc-if><sc-if value="{{q.bigEn}}" hint-placeholder-val="{{ false }}"><div class="q-big q-en">{{q.big}}</div></sc-if></sc-if>
           <sc-if value="{{q.isTyped}}" hint-placeholder-val="{{ true }}">
             <input id="answer-input" class="inp {{inpCls}}" type="text" value="{{qtyped}}" placeholder="{{q.placeholder}}" autocomplete="off" autocapitalize="off" aria-label="Your answer" data-on-input="{{onType}}" data-on-keydown="{{onEnter}}">
           </sc-if>
@@ -588,7 +593,7 @@
         <li>For <b>ü</b> type <b>v</b>: nv3 becomes nǚ. Capitals and spaces do not matter, and typing the hanzi works too.</li>
       </ul>
       <label class="py-try"><span>Try it here</span><input class="inp py-tryi" type="text" placeholder="ni3 hao3" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Practice typing pinyin" value="{{typIn}}" data-on-input="{{onTypIn}}"></label>
-      <div class="py-try-out zh" aria-live="polite">{{typOut}}</div>
+      <div lang="zh-Hans" class="py-try-out zh" aria-live="polite">{{typOut}}</div>
     </div>
                 <div class="py-typ-act"><button type="button" class="btn pri" data-on-click="{{typDone}}">Got it</button><button type="button" class="btn" data-on-click="{{typCourse}}">Open the pinyin course</button></div>
               </div>
@@ -603,7 +608,7 @@
           <sc-if value="{{q.isChoice}}" hint-placeholder-val="{{ false }}">
             <div class="opts {{optsCls}}">
               <sc-for list="{{opts}}" as="o" hint-placeholder-count="4">
-                <button class="opt {{o.cls}}" data-on-click="{{o.pick}}"><i class="optk" aria-hidden="true">{{o.k}}</i><span class="{{o.lcls}}">{{o.label}}</span></button>
+                <button class="opt {{o.cls}}" data-on-click="{{o.pick}}"><i class="optk" aria-hidden="true">{{o.k}}</i><span class="{{o.lcls}}" lang="{{o.lang}}">{{o.label}}</span></button>
               </sc-for>
             </div>
           </sc-if>
@@ -616,7 +621,7 @@
             <div class="fb-m">
               <div class="fb-t">{{fbTitle}}</div>
               <sc-if value="{{hasQfeed}}" hint-placeholder-val="{{ false }}"><div class="fb-x">{{qfeed}}</div></sc-if>
-              <div class="fb-s zh">{{q.reveal}}</div>
+              <div lang="zh-Hans" class="fb-s zh">{{q.reveal}}</div>
             <sc-if value="{{q.hasRevealPy}}" hint-placeholder-val="{{ false }}"><div class="fb-x fb-py">{{q.revealPy}}</div></sc-if>
               <div class="fb-x">{{q.explain}}</div>
               <a class="report" href="{{q.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
@@ -672,7 +677,7 @@
           <div class="stat"><b>{{rcounts.good}}</b><span>Good</span></div>
           <div class="stat"><b>{{rcounts.again}}</b><span>Again</span></div>
         </div>
-        <sc-if value="{{hasRmiss}}" hint-placeholder-val="{{ false }}"><div class="rc-look"><span class="kick">Worth another look</span><div class="chips"><sc-for list="{{rmissList}}" as="m" hint-placeholder-count="3"><span class="zh">{{m.zh}}</span></sc-for></div></div></sc-if>
+        <sc-if value="{{hasRmiss}}" hint-placeholder-val="{{ false }}"><div class="rc-look"><span class="kick">Worth another look</span><div class="chips"><sc-for list="{{rmissList}}" as="m" hint-placeholder-count="3"><span lang="zh-Hans" class="zh">{{m.zh}}</span></sc-for></div></div></sc-if>
         <sc-if value="{{startDoneShow}}" hint-placeholder-val="{{ false }}">
         <div class="ob-next">
           <b>First session done. What next?</b>
@@ -699,10 +704,10 @@
   <div class="lob">
     <section class="card">
       <div class="fmt">
-        <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">写</div><div><div class="fmt-t">Type it</div><div class="fmt-d">See a character and type its pinyin from memory.</div></div></div>
-        <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">听</div><div><div class="fmt-t">Listen</div><div class="fmt-d">Hear a word, then pick the character you heard.</div></div></div>
-        <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">组</div><div><div class="fmt-t">Build it</div><div class="fmt-d">Put words in order to make a correct sentence.</div></div></div>
-        <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">填</div><div><div class="fmt-t">Fill it</div><div class="fmt-d">Type the missing word in a sentence.</div></div></div>
+        <div class="fmt-r"><div lang="zh-Hans" class="fmt-g zh" aria-hidden="true">写</div><div><div class="fmt-t">Type it</div><div class="fmt-d">See a character and type its pinyin from memory.</div></div></div>
+        <div class="fmt-r"><div lang="zh-Hans" class="fmt-g zh" aria-hidden="true">听</div><div><div class="fmt-t">Listen</div><div class="fmt-d">Hear a word, then pick the character you heard.</div></div></div>
+        <div class="fmt-r"><div lang="zh-Hans" class="fmt-g zh" aria-hidden="true">组</div><div><div class="fmt-t">Build it</div><div class="fmt-d">Put words in order to make a correct sentence.</div></div></div>
+        <div class="fmt-r"><div lang="zh-Hans" class="fmt-g zh" aria-hidden="true">填</div><div><div class="fmt-t">Fill it</div><div class="fmt-d">Type the missing word in a sentence.</div></div></div>
       </div>
       <sc-if value="{{testReady}}" hint-placeholder-val="{{ true }}">
         <div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
@@ -755,13 +760,13 @@
             <div class="m1-front"><sc-html value="{{jyM1Icon}}"></sc-html><b>?</b><span>{{jyM1Kind}}</span></div>
             <div class="m1-back">
               <small>{{jyTripKicker}}</small>
-              <b class="zh">{{jyCardZh}}</b>
+              <b lang="zh-Hans" class="zh">{{jyCardZh}}</b>
               <i>{{jyCardPy}}</i>
               <span>{{jyCardEn}}</span>
               <em>{{jyPlace}}</em>
             </div>
           </div>
-          <div class="m1-stamp" aria-hidden="true"><span class="m1-st-top">{{jyM1StampEn}}</span><b class="zh">{{jyM1StampZh}}</b><span class="m1-st-bot zh">到</span></div>
+          <div class="m1-stamp" aria-hidden="true"><span class="m1-st-top">{{jyM1StampEn}}</span><b lang="zh-Hans" class="zh">{{jyM1StampZh}}</b><span lang="zh-Hans" class="m1-st-bot zh">到</span></div>
         </div>
         <button type="button" class="btn pri big jy-trip-go" data-on-click="{{jyTripClose}}">See your new stop</button>
       </div>
@@ -773,7 +778,7 @@
       <div class="jy-done" style="--dh:{{jyDoneHue}}">
         <div class="jd-confetti" aria-hidden="true"><sc-for list="{{jyDoneConf}}" as="c" hint-placeholder-count="12"><i style="left:{{c.x}};background:{{c.c}};animation-delay:{{c.d}};--r:{{c.r}};width:{{c.w}}px;height:{{c.w}}px"></i></sc-for></div>
         <div class="jd-art"><sc-html value="{{jyDoneArt}}"></sc-html></div>
-        <div class="jd-seal" aria-hidden="true"><span class="jd-seal-top">入境 · STAMPED</span><b class="zh">{{jyDoneZh}}</b><small>{{jyDoneEn}}</small></div>
+        <div class="jd-seal" aria-hidden="true"><span class="jd-seal-top">入境 · STAMPED</span><b lang="zh-Hans" class="zh">{{jyDoneZh}}</b><small>{{jyDoneEn}}</small></div>
         <h2 class="jd-h">{{jyDoneTitle}}</h2>
         <p class="jd-sub">{{jyDoneSub}}</p>
         <div class="jd-stats"><sc-for list="{{jyDoneStats}}" as="t" hint-placeholder-count="4"><div class="jd-stat"><b>{{t.n}}</b><span>{{t.l}}</span></div></sc-for></div>
@@ -795,11 +800,11 @@
       <sc-if value="{{jyHeroShow}}" hint-placeholder-val="{{ false }}"><div class="jy-hero"><img src="{{jyHeroUrl}}" alt="{{jyHeroAlt}}" referrerpolicy="no-referrer"><details class="jy-credit"><summary aria-label="Photo credit">©</summary><span>{{jyHeroCredit}}</span></details></div></sc-if>
       <div class="jy-now-t">
         <span class="jy-lab">{{jyNowLabel}}</span>
-        <b class="jy-where"><span class="zh">{{jyNowZh}}</span> {{jyNowEn}}</b>
+        <b class="jy-where"><span lang="zh-Hans" class="zh">{{jyNowZh}}</span> {{jyNowEn}}</b>
         <span class="jy-sub"><sc-if value="{{jyProvShow}}" hint-placeholder-val="{{ false }}"><span class="jy-prov" aria-hidden="true"><i style="width:{{jyProvW}}"></i></span></sc-if>{{jyNowSub}}</span>
       </div>
-      <sc-if value="{{jyGoalShow}}" hint-placeholder-val="{{ false }}"><div class="jy-goal {{jyGoalCls}}"><b class="zh" aria-hidden="true">{{jyGoalZh}}</b><span>{{jyGoalText}}</span></div></sc-if>
-      <sc-if value="{{jyLastShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="jy-last" data-on-click="{{jyLastOpen}}"><span class="jy-last-k">Latest stop</span><span class="jy-last-n"><b class="zh">{{jyLastZh}}</b> {{jyLastEn}}</span><span class="jy-last-s">{{jyLastKind}}</span></button></sc-if>
+      <sc-if value="{{jyGoalShow}}" hint-placeholder-val="{{ false }}"><div class="jy-goal {{jyGoalCls}}"><b lang="zh-Hans" class="zh" aria-hidden="true">{{jyGoalZh}}</b><span>{{jyGoalText}}</span></div></sc-if>
+      <sc-if value="{{jyLastShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="jy-last" data-on-click="{{jyLastOpen}}"><span class="jy-last-k">Latest stop</span><span class="jy-last-n"><b lang="zh-Hans" class="zh">{{jyLastZh}}</b> {{jyLastEn}}</span><span class="jy-last-s">{{jyLastKind}}</span></button></sc-if>
       <div class="jy-gorow"><button type="button" class="btn pri jy-go" disabled="{{jyGoOff}}" data-on-click="{{jyTravel}}">{{jyGoText}}</button><sc-if value="{{jyEarnShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="jy-earn" data-on-click="{{jyEarnOpen}}">How to earn?</button></sc-if></div>
     </div>
     </sc-if>
@@ -811,7 +816,7 @@
     <article class="jy-card {{jyKindCls}}" aria-live="polite">
       <sc-if value="{{jyBannerShow}}" hint-placeholder-val="{{ false }}"><div class="jy-banner"><sc-for list="{{jyBanners}}" as="b" hint-placeholder-count="1"><p><b>{{b.t}}</b> {{b.d}}</p></sc-for></div></sc-if>
       <sc-if value="{{jyStampShow}}" hint-placeholder-val="{{ false }}">
-        <div class="jy-stampbox"><div class="jy-stamp big done" style="--sh:{{jyStampHue}}"><span class="jy-stamp-top">入境 · ARRIVAL</span><span class="jy-stamp-zh zh">{{jyStampZh}}</span><span class="jy-stamp-en">{{jyStampEn}}</span><span class="jy-stamp-row"><img class="jy-stamp-pl" src="{{jyStampPlane}}" alt=""><span class="jy-stamp-code">{{jyStampCode}}</span><span class="jy-stamp-date">{{jyStampDate}}</span></span><span class="jy-stamp-seal zh" aria-hidden="true">完成</span></div></div>
+        <div class="jy-stampbox"><div class="jy-stamp big done" style="--sh:{{jyStampHue}}"><span class="jy-stamp-top">入境 · ARRIVAL</span><span lang="zh-Hans" class="jy-stamp-zh zh">{{jyStampZh}}</span><span class="jy-stamp-en">{{jyStampEn}}</span><span class="jy-stamp-row"><img class="jy-stamp-pl" src="{{jyStampPlane}}" alt=""><span class="jy-stamp-code">{{jyStampCode}}</span><span class="jy-stamp-date">{{jyStampDate}}</span></span><span lang="zh-Hans" class="jy-stamp-seal zh" aria-hidden="true">完成</span></div></div>
         <sc-if value="{{jyAlbumShow}}" hint-placeholder-val="{{ false }}"><div class="jy-albumbox"><b>{{jyAlbumTitle}}</b><div class="jy-album"><sc-for list="{{jyAlbum}}" as="a" hint-placeholder-count="6"><img src="{{a.url}}" alt="{{a.alt}}" loading="lazy" referrerpolicy="no-referrer"></sc-for></div></div></sc-if>
       </sc-if>
       <sc-if value="{{jySvCardShow}}" hint-placeholder-val="{{ false }}">
@@ -819,7 +824,7 @@
           <img class="sv-found-img" src="{{jySvCardImg}}" alt="" width="96" height="96">
           <div class="sv-found-t">
             <small>{{jySvCardTitle}}</small>
-            <b class="zh">{{jySvCardZh}}</b>
+            <b lang="zh-Hans" class="zh">{{jySvCardZh}}</b>
             <span class="sv-py">{{jySvCardPy}}</span>
             <span class="sv-en">{{jySvCardEn}}</span>
           </div>
@@ -829,48 +834,48 @@
       </sc-if>
       <sc-if value="{{jyTkFly}}" hint-placeholder-val="{{ false }}">
         <div class="jy-tk fly" role="group" aria-label="{{jyTkLabel}}">
-          <div class="jy-tk-h"><b class="zh">登机牌</b><span>Boarding pass</span><i>Shanlu Air</i></div>
+          <div class="jy-tk-h"><b lang="zh-Hans" class="zh">登机牌</b><span>Boarding pass</span><i>Shanlu Air</i></div>
           <div class="jy-tk-r">
-            <div class="jy-tk-p"><b class="zh">{{jyTkFromCode}}</b><span class="zh">{{jyTkFromZh}}</span><small>{{jyTkFromPy}}</small></div>
+            <div class="jy-tk-p"><b lang="zh-Hans" class="zh">{{jyTkFromCode}}</b><span lang="zh-Hans" class="zh">{{jyTkFromZh}}</span><small>{{jyTkFromPy}}</small></div>
             <div class="jy-tk-line" aria-hidden="true"><i class="jy-tk-v">✈️</i></div>
-            <div class="jy-tk-p"><b>{{jyTkToCode}}</b><span class="zh">{{jyTkToZh}}</span><small>{{jyTkToPy}}</small></div>
+            <div class="jy-tk-p"><b>{{jyTkToCode}}</b><span lang="zh-Hans" class="zh">{{jyTkToZh}}</span><small>{{jyTkToPy}}</small></div>
           </div>
-          <div class="jy-tk-f"><span><em class="zh">航班</em> Flight <b>{{jyTkNo}}</b></span><span><em class="zh">日期</em> Date <b>{{jyTkDate}}</b></span><sc-if value="{{jyTkHasKm}}" hint-placeholder-val="{{ false }}"><span><em class="zh">{{jyTkKm}}</em> · {{jyTkKmEn}}</span></sc-if></div>
+          <div class="jy-tk-f"><span><em lang="zh-Hans" class="zh">航班</em> Flight <b>{{jyTkNo}}</b></span><span><em lang="zh-Hans" class="zh">日期</em> Date <b>{{jyTkDate}}</b></span><sc-if value="{{jyTkHasKm}}" hint-placeholder-val="{{ false }}"><span><em lang="zh-Hans" class="zh">{{jyTkKm}}</em> · {{jyTkKmEn}}</span></sc-if></div>
         </div>
       </sc-if>
       <sc-if value="{{jyTkRide}}" hint-placeholder-val="{{ false }}">
         <div class="jy-tk ride" role="group" aria-label="{{jyTkLabel}}">
-          <div class="jy-tk-h"><b class="zh">车票</b><span>Ticket</span><i><span class="zh">{{jyTkNo}}</span> · {{jyTkNoEn}}</i></div>
+          <div class="jy-tk-h"><b lang="zh-Hans" class="zh">车票</b><span>Ticket</span><i><span lang="zh-Hans" class="zh">{{jyTkNo}}</span> · {{jyTkNoEn}}</i></div>
           <div class="jy-tk-r">
-            <div class="jy-tk-p"><b class="zh">{{jyTkFromZh}}</b><small>{{jyTkFromPy}}</small></div>
+            <div class="jy-tk-p"><b lang="zh-Hans" class="zh">{{jyTkFromZh}}</b><small>{{jyTkFromPy}}</small></div>
             <div class="jy-tk-line" aria-hidden="true"><i class="jy-tk-v">🚆</i></div>
-            <div class="jy-tk-p"><b class="zh">{{jyTkToZh}}</b><small>{{jyTkToPy}}</small></div>
+            <div class="jy-tk-p"><b lang="zh-Hans" class="zh">{{jyTkToZh}}</b><small>{{jyTkToPy}}</small></div>
           </div>
-          <sc-if value="{{jyTkHasKm}}" hint-placeholder-val="{{ false }}"><div class="jy-tk-f"><span><em class="zh">{{jyTkKm}}</em> <small>{{jyTkKmPy}}</small></span><span>{{jyTkKmEn}}</span></div></sc-if>
+          <sc-if value="{{jyTkHasKm}}" hint-placeholder-val="{{ false }}"><div class="jy-tk-f"><span><em lang="zh-Hans" class="zh">{{jyTkKm}}</em> <small>{{jyTkKmPy}}</small></span><span>{{jyTkKmEn}}</span></div></sc-if>
         </div>
       </sc-if>
       <sc-if value="{{jyTkWalk}}" hint-placeholder-val="{{ false }}">
-        <div class="jy-tk walk"><span aria-hidden="true">🚶</span><b class="zh">走路</b><small>zǒulù</small><span>{{jyTkWalkText}} · {{jyTkWalkN}}</span></div>
+        <div class="jy-tk walk"><span aria-hidden="true">🚶</span><b lang="zh-Hans" class="zh">走路</b><small>zǒulù</small><span>{{jyTkWalkText}} · {{jyTkWalkN}}</span></div>
       </sc-if>
       <sc-if value="{{jyCityStampShow}}" hint-placeholder-val="{{ false }}">
-        <div class="jy-stampbox"><div class="jy-cstamp big {{jyCityStampCls}}" style="--sh:{{jyCityStampHue}}"><img class="st-art" src="{{jyCityStampArt}}" alt=""><span class="zh">{{jyCityStampZh}}</span><small>{{jyCityStampEn}}</small></div></div>
+        <div class="jy-stampbox"><div class="jy-cstamp big {{jyCityStampCls}}" style="--sh:{{jyCityStampHue}}"><img class="st-art" src="{{jyCityStampArt}}" alt=""><span lang="zh-Hans" class="zh">{{jyCityStampZh}}</span><small>{{jyCityStampEn}}</small></div></div>
       </sc-if>
       <div class="jy-photo">
         <sc-if value="{{jyHasPhoto}}" hint-placeholder-val="{{ false }}"><img src="{{jyPhotoUrl}}" alt="{{jyPhotoAlt}}" loading="lazy" referrerpolicy="no-referrer"><details class="jy-credit"><summary aria-label="Photo credit">©</summary><span>{{jyPhotoCredit}}</span></details></sc-if>
         <sc-if value="{{jyNoPhoto}}" hint-placeholder-val="{{ true }}"><div class="jy-tile" aria-hidden="true"><svg viewBox="-10 -10 20 20"><sc-if value="{{jyIsT}}" hint-placeholder-val="{{ false }}"><rect x="-6" y="-6" width="12" height="12" rx="1.5"/></sc-if><sc-if value="{{jyIsA}}" hint-placeholder-val="{{ false }}"><path d="M0 -7.5 L7 5 L-7 5 Z"/></sc-if><sc-if value="{{jyIsD}}" hint-placeholder-val="{{ false }}"><circle r="6.2"/></sc-if><sc-if value="{{jyIsC}}" hint-placeholder-val="{{ false }}"><path d="M0 -7.5 L7.5 0 L0 7.5 L-7.5 0 Z"/></sc-if><sc-if value="{{jyIsP}}" hint-placeholder-val="{{ false }}"><path d="M0 -8 L1.8 -2.3 L8 1.2 L8 3 L1.8 1.4 L1.4 5.7 L3.4 7 L3.4 8.2 L0 7.3 L-3.4 8.2 L-3.4 7 L-1.4 5.7 L-1.8 1.4 L-8 3 L-8 1.2 L-1.8 -2.3 Z"/></sc-if></svg></div></sc-if>
       </div>
       <div class="jy-ct"><span class="jy-kind">{{jyKindLabel}}</span><span class="jy-place">{{jyPlace}}</span></div>
-      <h2 class="jy-zh zh">{{jyCardZh}}</h2>
+      <h2 lang="zh-Hans" class="jy-zh zh">{{jyCardZh}}</h2>
       <div class="jy-py">{{jyCardPy}}</div>
       <div class="jy-en">{{jyCardEn}}</div>
       <p class="jy-note">{{jyCardNote}}</p>
       <sc-if value="{{jyHasFun}}" hint-placeholder-val="{{ false }}"><p class="jy-fun"><b>Did you know?</b> {{jyCardFun}}</p></sc-if>
       <sc-if value="{{jyIntroShow}}" hint-placeholder-val="{{ false }}"><div class="jy-intro"><h3>{{jyIntroTitle}}</h3><sc-for list="{{jyIntro}}" as="l" hint-placeholder-count="3"><p><b>{{l.k}}</b> {{l.t}}</p></sc-for><small>{{jyIntroCount}}</small></div></sc-if>
       <sc-if value="{{jyHasWords}}" hint-placeholder-val="{{ false }}"><p class="jy-words"><b>Travel words</b> {{jyWords}}</p></sc-if>
-      <sc-if value="{{jyStarNote}}" hint-placeholder-val="{{ false }}"><div class="jy-starbox"><div class="jy-sstamp static" aria-hidden="true"><i>★</i><img class="st-art" src="{{jyStarArt}}" alt=""><span class="zh">{{jyCardZh}}</span></div><p class="jy-starnote">A must-see. Its gold stamp is in your passport.</p></div></sc-if>
+      <sc-if value="{{jyStarNote}}" hint-placeholder-val="{{ false }}"><div class="jy-starbox"><div class="jy-sstamp static" aria-hidden="true"><i>★</i><img class="st-art" src="{{jyStarArt}}" alt=""><span lang="zh-Hans" class="zh">{{jyCardZh}}</span></div><p class="jy-starnote">A must-see. Its gold stamp is in your passport.</p></div></sc-if>
       <div class="jy-sayit">
         <div class="jy-sayit-h"><b>Say it there</b><span>{{jySayTag}}</span></div>
-        <div class="jy-sayit-zh zh">{{jySayZh}}</div>
+        <div lang="zh-Hans" class="jy-sayit-zh zh">{{jySayZh}}</div>
         <div class="jy-sayit-py">{{jySayPy}}</div>
         <div class="jy-sayit-en">{{jySayEn}}</div>
         <button type="button" class="btn jy-sayit-b" data-on-click="{{jySayIt}}">Hear the sentence</button>
@@ -913,7 +918,7 @@
       </sc-if>
       <sc-if value="{{jyProv}}" hint-placeholder-val="{{ false }}">
         <div class="jy-panel">
-          <div class="jy-ph"><button type="button" class="linkbtn" data-on-click="{{jyBack}}">← All regions</button><b><span class="zh">{{jyProvZh}}</span> {{jyProvEn}}</b><span class="muted">{{jyProvCount}}</span></div>
+          <div class="jy-ph"><button type="button" class="linkbtn" data-on-click="{{jyBack}}">← All regions</button><b><span lang="zh-Hans" class="zh">{{jyProvZh}}</span> {{jyProvEn}}</b><span class="muted">{{jyProvCount}}</span></div>
           <div class="hs-wrap"><div class="seg2 hs-scroll" role="group" aria-label="Show on the map"><sc-for list="{{jyFilters}}" as="f" hint-placeholder-count="5"><button type="button" class="jy-chip {{f.cls}}" data-on-click="{{f.fn}}">{{f.label}} <i>{{f.count}}</i></button></sc-for></div><button type="button" class="jy-tabarr l" tabindex="-1" aria-hidden="true" data-jy-scroll="-1"><svg class="ic" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" class="jy-tabarr r" tabindex="-1" aria-hidden="true" data-jy-scroll="1"><svg class="ic" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div>
           <div class="jy-mapw prov">
             <div class="jy-sea" aria-hidden="true"><i class="jy-waves"></i></div>
@@ -930,7 +935,7 @@
           </div>
           <p class="muted jy-key">{{jyProvKey}}</p>
           <sc-if value="{{jyProvIntroShow}}" hint-placeholder-val="{{ false }}"><div class="jy-intro"><sc-for list="{{jyProvIntro}}" as="l" hint-placeholder-count="3"><p><b>{{l.k}}</b> {{l.t}}</p></sc-for></div></sc-if>
-          <sc-if value="{{jySelShow}}" hint-placeholder-val="{{ false }}"><div class="jy-sel"><sc-for list="{{jySelRows}}" as="r" hint-placeholder-count="2"><button type="button" class="jy-row {{r.cls}}" data-on-click="{{r.open}}"><span class="jy-k">{{r.kind}}</span><span class="zh">{{r.zh}}</span><span class="jy-rowen">{{r.en}}</span></button></sc-for></div></sc-if>
+          <sc-if value="{{jySelShow}}" hint-placeholder-val="{{ false }}"><div class="jy-sel"><sc-for list="{{jySelRows}}" as="r" hint-placeholder-count="2"><button type="button" class="jy-row {{r.cls}}" data-on-click="{{r.open}}"><span class="jy-k">{{r.kind}}</span><span lang="zh-Hans" class="zh">{{r.zh}}</span><span class="jy-rowen">{{r.en}}</span></button></sc-for></div></sc-if>
         </div>
       </sc-if>
     </sc-if>
@@ -944,7 +949,7 @@
             <div class="pcard-in">
               <button type="button" class="pcard-f" aria-label="{{c.label}}" tabindex="{{c.ft}}" data-on-click="{{c.flip}}"><sc-if value="{{c.hasPhoto}}" hint-placeholder-val="{{ false }}"><img src="{{c.url}}" alt="" loading="lazy" referrerpolicy="no-referrer"></sc-if><sc-if value="{{c.noPhoto}}" hint-placeholder-val="{{ true }}"><span class="pcard-art"><img src="{{c.art}}" alt=""></span></sc-if><span class="pcard-cap"><span>{{c.en}}</span></span></button>
               <div class="pcard-k" aria-hidden="{{c.kh}}" data-on-click="{{c.flip}}">
-                <div class="pcard-msg"><small>{{c.kind}}</small><b class="zh">{{c.zh}}</b><span class="pcard-py">{{c.py}}</span><span class="pcard-en">{{c.en}}</span><span class="pcard-wh">{{c.where}}</span></div>
+                <div class="pcard-msg"><small>{{c.kind}}</small><b lang="zh-Hans" class="zh">{{c.zh}}</b><span class="pcard-py">{{c.py}}</span><span class="pcard-en">{{c.en}}</span><span class="pcard-wh">{{c.where}}</span></div>
                 <div class="pcard-st"><img src="{{c.art}}" alt=""></div>
                 <div class="pcard-acts"><button type="button" class="pcard-go" tabindex="{{c.kt}}" data-on-click="{{c.open}}">Read it</button><span class="pcard-cr">{{c.credit}}</span></div>
               </div>
@@ -958,16 +963,16 @@
     <sc-if value="{{jyIsFood}}" hint-placeholder-val="{{ false }}">
       <div class="jy-panel">
         <sc-if value="{{jyFoodHas}}" hint-placeholder-val="{{ true }}">
-          <div class="fz-chips" role="group" aria-label="Province"><sc-for list="{{jyFoodChips}}" as="c" hint-placeholder-count="3"><button type="button" class="fz-chip" aria-pressed="{{c.pressed}}" data-on-click="{{c.pick}}"><b class="zh">{{c.zh}}</b><span>{{c.en}} · {{c.n}}</span></button></sc-for></div>
+          <div class="fz-chips" role="group" aria-label="Province"><sc-for list="{{jyFoodChips}}" as="c" hint-placeholder-count="3"><button type="button" class="fz-chip" aria-pressed="{{c.pressed}}" data-on-click="{{c.pick}}"><b lang="zh-Hans" class="zh">{{c.zh}}</b><span>{{c.en}} · {{c.n}}</span></button></sc-for></div>
           <div class="fz-card" role="button" tabindex="0" aria-label="{{jyFoodLabel}}" data-on-click="{{jyFoodOpenFn}}" data-on-keydown="{{jyFoodKey}}"><sc-html value="{{jyFoodSvg}}"></sc-html><span class="fz-badge" aria-hidden="true">Tap to look closer</span></div>
           <div class="fz-foot"><span>{{jyFoodCount}}</span><sc-if value="{{jyFoodMulti}}" hint-placeholder-val="{{ false }}"><span class="fz-pg"><button type="button" class="fz-pgb" aria-label="Previous course" data-on-click="{{jyFoodPrev}}" disabled="{{jyFoodPrevOff}}">‹</button><span>{{jyFoodCourse}}</span><button type="button" class="fz-pgb" aria-label="Next course" data-on-click="{{jyFoodNext}}" disabled="{{jyFoodNextOff}}">›</button></span></sc-if></div>
           <sc-if value="{{jyTablesShow}}" hint-placeholder-val="{{ true }}"><details class="fz-list"><summary>Menu as a list</summary>
             <sc-for list="{{jyTables}}" as="t" hint-placeholder-count="1">
               <section class="jy-table fd-menu" style="--sh:{{t.hue}}">
-                <div class="jy-table-h"><span class="fd-orn" aria-hidden="true">❦</span><b class="zh">{{t.zh}}</b><span>{{t.en}}</span><i><span class="zh">菜单</span> càidān · menu</i><small>{{t.sub}}</small></div>
+                <div class="jy-table-h"><span class="fd-orn" aria-hidden="true">❦</span><b lang="zh-Hans" class="zh">{{t.zh}}</b><span>{{t.en}}</span><i><span lang="zh-Hans" class="zh">菜单</span> càidān · menu</i><small>{{t.sub}}</small></div>
                 <sc-for list="{{t.groups}}" as="g" hint-placeholder-count="2">
-                  <div class="jy-menu-g"><span class="zh">{{g.zh}}</span> {{g.py}} · {{g.en}}</div>
-                  <sc-for list="{{g.items}}" as="d" hint-placeholder-count="3"><button type="button" class="jy-dish {{d.cls}}" aria-label="{{d.label}}" data-on-click="{{d.open}}"><img class="fd-ico" src="{{d.art}}" alt=""><span class="zh">{{d.zh}}</span><small>{{d.py}}</small><em>{{d.en}}</em></button></sc-for>
+                  <div class="jy-menu-g"><span lang="zh-Hans" class="zh">{{g.zh}}</span> {{g.py}} · {{g.en}}</div>
+                  <sc-for list="{{g.items}}" as="d" hint-placeholder-count="3"><button type="button" class="jy-dish {{d.cls}}" aria-label="{{d.label}}" data-on-click="{{d.open}}"><img class="fd-ico" src="{{d.art}}" alt=""><span lang="zh-Hans" class="zh">{{d.zh}}</span><small>{{d.py}}</small><em>{{d.en}}</em></button></sc-for>
                 </sc-for>
               </section>
             </sc-for>
@@ -980,7 +985,7 @@
               <sc-if value="{{jyFoodPopShow}}" hint-placeholder-val="{{ false }}">
                 <div class="fz-pop" role="group" aria-label="{{jyPopEn}}">
                   <div class="fz-pop-art"><sc-html value="{{jyPopArt}}"></sc-html></div>
-                  <div class="fz-pop-t"><b class="zh">{{jyPopZh}}</b><span class="fz-py">{{jyPopPy}}</span><em>{{jyPopEn}}</em><small>{{jyPopWhere}}</small>
+                  <div class="fz-pop-t"><b lang="zh-Hans" class="zh">{{jyPopZh}}</b><span class="fz-py">{{jyPopPy}}</span><em>{{jyPopEn}}</em><small>{{jyPopWhere}}</small>
                     <p>{{jyPopNote}}</p><p class="fz-fun">{{jyPopFun}}</p>
                     <div class="fz-pop-b"><sc-if value="{{jyPopCanOpen}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn pri sm" data-on-click="{{jyPopOpen}}">Open this stop</button></sc-if><button type="button" class="btn sm" data-on-click="{{jyPopClose}}">Close</button></div></div>
                 </div>
@@ -1002,13 +1007,13 @@
               <section class="pp-pg {{g.cls}}" style="z-index:{{g.z}}" aria-hidden="{{g.hid}}">
                 <div class="pp-front">
                   <sc-if value="{{g.cover}}" hint-placeholder-val="{{ true }}">
-                    <div class="pp-cover"><span class="pp-cv-k zh">护照</span><b>PASSPORT</b><sc-if value="{{g.who}}" hint-placeholder-val="{{ false }}"><span class="pp-cv-who">{{g.who}}</span></sc-if><span class="pp-cv-seal zh" aria-hidden="true">山</span><span class="pp-cv-facts"><sc-for list="{{g.facts}}" as="f" hint-placeholder-count="3"><span><em>{{f.k}}</em><i>{{f.v}}</i></span></sc-for></span><small>Turn the page ›</small></div>
+                    <div class="pp-cover"><span lang="zh-Hans" class="pp-cv-k zh">护照</span><b>PASSPORT</b><sc-if value="{{g.who}}" hint-placeholder-val="{{ false }}"><span class="pp-cv-who">{{g.who}}</span></sc-if><span lang="zh-Hans" class="pp-cv-seal zh" aria-hidden="true">山</span><span class="pp-cv-facts"><sc-for list="{{g.facts}}" as="f" hint-placeholder-count="3"><span><em>{{f.k}}</em><i>{{f.v}}</i></span></sc-for></span><small>Turn the page ›</small></div>
                   </sc-if>
                   <sc-if value="{{g.isPage}}" hint-placeholder-val="{{ false }}">
-                    <div class="pp-h"><span class="zh">{{g.head}}</span><b>{{g.title}}</b><i>{{g.no}}</i></div>
-                    <sc-if value="{{g.isReg}}" hint-placeholder-val="{{ true }}"><div class="pp-grid"><sc-for list="{{g.stamps}}" as="s" hint-placeholder-count="4"><button type="button" class="jy-slot {{s.cls}}" style="--sh:{{s.hue}}" aria-label="{{s.label}}" tabindex="{{g.tab}}" data-on-click="{{s.open}}"><span class="jy-stamp"><span class="jy-stamp-top">入境 · ARRIVAL</span><span class="jy-stamp-zh zh">{{s.zh}}</span><span class="jy-stamp-en">{{s.en}}</span><span class="jy-stamp-row"><img class="jy-stamp-pl" src="{{s.plane}}" alt=""><span class="jy-stamp-code">{{s.code}}</span><span class="jy-stamp-date">{{s.date}}</span></span><span class="jy-stamp-seal zh" aria-hidden="true">完成</span></span></button></sc-for></div></sc-if>
-                    <sc-if value="{{g.isCity}}" hint-placeholder-val="{{ false }}"><div class="pp-grid c2"><sc-for list="{{g.cstamps}}" as="c" hint-placeholder-count="3"><button type="button" class="jy-cstamp {{c.cls}}" style="--sh:{{c.hue}}" aria-label="{{c.label}}" tabindex="{{g.tab}}" data-on-click="{{c.open}}"><img class="st-art" src="{{c.art}}" alt=""><span class="zh">{{c.zh}}</span><small>{{c.en}}</small><i>{{c.sub}}</i></button></sc-for></div></sc-if>
-                    <sc-if value="{{g.isStar}}" hint-placeholder-val="{{ false }}"><div class="pp-grid c2"><sc-for list="{{g.sstamps}}" as="m" hint-placeholder-count="3"><button type="button" class="jy-sstamp" aria-label="{{m.label}}" tabindex="{{g.tab}}" data-on-click="{{m.open}}"><i aria-hidden="true">★</i><img class="st-art" src="{{m.art}}" alt=""><span class="zh">{{m.zh}}</span><small>{{m.en}}</small></button></sc-for></div></sc-if>
+                    <div class="pp-h"><span lang="zh-Hans" class="zh">{{g.head}}</span><b>{{g.title}}</b><i>{{g.no}}</i></div>
+                    <sc-if value="{{g.isReg}}" hint-placeholder-val="{{ true }}"><div class="pp-grid"><sc-for list="{{g.stamps}}" as="s" hint-placeholder-count="4"><button type="button" class="jy-slot {{s.cls}}" style="--sh:{{s.hue}}" aria-label="{{s.label}}" tabindex="{{g.tab}}" data-on-click="{{s.open}}"><span class="jy-stamp"><span class="jy-stamp-top">入境 · ARRIVAL</span><span lang="zh-Hans" class="jy-stamp-zh zh">{{s.zh}}</span><span class="jy-stamp-en">{{s.en}}</span><span class="jy-stamp-row"><img class="jy-stamp-pl" src="{{s.plane}}" alt=""><span class="jy-stamp-code">{{s.code}}</span><span class="jy-stamp-date">{{s.date}}</span></span><span lang="zh-Hans" class="jy-stamp-seal zh" aria-hidden="true">完成</span></span></button></sc-for></div></sc-if>
+                    <sc-if value="{{g.isCity}}" hint-placeholder-val="{{ false }}"><div class="pp-grid c2"><sc-for list="{{g.cstamps}}" as="c" hint-placeholder-count="3"><button type="button" class="jy-cstamp {{c.cls}}" style="--sh:{{c.hue}}" aria-label="{{c.label}}" tabindex="{{g.tab}}" data-on-click="{{c.open}}"><img class="st-art" src="{{c.art}}" alt=""><span lang="zh-Hans" class="zh">{{c.zh}}</span><small>{{c.en}}</small><i>{{c.sub}}</i></button></sc-for></div></sc-if>
+                    <sc-if value="{{g.isStar}}" hint-placeholder-val="{{ false }}"><div class="pp-grid c2"><sc-for list="{{g.sstamps}}" as="m" hint-placeholder-count="3"><button type="button" class="jy-sstamp" aria-label="{{m.label}}" tabindex="{{g.tab}}" data-on-click="{{m.open}}"><i aria-hidden="true">★</i><img class="st-art" src="{{m.art}}" alt=""><span lang="zh-Hans" class="zh">{{m.zh}}</span><small>{{m.en}}</small></button></sc-for></div></sc-if>
                     <sc-if value="{{g.none}}" hint-placeholder-val="{{ false }}"><p class="pp-none">{{g.noneText}}</p></sc-if>
                   </sc-if>
                 </div>
@@ -1034,7 +1039,7 @@
           <div class="sv-detail {{jySvSelCls}}" role="group" aria-label="{{jySvSelLabel}}">
             <img class="sv-detail-img" src="{{jySvSelImg}}" alt="" width="88" height="88">
             <div class="sv-detail-t">
-              <b class="zh">{{jySvSelZh}}</b>
+              <b lang="zh-Hans" class="zh">{{jySvSelZh}}</b>
               <span class="sv-py">{{jySvSelPy}}</span>
               <span class="sv-en">{{jySvSelEn}}</span>
             </div>
@@ -1045,7 +1050,7 @@
         </sc-if>
         <div class="jy-chips" role="group" aria-label="Show souvenirs"><sc-for list="{{jySvChips}}" as="f" hint-placeholder-count="3"><button type="button" class="jy-chip {{f.cls}}" data-on-click="{{f.fn}}">{{f.label}} <i>{{f.count}}</i></button></sc-for></div>
         <sc-if value="{{jySvNone}}" hint-placeholder-val="{{ false }}"><p class="muted jy-key">{{jySvNoneText}}</p></sc-if>
-        <div class="sv-grid"><sc-for list="{{jySvItems}}" as="s" hint-placeholder-count="6"><button type="button" class="sv-cell {{s.cls}}" aria-label="{{s.label}}" data-on-click="{{s.open}}"><img class="sv-img" src="{{s.img}}" alt="" width="64" height="64" loading="lazy"><span class="sv-name">{{s.name}}</span><small class="sv-zh zh">{{s.zh}}</small></button></sc-for></div>
+        <div class="sv-grid"><sc-for list="{{jySvItems}}" as="s" hint-placeholder-count="6"><button type="button" class="sv-cell {{s.cls}}" aria-label="{{s.label}}" data-on-click="{{s.open}}"><img class="sv-img" src="{{s.img}}" alt="" width="64" height="64" loading="lazy"><span class="sv-name">{{s.name}}</span><small lang="zh-Hans" class="sv-zh zh">{{s.zh}}</small></button></sc-for></div>
       </div>
     </sc-if>
     </div>
@@ -1063,20 +1068,20 @@
           <h2 class="gd-h1">Small steps every day. Real places at the end of them.</h2>
           <p class="gd-lead">Fifteen to twenty minutes is plenty. You learn words, bring them back before you forget, and spend the coins you earn on a journey through China.</p>
         </div>
-        <div class="gd-seal zh" aria-hidden="true">山</div>
+        <div lang="zh-Hans" class="gd-seal zh" aria-hidden="true">山</div>
       </div>
 
       <div class="gd-sounds">
-        <div class="gd-sounds-g zh" aria-hidden="true">拼音</div>
+        <div lang="zh-Hans" class="gd-sounds-g zh" aria-hidden="true">拼音</div>
         <div class="gd-sounds-t"><h3>New to Chinese? Start with the sounds.</h3><p>Pinyin spells how Chinese sounds, and the four tones change what a word means. Seven short lessons, about 30 minutes in all, with sounds you can tap to hear.</p></div>
         <button class="btn pri" data-on-click="{{goPinyin}}">Open the pinyin course</button>
       </div>
 
       <div class="gd-sec"><div class="kick">A day on Shanlu</div><h3 class="gd-h2">Three things, in this order</h3></div>
       <div class="gd-loop">
-        <div class="gd-step"><div class="gd-big zh" aria-hidden="true">见</div><h4>1. Meet new words</h4><p>Each stop on the Path brings a handful of related words. You meet each one, then try it. Meeting a word is not knowing it yet.</p><div class="gd-chips"><span>Path</span><span>Library</span></div></div>
-        <div class="gd-step"><div class="gd-big zh" aria-hidden="true">记</div><h4>2. Recall them in Review</h4><p>Pick the meaning, then type it. Review brings the word back just as you are about to forget it. Be honest with the buttons: Again, Hard, Good, Easy.</p><div class="gd-chips"><span>Review</span><span>My words</span></div></div>
-        <div class="gd-step"><div class="gd-big zh" aria-hidden="true">用</div><h4>3. Use them</h4><p>Add grammar, listening or speaking. The Today list on Home puts together a short plan for your daily goal, which you can change any time.</p><div class="gd-chips"><span>Grammar</span><span>Listening</span><span>Speaking</span></div></div>
+        <div class="gd-step"><div lang="zh-Hans" class="gd-big zh" aria-hidden="true">见</div><h4>1. Meet new words</h4><p>Each stop on the Path brings a handful of related words. You meet each one, then try it. Meeting a word is not knowing it yet.</p><div class="gd-chips"><span>Path</span><span>Library</span></div></div>
+        <div class="gd-step"><div lang="zh-Hans" class="gd-big zh" aria-hidden="true">记</div><h4>2. Recall them in Review</h4><p>Pick the meaning, then type it. Review brings the word back just as you are about to forget it. Be honest with the buttons: Again, Hard, Good, Easy.</p><div class="gd-chips"><span>Review</span><span>My words</span></div></div>
+        <div class="gd-step"><div lang="zh-Hans" class="gd-big zh" aria-hidden="true">用</div><h4>3. Use them</h4><p>Add grammar, listening or speaking. The Today list on Home puts together a short plan for your daily goal, which you can change any time.</p><div class="gd-chips"><span>Grammar</span><span>Listening</span><span>Speaking</span></div></div>
       </div>
 
       <div class="gd-coins">
@@ -1099,32 +1104,45 @@
 
       <div class="gd-sec"><div class="kick">What each part is for</div><h3 class="gd-h2">Your toolkit</h3></div>
       <div class="gd-tools">
-        <div class="gd-tool"><div class="gd-tg zh" aria-hidden="true">路</div><div><b>Path</b><span>Your road through the level: word stops and grammar stops in a sensible order, with the next one always one tap away.</span></div></div>
-        <div class="gd-tool"><div class="gd-tg zh" aria-hidden="true">库</div><div><b>Library</b><span>Look things up: topics, shared characters, word pairs, grammar and sounds, with a Study view for revising what you have met.</span></div></div>
-        <div class="gd-tool"><div class="gd-tg zh" aria-hidden="true">词</div><div><b>Review</b><span>The words that are due, based on how well you remember each one. This is the heart of the site.</span></div></div>
-        <div class="gd-tool"><div class="gd-tg zh" aria-hidden="true">语</div><div><b>Grammar and Grammar review</b><span>One lesson at a time with practice. Points you pass join Grammar review, where the weakest come first.</span></div></div>
-        <div class="gd-tool"><div class="gd-tg zh" aria-hidden="true">听</div><div><b>Listening lab</b><span>Dictation and shadowing at different speeds, plus a tone trainer for training your ear.</span></div></div>
-        <div class="gd-tool"><div class="gd-tg zh" aria-hidden="true">说</div><div><b>Speaking</b><span>Short scripted conversations to say out loud. The AI conversation with Mingming is optional and needs a key in Settings.</span></div></div>
-        <div class="gd-tool"><div class="gd-tg zh" aria-hidden="true">测</div><div><b>Test</b><span>Mixed questions from the words you have started, so you recall words instead of only recognising them.</span></div></div>
-        <div class="gd-tool"><div class="gd-tg zh" aria-hidden="true">考</div><div><b>Level exam</b><span>A mock exam for the level, listening and reading. Pass it to open the next level.</span></div></div>
-        <div class="gd-tool"><div class="gd-tg zh" aria-hidden="true">我</div><div><b>My words</b><span>How well you know each word, and when it needs a refresh.</span></div></div>
+        <div class="gd-tool"><div lang="zh-Hans" class="gd-tg zh" aria-hidden="true">路</div><div><b>Path</b><span>Your road through the level: word stops and grammar stops in a sensible order, with the next one always one tap away.</span></div></div>
+        <div class="gd-tool"><div lang="zh-Hans" class="gd-tg zh" aria-hidden="true">库</div><div><b>Library</b><span>Look things up: topics, shared characters, word pairs, grammar and sounds, with a Study view for revising what you have met.</span></div></div>
+        <div class="gd-tool"><div lang="zh-Hans" class="gd-tg zh" aria-hidden="true">词</div><div><b>Review</b><span>The words that are due, based on how well you remember each one. This is the heart of the site.</span></div></div>
+        <div class="gd-tool"><div lang="zh-Hans" class="gd-tg zh" aria-hidden="true">语</div><div><b>Grammar and Grammar review</b><span>One lesson at a time with practice. Points you pass join Grammar review, where the weakest come first.</span></div></div>
+        <div class="gd-tool"><div lang="zh-Hans" class="gd-tg zh" aria-hidden="true">听</div><div><b>Listening lab</b><span>Dictation and shadowing at different speeds, plus a tone trainer for training your ear.</span></div></div>
+        <div class="gd-tool"><div lang="zh-Hans" class="gd-tg zh" aria-hidden="true">说</div><div><b>Speaking</b><span>Short scripted conversations to say out loud. The AI conversation with Mingming is optional and needs a key in Settings.</span></div></div>
+        <div class="gd-tool"><div lang="zh-Hans" class="gd-tg zh" aria-hidden="true">测</div><div><b>Test</b><span>Mixed questions from the words you have started, so you recall words instead of only recognising them.</span></div></div>
+        <div class="gd-tool"><div lang="zh-Hans" class="gd-tg zh" aria-hidden="true">考</div><div><b>Level exam</b><span>A mock exam for the level, listening and reading. Pass it to open the next level.</span></div></div>
+        <div class="gd-tool"><div lang="zh-Hans" class="gd-tg zh" aria-hidden="true">我</div><div><b>My words</b><span>How well you know each word, and when it needs a refresh.</span></div></div>
       </div>
 
       <div class="gd-levels">
         <div class="gd-levels-t">
           <div class="kick">Levels</div>
           <h3 class="gd-h2">Nine HSK levels, one ladder</h3>
-          <p>HSK 1 to 4 are built, and 5 to 9 are on the way. To open the next level, pass the mock exam with 80% in both listening and reading. Switch level any time from the HSK menu at the top, or choose All levels to study everything you have unlocked together.</p>
+          <p>HSK 1 to 5 are built, and 6 to 9 are on the way. To open the next level, pass the mock exam with 80% in both listening and reading. Switch level any time from the HSK menu at the top, or choose All levels to study everything you have unlocked together.</p>
           <p class="gd-small">Already know the early levels? <button class="linkbtn" data-on-click="{{pcOpenMenu}}">Check my level</button>: about 3 minutes, and you start higher.</p>
         </div>
-        <div class="gd-rungs" role="img" aria-label="Nine HSK levels: 1 to 4 available, 5 to 9 coming">
+        <div class="gd-rungs" role="img" aria-label="Nine HSK levels: 1 to 5 available, 6 to 9 coming">
           <sc-for list="{{guideLevels}}" as="v" hint-placeholder-count="9"><div class="{{v.cls}}" style="height:{{v.h}}"><b>{{v.n}}</b></div></sc-for>
         </div>
       </div>
 
+      <div class="gd-about" id="gd-about">
+        <div class="kick">About and accuracy</div>
+        <h3 class="gd-h2">Where the content comes from</h3>
+        <ul class="gd-list">
+          <li><b>Words.</b> The word lists follow the official HSK 3.0 lists for each level.</li>
+          <li><b>Sentences, grammar and exams.</b> Written with the help of AI (Claude), then checked by scripts: every word must be at your level or below, and the English must match the Chinese. A second AI (DeepSeek) has read most of the sentences as a native-speaker check. No human Chinese teacher has read them yet, so mistakes are possible. If something looks wrong, tap Report a mistake.</li>
+          <li><b>Pinyin.</b> Made by rules from the Chinese, not typed by hand, so tone changes such as 不 and 一 follow the same rules everywhere.</li>
+          <li><b>Audio.</b> Recorded with Alibaba's Qwen voice, so it sounds the same on every device. Anything not recorded yet uses your device's own Chinese voice.</li>
+          <li><b>Exams.</b> Modelled on the official sample papers and written with AI help. Picture questions use emoji, which look different on different devices. If an unclear question holds you back, set the level lock to open in Settings.</li>
+          <li><b>Journey.</b> Facts about places are drafts. Photos are matched by name, so now and then one may show the wrong thing.</li>
+        </ul>
+      </div>
+
       <div class="gd-end">
         <div class="gd-me">
-          <div class="gd-big zh" aria-hidden="true">友</div>
+          <div lang="zh-Hans" class="gd-big zh" aria-hidden="true">友</div>
           <h3 class="gd-h2">Your progress and your friends</h3>
           <p>Your progress is saved in this browser. Download a backup, or connect sync in Settings, so it follows you to your other devices. If you join the study group, only your study totals are shared, and your personal link (Friends, then "Copy my link") brings your progress to a new device.</p>
           <div class="ob-act"><button class="btn pri" data-on-click="{{goVoice}}">Open Settings</button><button class="btn" data-on-click="{{goHome}}">Back to home</button></div>
@@ -1145,18 +1163,18 @@
           <p class="cp-note" style="margin:10px 0 0">Seven short lessons. Tap any sound to hear it, and answer a few quick questions at the end of each. Come back to any lesson later.</p>
         </div>
         <div class="card py-snd"><div class="py-snd-t"><b>Play a sound</b><span class="muted">Tap one to hear the four tones of ma.</span></div>
-          <div class="py-snd-b"><sc-for list="{{pySounds}}" as="s" hint-placeholder-count="4"><button type="button" class="py-sbtn {{s.cls}}" data-on-click="{{s.play}}" aria-label="Hear {{s.py}}"><span class="zh">{{s.zh}}</span><span>{{s.py}}</span></button></sc-for></div>
+          <div class="py-snd-b"><sc-for list="{{pySounds}}" as="s" hint-placeholder-count="4"><button type="button" class="py-sbtn {{s.cls}}" data-on-click="{{s.play}}"><span class="sr-only">Play </span><span lang="zh-Hans" class="zh">{{s.zh}}</span><span>{{s.py}}</span></button></sc-for></div>
           <svg class="py-tones" viewBox="0 0 300 80" fill="none" stroke-width="5" stroke-linecap="round" aria-hidden="true"><path d="M10 14H64" stroke="#1F4E8C"/><path d="M92 58L146 18" stroke="#1D6B58"/><path d="M174 20Q198 74 222 50L246 18" stroke="#B26A1B"/><path d="M262 14L292 66" stroke="#C2362B"/></svg></div>
         <div class="py-lessons">
           <sc-for list="{{pyLessons}}" as="l" hint-placeholder-count="7">
             <button type="button" class="py-lesson {{l.cls}}" data-on-click="{{l.open}}">
-              <span class="py-glyph zh" aria-hidden="true">{{l.glyph}}</span>
+              <span lang="zh-Hans" class="py-glyph zh" aria-hidden="true">{{l.glyph}}</span>
               <span class="py-lt"><b>{{l.title}}</b><span>{{l.blurb}}</span></span>
               <span class="py-st">{{l.state}}</span>
             </button>
           </sc-for>
           <button type="button" class="py-lesson py-chartbtn" data-on-click="{{pyOpenChart}}">
-            <span class="py-glyph zh" aria-hidden="true">表</span>
+            <span lang="zh-Hans" class="py-glyph zh" aria-hidden="true">表</span>
             <span class="py-lt"><b>Sound chart</b><span>Every syllable in HSK 1 to 4 that has a character to say it: tap one to hear it in each tone.</span></span>
             <span class="py-st">Open</span>
           </button>
@@ -1167,7 +1185,7 @@
       <sc-if value="{{pyIsLesson}}" hint-placeholder-val="{{ false }}">
         <div class="py-nav"><button type="button" class="linkbtn" data-on-click="{{pyBack}}">&larr; All lessons</button><span class="muted">{{pyLessonNo}}</span></div>
         <div class="card py-card">
-          <div class="py-lh"><span class="py-glyph zh" aria-hidden="true">{{pyGlyph}}</span><h2 class="h2">{{pyTitle}}</h2></div>
+          <div class="py-lh"><span lang="zh-Hans" class="py-glyph zh" aria-hidden="true">{{pyGlyph}}</span><h2 class="h2">{{pyTitle}}</h2></div>
           <sc-for list="{{pyBlocks}}" as="b" hint-placeholder-count="4">
 
             <sc-if value="{{b.isP}}" hint-placeholder-val="{{ true }}"><p class="py-p">{{b.x}}</p></sc-if>
@@ -1182,8 +1200,8 @@
               <div class="py-saywrap">
                 <sc-if value="{{b.hasTitle}}" hint-placeholder-val="{{ false }}"><div class="kick">{{b.title}}</div></sc-if>
                 <div class="py-says"><sc-for list="{{b.items}}" as="it" hint-placeholder-count="3">
-                  <button type="button" class="py-say {{it.cls}}" data-on-click="{{it.play}}" aria-label="Hear {{it.py}}">
-                    <span class="py-say-zh zh">{{it.zh}}</span>
+                  <button type="button" class="py-say {{it.cls}}" data-on-click="{{it.play}}"><span class="sr-only">Play </span>
+                    <span lang="zh-Hans" class="py-say-zh zh">{{it.zh}}</span>
                     <span class="py-say-m"><b>{{it.py}}</b><span>{{it.en}}</span><sc-if value="{{it.hasSplit}}" hint-placeholder-val="{{ false }}"><i>{{it.split}}</i></sc-if></span>
                     <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
                   </button>
@@ -1197,8 +1215,8 @@
                   <div class="py-gh">{{g.h}}</div>
                   <sc-if value="{{g.hasNote}}" hint-placeholder-val="{{ false }}"><p class="py-gn">{{g.note}}</p></sc-if>
                   <div class="py-cells"><sc-for list="{{g.cells}}" as="c" hint-placeholder-count="4">
-                    <button type="button" class="py-cell {{c.cls}}" data-on-click="{{c.play}}" aria-label="Hear {{c.s}} in {{c.py}}">
-                      <b class="py-cs">{{c.s}}</b><span class="py-cz zh">{{c.zh}}</span><span class="py-cp">{{c.py}}</span><span class="py-ce">{{c.en}}</span>
+                    <button type="button" class="py-cell {{c.cls}}" data-on-click="{{c.play}}"><span class="sr-only">Play </span>
+                      <b class="py-cs">{{c.s}}</b><span lang="zh-Hans" class="py-cz zh">{{c.zh}}</span><span class="py-cp">{{c.py}}</span><span class="py-ce">{{c.en}}</span>
                     </button>
                   </sc-for></div>
                 </div>
@@ -1209,8 +1227,8 @@
               <div class="py-pair">
                 <div class="kick">{{b.title}}</div>
                 <div class="py-pair-r">
-                  <button type="button" class="py-say {{b.a.cls}}" data-on-click="{{b.a.play}}"><span class="py-say-zh zh">{{b.a.zh}}</span><span class="py-say-m"><b>{{b.a.py}}</b><span>{{b.a.en}}</span></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
-                  <button type="button" class="py-say {{b.b.cls}}" data-on-click="{{b.b.play}}"><span class="py-say-zh zh">{{b.b.zh}}</span><span class="py-say-m"><b>{{b.b.py}}</b><span>{{b.b.en}}</span></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+                  <button type="button" class="py-say {{b.a.cls}}" data-on-click="{{b.a.play}}"><span lang="zh-Hans" class="py-say-zh zh">{{b.a.zh}}</span><span class="py-say-m"><b>{{b.a.py}}</b><span>{{b.a.en}}</span></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+                  <button type="button" class="py-say {{b.b.cls}}" data-on-click="{{b.b.play}}"><span lang="zh-Hans" class="py-say-zh zh">{{b.b.zh}}</span><span class="py-say-m"><b>{{b.b.py}}</b><span>{{b.b.en}}</span></span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
                 </div>
               </div>
             </sc-if>
@@ -1224,9 +1242,9 @@
 
             <sc-if value="{{b.isTones}}" hint-placeholder-val="{{ false }}">
               <div class="py-tonegrid"><sc-for list="{{b.tones}}" as="t" hint-placeholder-count="5">
-                <button type="button" class="py-tone {{t.cls}}" data-on-click="{{t.play}}" aria-label="Hear {{t.name}}: {{t.py}}">
+                <button type="button" class="py-tone {{t.cls}}" data-on-click="{{t.play}}"><span class="sr-only">Play </span>
                   <svg class="py-curve" viewBox="0 0 60 40" aria-hidden="true"><line x1="4" y1="6" x2="56" y2="6" class="g"/><line x1="4" y1="20" x2="56" y2="20" class="g"/><line x1="4" y1="34" x2="56" y2="34" class="g"/><path d="{{t.path}}"/></svg>
-                  <b>{{t.name}}</b><span class="py-td">{{t.desc}}</span><span class="py-tx"><span class="zh">{{t.zh}}</span> {{t.py}} &middot; {{t.en}}</span>
+                  <b>{{t.name}}</b><span class="py-td">{{t.desc}}</span><span class="py-tx"><span lang="zh-Hans" class="zh">{{t.zh}}</span> {{t.py}} &middot; {{t.en}}</span>
                 </button>
               </sc-for></div>
             </sc-if>
@@ -1240,7 +1258,7 @@
                   <li>For <b>ü</b> type <b>v</b>: nv3 becomes nǚ. Capitals and spaces do not matter, and typing the hanzi works too.</li>
                 </ul>
                 <label class="py-try"><span>Try it here</span><input class="inp py-tryi" type="text" placeholder="ni3 hao3" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Practice typing pinyin" value="{{typIn}}" data-on-input="{{onTypIn}}"></label>
-                <div class="py-try-out zh" aria-live="polite">{{typOut}}</div>
+                <div lang="zh-Hans" class="py-try-out zh" aria-live="polite">{{typOut}}</div>
               </div>
               </div>
             </sc-if>
@@ -1272,18 +1290,18 @@
       <sc-if value="{{pyIsChart}}" hint-placeholder-val="{{ false }}">
         <div class="py-nav"><button type="button" class="linkbtn" data-on-click="{{pyBack}}">&larr; All lessons</button><span class="muted">Sound chart</span></div>
         <div class="card py-card">
-          <div class="py-lh"><span class="py-glyph zh" aria-hidden="true">表</span><h2 class="h2">Sound chart</h2></div>
+          <div class="py-lh"><span lang="zh-Hans" class="py-glyph zh" aria-hidden="true">表</span><h2 class="h2">Sound chart</h2></div>
           <p class="py-p">Pick an initial, then tap a syllable in the tone you want to hear. Only syllables that appear in HSK 1 to 4 words are here, each said with one real character that has a single reading, so the voice cannot pick the wrong one. Greyed tones have no such character in the lists.</p>
           <div class="py-inis" role="group" aria-label="Initial"><sc-for list="{{pyInis}}" as="i" hint-placeholder-count="12"><button type="button" class="py-ini {{i.cls}}" data-on-click="{{i.pick}}">{{i.label}}</button></sc-for></div>
           <p class="muted py-chartnote">{{pyChartNote}}</p>
           <div class="py-sylls"><sc-for list="{{pySylls}}" as="s" hint-placeholder-count="6">
             <div class="py-syl"><b class="py-sn">{{s.name}}</b>
               <div class="py-syl-t"><sc-for list="{{s.tones}}" as="t" hint-placeholder-count="4">
-                <button type="button" class="py-tb {{t.cls}}" data-on-click="{{t.play}}" aria-label="{{t.label}}"><span class="py-tbm">{{t.mark}}</span><span class="py-tbz zh">{{t.zh}}</span></button>
+                <button type="button" class="py-tb {{t.cls}}" data-on-click="{{t.play}}" aria-label="{{t.label}}"><span class="py-tbm">{{t.mark}}</span><span lang="zh-Hans" class="py-tbz zh">{{t.zh}}</span></button>
               </sc-for></div>
             </div>
           </sc-for></div>
-          <sc-if value="{{pyHasInfo}}" hint-placeholder-val="{{ false }}"><div class="py-info" role="status"><span class="zh">{{pyInfoZh}}</span> <b>{{pyInfoPy}}</b> &middot; {{pyInfoEn}}</div></sc-if>
+          <sc-if value="{{pyHasInfo}}" hint-placeholder-val="{{ false }}"><div class="py-info" role="status"><span lang="zh-Hans" class="zh">{{pyInfoZh}}</span> <b>{{pyInfoPy}}</b> &middot; {{pyInfoEn}}</div></sc-if>
         </div>
       </sc-if>
 
@@ -1416,7 +1434,7 @@
         <div class="kick">Hear it in use</div>
         <sc-for list="{{lesson.examples}}" as="e" hint-placeholder-count="3">
           <div class="ex2">
-            <div class="ex-m"><div class="zh">{{e.zh}}</div><div class="py">{{e.py}}</div><div class="muted">{{e.en}}</div><a class="report" href="{{e.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a></div>
+            <div class="ex-m"><div lang="zh-Hans" class="zh">{{e.zh}}</div><div class="py">{{e.py}}</div><div class="muted">{{e.en}}</div><a class="report" href="{{e.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a></div>
             <button class="spk {{e.pc}}" aria-label="Hear this sentence" data-on-click="{{e.play}}">
               <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
             </button>
@@ -1463,10 +1481,10 @@
     <div class="spk-pick-h"><h2 class="h2">Pick a place</h2><p class="muted">Step into a scene and say your lines out loud. {{spDoneText}}.</p></div>
     <div class="spk-cards">
       <sc-for list="{{spCards}}" as="c" hint-placeholder-count="4">
-        <button type="button" class="spk-card {{c.cls}}" aria-label="{{c.aria}}" data-on-click="{{c.fn}}">
+        <button type="button" class="spk-card {{c.cls}}" data-on-click="{{c.fn}}">
           <span class="spk-card-img" style="{{c.img}}"></span>
           <span class="spk-card-b">
-            <span class="zh spk-card-g" aria-hidden="true">{{c.glyph}}</span>
+            <span lang="zh-Hans" class="zh spk-card-g" aria-hidden="true">{{c.glyph}}</span>
             <span class="spk-card-t"><b>{{c.title}}</b><span>{{c.sub}} · {{c.turns}}</span></span>
             <span class="spk-card-s">{{c.state}}</span>
           </span>
@@ -1495,7 +1513,7 @@
           <div class="mrow {{m.who}}">
             <div class="bub {{m.who}}">
               <div>
-                <sc-if value="{{m.showZh}}" hint-placeholder-val="{{ true }}"><div class="zh">{{m.zh}}</div></sc-if>
+                <sc-if value="{{m.showZh}}" hint-placeholder-val="{{ true }}"><div lang="zh-Hans" class="zh">{{m.zh}}</div></sc-if>
                 <sc-if value="{{m.quiet}}" hint-placeholder-val="{{ false }}"><div class="muted-b">{{m.quietText}}</div></sc-if>
                 <sc-if value="{{m.showPy}}" hint-placeholder-val="{{ true }}"><div class="py">{{m.py}}</div></sc-if>
                 <sc-if value="{{m.showEn}}" hint-placeholder-val="{{ true }}"><div class="en">{{m.en}}</div></sc-if>
@@ -1523,7 +1541,7 @@
           <div class="hint">
             <sc-if value="{{shint}}" hint-placeholder-val="{{ true }}">
               <div class="kick">Try saying</div>
-              <div class="zh">{{target.zh}}</div>
+              <div lang="zh-Hans" class="zh">{{target.zh}}</div>
               <div class="py">{{target.py}}</div>
               <button class="btn" style="min-height:38px;padding:0 14px;margin-top:8px;font-size:14px" data-on-click="{{toggleHint}}">Hide hint</button>
             </sc-if>
@@ -1562,7 +1580,7 @@
         <h2 class="h2">Useful words</h2>
         <div class="wchips">
           <sc-for list="{{wchips}}" as="w" hint-placeholder-count="6">
-            <button class="wchip" data-on-click="{{w.play}}" aria-label="Hear {{w.py}}"><span class="zh" style="font-size:24px;color:inherit">{{w.zh}}</span><span>{{w.py}}</span></button>
+            <button class="wchip" data-on-click="{{w.play}}" aria-label="Hear {{w.py}}"><span lang="zh-Hans" class="zh" style="font-size:24px;color:inherit">{{w.zh}}</span><span>{{w.py}}</span></button>
           </sc-for>
         </div>
       </section>
@@ -1571,7 +1589,7 @@
         <div style="margin-top:8px">
           <sc-for list="{{scenarios}}" as="s" hint-placeholder-count="4">
             <button type="button" class="scn {{s.cls}}" data-on-click="{{s.fn}}">
-              <div class="scn-g zh" aria-hidden="true">{{s.glyph}}</div>
+              <div lang="zh-Hans" class="scn-g zh" aria-hidden="true">{{s.glyph}}</div>
               <div class="scn-m">{{s.title}}<span>{{s.sub}}</span></div>
               <span class="scn-s">{{s.state}}</span>
             </button>
@@ -1595,7 +1613,7 @@
     <sc-if value="{{aiReady}}" hint-placeholder-val="{{ false }}">
     <section class="chat {{aiStageCls}}">
       <div class="chat-h">
-        <div class="av zh" aria-hidden="true">明</div>
+        <div lang="zh-Hans" class="av zh" aria-hidden="true">明</div>
         <div class="chat-t"><b>Mingming</b><span>AI conversation · {{aiToday}}</span></div>
         <sc-if value="{{aiNotVo}}" hint-placeholder-val="{{ true }}"><div class="seg2" role="group" aria-label="Show on screen">
           <button class="{{zhCls}}" data-on-click="{{toggleZh}}">Characters</button>
@@ -1610,7 +1628,7 @@
           <div class="mrow {{m.who}}">
             <div class="bub {{m.who}}">
               <div>
-                <sc-if value="{{m.showZh}}" hint-placeholder-val="{{ true }}"><div class="zh">{{m.zh}}</div></sc-if>
+                <sc-if value="{{m.showZh}}" hint-placeholder-val="{{ true }}"><div lang="zh-Hans" class="zh">{{m.zh}}</div></sc-if>
                 <sc-if value="{{m.quiet}}" hint-placeholder-val="{{ false }}"><div class="muted-b">{{m.quietText}}</div></sc-if>
                 <sc-if value="{{m.showPy}}" hint-placeholder-val="{{ true }}"><div class="py">{{m.py}}</div></sc-if>
                 <sc-if value="{{m.showEn}}" hint-placeholder-val="{{ true }}"><div class="en">{{m.en}}</div></sc-if>
@@ -1625,8 +1643,8 @@
             <sc-if value="{{m.hasPv}}" hint-placeholder-val="{{ false }}"><div class="note pv">{{m.pvText}}</div></sc-if>
             <sc-if value="{{m.hasOk}}" hint-placeholder-val="{{ false }}"><div class="note good">Sounds natural.</div></sc-if>
             <sc-if value="{{m.cmpGood}}" hint-placeholder-val="{{ false }}"><div class="note good">Matches the suggested reply. If you said it out loud, the microphone heard exactly these characters, a good sign for your tones.</div></sc-if>
-            <sc-if value="{{m.cmpBad}}" hint-placeholder-val="{{ false }}"><div class="note fix"><b>Not the same as the suggestion.</b> <span class="zh">{{m.cmpBadHead}}</span><br>{{m.cmpBadDetail}}</div></sc-if>
-            <sc-if value="{{m.hasFb}}" hint-placeholder-val="{{ false }}"><div class="note fix"><b>A more natural way:</b> <span class="zh">{{m.fbBetter}}</span><br>{{m.fbWhy}}</div></sc-if>
+            <sc-if value="{{m.cmpBad}}" hint-placeholder-val="{{ false }}"><div class="note fix"><b>Not the same as the suggestion.</b> <span lang="zh-Hans" class="zh">{{m.cmpBadHead}}</span><br>{{m.cmpBadDetail}}</div></sc-if>
+            <sc-if value="{{m.hasFb}}" hint-placeholder-val="{{ false }}"><div class="note fix"><b>A more natural way:</b> <span lang="zh-Hans" class="zh">{{m.fbBetter}}</span><br>{{m.fbWhy}}</div></sc-if>
           </div>
         </sc-for>
         <sc-if value="{{aiBusy}}" hint-placeholder-val="{{ false }}"><div class="dots" aria-label="Mingming is replying"><i></i><i></i><i></i></div></sc-if>
@@ -1638,17 +1656,17 @@
           <div class="sugbox open">
             <div class="sug-h">Suggested reply</div>
             <div class="sug-row">
-              <div><div class="zh">{{sugZh}}</div><div class="py">{{sugPy}}</div><div class="en">{{sugEn}}</div></div>
+              <div><div lang="zh-Hans" class="zh">{{sugZh}}</div><div class="py">{{sugPy}}</div><div class="en">{{sugEn}}</div></div>
               <button class="spk {{sugPc}}" aria-label="Hear the suggested reply" data-on-click="{{sugPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
             </div>
             <div class="sug-t"><sc-if value="{{aiNotVo}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" data-on-click="{{sugUse}}">Put it in the box</button></sc-if><span class="muted">Better: tap Speak and say it. The microphone hears characters, not tones directly, so this is a check, not a pronunciation score.</span></div>
           </div>
         </sc-if>
         <sc-if value="{{aiNotVo}}" hint-placeholder-val="{{ true }}"><div class="ai-in">
-          <input class="wsearch" style="margin:0;max-width:none" type="text" lang="zh" autocomplete="off" placeholder="Type Chinese, or tap Speak" value="{{aiInput}}" data-on-input="{{onAiInput}}" data-on-keydown="{{onAiKey}}" aria-label="Your reply">
+          <input class="wsearch" style="margin:0;max-width:none" type="text" lang="zh-Hans" autocomplete="off" placeholder="Type Chinese, or tap Speak" value="{{aiInput}}" data-on-input="{{onAiInput}}" data-on-keydown="{{onAiKey}}" aria-label="Your reply">
           <button class="btn pri" data-on-click="{{aiSend}}">Send</button>
         </div></sc-if>
-        <sc-if value="{{hasAlts}}" hint-placeholder-val="{{ false }}"><div class="alts"><span class="muted">Heard it differently? Tap what you said:</span><sc-for list="{{altList}}" as="a" hint-placeholder-count="2"><button type="button" class="chip" data-on-click="{{a.fn}}"><span class="zh">{{a.t}}</span></button></sc-for></div></sc-if>
+        <sc-if value="{{hasAlts}}" hint-placeholder-val="{{ false }}"><div class="alts"><span class="muted">Heard it differently? Tap what you said:</span><sc-for list="{{altList}}" as="a" hint-placeholder-count="2"><button type="button" class="chip" data-on-click="{{a.fn}}"><span lang="zh-Hans" class="zh">{{a.t}}</span></button></sc-for></div></sc-if>
         <div class="ai-tools">
           <sc-if value="{{aiHasMic}}" hint-placeholder-val="{{ true }}"><button class="btn {{aiMicCls}}" data-on-click="{{aiMic}}">{{aiMicLabel}}</button></sc-if>
           <button class="linkbtn" data-on-click="{{aiSimpler}}">Say it slower or again</button>
@@ -1705,7 +1723,7 @@
         <section class="card pth-next">
           <div class="kick">{{pthNextKick}}</div>
           <h3 class="pth-next-t">{{pthNextTitle}}</h3>
-          <div class="pth-next-s"><span>{{pthNextSub}}</span> <span class="zh">{{pthNextWords}}</span></div>
+          <div class="pth-next-s"><span>{{pthNextSub}}</span> <span lang="zh-Hans" class="zh">{{pthNextWords}}</span></div>
           <button class="btn pri big" data-on-click="{{pthNextGo}}">{{pthNextBtn}}</button>
         </section>
       </sc-if>
@@ -1724,7 +1742,7 @@
           <section class="pth-band">
             <img class="pth-band-img" src="{{u.bandImg}}" alt="" loading="lazy" width="600" height="240">
             <div class="pth-band-t">
-              <span class="pth-band-zh zh">{{u.bandZh}}</span>
+              <span lang="zh-Hans" class="pth-band-zh zh">{{u.bandZh}}</span>
               <div><b>{{u.bandTitle}}</b><span class="muted">{{u.bandSub}}</span></div>
               <span class="pth-band-n">{{u.bandN}}</span>
             </div>
@@ -1747,8 +1765,8 @@
             <div class="pth-dlg">
               <sc-for list="{{u.dlg}}" as="d" hint-placeholder-count="2">
                 <div class="pth-dl {{d.cls}}">
-                  <span class="pth-who zh">{{d.who}}</span>
-                  <div class="pth-dl-b"><div class="pth-dl-zh zh">{{d.zh}}</div><div class="pth-dl-py">{{d.py}}</div><div class="pth-dl-en">{{d.en}}</div></div>
+                  <span lang="zh-Hans" class="pth-who zh">{{d.who}}</span>
+                  <div class="pth-dl-b"><div lang="zh-Hans" class="pth-dl-zh zh">{{d.zh}}</div><div class="pth-dl-py">{{d.py}}</div><div class="pth-dl-en">{{d.en}}</div></div>
                   <button type="button" class="pth-hear {{d.playCls}}" data-on-click="{{d.say}}" aria-label="Hear this line"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
                 </div>
               </sc-for>
@@ -1760,10 +1778,10 @@
                 <div class="pth-row">
                   <sc-if value="{{s.hasLink}}" hint-placeholder-val="{{ true }}"><svg class="pth-link {{s.linkCls}}" viewBox="0 0 100 104" preserveAspectRatio="none" aria-hidden="true"><path d="{{s.curve}}"></path></svg></sc-if>
                   <button type="button" class="pth-node {{s.cls}}" style="{{s.nodeStyle}}" aria-label="{{s.aria}}" data-on-click="{{s.pick}}">
-                    <span class="zh pth-glyph">{{s.glyph}}</span>
+                    <span lang="zh-Hans" class="zh pth-glyph">{{s.glyph}}</span>
                     <sc-if value="{{s.isDone}}" hint-placeholder-val="{{ false }}"><svg class="pth-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12.5l4 4 8-9"/></svg></sc-if>
                   </button>
-                  <div class="pth-label" style="{{s.labelStyle}}"><b>{{s.title}}</b><span class="pth-sub zh">{{s.sub}}</span><span class="pth-meta">{{s.meta}}</span></div>
+                  <div class="pth-label" style="{{s.labelStyle}}"><b>{{s.title}}</b><span lang="zh-Hans" class="pth-sub zh">{{s.sub}}</span><span class="pth-meta">{{s.meta}}</span></div>
                 </div>
               </sc-for>
             </div>
@@ -1779,7 +1797,7 @@
           <div class="kick">The summit</div>
           <h2 class="h2">{{smt.title}}</h2>
           <p class="muted summit-p">{{smt.sub}}</p>
-          <sc-if value="{{smt.passed}}" hint-placeholder-val="{{ false }}"><span class="seal zh" aria-hidden="true">通过</span></sc-if>
+          <sc-if value="{{smt.passed}}" hint-placeholder-val="{{ false }}"><span lang="zh-Hans" class="seal zh" aria-hidden="true">通过</span></sc-if>
           <sc-if value="{{smt.locked}}" hint-placeholder-val="{{ false }}">
             <div class="abar" role="img" aria-label="{{smt.pct}} of the path"><i style="width: {{smt.pct}}"></i></div>
             <button type="button" class="linkbtn" data-on-click="{{smt.early}}">{{smt.hint}}</button>
@@ -1796,12 +1814,12 @@
       <div class="pth-scrim" data-on-click="{{pthClose}}"></div>
       <section class="pth-sheet" role="dialog" aria-modal="true" aria-label="{{pthSh.title}}">
         <div class="kick">{{pthSh.kick}}</div>
-        <div class="pth-sh-h"><h2 class="h2">{{pthSh.title}}</h2><sc-if value="{{pthSh.isDone}}" hint-placeholder-val="{{ false }}"><span class="seal sm zh" aria-label="Done">完成</span></sc-if><button type="button" class="btn sm" data-on-click="{{pthClose}}">Close</button></div>
+        <div class="pth-sh-h"><h2 class="h2">{{pthSh.title}}</h2><sc-if value="{{pthSh.isDone}}" hint-placeholder-val="{{ false }}"><span lang="zh-Hans" class="seal sm zh" aria-label="Done">完成</span></sc-if><button type="button" class="btn sm" data-on-click="{{pthClose}}">Close</button></div>
         <p class="muted pth-sh-p">{{pthSh.sub}}</p>
         <sc-if value="{{pthSh.isS}}" hint-placeholder-val="{{ false }}"><ul class="pth-goals"><sc-for list="{{pthSh.goalList}}" as="g" hint-placeholder-count="3"><li>{{g.t}}</li></sc-for></ul></sc-if>
         <sc-if value="{{pthSh.isW}}" hint-placeholder-val="{{ true }}">
           <ul class="pth-wl">
-            <sc-for list="{{pthSh.words}}" as="w" hint-placeholder-count="4"><li class="{{w.cls}}"><span class="zh pth-wz">{{w.zh}}</span><span class="pth-py">{{w.py}}</span><span class="pth-en">{{w.en}}</span></li></sc-for>
+            <sc-for list="{{pthSh.words}}" as="w" hint-placeholder-count="4"><li class="{{w.cls}}"><span lang="zh-Hans" class="zh pth-wz">{{w.zh}}</span><span class="pth-py">{{w.py}}</span><span class="pth-en">{{w.en}}</span></li></sc-for>
           </ul>
         </sc-if>
         <sc-if value="{{pthSh.hasBest}}" hint-placeholder-val="{{ false }}"><p class="muted pth-sh-p">{{pthSh.best}}</p></sc-if>
@@ -1832,20 +1850,20 @@
       <sc-if value="{{psgFastShow}}" hint-placeholder-val="{{ true }}"><p class="psg-fast {{psgFastCls}}">{{psgFastText}}</p></sc-if>
       <sc-if value="{{psgIsQ}}" hint-placeholder-val="{{ false }}">
         <div class="psg-q">
-          <p class="psg-qzh zh" lang="zh">{{psgQzh}}</p>
+          <p class="psg-qzh zh" lang="zh-Hans">{{psgQzh}}</p>
           <sc-if value="{{psgShowPy}}" hint-placeholder-val="{{ false }}"><p class="psg-qpy">{{psgQpy}}</p></sc-if>
           <sc-if value="{{psgShowEn}}" hint-placeholder-val="{{ false }}"><p class="muted psg-qen">{{psgQen}}</p></sc-if>
           <div class="psg-tog"><button type="button" class="linkbtn" data-on-click="{{psgTogPy}}">{{psgPyBtn}}</button><button type="button" class="linkbtn" data-on-click="{{psgTogEn}}">{{psgEnBtn}}</button></div>
           <div class="opts psg-opts">
             <sc-for list="{{psgOpts}}" as="o" hint-placeholder-count="4">
-              <button type="button" class="opt {{o.cls}}" data-on-click="{{o.pick}}"><i class="optk" aria-hidden="true">{{o.k}}</i><span class="zh" lang="zh">{{o.zh}}<sc-if value="{{psgShowPy}}" hint-placeholder-val="{{ false }}"><small class="psg-opy">{{o.py}}</small></sc-if></span></button>
+              <button type="button" class="opt {{o.cls}}" data-on-click="{{o.pick}}"><i class="optk" aria-hidden="true">{{o.k}}</i><span class="zh" lang="zh-Hans">{{o.zh}}<sc-if value="{{psgShowPy}}" hint-placeholder-val="{{ false }}"><small class="psg-opy">{{o.py}}</small></sc-if></span></button>
             </sc-for>
           </div>
           <sc-if value="{{psgChecked}}" hint-placeholder-val="{{ false }}">
             <div class="psg-ans {{psgAnsCls}}" aria-live="polite">
               <b>{{psgVerdict}}</b>
               <sc-for list="{{psgAnsLines}}" as="l" hint-placeholder-count="1">
-                <p class="psg-ansl"><span class="psg-who">{{l.who}}</span><span class="zh" lang="zh">{{l.zh}}</span></p>
+                <p class="psg-ansl"><span class="psg-who">{{l.who}}</span><span class="zh" lang="zh-Hans">{{l.zh}}</span></p>
                 <p class="psg-anspy">{{l.py}}</p>
               </sc-for>
               <div class="psg-ansb"><button type="button" class="btn sm" data-on-click="{{psgHearLine}}">{{psgHearText}}</button><button type="button" class="btn pri" data-on-click="{{psgNext}}">{{psgNextText}}</button></div>
@@ -1859,7 +1877,7 @@
           <div class="psg-tog"><button type="button" class="linkbtn" data-on-click="{{psgTogPy}}">{{psgPyBtn}}</button><button type="button" class="linkbtn" data-on-click="{{psgTogEn}}">{{psgEnBtn}}</button></div>
           <ol class="psg-tr">
             <sc-for list="{{psgLines}}" as="l" hint-placeholder-count="5">
-              <li class="{{l.cls}}"><button type="button" class="psg-lplay" aria-label="Play this line" data-on-click="{{l.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14l11-7z"/></svg></button><span class="psg-who">{{l.who}}</span><span class="psg-lt"><span class="zh" lang="zh">{{l.zh}}</span><sc-if value="{{psgShowPy}}" hint-placeholder-val="{{ false }}"><small class="psg-lpy">{{l.py}}</small></sc-if><sc-if value="{{psgShowEn}}" hint-placeholder-val="{{ false }}"><small class="muted psg-len">{{l.en}}</small></sc-if></span></li>
+              <li class="{{l.cls}}"><button type="button" class="psg-lplay" aria-label="Play this line" data-on-click="{{l.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14l11-7z"/></svg></button><span class="psg-who">{{l.who}}</span><span class="psg-lt"><span class="zh" lang="zh-Hans">{{l.zh}}</span><sc-if value="{{psgShowPy}}" hint-placeholder-val="{{ false }}"><small class="psg-lpy">{{l.py}}</small></sc-if><sc-if value="{{psgShowEn}}" hint-placeholder-val="{{ false }}"><small class="muted psg-len">{{l.en}}</small></sc-if></span></li>
             </sc-for>
           </ol>
           <div class="psg-ansb"><button type="button" class="btn" data-on-click="{{psgAgain}}">Listen and answer again</button><button type="button" class="btn pri" data-on-click="{{psgBack}}">Back to the Path</button></div>
@@ -1875,12 +1893,12 @@
   <div class="quiz pl">
     <sc-if value="{{plIsDone}}" hint-placeholder-val="{{ false }}">
       <div class="res celebrate pl-res">
-        <div class="stamp zh" aria-hidden="true">山</div>
+        <div lang="zh-Hans" class="stamp zh" aria-hidden="true">山</div>
         <h2 class="res-h">{{plRes.headline}}</h2>
         <p class="res-p">{{plRes.sub}}</p>
         <sc-if value="{{plRes.hasGain}}" hint-placeholder-val="{{ false }}"><span class="res-gain">+{{plRes.gain}} coins</span></sc-if>
         <ul class="pth-wl pl-wl">
-          <sc-for list="{{plRes.words}}" as="w" hint-placeholder-count="4"><li class="{{w.cls}}"><span class="zh pth-wz">{{w.zh}}</span><span class="pth-py">{{w.py}}</span><span class="pth-en">{{w.en}}</span></li></sc-for>
+          <sc-for list="{{plRes.words}}" as="w" hint-placeholder-count="4"><li class="{{w.cls}}"><span lang="zh-Hans" class="zh pth-wz">{{w.zh}}</span><span class="pth-py">{{w.py}}</span><span class="pth-en">{{w.en}}</span></li></sc-for>
         </ul>
         <sc-if value="{{plRes.hasMissed}}" hint-placeholder-val="{{ false }}"><p class="muted pl-miss">{{plRes.missedText}}</p></sc-if>
         <div class="res-act">
@@ -1908,7 +1926,7 @@
       <sc-if value="{{plIsMeet}}" hint-placeholder-val="{{ false }}">
         <div class="q-card pl-meet">
           <div class="kick">{{plMeet.count}}</div>
-          <div class="pl-w zh">{{plMeet.zh}}</div>
+          <div lang="zh-Hans" class="pl-w zh">{{plMeet.zh}}</div>
           <div class="pl-py">{{plMeet.py}}</div>
           <div class="pl-row">
             <button class="listen sm {{plHearCls}}" data-on-click="{{plHear}}" aria-label="Hear the word">
@@ -1918,12 +1936,12 @@
           </div>
           <sc-if value="{{plMeet.hasBuilt}}" hint-placeholder-val="{{ false }}">
             <div class="pl-built"><span class="kick">Built from</span>
-              <sc-for list="{{plMeet.built}}" as="b" hint-placeholder-count="2"><span class="pl-ch"><span class="zh">{{b.ch}}</span><sc-if value="{{b.hasEn}}" hint-placeholder-val="{{ true }}"><small>{{b.en}}</small></sc-if></span></sc-for>
+              <sc-for list="{{plMeet.built}}" as="b" hint-placeholder-count="2"><span class="pl-ch"><span lang="zh-Hans" class="zh">{{b.ch}}</span><sc-if value="{{b.hasEn}}" hint-placeholder-val="{{ true }}"><small>{{b.en}}</small></sc-if></span></sc-for>
             </div>
           </sc-if>
           <sc-if value="{{plMeet.hasEx}}" hint-placeholder-val="{{ true }}">
             <div class="exbox pl-ex">
-              <div class="zh pl-exz"><sc-for list="{{plMeet.exParts}}" as="p" hint-placeholder-count="3"><span class="{{p.cls}}">{{p.t}}</span></sc-for></div>
+              <div lang="zh-Hans" class="zh pl-exz"><sc-for list="{{plMeet.exParts}}" as="p" hint-placeholder-count="3"><span class="{{p.cls}}">{{p.t}}</span></sc-for></div>
               <div class="py">{{plMeet.exPy}}</div>
               <div class="en">{{plMeet.exEn}}</div>
               <button type="button" class="btn sm {{plHearExCls}}" data-on-click="{{plHearEx}}">Hear the sentence</button>
@@ -1947,7 +1965,7 @@
           </sc-if>
           <div class="opts {{plOptsCls}}">
             <sc-for list="{{plOpts}}" as="o" hint-placeholder-count="4">
-              <button class="opt {{o.cls}}" data-on-click="{{o.pick}}"><span class="{{o.lcls}}">{{o.label}}</span><sc-if value="{{o.hasSub}}" hint-placeholder-val="{{ false }}"><small class="opt-py">{{o.sub}}</small></sc-if></button>
+              <button class="opt {{o.cls}}" data-on-click="{{o.pick}}"><span class="{{o.lcls}}" lang="{{o.lang}}">{{o.label}}</span><sc-if value="{{o.hasSub}}" hint-placeholder-val="{{ false }}"><small class="opt-py">{{o.sub}}</small></sc-if></button>
             </sc-for>
           </div>
         </div>
@@ -1955,7 +1973,7 @@
           <div class="fb {{plFbCls}}">
             <div class="fb-m">
               <div class="fb-t">{{plFbTitle}}</div>
-              <div class="fb-s zh">{{plFbZh}}</div>
+              <div lang="zh-Hans" class="fb-s zh">{{plFbZh}}</div>
               <div class="fb-x">{{plFbPyEn}}</div>
               <sc-if value="{{plHasFbMore}}" hint-placeholder-val="{{ false }}"><div class="fb-x">{{plFbMore}}</div></sc-if>
             </div>
@@ -1972,7 +1990,7 @@
   <sc-if value="{{isAcct}}" hint-placeholder-val="{{ false }}">
   <div class="acct">
     <section class="acct-pp">
-      <div class="acct-av zh"><sc-if value="{{hasAv}}" hint-placeholder-val="{{ false }}"><img src="{{avUrl}}" alt="{{avAlt}}"></sc-if><sc-if value="{{noAv}}" hint-placeholder-val="{{ true }}"><span aria-hidden="true">{{acctInitial}}</span></sc-if></div>
+      <div lang="zh-Hans" class="acct-av zh"><sc-if value="{{hasAv}}" hint-placeholder-val="{{ false }}"><img src="{{avUrl}}" alt="{{avAlt}}"></sc-if><sc-if value="{{noAv}}" hint-placeholder-val="{{ true }}"><span aria-hidden="true">{{acctInitial}}</span></sc-if></div>
       <div class="acct-who">
         <sc-if value="{{acctShowName}}" hint-placeholder-val="{{ true }}">
           <div class="pp-k">Learner</div>
@@ -1990,12 +2008,12 @@
           <div class="av-pick-h">Pick a souvenir you have found</div>
           <sc-if value="{{avNone}}" hint-placeholder-val="{{ false }}"><p class="av-pick-n">You have not found a souvenir yet. They are hidden in Journey stops: travel to find them, then come back to pick one.</p></sc-if>
           <div class="av-pick-g">
-            <button type="button" class="av-it zh {{avInitialCls}}" data-on-click="{{avUseInitial}}" aria-label="Use my initial">{{acctInitial}}</button>
+            <button lang="zh-Hans" type="button" class="av-it zh {{avInitialCls}}" data-on-click="{{avUseInitial}}" aria-label="Use my initial">{{acctInitial}}</button>
             <sc-for list="{{avPicks}}" as="p" hint-placeholder-count="3"><button type="button" class="av-it {{p.cls}}" data-on-click="{{p.fn}}" aria-label="{{p.en}}"><img src="{{p.url}}" alt=""></button></sc-for>
           </div>
         </div>
       </sc-if>
-      <div class="pp-stamps" aria-label="Level stamps"><sc-for list="{{acctStamps}}" as="s" hint-placeholder-count="3"><div class="pp-st {{s.cls}}"><b class="zh">{{s.zh}}</b><span>{{s.label}}</span></div></sc-for></div>
+      <div class="pp-stamps" aria-label="Level stamps"><sc-for list="{{acctStamps}}" as="s" hint-placeholder-count="3"><div class="pp-st {{s.cls}}"><b lang="zh-Hans" class="zh">{{s.zh}}</b><span>{{s.label}}</span></div></sc-for></div>
     </section>
     <section class="card">
       <h2 class="h2">Your numbers</h2>
@@ -2024,7 +2042,7 @@
       <h2 class="h2">More</h2>
       <sc-for list="{{acctLinks}}" as="l" hint-placeholder-count="4">
         <button type="button" class="acct-row" data-on-click="{{l.go}}">
-          <span class="zh acct-g" aria-hidden="true">{{l.glyph}}</span>
+          <span lang="zh-Hans" class="zh acct-g" aria-hidden="true">{{l.glyph}}</span>
           <span class="acct-rt"><b>{{l.title}}</b><span class="muted">{{l.sub}}</span></span>
           <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
         </button>
@@ -2057,12 +2075,12 @@
       <div class="clayout">
         <aside class="cidx" aria-label="Shared characters">
           <div class="kick">Pick a character</div>
-          <div class="ctiles"><sc-for list="{{hubTiles}}" as="h" hint-placeholder-count="12"><button type="button" class="ctile {{h.cls}}" aria-label="{{h.label}}" data-on-click="{{h.fn}}"><b class="zh">{{h.zh}}</b><small>{{h.n}}</small></button></sc-for></div>
+          <div class="ctiles"><sc-for list="{{hubTiles}}" as="h" hint-placeholder-count="12"><button type="button" class="ctile {{h.cls}}" aria-label="{{h.label}}" data-on-click="{{h.fn}}"><b lang="zh-Hans" class="zh">{{h.zh}}</b><small>{{h.n}}</small></button></sc-for></div>
           <p class="muted tiny" style="margin:2px 2px 0">The small number is how many words use each character.</p>
         </aside>
         <div class="cmain">
           <section class="card chero">
-            <div class="chero-tile zh" aria-hidden="true">{{hubZh}}</div>
+            <div lang="zh-Hans" class="chero-tile zh" aria-hidden="true">{{hubZh}}</div>
             <div class="chero-body">
               <div class="kick">The shared character</div>
               <div class="hub-py">{{hubPy}}</div>
@@ -2080,15 +2098,15 @@
               <div class="cgrp">
                 <sc-if value="{{w.showGrp}}" hint-placeholder-val="{{ false }}"><h3 class="wgrp-h">{{w.grpLabel}}</h3></sc-if>
                 <div class="crow {{w.cls}}">
-                  <div class="cr-w"><sc-if value="{{w.showZh}}" hint-placeholder-val="{{ true }}"><div class="zh cr-zh"><span class="{{w.p1cls}}">{{w.p1w}}</span><span class="{{w.p2cls}}">{{w.p2w}}</span></div><div class="lr-py"><span class="wc-py">{{w.py}}</span><button type="button" class="spk sm {{w.pc}}" aria-label="Hear this word" data-on-click="{{w.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><sc-if value="{{w.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{w.lvCls}}">{{w.lvTag}}</span></sc-if></div></sc-if><sc-if value="{{w.hideZh}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the Chinese" data-on-click="{{w.peek}}">Show</button></sc-if></div>
+                  <div class="cr-w"><sc-if value="{{w.showZh}}" hint-placeholder-val="{{ true }}"><div lang="zh-Hans" class="zh cr-zh"><span class="{{w.p1cls}}">{{w.p1w}}</span><span class="{{w.p2cls}}">{{w.p2w}}</span></div><div class="lr-py"><span class="wc-py">{{w.py}}</span><button type="button" class="spk sm {{w.pc}}" aria-label="Hear this word" data-on-click="{{w.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><sc-if value="{{w.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{w.lvCls}}">{{w.lvTag}}</span></sc-if></div></sc-if><sc-if value="{{w.hideZh}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the Chinese" data-on-click="{{w.peek}}">Show</button></sc-if></div>
                   <div class="cr-parts" aria-label="How the word is built">
-                    <span class="part {{w.p1cls}}"><b class="zh">{{w.p1c}}</b><i>{{w.p1n}}</i></span>
+                    <span class="part {{w.p1cls}}"><b lang="zh-Hans" class="zh">{{w.p1c}}</b><i>{{w.p1n}}</i></span>
                     <span class="plus" aria-hidden="true">+</span>
-                    <span class="part {{w.p2cls}}"><b class="zh">{{w.p2c}}</b><i>{{w.p2n}}</i></span>
+                    <span class="part {{w.p2cls}}"><b lang="zh-Hans" class="zh">{{w.p2c}}</b><i>{{w.p2n}}</i></span>
                   </div>
                   <div class="cr-en"><sc-if value="{{w.showEn}}" hint-placeholder-val="{{ true }}"><span class="wc-en">{{w.en}}</span></sc-if><sc-if value="{{w.hideEn}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the meaning" data-on-click="{{w.peek}}">Show</button></sc-if>
                     <sc-if value="{{w.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{w.exToggle}}">{{w.exLabel}}</button></sc-if>
-                    <sc-if value="{{w.exOpen}}" hint-placeholder-val="{{ false }}"><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{w.exZh}}</div><button type="button" class="spk sm {{w.exPc}}" aria-label="Hear the example sentence" data-on-click="{{w.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{w.exPy}}</div><div>{{w.exEn}}</div><sc-if value="{{w.hasExMore}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{w.exNext}}">Another example ({{w.exCount}})</button></sc-if><sc-if value="{{w.hasExNote}}" hint-placeholder-val="{{ false }}"><div class="exnote">{{w.exNote}}</div></sc-if></div></sc-if>
+                    <sc-if value="{{w.exOpen}}" hint-placeholder-val="{{ false }}"><div class="wexbox"><div class="wwexbox-t"><div lang="zh-Hans" class="zh wexbox-zh">{{w.exZh}}</div><button type="button" class="spk sm {{w.exPc}}" aria-label="Hear the example sentence" data-on-click="{{w.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{w.exPy}}</div><div>{{w.exEn}}</div><sc-if value="{{w.hasExMore}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{w.exNext}}">Another example ({{w.exCount}})</button></sc-if><sc-if value="{{w.hasExNote}}" hint-placeholder-val="{{ false }}"><div class="exnote">{{w.exNote}}</div></sc-if></div></sc-if>
                     <a class="report" href="{{w.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
                   </div>
                   <div class="lr-st"><sc-if value="{{w.canAdd}}" hint-placeholder-val="{{ false }}"><button type="button" class="addbtn" aria-label="Add to my words" data-on-click="{{w.learn}}">+ Add</button></sc-if><sc-if value="{{w.capHit}}" hint-placeholder-val="{{ false }}"><span class="muted tiny">Tomorrow</span></sc-if><sc-if value="{{w.notNew}}" hint-placeholder-val="{{ false }}"><span class="ldot {{w.dot}}" role="img" aria-label="{{w.mLabel}}" title="{{w.mLabel}}"></span></sc-if></div>
@@ -2099,10 +2117,10 @@
           <section class="card" style="display:flex;flex-direction:column;gap:14px">
         <div class="kick">Which word fits?</div>
         <div class="muted" style="font-size:17px">{{fillEn}}</div>
-        <div class="zh" style="font-size:34px;line-height:1.3">{{fillZh}}</div>
+        <div lang="zh-Hans" class="zh" style="font-size:34px;line-height:1.3">{{fillZh}}</div>
         <div class="opts {{gapOptsCls}}">
           <sc-for list="{{gapOpts}}" as="g" hint-placeholder-count="4">
-            <button class="opt {{g.cls}}" data-on-click="{{g.fn}}"><span class="zh">{{g.zh}}</span> <span style="font-size:15px;color:var(--muted)">{{g.py}}</span></button>
+            <button class="opt {{g.cls}}" data-on-click="{{g.fn}}"><span lang="zh-Hans" class="zh">{{g.zh}}</span> <span style="font-size:15px;color:var(--muted)">{{g.py}}</span></button>
           </sc-for>
         </div>
         <sc-if value="{{gapDone}}" hint-placeholder-val="{{ false }}">
@@ -2127,14 +2145,14 @@
             <section class="card pcard">
               <div class="pc-pair">
               <div class="pc-w">
-                <sc-if value="{{o.aShowZh}}" hint-placeholder-val="{{ true }}"><div class="zh pc-zh">{{o.azh}}</div><div class="lr-py"><span class="wc-py">{{o.apy}}</span><button type="button" class="spk sm {{o.aPc}}" aria-label="Hear this word" data-on-click="{{o.aPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div></sc-if>
+                <sc-if value="{{o.aShowZh}}" hint-placeholder-val="{{ true }}"><div lang="zh-Hans" class="zh pc-zh">{{o.azh}}</div><div class="lr-py"><span class="wc-py">{{o.apy}}</span><button type="button" class="spk sm {{o.aPc}}" aria-label="Hear this word" data-on-click="{{o.aPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div></sc-if>
                 <sc-if value="{{o.aHideZh}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the Chinese" data-on-click="{{o.peek}}">Show</button></sc-if>
                 <div class="lr-en"><sc-if value="{{o.aShowEn}}" hint-placeholder-val="{{ true }}"><span>{{o.aen}}</span></sc-if><sc-if value="{{o.aHideEn}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the meaning" data-on-click="{{o.peek}}">Show</button></sc-if></div>
                 <span class="ldot {{o.aDot}}" role="img" aria-label="{{o.aStatus}}" title="{{o.aStatus}}"></span>
               </div>
               <svg class="ic oarrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>
               <div class="pc-w">
-                <sc-if value="{{o.bShowZh}}" hint-placeholder-val="{{ true }}"><div class="zh pc-zh">{{o.bzh}}</div><div class="lr-py"><span class="wc-py">{{o.bpy}}</span><button type="button" class="spk sm {{o.bPc}}" aria-label="Hear this word" data-on-click="{{o.bPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div></sc-if>
+                <sc-if value="{{o.bShowZh}}" hint-placeholder-val="{{ true }}"><div lang="zh-Hans" class="zh pc-zh">{{o.bzh}}</div><div class="lr-py"><span class="wc-py">{{o.bpy}}</span><button type="button" class="spk sm {{o.bPc}}" aria-label="Hear this word" data-on-click="{{o.bPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div></sc-if>
                 <sc-if value="{{o.bHideZh}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the Chinese" data-on-click="{{o.peek}}">Show</button></sc-if>
                 <div class="lr-en"><sc-if value="{{o.bShowEn}}" hint-placeholder-val="{{ true }}"><span>{{o.ben}}</span></sc-if><sc-if value="{{o.bHideEn}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the meaning" data-on-click="{{o.peek}}">Show</button></sc-if></div>
                 <span class="ldot {{o.bDot}}" role="img" aria-label="{{o.bStatus}}" title="{{o.bStatus}}"></span>
@@ -2143,7 +2161,7 @@
               <div class="muted pc-note">{{o.note}}</div>
               <sc-if value="{{o.hasExBtn}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{o.exToggle}}">{{o.exLabel}}</button></sc-if>
               <sc-if value="{{o.exOpen}}" hint-placeholder-val="{{ false }}">
-                <div class="opair exboth"><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{o.aExZh}}</div><button class="spk {{o.aExPc}}" aria-label="Hear the example sentence" data-on-click="{{o.aExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.aExPy}}</div><div>{{o.aExEn}}</div></div><div class="wexbox"><div class="wwexbox-t"><div class="zh wexbox-zh">{{o.bExZh}}</div><button class="spk {{o.bExPc}}" aria-label="Hear the example sentence" data-on-click="{{o.bExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.bExPy}}</div><div>{{o.bExEn}}</div></div></div>
+                <div class="opair exboth"><div class="wexbox"><div class="wwexbox-t"><div lang="zh-Hans" class="zh wexbox-zh">{{o.aExZh}}</div><button class="spk {{o.aExPc}}" aria-label="Hear the example sentence" data-on-click="{{o.aExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.aExPy}}</div><div>{{o.aExEn}}</div></div><div class="wexbox"><div class="wwexbox-t"><div lang="zh-Hans" class="zh wexbox-zh">{{o.bExZh}}</div><button class="spk {{o.bExPc}}" aria-label="Hear the example sentence" data-on-click="{{o.bExPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div><div class="wc-py" style="font-size:15px">{{o.bExPy}}</div><div>{{o.bExEn}}</div></div></div>
               </sc-if>
               <sc-if value="{{o.hasAdd}}" hint-placeholder-val="{{ false }}">
                 <div class="rrow">
@@ -2224,13 +2242,13 @@
       <div class="lrows">
         <sc-for list="{{topicChips}}" as="c" hint-placeholder-count="7">
           <div class="lrow {{c.cls}}">
-            <div class="lr-zh"><sc-if value="{{c.showZh}}" hint-placeholder-val="{{ true }}"><span class="zh lr-hz">{{c.zh}}</span></sc-if><sc-if value="{{c.hideZh}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the Chinese" data-on-click="{{c.peek}}">Show</button></sc-if></div>
+            <div class="lr-zh"><sc-if value="{{c.showZh}}" hint-placeholder-val="{{ true }}"><span lang="zh-Hans" class="zh lr-hz">{{c.zh}}</span></sc-if><sc-if value="{{c.hideZh}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the Chinese" data-on-click="{{c.peek}}">Show</button></sc-if></div>
             <div class="lr-mid">
               <div class="lr-py"><sc-if value="{{c.showZh}}" hint-placeholder-val="{{ true }}"><span class="wc-py">{{c.py}}</span></sc-if><button type="button" class="spk sm {{c.pc}}" aria-label="Hear this word" data-on-click="{{c.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><sc-if value="{{c.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{c.lvCls}}">{{c.lvTag}}</span></sc-if></div>
               <div class="lr-en"><sc-if value="{{c.showEn}}" hint-placeholder-val="{{ true }}"><span>{{c.en}}</span></sc-if><sc-if value="{{c.hideEn}}" hint-placeholder-val="{{ false }}"><button type="button" class="cvbtn" aria-label="Show the meaning" data-on-click="{{c.peek}}">Show</button></sc-if></div>
             </div>
             <sc-if value="{{c.hasEx}}" hint-placeholder-val="{{ true }}"><div class="lr-ex">
-              <div class="lr-exline"><sc-if value="{{c.showZh}}" hint-placeholder-val="{{ true }}"><span class="zh lr-exzh">{{c.exZh}}</span></sc-if><sc-if value="{{c.hideZh}}" hint-placeholder-val="{{ false }}"><span class="lr-ghost" aria-hidden="true">· · ·</span></sc-if><button type="button" class="spk sm {{c.exPc}}" aria-label="Hear the example sentence" data-on-click="{{c.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div>
+              <div class="lr-exline"><sc-if value="{{c.showZh}}" hint-placeholder-val="{{ true }}"><span lang="zh-Hans" class="zh lr-exzh">{{c.exZh}}</span></sc-if><sc-if value="{{c.hideZh}}" hint-placeholder-val="{{ false }}"><span class="lr-ghost" aria-hidden="true">· · ·</span></sc-if><button type="button" class="spk sm {{c.exPc}}" aria-label="Hear the example sentence" data-on-click="{{c.exPlay}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div>
               <div class="lr-exsub"><sc-if value="{{c.showZh}}" hint-placeholder-val="{{ true }}"><span>{{c.exPy}}</span></sc-if><sc-if value="{{c.showEn}}" hint-placeholder-val="{{ true }}"><span class="lr-exen">{{c.exEn}}</span></sc-if></div>
               <sc-if value="{{c.hasExMore}}" hint-placeholder-val="{{ false }}"><button class="linkbtn exbtn" data-on-click="{{c.exNext}}">Another example ({{c.exCount}})</button></sc-if>
               <sc-if value="{{c.hasExNote}}" hint-placeholder-val="{{ false }}"><div class="exnote">{{c.exNote}}</div></sc-if>
@@ -2241,7 +2259,7 @@
       </div>
       <section class="card" style="display:flex;flex-direction:column;gap:6px;align-items:flex-start">
         <div class="kick">Put them to work</div>
-        <div class="zh" style="font-size:30px;line-height:1.3">{{tsZh}}</div>
+        <div lang="zh-Hans" class="zh" style="font-size:30px;line-height:1.3">{{tsZh}}</div>
         <div class="muted">{{tsPy}}</div>
         <div>{{tsEn}}</div>
         <a class="report" href="{{tsReport}}" target="_blank" rel="noopener">Report a mistake</a>
@@ -2291,7 +2309,7 @@
         <div class="seg2" role="group" aria-label="Order friends by">
           <sc-for list="{{frSortOpts}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
         </div>
-        <sc-if value="{{frHasNudge}}" hint-placeholder-val="{{ false }}"><section class="card frnudge"><div class="frn-ic zh" aria-hidden="true">爬</div><div><b>{{frNudge}}</b><div class="muted">{{frNudgeSub}}</div></div></section></sc-if>
+        <sc-if value="{{frHasNudge}}" hint-placeholder-val="{{ false }}"><section class="card frnudge"><div lang="zh-Hans" class="frn-ic zh" aria-hidden="true">爬</div><div><b>{{frNudge}}</b><div class="muted">{{frNudgeSub}}</div></div></section></sc-if>
         <section class="card frlist">
           <sc-for list="{{frRows}}" as="r" hint-placeholder-count="5">
             <div class="frow {{r.cls}}">
@@ -2335,7 +2353,7 @@
     <sc-if value="{{lqHas}}" hint-placeholder-val="{{ false }}">
       <div class="lib-res">
         <sc-for list="{{lqRows}}" as="r" hint-placeholder-count="3">
-          <div class="lib-r"><button type="button" class="lib-rb" data-on-click="{{r.open}}"><span class="zh lib-zh">{{r.zh}}</span><span class="lib-m"><span class="wc-py">{{r.py}}</span><span class="muted">{{r.en}}</span></span></button><button class="spk {{r.pc}}" aria-label="Hear this word" data-on-click="{{r.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div>
+          <div class="lib-r"><button type="button" class="lib-rb" data-on-click="{{r.open}}"><span lang="zh-Hans" class="zh lib-zh">{{r.zh}}</span><span class="lib-m"><span class="wc-py">{{r.py}}</span><span class="muted">{{r.en}}</span></span></button><button class="spk {{r.pc}}" aria-label="Hear this word" data-on-click="{{r.play}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div>
         </sc-for>
       </div>
     </sc-if>
@@ -2343,7 +2361,7 @@
     <div class="lib-cols">
       <div class="lib-tiles">
         <sc-for list="{{libTiles}}" as="t" hint-placeholder-count="4">
-          <button type="button" class="lib-tile lt-{{t.key}}" data-on-click="{{t.fn}}"><span class="lib-hd" aria-hidden="true"><span class="lib-g zh">{{t.glyph}}</span></span><span class="lib-tt"><b>{{t.title}}</b><span class="muted lib-sb">{{t.sub}}</span></span></button>
+          <button type="button" class="lib-tile lt-{{t.key}}" data-on-click="{{t.fn}}"><span class="lib-hd" aria-hidden="true"><span lang="zh-Hans" class="lib-g zh">{{t.glyph}}</span></span><span class="lib-tt"><b>{{t.title}}</b><span class="muted lib-sb">{{t.sub}}</span></span></button>
         </sc-for>
       </div>
     </div>
@@ -2380,7 +2398,7 @@
     <div class="wrows2 {{wrowsCls}}">
       <sc-for list="{{rows}}" as="r" hint-placeholder-count="8">
         <div class="wr2">
-          <div class="wr2-zh zh">{{r.zh}}</div>
+          <div lang="zh-Hans" class="wr2-zh zh">{{r.zh}}</div>
           <i class="gi gi-{{r.lv}}" aria-hidden="true" title="{{r.mLabel}}"></i>
           <div class="wr2-m"><div class="wc-py">{{r.py}}</div><div class="muted">{{r.en}}</div></div>
           <sc-if value="{{r.hasLvTag}}" hint-placeholder-val="{{ false }}"><span class="lvtag {{r.lvCls}}">{{r.lvTag}}</span></sc-if>
@@ -2405,10 +2423,10 @@
   <div class="lab">
     <div class="lab-main">
       <div class="seg2 labtiles" role="group" aria-label="Lab mode">
-        <button class="{{lDictCls}}" data-on-click="{{setDict}}"><i class="lt-g zh" aria-hidden="true">写</i><b>Dictation</b><span class="lt-d">Hear it, type what you heard.</span></button>
-        <button class="{{lMeanCls}}" data-on-click="{{setMean}}"><i class="lt-g zh" aria-hidden="true">意</i><b>Meaning</b><span class="lt-d">Hear it, then say what it means.</span></button>
-        <button class="{{lShadowCls}}" data-on-click="{{setShadow}}"><i class="lt-g zh" aria-hidden="true">跟</i><b>Shadowing</b><span class="lt-d">Say it along with the voice.</span></button>
-        <button class="{{lToneCls}}" data-on-click="{{setTone}}"><i class="lt-g zh" aria-hidden="true">调</i><b>Tone trainer</b><span class="lt-d">Which tone did you hear?</span></button>
+        <button class="{{lDictCls}}" data-on-click="{{setDict}}"><i lang="zh-Hans" class="lt-g zh" aria-hidden="true">写</i><b>Dictation</b><span class="lt-d">Hear it, type what you heard.</span></button>
+        <button class="{{lMeanCls}}" data-on-click="{{setMean}}"><i lang="zh-Hans" class="lt-g zh" aria-hidden="true">意</i><b>Meaning</b><span class="lt-d">Hear it, then say what it means.</span></button>
+        <button class="{{lShadowCls}}" data-on-click="{{setShadow}}"><i lang="zh-Hans" class="lt-g zh" aria-hidden="true">跟</i><b>Shadowing</b><span class="lt-d">Say it along with the voice.</span></button>
+        <button class="{{lToneCls}}" data-on-click="{{setTone}}"><i lang="zh-Hans" class="lt-g zh" aria-hidden="true">调</i><b>Tone trainer</b><span class="lt-d">Which tone did you hear?</span></button>
       </div>
 
       <sc-if value="{{isDict}}" hint-placeholder-val="{{ true }}">
@@ -2435,7 +2453,7 @@
           <sc-if value="{{showWords}}" hint-placeholder-val="{{ false }}">
             <div class="wds">
               <sc-for list="{{wordsView}}" as="w" hint-placeholder-count="4">
-                <div class="wd {{w.cls}}"><span class="zh" style="font-size:28px;line-height:1.2;color:var(--ink)">{{w.zh}}</span><span>{{w.py}}</span></div>
+                <div class="wd {{w.cls}}"><span lang="zh-Hans" class="zh" style="font-size:28px;line-height:1.2;color:var(--ink)">{{w.zh}}</span><span>{{w.py}}</span></div>
               </sc-for>
             </div>
           </sc-if>
@@ -2505,7 +2523,7 @@
           <input id="mean-input" class="inp {{mInpCls}}" type="text" value="{{mTyped}}" placeholder="Type what it means, in English." autocomplete="off" aria-label="What it means" data-on-input="{{onMType}}" data-on-keydown="{{onMEnter}}">
           <sc-if value="{{hasMErr}}" hint-placeholder-val="{{ false }}"><p class="m-err" role="alert">{{mErr}}</p></sc-if>
           <sc-if value="{{mShowPy}}" hint-placeholder-val="{{ false }}"><div class="m-text"><span class="muted">{{mPy}}</span></div></sc-if>
-          <sc-if value="{{mShowZh}}" hint-placeholder-val="{{ false }}"><div class="m-text zh" style="font-size:30px;line-height:1.3">{{mZh}}</div></sc-if>
+          <sc-if value="{{mShowZh}}" hint-placeholder-val="{{ false }}"><div lang="zh-Hans" class="m-text zh" style="font-size:30px;line-height:1.3">{{mZh}}</div></sc-if>
           <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
             <sc-if value="{{mNotChecked}}" hint-placeholder-val="{{ true }}">
               <button class="btn pri big {{mCheckCls}}" aria-disabled="{{mCheckAria}}" data-on-click="{{checkMean}}">{{mCheckText}}</button>
@@ -2560,7 +2578,7 @@
           <div class="dict-top">
             <button class="listen sm {{clipPlayCls}}" data-on-click="{{playClip}}" aria-label="Play the clip"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
             <div style="flex:1 1 220px;min-width:0">
-              <sc-if value="{{shShowZh}}" hint-placeholder-val="{{ true }}"><div class="zh" style="font-size:34px;line-height:1.3">{{shZh}}</div></sc-if>
+              <sc-if value="{{shShowZh}}" hint-placeholder-val="{{ true }}"><div lang="zh-Hans" class="zh" style="font-size:34px;line-height:1.3">{{shZh}}</div></sc-if>
               <sc-if value="{{shShowPy}}" hint-placeholder-val="{{ true }}"><div class="muted" style="font-size:18px">{{shPy}}</div></sc-if>
               <sc-if value="{{shHidden}}" hint-placeholder-val="{{ false }}"><div class="muted">Text hidden.</div></sc-if>
             </div>
@@ -2639,7 +2657,7 @@
         <p class="muted" style="margin:4px 0 4px;font-size:15px">Two phrases for when someone talks too fast.</p>
         <sc-for list="{{phrases}}" as="p" hint-placeholder-count="2">
           <div class="ex">
-            <div class="ex-m"><div class="zh">{{p.zh}}</div><div class="py">{{p.py}}</div><div>{{p.en}}</div></div>
+            <div class="ex-m"><div lang="zh-Hans" class="zh">{{p.zh}}</div><div class="py">{{p.py}}</div><div>{{p.en}}</div></div>
             <button class="spk {{p.pc}}" aria-label="Hear this phrase" data-on-click="{{p.play}}">
               <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
             </button>
@@ -2663,9 +2681,9 @@
       <h2 class="h2">{{exTitle}}</h2>
       <p class="muted" style="margin:4px 0 14px;font-size:15.5px">{{exIntro}}</p>
       <div class="fmt">
-        <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">听</div><div style="flex:1;min-width:0"><div class="fmt-t">{{exListenT}}</div><div class="fmt-d">{{exListenD}}</div></div></div>
-        <div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">读</div><div style="flex:1;min-width:0"><div class="fmt-t">{{exReadT}}</div><div class="fmt-d">{{exReadD}}</div></div></div>
-        <sc-if value="{{examHasWriting}}" hint-placeholder-val="{{ false }}"><div class="fmt-r"><div class="fmt-g zh" aria-hidden="true">写</div><div style="flex:1;min-width:0"><div class="fmt-t">{{exWriteT}}</div><div class="fmt-d">{{exWriteD}}</div></div></div></sc-if>
+        <div class="fmt-r"><div lang="zh-Hans" class="fmt-g zh" aria-hidden="true">听</div><div style="flex:1;min-width:0"><div class="fmt-t">{{exListenT}}</div><div class="fmt-d">{{exListenD}}</div></div></div>
+        <div class="fmt-r"><div lang="zh-Hans" class="fmt-g zh" aria-hidden="true">读</div><div style="flex:1;min-width:0"><div class="fmt-t">{{exReadT}}</div><div class="fmt-d">{{exReadD}}</div></div></div>
+        <sc-if value="{{examHasWriting}}" hint-placeholder-val="{{ false }}"><div class="fmt-r"><div lang="zh-Hans" class="fmt-g zh" aria-hidden="true">写</div><div style="flex:1;min-width:0"><div class="fmt-t">{{exWriteT}}</div><div class="fmt-d">{{exWriteD}}</div></div></div></sc-if>
       </div>
       <p class="plan-note">{{exNote}}</p>
       <sc-if value="{{exCreditsOn}}" hint-placeholder-val="{{ false }}"><details class="ex-credits"><summary>Photo credits</summary><p>Photos from Wikimedia Commons, used under the licence named.</p><ul><sc-for list="{{exCredits}}" as="c" hint-placeholder-count="2"><li>{{c.a}}: {{c.c}}</li></sc-for></ul></details></sc-if>
@@ -2717,10 +2735,10 @@
       </sc-if>
       <sc-if value="{{exHasPic}}" hint-placeholder-val="{{ false }}"><div class="ex-pic" aria-hidden="true">{{exPic}}</div></sc-if>
       <sc-if value="{{exHasPhoto}}" hint-placeholder-val="{{ false }}"><div class="ex-pic-photo"><img class="ex-img" src="{{exPhoto}}" data-exu="{{exPhoto}}" alt="{{exPhotoAlt}}" loading="lazy" referrerpolicy="no-referrer"></div></sc-if>
-      <sc-if value="{{exHasText}}" hint-placeholder-val="{{ false }}"><div class="zh ex-text">{{exText}}</div></sc-if>
+      <sc-if value="{{exHasText}}" hint-placeholder-val="{{ false }}"><div lang="zh-Hans" class="zh ex-text">{{exText}}</div></sc-if>
       <sc-if value="{{exHasHint}}" hint-placeholder-val="{{ false }}"><div class="py ex-hint">{{exHint}}</div></sc-if>
-      <sc-if value="{{exIsOrder}}" hint-placeholder-val="{{ false }}"><div class="ex-built-row"><div class="zh ex-built" aria-live="polite">{{exBuilt}}</div><button class="btn" data-on-click="{{exClear}}">Clear</button></div></sc-if>
-      <sc-if value="{{exIsType}}" hint-placeholder-val="{{ false }}"><input id="ex-input" class="inp zh ex-input" type="text" value="{{exTypedVal}}" placeholder="Type the character" autocomplete="off" autocapitalize="off" aria-label="Your answer" data-on-input="{{exType}}"></sc-if>
+      <sc-if value="{{exIsOrder}}" hint-placeholder-val="{{ false }}"><div class="ex-built-row"><div lang="zh-Hans" class="zh ex-built" aria-live="polite">{{exBuilt}}</div><button class="btn" data-on-click="{{exClear}}">Clear</button></div></sc-if>
+      <sc-if value="{{exIsType}}" hint-placeholder-val="{{ false }}"><input lang="zh-Hans" id="ex-input" class="inp zh ex-input" type="text" value="{{exTypedVal}}" placeholder="Type the character" autocomplete="off" autocapitalize="off" aria-label="Your answer" data-on-input="{{exType}}"></sc-if>
       <div class="ex-opts {{exOptsCls}}" role="group" aria-label="Answers">
         <sc-for list="{{exOpts}}" as="o" hint-placeholder-count="3">
           <button class="ex-opt {{o.cls}}" data-on-click="{{o.pick}}"><b>{{o.letter}}</b><sc-if value="{{o.hasImg}}" hint-placeholder-val="{{ false }}"><img class="ex-img" src="{{o.img}}" data-exu="{{o.img}}" alt="{{o.alt}}" loading="lazy" referrerpolicy="no-referrer"></sc-if><sc-if value="{{o.noImg}}" hint-placeholder-val="{{ true }}"><span class="{{o.big}}">{{o.label}}</span></sc-if></button>
@@ -2762,7 +2780,7 @@
           </div>
         </sc-for>
       </div>
-      <sc-if value="{{exSeal}}" hint-placeholder-val="{{ false }}"><div class="reward"><div class="stamp zh" style="width:56px;height:56px;font-size:34px;border-radius:10px;animation:none" aria-hidden="true">{{exSealZh}}</div><div><b>{{lvName}} seal earned.</b><div class="muted" style="font-size:15px">{{exSealText}}</div></div></div></sc-if>
+      <sc-if value="{{exSeal}}" hint-placeholder-val="{{ false }}"><div class="reward"><div lang="zh-Hans" class="stamp zh" style="width:56px;height:56px;font-size:34px;border-radius:10px;animation:none" aria-hidden="true">{{exSealZh}}</div><div><b>{{lvName}} seal earned.</b><div class="muted" style="font-size:15px">{{exSealText}}</div></div></div></sc-if>
       <sc-if value="{{exUnlock}}" hint-placeholder-val="{{ false }}"><div class="reward" style="margin-top:12px"><div style="flex:1;min-width:0"><b>{{exUnlockText}}</b></div><button class="btn pri" data-on-click="{{exUnlockGo}}">{{exUnlockGoText}}</button></div></sc-if>
       <sc-if value="{{exBonus}}" hint-placeholder-val="{{ false }}"><div class="reward" style="margin-top:12px"><div style="flex:1;min-width:0"><b>{{exBonusText}}</b><div class="muted" style="font-size:15px">A level bonus, paid once for each level. Taking the exam again earns no more.</div></div></div></sc-if>
       <sc-if value="{{exNoSeal}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:14px 0 0">{{exSealText}}</p></sc-if>
@@ -2781,7 +2799,7 @@
             <div class="exw-h"><b>Question {{w.n}}</b><span>{{w.part}}</span></div>
             <sc-if value="{{w.hasPic}}" hint-placeholder-val="{{ false }}"><div class="exw-pic" aria-hidden="true">{{w.pic}}</div></sc-if>
             <sc-if value="{{w.hasPhoto}}" hint-placeholder-val="{{ false }}"><img class="ex-img exw-img" src="{{w.photo}}" data-exu="{{w.photo}}" alt="{{w.photoAlt}}" loading="lazy" referrerpolicy="no-referrer"></sc-if>
-            <div class="zh exw-zh">{{w.zh}}</div>
+            <div lang="zh-Hans" class="zh exw-zh">{{w.zh}}</div>
             <div class="py">{{w.py}}</div>
             <div>{{w.en}}</div>
             <div class="exw-a"><span class="good">Right answer: {{w.right}}</span><span class="bad">You chose: {{w.yours}}</span></div>
@@ -2820,7 +2838,7 @@
         <div class="kick">{{q.kicker}}</div>
         <h2 class="q-prompt">{{q.prompt}}</h2>
 
-        <sc-if value="{{q.hasBig}}" hint-placeholder-val="{{ true }}"><div class="zh q-big {{q.bigCls}}">{{q.big}}</div></sc-if>
+        <sc-if value="{{q.hasBig}}" hint-placeholder-val="{{ true }}"><div lang="zh-Hans" class="zh q-big {{q.bigCls}}">{{q.big}}</div></sc-if>
         <sc-if value="{{q.hasSub}}" hint-placeholder-val="{{ false }}"><div class="q-sub">{{q.sub}}</div></sc-if>
 
         <sc-if value="{{q.isTyped}}" hint-placeholder-val="{{ true }}">
@@ -2838,7 +2856,7 @@
         <li>For <b>ü</b> type <b>v</b>: nv3 becomes nǚ. Capitals and spaces do not matter, and typing the hanzi works too.</li>
       </ul>
       <label class="py-try"><span>Try it here</span><input class="inp py-tryi" type="text" placeholder="ni3 hao3" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Practice typing pinyin" value="{{typIn}}" data-on-input="{{onTypIn}}"></label>
-      <div class="py-try-out zh" aria-live="polite">{{typOut}}</div>
+      <div lang="zh-Hans" class="py-try-out zh" aria-live="polite">{{typOut}}</div>
     </div>
               <div class="py-typ-act"><button type="button" class="btn pri" data-on-click="{{typDone}}">Got it</button><button type="button" class="btn" data-on-click="{{typCourse}}">Open the pinyin course</button></div>
             </div>
@@ -2855,26 +2873,26 @@
         <sc-if value="{{q.isChoice}}" hint-placeholder-val="{{ false }}">
           <div class="opts {{optsCls}}">
             <sc-for list="{{opts}}" as="o" hint-placeholder-count="4">
-              <button class="opt {{o.cls}}" data-on-click="{{o.pick}}"><i class="optk" aria-hidden="true">{{o.k}}</i><span class="{{o.lcls}}">{{o.label}}</span></button>
+              <button class="opt {{o.cls}}" data-on-click="{{o.pick}}"><i class="optk" aria-hidden="true">{{o.k}}</i><span class="{{o.lcls}}" lang="{{o.lang}}">{{o.label}}</span></button>
             </sc-for>
           </div>
         </sc-if>
 
         <sc-if value="{{q.isOrder}}" hint-placeholder-val="{{ false }}">
           <div class="ans-line">
-            <sc-for list="{{pickedTiles}}" as="t" hint-placeholder-count="0"><button class="tile zh {{t.cls}}" data-on-click="{{t.fn}}">{{t.label}}</button></sc-for>
+            <sc-for list="{{pickedTiles}}" as="t" hint-placeholder-count="0"><button lang="zh-Hans" class="tile zh {{t.cls}}" data-on-click="{{t.fn}}">{{t.label}}</button></sc-for>
             <sc-if value="{{noPicked}}" hint-placeholder-val="{{ true }}"><span class="ans-ph">Tap the words below in order</span></sc-if>
           </div>
           <div class="bank">
-            <sc-for list="{{bankTiles}}" as="t" hint-placeholder-count="4"><button class="tile zh {{t.cls}}" data-on-click="{{t.fn}}">{{t.label}}</button></sc-for>
+            <sc-for list="{{bankTiles}}" as="t" hint-placeholder-count="4"><button lang="zh-Hans" class="tile zh {{t.cls}}" data-on-click="{{t.fn}}">{{t.label}}</button></sc-for>
           </div>
         </sc-if>
 
         <sc-if value="{{q.isSpot}}" hint-placeholder-val="{{ false }}">
           <div class="spot">
             <sc-for list="{{spotTokens}}" as="t" hint-placeholder-count="5">
-              <sc-if value="{{t.isTok}}" hint-placeholder-val="{{ true }}"><button class="tok zh {{t.cls}}" data-on-click="{{t.pick}}">{{t.label}}</button></sc-if>
-              <sc-if value="{{t.isPunct}}" hint-placeholder-val="{{ false }}"><span class="punct zh">{{t.label}}</span></sc-if>
+              <sc-if value="{{t.isTok}}" hint-placeholder-val="{{ true }}"><button lang="zh-Hans" class="tok zh {{t.cls}}" data-on-click="{{t.pick}}">{{t.label}}</button></sc-if>
+              <sc-if value="{{t.isPunct}}" hint-placeholder-val="{{ false }}"><span lang="zh-Hans" class="punct zh">{{t.label}}</span></sc-if>
             </sc-for>
           </div>
         </sc-if>
@@ -2893,7 +2911,7 @@
           <div class="fb-m">
             <div class="fb-t">{{fbTitle}}</div>
             <sc-if value="{{hasQfeed}}" hint-placeholder-val="{{ false }}"><div class="fb-x">{{qfeed}}</div></sc-if>
-            <div class="fb-s zh">{{q.reveal}}</div>
+            <div lang="zh-Hans" class="fb-s zh">{{q.reveal}}</div>
             <sc-if value="{{q.hasRevealPy}}" hint-placeholder-val="{{ false }}"><div class="fb-x fb-py">{{q.revealPy}}</div></sc-if>
             <div class="fb-x">{{q.explain}}</div>
             <a class="report" href="{{q.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
@@ -2905,7 +2923,7 @@
 
     <sc-if value="{{qdone}}" hint-placeholder-val="{{ false }}">
       <div class="res">
-        <div class="stamp zh" aria-hidden="true">好</div>
+        <div lang="zh-Hans" class="stamp zh" aria-hidden="true">好</div>
         <h2 class="res-h">{{resTitle}}</h2>
         <p class="res-p">{{resSub}}</p>
         <div class="res-stats">
@@ -2939,13 +2957,13 @@
   <sc-if value="{{obIntroShow}}" hint-placeholder-val="{{ false }}">
   <div class="obm-wrap"><div class="obm-scrim"></div>
     <div class="obm" role="dialog" aria-modal="true" aria-labelledby="obm-t-intro">
-      <div class="mark obm-mark zh" aria-hidden="true">山</div>
+      <div lang="zh-Hans" class="mark obm-mark zh" aria-hidden="true">山</div>
       <h2 class="obm-h" id="obm-t-intro">Welcome to Shanlu</h2>
       <p class="obm-p">Learn Chinese a little each day. Every minute you study earns coins, and coins take you to real places across China.</p>
       <div class="obm-pts">
-        <div><b class="zh" aria-hidden="true">学</b><span>A few words a day</span></div>
-        <div><b class="zh" aria-hidden="true">币</b><span>Coins for every minute</span></div>
-        <div><b class="zh" aria-hidden="true">路</b><span>Real places to visit</span></div>
+        <div><b lang="zh-Hans" class="zh" aria-hidden="true">学</b><span>A few words a day</span></div>
+        <div><b lang="zh-Hans" class="zh" aria-hidden="true">币</b><span>Coins for every minute</span></div>
+        <div><b lang="zh-Hans" class="zh" aria-hidden="true">路</b><span>Real places to visit</span></div>
       </div>
       <button class="btn pri big obm-main" data-on-click="{{obIntroGo}}">Take my first step</button>
       <button class="linkbtn obm-link" data-on-click="{{obBackOpen}}">I have been here before</button>
@@ -2975,8 +2993,8 @@
   <div class="obm-wrap obm-late"><div class="obm-scrim"></div>
     <div class="obm obm-guide" role="dialog" aria-modal="true" aria-labelledby="obm-t-guide">
       <div class="obm-bar"><span class="kick">{{obCCount}}</span><button class="linkbtn" data-on-click="{{obGuideSkip}}">Skip</button></div>
-      <div class="obm-shot {{obCArt}}" style="{{obCShot}}" role="img" aria-label="{{obCAlt}}"><b class="zh" aria-hidden="true">{{obCZh}}</b><i class="obm-shot-img" style="{{obCImg}}"></i></div>
-      <div class="obm-tagrow"><span class="obm-tagzh zh" aria-hidden="true">{{obCZh}}</span><span class="kick">{{obCTag}}</span></div>
+      <div class="obm-shot {{obCArt}}" style="{{obCShot}}" role="img" aria-label="{{obCAlt}}"><b lang="zh-Hans" class="zh" aria-hidden="true">{{obCZh}}</b><i class="obm-shot-img" style="{{obCImg}}"></i></div>
+      <div class="obm-tagrow"><span lang="zh-Hans" class="obm-tagzh zh" aria-hidden="true">{{obCZh}}</span><span class="kick">{{obCTag}}</span></div>
       <h2 class="obm-h" id="obm-t-guide">{{obCTitle}}</h2>
       <p class="obm-p">{{obCBody}}</p>
       <div class="obm-chips"><sc-for list="{{obCChips}}" as="c" hint-placeholder-count="2"><span class="chip">{{c}}</span></sc-for></div>
@@ -3032,7 +3050,7 @@
       <h2 class="obm-h" id="coin-h">How to earn coins</h2>
       <sc-if value="{{coinNeedShow}}" hint-placeholder-val="{{ false }}"><p class="coin-need">{{coinNeed}}</p></sc-if>
       <p class="obm-note">Everything you study earns coins. The quickest way: finish today's plan and open the treasure chest.</p>
-      <ul class="coin-rows"><sc-for list="{{coinRows}}" as="r" hint-placeholder-count="13"><li><b class="zh coin-zh" aria-hidden="true">{{r.zh}}</b><span class="coin-t"><b>{{r.t}}</b><small>{{r.d}}</small></span><span class="coin-amt">{{r.amt}}</span></li></sc-for></ul>
+      <ul class="coin-rows"><sc-for list="{{coinRows}}" as="r" hint-placeholder-count="13"><li><b lang="zh-Hans" class="zh coin-zh" aria-hidden="true">{{r.zh}}</b><span class="coin-t"><b>{{r.t}}</b><small>{{r.d}}</small></span><span class="coin-amt">{{r.amt}}</span></li></sc-for></ul>
       <p class="obm-note">{{coinPrices}}</p>
       <button type="button" class="btn pri big obm-main" data-on-click="{{coinHelpToday}}">Go to today's plan</button>
     </div>
@@ -3058,7 +3076,7 @@
         <div class="pc-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{pcPctN}}"><i style="width:{{pcPct}}"></i></div>
         <sc-if value="{{pcIsWord}}" hint-placeholder-val="{{ false }}">
           <p class="obm-note pc-q">What does this word mean?</p>
-          <div class="pc-zh zh" lang="zh">{{pcZh}}</div>
+          <div class="pc-zh zh" lang="zh-Hans">{{pcZh}}</div>
           <sc-if value="{{pcPyOn}}" hint-placeholder-val="{{ false }}"><div class="pc-py">{{pcPy}}</div></sc-if>
           <button class="linkbtn pc-pybtn" data-on-click="{{pcPyToggle}}">{{pcPyText}}</button>
         </sc-if>
@@ -3131,6 +3149,6 @@
 <script defer src="data/art.js?v=1dd8dd9d7b"></script>
 <script defer src="data/passages.js?v=5ada9a1323"></script>
 <script defer src="data/path.js?v=925023841f"></script>
-<script defer src="app.js?v=6726c4877e"></script>
+<script defer src="app.js?v=9513e451e2"></script>
 </body>
 </html>

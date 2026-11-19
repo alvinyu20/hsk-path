@@ -115,7 +115,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(/First session done/.test(t) && /Tomorrow, Review brings these five words back/.test(t), 'finishing shows what to do next');
     check(await page.locator('button', { hasText: 'Take my first flight' }).count() === 0, 'the first flight is not offered again: it was already taken');
     await page.locator('.brand').click();
-    check(await page.locator('section.ob').count() === 0 && /^Today/.test(await page.locator('h1').innerText()), 'Home is back to normal once the session is done');
+    check(await page.locator('section.ob').count() === 0 && /^Today/.test(await page.locator('.top h1').innerText()), 'Home is back to normal once the session is done');
     // the reference page
     await page.locator('.side .ylink', { hasText: 'How Shanlu works' }).click();
     t = await main(page);
@@ -183,7 +183,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   {
     const { ctx, page } = await open({ xp: 500 });
     check(await dlg(page).count() === 0 && await page.evaluate(() => window.shanlu.state.screen) === 'home', 'a person with progress gets no pop-up and stays on Home');
-    check(/^Today/.test(await page.locator('h1').innerText()) && await page.locator('section.ob').count() === 0, 'and keeps the normal Home title');
+    check(/^Today/.test(await page.locator('.top h1').innerText()) && await page.locator('section.ob').count() === 0, 'and keeps the normal Home title');
     await ctx.close();
   }
   {
