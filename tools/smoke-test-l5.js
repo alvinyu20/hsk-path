@@ -99,7 +99,7 @@ const startState = (o) => { try { if (!localStorage.getItem('shanlu-passed')) lo
   check(n5 === 1579, 'the HSK 5 list has 1,579 cards (' + n5 + ')');
   const home = await text();
   check(home.includes(n5.toLocaleString('en-US') + ' words to go') || home.includes(n5 + ' words to go'), 'the trail counts the ' + n5 + ' HSK 5 words');
-  check(home.includes('Dictation drill') && (await page.locator('.tchip', { hasText: 'Speak' }).count()) === 1 && (await page.locator('.tchip', { hasText: 'Grammar lesson' }).count()) === 1, 'Today offers the listening drill, a practice script and a grammar lesson');
+  check(home.includes('Dictation drill') && (await page.locator('.mw', { hasText: 'Speak' }).count()) === 1 && (await page.locator('.mw', { hasText: 'Grammar lesson' }).count()) === 1, 'Today offers the listening drill, a practice script and a grammar lesson');
   const st = await page.evaluate(() => ({ n: Object.keys(window.shanlu.state.ws).length, l1: !!window.shanlu.state.ws['你好'], l2: !!window.shanlu.state.ws['机场'], l3: !!window.shanlu.state.ws['聪明'], l4: !!window.shanlu.state.ws['面试'], l5: !!window.shanlu.state.ws['成就'] }));
   check(st.n === n5 && !st.l1 && !st.l2 && !st.l3 && !st.l4 && st.l5, 'progress holds the HSK 5 words and none of the HSK 1 to 4 words');
   check(await page.evaluate(() => !localStorage.getItem('shanlu-progress-v1') && !localStorage.getItem('shanlu-progress-v1-l2') && !localStorage.getItem('shanlu-progress-v1-l3') && !localStorage.getItem('shanlu-progress-v1-l4')), 'HSK 1 to 4 progress are not touched by opening HSK 5');
@@ -125,7 +125,7 @@ const startState = (o) => { try { if (!localStorage.getItem('shanlu-passed')) lo
   await page.waitForTimeout(80);
   const topicInfo = await page.evaluate(() => ({ n: window.HSK5_WEBS.topics.length, words: new Set([].concat(...window.HSK5_WEBS.topics.map(t => t.words))).size, small: window.HSK5_WEBS.topics.filter(t => t.words.length < 3).length }));
   const railN = (await page.locator('.trail-rail .tr-gn').allInnerTexts()).reduce((a, t) => a + parseInt(t, 10), 0);
-  check(topicInfo.n === 136 && railN === topicInfo.n, 'the topics screen lists the HSK 5 topics (' + topicInfo.n + ')');
+  check(topicInfo.n === 143 && railN === topicInfo.n, 'the topics screen lists the HSK 5 topics (' + topicInfo.n + ')');
   check(topicInfo.words === n5, 'every one of the ' + n5 + ' HSK 5 words is in a topic (' + topicInfo.words + ')');
   check(await page.evaluate(() => window.HSK5_WEBS.hubs.every(h => h.gaps.every(g => g.opts.includes(g.ans)))), 'every fill-in gap has its answer among its options');
 

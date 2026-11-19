@@ -1887,7 +1887,7 @@
     // Today's treasure chest: opens once, when everything in today's plan is done. The coins are paid at the tap; the animation only shows them.
     openChest = (roll) => {
       const S = this.state;
-      if (S.dcPaid || S.day !== ymd(new Date()) || dueCountsNow(S).n > 0) return;
+      if (S.dcPaid || S.day !== ymd(new Date()) || dueCountsNow(S).n > 0 || !(S.dcN > 0)) return;   // only on days that started with something due
       const c = chestRoll(typeof roll === 'number' ? roll : Math.random());
       this.setState({ xp:S.xp + c.amt, dayXp:S.dayXp + c.amt, dcPaid:true, dcAmt:c.amt, chestGo:true });
       SFX.play('chest');
@@ -5166,12 +5166,12 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + (S.grdone ? ' still due' : ' due') : 'Nothing due, short practice', done:!!S.grdone && grvDueToday === 0, run:() => this.startGrammarReview(true) });
       const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:t.run, stops:t.stops || [], hasStops:!!(t.stops && t.stops.length) }));
       const moreWays = [
-        pathStep && pathAllDone ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), cls:'', fn:() => this.pathContinue(pathStep.st.id) } : null,
-        HAS_LISTEN ? { glyph:'听', label:'Listening', sub:'Dictation drill', cls:S.ldone ? 'done' : '', fn:() => this.go('listen') } : null,
-        HAS_SCRIPTS ? { glyph:'说', label:'Speak', sub:(SCEN[nextScn] || NO_SC).title, cls:S.spokeToday ? 'done' : '', fn:() => { this.setState({ sidx:nextScn, sturn:0, sdone:false, sview:'chat' }); this.go('speak'); this.sayOpen(nextScn); } } : null,
-        { glyph:'语', label:'Grammar lesson', sub:LESSONS[nextLesson].title, cls:'', fn:() => { this.setState({ ggopen:null, gq:'', glesson:nextLesson }); this.go('grammar'); } },
-        testReady ? { glyph:'测', label:'Test', sub:'Mixed questions', cls:S.tdone ? 'done' : '', fn:() => this.go('testlobby') } : null,
-        { glyph:'书', label:'Library', sub:'Look things up', cls:'', fn:() => this.go('library') }
+        pathStep && pathAllDone ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), tint:'t-jade', cls:'', fn:() => this.pathContinue(pathStep.st.id) } : null,
+        HAS_LISTEN ? { glyph:'听', label:'Listening', sub:'Dictation drill', tint:'t-jade', cls:S.ldone ? 'done' : '', fn:() => this.go('listen') } : null,
+        HAS_SCRIPTS ? { glyph:'说', label:'Speak', sub:(SCEN[nextScn] || NO_SC).title, tint:'t-amber', cls:S.spokeToday ? 'done' : '', fn:() => { this.setState({ sidx:nextScn, sturn:0, sdone:false, sview:'chat' }); this.go('speak'); this.sayOpen(nextScn); } } : null,
+        { glyph:'语', label:'Grammar lesson', sub:LESSONS[nextLesson].title, tint:'t-seal', cls:'', fn:() => { this.setState({ ggopen:null, gq:'', glesson:nextLesson }); this.go('grammar'); } },
+        testReady ? { glyph:'测', label:'Test', sub:'Mixed questions', tint:'t-ink', cls:S.tdone ? 'done' : '', fn:() => this.go('testlobby') } : null,
+        { glyph:'书', label:'Library', sub:'Look things up', tint:'t-ink', cls:'', fn:() => this.go('library') }
       ].filter(Boolean);
       // The finished day: once every task of today's plan is done, Today shows this in place of the greeting and the plan (tomorrow's lantern, what is due tomorrow, a bonus round)
       const dayDone = !startShow && tasks.length > 0 && tasks.every(t => t.done);
@@ -5186,6 +5186,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
           finBonusShow:!!bonusGo, finBonusGo:bonusGo || (() => {}), finBonusSub:pathStep ? 'Path: ' + stopTitle(pathStep.st) : '',
           chestCls:S.dcPaid ? 'ch-open' + (S.chestGo ? ' ch-go' : '') + ' ' + chestFor(S.dcAmt).tier : 'ch-closed', chestOpened:!!S.dcPaid, chestTap:() => this.openChest(),
           chestAmt:'+' + (S.dcAmt || 0) + ' coins',
+          chestShow:S.dcPaid || S.dcN > 0, chestNone:!S.dcPaid && !(S.dcN > 0),
           chestLabel:S.dcPaid ? 'Treasure chest, opened: ' + (S.dcAmt || 0) + ' coins' : 'Open today\'s treasure chest',
           finMore:['Listening', 'Speak'].map(l => moreWays.find(c => c.label === l)).filter(Boolean).map(c => ({ label:c.label, fn:c.fn })).concat([{ label:'Journey', fn:() => this.go('journey') }])
         });
@@ -5203,10 +5204,10 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const AS = window.ShanluAscent;
       const ascDark = S.theme === 'dark';
       const apct = (v, tot) => (v / tot * 100).toFixed(2) + '%';
-      const asLabels = (t) => t.labels.map(l => ({ left:apct(l.x, t.w), top:apct(l.y, t.h), cls:l.center ? 'c' : '', kind:l.kind, text:l.text, sub:l.sub, hasSub:!!l.sub }));
+      const asLabels = (t) => t.labels.map(l => ({ left:apct(l.x, t.w), top:apct(l.y, t.h), cls:(l.center ? 'c' : '') + (l.soon ? ' soon' : ''), kind:l.kind, text:l.text, sub:l.sub, hasSub:!!l.sub }));
       const totalW = bankKeys.length;
-      const trD = AS.trail({ started:startedCount, total:totalW, levels:lvList, dark:ascDark });
-      const trP = AS.phoneTrail({ started:startedCount, total:totalW, levels:lvList, dark:ascDark });
+      const trD = AS.trail({ started:startedCount, total:totalW, levels:lvList, dark:ascDark, built:LVL.MAX_LEVEL });
+      const trP = AS.phoneTrail({ started:startedCount, total:totalW, levels:lvList, dark:ascDark, built:LVL.MAX_LEVEL });
       const youLabel = (t) => ({ left:t === trD ? 'max(72px, ' + apct(t.you.x, t.w) + ')' : apct(t.you.x, t.w), top:apct(t.you.y, t.h), cls:t === trD ? 'c' : '', kind:'you', text:'You are here', sub:startedCount + ' word' + (startedCount === 1 ? '' : 's') + ' kept', hasSub:true });
       const trailAlt = 'Mountain trail: ' + startedCount + ' of ' + totalW + ' words learned on the way to the ' + LVN + ' level exam';
       const nextM = AS.nextMilestone(startedCount, totalW);
@@ -5761,8 +5762,14 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         hasToneStats:S.ttotal > 0, toneStats:S.tright + ' of ' + S.ttotal + ' right',
         weak, hasWeak:weak.length > 0, noWeak:weak.length === 0, phrases,
         overall, streak:streakShown, streakText:streakShown + (streakShown === 1 ? ' day' : ' days'), xpText:S.xp.toLocaleString('en-US'), dayXp:S.dayXp,
-        memText:memNow.words.toLocaleString('en-US') + ' in memory', memTip:'Words you would probably recall right now: each started word counts by its recall chance. It rises when you learn and review and falls if reviews slide.',
-        memWords:memNow.words.toLocaleString('en-US'), memToday:(memNow.words - (S.mem0 == null ? memNow.words : S.mem0) >= 0 ? '+' : '') + (memNow.words - (S.mem0 == null ? memNow.words : S.mem0)) + ' today', memRecall:memNow.avg + '%',
+        memText:memNow.words.toLocaleString('en-US') + ' in memory', memTip:'Words in memory counts each word you have started by its recall chance right now, so it rises when you learn and review and falls if reviews slide. Average recall is over the words you started. The bars show your minutes on each of the last 7 days.',
+        memInfo:!!S.memInfo, memInfoTog:() => this.setState({ memInfo:!S.memInfo }),
+        memDCls:memNow.words > (S.mem0 == null ? memNow.words : S.mem0) ? 'up' : memNow.words < (S.mem0 == null ? memNow.words : S.mem0) ? 'down' : 'flat',
+        ...(() => { const td = ymd(new Date()); const mins = weekDates.slice().reverse().map(d => d === td ? Math.max(S.dayMin, window.ShanluSync.dayMinutes(S, d)) : window.ShanluSync.dayMinutes(S, d)); const top = Math.max(S.mins || 20, ...mins);
+          const days = weekDates.slice().reverse(); const L = 'SMTWTFS';
+          return { weekBars:days.map((d, i) => ({ h:(mins[i] > 0 ? Math.max(5, Math.round(mins[i] / top * 38)) : 4) + 'px', l:L[new Date(d + 'T12:00:00').getDay()], cls:(d === td ? 'today ' : '') + (mins[i] > 0 ? 'on' : '') })),
+            weekLabel:'Minutes on each of the last 7 days: ' + days.map((d, i) => mins[i]).join(', ') + '. Studied on ' + weekDays + ' of 7 days.' }; })(),
+        memWords:memNow.words.toLocaleString('en-US'), memToday:(memNow.words - (S.mem0 == null ? memNow.words : S.mem0) > 0 ? '+' : memNow.words - (S.mem0 == null ? memNow.words : S.mem0) < 0 ? '−' : '±') + Math.abs(memNow.words - (S.mem0 == null ? memNow.words : S.mem0)) + ' today', memRecall:memNow.avg + '%',
         weekMin:weekMin, weekDays:weekDays,
         title:tt[0], subtitle:tt[1], subShow:!(['home', 'path', 'library', 'review', 'greview', 'testlobby', 'listen', 'speak', 'journey', 'words', 'gtrack', 'web', 'grammar', 'pinyin'].indexOf(S.screen) >= 0) || (prefGet('sv', {})[S.screen] || 0) < 3 || startShow,
         obIntroShow:obPh === 'intro' && !S.obBack, obBackShow:obPh === 'intro' && !!S.obBack, obFlyShow:obPh === 'fly' && S.screen === 'journey',
@@ -5835,8 +5842,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         todayShort:S.dayMin + ' of ' + S.mins + ' min' + (S.mins > S.dayMin ? ' · ' + (S.mins - S.dayMin) + ' to go' : ' · done'),
         webCapOpen:S.webCapOpen, toggleCapOpen:() => this.setState({ webCapOpen:!S.webCapOpen }),
         ascSub:'Every word you learn moves you along the path, all the way to HSK 9.',
-        trailD:{ src:trD.src, alt:trailAlt, labels:asLabels(trD).concat([youLabel(trD)]) }, trailP:{ src:trP.src, alt:trailAlt, labels:asLabels(trP).concat(trP.hideYou ? [] : [youLabel(trP)]) },
-        dcShow:tasks.length > 0, dcCls:S.dcPaid ? 'got' : '', dcText:S.dcPaid ? '✓ Treasure chest opened · +' + (S.dcAmt || 0) + ' coins' : 'Finish today\'s plan to open a treasure chest · ' + tasks.filter(t => !t.done).length + ' left',
+        trailD:{ src:trD.src, alt:trailAlt, labels:asLabels(trD).concat([youLabel(trD)]) }, trailP:{ src:trP.src, h:trP.h, alt:trailAlt, labels:asLabels(trP).concat(trP.hideYou ? [] : [youLabel(trP)]) },
+        dcShow:tasks.length > 0 && (S.dcPaid || S.dcN > 0), dcCls:S.dcPaid ? 'got' : '', dcText:S.dcPaid ? '✓ Treasure chest opened · +' + (S.dcAmt || 0) + ' coins' : 'Finish today\'s plan to open a treasure chest · ' + tasks.filter(t => !t.done).length + ' left',
 
         todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed: ' + S.mins + ' minutes done.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
         mistClearText:mistClear + ' of ' + TOPICS.length + ' fully started', mistTiles, mistHasNear:!!nearBest, mistOpen:S.wmist, toggleMist:() => this.setState({ wmist:!this.state.wmist }), mistToggleText:S.wmist ? 'Hide the topic map' : 'Show all ' + TOPICS.length + ' topics',

@@ -6386,9 +6386,9 @@ window.HSK4_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "这位歌手和那位演员都是我喜欢的。",
-    "py": "Zhè wèi gēshǒu hé nà wèi yǎnyuán dōu shì wǒ xǐhuan de.",
-    "en": "This singer and that actor are both people I like."
+    "zh": "这些青年都是今年的毕业生。",
+    "py": "Zhèxiē qīngnián dōu shì jīnnián de bìyèshēng.",
+    "en": "These young people all graduated this year."
    },
    "words": [
     "姑娘",
@@ -6399,25 +6399,53 @@ window.HSK4_WEBS = {
     "儿童",
     "青年",
     "少年",
+    "者",
+    "考生",
+    "毕业生",
+    "研究生"
+   ]
+  },
+  {
+   "name": "Audiences, customers and fans",
+   "group": "People",
+   "order": 12,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "这场比赛的观众很多，很多球迷都来了。",
+    "py": "Zhè chǎng bǐsài de guānzhòng hěn duō, hěn duō qiúmí dōu lái le.",
+    "en": "There was a big audience at this match; lots of fans came."
+   },
+   "words": [
     "读者",
     "观众",
     "听众",
     "顾客",
     "旅客",
     "乘客",
-    "者",
+    "网友",
+    "会员",
+    "球迷",
+    "人员"
+   ]
+  },
+  {
+   "name": "Writers, singers and other roles",
+   "group": "People",
+   "order": 13,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "这位歌手和那位演员都是我喜欢的。",
+    "py": "Zhè wèi gēshǒu hé nà wèi yǎnyuán dōu shì wǒ xǐhuan de.",
+    "en": "I like both this singer and that actor."
+   },
+   "words": [
     "作者",
     "作家",
     "歌手",
     "演员",
     "记者",
-    "网友",
-    "会员",
-    "人员",
-    "球迷",
-    "考生",
-    "毕业生",
-    "研究生",
     "教授",
     "大夫"
    ]
@@ -6425,7 +6453,7 @@ window.HSK4_WEBS = {
   {
    "name": "Neighbours, visitors and colleagues",
    "group": "People",
-   "order": 12,
+   "order": 14,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6451,7 +6479,7 @@ window.HSK4_WEBS = {
   {
    "name": "Family",
    "group": "People",
-   "order": 13,
+   "order": 15,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6482,7 +6510,7 @@ window.HSK4_WEBS = {
   {
    "name": "Age and growing up",
    "group": "People",
-   "order": 15,
+   "order": 17,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6511,7 +6539,7 @@ window.HSK4_WEBS = {
   {
    "name": "Jobs and professions",
    "group": "People",
-   "order": 17,
+   "order": 19,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6543,7 +6571,7 @@ window.HSK4_WEBS = {
   {
    "name": "Finding and leaving a job",
    "group": "People",
-   "order": 18,
+   "order": 20,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6562,7 +6590,7 @@ window.HSK4_WEBS = {
   {
    "name": "Workplace and business",
    "group": "People",
-   "order": 19,
+   "order": 21,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6596,7 +6624,7 @@ window.HSK4_WEBS = {
   {
    "name": "Working hours and pay",
    "group": "People",
-   "order": 20,
+   "order": 22,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6620,7 +6648,7 @@ window.HSK4_WEBS = {
   {
    "name": "Days, weeks and years",
    "group": "Time",
-   "order": 21,
+   "order": 23,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6650,7 +6678,7 @@ window.HSK4_WEBS = {
   {
    "name": "Seasons",
    "group": "Time",
-   "order": 22,
+   "order": 24,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6674,7 +6702,7 @@ window.HSK4_WEBS = {
   {
    "name": "Holidays and time off",
    "group": "Time",
-   "order": 23,
+   "order": 25,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6699,7 +6727,7 @@ window.HSK4_WEBS = {
   {
    "name": "Clock and time of day",
    "group": "Time",
-   "order": 24,
+   "order": 26,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6726,7 +6754,7 @@ window.HSK4_WEBS = {
   {
    "name": "How long and how late",
    "group": "Time",
-   "order": 25,
+   "order": 27,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6756,7 +6784,7 @@ window.HSK4_WEBS = {
   {
    "name": "When and how often",
    "group": "Time",
-   "order": 26,
+   "order": 28,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6783,7 +6811,7 @@ window.HSK4_WEBS = {
   {
    "name": "Before, after and just now",
    "group": "Time",
-   "order": 27,
+   "order": 29,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6816,7 +6844,7 @@ window.HSK4_WEBS = {
   {
    "name": "Food and meals",
    "group": "Food and shopping",
-   "order": 28,
+   "order": 31,
    "to": "speak",
    "cta": "Use these when you order food or drinks",
    "sentence": {
@@ -6838,6 +6866,21 @@ window.HSK4_WEBS = {
     "厨房",
     "厨师",
     "聚餐",
+    "饼干"
+   ]
+  },
+  {
+   "name": "Tastes and cooking",
+   "group": "Food and shopping",
+   "order": 32,
+   "to": "speak",
+   "cta": "Use these when you order food or drinks",
+   "sentence": {
+    "zh": "这个汤有点儿咸，不过味道很香。",
+    "py": "Zhège tāng yǒudiǎnr xián, búguò wèidào hěn xiāng.",
+    "en": "This soup is a bit salty, but it smells delicious."
+   },
+   "words": [
     "汤",
     "油",
     "盐",
@@ -6850,14 +6893,13 @@ window.HSK4_WEBS = {
     "鲜",
     "味",
     "味道",
-    "熟",
-    "饼干"
+    "熟"
    ]
   },
   {
    "name": "Fruit, sweets and snacks",
    "group": "Food and shopping",
-   "order": 29,
+   "order": 33,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6881,7 +6923,7 @@ window.HSK4_WEBS = {
   {
    "name": "Drinks",
    "group": "Food and shopping",
-   "order": 31,
+   "order": 35,
    "to": "speak",
    "cta": "Use these when you order food or drinks",
    "sentence": {
@@ -6901,7 +6943,7 @@ window.HSK4_WEBS = {
   {
    "name": "Dishes and containers",
    "group": "Food and shopping",
-   "order": 32,
+   "order": 36,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -6923,7 +6965,7 @@ window.HSK4_WEBS = {
   {
    "name": "Money and shopping",
    "group": "Food and shopping",
-   "order": 33,
+   "order": 37,
    "to": "speak",
    "cta": "Use these when you ask a price",
    "sentence": {
@@ -6949,7 +6991,7 @@ window.HSK4_WEBS = {
   {
    "name": "Prices and paying",
    "group": "Food and shopping",
-   "order": 34,
+   "order": 38,
    "to": "speak",
    "cta": "Use these when you ask a price",
    "sentence": {
@@ -6982,7 +7024,7 @@ window.HSK4_WEBS = {
   {
    "name": "Earning and saving",
    "group": "Food and shopping",
-   "order": 35,
+   "order": 39,
    "to": "speak",
    "cta": "Use these when you ask a price",
    "sentence": {
@@ -7003,7 +7045,7 @@ window.HSK4_WEBS = {
   {
    "name": "Clothes and accessories",
    "group": "Food and shopping",
-   "order": 37,
+   "order": 41,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7029,7 +7071,7 @@ window.HSK4_WEBS = {
   {
    "name": "Places around town",
    "group": "Places and travel",
-   "order": 38,
+   "order": 42,
    "to": "speak",
    "cta": "Use these to ask where something is",
    "sentence": {
@@ -7068,7 +7110,7 @@ window.HSK4_WEBS = {
   {
    "name": "City and neighbourhood",
    "group": "Places and travel",
-   "order": 39,
+   "order": 43,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7102,7 +7144,7 @@ window.HSK4_WEBS = {
   {
    "name": "North, south, east and west",
    "group": "Places and travel",
-   "order": 42,
+   "order": 46,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7125,7 +7167,7 @@ window.HSK4_WEBS = {
   {
    "name": "Roads and distance",
    "group": "Places and travel",
-   "order": 44,
+   "order": 48,
    "to": "speak",
    "cta": "Use these to ask where something is",
    "sentence": {
@@ -7155,7 +7197,7 @@ window.HSK4_WEBS = {
   {
    "name": "Transport and tickets",
    "group": "Places and travel",
-   "order": 45,
+   "order": 49,
    "to": "speak",
    "cta": "Use these to ask where something is",
    "sentence": {
@@ -7190,7 +7232,7 @@ window.HSK4_WEBS = {
   {
    "name": "Travel and countries",
    "group": "Places and travel",
-   "order": 46,
+   "order": 50,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7213,6 +7255,23 @@ window.HSK4_WEBS = {
     "导游",
     "入住",
     "目的地",
+    "出差",
+    "出行",
+    "外出"
+   ]
+  },
+  {
+   "name": "Countries and the world",
+   "group": "Places and travel",
+   "order": 51,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "去别的国家旅行以前，要先办签证。",
+    "py": "Qù biéde guójiā lǚxíng yǐqián, yào xiān bàn qiānzhèng.",
+    "en": "Before you travel to another country, you need to get a visa first."
+   },
+   "words": [
     "国籍",
     "签证",
     "使馆",
@@ -7221,16 +7280,13 @@ window.HSK4_WEBS = {
     "首都",
     "全球",
     "海洋",
-    "地球",
-    "出差",
-    "出行",
-    "外出"
+    "地球"
    ]
   },
   {
    "name": "At home",
    "group": "Places and travel",
-   "order": 47,
+   "order": 52,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7263,7 +7319,7 @@ window.HSK4_WEBS = {
   {
    "name": "Furniture and appliances",
    "group": "Places and travel",
-   "order": 48,
+   "order": 53,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7284,7 +7340,7 @@ window.HSK4_WEBS = {
   {
    "name": "School",
    "group": "School and language",
-   "order": 49,
+   "order": 54,
    "to": "listen",
    "cta": "Train your ear",
    "sentence": {
@@ -7320,7 +7376,7 @@ window.HSK4_WEBS = {
   {
    "name": "School subjects and culture",
    "group": "School and language",
-   "order": 50,
+   "order": 55,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7349,7 +7405,7 @@ window.HSK4_WEBS = {
   {
    "name": "Studying and exams",
    "group": "School and language",
-   "order": 51,
+   "order": 56,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7380,7 +7436,7 @@ window.HSK4_WEBS = {
   {
    "name": "University and degrees",
    "group": "School and language",
-   "order": 52,
+   "order": 57,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7406,7 +7462,7 @@ window.HSK4_WEBS = {
   {
    "name": "Winning and succeeding",
    "group": "School and language",
-   "order": 53,
+   "order": 58,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7430,7 +7486,7 @@ window.HSK4_WEBS = {
   {
    "name": "Chinese and writing",
    "group": "School and language",
-   "order": 54,
+   "order": 59,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7469,7 +7525,7 @@ window.HSK4_WEBS = {
   {
    "name": "Phones, email and the internet",
    "group": "School and language",
-   "order": 55,
+   "order": 60,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7505,7 +7561,7 @@ window.HSK4_WEBS = {
   {
    "name": "Online life",
    "group": "School and language",
-   "order": 56,
+   "order": 61,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7529,7 +7585,7 @@ window.HSK4_WEBS = {
   {
    "name": "Daily routine",
    "group": "Daily life and fun",
-   "order": 57,
+   "order": 62,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7561,7 +7617,7 @@ window.HSK4_WEBS = {
   {
    "name": "Weather",
    "group": "Daily life and fun",
-   "order": 58,
+   "order": 63,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7589,7 +7645,7 @@ window.HSK4_WEBS = {
   {
    "name": "Mountains, rivers and plants",
    "group": "Daily life and fun",
-   "order": 59,
+   "order": 64,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7623,7 +7679,7 @@ window.HSK4_WEBS = {
   {
    "name": "Animals and nature",
    "group": "Daily life and fun",
-   "order": 61,
+   "order": 66,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7651,7 +7707,7 @@ window.HSK4_WEBS = {
   {
    "name": "Hobbies and fun",
    "group": "Daily life and fun",
-   "order": 63,
+   "order": 68,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7682,7 +7738,7 @@ window.HSK4_WEBS = {
   {
    "name": "Music and singing",
    "group": "Daily life and fun",
-   "order": 64,
+   "order": 69,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7701,7 +7757,7 @@ window.HSK4_WEBS = {
   {
    "name": "Parties, jokes and dreams",
    "group": "Daily life and fun",
-   "order": 65,
+   "order": 70,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7724,7 +7780,7 @@ window.HSK4_WEBS = {
   {
    "name": "Parties and gifts",
    "group": "Daily life and fun",
-   "order": 66,
+   "order": 71,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7752,7 +7808,7 @@ window.HSK4_WEBS = {
   {
    "name": "Movies, music, TV and news",
    "group": "Daily life and fun",
-   "order": 67,
+   "order": 72,
    "to": "listen",
    "cta": "Train your ear",
    "sentence": {
@@ -7791,7 +7847,7 @@ window.HSK4_WEBS = {
   {
    "name": "Sports and exercise",
    "group": "Daily life and fun",
-   "order": 71,
+   "order": 76,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7827,7 +7883,7 @@ window.HSK4_WEBS = {
   {
    "name": "Rules and law",
    "group": "Daily life and fun",
-   "order": 72,
+   "order": 78,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7865,7 +7921,7 @@ window.HSK4_WEBS = {
   {
    "name": "Parts of the body",
    "group": "Body and mind",
-   "order": 84,
+   "order": 91,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7893,7 +7949,7 @@ window.HSK4_WEBS = {
   {
    "name": "Health and illness",
    "group": "Body and mind",
-   "order": 85,
+   "order": 92,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7927,7 +7983,7 @@ window.HSK4_WEBS = {
   {
    "name": "Feelings",
    "group": "Body and mind",
-   "order": 87,
+   "order": 94,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7958,7 +8014,7 @@ window.HSK4_WEBS = {
   {
    "name": "Love and friendship",
    "group": "Body and mind",
-   "order": 88,
+   "order": 95,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -7977,7 +8033,7 @@ window.HSK4_WEBS = {
   {
    "name": "Stress and calm",
    "group": "Body and mind",
-   "order": 89,
+   "order": 96,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8001,7 +8057,7 @@ window.HSK4_WEBS = {
   {
    "name": "Being moved",
    "group": "Body and mind",
-   "order": 90,
+   "order": 97,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8024,7 +8080,7 @@ window.HSK4_WEBS = {
   {
    "name": "Character and manner",
    "group": "Body and mind",
-   "order": 91,
+   "order": 98,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8048,7 +8104,21 @@ window.HSK4_WEBS = {
     "积极",
     "友好",
     "幽默",
-    "优秀",
+    "优秀"
+   ]
+  },
+  {
+   "name": "Temper, attitude and style",
+   "group": "Body and mind",
+   "order": 99,
+   "to": "review",
+   "cta": "Review your words",
+   "sentence": {
+    "zh": "他的脾气不太好，但是工作态度很认真。",
+    "py": "Tā de píqi bú tài hǎo, dànshì gōngzuò tàidù hěn rènzhēn.",
+    "en": "His temper is not great, but his attitude to work is very serious."
+   },
+   "words": [
     "脾气",
     "性格",
     "态度",
@@ -8066,7 +8136,7 @@ window.HSK4_WEBS = {
   {
    "name": "Thinking and knowing",
    "group": "Body and mind",
-   "order": 92,
+   "order": 101,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8094,7 +8164,7 @@ window.HSK4_WEBS = {
   {
    "name": "Opinions and ideas",
    "group": "Body and mind",
-   "order": 93,
+   "order": 102,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8115,7 +8185,7 @@ window.HSK4_WEBS = {
   {
    "name": "Plans and goals",
    "group": "Body and mind",
-   "order": 94,
+   "order": 103,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8136,7 +8206,7 @@ window.HSK4_WEBS = {
   {
    "name": "Everyday actions",
    "group": "Actions and descriptions",
-   "order": 96,
+   "order": 105,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8163,7 +8233,7 @@ window.HSK4_WEBS = {
   {
    "name": "Hands and objects",
    "group": "Actions and descriptions",
-   "order": 97,
+   "order": 106,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8197,7 +8267,7 @@ window.HSK4_WEBS = {
   {
    "name": "Errands and arrangements",
    "group": "Actions and descriptions",
-   "order": 98,
+   "order": 107,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8225,7 +8295,7 @@ window.HSK4_WEBS = {
   {
    "name": "Change, choice and trying",
    "group": "Actions and descriptions",
-   "order": 100,
+   "order": 109,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8258,7 +8328,7 @@ window.HSK4_WEBS = {
   {
    "name": "More and less",
    "group": "Actions and descriptions",
-   "order": 101,
+   "order": 110,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8280,7 +8350,7 @@ window.HSK4_WEBS = {
   {
    "name": "Saying yes and no",
    "group": "Actions and descriptions",
-   "order": 102,
+   "order": 111,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8300,7 +8370,7 @@ window.HSK4_WEBS = {
   {
    "name": "Seeing, hearing, speaking",
    "group": "Actions and descriptions",
-   "order": 107,
+   "order": 116,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8336,7 +8406,7 @@ window.HSK4_WEBS = {
   {
    "name": "Meeting people",
    "group": "Actions and descriptions",
-   "order": 108,
+   "order": 118,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8368,7 +8438,7 @@ window.HSK4_WEBS = {
   {
    "name": "Moving your body",
    "group": "Actions and descriptions",
-   "order": 109,
+   "order": 119,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8396,7 +8466,7 @@ window.HSK4_WEBS = {
   {
    "name": "Starting, finishing, waiting",
    "group": "Actions and descriptions",
-   "order": 110,
+   "order": 120,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8434,7 +8504,7 @@ window.HSK4_WEBS = {
   {
    "name": "Size, length and speed",
    "group": "Actions and descriptions",
-   "order": 111,
+   "order": 121,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8463,7 +8533,7 @@ window.HSK4_WEBS = {
   {
    "name": "Measurements",
    "group": "Actions and descriptions",
-   "order": 112,
+   "order": 122,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8480,7 +8550,7 @@ window.HSK4_WEBS = {
   {
    "name": "Growing and shrinking",
    "group": "Actions and descriptions",
-   "order": 113,
+   "order": 123,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8497,7 +8567,7 @@ window.HSK4_WEBS = {
   {
    "name": "Good, bad, right, wrong",
    "group": "Actions and descriptions",
-   "order": 116,
+   "order": 126,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8531,7 +8601,7 @@ window.HSK4_WEBS = {
   {
    "name": "Excellent and precious",
    "group": "Actions and descriptions",
-   "order": 117,
+   "order": 127,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8553,7 +8623,7 @@ window.HSK4_WEBS = {
   {
    "name": "Clean, quiet and safe",
    "group": "Actions and descriptions",
-   "order": 121,
+   "order": 131,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8582,7 +8652,7 @@ window.HSK4_WEBS = {
   {
    "name": "Easy, hard and useful",
    "group": "Actions and descriptions",
-   "order": 122,
+   "order": 132,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8614,7 +8684,7 @@ window.HSK4_WEBS = {
   {
    "name": "Same and different",
    "group": "Actions and descriptions",
-   "order": 123,
+   "order": 133,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8645,7 +8715,7 @@ window.HSK4_WEBS = {
   {
    "name": "Things and matters",
    "group": "Actions and descriptions",
-   "order": 124,
+   "order": 135,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8676,7 +8746,7 @@ window.HSK4_WEBS = {
   {
    "name": "Situations and conditions",
    "group": "Actions and descriptions",
-   "order": 125,
+   "order": 136,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8699,7 +8769,7 @@ window.HSK4_WEBS = {
   {
    "name": "Forms, kinds and numbers",
    "group": "Actions and descriptions",
-   "order": 126,
+   "order": 137,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8720,7 +8790,7 @@ window.HSK4_WEBS = {
   {
    "name": "Be, have, be at",
    "group": "Grammar words",
-   "order": 129,
+   "order": 140,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8745,7 +8815,7 @@ window.HSK4_WEBS = {
   {
    "name": "Can, want, may, don't",
    "group": "Grammar words",
-   "order": 130,
+   "order": 141,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8769,7 +8839,7 @@ window.HSK4_WEBS = {
   {
    "name": "Not and don't",
    "group": "Grammar words",
-   "order": 131,
+   "order": 142,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8795,7 +8865,7 @@ window.HSK4_WEBS = {
   {
    "name": "If, only if, in order to",
    "group": "Grammar words",
-   "order": 132,
+   "order": 143,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8820,7 +8890,7 @@ window.HSK4_WEBS = {
   {
    "name": "Certainly and probably",
    "group": "Grammar words",
-   "order": 133,
+   "order": 144,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8854,7 +8924,7 @@ window.HSK4_WEBS = {
   {
    "name": "Still, only and even",
    "group": "Grammar words",
-   "order": 134,
+   "order": 145,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8888,7 +8958,7 @@ window.HSK4_WEBS = {
   {
    "name": "Helping, giving and telling",
    "group": "Actions and descriptions",
-   "order": 135,
+   "order": 146,
    "to": "review",
    "cta": "Review your words",
    "sentence": {
@@ -8925,7 +8995,7 @@ window.HSK4_WEBS = {
   {
    "name": "Comparing",
    "group": "Grammar words",
-   "order": 136,
+   "order": 147,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8949,7 +9019,7 @@ window.HSK4_WEBS = {
   {
    "name": "Very, too, most",
    "group": "Grammar words",
-   "order": 137,
+   "order": 148,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -8977,7 +9047,7 @@ window.HSK4_WEBS = {
   {
    "name": "And, also, all, together",
    "group": "Grammar words",
-   "order": 139,
+   "order": 151,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -9012,7 +9082,7 @@ window.HSK4_WEBS = {
   {
    "name": "Linking ideas",
    "group": "Grammar words",
-   "order": 140,
+   "order": 152,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -9027,17 +9097,6 @@ window.HSK4_WEBS = {
     "就是",
     "倒",
     "而",
-    "并且",
-    "此外",
-    "另外",
-    "再说",
-    "首先",
-    "其次",
-    "同时",
-    "接着",
-    "甚至",
-    "例如",
-    "举例",
     "即使",
     "尽管",
     "不仅",
@@ -9046,7 +9105,32 @@ window.HSK4_WEBS = {
     "于是",
     "否则",
     "要是",
-    "既然",
+    "既然"
+   ]
+  },
+  {
+   "name": "First, next and in addition",
+   "group": "Grammar words",
+   "order": 153,
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "sentence": {
+    "zh": "首先要多听，其次要多说，另外还要多写。",
+    "py": "Shǒuxiān yào duō tīng, qícì yào duō shuō, lìngwài hái yào duō xiě.",
+    "en": "First you need to listen a lot, next you need to speak a lot, and in addition you need to write a lot."
+   },
+   "words": [
+    "首先",
+    "其次",
+    "同时",
+    "接着",
+    "甚至",
+    "例如",
+    "举例",
+    "此外",
+    "另外",
+    "再说",
+    "并且",
     "加上",
     "顺便"
    ]
@@ -9054,7 +9138,7 @@ window.HSK4_WEBS = {
   {
    "name": "To, from, than, with",
    "group": "Grammar words",
-   "order": 141,
+   "order": 154,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -9078,7 +9162,7 @@ window.HSK4_WEBS = {
   {
    "name": "Little helper words",
    "group": "Grammar words",
-   "order": 142,
+   "order": 155,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
@@ -9095,7 +9179,7 @@ window.HSK4_WEBS = {
   {
    "name": "Word endings",
    "group": "Grammar words",
-   "order": 143,
+   "order": 156,
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {

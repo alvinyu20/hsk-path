@@ -80,7 +80,7 @@
     const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="1124" height="380" viewBox="0 0 1124 380">' + s.join('') + '</svg>';
     const labels = camps.map((k, i) => {
       const lv = o.levels[i]; const off = D.off[k.a];
-      return { x:k.x + off[0], y:k.y + off[1], center:i === 0, kind:i === 0 ? 'next' : (i <= 3 ? 'near' : 'far'), text:i === 0 ? 'Next camp · HSK ' + lv[0] + ' exam' : 'HSK ' + lv[0], sub:i === 0 ? (total - started) + ' words to go' : (off[2] ? (lv[1] ? lv[1] + ' words' : 'advanced') : '') };
+      return { soon:+lv[0] > (o.built || 9), x:k.x + off[0], y:k.y + off[1], center:i === 0, kind:i === 0 ? 'next' : (i <= 3 ? 'near' : 'far'), text:i === 0 ? 'Next camp · HSK ' + lv[0] + ' exam' : 'HSK ' + lv[0], sub:i === 0 ? (total - started) + ' words to go' : (off[2] ? (lv[1] ? lv[1] + ' words' : 'advanced') : '') };
     });
     return { src:uri(svg), w:1124, h:380, you:{ x:you[0], y:you[1] - 54 }, labels, stones, next:nm };
   };
@@ -91,38 +91,46 @@
     anchors:[[262, 414], [104, 364], [262, 316], [112, 268], [250, 222], [122, 178], [238, 134], [150, 92], [204, 50]],
     off:[[-112, -48, true], [26, -46, true], [-112, -44, true], [28, -42, false], [-106, -42, false], [26, -32, false], [-88, -34, false], [26, -30, false], [-74, -32, false]]
   };
+  // ---------------------------------------------------------------- phone trail: 342 wide, as tall as the levels need
+  // One camp per level, from this level's exam up to HSK 9 on the summit; the page shows it in a box that scrolls up (it opens at the bottom).
+  // o.built: the highest level that is built; higher ones get a dashed "coming later" label.
   const phoneTrail = (o) => {
     const c = o.dark ? DARK : LIGHT;
     const total = o.total || 300, started = Math.max(0, Math.min(total, o.started || 0));
-    const idx = spread(o.levels.length);
-    const camps = idx.map((a, i) => ({ x:M.anchors[a][0], y:M.anchors[a][1], i, a }));
+    const n = o.levels.length, STEP = 118, W = 342, H = 190 + n * STEP;
+    const p0 = [64, H - 22];
+    const camps = o.levels.map((lv, i) => (i === n - 1 && n > 1 ? { x:171, y:84, i, side:'top' } : { x:i % 2 ? 98 + (i % 4 === 3 ? 10 : 0) : 252 - (i % 4 === 2 ? 12 : 0), y:H - 96 - i * STEP, i, side:i % 2 ? 'left' : 'right' }));
     const L1 = camps[0];
     const frac = started / total;
-    const lineAt = (f) => [r1(M.p0[0] + f * (L1.x - M.p0[0])), r1(M.p0[1] + f * (L1.y - M.p0[1]))];
-    const you = lineAt(frac);
-    const pts = [M.p0].concat(camps.map(k => [k.x, k.y]));
-    const s = [];
-    s.push('<rect width="342" height="470" fill="' + c.sky + '"/>');
-    s.push('<circle cx="300" cy="50" r="22" fill="' + c.sun + '" fill-opacity=".9"/>');
-    s.push('<path d="M0 470 L0 300 L70 230 L120 260 L200 120 L260 170 L330 60 L342 80 L342 470Z" fill="' + c.far + '"/>');
-    s.push('<path d="M0 470 L0 380 L60 330 L130 372 L220 250 L300 320 L342 280 L342 470Z" fill="' + c.mid + '"/>');
-    s.push('<path d="M0 470 L0 440 Q 100 410 200 440 Q 280 460 342 430 L342 470Z" fill="' + c.near + '"/>');
-    s.push('<path d="' + curve(pts) + '" fill="none" stroke="' + c.path + '" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 9" opacity=".95"/>');
-    if (started > 0) s.push('<path d="M' + M.p0[0] + ' ' + M.p0[1] + ' L' + you[0] + ' ' + you[1] + '" fill="none" stroke="' + c.walk + '" stroke-width="5" stroke-linecap="round"/>');
+    const you = [r1(p0[0] + frac * (L1.x - p0[0])), r1(p0[1] + frac * (L1.y - p0[1]))];
+    const pts = [p0].concat(camps.map(k => [k.x, k.y]));
+    const y = (f) => r1(H * f);
+    const sh = [];
+    sh.push('<rect width="' + W + '" height="' + H + '" fill="' + c.sky + '"/>');
+    sh.push('<circle cx="284" cy="56" r="22" fill="' + c.sun + '" fill-opacity=".9"/>');
+    // the big mountain: summit at the top, slopes all the way down
+    sh.push('<path d="M0 ' + H + ' L0 ' + y(.34) + ' L64 ' + y(.22) + ' L171 64 L238 ' + y(.16) + ' L342 ' + y(.27) + ' L342 ' + H + 'Z" fill="' + c.far + '"/>');
+    sh.push('<path d="M171 64 L150 ' + r1(64 + 46) + ' L166 ' + r1(64 + 38) + ' L180 ' + r1(64 + 50) + ' L196 ' + r1(64 + 36) + 'Z" fill="' + c.white + '" fill-opacity=".85"/>');
+    sh.push('<path d="M0 ' + H + ' L0 ' + y(.58) + ' L74 ' + y(.5) + ' L150 ' + y(.6) + ' L246 ' + y(.44) + ' L342 ' + y(.53) + ' L342 ' + H + 'Z" fill="' + c.mid + '"/>');
+    sh.push('<path d="M0 ' + H + ' L0 ' + y(.82) + ' L90 ' + y(.76) + ' L196 ' + y(.84) + ' L290 ' + y(.74) + ' L342 ' + y(.79) + ' L342 ' + H + 'Z" fill="' + c.mid + '" fill-opacity=".7"/>');
+    sh.push('<path d="M0 ' + H + ' L0 ' + (H - 30) + ' Q 100 ' + (H - 60) + ' 200 ' + (H - 30) + ' Q 280 ' + (H - 10) + ' 342 ' + (H - 40) + ' L342 ' + H + 'Z" fill="' + c.near + '"/>');
+    sh.push('<path d="' + curve(pts) + '" fill="none" stroke="' + c.path + '" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 9" opacity=".95"/>');
+    if (started > 0) sh.push('<path d="M' + p0[0] + ' ' + p0[1] + ' L' + you[0] + ' ' + you[1] + '" fill="none" stroke="' + c.walk + '" stroke-width="5" stroke-linecap="round"/>');
+    // mist between the camps
+    camps.slice(0, -1).forEach((k, i) => { const fy = k.y - STEP / 2; sh.push('<ellipse cx="' + (i % 2 ? 236 : 106) + '" cy="' + r1(fy) + '" rx="' + (96 + (i % 3) * 14) + '" ry="20" fill="' + c.fog + '" fill-opacity="' + (i < 2 ? .55 : .75) + '"/>'); });
     camps.forEach((k, i) => {
-      if (i === 0) { s.push('<circle cx="' + k.x + '" cy="' + k.y + '" r="15" fill="none" stroke="' + c.ring + '" stroke-width="2" opacity=".55"/>'); s.push(flag(k.x, k.y, c.ring, c.white, 1, 1.2, c)); }
-      else s.push(flag(k.x, k.y, c.stone, c.stone, i >= 4 ? 0.4 : 0.7, 0.9, c));
+      if (i === 0) { sh.push('<circle cx="' + k.x + '" cy="' + k.y + '" r="15" fill="none" stroke="' + c.ring + '" stroke-width="2" opacity=".55"/>'); sh.push(flag(k.x, k.y, c.ring, c.white, 1, 1.2, c)); }
+      else sh.push(flag(k.x, k.y, c.stone, c.stone, o.levels[i][0] > (o.built || 9) ? 0.45 : 0.8, i === n - 1 ? 1.1 : 0.9, c));
     });
-    [[120, 120, 110, 30, .85], [230, 70, 100, 28, .85], [170, 190, 120, 26, .8], [250, 250, 90, 22, .75]].forEach(f => {
-      s.push('<ellipse cx="' + f[0] + '" cy="' + f[1] + '" rx="' + f[2] + '" ry="' + f[3] + '" fill="' + c.fog + '" fill-opacity="' + f[4] + '"/>');
-    });
-    s.push('<circle cx="' + you[0] + '" cy="' + you[1] + '" r="15" fill="' + c.walk + '" fill-opacity=".25"/><circle cx="' + you[0] + '" cy="' + you[1] + '" r="9" fill="' + c.walk + '" stroke="' + c.white + '" stroke-width="2.5"/>');
-    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="342" height="470" viewBox="0 0 342 470">' + s.join('') + '</svg>';
+    sh.push('<circle cx="' + you[0] + '" cy="' + you[1] + '" r="15" fill="' + c.walk + '" fill-opacity=".25"/><circle cx="' + you[0] + '" cy="' + you[1] + '" r="9" fill="' + c.walk + '" stroke="' + c.white + '" stroke-width="2.5"/>');
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">' + sh.join('') + '</svg>';
     const labels = camps.map((k, i) => {
-      const lv = o.levels[i]; const off = M.off[k.a];
-      return { x:k.x + off[0], y:k.y + off[1], center:false, kind:i === 0 ? 'next' : (i <= 2 ? 'near' : 'far'), text:i === 0 ? 'HSK ' + lv[0] + ' exam' : 'HSK ' + lv[0], sub:i === 0 ? (total - started) + ' to go' : (off[2] ? (lv[1] ? lv[1] + ' words' : 'advanced') : '') };
+      const lv = o.levels[i]; const soon = +lv[0] > (o.built || 9);
+      const off = k.side === 'top' ? [-46, -64] : k.side === 'left' ? [24, -48] : [-118, -50];
+      return { x:k.x + off[0], y:k.y + off[1], center:false, soon, kind:i === 0 ? 'next' : (i <= 2 ? 'near' : 'far'), text:i === 0 ? 'HSK ' + lv[0] + ' exam' : 'HSK ' + lv[0],
+        sub:i === 0 ? (total - started) + ' to go' : soon ? 'coming later' : (lv[1] ? lv[1] + ' words' : '') };
     });
-    return { src:uri(svg), w:342, h:470, you:{ x:Math.max(8, you[0] - 96), y:you[1] - 46 }, hideYou:frac > 0.6, labels };
+    return { src:uri(svg), w:W, h:H, you:{ x:Math.max(8, you[0] - 96), y:you[1] - 46 }, hideYou:frac > 0.6, labels };
   };
 
   // ---------------------------------------------------------------- mist mountains (one tile): w x h

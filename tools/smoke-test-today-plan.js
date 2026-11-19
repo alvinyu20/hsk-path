@@ -47,12 +47,12 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   // progress through the target
   await set({ mins: 20, dcN: 14, pbase: B(1) }); await home();
   r = await pathRow(); check(/Path: 3 steps today/.test(r) && /1 of 3 done/.test(r) && !/Done/.test(r), 'after 1 of 3 the row shows 1 of 3 and is still open: ' + r);
-  check(await page.locator('.tchip', { hasText: 'Another stop' }).count() === 0, 'and Another stop is not offered while the plan still has steps');
+  check(await page.locator('.mw', { hasText: 'Another stop' }).count() === 0, 'and Another stop is not offered while the plan still has steps');
   await set({ pbase: B(2) }); await home();
   r = await pathRow(); check(/2 of 3 done/.test(r), 'after 2 of 3: ' + r);
   await set({ pbase: B(3) }); await home();
   r = await pathRow(); check(/Path: 3 steps done/.test(r) && /Done/.test(r), 'at 3 of 3 the row says 3 steps done and is ticked: ' + r);
-  check(await page.locator('.tchip', { hasText: 'Another stop' }).count() === 1, 'and an extra step is offered under More ways to study');
+  check(await page.locator('.mw', { hasText: 'Another stop' }).count() === 1, 'and an extra step is offered under More ways to study');
   await set({ pbase: B(5) }); await home();
   r = await pathRow(); check(/Path: 5 steps done/.test(r), 'extra steps keep counting: ' + r);
 
@@ -70,6 +70,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   check((await page.locator('.fin-row .btn').allInnerTexts()).map(t => t.trim()).join('|').endsWith('Journey'), 'and shortcuts end with the Journey: ' + (await page.locator('.fin-row .btn').allInnerTexts()).join('|'));
   check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'the card fits the phone width');
   // the treasure chest: closed until tapped, one tap opens it and pays once
+  await set({ dcN: 1 });   // the chest is only for days that started with something due (19 Nov)
   check(await page.locator('.fin-top .ch.ch-closed').count() === 1 && /Bonus reward/.test(await page.locator('.fin-top .ch').innerText()) && !/Tap the chest/.test(await page.locator('.fin').innerText()), 'the Today is cleared card holds a closed chest labelled Bonus reward');
   const x0 = await page.evaluate(() => window.shanlu.state.xp);
   await page.locator('.ch-btn').click(); await page.waitForTimeout(150);

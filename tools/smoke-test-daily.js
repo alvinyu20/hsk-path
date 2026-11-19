@@ -47,6 +47,11 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   // the daily treasure chest (a new one each day, paid once, only when nothing is due)
   const today = () => ev(() => { const p = (v) => String(v).padStart(2, '0'); const n = new Date(); return n.getFullYear() + '-' + p(n.getMonth() + 1) + '-' + p(n.getDate()); });
   const x0 = await ev(() => window.shanlu.state.xp);
+  // a day that started with nothing due has no chest (19 Nov: the chest is for clearing what was due)
+  await setWord(60e3, 5);
+  await ev(async (d) => { const a = window.shanlu; a.setState({ dcN: 0, dcPaid: false, dcAmt: 0, day: d }); }, await today());
+  await ev(() => window.shanlu.openChest(0.5));
+  check(await ev(() => window.shanlu.state.xp) === x0 && !(await ev(() => window.shanlu.state.dcPaid)), 'no chest on a day that started with nothing due');
   await ev(async (d) => { const a = window.shanlu; a.setState({ dcN: 1, dcPaid: false, dcAmt: 0, day: d }); }, await today());
   await setWord(5 * DAY, 2);   // something is due
   await ev(() => window.shanlu.openChest(0.5));

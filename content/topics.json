@@ -665,27 +665,10 @@
     "儿童",
     "青年",
     "少年",
-    "读者",
-    "观众",
-    "听众",
-    "顾客",
-    "旅客",
-    "乘客",
     "者",
-    "作者",
-    "作家",
-    "歌手",
-    "演员",
-    "记者",
-    "网友",
-    "会员",
-    "人员",
-    "球迷",
     "考生",
     "毕业生",
     "研究生",
-    "教授",
-    "大夫",
     "男子",
     "女子",
     "妇女",
@@ -723,12 +706,57 @@
      "en": "Auntie and Uncle are friends of my mum and dad."
     },
     "4": {
-     "zh": "这位歌手和那位演员都是我喜欢的。",
-     "en": "This singer and that actor are both people I like."
+     "zh": "这些青年都是今年的毕业生。",
+     "en": "These young people all graduated this year."
     },
     "5": {
      "zh": "路人都看着那位新娘和新郎。",
      "en": "The passers-by are all looking at the bride and groom."
+    }
+   }
+  },
+  {
+   "name": "Audiences, customers and fans",
+   "group": "People",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "读者",
+    "观众",
+    "听众",
+    "顾客",
+    "旅客",
+    "乘客",
+    "网友",
+    "会员",
+    "球迷",
+    "人员"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "这场比赛的观众很多，很多球迷都来了。",
+     "en": "There was a big audience at this match; lots of fans came."
+    }
+   }
+  },
+  {
+   "name": "Writers, singers and other roles",
+   "group": "People",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "作者",
+    "作家",
+    "歌手",
+    "演员",
+    "记者",
+    "教授",
+    "大夫"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "这位歌手和那位演员都是我喜欢的。",
+     "en": "I like both this singer and that actor."
     }
    }
   },
@@ -1602,28 +1630,15 @@
     "随后",
     "先后",
     "陆续",
-    "最初",
-    "早期",
-    "初期",
-    "中期",
-    "近期",
-    "近代",
-    "古代",
     "事先",
-    "未来",
-    "如今",
     "自从",
     "以来",
-    "近年来",
     "即将",
     "刚好",
     "立刻",
     "立即",
     "连续",
-    "前途",
-    "此时",
-    "当前",
-    "当年"
+    "此时"
    ],
    "sentences": {
     "3": {
@@ -1637,6 +1652,33 @@
     "5": {
      "zh": "此前我没见过他，此后我们常常见面。",
      "en": "I had not met him before this; after this we often meet."
+    }
+   }
+  },
+  {
+   "name": "Past, present and future",
+   "group": "Time",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "最初",
+    "早期",
+    "初期",
+    "中期",
+    "近期",
+    "近代",
+    "古代",
+    "未来",
+    "如今",
+    "当前",
+    "当年",
+    "前途",
+    "近年来"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "古代的人和如今的人生活很不一样。",
+     "en": "People in ancient times lived very differently from people nowadays."
     }
    }
   },
@@ -1686,19 +1728,6 @@
     "厨房",
     "厨师",
     "聚餐",
-    "汤",
-    "油",
-    "盐",
-    "烤",
-    "酸",
-    "咸",
-    "辣",
-    "苦",
-    "香",
-    "鲜",
-    "味",
-    "味道",
-    "熟",
     "饼干",
     "餐饮",
     "盒饭",
@@ -1744,6 +1773,33 @@
     "5": {
      "zh": "他最喜欢火锅，我喜欢西餐。",
      "en": "He likes hot pot best, and I like Western food."
+    }
+   }
+  },
+  {
+   "name": "Tastes and cooking",
+   "group": "Food and shopping",
+   "to": "speak",
+   "cta": "Use these when you order food or drinks",
+   "words": [
+    "汤",
+    "油",
+    "盐",
+    "烤",
+    "酸",
+    "咸",
+    "辣",
+    "苦",
+    "香",
+    "鲜",
+    "味",
+    "味道",
+    "熟"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "这个汤有点儿咸，不过味道很香。",
+     "en": "This soup is a bit salty, but it smells delicious."
     }
    }
   },
@@ -2764,15 +2820,6 @@
     "导游",
     "入住",
     "目的地",
-    "国籍",
-    "签证",
-    "使馆",
-    "国际",
-    "亚洲",
-    "首都",
-    "全球",
-    "海洋",
-    "地球",
     "出差",
     "出行",
     "外出",
@@ -2807,6 +2854,29 @@
     "5": {
      "zh": "旅行社安排我们去欧洲游览。",
      "en": "The travel agency arranges for us to tour Europe."
+    }
+   }
+  },
+  {
+   "name": "Countries and the world",
+   "group": "Places and travel",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "国籍",
+    "签证",
+    "使馆",
+    "国际",
+    "亚洲",
+    "首都",
+    "全球",
+    "海洋",
+    "地球"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "去别的国家旅行以前，要先办签证。",
+     "en": "Before you travel to another country, you need to get a visa first."
     }
    }
   },
@@ -4294,29 +4364,19 @@
     "比分",
     "裁判",
     "决赛",
-    "冠军",
     "选手",
     "跑道",
     "跳高",
     "跳远",
     "赛场",
-    "领先",
-    "胜",
-    "胜利",
     "开幕",
     "开幕式",
     "闭幕式",
     "体力",
     "肌肉",
     "减肥",
-    "对手",
     "武术",
-    "队伍",
-    "激烈",
-    "奖励",
-    "挑战",
-    "争",
-    "争取"
+    "队伍"
    ],
    "sentences": {
     "1": {
@@ -4338,6 +4398,30 @@
     "5": {
      "zh": "决赛的比分很接近，裁判很公平。",
      "en": "The score in the final is very close, and the referee is very fair."
+    }
+   }
+  },
+  {
+   "name": "Winning and competing",
+   "group": "Daily life and fun",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "领先",
+    "胜",
+    "胜利",
+    "对手",
+    "激烈",
+    "奖励",
+    "挑战",
+    "争",
+    "争取",
+    "冠军"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "他的对手很强，但是他最后还是争取到了冠军。",
+     "en": "His opponent was strong, but in the end he still won the championship."
     }
    }
   },
@@ -4420,10 +4504,6 @@
     "老百姓",
     "人群",
     "人类",
-    "群体",
-    "集体",
-    "团队",
-    "成员",
     "志愿者",
     "公务员",
     "妇女",
@@ -4431,20 +4511,38 @@
     "代表",
     "地位",
     "独立",
-    "队伍",
     "人口",
     "人力",
-    "组织",
-    "密切",
-    "紧密",
-    "双方",
-    "人际",
     "物业"
    ],
    "sentences": {
     "5": {
      "zh": "志愿者和居民一起帮助社区的老人。",
      "en": "Volunteers and residents help the old people in the community together."
+    }
+   }
+  },
+  {
+   "name": "Groups and teams",
+   "group": "Society and world",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "群体",
+    "集体",
+    "团队",
+    "成员",
+    "队伍",
+    "组织",
+    "双方",
+    "人际",
+    "密切",
+    "紧密"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "我们的团队有十个成员，大家的关系很密切。",
+     "en": "Our team has ten members, and everyone is close."
     }
    }
   },
@@ -5188,20 +5286,6 @@
     "友好",
     "幽默",
     "优秀",
-    "脾气",
-    "性格",
-    "态度",
-    "骄傲",
-    "害羞",
-    "严格",
-    "仔细",
-    "信心",
-    "故意",
-    "厉害",
-    "帅",
-    "随便",
-    "大胆",
-    "胆小",
     "勤奋",
     "善良",
     "谨慎",
@@ -5213,19 +5297,11 @@
     "主动",
     "自觉",
     "傻",
-    "勇气",
     "个性",
     "魅力",
     "品质",
-    "坚强",
-    "平静",
-    "严肃",
-    "敏感",
     "丑",
-    "讲究",
-    "独立",
-    "可靠",
-    "了不起"
+    "讲究"
    ],
    "sentences": {
     "3": {
@@ -5239,6 +5315,56 @@
     "5": {
      "zh": "他很勤奋，也很善良，大家都喜欢他。",
      "en": "He is diligent and kind, and everyone likes him."
+    }
+   }
+  },
+  {
+   "name": "Temper, attitude and style",
+   "group": "Body and mind",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "脾气",
+    "性格",
+    "态度",
+    "骄傲",
+    "害羞",
+    "严格",
+    "仔细",
+    "信心",
+    "故意",
+    "厉害",
+    "帅",
+    "随便"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "他的脾气不太好，但是工作态度很认真。",
+     "en": "His temper is not great, but his attitude to work is very serious."
+    }
+   }
+  },
+  {
+   "name": "Courage, calm and strength",
+   "group": "Body and mind",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "大胆",
+    "胆小",
+    "勇气",
+    "坚强",
+    "平静",
+    "严肃",
+    "敏感",
+    "独立",
+    "可靠",
+    "了不起"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "遇到困难的时候，她总是很平静，也很坚强。",
+     "en": "When she runs into difficulties, she is always calm and strong."
     }
    }
   },
@@ -5916,16 +6042,8 @@
     "谈话",
     "发言",
     "演讲",
-    "询问",
-    "打听",
-    "称赞",
-    "骂",
-    "劝",
-    "说服",
-    "打断",
     "提起",
     "称为",
-    "转告",
     "响声",
     "掌声",
     "称",
@@ -5933,11 +6051,9 @@
     "表明",
     "形容",
     "据说",
-    "请求",
     "传",
     "传递",
-    "话题",
-    "咨询"
+    "话题"
    ],
    "sentences": {
     "1": {
@@ -5959,6 +6075,30 @@
     "5": {
      "zh": "他讲述了自己的故事，大家都认真地听。",
      "en": "He told his own story, and everyone listened carefully."
+    }
+   }
+  },
+  {
+   "name": "Asking, persuading and praising",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "询问",
+    "打听",
+    "称赞",
+    "骂",
+    "劝",
+    "说服",
+    "请求",
+    "咨询",
+    "打断",
+    "转告"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "我劝了他很久，最后终于说服了他。",
+     "en": "I tried to persuade him for a long time, and in the end I finally convinced him."
     }
    }
   },
@@ -6728,24 +6868,13 @@
     "同",
     "彼此",
     "对比",
-    "单一",
-    "单独",
-    "特殊",
-    "独特",
-    "特有",
     "不符",
-    "单",
     "反",
-    "特色",
-    "特征",
     "统一",
     "相关",
     "平衡",
-    "陌生",
     "紧密",
-    "密切",
-    "原",
-    "原有"
+    "密切"
    ],
    "sentences": {
     "3": {
@@ -6759,6 +6888,31 @@
     "5": {
      "zh": "这两个词意思相似，但是有差别。",
      "en": "These two words have similar meanings, but there is a difference."
+    }
+   }
+  },
+  {
+   "name": "Special, single and original",
+   "group": "Actions and descriptions",
+   "to": "review",
+   "cta": "Review your words",
+   "words": [
+    "特殊",
+    "独特",
+    "特有",
+    "特色",
+    "特征",
+    "单一",
+    "单独",
+    "单",
+    "原",
+    "原有",
+    "陌生"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "这个地方的菜很有特色，味道很独特。",
+     "en": "The food here has its own character, and the taste is unique."
     }
    }
   },
@@ -7505,13 +7659,6 @@
     "亲自",
     "单独",
     "独自",
-    "连忙",
-    "急忙",
-    "纷纷",
-    "逐步",
-    "逐渐",
-    "渐渐",
-    "尽快",
     "尽量",
     "随手",
     "随意",
@@ -7520,18 +7667,39 @@
     "反复",
     "分别",
     "一路",
-    "立即",
-    "立刻",
     "时常",
     "随时",
-    "随后",
-    "尽力",
-    "便"
+    "尽力"
    ],
    "sentences": {
     "5": {
      "zh": "他悄悄地走进来，亲自把门关上。",
      "en": "He walks in quietly and closes the door himself."
+    }
+   }
+  },
+  {
+   "name": "Quickly, gradually, step by step",
+   "group": "Grammar words",
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "words": [
+    "连忙",
+    "急忙",
+    "尽快",
+    "逐步",
+    "逐渐",
+    "渐渐",
+    "立即",
+    "立刻",
+    "随后",
+    "便",
+    "纷纷"
+   ],
+   "sentences": {
+    "5": {
+     "zh": "天渐渐黑了，路上的人纷纷回家。",
+     "en": "It is gradually getting dark, and the people on the road are going home one after another."
     }
    }
   },
@@ -7637,17 +7805,6 @@
     "就是",
     "倒",
     "而",
-    "并且",
-    "此外",
-    "另外",
-    "再说",
-    "首先",
-    "其次",
-    "同时",
-    "接着",
-    "甚至",
-    "例如",
-    "举例",
     "即使",
     "尽管",
     "不仅",
@@ -7657,8 +7814,6 @@
     "否则",
     "要是",
     "既然",
-    "加上",
-    "顺便",
     "不然",
     "从而",
     "因而",
@@ -7692,6 +7847,33 @@
     "5": {
      "zh": "他努力学习，因而取得了好成绩。",
      "en": "He studied hard and therefore got good results."
+    }
+   }
+  },
+  {
+   "name": "First, next and in addition",
+   "group": "Grammar words",
+   "to": "grammar",
+   "cta": "Practise the grammar",
+   "words": [
+    "首先",
+    "其次",
+    "同时",
+    "接着",
+    "甚至",
+    "例如",
+    "举例",
+    "此外",
+    "另外",
+    "再说",
+    "并且",
+    "加上",
+    "顺便"
+   ],
+   "sentences": {
+    "4": {
+     "zh": "首先要多听，其次要多说，另外还要多写。",
+     "en": "First you need to listen a lot, next you need to speak a lot, and in addition you need to write a lot."
     }
    }
   },

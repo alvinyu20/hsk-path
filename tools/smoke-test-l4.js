@@ -97,7 +97,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(n4 === 990, 'the HSK 4 list has 990 cards (' + n4 + ')');
   const home = await text();
   check(home.includes(n4 + ' words to go'), 'the trail counts the ' + n4 + ' HSK 4 words');
-  check(home.includes('Dictation drill') && (await page.locator('.tchip', { hasText: 'Speak' }).count()) === 1 && (await page.locator('.tchip', { hasText: 'Grammar lesson' }).count()) === 1, 'Today offers the listening drill, a practice script and a grammar lesson');
+  check(home.includes('Dictation drill') && (await page.locator('.mw', { hasText: 'Speak' }).count()) === 1 && (await page.locator('.mw', { hasText: 'Grammar lesson' }).count()) === 1, 'Today offers the listening drill, a practice script and a grammar lesson');
   const st = await page.evaluate(() => ({ n: Object.keys(window.shanlu.state.ws).length, l1: !!window.shanlu.state.ws['你好'], l2: !!window.shanlu.state.ws['机场'], l3: !!window.shanlu.state.ws['聪明'], l4: !!window.shanlu.state.ws['面试'] }));
   check(st.n === n4 && !st.l1 && !st.l2 && !st.l3 && st.l4, 'progress holds the HSK 4 words and none of the HSK 1, HSK 2 or HSK 3 words');
   check(await page.evaluate(() => !localStorage.getItem('shanlu-progress-v1') && !localStorage.getItem('shanlu-progress-v1-l2') && !localStorage.getItem('shanlu-progress-v1-l3')), 'HSK 1, HSK 2 and HSK 3 progress are not touched by opening HSK 4');
