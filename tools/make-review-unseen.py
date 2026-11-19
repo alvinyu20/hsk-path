@@ -3,10 +3,14 @@
 shows now (tools/dump-sentences.js, all levels) whose Chinese does not appear in the FIRST committed version of any file under review/.
 The first version is what was sent; later versions of a pack can hold fixes made after the review, which the reviewer never saw.
 
-Run:  python3 tools/make-review-unseen.py           (needs the data files built: bash tools/check-all.sh does that)
-Writes review/chinese-ai-new-items/unseen-HSKN-1-of-K.md (files of about 38 KB, each with the instructions on top)
+Run:  python3 tools/make-review-unseen.py [ROUND]   (needs the data files built: bash tools/check-all.sh does that)
+Writes review/chinese-ai-new-items/unseen-HSKN-1-of-K.md (round 1) or unseenROUND-HSKN-1-of-K.md (files of about 38 KB, each with the
+instructions on top). Use a new ROUND number for each round, so earlier rounds' files stay in the repo.
+
+"Seen" is every file ever added under review/ (also ones deleted since), in its first version, plus the later versions listed in
+SENT_AGAIN: a pack that was regenerated and sent again (19 Nov: HSK 5 pack files 20 to 23, refreshed before they were first sent).
 """
-import collections, json, os, re, subprocess
+import collections, json, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'review', 'chinese-ai-new-items')
@@ -21,9 +25,12 @@ def squash(s):
     return re.sub(r'[\s　]', '', s)
 
 
-# everything a reviewer has been sent: the first version of each review file
+# everything a reviewer has been sent: the first version of each review file (also files deleted since) ...
+SENT_AGAIN = [('853c49b8', 'review/chinese-ai-hsk5/20-exam.md'), ('853c49b8', 'review/chinese-ai-hsk5/21-scripts-and-clips.md'),
+              ('853c49b8', 'review/chinese-ai-hsk5/22-character-meanings.md'), ('853c49b8', 'review/chinese-ai-hsk5/23-five-mountains-path.md')]
 seen = []
-for f in git('ls-files', 'review').split('\n'):
+ever = sorted(set(x for x in git('log', '--all', '--diff-filter=A', '--format=', '--name-only', '--', 'review').split('\n') if x.strip()))
+for f in ever:
     if not f.endswith(('.md', '.csv', '.tsv')):
         continue
     first = git('log', '--diff-filter=A', '--format=%H', '--', f).split()
@@ -33,7 +40,11 @@ for f in git('ls-files', 'review').split('\n'):
         seen.append(git('show', first[-1] + ':' + f))
     except subprocess.CalledProcessError:
         pass
+for c, f in SENT_AGAIN:   # ... and the versions sent again later
+    seen.append(git('show', c + ':' + f))
 SEEN = squash('\n'.join(seen))
+ROUND = sys.argv[1] if len(sys.argv) > 1 else ''
+PREFIX = 'unseen%s-HSK' % ROUND
 
 KIND = collections.OrderedDict([
     ('word-ex', 'Word examples'), ('word-extra', 'More word examples'), ('lesson', 'Grammar lessons and extra questions'), ('point', 'Grammar review points'),
@@ -57,7 +68,7 @@ If there are no problems, answer "No problems found".
 
 def main():
     for f in os.listdir(OUT):
-        if f.startswith('unseen-HSK'):
+        if f.startswith(PREFIX):
             os.remove(os.path.join(OUT, f))
     total = 0
     for lv in range(1, 6):
@@ -103,7 +114,7 @@ def main():
             cur += p + '\n'
         files.append(cur)
         for i, body in enumerate(files):
-            name = 'unseen-HSK%d-%d-of-%d.md' % (lv, i + 1, len(files))
+            name = PREFIX + '%d-%d-of-%d.md' % (lv, i + 1, len(files))
             open(os.path.join(OUT, name), 'w', encoding='utf-8').write(head + body)
         print('HSK %d: %d unseen sentence(s) in %d file(s)' % (lv, n, len(files)))
     print('total', total)
