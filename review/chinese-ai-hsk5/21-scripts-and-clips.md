@@ -1,11 +1,11 @@
 你好！我正在做一个 HSK 5 学习网站（学习者已学过 HSK 1 到 4 的约 2000 个词，现在学 HSK 5 的约 1580 个新词）。请你以中国母语者和汉语老师的身份，检查下面的练习对话、常用句和听力短文。
 **只报告有问题的地方**，不要夸奖，也不要重复没问题的内容。对每个问题，请写：编号 / 原文 / 哪里不好（简单中文，再加一句英文）/ 更自然的说法（只用 HSK 1 到 HSK 5 的词）。
-需要特别注意：1) 不自然或不地道的说法；2) 语法错误；3) 英文翻译和中文意思不一致；4) 书面语被当成口语教（或口语被当成书面语）；5) 对 HSK 5 来说太难的词；6) 多音字和轻声的拼音是否正确，词与词之间的空格是否合理（例如“每个人”写成 měi ge rén，“一个人”写成 yí ge rén，“天气预报”写成 tiānqì yùbào）；7) 一个词在句子里的意思是否和词表里给出的意思一致。
+需要特别注意：1) 不自然或不地道的说法；2) 语法错误；3) 英文翻译和中文意思不一致；4) 书面语被当成口语教（或口语被当成书面语）；5) 对 HSK 5 来说太难的词（请按新版 HSK 3.0（2021）词表判断，不是旧的 HSK 2.0 词表；很多词在新版里级别不同）；6) 多音字和轻声的拼音是否正确，词与词之间的空格是否合理（例如“每个人”写成 měi ge rén，“一个人”写成 yí ge rén，“天气预报”写成 tiānqì yùbào）；7) 一个词在句子里的意思是否和词表里给出的意思一致。
 如果某一部分全部没问题，请回答“没有发现问题”。
 
 Hello! I am building an HSK 5 study site (learners know the ~2,000 words of HSK 1 to 4 and are now learning about 1,580 new HSK 5 words). Please act as a native speaker and Chinese teacher and check the items below.
 **Report only the problems**, no praise and no repeating good items. For each problem give: number / the item / what is wrong (simple Chinese plus one line of English) / a more natural version (using only HSK 1 to 5 words).
-Please watch for: 1) unnatural or non-idiomatic wording; 2) grammar mistakes; 3) English that does not match the Chinese; 4) written style taught as spoken (or the reverse); 5) words too hard for HSK 5; 6) wrong pinyin for words with more than one reading and for neutral tones, and wrong spaces between words in the pinyin (měi ge rén, yí ge rén, tiānqì yùbào); 7) a word used in a sense different from the one the word list gives.
+Please watch for: 1) unnatural or non-idiomatic wording; 2) grammar mistakes; 3) English that does not match the Chinese; 4) written style taught as spoken (or the reverse); 5) words too hard for HSK 5 (judge by the new HSK 3.0 (2021) word lists, not the old HSK 2.0 lists; many words changed level); 6) wrong pinyin for words with more than one reading and for neutral tones, and wrong spaces between words in the pinyin (měi ge rén, yí ge rén, tiānqì yùbào); 7) a word used in a sense different from the one the word list gives.
 If a part has no problems, answer "No problems found".
 
 ---
@@ -95,7 +95,7 @@ Also check: do the practice conversations sound like something people really say
 - 对方：可以，请在最后一页签上你的名字，再写上今天的日期。  /  You may. Please sign your name on the last page and write today's date.
 
 ## Useful phrases
-- 不好意思，我没听清楚，能请你重新说一遍吗？  /  Sorry, I did not hear clearly. Could you say it once more, please?
+- 不好意思，我没听清楚，能请你再说一遍吗？  /  Sorry, I did not hear clearly. Could you say it once more, please?
 - 你的意思是不是说，我们明天再讨论？  /  Do you mean that we will discuss it again tomorrow?
 - 请你说得慢一点，我想记下来。  /  Please speak a little more slowly; I want to write it down.
 - 这个词我不太了解，你能解释一下吗？  /  I do not quite understand this word. Could you explain it?
@@ -177,3 +177,75 @@ Also check: do the practice conversations sound like something people really say
 - 他说话的声音很轻，我几乎听不清楚。  /  He speaks in a very soft voice, and I can hardly hear clearly.
     note: 几乎 jīhū: both syllables are high and flat.
     note: 清楚 qīngchu: the second syllable is light and short.
+- 他每天都坚持锻炼身体，所以很少生病。  /  He keeps exercising every day, so he rarely gets sick.
+    note: 坚持 jiānchí: a high flat tone, then a rise.
+    note: 锻炼 duànliàn: both syllables fall.
+- 我打算明年去国外留学，现在正在准备材料。  /  I plan to go abroad to study next year, and I am preparing the documents now.
+    note: 打算 dǎsuàn: 打 only dips before the falling 算.
+    note: 留学 liúxué: both syllables rise.
+- 这家餐厅的服务很好，菜也很好吃。  /  The service in this restaurant is very good, and the food is tasty too.
+    note: 餐厅 cāntīng: both syllables are high and flat.
+    note: 服务 fúwù: a rise, then a fall.
+- 你的汉语说得越来越好了。  /  Your Chinese is getting better and better.
+    note: 越来越 yuè lái yuè: a fall, a rise, then a fall.
+    note: 汉语 Hànyǔ: a fall, then a dip.
+- 我们应该保护环境，不要乱扔垃圾。  /  We should protect the environment and not throw rubbish about.
+    note: 保护 bǎohù: 保 only dips before the falling 护.
+    note: 环境 huánjìng: a rise, then a fall.
+- 请把声音调小一点，孩子已经睡着了。  /  Please turn the volume down a little; the child has already fallen asleep.
+    note: 调小 tiáoxiǎo: 调 is said tiáo (to adjust), a rise.
+    note: 睡着 shuìzháo: 着 is said zháo here (the action worked), a rise.
+- 他的汉语水平提高得很快，老师经常表扬他。  /  His Chinese level is improving fast, and the teacher often praises him.
+    note: 提高 tígāo: a rise, then a high flat tone.
+    note: 表扬 biǎoyáng: 表 only dips before the rising 扬.
+- 我对这个电影不太感兴趣，你呢？  /  I am not very interested in this film; what about you?
+    note: 感兴趣 gǎn xìngqù: 兴 is said xìng (a fall) here, not xīng.
+    note: 不太 bú tài: 不 is said bú before the falling 太.
+- 为了身体健康，他每天早上都去公园走一走。  /  For the sake of his health, he goes for a walk in the park every morning.
+    note: 为了 wèile: 为 is said wèi (for), a fall; 了 is light.
+    note: 走一走 zǒu yi zǒu: 一 is light and short between the two verbs.
+- 昨天我们看了一场很精彩的足球比赛。  /  Yesterday we watched a very exciting football match.
+    note: 精彩 jīngcǎi: a high flat tone, then a dip.
+    note: 一场 yì chǎng: 一 is said yì (a fall) before the dipping 场.
+- 这些问题都比较复杂，需要慢慢解决。  /  These problems are all fairly complicated and need to be solved slowly.
+    note: 比较 bǐjiào: 比 only dips before the falling 较.
+    note: 复杂 fùzá: a fall, then a rise.
+- 他已经把房间收拾干净了，妈妈很满意。  /  He has already tidied up the room, and Mom is very satisfied.
+    note: 收拾 shōushi: the second syllable is light and short.
+    note: 满意 mǎnyì: 满 only dips before the falling 意.
+- 我们先坐地铁，然后换公共汽车。  /  First we take the metro, and then change to a bus.
+    note: 地铁 dìtiě: a fall, then a dip.
+    note: 然后 ránhòu: a rise, then a fall.
+- 这个周末你有空吗？我想请你吃饭。  /  Are you free this weekend? I would like to invite you to dinner.
+    note: 请你 qǐng nǐ: two third tones in a row, so 请 rises (say qíngnǐ).
+    note: 周末 zhōumò: a high flat tone, then a fall.
+- 他从小就喜欢画画，现在是一名画家。  /  He has liked drawing since childhood, and now he is an artist.
+    note: 从小 cóngxiǎo: a rise, then a dip.
+    note: 一名 yì míng: 一 is said yì (a fall) before the rising 名.
+- 如果明天不下雨，我们就去爬山。  /  If it does not rain tomorrow, we will go climbing.
+    note: 不下雨 bú xiàyǔ: 不 is said bú before the falling 下.
+    note: 爬山 páshān: a rise, then a high flat tone.
+- 这件事不能怪他，他也没有办法。  /  You cannot blame him for this; he has no choice either.
+    note: 办法 bànfǎ: a fall, then a dip.
+    note: 没有 méiyǒu: a rise, then a dip.
+- 她一边听音乐，一边做作业。  /  She does her homework while listening to music.
+    note: 一边 yì biān: 一 is said yì (a fall) before the high flat 边.
+    note: 作业 zuòyè: both syllables fall.
+- 他的建议对我很有帮助，我非常感谢他。  /  His suggestion is a great help to me, and I am very grateful to him.
+    note: 建议 jiànyì: both syllables fall.
+    note: 感谢 gǎnxiè: 感 only dips before the falling 谢.
+- 飞机晚点了，我们在机场等了两个小时。  /  The plane was delayed, and we waited at the airport for two hours.
+    note: 晚点 wǎndiǎn: two third tones in a row, so 晚 rises (say wándiǎn).
+    note: 机场 jīchǎng: a high flat tone, then a dip.
+- 我最近睡得不太好，常常半夜醒来。  /  I do not sleep very well these days, and often wake up in the middle of the night.
+    note: 最近 zuìjìn: both syllables fall.
+    note: 醒来 xǐnglái: 醒 only dips before the rising 来.
+- 这个包太贵了，我打算再看看别的。  /  This bag is too expensive; I plan to look at some others.
+    note: 看看 kànkan: the second 看 is light and short.
+    note: 别的 biéde: the second syllable is light and short.
+- 他们已经结婚十年了，感情一直很好。  /  They have been married for ten years, and their relationship has always been good.
+    note: 结婚 jiéhūn: a rise, then a high flat tone.
+    note: 感情 gǎnqíng: 感 only dips before the rising 情.
+- 对不起，我不是故意的，请原谅我。  /  I am sorry; it is not intentional, so please forgive me.
+    note: 对不起 duìbuqǐ: 不 is light (bu) between 对 and 起.
+    note: 原谅 yuánliàng: a rise, then a fall.

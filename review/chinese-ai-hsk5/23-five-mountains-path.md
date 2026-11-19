@@ -1,11 +1,11 @@
 你好！我正在做一个 HSK 5 学习网站（学习者已学过 HSK 1 到 4 的约 2000 个词，现在学 HSK 5 的约 1580 个新词）。请你以中国母语者和汉语老师的身份，检查下面的五岳学习路径文字。
 **只报告有问题的地方**，不要夸奖，也不要重复没问题的内容。对每个问题，请写：编号 / 原文 / 哪里不好（简单中文，再加一句英文）/ 更自然的说法（只用 HSK 1 到 HSK 5 的词）。
-需要特别注意：1) 不自然或不地道的说法；2) 语法错误；3) 英文翻译和中文意思不一致；4) 书面语被当成口语教（或口语被当成书面语）；5) 对 HSK 5 来说太难的词；6) 多音字和轻声的拼音是否正确，词与词之间的空格是否合理（例如“每个人”写成 měi ge rén，“一个人”写成 yí ge rén，“天气预报”写成 tiānqì yùbào）；7) 一个词在句子里的意思是否和词表里给出的意思一致。
+需要特别注意：1) 不自然或不地道的说法；2) 语法错误；3) 英文翻译和中文意思不一致；4) 书面语被当成口语教（或口语被当成书面语）；5) 对 HSK 5 来说太难的词（请按新版 HSK 3.0（2021）词表判断，不是旧的 HSK 2.0 词表；很多词在新版里级别不同）；6) 多音字和轻声的拼音是否正确，词与词之间的空格是否合理（例如“每个人”写成 měi ge rén，“一个人”写成 yí ge rén，“天气预报”写成 tiānqì yùbào）；7) 一个词在句子里的意思是否和词表里给出的意思一致。
 如果某一部分全部没问题，请回答“没有发现问题”。
 
 Hello! I am building an HSK 5 study site (learners know the ~2,000 words of HSK 1 to 4 and are now learning about 1,580 new HSK 5 words). Please act as a native speaker and Chinese teacher and check the items below.
 **Report only the problems**, no praise and no repeating good items. For each problem give: number / the item / what is wrong (simple Chinese plus one line of English) / a more natural version (using only HSK 1 to 5 words).
-Please watch for: 1) unnatural or non-idiomatic wording; 2) grammar mistakes; 3) English that does not match the Chinese; 4) written style taught as spoken (or the reverse); 5) words too hard for HSK 5; 6) wrong pinyin for words with more than one reading and for neutral tones, and wrong spaces between words in the pinyin (měi ge rén, yí ge rén, tiānqì yùbào); 7) a word used in a sense different from the one the word list gives.
+Please watch for: 1) unnatural or non-idiomatic wording; 2) grammar mistakes; 3) English that does not match the Chinese; 4) written style taught as spoken (or the reverse); 5) words too hard for HSK 5 (judge by the new HSK 3.0 (2021) word lists, not the old HSK 2.0 lists; many words changed level); 6) wrong pinyin for words with more than one reading and for neutral tones, and wrong spaces between words in the pinyin (měi ge rén, yí ge rén, tiānqì yùbào); 7) a word used in a sense different from the one the word list gives.
 If a part has no problems, answer "No problems found".
 
 ---
