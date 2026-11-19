@@ -568,8 +568,8 @@ window.HSK5_SPEAK = {
      "en": "Hello, welcome to the community service centre. What brings you here?"
     },
     {
-     "zh": "太好了！你对哪种活动比较有兴趣？我们的活动有照顾老人、教孩子学习，还有整理大家捐来的旧书。",
-     "py": "Tài hǎo le! Nǐ duì nǎ zhǒng huódòng bǐjiào yǒu xìngqù? Wǒmen de huódòng yǒu zhàogù lǎorén, jiāo háizi xuéxí, hái yǒu zhěnglǐ dàjiā juān lái de jiù shū.",
+     "zh": "太好了！你对哪种活动比较有兴趣？我们的活动包括照顾老人、教孩子学习，还有整理大家捐来的旧书。",
+     "py": "Tài hǎo le! Nǐ duì nǎ zhǒng huódòng bǐjiào yǒu xìngqù? Wǒmen de huódòng bāokuò zhàogù lǎorén, jiāo háizi xuéxí, hái yǒu zhěnglǐ dàjiā juān lái de jiù shū.",
      "en": "Great! Which kind of activity are you more interested in? We have looking after old people, teaching children, and sorting the old books people have donated."
     },
     {

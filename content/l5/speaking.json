@@ -170,7 +170,7 @@
    "words": ["志愿者", "报名", "组织", "活动", "免费", "捐"],
    "ai": [
     {"zh": "你好，欢迎来到社区服务中心。请问你有什么事？", "en": "Hello, welcome to the community service centre. What brings you here?"},
-    {"zh": "太好了！你对哪种活动比较有兴趣？我们的活动有照顾老人、教孩子学习，还有整理大家捐来的旧书。", "en": "Great! Which kind of activity are you more interested in? We have looking after old people, teaching children, and sorting the old books people have donated."},
+    {"zh": "太好了！你对哪种活动比较有兴趣？我们的活动包括照顾老人、教孩子学习，还有整理大家捐来的旧书。", "en": "Great! Which kind of activity are you more interested in? We have looking after old people, teaching children, and sorting the old books people have donated."},
     {"zh": "那太合适了。你每个星期有多少时间？", "en": "That is just right. How much time do you have each week?"},
     {"zh": "可以。这个活动是免费的，你只需要填一下这张报名表。", "en": "That is fine. The activity is free, and you only need to fill in this sign-up form."},
     {"zh": "不用，你自己来就行。下个星期六见！", "en": "No need, just come yourself. See you next Saturday!"}

@@ -296,8 +296,8 @@
    ],
    "sentences": {
     "1": {
-     "zh": "我家有三口人，他八岁，她十岁。",
-     "en": "There are three people in my family; he is eight and she is ten."
+     "zh": "我家有三口人：爸爸、妈妈和我。我今年八岁。",
+     "en": "There are three people in my family: dad, mom and me. I am eight this year."
     },
     "2": {
      "zh": "这个手机一万块，太贵了。",
@@ -3642,8 +3642,8 @@
    ],
    "sentences": {
     "1": {
-     "zh": "今天天气很冷，在下雨，明天会下雪。",
-     "en": "The weather is cold today and it is raining; it will snow tomorrow."
+     "zh": "今天天气很冷，还在下雨，明天会下雪。",
+     "en": "The weather is cold today and it is still raining; it will snow tomorrow."
     },
     "2": {
      "zh": "昨天是阴天，今天是晴天。",
@@ -7739,8 +7739,8 @@
    ],
    "sentences": {
     "1": {
-     "zh": "我给你一个苹果，你对我很好。",
-     "en": "I give you an apple; you are very good to me."
+     "zh": "你对我很好，我给你一个苹果。",
+     "en": "You are very good to me, so I give you an apple."
     },
     "2": {
      "zh": "我从家走路来学校，他比我快。",

@@ -153,3 +153,5 @@ write:g5-48:3	meaning	请你 is the polite "please"; English drops the "you"	万
 write:g2-33:1	meaning	两万 is 20,000; the checker reads it as 2	这个包两万块。
 lesson:fanerr:extra7	meaning	Chinese drops the subject of 迟到 (we will be late) in speech	快走吧，不然会迟到。
 word-extra:丢:2	meaning	别…了 warns against an outcome (losing the phone); 了 is not a completed action	小心，别把手机丢了。
+word-extra:手段:1	gloss	"all sorts of tricks" on purpose: 手段 leans negative in this sentence (DeepSeek, 19 Nov)	为了赢这场比赛，他用了各种手段。
+exam:L2:0.1	meaning	上海大学毕业 states who he is (a graduate of), so no 了 is needed; the English past is natural	我姓高，上海大学毕业，专业是经济。

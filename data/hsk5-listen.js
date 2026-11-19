@@ -781,7 +781,7 @@ window.HSK5_LISTEN = {
     }
    ],
    "notes": [
-    "选择 xuǎnzé: x is a soft hiss made with the tongue tip behind the lower teeth.",
+    "选择 xuǎnzé: x is a soft hiss: the tongue tip rests behind the lower teeth and the front of the tongue rises toward the roof of the mouth, a bit like a thin sh.",
     "职业 zhíyè: a rise, then a fall."
    ]
   },
@@ -1092,7 +1092,7 @@ window.HSK5_LISTEN = {
    ],
    "notes": [
     "长得 zhǎng de: 长 is said zhǎng (to grow), a dip; 得 is light.",
-    "比我 bǐ wǒ: two third tones in a row, so 比 rises (say bíwǒ)."
+    "比我 bǐ wǒ: two third tones in a row, so 比 rises (say bí wǒ)."
    ]
   },
   {

@@ -146,14 +146,14 @@ Sentences (Chinese / English):
 126. 请问，你的学校在哪里？  /  Excuse me, where is your school?
 127. 我在这里，你在那里。  /  I am here, and you are over there.
 128. 学校在那里，不在这里。  /  The school is over there, not here.
-129. 书店在学校的外边。  /  The bookshop is outside the school.
+129. 书店在学校外边。  /  The bookshop is outside the school.
 130. 我在这边，你在那边。  /  I am on this side, and you are on that side.
 131. 请到我们这边来。  /  Please come over to our side.
 132. 你好！谢谢你，再见！  /  Hello! Thank you, goodbye!
 133. 他是我的朋友，她是我的同学，我们都很好。  /  He is my friend, she is my classmate, and we are all well.
 134. 这个很好，那个太贵了。  /  This one is good; that one is too expensive.
 135. 你叫什么名字？你住在哪里？  /  What is your name? Where do you live?
-136. 我家有三口人，他八岁，她十岁。  /  There are three people in my family; he is eight and she is ten.
+136. 我家有三口人：爸爸、妈妈和我。我今年八岁。  /  There are three people in my family: dad, mom and me. I am eight this year.
 137. 你有多少钱？我有一点。  /  How much money do you have? I have a little.
 138. 我买了三本书、两件衣服和一个苹果。  /  I bought three books, two items of clothing and an apple.
 139. 我叫小明，认识你很高兴。  /  My name is Xiaoming; nice to meet you.
@@ -179,7 +179,7 @@ Sentences (Chinese / English):
 159. 我学汉语，会写一些汉字。  /  I study Chinese and can write some characters.
 160. 我的手机在桌子上，请打电话给我。  /  My phone is on the table; please call me.
 161. 我早上起床，晚上睡觉，中午吃饭。  /  I get up in the morning, go to bed in the evening and eat at noon.
-162. 今天天气很冷，在下雨，明天会下雪。  /  The weather is cold today and it is raining; it will snow tomorrow.
+162. 今天天气很冷，还在下雨，明天会下雪。  /  The weather is cold today and it is still raining; it will snow tomorrow.
 163. 我家有一只狗和一只猫。  /  My family has a dog and a cat.
 164. 你喜欢玩什么？  /  What do you like to play?
 165. 我喜欢看电影，也喜欢听歌。  /  I like watching movies, and I also like listening to songs.
@@ -196,7 +196,7 @@ Sentences (Chinese / English):
 176. 我不想去，我没有时间，你不要问了。  /  I do not want to go, and I have no time; you should not ask again.
 177. 今天太热了，我非常想喝水。  /  It is too hot today; I really want a drink of water.
 178. 我和你都是学生，他也是。  /  You and I are both students, and he is too.
-179. 我给你一个苹果，你对我很好。  /  I give you an apple; you are very good to me.
+179. 你对我很好，我给你一个苹果。  /  You are very good to me, so I give you an apple.
 180. 你好吗？我很好，你呢？我们去吧。  /  How are you? I am fine; and you? Let us go.
 181. 你好！你想喝什么？  /  Hello! What would you like to drink?
 182. 好的。你想喝热茶吗？  /  Okay. Would you like hot tea?

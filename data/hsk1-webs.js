@@ -2902,7 +2902,7 @@ window.HSK1_WEBS = {
    "gaps": [
     {
      "en": "The bookshop is outside the school.",
-     "zh": "书店在学校的___。",
+     "zh": "书店在学校___。",
      "ans": "外边",
      "opts": [
       "外边",
@@ -3168,9 +3168,9 @@ window.HSK1_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "我家有三口人，他八岁，她十岁。",
-    "py": "Wǒ jiā yǒu sān kǒu rén, tā bā suì, tā shí suì.",
-    "en": "There are three people in my family; he is eight and she is ten."
+    "zh": "我家有三口人：爸爸、妈妈和我。我今年八岁。",
+    "py": "Wǒ jiā yǒu sān kǒu rén: bàba, māma hé wǒ. Wǒ jīnnián bā suì.",
+    "en": "There are three people in my family: dad, mom and me. I am eight this year."
    },
    "words": [
     "一",
@@ -3752,9 +3752,9 @@ window.HSK1_WEBS = {
    "to": "review",
    "cta": "Review your words",
    "sentence": {
-    "zh": "今天天气很冷，在下雨，明天会下雪。",
-    "py": "Jīntiān tiānqì hěn lěng, zài xiàyǔ, míngtiān huì xià xuě.",
-    "en": "The weather is cold today and it is raining; it will snow tomorrow."
+    "zh": "今天天气很冷，还在下雨，明天会下雪。",
+    "py": "Jīntiān tiānqì hěn lěng, hái zài xiàyǔ, míngtiān huì xià xuě.",
+    "en": "The weather is cold today and it is still raining; it will snow tomorrow."
    },
    "words": [
     "天气",
@@ -4073,9 +4073,9 @@ window.HSK1_WEBS = {
    "to": "grammar",
    "cta": "Practise the grammar",
    "sentence": {
-    "zh": "我给你一个苹果，你对我很好。",
-    "py": "Wǒ gěi nǐ yí ge píngguǒ, nǐ duì wǒ hěn hǎo.",
-    "en": "I give you an apple; you are very good to me."
+    "zh": "你对我很好，我给你一个苹果。",
+    "py": "Nǐ duì wǒ hěn hǎo, wǒ gěi nǐ yí ge píngguǒ.",
+    "en": "You are very good to me, so I give you an apple."
    },
    "words": [
     "给",

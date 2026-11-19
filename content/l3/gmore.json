@@ -1645,14 +1645,14 @@
  {
   "p": "g3-33",
   "t": "mc",
-  "prompt": "Which sentence says: He smiled at me?",
+  "prompt": "Which sentence says: He walked toward me?",
   "options": [
-   "他向我笑了笑。",
-   "他笑了笑向我。"
+   "他向我走了过来。",
+   "他走了过来向我。"
   ],
   "correct": 0,
-  "zh": "他向我笑了笑。",
-  "en": "He smiled at me.",
+  "zh": "他向我走了过来。",
+  "en": "He walked toward me.",
   "explain": "向 + person comes before the verb."
  },
  {

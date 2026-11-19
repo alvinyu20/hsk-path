@@ -1036,7 +1036,7 @@ Examples:
 - Pronouns: 他是我的朋友，她是我的同学，我们都很好。  Tā shì wǒ de péngyou, tā shì wǒ de tóngxué, wǒmen dōu hěn hǎo.  — He is my friend, she is my classmate, and we are all well.
 - This, that, here, there: 这个很好，那个太贵了。  Zhège hěn hǎo, nàge tài guì le.  — This one is good; that one is too expensive.
 - Question words: 你叫什么名字？你住在哪儿？  Nǐ jiào shénme míngzi? Nǐ zhù zài nǎr?  — What is your name? Where do you live?
-- Numbers: 我家有三口人，他八岁，她十岁。  Wǒ jiā yǒu sān kǒu rén, tā bā suì, tā shí suì.  — There are three people in my family; he is eight and she is ten.
+- Numbers: 我家有三口人：爸爸、妈妈和我。我今年八岁。  Wǒ jiā yǒu sān kǒu rén: bàba, māma hé wǒ. Wǒ jīnnián bā suì.  — There are three people in my family: dad, mom and me. I am eight this year.
 - How much and how many: 你有多少钱？我有一点儿。  Nǐ yǒu duōshǎo qián? Wǒ yǒu yìdiǎnr.  — How much money do you have? I have a little.
 - Measure words: 我买了三本书、两件衣服和一个苹果。  Wǒ mǎi le sān běn shū, liǎng jiàn yīfu hé yí ge píngguǒ.  — I bought three books, two items of clothing and an apple.
 - Names and introductions: 我叫小明，认识你很高兴。  Wǒ jiào Xiǎomíng, rènshi nǐ hěn gāoxìng.  — My name is Xiaoming; nice to meet you.
@@ -1062,7 +1062,7 @@ Examples:
 - Chinese and writing: 我学汉语，会写一些汉字。  Wǒ xué Hànyǔ, huì xiě yìxiē hànzì.  — I study Chinese and can write some characters.
 - Phones, email and the internet: 我的手机在桌子上，请打电话给我。  Wǒ de shǒujī zài zhuōzi shàng, qǐng dǎ diànhuà gěi wǒ.  — My phone is on the table; please call me.
 - Daily routine: 我早上起床，晚上睡觉，中午吃饭。  Wǒ zǎoshang qǐchuáng, wǎnshang shuìjiào, zhōngwǔ chī fàn.  — I get up in the morning, go to bed in the evening and eat at noon.
-- Weather: 今天天气很冷，在下雨，明天会下雪。  Jīntiān tiānqì hěn lěng, zài xiàyǔ, míngtiān huì xià xuě.  — The weather is cold today and it is raining; it will snow tomorrow.
+- Weather: 今天天气很冷，还在下雨，明天会下雪。  Jīntiān tiānqì hěn lěng, hái zài xiàyǔ, míngtiān huì xià xuě.  — The weather is cold today and it is still raining; it will snow tomorrow.
 - Animals and nature: 我家有一只狗和一只猫。  Wǒ jiā yǒu yì zhī gǒu hé yì zhī māo.  — My family has a dog and a cat.
 - Hobbies and fun: 你喜欢玩什么？  Nǐ xǐhuan wán shénme?  — What do you like to play?
 - Movies, music, TV and news: 我喜欢看电影，也喜欢听歌。  Wǒ xǐhuan kàn diànyǐng, yě xǐhuan tīng gē.  — I like watching movies, and I also like listening to songs.
@@ -1079,7 +1079,7 @@ Examples:
 - Not and don't: 我不想去，我没有时间，你不要问了。  Wǒ bù xiǎng qù, wǒ méiyǒu shíjiān, nǐ búyào wèn le.  — I do not want to go, and I have no time; you should not ask again.
 - Very, too, most: 今天太热了，我非常想喝水。  Jīntiān tài rè le, wǒ fēicháng xiǎng hē shuǐ.  — It is too hot today; I really want a drink of water.
 - And, also, all, together: 我和你都是学生，他也是。  Wǒ hé nǐ dōu shì xuésheng, tā yě shì.  — You and I are both students, and he is too.
-- To, from, than, with: 我给你一个苹果，你对我很好。  Wǒ gěi nǐ yí ge píngguǒ, nǐ duì wǒ hěn hǎo.  — I give you an apple; you are very good to me.
+- To, from, than, with: 你对我很好，我给你一个苹果。  Nǐ duì wǒ hěn hǎo, wǒ gěi nǐ yí ge píngguǒ.  — You are very good to me, so I give you an apple.
 - Little helper words: 你好吗？我很好，你呢？我们去吧。  Nǐ hǎo ma? Wǒ hěn hǎo, nǐ ne? Wǒmen qù ba.  — How are you? I am fine; and you? Let us go.
 
 ## 6. The 300 words: gloss and example
