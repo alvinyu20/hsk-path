@@ -717,13 +717,13 @@
   // (meaning, then sound), then after the last group one mixed checkpoint on every word of the stop. A wrong answer comes back once, a few
   // questions later. Nothing is typed yet: the words go into Review afterwards, which asks for them again (a choice, then typed from memory).
   const plPlain = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z]/g, '');
-  const plChoices = (zh, kind, pool, n) => {   // zh plus n-1 wrong answers: first words of the same stop, then words of the same kind, then any
+  const plChoices = (zh, kind, pool, n, avoid) => {   // zh plus n-1 wrong answers: first words of the same stop, then words of the same kind, then any. avoid: words that are also right here (a Fill it gap's "also" words)
     const me = BANK[zh]; const seen = {};
     seen[kind === 'mean' ? me.en : zh] = true;
     if (kind === 'hear') seen['~' + plPlain(me.py)] = true;
     const out = [];
     const take = (list) => list.forEach(z => {
-      if (out.length >= n - 1 || z === zh || !BANK[z]) return;
+      if (out.length >= n - 1 || z === zh || !BANK[z] || (avoid && avoid.indexOf(z) >= 0)) return;
       const key = kind === 'mean' ? BANK[z].en : z; const sound = '~' + plPlain(BANK[z].py);
       if (seen[key] || (kind === 'hear' && seen[sound])) return;
       seen[key] = true; if (kind === 'hear') seen[sound] = true;
@@ -738,7 +738,7 @@
       ex = pickEx(zh, e => e.toks.indexOf(zh) >= 0 && e.zh.split(zh).length === 2);
       if (!ex || ex.toks.indexOf(zh) < 0 || ex.zh.split(zh).length !== 2) { kd = 'rev'; ex = null; }
     }
-    return { t:'q', kind:kd, zh, ph, ex:ex ? { zh:ex.zh, py:ex.py, en:ex.en } : null, opts:plChoices(zh, kd, pool, n) };
+    return { t:'q', kind:kd, zh, ph, ex:ex ? { zh:ex.zh, py:ex.py, en:ex.en } : null, opts:plChoices(zh, kd, pool, n, ex && ex.cl ? ex.cl.filter(c => c.v === 'also').map(c => c.w) : null) };
   };
   const plBuild = (teach, known) => {
     const steps = []; const k = Math.ceil(teach.length / PATH_BATCH);
@@ -823,6 +823,14 @@
     if (!r.ok) {   // a character's own tone is fine where the word changes it: a light syllable (睛 is jīng alone, light in 眼睛), 一/不 before another syllable, 儿 as r. Not for repeated words like 妈妈. See tools/build-neutral-alt.py
       const alt = NEUTRAL_ALT[q.exp.zh];
       if (alt && String(q.exp.py).indexOf('/') < 0 && comparePinyin(t, alt, tonesOptional()).ok) return { ok:true, grade:'good', note:'Also right: those are the characters\' own tones. Said in the word it is ' + String(q.exp.py).trim() + ' (a light syllable, 一 or 不 changing tone, or 儿 as r).' };
+    }
+    if (!r.ok && q.cl && q.cl.length) {   // Fill it: another word listed for this gap (content/cloze-alts.tsv): also right, or a classic mix-up with a teaching note
+      const ask = q.exp.zh + ' (' + q.exp.py.split('/')[0].trim() + ')';
+      const c = q.cl.find(x => t === x.w || comparePinyin(t, x.py, tonesOptional()).ok);
+      if (c && c.v === 'also') return { ok:true, grade:'good', note:'Also right: ' + c.w + ' (' + c.py + '). This sentence used ' + ask + '. ' + c.n };
+      if (c) return { ok:false, grade:'again', note:'Not here: ' + c.w + ' (' + c.py + '). ' + c.n + ' The gap is ' + ask + '.' };
+      const near = q.cl.find(x => x.v === 'also' && comparePinyin(t, x.py, tonesOptional()).grade === 'hard');
+      if (near) return { ok:false, grade:'hard', note:near.w + ' (' + near.py + ') fits this gap too, but check the tone. This sentence used ' + ask + '.' };
     }
     if (r.ok || r.grade === 'hard') return r;
     const syn = synonymOf(q, t);
@@ -1130,7 +1138,7 @@
         : kind === 'order' ? pickEx(zh, e => e.toks.length >= 3 && e.toks.length <= 8) : pickEx(zh);
       if (kind === 'listen') return qHearWord(zh, ex);
       if (kind === 'type') return qTypePinyin(zh, ex);
-      if (kind === 'cloze' && ex.toks.indexOf(zh) >= 0 && ex.zh.split(zh).length === 2) return { type:'cloze', kicker:'Fill it', prompt:'Type the missing word', big:ex.zh.replace(zh, '___'), sub:ex.en, placeholder:'Hanzi, or pinyin with tones', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, zh), reveal:zh + ' · ' + BANK[zh].py, explain:ex.py + ' (' + TYPE_HELP + ')', word:zh, dim:'prod' };
+      if (kind === 'cloze' && ex.toks.indexOf(zh) >= 0 && ex.zh.split(zh).length === 2) return { type:'cloze', kicker:'Fill it', prompt:'Type the missing word', big:ex.zh.replace(zh, '___'), sub:ex.en, placeholder:'Hanzi, or pinyin with tones', exp:{ zh, py:BANK[zh].py }, accepts:pinyinAccepts(BANK[zh].py, zh), cl:ex.cl || [], reveal:zh + ' · ' + BANK[zh].py, explain:ex.py + ' (' + TYPE_HELP + ')', word:zh, dim:'prod' };
       if (kind === 'order' && ex.toks.length >= 3 && ex.toks.length <= 8) return orderQ(ex.toks, { kicker:'Build it', prompt:'Put the words in order: ' + ex.en, reveal:ex.zh, explain:ex.py });
       return qMeaning(zh);
     });
@@ -5933,7 +5941,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
   const tpl = document.getElementById('app-template');
   const app = DCMount(root, tpl, Component);
   onPersonChange = () => { try { app.personChanged(); } catch (e) {} };
-  app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin };   // for the browser tests
+  app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin, plChoices };   // for the browser tests
   window.shanlu = app;
   // an exam photo that does not load (offline, blocked, removed) is dropped and its emoji shows instead
   document.addEventListener('error', (ev) => {

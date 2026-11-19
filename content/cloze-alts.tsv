@@ -1,0 +1,351 @@
+# Fill it (cloze) questions: another word a learner may type in the gap of one example sentence.
+# columns: answer (the gap word), other word, verdict (also = also right; wrong = a classic mix-up that does not fit here), sentence, teaching note
+# Only the classic pairs (会/能, 想/要, 很/非常, 认识/知道, 再/又/还, 二/两 ...). Checked by tools/check-cloze-alts.py.
+一些	一点儿	wrong	他有一些中国朋友。	一点儿 is "a little" of an amount (water, time). For a number of people or things, use 一些.
+一些	一点儿	also	我想买一些水果。	一点儿 works too and sounds like a small amount; 一些 is "some".
+一些	一点儿	wrong	桌子上有一些书。	一点儿 is "a little" of an amount (water, time). For a number of people or things, use 一些.
+一块儿	一起	also	你想跟我一块儿去吗？	一起 and 一块儿 both mean "together"; 一块儿 is the more casual, northern way to say it.
+一块儿	一起	also	我们一块儿去吧。	一起 and 一块儿 both mean "together"; 一块儿 is the more casual, northern way to say it.
+一块儿	一起	also	我们一块儿吃饭吧。	一起 and 一块儿 both mean "together"; 一块儿 is the more casual, northern way to say it.
+一点儿	一些	also	我会说一点儿汉语。	一些 "some" works too; 一点儿 sounds more modest, "a little".
+一点儿	一些	also	我想喝一点儿水。	一些 "some" works too; 一点儿 sounds more modest, "a little".
+一点儿	一些	also	请再说一点儿。	一些 "some" works too; 一点儿 sounds more modest, "a little".
+一点儿	一些	wrong	这个菜有一点儿贵。	Before an adjective, "a bit" is 有点儿. 一些 counts things: 一些菜.
+不过	但是	also	他不太高，不过很有力气。	但是 "but" works too; 不过 is a little softer.
+不过	可是	also	他不太高，不过很有力气。	可是 "but" works too; 不过 is a little softer.
+不过	但	also	他不太高，不过很有力气。	但 "but" works too; 不过 is a little softer.
+不过	但是	also	我想去，不过今天没时间。	但是 "but" works too; 不过 is a little softer.
+不过	可是	also	我想去，不过今天没时间。	可是 "but" works too; 不过 is a little softer.
+不过	但	also	我想去，不过今天没时间。	但 "but" works too; 不过 is a little softer.
+不过	但是	also	这个菜很好吃，不过有点儿辣。	但是 "but" works too; 不过 is a little softer.
+不过	可是	also	这个菜很好吃，不过有点儿辣。	可是 "but" works too; 不过 is a little softer.
+不过	但	also	这个菜很好吃，不过有点儿辣。	但 "but" works too; 不过 is a little softer.
+两	二	wrong	他们在这里住了两天。	Before a measure word (个, 杯, 天), "two" is 两: 两个, 两杯. 二 is for numbers: 二, 十二, 二号.
+两	二	wrong	我有两个孩子。	Before a measure word (个, 杯, 天), "two" is 两: 两个, 两杯. 二 is for numbers: 二, 十二, 二号.
+两	二	wrong	我有两个朋友。	Before a measure word (个, 杯, 天), "two" is 两: 两个, 两杯. 二 is for numbers: 二, 十二, 二号.
+两	二	wrong	请给我两杯茶。	Before a measure word (个, 杯, 天), "two" is 两: 两个, 两杯. 二 is for numbers: 二, 十二, 二号.
+也许	可能	also	也许你说得对。	可能 "maybe" works too, and is the everyday word.
+也许	大概	also	也许你说得对。	大概 "probably" works too; it sounds a bit more sure than 也许.
+也许	可能	also	也许明天会下雨。	可能 "maybe" works too, and is the everyday word.
+也许	大概	also	也许明天会下雨。	大概 "probably" works too; it sounds a bit more sure than 也许.
+也许	可能	also	他也许不来了。	可能 "maybe" works too, and is the everyday word.
+也许	大概	also	他也许不来了。	大概 "probably" works too; it sounds a bit more sure than 也许.
+二	两	wrong	我的房间是二号。	In numbers, dates and room numbers, "two" is 二: 二号, 二月. 两 is for "two of something": 两个.
+从前	以前	also	从前有一个小村子，村子里有很多树。	以前 "before, in the past" works too. 从前 is the storybook word: "once upon a time".
+从前	过去	also	从前有一个小村子，村子里有很多树。	过去 "in the past" works too. 从前 is the storybook word: "once upon a time".
+从前	以前	also	从前，这里没有高楼。	以前 "before, in the past" works too. 从前 is the storybook word: "once upon a time".
+从前	过去	also	从前，这里没有高楼。	过去 "in the past" works too. 从前 is the storybook word: "once upon a time".
+从前	以前	also	他还是和从前一样爱笑。	以前 "before, in the past" works too. 从前 is the storybook word: "once upon a time".
+从前	过去	also	他还是和从前一样爱笑。	过去 "in the past" works too. 从前 is the storybook word: "once upon a time".
+以前	过去	also	以前我不会游泳。	过去 "in the past" works too; 以前 is the most common word.
+以前	过去	also	他以前是我的老师。	过去 "in the past" works too; 以前 is the most common word.
+以前	过去	also	我以前住在这里。	过去 "in the past" works too; 以前 is the most common word.
+以后	后来	wrong	下课以后，我去图书馆。	后来 is only for the past, "afterwards" in a story. For "after class" or the future, use 以后.
+以后	后来	wrong	吃饭以后，我们去走走。	后来 is only for the past, "afterwards" in a story. For "after class" or the future, use 以后.
+以后	后来	wrong	我以后想去中国工作。	后来 is only for the past, "afterwards" in a story. For "after class" or the future, use 以后.
+会	能	also	他会做饭。	能 works too. 会 is a skill you learned; 能 is being able to.
+会	能	also	你会开车吗？	能 works too. 会 is a skill you learned; 能 is being able to.
+会	能	also	我会说汉语。	能 works too. 会 is a skill you learned; 能 is being able to.
+会	能	wrong	明天会下雨吗？	Here 会 means "will" (what is likely to happen). 能 is about being able to.
+会	可以	wrong	明天会下雨吗？	Here 会 means "will" (what is likely to happen). 可以 is about being allowed to.
+似乎	好像	also	他似乎不太高兴。	好像 "seem" works too, and is the everyday word.
+似乎	好像	also	他似乎知道这件事。	好像 "seem" works too, and is the everyday word.
+似乎	好像	also	天似乎要下雨了。	好像 "seem" works too, and is the everyday word.
+但	但是	also	他很忙，但很高兴。	但是 works too; 但 is just a shorter 但是.
+但	但是	also	我想去，但没有时间。	但是 works too; 但 is just a shorter 但是.
+但	但是	also	这个很好看，但有点儿贵。	但是 works too; 但 is just a shorter 但是.
+但是	但	also	他很忙，但是还是来了。	但 works too; it is just a shorter 但是.
+但是	但	also	我想去，但是太累了。	但 works too; it is just a shorter 但是.
+但是	但	also	菜很好吃，但是有点儿贵。	但 works too; it is just a shorter 但是.
+使	让	also	好的天气使人心情很好。	让 works too; both mean "make (someone feel or be)". 使 is more formal.
+使	让	also	运动使身体更健康。	让 works too; both mean "make (someone feel or be)". 使 is more formal.
+使	让	also	这个消息使大家很高兴。	让 works too; both mean "make (someone feel or be)". 使 is more formal.
+假如	如果	also	假如你有很多钱，你想做什么？	如果 "if" works too, and is the everyday word. 假如 is more bookish.
+假如	要是	also	假如你有很多钱，你想做什么？	要是 "if" works too; it is the casual one. 假如 is more bookish.
+假如	如果	also	假如我是你，我会去。	如果 "if" works too, and is the everyday word. 假如 is more bookish.
+假如	要是	also	假如我是你，我会去。	要是 "if" works too; it is the casual one. 假如 is more bookish.
+假如	如果	also	假如明天下雨，我们就不去。	如果 "if" works too, and is the everyday word. 假如 is more bookish.
+假如	要是	also	假如明天下雨，我们就不去。	要是 "if" works too; it is the casual one. 假如 is more bookish.
+再	还	wrong	你想再吃一个吗？	"Another one" of something more is 再 here: 你想再吃一个吗？ 还 would go before 想: 你还想吃一个吗？
+再	还	wrong	明天再来。	For doing something again in the future, especially in a request, use 再. 还 means "still" or "also".
+再	还	wrong	请再说一下。	For doing something again in the future, especially in a request, use 再. 还 means "still" or "also".
+刚	刚刚	also	他刚到家。	刚刚 works too; it is a slightly stronger "only just".
+刚	刚才	wrong	他刚到家。	刚才 means "a moment ago", a time word like 今天: 他刚才到家了. 刚 and 刚刚 go right before the verb.
+刚	刚刚	also	他刚起床。	刚刚 works too; it is a slightly stronger "only just".
+刚	刚才	wrong	他刚起床。	刚才 means "a moment ago", a time word like 今天: 他刚才到家了. 刚 and 刚刚 go right before the verb.
+刚	刚刚	also	我刚到学校。	刚刚 works too; it is a slightly stronger "only just".
+刚	刚才	wrong	我刚到学校。	刚才 means "a moment ago", a time word like 今天: 他刚才到家了. 刚 and 刚刚 go right before the verb.
+刚刚	刚	also	他刚刚离开。	刚 works too; 刚刚 is a slightly stronger "only just".
+刚刚	刚才	wrong	他刚刚离开。	刚才 means "a moment ago", a time word like 今天. 刚 and 刚刚 go right before the verb.
+刚刚	刚	also	会议刚刚结束。	刚 works too; 刚刚 is a slightly stronger "only just".
+刚刚	刚才	wrong	会议刚刚结束。	刚才 means "a moment ago", a time word like 今天. 刚 and 刚刚 go right before the verb.
+刚刚	刚	also	我刚刚吃完饭。	刚 works too; 刚刚 is a slightly stronger "only just".
+刚刚	刚才	wrong	我刚刚吃完饭。	刚才 means "a moment ago", a time word like 今天. 刚 and 刚刚 go right before the verb.
+刚才	刚刚	also	刚才有人找你。	刚刚 works too; it can also mean "just now".
+刚才	刚	wrong	刚才有人找你。	刚 "just" must go right before a verb. For "just now, a moment ago", use 刚才 or 刚刚.
+刚才	刚刚	also	你刚才去哪儿了？	刚刚 works too; it can also mean "just now".
+刚才	刚	wrong	你刚才去哪儿了？	刚 "just" must go right before a verb. For "just now, a moment ago", use 刚才 or 刚刚.
+刚才	刚刚	also	我刚才在打电话。	刚刚 works too; it can also mean "just now".
+刚才	刚	wrong	我刚才在打电话。	刚 "just" must go right before a verb. For "just now, a moment ago", use 刚才 or 刚刚.
+十分	很	also	今天十分冷。	很 works too; it is the plain, everyday "very". 十分 is stronger and a little formal.
+十分	非常	also	今天十分冷。	非常 "very, extremely" works too. 十分 is a little formal.
+十分	真	also	今天十分冷。	真 "really" works too. 十分 is a little formal.
+十分	挺	also	今天十分冷。	挺 "quite" works too; it is casual. 十分 is a little formal.
+十分	特别	also	今天十分冷。	特别 "especially, very" works too. 十分 is a little formal.
+十分	很	also	我十分喜欢这个地方。	很 works too; it is the plain, everyday "very". 十分 is stronger and a little formal.
+十分	非常	also	我十分喜欢这个地方。	非常 "very, extremely" works too. 十分 is a little formal.
+十分	真	also	我十分喜欢这个地方。	真 "really" works too. 十分 is a little formal.
+十分	特别	also	我十分喜欢这个地方。	特别 "especially, very" works too. 十分 is a little formal.
+十分	很	also	这件事十分重要。	很 works too; it is the plain, everyday "very". 十分 is stronger and a little formal.
+十分	非常	also	这件事十分重要。	非常 "very, extremely" works too. 十分 is a little formal.
+十分	特别	also	这件事十分重要。	特别 "especially, very" works too. 十分 is a little formal.
+又	再	wrong	他又来了。	又 is "again" for something that already happened: 他又来了. 再 is "again" in the future: 明天再来.
+又	还	wrong	他又来了。	还 means "still" or "also". For "again" about something that already happened, use 又.
+又	再	wrong	他又迟到了。	又 is "again" for something that already happened: 他又来了. 再 is "again" in the future: 明天再来.
+又	还	wrong	他又迟到了。	还 means "still" or "also". For "again" about something that already happened, use 又.
+只是	只	also	他只是想帮你。	只 "only" works too here.
+只是	只	also	我只是问问。	只 "only" works too here.
+只是	只	wrong	这只是一个小问题。	只 needs a verb after it: 这只是一个小问题. 只是 already contains 是.
+可以	能	also	你可以给我一杯水吗？	能 works too for asking or saying what is allowed; 可以 sounds a little more polite.
+可以	会	wrong	你可以给我一杯水吗？	会 would mean "will" here. To ask for or give permission, use 可以 or 能.
+可以	能	also	我可以坐这儿吗？	能 works too for asking or saying what is allowed; 可以 sounds a little more polite.
+可以	会	wrong	我可以坐这儿吗？	会 would mean "will" here. To ask for or give permission, use 可以 or 能.
+可以	能	also	我可以坐这里吗？	能 works too for asking or saying what is allowed; 可以 sounds a little more polite.
+可以	会	wrong	我可以坐这里吗？	会 would mean "will" here. To ask for or give permission, use 可以 or 能.
+可以	能	also	这里可以看书。	能 works too for asking or saying what is allowed; 可以 sounds a little more polite.
+可以	会	wrong	这里可以看书。	会 would mean "will" here. To ask for or give permission, use 可以 or 能.
+可是	但是	also	他很想去，可是没有钱。	但是 "but" works too.
+可是	但	also	他很想去，可是没有钱。	但 "but" works too.
+可是	但是	also	我想去，可是没有时间。	但是 "but" works too.
+可是	但	also	我想去，可是没有时间。	但 "but" works too.
+可是	但是	also	这件衣服很好看，可是太贵了。	但是 "but" works too.
+可是	但	also	这件衣服很好看，可是太贵了。	但 "but" works too.
+后来	以后	wrong	后来他去了中国。	以后 alone is mostly about the future. For "later" in a past story, use 后来.
+后来	以后	wrong	后来我们常常一起吃饭。	以后 alone is mostly about the future. For "later" in a past story, use 后来.
+后来	以后	wrong	我后来才知道这件事。	以后 alone is mostly about the future. For "later" in a past story, use 后来.
+向	对	wrong	他向我走来。	For moving in a direction (走, 看), use 向 or 往: 向左走. 对 is for speaking or acting toward a person: 对我说.
+向	对	wrong	到了路口，向左走。	For moving in a direction (走, 看), use 向 or 往: 向左走. 对 is for speaking or acting toward a person: 对我说.
+向	对	wrong	请向前走。	For moving in a direction (走, 看), use 向 or 往: 向左走. 对 is for speaking or acting toward a person: 对我说.
+商量	讨论	also	他们正在商量办法。	讨论 "discuss" works too. 商量 is "talk over and decide together".
+商量	讨论	also	有问题大家一起商量。	讨论 "discuss" works too. 商量 is "talk over and decide together".
+商量	讨论	also	这件事我们要商量一下。	讨论 "discuss" works too. 商量 is "talk over and decide together".
+喜欢	爱	also	她喜欢这个电影。	爱 works too but is stronger, "love". 爱 + verb (爱喝茶) is common for something you enjoy doing.
+喜欢	爱	also	我喜欢喝茶。	爱 works too but is stronger, "love". 爱 + verb (爱喝茶) is common for something you enjoy doing.
+因此	所以	also	今天下雨，因此比赛取消了。	所以 "so" works too, and is the everyday word. 因此 is more formal.
+因此	所以	also	他很努力，因此成绩很好。	所以 "so" works too, and is the everyday word. 因此 is more formal.
+因此	所以	also	他生病了，因此没来上课。	所以 "so" works too, and is the everyday word. 因此 is more formal.
+困难	难	wrong	他遇到了很多困难。	难 is mostly an adjective, "hard". As a noun, "difficulties" is 困难.
+困难	难	wrong	学汉语有什么困难？	难 is mostly an adjective, "hard". As a noun, "difficulties" is 困难.
+困难	难	also	我们不怕困难。	难 works too here: 不怕难, "not afraid of hard things".
+在	正在	wrong	书在桌子上。	Here 在 means "at, in" a place. 正在 is only for an action going on right now: 我正在吃饭.
+在	正在	wrong	他在学校学习。	Here 在 means "at, in" a place. 正在 is only for an action going on right now: 我正在吃饭.
+在	正在	wrong	我在家。	Here 在 means "at, in" a place. 正在 is only for an action going on right now: 我正在吃饭.
+外面	外边	also	外面下雨了。	外边 works too; 外面 and 外边 mean the same, "outside".
+外面	外边	also	外面很冷。	外边 works too; 外面 and 外边 mean the same, "outside".
+外面	外边	also	你在外面等我吧。	外边 works too; 外面 and 外边 mean the same, "outside".
+大概	可能	also	他大概不来了。	可能 "maybe" works too. 大概 also means "about" with numbers and times.
+大概	可能	also	他大概六点到家。	可能 "maybe" works too. 大概 also means "about" with numbers and times.
+大概	可能	also	现在大概八点。	可能 "maybe" works too. 大概 also means "about" with numbers and times.
+好看	漂亮	also	她穿这件衣服很好看。	漂亮 "pretty" works too, for how something looks.
+好看	漂亮	wrong	这个电影很好看。	漂亮 is only about looks. A film or book that is good to watch or read is 好看.
+好看	漂亮	also	这件衣服很好看。	漂亮 "pretty" works too, for how something looks.
+好看	漂亮	wrong	这本书很好看。	漂亮 is only about looks. A film or book that is good to watch or read is 好看.
+害怕	怕	also	别害怕，有我在。	怕 works too; it is the shorter, everyday "be afraid".
+害怕	怕	also	我害怕一个人坐电梯。	怕 works too; it is the shorter, everyday "be afraid".
+害怕	怕	also	晚上他一个人在家，有点儿害怕。	怕 works too; it is the shorter, everyday "be afraid".
+容易	简单	wrong	冬天孩子容易生病。	容易 + verb means "likely to": 容易生病. 简单 only means "simple".
+容易	简单	also	学汉字不容易。	简单 "simple" works too here.
+容易	简单	also	这个问题不容易。	简单 "simple" works too here.
+尤其	特别	also	他爱运动，尤其喜欢跑步。	特别 also means "especially": 特别是苹果.
+尤其	特别	also	我喜欢水果，尤其是苹果。	特别 also means "especially": 特别是苹果.
+尤其	特别	also	这里夏天很热，尤其是七月。	特别 also means "especially": 特别是苹果.
+屋子	房间	also	屋子里很热。	房间 "room" works too; 屋子 is the more casual, northern word.
+屋子	房间	also	他的屋子很干净。	房间 "room" works too; 屋子 is the more casual, northern word.
+屋子	房间	also	这间屋子很小。	房间 "room" works too; 屋子 is the more casual, northern word.
+已	已经	also	天已晚，我们回家吧。	已经 works too; it is the everyday form, and 已 the short written one.
+已	已经	also	我已知道这件事。	已经 works too; it is the everyday form, and 已 the short written one.
+已	已经	also	比赛已结束。	已经 works too; it is the everyday form, and 已 the short written one.
+帮助	帮	also	我们要帮助别人。	帮 works too; it is the shorter, everyday verb.
+帮助	帮	also	老师常常帮助我学习汉语。	帮 works too; it is the shorter, everyday verb.
+帮助	帮	wrong	谢谢你的帮助。	帮 is only a verb. "Your help" as a noun is 帮助 or 帮忙: 谢谢你的帮助.
+常	常常	also	她常给我打电话。	常常 "often" works too.
+常	经常	also	她常给我打电话。	经常 "often" works too.
+常	常常	also	我常去那家饭馆。	常常 "often" works too.
+常	经常	also	我常去那家饭馆。	经常 "often" works too.
+常	常常	also	我们常在这里见面。	常常 "often" works too.
+常	经常	also	我们常在这里见面。	经常 "often" works too.
+常常	常	also	他常常不吃早饭。	常 "often" works too; it is a shorter 常常.
+常常	经常	also	他常常不吃早饭。	经常 "often" works too.
+常常	常	also	他常常迟到。	常 "often" works too; it is a shorter 常常.
+常常	经常	also	他常常迟到。	经常 "often" works too.
+常常	常	also	我们常常一起吃饭。	常 "often" works too; it is a shorter 常常.
+常常	经常	also	我们常常一起吃饭。	经常 "often" works too.
+开心	高兴	also	今天见到你，我很开心。	高兴 "glad, happy" works too.
+开心	快乐	also	今天见到你，我很开心。	快乐 "happy" works too; it is often used in wishes: 生日快乐.
+开心	高兴	also	你今天开心吗？	高兴 "glad, happy" works too.
+开心	快乐	also	你今天开心吗？	快乐 "happy" works too; it is often used in wishes: 生日快乐.
+开心	高兴	also	孩子们玩得很开心。	高兴 "glad, happy" works too.
+开心	快乐	also	孩子们玩得很开心。	快乐 "happy" works too; it is often used in wishes: 生日快乐.
+很	非常	also	今天很热。	非常 works too; it is stronger than 很: "extremely".
+很	真	also	今天很热。	真 "really" works too, and sounds more excited.
+很	非常	also	她很漂亮。	非常 works too; it is stronger than 很: "extremely".
+很	真	also	她很漂亮。	真 "really" works too, and sounds more excited.
+很	非常	also	这个菜很好吃。	非常 works too; it is stronger than 很: "extremely".
+很	真	also	这个菜很好吃。	真 "really" works too, and sounds more excited.
+快乐	高兴	also	他每天都很快乐。	高兴 "glad, happy" works too.
+快乐	高兴	wrong	新年快乐！	Wishes use 快乐: 生日快乐, 新年快乐. 高兴 describes how someone feels.
+快乐	高兴	wrong	生日快乐！	Wishes use 快乐: 生日快乐, 新年快乐. 高兴 describes how someone feels.
+忽然	突然	also	他忽然记起了一件事。	突然 "suddenly" works too, and is the more common word.
+忽然	突然	also	天忽然下起雨来。	突然 "suddenly" works too, and is the more common word.
+忽然	突然	also	房间里忽然安静了。	突然 "suddenly" works too, and is the more common word.
+怎样	怎么	wrong	你的周末过得怎样？	At the end of a question ("how is it?"), use 怎么样 or 怎样. 怎么 goes before a verb: 怎么写.
+怎样	怎么	wrong	你觉得这个怎样？	At the end of a question ("how is it?"), use 怎么样 or 怎样. 怎么 goes before a verb: 怎么写.
+怎样	怎么	also	这个字怎样写？	怎么 works too before a verb: 怎么写.
+怕	害怕	also	我怕他生气。	害怕 "be afraid" works too.
+想	要	also	你想喝什么？	要 works too and sounds firmer: "want, am going to". 想 is softer: "would like".
+想	要	also	我想去中国。	要 works too and sounds firmer: "want, am going to". 想 is softer: "would like".
+想	要	also	我想去学校。	要 works too and sounds firmer: "want, am going to". 想 is softer: "would like".
+想	要	wrong	我想家。	Here 想 means "miss": 我想家. 要 cannot mean "miss".
+愉快	高兴	wrong	今天的旅行很愉快。	高兴 describes a person's feeling. For a trip or a time that is pleasant, use 愉快.
+愉快	高兴	also	和你聊天很愉快。	高兴 "glad" works too.
+愉快	开心	also	和你聊天很愉快。	开心 "happy" works too.
+愉快	快乐	also	祝你周末愉快。	快乐 works too, as a wish: 周末快乐.
+愉快	开心	also	祝你周末愉快。	开心 "happy" works too.
+愉快	高兴	wrong	祝你周末愉快。	祝你周末快乐 or 祝你周末愉快 are the set wishes. 高兴 describes how someone feels, not a weekend.
+时常	常	also	他时常给我打电话。	常 "often" works too.
+时常	常常	also	他时常给我打电话。	常常 "often" works too, and is the everyday word.
+时常	经常	also	他时常给我打电话。	经常 "often" works too, and is the everyday word.
+时常	常	also	她时常想起小时候的事。	常 "often" works too.
+时常	常常	also	她时常想起小时候的事。	常常 "often" works too, and is the everyday word.
+时常	经常	also	她时常想起小时候的事。	经常 "often" works too, and is the everyday word.
+时常	常	also	这里时常下雨。	常 "often" works too.
+时常	常常	also	这里时常下雨。	常常 "often" works too, and is the everyday word.
+时常	经常	also	这里时常下雨。	经常 "often" works too, and is the everyday word.
+明白	懂	also	你明白了吗？	懂 "understand" works too.
+明白	懂	also	我明白你的意思。	懂 "understand" works too.
+明白	清楚	also	我明白你的意思。	清楚 "be clear about" works too.
+明白	懂	also	我不明白这个字的意思。	懂 "understand" works too.
+明白	清楚	also	我不明白这个字的意思。	清楚 "be clear about" works too.
+最终	最后	also	最终他成功了。	最后 "in the end, last" works too, and is the everyday word.
+最终	最后	also	最终的结果是什么？	最后 "in the end, last" works too, and is the everyday word.
+最终	最后	also	经过努力，最终我们赢了。	最后 "in the end, last" works too, and is the everyday word.
+有些	有点儿	wrong	有些人不想去。	有点儿 is "a bit" before an adjective (有点儿冷). For "some" people or things, use 有些 or 一些.
+有些	有点儿	wrong	有些学生不喜欢学习。	有点儿 is "a bit" before an adjective (有点儿冷). For "some" people or things, use 有些 or 一些.
+有些	有点儿	wrong	有些学生不喜欢读书。	有点儿 is "a bit" before an adjective (有点儿冷). For "some" people or things, use 有些 or 一些.
+有些	有点儿	wrong	有些菜很好吃。	有点儿 is "a bit" before an adjective (有点儿冷). For "some" people or things, use 有些 or 一些.
+有点儿	有些	also	今天有点儿冷。	有些 + adjective also means "a bit, somewhat"; 有点儿 is the everyday one.
+有点儿	有些	also	今天有点儿热。	有些 + adjective also means "a bit, somewhat"; 有点儿 is the everyday one.
+有点儿	有些	also	我今天有点儿忙。	有些 + adjective also means "a bit, somewhat"; 有点儿 is the everyday one.
+有点儿	有些	also	这个菜有点儿热。	有些 + adjective also means "a bit, somewhat"; 有点儿 is the everyday one.
+正在	在	also	他正在看电视。	在 + verb also means "is doing"; 正在 stresses "right now".
+正在	在	also	她们正在上课。	在 + verb also means "is doing"; 正在 stresses "right now".
+正在	在	also	我正在吃饭。	在 + verb also means "is doing"; 正在 stresses "right now".
+比较	挺	also	今天比较冷。	挺 "quite" works too; 比较 is "rather, comparatively".
+比较	挺	also	我比较喜欢这个。	挺 "quite" works too; 比较 is "rather, comparatively".
+比较	挺	also	这个问题比较难。	挺 "quite" works too; 比较 is "rather, comparatively".
+清楚	明白	also	他说得很清楚。	明白 works too: "clear, easy to understand".
+清楚	懂	wrong	他说得很清楚。	懂 is "understand" and cannot describe how someone speaks. 说得很清楚 means "speaks clearly".
+清楚	明白	also	请你再说一遍，我没听清楚。	明白 works too: "clear, easy to understand".
+清楚	懂	also	请你再说一遍，我没听清楚。	懂 works too: 没听懂, "did not understand what I heard".
+漂亮	好看	also	你的家很漂亮。	好看 "good-looking" works too.
+漂亮	好看	also	她很漂亮。	好看 "good-looking" works too.
+漂亮	好看	also	这件衣服很漂亮。	好看 "good-looking" works too.
+爱	喜欢	wrong	她爱她的孩子。	For people you love (family, a partner), use 爱. 喜欢 is only "like".
+爱	喜欢	also	我爱吃面条儿。	喜欢 "like" works too; 爱 is stronger.
+爱	喜欢	wrong	我爱我的家人。	For people you love (family, a partner), use 爱. 喜欢 is only "like".
+特别	非常	also	今天特别冷。	非常 "very, extremely" works too; 特别 is "especially, unusually".
+特别	非常	also	她唱得特别好。	非常 "very, extremely" works too; 特别 is "especially, unusually".
+特别	非常	also	我特别喜欢这个。	非常 "very, extremely" works too; 特别 is "especially, unusually".
+由于	因为	also	由于下雨，比赛取消了。	因为 "because" works too, and is the everyday word. 由于 is more formal.
+由于	因为	also	由于时间不够，我们先到这里。	因为 "because" works too, and is the everyday word. 由于 is more formal.
+由于	因为	also	由于身体不好，他没有来。	因为 "because" works too, and is the everyday word. 由于 is more formal.
+相当	很	also	他的汉语相当好。	很 "very" works too.
+相当	挺	also	他的汉语相当好。	挺 "quite" works too; it is the casual word.
+相当	很	also	这个问题相当难。	很 "very" works too.
+相当	挺	also	这个问题相当难。	挺 "quite" works too; it is the casual word.
+相当	很	also	这家饭馆相当有名。	很 "very" works too.
+相当	挺	also	这家饭馆相当有名。	挺 "quite" works too; it is the casual word.
+真	很	also	今天真冷。	很 "very" works too; 真 sounds more excited.
+真	非常	also	今天真冷。	非常 "very, extremely" works too.
+真	很	also	你真漂亮。	很 "very" works too; 真 sounds more excited.
+真	非常	also	你真漂亮。	非常 "very, extremely" works too.
+真	很	also	你的衣服真漂亮！	很 "very" works too; 真 sounds more excited.
+真	非常	also	你的衣服真漂亮！	非常 "very, extremely" works too.
+真	很	also	这个真好吃。	很 "very" works too; 真 sounds more excited.
+真	非常	also	这个真好吃。	非常 "very, extremely" works too.
+知道	认识	wrong	你知道他在哪里吗？	认识 is "know" a person, or recognise a character. For knowing a fact or information, use 知道.
+知道	认识	wrong	我知道他的名字。	认识 is "know" a person, or recognise a character. For knowing a fact or information, use 知道.
+知道	认识	wrong	我不知道。	认识 is "know" a person, or recognise a character. For knowing a fact or information, use 知道.
+立刻	马上	also	他立刻明白了。	马上 "right away" works too, and is the everyday word.
+立刻	立即	also	他立刻明白了。	立即 "immediately" works too.
+立刻	马上	also	我立刻就来。	马上 "right away" works too, and is the everyday word.
+立刻	立即	also	我立刻就来。	立即 "immediately" works too.
+立刻	马上	also	老师来了，大家立刻安静了。	马上 "right away" works too, and is the everyday word.
+立刻	立即	also	老师来了，大家立刻安静了。	立即 "immediately" works too.
+立即	马上	also	听到消息，他立即给家里打了电话。	马上 "right away" works too, and is the everyday word.
+立即	立刻	also	听到消息，他立即给家里打了电话。	立刻 "immediately" works too.
+立即	马上	also	请立即回来。	马上 "right away" works too, and is the everyday word.
+立即	立刻	also	请立即回来。	立刻 "immediately" works too.
+立即	马上	also	请大家立即离开。	马上 "right away" works too, and is the everyday word.
+立即	立刻	also	请大家立即离开。	立刻 "immediately" works too.
+简单	容易	also	这个字很简单。	容易 "easy" works too; 简单 is "simple".
+简单	容易	also	这个问题一点儿都不简单。	容易 "easy" works too; 简单 is "simple".
+简单	容易	also	这个问题很简单。	容易 "easy" works too; 简单 is "simple".
+美	漂亮	also	春天的公园很美。	漂亮 "pretty" works too.
+美	好看	also	春天的公园很美。	好看 "good-looking" works too.
+美	美丽	also	春天的公园很美。	美丽 "beautiful" works too.
+美	漂亮	also	这里的花真美。	漂亮 "pretty" works too.
+美	好看	also	这里的花真美。	好看 "good-looking" works too.
+美	美丽	also	这里的花真美。	美丽 "beautiful" works too.
+美丽	漂亮	also	美丽的花开了。	漂亮 "pretty" works too.
+美丽	好看	also	美丽的花开了。	好看 "good-looking" works too.
+美丽	漂亮	also	她笑起来很美丽。	漂亮 "pretty" works too.
+美丽	好看	also	她笑起来很美丽。	好看 "good-looking" works too.
+美丽	美	also	她笑起来很美丽。	美 "beautiful" works too.
+美丽	漂亮	also	这座城市很美丽。	漂亮 "pretty" works too.
+美丽	美	also	这座城市很美丽。	美 "beautiful" works too.
+肯定	一定	also	他肯定不知道这件事。	一定 "surely" works too here.
+肯定	一定	wrong	你能肯定吗？	一定 is only an adverb, "surely". As a verb, "be sure", use 肯定: 我肯定他会来.
+肯定	一定	wrong	我肯定他会来。	一定 is only an adverb, "surely". As a verb, "be sure", use 肯定: 我肯定他会来.
+能	可以	also	他能看见我吗？	可以 works too; it sounds a little more polite.
+能	会	wrong	他能看见我吗？	会看见 would mean "will see". For "can (is able to) see", use 能 or 可以.
+能	可以	also	你能来吗？	可以 works too; it sounds a little more polite.
+能	会	wrong	你能来吗？	会 would mean "will" here: 你会来吗？ is "Will you come?". For "can, able to", use 能 or 可以.
+能	可以	also	你明天能来吗？	可以 works too; it sounds a little more polite.
+能	会	wrong	你明天能来吗？	会 would mean "will" here: 你会来吗？ is "Will you come?". For "can, able to", use 能 or 可以.
+能	会	wrong	我今天不能去。	不会去 would mean "will not go". For "cannot go", use 不能.
+要	想	wrong	你要什么？	你想什么？ means "What are you thinking about?". For "What do you want?", use 要.
+要	想	wrong	我要一个包子。	想 needs a verb after it when it means "would like": 我想喝一杯茶. With just a thing (我要一杯茶), use 要.
+要	想	wrong	我要一杯茶。	想 needs a verb after it when it means "would like": 我想喝一杯茶. With just a thing (我要一杯茶), use 要.
+要	想	wrong	我明天要上班。	Here 要 means "have to". 想 is only "want to", so it changes the meaning.
+要是	如果	also	要是下雨，我们就不去了。	如果 "if" works too, and is the everyday word. 要是 is casual.
+要是	如果	also	要是你不去，我也不去。	如果 "if" works too, and is the everyday word. 要是 is casual.
+要是	如果	also	要是你有时间，就来看我吧。	如果 "if" works too, and is the everyday word. 要是 is casual.
+认为	觉得	also	你认为呢？	觉得 "think, feel" works too, and is the everyday word.
+认为	觉得	also	我认为他是对的。	觉得 "think, feel" works too, and is the everyday word.
+认为	觉得	also	我认为这个办法很好。	觉得 "think, feel" works too, and is the everyday word.
+认识	知道	wrong	你认识他吗？	知道 is "know" a fact. For knowing a person or recognising a character, use 认识. 我知道他 means "I have heard of him".
+认识	知道	wrong	你认识这个字吗？	知道 is "know" a fact. For knowing a person or recognising a character, use 认识. 我知道他 means "I have heard of him".
+认识	知道	wrong	很高兴认识你。	知道 is "know" a fact. For knowing a person or recognising a character, use 认识. 我知道他 means "I have heard of him".
+认识	知道	wrong	我认识他。	知道 is "know" a fact. For knowing a person or recognising a character, use 认识. 我知道他 means "I have heard of him".
+讨论	商量	also	他们讨论了两个小时。	商量 "talk over" works too.
+讨论	商量	also	大家在讨论明天的计划。	商量 "talk over" works too.
+讨论	商量	also	我们讨论一下这个问题。	商量 "talk over" works too.
+让	叫	also	妈妈让我睡觉。	叫 "tell (someone to)" works too.
+让	叫	also	老师让我们读书。	叫 "tell (someone to)" works too.
+让	叫	wrong	请让我看一下。	To ask to be allowed ("let me"), use 让: 请让我看一下. 叫 is "tell someone to".
+还	再	wrong	他还在学校。	再 is "again" for a future action. For "still" or "else, more", use 还.
+还	再	wrong	你还想吃什么？	再 is "again" for a future action. For "still" or "else, more", use 还.
+还	再	wrong	我还有一个问题。	再 is "again" for a future action. For "still" or "else, more", use 还.
+通知	告诉	wrong	我收到了一个通知。	告诉 is only a verb. "A notice" (a noun) is 通知.
+通知	告诉	also	老师通知我们明天考试。	告诉 "tell" works too; 通知 is "notify" (more formal).
+通知	告诉	also	请通知大家开会。	告诉 "tell" works too; 通知 is "notify" (more formal).
+遍	次	also	请你再读一遍。	次 "time(s)" works too. 遍 stresses doing the whole thing from start to finish.
+遍	次	also	请再说一遍。	次 "time(s)" works too. 遍 stresses doing the whole thing from start to finish.
+遍	次	also	这个字我写了三遍。	次 "time(s)" works too. 遍 stresses doing the whole thing from start to finish.
+非常	很	also	她非常喜欢茶。	很 "very" works too; 非常 is stronger.
+非常	真	also	她非常喜欢茶。	真 "really" works too.
+非常	很	also	我非常高兴。	很 "very" works too; 非常 is stronger.
+非常	真	also	我非常高兴。	真 "really" works too.
+非常	很	also	这个电影非常好看。	很 "very" works too; 非常 is stronger.
+非常	真	also	这个电影非常好看。	真 "really" works too.

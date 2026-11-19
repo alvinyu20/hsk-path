@@ -83,12 +83,28 @@ def main():
                 sys.exit('%s line %d: the sentence %r does not contain the word %r' % (os.path.basename(path), n, p[1], p[0]))
             extras.setdefault(p[0], []).append(p)
 
+    # Fill it: other words a learner may type in a sentence's gap (content/cloze-alts.tsv, shared by all levels; checked by tools/check-cloze-alts.py)
+    cloze = {}
+    cpath = os.path.join(C, 'cloze-alts.tsv')
+    if os.path.exists(cpath):
+        for n, p in read_tsv(cpath):
+            if p[0].startswith('#'):
+                continue
+            if len(p) != 5 or any(not x.strip() for x in p) or p[2] not in ('also', 'wrong'):
+                sys.exit('cloze-alts.tsv line %d: expected answer, other word, also/wrong, sentence, note, got %r' % (n, p))
+            cloze.setdefault((p[0], p[3]), []).append(p)
+
     eng = Engine(levelcfg.known())
+    def with_cl(word, d):   # {w, py, v, n}: the other word, its pinyin, also/wrong, the teaching note
+        rows = cloze.get((word, d['zh']))
+        if rows:
+            d['cl'] = [dict(w=o, py=eng.word_py(o), v=v, n=note) for _, o, v, _, note in rows]
+        return d
     lines = []
     for w in words:
         w['py'] = eng.word_py(w['zh'])
         py, toks = eng.sentence(w['ex_zh'])
-        ex = dict(zh=w['ex_zh'], py=py, en=w['ex_en'], toks=toks)
+        ex = with_cl(w['zh'], dict(zh=w['ex_zh'], py=py, en=w['ex_en'], toks=toks))
         entry = dict(zh=w['zh'], py=w['py'], pos=w['pos'], en=w['en'], ex=ex)
         more = []
         seen = {w['ex_zh']}
@@ -97,7 +113,7 @@ def main():
                 continue
             seen.add(zh)
             py2, toks2 = eng.sentence(zh)
-            more.append(dict(zh=zh, py=py2, en=en, toks=toks2))
+            more.append(with_cl(w['zh'], dict(zh=zh, py=py2, en=en, toks=toks2)))
         if more:
             entry['more'] = more
         if w['note']:

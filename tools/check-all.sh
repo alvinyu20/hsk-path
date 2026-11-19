@@ -120,6 +120,8 @@ python3 -W ignore tools/check-content.py /tmp/shanlu-sentences-l5-plain.json --l
 echo "== 3f. spot the extra word: no question may have a second right answer that is not listed (also)"
 python3 -W ignore tools/check-spot-alternatives.py | grep -v "^Building\|^Dumping\|^Loading\|^Prefix"
 [ ${PIPESTATUS[0]} -eq 0 ] || { echo "spot check failed"; exit 1; }
+echo "== 3g. Fill it: the other words listed for a gap (content/cloze-alts.tsv) match real sentences and known words"
+python3 tools/check-cloze-alts.py
 echo "== 4. regenerate the teacher review packet and the list of everything that changes in plain style"
 node tools/make-review-packet.js
 node tools/erhua-diff.js > review/HSK1-plain-forms.md
