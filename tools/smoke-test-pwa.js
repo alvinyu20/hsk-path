@@ -176,7 +176,7 @@ function copySite() {
   await pp.evaluate(() => { const a = window.shanlu; a.setState({ xp: 5 }); });
   await pp.waitForFunction(() => window.__persistCalls === 1);
   await pp.waitForFunction(() => window.shanlu.state.storagePersisted === true);
-  await pp.evaluate(() => window.shanlu.go('voice'));
+  await pp.evaluate(() => { window.shanlu.go('voice'); window.shanlu.setSec('data'); });
   check((await pp.locator('main').innerText()).includes('Protected: the browser has agreed'), 'once there is progress, protected storage is requested and Settings shows the answer');
   check((await pp.locator('main').innerText()).includes('Version ' + newVersion), 'Settings shows the version number');
   await pctx.close();
@@ -234,8 +234,8 @@ function copySite() {
   });
   const tp = await tctx.newPage();
   await tp.goto(site); await tp.waitForSelector('.app');
-  await tp.evaluate(() => window.shanlu.go('voice'));
-  const card = (h) => tp.locator('section.card', { has: tp.locator('h2', { hasText: h }) });
+  await tp.evaluate(() => { window.shanlu.go('voice'); window.shanlu.setSec('sync'); });
+  const card = (h) => tp.locator('.st-item', { has: tp.locator('.st-row', { hasText: h }) });   // Settings rows: one open at a time
   const syncBtn = card('Sync across devices').locator('button', { hasText: 'Test connection' });
   await syncBtn.click();
   await tp.waitForSelector('text=GitHub accepts the token.');
@@ -247,16 +247,17 @@ function copySite() {
   net.gh.status = 200; net.gh.headers['x-oauth-scopes'] = 'repo'; await syncBtn.click();
   await tp.waitForSelector('text=does not have the gist permission');
   check(true, 'GitHub test: a token without the gist permission says so');
-  const aiBtn = card('AI conversation').locator('button', { hasText: 'Test connection' });
+  await tp.evaluate(() => window.shanlu.setSec('ai'));
+  const aiBtn = card('Talk with Mingming').locator('button', { hasText: 'Test connection' });
   await aiBtn.click();
   await tp.waitForSelector('text=Chat model (claude-haiku-5-5): working.');
-  check((await card('AI conversation').innerText()).includes('The key is accepted by Anthropic.'), 'Claude test: a good key is accepted and the chat model answers');
+  check((await card('Talk with Mingming').innerText()).includes('The key is accepted by Anthropic.'), 'Claude test: a good key is accepted and the chat model answers');
   net.messages = 402; await aiBtn.click();
   await tp.waitForSelector('text=has no credit yet');
   check(true, 'Claude test: a key without credit is explained');
   net.models = 401; await aiBtn.click();
   await tp.waitForSelector('text=Anthropic rejected the key');
-  check(!(await card('AI conversation').innerText()).includes('Chat model ('), 'Claude test: a rejected key stops after the key check (no message is sent)');
+  check(!(await card('Talk with Mingming').innerText()).includes('Chat model ('), 'Claude test: a rejected key stops after the key check (no message is sent)');
   await tp.evaluate(() => window.shanlu.go('friends'));
   await tp.waitForSelector('button:has-text("Test connection")');
   await tp.locator('button', { hasText: 'Test connection' }).click();

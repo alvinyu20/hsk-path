@@ -370,7 +370,7 @@ const startState = (o) => { try { if (!localStorage.getItem('shanlu-passed')) lo
   });
   await nav('Speak');
   await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
-  await page.locator('button', { hasText: 'Open Settings' }).click();
+  await page.locator('button', { hasText: 'Set up Mingming in Settings' }).click();
   await page.fill('input[aria-label="Anthropic API key"]', 'sk-ant-test');
   await page.locator('button', { hasText: 'Save key' }).click();
   await nav('Speak');
@@ -388,6 +388,7 @@ const startState = (o) => { try { if (!localStorage.getItem('shanlu-passed')) lo
 
   // ---- settings: level card, export names the level
   await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.evaluate(() => window.shanlu.setSec('level'));   // open the Level row
   check((await text()).includes('You are studying HSK 5'), 'Settings has a Level card that says HSK 5');
   const dl = page.waitForEvent('download');
   await page.locator('button', { hasText: 'Export progress' }).first().click();

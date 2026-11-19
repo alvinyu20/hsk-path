@@ -2824,6 +2824,12 @@
     };
 
     goVoice = () => this.go('voice');
+    // Settings opens one row at a time; a row that opens is scrolled to the top if the rows above it moved
+    setSec = (id) => {
+      this.setState({ stOpen:id || '' });
+      if (id) requestAnimationFrame(() => { try { const el = document.querySelector('.st-item.open'); if (el && el.getBoundingClientRect().top < 60 && el.scrollIntoView) el.scrollIntoView({ block:'start' }); } catch (e) {} });
+    };
+    goSet = (id) => { this.go('voice'); this.setSec(id); setTimeout(() => { try { const el = document.querySelector('.st-item.open'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'start' }); } catch (e) {} }, 60); };
 
     // ----- sync across devices (a private GitHub gist; see sync.js) -----
     syncTimer = null;
@@ -4789,7 +4795,7 @@
       const sg = lastM && lastM.who === 'ai' && lastM.sug && !S.aiBusy ? lastM.sug : null;
       return {
         retOpts:[[0.9, '90% (recommended)'], [0.85, '85%'], [0.8, '80%']].map(o => ({ label:o[1], cls:Math.abs(retention() - o[0]) < 0.001 ? 'on' : '', fn:() => this.setRetention(o[0]) })),
-        tonesLabel:tonesOptional() ? 'Optional (beginner)' : 'Required', tonesCls:tonesOptional() ? '' : 'on', toggleTones:this.toggleTones,
+        tonesLabel:tonesOptional() ? 'Optional (beginner)' : 'Required', stRevSum:'Recall target ' + Math.round(retention() * 100) + '% · tones ' + (tonesOptional() ? 'optional' : 'required'), tonesCls:tonesOptional() ? '' : 'on', toggleTones:this.toggleTones,
         personSyncOn:!!(FR && FR.enabled() && FR.identity()), personSyncOff:!(FR && FR.enabled() && FR.identity()),
         keySyncCls:S.syncKeys ? 'on' : '', keySyncLabel:S.syncKeys ? 'On: my keys follow me' : 'Off: keys stay on each device', keySyncToggle:this.keySyncToggle,
         ...(() => {
@@ -4823,7 +4829,7 @@
         aiModelOpts:AI_MODELS.map(m => ({ label:m[1], cls:S.aiModel === m[0] ? 'on' : '', fn:() => this.aiSetModel(m[0]) })), aiNote:S.aiNote, hasAiNote:!!S.aiNote,
         provAnthropic:S.aiTab !== 'alibaba', provAlibaba:S.aiTab === 'alibaba',
         provOpts:[['anthropic', 'Claude (Anthropic)'], ['alibaba', 'Qwen (Alibaba)']].map(o => ({ label:o[1] + (S.aiProvider === o[0] && S.aiOn ? ' · in use' : ''), cls:S.aiTab === o[0] ? 'on' : '', fn:() => this.viewProvider(o[0]) })),
-        hasRelay:relayShown().show, relayText:relayShown().text,
+        hasRelay:relayShown().show, relayText:relayShown().text, stAiSum:S.aiOn ? (relayOn() && !aliOwn() && !AICFG.key ? 'On: your study group\'s shared AI' : 'On: ' + (S.aiProvider === 'alibaba' ? 'Qwen (Alibaba)' : 'Claude (Anthropic)')) : 'Not set up: needs an API key',
         aliSet:S.aliOn, aliUnset:!S.aliOn, aliKeyInput:S.aliKeyInput, onAliKeyInput:(e) => this.setState({ aliKeyInput:e.target.value }),
         aliWsInput:S.aliWsInput, onAliWsInput:(e) => this.setState({ aliWsInput:e.target.value }), aliModelInput:S.aliModelInput, onAliModelInput:(e) => this.setState({ aliModelInput:e.target.value }),
         aliModelOpts:ALI_MODELS.map(m => ({ label:m[1], cls:S.aliModelInput === m[0] ? 'on' : '', fn:() => this.aliPreset(m[0]) })),
@@ -4925,6 +4931,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       else intro = 'Your browser lists ' + all.length + ' voices, ' + ranked.length + ' of them Mandarin. Unless you pick one, the site uses the best-sounding Mandarin voice it can find.';
       const speedOpts = [['Slow', 0.75], ['Relaxed', 0.9], ['Normal', 1], ['Quick', 1.15]].map(o => ({ label:o[0], cls:(S.speed || 1) === o[1] ? 'on' : '', fn:() => { this.setState({ speed:o[1] }); this.say(VOICE_SAMPLE, 'v:speed', o[1]); } }));
       return {
+        stVoiSum:([['Slow', 0.75], ['Relaxed', 0.9], ['Normal', 1], ['Quick', 1.15]].find(o => o[1] === (S.speed || 1)) || ['Normal'])[0] + ' speed · device voice: ' + (chosen ? chosen.name : 'none found'),
         speedOpts, speedNote:'Audio on this site plays at the voice\'s normal pace. Pick Slow or Relaxed if you want it slower. The Listening lab has its own speed buttons.',
         voiceIntro:intro, voiceRows:rows, hasVoices:rows.length > 0,
         autoCls:manual ? '' : 'on', autoLabel:manual ? 'Use automatic' : 'In use',
@@ -5099,7 +5106,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         journey:['Journey', 'Spend the coins you earn on trips through the Chinese-speaking world.'],
         friends:['Friends', FR && FR.identity() && FR.identity().group ? FR.identity().group + '. Only your study totals are shared.' : 'Study together. Only your study totals are shared.'],
         listen:['Listening lab', HAS_LISTEN ? 'Train your ear for how people really talk, not just how lessons sound.' : 'Not built yet for ' + LVN + '.'],
-        voice:['Settings', LV <= 1 ? 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud, and how 儿 endings are shown.' : 'Sync your progress between devices, choose the level and the voice that reads Chinese aloud.'],
+        voice:['Settings', 'How you study, how Chinese sounds, and where your progress is kept. Tap a row to change it.'],
         quiz:S.qmode === 'greview' ? ['Grammar review', 'Points you are weakest on come first. Write your own sentence when it asks: that is how a point becomes mastered.'] : S.qmode === 'grammar' ? ['Grammar practice', LESSONS[S.glesson].title] : [LVN + ' test', 'Take your time. Wrong answers show you why.']
       };
       const tt = titles[S.screen];
@@ -5805,6 +5812,12 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         lvMsgGo:() => { const tgt = S.lvMsg === 99 ? 1 : S.lvMsg - 1; this.setState({ lvMsg:0 }); if (LV === tgt) this.go('exam'); else { try { localStorage.setItem('shanlu-level', String(tgt)); } catch (e) {} prefSet('level', tgt); window.location.reload(); } },
         lvMsgClose:() => this.setState({ lvMsg:0 }), lvMsgGoText:LV === (S.lvMsg === 99 ? 1 : S.lvMsg - 1) ? 'Go to the HSK ' + LV + ' exam' : 'Open HSK ' + (S.lvMsg === 99 ? 1 : S.lvMsg - 1),
         lvNote:'You are studying ' + LVN + '. Each level keeps its own progress on this device and its own copy when you sync. ' + (LVL.softLock() ? 'The lock is set to open: every level can be studied, and passing an exam only earns that level\'s seal.' : 'A level opens when you pass the exam of the level before it: at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading. You can sit each section on its own and retake it; your best result for each section counts. If you already know a level, check your level below to start higher (the check opens levels but earns no seal), or take the level exam. A lock on a button means it is not open yet.'),
+        ...(() => { const sec = S.stOpen || ''; const o = {}; [['Rev', 'reviews'], ['Lvl', 'level'], ['Snd', 'sounds'], ['Erh', 'erhua'], ['Voi', 'voice'], ['Ai', 'ai'], ['Syn', 'sync'], ['Dat', 'data']].forEach(([c, id]) => { o['st' + c + 'Open'] = sec === id; o['st' + c + 'Cls'] = sec === id ? 'open' : ''; o['st' + c + 'Tog'] = () => this.setSec(sec === id ? '' : id); }); return o; })(),   // Settings: one row open at a time
+        stLvlSum:LVN + ' · ' + (LVL.softLock() ? 'all levels open' : 'the next level opens with its exam'),
+        stSndSum:prefGet('sound', true) !== false ? 'On' : 'Off',
+        stErhSum:ERHUA_ON ? 'On: 这儿, 一点儿 (Beijing style)' : 'Off: plain forms such as 这里, 一点',
+        stSynSum:S.syncOn ? 'On: your progress follows you through a GitHub gist' : 'Off: your progress is in this browser only',
+        stDatSum:(S.storagePersisted === true ? 'Protected on this device. ' : '') + 'Download or import a backup',
         lockOpts:[[false, 'Locked until the exam is passed'], [true, 'All levels open']].map(o => ({ label:o[1], cls:LVL.softLock() === o[0] ? 'on' : '', fn:() => this.setLock(o[0]) })),
         isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isGrv:S.screen === 'greview', isGtrack:S.screen === 'gtrack', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
 
@@ -5896,7 +5909,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         again:() => (S.qmode === 'greview' ? this.startGrammarReview(true) : this.startQuiz(S.qmode)),
 
         // footer
-        exportData:this.exportData, importData:this.importData, resetAll:this.resetAll, goVoice:this.goVoice, goAbout:this.goAbout,
+        exportData:this.exportData, importData:this.importData, resetAll:this.resetAll, goVoice:this.goVoice, goAbout:this.goAbout, goSetAi:() => this.goSet('ai'), goSetSync:() => this.goSet('sync'), goSetVoice:() => this.goSet('voice'),
         ...this.voiceVals(),
         ...this.examVals(),
         ...this.aiVals(),

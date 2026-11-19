@@ -44,7 +44,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   // ---- from Settings: pass HSK 1 and 2, get placed at HSK 3 ----
   {
     const { ctx, page, errors } = await open();
-    await page.evaluate(() => window.shanlu.go('voice')); await page.waitForTimeout(300);
+    await page.evaluate(() => { window.shanlu.go('voice'); window.shanlu.setSec('level'); }); await page.waitForTimeout(300);
     await page.locator('button', { hasText: 'Check my level' }).first().click();
     check(await dlg(page).count() === 1 && /Test out of a level/.test(await dlg(page).innerText()), 'Settings opens the level check');
     const claims = await dlg(page).locator('.obm-opt').allInnerTexts();

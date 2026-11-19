@@ -393,12 +393,12 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     await key2(' '); await key2('3'); await key2(' '); await key2('1');
     const log1 = await page.evaluate(() => window.__sfxLog.join(','));
     check(log1 === 'ok,bad', 'a right answer plays the ding and a missed one the soft tone (' + log1 + ')');
-    await page.evaluate(() => { window.shanlu.go('voice'); }); await page.waitForTimeout(150);
+    await page.evaluate(() => { window.shanlu.go('voice'); window.shanlu.setSec('sounds'); }); await page.waitForTimeout(150);
     await page.locator('button', { hasText: /^Sounds are on/ }).click(); await page.waitForTimeout(100);
     await page.evaluate(() => { window.__sfxLog = []; window.shanlu.go('review'); window.shanlu.practiceAnyway(); }); await page.waitForTimeout(150);
     await key2(' '); await key2('3');
     check(await page.evaluate(() => window.__sfxLog.length === 0), 'with sounds turned off in Settings nothing plays');
-    await page.evaluate(() => { window.shanlu.go('voice'); }); await page.waitForTimeout(150);
+    await page.evaluate(() => { window.shanlu.go('voice'); window.shanlu.setSec('sounds'); }); await page.waitForTimeout(150);
     await page.locator('button', { hasText: /^Sounds are off/ }).click(); await page.waitForTimeout(100);
     check(await page.evaluate(() => window.__sfxLog.join(',') === 'ok'), 'turning sounds back on plays a sample');
     check(await page.evaluate(() => { window.shanlu.go('review'); return true; }) && (await page.locator('.dgoal').count()) === 1, 'the daily goal is shown while studying');
@@ -796,6 +796,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   // Chinese voice picker
   const lastSpoken = async () => { await page.waitForTimeout(500); return page.evaluate(() => window.__spoken[window.__spoken.length - 1] || null); };
   await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.locator('.st-row', { hasText: 'Chinese voice' }).click();   // Settings opens one row at a time
   await page.waitForTimeout(100);
   const vt = await text();
   check(vt.includes('Lili (Premium)') && vt.includes('Tingting') && vt.includes('Meijia'), 'voice screen lists the Mandarin voices');
@@ -825,6 +826,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.waitForSelector('.app');
   check(await page.evaluate(() => window.shanlu.state.voiceId === 'com.apple.voice.compact.zh-CN.Tingting'), 'the chosen voice survives a reload');
   await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.locator('.st-row', { hasText: 'Chinese voice' }).click();
   await page.locator('button', { hasText: 'Use automatic' }).click();
   await page.evaluate(() => window.shanlu.say('你好', 'x'));
   sp = await lastSpoken();
@@ -832,7 +834,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.locator('button', { hasText: /Show every voice/ }).click();
   check((await text()).includes('Sinji · zh-HK'), 'the full voice list shows every voice the browser reports');
   await shot('21-voice');
-  await page.locator('button', { hasText: 'Back to home' }).click();
+  await page.evaluate(() => window.shanlu.go('home'));   // Settings no longer has its own Back to home button
 
   // 儿 endings switch
   const OFFICIAL_ER = ['面条儿', '一点儿', '有点儿', '好玩儿', '这儿', '那儿', '哪儿'];
@@ -855,6 +857,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   const myKey = erhuaMode ? '面条儿' : '面条', otherKey = erhuaMode ? '面条' : '面条儿';
   await page.evaluate((k) => { const ws = Object.assign({}, window.shanlu.state.ws); ws[k] = { see: { s: 7, l: 0 }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }; window.shanlu.setState({ ws }); window.shanlu.persistNow(); }, myKey);
   await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.locator('.st-row', { hasText: '儿 endings' }).click();
   check((await text()).includes(erhuaMode ? 'Now: 儿 endings are on' : 'Now: plain forms'), 'the voice and 儿 screen says which style is on');
   await Promise.all([page.waitForNavigation(), page.locator('button', { hasText: erhuaMode ? 'Switch to plain forms' : 'Switch to 儿 endings' }).click()]);
   await page.waitForSelector('.app');
@@ -862,6 +865,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(flipped.n === (erhuaMode ? 297 : 300) && flipped.has, 'switching flips the word list (' + flipped.n + ' words)');
   check(flipped.s === 7, 'progress on a renamed word carries over when the style switches (' + myKey + ' to ' + otherKey + ')');
   await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.locator('.st-row', { hasText: '儿 endings' }).click();
   await Promise.all([page.waitForNavigation(), page.locator('button', { hasText: erhuaMode ? 'Switch to 儿 endings' : 'Switch to plain forms' }).click()]);
   await page.waitForSelector('.app');
   const back = await page.evaluate((a) => ({ n: window.HSK1_WORDS.length, s: window.shanlu.state.ws[a] && window.shanlu.state.ws[a].see.s }), myKey);
@@ -1017,6 +1021,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   };
   await ctx.route('https://api.github.com/**', route);
   await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.evaluate(() => window.shanlu.setSec('sync'));   // open that Settings row
   check((await text()).includes('Sync across devices') && (await page.locator('input[aria-label="GitHub token"]').count()) === 1, 'settings has a sync card with a token box');
   await page.fill('input[aria-label="GitHub token"]', 'nope');
   await page.locator('button', { hasText: 'Connect' }).click();
@@ -1036,6 +1041,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await p2.goto(url); await p2.waitForSelector('.app');
   check(await p2.evaluate(() => window.shanlu.state.xp === 0), 'a second browser starts with nothing');
   await p2.locator('button', { hasText: 'Settings' }).first().click();
+  await p2.evaluate(() => window.shanlu.setSec('sync'));   // open that Settings row
   await p2.fill('input[aria-label="GitHub token"]', 'ghp_test');
   await p2.locator('button', { hasText: 'Connect' }).click();
   await p2.waitForFunction(() => !window.shanlu.state.syncBusy && window.shanlu.state.syncMsg);
@@ -1049,7 +1055,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(await page.evaluate(() => window.shanlu.state.ws['谢谢'].see.s === 4 && window.shanlu.state.ws['你好'].see.s === 9), 'work done on the second browser reaches the first after a sync');
   await ctx2.close();
   await page.locator('button', { hasText: 'Disconnect this device' }).click();
-  await page.locator('button', { hasText: 'Back to home' }).click();
+  await page.evaluate(() => window.shanlu.go('home'));   // Settings no longer has a Back to home button
 
   // AI conversation, against a fake Anthropic API
   const aiCalls = [];
@@ -1069,7 +1075,8 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ content: [{ type: 'text', text: 'Here you go: ' + JSON.stringify(reply) }] }) });
   });
   await page.locator('button', { hasText: 'Settings' }).first().click();
-  check((await text()).includes('AI conversation (optional)'), 'settings has an AI conversation card');
+  await page.evaluate(() => window.shanlu.setSec('ai'));   // open that Settings row
+  check((await text()).includes('Talk with Mingming'), 'settings has an AI conversation row');
   await page.fill('input[aria-label="Anthropic API key"]', 'sk-ant-test');
   await page.locator('button', { hasText: 'Save key' }).click();
   check((await text()).includes('Saved on this device') && (await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-ai')).key === 'sk-ant-test')), 'the key is saved on this device');
@@ -1159,6 +1166,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await ctx.route('https://testws1.ap-southeast-1.maas.aliyuncs.com/**', aliHandler);
   await page.locator('.modeseg button', { hasText: 'Practice script' }).click();
   await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.evaluate(() => window.shanlu.setSec('ai'));   // open that Settings row
   await page.locator('button', { hasText: /^Qwen \(Alibaba\)/ }).click();
   check((await text()).includes('Key Management') && !(await text()).includes('console.anthropic.com and add'), 'the Qwen tab shows the Alibaba steps instead of the Claude ones');
   await page.fill('input[aria-label="Alibaba API key"]', 'sk-ali-test');
@@ -1185,6 +1193,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   // voice: record from the (fake) microphone, send to Alibaba's recogniser, the text lands in the box
   await page.locator('.modeseg button', { hasText: 'Practice script' }).click();
   await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.evaluate(() => window.shanlu.setSec('ai'));   // open that Settings row
   await page.locator('button', { hasText: /^Alibaba Qwen3-ASR/ }).click();
   await nav('Speak');
   await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
@@ -1286,6 +1295,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   const exported3 = await page.evaluate(() => { window.shanlu.persistNow(); return JSON.stringify(JSON.parse(localStorage.getItem('shanlu-progress-v1'))) + JSON.stringify(JSON.parse(localStorage.getItem('shanlu-friends') || 'null')); });
   check(!exported3.includes('hiking'), 'remembered facts are not in the saved progress (so not in the export, the sync or the friends server)');
   await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.evaluate(() => window.shanlu.setSec('ai'));   // open that Settings row
   check((await text()).includes('What Mingming remembers') && (await text()).includes('learner likes hiking') && (await text()).includes('learner has a cat'), 'Settings lists what Mingming remembers');
   await page.locator('button', { hasText: 'Forget' }).first().click();
   check((await page.evaluate(() => window.shanlu.state.memFacts.map(f => f.t))).join() === 'learner has a cat', 'one fact can be forgotten');
@@ -1296,6 +1306,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await say('你好');
   check(lastSys().includes('Always use an empty list for "remember"') && !lastSys().includes('learner has a cat') && (await page.evaluate(() => window.shanlu.state.memFacts.length)) === 1, 'with memory switched off nothing is sent or kept');
   await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.evaluate(() => window.shanlu.setSec('ai'));   // open that Settings row
   await page.locator('button', { hasText: 'Off: nothing is kept' }).click();
   await page.locator('button', { hasText: 'Forget everything' }).click();
   check((await page.evaluate(() => window.shanlu.state.memFacts.length)) === 0 && (await text()).includes('Nothing remembered yet'), 'Forget everything empties the list');
@@ -1336,6 +1347,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await page.evaluate(() => window.shanlu.state.aiProvider)) === 'anthropic', 'you can switch back to Claude');
   await page.locator('.modeseg button', { hasText: 'Practice script' }).click();
   await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.evaluate(() => window.shanlu.setSec('ai'));   // open that Settings row
   await page.locator('button', { hasText: 'Remove the key' }).click();
   check(!(await page.evaluate(() => localStorage.getItem('shanlu-ai') && JSON.parse(localStorage.getItem('shanlu-ai')).key)), 'the key can be removed');
   // export (its link now sits only on Account and Settings, so do it before leaving Settings)
@@ -1343,7 +1355,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.locator('button', { hasText: 'Export progress' }).click();
   const d = await dl;
   check(/shanlu-progress-\d{4}-\d{2}-\d{2}\.json/.test(d.suggestedFilename()), 'export downloads a progress file');
-  await page.locator('button', { hasText: 'Back to home' }).click();
+  await page.evaluate(() => window.shanlu.go('home'));   // Settings no longer has a Back to home button
 
   // dark mode + phone width
   await page.locator('button', { hasText: 'Switch to dark' }).click();

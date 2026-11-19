@@ -328,7 +328,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await R.fill('#fr-name', 'Rae'); await R.locator('button', { hasText: 'Join group' }).click(); await R.waitForSelector('.frow');
     await R.waitForFunction(() => window.shanlu.state.aiOn === true, null, { timeout: 8000 });
     check(await R.evaluate(() => window.shanlu.state.aiProvider) === 'alibaba', 'after joining, with the server holding a key, the AI features switch on with no key saved');
-    await R.evaluate(() => window.shanlu.go('voice'));
+    await R.evaluate(() => { window.shanlu.go('voice'); window.shanlu.setSec('ai'); });
     await R.waitForFunction(() => document.body.innerText.includes('shared AI is on'), null, { timeout: 8000 });
     check(/0 of 200 calls/.test(await R.locator('main').innerText()), 'Settings says the shared AI is on and 0 of 200 calls are used');
     check(await R.evaluate(() => !JSON.parse(localStorage.getItem('shanlu-ai') || '{}').key && !(JSON.parse(localStorage.getItem('shanlu-ai') || '{}').ali || {}).key), 'no key was stored on this device');

@@ -121,7 +121,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     t = await main(page);
     check(/Small steps every day/.test(t) && /Three things, in this order/.test(t) && /Your toolkit/.test(t) && /Everything you study earns coins/.test(t), 'the reference page has its sections');
     check(/Your first stop is free|Free/.test(t) && /\b50\b/.test(t) && /\b500\b/.test(t), 'it shows the coin ramp');
-    check(/Nine HSK levels/.test(t) && await page.locator('.gd-rg').count() === 9 && await page.locator('.gd-rg.on').count() === 4, 'it shows nine levels, four of them built');
+    check(/Nine HSK levels/.test(t) && await page.locator('.gd-rg').count() === 9 && await page.locator('.gd-rg.on').count() === await page.evaluate(() => window.ShanluLevel.MAX_LEVEL), 'it shows nine levels, the open ones built');
     check(/New to Chinese\? Start with the sounds/.test(t) && await page.locator('.guide button', { hasText: 'Open the pinyin course' }).count() === 1, 'the pinyin course is near the top');
     check(await page.locator('.side .ylink', { hasText: 'How Shanlu works' }).count() === 1, 'the sidebar keeps a link to it');
     check(errors.length === 0, 'no errors: ' + errors.join(' | '));

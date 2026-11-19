@@ -7,7 +7,7 @@
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="shanlu-data" content="data/hsk1-words.js?v=2951ddbd46 data/hsk1-grammar.js?v=9c7c234f4d data/hsk1-webs.js?v=c55e460971 data/hsk1-speak.js?v=1a0bc4fd8d data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=f29670a542 data/hsk2-words.js?v=f24b343438 data/hsk2-grammar.js?v=3bdcfab282 data/hsk2-webs.js?v=a19112d83b data/hsk2-speak.js?v=f61eb12760 data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=e50c0d2d1e data/hsk3-words.js?v=b926f66ed7 data/hsk3-grammar.js?v=124e381156 data/hsk3-webs.js?v=8cd2eefb5d data/hsk3-speak.js?v=82ca84cf78 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=29e8aab26b data/hsk4-words.js?v=dd870dceb5 data/hsk4-grammar.js?v=1e2dd82126 data/hsk4-webs.js?v=a719c781b1 data/hsk4-speak.js?v=432fbea51b data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=257a4e159a data/hsk5-words.js?v=932440eb6a data/hsk5-grammar.js?v=9652096e29 data/hsk5-webs.js?v=09b4d2f03c data/hsk5-speak.js?v=f58e180d1a data/hsk5-listen.js?v=657e83574f data/hsk5-exam.js?v=a2f534a282">
-<meta name="shanlu-version" content="2d9dda4992">
+<meta name="shanlu-version" content="b756b56a04">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=e7f6286329">
+<link rel="stylesheet" href="styles.css?v=e67708bbcf">
 </head>
 <body>
 <div id="app"></div>
@@ -132,207 +132,238 @@
       <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" data-on-click="{{exportData}}">Download a backup</button><button class="btn" data-on-click="{{tipDismiss}}">Not now</button></div>
     </sc-if>
   </div></sc-if>
-  <sc-if value="{{noVoice}}" hint-placeholder-val="{{ false }}"><div class="banner">This browser does not report a Chinese voice, so audio may be silent or sound wrong. Try Chrome or Safari, or check your device's text-to-speech language settings. <button class="linkbtn" data-on-click="{{goVoice}}">Open voice settings</button></div></sc-if>
+  <sc-if value="{{noVoice}}" hint-placeholder-val="{{ false }}"><div class="banner">This browser does not report a Chinese voice, so audio may be silent or sound wrong. Try Chrome or Safari, or check your device's text-to-speech language settings. <button class="linkbtn" data-on-click="{{goSetVoice}}">Open voice settings</button></div></sc-if>
 
-  <!-- VOICE -->
+  <!-- SETTINGS (screen id "voice"): short groups of rows; each row shows its current value and opens one setting at a time -->
   <sc-if value="{{isVoice}}" hint-placeholder-val="{{ false }}">
-  <div class="vscreen">
-    <section class="card" style="margin-bottom:20px">
-      <h2 class="h2">Sync across devices</h2>
-      <sc-if value="{{syncOff}}" hint-placeholder-val="{{ true }}">
-        <p class="muted" style="margin:6px 0 0;font-size:16px">Your progress is saved in this browser only. To use the same progress on your phone and your computer, keep one private copy in a GitHub gist. You do this once per device.</p>
-        <ol class="muted" style="margin:10px 0 0;padding-left:20px;font-size:15.5px;line-height:1.6">
-          <li>Open <a href="{{syncTokenUrl}}" target="_blank" rel="noopener">this GitHub page</a> (sign in if asked). It makes a classic token with only the gist permission. Pick an expiry you are comfortable with, then press Generate token.</li>
-          <li>Copy the token (it starts with ghp_) and paste it below.</li>
-          <li>Press Connect. Do the same on your other devices with the same token.</li>
-        </ol>
-        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-          <input class="wsearch" type="password" autocomplete="off" placeholder="Paste the token" value="{{syncInput}}" data-on-input="{{onSyncInput}}" style="flex:1 1 220px;min-width:0" aria-label="GitHub token">
-          <button class="btn pri" data-on-click="{{syncConnect}}">Connect</button>
+  <div class="vscreen st">
+    <section class="st-g" aria-labelledby="st-g1">
+      <h2 class="st-gh" id="st-g1">Studying</h2>
+      <div class="st-card">
+      <div class="st-item {{stRevCls}}">
+        <h3 class="st-h"><button type="button" class="st-row" aria-expanded="{{stRevOpen}}" data-on-click="{{stRevTog}}"><span lang="zh-Hans" class="st-ic zh" aria-hidden="true">复</span><span class="st-rt"><b>Reviews</b><span class="st-sum">{{stRevSum}}</span></span><svg class="ic st-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+        <sc-if value="{{stRevOpen}}" hint-placeholder-val="{{ false }}"><div class="st-body">
+        <p class="muted" style="margin:6px 0 0;font-size:16px">A word comes back when your chance of recalling it falls to this level. A lower level means fewer reviews but more forgetting.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"><sc-for list="{{retOpts}}" as="o" hint-placeholder-count="3"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
+        <div style="margin:16px 0 0;font-weight:600">Tones in typed answers</div>
+        <p class="muted" style="margin:6px 0 0;font-size:15.5px">Type pinyin with tone marks or numbers (nǐ hǎo or ni3 hao3). Tones count, because they are the hardest part. If you are just starting, you can make them optional for now.</p>
+        <div style="margin-top:10px"><button class="fc2 {{tonesCls}}" data-on-click="{{toggleTones}}">{{tonesLabel}}</button></div>
+        </div></sc-if>
+      </div>
+      <div class="st-item {{stLvlCls}}">
+        <h3 class="st-h"><button type="button" class="st-row" aria-expanded="{{stLvlOpen}}" data-on-click="{{stLvlTog}}"><span lang="zh-Hans" class="st-ic zh" aria-hidden="true">级</span><span class="st-rt"><b>Level</b><span class="st-sum">{{stLvlSum}}</span></span><svg class="ic st-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+        <sc-if value="{{stLvlOpen}}" hint-placeholder-val="{{ false }}"><div class="st-body">
+        <p class="muted" style="margin:6px 0 0;font-size:16px">{{lvNote}}</p>
+        <div class="lvlist" role="group" aria-label="Level"><sc-for list="{{lvItems}}" as="o" hint-placeholder-count="3"><button type="button" class="lvitem {{o.cls}}" data-on-click="{{o.fn}}"><span class="lvn">{{o.label}}</span><span class="lvs">{{o.sub}}</span></button></sc-for></div>
+        <div style="margin:16px 0 0;font-weight:600">HSK version shown on your path</div>
+        <div class="seg2" style="margin-top:8px;display:inline-flex" role="group" aria-label="HSK version"><button class="{{sys2Cls}}" data-on-click="{{setSys2}}">HSK 2.0 · 6 levels</button><button class="{{sys3Cls}}" data-on-click="{{setSys3}}">HSK 3.0 · 9 levels</button></div>
+        <div style="margin:16px 0 0;font-weight:600">Already know some Chinese?</div>
+        <p class="muted" style="margin:6px 0 0;font-size:15px">A short check (about 3 minutes) finds the levels you know, so you can start higher. Words you skip come back in Review, about 20 a day.</p>
+        <div style="margin-top:8px"><button class="btn" data-on-click="{{pcOpenMenu}}">Check my level</button></div>
+        <div style="margin:16px 0 0;font-weight:600">Level lock</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{lockOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
+        <p class="muted" style="margin:8px 0 0;font-size:15px">Locked is the default. If an unclear exam question holds you back, switch to open: the exam then only earns the level's seal.</p>
+        </div></sc-if>
+      </div>
+      <div class="st-item {{stSndCls}}">
+        <h3 class="st-h"><button type="button" class="st-row" aria-expanded="{{stSndOpen}}" data-on-click="{{stSndTog}}"><span lang="zh-Hans" class="st-ic zh" aria-hidden="true">叮</span><span class="st-rt"><b>Sounds</b><span class="st-sum">{{stSndSum}}</span></span><svg class="ic st-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+        <sc-if value="{{stSndOpen}}" hint-placeholder-val="{{ false }}"><div class="st-body">
+        <p class="muted" style="margin:6px 0 0;font-size:16px">A short ding when you get something right, a soft tone when you do not, and a flourish when you finish a session or earn a milestone. They are made on the spot, with no downloads.</p>
+        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" data-on-click="{{soundToggle}}">{{soundLabel}}</button><button class="btn" data-on-click="{{soundTest}}">Play the right-answer sound</button><button class="btn" data-on-click="{{soundTestDone}}">Play the session-done sound</button></div>
+        </div></sc-if>
+      </div>
+      <sc-if value="{{erhuaAvailable}}" hint-placeholder-val="{{ true }}">
+      <div class="st-item {{stErhCls}}">
+        <h3 class="st-h"><button type="button" class="st-row" aria-expanded="{{stErhOpen}}" data-on-click="{{stErhTog}}"><span lang="zh-Hans" class="st-ic zh" aria-hidden="true">儿</span><span class="st-rt"><b>儿 endings</b><span class="st-sum">{{stErhSum}}</span></span><svg class="ic st-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+        <sc-if value="{{stErhOpen}}" hint-placeholder-val="{{ false }}"><div class="st-body">
+        <p class="muted" style="margin:6px 0 0;font-size:16px">In the northern, Beijing style, some words end in 儿: 面条儿, 一点儿, 这儿, 哪儿. Many speakers, especially in the south and in Taiwan, say 面条, 一点, 这里 and 哪里 instead. This site uses the plain forms unless you switch.</p>
+        <p class="muted" style="margin:10px 0 0;font-size:15.5px">The official HSK 1, HSK 2 and HSK 3 word lists print the 儿 forms, so you may still meet them on the exam. Switching reloads the page. Your progress on these words carries over. With plain forms on, 这儿, 那儿 and 哪儿 are left out, because 这里, 那里 and 哪里 are already on the list.</p>
+        <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+          <button class="btn pri" data-on-click="{{toggleErhua}}">{{erhuaBtn}}</button>
+          <span class="muted">{{erhuaNow}}</span>
         </div>
-        <p class="muted" style="margin:10px 0 0;font-size:14.5px">The token is kept on this device only, never in your exported progress. It can only read and write gists. You can delete it any time at github.com/settings/tokens.</p>
+        </div></sc-if>
+      </div>
       </sc-if>
-      <sc-if value="{{syncOn}}" hint-placeholder-val="{{ false }}">
-        <p class="muted" style="margin:6px 0 0;font-size:16px">{{syncAtText}} Progress syncs when you open the site, when you come back to the tab, and shortly after you study.</p>
-        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-          <button class="btn pri" data-on-click="{{syncNow}}">Sync now</button>
-          <button class="btn" data-on-click="{{syncTest}}">{{syncTestLabel}}</button>
-          <button class="btn" data-on-click="{{syncDisconnect}}">Disconnect this device</button>
-        </div>
-      </sc-if>
-      <sc-if value="{{hasSyncMsg}}" hint-placeholder-val="{{ false }}"><div class="banner {{syncMsgCls}}" style="margin-top:14px" role="status">{{syncMsg}}</div></sc-if>
+      </div>
     </section>
-    <section class="card" style="margin-bottom:20px">
-      <h2 class="h2">Saved on this device</h2>
-      <p class="muted" style="margin:6px 0 0;font-size:15.5px">{{storageText}}</p>
-      <p class="muted" style="margin:6px 0 0;font-size:15.5px">{{installedText}}</p>
-      <p class="muted" style="margin:6px 0 0;font-size:15.5px">{{versionText}}</p>
-      <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn" data-on-click="{{exportData}}">Download a backup</button><button class="btn" data-on-click="{{importData}}">Import a backup</button></div>
-    </section>
-    <section class="card" style="margin-bottom:20px">
-      <h2 class="h2">AI conversation (optional)</h2>
-      <p class="muted" style="margin:6px 0 0;font-size:16px">Speaking practice with a real conversation partner: you speak or type, Mingming answers in simple Chinese, may use a little of the next level ({{nextLvName}}) as a preview (with pinyin and English), and tells you what was not natural. Pick the service that writes Mingming's lines. You can save a key for both and switch any time.</p>
-      <sc-if value="{{hasRelay}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{relayText}}</div></sc-if>
-      <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
-        <sc-for list="{{provOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
+    <section class="st-g" aria-labelledby="st-g2">
+      <h2 class="st-gh" id="st-g2">Audio and conversation</h2>
+      <div class="st-card">
+      <div class="st-item {{stVoiCls}}">
+        <h3 class="st-h"><button type="button" class="st-row" aria-expanded="{{stVoiOpen}}" data-on-click="{{stVoiTog}}"><span lang="zh-Hans" class="st-ic zh" aria-hidden="true">音</span><span class="st-rt"><b>Chinese voice and speed</b><span class="st-sum">{{stVoiSum}}</span></span><svg class="ic st-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+        <sc-if value="{{stVoiOpen}}" hint-placeholder-val="{{ false }}"><div class="st-body">
+        <p class="muted" style="margin:6px 0 0;font-size:16px">{{voiceIntro}}</p>
+        <p class="muted" style="margin:10px 0 0;font-size:15.5px">On iPhone, download an Enhanced or Premium voice in Settings, Accessibility, Read &amp; Speak, Voices (it is called Spoken Content on older versions), then come back here and tap Refresh. Voices named Siri may not be offered to websites at all. If a voice you downloaded is missing from this list, your browser is not passing it on to websites.</p>
+        <div style="margin:16px 0 0;font-weight:600">Speaking speed</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{speedOpts}}" as="o" hint-placeholder-count="4"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
+        <p class="muted" style="margin:8px 0 0;font-size:15px">{{speedNote}}</p>
+        <div class="vlist">
+          <div class="vrow {{autoCls}}">
+            <div><b>{{autoName}}</b><span>Picks the highest-quality Mandarin voice, then prefers mainland over Taiwan</span></div>
+            <div class="vact"><button class="fc2 {{autoPlayCls}}" data-on-click="{{autoPlay}}">Play</button><button class="fc2 {{autoCls}}" data-on-click="{{useAuto}}">{{autoLabel}}</button></div>
+          </div>
+          <sc-for list="{{voiceRows}}" as="v" hint-placeholder-count="3">
+            <div class="vrow {{v.cls}}">
+              <div><b>{{v.name}}</b><span>{{v.meta}}</span></div>
+              <div class="vact"><button class="fc2 {{v.playCls}}" data-on-click="{{v.play}}">Play</button><button class="fc2 {{v.useCls}}" data-on-click="{{v.use}}">{{v.useLabel}}</button></div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <button class="btn pri" data-on-click="{{refreshVoices}}">Refresh</button>
+          <button class="linkbtn" data-on-click="{{toggleAllVoices}}">{{allVoicesBtn}}</button>
+        </div>
+        <sc-if value="{{showAllVoices}}" hint-placeholder-val="{{ false }}">
+          <ul class="vall"><sc-for list="{{everyVoice}}" as="e" hint-placeholder-count="3"><li>{{e.line}}</li></sc-for></ul>
+        </sc-if>
+        </div></sc-if>
       </div>
-      <sc-if value="{{provAnthropic}}" hint-placeholder-val="{{ true }}">
-      <sc-if value="{{aiCanUse}}" hint-placeholder-val="{{ false }}"><div style="margin-top:12px"><button class="btn pri" data-on-click="{{useAnth}}">Use Claude for conversation</button></div></sc-if>
-      <p class="muted" style="margin:12px 0 0;font-size:16px">Claude is billed separately from a Claude.ai subscription: create a key at console.anthropic.com and add some credit there. Each message costs a small fraction of a cent on the cheaper model; check current prices on that site.</p>
-      <p class="muted" style="margin:10px 0 0;font-size:14.5px">The key is stored on this device only. It is sent straight from your browser to Anthropic and is not synced or exported. Anyone who can use this browser can use the key, so set a spending limit on the key's account.</p>
-      <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
-        <sc-for list="{{aiModelOpts}}" as="m" hint-placeholder-count="2"><button class="fc2 {{m.cls}}" data-on-click="{{m.fn}}">{{m.label}}</button></sc-for>
-      </div>
-      <sc-if value="{{aiUnset}}" hint-placeholder-val="{{ true }}">
-        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-          <input class="wsearch" style="margin:0;flex:1 1 220px;min-width:0" type="password" autocomplete="off" placeholder="Paste the API key" value="{{aiKeyInput}}" data-on-input="{{onAiKeyInput}}" aria-label="Anthropic API key">
-          <button class="btn pri" data-on-click="{{aiSaveKey}}">Save key</button>
+      <div class="st-item {{stAiCls}}">
+        <h3 class="st-h"><button type="button" class="st-row" aria-expanded="{{stAiOpen}}" data-on-click="{{stAiTog}}"><span lang="zh-Hans" class="st-ic zh" aria-hidden="true">聊</span><span class="st-rt"><b>Talk with Mingming (AI)</b><span class="st-sum">{{stAiSum}}</span></span><svg class="ic st-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+        <sc-if value="{{stAiOpen}}" hint-placeholder-val="{{ false }}"><div class="st-body">
+        <p class="muted" style="margin:6px 0 0;font-size:16px">Speaking practice with a real conversation partner: you speak or type, Mingming answers in simple Chinese, may use a little of the next level ({{nextLvName}}) as a preview (with pinyin and English), and tells you what was not natural. Pick the service that writes Mingming's lines. You can save a key for both and switch any time.</p>
+        <sc-if value="{{hasRelay}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{relayText}}</div></sc-if>
+        <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{provOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
         </div>
-      </sc-if>
-      <sc-if value="{{aiSet}}" hint-placeholder-val="{{ false }}">
-        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span class="muted">A key is saved on this device.</span><button class="btn" data-on-click="{{aiTestKey}}">{{aiTestLabel}}</button><button class="btn" data-on-click="{{aiRemoveKey}}">Remove the key</button></div>
-      </sc-if>
-      </sc-if>
-      <sc-if value="{{provAlibaba}}" hint-placeholder-val="{{ false }}">
-        <p class="muted" style="margin:12px 0 0;font-size:16px">Qwen runs on Alibaba Cloud Model Studio. The same key can also make a stronger voice recogniser for Mandarin (below). New accounts get a free quota. Use the International edition (Singapore).</p>
-        <ol class="muted" style="margin:10px 0 0;padding-left:20px;font-size:15.5px;line-height:1.6">
-          <li>Make an account at alibabacloud.com and open Model Studio in the <b>Singapore</b> region. Agree to the terms to switch it on.</li>
-          <li>In Key Management (Singapore), press Create API Key (Default workspace) and copy it.</li>
-          <li>Paste it below and press Save, then Test connection. The workspace ID is optional: leave it empty at first. Alibaba's newest pages use an address with your workspace ID in it, so if the test fails, paste the ID from the Model Studio console and test again.</li>
-        </ol>
-        <p class="muted" style="margin:10px 0 0;font-size:14.5px">The key is stored on this device only and sent straight from your browser to Alibaba. It is not synced or exported. In Model Studio, turn on "Free quota only" for each model you use, so nothing is billed when the free quota runs out. Without it, use past the free quota is billed.</p>
-        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-          <input class="wsearch" style="margin:0;flex:1 1 260px;min-width:0" type="password" autocomplete="off" placeholder="Paste the Alibaba API key" value="{{aliKeyInput}}" data-on-input="{{onAliKeyInput}}" aria-label="Alibaba API key">
+        <sc-if value="{{provAnthropic}}" hint-placeholder-val="{{ true }}">
+        <sc-if value="{{aiCanUse}}" hint-placeholder-val="{{ false }}"><div style="margin-top:12px"><button class="btn pri" data-on-click="{{useAnth}}">Use Claude for conversation</button></div></sc-if>
+        <p class="muted" style="margin:12px 0 0;font-size:16px">Claude is billed separately from a Claude.ai subscription: create a key at console.anthropic.com and add some credit there. Each message costs a small fraction of a cent on the cheaper model; check current prices on that site.</p>
+        <p class="muted" style="margin:10px 0 0;font-size:14.5px">The key is stored on this device only. It is sent straight from your browser to Anthropic and is not synced or exported. Anyone who can use this browser can use the key, so set a spending limit on the key's account.</p>
+        <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{aiModelOpts}}" as="m" hint-placeholder-count="2"><button class="fc2 {{m.cls}}" data-on-click="{{m.fn}}">{{m.label}}</button></sc-for>
         </div>
-        <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-          <input class="wsearch" style="margin:0;flex:1 1 200px;min-width:0" type="text" autocomplete="off" placeholder="Workspace ID (optional)" value="{{aliWsInput}}" data-on-input="{{onAliWsInput}}" aria-label="Alibaba workspace ID">
-          <input class="wsearch" style="margin:0;flex:1 1 200px;min-width:0" type="text" autocomplete="off" placeholder="Model name" value="{{aliModelInput}}" data-on-input="{{onAliModelInput}}" aria-label="Qwen model name">
-        </div>
-        <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
-          <sc-for list="{{aliModelOpts}}" as="m" hint-placeholder-count="2"><button class="fc2 {{m.cls}}" data-on-click="{{m.fn}}">{{m.label}}</button></sc-for>
-        </div>
-        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-          <button class="btn pri" data-on-click="{{aliSaveKey}}">Save</button>
-          <button class="btn" data-on-click="{{aliTest}}">{{aliTestLabel}}</button>
-          <sc-if value="{{aliSet}}" hint-placeholder-val="{{ false }}"><span class="muted">A key is saved on this device.</span><button class="btn" data-on-click="{{aliRemoveKey}}">Remove the key</button></sc-if>
-          <sc-if value="{{aliCanUse}}" hint-placeholder-val="{{ false }}"><button class="btn pri" data-on-click="{{useAli}}">Use Qwen for conversation</button></sc-if>
-        </div>
-        <p class="muted" style="margin:10px 0 0;font-size:14.5px">Model names change over time. If Alibaba says the model does not exist, type the current name from the Model Studio model list.</p>
-      </sc-if>
-      <h3 style="margin:18px 0 0;font-size:17px">What hears your voice</h3>
-      <p class="muted" style="margin:6px 0 0;font-size:15.5px">The browser's own recogniser is free but can miss normal-speed Mandarin. Alibaba's Qwen3-ASR is built for Chinese. It records you, sends the clip to Alibaba, and fills the box a moment after you stop.</p>
-      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
-        <sc-for list="{{asrOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
-      </div>
-      <h3 style="margin:18px 0 0;font-size:17px">What speaks Mingming's lines</h3>
-      <p class="muted" style="margin:6px 0 0;font-size:15.5px">Alibaba's Qwen voice sounds far more natural than the browser's. It uses the model qwen3-tts-flash, which has its own free quota (turn on "Free quota only" for it too). If it ever fails, the browser voice takes over.</p>
-      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
-        <sc-for list="{{ttsOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
-      </div>
-      <sc-if value="{{ttsIsQwen}}" hint-placeholder-val="{{ false }}">
-        <p class="muted" style="margin:12px 0 0;font-size:15px">Voice (tap one to hear it):</p>
-        <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
-          <sc-for list="{{ttsVoiceOpts}}" as="o" hint-placeholder-count="5"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
-        </div>
-      </sc-if>
-      <h3 style="margin:18px 0 0;font-size:17px">What Mingming remembers</h3>
-      <p class="muted" style="margin:6px 0 0;font-size:15.5px">Light everyday facts you tell her (a hobby, a food you like, a plan), so the next chat can pick them up naturally.</p>
-      <sc-if value="{{personSyncOn}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:6px 0 0;font-size:15.5px">They follow you: they are saved with your progress on the group's server, so every device of yours has the same ones. Only you (and whoever runs the server) can read them; the other friends cannot.</p></sc-if>
-      <sc-if value="{{personSyncOff}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:6px 0 0;font-size:15.5px">They are kept on this device. If you join the study group (Friends tab), they follow you to your other devices.</p></sc-if>
-      <p class="muted" style="margin:6px 0 0;font-size:15.5px">The AI service does see them while a chat is running. Health, money, politics, religion and documents are filtered out (a keyword filter, so not perfect).</p>
-      <div style="margin-top:10px"><button class="fc2 {{memCls}}" data-on-click="{{memToggle}}">{{memOnLabel}}</button></div>
-      <sc-if value="{{noMemFacts}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:10px 0 0;font-size:15px">Nothing remembered yet.</p></sc-if>
-      <sc-if value="{{hasMemFacts}}" hint-placeholder-val="{{ false }}">
-        <div style="margin-top:10px">
-          <sc-for list="{{memList}}" as="f" hint-placeholder-count="2"><div style="display:flex;gap:10px;align-items:center;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line)"><span>{{f.t}} <span class="muted" style="font-size:13.5px">{{f.d}}</span></span><button class="linkbtn" data-on-click="{{f.forget}}">Forget</button></div></sc-for>
-        </div>
-        <div style="margin-top:8px"><button class="linkbtn" data-on-click="{{memClear}}">Forget everything</button></div>
-      </sc-if>
-      <sc-if value="{{personSyncOn}}" hint-placeholder-val="{{ false }}">
-        <h3 style="margin:18px 0 0;font-size:17px">API keys on all my devices</h3>
-        <p class="muted" style="margin:6px 0 0;font-size:15.5px">Your chat settings, listening level and remembered facts already follow you. API keys stay on each device unless you switch this on. Then they are locked on this device with a passphrase you choose, and only the scrambled text is saved with your progress on the group's server, so whoever runs the server cannot read your keys. The passphrase is never sent anywhere: type it once on each device. If you forget it, switch this off and on again.</p>
-        <div style="margin-top:10px"><button class="fc2 {{keySyncCls}}" data-on-click="{{keySyncToggle}}">{{keySyncLabel}}</button></div>
-        <sc-if value="{{keyAsk}}" hint-placeholder-val="{{ false }}">
-          <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-            <input class="wsearch" style="margin:0;flex:1 1 220px;min-width:0" type="password" autocomplete="new-password" placeholder="{{keyAskHint}}" value="{{keyPassInput}}" data-on-input="{{onKeyPassInput}}" aria-label="Key passphrase">
-            <button class="btn pri" data-on-click="{{keyPassGo}}">{{keyGoLabel}}</button>
+        <sc-if value="{{aiUnset}}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <input class="wsearch" style="margin:0;flex:1 1 220px;min-width:0" type="password" autocomplete="off" placeholder="Paste the API key" value="{{aiKeyInput}}" data-on-input="{{onAiKeyInput}}" aria-label="Anthropic API key">
+            <button class="btn pri" data-on-click="{{aiSaveKey}}">Save key</button>
           </div>
         </sc-if>
-        <sc-if value="{{keyReady}}" hint-placeholder-val="{{ false }}"><div class="muted" style="margin-top:10px"><span>Your keys are locked with your passphrase.</span> <button class="linkbtn" data-on-click="{{keyChange}}">Change passphrase</button></div></sc-if>
-        <sc-if value="{{keyMsgShow}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:10px" role="status">{{keyMsgText}}</div></sc-if>
-      </sc-if>
-      <sc-if value="{{hasAliNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aliNote}}</div></sc-if>
-      <sc-if value="{{hasAiNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aiNote}}</div></sc-if>
-    </section>
-    <section class="card">
-      <h2 class="h2">Reviews</h2>
-      <p class="muted" style="margin:6px 0 0;font-size:16px">A word comes back when your chance of recalling it falls to this level. A lower level means fewer reviews but more forgetting.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"><sc-for list="{{retOpts}}" as="o" hint-placeholder-count="3"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
-      <div style="margin:16px 0 0;font-weight:600">Tones in typed answers</div>
-      <p class="muted" style="margin:6px 0 0;font-size:15.5px">Type pinyin with tone marks or numbers (nǐ hǎo or ni3 hao3). Tones count, because they are the hardest part. If you are just starting, you can make them optional for now.</p>
-      <div style="margin-top:10px"><button class="fc2 {{tonesCls}}" data-on-click="{{toggleTones}}">{{tonesLabel}}</button></div>
-    </section>
-    <section class="card">
-      <h2 class="h2">Chinese voice</h2>
-      <p class="muted" style="margin:6px 0 0;font-size:16px">{{voiceIntro}}</p>
-      <p class="muted" style="margin:10px 0 0;font-size:15.5px">On iPhone, download an Enhanced or Premium voice in Settings, Accessibility, Read &amp; Speak, Voices (it is called Spoken Content on older versions), then come back here and tap Refresh. Voices named Siri may not be offered to websites at all. If a voice you downloaded is missing from this list, your browser is not passing it on to websites.</p>
-      <div style="margin:16px 0 0;font-weight:600">Speaking speed</div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{speedOpts}}" as="o" hint-placeholder-count="4"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
-      <p class="muted" style="margin:8px 0 0;font-size:15px">{{speedNote}}</p>
-      <div class="vlist">
-        <div class="vrow {{autoCls}}">
-          <div><b>{{autoName}}</b><span>Picks the highest-quality Mandarin voice, then prefers mainland over Taiwan</span></div>
-          <div class="vact"><button class="fc2 {{autoPlayCls}}" data-on-click="{{autoPlay}}">Play</button><button class="fc2 {{autoCls}}" data-on-click="{{useAuto}}">{{autoLabel}}</button></div>
-        </div>
-        <sc-for list="{{voiceRows}}" as="v" hint-placeholder-count="3">
-          <div class="vrow {{v.cls}}">
-            <div><b>{{v.name}}</b><span>{{v.meta}}</span></div>
-            <div class="vact"><button class="fc2 {{v.playCls}}" data-on-click="{{v.play}}">Play</button><button class="fc2 {{v.useCls}}" data-on-click="{{v.use}}">{{v.useLabel}}</button></div>
+        <sc-if value="{{aiSet}}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span class="muted">A key is saved on this device.</span><button class="btn" data-on-click="{{aiTestKey}}">{{aiTestLabel}}</button><button class="btn" data-on-click="{{aiRemoveKey}}">Remove the key</button></div>
+        </sc-if>
+        </sc-if>
+        <sc-if value="{{provAlibaba}}" hint-placeholder-val="{{ false }}">
+          <p class="muted" style="margin:12px 0 0;font-size:16px">Qwen runs on Alibaba Cloud Model Studio. The same key can also make a stronger voice recogniser for Mandarin (below). New accounts get a free quota. Use the International edition (Singapore).</p>
+          <ol class="muted" style="margin:10px 0 0;padding-left:20px;font-size:15.5px;line-height:1.6">
+            <li>Make an account at alibabacloud.com and open Model Studio in the <b>Singapore</b> region. Agree to the terms to switch it on.</li>
+            <li>In Key Management (Singapore), press Create API Key (Default workspace) and copy it.</li>
+            <li>Paste it below and press Save, then Test connection. The workspace ID is optional: leave it empty at first. Alibaba's newest pages use an address with your workspace ID in it, so if the test fails, paste the ID from the Model Studio console and test again.</li>
+          </ol>
+          <p class="muted" style="margin:10px 0 0;font-size:14.5px">The key is stored on this device only and sent straight from your browser to Alibaba. It is not synced or exported. In Model Studio, turn on "Free quota only" for each model you use, so nothing is billed when the free quota runs out. Without it, use past the free quota is billed.</p>
+          <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <input class="wsearch" style="margin:0;flex:1 1 260px;min-width:0" type="password" autocomplete="off" placeholder="Paste the Alibaba API key" value="{{aliKeyInput}}" data-on-input="{{onAliKeyInput}}" aria-label="Alibaba API key">
           </div>
-        </sc-for>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <input class="wsearch" style="margin:0;flex:1 1 200px;min-width:0" type="text" autocomplete="off" placeholder="Workspace ID (optional)" value="{{aliWsInput}}" data-on-input="{{onAliWsInput}}" aria-label="Alibaba workspace ID">
+            <input class="wsearch" style="margin:0;flex:1 1 200px;min-width:0" type="text" autocomplete="off" placeholder="Model name" value="{{aliModelInput}}" data-on-input="{{onAliModelInput}}" aria-label="Qwen model name">
+          </div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{aliModelOpts}}" as="m" hint-placeholder-count="2"><button class="fc2 {{m.cls}}" data-on-click="{{m.fn}}">{{m.label}}</button></sc-for>
+          </div>
+          <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <button class="btn pri" data-on-click="{{aliSaveKey}}">Save</button>
+            <button class="btn" data-on-click="{{aliTest}}">{{aliTestLabel}}</button>
+            <sc-if value="{{aliSet}}" hint-placeholder-val="{{ false }}"><span class="muted">A key is saved on this device.</span><button class="btn" data-on-click="{{aliRemoveKey}}">Remove the key</button></sc-if>
+            <sc-if value="{{aliCanUse}}" hint-placeholder-val="{{ false }}"><button class="btn pri" data-on-click="{{useAli}}">Use Qwen for conversation</button></sc-if>
+          </div>
+          <p class="muted" style="margin:10px 0 0;font-size:14.5px">Model names change over time. If Alibaba says the model does not exist, type the current name from the Model Studio model list.</p>
+        </sc-if>
+        <h3 style="margin:18px 0 0;font-size:17px">What hears your voice</h3>
+        <p class="muted" style="margin:6px 0 0;font-size:15.5px">The browser's own recogniser is free but can miss normal-speed Mandarin. Alibaba's Qwen3-ASR is built for Chinese. It records you, sends the clip to Alibaba, and fills the box a moment after you stop.</p>
+        <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{asrOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
+        </div>
+        <h3 style="margin:18px 0 0;font-size:17px">What speaks Mingming's lines</h3>
+        <p class="muted" style="margin:6px 0 0;font-size:15.5px">Alibaba's Qwen voice sounds far more natural than the browser's. It uses the model qwen3-tts-flash, which has its own free quota (turn on "Free quota only" for it too). If it ever fails, the browser voice takes over.</p>
+        <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ttsOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
+        </div>
+        <sc-if value="{{ttsIsQwen}}" hint-placeholder-val="{{ false }}">
+          <p class="muted" style="margin:12px 0 0;font-size:15px">Voice (tap one to hear it):</p>
+          <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ttsVoiceOpts}}" as="o" hint-placeholder-count="5"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for>
+          </div>
+        </sc-if>
+        <h3 style="margin:18px 0 0;font-size:17px">What Mingming remembers</h3>
+        <p class="muted" style="margin:6px 0 0;font-size:15.5px">Light everyday facts you tell her (a hobby, a food you like, a plan), so the next chat can pick them up naturally.</p>
+        <sc-if value="{{personSyncOn}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:6px 0 0;font-size:15.5px">They follow you: they are saved with your progress on the group's server, so every device of yours has the same ones. Only you (and whoever runs the server) can read them; the other friends cannot.</p></sc-if>
+        <sc-if value="{{personSyncOff}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:6px 0 0;font-size:15.5px">They are kept on this device. If you join the study group (Friends tab), they follow you to your other devices.</p></sc-if>
+        <p class="muted" style="margin:6px 0 0;font-size:15.5px">The AI service does see them while a chat is running. Health, money, politics, religion and documents are filtered out (a keyword filter, so not perfect).</p>
+        <div style="margin-top:10px"><button class="fc2 {{memCls}}" data-on-click="{{memToggle}}">{{memOnLabel}}</button></div>
+        <sc-if value="{{noMemFacts}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:10px 0 0;font-size:15px">Nothing remembered yet.</p></sc-if>
+        <sc-if value="{{hasMemFacts}}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:10px">
+            <sc-for list="{{memList}}" as="f" hint-placeholder-count="2"><div style="display:flex;gap:10px;align-items:center;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line)"><span>{{f.t}} <span class="muted" style="font-size:13.5px">{{f.d}}</span></span><button class="linkbtn" data-on-click="{{f.forget}}">Forget</button></div></sc-for>
+          </div>
+          <div style="margin-top:8px"><button class="linkbtn" data-on-click="{{memClear}}">Forget everything</button></div>
+        </sc-if>
+        <sc-if value="{{personSyncOn}}" hint-placeholder-val="{{ false }}">
+          <h3 style="margin:18px 0 0;font-size:17px">API keys on all my devices</h3>
+          <p class="muted" style="margin:6px 0 0;font-size:15.5px">Your chat settings, listening level and remembered facts already follow you. API keys stay on each device unless you switch this on. Then they are locked on this device with a passphrase you choose, and only the scrambled text is saved with your progress on the group's server, so whoever runs the server cannot read your keys. The passphrase is never sent anywhere: type it once on each device. If you forget it, switch this off and on again.</p>
+          <div style="margin-top:10px"><button class="fc2 {{keySyncCls}}" data-on-click="{{keySyncToggle}}">{{keySyncLabel}}</button></div>
+          <sc-if value="{{keyAsk}}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+              <input class="wsearch" style="margin:0;flex:1 1 220px;min-width:0" type="password" autocomplete="new-password" placeholder="{{keyAskHint}}" value="{{keyPassInput}}" data-on-input="{{onKeyPassInput}}" aria-label="Key passphrase">
+              <button class="btn pri" data-on-click="{{keyPassGo}}">{{keyGoLabel}}</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{keyReady}}" hint-placeholder-val="{{ false }}"><div class="muted" style="margin-top:10px"><span>Your keys are locked with your passphrase.</span> <button class="linkbtn" data-on-click="{{keyChange}}">Change passphrase</button></div></sc-if>
+          <sc-if value="{{keyMsgShow}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:10px" role="status">{{keyMsgText}}</div></sc-if>
+        </sc-if>
+        <sc-if value="{{hasAliNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aliNote}}</div></sc-if>
+        <sc-if value="{{hasAiNote}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:12px" role="status">{{aiNote}}</div></sc-if>
+        </div></sc-if>
       </div>
-      <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-        <button class="btn pri" data-on-click="{{refreshVoices}}">Refresh</button>
-        <button class="btn" data-on-click="{{goHome}}">Back to home</button>
-        <button class="linkbtn" data-on-click="{{toggleAllVoices}}">{{allVoicesBtn}}</button>
-      </div>
-      <sc-if value="{{showAllVoices}}" hint-placeholder-val="{{ false }}">
-        <ul class="vall"><sc-for list="{{everyVoice}}" as="e" hint-placeholder-count="3"><li>{{e.line}}</li></sc-for></ul>
-      </sc-if>
-    </section>
-    <section class="card" style="margin-top:20px">
-      <h2 class="h2">Sounds</h2>
-      <p class="muted" style="margin:6px 0 0;font-size:16px">A short ding when you get something right, a soft tone when you do not, and a flourish when you finish a session or earn a milestone. They are made on the spot, with no downloads.</p>
-      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn pri" data-on-click="{{soundToggle}}">{{soundLabel}}</button><button class="btn" data-on-click="{{soundTest}}">Play the right-answer sound</button><button class="btn" data-on-click="{{soundTestDone}}">Play the session-done sound</button></div>
-    </section>
-    <section class="card" style="margin-top:20px">
-      <h2 class="h2">Level</h2>
-      <p class="muted" style="margin:6px 0 0;font-size:16px">{{lvNote}}</p>
-      <div class="lvlist" role="group" aria-label="Level"><sc-for list="{{lvItems}}" as="o" hint-placeholder-count="3"><button type="button" class="lvitem {{o.cls}}" data-on-click="{{o.fn}}"><span class="lvn">{{o.label}}</span><span class="lvs">{{o.sub}}</span></button></sc-for></div>
-      <div style="margin:16px 0 0;font-weight:600">HSK version shown on your path</div>
-      <div class="seg2" style="margin-top:8px;display:inline-flex" role="group" aria-label="HSK version"><button class="{{sys2Cls}}" data-on-click="{{setSys2}}">HSK 2.0 · 6 levels</button><button class="{{sys3Cls}}" data-on-click="{{setSys3}}">HSK 3.0 · 9 levels</button></div>
-      <div style="margin:16px 0 0;font-weight:600">Already know some Chinese?</div>
-      <p class="muted" style="margin:6px 0 0;font-size:15px">A short check (about 3 minutes) finds the levels you know, so you can start higher. Words you skip come back in Review, about 20 a day.</p>
-      <div style="margin-top:8px"><button class="btn" data-on-click="{{pcOpenMenu}}">Check my level</button></div>
-      <div style="margin:16px 0 0;font-weight:600">Level lock</div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{lockOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
-      <p class="muted" style="margin:8px 0 0;font-size:15px">Locked is the default. If an unclear exam question holds you back, switch to open: the exam then only earns the level's seal.</p>
-    </section>
-    <sc-if value="{{erhuaAvailable}}" hint-placeholder-val="{{ true }}">
-    <section class="card" style="margin-top:20px">
-      <h2 class="h2">儿 endings</h2>
-      <p class="muted" style="margin:6px 0 0;font-size:16px">In the northern, Beijing style, some words end in 儿: 面条儿, 一点儿, 这儿, 哪儿. Many speakers, especially in the south and in Taiwan, say 面条, 一点, 这里 and 哪里 instead. This site uses the plain forms unless you switch.</p>
-      <p class="muted" style="margin:10px 0 0;font-size:15.5px">The official HSK 1, HSK 2 and HSK 3 word lists print the 儿 forms, so you may still meet them on the exam. Switching reloads the page. Your progress on these words carries over. With plain forms on, 这儿, 那儿 and 哪儿 are left out, because 这里, 那里 and 哪里 are already on the list.</p>
-      <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-        <button class="btn pri" data-on-click="{{toggleErhua}}">{{erhuaBtn}}</button>
-        <span class="muted">{{erhuaNow}}</span>
       </div>
     </section>
-    </sc-if>
-    <section class="card" style="margin-top:20px">
-      <h2 class="h2">About and accuracy</h2>
-      <p class="muted" style="margin:6px 0 0;font-size:16px">Where the words, sentences, audio and exams come from, and how they were checked.</p>
-      <div style="margin-top:12px"><button class="btn" data-on-click="{{goAbout}}">Read about the content</button></div>
+    <section class="st-g" aria-labelledby="st-g3">
+      <h2 class="st-gh" id="st-g3">Your progress</h2>
+      <div class="st-card">
+      <div class="st-item {{stSynCls}}">
+        <h3 class="st-h"><button type="button" class="st-row" aria-expanded="{{stSynOpen}}" data-on-click="{{stSynTog}}"><span lang="zh-Hans" class="st-ic zh" aria-hidden="true">同</span><span class="st-rt"><b>Sync across devices</b><span class="st-sum">{{stSynSum}}</span></span><svg class="ic st-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+        <sc-if value="{{stSynOpen}}" hint-placeholder-val="{{ false }}"><div class="st-body">
+        <sc-if value="{{syncOff}}" hint-placeholder-val="{{ true }}">
+          <p class="muted" style="margin:6px 0 0;font-size:16px">Your progress is saved in this browser only. To use the same progress on your phone and your computer, keep one private copy in a GitHub gist. You do this once per device.</p>
+          <ol class="muted" style="margin:10px 0 0;padding-left:20px;font-size:15.5px;line-height:1.6">
+            <li>Open <a href="{{syncTokenUrl}}" target="_blank" rel="noopener">this GitHub page</a> (sign in if asked). It makes a classic token with only the gist permission. Pick an expiry you are comfortable with, then press Generate token.</li>
+            <li>Copy the token (it starts with ghp_) and paste it below.</li>
+            <li>Press Connect. Do the same on your other devices with the same token.</li>
+          </ol>
+          <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <input class="wsearch" type="password" autocomplete="off" placeholder="Paste the token" value="{{syncInput}}" data-on-input="{{onSyncInput}}" style="flex:1 1 220px;min-width:0" aria-label="GitHub token">
+            <button class="btn pri" data-on-click="{{syncConnect}}">Connect</button>
+          </div>
+          <p class="muted" style="margin:10px 0 0;font-size:14.5px">The token is kept on this device only, never in your exported progress. It can only read and write gists. You can delete it any time at github.com/settings/tokens.</p>
+        </sc-if>
+        <sc-if value="{{syncOn}}" hint-placeholder-val="{{ false }}">
+          <p class="muted" style="margin:6px 0 0;font-size:16px">{{syncAtText}} Progress syncs when you open the site, when you come back to the tab, and shortly after you study.</p>
+          <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <button class="btn pri" data-on-click="{{syncNow}}">Sync now</button>
+            <button class="btn" data-on-click="{{syncTest}}">{{syncTestLabel}}</button>
+            <button class="btn" data-on-click="{{syncDisconnect}}">Disconnect this device</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{hasSyncMsg}}" hint-placeholder-val="{{ false }}"><div class="banner {{syncMsgCls}}" style="margin-top:14px" role="status">{{syncMsg}}</div></sc-if>
+        </div></sc-if>
+      </div>
+      <div class="st-item {{stDatCls}}">
+        <h3 class="st-h"><button type="button" class="st-row" aria-expanded="{{stDatOpen}}" data-on-click="{{stDatTog}}"><span lang="zh-Hans" class="st-ic zh" aria-hidden="true">存</span><span class="st-rt"><b>Backups and storage</b><span class="st-sum">{{stDatSum}}</span></span><svg class="ic st-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+        <sc-if value="{{stDatOpen}}" hint-placeholder-val="{{ false }}"><div class="st-body">
+        <p class="muted" style="margin:6px 0 0;font-size:15.5px">{{storageText}}</p>
+        <p class="muted" style="margin:6px 0 0;font-size:15.5px">{{installedText}}</p>
+        <p class="muted" style="margin:6px 0 0;font-size:15.5px">{{versionText}}</p>
+        <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:10px"><button class="btn" data-on-click="{{exportData}}">Download a backup</button><button class="btn" data-on-click="{{importData}}">Import a backup</button></div>
+        </div></sc-if>
+      </div>
+      </div>
+    </section>
+    <section class="st-g" aria-labelledby="st-g4">
+      <h2 class="st-gh" id="st-g4">About</h2>
+      <div class="st-card">
+        <div class="st-item"><button type="button" class="st-row" data-on-click="{{goAbout}}"><span lang="zh-Hans" class="st-ic zh" aria-hidden="true">知</span><span class="st-rt"><b>About and accuracy</b><span class="st-sum">Where the words, sentences, audio and exams come from</span></span><svg class="ic st-chev st-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
+      </div>
     </section>
   </div>
   </sc-if>
@@ -1145,7 +1176,7 @@
           <div lang="zh-Hans" class="gd-big zh" aria-hidden="true">友</div>
           <h3 class="gd-h2">Your progress and your friends</h3>
           <p>Your progress is saved in this browser. Download a backup, or connect sync in Settings, so it follows you to your other devices. If you join the study group, only your study totals are shared, and your personal link (Friends, then "Copy my link") brings your progress to a new device.</p>
-          <div class="ob-act"><button class="btn pri" data-on-click="{{goVoice}}">Open Settings</button><button class="btn" data-on-click="{{goHome}}">Back to home</button></div>
+          <div class="ob-act"><button class="btn pri" data-on-click="{{goSetSync}}">Set up sync</button><button class="btn" data-on-click="{{goHome}}">Back to home</button></div>
         </div>
       </div>
     </section>
@@ -1607,7 +1638,7 @@
     <section class="card" style="grid-column:1/-1">
       <h2 class="h2">Talk with Mingming</h2>
       <p class="muted" style="margin:6px 0 0;font-size:16px">Mingming is an AI that plays the other person in a conversation, answers you in simple Chinese and tells you when something you said was not natural. It needs an API key from Anthropic (Claude) or Alibaba (Qwen), which you add once in Settings. The key stays on this device.</p>
-      <button class="btn pri" style="margin-top:16px" data-on-click="{{goVoice}}">Open Settings</button>
+      <button class="btn pri" style="margin-top:16px" data-on-click="{{goSetAi}}">Set up Mingming in Settings</button>
     </section>
     </sc-if>
     <sc-if value="{{aiReady}}" hint-placeholder-val="{{ false }}">
@@ -2942,7 +2973,7 @@
   </sc-if>
 
   <sc-if value="{{footShow}}" hint-placeholder-val="{{ true }}"><footer class="foot">
-    <p>The Chinese on this site is checked by AI against a community HSK word list and has not been reviewed by a teacher yet. If something looks wrong, use "Report a mistake" next to it.</p>
+    <p>The Chinese on this site was written and checked with the help of AI and has not been read by a teacher yet. If something looks wrong, use "Report a mistake" next to it. <button class="linkbtn" data-on-click="{{goAbout}}">About and accuracy</button></p>
     <div class="foot-act">
       <button class="linkbtn" data-on-click="{{goVoice}}">Settings</button>
       <button class="linkbtn" data-on-click="{{exportData}}">Export progress</button>
@@ -3149,6 +3180,6 @@
 <script defer src="data/art.js?v=1dd8dd9d7b"></script>
 <script defer src="data/passages.js?v=5ada9a1323"></script>
 <script defer src="data/path.js?v=925023841f"></script>
-<script defer src="app.js?v=9513e451e2"></script>
+<script defer src="app.js?v=34c0080b91"></script>
 </body>
 </html>

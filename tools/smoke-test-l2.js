@@ -274,7 +274,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     const reply = { reply: { zh: '你去机场吗？你很聪明。', en: 'Are you going to the airport? You are clever.' }, feedback: { level: 'ok', better: '', why: '' }, suggest: { zh: '我坐地铁去。', en: 'I go by subway.' } };
     return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ content: [{ type: 'text', text: JSON.stringify(reply) }] }) });
   });
-  await page.locator('button', { hasText: 'Open Settings' }).click();
+  await page.locator('button', { hasText: 'Set up Mingming in Settings' }).click();
   await page.fill('input[aria-label="Anthropic API key"]', 'sk-ant-test');
   await page.locator('button', { hasText: 'Save key' }).click();
   await nav('Speak');
@@ -293,6 +293,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(await page.evaluate(() => { const all = JSON.stringify([window.HSK2_WORDS, window.HSK2_GRAMMAR, window.HSK2_SPEAK]); return all.includes('měitiān') && !/měi tiān|wài guó rén|qíng tiān/.test(all); }), 'HSK 2 sentence pinyin writes 每天 as one word (měitiān) and does not split 晴天 or 外国人');
   // ---- settings: level card, no 儿 card, export names the level
   await page.locator('button', { hasText: 'Settings' }).first().click();
+  await page.evaluate(() => window.shanlu.setSec('level'));   // open the Level row
   check((await text()).includes('You are studying HSK 2') && (await text()).includes('儿 endings'), 'Settings has a Level card and the 儿 endings card at HSK 2');
   const dl = page.waitForEvent('download');
   await page.locator('button', { hasText: 'Export progress' }).first().click();
