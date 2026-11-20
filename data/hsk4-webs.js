@@ -8443,7 +8443,7 @@ window.HSK4_WEBS = {
    "cta": "Review your words",
    "sentence": {
     "zh": "他抬起头，转身，慢慢走了。",
-    "py": "Tā tái qǐ tóu, zhuǎn shēn, màn màn zǒu le.",
+    "py": "Tā tái qǐ tóu, zhuǎn shēn, mànmàn zǒu le.",
     "en": "He raised his head, turned around and slowly walked off."
    },
    "words": [

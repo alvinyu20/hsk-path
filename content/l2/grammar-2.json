@@ -242,12 +242,13 @@
   ]
  },
  {
-  "id": "mw",
-  "title": "Counting: 条, 位, 间, 次, 万 and 多",
+  "id": "mw2",
+  "title": "Counting: 条, 位, 间, 次, 万, 多 and floors",
   "covers": [
    25,
    32,
-   33
+   33,
+   42
   ],
   "formula": [
    "Number",
@@ -257,7 +258,8 @@
   "explain": [
    "Every counted noun needs a measure word between the number and the noun. New ones: 条 for long, thin things (一条裤子 'a pair of trousers', 一条鱼 'a fish'); 位 for people, politely (一位老师 'a teacher'); 间 for rooms (一间教室 'a classroom').",
    "To count how many times an action happens, put 次 after the verb and number: 我去过三次中国 'I have been to China three times'; 请再说一次 'Please say it once more'.",
-   "万 means ten thousand: 一万 '10,000'. In speech 20,000 is 两万. 多 after a number means 'more than': 二十多个学生 'more than twenty students'."
+   "万 means ten thousand: 一万 '10,000'. In speech 20,000 is 两万. 多 after a number means 'more than': 二十多个学生 'more than twenty students'.",
+   "楼 after a number names a floor: 三楼 'the third floor'; 我家在五楼 'My home is on the fifth floor'. No measure word and no 第 is needed, and the second floor is 二楼, not 两楼, because the number is a name, like 二号. 几楼？ asks 'Which floor?'."
   ],
   "examples": [
    {
@@ -275,10 +277,15 @@
    {
     "zh": "我去过三次中国。",
     "en": "I have been to China three times."
+   },
+   {
+    "zh": "我家在五楼。",
+    "en": "My home is on the fifth floor."
    }
   ],
   "mistakes": [
-   "Do not put the number straight in front of the noun. 一裤子 is wrong; you need a measure word: 一条裤子."
+   "Do not put the number straight in front of the noun. 一裤子 is wrong; you need a measure word: 一条裤子.",
+   "Floors are named with 二, not 两: 二楼 'the second floor'."
   ],
   "q": [
    {
@@ -318,6 +325,19 @@
     "zh": "这个包两万块。",
     "en": "This bag is 20,000 yuan.",
     "explain": "In speech 20,000 is 两万."
+   },
+   {
+    "t": "cloze",
+    "zh": "洗手间在几楼？",
+    "en": "Which floor is the toilet on?",
+    "blank": "几",
+    "explain": "几楼 asks which floor."
+   },
+   {
+    "t": "order",
+    "zh": "我的房间在三楼。",
+    "en": "My room is on the third floor.",
+    "explain": "Number + 楼 names the floor."
    }
   ]
  },
@@ -794,6 +814,419 @@
     "zh": "再想想吧。",
     "en": "Think about it again.",
     "explain": "Doubling the verb: 想想."
+   }
+  ]
+ },
+ {
+  "id": "asoon",
+  "title": "一…就…: as soon as",
+  "covers": [
+   37
+  ],
+  "formula": [
+   "Subject",
+   "*一",
+   "Action 1",
+   "*就",
+   "Action 2"
+  ],
+  "explain": [
+   "一…就… means 'as soon as … , …': 他一下课就回家 'He goes home as soon as class is over'. 一 goes before the first action and 就 before the second.",
+   "If the two actions have different people doing them, each person comes first in their own half: 我一说，他就懂了 'As soon as I said it, he understood'.",
+   "It can also mean 'whenever': 他一累就头疼 'Whenever he is tired, he gets a headache'."
+  ],
+  "examples": [
+   {
+    "zh": "他一下课就回家。",
+    "en": "He goes home as soon as class is over."
+   },
+   {
+    "zh": "我一到家就给你打电话。",
+    "en": "I will call you as soon as I get home."
+   },
+   {
+    "zh": "我一说，他就懂了。",
+    "en": "As soon as I said it, he understood."
+   },
+   {
+    "zh": "他一累就头疼。",
+    "en": "Whenever he is tired, he gets a headache."
+   }
+  ],
+  "mistakes": [
+   "一 comes after the person: 他一下课就回家, not 一他下课就回家.",
+   "Do not leave out 就: 我一到家就给你打电话."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他一下课就回家。",
+    "en": "He goes home as soon as class is over.",
+    "explain": "一 before the first action, 就 before the second."
+   },
+   {
+    "t": "order",
+    "zh": "我一到家就给你打电话。",
+    "en": "I will call you as soon as I get home.",
+    "explain": "The person, then 一 + first action, then 就 + second action."
+   },
+   {
+    "t": "cloze",
+    "zh": "妈妈一回来就做饭。",
+    "en": "Mom cooks as soon as she gets back.",
+    "blank": "就",
+    "explain": "就 goes before the second action."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: As soon as I said it, he understood?",
+    "options": [
+     "我一说，他就懂了。",
+     "一我说，他就懂了。"
+    ],
+    "correct": 0,
+    "zh": "我一说，他就懂了。",
+    "en": "As soon as I said it, he understood.",
+    "explain": "一 comes after the person, not before."
+   },
+   {
+    "t": "cloze",
+    "zh": "我一看就知道了。",
+    "en": "I knew as soon as I looked.",
+    "blank": "一",
+    "explain": "一 + first action, 就 + what follows at once."
+   }
+  ]
+ },
+ {
+  "id": "lihe",
+  "title": "Split verbs: 帮忙, 睡觉, 说话",
+  "covers": [
+   43
+  ],
+  "formula": [
+   "Verb part",
+   "*了 / amount",
+   "Second part"
+  ],
+  "explain": [
+   "Some two-character verbs are really a verb plus its object: 帮忙 (帮 'help' + 忙), 睡觉, 说话, 游泳, 跑步, 跳舞, 上课, 打电话. Other words can go between the two parts, so they are called split (separable) verbs.",
+   "了 and 过 go after the first part: 我昨天睡了一个好觉 'I slept well last night'; 你游过泳吗？ 'Have you ever swum?'. How long or how much also goes in the middle: 我们说了一会儿话 'We chatted for a while'; 他打了一个小时的电话 'He was on the phone for an hour'.",
+   "The second part is already an object, so no other object can follow the whole verb. To say who you help, use 帮 alone or put the person in the middle: 我帮你 'I will help you'; 你能帮我一个忙吗？ 'Can you do me a favour?'."
+  ],
+  "examples": [
+   {
+    "zh": "你能帮我一个忙吗？",
+    "en": "Can you do me a favour?"
+   },
+   {
+    "zh": "我昨天睡了一个好觉。",
+    "en": "I slept well last night."
+   },
+   {
+    "zh": "我们说了一会儿话。",
+    "en": "We chatted for a while."
+   },
+   {
+    "zh": "他打了一个小时的电话。",
+    "en": "He was on the phone for an hour."
+   }
+  ],
+  "mistakes": [
+   "No object after a split verb: say 我帮你 or 我帮你一个忙, not 我帮忙你.",
+   "了 and how long go in the middle: 我们说了一会儿话, not 我们说话了一会儿."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "你能帮我一个忙吗？",
+    "en": "Can you do me a favour?",
+    "explain": "The person and 一个 go between 帮 and 忙."
+   },
+   {
+    "t": "order",
+    "zh": "我们说了一会儿话。",
+    "en": "We chatted for a while.",
+    "explain": "了 and 一会儿 go between 说 and 话."
+   },
+   {
+    "t": "cloze",
+    "zh": "他打了一个小时的电话。",
+    "en": "He was on the phone for an hour.",
+    "blank": "了",
+    "explain": "了 goes after the first part, 打."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Can you help me?",
+    "options": [
+     "你能帮我吗？",
+     "你能帮忙我吗？"
+    ],
+    "correct": 0,
+    "zh": "你能帮我吗？",
+    "en": "Can you help me?",
+    "explain": "帮忙 cannot take another object; use 帮 + person."
+   },
+   {
+    "t": "order",
+    "zh": "我昨天睡了一个好觉。",
+    "en": "I slept well last night.",
+    "explain": "了 and 一个好 go between 睡 and 觉."
+   }
+  ]
+ },
+ {
+  "id": "adjdouble",
+  "title": "Doubled adjectives and 多…啊!",
+  "covers": [
+   44,
+   45
+  ],
+  "formula": [
+   "*AA / *AABB",
+   "*的 / *地"
+  ],
+  "explain": [
+   "Saying an adjective twice makes a description more vivid: 大大的眼睛 'big eyes', 慢慢地走 'walk slowly'. One-character adjectives double as AA (大大, 高高, 慢慢, 早早); two-character ones double each character, AABB (高兴 → 高高兴兴, 漂亮 → 漂漂亮亮).",
+   "Before a noun a doubled adjective takes 的: 她有大大的眼睛 'She has big eyes'. Before a verb it takes 地: 他慢慢地走过来了 'He walked over slowly'; 孩子们高高兴兴地回家了 'The children went home happily'.",
+   "A doubled adjective already means 'quite, nicely', so do not put 很 or 非常 in front of it.",
+   "多 + adjective + 啊 means 'how …!': 这里多漂亮啊！ 'How beautiful it is here!'; 今天多冷啊！ 'How cold it is today!'. It is an exclamation, not the question 多大？ 'how old?'."
+  ],
+  "examples": [
+   {
+    "zh": "她有大大的眼睛。",
+    "en": "She has big eyes."
+   },
+   {
+    "zh": "他慢慢地走过来了。",
+    "en": "He walked over slowly."
+   },
+   {
+    "zh": "孩子们高高兴兴地回家了。",
+    "en": "The children went home happily."
+   },
+   {
+    "zh": "这里多漂亮啊！",
+    "en": "How beautiful it is here!"
+   }
+  ],
+  "mistakes": [
+   "No 很 before a doubled adjective: 大大的眼睛, not 很大大的眼睛.",
+   "Two-character adjectives double each character: 高高兴兴地回家, not 高兴高兴地回家."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他慢慢地走过来了。",
+    "en": "He walked over slowly.",
+    "explain": "A doubled adjective + 地 goes before the verb."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: The children went home happily?",
+    "options": [
+     "孩子们高高兴兴地回家了。",
+     "孩子们高兴高兴地回家了。"
+    ],
+    "correct": 0,
+    "zh": "孩子们高高兴兴地回家了。",
+    "en": "The children went home happily.",
+    "explain": "Two-character adjectives double as AABB: 高高兴兴."
+   },
+   {
+    "t": "cloze",
+    "zh": "这里多漂亮啊！",
+    "en": "How beautiful it is here!",
+    "blank": "多",
+    "explain": "多 + adjective + 啊 is an exclamation."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: She has big eyes?",
+    "options": [
+     "她有大大的眼睛。",
+     "她有很大大的眼睛。"
+    ],
+    "correct": 0,
+    "zh": "她有大大的眼睛。",
+    "en": "She has big eyes.",
+    "explain": "A doubled adjective already means \"quite\"; no 很."
+   },
+   {
+    "t": "spot",
+    "zh": "他慢慢地走过来了。",
+    "en": "He walked over slowly.",
+    "wrong": "他非常慢慢地走过来了。",
+    "remove": "非常",
+    "explain": "No 非常 before a doubled adjective."
+   }
+  ]
+ },
+ {
+  "id": "biyou",
+  "title": "More comparing: 有 and 比 with 得",
+  "covers": [
+   46,
+   47
+  ],
+  "formula": [
+   "A",
+   "*有 / *比",
+   "B",
+   "Adjective"
+  ],
+  "explain": [
+   "A 有 B + adjective means 'A is as … as B': 你有他高吗？ 'Are you as tall as him?'; 弟弟有我高了 'My younger brother is as tall as me now'. It is used most in questions. Its 'not as … as' form is the 没有 comparison you know: 我没有他高.",
+   "有 + an amount means 'reach, be as much as': 你哥哥有三十岁吗？ 'Is your older brother thirty yet?'.",
+   "To compare how well two people do something, use 得 with 比. Both orders are right: 她比我说得好 and 她说得比我好 'She speaks better than me'. With an object, name it first: 哥哥汉语说得比我好 'My brother speaks Chinese better than me'."
+  ],
+  "examples": [
+   {
+    "zh": "你有他高吗？",
+    "en": "Are you as tall as him?"
+   },
+   {
+    "zh": "弟弟有我高了。",
+    "en": "My younger brother is as tall as me now."
+   },
+   {
+    "zh": "她比我说得好。",
+    "en": "She speaks better than me."
+   },
+   {
+    "zh": "他跑得比我快。",
+    "en": "He runs faster than me."
+   }
+  ],
+  "mistakes": [
+   "No 很 in these comparisons: 她说得比我好, not 她说得比我很好.",
+   "得 goes right after the verb: 她说得比我好 or 她比我说得好, not 她说比我得好."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "你有他高吗？",
+    "en": "Are you as tall as him?",
+    "explain": "A + 有 + B + adjective asks \"as … as\"."
+   },
+   {
+    "t": "order",
+    "zh": "她说得比我好。",
+    "en": "She speaks better than me.",
+    "explain": "Verb + 得 + 比 B + adjective."
+   },
+   {
+    "t": "cloze",
+    "zh": "弟弟有我高了。",
+    "en": "My younger brother is as tall as me now.",
+    "blank": "有",
+    "explain": "有 here means \"reach\": as tall as."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He runs faster than me?",
+    "options": [
+     "他跑得比我快。",
+     "他跑比我得快。"
+    ],
+    "correct": 0,
+    "zh": "他跑得比我快。",
+    "en": "He runs faster than me.",
+    "explain": "得 comes right after the verb."
+   },
+   {
+    "t": "spot",
+    "zh": "她说得比我好。",
+    "en": "She speaks better than me.",
+    "wrong": "她说得比我很好。",
+    "remove": "很",
+    "explain": "No 很 in a 比 sentence."
+   }
+  ]
+ },
+ {
+  "id": "topic2",
+  "title": "Topic first: 她个子很高 and 什么的",
+  "covers": [
+   48,
+   49
+  ],
+  "formula": [
+   "*Topic",
+   "Subject",
+   "Adjective / Verb"
+  ],
+  "explain": [
+   "Chinese often names the topic first and then says something about one part of it: 她个子很高 'She is tall' (her height is high); 我头疼 'I have a headache'; 他身体很好 'He is very healthy'.",
+   "The thing an action is done to can also come first, when it is what you are talking about: 这本书我看完了 'I have finished this book'; 水果都吃完了 'The fruit has all been eaten'.",
+   "什么的 at the end of a list means 'and so on, and things like that': 我喜欢唱歌、跳舞什么的 'I like singing, dancing and things like that'. It sounds casual."
+  ],
+  "examples": [
+   {
+    "zh": "她个子很高。",
+    "en": "She is tall."
+   },
+   {
+    "zh": "我头疼。",
+    "en": "I have a headache."
+   },
+   {
+    "zh": "这本书我看完了。",
+    "en": "I have finished this book."
+   },
+   {
+    "zh": "我喜欢唱歌、跳舞什么的。",
+    "en": "I like singing, dancing and things like that."
+   }
+  ],
+  "mistakes": [
+   "很 goes before the adjective, not before the part: 她个子很高, not 她很个子高.",
+   "什么的 comes after the list: 我买了面包、牛奶什么的."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "她个子很高。",
+    "en": "She is tall.",
+    "explain": "Person, then the part (个子), then 很 高."
+   },
+   {
+    "t": "order",
+    "zh": "这本书我看完了。",
+    "en": "I have finished this book.",
+    "explain": "The thing you talk about can come first."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I have finished this book?",
+    "options": [
+     "这本书我看完了。",
+     "这本书看完我了。"
+    ],
+    "correct": 0,
+    "zh": "这本书我看完了。",
+    "en": "I have finished this book.",
+    "explain": "Topic first, then who did it, then the verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "我买了面包、牛奶什么的。",
+    "en": "I bought bread, milk and things like that.",
+    "blank": "什么",
+    "explain": "什么的 closes a list."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He is very healthy?",
+    "options": [
+     "他身体很好。",
+     "他很身体好。"
+    ],
+    "correct": 0,
+    "zh": "他身体很好。",
+    "en": "He is very healthy.",
+    "explain": "很 goes right before the adjective 好."
    }
   ]
  }

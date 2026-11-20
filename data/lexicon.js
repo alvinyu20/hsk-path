@@ -207,5 +207,9 @@ window.SHANLU_LEXICON = {
 "中国人": "zhōngguórén",
 "天天": "tiāntiān",
 "以便": "yǐbiàn",
-"为的是": "wèideshì"
+"为的是": "wèideshì",
+"大大": "dàdà",
+"慢慢": "mànmàn",
+"早早": "zǎozǎo",
+"高高兴兴": "gāogāoxìngxìng"
 };

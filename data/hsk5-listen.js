@@ -2083,7 +2083,7 @@ window.HSK5_LISTEN = {
   },
   {
    "zh": "这些问题都比较复杂，需要慢慢解决。",
-   "py": "Zhèxiē wèntí dōu bǐjiào fùzá, xūyào màn màn jiějué.",
+   "py": "Zhèxiē wèntí dōu bǐjiào fùzá, xūyào mànmàn jiějué.",
    "en": "These problems are all fairly complicated and need to be solved slowly.",
    "words": [
     {
@@ -2117,14 +2117,9 @@ window.HSK5_LISTEN = {
      "key": "xuyao"
     },
     {
-     "zh": "慢",
-     "py": "màn",
-     "key": "man"
-    },
-    {
-     "zh": "慢",
-     "py": "màn",
-     "key": "man"
+     "zh": "慢慢",
+     "py": "mànmàn",
+     "key": "manman"
     },
     {
      "zh": "解决",

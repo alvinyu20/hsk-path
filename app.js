@@ -297,6 +297,8 @@
   const scnImg = (im) => (im ? 'background-color:' + im.c + ';background-image:url("' + im.u + '")' : '');
   const SCEN_AT = {};
   SCEN.forEach((x, i) => { SCEN_AT[x.id] = i; });
+  // the data's subtitles end in "5 turns" (the whole dialogue), which clashed with the card's own count of the learner's lines: keep only the place
+  SCEN.forEach((x) => { if (x.sub) x.sub = x.sub.replace(/,\s*\d+\s*turns?\s*$/i, ''); });
   const PATH_LVLS = LVLS.filter(n => PATH[n] && (PATH[n].units || []).length);
   const LESSON_AT = {};
   LESSONS.forEach((L, i) => { LESSON_AT[L.id] = i; });
@@ -698,6 +700,9 @@
     try { if (!localStorage.getItem('shanlu-theme-v2:' + KEY)) { localStorage.setItem('shanlu-theme-v2:' + KEY, '1'); if (st.theme === 'dark' && !prefGet('themeSet', false)) st.theme = 'light'; } } catch (e) {}
     // right after the level check the path jumps ahead: today's "steps done" and "words in memory" start again from there, so the check does not count as a day's work
     try { if (localStorage.getItem('shanlu-rebase') === '1') { localStorage.removeItem('shanlu-rebase'); st.pbase = pathDoneCount(st); st.mem0 = memOf(st.ws).words; } } catch (e) {}
+    // 20 Nov 2026: nine HSK 2 and 3 grammar lessons got new sections and new ids (yijing → yijing2 …), so their old scores no longer count and those Path stops
+    // are open again (a one-time reset Alvin asked for). Re-take today's Path baseline once, so the reopened stops do not count against today's steps.
+    try { const rk = 'shanlu-gram-2026-11:' + KEY; if (!localStorage.getItem(rk)) { localStorage.setItem(rk, '1'); if (st.pbase != null) st.pbase = Math.min(st.pbase, pathDoneCount(st)); } } catch (e) {}
     try { const m = JSON.parse(localStorage.getItem('shanlu-placed-msg')); if (m && m.at) { localStorage.removeItem('shanlu-placed-msg'); st.pcNote = 'Level check done: you start at HSK ' + m.at + '. ' + (m.n ? m.n.toLocaleString('en-US') + ' words of ' + (m.top > 1 ? 'HSK 1 to ' + m.top : 'HSK 1') + ' come back in Review, about ' + m.perDay + ' a day from tomorrow, so any slips are caught.' : 'The levels before it are open.'); } } catch (e) {}
     // a saved Review queue can hold a word this view does not have (a word of a locked level, or one that was renamed): drawing it threw and froze the page
     if (Array.isArray(st.rq)) { const n0 = st.rq.length; st.rq = st.rq.filter(z => BANK[itemOf(z).zh] && !staleNew(z, st.ws, st.lrn)); if (n0 && !st.rq.length) st.rcomplete = true; }
@@ -5858,7 +5863,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         trailD:{ src:trD.src, alt:trailAlt, labels:asLabels(trD).concat([youLabel(trD)]) }, trailP:{ src:trP.src, h:trP.h, alt:trailAlt, labels:asLabels(trP).concat(trP.hideYou ? [] : [youLabel(trP)]) },
         dcShow:tasks.length > 0 && (S.dcPaid || S.dcN > 0), dcCls:S.dcPaid ? 'got' : '', dcText:S.dcPaid ? '✓ Treasure chest opened · +' + (S.dcAmt || 0) + ' coins' : 'Finish today\'s plan to open a treasure chest · ' + tasks.filter(t => !t.done).length + ' left',
 
-        todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed: ' + S.mins + ' minutes done.', todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
+        todayBig:S.dayMin + ' of ' + S.mins + ' min', todaySub:minsLeft > 0 ? minsLeft + ' more minute' + (minsLeft === 1 ? '' : 's') + ' closes today\'s ring.' : 'Today\'s ring is closed: ' + S.mins + ' minutes done.', todayBarShow:S.dayMin > 0,   // an empty bar right above the divider read as two stray lines
+        todayPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%',
         mistClearText:mistClear + ' of ' + TOPICS.length + ' fully started', mistTiles, mistHasNear:!!nearBest, mistOpen:S.wmist, toggleMist:() => this.setState({ wmist:!this.state.wmist }), mistToggleText:S.wmist ? 'Hide the topic map' : 'Show all ' + TOPICS.length + ' topics',
         mistNearText:nearBest ? 'Finish ' + nearBest.name + ' (' + (nearBest.tot - nearBest.got) + ' to go)' : '', mistNearGo:() => nearBest && openTopic(nearBest.i),
         mistNote:'A topic is fully started when you have started every word in it.',
@@ -5910,7 +5916,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
 
         // speak
         spPick:S.sview === 'pick', spChat:S.sview !== 'pick', spBack:this.spBack,
-        spCards:SCEN.map((x, i) => { const im = SSCN[x.id]; return { glyph:x.glyph, title:x.title, sub:x.sub, turns:x.you.length + ' turns', img:im ? 'background-color:' + im.c + ';background-image:url("' + im.u + '")' : '', state:S.sres[x.id] ? 'Done' : '', cls:S.sres[x.id] ? 'done' : '', fn:() => this.pickScenario(i), aria:x.title + (S.sres[x.id] ? ', done' : '') }; }),
+        spCards:SCEN.map((x, i) => { const im = SSCN[x.id]; return { glyph:x.glyph, title:x.title, sub:x.sub, turns:x.you.length + ' lines to say', img:im ? 'background-color:' + im.c + ';background-image:url("' + im.u + '")' : '', state:S.sres[x.id] ? 'Done' : '', cls:S.sres[x.id] ? 'done' : '', fn:() => this.pickScenario(i), aria:x.title + (S.sres[x.id] ? ', done' : '') }; }),
         spDoneText:SCEN.filter(x => S.sres[x.id]).length + ' of ' + SCEN.length + ' places visited',
         stageStyle:SSCN[sc.id] ? '--sc:' + SSCN[sc.id].c + ';--scene:url("' + SSCN[sc.id].u + '")' : '', stageCls:SSCN[sc.id] ? 'staged' : '',
         aiStageStyle:aiSceneOf(S) ? '--sc:' + aiSceneOf(S).c + ';--scene:url("' + aiSceneOf(S).u + '")' : '', aiStageCls:aiSceneOf(S) ? 'staged' : '',

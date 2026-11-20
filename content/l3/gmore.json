@@ -2721,5 +2721,941 @@
   "zh": "我得去医院。",
   "en": "I have to go to the hospital.",
   "explain": "得 means must and goes before the verb."
+ },
+ {
+  "p": "g3-53",
+  "t": "mc",
+  "prompt": "Which sentence says: We played basketball all afternoon?",
+  "options": [
+   "我们打篮球打了一个下午。",
+   "我们打篮球了一个下午。"
+  ],
+  "correct": 0,
+  "zh": "我们打篮球打了一个下午。",
+  "en": "We played basketball all afternoon.",
+  "explain": "Say the verb again before the time."
+ },
+ {
+  "p": "g3-53",
+  "t": "cloze",
+  "zh": "她做饭做了一个小时。",
+  "en": "She spent an hour cooking.",
+  "blank": "了",
+  "explain": "Verb + object + verb + 了 + time."
+ },
+ {
+  "p": "g3-53",
+  "t": "order",
+  "zh": "他打电话打了半天。",
+  "en": "He was on the phone for ages.",
+  "explain": "Say 打 again before 了 + time."
+ },
+ {
+  "p": "g3-53",
+  "t": "mc",
+  "prompt": "Which sentence says: I waited for you for a long time?",
+  "options": [
+   "我等你等了很久。",
+   "我等你了很久。"
+  ],
+  "correct": 0,
+  "zh": "我等你等了很久。",
+  "en": "I waited for you for a long time.",
+  "explain": "After the object, the verb comes again."
+ },
+ {
+  "p": "g3-54",
+  "t": "cloze",
+  "zh": "他来中国两年了。",
+  "en": "He has been in China for two years.",
+  "blank": "了",
+  "explain": "Event + time + 了: how long since."
+ },
+ {
+  "p": "g3-54",
+  "t": "mc",
+  "prompt": "Which sentence says: They have been married for ten years?",
+  "options": [
+   "他们结婚十年了。",
+   "他们十年结婚了。"
+  ],
+  "correct": 0,
+  "zh": "他们结婚十年了。",
+  "en": "They have been married for ten years.",
+  "explain": "The time comes after the event."
+ },
+ {
+  "p": "g3-54",
+  "t": "order",
+  "zh": "我们认识五年了。",
+  "en": "We have known each other for five years.",
+  "explain": "Event + time + 了."
+ },
+ {
+  "p": "g3-54",
+  "t": "mc",
+  "prompt": "Which sentence says: He left half an hour ago?",
+  "options": [
+   "他走了半个小时了。",
+   "他半个小时走了。"
+  ],
+  "correct": 0,
+  "zh": "他走了半个小时了。",
+  "en": "He left half an hour ago.",
+  "explain": "The time since he left comes after 走了."
+ },
+ {
+  "p": "g3-55",
+  "t": "order",
+  "zh": "天气一会儿冷，一会儿热。",
+  "en": "The weather is cold one moment and hot the next.",
+  "explain": "一会儿 before each changing state."
+ },
+ {
+  "p": "g3-55",
+  "t": "mc",
+  "prompt": "Which sentence says: He keeps going in and coming out?",
+  "options": [
+   "他一会儿进去，一会儿出来。",
+   "他一边进去，一边出来。"
+  ],
+  "correct": 0,
+  "zh": "他一会儿进去，一会儿出来。",
+  "en": "He keeps going in and coming out.",
+  "explain": "Taking turns: 一会儿…一会儿…."
+ },
+ {
+  "p": "g3-55",
+  "t": "mc",
+  "prompt": "Which sentence says: She watches TV while she eats?",
+  "options": [
+   "她一边吃饭，一边看电视。",
+   "她一会儿吃饭，一会儿看电视。"
+  ],
+  "correct": 0,
+  "zh": "她一边吃饭，一边看电视。",
+  "en": "She watches TV while she eats.",
+  "explain": "At the same time: 一边…一边…."
+ },
+ {
+  "p": "g3-55",
+  "t": "cloze",
+  "zh": "他一会儿说要去，一会儿又说不去了。",
+  "en": "One moment he says he will go, the next he says he won't.",
+  "blank": "又",
+  "explain": "一会儿…一会儿又…: he keeps changing."
+ },
+ {
+  "p": "g3-56",
+  "t": "mc",
+  "prompt": "Which sentence says: This bag is no more expensive than that one?",
+  "options": [
+   "这个包不比那个贵。",
+   "这个包比那个不贵。"
+  ],
+  "correct": 0,
+  "zh": "这个包不比那个贵。",
+  "en": "This bag is no more expensive than that one.",
+  "explain": "不 goes before 比."
+ },
+ {
+  "p": "g3-56",
+  "t": "cloze",
+  "zh": "我的汉语不比他差。",
+  "en": "My Chinese is no worse than his.",
+  "blank": "不",
+  "explain": "A 不比 B + adjective."
+ },
+ {
+  "p": "g3-56",
+  "t": "order",
+  "zh": "这里的菜不比饭店的差。",
+  "en": "The food here is no worse than a restaurant's.",
+  "explain": "不比 + B + adjective."
+ },
+ {
+  "p": "g3-56",
+  "t": "mc",
+  "prompt": "Which sentence says: She is not as tall as me?",
+  "options": [
+   "她没有我高。",
+   "她不比我高。"
+  ],
+  "correct": 0,
+  "zh": "她没有我高。",
+  "en": "She is not as tall as me.",
+  "explain": "没有 means \"not as … as\"; 不比 would only mean \"not taller\"."
+ },
+ {
+  "p": "g3-57",
+  "t": "cloze",
+  "zh": "他比我晚来了半个小时。",
+  "en": "He came half an hour later than me.",
+  "blank": "晚",
+  "explain": "晚 before the verb, the amount after it."
+ },
+ {
+  "p": "g3-57",
+  "t": "mc",
+  "prompt": "Which sentence says: I bought two more than you?",
+  "options": [
+   "我比你多买了两个。",
+   "我比你买多了两个。"
+  ],
+  "correct": 0,
+  "zh": "我比你多买了两个。",
+  "en": "I bought two more than you.",
+  "explain": "多 before the verb."
+ },
+ {
+  "p": "g3-57",
+  "t": "order",
+  "zh": "我比他早到十分钟。",
+  "en": "I arrived ten minutes earlier than him.",
+  "explain": "早 + verb + amount."
+ },
+ {
+  "p": "g3-57",
+  "t": "mc",
+  "prompt": "Which sentence says: She slept an hour less than me?",
+  "options": [
+   "她比我少睡了一个小时。",
+   "她比我睡少了一个小时。"
+  ],
+  "correct": 0,
+  "zh": "她比我少睡了一个小时。",
+  "en": "She slept an hour less than me.",
+  "explain": "少 before the verb."
+ },
+ {
+  "p": "g3-58",
+  "t": "order",
+  "zh": "我好像在哪儿见过这个人。",
+  "en": "I think I have seen this person somewhere.",
+  "explain": "哪儿 here means \"somewhere\"."
+ },
+ {
+  "p": "g3-58",
+  "t": "mc",
+  "prompt": "Which sentence says: I want to buy him something?",
+  "options": [
+   "我想给他买一点儿什么。",
+   "我想给他买什么？"
+  ],
+  "correct": 0,
+  "zh": "我想给他买一点儿什么。",
+  "en": "I want to buy him something.",
+  "explain": "一点儿什么 in a statement: something."
+ },
+ {
+  "p": "g3-58",
+  "t": "order",
+  "zh": "你想吃一点儿什么吗？",
+  "en": "Would you like something to eat?",
+  "explain": "With 吗, 什么 means \"something\"."
+ },
+ {
+  "p": "g3-58",
+  "t": "mc",
+  "prompt": "Which sentence asks: Did you go anywhere fun at the weekend?",
+  "options": [
+   "周末你去哪儿玩了吗？",
+   "周末你去哪儿玩了？"
+  ],
+  "correct": 0,
+  "zh": "周末你去哪儿玩了吗？",
+  "en": "Did you go anywhere fun at the weekend?",
+  "explain": "With 吗, 哪儿 means \"anywhere\"; without it you ask \"where?\"."
+ },
+ {
+  "p": "g3-59",
+  "t": "order",
+  "zh": "前边开过来一辆出租车。",
+  "en": "A taxi came driving up ahead.",
+  "explain": "Place, verb + direction, then what came."
+ },
+ {
+  "p": "g3-59",
+  "t": "mc",
+  "prompt": "Which sentence says: A guest came to my home today?",
+  "options": [
+   "今天我家来了一个客人。",
+   "今天一个客人来了我家。"
+  ],
+  "correct": 0,
+  "zh": "今天我家来了一个客人。",
+  "en": "A guest came to my home today.",
+  "explain": "Place first, who came last."
+ },
+ {
+  "p": "g3-59",
+  "t": "cloze",
+  "zh": "昨天我们公司走了两个人。",
+  "en": "Two people left our company yesterday.",
+  "blank": "走",
+  "explain": "Place + 走了 + who left."
+ },
+ {
+  "p": "g3-59",
+  "t": "mc",
+  "prompt": "Which sentence says: A cat comes running out of the room?",
+  "options": [
+   "房间里跑出来一只猫。",
+   "一只猫房间里跑出来。"
+  ],
+  "correct": 0,
+  "zh": "房间里跑出来一只猫。",
+  "en": "A cat comes running out of the room.",
+  "explain": "Place, verb + direction, then what appeared."
+ },
+ {
+  "p": "g3-60",
+  "t": "mc",
+  "prompt": "Which sentence reminds a friend: You said you were busy today, didn't you?",
+  "options": [
+   "你不是说今天很忙吗？",
+   "你说今天很忙吗？"
+  ],
+  "correct": 0,
+  "zh": "你不是说今天很忙吗？",
+  "en": "You said you were busy today, didn't you?",
+  "explain": "不是…吗？ reminds; the plain question just asks."
+ },
+ {
+  "p": "g3-60",
+  "t": "cloze",
+  "zh": "他不是回家了吗？怎么还在这儿？",
+  "en": "Hasn't he gone home? Why is he still here?",
+  "blank": "吗",
+  "explain": "不是 … 吗？ shows surprise."
+ },
+ {
+  "p": "g3-60",
+  "t": "order",
+  "zh": "你不是会说汉语吗？",
+  "en": "You can speak Chinese, can't you?",
+  "explain": "不是 + what you both know + 吗？"
+ },
+ {
+  "p": "g3-60",
+  "t": "mc",
+  "prompt": "Which sentence says: Isn't today your birthday?",
+  "options": [
+   "今天不是你的生日吗？",
+   "今天是你的生日不吗？"
+  ],
+  "correct": 0,
+  "zh": "今天不是你的生日吗？",
+  "en": "Isn't today your birthday?",
+  "explain": "不是 goes before what you are checking."
+ },
+ {
+  "p": "g3-61",
+  "t": "mc",
+  "prompt": "Which sentence says firmly: This dish really is delicious?",
+  "options": [
+   "这个菜是很好吃的。",
+   "这个菜是很好吃。"
+  ],
+  "correct": 0,
+  "zh": "这个菜是很好吃的。",
+  "en": "This dish really is delicious.",
+  "explain": "是…的 needs both parts."
+ },
+ {
+  "p": "g3-61",
+  "t": "order",
+  "zh": "他是会来的。",
+  "en": "He will definitely come.",
+  "explain": "是 + view + 的."
+ },
+ {
+  "p": "g3-61",
+  "t": "cloze",
+  "zh": "学好汉语是不容易的。",
+  "en": "Learning Chinese well really is not easy.",
+  "blank": "是",
+  "explain": "是 … 的 around the description."
+ },
+ {
+  "p": "g3-61",
+  "t": "mc",
+  "prompt": "Which sentence says firmly: What you said is right?",
+  "options": [
+   "你说的是对的。",
+   "你说的是对。"
+  ],
+  "correct": 0,
+  "zh": "你说的是对的。",
+  "en": "What you said is right.",
+  "explain": "Close 是…的 with 的."
+ },
+ {
+  "p": "g3-62",
+  "t": "mc",
+  "prompt": "Which sentence says: What's the hurry? There is still time.",
+  "options": [
+   "急什么？还有时间呢。",
+   "急吗？还有时间呢。"
+  ],
+  "correct": 0,
+  "zh": "急什么？还有时间呢。",
+  "en": "What's the hurry? There is still time.",
+  "explain": "Adjective + 什么 pushes back."
+ },
+ {
+  "p": "g3-62",
+  "t": "cloze",
+  "zh": "哭什么啊？明天再考一次吧。",
+  "en": "What is there to cry about? Take it again tomorrow.",
+  "blank": "什么",
+  "explain": "Verb + 什么啊."
+ },
+ {
+  "p": "g3-62",
+  "t": "order",
+  "zh": "你难过什么啊？",
+  "en": "What are you sad about?",
+  "explain": "Adjective + 什么啊."
+ },
+ {
+  "p": "g3-62",
+  "t": "mc",
+  "prompt": "Which sentence says (to a friend): What is there to be afraid of!",
+  "options": [
+   "怕什么啊！",
+   "什么怕啊！"
+  ],
+  "correct": 0,
+  "zh": "怕什么啊！",
+  "en": "What is there to be afraid of!",
+  "explain": "什么 comes after the verb."
+ },
+ {
+  "p": "g3-63",
+  "t": "cloze",
+  "zh": "这些孩子个个都很聪明。",
+  "en": "Every one of these children is clever.",
+  "blank": "都",
+  "explain": "个个 goes with 都."
+ },
+ {
+  "p": "g3-63",
+  "t": "mc",
+  "prompt": "Which sentence says: Every one of these apples is big?",
+  "options": [
+   "这些苹果个个都很大。",
+   "这些苹果个都很大。"
+  ],
+  "correct": 0,
+  "zh": "这些苹果个个都很大。",
+  "en": "Every one of these apples is big.",
+  "explain": "Say the measure word twice."
+ },
+ {
+  "p": "g3-63",
+  "t": "order",
+  "zh": "他的照片张张都很好看。",
+  "en": "Every one of his photos is good-looking.",
+  "explain": "Noun, 张张, 都, description."
+ },
+ {
+  "p": "g3-63",
+  "t": "mc",
+  "prompt": "Which sentence says: Every one of the students came?",
+  "options": [
+   "学生们个个都来了。",
+   "学生们个个来都了。"
+  ],
+  "correct": 0,
+  "zh": "学生们个个都来了。",
+  "en": "Every one of the students came.",
+  "explain": "都 goes before the verb."
+ },
+ {
+  "p": "g3-64",
+  "t": "mc",
+  "prompt": "Which sentence says: My Chinese is getting better day by day?",
+  "options": [
+   "我的汉语一天一天地好起来了。",
+   "我的汉语天天一地好起来了。"
+  ],
+  "correct": 0,
+  "zh": "我的汉语一天一天地好起来了。",
+  "en": "My Chinese is getting better day by day.",
+  "explain": "一天一天 + 地."
+ },
+ {
+  "p": "g3-64",
+  "t": "order",
+  "zh": "请一个一个地说。",
+  "en": "Please speak one at a time.",
+  "explain": "一个一个 + 地 + verb."
+ },
+ {
+  "p": "g3-64",
+  "t": "cloze",
+  "zh": "我们一点一点地做吧。",
+  "en": "Let's do it little by little.",
+  "blank": "地",
+  "explain": "一点一点 + 地 + verb."
+ },
+ {
+  "p": "g3-64",
+  "t": "mc",
+  "prompt": "Which sentence says: Little by little, I understood?",
+  "options": [
+   "我一点一点地明白了。",
+   "我一点地一点明白了。"
+  ],
+  "correct": 0,
+  "zh": "我一点一点地明白了。",
+  "en": "Little by little, I understood.",
+  "explain": "地 comes after the whole doubled phrase."
+ },
+ {
+  "p": "g3-65",
+  "t": "cloze",
+  "zh": "今天不冷不热，我们去公园吧。",
+  "en": "Today is neither cold nor hot; let's go to the park.",
+  "blank": "冷",
+  "explain": "不A不B with two opposites."
+ },
+ {
+  "p": "g3-65",
+  "t": "mc",
+  "prompt": "Which sentence says: Just the right number of people came?",
+  "options": [
+   "来的人不多不少。",
+   "来的人不多不大。"
+  ],
+  "correct": 0,
+  "zh": "来的人不多不少。",
+  "en": "Just the right number of people came.",
+  "explain": "多 and 少 are opposites."
+ },
+ {
+  "p": "g3-65",
+  "t": "order",
+  "zh": "这件衣服不大不小。",
+  "en": "This top is neither too big nor too small.",
+  "explain": "不大不小: just right."
+ },
+ {
+  "p": "g3-65",
+  "t": "mc",
+  "prompt": "Which sentence says: He arrived neither early nor late?",
+  "options": [
+   "他来得不早不晚。",
+   "他来得不早不快。"
+  ],
+  "correct": 0,
+  "zh": "他来得不早不晚。",
+  "en": "He arrived neither early nor late.",
+  "explain": "早 and 晚 are opposites."
+ },
+ {
+  "p": "g3-66",
+  "t": "mc",
+  "prompt": "Which sentence says: These dishes all look delicious?",
+  "options": [
+   "这些菜看上去都很好吃。",
+   "这些菜看都上去很好吃。"
+  ],
+  "correct": 0,
+  "zh": "这些菜看上去都很好吃。",
+  "en": "These dishes all look delicious.",
+  "explain": "看上去 stays together."
+ },
+ {
+  "p": "g3-66",
+  "t": "cloze",
+  "zh": "她看上去很年轻。",
+  "en": "She looks young.",
+  "blank": "看",
+  "explain": "看上去: looks."
+ },
+ {
+  "p": "g3-66",
+  "t": "order",
+  "zh": "这个房间看上去很干净。",
+  "en": "This room looks clean.",
+  "explain": "Thing + 看上去 + description."
+ },
+ {
+  "p": "g3-66",
+  "t": "mc",
+  "prompt": "Which sentence says: He looks very happy today?",
+  "options": [
+   "他今天看上去很高兴。",
+   "他今天上去看很高兴。"
+  ],
+  "correct": 0,
+  "zh": "他今天看上去很高兴。",
+  "en": "He looks very happy today.",
+  "explain": "看 comes before 上去."
+ },
+ {
+  "p": "g3-67",
+  "t": "cloze",
+  "zh": "一般来说，周末人比较多。",
+  "en": "Generally speaking, there are more people at weekends.",
+  "blank": "一般",
+  "explain": "一般来说 starts the sentence."
+ },
+ {
+  "p": "g3-67",
+  "t": "mc",
+  "prompt": "Which sentence says: Generally speaking, children like animals?",
+  "options": [
+   "一般来说，孩子都喜欢动物。",
+   "来说一般，孩子都喜欢动物。"
+  ],
+  "correct": 0,
+  "zh": "一般来说，孩子都喜欢动物。",
+  "en": "Generally speaking, children like animals.",
+  "explain": "一般 comes before 来说."
+ },
+ {
+  "p": "g3-67",
+  "t": "order",
+  "zh": "一般来说，这里冬天不太冷。",
+  "en": "Generally speaking, winters here are not very cold.",
+  "explain": "一般来说 + the general statement."
+ },
+ {
+  "p": "g3-67",
+  "t": "mc",
+  "prompt": "Which sentence says: Generally speaking, I go to bed at eleven?",
+  "options": [
+   "一般来说，我十一点睡觉。",
+   "一般来说，我十一点睡觉了。"
+  ],
+  "correct": 0,
+  "zh": "一般来说，我十一点睡觉。",
+  "en": "Generally speaking, I go to bed at eleven.",
+  "explain": "A habit needs no 了."
+ },
+ {
+  "p": "g3-68",
+  "t": "cloze",
+  "zh": "不一会儿，他就回来了。",
+  "en": "Before long, he was back.",
+  "blank": "就",
+  "explain": "不一会儿 … 就 …."
+ },
+ {
+  "p": "g3-68",
+  "t": "order",
+  "zh": "不一会儿，客人就到了。",
+  "en": "Before long, the guests arrived.",
+  "explain": "不一会儿, then 就 + what happened."
+ },
+ {
+  "p": "g3-68",
+  "t": "mc",
+  "prompt": "Which sentence says: Before long, everyone had left?",
+  "options": [
+   "不一会儿，大家就走了。",
+   "一会儿不，大家就走了。"
+  ],
+  "correct": 0,
+  "zh": "不一会儿，大家就走了。",
+  "en": "Before long, everyone had left.",
+  "explain": "不 comes first."
+ },
+ {
+  "p": "g3-68",
+  "t": "order",
+  "zh": "不一会儿，菜就做好了。",
+  "en": "Before long, the food was ready.",
+  "explain": "不一会儿 at the start, 就 before the verb."
+ },
+ {
+  "p": "g3-69",
+  "t": "cloze",
+  "zh": "这个电影不怎么样。",
+  "en": "This film is not great.",
+  "blank": "怎么样",
+  "explain": "不怎么样: not great."
+ },
+ {
+  "p": "g3-69",
+  "t": "mc",
+  "prompt": "A friend asks how the new restaurant was. Which answer means \"not great\"?",
+  "options": [
+   "不怎么样。",
+   "怎么样？"
+  ],
+  "correct": 0,
+  "zh": "不怎么样。",
+  "en": "Not great.",
+  "explain": "不怎么样 is the answer; 怎么样？ asks."
+ },
+ {
+  "p": "g3-69",
+  "t": "order",
+  "zh": "我觉得这些照片不怎么样。",
+  "en": "I think these photos are not great.",
+  "explain": "不怎么样 at the end."
+ },
+ {
+  "p": "g3-69",
+  "t": "mc",
+  "prompt": "Which sentence says: His Chinese is not great?",
+  "options": [
+   "他的汉语不怎么样。",
+   "他的汉语怎么样不。"
+  ],
+  "correct": 0,
+  "zh": "他的汉语不怎么样。",
+  "en": "His Chinese is not great.",
+  "explain": "不 comes before 怎么样."
+ },
+ {
+  "p": "g3-70",
+  "t": "mc",
+  "prompt": "Which sentence says: Starting next week, I will cycle to work?",
+  "options": [
+   "从下个星期起，我骑自行车上班。",
+   "从下个星期，我骑自行车上班起。"
+  ],
+  "correct": 0,
+  "zh": "从下个星期起，我骑自行车上班。",
+  "en": "Starting next week, I will cycle to work.",
+  "explain": "起 closes the time."
+ },
+ {
+  "p": "g3-70",
+  "t": "cloze",
+  "zh": "从今天起，我不喝酒了。",
+  "en": "From today on, I am not drinking any more.",
+  "blank": "起",
+  "explain": "从 + time + 起."
+ },
+ {
+  "p": "g3-70",
+  "t": "order",
+  "zh": "从那天起，他每天都锻炼。",
+  "en": "From that day on, he has exercised every day.",
+  "explain": "从那天起 at the start."
+ },
+ {
+  "p": "g3-70",
+  "t": "mc",
+  "prompt": "Which sentence says: From now on, I will study hard?",
+  "options": [
+   "从现在起，我要努力学习。",
+   "现在从起，我要努力学习。"
+  ],
+  "correct": 0,
+  "zh": "从现在起，我要努力学习。",
+  "en": "From now on, I will study hard.",
+  "explain": "从 comes before the time."
+ },
+ {
+  "p": "g3-71",
+  "t": "cloze",
+  "zh": "在生活中，我们会遇到很多问题。",
+  "en": "In life, we will meet many problems.",
+  "blank": "中",
+  "explain": "在 + noun + 中: in."
+ },
+ {
+  "p": "g3-71",
+  "t": "mc",
+  "prompt": "Which sentence says: When it comes to work, he is very serious?",
+  "options": [
+   "在工作上，他很认真。",
+   "在工作，他很认真上。"
+  ],
+  "correct": 0,
+  "zh": "在工作上，他很认真。",
+  "en": "When it comes to work, he is very serious.",
+  "explain": "在…上 goes at the start."
+ },
+ {
+  "p": "g3-71",
+  "t": "order",
+  "zh": "在学习上，他帮了我很多。",
+  "en": "With my studies, he helped me a lot.",
+  "explain": "在 + area + 上, then the rest."
+ },
+ {
+  "p": "g3-71",
+  "t": "mc",
+  "prompt": "Which sentence says: On this matter, I agree with you?",
+  "options": [
+   "在这件事情上，我同意你。",
+   "在这件事情中上，我同意你。"
+  ],
+  "correct": 0,
+  "zh": "在这件事情上，我同意你。",
+  "en": "On this matter, I agree with you.",
+  "explain": "在…上: on this matter."
+ },
+ {
+  "p": "g3-72",
+  "t": "mc",
+  "prompt": "Which sentence says: For children, this book is too hard?",
+  "options": [
+   "对孩子来说，这本书太难了。",
+   "对孩子说，这本书太难了。"
+  ],
+  "correct": 0,
+  "zh": "对孩子来说，这本书太难了。",
+  "en": "For children, this book is too hard.",
+  "explain": "对…来说 needs 来."
+ },
+ {
+  "p": "g3-72",
+  "t": "cloze",
+  "zh": "对我来说，健康最重要。",
+  "en": "For me, health matters most.",
+  "blank": "对",
+  "explain": "对 + person + 来说."
+ },
+ {
+  "p": "g3-72",
+  "t": "order",
+  "zh": "对外国人来说，汉字很难。",
+  "en": "For foreigners, Chinese characters are hard.",
+  "explain": "对 + people + 来说 at the start."
+ },
+ {
+  "p": "g3-72",
+  "t": "mc",
+  "prompt": "Which sentence says: For him, it is a good chance?",
+  "options": [
+   "对他来说，这是一个好机会。",
+   "对他来，这是一个好机会说。"
+  ],
+  "correct": 0,
+  "zh": "对他来说，这是一个好机会。",
+  "en": "For him, it is a good chance.",
+  "explain": "来说 stays together."
+ },
+ {
+  "p": "g3-73",
+  "t": "order",
+  "zh": "那个穿红色衣服的女孩儿是谁？",
+  "en": "Who is that girl in red?",
+  "explain": "那个, then the description + 的, then the noun."
+ },
+ {
+  "p": "g3-73",
+  "t": "mc",
+  "prompt": "Which sentence says: The new phone I bought yesterday is lost?",
+  "options": [
+   "我昨天新买的手机丢了。",
+   "我新昨天买的手机丢了。"
+  ],
+  "correct": 0,
+  "zh": "我昨天新买的手机丢了。",
+  "en": "The new phone I bought yesterday is lost.",
+  "explain": "The time 昨天 comes before 新买."
+ },
+ {
+  "p": "g3-73",
+  "t": "cloze",
+  "zh": "那两个新来的同学是哪国人？",
+  "en": "Which country are those two new classmates from?",
+  "blank": "两",
+  "explain": "那 + number + measure word, then the description."
+ },
+ {
+  "p": "g3-73",
+  "t": "mc",
+  "prompt": "Which sentence says: I really like that book you gave me?",
+  "options": [
+   "我很喜欢你送给我的那本书。",
+   "我很喜欢那你送给我的本书。"
+  ],
+  "correct": 0,
+  "zh": "我很喜欢你送给我的那本书。",
+  "en": "I really like that book you gave me.",
+  "explain": "Keep 那本 together."
+ },
+ {
+  "p": "g3-74",
+  "t": "mc",
+  "prompt": "Which sentence says: Have you seen my pen?",
+  "options": [
+   "你看到我的笔了吗？",
+   "你看我的笔到了吗？"
+  ],
+  "correct": 0,
+  "zh": "你看到我的笔了吗？",
+  "en": "Have you seen my pen?",
+  "explain": "到 goes right after the verb."
+ },
+ {
+  "p": "g3-74",
+  "t": "cloze",
+  "zh": "小鸟飞走了。",
+  "en": "The little bird flew away.",
+  "blank": "走",
+  "explain": "Verb + 走: away."
+ },
+ {
+  "p": "g3-74",
+  "t": "order",
+  "zh": "我去买票了，可是没买到。",
+  "en": "I went to buy tickets but did not manage to get any.",
+  "explain": "没 + verb + 到."
+ },
+ {
+  "p": "g3-74",
+  "t": "mc",
+  "prompt": "Which sentence says: Remember, don't be late!",
+  "options": [
+   "记住，别迟到！",
+   "记到，别迟到！"
+  ],
+  "correct": 0,
+  "zh": "记住，别迟到！",
+  "en": "Remember, don't be late!",
+  "explain": "记住: remember for good."
+ },
+ {
+  "p": "g3-75",
+  "t": "mc",
+  "prompt": "Which sentence says: She got into a good university?",
+  "options": [
+   "她考上了一个好大学。",
+   "她考到了一个好大学。"
+  ],
+  "correct": 0,
+  "zh": "她考上了一个好大学。",
+  "en": "She got into a good university.",
+  "explain": "For getting into a school use 考上."
+ },
+ {
+  "p": "g3-75",
+  "t": "order",
+  "zh": "我们终于吃上饭了。",
+  "en": "We finally got to eat.",
+  "explain": "Verb + 上: finally got to."
+ },
+ {
+  "p": "g3-75",
+  "t": "cloze",
+  "zh": "他爱上了一个中国女孩儿。",
+  "en": "He fell in love with a Chinese girl.",
+  "blank": "上",
+  "explain": "爱上: fall in love with."
+ },
+ {
+  "p": "g3-75",
+  "t": "mc",
+  "prompt": "Which sentence says: They finally got to live in a new home?",
+  "options": [
+   "他们终于住上了新房子。",
+   "他们终于住到了新房子上。"
+  ],
+  "correct": 0,
+  "zh": "他们终于住上了新房子。",
+  "en": "They finally got to live in a new home.",
+  "explain": "住上: get to live in."
  }
 ]

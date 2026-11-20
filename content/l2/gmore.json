@@ -2049,5 +2049,540 @@
   "wrong": "你很问问老师。",
   "remove": "很",
   "explain": "Do not put 很 before a doubled verb."
+ },
+ {
+  "p": "g2-37",
+  "t": "cloze",
+  "zh": "他一累就头疼。",
+  "en": "Whenever he is tired, he gets a headache.",
+  "blank": "就",
+  "explain": "一…就… can mean \"whenever\"."
+ },
+ {
+  "p": "g2-37",
+  "t": "mc",
+  "prompt": "Which sentence says: She went to sleep as soon as she got home?",
+  "options": [
+   "她一到家就睡觉了。",
+   "她到家一就睡觉了。"
+  ],
+  "correct": 0,
+  "zh": "她一到家就睡觉了。",
+  "en": "She went to sleep as soon as she got home.",
+  "explain": "一 goes before the first action."
+ },
+ {
+  "p": "g2-37",
+  "t": "order",
+  "zh": "我一看见她就笑了。",
+  "en": "I smiled as soon as I saw her.",
+  "explain": "一 + first action, 就 + second action."
+ },
+ {
+  "p": "g2-37",
+  "t": "cloze",
+  "zh": "天一冷，我就不想出门。",
+  "en": "As soon as it gets cold, I do not want to go out.",
+  "blank": "一",
+  "explain": "Each half has its own subject: 天一冷，我就…."
+ },
+ {
+  "p": "g2-37",
+  "t": "mc",
+  "prompt": "Which sentence says: As soon as the teacher came in, the students stopped talking?",
+  "options": [
+   "老师一进来，学生们就不说话了。",
+   "老师进来一，学生们就不说话了。"
+  ],
+  "correct": 0,
+  "zh": "老师一进来，学生们就不说话了。",
+  "en": "As soon as the teacher came in, the students stopped talking.",
+  "explain": "一 comes before the verb, not after it."
+ },
+ {
+  "p": "g2-38",
+  "t": "spot",
+  "zh": "我还没买票呢。",
+  "en": "I have not bought the tickets yet.",
+  "wrong": "我还没买了票呢。",
+  "remove": "了",
+  "explain": "No 了 with 没."
+ },
+ {
+  "p": "g2-38",
+  "t": "cloze",
+  "zh": "飞机还没到呢。",
+  "en": "The plane has not arrived yet.",
+  "blank": "没",
+  "explain": "还没 + verb: not yet."
+ },
+ {
+  "p": "g2-38",
+  "t": "order",
+  "zh": "我还没想好呢。",
+  "en": "I have not thought it through yet.",
+  "explain": "还没 + verb + 呢."
+ },
+ {
+  "p": "g2-38",
+  "t": "mc",
+  "prompt": "Someone asks 你吃饭了吗？ You have not eaten. Which answer fits?",
+  "options": [
+   "还没呢。",
+   "还不呢。"
+  ],
+  "correct": 0,
+  "zh": "还没呢。",
+  "en": "Not yet.",
+  "explain": "The short answer for \"not yet\" is 还没呢."
+ },
+ {
+  "p": "g2-39",
+  "t": "cloze",
+  "zh": "都十点了，他还在睡觉。",
+  "en": "It is already ten and he is still sleeping.",
+  "blank": "都",
+  "explain": "都…了: later than expected."
+ },
+ {
+  "p": "g2-39",
+  "t": "mc",
+  "prompt": "Which sentence says: You are already twenty!",
+  "options": [
+   "你都二十岁了！",
+   "你都二十岁！"
+  ],
+  "correct": 0,
+  "zh": "你都二十岁了！",
+  "en": "You are already twenty!",
+  "explain": "都…了 needs 了 at the end."
+ },
+ {
+  "p": "g2-39",
+  "t": "order",
+  "zh": "都十二点了，快睡觉吧。",
+  "en": "It is already twelve, go to sleep.",
+  "explain": "都 + time + 了."
+ },
+ {
+  "p": "g2-39",
+  "t": "mc",
+  "prompt": "Which sentence says: It is already Friday, time goes fast?",
+  "options": [
+   "都星期五了，时间过得真快。",
+   "都星期五，时间过得真快。"
+  ],
+  "correct": 0,
+  "zh": "都星期五了，时间过得真快。",
+  "en": "It is already Friday, time goes fast.",
+  "explain": "Keep the 了 after the time."
+ },
+ {
+  "p": "g2-40",
+  "t": "cloze",
+  "zh": "我请你喝咖啡吧。",
+  "en": "Let me invite you for a coffee.",
+  "blank": "请",
+  "explain": "请 + person + verb: invite, treat."
+ },
+ {
+  "p": "g2-40",
+  "t": "order",
+  "zh": "爸爸叫我去洗手。",
+  "en": "Dad told me to go and wash my hands.",
+  "explain": "叫 + person + what to do."
+ },
+ {
+  "p": "g2-40",
+  "t": "mc",
+  "prompt": "Which sentence says: She invited me to her home?",
+  "options": [
+   "她请我去她家。",
+   "她请去她家我。"
+  ],
+  "correct": 0,
+  "zh": "她请我去她家。",
+  "en": "She invites me to her home.",
+  "explain": "The person comes right after 请."
+ },
+ {
+  "p": "g2-40",
+  "t": "order",
+  "zh": "朋友请我们吃饭。",
+  "en": "A friend invites us to a meal.",
+  "explain": "请 + people + verb."
+ },
+ {
+  "p": "g2-41",
+  "t": "cloze",
+  "zh": "他送给妈妈一些花。",
+  "en": "He gave Mom some flowers.",
+  "blank": "给",
+  "explain": "Verb + 给 + person."
+ },
+ {
+  "p": "g2-41",
+  "t": "order",
+  "zh": "这是我送给你的。",
+  "en": "This is my present to you.",
+  "explain": "送给 + person."
+ },
+ {
+  "p": "g2-41",
+  "t": "mc",
+  "prompt": "Which sentence says: I gave my friend a watch?",
+  "options": [
+   "我送给朋友一个手表。",
+   "我送朋友给一个手表。"
+  ],
+  "correct": 0,
+  "zh": "我送给朋友一个手表。",
+  "en": "I gave my friend a watch.",
+  "explain": "给 comes right after the verb."
+ },
+ {
+  "p": "g2-41",
+  "t": "cloze",
+  "zh": "拿给我看看。",
+  "en": "Hand it to me, let me have a look.",
+  "blank": "拿",
+  "explain": "拿给 + person: hand to."
+ },
+ {
+  "p": "g2-42",
+  "t": "mc",
+  "prompt": "Which sentence says: My home is on the fifth floor?",
+  "options": [
+   "我家在五楼。",
+   "我家在五个楼。"
+  ],
+  "correct": 0,
+  "zh": "我家在五楼。",
+  "en": "My home is on the fifth floor.",
+  "explain": "No measure word: number + 楼."
+ },
+ {
+  "p": "g2-42",
+  "t": "cloze",
+  "zh": "我们的教室在二楼。",
+  "en": "Our classroom is on the second floor.",
+  "blank": "楼",
+  "explain": "Number + 楼 is the floor."
+ },
+ {
+  "p": "g2-42",
+  "t": "mc",
+  "prompt": "Which sentence says: The coffee shop is on the second floor?",
+  "options": [
+   "咖啡店在二楼。",
+   "咖啡店在两楼。"
+  ],
+  "correct": 0,
+  "zh": "咖啡店在二楼。",
+  "en": "The coffee shop is on the second floor.",
+  "explain": "Floors are names: 二楼, not 两楼."
+ },
+ {
+  "p": "g2-42",
+  "t": "order",
+  "zh": "你家在几楼？",
+  "en": "Which floor is your home on?",
+  "explain": "几楼 asks which floor."
+ },
+ {
+  "p": "g2-43",
+  "t": "mc",
+  "prompt": "Which sentence says: We chatted for a while?",
+  "options": [
+   "我们说了一会儿话。",
+   "我们说话了一会儿。"
+  ],
+  "correct": 0,
+  "zh": "我们说了一会儿话。",
+  "en": "We chatted for a while.",
+  "explain": "How long goes between 说 and 话."
+ },
+ {
+  "p": "g2-43",
+  "t": "mc",
+  "prompt": "Which sentence says: Have you ever swum?",
+  "options": [
+   "你游过泳吗？",
+   "你游泳过吗？"
+  ],
+  "correct": 0,
+  "zh": "你游过泳吗？",
+  "en": "Have you ever swum?",
+  "explain": "过 goes after the first part, 游."
+ },
+ {
+  "p": "g2-43",
+  "t": "cloze",
+  "zh": "你能帮我一个忙吗？",
+  "en": "Can you do me a favour?",
+  "blank": "忙",
+  "explain": "帮 + person + 一个 + 忙."
+ },
+ {
+  "p": "g2-43",
+  "t": "order",
+  "zh": "他开了一个小时的车。",
+  "en": "He drove for an hour.",
+  "explain": "了 and the time go between 开 and 车."
+ },
+ {
+  "p": "g2-43",
+  "t": "mc",
+  "prompt": "Which sentence says: I help him every day?",
+  "options": [
+   "我每天帮他。",
+   "我每天帮忙他。"
+  ],
+  "correct": 0,
+  "zh": "我每天帮他。",
+  "en": "I help him every day.",
+  "explain": "No object after 帮忙; use 帮 + person."
+ },
+ {
+  "p": "g2-44",
+  "t": "mc",
+  "prompt": "Which sentence says: I got up early today?",
+  "options": [
+   "我今天早早地起床了。",
+   "我今天很早早地起床了。"
+  ],
+  "correct": 0,
+  "zh": "我今天早早地起床了。",
+  "en": "I got up early today.",
+  "explain": "No 很 before a doubled adjective."
+ },
+ {
+  "p": "g2-44",
+  "t": "cloze",
+  "zh": "你慢慢地说，我听着呢。",
+  "en": "Speak slowly, I am listening.",
+  "blank": "地",
+  "explain": "A doubled adjective takes 地 before a verb."
+ },
+ {
+  "p": "g2-44",
+  "t": "order",
+  "zh": "孩子们高高兴兴地回家了。",
+  "en": "The children went home happily.",
+  "explain": "AABB + 地 + verb."
+ },
+ {
+  "p": "g2-44",
+  "t": "order",
+  "zh": "他每天早早地起床。",
+  "en": "He gets up early every day.",
+  "explain": "早早 + 地 + verb."
+ },
+ {
+  "p": "g2-45",
+  "t": "mc",
+  "prompt": "Which sentence says: How hot it is today!",
+  "options": [
+   "今天多热啊！",
+   "今天多热吗？"
+  ],
+  "correct": 0,
+  "zh": "今天多热啊！",
+  "en": "How hot it is today!",
+  "explain": "The exclamation ends with 啊."
+ },
+ {
+  "p": "g2-45",
+  "t": "cloze",
+  "zh": "看，这个孩子多高兴啊！",
+  "en": "Look, how happy this child is!",
+  "blank": "多",
+  "explain": "多 + adjective + 啊."
+ },
+ {
+  "p": "g2-45",
+  "t": "order",
+  "zh": "这个菜多好吃啊！",
+  "en": "How delicious this dish is!",
+  "explain": "多 + adjective + 啊."
+ },
+ {
+  "p": "g2-45",
+  "t": "mc",
+  "prompt": "Which sentence says: How cold it is outside!",
+  "options": [
+   "外面多冷啊！",
+   "外面冷多啊！"
+  ],
+  "correct": 0,
+  "zh": "外面多冷啊！",
+  "en": "How cold it is outside!",
+  "explain": "多 goes before the adjective."
+ },
+ {
+  "p": "g2-46",
+  "t": "mc",
+  "prompt": "Which sentence asks: Is your home as far as his?",
+  "options": [
+   "你家有他家远吗？",
+   "你家有远他家吗？"
+  ],
+  "correct": 0,
+  "zh": "你家有他家远吗？",
+  "en": "Is your home as far as his?",
+  "explain": "A + 有 + B + adjective."
+ },
+ {
+  "p": "g2-46",
+  "t": "cloze",
+  "zh": "你有你哥哥高吗？",
+  "en": "Are you as tall as your older brother?",
+  "blank": "有",
+  "explain": "有 asks \"as … as\"."
+ },
+ {
+  "p": "g2-46",
+  "t": "order",
+  "zh": "你哥哥有三十岁吗？",
+  "en": "Is your older brother thirty yet?",
+  "explain": "有 + an amount: reach."
+ },
+ {
+  "p": "g2-46",
+  "t": "mc",
+  "prompt": "Which sentence says: This room is not as big as that one?",
+  "options": [
+   "这个房间没有那个大。",
+   "这个房间没有那个很大。"
+  ],
+  "correct": 0,
+  "zh": "这个房间没有那个大。",
+  "en": "This room is not as big as that one.",
+  "explain": "No 很 in a 没有 comparison."
+ },
+ {
+  "p": "g2-47",
+  "t": "mc",
+  "prompt": "Which sentence says: She sings better than me?",
+  "options": [
+   "她唱得比我好。",
+   "她唱比我得好。"
+  ],
+  "correct": 0,
+  "zh": "她唱得比我好。",
+  "en": "She sings better than me.",
+  "explain": "得 comes right after the verb."
+ },
+ {
+  "p": "g2-47",
+  "t": "cloze",
+  "zh": "他比我跑得快。",
+  "en": "He runs faster than me.",
+  "blank": "比",
+  "explain": "A + 比 + B + verb + 得 + adjective."
+ },
+ {
+  "p": "g2-47",
+  "t": "order",
+  "zh": "哥哥汉语说得比我好。",
+  "en": "My older brother speaks Chinese better than me.",
+  "explain": "Name the object first, then verb + 得 + 比."
+ },
+ {
+  "p": "g2-47",
+  "t": "mc",
+  "prompt": "Which sentence says: Today he came earlier than me?",
+  "options": [
+   "今天他来得比我早。",
+   "今天他来比我得早。"
+  ],
+  "correct": 0,
+  "zh": "今天他来得比我早。",
+  "en": "Today he is here earlier than me.",
+  "explain": "Verb + 得 + 比 B + adjective."
+ },
+ {
+  "p": "g2-47",
+  "t": "spot",
+  "zh": "他跑得比我快。",
+  "en": "He runs faster than me.",
+  "wrong": "他跑得比我非常快。",
+  "remove": "非常",
+  "explain": "No 非常 in a 比 sentence."
+ },
+ {
+  "p": "g2-48",
+  "t": "mc",
+  "prompt": "Which sentence says: My older sister is tall?",
+  "options": [
+   "我姐姐个子很高。",
+   "我姐姐很个子高。"
+  ],
+  "correct": 0,
+  "zh": "我姐姐个子很高。",
+  "en": "My older sister is tall.",
+  "explain": "很 goes right before 高."
+ },
+ {
+  "p": "g2-48",
+  "t": "order",
+  "zh": "水果都吃完了。",
+  "en": "The fruit has all been eaten.",
+  "explain": "The thing comes first; no one needs to be named."
+ },
+ {
+  "p": "g2-48",
+  "t": "cloze",
+  "zh": "这个菜我吃过。",
+  "en": "I have eaten this dish before.",
+  "blank": "过",
+  "explain": "The dish is the topic; 我 + 吃过 follows."
+ },
+ {
+  "p": "g2-48",
+  "t": "mc",
+  "prompt": "Which sentence says: I have a headache today?",
+  "options": [
+   "我今天头疼。",
+   "我今天疼头。"
+  ],
+  "correct": 0,
+  "zh": "我今天头疼。",
+  "en": "I have a headache today.",
+  "explain": "Person, then the part (头), then 疼."
+ },
+ {
+  "p": "g2-49",
+  "t": "mc",
+  "prompt": "Which sentence says: I like football, basketball and so on?",
+  "options": [
+   "我喜欢足球、篮球什么的。",
+   "我喜欢什么的足球、篮球。"
+  ],
+  "correct": 0,
+  "zh": "我喜欢足球、篮球什么的。",
+  "en": "I like football, basketball and so on.",
+  "explain": "什么的 closes the list."
+ },
+ {
+  "p": "g2-49",
+  "t": "cloze",
+  "zh": "他喜欢看电影、听歌什么的。",
+  "en": "He likes watching films, listening to songs and so on.",
+  "blank": "什么",
+  "explain": "什么的: and things like that."
+ },
+ {
+  "p": "g2-49",
+  "t": "mc",
+  "prompt": "Which sentence says: I bought milk, bread and things like that?",
+  "options": [
+   "我买了牛奶、面包什么的。",
+   "我买了什么的牛奶、面包。"
+  ],
+  "correct": 0,
+  "zh": "我买了牛奶、面包什么的。",
+  "en": "I bought milk, bread and things like that.",
+  "explain": "什么的 goes after the things."
  }
 ]

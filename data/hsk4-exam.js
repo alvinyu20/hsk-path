@@ -870,7 +870,7 @@ window.HSK4_EXAM = {
     {
      "s": "女",
      "zh": "别着急，慢慢练，你的字已经比以前好看多了。",
-     "py": "Bié zháojí, màn màn liàn, nǐ de zì yǐjīng bǐ yǐqián hǎokàn duō le.",
+     "py": "Bié zháojí, mànmàn liàn, nǐ de zì yǐjīng bǐ yǐqián hǎokàn duō le.",
      "en": "Do not worry; practise slowly. Your writing is already much nicer than before."
     }
    ],
@@ -2003,7 +2003,7 @@ window.HSK4_EXAM = {
     {
      "s": "",
      "zh": "我的汉语老师总是提醒我们，学语言不能怕错。只要多说多听，慢慢地就会进步。我听了她的话，现在敢和中国人聊天了。",
-     "py": "Wǒ de Hànyǔ lǎoshī zǒngshì tíxǐng wǒmen, xué yǔyán bù néng pà cuò. Zhǐyào duō shuō duō tīng, màn màn de jiù huì jìn bù. Wǒ tīng le tā dehuà, xiànzài gǎn hé Zhōngguórén liáo tiān le.",
+     "py": "Wǒ de Hànyǔ lǎoshī zǒngshì tíxǐng wǒmen, xué yǔyán bù néng pà cuò. Zhǐyào duō shuō duō tīng, mànmàn de jiù huì jìn bù. Wǒ tīng le tā dehuà, xiànzài gǎn hé Zhōngguórén liáo tiān le.",
      "en": "My Chinese teacher always reminds us that when learning a language we must not be afraid of mistakes. As long as we speak and listen more, we will slowly make progress. I listened to her, and now I dare to chat with Chinese people."
     }
    ],
@@ -3161,7 +3161,7 @@ window.HSK4_EXAM = {
   },
   {
    "zh": "小学的时候，我很怕数学，一看到数字就头疼。后来有一位老师教我用游戏学数学，我慢慢发现数学很有意思，现在它是我最喜欢的课。",
-   "py": "Xiǎoxué de shíhou, wǒ hěn pà shùxué, yí kàn dào shùzì jiù tóu téng. Hòulái yǒu yí wèi lǎoshī jiāo wǒ yòng yóuxì xué shùxué, wǒ màn màn fāxiàn shùxué hěn yǒuyìsi, xiànzài tā shì wǒ zuì xǐhuan de kè.",
+   "py": "Xiǎoxué de shíhou, wǒ hěn pà shùxué, yí kàn dào shùzì jiù tóu téng. Hòulái yǒu yí wèi lǎoshī jiāo wǒ yòng yóuxì xué shùxué, wǒ mànmàn fāxiàn shùxué hěn yǒuyìsi, xiànzài tā shì wǒ zuì xǐhuan de kè.",
    "en": "In primary school I was afraid of maths and got a headache at the sight of numbers. Later a teacher taught me to learn maths with games, and I slowly found that maths is interesting; now it is my favourite class.",
    "q": {
     "zh": "说话人现在觉得数学怎么样？",

@@ -154,7 +154,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   // ---- every grammar lesson: all questions answered correctly
   await nav('Grammar');
   const lessons = await page.evaluate(() => window.HSK3_GRAMMAR.lessons.length);
-  check(lessons === 28, 'the Grammar screen has 28 HSK 3 lessons (' + lessons + ')');
+  check(lessons === 34, 'the Grammar screen has 34 HSK 3 lessons (' + lessons + ')');
   let allFull = true;
   for (let i = 0; i < lessons; i++) {
     await page.evaluate((j) => window.shanlu.pickLesson(j), i);
@@ -166,7 +166,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     await nav('Grammar');
   }
   check(allFull, 'every HSK 3 lesson scores full marks when its questions are answered correctly');
-  check(await page.evaluate(() => Object.values(window.shanlu.state.gres).filter(v => v >= 80).length) === 28, 'all 28 lessons are marked done');
+  check(await page.evaluate(() => Object.values(window.shanlu.state.gres).filter(v => v >= 80).length) === 34, 'all 34 lessons are marked done');
   await page.evaluate(() => window.shanlu.pickLesson(0));
   await page.locator('button', { hasText: 'Practise this lesson' }).first().click();
   await answer(false);

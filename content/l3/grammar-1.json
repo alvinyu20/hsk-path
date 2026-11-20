@@ -656,12 +656,13 @@
   ]
  },
  {
-  "id": "xian",
-  "title": "先…再…, 一边…一边… and 又…又…",
+  "id": "xian3",
+  "title": "先…再…, 一边…一边…, 又…又… and 一会儿…一会儿…",
   "covers": [
    14,
    15,
-   16
+   16,
+   55
   ],
   "formula": [
    "*先",
@@ -672,7 +673,8 @@
   "explain": [
    "先…再… means 'first … then …': 先洗手，再吃饭 'Wash your hands first, then eat'. 然后 can replace 再: 我们先看电影，然后去吃饭.",
    "一边…一边… means 'while … (at the same time)': 妈妈一边做饭，一边听音乐 'Mom listens to music while she cooks'. 一边 goes before both verbs.",
-   "又…又… means 'both … and …' and joins two qualities: 这个菜又好吃又便宜 'This dish is both delicious and cheap'; 她又高又漂亮 'She is both tall and pretty'."
+   "又…又… means 'both … and …' and joins two qualities: 这个菜又好吃又便宜 'This dish is both delicious and cheap'; 她又高又漂亮 'She is both tall and pretty'.",
+   "一会儿…，一会儿… means 'one moment … , the next …': two things that keep taking turns. 他一会儿进来，一会儿出去 'He keeps coming in and going out'; 天气一会儿冷，一会儿热 'The weather is cold one moment and hot the next'. Compare 一边…一边…, where both things happen at the same time."
   ],
   "examples": [
    {
@@ -690,11 +692,16 @@
    {
     "zh": "我先去银行，再去商店。",
     "en": "I will go to the bank first, then to the shop."
+   },
+   {
+    "zh": "天气一会儿冷，一会儿热。",
+    "en": "The weather is cold one moment and hot the next."
    }
   ],
   "mistakes": [
    "Put 一边 before both verbs: 他一边吃饭一边看电视. Do not leave out the first 一边.",
-   "又…又… joins two things of the same kind (two adjectives or two verbs): 又高又漂亮."
+   "又…又… joins two things of the same kind (two adjectives or two verbs): 又高又漂亮.",
+   "一会儿…一会儿… takes turns; 一边…一边… happens at the same time. 一边吃饭一边看电视 'watch TV while eating'."
   ],
   "q": [
    {
@@ -734,6 +741,24 @@
     "zh": "她又高又漂亮。",
     "en": "She is both tall and pretty.",
     "explain": "又…又… joins two qualities."
+   },
+   {
+    "t": "order",
+    "zh": "他一会儿进来，一会儿出去。",
+    "en": "He keeps coming in and going out.",
+    "explain": "一会儿 before each of the two actions that take turns."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: The child is laughing one moment and crying the next?",
+    "options": [
+     "孩子一会儿笑，一会儿哭。",
+     "孩子一边笑，一边哭。"
+    ],
+    "correct": 0,
+    "zh": "孩子一会儿笑，一会儿哭。",
+    "en": "The child is laughing one moment and crying the next.",
+    "explain": "一会儿…一会儿… takes turns; 一边…一边… would be both at once."
    }
   ]
  },

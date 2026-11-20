@@ -401,11 +401,13 @@
   ]
  },
  {
-  "id": "yiyang",
-  "title": "一样, 不同 and more ways to compare",
+  "id": "yiyang3",
+  "title": "一样, 不同, 不比 and more ways to compare",
   "covers": [
    28,
-   29
+   29,
+   56,
+   57
   ],
   "formula": [
    "A",
@@ -418,7 +420,9 @@
    "A 跟 B 一样 means 'A is the same as B': 我的手机跟你的一样 'My phone is the same as yours'. Add an adjective for 'as … as': 他跟我一样高 'He is as tall as me'. The negative is 不一样: 这两个字不一样 'These two characters are not the same'. 不同 means 'different' and sounds a little more formal: 两个城市的天气不同.",
    "比 + 更 or 还 means 'even more': 今天比昨天还冷 'Today is even colder than yesterday'. Do not add 很.",
    "比 + adjective + 多了 means 'much more': 他比我高多了 'He is much taller than me'.",
-   "跟…比起来 means 'compared with …': 跟我的手机比起来，你的手机大多了 'Compared with my phone, yours is much bigger'."
+   "跟…比起来 means 'compared with …': 跟我的手机比起来，你的手机大多了 'Compared with my phone, yours is much bigger'.",
+   "A 不比 B + adjective means 'A is no more … than B' (they are about the same): 这张照片不比那张好看 'This photo is no better-looking than that one'. It answers someone who thinks A is better; it does not say A is worse. For 'A is not as … as B' use 没有: 我没有他高.",
+   "To say someone did something earlier, later, more or less, and by how much, put 早, 晚, 多 or 少 before the verb and the amount after it: 我比他早到十分钟 'I arrived ten minutes earlier than him'; 他比我多吃了一碗饭 'He ate one more bowl of rice than me'."
   ],
   "examples": [
    {
@@ -436,11 +440,21 @@
    {
     "zh": "这两个字不一样。",
     "en": "These two characters are not the same."
+   },
+   {
+    "zh": "这张照片不比那张好看。",
+    "en": "This photo is no better-looking than that one."
+   },
+   {
+    "zh": "我比他早到十分钟。",
+    "en": "I arrived ten minutes earlier than him."
    }
   ],
   "mistakes": [
    "Do not add 很 in a 比 sentence: 他比我更高 is right, 他比我很更高 is wrong.",
-   "In 跟…一样 the adjective comes after 一样: 他跟我一样高, not 他跟我高一样."
+   "In 跟…一样 the adjective comes after 一样: 他跟我一样高, not 他跟我高一样.",
+   "早 / 晚 / 多 / 少 go before the verb and the amount after it: 我比他早到十分钟, not 我比他到早十分钟.",
+   "不比 is not 没有: 他不比我高 means he is not taller (we may be the same); 他没有我高 means he is shorter."
   ],
   "q": [
    {
@@ -476,6 +490,43 @@
     "wrong": "他比我很更高。",
     "remove": "很",
     "explain": "Do not add 很 in a 比 sentence."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I arrived ten minutes earlier than him?",
+    "options": [
+     "我比他早到十分钟。",
+     "我比他到早十分钟。"
+    ],
+    "correct": 0,
+    "zh": "我比他早到十分钟。",
+    "en": "I arrived ten minutes earlier than him.",
+    "explain": "早 goes before the verb, the amount after it."
+   },
+   {
+    "t": "order",
+    "zh": "他比我多吃了一碗饭。",
+    "en": "He ate one more bowl of rice than me.",
+    "explain": "多 before the verb, the amount after it."
+   },
+   {
+    "t": "cloze",
+    "zh": "这张照片不比那张好看。",
+    "en": "This photo is no better-looking than that one.",
+    "blank": "不",
+    "explain": "A 不比 B: A is no more … than B."
+   },
+   {
+    "t": "mc",
+    "prompt": "A friend says his phone is better than yours. Which answer says yours is just as good?",
+    "options": [
+     "我的手机不比你的差。",
+     "我的手机没有你的好。"
+    ],
+    "correct": 0,
+    "zh": "我的手机不比你的差。",
+    "en": "My phone is no worse than yours.",
+    "explain": "不比 pushes back: \"no worse than yours\". 没有 would agree it is worse."
    }
   ]
  },
@@ -640,11 +691,12 @@
   ]
  },
  {
-  "id": "direction2",
-  "title": "起来, 出来, 下去 and 向",
+  "id": "direction3",
+  "title": "起来, 出来, 下去, 向 and things that appear or leave",
   "covers": [
    32,
-   33
+   33,
+   59
   ],
   "formula": [
    "Verb",
@@ -653,7 +705,8 @@
   "explain": [
    "After a verb, direction words such as 进 'in', 出 'out' and 回 'back' go in front of 来 or 去: 他走进来了 'He has walked in', 出去 'go out', 回来 'come back'. If there is a place, it goes between the two parts: 他回学校去了 'He has gone back to school'.",
    "起来 can mean 'start to': 他笑起来了 'He started to laugh'. 下去 can mean 'go on': 请说下去 'Please go on speaking'.",
-   "向 + direction or person means 'toward': 孩子们向老师跑去了 'The children ran toward the teacher'; 请向前走 'Please walk forward'."
+   "向 + direction or person means 'toward': 孩子们向老师跑去了 'The children ran toward the teacher'; 请向前走 'Please walk forward'.",
+   "To say that someone or something appears or leaves, put the place first, then the verb (with 了 or a direction), then the person or thing, usually with a number: 前边开过来一辆出租车 'A taxi came driving up ahead'; 树上飞走了三只鸟 'Three birds flew off the tree'; 我们班来了一个新同学 'A new classmate has joined our class'. What appears is new to the listener, so it comes last."
   ],
   "examples": [
    {
@@ -671,11 +724,20 @@
    {
     "zh": "孩子们向老师跑去了。",
     "en": "The children ran toward the teacher."
+   },
+   {
+    "zh": "前边开过来一辆出租车。",
+    "en": "A taxi came driving up ahead."
+   },
+   {
+    "zh": "我们班来了一个新同学。",
+    "en": "A new classmate has joined our class."
    }
   ],
   "mistakes": [
    "Do not put a place after 来 or 去: say 他回学校去了, not 他回去学校了.",
-   "Do not put a plain direction word like 起 on its own after a verb. It needs 来: 笑起来."
+   "Do not put a plain direction word like 起 on its own after a verb. It needs 来: 笑起来.",
+   "Something new comes last: 我们班来了一个新同学 sounds natural; 一个新同学来了我们班 does not."
   ],
   "q": [
    {
@@ -715,15 +777,35 @@
     "zh": "他回学校去了。",
     "en": "He has gone back to school.",
     "explain": "The place goes between 回 and 去."
+   },
+   {
+    "t": "order",
+    "zh": "我们班来了一个新同学。",
+    "en": "A new classmate has joined our class.",
+    "explain": "Place first, then 来了, then who came."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Three birds flew off the tree?",
+    "options": [
+     "树上飞走了三只鸟。",
+     "三只鸟飞走了树上。"
+    ],
+    "correct": 0,
+    "zh": "树上飞走了三只鸟。",
+    "en": "Three birds flew off the tree.",
+    "explain": "The place comes first, what left comes last."
    }
   ]
  },
  {
-  "id": "duration",
-  "title": "How long: 学了两年 and 三年没见了",
+  "id": "duration3",
+  "title": "How long: 学了两年, 打球打了一个下午 and 三年没见了",
   "covers": [
    34,
-   35
+   35,
+   53,
+   54
   ],
   "formula": [
    "Subject",
@@ -735,7 +817,9 @@
    "To say how long something lasted, put the time length after the verb and 了: 我学了两年汉语 'I studied Chinese for two years'. The time length comes before the object.",
    "Add a second 了 at the end if it is still going on: 他在这里工作了三年了 'He has worked here for three years (and still does)'.",
    "Time length + 没 + verb + 了 means 'has not … for …': 我们三年没见面了 'We have not met for three years'.",
-   "The time length never goes before the verb: 我两年学汉语 is wrong."
+   "The time length never goes before the verb: 我两年学汉语 is wrong.",
+   "With an object, you can say the verb twice: verb + object + the verb again + 了 + time. 我们打篮球打了一个下午 'We played basketball all afternoon'; 他看书看了两个小时 'He read for two hours'. The other way you know also works: 他看了两个小时书.",
+   "To say how long it has been since something happened, put the time after the whole event and end with 了: 开学已经两个星期了 'It has been two weeks since school started'; 他来中国一年了 'He has been in China for a year'; 他们结婚十年了 'They have been married for ten years'."
   ],
   "examples": [
    {
@@ -753,11 +837,20 @@
    {
     "zh": "他等了你一个小时。",
     "en": "He waited for you for an hour."
+   },
+   {
+    "zh": "我们打篮球打了一个下午。",
+    "en": "We played basketball all afternoon."
+   },
+   {
+    "zh": "开学已经两个星期了。",
+    "en": "It has been two weeks since school started."
    }
   ],
   "mistakes": [
    "Time length goes after the verb, not before: 我学了两年汉语, not 我两年学汉语.",
-   "Without the final 了 the action is finished; with it, the action is still going on."
+   "Without the final 了 the action is finished; with it, the action is still going on.",
+   "The time cannot follow the object without the verb again: 他看书看了两个小时 or 他看了两个小时书, not 他看书了两个小时."
   ],
   "q": [
    {
@@ -797,6 +890,37 @@
     "zh": "我学了两年汉语。",
     "en": "I studied Chinese for two years.",
     "explain": "The time length comes before the object."
+   },
+   {
+    "t": "order",
+    "zh": "我们打篮球打了一个下午。",
+    "en": "We played basketball all afternoon.",
+    "explain": "Verb + object, then the verb again + 了 + time."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He read for two hours?",
+    "options": [
+     "他看书看了两个小时。",
+     "他看书了两个小时。"
+    ],
+    "correct": 0,
+    "zh": "他看书看了两个小时。",
+    "en": "He read for two hours.",
+    "explain": "After the object, say the verb again before the time."
+   },
+   {
+    "t": "cloze",
+    "zh": "开学已经两个星期了。",
+    "en": "It has been two weeks since school started.",
+    "blank": "已经",
+    "explain": "Event + (已经) + time + 了: how long since."
+   },
+   {
+    "t": "order",
+    "zh": "他来中国一年了。",
+    "en": "He has been in China for a year.",
+    "explain": "The time comes after the whole event 来中国."
    }
   ]
  }

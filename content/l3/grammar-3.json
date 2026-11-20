@@ -405,12 +405,13 @@
   ]
  },
  {
-  "id": "qword2",
-  "title": "Question words for \"any\": 谁都, 想吃什么就吃什么, 一个也不",
+  "id": "qword3",
+  "title": "Question words for \"any\" and \"some\": 谁都, 想吃什么就吃什么, 在哪儿见过",
   "covers": [
    47,
    48,
-   49
+   49,
+   58
   ],
   "formula": [
    "*谁 / *什么 / *哪儿",
@@ -420,7 +421,8 @@
   "explain": [
    "A question word + 都 or 也 means 'every' or 'any': 谁都知道这件事 'Everyone knows about this'; 我哪儿都不想去 'I don't want to go anywhere'. With 不 or 没 it means 'nothing, nobody, nowhere': 我什么都没买 'I did not buy anything'.",
    "想 + question word + 就 + the same question word means 'as you like': 你想吃什么就吃什么 'Eat whatever you want'; 你想去哪儿就去哪儿 'Go wherever you want'.",
-   "一 + measure word + noun + 也 or 都 + 不 or 没 + verb means 'not even one': 教室里一个人也没有 'There is not a single person in the classroom'; 我一个字也不认识 'I do not know a single character'."
+   "一 + measure word + noun + 也 or 都 + 不 or 没 + verb means 'not even one': 教室里一个人也没有 'There is not a single person in the classroom'; 我一个字也不认识 'I do not know a single character'.",
+   "A question word can also mean 'some-' when it is not the thing you ask about: 我好像在哪儿见过她 'I think I have seen her somewhere'; 我想给他买一点儿什么 'I want to buy him something'. In a question that ends with 吗, the question word means 'something, anywhere': 你想吃一点儿什么吗？ 'Would you like something to eat?'."
   ],
   "examples": [
    {
@@ -438,11 +440,20 @@
    {
     "zh": "教室里一个人也没有。",
     "en": "There is not a single person in the classroom."
+   },
+   {
+    "zh": "我好像在哪儿见过她。",
+    "en": "I think I have seen her somewhere."
+   },
+   {
+    "zh": "你想吃一点儿什么吗？",
+    "en": "Would you like something to eat?"
    }
   ],
   "mistakes": [
    "Do not leave out 都 or 也: 谁知道这件事？ is a question 'Who knows?', but 谁都知道这件事 is a statement 'Everyone knows'.",
-   "In 想…就… use the same question word twice: 想吃什么就吃什么."
+   "In 想…就… use the same question word twice: 想吃什么就吃什么.",
+   "With 吗 at the end, 什么 means 'something': 你想喝一点儿什么吗？ 'Would you like something to drink?'; without 吗 it is a real question: 你想喝什么？ 'What would you like to drink?'."
   ],
   "q": [
    {
@@ -482,6 +493,24 @@
     "zh": "这里一个人也没有。",
     "en": "There is not a single person here.",
     "explain": "一…也没有 means not even one."
+   },
+   {
+    "t": "order",
+    "zh": "我好像在哪儿见过她。",
+    "en": "I think I have seen her somewhere.",
+    "explain": "哪儿 here means \"somewhere\"; it is not a question."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence asks: Would you like something to drink?",
+    "options": [
+     "你想喝一点儿什么吗？",
+     "你想喝什么？"
+    ],
+    "correct": 0,
+    "zh": "你想喝一点儿什么吗？",
+    "en": "Would you like something to drink?",
+    "explain": "With 吗, 什么 means \"something\". Without it, you ask \"what?\"."
    }
   ]
  },
@@ -642,6 +671,512 @@
     "zh": "明天我们开会。",
     "en": "We have a meeting tomorrow.",
     "explain": "开会 means to have a meeting."
+   }
+  ]
+ },
+ {
+  "id": "tone3",
+  "title": "Showing what you think: 不是…吗？, 是…的 and …什么啊",
+  "covers": [
+   60,
+   61,
+   62
+  ],
+  "formula": [
+   "*不是",
+   "…",
+   "*吗？"
+  ],
+  "explain": [
+   "不是…吗？ is not a real question. It reminds someone of something you both know, often with surprise: 你不是写完作业了吗？ 'Didn't you say you had finished your homework?'; 你不是会说汉语吗？ 'You can speak Chinese, can't you?'. The answer it expects is 'yes'.",
+   "是…的 around a description makes it a firm view, like 'really is': 这个问题其实是很简单的 'This problem really is simple'; 他是会来的 'He will come, I am sure'.",
+   "A verb or adjective + 什么(啊) pushes back: 'what is there to …?'. 难过什么啊 'What is there to be sad about?'; 你着急什么啊？ 'What are you in such a hurry for?'. It is friendly between people who know each other, but can sound rude to strangers or older people."
+  ],
+  "examples": [
+   {
+    "zh": "你不是写完作业了吗？",
+    "en": "Didn't you say you had finished your homework?"
+   },
+   {
+    "zh": "这个问题其实是很简单的。",
+    "en": "This problem really is simple."
+   },
+   {
+    "zh": "难过什么啊？你的成绩不是挺好的吗？",
+    "en": "What is there to be sad about? Your grades are pretty good, aren't they?"
+   },
+   {
+    "zh": "你着急什么啊？",
+    "en": "What are you in such a hurry for?"
+   }
+  ],
+  "mistakes": [
+   "不是…吗？ expects 'yes': 你不是去过中国吗？ means 'You have been to China, haven't you?'.",
+   "Use …什么啊 with friends; with strangers it can sound rude."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "你不是写完作业了吗？",
+    "en": "Didn't you say you had finished your homework?",
+    "explain": "不是 … 吗？ reminds someone of what you both know."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: You can speak Chinese, can't you?",
+    "options": [
+     "你不是会说汉语吗？",
+     "你会说汉语吗？"
+    ],
+    "correct": 0,
+    "zh": "你不是会说汉语吗？",
+    "en": "You can speak Chinese, can't you?",
+    "explain": "The plain question just asks; 不是…吗？ expects \"yes\"."
+   },
+   {
+    "t": "cloze",
+    "zh": "这个问题其实是很简单的。",
+    "en": "This problem really is simple.",
+    "blank": "的",
+    "explain": "是 … 的 around a description makes it firm."
+   },
+   {
+    "t": "cloze",
+    "zh": "你着急什么啊？",
+    "en": "What are you in such a hurry for?",
+    "blank": "什么",
+    "explain": "Adjective + 什么(啊): what is there to …?"
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: What is there to cry about? You are doing well.",
+    "options": [
+     "哭什么啊？你做得很好。",
+     "哭了吗？你做得很好。"
+    ],
+    "correct": 0,
+    "zh": "哭什么啊？你做得很好。",
+    "en": "What is there to cry about? You are doing well.",
+    "explain": "Verb + 什么啊 pushes back."
+   }
+  ]
+ },
+ {
+  "id": "redup3",
+  "title": "Doubling: 个个, 一天一天 and 不大不小",
+  "covers": [
+   63,
+   64,
+   65
+  ],
+  "formula": [
+   "Measure word",
+   "*doubled",
+   "*都",
+   "Adjective / verb"
+  ],
+  "explain": [
+   "A measure word said twice means 'every single one': 这些苹果个个都很大 'Every one of these apples is big'; 他的照片张张都很好看 'Every one of his photos is good-looking'. It comes after the noun and usually goes with 都.",
+   "一 + measure word + 一 + measure word means 'one by one, step by step', with 地 before the verb: 请一个一个地进来 'Please come in one at a time'; 我的汉语一天一天地好起来了 'My Chinese is getting better day by day'; 一点一点地 'little by little'.",
+   "不A不B with two opposite adjectives means 'just right, neither too … nor too …': 这件衣服不大不小 'This top is neither too big nor too small'; 今天不冷不热 'Today is neither cold nor hot'."
+  ],
+  "examples": [
+   {
+    "zh": "这些苹果个个都很大。",
+    "en": "Every one of these apples is big."
+   },
+   {
+    "zh": "请一个一个地进来。",
+    "en": "Please come in one at a time."
+   },
+   {
+    "zh": "我的汉语一天一天地好起来了。",
+    "en": "My Chinese is getting better day by day."
+   },
+   {
+    "zh": "这件衣服不大不小，特别合适。",
+    "en": "This top is neither too big nor too small; it fits really well."
+   }
+  ],
+  "mistakes": [
+   "Keep 都 after a doubled measure word: 这些苹果个个都很大.",
+   "不A不B needs two opposites: 不大不小, 不冷不热, 不早不晚."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "这些苹果个个都很大。",
+    "en": "Every one of these apples is big.",
+    "explain": "Noun, then the doubled measure word, then 都."
+   },
+   {
+    "t": "cloze",
+    "zh": "请一个一个地进来。",
+    "en": "Please come in one at a time.",
+    "blank": "地",
+    "explain": "一个一个 + 地 + verb."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: This top is just the right size?",
+    "options": [
+     "这件衣服不大不小。",
+     "这件衣服不大不多。"
+    ],
+    "correct": 0,
+    "zh": "这件衣服不大不小。",
+    "en": "This top is just the right size.",
+    "explain": "不A不B needs two opposites: 大 and 小."
+   },
+   {
+    "t": "order",
+    "zh": "今天不冷不热。",
+    "en": "Today is neither cold nor hot.",
+    "explain": "不 + one adjective, 不 + its opposite."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Every one of his photos is good-looking?",
+    "options": [
+     "他的照片张张都很好看。",
+     "他的照片张都很好看。"
+    ],
+    "correct": 0,
+    "zh": "他的照片张张都很好看。",
+    "en": "Every one of his photos is good-looking.",
+    "explain": "Say the measure word twice: 张张."
+   }
+  ]
+ },
+ {
+  "id": "phrases3",
+  "title": "Handy phrases: 看上去, 一般来说, 不一会儿, 不怎么样",
+  "covers": [
+   66,
+   67,
+   68,
+   69
+  ],
+  "formula": [
+   "*看上去 / *一般来说 / *不一会儿",
+   "…"
+  ],
+  "explain": [
+   "看上去 means 'looks, seems' (from how it looks), like 看起来: 他看上去很累 'He looks tired'; 这个问题看上去很难，其实很简单 'This problem looks hard, but it is actually simple'.",
+   "一般来说 means 'generally speaking' and usually starts the sentence: 一般来说，早上锻炼比较好 'Generally speaking, it is better to exercise in the morning'.",
+   "不一会儿 means 'before long, a moment later', and the next part usually has 就: 不一会儿，他就来了 'Before long, he arrived'.",
+   "不怎么样 means 'not great, so-so', a soft way to say something is not good: 这家饭店的菜不怎么样 'The food at this restaurant is not great'."
+  ],
+  "examples": [
+   {
+    "zh": "他看上去很累。",
+    "en": "He looks tired."
+   },
+   {
+    "zh": "一般来说，早上锻炼比较好。",
+    "en": "Generally speaking, it is better to exercise in the morning."
+   },
+   {
+    "zh": "不一会儿，他就来了。",
+    "en": "Before long, he arrived."
+   },
+   {
+    "zh": "这家饭店的菜不怎么样。",
+    "en": "The food at this restaurant is not great."
+   }
+  ],
+  "mistakes": [
+   "看上去 is about how something looks; for your opinion use 我觉得.",
+   "不一会儿 usually needs 就 in the next part: 不一会儿，他就来了."
+  ],
+  "q": [
+   {
+    "t": "cloze",
+    "zh": "这个问题看上去很难，其实很简单。",
+    "en": "This problem looks hard, but it is actually simple.",
+    "blank": "上去",
+    "explain": "看上去: looks (from the outside)."
+   },
+   {
+    "t": "order",
+    "zh": "一般来说，早上锻炼比较好。",
+    "en": "Generally speaking, it is better to exercise in the morning.",
+    "explain": "一般来说 starts the sentence."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Before long, he arrived?",
+    "options": [
+     "不一会儿，他就来了。",
+     "一会儿不，他就来了。"
+    ],
+    "correct": 0,
+    "zh": "不一会儿，他就来了。",
+    "en": "Before long, he arrived.",
+    "explain": "不 comes before 一会儿."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: The food at this restaurant is not great?",
+    "options": [
+     "这家饭店的菜不怎么样。",
+     "这家饭店的菜怎么样不。"
+    ],
+    "correct": 0,
+    "zh": "这家饭店的菜不怎么样。",
+    "en": "The food at this restaurant is not great.",
+    "explain": "不怎么样: not great."
+   },
+   {
+    "t": "order",
+    "zh": "他看上去很累。",
+    "en": "He looks tired.",
+    "explain": "Person + 看上去 + description."
+   }
+  ]
+ },
+ {
+  "id": "frames3",
+  "title": "Frames: 从…起, 在…上 and 对…来说",
+  "covers": [
+   70,
+   71,
+   72
+  ],
+  "formula": [
+   "*从 / *在 / *对",
+   "…",
+   "*起 / *上 / *来说"
+  ],
+  "explain": [
+   "从 + time + 起 means 'from … on, starting …': 从明天起，我每天早上跑步 'From tomorrow on, I will run every morning'; 从那天起，我们就变成了好朋友 'From that day on, we became good friends'.",
+   "在 + area + 上 means 'when it comes to, in terms of': 在学习上，老师给了我很多帮助 'With my studies, my teacher gave me a lot of help'. 在 + noun + 中 means 'in, during': 在生活中，我们会遇到很多问题 'In life, we meet many problems'.",
+   "对 + person + 来说 means 'for someone, as far as they are concerned': 对我来说，这个机会非常重要 'For me, this chance is very important'."
+  ],
+  "examples": [
+   {
+    "zh": "从明天起，我每天早上跑步。",
+    "en": "From tomorrow on, I will run every morning."
+   },
+   {
+    "zh": "在学习上，老师给了我很多帮助。",
+    "en": "With my studies, my teacher gave me a lot of help."
+   },
+   {
+    "zh": "对我来说，这个机会非常重要。",
+    "en": "For me, this chance is very important."
+   },
+   {
+    "zh": "在生活中，我们会遇到很多问题。",
+    "en": "In life, we will meet many problems."
+   }
+  ],
+  "mistakes": [
+   "对…来说 needs both parts: 对我来说, not 对我说 (that means 'say to me').",
+   "从…起 needs 起 at the end of the time: 从明天起."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "从明天起，我每天早上跑步。",
+    "en": "From tomorrow on, I will run every morning.",
+    "explain": "从 + time + 起."
+   },
+   {
+    "t": "cloze",
+    "zh": "对我来说，这个机会非常重要。",
+    "en": "For me, this chance is very important.",
+    "blank": "对",
+    "explain": "对 + person + 来说."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: With my studies, my teacher gave me a lot of help?",
+    "options": [
+     "在学习上，老师给了我很多帮助。",
+     "在学习，老师给了我很多帮助上。"
+    ],
+    "correct": 0,
+    "zh": "在学习上，老师给了我很多帮助。",
+    "en": "With my studies, my teacher gave me a lot of help.",
+    "explain": "在 + area + 上 goes at the start."
+   },
+   {
+    "t": "order",
+    "zh": "对他来说，汉字不难。",
+    "en": "For him, Chinese characters are not hard.",
+    "explain": "对 + person + 来说 at the start."
+   },
+   {
+    "t": "cloze",
+    "zh": "从那天起，我们就变成了好朋友。",
+    "en": "From that day on, we became good friends.",
+    "blank": "起",
+    "explain": "从 + time + 起."
+   }
+  ]
+ },
+ {
+  "id": "attr3",
+  "title": "Several describing words before a noun",
+  "covers": [
+   73
+  ],
+  "formula": [
+   "Whose / which action + 的",
+   "*这 / 那 + measure word",
+   "Adjective (+ 的)",
+   "Noun"
+  ],
+  "explain": [
+   "When several words describe one noun, they all go before it. A common order is: who it belongs to or what was done to it (+ 的), then 这 / 那 + measure word, then the adjective, then the noun: 我昨天买的那条黑色的裤子 'the black trousers I bought yesterday'. The 这 / 那 + measure word part can also come first: 那条我昨天买的裤子.",
+   "Short adjectives such as 新, 大 and 小 join the noun without 的: 我的新手机 'my new phone'; 一个大蛋糕 'a big cake'.",
+   "Keep the measure word right after 这, 那 or the number: 那条黑色的裤子."
+  ],
+  "examples": [
+   {
+    "zh": "我昨天买的那条裤子在哪儿？",
+    "en": "Where are the trousers I bought yesterday?"
+   },
+   {
+    "zh": "这是我妈妈做的一个大蛋糕。",
+    "en": "This is a big cake my mom made."
+   },
+   {
+    "zh": "那个穿红色衣服的女孩儿是谁？",
+    "en": "Who is that girl in red?"
+   },
+   {
+    "zh": "我的新手机很贵。",
+    "en": "My new phone is expensive."
+   }
+  ],
+  "mistakes": [
+   "The measure word stays with 这 / 那: 那条黑色的裤子, not 那黑色的条裤子.",
+   "Everything that describes the noun goes before it: 穿红色衣服的女孩儿 'the girl in red'."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我昨天买的那条裤子在哪儿？",
+    "en": "Where are the trousers I bought yesterday?",
+    "explain": "What was done to it + 的, then 那条, then the noun."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Who is that girl in red?",
+    "options": [
+     "那个穿红色衣服的女孩儿是谁？",
+     "那个女孩儿穿红色衣服的是谁？"
+    ],
+    "correct": 0,
+    "zh": "那个穿红色衣服的女孩儿是谁？",
+    "en": "Who is that girl in red?",
+    "explain": "The description comes before the noun."
+   },
+   {
+    "t": "cloze",
+    "zh": "这是我妈妈做的一个大蛋糕。",
+    "en": "This is a big cake my mom made.",
+    "blank": "的",
+    "explain": "Who made it + 的, then 一个大蛋糕."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I like that pair of black trousers?",
+    "options": [
+     "我喜欢那条黑色的裤子。",
+     "我喜欢那黑色的条裤子。"
+    ],
+    "correct": 0,
+    "zh": "我喜欢那条黑色的裤子。",
+    "en": "I like that pair of black trousers.",
+    "explain": "The measure word stays right after 那."
+   },
+   {
+    "t": "order",
+    "zh": "我的新手机很贵。",
+    "en": "My new phone is expensive.",
+    "explain": "新 joins the noun without 的."
+   }
+  ]
+ },
+ {
+  "id": "result3",
+  "title": "Results: 到, 住, 走 and 上",
+  "covers": [
+   74,
+   75
+  ],
+  "formula": [
+   "Verb",
+   "*到 / *住 / *走 / *上"
+  ],
+  "explain": [
+   "到 after a verb means you reached or got what you were after: 买到 'manage to buy', 找到 'find', 看到 'see', 听到 'hear'. 火车票你买到了没有？ 'Did you manage to get the train tickets?'; 我找到我的手机了 'I have found my phone'. The negative uses 没: 我没买到票 'I did not manage to get a ticket'.",
+   "住 after a verb means it stays put: 记住 'remember (for good)'. 走 after a verb means away: 拿走 'take away', 飞走 'fly away'.",
+   "上 after a verb can mean reaching a goal, often after effort or waiting: 考上大学 'get into university'; 我们终于吃上饭了 'We finally got to eat'; 住上新房子 'get to live in a new home'. 爱上 means 'fall in love with'."
+  ],
+  "examples": [
+   {
+    "zh": "火车票你买到了没有？",
+    "en": "Did you manage to get the train tickets?"
+   },
+   {
+    "zh": "请记住这个号码。",
+    "en": "Please remember this number."
+   },
+   {
+    "zh": "谁把我的书拿走了？",
+    "en": "Who took my book away?"
+   },
+   {
+    "zh": "他考上大学了。",
+    "en": "He got into university."
+   }
+  ],
+  "mistakes": [
+   "For 'did not manage to' use 没 + verb + 到: 我没买到票, not 我不买到票.",
+   "For getting into a school use 考上: 考上大学."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我找到我的手机了。",
+    "en": "I have found my phone.",
+    "explain": "Verb + 到: you got what you were after."
+   },
+   {
+    "t": "cloze",
+    "zh": "请记住这个号码。",
+    "en": "Please remember this number.",
+    "blank": "住",
+    "explain": "记住: remember for good."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I did not manage to get a ticket?",
+    "options": [
+     "我没买到票。",
+     "我不买到票。"
+    ],
+    "correct": 0,
+    "zh": "我没买到票。",
+    "en": "I did not manage to get a ticket.",
+    "explain": "Use 没 with a result."
+   },
+   {
+    "t": "order",
+    "zh": "谁把我的书拿走了？",
+    "en": "Who took my book away?",
+    "explain": "Verb + 走: away."
+   },
+   {
+    "t": "cloze",
+    "zh": "他考上大学了。",
+    "en": "He got into university.",
+    "blank": "上",
+    "explain": "考上: pass the exam and get in."
    }
   ]
  }

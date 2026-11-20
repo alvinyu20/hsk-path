@@ -160,11 +160,12 @@
   ]
  },
  {
-  "id": "dao",
-  "title": "到 and 在 after a verb",
+  "id": "dao2",
+  "title": "到, 在 and 给 after a verb",
   "covers": [
    9,
-   10
+   10,
+   41
   ],
   "formula": [
    "Subject",
@@ -175,7 +176,8 @@
   "explain": [
    "到 before a place means 'arrive at' or 'get to': 我们到机场了 'We have arrived at the airport'. 他每天八点到学校 'He gets to school at eight every day'.",
    "Most verbs keep 在 + place before the verb (我在家吃饭), but a few verbs take 在 + place after them to say where the person ends up: 我住在学校旁边 'I live next to the school'; 她站在门口 'She is standing at the door'. Common ones are 住, 坐 and 站.",
-   "Compare 我在这里工作 (the working happens here) and 我住在这里 (I live here)."
+   "Compare 我在这里工作 (the working happens here) and 我住在这里 (I live here).",
+   "给 after a verb says who something goes to: verb + 给 + person + thing. 爸爸送给我一个手机 'Dad gave me a phone (as a present)'; 他拿给我一本书 'He handed me a book'. 送给 and 拿给 are the most common."
   ],
   "examples": [
    {
@@ -193,10 +195,19 @@
    {
     "zh": "她站在门口等你。",
     "en": "She is standing at the door waiting for you."
+   },
+   {
+    "zh": "爸爸送给我一个手机。",
+    "en": "Dad gave me a phone."
+   },
+   {
+    "zh": "这是我送给你的。",
+    "en": "This is my present to you."
    }
   ],
   "mistakes": [
-   "Most verbs keep 在 + place before the verb: 我在学校学习, not 我学习在学校. Only a few verbs such as 住, 坐 and 站 take 在 + place after them."
+   "Most verbs keep 在 + place before the verb: 我在学校学习, not 我学习在学校. Only a few verbs such as 住, 坐 and 站 take 在 + place after them.",
+   "The person comes right after 给: 送给我一个手机, not 送一个手机我."
   ],
   "q": [
    {
@@ -237,6 +248,24 @@
     "wrong": "他到在学校了。",
     "remove": "在",
     "explain": "到 already means arrive at; do not add 在."
+   },
+   {
+    "t": "order",
+    "zh": "爸爸送给我一个手机。",
+    "en": "Dad gave me a phone.",
+    "explain": "Verb + 给 + person + thing."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: She handed me a book?",
+    "options": [
+     "她拿给我一本书。",
+     "她拿我给一本书。"
+    ],
+    "correct": 0,
+    "zh": "她拿给我一本书。",
+    "en": "She hands me a book.",
+    "explain": "给 comes right after the verb, then the person."
    }
   ]
  },
@@ -477,11 +506,13 @@
   ]
  },
  {
-  "id": "yijing",
-  "title": "已经…了 and 就: already, and sooner than expected",
+  "id": "yijing2",
+  "title": "已经…了, 都…了, 还没…呢 and 就: already, not yet, sooner than expected",
   "covers": [
    14,
-   15
+   15,
+   38,
+   39
   ],
   "formula": [
    "Subject",
@@ -492,7 +523,9 @@
   "explain": [
    "已经…了 means 'already': 我已经吃饭了 'I have already eaten'. 已经 goes before the verb and 了 comes at the end (or right after the verb).",
    "就 before a verb can mean 'as early as' or 'right away': 我五点就起床了 'I got up as early as five'; 他八点就到了 'He was already there by eight'. Use 就 when something is earlier or quicker than you expected.",
-   "就 can also mean 'then, in that case': 你累了，就休息吧 'If you are tired, rest then'."
+   "就 can also mean 'then, in that case': 你累了，就休息吧 'If you are tired, rest then'.",
+   "都…了 also means 'already', with a feeling that it is later, older or more than you would think: 都十二点了，快睡觉吧 'It is already twelve, go to sleep'; 你都二十岁了 'You are already twenty!'. 都 goes before the time or the amount, and 了 goes at the end.",
+   "还没…呢 means 'not yet': 他还没起床呢 'He has not got up yet'. Use 没, because it is about something that has not happened, and 呢 at the end makes it sound natural. The short answer is 还没呢 'Not yet'."
   ],
   "examples": [
    {
@@ -510,10 +543,20 @@
    {
     "zh": "你累了，就休息吧。",
     "en": "If you are tired, then rest."
+   },
+   {
+    "zh": "都十二点了，快睡觉吧。",
+    "en": "It is already twelve, go to sleep."
+   },
+   {
+    "zh": "他还没起床呢。",
+    "en": "He has not got up yet."
    }
   ],
   "mistakes": [
-   "Do not use 已经 with something that has not happened. For 'not yet' say 还没: 我还没吃饭 'I have not eaten yet', not 我已经没吃饭."
+   "Do not use 已经 with something that has not happened. For 'not yet' say 还没: 我还没吃饭 'I have not eaten yet', not 我已经没吃饭.",
+   "都…了 needs the 了 at the end: 都十二点了, not 都十二点.",
+   "Do not use 了 together with 没: 我还没吃饭呢, not 我还没吃饭了呢."
   ],
   "q": [
    {
@@ -553,15 +596,47 @@
     "en": "He got up as early as five; that is really early.",
     "blank": "就",
     "explain": "就 shows it happened earlier than expected."
+   },
+   {
+    "t": "order",
+    "zh": "都这么晚了，你快回家吧。",
+    "en": "It is so late already, you should hurry home.",
+    "explain": "都 goes before the time word, and 了 closes the sentence."
+   },
+   {
+    "t": "cloze",
+    "zh": "都八点了，你怎么还不起床？",
+    "en": "It is already eight. Why are you still not up?",
+    "blank": "都",
+    "explain": "都…了: it is later than it should be."
+   },
+   {
+    "t": "order",
+    "zh": "妹妹还没回家呢。",
+    "en": "My younger sister has not come home yet.",
+    "explain": "还没 + verb + 呢 means \"not yet\"."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: The film has not started yet?",
+    "options": [
+     "电影还没开始呢。",
+     "电影已经没开始呢。"
+    ],
+    "correct": 0,
+    "zh": "电影还没开始呢。",
+    "en": "The film has not started yet.",
+    "explain": "For \"not yet\" say 还没; 已经 is only for things that have happened."
    }
   ]
  },
  {
-  "id": "rang",
-  "title": "让 and 别: letting, asking and telling not to",
+  "id": "rang2",
+  "title": "让, 叫, 请 and 别: asking, inviting and telling not to",
   "covers": [
    16,
-   22
+   22,
+   40
   ],
   "formula": [
    "Subject",
@@ -572,7 +647,8 @@
   "explain": [
    "让 means 'to let' or 'to ask someone to': 他让我等一会儿 'He asked me to wait a moment'; 妈妈让我早点睡觉 'Mom tells me to go to bed early'. The person comes right after 让.",
    "让 can also mean 'to make': 这个电影让我很高兴 'This movie made me happy'.",
-   "别 + verb tells someone not to do something: 别走 'Do not go'; 别说话 'Do not talk'. 别…了 asks someone to stop: 别笑了 'Stop laughing'. 别 means the same as 不要 but is more common in speech."
+   "别 + verb tells someone not to do something: 别走 'Do not go'; 别说话 'Do not talk'. 别…了 asks someone to stop: 别笑了 'Stop laughing'. 别 means the same as 不要 but is more common in speech.",
+   "叫 and 请 work like 让, with the person right after them. 叫 + person + verb means 'tell someone to': 妈妈叫我去买水果 'Mom told me to go and buy fruit'. 请 + person + verb means 'invite' or 'politely ask': 我请你吃饭 'I am treating you to a meal'; 他请我去他家 'He invited me to his home'."
   ],
   "examples": [
    {
@@ -590,10 +666,19 @@
    {
     "zh": "别走，再坐一会儿。",
     "en": "Do not go; sit a little longer."
+   },
+   {
+    "zh": "妈妈叫我去买水果。",
+    "en": "Mom told me to go and buy fruit."
+   },
+   {
+    "zh": "今天我请你吃饭。",
+    "en": "Today I invite you to a meal (my treat)."
    }
   ],
   "mistakes": [
-   "Do not leave out the person after 让. You need 让 + who + what: 妈妈让我早点睡觉."
+   "Do not leave out the person after 让. You need 让 + who + what: 妈妈让我早点睡觉.",
+   "The person comes right after 叫 or 请: 老师叫我们进来, not 老师叫进来我们."
   ],
   "q": [
    {
@@ -633,6 +718,24 @@
     "en": "Stop talking, I am busy.",
     "blank": "说",
     "explain": "别…了 asks someone to stop."
+   },
+   {
+    "t": "order",
+    "zh": "妈妈叫我去买水果。",
+    "en": "Mom told me to go and buy fruit.",
+    "explain": "叫 + person + what they should do."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Today I am treating you to dinner?",
+    "options": [
+     "今天我请你吃晚饭。",
+     "今天我请吃晚饭你。"
+    ],
+    "correct": 0,
+    "zh": "今天我请你吃晚饭。",
+    "en": "Today I invite you to dinner (my treat).",
+    "explain": "The person goes right after 请."
    }
   ]
  },

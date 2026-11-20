@@ -63,12 +63,12 @@ hub-gap:小:0	meaning	小时候 ("when I was little") is itself the past time wo
 hub-gap:小:1	meaning	从小 ("since I was little") marks past time with the verb 喜欢 still true now; "has liked" is the correct English	从小
 hub-gap:色:2	meaning	穿了 describes a completed action, and "wore" is the matching English past; the checker only looks for -ed endings	穿了
 lesson:guo:example3	meaning	两次 means twice: the 2 is carried by "twice"
-lesson:mw:exercise5	meaning	两万 is 20,000: 两 is the spoken form of 2, so "twenty thousand" is the correct translation
-lesson:rang:exercise5	meaning	别…了 is a command to stop and 别 is a negative word; "Stop talking" says the same without "not"
-lesson:rang:example1	meaning	一会儿 contains 会 but means "a moment"; the English past tense is natural for reported speech (让 has no tense in Chinese)
-lesson:rang:example3	meaning	一会儿 contains 会 but means "a while"
-lesson:rang:exercise1	meaning	让 has no tense in Chinese; "asked" is the natural English for this reported request
-lesson:rang:exercise5	meaning	别…了 means "stop doing it"; the 了 is part of the pattern and the English imperative covers it
+lesson:mw2:exercise5	meaning	两万 is 20,000: 两 is the spoken form of 2, so "twenty thousand" is the correct translation
+lesson:rang2:exercise5	meaning	别…了 is a command to stop and 别 is a negative word; "Stop talking" says the same without "not"
+lesson:rang2:example1	meaning	一会儿 contains 会 but means "a moment"; the English past tense is natural for reported speech (让 has no tense in Chinese)
+lesson:rang2:example3	meaning	一会儿 contains 会 but means "a while"
+lesson:rang2:exercise1	meaning	让 has no tense in Chinese; "asked" is the natural English for this reported request
+lesson:rang2:exercise5	meaning	别…了 means "stop doing it"; the 了 is part of the pattern and the English imperative covers it
 lesson:result:example3	meaning	听不懂 is a potential complement: 不 between verb and complement means "cannot"
 lesson:result:exercise4	meaning	听不懂 is a potential complement: 不 between verb and complement means "cannot"
 lesson:yao:exercise3	meaning	后天 means "the day after tomorrow", so "tomorrow" in the English is part of that phrase
@@ -114,7 +114,7 @@ exam:L3:14:question	pinyin	说话人为什么: pypinyin reads 人为 as one word
 exam:L3:20:question	pinyin	说话人为什么: pypinyin reads 人为 as one word (rénwéi), but the sentence is 说话人 + 为什么 (wèishénme)	说话人为什么问了妈妈？
 exam:R3:1:question	pinyin	说话人为什么: pypinyin reads 人为 as one word (rénwéi), but the sentence is 说话人 + 为什么 (wèishénme)	说话人为什么晚上去超市？
 wordform:过	pinyin	过 has two readings, guo (after a verb: 去过) and guò (to pass, to spend time); the entry shows both so that a typed guò is accepted too
-lesson:mw:extra13	meaning	三万 is 30,000: the checker reads 万 as a separate number, so it cannot match "30,000"; the English is right	三万
+lesson:mw2:extra13	meaning	三万 is 30,000: the checker reads 万 as a separate number, so it cannot match "30,000"; the English is right	三万
 clip:33	pinyin	场 in 一场比赛 (a match) is chǎng, third tone; pypinyin gives cháng, the reading for 一场雨 (a spell of rain)	一场
 passage:p2-class:line4	meaning	老师说 + what was said is natural without 了 when you report a message; the English uses "said" because the class is over	老师说下个星期一考试，你要好好准备。
 passage:p2-coffee:line1	meaning	喝了睡不着 is a condition ("once I drink it, I cannot sleep"); 了 marks the first action finishing, not the past	我晚上不喝咖啡，喝了睡不着。
@@ -156,3 +156,30 @@ word-extra:丢:2	meaning	别…了 warns against an outcome (losing the phone); 
 word-extra:手段:1	gloss	"all sorts of tricks" on purpose: 手段 leans negative in this sentence (DeepSeek, 19 Nov)	为了赢这场比赛，他用了各种手段。
 exam:L2:0.1	meaning	上海大学毕业 states who he is (a graduate of), so no 了 is needed; the English past is natural	我姓高，上海大学毕业，专业是经济。
 word:入	gloss	入 is taught through 入口, and "entrance" is the right English for 入口 (DeepSeek, 20 Nov)
+lesson:lihe	level	话 is the second half of the HSK 1 word 说话; split verbs put 了 or a time between the halves, which is the point of the lesson	话
+lesson:lihe	level	觉 is the second half of the HSK 1 word 睡觉, split by 了 + amount (睡了一个好觉), the point of the lesson	觉
+lesson:lihe	level	泳 is the second half of the HSK 2 word 游泳, split by 过 (游过泳), the point of the lesson	泳
+write:g2-43	level	话 / 觉: halves of 说话 and 睡觉 split by 了 + amount, the point of this split-verb prompt	了
+lesson:adjdouble	level	高高兴兴 is the AABB doubling of the HSK 1 word 高兴; 兴 only appears doubled here, the point of the lesson	高高兴兴
+write:g2-44	level	高高兴兴 is the AABB doubling of the HSK 1 word 高兴, the point of this prompt	高高兴兴
+lesson:asoon:exercise3	meaning	the second half of 一…就… drops the repeated subject (妈妈一回来就做饭); English needs "she"	妈妈一回来就做饭
+lesson:phrases3	meaning	不一会儿 is a fixed phrase meaning "before long"; its 不 is not a negation	不一会儿
+write:g3-68	meaning	不一会儿 is a fixed phrase meaning "before long"; its 不 is not a negation	不一会儿
+lesson:redup3	meaning	不大不小 is the 不A不B pattern "neither too … nor too …" (just right), not a plain negation; past-tense English is natural for 来	不大不小
+write:g3-65	meaning	不大不小 is the 不A不B pattern "neither too … nor too …", not a plain negation	不大不小
+lesson:redup3	meaning	不冷不热 is the 不A不B pattern "neither too … nor too …" (just right), not a plain negation; past-tense English is natural for 来	不冷不热
+write:g3-65	meaning	不冷不热 is the 不A不B pattern "neither too … nor too …", not a plain negation	不冷不热
+lesson:redup3	meaning	不多不少 is the 不A不B pattern "neither too … nor too …" (just right), not a plain negation; past-tense English is natural for 来	不多不少
+write:g3-65	meaning	不多不少 is the 不A不B pattern "neither too … nor too …", not a plain negation	不多不少
+lesson:redup3	meaning	不早不晚 is the 不A不B pattern "neither too … nor too …" (just right), not a plain negation; past-tense English is natural for 来	不早不晚
+write:g3-65	meaning	不早不晚 is the 不A不B pattern "neither too … nor too …", not a plain negation	不早不晚
+lesson:result3:example0	meaning	V了没有？ is a yes/no question form ("did you … or not?"), not a negation	买到了没有
+lesson:qword3	meaning	with 吗, 什么 means "something" (the point of the lesson), so 吗 + question word is right here	什么吗
+lesson:qword3	meaning	with 吗, 哪儿 means "anywhere" (the point of the lesson), so 吗 + question word is right here	玩了吗
+write:g3-58	meaning	with 吗, 什么 / 哪儿 mean "something / anywhere", the point of this prompt	吗
+lesson:tone3:example2	meaning	难过什么啊 is a rhetorical push-back, not a question; the second sentence is the 不是…吗 pattern	不是挺好的吗
+lesson:tone3:extra1	meaning	不是说…吗 reminds someone of what they said earlier; English needs the past "said"	不是说今天很忙吗
+lesson:yiyang3	meaning	早到十分钟 (the syllabus example) reports a finished arrival; 了 is optional after 早到 + amount	早到十分钟
+write:g3-57	meaning	早到十分钟 (the syllabus example) reports a finished arrival; 了 is optional after 早到 + amount	早到十分钟
+lesson:tone3:extra2	meaning	"Hasn't he gone home?" shows the finished action of 回家了; the check does not read the negative perfect	不是回家了吗
+write:g3-60	meaning	"Hasn't he gone home?" shows the finished action of 回家了; the check does not read the negative perfect	不是回家了吗

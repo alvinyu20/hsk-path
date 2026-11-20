@@ -1874,7 +1874,7 @@ window.HSK5_EXAM = {
     {
      "s": "",
      "zh": "我小时候特别怕黑，晚上一个人不敢睡觉。后来奶奶告诉我，黑夜只是没有光，没有什么可怕的。从那以后，我慢慢就不怕了。现在我已经长大了，可是奶奶告诉我的事，我一直记得。",
-     "py": "Wǒ xiǎoshíhou tèbié pà hēi, wǎnshang yí ge rén bù gǎn shuìjiào. Hòulái nǎinai gàosu wǒ, hēiyè zhǐshì méiyǒu guāng, méiyǒu shénme kěpà de. Cóng nà yǐhòu, wǒ màn màn jiù bú pà le. Xiànzài wǒ yǐjīng zhǎngdà le, kěshì nǎinai gàosu wǒ de shì, wǒ yìzhí jìde.",
+     "py": "Wǒ xiǎoshíhou tèbié pà hēi, wǎnshang yí ge rén bù gǎn shuìjiào. Hòulái nǎinai gàosu wǒ, hēiyè zhǐshì méiyǒu guāng, méiyǒu shénme kěpà de. Cóng nà yǐhòu, wǒ mànmàn jiù bú pà le. Xiànzài wǒ yǐjīng zhǎngdà le, kěshì nǎinai gàosu wǒ de shì, wǒ yìzhí jìde.",
      "en": "When I was a child, I was especially afraid of the dark and did not dare to sleep alone at night. Later my grandmother told me that night is just a lack of light and there is nothing to be afraid of. From then on, I gradually stopped being afraid. Now I have grown up, but I have always remembered what grandmother said."
     }
    ],
@@ -2654,7 +2654,7 @@ window.HSK5_EXAM = {
     {
      "s": "女",
      "zh": "先把鱼洗干净，再放一点盐，最后用小火慢慢煮二十分钟。",
-     "py": "Xiān bǎ yú xǐ gānjìng, zài fàng yì diǎn yán, zuìhòu yòng xiǎo huǒ màn màn zhǔ èrshí fēnzhōng.",
+     "py": "Xiān bǎ yú xǐ gānjìng, zài fàng yì diǎn yán, zuìhòu yòng xiǎo huǒ mànmàn zhǔ èrshí fēnzhōng.",
      "en": "First wash the fish clean, then add a little salt, and finally cook it slowly over a low heat for twenty minutes."
     },
     {
@@ -2699,7 +2699,7 @@ window.HSK5_EXAM = {
     {
      "s": "",
      "zh": "老师常常对我们说，读书不能只看快慢，更重要的是想一想。一本书如果读得很快，却什么也没记住，还不如慢慢读。每读完一部分，最好用自己的话说一说里面写了什么。",
-     "py": "Lǎoshī chángcháng duì wǒmen shuō, dúshū bù néng zhǐ kàn kuài màn, gèng zhòngyào de shì xiǎng yi xiǎng. Yì běn shū rúguǒ dú de hěn kuài, què shénme yě méi jì zhù, hái bùrú màn màn dú. Měi dú wán yí bùfen, zuìhǎo yòng zìjǐ dehuà shuō yi shuō lǐmiàn xiě le shénme.",
+     "py": "Lǎoshī chángcháng duì wǒmen shuō, dúshū bù néng zhǐ kàn kuài màn, gèng zhòngyào de shì xiǎng yi xiǎng. Yì běn shū rúguǒ dú de hěn kuài, què shénme yě méi jì zhù, hái bùrú mànmàn dú. Měi dú wán yí bùfen, zuìhǎo yòng zìjǐ dehuà shuō yi shuō lǐmiàn xiě le shénme.",
      "en": "The teacher often tells us that when reading, you should not look only at speed; what matters more is to think. If you read a book very fast but remember nothing, you had better read slowly. After finishing each part, it is best to say in your own words what was written in it."
     }
    ],
@@ -3175,7 +3175,7 @@ window.HSK5_EXAM = {
   {
    "zh": "很多现代人睡得太少，原因是工作压力大，___晚上喜欢玩手机。睡眠长期不足不但会让人精神不好，还会引起许多___。专家建议，成年人每天应该睡七到八个小时，而且最好每天在同一个时间睡觉和起床，让身体慢慢___。睡觉前一小时，最好不要看手机，也不要喝咖啡或茶，可以听听轻音乐，让自己___下来。只要坚持一段时间，睡眠就会有明显的___。",
    "full": "很多现代人睡得太少，原因是工作压力大，或者晚上喜欢玩手机。睡眠长期不足不但会让人精神不好，还会引起许多疾病。专家建议，成年人每天应该睡七到八个小时，而且最好每天在同一个时间睡觉和起床，让身体慢慢适应。睡觉前一小时，最好不要看手机，也不要喝咖啡或茶，可以听听轻音乐，让自己放松下来。只要坚持一段时间，睡眠就会有明显的改善。",
-   "py": "Hěn duō xiàndài rén shuì de tài shǎo, yuányīn shì gōngzuò yālì dà, huòzhě wǎnshang xǐhuan wán shǒujī. Shuìmián chángqī bùzú búdàn huì ràng rén jīngshen bù hǎo, hái huì yǐnqǐ xǔduō jíbìng. Zhuānjiā jiànyì, chéngnián rén měitiān yīnggāi shuì qī dào bā ge xiǎoshí, érqiě zuìhǎo měitiān zài tóngyī ge shíjiān shuìjiào hé qǐchuáng, ràng shēntǐ màn màn shìyìng. Shuìjiào qián yì xiǎoshí, zuìhǎo búyào kàn shǒujī, yě búyào hē kāfēi huò chá, kěyǐ tīngting qīng yīnyuè, ràng zìjǐ fàngsōng xiàlái. Zhǐyào jiānchí yí duàn shíjiān, shuìmián jiù huì yǒu míngxiǎn de gǎishàn.",
+   "py": "Hěn duō xiàndài rén shuì de tài shǎo, yuányīn shì gōngzuò yālì dà, huòzhě wǎnshang xǐhuan wán shǒujī. Shuìmián chángqī bùzú búdàn huì ràng rén jīngshen bù hǎo, hái huì yǐnqǐ xǔduō jíbìng. Zhuānjiā jiànyì, chéngnián rén měitiān yīnggāi shuì qī dào bā ge xiǎoshí, érqiě zuìhǎo měitiān zài tóngyī ge shíjiān shuìjiào hé qǐchuáng, ràng shēntǐ mànmàn shìyìng. Shuìjiào qián yì xiǎoshí, zuìhǎo búyào kàn shǒujī, yě búyào hē kāfēi huò chá, kěyǐ tīngting qīng yīnyuè, ràng zìjǐ fàngsōng xiàlái. Zhǐyào jiānchí yí duàn shíjiān, shuìmián jiù huì yǒu míngxiǎn de gǎishàn.",
    "en": "Many modern people sleep too little, because of work pressure or because they like playing on their phones at night. A long-term lack of sleep not only makes people feel low but also causes many illnesses. Experts suggest that adults should sleep seven to eight hours a day and, preferably, go to bed and get up at the same time every day, letting the body gradually adapt. In the hour before bed, it is best not to look at your phone or drink coffee or tea; you can listen to light music and let yourself relax. If you keep it up for a while, your sleep will improve clearly.",
    "blanks": [
     [
@@ -4142,7 +4142,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "医生建议，有时间的话，最好多爬楼梯，少坐电梯。爬楼梯不但能锻炼身体，还能帮助减肥。不过，对于腿不好的人来说，一次爬太多层楼可能会受伤，所以应该慢慢来。",
-   "py": "Yīshēng jiànyì, yǒu shíjiān dehuà, zuìhǎo duō pá lóutī, shǎo zuò diàntī. Pá lóutī búdàn néng duànliàn shēntǐ, hái néng bāngzhù jiǎnféi. Búguò, duìyú tuǐ bù hǎo de rén lái shuō, yí cì pá tài duō céng lóu kěnéng huì shòushāng, suǒyǐ yīnggāi màn màn lái.",
+   "py": "Yīshēng jiànyì, yǒu shíjiān dehuà, zuìhǎo duō pá lóutī, shǎo zuò diàntī. Pá lóutī búdàn néng duànliàn shēntǐ, hái néng bāngzhù jiǎnféi. Búguò, duìyú tuǐ bù hǎo de rén lái shuō, yí cì pá tài duō céng lóu kěnéng huì shòushāng, suǒyǐ yīnggāi mànmàn lái.",
    "en": "Doctors suggest that if you have time, you had better climb stairs more and take the lift less. Climbing stairs can not only exercise the body but also help with losing weight. However, for people with bad legs, climbing too many floors at once may cause injury, so they should take it slowly.",
    "q": {
     "zh": "对腿不好的人来说，爬楼梯应该怎么样？",
@@ -4152,7 +4152,7 @@ window.HSK5_EXAM = {
    "opts": [
     {
      "zh": "慢慢来",
-     "py": "Màn màn lái"
+     "py": "Mànmàn lái"
     },
     {
      "zh": "越多越好",
@@ -4702,7 +4702,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "刚开始锻炼的时候，不要给自己定太高的目标。比如，每天跑五公里对刚开始的人来说太难了，很容易放弃。不如先从每天走半个小时开始，等身体适应了，再慢慢增加。这样才能让运动变成一种长期的习惯。",
-   "py": "Gāng kāishǐ duànliàn de shíhou, búyào gěi zìjǐ dìng tài gāo de mùbiāo. Bǐrú, měitiān pǎo wǔ gōnglǐ duì gāng kāishǐ de rén lái shuō tài nán le, hěn róngyì fàngqì. Bùrú xiān cóng měitiān zǒu bàn ge xiǎoshí kāishǐ, děng shēntǐ shìyìng le, zài màn màn zēngjiā. Zhèyàng cái néng ràng yùndòng biànchéng yì zhǒng chángqī de xíguàn.",
+   "py": "Gāng kāishǐ duànliàn de shíhou, búyào gěi zìjǐ dìng tài gāo de mùbiāo. Bǐrú, měitiān pǎo wǔ gōnglǐ duì gāng kāishǐ de rén lái shuō tài nán le, hěn róngyì fàngqì. Bùrú xiān cóng měitiān zǒu bàn ge xiǎoshí kāishǐ, děng shēntǐ shìyìng le, zài mànmàn zēngjiā. Zhèyàng cái néng ràng yùndòng biànchéng yì zhǒng chángqī de xíguàn.",
    "en": "When you first start exercising, do not set yourself too high a goal. For example, running five kilometres a day is too hard for someone who has only just started, and it is easy to give up. It is better to start by walking for half an hour a day and then, once the body has adapted, increase it gradually. Only in this way can exercise become a long-term habit.",
    "q": {
     "zh": "对刚开始锻炼的人来说，最好怎么开始？",
@@ -4870,7 +4870,7 @@ window.HSK5_EXAM = {
   },
   {
    "zh": "很多孩子不喜欢吃蔬菜。有的父母要求孩子必须吃，结果孩子越来越讨厌。有一位妈妈的做法不一样：她带孩子一起去菜市场买菜，让孩子自己选，再让孩子帮忙洗菜。慢慢地，孩子对蔬菜有了兴趣，也愿意吃了。",
-   "py": "Hěn duō háizi bù xǐhuan chī shūcài. Yǒude fùmǔ yāoqiú háizi bìxū chī, jiéguǒ háizi yuè lái yuè tǎoyàn. Yǒu yí wèi māma de zuòfǎ bù yíyàng: tā dài háizi yìqǐ qù càishìchǎng mǎi cài, ràng háizi zìjǐ xuǎn, zài ràng háizi bāngmáng xǐ cài. Màn màn de, háizi duì shūcài yǒu le xìngqù, yě yuànyì chī le.",
+   "py": "Hěn duō háizi bù xǐhuan chī shūcài. Yǒude fùmǔ yāoqiú háizi bìxū chī, jiéguǒ háizi yuè lái yuè tǎoyàn. Yǒu yí wèi māma de zuòfǎ bù yíyàng: tā dài háizi yìqǐ qù càishìchǎng mǎi cài, ràng háizi zìjǐ xuǎn, zài ràng háizi bāngmáng xǐ cài. Mànmàn de, háizi duì shūcài yǒu le xìngqù, yě yuànyì chī le.",
    "en": "Many children do not like eating vegetables. Some parents require their children to eat them, and the children come to dislike them more and more. One mother does it differently: she takes her child to the market to buy vegetables, lets the child choose, and then lets the child help wash them. Gradually the child became interested in vegetables and was willing to eat them.",
    "q": {
     "zh": "那位妈妈是怎么让孩子吃蔬菜的？",

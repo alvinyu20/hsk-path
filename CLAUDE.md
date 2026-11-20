@@ -59,6 +59,7 @@ Template syntax: `<sc-if value>`, `<sc-for list as x>`, `{{holes}}`, `data-on-cl
 - Settings rows: open one with `window.shanlu.setSec('<id>')`. The ids are reviews, level, sounds, erhua, voice, ai, sync, data.
 - In a test's `setState`, setting `dayMin` resets `minLog`, so set any fake history in a separate call.
 - Coins (`xp`) are lifetime earnings, never spent down. Each device's share is kept in `xpDev`/`xpBase` (`mergeCoins` in sync.js). Raise `xp` with a normal `setState` so this device's share counts; when applying synced numbers, set `noSync`/`noMin` so they don't count as earned here.
+- Grammar progress is keyed by lesson id (`gres[id]`). To reset everyone's score on a lesson whose content changed, give it a new id (`yijing` → `yijing2`) and rename it in `categories-grammar.json`, `path.json`, the level's `gpoints.json` and `check-waivers.tsv`. Old scores stay as harmless orphans, and sync cannot bring them back.
 - Tests look things up by class names (`.mw`, `.top h1`, …). When markup changes, grep `tools/smoke-test-*.js` for the old class first.
 
 ## DeepSeek review workflow

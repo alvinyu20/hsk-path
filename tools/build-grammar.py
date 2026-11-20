@@ -180,6 +180,8 @@ def main():
         else:
             f.write(' * The points are NOT the official numbered list. They are chosen from the grammar of the HSK %d words and from the Chinese Grammar Wiki list of\n' % LV)
             f.write(' * HSK %d points (content/l%d/grammar-outline.txt). Explanations were written by AI and cross-checked against the Chinese Grammar Wiki\n' % (LV, LV))
+            if LV in (2, 3):
+                f.write(' * (and, on 20 Nov 2026, compared with the official 2025 syllabus grammar list; the points it had that were missing here were added at the end of the outline)\n')
         f.write(' * where noted in CONTENT-CHECKS.md. They have NOT been reviewed by a human teacher. */\n')
         f.write('window.HSK%d_GRAMMAR = { lessons: [' % LV + '\n' + ',\n'.join(json.dumps(l, ensure_ascii=False) for l in lessons) + '\n],\npoints: ' + json.dumps(points, ensure_ascii=False) + ' };\n')
     covered = sorted({p for l in lessons for p in l['covers']})

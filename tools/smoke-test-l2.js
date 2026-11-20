@@ -107,7 +107,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await page.title()).includes('HSK 2'), 'the page title says HSK 2');
   const home = await text();
   check(home.includes('197 words to go'), 'the trail counts the 197 HSK 2 words');
-  check(home.includes('Dictation drill') && (await page.locator('.mw', { hasText: 'Speak' }).count()) === 1 && home.includes('Comparing'), 'Today offers word webs, the listening drill, a practice script and grammar');
+  check(home.includes('Dictation drill') && (await page.locator('.mw', { hasText: 'Speak' }).count()) === 1 && home.includes('Grammar lesson'), 'Today offers word webs, the listening drill, a practice script and grammar');
   check(!home.includes('Climb to the') && (await page.locator('.rg').count()) === 0 && home.includes('HSK 2 exam'), 'the home page has no Climb card, and the trail names the HSK 2 exam');
   const st = await page.evaluate(() => ({ n: Object.keys(window.shanlu.state.ws).length, l1: !!window.shanlu.state.ws['你好'], l2: !!window.shanlu.state.ws['机场'] }));
   check(st.n === 197 && !st.l1 && st.l2, 'progress holds the 197 HSK 2 words and none of the HSK 1 words');
@@ -162,7 +162,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   // ---- every grammar lesson: all 90 questions answered correctly
   await nav('Grammar');
   const lessons = await page.evaluate(() => window.HSK2_GRAMMAR.lessons.length);
-  check(lessons === 19, 'the Grammar screen has 19 HSK 2 lessons');
+  check(lessons === 24, 'the Grammar screen has 24 HSK 2 lessons');
   let allFull = true;
   for (let i = 0; i < lessons; i++) {
     await page.evaluate((j) => window.shanlu.pickLesson(j), i);
@@ -174,7 +174,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     await nav('Grammar');
   }
   check(allFull, 'every HSK 2 lesson scores full marks when its questions are answered correctly');
-  check(await page.evaluate(() => Object.values(window.shanlu.state.gres).filter(v => v >= 80).length) === 19, 'all 19 lessons are marked done');
+  check(await page.evaluate(() => Object.values(window.shanlu.state.gres).filter(v => v >= 80).length) === 24, 'all 24 lessons are marked done');
   // wrong answers are marked wrong in each question type
   await page.evaluate(() => window.shanlu.pickLesson(0));
   await page.locator('button', { hasText: 'Practise this lesson' }).first().click();
@@ -360,7 +360,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     await pA.fill('.gl .tr-search', 'describing and comparing');
     await pA.waitForTimeout(100);
     const cmp = await pA.evaluate(() => ({ n: document.querySelectorAll('.gl .gp').length, l1: document.querySelectorAll('.gl .gp .lvtag.l1').length, l2: document.querySelectorAll('.gl .gp .lvtag.l2').length, edge1: document.querySelectorAll('.gl .gp.rl1').length, edge2: document.querySelectorAll('.gl .gp.rl2').length, t: document.querySelector('.gl').innerText }));
-    check(cmp.n === 4 && cmp.l1 === 1 && cmp.l2 === 3 && cmp.edge1 === 1 && cmp.edge2 === 3 && cmp.t.includes('Comparing: 比'), 'the Describing and comparing category holds the HSK 1 describing lesson and three HSK 2 lessons, each with its level tag and coloured edge');
+    check(cmp.n === 6 && cmp.l1 === 1 && cmp.l2 === 5 && cmp.edge1 === 1 && cmp.edge2 === 5 && cmp.t.includes('Comparing: 比'), 'the Describing and comparing category holds the HSK 1 describing lesson and five HSK 2 lessons, each with its level tag and coloured edge');
     await pA.fill('.gl .tr-search', '');
     // word webs: topics first, and the hubs of both levels
     await require('./test-nav').makeNav(pA)('Archive');

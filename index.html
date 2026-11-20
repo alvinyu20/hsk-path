@@ -6,8 +6,8 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=9c7c234f4d data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=1a0bc4fd8d data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=fc76ac3463 data/hsk2-grammar.js?v=3bdcfab282 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=f61eb12760 data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=d8bb568b2e data/hsk3-grammar.js?v=29173011dc data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=82ca84cf78 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=6b5998626b data/hsk4-words.js?v=e1524faf11 data/hsk4-grammar.js?v=d1b147c738 data/hsk4-webs.js?v=357da9f493 data/hsk4-speak.js?v=432fbea51b data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=257a4e159a data/hsk5-words.js?v=8053ecd134 data/hsk5-grammar.js?v=9652096e29 data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=376d0f56b1 data/hsk5-listen.js?v=54545a43e7 data/hsk5-exam.js?v=285f77b6c7">
-<meta name="shanlu-version" content="19be2dff9b">
+<meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=9c7c234f4d data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=1a0bc4fd8d data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=7b6acdada8 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=f61eb12760 data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=bbccb91a56 data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=82ca84cf78 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=6b5998626b data/hsk4-words.js?v=aa602a2a6e data/hsk4-grammar.js?v=d1b147c738 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=432fbea51b data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=372a4da5b0 data/hsk5-words.js?v=d8d93dab24 data/hsk5-grammar.js?v=9652096e29 data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=376d0f56b1 data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=db77f8b5e5">
+<meta name="shanlu-version" content="b1bae1affa">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=466086d420">
+<link rel="stylesheet" href="styles.css?v=8d7441048b">
 </head>
 <body>
 <div id="app"></div>
@@ -456,7 +456,7 @@
     <section class="card">
       <div class="today-top"><h2 class="h2">Today</h2><span class="muted">{{todayShort}}</span></div>
       <button class="btn pri big today-go" data-on-click="{{planGo}}">{{planGoText}}</button>
-      <div class="abar jade" style="margin:12px 0 8px"><i style="width: {{todayPct}}"></i></div>
+      <sc-if value="{{todayBarShow}}" hint-placeholder-val="{{ true }}"><div class="abar jade" style="margin:12px 0 8px"><i style="width: {{todayPct}}"></i></div></sc-if>
       <div class="tasks2">
         <sc-for list="{{tasks}}" as="t" hint-placeholder-count="3">
           <button type="button" class="task2 {{t.cls}}" data-on-click="{{t.go}}">
@@ -3151,9 +3151,9 @@
 <script defer src="friends.js?v=f51b3f7ce5"></script>
 <script defer src="level.js?v=1b9a0aa0f9"></script>
 <script defer src="placement.js?v=8b6f2b8170"></script>
-<script defer src="data/levels-index.js?v=13c52ba34e"></script>
+<script defer src="data/levels-index.js?v=f34d658763"></script>
 <script defer src="data/hsk1-erhua.js?v=161afeaf51"></script>
-<script defer src="data/lexicon.js?v=752b6080ef"></script>
+<script defer src="data/lexicon.js?v=f5537f9e44"></script>
 <script defer src="data/char-glosses.js?v=3f467cfcff"></script>
 <script defer src="data/hsk2-preview.js?v=e386a66d12"></script>
 <script defer src="data/hsk3-preview.js?v=1839728984"></script>
@@ -3184,8 +3184,8 @@
 <script defer src="data/path-scenes.js?v=cabc535d43"></script>
 <script defer src="data/speak-scenes.js?v=8fc79e5d01"></script>
 <script defer src="data/art.js?v=1dd8dd9d7b"></script>
-<script defer src="data/passages.js?v=5ada9a1323"></script>
-<script defer src="data/path.js?v=816ab8877a"></script>
-<script defer src="app.js?v=fab1fb5322"></script>
+<script defer src="data/passages.js?v=36bcb932ca"></script>
+<script defer src="data/path.js?v=ca70d08553"></script>
+<script defer src="app.js?v=0bc61f16b7"></script>
 </body>
 </html>

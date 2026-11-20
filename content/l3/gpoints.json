@@ -147,7 +147,7 @@
   "id": "g3-14",
   "title": "先…再 / 然后…",
   "src": {
-   "xian": [
+   "xian3": [
     0,
     2,
     3
@@ -158,7 +158,7 @@
   "id": "g3-15",
   "title": "一边…一边…",
   "src": {
-   "xian": [
+   "xian3": [
     1
    ]
   }
@@ -167,7 +167,7 @@
   "id": "g3-16",
   "title": "又…又…",
   "src": {
-   "xian": [
+   "xian3": [
     4
    ]
   }
@@ -294,7 +294,7 @@
   "id": "g3-28",
   "title": "A 跟 B 一样 (the same as) and 不同 (different)",
   "src": {
-   "yiyang": [
+   "yiyang3": [
     0,
     3
    ]
@@ -304,7 +304,7 @@
   "id": "g3-29",
   "title": "比 + 更 / 还 and 比 + adjective + 多了",
   "src": {
-   "yiyang": [
+   "yiyang3": [
     1,
     2,
     4
@@ -341,7 +341,7 @@
   "id": "g3-32",
   "title": "起来, 出来, 回来 and 下去 after a verb",
   "src": {
-   "direction2": [
+   "direction3": [
     0,
     1,
     3,
@@ -353,7 +353,7 @@
   "id": "g3-33",
   "title": "向 + direction or person",
   "src": {
-   "direction2": [
+   "direction3": [
     2
    ]
   }
@@ -362,7 +362,7 @@
   "id": "g3-34",
   "title": "verb + 了 + duration",
   "src": {
-   "duration": [
+   "duration3": [
     0,
     2,
     4
@@ -373,7 +373,7 @@
   "id": "g3-35",
   "title": "duration + 没 + verb + 了",
   "src": {
-   "duration": [
+   "duration3": [
     1,
     3
    ]
@@ -495,7 +495,7 @@
   "id": "g3-47",
   "title": "question word + 都",
   "src": {
-   "qword2": [
+   "qword3": [
     0,
     3
    ]
@@ -505,7 +505,7 @@
   "id": "g3-48",
   "title": "想 + question word + 就 + question word",
   "src": {
-   "qword2": [
+   "qword3": [
     2
    ]
   }
@@ -514,7 +514,7 @@
   "id": "g3-49",
   "title": "一 + measure word + 也 / 都 + 不 / 没",
   "src": {
-   "qword2": [
+   "qword3": [
     4,
     1
    ]
@@ -550,6 +550,234 @@
     1,
     2,
     3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-53",
+  "title": "verb + object + verb again + time (打篮球打了一个下午)",
+  "src": {
+   "duration3": [
+    5,
+    6
+   ]
+  }
+ },
+ {
+  "id": "g3-54",
+  "title": "how long since (开学已经两个星期了)",
+  "src": {
+   "duration3": [
+    7,
+    8
+   ]
+  }
+ },
+ {
+  "id": "g3-55",
+  "title": "一会儿…，一会儿… (one moment … the next)",
+  "src": {
+   "xian3": [
+    5,
+    6
+   ]
+  }
+ },
+ {
+  "id": "g3-56",
+  "title": "A 不比 B + adjective",
+  "src": {
+   "yiyang3": [
+    7,
+    8
+   ]
+  }
+ },
+ {
+  "id": "g3-57",
+  "title": "比 + 早 / 晚 / 多 / 少 + verb + amount",
+  "src": {
+   "yiyang3": [
+    5,
+    6
+   ]
+  }
+ },
+ {
+  "id": "g3-58",
+  "title": "question words for \"some-\" (在哪儿见过她)",
+  "src": {
+   "qword3": [
+    5,
+    6
+   ]
+  }
+ },
+ {
+  "id": "g3-59",
+  "title": "things appearing and leaving (来了一个新同学)",
+  "src": {
+   "direction3": [
+    5,
+    6
+   ]
+  }
+ },
+ {
+  "id": "g3-60",
+  "title": "不是…吗？ (isn't it …?)",
+  "src": {
+   "tone3": [
+    0,
+    1
+   ]
+  }
+ },
+ {
+  "id": "g3-61",
+  "title": "是…的 for a firm view",
+  "src": {
+   "tone3": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g3-62",
+  "title": "…什么(啊) (难过什么啊)",
+  "src": {
+   "tone3": [
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-63",
+  "title": "doubled measure words (个个都, 张张都)",
+  "src": {
+   "redup3": [
+    0,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-64",
+  "title": "一个一个, 一天一天 (one by one)",
+  "src": {
+   "redup3": [
+    1
+   ]
+  }
+ },
+ {
+  "id": "g3-65",
+  "title": "不A不B (不大不小)",
+  "src": {
+   "redup3": [
+    2,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g3-66",
+  "title": "看上去 (looks)",
+  "src": {
+   "phrases3": [
+    0,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-67",
+  "title": "一般来说 (generally speaking)",
+  "src": {
+   "phrases3": [
+    1
+   ]
+  }
+ },
+ {
+  "id": "g3-68",
+  "title": "不一会儿 (before long)",
+  "src": {
+   "phrases3": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g3-69",
+  "title": "不怎么样 (not great)",
+  "src": {
+   "phrases3": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g3-70",
+  "title": "从…起 (from … on)",
+  "src": {
+   "frames3": [
+    0,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-71",
+  "title": "在…上 / 在…中",
+  "src": {
+   "frames3": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g3-72",
+  "title": "对…来说 (for someone)",
+  "src": {
+   "frames3": [
+    1,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g3-73",
+  "title": "order of describing words before a noun",
+  "src": {
+   "attr3": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g3-74",
+  "title": "results 到, 住, 走 (买到, 记住, 拿走)",
+  "src": {
+   "result3": [
+    0,
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g3-75",
+  "title": "上 after a verb (考上, 吃上, 爱上)",
+  "src": {
+   "result3": [
     4
    ]
   }

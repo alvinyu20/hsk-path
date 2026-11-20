@@ -75,7 +75,7 @@
   "id": "g2-9",
   "title": "到 + place (arrive, go to)",
   "src": {
-   "dao": [
+   "dao2": [
     2,
     4
    ]
@@ -85,7 +85,7 @@
   "id": "g2-10",
   "title": "verb + 在 + place (住在, 站在)",
   "src": {
-   "dao": [
+   "dao2": [
     0,
     1,
     3
@@ -135,7 +135,7 @@
   "id": "g2-14",
   "title": "已经…了 (already)",
   "src": {
-   "yijing": [
+   "yijing2": [
     0,
     2,
     3
@@ -146,7 +146,7 @@
   "id": "g2-15",
   "title": "就 (as early as, then)",
   "src": {
-   "yijing": [
+   "yijing2": [
     1,
     4
    ]
@@ -156,7 +156,7 @@
   "id": "g2-16",
   "title": "别 / 别…了 (do not, stop)",
   "src": {
-   "rang": [
+   "rang2": [
     1,
     3,
     4
@@ -222,7 +222,7 @@
   "id": "g2-22",
   "title": "让 (let, ask, make)",
   "src": {
-   "rang": [
+   "rang2": [
     0,
     2
    ]
@@ -252,7 +252,7 @@
   "id": "g2-25",
   "title": "次 (counting actions)",
   "src": {
-   "mw": [
+   "mw2": [
     2
    ]
   }
@@ -351,7 +351,7 @@
   "id": "g2-32",
   "title": "条 / 位 / 间 (new measure words)",
   "src": {
-   "mw": [
+   "mw2": [
     0,
     1,
     3
@@ -362,7 +362,7 @@
   "id": "g2-33",
   "title": "万 and 多 (big numbers, more than)",
   "src": {
-   "mw": [
+   "mw2": [
     4
    ]
   }
@@ -393,6 +393,145 @@
   "src": {
    "duo": [
     4
+   ]
+  }
+ },
+ {
+  "id": "g2-37",
+  "title": "一…就… (as soon as)",
+  "src": {
+   "asoon": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-38",
+  "title": "还没…呢 (not yet)",
+  "src": {
+   "yijing2": [
+    7,
+    8
+   ]
+  }
+ },
+ {
+  "id": "g2-39",
+  "title": "都…了 (already, so late)",
+  "src": {
+   "yijing2": [
+    5,
+    6
+   ]
+  }
+ },
+ {
+  "id": "g2-40",
+  "title": "叫 / 请 + someone + verb",
+  "src": {
+   "rang2": [
+    5,
+    6
+   ]
+  }
+ },
+ {
+  "id": "g2-41",
+  "title": "verb + 给 + person (送给, 拿给)",
+  "src": {
+   "dao2": [
+    5,
+    6
+   ]
+  }
+ },
+ {
+  "id": "g2-42",
+  "title": "floors: 三楼, 几楼",
+  "src": {
+   "mw2": [
+    5,
+    6
+   ]
+  }
+ },
+ {
+  "id": "g2-43",
+  "title": "split verbs (帮我一个忙, 说了一会儿话)",
+  "src": {
+   "lihe": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-44",
+  "title": "doubled adjectives (大大的, 慢慢地, 高高兴兴)",
+  "src": {
+   "adjdouble": [
+    0,
+    1,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-45",
+  "title": "多 + adjective + 啊 (how …!)",
+  "src": {
+   "adjdouble": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g2-46",
+  "title": "A 有 B + adjective (as … as)",
+  "src": {
+   "biyou": [
+    0,
+    2
+   ]
+  }
+ },
+ {
+  "id": "g2-47",
+  "title": "比 with 得 (她说得比我好)",
+  "src": {
+   "biyou": [
+    1,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-48",
+  "title": "topic first (她个子很高, 这本书我看完了)",
+  "src": {
+   "topic2": [
+    0,
+    1,
+    2,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g2-49",
+  "title": "什么的 (and so on)",
+  "src": {
+   "topic2": [
+    3
    ]
   }
  }

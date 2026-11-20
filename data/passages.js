@@ -2858,7 +2858,7 @@ window.SHANLU_PASSAGES = {
     {
      "s": "男",
      "zh": "别跑，慢慢走。我在电影院门口等你。",
-     "py": "Bié pǎo, màn màn zǒu. Wǒ zài diànyǐngyuàn ménkǒu děng nǐ.",
+     "py": "Bié pǎo, mànmàn zǒu. Wǒ zài diànyǐngyuàn ménkǒu děng nǐ.",
      "en": "Do not run; walk slowly. I am waiting for you at the cinema entrance."
     }
    ],
@@ -2968,7 +2968,6 @@ window.SHANLU_PASSAGES = {
     "就",
     "别",
     "跑",
-    "慢",
     "走",
     "门口",
     "等"
