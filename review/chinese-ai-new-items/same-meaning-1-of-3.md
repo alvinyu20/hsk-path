@@ -287,9 +287,9 @@ If there are no problems, answer "No problems found".
 - **进入** (jìnrù, HSK 4): to enter (formal; also a new stage)
   - Note: 进入 is more formal and needs a place or a stage after it: 进入房间, 进入大学 (to start university). In speech, 进 is more common: 进来, 请进.
   - Example: 请从这个门进入。 / Please enter through this door.
-- **入** (rù, HSK 4): to enter (in words: 入口)
-  - Note: 入 is mostly used in words such as 入口 and 加入.
-  - Example: 学生从东门入。 / Students enter by the east gate.
+- **入** (rù, HSK 4): to enter (in words: 入口, 加入)
+  - Note: 入 is mostly used inside words: 入口 (entrance), 加入 (to join). For "to go in" in speech, say 进: 请进.
+  - Example: 请问，入口在哪里？ / Excuse me, where is the entrance?
 
 ## 32. to forget
 

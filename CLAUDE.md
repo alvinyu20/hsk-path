@@ -47,6 +47,7 @@ Template syntax: `<sc-if value>`, `<sc-for list as x>`, `{{holes}}`, `data-on-cl
   - `sh tools/check-quick.sh full ../hsk-dataset/complete.json` before a big release
 - One browser test: `NODE_PATH="$(npm root -g)" node tools/smoke-test-<name>.js`
 - Path rebuild order: `build-webs.py`, then `build-path.py` (the path build fails on stale webs).
+- After editing `content/preview-hsk*.tsv`: `build-preview.py <dataset> <level>` once per level 2–5 (dataset first; with no level it only builds HSK 2).
 - Audio: dry run with `python3 -W ignore tools/make-audio.py --scope all --level N --dry-run`. Record with `gh api -X POST repos/alvinyu20/hsk-path/actions/workflows/audio.yml/dispatches -f ref=main -f 'inputs[scope]=all' -f 'inputs[level]=N'`. **Dispatch one level at a time and wait for it to finish**: runs share a concurrency group, and overlapping runs conflict on `audio/index.json`. Pushing during a run is fine, because its save step rebases.
 - Next unseen review round: `python3 tools/make-review-unseen.py <round>`.
 

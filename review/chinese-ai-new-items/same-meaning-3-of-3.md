@@ -30,7 +30,8 @@ If there are no problems, answer "No problems found".
 
 ## 83. theatre
 
-- **剧院** (jùyuàn, HSK 4): theatre (a theatre or theatre company)
+- **剧院** (jùyuàn, HSK 4): theatre (the building; often in names)
+  - Note: 剧院 is a theatre, and the word often appears in names: 大剧院 (grand theatre). 剧场 is the hall where a show is put on. A theatre company (the group of actors) has a different word.
   - Example: 这个剧院很大。 / This theatre is very big.
 - **剧场** (jùchǎng, HSK 5): theatre (the hall where shows are on)
   - Note: 剧场 is a theatre building where plays and shows are put on. A cinema is 电影院.
@@ -48,8 +49,8 @@ If there are no problems, answer "No problems found".
 ## 85. to cough
 
 - **咳** (ké, HSK 4): to cough (short; in 咳嗽)
-  - Note: 咳 is usually part of 咳嗽 in speech.
-  - Example: 我咳了两天了。 / I have been coughing for two days.
+  - Note: 咳 alone is short, for a cough or two: 咳了几声 (coughed a few times). For a cough that goes on, say 咳嗽: 我咳嗽了两天了.
+  - Example: 他咳了几声。 / He coughed a few times.
 - **咳嗽** (késou, HSK 4): to cough (everyday word)
   - Note: 咳嗽 is read késou, with a light second syllable.
   - Example: 我感冒了，一直咳嗽。 / I have a cold and keep coughing.
@@ -137,11 +138,11 @@ If there are no problems, answer "No problems found".
 
 ## 95. unexpectedly; actually
 
-- **竟然** (jìngrán, HSK 4): unexpectedly; actually (surprise)
-  - Note: 竟然 shows surprise that something happened: 他竟然忘了.
+- **竟然** (jìngrán, HSK 4): unexpectedly; actually (surprise; a bit more in writing)
+  - Note: 竟然 shows surprise that something happened: 他竟然忘了. 竟然 and 居然 are very close and both are common in speech and writing; 竟然 is a little more common in writing.
   - Example: 他竟然忘了自己的生日。 / He actually forgot his own birthday.
-- **居然** (jūrán, HSK 5): unexpectedly; actually (surprise; more spoken)
-  - Note: 居然 shows surprise that something happened or did not: 居然不知道 (to be surprised that someone does not know).
+- **居然** (jūrán, HSK 5): unexpectedly; actually (surprise; very close to 竟然)
+  - Note: 居然 shows surprise that something happened or did not: 居然不知道 (to be surprised that someone does not know). 居然 and 竟然 are very close and both are common in speech and writing.
   - Example: 他居然忘了自己的生日。 / He actually forgot his own birthday.
 
 ## 96. window
@@ -164,7 +165,7 @@ If there are no problems, answer "No problems found".
 
 ## 98. children (sons and daughters)
 
-- **儿女** (érnǚ, HSK 5): children (sons and daughters; warm, spoken)
+- **儿女** (érnǚ, HSK 5): children (sons and daughters; neutral)
   - Note: 儿女 means sons and daughters, usually when talking about someone's grown-up children. 孩子 is any child.
   - Example: 他的儿女都在国外工作。 / His children all work abroad.
 - **子女** (zǐnǚ, HSK 5): children (sons and daughters; formal)
@@ -182,8 +183,8 @@ If there are no problems, answer "No problems found".
 
 ## 100. gradually
 
-- **渐渐** (jiànjiàn, HSK 5): gradually (descriptive, spoken)
-  - Note: 渐渐 means slowly and step by step. It is often followed by 了 to show a change: 渐渐好了, 渐渐明白了.
+- **渐渐** (jiànjiàn, HSK 5): gradually (in descriptions and stories)
+  - Note: 渐渐 means slowly and step by step, and is typical of descriptions and stories rather than chat. It is often followed by 了 to show a change: 渐渐好了, 渐渐明白了. In everyday speech people often say 慢慢: 天气慢慢冷了.
   - Example: 天气渐渐冷了。 / The weather is gradually getting cold.
 - **逐渐** (zhújiàn, HSK 5): gradually (step by step, more formal)
   - Note: 逐渐 is "gradually", for a change that happens by itself: 逐渐变好 (to get better gradually), 逐渐明白 (to understand gradually), 逐渐增多 (to increase gradually).

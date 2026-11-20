@@ -147,8 +147,8 @@ If there are no problems, answer "No problems found".
 - **回答** (huídá, HSK 3): to answer; to reply (everyday)
   - Example: 请回答我的问题。 / Please answer my question.
 - **答** (dá, HSK 4): to answer; to reply (short; in words)
-  - Note: 答 is rarely used alone. Common words: 回答 (answer), 答应 (promise), 答案 (answer key).
-  - Example: 我问了三遍，他都没答。 / I asked three times and he did not answer once.
+  - Note: 答 alone is mostly used with a result: 答对 (to answer correctly), 答错 (to answer wrongly). Otherwise say 回答: 请回答我的问题. Common words: 答应 (to promise), 答案 (answer key).
+  - Example: 这个问题我答错了。 / I answered this question wrong.
 
 ## 57. to chat
 
@@ -266,7 +266,7 @@ If there are no problems, answer "No problems found".
 ## 70. indeed; really
 
 - **确实** (quèshí, HSK 4): indeed; really (also: true)
-  - Note: 确实 confirms something: 这个电影确实很好看. It can also be an adjective, "true": 这个消息确实.
+  - Note: 确实 confirms something: 这个电影确实很好看. It can also be an adjective, "confirmed, true": 确实的消息 (confirmed news).
   - Example: 这个电影确实很好看。 / This movie really is good.
 - **的确** (díquè, HSK 5): indeed; really (more formal)
   - Note: 的确 confirms that something is true. 的 is read dí in this word, not de.
