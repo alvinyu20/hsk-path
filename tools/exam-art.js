@@ -20,10 +20,12 @@ const clock = (key, alt, h, m) => {
   add(key, alt, [circ(32, 32, 28, C.white), circ(32, 32, 28, 'none').replace('fill="none"', 'fill="none"'), ticks, line('M32 32 L' + hp[0] + ' ' + hp[1], C.ink, 4.2), line('M32 32 L' + mp[0] + ' ' + mp[1], C.red, 2.6), dot(32, 32, 2.6, C.ink)]);
 };
 
-add('📞', 'a telephone handset', [
-  line('M18 20 Q18 46 46 46', C.ink, 15), line('M18 20 Q18 46 46 46', C.dgrey, 10),
-  rect(8, 10, 20, 13, C.red, 5), rect(36, 40, 20, 13, C.red, 5),
-  line('M44 12 q7 3 8 11', C.blue, 2.4), line('M40 6 q12 5 14 19', C.blue, 2.4)]);
+add('📞', 'a telephone', [
+  line('M51 47 q6 1 5 6 q-1 5 4 5', C.ink, 2),
+  path_('M9 54 L15 31 Q16 27 20 27 H44 Q48 27 49 31 L55 54 Q55 57 52 57 H12 Q9 57 9 54 Z', C.red),
+  rect(22, 34, 20, 18, C.white, 3),
+  dot(27, 39, 1.7), dot(32, 39, 1.7), dot(37, 39, 1.7), dot(27, 43.5, 1.7), dot(32, 43.5, 1.7), dot(37, 43.5, 1.7), dot(27, 48, 1.7), dot(32, 48, 1.7), dot(37, 48, 1.7),
+  path_('M7 22 Q7 12 18 12 H46 Q57 12 57 22 L57 25 Q57 28 54 28 H45 Q42 28 42 25 L42 21 H22 L22 25 Q22 28 19 28 H10 Q7 28 7 25 Z', C.ink)]);
 add('🍚', 'a bowl of rice', [
   line('M38 4 L53 26', C.brown, 3.4), line('M45 2 L59 22', C.brown, 3.4),
   path_('M11 30 Q12 10 32 9 Q52 10 53 30 Z', C.white),
