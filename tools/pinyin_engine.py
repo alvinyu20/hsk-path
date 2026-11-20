@@ -165,6 +165,8 @@ class Engine:
             return sandhi_word(z, self.wpy[z])
         if self.lex.get(z):
             return sandhi_word(z, self.lex[z])
+        if z in self.overrides:     # a reading fixed for a piece that is not a word on the list, e.g. 觉 jiào split off 睡觉 (睡了一个好觉)
+            return sandhi_word(z, self.overrides[z])
         return sandhi_word(z, join_syl(lazy_pinyin(z, style=Style.TONE, v_to_u=True)))
 
     @staticmethod

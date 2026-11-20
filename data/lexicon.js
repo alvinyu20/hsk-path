@@ -211,5 +211,7 @@ window.SHANLU_LEXICON = {
 "大大": "dàdà",
 "慢慢": "mànmàn",
 "早早": "zǎozǎo",
-"高高兴兴": "gāogāoxìngxìng"
+"高高兴兴": "gāogāoxìngxìng",
+"个个": "gègè",
+"张张": "zhāngzhāng"
 };
