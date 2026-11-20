@@ -11,6 +11,30 @@ const m1 = S.merge(a, b), m2 = S.merge(b, a);
 check(S.same(m1, m2), 'merge is symmetric');
 check(S.same(S.merge(m1, m1), m1), 'merge is idempotent');
 check(S.same(S.merge(S.merge(a, b), b), m1), 'merging the same device twice changes nothing');
+
+// coins: each device's own count adds up (the per-device ledger), instead of the larger total winning
+{
+  const C = S.mergeCoins;
+  const legacy = { xp: 1000 };                                                // a save from before the ledger
+  const phone = C(legacy, legacy); check(phone.xp === 1000 && phone.xpBase === 1000, 'a save from before the ledger becomes the base');
+  const p2 = { xp: 1050, xpBase: 1000, xpDev: { phone: 50 } }, l2 = { xp: 1030, xpBase: 1000, xpDev: { laptop: 30 } };
+  const both = C(p2, l2);
+  check(both.xp === 1080, 'coins earned on two devices between syncs both count (50 + 30 on top of 1000), got ' + both.xp);
+  check(S.same(C(p2, l2), C(l2, p2)) && S.same(C(both, both), both) && S.same(C(both, p2), both), 'the coin merge is symmetric, idempotent and repeatable');
+  // an old copy of the app merges without the ledger and pushes only a total that already holds the phone's 50 (plus 30 of its own)
+  const oldPush = { xp: 1080 };
+  const back = C(p2, oldPush);
+  check(back.xp === 1080, 'a total from an old copy of the app is not counted twice, got ' + back.xp);
+  const later = C(Object.assign({}, back, { xp: back.xp + 20, xpDev: Object.assign({}, back.xpDev, { phone: back.xpDev.phone + 20 }) }), oldPush);
+  check(later.xp === 1100, 'earning on after that keeps adding up, got ' + later.xp);
+  check(C(p2, legacy).xp === 1050, 'a new save and an old one never go below either total');
+  // the ledger travels with a level's progress
+  const ma = S.merge(Object.assign({}, a, { xp: 70, xpBase: 50, xpDev: { d1: 20 } }), Object.assign({}, b, { xp: 90, xpBase: 80, xpDev: { d2: 10 } }));
+  check(ma.xp === 110 && ma.xpBase === 80 && ma.xpDev.d1 === 20 && ma.xpDev.d2 === 10, 'merge() adds up the devices on the larger base, got ' + ma.xp);
+  check(S.SYNC_KEYS.indexOf('xpDev') >= 0 && S.SYNC_KEYS.indexOf('xpBase') >= 0, 'the ledger is part of what syncs');
+  const reset = S.merge(Object.assign({}, a, { epoch: 1, xp: 70, xpBase: 50, xpDev: { d1: 20 } }), { epoch: 2 });
+  check(reset.xp === 0 && Object.keys(reset.xpDev).length === 0, 'a reset (newer epoch) clears the coins and the device counts');
+}
 check(m1.ws.x.see.s === 5 && m1.ws.x.hear.s === 1 && m1.ws.y.see.s === 1, 'per word and per skill, the more recent review wins');
 check(m1.xp === 80 && m1.streak === 3 && m1.lastActive === '2026-10-30', 'xp is the larger, the streak follows the device active most recently');
 check(m1.gres.l1 === 90 && m1.gres.l2 === 80 && m1.misses.z === 4 && m1.misses.x === 2, 'best lesson scores and miss counts keep the larger value');

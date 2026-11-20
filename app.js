@@ -543,7 +543,7 @@
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
-  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'mbest', 'misses', 'testHistory', 'ws',
+  const PERSIST = ['sys', 'mins', 'theme', 'xp', 'xpDev', 'xpBase', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'mbest', 'misses', 'testHistory', 'ws',
     'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'pbase', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch', 'dcN', 'dcPaid', 'dcAmt'];
 
   // Settings that belong to the person, not the device: kept as person preferences ('set.<name>', 'level', 'erhua') so every device ends up with the same ones.
@@ -556,7 +556,7 @@
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:'light',   // light to start, whatever the device's setting; dark only when chosen
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
       jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyTab:'explore', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
-      xp:0, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
+      xp:0, xpDev:{}, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:wPage(), clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rrun:0, rmiss:[],
@@ -1854,6 +1854,13 @@
         const kd = Object.keys(md).sort(); while (kd.length > 60) delete md[kd.shift()];
         patch = Object.assign({}, patch, { minLog:ml, minDev:md });
       }
+      // coins earned here go into this device's own count (see mergeCoins in sync.js); not when a sync brings in another device's coins
+      if (patch.xp !== undefined && patch.xp > (S.xp || 0) && !this.noMin && !this.noSync && patch.xpDev === undefined) {
+        let had = 0; Object.keys(S.xpDev || {}).forEach(k => { had += Number(S.xpDev[k]) || 0; });
+        const base = typeof S.xpBase === 'number' ? S.xpBase : Math.max(0, (S.xp || 0) - had);   // a save from before the ledger: everything so far is the base
+        const dev = Object.assign({}, S.xpDev); dev[DEVICE] = (Number(dev[DEVICE]) || 0) + (patch.xp - (S.xp || 0));
+        patch = Object.assign({}, patch, { xpDev:dev, xpBase:base });
+      }
       const gained = (patch.xp !== undefined && patch.xp > S.xp) || (patch.dayMin !== undefined && patch.dayMin > S.dayMin);
       if (gained) {
         const t = ymd(new Date());
@@ -1993,18 +2000,21 @@
       const remote = (got && got.progress && got.progress.levels) || {};
       const merged = {}; let pushNeeded = !(got && got.progress), changed = false;
       // Coins earned while the "All levels" view is open are kept in that view's own saved copy, which is not one of the levels above:
-      // they travel as one number (the larger one wins), so every device ends up with the same coin total.
+      // they travel beside the levels (allXp, plus the per-device counts allXpDev / allXpBase) and merge like a level's coins (mergeCoins).
       const allKey = 'shanlu-progress-v1-all';
       const readAllSt = () => { try { return JSON.parse(localStorage.getItem(allKey)); } catch (e) { return null; } };
-      const localAllXp = ALL ? (this.state.xp || 0) : ((readAllSt() || {}).xp || 0);
-      const remoteAllXp = Number(got && got.progress && got.progress.allXp) || 0;
-      const mergedAllXp = Math.max(localAllXp, remoteAllXp);
-      if (mergedAllXp > localAllXp) {
-        if (ALL) { this.noSync = true; this.setState({ xp:mergedAllXp }); this.noSync = false; this.persistNow(); }
-        else { const st = readAllSt() || {}; st.xp = mergedAllXp; lsSet(allKey, JSON.stringify(st)); }
-        changed = true; otherXp(true);
+      const allSt = ALL ? this.state : (readAllSt() || {});
+      const rp = (got && got.progress) || {};
+      const localAll = { xp:Number(allSt.xp) || 0, xpDev:allSt.xpDev, xpBase:allSt.xpBase };
+      const remoteAll = { xp:Number(rp.allXp) || 0, xpDev:rp.allXpDev, xpBase:rp.allXpBase };
+      const mAll = SY.mergeCoins(localAll, remoteAll);
+      const sameCoins = (x, y) => x.xp === y.xp && x.xpBase === y.xpBase && SY.same(x.xpDev || {}, y.xpDev || {});
+      if (!sameCoins(mAll, localAll)) {
+        if (ALL) { this.noSync = true; this.noMin = true; this.setState({ xp:mAll.xp, xpDev:mAll.xpDev, xpBase:mAll.xpBase }); this.noMin = false; this.noSync = false; this.persistNow(); }
+        else if (mAll.xp > 0) { const st = readAllSt() || {}; Object.assign(st, mAll); lsSet(allKey, JSON.stringify(st)); }
+        if (mAll.xp !== localAll.xp) { changed = true; otherXp(true); }
       }
-      if (mergedAllXp > remoteAllXp) pushNeeded = true;
+      if (!sameCoins(mAll, remoteAll)) pushNeeded = true;
       Object.keys(Object.assign({}, local, remote)).forEach(k => {
         const n = Number(k);
         if (levels.indexOf(n) < 0) { merged[k] = remote[k]; return; }   // a level this version does not know: pass it through untouched
@@ -2034,7 +2044,7 @@
       if (SY.samePerson && !SY.samePerson(mergedP, PERSON)) { PERSON = mergedP; savePerson(false); this.personApply(); changed = true; }
       if (SY.samePerson && !SY.samePerson(mergedP, remoteP)) pushNeeded = true;
       if (pushNeeded) {
-        try { await FR.putProgress({ v:1, levels:merged, person:mergedP, allXp:mergedAllXp }, { base:got ? got.updated : undefined }); }
+        try { await FR.putProgress({ v:1, levels:merged, person:mergedP, allXp:mAll.xp, allXpDev:mAll.xpDev, allXpBase:mAll.xpBase }, { base:got ? got.updated : undefined }); }
         catch (e) { if (e && e.status === 412) return { changed, conflict:true }; throw e; }
       }
       return { changed, conflict:false };

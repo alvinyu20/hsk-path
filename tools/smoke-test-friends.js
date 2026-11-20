@@ -244,6 +244,14 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await A.page.evaluate(() => window.shanlu.friendsProgressSync());
   await A2.page.evaluate(() => window.shanlu.friendsProgressSync());
   check(await A2.page.evaluate(() => (JSON.parse(localStorage.getItem('shanlu-progress-v1-all')) || {}).xp === 7777), 'coins earned in the All-levels view reach the same person\'s other device');
+  // coins earned on both devices before either syncs add up (each device keeps its own count), instead of the larger total winning
+  await A.page.evaluate(() => window.shanlu.friendsProgressSync()); await A2.page.evaluate(() => window.shanlu.friendsProgressSync());
+  const coin0 = await A.page.evaluate(() => window.shanlu.state.xp);
+  await A.page.evaluate(() => window.shanlu.setState({ xp: window.shanlu.state.xp + 30 }));
+  await A2.page.evaluate(() => window.shanlu.setState({ xp: window.shanlu.state.xp + 20 }));
+  await A.page.evaluate(() => window.shanlu.friendsProgressSync()); await A2.page.evaluate(() => window.shanlu.friendsProgressSync()); await A.page.evaluate(() => window.shanlu.friendsProgressSync());
+  const coinA = await A.page.evaluate(() => window.shanlu.state.xp), coinA2 = await A2.page.evaluate(() => window.shanlu.state.xp);
+  check(coinA === coin0 + 50 && coinA2 === coin0 + 50, 'coins earned on two devices between syncs both count (' + coin0 + ' + 30 + 20, got ' + coinA + ' and ' + coinA2 + ')');
   // the Sync now button says what happened
   await A2.page.evaluate(() => window.shanlu.setState({ screen:'friends' }));
   await A2.page.locator('button', { hasText: 'Sync now' }).click(); await A2.page.waitForSelector('.banner:has-text("Synced.")');

@@ -8,7 +8,7 @@
   const DIMS = ['see', 'hear', 'prod'];
   // progress that is merged between devices; device preferences (theme, voice, hint switches, daily goal, new-word limit) stay local
   const SYNC_KEYS = ['xp', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'clipBest', 'mbest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone', 'exams', 'aiDays', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'wlearned', 'wrated', 'sdone', 'exams', 'aiDays', 'minLog', 'minDev', 'xpDev', 'xpBase', 'lrn', 'rlog', 'epoch'];
   const FILE = 'shanlu-progress.json';   // HSK 1 progress (the original file name)
   const fileFor = (level) => (level > 1 ? 'shanlu-progress-hsk' + level + '.json' : FILE);   // each level keeps its own file in the same gist
   const PERSON_FILE = 'shanlu-person.json';   // the person's own settings and notes: one file for the whole gist, whatever the level
@@ -54,6 +54,20 @@
   }
   function unionObj(a, b) { const o = Object.assign({}, a || {}); Object.keys(b || {}).forEach(k => { if (b[k]) o[k] = b[k]; }); return o; }
   function maxObj(a, b) { const o = Object.assign({}, a || {}); Object.keys(b || {}).forEach(k => { o[k] = Math.max(o[k] || 0, b[k] || 0); }); return o; }
+  function sumObj(o) { let t = 0; Object.keys(o || {}).forEach(k => { t += Number(o[k]) || 0; }); return t; }
+
+  // Coins (lifetime, never spent down: the Journey compares the total with each stop's price). Each device keeps its own count of what
+  // it earned (xpDev: device id -> coins) on top of a base (xpBase: the total from before this ledger, or whatever is not in xpDev).
+  // Merging takes each device's larger count and adds them up, so coins earned on two devices between syncs both count (the old
+  // "larger total wins" kept only one of them). A side saved before the ledger (no xpBase) is taken to already hold every device count
+  // we know of, so its base is its total minus those counts: that never counts a coin twice. The result is never below either total.
+  function mergeCoins(a, b) {
+    a = a || {}; b = b || {};
+    const dev = maxObj(a.xpDev, b.xpDev), sum = sumObj(dev);
+    const baseOf = (s) => typeof s.xpBase === 'number' ? s.xpBase : Math.max(0, (Number(s.xp) || 0) - sum);
+    const xp = Math.max(Math.max(baseOf(a), baseOf(b)) + sum, Number(a.xp) || 0, Number(b.xp) || 0);
+    return { xp, xpDev:dev, xpBase:xp - sum };
+  }
 
   // merge two progress objects (each holding SYNC_KEYS). Returns a new object.
   // A reset starts a new "epoch" (a timestamp stored with the progress). The side with the newer epoch wins outright, so a reset reaches
@@ -65,7 +79,7 @@
     const out = {};
     out.epoch = ea;
     out.ws = mergeWs(a.ws, b.ws);
-    out.xp = maxNum(a.xp, b.xp);
+    { const c = mergeCoins(a, b); out.xp = c.xp; out.xpDev = c.xpDev; out.xpBase = c.xpBase; }
     out.activity = unionObj(a.activity, b.activity);
     // streak belongs to whichever device was active most recently
     const la = a.lastActive || '', lb = b.lastActive || '';
@@ -285,5 +299,5 @@
   }
   function samePerson(a, b) { return JSON.stringify(mergePerson(a, a)) === JSON.stringify(mergePerson(b, b)); }
 
-  return { SYNC_KEYS, FILE, PERSON_FILE, fileFor, DESCRIPTION, merge, pick, round, gistApi, mergeWs, same, dayMinutes, mergePerson, samePerson, compactWs, compactWord, applyMerged, nextEpoch };
+  return { SYNC_KEYS, FILE, PERSON_FILE, fileFor, DESCRIPTION, merge, mergeCoins, pick, round, gistApi, mergeWs, same, dayMinutes, mergePerson, samePerson, compactWs, compactWord, applyMerged, nextEpoch };
 });

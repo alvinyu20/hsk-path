@@ -128,7 +128,7 @@
       "title": "HSK 4",
       "blurb": "The 990 new words of HSK 4, from meeting your neighbours to joining long sentences.",
       "place": {"亚洲": "Countries and the world", "国籍": "Countries and the world", "签证": "Countries and the world", "使馆": "Countries and the world", "国际": "Countries and the world", "首都": "Countries and the world", "全球": "Countries and the world", "此外": "First, next and in addition", "另外": "First, next and in addition", "例如": "First, next and in addition", "举例": "First, next and in addition", "着火": "Rules and law", "经验": "Finding and leaving a job", "紧张": "Finding and leaving a job", "理解": "Greetings and manners", "租": "At home", "提供": "At home", "重": "Phones, email and the internet", "订": "Food and meals", "座位": "Food and meals", "申请": "Rules and law", "材料": "Rules and law", "通过": "Rules and law", "放松": "Sports and exercise", "压力": "Sports and exercise"},
-      "names": {"Little helper words + Word endings": "Little words and endings"},
+      "names": {"Little helper words + Word endings": "Little words and endings", "Music and singing + Parties, jokes and dreams": "Songs, jokes and dreams", "More and less + Saying yes and no": "Raising, lowering, cancelling"},
       "units": [
         { "title": "Hello, new neighbours", "blurb": "Greet people, say who you are, and ask the first questions.",
           "topics": ["Greetings and manners", "Pronouns", "This, that, here, there", "Question words", "Names and introductions"] },
@@ -183,7 +183,7 @@
     "5": {
       "title": "HSK 5", "blurb": "The 1,579 new words of HSK 5, from the first steps up Mount Tai to joining long, formal sentences on Mount Song.",
       "place": {"退": "Money and shopping", "赔": "Money and shopping", "维修": "Furniture and appliances", "账户": "Economy and finance", "存款": "Economy and finance", "方案": "Workplace and business", "路线": "Travel and countries", "迷路": "Travel and countries", "志愿者": "Society and community"},
-      "names": { "Comparing + Very, too, most": "Comparing and degree" },
+      "names": { "Comparing + Very, too, most": "Comparing and degree", "Measurements + Growing and shrinking": "Sizes and measurements" },
       "units": [
         { "title": "At the foot of the mountain", "blurb": "Greet people, say who you are, and point things out.",
           "topics": ["Greetings and manners", "Pronouns", "This, that, here, there", "Names and introductions"] },
