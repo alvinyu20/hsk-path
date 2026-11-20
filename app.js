@@ -1860,6 +1860,9 @@
         const base = typeof S.xpBase === 'number' ? S.xpBase : Math.max(0, (S.xp || 0) - had);   // a save from before the ledger: everything so far is the base
         const dev = Object.assign({}, S.xpDev); dev[DEVICE] = (Number(dev[DEVICE]) || 0) + (patch.xp - (S.xp || 0));
         patch = Object.assign({}, patch, { xpDev:dev, xpBase:base });
+      } else if (patch.xp !== undefined && patch.xp < (S.xp || 0) && !this.noMin && !this.noSync && patch.xpDev === undefined) {
+        // coins never go down in normal use (a reset starts a new save); if something lowers them here, the counts start again from the new total
+        patch = Object.assign({}, patch, { xpDev:{}, xpBase:patch.xp });
       }
       const gained = (patch.xp !== undefined && patch.xp > S.xp) || (patch.dayMin !== undefined && patch.dayMin > S.dayMin);
       if (gained) {

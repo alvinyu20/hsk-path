@@ -1046,7 +1046,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await p2.locator('button', { hasText: 'Connect' }).click();
   await p2.waitForFunction(() => !window.shanlu.state.syncBusy && window.shanlu.state.syncMsg);
   const got = await p2.evaluate(() => ({ xp: window.shanlu.state.xp, s: window.shanlu.state.ws['你好'].see.s }));
-  check(got.xp === 777 && got.s === 9, 'the second browser gets the first one\'s progress after connecting');
+  check(got.xp === 777 && got.s === 9, 'the second browser gets the first one\'s progress after connecting (' + JSON.stringify(got) + ')');
   await p2.evaluate(() => { const ws = JSON.parse(JSON.stringify(window.shanlu.state.ws)); ws['谢谢'] = { see: { s: 4, l: 0, t: Date.now() }, hear: { s: 0, l: 0 }, prod: { s: 0, l: 0 } }; window.shanlu.setState({ ws }); });
   await p2.locator('button', { hasText: 'Sync now' }).click();
   await p2.waitForFunction(() => !window.shanlu.state.syncBusy);
