@@ -366,3 +366,10 @@ Each claim was checked before anything changed; replacements were level-checked 
 - Both cards said just "to swim". Now 游 = "to swim (how, where or how far)" and 游泳 = "to swim; swimming (the activity, the sport)", each with a note on when to use which (游得很快 / 游到这里 vs 去游泳 / 会游泳; 游泳得很快 is wrong).
 - Examples: 游 had 我们去游泳吧 (really a 游泳 sentence) and 鱼在水里游 (游泳 also works there, so the gap had two right answers). Replaced with 小鱼游到我这里来了 and 他在水里游得很快; 游泳's 我们星期天去游泳 (跑步 fits too) became 天气太热了，我们去游泳吧.
 - cloze-alts: 游 is a `wrong` row for the 去游泳 sentence, 游泳 a `wrong` row for 游得很快 (both with notes); 跑步 an `also` row for 我喜欢游泳 so the Path never offers it as a wrong option there.
+
+### 19 Nov 2026 (night), same-meaning sweep: 119 groups, 248 words that had identical English (Alvin)
+- Every group of words whose English was exactly the same (list in `content/same-meaning-groups.tsv`, plus 游/游泳) now has a short label in brackets that tells them apart (register, grammar, or a different sense): 今天 "today (everyday word)" vs 今日 "today (written: news, signs)", 失去 "to lose (something you had)" vs 输 "to lose (a game or a bet)". The bracket is stripped by the sense matching (`senseSet`) and the gloss check, so "a real word too" feedback still works.
+- Usage notes ("when to use which", with short examples) added or rewritten for the words that had none or a thin one; good existing notes were kept. Notes only use Chinese at or below their word's level, so a contrast note sits on the higher-level word and the lower one gets a plain label (北京, 王, 门 and 恭喜 were taken out of HSK 1/4 notes for that reason). The 这儿/那儿/哪儿 notes are on the 儿 words, which plain style drops.
+- Preview lists (`content/preview-hsk*.tsv`) got the same labels (131 rows). All five levels pass `check-content.py` in both styles.
+- Review pack for DeepSeek/Qwen: `python3 tools/make-meaning-pairs-review.py` writes `review/chinese-ai-new-items/same-meaning-{1,2,3}-of-3.md` (40 groups each). Not yet reviewed.
+- Not done: the broader set of words that share only their first sense (558 groups, 1,366 words), many of which are not true synonyms.

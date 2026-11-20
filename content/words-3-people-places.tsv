@@ -8,12 +8,12 @@
 儿子	n	son	他有一个儿子。	He has a son.
 女儿	n	daughter	我有一个女儿。	I have a daughter.
 家人	n	family members	这是我的家人。	These are my family members.
-孩子	n	child	这个孩子五岁。	This child is five years old.
+孩子	n	child (also: someone's own kids)	这个孩子五岁。	This child is five years old.	孩子 is the general word for a child, and the word for your own sons and daughters: 你有孩子吗? (Do you have children?)
 朋友	n	friend	他是我的朋友。	He is my friend.
 同学	n	classmate	他是我的同学。	He is my classmate.
-老师	n	teacher	她是我的老师。	She is my teacher.
+老师	n	teacher (also how you address one)	她是我的老师。	She is my teacher.	老师 is also what you call a teacher, alone or after their family name: 老师好! (Hello, teacher!)
 学生	n	student	他是学生。	He is a student.
-医生	n	doctor	医生在医院工作。	The doctor works at the hospital.
+医生	n	doctor (standard)	医生在医院工作。	The doctor works at the hospital.
 先生	n	Mr., sir; husband	先生，请问您想喝什么？	Sir, what would you like to drink?
 女士	n	madam, lady	女士，您想喝茶吗？	Madam, would you like some tea?
 男	adj	male	他是男老师。	He is a male teacher.
@@ -36,13 +36,13 @@
 商店	n	shop	商店里有很多水果。	There is a lot of fruit in the shop.
 书店	n	bookstore	我想去书店买书。	I want to go to the bookstore to buy a book.
 公司	n	company	我爸爸在公司工作。	My dad works at a company.
-饭店	n	restaurant	我们在饭店吃饭。	We eat at a restaurant.
+饭店	n	restaurant (also: hotel, in names)	我们在饭店吃饭。	We eat at a restaurant.	In names, 饭店 is often a hotel rather than a restaurant (for example, the Beijing Hotel).
 超市	n	supermarket	我去超市买牛奶。	I go to the supermarket to buy milk.
 店	n	shop, store	这家店的包子很好吃。	The buns at this shop are very tasty.
-房间	n	room	我的房间很小。	My room is very small.
-外边	loc	outside	外边在下雨。	It is raining outside.
-外	loc	outside	他不在房间里，在房间外边。	He is not in the room, he is outside it.
-里	loc	inside	杯子里有水。	There is water in the cup.
+房间	n	room (in a home or hotel)	我的房间很小。	My room is very small.
+外边	loc	outside (spoken)	外边在下雨。	It is raining outside.
+外	loc	outside (after a noun: 房间外)	他不在房间里，在房间外边。	He is not in the room, he is outside it.	外 alone is short and usually comes after a noun: 房间外 (outside the room). On its own in a sentence, say 外边: 外边很冷.
+里	loc	inside; in (after a noun: 房间里)	杯子里有水。	There is water in the cup.	里 always comes after a noun: 房间里 (in the room), 杯子里 (in the cup).
 上	loc	on, above (also: to go up)	书在桌子上。	The book is on the table.
 下	loc	under, below (also: to go down)	猫在桌子下边。	The cat is under the table.
 前	loc	front, before	商店在学校前边。	The shop is in front of the school.

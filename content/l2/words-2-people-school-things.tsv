@@ -1,11 +1,11 @@
 爷爷	n	paternal grandfather	我爷爷今年八十岁。	My grandfather is eighty years old this year.
 奶奶	n	paternal grandmother	奶奶在家做饭。	Grandma is cooking at home.
-妻子	n	wife	他的妻子是老师。	His wife is a teacher.
-丈夫	n	husband	她的丈夫是医生。	Her husband is a doctor.
+妻子	n	wife (standard)	他的妻子是老师。	His wife is a teacher.
+丈夫	n	husband (standard)	她的丈夫是医生。	Her husband is a doctor.
 男孩儿	n	boy	那个男孩儿是我弟弟。	That boy is my younger brother.
 女孩儿	n	girl	这个女孩儿很漂亮。	This girl is very pretty.
-小孩儿	n	child	这个小孩儿很高兴。	This child is very happy.
-班	n	class (a group of students)	我们班有二十个学生。	Our class has twenty students.
+小孩儿	n	child (little kid, casual)	这个小孩儿很高兴。	This child is very happy.	小孩儿 is a casual word for a small child: 一个小孩儿. 孩子 is the general word, and the one for your own children: 我有两个孩子.
+班	n	class (a group of students: 我们班)	我们班有二十个学生。	Our class has twenty students.	班 is the everyday word: 我们班 (our class), 一个班. It is also in 上班 (to go to work).
 词	n	word	这个词是什么意思？	What does this word mean?
 题	n	question, problem (in a test)	这个题我不会做。	I do not know how to do this problem.
 考	v	to take (an exam)	我明天考汉语。	I have a Chinese exam tomorrow.
@@ -13,7 +13,7 @@
 教	v	to teach	她教我们汉语。	She teaches us Chinese.
 懂	v	to understand	我不懂。	I do not understand.
 记得	v	to remember	你记得我吗？	Do you remember me?
-忘	v	to forget	我忘了他的名字。	I forgot his name.
+忘	v	to forget (short, spoken)	我忘了他的名字。	I forgot his name.
 笔	n	pen	你有笔吗？	Do you have a pen?
 本子	n	notebook	这个本子是我的。	This notebook is mine.
 书包	n	schoolbag	我的书包很大。	My schoolbag is big.
@@ -24,7 +24,7 @@
 姓名	n	full name (formal, as on forms)	请写你的姓名。	Please write your full name.	In speech people ask 你叫什么名字？ ; 姓名 is what a form asks for.
 介绍	v	to introduce	请介绍一下你自己。	Please introduce yourself.
 告诉	v	to tell	请告诉我你的名字。	Please tell me your name.
-帮	v	to help	请你帮我一下。	Please help me.
+帮	v	to help (do something for someone)	请你帮我一下。	Please help me.	帮 is common for a quick favour: 帮我一下 (give me a hand).
 帮忙	v	to help, to do a favor	请你帮忙。	Please help.
 等	v	to wait	请等一下。	Please wait a moment.
 完	v	to finish	我做完了。	I am finished.
@@ -49,7 +49,7 @@
 颜色	n	color	你喜欢什么颜色？	What color do you like?
 白色	n	white	我喜欢白色。	I like white.
 黑色	n	black	我的手机是黑色的。	My phone is black.
-红色	n	red	她穿着红色的衣服。	She is wearing red clothes.
+红色	n	red (the colour, as a noun)	她穿着红色的衣服。	She is wearing red clothes.	红色 is the colour as a noun: 红色的衣服 (red clothes), 我喜欢红色.
 绿色	n	green	这个苹果是绿色的。	This apple is green.
 红茶	n	black tea	我想喝红茶。	I want to drink black tea.	红茶 is literally "red tea": what English calls black tea.
 绿茶	n	green tea	我喜欢喝绿茶。	I like drinking green tea.
