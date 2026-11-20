@@ -14,11 +14,13 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   await ctx.addInitScript(() => { window.SHANLU_MUTE_SFX = true; window.SHANLU_AUTO_SHARE = 0; });
   const page = await ctx.newPage(); const errs = []; page.on('pageerror', (e) => errs.push(e.message));
   await page.goto(site); await page.waitForSelector('.app');
+  // the site loads only the open level's exam bank, so load every level's bank here to check all of them
+  for (const n of [1, 2, 3, 4, 5]) { if (!(await page.evaluate((k) => !!window['HSK' + k + '_EXAM'], n))) await page.addScriptTag({ url: site + 'data/hsk' + n + '-exam.js' }); }
   const d = await page.evaluate(() => {
     const ART = window.SHANLU_EXAM_ART || {}; const bad = []; const missing = []; const parser = new DOMParser(); const seen = {};
     const norm = (e) => String(e).replace(/️/g, '');
     const walk = (o) => { if (Array.isArray(o)) o.forEach(walk); else if (o && typeof o === 'object') Object.keys(o).forEach((k) => { const v = o[k]; if (k === 'pic' && typeof v === 'string') seen[norm(v)] = 1; if ((k === 'opts' || k === 'o') && Array.isArray(v)) v.forEach((x) => { if (typeof x === 'string' && /\p{Extended_Pictographic}/u.test(x)) seen[norm(x)] = 1; }); walk(v); }); };
-    [1, 2, 3, 4].forEach((n) => walk(window['HSK' + n + '_EXAM']));
+    [1, 2, 3, 4, 5].forEach((n) => walk(window['HSK' + n + '_EXAM']));
     Object.keys(seen).forEach((k) => { if (!ART[k]) missing.push(k); });
     Object.keys(ART).forEach((k) => {
       const m = /^data:image\/svg\+xml;charset=utf-8,(.*)$/.exec(ART[k].u || ''); if (!m) { bad.push(k + ': not an svg address'); return; }

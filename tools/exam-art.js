@@ -20,10 +20,12 @@ const clock = (key, alt, h, m) => {
   add(key, alt, [circ(32, 32, 28, C.white), circ(32, 32, 28, 'none').replace('fill="none"', 'fill="none"'), ticks, line('M32 32 L' + hp[0] + ' ' + hp[1], C.ink, 4.2), line('M32 32 L' + mp[0] + ' ' + mp[1], C.red, 2.6), dot(32, 32, 2.6, C.ink)]);
 };
 
-add('📞', 'a telephone handset', [
-  line('M18 20 Q18 46 46 46', C.ink, 15), line('M18 20 Q18 46 46 46', C.dgrey, 10),
-  rect(8, 10, 20, 13, C.red, 5), rect(36, 40, 20, 13, C.red, 5),
-  line('M44 12 q7 3 8 11', C.blue, 2.4), line('M40 6 q12 5 14 19', C.blue, 2.4)]);
+add('📞', 'a telephone', [
+  line('M51 47 q6 1 5 6 q-1 5 4 5', C.ink, 2),
+  path_('M9 54 L15 31 Q16 27 20 27 H44 Q48 27 49 31 L55 54 Q55 57 52 57 H12 Q9 57 9 54 Z', C.red),
+  rect(22, 34, 20, 18, C.white, 3),
+  dot(27, 39, 1.7), dot(32, 39, 1.7), dot(37, 39, 1.7), dot(27, 43.5, 1.7), dot(32, 43.5, 1.7), dot(37, 43.5, 1.7), dot(27, 48, 1.7), dot(32, 48, 1.7), dot(37, 48, 1.7),
+  path_('M7 22 Q7 12 18 12 H46 Q57 12 57 22 L57 25 Q57 28 54 28 H45 Q42 28 42 25 L42 21 H22 L22 25 Q22 28 19 28 H10 Q7 28 7 25 Z', C.ink)]);
 add('🍚', 'a bowl of rice', [
   line('M38 4 L53 26', C.brown, 3.4), line('M45 2 L59 22', C.brown, 3.4),
   path_('M11 30 Q12 10 32 9 Q52 10 53 30 Z', C.white),
@@ -113,10 +115,11 @@ add('💻', 'a laptop', [
   rect(11, 10, 42, 30, C.dgrey, 4), rect(15, 14, 34, 22, C.sky, 2), line('M20 20 H36 M20 26 H42', C.white, 2),
   path_('M5 42 H59 L55 52 Q54 54 52 54 H12 Q10 54 9 52 Z', C.grey), rect(24, 44, 16, 4, C.dgrey, 2)]);
 add('🥶', 'a freezing face', [
-  circ(32, 33, 23, '#9fd0ee'), line('M17 26 q4 -4 9 0 M38 26 q4 -4 9 0', C.ink, 2.2),
-  circ(23, 31, 3.4, C.white), circ(41, 31, 3.4, C.white), dot(23, 31, 1.5), dot(41, 31, 1.5),
-  path_('M21 44 L25 40 L29 45 L33 40 L37 45 L41 40 L43 44 Q32 52 21 44 Z', C.white),
-  line('M7 12 L14 18 M10 8 V18 M5 15 H15', C.sky, 1.8), line('M54 8 l6 6 M57 5 V14 M52 11 H61', C.sky, 1.8)]);
+  circ(32, 37, 21, '#9fd0ee'),
+  path_('M12 31 Q12 12 32 12 Q52 12 52 31 Z', C.red), rect(10, 27, 44, 7, C.white, 3), circ(32, 9, 4.5, C.white),
+  line('M19 41 L27 38 M45 41 L37 38', C.ink, 2.2), dot(23, 44, 2.2), dot(41, 44, 2.2),
+  rect(23, 49, 18, 6, C.white, 2), line('M27.5 49 V55 M32 49 V55 M36.5 49 V55', C.ink, 1.2),
+  line('M6 33 q-3 4 0 8 q-3 4 0 8 M58 33 q3 4 0 8 q3 4 0 8', C.blue, 2)]);
 clock('🕘', 'a clock showing nine o’clock', 9, 0);
 clock('🕛', 'a clock showing twelve o’clock', 12, 0);
 clock('🕔', 'a clock showing five o’clock', 5, 0);
@@ -139,13 +142,17 @@ add('🚕', 'a taxi', [
   rect(4, 38, 56, 3, C.black, 0), circ(17, 47, 7, C.black), circ(17, 47, 3, C.grey), circ(47, 47, 7, C.black), circ(47, 47, 3, C.grey)]);
 add('🥟', 'a dumpling', [
   ell(32, 52, 29, 6, C.sky),
-  path_('M5 45 Q6 20 32 16 Q58 20 59 45 Q32 55 5 45 Z', C.white),
-  line('M13 30 q3 4 2 10 M20 24 q3 5 2 13 M27 20 q2 7 1 15 M36 20 q-1 8 -2 15 M43 24 q-2 8 -4 13 M51 30 q-2 6 -5 10', C.grey, 2.2)]);
+  tr(22, 2, [path_('M4 36 C9 47 36 47 41 36 C37 30 30 25 22.5 25 C15 25 8 30 4 36 Z', C.cream), line('M9 32 q2 -4 5 -3 q2 -4 5 -3 q3 -3 6 -1 q4 -1 5 3 q4 0 5 4', C.ink, 1.6)]),
+  path_('M3 42 C9 56 45 56 51 42 C46 34 37 27 27 27 C17 27 8 34 3 42 Z', C.cream),
+  line('M8 38 q2 -5 6 -4 q2 -5 6 -4 q3 -4 7 -2 q4 -2 7 2 q4 -1 6 4 q4 0 5 5', C.ink, 2),
+  line('M15 35 q2 4 1 8 M21 31 q2 5 1 10 M27 29 q1 5 0 11 M33 31 q-1 5 -2 10 M40 34 q-2 4 -2 8', C.tan, 1.5),
+  line('M26 17 q-3 -4 0 -8 M33 17 q-3 -4 0 -8 M40 17 q-3 -4 0 -8', C.grey, 2)]);
 add('🏊', 'a swimmer', [
-  path_('M2 50 Q9 44 16 50 T30 50 T44 50 T58 50 V62 H2 Z', C.blue), line('M2 50 Q9 44 16 50 T30 50 T44 50 T58 50', C.sky, 2),
-  circ(24, 29, 7, C.skin), path_('M17 28 Q24 17 31 27 Q24 24 17 28 Z', C.black),
-  path_('M30 33 Q40 30 56 38 L53 45 Q40 40 29 41 Z', C.skin), line('M32 25 Q42 14 52 22', C.skin, 5), line('M32 25 Q42 14 52 22', C.ink, 1.2),
-  path_('M26 41 Q27 49 36 48', 'none'), line('M2 44 q5 -4 10 0', C.sky, 2.4)]);
+  ell(24, 42, 15, 5, C.skin),
+  circ(42, 39, 7.5, C.skin), path_('M34.5 38 Q35 30.5 42 31.5 Q49 30.5 49.5 37 Z', C.red), rect(43, 37, 6, 3.4, C.ink, 1.5),
+  line('M34 40 Q39 22 51 23 Q59 26 59 46', C.skin, 6), line('M34 40 Q39 22 51 23 Q59 26 59 46', C.ink, 1),
+  path_('M2 45 Q9 40 16 45 T30 45 T44 45 T58 45 T64 44 V62 H2 Z', C.blue), line('M2 45 Q9 40 16 45 T30 45 T44 45 T58 45 T64 44', C.sky, 2),
+  dot(6, 36, 1.8, C.sky), dot(10, 32, 1.5, C.sky), dot(13, 37, 1.5, C.sky), line('M3 41 q4 -5 9 -2', C.sky, 2.2)]);
 add('⚽', 'a football', [
   circ(32, 32, 27, C.white), poly('32,20 42,27 38,39 26,39 22,27', C.black),
   line('M32 20 V6 M42 27 L55 22 M38 39 L46 51 M26 39 L18 51 M22 27 L9 22', C.ink, 2.2),
