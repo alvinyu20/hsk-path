@@ -46,6 +46,7 @@ Template syntax: `<sc-if value>`, `<sc-for list as x>`, `{{holes}}`, `data-on-cl
   - `sh tools/check-quick.sh content ../hsk-dataset/complete.json` for content across levels (same as `check-all.sh --no-browser`)
   - `sh tools/check-quick.sh full ../hsk-dataset/complete.json` before a big release
 - One browser test: `NODE_PATH="$(npm root -g)" node tools/smoke-test-<name>.js`
+- `smoke-test-friends.js` needs `cd worker && npm install` first; without it, it prints "skipped" and exits 0, which looks like a pass.
 - Path rebuild order: `build-webs.py`, then `build-path.py` (the path build fails on stale webs).
 - After editing `content/preview-hsk*.tsv`: `build-preview.py <dataset> <level>` once per level 2–5 (dataset first; with no level it only builds HSK 2).
 - Audio: dry run with `python3 -W ignore tools/make-audio.py --scope all --level N --dry-run`. Record with `gh api -X POST repos/alvinyu20/hsk-path/actions/workflows/audio.yml/dispatches -f ref=main -f 'inputs[scope]=all' -f 'inputs[level]=N'`. **Dispatch one level at a time and wait for it to finish**: runs share a concurrency group, and overlapping runs conflict on `audio/index.json`. Pushing during a run is fine, because its save step rebases.
@@ -57,6 +58,7 @@ Template syntax: `<sc-if value>`, `<sc-for list as x>`, `{{holes}}`, `data-on-cl
 - Path: a word in several topics goes to the first Path topic that has it, unless `place` in `content/path.json` says otherwise. Stops are cut into parts of about 5 words. Adding or splitting topics changes the stop counts that `smoke-test-path.js` and `smoke-test-l5.js` expect.
 - Settings rows: open one with `window.shanlu.setSec('<id>')`. The ids are reviews, level, sounds, erhua, voice, ai, sync, data.
 - In a test's `setState`, setting `dayMin` resets `minLog`, so set any fake history in a separate call.
+- Coins (`xp`) are lifetime earnings, never spent down. Each device's share is kept in `xpDev`/`xpBase` (`mergeCoins` in sync.js). Raise `xp` with a normal `setState` so this device's share counts; when applying synced numbers, set `noSync`/`noMin` so they don't count as earned here.
 - Tests look things up by class names (`.mw`, `.top h1`, …). When markup changes, grep `tools/smoke-test-*.js` for the old class first.
 
 ## DeepSeek review workflow
