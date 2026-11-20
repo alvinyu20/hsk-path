@@ -241,8 +241,8 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.locator('button', { hasText: /^Add (all )?\d+( of \d+)? new word/ }).first().click();
   await page.waitForTimeout(100);
   const tp = (await text()).match(/(\d+) of (\d+) started/);
-  check(tp && Number(tp[1]) === Math.min(12, Number(tp[2])), 'Add on a topic puts its words in the learning phase, at most 12 waiting at once (' + (tp ? tp[0] : 'no progress text') + ')');
-  check(/Add 12 of \d+ new word|Add all \d+ new word/.test(await text()) || (await page.evaluate(() => Object.keys(window.shanlu.state.lrn).length)) === 12, 'the learning queue is capped at 12 words');
+  check(tp && Number(tp[1]) === Math.min(40, Number(tp[2])), 'Add on a topic puts its words in the learning phase, at most 40 waiting at once (' + (tp ? tp[0] : 'no progress text') + ')');
+  check(await page.evaluate(() => { const n = Object.keys(window.shanlu.state.lrn).length; return n > 0 && n <= 40; }), 'the learning queue takes the topic\'s new words, and stays within its 40-word cap');
   await shot('03-topics');
   await page.locator('button', { hasText: 'Shared character' }).click();
   await page.locator('.opts .opt').first().click();

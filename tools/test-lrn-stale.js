@@ -1,5 +1,5 @@
 /* A word that is already learned but is still listed as "learning" must not make Review say "Learn N new words" (the button could never serve it)
- * or use up the 12-word limit.   node tools/test-lrn-stale.js */
+ * or use up the 40-word limit.   node tools/test-lrn-stale.js */
 const path = require('path');
 const { chromium } = require('playwright');
 const root = path.join(__dirname, '..');
