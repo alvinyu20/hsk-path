@@ -1013,7 +1013,7 @@ button.scn:hover .scn-m{text-decoration:underline}
   .app.am .listen{width:clamp(64px,11dvh,92px);height:clamp(64px,11dvh,92px)}
   .app.am .listen svg{width:34px;height:34px}
   .app.am .rev > .btn.pri.big{min-height:48px}
-  .app.am .fb{gap:8px;padding:10px 14px;border-radius:16px;flex-wrap:nowrap;flex:0 0 auto}
+  .app.am .fb{gap:8px;padding:10px 14px;border-radius:16px;flex-wrap:nowrap;flex:0 0 auto;animation:none}
   .app.am .fb-m{flex:1 1 auto;max-height:30dvh;overflow-y:auto}
   .app.am .fb-t{font-size:18px}
   .app.am .fb-s{font-size:15px;margin:0}
@@ -3809,3 +3809,13 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .mw-d span{font-size:11px;font-weight:600;color:var(--muted);line-height:1}
 .mw-d.today span{color:var(--ink)}
 @media (min-width:900px){.mem-s b{font-size:30px}}
+
+/* iPhone blank flash in lessons and reviews (Alvin, 19 Nov; screen recording): after tapping an answer, everything but the tapped button and the
+   feedback bar went blank for 0.2-0.4 s. On touch screens a tapped button keeps :hover, so its lift (a transform transition) and the feedback bar's
+   rise animation both got their own GPU layers inside the scrolling lesson, and Safari showed the scroll area blank until it repainted.
+   So: no hover lift on touch screens, and the feedback bar appears without animating on app-mode screens (rule in the .app.am block). */
+@media (hover:none){
+  .btn:hover,.opt:hover,.rev .opt:hover,.rate:hover,.listen:hover,.tok:hover,.tile:hover,.lad:hover,.tonebtn:hover,.spk:hover,.mic:hover,.wchip:hover,.mtile:hover,
+  .py-lesson:hover,.py-say:hover,.py-cell:hover,.py-tone:hover,.pth-node:hover,.spk-card:hover,.lib-tile:hover,.gcell:hover,.labtiles button:hover,.mw:hover{transform:none}
+  .opt,.listen{transition-property:border-color,background,color,box-shadow}
+}

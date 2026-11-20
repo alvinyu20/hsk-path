@@ -361,3 +361,8 @@ Each claim was checked before anything changed; replacements were level-checked 
 - New topic sentences (checked like all others); People's HSK 4 sentence moved to Writers, singers and other roles, and People has a new one (这些青年都是今年的毕业生).
 - `place` points 国籍 签证 使馆 国际 首都 全球 (with 亚洲) to Countries and the world, and 此外 另外 例如 举例 to First, next and in addition; without it those words land on earlier stops and the new stops were one or two words.
 - Topics: HSK 4 112, HSK 5 143. Path stops: HSK 4 236, HSK 5 352 (stops were already cut into parts of about 5 words, so the split mostly changes the names and grouping).
+
+### 19 Nov 2026, 游 vs 游泳 (Alvin: a Path gap question marked 游泳 wrong in 鱼在水里游)
+- Both cards said just "to swim". Now 游 = "to swim (how, where or how far)" and 游泳 = "to swim; swimming (the activity, the sport)", each with a note on when to use which (游得很快 / 游到这里 vs 去游泳 / 会游泳; 游泳得很快 is wrong).
+- Examples: 游 had 我们去游泳吧 (really a 游泳 sentence) and 鱼在水里游 (游泳 also works there, so the gap had two right answers). Replaced with 小鱼游到我这里来了 and 他在水里游得很快; 游泳's 我们星期天去游泳 (跑步 fits too) became 天气太热了，我们去游泳吧.
+- cloze-alts: 游 is a `wrong` row for the 去游泳 sentence, 游泳 a `wrong` row for 游得很快 (both with notes); 跑步 an `also` row for 我喜欢游泳 so the Path never offers it as a wrong option there.

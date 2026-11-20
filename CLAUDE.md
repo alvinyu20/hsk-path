@@ -38,6 +38,7 @@ Template syntax: `<sc-if value>`, `<sc-for list as x>`, `{{holes}}`, `data-on-cl
   - `content/l5/exam-5-writing.json`: does not round-trip; edit it with text replacement only.
 
 ## Commands
+- Fresh sandbox: the builders need `pip install --break-system-packages pypinyin jieba`. `../hsk-dataset/complete.json` is optional (checks fall back to the official lists): to run one level's steps without it, run the commands of that level in `check-quick.sh` by hand with `--dataset /nonexistent`.
 - After **any** site change: `node tools/build-site.js`. It stamps versions and `sw.js` and adds `lang="zh-Hans"` to `.zh` elements. CI runs `--check` and fails if this step was skipped.
 - Pick the smallest check that covers the change (`tools/check-quick.sh`, which prints only the last lines):
   - `sh tools/check-quick.sh ui` for app.js, index.html or styles.css

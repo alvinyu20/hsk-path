@@ -26,7 +26,7 @@ const check = (c, m) => { if (!c) { failures++; console.log('FAIL', m); } else c
   });
   await page.waitForTimeout(300);
   check((await page.evaluate(() => (document.body.innerText.match(/Review (\d+) words?/) || [])[1])) === '1', 'only the word that is really waiting is offered ("Review 1 word", not 3)');
-  check((await page.evaluate(() => window.shanlu.lrnRoom())) === 11, 'learned words do not use up the 12-word limit');
+  check((await page.evaluate(() => window.shanlu.lrnRoom())) === 39, 'learned words do not use up the 40-word limit');
   // starting the lesson drops the stale entries and serves the real word
   await page.evaluate(() => window.shanlu.reviewMore());
   const st = await page.evaluate((z) => { const S = window.shanlu.state; return { lrn: Object.keys(S.lrn), rq: S.rq.slice() }; }, zs);

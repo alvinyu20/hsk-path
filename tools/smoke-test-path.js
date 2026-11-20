@@ -181,9 +181,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await page.locator('.pth-sheet').innerText().then(t => /limit of 5/.test(t)), 'the explanation shows in the sheet');
     await page.evaluate(() => { window.shanlu.setState({ nlimit: 0, pstop: '', plNote: '', plAlt: '' }); });
     await page.waitForTimeout(80);
-    // the Review queue is full: pretend 12 words are waiting
+    // the Review queue is full: pretend more than the 40-word limit is waiting
     await page.evaluate(() => {
-      const ws = window.shanlu.state.ws; const lrn = {}; Object.keys(ws).filter(z => !(ws[z].see.s > 0)).slice(0, 14).forEach(z => { lrn[z] = { st: 0, m: 0, at: Date.now() }; });   // real words that are not learned yet (made-up entries are ignored)
+      const ws = window.shanlu.state.ws; const lrn = {}; Object.keys(ws).filter(z => !(ws[z].see.s > 0)).slice(0, 45).forEach(z => { lrn[z] = { st: 0, m: 0, at: Date.now() }; });   // real words that are not learned yet (made-up entries are ignored)
       window.shanlu.setState({ lrn, screen: 'path', pstop: '', plNote: '' });
     });
     await page.waitForTimeout(100);

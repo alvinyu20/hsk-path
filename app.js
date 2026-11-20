@@ -391,7 +391,7 @@
   // learning phase. Every skill has its own timer, so a word can be due as one card and not as another. New words come first; then everything due,
   // weakest first but jumbled (a random nudge) so words learned together do not come back in list order. Saying cards and hearing cards are each capped at
   // a third of the recognition cards (at least 10), so adding two directions does not double the pile in one day; the rest stay due for next time. (The floor was 2: once the recognition cards were done, only 2 typing cards came at a time.)
-  const LRN_MAX = 12;       // new words waiting in their learning phase at once; add more after these are learned
+  const LRN_MAX = 40;       // new words waiting in their learning phase at once (40: four of the biggest Path stops, 8 words each, plus a few left from yesterday, so a full day of Path steps never sends you to Review in between)
   const LEARN_STEPS = 2;    // successful recalls (after meeting the word) before it gets a real interval
   const itemOf = (it) => { const m = /^(.*?)(?:#([lph]))?$/.exec(String(it)); return { zh:m[1], t:m[2] || 's' }; };
   // a "new word" card (word#l) for a word that has already graduated (it is in memory and no longer in the learning list) is out of date: it would show the word as new again and reset its progress
