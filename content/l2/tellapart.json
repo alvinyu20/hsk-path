@@ -1,0 +1,90 @@
+[
+ {
+  "id": "le-guo-zhe",
+  "title": "了, 过 or 着?",
+  "opts": ["了", "过", "着"],
+  "needs": ["le1", "guo", "zhe"],
+  "means": {
+   "了": "了 after a verb says the action happened and is done: 买了一本书 'bought a book'.",
+   "过": "过 says you have done it at some time in your life, as an experience: 去过北京 'have been to Beijing'.",
+   "着": "着 says a state goes on, or that one thing is done while doing another: 站着说话 'talk standing up'."
+  },
+  "items": [
+   {"zh": "我去[过]中国，那里很漂亮。", "en": "I've been to China. It's beautiful there.", "why": "Something you have done at some point in your life: 过."},
+   {"zh": "他笑[着]说：没问题。", "en": "He said with a smile: no problem.", "why": "Doing one thing (smiling) while doing another (speaking): 着."},
+   {"zh": "我昨天买[了]一本书。", "en": "I bought a book yesterday.", "why": "One action that happened and is done: 了."},
+   {"zh": "你吃[过]中国菜吗？", "en": "Have you ever had Chinese food?", "why": "'Ever' asks about an experience: 过."},
+   {"zh": "外面下[着]雨呢。", "en": "It's raining outside.", "why": "Something going on right now: 着…呢."},
+   {"zh": "他们站[着]说话。", "en": "They are talking standing up.", "why": "The way they talk (standing): 着."},
+   {"zh": "这个菜我还没吃[过]。", "en": "I've never tried this dish.", "why": "Never yet, as an experience: 没…过."},
+   {"zh": "他喝[了]两杯咖啡就走了。", "en": "He drank two cups of coffee and then left.", "why": "One finished action, then the next: 了."},
+   {"zh": "我们见[过]面吗？", "en": "Have we met before?", "why": "Have we ever met: an experience, 过."}
+  ]
+ },
+ {
+  "id": "de-de-de",
+  "title": "的, 地 or 得?",
+  "opts": ["的", "地", "得"],
+  "needs": ["de", "de2"],
+  "means": {
+   "的": "的 joins a describing word or an owner to a noun: 我的书, 红色的衣服.",
+   "地": "地 comes after a describing word and before a verb: how someone does it, 高兴地说.",
+   "得": "得 comes after a verb and says how well, fast or much it is done: 跑得很快."
+  },
+  "items": [
+   {"zh": "这是我[的]书。", "en": "This is my book.", "why": "An owner + noun: 的."},
+   {"zh": "他跑[得]很快。", "en": "He runs fast.", "why": "Verb + 得 + how well: 得."},
+   {"zh": "她高兴[地]说：谢谢！", "en": "She said happily: thank you!", "why": "How she said it, before the verb: 地."},
+   {"zh": "你说[得]对。", "en": "You're right. (What you said is right.)", "why": "Verb + 得 + a judgement of it: 得."},
+   {"zh": "我们慢慢[地]走吧。", "en": "Let's walk slowly.", "why": "How we walk, before the verb: 地."},
+   {"zh": "红色[的]那件是我的。", "en": "The red one is mine.", "why": "A describing word + the thing: 的."},
+   {"zh": "他汉语说[得]很好。", "en": "He speaks Chinese very well.", "why": "Verb + 得 + how well: 得."},
+   {"zh": "这是妈妈做[的]菜。", "en": "This is food Mum made.", "why": "妈妈做 describes the noun 菜: 的."},
+   {"zh": "孩子们快乐[地]玩着。", "en": "The children are playing happily.", "why": "How they play, before the verb: 地."}
+  ]
+ },
+ {
+  "id": "bi-meiyou-zui",
+  "title": "比, 没有 or 最?",
+  "opts": ["比", "没有", "最"],
+  "needs": ["bi"],
+  "means": {
+   "比": "A 比 B + describing word: A is more … than B.",
+   "没有": "A 没有 B + describing word: A is not as … as B.",
+   "最": "最 + describing word: the most … of all."
+  },
+  "items": [
+   {"zh": "哥哥[比]我大三岁。", "en": "My older brother is three years older than me.", "why": "A is more than B, by an amount: 比."},
+   {"zh": "这个[没有]那个好看。", "en": "This one isn't as nice as that one.", "why": "Not as … as: 没有."},
+   {"zh": "他是我们班[最]高的。", "en": "He's the tallest in our class.", "why": "The most of all: 最."},
+   {"zh": "今天[比]昨天热多了。", "en": "Today is much hotter than yesterday.", "why": "比 + describing word + 多了 'much more'. 没有 cannot take 多了."},
+   {"zh": "我[没有]他那么忙。", "en": "I'm not as busy as he is.", "why": "没有 + B + 那么 + describing word: not as … as."},
+   {"zh": "这是我吃过的[最]好吃的菜。", "en": "This is the best food I've ever eaten.", "why": "The most of all: 最."},
+   {"zh": "坐飞机[比]坐火车快。", "en": "Flying is faster than taking the train.", "why": "A is more … than B: 比."},
+   {"zh": "今天[没有]昨天冷。", "en": "Today isn't as cold as yesterday.", "why": "Not as … as: 没有."},
+   {"zh": "你[最]喜欢什么颜色？", "en": "What colour do you like best?", "why": "Best of all: 最."}
+  ]
+ },
+ {
+  "id": "cong-li-wang",
+  "title": "从, 离 or 往?",
+  "opts": ["从", "离", "往"],
+  "needs": ["li"],
+  "means": {
+   "从": "从 is 'from': where or when something starts, often with 到 'to'.",
+   "离": "离 is the distance between two places or times: A 离 B 很近 / 很远 / 还有….",
+   "往": "往 is 'towards': the direction you go."
+  },
+  "items": [
+   {"zh": "我家[离]学校很近。", "en": "My home is close to the school.", "why": "Distance between two places: 离."},
+   {"zh": "我[从]中国来。", "en": "I come from China.", "why": "Where it starts: 从."},
+   {"zh": "[往]前走，就到了。", "en": "Go straight ahead and you're there.", "why": "The direction you go: 往."},
+   {"zh": "现在[离]考试还有三天。", "en": "There are three days left until the exam.", "why": "Distance in time: 离…还有."},
+   {"zh": "他每天[从]早上八点工作到下午五点。", "en": "Every day he works from 8 a.m. to 5 p.m.", "why": "From … to …: 从…到…."},
+   {"zh": "[往]左看，那就是医院。", "en": "Look to the left: that's the hospital.", "why": "A direction: 往."},
+   {"zh": "[从]这儿到火车站要多长时间？", "en": "How long does it take from here to the train station?", "why": "From here to there: 从…到…."},
+   {"zh": "你家[离]这儿远吗？", "en": "Is your home far from here?", "why": "Distance between two places: 离."},
+   {"zh": "这个车[往]机场开。", "en": "This bus goes towards the airport.", "why": "The direction it goes: 往."}
+  ]
+ }
+]

@@ -1,0 +1,67 @@
+[
+ {
+  "id": "dou-ye",
+  "title": "都 or 也?",
+  "opts": ["都", "也"],
+  "needs": ["adv"],
+  "means": {
+   "都": "都 means 'all' or 'both'. It points back to a group that comes before it: 我们都…, 这些菜我都….",
+   "也": "也 means 'also' or 'too'. One more person or thing does the same as before."
+  },
+  "items": [
+   {"zh": "我们[都]是学生。", "en": "We are all students.", "why": "都 sums up the group 我们: all of us."},
+   {"zh": "他是学生，我[也]是学生。", "en": "He is a student, and I am a student too.", "why": "也: one more person, me, is the same."},
+   {"zh": "他喜欢喝茶，我[也]喜欢。", "en": "He likes tea, and so do I.", "why": "也: I like it too."},
+   {"zh": "这些菜我[都]喜欢。", "en": "I like all of these dishes.", "why": "都 points back to 这些菜: all of them."},
+   {"zh": "你们[都]去吗？", "en": "Are you all going?", "why": "都 covers everyone in 你们."},
+   {"zh": "我们两个人[都]很忙。", "en": "We are both busy.", "why": "都 covers the two people: both."},
+   {"zh": "你不知道？我[也]不知道。", "en": "You don't know? I don't know either.", "why": "也 + 不 is 'not either'. 我都不知道 would mean 'I had no idea at all'."},
+   {"zh": "爸爸妈妈[都]在家。", "en": "Mum and Dad are both at home.", "why": "都 covers the two people before it."},
+   {"zh": "他会写汉字，[也]会说汉语。", "en": "He can write characters, and he can also speak Chinese.", "why": "也: one more thing he can do."}
+  ]
+ },
+ {
+  "id": "bu-mei",
+  "title": "不 or 没?",
+  "opts": ["不", "没"],
+  "needs": ["neg"],
+  "means": {
+   "不": "不 says no to the present, the future, a habit, a wish or a quality. It goes before 是, 会, 想 and describing words.",
+   "没": "没 says something did not happen, or has not happened yet. It is always 没 before 有."
+  },
+  "items": [
+   {"zh": "我昨天[没]去学校。", "en": "I didn't go to school yesterday.", "why": "Yesterday: it did not happen, so 没."},
+   {"zh": "我明天[不]去学校。", "en": "I'm not going to school tomorrow.", "why": "Tomorrow, and it is your choice: 不."},
+   {"zh": "他[不]喜欢喝茶。", "en": "He doesn't like tea.", "why": "A liking, true in general: 不."},
+   {"zh": "我[没]有钱。", "en": "I don't have any money.", "why": "有 always takes 没: 没有."},
+   {"zh": "今天[不]冷。", "en": "It isn't cold today.", "why": "A describing word (冷) takes 不."},
+   {"zh": "我[不]是老师。", "en": "I'm not a teacher.", "why": "是 always takes 不: 不是."},
+   {"zh": "你吃饭了吗？我还[没]吃。", "en": "Have you eaten? Not yet.", "why": "还没 = not yet: it has not happened so far."},
+   {"zh": "我[不]会说汉语。", "en": "I can't speak Chinese.", "why": "会 takes 不: 不会."},
+   {"zh": "我[不]想去。", "en": "I don't want to go.", "why": "想 takes 不: a wish, not an event."},
+   {"zh": "上个星期我[没]看见他。", "en": "I didn't see him last week.", "why": "Last week, it did not happen: 没."}
+  ]
+ },
+ {
+  "id": "ma-ne-ba",
+  "title": "吗, 呢 or 吧?",
+  "opts": ["吗", "呢", "吧"],
+  "needs": ["ma", "bane"],
+  "means": {
+   "吗": "吗 turns a statement into a plain yes/no question. Never with a question word like 什么 or 哪儿.",
+   "呢": "呢 asks 'and you?' or 'where is…?', and it can sit at the end of a question that already has a question word.",
+   "吧": "吧 makes a suggestion (let's…) or checks a guess (…, right?)."
+  },
+  "items": [
+   {"zh": "你是中国人[吗]？", "en": "Are you Chinese?", "why": "A plain yes/no question: 吗."},
+   {"zh": "我很好，你[呢]？", "en": "I'm fine. And you?", "why": "'And you?' is 你呢."},
+   {"zh": "我们去吃饭[吧]。", "en": "Let's go and eat.", "why": "A suggestion: 吧."},
+   {"zh": "你是老师[吧]？", "en": "You're a teacher, right?", "why": "Checking a guess: 吧. 你是老师吗 would be a plain question with no guess."},
+   {"zh": "你在做什么[呢]？", "en": "What are you doing?", "why": "The question already has 什么, so 吗 cannot go here; 呢 can."},
+   {"zh": "我的书[呢]？", "en": "Where's my book?", "why": "Noun + 呢 asks where it is."},
+   {"zh": "你喝茶[吗]？", "en": "Do you drink tea?", "why": "A plain yes/no question: 吗."},
+   {"zh": "太晚了，明天再说[吧]。", "en": "It's too late. Let's talk about it tomorrow.", "why": "A suggestion: 吧."},
+   {"zh": "他去哪儿了[呢]？", "en": "Where has he gone?", "why": "哪儿 is already the question word, so 吗 cannot go here; 呢 makes it softer."}
+  ]
+ }
+]

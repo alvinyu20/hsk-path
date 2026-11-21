@@ -1,0 +1,66 @@
+[
+ {
+  "id": "buguan-ruguo-jishi",
+  "title": "不管, 如果 or 即使?",
+  "opts": ["不管", "如果", "即使"],
+  "needs": ["buguan", "ruguo", "jishi4"],
+  "means": {
+   "不管": "不管…都…: no matter which, who or how; the result is the same. It needs a question form or a choice after it.",
+   "如果": "如果…就…: if this happens, then that.",
+   "即使": "即使…也…: even if this happens, that still holds."
+  },
+  "items": [
+   {"zh": "[不管]你去不去，我都去。", "en": "Whether you go or not, I'm going.", "why": "A choice (去不去) + 都: 不管."},
+   {"zh": "[如果]明天下雨，我们就不去了。", "en": "If it rains tomorrow, we won't go.", "why": "A plain condition + 就: 如果."},
+   {"zh": "[即使]明天下雨，我们也要去。", "en": "Even if it rains tomorrow, we'll still go.", "why": "Even if + 也: 即使."},
+   {"zh": "[不管]多忙，他每天都运动。", "en": "No matter how busy he is, he exercises every day.", "why": "多忙 'how busy' + 都: 不管."},
+   {"zh": "[如果]你有时间，就来我家玩吧。", "en": "If you have time, come over to my place.", "why": "If + 就: 如果."},
+   {"zh": "[即使]你不说，我也知道。", "en": "Even if you don't tell me, I know.", "why": "Even if + 也: 即使."},
+   {"zh": "[不管]谁来，都要先打电话。", "en": "Whoever comes has to phone first.", "why": "谁 'who' + 都: 不管."},
+   {"zh": "[如果]我是你，我就不买。", "en": "If I were you, I wouldn't buy it.", "why": "If + 就: 如果."},
+   {"zh": "[即使]再累，他也要把工作做完。", "en": "However tired he is, he'll finish the work.", "why": "Even if + 也: 即使."}
+  ]
+ },
+ {
+  "id": "ranhou-erqie-raner",
+  "title": "然后, 而且 or 然而?",
+  "opts": ["然后", "而且", "然而"],
+  "needs": ["budan", "ranerr"],
+  "means": {
+   "然后": "然后 is 'then, after that': the next step in time.",
+   "而且": "而且 is 'and also, what's more': it adds a second point in the same direction.",
+   "然而": "然而 is 'however': what follows goes against what came before. It sounds written."
+  },
+  "items": [
+   {"zh": "我们先吃饭，[然后]去看电影。", "en": "Let's eat first, then go to the cinema.", "why": "The next step in time: 然后."},
+   {"zh": "这家店的菜很好吃，[而且]很便宜。", "en": "The food here is tasty, and it's cheap too.", "why": "A second good point: 而且."},
+   {"zh": "他很努力，[然而]还是没有成功。", "en": "He worked hard; however, he still didn't succeed.", "why": "The opposite of what you'd expect: 然而."},
+   {"zh": "他会说汉语，[而且]说得很好。", "en": "He speaks Chinese, and speaks it very well.", "why": "Adding a stronger point: 而且."},
+   {"zh": "我先洗了个澡，[然后]就睡了。", "en": "I had a shower first and then went to sleep.", "why": "The next step: 然后."},
+   {"zh": "大家都以为他会来，[然而]他没来。", "en": "Everyone thought he would come. However, he didn't.", "why": "Against what was expected: 然而."},
+   {"zh": "这个房间很大，[而且]很安静。", "en": "This room is big, and it's quiet as well.", "why": "One more good point: 而且."},
+   {"zh": "你下了车往右走，[然后]就能看到银行了。", "en": "Get off the bus and turn right, then you'll see the bank.", "why": "The next step: 然后."},
+   {"zh": "这个办法听起来不错，[然而]做起来很难。", "en": "The idea sounds good. In practice, however, it's hard.", "why": "Turning against what came before: 然而."}
+  ]
+ },
+ {
+  "id": "jiran-yaoshi",
+  "title": "既然 or 要是?",
+  "opts": ["既然", "要是"],
+  "needs": ["yaoshi"],
+  "means": {
+   "既然": "既然 is 'since, now that': the first part is already a fact.",
+   "要是": "要是 is 'if': the first part may or may not happen."
+  },
+  "items": [
+   {"zh": "[既然]你已经决定了，我就不说什么了。", "en": "Since you've already decided, I won't say anything.", "why": "It is already a fact (已经): 既然."},
+   {"zh": "[要是]明天下雨，我们就不去了。", "en": "If it rains tomorrow, we won't go.", "why": "It may or may not happen: 要是."},
+   {"zh": "[既然]来了，就多坐一会儿吧。", "en": "Since you're here, stay a bit longer.", "why": "You are already here: 既然."},
+   {"zh": "[要是]明天你不舒服，就别来了。", "en": "If you don't feel well tomorrow, don't come.", "why": "Maybe, maybe not: 要是."},
+   {"zh": "[既然]你不喜欢，为什么还要买？", "en": "Since you don't like it, why buy it?", "why": "A known fact: 既然."},
+   {"zh": "[要是]我有钱，我就去旅游。", "en": "If I had money, I'd go travelling.", "why": "Not true now, just imagined: 要是."},
+   {"zh": "[既然]大家都同意，那就这么办吧。", "en": "Since everyone agrees, let's do it this way.", "why": "Already a fact: 既然."},
+   {"zh": "[要是]有问题，就给我打电话。", "en": "If there's a problem, give me a call.", "why": "Only if it happens: 要是."}
+  ]
+ }
+]

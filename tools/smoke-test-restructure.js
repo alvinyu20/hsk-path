@@ -161,7 +161,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await scr(ph) === scrn && await noSide(), 'phone: ' + label + ' opens and does not scroll sideways');
   }
   await pnav('Library');
-  check((await ph.locator('.subnav button').allInnerTexts()).join('|') === 'Path|Library', 'phone: Learn has two pages in its strip');
+  check((await ph.locator('.subnav button').allInnerTexts()).join('|') === 'Path|Library|Games', 'phone: Learn has three pages in its strip');
   const bar = await ph.evaluate(() => { const b = document.querySelector('.subnav'); return b.scrollWidth <= b.clientWidth + 1; });
   check(bar, 'phone: the strip does not scroll sideways');
   await pnav('Home');

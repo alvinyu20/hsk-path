@@ -62,7 +62,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(sideLabels.join('|') === 'Today|Learn|Review|Talk|Journey', 'the sidebar has five tabs: ' + sideLabels.join(', '));
     const nav = require('./test-nav').makeNav(page);
     await nav('Path');
-    check((await page.locator('.navsub .subl').allInnerTexts()).join('|') === 'Path|Library', 'the Learn tab lists Path and Library under itself');
+    check((await page.locator('.navsub .subl').allInnerTexts()).join('|') === 'Path|Library|Games', 'the Learn tab lists Path, Library and Games under itself');
 
     // ---- the path
     await nav('Path');
@@ -250,7 +250,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.goto(url); await page.waitForSelector('.app'); await page.waitForTimeout(200);
     check((await page.locator('.navg button.nav').allInnerTexts()).map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()).join('|') === 'Today|Learn|Review|Talk|Journey', 'the five tabs on a phone: Today, Learn, Review, Talk, Journey');
     await page.locator('.navg button.nav', { hasText: 'Learn' }).click(); await page.waitForTimeout(150);
-    check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Path|Library', 'Learn holds Path and Library');
+    check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Path|Library|Games', 'Learn holds Path, Library and Games');
     check((await st(page)).screen === 'path', 'Learn opens on the Path');
     check(await noSideways(page), 'the path does not scroll sideways on a phone');
     // every label sits inside the screen

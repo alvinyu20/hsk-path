@@ -1,0 +1,126 @@
+[
+ {
+  "id": "jiu-cai",
+  "title": "就 or 才?",
+  "opts": ["就", "才"],
+  "needs": ["yijing2", "cai"],
+  "means": {
+   "就": "就 says it happened early, quickly or easily: sooner than expected.",
+   "才": "才 says it happened late, slowly or with difficulty: later than expected. Before a number it can also mean 'only'."
+  },
+  "items": [
+   {"zh": "他八点[就]来了。", "en": "He came early, at eight.", "why": "Earlier than expected: 就 (and 了 at the end)."},
+   {"zh": "他十点[才]来。", "en": "He didn't come until ten.", "why": "Later than expected: 才 (no 了)."},
+   {"zh": "我看了三遍[才]看懂。", "en": "I only understood it after reading it three times.", "why": "It took a lot: 才."},
+   {"zh": "我看了一遍[就]懂了。", "en": "I understood it after reading it once.", "why": "It was easy and quick: 就."},
+   {"zh": "他今年[才]十岁，个子已经很高了。", "en": "He's only ten this year, but he's already tall.", "why": "Before a number, 'only': 才."},
+   {"zh": "你等一下，我马上[就]来。", "en": "Wait a moment, I'm coming right away.", "why": "Very soon: 马上就."},
+   {"zh": "你怎么现在[才]来？", "en": "Why are you only getting here now?", "why": "Later than it should be: 才."},
+   {"zh": "早上五点他[就]起床了。", "en": "He was already up at five in the morning.", "why": "Earlier than expected: 就…了."},
+   {"zh": "我等了一个小时，车[才]来。", "en": "I waited an hour before the bus finally came.", "why": "It took a long time: 才."}
+  ]
+ },
+ {
+  "id": "zai-you",
+  "title": "再 or 又?",
+  "opts": ["再", "又"],
+  "needs": ["zaiyou"],
+  "means": {
+   "再": "再 is 'again' for something that has not happened yet: next time, later, once more. It also means 'then' in 先…再….",
+   "又": "又 is 'again' for something that already happened again, or that will surely come round again (明天又是星期一)."
+  },
+  "items": [
+   {"zh": "你明天[再]来吧。", "en": "Come again tomorrow.", "why": "Again, but it has not happened yet: 再."},
+   {"zh": "他昨天来了，今天[又]来了。", "en": "He came yesterday, and he came again today.", "why": "It already happened again: 又."},
+   {"zh": "请你[再]说一遍。", "en": "Please say it once more.", "why": "Once more, from now on: 再."},
+   {"zh": "你怎么[又]迟到了？", "en": "Why are you late again?", "why": "It has already happened again: 又."},
+   {"zh": "明天[又]是星期一了。", "en": "Tomorrow is Monday again.", "why": "Something that surely comes round again: 又, even about tomorrow."},
+   {"zh": "我们先吃饭，[再]去看电影。", "en": "Let's eat first, then go to the cinema.", "why": "先…再…: first … then …."},
+   {"zh": "这个菜很好吃，我想[再]吃一碗。", "en": "This is delicious. I'd like another bowl.", "why": "Once more, not yet eaten: 再."},
+   {"zh": "他[又]忘了带手机。", "en": "He forgot his phone again.", "why": "It has happened again: 又."},
+   {"zh": "下了课[再]走吧。", "en": "Let's leave after class.", "why": "Later, after something else: 再."}
+  ]
+ },
+ {
+  "id": "ba-bei",
+  "title": "把 or 被?",
+  "opts": ["把", "被"],
+  "needs": ["ba", "bei"],
+  "means": {
+   "把": "把: the doer comes first and does something to the thing: 我把作业写完了 'I finished my homework'.",
+   "被": "被: the thing comes first and something is done to it, often something bad: 杯子被打破了 'the cup got broken'."
+  },
+  "items": [
+   {"zh": "我[把]作业写完了。", "en": "I've finished my homework.", "why": "The doer (我) comes first and does something to the homework: 把."},
+   {"zh": "我的自行车[被]人骑走了。", "en": "My bike was ridden off by someone.", "why": "The thing comes first and something is done to it: 被."},
+   {"zh": "请你[把]门关上。", "en": "Please close the door.", "why": "You do something to the door: 把."},
+   {"zh": "那个蛋糕[被]弟弟吃了。", "en": "That cake was eaten by my little brother.", "why": "The cake comes first; it got eaten: 被."},
+   {"zh": "妈妈[把]房间打扫得很干净。", "en": "Mum cleaned the room until it was spotless.", "why": "The doer first, then what she did to the room: 把."},
+   {"zh": "他的手机[被]拿走了。", "en": "His phone was taken.", "why": "The phone comes first and something bad happened to it: 被. The doer can be left out."},
+   {"zh": "你[把]手机放在哪儿了？", "en": "Where did you put your phone?", "why": "You did something to the phone (put it somewhere): 把."},
+   {"zh": "那本书[被]他借走了。", "en": "That book has been borrowed by him.", "why": "The book comes first; something was done to it: 被."},
+   {"zh": "他[把]我的杯子拿走了。", "en": "He took my cup.", "why": "The doer first: 把."}
+  ]
+ },
+ {
+  "id": "huozhe-haishi",
+  "title": "或者 or 还是?",
+  "opts": ["或者", "还是"],
+  "needs": ["huozhe"],
+  "means": {
+   "或者": "或者 is 'or' in a statement: either one is fine.",
+   "还是": "还是 is 'or' in a question, including a question inside a sentence (我不知道…还是…)."
+  },
+  "items": [
+   {"zh": "你喝茶[还是]咖啡？", "en": "Would you like tea or coffee?", "why": "A question asking you to choose: 还是."},
+   {"zh": "你可以明天[或者]后天来。", "en": "You can come tomorrow or the day after.", "why": "A statement, either is fine: 或者."},
+   {"zh": "你想坐飞机[还是]坐火车？", "en": "Do you want to fly or take the train?", "why": "A question: 还是."},
+   {"zh": "周末我常常看书[或者]看电影。", "en": "At weekends I often read or watch a film.", "why": "A statement: 或者."},
+   {"zh": "我不知道他是老师[还是]学生。", "en": "I don't know whether he's a teacher or a student.", "why": "A question inside a sentence (I don't know which): 还是."},
+   {"zh": "你可以给我打电话[或者]发电子邮件。", "en": "You can phone me or send an email.", "why": "A statement, either way works: 或者."},
+   {"zh": "你是今天走[还是]明天走？", "en": "Are you leaving today or tomorrow?", "why": "A question: 还是."},
+   {"zh": "星期六[或者]星期天我去看你。", "en": "I'll come and see you on Saturday or Sunday.", "why": "A statement: 或者."},
+   {"zh": "去不去，[还是]你自己决定吧。", "en": "Whether to go or not, you'd better decide yourself.", "why": "还是 can also mean 'had better'; 或者 never does."}
+  ]
+ },
+ {
+  "id": "gang-gangcai",
+  "title": "刚 or 刚才?",
+  "opts": ["刚", "刚才"],
+  "needs": ["gang"],
+  "means": {
+   "刚": "刚 is an adverb, 'just': it sits right before the verb and can take a length of time after the verb (刚来两天).",
+   "刚才": "刚才 is a time word, 'a moment ago': it can come before the person, after 比, or before 不 / 没."
+  },
+  "items": [
+   {"zh": "[刚才]你去哪儿了？", "en": "Where did you go just now?", "why": "Before the person (你), only the time word 刚才 can go."},
+   {"zh": "我[刚]来两天，还不太习惯。", "en": "I only arrived two days ago, so I'm not used to it yet.", "why": "刚 + verb + length of time: 刚来两天."},
+   {"zh": "[刚才]我没听清楚，请再说一遍。", "en": "I didn't hear clearly just now. Please say it again.", "why": "Before 没, and at the start: 刚才."},
+   {"zh": "他[刚]到家就下雨了。", "en": "It started raining just as he got home.", "why": "刚…就…: as soon as it had just happened."},
+   {"zh": "现在比[刚才]好多了。", "en": "It's much better now than a moment ago.", "why": "After 比 you need a noun-like time word: 刚才."},
+   {"zh": "这件衣服是我[刚]买的。", "en": "I just bought this jacket.", "why": "Right before the verb, 'just': 刚. 刚才 also works here ('a moment ago').", "also": ["刚才"]},
+   {"zh": "[刚才]的电话是谁打的？", "en": "Who was that on the phone just now?", "why": "刚才的 describes a noun; 刚 cannot."},
+   {"zh": "我们[刚]认识一个月。", "en": "We've only known each other for a month.", "why": "刚 + verb + length of time."}
+  ]
+ },
+ {
+  "id": "zhiyao-zhiyou",
+  "title": "只要 or 只有?",
+  "opts": ["只要", "只有"],
+  "needs": ["zhiyao"],
+  "means": {
+   "只要": "只要…就…: as long as this happens, that will follow. One easy condition is enough.",
+   "只有": "只有…才…: only if this happens can that follow. Nothing else will do. 只有 + person also means 'only'."
+  },
+  "items": [
+   {"zh": "[只要]你努力，就一定能学好。", "en": "As long as you work hard, you'll learn it well.", "why": "One condition is enough, with 就: 只要."},
+   {"zh": "[只有]多练习，才能说得好。", "en": "Only with lots of practice can you speak well.", "why": "The only way, with 才: 只有."},
+   {"zh": "[只要]有时间，我就去看他。", "en": "Whenever I have time, I go to see him.", "why": "As long as: 只要…就…."},
+   {"zh": "这件事[只有]他知道。", "en": "Only he knows about this.", "why": "只有 + person: only him."},
+   {"zh": "[只要]不下雨，我们就去爬山。", "en": "As long as it doesn't rain, we'll go hiking.", "why": "As long as: 只要…就…."},
+   {"zh": "[只有]到了晚上，这里才安静。", "en": "Only at night is it quiet here.", "why": "Only then, with 才: 只有."},
+   {"zh": "[只要]你喜欢，就拿去吧。", "en": "If you like it, take it.", "why": "As long as you like it: 只要…就…."},
+   {"zh": "[只有]你自己去，才能看清楚。", "en": "Only if you go yourself will you see clearly.", "why": "The only way, with 才: 只有."}
+  ]
+ }
+]

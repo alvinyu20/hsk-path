@@ -345,6 +345,16 @@
   const psgSpeed = () => { const v = Number(prefGet('psgSpeed', 1)); return PSG_SPEEDS.indexOf(v) >= 0 ? v : 1; };
   const psgRung = (res) => (res ? Math.max(res.r || 0, res.f ? 1.25 : 0) : 0);   // f: the old fast-ear flag (all right at 1.25×)
   const clipRung = (zh) => Number(prefGet('cr.' + zh, 0)) || 0;
+
+  // ---- Games (Learn > Games): short rounds that mix up things that are easy to confuse. Data: data/games.js (tools/build-games.py) ----
+  // Tell them apart: a set (了 / 过 / 着 ...) opens once the grammar lessons it mixes are passed, on any level (or that level's exam is passed).
+  // A card waits until the words of this view's level in it have been started; a set needs TA_MIN ready cards. A round is up to TA_ROUND cards,
+  // the ones missed last time first. Saved with the person: 'ta.' + set id = { b: best right, t: cards in that round, n: rounds, m: missed cards, d: day }.
+  const GAMES = window.SHANLU_GAMES || { tellapart:{} };
+  const TA_ROUND = 8, TA_COIN = 2, TA_PERFECT = 5, TA_MIN = 5;
+  const TA_SETS = []; Object.keys(GAMES.tellapart || {}).forEach(n => (GAMES.tellapart[n] || []).forEach(s => TA_SETS.push(s)));
+  const TA_BY = {}; TA_SETS.forEach(s => { TA_BY[s.id] = s; });
+  const taRes = (id) => prefGet('ta.' + id, null);
   const wPage = () => (prefGet('wview', 'cards') === 'list' ? 100 : 40);   // My words shows this many at a time (the compact list shows more)
   const psgRes = (id) => prefGet('psg.' + id, null);
   const PATH_U = {}, STOP_BY = {};
@@ -578,7 +588,7 @@
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false, shrec:'idle', shurl:'', shnote:'',
       wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wcover:'all', wpeek:{}, jyPlay:'', jyPlayStamp:false, wopptab:'all', wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, syncKeys:prefGet('syncKeys', false) === true, aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), lsnNote:'', memOn:memOn(), memFacts:memFacts().slice(), aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, aiTesting:false, syncTesting:false, frTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
-      lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dmin:0, drung:null, dtyped:'', dchecked:false, dmarks:[], dreveal:0, mtyped:'', mchecked:false, mbusy:false, mres:null, merr:'', mpeek:0, mmix:false, mbest:{},
+      lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dmin:0, drung:null, gm:{ view:'hub' }, dtyped:'', dchecked:false, dmarks:[], dreveal:0, mtyped:'', mchecked:false, mbusy:false, mres:null, merr:'', mpeek:0, mmix:false, mbest:{},
       tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
     };
@@ -619,6 +629,7 @@
     ['复', 'Review', 'Each card (a new word: 3 per step, 5 when it sticks)', '2 to 5'],
     ['听', 'Listening lab', 'Each word you catch or understand; speed rungs in Dictation: +3 the first time a clip is all right at 1.25×, +5 at 1.5×', '1 a word'],
     ['跟', 'Shadowing', 'After three rounds of a clip', '6'],
+    ['辨', 'Games: Tell them apart', 'Each right card, +5 when the whole round is right', '2'],
     ['网', 'Word webs', 'A word you knew (1 if not)', '3'],
     ['聊', 'AI chat', 'Each message you send', '2'],
     ['试', 'Practice exam', 'Each right answer', '2']
@@ -1795,6 +1806,8 @@
     { id:'mean1', grp:'Sounds', icon:'💡', title:'First translation', desc:'You heard a clip and said what it means in English.', hint:'Get a clip right in the Meaning mode of the Listening lab.', test:m => m.meanings >= 1 },
     { id:'mean10', grp:'Sounds', icon:'🌟', title:'10 translations', desc:'Ten clips understood without reading a thing.', hint:'Get 10 clips right in the Meaning mode.', test:m => m.meanings >= 10, prog:m => [m.meanings, 10] },
     { id:'clip1', grp:'Sounds', icon:'🎧', title:'First clip', desc:'You tried your first Listening lab clip.', hint:'Try a clip in the Listening lab.', test:m => m.clips >= 1 },
+    { id:'ta1', grp:'Grammar', icon:'🔀', title:'Told them apart', desc:'You played a round of Tell them apart.', hint:'Play a round of Tell them apart in Games.', test:m => m.taRounds >= 1 },
+    { id:'taperfect', grp:'Grammar', icon:'🎯', title:'Sharp eye', desc:'Every card right in a round of Tell them apart.', hint:'Get every card right in a round of Tell them apart (Games).', test:m => m.taPerfect >= 1 },
     { id:'fast125', grp:'Sounds', icon:'🐇', title:'Quick ear', desc:'You cleared the 1.25× speed rung on a clip or a conversation.', hint:'Get every word of a Dictation clip, or every question of a listening passage, right after hearing it only at 1.25× or faster.', test:m => m.rung125 >= 1 },
     { id:'fast15', grp:'Sounds', icon:'⚡', title:'1.5× club', desc:'Every word or every answer right at one and a half times normal speed. Faster than most people talk.', hint:'Clear the 1.5× speed rung on a Dictation clip or a listening passage.', test:m => m.rung15 >= 1 },
     { id:'fast15x10', grp:'Sounds', icon:'🏎️', title:'1.5× regular', desc:'Ten clips or conversations cleared at 1.5×.', hint:'Clear the 1.5× speed rung 10 times (different clips or passages).', test:m => m.rung15 >= 10, prog:m => [m.rung15, 10] },
@@ -2196,7 +2209,7 @@
       this.go(this.lastSub[id] || first);
     };
     go = (screen) => {
-      { const grp = { path:'learn', library:'learn', grammar:'learn', gtrack:'learn', pinyin:'learn', web:'learn', words:'learn', exam:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', journey:'journey' }[screen]; if (grp) this.lastSub[grp] = ({ words:'library', grammar:'library', gtrack:'library', web:'library', pinyin:'library', exam:'path' })[screen] || screen; }
+      { const grp = { path:'learn', library:'learn', games:'learn', grammar:'learn', gtrack:'learn', pinyin:'learn', web:'learn', words:'learn', exam:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', journey:'journey' }[screen]; if (grp) this.lastSub[grp] = ({ words:'library', grammar:'library', gtrack:'library', web:'library', pinyin:'library', exam:'path' })[screen] || screen; }
       { const sv = prefGet('sv', {}); if ((sv[screen] || 0) < 4) prefSet('sv', Object.assign({}, sv, { [screen]:(sv[screen] || 0) + 1 })); }   // how many times each page was opened: a page's one-line description fades after a few visits
       if (screen === 'guide' && !onbRead().g) this.onbSet({ g:Date.now() });
       if (screen === 'journey') { otherXp(true); this.jyEnsure(); this.friendsRefresh(false); }
@@ -3894,6 +3907,7 @@
       { let r125 = 0, r15 = 0;   // speed rungs, kept with the person (every level): 'cr.' + clip, 'psg.' + passage
         Object.keys(PERSON.prefs).forEach(k => { const r = k.indexOf('cr.') === 0 ? clipRung(k.slice(3)) : k.indexOf('psg.') === 0 ? psgRung(prefGet(k, null)) : 0; if (r >= 1.25) r125++; if (r >= 1.5) r15++; });
         m.rung125 = r125; m.rung15 = r15; }
+      { let rounds = 0, perfect = 0; TA_SETS.forEach(s => { const r = taRes(s.id); if (r && r.n) { rounds += r.n; if (r.t && r.b === r.t) perfect++; } }); m.taRounds = rounds; m.taPerfect = perfect; }
       m.clips = Math.max(clipsSaved, (S.clipBest || []).filter(x => x > 0).length); m.hubs = Math.max(hubsSaved, HUBS.filter(h => h.words.length && h.words.every(w => started(S.ws[w.zh]))).length);
       { const grOpen = (() => { const greg = gptReg(); return Object.keys(greg).filter(id => gptOpen(S, id)).length; })();
         m.fullDay = S.pbase != null && pathDoneCount(S) > S.pbase && !!S.rcomplete && (!grOpen || (!!S.grdone && !Object.keys(gptReg()).some(id => gptOpen(S, id) && gptDueNow(S, id)))); }
@@ -4164,6 +4178,109 @@
         ],
         acctLinks:links
       };
+    };
+
+    // ----- Games: Tell them apart -----
+    taOther = null;   // grammar lessons passed in the saved progress of every level (read once: other levels do not change while this page is open)
+    taPassed = (id, lv) => {
+      if (!this.taOther) { this.taOther = {}; for (let n = 1; n <= LVL.MAX_LEVEL; n++) { const st = readStore(n); const g = (st && st.gres) || {}; Object.keys(g).forEach(k => { if (g[k] >= 80) this.taOther[k] = 1; }); } }
+      return !!this.taOther[id] || (this.state.gres[id] || 0) >= 80 || (lv != null && LVL.levelPassed(lv));
+    };
+    taInfo = (S, set) => {
+      const miss = set.needs.map((id, i) => (this.taPassed(id, set.needL[i]) ? null : set.needT[i])).filter(Boolean);
+      const open = []; set.items.forEach((it, i) => { if (it.w.every(z => !BANK[z] || wStarted(S, z))) open.push(i); });
+      return { miss, open, ready:!miss.length && open.length >= TA_MIN };
+    };
+    taOpen = (id) => {
+      const S = this.state; const set = TA_BY[id]; if (!set) return;
+      const info = this.taInfo(S, set); if (!info.ready) return;
+      const res = taRes(id) || {};
+      const missed = shuffle((res.m || []).filter(i => info.open.indexOf(i) >= 0));
+      const rest = shuffle(info.open.filter(i => missed.indexOf(i) < 0));
+      const cards = shuffle(missed.concat(rest).slice(0, TA_ROUND));
+      this.stopNative();
+      this.setState({ gm:{ view:'play', id, cards, qi:0, pick:-1, ans:[], py:false, t0:Date.now(), gain:0 } });
+      if (S.screen !== 'games') this.go('games'); else { try { window.scrollTo(0, 0); } catch (e) {} }
+    };
+    taPick = (k) => {
+      const g = this.state.gm; const set = g && TA_BY[g.id]; if (!set || g.view !== 'play' || g.pick >= 0) return;
+      const it = set.items[g.cards[g.qi]]; const o = set.opts[k]; if (o == null) return;
+      const ok = o === it.a || (it.also || []).indexOf(o) >= 0;
+      SFX.play(ok ? 'ok' : 'bad');
+      this.setState({ gm:Object.assign({}, g, { pick:k, ans:g.ans.concat([{ i:g.cards[g.qi], ok, k }]) }) });
+      this.sayAi(it.zh, 'gm', this.state.speed || 1);
+    };
+    taHear = () => { const g = this.state.gm; const set = g && TA_BY[g.id]; if (!set) return; this.ttsUnlock(); this.sayAi(set.items[g.cards[g.qi]].zh, 'gm', this.state.speed || 1); };
+    taNext = () => {
+      const S = this.state; const g = S.gm; const set = g && TA_BY[g.id]; if (!set || g.pick < 0) return;
+      if (g.qi + 1 < g.cards.length) { this.stopNative(); this.setState({ gm:Object.assign({}, g, { qi:g.qi + 1, pick:-1 }) }); return; }
+      const right = g.ans.filter(a => a.ok).length, n = g.cards.length; const prev = taRes(set.id) || {};
+      const gain = right * TA_COIN + (right === n ? TA_PERFECT : 0);
+      const best = !prev.t || right / n > (prev.b || 0) / prev.t ? { b:right, t:n } : { b:prev.b, t:prev.t };
+      prefSet('ta.' + set.id, Object.assign(best, { n:(prev.n || 0) + 1, m:g.ans.filter(a => !a.ok).map(a => a.i), d:ymd(new Date()) }));
+      if (right === n) SFX.play('ok');
+      this.stopNative();
+      this.setState({ gm:Object.assign({}, g, { view:'done', right, gain }), xp:S.xp + gain, dayXp:S.dayXp + gain, dayMin:S.dayMin + Math.max(1, Math.round((Date.now() - g.t0) / 60000)) });
+    };
+    taHub = () => { this.stopNative(); this.setState({ gm:{ view:'hub' } }); try { window.scrollTo(0, 0); } catch (e) {} };
+    // the set offered as "Game of the day" on Today: one that is ready, not yet played today; the same all day (picked by the date)
+    taOfDay = (S) => {
+      const today = ymd(new Date());
+      const ready = TA_SETS.filter(s => s.lv <= TOPL && this.taInfo(S, s).ready);
+      if (!ready.length) return null;
+      const fresh = ready.filter(s => !(taRes(s.id) || {}).n);
+      const pool = fresh.length ? fresh : ready;
+      let h = 0; for (let i = 0; i < today.length; i++) h = (h * 31 + today.charCodeAt(i)) >>> 0;
+      const set = pool[h % pool.length];
+      return { set, done:(taRes(set.id) || {}).d === today };
+    };
+    gamesVals = (S) => {
+      const out = { isGames:false, gmHub:false, gmPlay:false, gmDone:false, taLevels:[], gmOpts:[], gmBreak:[] };
+      if (S.screen !== 'games') return out;
+      const g = S.gm || { view:'hub' }; const set = TA_BY[g.id];
+      if (g.view !== 'hub' && set) {
+        const n = g.cards.length;
+        if (g.view === 'play') {
+          const it = set.items[g.cards[g.qi]]; const picked = g.pick >= 0; const o = picked ? set.opts[g.pick] : '';
+          const ok = picked && (o === it.a || (it.also || []).indexOf(o) >= 0), also = ok && o !== it.a;
+          const ai = set.opts.indexOf(it.a);
+          Object.assign(out, { isGames:true, gmPlay:true, gmTitle:set.title, gmStep:'Card ' + (g.qi + 1) + ' of ' + n,
+            gmPre:it.pre, gmPost:it.post, gmGap:picked ? it.a : '', gmGapCls:picked ? (ok ? 'ok' : 'miss') : '',
+            gmPy:picked ? it.py : (it.preQ + ' ___ ' + it.postQ).trim(), gmShowPy:!!g.py || picked, gmPyBtn:g.py ? 'Hide pinyin' : 'Show pinyin', gmTogPy:() => this.setState({ gm:Object.assign({}, this.state.gm, { py:!this.state.gm.py }) }),
+            gmEn:it.en, gmPicked:picked, gmNotPicked:!picked, gmOptN:set.opts.length,
+            gmOpts:set.opts.map((x, k) => ({ zh:x, py:set.optPy[k], k:k + 1, pick:() => this.taPick(k),
+              cls:!picked ? '' : x === it.a ? 'right' : (it.also || []).indexOf(x) >= 0 ? 'right' : k === g.pick ? 'wrong' : '' })),
+            gmVerdict:!picked ? '' : also ? 'Also right here.' : ok ? 'Right!' : 'Not quite: it is ' + it.a + '.',
+            gmVerdictCls:ok ? 'right' : 'wrong', gmWhy:it.why,
+            gmYours:picked && !ok ? set.means[g.pick] : '', gmHasYours:picked && !ok,
+            gmRule:picked && !ok ? set.means[ai] : '', gmHasRule:picked && !ok,
+            gmHear:this.taHear, gmHearCls:S.playing === 'gm' ? 'on' : '', gmNext:this.taNext, gmNextText:g.qi + 1 < n ? 'Next card' : 'See how you did',
+            gmBack:this.taHub });
+          return out;
+        }
+        // done: score, and how each word of the set went
+        const brk = set.opts.map(x => { const mine = g.ans.filter(a => set.items[a.i].a === x); return { zh:x, r:mine.filter(a => a.ok).length, t:mine.length }; }).filter(b => b.t);
+        const weak = brk.filter(b => b.r < b.t).sort((a, b) => a.r / a.t - b.r / b.t)[0];
+        Object.assign(out, { isGames:true, gmDone:true, gmTitle:set.title, gmStep:'Done', gmBack:this.taHub,
+          gmScore:g.right + ' of ' + n + ' right', gmScoreSub:'+' + g.gain + ' coins' + (g.right === n ? ' (every card right: +' + TA_PERFECT + ')' : ''),
+          gmBreak:brk.map(b => ({ zh:b.zh, t:b.r + ' of ' + b.t, cls:b.r === b.t ? 'ok' : 'miss' })),
+          gmWatch:weak ? weak.zh + ' is the one to watch. The cards you missed come first next time.' : 'Every pattern right. Nicely told apart.',
+          gmMissed:g.ans.filter(a => !a.ok).map(a => { const it = set.items[a.i]; return { zh:it.zh, en:it.en, why:it.why }; }), gmHasMissed:g.ans.some(a => !a.ok),
+          gmAgain:() => this.taOpen(set.id) });
+        return out;
+      }
+      // the hub: every set of this level and the ones below, this level first
+      const lvls = []; for (let n = TOPL; n >= 1; n--) lvls.push(n);
+      Object.assign(out, { isGames:true, gmHub:true,
+        taLevels:lvls.map(n => ({ name:'HSK ' + n, sets:TA_SETS.filter(s => s.lv === n).map(s => {
+          const info = this.taInfo(S, s); const res = taRes(s.id);
+          const sub = info.miss.length ? 'Pass ' + info.miss.join(' and ') + ' to open'
+            : !info.ready ? info.open.length + ' of ' + TA_MIN + ' cards ready. Start more of its words to open it'
+            : res && res.n ? 'Best ' + res.b + ' of ' + res.t + (res.m && res.m.length ? ' · ' + res.m.length + ' to fix' : '')
+            : Math.min(TA_ROUND, info.open.length) + ' cards' + (info.open.length < s.items.length ? ' · ' + (s.items.length - info.open.length) + ' more open as you learn words' : '');
+          return { title:s.title, sub, cls:info.ready ? (res && res.n ? 'played' : 'new') : 'locked', ready:info.ready, locked:!info.ready, go:() => this.taOpen(s.id), btn:res && res.n ? 'Play again' : 'Play' };
+        }) })).filter(l => l.sets.length) });
+      return out;
     };
 
     // ----- listening passages (a Path stop of kind "l") -----
@@ -5169,10 +5286,10 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const startWords = START_WORDS.filter(z => BANK[z]).map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en.split(',')[0] }));
       const startDoneShow = onbOn && onb.s === 'done' && onb.d === ymd(new Date()) && S.rcomplete;   // the end of the first session: what to do next
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
-      const GROUPS = [['home', ['home']], ['learn', ['path', 'library']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['journey', ['journey']]];
+      const GROUPS = [['home', ['home']], ['learn', ['path', 'library', 'games']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['journey', ['journey']]];
       const SUBOF = { words:'library', grammar:'library', gtrack:'library', web:'library', pinyin:'library', exam:'path' };   // pages reached from another page of the same tab: that page stays lit
       const BRANCH = ['acct', 'friends', 'ach', 'voice', 'guide'];   // reached from the Account page (the avatar) or the quiet "You" links, not from a tab
-      const SUBLABEL = { path:'Path', library:'Library', review:'Words', greview:'Grammar', testlobby:'Test', listen:'Listening', speak:'Speaking', home:'Today', journey:'Journey' };
+      const SUBLABEL = { path:'Path', library:'Library', games:'Games', review:'Words', greview:'Grammar', testlobby:'Test', listen:'Listening', speak:'Speaking', home:'Today', journey:'Journey' };
       const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen === 'plesson' || S.screen === 'passage' ? 'path' : S.screen;
       const hlScreen = SUBOF[curScreen] || curScreen;
       const navGroup = BRANCH.indexOf(curScreen) >= 0 ? '' : (GROUPS.find(g => g[1].indexOf(hlScreen) >= 0) || GROUPS[0])[0];
@@ -5254,6 +5371,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         path:['Your path', 'Words and grammar in order, from the basics up. The next stop is always one tap away.'],
         plesson:[S.pl && STOP_BY[S.pl.id] ? stopTitle(STOP_BY[S.pl.id].st) : 'Lesson', 'Meet the words, try them, then check them.'],
         passage:['Listening', 'Hear a conversation, then answer questions about it in Chinese.'],
+        games:['Games', 'Quick rounds for the things that are easy to mix up. Each game opens bit by bit as you pass lessons and start words.'],
         acct:['Account', 'You, your numbers, and the settings behind Shanlu.'],
         web:S.wmode === 'char' ? ['Shared character', 'Words built from the same character, side by side. New words are best learned on your path.'] : S.wmode === 'opp' ? ['Word pairs', 'Opposites and look-alike words, side by side. New words are best learned on your path.'] : ['Topics', 'Every topic, to browse and review. New words are best learned on your path.'],
         words:['My words', 'How well you know each word, and when it needs a refresh.'],
@@ -5314,11 +5432,13 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         run:() => { if (!S.rq.length && toReviewN > 0) this.reviewMore(); this.go('review'); } });
       if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + (S.grdone ? ' still due' : ' due') : 'Nothing due, short practice', done:!!S.grdone && grvDueToday === 0, run:() => this.startGrammarReview(true) });
       const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:t.run, stops:t.stops || [], hasStops:!!(t.stops && t.stops.length) }));
+      const gmDay = S.screen === 'home' ? this.taOfDay(S) : null;
       const moreWays = [
         pathStep && pathAllDone ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), tint:'t-jade', cls:'', fn:() => this.pathContinue(pathStep.st.id) } : null,
         HAS_LISTEN ? { glyph:'听', label:'Listening', sub:'Dictation drill', tint:'t-jade', cls:S.ldone ? 'done' : '', fn:() => this.go('listen') } : null,
         HAS_SCRIPTS ? { glyph:'说', label:'Speak', sub:(SCEN[nextScn] || NO_SC).title, tint:'t-amber', cls:S.spokeToday ? 'done' : '', fn:() => { this.setState({ sidx:nextScn, sturn:0, sdone:false, sview:'chat' }); this.go('speak'); this.sayOpen(nextScn); } } : null,
         { glyph:'语', label:'Grammar lesson', sub:LESSONS[nextLesson].title, tint:'t-seal', cls:'', fn:() => { this.setState({ ggopen:null, gq:'', glesson:nextLesson }); this.go('grammar'); } },
+        gmDay ? { glyph:'辨', label:'Game of the day', sub:gmDay.set.title + ' · Tell them apart', tint:'t-amber', cls:gmDay.done ? 'done' : '', fn:() => this.taOpen(gmDay.set.id) } : null,
         testReady ? { glyph:'测', label:'Test', sub:'Mixed questions', tint:'t-ink', cls:S.tdone ? 'done' : '', fn:() => this.go('testlobby') } : null,
         { glyph:'书', label:'Library', sub:'Look things up', tint:'t-ink', cls:'', fn:() => this.go('library') }
       ].filter(Boolean);
@@ -5819,6 +5939,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         ...frVals,
         ...this.pathVals(S),
         ...this.psgVals(S),
+        ...this.gamesVals(S),
         ...this.acctVals(S, { level:LVN, streak:streakShown, coins:totalXp(S).toLocaleString('en-US'), mem:memNow.words, started:startedCount, total:bankKeys.length, guide:guideAvail }),
         ...this.jyView(S),
         isWChar:S.wmode === 'char', isWOpp:S.wmode === 'opp', isWTopic:S.wmode === 'topic',
@@ -6149,6 +6270,13 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       else if (g.stage === 'qs' && !g.checked && /^[1-4]$/.test(e.key)) { e.preventDefault(); app.psgPick(Number(e.key) - 1); }
       else if (g.stage === 'qs' && g.checked && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); app.psgNext(); }
       else if (g.stage === 'qs' && g.checked && (e.key === 'h' || e.key === 'H')) { e.preventDefault(); app.psgHearLine(); }
+    } else if (S.screen === 'games' && S.gm && S.gm.view === 'play') {   // Tell them apart: 1-3 pick, Enter goes on, H hears it
+      const g = S.gm;
+      if (e.repeat) return;
+      if ((e.key === ' ' || e.key === 'Enter') && t && (t.tagName === 'BUTTON' || t.tagName === 'A')) return;
+      if (g.pick < 0 && /^[1-3]$/.test(e.key)) { e.preventDefault(); app.taPick(Number(e.key) - 1); }
+      else if (g.pick >= 0 && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); app.taNext(); }
+      else if (e.key === 'h' || e.key === 'H') { e.preventDefault(); app.taHear(); }
     } else if (S.screen === 'exam' && S.exm && S.exm.stage === 'run') {
       const m = S.exm;
       if (e.key === 'ArrowRight') { e.preventDefault(); app.exGo(m.i + 1); }

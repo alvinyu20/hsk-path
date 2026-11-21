@@ -23,6 +23,7 @@ last python3 -W ignore tools/build-lexicon.py
 last python3 -W ignore tools/build-erhua.py
 last python3 -W ignore tools/build-exam.py
 last python3 -W ignore tools/build-passages.py
+last python3 -W ignore tools/build-games.py
 last python3 -W ignore tools/build-path.py
 last python3 -W ignore tools/build-preview.py "$DATASET"
 last python3 -W ignore tools/build-preview.py "$DATASET" 3
@@ -152,6 +153,8 @@ if [ "$2" != "--no-browser" ]; then
   NODE_PATH="$(npm root -g)" node tools/smoke-test-grv-variety.js
   echo "== 5m. listening passages: placed on the Path after their words, listen / answer / transcript, coins"
   NODE_PATH="$(npm root -g)" node tools/smoke-test-passages.js
+  echo "== 5o. Games: Tell them apart (locks, a round, saving, Game of the day)"
+  NODE_PATH="$(npm root -g)" node tools/smoke-test-games.js
   echo "== 5n. listening ladder: speed rungs on clips, shadowing with a recording"
   NODE_PATH="$(npm root -g)" node tools/smoke-test-ladder.js
   echo "== 5l. Review plays whole sentences for words you already hear well"

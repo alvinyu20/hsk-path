@@ -1,0 +1,64 @@
+[
+ {
+  "id": "guoran-juran",
+  "title": "果然 or 居然?",
+  "opts": ["果然", "居然"],
+  "needs": ["guoran"],
+  "means": {
+   "果然": "果然 is 'sure enough, as expected': it turned out the way someone said or thought.",
+   "居然": "居然 is 'to my surprise': it turned out against what anyone expected."
+  },
+  "items": [
+   {"zh": "天气预报说今天有雨，下午[果然]下雨了。", "en": "The forecast said rain, and sure enough it rained in the afternoon.", "why": "Just as expected: 果然."},
+   {"zh": "他平时不怎么学习，这次[居然]考了第一。", "en": "He hardly studies, yet this time he came top, of all things.", "why": "Against all expectations: 居然."},
+   {"zh": "大家都说这家店好吃，我去尝了尝，[果然]不错。", "en": "Everyone said this place was good; I tried it and it really was.", "why": "As people said: 果然."},
+   {"zh": "这么简单的问题，你[居然]不知道？", "en": "You don't even know something this simple?", "why": "Surprising: 居然."},
+   {"zh": "我猜他会迟到，他[果然]迟到了。", "en": "I guessed he'd be late, and he was.", "why": "As I guessed: 果然."},
+   {"zh": "外面那么冷，他[居然]只穿了一件衬衫。", "en": "It's so cold out, and he's wearing just a shirt!", "why": "Not what anyone would expect: 居然."},
+   {"zh": "医生说吃了这个药就会好，第二天[果然]好多了。", "en": "The doctor said this medicine would help, and the next day I was much better.", "why": "As the doctor said: 果然."},
+   {"zh": "我们才认识三天，他[居然]要跟我借钱。", "en": "We've known each other three days, and he wants to borrow money from me!", "why": "Surprising: 居然."}
+  ]
+ },
+ {
+  "id": "faner-erqie",
+  "title": "反而 or 而且?",
+  "opts": ["反而", "而且"],
+  "needs": ["fanerr"],
+  "means": {
+   "反而": "反而 is 'instead, on the contrary': the result is the opposite of what you would expect.",
+   "而且": "而且 is 'and what's more': it adds a point in the same direction."
+  },
+  "items": [
+   {"zh": "吃了药，他的病不但没好，[反而]更重了。", "en": "After the medicine he didn't get better; instead he got worse.", "why": "The opposite of what was expected: 反而."},
+   {"zh": "这家饭店的菜很好吃，[而且]不贵。", "en": "This restaurant's food is good, and it isn't expensive either.", "why": "One more good point: 而且."},
+   {"zh": "我想帮他，他[反而]生气了。", "en": "I wanted to help him, but instead he got angry.", "why": "Not the expected result: 反而."},
+   {"zh": "她会唱歌，[而且]唱得非常好。", "en": "She can sing, and she sings really well.", "why": "Adding a stronger point: 而且."},
+   {"zh": "风不但没停，[反而]越来越大了。", "en": "The wind didn't stop; on the contrary, it got stronger.", "why": "不但没…反而…: the opposite happened."},
+   {"zh": "这份工作很轻松，[而且]离家很近。", "en": "This job is easy, and it's close to home as well.", "why": "One more point the same way: 而且."},
+   {"zh": "他比我小，[反而]比我懂得多。", "en": "He's younger than me, yet he knows more than I do.", "why": "Opposite to what you'd expect: 反而."},
+   {"zh": "这本书内容丰富，[而且]写得很有意思。", "en": "This book is full of content, and it's interesting too.", "why": "Adding a point: 而且."}
+  ]
+ },
+ {
+  "id": "genben-jianzhi-juedui",
+  "title": "根本, 简直 or 绝对?",
+  "opts": ["根本", "简直", "绝对"],
+  "needs": ["jianzhi"],
+  "means": {
+   "根本": "根本 is 'at all, simply not': it is mostly used with 不 or 没 to deny something completely.",
+   "简直": "简直 is 'simply, practically': it exaggerates, often with 像, 太…了 or 是.",
+   "绝对": "绝对 is 'absolutely, definitely': a firm promise or a certain claim."
+  },
+  "items": [
+   {"zh": "我[根本]不认识他。", "en": "I don't know him at all.", "why": "Not at all, with 不: 根本."},
+   {"zh": "这里的风景[简直]太美了！", "en": "The scenery here is just too beautiful!", "why": "Exaggerating, with 太…了: 简直."},
+   {"zh": "放心，我[绝对]不会告诉别人。", "en": "Don't worry, I definitely won't tell anyone.", "why": "A firm promise: 绝对."},
+   {"zh": "这件事[简直]像做梦一样。", "en": "This is just like a dream.", "why": "Exaggerating, with 像: 简直."},
+   {"zh": "他[根本]没来过这儿。", "en": "He has never been here at all.", "why": "Completely denying, with 没: 根本."},
+   {"zh": "这个价格[绝对]是全市最低的。", "en": "This price is definitely the lowest in the city.", "why": "A certain claim: 绝对."},
+   {"zh": "他做的菜[简直]比饭店的还好吃。", "en": "His cooking is practically better than a restaurant's.", "why": "Exaggerating: 简直."},
+   {"zh": "这么多工作，一天[根本]做不完。", "en": "This much work simply can't be done in a day.", "why": "Completely impossible, with 不: 根本. 绝对 also works ('definitely can't').", "also": ["绝对"]},
+   {"zh": "这次比赛我们[绝对]能赢。", "en": "We can definitely win this match.", "why": "Certain: 绝对."}
+  ]
+ }
+]

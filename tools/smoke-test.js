@@ -1391,7 +1391,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(homeTop.y < homeTop.h - 60, 'on a phone the main Today button is on the first screen, above the bottom bar (bottom edge at ' + Math.round(homeTop.y) + ' of ' + homeTop.h + ')');
   await page.locator('.navg button.nav', { hasText: 'Learn' }).click();
   await page.waitForTimeout(120);
-  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Path|Library' && ['path', 'library'].includes(await page.evaluate(() => window.shanlu.state.screen)), 'the Learn tab opens a Learn screen, with the Path and the Library one tap away');
+  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Path|Library|Games' && ['path', 'library'].includes(await page.evaluate(() => window.shanlu.state.screen)), 'the Learn tab opens a Learn screen, with the Path, the Library and Games one tap away');
   await page.locator('.subnav button', { hasText: /^Library$/ }).click();
   await page.waitForTimeout(100);
   check((await page.evaluate(() => window.shanlu.state.screen)) === 'library' && (await page.locator('.navg button.nav.on').innerText()).includes('Learn'), 'the strip switches screens inside the section and the Learn tab stays lit');

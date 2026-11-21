@@ -95,6 +95,7 @@
         win[name] = w;
       };
       if (!only && win.SHANLU_PASSAGES) win.SHANLU_PASSAGES = walk(win.SHANLU_PASSAGES);   // the listening passages (every level)
+      if (!only && win.SHANLU_GAMES) win.SHANLU_GAMES = walk(win.SHANLU_GAMES);   // the Games cards (every level)
       // HSK 2 to HSK 5 data (same table: the official level-2 list prints 男孩儿, 女孩儿, 小孩儿 and 一会儿; HSK 3 sentences use 哪儿, 一点儿 ...)
       [1, 2, 3, 4, 5].forEach(n => {
         ['WORDS', 'GRAMMAR', 'LISTEN', 'EXAM'].forEach(k => { const name = 'HSK' + n + '_' + k; if (n > 1 || k !== 'WORDS') { if (want(name)) win[name] = walk(win[name]); } });
