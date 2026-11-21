@@ -205,3 +205,14 @@ lesson:anzhao4	meaning	表扬 + person + 考得很好 reports praise for a finis
 write:g4-85	meaning	表扬 + person + 考得很好 reports praise for a finished exam; Chinese needs no 了 here	表扬
 lesson:kouyu4a	meaning	X就是了 is a fixed spoken ending ("just do X, that's all"); its 了 marks no finished action	就是了
 write:g4-92	meaning	X就是了 is a fixed spoken ending ("just do X, that's all"); its 了 marks no finished action	就是了
+lesson:napa5	level	不见不散 is a fixed phrase (official HSK 5 example of 不…不…); 散 only appears inside it	不见不散
+write:g5-81	level	不见不散 is a fixed phrase (official HSK 5 example of 不…不…); 散 only appears inside it	不见不散
+lesson:napa5	meaning	不见不散 "don't leave until we meet" is a fixed phrase; the English gives its sense	不见不散
+write:g5-81	meaning	不见不散 "don't leave until we meet" is a fixed phrase; the English gives its sense	不见不散
+lesson:napa5	meaning	不做不行 is the 不…不… pattern ("not doing it won't do" = must); the English states the positive	不做不行
+write:g5-81	meaning	不做不行 is the 不…不… pattern ("not doing it won't do" = must); the English states the positive	不做不行
+lesson:youa5	meaning	没日没夜 "day and night" is the 没A没B pattern; its 没 is not a plain negation	没日没夜
+write:g5-87	meaning	没日没夜 "day and night" is the 没A没B pattern; its 没 is not a plain negation	没日没夜
+lesson:kouyu5a	meaning	你怎么想到的？ uses 是…的 for a finished action, so English needs the past	想到的
+write:g5-95	meaning	你怎么想到的？ uses 是…的 for a finished action, so English needs the past	想到的
+lesson:xiangbi5	meaning	早我一年毕业 compares when a finished event happened; Chinese needs no 了 here	早我一年

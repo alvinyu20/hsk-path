@@ -4400,5 +4400,595 @@
   "zh": "这张桌子是木头做的。",
   "en": "This table is made of wood.",
   "explain": "木头 is mùtou, with a neutral 头."
+ },
+ {
+  "p": "g5-79",
+  "t": "mc",
+  "prompt": "Which sentence says: Even if it rains, we're going?",
+  "options": [
+   "哪怕下雨，我们也要去。",
+   "哪怕下雨，我们就要去。"
+  ],
+  "correct": 0,
+  "zh": "哪怕下雨，我们也要去。",
+  "en": "Even if it rains, we will go.",
+  "explain": "哪怕 goes with 也."
+ },
+ {
+  "p": "g5-79",
+  "t": "order",
+  "zh": "哪怕很难，我也不放弃。",
+  "en": "Even if it's hard, I won't give up.",
+  "explain": "哪怕 … 也 …."
+ },
+ {
+  "p": "g5-79",
+  "t": "cloze",
+  "zh": "哪怕只有一个人来，我们也要开会。",
+  "en": "Even if only one person comes, we'll hold the meeting.",
+  "blank": "也",
+  "explain": "哪怕 … 也 …."
+ },
+ {
+  "p": "g5-79",
+  "t": "mc",
+  "prompt": "Which sentence says: However expensive it is, he wants to buy it?",
+  "options": [
+   "哪怕再贵，他也要买。",
+   "再贵哪怕，他也要买。"
+  ],
+  "correct": 0,
+  "zh": "哪怕再贵，他也要买。",
+  "en": "However expensive it is, he wants to buy it.",
+  "explain": "哪怕 starts the first part."
+ },
+ {
+  "p": "g5-80",
+  "t": "cloze",
+  "zh": "不是有钱就行，还要有时间。",
+  "en": "Having money is not enough; you also need time.",
+  "blank": "还",
+  "explain": "不是 … 就行，还要 …."
+ },
+ {
+  "p": "g5-80",
+  "t": "mc",
+  "prompt": "Which sentence says: With Chinese, being able to speak isn't enough; you also need to write?",
+  "options": [
+   "学汉语不是会说就行，还要会写。",
+   "学汉语不是会说就行，就要会写。"
+  ],
+  "correct": 0,
+  "zh": "学汉语不是会说就行，还要会写。",
+  "en": "With Chinese, being able to speak isn't enough; you also need to write.",
+  "explain": "The second part uses 还要."
+ },
+ {
+  "p": "g5-80",
+  "t": "mc",
+  "prompt": "Which sentence says: Hard work alone is not enough; you also need a good method?",
+  "options": [
+   "不是光努力就够了，还要有好方法。",
+   "光努力就够了，还要有好方法。"
+  ],
+  "correct": 0,
+  "zh": "不是光努力就够了，还要有好方法。",
+  "en": "Hard work alone is not enough; you also need a good method.",
+  "explain": "Start with 不是."
+ },
+ {
+  "p": "g5-81",
+  "t": "cloze",
+  "zh": "不尝不知道，这个菜真好吃。",
+  "en": "You won't know unless you taste it: this dish is really good.",
+  "blank": "尝",
+  "explain": "不 + verb + 不知道."
+ },
+ {
+  "p": "g5-81",
+  "t": "mc",
+  "prompt": "What do you say when making a date: Tomorrow at eight; I'll wait until you come?",
+  "options": [
+   "明天八点，不见不散。",
+   "明天八点，不散不见。"
+  ],
+  "correct": 0,
+  "zh": "明天八点，不见不散。",
+  "en": "Tomorrow at eight; I'll wait until you come.",
+  "explain": "不见不散 is fixed."
+ },
+ {
+  "p": "g5-81",
+  "t": "order",
+  "zh": "这件事不做不行。",
+  "en": "This has to be done.",
+  "explain": "不做不行: not doing it won't do."
+ },
+ {
+  "p": "g5-82",
+  "t": "mc",
+  "prompt": "Which sentence says: The cup got broken by my little brother?",
+  "options": [
+   "杯子被弟弟给打坏了。",
+   "杯子给被弟弟打坏了。"
+  ],
+  "correct": 0,
+  "zh": "杯子被弟弟给打坏了。",
+  "en": "The cup got broken by my little brother.",
+  "explain": "给 goes right before the verb."
+ },
+ {
+  "p": "g5-82",
+  "t": "cloze",
+  "zh": "我的自行车让人给骑走了。",
+  "en": "Someone rode off on my bike.",
+  "blank": "给",
+  "explain": "让 + doer + 给 + verb."
+ },
+ {
+  "p": "g5-82",
+  "t": "order",
+  "zh": "饭都叫他给吃光了。",
+  "en": "He ate up all the food.",
+  "explain": "叫 + doer + 给 + verb + result."
+ },
+ {
+  "p": "g5-83",
+  "t": "mc",
+  "prompt": "Which sentence says: Mom opened the door and saw me?",
+  "options": [
+   "妈妈把门一开，就看见了我。",
+   "妈妈一开把门，就看见了我。"
+  ],
+  "correct": 0,
+  "zh": "妈妈把门一开，就看见了我。",
+  "en": "Mom opened the door and saw me.",
+  "explain": "把 + thing + 一 + verb."
+ },
+ {
+  "p": "g5-83",
+  "t": "order",
+  "zh": "他把书一放，就出去了。",
+  "en": "He put the book down and went out.",
+  "explain": "把 + thing + 一 + verb, then 就."
+ },
+ {
+  "p": "g5-83",
+  "t": "cloze",
+  "zh": "她把手机一扔，就哭了。",
+  "en": "She threw down her phone and burst into tears.",
+  "blank": "扔",
+  "explain": "把 + thing + 一 + verb."
+ },
+ {
+  "p": "g5-84",
+  "t": "mc",
+  "prompt": "Which sentence says: He spent all his money on books?",
+  "options": [
+   "他把钱都买了书。",
+   "他把书都买了钱。"
+  ],
+  "correct": 0,
+  "zh": "他把钱都买了书。",
+  "en": "He spent all his money on books.",
+  "explain": "The money comes after 把."
+ },
+ {
+  "p": "g5-84",
+  "t": "order",
+  "zh": "我把这些钱都买了衣服。",
+  "en": "I spent all this money on clothes.",
+  "explain": "把 + money + 都 + 买了 + what."
+ },
+ {
+  "p": "g5-84",
+  "t": "cloze",
+  "zh": "她把所有的钱都买了礼物。",
+  "en": "She spent all her money on presents.",
+  "blank": "把",
+  "explain": "把 + money + 买了 + what."
+ },
+ {
+  "p": "g5-85",
+  "t": "mc",
+  "prompt": "Which sentence says (in written style): A photo hangs on the wall?",
+  "options": [
+   "墙上挂有一张照片。",
+   "墙上有挂一张照片。"
+  ],
+  "correct": 0,
+  "zh": "墙上挂有一张照片。",
+  "en": "A photo hangs on the wall.",
+  "explain": "Verb + 有."
+ },
+ {
+  "p": "g5-85",
+  "t": "cloze",
+  "zh": "桌子上放有一些书。",
+  "en": "Some books lie on the table.",
+  "blank": "有",
+  "explain": "Verb + 有: written style."
+ },
+ {
+  "p": "g5-85",
+  "t": "order",
+  "zh": "黑板上写有几个字。",
+  "en": "A few characters are written on the blackboard.",
+  "explain": "Place + verb + 有 + what."
+ },
+ {
+  "p": "g5-86",
+  "t": "cloze",
+  "zh": "这件事急不得，慢慢来。",
+  "en": "This mustn't be rushed; take it slowly.",
+  "blank": "急",
+  "explain": "Verb or adjective + 不得: must not."
+ },
+ {
+  "p": "g5-86",
+  "t": "mc",
+  "prompt": "Which sentence says: Things like this mustn't be talked about?",
+  "options": [
+   "这种事说不得。",
+   "这种事不说得。"
+  ],
+  "correct": 0,
+  "zh": "这种事说不得。",
+  "en": "Things like this mustn't be talked about.",
+  "explain": "不得 comes after the verb."
+ },
+ {
+  "p": "g5-86",
+  "t": "order",
+  "zh": "这种玩笑可开不得。",
+  "en": "You really mustn't make jokes like this.",
+  "explain": "可 + verb + 不得."
+ },
+ {
+  "p": "g5-87",
+  "t": "mc",
+  "prompt": "Which sentence says: He studies day and night?",
+  "options": [
+   "他没日没夜地学习。",
+   "他没日夜没地学习。"
+  ],
+  "correct": 0,
+  "zh": "他没日没夜地学习。",
+  "en": "He studies day and night.",
+  "explain": "没 before each part."
+ },
+ {
+  "p": "g5-87",
+  "t": "order",
+  "zh": "你别没日没夜地工作。",
+  "en": "Don't work day and night.",
+  "explain": "没日没夜 + 地 + verb."
+ },
+ {
+  "p": "g5-87",
+  "t": "cloze",
+  "zh": "这孩子说话没大没小。",
+  "en": "This child talks with no respect for adults.",
+  "blank": "大",
+  "explain": "没大没小."
+ },
+ {
+  "p": "g5-88",
+  "t": "order",
+  "zh": "孩子们哭的哭，笑的笑。",
+  "en": "Some of the children are crying and some are laughing.",
+  "explain": "A的A，B的B."
+ },
+ {
+  "p": "g5-88",
+  "t": "mc",
+  "prompt": "Which sentence says: The apples are some big, some small?",
+  "options": [
+   "苹果大的大，小的小。",
+   "苹果大大的，小小的。"
+  ],
+  "correct": 0,
+  "zh": "苹果大的大，小的小。",
+  "en": "The apples are some big, some small.",
+  "explain": "A的A，B的B."
+ },
+ {
+  "p": "g5-88",
+  "t": "mc",
+  "prompt": "Which sentence says: Some people are busy, some are resting?",
+  "options": [
+   "大家忙的忙，休息的休息。",
+   "大家忙忙的，休息休息的。"
+  ],
+  "correct": 0,
+  "zh": "大家忙的忙，休息的休息。",
+  "en": "Some people are busy, some are resting.",
+  "explain": "A的A，B的B."
+ },
+ {
+  "p": "g5-89",
+  "t": "cloze",
+  "zh": "哥哥大我五岁。",
+  "en": "My older brother is five years older than me.",
+  "blank": "大",
+  "explain": "Adjective + person + amount."
+ },
+ {
+  "p": "g5-89",
+  "t": "mc",
+  "prompt": "Which sentence says: He finished school a year earlier than me?",
+  "options": [
+   "他早我一年毕业。",
+   "他一年早我毕业。"
+  ],
+  "correct": 0,
+  "zh": "他早我一年毕业。",
+  "en": "He finished school a year earlier than me.",
+  "explain": "早 + person + amount, then the verb."
+ },
+ {
+  "p": "g5-89",
+  "t": "order",
+  "zh": "他高我半头。",
+  "en": "He is half a head taller than me.",
+  "explain": "高 + person + amount."
+ },
+ {
+  "p": "g5-90",
+  "t": "mc",
+  "prompt": "Which sentence says: There's no need for you to worry?",
+  "options": [
+   "你用不着担心。",
+   "你不用着担心。"
+  ],
+  "correct": 0,
+  "zh": "你用不着担心。",
+  "en": "There's no need for you to worry.",
+  "explain": "用不着 stays together."
+ },
+ {
+  "p": "g5-90",
+  "t": "order",
+  "zh": "这件事用不着你管。",
+  "en": "There's no need for you to deal with this.",
+  "explain": "用不着 + person + verb."
+ },
+ {
+  "p": "g5-90",
+  "t": "cloze",
+  "zh": "时间还早，用不着这么急。",
+  "en": "It's still early; no need to rush like this.",
+  "blank": "用不着",
+  "explain": "用不着: no need to."
+ },
+ {
+  "p": "g5-91",
+  "t": "mc",
+  "prompt": "Which sentence says: You can neither talk about this nor do anything about it?",
+  "options": [
+   "这件事说也说不得，做也做不得。",
+   "这件事说也不得，做也不得。"
+  ],
+  "correct": 0,
+  "zh": "这件事说也说不得，做也做不得。",
+  "en": "You mustn't talk about this, and you mustn't do anything about it.",
+  "explain": "The verb comes twice: 说也说不得."
+ },
+ {
+  "p": "g5-91",
+  "t": "order",
+  "zh": "这只猫打也打不得。",
+  "en": "You mustn't hit this cat.",
+  "explain": "X也X不得: you mustn't."
+ },
+ {
+  "p": "g5-91",
+  "t": "cloze",
+  "zh": "他对这只猫真没办法，骂也骂不得，打也打不得。",
+  "en": "He really can't handle this cat: he mustn't scold it and he mustn't hit it.",
+  "blank": "办法",
+  "explain": "没办法, then X也X不得."
+ },
+ {
+  "p": "g5-92",
+  "t": "mc",
+  "prompt": "Which sentence says: Good or bad, this is it; you have no other choice?",
+  "options": [
+   "好是它，坏也是它，你没有别的选择。",
+   "好是它，坏是也它，你没有别的选择。"
+  ],
+  "correct": 0,
+  "zh": "好是它，坏也是它，你没有别的选择。",
+  "en": "Good or bad, this is it; you have no other choice.",
+  "explain": "也 comes before 是."
+ },
+ {
+  "p": "g5-92",
+  "t": "cloze",
+  "zh": "贵是它，便宜也是它，就买这个吧。",
+  "en": "Expensive or cheap, this is the one; let's just buy it.",
+  "blank": "便宜",
+  "explain": "X是它，Y也是它."
+ },
+ {
+  "p": "g5-92",
+  "t": "order",
+  "zh": "对是它，错也是它。",
+  "en": "Right or wrong, this is it.",
+  "explain": "X是它，Y也是它."
+ },
+ {
+  "p": "g5-93",
+  "t": "cloze",
+  "zh": "等着也是等着，我们聊聊天吧。",
+  "en": "Since we're waiting anyway, let's chat.",
+  "blank": "也",
+  "explain": "X着也是X着."
+ },
+ {
+  "p": "g5-93",
+  "t": "mc",
+  "prompt": "Which sentence says: Since we're sitting here anyway, let's watch some TV?",
+  "options": [
+   "坐着也是坐着，我们看看电视吧。",
+   "坐着也坐着，我们看看电视吧。"
+  ],
+  "correct": 0,
+  "zh": "坐着也是坐着，我们看看电视吧。",
+  "en": "Since we're sitting here anyway, let's watch some TV.",
+  "explain": "Keep 是: 坐着也是坐着."
+ },
+ {
+  "p": "g5-93",
+  "t": "order",
+  "zh": "我闲着也是闲着。",
+  "en": "I'm free anyway.",
+  "explain": "X着也是X着."
+ },
+ {
+  "p": "g5-94",
+  "t": "mc",
+  "prompt": "Which sentence says: Whatever you say, he is your dad?",
+  "options": [
+   "不管怎么说，他是你爸爸。",
+   "怎么说不管，他是你爸爸。"
+  ],
+  "correct": 0,
+  "zh": "不管怎么说，他是你爸爸。",
+  "en": "Whatever you say, he is your dad.",
+  "explain": "不管 comes first."
+ },
+ {
+  "p": "g5-94",
+  "t": "cloze",
+  "zh": "不管怎么说，我们都应该试一试。",
+  "en": "Anyway, we should give it a try.",
+  "blank": "不管",
+  "explain": "不管怎么说: anyway."
+ },
+ {
+  "p": "g5-94",
+  "t": "order",
+  "zh": "不管怎么说，你也有错。",
+  "en": "Whatever you say, you're at fault too.",
+  "explain": "不管怎么说 at the start."
+ },
+ {
+  "p": "g5-95",
+  "t": "cloze",
+  "zh": "真有你的，你怎么想到的？",
+  "en": "You're amazing: how did you think of that?",
+  "blank": "有",
+  "explain": "真有你的."
+ },
+ {
+  "p": "g5-95",
+  "t": "mc",
+  "prompt": "Which says: You're something else!",
+  "options": [
+   "真有你的！",
+   "真你的有！"
+  ],
+  "correct": 0,
+  "zh": "真有你的！",
+  "en": "You're something else!",
+  "explain": "真有你的 is fixed."
+ },
+ {
+  "p": "g5-95",
+  "t": "mc",
+  "prompt": "Which sentence says: You're amazing, finished so fast?",
+  "options": [
+   "真有你的，这么快就做完了。",
+   "真有你，这么快就做完了。"
+  ],
+  "correct": 0,
+  "zh": "真有你的，这么快就做完了。",
+  "en": "You're amazing: finished so fast.",
+  "explain": "Keep the 的."
+ },
+ {
+  "p": "g5-96",
+  "t": "mc",
+  "prompt": "Which sentence says: It'd be a waste not to eat it?",
+  "options": [
+   "不吃白不吃。",
+   "白吃不吃。"
+  ],
+  "correct": 0,
+  "zh": "不吃白不吃。",
+  "en": "It'd be a waste not to eat it.",
+  "explain": "不X白不X."
+ },
+ {
+  "p": "g5-96",
+  "t": "order",
+  "zh": "东西是免费的，不拿白不拿。",
+  "en": "The things are free; it'd be a waste not to take some.",
+  "explain": "不X白不X."
+ },
+ {
+  "p": "g5-96",
+  "t": "cloze",
+  "zh": "反正是免费的，不用白不用。",
+  "en": "It's free anyway; it'd be a waste not to use it.",
+  "blank": "白",
+  "explain": "不X白不X."
+ },
+ {
+  "p": "g5-97",
+  "t": "cloze",
+  "zh": "听来听去，都是一些差不多的意见。",
+  "en": "After hearing them all, they are much the same ideas.",
+  "blank": "都",
+  "explain": "X来X去，都是 …."
+ },
+ {
+  "p": "g5-97",
+  "t": "order",
+  "zh": "我们争来争去，还是没有结果。",
+  "en": "We argued back and forth and still had no result.",
+  "explain": "X来X去，还是 …."
+ },
+ {
+  "p": "g5-97",
+  "t": "mc",
+  "prompt": "Which sentence says: After looking at them all, this top still looks best?",
+  "options": [
+   "比来比去，还是这件衣服最好。",
+   "比去比来，还是这件衣服最好。"
+  ],
+  "correct": 0,
+  "zh": "比来比去，还是这件衣服最好。",
+  "en": "After comparing them all, this top is still the best.",
+  "explain": "来 comes before 去."
+ },
+ {
+  "p": "g5-98",
+  "t": "mc",
+  "prompt": "Which sentence says: Whatever the teacher says goes?",
+  "options": [
+   "老师说什么就是什么。",
+   "老师什么说就是什么。"
+  ],
+  "correct": 0,
+  "zh": "老师说什么就是什么。",
+  "en": "Whatever the teacher says goes.",
+  "explain": "Verb + 什么就是什么."
+ },
+ {
+  "p": "g5-98",
+  "t": "cloze",
+  "zh": "在家里，妈妈说什么就是什么。",
+  "en": "At home, whatever Mom says goes.",
+  "blank": "就是",
+  "explain": "Verb + 什么就是什么."
+ },
+ {
+  "p": "g5-98",
+  "t": "order",
+  "zh": "你说什么就是什么。",
+  "en": "Whatever you say goes.",
+  "explain": "Verb + 什么就是什么."
  }
 ]

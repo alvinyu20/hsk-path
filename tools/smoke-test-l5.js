@@ -156,7 +156,7 @@ const startState = (o) => { try { if (!localStorage.getItem('shanlu-passed')) lo
   // ---- every grammar lesson: all questions answered correctly
   await nav('Grammar');
   const lessons = await page.evaluate(() => window.HSK5_GRAMMAR.lessons.length);
-  check(lessons === 32, 'the Grammar screen has 32 HSK 5 lessons (' + lessons + ')');
+  check(lessons === 36, 'the Grammar screen has 36 HSK 5 lessons (' + lessons + ')');
   let allFull = true;
   for (let i = 0; i < lessons; i++) {
     await page.evaluate((j) => window.shanlu.pickLesson(j), i);
@@ -168,7 +168,7 @@ const startState = (o) => { try { if (!localStorage.getItem('shanlu-passed')) lo
     await nav('Grammar');
   }
   check(allFull, 'every HSK 5 lesson scores full marks when its questions are answered correctly');
-  check(await page.evaluate(() => Object.values(window.shanlu.state.gres).filter(v => v >= 80).length) === 32, 'all 32 lessons are marked done');
+  check(await page.evaluate(() => Object.values(window.shanlu.state.gres).filter(v => v >= 80).length) === 36, 'all 36 lessons are marked done');
   await page.evaluate(() => window.shanlu.pickLesson(0));
   await page.locator('button', { hasText: 'Practise this lesson' }).first().click();
   await answer(false);

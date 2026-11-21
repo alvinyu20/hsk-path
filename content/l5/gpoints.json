@@ -527,7 +527,7 @@
   "id": "g5-54",
   "title": "有A有B",
   "src": {
-   "youa": [
+   "youa5": [
     0,
     4
    ]
@@ -537,7 +537,7 @@
   "id": "g5-55",
   "title": "X也不是，Y也不是",
   "src": {
-   "youa": [
+   "youa5": [
     1,
     2
    ]
@@ -547,7 +547,7 @@
   "id": "g5-56",
   "title": "一来…二来…",
   "src": {
-   "youa": [
+   "youa5": [
     3
    ]
   }
@@ -606,7 +606,7 @@
   "id": "g5-62",
   "title": "V得 + clause",
   "src": {
-   "zhuangtai": [
+   "zhuangtai5": [
     0,
     1,
     3,
@@ -618,7 +618,7 @@
   "id": "g5-63",
   "title": "得了 and 不了",
   "src": {
-   "zhuangtai": [
+   "zhuangtai5": [
     2
    ]
   }
@@ -703,7 +703,7 @@
   "id": "g5-71",
   "title": "跟…相比",
   "src": {
-   "xiangbi": [
+   "xiangbi5": [
     1,
     2
    ]
@@ -713,7 +713,7 @@
   "id": "g5-72",
   "title": "adjective + amount",
   "src": {
-   "xiangbi": [
+   "xiangbi5": [
     0,
     3,
     4
@@ -779,6 +779,192 @@
     1,
     2,
     3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g5-79",
+  "title": "哪怕…，也… (even if)",
+  "src": {
+   "napa5": [
+    0,
+    1
+   ]
+  }
+ },
+ {
+  "id": "g5-80",
+  "title": "不是…，还 / 还要… (not enough on its own)",
+  "src": {
+   "napa5": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g5-81",
+  "title": "不…不… (不尝不知道, 不见不散)",
+  "src": {
+   "napa5": [
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g5-82",
+  "title": "被 / 叫 / 让 … 给 + verb (被他给洗坏了)",
+  "src": {
+   "bei5": [
+    0
+   ]
+  }
+ },
+ {
+  "id": "g5-83",
+  "title": "把 + thing + 一 + verb (把书包一扔)",
+  "src": {
+   "bei5": [
+    1,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g5-84",
+  "title": "把 + thing 1 + verb + thing 2 (把钱都买了衣服)",
+  "src": {
+   "bei5": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g5-85",
+  "title": "verb + 有 (墙上挂有一张地图)",
+  "src": {
+   "bei5": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g5-86",
+  "title": "verb + 不得 (must not: 开不得)",
+  "src": {
+   "zhuangtai5": [
+    5,
+    6
+   ]
+  }
+ },
+ {
+  "id": "g5-87",
+  "title": "没A没B (没日没夜)",
+  "src": {
+   "youa5": [
+    5
+   ]
+  }
+ },
+ {
+  "id": "g5-88",
+  "title": "A的A，B的B (大的大，小的小)",
+  "src": {
+   "youa5": [
+    6
+   ]
+  }
+ },
+ {
+  "id": "g5-89",
+  "title": "A + adjective + B + amount (他高我一头)",
+  "src": {
+   "xiangbi5": [
+    5,
+    6
+   ]
+  }
+ },
+ {
+  "id": "g5-90",
+  "title": "用不着 (no need to)",
+  "src": {
+   "kouyu5a": [
+    0
+   ]
+  }
+ },
+ {
+  "id": "g5-91",
+  "title": "X也X不得，Y也Y不得 (打也打不得)",
+  "src": {
+   "kouyu5b": [
+    0
+   ]
+  }
+ },
+ {
+  "id": "g5-92",
+  "title": "X是它，Y也是它 (好是它，坏也是它)",
+  "src": {
+   "kouyu5b": [
+    1
+   ]
+  }
+ },
+ {
+  "id": "g5-93",
+  "title": "X着也是X着 (闲着也是闲着)",
+  "src": {
+   "kouyu5a": [
+    4
+   ]
+  }
+ },
+ {
+  "id": "g5-94",
+  "title": "不管怎么说 (anyway)",
+  "src": {
+   "kouyu5a": [
+    1
+   ]
+  }
+ },
+ {
+  "id": "g5-95",
+  "title": "真有你的 (you're amazing)",
+  "src": {
+   "kouyu5a": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g5-96",
+  "title": "不X白不X (a waste not to)",
+  "src": {
+   "kouyu5a": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g5-97",
+  "title": "X来X去，都是 / 还是… (想来想去)",
+  "src": {
+   "kouyu5b": [
+    2,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g5-98",
+  "title": "verb + 什么就是什么 (说什么就是什么)",
+  "src": {
+   "kouyu5b": [
     4
    ]
   }

@@ -215,5 +215,7 @@ window.SHANLU_LEXICON = {
 "个个": "gègè",
 "张张": "zhāngzhāng",
 "说不定": "shuōbudìng",
-"就是说": "jiùshìshuō"
+"就是说": "jiùshìshuō",
+"玩笑": "wánxiào",
+"用不着": "yòngbuzháo"
 };

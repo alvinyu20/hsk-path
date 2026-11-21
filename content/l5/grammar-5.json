@@ -1,112 +1,324 @@
 [
-  {
-    "id": "qilai",
-    "title": "起来, 下去, 下来 and 上: beyond the direction",
-    "covers": [64],
-    "formula": ["Adjective / verb", "*起来"],
-    "explain": [
-      "起来 does more than 'rise'. After an adjective it shows a change that begins and keeps growing: 天气热起来了 'The weather is getting hot'. After 看, 吃 or 说 it gives your impression from one angle: 这个菜看起来很好吃 'This dish looks very tasty'; 说起来容易，做起来难 'It is easy to say but hard to do'.",
-      "下去 'keep on' carries an action on from now into the future: 请你说下去 'Please go on talking'; 不管多难，我们都要坚持下去 'However hard it is, we must keep going'.",
-      "下来 'settle down' is for something that quiets, slows or is fixed in place: 请你安静下来 'Please calm down'; 请把电话号码写下来 'Please write the phone number down'. 写下来 is to write something so that it stays; 写下去 is to keep writing.",
-      "上 after a verb shows that someone reaches a goal or starts a state: 他爱上了这座城市 'He fell in love with this city'; 她考上了大学 'She got into university'."
+ {
+  "id": "qilai",
+  "title": "起来, 下去, 下来 and 上: beyond the direction",
+  "covers": [
+   64
+  ],
+  "formula": [
+   "Adjective / verb",
+   "*起来"
+  ],
+  "explain": [
+   "起来 does more than 'rise'. After an adjective it shows a change that begins and keeps growing: 天气热起来了 'The weather is getting hot'. After 看, 吃 or 说 it gives your impression from one angle: 这个菜看起来很好吃 'This dish looks very tasty'; 说起来容易，做起来难 'It is easy to say but hard to do'.",
+   "下去 'keep on' carries an action on from now into the future: 请你说下去 'Please go on talking'; 不管多难，我们都要坚持下去 'However hard it is, we must keep going'.",
+   "下来 'settle down' is for something that quiets, slows or is fixed in place: 请你安静下来 'Please calm down'; 请把电话号码写下来 'Please write the phone number down'. 写下来 is to write something so that it stays; 写下去 is to keep writing.",
+   "上 after a verb shows that someone reaches a goal or starts a state: 他爱上了这座城市 'He fell in love with this city'; 她考上了大学 'She got into university'."
+  ],
+  "examples": [
+   {
+    "zh": "天气热起来了。",
+    "en": "The weather is getting hot."
+   },
+   {
+    "zh": "这个菜看起来很好吃。",
+    "en": "This dish looks very tasty."
+   },
+   {
+    "zh": "请把电话号码写下来。",
+    "en": "Please write the phone number down."
+   },
+   {
+    "zh": "她考上了大学。",
+    "en": "She got into university."
+   }
+  ],
+  "mistakes": [
+   "下来 and 下去 are not the same: 写下来 means 'write it down', 写下去 means 'keep writing'.",
+   "看起来, 吃起来 and 说起来 give an impression, and the verb stays right before 起来. The adjective comes after: 看起来很好吃."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "天气热起来了。",
+    "en": "The weather is getting hot.",
+    "explain": "Adjective + 起来 = starts to be."
+   },
+   {
+    "t": "order",
+    "zh": "请把电话号码写下来。",
+    "en": "Please write the phone number down.",
+    "explain": "写下来 = write it down."
+   },
+   {
+    "t": "cloze",
+    "zh": "请你说下去。",
+    "en": "Please go on talking.",
+    "blank": "下去",
+    "explain": "下去 = keep on."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: She got into university?",
+    "options": [
+     "她考上了大学。",
+     "她考了上大学。"
     ],
-    "examples": [
-      {"zh": "天气热起来了。", "en": "The weather is getting hot."},
-      {"zh": "这个菜看起来很好吃。", "en": "This dish looks very tasty."},
-      {"zh": "请把电话号码写下来。", "en": "Please write the phone number down."},
-      {"zh": "她考上了大学。", "en": "She got into university."}
+    "correct": 0,
+    "zh": "她考上了大学。",
+    "en": "She got into university.",
+    "explain": "考上 = pass and get in."
+   },
+   {
+    "t": "spot",
+    "zh": "这个菜看起来很好吃。",
+    "en": "This dish looks very tasty.",
+    "wrong": "这个菜看起来是很好吃。",
+    "remove": "是",
+    "explain": "Do not put 是 before the adjective."
+   }
+  ]
+ },
+ {
+  "id": "youzhe",
+  "title": "有着 and 把…当作…: have, treat as",
+  "covers": [
+   65,
+   66
+  ],
+  "formula": [
+   "Subject",
+   "*有着",
+   "Abstract noun"
+  ],
+  "explain": [
+   "有着 is a formal 有 and goes with an abstract noun such as history, experience, effect or meaning: 这座城市有着很长的历史 'This city has a very long history'; 他有着丰富的经验 'He has rich experience'. 着 is read zhe. For a plain thing, say 有: 我有一本书, not 我有着一本书.",
+   "把 + noun + 当作 / 当成 / 看作 'treat as, regard as' says what someone takes something to be: 他把我当作朋友 'He treats me as a friend'; 我们把他看作自己的老师 'We regard him as our own teacher'. 变成 'turn into' can sit in the same pattern: 他们把这个地方变成了公园 'They turned this place into a park'. Longer forms such as 翻译成 are for a later level."
+  ],
+  "examples": [
+   {
+    "zh": "这座城市有着很长的历史。",
+    "en": "This city has a very long history."
+   },
+   {
+    "zh": "他有着丰富的经验。",
+    "en": "He has rich experience."
+   },
+   {
+    "zh": "他把我当作朋友。",
+    "en": "He treats me as a friend."
+   },
+   {
+    "zh": "他们把这个地方变成了公园。",
+    "en": "They turned this place into a park."
+   }
+  ],
+  "mistakes": [
+   "有着 is for abstract things. 我有着一本书 is wrong; say 我有一本书.",
+   "In 把 … 当作 …, the thing that is treated comes right after 把. If you switch the two nouns, the meaning changes: 他把我当作朋友 and 他把朋友当作我 are not the same."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他有着丰富的经验。",
+    "en": "He has rich experience.",
+    "explain": "有着 + abstract noun."
+   },
+   {
+    "t": "order",
+    "zh": "他把我当作朋友。",
+    "en": "He treats me as a friend.",
+    "explain": "把 + noun + 当作 + noun."
+   },
+   {
+    "t": "cloze",
+    "zh": "这座城市有着很长的历史。",
+    "en": "This city has a very long history.",
+    "blank": "历史",
+    "explain": "有着 goes with an abstract noun such as 历史."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: They turned this place into a park?",
+    "options": [
+     "他们把这个地方变成了公园。",
+     "他们把变成了这个地方公园。"
     ],
-    "mistakes": [
-      "下来 and 下去 are not the same: 写下来 means 'write it down', 写下去 means 'keep writing'.",
-      "看起来, 吃起来 and 说起来 give an impression, and the verb stays right before 起来. The adjective comes after: 看起来很好吃."
+    "correct": 0,
+    "zh": "他们把这个地方变成了公园。",
+    "en": "They turned this place into a park.",
+    "explain": "把 + thing + 变成 + result."
+   },
+   {
+    "t": "spot",
+    "zh": "他有着丰富的经验。",
+    "en": "He has rich experience.",
+    "wrong": "他有着是丰富的经验。",
+    "remove": "是",
+    "explain": "Do not put 是 after 有着."
+   }
+  ]
+ },
+ {
+  "id": "notional",
+  "title": "饭做好了 and 来了一位新同学: no 被, arrivals and losses",
+  "covers": [
+   67,
+   68
+  ],
+  "formula": [
+   "Thing",
+   "Verb + result",
+   "*了"
+  ],
+  "explain": [
+   "Chinese does not need 被 when it is clear that the thing receives the action. 饭做好了 'The meal has been cooked'; 衣服洗干净了 'The clothes have been washed clean'; 问题解决了 'The problem has been solved'. The thing comes first, a verb with a result follows (好, 干净, 完), and nobody is named because it does not matter or is already clear.",
+   "For arrivals and losses, a new thing comes after the verb: 我们班来了一位新同学 'A new classmate has joined our class'; 前面来了一辆车 'A car has come from ahead'. The place or group comes first, then 来了 or 丢了, then the thing, usually with a number and a measure word. A thing the listener already knows comes before the verb: 我的手机丢了 'My phone is lost'."
+  ],
+  "examples": [
+   {
+    "zh": "饭做好了。",
+    "en": "The meal has been cooked."
+   },
+   {
+    "zh": "问题解决了。",
+    "en": "The problem has been solved."
+   },
+   {
+    "zh": "我们班来了一位新同学。",
+    "en": "A new classmate has joined our class."
+   },
+   {
+    "zh": "我的手机丢了。",
+    "en": "My phone is lost."
+   }
+  ],
+  "mistakes": [
+   "Do not add 被 when the meaning is already clear. 饭做好了 is natural; 饭被做好了 sounds odd, as if someone suffered. 被 is for something that happened to someone, or when you name the doer.",
+   "In 我们班来了一位新同学, the place comes first. 来了一位新同学我们班 is wrong."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "饭做好了。",
+    "en": "The meal has been cooked.",
+    "explain": "Thing + verb + result + 了."
+   },
+   {
+    "t": "order",
+    "zh": "我们班来了一位新同学。",
+    "en": "A new classmate has joined our class.",
+    "explain": "Place + 来了 + new person."
+   },
+   {
+    "t": "cloze",
+    "zh": "问题解决了。",
+    "en": "The problem has been solved.",
+    "blank": "解决",
+    "explain": "The thing comes first; no 被 is needed."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: My phone is lost?",
+    "options": [
+     "我的手机丢了。",
+     "我的丢了手机。"
     ],
-    "q": [
-      {"t": "order", "zh": "天气热起来了。", "en": "The weather is getting hot.", "explain": "Adjective + 起来 = starts to be."},
-      {"t": "order", "zh": "请把电话号码写下来。", "en": "Please write the phone number down.", "explain": "写下来 = write it down."},
-      {"t": "cloze", "zh": "请你说下去。", "en": "Please go on talking.", "blank": "下去", "explain": "下去 = keep on."},
-      {"t": "mc", "prompt": "Which sentence says: She got into university?", "options": ["她考上了大学。", "她考了上大学。"], "correct": 0, "zh": "她考上了大学。", "en": "She got into university.", "explain": "考上 = pass and get in."},
-      {"t": "spot", "zh": "这个菜看起来很好吃。", "en": "This dish looks very tasty.", "wrong": "这个菜看起来是很好吃。", "remove": "是", "explain": "Do not put 是 before the adjective."}
-    ]
-  },
-  {
-    "id": "youzhe",
-    "title": "有着 and 把…当作…: have, treat as",
-    "covers": [65, 66],
-    "formula": ["Subject", "*有着", "Abstract noun"],
-    "explain": [
-      "有着 is a formal 有 and goes with an abstract noun such as history, experience, effect or meaning: 这座城市有着很长的历史 'This city has a very long history'; 他有着丰富的经验 'He has rich experience'. 着 is read zhe. For a plain thing, say 有: 我有一本书, not 我有着一本书.",
-      "把 + noun + 当作 / 当成 / 看作 'treat as, regard as' says what someone takes something to be: 他把我当作朋友 'He treats me as a friend'; 我们把他看作自己的老师 'We regard him as our own teacher'. 变成 'turn into' can sit in the same pattern: 他们把这个地方变成了公园 'They turned this place into a park'. Longer forms such as 翻译成 are for a later level."
+    "correct": 0,
+    "zh": "我的手机丢了。",
+    "en": "My phone is lost.",
+    "explain": "A known thing comes before 丢了."
+   },
+   {
+    "t": "spot",
+    "zh": "饭做好了。",
+    "en": "The meal has been cooked.",
+    "wrong": "饭被做好了。",
+    "remove": "被",
+    "explain": "No 被 is needed when the meaning is already clear."
+   }
+  ]
+ },
+ {
+  "id": "adverbials",
+  "title": "Time, place, manner and serial verbs: word order before the verb",
+  "covers": [
+   69,
+   70
+  ],
+  "formula": [
+   "Subject",
+   "Time",
+   "Place",
+   "Manner",
+   "Verb"
+  ],
+  "explain": [
+   "Time, place and manner words all go before the verb, in this order: who, when, where, how, then the verb (and what comes after it). 我们明天下午在学校门口见面 'We will meet at the school gate tomorrow afternoon'; 他每天早上在公园里认真地跑步 'Every morning he runs seriously in the park'. A manner word ending in 地 sits right before the verb: 孩子们在院子里高兴地玩 'The children play happily in the yard'.",
+   "Serial verbs put two or more verbs one after another, in the order they happen, with one subject and nothing between them. 我去商店买东西 'I go to the shop to buy things'; 他坐飞机去上海 'He goes to Shanghai by plane'; 他打开门走了出去 'He opened the door and walked out'. The first verb often shows the way or the means, and the last shows the aim. 了 goes after the verb that ends the chain."
+  ],
+  "examples": [
+   {
+    "zh": "我们明天下午在学校门口见面。",
+    "en": "We will meet at the school gate tomorrow afternoon."
+   },
+   {
+    "zh": "他每天早上在公园里认真地跑步。",
+    "en": "Every morning he runs seriously in the park."
+   },
+   {
+    "zh": "我去商店买东西。",
+    "en": "I go to the shop to buy things."
+   },
+   {
+    "zh": "他坐飞机去上海。",
+    "en": "He goes to Shanghai by plane."
+   }
+  ],
+  "mistakes": [
+   "The place goes before the verb in Chinese: 我在公园里跑步, not 我跑步在公园里.",
+   "Do not join serial verbs with 和: 我去商店买东西, not 我去商店和买东西."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我们明天在学校门口见面。",
+    "en": "We will meet at the school gate tomorrow.",
+    "explain": "Time, then place, then verb."
+   },
+   {
+    "t": "order",
+    "zh": "他坐飞机去上海。",
+    "en": "He goes to Shanghai by plane.",
+    "explain": "Means first, then the aim."
+   },
+   {
+    "t": "cloze",
+    "zh": "孩子们在院子里高兴地玩。",
+    "en": "The children play happily in the yard.",
+    "blank": "地",
+    "explain": "Manner + 地 + verb."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I go to the shop to buy things?",
+    "options": [
+     "我去商店买东西。",
+     "我买东西去商店。"
     ],
-    "examples": [
-      {"zh": "这座城市有着很长的历史。", "en": "This city has a very long history."},
-      {"zh": "他有着丰富的经验。", "en": "He has rich experience."},
-      {"zh": "他把我当作朋友。", "en": "He treats me as a friend."},
-      {"zh": "他们把这个地方变成了公园。", "en": "They turned this place into a park."}
-    ],
-    "mistakes": [
-      "有着 is for abstract things. 我有着一本书 is wrong; say 我有一本书.",
-      "In 把 … 当作 …, the thing that is treated comes right after 把. If you switch the two nouns, the meaning changes: 他把我当作朋友 and 他把朋友当作我 are not the same."
-    ],
-    "q": [
-      {"t": "order", "zh": "他有着丰富的经验。", "en": "He has rich experience.", "explain": "有着 + abstract noun."},
-      {"t": "order", "zh": "他把我当作朋友。", "en": "He treats me as a friend.", "explain": "把 + noun + 当作 + noun."},
-      {"t": "cloze", "zh": "这座城市有着很长的历史。", "en": "This city has a very long history.", "blank": "历史", "explain": "有着 goes with an abstract noun such as 历史."},
-      {"t": "mc", "prompt": "Which sentence says: They turned this place into a park?", "options": ["他们把这个地方变成了公园。", "他们把变成了这个地方公园。"], "correct": 0, "zh": "他们把这个地方变成了公园。", "en": "They turned this place into a park.", "explain": "把 + thing + 变成 + result."},
-      {"t": "spot", "zh": "他有着丰富的经验。", "en": "He has rich experience.", "wrong": "他有着是丰富的经验。", "remove": "是", "explain": "Do not put 是 after 有着."}
-    ]
-  },
-  {
-    "id": "notional",
-    "title": "饭做好了 and 来了一位新同学: no 被, arrivals and losses",
-    "covers": [67, 68],
-    "formula": ["Thing", "Verb + result", "*了"],
-    "explain": [
-      "Chinese does not need 被 when it is clear that the thing receives the action. 饭做好了 'The meal has been cooked'; 衣服洗干净了 'The clothes have been washed clean'; 问题解决了 'The problem has been solved'. The thing comes first, a verb with a result follows (好, 干净, 完), and nobody is named because it does not matter or is already clear.",
-      "For arrivals and losses, a new thing comes after the verb: 我们班来了一位新同学 'A new classmate has joined our class'; 前面来了一辆车 'A car has come from ahead'. The place or group comes first, then 来了 or 丢了, then the thing, usually with a number and a measure word. A thing the listener already knows comes before the verb: 我的手机丢了 'My phone is lost'."
-    ],
-    "examples": [
-      {"zh": "饭做好了。", "en": "The meal has been cooked."},
-      {"zh": "问题解决了。", "en": "The problem has been solved."},
-      {"zh": "我们班来了一位新同学。", "en": "A new classmate has joined our class."},
-      {"zh": "我的手机丢了。", "en": "My phone is lost."}
-    ],
-    "mistakes": [
-      "Do not add 被 when the meaning is already clear. 饭做好了 is natural; 饭被做好了 sounds odd, as if someone suffered. 被 is for something that happened to someone, or when you name the doer.",
-      "In 我们班来了一位新同学, the place comes first. 来了一位新同学我们班 is wrong."
-    ],
-    "q": [
-      {"t": "order", "zh": "饭做好了。", "en": "The meal has been cooked.", "explain": "Thing + verb + result + 了."},
-      {"t": "order", "zh": "我们班来了一位新同学。", "en": "A new classmate has joined our class.", "explain": "Place + 来了 + new person."},
-      {"t": "cloze", "zh": "问题解决了。", "en": "The problem has been solved.", "blank": "解决", "explain": "The thing comes first; no 被 is needed."},
-      {"t": "mc", "prompt": "Which sentence says: My phone is lost?", "options": ["我的手机丢了。", "我的丢了手机。"], "correct": 0, "zh": "我的手机丢了。", "en": "My phone is lost.", "explain": "A known thing comes before 丢了."},
-      {"t": "spot", "zh": "饭做好了。", "en": "The meal has been cooked.", "wrong": "饭被做好了。", "remove": "被", "explain": "No 被 is needed when the meaning is already clear."}
-    ]
-  },
-  {
-    "id": "adverbials",
-    "title": "Time, place, manner and serial verbs: word order before the verb",
-    "covers": [69, 70],
-    "formula": ["Subject", "Time", "Place", "Manner", "Verb"],
-    "explain": [
-      "Time, place and manner words all go before the verb, in this order: who, when, where, how, then the verb (and what comes after it). 我们明天下午在学校门口见面 'We will meet at the school gate tomorrow afternoon'; 他每天早上在公园里认真地跑步 'Every morning he runs seriously in the park'. A manner word ending in 地 sits right before the verb: 孩子们在院子里高兴地玩 'The children play happily in the yard'.",
-      "Serial verbs put two or more verbs one after another, in the order they happen, with one subject and nothing between them. 我去商店买东西 'I go to the shop to buy things'; 他坐飞机去上海 'He goes to Shanghai by plane'; 他打开门走了出去 'He opened the door and walked out'. The first verb often shows the way or the means, and the last shows the aim. 了 goes after the verb that ends the chain."
-    ],
-    "examples": [
-      {"zh": "我们明天下午在学校门口见面。", "en": "We will meet at the school gate tomorrow afternoon."},
-      {"zh": "他每天早上在公园里认真地跑步。", "en": "Every morning he runs seriously in the park."},
-      {"zh": "我去商店买东西。", "en": "I go to the shop to buy things."},
-      {"zh": "他坐飞机去上海。", "en": "He goes to Shanghai by plane."}
-    ],
-    "mistakes": [
-      "The place goes before the verb in Chinese: 我在公园里跑步, not 我跑步在公园里.",
-      "Do not join serial verbs with 和: 我去商店买东西, not 我去商店和买东西."
-    ],
-    "q": [
-      {"t": "order", "zh": "我们明天在学校门口见面。", "en": "We will meet at the school gate tomorrow.", "explain": "Time, then place, then verb."},
-      {"t": "order", "zh": "他坐飞机去上海。", "en": "He goes to Shanghai by plane.", "explain": "Means first, then the aim."},
-      {"t": "cloze", "zh": "孩子们在院子里高兴地玩。", "en": "The children play happily in the yard.", "blank": "地", "explain": "Manner + 地 + verb."},
-      {"t": "mc", "prompt": "Which sentence says: I go to the shop to buy things?", "options": ["我去商店买东西。", "我买东西去商店。"], "correct": 0, "zh": "我去商店买东西。", "en": "I go to the shop to buy things.", "explain": "Verbs follow the order of the actions."},
-      {"t": "spot", "zh": "我去商店买东西。", "en": "I go to the shop to buy things.", "wrong": "我去商店和买东西。", "remove": "和", "explain": "Serial verbs have no 和 between them."}
-    ]
-  }
+    "correct": 0,
+    "zh": "我去商店买东西。",
+    "en": "I go to the shop to buy things.",
+    "explain": "Verbs follow the order of the actions."
+   },
+   {
+    "t": "spot",
+    "zh": "我去商店买东西。",
+    "en": "I go to the shop to buy things.",
+    "wrong": "我去商店和买东西。",
+    "remove": "和",
+    "explain": "Serial verbs have no 和 between them."
+   }
+  ]
+ }
 ]

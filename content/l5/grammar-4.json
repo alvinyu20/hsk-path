@@ -1,168 +1,555 @@
 [
-  {
-    "id": "zaiye2",
-    "title": "再也不 / 没 and 怎么都 / 也 + 不 / 没: never again, however hard I try",
-    "covers": [49, 50],
-    "formula": ["Subject", "*再也", "不 / 没", "Verb"],
-    "explain": [
-      "再也不 + verb 'not any more, never again' says what someone will not do from now on: 我再也不会相信他了 'I will not trust him any more'; 我再也不吃那家店的菜了 'I will not eat the food from that restaurant any more'. 再也没(有) + verb says that something has not happened again since a past time: 他走了以后，再也没回来过 'After he left, he never came back again'. 不 is for a decision or a state; 没 is for what did not happen.",
-      "怎么 + 都 / 也 + verb + 不 / 没 'however hard one tries, still not' shows that effort does not work: 这个字我怎么也写不好 'However hard I try, I do not manage to write this character well'; 我怎么都想不起来他的名字 'However hard I try, I do not manage to think of his name'. It usually goes with a 不 complement (写不好, 打不开, 想不起来). 怎么都 and 怎么也 mean the same."
+ {
+  "id": "zaiye2",
+  "title": "再也不 / 没 and 怎么都 / 也 + 不 / 没: never again, however hard I try",
+  "covers": [
+   49,
+   50
+  ],
+  "formula": [
+   "Subject",
+   "*再也",
+   "不 / 没",
+   "Verb"
+  ],
+  "explain": [
+   "再也不 + verb 'not any more, never again' says what someone will not do from now on: 我再也不会相信他了 'I will not trust him any more'; 我再也不吃那家店的菜了 'I will not eat the food from that restaurant any more'. 再也没(有) + verb says that something has not happened again since a past time: 他走了以后，再也没回来过 'After he left, he never came back again'. 不 is for a decision or a state; 没 is for what did not happen.",
+   "怎么 + 都 / 也 + verb + 不 / 没 'however hard one tries, still not' shows that effort does not work: 这个字我怎么也写不好 'However hard I try, I do not manage to write this character well'; 我怎么都想不起来他的名字 'However hard I try, I do not manage to think of his name'. It usually goes with a 不 complement (写不好, 打不开, 想不起来). 怎么都 and 怎么也 mean the same."
+  ],
+  "examples": [
+   {
+    "zh": "我再也不会相信他了。",
+    "en": "I will not trust him any more."
+   },
+   {
+    "zh": "他走了以后，再也没回来过。",
+    "en": "After he left, he never came back again."
+   },
+   {
+    "zh": "这个字我怎么也写不好。",
+    "en": "However hard I try, I do not manage to write this character well."
+   },
+   {
+    "zh": "我怎么都想不起来他的名字。",
+    "en": "However hard I try, I do not manage to think of his name."
+   }
+  ],
+  "mistakes": [
+   "再也 must be followed by 不 or 没. 再也吃 is wrong. 再 alone, as in 再吃, means 'again', which is the opposite.",
+   "With a 不 complement, 怎么也打不开 means 'try but fail'. With 不 before the verb, 怎么也不打开 means 'refuse, however much'. They are not the same."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我再也不会相信他了。",
+    "en": "I will not trust him any more.",
+    "explain": "再也 + 不 + verb."
+   },
+   {
+    "t": "order",
+    "zh": "我怎么也打不开门。",
+    "en": "However hard I try, I do not manage to open the door.",
+    "explain": "怎么也 + verb + 不 complement."
+   },
+   {
+    "t": "cloze",
+    "zh": "他走了以后，再也没回来过。",
+    "en": "After he left, he never came back again.",
+    "blank": "没",
+    "explain": "再也 + 没 = has not … again since then."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: However hard I try, I do not manage to think of his name?",
+    "options": [
+     "我怎么都想不起来他的名字。",
+     "我怎么都想起来不他的名字。"
     ],
-    "examples": [
-      {"zh": "我再也不会相信他了。", "en": "I will not trust him any more."},
-      {"zh": "他走了以后，再也没回来过。", "en": "After he left, he never came back again."},
-      {"zh": "这个字我怎么也写不好。", "en": "However hard I try, I do not manage to write this character well."},
-      {"zh": "我怎么都想不起来他的名字。", "en": "However hard I try, I do not manage to think of his name."}
+    "correct": 0,
+    "zh": "我怎么都想不起来他的名字。",
+    "en": "However hard I try, I do not manage to think of his name.",
+    "explain": "不 sits inside the complement: 想不起来."
+   },
+   {
+    "t": "spot",
+    "zh": "这个字我怎么也写不好。",
+    "en": "However hard I try, I do not manage to write this character well.",
+    "wrong": "这个字我怎么也是写不好。",
+    "remove": "是",
+    "explain": "Do not put 是 after 怎么也."
+   }
+  ]
+ },
+ {
+  "id": "laiqu",
+  "title": "A来A去, A着A着 and 说A就A: again and again, while …, the moment you say so",
+  "covers": [
+   51,
+   52,
+   53
+  ],
+  "formula": [
+   "Subject",
+   "*A来A去",
+   "，",
+   "Result"
+  ],
+  "explain": [
+   "A来A去 repeats a verb to show that an action goes on again and again, or back and forth: 他在房间里走来走去 'He walks back and forth in the room'; 我想来想去，还是决定去了 'After thinking it over and over, I still decided to go'. The result or decision follows, often with 还是 or 也.",
+   "A着A着 'while doing A, something happens' shows an action that goes on until a new, often unexpected thing comes in: 他看着看着就睡着了 'He fell asleep while watching'; 我们走着走着，下起雨来了 'We were walking when it began to rain'. The second part needs a new event.",
+   "说A就A 'do A the moment one says so' repeats the verb to show that someone acts at once, with no delay: 他说走就走，没有等我们 'He left the moment he said so, and did not wait for us'; 说干就干，我们现在就开始吧 'Let us get to it right away; let us start now'; 他说哭就哭 'He cries at the drop of a hat'."
+  ],
+  "examples": [
+   {
+    "zh": "他在房间里走来走去。",
+    "en": "He walks back and forth in the room."
+   },
+   {
+    "zh": "我想来想去，还是决定去了。",
+    "en": "After thinking it over and over, I still decided to go."
+   },
+   {
+    "zh": "他看着看着就睡着了。",
+    "en": "He fell asleep while watching."
+   },
+   {
+    "zh": "他说走就走，没有等我们。",
+    "en": "He left the moment he said so, and did not wait for us."
+   }
+  ],
+  "mistakes": [
+   "A来A去 uses the same verb twice: 走来走去, 想来想去. Two different verbs do not make this pattern.",
+   "A着A着 needs a second event. 他看着看着 alone sounds unfinished; add 就睡着了 or something similar."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他在房间里走来走去。",
+    "en": "He walks back and forth in the room.",
+    "explain": "走来走去 = back and forth."
+   },
+   {
+    "t": "order",
+    "zh": "他说哭就哭。",
+    "en": "He cries at the drop of a hat.",
+    "explain": "说 + A + 就 + A."
+   },
+   {
+    "t": "cloze",
+    "zh": "我想来想去，还是决定去了。",
+    "en": "After thinking it over and over, I still decided to go.",
+    "blank": "还是",
+    "explain": "还是 brings in the decision after 想来想去."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He fell asleep while watching?",
+    "options": [
+     "他看着看着就睡着了。",
+     "他看看着着就睡着了。"
     ],
-    "mistakes": [
-      "再也 must be followed by 不 or 没. 再也吃 is wrong. 再 alone, as in 再吃, means 'again', which is the opposite.",
-      "With a 不 complement, 怎么也打不开 means 'try but fail'. With 不 before the verb, 怎么也不打开 means 'refuse, however much'. They are not the same."
+    "correct": 0,
+    "zh": "他看着看着就睡着了。",
+    "en": "He fell asleep while watching.",
+    "explain": "A着A着: 看着看着."
+   },
+   {
+    "t": "spot",
+    "zh": "他说走就走，没有等我们。",
+    "en": "He left the moment he said so, and did not wait for us.",
+    "wrong": "他说走就马上走，没有等我们。",
+    "remove": "马上",
+    "explain": "就 already means at once; do not add 马上."
+   }
+  ]
+ },
+ {
+  "id": "youa5",
+  "title": "有A有B, 没A没B, A的A B的B, X也不是Y也不是 and 一来…二来…",
+  "covers": [
+   54,
+   55,
+   56,
+   87,
+   88
+  ],
+  "formula": [
+   "*有",
+   "A",
+   "*有",
+   "B"
+  ],
+  "explain": [
+   "有A有B 'both A and B' joins two things of the same kind that both exist or both happen. With nouns it shows what there is: 这家饭店有吃有喝，还有音乐 'This restaurant has food and drink, and music too'. With verbs, it shows two actions at the same time: 他们有说有笑地走进了教室 'They walked into the classroom talking and laughing'.",
+   "X也不是，Y也不是 'whichever way, it is not right' describes being stuck in an awkward spot, where neither choice works: 他坐也不是，站也不是，不知道该怎么办 'He does not know whether to sit or stand, and does not know what to do'; 我说也不是，不说也不是，真难办 'I do not know whether to speak or keep quiet; it is really awkward'.",
+   "一来…二来… 'for one thing …, for another …' lists two reasons or two aims in order: 今天我不去了，一来天气不好，二来我有点累 'I am not going today: first, the weather is bad; second, I am a bit tired'; 我想去中国，一来学汉语，二来看朋友 'I want to go to China: first to learn Chinese, second to see my friends'.",
+   "没A没B means 'with neither, without any': 没日没夜 'day and night (without stopping)'; 没大没小 'with no respect for age'. 他没日没夜地工作 'He works day and night'.",
+   "A的A，B的B describes a mix, like 有的…有的…: 这些汉字写得大的大，小的小 'These characters are written some big, some small'; 孩子们哭的哭，笑的笑 'Some of the children are crying and some are laughing'."
+  ],
+  "examples": [
+   {
+    "zh": "这家饭店有吃有喝，还有音乐。",
+    "en": "This restaurant has food and drink, and music too."
+   },
+   {
+    "zh": "他们有说有笑地走进了教室。",
+    "en": "They walked into the classroom talking and laughing."
+   },
+   {
+    "zh": "他坐也不是，站也不是，不知道该怎么办。",
+    "en": "He does not know whether to sit or stand, and does not know what to do."
+   },
+   {
+    "zh": "今天我不去了，一来天气不好，二来我有点累。",
+    "en": "I am not going today: first, the weather is bad; second, I am a bit tired."
+   },
+   {
+    "zh": "他没日没夜地工作。",
+    "en": "He works day and night."
+   },
+   {
+    "zh": "这些汉字写得大的大，小的小。",
+    "en": "These characters are written some big, some small."
+   }
+  ],
+  "mistakes": [
+   "有A有B needs the same kind of word on both sides: 有说有笑 joins two verbs. 有说有好 is wrong.",
+   "一来 and 二来 come as a pair. 一来 with no 二来 sounds unfinished.",
+   "没A没B uses 没 twice: 没日没夜."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "这家饭店有吃有喝。",
+    "en": "This restaurant has food and drink.",
+    "explain": "有 + A + 有 + B."
+   },
+   {
+    "t": "order",
+    "zh": "他坐也不是，站也不是。",
+    "en": "He does not know whether to sit or stand.",
+    "explain": "X也不是，Y也不是."
+   },
+   {
+    "t": "cloze",
+    "zh": "他坐也不是，站也不是，不知道该怎么办。",
+    "en": "He does not know whether to sit or stand, and does not know what to do.",
+    "blank": "站",
+    "explain": "X也不是，Y也不是 pairs two actions that both fail: 坐 and 站."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I am not going today: first, the weather is bad; second, I am a bit tired?",
+    "options": [
+     "今天我不去了，一来天气不好，二来我有点累。",
+     "今天我不去了，一来二来天气不好，我有点累。"
     ],
-    "q": [
-      {"t": "order", "zh": "我再也不会相信他了。", "en": "I will not trust him any more.", "explain": "再也 + 不 + verb."},
-      {"t": "order", "zh": "我怎么也打不开门。", "en": "However hard I try, I do not manage to open the door.", "explain": "怎么也 + verb + 不 complement."},
-      {"t": "cloze", "zh": "他走了以后，再也没回来过。", "en": "After he left, he never came back again.", "blank": "没", "explain": "再也 + 没 = has not … again since then."},
-      {"t": "mc", "prompt": "Which sentence says: However hard I try, I do not manage to think of his name?", "options": ["我怎么都想不起来他的名字。", "我怎么都想起来不他的名字。"], "correct": 0, "zh": "我怎么都想不起来他的名字。", "en": "However hard I try, I do not manage to think of his name.", "explain": "不 sits inside the complement: 想不起来."},
-      {"t": "spot", "zh": "这个字我怎么也写不好。", "en": "However hard I try, I do not manage to write this character well.", "wrong": "这个字我怎么也是写不好。", "remove": "是", "explain": "Do not put 是 after 怎么也."}
-    ]
-  },
-  {
-    "id": "laiqu",
-    "title": "A来A去, A着A着 and 说A就A: again and again, while …, the moment you say so",
-    "covers": [51, 52, 53],
-    "formula": ["Subject", "*A来A去", "，", "Result"],
-    "explain": [
-      "A来A去 repeats a verb to show that an action goes on again and again, or back and forth: 他在房间里走来走去 'He walks back and forth in the room'; 我想来想去，还是决定去了 'After thinking it over and over, I still decided to go'. The result or decision follows, often with 还是 or 也.",
-      "A着A着 'while doing A, something happens' shows an action that goes on until a new, often unexpected thing comes in: 他看着看着就睡着了 'He fell asleep while watching'; 我们走着走着，下起雨来了 'We were walking when it began to rain'. The second part needs a new event.",
-      "说A就A 'do A the moment one says so' repeats the verb to show that someone acts at once, with no delay: 他说走就走，没有等我们 'He left the moment he said so, and did not wait for us'; 说干就干，我们现在就开始吧 'Let us get to it right away; let us start now'; 他说哭就哭 'He cries at the drop of a hat'."
+    "correct": 0,
+    "zh": "今天我不去了，一来天气不好，二来我有点累。",
+    "en": "I am not going today: first, the weather is bad; second, I am a bit tired.",
+    "explain": "一来 and 二来 each start one reason."
+   },
+   {
+    "t": "spot",
+    "zh": "他们有说有笑地走进了教室。",
+    "en": "They walked into the classroom talking and laughing.",
+    "wrong": "他们有说有笑的地走进了教室。",
+    "remove": "的",
+    "explain": "The adverb ending is 地, with no 的 before it."
+   },
+   {
+    "t": "cloze",
+    "zh": "他没日没夜地工作。",
+    "en": "He works day and night.",
+    "blank": "夜",
+    "explain": "没日没夜: day and night."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: These characters are written some big, some small?",
+    "options": [
+     "这些汉字写得大的大，小的小。",
+     "这些汉字写得大小的，大小的。"
     ],
-    "examples": [
-      {"zh": "他在房间里走来走去。", "en": "He walks back and forth in the room."},
-      {"zh": "我想来想去，还是决定去了。", "en": "After thinking it over and over, I still decided to go."},
-      {"zh": "他看着看着就睡着了。", "en": "He fell asleep while watching."},
-      {"zh": "他说走就走，没有等我们。", "en": "He left the moment he said so, and did not wait for us."}
+    "correct": 0,
+    "zh": "这些汉字写得大的大，小的小。",
+    "en": "These characters are written some big, some small.",
+    "explain": "A的A，B的B."
+   }
+  ]
+ },
+ {
+  "id": "kan",
+  "title": "看你…的, X什么X and 什么…不…的: look how, why bother, never mind",
+  "covers": [
+   57,
+   58,
+   59
+  ],
+  "formula": [
+   "*看你",
+   "Adjective / verb",
+   "*的"
+  ],
+  "explain": [
+   "看你 + adjective or verb + 的 'look how …' shows how someone's state strikes the speaker, with surprise, pity or teasing: 看你急的 'Look how worried you are!'; 看你累的，快去休息吧 'Look how tired you are; go and rest'. 看你说的 'Come on, what a thing to say' pushes back on what someone said: 看你说的，我怎么会不帮你呢？'Come on, why would I not help you?'",
+   "X什么X 'why bother …, no need to …' repeats a verb or adjective with 什么 in the middle to tell someone to stop: 急什么急？时间还早呢 'Why the hurry? It is still early'; 怕什么怕？有我在呢 'What is there to fear? I am here'. It sounds blunt, so use it with people you know well.",
+   "什么 + A + 不 + A + 的 'never mind (whether) …' waves aside the other person's worry: 什么钱不钱的，我们是朋友 'Never mind money; we are friends'; 什么麻烦不麻烦的，都是小事 'Never mind trouble; it is all small things'. The word in the middle is the thing the other person has just worried about."
+  ],
+  "examples": [
+   {
+    "zh": "看你累的，快去休息吧。",
+    "en": "Look how tired you are; go and rest quickly."
+   },
+   {
+    "zh": "看你说的，我怎么会不帮你呢？",
+    "en": "Come on, why would I not help you?"
+   },
+   {
+    "zh": "急什么急？时间还早呢。",
+    "en": "Why the hurry? It is still early."
+   },
+   {
+    "zh": "什么钱不钱的，我们是朋友！",
+    "en": "Never mind money; we are friends!"
+   }
+  ],
+  "mistakes": [
+   "X什么X is blunt and can sound rude to a stranger. To be polite, say 别急 or 不要急.",
+   "看你 … 的 needs a state or an action: 看你急的 is right. A plain noun does not fit, so 看你书的 is wrong."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "看你急的！",
+    "en": "Look how worried you are!",
+    "explain": "看你 + adjective + 的."
+   },
+   {
+    "t": "order",
+    "zh": "怕什么怕？有我在呢。",
+    "en": "What is there to fear? I am here.",
+    "explain": "怕 + 什么 + 怕."
+   },
+   {
+    "t": "cloze",
+    "zh": "什么钱不钱的，我们是朋友！",
+    "en": "Never mind money; we are friends!",
+    "blank": "什么",
+    "explain": "什么 + A + 不 + A + 的."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Why the hurry? It is still early?",
+    "options": [
+     "急什么急？时间还早呢。",
+     "急急什么？时间还早呢。"
     ],
-    "mistakes": [
-      "A来A去 uses the same verb twice: 走来走去, 想来想去. Two different verbs do not make this pattern.",
-      "A着A着 needs a second event. 他看着看着 alone sounds unfinished; add 就睡着了 or something similar."
+    "correct": 0,
+    "zh": "急什么急？时间还早呢。",
+    "en": "Why the hurry? It is still early.",
+    "explain": "什么 sits between the two 急."
+   },
+   {
+    "t": "spot",
+    "zh": "看你急的！",
+    "en": "Look how worried you are!",
+    "wrong": "看你很急的！",
+    "remove": "很",
+    "explain": "No degree word in 看你 … 的."
+   }
+  ]
+ },
+ {
+  "id": "bude",
+  "title": "不得了, 极了 and 得很: extremely",
+  "covers": [
+   60,
+   61
+  ],
+  "formula": [
+   "Subject",
+   "Adjective",
+   "*得",
+   "*不得了"
+  ],
+  "explain": [
+   "Adjective or feeling + 得不得了 'extremely, terribly' shows a degree with no limit: 他高兴得不得了 'He is extremely happy'. 不得了 can also stand alone as a comment, 'This is serious!': 这可不得了！ It can be good or bad.",
+   "极了 'extremely' follows an adjective or a feeling at the end of the clause: 这里的风景美极了 'The scenery here is extremely beautiful'. 极了 already carries the degree, so do not add 很 or 非常 before the adjective.",
+   "得很 'very' follows an adjective and is more casual: 他累得很，想早点睡觉 'He is very tired and wants to go to bed early'. In formal writing, 非常 is better. As with 极了, no 很 goes before the adjective."
+  ],
+  "examples": [
+   {
+    "zh": "他高兴得不得了。",
+    "en": "He is extremely happy."
+   },
+   {
+    "zh": "这里的风景美极了。",
+    "en": "The scenery here is extremely beautiful."
+   },
+   {
+    "zh": "他累得很，想早点睡觉。",
+    "en": "He is very tired and wants to go to bed early."
+   },
+   {
+    "zh": "这可不得了！",
+    "en": "This is serious!"
+   }
+  ],
+  "mistakes": [
+   "极了 and 得很 already carry the degree. Do not add 很 or 非常: 很美极了 is wrong; say 美极了.",
+   "得很 is spoken and casual. In an essay or a notice, use 非常 instead."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "这里的风景美极了。",
+    "en": "The scenery here is extremely beautiful.",
+    "explain": "Adjective + 极了."
+   },
+   {
+    "t": "order",
+    "zh": "他高兴得不得了。",
+    "en": "He is extremely happy.",
+    "explain": "Adjective + 得不得了."
+   },
+   {
+    "t": "cloze",
+    "zh": "他累得很，想早点睡觉。",
+    "en": "He is very tired and wants to go to bed early.",
+    "blank": "很",
+    "explain": "Adjective + 得 + 很 = very."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He is extremely happy?",
+    "options": [
+     "他高兴得不得了。",
+     "他高兴不得了得。"
     ],
-    "q": [
-      {"t": "order", "zh": "他在房间里走来走去。", "en": "He walks back and forth in the room.", "explain": "走来走去 = back and forth."},
-      {"t": "order", "zh": "他说哭就哭。", "en": "He cries at the drop of a hat.", "explain": "说 + A + 就 + A."},
-      {"t": "cloze", "zh": "我想来想去，还是决定去了。", "en": "After thinking it over and over, I still decided to go.", "blank": "还是", "explain": "还是 brings in the decision after 想来想去."},
-      {"t": "mc", "prompt": "Which sentence says: He fell asleep while watching?", "options": ["他看着看着就睡着了。", "他看看着着就睡着了。"], "correct": 0, "zh": "他看着看着就睡着了。", "en": "He fell asleep while watching.", "explain": "A着A着: 看着看着."},
-      {"t": "spot", "zh": "他说走就走，没有等我们。", "en": "He left the moment he said so, and did not wait for us.", "wrong": "他说走就马上走，没有等我们。", "remove": "马上", "explain": "就 already means at once; do not add 马上."}
-    ]
-  },
-  {
-    "id": "youa",
-    "title": "有A有B, X也不是Y也不是 and 一来…二来…: both, stuck either way, for one thing",
-    "covers": [54, 55, 56],
-    "formula": ["*有", "A", "*有", "B"],
-    "explain": [
-      "有A有B 'both A and B' joins two things of the same kind that both exist or both happen. With nouns it shows what there is: 这家饭店有吃有喝，还有音乐 'This restaurant has food and drink, and music too'. With verbs, it shows two actions at the same time: 他们有说有笑地走进了教室 'They walked into the classroom talking and laughing'.",
-      "X也不是，Y也不是 'whichever way, it is not right' describes being stuck in an awkward spot, where neither choice works: 他坐也不是，站也不是，不知道该怎么办 'He does not know whether to sit or stand, and does not know what to do'; 我说也不是，不说也不是，真难办 'I do not know whether to speak or keep quiet; it is really awkward'.",
-      "一来…二来… 'for one thing …, for another …' lists two reasons or two aims in order: 今天我不去了，一来天气不好，二来我有点累 'I am not going today: first, the weather is bad; second, I am a bit tired'; 我想去中国，一来学汉语，二来看朋友 'I want to go to China: first to learn Chinese, second to see my friends'."
+    "correct": 0,
+    "zh": "他高兴得不得了。",
+    "en": "He is extremely happy.",
+    "explain": "得 comes right after the adjective."
+   },
+   {
+    "t": "spot",
+    "zh": "这里的风景美极了。",
+    "en": "The scenery here is extremely beautiful.",
+    "wrong": "这里的风景很美极了。",
+    "remove": "很",
+    "explain": "极了 already means extremely."
+   }
+  ]
+ },
+ {
+  "id": "zhuangtai5",
+  "title": "V得 + clause, 得了 / 不了 and 开不得: so … that, can or cannot, must not",
+  "covers": [
+   62,
+   63,
+   86
+  ],
+  "formula": [
+   "Subject",
+   "Verb / adjective",
+   "*得",
+   "Result clause"
+  ],
+  "explain": [
+   "得 after a verb or an adjective can bring in a whole clause that shows how far the action or state went: 他高兴得跳了起来 'He was so happy that he jumped up'; 她哭得眼睛都红了 'She cried until her eyes were red'; 他忙得没有时间吃饭 'He was so busy that he had no time to eat'. The result is a full phrase, not a single word.",
+   "得了 and 不了, read liǎo, after a verb tell whether someone can manage the action, mostly about amount or ability. 吃得了 'can finish eating' and 吃不了 'cannot finish eating'. 这么多菜，我们吃得了吗？ 'Will we manage to finish so many dishes?'; 这么多菜，我吃不了 'There is so much food that I will not manage to finish it'; 明天我有事，去不了 'I have something on tomorrow, so I will not make it'. Do not mix it up with 不得了 'extremely'.",
+   "Verb + 不得 means 'must not, should not' (it would be wrong or harmful): 这种玩笑开不得 'You mustn't make jokes like this'; 这个药多吃不得 'You mustn't take too much of this medicine'; 这件事急不得 'This can't be rushed'."
+  ],
+  "examples": [
+   {
+    "zh": "他高兴得跳了起来。",
+    "en": "He was so happy that he jumped up."
+   },
+   {
+    "zh": "她哭得眼睛都红了。",
+    "en": "She cried until her eyes were red."
+   },
+   {
+    "zh": "这么多菜，我们吃得了吗？",
+    "en": "Will we manage to finish so many dishes?"
+   },
+   {
+    "zh": "明天我有事，去不了。",
+    "en": "I have something on tomorrow, so I will not make it."
+   },
+   {
+    "zh": "这种玩笑开不得。",
+    "en": "You mustn't make jokes like this."
+   },
+   {
+    "zh": "这件事急不得。",
+    "en": "This mustn't be rushed."
+   }
+  ],
+  "mistakes": [
+   "After 得 + clause, do not add 很 between: 他忙得没有时间吃饭 is right; 他忙得很没有时间 is wrong.",
+   "吃不了 means 'cannot finish', not 'will not eat'. To refuse, say 不吃.",
+   "开不得 means 'mustn't (make)'; for 'can't open' say 打不开."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他高兴得跳了起来。",
+    "en": "He was so happy that he jumped up.",
+    "explain": "Verb / adjective + 得 + clause."
+   },
+   {
+    "t": "order",
+    "zh": "他忙得没有时间吃饭。",
+    "en": "He was so busy that he had no time to eat.",
+    "explain": "忙得 + result."
+   },
+   {
+    "t": "cloze",
+    "zh": "这么多菜，我吃不了。",
+    "en": "There is so much food that I will not manage to finish it.",
+    "blank": "不",
+    "explain": "吃不了 = cannot finish."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: She cried until her eyes were red?",
+    "options": [
+     "她哭得眼睛都红了。",
+     "她哭眼睛都红了得。"
     ],
-    "examples": [
-      {"zh": "这家饭店有吃有喝，还有音乐。", "en": "This restaurant has food and drink, and music too."},
-      {"zh": "他们有说有笑地走进了教室。", "en": "They walked into the classroom talking and laughing."},
-      {"zh": "他坐也不是，站也不是，不知道该怎么办。", "en": "He does not know whether to sit or stand, and does not know what to do."},
-      {"zh": "今天我不去了，一来天气不好，二来我有点累。", "en": "I am not going today: first, the weather is bad; second, I am a bit tired."}
+    "correct": 0,
+    "zh": "她哭得眼睛都红了。",
+    "en": "She cried until her eyes were red.",
+    "explain": "得 comes right after the verb."
+   },
+   {
+    "t": "spot",
+    "zh": "他高兴得跳了起来。",
+    "en": "He was so happy that he jumped up.",
+    "wrong": "他高兴得很跳了起来。",
+    "remove": "很",
+    "explain": "Do not put 很 between 得 and the result."
+   },
+   {
+    "t": "order",
+    "zh": "这种玩笑开不得。",
+    "en": "You mustn't make jokes like this.",
+    "explain": "Verb + 不得: must not."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: You mustn't take too much of this medicine?",
+    "options": [
+     "这个药多吃不得。",
+     "这个药多不吃得。"
     ],
-    "mistakes": [
-      "有A有B needs the same kind of word on both sides: 有说有笑 joins two verbs. 有说有好 is wrong.",
-      "一来 and 二来 come as a pair. 一来 with no 二来 sounds unfinished."
-    ],
-    "q": [
-      {"t": "order", "zh": "这家饭店有吃有喝。", "en": "This restaurant has food and drink.", "explain": "有 + A + 有 + B."},
-      {"t": "order", "zh": "他坐也不是，站也不是。", "en": "He does not know whether to sit or stand.", "explain": "X也不是，Y也不是."},
-      {"t": "cloze", "zh": "他坐也不是，站也不是，不知道该怎么办。", "en": "He does not know whether to sit or stand, and does not know what to do.", "blank": "站", "explain": "X也不是，Y也不是 pairs two actions that both fail: 坐 and 站."},
-      {"t": "mc", "prompt": "Which sentence says: I am not going today: first, the weather is bad; second, I am a bit tired?", "options": ["今天我不去了，一来天气不好，二来我有点累。", "今天我不去了，一来二来天气不好，我有点累。"], "correct": 0, "zh": "今天我不去了，一来天气不好，二来我有点累。", "en": "I am not going today: first, the weather is bad; second, I am a bit tired.", "explain": "一来 and 二来 each start one reason."},
-      {"t": "spot", "zh": "他们有说有笑地走进了教室。", "en": "They walked into the classroom talking and laughing.", "wrong": "他们有说有笑的地走进了教室。", "remove": "的", "explain": "The adverb ending is 地, with no 的 before it."}
-    ]
-  },
-  {
-    "id": "kan",
-    "title": "看你…的, X什么X and 什么…不…的: look how, why bother, never mind",
-    "covers": [57, 58, 59],
-    "formula": ["*看你", "Adjective / verb", "*的"],
-    "explain": [
-      "看你 + adjective or verb + 的 'look how …' shows how someone's state strikes the speaker, with surprise, pity or teasing: 看你急的 'Look how worried you are!'; 看你累的，快去休息吧 'Look how tired you are; go and rest'. 看你说的 'Come on, what a thing to say' pushes back on what someone said: 看你说的，我怎么会不帮你呢？'Come on, why would I not help you?'",
-      "X什么X 'why bother …, no need to …' repeats a verb or adjective with 什么 in the middle to tell someone to stop: 急什么急？时间还早呢 'Why the hurry? It is still early'; 怕什么怕？有我在呢 'What is there to fear? I am here'. It sounds blunt, so use it with people you know well.",
-      "什么 + A + 不 + A + 的 'never mind (whether) …' waves aside the other person's worry: 什么钱不钱的，我们是朋友 'Never mind money; we are friends'; 什么麻烦不麻烦的，都是小事 'Never mind trouble; it is all small things'. The word in the middle is the thing the other person has just worried about."
-    ],
-    "examples": [
-      {"zh": "看你累的，快去休息吧。", "en": "Look how tired you are; go and rest quickly."},
-      {"zh": "看你说的，我怎么会不帮你呢？", "en": "Come on, why would I not help you?"},
-      {"zh": "急什么急？时间还早呢。", "en": "Why the hurry? It is still early."},
-      {"zh": "什么钱不钱的，我们是朋友！", "en": "Never mind money; we are friends!"}
-    ],
-    "mistakes": [
-      "X什么X is blunt and can sound rude to a stranger. To be polite, say 别急 or 不要急.",
-      "看你 … 的 needs a state or an action: 看你急的 is right. A plain noun does not fit, so 看你书的 is wrong."
-    ],
-    "q": [
-      {"t": "order", "zh": "看你急的！", "en": "Look how worried you are!", "explain": "看你 + adjective + 的."},
-      {"t": "order", "zh": "怕什么怕？有我在呢。", "en": "What is there to fear? I am here.", "explain": "怕 + 什么 + 怕."},
-      {"t": "cloze", "zh": "什么钱不钱的，我们是朋友！", "en": "Never mind money; we are friends!", "blank": "什么", "explain": "什么 + A + 不 + A + 的."},
-      {"t": "mc", "prompt": "Which sentence says: Why the hurry? It is still early?", "options": ["急什么急？时间还早呢。", "急急什么？时间还早呢。"], "correct": 0, "zh": "急什么急？时间还早呢。", "en": "Why the hurry? It is still early.", "explain": "什么 sits between the two 急."},
-      {"t": "spot", "zh": "看你急的！", "en": "Look how worried you are!", "wrong": "看你很急的！", "remove": "很", "explain": "No degree word in 看你 … 的."}
-    ]
-  },
-  {
-    "id": "bude",
-    "title": "不得了, 极了 and 得很: extremely",
-    "covers": [60, 61],
-    "formula": ["Subject", "Adjective", "*得", "*不得了"],
-    "explain": [
-      "Adjective or feeling + 得不得了 'extremely, terribly' shows a degree with no limit: 他高兴得不得了 'He is extremely happy'. 不得了 can also stand alone as a comment, 'This is serious!': 这可不得了！ It can be good or bad.",
-      "极了 'extremely' follows an adjective or a feeling at the end of the clause: 这里的风景美极了 'The scenery here is extremely beautiful'. 极了 already carries the degree, so do not add 很 or 非常 before the adjective.",
-      "得很 'very' follows an adjective and is more casual: 他累得很，想早点睡觉 'He is very tired and wants to go to bed early'. In formal writing, 非常 is better. As with 极了, no 很 goes before the adjective."
-    ],
-    "examples": [
-      {"zh": "他高兴得不得了。", "en": "He is extremely happy."},
-      {"zh": "这里的风景美极了。", "en": "The scenery here is extremely beautiful."},
-      {"zh": "他累得很，想早点睡觉。", "en": "He is very tired and wants to go to bed early."},
-      {"zh": "这可不得了！", "en": "This is serious!"}
-    ],
-    "mistakes": [
-      "极了 and 得很 already carry the degree. Do not add 很 or 非常: 很美极了 is wrong; say 美极了.",
-      "得很 is spoken and casual. In an essay or a notice, use 非常 instead."
-    ],
-    "q": [
-      {"t": "order", "zh": "这里的风景美极了。", "en": "The scenery here is extremely beautiful.", "explain": "Adjective + 极了."},
-      {"t": "order", "zh": "他高兴得不得了。", "en": "He is extremely happy.", "explain": "Adjective + 得不得了."},
-      {"t": "cloze", "zh": "他累得很，想早点睡觉。", "en": "He is very tired and wants to go to bed early.", "blank": "很", "explain": "Adjective + 得 + 很 = very."},
-      {"t": "mc", "prompt": "Which sentence says: He is extremely happy?", "options": ["他高兴得不得了。", "他高兴不得了得。"], "correct": 0, "zh": "他高兴得不得了。", "en": "He is extremely happy.", "explain": "得 comes right after the adjective."},
-      {"t": "spot", "zh": "这里的风景美极了。", "en": "The scenery here is extremely beautiful.", "wrong": "这里的风景很美极了。", "remove": "很", "explain": "极了 already means extremely."}
-    ]
-  },
-  {
-    "id": "zhuangtai",
-    "title": "V得 + clause and 得了 / 不了: so … that, manage to or not",
-    "covers": [62, 63],
-    "formula": ["Subject", "Verb / adjective", "*得", "Result clause"],
-    "explain": [
-      "得 after a verb or an adjective can bring in a whole clause that shows how far the action or state went: 他高兴得跳了起来 'He was so happy that he jumped up'; 她哭得眼睛都红了 'She cried until her eyes were red'; 他忙得没有时间吃饭 'He was so busy that he had no time to eat'. The result is a full phrase, not a single word.",
-      "得了 and 不了, read liǎo, after a verb tell whether someone can manage the action, mostly about amount or ability. 吃得了 'can finish eating' and 吃不了 'cannot finish eating'. 这么多菜，我们吃得了吗？ 'Will we manage to finish so many dishes?'; 这么多菜，我吃不了 'There is so much food that I will not manage to finish it'; 明天我有事，去不了 'I have something on tomorrow, so I will not make it'. Do not mix it up with 不得了 'extremely'."
-    ],
-    "examples": [
-      {"zh": "他高兴得跳了起来。", "en": "He was so happy that he jumped up."},
-      {"zh": "她哭得眼睛都红了。", "en": "She cried until her eyes were red."},
-      {"zh": "这么多菜，我们吃得了吗？", "en": "Will we manage to finish so many dishes?"},
-      {"zh": "明天我有事，去不了。", "en": "I have something on tomorrow, so I will not make it."}
-    ],
-    "mistakes": [
-      "After 得 + clause, do not add 很 between: 他忙得没有时间吃饭 is right; 他忙得很没有时间 is wrong.",
-      "吃不了 means 'cannot finish', not 'will not eat'. To refuse, say 不吃."
-    ],
-    "q": [
-      {"t": "order", "zh": "他高兴得跳了起来。", "en": "He was so happy that he jumped up.", "explain": "Verb / adjective + 得 + clause."},
-      {"t": "order", "zh": "他忙得没有时间吃饭。", "en": "He was so busy that he had no time to eat.", "explain": "忙得 + result."},
-      {"t": "cloze", "zh": "这么多菜，我吃不了。", "en": "There is so much food that I will not manage to finish it.", "blank": "不", "explain": "吃不了 = cannot finish."},
-      {"t": "mc", "prompt": "Which sentence says: She cried until her eyes were red?", "options": ["她哭得眼睛都红了。", "她哭眼睛都红了得。"], "correct": 0, "zh": "她哭得眼睛都红了。", "en": "She cried until her eyes were red.", "explain": "得 comes right after the verb."},
-      {"t": "spot", "zh": "他高兴得跳了起来。", "en": "He was so happy that he jumped up.", "wrong": "他高兴得很跳了起来。", "remove": "很", "explain": "Do not put 很 between 得 and the result."}
-    ]
-  }
+    "correct": 0,
+    "zh": "这个药多吃不得。",
+    "en": "You mustn't take too much of this medicine.",
+    "explain": "不得 comes after the verb."
+   }
+  ]
+ }
 ]
