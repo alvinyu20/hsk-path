@@ -200,7 +200,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await text()).includes('Right. ' + pairL2.zh), 'the HSK 2 two-syllable trainer scores a right answer');
   check(await page.evaluate(() => window.HSK2_LISTEN.pairs.length > 200 && window.HSK2_LISTEN.pairs.some(p => p.zh === '老师' && p.t[0] === 3 && p.t[1] === 1)), 'the HSK 2 tone-pair list includes the HSK 1 and HSK 2 two-syllable words');
   await nav('Speak');
-  check((await page.locator('.modeseg').count()) === 1 && (await text()).includes('Practice script'), 'Speak has the practice-script switch at HSK 2');
+  check((await page.locator('.subnav button', { hasText: 'Talk with AI' }).count()) === 1 && (await page.locator('.subnav button.on', { hasText: 'Speaking' }).count()) === 1, 'Speak has Speaking and Talk with AI in its strip at HSK 2');
   const scn = await page.evaluate(() => window.HSK2_SPEAK.scenarios.map(s => s.title));
   check(scn.length === 8 && (await text()).includes('Ask the way') && (await text()).includes('Order at a café'), 'the eight HSK 2 scripts are listed');
   await page.locator('.spk-card').first().click();
@@ -263,8 +263,8 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
 
   // ---- Speak is the AI conversation only; talk to a fake Anthropic API
   await nav('Speak');
-  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
-  check((await text()).includes('Talk with Mingming'), 'Talk with AI is the second tab in Speak');
+  await page.locator(':is(.subnav button, .navsub .subl):visible', { hasText: 'Talk with AI' }).first().click();
+  check((await text()).includes('Talk with Mingming'), 'Talk with AI opens from the Talk strip');
   const calls = [];
   await ctx.route('https://api.anthropic.com/**', async (r) => {
     const req = r.request();
@@ -278,7 +278,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.fill('input[aria-label="Anthropic API key"]', 'sk-ant-test');
   await page.locator('button', { hasText: 'Save key' }).click();
   await nav('Speak');
-  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
+  await page.locator(':is(.subnav button, .navsub .subl):visible', { hasText: 'Talk with AI' }).first().click();
   await page.waitForFunction(() => window.shanlu.state.aim.length >= 1 && !window.shanlu.state.aiBusy);
   await page.locator('.ai-tools button', { hasText: 'Type instead' }).click();   // voice only is the default and keeps Mingming's lines hidden
   const sys = calls[0].system;

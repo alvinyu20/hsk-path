@@ -31,6 +31,7 @@ Template syntax: `<sc-if value>`, `<sc-for list as x>`, `{{holes}}`, `data-on-cl
 - Examples: `examples-*.tsv` columns: word, Chinese, English. The word must appear in the sentence, and the sentence may only use words at or below its level.
 - `content/cloze-alts.tsv`: answer, other, `also`|`wrong`, sentence, note. Checked by `tools/check-cloze-alts.py`.
 - Grammar fill-ins (`t: cloze` in `grammar-*.json` / `gmore.json`) can list `also`: other words that fit the gap just as well; they are accepted and shown as "also right".
+- `content/example-parts.tsv`: grammar examples cut into the formula's colours (`lesson id<TAB>who=我 | k=把 | thing=作业 | does=做完了 | 。`); the pieces must join back into an example of that lesson (`build-grammar.py` dies otherwise). Only listed examples are coloured.
 - `content/char-glosses.tsv`: 30-character limit per meaning. Run `tools/build-char-glosses.py` after editing.
 - `content/check-waivers.tsv`: known false alarms; every line needs a reason.
 - **Round-trip formats (rewriting the file any other way makes a huge diff):**

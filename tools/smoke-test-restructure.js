@@ -46,7 +46,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await nav('Review words');
   check(await scr(page) !== 'web' && (await page.locator('.navsub .subl').allInnerTexts()).map(t => t.replace(/\d+$/, '').trim()).join('|') === 'Words|Grammar|Test', 'Review lists Words, Grammar and Test');
   await nav('Listening lab');
-  check(await scr(page) === 'listen' && (await page.locator('.navsub .subl').allInnerTexts()).join('|') === 'Listening|Speaking', 'Talk lists Listening and Speaking');
+  check(await scr(page) === 'listen' && (await page.locator('.navsub .subl').allInnerTexts()).join('|') === 'Listening|Speaking|Talk with AI', 'Talk lists Listening, Speaking and Talk with AI');
   check(await page.locator('.navyou .ylink').count() >= 2, 'a quiet "You" group holds Achievements and Settings');
   await nav('Settings'); check(await scr(page) === 'voice', 'Settings opens from the You group');
 
@@ -160,6 +160,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await pnav(label); await ph.waitForTimeout(120);
     check(await scr(ph) === scrn && await noSide(), 'phone: ' + label + ' opens and does not scroll sideways');
   }
+  await ph.evaluate(() => window.shanlu.go('words')); await ph.waitForTimeout(150);
+  check(await ph.locator('.wview button', { hasText: 'List' }).getAttribute('aria-pressed') === 'true' && await ph.locator('.wrows2.compact').count() === 1, 'phone: My words starts as the List until Cards is chosen');
   await pnav('Library');
   check((await ph.locator('.subnav button').allInnerTexts()).join('|') === 'Path|Library|Games', 'phone: Learn has three pages in its strip');
   const bar = await ph.evaluate(() => { const b = document.querySelector('.subnav'); return b.scrollWidth <= b.clientWidth + 1; });

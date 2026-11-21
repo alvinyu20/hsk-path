@@ -295,6 +295,30 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await ctx.close();
   }
 
+  // ================= finished units fold into one line, with a way back to the current stop
+  {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    const page = await ctx.newPage(); watch(page);
+    await page.goto(url); await page.waitForSelector('.app'); await page.waitForTimeout(200);
+    await page.evaluate(() => {   // finish the first three units of HSK 1 (words started, grammar passed)
+      const S = window.shanlu.state, wl = Object.assign({}, S.wlearned), gr = Object.assign({}, S.gres);
+      window.SHANLU_PATH['1'].units.slice(0, 3).forEach(u => u.stops.forEach(st => { if (st.k === 'w') st.w.forEach(z => { wl[z] = true; }); if (st.k === 'g') gr[st.g] = 100; }));
+      window.shanlu.setState({ wlearned: wl, gres: gr });
+    });
+    await require('./test-nav').makeNav(page)('Path'); await page.waitForTimeout(200);
+    const fold = page.locator('.pth-fold');
+    check(await fold.count() === 1 && /3 units done/.test(await fold.innerText()) && await page.locator('.pth-unit:visible').count() === 10, 'three finished units fold into one line (' + (await fold.innerText().catch(() => '')) + ')');
+    await fold.click(); await page.waitForTimeout(150);
+    check(await page.locator('.pth-unit:visible').count() === 13 && /Hide/.test(await fold.innerText()), 'the line opens them again');
+    await fold.click(); await page.waitForTimeout(150);
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight)); await page.waitForTimeout(400);
+    const jump = page.locator('.pth-jump');
+    check(await jump.count() === 1 && await jump.isVisible(), 'scrolled away, a button leads back to the current stop');
+    await jump.click(); await page.waitForTimeout(700);
+    check(await page.locator('.pth-node.cur').first().evaluate(e => { const r = e.getBoundingClientRect(); return r.top >= 0 && r.bottom <= innerHeight; }), 'and it scrolls the current stop into view');
+    await ctx.close();
+  }
+
   await browser.close(); server.close();
   check(errors.length === 0, 'no page errors' + (errors.length ? ': ' + errors.slice(0, 5).join(' / ') : ''));
   if (failures) { console.log(failures + ' failed'); process.exit(1); }

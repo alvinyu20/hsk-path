@@ -191,7 +191,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await text()).includes('Right. ' + pairL3.zh), 'the HSK 3 two-syllable trainer scores a right answer');
   check(await page.evaluate(() => window.HSK3_LISTEN.pairs.length > 500 && window.HSK3_LISTEN.pairs.some(p => p.zh === '老师' && p.t[0] === 3 && p.t[1] === 1) && window.HSK3_LISTEN.pairs.some(p => p.zh === '决定' && p.t[0] === 2 && p.t[1] === 4)), 'the HSK 3 tone-pair list includes HSK 1, HSK 2 and HSK 3 two-syllable words');
   await nav('Speak');
-  check((await page.locator('.modeseg').count()) === 1 && (await text()).includes('Practice script'), 'Speak has the practice-script switch at HSK 3');
+  check((await page.locator('.subnav button', { hasText: 'Talk with AI' }).count()) === 1 && (await page.locator('.subnav button.on', { hasText: 'Speaking' }).count()) === 1, 'Speak has Speaking and Talk with AI in its strip at HSK 3');
   check((await text()).includes('Check in at a hotel') && (await text()).includes('Call a friend abroad') && await page.evaluate(() => window.HSK3_SPEAK.scenarios.length === 8 && window.HSK3_SPEAK.phrases.length === 8), 'the eight HSK 3 scripts and eight phrases are listed');
   await page.locator('.spk-card').first().click();
   await page.locator('button', { hasText: 'I said it' }).first().click();
@@ -304,12 +304,12 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     return r.fulfill({ status: 200, headers: cors, contentType: 'application/json', body: JSON.stringify({ content: [{ type: 'text', text: JSON.stringify(reply) }] }) });
   });
   await nav('Speak');
-  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
+  await page.locator(':is(.subnav button, .navsub .subl):visible', { hasText: 'Talk with AI' }).first().click();
   await page.locator('button', { hasText: 'Set up Mingming in Settings' }).click();
   await page.fill('input[aria-label="Anthropic API key"]', 'sk-ant-test');
   await page.locator('button', { hasText: 'Save key' }).click();
   await nav('Speak');
-  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
+  await page.locator(':is(.subnav button, .navsub .subl):visible', { hasText: 'Talk with AI' }).first().click();
   await page.waitForFunction(() => window.shanlu.state.aim.length >= 1 && !window.shanlu.state.aiBusy);
   await page.locator('.ai-tools button', { hasText: 'Type instead' }).click();   // voice only is the default and keeps Mingming's lines hidden
   const sys = calls[0].system;

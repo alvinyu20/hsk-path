@@ -1,0 +1,64 @@
+# Grammar lesson examples coloured like the lesson's formula (the lesson page shows the pieces in the formula's colours).
+# lesson id <TAB> the example cut into pieces with " | ", each piece "role=text" or plain text. Roles: who (the doer, blue), when (time or place, amber),
+# does (the verb or describing word, jade), thing (the object or thing, purple), k (the lesson's key word, red). The pieces must join back into
+# the example exactly (checked by tools/build-grammar.py). Only examples listed here are coloured; the rest stay plain.
+order	who=我 | does=喝 | thing=茶 | 。
+order	who=哥哥 | does=吃 | thing=鸡蛋 | 。
+order	who=我们 | does=学习 | thing=汉语 | 。
+order	who=爸爸 | when=晚上在家 | does=工作 | 。
+adj	who=今天 | does=很冷 | 。
+adj	who=这个房间 | does=不大 | 。
+adj	who=你的衣服 | does=真漂亮 | ！
+adj	who=今天 | does=太冷 | 了！
+you	who=我 | k=有 | thing=一个哥哥 | 。
+you	who=我 | k=没有 | thing=手机 | 。
+you	who=你 | k=有 | thing=时间 | 吗？
+de	这是 | who=我 | k=的 | thing=书 | 。
+de	这是 | who=我妈妈 | k=的 | thing=手机 | 。
+de	这是 | who=很好吃 | k=的 | thing=米饭 | 。
+time	who=我 | when=七点 | does=起床 | 。
+time	who=我 | when=星期天 | does=在家 | 。
+zai	who=他们 | k=在 | when=家 | does=吃饭 | 。
+zai	who=你 | k=在 | when=哪儿 | does=工作 | ？
+zai	who=我 | k=在 | when=学校 | does=学习 | thing=汉语 | 。
+loc	thing=书 | k=在 | when=桌子上 | 。
+loc	thing=学校 | k=在 | when=那边 | 。
+le1	who=我 | does=买 | k=了 | thing=一本书 | 。
+le1	who=妈妈 | does=喝 | k=了 | thing=一杯茶 | 。
+seq	who=我 | does=去商店 | does=买水果 | 。
+seq	who=爸爸 | does=开车 | does=去公司 | 。
+li	when=学校 | k=离 | when=我家 | 很近。
+li	when=机场 | k=离 | when=这里 | 很远。
+guo	who=我 | does=去 | k=过 | when=中国 | 。
+guo	who=你 | does=喝 | k=过 | thing=红茶 | 吗？
+guo	who=我 | 没 | does=学 | k=过 | thing=游泳 | 。
+zhe	who=门 | does=开 | k=着 | 。
+zhe	who=手机 | does=开 | k=着 | 。
+zhe	who=他 | does=笑 | k=着 | does=说话 | 。
+yijing2	who=我 | k=已经 | does=吃饭 | k=了 | 。
+yijing2	who=他 | k=已经 | does=走 | k=了 | 。
+rang2	who=妈妈 | k=让 | thing=我 | does=早点睡觉 | 。
+rang2	who=他 | k=让 | thing=我 | does=等一会儿 | 。
+de2	who=他 | does=跑 | k=得 | does=很快 | 。
+de2	who=她 | thing=汉语 | does=说 | k=得 | does=很好 | 。
+de2	who=我们 | when=昨天 | does=玩 | k=得 | does=很高兴 | 。
+gen	who=我 | k=跟 | thing=朋友 | k=一起 | does=去旅游 | 。
+shide	who=我 | k=是 | when=昨天 | does=来 | k=的 | 。
+shide	who=你 | k=是 | when=怎么 | does=来 | k=的 | ？
+shide	who=我 | k=是 | when=坐地铁 | does=来 | k=的 | 。
+ba	请 | k=把 | thing=门 | does=打开 | 。
+ba	who=我 | k=把 | thing=作业 | does=做完了 | 。
+ba	请 | k=把 | thing=书 | does=放在桌子上 | 。
+ba	who=他 | k=把 | thing=杯子 | does=打坏了 | 。
+bei	thing=杯子 | k=被 | who=他 | does=打坏了 | 。
+bei	thing=我的伞 | k=被 | who=朋友 | does=拿走了 | 。
+bei	thing=作业 | k=被 | who=老师 | does=收走了 | 。
+bei	thing=我的书 | k=被 | who=同学 | does=借走了 | 。
+cai	who=他 | when=八点 | k=才 | does=到学校 | 。
+cai	who=他 | when=六点 | k=就 | does=起床了 | 。
+duration3	who=我 | does=学 | k=了 | when=两年 | thing=汉语 | 。
+duration3	who=他 | does=等 | k=了 | thing=你 | when=一个小时 | 。
+lian	who=我 | k=连 | thing=他的名字 | k=也 | does=不知道 | 。
+conglai	who=我 | k=从来 | does=不喝酒 | 。
+conglai	who=他 | k=从来 | does=没去过那个地方 | 。
+jianzhi	who=我 | k=根本 | does=不知道 | thing=这件事 | 。

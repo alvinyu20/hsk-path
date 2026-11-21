@@ -373,7 +373,9 @@
   const qfCoin = (rate) => (rate >= 1.5 ? 5 : rate >= 1.25 ? 4 : GM_COIN.qf);
   const qfRes = (id) => prefGet('qf.' + id, null);
   const qfSpeed = () => { const v = Number(prefGet('qfSpeed', 1)); return QF_SPEEDS.indexOf(v) >= 0 ? v : 1; };
-  const wPage = () => (prefGet('wview', 'cards') === 'list' ? 100 : 40);   // My words shows this many at a time (the compact list shows more)
+  // My words: Cards or List, remembered (person pref 'wview'); until chosen, phones start on the List (Cards fit about 6 words on a phone screen)
+  const wViewDefault = () => { try { return window.matchMedia && window.matchMedia('(max-width: 600px)').matches ? 'list' : 'cards'; } catch (e) { return 'cards'; } };
+  const wPage = () => (prefGet('wview', wViewDefault()) === 'list' ? 100 : 40);   // My words shows this many at a time (the compact list shows more)
   const psgRes = (id) => prefGet('psg.' + id, null);
   const PATH_U = {}, STOP_BY = {};
   PATH_LVLS.forEach(n => {
@@ -584,7 +586,7 @@
   const daysAgo = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return ymd(d); };
 
   const PERSIST = ['sys', 'mins', 'theme', 'xp', 'xpDev', 'xpBase', 'dayXp', 'dayMin', 'streak', 'lastActive', 'activity', 'day', 'gres', 'gpt', 'sres', 'nlimit', 'voiceId', 'speed', 'ascView', 'clipBest', 'mbest', 'misses', 'testHistory', 'ws',
-    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'pbase', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'lrn', 'rlog', 'epoch', 'dcN', 'dcPaid', 'dcAmt'];
+    'rq', 'rtotal', 'rdone', 'rxp', 'rcomplete', 'rcounts', 'rlast', 'gdone', 'grdone', 'tdone', 'ldone', 'spokeToday', 'webCredited', 'pbase', 'wlearned', 'wrated', 'wdelta', 'wreveal', 'spy', 'sen', 'shint', 'szh', 'exams', 'aiDays', 'rpy', 'mem0', 'minLog', 'minDev', 'dayAct', 'lrn', 'rlog', 'epoch', 'dcN', 'dcPaid', 'dcAmt'];
 
   // Settings that belong to the person, not the device: kept as person preferences ('set.<name>', 'level', 'erhua') so every device ends up with the same ones.
   // (The browser voice stays on the device: the voices on a phone and a laptop are different ones.)
@@ -596,7 +598,7 @@
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:'light',   // light to start, whatever the device's setting; dark only when chosen
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
       jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyTab:'explore', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
-      xp:0, xpDev:{}, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
+      xp:0, xpDev:{}, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, dayAct:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:wPage(), clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
       rq:[], rtotal:0, rflip:false, rpy:false, rdone:0, rstep:0, rxp:0, rcomplete:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rrun:0, rmiss:[],
@@ -1895,7 +1897,7 @@
     // (the message is also kept in localStorage 'shanlu-lasterr'), drop the Review card that was being drawn, and carry on.
     rFails = 0;
     _render() {
-      try { super._render(); this.rFails = 0; this.focusTyped(); this.sfxWatch(); }
+      try { super._render(); this.rFails = 0; this.focusTyped(); this.sfxWatch(); this.pathJumpWatch(); }
       catch (e) {
         showErr(e, 'draw');
         const S = this.state; this.rFails++;
@@ -1916,6 +1918,11 @@
         const md = Object.assign({}, S.minDev); md[td] = Object.assign({}, md[td], { [DEVICE]: ((md[td] && md[td][DEVICE]) || 0) + Math.max(0, patch.dayMin - S.dayMin) });   // this device's own minutes: only what was added here
         const kd = Object.keys(md).sort(); while (kd.length > 60) delete md[kd.shift()];
         patch = Object.assign({}, patch, { minLog:ml, minDev:md });
+        // today's minutes by plan row (Today shows them on a row once it is done): counted where the minutes were earned
+        const sc = patch.screen || S.screen;
+        const act = sc === 'review' ? 'review' : sc === 'greview' ? 'grv' : sc === 'path' || sc === 'plesson' || sc === 'passage' || sc === 'grammar' ? 'path' : '';
+        const dm = patch.dayMin - S.dayMin;
+        if (act && dm > 0) { const da = S.dayAct && S.dayAct.d === td ? Object.assign({}, S.dayAct) : { d:td }; da[act] = (da[act] || 0) + dm; patch.dayAct = da; }
       }
       // coins earned here go into this device's own count (see mergeCoins in sync.js); not when a sync brings in another device's coins
       if (patch.xp !== undefined && patch.xp > (S.xp || 0) && !this.noMin && !this.noSync && patch.xpDev === undefined) {
@@ -3679,7 +3686,16 @@
       const tabList = fm ? [['map', 'Map'], ['pass', 'Passport']] : [['explore', 'Explore'], ['map', 'Map'], ['pass', 'Passport'], ['shelf', 'Souvenirs'], ['stops', 'Postcards'], ['food', 'Food']];
          // a grid, not a scrolling strip: 3 across on a phone (two rows), all in one row on wide screens
       out.jyTabs = tabList.map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', sel:tabNow === t[0] ? 'true' : 'false', fn:() => this.jyTabSet(t[0]) }));
-      out.jyIsExplore = tabNow === 'explore'; out.jyExCls = tabNow === 'explore' ? 'jy-ex' : ''; out.jyNowShow = !fm && tabNow === 'explore'; out.jyIsMap = tabNow === 'map' || tabNow === 'explore'; out.jyIsStops = tabNow === 'stops'; out.jyIsFood = tabNow === 'food'; out.jyIsPass = tabNow === 'pass'; out.jyIsShelf = tabNow === 'shelf';
+      out.jyIsExplore = tabNow === 'explore'; out.jyExCls = tabNow === 'explore' ? 'jy-ex' : ''; out.jyNowShow = !fm && tabNow === 'explore';
+      // under the road card on Explore: coins toward the next stop, and the journey so far at a glance (a phone otherwise shows empty space here)
+      { const sv = {}; st.seen.forEach(id => { sv[id] = 1; });
+        const dishes = st.seen.filter(id => JWORLD.byStop[id] && JWORLD.byStop[id].k === 'D').length;
+        const souv = SOUV.filter(x => sv[x.stop]).length;
+        const stamped = Object.keys(st.done || {}).filter(id => JWORLD.byRegion[id]).length;
+        out.jyGlanceShow = out.jyNowShow;
+        out.jyCoinsNow = bal.toLocaleString('en-US') + ' coins';
+        out.jyGlance = [{ n:String(stamped), l:'of ' + JWORLD.order.length + ' regions stamped' }, { n:String(st.seen.length), l:st.seen.length === 1 ? 'stop visited' : 'stops visited' },
+          { n:String(dishes), l:dishes === 1 ? 'dish tasted' : 'dishes tasted' }, { n:String(souv), l:souv === 1 ? 'souvenir' : 'souvenirs' }]; } out.jyIsMap = tabNow === 'map' || tabNow === 'explore'; out.jyIsStops = tabNow === 'stops'; out.jyIsFood = tabNow === 'food'; out.jyIsPass = tabNow === 'pass'; out.jyIsShelf = tabNow === 'shelf';
       // the souvenir shelf (your own journey only): found when the stop that hides it is unlocked; the rest show as dark shapes with their region
       if (tabNow === 'shelf' && !fm) {
         const list = SOUV.filter(x => JWORLD.byStop[x.stop]); const got = list.filter(x => have[x.stop]); const fl = S.jySvFilter || 'all';
@@ -4071,6 +4087,21 @@
     // ----- the learning path and its stop lesson -----
     pathLevel = () => { const S = this.state; return S.plv && PATH_LVLS.indexOf(S.plv) >= 0 ? S.plv : pathFirstOpen(S); };
     pathSetLevel = (n) => { this.setState({ plv:n, pstop:'', plNote:'', plAlt:'' }); };
+    // the "My next stop" button on the Path: an IntersectionObserver on the current stop; the button shows (pjShow) only while that stop is off screen
+    pjShow = false; pjDir = 'down'; pjObs = null; pjEl = null;
+    pathJumpWatch = () => {
+      const cur = this.state.screen === 'path' ? document.querySelector('.pth-node.cur') : null;
+      if (!cur || typeof IntersectionObserver === 'undefined') { if (this.pjObs) { this.pjObs.disconnect(); this.pjObs = null; this.pjEl = null; } if (this.pjShow) { this.pjShow = false; } return; }
+      if (this.pjEl === cur) return;
+      if (this.pjObs) this.pjObs.disconnect();
+      this.pjEl = cur;
+      this.pjObs = new IntersectionObserver((es) => {
+        const e = es[es.length - 1]; const show = !e.isIntersecting, dir = e.boundingClientRect.top < 0 ? 'up' : 'down';
+        if (show !== this.pjShow || dir !== this.pjDir) { this.pjShow = show; this.pjDir = dir; this.setState({}); }
+      }, { rootMargin:'-60px 0px -90px 0px' });
+      this.pjObs.observe(cur);
+    };
+    pathJump = () => { const el = document.querySelector('.pth-node.cur'); if (el) el.scrollIntoView({ behavior:this.jyMotionOk() ? 'smooth' : 'auto', block:'center' }); };
     pathUnitToggle = (id, open) => { const pu = Object.assign({}, this.state.pu); pu[id] = open; this.setState({ pu }); };
     // "Continue" from Today: the path opens, glides to the stop you are on and centres it, then the stop opens
     pathContinue = (id) => {
@@ -4576,6 +4607,7 @@
         pthHas:PATH_LVLS.length > 0, pthNone:!PATH_LVLS.length, pthHasTabs:PATH_LVLS.length > 1, pthTabs:[], pthSub:'', pthPct:'0%', pthName:'', pthBlurb:'', pthKCls:'', pthHasHero:false, pthHeroImg:'', pthHasTag:false, pthTag:'', pthRailPct:'0%',
         pthHasNext:false, pthAllDone:false, pthNextKick:'', pthNextTitle:'', pthNextSub:'', pthNextWords:'', pthNextBtn:'', pthNextGo:() => {},
         pthUnits:[], pthSheet:false, pthSh:sh0, pthClose:this.pathClose, pthAlt:this.pathAlt,
+        pthFoldShow:false, pthFoldOpen:false, pthFoldText:'', pthFoldToggle:() => {}, pthJumpShow:false, pthJumpCls:'', pthJumpText:'', pthJump:() => {},
         pthSummit:false, smt:{ cls:'', title:'', sub:'', btn:'', go:() => {}, locked:false, unlocked:false, passed:false, early:() => {}, art:artUri('summit'), pct:'0%', hint:'' }
       };
       if (S.screen === 'path') {
@@ -4613,12 +4645,22 @@
         }
         const unitDone = us.map(u => u.stops.every(st => stopState(S, st) === 'done'));
         if (th && (th.kind === 'rail' || th.kind === 'terms' || th.kind === 'peaks')) out.pthRailPct = (us.length > 1 ? Math.round(Math.min(unitDone.filter(Boolean).length, us.length - 1) / (us.length - 1) * 100) : 0) + '%';
+        // finished units before the one you are on fold into one line ("✓ 8 units done"), until asked to show them
+        const foldN = nxt ? unitDone.slice(0, nxt.ui).reduce((a, d, i) => (a === i && d ? i + 1 : a), 0) : 0;
+        const showDone = !!S.pthShowDone;
+        out.pthFoldShow = foldN >= 2; out.pthFoldOpen = showDone;
+        out.pthFoldText = showDone ? 'Hide the ' + foldN + ' finished units' : '✓ ' + foldN + ' units done · ' + us.slice(0, foldN).reduce((a, u) => a + u.stops.length, 0) + ' stops. Show them';
+        out.pthFoldToggle = () => this.setState({ pthShowDone:!showDone });
+        const folded = (ui) => foldN >= 2 && !showDone && ui < foldN;
+        // the jump button: shows when the stop you are on is off screen (watched by pathJumpWatch after each draw)
+        out.pthJumpShow = !!nxt; out.pthJumpCls = this.pjShow ? 'show' : ''; out.pthJumpText = this.pjDir === 'up' ? '↑ My next stop' : '↓ My next stop'; out.pthJump = this.pathJump;
         const seenGroup = {};
         out.pthUnits = us.map((u, ui) => {
+          if (folded(ui)) return { id:u.id, cls:'folded', folded:true, hasBand:false, stops:[], dlg:[], hasDlg:false, open:false, toggle:() => {} };
           const states = u.stops.map(st => stopState(S, st));
           const tu = th && th.units ? th.units[u.id] : null;
           const grp = th && th.groups ? th.groups.find(g => { const a = us.findIndex(x => x.id === g.from), b = us.findIndex(x => x.id === g.to); return a >= 0 && ui >= a && ui <= b; }) : null;
-          const first = !!grp && !seenGroup[grp.id]; if (grp) seenGroup[grp.id] = 1;
+          const first = !!grp && !seenGroup[grp.id]; if (grp) seenGroup[grp.id] = 1;   // (a folded unit returns above, so the band goes on the group's first unit that shows)
           const gN = grp ? us.filter((x, xi) => { const a = us.findIndex(y => y.id === grp.from), b = us.findIndex(y => y.id === grp.to); return xi >= a && xi <= b; }).length : 0;
           const th0 = th ? th.kind : '';
           const lines = th0 === 'story' && tu && tu.lines ? tu.lines : [];
@@ -5611,12 +5653,15 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       if (pathStep || pathDoneToday > 0) planRows.push({ glyph:'路',
         title:pathAllDone ? 'Path: ' + (pathDoneToday === 1 ? 'a step' : pathDoneToday + ' steps') + ' done' : (pathTarget === 1 ? 'Path: ' + stopTitle(pathStep.st) : 'Path: ' + pathTarget + ' steps today'),
         meta:pathAllDone ? (pathStep ? 'Next: ' + stopTitle(pathStep.st) : 'You have walked the whole path') : (pathTarget === 1 ? stopMeta(pathStep.st) : pathFirstList.length > 1 ? 'Your first ' + pathFirstList.length + ' stops · ' + Math.min(pathDoneToday, pathFirstList.length) + ' of ' + pathFirstList.length + ' done' : pathDoneToday + ' of ' + pathTarget + ' done · Next: ' + stopTitle(pathStep.st)), done:pathAllDone,
-        stops:pathFirstList.length > 1 ? pathFirstList : [],
+        stops:pathFirstList.length > 1 ? pathFirstList : [], keepOpen:true, act:'path',
         run:pathStep ? () => this.pathContinue(pathStep.st.id) : () => this.go('path') });
-      if (toReviewN > 0 || S.rq.length > 0 || S.rcomplete) planRows.push({ glyph:'词', title:'Review words', meta:toReviewN > 0 ? toReviewN + (S.rcomplete ? ' still to review' : ' to review') : 'All caught up', done:S.rcomplete && toReviewN === 0,
+      if (toReviewN > 0 || S.rq.length > 0 || S.rcomplete) planRows.push({ glyph:'词', title:'Review words', meta:toReviewN > 0 ? toReviewN + (S.rcomplete ? ' still to review' : ' to review') : 'All caught up', done:S.rcomplete && toReviewN === 0, act:'review',
         run:() => { if (!S.rq.length && toReviewN > 0) this.reviewMore(); this.go('review'); } });
-      if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + (S.grdone ? ' still due' : ' due') : 'Nothing due, short practice', done:!!S.grdone && grvDueToday === 0, run:() => this.startGrammarReview(true) });
-      const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:t.run, stops:t.stops || [], hasStops:!!(t.stops && t.stops.length) }));
+      if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + (S.grdone ? ' still due' : ' due') : 'Nothing due, short practice', done:!!S.grdone && grvDueToday === 0, act:'grv', run:() => this.startGrammarReview(true) });
+      // a done row shows a tick and the minutes it took today (minutes are counted per row from the first day this was added; before that it says Done)
+      const actMin = (a) => (a && S.dayAct && S.dayAct.d === today ? S.dayAct[a] || 0 : 0);
+      const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:!!t.done, open:!t.done || !!t.keepOpen, cls:t.done ? 'done' : '', go:t.run, stops:t.stops || [], hasStops:!!(t.stops && t.stops.length),
+        doneText:actMin(t.act) ? actMin(t.act) + ' min' : 'Done' }));
       const gmDay = S.screen === 'home' ? this.gmOfDay(S) : null;
       const moreWays = [
         pathStep && pathAllDone ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), tint:'t-jade', cls:'', fn:() => this.pathContinue(pathStep.st.id) } : null,
@@ -5990,7 +6035,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const grvLvChips = (LVLS.length > 1 ? [{ label:'All', n:0 }].concat(LVLS.map(n => ({ label:'HSK ' + n, n }))) : []).map(c => ({ label:c.label, cls:(S.grvLv || 0) === c.n ? 'on' : '', fn:() => this.setState({ grvLv:c.n }) }));
       const lessonBest = S.gres[L.id];
       // how a lesson is built decides how its formula is drawn: word order gets role colours; frames, add-ons and pick-one lists stay plain, with only the key word marked
-      const slotRole = (t) => /^(subject|pronoun|owner)/i.test(t) ? 'who' : /^(time|place|where|when|how long)/i.test(t) ? 'when' : /^(verb|action|adjective|degree|how well|result|how)/i.test(t) ? 'does' : /^(object|thing|noun|amount|number|measure|owner or)/i.test(t) ? 'thing' : '';
+      const slotRole = (t) => /^(subject|pronoun|owner|doer)/i.test(t) ? 'who' : /^(time|place|where|when|how long|how \/ when)/i.test(t) ? 'when' : /^(verb|action|adjective|degree|how well|result|how)/i.test(t) ? 'does' : /^(object|thing|noun|amount|number|measure|owner or|someone)/i.test(t) ? 'thing' : '';
       const shapeOf = (() => {
         const ft = L.formula.map(f => f.t).join(' ');
         if (/…/.test(L.title) && /因为|所以|不但|如果|只要|除了|先|越|虽然|一边/.test(ft)) return { k:'frame', label:'Frame with blanks', hint:'The red words are the frame. Fill the gaps with your own words.' };
@@ -6004,7 +6049,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         explOpen:!S.explHide, explExpanded:S.explHide ? 'false' : 'true', explToggleText:S.explHide ? 'Show' : 'Hide', toggleExpl:() => this.setState({ explHide:!this.state.explHide }),
         shapeCls:'sh-' + shapeOf.k, shapeLabel:shapeOf.label, shapeHint:shapeOf.hint,
         explain:L.explain.map(t => ({ t })), hasMistakes:L.mistakes.length > 0, mistakes:L.mistakes.map(t => ({ t })),
-        examples:L.examples.map((e, i) => ({ zh:e.zh, py:e.py, en:e.en, pc:pc('g' + i), play:() => this.say(e.zh, 'g' + i), reportUrl:report('Grammar lesson: ' + L.title, e.zh + ' (' + e.py + ') ' + e.en) })),
+        examples:L.examples.map((e, i) => ({ zh:e.zh, py:e.py, en:e.en, parts:e.parts || [], hasParts:!!(e.parts && e.parts.length), noParts:!(e.parts && e.parts.length), pc:pc('g' + i), play:() => this.say(e.zh, 'g' + i), reportUrl:report('Grammar lesson: ' + L.title, e.zh + ' (' + e.py + ') ' + e.en) })),
         count:L.q.length + ' exercises · about ' + Math.max(2, Math.round(L.q.length * 0.7)) + ' minutes',
         covers:'Official grammar outline points: ' + L.covers.join(', '),
         reportUrl:report('Grammar lesson: ' + L.title, 'the explanation or examples'),
@@ -6066,7 +6111,13 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         gLearnOpen:navGroup === 'learn', gReviewOpen:navGroup === 'review', gTalkOpen:navGroup === 'talk',
         acctMiniCls:inBranch ? 'on' : '', hasBack:inBranch && curScreen !== 'acct',
         hasSubnav:subnavItems.length > 1,
-        subnav:subnavItems.map(o => { const n = o[0] === 'review' ? wordsDueN : o[0] === 'greview' ? grvDue : 0; return { label:o[1], cls:hlScreen === o[0] ? 'on' : '', fn:() => this.go(o[0]), hasN:n > 0, n }; }),
+        // Talk: Speaking's two modes (practice script, Talk with AI) are their own items here, so a phone shows one row instead of two stacked pill bars
+        subnav:(navGroup === 'talk' && HAS_SCRIPTS ? [['listen', 'Listening'], ['speak', 'Speaking'], ['speakai', 'Talk with AI']] : subnavItems).map(o => {
+          const n = o[0] === 'review' ? wordsDueN : o[0] === 'greview' ? grvDue : 0;
+          const aiNow = hlScreen === 'speak' && !!S.aiMode;
+          const on = o[0] === 'speakai' ? aiNow : o[0] === 'speak' ? hlScreen === 'speak' && !aiNow : hlScreen === o[0];
+          const fn = o[0] === 'speakai' ? () => { this.go('speak'); this.setAiMode(true); } : o[0] === 'speak' ? () => { this.go('speak'); this.setAiMode(false); } : () => this.go(o[0]);
+          return { label:o[1], cls:on ? 'on' : '', fn, hasN:n > 0, n }; }),
         inLib:['words', 'gtrack', 'grammar', 'web', 'pinyin'].indexOf(S.screen) >= 0, goLibrary:() => this.go('library'), isLibrary:S.screen === 'library',
         youFriends:!!(FR && FR.enabled()), youFriendsCls:'ylink' + (curScreen === 'friends' ? ' on' : ''), youSetCls:'ylink' + (curScreen === 'voice' ? ' on' : ''), youGuideCls:'ylink' + (curScreen === 'guide' ? ' on' : ''), youAchCls:'ylink' + (curScreen === 'ach' ? ' on' : ''),
         goSettings:() => this.go('voice'), goAch:() => this.go('ach'),

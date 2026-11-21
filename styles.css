@@ -3930,3 +3930,37 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .gm-m{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:12px;background:var(--bg)}
 .gm-m .zh{font-size:20px}
 @media (max-width:600px){.gm-zh{font-size:26px}.gm-card{padding:16px}.gm-head{padding:14px;gap:12px}.gm-hg{width:46px;height:46px;font-size:26px}.gm-row{padding:10px 12px}}
+.task-done{display:inline-flex;align-items:center;gap:3px;flex:none;white-space:nowrap}
+.task-done .ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.6}
+/* Path: finished units folded into one line, and the "My next stop" button */
+.pth-fold{align-self:stretch;display:block;width:100%;margin:0 0 12px;padding:14px 18px;border-radius:18px;border:1px dashed var(--line);background:transparent;color:var(--jade);font:inherit;font-weight:700;text-align:left;cursor:pointer}
+.pth-fold:hover{border-color:var(--jade);background:var(--jade-soft)}
+.pth-ent[hidden]{display:none}
+.pth-jump{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));z-index:40;transform:translate(-50%,24px);opacity:0;pointer-events:none;padding:11px 20px;border-radius:999px;border:0;background:var(--ink);color:var(--panel);font:inherit;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.22);transition:opacity .2s,transform .2s;cursor:pointer}
+.pth-jump.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+@media (min-width:901px){.pth-jump{bottom:28px}}
+@media (prefers-reduced-motion:reduce){.pth-jump{transition:none}}
+/* Journey > Explore: coins toward the next stop and the journey at a glance, under the road card */
+.jy-glance{order:1;display:flex;flex-direction:column;gap:14px;padding:16px 18px;border-radius:22px;background:var(--panel);border:1px solid var(--line)}
+.jy-gl-coin{display:flex;justify-content:space-between;gap:10px;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.jy-gl-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.jy-gl-s{display:flex;flex-direction:column;align-items:center;gap:0;text-align:center;padding:8px 4px;border-radius:14px;background:var(--bg)}
+.jy-gl-s b{font-size:20px;font-variant-numeric:tabular-nums}
+.jy-gl-s span{font-size:12.5px;line-height:1.25;color:var(--muted)}
+@media (max-width:420px){.jy-gl-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* phones: in Path lessons and quizzes the question and its answer buttons sit in the lower half of the card, near the thumb (only the small heading stays at the top) */
+@media (max-width:700px){
+  .app.am .quiz .q-card > .q-prompt,.app.am .quiz .q-card > .opts{margin-top:auto}
+  .app.am .quiz .q-card > .opts .opt{min-height:56px}
+}
+/* grammar examples cut into the formula's colours (content/example-parts.tsv) */
+.xpart{border-radius:6px;padding:0 2px}
+.xpart.who{background:#DCE6F3;color:#1F4E8C}
+.xpart.when{background:#F8E4CB;color:#8A4300}
+.xpart.does{background:var(--jade-soft);color:var(--jade)}
+.xpart.thing{background:#E6DFF1;color:#5A3E8A}
+.xpart.k{background:var(--seal);color:var(--on-seal)}
+.app.t-dark .xpart.who{background:#1E3550;color:#9CC0EE}
+.app.t-dark .xpart.when{background:#4A3418;color:#F0B36A}
+.app.t-dark .xpart.thing{background:#33284A;color:#C3AEEA}
+.xpart + .xpart{margin-left:2px}

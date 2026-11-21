@@ -6,8 +6,8 @@
 <title>Shanlu · HSK study path</title>
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=9c7c234f4d data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=1a0bc4fd8d data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=03338bf705 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=f61eb12760 data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=08b995b674 data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=82ca84cf78 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=6b5998626b data/hsk4-words.js?v=9ebcc5a250 data/hsk4-grammar.js?v=28032af4f3 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=432fbea51b data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=372a4da5b0 data/hsk5-words.js?v=1e54d78599 data/hsk5-grammar.js?v=212fbdddbc data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=376d0f56b1 data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=db77f8b5e5">
-<meta name="shanlu-version" content="5dd0f2b943">
+<meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=e454972364 data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=1a0bc4fd8d data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=3d38adc628 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=f61eb12760 data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=3135c6fdd2 data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=82ca84cf78 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=6b5998626b data/hsk4-words.js?v=9ebcc5a250 data/hsk4-grammar.js?v=eb819c8dc6 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=432fbea51b data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=372a4da5b0 data/hsk5-words.js?v=1e54d78599 data/hsk5-grammar.js?v=1726186051 data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=376d0f56b1 data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=db77f8b5e5">
+<meta name="shanlu-version" content="80a35f369c">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=84d00486c4">
+<link rel="stylesheet" href="styles.css?v=0a7503c7a8">
 </head>
 <body>
 <div id="app"></div>
@@ -466,7 +466,7 @@
               <div class="task-s">{{t.meta}}</div>
               <sc-if value="{{t.hasStops}}" hint-placeholder-val="{{ false }}"><span class="task-stops"><sc-for list="{{t.stops}}" as="s" hint-placeholder-count="4"><span class="tstop {{s.cls}}"><i>{{s.n}}</i><span class="tstop-t">{{s.title}}</span><em>{{s.kind}}</em></span></sc-for></span></sc-if>
             </div>
-            <sc-if value="{{t.done}}" hint-placeholder-val="{{ false }}"><span class="xpc">Done</span></sc-if>
+            <sc-if value="{{t.done}}" hint-placeholder-val="{{ false }}"><span class="xpc task-done"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>{{t.doneText}}</span></sc-if>
             <sc-if value="{{t.open}}" hint-placeholder-val="{{ true }}"><span class="task-go" aria-hidden="true">›</span></sc-if>
           </button>
         </sc-for>
@@ -844,6 +844,12 @@
       <sc-if value="{{jyLastShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="jy-last" data-on-click="{{jyLastOpen}}"><span class="jy-last-k">Latest stop</span><span class="jy-last-n"><b lang="zh-Hans" class="zh">{{jyLastZh}}</b> {{jyLastEn}}</span><span class="jy-last-s">{{jyLastKind}}</span></button></sc-if>
       <div class="jy-gorow"><button type="button" class="btn pri jy-go" disabled="{{jyGoOff}}" data-on-click="{{jyTravel}}">{{jyGoText}}</button><sc-if value="{{jyEarnShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="jy-earn" data-on-click="{{jyEarnOpen}}">How to earn?</button></sc-if></div>
     </div>
+    </sc-if>
+    <sc-if value="{{jyGlanceShow}}" hint-placeholder-val="{{ false }}">
+    <section class="jy-glance" aria-label="Your journey so far">
+      <div class="jy-gl-coin"><span>{{jyMeterLabel}}</span><span class="muted">{{jyCoinsNow}}</span></div>
+      <div class="jy-gl-stats"><sc-for list="{{jyGlance}}" as="g" hint-placeholder-count="4"><div class="jy-gl-s"><b>{{g.n}}</b><span>{{g.l}}</span></div></sc-for></div>
+    </section>
     </sc-if>
     <sc-if value="{{jyFriendMode}}" hint-placeholder-val="{{ false }}">
       <div class="jy-fbar"><button type="button" class="linkbtn" data-on-click="{{jyFriendBack}}">← My journey</button><b>{{jyFriendName}}'s journey</b><span class="muted">{{jyFriendSub}}</span></div>
@@ -1471,7 +1477,7 @@
         <div class="kick">Hear it in use</div>
         <sc-for list="{{lesson.examples}}" as="e" hint-placeholder-count="3">
           <div class="ex2">
-            <div class="ex-m"><div lang="zh-Hans" class="zh">{{e.zh}}</div><div class="py">{{e.py}}</div><div class="muted">{{e.en}}</div><a class="report" href="{{e.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a></div>
+            <div class="ex-m"><div lang="zh-Hans" class="zh"><sc-if value="{{e.hasParts}}" hint-placeholder-val="{{ false }}"><sc-for list="{{e.parts}}" as="p" hint-placeholder-count="4"><span class="xpart {{p.c}}">{{p.t}}</span></sc-for></sc-if><sc-if value="{{e.noParts}}" hint-placeholder-val="{{ true }}">{{e.zh}}</sc-if></div><div class="py">{{e.py}}</div><div class="muted">{{e.en}}</div><a class="report" href="{{e.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a></div>
             <button class="spk {{e.pc}}" aria-label="Hear this sentence" data-on-click="{{e.play}}">
               <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
             </button>
@@ -1506,12 +1512,7 @@
 
   <!-- SPEAK -->
   <sc-if value="{{isSpeak}}" hint-placeholder-val="{{ false }}">
-  <sc-if value="{{hasModeSwitch}}" hint-placeholder-val="{{ true }}">
-  <div class="seg2 modeseg" role="group" aria-label="Practice mode">
-    <button class="{{scriptCls}}" data-on-click="{{setScript}}">Practice script</button>
-    <button class="{{aiCls}}" data-on-click="{{setAi}}">Talk with AI</button>
-  </div>
-  </sc-if>
+  <!-- the two Speaking modes (practice script, Talk with AI) are items of the Talk strip above (subnav in app.js) -->
   <sc-if value="{{scriptMode}}" hint-placeholder-val="{{ true }}">
   <sc-if value="{{spPick}}" hint-placeholder-val="{{ false }}">
   <section class="spk-pick">
@@ -1532,7 +1533,7 @@
   </sc-if>
   <sc-if value="{{spChat}}" hint-placeholder-val="{{ true }}">
   <div class="speak">
-    <div class="banner">This is a practice script: you say your lines out loud yourself and nothing listens. For a real back-and-forth, use the Talk with AI tab (it needs a key in Settings). Pronunciation scoring is not built.</div>
+    <div class="banner">This is a practice script: you say your lines out loud yourself and nothing listens. For a real back-and-forth, use Talk with AI at the top (it needs a key in Settings). Pronunciation scoring is not built.</div>
     <section class="chat {{stageCls}}">
       <div class="chat-h">
         <button type="button" class="btn sm stage-back" data-on-click="{{spBack}}" aria-label="Back to all places"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Places</button>
@@ -1772,9 +1773,10 @@
           <button class="btn pri big" data-on-click="{{goReview}}">Go to Review</button>
         </section>
       </sc-if>
+      <sc-if value="{{pthFoldShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="pth-fold" aria-expanded="{{pthFoldOpen}}" data-on-click="{{pthFoldToggle}}">{{pthFoldText}}</button></sc-if>
       <div class="pth-list" style="--rail: {{pthRailPct}}">
       <sc-for list="{{pthUnits}}" as="u" hint-placeholder-count="3">
-        <div class="pth-ent {{u.cls}}">
+        <div class="pth-ent {{u.cls}}" hidden="{{u.folded}}">
         <sc-if value="{{u.hasBand}}" hint-placeholder-val="{{ false }}">
           <section class="pth-band">
             <img class="pth-band-img" src="{{u.bandImg}}" alt="" loading="lazy" width="600" height="240">
@@ -1827,6 +1829,7 @@
         </div>
       </sc-for>
       </div>
+      <sc-if value="{{pthJumpShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="pth-jump {{pthJumpCls}}" data-on-click="{{pthJump}}">{{pthJumpText}}</button></sc-if>
       <sc-if value="{{pthSummit}}" hint-placeholder-val="{{ false }}">
       <section class="card summit {{smt.cls}}" aria-label="The summit">
         <img class="summit-art" src="{{smt.art}}" alt="" aria-hidden="true" width="300" height="200">
@@ -3317,6 +3320,6 @@
 <script defer src="numbers.js?v=997b8744e4"></script>
 <script defer src="data/games.js?v=81a4332979"></script>
 <script defer src="data/path.js?v=988d907206"></script>
-<script defer src="app.js?v=f7372e2eeb"></script>
+<script defer src="app.js?v=326491f144"></script>
 </body>
 </html>

@@ -38,6 +38,36 @@ for _i, _c in enumerate(CATS):
         CAT_OF[_id] = _i
 
 
+
+# ---- example sentences coloured like the lesson's formula: content/example-parts.tsv (hand-cut, so a colour is never a guess) ----
+PART_ROLES = {'who', 'when', 'does', 'thing', 'k'}
+
+
+def example_parts_table():
+    """{(lesson id, example Chinese): [{t, c}]} from content/example-parts.tsv (every level's lessons are in the one file)."""
+    p = os.path.join(levelcfg.C, 'example-parts.tsv')
+    out = {}
+    if not os.path.exists(p):
+        return out
+    for n, line in enumerate(open(p, encoding='utf-8'), 1):
+        line = line.rstrip('\n')
+        if not line.strip() or line.startswith('#'):
+            continue
+        lid, cut = line.split('\t')
+        parts = []
+        for piece in cut.split(' | '):
+            m = re.match(r'^(who|when|does|thing|k)=(.*)$', piece)
+            parts.append(dict(t=m.group(2), c=m.group(1)) if m else dict(t=piece, c=''))
+        merged = []
+        for p_ in parts:
+            if merged and merged[-1]['c'] == p_['c']:
+                merged[-1]['t'] += p_['t']
+            else:
+                merged.append(dict(p_))
+        out[(lid, ''.join(p_['t'] for p_ in merged))] = merged
+    return out
+
+
 def main():
     LV = levelcfg.LEVEL
     eng = Engine(levelcfg.known())
@@ -136,6 +166,7 @@ def main():
             die('extra exercise %r names an unknown point %r' % (q_.get('zh'), q_.get('p')))
         MORE_BY_LESSON.setdefault(LESSON_OF_PT[q_['p']], []).append(q_)
 
+    PARTS = example_parts_table(); PARTS_USED = set()
     lessons = []
     for L in lessons_in:
         lid = L['id']
@@ -147,6 +178,11 @@ def main():
             formula.append(dict(t=text, k=key, z=bool(CJK.search(text)), sep='' if first else ('=' if res else '+')))
             first = False
         examples = [sent(e['zh'], e['en'])[0] for e in L['examples']]
+        for ex in examples:
+            parts = PARTS.get((lid, ex['zh']))
+            if parts:
+                ex['parts'] = parts
+                PARTS_USED.add((lid, ex['zh']))
         qs = []
         for n, q in enumerate(L['q'], 1):
             qs.append(build_q('%s q%d' % (lid, n), q, PT_OF.get((lid, n - 1))))
@@ -157,6 +193,9 @@ def main():
         lessons.append(dict(id=lid, title=L['title'], cat=CATS[ci]['name'], catOrder=ci, catBlurb=CATS[ci]['blurb'], covers=L['covers'], formula=formula, explain=L['explain'], examples=examples,
                             mistakes=L.get('mistakes', []), q=qs, qx=qx))
 
+    for (lid_, zh_) in PARTS:
+        if lid_ in ids and (lid_, zh_) not in PARTS_USED:
+            die('content/example-parts.tsv: %s has no example %r (the pieces must join back into an example of the lesson)' % (lid_, zh_))
     # write-your-own prompts: content/gwrite.tsv  =  point id <TAB> English prompt <TAB> a model answer <TAB> words the answer needs (a+b = both, a|b = either; a+b|c = both or c)
     WRITE = {}
     wp = os.path.join(levelcfg.CONTENT, 'gwrite.tsv')

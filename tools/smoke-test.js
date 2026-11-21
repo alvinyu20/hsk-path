@@ -1081,7 +1081,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.locator('button', { hasText: 'Save key' }).click();
   check((await text()).includes('Saved on this device') && (await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-ai')).key === 'sk-ant-test')), 'the key is saved on this device');
   await nav('Speak');
-  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
+  await page.locator(':is(.subnav button, .navsub .subl):visible', { hasText: 'Talk with AI' }).first().click();
   await page.waitForFunction(() => window.shanlu.state.aim.length >= 1 && !window.shanlu.state.aiBusy);
   check(await page.locator('input[aria-label="Your reply"]').count() === 0 && (await page.locator('.ai-tools').innerText()).includes('Type instead'), 'voice only is the default: no typing box until you ask for it');
   await page.locator('.ai-tools button', { hasText: 'Type instead' }).click();
@@ -1164,7 +1164,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   };
   await ctx.route('https://dashscope-intl.aliyuncs.com/**', aliHandler);
   await ctx.route('https://testws1.ap-southeast-1.maas.aliyuncs.com/**', aliHandler);
-  await page.locator('.modeseg button', { hasText: 'Practice script' }).click();
+  await page.locator(':is(.subnav button, .navsub .subl):visible', { hasText: 'Speaking' }).first().click();
   await page.locator('button', { hasText: 'Settings' }).first().click();
   await page.evaluate(() => window.shanlu.setSec('ai'));   // open that Settings row
   await page.locator('button', { hasText: /^Qwen \(Alibaba\)/ }).click();
@@ -1182,7 +1182,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   const testCall = aliCalls.find(c => c.body.model === 'qwen3-asr-flash');
   check(testCall && testCall.headers['authorization'] === 'Bearer sk-ali-test' && testCall.url.startsWith('https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions') && testCall.body.messages[0].content[0].input_audio.data.startsWith('data:audio/wav;base64,UklGR'), 'the recogniser request carries the key and a WAV clip to the Singapore endpoint');
   await nav('Speak');
-  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
+  await page.locator(':is(.subnav button, .navsub .subl):visible', { hasText: 'Talk with AI' }).first().click();
   await page.waitForFunction(() => window.shanlu.state.aim.length >= 1 && !window.shanlu.state.aiBusy);
   const ali1 = await page.locator('.msgs').innerText();
   check(ali1.includes('你好！你想去哪儿？') && ali1.includes('Nǐ hǎo! Nǐ xiǎng qù nǎr?') || ali1.includes('Nǐ xiǎng qù nǎlǐ'), 'Qwen opens the conversation, with pinyin from the site\'s own word list');
@@ -1191,12 +1191,12 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await page.locator('.chat-t span').innerText()).includes('Qwen'), 'the chat header says Qwen is answering');
   check(await page.locator('.ai-dock button', { hasText: 'Suggest a reply' }).count() === 1, 'Qwen replies also come with a suggested reply');
   // voice: record from the (fake) microphone, send to Alibaba's recogniser, the text lands in the box
-  await page.locator('.modeseg button', { hasText: 'Practice script' }).click();
+  await page.locator(':is(.subnav button, .navsub .subl):visible', { hasText: 'Speaking' }).first().click();
   await page.locator('button', { hasText: 'Settings' }).first().click();
   await page.evaluate(() => window.shanlu.setSec('ai'));   // open that Settings row
   await page.locator('button', { hasText: /^Alibaba Qwen3-ASR/ }).click();
   await nav('Speak');
-  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
+  await page.locator(':is(.subnav button, .navsub .subl):visible', { hasText: 'Talk with AI' }).first().click();
   await page.fill('input[aria-label="Your reply"]', '');
   const asrBefore = aliCalls.filter(c => c.body.model === 'qwen3-asr-flash').length;
   await page.locator('.ai-tools button', { hasText: 'Speak' }).click();
@@ -1301,7 +1301,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await page.evaluate(() => window.shanlu.state.memFacts.map(f => f.t))).join() === 'learner has a cat', 'one fact can be forgotten');
   await page.locator('button', { hasText: 'On: Mingming remembers' }).click();
   await nav('Speak');
-  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
+  await page.locator(':is(.subnav button, .navsub .subl):visible', { hasText: 'Talk with AI' }).first().click();
   aliRemember = ['learner likes tea'];
   await say('你好');
   check(lastSys().includes('Always use an empty list for "remember"') && !lastSys().includes('learner has a cat') && (await page.evaluate(() => window.shanlu.state.memFacts.length)) === 1, 'with memory switched off nothing is sent or kept');
@@ -1312,7 +1312,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check((await page.evaluate(() => window.shanlu.state.memFacts.length)) === 0 && (await text()).includes('Nothing remembered yet'), 'Forget everything empties the list');
   aliRemember = [];
   await nav('Speak');
-  await page.locator('.modeseg button', { hasText: 'Talk with AI' }).click();
+  await page.locator(':is(.subnav button, .navsub .subl):visible', { hasText: 'Talk with AI' }).first().click();
   // hands-free: the microphone opens by itself when Mingming has finished speaking
   await page.locator('.ai-tools button', { hasText: 'Voice only' }).click();
   aliUnderstood = null;
@@ -1345,7 +1345,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(aliCalls.some(c => c.url.startsWith('https://testws1.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1/chat/completions')), 'a workspace ID switches to the workspace web address');
   await page.evaluate(() => { const app = window.shanlu; app.setState({ aliWsInput:'' }); app.aliSaveKey(); app.setProvider('anthropic'); app.setAsr('browser'); });
   check((await page.evaluate(() => window.shanlu.state.aiProvider)) === 'anthropic', 'you can switch back to Claude');
-  await page.locator('.modeseg button', { hasText: 'Practice script' }).click();
+  await page.locator(':is(.subnav button, .navsub .subl):visible', { hasText: 'Speaking' }).first().click();
   await page.locator('button', { hasText: 'Settings' }).first().click();
   await page.evaluate(() => window.shanlu.setSec('ai'));   // open that Settings row
   await page.locator('button', { hasText: 'Remove the key' }).click();
