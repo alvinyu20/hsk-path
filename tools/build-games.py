@@ -66,6 +66,7 @@ def main():
         if not os.path.exists(p):
             continue
         words = known(n); allowed = set(words); chars = set(''.join(allowed))
+        os.environ['LEVEL'] = str(n)   # the engine reads lexicon-words.tsv entries up to this level (慢慢 mànmàn is an HSK 2 entry)
         eng = Engine(words); lids = lesson_ids(n)
         sets = []
         for S in json.load(open(p, encoding='utf-8')):

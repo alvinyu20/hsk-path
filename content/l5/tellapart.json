@@ -29,11 +29,11 @@
    "而且": "而且 is 'and what's more': it adds a point in the same direction."
   },
   "items": [
-   {"zh": "吃了药，他的病不但没好，[反而]更重了。", "en": "After the medicine he didn't get better; instead he got worse.", "why": "The opposite of what was expected: 反而."},
+   {"zh": "我以为他会生气，他[反而]笑了。", "en": "I thought he'd get angry, but instead he laughed.", "why": "The opposite of what was expected: 反而."},
    {"zh": "这家饭店的菜很好吃，[而且]不贵。", "en": "This restaurant's food is good, and it isn't expensive either.", "why": "One more good point: 而且."},
    {"zh": "我想帮他，他[反而]生气了。", "en": "I wanted to help him, but instead he got angry.", "why": "Not the expected result: 反而."},
    {"zh": "她会唱歌，[而且]唱得非常好。", "en": "She can sing, and she sings really well.", "why": "Adding a stronger point: 而且."},
-   {"zh": "风不但没停，[反而]越来越大了。", "en": "The wind didn't stop; on the contrary, it got stronger.", "why": "不但没…反而…: the opposite happened."},
+   {"zh": "休息了一天，他[反而]更累了。", "en": "After a day's rest he was, if anything, even more tired.", "why": "Rest should help, but the opposite happened: 反而."},
    {"zh": "这份工作很轻松，[而且]离家很近。", "en": "This job is easy, and it's close to home as well.", "why": "One more point the same way: 而且."},
    {"zh": "他比我小，[反而]比我懂得多。", "en": "He's younger than me, yet he knows more than I do.", "why": "Opposite to what you'd expect: 反而."},
    {"zh": "这本书内容丰富，[而且]写得很有意思。", "en": "This book is full of content, and it's interesting too.", "why": "Adding a point: 而且."}

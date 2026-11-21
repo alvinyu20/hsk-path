@@ -96,7 +96,7 @@
    {"zh": "[刚才]你去哪儿了？", "en": "Where did you go just now?", "why": "Before the person (你), only the time word 刚才 can go."},
    {"zh": "我[刚]来两天，还不太习惯。", "en": "I only arrived two days ago, so I'm not used to it yet.", "why": "刚 + verb + length of time: 刚来两天."},
    {"zh": "[刚才]我没听清楚，请再说一遍。", "en": "I didn't hear clearly just now. Please say it again.", "why": "Before 没, and at the start: 刚才."},
-   {"zh": "他[刚]到家就下雨了。", "en": "It started raining just as he got home.", "why": "刚…就…: as soon as it had just happened."},
+   {"zh": "我[刚]学了一个月汉语，还说得不好。", "en": "I've only been learning Chinese for a month, so I don't speak it well yet.", "why": "刚 + verb + length of time: 刚学了一个月. 刚才 cannot take a length of time."},
    {"zh": "现在比[刚才]好多了。", "en": "It's much better now than a moment ago.", "why": "After 比 you need a noun-like time word: 刚才."},
    {"zh": "这件衣服是我[刚]买的。", "en": "I just bought this jacket.", "why": "Right before the verb, 'just': 刚. 刚才 also works here ('a moment ago').", "also": ["刚才"]},
    {"zh": "[刚才]的电话是谁打的？", "en": "Who was that on the phone just now?", "why": "刚才的 describes a noun; 刚 cannot."},
