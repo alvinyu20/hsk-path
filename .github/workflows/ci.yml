@@ -53,7 +53,7 @@ jobs:
       matrix:
         include:
           - name: friends, sync, offline copy
-            run: node tools/smoke-test-friends.js && node tools/smoke-test-pwa.js && node tools/smoke-test-grv-variety.js && node tools/smoke-test-hear-sentence.js && node tools/smoke-test-spot-also.js && node tools/smoke-test-passages.js && node tools/smoke-test-theme.js && node tools/smoke-test-cloze-alts.js
+            run: node tools/smoke-test-friends.js && node tools/smoke-test-pwa.js && node tools/smoke-test-grv-variety.js && node tools/smoke-test-hear-sentence.js && node tools/smoke-test-spot-also.js && node tools/smoke-test-passages.js && node tools/smoke-test-ladder.js && node tools/smoke-test-theme.js && node tools/smoke-test-cloze-alts.js
           - name: HSK 1
             run: node tools/smoke-test.js
           - name: HSK 2

@@ -72,30 +72,45 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await tap(page.locator('.psg-ansb .btn', { hasText: 'Back to the Path' }));
     const st = await page.evaluate(() => { const b = (window.shanlu.state); return true; });
     const pref = await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-person') || '{}').prefs['psg.p1-family']);
-    check(pref && pref.v && pref.v.b === 3 && pref.v.n === 2, 'the best result is saved with the person (best 3, twice)' + tag);
-    // speed: 0.8×, 1× and 1.25× buttons; the fast-ear challenge pays once for all right after listening only at 1.25×
+    check(pref && pref.v && pref.v.b === 3 && pref.v.n === 2 && pref.v.r === 1, 'the best result is saved with the person (best 3, twice, speed rung 1×)' + tag);
+    check(/New speed rung: 1×/.test(t), 'all right at 1× clears the 1× rung (no coins for it)' + tag);
+    // speed rungs: 0.8×, 1×, 1.25× and 1.5× buttons; a rung pays once, for all right after listening only at that speed or faster
     await page.evaluate(() => window.shanlu.pathStart('h1.l.p1-family')); await page.waitForSelector('.psg-card');
     const spd = await page.locator('.psg-speed .fc2').allInnerTexts();
-    check(spd.join(' ') === '0.8× 1× 1.25×' && await page.locator('.psg-speed .fc2.on').innerText() === '1×', 'the passage has its own speed buttons, 1× to start (' + spd.join(' ') + ')' + tag);
-    check(/Fast-ear challenge: listen only at 1\.25×/.test(await page.locator('.psg-fast').innerText()), 'the fast-ear challenge is explained before playing' + tag);
+    check(spd.join(' ') === '0.8× 1× 1.25× 1.5×' && await page.locator('.psg-speed .fc2.on').innerText() === '1×', 'the passage has its own speed buttons, 1× to start (' + spd.join(' ') + ')' + tag);
+    const rg = await page.locator('.psg-card .rung').allInnerTexts();
+    check(rg.length === 4 && await page.locator('.psg-card .rung.got').count() === 2 && /1\.25×/.test(await page.locator('.psg-card .rung.next').innerText())
+      && /Next rung: 1\.25×.*\+10 coins/.test(await page.locator('.psg-card .rung-t').innerText()), 'the ladder shows 0.8× and 1× cleared and 1.25× next, with its coins (' + rg.join(' ').replace(/\s+/g, ' ') + ')' + tag);
     await tap(page.locator('.psg-speed .fc2', { hasText: '1.25×' }));
     await tap(page.locator('.psg-play .btn', { hasText: 'Play the conversation' }));
-    check(await page.evaluate(() => window.shanlu.state.psg.minRate === 1.25) && /challenge on/.test(await page.locator('.psg-fast').innerText()), 'playing at 1.25× turns the challenge on' + tag);
+    check(await page.evaluate(() => window.shanlu.state.psg.minRate === 1.25) && /counts for the 1\.25× rung/.test(await page.locator('.psg-card .rung-t').innerText()), 'playing at 1.25× makes this try count for the 1.25× rung' + tag);
     await tap(page.locator('.psg-play .btn', { hasText: 'Answer the questions' }));
     for (let i = 0; i < 3; i++) {
       const k = await page.evaluate(() => { const g = window.shanlu.state.psg; return g.ord[g.qi].indexOf(0); });
       await tap(page.locator('.psg-opts .opt').nth(k)); await tap(page.locator('.psg-ansb .btn.pri'));
     }
     t = await page.locator('.psg-card').innerText();
-    check(/3 of 3 right/.test(t) && /\+16 coins/.test(t) && /fast ear: \+10/.test(t), 'all right at 1.25× pays the fast-ear bonus: 6 + 10 (' + (/\+\d+ coins[^\n]*/.exec(t) || [''])[0] + ')' + tag);
-    const pp = await page.evaluate(() => { const pr = JSON.parse(localStorage.getItem('shanlu-person') || '{}').prefs; return { sp: pr.psgSpeed && pr.psgSpeed.v, f: pr['psg.p1-family'] && pr['psg.p1-family'].v.f }; });
-    check(pp.sp === 1.25 && pp.f === 1, 'the chosen speed and the earned challenge are saved with the person' + tag);
-    // once earned, it is not offered or paid again; slowing down before the questions switches it off
+    check(/3 of 3 right/.test(t) && /\+16 coins/.test(t) && /1\.25× rung: \+10/.test(t), 'all right at 1.25× pays the 1.25× rung: 6 + 10 (' + (/\+\d+ coins[^\n]*/.exec(t) || [''])[0] + ')' + tag);
+    const pp = await page.evaluate(() => { const pr = JSON.parse(localStorage.getItem('shanlu-person') || '{}').prefs; return { sp: pr.psgSpeed && pr.psgSpeed.v, r: pr['psg.p1-family'] && pr['psg.p1-family'].v.r }; });
+    check(pp.sp === 1.25 && pp.r === 1.25, 'the chosen speed and the cleared rung are saved with the person' + tag);
+    // a rung is paid once; a slower listen keeps this try below the next rung
     await tap(page.locator('.psg-ansb .btn', { hasText: 'Listen and answer again' }));
-    check(await page.locator('.psg-fast').count() === 0 && await page.locator('.psg-speed .fc2.on').innerText() === '1.25×', 'the challenge is not offered again, and the speed is remembered' + tag);
+    check(await page.locator('.psg-card .rung.got').count() === 3 && await page.locator('.psg-speed .fc2.on').innerText() === '1.25×', 'three rungs are cleared now, and the speed is remembered' + tag);
     await page.evaluate(() => window.shanlu.psgSetSpeed(0.8));
     await tap(page.locator('.psg-play .btn', { hasText: 'Play the conversation' }));
-    check(await page.evaluate(() => window.shanlu.state.psg.minRate === 0.8), 'a slower listen is remembered for this try' + tag);
+    check(await page.evaluate(() => window.shanlu.state.psg.minRate === 0.8) && /cannot climb past your 1\.25× rung/.test(await page.locator('.psg-card .rung-t').innerText()), 'a slower listen is remembered for this try, and the ladder says it cannot climb' + tag);
+    // 1.5×: the last rung, +15 coins, and the 1.5× club
+    await page.evaluate(() => window.shanlu.psgOpen('p1-family')); await page.evaluate(() => window.shanlu.psgSetSpeed(1.5));
+    await tap(page.locator('.psg-play .btn', { hasText: 'Play the conversation' }));
+    await tap(page.locator('.psg-play .btn', { hasText: 'Answer the questions' }));
+    for (let i = 0; i < 3; i++) {
+      const k = await page.evaluate(() => { const g = window.shanlu.state.psg; return g.ord[g.qi].indexOf(0); });
+      await tap(page.locator('.psg-opts .opt').nth(k)); await tap(page.locator('.psg-ansb .btn.pri'));
+    }
+    t = await page.locator('.psg-card').innerText();
+    check(/\+21 coins/.test(t) && /1\.5× rung: \+15/.test(t), 'all right at 1.5× pays the 1.5× rung: 6 + 15 (' + (/\+\d+ coins[^\n]*/.exec(t) || [''])[0] + ')' + tag);
+    check(await page.evaluate(() => window.shanlu.achMetrics().rung15 === 1), 'the 1.5× club counts the passage' + tag);
+    await page.evaluate(() => window.shanlu.psgSetSpeed(1));
     await page.evaluate(() => window.shanlu.psgSetSpeed(1));
     // a question whose answer needs two lines shows both and plays both (p1-fruit Q1: the apples are in line 1, the buying in line 5)
     await page.evaluate(() => window.shanlu.pathStart('h1.l.p1-fruit')); await page.waitForSelector('.psg-card');

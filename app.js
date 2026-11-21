@@ -332,9 +332,19 @@
   Object.keys(window.SHANLU_PASSAGES || {}).forEach(n => (window.SHANLU_PASSAGES[n] || []).forEach(p => { PSG_BY[p.id] = p; }));
   const PSG_COIN = 10, PSG_BONUS = 10, PSG_AGAIN = 2;   // first time: 10 per right answer and 10 more when all are right; after that 2 per right answer
   // passage speed (its own setting, saved as the person pref 'psgSpeed'; absolute, not a multiple of the voice speed in Settings).
-  // Fast-ear challenge: listen only at 1.25× before answering and get every question right: PSG_FAST_BONUS more, once per passage.
-  const PSG_SPEEDS = [0.8, 1, 1.25], PSG_FAST = 1.25, PSG_FAST_BONUS = 10;
+  // Speed rungs (0.8×, 1×, 1.25×, 1.5×): get every question right after hearing it only at a speed or faster, and that rung (and the ones
+  // below it) is cleared for good. The first clear of 1.25× and of 1.5× pays coins, once per passage (RUNG_COIN.psg).
+  // Listening lab clips have rungs too: every word right in Dictation (RUNG_COIN.clip), saved as the person pref 'cr.' + the clip's Chinese.
+  const RUNGS = [0.8, 1, 1.25, 1.5];
+  const RUNG_COIN = { psg:{ 1.25:10, 1.5:15 }, clip:{ 1.25:3, 1.5:5 } };
+  const rungOf = (rate) => RUNGS.filter(r => rate >= r - 1e-9).pop() || 0;   // the highest rung at or below a speed
+  const rungX = (r) => String(r) + '×';
+  const rungPay = (kind, from, to) => RUNGS.filter(r => r > from && r <= to).reduce((a, r) => a + (RUNG_COIN[kind][r] || 0), 0);
+  const rungNext = (best) => RUNGS.find(r => r > best) || 0;
+  const PSG_SPEEDS = RUNGS;
   const psgSpeed = () => { const v = Number(prefGet('psgSpeed', 1)); return PSG_SPEEDS.indexOf(v) >= 0 ? v : 1; };
+  const psgRung = (res) => (res ? Math.max(res.r || 0, res.f ? 1.25 : 0) : 0);   // f: the old fast-ear flag (all right at 1.25×)
+  const clipRung = (zh) => Number(prefGet('cr.' + zh, 0)) || 0;
   const wPage = () => (prefGet('wview', 'cards') === 'list' ? 100 : 40);   // My words shows this many at a time (the compact list shows more)
   const psgRes = (id) => prefGet('psg.' + id, null);
   const PATH_U = {}, STOP_BY = {};
@@ -566,9 +576,9 @@
       gdone:false, grdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       plv:0, pstop:'', pu:{}, pl:null, plNote:'', plAlt:'', acctEdit:false,
       sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
-      woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false,
+      woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false, shrec:'idle', shurl:'', shnote:'',
       wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wcover:'all', wpeek:{}, jyPlay:'', jyPlayStamp:false, wopptab:'all', wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, syncKeys:prefGet('syncKeys', false) === true, aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), lsnNote:'', memOn:memOn(), memFacts:memFacts().slice(), aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, aiTesting:false, syncTesting:false, frTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
-      lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dtyped:'', dchecked:false, dmarks:[], dreveal:0, mtyped:'', mchecked:false, mbusy:false, mres:null, merr:'', mpeek:0, mmix:false, mbest:{},
+      lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dmin:0, drung:null, dtyped:'', dchecked:false, dmarks:[], dreveal:0, mtyped:'', mchecked:false, mbusy:false, mres:null, merr:'', mpeek:0, mmix:false, mbest:{},
       tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
     };
@@ -604,10 +614,10 @@
     ['写', 'Write your own sentence', 'When it is right', '12'],
     ['路', 'Path word stop', 'The first time you finish it', String(STOP_COINS)],
     ['音', 'Pinyin lesson', 'The first time you finish it', String(PY_COINS)],
-    ['听', 'Listening passage (Path)', 'Each right answer the first time, +10 when all are right (2 later), +10 once for all right at 1.25× speed', '10'],
+    ['听', 'Listening passage (Path)', 'Each right answer the first time, +10 when all are right (2 later); speed rungs: +10 the first time all are right at 1.25×, +15 at 1.5×', '10'],
     ['说', 'Speaking conversation', 'Each one you finish', '10'],
     ['复', 'Review', 'Each card (a new word: 3 per step, 5 when it sticks)', '2 to 5'],
-    ['听', 'Listening lab', 'Each word you catch or understand', '1 a word'],
+    ['听', 'Listening lab', 'Each word you catch or understand; speed rungs in Dictation: +3 the first time a clip is all right at 1.25×, +5 at 1.5×', '1 a word'],
     ['跟', 'Shadowing', 'After three rounds of a clip', '6'],
     ['网', 'Word webs', 'A word you knew (1 if not)', '3'],
     ['聊', 'AI chat', 'Each message you send', '2'],
@@ -1389,6 +1399,15 @@
     for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
     return btoa(bin);
   };
+  // shadowing: cut the silence before and after you speak (keeping a little), and bring the loudest point to a steady level so your try is as loud as the clip
+  const shTidy = (pcm, rate) => {
+    const win = Math.round(rate * 0.02), n = Math.floor(pcm.length / win); let first = -1, last = -1, peak = 0;
+    for (let k = 0; k < n; k++) { let sum = 0; for (let i = k * win; i < (k + 1) * win; i++) sum += pcm[i] * pcm[i]; if (Math.sqrt(sum / win) > 0.015) { if (first < 0) first = k; last = k; } }
+    const a = first < 0 ? 0 : Math.max(0, (first - 8) * win), b = first < 0 ? pcm.length : Math.min(pcm.length, (last + 12) * win);
+    const out = pcm.slice(a, b); for (let i = 0; i < out.length; i++) peak = Math.max(peak, Math.abs(out[i]));
+    if (peak > 0.01) { const g = Math.min(8, 0.9 / peak); for (let i = 0; i < out.length; i++) out[i] *= g; }
+    return out;
+  };
   // average neighbouring samples down to 16 kHz (the recording is taken straight from the microphone, so nothing has to be decoded)
   const to16k = (pcm, rate) => {
     if (rate === 16000) return pcm;
@@ -1776,6 +1795,9 @@
     { id:'mean1', grp:'Sounds', icon:'💡', title:'First translation', desc:'You heard a clip and said what it means in English.', hint:'Get a clip right in the Meaning mode of the Listening lab.', test:m => m.meanings >= 1 },
     { id:'mean10', grp:'Sounds', icon:'🌟', title:'10 translations', desc:'Ten clips understood without reading a thing.', hint:'Get 10 clips right in the Meaning mode.', test:m => m.meanings >= 10, prog:m => [m.meanings, 10] },
     { id:'clip1', grp:'Sounds', icon:'🎧', title:'First clip', desc:'You tried your first Listening lab clip.', hint:'Try a clip in the Listening lab.', test:m => m.clips >= 1 },
+    { id:'fast125', grp:'Sounds', icon:'🐇', title:'Quick ear', desc:'You cleared the 1.25× speed rung on a clip or a conversation.', hint:'Get every word of a Dictation clip, or every question of a listening passage, right after hearing it only at 1.25× or faster.', test:m => m.rung125 >= 1 },
+    { id:'fast15', grp:'Sounds', icon:'⚡', title:'1.5× club', desc:'Every word or every answer right at one and a half times normal speed. Faster than most people talk.', hint:'Clear the 1.5× speed rung on a Dictation clip or a listening passage.', test:m => m.rung15 >= 1 },
+    { id:'fast15x10', grp:'Sounds', icon:'🏎️', title:'1.5× regular', desc:'Ten clips or conversations cleared at 1.5×.', hint:'Clear the 1.5× speed rung 10 times (different clips or passages).', test:m => m.rung15 >= 10, prog:m => [m.rung15, 10] },
     { id:'clip10', grp:'Sounds', icon:'👂', title:'10 clips', desc:'Ten clips from the Listening lab.', hint:'Try 10 Listening lab clips.', test:m => m.clips >= 10, prog:m => [m.clips, 10] },
     { id:'hub1', grp:'Collecting', icon:'🌐', title:'Word family complete', desc:'Every word that shares one character, started.', hint:'Start every word in one Shared character family.', test:m => m.hubs >= 1 },
     { id:'hub10', grp:'Collecting', icon:'🪢', title:'10 word families', desc:'Ten shared characters, all their words started.', hint:'Finish 10 Shared character families.', test:m => m.hubs >= 10, prog:m => [m.hubs, 10] },
@@ -3869,6 +3891,9 @@
       m.pyTotal = (PYC.lessons || []).length; m.pyDone = (PYC.lessons || []).filter(l => pyDoneAt(l.id)).length;
       m.scenes = Math.max(scenesSaved, Object.keys(S.sres || {}).filter(id => S.sres[id]).length); m.scenesAll = HAS_SCRIPTS && SCEN.length > 0 && SCEN.every(sc => S.sres[sc.id]);
       m.meanings = Object.keys(S.mbest || {}).filter(z => S.mbest[z] >= 2).length;
+      { let r125 = 0, r15 = 0;   // speed rungs, kept with the person (every level): 'cr.' + clip, 'psg.' + passage
+        Object.keys(PERSON.prefs).forEach(k => { const r = k.indexOf('cr.') === 0 ? clipRung(k.slice(3)) : k.indexOf('psg.') === 0 ? psgRung(prefGet(k, null)) : 0; if (r >= 1.25) r125++; if (r >= 1.5) r15++; });
+        m.rung125 = r125; m.rung15 = r15; }
       m.clips = Math.max(clipsSaved, (S.clipBest || []).filter(x => x > 0).length); m.hubs = Math.max(hubsSaved, HUBS.filter(h => h.words.length && h.words.every(w => started(S.ws[w.zh]))).length);
       { const grOpen = (() => { const greg = gptReg(); return Object.keys(greg).filter(id => gptOpen(S, id)).length; })();
         m.fullDay = S.pbase != null && pathDoneCount(S) > S.pbase && !!S.rcomplete && (!grOpen || (!!S.grdone && !Object.keys(gptReg()).some(id => gptOpen(S, id) && gptDueNow(S, id)))); }
@@ -4176,23 +4201,39 @@
       SFX.play(ok ? 'ok' : 'bad');
       this.setState({ psg:Object.assign({}, g, { pick:k, checked:true, ans:g.ans.concat([ok]) }) });
     };
-    psgHearLine = () => { const g = this.state.psg; const p = g && PSG_BY[g.id]; if (!p) return; this.ttsUnlock(); this.speakLines(this.psgLines(p, p.qs[g.qi].line), 'psgl', psgSpeed()); };
+    psgHearLine = () => {
+      const g = this.state.psg; const p = g && PSG_BY[g.id]; if (!p) return; this.ttsUnlock(); this.speakLines(this.psgLines(p, p.qs[g.qi].line), 'psgl', psgSpeed());
+      if (!g.checked && g.minRate && psgSpeed() < g.minRate) this.setState({ psg:Object.assign({}, g, { minRate:psgSpeed() }) });   // a slower replay before answering counts for the rung
+    };
     psgNext = () => {
       const S = this.state; const g = S.psg; const p = g && PSG_BY[g.id]; if (!p || !g.checked) return;
       if (g.qi + 1 < p.qs.length) { this.setState({ psg:Object.assign({}, g, { qi:g.qi + 1, pick:null, checked:false }) }); return; }
       const right = g.ans.filter(Boolean).length, n = p.qs.length; const prev = psgRes(p.id);
-      const fast = right === n && g.minRate >= PSG_FAST && !(prev && prev.f);   // the fast-ear challenge, once per passage
-      const gain = (prev ? right * PSG_AGAIN : right * PSG_COIN + (right === n ? PSG_BONUS : 0)) + (fast ? PSG_FAST_BONUS : 0);   // the first time pays most, so a passage is not a coin farm
-      prefSet('psg.' + p.id, Object.assign({ b:Math.max(prev ? prev.b : 0, right), n:(prev ? prev.n : 0) + 1 }, fast || (prev && prev.f) ? { f:1 } : {}));
+      const was = psgRung(prev), now = right === n ? Math.max(was, rungOf(g.minRate || 0)) : was;   // speed rungs: all right after hearing it only at that speed or faster
+      const rungGain = rungPay('psg', was, now);
+      const gain = (prev ? right * PSG_AGAIN : right * PSG_COIN + (right === n ? PSG_BONUS : 0)) + rungGain;   // the first time pays most, so a passage is not a coin farm
+      prefSet('psg.' + p.id, Object.assign({ b:Math.max(prev ? prev.b : 0, right), n:(prev ? prev.n : 0) + 1 }, now ? { r:now } : {}, now >= 1.25 ? { f:1 } : {}));
       if (right === n) SFX.play('ok');
-      this.setState({ psg:Object.assign({}, g, { stage:'done', right, gain, first:!prev, fast }), xp:S.xp + gain, dayXp:S.dayXp + gain, dayMin:S.dayMin + Math.max(2, Math.round((Date.now() - g.t0) / 60000)) });
+      this.setState({ psg:Object.assign({}, g, { stage:'done', right, gain, first:!prev, rungUp:now > was ? now : 0, rungGain }), xp:S.xp + gain, dayXp:S.dayXp + gain, dayMin:S.dayMin + Math.max(2, Math.round((Date.now() - g.t0) / 60000)) });
     };
     psgAgain = () => { const g = this.state.psg; if (g) this.psgOpen(g.id); };
     psgBack = () => { this.stopNative(); this.go('path'); };
     psgTog = (k) => { const g = this.state.psg; if (g) this.setState({ psg:Object.assign({}, g, { [k]:!g[k] }) }); };
+    // the speed-rung ladder shown on a passage (before you answer) and on a Dictation clip. best: the rung already cleared;
+    // heard: the slowest speed heard on this try (0 when nothing has played yet)
+    rungView = (kind, best, show, heard) => {
+      const next = rungNext(best), pay = next ? RUNG_COIN[kind][next] || 0 : 0, can = heard ? rungOf(heard) : 0;
+      const what = kind === 'psg' ? 'every question' : 'every word';
+      const text = !next ? 'Every speed rung cleared. That is a fast ear.'
+        : heard && can > best ? 'This try counts for the ' + rungX(can) + ' rung' + (rungPay(kind, best, can) ? ' (+' + rungPay(kind, best, can) + ' coins)' : '') + ' if you get ' + what + ' right.'
+        : heard ? 'You heard it at ' + rungX(heard) + ', so this try cannot climb past ' + (best ? 'your ' + rungX(best) + ' rung' : 'the ' + rungX(can || 0.8) + ' rung') + '. Speed up and play it again to climb.'
+        : 'Next rung: ' + rungX(next) + '. Get ' + what + ' right after hearing it only at ' + rungX(next) + ' or faster' + (pay ? ' for +' + pay + ' coins' : '') + '.';
+      return { show, text, cls:heard && can <= best && next ? 'off' : (heard ? 'on' : ''),
+        steps:RUNGS.map(r => ({ label:rungX(r), cls:r <= best ? 'got' : r === next ? 'next' : '', mark:r <= best ? '✓' : '' })) };
+    };
     psgVals = (S) => {
       const g = S.psg; const p = g && PSG_BY[g.id];
-      const out = { isPassage:false, psgIntro:false, psgIsQ:false, psgIsDone:false, psgOpts:[], psgLines:[], psgChecked:false };
+      const out = { isPassage:false, psgIntro:false, psgIsQ:false, psgIsDone:false, psgOpts:[], psgLines:[], psgChecked:false, psgRg:{ show:false, steps:[] } };
       if (S.screen !== 'passage' || !p) return out;
       const n = p.qs.length; const q = p.qs[Math.min(g.qi, n - 1)]; const ord = g.ord[Math.min(g.qi, n - 1)];
       const who = (s) => (s === '男' ? '男' : '女');
@@ -4205,12 +4246,8 @@
         psgPlay:this.psgPlay, psgPlayCls:(g.stage === 'intro' && !g.played ? 'pri' : '') + (S.playing === 'psg' ? ' on' : ''),
         psgPlayText:S.playing === 'psg' ? 'Playing…' : g.played ? 'Play the conversation again' : 'Play the conversation',
         psgAsk:this.psgAsk, psgAskOff:!g.played,
-        psgSpeeds:PSG_SPEEDS.map(r => ({ label:String(r).replace(/^0\./, '0.') + '×', cls:r === psgSpeed() ? 'on' : '', pressed:r === psgSpeed() ? 'true' : 'false', fn:() => this.psgSetSpeed(r) })),
-        psgFastShow:g.stage === 'intro' && !(psgRes(p.id) || {}).f,
-        psgFastCls:g.played && g.minRate && g.minRate < PSG_FAST ? 'off' : (g.played ? 'on' : ''),
-        psgFastText:g.played && g.minRate && g.minRate < PSG_FAST ? 'Fast-ear challenge is off this time: you listened below 1.25×. Try it again later from the Path.'
-          : g.played ? 'Fast-ear challenge on: get every question right for +' + PSG_FAST_BONUS + ' coins.'
-          : 'Fast-ear challenge: listen only at 1.25× before you answer, get every question right, and earn +' + PSG_FAST_BONUS + ' coins (once per passage).',
+        psgSpeeds:PSG_SPEEDS.map(r => ({ label:rungX(r), cls:r === psgSpeed() ? 'on' : '', pressed:r === psgSpeed() ? 'true' : 'false', fn:() => this.psgSetSpeed(r) })),
+        psgRg:this.rungView('psg', psgRung(psgRes(p.id)), g.stage === 'intro', g.played ? g.minRate : 0),
         psgShowPy:!!g.py, psgShowEn:!!g.en, psgTogPy:() => this.psgTog('py'), psgTogEn:() => this.psgTog('en'),
         psgPyBtn:g.py ? 'Hide pinyin' : 'Show pinyin', psgEnBtn:g.en ? 'Hide English' : 'Show English',
         psgQzh:q.zh, psgQpy:q.py, psgQen:q.en,
@@ -4220,7 +4257,8 @@
         psgAnsLines:ansLines.map(l => ({ who:who(l.s), zh:l.zh, py:l.py })), psgHearLine:this.psgHearLine, psgHearText:ansLines.length > 1 ? 'Hear those lines' : 'Hear that line',
         psgNext:this.psgNext, psgNextText:g.qi + 1 < n ? 'Next question' : 'See how you did',
         psgScore:(g.right || 0) + ' of ' + n + ' right',
-        psgScoreSub:g.gain ? '+' + g.gain + ' coins' + ([g.first && g.right === n ? 'all right: +' + PSG_BONUS : '', g.fast ? 'fast ear: +' + PSG_FAST_BONUS : ''].filter(Boolean).map(x => ' (' + x + ')').join('')) : 'No coins this time',
+        psgScoreSub:(g.gain ? '+' + g.gain + ' coins' + ([g.first && g.right === n ? 'all right: +' + PSG_BONUS : '', g.rungGain ? rungX(g.rungUp) + ' rung: +' + g.rungGain : ''].filter(Boolean).map(x => ' (' + x + ')').join('')) : 'No coins this time')
+          + (g.rungUp && !g.rungGain ? '. New speed rung: ' + rungX(g.rungUp) : ''),
         psgLines:p.lines.map((l, i) => ({ who:who(l.s), zh:l.zh, py:l.py, en:l.en, cls:p.qs.some(x => [].concat(x.line).indexOf(i) >= 0) ? 'ans' : '',
           play:() => { this.ttsUnlock(); this.speakLines(this.psgLines(p, i), 'psgl', psgSpeed()); } })),
         psgAgain:this.psgAgain, psgReport:report('Listening passage ' + p.id, p.title)
@@ -4298,7 +4336,7 @@
               return {
                 id:st.id, isW:st.k === 'w', isG:st.k === 'g', isS:st.k === 's', glyph:st.k === 'w' ? ws[0].charAt(0) : st.k === 's' ? '说' : st.k === 'l' ? '听' : '语', title:stopTitle(st),
                 sub:st.k === 'w' ? ws.slice(0, 3).join(' · ') + (ws.length > 3 ? ' …' : '') : st.k === 's' ? SCEN[SCEN_AT[st.s]].sub : st.k === 'l' ? 'Listening' : 'Grammar',
-                meta:st.k === 'l' ? (state === 'done' ? 'Heard it · ' + (psgRes(st.l) || {}).b + ' of ' + PSG_BY[st.l].qs.length + ' right' : 'Listen · ' + PSG_BY[st.l].qs.length + ' questions') : st.k === 'w' ? ws.length + ' words' + (state === 'part' ? ' · ' + ws.filter(z => wStarted(S, z)).length + ' started' : '') : st.k === 's' ? (state === 'done' ? 'Said it' : 'Speak · ' + SCEN[SCEN_AT[st.s]].you.length + ' turns') : (state === 'done' ? 'Passed' : state === 'part' ? 'Best ' + (S.gres[st.g] || 0) + '%' : 'Lesson'),
+                meta:st.k === 'l' ? (state === 'done' ? 'Heard it · ' + (psgRes(st.l) || {}).b + ' of ' + PSG_BY[st.l].qs.length + ' right' + (psgRung(psgRes(st.l)) ? ' · ' + rungX(psgRung(psgRes(st.l))) : '') : 'Listen · ' + PSG_BY[st.l].qs.length + ' questions') : st.k === 'w' ? ws.length + ' words' + (state === 'part' ? ' · ' + ws.filter(z => wStarted(S, z)).length + ' started' : '') : st.k === 's' ? (state === 'done' ? 'Said it' : 'Speak · ' + SCEN[SCEN_AT[st.s]].you.length + ' turns') : (state === 'done' ? 'Passed' : state === 'part' ? 'Best ' + (S.gres[st.g] || 0) + '%' : 'Lesson'),
                 cls:(state === 'done' ? 'done' : isCur ? 'cur' : state === 'part' ? 'part' : '') + (st.k === 'g' ? ' g' : st.k === 's' ? ' sp' : st.k === 'l' ? ' sp ls' : '') + (S.pstop === st.id ? ' sel' : ''),
                 state, isDone:state === 'done', isCur, nodeStyle:'left:' + x + '%',
                 labelStyle:x <= 50 ? 'left:calc(' + x + '% + 50px);width:calc(' + (100 - x) + '% - 58px);text-align:left' : 'right:calc(' + (100 - x) + '% + 50px);width:calc(' + x + '% - 58px);text-align:right',
@@ -4323,7 +4361,7 @@
             cta:st.k === 'l' ? (state === 'done' ? 'Listen again' : 'Start listening') : st.k === 's' ? (state === 'done' ? 'Say it again' : 'Step into the scene') : st.k === 'g' ? (state === 'done' ? 'Open the lesson again' : 'Open the lesson') : state === 'done' ? 'Practise again' : state === 'part' ? 'Continue' : 'Start',
             go:() => this.pathStart(st.id),
             hasNote:!!S.plNote, note:S.plNote, hasAlt:!!S.plAlt, altText:S.plAlt === 'review' ? 'Go to Review' : 'Open Settings',
-            hasBest:(!!L && (S.gres[L.id] || 0) > 0) || (!!PS && !!psgRes(PS.id)), best:L ? 'Best score so far: ' + (S.gres[L.id] || 0) + '%. You pass at 80%.' : PS && psgRes(PS.id) ? 'Best so far: ' + psgRes(PS.id).b + ' of ' + PS.qs.length + ' right.' : ''
+            hasBest:(!!L && (S.gres[L.id] || 0) > 0) || (!!PS && !!psgRes(PS.id)), best:L ? 'Best score so far: ' + (S.gres[L.id] || 0) + '%. You pass at 80%.' : PS && psgRes(PS.id) ? 'Best so far: ' + psgRes(PS.id).b + ' of ' + PS.qs.length + ' right.' + (psgRung(psgRes(PS.id)) ? ' Speed rung: ' + rungX(psgRung(psgRes(PS.id))) + '.' : '') : ''
           };
         }
       }
@@ -4485,21 +4523,109 @@
     };
     gapNext = () => { const S = this.state; this.setState({ gfq:(S.gfq + 1) % HUBS[S.whub].gaps.length, gfpick:null }); };
 
-    // ----- shadowing (you say it yourself; nothing is recorded) -----
+    // ----- shadowing: hear the clip, say it straight after (recorded when there is a microphone), then hear the clip and yourself back to back -----
+    // The recording stays in this tab only (a WAV data: URL in state); nothing is uploaded or saved. Without a microphone it is the old three rounds.
     shadowGo = () => {
       const S = this.state;
       if (S.shround >= 3) return;
+      this.shReset();
       const n = S.shround + 1;
-      const patch = { shround:n };
+      const patch = { shround:n, shrec:'idle', shurl:'', shnote:'' };
       if (n >= 3) { patch.xp = S.xp + 6; patch.dayXp = S.dayXp + 6; }
       this.setState(patch);
     };
+    shEl = null; shCtx = null; shStop = null;
+    shCanRec = () => !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && (window.AudioContext || window.webkitAudioContext));
+    // stop a recording or a playback in progress (nothing is kept)
+    shReset = () => {
+      if (this.shStop) { const f = this.shStop; this.shStop = null; f('drop'); }
+      try { if (this.shEl) this.shEl.pause(); } catch (e) {}
+    };
+    // the tap: unlock sound and the recorder while still inside the tap (phones need that), play the clip, and record as soon as it ends
+    shStart = () => {
+      const S = this.state; if (S.shround >= 3 || S.shrec === 'wait' || S.shrec === 'rec') return;
+      this.shReset(); this.ttsUnlock();
+      try {
+        if (!this.shEl) this.shEl = new Audio();
+        this.shEl.src = 'data:audio/wav;base64,' + wavBase64(new Float32Array(800), 8000); const pr = this.shEl.play(); if (pr && pr.catch) pr.catch(() => {});
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!this.shCtx || this.shCtx.state === 'closed') this.shCtx = new AC();
+        if (this.shCtx.resume) this.shCtx.resume().catch(() => {});
+      } catch (e) {}
+      const clip = CLIPS[S.dclip]; if (!clip) return;
+      this.setState({ shrec:'wait', shurl:'', shnote:'' });
+      this.sayAi(clip.zh, 'clip', S.drate, () => { if (this.state.shrec === 'wait' && CLIPS[this.state.dclip] === clip) this.shRecord(clip); });
+    };
+    shRecord = async (clip) => {
+      let stream;
+      // (the browser tests use a fake microphone that plays a steady tone, which noise suppression would remove: SHANLU_SH_RAW turns it off)
+      try { stream = await navigator.mediaDevices.getUserMedia({ audio:window.SHANLU_SH_RAW ? { echoCancellation:false, noiseSuppression:false, autoGainControl:false } : { echoCancellation:true, noiseSuppression:true } }); }
+      catch (e) { this.setState({ shrec:'idle', shnote:'The microphone is blocked, so nothing was recorded. Allow microphone access for this site in the browser to hear yourself back, or just say it and tap I said it.' }); return; }
+      const actx = this.shCtx; let node = null, src = null;
+      const release = () => { try { stream.getTracks().forEach(t => t.stop()); } catch (e) {} try { if (node) node.disconnect(); } catch (e) {} try { if (src) src.disconnect(); } catch (e) {} };
+      try {
+        if (actx.resume) { try { await actx.resume(); } catch (e) {} }
+        const rate = actx.sampleRate;
+        src = actx.createMediaStreamSource(stream);
+        const parts = []; let total = 0, heard = false, lastVoice = Date.now(); const t0 = Date.now();
+        // longest wait: about 0.45 s a character at the speed played, plus room to start and finish
+        const maxMs = Math.min(20000, Math.round(clip.zh.length * 450 / Math.max(0.6, this.state.drate || 1)) + 4000);
+        node = actx.createScriptProcessor(4096, 1, 1);
+        node.onaudioprocess = (e) => {
+          const d = e.inputBuffer.getChannelData(0); parts.push(new Float32Array(d)); total += d.length;
+          let sum = 0; for (let i = 0; i < d.length; i += 4) sum += d[i] * d[i];
+          if (Math.sqrt(sum / (d.length / 4)) > 0.02) { heard = true; lastVoice = Date.now(); }
+        };
+        const mute = actx.createGain(); mute.gain.value = 0;   // keeps the processor running without playing the microphone back
+        src.connect(node); node.connect(mute); mute.connect(actx.destination);
+        let stopped = false;
+        const stop = (why) => {
+          if (stopped) return; stopped = true; clearInterval(timer); release(); this.shStop = null;
+          if (why === 'drop') return;
+          if (!heard) { this.setState({ shrec:'idle', shnote:'I did not hear you. Check the microphone, then tap the button and say it right after the clip.' }); return; }
+          const pcm = new Float32Array(total); let o = 0; parts.forEach(p => { pcm.set(p, o); o += p.length; });
+          const url = 'data:audio/wav;base64,' + wavBase64(shTidy(to16k(pcm, rate), 16000), 16000);
+          this.setState({ shrec:'done', shurl:url, shnote:'' });
+          this.shBoth();
+        };
+        const timer = setInterval(() => {
+          const now = Date.now();
+          if ((heard && now - lastVoice > 1300) || now - t0 > maxMs || (!heard && now - t0 > 6000)) stop('auto');
+        }, 100);
+        this.shStop = stop;
+        this.setState({ shrec:'rec', shnote:'' });
+      } catch (e) { release(); this.setState({ shrec:'idle', shnote:'The microphone could not start here. Say it out loud and tap I said it.' }); }
+    };
+    shDone = () => { if (this.shStop) this.shStop('hand'); };
+    // the clip, then your try, back to back
+    shBoth = () => {
+      const S = this.state; const clip = CLIPS[S.dclip]; if (!clip || !S.shurl) return;
+      try { if (this.shEl) this.shEl.pause(); } catch (e) {}
+      this.setState({ shrec:'play' });
+      this.sayAi(clip.zh, 'clip', S.drate, () => this.shMine(true));
+    };
+    shMine = (fromBoth) => {
+      const S = this.state; if (!S.shurl) return;
+      if (!fromBoth) { this.stopNative(); this.ttsUnlock(); }
+      try {
+        if (!this.shEl) this.shEl = new Audio();
+        const a = this.shEl; a.onended = () => { if (this.state.playing === 'shy') this.setState({ playing:null, shrec:'done' }); };
+        a.src = S.shurl; a.playbackRate = 1;
+        const pr = a.play(); if (pr && pr.catch) pr.catch(() => this.setState({ playing:null, shrec:'done' }));
+        this.setState({ playing:'shy', shrec:'play' });
+      } catch (e) { this.setState({ playing:null, shrec:'done' }); }
+    };
     // a new random clip (see pickClip); `reset` clears the dictation box
-    newClip = (extra) => { const S = this.state; const i = pickClip(S.clipBest, S.drecent); this.setState(Object.assign({ dclip:i, drecent:(S.drecent || []).concat([i]).slice(-8) }, extra || {})); };
-    shadowNext = () => { this.newClip({ shround:0 }); };
+    newClip = (extra) => { const S = this.state; const i = pickClip(S.clipBest, S.drecent); this.shReset(); this.setState(Object.assign({ dclip:i, drecent:(S.drecent || []).concat([i]).slice(-8), dmin:0, drung:null }, extra || {})); };
+    shadowNext = () => { this.newClip({ shround:0, shrec:'idle', shurl:'', shnote:'' }); };
 
     // ----- listening lab -----
-    playClip = () => { this.ttsUnlock(); this.sayAi(CLIPS[this.state.dclip].zh, 'clip', this.state.drate); this.setState({ dplays:this.state.dplays + 1 }); };
+    playClip = () => {
+      const S = this.state; this.ttsUnlock(); this.sayAi(CLIPS[S.dclip].zh, 'clip', S.drate);
+      // the slowest speed heard before checking decides which speed rung a Dictation clip can clear
+      const dmin = S.lmode === 'dict' && !S.dchecked ? (S.dmin ? Math.min(S.dmin, S.drate) : S.drate) : S.dmin;
+      this.setState({ dplays:S.dplays + 1, dmin });
+    };
     checkDict = () => {
       const S = this.state;
       if (S.dchecked) return;
@@ -4521,7 +4647,12 @@
       clip.words.forEach((w, i) => { if (!marks[i]) mis[w.zh] = (mis[w.zh] || 0) + 1; });
       patch.misses = mis;
       if (!S.ldone) { patch.ldone = true; patch.dayMin = S.dayMin + 4; }
-      patch.xp = S.xp + hits; patch.dayXp = S.dayXp + hits;
+      // speed rungs: every word right, nothing peeked, and heard only at a rung's speed or faster
+      const was = clipRung(clip.zh), now = hits === clip.words.length && !S.dreveal && S.dmin ? Math.max(was, rungOf(S.dmin)) : was;
+      const rungGain = rungPay('clip', was, now);
+      if (now > was) prefSet('cr.' + clip.zh, now);
+      patch.drung = now > was ? { r:now, gain:rungGain } : null;
+      patch.xp = S.xp + hits + rungGain; patch.dayXp = S.dayXp + hits + rungGain;
       this.setState(patch);
     };
     nextClip = () => {
@@ -5589,7 +5720,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const hits = S.dmarks.filter(m => m).length;
       const missed = clip.words.filter((w, i) => S.dchecked && !S.dmarks[i]);
       const typedOk = S.dtyped.replace(/[^a-zA-Z]/g, '').length > 0;
-      const rateOpts = [0.6, 0.8, 1, 1.2].map(r => ({ label:r + '×', cls:S.drate === r ? 'on' : '', fn:() => this.setState({ drate:r }) }));
+      const rateOpts = [0.6].concat(RUNGS).map(r => ({ label:rungX(r), cls:S.drate === r ? 'on' : '', fn:() => this.setState({ drate:r }) }));
       const toneOpts = TONES.map((t, i) => ({
         py:t.py, label:t.label,
         cls:S.tpick === null ? '' : (i === S.tidx ? 'right' : (i === S.tpick ? 'wrong' : '')),
@@ -5727,8 +5858,16 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         shNow:Math.min(S.shround + 1, 3), shTitle:'Say it after you hear it', shHelp:shHelps[S.shround],
         shZh:shClip.zh, shPy:shClip.py,
         shShowZh:S.shround < 2 || shDone, shShowPy:S.shround === 0 || shDone, shHidden:S.shround === 2,
-        shCanGo:!shDone, shDone, shGoLabel:'I said it',
+        shCanGo:!shDone && S.shrec !== 'wait' && S.shrec !== 'rec', shDone, shGoLabel:S.shurl ? (S.shround === 2 ? 'Finish' : 'Next round') : 'I said it',
+        shGoCls:S.shurl ? 'pri' : (this.shCanRec() ? '' : 'pri'),
         shadowGo:this.shadowGo, shadowNext:this.shadowNext,
+        shMic:this.shCanRec() && !shDone && S.shrec !== 'rec', shStart:this.shStart, shDoneRec:this.shDone, shBoth:this.shBoth, shMine:() => this.shMine(false),
+        shStartLabel:S.shrec === 'wait' ? 'Listen…' : S.shurl ? 'Try it again' : 'Hear it, then say it',
+        shStartCls:(S.shurl ? '' : 'pri') + (S.shrec === 'wait' ? ' on' : ''), shStartOff:S.shrec === 'wait' || S.shrec === 'rec',
+        shRecOn:S.shrec === 'rec', shHasMine:!!S.shurl && S.shrec !== 'rec' && S.shrec !== 'wait',
+        shPlayNote:S.shrec === 'play' ? (S.playing === 'shy' ? 'Now you…' : 'The clip first…') : 'Compare: the clip, then you. Listen for the tones and the rhythm.',
+        shHasNote:!!S.shnote, shNote:S.shnote,
+        shRateOpts:[0.6].concat(RUNGS).map(r => ({ label:rungX(r), cls:S.drate === r ? 'on' : '', fn:() => this.setState({ drate:r }) })),
 
         // listening lab
         navListen:navCls('listen'), goListen:() => this.go('listen'), isListen:S.screen === 'listen' && HAS_LISTEN, isListenNA:S.screen === 'listen' && !HAS_LISTEN,
@@ -5755,7 +5894,10 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         clipBadge:clipBest > 0 ? 'Best so far ' + Math.round(clipBest * 100) + '%' : 'New clip', clipBadgeCls:clipBest >= 0.99 ? 'done' : (clipBest > 0 ? 'again' : 'new'),
         clipTried:clipsTried + ' of ' + CLIPS.length + ' clips tried', skipClip:this.nextClip, canSkip:!S.dchecked,
         ...lvInfo2(S.dclip), playedText:S.dplays === 0 ? 'Not played yet.' : 'Played ' + S.dplays + (S.dplays === 1 ? ' time.' : ' times.'),
-        rateHint:S.drate < 1 ? 'Slow clip, good for catching every sound.' : (S.drate === 1 ? 'Normal speed.' : 'Faster than a textbook.'),
+        rateHint:S.drate < 1 ? 'Slow clip, good for catching every sound.' : (S.drate === 1 ? 'Normal speed.' : S.drate >= 1.5 ? 'Native speed, and then some.' : 'Faster than a textbook.'),
+        clipRg:S.lmode === 'dict' ? Object.assign(this.rungView('clip', clipRung(clip.zh), !S.dchecked, S.dreveal ? 0 : S.dmin || 0),
+          S.dreveal && !S.dchecked && rungNext(clipRung(clip.zh)) ? { text:'You peeked, so this try does not count for a speed rung.', cls:'off' } : {}) : { show:false, steps:[] },
+        dRungShow:!!(S.dchecked && S.drung), dRungText:S.drung ? 'New speed rung: ' + rungX(S.drung.r) + (S.drung.gain ? ' (+' + S.drung.gain + ' coins)' : '') + (S.drung.r >= 1.5 ? '. Welcome to the 1.5× club!' : '') : '',
         rateOpts, playClip:this.playClip, clipPlayCls:pc('clip'),
         dtyped:S.dtyped, dInpCls:S.dchecked ? 'locked' : '',
         onDType:(e) => { if (!this.state.dchecked) this.setState({ dtyped:e.target.value }); },

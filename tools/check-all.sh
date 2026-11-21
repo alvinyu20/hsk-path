@@ -152,6 +152,8 @@ if [ "$2" != "--no-browser" ]; then
   NODE_PATH="$(npm root -g)" node tools/smoke-test-grv-variety.js
   echo "== 5m. listening passages: placed on the Path after their words, listen / answer / transcript, coins"
   NODE_PATH="$(npm root -g)" node tools/smoke-test-passages.js
+  echo "== 5n. listening ladder: speed rungs on clips, shadowing with a recording"
+  NODE_PATH="$(npm root -g)" node tools/smoke-test-ladder.js
   echo "== 5l. Review plays whole sentences for words you already hear well"
   NODE_PATH="$(npm root -g)" node tools/smoke-test-hear-sentence.js
 fi
