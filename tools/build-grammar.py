@@ -74,8 +74,15 @@ def main():
             acc = set(alts) | {b}
             if b.endswith('儿'):
                 acc.add(alts[0].replace('r', 'er', 1) if alts[0].endswith('r') else alts[0])
+            # also: other words that fit this gap just as well (a reviewer found 都 fits where the lesson wrote 也); typing one is marked right
+            also = q.get('also', [])
+            for w in also:
+                if not w or w == b:
+                    die('%s: bad "also" word %r' % (where, w))
+                acc |= {w} | {toneless(a) for a in eng.word_py(w).split(' / ')}
+            reveal = '%s · %s' % (b, eng.word_py(b)) + ('  (also right: %s)' % ', '.join(also) if also else '')
             out.update(type='cloze', kicker='Fill it', prompt='Type the missing word', big=q['zh'].replace(b, '___', 1), sub=q['en'],
-                       placeholder='Pinyin or character', accepts=sorted(acc), reveal='%s · %s' % (b, eng.word_py(b)))
+                       placeholder='Pinyin or character', accepts=sorted(acc), reveal=reveal)
         elif t == 'spot':
             wtoks = eng.word_tokens(q['wrong'])
             if q['remove'] not in wtoks or q['wrong'].count(q['remove']) != 1:

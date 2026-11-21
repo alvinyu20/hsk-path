@@ -29,6 +29,7 @@ Template syntax: `<sc-if value>`, `<sc-for list as x>`, `{{holes}}`, `data-on-cl
 - Words: `content/l5/words-NN.tsv` columns: word, part of speech, English, example Chinese, example English, [note].
 - Examples: `examples-*.tsv` columns: word, Chinese, English. The word must appear in the sentence, and the sentence may only use words at or below its level.
 - `content/cloze-alts.tsv`: answer, other, `also`|`wrong`, sentence, note. Checked by `tools/check-cloze-alts.py`.
+- Grammar fill-ins (`t: cloze` in `grammar-*.json` / `gmore.json`) can list `also`: other words that fit the gap just as well; they are accepted and shown as "also right".
 - `content/char-glosses.tsv`: 30-character limit per meaning. Run `tools/build-char-glosses.py` after editing.
 - `content/check-waivers.tsv`: known false alarms; every line needs a reason.
 - **Round-trip formats (rewriting the file any other way makes a huge diff):**

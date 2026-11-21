@@ -3155,7 +3155,11 @@
   "zh": "我们不仅要会说，还要会写。",
   "en": "We must be able not only to speak but also to write.",
   "blank": "不仅",
-  "explain": "不仅 … 还 …."
+  "explain": "不仅 … 还 ….",
+  "also": [
+   "不光",
+   "不但"
+  ]
  },
  {
   "p": "g4-63",
@@ -3299,7 +3303,10 @@
   "zh": "你把衣服洗一洗。",
   "en": "Give your clothes a wash.",
   "blank": "一",
-  "explain": "把 + thing + verb 一 verb."
+  "explain": "把 + thing + verb 一 verb.",
+  "also": [
+   "了"
+  ]
  },
  {
   "p": "g4-67",
@@ -3340,7 +3347,11 @@
   "zh": "今天热死了。",
   "en": "It's boiling today.",
   "blank": "死",
-  "explain": "Adjective + 死了."
+  "explain": "Adjective + 死了.",
+  "also": [
+   "极",
+   "坏"
+  ]
  },
  {
   "p": "g4-68",
@@ -3651,7 +3662,10 @@
   "zh": "就是再忙，我也会给你打电话。",
   "en": "Even if I'm really busy, I will call you.",
   "blank": "也",
-  "explain": "就是 … 也 …."
+  "explain": "就是 … 也 ….",
+  "also": [
+   "都"
+  ]
  },
  {
   "p": "g4-76",
@@ -3679,7 +3693,11 @@
   "zh": "就是没有人帮我，我也能做完。",
   "en": "Even if nobody helps me, I can finish it.",
   "blank": "就是",
-  "explain": "就是 … 也 …: even if."
+  "explain": "就是 … 也 …: even if.",
+  "also": [
+   "即使",
+   "哪怕"
+  ]
  },
  {
   "p": "g4-77",
@@ -3725,8 +3743,8 @@
  {
   "p": "g4-78",
   "t": "order",
-  "zh": "我们一左一右坐在他旁边。",
-  "en": "We sat on either side of him.",
+  "zh": "我们一左一右坐在他两边。",
+  "en": "We sat on both sides of him, one on each side.",
   "explain": "一左一右: one on each side."
  },
  {
@@ -4119,7 +4137,10 @@
   "zh": "这个字我怎么也记不住。",
   "en": "However hard I try, I can't remember this character.",
   "blank": "也",
-  "explain": "怎么也 … 不 …."
+  "explain": "怎么也 … 不 ….",
+  "also": [
+   "都"
+  ]
  },
  {
   "p": "g4-88",
@@ -4160,7 +4181,10 @@
   "zh": "没有什么好难过的。",
   "en": "There's nothing to be sad about.",
   "blank": "没有",
-  "explain": "没有什么好 … 的."
+  "explain": "没有什么好 … 的.",
+  "also": [
+   "没"
+  ]
  },
  {
   "p": "g4-90",
@@ -4291,7 +4315,10 @@
   "zh": "我们只能走一步是一步。",
   "en": "We can only take it one step at a time.",
   "blank": "是",
-  "explain": "Verb + 一X是一X."
+  "explain": "Verb + 一X是一X.",
+  "also": [
+   "算"
+  ]
  },
  {
   "p": "g4-94",
@@ -4338,7 +4365,10 @@
   "zh": "你看你的书吧，我出去一下。",
   "en": "Go ahead and read your book, I'm popping out.",
   "blank": "看",
-  "explain": "你 + verb + 你的."
+  "explain": "你 + verb + 你的.",
+  "also": [
+   "读"
+  ]
  },
  {
   "p": "g4-95",
@@ -4457,6 +4487,10 @@
   "zh": "这家饭店近是近，可是菜不好吃。",
   "en": "This restaurant is close all right, but the food isn't good.",
   "blank": "可是",
-  "explain": "X是X，可是 …."
+  "explain": "X是X，可是 ….",
+  "also": [
+   "就是",
+   "但是"
+  ]
  }
 ]

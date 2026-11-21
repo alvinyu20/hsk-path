@@ -181,8 +181,19 @@ class Engine:
                 out.append(t)
         return out
 
+    @staticmethod
+    def _fraction(toks):
+        """之一 (one of) is on the HSK 5 list, so the cutter joins it in fractions: 三分之一 is sān fēn zhī yī, not sān fēn zhīyī."""
+        out = []
+        for t in toks:
+            if t == '之一' and out and out[-1].endswith('分'):
+                out += ['之', '一']
+            else:
+                out.append(t)
+        return out
+
     def tokens(self, zh):
-        return self._measure_geren([t for t in self.tk.cut(zh, HMM=False) if t.strip()])
+        return self._fraction(self._measure_geren([t for t in self.tk.cut(zh, HMM=False) if t.strip()]))
 
     def tokens_right(self, zh):
         """The cut with ties going the other way (see _TokenizerRight)."""
@@ -190,7 +201,7 @@ class Engine:
             import copy
             self._tk_right = copy.copy(self.tk)
             self._tk_right.__class__ = _TokenizerRight
-        return self._measure_geren([t for t in self._tk_right.cut(zh, HMM=False) if t.strip()])
+        return self._fraction(self._measure_geren([t for t in self._tk_right.cut(zh, HMM=False) if t.strip()]))
 
     def word_tokens(self, zh):
         return [t for t in self.tokens(zh) if t not in P_MAP and t not in ('—', '——')]
@@ -258,7 +269,10 @@ class Engine:
                 # at the start of a clause it is the verb (过了红绿灯 "once past the lights"): the particle always follows a verb
                 first = i == 0 or parts[i - 1][0] != 'w'
                 # the word entry lists both readings ("guo / guò"); a sentence gets exactly one
-                parts[i] = ('w', '过', 'guò' if first or nxt in ('得', '马路', '生日', '日子') else 'guo')
+                # after a modal or a time word it is the verb too (只能过一天是一天, 每天过一天是一天): the particle never follows these
+                prev = parts[i - 1][1] if i > 0 and parts[i - 1][0] == 'w' else ''
+                verb_ctx = prev in ('能', '只能', '可以', '会', '要', '想', '每天', '才')
+                parts[i] = ('w', '过', 'guò' if first or verb_ctx or nxt in ('得', '马路', '生日', '日子') else 'guo')
         # 调: diào (to transfer, the HSK 5 card); tiáo (to adjust) right before a size or level word: 调小 调大 调高 调低 调好
         for i, p in enumerate(parts):
             if p[0] == 'w' and p[1] == '调':
@@ -314,7 +328,7 @@ class Engine:
                 parts[i] = ('w', p[1], 'bú' if nxt_tone == 4 else 'bù')
             elif prev and nxt and nxt[0] == 'w' and prev == nxt[1] and prev in V1V_VERBS:
                 parts[i] = ('w', p[1], 'yi')   # V一V (走一走, 看一看): the 一 is light; not 一个一个 or 一天一天 (个, 天 are not verbs)
-            elif nxt is None or nxt[0] != 'w' or (prev and prev[-1] in NUMBER_PREV):
+            elif nxt is None or nxt[0] != 'w' or (prev and prev[-1] in NUMBER_PREV) or prev == '之':   # 三分之一: the number one, yī
                 parts[i] = ('w', p[1], 'yī')
             else:
                 parts[i] = ('w', p[1], 'yí' if nxt_tone == 4 else 'yì')

@@ -187,11 +187,11 @@
     "t": "mc",
     "prompt": "Which sentence says: Even if it rains tomorrow, I will go?",
     "options": [
-     "明天就是下雨，我也要去。",
-     "明天就是下雨，我就要去。"
+     "就是明天下雨，我也要去。",
+     "就是明天下雨，我就要去。"
     ],
     "correct": 0,
-    "zh": "明天就是下雨，我也要去。",
+    "zh": "就是明天下雨，我也要去。",
     "en": "Even if it rains tomorrow, I will go.",
     "explain": "就是 (even if) goes with 也."
    }

@@ -919,7 +919,11 @@
     "zh": "他不光是我的同事，也是我的好朋友。",
     "en": "He is not only my colleague but also my good friend.",
     "blank": "不光",
-    "explain": "不光 is the casual 不仅."
+    "explain": "不光 is the casual 不仅.",
+    "also": [
+     "不仅",
+     "不但"
+    ]
    },
    {
     "t": "mc",
@@ -1086,7 +1090,11 @@
     "zh": "考试的时候，我紧张死了。",
     "en": "I was terribly nervous in the exam.",
     "blank": "死",
-    "explain": "Adjective + 死了: terribly."
+    "explain": "Adjective + 死了: terribly.",
+    "also": [
+     "极",
+     "坏"
+    ]
    },
    {
     "t": "mc",
@@ -1173,8 +1181,11 @@
     "t": "cloze",
     "zh": "为了梦想而努力的人值得我们学习。",
     "en": "We should learn from people who work hard for their dreams.",
-    "blank": "而",
-    "explain": "为了 … 而 + action."
+    "blank": "为了",
+    "explain": "为了 (or 为) … 而 + action.",
+    "also": [
+     "为"
+    ]
    },
    {
     "t": "mc",
@@ -1193,7 +1204,10 @@
     "zh": "在教育孩子方面，她很有经验。",
     "en": "When it comes to raising children, she is very experienced.",
     "blank": "方面",
-    "explain": "在 … 方面."
+    "explain": "在 … 方面.",
+    "also": [
+     "上"
+    ]
    },
    {
     "t": "mc",
@@ -1383,7 +1397,10 @@
     "zh": "客人来不来还说不定。",
     "en": "It is not certain yet whether the guests will come.",
     "blank": "说不定",
-    "explain": "还说不定: not certain yet."
+    "explain": "还说不定: not certain yet.",
+    "also": [
+     "不一定"
+    ]
    }
   ]
  },
@@ -1494,7 +1511,7 @@
    "X也得X，不X也得X means 'you have to, like it or not': 你去也得去，不去也得去.",
    "X就是了 at the end means 'just do it, that's all': 有什么想法，说就是了 'If you have an idea, just say it'.",
    "还 + noun + 呢 mocks something that does not live up to its name: 还大饭店呢，菜这么难吃 'Call this a big restaurant? The food is so bad'.",
-   "Verb + 一X是一X means 'one at a time, with no plan': 过一天是一天 'live one day at a time'; 走一步是一步 'take it one step at a time'."
+   "Verb + 一X是一X means 'one at a time, with no plan': 过一天是一天 'live one day at a time'; 走一步是一步 'take it one step at a time' (走一步算一步 is just as common)."
   ],
   "examples": [
    {

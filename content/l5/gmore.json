@@ -4427,7 +4427,10 @@
   "zh": "哪怕只有一个人来，我们也要开会。",
   "en": "Even if only one person comes, we'll hold the meeting.",
   "blank": "也",
-  "explain": "哪怕 … 也 …."
+  "explain": "哪怕 … 也 ….",
+  "also": [
+   "都"
+  ]
  },
  {
   "p": "g5-79",
@@ -4607,7 +4610,10 @@
   "zh": "桌子上放有一些书。",
   "en": "Some books lie on the table.",
   "blank": "有",
-  "explain": "Verb + 有: written style."
+  "explain": "Verb + 有: written style.",
+  "also": [
+   "着"
+  ]
  },
  {
   "p": "g5-85",
@@ -4759,7 +4765,11 @@
   "zh": "时间还早，用不着这么急。",
   "en": "It's still early; no need to rush like this.",
   "blank": "用不着",
-  "explain": "用不着: no need to."
+  "explain": "用不着: no need to.",
+  "also": [
+   "不必",
+   "不用"
+  ]
  },
  {
   "p": "g5-91",
@@ -4864,7 +4874,10 @@
   "zh": "不管怎么说，我们都应该试一试。",
   "en": "Anyway, we should give it a try.",
   "blank": "不管",
-  "explain": "不管怎么说: anyway."
+  "explain": "不管怎么说: anyway.",
+  "also": [
+   "无论"
+  ]
  },
  {
   "p": "g5-94",
@@ -4941,7 +4954,10 @@
   "zh": "听来听去，都是一些差不多的意见。",
   "en": "After hearing them all, they are much the same ideas.",
   "blank": "都",
-  "explain": "X来X去，都是 …."
+  "explain": "X来X去，都是 ….",
+  "also": [
+   "还"
+  ]
  },
  {
   "p": "g5-97",
