@@ -301,7 +301,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     if (q.type === 'type') await page.fill('#answer-input', o.right ? q.py : 'zzz');
     else await page.locator('.opts .opt', { hasText: o.right ? q.correct : q.wrong }).first().click();
     await page.locator('button', { hasText: /^\s*Check\s*$/ }).click();
-    await page.locator('button', { hasText: 'Continue' }).click();
+    await page.locator('button', { hasText: /^\s*Continue\s*$/ }).click();
     return st.kind;
   };
   await nav('Review words');
@@ -596,7 +596,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await answer(false);
   check((await text()).includes('Not quite'), 'a wrong grammar answer is marked wrong');
   await shot('09-quiz-feedback');
-  await page.locator('button', { hasText: 'Continue' }).click();
+  await page.locator('button', { hasText: /^\s*Continue\s*$/ }).click();
   for (let i = 1; i < 5; i++) {
     await answer(true);
     await page.locator('button', { hasText: i === 4 ? 'See results' : 'Continue' }).click();
@@ -967,7 +967,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
       await page.locator('button', { hasText: /^\s*Check\s*$/ }).click();
       const fb = await page.locator('.fb').innerText();
       if (!seen.noTone) { seen.noTone = /close/i.test(fb) && /tones count/i.test(fb); }
-      await page.locator('button', { hasText: 'Continue' }).click();
+      await page.locator('button', { hasText: /^\s*Continue\s*$/ }).click();
     } else { await driveCard(); }
   }
   check(seen.choice && seen.audio && seen.type, 'Review mixes checked-for-you cards: choice, audio and typed (' + Object.keys(seen).join(', ') + ')');

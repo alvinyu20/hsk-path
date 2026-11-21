@@ -292,7 +292,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await Z.page.waitForSelector('.obm-guide', { timeout: 20000 });
     await Z.page.waitForTimeout(900);
     await Z.page.locator('.obm-bar button', { hasText: 'Skip' }).click();
-    await Z.page.locator('button', { hasText: 'Continue' }).click();
+    await Z.page.locator('button', { hasText: /^\s*Continue\s*$/ }).click();
     check(await Z.page.locator('.obm-chk.on').count() === 1 && /Join the study group/.test(await Z.page.locator('.obm').innerText()), 'with a friends server the name step offers a ticked "Join the study group" box');
     check(/Save and join the group/.test(await Z.page.locator('.obm-main').innerText()), 'and the button says what it will do');
     await Z.page.locator('button', { hasText: 'Save and join the group' }).click();

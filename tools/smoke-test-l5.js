@@ -82,7 +82,7 @@ const startState = (o) => { try { if (!localStorage.getItem('shanlu-passed')) lo
     const total = await page.evaluate(() => window.shanlu.quizQs.length);
     for (let i = 0; i < total; i++) {
       await answer(right);
-      await page.locator('button', { hasText: i === total - 1 ? 'See results' : 'Continue' }).click();
+      await page.locator('button', { hasText: i === total - 1 ? /^\s*See results\s*$/ : /^\s*Continue\s*$/ }).click();
       await page.waitForTimeout(30);
     }
     return total;

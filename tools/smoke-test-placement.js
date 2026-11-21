@@ -172,7 +172,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const lvl = await dlg(page).innerText();
     check(/Test out of a level/.test(lvl) && !/Coming soon/.test(lvl), 'test out is a real choice now, not "coming soon"');
     await dlg(page).locator('.obm-opt', { hasText: 'Test out of a level' }).click();
-    await dlg(page).locator('button', { hasText: 'Continue' }).click();
+    await dlg(page).locator('button', { hasText: /^\s*Continue\s*$/ }).click();
     check(/Make it yours/.test(await dlg(page).innerText()), 'the name step comes next');
     await dlg(page).locator('button', { hasText: 'Stay a guest for now' }).click();
     await page.waitForTimeout(300);
@@ -197,7 +197,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.waitForSelector('.obm-guide', { timeout: 20000 }); await page.waitForTimeout(900);
     await page.locator('.obm-bar button', { hasText: 'Skip' }).click();
     await dlg(page).locator('.obm-opt', { hasText: 'Test out of a level' }).click();
-    await dlg(page).locator('button', { hasText: 'Continue' }).click();
+    await dlg(page).locator('button', { hasText: /^\s*Continue\s*$/ }).click();
     await dlg(page).locator('button', { hasText: 'Stay a guest for now' }).click();
     await dlg(page).locator('button', { hasText: 'Skip, start at HSK 1' }).click();
     await page.waitForTimeout(300);

@@ -32,7 +32,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const q = await page.evaluate(() => { const x = window.shanlu.quizQs[0]; return { type: x.type, correct: x.options && x.options.find(op => op.id === x.correct).label, py: x.exp && x.exp.py }; });
     if (q.type === 'type') await page.fill('#answer-input', q.py); else await page.locator('.opts .opt', { hasText: q.correct }).first().click();
     await page.locator('button', { hasText: /^\s*Check\s*$/ }).click();
-    await page.locator('button', { hasText: 'Continue' }).click();
+    await page.locator('button', { hasText: /^\s*Continue\s*$/ }).click();
   };
 
   const toGuide = async (page) => {   // intro -> first step -> first flight -> the guide cards
@@ -79,7 +79,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await page.locator('.obm-opt', { hasText: 'Test out of a level' }).isEnabled(), 'test-out can be chosen (tools/smoke-test-placement.js runs it)');
     check(await page.locator('.obm-opt.on').innerText().then(x => /brand new/.test(x)), 'brand new is the preselected, recommended choice');
     check(/sounds of Chinese/.test(t) && /pinyin and tones/.test(t), 'it says that a beginner starts with the sounds');
-    await page.locator('button', { hasText: 'Continue' }).click();
+    await page.locator('button', { hasText: /^\s*Continue\s*$/ }).click();
     t = await dlg(page).innerText();
     check(/Make it yours/.test(t) && await page.locator('#ob-name').count() === 1, 'then name');
     check(!/Join the study group/.test(t), 'no join option when the site has no friends server');
@@ -139,7 +139,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(/Where are you starting/.test(await dlg(page).innerText()), 'Skip on the cards goes to where to start');
     await fit('where to start');
     await page.locator('.obm-opt', { hasText: 'I know a little' }).click();
-    await page.locator('button', { hasText: 'Continue' }).click();
+    await page.locator('button', { hasText: /^\s*Continue\s*$/ }).click();
     await fit('name and goal');
     await page.locator('#ob-name').fill('Not saved');
     await page.locator('button', { hasText: 'Stay a guest for now' }).click();
