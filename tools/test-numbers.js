@@ -11,7 +11,7 @@ eq(N.zh(200, { two100: true }), '两百', 'two100'); eq(N.zh(200), '二百', 'tw
 [[120, '一百二'], [1500, '一千五'], [23000, '两万三'], [105, null], [1000, null]].forEach(([n, z]) => eq(N.shortZh(n), z, 'shortZh(' + n + ')'));
 // pinyin
 [['十四', 'shísì'], ['四十二', "sìshí'èr"], ['一百零五', 'yìbǎi língwǔ'], ['两万三千', 'liǎngwàn sānqiān'], ['一万', 'yíwàn'], ['二十八块五', "èrshíbā kuài wǔ"], ['三点一刻', 'sān diǎn yí kè'],
- ['差五分四点', 'chà wǔ fēn sì diǎn'], ['五月二十号', "wǔ yuè èrshí hào"], ['两块', 'liǎng kuài']].forEach(([z, p]) => eq(N.py(z), p, 'py(' + z + ')'));
+ ['差五分四点', 'chà wǔ fēn sì diǎn'], ['五月二十号', "wǔ yuè èrshí hào"], ['两块', 'liǎng kuài'], ['一块', 'yí kuài'], ['一毛', 'yì máo'], ['一点', 'yì diǎn'], ['一块零五分', 'yí kuài língwǔ fēn'], ['十一点', 'shíyī diǎn'], ['一月一号', 'yī yuè yī hào'], ['三点零一分', 'sān diǎn língyī fēn']].forEach(([z, p]) => eq(N.py(z), p, 'py(' + z + ')'));
 // cards: every step, many seeds: four different answers, the right one among them, Chinese text present
 let seed = 1; const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
 N.STEPS.forEach(st => [1, 3, 5].forEach(lv => {

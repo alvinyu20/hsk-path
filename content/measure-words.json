@@ -487,7 +487,10 @@
   {
    "lv": 2,
    "zh": "一[块]手表",
-   "en": "a watch"
+   "en": "a watch",
+   "also": [
+    "只"
+   ]
   },
   {
    "lv": 3,
@@ -686,7 +689,10 @@
   {
    "lv": 5,
    "zh": "一[束]花",
-   "en": "a bunch of flowers"
+   "en": "a bunch of flowers",
+   "also": [
+    "把"
+   ]
   }
  ]
 }

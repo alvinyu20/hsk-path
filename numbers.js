@@ -53,7 +53,7 @@
     return null;
   }
 
-  // pinyin: a number up to the next 百, 千 or 万 is one word; 块, 点, 月 ... stand apart. 一 is yì before 百 and 千, yí before 万 and 刻, yī elsewhere.
+  // pinyin: a number up to the next 百, 千 or 万 is one word; 块, 点, 月 ... stand apart.
   const PY = { '零':'líng', '一':'yī', '二':'èr', '两':'liǎng', '三':'sān', '四':'sì', '五':'wǔ', '六':'liù', '七':'qī', '八':'bā', '九':'jiǔ', '十':'shí', '百':'bǎi', '千':'qiān', '万':'wàn', '幺':'yāo',
     '块':'kuài', '毛':'máo', '分':'fēn', '点':'diǎn', '半':'bàn', '刻':'kè', '差':'chà', '月':'yuè', '号':'hào', '日':'rì' };
   const NUMC = '零一二两三四五六七八九十百千万';
@@ -63,7 +63,13 @@
     chars.forEach((c, i) => {
       if (c === ' ' || c === '，' || c === ',') { if (cur) words.push(cur); cur = ''; if (c !== ' ') words.push(','); return; }
       let p = PY[c] || c;
-      if (c === '一') { const nx = chars[i + 1]; p = nx === '百' || nx === '千' ? 'yì' : nx === '万' || nx === '刻' ? 'yí' : 'yī'; }
+      if (c === '一') {
+        // 一 changes tone before a following syllable when it counts something: yìbǎi, yíwàn, yí kè, and on its own before a unit (yí kuài, yì máo,
+        // yì fēn, yì diǎn for one o'clock). Inside a number (十一, 零一) and in dates (一月, 一号) it stays yī.
+        const nx = chars[i + 1], pv = chars[i - 1];
+        const alone = !pv || NUMC.indexOf(pv) < 0;
+        p = nx === '百' || nx === '千' ? 'yì' : nx === '万' || nx === '刻' ? 'yí' : alone && nx === '块' ? 'yí' : alone && (nx === '毛' || nx === '分' || nx === '点') ? 'yì' : 'yī';
+      }
       if (NUMC.indexOf(c) >= 0) {
         cur += (cur && /^[aeoāáǎàēéěèōóǒò]/.test(p) ? "'" : '') + p;
         if ('百千万'.indexOf(c) >= 0 && NUMC.indexOf(chars[i + 1] || '') >= 0) { words.push(cur); cur = ''; }   // big numbers are written in parts: yìbǎi língwǔ, liǎngwàn sānqiān
