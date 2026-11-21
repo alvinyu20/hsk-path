@@ -32,5 +32,15 @@ for (let i = 0; i < 500; i++) {
   const p = N.card('price', 1, rnd);
   if (/块[一二三四五六七八九]$/.test(p.zh) && !/\.[1-9]0$/.test(p.label)) { fails++; console.log('FAIL price', p.zh, p.label); }
 }
+// typed answers
+[['n99', '14', '14'], ['n99', ' 014 ', '14'], ['n99', 'fourteen', null], ['big', '1,200', '1200'], ['big', '1 200', '1200'],
+ ['price', '28.5', '28.50'], ['price', '¥28.50', '28.50'], ['price', '28', '28.00'], ['price', '.5', '0.50'], ['price', '3.05', '3.05'], ['price', 'abc', null],
+ ['time', '3:15', '3:15'], ['time', '3.15', '3:15'], ['time', '315', '3:15'], ['time', '15:15', '3:15'], ['time', '12:05', '12:05'], ['time', '0:30', '12:30'], ['time', '9', '9:00'], ['time', '25:00', null],
+ ['date', '5/20', '5/20'], ['date', '5.20', '5/20'], ['date', '05-20', '5/20'], ['date', '13/2', null],
+ ['phone', '138 1234 5678', '13812345678'], ['phone', '138-1234-5678', '13812345678']].forEach(([st, t, k]) => eq(N.read(st, t), k, 'read(' + st + ', ' + t + ')'));
+// every card's key reads back from its own label
+seed = 5;
+N.STEPS.forEach(st => { for (let i = 0; i < 300; i++) { const c = N.card(st.id, 5, rnd); if (!c.key || !c.hint) { fails++; console.log('FAIL key', st.id, JSON.stringify(c)); break; }
+  if (st.id !== 'date' && N.read(st.id, c.label) !== c.key) { fails++; console.log('FAIL label', st.id, c.label, c.key); break; } } });
 if (fails) { console.log(fails + ' failed'); process.exit(1); }
 console.log('test-numbers: all passed');

@@ -351,7 +351,7 @@
   // A card waits until the words of this view's level in it have been started; a set needs TA_MIN ready cards. A round is up to TA_ROUND cards,
   // the ones missed last time first. Saved with the person: 'ta.' + set id = { b: best right, t: cards in that round, n: rounds, m: missed cards, d: day }.
   const GAMES = window.SHANLU_GAMES || { tellapart:{}, mw:{ mws:[], cards:[] } };
-  const TA_ROUND = 8, TA_COIN = 2, TA_PERFECT = 5, TA_MIN = 5;
+  const TA_ROUND = 8, TA_MIN = 5;
   const TA_SETS = []; Object.keys(GAMES.tellapart || {}).forEach(n => (GAMES.tellapart[n] || []).forEach(s => TA_SETS.push(s)));
   const TA_BY = {}; TA_SETS.forEach(s => { TA_BY[s.id] = s; });
   const taRes = (id) => prefGet('ta.' + id, null);
@@ -359,13 +359,18 @@
   // are started. Saved with the person: 'mwg.' + level = { b, t, n, d }, and 'mwk' = { phrase: right answers in a row } (the lowest come first).
   const MW = GAMES.mw || { mws:[], cards:[] };
   const MW_BY = {}; MW.mws.forEach(m => { MW_BY[m.zh] = m; });
-  const MW_ROUND = 10, MW_MIN = 5, MW_COIN = 1, MW_PERFECT = 3;
+  const MW_ROUND = 10, MW_MIN = 5;
   const mwRes = (lv) => prefGet('mwg.' + lv, null);
   const mwK = () => prefGet('mwk', {}) || {};   // each phrase: right answers in a row (0 after a miss), shared by every level's round
   // Quick-fire numbers (numbers.js): six steps in order (numbers, bigger numbers, prices, times, dates, phone numbers); the next opens with
   // QF_PASS of QF_ROUND right. 1 coin a card, 2 when heard only at 1.25× or faster. Saved with the person: 'qf.' + step = { b, t, n, d, f }.
   const NUMS = window.ShanluNumbers || null;
-  const QF_ROUND = 10, QF_PASS = 8, QF_PERFECT = 3, QF_SPEEDS = [1, 1.25, 1.5];
+  const QF_ROUND = 10, QF_PASS = 8, QF_SPEEDS = [1, 1.25, 1.5];
+  // Coins for games, set to earn about what Review and grammar practice earn a minute (about 30 to 40) when played properly:
+  // a right card pays GM_COIN (Quick-fire: more when heard faster), a round with every card right GM_PERFECT more. The same round again on the
+  // same day pays half, so one easy round is not a coin farm, and Game of the day pays GM_DAY once a day on top.
+  const GM_COIN = { ta:4, mw:3, qf:3 }, GM_PERFECT = 10, GM_DAY = 15;
+  const qfCoin = (rate) => (rate >= 1.5 ? 5 : rate >= 1.25 ? 4 : GM_COIN.qf);
   const qfRes = (id) => prefGet('qf.' + id, null);
   const qfSpeed = () => { const v = Number(prefGet('qfSpeed', 1)); return QF_SPEEDS.indexOf(v) >= 0 ? v : 1; };
   const wPage = () => (prefGet('wview', 'cards') === 'list' ? 100 : 40);   // My words shows this many at a time (the compact list shows more)
@@ -642,9 +647,10 @@
     ['复', 'Review', 'Each card (a new word: 3 per step, 5 when it sticks)', '2 to 5'],
     ['听', 'Listening lab', 'Each word you catch or understand; speed rungs in Dictation: +3 the first time a clip is all right at 1.25×, +5 at 1.5×', '1 a word'],
     ['跟', 'Shadowing', 'After three rounds of a clip', '6'],
-    ['辨', 'Games: Tell them apart', 'Each right card, +5 when the whole round is right', '2'],
-    ['量', 'Games: Measure words', 'Each right card, +3 when the whole round is right', '1'],
-    ['数', 'Games: Quick-fire numbers', 'Each right card (2 when heard at 1.25× or faster), +3 when the whole round is right', '1 to 2'],
+    ['辨', 'Games: Tell them apart', 'Each right card, +10 for a perfect round; half for the same round again that day', '4'],
+    ['量', 'Games: Measure words', 'Each right card, +10 for a perfect round; half for the same round again that day', '3'],
+    ['数', 'Games: Quick-fire numbers', 'Each right answer (4 at 1.25×, 5 at 1.5×), +10 for a perfect round; half again that day', '3 to 5'],
+    ['日', 'Game of the day', 'Once a day, on top of the round', '15'],
     ['网', 'Word webs', 'A word you knew (1 if not)', '3'],
     ['聊', 'AI chat', 'Each message you send', '2'],
     ['试', 'Practice exam', 'Each right answer', '2']
@@ -3972,7 +3978,11 @@
     }
     focusTyped() {
       try {
-        const S = this.state; if ((S.screen !== 'review' && S.screen !== 'quiz') || S.qchecked) return;
+        const S = this.state;
+        if (S.screen === 'games' && S.gm && S.gm.view === 'play' && S.gm.pick < 0 && window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+          const gi = document.getElementById('gm-input'); if (gi && document.activeElement !== gi) gi.focus({ preventScroll:true }); return;
+        }
+        if ((S.screen !== 'review' && S.screen !== 'quiz') || S.qchecked) return;
         if (!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches)) return;
         if (document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('py-tryi')) return;   // typing in the tutorial's practice box
         const el = document.getElementById('answer-input');
@@ -4234,11 +4244,11 @@
       return { key:c.zh, pre:c.pre, post:c.post, a:c.a, also:c.also, zh:c.zh, py:c.py, preQ:c.preQ, postQ:c.postQ, en:c.en, why:MW_BY[c.a].means + (c.also.length ? ' ' + c.also.join(' and ') + (c.also.length > 1 ? ' also work' : ' also works') + ' here.' : ''),
         opts:opts.map(x => ({ zh:x, py:MW_BY[x].py, mean:MW_BY[x].means })) };
     };
-    qfCard = (id) => { const c = NUMS.card(id, TOPL); return { key:c.label, pre:'', post:'', a:c.label, also:[], zh:c.zh, py:c.py, preQ:'', postQ:'', en:c.en, why:c.why, audio:true, say:c.zh.replace(/，/g, '，'),
-      opts:c.opts.map(x => ({ zh:x, py:'', mean:'' })) }; };
+    // Quick-fire: you type what you heard (numbers.js reads the typed answer into the same form as the card's key)
+    qfCard = (id) => { const c = NUMS.card(id, TOPL); return { key:c.key, step:id, pre:'', post:'', a:c.label, also:[], zh:c.zh, py:c.py, preQ:'', postQ:'', en:c.en, why:c.why, audio:true, typed:true, hint:c.hint, say:c.zh, opts:[] }; };
     gmStart = (kind, id, deck) => {
       this.stopNative();
-      this.setState({ gm:{ view:'play', kind, id, deck, qi:0, pick:-1, ans:[], py:false, t0:Date.now(), minRate:0 } });
+      this.setState({ gm:{ view:'play', kind, id, deck, qi:0, pick:-1, ans:[], py:false, t0:Date.now(), minRate:0, inp:'', err:'' } });
       if (this.state.screen !== 'games') this.go('games'); else { try { window.scrollTo(0, 0); } catch (e) {} }
       if (kind === 'qf') { this.ttsUnlock(); this.gmHear(); }
     };
@@ -4276,6 +4286,16 @@
       if (!c.audio) this.sayAi(c.zh, 'gm', this.state.speed || 1);
     };
     taPick = (k) => this.gmPick(k);   // the old name, kept for the tests and the keyboard
+    gmType = (e) => { const g = this.state.gm; if (g && g.pick < 0) this.setState({ gm:Object.assign({}, g, { inp:e.target.value, err:'' }) }); };
+    gmTypeKey = (e) => { if (e.key !== 'Enter') return; e.preventDefault(); const g = this.state.gm; if (g && g.pick >= 0) this.gmNext(); else this.gmCheck(); };
+    gmCheck = () => {
+      const g = this.state.gm; const c = this.gmCur(); if (!c || !c.typed || g.pick >= 0) return;
+      const k = NUMS.read(c.step, g.inp);
+      if (k == null) { this.setState({ gm:Object.assign({}, g, { err:g.inp.trim() ? c.hint + '.' : 'Type what you heard first.' }) }); return; }
+      const ok = k === c.key;
+      SFX.play(ok ? 'ok' : 'bad');
+      this.setState({ gm:Object.assign({}, g, { pick:0, err:'', ans:g.ans.concat([{ key:c.key, a:c.a, ok, typed:g.inp.trim() }]) }) });
+    };
     gmHear = () => {
       const g = this.state.gm; const c = this.gmCur(); if (!c) return;
       this.ttsUnlock();
@@ -4288,115 +4308,162 @@
     gmNext = () => {
       const S = this.state; const g = S.gm; if (!g || g.view !== 'play' || g.pick < 0) return;
       this.stopNative();
-      if (g.qi + 1 < g.deck.length) { this.setState({ gm:Object.assign({}, g, { qi:g.qi + 1, pick:-1 }) }); if (g.kind === 'qf') setTimeout(() => this.gmHear(), 0); return; }
+      if (g.qi + 1 < g.deck.length) { this.setState({ gm:Object.assign({}, g, { qi:g.qi + 1, pick:-1, inp:'', err:'' }) }); if (g.kind === 'qf') setTimeout(() => this.gmHear(), 0); return; }
       const right = g.ans.filter(a => a.ok).length, n = g.deck.length, today = ymd(new Date()), all = right === n;
-      let gain = 0;
       const best = (prev) => (!prev.t || right / n > (prev.b || 0) / prev.t ? { b:right, t:n } : { b:prev.b, t:prev.t });
-      if (g.kind === 'ta') {
-        const prev = taRes(g.id) || {};
-        gain = right * TA_COIN + (all ? TA_PERFECT : 0);
-        prefSet('ta.' + g.id, Object.assign(best(prev), { n:(prev.n || 0) + 1, m:g.ans.filter(a => !a.ok).map(a => a.key), d:today }));
-      } else if (g.kind === 'mw') {
-        const prev = mwRes(g.id) || {}; const k = Object.assign({}, mwK());
-        g.ans.forEach(a => { k[a.key] = a.ok ? (k[a.key] || 0) + 1 : 0; });
-        gain = right * MW_COIN + (all ? MW_PERFECT : 0);
-        prefSet('mwk', k);
-        prefSet('mwg.' + g.id, Object.assign(best(prev), { n:(prev.n || 0) + 1, d:today }));
+      const per = g.kind === 'qf' ? qfCoin(g.minRate || 1) : GM_COIN[g.kind];
+      const pkey = g.kind === 'ta' ? 'ta.' + g.id : g.kind === 'mw' ? 'mwg.' + g.id : 'qf.' + g.id;
+      const prev = prefGet(pkey, null) || {};
+      const again = prev.d === today;   // the same round again today pays half
+      let gain = right * per + (all ? GM_PERFECT : 0); if (again) gain = Math.ceil(gain / 2);
+      const day = this.gmOfDay(S); let dayBonus = 0;
+      if (day && day.key === pkey && !day.paid) { dayBonus = GM_DAY; prefSet('gmDay', Object.assign({}, prefGet('gmDay', {}), { paid:1 })); }
+      gain += dayBonus;
+      if (g.kind === 'ta') prefSet(pkey, Object.assign(best(prev), { n:(prev.n || 0) + 1, m:g.ans.filter(a => !a.ok).map(a => a.key), d:today }));
+      else if (g.kind === 'mw') {
+        const k = Object.assign({}, mwK()); g.ans.forEach(a => { k[a.key] = a.ok ? (k[a.key] || 0) + 1 : 0; });
+        prefSet('mwk', k); prefSet(pkey, Object.assign(best(prev), { n:(prev.n || 0) + 1, d:today }));
       } else {
-        const prev = qfRes(g.id) || {}; const fast = (g.minRate || 1) >= 1.25;
-        gain = right * (fast ? 2 : 1) + (all ? QF_PERFECT : 0);
-        prefSet('qf.' + g.id, Object.assign(best(prev), { n:(prev.n || 0) + 1, d:today }, fast && all ? { f:Math.max(prev.f || 0, g.minRate) } : prev.f ? { f:prev.f } : {}));
+        const fast = (g.minRate || 1) >= 1.25;
+        prefSet(pkey, Object.assign(best(prev), { n:(prev.n || 0) + 1, d:today }, fast && all ? { f:Math.max(prev.f || 0, g.minRate) } : prev.f ? { f:prev.f } : {}));
       }
+      g.coin = { per, again, dayBonus, perfect:all ? GM_PERFECT : 0 };
       if (all) SFX.play('ok');
-      this.setState({ gm:Object.assign({}, g, { view:'done', right, gain }), xp:S.xp + gain, dayXp:S.dayXp + gain, dayMin:S.dayMin + Math.max(1, Math.round((Date.now() - g.t0) / 60000)) });
+      this.setState({ gm:Object.assign({}, g, { view:'done', right, gain, coin:g.coin }), xp:S.xp + gain, dayXp:S.dayXp + gain, dayMin:S.dayMin + Math.max(1, Math.round((Date.now() - g.t0) / 60000)) });
     };
     taNext = () => this.gmNext();
     gmAgain = () => { const g = this.state.gm; if (!g) return; if (g.kind === 'ta') this.taOpen(g.id); else if (g.kind === 'mw') this.mwOpen(g.id); else this.qfOpen(g.id); };
     taHub = () => { this.stopNative(); this.setState({ gm:{ view:'hub' } }); try { window.scrollTo(0, 0); } catch (e) {} };
+    gmGame = (kind) => { this.stopNative(); this.setState({ gm:{ view:'game', game:kind, more:false } }); if (this.state.screen !== 'games') this.go('games'); else { try { window.scrollTo(0, 0); } catch (e) {} } };
+    gmBackTo = () => { const g = this.state.gm; if (g && g.kind) this.gmGame(g.kind); else this.taHub(); };
     // every round that is open right now, for Game of the day
     gmReady = (S) => {
       const out = [];
-      TA_SETS.forEach(s => { if (s.lv <= TOPL && this.taInfo(S, s).ready) out.push({ key:'ta.' + s.id, title:s.title, sub:s.title + ' · Tell them apart', res:taRes(s.id), go:() => this.taOpen(s.id) }); });
-      for (let n = 1; n <= TOPL; n++) if (this.mwInfo(S, n).ready) out.push({ key:'mwg.' + n, sub:'Measure words · HSK ' + n, res:mwRes(n), go:() => this.mwOpen(n) });
-      if (NUMS) NUMS.STEPS.forEach((st, i) => { if (this.qfInfo(i).ready) out.push({ key:'qf.' + st.id, sub:'Quick-fire numbers · ' + st.title, res:qfRes(st.id), go:() => this.qfOpen(st.id) }); });
+      TA_SETS.forEach(s => { if (s.lv <= TOPL && this.taInfo(S, s).ready) out.push({ key:'ta.' + s.id, kind:'ta', title:s.title, sub:s.title + ' · Tell them apart', res:taRes(s.id), go:() => this.taOpen(s.id) }); });
+      for (let n = 1; n <= TOPL; n++) if (this.mwInfo(S, n).ready) out.push({ key:'mwg.' + n, kind:'mw', title:'HSK ' + n + ' measure words', sub:'Measure words · HSK ' + n, res:mwRes(n), go:() => this.mwOpen(n) });
+      if (NUMS) NUMS.STEPS.forEach((st, i) => { if (this.qfInfo(i).ready) out.push({ key:'qf.' + st.id, kind:'qf', title:st.title, sub:'Quick-fire numbers · ' + st.title, res:qfRes(st.id), go:() => this.qfOpen(st.id) }); });
       return out;
     };
     // Game of the day on Today: a round that is open, preferring ones never played; the same one all day (picked by the date)
+    // the choice is kept for the day (person pref 'gmDay' = { d, key, paid }), so playing it does not move it to another round
     gmOfDay = (S) => {
       const today = ymd(new Date());
       const ready = this.gmReady(S); if (!ready.length) return null;
-      const fresh = ready.filter(r => !(r.res && r.res.n)); const pool = fresh.length ? fresh : ready;
-      let h = 0; for (let i = 0; i < today.length; i++) h = (h * 31 + today.charCodeAt(i)) >>> 0;
-      const r = pool[h % pool.length];
-      return { sub:r.sub, go:r.go, done:!!(r.res && r.res.d === today) };
+      const memo = prefGet('gmDay', null);
+      let r = memo && memo.d === today ? ready.find(x => x.key === memo.key) : null;
+      if (!r) {
+        const fresh = ready.filter(x => !(x.res && x.res.n)); const pool = fresh.length ? fresh : ready;
+        let h = 0; for (let i = 0; i < today.length; i++) h = (h * 31 + today.charCodeAt(i)) >>> 0;
+        r = pool[h % pool.length];
+        prefSet('gmDay', { d:today, key:r.key });
+      }
+      return { key:r.key, kind:r.kind, title:r.title, sub:r.sub, go:r.go, done:!!(r.res && r.res.d === today), paid:!!(memo && memo.d === today && memo.key === r.key && memo.paid) };
     };
     gamesVals = (S) => {
-      const out = { isGames:false, gmHub:false, gmPlay:false, gmDone:false, taLevels:[], mwLevels:[], qfSteps:[], gmOpts:[], gmBreak:[], gmMissed:[], qfSpeeds:[] };
+      const out = { isGames:false, gmHub:false, gmPage:false, gmPlay:false, gmDone:false, gmTiles:[], gmRows:[], gmLocked:[], gmOpts:[], gmBreak:[], gmMissed:[], qfSpeeds:[], gmDots:[] };
       if (S.screen !== 'games') return out;
       const g = S.gm || { view:'hub' };
-      const kindName = { ta:'Tell them apart', mw:'Measure words', qf:'Quick-fire numbers' }[g.kind] || '';
-      const what = g.kind === 'ta' ? (TA_BY[g.id] || {}).title : g.kind === 'mw' ? 'HSK ' + g.id : g.kind === 'qf' && NUMS ? (NUMS.STEPS.find(s => s.id === g.id) || {}).title : '';
-      if (g.view !== 'hub' && g.deck && g.deck.length) {
-        const n = g.deck.length;
+      const today = ymd(new Date());
+      const GAME = { ta:{ name:'Tell them apart', glyph:'辨', cls:'g-ta', blurb:'One sentence, one gap, two or three patterns that look alike. A wrong pick tells you what your choice would have meant.' },
+        mw:{ name:'Measure words', glyph:'量', cls:'g-mw', blurb:'一本书, 一张桌子, 一双鞋: pick the measure word that goes with the thing. Pairs you miss come back sooner.' },
+        qf:{ name:'Quick-fire numbers', glyph:'数', cls:'g-qf', blurb:'Hear a number, price, time, date or phone number, and type it. Get 8 of 10 to open the next step.' } };
+      const coinLine = (k) => (k === 'qf' ? qfCoin(1) + ' coins a right answer (' + qfCoin(1.25) + ' at 1.25×, ' + qfCoin(1.5) + ' at 1.5×)' : GM_COIN[k] + ' coins a right card') + ', +' + GM_PERFECT + ' for a perfect round. Half again the same day.';
+      // every round of a game, as rows: open ones (to play) and locked ones (with what opens them)
+      const rowsOf = (k) => {
+        const rows = [];
+        const resRow = (res) => (res && res.n ? 'Best ' + res.b + ' of ' + res.t + (res.d === today ? ' · played today' : '') : '');
+        if (k === 'ta') {
+          for (let n = TOPL; n >= 1; n--) TA_SETS.filter(s => s.lv === n).forEach(s => {
+            const info = this.taInfo(S, s); const res = taRes(s.id);
+            rows.push({ title:s.title, tag:'HSK ' + n, ready:info.ready, played:!!(res && res.n), go:() => this.taOpen(s.id), btn:res && res.n ? 'Again' : 'Play',
+              sub:info.miss.length ? 'Pass ' + info.miss.join(' and ') + ' to open' : !info.ready ? info.open.length + ' of ' + TA_MIN + ' cards ready: start more of its words'
+                : (resRow(res) || Math.min(TA_ROUND, info.open.length) + ' cards') + (res && res.m && res.m.length ? ' · ' + res.m.length + ' to fix' : '') });
+          });
+        } else if (k === 'mw') {
+          for (let n = TOPL; n >= 1; n--) {
+            const info = this.mwInfo(S, n); const res = mwRes(n); if (!info.cards.length) continue;
+            const strong = info.open.filter(c => (mwK()[c.zh] || 0) >= 3).length;
+            rows.push({ title:'HSK ' + n + ' measure words', tag:'', ready:info.ready, played:!!(res && res.n), go:() => this.mwOpen(n), btn:res && res.n ? 'Again' : 'Play',
+              sub:!info.ready ? info.open.length + ' of ' + MW_MIN + ' pairs ready: start more of its words'
+                : (resRow(res) ? resRow(res) + ' · ' : '') + info.open.length + ' pairs' + (strong ? ', ' + strong + ' known well' : '') });
+          }
+        } else if (NUMS) {
+          NUMS.STEPS.forEach((st, i) => {
+            const info = this.qfInfo(i); const res = qfRes(st.id);
+            rows.push({ title:(i + 1) + '. ' + st.title, tag:'', ready:info.ready, played:!!(res && res.n), go:() => this.qfOpen(st.id), btn:res && res.n ? 'Again' : 'Play',
+              sub:!info.ready ? 'Get ' + QF_PASS + ' of ' + QF_ROUND + ' in ' + info.prev + ' to open' : (resRow(res) ? resRow(res) + (res.f ? ' · all right at ' + rungX(res.f) : '') : st.sub) });
+          });
+        }
+        return rows;
+      };
+      if ((g.view === 'play' || g.view === 'done') && g.deck && g.deck.length) {
+        const G = GAME[g.kind]; const n = g.deck.length;
+        const what = g.kind === 'ta' ? (TA_BY[g.id] || {}).title : g.kind === 'mw' ? 'HSK ' + g.id : (NUMS.STEPS.find(x => x.id === g.id) || {}).title;
+        Object.assign(out, { isGames:true, gmCls:G.cls, gmGlyph:G.glyph, gmKick:G.name, gmWhat:what, gmBack:this.gmBackTo, gmBackText:G.name,
+          gmDots:g.deck.map((c, i) => ({ cls:i < g.ans.length ? (g.ans[i].ok ? 'ok' : 'miss') : i === g.qi && g.view === 'play' ? 'now' : '' })) });
         if (g.view === 'play') {
-          const c = g.deck[g.qi]; const picked = g.pick >= 0; const o = picked ? c.opts[g.pick] : null;
-          const ok = picked && (o.zh === c.a || c.also.indexOf(o.zh) >= 0), also = ok && o.zh !== c.a;
+          const c = g.deck[g.qi]; const picked = g.pick >= 0; const last = picked ? g.ans[g.ans.length - 1] : null;
+          const o = picked && !c.typed ? c.opts[g.pick] : null;
+          const ok = picked && (c.typed ? last.ok : (o.zh === c.a || c.also.indexOf(o.zh) >= 0)), also = ok && o && o.zh !== c.a;
           const ac = c.opts.find(x => x.zh === c.a) || {};
-          Object.assign(out, { isGames:true, gmPlay:true, gmKick:kindName + ' · ' + what, gmStep:'Card ' + (g.qi + 1) + ' of ' + n,
-            gmAudio:!!c.audio && !picked, gmText:!c.audio || picked, gmIsQf:g.kind === 'qf',
+          Object.assign(out, { gmPlay:true, gmStep:(g.qi + 1) + ' / ' + n,
+            gmAudio:!!c.audio && !picked, gmText:!c.audio || picked, gmIsQf:g.kind === 'qf', gmTyped:!!c.typed, gmChoice:!c.typed,
             gmPre:c.audio ? c.zh : c.pre, gmPost:c.audio ? '' : c.post, gmGap:picked && !c.audio ? c.a : '', gmHasGap:!c.audio, gmGapCls:picked ? (ok ? 'ok' : 'miss') : '',
             gmPy:picked ? c.py : (c.preQ + ' ___ ' + c.postQ).trim(), gmShowPy:(!!g.py && !c.audio) || picked, gmPyBtn:g.py ? 'Hide pinyin' : 'Show pinyin',
             gmTogPy:() => this.setState({ gm:Object.assign({}, this.state.gm, { py:!this.state.gm.py }) }),
-            gmEn:c.audio ? (picked ? c.a : 'Listen, then pick what you heard. Play it again as often as you like.') : c.en, gmPicked:picked, gmNotPicked:!picked, gmCanPy:!picked && !c.audio, gmOptN:c.opts.length,
+            gmEn:c.audio ? (picked ? c.a : 'Listen, then type what you heard. Play it again as often as you like.') : c.en, gmPicked:picked, gmNotPicked:!picked, gmCanPy:!picked && !c.audio, gmOptN:c.opts.length,
             gmOpts:c.opts.map((x, k) => ({ zh:x.zh, py:x.py, hasPy:!!x.py, k:k + 1, pick:() => this.gmPick(k),
-              cls:(c.audio ? 'num ' : '') + (!picked ? '' : x.zh === c.a || c.also.indexOf(x.zh) >= 0 ? 'right' : k === g.pick ? 'wrong' : '') })),
-            gmVerdict:!picked ? '' : also ? 'Also right here.' : ok ? 'Right!' : 'Not quite: it is ' + c.a + '.',
+              cls:!picked ? '' : x.zh === c.a || c.also.indexOf(x.zh) >= 0 ? 'right' : k === g.pick ? 'wrong' : '' })),
+            gmInp:g.inp || '', gmHint:c.hint || '', gmType:this.gmType, gmTypeKey:this.gmTypeKey, gmCheck:this.gmCheck, gmInpCls:picked ? (ok ? 'ok' : 'miss') : '',
+            gmInpMode:c.step === 'time' || c.step === 'date' || c.step === 'price' ? 'decimal' : 'numeric', gmCheckOff:!String(g.inp || '').trim(),
+            gmErr:g.err || '', gmHasErr:!!g.err,
+            gmVerdict:!picked ? '' : also ? 'Also right here.' : ok ? 'Right!' : c.typed ? 'Not quite: it is ' + c.a + '.' : 'Not quite: it is ' + c.a + '.',
+            gmYouTyped:picked && c.typed && !ok ? 'You typed ' + last.typed + '.' : '', gmHasYouTyped:!!(picked && c.typed && !ok),
             gmVerdictCls:ok ? 'right' : 'wrong', gmWhy:c.why || (ac.mean || ''), gmHasWhy:!!(c.why || ac.mean),
-            gmYours:picked && !ok && o.mean ? o.mean : '', gmHasYours:!!(picked && !ok && o.mean),
-            gmHear:this.gmHear, gmHearCls:S.playing === 'gm' ? 'on' : '', gmNext:this.gmNext, gmNextText:g.qi + 1 < n ? 'Next card' : 'See how you did',
-            gmBack:this.taHub,
+            gmYours:picked && !ok && o && o.mean ? o.mean : '', gmHasYours:!!(picked && !ok && o && o.mean),
+            gmHear:this.gmHear, gmHearCls:S.playing === 'gm' ? 'on' : '', gmNext:this.gmNext, gmNextText:g.qi + 1 < n ? 'Next' : 'See how you did',
+            gmKeys:c.typed ? 'Enter checks, then Enter goes on. P plays it again.' : 'Keys: 1 to ' + c.opts.length + ' pick, Enter next, H hear it.',
             qfSpeeds:g.kind === 'qf' ? QF_SPEEDS.map(r => ({ label:rungX(r), cls:r === qfSpeed() ? 'on' : '', pressed:r === qfSpeed() ? 'true' : 'false', fn:() => this.qfSetSpeed(r) })) : [] });
           return out;
         }
-        // done: the score, and (for the games with patterns) how each one went
+        // done: the score, the coins and what they were for, how each pattern went, and the misses
         const groups = {}; g.ans.forEach(a => { const x = groups[a.a] || (groups[a.a] = { zh:a.a, r:0, t:0 }); x.t++; if (a.ok) x.r++; });
         const brk = g.kind === 'qf' ? [] : Object.keys(groups).map(z => groups[z]);
         const weak = brk.filter(b => b.r < b.t).sort((a, b) => a.r / a.t - b.r / b.t)[0];
-        const missed = g.ans.map((a, i) => (a.ok ? null : g.deck[i])).filter(Boolean);
-        const fast = g.kind === 'qf' && (g.minRate || 1) >= 1.25;
-        Object.assign(out, { isGames:true, gmDone:true, gmKick:kindName + ' · ' + what, gmStep:'Done', gmBack:this.taHub,
-          gmScore:g.right + ' of ' + n + ' right',
-          gmScoreSub:'+' + g.gain + ' coins' + (fast ? ' (heard at ' + rungX(g.minRate) + ': 2 a card)' : '') + (g.right === n ? ' (every card right: +' + ({ ta:TA_PERFECT, mw:MW_PERFECT, qf:QF_PERFECT })[g.kind] + ')' : ''),
-          gmBreak:brk.map(b => ({ zh:b.zh, t:b.r + ' of ' + b.t, cls:b.r === b.t ? 'ok' : 'miss' })), gmHasBreak:brk.length > 0, gmNoBreak:!brk.length,
+        const missed = g.ans.map((a, i) => (a.ok ? null : Object.assign({ typed:a.typed }, g.deck[i]))).filter(Boolean);
+        const cn = g.coin || {};
+        const parts = [g.right + ' right × ' + (cn.per || 0) + ' coins'].concat(cn.perfect ? ['perfect round +' + cn.perfect] : []);
+        Object.assign(out, { gmDone:true, gmStep:'Done',
+          gmScore:g.right + ' / ' + n, gmScorePct:Math.round(g.right / n * 100) + '%',
+          gmCoins:'+' + g.gain, gmCoinWhy:parts.join(', ') + (cn.again ? ' (played again today: half)' : '') + (cn.dayBonus ? ' · Game of the day +' + cn.dayBonus : ''),
+          gmBreak:brk.map(b => ({ zh:b.zh, t:b.r + '/' + b.t, cls:b.r === b.t ? 'ok' : 'miss' })), gmHasBreak:brk.length > 0, gmNoBreak:!brk.length,
           gmWatch:g.kind === 'qf' ? (g.right >= QF_PASS ? (g.right === n ? 'Every one right.' : 'Good ears.') + ' ' + (this.qfNextTitle(g.id) ? 'That opens ' + this.qfNextTitle(g.id) + '.' : 'Try it faster next time.') : 'Get ' + QF_PASS + ' of ' + n + ' to open the next step.')
-            : weak ? weak.zh + ' is the one to watch. ' + (g.kind === 'ta' ? 'The cards you missed come first next time.' : 'Pairs you miss come back sooner.') : 'Every one right. Nicely told apart.',
-          gmMissed:missed.map(c => ({ zh:c.zh, en:c.audio ? c.a + ' · ' + c.py : c.en, why:c.why || '' })), gmHasMissed:missed.length > 0,
+            : weak ? weak.zh + ' is the one to watch. ' + (g.kind === 'ta' ? 'The cards you missed come first next time.' : 'Pairs you miss come back sooner.') : 'Every one right. Nicely done.',
+          gmMissed:missed.map(c => ({ zh:c.zh, en:c.audio ? c.a + ' · ' + c.py + (c.typed ? ' (you typed ' + c.typed + ')' : '') : c.en, why:c.why || '' })), gmHasMissed:missed.length > 0,
           gmAgain:this.gmAgain });
         return out;
       }
-      // the hub
-      const lvls = []; for (let n = TOPL; n >= 1; n--) lvls.push(n);
+      // a game's own page: what is open, then the locked rounds folded into one line
+      if (g.view === 'game' && GAME[g.game]) {
+        const k = g.game, G = GAME[k], rows = rowsOf(k);
+        const open = rows.filter(r => r.ready), locked = rows.filter(r => !r.ready);
+        Object.assign(out, { isGames:true, gmPage:true, gmCls:G.cls, gmGlyph:G.glyph, gmName:G.name, gmBlurb:G.blurb, gmCoinLine:coinLine(k), gmBack:this.taHub,
+          gmRows:open, gmNoOpen:!open.length, gmProg:open.length + ' of ' + rows.length + ' open', gmProgW:Math.round(open.length / Math.max(1, rows.length) * 100) + '%',
+          gmLocked:g.more ? locked : (k === 'qf' ? locked.slice(0, 1) : []), gmHasMore:locked.length > (k === 'qf' ? 1 : 0) && !g.more,
+          gmMoreText:k === 'qf' ? '+ ' + (locked.length - 1) + ' more steps' : '+ ' + locked.length + ' locked ' + (k === 'ta' ? (locked.length === 1 ? 'set' : 'sets') : (locked.length === 1 ? 'round' : 'rounds')) + ': see what opens them',
+          gmMore:() => this.setState({ gm:Object.assign({}, this.state.gm, { more:true }) }), gmHasLocked:(g.more ? locked : (k === 'qf' ? locked.slice(0, 1) : [])).length > 0 });
+        return out;
+      }
+      // the hub: Game of the day, then a tile for each game with its progress
+      const day = this.gmOfDay(S);
       Object.assign(out, { isGames:true, gmHub:true,
-        taLevels:lvls.map(n => ({ name:'HSK ' + n, sets:TA_SETS.filter(s => s.lv === n).map(s => {
-          const info = this.taInfo(S, s); const res = taRes(s.id);
-          const sub = info.miss.length ? 'Pass ' + info.miss.join(' and ') + ' to open'
-            : !info.ready ? info.open.length + ' of ' + TA_MIN + ' cards ready. Start more of its words to open it'
-            : res && res.n ? 'Best ' + res.b + ' of ' + res.t + (res.m && res.m.length ? ' · ' + res.m.length + ' to fix' : '')
-            : Math.min(TA_ROUND, info.open.length) + ' cards' + (info.open.length < s.items.length ? ' · ' + (s.items.length - info.open.length) + ' more open as you learn words' : '');
-          return { title:s.title, sub, cls:info.ready ? (res && res.n ? 'played' : 'new') : 'locked', ready:info.ready, locked:!info.ready, go:() => this.taOpen(s.id), btn:res && res.n ? 'Play again' : 'Play' };
-        }) })).filter(l => l.sets.length),
-        mwLevels:lvls.map(n => {
-          const info = this.mwInfo(S, n); const res = mwRes(n); if (!info.cards.length) return null;
-          const strong = info.open.filter(c => (mwK()[c.zh] || 0) >= 3).length;
-          const sub = !info.ready ? info.open.length + ' of ' + MW_MIN + ' pairs ready. Start more of its words to open it'
-            : (res && res.n ? 'Best ' + res.b + ' of ' + res.t + ' · ' : '') + info.open.length + ' pairs' + (strong ? ', ' + strong + ' known well' : '') + (info.open.length < info.cards.length ? ' · ' + (info.cards.length - info.open.length) + ' more as you learn words' : '');
-          return { title:'HSK ' + n + ' measure words', sub, cls:info.ready ? 'new' : 'locked', ready:info.ready, locked:!info.ready, go:() => this.mwOpen(n), btn:res && res.n ? 'Play again' : 'Play' };
-        }).filter(Boolean),
-        qfSteps:NUMS ? NUMS.STEPS.map((st, i) => {
-          const info = this.qfInfo(i); const res = qfRes(st.id);
-          const sub = !info.ready ? 'Get ' + QF_PASS + ' of ' + QF_ROUND + ' in ' + info.prev + ' to open' : res && res.n ? 'Best ' + res.b + ' of ' + res.t + (res.f ? ' · all right at ' + rungX(res.f) : '') : st.sub;
-          return { title:st.title, sub, cls:info.ready ? 'new' : 'locked', ready:info.ready, locked:!info.ready, go:() => this.qfOpen(st.id), btn:res && res.n ? 'Play again' : 'Play' };
-        }) : [] });
+        gmDayShow:!!day, gmDaySub:day ? day.sub : '', gmDayGo:day ? day.go : null, gmDayDone:!!(day && day.done), gmDayCls:day ? GAME[day.kind].cls : '', gmDayGlyph:day ? GAME[day.kind].glyph : '',
+        gmDayBtn:day && day.done ? 'Play again' : 'Play', gmDayNote:day ? (day.paid ? 'Done today. Its +' + GM_DAY + ' is in.' : '+' + GM_DAY + ' coins on top today') : '',
+        gmTiles:['ta', 'mw', 'qf'].map(k => {
+          const rows = rowsOf(k); const open = rows.filter(r => r.ready).length, played = rows.filter(r => r.played).length;
+          return { cls:GAME[k].cls, glyph:GAME[k].glyph, name:GAME[k].name, go:() => this.gmGame(k), w:Math.round(open / Math.max(1, rows.length) * 100) + '%',
+            line:open + ' of ' + rows.length + ' open', sub:played ? played + ' played' : open ? 'Ready to play' : 'Opens as you learn' };
+        }) });
       return out;
     };
     qfNextTitle = (id) => { if (!NUMS) return ''; const i = NUMS.STEPS.findIndex(s => s.id === id); const nx = NUMS.STEPS[i + 1]; return nx && !(qfRes(nx.id) || {}).n ? nx.title : ''; };

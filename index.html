@@ -7,7 +7,7 @@
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=9c7c234f4d data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=1a0bc4fd8d data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=03338bf705 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=f61eb12760 data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=08b995b674 data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=82ca84cf78 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=6b5998626b data/hsk4-words.js?v=9ebcc5a250 data/hsk4-grammar.js?v=28032af4f3 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=432fbea51b data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=372a4da5b0 data/hsk5-words.js?v=1e54d78599 data/hsk5-grammar.js?v=212fbdddbc data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=376d0f56b1 data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=db77f8b5e5">
-<meta name="shanlu-version" content="40439ffc2b">
+<meta name="shanlu-version" content="d53f954a29">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=5900067fac">
+<link rel="stylesheet" href="styles.css?v=84d00486c4">
 </head>
 <body>
 <div id="app"></div>
@@ -1867,81 +1867,102 @@
   </div>
   </sc-if>
 
-  <!-- GAMES (Learn > Games): short rounds that mix up things that are easy to confuse; Tell them apart is the first -->
+  <!-- GAMES (Learn > Games): a hub (Game of the day, a tile per game), a page per game, and one play screen for every game -->
   <sc-if value="{{isGames}}" hint-placeholder-val="{{ false }}">
   <div class="gm">
     <sc-if value="{{gmHub}}" hint-placeholder-val="{{ true }}">
-      <section class="card gm-game">
-        <div class="gm-gh"><span lang="zh-Hans" class="zh gm-glyph" aria-hidden="true">辨</span><div><h2 class="h2">Tell them apart</h2><p class="muted" style="margin:4px 0 0">One sentence, one gap, two or three patterns that look alike. A wrong pick tells you what your choice would have meant.</p></div></div>
-        <sc-for list="{{taLevels}}" as="l" hint-placeholder-count="2">
-          <h3 class="gm-lv">{{l.name}}</h3>
-          <div class="gm-sets">
-            <sc-for list="{{l.sets}}" as="x" hint-placeholder-count="3">
-              <div class="gm-set {{x.cls}}">
-                <div class="gm-st"><b>{{x.title}}</b><span class="muted">{{x.sub}}</span></div>
-                <sc-if value="{{x.ready}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn sm pri" data-on-click="{{x.go}}">{{x.btn}}</button></sc-if>
-                <sc-if value="{{x.locked}}" hint-placeholder-val="{{ false }}"><span class="gm-lock">Locked</span></sc-if>
-              </div>
-            </sc-for>
+      <sc-if value="{{gmDayShow}}" hint-placeholder-val="{{ true }}">
+        <section class="gm-day {{gmDayCls}}">
+          <span lang="zh-Hans" class="zh gm-dg" aria-hidden="true">{{gmDayGlyph}}</span>
+          <div class="gm-dt"><span class="gm-dk">Game of the day</span><b>{{gmDaySub}}</b><span class="gm-dn">{{gmDayNote}}</span></div>
+          <button type="button" class="btn gm-dbtn" data-on-click="{{gmDayGo}}">{{gmDayBtn}}</button>
+        </section>
+      </sc-if>
+      <div class="gm-tiles">
+        <sc-for list="{{gmTiles}}" as="t" hint-placeholder-count="3">
+          <button type="button" class="gm-tile {{t.cls}}" data-on-click="{{t.go}}">
+            <span lang="zh-Hans" class="zh gm-tg" aria-hidden="true">{{t.glyph}}</span>
+            <b class="gm-tn">{{t.name}}</b>
+            <span class="gm-bar" aria-hidden="true"><i style="width: {{t.w}}"></i></span>
+            <span class="gm-tl">{{t.line}}</span>
+            <span class="gm-ts">{{t.sub}}</span>
+          </button>
+        </sc-for>
+      </div>
+      <p class="muted gm-soon">More games are on the way.</p>
+    </sc-if>
+    <sc-if value="{{gmPage}}" hint-placeholder-val="{{ false }}">
+      <button type="button" class="crumb" data-on-click="{{gmBack}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Games</button>
+      <section class="gm-head {{gmCls}}">
+        <span lang="zh-Hans" class="zh gm-hg" aria-hidden="true">{{gmGlyph}}</span>
+        <div class="gm-ht"><h2 class="h2">{{gmName}}</h2><p>{{gmBlurb}}</p>
+          <div class="gm-hp"><span class="gm-bar" aria-hidden="true"><i style="width: {{gmProgW}}"></i></span><span>{{gmProg}}</span></div></div>
+      </section>
+      <section class="card gm-list {{gmCls}}">
+        <sc-if value="{{gmNoOpen}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0">Nothing is open yet. The rounds below open as you go.</p></sc-if>
+        <sc-for list="{{gmRows}}" as="x" hint-placeholder-count="4">
+          <div class="gm-row">
+            <div class="gm-st"><b>{{x.title}}</b><span class="muted">{{x.sub}}</span></div>
+            <sc-if value="{{x.tag}}" hint-placeholder-val="{{ false }}"><span class="gm-tag">{{x.tag}}</span></sc-if>
+            <button type="button" class="btn sm gm-play" data-on-click="{{x.go}}">{{x.btn}}</button>
           </div>
         </sc-for>
-      </section>
-      <section class="card gm-game">
-        <div class="gm-gh"><span lang="zh-Hans" class="zh gm-glyph" aria-hidden="true">量</span><div><h2 class="h2">Measure words</h2><p class="muted" style="margin:4px 0 0">一本书, 一张桌子, 一双鞋: pick the measure word that goes with the thing. Pairs you miss come back sooner, and new pairs open as you learn the words.</p></div></div>
-        <div class="gm-sets">
-          <sc-for list="{{mwLevels}}" as="x" hint-placeholder-count="2">
-            <div class="gm-set {{x.cls}}">
+        <sc-if value="{{gmHasLocked}}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{gmLocked}}" as="x" hint-placeholder-count="2">
+            <div class="gm-row locked">
+              <svg class="ic gm-lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
               <div class="gm-st"><b>{{x.title}}</b><span class="muted">{{x.sub}}</span></div>
-              <sc-if value="{{x.ready}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn sm pri" data-on-click="{{x.go}}">{{x.btn}}</button></sc-if>
-              <sc-if value="{{x.locked}}" hint-placeholder-val="{{ false }}"><span class="gm-lock">Locked</span></sc-if>
             </div>
           </sc-for>
-        </div>
+        </sc-if>
+        <sc-if value="{{gmHasMore}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn gm-more" data-on-click="{{gmMore}}">{{gmMoreText}}</button></sc-if>
       </section>
-      <section class="card gm-game">
-        <div class="gm-gh"><span lang="zh-Hans" class="zh gm-glyph" aria-hidden="true">数</span><div><h2 class="h2">Quick-fire numbers</h2><p class="muted" style="margin:4px 0 0">Prices, times, dates and phone numbers the way people say them. Hear it, pick what you heard. Each step opens the next when you get 8 of 10.</p></div></div>
-        <div class="gm-sets">
-          <sc-for list="{{qfSteps}}" as="x" hint-placeholder-count="6">
-            <div class="gm-set {{x.cls}}">
-              <div class="gm-st"><b>{{x.title}}</b><span class="muted">{{x.sub}}</span></div>
-              <sc-if value="{{x.ready}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn sm pri" data-on-click="{{x.go}}">{{x.btn}}</button></sc-if>
-              <sc-if value="{{x.locked}}" hint-placeholder-val="{{ false }}"><span class="gm-lock">Locked</span></sc-if>
-            </div>
-          </sc-for>
-        </div>
-      </section>
+      <p class="muted gm-coin">{{gmCoinLine}}</p>
     </sc-if>
     <sc-if value="{{gmPlay}}" hint-placeholder-val="{{ false }}">
-      <button type="button" class="crumb" data-on-click="{{gmBack}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Games</button>
-      <section class="card gm-card">
-        <div class="psg-top"><span class="kick">{{gmKick}}</span><span class="muted psg-step">{{gmStep}}</span></div>
-        <sc-if value="{{gmAudio}}" hint-placeholder-val="{{ false }}"><div class="gm-listen"><button type="button" class="listen sm {{gmHearCls}}" data-on-click="{{gmHear}}" aria-label="Play it again"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><span class="muted">Tap to hear it again</span></div></sc-if>
+      <button type="button" class="crumb" data-on-click="{{gmBack}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>{{gmBackText}}</button>
+      <section class="card gm-card {{gmCls}}">
+        <div class="gm-top"><span class="gm-kick"><span lang="zh-Hans" class="zh" aria-hidden="true">{{gmGlyph}}</span> {{gmWhat}}</span><span class="muted gm-step">{{gmStep}}</span></div>
+        <div class="gm-dots" aria-hidden="true"><sc-for list="{{gmDots}}" as="d" hint-placeholder-count="8"><i class="{{d.cls}}"></i></sc-for></div>
+        <sc-if value="{{gmAudio}}" hint-placeholder-val="{{ false }}"><div class="gm-listen"><button type="button" class="listen {{gmHearCls}}" data-on-click="{{gmHear}}" aria-label="Play it again"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div></sc-if>
         <sc-if value="{{gmText}}" hint-placeholder-val="{{ true }}"><p class="gm-zh zh" lang="zh-Hans">{{gmPre}}<sc-if value="{{gmHasGap}}" hint-placeholder-val="{{ true }}"><span class="gm-gap {{gmGapCls}}">{{gmGap}}</span></sc-if>{{gmPost}}</p></sc-if>
         <sc-if value="{{gmShowPy}}" hint-placeholder-val="{{ false }}"><p class="gm-py">{{gmPy}}</p></sc-if>
         <p class="muted gm-en">{{gmEn}}</p>
-        <sc-if value="{{gmIsQf}}" hint-placeholder-val="{{ false }}"><div class="psg-speed" role="group" aria-label="Playback speed"><span class="muted psg-spl">Speed</span><sc-for list="{{qfSpeeds}}" as="o" hint-placeholder-count="3"><button type="button" class="fc2 {{o.cls}}" aria-pressed="{{o.pressed}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div></sc-if>
-        <div class="opts gm-opts n{{gmOptN}}">
-          <sc-for list="{{gmOpts}}" as="o" hint-placeholder-count="3">
-            <button type="button" class="opt {{o.cls}}" data-on-click="{{o.pick}}"><i class="optk" aria-hidden="true">{{o.k}}</i><span class="zh" lang="zh-Hans">{{o.zh}}</span><sc-if value="{{o.hasPy}}" hint-placeholder-val="{{ true }}"><small class="gm-opy">{{o.py}}</small></sc-if></button>
-          </sc-for>
-        </div>
+        <sc-if value="{{gmIsQf}}" hint-placeholder-val="{{ false }}"><div class="psg-speed gm-speed" role="group" aria-label="Playback speed"><span class="muted psg-spl">Speed</span><sc-for list="{{qfSpeeds}}" as="o" hint-placeholder-count="3"><button type="button" class="fc2 {{o.cls}}" aria-pressed="{{o.pressed}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div></sc-if>
+        <sc-if value="{{gmChoice}}" hint-placeholder-val="{{ true }}">
+          <div class="opts gm-opts n{{gmOptN}}">
+            <sc-for list="{{gmOpts}}" as="o" hint-placeholder-count="3">
+              <button type="button" class="opt {{o.cls}}" data-on-click="{{o.pick}}"><i class="optk" aria-hidden="true">{{o.k}}</i><span class="zh" lang="zh-Hans">{{o.zh}}</span><sc-if value="{{o.hasPy}}" hint-placeholder-val="{{ true }}"><small class="gm-opy">{{o.py}}</small></sc-if></button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{gmTyped}}" hint-placeholder-val="{{ false }}">
+          <div class="gm-typed">
+            <input id="gm-input" class="inp gm-inp {{gmInpCls}}" type="text" inputmode="{{gmInpMode}}" autocomplete="off" autocapitalize="off" spellcheck="false" value="{{gmInp}}" placeholder="{{gmHint}}" aria-label="What you heard" data-on-input="{{gmType}}" data-on-keydown="{{gmTypeKey}}" readonly="{{gmPicked}}">
+            <sc-if value="{{gmNotPicked}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn pri gm-check" disabled="{{gmCheckOff}}" data-on-click="{{gmCheck}}">Check</button></sc-if>
+          </div>
+          <sc-if value="{{gmHasErr}}" hint-placeholder-val="{{ false }}"><p class="m-err" role="alert">{{gmErr}}</p></sc-if>
+        </sc-if>
         <sc-if value="{{gmCanPy}}" hint-placeholder-val="{{ true }}"><div class="psg-tog"><button type="button" class="linkbtn" data-on-click="{{gmTogPy}}">{{gmPyBtn}}</button></div></sc-if>
-        <sc-if value="{{gmNotPicked}}" hint-placeholder-val="{{ true }}"><p class="kbhint">Keys: 1 to 4 pick, Enter next, H hear it.</p></sc-if>
+        <sc-if value="{{gmNotPicked}}" hint-placeholder-val="{{ true }}"><p class="kbhint">{{gmKeys}}</p></sc-if>
         <sc-if value="{{gmPicked}}" hint-placeholder-val="{{ false }}">
           <div class="psg-ans {{gmVerdictCls}}" aria-live="polite">
             <b>{{gmVerdict}}</b>
+            <sc-if value="{{gmHasYouTyped}}" hint-placeholder-val="{{ false }}"><p class="gm-why muted">{{gmYouTyped}}</p></sc-if>
             <sc-if value="{{gmHasWhy}}" hint-placeholder-val="{{ true }}"><p class="gm-why">{{gmWhy}}</p></sc-if>
             <sc-if value="{{gmHasYours}}" hint-placeholder-val="{{ false }}"><p class="gm-why muted">Your pick: {{gmYours}}</p></sc-if>
-            <div class="psg-ansb"><button type="button" class="btn sm {{gmHearCls}}" data-on-click="{{gmHear}}">Hear it</button><button type="button" class="btn pri" data-on-click="{{gmNext}}">{{gmNextText}}</button></div>
+            <div class="psg-ansb"><button type="button" class="btn sm {{gmHearCls}}" data-on-click="{{gmHear}}">Hear it</button><button type="button" class="btn pri gm-next" data-on-click="{{gmNext}}">{{gmNextText}}</button></div>
           </div>
         </sc-if>
       </section>
     </sc-if>
     <sc-if value="{{gmDone}}" hint-placeholder-val="{{ false }}">
-      <button type="button" class="crumb" data-on-click="{{gmBack}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Games</button>
-      <section class="card gm-card">
-        <div class="psg-top"><span class="kick">{{gmKick}}</span><span class="muted psg-step">{{gmStep}}</span></div>
-        <p class="psg-score"><b>{{gmScore}}</b> <span class="muted">{{gmScoreSub}}</span></p>
+      <button type="button" class="crumb" data-on-click="{{gmBack}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>{{gmBackText}}</button>
+      <section class="card gm-card gm-end {{gmCls}}">
+        <div class="gm-top"><span class="gm-kick"><span lang="zh-Hans" class="zh" aria-hidden="true">{{gmGlyph}}</span> {{gmWhat}}</span><span class="muted gm-step">{{gmStep}}</span></div>
+        <div class="gm-dots" aria-hidden="true"><sc-for list="{{gmDots}}" as="d" hint-placeholder-count="8"><i class="{{d.cls}}"></i></sc-for></div>
+        <div class="gm-score"><div><b class="gm-big">{{gmScore}}</b><span class="muted">right</span></div><div class="gm-coins"><b class="gm-big">{{gmCoins}}</b><span class="muted">coins</span></div></div>
+        <p class="muted gm-cw">{{gmCoinWhy}}</p>
         <div class="gm-brk" hidden="{{gmNoBreak}}"><sc-for list="{{gmBreak}}" as="b" hint-placeholder-count="3"><span class="gm-b {{b.cls}}"><b lang="zh-Hans" class="zh">{{b.zh}}</b> {{b.t}}</span></sc-for></div>
         <p style="margin:0">{{gmWatch}}</p>
         <sc-if value="{{gmHasMissed}}" hint-placeholder-val="{{ false }}">
@@ -1950,7 +1971,7 @@
             <sc-for list="{{gmMissed}}" as="m" hint-placeholder-count="2"><div class="gm-m"><span lang="zh-Hans" class="zh">{{m.zh}}</span><span class="muted">{{m.en}}</span><span>{{m.why}}</span></div></sc-for>
           </div>
         </sc-if>
-        <div class="psg-ansb"><button type="button" class="btn" data-on-click="{{gmAgain}}">Play again</button><button type="button" class="btn pri" data-on-click="{{gmBack}}">Back to Games</button></div>
+        <div class="psg-ansb"><button type="button" class="btn" data-on-click="{{gmAgain}}">Play again</button><button type="button" class="btn pri gm-next" data-on-click="{{gmBack}}">Done</button></div>
       </section>
     </sc-if>
   </div>
@@ -3293,9 +3314,9 @@
 <script defer src="data/speak-scenes.js?v=8fc79e5d01"></script>
 <script defer src="data/art.js?v=1dd8dd9d7b"></script>
 <script defer src="data/passages.js?v=36bcb932ca"></script>
-<script defer src="numbers.js?v=462e852ef2"></script>
+<script defer src="numbers.js?v=0f114c3ef3"></script>
 <script defer src="data/games.js?v=e76c055491"></script>
 <script defer src="data/path.js?v=988d907206"></script>
-<script defer src="app.js?v=70b954f650"></script>
+<script defer src="app.js?v=f7372e2eeb"></script>
 </body>
 </html>

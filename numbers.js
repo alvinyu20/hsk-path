@@ -1,6 +1,7 @@
 /* Quick-fire numbers (Games): numbers, prices, clock times, dates and phone numbers said the way people say them, with four look-alike
  * answers to pick from. Pure functions, so tools/test-numbers.js can check them in Node.
- *   ShanluNumbers.card(step, lv, rnd) -> { zh, py, label, opts: [4 labels, the right one included], why, en }
+ *   ShanluNumbers.card(step, lv, rnd) -> { zh, py, label, key, opts: [4 labels, the right one included], why, en }
+ *   ShanluNumbers.read(step, typed) -> the typed answer in the same form as `key` (null when it cannot be read), so the learner types what they heard
  *   ShanluNumbers.zh(n) -> 二十八, 一百零五, 两万三千 ...   ShanluNumbers.py('二十八块五') -> 'èrshíbā kuài wǔ'
  * step: 'n99' (0 to 99), 'big' (100 and up), 'price', 'time', 'date', 'phone'. lv: the highest HSK level of the view (刻, 差 and 毛 are HSK 3, 万 is HSK 2). */
 (function (root, factory) {
@@ -86,7 +87,32 @@
   const shuffleArr = (rnd, a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
   const fmt = (n) => n.toLocaleString('en-US');
 
+  // what the learner types, made comparable: numbers as digits, prices as yuan.cents, times as h:mm (13:15 counts as 1:15), dates as m/d, phones as 11 digits
+  const HINT = { n99:'Type the number, e.g. 14', big:'Type the number, e.g. 1200', price:'Type the price in yuan, e.g. 28.5', time:'Type the time, e.g. 3:15 or 3.15', date:'Type month and day, e.g. 5/20', phone:'Type the 11 digits' };
+  function read(step, typed) {
+    const t = String(typed || '').trim().replace(/[，,\s]/g, (c) => (step === 'phone' || step === 'big' || step === 'n99' ? '' : ' ')).replace(/[¥￥元]/g, '');
+    if (!t) return null;
+    if (step === 'n99' || step === 'big') { return /^\d+$/.test(t) ? String(Number(t)) : null; }
+    if (step === 'price') { const m = /^(\d*)(?:[.。](\d{1,2}))?$/.exec(t.replace(/\s/g, '')); if (!m || (!m[1] && !m[2])) return null; const cents = Number(m[1] || 0) * 100 + Number(((m[2] || '') + '00').slice(0, 2)); return (cents / 100).toFixed(2); }
+    if (step === 'time') {
+      let h, mi; const m = /^(\d{1,2})\s*[:.。点\s]\s*(\d{1,2})$/.exec(t) || /^(\d{1,2})(\d{2})$/.exec(t.replace(/\s/g, ''));
+      if (m) { h = Number(m[1]); mi = Number(m[2]); } else if (/^\d{1,2}$/.test(t)) { h = Number(t); mi = 0; } else return null;
+      if (h > 23 || mi > 59) return null; if (h > 12) h -= 12; if (h === 0) h = 12;
+      return h + ':' + String(mi).padStart(2, '0');
+    }
+    if (step === 'date') {
+      const m = /^(\d{1,2})\s*[/.\-。月\s]\s*(\d{1,2})\s*[号日]?$/.exec(t); if (!m) return null;
+      const mo = Number(m[1]), d = Number(m[2]); return mo >= 1 && mo <= 12 && d >= 1 && d <= 31 ? mo + '/' + d : null;
+    }
+    const dg = t.replace(/\D/g, ''); return dg.length ? dg : null;
+  }
   function card(step, lv, rnd) {
+    const c = card0(step, lv, rnd);
+    c.key = read(step, step === 'date' ? (MONTHS.indexOf(c.label.split(' ')[0]) + 1) + '/' + c.label.split(' ')[1] : c.label);
+    c.hint = HINT[step];
+    return c;
+  }
+  function card0(step, lv, rnd) {
     rnd = rnd || Math.random;
     if (step === 'n99') {
       // the easy-to-mix ones come up more: 11-19, the tens, and numbers with a 4 or 10 in them
@@ -185,5 +211,5 @@
       why:/幺/.test(z.slice(3)) ? '幺 (yāo) is how 1 is read in phone numbers, so it does not sound like 七 (qī).' : 'Phone numbers are read digit by digit, in groups of 3, 4 and 4.', en:'a phone number' };
   }
 
-  return { STEPS, card, zh, shortZh, py };
+  return { STEPS, card, read, zh, shortZh, py, HINT };
 }));
