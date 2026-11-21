@@ -2964,5 +2964,1499 @@
   "wrong": "他在车上睡着觉了。",
   "remove": "觉",
   "explain": "睡着 means fall asleep; do not add 觉."
+ },
+ {
+  "p": "g4-59",
+  "t": "cloze",
+  "zh": "零点五就是二分之一。",
+  "en": "0.5 is the same as 1/2.",
+  "blank": "点",
+  "explain": "Decimals use 点."
+ },
+ {
+  "p": "g4-59",
+  "t": "mc",
+  "prompt": "Which sentence says: Three quarters of the people agreed?",
+  "options": [
+   "四分之三的人同意了。",
+   "三分之四的人同意了。"
+  ],
+  "correct": 0,
+  "zh": "四分之三的人同意了。",
+  "en": "Three quarters (3/4) of the people agreed.",
+  "explain": "The bottom number (4) comes first."
+ },
+ {
+  "p": "g4-59",
+  "t": "order",
+  "zh": "百分之八十的人同意。",
+  "en": "Eighty percent of the people agree.",
+  "explain": "百分之 + number."
+ },
+ {
+  "p": "g4-59",
+  "t": "mc",
+  "prompt": "Which sentence says: This watermelon weighs 3.5 kilos?",
+  "options": [
+   "这个西瓜三点五公斤。",
+   "这个西瓜三分五公斤。"
+  ],
+  "correct": 0,
+  "zh": "这个西瓜三点五公斤。",
+  "en": "This watermelon weighs 3.5 kilos.",
+  "explain": "Decimals use 点."
+ },
+ {
+  "p": "g4-60",
+  "t": "mc",
+  "prompt": "Which sentence says: This room is three times as big as that one?",
+  "options": [
+   "这个房间是那个的三倍大。",
+   "这个房间是三倍那个的大。"
+  ],
+  "correct": 0,
+  "zh": "这个房间是那个的三倍大。",
+  "en": "This room is three times as big as that one.",
+  "explain": "A 是 B 的 + number + 倍."
+ },
+ {
+  "p": "g4-60",
+  "t": "cloze",
+  "zh": "今年的游客比去年多了一倍。",
+  "en": "There are twice as many visitors this year as last year.",
+  "blank": "倍",
+  "explain": "多了一倍: doubled."
+ },
+ {
+  "p": "g4-60",
+  "t": "order",
+  "zh": "哥哥的书是我的三倍。",
+  "en": "My older brother has three times as many books as me.",
+  "explain": "A 是 B 的 三倍."
+ },
+ {
+  "p": "g4-60",
+  "t": "mc",
+  "prompt": "Which sentence says: Things have got twice as expensive?",
+  "options": [
+   "东西贵了一倍。",
+   "东西贵了两倍一。"
+  ],
+  "correct": 0,
+  "zh": "东西贵了一倍。",
+  "en": "Things have got twice as expensive.",
+  "explain": "Adjective + 了一倍: doubled."
+ },
+ {
+  "p": "g4-61",
+  "t": "mc",
+  "prompt": "Which sentence says: About thirty people came?",
+  "options": [
+   "来了三十来个人。",
+   "来了三来十个人。"
+  ],
+  "correct": 0,
+  "zh": "来了三十来个人。",
+  "en": "About thirty people came.",
+  "explain": "来 goes after the round number."
+ },
+ {
+  "p": "g4-61",
+  "t": "order",
+  "zh": "他看上去四十来岁。",
+  "en": "He looks about forty.",
+  "explain": "Round number + 来 + 岁."
+ },
+ {
+  "p": "g4-61",
+  "t": "cloze",
+  "zh": "这个西瓜十来公斤。",
+  "en": "This watermelon is about ten kilos.",
+  "blank": "来",
+  "explain": "十来: about ten."
+ },
+ {
+  "p": "g4-61",
+  "t": "mc",
+  "prompt": "Which sentence says: There are about a hundred students in the school?",
+  "options": [
+   "学校里有一百来个学生。",
+   "学校里有一来百个学生。"
+  ],
+  "correct": 0,
+  "zh": "学校里有一百来个学生。",
+  "en": "There are about a hundred students in the school.",
+  "explain": "一百来个: about a hundred."
+ },
+ {
+  "p": "g4-62",
+  "t": "mc",
+  "prompt": "Which sentence says: I ate a big bowl of rice?",
+  "options": [
+   "我吃了一大碗米饭。",
+   "我吃了大一碗米饭。"
+  ],
+  "correct": 0,
+  "zh": "我吃了一大碗米饭。",
+  "en": "I ate a big bowl of rice.",
+  "explain": "一 + adjective + measure word."
+ },
+ {
+  "p": "g4-62",
+  "t": "cloze",
+  "zh": "他喝了一小杯咖啡。",
+  "en": "He drank a small cup of coffee.",
+  "blank": "小",
+  "explain": "一小杯: a small cup."
+ },
+ {
+  "p": "g4-62",
+  "t": "order",
+  "zh": "来了一屋子人。",
+  "en": "A whole roomful of people came.",
+  "explain": "一屋子: a roomful."
+ },
+ {
+  "p": "g4-62",
+  "t": "mc",
+  "prompt": "Which sentence says: He ran in, looking excited?",
+  "options": [
+   "他一脸兴奋地跑了进来。",
+   "他一个脸兴奋地跑了进来。"
+  ],
+  "correct": 0,
+  "zh": "他一脸兴奋地跑了进来。",
+  "en": "He ran in, looking excited.",
+  "explain": "一脸 + feeling, no 个."
+ },
+ {
+  "p": "g4-63",
+  "t": "mc",
+  "prompt": "Which sentence says: This dish is not only cheap but also tasty?",
+  "options": [
+   "这个菜不仅便宜，而且好吃。",
+   "这个菜不仅便宜，而是好吃。"
+  ],
+  "correct": 0,
+  "zh": "这个菜不仅便宜，而且好吃。",
+  "en": "This dish is not only cheap but also tasty.",
+  "explain": "不仅 … 而且 …."
+ },
+ {
+  "p": "g4-63",
+  "t": "order",
+  "zh": "她不光漂亮，还很聪明。",
+  "en": "She is not only pretty but also clever.",
+  "explain": "不光 … 还 …."
+ },
+ {
+  "p": "g4-63",
+  "t": "cloze",
+  "zh": "我们不仅要会说，还要会写。",
+  "en": "We must be able not only to speak but also to write.",
+  "blank": "不仅",
+  "explain": "不仅 … 还 …."
+ },
+ {
+  "p": "g4-63",
+  "t": "mc",
+  "prompt": "Which sentence says: He can not only sing but also dance?",
+  "options": [
+   "他不仅会唱歌，还会跳舞。",
+   "他不仅会唱歌，就会跳舞。"
+  ],
+  "correct": 0,
+  "zh": "他不仅会唱歌，还会跳舞。",
+  "en": "He can not only sing but also dance.",
+  "explain": "The second half uses 还 or 而且."
+ },
+ {
+  "p": "g4-64",
+  "t": "cloze",
+  "zh": "一方面我想去，另一方面我没有时间。",
+  "en": "On the one hand I want to go; on the other I have no time.",
+  "blank": "另",
+  "explain": "The second half is 另一方面."
+ },
+ {
+  "p": "g4-64",
+  "t": "mc",
+  "prompt": "Which sentence says: Learning Chinese is interesting on the one hand and useful on the other?",
+  "options": [
+   "学汉语一方面有意思，另一方面很有用。",
+   "学汉语一方面有意思，另方面很有用。"
+  ],
+  "correct": 0,
+  "zh": "学汉语一方面有意思，另一方面很有用。",
+  "en": "Learning Chinese is interesting on the one hand and useful on the other.",
+  "explain": "另一方面 keeps the 一."
+ },
+ {
+  "p": "g4-64",
+  "t": "mc",
+  "prompt": "Which sentence says: On the one hand study hard, on the other also rest?",
+  "options": [
+   "一方面要努力学习，另一方面也要注意休息。",
+   "一方面要努力学习，二方面也要注意休息。"
+  ],
+  "correct": 0,
+  "zh": "一方面要努力学习，另一方面也要注意休息。",
+  "en": "On the one hand you need to study hard; on the other you need to rest too.",
+  "explain": "Not 二方面: the second half is 另一方面."
+ },
+ {
+  "p": "g4-64",
+  "t": "cloze",
+  "zh": "一方面他很聪明，另一方面他很努力。",
+  "en": "On the one hand he is clever; on the other he works hard.",
+  "blank": "另",
+  "explain": "一方面 … 另一方面 …."
+ },
+ {
+  "p": "g4-65",
+  "t": "mc",
+  "prompt": "Which sentence says: He is either in the office or in a meeting?",
+  "options": [
+   "他不是在办公室，就是在开会。",
+   "他不是在办公室，就在开会。"
+  ],
+  "correct": 0,
+  "zh": "他不是在办公室，就是在开会。",
+  "en": "He is either in the office or in a meeting.",
+  "explain": "Use 就是 in the second half."
+ },
+ {
+  "p": "g4-65",
+  "t": "order",
+  "zh": "周末我不是看书，就是睡觉。",
+  "en": "At weekends I either read or sleep.",
+  "explain": "不是 … 就是 …."
+ },
+ {
+  "p": "g4-65",
+  "t": "cloze",
+  "zh": "这几天不是刮风，就是下雨。",
+  "en": "These days it is either windy or raining.",
+  "blank": "就是",
+  "explain": "不是 … 就是 …: one or the other."
+ },
+ {
+  "p": "g4-65",
+  "t": "mc",
+  "prompt": "Which sentence corrects a mistake: He is not a teacher but a student?",
+  "options": [
+   "他不是老师，而是学生。",
+   "他不是老师，就是学生。"
+  ],
+  "correct": 0,
+  "zh": "他不是老师，而是学生。",
+  "en": "He is not a teacher but a student.",
+  "explain": "不是…而是… corrects; 不是…就是… gives two choices."
+ },
+ {
+  "p": "g4-66",
+  "t": "mc",
+  "prompt": "Which sentence says: My book was borrowed by a classmate?",
+  "options": [
+   "我的书叫同学借走了。",
+   "我的书叫借走了。"
+  ],
+  "correct": 0,
+  "zh": "我的书叫同学借走了。",
+  "en": "My book was borrowed by a classmate.",
+  "explain": "叫 needs the doer after it."
+ },
+ {
+  "p": "g4-66",
+  "t": "order",
+  "zh": "蛋糕让孩子们吃完了。",
+  "en": "The cake was eaten up by the children.",
+  "explain": "Thing + 让 + doer + verb + result."
+ },
+ {
+  "p": "g4-66",
+  "t": "mc",
+  "prompt": "Which sentence says: The cup was broken by him?",
+  "options": [
+   "杯子让他打坏了。",
+   "杯子让打坏了。"
+  ],
+  "correct": 0,
+  "zh": "杯子让他打坏了。",
+  "en": "The cup was broken by him.",
+  "explain": "让 needs the doer after it."
+ },
+ {
+  "p": "g4-66",
+  "t": "order",
+  "zh": "我的自行车叫人骑走了。",
+  "en": "Someone rode off on my bike.",
+  "explain": "叫 + 人 when you do not know who."
+ },
+ {
+  "p": "g4-67",
+  "t": "cloze",
+  "zh": "你把衣服洗一洗。",
+  "en": "Give your clothes a wash.",
+  "blank": "一",
+  "explain": "把 + thing + verb 一 verb."
+ },
+ {
+  "p": "g4-67",
+  "t": "mc",
+  "prompt": "Which sentence says: I forgot the password?",
+  "options": [
+   "我把密码忘了。",
+   "我把密码忘。"
+  ],
+  "correct": 0,
+  "zh": "我把密码忘了。",
+  "en": "I forgot the password.",
+  "explain": "The verb needs 了 after it."
+ },
+ {
+  "p": "g4-67",
+  "t": "order",
+  "zh": "他把我批评了一顿。",
+  "en": "He gave me a scolding.",
+  "explain": "把 + person + verb + 了一顿."
+ },
+ {
+  "p": "g4-67",
+  "t": "mc",
+  "prompt": "Which sentence says: Don't throw rubbish on the ground?",
+  "options": [
+   "别把垃圾往地上扔。",
+   "别往地上扔把垃圾。"
+  ],
+  "correct": 0,
+  "zh": "别把垃圾往地上扔。",
+  "en": "Don't throw rubbish on the ground.",
+  "explain": "把 + thing comes before 往 + place."
+ },
+ {
+  "p": "g4-68",
+  "t": "cloze",
+  "zh": "今天热死了。",
+  "en": "It's boiling today.",
+  "blank": "死",
+  "explain": "Adjective + 死了."
+ },
+ {
+  "p": "g4-68",
+  "t": "mc",
+  "prompt": "Which sentence says: I'm starving?",
+  "options": [
+   "我饿死了。",
+   "我死饿了。"
+  ],
+  "correct": 0,
+  "zh": "我饿死了。",
+  "en": "I'm starving.",
+  "explain": "死了 comes after the adjective."
+ },
+ {
+  "p": "g4-68",
+  "t": "order",
+  "zh": "她最近忙得厉害。",
+  "en": "She has been terribly busy lately.",
+  "explain": "Adjective + 得厉害."
+ },
+ {
+  "p": "g4-68",
+  "t": "mc",
+  "prompt": "Which sentence says (casually): I'm dead tired?",
+  "options": [
+   "我累死了。",
+   "我死了累。"
+  ],
+  "correct": 0,
+  "zh": "我累死了。",
+  "en": "I'm dead tired.",
+  "explain": "Adjective first, then 死了."
+ },
+ {
+  "p": "g4-69",
+  "t": "mc",
+  "prompt": "Which sentence means: I don't know?",
+  "options": [
+   "我怎么知道？",
+   "我知道怎么？"
+  ],
+  "correct": 0,
+  "zh": "我怎么知道？",
+  "en": "How would I know?",
+  "explain": "怎么知道？ said this way means \"I don't know\"."
+ },
+ {
+  "p": "g4-69",
+  "t": "cloze",
+  "zh": "这么好吃的菜，谁不喜欢？",
+  "en": "Who wouldn't like such tasty food?",
+  "blank": "谁",
+  "explain": "谁不…？ means everyone would."
+ },
+ {
+  "p": "g4-69",
+  "t": "order",
+  "zh": "谁不想去旅游？",
+  "en": "Who doesn't want to travel?",
+  "explain": "谁不 + verb?"
+ },
+ {
+  "p": "g4-69",
+  "t": "mc",
+  "prompt": "Which sentence means: this isn't hard at all?",
+  "options": [
+   "这有什么难的？",
+   "这难什么有的？"
+  ],
+  "correct": 0,
+  "zh": "这有什么难的？",
+  "en": "What's so hard about this?",
+  "explain": "有什么 + adjective + 的？"
+ },
+ {
+  "p": "g4-70",
+  "t": "cloze",
+  "zh": "这件事我不能不告诉他。",
+  "en": "I have to tell him about this.",
+  "blank": "能",
+  "explain": "不能不: must."
+ },
+ {
+  "p": "g4-70",
+  "t": "mc",
+  "prompt": "Which sentence means: everyone came?",
+  "options": [
+   "没有一个人不来。",
+   "没有一个人来。"
+  ],
+  "correct": 0,
+  "zh": "没有一个人不来。",
+  "en": "Not one person stayed away.",
+  "explain": "Two negatives: everyone."
+ },
+ {
+  "p": "g4-70",
+  "t": "order",
+  "zh": "没有学生不喜欢他。",
+  "en": "Every student likes him.",
+  "explain": "没有 … 不 …: all."
+ },
+ {
+  "p": "g4-70",
+  "t": "mc",
+  "prompt": "Which sentence says: I have no choice but to go?",
+  "options": [
+   "我不得不去。",
+   "我不去不得。"
+  ],
+  "correct": 0,
+  "zh": "我不得不去。",
+  "en": "I have no choice but to go.",
+  "explain": "不得不 + verb."
+ },
+ {
+  "p": "g4-71",
+  "t": "mc",
+  "prompt": "Which sentence says: It's really cold today?",
+  "options": [
+   "今天真够冷的。",
+   "今天真够冷。"
+  ],
+  "correct": 0,
+  "zh": "今天真够冷的。",
+  "en": "It's really cold today.",
+  "explain": "Keep the 的."
+ },
+ {
+  "p": "g4-71",
+  "t": "cloze",
+  "zh": "他的汉语说得真够好的。",
+  "en": "His Chinese is really good.",
+  "blank": "够",
+  "explain": "够 + adjective + 的."
+ },
+ {
+  "p": "g4-71",
+  "t": "order",
+  "zh": "这个包真够贵的。",
+  "en": "This bag is really expensive.",
+  "explain": "够 + adjective + 的."
+ },
+ {
+  "p": "g4-71",
+  "t": "mc",
+  "prompt": "Which sentence says: You are really busy!",
+  "options": [
+   "你可真够忙的！",
+   "你可真忙够的！"
+  ],
+  "correct": 0,
+  "zh": "你可真够忙的！",
+  "en": "You are really busy!",
+  "explain": "够 comes before the adjective."
+ },
+ {
+  "p": "g4-72",
+  "t": "cloze",
+  "zh": "孩子们一个比一个高。",
+  "en": "Each child is taller than the last.",
+  "blank": "比",
+  "explain": "一个比一个."
+ },
+ {
+  "p": "g4-72",
+  "t": "order",
+  "zh": "他的成绩一次比一次好。",
+  "en": "His grades get better every time.",
+  "explain": "一次比一次 + adjective."
+ },
+ {
+  "p": "g4-72",
+  "t": "mc",
+  "prompt": "Which sentence says: Life is getting better day by day?",
+  "options": [
+   "生活一天比一天好。",
+   "生活一天一天比好。"
+  ],
+  "correct": 0,
+  "zh": "生活一天比一天好。",
+  "en": "Life is getting better day by day.",
+  "explain": "比 goes between the two 一天."
+ },
+ {
+  "p": "g4-72",
+  "t": "cloze",
+  "zh": "这里的游客一年比一年多。",
+  "en": "There are more visitors here every year.",
+  "blank": "比",
+  "explain": "一年比一年 + adjective."
+ },
+ {
+  "p": "g4-73",
+  "t": "mc",
+  "prompt": "Which sentence says: When it comes to health, she is very careful?",
+  "options": [
+   "在健康方面，她非常注意。",
+   "在方面健康，她非常注意。"
+  ],
+  "correct": 0,
+  "zh": "在健康方面，她非常注意。",
+  "en": "When it comes to health, she is very careful.",
+  "explain": "在 + area + 方面."
+ },
+ {
+  "p": "g4-73",
+  "t": "order",
+  "zh": "在语言方面，他是我的老师。",
+  "en": "When it comes to languages, he is my teacher.",
+  "explain": "在 … 方面 at the start."
+ },
+ {
+  "p": "g4-73",
+  "t": "cloze",
+  "zh": "在工作方面，他很认真。",
+  "en": "When it comes to work, he is very serious.",
+  "blank": "在",
+  "explain": "在 + area + 方面."
+ },
+ {
+  "p": "g4-73",
+  "t": "mc",
+  "prompt": "Which sentence says: When it comes to money, he is careful?",
+  "options": [
+   "在钱方面，他很小心。",
+   "在钱，他很小心方面。"
+  ],
+  "correct": 0,
+  "zh": "在钱方面，他很小心。",
+  "en": "When it comes to money, he is careful.",
+  "explain": "方面 stays right after the area."
+ },
+ {
+  "p": "g4-74",
+  "t": "order",
+  "zh": "他为了健康而每天跑步。",
+  "en": "He runs every day for his health.",
+  "explain": "为了 + reason + 而 + action."
+ },
+ {
+  "p": "g4-74",
+  "t": "mc",
+  "prompt": "Which sentence says: We should not study only for exams?",
+  "options": [
+   "我们不应该只为了考试而学习。",
+   "我们不应该只为了考试学习而。"
+  ],
+  "correct": 0,
+  "zh": "我们不应该只为了考试而学习。",
+  "en": "We should not study only for exams.",
+  "explain": "而 comes before the action."
+ },
+ {
+  "p": "g4-74",
+  "t": "cloze",
+  "zh": "她为了学汉语而来到中国。",
+  "en": "She came to China to study Chinese.",
+  "blank": "而",
+  "explain": "为了 … 而 …."
+ },
+ {
+  "p": "g4-74",
+  "t": "order",
+  "zh": "为了梦想而努力。",
+  "en": "Work hard for your dream.",
+  "explain": "为了 … 而 + verb."
+ },
+ {
+  "p": "g4-75",
+  "t": "cloze",
+  "zh": "拿我来说，我每天都锻炼。",
+  "en": "Take me, for example: I exercise every day.",
+  "blank": "拿",
+  "explain": "拿 … 来说."
+ },
+ {
+  "p": "g4-75",
+  "t": "order",
+  "zh": "拿我来说，我最爱吃米饭。",
+  "en": "Take me: I love rice most.",
+  "explain": "拿 + example + 来说."
+ },
+ {
+  "p": "g4-75",
+  "t": "mc",
+  "prompt": "Which sentence says: My friends are all busy. Take my sister: she works ten hours a day?",
+  "options": [
+   "我的朋友都很忙，拿我姐姐来说，她每天工作十个小时。",
+   "我的朋友都很忙，拿来说我姐姐，她每天工作十个小时。"
+  ],
+  "correct": 0,
+  "zh": "我的朋友都很忙，拿我姐姐来说，她每天工作十个小时。",
+  "en": "My friends are all busy. Take my sister: she works ten hours a day.",
+  "explain": "The example goes between 拿 and 来说."
+ },
+ {
+  "p": "g4-75",
+  "t": "order",
+  "zh": "拿我来说，我不太喜欢运动。",
+  "en": "Take me: I don't much like sport.",
+  "explain": "拿 … 来说 at the start."
+ },
+ {
+  "p": "g4-76",
+  "t": "cloze",
+  "zh": "就是再忙，我也会给你打电话。",
+  "en": "Even if I'm really busy, I will call you.",
+  "blank": "也",
+  "explain": "就是 … 也 …."
+ },
+ {
+  "p": "g4-76",
+  "t": "order",
+  "zh": "就是很难，我也要学。",
+  "en": "Even if it is hard, I want to learn it.",
+  "explain": "就是 … 也 …."
+ },
+ {
+  "p": "g4-76",
+  "t": "mc",
+  "prompt": "Which sentence says: Even if you don't come, we will start?",
+  "options": [
+   "你就是不来，我们也要开始。",
+   "你就是不来，我们就要开始。"
+  ],
+  "correct": 0,
+  "zh": "你就是不来，我们也要开始。",
+  "en": "Even if you don't come, we will start.",
+  "explain": "就是 (even if) goes with 也."
+ },
+ {
+  "p": "g4-76",
+  "t": "cloze",
+  "zh": "就是没有人帮我，我也能做完。",
+  "en": "Even if nobody helps me, I can finish it.",
+  "blank": "就是",
+  "explain": "就是 … 也 …: even if."
+ },
+ {
+  "p": "g4-77",
+  "t": "mc",
+  "prompt": "Which sentence says: I know even if you don't tell me?",
+  "options": [
+   "你不告诉我，我也知道。",
+   "你不告诉我，我就知道。"
+  ],
+  "correct": 0,
+  "zh": "你不告诉我，我也知道。",
+  "en": "I know even if you don't tell me.",
+  "explain": "不 … 也 …."
+ },
+ {
+  "p": "g4-77",
+  "t": "cloze",
+  "zh": "今天晚上我不睡觉也要把它做完。",
+  "en": "Tonight I'll finish it even if I don't sleep.",
+  "blank": "也",
+  "explain": "不 + verb + 也 …."
+ },
+ {
+  "p": "g4-77",
+  "t": "order",
+  "zh": "他不吃饭也要看完。",
+  "en": "He'll finish reading even if he doesn't eat.",
+  "explain": "不 + verb + 也要."
+ },
+ {
+  "p": "g4-78",
+  "t": "mc",
+  "prompt": "Which sentence says: My family has two dogs, a big one and a small one?",
+  "options": [
+   "我家有两只狗，一大一小。",
+   "我家有两只狗，一大小一。"
+  ],
+  "correct": 0,
+  "zh": "我家有两只狗，一大一小。",
+  "en": "My family has two dogs: a big one and a small one.",
+  "explain": "一大一小."
+ },
+ {
+  "p": "g4-78",
+  "t": "order",
+  "zh": "我们一左一右坐在他旁边。",
+  "en": "We sat on either side of him.",
+  "explain": "一左一右: one on each side."
+ },
+ {
+  "p": "g4-78",
+  "t": "cloze",
+  "zh": "老师一字一句地读课文。",
+  "en": "The teacher reads the text word by word.",
+  "blank": "句",
+  "explain": "一字一句."
+ },
+ {
+  "p": "g4-78",
+  "t": "mc",
+  "prompt": "Which sentence says: The two of them walk one behind the other?",
+  "options": [
+   "两个人一前一后地走着。",
+   "两个人一前后一地走着。"
+  ],
+  "correct": 0,
+  "zh": "两个人一前一后地走着。",
+  "en": "The two of them walk one behind the other.",
+  "explain": "一前一后."
+ },
+ {
+  "p": "g4-79",
+  "t": "cloze",
+  "zh": "他无儿无女，一个人生活。",
+  "en": "He has no children and lives alone.",
+  "blank": "女",
+  "explain": "无儿无女."
+ },
+ {
+  "p": "g4-79",
+  "t": "order",
+  "zh": "那位老人无儿无女。",
+  "en": "That old man has no children.",
+  "explain": "无A无B."
+ },
+ {
+  "p": "g4-79",
+  "t": "mc",
+  "prompt": "Which sentence says: He has no children?",
+  "options": [
+   "他无儿无女。",
+   "他有儿有女。"
+  ],
+  "correct": 0,
+  "zh": "他无儿无女。",
+  "en": "He has no children.",
+  "explain": "无 means \"without\"."
+ },
+ {
+  "p": "g4-80",
+  "t": "mc",
+  "prompt": "Which sentence says: They came out chatting and laughing?",
+  "options": [
+   "他们有说有笑地走了出来。",
+   "他们说有笑有地走了出来。"
+  ],
+  "correct": 0,
+  "zh": "他们有说有笑地走了出来。",
+  "en": "They came out chatting and laughing.",
+  "explain": "有 comes before each verb."
+ },
+ {
+  "p": "g4-80",
+  "t": "cloze",
+  "zh": "这里有山有水，非常漂亮。",
+  "en": "With hills and water, it is very beautiful here.",
+  "blank": "水",
+  "explain": "有山有水."
+ },
+ {
+  "p": "g4-80",
+  "t": "order",
+  "zh": "过年的时候家里有吃有喝。",
+  "en": "At New Year there is plenty to eat and drink at home.",
+  "explain": "有吃有喝."
+ },
+ {
+  "p": "g4-80",
+  "t": "mc",
+  "prompt": "Which sentence says: Everyone is chatting and laughing?",
+  "options": [
+   "大家有说有笑。",
+   "大家有说和有笑。"
+  ],
+  "correct": 0,
+  "zh": "大家有说有笑。",
+  "en": "Everyone is chatting and laughing.",
+  "explain": "No 和 inside the pattern."
+ },
+ {
+  "p": "g4-81",
+  "t": "mc",
+  "prompt": "Which sentence says: There will be plenty of chances later?",
+  "options": [
+   "以后有的是机会。",
+   "以后是有的机会。"
+  ],
+  "correct": 0,
+  "zh": "以后有的是机会。",
+  "en": "There will be plenty of chances later.",
+  "explain": "有的是 + noun."
+ },
+ {
+  "p": "g4-81",
+  "t": "mc",
+  "prompt": "Which sentence says: His family has plenty of money?",
+  "options": [
+   "他家有的是钱。",
+   "他家的有是钱。"
+  ],
+  "correct": 0,
+  "zh": "他家有的是钱。",
+  "en": "His family has plenty of money.",
+  "explain": "有的是 stays together."
+ },
+ {
+  "p": "g4-81",
+  "t": "order",
+  "zh": "别急，我们有的是时间。",
+  "en": "Don't rush, we have plenty of time.",
+  "explain": "有的是 + 时间."
+ },
+ {
+  "p": "g4-81",
+  "t": "mc",
+  "prompt": "Which sentence says: He has plenty of ways to do it?",
+  "options": [
+   "他有的是办法。",
+   "有的人有办法。"
+  ],
+  "correct": 0,
+  "zh": "他有的是办法。",
+  "en": "He has plenty of ways to do it.",
+  "explain": "有的是 \"plenty\", not 有的 \"some\"."
+ },
+ {
+  "p": "g4-82",
+  "t": "order",
+  "zh": "他说不定已经走了。",
+  "en": "He may have left already.",
+  "explain": "说不定 before the verb."
+ },
+ {
+  "p": "g4-82",
+  "t": "cloze",
+  "zh": "明天说不定会下雨。",
+  "en": "It may rain tomorrow.",
+  "blank": "说不定",
+  "explain": "说不定: maybe."
+ },
+ {
+  "p": "g4-82",
+  "t": "mc",
+  "prompt": "Which sentence says: Maybe she doesn't know?",
+  "options": [
+   "她说不定不知道。",
+   "她不说定知道。"
+  ],
+  "correct": 0,
+  "zh": "她说不定不知道。",
+  "en": "Maybe she doesn't know.",
+  "explain": "说不定 stays together."
+ },
+ {
+  "p": "g4-82",
+  "t": "mc",
+  "prompt": "Which sentence says: It is not certain yet whether he will come?",
+  "options": [
+   "他来不来还说不定。",
+   "他来不来还不说定。"
+  ],
+  "correct": 0,
+  "zh": "他来不来还说不定。",
+  "en": "It is not certain yet whether he will come.",
+  "explain": "还说不定: not certain yet."
+ },
+ {
+  "p": "g4-83",
+  "t": "cloze",
+  "zh": "这个菜不怎么好吃。",
+  "en": "This dish is not very tasty.",
+  "blank": "怎么",
+  "explain": "不怎么 + adjective."
+ },
+ {
+  "p": "g4-83",
+  "t": "mc",
+  "prompt": "Which sentence says: I don't watch TV much?",
+  "options": [
+   "我不怎么看电视。",
+   "我怎么不看电视？"
+  ],
+  "correct": 0,
+  "zh": "我不怎么看电视。",
+  "en": "I don't watch TV much.",
+  "explain": "不怎么: not much. 怎么不 asks \"why not?\"."
+ },
+ {
+  "p": "g4-83",
+  "t": "order",
+  "zh": "他最近不怎么来。",
+  "en": "He hasn't been coming much lately.",
+  "explain": "不怎么 + verb."
+ },
+ {
+  "p": "g4-83",
+  "t": "mc",
+  "prompt": "Which sentence says: This film is not great?",
+  "options": [
+   "这个电影不怎么样。",
+   "这个电影不怎么。"
+  ],
+  "correct": 0,
+  "zh": "这个电影不怎么样。",
+  "en": "This film is not great.",
+  "explain": "On its own use 不怎么样; 不怎么 needs a verb or adjective."
+ },
+ {
+  "p": "g4-84",
+  "t": "cloze",
+  "zh": "他没回答，这就是说，他不同意。",
+  "en": "He didn't answer; that is to say, he doesn't agree.",
+  "blank": "就是说",
+  "explain": "这就是说: in other words."
+ },
+ {
+  "p": "g4-84",
+  "t": "mc",
+  "prompt": "Which sentence says: In other words, we have to start again?",
+  "options": [
+   "这就是说，我们得重新开始。",
+   "这说就是，我们得重新开始。"
+  ],
+  "correct": 0,
+  "zh": "这就是说，我们得重新开始。",
+  "en": "In other words, we have to start again.",
+  "explain": "就是说 stays together."
+ },
+ {
+  "p": "g4-84",
+  "t": "order",
+  "zh": "就是说，你明天不用来了。",
+  "en": "That is to say, you don't need to come tomorrow.",
+  "explain": "就是说 at the start."
+ },
+ {
+  "p": "g4-85",
+  "t": "cloze",
+  "zh": "妈妈批评他回家太晚。",
+  "en": "Mom told him off for coming home too late.",
+  "blank": "批评",
+  "explain": "批评 + person + what they did."
+ },
+ {
+  "p": "g4-85",
+  "t": "order",
+  "zh": "我们选他当经理。",
+  "en": "We chose him as manager.",
+  "explain": "选 + person + 当 + role."
+ },
+ {
+  "p": "g4-85",
+  "t": "mc",
+  "prompt": "Which sentence says: The teacher praised him for working hard?",
+  "options": [
+   "老师表扬他很努力。",
+   "老师表扬很努力他。"
+  ],
+  "correct": 0,
+  "zh": "老师表扬他很努力。",
+  "en": "The teacher praised him for working hard.",
+  "explain": "The person comes right after 表扬."
+ },
+ {
+  "p": "g4-85",
+  "t": "cloze",
+  "zh": "老师表扬我考得很好。",
+  "en": "The teacher praised me for doing well in the exam.",
+  "blank": "表扬",
+  "explain": "表扬 + person + what they did well."
+ },
+ {
+  "p": "g4-86",
+  "t": "cloze",
+  "zh": "这么多东西，你拿得了吗？",
+  "en": "Can you carry all these things?",
+  "blank": "得",
+  "explain": "Verb + 得了: can manage."
+ },
+ {
+  "p": "g4-86",
+  "t": "mc",
+  "prompt": "Which sentence says: I can't come tomorrow?",
+  "options": [
+   "明天我来不了。",
+   "明天我不来了。"
+  ],
+  "correct": 0,
+  "zh": "明天我来不了。",
+  "en": "I can't come tomorrow.",
+  "explain": "来不了 is \"can't\"; 不来了 is \"won't come any more\"."
+ },
+ {
+  "p": "g4-86",
+  "t": "order",
+  "zh": "这个问题他解决不了。",
+  "en": "He can't solve this problem.",
+  "explain": "Verb + 不了."
+ },
+ {
+  "p": "g4-86",
+  "t": "mc",
+  "prompt": "Which sentence asks: Can you manage it today?",
+  "options": [
+   "今天你做得了吗？",
+   "今天你做了得吗？"
+  ],
+  "correct": 0,
+  "zh": "今天你做得了吗？",
+  "en": "Can you manage it today?",
+  "explain": "Verb + 得了."
+ },
+ {
+  "p": "g4-87",
+  "t": "cloze",
+  "zh": "我再也不喝酒了。",
+  "en": "I will never drink again.",
+  "blank": "再",
+  "explain": "再也不."
+ },
+ {
+  "p": "g4-87",
+  "t": "order",
+  "zh": "他再也没来过。",
+  "en": "He never came again.",
+  "explain": "再也没 + verb + 过."
+ },
+ {
+  "p": "g4-87",
+  "t": "mc",
+  "prompt": "Which sentence says: I will never believe him again?",
+  "options": [
+   "我再也不相信他了。",
+   "我不再也相信他了。"
+  ],
+  "correct": 0,
+  "zh": "我再也不相信他了。",
+  "en": "I will never believe him again.",
+  "explain": "再也 comes before 不."
+ },
+ {
+  "p": "g4-87",
+  "t": "mc",
+  "prompt": "Which sentence says: After that I never saw her again?",
+  "options": [
+   "从那以后，我再也没见过她。",
+   "从那以后，我没再也见过她。"
+  ],
+  "correct": 0,
+  "zh": "从那以后，我再也没见过她。",
+  "en": "After that I never saw her again.",
+  "explain": "再也 comes before 没."
+ },
+ {
+  "p": "g4-88",
+  "t": "mc",
+  "prompt": "Which sentence says: However hard they looked, they couldn't find it?",
+  "options": [
+   "他们怎么都找不到。",
+   "他们都怎么找不到。"
+  ],
+  "correct": 0,
+  "zh": "他们怎么都找不到。",
+  "en": "However hard they looked, they couldn't find it.",
+  "explain": "怎么都 + 不."
+ },
+ {
+  "p": "g4-88",
+  "t": "order",
+  "zh": "我怎么也打不开这个门。",
+  "en": "However hard I try, I can't open this door.",
+  "explain": "怎么也 + verb 不 + result."
+ },
+ {
+  "p": "g4-88",
+  "t": "cloze",
+  "zh": "这个字我怎么也记不住。",
+  "en": "However hard I try, I can't remember this character.",
+  "blank": "也",
+  "explain": "怎么也 … 不 …."
+ },
+ {
+  "p": "g4-88",
+  "t": "mc",
+  "prompt": "Which sentence says: However I put it, he doesn't understand?",
+  "options": [
+   "我怎么说他都不明白。",
+   "我说怎么他都不明白。"
+  ],
+  "correct": 0,
+  "zh": "我怎么说他都不明白。",
+  "en": "However I put it, he doesn't understand.",
+  "explain": "怎么 + verb … 都不."
+ },
+ {
+  "p": "g4-89",
+  "t": "mc",
+  "prompt": "Which sentence says: What is there to worry about?",
+  "options": [
+   "有什么好担心的？",
+   "有什么担心好的？"
+  ],
+  "correct": 0,
+  "zh": "有什么好担心的？",
+  "en": "What is there to worry about?",
+  "explain": "有什么好 + feeling + 的."
+ },
+ {
+  "p": "g4-89",
+  "t": "order",
+  "zh": "这有什么好看的？",
+  "en": "What's so good to look at?",
+  "explain": "有什么 + 好看 + 的?"
+ },
+ {
+  "p": "g4-89",
+  "t": "cloze",
+  "zh": "没有什么好难过的。",
+  "en": "There's nothing to be sad about.",
+  "blank": "没有",
+  "explain": "没有什么好 … 的."
+ },
+ {
+  "p": "g4-90",
+  "t": "mc",
+  "prompt": "Which sentence says: Work is work and life is life?",
+  "options": [
+   "工作是工作，生活是生活。",
+   "工作是生活，生活是工作。"
+  ],
+  "correct": 0,
+  "zh": "工作是工作，生活是生活。",
+  "en": "Work is work and life is life.",
+  "explain": "Each thing is said twice."
+ },
+ {
+  "p": "g4-90",
+  "t": "order",
+  "zh": "你是你，我是我。",
+  "en": "You are you and I am I.",
+  "explain": "X是X，Y是Y."
+ },
+ {
+  "p": "g4-90",
+  "t": "mc",
+  "prompt": "Which sentence says: He is he, I am I; we are different?",
+  "options": [
+   "他是他，我是我，我们不一样。",
+   "他是我，我是他，我们不一样。"
+  ],
+  "correct": 0,
+  "zh": "他是他，我是我，我们不一样。",
+  "en": "He is he, I am I; we are different.",
+  "explain": "X是X keeps the two apart."
+ },
+ {
+  "p": "g4-91",
+  "t": "cloze",
+  "zh": "这件事你做也得做，不做也得做。",
+  "en": "You have to do this, like it or not.",
+  "blank": "不",
+  "explain": "X也得X，不X也得X."
+ },
+ {
+  "p": "g4-91",
+  "t": "mc",
+  "prompt": "Which sentence says: You have to take this medicine, like it or not?",
+  "options": [
+   "这个药你吃也得吃，不吃也得吃。",
+   "这个药你吃也吃，不吃也吃。"
+  ],
+  "correct": 0,
+  "zh": "这个药你吃也得吃，不吃也得吃。",
+  "en": "You have to take this medicine, like it or not.",
+  "explain": "也得 in both halves."
+ },
+ {
+  "p": "g4-91",
+  "t": "mc",
+  "prompt": "Which sentence says: Tomorrow you have to come, like it or not?",
+  "options": [
+   "明天你来也得来，不来也得来。",
+   "明天你来也得来，不来就得来。"
+  ],
+  "correct": 0,
+  "zh": "明天你来也得来，不来也得来。",
+  "en": "Tomorrow you have to come, like it or not.",
+  "explain": "Both halves use 也得."
+ },
+ {
+  "p": "g4-92",
+  "t": "mc",
+  "prompt": "Which sentence says: Don't worry, I'll do it, that's all?",
+  "options": [
+   "你放心，我做就是了。",
+   "你放心，我就是做了。"
+  ],
+  "correct": 0,
+  "zh": "你放心，我做就是了。",
+  "en": "Relax, I'll do it, that's all.",
+  "explain": "Verb + 就是了."
+ },
+ {
+  "p": "g4-92",
+  "t": "cloze",
+  "zh": "你不想去，不去就是了。",
+  "en": "If you don't want to go, just don't go.",
+  "blank": "就是",
+  "explain": "就是了 at the end."
+ },
+ {
+  "p": "g4-92",
+  "t": "order",
+  "zh": "有问题，问就是了。",
+  "en": "If you have a question, just ask.",
+  "explain": "Verb + 就是了."
+ },
+ {
+  "p": "g4-93",
+  "t": "cloze",
+  "zh": "还大学生呢，这么简单的字都不认识。",
+  "en": "Some university student you are: you don't even know such a simple character.",
+  "blank": "还",
+  "explain": "还 + noun + 呢."
+ },
+ {
+  "p": "g4-93",
+  "t": "mc",
+  "prompt": "Which sentence says: Some good friend you are: you even forgot my birthday.",
+  "options": [
+   "还好朋友呢，生日都忘了。",
+   "是好朋友呢，生日都忘了。"
+  ],
+  "correct": 0,
+  "zh": "还好朋友呢，生日都忘了。",
+  "en": "Some good friend you are: you even forgot my birthday.",
+  "explain": "还 … 呢 mocks."
+ },
+ {
+  "p": "g4-93",
+  "t": "order",
+  "zh": "还老师呢，这都不知道。",
+  "en": "Some teacher you are: you don't even know this.",
+  "explain": "还 + noun + 呢."
+ },
+ {
+  "p": "g4-94",
+  "t": "cloze",
+  "zh": "我们只能走一步是一步。",
+  "en": "We can only take it one step at a time.",
+  "blank": "是",
+  "explain": "Verb + 一X是一X."
+ },
+ {
+  "p": "g4-94",
+  "t": "mc",
+  "prompt": "Which sentence says: He just lives one day at a time?",
+  "options": [
+   "他每天过一天是一天。",
+   "他每天一天过是一天。"
+  ],
+  "correct": 0,
+  "zh": "他每天过一天是一天。",
+  "en": "He just lives one day at a time.",
+  "explain": "Verb first: 过一天是一天."
+ },
+ {
+  "p": "g4-94",
+  "t": "mc",
+  "prompt": "Which sentence says: Let's take it one step at a time?",
+  "options": [
+   "走一步是一步吧。",
+   "走一步就一步吧。"
+  ],
+  "correct": 0,
+  "zh": "走一步是一步吧。",
+  "en": "Let's take it one step at a time.",
+  "explain": "The pattern uses 是."
+ },
+ {
+  "p": "g4-95",
+  "t": "mc",
+  "prompt": "Which sentence says: Get on with your work, don't mind me?",
+  "options": [
+   "你忙你的，不用管我。",
+   "你忙我的，不用管你。"
+  ],
+  "correct": 0,
+  "zh": "你忙你的，不用管我。",
+  "en": "Get on with your work, don't mind me.",
+  "explain": "你 + verb + 你的."
+ },
+ {
+  "p": "g4-95",
+  "t": "cloze",
+  "zh": "你看你的书吧，我出去一下。",
+  "en": "Go ahead and read your book, I'm popping out.",
+  "blank": "看",
+  "explain": "你 + verb + 你的."
+ },
+ {
+  "p": "g4-95",
+  "t": "order",
+  "zh": "你们玩你们的吧。",
+  "en": "You go ahead and have fun.",
+  "explain": "你们 + verb + 你们的."
+ },
+ {
+  "p": "g4-96",
+  "t": "order",
+  "zh": "让你休息你就休息。",
+  "en": "When you are told to rest, just rest.",
+  "explain": "让你X你就X."
+ },
+ {
+  "p": "g4-96",
+  "t": "mc",
+  "prompt": "Which sentence says: When the doctor tells you to take medicine, just take it?",
+  "options": [
+   "医生让你吃药，你就吃药。",
+   "医生让你吃药，你吃就药。"
+  ],
+  "correct": 0,
+  "zh": "医生让你吃药，你就吃药。",
+  "en": "When the doctor tells you to take medicine, just take it.",
+  "explain": "你就 + the same verb."
+ },
+ {
+  "p": "g4-96",
+  "t": "cloze",
+  "zh": "妈妈让你回家，你就回家。",
+  "en": "When Mom tells you to come home, just come home.",
+  "blank": "就",
+  "explain": "让你X你就X."
+ },
+ {
+  "p": "g4-97",
+  "t": "mc",
+  "prompt": "Which sentence says: Whatever happens, I must finish today?",
+  "options": [
+   "我说什么也得今天做完。",
+   "我什么说也得今天做完。"
+  ],
+  "correct": 0,
+  "zh": "我说什么也得今天做完。",
+  "en": "Whatever happens, I must finish today.",
+  "explain": "说什么也得."
+ },
+ {
+  "p": "g4-97",
+  "t": "order",
+  "zh": "这次我说什么也得去。",
+  "en": "This time I must go, whatever happens.",
+  "explain": "说什么也得 + verb."
+ },
+ {
+  "p": "g4-97",
+  "t": "cloze",
+  "zh": "他说什么也不同意。",
+  "en": "He won't agree, whatever you say.",
+  "blank": "什么",
+  "explain": "说什么也不: won't, whatever happens."
+ },
+ {
+  "p": "g4-98",
+  "t": "mc",
+  "prompt": "Which sentence says: All right, let's go then?",
+  "options": [
+   "去就去吧。",
+   "去吧就去。"
+  ],
+  "correct": 0,
+  "zh": "去就去吧。",
+  "en": "All right, let's go then.",
+  "explain": "X就X吧."
+ },
+ {
+  "p": "g4-98",
+  "t": "order",
+  "zh": "吃就吃吧，我也饿了。",
+  "en": "Fine, let's eat then; I'm hungry too.",
+  "explain": "X就X吧."
+ },
+ {
+  "p": "g4-98",
+  "t": "cloze",
+  "zh": "换就换吧，这个也不太好。",
+  "en": "Fine, change it then; this one isn't very good.",
+  "blank": "就",
+  "explain": "X就X吧: fine, then."
+ },
+ {
+  "p": "g4-99",
+  "t": "order",
+  "zh": "我们讨论是讨论了，可是还没决定。",
+  "en": "We did discuss it, but we haven't decided yet.",
+  "explain": "X是X了，可是 …."
+ },
+ {
+  "p": "g4-99",
+  "t": "mc",
+  "prompt": "Which sentence says: This phone is good all right, it's just too expensive?",
+  "options": [
+   "这个手机好是好，就是太贵了。",
+   "这个手机是好好，就是太贵了。"
+  ],
+  "correct": 0,
+  "zh": "这个手机好是好，就是太贵了。",
+  "en": "This phone is good all right, it's just too expensive.",
+  "explain": "X是X, then 就是."
+ },
+ {
+  "p": "g4-99",
+  "t": "cloze",
+  "zh": "这家饭店近是近，可是菜不好吃。",
+  "en": "This restaurant is close all right, but the food isn't good.",
+  "blank": "可是",
+  "explain": "X是X，可是 …."
  }
 ]

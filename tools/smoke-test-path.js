@@ -275,7 +275,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   }
 
   // ================= HSK 2 to HSK 5 have their own paths
-  for (const [lv, units, stops] of [[2, 10, 89], [3, 17, 147], [4, 24, 236], [5, 39, 352]]) {
+  for (const [lv, units, stops] of [[2, 10, 89], [3, 17, 147], [4, 24, 246], [5, 39, 352]]) {
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
     await ctx.addInitScript((a) => { try { localStorage.setItem('shanlu-passed', JSON.stringify(a.passed)); localStorage.setItem('shanlu-level', String(a.lv)); if (a.erhua) localStorage.setItem('shanlu-erhua', 'on'); } catch (e) {} }, { passed: lv === 2 ? { 1: 1 } : lv === 3 ? { 1: 1, 2: 1 } : lv === 4 ? { 1: 1, 2: 1, 3: 1 } : { 1: 1, 2: 1, 3: 1, 4: 1 }, lv, erhua: erhuaMode });
     const page = await ctx.newPage(); watch(page);

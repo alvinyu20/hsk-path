@@ -213,5 +213,7 @@ window.SHANLU_LEXICON = {
 "早早": "zǎozǎo",
 "高高兴兴": "gāogāoxìngxìng",
 "个个": "gègè",
-"张张": "zhāngzhāng"
+"张张": "zhāngzhāng",
+"说不定": "shuōbudìng",
+"就是说": "jiùshìshuō"
 };

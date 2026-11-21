@@ -1,10 +1,11 @@
 [
  {
-  "id": "gengjia",
-  "title": "更加, 不如, 相同 and 同样: more, less, the same",
+  "id": "gengjia4",
+  "title": "更加, 不如, 相同, 同样 and 一天比一天: more, less, the same",
   "covers": [
    41,
-   56
+   56,
+   72
   ],
   "formula": [
    "A",
@@ -15,7 +16,8 @@
   "explain": [
    "更加 'even more' is like 更 (HSK 3) but a little more formal. It goes before adjectives and some verbs: 天气更加冷了 'The weather is even colder'; 他更加努力了 'He works even harder'. It compares with an earlier state.",
    "A 不如 B means 'A is not as good as B': 这个手机不如那个手机好用 'This phone is not as easy to use as that one'. An adjective can follow B: 我不如他高 'I am not as tall as he is'. Compare 没有 (HSK 2): 这个没有那个好. 不如 can also suggest a better choice, 'might as well': 不如去睡觉吧 'we may as well go to sleep'.",
-   "相同 'the same, identical' and 同样 'in the same way, equally' say there is no difference: 我们的想法相同 'Our ideas are the same'; 他们同样很高兴 'They are equally happy'. 同样 can also come before a noun with 的: 同样的问题 'the same question'."
+   "相同 'the same, identical' and 同样 'in the same way, equally' say there is no difference: 我们的想法相同 'Our ideas are the same'; 他们同样很高兴 'They are equally happy'. 同样 can also come before a noun with 的: 同样的问题 'the same question'.",
+   "一 + measure word + 比 + 一 + measure word means 'each one more than the last': 天气一天比一天冷 'The weather is getting colder by the day'; 他的表演一次比一次精彩 'His performances get better every time'."
   ],
   "examples": [
    {
@@ -33,11 +35,16 @@
    {
     "zh": "他们对这件事同样感兴趣。",
     "en": "They are equally interested in this matter."
+   },
+   {
+    "zh": "天气一天比一天冷。",
+    "en": "The weather is getting colder by the day."
    }
   ],
   "mistakes": [
    "不如 compares two things, so you need both A and B. 这个不如好 is incomplete; say 这个不如那个好.",
-   "相同 does not take 很: 很相同 is wrong. Say 完全相同 'exactly the same' or 不太相同 'not quite the same'."
+   "相同 does not take 很: 很相同 is wrong. Say 完全相同 'exactly the same' or 不太相同 'not quite the same'.",
+   "Keep both halves the same: 一天比一天, 一次比一次, 一年比一年."
   ],
   "q": [
    {
@@ -78,6 +85,24 @@
     "wrong": "我们的想法很相同。",
     "remove": "很",
     "explain": "相同 does not take 很."
+   },
+   {
+    "t": "order",
+    "zh": "天气一天比一天冷。",
+    "en": "The weather is getting colder by the day.",
+    "explain": "一天 + 比 + 一天, then the adjective."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: His Chinese gets better every year?",
+    "options": [
+     "他的汉语一年比一年好。",
+     "他的汉语比一年一年好。"
+    ],
+    "correct": 0,
+    "zh": "他的汉语一年比一年好。",
+    "en": "His Chinese gets better every year.",
+    "explain": "一年 comes before and after 比."
    }
   ]
  },
@@ -164,12 +189,13 @@
   ]
  },
  {
-  "id": "anzhao",
-  "title": "按照, 作为, 与…相比 and 使: according to, as, compared with, make",
+  "id": "anzhao4",
+  "title": "按照, 作为, 与…相比, 使, 表扬 and 选: according to, as, compared with, make",
   "covers": [
    45,
    46,
-   47
+   47,
+   85
   ],
   "formula": [
    "*按照",
@@ -179,7 +205,8 @@
   "explain": [
    "按照 'according to, in line with' is followed by a rule, a plan or an order, and then the action: 按照老师说的做 'Do it the way the teacher said'. 按照 is about following something. 根据 (HSK 3) is about the evidence a judgement rests on. 作为 'as, in the role of' says what role someone has: 作为学生，他应该努力学习 'As a student, he should study hard'.",
    "与 … 相比 'compared with …' compares two things. 与 is the written form of 和, and 和 … 相比 is the spoken one: 与去年相比，今年的雨多了 'Compared with last year, there is more rain this year'.",
-   "使 'to make, to cause' is followed by a person and then a feeling or a state: 这个消息使我很高兴 'This news makes me very happy'. The subject is a thing or an event, not a person who acts on purpose."
+   "使 'to make, to cause' is followed by a person and then a feeling or a state: 这个消息使我很高兴 'This news makes me very happy'. The subject is a thing or an event, not a person who acts on purpose.",
+   "Some verbs take a person and then a second verb about that person: 老师表扬我考得很好 'The teacher praised me for doing well in the exam'; 妈妈批评他回家太晚 'Mom told him off for coming home too late'; 大家选他当经理 'Everyone chose him as manager' (选 + person + 当 / 做 + role)."
   ],
   "examples": [
    {
@@ -197,11 +224,20 @@
    {
     "zh": "这个消息使我很高兴。",
     "en": "This news makes me very happy."
+   },
+   {
+    "zh": "老师表扬我考得很好。",
+    "en": "The teacher praised me for doing well in the exam."
+   },
+   {
+    "zh": "大家选他当经理。",
+    "en": "Everyone chose him as manager."
    }
   ],
   "mistakes": [
    "使 is followed by a person and then the result. For a person who makes someone do a job, use 让.",
-   "与…相比 needs both parts: 与去年相比, then what is different."
+   "与…相比 needs both parts: 与去年相比, then what is different.",
+   "The person comes right after 表扬, 批评 or 选: 大家选他当经理, not 大家选当经理他."
   ],
   "q": [
    {
@@ -242,6 +278,24 @@
     "wrong": "与去年相比，今年的雨是多了。",
     "remove": "是",
     "explain": "相比 already makes the comparison; do not add 是."
+   },
+   {
+    "t": "order",
+    "zh": "老师表扬我考得很好。",
+    "en": "The teacher praised me for doing well in the exam.",
+    "explain": "表扬 + person + what they did well."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Everyone chose him as manager?",
+    "options": [
+     "大家选他当经理。",
+     "大家选当经理他。"
+    ],
+    "correct": 0,
+    "zh": "大家选他当经理。",
+    "en": "Everyone chose him as manager.",
+    "explain": "选 + person + 当 + role."
    }
   ]
  },
@@ -725,6 +779,899 @@
     "zh": "他睡着了。",
     "en": "He has fallen asleep.",
     "explain": "睡着 zháo = to fall asleep."
+   }
+  ]
+ },
+ {
+  "id": "num4",
+  "title": "Numbers: 三分之一, 百分之二十, 两倍, 三十来个 and 一脸",
+  "covers": [
+   59,
+   60,
+   61,
+   62
+  ],
+  "formula": [
+   "Bottom number",
+   "*分之",
+   "Top number"
+  ],
+  "explain": [
+   "Fractions say the bottom number first: 三分之一 'one third', 四分之三 'three quarters'. Percentages use 百分之: 百分之二十 '20%'. Decimals use 点: 零点五 '0.5', 三点五 '3.5'.",
+   "倍 means 'times': 他的收入是我的两倍 'His income is twice mine'. 多了一倍 means 'doubled': 今年的游客比去年多了一倍 'There are twice as many visitors this year as last year'.",
+   "A round number + 来 + measure word means 'about': 三十来个学生 'about thirty students'; 四十来岁 'about forty years old'.",
+   "Some nouns can be used as measure words with 一 to mean 'all over, a whole …': 一脸高兴 'happy all over his face'; 一屋子人 'a roomful of people'. An adjective can go between 一 and the measure word: 一大碗米饭 'a big bowl of rice'; 一小杯咖啡 'a small cup of coffee'."
+  ],
+  "examples": [
+   {
+    "zh": "三分之一的学生是外国人。",
+    "en": "One third of the students are foreigners."
+   },
+   {
+    "zh": "他的收入是我的两倍。",
+    "en": "His income is twice mine."
+   },
+   {
+    "zh": "教室里有三十来个学生。",
+    "en": "There are about thirty students in the classroom."
+   },
+   {
+    "zh": "她一脸高兴地跑了进来。",
+    "en": "She ran in, beaming."
+   }
+  ],
+  "mistakes": [
+   "The bottom number comes first: 三分之一 is 1/3, not 3/1.",
+   "来 meaning 'about' goes after a round number: 三十来个, not 三来十个."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "他的收入是我的两倍。",
+    "en": "His income is twice mine.",
+    "explain": "A 是 B 的 + number + 倍."
+   },
+   {
+    "t": "cloze",
+    "zh": "教室里有三十来个学生。",
+    "en": "There are about thirty students in the classroom.",
+    "blank": "来",
+    "explain": "Round number + 来 + measure word: about."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: One third of the students are foreigners?",
+    "options": [
+     "三分之一的学生是外国人。",
+     "一分之三的学生是外国人。"
+    ],
+    "correct": 0,
+    "zh": "三分之一的学生是外国人。",
+    "en": "One third of the students are foreigners.",
+    "explain": "The bottom number (3) comes first."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: After the discount it is 20% cheaper?",
+    "options": [
+     "打折以后便宜了百分之二十。",
+     "打折以后便宜了二十百分。"
+    ],
+    "correct": 0,
+    "zh": "打折以后便宜了百分之二十。",
+    "en": "After the discount it is 20% cheaper.",
+    "explain": "百分之 comes before the number."
+   },
+   {
+    "t": "order",
+    "zh": "她一脸高兴地跑了进来。",
+    "en": "She ran in, beaming.",
+    "explain": "一脸 + feeling: all over the face."
+   }
+  ]
+ },
+ {
+  "id": "pairs4",
+  "title": "More pairs: 不仅…还…, 一方面…另一方面…, 不是…就是…",
+  "covers": [
+   63,
+   64,
+   65
+  ],
+  "formula": [
+   "*不仅 / *一方面 / *不是",
+   "…",
+   "*还 / *另一方面 / *就是",
+   "…"
+  ],
+  "explain": [
+   "不仅…，还 / 而且… means 'not only … but also', a little more formal than 不但…而且…: 我不仅会说汉语，还会写汉字 'I can not only speak Chinese but also write characters'. 不光 means the same and sounds casual.",
+   "一方面…，另一方面… gives two sides or two reasons: 学汉语一方面有意思，另一方面很有用 'Learning Chinese is interesting on the one hand and useful on the other'.",
+   "不是…，就是… means 'either … or' (one of the two, nothing else): 周末他不是在家，就是在公园 'At weekends he is either at home or in the park'. Compare 不是…而是…, which corrects: 他不是老师，而是学生 'He is not a teacher but a student'."
+  ],
+  "examples": [
+   {
+    "zh": "我不仅会说汉语，还会写汉字。",
+    "en": "I can not only speak Chinese but also write characters."
+   },
+   {
+    "zh": "学汉语一方面有意思，另一方面很有用。",
+    "en": "Learning Chinese is interesting on the one hand and useful on the other."
+   },
+   {
+    "zh": "周末他不是在家，就是在公园。",
+    "en": "At weekends he is either at home or in the park."
+   }
+  ],
+  "mistakes": [
+   "不是…就是… gives two choices; 不是…而是… corrects a mistake.",
+   "The second half is 另一方面, with 另."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我不仅会说汉语，还会写汉字。",
+    "en": "I can not only speak Chinese but also write characters.",
+    "explain": "不仅 … 还 …."
+   },
+   {
+    "t": "cloze",
+    "zh": "他不光是我的同事，也是我的好朋友。",
+    "en": "He is not only my colleague but also my good friend.",
+    "blank": "不光",
+    "explain": "不光 is the casual 不仅."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: This shop is cheap on the one hand and close to home on the other?",
+    "options": [
+     "这家店一方面便宜，另一方面离家近。",
+     "这家店一方面便宜，一方面另离家近。"
+    ],
+    "correct": 0,
+    "zh": "这家店一方面便宜，另一方面离家近。",
+    "en": "This shop is cheap on the one hand and close to home on the other.",
+    "explain": "The second half starts with 另一方面."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: At weekends he is either at home or in the park?",
+    "options": [
+     "周末他不是在家，就是在公园。",
+     "周末他不是在家，而是在公园。"
+    ],
+    "correct": 0,
+    "zh": "周末他不是在家，就是在公园。",
+    "en": "At weekends he is either at home or in the park.",
+    "explain": "不是…就是… is either/or; 不是…而是… would mean \"not at home but in the park\"."
+   },
+   {
+    "t": "cloze",
+    "zh": "他每天不是工作，就是学习。",
+    "en": "Every day he is either working or studying.",
+    "blank": "就是",
+    "explain": "不是 … 就是 …: one or the other."
+   }
+  ]
+ },
+ {
+  "id": "jiaorang",
+  "title": "叫 and 让 for the passive, and more 把 sentences",
+  "covers": [
+   66,
+   67
+  ],
+  "formula": [
+   "Thing",
+   "*叫 / *让 / *把",
+   "Someone",
+   "Verb + more"
+  ],
+  "explain": [
+   "In speech, 叫 and 让 can work like 被: 我的自行车让朋友借走了 'My bike was borrowed by a friend'; 蛋糕叫弟弟吃了 'The cake was eaten by my little brother'. Unlike 被, they need the doer after them.",
+   "More 把 sentences: a doubled verb (你把衣服洗一洗 'Give your clothes a wash'); verb + 了 for something lost or forgotten (我把银行卡密码忘了 'I forgot my bank card PIN'); verb + 一顿 (妈妈把他批评了一顿 'Mom gave him a scolding'); and a direction before the verb (别把垃圾往地上扔 'Don't throw rubbish on the ground')."
+  ],
+  "examples": [
+   {
+    "zh": "我的自行车让朋友借走了。",
+    "en": "My bike was borrowed by a friend."
+   },
+   {
+    "zh": "蛋糕叫弟弟吃了。",
+    "en": "The cake was eaten by my little brother."
+   },
+   {
+    "zh": "我把银行卡密码忘了。",
+    "en": "I forgot my bank card PIN."
+   },
+   {
+    "zh": "别把垃圾往地上扔。",
+    "en": "Don't throw rubbish on the ground."
+   }
+  ],
+  "mistakes": [
+   "叫 / 让 in the passive need the doer: 自行车让朋友借走了, not 自行车让借走了.",
+   "With 把 the verb cannot stand alone: 我把密码忘了, not 我把密码忘."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我的自行车让朋友借走了。",
+    "en": "My bike was borrowed by a friend.",
+    "explain": "Thing + 让 + doer + verb + result."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: The cake was eaten by my little brother?",
+    "options": [
+     "蛋糕叫弟弟吃了。",
+     "蛋糕叫吃了弟弟。"
+    ],
+    "correct": 0,
+    "zh": "蛋糕叫弟弟吃了。",
+    "en": "The cake was eaten by my little brother.",
+    "explain": "The doer comes right after 叫."
+   },
+   {
+    "t": "cloze",
+    "zh": "我把银行卡密码忘了。",
+    "en": "I forgot my bank card PIN.",
+    "blank": "忘",
+    "explain": "把 + thing + 忘了."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Mom gave him a scolding?",
+    "options": [
+     "妈妈把他批评了一顿。",
+     "妈妈把他一顿批评了。"
+    ],
+    "correct": 0,
+    "zh": "妈妈把他批评了一顿。",
+    "en": "Mom gave him a scolding.",
+    "explain": "一顿 comes after the verb."
+   },
+   {
+    "t": "order",
+    "zh": "别把垃圾往地上扔。",
+    "en": "Don't throw rubbish on the ground.",
+    "explain": "把 + thing + 往 + place + verb."
+   }
+  ]
+ },
+ {
+  "id": "qiang4",
+  "title": "Saying it strongly: 累死了, 谁不…？, 没有…不… and 够…的",
+  "covers": [
+   68,
+   69,
+   70,
+   71
+  ],
+  "formula": [
+   "Adjective",
+   "*死了 / *得厉害"
+  ],
+  "explain": [
+   "Adjective or feeling + 死了 means 'terribly' in casual speech: 我累死了 'I'm dead tired'; 考试的时候，我紧张死了 'I was terribly nervous in the exam'. 得厉害 means 'badly, a lot': 他头疼得厉害 'His head hurts badly'.",
+   "A question with a question word can say the opposite, for emphasis: 谁不认识他？ 'Who doesn't know him?' (everyone does); 我怎么知道？ 'How would I know?' (I don't).",
+   "Two negatives make a strong yes: 没有人不喜欢放假 'There is nobody who doesn't like holidays' (everyone does); 我不能不去 'I can't not go' (I must).",
+   "够…的 means 'really, quite' and is casual: 这个房间真够大的 'This room is really big'. Keep the 的 at the end."
+  ],
+  "examples": [
+   {
+    "zh": "我累死了。",
+    "en": "I'm dead tired."
+   },
+   {
+    "zh": "谁不认识他？",
+    "en": "Who doesn't know him?"
+   },
+   {
+    "zh": "没有人不喜欢放假。",
+    "en": "There is nobody who doesn't like holidays."
+   },
+   {
+    "zh": "这个房间真够大的。",
+    "en": "This room is really big."
+   }
+  ],
+  "mistakes": [
+   "死了 is casual; in polite or written Chinese use 非常 or 十分.",
+   "够…的 needs the 的: 真够大的."
+  ],
+  "q": [
+   {
+    "t": "cloze",
+    "zh": "考试的时候，我紧张死了。",
+    "en": "I was terribly nervous in the exam.",
+    "blank": "死",
+    "explain": "Adjective + 死了: terribly."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence means: everyone knows him?",
+    "options": [
+     "谁不认识他？",
+     "谁认识他？"
+    ],
+    "correct": 0,
+    "zh": "谁不认识他？",
+    "en": "Who doesn't know him?",
+    "explain": "谁不…？ means everyone does."
+   },
+   {
+    "t": "order",
+    "zh": "没有人不喜欢放假。",
+    "en": "There is nobody who doesn't like holidays.",
+    "explain": "没有 … 不 …: everyone."
+   },
+   {
+    "t": "order",
+    "zh": "这个房间真够大的。",
+    "en": "This room is really big.",
+    "explain": "够 + adjective + 的."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: His head hurts badly?",
+    "options": [
+     "他头疼得厉害。",
+     "他头疼厉害得。"
+    ],
+    "correct": 0,
+    "zh": "他头疼得厉害。",
+    "en": "His head hurts badly.",
+    "explain": "得 comes before 厉害."
+   }
+  ]
+ },
+ {
+  "id": "frames4",
+  "title": "Frames: 在…方面, 为了…而… and 拿…来说",
+  "covers": [
+   73,
+   74,
+   75
+  ],
+  "formula": [
+   "*在 / *为了 / *拿",
+   "…",
+   "*方面 / *而 / *来说"
+  ],
+  "explain": [
+   "在…方面 means 'when it comes to, in the area of': 在工作方面，他很有经验 'When it comes to work, he is very experienced'. It is a little more formal than 在…上.",
+   "为了…而… means 'do something for the sake of …': 他为了家人而努力工作 'He works hard for his family'. 而 links the reason to the action and sounds written.",
+   "拿…来说 means 'take … for example': 我的朋友都很忙，拿我姐姐来说，她每天工作十个小时 'My friends are all busy. Take my sister: she works ten hours a day'."
+  ],
+  "examples": [
+   {
+    "zh": "在工作方面，他很有经验。",
+    "en": "When it comes to work, he is very experienced."
+   },
+   {
+    "zh": "为了梦想而努力的人值得我们学习。",
+    "en": "We should learn from people who work hard for their dreams."
+   },
+   {
+    "zh": "拿我来说，我每天都跑步。",
+    "en": "Take me, for example: I run every day."
+   }
+  ],
+  "mistakes": [
+   "在…方面 needs 方面 at the end: 在工作方面.",
+   "拿…来说 introduces an example, so what follows is about that example."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "在工作方面，他很有经验。",
+    "en": "When it comes to work, he is very experienced.",
+    "explain": "在 + area + 方面 at the start."
+   },
+   {
+    "t": "cloze",
+    "zh": "为了梦想而努力的人值得我们学习。",
+    "en": "We should learn from people who work hard for their dreams.",
+    "blank": "而",
+    "explain": "为了 … 而 + action."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Take me, for example: I run every day?",
+    "options": [
+     "拿我来说，我每天都跑步。",
+     "拿我说来，我每天都跑步。"
+    ],
+    "correct": 0,
+    "zh": "拿我来说，我每天都跑步。",
+    "en": "Take me, for example: I run every day.",
+    "explain": "来说 stays together."
+   },
+   {
+    "t": "cloze",
+    "zh": "在教育孩子方面，她很有经验。",
+    "en": "When it comes to raising children, she is very experienced.",
+    "blank": "方面",
+    "explain": "在 … 方面."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He works hard for his family?",
+    "options": [
+     "他为了家人而努力工作。",
+     "他为了家人努力而工作。"
+    ],
+    "correct": 0,
+    "zh": "他为了家人而努力工作。",
+    "en": "He works hard for his family.",
+    "explain": "而 comes right after the reason."
+   }
+  ]
+ },
+ {
+  "id": "fixed4",
+  "title": "Four-word patterns: 一A一B, 无A无B and 有A有B",
+  "covers": [
+   78,
+   79,
+   80
+  ],
+  "formula": [
+   "*一 / *无 / *有",
+   "A",
+   "*一 / *无 / *有",
+   "B"
+  ],
+  "explain": [
+   "一A一B puts 一 before two related words: 一字一句 'word by word'; 一前一后 'one in front, one behind'; 一大一小 'one big, one small'.",
+   "无A无B means 'without either': 无儿无女 'with no children'.",
+   "有A有B means 'with both, plenty of': 有说有笑 'chatting and laughing'; 有山有水 'with hills and water'; 有吃有喝 'plenty to eat and drink'."
+  ],
+  "examples": [
+   {
+    "zh": "她一字一句说得很清楚。",
+    "en": "She says every word clearly."
+   },
+   {
+    "zh": "他们一前一后走进了教室。",
+    "en": "They walked into the classroom one behind the other."
+   },
+   {
+    "zh": "那位老人无儿无女。",
+    "en": "That old man has no children."
+   },
+   {
+    "zh": "同学们有说有笑地走出了教室。",
+    "en": "The students walked out of the classroom chatting and laughing."
+   }
+  ],
+  "mistakes": [
+   "These are fixed: do not add 和 or 的 between the parts: 有说有笑, not 有说和有笑."
+  ],
+  "q": [
+   {
+    "t": "cloze",
+    "zh": "同学们有说有笑地走出了教室。",
+    "en": "The students walked out of the classroom chatting and laughing.",
+    "blank": "笑",
+    "explain": "有A有B: 有说有笑."
+   },
+   {
+    "t": "order",
+    "zh": "他们一前一后走进了教室。",
+    "en": "They walked into the classroom one behind the other.",
+    "explain": "一前一后: one in front, one behind."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: She says every word clearly?",
+    "options": [
+     "她一字一句说得很清楚。",
+     "她一字一个句说得很清楚。"
+    ],
+    "correct": 0,
+    "zh": "她一字一句说得很清楚。",
+    "en": "She says every word clearly.",
+    "explain": "The pattern is 一字一句."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: That old man has no children?",
+    "options": [
+     "那位老人无儿无女。",
+     "那位老人有儿无女。"
+    ],
+    "correct": 0,
+    "zh": "那位老人无儿无女。",
+    "en": "That old man has no children.",
+    "explain": "无儿无女: no sons and no daughters."
+   },
+   {
+    "t": "order",
+    "zh": "这里有山有水，很漂亮。",
+    "en": "With hills and water, it is beautiful here.",
+    "explain": "有山有水."
+   }
+  ]
+ },
+ {
+  "id": "phrases4",
+  "title": "Handy phrases: 有的是, 说不定, 不怎么, 就是说",
+  "covers": [
+   81,
+   82,
+   83,
+   84
+  ],
+  "formula": [
+   "*有的是 / *说不定 / *不怎么 / *就是说",
+   "…"
+  ],
+  "explain": [
+   "有的是 means 'plenty of': 别着急，我们有的是时间 'Don't worry, we have plenty of time'. Don't mix it up with 有的…, 'some': 有的人 'some people'.",
+   "说不定 means 'maybe, it could be': 他说不定已经到家了 'He may be home already'; 客人来不来还说不定 'It is not certain yet whether the guests will come'.",
+   "不怎么 + verb or adjective means 'not much, not very': 我不怎么喜欢喝咖啡 'I don't much like coffee'; 这个菜不怎么辣 'This dish is not very spicy'. Compare 不怎么样 'not great'.",
+   "(这)就是说 means 'that is to say, in other words': 他没有直接拒绝，这就是说，你还有机会 'He didn't turn you down directly; that is to say, you still have a chance'."
+  ],
+  "examples": [
+   {
+    "zh": "别着急，我们有的是时间。",
+    "en": "Don't worry, we have plenty of time."
+   },
+   {
+    "zh": "他说不定已经到家了。",
+    "en": "He may be home already."
+   },
+   {
+    "zh": "我不怎么喜欢喝咖啡。",
+    "en": "I don't much like coffee."
+   },
+   {
+    "zh": "他没有直接拒绝，这就是说，你还有机会。",
+    "en": "He didn't turn you down directly; that is to say, you still have a chance."
+   }
+  ],
+  "mistakes": [
+   "不怎么 goes before a verb or adjective: 不怎么喜欢. On its own, say 不怎么样."
+  ],
+  "q": [
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Don't worry, we have plenty of time?",
+    "options": [
+     "别着急，我们有的是时间。",
+     "别着急，我们是有的时间。"
+    ],
+    "correct": 0,
+    "zh": "别着急，我们有的是时间。",
+    "en": "Don't worry, we have plenty of time.",
+    "explain": "有的是 + what you have plenty of."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: He may be home already?",
+    "options": [
+     "他说不定已经到家了。",
+     "他不说定已经到家了。"
+    ],
+    "correct": 0,
+    "zh": "他说不定已经到家了。",
+    "en": "He may be home already.",
+    "explain": "说不定: maybe."
+   },
+   {
+    "t": "order",
+    "zh": "我不怎么喜欢喝咖啡。",
+    "en": "I don't much like coffee.",
+    "explain": "不怎么 + verb."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: That is to say, you still have a chance?",
+    "options": [
+     "这就是说，你还有机会。",
+     "这说就是，你还有机会。"
+    ],
+    "correct": 0,
+    "zh": "这就是说，你还有机会。",
+    "en": "That is to say, you still have a chance.",
+    "explain": "这就是说: in other words."
+   },
+   {
+    "t": "cloze",
+    "zh": "客人来不来还说不定。",
+    "en": "It is not certain yet whether the guests will come.",
+    "blank": "说不定",
+    "explain": "还说不定: not certain yet."
+   }
+  ]
+ },
+ {
+  "id": "never4",
+  "title": "Can and never: 吃得了, 再也不, 怎么也…不",
+  "covers": [
+   86,
+   87,
+   88
+  ],
+  "formula": [
+   "Verb",
+   "*得了 / *不了"
+  ],
+  "explain": [
+   "Verb + 得了 / 不了 says whether you can manage it: 这么多菜，我们吃得了吗？ 'Can we finish this much food?'; 明天我去不了 'I can't go tomorrow'. Here 了 is read liǎo.",
+   "再也不 / 再也没 means 'never again': 我保证再也不迟到了 'I promise never to be late again'; 我再也没见过他 'I never saw him again'.",
+   "怎么都 / 怎么也 + 不 / 没 means 'however hard, still not': 我怎么也想不起来他的名字 'I just can't remember his name'; 他们怎么都找不到 'However hard they looked, they couldn't find it'."
+  ],
+  "examples": [
+   {
+    "zh": "这么多菜，我们吃得了吗？",
+    "en": "Can we finish this much food?"
+   },
+   {
+    "zh": "明天我去不了。",
+    "en": "I can't go tomorrow."
+   },
+   {
+    "zh": "我保证再也不迟到了。",
+    "en": "I promise never to be late again."
+   },
+   {
+    "zh": "我怎么也想不起来他的名字。",
+    "en": "I just can't think of his name."
+   }
+  ],
+  "mistakes": [
+   "再也 goes before 不 / 没: 再也不, not 不再也.",
+   "In 得了 / 不了 the 了 is liǎo, not le."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "明天我去不了。",
+    "en": "I can't go tomorrow.",
+    "explain": "Verb + 不了: cannot manage it."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: I promise never to be late again?",
+    "options": [
+     "我保证再也不迟到了。",
+     "我保证不再也迟到了。"
+    ],
+    "correct": 0,
+    "zh": "我保证再也不迟到了。",
+    "en": "I promise never to be late again.",
+    "explain": "再也 comes before 不."
+   },
+   {
+    "t": "cloze",
+    "zh": "我怎么也想不起来他的名字。",
+    "en": "I just can't think of his name.",
+    "blank": "怎么",
+    "explain": "怎么也 + 不: however hard."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence asks: Can we finish this much food?",
+    "options": [
+     "这么多菜，我们吃得了吗？",
+     "这么多菜，我们吃了得吗？"
+    ],
+    "correct": 0,
+    "zh": "这么多菜，我们吃得了吗？",
+    "en": "Can we finish this much food?",
+    "explain": "Verb + 得了."
+   },
+   {
+    "t": "order",
+    "zh": "我再也没见过他。",
+    "en": "I never saw him again.",
+    "explain": "再也没 + verb + 过."
+   }
+  ]
+ },
+ {
+  "id": "kouyu4a",
+  "title": "Spoken patterns (1): 有什么好怕的, 他是他，我是我, 说就是了",
+  "covers": [
+   89,
+   90,
+   91,
+   92,
+   93,
+   94
+  ],
+  "formula": [
+   "*有什么好",
+   "Verb / adjective",
+   "*的"
+  ],
+  "explain": [
+   "有什么(好) + verb or adjective + 的 means 'there is nothing to …': 有什么好害怕的？ 'What is there to be afraid of?'.",
+   "X是X，Y是Y keeps two things apart: 他是他，我是我 'He is he and I am I'; 工作是工作，生活是生活 'Work is work and life is life'.",
+   "X也得X，不X也得X means 'you have to, like it or not': 你去也得去，不去也得去.",
+   "X就是了 at the end means 'just do it, that's all': 有什么想法，说就是了 'If you have an idea, just say it'.",
+   "还 + noun + 呢 mocks something that does not live up to its name: 还大饭店呢，菜这么难吃 'Call this a big restaurant? The food is so bad'.",
+   "Verb + 一X是一X means 'one at a time, with no plan': 过一天是一天 'live one day at a time'; 走一步是一步 'take it one step at a time'."
+  ],
+  "examples": [
+   {
+    "zh": "有什么好害怕的？",
+    "en": "What is there to be afraid of?"
+   },
+   {
+    "zh": "他是他，我是我。",
+    "en": "He is he and I am I."
+   },
+   {
+    "zh": "你去也得去，不去也得去。",
+    "en": "You have to go, like it or not."
+   },
+   {
+    "zh": "有什么想法，说就是了。",
+    "en": "If you have an idea, just say it."
+   },
+   {
+    "zh": "还大饭店呢，菜这么难吃。",
+    "en": "Some big restaurant this is: the food is so bad."
+   },
+   {
+    "zh": "我们只能走一步是一步。",
+    "en": "We can only take it one step at a time."
+   }
+  ],
+  "mistakes": [
+   "These are casual spoken patterns; don't use them in formal writing.",
+   "还…呢 is sarcastic: it criticises."
+  ],
+  "q": [
+   {
+    "t": "cloze",
+    "zh": "有什么好害怕的？",
+    "en": "What is there to be afraid of?",
+    "blank": "好",
+    "explain": "有什么好 + feeling + 的."
+   },
+   {
+    "t": "order",
+    "zh": "他是他，我是我。",
+    "en": "He is he and I am I.",
+    "explain": "X是X，Y是Y."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: You have to go, like it or not?",
+    "options": [
+     "你去也得去，不去也得去。",
+     "你去也去，不去也去。"
+    ],
+    "correct": 0,
+    "zh": "你去也得去，不去也得去。",
+    "en": "You have to go, like it or not.",
+    "explain": "也得 in both halves."
+   },
+   {
+    "t": "cloze",
+    "zh": "有什么想法，说就是了。",
+    "en": "If you have an idea, just say it.",
+    "blank": "就是",
+    "explain": "Verb + 就是了: just do it."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Some big restaurant this is: the food is so bad.",
+    "options": [
+     "还大饭店呢，菜这么难吃。",
+     "是大饭店呢，菜这么难吃。"
+    ],
+    "correct": 0,
+    "zh": "还大饭店呢，菜这么难吃。",
+    "en": "Some big restaurant this is: the food is so bad.",
+    "explain": "还 + noun + 呢 mocks."
+   },
+   {
+    "t": "order",
+    "zh": "现在只能过一天是一天。",
+    "en": "Right now all you can do is live one day at a time.",
+    "explain": "过一天是一天."
+   }
+  ]
+ },
+ {
+  "id": "kouyu4b",
+  "title": "Spoken patterns (2): 你吃你的, 买就买吧, 便宜是便宜",
+  "covers": [
+   95,
+   96,
+   97,
+   98,
+   99
+  ],
+  "formula": [
+   "X",
+   "*是",
+   "X",
+   "*就是 / *可是",
+   "…"
+  ],
+  "explain": [
+   "你 + verb + 你的(吧) means 'go ahead with yours, don't mind me': 我不饿，你吃你的吧 'I'm not hungry, go ahead and eat'.",
+   "让你X你就X means 'just do as you are told': 老师让你多练，你就多练.",
+   "说什么也得X means 'whatever happens, must': 他病了，我说什么也得去看看他 'He's ill; I must go and see him no matter what'. With 不 it means 'won't, whatever you say': 他说什么也不同意.",
+   "X就X吧 accepts something: 'fine, then': 买就买吧，也不太贵 'Fine, buy it then; it's not that expensive'.",
+   "X是X，就是 / 可是… admits one point and then adds a 'but': 这些衣服便宜是便宜，就是质量不太好 'These clothes are cheap all right, but the quality isn't great'."
+  ],
+  "examples": [
+   {
+    "zh": "我不饿，你吃你的吧。",
+    "en": "I'm not hungry, you go ahead and eat."
+   },
+   {
+    "zh": "老师让你多练，你就多练。",
+    "en": "If the teacher tells you to practise more, just practise more."
+   },
+   {
+    "zh": "他病了，我说什么也得去看看他。",
+    "en": "He's ill; I must go and see him, whatever happens."
+   },
+   {
+    "zh": "买就买吧，也不太贵。",
+    "en": "Fine, buy it then; it's not that expensive."
+   },
+   {
+    "zh": "这些衣服便宜是便宜，就是质量不太好。",
+    "en": "These clothes are cheap all right, but the quality isn't great."
+   }
+  ],
+  "mistakes": [
+   "In X是X the same word comes twice with nothing added: 便宜是便宜, not 便宜是很便宜."
+  ],
+  "q": [
+   {
+    "t": "order",
+    "zh": "我不饿，你吃你的吧。",
+    "en": "I'm not hungry, you go ahead and eat.",
+    "explain": "你 + verb + 你的."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: If the teacher tells you to practise more, just practise more?",
+    "options": [
+     "老师让你多练，你就多练。",
+     "老师让你多练，你多就练。"
+    ],
+    "correct": 0,
+    "zh": "老师让你多练，你就多练。",
+    "en": "If the teacher tells you to practise more, just practise more.",
+    "explain": "你就 + the same verb."
+   },
+   {
+    "t": "cloze",
+    "zh": "他病了，我说什么也得去看看他。",
+    "en": "He's ill; I must go and see him, whatever happens.",
+    "blank": "什么",
+    "explain": "说什么也得: whatever happens."
+   },
+   {
+    "t": "cloze",
+    "zh": "买就买吧，也不太贵。",
+    "en": "Fine, buy it then; it's not that expensive.",
+    "blank": "就",
+    "explain": "X就X吧: fine, then."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: These clothes are cheap all right, but the quality isn't great?",
+    "options": [
+     "这些衣服便宜是便宜，就是质量不太好。",
+     "这些衣服是便宜便宜，就是质量不太好。"
+    ],
+    "correct": 0,
+    "zh": "这些衣服便宜是便宜，就是质量不太好。",
+    "en": "These clothes are cheap all right, but the quality isn't great.",
+    "explain": "X是X, then 就是 + the problem."
    }
   ]
  }

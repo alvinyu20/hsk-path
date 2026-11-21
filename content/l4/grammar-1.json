@@ -76,17 +76,22 @@
     "zh": "他连饭也不吃。",
     "en": "He does not even eat.",
     "wrong": "他连饭也都不吃。",
-    "remove": "都", "also": ["也"],
+    "remove": "都",
+    "also": [
+     "也"
+    ],
     "explain": "After 连 use 也 or 都, not both."
    }
   ]
  },
  {
-  "id": "jishi",
-  "title": "即使…也… and 尽管…: even if, although",
+  "id": "jishi4",
+  "title": "即使…也…, 就是…也… and 尽管…: even if, although",
   "covers": [
    2,
-   3
+   3,
+   76,
+   77
   ],
   "formula": [
    "*即使",
@@ -97,7 +102,9 @@
   "explain": [
    "即使 … 也 … 'even if' says that the result stays the same whatever happens: 即使下雨，我也去 'Even if it rains, I will go'. 即使 gives a situation that may or may not happen, and 也 (or 还是) comes in the second part.",
    "尽管 … 还是 / 但是 … 'although, in spite of the fact that' is for something that is true: 尽管很累，他还是去上班了 'Although he was tired, he still went to work'. Compare 即使 (maybe it happens) with 尽管 (it really is so).",
-   "In the second part use 还是 'still' or 但是 'but'. 还是 is the more natural partner of 尽管. You can drop the English 'but', and Chinese does too: 尽管很贵，我还是买了 'Although it was dear, I still bought it'."
+   "In the second part use 还是 'still' or 但是 'but'. 还是 is the more natural partner of 尽管. You can drop the English 'but', and Chinese does too: 尽管很贵，我还是买了 'Although it was dear, I still bought it'.",
+   "就是…，也… means 'even if', like 即使…也…, but it sounds more spoken: 我今天晚上就是不睡觉，也要把作业写完 'Even if I don't sleep tonight, I'll finish my homework'.",
+   "A short spoken form is 不 + verb + 也 …: 你不说我也知道 'I know even if you don't say it'; 我不睡觉也要把作业写完 'I'll finish my homework even if I don't sleep'."
   ],
   "examples": [
    {
@@ -115,11 +122,20 @@
    {
     "zh": "尽管她很累，但是她不想休息。",
     "en": "Although she is tired, she does not want to rest."
+   },
+   {
+    "zh": "我今天晚上就是不睡觉，也要把作业写完。",
+    "en": "Even if I don't sleep tonight, I'll finish my homework."
+   },
+   {
+    "zh": "你不说我也知道。",
+    "en": "I know even if you don't say it."
    }
   ],
   "mistakes": [
    "即使 is mostly for something that may or may not happen. For something that is a fact, 尽管 is the usual choice: 尽管下雨了，我们还是去了.",
-   "Do not leave out 也 / 还是 in the second part. 即使下雨，我去 sounds unfinished."
+   "Do not leave out 也 / 还是 in the second part. 即使下雨，我去 sounds unfinished.",
+   "就是 here means 'even if', so the second part needs 也: 明天就是下雨，我也要去."
   ],
   "q": [
    {
@@ -160,6 +176,24 @@
     "wrong": "即使下雨，所以我也去。",
     "remove": "所以",
     "explain": "即使 does not go with 所以; 也 is enough."
+   },
+   {
+    "t": "order",
+    "zh": "你不说我也知道。",
+    "en": "I know even if you don't say it.",
+    "explain": "不 + verb, then 也."
+   },
+   {
+    "t": "mc",
+    "prompt": "Which sentence says: Even if it rains tomorrow, I will go?",
+    "options": [
+     "明天就是下雨，我也要去。",
+     "明天就是下雨，我就要去。"
+    ],
+    "correct": 0,
+    "zh": "明天就是下雨，我也要去。",
+    "en": "Even if it rains tomorrow, I will go.",
+    "explain": "就是 (even if) goes with 也."
    }
   ]
  },
@@ -566,7 +600,10 @@
     "zh": "这个菜既好吃又便宜。",
     "en": "This dish is both tasty and cheap.",
     "wrong": "这个菜既好吃又也便宜。",
-    "remove": "也", "also": ["又"],
+    "remove": "也",
+    "also": [
+     "又"
+    ],
     "explain": "又 follows 既; do not add 也."
    }
   ]
@@ -731,7 +768,10 @@
     "zh": "来不及了，我们赶紧走吧。",
     "en": "It is already too late; let us hurry.",
     "wrong": "来不及了，我们赶紧快走吧。",
-    "remove": "快", "also": ["赶紧"],
+    "remove": "快",
+    "also": [
+     "赶紧"
+    ],
     "explain": "Do not use 赶紧 and 快 together."
    }
   ]

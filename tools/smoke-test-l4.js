@@ -154,7 +154,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   // ---- every grammar lesson: all questions answered correctly
   await nav('Grammar');
   const lessons = await page.evaluate(() => window.HSK4_GRAMMAR.lessons.length);
-  check(lessons === 27, 'the Grammar screen has 27 HSK 4 lessons (' + lessons + ')');
+  check(lessons === 37, 'the Grammar screen has 37 HSK 4 lessons (' + lessons + ')');
   let allFull = true;
   for (let i = 0; i < lessons; i++) {
     await page.evaluate((j) => window.shanlu.pickLesson(j), i);
@@ -166,7 +166,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     await nav('Grammar');
   }
   check(allFull, 'every HSK 4 lesson scores full marks when its questions are answered correctly');
-  check(await page.evaluate(() => Object.values(window.shanlu.state.gres).filter(v => v >= 80).length) === 27, 'all 27 lessons are marked done');
+  check(await page.evaluate(() => Object.values(window.shanlu.state.gres).filter(v => v >= 80).length) === 37, 'all 37 lessons are marked done');
   await page.evaluate(() => window.shanlu.pickLesson(0));
   await page.locator('button', { hasText: 'Practise this lesson' }).first().click();
   await answer(false);
@@ -364,7 +364,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     await require('./test-nav').makeNav(pA)('Grammar');
     await pA.waitForTimeout(150);
     check(await pA.evaluate(() => (document.querySelector('main').innerText).toLowerCase().includes('lesson 1 of ' + (window.HSK1_GRAMMAR.lessons.length + window.HSK2_GRAMMAR.lessons.length + window.HSK3_GRAMMAR.lessons.length + window.HSK4_GRAMMAR.lessons.length))), 'Grammar lists the lessons of the four levels');
-    check(await pA.locator('.gl .gg').count() === 16, 'Grammar is in 16 categories (the 15 of HSK 1 to 3 and HSK 4\'s "Even, although and no matter")');
+    check(await pA.locator('.gl .gg').count() === 17, 'Grammar is in 17 categories (the 15 of HSK 1 to 3, and HSK 4\'s "Even, although and no matter" and "Fixed patterns and sayings")');
     const t0 = await pA.evaluate(() => window.HSK4_GRAMMAR.lessons[0].title);
     await pA.fill('.gl .tr-search', t0);
     await pA.waitForTimeout(100);

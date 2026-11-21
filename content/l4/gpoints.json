@@ -15,7 +15,7 @@
   "id": "g4-2",
   "title": "即使…也…",
   "src": {
-   "jishi": [
+   "jishi4": [
     0,
     2,
     4
@@ -26,7 +26,7 @@
   "id": "g4-3",
   "title": "尽管…还是 / 但是…",
   "src": {
-   "jishi": [
+   "jishi4": [
     1,
     3
    ]
@@ -413,7 +413,7 @@
   "id": "g4-41",
   "title": "更加 and 不如",
   "src": {
-   "gengjia": [
+   "gengjia4": [
     0,
     1,
     3
@@ -453,7 +453,7 @@
   "id": "g4-45",
   "title": "按照 and 作为",
   "src": {
-   "anzhao": [
+   "anzhao4": [
     0,
     1
    ]
@@ -463,7 +463,7 @@
   "id": "g4-46",
   "title": "与…相比",
   "src": {
-   "anzhao": [
+   "anzhao4": [
     3,
     4
    ]
@@ -473,7 +473,7 @@
   "id": "g4-47",
   "title": "使",
   "src": {
-   "anzhao": [
+   "anzhao4": [
     2
    ]
   }
@@ -566,7 +566,7 @@
   "id": "g4-56",
   "title": "相同 and 同样",
   "src": {
-   "gengjia": [
+   "gengjia4": [
     2,
     4
    ]
@@ -594,6 +594,391 @@
     1,
     2,
     3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g4-59",
+  "title": "fractions, percentages, decimals (三分之一, 百分之二十, 零点五)",
+  "src": {
+   "num4": [
+    2,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g4-60",
+  "title": "multiples with 倍 (两倍, 多了一倍)",
+  "src": {
+   "num4": [
+    0
+   ]
+  }
+ },
+ {
+  "id": "g4-61",
+  "title": "number + 来 (about: 三十来个)",
+  "src": {
+   "num4": [
+    1
+   ]
+  }
+ },
+ {
+  "id": "g4-62",
+  "title": "borrowed measure words and 一大碗, 一小杯 (一脸高兴)",
+  "src": {
+   "num4": [
+    4
+   ]
+  }
+ },
+ {
+  "id": "g4-63",
+  "title": "不仅 / 不光…，还 / 而且… (not only … but also)",
+  "src": {
+   "pairs4": [
+    0,
+    1
+   ]
+  }
+ },
+ {
+  "id": "g4-64",
+  "title": "一方面…，另一方面… (on the one hand … on the other)",
+  "src": {
+   "pairs4": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g4-65",
+  "title": "不是…，就是… (either … or)",
+  "src": {
+   "pairs4": [
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g4-66",
+  "title": "passive with 叫 / 让 (自行车让朋友借走了)",
+  "src": {
+   "jiaorang": [
+    0,
+    1
+   ]
+  }
+ },
+ {
+  "id": "g4-67",
+  "title": "more 把 sentences (把衣服洗一洗, 把密码忘了, 把他批评了一顿)",
+  "src": {
+   "jiaorang": [
+    2,
+    3,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g4-68",
+  "title": "adjective + 死了 / 得厉害 (累死了)",
+  "src": {
+   "qiang4": [
+    0,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g4-69",
+  "title": "question words for emphasis (谁不认识他？)",
+  "src": {
+   "qiang4": [
+    1
+   ]
+  }
+ },
+ {
+  "id": "g4-70",
+  "title": "double negatives for emphasis (没有人不喜欢)",
+  "src": {
+   "qiang4": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g4-71",
+  "title": "够…的 (really, quite)",
+  "src": {
+   "qiang4": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g4-72",
+  "title": "一 + measure word + 比 + 一 + measure word (一天比一天冷)",
+  "src": {
+   "gengjia4": [
+    5,
+    6
+   ]
+  }
+ },
+ {
+  "id": "g4-73",
+  "title": "在…方面 (when it comes to)",
+  "src": {
+   "frames4": [
+    0,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g4-74",
+  "title": "为了…而… (for the sake of)",
+  "src": {
+   "frames4": [
+    1,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g4-75",
+  "title": "拿…来说 (take … for example)",
+  "src": {
+   "frames4": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g4-76",
+  "title": "就是…，也… (even if)",
+  "src": {
+   "jishi4": [
+    6
+   ]
+  }
+ },
+ {
+  "id": "g4-77",
+  "title": "不…也… (我不睡觉也要写完)",
+  "src": {
+   "jishi4": [
+    5
+   ]
+  }
+ },
+ {
+  "id": "g4-78",
+  "title": "一A一B (一字一句, 一前一后)",
+  "src": {
+   "fixed4": [
+    1,
+    2
+   ]
+  }
+ },
+ {
+  "id": "g4-79",
+  "title": "无A无B (无儿无女)",
+  "src": {
+   "fixed4": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g4-80",
+  "title": "有A有B (有说有笑)",
+  "src": {
+   "fixed4": [
+    0,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g4-81",
+  "title": "有的是 (plenty of)",
+  "src": {
+   "phrases4": [
+    0
+   ]
+  }
+ },
+ {
+  "id": "g4-82",
+  "title": "说不定 (maybe)",
+  "src": {
+   "phrases4": [
+    1,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g4-83",
+  "title": "不怎么 + verb / adjective (not much)",
+  "src": {
+   "phrases4": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g4-84",
+  "title": "(这)就是说 (that is to say)",
+  "src": {
+   "phrases4": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g4-85",
+  "title": "表扬 / 批评 / 选 + person + verb (老师表扬我考得好, 选他当经理)",
+  "src": {
+   "anzhao4": [
+    5,
+    6
+   ]
+  }
+ },
+ {
+  "id": "g4-86",
+  "title": "verb + 得了 / 不了 (can manage or not)",
+  "src": {
+   "never4": [
+    0,
+    3
+   ]
+  }
+ },
+ {
+  "id": "g4-87",
+  "title": "再也不 / 再也没 (never again)",
+  "src": {
+   "never4": [
+    1,
+    4
+   ]
+  }
+ },
+ {
+  "id": "g4-88",
+  "title": "怎么都 / 也 + 不 / 没 (no matter how)",
+  "src": {
+   "never4": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g4-89",
+  "title": "有什么好 … 的 (there is nothing to …)",
+  "src": {
+   "kouyu4a": [
+    0
+   ]
+  }
+ },
+ {
+  "id": "g4-90",
+  "title": "X是X，Y是Y (他是他，我是我)",
+  "src": {
+   "kouyu4a": [
+    1
+   ]
+  }
+ },
+ {
+  "id": "g4-91",
+  "title": "X也得X，不X也得X (like it or not)",
+  "src": {
+   "kouyu4a": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g4-92",
+  "title": "X就是了 (just do it)",
+  "src": {
+   "kouyu4a": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g4-93",
+  "title": "还 + noun + 呢 (call that a …?)",
+  "src": {
+   "kouyu4a": [
+    4
+   ]
+  }
+ },
+ {
+  "id": "g4-94",
+  "title": "verb + 一X是一X (过一天是一天)",
+  "src": {
+   "kouyu4a": [
+    5
+   ]
+  }
+ },
+ {
+  "id": "g4-95",
+  "title": "你X你的 (go ahead, don't mind me)",
+  "src": {
+   "kouyu4b": [
+    0
+   ]
+  }
+ },
+ {
+  "id": "g4-96",
+  "title": "让你X你就X (just do as you are told)",
+  "src": {
+   "kouyu4b": [
+    1
+   ]
+  }
+ },
+ {
+  "id": "g4-97",
+  "title": "说什么也得X (whatever happens)",
+  "src": {
+   "kouyu4b": [
+    2
+   ]
+  }
+ },
+ {
+  "id": "g4-98",
+  "title": "X就X吧 (fine, then)",
+  "src": {
+   "kouyu4b": [
+    3
+   ]
+  }
+ },
+ {
+  "id": "g4-99",
+  "title": "X是X，就是 / 可是… (便宜是便宜，就是…)",
+  "src": {
+   "kouyu4b": [
     4
    ]
   }
