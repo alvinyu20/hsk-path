@@ -17,7 +17,7 @@ Read this file first in every session. It replaces rediscovering the repo. Keep 
 | Levels, lock, `MAX_LEVEL`, `PASS_PCT` | `level.js` |
 | Mountain trail art (`trail`, `phoneTrail`) | `ascent.js` |
 | Journey, Feast, friends, sync, erhua, pinyin | `journey.js`/`jyscene.js`, `feast*.js`, `friends.js`, `sync.js`, `erhua.js`, `pinyin.js` |
-| Games (Learn > Games): Tell them apart sets | `content/tellapart.json`, `content/lN/tellapart.json` → `tools/build-games.py` → `data/games.js`; code `taOpen`/`gamesVals` in app.js |
+| Games (Learn > Games): Tell them apart, Measure words, Quick-fire numbers | `content/tellapart.json`, `content/lN/tellapart.json`, `content/measure-words.json` → `tools/build-games.py` → `data/games.js`; numbers made in `numbers.js` (`tools/test-numbers.js`); code `gmStart`/`gamesVals` in app.js |
 | Content (edited by hand: Chinese + English only, no pinyin) | `content/` (HSK 1 at top level, `content/l2..l5/` per level) |
 | Generated data the site loads (**never edit by hand**) | `data/hsk*-*.js`, `data/char-glosses.js` |
 | Builders, checks, tests | `tools/build-*.py`, `tools/check-*.py`, `tools/test-*.js`, `tools/smoke-test-*.js` |
@@ -53,7 +53,7 @@ Template syntax: `<sc-if value>`, `<sc-for list as x>`, `{{holes}}`, `data-on-cl
 - After editing `content/preview-hsk*.tsv`: `build-preview.py <dataset> <level>` once per level 2–5 (dataset first; with no level it only builds HSK 2).
 - Audio: dry run with `python3 -W ignore tools/make-audio.py --scope all --level N --dry-run`. Record with `gh api -X POST repos/alvinyu20/hsk-path/actions/workflows/audio.yml/dispatches -f ref=main -f 'inputs[scope]=all' -f 'inputs[level]=N'`. **Dispatch one level at a time and wait for it to finish**: runs share a concurrency group, and overlapping runs conflict on `audio/index.json`. Pushing during a run is fine, because its save step rebases.
 - Next unseen review round: `python3 tools/make-review-unseen.py <round>`.
-- After editing a `tellapart.json`: `python3 -W ignore tools/build-games.py` (it also does the level check; `--check` in `check-quick.sh ui`).
+- After editing a `tellapart.json` or `measure-words.json`: `python3 -W ignore tools/build-games.py` (it also does the level check; `--check` in `check-quick.sh ui`).
 
 ## Rules that are easy to get wrong
 - **Word levels come from the site's own lists** (`content/hsk*-official-*.txt|tsv`), not from DeepSeek or HSK 2.0 memory. Examples: 红 alone is HSK 5, 因为 HSK 2, 作业 HSK 3, 宾馆 HSK 3, 落 HSK 4, 包括 HSK 5, 居然 HSK 5.

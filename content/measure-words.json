@@ -1,0 +1,692 @@
+{
+ "mws": [
+  {
+   "zh": "个",
+   "lv": 1,
+   "near": [
+    "位",
+    "件",
+    "口",
+    "只"
+   ],
+   "means": "个 is the general measure word: people and lots of everyday things (一个人, 一个苹果)."
+  },
+  {
+   "zh": "本",
+   "lv": 1,
+   "near": [
+    "张",
+    "件",
+    "篇"
+   ],
+   "means": "本 is for bound things: books, dictionaries, notebooks."
+  },
+  {
+   "zh": "件",
+   "lv": 1,
+   "near": [
+    "条",
+    "个",
+    "套"
+   ],
+   "means": "件 is for clothes worn on top or on the whole body (一件衣服), and for matters (一件事)."
+  },
+  {
+   "zh": "只",
+   "lv": 1,
+   "near": [
+    "条",
+    "匹",
+    "个"
+   ],
+   "means": "只 is for many animals (猫, 鸟) and for one of a pair (一只手)."
+  },
+  {
+   "zh": "口",
+   "lv": 1,
+   "near": [
+    "个",
+    "位"
+   ],
+   "means": "口 counts the people in a family when you give its size: 我家有三口人."
+  },
+  {
+   "zh": "家",
+   "lv": 1,
+   "near": [
+    "个",
+    "间",
+    "座"
+   ],
+   "means": "家 is for businesses: shops, restaurants, companies, hospitals."
+  },
+  {
+   "zh": "块",
+   "lv": 1,
+   "near": [
+    "片",
+    "张",
+    "杯"
+   ],
+   "means": "块 is for chunks and pieces (一块蛋糕), and for yuan when talking about money (三块钱)."
+  },
+  {
+   "zh": "杯",
+   "lv": 1,
+   "near": [
+    "碗",
+    "块",
+    "个"
+   ],
+   "means": "杯 is a cup or glass of a drink: 一杯茶, 一杯水."
+  },
+  {
+   "zh": "位",
+   "lv": 2,
+   "near": [
+    "个",
+    "口",
+    "只"
+   ],
+   "means": "位 counts people politely: 一位老师, 三位客人."
+  },
+  {
+   "zh": "条",
+   "lv": 2,
+   "near": [
+    "张",
+    "只",
+    "件",
+    "根"
+   ],
+   "means": "条 is for long, narrow things: roads, rivers, fish, trousers."
+  },
+  {
+   "zh": "间",
+   "lv": 2,
+   "near": [
+    "家",
+    "层",
+    "座"
+   ],
+   "means": "间 is for rooms: 一间教室, 两间房."
+  },
+  {
+   "zh": "张",
+   "lv": 3,
+   "near": [
+    "条",
+    "本",
+    "块",
+    "片"
+   ],
+   "means": "张 is for flat things: paper, tickets, tables, beds, photos."
+  },
+  {
+   "zh": "双",
+   "lv": 3,
+   "near": [
+    "只",
+    "件",
+    "套"
+   ],
+   "means": "双 is a pair of things that go together: shoes, chopsticks, socks."
+  },
+  {
+   "zh": "辆",
+   "lv": 3,
+   "near": [
+    "台",
+    "架",
+    "条"
+   ],
+   "means": "辆 is for vehicles on wheels: cars, bikes, buses."
+  },
+  {
+   "zh": "碗",
+   "lv": 3,
+   "near": [
+    "杯",
+    "块",
+    "个"
+   ],
+   "means": "碗 is a bowl of food: 一碗米饭, 一碗面条."
+  },
+  {
+   "zh": "把",
+   "lv": 3,
+   "near": [
+    "张",
+    "只",
+    "条"
+   ],
+   "means": "把 is for things you hold by a handle: chairs, umbrellas, knives, keys."
+  },
+  {
+   "zh": "节",
+   "lv": 3,
+   "near": [
+    "场",
+    "个"
+   ],
+   "means": "节 counts class periods: 一节课, 两节课."
+  },
+  {
+   "zh": "封",
+   "lv": 3,
+   "near": [
+    "张",
+    "本",
+    "篇"
+   ],
+   "means": "封 is for letters and emails: 一封信."
+  },
+  {
+   "zh": "层",
+   "lv": 3,
+   "near": [
+    "间",
+    "座",
+    "家"
+   ],
+   "means": "层 counts floors or layers: 这个楼有十层."
+  },
+  {
+   "zh": "台",
+   "lv": 4,
+   "near": [
+    "辆",
+    "架",
+    "部"
+   ],
+   "means": "台 is for machines: computers, TVs, washing machines."
+  },
+  {
+   "zh": "部",
+   "lv": 4,
+   "near": [
+    "台",
+    "首",
+    "篇",
+    "本"
+   ],
+   "means": "部 is for films and long works (一部电影), and also for phones."
+  },
+  {
+   "zh": "座",
+   "lv": 4,
+   "near": [
+    "棵",
+    "间",
+    "层",
+    "家"
+   ],
+   "means": "座 is for big things that stay put: mountains, bridges, tall buildings, cities."
+  },
+  {
+   "zh": "棵",
+   "lv": 4,
+   "near": [
+    "座",
+    "朵",
+    "根",
+    "条"
+   ],
+   "means": "棵 is for trees and plants: 一棵树."
+  },
+  {
+   "zh": "首",
+   "lv": 4,
+   "near": [
+    "篇",
+    "部",
+    "本"
+   ],
+   "means": "首 is for songs and poems: 一首歌."
+  },
+  {
+   "zh": "篇",
+   "lv": 4,
+   "near": [
+    "首",
+    "本",
+    "封"
+   ],
+   "means": "篇 is for written pieces: articles, essays, stories."
+  },
+  {
+   "zh": "场",
+   "lv": 4,
+   "near": [
+    "节",
+    "部",
+    "道"
+   ],
+   "means": "场 is for events that take place: matches, films being shown, a rain, an exam."
+  },
+  {
+   "zh": "道",
+   "lv": 4,
+   "near": [
+    "个",
+    "场",
+    "条"
+   ],
+   "means": "道 is for questions on a test (一道题), dishes in a meal, and doors or walls."
+  },
+  {
+   "zh": "片",
+   "lv": 4,
+   "near": [
+    "块",
+    "张",
+    "根"
+   ],
+   "means": "片 is for thin slices and flat bits: bread, leaves, medicine tablets."
+  },
+  {
+   "zh": "幅",
+   "lv": 4,
+   "near": [
+    "张",
+    "篇",
+    "片"
+   ],
+   "means": "幅 is for paintings and pictures hung on a wall: 一幅画."
+  },
+  {
+   "zh": "朵",
+   "lv": 5,
+   "near": [
+    "棵",
+    "束",
+    "片"
+   ],
+   "means": "朵 is for single flowers and clouds: 一朵花, 一朵云."
+  },
+  {
+   "zh": "匹",
+   "lv": 5,
+   "near": [
+    "只",
+    "条"
+   ],
+   "means": "匹 is for horses: 一匹马."
+  },
+  {
+   "zh": "颗",
+   "lv": 5,
+   "near": [
+    "块",
+    "片",
+    "根",
+    "个"
+   ],
+   "means": "颗 is for small, round things: stars, teeth, sweets, hearts."
+  },
+  {
+   "zh": "根",
+   "lv": 5,
+   "near": [
+    "条",
+    "片",
+    "棵"
+   ],
+   "means": "根 is for thin, long things: hairs, sticks, bananas."
+  },
+  {
+   "zh": "扇",
+   "lv": 5,
+   "near": [
+    "座",
+    "间",
+    "张"
+   ],
+   "means": "扇 is for doors and windows: 一扇门."
+  },
+  {
+   "zh": "架",
+   "lv": 5,
+   "near": [
+    "辆",
+    "台",
+    "部"
+   ],
+   "means": "架 is for planes and pianos: 一架飞机."
+  },
+  {
+   "zh": "套",
+   "lv": 5,
+   "near": [
+    "件",
+    "双",
+    "间"
+   ],
+   "means": "套 is for sets: a flat with its rooms, a set of books, a suit."
+  },
+  {
+   "zh": "束",
+   "lv": 5,
+   "near": [
+    "朵",
+    "棵",
+    "根"
+   ],
+   "means": "束 is for a bunch of flowers: 一束花."
+  }
+ ],
+ "cards": [
+  {
+   "lv": 1,
+   "zh": "一[本]书",
+   "en": "a book"
+  },
+  {
+   "lv": 1,
+   "zh": "这[本]书很好看",
+   "en": "This book is a good read."
+  },
+  {
+   "lv": 1,
+   "zh": "一[件]衣服",
+   "en": "an item of clothing"
+  },
+  {
+   "lv": 1,
+   "zh": "我有一[件]事想问你",
+   "en": "There is something I want to ask you."
+  },
+  {
+   "lv": 1,
+   "zh": "一[只]猫",
+   "en": "a cat"
+  },
+  {
+   "lv": 1,
+   "zh": "两[只]狗",
+   "en": "two dogs",
+   "also": [
+    "条"
+   ]
+  },
+  {
+   "lv": 1,
+   "zh": "我家有三[口]人",
+   "en": "There are three people in my family.",
+   "also": [
+    "个"
+   ]
+  },
+  {
+   "lv": 1,
+   "zh": "一[家]饭店",
+   "en": "a restaurant",
+   "also": [
+    "个"
+   ]
+  },
+  {
+   "lv": 1,
+   "zh": "一[杯]茶",
+   "en": "a cup of tea"
+  },
+  {
+   "lv": 1,
+   "zh": "两[杯]水",
+   "en": "two glasses of water"
+  },
+  {
+   "lv": 1,
+   "zh": "三[块]钱",
+   "en": "three yuan"
+  },
+  {
+   "lv": 1,
+   "zh": "一[个]苹果",
+   "en": "an apple"
+  },
+  {
+   "lv": 1,
+   "zh": "一[个]星期",
+   "en": "one week"
+  },
+  {
+   "lv": 1,
+   "zh": "这[个]学生",
+   "en": "this student",
+   "also": [
+    "位"
+   ]
+  },
+  {
+   "lv": 2,
+   "zh": "一[位]老师",
+   "en": "a teacher (said politely)",
+   "also": [
+    "个"
+   ]
+  },
+  {
+   "lv": 2,
+   "zh": "那[条]路",
+   "en": "that road"
+  },
+  {
+   "lv": 2,
+   "zh": "一[条]鱼",
+   "en": "a fish"
+  },
+  {
+   "lv": 2,
+   "zh": "一[间]教室",
+   "en": "a classroom",
+   "also": [
+    "个"
+   ]
+  },
+  {
+   "lv": 2,
+   "zh": "一[块]手表",
+   "en": "a watch"
+  },
+  {
+   "lv": 3,
+   "zh": "三[位]客人",
+   "en": "three guests",
+   "also": [
+    "个"
+   ]
+  },
+  {
+   "lv": 3,
+   "zh": "一[张]桌子",
+   "en": "a table"
+  },
+  {
+   "lv": 3,
+   "zh": "两[张]票",
+   "en": "two tickets"
+  },
+  {
+   "lv": 3,
+   "zh": "一[张]照片",
+   "en": "a photo"
+  },
+  {
+   "lv": 3,
+   "zh": "一[双]鞋",
+   "en": "a pair of shoes"
+  },
+  {
+   "lv": 3,
+   "zh": "一[双]筷子",
+   "en": "a pair of chopsticks"
+  },
+  {
+   "lv": 3,
+   "zh": "一[辆]车",
+   "en": "a car"
+  },
+  {
+   "lv": 3,
+   "zh": "一[辆]自行车",
+   "en": "a bike"
+  },
+  {
+   "lv": 3,
+   "zh": "一[碗]米饭",
+   "en": "a bowl of rice"
+  },
+  {
+   "lv": 3,
+   "zh": "一[把]椅子",
+   "en": "a chair",
+   "also": [
+    "个"
+   ]
+  },
+  {
+   "lv": 3,
+   "zh": "一[把]伞",
+   "en": "an umbrella"
+  },
+  {
+   "lv": 3,
+   "zh": "下午有两[节]课",
+   "en": "There are two classes in the afternoon."
+  },
+  {
+   "lv": 3,
+   "zh": "一[封]信",
+   "en": "a letter"
+  },
+  {
+   "lv": 3,
+   "zh": "这个楼有十[层]",
+   "en": "This building has ten floors."
+  },
+  {
+   "lv": 3,
+   "zh": "一[条]裤子",
+   "en": "a pair of trousers"
+  },
+  {
+   "lv": 4,
+   "zh": "一[台]电脑",
+   "en": "a computer",
+   "also": [
+    "个",
+    "部"
+   ]
+  },
+  {
+   "lv": 4,
+   "zh": "一[部]电影",
+   "en": "a film",
+   "also": [
+    "个"
+   ]
+  },
+  {
+   "lv": 4,
+   "zh": "一[座]山",
+   "en": "a mountain"
+  },
+  {
+   "lv": 4,
+   "zh": "一[座]桥",
+   "en": "a bridge"
+  },
+  {
+   "lv": 4,
+   "zh": "一[棵]树",
+   "en": "a tree"
+  },
+  {
+   "lv": 4,
+   "zh": "一[首]歌",
+   "en": "a song"
+  },
+  {
+   "lv": 4,
+   "zh": "一[篇]文章",
+   "en": "an article"
+  },
+  {
+   "lv": 4,
+   "zh": "一[场]比赛",
+   "en": "a match"
+  },
+  {
+   "lv": 4,
+   "zh": "一[道]题",
+   "en": "a question (on a test)",
+   "also": [
+    "个"
+   ]
+  },
+  {
+   "lv": 4,
+   "zh": "一[片]面包",
+   "en": "a slice of bread",
+   "also": [
+    "块"
+   ]
+  },
+  {
+   "lv": 4,
+   "zh": "一[幅]画",
+   "en": "a painting",
+   "also": [
+    "张"
+   ]
+  },
+  {
+   "lv": 5,
+   "zh": "一[朵]花",
+   "en": "a flower"
+  },
+  {
+   "lv": 5,
+   "zh": "一[匹]马",
+   "en": "a horse"
+  },
+  {
+   "lv": 5,
+   "zh": "一[颗]星星",
+   "en": "a star"
+  },
+  {
+   "lv": 5,
+   "zh": "一[根]头发",
+   "en": "a hair"
+  },
+  {
+   "lv": 5,
+   "zh": "一[扇]门",
+   "en": "a door",
+   "also": [
+    "个",
+    "道"
+   ]
+  },
+  {
+   "lv": 5,
+   "zh": "一[架]飞机",
+   "en": "a plane"
+  },
+  {
+   "lv": 5,
+   "zh": "一[套]房子",
+   "en": "a flat (a set of rooms)",
+   "also": [
+    "个"
+   ]
+  },
+  {
+   "lv": 5,
+   "zh": "一[束]花",
+   "en": "a bunch of flowers"
+  }
+ ]
+}

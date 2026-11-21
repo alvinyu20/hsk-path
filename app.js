@@ -350,11 +350,24 @@
   // Tell them apart: a set (了 / 过 / 着 ...) opens once the grammar lessons it mixes are passed, on any level (or that level's exam is passed).
   // A card waits until the words of this view's level in it have been started; a set needs TA_MIN ready cards. A round is up to TA_ROUND cards,
   // the ones missed last time first. Saved with the person: 'ta.' + set id = { b: best right, t: cards in that round, n: rounds, m: missed cards, d: day }.
-  const GAMES = window.SHANLU_GAMES || { tellapart:{} };
+  const GAMES = window.SHANLU_GAMES || { tellapart:{}, mw:{ mws:[], cards:[] } };
   const TA_ROUND = 8, TA_COIN = 2, TA_PERFECT = 5, TA_MIN = 5;
   const TA_SETS = []; Object.keys(GAMES.tellapart || {}).forEach(n => (GAMES.tellapart[n] || []).forEach(s => TA_SETS.push(s)));
   const TA_BY = {}; TA_SETS.forEach(s => { TA_BY[s.id] = s; });
   const taRes = (id) => prefGet('ta.' + id, null);
+  // Measure words: phrases with the measure word as the gap (content/measure-words.json); a level's round opens with MW_MIN pairs whose words
+  // are started. Saved with the person: 'mwg.' + level = { b, t, n, d }, and 'mwk' = { phrase: right answers in a row } (the lowest come first).
+  const MW = GAMES.mw || { mws:[], cards:[] };
+  const MW_BY = {}; MW.mws.forEach(m => { MW_BY[m.zh] = m; });
+  const MW_ROUND = 10, MW_MIN = 5, MW_COIN = 1, MW_PERFECT = 3;
+  const mwRes = (lv) => prefGet('mwg.' + lv, null);
+  const mwK = () => prefGet('mwk', {}) || {};   // each phrase: right answers in a row (0 after a miss), shared by every level's round
+  // Quick-fire numbers (numbers.js): six steps in order (numbers, bigger numbers, prices, times, dates, phone numbers); the next opens with
+  // QF_PASS of QF_ROUND right. 1 coin a card, 2 when heard only at 1.25× or faster. Saved with the person: 'qf.' + step = { b, t, n, d, f }.
+  const NUMS = window.ShanluNumbers || null;
+  const QF_ROUND = 10, QF_PASS = 8, QF_PERFECT = 3, QF_SPEEDS = [1, 1.25, 1.5];
+  const qfRes = (id) => prefGet('qf.' + id, null);
+  const qfSpeed = () => { const v = Number(prefGet('qfSpeed', 1)); return QF_SPEEDS.indexOf(v) >= 0 ? v : 1; };
   const wPage = () => (prefGet('wview', 'cards') === 'list' ? 100 : 40);   // My words shows this many at a time (the compact list shows more)
   const psgRes = (id) => prefGet('psg.' + id, null);
   const PATH_U = {}, STOP_BY = {};
@@ -630,6 +643,8 @@
     ['听', 'Listening lab', 'Each word you catch or understand; speed rungs in Dictation: +3 the first time a clip is all right at 1.25×, +5 at 1.5×', '1 a word'],
     ['跟', 'Shadowing', 'After three rounds of a clip', '6'],
     ['辨', 'Games: Tell them apart', 'Each right card, +5 when the whole round is right', '2'],
+    ['量', 'Games: Measure words', 'Each right card, +3 when the whole round is right', '1'],
+    ['数', 'Games: Quick-fire numbers', 'Each right card (2 when heard at 1.25× or faster), +3 when the whole round is right', '1 to 2'],
     ['网', 'Word webs', 'A word you knew (1 if not)', '3'],
     ['聊', 'AI chat', 'Each message you send', '2'],
     ['试', 'Practice exam', 'Each right answer', '2']
@@ -1808,6 +1823,8 @@
     { id:'clip1', grp:'Sounds', icon:'🎧', title:'First clip', desc:'You tried your first Listening lab clip.', hint:'Try a clip in the Listening lab.', test:m => m.clips >= 1 },
     { id:'ta1', grp:'Grammar', icon:'🔀', title:'Told them apart', desc:'You played a round of Tell them apart.', hint:'Play a round of Tell them apart in Games.', test:m => m.taRounds >= 1 },
     { id:'taperfect', grp:'Grammar', icon:'🎯', title:'Sharp eye', desc:'Every card right in a round of Tell them apart.', hint:'Get every card right in a round of Tell them apart (Games).', test:m => m.taPerfect >= 1 },
+    { id:'mw1', grp:'Grammar', icon:'🧮', title:'Counting things right', desc:'Every card right in a round of Measure words.', hint:'Get every card right in a round of Measure words (Games).', test:m => m.mwPerfect >= 1 },
+    { id:'qfall', grp:'Sounds', icon:'🔢', title:'Numbers at speed', desc:'Every step of Quick-fire numbers is open: numbers, prices, times, dates and phone numbers.', hint:'Get 8 of 10 in each step of Quick-fire numbers (Games).', test:m => m.qfSteps >= 6, prog:m => [m.qfSteps, 6] },
     { id:'fast125', grp:'Sounds', icon:'🐇', title:'Quick ear', desc:'You cleared the 1.25× speed rung on a clip or a conversation.', hint:'Get every word of a Dictation clip, or every question of a listening passage, right after hearing it only at 1.25× or faster.', test:m => m.rung125 >= 1 },
     { id:'fast15', grp:'Sounds', icon:'⚡', title:'1.5× club', desc:'Every word or every answer right at one and a half times normal speed. Faster than most people talk.', hint:'Clear the 1.5× speed rung on a Dictation clip or a listening passage.', test:m => m.rung15 >= 1 },
     { id:'fast15x10', grp:'Sounds', icon:'🏎️', title:'1.5× regular', desc:'Ten clips or conversations cleared at 1.5×.', hint:'Clear the 1.5× speed rung 10 times (different clips or passages).', test:m => m.rung15 >= 10, prog:m => [m.rung15, 10] },
@@ -3908,6 +3925,8 @@
         Object.keys(PERSON.prefs).forEach(k => { const r = k.indexOf('cr.') === 0 ? clipRung(k.slice(3)) : k.indexOf('psg.') === 0 ? psgRung(prefGet(k, null)) : 0; if (r >= 1.25) r125++; if (r >= 1.5) r15++; });
         m.rung125 = r125; m.rung15 = r15; }
       { let rounds = 0, perfect = 0; TA_SETS.forEach(s => { const r = taRes(s.id); if (r && r.n) { rounds += r.n; if (r.t && r.b === r.t) perfect++; } }); m.taRounds = rounds; m.taPerfect = perfect; }
+      { let p = 0; for (let n = 1; n <= LVL.MAX_LEVEL; n++) { const r = mwRes(n); if (r && r.t && r.b === r.t) p++; } m.mwPerfect = p;
+        m.qfSteps = NUMS ? NUMS.STEPS.filter(st => ((qfRes(st.id) || {}).b || 0) >= QF_PASS).length : 0; }
       m.clips = Math.max(clipsSaved, (S.clipBest || []).filter(x => x > 0).length); m.hubs = Math.max(hubsSaved, HUBS.filter(h => h.words.length && h.words.every(w => started(S.ws[w.zh]))).length);
       { const grOpen = (() => { const greg = gptReg(); return Object.keys(greg).filter(id => gptOpen(S, id)).length; })();
         m.fullDay = S.pbase != null && pathDoneCount(S) > S.pbase && !!S.rcomplete && (!grOpen || (!!S.grdone && !Object.keys(gptReg()).some(id => gptOpen(S, id) && gptDueNow(S, id)))); }
@@ -4180,16 +4199,48 @@
       };
     };
 
-    // ----- Games: Tell them apart -----
+    // ----- Games (Learn > Games): Tell them apart, Measure words, Quick-fire numbers. A round is a deck of cards with one gap (or a sound) and
+    // two to four answers; the same screen plays all three. gm = { view: 'hub' | 'play' | 'done', kind: 'ta' | 'mw' | 'qf', id, deck, qi, pick, ans }.
     taOther = null;   // grammar lessons passed in the saved progress of every level (read once: other levels do not change while this page is open)
     taPassed = (id, lv) => {
       if (!this.taOther) { this.taOther = {}; for (let n = 1; n <= LVL.MAX_LEVEL; n++) { const st = readStore(n); const g = (st && st.gres) || {}; Object.keys(g).forEach(k => { if (g[k] >= 80) this.taOther[k] = 1; }); } }
       return !!this.taOther[id] || (this.state.gres[id] || 0) >= 80 || (lv != null && LVL.levelPassed(lv));
     };
+    gmKnown = (S, w) => w.every(z => !BANK[z] || wStarted(S, z));   // a word of another level counts as known; one of this level once it is started
     taInfo = (S, set) => {
       const miss = set.needs.map((id, i) => (this.taPassed(id, set.needL[i]) ? null : set.needT[i])).filter(Boolean);
-      const open = []; set.items.forEach((it, i) => { if (it.w.every(z => !BANK[z] || wStarted(S, z))) open.push(i); });
+      const open = []; set.items.forEach((it, i) => { if (this.gmKnown(S, it.w)) open.push(i); });
       return { miss, open, ready:!miss.length && open.length >= TA_MIN };
+    };
+    mwInfo = (S, lv) => {
+      const cards = MW.cards.filter(c => c.lv === lv);
+      const open = cards.filter(c => this.gmKnown(S, c.w));
+      return { cards, open, ready:lv <= TOPL && open.length >= MW_MIN };
+    };
+    qfInfo = (i) => {
+      if (!NUMS) return { ready:false, prev:'' };
+      const prev = i > 0 ? NUMS.STEPS[i - 1] : null; const pr = prev ? qfRes(prev.id) : null;
+      return { ready:!prev || !!(pr && pr.b >= QF_PASS), prev:prev ? prev.title : '' };
+    };
+    // one card of each kind, in the shape the play screen uses
+    taCard = (set, i) => { const it = set.items[i]; return { key:i, pre:it.pre, post:it.post, a:it.a, also:it.also || [], zh:it.zh, py:it.py, preQ:it.preQ, postQ:it.postQ, en:it.en, why:it.why,
+      opts:set.opts.map((o, k) => ({ zh:o, py:set.optPy[k], mean:set.means[k] })) }; };
+    mwCard = (c) => {
+      const bad = (x) => x === c.a || c.also.indexOf(x) >= 0;
+      const pool = MW.mws.filter(m => m.lv <= TOPL && !bad(m.zh));
+      const near = shuffle(MW_BY[c.a].near.filter(x => MW_BY[x] && MW_BY[x].lv <= TOPL && !bad(x)));
+      const rest = shuffle(pool.map(m => m.zh).filter(x => near.indexOf(x) < 0));
+      const opts = shuffle([c.a].concat(near.concat(rest).slice(0, 2)));
+      return { key:c.zh, pre:c.pre, post:c.post, a:c.a, also:c.also, zh:c.zh, py:c.py, preQ:c.preQ, postQ:c.postQ, en:c.en, why:MW_BY[c.a].means + (c.also.length ? ' ' + c.also.join(' and ') + (c.also.length > 1 ? ' also work' : ' also works') + ' here.' : ''),
+        opts:opts.map(x => ({ zh:x, py:MW_BY[x].py, mean:MW_BY[x].means })) };
+    };
+    qfCard = (id) => { const c = NUMS.card(id, TOPL); return { key:c.label, pre:'', post:'', a:c.label, also:[], zh:c.zh, py:c.py, preQ:'', postQ:'', en:c.en, why:c.why, audio:true, say:c.zh.replace(/，/g, '，'),
+      opts:c.opts.map(x => ({ zh:x, py:'', mean:'' })) }; };
+    gmStart = (kind, id, deck) => {
+      this.stopNative();
+      this.setState({ gm:{ view:'play', kind, id, deck, qi:0, pick:-1, ans:[], py:false, t0:Date.now(), minRate:0 } });
+      if (this.state.screen !== 'games') this.go('games'); else { try { window.scrollTo(0, 0); } catch (e) {} }
+      if (kind === 'qf') { this.ttsUnlock(); this.gmHear(); }
     };
     taOpen = (id) => {
       const S = this.state; const set = TA_BY[id]; if (!set) return;
@@ -4197,79 +4248,133 @@
       const res = taRes(id) || {};
       const missed = shuffle((res.m || []).filter(i => info.open.indexOf(i) >= 0));
       const rest = shuffle(info.open.filter(i => missed.indexOf(i) < 0));
-      const cards = shuffle(missed.concat(rest).slice(0, TA_ROUND));
-      this.stopNative();
-      this.setState({ gm:{ view:'play', id, cards, qi:0, pick:-1, ans:[], py:false, t0:Date.now(), gain:0 } });
-      if (S.screen !== 'games') this.go('games'); else { try { window.scrollTo(0, 0); } catch (e) {} }
+      this.gmStart('ta', id, shuffle(missed.concat(rest).slice(0, TA_ROUND)).map(i => this.taCard(set, i)));
     };
-    taPick = (k) => {
-      const g = this.state.gm; const set = g && TA_BY[g.id]; if (!set || g.view !== 'play' || g.pick >= 0) return;
-      const it = set.items[g.cards[g.qi]]; const o = set.opts[k]; if (o == null) return;
-      const ok = o === it.a || (it.also || []).indexOf(o) >= 0;
+    // measure words: the pairs you got right least often in a row come first (a light spaced repetition); new pairs count as 0
+    // a level with fewer than MW_ROUND pairs fills the round with the weakest pairs of the levels below
+    mwOpen = (lv) => {
+      const S = this.state; const info = this.mwInfo(S, lv); if (!info.ready) return;
+      const k = mwK();
+      const weak = (list) => shuffle(list).sort((a, b) => (k[a.zh] || 0) - (k[b.zh] || 0));
+      let deck = weak(info.open).slice(0, MW_ROUND);
+      if (deck.length < MW_ROUND) deck = deck.concat(weak(MW.cards.filter(c => c.lv < lv && this.gmKnown(S, c.w))).slice(0, MW_ROUND - deck.length));
+      this.gmStart('mw', lv, shuffle(deck).map(c => this.mwCard(c)));
+    };
+    qfOpen = (id) => {
+      const i = NUMS ? NUMS.STEPS.findIndex(s => s.id === id) : -1; if (i < 0 || !this.qfInfo(i).ready) return;
+      const deck = []; const seen = {};
+      for (let t = 0; deck.length < QF_ROUND && t < 60; t++) { const c = this.qfCard(id); if (!seen[c.key]) { seen[c.key] = 1; deck.push(c); } }
+      this.gmStart('qf', id, deck);
+    };
+    gmCur = () => { const g = this.state.gm; return g && g.deck ? g.deck[g.qi] : null; };
+    gmPick = (k) => {
+      const g = this.state.gm; const c = this.gmCur(); if (!c || g.view !== 'play' || g.pick >= 0) return;
+      const o = c.opts[k]; if (!o) return;
+      const ok = o.zh === c.a || c.also.indexOf(o.zh) >= 0;
       SFX.play(ok ? 'ok' : 'bad');
-      this.setState({ gm:Object.assign({}, g, { pick:k, ans:g.ans.concat([{ i:g.cards[g.qi], ok, k }]) }) });
-      this.sayAi(it.zh, 'gm', this.state.speed || 1);
+      this.setState({ gm:Object.assign({}, g, { pick:k, ans:g.ans.concat([{ key:c.key, a:c.a, ok }]) }) });
+      if (!c.audio) this.sayAi(c.zh, 'gm', this.state.speed || 1);
     };
-    taHear = () => { const g = this.state.gm; const set = g && TA_BY[g.id]; if (!set) return; this.ttsUnlock(); this.sayAi(set.items[g.cards[g.qi]].zh, 'gm', this.state.speed || 1); };
-    taNext = () => {
-      const S = this.state; const g = S.gm; const set = g && TA_BY[g.id]; if (!set || g.pick < 0) return;
-      if (g.qi + 1 < g.cards.length) { this.stopNative(); this.setState({ gm:Object.assign({}, g, { qi:g.qi + 1, pick:-1 }) }); return; }
-      const right = g.ans.filter(a => a.ok).length, n = g.cards.length; const prev = taRes(set.id) || {};
-      const gain = right * TA_COIN + (right === n ? TA_PERFECT : 0);
-      const best = !prev.t || right / n > (prev.b || 0) / prev.t ? { b:right, t:n } : { b:prev.b, t:prev.t };
-      prefSet('ta.' + set.id, Object.assign(best, { n:(prev.n || 0) + 1, m:g.ans.filter(a => !a.ok).map(a => a.i), d:ymd(new Date()) }));
-      if (right === n) SFX.play('ok');
+    taPick = (k) => this.gmPick(k);   // the old name, kept for the tests and the keyboard
+    gmHear = () => {
+      const g = this.state.gm; const c = this.gmCur(); if (!c) return;
+      this.ttsUnlock();
+      const r = c.audio ? qfSpeed() : (this.state.speed || 1);
+      this.sayAi(c.say || c.zh, 'gm', r);
+      if (c.audio && g.pick < 0) this.setState({ gm:Object.assign({}, g, { minRate:g.minRate ? Math.min(g.minRate, r) : r }) });
+    };
+    taHear = () => this.gmHear();
+    qfSetSpeed = (r) => { if (QF_SPEEDS.indexOf(r) >= 0) { prefSet('qfSpeed', r); this.setState({}); } };
+    gmNext = () => {
+      const S = this.state; const g = S.gm; if (!g || g.view !== 'play' || g.pick < 0) return;
       this.stopNative();
+      if (g.qi + 1 < g.deck.length) { this.setState({ gm:Object.assign({}, g, { qi:g.qi + 1, pick:-1 }) }); if (g.kind === 'qf') setTimeout(() => this.gmHear(), 0); return; }
+      const right = g.ans.filter(a => a.ok).length, n = g.deck.length, today = ymd(new Date()), all = right === n;
+      let gain = 0;
+      const best = (prev) => (!prev.t || right / n > (prev.b || 0) / prev.t ? { b:right, t:n } : { b:prev.b, t:prev.t });
+      if (g.kind === 'ta') {
+        const prev = taRes(g.id) || {};
+        gain = right * TA_COIN + (all ? TA_PERFECT : 0);
+        prefSet('ta.' + g.id, Object.assign(best(prev), { n:(prev.n || 0) + 1, m:g.ans.filter(a => !a.ok).map(a => a.key), d:today }));
+      } else if (g.kind === 'mw') {
+        const prev = mwRes(g.id) || {}; const k = Object.assign({}, mwK());
+        g.ans.forEach(a => { k[a.key] = a.ok ? (k[a.key] || 0) + 1 : 0; });
+        gain = right * MW_COIN + (all ? MW_PERFECT : 0);
+        prefSet('mwk', k);
+        prefSet('mwg.' + g.id, Object.assign(best(prev), { n:(prev.n || 0) + 1, d:today }));
+      } else {
+        const prev = qfRes(g.id) || {}; const fast = (g.minRate || 1) >= 1.25;
+        gain = right * (fast ? 2 : 1) + (all ? QF_PERFECT : 0);
+        prefSet('qf.' + g.id, Object.assign(best(prev), { n:(prev.n || 0) + 1, d:today }, fast && all ? { f:Math.max(prev.f || 0, g.minRate) } : prev.f ? { f:prev.f } : {}));
+      }
+      if (all) SFX.play('ok');
       this.setState({ gm:Object.assign({}, g, { view:'done', right, gain }), xp:S.xp + gain, dayXp:S.dayXp + gain, dayMin:S.dayMin + Math.max(1, Math.round((Date.now() - g.t0) / 60000)) });
     };
+    taNext = () => this.gmNext();
+    gmAgain = () => { const g = this.state.gm; if (!g) return; if (g.kind === 'ta') this.taOpen(g.id); else if (g.kind === 'mw') this.mwOpen(g.id); else this.qfOpen(g.id); };
     taHub = () => { this.stopNative(); this.setState({ gm:{ view:'hub' } }); try { window.scrollTo(0, 0); } catch (e) {} };
-    // the set offered as "Game of the day" on Today: one that is ready, not yet played today; the same all day (picked by the date)
-    taOfDay = (S) => {
+    // every round that is open right now, for Game of the day
+    gmReady = (S) => {
+      const out = [];
+      TA_SETS.forEach(s => { if (s.lv <= TOPL && this.taInfo(S, s).ready) out.push({ key:'ta.' + s.id, title:s.title, sub:s.title + ' · Tell them apart', res:taRes(s.id), go:() => this.taOpen(s.id) }); });
+      for (let n = 1; n <= TOPL; n++) if (this.mwInfo(S, n).ready) out.push({ key:'mwg.' + n, sub:'Measure words · HSK ' + n, res:mwRes(n), go:() => this.mwOpen(n) });
+      if (NUMS) NUMS.STEPS.forEach((st, i) => { if (this.qfInfo(i).ready) out.push({ key:'qf.' + st.id, sub:'Quick-fire numbers · ' + st.title, res:qfRes(st.id), go:() => this.qfOpen(st.id) }); });
+      return out;
+    };
+    // Game of the day on Today: a round that is open, preferring ones never played; the same one all day (picked by the date)
+    gmOfDay = (S) => {
       const today = ymd(new Date());
-      const ready = TA_SETS.filter(s => s.lv <= TOPL && this.taInfo(S, s).ready);
-      if (!ready.length) return null;
-      const fresh = ready.filter(s => !(taRes(s.id) || {}).n);
-      const pool = fresh.length ? fresh : ready;
+      const ready = this.gmReady(S); if (!ready.length) return null;
+      const fresh = ready.filter(r => !(r.res && r.res.n)); const pool = fresh.length ? fresh : ready;
       let h = 0; for (let i = 0; i < today.length; i++) h = (h * 31 + today.charCodeAt(i)) >>> 0;
-      const set = pool[h % pool.length];
-      return { set, done:(taRes(set.id) || {}).d === today };
+      const r = pool[h % pool.length];
+      return { sub:r.sub, go:r.go, done:!!(r.res && r.res.d === today) };
     };
     gamesVals = (S) => {
-      const out = { isGames:false, gmHub:false, gmPlay:false, gmDone:false, taLevels:[], gmOpts:[], gmBreak:[] };
+      const out = { isGames:false, gmHub:false, gmPlay:false, gmDone:false, taLevels:[], mwLevels:[], qfSteps:[], gmOpts:[], gmBreak:[], gmMissed:[], qfSpeeds:[] };
       if (S.screen !== 'games') return out;
-      const g = S.gm || { view:'hub' }; const set = TA_BY[g.id];
-      if (g.view !== 'hub' && set) {
-        const n = g.cards.length;
+      const g = S.gm || { view:'hub' };
+      const kindName = { ta:'Tell them apart', mw:'Measure words', qf:'Quick-fire numbers' }[g.kind] || '';
+      const what = g.kind === 'ta' ? (TA_BY[g.id] || {}).title : g.kind === 'mw' ? 'HSK ' + g.id : g.kind === 'qf' && NUMS ? (NUMS.STEPS.find(s => s.id === g.id) || {}).title : '';
+      if (g.view !== 'hub' && g.deck && g.deck.length) {
+        const n = g.deck.length;
         if (g.view === 'play') {
-          const it = set.items[g.cards[g.qi]]; const picked = g.pick >= 0; const o = picked ? set.opts[g.pick] : '';
-          const ok = picked && (o === it.a || (it.also || []).indexOf(o) >= 0), also = ok && o !== it.a;
-          const ai = set.opts.indexOf(it.a);
-          Object.assign(out, { isGames:true, gmPlay:true, gmTitle:set.title, gmStep:'Card ' + (g.qi + 1) + ' of ' + n,
-            gmPre:it.pre, gmPost:it.post, gmGap:picked ? it.a : '', gmGapCls:picked ? (ok ? 'ok' : 'miss') : '',
-            gmPy:picked ? it.py : (it.preQ + ' ___ ' + it.postQ).trim(), gmShowPy:!!g.py || picked, gmPyBtn:g.py ? 'Hide pinyin' : 'Show pinyin', gmTogPy:() => this.setState({ gm:Object.assign({}, this.state.gm, { py:!this.state.gm.py }) }),
-            gmEn:it.en, gmPicked:picked, gmNotPicked:!picked, gmOptN:set.opts.length,
-            gmOpts:set.opts.map((x, k) => ({ zh:x, py:set.optPy[k], k:k + 1, pick:() => this.taPick(k),
-              cls:!picked ? '' : x === it.a ? 'right' : (it.also || []).indexOf(x) >= 0 ? 'right' : k === g.pick ? 'wrong' : '' })),
-            gmVerdict:!picked ? '' : also ? 'Also right here.' : ok ? 'Right!' : 'Not quite: it is ' + it.a + '.',
-            gmVerdictCls:ok ? 'right' : 'wrong', gmWhy:it.why,
-            gmYours:picked && !ok ? set.means[g.pick] : '', gmHasYours:picked && !ok,
-            gmRule:picked && !ok ? set.means[ai] : '', gmHasRule:picked && !ok,
-            gmHear:this.taHear, gmHearCls:S.playing === 'gm' ? 'on' : '', gmNext:this.taNext, gmNextText:g.qi + 1 < n ? 'Next card' : 'See how you did',
-            gmBack:this.taHub });
+          const c = g.deck[g.qi]; const picked = g.pick >= 0; const o = picked ? c.opts[g.pick] : null;
+          const ok = picked && (o.zh === c.a || c.also.indexOf(o.zh) >= 0), also = ok && o.zh !== c.a;
+          const ac = c.opts.find(x => x.zh === c.a) || {};
+          Object.assign(out, { isGames:true, gmPlay:true, gmKick:kindName + ' · ' + what, gmStep:'Card ' + (g.qi + 1) + ' of ' + n,
+            gmAudio:!!c.audio && !picked, gmText:!c.audio || picked, gmIsQf:g.kind === 'qf',
+            gmPre:c.audio ? c.zh : c.pre, gmPost:c.audio ? '' : c.post, gmGap:picked && !c.audio ? c.a : '', gmHasGap:!c.audio, gmGapCls:picked ? (ok ? 'ok' : 'miss') : '',
+            gmPy:picked ? c.py : (c.preQ + ' ___ ' + c.postQ).trim(), gmShowPy:(!!g.py && !c.audio) || picked, gmPyBtn:g.py ? 'Hide pinyin' : 'Show pinyin',
+            gmTogPy:() => this.setState({ gm:Object.assign({}, this.state.gm, { py:!this.state.gm.py }) }),
+            gmEn:c.audio ? (picked ? c.a : 'Listen, then pick what you heard. Play it again as often as you like.') : c.en, gmPicked:picked, gmNotPicked:!picked, gmCanPy:!picked && !c.audio, gmOptN:c.opts.length,
+            gmOpts:c.opts.map((x, k) => ({ zh:x.zh, py:x.py, hasPy:!!x.py, k:k + 1, pick:() => this.gmPick(k),
+              cls:(c.audio ? 'num ' : '') + (!picked ? '' : x.zh === c.a || c.also.indexOf(x.zh) >= 0 ? 'right' : k === g.pick ? 'wrong' : '') })),
+            gmVerdict:!picked ? '' : also ? 'Also right here.' : ok ? 'Right!' : 'Not quite: it is ' + c.a + '.',
+            gmVerdictCls:ok ? 'right' : 'wrong', gmWhy:c.why || (ac.mean || ''), gmHasWhy:!!(c.why || ac.mean),
+            gmYours:picked && !ok && o.mean ? o.mean : '', gmHasYours:!!(picked && !ok && o.mean),
+            gmHear:this.gmHear, gmHearCls:S.playing === 'gm' ? 'on' : '', gmNext:this.gmNext, gmNextText:g.qi + 1 < n ? 'Next card' : 'See how you did',
+            gmBack:this.taHub,
+            qfSpeeds:g.kind === 'qf' ? QF_SPEEDS.map(r => ({ label:rungX(r), cls:r === qfSpeed() ? 'on' : '', pressed:r === qfSpeed() ? 'true' : 'false', fn:() => this.qfSetSpeed(r) })) : [] });
           return out;
         }
-        // done: score, and how each word of the set went
-        const brk = set.opts.map(x => { const mine = g.ans.filter(a => set.items[a.i].a === x); return { zh:x, r:mine.filter(a => a.ok).length, t:mine.length }; }).filter(b => b.t);
+        // done: the score, and (for the games with patterns) how each one went
+        const groups = {}; g.ans.forEach(a => { const x = groups[a.a] || (groups[a.a] = { zh:a.a, r:0, t:0 }); x.t++; if (a.ok) x.r++; });
+        const brk = g.kind === 'qf' ? [] : Object.keys(groups).map(z => groups[z]);
         const weak = brk.filter(b => b.r < b.t).sort((a, b) => a.r / a.t - b.r / b.t)[0];
-        Object.assign(out, { isGames:true, gmDone:true, gmTitle:set.title, gmStep:'Done', gmBack:this.taHub,
-          gmScore:g.right + ' of ' + n + ' right', gmScoreSub:'+' + g.gain + ' coins' + (g.right === n ? ' (every card right: +' + TA_PERFECT + ')' : ''),
-          gmBreak:brk.map(b => ({ zh:b.zh, t:b.r + ' of ' + b.t, cls:b.r === b.t ? 'ok' : 'miss' })),
-          gmWatch:weak ? weak.zh + ' is the one to watch. The cards you missed come first next time.' : 'Every pattern right. Nicely told apart.',
-          gmMissed:g.ans.filter(a => !a.ok).map(a => { const it = set.items[a.i]; return { zh:it.zh, en:it.en, why:it.why }; }), gmHasMissed:g.ans.some(a => !a.ok),
-          gmAgain:() => this.taOpen(set.id) });
+        const missed = g.ans.map((a, i) => (a.ok ? null : g.deck[i])).filter(Boolean);
+        const fast = g.kind === 'qf' && (g.minRate || 1) >= 1.25;
+        Object.assign(out, { isGames:true, gmDone:true, gmKick:kindName + ' · ' + what, gmStep:'Done', gmBack:this.taHub,
+          gmScore:g.right + ' of ' + n + ' right',
+          gmScoreSub:'+' + g.gain + ' coins' + (fast ? ' (heard at ' + rungX(g.minRate) + ': 2 a card)' : '') + (g.right === n ? ' (every card right: +' + ({ ta:TA_PERFECT, mw:MW_PERFECT, qf:QF_PERFECT })[g.kind] + ')' : ''),
+          gmBreak:brk.map(b => ({ zh:b.zh, t:b.r + ' of ' + b.t, cls:b.r === b.t ? 'ok' : 'miss' })), gmHasBreak:brk.length > 0, gmNoBreak:!brk.length,
+          gmWatch:g.kind === 'qf' ? (g.right >= QF_PASS ? (g.right === n ? 'Every one right.' : 'Good ears.') + ' ' + (this.qfNextTitle(g.id) ? 'That opens ' + this.qfNextTitle(g.id) + '.' : 'Try it faster next time.') : 'Get ' + QF_PASS + ' of ' + n + ' to open the next step.')
+            : weak ? weak.zh + ' is the one to watch. ' + (g.kind === 'ta' ? 'The cards you missed come first next time.' : 'Pairs you miss come back sooner.') : 'Every one right. Nicely told apart.',
+          gmMissed:missed.map(c => ({ zh:c.zh, en:c.audio ? c.a + ' · ' + c.py : c.en, why:c.why || '' })), gmHasMissed:missed.length > 0,
+          gmAgain:this.gmAgain });
         return out;
       }
-      // the hub: every set of this level and the ones below, this level first
+      // the hub
       const lvls = []; for (let n = TOPL; n >= 1; n--) lvls.push(n);
       Object.assign(out, { isGames:true, gmHub:true,
         taLevels:lvls.map(n => ({ name:'HSK ' + n, sets:TA_SETS.filter(s => s.lv === n).map(s => {
@@ -4279,9 +4384,22 @@
             : res && res.n ? 'Best ' + res.b + ' of ' + res.t + (res.m && res.m.length ? ' · ' + res.m.length + ' to fix' : '')
             : Math.min(TA_ROUND, info.open.length) + ' cards' + (info.open.length < s.items.length ? ' · ' + (s.items.length - info.open.length) + ' more open as you learn words' : '');
           return { title:s.title, sub, cls:info.ready ? (res && res.n ? 'played' : 'new') : 'locked', ready:info.ready, locked:!info.ready, go:() => this.taOpen(s.id), btn:res && res.n ? 'Play again' : 'Play' };
-        }) })).filter(l => l.sets.length) });
+        }) })).filter(l => l.sets.length),
+        mwLevels:lvls.map(n => {
+          const info = this.mwInfo(S, n); const res = mwRes(n); if (!info.cards.length) return null;
+          const strong = info.open.filter(c => (mwK()[c.zh] || 0) >= 3).length;
+          const sub = !info.ready ? info.open.length + ' of ' + MW_MIN + ' pairs ready. Start more of its words to open it'
+            : (res && res.n ? 'Best ' + res.b + ' of ' + res.t + ' · ' : '') + info.open.length + ' pairs' + (strong ? ', ' + strong + ' known well' : '') + (info.open.length < info.cards.length ? ' · ' + (info.cards.length - info.open.length) + ' more as you learn words' : '');
+          return { title:'HSK ' + n + ' measure words', sub, cls:info.ready ? 'new' : 'locked', ready:info.ready, locked:!info.ready, go:() => this.mwOpen(n), btn:res && res.n ? 'Play again' : 'Play' };
+        }).filter(Boolean),
+        qfSteps:NUMS ? NUMS.STEPS.map((st, i) => {
+          const info = this.qfInfo(i); const res = qfRes(st.id);
+          const sub = !info.ready ? 'Get ' + QF_PASS + ' of ' + QF_ROUND + ' in ' + info.prev + ' to open' : res && res.n ? 'Best ' + res.b + ' of ' + res.t + (res.f ? ' · all right at ' + rungX(res.f) : '') : st.sub;
+          return { title:st.title, sub, cls:info.ready ? 'new' : 'locked', ready:info.ready, locked:!info.ready, go:() => this.qfOpen(st.id), btn:res && res.n ? 'Play again' : 'Play' };
+        }) : [] });
       return out;
     };
+    qfNextTitle = (id) => { if (!NUMS) return ''; const i = NUMS.STEPS.findIndex(s => s.id === id); const nx = NUMS.STEPS[i + 1]; return nx && !(qfRes(nx.id) || {}).n ? nx.title : ''; };
 
     // ----- listening passages (a Path stop of kind "l") -----
     // only: one line index, or a list (a question whose answer needs two lines points at both)
@@ -5432,13 +5550,13 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         run:() => { if (!S.rq.length && toReviewN > 0) this.reviewMore(); this.go('review'); } });
       if (grvOpenToday > 0) planRows.push({ glyph:'复', title:'Grammar review', meta:grvDueToday > 0 ? grvDueToday + (S.grdone ? ' still due' : ' due') : 'Nothing due, short practice', done:!!S.grdone && grvDueToday === 0, run:() => this.startGrammarReview(true) });
       const tasks = planRows.map(t => ({ glyph:t.glyph, title:t.title, meta:t.meta, done:t.done, open:!t.done, cls:t.done ? 'done' : '', go:t.run, stops:t.stops || [], hasStops:!!(t.stops && t.stops.length) }));
-      const gmDay = S.screen === 'home' ? this.taOfDay(S) : null;
+      const gmDay = S.screen === 'home' ? this.gmOfDay(S) : null;
       const moreWays = [
         pathStep && pathAllDone ? { glyph:'路', label:'Another stop', sub:stopTitle(pathStep.st), tint:'t-jade', cls:'', fn:() => this.pathContinue(pathStep.st.id) } : null,
         HAS_LISTEN ? { glyph:'听', label:'Listening', sub:'Dictation drill', tint:'t-jade', cls:S.ldone ? 'done' : '', fn:() => this.go('listen') } : null,
         HAS_SCRIPTS ? { glyph:'说', label:'Speak', sub:(SCEN[nextScn] || NO_SC).title, tint:'t-amber', cls:S.spokeToday ? 'done' : '', fn:() => { this.setState({ sidx:nextScn, sturn:0, sdone:false, sview:'chat' }); this.go('speak'); this.sayOpen(nextScn); } } : null,
         { glyph:'语', label:'Grammar lesson', sub:LESSONS[nextLesson].title, tint:'t-seal', cls:'', fn:() => { this.setState({ ggopen:null, gq:'', glesson:nextLesson }); this.go('grammar'); } },
-        gmDay ? { glyph:'辨', label:'Game of the day', sub:gmDay.set.title + ' · Tell them apart', tint:'t-amber', cls:gmDay.done ? 'done' : '', fn:() => this.taOpen(gmDay.set.id) } : null,
+        gmDay ? { glyph:'辨', label:'Game of the day', sub:gmDay.sub, tint:'t-amber', cls:gmDay.done ? 'done' : '', fn:gmDay.go } : null,
         testReady ? { glyph:'测', label:'Test', sub:'Mixed questions', tint:'t-ink', cls:S.tdone ? 'done' : '', fn:() => this.go('testlobby') } : null,
         { glyph:'书', label:'Library', sub:'Look things up', tint:'t-ink', cls:'', fn:() => this.go('library') }
       ].filter(Boolean);
@@ -6270,11 +6388,12 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       else if (g.stage === 'qs' && !g.checked && /^[1-4]$/.test(e.key)) { e.preventDefault(); app.psgPick(Number(e.key) - 1); }
       else if (g.stage === 'qs' && g.checked && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); app.psgNext(); }
       else if (g.stage === 'qs' && g.checked && (e.key === 'h' || e.key === 'H')) { e.preventDefault(); app.psgHearLine(); }
-    } else if (S.screen === 'games' && S.gm && S.gm.view === 'play') {   // Tell them apart: 1-3 pick, Enter goes on, H hears it
+    } else if (S.screen === 'games' && S.gm && S.gm.view === 'play') {   // Games: 1-4 pick, Enter goes on, H (or P) hears it
       const g = S.gm;
       if (e.repeat) return;
       if ((e.key === ' ' || e.key === 'Enter') && t && (t.tagName === 'BUTTON' || t.tagName === 'A')) return;
-      if (g.pick < 0 && /^[1-3]$/.test(e.key)) { e.preventDefault(); app.taPick(Number(e.key) - 1); }
+      if (g.pick < 0 && /^[1-4]$/.test(e.key)) { e.preventDefault(); app.gmPick(Number(e.key) - 1); }
+      else if (e.key === 'p' || e.key === 'P') { e.preventDefault(); app.gmHear(); }
       else if (g.pick >= 0 && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); app.taNext(); }
       else if (e.key === 'h' || e.key === 'H') { e.preventDefault(); app.taHear(); }
     } else if (S.screen === 'exam' && S.exm && S.exm.stage === 'run') {

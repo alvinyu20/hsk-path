@@ -3870,3 +3870,8 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .gm-m{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:12px;background:var(--bg)}
 .gm-m .zh{font-size:20px}
 @media (max-width:600px){.gm-zh{font-size:26px}.gm-set{flex-wrap:wrap}}
+.gm-listen{display:flex;align-items:center;gap:14px;margin:6px 0}
+.gm-opts .opt.num{flex-direction:row;font-size:20px;font-weight:700;min-height:62px;padding-left:36px}
+.gm-opts .opt.num .zh{font-size:20px;font-family:inherit}
+@media (max-width:600px){.gm-opts.n4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gm-opts.n4{grid-template-columns:repeat(2,minmax(0,1fr))}
