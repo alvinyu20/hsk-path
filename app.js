@@ -304,6 +304,7 @@
   LESSONS.forEach((L, i) => { LESSON_AT[L.id] = i; });
   const POS_NAME = { n:'noun', v:'verb', adj:'adjective', adv:'adverb', pron:'pronoun', num:'number', m:'measure word', qw:'question word', phr:'phrase', time:'time word', conj:'conjunction', prep:'preposition', part:'particle', loc:'place word', suf:'suffix' };
   const STOP_COINS = 10;     // coins for finishing a word stop the first time
+  const TEST_COIN = 3;       // Review > Test: each right answer (+1 from the third in a row)
   const QS_MAX = 30, QS_RUN = 5, QS_CHECK = 4;
   const plural2 = (n, a, b) => n + ' ' + (n === 1 ? a : b);   // the quick sort: at most 30 words; five "Not yet" in a row ends it; every 4th "Know it" gets a meaning check
   const FIRST_SESSION_COINS = 50;   // a new person's first stop pays this instead, so day one ends with the Journey's second stop (50 coins) ready
@@ -661,7 +662,8 @@
   const COIN_WAYS = () => [
     ['宝', 'Treasure chest', 'Finish today\'s plan to open it', CHEST.map(c => c.amt).join(', ')],
     ['考', 'Pass a level exam', 'Paid once for each level', LVL.PASS_COINS.toLocaleString('en-US')],
-    ['语', 'Grammar practice and tests', 'Each right answer; more on a streak', '10 to 18'],
+    ['语', 'Grammar lessons and grammar review', 'Each right answer; more on a streak', '10 to 18'],
+    ['测', 'Review > Test', 'Each right answer; 4 from the third in a row', TEST_COIN + ' to ' + (TEST_COIN + 1)],
     ['写', 'Write your own sentence', 'When it is right', '12'],
     ['路', 'Path word stop', 'The first time you finish it', String(STOP_COINS)],
     ['音', 'Pinyin lesson', 'The first time you finish it', String(PY_COINS)],
@@ -3201,7 +3203,9 @@
       }
       if (q.rv) { this.rAnswer(q, ok, grade, feed); return; }   // a Review card: the answer goes to the word's memory and the review log, not to a test score
       if (q.pt) this.gptRecord(q.pt, 'r', ok, grade, q.gpool);   // a grammar-review card: the point's own memory moves on
-      const gain = ok ? 10 + Math.min(S.qcombo, 4) * 2 : 0;
+      // Review > Test asks quick word questions (about 10 s each), so it pays like Review: 3 a right answer, 4 from the third in a row.
+      // (It used to pay the grammar rate, 10 to 18, which made a 10-question test worth 100+ coins in a couple of minutes.) Grammar keeps 10 to 18: its questions are slower.
+      const gain = !ok ? 0 : S.qmode === 'test' ? TEST_COIN + (S.qcombo >= 2 ? 1 : 0) : 10 + Math.min(S.qcombo, 4) * 2;
       const combo = ok ? S.qcombo + 1 : 0;
       const res = S.qres.slice(); res[S.qi] = ok;
       const patch = { qfeed:feed, qchecked:true, qcorrect:ok, qscore:S.qscore + (ok ? 1 : 0), qcombo:combo, qbest:Math.max(S.qbest, combo), qxp:S.qxp + gain, qgain:gain, qres:res, xp:S.xp + gain, dayXp:S.dayXp + gain };
