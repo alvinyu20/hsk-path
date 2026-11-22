@@ -152,7 +152,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   {
     const { ctx, page, errors } = await open({ onb: true });
     await page.evaluate(() => { window.shanlu.onbSet({ p: 'done', w: Date.now() }); window.shanlu.go('home'); });   // the first-visit flow is covered by smoke-test-onboarding.js
-    await page.locator('button', { hasText: 'Start my first stop' }).click();   // the first session is the first Path stop; its words then go into Review
+    await page.locator('button', { hasText: 'Start my first stop' }).click();   // the first session is the first Path stop (its card opens on the Path); its words then go into Review
+    await page.waitForSelector('.pth-sheet'); await page.locator('.pth-sheet .pth-go').click();
     for (let g = 0; g < 120 && !(await page.locator('.pl-res').count()); g++) {
       if (await page.locator('.pl-meet').count()) { await page.locator('.pl button:has-text("Next")').click(); continue; }
       const st = await page.evaluate(() => { const pl = window.shanlu.state.pl; const s = pl.steps[pl.i]; return { zh: s.zh, opts: s.opts }; });

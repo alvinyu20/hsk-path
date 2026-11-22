@@ -3372,9 +3372,9 @@
     onbStartPath = () => {
       const S = this.state;
       if (onbRead().s === 'go' && !S.rcomplete && S.rq.length) { this.onbSet({ w:Date.now() }); this.go('review'); return; }
-      if (onbRead().s === 'go' && S.pl && !S.pl.done) { this.onbSet({ w:Date.now() }); this.setState({ screen:'plesson' }); try { window.scrollTo(0, 0); } catch (e) {} return; }
+      if (onbRead().s === 'go' && S.pl && !S.pl.done && S.pl.i > 0) { this.onbSet({ w:Date.now() }); this.setState({ screen:'plesson' }); try { window.scrollTo(0, 0); } catch (e) {} return; }
       const first = PATH_LVLS.length ? pathNextWord(S, pathFirstOpen(S)) : null;
-      if (first) { this.onbSet({ w:Date.now(), s:'go' }); this.pathStart(first.st.id); return; }
+      if (first) { this.onbSet({ w:Date.now(), s:'go' }); this.pathContinue(first.st.id); return; }   // the Path opens, glides to the stop and opens its card; Start there begins the lesson
       const lrn = Object.assign({}, S.lrn); const wl = Object.assign({}, S.wlearned);
       START_WORDS.forEach(z => { if (BANK[z] && !(S.ws[z].see.s > 0) && !lrn[z]) { lrn[z] = { st:-1, m:0, at:Date.now() }; wl[z] = true; } });
       this.setState(this.webCredit({ lrn, wlearned:wl, lrnNote:'' }));
@@ -4319,7 +4319,7 @@
       const open = () => { if (this.state.screen === 'path') this.setState({ pstop:id }); };
       const run = (n) => {
         if (this.state.screen !== 'path') return;
-        const el = document.querySelector('.pth-node.cur');
+        const el = document.querySelector('.pth-node[data-stop="' + id + '"]') || document.querySelector('.pth-node.cur');
         if (!el) { if (n < 12) setTimeout(() => run(n + 1), 50); else open(); return; }
         try { el.scrollIntoView({ behavior:smooth ? 'smooth' : 'auto', block:'center' }); } catch (e) {}
         if (smooth) setTimeout(open, 750); else open();
@@ -5727,7 +5727,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const startShow = onbOn && S.screen === 'home' && !flowOn && ((!onb.s && Object.keys(S.lrn || {}).length === 0 && (startedCount === 0 ? (noProg || onb.p === 'done') : !!onb.qs)) || (onb.s === 'go' && !S.rcomplete && !(S.pl && S.pl.done)));
       // the first session is the first stop of the Path (see onbStartPath); its words are shown on the card
       const startStop = startShow && PATH_LVLS.length ? pathNextWord(S, pathFirstOpen(S)) : null;
-      const startGoing = onb.s === 'go' && ((S.rq.length > 0 && !S.rcomplete) || (!!S.pl && !S.pl.done));
+      const startGoing = onb.s === 'go' && ((S.rq.length > 0 && !S.rcomplete) || (!!S.pl && !S.pl.done && S.pl.i > 0));
       const startList = startStop ? stopWords(startStop.st).filter(z => !wStarted(S, z)) : START_WORDS.filter(z => BANK[z]);
       const startWords = startList.map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en.split(/[,;]/)[0] }));
       const startLead = startStop ? (flown ? 'Your host is still waiting at arrivals. Learn to greet them: your' : 'Your') + ' first stop on the Path is ' + (startWords.length === 1 ? '1 everyday word' : startWords.length + ' everyday words') + '. You meet each one, try it, then a short check, and they go into your Review. Nothing to set up.'

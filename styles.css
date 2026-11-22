@@ -1362,7 +1362,8 @@ html,body,.app,button,a,input,select,textarea,label,[role=button]{touch-action:m
 .ob{margin-bottom:18px}
 .ob-top{display:flex;align-items:center;gap:14px}
 .ob-act{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
-.ob-words{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.ob-words{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px;max-width:560px}
+.ob-words .ob-w{min-width:0;padding:10px 6px;overflow-wrap:anywhere}
 .ob-snd{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;padding:12px 14px;border-radius:14px;background:var(--panel2)}
 .ob-snd .zh{font-size:24px;font-weight:700;color:var(--red)}
 .ob-snd p{flex:1 1 180px;margin:0;font-size:14px;color:var(--muted);line-height:1.45}
