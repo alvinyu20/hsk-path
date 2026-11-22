@@ -175,7 +175,10 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.waitForTimeout(400);
     const st = await page.evaluate(() => ({ screen: window.shanlu.state.screen, prefs: JSON.parse(localStorage.getItem('shanlu-person') || '{}').prefs || {} }));
     check(st.screen === 'home' && !st.prefs.name && st.prefs.onb.v.l === 'some', 'staying a guest keeps no name and remembers "I know a little"');
-    check(await page.locator('.ob-snd').count() === 0 && await page.locator('section.ob[aria-label="Start here"]').count() === 1, '"I know a little" gets Start here without the sounds line');
+    check(await page.locator('.qs').count() === 1 && /Quick sort/.test(await page.locator('.qs').innerText()), '"I know a little" opens the quick sort (tools/smoke-test-quicksort.js runs it)');
+    await fit('the quick sort');
+    await page.locator('.qs button', { hasText: 'Skip, start from the first words' }).click();
+    check(await page.locator('.ob-snd').count() === 0 && await page.locator('section.ob[aria-label="Start here"]').count() === 1, '"I know a little", skipping the sort, gets Start here without the sounds line');
     await page.locator('.acct-mini').click();
     check((await page.locator('.acct-row').allInnerTexts()).join(' ').includes('How Shanlu works'), 'the Account page lists the reference page');
     await page.locator('.acct-row', { hasText: 'How Shanlu works' }).click();

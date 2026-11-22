@@ -7,7 +7,7 @@
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=e454972364 data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=1a0bc4fd8d data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=3d38adc628 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=f61eb12760 data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=3135c6fdd2 data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=82ca84cf78 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=6b5998626b data/hsk4-words.js?v=9ebcc5a250 data/hsk4-grammar.js?v=eb819c8dc6 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=432fbea51b data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=372a4da5b0 data/hsk5-words.js?v=1e54d78599 data/hsk5-grammar.js?v=1726186051 data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=376d0f56b1 data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=db77f8b5e5">
-<meta name="shanlu-version" content="97742ab9b7">
+<meta name="shanlu-version" content="84d88dc4a3">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=2950cedb63">
+<link rel="stylesheet" href="styles.css?v=3911e42a3b">
 </head>
 <body>
 <div id="app"></div>
@@ -159,7 +159,8 @@
         <div class="seg2" style="margin-top:8px;display:inline-flex" role="group" aria-label="HSK version"><button class="{{sys2Cls}}" data-on-click="{{setSys2}}">HSK 2.0 · 6 levels</button><button class="{{sys3Cls}}" data-on-click="{{setSys3}}">HSK 3.0 · 9 levels</button></div>
         <div style="margin:16px 0 0;font-weight:600">Already know some Chinese?</div>
         <p class="muted" style="margin:6px 0 0;font-size:15px">A short check (about 3 minutes) finds the levels you know, so you can start higher. Words you skip come back in Review, about 20 a day.</p>
-        <div style="margin-top:8px"><button class="btn" data-on-click="{{pcOpenMenu}}">Check my level</button></div>
+        <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px"><button class="btn" data-on-click="{{pcOpenMenu}}">Check my level</button><button class="btn" data-on-click="{{qsOpenMenu}}">Quick sort (1 minute)</button></div>
+        <p class="muted" style="margin:6px 0 0;font-size:15px">Know a little but not a whole level? The quick sort goes through up to 30 words from where your Path goes next.</p>
         <div style="margin:16px 0 0;font-weight:600">Level lock</div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><sc-for list="{{lockOpts}}" as="o" hint-placeholder-count="2"><button class="fc2 {{o.cls}}" data-on-click="{{o.fn}}">{{o.label}}</button></sc-for></div>
         <p class="muted" style="margin:8px 0 0;font-size:15px">Locked is the default. If an unclear exam question holds you back, switch to open: the exam then only earns the level's seal.</p>
@@ -1178,7 +1179,7 @@
           <div class="kick">Levels</div>
           <h3 class="gd-h2">Nine HSK levels, one ladder</h3>
           <p>HSK 1 to 5 are built, and 6 to 9 are on the way. To open the next level, pass the mock exam with 80% in both listening and reading. Switch level any time from the HSK menu at the top, or choose All levels to study everything you have unlocked together.</p>
-          <p class="gd-small">Already know the early levels? <button class="linkbtn" data-on-click="{{pcOpenMenu}}">Check my level</button>: about 3 minutes, and you start higher.</p>
+          <p class="gd-small">Already know the early levels? <button class="linkbtn" data-on-click="{{pcOpenMenu}}">Check my level</button>: about 3 minutes, and you start higher. Know just a few words? <button class="linkbtn" data-on-click="{{qsOpenMenu}}">Quick sort</button>: about a minute, and the Path skips what you know.</p>
         </div>
         <div class="gd-rungs" role="img" aria-label="Nine HSK levels: 1 to 5 available, 6 to 9 coming">
           <sc-for list="{{guideLevels}}" as="v" hint-placeholder-count="9"><div class="{{v.cls}}" style="height:{{v.h}}"><b>{{v.n}}</b></div></sc-for>
@@ -3251,6 +3252,48 @@
     </div>
   </div>
   </sc-if>
+  <sc-if value="{{qsShow}}" hint-placeholder-val="{{ false }}">
+  <div class="obm-wrap pc-wrap qs-wrap"><div class="obm-scrim"></div>
+    <div class="obm pc qs" role="dialog" aria-modal="true" aria-label="Quick sort">
+      <sc-if value="{{qsIntroShow}}" hint-placeholder-val="{{ false }}">
+        <h2 class="obm-h">Quick sort: which words do you know?</h2>
+        <p class="obm-p">Up to {{qsMax}} words from where your {{qsLvl}} Path goes next, one at a time. Tap <b>Know it</b> if you know what it means, <b>Not yet</b> if you don't. About a minute.</p>
+        <ul class="pc-list">
+          <li>Now and then we ask what a "Know it" word means, to keep it honest.</li>
+          <li>Known words come back in Review, about 20 a day, to make sure. Path stops you already know count as done.</li>
+        </ul>
+        <button class="btn pri big obm-main" data-on-click="{{qsBegin}}">Start</button>
+        <button class="linkbtn obm-link" data-on-click="{{qsCancel}}">{{qsCancelText}}</button>
+      </sc-if>
+      <sc-if value="{{qsCardShow}}" hint-placeholder-val="{{ false }}">
+        <div class="obm-bar"><span class="kick">{{qsCount}}</span><button class="linkbtn" data-on-click="{{qsStop}}">Finish here</button></div>
+        <div class="pc-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i style="width:{{qsPct}}"></i></div>
+        <div class="qs-card" aria-live="polite"><div class="pc-zh zh" lang="zh-Hans">{{qsZh}}</div><button type="button" class="linkbtn qs-hear" data-on-click="{{qsHear}}">Hear it</button></div>
+        <div class="qs-btns"><button type="button" class="btn big qs-no" data-on-click="{{qsNo}}">Not yet</button><button type="button" class="btn pri big qs-yes" data-on-click="{{qsYes}}">Know it</button></div>
+        <p class="obm-note qs-tip">Swipe the word right for Know it, left for Not yet. On a keyboard: → and ←.</p>
+      </sc-if>
+      <sc-if value="{{qsChkShow}}" hint-placeholder-val="{{ false }}">
+        <div class="obm-bar"><span class="kick">Quick check</span></div>
+        <p class="obm-note pc-q">You know this one: what does it mean?</p>
+        <div class="pc-zh zh" lang="zh-Hans">{{qsZh}}</div>
+        <div class="obm-opts" role="group" aria-label="Answers">
+          <sc-for list="{{qsOpts}}" as="o" hint-placeholder-count="3"><button type="button" class="{{o.cls}}" aria-disabled="{{o.dis}}" data-on-click="{{o.fn}}"><b>{{o.t}}</b></button></sc-for>
+        </div>
+        <sc-if value="{{qsChkOk}}" hint-placeholder-val="{{ false }}"><p class="qs-fb ok">Right. {{qsZh}} ({{qsChkPy}}) means "{{qsChkRight}}". It counts as known.</p></sc-if>
+        <sc-if value="{{qsChkBad}}" hint-placeholder-val="{{ false }}"><p class="qs-fb bad">Not quite: {{qsZh}} ({{qsChkPy}}) means "{{qsChkRight}}". It goes with the words to learn, no harm done.</p></sc-if>
+        <sc-if value="{{qsChkDone}}" hint-placeholder-val="{{ false }}"><button class="btn pri big obm-main" data-on-click="{{qsChkGo}}">Continue</button></sc-if>
+      </sc-if>
+      <sc-if value="{{qsDoneShow}}" hint-placeholder-val="{{ false }}">
+        <h2 class="obm-h">{{qsHead}}</h2>
+        <p class="obm-p">{{qsLead}}</p>
+        <sc-if value="{{qsNotShow}}" hint-placeholder-val="{{ false }}"><p class="obm-note">{{qsNotLine}}</p></sc-if>
+        <sc-if value="{{qsMost}}" hint-placeholder-val="{{ false }}"><p class="obm-note qs-most">You knew nearly all of them. The level check (about 3 minutes) can place you further along. <button class="linkbtn" data-on-click="{{qsToCheck}}">Take the level check instead</button></p></sc-if>
+        <sc-if value="{{qsSaveShow}}" hint-placeholder-val="{{ false }}"><button class="btn pri big obm-main" data-on-click="{{qsApply}}">{{qsSaveText}}</button></sc-if>
+        <button class="linkbtn obm-link" data-on-click="{{qsCancel}}">{{qsDoneCancel}}</button>
+      </sc-if>
+    </div>
+  </div>
+  </sc-if>
   <sc-if value="{{pcShow}}" hint-placeholder-val="{{ false }}">
   <div class="obm-wrap pc-wrap"><div class="obm-scrim"></div>
     <div class="obm pc" role="dialog" aria-modal="true" aria-label="Level check">
@@ -3346,6 +3389,6 @@
 <script defer src="numbers.js?v=997b8744e4"></script>
 <script defer src="data/games.js?v=81a4332979"></script>
 <script defer src="data/path.js?v=988d907206"></script>
-<script defer src="app.js?v=d69343aed4"></script>
+<script defer src="app.js?v=ea7e578c15"></script>
 </body>
 </html>

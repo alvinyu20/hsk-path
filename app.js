@@ -304,6 +304,8 @@
   LESSONS.forEach((L, i) => { LESSON_AT[L.id] = i; });
   const POS_NAME = { n:'noun', v:'verb', adj:'adjective', adv:'adverb', pron:'pronoun', num:'number', m:'measure word', qw:'question word', phr:'phrase', time:'time word', conj:'conjunction', prep:'preposition', part:'particle', loc:'place word', suf:'suffix' };
   const STOP_COINS = 10;     // coins for finishing a word stop the first time
+  const QS_MAX = 30, QS_RUN = 5, QS_CHECK = 4;
+  const plural2 = (n, a, b) => n + ' ' + (n === 1 ? a : b);   // the quick sort: at most 30 words; five "Not yet" in a row ends it; every 4th "Know it" gets a meaning check
   const FIRST_SESSION_COINS = 50;   // a new person's first stop pays this instead, so day one ends with the Journey's second stop (50 coins) ready
   const PATH_BATCH = 4;      // most words met before the first questions about them
   const PATH_XS = [50, 68, 78, 68, 50, 32, 22, 32];   // where the stops sit across the trail (percent from the left), one after the other
@@ -3420,7 +3422,7 @@
       const test = !!onbRead().ts;
       this.onbSet({ p:'done', w:Date.now(), ts:0 });
       this.go('home');
-      if (test) this.pcOpen('onb', 1);
+      if (test) this.pcOpen('onb', 1); else if (onbRead().l === 'some') this.qsOpen('onb');
     };
     obSoundsGo = () => { const l = (PYC.lessons || [])[0]; this.onbSet({ px:Date.now() }); if (l) this.pyOpenId(l.id); else this.go('pinyin'); };
     obSoundsLater = () => this.onbSet({ px:Date.now() });
@@ -3574,6 +3576,75 @@
     jySvFilterSet = (f) => this.setState({ jySvFilter:f, jySvSel:null });
     jySvPick = (id) => { SFX.play('ok'); this.setState({ jySvSel:id }); setTimeout(() => { try { const el = document.querySelector('.sv-detail'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest', behavior:'smooth' }); } catch (e) {} }, 40); };
 
+    // ---- the quick sort (N6): up to 30 words from where your Path goes next, "Know it" or "Not yet", about a minute ----
+    // Every 4th "Know it" is checked with a 3-choice meaning question (a miss turns it into "Not yet"). Five "Not yet" in a row ends it early.
+    // Saving marks the known words "probably known" (20 a day come back in Review from tomorrow; a checked one counts as known), the same as the level check,
+    // so a Path stop whose words are all known counts as done (no coins), and the Path starts at the first stop with a word you did not know.
+    qsOpen = (from) => {
+      const S = this.state; const lv = PATH_LVLS.length ? pathFirstOpen(S) : 0; const deck = [], seen = {};
+      (PATH_U[lv] || []).forEach(u => u.stops.forEach(st => stopWords(st).forEach(z => { if (deck.length < QS_MAX && !seen[z] && !wStarted(S, z)) { seen[z] = 1; deck.push(z); } })));
+      this.setState({ qs:{ from:from || 'menu', lv, deck, i:0, marks:{}, run:0, kn:0, chk:null, step:'intro' } });
+      try { window.scrollTo(0, 0); } catch (e) {}
+    };
+    qsBegin = () => { const q = this.state.qs; if (!q) return; this.setState({ qs:Object.assign({}, q, { step:q.deck.length ? 'card' : 'done' }) }); if (q.deck.length) this.qsSay(); };
+    qsSay = () => { const q = this.state.qs; const z = q && q.deck[q.i]; if (z) this.say(z, 'qs'); };
+    qsNext = (q) => { const i = q.i + 1; const end = i >= q.deck.length || q.run >= QS_RUN; this.setState({ qs:Object.assign({}, q, { i, chk:null, step:end ? 'done' : 'card' }) }); if (!end) setTimeout(() => this.qsSay(), 30); else SFX.play('done'); };
+    qsMark = (know) => {
+      const q0 = this.state.qs; if (!q0 || q0.step !== 'card') return; const z = q0.deck[q0.i]; const q = Object.assign({}, q0, { marks:Object.assign({}, q0.marks) });
+      if (!know) { q.marks[z] = 'not'; q.run++; SFX.play('pop'); this.qsNext(q); return; }
+      q.kn++; q.run = 0;
+      if (q.kn % QS_CHECK === 0) {   // keep it honest: what does it mean?
+        const PL = window.ShanluPlacement; const g = (x) => (PL ? PL.gloss(BANK[x].en) : BANK[x].en.split(/[;,]/)[0]);
+        const right = g(z); const pool = levelWords(q.lv).map(w => w.zh).filter(x => x !== z && BANK[x] && g(x) && g(x).toLowerCase() !== right.toLowerCase());
+        const same = pool.filter(x => BANK[x].pos === BANK[z].pos); const src = same.length >= 6 ? same : pool; const wrong = [];
+        while (wrong.length < 2 && src.length) { const x = src.splice(Math.floor(Math.random() * src.length), 1)[0]; if (wrong.every(w => g(w) !== g(x))) wrong.push(x); }
+        const opts = [{ t:right, ok:true }].concat(wrong.map(x => ({ t:g(x), ok:false }))).sort(() => Math.random() - 0.5);
+        q.chk = { zh:z, opts, pick:-1, right }; q.step = 'check'; this.setState({ qs:q }); return;
+      }
+      q.marks[z] = 'know'; SFX.play('ok'); this.qsNext(q);
+    };
+    qsPick = (i) => {
+      const q0 = this.state.qs; if (!q0 || q0.step !== 'check' || !q0.chk || q0.chk.pick >= 0) return;
+      const ok = !!q0.chk.opts[i].ok; const q = Object.assign({}, q0, { marks:Object.assign({}, q0.marks), chk:Object.assign({}, q0.chk, { pick:i, ok }) });
+      q.marks[q0.chk.zh] = ok ? 'sure' : 'not'; SFX.play(ok ? 'ok' : 'bad'); this.setState({ qs:q });
+    };
+    qsChkGo = () => { const q = this.state.qs; if (q && q.step === 'check' && q.chk && q.chk.pick >= 0) this.qsNext(q); };
+    qsStop = () => { const q = this.state.qs; if (q) this.setState({ qs:Object.assign({}, q, { step:'done', chk:null }) }); };
+    qsCancel = () => this.setState({ qs:null });
+    qsToCheck = () => { const q = this.state.qs; this.setState({ qs:null }); this.pcOpen(q && q.from === 'onb' ? 'onb' : 'menu'); };
+    qsApply = () => {
+      const q = this.state.qs; const PL = window.ShanluPlacement; if (!q) return;
+      const known = q.deck.filter(z => q.marks[z] === 'know' || q.marks[z] === 'sure');
+      if (!known.length || !PL) { this.setState({ qs:null }); return; }
+      const now = Date.now(); const tomorrow = new Date(now); tomorrow.setHours(24, 0, 0, 0); const plan = {}; let k = 0;
+      known.forEach(z => { if (q.marks[z] === 'sure') { plan[z] = { s:PL.KNOWN_S, t:now, d:5 }; return; } const rel = new Date(tomorrow); rel.setDate(rel.getDate() + Math.floor(k / PL.PER_DAY)); k++; plan[z] = { s:PL.PROBABLY_S, t:now, d:5, pk:rel.getTime() }; });
+      const ws = Object.assign({}, this.state.ws); PL.applyPlan(ws, plan);
+      const next = Object.assign({}, this.state, { ws });
+      // like the level check: the stops this skips are not today's work, so today's "steps done" and "words in memory" start again from here
+      this.setState({ ws, qs:null, pbase:pathDoneCount(next), mem0:memOf(ws).words, pcNote:'Quick sort done: ' + known.length + (known.length === 1 ? ' word is' : ' words are') + ' marked as known. ' + (k ? k + ' of them come back in Review, ' + PL.PER_DAY + ' a day from tomorrow, to make sure. ' : '') + 'Your Path now starts at your first new word.' });
+      if (q.from === 'onb') this.onbSet({ qs:Date.now() });
+    };
+    qsVals(S) {
+      const q = S.qs; const v = { qsShow:!!q, qsIntroShow:false, qsCardShow:false, qsChkShow:false, qsDoneShow:false, qsOpenMenu:() => this.qsOpen('menu'), qsBegin:this.qsBegin, qsCancel:this.qsCancel, qsStop:this.qsStop,
+        qsYes:() => this.qsMark(true), qsNo:() => this.qsMark(false), qsHear:this.qsSay, qsApply:this.qsApply, qsToCheck:this.qsToCheck, qsChkGo:this.qsChkGo };
+      if (!q) return v;
+      const N = q.deck.length; const marked = q.deck.filter(z => q.marks[z]); const known = marked.filter(z => q.marks[z] === 'know' || q.marks[z] === 'sure');
+      Object.assign(v, { qsIntroShow:q.step === 'intro', qsCardShow:q.step === 'card', qsChkShow:q.step === 'check', qsDoneShow:q.step === 'done',
+        qsLvl:'HSK ' + q.lv, qsMax:QS_MAX, qsCancelText:q.from === 'onb' ? 'Skip, start from the first words' : 'Not now', qsNone:N === 0,
+        qsCount:'Word ' + Math.min(q.i + 1, N) + ' of up to ' + N + ' · ' + known.length + ' known', qsPct:Math.round(100 * q.i / Math.max(1, N)) + '%', qsZh:q.deck[q.i] || '' });
+      if (q.step === 'check' && q.chk) { const c = q.chk; const done = c.pick >= 0;
+        Object.assign(v, { qsZh:c.zh, qsChkDone:done, qsChkOk:done && c.ok, qsChkBad:done && !c.ok, qsChkPy:BANK[c.zh] ? BANK[c.zh].py : '', qsChkRight:c.right,
+          qsOpts:c.opts.map((o, i) => ({ t:o.t, cls:'obm-opt pc-ans' + (done ? (o.ok ? ' right' : i === c.pick ? ' wrong' : ' dim') : ''), dis:done ? 'true' : 'false', fn:() => this.qsPick(i) })) }); }
+      if (q.step === 'done') {
+        const sure = known.filter(z => q.marks[z] === 'sure').length; const not = marked.length - known.length;
+        const most = marked.length >= QS_MAX && known.length >= marked.length - 2;
+        Object.assign(v, { qsHead:N === 0 ? 'Nothing to sort here' : known.length ? 'You know ' + known.length + ' of ' + marked.length : 'All new to you, and that is fine',
+          qsLead:N === 0 ? 'Every word on your next Path stops is already started. Nothing to sort.' : known.length ? 'Those words are marked as known' + (sure ? ' (' + sure + ' checked)' : '') + '. Unchecked ones come back in Review, about 20 a day from tomorrow, and one you miss goes back to learning. Path stops whose words are all known count as done, without coins.' : 'Your Path starts with the first words, one stop at a time.',
+          qsNotLine:not > 0 ? plural2(not, 'word', 'words') + ' you did not know yet: your Path starts with ' + (not === 1 ? 'it' : 'them') + '.' : '', qsNotShow:not > 0 && known.length > 0,
+          qsSaveShow:known.length > 0, qsSaveText:'Save and start', qsMost:most, qsDoneCancel:known.length > 0 ? 'Do not save' : 'Close' });
+      }
+      return v;
+    }
     pcVals(S) {
       const p = S.pcs; const PL = window.ShanluPlacement; const MAX = LVL.MAX_LEVEL;
       const cum = []; let tot = 0; for (let n = 1; n <= MAX; n++) { tot += levelWords(n).length; cum[n] = Math.round(tot / 10) * 10; }
@@ -5653,13 +5724,13 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const obC = obCards[Math.max(0, Math.min(obCards.length - 1, S.obCard || 0))];
       const frOn = !!(FR && FR.enabled());
       const pyN = (PYC.lessons || []).filter(l => pyDoneAt(l.id)).length;
-      const startShow = onbOn && S.screen === 'home' && !flowOn && ((!onb.s && startedCount === 0 && Object.keys(S.lrn || {}).length === 0 && (noProg || onb.p === 'done')) || (onb.s === 'go' && !S.rcomplete && !(S.pl && S.pl.done)));
+      const startShow = onbOn && S.screen === 'home' && !flowOn && ((!onb.s && Object.keys(S.lrn || {}).length === 0 && (startedCount === 0 ? (noProg || onb.p === 'done') : !!onb.qs)) || (onb.s === 'go' && !S.rcomplete && !(S.pl && S.pl.done)));
       // the first session is the first stop of the Path (see onbStartPath); its words are shown on the card
       const startStop = startShow && PATH_LVLS.length ? pathNextWord(S, pathFirstOpen(S)) : null;
       const startGoing = onb.s === 'go' && ((S.rq.length > 0 && !S.rcomplete) || (!!S.pl && !S.pl.done));
       const startList = startStop ? stopWords(startStop.st).filter(z => !wStarted(S, z)) : START_WORDS.filter(z => BANK[z]);
       const startWords = startList.map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en.split(/[,;]/)[0] }));
-      const startLead = startStop ? (flown ? 'Your host is still waiting at arrivals. Learn to greet them: your' : 'Your') + ' first stop on the Path is ' + startWords.length + ' everyday words. You meet each one, try it, then a short check, and they go into your Review. Nothing to set up.'
+      const startLead = startStop ? (flown ? 'Your host is still waiting at arrivals. Learn to greet them: your' : 'Your') + ' first stop on the Path is ' + (startWords.length === 1 ? '1 everyday word' : startWords.length + ' everyday words') + '. You meet each one, try it, then a short check, and they go into your Review. Nothing to set up.'
         : 'Your first session is five everyday words, the same for everyone. You meet each one, pick its meaning, then type it. Nothing to set up.';
       // brand new to Chinese: the sounds course is offered on the same card (and as a row in Today's plan) instead of a card of its own
       const startSoundsShow = startShow && onb.l === 'new' && pyN === 0 && (PYC.lessons || []).length > 0;
@@ -6458,7 +6529,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         obLinkIn:S.frLinkIn, onObLink:(e) => this.setState({ frLinkIn:e.target.value }), obLinkText:S.frLinkBusy ? 'Signing in…' : 'Bring my progress here', obHasErr:!!S.frErr, obErrText:S.frErr,
         obCZh:obC.zh, obCTag:obC.tag, obCTitle:obC.title, obCBody:obC.body, obCChips:obC.chips, obCCount:((S.obCard || 0) + 1) + ' of ' + obCards.length, obCArt:'a' + (S.obCard || 0), obCShot:'aspect-ratio:' + obC.w + '/' + obC.h, obCImg:'background-image:url(' + obC.img + ')', obCAlt:obC.alt,
         obCDots:obCards.map((_, i) => ({ cls:'obm-dot' + (i === (S.obCard || 0) ? ' on' : '') })), obCPrev:(S.obCard || 0) > 0, obCBtn:(S.obCard || 0) === obCards.length - 1 ? 'Choose where to start' : 'Next', obCardNext:() => this.obCardGo(1), obCardPrev:() => this.obCardGo(-1), obGuideSkip:this.obGuideSkip,
-        obLvlOpts:[['new', 'I am brand new to Chinese', 'Start with the sounds of Chinese (pinyin and tones, about 30 minutes), then your first words.', 'Recommended if Chinese is new to you'], ['some', 'I know a little', 'Go straight to HSK 1 words. The pinyin course is always there if you want it.', '']].map(([k, t, d, tag]) => ({ k, t, d, tag, hasTag:!!tag, cls:'obm-opt' + (S.obLvl === k ? ' on' : ''), pressed:S.obLvl === k ? 'true' : 'false', fn:() => this.obPickLvl(k) })), obLevelGo:this.obLevelGo,
+        obLvlOpts:[['new', 'I am brand new to Chinese', 'Start with the sounds of Chinese (pinyin and tones, about 30 minutes), then your first words.', 'Recommended if Chinese is new to you'], ['some', 'I know a little', 'A one-minute sort of your first words (Know it or Not yet), so the Path starts where you need it. The pinyin course is always there if you want it.', '']].map(([k, t, d, tag]) => ({ k, t, d, tag, hasTag:!!tag, cls:'obm-opt' + (S.obLvl === k ? ' on' : ''), pressed:S.obLvl === k ? 'true' : 'false', fn:() => this.obPickLvl(k) })), obLevelGo:this.obLevelGo,
         obName:S.obName, onObName:(e) => this.setState({ obName:e.target.value }), obFrShow:frOn && !(FR && FR.identity()), obJoinChk:S.obJoin ? 'true' : 'false', obJoinCls:'obm-chk' + (S.obJoin ? ' on' : ''), obJoinToggle:this.obJoinToggle,
         obGoals:[10, 20, 30, 45].map(m => ({ label:m + ' min', cls:(S.obGoal || S.mins) === m ? 'on' : '', fn:() => this.setState({ obGoal:m }) })), obHasMeErr:!!S.obErr, obMeErr:S.obErr, obMeBusy:S.obBusy, obGoText:S.obBusy ? 'Joining…' : ((S.obJoin && frOn && !(FR && FR.identity())) ? 'Save and join the group' : 'Save and start'), obMeGo:() => this.obMeGo(false), obGuideGo:() => this.obMeGo(true), obMeBack:this.obMeBack,
         guideLevels:[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => ({ n, h:(46 + n * 22) + 'px', cls:'gd-rg' + (n <= LVL.MAX_LEVEL ? ' on' : '') })),
@@ -6606,7 +6677,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         ...this.voiceVals(),
         ...this.examVals(),
         ...this.aiVals(),
-        ...this.pcVals(S),
+        ...this.pcVals(S), ...this.qsVals(S),
         obTestCls:'obm-opt' + (S.obLvl === 'test' ? ' on' : ''), obTestPressed:S.obLvl === 'test' ? 'true' : 'false', obTestPick:() => this.obPickLvl('test'),
         lvMsgCheck:() => { const m = S.lvMsg; this.setState({ lvMsg:0 }); this.pcOpen('menu', m === 99 || !m ? 1 : m - 1); },
         pcNoteShow:!!S.pcNote, pcNoteText:S.pcNote, pcNoteClose:() => this.setState({ pcNote:'' }),
@@ -6648,6 +6719,18 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
   }
 
   // keyboard: Space flips a review card, 1-4 rate it; in the exam, arrows move and A-F or 1-6 choose
+  // the quick sort: → Know it, ← Not yet; on the meaning check 1-3 answer and Enter goes on. A swipe on the word does the same as the arrows.
+  document.addEventListener('keydown', (e) => {
+    const q = app.state.qs; if (!q || e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
+    if (q.step === 'card' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) { e.preventDefault(); e.stopImmediatePropagation(); app.qsMark(e.key === 'ArrowRight'); }
+    else if (q.step === 'check' && q.chk && q.chk.pick < 0 && /^[1-3]$/.test(e.key)) { e.preventDefault(); e.stopImmediatePropagation(); app.qsPick(Number(e.key) - 1); }
+    else if (q.step === 'check' && q.chk && q.chk.pick >= 0 && e.key === 'Enter' && !(e.target && e.target.tagName === 'BUTTON' && !e.target.classList.contains('pc-ans'))) { e.preventDefault(); e.stopImmediatePropagation(); app.qsChkGo(); }
+  }, true);
+  { let sx = null, sy = 0, el = null;
+    document.addEventListener('pointerdown', (e) => { el = e.target && e.target.closest ? e.target.closest('.qs-card') : null; if (!el || e.target.closest('button')) { el = null; return; } sx = e.clientX; sy = e.clientY; }, { passive:true });
+    document.addEventListener('pointermove', (e) => { if (el && sx != null) { const dx = e.clientX - sx; if (Math.abs(dx) > Math.abs(e.clientY - sy)) el.style.transform = 'translateX(' + dx + 'px) rotate(' + (dx / 20) + 'deg)'; } }, { passive:true });
+    const up = (e) => { if (!el || sx == null) return; const dx = (e.clientX || sx) - sx; el.style.transform = ''; const was = el; el = null; sx = null; if (e.type === 'pointerup' && Math.abs(dx) > 70 && was.isConnected) app.qsMark(dx > 0); };
+    document.addEventListener('pointerup', up); document.addEventListener('pointercancel', up); }
   document.addEventListener('keydown', (e) => {
     const t = e.target; if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;

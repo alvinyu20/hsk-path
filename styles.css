@@ -4078,3 +4078,19 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 @keyframes m1svq{0%{opacity:0;transform:translateY(6px)}25%,75%{opacity:1;transform:none}100%{opacity:0}}
 @keyframes m1sva{from{opacity:0;transform:scale(.3) rotate(-10deg)}to{opacity:1;transform:none}}
 .m1:not(.play) .m1-glint{display:none}
+
+/* The quick sort: one word at a time, Know it or Not yet (swipe, tap or arrow keys), with a meaning check now and then */
+.qs-card{display:flex;flex-direction:column;align-items:center;gap:4px;margin:14px 0 4px;padding:18px 12px 10px;border-radius:20px;background:var(--panel2);touch-action:pan-y;user-select:none;transition:transform .18s ease-out}
+.qs-card .pc-zh{margin:0}
+.qs-hear{font-size:14px}
+.qs-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.qs-btns .btn{width:100%}
+.qs-tip{text-align:center;margin-top:10px}
+.qs-fb{margin:12px 0 0;padding:10px 12px;border-radius:12px;font-size:14.5px;line-height:1.45}
+.qs-fb.ok{background:var(--jade-soft,#E3F4EA)}
+.qs-fb.bad{background:#FDECE8;color:#5A1D14}
+.t-dark .qs-fb.bad{background:#3A1F1B;color:#F6D9D3}
+.qs .obm-opt.right{border-color:var(--jade,#2E8B57);background:var(--jade-soft,#E3F4EA)}
+.qs .obm-opt.wrong{border-color:#C2362B;background:#FDECE8;color:#5A1D14}
+.qs .obm-opt.dim{opacity:.55}
+.qs-most{margin-top:10px}
