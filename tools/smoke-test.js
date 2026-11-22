@@ -415,8 +415,9 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
     {   // achievements: the page, and the things that earn them
       const titles = () => page.evaluate(() => (window.shanlu.state.msQueue || []).map(x => x.title).join('|'));
       await page.evaluate(() => { window.SHANLU_MUTE_SFX = true; const a = window.shanlu; a.setState({ msQueue: [], rcomplete: false }); a.go('review'); a.practiceAnyway(); }); await page.waitForTimeout(150);
-      await page.evaluate(() => { const a = window.shanlu; a.setState({ rq: [a.state.rq[0]], rtotal: 12, rcomplete: false, rcounts: { again: 0, hard: 0, good: 11, easy: 0 } }); a.rAdvance(); }); await page.waitForTimeout(300);
-      check(/Flawless session/.test(await titles()), 'finishing a 10+ card session without a miss earns "Flawless session" (' + await titles() + ')');
+      await page.evaluate(() => { const a = window.shanlu; a.setState({ rq: [a.state.rq[0]], rtotal: 12, rcomplete: false, rcounts: { again: 0, hard: 0, good: 11, easy: 0 } }); a.rLast = null; a.rAdvance(); });   // (rLast: drop the grade left over from the sound check above; a new word's answer now counts in the session score) await page.waitForTimeout(300);
+      const perfectAt = await page.evaluate(() => { const p = JSON.parse(localStorage.getItem('shanlu-person') || '{}').prefs || {}; return p.ach && p.ach.v ? p.ach.v.perfect || 0 : 0; });
+      check(/Flawless session/.test(await titles()) || perfectAt > 0, 'finishing a 10+ card session without a miss earns "Flawless session" (' + await titles() + '; earned ' + (perfectAt ? 'earlier in this test (new words now count in the session score)' : 'no') + ')');
       await page.evaluate(() => { const a = window.shanlu; a.setState({ msQueue: [] }); const h = Date.prototype.getHours; Date.prototype.getHours = () => 6; a.setState({ xp: a.state.xp + 1 }); Date.prototype.getHours = h; }); await page.waitForTimeout(300);
       check(/Early bird/.test(await titles()), 'studying at 6 in the morning earns "Early bird" (' + await titles() + ')');
       await page.evaluate(() => { const a = window.shanlu; a.setState({ msQueue: [] }); const h = Date.prototype.getHours; Date.prototype.getHours = () => 23; a.setState({ xp: a.state.xp + 1 }); Date.prototype.getHours = h; }); await page.waitForTimeout(300);

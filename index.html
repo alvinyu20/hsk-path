@@ -7,7 +7,7 @@
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=e454972364 data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=1a0bc4fd8d data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=3d38adc628 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=f61eb12760 data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=3135c6fdd2 data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=82ca84cf78 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=6b5998626b data/hsk4-words.js?v=9ebcc5a250 data/hsk4-grammar.js?v=eb819c8dc6 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=432fbea51b data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=372a4da5b0 data/hsk5-words.js?v=1e54d78599 data/hsk5-grammar.js?v=1726186051 data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=376d0f56b1 data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=db77f8b5e5">
-<meta name="shanlu-version" content="80a35f369c">
+<meta name="shanlu-version" content="97742ab9b7">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=0a7503c7a8">
+<link rel="stylesheet" href="styles.css?v=2950cedb63">
 </head>
 <body>
 <div id="app"></div>
@@ -381,11 +381,12 @@
   <sc-if value="{{startShow}}" hint-placeholder-val="{{ false }}">
   <section class="card ob" aria-label="Start here">
     <div class="today-top"><h2 class="h2">Start here</h2><span class="muted">About 5 minutes</span></div>
-    <p class="cp-note" style="margin-top:8px">Your first session is five everyday words, the same for everyone. You meet each one, pick its meaning, then type it. Nothing to set up.</p>
-    <div class="ob-words" aria-label="The five words">
+    <p class="cp-note" style="margin-top:8px">{{startLead}}</p>
+    <div class="ob-words" aria-label="Your first words">
       <sc-for list="{{startWords}}" as="w" hint-placeholder-count="5"><span class="ob-w"><b lang="zh-Hans" class="zh">{{w.zh}}</b><i>{{w.py}}</i><span>{{w.en}}</span></span></sc-for>
     </div>
     <div class="ob-act"><button class="btn pri big" data-on-click="{{onbStartPath}}">{{startBtnText}}</button></div>
+    <sc-if value="{{startSoundsShow}}" hint-placeholder-val="{{ false }}"><div class="ob-snd"><span lang="zh-Hans" class="zh" aria-hidden="true">拼</span><p>New to the sounds of Chinese? The sounds course is {{pyTotal}} short lessons, one a day in Today's plan. You can start it before or after this stop.</p><button class="btn" data-on-click="{{obSoundsGo}}">Sounds lesson 1</button></div></sc-if>
     <sc-if value="{{startFresh}}" hint-placeholder-val="{{ true }}"><button class="linkbtn" style="margin-top:10px" data-on-click="{{onbSkipStart}}">Skip this, I will find my own way</button></sc-if>
   </section>
   </sc-if>
@@ -455,7 +456,7 @@
     <sc-if value="{{planShow}}" hint-placeholder-val="{{ true }}">
     <section class="card">
       <div class="today-top"><h2 class="h2">Today</h2><span class="muted">{{todayShort}}</span></div>
-      <button class="btn pri big today-go" data-on-click="{{planGo}}">{{planGoText}}</button>
+      <button class="{{planGoCls}}" data-on-click="{{planGo}}">{{planGoText}}</button>
       <sc-if value="{{todayBarShow}}" hint-placeholder-val="{{ true }}"><div class="abar jade" style="margin:12px 0 8px"><i style="width: {{todayPct}}"></i></div></sc-if>
       <div class="tasks2">
         <sc-for list="{{tasks}}" as="t" hint-placeholder-count="3">
@@ -804,6 +805,8 @@
             </div>
           </div>
           <div class="m1-stamp" aria-hidden="true"><span class="m1-st-top">{{jyM1StampEn}}</span><b lang="zh-Hans" class="zh">{{jyM1StampZh}}</b><span lang="zh-Hans" class="m1-st-bot zh">到</span></div>
+          <sc-if value="{{jyM1Gold}}" hint-placeholder-val="{{ false }}"><div class="m1-glint" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div></sc-if>
+          <sc-if value="{{jyM1SvShow}}" hint-placeholder-val="{{ false }}"><div class="m1-sv" role="status"><span class="m1-sv-q">…and something else is here</span><span class="m1-sv-a"><img src="{{jyM1SvImg}}" alt="" width="58" height="58"><b>A souvenir! <small>{{jyM1SvEn}}</small></b></span></div></sc-if>
         </div>
         <button type="button" class="btn pri big jy-trip-go" data-on-click="{{jyTripClose}}">See your new stop</button>
       </div>
@@ -819,6 +822,7 @@
         <h2 class="jd-h">{{jyDoneTitle}}</h2>
         <p class="jd-sub">{{jyDoneSub}}</p>
         <div class="jd-stats"><sc-for list="{{jyDoneStats}}" as="t" hint-placeholder-count="4"><div class="jd-stat"><b>{{t.n}}</b><span>{{t.l}}</span></div></sc-for></div>
+        <sc-if value="{{jyDoneTierShow}}" hint-placeholder-val="{{ false }}"><div class="{{jyDoneTierCls}}"><span lang="zh-Hans" class="zh">{{jyDoneTierZh}}</span><div><b>{{jyDoneTierEn}}</b><small>{{jyDoneTierSub}}</small></div></div></sc-if>
         <p class="jd-count">{{jyDoneCount}}<sc-if value="{{jyDoneNextShow}}" hint-placeholder-val="{{ false }}"> · {{jyDoneNext}}</sc-if></p>
         <button type="button" class="btn pri big jd-go" data-on-click="{{jyDoneMap}}">{{jyDoneMapText}}</button>
         <button type="button" class="linkbtn jd-skip" data-on-click="{{jyDoneClose}}">Keep exploring</button>
@@ -826,7 +830,7 @@
     </div>
     </sc-if>
 
-    <div class="jy-tabw"><div class="seg2 jy-tabs" role="group" aria-label="Journey views"><sc-for list="{{jyTabs}}" as="t" hint-placeholder-count="6"><button type="button" aria-pressed="{{t.sel}}" class="{{t.cls}}" data-on-click="{{t.fn}}">{{t.label}}</button></sc-for></div>
+    <div class="jy-tabw"><div class="seg2 jy-tabs" role="group" aria-label="Journey views"><sc-for list="{{jyTabs}}" as="t" hint-placeholder-count="6"><button type="button" aria-pressed="{{t.sel}}" aria-label="{{t.aria}}" class="{{t.cls}}" data-tab="{{t.key}}" data-on-click="{{t.fn}}">{{t.label}}<sc-if value="{{t.dot}}" hint-placeholder-val="{{ false }}"><i class="jy-tdot" aria-hidden="true"></i></sc-if></button></sc-for></div>
       <button type="button" class="jy-tabarr l" tabindex="-1" aria-hidden="true" data-jy-scroll="-1"><svg class="ic" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
       <button type="button" class="jy-tabarr r" tabindex="-1" aria-hidden="true" data-jy-scroll="1"><svg class="ic" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div>
 
@@ -858,6 +862,15 @@
     <sc-if value="{{jyCardShow}}" hint-placeholder-val="{{ false }}">
     <article class="jy-card {{jyKindCls}}" aria-live="polite">
       <sc-if value="{{jyBannerShow}}" hint-placeholder-val="{{ false }}"><div class="jy-banner"><sc-for list="{{jyBanners}}" as="b" hint-placeholder-count="1"><p><b>{{b.t}}</b> {{b.d}}</p></sc-for></div></sc-if>
+      <sc-if value="{{jyHostShow}}" hint-placeholder-val="{{ false }}">
+        <div class="jy-host" role="group" aria-label="Your host is waiting at arrivals">
+          <img class="jy-host-img" src="{{mingWave}}" alt="" width="68" height="71">
+          <div class="jy-host-t"><small>Arrivals</small><b>Someone is waving at you: your host.</b></div>
+          <sc-if value="{{jyHostHi}}" hint-placeholder-val="{{ true }}"><button type="button" class="jy-host-hi" data-on-click="{{jyHostSay}}" aria-label="Hear 你好, hello"><span lang="zh-Hans" class="zh">你好！</span><small>nǐ hǎo · hello</small><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 8.5a5 5 0 0 1 0 7"/></svg></button></sc-if>
+          <p class="jy-host-p">{{jyHostText}}</p>
+          <button type="button" class="btn pri jy-host-go" data-on-click="{{jyHostGo}}">{{jyHostBtn}}</button>
+        </div>
+      </sc-if>
       <sc-if value="{{jyStampShow}}" hint-placeholder-val="{{ false }}">
         <div class="jy-stampbox"><div class="jy-stamp big done" style="--sh:{{jyStampHue}}"><span class="jy-stamp-top">入境 · ARRIVAL</span><span lang="zh-Hans" class="jy-stamp-zh zh">{{jyStampZh}}</span><span class="jy-stamp-en">{{jyStampEn}}</span><span class="jy-stamp-row"><img class="jy-stamp-pl" src="{{jyStampPlane}}" alt=""><span class="jy-stamp-code">{{jyStampCode}}</span><span class="jy-stamp-date">{{jyStampDate}}</span></span><span lang="zh-Hans" class="jy-stamp-seal zh" aria-hidden="true">完成</span></div></div>
         <sc-if value="{{jyAlbumShow}}" hint-placeholder-val="{{ false }}"><div class="jy-albumbox"><b>{{jyAlbumTitle}}</b><div class="jy-album"><sc-for list="{{jyAlbum}}" as="a" hint-placeholder-count="6"><img src="{{a.url}}" alt="{{a.alt}}" loading="lazy" referrerpolicy="no-referrer"></sc-for></div></div></sc-if>
@@ -876,8 +889,8 @@
         </div>
       </sc-if>
       <sc-if value="{{jyTkFly}}" hint-placeholder-val="{{ false }}">
-        <div class="jy-tk fly" role="group" aria-label="{{jyTkLabel}}">
-          <div class="jy-tk-h"><b lang="zh-Hans" class="zh">登机牌</b><span>Boarding pass</span><i>Shanlu Air</i></div>
+        <div class="jy-tk fly {{jyTkTier}}" role="group" aria-label="{{jyTkLabel}}">
+          <div class="jy-tk-h"><b lang="zh-Hans" class="zh">登机牌</b><span>Boarding pass</span><i>Shanlu Air · {{jyTkTierEn}}</i></div>
           <div class="jy-tk-r">
             <div class="jy-tk-p"><b lang="zh-Hans" class="zh">{{jyTkFromCode}}</b><span lang="zh-Hans" class="zh">{{jyTkFromZh}}</span><small>{{jyTkFromPy}}</small></div>
             <div class="jy-tk-line" aria-hidden="true"><i class="jy-tk-v">✈️</i></div>
@@ -911,6 +924,7 @@
       <h2 lang="zh-Hans" class="jy-zh zh">{{jyCardZh}}</h2>
       <div class="jy-py">{{jyCardPy}}</div>
       <div class="jy-en">{{jyCardEn}}</div>
+      <sc-if value="{{jyLandsShow}}" hint-placeholder-val="{{ false }}"><div class="jy-lands" role="group" aria-label="Where your finds went"><sc-for list="{{jyLands}}" as="l" hint-placeholder-count="2"><button type="button" class="jy-land" data-tab="{{l.tab}}" data-on-click="{{l.go}}"><span aria-hidden="true">{{l.icon}}</span>{{l.text}}</button></sc-for></div></sc-if>
       <p class="jy-note">{{jyCardNote}}</p>
       <sc-if value="{{jyHasFun}}" hint-placeholder-val="{{ false }}"><p class="jy-fun"><b>Did you know?</b> {{jyCardFun}}</p></sc-if>
       <sc-if value="{{jyIntroShow}}" hint-placeholder-val="{{ false }}"><div class="jy-intro"><h3>{{jyIntroTitle}}</h3><sc-for list="{{jyIntro}}" as="l" hint-placeholder-count="3"><p><b>{{l.k}}</b> {{l.t}}</p></sc-for><small>{{jyIntroCount}}</small></div></sc-if>
@@ -989,6 +1003,7 @@
         <sc-if value="{{jyStopsNoteShow}}" hint-placeholder-val="{{ false }}"><p class="muted jy-key">{{jyStopsNote}}</p></sc-if>
         <div class="pcw"><sc-for list="{{jyCards}}" as="c" hint-placeholder-count="4">
           <div class="pstc {{c.cls}}" style="--ph:{{c.hue}};--rot:{{c.rot}}deg">
+            <sc-if value="{{c.isNew}}" hint-placeholder-val="{{ false }}"><span class="jy-newtag" aria-hidden="true">New</span></sc-if>
             <div class="pcard-in">
               <button type="button" class="pcard-f" aria-label="{{c.label}}" tabindex="{{c.ft}}" data-on-click="{{c.flip}}"><sc-if value="{{c.hasPhoto}}" hint-placeholder-val="{{ false }}"><img src="{{c.url}}" alt="" loading="lazy" referrerpolicy="no-referrer"></sc-if><sc-if value="{{c.noPhoto}}" hint-placeholder-val="{{ true }}"><span class="pcard-art"><img src="{{c.art}}" alt=""></span></sc-if><span class="pcard-cap"><span>{{c.en}}</span></span></button>
               <div class="pcard-k" aria-hidden="{{c.kh}}" data-on-click="{{c.flip}}">
@@ -1050,13 +1065,13 @@
               <section class="pp-pg {{g.cls}}" style="z-index:{{g.z}}" aria-hidden="{{g.hid}}">
                 <div class="pp-front">
                   <sc-if value="{{g.cover}}" hint-placeholder-val="{{ true }}">
-                    <div class="pp-cover"><span lang="zh-Hans" class="pp-cv-k zh">护照</span><b>PASSPORT</b><sc-if value="{{g.who}}" hint-placeholder-val="{{ false }}"><span class="pp-cv-who">{{g.who}}</span></sc-if><span lang="zh-Hans" class="pp-cv-seal zh" aria-hidden="true">山</span><span class="pp-cv-facts"><sc-for list="{{g.facts}}" as="f" hint-placeholder-count="3"><span><em>{{f.k}}</em><i>{{f.v}}</i></span></sc-for></span><small>Turn the page ›</small></div>
+                    <div class="pp-cover"><span lang="zh-Hans" class="pp-cv-k zh">护照</span><b>PASSPORT</b><sc-if value="{{g.who}}" hint-placeholder-val="{{ false }}"><span class="pp-cv-who">{{g.who}}</span></sc-if><span class="{{g.tierCls}}"><em lang="zh-Hans" class="zh">{{g.tierZh}}</em><b>{{g.tierEn}}</b><i>{{g.tierNext}}</i></span><span lang="zh-Hans" class="pp-cv-seal zh" aria-hidden="true">山</span><span class="pp-cv-facts"><sc-for list="{{g.facts}}" as="f" hint-placeholder-count="3"><span><em>{{f.k}}</em><i>{{f.v}}</i></span></sc-for></span><small>Turn the page ›</small></div>
                   </sc-if>
                   <sc-if value="{{g.isPage}}" hint-placeholder-val="{{ false }}">
                     <div class="pp-h"><span lang="zh-Hans" class="zh">{{g.head}}</span><b>{{g.title}}</b><i>{{g.no}}</i></div>
-                    <sc-if value="{{g.isReg}}" hint-placeholder-val="{{ true }}"><div class="pp-grid"><sc-for list="{{g.stamps}}" as="s" hint-placeholder-count="4"><button type="button" class="jy-slot {{s.cls}}" style="--sh:{{s.hue}}" aria-label="{{s.label}}" tabindex="{{g.tab}}" data-on-click="{{s.open}}"><span class="jy-stamp"><span class="jy-stamp-top">入境 · ARRIVAL</span><span lang="zh-Hans" class="jy-stamp-zh zh">{{s.zh}}</span><span class="jy-stamp-en">{{s.en}}</span><span class="jy-stamp-row"><img class="jy-stamp-pl" src="{{s.plane}}" alt=""><span class="jy-stamp-code">{{s.code}}</span><span class="jy-stamp-date">{{s.date}}</span></span><span lang="zh-Hans" class="jy-stamp-seal zh" aria-hidden="true">完成</span></span></button></sc-for></div></sc-if>
-                    <sc-if value="{{g.isCity}}" hint-placeholder-val="{{ false }}"><div class="pp-grid c2"><sc-for list="{{g.cstamps}}" as="c" hint-placeholder-count="3"><button type="button" class="jy-cstamp {{c.cls}}" style="--sh:{{c.hue}}" aria-label="{{c.label}}" tabindex="{{g.tab}}" data-on-click="{{c.open}}"><img class="st-art" src="{{c.art}}" alt=""><span lang="zh-Hans" class="zh">{{c.zh}}</span><small>{{c.en}}</small><i>{{c.sub}}</i></button></sc-for></div></sc-if>
-                    <sc-if value="{{g.isStar}}" hint-placeholder-val="{{ false }}"><div class="pp-grid c2"><sc-for list="{{g.sstamps}}" as="m" hint-placeholder-count="3"><button type="button" class="jy-sstamp" aria-label="{{m.label}}" tabindex="{{g.tab}}" data-on-click="{{m.open}}"><i aria-hidden="true">★</i><img class="st-art" src="{{m.art}}" alt=""><span lang="zh-Hans" class="zh">{{m.zh}}</span><small>{{m.en}}</small></button></sc-for></div></sc-if>
+                    <sc-if value="{{g.isReg}}" hint-placeholder-val="{{ true }}"><div class="pp-grid"><sc-for list="{{g.stamps}}" as="s" hint-placeholder-count="4"><button type="button" class="jy-slot {{s.cls}}" style="--sh:{{s.hue}}" aria-label="{{s.label}}" tabindex="{{g.tab}}" data-on-click="{{s.open}}"><span class="jy-stamp"><span class="jy-stamp-top">入境 · ARRIVAL</span><span lang="zh-Hans" class="jy-stamp-zh zh">{{s.zh}}</span><span class="jy-stamp-en">{{s.en}}</span><span class="jy-stamp-row"><img class="jy-stamp-pl" src="{{s.plane}}" alt=""><span class="jy-stamp-code">{{s.code}}</span><span class="jy-stamp-date">{{s.date}}</span></span><span lang="zh-Hans" class="jy-stamp-seal zh" aria-hidden="true">完成</span></span><sc-if value="{{s.isNew}}" hint-placeholder-val="{{ false }}"><span class="jy-newtag" aria-hidden="true">New</span></sc-if></button></sc-for></div></sc-if>
+                    <sc-if value="{{g.isCity}}" hint-placeholder-val="{{ false }}"><div class="pp-grid c2"><sc-for list="{{g.cstamps}}" as="c" hint-placeholder-count="3"><button type="button" class="jy-cstamp {{c.cls}}" style="--sh:{{c.hue}}" aria-label="{{c.label}}" tabindex="{{g.tab}}" data-on-click="{{c.open}}"><img class="st-art" src="{{c.art}}" alt=""><span lang="zh-Hans" class="zh">{{c.zh}}</span><small>{{c.en}}</small><i>{{c.sub}}</i><sc-if value="{{c.isNew}}" hint-placeholder-val="{{ false }}"><span class="jy-newtag" aria-hidden="true">New</span></sc-if></button></sc-for></div></sc-if>
+                    <sc-if value="{{g.isStar}}" hint-placeholder-val="{{ false }}"><div class="pp-grid c2"><sc-for list="{{g.sstamps}}" as="m" hint-placeholder-count="3"><button type="button" class="{{m.cls}}" aria-label="{{m.label}}" tabindex="{{g.tab}}" data-on-click="{{m.open}}"><i aria-hidden="true">★</i><img class="st-art" src="{{m.art}}" alt=""><span lang="zh-Hans" class="zh">{{m.zh}}</span><small>{{m.en}}</small><sc-if value="{{m.isNew}}" hint-placeholder-val="{{ false }}"><span class="jy-newtag" aria-hidden="true">New</span></sc-if></button></sc-for></div></sc-if>
                     <sc-if value="{{g.none}}" hint-placeholder-val="{{ false }}"><p class="pp-none">{{g.noneText}}</p></sc-if>
                   </sc-if>
                 </div>
@@ -1093,7 +1108,7 @@
         </sc-if>
         <div class="jy-chips" role="group" aria-label="Show souvenirs"><sc-for list="{{jySvChips}}" as="f" hint-placeholder-count="3"><button type="button" class="jy-chip {{f.cls}}" data-on-click="{{f.fn}}">{{f.label}} <i>{{f.count}}</i></button></sc-for></div>
         <sc-if value="{{jySvNone}}" hint-placeholder-val="{{ false }}"><p class="muted jy-key">{{jySvNoneText}}</p></sc-if>
-        <div class="sv-grid"><sc-for list="{{jySvItems}}" as="s" hint-placeholder-count="6"><button type="button" class="sv-cell {{s.cls}}" aria-label="{{s.label}}" data-on-click="{{s.open}}"><img class="sv-img" src="{{s.img}}" alt="" width="64" height="64" loading="lazy"><span class="sv-name">{{s.name}}</span><small lang="zh-Hans" class="sv-zh zh">{{s.zh}}</small></button></sc-for></div>
+        <div class="sv-grid"><sc-for list="{{jySvItems}}" as="s" hint-placeholder-count="6"><button type="button" class="sv-cell {{s.cls}}" aria-label="{{s.label}}" data-on-click="{{s.open}}"><sc-if value="{{s.isNew}}" hint-placeholder-val="{{ false }}"><span class="jy-newtag" aria-hidden="true">New</span></sc-if><img class="sv-img" src="{{s.img}}" alt="" width="64" height="64" loading="lazy"><span class="sv-name">{{s.name}}</span><small lang="zh-Hans" class="sv-zh zh">{{s.zh}}</small></button></sc-for></div>
       </div>
     </sc-if>
     </div>
@@ -2051,8 +2066,19 @@
           <sc-for list="{{plRes.words}}" as="w" hint-placeholder-count="4"><li class="{{w.cls}}"><span lang="zh-Hans" class="zh pth-wz">{{w.zh}}</span><span class="pth-py">{{w.py}}</span><span class="pth-en">{{w.en}}</span></li></sc-for>
         </ul>
         <sc-if value="{{plRes.hasMissed}}" hint-placeholder-val="{{ false }}"><p class="muted pl-miss">{{plRes.missedText}}</p></sc-if>
+        <sc-if value="{{plRes.onb}}" hint-placeholder-val="{{ false }}">
+        <div class="ob-next">
+          <b>Your first stop is done. What next?</b>
+          <ul>
+            <li>Tomorrow, Review brings these words back at the right moment. Open Review first.</li>
+            <li>Then take the next stop or two on the Path. Today's plan on Home lines them up.</li>
+            <li>About 15 to 20 minutes a day is plenty. Your daily goal is set on Home.</li>
+          </ul>
+          <sc-if value="{{plRes.jyShow}}" hint-placeholder-val="{{ false }}"><p class="cp-note" style="margin:8px 0 0">{{plRes.jyText}}</p><button class="btn pri" style="margin-top:10px" data-on-click="{{onbFlight}}">{{plRes.jyBtn}}</button></sc-if>
+        </div>
+        </sc-if>
         <div class="res-act">
-          <sc-if value="{{plRes.hasNext}}" hint-placeholder-val="{{ true }}"><button class="btn pri big" data-on-click="{{plAfter}}">{{plRes.nextText}}</button></sc-if>
+          <sc-if value="{{plRes.hasNext}}" hint-placeholder-val="{{ true }}"><button class="{{plRes.nextCls}}" data-on-click="{{plAfter}}">{{plRes.nextText}}</button></sc-if>
           <button class="btn big" data-on-click="{{plExit}}">Back to the path</button>
         </div>
       </div>
@@ -3299,7 +3325,7 @@
 <script defer src="journey.js?v=929106c907"></script>
 <script defer src="stampart.js?v=94be30f98c"></script>
 <script defer src="feastart.js?v=84bafd4ee6"></script>
-<script defer src="feastscene.js?v=e207423bff"></script>
+<script defer src="feastscene.js?v=41bdf943f2"></script>
 <script defer src="feastthemes.js?v=1254a4a6a0"></script>
 <script defer src="feastthemes2.js?v=2e728d2e25"></script>
 <script defer src="data/journey.js?v=b1c7f80de3"></script>
@@ -3320,6 +3346,6 @@
 <script defer src="numbers.js?v=997b8744e4"></script>
 <script defer src="data/games.js?v=81a4332979"></script>
 <script defer src="data/path.js?v=988d907206"></script>
-<script defer src="app.js?v=326491f144"></script>
+<script defer src="app.js?v=d69343aed4"></script>
 </body>
 </html>

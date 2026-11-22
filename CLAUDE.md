@@ -64,6 +64,8 @@ Template syntax: `<sc-if value>`, `<sc-for list as x>`, `{{holes}}`, `data-on-cl
 - In a test's `setState`, setting `dayMin` resets `minLog`, so set any fake history in a separate call.
 - Coins (`xp`) are lifetime earnings, never spent down. Each device's share is kept in `xpDev`/`xpBase` (`mergeCoins` in sync.js). Raise `xp` with a normal `setState` so this device's share counts; when applying synced numbers, set `noSync`/`noMin` so they don't count as earned here.
 - Grammar progress is keyed by lesson id (`gres[id]`). To reset everyone's score on a lesson whose content changed, give it a new id (`yijing` → `yijing2`) and rename it in `categories-grammar.json`, `path.json`, the level's `gpoints.json` and `check-waivers.tsv`. Old scores stay as harmless orphans, and sync cannot bring them back.
+- First visit: the first session is the first Path stop (`onbStartPath` sets `onb.s = 'go'`; `plFinish` pays `FIRST_SESSION_COINS` = 50 and sets `onb.s = 'done', v:'path'`). `START_WORDS` through Review is only a fallback. After the first flight the guide cards wait until the stop page (with the host box) is closed, so tests click `.jy-host-go`.
+- Journey finds: `jyFinds(stop, ev)` says where a stop's finds go (food / stops / pass / shelf). The person setting `jyNew` holds what is still new (tab dots, NEW tags; emptied when that tab is looked at). `jyLand` opens the tab with `jyLandK` set for the arrival animation. Shanlu Air status is `FF_TIERS` / `ffTier` (0 / 3 / 8 / 15 regions). Travel sounds are timed in `jyPlayRun` and cut off on skip.
 - Tests look things up by class names (`.mw`, `.top h1`, …). When markup changes, grep `tools/smoke-test-*.js` for the old class first.
 
 ## DeepSeek review workflow

@@ -1363,6 +1363,9 @@ html,body,.app,button,a,input,select,textarea,label,[role=button]{touch-action:m
 .ob-top{display:flex;align-items:center;gap:14px}
 .ob-act{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
 .ob-words{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.ob-snd{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;padding:12px 14px;border-radius:14px;background:var(--panel2)}
+.ob-snd .zh{font-size:24px;font-weight:700;color:var(--red)}
+.ob-snd p{flex:1 1 180px;margin:0;font-size:14px;color:var(--muted);line-height:1.45}
 .ob-w{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:84px;padding:10px 12px;border-radius:14px;background:var(--panel2);text-align:center}
 .ob-w b{font-size:26px;font-weight:700;line-height:1.2}
 .ob-w i{font-style:normal;font-size:14px;color:var(--muted)}
@@ -3964,3 +3967,114 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .app.t-dark .xpart.when{background:#4A3418;color:#F0B36A}
 .app.t-dark .xpart.thing{background:#33284A;color:#C3AEEA}
 .xpart + .xpart{margin-left:2px}
+
+/* The first stop: your host waves at arrivals (the Path's HSK 1 story starts here) */
+.jy-host{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;align-items:center;margin:0 0 16px;padding:14px 16px;border-radius:18px;background:linear-gradient(160deg,#FCE3C8,#FBF1E2);color:#3a2a1c}
+.jy-host-img{grid-row:span 2;width:68px;height:auto}
+.jy-host-t small{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#9a6a3a;font-weight:700}
+.jy-host-t b{font-size:16.5px;line-height:1.3}
+.jy-host-hi{justify-self:start;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:0;border-radius:999px;background:#fff;color:#3a2a1c;box-shadow:0 2px 8px rgba(120,70,20,.15);cursor:pointer;font:inherit}
+.jy-host-hi .zh{font-size:22px;font-weight:700}
+.jy-host-hi small{font-size:13px;color:#8a6a4a}
+.jy-host-hi .ic{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
+.jy-host-p{grid-column:1/-1;margin:6px 0 0;font-size:14.5px;line-height:1.45}
+.jy-host-go{grid-column:1/-1;justify-self:start}
+
+/* Shanlu Air status (bronze 0, silver 3, gold 8, platinum 15 regions): boarding passes, the passport cover, the region pop-up */
+.jy-tk.fly.tier-bronze{background:linear-gradient(135deg,#F3DCC8,#FBF1E8 70%);border-color:#C9926B}
+.jy-tk.fly.tier-silver{background:linear-gradient(135deg,#DDE3EA,#F7F9FB 55%,#E6EBF0);border-color:#A3AEBA}
+.jy-tk.fly.tier-gold{background:linear-gradient(135deg,#F6DA8E,#FFF6DA 60%,#F3D27A);border-color:#C79A2E}
+.jy-tk.fly.tier-platinum{background:linear-gradient(135deg,#2B323C,#4B5664 60%,#323A45);border-color:#8C99A8;color:#F2F4F7}
+.jy-tk.fly.tier-platinum .jy-tk-h,.jy-tk.fly.tier-platinum .jy-tk-p small,.jy-tk.fly.tier-platinum .jy-tk-f{color:#C3CBD5}
+.jy-tk.fly.tier-platinum .jy-tk-h b,.jy-tk.fly.tier-platinum .jy-tk-f b,.jy-tk.fly.tier-platinum .jy-tk-f em,.jy-tk.fly.tier-platinum .jy-tk-h i .zh{color:#fff}
+.jy-tk.fly.tier-platinum .jy-tk-line{border-bottom-color:#8C99A8}
+.jy-tk.fly.tier-gold .jy-tk-h i,.jy-tk.fly.tier-silver .jy-tk-h i,.jy-tk.fly.tier-bronze .jy-tk-h i{color:var(--ink)}
+.t-dark .jy-tk.fly:not(.tier-platinum){color:#2B2A26}
+.t-dark .jy-tk.fly:not(.tier-platinum) .jy-tk-h b,.t-dark .jy-tk.fly:not(.tier-platinum) .jy-tk-f b,.t-dark .jy-tk.fly:not(.tier-platinum) .jy-tk-f em,.t-dark .jy-tk.fly:not(.tier-platinum) .jy-tk-h i{color:#2B2A26}
+.t-dark .jy-tk.fly:not(.tier-platinum) .jy-tk-h,.t-dark .jy-tk.fly:not(.tier-platinum) .jy-tk-p small,.t-dark .jy-tk.fly:not(.tier-platinum) .jy-tk-f{color:#5E5A52}
+.pp-cv-tier{display:flex;flex-direction:column;align-items:center;gap:1px;margin-top:2px;padding:6px 14px 7px;border-radius:10px;line-height:1.25;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.pp-cv-tier em{font-style:normal;font-size:15px;font-weight:700;letter-spacing:.08em}
+.pp-cover .pp-cv-tier b{font-size:11px;letter-spacing:.12em;text-indent:0;text-transform:uppercase}
+.pp-cv-tier i{font-style:normal;font-size:10.5px;opacity:.8}
+.pp-cv-tier.tier-bronze{background:linear-gradient(135deg,#B9784C,#E2B08A 50%,#A9663D);color:#2E1A0C}
+.pp-cv-tier.tier-silver{background:linear-gradient(135deg,#9FA9B4,#EEF2F6 50%,#8E99A5);color:#1E252D}
+.pp-cv-tier.tier-gold{background:linear-gradient(135deg,#C99A2E,#FBE7A6 50%,#B8871F);color:#3A2A05}
+.pp-cv-tier.tier-platinum{background:linear-gradient(135deg,#3A4350,#9AA6B4 50%,#2E3640);color:#fff}
+.jd-tier{display:flex;align-items:center;gap:12px;margin:12px auto 4px;max-width:330px;padding:10px 14px;border-radius:14px;text-align:left;box-shadow:0 6px 16px -8px rgba(0,0,0,.45);animation:jdup .5s 1s ease both}
+.jd-tier .zh{font-size:24px;font-weight:700;white-space:nowrap}
+.jd-tier b{display:block;font-size:15px}
+.jd-tier small{display:block;font-size:12.5px;opacity:.85}
+.jd-tier.tier-silver{background:linear-gradient(135deg,#C3CBD4,#F3F6F9 50%,#B2BCC7);color:#1E252D}
+.jd-tier.tier-gold{background:linear-gradient(135deg,#D9AE45,#FCEBB4 50%,#CB9C33);color:#3A2A05}
+.jd-tier.tier-platinum{background:linear-gradient(135deg,#3A4350,#8E9AA9 50%,#2E3640);color:#fff}
+
+/* Finds land where they belong: buttons on the stop page, a dot on the tab, a NEW tag until it has been looked at, and an arrival on each page */
+.jy-lands{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+.jy-land{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 14px;border-radius:999px;border:1.5px solid hsl(var(--jh,200) 40% 70%);background:hsl(var(--jh,200) 60% 96%);color:var(--ink);font:inherit;font-size:14.5px;font-weight:600;cursor:pointer}
+.jy-land span{font-size:17px}
+.jy-land:hover{background:hsl(var(--jh,200) 60% 92%)}
+.t-dark .jy-land{background:var(--panel2);border-color:var(--line)}
+.jy-tabs button{position:relative}
+.jy-tdot{position:absolute;top:6px;right:7px;width:8px;height:8px;border-radius:50%;background:#E0412F;box-shadow:0 0 0 2px var(--panel,#fff);animation:jytdot 1.8s ease-in-out infinite}
+@keyframes jytdot{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+.jy-flyer{position:fixed;z-index:9999;width:32px;height:32px;display:grid;place-items:center;font-size:24px;line-height:1;pointer-events:none;filter:drop-shadow(0 3px 4px rgba(0,0,0,.3))}
+.jy-newtag{position:absolute;z-index:3;top:-7px;left:-6px;padding:2px 7px 3px;border-radius:999px;background:#C2362B;color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;line-height:1.3;box-shadow:0 2px 5px rgba(0,0,0,.25);pointer-events:none;transform:rotate(-6deg)}
+.sv-cell,.jy-cstamp,.jy-sstamp,.pp-front .jy-slot{position:relative}
+.pp-front .jy-slot .jy-newtag{top:2px;left:2px}
+/* a postcard flies onto the wall and its tape presses down (then it turns over by itself) */
+.pstc.land{z-index:4;animation:pcland 1.1s cubic-bezier(.2,.9,.3,1.15) both}
+.pstc.land::before{animation:pctape .35s .9s ease-out both}
+.pstc.land .pcard-in{box-shadow:0 0 0 3px #FFD34D,0 14px 30px -10px rgba(0,0,0,.45);border-radius:6px;transition:box-shadow 1s 4s}
+@keyframes pcland{0%{opacity:0;transform:translate(40px,-160px) rotate(18deg) scale(1.25)}60%{opacity:1;transform:translate(0,6px) rotate(calc(var(--rot) - 2deg)) scale(1.02)}100%{opacity:1;transform:rotate(var(--rot))}}
+@keyframes pctape{from{opacity:0;transform:rotate(-3deg) scale(1.6)}to{opacity:1;transform:rotate(-3deg) scale(1)}}
+/* a stamp thuds onto its passport page once the page has turned to it */
+.pp-front .jy-slot.land .jy-stamp{animation:pplandr .55s .75s cubic-bezier(.3,1.4,.5,1) both}
+.jy-cstamp.land{animation:pplandc .55s .75s cubic-bezier(.3,1.4,.5,1) both}
+.jy-sstamp.land{animation:pplands .55s .75s cubic-bezier(.3,1.4,.5,1) both}
+.pp-front .jy-slot.land::after,.jy-cstamp.land::after,.jy-sstamp.land::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid hsl(var(--sh,42) 60% 50% / .55);animation:jdring .9s 1.15s ease-out both;pointer-events:none}
+@keyframes pplandr{0%{opacity:0;transform:scale(2.4) rotate(-20deg)}70%{opacity:1;transform:scale(.94) rotate(-4deg)}100%{opacity:1;transform:rotate(-5deg)}}
+@keyframes pplandc{0%{opacity:0;transform:scale(2.4) rotate(-20deg)}70%{opacity:1;transform:scale(.94) rotate(-3deg)}100%{opacity:1;transform:rotate(-4deg)}}
+@keyframes pplands{0%{opacity:0;transform:scale(2.2)}70%{opacity:1;transform:scale(.95)}100%{opacity:1;transform:none}}
+/* a souvenir slides onto its shelf spot under a spotlight */
+.sv-cell.land{animation:svland .8s cubic-bezier(.2,.9,.3,1.2) both;box-shadow:0 0 0 3px #FFD34D,0 0 26px 4px rgba(255,211,77,.55)}
+@keyframes svland{0%{opacity:0;transform:translateY(-90px) scale(1.3)}65%{opacity:1;transform:translateY(4px) scale(.97)}100%{transform:none}}
+/* the feast table: a pool of light under the dish just put there */
+.fz-spot{animation:fzspot 2.4s ease-in-out 3 both}
+@keyframes fzspot{0%,100%{opacity:.55}50%{opacity:1}}
+.fz-tag{animation:fzfade .4s 1.2s ease-out both}
+@keyframes fzfade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){ .pstc.land,.pstc.land::before,.pp-front .jy-slot.land .jy-stamp,.jy-cstamp.land,.jy-sstamp.land,.sv-cell.land,.fz-spot,.fz-tag,.jy-tdot{animation:none} .pp-front .jy-slot.land::after,.jy-cstamp.land::after,.jy-sstamp.land::after{display:none} }
+
+/* The travel moment, rarer stops: a must-see's card catches the light and turns more slowly; a hidden souvenir gets its own beat after the stamp */
+.m1.gold .m1-back{background:linear-gradient(150deg,#FFF4CC,#F9E3A0 45%,#FFF9E4);border:2px solid #D4A72C}
+.m1.gold .m1-back small{color:#8A6A12}
+.m1.gold .m1-front::after{content:"";position:absolute;inset:0;border-radius:18px;background:linear-gradient(115deg,transparent 28%,rgba(255,228,140,.9) 47%,transparent 64%);background-size:260% 100%;background-position:130% 0;opacity:0;pointer-events:none}
+.m1.play.gold .m1-front{animation:m1goldglow .8s 1.05s ease both}
+.m1.play.gold .m1-front::after{animation:m1sheen .95s 1.15s ease-in-out both}
+@keyframes m1goldglow{to{border:2px solid #F2C94C;box-shadow:0 0 30px 6px rgba(242,201,76,.6),0 10px 26px rgba(20,33,42,.22)}}
+@keyframes m1sheen{0%{opacity:0;background-position:130% 0}30%{opacity:1}100%{opacity:.5;background-position:-40% 0}}
+.m1.play.gold .m1-card{animation:m1flip 1.15s 1.9s cubic-bezier(.4,.1,.3,1) both}
+.m1.play.gold .m1-steps .s3{animation-delay:1.9s}.m1.play.gold .m1-steps .s4{animation-delay:3.1s}
+.m1.play.gold .m1-stamp{animation-delay:3.1s}
+.m1.play.gold .m1-stage{animation-delay:3.4s}
+.m1-glint{position:absolute;inset:0;pointer-events:none}
+.m1-glint i{position:absolute;width:14px;height:14px;opacity:0;background:radial-gradient(circle,#fff 0 18%,rgba(255,226,140,.9) 30%,transparent 70%);clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%)}
+.m1-glint i:nth-child(1){left:6%;top:10%}.m1-glint i:nth-child(2){right:8%;top:6%;transform:scale(1.4)}.m1-glint i:nth-child(3){left:18%;bottom:12%}
+.m1-glint i:nth-child(4){right:22%;top:44%;transform:scale(.8)}.m1-glint i:nth-child(5){left:48%;top:-4%}.m1-glint i:nth-child(6){left:3%;top:52%;transform:scale(1.2)}
+.m1.play .m1-glint i{animation:m1tw 1.1s ease-in-out both}
+.m1.play .m1-glint i:nth-child(1){animation-delay:2.7s}.m1.play .m1-glint i:nth-child(2){animation-delay:2.85s}.m1.play .m1-glint i:nth-child(3){animation-delay:3s}
+.m1.play .m1-glint i:nth-child(4){animation-delay:3.15s}.m1.play .m1-glint i:nth-child(5){animation-delay:2.95s}.m1.play .m1-glint i:nth-child(6){animation-delay:3.3s}
+@keyframes m1tw{0%,100%{opacity:0;scale:.3}45%{opacity:1;scale:1.2}}
+.m1-sv{position:absolute;left:-4px;bottom:-20px;z-index:2;display:grid;pointer-events:none}
+.m1-sv > span{grid-area:1/1;align-self:end}
+.m1-sv-q{padding:5px 12px;border-radius:999px;background:#14212A;color:#F8FAF7;font-size:13px;font-style:italic;white-space:nowrap;opacity:0}
+.m1-sv-a{display:flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border-radius:999px;background:#FFF8E1;border:2px solid #E0A526;color:#14212A;box-shadow:0 8px 20px -6px rgba(0,0,0,.35)}
+.m1-sv-a img{width:46px;height:46px;border-radius:50%;background:#fff}
+.m1-sv-a b{font-size:14px;line-height:1.15;display:flex;flex-direction:column}
+.m1-sv-a small{font-size:12px;font-weight:600;color:#6A5A30;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m1.play .m1-sv-q{animation:m1svq .75s 3.2s ease both}
+.m1.play .m1-sv-a{animation:m1sva .55s 3.95s cubic-bezier(.2,1.4,.4,1) both}
+.m1.play.gold .m1-sv-q{animation-delay:3.7s}.m1.play.gold .m1-sv-a{animation-delay:4.45s}
+@keyframes m1svq{0%{opacity:0;transform:translateY(6px)}25%,75%{opacity:1;transform:none}100%{opacity:0}}
+@keyframes m1sva{from{opacity:0;transform:scale(.3) rotate(-10deg)}to{opacity:1;transform:none}}
+.m1:not(.play) .m1-glint{display:none}

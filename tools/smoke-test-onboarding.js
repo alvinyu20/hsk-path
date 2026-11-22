@@ -39,8 +39,18 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('button', { hasText: 'Take my first step' }).click();
     await page.locator('.jy-go').click();
     await page.locator('.jy-trip-go').click();
+    await page.locator('.jy-host-go').click();   // the first stop's page: your host waves; Continue opens the guide cards
     await page.waitForSelector('.obm-guide', { timeout: 20000 });
     await page.waitForTimeout(900);
+  };
+  const playStop = async (page) => {   // a Path lesson, every answer right
+    for (let guard = 0; guard < 120; guard++) {
+      if (await page.locator('.pl-res').count()) return;
+      if (await page.locator('.pl-meet').count()) { await page.locator('.pl button:has-text("Next")').click(); await page.waitForTimeout(30); continue; }
+      const step = await page.evaluate(() => { const pl = window.shanlu.state.pl; const s = pl.steps[pl.i]; return { zh: s.zh, opts: s.opts }; });
+      await page.locator('.q-card .opt').nth(step.opts.indexOf(step.zh)).click(); await page.waitForTimeout(30);
+      await page.locator('.fb button:has-text("Continue")').click(); await page.waitForTimeout(30);
+    }
   };
   const dlg = (p) => p.locator('[role=dialog]');
 
@@ -56,6 +66,12 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check(await dlg(page).count() === 0 && await page.locator('.ob-banner').count() === 1, 'a reload keeps the person at the first flight, without the intro again');
     await page.locator('.jy-go').click();
     await page.locator('.jy-trip-go').click();
+    await page.waitForTimeout(400);
+    check(await page.locator('.obm-guide').count() === 0 && await page.locator('.jy-host').count() === 1, 'after the first flight the stop page shows first, with your host waiting (the guide waits)');
+    const host = await page.locator('.jy-host').innerText();
+    check(/your host/.test(host) && /你好/.test(host) && /first stop on the Path/.test(host) && /how Shanlu works/.test(host) && /Continue/.test(host), 'the host box: 你好 to hear, the Path link, and Continue: ' + host.replace(/\s+/g, ' '));
+    await page.locator('.jy-host-hi').click();
+    await page.locator('.jy-host-go').click();
     await page.waitForSelector('.obm-guide', { timeout: 20000 }); await page.waitForTimeout(900);
     check(/1 of 6/i.test(await dlg(page).innerText()) && /Meet a few words at a time/.test(await dlg(page).innerText()), 'after the first flight the guide cards start with Meet');
     const titles = [], shots = [], bodies = [];
@@ -91,29 +107,42 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const st = await page.evaluate(() => ({ screen: window.shanlu.state.screen, mins: window.shanlu.state.mins, onb: JSON.parse(localStorage.getItem('shanlu-person') || '{}').prefs }));
     check(st.screen === 'home' && st.mins === 30, 'finishing lands on Home with the chosen goal');
     check(st.onb && st.onb.name && st.onb.name.v === 'Mei' && st.onb.onb.v.p === 'done' && st.onb.onb.v.l === 'new', 'the name, the choice and "flow done" are saved');
-    check(await dlg(page).count() === 0 && await page.locator('section.ob[aria-label="The sounds of Chinese"]').count() === 1 && await page.locator('section.ob[aria-label="Start here"]').count() === 1, 'Home shows the sounds course first and Start here under it');
-    check(/Seven|7 short lessons/.test(await main(page)) && await page.locator('button', { hasText: 'Start the sounds course' }).count() === 1, 'the sounds card explains the course and offers it');
+    check(await dlg(page).count() === 0 && await page.locator('section.ob[aria-label="The sounds of Chinese"]').count() === 0 && await page.locator('section.ob[aria-label="Start here"]').count() === 1, 'Home shows one Start here card (the sounds course is on it, not a card of its own)');
+    check(await page.locator('main .btn.pri').count() === 1 && await page.locator('main .btn.pri', { hasText: 'Start my first stop' }).count() === 1, 'one red button on Home: Start my first stop');
+    check(/7 short lessons/.test(await page.locator('.ob-snd').innerText()) && await page.locator('.ob-snd button', { hasText: 'Sounds lesson 1' }).count() === 1, 'the Start card offers the sounds course for a brand-new person');
+    check(/host is still waiting/.test(await page.locator('section.ob[aria-label="Start here"]').innerText()), 'the Start card picks up the host from the first stop');
+    check(/Sounds of Chinese: lesson 1 of 7/.test(await page.locator('.tasks2').innerText()), 'Today\'s plan has a sounds lesson as its first row');
     await page.reload(); await page.waitForSelector('.app');
     check(await dlg(page).count() === 0 && await page.evaluate(() => window.shanlu.state.screen) === 'home', 'the flow does not come back after a reload');
     // the pinyin course opens from the card
-    await page.locator('button', { hasText: 'Start the sounds course' }).click();
-    check(await page.evaluate(() => window.shanlu.state.screen) === 'pinyin' && await page.evaluate(() => window.shanlu.state.pyView) === 'lesson', 'Start the sounds course opens the first lesson');
+    await page.locator('button', { hasText: 'Sounds lesson 1' }).click();
+    check(await page.evaluate(() => window.shanlu.state.screen) === 'pinyin' && await page.evaluate(() => window.shanlu.state.pyView) === 'lesson', 'Sounds lesson 1 opens the first lesson');
     await page.locator('.brand').click();
-    check(await page.locator('section.ob[aria-label="The sounds of Chinese"]').count() === 0, 'the sounds card is gone once the course has been opened');
-    // Start here, the first session
+    // Start here: the first stop of the Path
     const words = await page.locator('.ob-w b').allInnerTexts();
-    check(JSON.stringify(words) === JSON.stringify(['你好', '谢谢', '我', '你', '是']), 'Start here shows the five fixed words: ' + words.join(' '));
-    await page.locator('button', { hasText: 'Learn my first 5 words' }).click();
-    await page.waitForSelector('text=Got it, ask me soon');
-    const rs = await page.evaluate(() => ({ lrn: Object.keys(window.shanlu.state.lrn).length, rq: window.shanlu.state.rq.length, screen: window.shanlu.state.screen }));
-    check(rs.screen === 'review' && rs.lrn === 5 && rs.rq === 5, 'the button puts the five words into Review and starts the session');
+    check(words.length >= 4 && words[0] === '你好', 'Start here shows the first Path stop\'s words, starting with 你好: ' + words.join(' '));
+    const xp0 = await page.evaluate(() => window.shanlu.state.xp);
+    await page.locator('button', { hasText: 'Start my first stop' }).click();
+    check(await page.evaluate(() => window.shanlu.state.screen) === 'plesson' && await page.locator('.pl-meet').count() === 1, 'the button opens the first Path lesson');
     await page.locator('.brand').click();
-    check(await page.locator('button', { hasText: 'Continue my first session' }).count() === 1, 'Home offers to continue a started session');
-    await page.locator('button', { hasText: 'Continue my first session' }).click();
+    check(await page.locator('button', { hasText: 'Continue my first stop' }).count() === 1, 'Home offers to continue the first stop');
+    await page.locator('button', { hasText: 'Continue my first stop' }).click();
+    check(await page.evaluate(() => window.shanlu.state.screen) === 'plesson', 'and it goes back into the lesson');
+    await playStop(page);
+    t = await page.locator('.pl-res').innerText();
+    const xp1 = await page.evaluate(() => window.shanlu.state.xp);
+    check(xp1 - xp0 === 50 && /\+50 coins/.test(t), 'the first stop pays 50 coins (' + (xp1 - xp0) + ')');
+    check(/Your first stop is done/.test(t) && /Tomorrow, Review brings these words back/.test(t), 'finishing shows what to do next');
+    check(/paid for your next stop/.test(t) && await page.locator('.pl-res button', { hasText: 'Travel to it' }).count() === 1, 'and the Journey stop those coins just paid for');
+    check(await page.locator('.pl-res .btn.pri').count() === 1, 'one red button on the result');
+    await page.locator('.pl-res button', { hasText: 'Travel to it' }).click();
+    check(await page.evaluate(() => window.shanlu.state.screen) === 'journey' && /Travel to the next stop/.test(await page.locator('.jy-go').innerText()), 'it opens the Journey with a stop ready');
+    // the new words in Review: a session of only new words, all right, scores as right first time (it used to say 0%)
+    await page.evaluate(() => { window.shanlu.go('review'); window.shanlu.reviewMore(); });
     for (let i = 0; i < 60 && !(await main(page)).includes('cards done'); i++) await drive(page);
     t = await main(page);
-    check(/First session done/.test(t) && /Tomorrow, Review brings these five words back/.test(t), 'finishing shows what to do next');
-    check(await page.locator('button', { hasText: 'Take my first flight' }).count() === 0, 'the first flight is not offered again: it was already taken');
+    check(/100%\s+right first time/.test(t) && !/Tough one/.test(t), 'a Review session of new words, all right, says 100% right first time: ' + (/(\d+)%\s+right first time/.exec(t) || [''])[0].replace(/\s+/g, ' '));
+    check(!/First session done/.test(t), 'the old Review what-next panel does not show after a Path first session');
     await page.locator('.brand').click();
     check(await page.locator('section.ob').count() === 0 && /^Today/.test(await page.locator('.top h1').innerText()), 'Home is back to normal once the session is done');
     // the reference page
@@ -146,7 +175,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.waitForTimeout(400);
     const st = await page.evaluate(() => ({ screen: window.shanlu.state.screen, prefs: JSON.parse(localStorage.getItem('shanlu-person') || '{}').prefs || {} }));
     check(st.screen === 'home' && !st.prefs.name && st.prefs.onb.v.l === 'some', 'staying a guest keeps no name and remembers "I know a little"');
-    check(await page.locator('section.ob[aria-label="The sounds of Chinese"]').count() === 0 && await page.locator('section.ob[aria-label="Start here"]').count() === 1, '"I know a little" gets Start here without the sounds card');
+    check(await page.locator('.ob-snd').count() === 0 && await page.locator('section.ob[aria-label="Start here"]').count() === 1, '"I know a little" gets Start here without the sounds line');
     await page.locator('.acct-mini').click();
     check((await page.locator('.acct-row').allInnerTexts()).join(' ').includes('How Shanlu works'), 'the Account page lists the reference page');
     await page.locator('.acct-row', { hasText: 'How Shanlu works' }).click();

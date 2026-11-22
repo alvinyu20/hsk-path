@@ -170,6 +170,9 @@
   // a dish found since the table was last opened joins it: its dark shape pops into colour (the shape fades, the dish drops in) and a puff of steam rises
   const puff = (it, x, y, k) => { let o = ''; for (let i = 0; i < 3; i++) o += '<circle class="fz-puff" style="--d:' + (+it.fd + .25 + i * .12).toFixed(2) + 's" cx="' + (x + (i - 1) * 15 * k) + '" cy="' + (y - 40 * k) + '" r="' + (5.5 * k) + '" fill="#FFF6E0"/>'; return '<g pointer-events="none">' + o + '</g>'; };
   const joined = (it, solid, silhouette, x, y, k) => it.fresh && !it.hid && it.fd != null ? '<g class="fz-new" style="--d:' + it.fd + 's">' + solid + '</g><g class="fz-sil" style="--d:' + it.fd + 's" pointer-events="none"><g filter="url(#fzsil)" opacity=".5">' + silhouette + '</g></g>' + puff(it, x, y, k) : solid;
+  // a dish that has just been put on the table (from its stop page) stands in a pool of light; anything not looked at yet wears a little NEW tag
+  const marks = (it, x, y, k, html, tagDy) => (it.focus && !it.hid ? '<g class="fz-spot" pointer-events="none">' + E(x, y - 8 * k, 92 * k, 40 * k, 'url(#fzaura)', N) + E(x, y - 4 * k, 66 * k, 22 * k, 'none', 'stroke="#FFD34D" stroke-width="2.5"') + '</g>' : '') + html +
+    ((it.nw || it.focus) && !it.hid ? '<g class="fz-tag" pointer-events="none" transform="translate(' + x + ' ' + (y - tagDy) + ')"><rect x="-20" y="-10" width="40" height="18" rx="9" fill="#C2362B" stroke="#fff" stroke-width="1.5"/><text x="0" y="3.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff" font-family="system-ui,sans-serif" letter-spacing=".08em">NEW</text></g>' : '');
   function layoutRows(n, rows, hasCentre) {
     // spread n dishes over the three rows in proportion to how many fit; the centre piece takes the middle of the middle row
     const cap = rows.map((r, i) => Math.max(2, Math.floor(2 * r[1] / (74 * SC[i]))));
@@ -189,6 +192,11 @@
       }
     });
     return out;
+  }
+  // which course (page) of the table a dish is set on: the same split as scene() makes
+  function pageOf(found, id) {
+    const items = found.map(f => Object.assign({}, f, FE.classify(f, f.kind))); const pages = pagesFor(items); const it = items.find(x => x.id === id); if (!it) return 0;
+    const zone = items.filter(x => x.zone === it.zone); const per = Math.ceil(zone.length / pages) || 1; return Math.max(0, Math.min(pages - 1, Math.floor(zone.indexOf(it) / per)));
   }
   function pagesFor(items) {
     const tb = items.filter(x => x.zone === 'table'), sh = items.filter(x => x.zone === 'shelf');
@@ -211,7 +219,7 @@
     // shelf and what is on it
     const sf = th.shelf, shelfItems = [];
     s += shelfUnit(sf);
-    sh.forEach((it, i) => { const row = i < 5 ? 0 : 1, col = i % 5, n = Math.min(5, sh.length - row * 5), x = sf.x + sf.w * ((col + .5) / 5), y = sf.y + row * 62 + 0; shelfItems.push(hot(it, E(x, y + 1, 19, 4.4, 'url(#fzsh)', N) + (it.hid ? '<g filter="url(#fzsil)" opacity=".5">' + gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null, true)) + '</g>' : joined(it, gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null)), gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null, true)), x, y, .46)), x, y, 36, 34)); });
+    sh.forEach((it, i) => { const row = i < 5 ? 0 : 1, col = i % 5, n = Math.min(5, sh.length - row * 5), x = sf.x + sf.w * ((col + .5) / 5), y = sf.y + row * 62 + 0; shelfItems.push(marks(it, x, y, .46, hot(it, E(x, y + 1, 19, 4.4, 'url(#fzsh)', N) + (it.hid ? '<g filter="url(#fzsil)" opacity=".5">' + gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null, true)) + '</g>' : joined(it, gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null)), gsc(x, y, .46, FE.drawVar(it, it.vn ? it.vn : null, true)), x, y, .46)), x, y, 36, 34), 44)); });
     s += shelfItems.join('');
     if (th.back) s += th.back(KIT);
     s += th.table.draw(KIT);
@@ -231,7 +239,7 @@
     rest.forEach((it, i) => { const sl = slots[i]; if (!sl) return; placed.push({ it, x: sl[0], y: sl[1], k: SC[sl[2]] * (it.drink ? .85 : 1) * (it.arch === 'hotpot' ? .9 : 1) }); });
     // the featured dish glows softly: a warm halo on the table behind it, and a few motes of light
     if (centre) { const ax = 340, ay = th.table.rows[1][0] - 4; s += '<g pointer-events="none" class="fz-aura">' + E(ax, ay, 132, 74, 'url(#fzaura)', N) + E(ax, ay + 2, 82, 44, 'url(#fzaura)', 'opacity=".9" stroke="none"') + [[-74, -52, 2.2], [66, -58, 1.8], [-96, -14, 1.6], [102, -22, 2], [-38, -70, 1.5], [30, -76, 1.7]].map(m => C(ax + m[0], ay + m[1], m[2], '#FFE9A8', 'opacity=".7" stroke="none"')).join('') + '</g>'; }
-    placed.sort((a, b) => a.y - b.y).forEach(o => { const sh = '<ellipse cx="0" cy="2" rx="58" ry="12" fill="url(#fzsh)" stroke="none"/>'; s += hot(o.it, o.it.hid ? '<g>' + gsc(o.x, o.y, o.k, sh) + '<g filter="url(#fzsil)" opacity=".5">' + gsc(o.x, o.y, o.k, FE.drawVar(o.it, o.it.vn ? o.it.vn : null, true)) + '</g></g>' : joined(o.it, '<g>' + gsc(o.x, o.y, o.k, sh + FE.drawVar(o.it, o.it.vn ? o.it.vn : null)) + '</g>', gsc(o.x, o.y, o.k, FE.drawVar(o.it, o.it.vn ? o.it.vn : null, true)), o.x, o.y, o.k), o.x, o.y, 80 * o.k, 70 * o.k); });
+    placed.sort((a, b) => a.y - b.y).forEach(o => { const sh = '<ellipse cx="0" cy="2" rx="58" ry="12" fill="url(#fzsh)" stroke="none"/>'; s += marks(o.it, o.x, o.y, o.k, hot(o.it, o.it.hid ? '<g>' + gsc(o.x, o.y, o.k, sh) + '<g filter="url(#fzsil)" opacity=".5">' + gsc(o.x, o.y, o.k, FE.drawVar(o.it, o.it.vn ? o.it.vn : null, true)) + '</g></g>' : joined(o.it, '<g>' + gsc(o.x, o.y, o.k, sh + FE.drawVar(o.it, o.it.vn ? o.it.vn : null)) + '</g>', gsc(o.x, o.y, o.k, FE.drawVar(o.it, o.it.vn ? o.it.vn : null, true)), o.x, o.y, o.k), o.x, o.y, 80 * o.k, 70 * o.k), 84 * o.k); });
     if (th.front) s += th.front(KIT);
     s += '<g pointer-events="none">' + R(0, 0, 680, 440, 'url(#fzvig)', N) + R(0, 0, 680, 140, 'url(#fzceil)', N) + '</g>';
     return { svg: s,
@@ -253,6 +261,6 @@
     return '<svg class="fz-svg" viewBox="' + vb + '" preserveAspectRatio="xMidYMid meet" role="img" aria-hidden="true" overflow="hidden">'+FE.TINT_DEFS + LIGHT_DEFS + '<clipPath id="' + c + '"><rect y="' + (land ? 112 : 0) + '" width="680" height="' + (land ? 328 : 440) + '"/></clipPath><g clip-path="url(#' + c + ')">' + res.svg + '</g></svg>';
   }
   const FEAST_THEMES = {};
-  const api = { scene, wrap, portrait, pagesFor, KIT, THEMES: FEAST_THEMES, TABLE_CAP, SHELF_CAP };
+  const api = { scene, wrap, portrait, pagesFor, pageOf, KIT, THEMES: FEAST_THEMES, TABLE_CAP, SHELF_CAP };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.FEAST = Object.assign(root.FEAST || {}, api);
 })(typeof window !== 'undefined' ? window : globalThis);

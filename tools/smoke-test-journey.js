@@ -263,6 +263,63 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await ctx.close();
   }
 
+  // ---- finds land where they belong (buttons, NEW tags, tab dots), rarer reveals, travel sounds, Shanlu Air status ----
+  {
+    const { ctx, page, errors } = await open({ viewport: { width: 390, height: 844 }, xp: 60000 });
+    await page.evaluate(() => { window.SHANLU_JY_FIRST = 'macau'; });
+    const tiers = await page.evaluate(() => [0, 2, 3, 7, 8, 14, 15, 31].map(n => window.shanlu.testApi.ffTier(n).t.en + ':' + window.shanlu.testApi.ffTier(n).toGo).join(' '));
+    check(tiers === 'Bronze:3 Bronze:1 Silver:5 Silver:1 Gold:7 Gold:1 Platinum:0 Platinum:0', 'Shanlu Air status: Bronze from 0, Silver at 3, Gold at 8, Platinum at 15 regions (' + tiers + ')');
+    await page.evaluate(() => window.shanlu.go('journey')); await page.waitForTimeout(200);
+    const sfx = () => page.evaluate(() => window.__sfxLog || []);
+    await page.evaluate(() => { window.__sfxLog = []; });
+    await page.locator('.jy-go').click(); await page.waitForTimeout(300);
+    check(await page.locator('.jy-tdot').count() === 0, 'no tab dots while the travel moment plays (they would give away what is coming)');
+    await page.waitForTimeout(4600);
+    const s1 = await sfx();
+    check(['plane', 'stamp'].every(x => s1.indexOf(x) >= 0) && s1.some(x => /waves|wind|birds/.test(x)), 'a flight sounds like a plane, then the place, then the stamp (' + s1.join(',') + ')');
+    check(await page.locator('.jy-tk.fly.tier-bronze').count() === 1 && /Shanlu Air · Bronze/i.test(await page.locator('.jy-tk.fly').innerText()), 'the boarding pass is bronze to start with');
+    check((await page.locator('.jy-lands button').allInnerTexts()).join('|').includes('Pin it to the wall'), 'the stop page offers to pin the postcard to the wall');
+    check(await page.locator('.jy-tabs button[data-tab="stops"] .jy-tdot').count() === 1, 'the Postcards tab has a dot');
+    await page.locator('.jy-lands button', { hasText: 'Pin it to the wall' }).click(); await page.waitForTimeout(300);
+    const airport = await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-person')).prefs.jy.v.seen[0]);
+    check(await page.evaluate(() => window.shanlu.state.jyTab) === 'stops' && await page.locator('.pstc.land').count() === 1 && await page.locator('.pstc.isnew .jy-newtag').count() === 1, 'it opens the postcard wall, where the new card lands with a NEW tag');
+    await page.waitForTimeout(2000);
+    check(await page.evaluate(() => window.shanlu.state.jyFlip) === airport, 'then the card turns over by itself');
+    check(await page.locator('.jy-tabs button[data-tab="stops"] .jy-tdot').count() === 0 && await page.evaluate(() => (JSON.parse(localStorage.getItem('shanlu-person')).prefs.jyNew.v.stops || []).length) === 0, 'looking at the wall clears its dot and its saved "new" list');
+    // on to a dish, a must-see and so on (skipping the moments)
+    const seen = {};
+    for (let i = 0; i < 40 && !(seen.food && seen.star); i++) {
+      await page.evaluate(() => window.shanlu.jyTabSet('explore')); await page.waitForTimeout(60);
+      await page.evaluate(() => { window.__sfxLog = []; });
+      await page.locator('.jy-go').click(); await page.waitForTimeout(80);
+      const gold = /\bgold\b/.test(await page.locator('.m1').getAttribute('class'));
+      if (gold && !seen.star) { await page.waitForTimeout(1400); check((await sfx()).indexOf('gold') >= 0, 'a must-see reveal has its own glittering sound'); }
+      await closeTrip(page); await page.waitForTimeout(150);
+      const lands = (await page.locator('.jy-lands button').allInnerTexts()).join('|');
+      if (!seen.food && lands.includes('Put it on the table')) {
+        seen.food = 1; const id = await page.evaluate(() => window.shanlu.state.jyRv.id);
+        await page.locator('.jy-lands button', { hasText: 'Put it on the table' }).click(); await page.waitForTimeout(400);
+        const fs = await page.evaluate(() => ({ tab: window.shanlu.state.jyTab, ov: window.shanlu.state.jyFoodOv }));
+        const svg = await page.locator('.fz-ov, .jy-food-ov, [class*="fz-ov"]').first().innerHTML().catch(() => '');
+        check(fs.tab === 'food' && fs.ov && /fz-spot/.test(svg) && /NEW/.test(svg), 'Put it on the table opens the big table with the dish in a pool of light and a NEW tag');
+        await page.waitForTimeout(2400);
+        check(await page.evaluate(() => window.shanlu.state.jyFoodPop) === id, 'then the dish\'s card opens');
+        await page.evaluate(() => window.shanlu.setState({ jyFoodOv: false, jyFoodPop: null }));
+      } else if (!seen.star && gold) {
+        seen.star = 1;
+        check(lands.includes('Stamp the passport'), 'a must-see offers to stamp the passport');
+        await page.locator('.jy-lands button', { hasText: 'Stamp the passport' }).click(); await page.waitForTimeout(400);
+        check(await page.evaluate(() => window.shanlu.state.jyTab === 'pass' && window.shanlu.state.jyPsec === 'star') && await page.locator('.pp-pg.cur .jy-sstamp.land').count() === 1, 'it opens the passport on the must-see page, where the gold stamp lands');
+      }
+    }
+    check(seen.food && seen.star, 'reached a dish and a must-see');
+    await page.evaluate(() => window.shanlu.jyTabSet('pass')); await page.waitForTimeout(300);
+    const cover = await page.locator('.pp-cover').first().innerText();
+    check(/铜卡/.test(cover) && /SHANLU AIR BRONZE/i.test(cover) && /3 more regions to Silver/.test(cover), 'the passport cover shows the status and how far the next one is: ' + cover.replace(/\s+/g, ' '));
+    check(errors.length === 0, 'no errors: ' + errors.join(' | '));
+    await ctx.close();
+  }
+
   await browser.close(); server.close();
   if (failures) { console.log(failures + ' failed'); process.exit(1); }
   console.log('journey browser tests passed');

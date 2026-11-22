@@ -304,6 +304,7 @@
   LESSONS.forEach((L, i) => { LESSON_AT[L.id] = i; });
   const POS_NAME = { n:'noun', v:'verb', adj:'adjective', adv:'adverb', pron:'pronoun', num:'number', m:'measure word', qw:'question word', phr:'phrase', time:'time word', conj:'conjunction', prep:'preposition', part:'particle', loc:'place word', suf:'suffix' };
   const STOP_COINS = 10;     // coins for finishing a word stop the first time
+  const FIRST_SESSION_COINS = 50;   // a new person's first stop pays this instead, so day one ends with the Journey's second stop (50 coins) ready
   const PATH_BATCH = 4;      // most words met before the first questions about them
   const PATH_XS = [50, 68, 78, 68, 50, 32, 22, 32];   // where the stops sit across the trail (percent from the left), one after the other
   const stopWords = (st) => (st.k === 'w' ? st.w.filter(z => BANK[z]) : []);
@@ -530,6 +531,24 @@
   const SOUV = window.SOUVENIRS || [];
   const FZ_KEY = 'shanlu-feast-seen'; const fzRead = () => { try { return JSON.parse(localStorage.getItem(FZ_KEY) || '{}') || {}; } catch (e) { return {}; } };
   const SV_BY_STOP = {}; SOUV.forEach(s => { SV_BY_STOP[s.stop] = s; });
+  // Shanlu Air frequent-flyer status, from the number of regions stamped (Alvin's thresholds: 0, 3, 8, 15). It colours the boarding passes and sits on the passport cover.
+  const FF_TIERS = [{ id:'bronze', at:0, en:'Bronze', zh:'铜卡', py:'tóngkǎ' }, { id:'silver', at:3, en:'Silver', zh:'银卡', py:'yínkǎ' }, { id:'gold', at:8, en:'Gold', zh:'金卡', py:'jīnkǎ' }, { id:'platinum', at:15, en:'Platinum', zh:'白金卡', py:'báijīnkǎ' }];
+  // What a stop just reached adds, and where each thing goes: a dish to the feast table, any other stop to the postcard wall, a stamp to the passport (a region, a city, a must-see), a souvenir to the shelf.
+  // Each find is new (a ribbon on it and a dot on its tab) until that tab has been looked at. The list is a person setting ('jyNew'), so every device agrees.
+  const JY_NEW_TABS = ['food', 'stops', 'pass', 'shelf'];
+  const jyFinds = (stop, ev) => {
+    const out = [];
+    out.push(stop.k === 'D' ? { tab:'food', key:stop.id, icon:'🍜', text:'Put it on the table' } : { tab:'stops', key:stop.id, icon:'🖼️', text:'Pin it to the wall' });
+    const pass = [];
+    if (ev && ev.indexOf('stamp') >= 0) pass.push('reg:' + stop.rid);
+    if (ev && ev.indexOf('citydone') >= 0) pass.push('city:' + stop.cid);
+    if (stop.sp) pass.push('star:' + stop.id);
+    pass.forEach((k, i) => out.push({ tab:'pass', key:k, icon:'📕', text:'Stamp the passport', more:i > 0 }));   // one button: the biggest stamp; the others are still marked new
+    const sv = SV_BY_STOP[stop.id]; if (sv) out.push({ tab:'shelf', key:sv.id, icon:'🎁', text:'Put it on the shelf' });
+    return out;
+  };
+  const jyNewRead = () => { const n = prefGet('jyNew', null); const o = {}; JY_NEW_TABS.forEach(t => { o[t] = n && Array.isArray(n[t]) ? n[t] : []; }); return o; };
+  const ffTier = (n) => { let i = 0; FF_TIERS.forEach((x, k) => { if (n >= x.at) i = k; }); const t = FF_TIERS[i], nx = FF_TIERS[i + 1] || null; return { t, nx, toGo:nx ? nx.at - n : 0, cls:'tier-' + t.id }; };
   const svImg = (s) => s.u || (s.u = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s.svg));
   const SOUV_BY = {}; SOUV.forEach(sv => { SOUV_BY[sv.id] = sv; });
   const avUrlOf = (id) => { const sv = id && SOUV_BY[String(id)]; return sv ? svImg(sv) : ''; };   // a picture by souvenir id (yours or a friend's); '' when there is none or the id is unknown
@@ -1764,7 +1783,32 @@
       g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(vol, at + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
       o.connect(g); g.connect(c.destination); o.start(at); o.stop(at + dur + 0.03);
     };
+    // noise for the travel sounds (engine, wheels, steps, waves, wind), made once
+    let nbuf = null;
+    const noise = (c, at, dur, vol, ftype, f0, f1, q) => {
+      if (!nbuf) { nbuf = c.createBuffer(1, c.sampleRate * 2, c.sampleRate); const d = nbuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
+      const src = c.createBufferSource(); src.buffer = nbuf; src.loop = true;
+      const f = c.createBiquadFilter(); f.type = ftype || 'lowpass'; f.Q.value = q || 0.8; f.frequency.setValueAtTime(f0, at); if (f1) f.frequency.exponentialRampToValueAtTime(f1, at + dur);
+      const g = c.createGain(); g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(vol, at + Math.min(0.4, dur * 0.3)); g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+      src.connect(f); f.connect(g); g.connect(c.destination); src.start(at, Math.random()); src.stop(at + dur + 0.05);
+      return g;
+    };
+    const hit = (c, at, f0, vol, dur) => { const g = noise(c, at, dur || 0.09, vol, 'lowpass', f0); g.gain.cancelScheduledValues(at); g.gain.setValueAtTime(vol, at); g.gain.exponentialRampToValueAtTime(0.0001, at + (dur || 0.09)); };
     const SOUNDS = {
+      // the travel moment: a plane climbing away, a train (horn, then wheels over the joints), footsteps; then the stamp
+      plane:(c, t) => { noise(c, t, 2.6, 0.07, 'lowpass', 260, 1400); noise(c, t + 0.6, 1.8, 0.04, 'bandpass', 900, 300, 1.2); const o = c.createOscillator(), g = c.createGain(); o.type = 'sawtooth'; o.frequency.setValueAtTime(72, t); o.frequency.exponentialRampToValueAtTime(118, t + 2.2); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.018, t + 0.5); g.gain.exponentialRampToValueAtTime(0.0001, t + 2.4); const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 400; o.connect(lp); lp.connect(g); g.connect(c.destination); o.start(t); o.stop(t + 2.5); },
+      train:(c, t) => { tone(c, 311.1, t, 0.55, 'triangle', 0.05); tone(c, 370, t, 0.55, 'triangle', 0.045); tone(c, 311.1, t + 0.62, 0.35, 'triangle', 0.04); tone(c, 370, t + 0.62, 0.35, 'triangle', 0.035);
+        for (let i = 0; i < 5; i++) { const a = t + 1.1 + i * 0.3; hit(c, a, 1600, 0.06, 0.05); hit(c, a + 0.11, 1300, 0.05, 0.05); } },
+      walk: (c, t) => { for (let i = 0; i < 6; i++) hit(c, t + i * 0.36, i % 2 ? 380 : 320, 0.13, 0.11); },
+      stamp:(c, t) => { const o = c.createOscillator(), g = c.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(48, t + 0.16); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.32, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.22); o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + 0.25); hit(c, t, 900, 0.12, 0.06); },
+      pop:  (c, t) => { const o = c.createOscillator(), g = c.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(520, t); o.frequency.exponentialRampToValueAtTime(1250, t + 0.07); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.09, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.12); o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + 0.14); },
+      // a must-see: a slower, glittering reveal; a souvenir: a little two-note "oh!"
+      gold: (c, t) => { [1046.5, 1318.5, 1568, 2093, 2637, 3136].forEach((f, i) => tone(c, f, t + i * 0.06, 0.55, 'triangle', 0.045)); tone(c, 523.25, t, 1.1, 'sine', 0.06); tone(c, 784, t + 0.2, 1, 'sine', 0.05); noise(c, t, 1.2, 0.012, 'highpass', 6000); },
+      found:(c, t) => { tone(c, 1174.66, t, 0.25, 'sine', 0.09); tone(c, 1760, t + 0.13, 0.45, 'sine', 0.09); tone(c, 2349.3, t + 0.13, 0.4, 'triangle', 0.03); },
+      // a few seconds of where you land, under the moment: waves on the coast, wind on the plateaus and grasslands, birds in the hills
+      waves:(c, t) => { for (let i = 0; i < 2; i++) noise(c, t + i * 1.5, 2.1, 0.05, 'lowpass', 380, 1100); noise(c, t, 3.6, 0.012, 'highpass', 3000); },
+      wind: (c, t) => { noise(c, t, 3.6, 0.045, 'bandpass', 380, 900, 3); noise(c, t + 1, 2.6, 0.03, 'bandpass', 700, 420, 4); },
+      birds:(c, t) => { [[0.3, 2600], [0.55, 3100], [1.4, 2900], [1.62, 3400], [2.5, 2700], [2.7, 3200]].forEach(b => { const o = c.createOscillator(), g = c.createGain(), a = t + b[0]; o.type = 'sine'; o.frequency.setValueAtTime(b[1], a); o.frequency.exponentialRampToValueAtTime(b[1] * 1.35, a + 0.07); o.frequency.exponentialRampToValueAtTime(b[1] * 0.9, a + 0.13); g.gain.setValueAtTime(0.0001, a); g.gain.exponentialRampToValueAtTime(0.03, a + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, a + 0.15); o.connect(g); g.connect(c.destination); o.start(a); o.stop(a + 0.17); }); noise(c, t, 3.4, 0.01, 'lowpass', 900); },
       ok:   (c, t) => { tone(c, 880, t, 0.14, 'sine', 0.11); tone(c, 1318.5, t + 0.085, 0.2, 'sine', 0.11); },
       bad:  (c, t) => { tone(c, 262, t, 0.16, 'triangle', 0.1); tone(c, 196, t + 0.1, 0.24, 'triangle', 0.1); },
       done: (c, t) => { [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(c, f, t + i * 0.11, 0.3, 'sine', 0.1)); tone(c, 1046.5, t + 0.44, 0.5, 'triangle', 0.06); },
@@ -3076,13 +3120,13 @@
       g = g || this.rLast || { ws:S.ws, lrn:S.lrn, rlog:[], gain:0, done:true, again:false, at:0, from:wMastery(S.ws[itemOf(it).zh]), to:wMastery(S.ws[itemOf(it).zh]), rate:null };   // (no grade kept: just move on, never throw)
       const q = S.rq.slice(1).filter(z => BANK[itemOf(z).zh] && !staleNew(z, g.ws, g.lrn || S.lrn));
       if (g.again) q.push(it); else if (g.at) q.splice(Math.min(g.at, q.length), 0, it);
-      const counts = Object.assign({}, S.rcounts); if (g.rate) counts[g.rate] = (counts[g.rate] || 0) + 1;
+      const counts = Object.assign({}, S.rcounts); const cr = g.rate || g.lrate; if (cr) counts[cr] = (counts[cr] || 0) + 1;
       const finished = q.length === 0;
       this.rvKey = null; this.rLast = null;
       if (g.rate) { try { const t = ymd(new Date()); let d = null; try { d = JSON.parse(localStorage.getItem('shanlu-achday')); } catch (e) {} if (!d || d.d !== t) d = { d:t, n:0 }; d.n++; if (d.n >= 100) this.achEv.rev100 = 1; localStorage.setItem('shanlu-achday', JSON.stringify(d)); } catch (e) {} }
       if (finished) { const c = (counts.again || 0) + (counts.hard || 0) + (counts.good || 0) + (counts.easy || 0); if (c >= 10 && !counts.again && !counts.hard) this.achEv.perfect = 1; }
       this.setState({
-        rq:q, rflip:false, rpy:false, rdone:S.rdone + (g.done && !g.again ? 1 : 0), rstep:S.rstep + 1, rrun:g.rate ? ((g.rate === 'again' || g.rate === 'hard') ? 0 : (S.rrun || 0) + 1) : (S.rrun || 0), rmiss:(g.rate === 'again' || g.rate === 'hard') && (S.rmiss || []).indexOf(itemOf(it).zh) < 0 ? (S.rmiss || []).concat(itemOf(it).zh).slice(0, 8) : (S.rmiss || []), rxp:S.rxp + g.gain, rcomplete:finished, rcounts:counts,
+        rq:q, rflip:false, rpy:false, rdone:S.rdone + (g.done && !g.again ? 1 : 0), rstep:S.rstep + 1, rrun:g.rate ? ((g.rate === 'again' || g.rate === 'hard') ? 0 : (S.rrun || 0) + 1) : (S.rrun || 0), rmiss:(cr === 'again' || cr === 'hard') && (S.rmiss || []).indexOf(itemOf(it).zh) < 0 ? (S.rmiss || []).concat(itemOf(it).zh).slice(0, 8) : (S.rmiss || []), rxp:S.rxp + g.gain, rcomplete:finished, rcounts:counts,
         xp:S.xp + g.gain, dayXp:S.dayXp + g.gain, dayMin:S.dayMin + (finished ? Math.max(1, Math.round(S.rtotal * 0.5)) : 0),
         ws:g.ws, lrn:g.lrn || S.lrn, rlog:g.rlog.length ? g.rlog : S.rlog, woff:0, rlast:g.rate ? { zh:itemOf(it).zh, from:g.from, to:g.to } : S.rlast,
         qchecked:false, qchoice:null, qtyped:'', qcorrect:false, qfeed:''
@@ -3094,7 +3138,7 @@
       const S = this.state;
       if (!S.rq.length) return;
       const it = S.rq[0];
-      const g = this.rGrade(it, r, 'f'); g.rate = itemOf(it).t === 'l' ? null : r;
+      const g = this.rGrade(it, r, 'f'); g.rate = itemOf(it).t === 'l' ? null : r; if (itemOf(it).t === 'l') g.lrate = r;
       this.rAdvance(g);
     };
     rIntroDone = () => { const S = this.state; if (!S.rq.length) return; const g = this.rGrade(S.rq[0], 'good', 'f'); g.rate = null; this.rAdvance(g); };
@@ -3103,7 +3147,7 @@
       const S = this.state; if (!S.rq.length) return;
       const r = ok ? 'good' : (grade === 'hard' ? 'hard' : 'again');
       const kind = q.type === 'listen' ? 'a' : q.type === 'mc' ? 'c' : 't';
-      const g = this.rGrade(S.rq[0], r, kind); g.rate = itemOf(S.rq[0]).t === 'l' ? null : r;
+      const g = this.rGrade(S.rq[0], r, kind); g.rate = itemOf(S.rq[0]).t === 'l' ? null : r; if (itemOf(S.rq[0]).t === 'l') g.lrate = r;   // a new word's answers count in the session score too (lrate), but not as a mastery change
       this.rLast = g;
       this.setState({ qchecked:true, qcorrect:ok, qfeed:feed });
     };
@@ -3278,6 +3322,7 @@
       const r = JY.step(JWORLD, st0, JY.rngFor(st0), ymd(new Date()));
       if (!r.stop) return;
       prefSet('jy', r.st);
+      { const n = jyNewRead(); jyFinds(r.stop, r.ev).forEach(f => { const l = n[f.tab].filter(k => k !== f.key); l.push(f.key); n[f.tab] = l.slice(-80); }); prefSet('jyNew', n); }
       this.friendsTick();
       SFX.play(r.ev.indexOf('arrive') >= 0 ? 'fly' : 'ok');
       // a flight shows on the map of the whole country; a ride or a walk shows on the map of the region you are in
@@ -3285,19 +3330,31 @@
       const playMode = this.jyMotionOk() ? (flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk')) : '';
       this.setState({ jyTrip:flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk'), jyPlay:playMode, jyPlayStamp:r.ev.indexOf('stamp') >= 0, jyDone:r.ev.indexOf('stamp') >= 0 ? { rid:r.region, next:r.next, all:r.ev.indexOf('all') >= 0 } : null, jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next, from, cost, k:(this.jyK = ((this.jyK || 0) + 1) % 2) }, jyOpen:null, jyTab:'explore', jySel:null, jyFilter:'all', jyReg:flew || !JMAP.regions[r.stop.rid] ? null : r.stop.rid });   // (stays on Explore, where Travel is; the Map tab opens on that province)
       try { window.scrollTo(0, 0); } catch (e) {}
-      if (playMode) this.jyPlayRun(playMode);
-      this.checkMilestones();
+      if (playMode) this.jyPlayRun(playMode, { gold:!!r.stop.sp, sv:!!SV_BY_STOP[r.stop.id], rid:r.stop.rid });
+      else this.checkMilestones();   // (with the travel moment playing, achievements wait for it to end, so a "First souvenir" toast cannot give the reveal away)
     };
     // The travel moment: pay, take off, land, postcard, stamp. It plays once per trip and never loops. Any tap or key skips to the finished picture.
     jyMotionOk = () => !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    jyPlayRun = (mode) => {
-      const t0 = (this.jyPlayAt = Date.now());
+    jyPlayRun = (mode, x) => {
+      const t0 = (this.jyPlayAt = Date.now()); x = x || {};
       clearTimeout(this.jyPlayTimer); if (this.jyPlayOff) this.jyPlayOff();
-      this.jyPlayTimer = setTimeout(() => this.jyPlayEnd(t0), 4300);   // coins in, button wakes, postcard flips, stamp lands, a short rest, then the stop's page
+      // a must-see turns gold and flips more slowly (+0.5 s); a hidden souvenir gets its own beat after the stamp (+1.4 s)
+      const g = x.gold ? 500 : 0;
+      this.jyPlayTimer = setTimeout(() => this.jyPlayEnd(t0), 4300 + g + (x.sv ? 1400 : 0));   // coins in, button wakes, postcard flips, stamp lands, a short rest, then the stop's page
+      // the sounds of the trip, timed to the picture (and cut off if the moment is skipped)
+      (this.jySfxT || []).forEach(clearTimeout); this.jySfxT = [];
+      const at = (ms, name) => this.jySfxT.push(setTimeout(() => { if (this.jyPlayAt === t0) SFX.play(name); }, ms));
+      const BED = { waves:['fujian', 'guangdong', 'guangxi', 'hainan', 'hongkong', 'macau', 'singapore', 'taiwan', 'zhejiang', 'shandong', 'liaoning', 'jiangsu'], wind:['gansu', 'neimenggu', 'ningxia', 'qinghai', 'xinjiang', 'xizang', 'heilongjiang', 'jilin', 'shanxi', 'shaanxi', 'hebei'] };
+      const bed = BED.waves.indexOf(x.rid) >= 0 ? 'waves' : BED.wind.indexOf(x.rid) >= 0 ? 'wind' : 'birds';
+      at(250, mode === 'fly' ? 'plane' : mode === 'leg' ? 'train' : 'walk');
+      if (mode !== 'walk') at(1500, bed);   // you hear the new place as you arrive in it (a walk stays where you are)
+      if (x.gold) at(1150, 'gold');
+      at(2800 + g, 'stamp');
+      if (x.sv) at(3950 + g, 'found');
       // a tap (counted on the click, so the tap cannot fall through to what is underneath) or a key skips to the stop page; the button does its own closing
       const skip = (e) => { if (e && e.target && e.target.closest && e.target.closest('.jy-trip-go')) return; if (e && e.type === 'click') { e.stopPropagation(); e.preventDefault(); } this.jyPlayEnd(t0); };
       const arm = setTimeout(() => { document.addEventListener('click', skip, true); document.addEventListener('keydown', skip); }, 450);
-      this.jyPlayOff = () => { clearTimeout(arm); document.removeEventListener('click', skip, true); document.removeEventListener('keydown', skip); this.jyPlayOff = null; };
+      this.jyPlayOff = () => { clearTimeout(arm); (this.jySfxT || []).forEach(clearTimeout); this.jySfxT = []; document.removeEventListener('click', skip, true); document.removeEventListener('keydown', skip); this.jyPlayOff = null; };
     };
     // when the moment is over (or skipped with a tap) it flows straight into the stop's page
     jyPlayEnd = (t0) => {
@@ -3308,10 +3365,14 @@
     // ---- onboarding ----
     onbSet = (p) => { prefSet('onb', Object.assign({}, onbRead(), p)); this.setState({ onbV:(this.state.onbV || 0) + 1 }); };
     onbSkipStart = () => this.onbSet({ s:'skip' });
-    // the first session: five fixed words go into the learning phase, then Review runs them (introduction, a choice, then typing)
+    // the first session is the first stop of the Path: meet a few words, try them, a short check, and they go into Review
+    // (an older first session still running in Review carries on there; with no Path, the five fixed words go through Review as before)
     onbStartPath = () => {
       const S = this.state;
       if (onbRead().s === 'go' && !S.rcomplete && S.rq.length) { this.onbSet({ w:Date.now() }); this.go('review'); return; }
+      if (onbRead().s === 'go' && S.pl && !S.pl.done) { this.onbSet({ w:Date.now() }); this.setState({ screen:'plesson' }); try { window.scrollTo(0, 0); } catch (e) {} return; }
+      const first = PATH_LVLS.length ? pathNextWord(S, pathFirstOpen(S)) : null;
+      if (first) { this.onbSet({ w:Date.now(), s:'go' }); this.pathStart(first.st.id); return; }
       const lrn = Object.assign({}, S.lrn); const wl = Object.assign({}, S.wlearned);
       START_WORDS.forEach(z => { if (BANK[z] && !(S.ws[z].see.s > 0) && !lrn[z]) { lrn[z] = { st:-1, m:0, at:Date.now() }; wl[z] = true; } });
       this.setState(this.webCredit({ lrn, wlearned:wl, lrnNote:'' }));
@@ -3446,9 +3507,55 @@
     // the travel window: the trip plays in the middle of the screen; closing it shows the new stop's card
     jyTripClose = () => {
       this.jyPlayAt = 0; clearTimeout(this.jyPlayTimer); clearTimeout(this.jyPlaneTimer); if (this.jyPlayOff) this.jyPlayOff();
-      const anim = this.jyMotionOk(); this.setState({ jyTrip:'', jyPlay:'', jyCardIn:anim });
+      const anim = this.jyMotionOk(); this.setState({ jyTrip:'', jyPlay:'', jyCardIn:anim }); this.checkMilestones();
       if (anim) { clearTimeout(this.jyInTimer); this.jyInTimer = setTimeout(() => { if (this.state.jyCardIn) this.setState({ jyCardIn:false }); }, 1100); }
       requestAnimationFrame(() => { try { const el = document.querySelector('.jy-card'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'start', behavior:this.jyMotionOk() ? 'smooth' : 'auto' }); } catch (e) {} });
+      const rv = this.state.jyRv; if (anim && rv) { clearTimeout(this.jyFlyTimer); this.jyFlyTimer = setTimeout(() => this.jyFlyFinds(rv.id), 1150); }
+    };
+    // each find flies from the stop page into where it went: its tab when the tab bar is on screen, otherwise its button on the page; the target gives a little bump
+    jyFlyFinds = (id) => {
+      try {
+        const S = this.state; if (!S.jyRv || S.jyRv.id !== id || S.screen !== 'journey' || !this.jyMotionOk()) return;
+        const stop = JWORLD.byStop[id]; if (!stop) return;
+        const from = document.querySelector('.jy-card .jy-zh') || document.querySelector('.jy-card'); if (!from || !from.animate) return;
+        const fr = from.getBoundingClientRect(); const vh = window.innerHeight || 800;
+        const seen = {};
+        jyFinds(stop, S.jyRv.ev).filter(f => !f.more && !seen[f.tab] && (seen[f.tab] = 1)).forEach((f, i) => {
+          const tab = document.querySelector('.jy-tabs button[data-tab="' + f.tab + '"]'); const bar = document.querySelector('.jy-tabs');
+          let to = null;
+          if (tab && bar) { const tr = tab.getBoundingClientRect(), br = bar.getBoundingClientRect(); if (tr.top >= 0 && tr.bottom <= vh && tr.left >= br.left - 2 && tr.right <= br.right + 2) to = tab; }
+          if (!to) to = document.querySelector('.jy-lands button[data-tab="' + f.tab + '"]');
+          if (!to) return;
+          const tr = to.getBoundingClientRect();
+          const el = document.createElement('span'); el.className = 'jy-flyer'; el.textContent = f.icon; el.setAttribute('aria-hidden', 'true');
+          const x0 = fr.left + fr.width / 2 - 16 + (i - 1) * 26, y0 = fr.top + fr.height / 2 - 16, x1 = tr.left + tr.width / 2 - 16, y1 = tr.top + tr.height / 2 - 16;
+          el.style.left = x0 + 'px'; el.style.top = y0 + 'px'; document.body.appendChild(el);
+          const mx = (x1 - x0) * .5, my = Math.min(y1 - y0, 0) * .5 - 70;
+          const a = el.animate([{ transform:'translate(0,0) scale(.4)', opacity:0 }, { transform:'translate(0,-24px) scale(1.25)', opacity:1, offset:.18 }, { transform:'translate(' + mx + 'px,' + my + 'px) scale(1)', opacity:1, offset:.55 }, { transform:'translate(' + (x1 - x0) + 'px,' + (y1 - y0) + 'px) scale(.5)', opacity:.2 }], { duration:1000, delay:i * 260, easing:'cubic-bezier(.45,0,.3,1)', fill:'both' });
+          a.onfinish = () => { el.remove(); try { to.animate([{ transform:'scale(1)' }, { transform:'scale(1.16)' }, { transform:'scale(.96)' }, { transform:'scale(1)' }], { duration:420, easing:'ease-out' }); } catch (e) {} SFX.play('pop'); };
+        });
+      } catch (e) {}
+    };
+    // "Put it on the table / Pin it to the wall / Stamp the passport / Put it on the shelf": open the tab where the find went and let it arrive there with a bit of emphasis
+    jyLand = (f) => {
+      const S = this.state; if (!JWORLD) return; SFX.play('ok');
+      const p = { jyRv:null, jyOpen:null, jyTrip:'', jyFilter:'all', jyMoreN:40, jyFlip:null, jyFoodOv:false, jyFoodPop:null, jyLandK:f.key, jyNewSeen:null, jyTab:f.tab, jyPg:null };
+      if (f.tab === 'food') { const st = JWORLD.byStop[f.key]; if (st) Object.assign(p, { jyFoodRid:st.rid, jyFoodPg:this.jyFoodPageOf(st), jyFoodOv:true }); }   // the table opens big, the dish drops in, then its card opens
+      else if (f.tab === 'pass') p.jyPsec = f.key.split(':')[0];
+      else if (f.tab === 'shelf') Object.assign(p, { jySvSel:f.key, jySvFilter:'all' });
+      this.setState(p);
+      try { window.scrollTo(0, 0); } catch (e) {}
+      const k = f.key; clearTimeout(this.jyLandTimer); clearTimeout(this.jyLandFlip);
+      if (f.tab === 'food') this.jyLandFlip = setTimeout(() => { if (this.state.jyTab === 'food' && this.state.jyFoodOv && this.state.jyLandK === k) this.setState({ jyFoodPop:k }); }, this.jyMotionOk() ? 2300 : 0);
+      if (f.tab === 'stops' && this.jyMotionOk()) this.jyLandFlip = setTimeout(() => { if (this.state.jyTab === 'stops' && this.state.jyLandK === k) { SFX.play('ok'); this.setState({ jyFlip:k }); } }, 1900);
+      if (f.tab === 'shelf' || f.tab === 'food') setTimeout(() => { try { const el = document.querySelector(f.tab === 'shelf' ? '.sv-cell.land' : '.fz-wrap, .jy-food'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'center', behavior:'auto' }); } catch (e) {} }, 60);
+      this.jyLandTimer = setTimeout(() => { if (this.state.jyLandK === k) this.setState({ jyLandK:null }); }, 7000);
+    };
+    // the feast table is shown a course (page) at a time: which one holds this dish
+    jyFoodPageOf = (stop) => {
+      try { const R = JWORLD.byRegion[stop.rid]; const st = jyRead() || { seen:[] }; const have = {}; st.seen.forEach(i => { have[i] = 1; });
+        const found = R.stops.filter(x => x.k === 'D').map(x => ({ id:x.id, zh:x.zh, py:x.py, en:x.en, kind:JY.sayKind(x), sp:!!x.sp, hid:!have[x.id] }));
+        return window.FEAST && window.FEAST.pageOf ? window.FEAST.pageOf(found, stop.id) : 0; } catch (e) { return 0; }
     };
     jyOpenStop = (id) => { SFX.play('ok'); this.setState({ jyOpen:id, jyRv:null }); try { window.scrollTo(0, 0); } catch (e) {} };
     // a finished region: the pop-up closes, or takes you to the country map where the province fills in with its colour
@@ -3462,7 +3569,7 @@
     jyShowReg = (id) => this.setState({ jyTab:'map', jyReg:id, jySel:null, jyFilter:'all', jyOpen:null, jyRv:null });
     jyBack = () => this.setState({ jyReg:null, jySel:null, jyFilter:'all' });
     jyPgGo = (d, cur, total) => { const to = Math.max(0, Math.min(total - 1, cur + d)); if (to === cur) return; SFX.play('ok'); this.setState({ jyPg:to }); };
-    jyTabSet = (t) => this.setState({ jyTab:t, jyFilter:'all', jyMoreN:40, jyFlip:null, jyPg:null, jyFoodOv:false, jyFoodPop:null });
+    jyTabSet = (t) => this.setState({ jyTab:t, jyFilter:'all', jyMoreN:40, jyFlip:null, jyPg:null, jyFoodOv:false, jyFoodPop:null, jyLandK:null, jyNewSeen:null });
     jyFilterSet = (f) => this.setState({ jyFilter:f, jySel:null, jyMoreN:40 });
     jySvFilterSet = (f) => this.setState({ jySvFilter:f, jySvSel:null });
     jySvPick = (id) => { SFX.play('ok'); this.setState({ jySvSel:id }); setTimeout(() => { try { const el = document.querySelector('.sv-detail'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest', behavior:'smooth' }); } catch (e) {} }, 40); };
@@ -3604,6 +3711,7 @@
           Object.assign(out, { jyDoneLabel:DR.en + ' complete', jyDoneZh:DR.zh, jyDoneEn:DR.en, jyDoneHue:hueD, jyDoneArt:window.JYSCENE ? '<svg class="jd-scene" viewBox="0 0 360 150" preserveAspectRatio="xMidYMin slice" aria-hidden="true">' + window.JYSCENE.scene(dn.rid) + '</svg>' : '',
             jyDoneTitle:dn.all ? 'Every region stamped!' : DR.en + ' complete!', jyDoneSub:dn.all ? 'You have been everywhere. Well travelled.' : 'You have seen every stop. Your passport is stamped.',
             jyDoneStats:[{ n:String(rs.got), l:rs.got === 1 ? 'stop' : 'stops' }, { n:String(DR.cities.length), l:DR.cities.length === 1 ? 'city' : 'cities' }, { n:rs.byKind.Dish[0] + '/' + rs.byKind.Dish[1], l:'dishes' }, { n:svT.length ? svG + '/' + svT.length : String(stampedN), l:svT.length ? 'souvenirs' : 'stamps' }],
+            ...(() => { const a = ffTier(stampedN), b = ffTier(stampedN - 1); const up = !dn.all && a.t.id !== b.t.id; return { jyDoneTierShow:up, jyDoneTierCls:'jd-tier ' + a.cls, jyDoneTierZh:a.t.zh, jyDoneTierEn:up ? 'New status: Shanlu Air ' + a.t.en : '', jyDoneTierSub:up ? 'Your boarding passes are ' + a.t.en.toLowerCase() + ' from now on.' : '' }; })(),
             jyDoneCount:stampedN + ' of ' + allN + ' regions stamped', jyDoneNextShow:!!dn.next && !dn.all, jyDoneNext:dn.next ? 'Next flight: ' + rName(dn.next) : '', jyDoneConf:conf, jyDoneClose:this.jyDoneClose, jyDoneMap:this.jyDoneMap, jyDoneMapText:'See ' + DR.en + ' fill in on the map' });
         } }
       // three lines about a region: on its airport card, and under its map
@@ -3632,6 +3740,15 @@
           if (ev.indexOf('citydone') >= 0 && ev.indexOf('stamp') < 0) banners.push({ t:CC.en + ' complete!', d:'You have seen every stop here. Its city stamp is in your passport.' });
           if (ev.indexOf('all') >= 0) banners.push({ t:'Every region stamped!', d:'You have been everywhere. Well travelled.' });
         }
+        // the very first stop of someone who has not learned a word yet: the Path's story starts here (HSK 1 opens with a host waving on the platform)
+        { const firstStop = st.seen && st.seen[0] === stop.id; const noWords = !Object.keys(S.lrn || {}).length && !BANK_KEYS.some(z => wStarted(S, z));
+          const fw = firstStop && noWords && PATH_LVLS.length ? pathNextWord(S, pathFirstOpen(S)) : null;
+          out.jyHostShow = !!fw;
+          if (fw) { const o = onbRead(); const inFlow = !ONB_OFF() && o.p && o.p !== 'done' && !o.w; const hasHi = stopWords(fw.st).indexOf('你好') >= 0;
+            Object.assign(out, { jyHostText:(hasHi ? 'Learn to greet them properly: your first stop on the Path teaches 你好 and a few more everyday words.' : 'Learn to greet them properly: your first stop on the Path teaches a few everyday words.') + (inFlow ? ' First, a quick look at how Shanlu works.' : ''),
+              jyHostHi:hasHi, jyHostBtn:inFlow ? 'Continue' : 'Learn to greet them', jyHostGo:inFlow ? this.jyCloseCard : () => { this.jyCloseCard(); this.onbStartPath(); }, jyHostSay:() => this.say('你好', 'jyhost') }); } }
+        // where this stop's finds went: one button per place (only right after travelling here)
+        { const seenT = {}; out.jyLands = rv ? jyFinds(stop, rv.ev).filter(f => !f.more && !seenT[f.tab] && (seenT[f.tab] = 1)).map(f => ({ tab:f.tab, icon:f.icon, text:f.text, go:() => this.jyLand(f) })) : []; out.jyLandsShow = out.jyLands.length > 0; }
         Object.assign(out, { jyBanners:banners, jyBannerShow:banners.length > 0, jyStampShow:!!rv && rv.ev.indexOf('stamp') >= 0, jyKindCls:'k' + stop.k + (stop.sp ? ' sp' : ''),
           jyIsT:stop.k === 'T', jyIsA:stop.k === 'A', jyIsD:stop.k === 'D', jyIsC:stop.k === 'C', jyIsP:stop.k === 'P', jyKindLabel:(stop.sp ? '★ Must-see · ' : '') + stop.kind, jyPlace:CR.en + ' · ' + CC.en + (CC.muni ? ' (' + CC.muni + ' municipality)' : ''), jyCardZh:stop.zh, jyCardPy:stop.py, jyCardEn:stop.en, jyCardNote:stop.note, jyHasFun:!!stop.fun, jyCardFun:stop.fun,
           jyHasWords:stop.k === 'P', jyWords:'机场 jīchǎng airport · 护照 hùzhào passport · 登机牌 dēngjīpái boarding pass · 行李 xíngli luggage',
@@ -3642,11 +3759,14 @@
         const kmT = (n) => n.toLocaleString('en-US');
         out.jyTkFly = !!hp && hp.mode === 'fly'; out.jyTkRide = !!hp && hp.mode === 'ride'; out.jyTkWalk = !!hp && hp.mode === 'walk';
         { const KL = { P:'A flight', T:'A new city', A:'A sight', D:'A dish', C:'A cultural stop' }; const cost = rv && rv.cost ? rv.cost : 0; const arriveEv = !!rv && rv.ev.indexOf('arrive') >= 0;
-          Object.assign(out, { jyM1Cls:S.jyPlay ? 'play' : 'rest', jyM1PayText:cost > 0 ? 'The price of this stop' : 'Your first flight is free', jyM1PayCoins:cost > 0 ? cost.toLocaleString('en-US') + ' coins' : 'Free',
+          const svM = rv && SV_BY_STOP[stop.id] ? SV_BY_STOP[stop.id] : null;
+          Object.assign(out, { jyM1SvShow:!!svM, jyM1SvImg:svM ? svImg(svM) : '', jyM1SvEn:svM ? svM.en : '', jyM1Gold:!!stop.sp });
+          Object.assign(out, { jyM1Cls:(S.jyPlay ? 'play' : 'rest') + (stop.sp ? ' gold' : '') + (svM ? ' sv' : ''), jyM1PayText:cost > 0 ? 'The price of this stop' : 'Your first flight is free', jyM1PayCoins:cost > 0 ? cost.toLocaleString('en-US') + ' coins' : 'Free',
             jyM1GoText:arriveEv ? (st.n === 1 ? 'Take your first flight (free)' : 'Board the flight') : 'Travel to the next stop',
             jyM1Kind:KL[stop.k] || 'A stop', jyM1Icon:window.JYSCENE ? window.JYSCENE.kindSvg(stop.k) : '', jyM1Alt:'A mystery stop, then ' + stop.en,
             jyM1StampZh:CC.zh.slice(0, 2), jyM1StampEn:'ARRIVED' }); }
         if (S.jyTrip) { out.jyTripFly = !!hp && hp.mode === 'fly' && S.jyTrip === 'fly'; out.jyTripLeg = !!hp && hp.mode === 'ride' && S.jyTrip === 'leg'; out.jyTripKicker = hp && hp.mode === 'fly' ? 'Flying to' : hp && hp.mode === 'ride' ? 'On the train to' : 'Walking to'; }
+        { const ft = ffTier(Object.keys(st.done || {}).filter(id => JWORLD.byRegion[id]).length); out.jyTkTier = ft.cls; out.jyTkTierEn = ft.t.en; }
         if (hp && hp.mode === 'fly') Object.assign(out, { jyTkFromCode:hp.from ? hp.from.code || '···' : '家', jyTkFromZh:hp.from ? hp.from.zh : '', jyTkFromPy:hp.from ? hp.from.py : 'jiā · home',
           jyTkToCode:hp.to.code || '···', jyTkToZh:hp.to.zh, jyTkToPy:hp.to.py, jyTkToEn:hp.to.en, jyTkNo:'SL ' + String(hp.no).padStart(3, '0'), jyTkDate:hp.date,
           jyTkHasKm:hp.km > 0, jyTkKm:'约 ' + kmT(hp.km) + ' 公里', jyTkKmEn:'about ' + kmT(hp.km) + ' km',
@@ -3659,7 +3779,7 @@
         const sv = SV_BY_STOP[stop.id] && have[stop.id] ? SV_BY_STOP[stop.id] : null;
         out.jySvCardShow = !!sv;
         if (sv) Object.assign(out, { jySvCardCls:rv ? 'new' : '', jySvCardTitle:rv ? 'You found a souvenir!' : 'A souvenir was hidden here', jySvCardImg:svImg(sv), jySvCardZh:sv.zh, jySvCardPy:sv.py, jySvCardEn:sv.en, jySvCardStory:sv.story,
-          jySvCardShelf:() => { SFX.play('ok'); this.setState({ jyTab:'shelf', jySvSel:sv.id, jySvFilter:'all', jyRv:null, jyOpen:null, jyFilter:'all' }); try { window.scrollTo(0, 0); } catch (e) {} } });
+          jySvCardShelf:rv ? () => this.jyLand({ tab:'shelf', key:sv.id }) : () => { SFX.play('ok'); this.setState({ jyTab:'shelf', jySvSel:sv.id, jySvFilter:'all', jyRv:null, jyOpen:null, jyFilter:'all' }); try { window.scrollTo(0, 0); } catch (e) {} } });
         // a sentence to say at this stop
         const sy = JY.sayFor(stop);
         Object.assign(out, { jySayTag:sy.tag, jySayZh:sy.zh, jySayPy:sy.py, jySayEn:sy.en, jySayIt:() => this.say(sy.zh, 'jysay:' + stop.id) });
@@ -3685,7 +3805,16 @@
       const tabNow = fm && (S.jyTab === 'stops' || S.jyTab === 'food' || S.jyTab === 'shelf' || S.jyTab === 'explore') ? 'map' : S.jyTab;
       const tabList = fm ? [['map', 'Map'], ['pass', 'Passport']] : [['explore', 'Explore'], ['map', 'Map'], ['pass', 'Passport'], ['shelf', 'Souvenirs'], ['stops', 'Postcards'], ['food', 'Food']];
          // a grid, not a scrolling strip: 3 across on a phone (two rows), all in one row on wide screens
-      out.jyTabs = tabList.map(t => ({ label:t[1], cls:tabNow === t[0] ? 'on' : '', sel:tabNow === t[0] ? 'true' : 'false', fn:() => this.jyTabSet(t[0]) }));
+      const jn = fm ? null : jyNewRead();
+      out.jyTabs = tabList.map(t => { const dot = !!jn && !S.jyTrip && !S.jyPlay && tabNow !== t[0] && !!jn[t[0]] && jn[t[0]].length > 0;
+        return { key:t[0], label:t[1], dot, aria:t[1] + (dot ? ', something new' : ''), cls:(tabNow === t[0] ? 'on' : '') + (dot ? ' has-new' : ''), sel:tabNow === t[0] ? 'true' : 'false', fn:() => this.jyTabSet(t[0]) }; });
+      // looking at a tab uses up its "new" list: the ribbons stay on screen while you are here (jyNewSeen), the saved list empties
+      if (jn && JY_NEW_TABS.indexOf(tabNow) >= 0 && jn[tabNow].length && S.screen === 'journey' && this.jyNewMv !== tabNow + jn[tabNow].join()) {
+        const keys = jn[tabNow].slice(); this.jyNewMv = tabNow + keys.join();
+        setTimeout(() => { const n = jyNewRead(); n[tabNow] = n[tabNow].filter(k => keys.indexOf(k) < 0); prefSet('jyNew', n); const cur = this.state.jyNewSeen && this.state.jyNewSeen.t === tabNow ? this.state.jyNewSeen.keys : [];
+          this.setState({ jyNewSeen:{ t:tabNow, keys:cur.concat(keys) } }); this.jyNewMv = ''; }, 0);
+      }
+      const isNewK = (k) => !!(S.jyNewSeen && S.jyNewSeen.t === tabNow && S.jyNewSeen.keys.indexOf(k) >= 0) || !!(jn && jn[tabNow] && jn[tabNow].indexOf(k) >= 0);
       out.jyIsExplore = tabNow === 'explore'; out.jyExCls = tabNow === 'explore' ? 'jy-ex' : ''; out.jyNowShow = !fm && tabNow === 'explore';
       // under the road card on Explore: coins toward the next stop, and the journey so far at a glance (a phone otherwise shows empty space here)
       { const sv = {}; st.seen.forEach(id => { sv[id] = 1; });
@@ -3703,7 +3832,8 @@
                 out.jySvChips = [['all', 'All', list.length], ['found', 'Found', got.length]].map(c => ({ label:c[1], count:c[2], cls:fl === c[0] ? 'on' : '', fn:() => this.jySvFilterSet(c[0]) }));
         const shown = list.filter(x => fl === 'all' || (fl === 'found') === !!have[x.stop]).sort((a, b) => a.en.localeCompare(b.en, 'en', { sensitivity:'base' }) || (a.id < b.id ? -1 : 1));
         out.jySvItems = shown.map(x => { const has = !!have[x.stop]; const RR = JWORLD.byRegion[x.rid];
-          return { cls:(has ? 'got' : 'hid') + (sel && sel.id === x.id ? ' sel' : ''), img:svImg(x), name:has ? x.en : '', zh:has ? x.zh : '', label:has ? x.en + ', found' : 'A souvenir still to find in ' + (RR ? RR.en : 'China'), open:() => this.jySvPick(x.id) }; });
+          const nw = has && isNewK(x.id), ld = has && S.jyLandK === x.id;
+          return { isNew:nw, cls:(has ? 'got' : 'hid') + (sel && sel.id === x.id ? ' sel' : '') + (nw ? ' isnew' : '') + (ld ? ' land' : ''), img:svImg(x), name:has ? x.en : '', zh:has ? x.zh : '', label:has ? x.en + ', found' : 'A souvenir still to find in ' + (RR ? RR.en : 'China'), open:() => this.jySvPick(x.id) }; });
         out.jySvNone = shown.length === 0; out.jySvNoneText = fl === 'found' ? 'Nothing here yet. Travel on: each region hides a few souvenirs in its stops.' : 'You have found them all.';
         out.jySvSelShow = !!sel;
         if (sel) { const has = !!have[sel.stop]; const RR = JWORLD.byRegion[sel.rid]; const SP = JWORLD.byStop[sel.stop];
@@ -3793,7 +3923,8 @@
         const dk = S.theme === 'dark';
         const hsh = (str) => { let h = 0; for (let k = 0; k < str.length; k++) h = (h * 31 + str.charCodeAt(k)) | 0; return Math.abs(h); };
         out.jyCards = S.jyTab === 'stops' ? shown.slice(0, S.jyMoreN).map(s => { const ph = JMEDIA[s.id]; const has = !!(ph && ph.u); const RR = JWORLD.byRegion[s.rid]; const CC = JWORLD.byCity[s.cid]; const fl = S.jyFlip === s.id;
-          return { kind:(s.sp ? '★ ' : '') + KN[s.k], zh:s.zh, py:s.py, en:s.en, where:CC.en + ' · ' + RR.en, hue:RR.hue, rot:(((hsh(s.id) % 7) - 3) * 0.9).toFixed(1), cls:'k' + s.k + (s.sp ? ' sp' : '') + (fl ? ' flip' : '') + (s.zh.length > 6 ? ' long' : ''),
+          const nw = isNewK(s.id), ld = S.jyLandK === s.id;
+          return { kind:(s.sp ? '★ ' : '') + KN[s.k], zh:s.zh, py:s.py, en:s.en, where:CC.en + ' · ' + RR.en, hue:RR.hue, rot:(((hsh(s.id) % 7) - 3) * 0.9).toFixed(1), cls:'k' + s.k + (s.sp ? ' sp' : '') + (fl ? ' flip' : '') + (s.zh.length > 6 ? ' long' : '') + (nw ? ' isnew' : '') + (ld ? ' land' : ''), isNew:nw,
             hasPhoto:has, noPhoto:!has, url:has ? ph.u : '', art:jyStopArt(s, RR.hue, dk), credit:has && ph.c ? ph.c : '', ft:fl ? '-1' : '0', kt:fl ? '0' : '-1', kh:fl ? 'false' : 'true',
             label:'Postcard: ' + s.en + ', ' + CC.en + (s.sp ? ', a must-see' : '') + '. Tap to turn it over.', flip:() => { SFX.play('ok'); this.setState({ jyFlip:fl ? null : s.id }); }, open:() => this.jyOpenStop(s.id) }; }) : [];
         out.jyMoreShow = shown.length > S.jyMoreN; out.jyMore = () => this.setState({ jyMoreN:S.jyMoreN + 40 });
@@ -3827,7 +3958,7 @@
           const nowIds = R.stops.filter(x => x.k === 'D' && have[x.id]).map(x => x.id);
           let fresh = S.jyFoodNew && S.jyFoodNew.rid === rid ? S.jyFoodNew.ids : null;
           if (!fresh) { const known = {}; (fzRead()[rid] || []).forEach(id => { known[id] = 1; }); const ids = nowIds.filter(id => !known[id]); if (ids.length) { fresh = {}; ids.forEach(id => { fresh[id] = 1; }); } this.jyFoodSeen(rid, fresh, nowIds); }
-          const found = R.stops.filter(x => x.k === 'D').map(x => ({ id:x.id, zh:x.zh, py:x.py, en:x.en, kind:JY.sayKind(x), sp:!!x.sp, hid:!have[x.id], fresh:!!(fresh && fresh[x.id]) }));
+          const found = R.stops.filter(x => x.k === 'D').map(x => ({ id:x.id, zh:x.zh, py:x.py, en:x.en, kind:JY.sayKind(x), sp:!!x.sp, hid:!have[x.id], fresh:!!(fresh && fresh[x.id]) || (S.jyLandK === x.id && !!have[x.id]), nw:!!have[x.id] && isNewK(x.id), focus:S.jyLandK === x.id }));
           const nFound = found.filter(f => !f.hid).length;
           const total = found.length, n0 = Math.max(0, Math.min(window.FEAST.pagesFor(found.map(f => Object.assign({}, f, window.FEAST.classify(f, f.kind)))) - 1, S.jyFoodPg || 0));
           const sc = window.FEAST.scene(rid, found, n0);
@@ -3867,7 +3998,8 @@
         out.jyPassMore = () => this.setState({ jyPassAll:!S.jyPassAll });
         out.jyStamps = sorted.filter(id => showAll || vs.done[id] || (vs.reg === id && vs.started)).map(id => {
           const has = !!JWORLD.byRegion[id]; const RR = JWORLD.byRegion[id]; const got = !!vs.done[id]; const here = !got && vs.reg === id && vs.started;
-          return { hue:has ? RR.hue : META[id][2], cls:got ? 'got' : here ? 'here' : 'empty', zh:got || here ? (has ? RR.zh : META[id][0]) : '?', en:got || here ? rName(id) : 'Not yet', code:got || here ? (has && RR.air ? RR.air.code : '') : '', date:got ? vs.done[id] : here ? 'In progress' : '',
+          const nw = got && isNewK('reg:' + id), ld = S.jyLandK === 'reg:' + id;
+          return { key:'reg:' + id, isNew:nw, hue:has ? RR.hue : META[id][2], cls:(got ? 'got' : here ? 'here' : 'empty') + (nw ? ' isnew' : '') + (ld ? ' land' : ''), zh:got || here ? (has ? RR.zh : META[id][0]) : '?', en:got || here ? rName(id) : 'Not yet', code:got || here ? (has && RR.air ? RR.air.code : '') : '', date:got ? vs.done[id] : here ? 'In progress' : '',
             label:got ? rName(id) + ', stamped' : here ? rName(id) + ', in progress' : 'Not visited yet', open:has && (got || here) && !fm ? () => this.jyShowReg(id) : () => {} };
         });
         // the passport is a little book with a cover and a bookmark on the side for each kind of stamp: regions (four to a page), cities and must-sees (nine to a page)
@@ -3881,9 +4013,11 @@
             const curC = st.started && st.cur && JWORLD.byCity[st.cur] && !cs.some(c => c.cid === st.cur) ? JWORLD.byCity[st.cur] : null;
             cityItems = (curC ? [{ C:curC, here:true }] : []).concat(cs.map(c => ({ C:JWORLD.byCity[c.cid], here:false }))).map(o => {
               const got = o.C.stops.filter(x => have[x.id]).length;
-              return { art:JART ? jyArt(JART.cityKey(o.C), JWORLD.byRegion[o.C.rid].hue, dark) : '', zh:o.C.zh, en:o.C.en, hue:JWORLD.byRegion[o.C.rid].hue, cls:(o.here ? 'here' : 'got') + (o.C.zh.length > 4 ? ' long' : o.C.zh.length === 4 ? ' l4' : ''), sub:o.here ? got + ' / ' + o.C.stops.length : '', label:o.C.en + (o.here ? ', ' + got + ' of ' + o.C.stops.length + ' stops seen' : ', city stamp'), open:() => this.jyShowReg(o.C.rid) };
+              const ck = 'city:' + o.C.id, nw = !o.here && isNewK(ck), ld = !o.here && S.jyLandK === ck;
+              return { key:ck, isNew:nw, art:JART ? jyArt(JART.cityKey(o.C), JWORLD.byRegion[o.C.rid].hue, dark) : '', zh:o.C.zh, en:o.C.en, hue:JWORLD.byRegion[o.C.rid].hue, cls:(o.here ? 'here' : 'got') + (o.C.zh.length > 4 ? ' long' : o.C.zh.length === 4 ? ' l4' : '') + (nw ? ' isnew' : '') + (ld ? ' land' : ''), sub:o.here ? got + ' / ' + o.C.stops.length : '', label:o.C.en + (o.here ? ', ' + got + ' of ' + o.C.stops.length + ' stops seen' : ', city stamp'), open:() => this.jyShowReg(o.C.rid) };
             });
-            starItems = ms.map(x => ({ art:jyStopArt(x, JWORLD.byRegion[x.rid].hue, dark), zh:x.zh, en:x.en, label:'Must-see: ' + x.en, open:() => this.jyOpenStop(x.id) }));
+            starItems = ms.map(x => { const nw = isNewK('star:' + x.id), ld = S.jyLandK === 'star:' + x.id;
+              return { key:'star:' + x.id, isNew:nw, cls:'jy-sstamp' + (nw ? ' isnew' : '') + (ld ? ' land' : ''), art:jyStopArt(x, JWORLD.byRegion[x.rid].hue, dark), zh:x.zh, en:x.en, label:'Must-see: ' + x.en, open:() => this.jyOpenStop(x.id) }; });
             const nCities = Object.keys(JWORLD.byCity).length, nStar = Object.keys(JWORLD.byStop).filter(k => JWORLD.byStop[k].sp).length;
             out.jyPassSub += ' · ' + plural(cs.length, 'city stamp', 'city stamps') + ' of ' + nCities + ' · ' + plural(ms.length, 'must-see', 'must-sees') + ' of ' + nStar;
           }
@@ -3891,7 +4025,9 @@
             city:{ items:cityItems, per:6, head:'城', title:'Cities', none:'None yet. Your first one comes when you see every stop in a city.', sub:() => cs.length + ' city stamps' },
             star:{ items:starItems, per:6, head:'★', title:'Must-sees', none:'None yet. Gold stops are the must-sees.', sub:() => ms.length + ' must-sees' } }[sec];
           const per = SEC.per, np = Math.max(1, Math.ceil(SEC.items.length / per)), total = np + 1;
-          const auto = 0;   // the passport always opens on its cover
+          // the passport opens on its cover, except when a stamp has just been put in: then on the page that holds it (the page turns over to it)
+          const landAt = S.jyLandK ? SEC.items.findIndex(x => x.key === S.jyLandK) : -1;
+          const auto = landAt >= 0 ? Math.floor(landAt / per) + 1 : 0;
           const cur = Math.max(0, Math.min(total - 1, S.jyPg == null ? auto : S.jyPg));
           const stampedN = ids.filter(id => vs.done[id]).length;
           const facts = [{ k:'Regions', v:stampedN + ' / ' + ids.length }].concat(fm ? [] : [{ k:'Cities', v:cs.length + ' / ' + Object.keys(JWORLD.byCity).length }, { k:'Must-sees', v:ms.length + ' / ' + Object.keys(JWORLD.byStop).filter(k => JWORLD.byStop[k].sp).length }]);
@@ -3899,7 +4035,9 @@
           const regLast = regItems.reduce((a, x, i) => x.cls === 'empty' ? a : i, 0), regPg = Math.floor(regLast / 4) + 1;
           out.jyPsecs = fm ? [] : [['reg', 'Regions'], ['city', 'Cities'], ['star', 'Must-sees']].map(x => ({ label:x[1], cls:'pp-mark ' + x[0] + (sec === x[0] ? ' on' : ''), pressed:sec === x[0] ? 'true' : 'false', fn:() => { if (sec !== x[0] || cur === 0) { SFX.play('ok'); this.setState({ jyPsec:x[0], jyPg:x[0] === 'reg' ? regPg : 1 }); } } }));
           out.jyPsecShow = !fm; out.jyPassMoreShow = out.jyPassMoreShow && sec === 'reg';
-          out.jyPages = [{ cover:true, isPage:false, cls:(cur > 0 ? 'turned' : 'cur') + ' cv', z:cur > 0 ? 0 : total, hid:cur > 0 ? 'true' : 'false', sub:'', facts, who:fm ? fm.name : '', title:'', no:'', tab:'-1', stamps:[], cstamps:[], sstamps:[], isReg:false, isCity:false, isStar:false, none:false, noneText:'' }].concat(Array.from({ length:np }, (_, p) => {
+          const ftP = ffTier(stampedN);
+          out.jyPages = [{ cover:true, isPage:false, cls:(cur > 0 ? 'turned' : 'cur') + ' cv', z:cur > 0 ? 0 : total, hid:cur > 0 ? 'true' : 'false', sub:'', facts, who:fm ? fm.name : '',
+            tierCls:'pp-cv-tier ' + ftP.cls, tierZh:ftP.t.zh, tierEn:'Shanlu Air ' + ftP.t.en, tierNext:ftP.nx ? plural(ftP.toGo, 'more region', 'more regions') + ' to ' + ftP.nx.en : 'The top status', title:'', no:'', tab:'-1', stamps:[], cstamps:[], sstamps:[], isReg:false, isCity:false, isStar:false, none:false, noneText:'' }].concat(Array.from({ length:np }, (_, p) => {
             const idx = p + 1, mine = SEC.items.slice(p * per, p * per + per);
             return { cover:false, isPage:true, cls:idx < cur ? 'turned' : idx === cur ? 'cur' : 'next', z:idx < cur ? idx : total - idx, hid:idx === cur ? 'false' : 'true', sub:'', facts:[], who:'', title:SEC.title, head:SEC.head, no:idx + ' / ' + np, tab:idx === cur ? '0' : '-1',
               isReg:sec === 'reg', isCity:sec === 'city', isStar:sec === 'star', stamps:sec === 'reg' ? mine : [], cstamps:sec === 'city' ? mine : [], sstamps:sec === 'star' ? mine : [], none:SEC.items.length === 0, noneText:SEC.none };
@@ -4170,11 +4308,14 @@
     plFinish = () => {
       const S = this.state; const pl = S.pl; if (!pl || pl.done) return;
       const first = !prefGet('pth.' + pl.id, 0); const now = Date.now();
+      const onbFirst = first && pl.fresh.length > 0 && onbRead().s === 'go';   // a new person's first session: it pays more and ends with what to do next
       const lrn = Object.assign({}, S.lrn); const wl = Object.assign({}, S.wlearned);
       pl.fresh.forEach(zh => { lrn[zh] = { st:pl.missed[zh] === 'final' ? -1 : 0, m:0, at:now }; wl[zh] = true; });
       prefSet('pth.' + pl.id, now);
-      const patch = { lrn, wlearned:wl, webCredited:true, lrnNote:'', pl:Object.assign({}, pl, { done:true, gain:first ? STOP_COINS : 0 }) };
-      if (first) { patch.xp = S.xp + STOP_COINS; patch.dayXp = S.dayXp + STOP_COINS; patch.dayMin = S.dayMin + Math.max(2, Math.round(pl.steps.length / 5)); }
+      const coins = onbFirst ? FIRST_SESSION_COINS : STOP_COINS;
+      const patch = { lrn, wlearned:wl, webCredited:true, lrnNote:'', pl:Object.assign({}, pl, { done:true, gain:first ? coins : 0, onbDone:onbFirst }) };
+      if (first) { patch.xp = S.xp + coins; patch.dayXp = S.dayXp + coins; patch.dayMin = S.dayMin + Math.max(2, Math.round(pl.steps.length / 5)); }
+      if (onbFirst) this.onbSet({ s:'done', d:ymd(new Date()), v:'path' });   // v: it ended on the Path (its own what-next panel), not in Review
       SFX.play('done');
       this.setState(patch);
       try { window.scrollTo(0, 0); } catch (e) {}
@@ -4720,7 +4861,7 @@
         plMeet:emptyMeet, plQuest:emptyQ, plOpts:[], plOptsCls:'', plChecked:false, plFbCls:'', plFbTitle:'', plFbZh:'', plFbPyEn:'', plFbMore:'', plHasFbMore:false,
         plHearCls:S.playing === 'pl' ? 'on' : '', plHearExCls:S.playing === 'plx' ? 'on' : '',
         plNext:this.plNext, plHear:this.plHear, plHearEx:this.plHearEx, plClose:this.plClose, plKeep:this.plStay, plExit:this.plLeave, plAfter:this.plAfter,
-        plRes:{ n:0, gain:0, hasGain:false, words:[], hasMissed:false, missedText:'', headline:'', sub:'', replay:false, nextText:'', hasNext:false }
+        plRes:{ n:0, gain:0, hasGain:false, words:[], hasMissed:false, missedText:'', headline:'', sub:'', replay:false, nextText:'', hasNext:false, nextCls:'btn pri big', onb:false, jyShow:false, jyText:'', jyBtn:'' }
       };
       if (!pl || S.screen !== 'plesson') return out;
       const hit = STOP_BY[pl.id]; const st = pl.steps[pl.i];
@@ -4737,8 +4878,13 @@
           hasMissed:missed.length > 0, missedText:'Worth another look: ' + missed.join(' · ') + '. Review will bring ' + (missed.length === 1 ? 'it' : 'them') + ' back soon.',
           headline:pl.replay ? 'Practice done' : 'Stop complete',
           sub:pl.replay ? 'Nice. These words were already yours.' : pl.fresh.length + (pl.fresh.length === 1 ? ' new word is' : ' new words are') + ' now in your Review. You will be asked for ' + (pl.fresh.length === 1 ? 'it' : 'them') + ' again soon, which is what makes ' + (pl.fresh.length === 1 ? 'it' : 'them') + ' stay.',
-          hasNext:!!nx, nextText:nx ? 'Next: ' + stopTitle(nx.st) : ''
+          hasNext:!!nx, nextText:nx ? 'Next: ' + stopTitle(nx.st) : '', nextCls:'btn big' + (pl.onbDone ? '' : ' pri'), onb:!!pl.onbDone, jyShow:false, jyText:'', jyBtn:''
         };
+        if (pl.onbDone) {   // a new person's first stop: what next, and the Journey stop the 50 coins just paid for
+          const js = jyRead(); const flownJ = !!(js && js.seen && js.seen.length); const mt = flownJ && js.reg ? JY.meter(totalXp(S), js) : null;
+          if (!flownJ) Object.assign(out.plRes, { jyShow:true, jyText:'Your first flight on the Journey is free: study earns coins, and coins take you around the Chinese-speaking world.', jyBtn:'Take my first flight' });
+          else if (mt && mt.ready >= 1) Object.assign(out.plRes, { jyShow:true, jyText:'Those ' + pl.gain + ' coins just paid for your next stop on the Journey.', jyBtn:'Travel to it' });
+        }
         return out;
       }
       if (st.t === 'meet') {
@@ -5507,11 +5653,18 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const obC = obCards[Math.max(0, Math.min(obCards.length - 1, S.obCard || 0))];
       const frOn = !!(FR && FR.enabled());
       const pyN = (PYC.lessons || []).filter(l => pyDoneAt(l.id)).length;
-      const obSoundsShow = onbOn && S.screen === 'home' && !flowOn && onb.l === 'new' && !onb.px && pyN === 0 && (PYC.lessons || []).length > 0 && noProg;
-      const startShow = onbOn && S.screen === 'home' && !flowOn && ((!onb.s && noProg) || (onb.s === 'go' && !S.rcomplete));
-      const startGoing = onb.s === 'go' && S.rq.length > 0 && !S.rcomplete;
-      const startWords = START_WORDS.filter(z => BANK[z]).map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en.split(',')[0] }));
-      const startDoneShow = onbOn && onb.s === 'done' && onb.d === ymd(new Date()) && S.rcomplete;   // the end of the first session: what to do next
+      const startShow = onbOn && S.screen === 'home' && !flowOn && ((!onb.s && startedCount === 0 && Object.keys(S.lrn || {}).length === 0 && (noProg || onb.p === 'done')) || (onb.s === 'go' && !S.rcomplete && !(S.pl && S.pl.done)));
+      // the first session is the first stop of the Path (see onbStartPath); its words are shown on the card
+      const startStop = startShow && PATH_LVLS.length ? pathNextWord(S, pathFirstOpen(S)) : null;
+      const startGoing = onb.s === 'go' && ((S.rq.length > 0 && !S.rcomplete) || (!!S.pl && !S.pl.done));
+      const startList = startStop ? stopWords(startStop.st).filter(z => !wStarted(S, z)) : START_WORDS.filter(z => BANK[z]);
+      const startWords = startList.map(z => ({ zh:z, py:BANK[z].py, en:BANK[z].en.split(/[,;]/)[0] }));
+      const startLead = startStop ? (flown ? 'Your host is still waiting at arrivals. Learn to greet them: your' : 'Your') + ' first stop on the Path is ' + startWords.length + ' everyday words. You meet each one, try it, then a short check, and they go into your Review. Nothing to set up.'
+        : 'Your first session is five everyday words, the same for everyone. You meet each one, pick its meaning, then type it. Nothing to set up.';
+      // brand new to Chinese: the sounds course is offered on the same card (and as a row in Today's plan) instead of a card of its own
+      const startSoundsShow = startShow && onb.l === 'new' && pyN === 0 && (PYC.lessons || []).length > 0;
+      const obSoundsShow = false;
+      const startDoneShow = onbOn && onb.s === 'done' && onb.v !== 'path' && onb.d === ymd(new Date()) && S.rcomplete;   // the end of the first session: what to do next
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
       const GROUPS = [['home', ['home']], ['learn', ['path', 'library', 'games']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['journey', ['journey']]];
       const SUBOF = { words:'library', grammar:'library', gtrack:'library', web:'library', pinyin:'library', exam:'path' };   // pages reached from another page of the same tab: that page stays lit
@@ -5650,6 +5803,13 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const pathFirstList = [];
       if (pathFirstDay) { (PATH_U[pathLvNow] || []).forEach(u => u.stops.forEach(st => { if (pathFirstList.length < pathTarget) pathFirstList.push({ n:pathFirstList.length + 1, title:stopTitle(st), kind:stopMeta(st), cls:stopState(S, st) === 'done' ? 'done' : '' }); })); }
       const planRows = [];
+      // brand new to Chinese (chosen in the first-visit flow): one lesson of the sounds course a day comes first, until the course is done
+      { const pyL = PYC.lessons || []; const onbP = onbRead();
+        if (onbOn && onbP.l === 'new' && pyL.length && pyN < pyL.length) {
+          const pyToday = pyL.some(l => pyDoneAt(l.id) && ymd(new Date(pyDoneAt(l.id))) === today); const pyNext = pyL.find(l => !pyDoneAt(l.id));
+          planRows.push({ glyph:'拼', title:pyToday ? 'Sounds of Chinese: a lesson done' : 'Sounds of Chinese: lesson ' + (pyN + 1) + ' of ' + pyL.length, meta:pyToday ? (pyNext ? 'Next: ' + pyNext.title : 'Course done') : (pyNext ? pyNext.title : '') + ' · about 5 min',
+            done:pyToday, keepOpen:true, act:'pinyin', run:() => { if (pyNext) this.pyOpenId(pyNext.id); else this.go('pinyin'); } });
+        } }
       if (pathStep || pathDoneToday > 0) planRows.push({ glyph:'路',
         title:pathAllDone ? 'Path: ' + (pathDoneToday === 1 ? 'a step' : pathDoneToday + ' steps') + ' done' : (pathTarget === 1 ? 'Path: ' + stopTitle(pathStep.st) : 'Path: ' + pathTarget + ' steps today'),
         meta:pathAllDone ? (pathStep ? 'Next: ' + stopTitle(pathStep.st) : 'You have walked the whole path') : (pathTarget === 1 ? stopMeta(pathStep.st) : pathFirstList.length > 1 ? 'Your first ' + pathFirstList.length + ' stops · ' + Math.min(pathDoneToday, pathFirstList.length) + ' of ' + pathFirstList.length + ' done' : pathDoneToday + ' of ' + pathTarget + ' done · Next: ' + stopTitle(pathStep.st)), done:pathAllDone,
@@ -6122,7 +6282,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         youFriends:!!(FR && FR.enabled()), youFriendsCls:'ylink' + (curScreen === 'friends' ? ' on' : ''), youSetCls:'ylink' + (curScreen === 'voice' ? ' on' : ''), youGuideCls:'ylink' + (curScreen === 'guide' ? ' on' : ''), youAchCls:'ylink' + (curScreen === 'ach' ? ' on' : ''),
         goSettings:() => this.go('voice'), goAch:() => this.go('ach'),
         goStreak:() => this.go('home'), goMem:() => this.go('words'),
-        homeHero:!startShow && !dayDone, planShow:!dayDone, dayDone, ...finV, planGo, planGoText, greetZh:greet[0], greetPy:greet[1], greetEn:greet[2], moreWays, climbPct:climbN + '%', climbN, climbTitle:'Climb to ' + (ALL ? 'the top' : 'the HSK ' + LV + ' summit'),
+        homeHero:!startShow && !dayDone, planShow:!dayDone, dayDone, ...finV, planGo, planGoText, planGoCls:'btn big today-go' + (startShow ? '' : ' pri'), greetZh:greet[0], greetPy:greet[1], greetEn:greet[2], moreWays, climbPct:climbN + '%', climbN, climbTitle:'Climb to ' + (ALL ? 'the top' : 'the HSK ' + LV + ' summit'),
         climbNote:ALL ? 'Each level has its own exam, at the top of its path.' : EXAMBANK ? (LVL.levelPassed(LV) ? LVN + ' is behind you.' : climbN >= 80 ? 'The exam is waiting at the top of your path.' : 'The ' + LVN + ' exam sits at the top of your path. It opens at 80%.') : 'The exam for ' + LVN + ' is not built yet.',
         artToday:artUri('banner', 'today'), artLibrary:artUri('banner', 'library'), artReview:artUri('banner', 'review'), artTalk:artUri('banner', 'talk'), artJourney:artUri('banner', 'journey'), artPath:artUri('banner', 'path'), artSummit:artUri('summit'),
         mingWave:artUri('ming', 'wave'), mingThink:artUri('ming', 'think'), mingCheer:artUri('ming', 'cheer'), mingSleep:artUri('ming', 'sleep'), mingThumbs:artUri('ming', 'thumbs'),
@@ -6293,7 +6453,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         coinHelpShow:!!S.coinHelp && !S.jyPlay, coinNeed:S.coinHelp ? S.coinHelp.need : '', coinNeedShow:!!(S.coinHelp && S.coinHelp.need),
         coinRows:COIN_WAYS().map(r => ({ zh:r[0], t:r[1], d:r[2], amt:r[3] })), coinHelpClose:this.coinHelpClose, coinHelpToday:this.coinHelpToday,
         coinPrices:'Prices: your first flight is free, then ' + JY.LADDER.join(', ') + ' coins, and ' + JY.FLAT + ' for every stop after that. Coins you spend still count as earned, so your total in Account never goes down.',
-        obGuideShow:obPh === 'guide' && !S.jyPlay && !(S.jyTrip && S.jyRv), obLevelShow:obPh === 'level', obMeShow:obPh === 'me',
+        obGuideShow:obPh === 'guide' && !S.jyPlay && !(S.screen === 'journey' && S.jyRv), obLevelShow:obPh === 'level', obMeShow:obPh === 'me',
         obIntroGo:this.obIntroGo, obFlySkip:this.obFlySkip, obBackOpen:this.obBackOpen, obBackClose:this.obBackClose, obBackGo:this.obBackGo, obBackFile:this.obBackFile, obFrOn:frOn,
         obLinkIn:S.frLinkIn, onObLink:(e) => this.setState({ frLinkIn:e.target.value }), obLinkText:S.frLinkBusy ? 'Signing in…' : 'Bring my progress here', obHasErr:!!S.frErr, obErrText:S.frErr,
         obCZh:obC.zh, obCTag:obC.tag, obCTitle:obC.title, obCBody:obC.body, obCChips:obC.chips, obCCount:((S.obCard || 0) + 1) + ' of ' + obCards.length, obCArt:'a' + (S.obCard || 0), obCShot:'aspect-ratio:' + obC.w + '/' + obC.h, obCImg:'background-image:url(' + obC.img + ')', obCAlt:obC.alt,
@@ -6303,7 +6463,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         obGoals:[10, 20, 30, 45].map(m => ({ label:m + ' min', cls:(S.obGoal || S.mins) === m ? 'on' : '', fn:() => this.setState({ obGoal:m }) })), obHasMeErr:!!S.obErr, obMeErr:S.obErr, obMeBusy:S.obBusy, obGoText:S.obBusy ? 'Joining…' : ((S.obJoin && frOn && !(FR && FR.identity())) ? 'Save and join the group' : 'Save and start'), obMeGo:() => this.obMeGo(false), obGuideGo:() => this.obMeGo(true), obMeBack:this.obMeBack,
         guideLevels:[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => ({ n, h:(46 + n * 22) + 'px', cls:'gd-rg' + (n <= LVL.MAX_LEVEL ? ' on' : '') })),
         obSoundsShow, obSoundsGo:this.obSoundsGo, obSoundsLater:this.obSoundsLater, pyTotal:(PYC.lessons || []).length,
-        startShow, startWords, startGoing, startFresh:!startGoing, startBtnText:startGoing ? 'Continue my first session' : 'Learn my first 5 words', startDoneShow, guideAvail, isGuide:S.screen === 'guide',
+        startShow, startWords, startGoing, startFresh:!startGoing, startBtnText:startGoing ? 'Continue my first stop' : startStop ? 'Start my first stop' : 'Learn my first 5 words', startDoneShow, startLead, startSoundsShow, guideAvail, isGuide:S.screen === 'guide',
         onbSkipStart:this.onbSkipStart, onbStartPath:this.onbStartPath, onbOpenGuide:this.onbOpenGuide, onbFlight:this.onbFlight,
         onbFlightShow:startDoneShow && !flown, guideSideCls:'linkbtn guide-link' + (S.screen === 'guide' ? ' on' : ''),
         isAch:S.screen === 'ach', achSummary:achSummary, achPct:achPct, achItems:achItems, achNext, hasAchNext:achNext.length > 0,
@@ -6466,7 +6626,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
   const tpl = document.getElementById('app-template');
   const app = DCMount(root, tpl, Component);
   onPersonChange = () => { try { app.personChanged(); } catch (e) {} };
-  app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin, plChoices };   // for the browser tests
+  app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin, plChoices, ffTier, jyFinds };   // for the browser tests
   window.shanlu = app;
   // an exam photo that does not load (offline, blocked, removed) is dropped and its emoji shows instead
   document.addEventListener('error', (ev) => {
