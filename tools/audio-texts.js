@@ -36,7 +36,7 @@ const add = (text, voice, group) => {
   if (SPEAK) (SPEAK.phrases || []).forEach((e) => add(e.zh, 'f', 'examples'));
   const LISTEN = window[N + '_LISTEN'];
   if (LISTEN) (LISTEN.clips || []).forEach((c) => add(c.zh, 'f', 'lab'));
-  if (SPEAK) (SPEAK.scenarios || []).forEach((s) => [].concat(s.ai || [], s.you || []).forEach((e) => add(e.zh, 'f', 'extra')));
+  if (SPEAK) (SPEAK.scenarios || []).forEach((s) => [].concat(s.ai || [], s.you || []).forEach((e) => { add(e.zh, 'f', 'extra'); if (e.alt) add(e.alt.zh, 'f', 'extra'); }));
   const G = window[N + '_GRAMMAR'];
   const walkG = (o) => { if (!o || typeof o !== 'object') return; if (Array.isArray(o.examples)) o.examples.forEach((e) => add(e.zh, 'f', 'extra')); Object.keys(o).forEach((k) => { if (o[k] && typeof o[k] === 'object') walkG(o[k]); }); };
   walkG(G);

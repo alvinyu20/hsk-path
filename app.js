@@ -294,10 +294,18 @@
   let PSCENE = window.SHANLU_PATH_SCENES || {};
   let PTILE = window.SHANLU_PATH_TILES || {};     // the wallpaper behind each unit's trail   // the pictures of the themed path (data/path-scenes.js)
   let SSCN = window.SHANLU_SPEAK_SCENES || {};     // one drawn place for each practice script (data/speak-scenes.js)
-  const aiSceneOf = (S) => (S.aiScn >= 0 ? (SCEN[S.aiScn] ? SSCN[SCEN[S.aiScn].id] : null) : SSCN.free);   // the drawn place behind the chat (Free chat has its own)
+  const aiSceneOf = (S) => (S.aiScn >= 0 ? (SCEN[S.aiScn] ? SSCN[SCEN[S.aiScn].scene || SCEN[S.aiScn].bad || SCEN[S.aiScn].id] || null : null) : SSCN.free);   // the drawn place behind the chat (Free chat has its own)
   const scnImg = (im) => (im ? 'background-color:' + im.c + ';background-image:url("' + im.u + '")' : '');
   const SCEN_AT = {};
   SCEN.forEach((x, i) => { SCEN_AT[x.id] = i; });
+  // E3: a scenario with "bad" is the bad-day version of another one (the café is out of tea, the train is late). It is not listed on
+  // its own: the scenario it belongs to offers it (Good day / Bad day). SCEN_LIST holds the ordinary ones, with their index in SCEN.
+  const SCEN_LIST = SCEN.map((x, i) => ({ x, i })).filter(o => !o.x.bad);
+  const BAD_OF = {}; SCEN.forEach((x, i) => { if (x.bad) BAD_OF[x.bad] = i; });
+  const scnArt = (x) => (x ? SSCN[x.scene || x.bad || x.id] || null : null);   // the backdrop: its own, the one it borrows, or its ordinary day's
+  // which of the two lines (a choice, "alt") was said at each turn of the scenario being played: S.salt = { id: { turn: 0 or 1 } }
+  const scnPick = (S, sc, k) => (((S.salt || {})[sc.id] || {})[k] || 0);
+  const scnLine = (line, alt) => (alt && line.alt ? line.alt : line);
   // the data's subtitles end in "5 turns" (the whole dialogue), which clashed with the card's own count of the learner's lines: keep only the place
   SCEN.forEach((x) => { if (x.sub) x.sub = x.sub.replace(/,\s*\d+\s*turns?\s*$/i, ''); });
   const PATH_LVLS = LVLS.filter(n => PATH[n] && (PATH[n].units || []).length);
@@ -655,7 +663,7 @@
       pyView:'list', pyLs:0, pyAns:{}, pyGain:'', pyIni:'b', pyInfo:null, typOpen:false, typIn:'', qmode:'test', qi:0, qpicked:[], qtyped:'', qchoice:null, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false,
       gdone:false, grdone:false, tdone:false, ldone:false, spokeToday:false, webCredited:false,
       plv:0, pstop:'', pu:{}, pl:null, plNote:'', plAlt:'', acctEdit:false,
-      sturn:0, szh:true, spy:true, sen:true, shint:true, sdone:false,
+      sturn:0, salt:{}, szh:true, spy:true, sen:true, shint:true, sdone:false,
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false, shrec:'idle', shurl:'', shnote:'',
       wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wcover:'all', wpeek:{}, jyPlay:'', jyPlayStamp:false, wopptab:'all', wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, syncKeys:prefGet('syncKeys', false) === true, aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), lsnNote:'', memOn:memOn(), memFacts:memFacts().slice(), aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, aiTesting:false, syncTesting:false, frTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dmin:0, drung:null, gm:{ view:'hub' }, dtyped:'', dchecked:false, dmarks:[], dreveal:0, mtyped:'', mchecked:false, mbusy:false, mres:null, merr:'', mpeek:0, mmix:false, mbest:{},
@@ -1675,32 +1683,53 @@
   };
   const PART = LV === 1 ? PART_1 : LV === 2 ? PART_2 : LV === 3 ? PART_3 : LV === 4 ? PART_4 : PART_5;
   const LETTERS = 'ABCDEF';
-  const pickN = (arr, n) => shuffleArr(arr).slice(0, n);
   function shuffleArr(arr) { const x = arr.slice(); for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = x[i]; x[i] = x[j]; x[j] = t; } return x; }
-  // five true/false items with at least two of each
-  const pickTF = (bank) => { const t = shuffleArr(bank.filter(e => e.ok)), f = shuffleArr(bank.filter(e => !e.ok)); const rest = shuffleArr(t.slice(2).concat(f.slice(2))); return shuffleArr(t.slice(0, 2).concat(f.slice(0, 2), rest.slice(0, 1))); };
+  // E1: on a retake, questions you have not had yet come first, then the ones you had longest ago. The person pref 'exseen' keeps, per level and
+  // part ('4.L3'), the ids of the items drawn in finished sections, oldest first (an id is a hash of the item, so an edited item counts as new).
+  const EX_ID = new WeakMap();
+  const exItemId = (e) => { let id = EX_ID.get(e); if (!id) { id = strHash(JSON.stringify(e)).toString(36); EX_ID.set(e, id); } return id; };
+  let EX_DRAWN = [];   // 'L3:id' for every item the last examQs drew; exBegin keeps it with the sitting, exSubmit remembers it
+  const freshOrder = (part, list) => {
+    const at = {}; (((prefGet('exseen', {}) || {})[LV + '.' + part]) || []).forEach((id, i) => { at[id] = i; });
+    const un = [], old = []; list.forEach(e => { (at[exItemId(e)] === undefined ? un : old).push(e); });
+    old.sort((a, b) => at[exItemId(a)] - at[exItemId(b)]);
+    return shuffleArr(un).concat(old);
+  };
+  const drew = (part, items) => { items.forEach(e => EX_DRAWN.push(part + ':' + exItemId(e))); return items; };
+  const pickF = (part, bank, n) => drew(part, shuffleArr(freshOrder(part, bank).slice(0, n)));
+  // n true/false items, half of each kind at least (the rest from whichever kind is fresher)
+  const pickTFF = (part, bank, n) => {
+    const half = Math.floor(n / 2), t = freshOrder(part, bank.filter(e => e.ok)), f = freshOrder(part, bank.filter(e => !e.ok));
+    const rest = freshOrder(part, t.slice(half).concat(f.slice(half)));
+    return drew(part, shuffleArr(t.slice(0, half).concat(f.slice(0, half), rest.slice(0, n - 2 * half))));
+  };
+  const exRemember = (drawn) => {
+    if (!drawn || !drawn.length) return;
+    const all = Object.assign({}, prefGet('exseen', {}) || {});
+    drawn.forEach(d => { const i = d.indexOf(':'), k = LV + '.' + d.slice(0, i), id = d.slice(i + 1); const l = (all[k] || []).filter(x => x !== id); l.push(id); all[k] = l.slice(-300); });
+    prefSet('exseen', all);
+  };
   const audioOf = (lines) => lines.map(l => ({ text:l.zh, pitch:l.s === '女' ? 1.25 : l.s === '男' ? 0.8 : 1 }));
   // HSK 2: listening 10 + 10 + 10 + 5, reading 5 + 5 + 5 + 10 (the layout of the 2012 HSK 2 sample papers)
-  const pickTFn = (bank, n) => { const half = Math.floor(n / 2); const t = shuffleArr(bank.filter(e => e.ok)), f = shuffleArr(bank.filter(e => !e.ok)); const rest = shuffleArr(t.slice(half).concat(f.slice(half))); return shuffleArr(t.slice(0, half).concat(f.slice(0, half), rest.slice(0, n - 2 * half))); };
   const examQsL2 = (sec) => {
     const out = [];
     const add = (part, q) => { out.push(Object.assign({ part, id:part + '-' + out.length, sec:PART[part].sec }, q)); };
     const E = EXAMBANK;
     const sayRev = (lines, q) => ({ zh:lines.map(l => l.zh).join(' ') + (q ? ' ' + q.zh : ''), py:lines.map(l => l.py).join(' ') + (q ? ' ' + q.py : ''), en:lines.map(l => l.en).join(' ') + (q ? ' ' + q.en : '') });
-    const textQ = (part, bank, n) => pickN(bank, n).forEach(e => { const order = shuffleArr([0, 1, 2]); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add(part, { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:sayRev(e.say, e.q), right:e.opts[0].zh }); });
+    const textQ = (part, bank, n) => pickF(part, bank, n).forEach(e => { const order = shuffleArr([0, 1, 2]); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add(part, { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:sayRev(e.say, e.q), right:e.opts[0].zh }); });
     if (sec === 'listening') {
-      pickTFn(E.L1, 10).forEach(e => add('L1', { kind:'tf', pic:e.pic, audio:[{ text:e.zh }], ans:e.ok ? 'T' : 'F', opts:[{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }], rev:{ zh:e.zh, py:e.py, en:e.en, pic:e.pic }, right:e.ok ? 'It matches' : 'It does not match' }));
-      pickN(E.L2, 2).forEach(st => shuffleArr(st.items).forEach(it => add('L2', { kind:'match', audio:audioOf(it.say), opts:st.opts.map((p, k) => ({ v:k, label:p, emoji:true })), ans:it.ans, rev:sayRev(it.say), right:st.opts[it.ans] })));
+      pickTFF('L1', E.L1, 10).forEach(e => add('L1', { kind:'tf', pic:e.pic, audio:[{ text:e.zh }], ans:e.ok ? 'T' : 'F', opts:[{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }], rev:{ zh:e.zh, py:e.py, en:e.en, pic:e.pic }, right:e.ok ? 'It matches' : 'It does not match' }));
+      pickF('L2', E.L2, 2).forEach(st => shuffleArr(st.items).forEach(it => add('L2', { kind:'match', audio:audioOf(it.say), opts:st.opts.map((p, k) => ({ v:k, label:p, emoji:true })), ans:it.ans, rev:sayRev(it.say), right:st.opts[it.ans] })));
       textQ('L3', E.L3, 10);
       textQ('L4', E.L4, 5);
     } else {
-      const s1 = E.R1[Math.floor(Math.random() * E.R1.length)];
+      const s1 = pickF('R1', E.R1, 1)[0];
       shuffleArr(s1.items).forEach(it => add('R1', { kind:'match', text:it.zh, opts:s1.opts.map((p, k) => ({ v:k, label:p, emoji:true })), ans:it.ans, rev:{ zh:it.zh, py:it.py, en:it.en }, right:s1.opts[it.ans] }));
-      const s2 = E.R2[Math.floor(Math.random() * E.R2.length)];
+      const s2 = pickF('R2', E.R2, 1)[0];
       const p2 = shuffleArr([0, 1, 2, 3, 4, 5]);
       shuffleArr(s2.items).forEach(it => add('R2', { kind:'match', text:it.zh, opts:p2.map((k, j) => ({ v:j, label:s2.opts[k].zh })), ans:p2.indexOf(it.ans), rev:{ zh:it.full, py:it.py, en:it.en }, right:s2.opts[it.ans].zh }));
-      pickTFn(E.R3.map(e => Object.assign({ ok:e.same }, e)), 5).forEach(e => add('R3', { kind:'tf', text:e.a.zh + '\n' + e.b.zh, ans:e.same ? 'T' : 'F', opts:[{ v:'T', label:'✓ Same meaning' }, { v:'F', label:'✗ Different meaning' }], rev:{ zh:e.a.zh + ' / ' + e.b.zh, py:e.a.py + ' / ' + e.b.py, en:e.a.en + ' / ' + e.b.en }, right:e.same ? 'Same meaning' : 'Different meaning' }));
-      pickN(E.R4, 2).forEach(st => {
+      pickTFF('R3', E.R3.map(e => Object.assign({ ok:e.same }, e)), 5).forEach(e => add('R3', { kind:'tf', text:e.a.zh + '\n' + e.b.zh, ans:e.same ? 'T' : 'F', opts:[{ v:'T', label:'✓ Same meaning' }, { v:'F', label:'✗ Different meaning' }], rev:{ zh:e.a.zh + ' / ' + e.b.zh, py:e.a.py + ' / ' + e.b.py, en:e.a.en + ' / ' + e.b.en }, right:e.same ? 'Same meaning' : 'Different meaning' }));
+      pickF('R4', E.R4, 2).forEach(st => {
         const p4 = shuffleArr([0, 1, 2, 3, 4]);
         st.items.forEach(it => add('R4', { kind:'match', text:it.zh, opts:p4.map((k, j) => ({ v:j, label:st.opts[k].zh })), ans:p4.indexOf(it.ans), rev:{ zh:it.zh + ' ' + st.opts[it.ans].zh, py:it.py + ' ' + st.opts[it.ans].py, en:it.en + ' ' + st.opts[it.ans].en }, right:st.opts[it.ans].zh }));
       });
@@ -1714,21 +1743,21 @@
     const add = (part, q) => { out.push(Object.assign({ part, id:part + '-' + out.length, sec:PART[part].sec }, q)); };
     const E = EXAMBANK;
     const sayRev = (lines, q) => ({ zh:lines.map(l => l.zh).join(' ') + (q ? ' ' + q.zh : ''), py:lines.map(l => l.py).join(' ') + (q ? ' ' + q.py : ''), en:lines.map(l => l.en).join(' ') + (q ? ' ' + q.en : '') });
-    const textQ = (part, bank, n) => pickN(bank, n).forEach(e => { const order = shuffleArr([0, 1, 2]); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add(part, { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:sayRev(e.say, e.q), right:e.opts[0].zh }); });
+    const textQ = (part, bank, n) => pickF(part, bank, n).forEach(e => { const order = shuffleArr([0, 1, 2]); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add(part, { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:sayRev(e.say, e.q), right:e.opts[0].zh }); });
     if (sec === 'listening') {
-      pickN(E.L1, 2).forEach(st => shuffleArr(st.items).forEach(it => add('L1', { kind:'match', audio:audioOf(it.say), opts:st.opts.map((p, k) => ({ v:k, label:p, emoji:true })), ans:it.ans, rev:sayRev(it.say), right:st.opts[it.ans] })));
-      pickTFn(E.L2, 10).forEach(e => add('L2', { kind:'tf', text:e.st.zh, audio:audioOf(e.say), ans:e.ok ? 'T' : 'F', opts:[{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }],
+      pickF('L1', E.L1, 2).forEach(st => shuffleArr(st.items).forEach(it => add('L1', { kind:'match', audio:audioOf(it.say), opts:st.opts.map((p, k) => ({ v:k, label:p, emoji:true })), ans:it.ans, rev:sayRev(it.say), right:st.opts[it.ans] })));
+      pickTFF('L2', E.L2, 10).forEach(e => add('L2', { kind:'tf', text:e.st.zh, audio:audioOf(e.say), ans:e.ok ? 'T' : 'F', opts:[{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }],
         rev:{ zh:e.say.map(l => l.zh).join(' ') + ' / ' + e.st.zh, py:e.say.map(l => l.py).join(' ') + ' / ' + e.st.py, en:e.say.map(l => l.en).join(' ') + ' / ' + e.st.en }, right:e.ok ? 'It matches' : 'It does not match' }));
       textQ('L3', E.L3, 10);
       textQ('L4', E.L4, 10);
     } else if (sec === 'reading') {
-      pickN(E.R1, 2).forEach(st => { const p1 = shuffleArr([0, 1, 2, 3, 4, 5]); st.items.forEach(it => add('R1', { kind:'match', text:it.zh, opts:p1.map((k, j) => ({ v:j, label:st.opts[k].zh })), ans:p1.indexOf(it.ans), rev:{ zh:it.zh + ' ' + st.opts[it.ans].zh, py:it.py + ' ' + st.opts[it.ans].py, en:it.en + ' ' + st.opts[it.ans].en }, right:st.opts[it.ans].zh })); });
-      pickN(E.R2, 2).forEach(st => { const p2 = shuffleArr([0, 1, 2, 3, 4, 5]); st.items.forEach(it => add('R2', { kind:'match', text:it.zh, opts:p2.map((k, j) => ({ v:j, label:st.opts[k].zh })), ans:p2.indexOf(it.ans), rev:{ zh:it.full, py:it.py, en:it.en }, right:st.opts[it.ans].zh })); });
-      pickN(E.R3, 10).forEach(e => { const order = shuffleArr([0, 1, 2]); add('R3', { kind:'text', text:e.zh + '\n' + e.q.zh, opts:order.map((k, j) => ({ v:j, label:e.opts[k].zh })), ans:order.indexOf(0), rev:{ zh:e.zh + ' ' + e.q.zh, py:e.py + ' ' + e.q.py, en:e.en + ' ' + e.q.en }, right:e.opts[0].zh }); });
+      pickF('R1', E.R1, 2).forEach(st => { const p1 = shuffleArr([0, 1, 2, 3, 4, 5]); st.items.forEach(it => add('R1', { kind:'match', text:it.zh, opts:p1.map((k, j) => ({ v:j, label:st.opts[k].zh })), ans:p1.indexOf(it.ans), rev:{ zh:it.zh + ' ' + st.opts[it.ans].zh, py:it.py + ' ' + st.opts[it.ans].py, en:it.en + ' ' + st.opts[it.ans].en }, right:st.opts[it.ans].zh })); });
+      pickF('R2', E.R2, 2).forEach(st => { const p2 = shuffleArr([0, 1, 2, 3, 4, 5]); st.items.forEach(it => add('R2', { kind:'match', text:it.zh, opts:p2.map((k, j) => ({ v:j, label:st.opts[k].zh })), ans:p2.indexOf(it.ans), rev:{ zh:it.full, py:it.py, en:it.en }, right:st.opts[it.ans].zh })); });
+      pickF('R3', E.R3, 10).forEach(e => { const order = shuffleArr([0, 1, 2]); add('R3', { kind:'text', text:e.zh + '\n' + e.q.zh, opts:order.map((k, j) => ({ v:j, label:e.opts[k].zh })), ans:order.indexOf(0), rev:{ zh:e.zh + ' ' + e.q.zh, py:e.py + ' ' + e.q.py, en:e.en + ' ' + e.q.en }, right:e.opts[0].zh }); });
     } else {
       // the words are never shown already in a right order (two identical words could otherwise swap places)
-      pickN(E.W1, 5).forEach(e => { let order; const said = (o) => o.map(k => e.words[k]).join(''); do { order = shuffleArr(e.words.map((w, k) => k)); } while (said(order) === e.zh || (e.alts || []).indexOf(said(order)) >= 0); add('W1', { kind:'order', opts:order.map((k, j) => ({ v:j, label:e.words[k] })), ans:e.zh, alts:e.alts, rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.zh }); });
-      pickN(E.W2, 5).forEach(e => add('W2', { kind:'type', text:e.zh, hint:e.hint, opts:[], ans:e.ans, rev:{ zh:e.full, py:e.py, en:e.en }, right:e.ans }));
+      pickF('W1', E.W1, 5).forEach(e => { let order; const said = (o) => o.map(k => e.words[k]).join(''); do { order = shuffleArr(e.words.map((w, k) => k)); } while (said(order) === e.zh || (e.alts || []).indexOf(said(order)) >= 0); add('W1', { kind:'order', opts:order.map((k, j) => ({ v:j, label:e.words[k] })), ans:e.zh, alts:e.alts, rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.zh }); });
+      pickF('W2', E.W2, 5).forEach(e => add('W2', { kind:'type', text:e.zh, hint:e.hint, opts:[], ans:e.ans, rev:{ zh:e.full, py:e.py, en:e.en }, right:e.ans }));
     }
     return out;
   };
@@ -1739,21 +1768,21 @@
     const E = EXAMBANK;
     const sayRev = (lines, q) => ({ zh:lines.map(l => l.zh).join(' ') + (q ? ' ' + q.zh : ''), py:lines.map(l => l.py).join(' ') + (q ? ' ' + q.py : ''), en:lines.map(l => l.en).join(' ') + (q ? ' ' + q.en : '') });
     // a conversation, a question, four choices (the first one in the bank is the right one; the order is shuffled)
-    const textQ = (part, bank, n) => pickN(bank, n).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add(part, { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:sayRev(e.say, e.q), right:e.opts[0].zh }); });
+    const textQ = (part, bank, n) => pickF(part, bank, n).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add(part, { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:sayRev(e.say, e.q), right:e.opts[0].zh }); });
     const tfOpts = [{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }];
     if (sec === 'listening') {
-      pickTFn(E.L1, 10).forEach(e => add('L1', { kind:'tf', text:e.st.zh, audio:audioOf(e.say), ans:e.ok ? 'T' : 'F', opts:tfOpts,
+      pickTFF('L1', E.L1, 10).forEach(e => add('L1', { kind:'tf', text:e.st.zh, audio:audioOf(e.say), ans:e.ok ? 'T' : 'F', opts:tfOpts,
         rev:{ zh:e.say.map(l => l.zh).join(' ') + ' / ' + e.st.zh, py:e.say.map(l => l.py).join(' ') + ' / ' + e.st.py, en:e.say.map(l => l.en).join(' ') + ' / ' + e.st.en }, right:e.ok ? 'It matches' : 'It does not match' }));
       textQ('L2', E.L2, 15);
       textQ('L3', E.L3, 20);
     } else if (sec === 'reading') {
-      pickN(E.R1, 2).forEach(st => { const p1 = shuffleArr([0, 1, 2, 3, 4, 5]); st.items.forEach(it => add('R1', { kind:'match', text:it.zh, opts:p1.map((k, j) => ({ v:j, label:st.opts[k].zh })), ans:p1.indexOf(it.ans), rev:{ zh:it.full, py:it.py, en:it.en }, right:st.opts[it.ans].zh })); });
+      pickF('R1', E.R1, 2).forEach(st => { const p1 = shuffleArr([0, 1, 2, 3, 4, 5]); st.items.forEach(it => add('R1', { kind:'match', text:it.zh, opts:p1.map((k, j) => ({ v:j, label:st.opts[k].zh })), ans:p1.indexOf(it.ans), rev:{ zh:it.full, py:it.py, en:it.en }, right:st.opts[it.ans].zh })); });
       // three pieces of a sentence, tapped in order (never shown already in the right order)
-      pickN(E.R2, 10).forEach(e => { let order; const said = (o) => o.map(k => e.words[k]).join(''); do { order = shuffleArr(e.words.map((w, k) => k)); } while (said(order) === e.zh || (e.alts || []).indexOf(said(order)) >= 0); add('R2', { kind:'order', opts:order.map((k, j) => ({ v:j, label:e.words[k] })), ans:e.zh, alts:e.alts, rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.zh }); });
-      pickN(E.R3, 20).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); add('R3', { kind:'text', text:e.zh + '\n' + e.q.zh, opts:order.map((k, j) => ({ v:j, label:e.opts[k].zh })), ans:order.indexOf(0), rev:{ zh:e.zh + ' ' + e.q.zh, py:e.py + ' ' + e.q.py, en:e.en + ' ' + e.q.en }, right:e.opts[0].zh }); });
+      pickF('R2', E.R2, 10).forEach(e => { let order; const said = (o) => o.map(k => e.words[k]).join(''); do { order = shuffleArr(e.words.map((w, k) => k)); } while (said(order) === e.zh || (e.alts || []).indexOf(said(order)) >= 0); add('R2', { kind:'order', opts:order.map((k, j) => ({ v:j, label:e.words[k] })), ans:e.zh, alts:e.alts, rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.zh }); });
+      pickF('R3', E.R3, 20).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); add('R3', { kind:'text', text:e.zh + '\n' + e.q.zh, opts:order.map((k, j) => ({ v:j, label:e.opts[k].zh })), ans:order.indexOf(0), rev:{ zh:e.zh + ' ' + e.q.zh, py:e.py + ' ' + e.q.py, en:e.en + ' ' + e.q.en }, right:e.opts[0].zh }); });
     } else {
-      pickN(E.W1, 10).forEach(e => { let order; const said = (o) => o.map(k => e.words[k]).join(''); do { order = shuffleArr(e.words.map((w, k) => k)); } while (said(order) === e.zh || (e.alts || []).indexOf(said(order)) >= 0); add('W1', { kind:'order', opts:order.map((k, j) => ({ v:j, label:e.words[k] })), ans:e.zh, alts:e.alts, rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.zh }); });
-      pickN(E.W2, 5).forEach(e => add('W2', { kind:'type', text:e.zh, hint:e.hint, opts:[], ans:e.ans, rev:{ zh:e.full, py:e.py, en:e.en }, right:e.ans }));
+      pickF('W1', E.W1, 10).forEach(e => { let order; const said = (o) => o.map(k => e.words[k]).join(''); do { order = shuffleArr(e.words.map((w, k) => k)); } while (said(order) === e.zh || (e.alts || []).indexOf(said(order)) >= 0); add('W1', { kind:'order', opts:order.map((k, j) => ({ v:j, label:e.words[k] })), ans:e.zh, alts:e.alts, rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.zh }); });
+      pickF('W2', E.W2, 5).forEach(e => add('W2', { kind:'type', text:e.zh, hint:e.hint, opts:[], ans:e.ans, rev:{ zh:e.full, py:e.py, en:e.en }, right:e.ans }));
     }
     return out;
   };
@@ -1764,13 +1793,13 @@
     const E = EXAMBANK;
     const sayRev = (lines, q) => ({ zh:lines.map(l => l.zh).join(' ') + (q ? ' ' + q.zh : ''), py:lines.map(l => l.py).join(' ') + (q ? ' ' + q.py : ''), en:lines.map(l => l.en).join(' ') + (q ? ' ' + q.en : '') });
     // a conversation, a question, four choices (the first one in the bank is the right one; the order is shuffled)
-    const textQ = (part, bank, n) => pickN(bank, n).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add(part, { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:sayRev(e.say, e.q), right:e.opts[0].zh }); });
+    const textQ = (part, bank, n) => pickF(part, bank, n).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add(part, { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:sayRev(e.say, e.q), right:e.opts[0].zh }); });
     if (sec === 'listening') {
       textQ('L1', E.L1, 20);
       textQ('L2', E.L2, 25);
     } else if (sec === 'reading') {
       // three passages, five numbered blanks each; one question per blank, with the whole passage in view (the blank asked about is marked 【 】)
-      pickN(E.R1, 3).forEach(p => {
+      pickF('R1', E.R1, 3).forEach(p => {
         const parts = p.zh.split('___'), fulls = p.full;
         p.blanks.forEach((bl, k) => {
           const text = parts.map((seg, i) => seg + (i < parts.length - 1 ? (i === k ? '【' + (i + 1) + '】' : '（' + (i + 1) + '）') : '')).join('');
@@ -1779,15 +1808,16 @@
         });
       });
       // a short passage, four sentences: which one matches it?
-      pickN(E.R2, 10).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); add('R2', { kind:'text', text:e.zh, opts:order.map((k, j) => ({ v:j, label:e.opts[k].zh })), ans:order.indexOf(0), rev:{ zh:e.zh + ' → ' + e.opts[0].zh, py:e.py + ' → ' + e.opts[0].py, en:e.en }, right:e.opts[0].zh }); });
-      pickN(E.R3, 20).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); add('R3', { kind:'text', text:e.zh + '\n' + e.q.zh, opts:order.map((k, j) => ({ v:j, label:e.opts[k].zh })), ans:order.indexOf(0), rev:{ zh:e.zh + ' ' + e.q.zh, py:e.py + ' ' + e.q.py, en:e.en + ' ' + e.q.en }, right:e.opts[0].zh }); });
+      pickF('R2', E.R2, 10).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); add('R2', { kind:'text', text:e.zh, opts:order.map((k, j) => ({ v:j, label:e.opts[k].zh })), ans:order.indexOf(0), rev:{ zh:e.zh + ' → ' + e.opts[0].zh, py:e.py + ' → ' + e.opts[0].py, en:e.en }, right:e.opts[0].zh }); });
+      pickF('R3', E.R3, 20).forEach(e => { const order = shuffleArr(e.opts.map((o, k) => k)); add('R3', { kind:'text', text:e.zh + '\n' + e.q.zh, opts:order.map((k, j) => ({ v:j, label:e.opts[k].zh })), ans:order.indexOf(0), rev:{ zh:e.zh + ' ' + e.q.zh, py:e.py + ' ' + e.q.py, en:e.en + ' ' + e.q.en }, right:e.opts[0].zh }); });
     } else {
-      pickN(E.W1, 10).forEach(e => { let order; const said = (o) => o.map(k => e.words[k]).join(''); do { order = shuffleArr(e.words.map((w, k) => k)); } while (said(order) === e.zh || (e.alts || []).indexOf(said(order)) >= 0); add('W1', { kind:'order', opts:order.map((k, j) => ({ v:j, label:e.words[k] })), ans:e.zh, alts:e.alts, rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.zh }); });
-      pickN(E.W2, 5).forEach(e => add('W2', { kind:'type', text:e.zh, hint:e.hint, opts:[], ans:e.ans, rev:{ zh:e.full, py:e.py, en:e.en }, right:e.ans }));
+      pickF('W1', E.W1, 10).forEach(e => { let order; const said = (o) => o.map(k => e.words[k]).join(''); do { order = shuffleArr(e.words.map((w, k) => k)); } while (said(order) === e.zh || (e.alts || []).indexOf(said(order)) >= 0); add('W1', { kind:'order', opts:order.map((k, j) => ({ v:j, label:e.words[k] })), ans:e.zh, alts:e.alts, rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.zh }); });
+      pickF('W2', E.W2, 5).forEach(e => add('W2', { kind:'type', text:e.zh, hint:e.hint, opts:[], ans:e.ans, rev:{ zh:e.full, py:e.py, en:e.en }, right:e.ans }));
     }
     return out;
   };
   const examQs = (sec) => {
+    EX_DRAWN = [];   // what this draw takes (see freshOrder)
     if (LV === 5) return examQsL5(sec);
     if (LV === 2) return examQsL2(sec);
     if (LV === 3) return examQsL3(sec);
@@ -1796,19 +1826,19 @@
     const add = (part, q) => { out.push(Object.assign({ part, id:part + '-' + out.length, sec:PART[part].sec }, q)); };
     const E = EXAMBANK;
     if (sec === 'listening') {
-      pickTF(E.L1).forEach(e => add('L1', { kind:'tf', pic:e.pic, audio:[{ text:e.zh }], ans:e.ok ? 'T' : 'F', opts:[{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }], rev:{ zh:e.zh, py:e.py, en:e.en, pic:e.pic }, right:e.ok ? 'It matches' : 'It does not match' }));
-      pickN(E.L2, 5).forEach(e => { const order = shuffleArr([0, 1, 2]); const opts = order.map((k, j) => ({ v:j, label:e.opts[k], emoji:true })); add('L2', { kind:'pic', audio:[{ text:e.zh }], opts, ans:order.indexOf(0), rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.opts[0] }); });
-      const s3 = E.L3[Math.floor(Math.random() * E.L3.length)];
+      pickTFF('L1', E.L1, 5).forEach(e => add('L1', { kind:'tf', pic:e.pic, audio:[{ text:e.zh }], ans:e.ok ? 'T' : 'F', opts:[{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }], rev:{ zh:e.zh, py:e.py, en:e.en, pic:e.pic }, right:e.ok ? 'It matches' : 'It does not match' }));
+      pickF('L2', E.L2, 5).forEach(e => { const order = shuffleArr([0, 1, 2]); const opts = order.map((k, j) => ({ v:j, label:e.opts[k], emoji:true })); add('L2', { kind:'pic', audio:[{ text:e.zh }], opts, ans:order.indexOf(0), rev:{ zh:e.zh, py:e.py, en:e.en }, right:e.opts[0] }); });
+      const s3 = pickF('L3', E.L3, 1)[0];
       shuffleArr(s3.items).forEach(it => add('L3', { kind:'match', audio:audioOf(it.say), opts:s3.opts.map((p, k) => ({ v:k, label:p, emoji:true })), ans:it.ans, rev:{ zh:it.say.map(l => l.zh).join(' '), py:it.say.map(l => l.py).join(' '), en:it.say.map(l => l.en).join(' ') }, right:s3.opts[it.ans] }));
-      pickN(E.L4, 5).forEach(e => { const order = shuffleArr([0, 1, 2]); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add('L4', { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:{ zh:e.say.map(l => l.zh).join(' ') + ' ' + e.q.zh, py:e.say.map(l => l.py).join(' ') + ' ' + e.q.py, en:e.say.map(l => l.en).join(' ') + ' ' + e.q.en }, right:e.opts[0].zh }); });
+      pickF('L4', E.L4, 5).forEach(e => { const order = shuffleArr([0, 1, 2]); const opts = order.map((k, j) => ({ v:j, label:e.opts[k].zh })); add('L4', { kind:'text', audio:audioOf(e.say).concat([{ text:e.q.zh, pitch:1 }]), opts, ans:order.indexOf(0), rev:{ zh:e.say.map(l => l.zh).join(' ') + ' ' + e.q.zh, py:e.say.map(l => l.py).join(' ') + ' ' + e.q.py, en:e.say.map(l => l.en).join(' ') + ' ' + e.q.en }, right:e.opts[0].zh }); });
     } else {
-      pickTF(E.R1).forEach(e => add('R1', { kind:'tf', pic:e.pic, text:e.zh, ans:e.ok ? 'T' : 'F', opts:[{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }], rev:{ zh:e.zh, py:e.py, en:e.en, pic:e.pic }, right:e.ok ? 'It matches' : 'It does not match' }));
-      const s2 = E.R2[Math.floor(Math.random() * E.R2.length)];
+      pickTFF('R1', E.R1, 5).forEach(e => add('R1', { kind:'tf', pic:e.pic, text:e.zh, ans:e.ok ? 'T' : 'F', opts:[{ v:'T', label:'✓ It matches' }, { v:'F', label:'✗ It does not match' }], rev:{ zh:e.zh, py:e.py, en:e.en, pic:e.pic }, right:e.ok ? 'It matches' : 'It does not match' }));
+      const s2 = pickF('R2', E.R2, 1)[0];
       shuffleArr(s2.items).forEach(it => add('R2', { kind:'match', text:it.zh, opts:s2.opts.map((p, k) => ({ v:k, label:p, emoji:true })), ans:it.ans, rev:{ zh:it.zh, py:it.py, en:it.en }, right:s2.opts[it.ans] }));
-      const s3 = E.R3[Math.floor(Math.random() * E.R3.length)];
+      const s3 = pickF('R3', E.R3, 1)[0];
       const p3 = shuffleArr([0, 1, 2, 3, 4]);
       s3.items.forEach(it => add('R3', { kind:'match', text:it.zh, opts:p3.map((k, j) => ({ v:j, label:s3.opts[k].zh })), ans:p3.indexOf(it.ans), rev:{ zh:it.zh + ' ' + s3.opts[it.ans].zh, py:it.py + ' ' + s3.opts[it.ans].py, en:it.en + ' ' + s3.opts[it.ans].en }, right:s3.opts[it.ans].zh }));
-      const s4 = E.R4[Math.floor(Math.random() * E.R4.length)];
+      const s4 = pickF('R4', E.R4, 1)[0];
       const p4 = shuffleArr([0, 1, 2, 3, 4]);
       s4.items.forEach(it => add('R4', { kind:'match', text:it.zh, opts:p4.map((k, j) => ({ v:j, label:s4.opts[k].zh })), ans:p4.indexOf(it.ans), rev:{ zh:it.full, py:it.py, en:it.en }, right:s4.opts[it.ans].zh }));
     }
@@ -2515,7 +2545,8 @@
     examDraw = (sec) => examQs(sec);   // used by the browser test
     startExam = (mode) => { if (!EXAMBANK) return; this.exBegin({ mode, sec:mode === 'reading' ? 'reading' : mode === 'writing' ? 'writing' : 'listening', results:{} }); };
     exBegin = (base) => {
-      const exm = Object.assign({}, base, { stage:'run', qs:examQs(base.sec), ans:{}, picks:{}, typed:{}, i:0, plays:{}, confirm:false, endAt:Date.now() + EXAM_MIN[base.sec] * 60000 });
+      const qs = examQs(base.sec);
+      const exm = Object.assign({}, base, { stage:'run', qs, drawn:EX_DRAWN, ans:{}, picks:{}, typed:{}, i:0, plays:{}, confirm:false, endAt:Date.now() + EXAM_MIN[base.sec] * 60000 });
       clearInterval(this.exTimer);
       this.exTimer = setInterval(() => {
         const m = this.state.exm;
@@ -2637,6 +2668,7 @@
       if (!auto && open > 0 && !m.confirm) { this.exPatch({ confirm:true }); return; }
       clearInterval(this.exTimer);
       try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+      exRemember(m.drawn);   // these come last on the next sitting
       const byPart = {};
       const wrong = [];
       let correct = 0;
@@ -4261,7 +4293,7 @@
         PATH_LVLS.forEach(lv => { let all = true; (PATH_U[lv] || []).forEach(u => { let d = 0; u.stops.forEach(st => { if (stopState(S, st) === 'done') { stops++; d++; } }); if (u.stops.length && d === u.stops.length) units++; else all = false; }); if (all && (PATH_U[lv] || []).length) lvls++; });
         m.pathStops = stops; m.pathUnits = units; m.pathLevels = lvls; }
       m.pyTotal = (PYC.lessons || []).length; m.pyDone = (PYC.lessons || []).filter(l => pyDoneAt(l.id)).length;
-      m.scenes = Math.max(scenesSaved, Object.keys(S.sres || {}).filter(id => S.sres[id]).length); m.scenesAll = HAS_SCRIPTS && SCEN.length > 0 && SCEN.every(sc => S.sres[sc.id]);
+      m.scenes = Math.max(scenesSaved, Object.keys(S.sres || {}).filter(id => S.sres[id]).length); m.scenesAll = HAS_SCRIPTS && SCEN_LIST.length > 0 && SCEN_LIST.every(o => S.sres[o.x.id]);
       m.meanings = Object.keys(S.mbest || {}).filter(z => S.mbest[z] >= 2).length;
       { let r125 = 0, r15 = 0;   // speed rungs, kept with the person (every level): 'cr.' + clip, 'psg.' + passage
         Object.keys(PERSON.prefs).forEach(k => { const r = k.indexOf('cr.') === 0 ? clipRung(k.slice(3)) : k.indexOf('psg.') === 0 ? psgRung(prefGet(k, null)) : 0; if (r >= 1.25) r125++; if (r >= 1.5) r15++; });
@@ -4389,26 +4421,29 @@
     pickTopic = (i) => { this.setState({ wtopic:i, wtmenu:false, wgopen:null, wtq:'' }); try { window.scrollTo(0, 0); } catch (e) {} };
 
     // ----- speaking practice: a scripted conversation you say out loud yourself -----
-    sayIt = () => {
+    sayIt = (alt) => {
       const S = this.state;
       const sc = SCEN[S.sidx] || NO_SC;
       const total = sc.you.length;
       if (S.sturn >= total) return;
       const t = S.sturn + 1;
-      const patch = { sturn:t };
+      const pick = alt === true && sc.you[S.sturn].alt ? 1 : 0;   // a turn with a choice: which of the two lines you said
+      const patch = { sturn:t, salt:Object.assign({}, S.salt, { [sc.id]:Object.assign({}, (S.salt || {})[sc.id], { [S.sturn]:pick }) }) };
       if (t >= total) {
         const sres = Object.assign({}, S.sres); sres[sc.id] = true;
         patch.sdone = true; patch.sres = sres; patch.xp = S.xp + 10; patch.dayXp = S.dayXp + 10;
         patch.dayMin = S.dayMin + (S.spokeToday ? 0 : 6); patch.spokeToday = true;
       }
       this.setState(patch);
-      // Mingming's next line plays by itself (this runs inside your tap, so the browser allows the sound)
-      if (t < sc.ai.length) this.say(sc.ai[t].zh, 'ai' + t);
+      // Mingming's next line plays by itself (this runs inside your tap, so the browser allows the sound); after a choice, her answer to it
+      if (t < sc.ai.length) this.say(scnLine(sc.ai[t], pick).zh, 'ai' + t);
     };
     // the opening line of a script plays as soon as it opens (always called from a tap)
     sayOpen = (i) => { const sc = SCEN[i]; if (sc && sc.ai && sc.ai.length) this.say(sc.ai[0].zh, 'ai0'); };
     resetSpeak = () => { this.setState({ sturn:0, sdone:false }); this.sayOpen(this.state.sidx); };
     pickScenario = (i) => { this.setState({ sidx:i, sturn:0, sdone:false, sview:'chat' }); this.sayOpen(i); try { window.scrollTo(0, 0); } catch (e) {} };
+    // Good day / Bad day: the same place, the other version (from the start)
+    pickDay = (bad) => { const sc = SCEN[this.state.sidx] || NO_SC; const base = sc.bad ? SCEN_AT[sc.bad] : this.state.sidx; const i = bad ? BAD_OF[SCEN[base].id] : base; if (i === undefined || i === this.state.sidx) return; this.pickScenario(i); };
     spBack = () => { this.setState({ sview:'pick' }); try { window.scrollTo(0, 0); } catch (e) {} };
 
     // ----- the learning path and its stop lesson -----
@@ -5660,7 +5695,7 @@
         aiNoKey:aiEff && !S.aiOn, aiReady:aiEff && S.aiOn, aiMsgs:msgs, aiBusy:S.aiBusy, aiErr:S.aiErr, hasAiErr:!!S.aiErr,
         aiInput:S.aiInput, onAiInput:(e) => this.setState({ aiInput:e.target.value }), onAiKey:(e) => { if (e.key === 'Enter') this.aiSend(); },
         aiSend:this.aiSend, aiMic:this.aiMic, aiHasMic:hasMic, aiNoMic:!hasMic, aiMicLabel:S.asrBusy ? 'Transcribing…' : (S.aiListen ? 'Listening… tap to stop' : 'Speak'), aiMicCls:S.aiListen ? 'on' : (vo ? 'pri' : ''),
-        aiScnList:[{ title:'Free chat', sub:'Anything simple', cls:S.aiScn === -1 ? 'cur' : '', img:scnImg(SSCN.free), fn:() => { this.setState({ aiPick:false }); this.aiStart(-1); } }].concat(AISCN.map((x, i) => ({ title:x.title, sub:x.sub, cls:S.aiScn === i ? 'cur' : '', img:scnImg(SSCN[x.id]), fn:() => { this.setState({ aiPick:false }); this.aiStart(i); } }))),
+        aiScnList:[{ title:'Free chat', sub:'Anything simple', cls:S.aiScn === -1 ? 'cur' : '', img:scnImg(SSCN.free), fn:() => { this.setState({ aiPick:false }); this.aiStart(-1); } }].concat(AISCN.map((x, i) => ({ x, i })).filter(o => !o.x.bad).map(({ x, i }) => ({ title:x.title, sub:x.sub, cls:S.aiScn === i ? 'cur' : '', img:scnImg(scnArt(x)), fn:() => { this.setState({ aiPick:false }); this.aiStart(i); } }))),
         aiToday:(S.aiDays[ymd(new Date())] || 0) + ' messages today · ' + (S.aiProvider === 'alibaba' ? 'Qwen' : 'Claude'), aiSimpler:this.aiSimpler,
         aiSet:!!AICFG.key, aiUnset:!AICFG.key, aiKeyInput:S.aiKeyInput, onAiKeyInput:(e) => this.setState({ aiKeyInput:e.target.value }), aiSaveKey:this.aiSaveKey, aiRemoveKey:this.aiRemoveKey,
         aiModelOpts:AI_MODELS.map(m => ({ label:m[1], cls:S.aiModel === m[0] ? 'on' : '', fn:() => this.aiSetModel(m[0]) })), aiNote:S.aiNote, hasAiNote:!!S.aiNote,
@@ -5802,8 +5837,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const testReady = BANK_KEYS.filter(zh => DIMS.some(k => S.ws[zh][k].s > 0)).length >= 3;
       const clipsTried = S.clipBest.filter(x => x > 0).length;
       const listenPct = HAS_LISTEN ? Math.round(S.clipBest.reduce((a, b) => a + b, 0) / CLIPS.length * 100) : 0;
-      const spkDone = SCEN.filter(sc => S.sres[sc.id]).length;
-      const spkPct = HAS_SCRIPTS ? Math.round(spkDone / SCEN.length * 100) : 0;
+      const spkDone = SCEN_LIST.filter(o => S.sres[o.x.id]).length;
+      const spkPct = HAS_SCRIPTS ? Math.round(spkDone / SCEN_LIST.length * 100) : 0;
       const pctParts = [vocabPct, gramPct].concat(HAS_LISTEN ? [listenPct] : []).concat(HAS_SCRIPTS ? [spkPct] : []);
       const overall = Math.round(pctParts.reduce((a, b) => a + b, 0) / pctParts.length);
       const wm = {
@@ -5970,7 +6005,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const C = 2 * Math.PI * 46;
       const ringDash = (Math.min(S.dayMin / S.mins, 1) * C).toFixed(1) + 'px ' + C.toFixed(1) + 'px';
       const nextLesson = Math.max(0, LESSONS.findIndex(L => (S.gres[L.id] || 0) < 80));
-      const nextScn = Math.max(0, SCEN.findIndex(sc => !S.sres[sc.id]));
+      const nextScn = (SCEN_LIST.find(o => !S.sres[o.x.id]) || SCEN_LIST[0] || { i:0 }).i;
       const grvAllI = (() => { const greg = gptReg(); return Object.keys(greg).filter(id => gptOpen(S, id)).map(id => ({ due:gptDueNow(S, id) })); })();   // grammar points open to review (their lesson is passed)
       const grvOpenToday = grvAllI.length, grvDueToday = grvAllI.filter(i => i.due).length;
       // Today's plan: a step on the Path comes first every day, then the words and grammar points that are due. Everything else is a shortcut under "More ways to study".
@@ -6046,7 +6081,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         { label:'Vocabulary', detail:startedCount + ' of ' + bankKeys.length + ' words started', w:vocabPct + '%' },
         { label:'Grammar', detail:gramPassed + ' of ' + LESSONS.length + ' lessons passed', w:gramPct + '%' }
       ].concat(HAS_LISTEN ? [{ label:'Listening', detail:clipsTried + ' of ' + CLIPS.length + ' clips tried', w:listenPct + '%' }] : [])
-        .concat(HAS_SCRIPTS ? [{ label:'Speaking', detail:spkDone + ' of ' + SCEN.length + ' scripts done', w:spkPct + '%' }] : []);
+        .concat(HAS_SCRIPTS ? [{ label:'Speaking', detail:spkDone + ' of ' + SCEN_LIST.length + ' scripts done', w:spkPct + '%' }] : []);
       skills.forEach(k => { const n = parseInt(k.w, 10) || 0; k.pctN = n; k.dash = (n / 100 * 138.23).toFixed(1) + ' 138.23'; });
       const lvList = SYS['3.0'].levels.slice((ALL ? TOPL : LV) - 1);   // this level first, then every one above it, up to HSK 9
 
@@ -6187,14 +6222,15 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const msgs = [];
       const listenOnly = !S.szh && !S.spy && !S.sen;   // everything hidden: just listen
       for (let k = 0; k <= turns; k++) {
-        if (S.sturn >= k) msgs.push({ who:'ai', isAi:true, zh:sc.ai[k].zh, py:sc.ai[k].py, en:sc.ai[k].en, showZh:S.szh, showPy:S.spy, showEn:S.sen, quiet:listenOnly, quietText:'Listen to Mingming', hasNote:false, note:'', noteCls:'', pc:pc('ai' + k), play:() => this.say(sc.ai[k].zh, 'ai' + k) });
-        if (k < turns && S.sturn > k) msgs.push({ who:'me', isAi:false, zh:sc.you[k].zh, py:sc.you[k].py, en:sc.you[k].en, showZh:S.szh, showPy:S.spy, showEn:S.sen, quiet:listenOnly, quietText:'You said it', hasNote:false, note:'', noteCls:'', pc:'', play:() => {} });
+        const aiL = scnLine(sc.ai[k], k > 0 && scnPick(S, sc, k - 1)), meL = k < turns ? scnLine(sc.you[k], scnPick(S, sc, k)) : null;   // after a choice, the line you chose and the answer to it
+        if (S.sturn >= k) msgs.push({ who:'ai', isAi:true, zh:aiL.zh, py:aiL.py, en:aiL.en, showZh:S.szh, showPy:S.spy, showEn:S.sen, quiet:listenOnly, quietText:'Listen to Mingming', hasNote:false, note:'', noteCls:'', pc:pc('ai' + k), play:() => this.say(aiL.zh, 'ai' + k) });
+        if (k < turns && S.sturn > k) msgs.push({ who:'me', isAi:false, zh:meL.zh, py:meL.py, en:meL.en, showZh:S.szh, showPy:S.spy, showEn:S.sen, quiet:listenOnly, quietText:'You said it', hasNote:false, note:'', noteCls:'', pc:'', play:() => {} });
       }
       const canTalk = S.sturn < turns;
       const target = sc.you[Math.min(S.sturn, turns - 1)];
       const goals = sc.goals.map((g, i) => ({ t:g, cls:S.sturn >= i + 1 ? 'ok' : '' }));
       const wchips = sc.words.map(x => ({ zh:x.zh, py:x.py, play:() => this.sayAi(x.zh, 'w' + x.zh) }));
-      const scenarios = SCEN.map((x, i) => ({ glyph:x.glyph, title:x.title, sub:x.sub, state:S.sres[x.id] ? 'Done' : (i === S.sidx ? 'Now' : 'Open'), cls:(S.sres[x.id] ? 'done ' : '') + (i === S.sidx ? 'cur' : ''), fn:() => this.pickScenario(i) }));
+      const scenarios = SCEN_LIST.map(({ x, i }) => ({ glyph:x.glyph, title:x.title, sub:x.sub, state:S.sres[x.id] ? 'Done' : (i === S.sidx ? 'Now' : 'Open'), cls:(S.sres[x.id] ? 'done ' : '') + (i === S.sidx ? 'cur' : ''), fn:() => this.pickScenario(i) }));
 
       // word webs and word memory
       const webCount = Object.keys(S.wlearned).length;
@@ -6766,9 +6802,12 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
 
         // speak
         spPick:S.sview === 'pick', spChat:S.sview !== 'pick', spBack:this.spBack,
-        spCards:SCEN.map((x, i) => { const im = SSCN[x.id]; return { glyph:x.glyph, title:x.title, sub:x.sub, turns:x.you.length + ' lines to say', img:im ? 'background-color:' + im.c + ';background-image:url("' + im.u + '")' : '', state:S.sres[x.id] ? 'Done' : '', cls:S.sres[x.id] ? 'done' : '', fn:() => this.pickScenario(i), aria:x.title + (S.sres[x.id] ? ', done' : '') }; }),
-        spDoneText:SCEN.filter(x => S.sres[x.id]).length + ' of ' + SCEN.length + ' places visited',
-        stageStyle:SSCN[sc.id] ? '--sc:' + SSCN[sc.id].c + ';--scene:url("' + SSCN[sc.id].u + '")' : '', stageCls:SSCN[sc.id] ? 'staged' : '',
+        spCards:SCEN_LIST.map(({ x, i }) => { const im = scnArt(x); return { glyph:x.glyph, title:x.title, sub:x.sub + (BAD_OF[x.id] !== undefined ? ' · and a bad day' : ''), turns:x.you.length + ' lines to say', img:im ? 'background-color:' + im.c + ';background-image:url("' + im.u + '")' : '', state:S.sres[x.id] ? 'Done' : '', cls:S.sres[x.id] ? 'done' : '', fn:() => this.pickScenario(i), aria:x.title + (S.sres[x.id] ? ', done' : '') }; }),
+        spDoneText:SCEN_LIST.filter(o => S.sres[o.x.id]).length + ' of ' + SCEN_LIST.length + ' places visited',
+        stageStyle:scnArt(sc) ? '--sc:' + scnArt(sc).c + ';--scene:url("' + scnArt(sc).u + '")' : '', stageCls:scnArt(sc) ? 'staged' : '',
+        // Good day / Bad day (E3), and a turn where you choose what to say
+        spDayShow:!!sc.bad || BAD_OF[sc.id] !== undefined, spGoodCls:sc.bad ? '' : 'on', spBadCls:sc.bad ? 'on' : '', spGood:() => this.pickDay(false), spBad:() => this.pickDay(true),
+        spChoice:canTalk && !!target.alt, spPlain:!(canTalk && target.alt), spOptA:target, spOptB:target.alt || target, spSayA:() => this.sayIt(false), spSayB:() => this.sayIt(true),
         aiStageStyle:aiSceneOf(S) ? '--sc:' + aiSceneOf(S).c + ';--scene:url("' + aiSceneOf(S).u + '")' : '', aiStageCls:aiSceneOf(S) ? 'staged' : '',
         aiSitLabel:S.aiScn >= 0 && SCEN[S.aiScn] ? SCEN[S.aiScn].title : 'Free chat', aiPickOpen:!!S.aiPick, aiPickToggle:() => this.setState({ aiPick:!this.state.aiPick }), aiPickClose:() => this.setState({ aiPick:false }), aiSitImg:scnImg(aiSceneOf(S)),
         msgs, typing:false, canTalk, sdone:S.sdone, target, goals, wchips, scenarios, chatGlyph:sc.glyph, chatTitle:sc.title, chatSub:sc.sub, turnsText:turns + ' turns',
@@ -6776,7 +6815,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         zhCls:S.szh ? 'on' : '', pyCls:S.spy ? 'on' : '', enCls:S.sen ? 'on' : '', listenOnly:!S.szh && !S.spy && !S.sen,
         toggleZh:() => this.setState({ szh:!this.state.szh }), listenOnlyNow:() => this.setState({ szh:false, spy:false, sen:false }),
         togglePy:() => this.setState({ spy:!this.state.spy }), toggleEn:() => this.setState({ sen:!this.state.sen }),
-        sayIt:this.sayIt, resetSpeak:this.resetSpeak,
+        sayIt:() => this.sayIt(false), resetSpeak:this.resetSpeak,
 
         // quiz
         inQuestions:!S.qdone, qdone:S.qdone, q, segs, qLanShow:S.qmode === 'greview', qSegShow:S.qmode !== 'greview', qLants, qAnswered, qTotal:qs.length, opts, optsCls:S.qchecked ? 'locked' : '', pickedTiles, noPicked:S.qpicked.length === 0, bankTiles, spotTokens,
@@ -6830,7 +6869,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       if (window.requestAnimationFrame) requestAnimationFrame(() => setTimeout(go, 0)); else setTimeout(go, 0);
     });
     app.lateReady = () => p; }
-  app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin, plChoices, confusers, choiceOptions, ffTier, jyFinds, jyRead, SV_SETS };   // for the browser tests
+  app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin, plChoices, confusers, choiceOptions, exRemember, exDrawn:() => EX_DRAWN.slice(), ffTier, jyFinds, jyRead, SV_SETS };   // for the browser tests
   window.shanlu = app;
   // an exam photo that does not load (offline, blocked, removed) is dropped and its emoji shows instead
   document.addEventListener('error', (ev) => {

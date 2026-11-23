@@ -697,6 +697,378 @@ window.HSK3_SPEAK = {
      "en": "Sure, see you at the weekend!"
     }
    ]
+  },
+  {
+   "id": "money",
+   "glyph": "换",
+   "title": "Change money",
+   "sub": "Bank, 5 turns",
+   "goals": [
+    "Say you want to change money",
+    "Choose how much",
+    "Ask how long it takes",
+    "Say thanks"
+   ],
+   "words": [
+    {
+     "zh": "换",
+     "py": "huàn"
+    },
+    {
+     "zh": "护照",
+     "py": "hùzhào"
+    },
+    {
+     "zh": "办",
+     "py": "bàn"
+    },
+    {
+     "zh": "钱",
+     "py": "qián"
+    },
+    {
+     "zh": "等",
+     "py": "děng"
+    },
+    {
+     "zh": "分钟",
+     "py": "fēnzhōng"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好，请问你要办什么事？",
+     "py": "Nǐ hǎo, qǐngwèn nǐ yào bàn shénme shì?",
+     "en": "Hello, what business would you like to do?"
+    },
+    {
+     "zh": "好的，你要换多少？",
+     "py": "Hǎo de, nǐ yào huàn duōshǎo?",
+     "en": "Okay, how much do you want to change?"
+    },
+    {
+     "zh": "好的，五百块。请把你的护照给我。",
+     "py": "Hǎo de, wǔ bǎi kuài. Qǐng bǎ nǐ de hùzhào gěi wǒ.",
+     "en": "Okay, 500 yuan. Please give me your passport.",
+     "alt": {
+      "zh": "好的，一千块。请把你的护照给我。",
+      "py": "Hǎo de, yì qiān kuài. Qǐng bǎ nǐ de hùzhào gěi wǒ.",
+      "en": "Okay, 1,000 yuan. Please give me your passport."
+     }
+    },
+    {
+     "zh": "五分钟就好，请在这儿坐一下。",
+     "py": "Wǔ fēnzhōng jiù hǎo, qǐng zài zhèr zuò yíxià.",
+     "en": "It will be ready in just five minutes; please sit here for a moment."
+    },
+    {
+     "zh": "不客气。",
+     "py": "Bú kèqi.",
+     "en": "You are welcome."
+    }
+   ],
+   "you": [
+    {
+     "zh": "你好，我想换一些钱。",
+     "py": "Nǐ hǎo, wǒ xiǎng huàn yìxiē qián.",
+     "en": "Hello, I would like to change some money."
+    },
+    {
+     "zh": "我想换五百块。",
+     "py": "Wǒ xiǎng huàn wǔ bǎi kuài.",
+     "en": "I would like to change 500 yuan.",
+     "alt": {
+      "zh": "我想换一千块。",
+      "py": "Wǒ xiǎng huàn yì qiān kuài.",
+      "en": "I would like to change 1,000 yuan."
+     }
+    },
+    {
+     "zh": "给你。要等多长时间？",
+     "py": "Gěi nǐ. Yào děng duō cháng shíjiān?",
+     "en": "Here you are. How long will one need to wait?"
+    },
+    {
+     "zh": "好的，谢谢。",
+     "py": "Hǎo de, xièxie.",
+     "en": "Okay, thank you."
+    }
+   ],
+   "scene": "bank"
+  },
+  {
+   "id": "missed",
+   "glyph": "课",
+   "title": "Catch up after missing class",
+   "sub": "School, 5 turns",
+   "goals": [
+    "Say why you were away and ask about the class",
+    "Choose how to catch up",
+    "Ask when the homework is due",
+    "Say thanks"
+   ],
+   "words": [
+    {
+     "zh": "生病",
+     "py": "shēngbìng"
+    },
+    {
+     "zh": "发烧",
+     "py": "fāshāo"
+    },
+    {
+     "zh": "讲",
+     "py": "jiǎng"
+    },
+    {
+     "zh": "作业",
+     "py": "zuòyè"
+    },
+    {
+     "zh": "休息",
+     "py": "xiūxi"
+    },
+    {
+     "zh": "课",
+     "py": "kè"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你今天怎么没来上课？",
+     "py": "Nǐ jīntiān zěnme méi lái shàngkè?",
+     "en": "Why did you not come to class today?"
+    },
+    {
+     "zh": "讲了第五课，还有很多作业。我可以把我的作业给你看看。",
+     "py": "Jiǎng le dì wǔ kè, hái yǒu hěn duō zuòyè. Wǒ kěyǐ bǎ wǒ de zuòyè gěi nǐ kànkan.",
+     "en": "The teacher went over lesson five, and there is a lot of homework. I can show you my homework."
+    },
+    {
+     "zh": "不客气，我明天带给你。",
+     "py": "Bú kèqi, wǒ míngtiān dài gěi nǐ.",
+     "en": "You are welcome; I will bring it to you tomorrow.",
+     "alt": {
+      "zh": "也好，老师明天上午有时间。",
+      "py": "Yě hǎo, lǎoshī míngtiān shàngwǔ yǒu shíjiān.",
+      "en": "That works too; the teacher has time tomorrow morning."
+     }
+    },
+    {
+     "zh": "星期五以前。你好好休息吧。",
+     "py": "Xīngqīwǔ yǐqián. Nǐ hǎo hǎo xiūxi ba.",
+     "en": "Before Friday. You should rest well."
+    },
+    {
+     "zh": "不客气，快一点儿好起来！",
+     "py": "Bú kèqi, kuài yìdiǎnr hǎo qǐlái!",
+     "en": "You are welcome. Get better soon!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我生病了，还发烧了。今天老师讲了什么？",
+     "py": "Wǒ shēngbìng le, hái fāshāo le. Jīntiān lǎoshī jiǎng le shénme?",
+     "en": "I was ill and had a fever too. What did the teacher go over today?"
+    },
+    {
+     "zh": "太好了，谢谢你！",
+     "py": "Tài hǎo le, xièxie nǐ!",
+     "en": "Great, thank you!",
+     "alt": {
+      "zh": "不用了，我明天问老师。",
+      "py": "Búyòng le, wǒ míngtiān wèn lǎoshī.",
+      "en": "No need; I will ask the teacher tomorrow."
+     }
+    },
+    {
+     "zh": "作业什么时候要给老师？",
+     "py": "Zuòyè shénme shíhou yào gěi lǎoshī?",
+     "en": "When does the homework have to be given to the teacher?"
+    },
+    {
+     "zh": "好的，谢谢你。",
+     "py": "Hǎo de, xièxie nǐ.",
+     "en": "Okay, thank you."
+    }
+   ],
+   "scene": "school"
+  },
+  {
+   "id": "hotel-bad",
+   "glyph": "住",
+   "title": "Check in at a hotel: a bad day",
+   "sub": "Hotel, 5 turns",
+   "goals": [
+    "Say how many days and that you phoned",
+    "Say you asked for three days",
+    "Ask about the third day",
+    "Thank them"
+   ],
+   "words": [
+    {
+     "zh": "宾馆",
+     "py": "bīnguǎn"
+    },
+    {
+     "zh": "住",
+     "py": "zhù"
+    },
+    {
+     "zh": "打电话",
+     "py": "dǎ diànhuà"
+    },
+    {
+     "zh": "旁边",
+     "py": "pángbiān"
+    },
+    {
+     "zh": "帮助",
+     "py": "bāngzhù"
+    },
+    {
+     "zh": "对不起",
+     "py": "duìbuqǐ"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好！欢迎来到我们宾馆。你想住几天？",
+     "py": "Nǐ hǎo! Huānyíng lái dào wǒmen bīnguǎn. Nǐ xiǎng zhù jǐ tiān?",
+     "en": "Hello! Welcome to our hotel. How many days would you like to stay?"
+    },
+    {
+     "zh": "请等一下……对不起，你的房间只能住两天。",
+     "py": "Qǐng děng yíxià...... Duìbuqǐ, nǐ de fángjiān zhǐnéng zhù liǎng tiān.",
+     "en": "Please wait a moment… Sorry, your room is only for two days."
+    },
+    {
+     "zh": "真对不起，第三天的房间都有人住了。",
+     "py": "Zhēn duìbuqǐ, dì sān tiān de fángjiān dōu yǒu rén zhù le.",
+     "en": "Really sorry; on the third day all the rooms have been taken."
+    },
+    {
+     "zh": "你可以去旁边的宾馆，我帮你打电话问问。",
+     "py": "Nǐ kěyǐ qù pángbiān de bīnguǎn, wǒ bāng nǐ dǎ diànhuà wènwen.",
+     "en": "You can go to the hotel next door; I will phone them and ask for you."
+    },
+    {
+     "zh": "不客气，真对不起！",
+     "py": "Bú kèqi, zhēn duìbuqǐ!",
+     "en": "You are welcome. Really sorry!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想住三天。我上个星期打过电话。",
+     "py": "Wǒ xiǎng zhù sān tiān. Wǒ shàng ge xīngqī dǎ guo diànhuà.",
+     "en": "I would like to stay three days. I phoned last week."
+    },
+    {
+     "zh": "怎么会这样？我要的是三天。",
+     "py": "Zěnme huì zhèyàng? Wǒ yào de shì sān tiān.",
+     "en": "How can that be? What I want is three days."
+    },
+    {
+     "zh": "那第三天我怎么办？",
+     "py": "Nà dì sān tiān wǒ zěnmebàn?",
+     "en": "Then what do I do on the third day?"
+    },
+    {
+     "zh": "好吧，谢谢你的帮助。",
+     "py": "Hǎo ba, xièxie nǐ de bāngzhù.",
+     "en": "All right, thank you for your help."
+    }
+   ],
+   "bad": "hotel"
+  },
+  {
+   "id": "train-bad",
+   "glyph": "铁",
+   "title": "Take the high-speed train: a bad day",
+   "sub": "Travel, 5 turns",
+   "goals": [
+    "Ask why the train is not boarding",
+    "Say you have a meeting",
+    "Ask where to change your ticket",
+    "Say thanks"
+   ],
+   "words": [
+    {
+     "zh": "高铁",
+     "py": "gāotiě"
+    },
+    {
+     "zh": "检票",
+     "py": "jiǎnpiào"
+    },
+    {
+     "zh": "晚点",
+     "py": "wǎndiǎn"
+    },
+    {
+     "zh": "会议",
+     "py": "huìyì"
+    },
+    {
+     "zh": "换",
+     "py": "huàn"
+    },
+    {
+     "zh": "等",
+     "py": "děng"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好！需要帮助吗？",
+     "py": "Nǐ hǎo! Xūyào bāngzhù ma?",
+     "en": "Hello! Do you need help?"
+    },
+    {
+     "zh": "对不起，因为下大雨，高铁晚点了，要等两个小时。",
+     "py": "Duìbuqǐ, yīnwèi xià dà yǔ, gāotiě wǎndiǎn le, yào děng liǎng ge xiǎoshí.",
+     "en": "Sorry, because of the heavy rain the train is late; you have to wait two hours."
+    },
+    {
+     "zh": "你可以换十一点出发的高铁。",
+     "py": "Nǐ kěyǐ huàn shíyī diǎn chūfā de gāotiě.",
+     "en": "You can change to the train that leaves at eleven."
+    },
+    {
+     "zh": "在那边。人很多，你得等一会儿。",
+     "py": "Zài nàbiān. Rén hěn duō, nǐ děi děng yíhuìr.",
+     "en": "Over there. There are a lot of people, so you will have to wait a while."
+    },
+    {
+     "zh": "不客气，再见！",
+     "py": "Bú kèqi, zàijiàn!",
+     "en": "You are welcome, goodbye!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "请问，十点二十的高铁怎么还不检票？",
+     "py": "Qǐngwèn, shí diǎn èrshí de gāotiě zěnme hái bù jiǎnpiào?",
+     "en": "Excuse me, why is ticket checking for the 10:20 train not starting yet?"
+    },
+    {
+     "zh": "两个小时？我下午还有一个会议。",
+     "py": "Liǎng ge xiǎoshí? Wǒ xiàwǔ hái yǒu yí ge huìyì.",
+     "en": "Two hours? I have a meeting in the afternoon."
+    },
+    {
+     "zh": "好的，我在哪儿换票？",
+     "py": "Hǎo de, wǒ zài nǎr huàn piào?",
+     "en": "Okay, where do I change my ticket?"
+    },
+    {
+     "zh": "好，谢谢你。",
+     "py": "Hǎo, xièxie nǐ.",
+     "en": "Okay, thank you."
+    }
+   ],
+   "bad": "train"
   }
  ],
  "phrases": [

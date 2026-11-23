@@ -61,15 +61,37 @@ def main():
 
     sp = json.load(open(os.path.join(levelcfg.CONTENT, 'speaking.json'), encoding='utf-8'))
     scenarios = []
+    ids = [s['id'] for s in sp['scenarios']]
+    if len(set(ids)) != len(ids):
+        die('two scenarios share an id')
     for s in sp['scenarios']:
         if len(s['ai']) != len(s['you']) + 1:
             die('scenario %s: needs one more speaker line than your lines' % s['id'])
         if len(s['goals']) != len(s['you']):
             die('scenario %s: one goal per line of yours' % s['id'])
+        # A choice (E3): a line of yours can have "alt", a second thing you could say; then Mingming's next line has "alt" too, her
+        # answer to it. After that the conversation goes on the same way. Mingming's other lines never have "alt".
+        for k, y in enumerate(s['you']):
+            if bool(y.get('alt')) != bool(s['ai'][k + 1].get('alt')):
+                die('scenario %s: your line %d and the reply after it must both have "alt" or neither' % (s['id'], k + 1))
+        if s['ai'][0].get('alt'):
+            die('scenario %s: the opening line cannot have "alt"' % s['id'])
+        # a "bad day" version of another scenario of this level (things go wrong); it is reached from that scenario, not listed on its own
+        if s.get('bad') and (s['bad'] not in ids or next(x for x in sp['scenarios'] if x['id'] == s['bad']).get('bad')):
+            die('scenario %s: "bad" must name an ordinary scenario of this level' % s['id'])
+        def line(l):
+            out = dict(zh=l['zh'], py=eng.sentence(l['zh'])[0], en=l['en'])
+            if l.get('alt'):
+                out['alt'] = dict(zh=l['alt']['zh'], py=eng.sentence(l['alt']['zh'])[0], en=l['alt']['en'])
+            return out
         def conv(lines):
-            return [dict(zh=l['zh'], py=eng.sentence(l['zh'])[0], en=l['en']) for l in lines]
+            return [line(l) for l in lines]
         words = [dict(zh=w, py=lower_first(eng.sentence(w)[0])) for w in s['words']]
-        scenarios.append(dict(id=s['id'], glyph=s['glyph'], title=s['title'], sub=s['sub'], goals=s['goals'], words=words, ai=conv(s['ai']), you=conv(s['you'])))
+        sc = dict(id=s['id'], glyph=s['glyph'], title=s['title'], sub=s['sub'], goals=s['goals'], words=words, ai=conv(s['ai']), you=conv(s['you']))
+        for k in ('bad', 'scene'):   # scene: the id of the backdrop to borrow (data/speak-scenes.js) when the scenario has none of its own
+            if s.get(k):
+                sc[k] = s[k]
+        scenarios.append(sc)
     phrases = [dict(zh=p['zh'], py=eng.sentence(p['zh'])[0], en=p['en']) for p in sp['phrases']]
 
     li = json.load(open(os.path.join(levelcfg.CONTENT, 'listening.json'), encoding='utf-8'))

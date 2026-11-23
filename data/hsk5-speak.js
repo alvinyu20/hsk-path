@@ -697,6 +697,378 @@ window.HSK5_SPEAK = {
      "en": "Okay, I have no more questions. Can I sign now?"
     }
    ]
+  },
+  {
+   "id": "lostphone",
+   "glyph": "丢",
+   "title": "Report a lost phone",
+   "sub": "Subway office, 5 turns",
+   "goals": [
+    "Say what you lost and where",
+    "Say where you got off",
+    "Describe the phone",
+    "Thank them"
+   ],
+   "words": [
+    {
+     "zh": "丢",
+     "py": "diū"
+    },
+    {
+     "zh": "记得",
+     "py": "jìde"
+    },
+    {
+     "zh": "颜色",
+     "py": "yánsè"
+    },
+    {
+     "zh": "运气",
+     "py": "yùnqi"
+    },
+    {
+     "zh": "感谢",
+     "py": "gǎnxiè"
+    },
+    {
+     "zh": "小心",
+     "py": "xiǎoxīn"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好，我能帮你什么？",
+     "py": "Nǐ hǎo, wǒ néng bāng nǐ shénme?",
+     "en": "Hello, what can I help you with?"
+    },
+    {
+     "zh": "别着急。你是在哪一站下的车？",
+     "py": "Bié zháojí. Nǐ shì zài nǎ yí zhàn xià de chē?",
+     "en": "Do not worry. At which stop did you get off?"
+    },
+    {
+     "zh": "你的手机是什么颜色的？",
+     "py": "Nǐ de shǒujī shì shénme yánsè de?",
+     "en": "What colour is your phone?"
+    },
+    {
+     "zh": "你运气不错，刚才有人送来一部黑色的手机，你看看是不是你的。",
+     "py": "Nǐ yùnqi búcuò, gāngcái yǒu rén sòng lái yí bù hēisè de shǒujī, nǐ kànkan shì bú shì nǐ de.",
+     "en": "You are lucky: someone just brought in a black phone. Have a look whether it is yours.",
+     "alt": {
+      "zh": "你运气不错，刚才有人送来一部白色的手机，你看看是不是你的。",
+      "py": "Nǐ yùnqi búcuò, gāngcái yǒu rén sòng lái yí bù báisè de shǒujī, nǐ kànkan shì bú shì nǐ de.",
+      "en": "You are lucky: someone just brought in a white phone. Have a look whether it is yours."
+     }
+    },
+    {
+     "zh": "不客气，以后要小心一点儿。",
+     "py": "Bú kèqi, yǐhòu yào xiǎoxīn yìdiǎnr.",
+     "en": "You are welcome. You need to be a bit more careful from now on."
+    }
+   ],
+   "you": [
+    {
+     "zh": "你好，我的手机好像丢在地铁上了。",
+     "py": "Nǐ hǎo, wǒ de shǒujī hǎoxiàng diū zài dìtiě shàng le.",
+     "en": "Hello, I think I left my phone on the subway."
+    },
+    {
+     "zh": "我是在第三站下的车，大概二十分钟以前。",
+     "py": "Wǒ shì zài dì sān zhàn xià de chē, dàgài èrshí fēnzhōng yǐqián.",
+     "en": "I got off at the third stop, about twenty minutes ago."
+    },
+    {
+     "zh": "黑色的，后面有一张照片。",
+     "py": "Hēisè de, hòumian yǒu yì zhāng zhàopiàn.",
+     "en": "Black, with a photo on the back.",
+     "alt": {
+      "zh": "白色的，已经有点儿旧了。",
+      "py": "Báisè de, yǐjīng yǒudiǎnr jiù le.",
+      "en": "White, and already a bit old."
+     }
+    },
+    {
+     "zh": "对，就是这个！太感谢了，请帮我谢谢那个人。",
+     "py": "Duì, jiùshì zhège! Tài gǎnxiè le, qǐng bāng wǒ xièxie nàge rén.",
+     "en": "Yes, this is it! Thank you so much; please thank that person for me."
+    }
+   ],
+   "scene": "train"
+  },
+  {
+   "id": "extension",
+   "glyph": "延",
+   "title": "Ask for more time on your thesis",
+   "sub": "University, 5 turns",
+   "goals": [
+    "Say you want to talk about your thesis",
+    "Say why it will be late",
+    "Ask for more time",
+    "Thank the professor"
+   ],
+   "words": [
+    {
+     "zh": "商量",
+     "py": "shāngliang"
+    },
+    {
+     "zh": "论文",
+     "py": "lùnwén"
+    },
+    {
+     "zh": "按时",
+     "py": "ànshí"
+    },
+    {
+     "zh": "教授",
+     "py": "jiàoshòu"
+    },
+    {
+     "zh": "完成",
+     "py": "wánchéng"
+    },
+    {
+     "zh": "随时",
+     "py": "suíshí"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "请进。你有什么事？",
+     "py": "Qǐng jìn. Nǐ yǒu shénme shì?",
+     "en": "Please come in. What do you need?"
+    },
+    {
+     "zh": "好的，你说吧。",
+     "py": "Hǎo de, nǐ shuō ba.",
+     "en": "Okay, you go ahead."
+    },
+    {
+     "zh": "我明白了。你需要多长时间？",
+     "py": "Wǒ míngbai le. Nǐ xūyào duō cháng shíjiān?",
+     "en": "I see. How much time do you need?"
+    },
+    {
+     "zh": "一个星期有点儿长，五天吧。",
+     "py": "Yí ge xīngqī yǒudiǎnr cháng, wǔ tiān ba.",
+     "en": "A week is a bit long; let's say five days.",
+     "alt": {
+      "zh": "三天没问题。不过这次以后，不能再晚了。",
+      "py": "Sān tiān méi wèntí. Búguò zhè cì yǐhòu, bù néng zài wǎn le.",
+      "en": "Three days is no problem. But after this time, it cannot be late again."
+     }
+    },
+    {
+     "zh": "不客气，有问题随时来找我。",
+     "py": "Bú kèqi, yǒu wèntí suíshí lái zhǎo wǒ.",
+     "en": "You are welcome. Come and find me any time you have a question."
+    }
+   ],
+   "you": [
+    {
+     "zh": "教授，您好。我想跟您商量一下论文的事。",
+     "py": "Jiàoshòu, nín hǎo. Wǒ xiǎng gēn nín shāngliang yíxià lùnwén de shì.",
+     "en": "Hello, Professor. I would like to discuss my thesis with you."
+    },
+    {
+     "zh": "我最近家里出了一些事，论文可能没办法按时交了。",
+     "py": "Wǒ zuìjìn jiā lǐ chū le yìxiē shì, lùnwén kěnéng méi bànfǎ ànshí jiāo le.",
+     "en": "Something happened in my family recently, so I may not be able to hand in my thesis on time."
+    },
+    {
+     "zh": "我想再要一个星期，可以吗？",
+     "py": "Wǒ xiǎng zài yào yí ge xīngqī, kěyǐ ma?",
+     "en": "I would like one more week; is that all right?",
+     "alt": {
+      "zh": "能不能多给我三天？",
+      "py": "Néng bù néng duō gěi wǒ sān tiān?",
+      "en": "Could you give me three more days?"
+     }
+    },
+    {
+     "zh": "好的，非常感谢您的理解，我一定按时完成。",
+     "py": "Hǎo de, fēicháng gǎnxiè nín de lǐjiě, wǒ yídìng ànshí wánchéng.",
+     "en": "Okay, thank you very much for understanding. I will certainly finish on time."
+    }
+   ],
+   "scene": "meeting"
+  },
+  {
+   "id": "bank-bad",
+   "glyph": "银",
+   "title": "Open a bank account: a bad day",
+   "sub": "Money, 5 turns",
+   "goals": [
+    "Say you want to open an account",
+    "Say you forgot your ID card",
+    "Ask when they close",
+    "Say you will come back"
+   ],
+   "words": [
+    {
+     "zh": "业务",
+     "py": "yèwù"
+    },
+    {
+     "zh": "账户",
+     "py": "zhànghù"
+    },
+    {
+     "zh": "身份证",
+     "py": "shēnfènzhèng"
+    },
+    {
+     "zh": "护照",
+     "py": "hùzhào"
+    },
+    {
+     "zh": "下班",
+     "py": "xiàbān"
+    },
+    {
+     "zh": "办理",
+     "py": "bànlǐ"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好，请问你要办理什么业务？",
+     "py": "Nǐ hǎo, qǐngwèn nǐ yào bànlǐ shénme yèwù?",
+     "en": "Hello, what business would you like to do?"
+    },
+    {
+     "zh": "好的。请把你的身份证给我。",
+     "py": "Hǎo de. Qǐng bǎ nǐ de shēnfènzhèng gěi wǒ.",
+     "en": "Okay. Please give me your ID card."
+    },
+    {
+     "zh": "不好意思，办这个业务必须用身份证。",
+     "py": "Bùhǎoyìsi, bàn zhège yèwù bìxū yòng shēnfènzhèng.",
+     "en": "Sorry, for this you must use your ID card."
+    },
+    {
+     "zh": "我们下午五点下班，周末也开门。",
+     "py": "Wǒmen xiàwǔ wǔ diǎn xiàbān, zhōumò yě kāi mén.",
+     "en": "We close at five in the afternoon, and we are open at weekends too."
+    },
+    {
+     "zh": "好的。下次来之前，可以先打电话问清楚要带什么。",
+     "py": "Hǎo de. Xiàcì lái zhīqián, kěyǐ xiān dǎ diànhuà wèn qīngchu yào dài shénme.",
+     "en": "Okay. Before you come next time, you can phone first and ask exactly what you need to bring."
+    }
+   ],
+   "you": [
+    {
+     "zh": "你好，我想开一个新的银行账户。",
+     "py": "Nǐ hǎo, wǒ xiǎng kāi yí ge xīn de yínháng zhànghù.",
+     "en": "Hello, I would like to open a new bank account."
+    },
+    {
+     "zh": "哎呀，我把身份证忘在家里了。用护照可以吗？",
+     "py": "Āiyā, wǒ bǎ shēnfènzhèng wàng zài jiā lǐ le. Yòng hùzhào kěyǐ ma?",
+     "en": "Oh dear, I left my ID card at home. Can I use my passport?"
+    },
+    {
+     "zh": "那我只能明天再来。你们几点下班？",
+     "py": "Nà wǒ zhǐnéng míngtiān zài lái. Nǐmen jǐ diǎn xiàbān?",
+     "en": "Then I can only come back tomorrow. What time do you close?"
+    },
+    {
+     "zh": "好的，那我明天上午带身份证再来。",
+     "py": "Hǎo de, nà wǒ míngtiān shàngwǔ dài shēnfènzhèng zài lái.",
+     "en": "Okay, then I will come back tomorrow morning with my ID card."
+    }
+   ],
+   "bad": "bank"
+  },
+  {
+   "id": "repair-bad",
+   "glyph": "修",
+   "title": "Report a problem in your flat: a bad day",
+   "sub": "Housing, 5 turns",
+   "goals": [
+    "Say it has broken again",
+    "Ask for it to be done today",
+    "Ask whether it should be replaced",
+    "Say you hope it is fixed for good"
+   ],
+   "words": [
+    {
+     "zh": "物业",
+     "py": "wùyè"
+    },
+    {
+     "zh": "师傅",
+     "py": "shīfu"
+    },
+    {
+     "zh": "安排",
+     "py": "ānpái"
+    },
+    {
+     "zh": "麻烦",
+     "py": "máfan"
+    },
+    {
+     "zh": "彻底",
+     "py": "chèdǐ"
+    },
+    {
+     "zh": "尽快",
+     "py": "jǐnkuài"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好，这里是物业，请问有什么事？",
+     "py": "Nǐ hǎo, zhèlǐ shì wùyè, qǐngwèn yǒu shénme shì?",
+     "en": "Hello, this is the property office. What is the matter?"
+    },
+    {
+     "zh": "真不好意思。我们的师傅今天都很忙，最早明天下午才能去。",
+     "py": "Zhēn bùhǎoyìsi. Wǒmen de shīfu jīntiān dōu hěn máng, zuì zǎo míngtiān xiàwǔ cái néng qù.",
+     "en": "I am very sorry. Our repairmen are all busy today; the earliest they can come is tomorrow afternoon."
+    },
+    {
+     "zh": "我理解您的心情。我再问问，看看今天晚上能不能派人去。",
+     "py": "Wǒ lǐjiě nín de xīnqíng. Wǒ zài wènwen, kànkan jīntiān wǎnshang néng bù néng pài rén qù.",
+     "en": "I understand how you feel. I will ask again and see whether someone can be sent this evening."
+    },
+    {
+     "zh": "这个问题我需要问一下经理，明天给您回电话。",
+     "py": "Zhège wèntí wǒ xūyào wèn yíxià jīnglǐ, míngtiān gěi nín huí diànhuà.",
+     "en": "I need to ask the manager about that; I will call you back tomorrow."
+    },
+    {
+     "zh": "好的，我们一定尽快处理。",
+     "py": "Hǎo de, wǒmen yídìng jǐnkuài chǔlǐ.",
+     "en": "Okay, we will certainly deal with it as soon as possible."
+    }
+   ],
+   "you": [
+    {
+     "zh": "你好，我家的空调又坏了，这已经是这个月第二次了。",
+     "py": "Nǐ hǎo, wǒ jiā de kōngtiáo yòu huài le, zhè yǐjīng shì zhège yuè dì èr cì le.",
+     "en": "Hello, my air conditioner has broken down again; this is already the second time this month."
+    },
+    {
+     "zh": "明天下午？现在家里热得我受不了，能不能今天就安排？",
+     "py": "Míngtiān xiàwǔ? Xiànzài jiā lǐ rè de wǒ shòubuliǎo, néng bù néng jīntiān jiù ānpái?",
+     "en": "Tomorrow afternoon? It is so hot at home now that I cannot bear it. Could you arrange it today?"
+    },
+    {
+     "zh": "好的，谢谢你。另外，这个空调是不是应该换新的了？",
+     "py": "Hǎo de, xièxie nǐ. Lìngwài, zhège kōngtiáo shì bú shì yīnggāi huàn xīn de le?",
+     "en": "Okay, thank you. Also, should this air conditioner be replaced with a new one?"
+    },
+    {
+     "zh": "好，希望这次能彻底解决。",
+     "py": "Hǎo, xīwàng zhè cì néng chèdǐ jiějué.",
+     "en": "Okay, hope it can be fixed for good this time."
+    }
+   ],
+   "bad": "repair"
   }
  ],
  "phrases": [

@@ -639,7 +639,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
 
   // Speak
   await nav('Speak');
-  check((await page.locator('.spk-card').count()) === 8, 'speaking lists 8 places to pick from');
+  check((await page.locator('.spk-card').count()) === 10, 'speaking lists 10 places to pick from (bad-day versions are reached from their place)');
   await page.locator('.spk-card').first().click();
   check((await page.locator('.chat.staged .stage').count()) === 1 && (await page.locator('.scn').count()) === 8, 'picking a place opens its scene and the list of 8 scripts');
   for (let i = 0; i < 4; i++) await page.locator('button', { hasText: 'I said it' }).click();
@@ -669,7 +669,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.reload();
   await page.waitForSelector('.app');
   await nav('Speak');
-  check((await page.locator('.spk-card').count()) === 8, 'after a reload Speak opens on the places to pick from');
+  check((await page.locator('.spk-card').count()) === 10, 'after a reload Speak opens on the places to pick from');
   await page.locator('.spk-card').first().click();
   check(!(await page.locator('.chat-h .seg2 button', { hasText: 'Pinyin' }).getAttribute('class') || '').includes('on'), 'the hidden pinyin and English stay hidden after a reload');
   await page.locator('.chat-h .seg2 button', { hasText: 'Pinyin' }).click();

@@ -479,6 +479,266 @@
      "en": "That is too expensive, make it cheaper."
     }
    ]
+  },
+  {
+   "id": "bookshop",
+   "glyph": "书",
+   "title": "Buy a book",
+   "sub": "Bookshop, 5 turns",
+   "scene": "shop",
+   "goals": [
+    "Say what you want to buy",
+    "Choose a book",
+    "Ask if you can read here for a while",
+    "Say thanks"
+   ],
+   "words": [
+    "书",
+    "本",
+    "块",
+    "一会儿",
+    "可以",
+    "那边"
+   ],
+   "ai": [
+    {
+     "zh": "你好！你想买什么书？",
+     "en": "Hello! What book would you like to buy?"
+    },
+    {
+     "zh": "好的。这本五十块，那本八十块。你要哪本？",
+     "en": "Okay. This one is 50 yuan and that one is 80 yuan. Which one do you want?"
+    },
+    {
+     "zh": "好，五十块。",
+     "en": "Okay, 50 yuan.",
+     "alt": {
+      "zh": "好，八十块。",
+      "en": "Okay, 80 yuan."
+     }
+    },
+    {
+     "zh": "可以，那边有椅子。",
+     "en": "Yes, you can; there are chairs over there."
+    },
+    {
+     "zh": "不客气！",
+     "en": "You are welcome!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想买汉语书。",
+     "en": "I would like to buy a Chinese book."
+    },
+    {
+     "zh": "我要这本。",
+     "en": "I want this one.",
+     "alt": {
+      "zh": "我要那本。",
+      "en": "I want that one."
+     }
+    },
+    {
+     "zh": "我可以在这儿看一会儿吗？",
+     "en": "Can I read here for a while?"
+    },
+    {
+     "zh": "好的，谢谢！",
+     "en": "Okay, thank you!"
+    }
+   ]
+  },
+  {
+   "id": "film",
+   "glyph": "影",
+   "title": "Go to a film with a friend",
+   "sub": "Phone call, 5 turns",
+   "scene": "plan",
+   "goals": [
+    "Say you are free",
+    "Choose a film",
+    "Ask when it starts",
+    "Agree to meet"
+   ],
+   "words": [
+    "电影",
+    "时间",
+    "开始",
+    "门口",
+    "见",
+    "有"
+   ],
+   "ai": [
+    {
+     "zh": "喂，你好！我是小明。你明天下午有时间吗？",
+     "en": "Hello! I am Xiao Ming. Are you free tomorrow afternoon?"
+    },
+    {
+     "zh": "我想请你去看电影。你想看什么电影？",
+     "en": "I would like to invite you to a film. What film would you like to see?"
+    },
+    {
+     "zh": "好啊，明天下午有一个很好的中国电影。",
+     "en": "Great, there is a very good Chinese film tomorrow afternoon.",
+     "alt": {
+      "zh": "好啊，明天下午有一个很好的外国电影。",
+      "en": "Great, there is a very good foreign film tomorrow afternoon."
+     }
+    },
+    {
+     "zh": "三点。我们两点半在电影院门口见，好吗？",
+     "en": "Three o'clock. Let's meet at the cinema entrance at half past two, okay?"
+    },
+    {
+     "zh": "明天见！",
+     "en": "See you tomorrow!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我有时间。什么事？",
+     "en": "I have time. What is it?"
+    },
+    {
+     "zh": "我想看一个中国电影。",
+     "en": "I would like to see a Chinese film.",
+     "alt": {
+      "zh": "我想看一个外国电影。",
+      "en": "I would like to see a foreign film."
+     }
+    },
+    {
+     "zh": "电影几点开始？",
+     "en": "What time does the film start?"
+    },
+    {
+     "zh": "好的，明天见！",
+     "en": "Okay, see you tomorrow!"
+    }
+   ]
+  },
+  {
+   "id": "cafe2-bad",
+   "bad": "cafe2",
+   "glyph": "咖",
+   "title": "Order at a café: a bad day",
+   "sub": "Drinks, 5 turns",
+   "goals": [
+    "Order a drink",
+    "Choose something else",
+    "Say it is the wrong drink",
+    "Say it is all right"
+   ],
+   "words": [
+    "红茶",
+    "绿茶",
+    "咖啡",
+    "对不起",
+    "再",
+    "没关系"
+   ],
+   "ai": [
+    {
+     "zh": "你好！你想喝什么？",
+     "en": "Hello! What would you like to drink?"
+    },
+    {
+     "zh": "对不起，红茶没有了。我们有绿茶和咖啡。",
+     "en": "Sorry, there is no black tea left. We have green tea and coffee."
+    },
+    {
+     "zh": "好的，你的绿茶来了。",
+     "en": "Okay, your green tea has come."
+    },
+    {
+     "zh": "啊，对不起！我再给你做一杯绿茶。",
+     "en": "Oh, sorry! I will make you another cup of green tea."
+    },
+    {
+     "zh": "不客气。这杯不要钱。",
+     "en": "You are welcome. This cup does not cost money."
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想喝红茶。",
+     "en": "I would like to drink black tea."
+    },
+    {
+     "zh": "那我喝绿茶吧。",
+     "en": "Then I will have green tea."
+    },
+    {
+     "zh": "对不起，这是咖啡，不是绿茶。",
+     "en": "Sorry, this is coffee, not green tea."
+    },
+    {
+     "zh": "没关系，谢谢。",
+     "en": "It does not matter, thank you."
+    }
+   ]
+  },
+  {
+   "id": "airport-bad",
+   "bad": "airport",
+   "glyph": "机",
+   "title": "Go to the airport: a bad day",
+   "sub": "Taxi, 5 turns",
+   "goals": [
+    "Say where you are going",
+    "Say your flight time and ask to hurry",
+    "Ask when you will get there",
+    "Thank the driver"
+   ],
+   "words": [
+    "机场",
+    "飞机",
+    "路上",
+    "快",
+    "慢",
+    "可能"
+   ],
+   "ai": [
+    {
+     "zh": "你好！你去哪儿？",
+     "en": "Hello! Where are you going?"
+    },
+    {
+     "zh": "好的。你几点的飞机？",
+     "en": "Okay. What time is your plane?"
+    },
+    {
+     "zh": "对不起，路上车太多了，我们走得很慢。",
+     "en": "Sorry, there are too many cars on the road; we are going very slowly."
+    },
+    {
+     "zh": "可能两点半。没问题，我们能到。",
+     "en": "Maybe half past two. No problem, we can make it."
+    },
+    {
+     "zh": "不客气，我会开快一点。",
+     "en": "You are welcome. I will drive a bit faster."
+    }
+   ],
+   "you": [
+    {
+     "zh": "我去机场。",
+     "en": "I am going to the airport."
+    },
+    {
+     "zh": "下午三点。我们能快一点吗？",
+     "en": "Three in the afternoon. Can we go a bit faster?"
+    },
+    {
+     "zh": "那我们几点能到？",
+     "en": "Then what time can we get there?"
+    },
+    {
+     "zh": "好吧，谢谢你。",
+     "en": "All right, thank you."
+    }
+   ]
   }
  ],
  "phrases": [

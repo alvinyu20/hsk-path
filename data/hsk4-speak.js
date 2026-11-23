@@ -697,6 +697,378 @@ window.HSK4_SPEAK = {
      "en": "Great, I will invite you to a meal. Come on!"
     }
    ]
+  },
+  {
+   "id": "neighbour",
+   "glyph": "静",
+   "title": "Ask a neighbour to keep it down",
+   "sub": "Home, 5 turns",
+   "goals": [
+    "Say who you are and say sorry for the time",
+    "Say what the problem is",
+    "Ask them to be quieter",
+    "Thank them"
+   ],
+   "words": [
+    {
+     "zh": "邻居",
+     "py": "línjū"
+    },
+    {
+     "zh": "打扰",
+     "py": "dǎrǎo"
+    },
+    {
+     "zh": "声音",
+     "py": "shēngyīn"
+    },
+    {
+     "zh": "注意",
+     "py": "zhùyì"
+    },
+    {
+     "zh": "理解",
+     "py": "lǐjiě"
+    },
+    {
+     "zh": "安静",
+     "py": "ānjìng"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好，你找谁？",
+     "py": "Nǐ hǎo, nǐ zhǎo shéi?",
+     "en": "Hello, who are you looking for?"
+    },
+    {
+     "zh": "没关系，怎么了？",
+     "py": "Méiguānxi, zěnme le?",
+     "en": "It is all right. What is wrong?"
+    },
+    {
+     "zh": "真抱歉，我们在给朋友过生日，没注意时间。",
+     "py": "Zhēn bàoqiàn, wǒmen zài gěi péngyou guò shēngrì, méi zhùyì shíjiān.",
+     "en": "I am really sorry; we are having a birthday party for a friend and did not notice the time."
+    },
+    {
+     "zh": "当然可以，我们马上把声音关小。",
+     "py": "Dāngrán kěyǐ, wǒmen mǎshàng bǎ shēngyīn guān xiǎo.",
+     "en": "Of course; we will turn it down right away.",
+     "alt": {
+      "zh": "没问题，十一点以后我们就不放音乐了。",
+      "py": "Méi wèntí, shíyī diǎn yǐhòu wǒmen jiù bú fàng yīnyuè le.",
+      "en": "No problem; after eleven we will stop playing music."
+     }
+    },
+    {
+     "zh": "谢谢，晚安！",
+     "py": "Xièxie, wǎn'ān!",
+     "en": "Thank you, good night!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "你好，我是楼下的邻居。不好意思，这么晚来打扰你。",
+     "py": "Nǐ hǎo, wǒ shì lóuxià de línjū. Bùhǎoyìsi, zhème wǎn lái dǎrǎo nǐ.",
+     "en": "Hello, I am your neighbour from downstairs. Sorry to disturb you so late."
+    },
+    {
+     "zh": "你家的音乐声音有点大，我明天早上还要上班。",
+     "py": "Nǐ jiā de yīnyuè shēngyīn yǒu diǎn dà, wǒ míngtiān zǎoshang hái yào shàngbān.",
+     "en": "Your music is a bit loud, and I have to go to work tomorrow morning."
+    },
+    {
+     "zh": "没关系，你们能把声音关小一点吗？",
+     "py": "Méiguānxi, nǐmen néng bǎ shēngyīn guān xiǎo yì diǎn ma?",
+     "en": "It is all right. Could you turn it down a little?",
+     "alt": {
+      "zh": "没关系，十一点以后能安静一点吗？",
+      "py": "Méiguānxi, shíyī diǎn yǐhòu néng ānjìng yì diǎn ma?",
+      "en": "It is all right. Could it be a bit quieter after eleven?"
+     }
+    },
+    {
+     "zh": "谢谢你的理解，祝你朋友生日快乐！",
+     "py": "Xièxie nǐ de lǐjiě, zhù nǐ péngyou shēngrì kuàilè!",
+     "en": "Thank you for understanding. Happy birthday to your friend!"
+    }
+   ],
+   "scene": "moving"
+  },
+  {
+   "id": "dayoff",
+   "glyph": "假",
+   "title": "Ask your manager for a day off",
+   "sub": "Office, 5 turns",
+   "goals": [
+    "Ask for the day off",
+    "Say why",
+    "Say how your work will be done",
+    "Thank your manager"
+   ],
+   "words": [
+    {
+     "zh": "请假",
+     "py": "qǐngjià"
+    },
+    {
+     "zh": "陪",
+     "py": "péi"
+    },
+    {
+     "zh": "检查",
+     "py": "jiǎnchá"
+    },
+    {
+     "zh": "提前",
+     "py": "tíqián"
+    },
+    {
+     "zh": "材料",
+     "py": "cáiliào"
+    },
+    {
+     "zh": "原来",
+     "py": "yuánlái"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "小高，你找我有事吗？",
+     "py": "Xiǎo gāo, nǐ zhǎo wǒ yǒu shì ma?",
+     "en": "Xiao Gao, are you looking for me about something?"
+    },
+    {
+     "zh": "是家里有事吗？",
+     "py": "Shì jiā lǐ yǒu shì ma?",
+     "en": "Is it something at home?"
+    },
+    {
+     "zh": "原来是这样。那你手上的工作怎么办？",
+     "py": "Yuánlái shì zhèyàng. Nà nǐ shǒu shàng de gōngzuò zěnmebàn?",
+     "en": "So that is it. Then what about the work you have on?"
+    },
+    {
+     "zh": "好，那你星期四下班以前把材料给我。",
+     "py": "Hǎo, nà nǐ xīngqīsì xiàbān yǐqián bǎ cáiliào gěi wǒ.",
+     "en": "Okay. Then give me the materials before you leave work on Thursday.",
+     "alt": {
+      "zh": "好，那你把要做的事跟小张说清楚。",
+      "py": "Hǎo, nà nǐ bǎ yào zuò de shì gēn xiǎo zhāng shuō qīngchu.",
+      "en": "Okay. Then you explain clearly to Xiao Zhang what needs doing."
+     }
+    },
+    {
+     "zh": "不客气，希望你妈妈一切都好。",
+     "py": "Bú kèqi, xīwàng nǐ māma yíqiè dōu hǎo.",
+     "en": "You are welcome. Hope everything goes well for your mother."
+    }
+   ],
+   "you": [
+    {
+     "zh": "经理，我想下个星期五请假一天。",
+     "py": "Jīnglǐ, wǒ xiǎng xià ge xīngqīwǔ qǐngjià yì tiān.",
+     "en": "Manager, I would like to take a day off next Friday."
+    },
+    {
+     "zh": "对，我妈妈那天要去医院检查身体，我想陪她去。",
+     "py": "Duì, wǒ māma nà tiān yào qù yīyuàn jiǎnchá shēntǐ, wǒ xiǎng péi tā qù.",
+     "en": "Yes, my mother is going to the hospital for a check-up that day, and I want to go with her."
+    },
+    {
+     "zh": "我会提前把工作做完。",
+     "py": "Wǒ huì tíqián bǎ gōngzuò zuò wán.",
+     "en": "I will finish the work in advance.",
+     "alt": {
+      "zh": "我已经请小张帮我了。",
+      "py": "Wǒ yǐjīng qǐng xiǎo zhāng bāng wǒ le.",
+      "en": "I have already asked Xiao Zhang to help me."
+     }
+    },
+    {
+     "zh": "好的，谢谢经理！",
+     "py": "Hǎo de, xièxie jīnglǐ!",
+     "en": "Okay, thank you, Manager!"
+    }
+   ],
+   "scene": "interview"
+  },
+  {
+   "id": "parcel-bad",
+   "glyph": "寄",
+   "title": "Send a parcel: a bad day",
+   "sub": "Post, 5 turns",
+   "goals": [
+    "Say it must arrive tomorrow",
+    "Ask for another way",
+    "Agree to pay more",
+    "Fix the phone number"
+   ],
+   "words": [
+    {
+     "zh": "快递",
+     "py": "kuàidì"
+    },
+    {
+     "zh": "寄",
+     "py": "jì"
+    },
+    {
+     "zh": "地址",
+     "py": "dìzhǐ"
+    },
+    {
+     "zh": "来不及",
+     "py": "láibují"
+    },
+    {
+     "zh": "办法",
+     "py": "bànfǎ"
+    },
+    {
+     "zh": "号码",
+     "py": "hàomǎ"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好，你要寄什么？",
+     "py": "Nǐ hǎo, nǐ yào jì shénme?",
+     "en": "Hello, what would you like to send?"
+    },
+    {
+     "zh": "对不起，这个地址太远了，最快也要后天才能到。",
+     "py": "Duìbuqǐ, zhège dìzhǐ tài yuǎn le, zuì kuài yě yào hòutiān cái néng dào.",
+     "en": "Sorry, this address is too far; even the fastest will need until the day after tomorrow to arrive."
+    },
+    {
+     "zh": "你可以选更快的，不过要多付五十块。",
+     "py": "Nǐ kěyǐ xuǎn gèng kuài de, búguò yào duō fù wǔshí kuài.",
+     "en": "You can choose a faster one, but you have to pay 50 yuan more."
+    },
+    {
+     "zh": "好的，请把地址写在这里。啊，你这个电话号码少写了一位。",
+     "py": "Hǎo de, qǐng bǎ dìzhǐ xiě zài zhèlǐ. A, nǐ zhège diànhuà hàomǎ shǎo xiě le yí wèi.",
+     "en": "Okay, please write the address here. Ah, you have left out one digit of the phone number."
+    },
+    {
+     "zh": "没关系，写好给我就行。",
+     "py": "Méiguānxi, xiě hǎo gěi wǒ jiù xíng.",
+     "en": "It does not matter; just give it to me when you have written it."
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想寄一个快递，明天必须到。",
+     "py": "Wǒ xiǎng jì yí ge kuàidì, míngtiān bìxū dào.",
+     "en": "I would like to send a parcel; it must arrive tomorrow."
+    },
+    {
+     "zh": "后天就来不及了。有没有别的办法？",
+     "py": "Hòutiān jiù láibují le. Yǒu méiyǒu biéde bànfǎ?",
+     "en": "The day after tomorrow will be too late. Is there no other way?"
+    },
+    {
+     "zh": "五十块？太贵了……好吧，没办法，就寄更快的吧。",
+     "py": "Wǔshí kuài? Tài guì le...... Hǎo ba, méi bànfǎ, jiù jì gèng kuài de ba.",
+     "en": "An extra 50 yuan? That is too expensive… All right, there is no other way; send the faster one."
+    },
+    {
+     "zh": "啊，真不好意思，我再写一遍。",
+     "py": "A, zhēn bùhǎoyìsi, wǒ zài xiě yí biàn.",
+     "en": "Oh, I am so sorry; I will write it again."
+    }
+   ],
+   "bad": "parcel"
+  },
+  {
+   "id": "booking-bad",
+   "glyph": "订",
+   "title": "Book a table for a group: a bad day",
+   "sub": "Food, 5 turns",
+   "goals": [
+    "Ask for a table for ten",
+    "Ask if there is really nothing",
+    "Say you will ask your friends",
+    "Say you will call back"
+   ],
+   "words": [
+    {
+     "zh": "订",
+     "py": "dìng"
+    },
+    {
+     "zh": "座位",
+     "py": "zuòwèi"
+    },
+    {
+     "zh": "餐厅",
+     "py": "cāntīng"
+    },
+    {
+     "zh": "满",
+     "py": "mǎn"
+    },
+    {
+     "zh": "晚上",
+     "py": "wǎnshang"
+    },
+    {
+     "zh": "可能",
+     "py": "kěnéng"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好，这里是餐厅。你要订座位吗？",
+     "py": "Nǐ hǎo, zhèlǐ shì cāntīng. Nǐ yào dìng zuòwèi ma?",
+     "en": "Hello, this is the restaurant. Would you like to book a table?"
+    },
+    {
+     "zh": "不好意思，星期六晚上的座位已经订满了。",
+     "py": "Bùhǎoyìsi, xīngqīliù wǎnshang de zuòwèi yǐjīng dìng mǎn le.",
+     "en": "Sorry, the tables for Saturday evening are already fully booked."
+    },
+    {
+     "zh": "真的没有了。星期天晚上还有座位，可以吗？",
+     "py": "Zhēn de méiyǒu le. Xīngqītiān wǎnshang hái yǒu zuòwèi, kěyǐ ma?",
+     "en": "There really are no tables left now. There are still tables on Sunday evening; would that be all right?"
+    },
+    {
+     "zh": "好的，问好了再给我们打电话。",
+     "py": "Hǎo de, wèn hǎo le zài gěi wǒmen dǎ diànhuà.",
+     "en": "Okay. Call us again when you have asked."
+    },
+    {
+     "zh": "好的，等你的电话。",
+     "py": "Hǎo de, děng nǐ de diànhuà.",
+     "en": "Okay, waiting for your call."
+    }
+   ],
+   "you": [
+    {
+     "zh": "对，我想订星期六晚上十个人的座位。",
+     "py": "Duì, wǒ xiǎng dìng xīngqīliù wǎnshang shí ge rén de zuòwèi.",
+     "en": "Yes, I would like to book a table for ten people on Saturday evening."
+    },
+    {
+     "zh": "一个座位也没有了吗？我们七点以后来也可以。",
+     "py": "Yí ge zuòwèi yě méiyǒu le ma? Wǒmen qī diǎn yǐhòu lái yě kěyǐ.",
+     "en": "Is there not a single table left now? We can come after seven too."
+    },
+    {
+     "zh": "星期天大家可能没时间，我先问问朋友。",
+     "py": "Xīngqītiān dàjiā kěnéng méi shíjiān, wǒ xiān wènwen péngyou.",
+     "en": "Everyone might not have time on Sunday; I will ask my friends first."
+    },
+    {
+     "zh": "好的，那我一会儿给你们回电话。",
+     "py": "Hǎo de, nà wǒ yíhuìr gěi nǐmen huí diànhuà.",
+     "en": "Okay, then I will call you back in a while."
+    }
+   ],
+   "bad": "booking"
   }
  ],
  "phrases": [

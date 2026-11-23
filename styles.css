@@ -4125,3 +4125,13 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .sv-setline.full{color:#7A5A10}
 .sv-setline.full .zh{background:#C2362B;color:#fff}
 @media (prefers-reduced-motion:reduce){.sv-set.land{animation:none}}
+/* E3: Good day / Bad day switch and a turn where you choose what to say */
+.spk-day{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;padding:10px 26px;border-bottom:1px solid var(--line)}
+.app.am .spk-day{padding:8px 12px}
+.spk-day .muted{font-size:13px}
+.spk-choice{display:flex;flex-direction:column;gap:10px;flex:1}
+.spk-opt{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px 12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.spk-opt .zh,.spk-opt .py,.spk-opt .en{grid-column:1}
+.spk-opt .btn{grid-column:2;grid-row:1 / span 3;min-height:40px}
+.spk-opt .en{color:var(--muted);font-size:14px}
+

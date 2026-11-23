@@ -39,8 +39,8 @@ if (WEBS) {
 }
 if (SPEAK) {
   SPEAK.scenarios.forEach(s => {
-    s.ai.forEach((e, i) => add('scenario:' + s.id + ':ai' + i, e.zh, e.py, e.en));
-    s.you.forEach((e, i) => add('scenario:' + s.id + ':you' + i, e.zh, e.py, e.en));
+    s.ai.forEach((e, i) => { add('scenario:' + s.id + ':ai' + i, e.zh, e.py, e.en); if (e.alt) add('scenario:' + s.id + ':ai' + i + ':alt', e.alt.zh, e.alt.py, e.alt.en); });
+    s.you.forEach((e, i) => { add('scenario:' + s.id + ':you' + i, e.zh, e.py, e.en); if (e.alt) add('scenario:' + s.id + ':you' + i + ':alt', e.alt.zh, e.alt.py, e.alt.en); });
   });
   SPEAK.phrases.forEach((e, i) => add('phrase:' + i, e.zh, e.py, e.en));
 }

@@ -31,7 +31,8 @@ Template syntax: `<sc-if value>`, `<sc-for list as x>`, `{{holes}}`, `data-on-cl
 - Examples: `examples-*.tsv` columns: word, Chinese, English. The word must appear in the sentence, and the sentence may only use words at or below its level.
 - `content/cloze-alts.tsv`: answer, other, `also`|`wrong`, sentence, note. Checked by `tools/check-cloze-alts.py`.
 - Grammar fill-ins (`t: cloze` in `grammar-*.json` / `gmore.json`) can list `also`: other words that fit the gap just as well; they are accepted and shown as "also right".
-- `content/example-parts.tsv`: grammar examples cut into the formula's colours (`lesson id<TAB>who=我 | k=把 | thing=作业 | does=做完了 | 。`); the pieces must join back into an example of that lesson (`build-grammar.py` dies otherwise). Only listed examples are coloured.
+- `content/example-parts.tsv`: grammar examples cut into the formula's colours (`lesson id<TAB>who=我 | k=把 | thing=作业 | does=做完了 | 。`); the pieces must join back into an example of that lesson (`build-grammar.py` dies otherwise). Every example has a line (C4); one without shows uncoloured.
+- Speaking scenes (`content/speaking.json`, `content/l*/speaking.json`): a line of yours can have `"alt": {zh, en}` (a second thing you could say); then Mingming's next line must have `alt` too (her answer to it). A scenario with `"bad": "<id>"` is the bad-day version of that one (not listed on its own; Good day / Bad day in the chat). `"scene": "<id>"` borrows another scenario's backdrop. HSK 1 and HSK 5 speaking files are hand-formatted; HSK 2–4 round-trip with `indent=1`.
 - `content/char-glosses.tsv`: 30-character limit per meaning. Run `tools/build-char-glosses.py` after editing.
 - `content/check-waivers.tsv`: known false alarms; every line needs a reason.
 - **Round-trip formats (rewriting the file any other way makes a huge diff):**
@@ -54,6 +55,7 @@ Template syntax: `<sc-if value>`, `<sc-for list as x>`, `{{holes}}`, `data-on-cl
 - After editing `content/preview-hsk*.tsv`: `build-preview.py <dataset> <level>` once per level 2–5 (dataset first; with no level it only builds HSK 2).
 - Audio: dry run with `python3 -W ignore tools/make-audio.py --scope all --level N --dry-run`. Record with `gh api -X POST repos/alvinyu20/hsk-path/actions/workflows/audio.yml/dispatches -f ref=main -f 'inputs[scope]=all' -f 'inputs[level]=N'`. **Dispatch one level at a time and wait for it to finish**: runs share a concurrency group, and overlapping runs conflict on `audio/index.json`. Pushing during a run is fine, because its save step rebases.
 - Next unseen review round: `python3 tools/make-review-unseen.py <round>`.
+- Review packs for other additions: `python3 tools/make-review-parts.py` (colour cuts, look-alikes) and `python3 tools/make-review-additions.py <git ref before the additions>` (new exam items and speaking scenes).
 - After editing a `tellapart.json` or `measure-words.json`: `python3 -W ignore tools/build-games.py` (it also does the level check; `--check` in `check-quick.sh ui`).
 
 ## Rules that are easy to get wrong
@@ -74,6 +76,8 @@ Template syntax: `<sc-if value>`, `<sc-for list as x>`, `{{holes}}`, `data-on-cl
 - Loaded after the first draw (B2): `data/path-scenes.js`, `speak-scenes.js`, `exam-art.js`, `journey-media.js` (`LATER` in `tools/build-site.js`, named in `<meta name="shanlu-data">`, loaded with `ShanluData.load`). In app.js `PSCENE`/`PTILE`/`SSCN`/`EXAM_ART`/`JMEDIA` are `let`s that fill in then; nothing computed at start-up may depend on them. A test that checks those pictures right after loading awaits `window.shanlu.lateReady()`. Passages stay at start-up (the Path's stop list needs them).
 - Wrong answers (D4): `confusers(zh)` in app.js offers look-alikes (`content/look-alikes.tsv` → `tools/build-confusers.py` → `data/confusers.js`), word families, other tones (Review listening only; Path listening never), opposites and topic partners, at most 2 per Review card and 1 per Path card, none on Fill it. Words in `content/same-meaning-groups.tsv` are never options together. Test: `smoke-test-confusers.js`.
 - Grammar examples: every one has a hand cut in `content/example-parts.tsv` (C4). A new or changed example needs its line there too, or it shows uncoloured; `build-grammar.py` dies on a line that no longer joins into an example.
+- Mock exam retakes (E1): the exam draws through `pickF`/`pickTFF` (never `shuffle` a bank directly), which put items not yet had first, then the oldest (`freshOrder`, person pref `exseen`, per level and part). Keep every part's bank at least twice what one sitting draws; `smoke-test-exam-fresh.js` fails on a repeat that a big enough bank should have avoided.
+- New exam items: `check-content.py` flags proper names (北京, 李, 王, 刘 are not on the lists; use 张, 马, 高 or 小明), 点儿 outside 一点儿, and numbers written in words in the English (write 3,500). Ties from new sentences go in `content/segment-reviewed.tsv` after checking the cut, or reword.
 - Tests look things up by class names (`.mw`, `.top h1`, …). When markup changes, grep `tools/smoke-test-*.js` for the old class first.
 
 ## DeepSeek review workflow

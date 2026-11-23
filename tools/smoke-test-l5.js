@@ -194,7 +194,7 @@ const startState = (o) => { try { if (!localStorage.getItem('shanlu-passed')) lo
   check(await page.evaluate(() => window.HSK5_LISTEN.pairs.length > 2000 && window.HSK5_LISTEN.pairs.some(p => p.zh === '老师' && p.t[0] === 3 && p.t[1] === 1) && window.HSK5_LISTEN.pairs.some(p => p.zh === '决定' && p.t[0] === 2 && p.t[1] === 4) && window.HSK5_LISTEN.pairs.some(p => p.zh === '成就' && p.t[0] === 2 && p.t[1] === 4)), 'the HSK 5 tone-pair list includes HSK 1, HSK 4 and HSK 5 two-syllable words');
   await nav('Speak');
   check((await page.locator('.subnav button', { hasText: 'Talk with AI' }).count()) === 1 && (await page.locator('.subnav button.on', { hasText: 'Speaking' }).count()) === 1, 'Speak has Speaking and Talk with AI in its strip at HSK 5');
-  check((await text()).includes('Return a faulty product') && (await text()).includes('Sign a work contract') && await page.evaluate(() => window.HSK5_SPEAK.scenarios.length === 8 && window.HSK5_SPEAK.phrases.length === 8), 'the eight HSK 5 scripts and eight phrases are listed');
+  check((await text()).includes('Return a faulty product') && (await text()).includes('Sign a work contract') && await page.evaluate(() => window.HSK5_SPEAK.scenarios.length === 12 && window.HSK5_SPEAK.scenarios.filter(s => !s.bad).length === 10 && window.HSK5_SPEAK.phrases.length === 8), 'the ten HSK 5 scripts (and two bad-day versions) and eight phrases are listed');
   await page.locator('.spk-card').first().click();
   await page.locator('button', { hasText: 'I said it' }).first().click();
   check((await text()).includes('我可以帮您做什么'), 'an HSK 5 script plays: the first line of the first scenario shows after "I said it"');

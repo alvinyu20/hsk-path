@@ -314,6 +314,38 @@
     "非常高兴。"
    ],
    "en": "Hearing this news, everyone felt very happy."
+  },
+  {
+   "words": [
+    "我本来打算周末去爬山，",
+    "可是听说周末要下雨，",
+    "所以只好在家看书了。"
+   ],
+   "en": "I had originally planned to go climbing at the weekend, but I heard it will rain at the weekend, so I just stayed at home and read."
+  },
+  {
+   "words": [
+    "这家店的衣服质量很好，",
+    "而且价格也不贵，",
+    "所以每天都有很多顾客。"
+   ],
+   "en": "The clothes in this shop are of good quality, and the prices are not high either, so there are a lot of customers every day."
+  },
+  {
+   "words": [
+    "只要你每天坚持练习，",
+    "你的汉语水平就一定会提高，",
+    "到时候你说汉语就会更流利。"
+   ],
+   "en": "As long as you keep practising every day, your Chinese will definitely improve, and by then you will speak Chinese more fluently."
+  },
+  {
+   "words": [
+    "他把手机忘在了出租车上，",
+    "后来司机给他打了电话，",
+    "还把手机送了回来。"
+   ],
+   "en": "He left his phone in the taxi; later the driver called him and even brought the phone back."
   }
  ],
  "R3": [
@@ -651,6 +683,230 @@
     "价格更低",
     "能送礼物",
     "银行更近"
+   ]
+  },
+  {
+   "zh": "我的邻居张阿姨今年六十多岁了，每天早上都在楼下教大家跳舞。现在跟她学的人越来越多了。",
+   "en": "My neighbour Auntie Zhang is over sixty this year, and every morning she teaches everyone to dance downstairs. Now more and more people learn from her.",
+   "q": {
+    "zh": "张阿姨每天早上做什么？",
+    "en": "What does Auntie Zhang do every morning?"
+   },
+   "opts": [
+    "教大家跳舞",
+    "去公园跑步",
+    "去超市买菜",
+    "送孙子上学"
+   ]
+  },
+  {
+   "zh": "这家饭馆的菜很好吃，但是服务员太少，每次都要等很长时间才能点菜。",
+   "en": "The dishes at this restaurant are very tasty, but there are too few waiters; every time you have to wait a long time before you can order.",
+   "q": {
+    "zh": "这家饭馆有什么问题？",
+    "en": "What is the problem with this restaurant?"
+   },
+   "opts": [
+    "服务员太少",
+    "菜不好吃",
+    "价格太贵",
+    "环境不好"
+   ]
+  },
+  {
+   "zh": "坐飞机的时候，最好不要带太多行李。行李超过二十公斤，就要另外付钱。",
+   "en": "When you fly, it is best not to bring too much luggage. If your luggage is over twenty kilos, you have to pay extra.",
+   "q": {
+    "zh": "行李超过二十公斤会怎么样？",
+    "en": "What will happen if the luggage is over twenty kilos?"
+   },
+   "opts": [
+    "要另外付钱",
+    "不能上飞机",
+    "要自己拿着",
+    "要早点儿到机场"
+   ]
+  },
+  {
+   "zh": "小张大学学的是法律，可是毕业以后他发现自己更喜欢做饭，就去饭馆工作了。",
+   "en": "Xiao Zhang studied law at university, but after graduating he found that he liked cooking more, so he went to work in a restaurant.",
+   "q": {
+    "zh": "小张现在在哪儿工作？",
+    "en": "Where does Xiao Zhang work now?"
+   },
+   "opts": [
+    "饭馆",
+    "公司",
+    "学校",
+    "医院"
+   ]
+  },
+  {
+   "zh": "很多人以为多喝咖啡可以让人不累，其实喝得太多会让人晚上睡不着。",
+   "en": "Many people think drinking lots of coffee can stop you feeling tired, but in fact drinking too much will make you not fall asleep at night.",
+   "q": {
+    "zh": "喝太多咖啡会怎么样？",
+    "en": "What will happen if you drink too much coffee?"
+   },
+   "opts": [
+    "晚上睡不着",
+    "一点儿也不累",
+    "身体更健康",
+    "变胖"
+   ]
+  },
+  {
+   "zh": "我们公司规定九点上班，如果迟到超过十五分钟，就算请假半天。",
+   "en": "Our company's rule is that work starts at nine; if you are more than fifteen minutes late, it counts as half a day off.",
+   "q": {
+    "zh": "在这家公司迟到二十分钟会怎么样？",
+    "en": "What will happen at this company if you are twenty minutes late?"
+   },
+   "opts": [
+    "算请假半天",
+    "没有关系",
+    "要多工作一个小时",
+    "要给经理打电话"
+   ]
+  },
+  {
+   "zh": "为了让孩子多读书，马先生家里没有电视，客厅里放的都是书。孩子们从小就养成了读书的习惯。",
+   "en": "So that his children would read more, Mr Ma has no television at home; the living room is filled with books. The children got into the habit of reading from a young age.",
+   "q": {
+    "zh": "马先生家的客厅里有什么？",
+    "en": "What is in Mr Ma's living room?"
+   },
+   "opts": [
+    "很多书",
+    "电视",
+    "电脑",
+    "很多玩具"
+   ]
+  },
+  {
+   "zh": "这次旅行我们本来想坐火车去，后来发现飞机票打折，比坐火车还便宜，就改坐飞机了。",
+   "en": "On this trip we had originally wanted to go by train, but then we found that the plane tickets were discounted and even cheaper than going by train, so we flew instead.",
+   "q": {
+    "zh": "他们后来为什么改坐飞机了？",
+    "en": "Why did they fly instead in the end?"
+   },
+   "opts": [
+    "飞机票更便宜",
+    "火车票卖完了",
+    "坐飞机更舒服",
+    "火车太慢了"
+   ]
+  },
+  {
+   "zh": "学习外语的时候，不要害怕说错。说错了没关系，别人会告诉你正确的说法，这样你会进步得更快。",
+   "en": "When you learn a foreign language, do not be afraid of making mistakes. It does not matter if you have said something wrong; others will tell you the right way to say it, and you will progress faster that way.",
+   "q": {
+    "zh": "说话人认为学外语时应该怎么做？",
+    "en": "What does the speaker think you should do when learning a foreign language?"
+   },
+   "opts": [
+    "不要怕说错",
+    "少说多听",
+    "先学语法",
+    "每天写日记"
+   ]
+  },
+  {
+   "zh": "我妹妹很喜欢小动物，家里养了两只猫和一只狗。每天放学回家，她第一件事就是陪它们玩。",
+   "en": "My younger sister loves small animals; at home she has got two cats and a dog. When she gets home from school every day, the first thing she does is play with them.",
+   "q": {
+    "zh": "妹妹放学回家先做什么？",
+    "en": "What does the younger sister do first after coming home from school?"
+   },
+   "opts": [
+    "和小动物玩",
+    "写作业",
+    "看电视",
+    "吃饭"
+   ]
+  },
+  {
+   "zh": "过年是中国人最重要的节日。过年以前，很多在外地工作的人都要回家和家人一起过年，所以火车票特别难买。",
+   "en": "The New Year is the most important festival for Chinese people. Before the New Year, many people who work away from home have to go back to celebrate it with their families, so train tickets are especially hard to buy.",
+   "q": {
+    "zh": "过年以前为什么火车票很难买？",
+    "en": "Why are train tickets hard to buy before the New Year?"
+   },
+   "opts": [
+    "很多人回家过年",
+    "火车太少",
+    "票价太贵",
+    "天气不好"
+   ]
+  },
+  {
+   "zh": "张经理说话很直接，有时候让人不太舒服，但是他做事非常认真，大家都很喜欢跟他一起工作。",
+   "en": "Manager Zhang speaks very directly, which sometimes makes people not very comfortable, but he works very conscientiously, and everyone likes working with him.",
+   "q": {
+    "zh": "大家为什么喜欢跟张经理一起工作？",
+    "en": "Why does everyone like working with Manager Zhang?"
+   },
+   "opts": [
+    "他做事很认真",
+    "他说话很客气",
+    "他年纪大",
+    "他工资高"
+   ]
+  },
+  {
+   "zh": "这座桥是一百多年前修的，到现在还在使用。每年都有很多游客专门来这里照相。",
+   "en": "This bridge was built more than a hundred years ago and is still in use today. Every year many tourists come here specially to take photos.",
+   "q": {
+    "zh": "关于这座桥，可以知道什么？",
+    "en": "What can be known about this bridge?"
+   },
+   "opts": [
+    "一百多年前就有了",
+    "去年刚修好",
+    "很少有人去",
+    "已经不能用了"
+   ]
+  },
+  {
+   "zh": "医生说，晚上睡觉前最好不要玩手机，因为手机会影响睡觉。",
+   "en": "The doctor says it is best not to play on your phone before going to sleep at night, because the phone affects your sleep.",
+   "q": {
+    "zh": "医生建议睡觉前不要做什么？",
+    "en": "What does the doctor advise not doing before sleep?"
+   },
+   "opts": [
+    "玩手机",
+    "喝水",
+    "看书",
+    "洗澡"
+   ]
+  },
+  {
+   "zh": "这个超市每个星期三的水果都比平时便宜，所以每到星期三，来买水果的人特别多。",
+   "en": "At this supermarket the fruit is cheaper than usual every Wednesday, so every Wednesday a great many people come to buy fruit.",
+   "q": {
+    "zh": "为什么星期三买水果的人多？",
+    "en": "Why do many people buy fruit on Wednesdays?"
+   },
+   "opts": [
+    "水果比平时便宜",
+    "水果更新鲜",
+    "超市开门早",
+    "星期三放假"
+   ]
+  },
+  {
+   "zh": "小高上个月参加了公司的篮球比赛。虽然他们队最后没有得第一，但是大家都觉得很开心，也认识了很多新朋友。",
+   "en": "Last month Xiao Gao took part in the company's basketball match. Although his team did not come first in the end, everyone was very happy and they also met lots of new friends.",
+   "q": {
+    "zh": "关于这次比赛，可以知道什么？",
+    "en": "What can be known about this match?"
+   },
+   "opts": [
+    "大家都很开心",
+    "他们队得了第一",
+    "小高没有参加",
+    "比赛很无聊"
    ]
   }
  ]

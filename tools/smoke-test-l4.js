@@ -192,7 +192,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(await page.evaluate(() => window.HSK4_LISTEN.pairs.length > 1000 && window.HSK4_LISTEN.pairs.some(p => p.zh === '老师' && p.t[0] === 3 && p.t[1] === 1) && window.HSK4_LISTEN.pairs.some(p => p.zh === '决定' && p.t[0] === 2 && p.t[1] === 4) && window.HSK4_LISTEN.pairs.some(p => p.zh === '面试' && p.t[0] === 4 && p.t[1] === 4)), 'the HSK 4 tone-pair list includes HSK 1, HSK 3 and HSK 4 two-syllable words');
   await nav('Speak');
   check((await page.locator('.subnav button', { hasText: 'Talk with AI' }).count()) === 1 && (await page.locator('.subnav button.on', { hasText: 'Speaking' }).count()) === 1, 'Speak has Speaking and Talk with AI in its strip at HSK 4');
-  check((await text()).includes('Go to a job interview') && (await text()).includes('Cheer up a friend') && await page.evaluate(() => window.HSK4_SPEAK.scenarios.length === 8 && window.HSK4_SPEAK.phrases.length === 8), 'the eight HSK 4 scripts and eight phrases are listed');
+  check((await text()).includes('Go to a job interview') && (await text()).includes('Cheer up a friend') && await page.evaluate(() => window.HSK4_SPEAK.scenarios.length === 12 && window.HSK4_SPEAK.scenarios.filter(s => !s.bad).length === 10 && window.HSK4_SPEAK.phrases.length === 8), 'the ten HSK 4 scripts (and two bad-day versions) and eight phrases are listed');
   await page.locator('.spk-card').first().click();
   await page.locator('button', { hasText: 'I said it' }).first().click();
   check((await text()).includes('请坐'), 'an HSK 4 script plays: the first line of the first scenario shows after "I said it"');

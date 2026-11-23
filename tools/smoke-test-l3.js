@@ -192,7 +192,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(await page.evaluate(() => window.HSK3_LISTEN.pairs.length > 500 && window.HSK3_LISTEN.pairs.some(p => p.zh === '老师' && p.t[0] === 3 && p.t[1] === 1) && window.HSK3_LISTEN.pairs.some(p => p.zh === '决定' && p.t[0] === 2 && p.t[1] === 4)), 'the HSK 3 tone-pair list includes HSK 1, HSK 2 and HSK 3 two-syllable words');
   await nav('Speak');
   check((await page.locator('.subnav button', { hasText: 'Talk with AI' }).count()) === 1 && (await page.locator('.subnav button.on', { hasText: 'Speaking' }).count()) === 1, 'Speak has Speaking and Talk with AI in its strip at HSK 3');
-  check((await text()).includes('Check in at a hotel') && (await text()).includes('Call a friend abroad') && await page.evaluate(() => window.HSK3_SPEAK.scenarios.length === 8 && window.HSK3_SPEAK.phrases.length === 8), 'the eight HSK 3 scripts and eight phrases are listed');
+  check((await text()).includes('Check in at a hotel') && (await text()).includes('Call a friend abroad') && await page.evaluate(() => window.HSK3_SPEAK.scenarios.length === 12 && window.HSK3_SPEAK.scenarios.filter(s => !s.bad).length === 10 && window.HSK3_SPEAK.phrases.length === 8), 'the ten HSK 3 scripts (and two bad-day versions) and eight phrases are listed');
   await page.locator('.spk-card').first().click();
   await page.locator('button', { hasText: 'I said it' }).first().click();
   check((await text()).includes('欢迎来到我们宾馆'), 'an HSK 3 script plays: the first line of the first scenario shows after "I said it"');

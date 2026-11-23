@@ -697,6 +697,378 @@ window.HSK1_SPEAK = {
      "en": "Great! See you tomorrow!"
     }
    ]
+  },
+  {
+   "id": "fruit",
+   "glyph": "果",
+   "title": "Buy fruit",
+   "sub": "Fruit shop, 5 turns",
+   "goals": [
+    "Say what you want",
+    "Choose how many",
+    "Pay",
+    "Say goodbye"
+   ],
+   "words": [
+    {
+     "zh": "买",
+     "py": "mǎi"
+    },
+    {
+     "zh": "苹果",
+     "py": "píngguǒ"
+    },
+    {
+     "zh": "个",
+     "py": "ge"
+    },
+    {
+     "zh": "块",
+     "py": "kuài"
+    },
+    {
+     "zh": "钱",
+     "py": "qián"
+    },
+    {
+     "zh": "再见",
+     "py": "zàijiàn"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好！你想买什么？",
+     "py": "Nǐ hǎo! Nǐ xiǎng mǎi shénme?",
+     "en": "Hello! What would you like to buy?"
+    },
+    {
+     "zh": "好的。你要几个？",
+     "py": "Hǎo de. Nǐ yào jǐ ge?",
+     "en": "Okay. How many do you want?"
+    },
+    {
+     "zh": "五个苹果，十块钱。",
+     "py": "Wǔ ge píngguǒ, shí kuài qián.",
+     "en": "Five apples, ten yuan.",
+     "alt": {
+      "zh": "十个苹果，二十块钱。",
+      "py": "Shí ge píngguǒ, èrshí kuài qián.",
+      "en": "Ten apples, twenty yuan."
+     }
+    },
+    {
+     "zh": "谢谢！你还想买什么？",
+     "py": "Xièxie! Nǐ hái xiǎng mǎi shénme?",
+     "en": "Thank you! What else would you like to buy?"
+    },
+    {
+     "zh": "好的，再见！",
+     "py": "Hǎo de, zàijiàn!",
+     "en": "Okay, goodbye!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想买苹果。",
+     "py": "Wǒ xiǎng mǎi píngguǒ.",
+     "en": "I would like to buy apples."
+    },
+    {
+     "zh": "我要五个。",
+     "py": "Wǒ yào wǔ ge.",
+     "en": "I want five.",
+     "alt": {
+      "zh": "我要十个。",
+      "py": "Wǒ yào shí ge.",
+      "en": "I want ten."
+     }
+    },
+    {
+     "zh": "好的，给你钱。",
+     "py": "Hǎo de, gěi nǐ qián.",
+     "en": "Okay, here is the money for you."
+    },
+    {
+     "zh": "不要了，谢谢。再见！",
+     "py": "Búyào le, xièxie. Zàijiàn!",
+     "en": "No more now, thank you. Goodbye!"
+    }
+   ],
+   "scene": "shop"
+  },
+  {
+   "id": "visit",
+   "glyph": "家",
+   "title": "Visit a friend at home",
+   "sub": "A friend's home, 5 turns",
+   "goals": [
+    "Say thank you and something nice",
+    "Choose a drink",
+    "Ask about the family",
+    "Ask where the brother is"
+   ],
+   "words": [
+    {
+     "zh": "请",
+     "py": "qǐng"
+    },
+    {
+     "zh": "坐",
+     "py": "zuò"
+    },
+    {
+     "zh": "喝",
+     "py": "hē"
+    },
+    {
+     "zh": "茶",
+     "py": "chá"
+    },
+    {
+     "zh": "家",
+     "py": "jiā"
+    },
+    {
+     "zh": "口",
+     "py": "kǒu"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好！你来了，请坐。",
+     "py": "Nǐ hǎo! Nǐ lái le, qǐng zuò.",
+     "en": "Hello! You have come; please sit down."
+    },
+    {
+     "zh": "谢谢。你想喝什么？",
+     "py": "Xièxie. Nǐ xiǎng hē shénme?",
+     "en": "Thank you. What would you like to drink?"
+    },
+    {
+     "zh": "好，这是你的茶。",
+     "py": "Hǎo, zhè shì nǐ de chá.",
+     "en": "Okay, here is your tea.",
+     "alt": {
+      "zh": "好，这是你的水。",
+      "py": "Hǎo, zhè shì nǐ de shuǐ.",
+      "en": "Okay, here is your water."
+     }
+    },
+    {
+     "zh": "我家有四口人：爸爸、妈妈、哥哥和我。",
+     "py": "Wǒ jiā yǒu sì kǒu rén: bàba, māma, gēge hé wǒ.",
+     "en": "There are four people in my family: Dad, Mum, my older brother and me."
+    },
+    {
+     "zh": "不在，他在学校。",
+     "py": "Bú zài, tā zài xuéxiào.",
+     "en": "No, he is at school."
+    }
+   ],
+   "you": [
+    {
+     "zh": "谢谢！你的家很漂亮。",
+     "py": "Xièxie! Nǐ de jiā hěn piàoliang.",
+     "en": "Thank you! Your home is very nice."
+    },
+    {
+     "zh": "我想喝茶。",
+     "py": "Wǒ xiǎng hē chá.",
+     "en": "I would like to drink tea.",
+     "alt": {
+      "zh": "我想喝水。",
+      "py": "Wǒ xiǎng hē shuǐ.",
+      "en": "I would like to drink water."
+     }
+    },
+    {
+     "zh": "谢谢。你家有几口人？",
+     "py": "Xièxie. Nǐ jiā yǒu jǐ kǒu rén?",
+     "en": "Thank you. How many people are there in your family?"
+    },
+    {
+     "zh": "你哥哥在家吗？",
+     "py": "Nǐ gēge zài jiā ma?",
+     "en": "Is your older brother at home?"
+    }
+   ],
+   "scene": "family"
+  },
+  {
+   "id": "cafe-bad",
+   "glyph": "茶",
+   "title": "Order a drink: a bad day",
+   "sub": "Café, 5 turns",
+   "goals": [
+    "Order a drink",
+    "Take something else",
+    "Turn down food",
+    "Say your money is at home"
+   ],
+   "words": [
+    {
+     "zh": "对不起",
+     "py": "duìbuqǐ"
+    },
+    {
+     "zh": "没有",
+     "py": "méiyǒu"
+    },
+    {
+     "zh": "水",
+     "py": "shuǐ"
+    },
+    {
+     "zh": "钱",
+     "py": "qián"
+    },
+    {
+     "zh": "没关系",
+     "py": "méiguānxi"
+    },
+    {
+     "zh": "明天",
+     "py": "míngtiān"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好！你想喝什么？",
+     "py": "Nǐ hǎo! Nǐ xiǎng hē shénme?",
+     "en": "Hello! What would you like to drink?"
+    },
+    {
+     "zh": "对不起，今天没有茶了。你想喝水吗？",
+     "py": "Duìbuqǐ, jīntiān méiyǒu chá le. Nǐ xiǎng hē shuǐ ma?",
+     "en": "Sorry, there is no tea left today. Would you like to drink water?"
+    },
+    {
+     "zh": "好的。你想吃东西吗？",
+     "py": "Hǎo de. Nǐ xiǎng chī dōngxi ma?",
+     "en": "Okay. Would you like something to eat?"
+    },
+    {
+     "zh": "好。三块钱。",
+     "py": "Hǎo. Sān kuài qián.",
+     "en": "Okay. Three yuan."
+    },
+    {
+     "zh": "没关系，明天给我吧。",
+     "py": "Méiguānxi, míngtiān gěi wǒ ba.",
+     "en": "It does not matter; give it to me tomorrow."
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想喝茶。",
+     "py": "Wǒ xiǎng hē chá.",
+     "en": "I would like to drink tea."
+    },
+    {
+     "zh": "没有茶？好吧，我喝水。",
+     "py": "Méiyǒu chá? Hǎo ba, wǒ hē shuǐ.",
+     "en": "No tea? All right, I will drink water."
+    },
+    {
+     "zh": "我不想吃东西，谢谢。",
+     "py": "Wǒ bù xiǎng chī dōngxi, xièxie.",
+     "en": "I do not want anything to eat, thank you."
+    },
+    {
+     "zh": "对不起，我的钱在家里。",
+     "py": "Duìbuqǐ, wǒ de qián zài jiā lǐ.",
+     "en": "Sorry, my money is at home."
+    }
+   ],
+   "bad": "cafe"
+  },
+  {
+   "id": "shop-bad",
+   "glyph": "买",
+   "title": "Ask the price: a bad day",
+   "sub": "Shop, 5 turns",
+   "goals": [
+    "Say what you want to buy",
+    "Say it is too expensive",
+    "Say you will look in that other shop",
+    "Say no again and leave"
+   ],
+   "words": [
+    {
+     "zh": "衣服",
+     "py": "yīfu"
+    },
+    {
+     "zh": "贵",
+     "py": "guì"
+    },
+    {
+     "zh": "便宜",
+     "py": "piányi"
+    },
+    {
+     "zh": "商店",
+     "py": "shāngdiàn"
+    },
+    {
+     "zh": "太",
+     "py": "tài"
+    },
+    {
+     "zh": "看",
+     "py": "kàn"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好！你想买什么？",
+     "py": "Nǐ hǎo! Nǐ xiǎng mǎi shénme?",
+     "en": "Hello! What would you like to buy?"
+    },
+    {
+     "zh": "这件很好看，三百块。",
+     "py": "Zhè jiàn hěn hǎokàn, sān bǎi kuài.",
+     "en": "This one looks very nice. 300 yuan."
+    },
+    {
+     "zh": "没有，我们的衣服都是三百块。",
+     "py": "Méiyǒu, wǒmen de yīfu dōu shì sān bǎi kuài.",
+     "en": "No, all our clothes are 300 yuan."
+    },
+    {
+     "zh": "这件现在两百块，好吗？",
+     "py": "Zhè jiàn xiànzài liǎng bǎi kuài, hǎo ma?",
+     "en": "This one is 200 yuan now. Is that okay?"
+    },
+    {
+     "zh": "好吧，再见！",
+     "py": "Hǎo ba, zàijiàn!",
+     "en": "All right, goodbye!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想买一件衣服。",
+     "py": "Wǒ xiǎng mǎi yí jiàn yīfu.",
+     "en": "I would like to buy a piece of clothing."
+    },
+    {
+     "zh": "太贵了！有便宜的吗？",
+     "py": "Tài guì le! Yǒu piányi de ma?",
+     "en": "Too expensive! Do you have a cheap one?"
+    },
+    {
+     "zh": "那我不买了，我去那个商店看看。",
+     "py": "Nà wǒ bù mǎi le, wǒ qù nàge shāngdiàn kànkan.",
+     "en": "Then I am not buying it now. I will go and look in that shop."
+    },
+    {
+     "zh": "两百块也太贵了。谢谢，再见！",
+     "py": "Liǎng bǎi kuài yě tài guì le. Xièxie, zàijiàn!",
+     "en": "Even 200 yuan is too expensive. Thanks, goodbye!"
+    }
+   ],
+   "bad": "shop"
   }
  ],
  "phrases": [

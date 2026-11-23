@@ -697,6 +697,378 @@ window.HSK2_SPEAK = {
      "en": "That is too expensive, make it cheaper."
     }
    ]
+  },
+  {
+   "id": "bookshop",
+   "glyph": "书",
+   "title": "Buy a book",
+   "sub": "Bookshop, 5 turns",
+   "goals": [
+    "Say what you want to buy",
+    "Choose a book",
+    "Ask if you can read here for a while",
+    "Say thanks"
+   ],
+   "words": [
+    {
+     "zh": "书",
+     "py": "shū"
+    },
+    {
+     "zh": "本",
+     "py": "běn"
+    },
+    {
+     "zh": "块",
+     "py": "kuài"
+    },
+    {
+     "zh": "一会儿",
+     "py": "yíhuìr"
+    },
+    {
+     "zh": "可以",
+     "py": "kěyǐ"
+    },
+    {
+     "zh": "那边",
+     "py": "nàbiān"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好！你想买什么书？",
+     "py": "Nǐ hǎo! Nǐ xiǎng mǎi shénme shū?",
+     "en": "Hello! What book would you like to buy?"
+    },
+    {
+     "zh": "好的。这本五十块，那本八十块。你要哪本？",
+     "py": "Hǎo de. Zhè běn wǔshí kuài, nà běn bāshí kuài. Nǐ yào nǎ běn?",
+     "en": "Okay. This one is 50 yuan and that one is 80 yuan. Which one do you want?"
+    },
+    {
+     "zh": "好，五十块。",
+     "py": "Hǎo, wǔshí kuài.",
+     "en": "Okay, 50 yuan.",
+     "alt": {
+      "zh": "好，八十块。",
+      "py": "Hǎo, bāshí kuài.",
+      "en": "Okay, 80 yuan."
+     }
+    },
+    {
+     "zh": "可以，那边有椅子。",
+     "py": "Kěyǐ, nàbiān yǒu yǐzi.",
+     "en": "Yes, you can; there are chairs over there."
+    },
+    {
+     "zh": "不客气！",
+     "py": "Bú kèqi!",
+     "en": "You are welcome!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想买汉语书。",
+     "py": "Wǒ xiǎng mǎi Hànyǔ shū.",
+     "en": "I would like to buy a Chinese book."
+    },
+    {
+     "zh": "我要这本。",
+     "py": "Wǒ yào zhè běn.",
+     "en": "I want this one.",
+     "alt": {
+      "zh": "我要那本。",
+      "py": "Wǒ yào nà běn.",
+      "en": "I want that one."
+     }
+    },
+    {
+     "zh": "我可以在这儿看一会儿吗？",
+     "py": "Wǒ kěyǐ zài zhèr kàn yíhuìr ma?",
+     "en": "Can I read here for a while?"
+    },
+    {
+     "zh": "好的，谢谢！",
+     "py": "Hǎo de, xièxie!",
+     "en": "Okay, thank you!"
+    }
+   ],
+   "scene": "shop"
+  },
+  {
+   "id": "film",
+   "glyph": "影",
+   "title": "Go to a film with a friend",
+   "sub": "Phone call, 5 turns",
+   "goals": [
+    "Say you are free",
+    "Choose a film",
+    "Ask when it starts",
+    "Agree to meet"
+   ],
+   "words": [
+    {
+     "zh": "电影",
+     "py": "diànyǐng"
+    },
+    {
+     "zh": "时间",
+     "py": "shíjiān"
+    },
+    {
+     "zh": "开始",
+     "py": "kāishǐ"
+    },
+    {
+     "zh": "门口",
+     "py": "ménkǒu"
+    },
+    {
+     "zh": "见",
+     "py": "jiàn"
+    },
+    {
+     "zh": "有",
+     "py": "yǒu"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "喂，你好！我是小明。你明天下午有时间吗？",
+     "py": "Wèi, nǐ hǎo! Wǒ shì Xiǎomíng. Nǐ míngtiān xiàwǔ yǒu shíjiān ma?",
+     "en": "Hello! I am Xiao Ming. Are you free tomorrow afternoon?"
+    },
+    {
+     "zh": "我想请你去看电影。你想看什么电影？",
+     "py": "Wǒ xiǎng qǐng nǐ qù kàn diànyǐng. Nǐ xiǎng kàn shénme diànyǐng?",
+     "en": "I would like to invite you to a film. What film would you like to see?"
+    },
+    {
+     "zh": "好啊，明天下午有一个很好的中国电影。",
+     "py": "Hǎo a, míngtiān xiàwǔ yǒu yí ge hěn hǎo de Zhōngguó diànyǐng.",
+     "en": "Great, there is a very good Chinese film tomorrow afternoon.",
+     "alt": {
+      "zh": "好啊，明天下午有一个很好的外国电影。",
+      "py": "Hǎo a, míngtiān xiàwǔ yǒu yí ge hěn hǎo de wàiguó diànyǐng.",
+      "en": "Great, there is a very good foreign film tomorrow afternoon."
+     }
+    },
+    {
+     "zh": "三点。我们两点半在电影院门口见，好吗？",
+     "py": "Sān diǎn. Wǒmen liǎng diǎn bàn zài diànyǐngyuàn ménkǒu jiàn, hǎo ma?",
+     "en": "Three o'clock. Let's meet at the cinema entrance at half past two, okay?"
+    },
+    {
+     "zh": "明天见！",
+     "py": "Míngtiān jiàn!",
+     "en": "See you tomorrow!"
+    }
+   ],
+   "you": [
+    {
+     "zh": "我有时间。什么事？",
+     "py": "Wǒ yǒu shíjiān. Shénme shì?",
+     "en": "I have time. What is it?"
+    },
+    {
+     "zh": "我想看一个中国电影。",
+     "py": "Wǒ xiǎng kàn yí ge Zhōngguó diànyǐng.",
+     "en": "I would like to see a Chinese film.",
+     "alt": {
+      "zh": "我想看一个外国电影。",
+      "py": "Wǒ xiǎng kàn yí ge wàiguó diànyǐng.",
+      "en": "I would like to see a foreign film."
+     }
+    },
+    {
+     "zh": "电影几点开始？",
+     "py": "Diànyǐng jǐ diǎn kāishǐ?",
+     "en": "What time does the film start?"
+    },
+    {
+     "zh": "好的，明天见！",
+     "py": "Hǎo de, míngtiān jiàn!",
+     "en": "Okay, see you tomorrow!"
+    }
+   ],
+   "scene": "plan"
+  },
+  {
+   "id": "cafe2-bad",
+   "glyph": "咖",
+   "title": "Order at a café: a bad day",
+   "sub": "Drinks, 5 turns",
+   "goals": [
+    "Order a drink",
+    "Choose something else",
+    "Say it is the wrong drink",
+    "Say it is all right"
+   ],
+   "words": [
+    {
+     "zh": "红茶",
+     "py": "hóngchá"
+    },
+    {
+     "zh": "绿茶",
+     "py": "lǜchá"
+    },
+    {
+     "zh": "咖啡",
+     "py": "kāfēi"
+    },
+    {
+     "zh": "对不起",
+     "py": "duìbuqǐ"
+    },
+    {
+     "zh": "再",
+     "py": "zài"
+    },
+    {
+     "zh": "没关系",
+     "py": "méiguānxi"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好！你想喝什么？",
+     "py": "Nǐ hǎo! Nǐ xiǎng hē shénme?",
+     "en": "Hello! What would you like to drink?"
+    },
+    {
+     "zh": "对不起，红茶没有了。我们有绿茶和咖啡。",
+     "py": "Duìbuqǐ, hóngchá méiyǒu le. Wǒmen yǒu lǜchá hé kāfēi.",
+     "en": "Sorry, there is no black tea left. We have green tea and coffee."
+    },
+    {
+     "zh": "好的，你的绿茶来了。",
+     "py": "Hǎo de, nǐ de lǜchá lái le.",
+     "en": "Okay, your green tea has come."
+    },
+    {
+     "zh": "啊，对不起！我再给你做一杯绿茶。",
+     "py": "A, duìbuqǐ! Wǒ zài gěi nǐ zuò yì bēi lǜchá.",
+     "en": "Oh, sorry! I will make you another cup of green tea."
+    },
+    {
+     "zh": "不客气。这杯不要钱。",
+     "py": "Bú kèqi. Zhè bēi búyào qián.",
+     "en": "You are welcome. This cup does not cost money."
+    }
+   ],
+   "you": [
+    {
+     "zh": "我想喝红茶。",
+     "py": "Wǒ xiǎng hē hóngchá.",
+     "en": "I would like to drink black tea."
+    },
+    {
+     "zh": "那我喝绿茶吧。",
+     "py": "Nà wǒ hē lǜchá ba.",
+     "en": "Then I will have green tea."
+    },
+    {
+     "zh": "对不起，这是咖啡，不是绿茶。",
+     "py": "Duìbuqǐ, zhè shì kāfēi, bú shì lǜchá.",
+     "en": "Sorry, this is coffee, not green tea."
+    },
+    {
+     "zh": "没关系，谢谢。",
+     "py": "Méiguānxi, xièxie.",
+     "en": "It does not matter, thank you."
+    }
+   ],
+   "bad": "cafe2"
+  },
+  {
+   "id": "airport-bad",
+   "glyph": "机",
+   "title": "Go to the airport: a bad day",
+   "sub": "Taxi, 5 turns",
+   "goals": [
+    "Say where you are going",
+    "Say your flight time and ask to hurry",
+    "Ask when you will get there",
+    "Thank the driver"
+   ],
+   "words": [
+    {
+     "zh": "机场",
+     "py": "jīchǎng"
+    },
+    {
+     "zh": "飞机",
+     "py": "fēijī"
+    },
+    {
+     "zh": "路上",
+     "py": "lùshang"
+    },
+    {
+     "zh": "快",
+     "py": "kuài"
+    },
+    {
+     "zh": "慢",
+     "py": "màn"
+    },
+    {
+     "zh": "可能",
+     "py": "kěnéng"
+    }
+   ],
+   "ai": [
+    {
+     "zh": "你好！你去哪儿？",
+     "py": "Nǐ hǎo! Nǐ qù nǎr?",
+     "en": "Hello! Where are you going?"
+    },
+    {
+     "zh": "好的。你几点的飞机？",
+     "py": "Hǎo de. Nǐ jǐ diǎn de fēijī?",
+     "en": "Okay. What time is your plane?"
+    },
+    {
+     "zh": "对不起，路上车太多了，我们走得很慢。",
+     "py": "Duìbuqǐ, lùshang chē tài duō le, wǒmen zǒu de hěn màn.",
+     "en": "Sorry, there are too many cars on the road; we are going very slowly."
+    },
+    {
+     "zh": "可能两点半。没问题，我们能到。",
+     "py": "Kěnéng liǎng diǎn bàn. Méi wèntí, wǒmen néng dào.",
+     "en": "Maybe half past two. No problem, we can make it."
+    },
+    {
+     "zh": "不客气，我会开快一点。",
+     "py": "Bú kèqi, wǒ huì kāi kuài yì diǎn.",
+     "en": "You are welcome. I will drive a bit faster."
+    }
+   ],
+   "you": [
+    {
+     "zh": "我去机场。",
+     "py": "Wǒ qù jīchǎng.",
+     "en": "I am going to the airport."
+    },
+    {
+     "zh": "下午三点。我们能快一点吗？",
+     "py": "Xiàwǔ sān diǎn. Wǒmen néng kuài yì diǎn ma?",
+     "en": "Three in the afternoon. Can we go a bit faster?"
+    },
+    {
+     "zh": "那我们几点能到？",
+     "py": "Nà wǒmen jǐ diǎn néng dào?",
+     "en": "Then what time can we get there?"
+    },
+    {
+     "zh": "好吧，谢谢你。",
+     "py": "Hǎo ba, xièxie nǐ.",
+     "en": "All right, thank you."
+    }
+   ],
+   "bad": "airport"
   }
  ],
  "phrases": [

@@ -939,6 +939,118 @@
     "老师告诉了他",
     "在书上看到的"
    ]
+  },
+  {
+   "zh": "小周大学毕业以后，没有马上去找工作，而是花了一年时间到处旅行。他说，这一年让他更清楚地知道了自己想做什么。现在，他在一家旅游公司工作，每天都很开心。",
+   "en": "After graduating from university, Xiao Zhou did not look for a job straight away, but spent a year travelling everywhere. He says that year made him understand more clearly what he wants to do. Now he works at a travel company and is very happy every day.",
+   "q": {
+    "zh": "那一年的旅行让小周怎么样了？",
+    "en": "What did that year of travel do for Xiao Zhou?"
+   },
+   "opts": [
+    "更清楚自己想做什么",
+    "花完了所有的钱",
+    "交了很多朋友",
+    "不想工作了"
+   ]
+  },
+  {
+   "zh": "有些人以为，越贵的东西质量越好。其实不一定。买东西的时候，我们应该根据自己的需要来选择，而不是只看价格。",
+   "en": "Some people think that the more expensive something is, the better its quality. In fact that is not necessarily so. When we buy things, we should choose according to our own needs, not just look at the price.",
+   "q": {
+    "zh": "作者认为买东西时应该怎么样？",
+    "en": "What does the writer think one should do when buying things?"
+   },
+   "opts": [
+    "根据需要选择",
+    "买最贵的",
+    "买最便宜的",
+    "多问别人"
+   ]
+  },
+  {
+   "zh": "我的邻居是一位退休的老师，他每个周末都免费给楼里的孩子们讲故事。孩子们都很喜欢他，叫他“周爷爷”。",
+   "en": "My neighbour is a retired teacher. Every weekend he tells stories to the children in our building for free. The children all love him and call him \"Grandpa Zhou\".",
+   "q": {
+    "zh": "关于这位邻居，可以知道什么？",
+    "en": "What can be known about this neighbour?"
+   },
+   "opts": [
+    "免费给孩子们讲故事",
+    "现在还在学校工作",
+    "每天都很忙",
+    "孩子们不太喜欢他"
+   ]
+  },
+  {
+   "zh": "研究发现，每天走路半个小时，对身体有很大的好处。它不但能让心情变好，还能帮助人睡得更好。所以，如果没有时间去健身房，不如每天多走走路。",
+   "en": "Research has found that walking for half an hour a day is very good for your health. It not only improves your mood but also helps you sleep better. So if you have no time to go to the gym, you might as well walk more every day.",
+   "q": {
+    "zh": "作者建议没时间去健身房的人怎么做？",
+    "en": "What does the writer suggest for people with no time to go to the gym?"
+   },
+   "opts": [
+    "每天多走路",
+    "早点儿睡觉",
+    "少吃东西",
+    "周末去健身房"
+   ]
+  },
+  {
+   "zh": "这家饭馆有个特别的规定：如果客人把点的菜全部吃完，就可以少付一些钱。老板说，这样做是为了让大家不要浪费粮食。",
+   "en": "This restaurant has a special rule: if customers finish all the dishes they ordered, they can pay a bit less. The owner says this is so that people will not waste food.",
+   "q": {
+    "zh": "老板为什么有这个规定？",
+    "en": "Why does the owner have this rule?"
+   },
+   "opts": [
+    "让大家不浪费粮食",
+    "吸引更多客人",
+    "菜做得太多了",
+    "让客人吃得快一点儿"
+   ]
+  },
+  {
+   "zh": "我小时候特别怕水，每次去游泳都哭。有一次，教练一边跟我聊天，一边带我在水里慢慢地走，我还没反应过来，就已经在水里玩了半个小时。从那以后，我就不那么怕水了。",
+   "en": "When I was little I was very afraid of water and cried every time I went swimming. Once the coach chatted with me while slowly walking me through the water, and before I knew it I had already been playing in the water for half an hour. From then on I was not so afraid of water.",
+   "q": {
+    "zh": "作者后来为什么不那么怕水了？",
+    "en": "Why was the writer later not so afraid of water any more?"
+   },
+   "opts": [
+    "教练一边聊天一边带他在水里走",
+    "水一点儿也不深",
+    "妈妈鼓励了他",
+    "他长大了"
+   ]
+  },
+  {
+   "zh": "很多人在网上看到好看的照片，就想去同一个地方旅游。可是到了那儿才发现，人特别多，风景也没有照片里那么美。所以，出发前最好多了解一下真实的情况。",
+   "en": "Many people see beautiful photos online and want to travel to the same place. But when they have got there they find there are a great many people, and the scenery is not as beautiful as in the photos. So before setting off it is best to find out more about what it is really like.",
+   "q": {
+    "zh": "作者建议出发前做什么？",
+    "en": "What does the writer suggest doing before setting off?"
+   },
+   "opts": [
+    "多了解真实的情况",
+    "多拍一些照片",
+    "早点儿出发",
+    "少带行李"
+   ]
+  },
+  {
+   "zh": "去年冬天，我们公司开始让员工每个星期有一天在家工作。一年下来，大家发现，在家工作的那天效率反而更高，因为路上节省了很多时间。",
+   "en": "In the winter of last year our company started letting staff work from home one day a week. After a year, everyone found that they were actually more efficient on the day at home, because a lot of time was saved on the road.",
+   "q": {
+    "zh": "在家工作的那天怎么样？",
+    "en": "What is the day working from home like?"
+   },
+   "opts": [
+    "效率更高",
+    "大家都很累",
+    "工作做不完",
+    "经常迟到"
+   ]
   }
  ]
 }
