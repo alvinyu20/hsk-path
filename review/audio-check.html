@@ -31,7 +31,8 @@ button.on{background:#15222b;color:#fff;border-color:#15222b}
 const RISK = new Set('只过了得地还会好行长重数教种发角假号差干都为着'.split(''));
 const KEY = 'shanlu-audio-check';
 let marks = {}; try { marks = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
-const M = window.SHANLU_AUDIO || {};
+// every recording, key -> file: audio/index.json (the site's own manifest only lists hashes now), plus any file named after its text
+const M = Object.assign((() => { try { const x = new XMLHttpRequest(); x.open('GET', '../audio/index.json', false); x.send(); return x.status === 200 ? JSON.parse(x.responseText) : {}; } catch (e) { return {}; } })(), window.SHANLU_AUDIO || {});
 const words = [];
 [1, 2, 3].forEach(n => (window['HSK' + n + '_WORDS'] || []).forEach(w => { if (M[w.zh]) words.push({ n, zh: w.zh, py: w.py, en: w.en, file: '../audio/' + (String(M[w.zh]).indexOf('.') >= 0 ? M[w.zh] : encodeURIComponent(w.zh) + '.' + M[w.zh]), risk: [...w.zh].some(c => RISK.has(c)) || w.py.indexOf('/') >= 0 }); }));
 let VER = { differs: {}, extra: {}, unsure: {}, homophone: {} };

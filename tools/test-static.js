@@ -24,7 +24,7 @@ function server(root, opts) {
     if (p === '/') p = '/index.html';
     if (p === '/config.js' && !o.realConfig) { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end("window.SHANLU_FRIENDS_URL = window.SHANLU_FRIENDS_URL || '';"); return; }
     if (p === '/sw.js' && !o.sw) { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end('/* tests: a service worker that does nothing, so no files are cached between test runs */'); return; }
-    if (p === '/data/audio-manifest.js' && !o.realAudio) { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end('window.SHANLU_AUDIO = {};'); return; }
+    if (p === '/data/audio-manifest.js' && !o.realAudio) { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end('window.SHANLU_AUDIO_IDS = ""; window.SHANLU_AUDIO = {};'); return; }
     const f = path.join(root, p);
     if (!f.startsWith(root) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); res.end('nope'); return; }
     const headers = { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' };

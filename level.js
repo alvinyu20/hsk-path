@@ -131,6 +131,8 @@
   window.ShanluData = {
     need: need,
     has: function (n, kind) { return fileState['data/hsk' + n + '-' + kind + '.js'] === 'ok'; },
+    // any other file named in <meta name="shanlu-data"> (the pictures app.js loads after the first draw): cb(allLoaded) once all have run
+    load: function (files, cb) { var left = files.length, all = true; if (!left) { cb(true); return; } files.forEach(function (f) { loadFile(f, function (ok) { all = all && ok; if (--left === 0) cb(all); }); }); },
     start: function (fn) { if (started) fn(); else startFns.push(fn); }
   };
   if (document.title) document.title = 'Shanlu · ' + (level === 0 ? 'all levels' : 'HSK ' + level) + ' study path';

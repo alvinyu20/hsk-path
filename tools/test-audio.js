@@ -17,7 +17,7 @@ global.window = {};
 let male = 0;
 [1, 2, 3, 4].forEach((n) => { const E = window['HSK' + n + '_EXAM']; Object.keys(E).filter((k) => /^L\d/.test(k)).forEach((k) => JSON.stringify(E[k], (key, v) => { if (v && Array.isArray(v.say)) v.say.forEach((l) => { if (!has.has((l.s === '男' ? 'm' : 'f') + '|' + l.zh)) fail('exam line ' + l.zh + ' (' + l.s + ') is not in the list'); if (l.s === '男') male++; }); return v; })); });
 if (!male) fail('no man\'s lines were found in the exams');
-// the manifest: every file it names exists
+// the manifest: every file it names exists, and the site finds the right file for every recording (audiolist.js works the name out from the text)
 global.window = {};
 require(path.join(root, 'data', 'audio-manifest.js'));
 const M = window.SHANLU_AUDIO || {};
@@ -26,6 +26,20 @@ Object.keys(M).forEach((k) => {
   const f = path.join(root, 'audio', v.indexOf('.') >= 0 ? v : text + '.' + v);
   if (!fs.existsSync(f)) fail('the manifest names ' + path.basename(f) + ' for "' + k + '" but the file is missing');
 });
+const AL = require(path.join(root, 'audiolist.js'));
+const crypto = require('crypto');
+['', 'a', '你好', 'm|我很好。', 'x'.repeat(55), 'y'.repeat(56), 'z'.repeat(64), '😀 emoji ' + '长'.repeat(300)].forEach((t) => {
+  if (AL.sha1hex(t) !== crypto.createHash('sha1').update(t).digest('hex')) fail('audiolist.js gets the SHA-1 of "' + t.slice(0, 20) + '" wrong');
+});
+const INDEX = fs.existsSync(path.join(root, 'audio', 'index.json')) ? JSON.parse(fs.readFileSync(path.join(root, 'audio', 'index.json'), 'utf8')) : {};
+let found = 0;
+Object.keys(INDEX).forEach((k) => {
+  if (!fs.existsSync(path.join(root, 'audio', INDEX[k]))) return;
+  const man = /^m\|/.test(k), got = AL.file(man ? k.slice(2) : k, man ? 'm' : '');
+  if (got !== 'audio/' + INDEX[k]) fail('the site would play ' + got + ' for "' + k + '" instead of audio/' + INDEX[k]); else found++;
+});
+{ let stray = 0; for (let i = 0; i < 3000; i++) if (AL.file('没有录音的句子' + i)) stray++;
+  if (stray > 3) fail(stray + ' of 3000 texts without a recording look recorded (the list should almost never match them)'); }
 // the manifest is what build-audio.py would write
 const before = fs.readFileSync(path.join(root, 'data', 'audio-manifest.js'), 'utf8');
 cp.execSync('python3 ' + path.join(__dirname, 'build-audio.py'), { stdio: 'pipe' });
@@ -38,5 +52,5 @@ if (fs.readFileSync(path.join(root, 'data', 'audio-manifest.js'), 'utf8') !== be
   if (!scripts.length) fail('review/audio-check.html has no inline script');
 }
 if (bad) process.exit(1);
-console.log('audio tests passed (' + list.length + ' lines to record, ' + male + ' by the man, ' + Object.keys(M).length + ' recorded)');
+console.log('audio tests passed (' + list.length + ' lines to record, ' + male + ' by the man, ' + found + ' recordings found from their text)');
 

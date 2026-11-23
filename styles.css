@@ -1270,6 +1270,8 @@ html,body,.app,button,a,input,select,textarea,label,[role=button]{touch-action:m
 .jy-sm.done path{fill:hsl(var(--rh) 55% 58%)}.t-dark .jy-sm.done path{fill:hsl(var(--rh) 45% 42%)}
 .jy-sm.here path{fill:hsl(var(--rh) 60% 82%);stroke:var(--ink)}.t-dark .jy-sm.here path{fill:hsl(var(--rh) 40% 30%)}
 .jy-sm.na{opacity:.55;cursor:default}
+.jy-sm.me{position:relative;border-color:#E07A3B;box-shadow:0 0 0 2px color-mix(in srgb,#E07A3B 30%,transparent)}
+.jy-sm-me{position:absolute;top:-9px;right:8px;padding:1px 7px;border-radius:99px;background:#E07A3B;color:#fff;font-size:10.5px;font-weight:700;line-height:16px;white-space:nowrap;animation:jymebob 1.8s ease-in-out infinite}
 .jy-key{font-size:13px;margin:0}
 .jy-ph{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 .jy-ph b{font-size:18px;font-family:'Bricolage Grotesque',system-ui,sans-serif}
@@ -3337,10 +3339,10 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .jd-confetti i{position:absolute;top:-12px;border-radius:2px;opacity:0;animation:jdconf 2.8s ease-in both}
 @keyframes jdconf{0%{opacity:0;transform:translateY(0) rotate(0)}8%{opacity:1}85%{opacity:1}100%{opacity:0;transform:translateY(520px) rotate(var(--r,200deg))}}
 .jy-r.fillnew path:not(.mu),.jy-sm.fillnew path{animation:jyfill 1.6s .25s ease both}
-.jy-sm.fillnew{animation:jysmpop 1s .25s ease both}
-@keyframes jysmpop{0%,100%{transform:none}35%{transform:scale(1.12)}}
+.jy-sm.fillnew{position:relative;z-index:1;border-color:hsl(var(--rh) 60% 50%);animation:jysmpop 1.5s .25s ease both}
+@keyframes jysmpop{0%{transform:none;box-shadow:0 0 0 0 hsl(var(--rh) 75% 55% / .7)}16%{transform:scale(1.3)}32%{transform:scale(.94)}48%{transform:scale(1.14)}60%{box-shadow:0 0 0 18px hsl(var(--rh) 75% 55% / 0)}64%{transform:none}100%{transform:none;box-shadow:0 0 0 0 hsl(var(--rh) 75% 55% / 0)}}
 @keyframes jyfill{0%{fill:var(--panel2);stroke-width:.7}45%{fill:hsl(var(--rh) 80% 68%);stroke:var(--ink);stroke-width:1.6}100%{stroke-width:.7}}
-@media (prefers-reduced-motion:reduce){.jy-done,.jd-seal,.jd-h,.jd-sub,.jd-stat,.jd-count,.jd-go,.jd-skip,.jy-done-bg,.jy-r.fillnew path{animation:none!important}.jd-confetti,.jd-seal::after{display:none}}
+@media (prefers-reduced-motion:reduce){.jy-done,.jd-seal,.jd-h,.jd-sub,.jd-stat,.jd-count,.jd-go,.jd-skip,.jy-done-bg,.jy-r.fillnew path,.jy-sm.fillnew,.jy-sm-me{animation:none!important}.jd-confetti,.jd-seal::after{display:none}}
 
 /* the finished day on Today: cleared card, tomorrow's lantern, a bonus round */
 .fin{display:grid;gap:12px}

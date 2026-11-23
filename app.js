@@ -290,9 +290,10 @@
   // comes next. A word stop is done when every word in it has been started (here, in a web, or in Review) or its lesson was finished;
   // a grammar stop is done when its lesson was passed (80%).
   const PATH = window.SHANLU_PATH || {};
-  const PSCENE = window.SHANLU_PATH_SCENES || {};
-  const PTILE = window.SHANLU_PATH_TILES || {};     // the wallpaper behind each unit's trail   // the pictures of the themed path (data/path-scenes.js)
-  const SSCN = window.SHANLU_SPEAK_SCENES || {};     // one drawn place for each practice script (data/speak-scenes.js)
+  // The pictures below arrive a moment after the first draw (lateData): until then they are empty and the screens draw without them.
+  let PSCENE = window.SHANLU_PATH_SCENES || {};
+  let PTILE = window.SHANLU_PATH_TILES || {};     // the wallpaper behind each unit's trail   // the pictures of the themed path (data/path-scenes.js)
+  let SSCN = window.SHANLU_SPEAK_SCENES || {};     // one drawn place for each practice script (data/speak-scenes.js)
   const aiSceneOf = (S) => (S.aiScn >= 0 ? (SCEN[S.aiScn] ? SSCN[SCEN[S.aiScn].id] : null) : SSCN.free);   // the drawn place behind the chat (Free chat has its own)
   const scnImg = (im) => (im ? 'background-color:' + im.c + ';background-image:url("' + im.u + '")' : '');
   const SCEN_AT = {};
@@ -518,7 +519,7 @@
   const JWORLD = JY && window.JOURNEY ? JY.build(window.JOURNEY) : null;
   if (JWORLD && window.SHANLU_JY_FIRST) JWORLD.prefer = window.SHANLU_JY_FIRST;   // set by tests so the first region is known
   const JMAP = window.JOURNEY_MAP || null;
-  const JMEDIA = window.JOURNEY_MEDIA || {};
+  let JMEDIA = window.JOURNEY_MEDIA || {};   // the photo of each stop (data/journey-media.js, loaded after the first draw)
   const JART = window.JYART || null;
   // an ink drawing for a stop, a city or a must-see, drawn in the region's colour (lighter ink in the dark theme)
   const jyInk = (hue, dark, gold) => gold ? (dark ? 'hsl(40 85% 64%)' : 'hsl(34 78% 34%)') : (dark ? 'hsl(' + hue + ' 60% 76%)' : 'hsl(' + hue + ' 58% 34%)');
@@ -998,7 +999,7 @@
   // "Hear the sentence": a listening card for a word you already hear well. One of its example sentences is played (recorded audio only,
   // so every device hears the same voice), and you pick what the whole sentence means. Wrong answers are other example sentences, the ones
   // that share the most words with it first, so the word alone is not always enough; a wrong answer never means the same thing in English.
-  const recorded = (zh) => !!(window.SHANLU_AUDIO && Object.prototype.hasOwnProperty.call(window.SHANLU_AUDIO, zh));
+  const recorded = (zh) => !!(window.ShanluAudio && window.ShanluAudio.file(zh));
   const enKey = (s) => String(s || '').toLowerCase().replace(/o'clock/g, '').replace(/\b(a|an|the)\b/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
   let SENT_POOL = null;
   const sentPool = () => {
@@ -1562,9 +1563,9 @@
   const EXAM_MEDIA = window.SHANLU_EXAM_MEDIA || {};
   const exBad = {};   // photo addresses that did not load
   // Drawings come first (data/exam-art.js, made by tools/exam-art.js, the same look as the souvenirs); a photo or the emoji is only the fallback for a picture that has no drawing.
-  const EXAM_ART = window.SHANLU_EXAM_ART || {};
+  let EXAM_ART = window.SHANLU_EXAM_ART || {};   // (data/exam-art.js, loaded after the first draw)
   const exPhoto = (e) => { const k = e ? String(e).replace(/\uFE0F/g, '') : ''; const d = EXAM_ART[k]; if (d && d.u) return d; const m = k ? EXAM_MEDIA[k] : null; return m && m.u && !exBad[m.u] ? m : null; };
-  const EX_PICNOTE = Object.keys(EXAM_ART).length ? 'drawings stand in for them' : Object.keys(EXAM_MEDIA).length ? 'photos (where a clear one is free to use) and emoji stand in for them' : 'emoji stand in for them';
+  const exPicNote = () => Object.keys(EXAM_ART).length ? 'drawings stand in for them' : Object.keys(EXAM_MEDIA).length ? 'photos (where a clear one is free to use) and emoji stand in for them' : 'emoji stand in for them';
   const EXAM_MIN = EXAMBANK && EXAMBANK.meta ? { listening:EXAMBANK.meta.listening.minutes, reading:EXAMBANK.meta.reading.minutes } : { listening:15, reading:20 };
   const EXAM_N = EXAMBANK && EXAMBANK.meta ? { listening:EXAMBANK.meta.listening.questions, reading:EXAMBANK.meta.reading.questions } : { listening:20, reading:20 };
   // HSK 3 also has a writing section; the site treats it as practice (it is not part of the 200 points or the seal)
@@ -2097,10 +2098,19 @@
     friendStats = () => collectFriendStats();
     // Your progress lives on the server too: every device merges into it (the same order-independent merge the GitHub sync uses),
     // so a word, an exam pass or a day's study on one device shows up on all of them.
-    progBusy = false;
-    friendsProgressSync = async () => {
-      if (this.progBusy) return false;
-      this.progBusy = true;
+    // One sync at a time. A call while one is out waits for it and then runs once more (several such calls share that one run), so what
+    // changed since the running sync read this device is merged too. (It used to return at once without syncing: a "Sync now" right after
+    // the start-up sync, or a test, could finish before anything was synced.)
+    progRun = null; progAgain = null;
+    friendsProgressSync = () => {
+      if (this.progRun) {
+        if (!this.progAgain) this.progAgain = this.progRun.catch(() => {}).then(() => { this.progAgain = null; return this.friendsProgressSync(); });
+        return this.progAgain;
+      }
+      const run = this.progRun = this.friendsProgressSyncGuarded().finally(() => { if (this.progRun === run) this.progRun = null; });
+      return run;
+    };
+    friendsProgressSyncGuarded = async () => {
       try {
         const r = await this.friendsProgressSyncRun();
         this.syncInfo = { ok:true, at:Date.now() };
@@ -2111,7 +2121,7 @@
         this.syncInfo = { ok:false, at:Date.now(), msg:why };
         try { if (this.state.syncBadMsg !== why) this.setState({ syncBadMsg:why }); } catch (e2) {}
         throw e;
-      } finally { this.progBusy = false; }
+      }
     };
     syncInfo = null;
     // "Sync now": merge with the server right away and say what happened (the numbers are this device's, after the merge)
@@ -2357,14 +2367,10 @@
       if (!wait) { doSpeak(ss); return; }
       setTimeout(() => { if (tok === this.sayTok) { try { doSpeak(ss); } catch (e) {} } }, wait);
     };
-    // recorded audio: audio/<text>.<ext> for every text listed in data/audio-manifest.js; anything else is read by the browser voice
+    // recorded audio: the file of every text data/audio-manifest.js lists (audiolist.js works out its name); anything else is read by the browser voice
     nativeAudio = null;
-    // tag 'm' is the man's voice (exam lines spoken by 男). A manifest value with a dot is the file name itself (made by tools/make-audio.py), otherwise it is the extension of audio/<text>.<ext>.
-    nativeFile = (text, tag) => {
-      const m = window.SHANLU_AUDIO, k = (tag === 'm' ? 'm|' : '') + text;
-      if (!m || !text || !Object.prototype.hasOwnProperty.call(m, k)) return null;
-      return 'audio/' + (String(m[k]).indexOf('.') >= 0 ? m[k] : encodeURIComponent(text) + '.' + m[k]);
-    };
+    // tag 'm' is the man's voice (exam lines spoken by 男)
+    nativeFile = (text, tag) => (window.ShanluAudio ? window.ShanluAudio.file(text, tag) : null);
     stopNative = () => { this.ttsTok++; try { if (this.nativeAudio) { this.nativeAudio.pause(); this.nativeAudio = null; } } catch (e) {} try { if (this.ttsEl) this.ttsEl.pause(); } catch (e) {} };
     // Mingming's voice: Qwen when an Alibaba key is saved (and it is switched on), otherwise the browser voice. Any failure falls back to the browser voice.
     ttsEl = null; ttsTok = 0; ttsOpen = false; ttsCache = {}; ttsWarned = false;
@@ -3601,7 +3607,7 @@
       const rid = this.state.jyDone && this.state.jyDone.rid; SFX.play('ok');
       this.setState({ jyDone:null, jyTab:'map', jyReg:null, jySel:null, jyOpen:null, jyRv:null, jyTrip:'', jyFill:rid || null });
       clearTimeout(this.jyFillTimer); this.jyFillTimer = setTimeout(() => { if (this.state.jyFill) this.setState({ jyFill:null }); }, 3200);
-      requestAnimationFrame(() => { try { const m = document.querySelector(JY.SMALL.indexOf(rid) >= 0 && rid !== 'singapore' ? '.jy-small' : '.jy-map'); if (m && m.scrollIntoView) m.scrollIntoView({ block:'center', behavior:'auto' }); } catch (e) {} });
+      requestAnimationFrame(() => { try { const m = document.querySelector(JY.SMALL.indexOf(rid) >= 0 ? '.jy-sm.fillnew' : '.jy-map') || document.querySelector('.jy-map'); if (m && m.scrollIntoView) m.scrollIntoView({ block:'center', behavior:'auto' }); } catch (e) {} });
     };
     jyShowReg = (id) => this.setState({ jyTab:'map', jyReg:id, jySel:null, jyFilter:'all', jyOpen:null, jyRv:null });
     jyBack = () => this.setState({ jyReg:null, jySel:null, jyFilter:'all' });
@@ -3996,7 +4002,9 @@
         }
         out.jyCHereShow = false;
         if (!fm && vs.started && vs.seen && vs.seen.length) { const ls = JWORLD.byStop[vs.seen[vs.seen.length - 1]]; const lc = ls && JWORLD.byCity[ls.cid]; if (lc) { const xy = JY.projectCountry(lc.lat, lc.lon); out.jyCHereShow = true; out.jyCHereX = Math.round(Math.max(6, Math.min(344, xy[0])) * 10) / 10; out.jyCHereY = Math.round(Math.max(6, Math.min(284, xy[1])) * 10) / 10; } }
-        out.jySmall = JY.SMALL.map(id => Object.assign(mk(id), { d:JMAP.insets[id] || '' }));
+        // the small regions are buttons under the map (Singapore is not on it at all), so the one you are in carries its own "you are here" tag
+        const meRid = fm ? '' : (VR ? VR.id : st.reg);
+        out.jySmall = JY.SMALL.map(id => { const r = Object.assign(mk(id), { d:JMAP.insets[id] || '', me:id === meRid, meText:st.started || secret ? 'You are here' : 'Start here' }); if (r.me) r.cls += ' me'; return r; });
       } else {
         const id = S.jyReg; const RR = JWORLD.byRegion[id]; const mp = JMAP.regions[id];
         const seenHere = RR.stops.filter(s => have[s.id]);
@@ -4933,7 +4941,8 @@
           const tu = th && th.units ? th.units[u.id] : null;
           const grp = th && th.groups ? th.groups.find(g => { const a = us.findIndex(x => x.id === g.from), b = us.findIndex(x => x.id === g.to); return a >= 0 && ui >= a && ui <= b; }) : null;
           const first = !!grp && !seenGroup[grp.id]; if (grp) seenGroup[grp.id] = 1;   // (a folded unit returns above, so the band goes on the group's first unit that shows)
-          const gN = grp ? us.filter((x, xi) => { const a = us.findIndex(y => y.id === grp.from), b = us.findIndex(y => y.id === grp.to); return xi >= a && xi <= b; }).length : 0;
+          const gIdx = grp ? us.map((x, xi) => xi).filter(xi => { const a = us.findIndex(y => y.id === grp.from), b = us.findIndex(y => y.id === grp.to); return xi >= a && xi <= b; }) : [];
+          const gN = gIdx.length, gF = gIdx.filter(folded).length;   // units of the group folded into "✓ N units done" above: the header says so, instead of counting them as if they were below
           const th0 = th ? th.kind : '';
           const lines = th0 === 'story' && tu && tu.lines ? tu.lines : [];
           const nd = states.filter(x => x === 'done').length;
@@ -4943,7 +4952,7 @@
             trailStyle:tu && PTILE[tu.tile] ? 'background-image:url("' + PTILE[tu.tile] + '"),linear-gradient(180deg,' + ((tu.bg || (grp && grp.bg) || ['#EDF0EC', '#EDF0EC'])[0]) + ',' + ((tu.bg || (grp && grp.bg) || ['#EDF0EC', '#EDF0EC'])[1]) + ')' : '',
             hasKick:!!tu && th0 !== '' && th0 !== 'day', kick:!tu ? '' : th0 === 'day' ? '' : th0 === 'rail' ? 'Station ' + (ui + 1) + ' · ' + tu.py : th0 === 'terms' ? tu.py + ' · ' + tu.en + ' · c. ' + tu.date : th0 === 'peaks' ? tu.stage + ' · ' + tu.zh + ' · ' + tu.py + ' · ' + tu.en : 'Chapter ' + (ui + 1) + ' · ' + (tu.place || ''),
             hasScene:(th0 === 'day' || th0 === 'terms' || th0 === 'peaks') && !!tu && !!tu.scene, scene:tu && tu.scene || '',
-            hasBand:first, bandImg:grp && PSCENE[grp.scene] || '', bandZh:grp && grp.zh || '', bandTitle:grp ? (grp.sub ? grp.title + ' · ' + grp.sub : grp.title) : '', bandSub:'', bandN:gN + (gN === 1 ? ' unit' : ' units'), hasBandLine:!!grp && !!grp.line, bandLine:grp && grp.line || '',
+            hasBand:first, bandImg:grp && PSCENE[grp.scene] || '', bandZh:grp && grp.zh || '', bandTitle:grp ? (grp.sub ? grp.title + ' · ' + grp.sub : grp.title) : '', bandSub:'', bandN:gN + (gN === 1 ? ' unit' : ' units') + (gF ? ' · ' + gF + ' done' : ''), hasBandLine:!!grp && !!grp.line, bandLine:grp && grp.line || '',
             hasDlg:open && lines.length > 0, dlg:lines.map((l, li) => ({ who:l.who, zh:l.zh, py:l.py, en:l.en, cls:l.who === '你' ? 'me' : '', playCls:S.playing === 'pd:' + u.id + li ? 'on' : '', say:() => this.say(l.zh, 'pd:' + u.id + li) })),
             isDone:nd === u.stops.length, toggleText:open ? 'Hide' : 'Show', toggle:() => this.pathUnitToggle(u.id, !open),
             stops:open ? u.stops.map((st, si) => {
@@ -6612,7 +6621,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         exReadT:'Reading · ' + EXAM_N.reading + ' questions · ' + EXAM_MIN.reading + ' min',
         exReadD:LV === 5 ? 'Part 1 (15): read three passages and fill five numbered blanks in each. Part 2 (10): read a short passage and choose the sentence that matches it. Part 3 (20): read a passage and answer a question with four choices.' : LV === 1 ? 'Part 1: does the picture match the words? Part 2: match five sentences to pictures. Part 3: match five questions to answers. Part 4: fill five blanks from a word list.' : LV === 4 ? 'Part 1 (10): fill blanks from word lists. Part 2 (10): put three pieces in the right order to make a sentence. Part 3 (20): read a passage and answer a question with four choices.' : LV === 3 ? 'Part 1 (10): choose the reply that fits each sentence. Part 2 (10): fill blanks from a word list. Part 3 (10): read a passage and answer a question.' : 'Part 1 (5): match sentences to pictures. Part 2 (5): fill blanks from a word list. Part 3 (5): do two sentences mean the same? Part 4 (10): match questions to answers.',
         exCreditsOn:Object.keys(EXAM_MEDIA).length > 0, exCredits:Object.keys(EXAM_MEDIA).map(k => ({ a:EXAM_MEDIA[k].a, c:EXAM_MEDIA[k].c })),
-        exNote:LV === 5 ? 'There are no pictures in this exam. This layout follows the 2012 (HSK 2.0) HSK 5 sample papers (45 listening, 45 reading, 10 writing questions). The new 2025 exam may be laid out differently. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand and includes writing a short passage; here you tap and type 15 practice questions, and the site cannot judge a hand-written character or a free text.' : LV === 4 ? 'The real test has no pictures in its sample papers, and none here. This layout follows the 2012 (HSK 2.0) HSK 4 sample papers (45 listening, 40 reading, 15 writing questions). The new 2025 exam may be laid out differently. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand; here you tap and type, and the site cannot judge a hand-written character or a free sentence.' : LV === 1 ? 'The real test has pictures; here ' + EX_PICNOTE + '. The official 2025 test is said to have 20 listening questions (about 12 minutes of audio) and 20 reading questions (20 minutes); the part-by-part layout above is from the official sample papers, and the 2025 version may differ in the details. Listening gets 15 minutes here because you press play yourself.' : LV === 3 ? 'The real test has pictures; here ' + EX_PICNOTE + '. This layout follows the 2012 (HSK 2.0) sample papers. The new 2025 exam may be laid out differently. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand; here you tap and type, and the site cannot judge a hand-written character.' : 'The real test has pictures; here ' + EX_PICNOTE + '. This layout follows the 2012 (HSK 2.0) sample papers. The new 2025 exam may be laid out differently. Listening gets 25 minutes because you press play yourself.',
+        exNote:LV === 5 ? 'There are no pictures in this exam. This layout follows the 2012 (HSK 2.0) HSK 5 sample papers (45 listening, 45 reading, 10 writing questions). The new 2025 exam may be laid out differently. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand and includes writing a short passage; here you tap and type 15 practice questions, and the site cannot judge a hand-written character or a free text.' : LV === 4 ? 'The real test has no pictures in its sample papers, and none here. This layout follows the 2012 (HSK 2.0) HSK 4 sample papers (45 listening, 40 reading, 15 writing questions). The new 2025 exam may be laid out differently. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand; here you tap and type, and the site cannot judge a hand-written character or a free sentence.' : LV === 1 ? 'The real test has pictures; here ' + exPicNote() + '. The official 2025 test is said to have 20 listening questions (about 12 minutes of audio) and 20 reading questions (20 minutes); the part-by-part layout above is from the official sample papers, and the 2025 version may differ in the details. Listening gets 15 minutes here because you press play yourself.' : LV === 3 ? 'The real test has pictures; here ' + exPicNote() + '. This layout follows the 2012 (HSK 2.0) sample papers. The new 2025 exam may be laid out differently. Listening gets 35 minutes because you press play yourself. The real writing section is written by hand; here you tap and type, and the site cannot judge a hand-written character.' : 'The real test has pictures; here ' + exPicNote() + '. This layout follows the 2012 (HSK 2.0) sample papers. The new 2025 exam may be laid out differently. Listening gets 25 minutes because you press play yourself.',
         exScore:(LV === 5 ? 'Each section is worth 100 points, shared evenly by its questions (about 2.2 points a question in listening and in reading), so the total is out of 200. Writing practice is not scored in points.' : LV === 1 ? 'Each question is worth 5 points, so each section is out of 100 and the total out of 200.' : LV === 4 ? 'Each section is worth 100 points, shared evenly by its questions (listening about 2.2 points a question, reading 2.5), so the total is out of 200. Writing practice is not scored in points.' : LV === 3 ? 'Each section is worth 100 points, shared evenly by its questions (listening 2.5 points a question, reading about 3.3), so the total is out of 200. Writing practice is not scored in points.' : 'Each section is worth 100 points, shared evenly by its questions (listening about 2.9 points a question, reading 4), so the total is out of 200.') + ' The official ' + LVN + ' pass mark is ' + (LV >= 3 ? '180 of 300, which is 60% and so 120 of the 200 here' : '120 of 200') + ' (the 2025 version may have changed it). This site\'s ' + LVN + ' seal is stricter: ' + LVL.PASS_PCT + '% in listening and in reading (your best result in each section counts), and it opens ' + (LV < LVL.MAX_LEVEL ? 'HSK ' + (LV + 1) : 'the next level') + '.',
         chatVocab:KNOWN_LISTS + ' vocabulary only', lvName:LVN, nextLvName:'HSK ' + (TOPL + 1), lvIs1:TOPL === 1, lvIs2:TOPL !== 1, hasExamCard:!!EXAMBANK, noExamCard:!EXAMBANK,
         examCardTitle:ALL ? 'Level exams' : EXAMBANK ? LVN + ' level exam' : LVN + ' progress', examCardNote:ALL ? 'Each level has its own exam. Switch to that level in the header to take it; passing it opens the next level. The rings show your progress across all the levels shown here.' : EXAMBANK ? (LVL.levelPassed(LV) ? LVN + ' exam passed.' + (LV < LVL.MAX_LEVEL ? ' HSK ' + (LV + 1) + ' is open.' : '') : (LV < LVL.MAX_LEVEL ? 'Pass the full exam (' + LVL.PASS_PCT + '% in listening and in reading) to open HSK ' + (LV + 1) + '. The rings show how ready you are.' : 'Reach ' + LVL.PASS_PCT + '% in listening and in reading to pass.')) : 'The ' + LVN + ' level exam, listening lab and practice scripts are not built yet. These rings show the parts that are.',
@@ -6758,6 +6767,19 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
   const tpl = document.getElementById('app-template');
   const app = DCMount(root, tpl, Component);
   onPersonChange = () => { try { app.personChanged(); } catch (e) {} };
+  // Pictures and photo addresses no first screen needs (about 1 MB: path scenes, speaking scenes, exam drawings, Journey photos) load
+  // right after the first draw instead of before it (tools/build-site.js LATER). The Journey's photos come first when the Journey is open
+  // (a newcomer lands there). When they have arrived, the screens are drawn again with them. app.lateReady() is a promise for tests.
+  { const LATE = { 'data/journey-media.js':'journey', 'data/path-scenes.js':'path', 'data/speak-scenes.js':'', 'data/exam-art.js':'' };
+    const bind = () => { PSCENE = window.SHANLU_PATH_SCENES || {}; PTILE = window.SHANLU_PATH_TILES || {}; SSCN = window.SHANLU_SPEAK_SCENES || {}; JMEDIA = window.JOURNEY_MEDIA || {}; EXAM_ART = window.SHANLU_EXAM_ART || {}; };
+    const D = window.ShanluData;
+    const files = Object.keys(LATE).sort((a, b) => (LATE[b] === app.state.screen ? 1 : 0) - (LATE[a] === app.state.screen ? 1 : 0));
+    const p = new Promise((res) => {
+      if (!D || !D.load) { res(); return; }
+      const go = () => D.load(files, () => { bind(); try { app.setState({ vtick:(app.state.vtick || 0) + 1 }); } catch (e) {} res(); });
+      if (window.requestAnimationFrame) requestAnimationFrame(() => setTimeout(go, 0)); else setTimeout(go, 0);
+    });
+    app.lateReady = () => p; }
   app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin, plChoices, ffTier, jyFinds, jyRead, SV_SETS };   // for the browser tests
   window.shanlu = app;
   // an exam photo that does not load (offline, blocked, removed) is dropped and its emoji shows instead

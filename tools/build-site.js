@@ -68,7 +68,11 @@ const dataMeta = /<meta name="shanlu-data" content="([^"]*)">/.exec(html);
 if (!dataMeta) { console.error('index.html needs <meta name="shanlu-data" content="..."> (the level files level.js loads).'); process.exit(2); }
 const lazy = [];
 for (let n = 1; n <= 9; n++) LEVEL_KINDS.forEach((k) => { const f = 'data/hsk' + n + '-' + k + '.js'; if (exists(f)) lazy.push(f); });
-lazy.forEach((f) => { if (scripts.indexOf(f) >= 0) { console.error(f + ' is a level file: leave it out of the <script> tags (level.js loads it).'); process.exit(2); } });
+// pictures no first screen needs: app.js asks level.js for them (ShanluData.load) once it has drawn, so they do not hold up the start.
+// They are named in the same <meta name="shanlu-data"> (with their ?v=) and are in the offline copy like every other file.
+const LATER = ['data/path-scenes.js', 'data/speak-scenes.js', 'data/exam-art.js', 'data/journey-media.js'];
+LATER.forEach((f) => { if (exists(f)) lazy.push(f); });
+lazy.forEach((f) => { if (scripts.indexOf(f) >= 0) { console.error(f + ' is loaded later by level.js (a level file, or one in LATER): leave it out of the <script> tags.'); process.exit(2); } });
 const fonts = fs.readdirSync(path.join(root, 'fonts')).filter((f) => /\.woff2$/.test(f)).sort().map((f) => 'fonts/' + f);
 const icons = fs.readdirSync(path.join(root, 'icons')).filter((f) => /\.png$/.test(f)).sort().map((f) => 'icons/' + f);
 const extra = ['manifest.webmanifest'];

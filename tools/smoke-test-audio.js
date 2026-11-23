@@ -13,8 +13,11 @@ const wav = (() => { const n = 800, b = Buffer.alloc(44 + n * 2); b.write('RIFF'
   const browser = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required'] });
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const files = [], qwen = [];
+  // the manifest in its real form: the first digits of each recorded key's SHA-1 (the site works the file name out), plus one file named after its text
+  const h = (k) => require('crypto').createHash('sha1').update(k).digest('hex'), W = require('../audiolist.js').W;
+  const fileOf = (k) => h(k).slice(0, 14) + '.mp3';
   await ctx.route('**/data/audio-manifest.js*', (r) => r.fulfill({ status: 200, contentType: 'text/javascript',
-    body: 'window.SHANLU_AUDIO={"谢谢":"aaaaaaaaaaaaaa.mp3","你好吗？":"bbbbbbbbbbbbbb.mp3","m|我很好。":"cccccccccccccc.mp3","旧的":"mp3"};' }));
+    body: 'window.SHANLU_AUDIO_IDS="' + ['谢谢', '你好吗？', 'm|我很好。'].map(k => h(k).slice(0, W)).sort().join('') + '";window.SHANLU_AUDIO={"旧的":"mp3"};' }));
   await ctx.route('**/audio/*', (r) => { files.push(decodeURIComponent(new URL(r.request().url()).pathname.split('/audio/')[1])); r.fulfill({ status: 200, contentType: 'audio/wav', body: wav }); });
   await ctx.route('https://dashscope-intl.aliyuncs.com/**', (r) => { try { qwen.push(JSON.parse(r.request().postData()).input.text); } catch (e) { qwen.push('?'); } r.fulfill({ status: 500, contentType: 'application/json', body: '{}' }); });
   const page = await ctx.newPage();
@@ -23,7 +26,7 @@ const wav = (() => { const n = 800, b = Buffer.alloc(44 + n * 2); b.write('RIFF'
   const wait = (ms) => page.waitForTimeout(ms);
   // no key: a recorded word plays its file; an unrecorded one makes no request
   await page.evaluate(() => window.shanlu.sayAi('谢谢', 'word')); await wait(300);
-  check(files.length === 1 && files[0] === 'aaaaaaaaaaaaaa.mp3', 'a recorded word plays its file (' + files.join(',') + ')');
+  check(files.length === 1 && files[0] === fileOf('谢谢'), 'a recorded word plays its file, named from its text (' + files.join(',') + ')');
   await page.evaluate(() => window.shanlu.sayAi('你好', 'word')); await wait(300);
   check(files.length === 1, 'an unrecorded text asks for no file');
   await page.evaluate(() => window.shanlu.say('旧的', 'x')); await wait(300);
@@ -36,7 +39,7 @@ const wav = (() => { const n = 800, b = Buffer.alloc(44 + n * 2); b.write('RIFF'
   // a conversation: the woman's file, then the man's
   files.length = 0;
   await page.evaluate(() => window.shanlu.speakLines([{ text: '你好吗？', pitch: 1.25 }, { text: '我很好。', pitch: 0.8 }], 'exq')); await wait(1200);
-  check(files.join(',') === 'bbbbbbbbbbbbbb.mp3,cccccccccccccc.mp3', 'a conversation plays the woman\'s file and then the man\'s (' + files.join(',') + ')');
+  check(files.join(',') === fileOf('你好吗？') + ',' + fileOf('m|我很好。'), 'a conversation plays the woman\'s file and then the man\'s (' + files.join(',') + ')');
   check(qwen.length === 0, 'and asks Alibaba for nothing');
   // one line missing: the old path (the live Qwen voice) takes over
   files.length = 0;
