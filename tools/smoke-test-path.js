@@ -69,7 +69,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check((await page.locator('.pth-unit').count()) === 13, 'HSK 1 path shows its 13 units');
     const head = await page.locator('.pth-head').innerText();
     const wordsHsk1 = await page.evaluate(() => (window.HSK1_WORDS || []).length);
-    check(/0 of 103 stops done/.test(head) && head.includes('0 of ' + wordsHsk1 + ' words started'), 'the header counts 103 stops (91 plus 12 listening passages) and every word of the level (' + wordsHsk1 + '): ' + head.replace(/\n/g, ' | '));
+    check(/0 of 105 stops done/.test(head) && head.includes('0 of ' + wordsHsk1 + ' words started'), 'the header counts 105 stops (93 plus 12 listening passages) and every word of the level (' + wordsHsk1 + '): ' + head.replace(/\n/g, ' | '));
     check((await page.locator('.pth-next').innerText()).includes('Greetings and manners'), 'the next stop is the first one, with a Start button');
     check(await noSideways(page), 'the path does not scroll sideways');
     check(await page.locator('.pth-node.cur').count() === 1, 'exactly one stop is marked as the current one');
@@ -144,7 +144,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     // the coins and the stop are saved once
     const coins1 = await page.evaluate(() => window.shanlu.state.xp);
     await page.locator('.pl-res button', { hasText: 'Back to the path' }).click(); await page.waitForTimeout(150);
-    check(await page.locator('.pth').count() === 1 && /1 of 103 stops done/.test(await page.locator('.pth-head').innerText()), 'back on the path, one stop is done');
+    check(await page.locator('.pth').count() === 1 && /1 of 105 stops done/.test(await page.locator('.pth-head').innerText()), 'back on the path, one stop is done');
     check(await page.locator('.pth-node.done').count() === 1, 'the stop shows as done');
 
     // replaying a done stop is practice only: no new words, no coins again
@@ -275,7 +275,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   }
 
   // ================= HSK 2 to HSK 5 have their own paths
-  for (const [lv, units, stops] of [[2, 10, 89], [3, 17, 147], [4, 24, 246], [5, 39, 356]]) {
+  for (const [lv, units, stops] of [[2, 10, 91], [3, 17, 149], [4, 24, 248], [5, 39, 358]]) {
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
     await ctx.addInitScript((a) => { try { localStorage.setItem('shanlu-passed', JSON.stringify(a.passed)); localStorage.setItem('shanlu-level', String(a.lv)); if (a.erhua) localStorage.setItem('shanlu-erhua', 'on'); } catch (e) {} }, { passed: lv === 2 ? { 1: 1 } : lv === 3 ? { 1: 1, 2: 1 } : lv === 4 ? { 1: 1, 2: 1, 3: 1 } : { 1: 1, 2: 1, 3: 1, 4: 1 }, lv, erhua: erhuaMode });
     const page = await ctx.newPage(); watch(page);

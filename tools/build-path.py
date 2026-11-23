@@ -24,7 +24,7 @@ const res={};
 for(const n of [1,2,3,4,5]){
   for(const f of ['words','webs','grammar','speak'])vm.runInContext(fs.readFileSync('data/hsk'+n+'-'+f+'.js','utf8'),ctx);
   const W=ctx.window['HSK'+n+'_WORDS'],T=ctx.window['HSK'+n+'_WEBS'].topics,G=ctx.window['HSK'+n+'_GRAMMAR'].lessons;
-  res[n]={words:W.map(w=>w.zh),topics:T.map(t=>({name:t.name,words:t.words})),lessons:G.map(g=>({id:g.id,title:g.title})),scenarios:((ctx.window['HSK'+n+'_SPEAK']||{}).scenarios||[]).map(x=>({id:x.id,title:x.title}))};
+  res[n]={words:W.map(w=>w.zh),topics:T.map(t=>({name:t.name,words:t.words})),lessons:G.map(g=>({id:g.id,title:g.title})),scenarios:((ctx.window['HSK'+n+'_SPEAK']||{}).scenarios||[]).map(x=>({id:x.id,title:x.title,bad:x.bad||''}))};
 }
 if(fs.existsSync('data/passages.js')){vm.runInContext(fs.readFileSync('data/passages.js','utf8'),ctx);const PS=ctx.window.SHANLU_PASSAGES||{};for(const n of [1,2,3,4,5])res[n].passages=(PS[n]||[]).map(p=>({id:p.id,title:p.title,words:p.words}));}
 console.log(JSON.stringify(res));
@@ -40,7 +40,7 @@ def build_level(n, cfg, data, problems, report):
     pre = 'h%s' % n
     topics = {t['name']: t['words'] for t in data['topics']}
     lessons = {g['id']: g['title'] for g in data['lessons']}
-    scns = {x['id']: x['title'] for x in data.get('scenarios', [])}
+    scns = {x['id']: x['title'] for x in data.get('scenarios', []) if not x.get('bad')}   # a bad-day version is reached from its scenario, not from the path
     used_scns = {}
     later = []          # practice scripts that wait for a word: (stop, word)
     place = cfg.get('place', {})

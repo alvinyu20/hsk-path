@@ -77,7 +77,7 @@ for (const erhua of [false, true]) {
   // practice scripts: every script of the level is a stop of the path, once (the stop opens that script in Speak)
   for (const n of [1, 2, 3, 4]) {
     const SP = ctx['HSK' + n + '_SPEAK'];
-    const ids = (SP && SP.scenarios || []).map(x => x.id);
+    const ids = (SP && SP.scenarios || []).filter(x => !x.bad).map(x => x.id);   // bad-day versions are reached from their scenario, not from the path
     const inPath = {}; ctx.SHANLU_PATH[n].units.forEach(u => u.stops.forEach(st => { if (st.k === 's') inPath[st.s] = (inPath[st.s] || 0) + 1; }));
     const lost = ids.filter(i => !inPath[i]); const twice = Object.keys(inPath).filter(i => inPath[i] > 1); const stray = Object.keys(inPath).filter(i => ids.indexOf(i) < 0);
     check(ids.length > 0 && lost.length === 0 && twice.length === 0 && stray.length === 0, 'HSK ' + n + ': every practice script is on the path once (' + ids.length + ')' + (lost.length ? ' missing ' + lost.join(' ') : '') + (twice.length ? ' twice ' + twice.join(' ') : '') + (stray.length ? ' unknown ' + stray.join(' ') : ''));
@@ -89,7 +89,8 @@ for (const erhua of [false, true]) {
     }));
     check(early.length === 0, 'HSK ' + n + ': no practice script comes before its useful words' + (early.length ? ' (' + early.join(' ') + ')' : ''));
     const sc = (ctx.SHANLU_SPEAK_SCENES || {});
-    check(ids.every(i => sc[i] && sc[i].u && sc[i].c), 'HSK ' + n + ': every practice script has its scene picture');
+    const art = (x) => sc[x.scene || x.bad || x.id];   // its own backdrop, or the one it borrows
+    check((SP.scenarios || []).every(x => art(x) && art(x).u && art(x).c), 'HSK ' + n + ': every practice script has its scene picture (its own or a borrowed one)');
   }
   // anchors of the order: hello comes before anything else, numbers before time, and each level starts with a word stop
   const first = ctx.SHANLU_PATH[1].units[0].stops[0];
