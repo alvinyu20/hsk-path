@@ -4004,7 +4004,7 @@
         if (!fm && vs.started && vs.seen && vs.seen.length) { const ls = JWORLD.byStop[vs.seen[vs.seen.length - 1]]; const lc = ls && JWORLD.byCity[ls.cid]; if (lc) { const xy = JY.projectCountry(lc.lat, lc.lon); out.jyCHereShow = true; out.jyCHereX = Math.round(Math.max(6, Math.min(344, xy[0])) * 10) / 10; out.jyCHereY = Math.round(Math.max(6, Math.min(284, xy[1])) * 10) / 10; } }
         // the small regions are buttons under the map (Singapore is not on it at all), so the one you are in carries its own "you are here" tag
         const meRid = fm ? '' : (VR ? VR.id : st.reg);
-        out.jySmall = JY.SMALL.map(id => { const r = Object.assign(mk(id), { d:JMAP.insets[id] || '', me:id === meRid, meText:st.started || secret ? 'You are here' : 'Start here' }); if (r.me) r.cls += ' me'; return r; });
+        out.jySmall = JY.SMALL.map(id => { const r = Object.assign(mk(id), { d:JMAP.insets[id] || '', me:id === meRid, meText:st.started || secret ? 'You are here' : 'Start here' }); if (r.me) r.cls += ' jy-sm-here'; return r; });
       } else {
         const id = S.jyReg; const RR = JWORLD.byRegion[id]; const mp = JMAP.regions[id];
         const seenHere = RR.stops.filter(s => have[s.id]);

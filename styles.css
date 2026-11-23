@@ -1270,7 +1270,7 @@ html,body,.app,button,a,input,select,textarea,label,[role=button]{touch-action:m
 .jy-sm.done path{fill:hsl(var(--rh) 55% 58%)}.t-dark .jy-sm.done path{fill:hsl(var(--rh) 45% 42%)}
 .jy-sm.here path{fill:hsl(var(--rh) 60% 82%);stroke:var(--ink)}.t-dark .jy-sm.here path{fill:hsl(var(--rh) 40% 30%)}
 .jy-sm.na{opacity:.55;cursor:default}
-.jy-sm.me{position:relative;border-color:#E07A3B;box-shadow:0 0 0 2px color-mix(in srgb,#E07A3B 30%,transparent)}
+.jy-sm.jy-sm-here{position:relative;border-color:#E07A3B;box-shadow:0 0 0 2px color-mix(in srgb,#E07A3B 30%,transparent)}
 .jy-sm-me{position:absolute;top:-9px;right:8px;padding:1px 7px;border-radius:99px;background:#E07A3B;color:#fff;font-size:10.5px;font-weight:700;line-height:16px;white-space:nowrap;animation:jymebob 1.8s ease-in-out infinite}
 .jy-key{font-size:13px;margin:0}
 .jy-ph{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
