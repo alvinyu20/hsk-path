@@ -36,7 +36,6 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.locator('.jy-go').click();
     let t = await main(page);
     check(/Welcome to Sichuan/.test(t) && /TFU/.test(t) && /Chéngdū Tiānfǔ Guójì Jīchǎng/.test(t), 'the airport arrival card shows the code and pinyin');
-    check(/Boarding pass/.test(await page.locator('.mstoast').innerText().catch(() => '')), 'the Boarding pass achievement shows');
     // the flight in comes with a boarding pass (from home, the first time) and a sentence to say at the airport
     const pass = await page.locator('.jy-card .jy-tk.fly').innerText().catch(() => '');
     check(/登机牌/.test(pass) && /TFU/.test(pass) && /成都/.test(pass) && /家/.test(pass) && /SL 001/.test(pass), 'the first flight shows a boarding pass from home to TFU: ' + pass.replace(/\s+/g, ' '));
@@ -58,8 +57,10 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await closeTrip(page);
     check(await page.locator('.jy-here .rip').count() === 2, 'two quiet rings mark where you are on the country map');
     check(await page.locator('.jy-me').count() === 1 && /You (are|start)/.test(await page.locator('.jy-me .cap').textContent()), 'your avatar sits on the country map, labelled');
-    await page.locator('.jy-acts .btn.pri').click();
+    check(await page.locator('.mstoast').count() === 0 && await page.evaluate(() => (window.shanlu.state.msQueue || []).some(x => /Boarding pass/.test(x.title))), 'the Boarding pass achievement waits while the new stop page is open');
+    await page.locator('.jy-acts .btn.pri').click(); await page.waitForTimeout(900);
     check(await page.locator('.jy-card').count() === 0, 'the card closes');
+    check(/Boarding pass/.test(await page.locator('.mstoast').innerText().catch(() => '')), 'then the Boarding pass achievement shows');
     await page.locator('.jy-earn').click();
     { const g = await page.locator('.coin-help').innerText().catch(() => '');
       check(/How to earn coins/.test(g) && /Treasure chest/.test(g) && /50 more/.test(g) && /first flight is free/.test(g), 'tapping it opens the coin guide with what is still needed: ' + g.replace(/\s+/g, ' ').slice(0, 120)); }
@@ -281,7 +282,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check((await page.locator('.jy-lands button').allInnerTexts()).join('|').includes('Pin it to the wall'), 'the stop page offers to pin the postcard to the wall');
     check(await page.locator('.jy-tabs button[data-tab="stops"] .jy-tdot').count() === 1, 'the Postcards tab has a dot');
     await page.locator('.jy-lands button', { hasText: 'Pin it to the wall' }).click(); await page.waitForTimeout(300);
-    const airport = await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-person')).prefs.jy.v.seen[0]);
+    const airport = await page.evaluate(() => window.shanlu.testApi.jyRead().seen[0]);
     check(await page.evaluate(() => window.shanlu.state.jyTab) === 'stops' && await page.locator('.pstc.land').count() === 1 && await page.locator('.pstc.isnew .jy-newtag').count() === 1, 'it opens the postcard wall, where the new card lands with a NEW tag');
     await page.waitForTimeout(2000);
     check(await page.evaluate(() => window.shanlu.state.jyFlip) === airport, 'then the card turns over by itself');
@@ -316,6 +317,75 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.evaluate(() => window.shanlu.jyTabSet('pass')); await page.waitForTimeout(300);
     const cover = await page.locator('.pp-cover').first().innerText();
     check(/铜卡/.test(cover) && /SHANLU AIR BRONZE/i.test(cover) && /3 more regions to Silver/.test(cover), 'the passport cover shows the status and how far the next one is: ' + cover.replace(/\s+/g, ' '));
+    check(errors.length === 0, 'no errors: ' + errors.join(' | '));
+    await ctx.close();
+  }
+
+  // ---- the next region is a secret until you land; the day you were there on postcards; the packed save; souvenir sets ----
+  {
+    const { ctx, page, errors } = await open({ viewport: { width: 390, height: 844 }, xp: 60000, first: 'hainan', reduced: true });
+    const sets = await page.evaluate(() => window.shanlu.testApi.SV_SETS.map(t => t.ids));
+    const flat = [].concat(...sets);
+    check(sets.length === 12 && sets.every(t => t.length >= 4) && new Set(flat).size === flat.length && await page.evaluate((ids) => ids.every(id => window.SOUVENIRS.some(x => x.id === id)), flat), 'twelve souvenir sets, each souvenir in one set at most, all real souvenirs (' + flat.length + ')');
+    await page.evaluate(() => window.shanlu.go('journey')); await page.waitForTimeout(200);
+    let stamped = false;
+    for (let i = 0; i < 70 && !stamped; i++) {
+      await page.evaluate(() => window.shanlu.jyTabSet('explore'));
+      await page.locator('.jy-go').click(); await page.waitForTimeout(60);
+      if (await page.locator('.jy-trip-go').count()) { await page.locator('.jy-trip-go').click(); await page.waitForTimeout(60); }
+      if (!(await page.locator('.jd-skip').count())) { if (await page.locator('.jy-acts .btn.pri').count()) await page.locator('.jy-acts .btn.pri').click(); continue; }
+      {
+        stamped = true;
+        const pop = await page.locator('.jy-done-bg').innerText();
+        const nextId = await page.evaluate(() => window.shanlu.testApi.jyRead().reg);
+        const nextEn = await page.evaluate((id) => (window.JOURNEY.regions.find(r => r.id === id) || {}).en, nextId);
+        check(/somewhere new/i.test(pop) && pop.indexOf(nextEn) < 0, 'the region pop-up keeps the next region a secret (' + nextEn + '): ' + pop.replace(/\s+/g, ' ').slice(0, 120));
+        await page.locator('.jd-skip').click(); await page.waitForTimeout(100);
+        if (await page.locator('.jy-acts .btn.pri').count()) await page.locator('.jy-acts .btn.pri').click();
+        await page.evaluate(() => { window.shanlu.jyTabSet('explore'); window.scrollTo(0, 0); }); await page.waitForTimeout(200);
+        const ex = await page.locator('main').innerText();
+        check(/Somewhere new/.test(ex) && ex.indexOf(nextEn) < 0, 'Explore shows "Somewhere new", not ' + nextEn);
+        await page.evaluate(() => { window.shanlu.jyTabSet('map'); window.shanlu.setState({ jyReg: null }); }); await page.waitForTimeout(200);
+        const me = await page.evaluate(() => { const e = document.querySelector('.jy-me'); return e ? e.getAttribute('aria-label') : ''; });
+        check(/You are in Hainan/.test(me), 'on the map you are still in Hainan: ' + me);
+        await page.evaluate(() => window.shanlu.jyTabSet('explore')); await page.waitForTimeout(100);
+        const mapTxt = await page.evaluate(() => [...document.querySelectorAll('[aria-label]')].map(e => e.getAttribute('aria-label')).join(' | '));
+        check(!/next flight/i.test(mapTxt) && mapTxt.indexOf(nextEn + ', next') < 0, 'no "next flight" mark on the map');
+        await page.locator('.jy-go').click(); await page.waitForTimeout(100);
+        if (await page.locator('.jy-trip-go').count()) await page.locator('.jy-trip-go').click();
+        await page.waitForTimeout(100);
+        const card = await page.locator('main').innerText();
+        check(card.indexOf(nextEn) >= 0, 'flying there reveals it: ' + nextEn);
+      }
+    }
+    check(stamped, 'finished Hainan');
+    const raw = await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-person')).prefs.jy.v);
+    check(raw.v === 2 && typeof raw.s === 'string' && raw.s.length === raw.n * 6 && !raw.seen && raw.d.length >= raw.n, 'the Journey is saved packed (' + JSON.stringify(raw).length + ' bytes for ' + raw.n + ' stops)');
+    await page.evaluate(() => window.shanlu.jyTabSet('stops')); await page.waitForTimeout(200);
+    const today = await page.evaluate(() => new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }));
+    check(await page.locator('.pstc .pcard-when').count() > 0 && (await page.locator('.pstc .pcard-when').first().getAttribute('aria-label')).startsWith('You were here on ') && (await page.locator('.pstc .pcard-when b').first().innerText()) === today, 'postcards carry the day you were there (' + today + ')');
+    await page.evaluate(() => window.shanlu.jyTabSet('shelf')); await page.waitForTimeout(200);
+    check(await page.locator('.sv-set').count() === 12 && /0 of 12 sets complete/.test(await page.locator('.sv-sets-h').innerText()), 'the shelf shows the 12 sets');
+    await page.locator('.sv-set', { hasText: 'Master crafts' }).click();
+    const cells = await page.locator('.sv-cell').count();
+    check(cells === 7 && /Master crafts: 1 of 7 found/.test(await page.locator('main').innerText()), 'tapping a set shows only its souvenirs (the coconut carving from Hainan found): ' + cells);
+    check(errors.length === 0, 'no errors: ' + errors.join(' | '));
+    await ctx.close();
+  }
+  // ---- an older save (stop ids, no dates) still works, keeps its days where known, and is packed when opened ----
+  {
+    const { ctx, page, errors } = await open({ xp: 0 });
+    await page.evaluate(() => {
+      const ids = window.JOURNEY.regions.find(r => r.id === 'hainan'); const W = window.ShanluJourney.build(window.JOURNEY);
+      const R = W.byRegion.hainan; const seen = [R.cities[0].air.id].concat(R.cities[0].stops.filter(s => s.k !== 'P').slice(0, 3).map(s => s.id));
+      const v = { v: 1, n: seen.length, reg: 'hainan', started: true, cq: [], cur: R.cities[0].id, sq: [], seen, done: {}, arr: { hainan: '2026-11-02' }, ms: {}, sd: 'abc' };
+      const P = JSON.parse(localStorage.getItem('shanlu-person') || '{"prefs":{}}'); P.prefs = P.prefs || {}; P.prefs.jy = { v, at: Date.now() }; localStorage.setItem('shanlu-person', JSON.stringify(P));
+    });
+    await page.reload(); await page.waitForSelector('.app');
+    await page.evaluate(() => { window.shanlu.go('journey'); window.shanlu.jyTabSet('stops'); }); await page.waitForTimeout(300);
+    const raw = await page.evaluate(() => JSON.parse(localStorage.getItem('shanlu-person')).prefs.jy.v);
+    check(raw.v === 2 && raw.n === 4, 'an older save is packed the first time the Journey opens');
+    check(await page.locator('.pstc').count() === 4 && await page.locator('.pcard-when').count() === 1, 'its stops are all there; only the arrival has a known day');
     check(errors.length === 0, 'no errors: ' + errors.join(' | '));
     await ctx.close();
   }

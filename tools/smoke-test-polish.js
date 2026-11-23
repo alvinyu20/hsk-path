@@ -82,7 +82,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
 
   // ---- the picture: a souvenir you have found ----
   await page.evaluate(() => { const a = window.shanlu; a.setState({ xp: 99999 }); a.go('journey'); a.jyTravel(); a.jyTripClose(); });
-  await page.evaluate(() => { const P = JSON.parse(localStorage.getItem('shanlu-person')); P.prefs.jy.v.seen = P.prefs.jy.v.seen.concat(window.SOUVENIRS.slice(0, 2).map(s => s.stop)); P.prefs.jy.at = Date.now() + 1000; localStorage.setItem('shanlu-person', JSON.stringify(P)); });
+  await page.evaluate(() => { const P = JSON.parse(localStorage.getItem('shanlu-person')); const st0 = window.shanlu.testApi.jyRead(); const v0 = Object.assign({}, st0, { seen: st0.seen.concat(window.SOUVENIRS.slice(0, 2).map(s => s.stop)) }); delete v0.dates; P.prefs.jy.v = v0; /* (an older, unpacked save: still read) */ P.prefs.jy.at = Date.now() + 1000; localStorage.setItem('shanlu-person', JSON.stringify(P)); });
   await page.reload(); await page.waitForSelector('.app');
   await page.evaluate(() => window.shanlu.go('acct')); await page.waitForTimeout(200);
   await page.locator('text=Change picture').click();

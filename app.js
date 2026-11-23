@@ -539,6 +539,24 @@
   // What a stop just reached adds, and where each thing goes: a dish to the feast table, any other stop to the postcard wall, a stamp to the passport (a region, a city, a must-see), a souvenir to the shelf.
   // Each find is new (a ribbon on it and a dot on its tab) until that tab has been looked at. The list is a person setting ('jyNew'), so every device agrees.
   const JY_NEW_TABS = ['food', 'stops', 'pass', 'shelf'];
+  // souvenir sets (J12): finishing one pays SV_SET_COINS once (the person setting 'svset.<id>' is the receipt) and puts its seal on the shelf
+  const SV_SET_COINS = 100;
+  const SV_SETS = [
+    { id:'tea', zh:'茶', en:'Tea master', ids:['gaiwan', 'zisha-teapot', 'alishan-tea-tin', 'puer-cake', 'gongfu-tea'] },
+    { id:'kiln', zh:'瓷', en:'From the kilns', ids:['celadon-cup', 'guangcai-plate', 'blue-white-vase', 'tang-sancai'] },
+    { id:'desk', zh:'文', en:'The scholar\'s desk', ids:['huzhou-brush', 'hui-ink', 'duan-inkstone', 'shoushan-seal', 'yuelu-scroll'] },
+    { id:'stage', zh:'戏', en:'Behind the stage', ids:['face-mask-sichuan', 'peking-opera-face', 'glove-puppet', 'shadow-puppet'] },
+    { id:'music', zh:'乐', en:'Music of the regions', ids:['rawap', 'lusheng', 'bianzhong', 'morin-khuur'] },
+    { id:'dig', zh:'古', en:'Ancient finds', ids:['sanxingdui-mask', 'terracotta-warrior', 'oracle-bone', 'bamboo-slips', 'flying-apsara'] },
+    { id:'thread', zh:'绣', en:'Silk and thread', ids:['suzhou-embroidery', 'yunjin', 'qipao', 'tie-dye-cloth', 'atlas-scarf', 'li-brocade', 'nyonya-slippers', 'doppa'] },
+    { id:'toys', zh:'玩', en:'Folk toys', ids:['panda-plush', 'rabbit-lord', 'clay-zhang', 'ah-fu', 'paper-cut', 'yangliuqing', 'kite', 'matryoshka'] },
+    { id:'pantry', zh:'食', en:'The travel pantry', ids:['hotpot-base', 'pineapple-cake-box', 'almond-cookie-tin', 'luosifen-pack', 'chili-string', 'vinegar-bottle', 'goji-pouch', 'ginseng', 'salt-crystal'] },
+    { id:'craft', zh:'艺', en:'Master crafts', ids:['cloisonne', 'lacquer-box', 'xiuyan-jade', 'luminous-cup', 'coconut-carving', 'iron-painting', 'oilpaper-umbrella'] },
+    { id:'models', zh:'景', en:'Little landmarks', ids:['wild-goose-pagoda', 'tulou', 'st-pauls-facade', 'tram', 'yurt'] },
+    { id:'wishes', zh:'福', en:'Wishes and blessings', ids:['prayer-wheel', 'khata', 'tibetan-bowl', 'dongba-sign', 'sky-lantern', 'zhuang-ball'] }
+  ].map(t => Object.assign(t, { ids:t.ids.filter(id => SOUV.some(x => x.id === id)) })).filter(t => t.ids.length >= 3);
+  const SV_SET_OF = {}; SV_SETS.forEach(t => t.ids.forEach(id => { SV_SET_OF[id] = t; }));
+  const svSetGot = (t, have) => t.ids.filter(id => { const x = SOUV.find(y => y.id === id); return x && have[x.stop]; }).length;
   const jyFinds = (stop, ev) => {
     const out = [];
     out.push(stop.k === 'D' ? { tab:'food', key:stop.id, icon:'🍜', text:'Put it on the table' } : { tab:'stops', key:stop.id, icon:'🖼️', text:'Pin it to the wall' });
@@ -559,7 +577,16 @@
   const ONB_OFF = () => { try { return !!(navigator.webdriver && !window.SHANLU_ONBOARDING); } catch (e) { return false; } };   // browser tests run without it unless they ask for it
   const onbRead = () => { const v = prefGet('onb', null); return v && typeof v === 'object' ? v : {}; };
   const START_WORDS = ['你好', '谢谢', '我', '你', '是'];   // the same five for everyone: a greeting, thanks, I, you, and the verb to be
-  const jyRead = () => { const v = prefGet('jy', null); return v && typeof v === 'object' && Array.isArray(v.seen) ? v : null; };
+  // the Journey is saved packed (journey.js pack: 6-character stop codes and a short date string), and read back unpacked; the last unpacking is kept
+  // until the saved value changes (a new travel, or sync bringing another device's journey)
+  let jyMemo = { raw:null, st:null };
+  const jyRead = () => {
+    const raw = prefGet('jy', null); if (!raw || typeof raw !== 'object') return null;
+    if (!JWORLD || !JY.unpack) return Array.isArray(raw.seen) ? raw : null;
+    if (raw !== jyMemo.raw) jyMemo = { raw, st:JY.unpack(JWORLD, raw) };
+    return jyMemo.st;
+  };
+  const jySave = (st) => prefSet('jy', JWORLD && JY.pack ? JY.pack(JWORLD, st) : st);
   // lifetime XP (the saved name for the coins ever earned): this view's live number plus what the other saved copies hold (each level, and All levels); read at most every few seconds because it parses saved data
   let jyOther = { at:0, v:0 };
   const otherXp = (force) => {
@@ -3307,7 +3334,7 @@
       const cur = jyRead();
       const st = JY.ensure(JWORLD, cur, cur ? JY.rngFor(cur) : Math.random);
       if (!cur) st.sd = Math.random().toString(36).slice(2, 10);   // this journey's own seed (see journey.js rngFor)
-      if (!cur || st.reg !== cur.reg || !cur.ms) prefSet('jy', st);
+      if (!cur || st.reg !== cur.reg || !cur.ms || (prefGet('jy', {}) || {}).v !== 2) jySave(st);   // (an older save is packed the first time it is opened)
       return st;
     }
     // spend the XP: unlock the next stop
@@ -3327,7 +3354,11 @@
       const cost = JY.meter(totalXp(S), st0).nextCost;   // what this stop costs, shown as the coins that fly in
       const r = JY.step(JWORLD, st0, JY.rngFor(st0), ymd(new Date()));
       if (!r.stop) return;
-      prefSet('jy', r.st);
+      jySave(r.st);
+      // a souvenir that completes a set: the set's seal, and its coins once
+      { const sv = SV_BY_STOP[r.stop.id]; const t = sv ? SV_SET_OF[sv.id] : null;
+        if (t) { const have = {}; r.st.seen.forEach(id => { have[id] = 1; });
+          if (svSetGot(t, have) === t.ids.length && !prefGet('svset.' + t.id, 0)) { prefSet('svset.' + t.id, Date.now()); this.setState({ xp:this.state.xp + SV_SET_COINS, dayXp:this.state.dayXp + SV_SET_COINS, jySetDone:{ id:t.id, stop:r.stop.id } }); } } }
       { const n = jyNewRead(); jyFinds(r.stop, r.ev).forEach(f => { const l = n[f.tab].filter(k => k !== f.key); l.push(f.key); n[f.tab] = l.slice(-80); }); prefSet('jyNew', n); }
       this.friendsTick();
       SFX.play(r.ev.indexOf('arrive') >= 0 ? 'fly' : 'ok');
@@ -3575,7 +3606,7 @@
     jyShowReg = (id) => this.setState({ jyTab:'map', jyReg:id, jySel:null, jyFilter:'all', jyOpen:null, jyRv:null });
     jyBack = () => this.setState({ jyReg:null, jySel:null, jyFilter:'all' });
     jyPgGo = (d, cur, total) => { const to = Math.max(0, Math.min(total - 1, cur + d)); if (to === cur) return; SFX.play('ok'); this.setState({ jyPg:to }); };
-    jyTabSet = (t) => this.setState({ jyTab:t, jyFilter:'all', jyMoreN:40, jyFlip:null, jyPg:null, jyFoodOv:false, jyFoodPop:null, jyLandK:null, jyNewSeen:null });
+    jyTabSet = (t) => this.setState({ jyTab:t, jyFilter:'all', jyMoreN:40, jyFlip:null, jyPg:null, jyFoodOv:false, jyFoodPop:null, jyLandK:null, jyNewSeen:null, jySetDone:null });
     jyFilterSet = (f) => this.setState({ jyFilter:f, jySel:null, jyMoreN:40 });
     jySvFilterSet = (f) => this.setState({ jySvFilter:f, jySvSel:null });
     jySvPick = (id) => { SFX.play('ok'); this.setState({ jySvSel:id }); setTimeout(() => { try { const el = document.querySelector('.sv-detail'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest', behavior:'smooth' }); } catch (e) {} }, 40); };
@@ -3699,6 +3730,10 @@
       const META = JY.META;
       const rName = (id) => (JWORLD.byRegion[id] ? JWORLD.byRegion[id].en : (META[id] ? META[id][1] : id));
       const R = st.reg ? JWORLD.byRegion[st.reg] : null;
+      // between regions (one finished, the next not flown to yet) where you fly next is a secret until you land: everything shows the region you are still in
+      const lastS = st.seen && st.seen.length ? JWORLD.byStop[st.seen[st.seen.length - 1]] : null;
+      const secret = !!R && !st.started && !!lastS && !!JWORLD.byRegion[lastS.rid];
+      const VR = secret ? JWORLD.byRegion[lastS.rid] : R;
       base.jyReadyShow = mt.ready > 0 && !!R; base.xpPillCls = 'pill xpp' + (mt.ready > 0 && R ? ' ready' : ''); base.jyPingShow = !!S.jyPing && S.screen !== 'journey' && !!R && mt.ready > 0; base.jyReadyN = mt.ready; base.jyReadyLabel = mt.ready + (mt.ready === 1 ? ' stop' : ' stops') + ' ready on the Journey';
       if (S.screen !== 'journey') return base;
       const have = {}; st.seen.forEach(id => { have[id] = 1; });
@@ -3727,15 +3762,15 @@
       // everyone's place on the country map (you and your friends), spread out a little where several are in the same city
       if (!fm) {
         const raw = [];
-        const me = st.started && st.seen.length ? hereOf({ here:st.reg, at:st.seen[st.seen.length - 1] }) : null;
+        const me = (st.started || secret) && st.seen.length ? hereOf({ here:VR.id, at:st.seen[st.seen.length - 1] }) : null;
         // you: your picture (or the region's landmark) on the map, from the very first day
-        { const mr0 = JMAP.regions[st.reg]; const xy0 = me && me.xy ? me.xy : (mr0 && mr0.cc ? mr0.cc : null);
+        { const mr0 = JMAP.regions[VR ? VR.id : st.reg]; const xy0 = me && me.xy ? me.xy : (mr0 && mr0.cc ? mr0.cc : null);
           out.jyMeShow = !!xy0;
           if (xy0) {
             const seenSv0 = {}; st.seen.forEach(id => { seenSv0[id] = 1; }); const avSv1 = SOUV.find(sv => sv.id === String(prefGet('av', '') || '') && seenSv0[sv.stop]) || null;
             Object.assign(out, { jyMeX:Math.round(Math.max(15, Math.min(335, xy0[0])) * 10) / 10, jyMeY:Math.round(Math.max(15, Math.min(272, xy0[1])) * 10) / 10,
-              jyMeImg:avSv1 ? svImg(avSv1) : '', jyMeHasImg:!!avSv1, jyMeNoImg:!avSv1, jyMeRef:'#jic-' + (JY_ICON[st.reg] || JY_ICONS[Array.from(st.reg).reduce((n, ch) => n + ch.charCodeAt(0), 0) % JY_ICONS.length]),
-              jyMeText:st.started ? 'You are here' : 'Start here', jyMeLabel:(st.started ? 'You are in ' : 'You start in ') + rName(st.reg) + '.' });
+              jyMeImg:avSv1 ? svImg(avSv1) : '', jyMeHasImg:!!avSv1, jyMeNoImg:!avSv1, jyMeRef:'#jic-' + (JY_ICON[VR.id] || JY_ICONS[Array.from(VR.id).reduce((n, ch) => n + ch.charCodeAt(0), 0) % JY_ICONS.length]),
+              jyMeText:st.started || secret ? 'You are here' : 'Start here', jyMeLabel:(st.started || secret ? 'You are in ' : 'You start in ') + rName(VR.id) + '.' });
           } }
         fMembers.forEach((m, i) => { const w = fWhere(m); if (w && w.xy) raw.push({ w, name:m.name, initial:window.ShanluFriends.initial(m.name), av:avUrlOf(m.stats.av), cls:'c' + (i % 4), open:() => this.setState({ jyFriend:m.id, jyTab:'map', jyReg:null, jySel:null, jyOpen:null, jyRv:null }) }); });
         const groups = {}; raw.forEach(r => { const k = Math.round(r.w.xy[0] / 9) + ',' + Math.round(r.w.xy[1] / 9); (groups[k] = groups[k] || []).push(r); });
@@ -3748,6 +3783,7 @@
       // where you are and the XP bar
       const done = !R;
       if (done) { Object.assign(out, { jyNowLabel:'Every region stamped', jyNowZh:'完', jyNowEn:'The whole map is yours', jyNowSub:'You finished the Journey. More stops can be added later.' }); }
+      else if (secret) Object.assign(out, { jyNowLabel:'Next flight', jyNowZh:'？', jyNowEn:'Somewhere new', jyNowSub:'Where it goes stays a secret until you land.' });
       else if (!st.started) Object.assign(out, { jyNowLabel:'Next flight', jyNowZh:R.zh, jyNowEn:R.en, jyNowSub:'Fly in to ' + (R.air ? R.air.en + (R.air.code ? '' : '') : R.cities[0].en) + '.' });
       else {
         const rs = JY.regionStats(JWORLD, st, R.id); const C = st.cur && JWORLD.byCity[st.cur];
@@ -3757,7 +3793,7 @@
       { const lastId = st.seen && st.seen.length ? st.seen[st.seen.length - 1] : null; const LS = lastId ? JWORLD.byStop[lastId] : null; const LC = LS ? JWORLD.byCity[LS.cid] : null;
         Object.assign(out, { jyLastShow:!!LS && !done, jyLastZh:LS ? LS.zh : '', jyLastEn:LS ? LS.en : '', jyLastKind:LS ? LS.kind + (LC ? ' · ' + LC.en : '') : '', jyLastOpen:() => { if (lastId) this.jyOpenStop(lastId); } }); }
       // a picture of the region you are in (or about to fly to) on top of the card: the same province photo its airport stop shows
-      { const a0 = R ? (R.cities[0].air || R.cities[0].first) : null; const hero = a0 && JMEDIA[a0.id] && JMEDIA[a0.id].u ? JMEDIA[a0.id] : null;
+      { const a0 = VR ? (VR.cities[0].air || VR.cities[0].first) : null; const hero = a0 && JMEDIA[a0.id] && JMEDIA[a0.id].u ? JMEDIA[a0.id] : null;
         Object.assign(out, { jyHeroShow:!!hero, jyHeroUrl:hero ? hero.u : '', jyHeroAlt:hero ? (hero.a || R.en) : '', jyHeroCredit:hero ? hero.c : '' }); }
       // the road ahead: a landscape of the region you are in (or about to fly to) with your next stop on it. The next stop shows its category only, never which stop it is.
       { const JS = window.JYSCENE; const NK = { P:'A flight', T:'A new city', A:'A sight', D:'A dish', C:'A cultural stop' };
@@ -3767,12 +3803,12 @@
           let nk = 'A';
           if (!st.started) nk = R.cities[0].air ? 'P' : 'T'; else if (sqLive.length) nk = JWORLD.byStop[sqLive[0]].k; else if (cqLive.length) nk = 'T'; else { const rest = R.stops.find(s => !have[s.id]); nk = rest ? rest.k : 'A'; }
           const rs0 = JY.regionStats(JWORLD, st, R.id); const CC0 = st.cur && JWORLD.byCity[st.cur];
-          const goal = !st.started ? { kind:'region', zh:R.zh.slice(0, 2), label:rs0.total + ' stops in ' + R.en }
+          const goal = secret ? { kind:'region', zh:'？', label:'A new region' } : !st.started ? { kind:'region', zh:R.zh.slice(0, 2), label:rs0.total + ' stops in ' + R.en }
             : sqLive.length && CC0 ? { kind:'city', zh:CC0.zh.slice(0, 1), label:sqLive.length + ' left in ' + CC0.en }
             : { kind:'region', zh:R.zh.slice(0, 2), label:(rs0.total - rs0.got) + ' to stamp ' + R.en };
           const seenSv = {}; st.seen.forEach(id => { seenSv[id] = 1; }); const avSv0 = SOUV.find(sv => sv.id === String(prefGet('av', '') || '') && seenSv[sv.stop]) || null;
-          road = JS.svg(R.id, { done:st.started ? Math.min(2, rs0.got) : 0, mid:sqLive.length > 1 || (sqLive.length > 0 && cqLive.length > 0) || (!sqLive.length && cqLive.length > 1) ? 1 : 0, next:{ kind:nk, label:NK[nk] }, goal, pct:mt.pct / 100, ready:mt.ready > 0,
-            avatar:avSv0 ? svImg(avSv0) : '', home:!st.started && st.n === 0, meLabel:!st.started && st.n > 0 ? 'Ready to fly' : '' }, 'Your road in ' + R.en + '. Next: ' + NK[nk]);
+          road = JS.svg(VR.id, { done:st.started ? Math.min(2, rs0.got) : 0, mid:sqLive.length > 1 || (sqLive.length > 0 && cqLive.length > 0) || (!sqLive.length && cqLive.length > 1) ? 1 : 0, next:{ kind:nk, label:NK[nk] }, goal, pct:mt.pct / 100, ready:mt.ready > 0,
+            avatar:avSv0 ? svImg(avSv0) : '', home:!st.started && st.n === 0, meLabel:!st.started && st.n > 0 ? 'Ready to fly' : '' }, (secret ? 'Your road out of ' + VR.en + '. Next: a flight to somewhere new' : 'Your road in ' + R.en + '. Next: ' + NK[nk]));
           out.jyNextKind = NK[nk]; out.jyHomeLine = (mt.ready > 0 ? 'Enough coins for your next stop: ' : mt.toGo + ' coins from your next stop: ') + NK[nk].toLowerCase(); out.jyHomePct = Math.round(mt.pct) + '%'; out.jyGoalShow = true; out.jyGoalZh = goal.zh; out.jyGoalText = goal.label; out.jyGoalCls = goal.kind;
         }
         Object.assign(out, { jyRoadShow:!!road, jyRoadSvg:road, jyGoalShow:!!road }); if (road) out.jyHeroShow = false; }
@@ -3787,7 +3823,7 @@
             jyDoneTitle:dn.all ? 'Every region stamped!' : DR.en + ' complete!', jyDoneSub:dn.all ? 'You have been everywhere. Well travelled.' : 'You have seen every stop. Your passport is stamped.',
             jyDoneStats:[{ n:String(rs.got), l:rs.got === 1 ? 'stop' : 'stops' }, { n:String(DR.cities.length), l:DR.cities.length === 1 ? 'city' : 'cities' }, { n:rs.byKind.Dish[0] + '/' + rs.byKind.Dish[1], l:'dishes' }, { n:svT.length ? svG + '/' + svT.length : String(stampedN), l:svT.length ? 'souvenirs' : 'stamps' }],
             ...(() => { const a = ffTier(stampedN), b = ffTier(stampedN - 1); const up = !dn.all && a.t.id !== b.t.id; return { jyDoneTierShow:up, jyDoneTierCls:'jd-tier ' + a.cls, jyDoneTierZh:a.t.zh, jyDoneTierEn:up ? 'New status: Shanlu Air ' + a.t.en : '', jyDoneTierSub:up ? 'Your boarding passes are ' + a.t.en.toLowerCase() + ' from now on.' : '' }; })(),
-            jyDoneCount:stampedN + ' of ' + allN + ' regions stamped', jyDoneNextShow:!!dn.next && !dn.all, jyDoneNext:dn.next ? 'Next flight: ' + rName(dn.next) : '', jyDoneConf:conf, jyDoneClose:this.jyDoneClose, jyDoneMap:this.jyDoneMap, jyDoneMapText:'See ' + DR.en + ' fill in on the map' });
+            jyDoneCount:stampedN + ' of ' + allN + ' regions stamped', jyDoneNextShow:!!dn.next && !dn.all, jyDoneNext:dn.next ? 'Next flight: somewhere new. You find out where when you land.' : '', jyDoneConf:conf, jyDoneClose:this.jyDoneClose, jyDoneMap:this.jyDoneMap, jyDoneMapText:'See ' + DR.en + ' fill in on the map' });
         } }
       // three lines about a region: on its airport card, and under its map
       const introOf = (RR) => (RR && RR.intro && RR.intro.length === 3 ? [{ k:'The land', t:RR.intro[0] }, { k:'The table', t:RR.intro[1] }, { k:'Good to know', t:RR.intro[2] }] : []);
@@ -3798,7 +3834,7 @@
       out.jyTravel = this.jyTravel;
 
       // the tint follows the region on screen: the one being looked at, else the one you are in
-      const focusId = fm ? null : (S.jyReg || st.reg);
+      const focusId = fm ? null : (S.jyReg || (VR ? VR.id : st.reg));
       out.jyHue = focusId && META[focusId] ? (JWORLD.byRegion[focusId] ? JWORLD.byRegion[focusId].hue : META[focusId][2]) : 205;
 
       // the card: a stop just unlocked, or one opened from the map or the list
@@ -3853,6 +3889,8 @@
         // a souvenir hidden in this stop: it appears the moment the stop is unlocked, and again whenever the stop is opened
         const sv = SV_BY_STOP[stop.id] && have[stop.id] ? SV_BY_STOP[stop.id] : null;
         out.jySvCardShow = !!sv;
+        if (sv) { const t = SV_SET_OF[sv.id]; const g = t ? svSetGot(t, have) : 0; const fin = !!(rv && S.jySetDone && S.jySetDone.stop === stop.id);
+          Object.assign(out, { jySvSetShow:!!t, jySvSetCls:'sv-setline' + (fin ? ' full' : ''), jySvSetZh:t ? t.zh : '', jySvSetText:!t ? '' : fin ? 'Set complete: ' + t.en + '! +' + SV_SET_COINS + ' coins' : t.en + ' set: ' + g + ' of ' + t.ids.length }); }
         if (sv) Object.assign(out, { jySvCardCls:rv ? 'new' : '', jySvCardTitle:rv ? 'You found a souvenir!' : 'A souvenir was hidden here', jySvCardImg:svImg(sv), jySvCardZh:sv.zh, jySvCardPy:sv.py, jySvCardEn:sv.en, jySvCardStory:sv.story,
           jySvCardShelf:rv ? () => this.jyLand({ tab:'shelf', key:sv.id }) : () => { SFX.play('ok'); this.setState({ jyTab:'shelf', jySvSel:sv.id, jySvFilter:'all', jyRv:null, jyOpen:null, jyFilter:'all' }); try { window.scrollTo(0, 0); } catch (e) {} } });
         // a sentence to say at this stop
@@ -3905,7 +3943,14 @@
         const list = SOUV.filter(x => JWORLD.byStop[x.stop]); const got = list.filter(x => have[x.stop]); const fl = S.jySvFilter || 'all';
         const sel = S.jySvSel ? list.find(x => x.id === S.jySvSel) : null;
                 out.jySvChips = [['all', 'All', list.length], ['found', 'Found', got.length]].map(c => ({ label:c[1], count:c[2], cls:fl === c[0] ? 'on' : '', fn:() => this.jySvFilterSet(c[0]) }));
-        const shown = list.filter(x => fl === 'all' || (fl === 'found') === !!have[x.stop]).sort((a, b) => a.en.localeCompare(b.en, 'en', { sensitivity:'base' }) || (a.id < b.id ? -1 : 1));
+        // the sets: a seal for each, gold when complete; tapping one shows only its souvenirs
+        const setNow = fl.indexOf('set:') === 0 ? SV_SETS.find(t => 'set:' + t.id === fl) : null;
+        out.jySets = SV_SETS.map(t => { const g = svSetGot(t, have), full = g === t.ids.length;
+          return { zh:t.zh, en:t.en, count:g + '/' + t.ids.length, cls:'sv-set' + (full ? ' full' : '') + (setNow === t ? ' on' : '') + (S.jySetDone && S.jySetDone.id === t.id ? ' land' : ''), pressed:setNow === t ? 'true' : 'false',
+            label:t.en + ', ' + g + ' of ' + t.ids.length + ' found' + (full ? ', complete' : ''), fn:() => this.jySvFilterSet(setNow === t ? 'all' : 'set:' + t.id) }; });
+        out.jySetsDone = SV_SETS.filter(t => svSetGot(t, have) === t.ids.length).length + ' of ' + SV_SETS.length + ' sets complete · ' + SV_SET_COINS + ' coins each';
+        out.jySetNowShow = !!setNow; out.jySetNowText = setNow ? setNow.en + ': ' + svSetGot(setNow, have) + ' of ' + setNow.ids.length + ' found' + (svSetGot(setNow, have) === setNow.ids.length ? '. Complete!' : '. The rest are hidden in stops around the map.') : '';
+        const shown = list.filter(x => setNow ? setNow.ids.indexOf(x.id) >= 0 : (fl === 'all' || (fl === 'found') === !!have[x.stop])).sort((a, b) => a.en.localeCompare(b.en, 'en', { sensitivity:'base' }) || (a.id < b.id ? -1 : 1));
         out.jySvItems = shown.map(x => { const has = !!have[x.stop]; const RR = JWORLD.byRegion[x.rid];
           const nw = has && isNewK(x.id), ld = has && S.jyLandK === x.id;
           return { isNew:nw, cls:(has ? 'got' : 'hid') + (sel && sel.id === x.id ? ' sel' : '') + (nw ? ' isnew' : '') + (ld ? ' land' : ''), img:svImg(x), name:has ? x.en : '', zh:has ? x.zh : '', label:has ? x.en + ', found' : 'A souvenir still to find in ' + (RR ? RR.en : 'China'), open:() => this.jySvPick(x.id) }; });
@@ -3914,6 +3959,7 @@
         if (sel) { const has = !!have[sel.stop]; const RR = JWORLD.byRegion[sel.rid]; const SP = JWORLD.byStop[sel.stop];
           Object.assign(out, { jySvSelCls:has ? 'got' : 'hid', jySvSelImg:svImg(sel), jySvSelZh:has ? sel.zh : '', jySvSelPy:has ? sel.py : '', jySvSelEn:has ? sel.en : 'Still to find',
             jySvSelStory:has ? sel.story : 'Waiting in a stop somewhere in ' + (RR ? RR.en : 'China') + '. Keep travelling there to find it.', jySvSelFound:has, jySvSelWhere:has ? 'Found at ' + SP.en + ' · ' + (RR ? RR.en : '') : '',
+            jySvSelSet:SV_SET_OF[sel.id] ? 'Part of the ' + SV_SET_OF[sel.id].zh + ' ' + SV_SET_OF[sel.id].en + ' set (' + svSetGot(SV_SET_OF[sel.id], have) + ' of ' + SV_SET_OF[sel.id].ids.length + ')' : '', jySvSelSetShow:has && !!SV_SET_OF[sel.id],   // (a hidden one gives nothing away)
             jySvSelGo:() => this.jyOpenStop(sel.stop), jySvSelClose:() => this.setState({ jySvSel:null }), jySvSelLabel:has ? sel.en + ', ' + sel.story : 'A souvenir still to find in ' + (RR ? RR.en : 'China') }); }
       }
       const FILT = [['all', 'All'], ['S', '★ Must-see'], ['T', 'Cities'], ['A', 'Sights'], ['D', 'Dishes'], ['C', 'Culture'], ['P', 'Airports']];
@@ -3925,7 +3971,7 @@
       out.jyCountry = !!fm || !S.jyReg || !JMAP.regions[S.jyReg]; out.jyProv = !out.jyCountry;
       if (out.jyCountry) {
         const regs = Object.keys(JMAP.regions);
-        const status = (id) => vs.done[id] ? 'done' : (vs.reg === id && vs.started ? 'here' : (vs.reg === id && !fm ? 'next' : 'none'));
+        const status = (id) => vs.done[id] ? 'done' : (vs.reg === id && vs.started ? 'here' : (vs.reg === id && !fm && !secret ? 'next' : 'none'));
         const mk = (id) => {
           const has = !!JWORLD.byRegion[id]; const m = JMAP.regions[id]; const en = rName(id); const stt = has ? status(id) : 'none';
           const hue = has ? JWORLD.byRegion[id].hue : META[id][2];
@@ -3997,9 +4043,12 @@
         const KN = { T:'City', A:'Sight', D:'Dish', C:'Culture', P:'Airport' };
         const dk = S.theme === 'dark';
         const hsh = (str) => { let h = 0; for (let k = 0; k < str.length; k++) h = (h * 31 + str.charCodeAt(k)) | 0; return Math.abs(h); };
+        // the day you were there, on the back of each postcard (only yours, and only when it is known: stops reached before dates were kept show none, except a region's first and last)
+        const visitDay = {}; if (!fm && S.jyTab === 'stops') st.seen.forEach((id, i) => { const d = (st.dates || [])[i]; if (d) { const dt = new Date(d + 'T12:00:00'); visitDay[id] = { dm:dt.toLocaleDateString('en-GB', { day:'numeric', month:'short' }), y:String(dt.getFullYear()), full:dt.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' }) }; } });
         out.jyCards = S.jyTab === 'stops' ? shown.slice(0, S.jyMoreN).map(s => { const ph = JMEDIA[s.id]; const has = !!(ph && ph.u); const RR = JWORLD.byRegion[s.rid]; const CC = JWORLD.byCity[s.cid]; const fl = S.jyFlip === s.id;
           const nw = isNewK(s.id), ld = S.jyLandK === s.id;
-          return { kind:(s.sp ? '★ ' : '') + KN[s.k], zh:s.zh, py:s.py, en:s.en, where:CC.en + ' · ' + RR.en, hue:RR.hue, rot:(((hsh(s.id) % 7) - 3) * 0.9).toFixed(1), cls:'k' + s.k + (s.sp ? ' sp' : '') + (fl ? ' flip' : '') + (s.zh.length > 6 ? ' long' : '') + (nw ? ' isnew' : '') + (ld ? ' land' : ''), isNew:nw,
+          const vd = visitDay[s.id];
+          return { whenDm:vd ? vd.dm : '', whenY:vd ? vd.y : '', whenLabel:vd ? 'You were here on ' + vd.full : '', hasWhen:!!vd, kind:(s.sp ? '★ ' : '') + KN[s.k], zh:s.zh, py:s.py, en:s.en, where:CC.en + ' · ' + RR.en, hue:RR.hue, rot:(((hsh(s.id) % 7) - 3) * 0.9).toFixed(1), cls:'k' + s.k + (s.sp ? ' sp' : '') + (fl ? ' flip' : '') + (s.zh.length > 6 ? ' long' : '') + (nw ? ' isnew' : '') + (ld ? ' land' : ''), isNew:nw,
             hasPhoto:has, noPhoto:!has, url:has ? ph.u : '', art:jyStopArt(s, RR.hue, dk), credit:has && ph.c ? ph.c : '', ft:fl ? '-1' : '0', kt:fl ? '0' : '-1', kh:fl ? 'false' : 'true',
             label:'Postcard: ' + s.en + ', ' + CC.en + (s.sp ? ', a must-see' : '') + '. Tap to turn it over.', flip:() => { SFX.play('ok'); this.setState({ jyFlip:fl ? null : s.id }); }, open:() => this.jyOpenStop(s.id) }; }) : [];
         out.jyMoreShow = shown.length > S.jyMoreN; out.jyMore = () => this.setState({ jyMoreN:S.jyMoreN + 40 });
@@ -4196,14 +4245,21 @@
         if (!this.msStarted) { this.msStarted = true; if (fresh.length > 3) return; }   // the first look in a visit that finds a pile of them (an older learner, a new device) records them quietly instead of showering old news
         this.msStarted = true;
         this.setState({ msQueue:(this.state.msQueue || []).concat(fresh.map(x => ({ icon:x.icon, title:x.title, desc:x.desc }))) });
-        SFX.play('ach');
-        this.msArm();
+        this.msArm();   // (its sound plays when it actually shows)
       } catch (e) {}
     }
-    // a milestone toast leaves by itself after a few seconds (the next one in line then shows)
+    // achievement toasts wait while something they would cover or give away is on screen: the first-visit flow, the quick sort or level check,
+    // the travel moment, the stop page it opens onto, and the region pop-up. Then they show one at a time, each for a few seconds.
+    msBusy() {
+      const S = this.state;
+      return !!(S.jyTrip || S.jyPlay || S.jyDone || S.qs || S.pcs || (S.screen === 'journey' && S.jyRv && (!S.jyTab || S.jyTab === 'explore' || S.jyTab === 'map')) || this.obPhNow);
+    }
     msArm() {
       clearTimeout(this.msTimer);
-      this.msTimer = setTimeout(() => { const q = (this.state.msQueue || []).slice(1); this.setState({ msQueue:q }); if (q.length) this.msArm(); }, 6500);
+      if (!(this.state.msQueue || []).length) { this.msHead = false; return; }
+      if (this.msBusy()) { this.msHead = false; this.msTimer = setTimeout(() => this.msArm(), 700); return; }
+      if (!this.msHead) { this.msHead = true; SFX.play('ach'); }
+      this.msTimer = setTimeout(() => { const q = (this.state.msQueue || []).slice(1); this.msHead = false; this.setState({ msQueue:q }); if (q.length) this.msArm(); }, 6500);
     }
     focusTyped() {
       try {
@@ -5716,6 +5772,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const flowOn = onbOn && noProg && !onb.w && onb.p !== 'done';
       let obPh = flowOn ? (onb.p || 'intro') : '';
       if (obPh === 'fly' && flown) obPh = 'guide';
+      this.obPhNow = obPh;   // (achievement toasts wait while the first-visit flow is on screen: msBusy)
       // each card shows a real screenshot of the screen it talks about (tour/*.jpg, made by tools/make-tour-shots.js); w and h are its size in pixels
       const obCards = [
         { zh:'见', tag:'Meet', title:'Meet a few words at a time', body:'The Path winds through small stops: a handful of related words, then a Grammar lesson, then Speaking practice. You meet each word, then try it. Meeting a word is not the same as knowing it.', chips:['Path', 'Grammar', 'Speaking', 'Archive'], img:'tour/path.jpg', w:748, h:760, alt:'The Path: a winding trail of word stops, grammar stops and speaking stops, some done and some still ahead' },
@@ -6606,7 +6663,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         setSys2:() => this.setState({ sys:'2.0' }), setSys3:() => this.setState({ sys:'3.0' }),
 
         // review
-        msShow:(S.msQueue || []).length > 0, msIcon:(S.msQueue || [])[0] ? S.msQueue[0].icon : '', msTitle:(S.msQueue || [])[0] ? S.msQueue[0].title : '', msDesc:(S.msQueue || [])[0] ? S.msQueue[0].desc : '', msMore:(S.msQueue || []).length > 1 ? '+' + (S.msQueue.length - 1) + ' more' : '', msClose:() => { const q = (this.state.msQueue || []).slice(1); this.setState({ msQueue:q }); if (q.length) this.msArm(); else clearTimeout(this.msTimer); },
+        msShow:(S.msQueue || []).length > 0 && !this.msBusy(), msIcon:(S.msQueue || [])[0] ? S.msQueue[0].icon : '', msTitle:(S.msQueue || [])[0] ? S.msQueue[0].title : '', msDesc:(S.msQueue || [])[0] ? S.msQueue[0].desc : '', msMore:(S.msQueue || []).length > 1 ? '+' + (S.msQueue.length - 1) + ' more' : '', msClose:() => { const q = (this.state.msQueue || []).slice(1); this.setState({ msQueue:q }); if (q.length) this.msArm(); else clearTimeout(this.msTimer); },
         dgPct:Math.min(100, Math.round(S.dayMin / Math.max(1, S.mins) * 100)) + '%', dgText:S.dayMin >= S.mins ? S.mins + '-minute goal reached (' + S.dayMin + ' min today)' : 'Daily goal: ' + S.dayMin + ' of ' + S.mins + ' min', dgDone:S.dayMin >= S.mins,
         autoplayLabel:prefGet('autoplay', true) !== false ? 'Words play by themselves. Turn off' : 'Words wait for a tap. Turn on', autoplayToggle:() => { prefSet('autoplay', prefGet('autoplay', true) === false); this.setState({ soundTick:(this.state.soundTick || 0) + 1 }); },
         soundOn:prefGet('sound', true) !== false, soundLabel:prefGet('sound', true) !== false ? 'Sounds are on. Turn off' : 'Sounds are off. Turn on', soundToggle:() => { const on = prefGet('sound', true) !== false; prefSet('sound', !on); this.setState({ soundTick:(this.state.soundTick || 0) + 1 }); if (!on) SFX.play('ok', true); }, soundTest:() => SFX.play('ok', true), soundTestDone:() => SFX.play('done', true),
@@ -6701,7 +6758,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
   const tpl = document.getElementById('app-template');
   const app = DCMount(root, tpl, Component);
   onPersonChange = () => { try { app.personChanged(); } catch (e) {} };
-  app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin, plChoices, ffTier, jyFinds };   // for the browser tests
+  app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin, plChoices, ffTier, jyFinds, jyRead, SV_SETS };   // for the browser tests
   window.shanlu = app;
   // an exam photo that does not load (offline, blocked, removed) is dropped and its emoji shows instead
   document.addEventListener('error', (ev) => {

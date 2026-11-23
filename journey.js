@@ -68,7 +68,7 @@
     return W;
   }
 
-  function fresh() { return { v:1, n:0, reg:null, started:false, cq:[], cur:null, sq:[], seen:[], done:{}, arr:{}, ms:{} }; }
+  function fresh() { return { v:1, n:0, reg:null, started:false, cq:[], cur:null, sq:[], seen:[], dates:[], done:{}, arr:{}, ms:{} }; }
   const clone = (st) => JSON.parse(JSON.stringify(st));
 
   // choose the next region at random from those not yet stamped; set up its city queue (the main city always first)
@@ -92,6 +92,61 @@
   const seenSet = (st) => { const o = {}; st.seen.forEach((id) => { o[id] = 1; }); return o; };
 
   // unlock the next stop. Returns { st, stop, ev:[...], region, next } where ev holds: 'arrive' (flight in), 'city', 'citydone', 'muni', 'stamp', 'all'
+  // ---- the saved form (J15). In memory a journey keeps seen (stop ids, in the order visited) and dates (the day each was reached, '' if not known).
+  // Saved, each stop is a 6-character code (FNV-1a hash of its id, base 36) and the dates a short string: one base-36 character per stop for the days
+  // since the stop before (0 to 34), '!' + 3 characters for a day counted from 1 Jan 2026 (the first stop, or a gap of 35+ days), '-' for unknown.
+  // About 14 KB for all 2,000 stops instead of about 75 KB. Codes that match no stop (a stop taken out of the data) are dropped, as unknown ids were.
+  const code = (id) => { let h = 0x811c9dc5; for (let i = 0; i < id.length; i++) { h ^= id.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return ('00000' + (h % 2176782336).toString(36)).slice(-6); };
+  const codeMaps = new WeakMap();
+  const codeMap = (W) => { let m = codeMaps.get(W); if (!m) { m = {}; Object.keys(W.byStop).forEach((id) => { m[code(id)] = id; }); codeMaps.set(W, m); } return m; };
+  const DAY0 = Date.UTC(2026, 0, 1);
+  const dayNo = (ymd) => { const p = /^(\d{4})-(\d{2})-(\d{2})$/.exec(ymd || ''); return p ? Math.round((Date.UTC(+p[1], +p[2] - 1, +p[3]) - DAY0) / 864e5) : null; };
+  const dayYmd = (n) => new Date(DAY0 + n * 864e5).toISOString().slice(0, 10);
+  function packDates(dates) {
+    let out = '', prev = null;
+    dates.forEach((d) => { const n = dayNo(d);
+      if (n == null || n < 0) { out += '-'; return; }
+      if (prev != null && n >= prev && n - prev < 35) out += (n - prev).toString(36); else out += '!' + ('00' + Math.min(n, 46655).toString(36)).slice(-3);
+      prev = n; });
+    return out;
+  }
+  function unpackDates(str, count) {
+    const out = []; let prev = null, i = 0;
+    while (i < (str || '').length && out.length < count) { const c = str[i];
+      if (c === '-') { out.push(''); i++; continue; }
+      if (c === '!') { prev = parseInt(str.slice(i + 1, i + 4), 36); out.push(dayYmd(prev)); i += 4; continue; }
+      prev = prev == null ? null : prev + parseInt(c, 36); out.push(prev == null ? '' : dayYmd(prev)); i++; }
+    while (out.length < count) out.push('');
+    return out;
+  }
+  // in memory -> saved
+  function pack(W, st) {
+    const o = Object.assign({}, st); delete o.seen; delete o.dates;
+    o.v = 2; o.s = st.seen.map(code).join(''); o.d = packDates((st.dates || []).slice(0, st.seen.length).concat(new Array(Math.max(0, st.seen.length - (st.dates || []).length)).fill('')));
+    o.n = st.seen.length;   // (sync keeps the journey with more stops, so n must stay right)
+    return o;
+  }
+  // saved (either form) -> in memory. A journey saved before dates were kept gets the days that are known anyway: arriving in a region is its first stop, stamping it is its last.
+  function unpack(W, v) {
+    if (!v || typeof v !== 'object') return null;
+    let st;
+    if (v.v === 2 && typeof v.s === 'string') {
+      const m = codeMap(W); const seen = [], idx = [];
+      for (let i = 0; i + 6 <= v.s.length; i += 6) { const id = m[v.s.slice(i, i + 6)]; if (id) { seen.push(id); idx.push(i / 6); } }
+      const all = unpackDates(v.d, v.s.length / 6);
+      st = Object.assign({}, v, { v:1, seen, dates:idx.map((k) => all[k] || '') }); delete st.s; delete st.d;
+    } else if (Array.isArray(v.seen)) {
+      st = Object.assign({}, v, { seen:v.seen.slice() });
+      if (!Array.isArray(v.dates)) {
+        const dates = st.seen.map(() => ''); const firstOf = {}, lastOf = {};
+        st.seen.forEach((id, i) => { const s = W.byStop[id]; if (!s) return; if (firstOf[s.rid] == null) firstOf[s.rid] = i; lastOf[s.rid] = i; });
+        Object.keys(firstOf).forEach((rid) => { if (st.arr && st.arr[rid]) dates[firstOf[rid]] = st.arr[rid]; if (st.done && st.done[rid]) dates[lastOf[rid]] = st.done[rid]; });
+        st.dates = dates;
+      } else st.dates = v.dates.slice();
+    } else return null;
+    return st;
+  }
+
   function step(W, st0, rnd, today) {
     const st = ensure(W, st0, rnd);
     if (!st.reg) return { st, stop:null, ev:[], region:null, next:null };
@@ -123,6 +178,7 @@
     let next = null, region = R.id;
     if (stop) {
       st.seen.push(stop.id); st.n++;
+      if (Array.isArray(st.dates)) { while (st.dates.length < st.seen.length - 1) st.dates.push(''); st.dates.push(today || ''); }   // the day you were there (postcard backs)
       const have2 = seenSet(st);
       if (st.sq.length === 0 && st.cur && W.byCity[st.cur] && ev.indexOf('citydone') < 0) ev.push('citydone');
       if (st.sq.length === 0 && st.cq.length === 0) {
@@ -275,6 +331,6 @@
     return { kind, tag:p === P_TAXI ? 'In a taxi' : SAY_TAG[kind], zh:fill(p[0], s.zh), py:fill(p[1], s.py), en:fill(verb(p[2]), en) };
   }
 
-  const api = { hop, kmBetween, dirBetween, cityRoute, regionRoute, cityStamps, mustSeen, sayFor, sayKind, META, SMALL, LADDER, FLAT, costOf, cum, paidFor, build, fresh, ensure, step, meter, regionStats, pinLatLon, project, projectCountry, shuffle, slug, KINDS, seedOf, rngFor };
+  const api = { pack, unpack, code, hop, kmBetween, dirBetween, cityRoute, regionRoute, cityStamps, mustSeen, sayFor, sayKind, META, SMALL, LADDER, FLAT, costOf, cum, paidFor, build, fresh, ensure, step, meter, regionStats, pinLatLon, project, projectCountry, shuffle, slug, KINDS, seedOf, rngFor };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.ShanluJourney = api;
 })(typeof window !== 'undefined' ? window : globalThis);

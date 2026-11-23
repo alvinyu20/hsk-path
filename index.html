@@ -7,7 +7,7 @@
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=e454972364 data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=1a0bc4fd8d data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=3d38adc628 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=f61eb12760 data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=3135c6fdd2 data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=82ca84cf78 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=6b5998626b data/hsk4-words.js?v=9ebcc5a250 data/hsk4-grammar.js?v=eb819c8dc6 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=432fbea51b data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=372a4da5b0 data/hsk5-words.js?v=1e54d78599 data/hsk5-grammar.js?v=1726186051 data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=376d0f56b1 data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=db77f8b5e5">
-<meta name="shanlu-version" content="b722fa8de9">
+<meta name="shanlu-version" content="454d92db8e">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=28882d3db2">
+<link rel="stylesheet" href="styles.css?v=77cbffaff9">
 </head>
 <body>
 <div id="app"></div>
@@ -886,6 +886,7 @@
             <span class="sv-en">{{jySvCardEn}}</span>
           </div>
           <p class="sv-story">{{jySvCardStory}}</p>
+          <sc-if value="{{jySvSetShow}}" hint-placeholder-val="{{ false }}"><p class="{{jySvSetCls}}"><span lang="zh-Hans" class="zh" aria-hidden="true">{{jySvSetZh}}</span>{{jySvSetText}}</p></sc-if>
           <button type="button" class="linkbtn" data-on-click="{{jySvCardShelf}}">See it in Souvenirs</button>
         </div>
       </sc-if>
@@ -1009,7 +1010,7 @@
               <button type="button" class="pcard-f" aria-label="{{c.label}}" tabindex="{{c.ft}}" data-on-click="{{c.flip}}"><sc-if value="{{c.hasPhoto}}" hint-placeholder-val="{{ false }}"><img src="{{c.url}}" alt="" loading="lazy" referrerpolicy="no-referrer"></sc-if><sc-if value="{{c.noPhoto}}" hint-placeholder-val="{{ true }}"><span class="pcard-art"><img src="{{c.art}}" alt=""></span></sc-if><span class="pcard-cap"><span>{{c.en}}</span></span></button>
               <div class="pcard-k" aria-hidden="{{c.kh}}" data-on-click="{{c.flip}}">
                 <div class="pcard-msg"><small>{{c.kind}}</small><b lang="zh-Hans" class="zh">{{c.zh}}</b><span class="pcard-py">{{c.py}}</span><span class="pcard-en">{{c.en}}</span><span class="pcard-wh">{{c.where}}</span></div>
-                <div class="pcard-st"><img src="{{c.art}}" alt=""></div>
+                <div class="pcard-st"><img src="{{c.art}}" alt=""><sc-if value="{{c.hasWhen}}" hint-placeholder-val="{{ false }}"><span class="pcard-when" role="img" aria-label="{{c.whenLabel}}"><b>{{c.whenDm}}</b><i>{{c.whenY}}</i></span></sc-if></div>
                 <div class="pcard-acts"><button type="button" class="pcard-go" tabindex="{{c.kt}}" data-on-click="{{c.open}}">Read it</button><span class="pcard-cr">{{c.credit}}</span></div>
               </div>
             </div>
@@ -1103,10 +1104,14 @@
               <span class="sv-en">{{jySvSelEn}}</span>
             </div>
             <p class="sv-story">{{jySvSelStory}}</p>
+            <sc-if value="{{jySvSelSetShow}}" hint-placeholder-val="{{ false }}"><p class="sv-setline">{{jySvSelSet}}</p></sc-if>
             <sc-if value="{{jySvSelFound}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn" data-on-click="{{jySvSelGo}}">{{jySvSelWhere}}</button></sc-if>
             <button type="button" class="linkbtn sv-x" data-on-click="{{jySvSelClose}}">Close</button>
           </div>
         </sc-if>
+        <div class="sv-sets-h"><b>Sets</b><span class="muted">{{jySetsDone}}</span></div>
+        <div class="sv-sets" role="group" aria-label="Souvenir sets"><sc-for list="{{jySets}}" as="t" hint-placeholder-count="12"><button type="button" class="{{t.cls}}" aria-pressed="{{t.pressed}}" aria-label="{{t.label}}" data-on-click="{{t.fn}}"><span lang="zh-Hans" class="zh" aria-hidden="true">{{t.zh}}</span><b>{{t.en}}</b><i>{{t.count}}</i></button></sc-for></div>
+        <sc-if value="{{jySetNowShow}}" hint-placeholder-val="{{ false }}"><p class="muted jy-key">{{jySetNowText}}</p></sc-if>
         <div class="jy-chips" role="group" aria-label="Show souvenirs"><sc-for list="{{jySvChips}}" as="f" hint-placeholder-count="3"><button type="button" class="jy-chip {{f.cls}}" data-on-click="{{f.fn}}">{{f.label}} <i>{{f.count}}</i></button></sc-for></div>
         <sc-if value="{{jySvNone}}" hint-placeholder-val="{{ false }}"><p class="muted jy-key">{{jySvNoneText}}</p></sc-if>
         <div class="sv-grid"><sc-for list="{{jySvItems}}" as="s" hint-placeholder-count="6"><button type="button" class="sv-cell {{s.cls}}" aria-label="{{s.label}}" data-on-click="{{s.open}}"><sc-if value="{{s.isNew}}" hint-placeholder-val="{{ false }}"><span class="jy-newtag" aria-hidden="true">New</span></sc-if><img class="sv-img" src="{{s.img}}" alt="" width="64" height="64" loading="lazy"><span class="sv-name">{{s.name}}</span><small lang="zh-Hans" class="sv-zh zh">{{s.zh}}</small></button></sc-for></div>
@@ -3365,7 +3370,7 @@
 <script defer src="sync.js?v=5b5c6f52f4"></script>
 <script defer src="data/audio-manifest.js?v=5805fb8afb"></script>
 <script defer src="jyscene.js?v=1c02bf2fa0"></script>
-<script defer src="journey.js?v=929106c907"></script>
+<script defer src="journey.js?v=f19fa94dd0"></script>
 <script defer src="stampart.js?v=94be30f98c"></script>
 <script defer src="feastart.js?v=84bafd4ee6"></script>
 <script defer src="feastscene.js?v=41bdf943f2"></script>
@@ -3389,6 +3394,6 @@
 <script defer src="numbers.js?v=997b8744e4"></script>
 <script defer src="data/games.js?v=81a4332979"></script>
 <script defer src="data/path.js?v=988d907206"></script>
-<script defer src="app.js?v=be1097fed6"></script>
+<script defer src="app.js?v=5dfaba9dbb"></script>
 </body>
 </html>

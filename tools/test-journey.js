@@ -189,4 +189,26 @@ if (bad) { console.log(bad + ' failed'); process.exit(1); }
   const none = W.regions.filter(r => !r.intro || r.intro.length !== 3 || r.intro.some(x => !x || x.length < 20));
   ok(none.length === 0, 'every region has three real intro lines: ' + none.map(r => r.id).join(','));
 }
+// ---- the saved form: 6-character stop codes and a date string (pack / unpack) ----
+{
+  const codes = {}; let clash = [];
+  Object.keys(W.byStop).forEach(id => { const c = J.code(id); if (codes[c]) clash.push(codes[c] + ' / ' + id); codes[c] = id; ok(/^[0-9a-z]{6}$/.test(c), 'a stop code is 6 base-36 characters: ' + c); });
+  ok(clash.length === 0, 'no two stops share a code (if this fails, change the hash in journey.js code()): ' + clash.join(', '));
+  let st = J.ensure(W, null, seeded(7)); const days = ['2026-11-20', '2026-11-20', '2026-11-21', '2027-02-14', '2027-02-15'];
+  for (let i = 0; i < 400; i++) st = J.step(W, st, seeded(100 + i), days[Math.min(days.length - 1, Math.floor(i / 80))]).st;
+  ok(st.dates.length === st.seen.length && st.dates[0] === '2026-11-20' && st.dates[399] === '2027-02-15', 'each step records the day');
+  const p = J.pack(W, st); const u = J.unpack(W, JSON.parse(JSON.stringify(p)));
+  ok(JSON.stringify(u.seen) === JSON.stringify(st.seen), 'unpack gives the same stops in the same order');
+  ok(JSON.stringify(u.dates) === JSON.stringify(st.dates), 'and the same days');
+  ok(p.n === st.seen.length && p.v === 2 && !p.seen, 'the packed form keeps n (sync keeps the journey with more stops)');
+  ok(JSON.stringify(p).length < JSON.stringify(st).length / 3, 'packed is much smaller: ' + JSON.stringify(p).length + ' vs ' + JSON.stringify(st).length);
+  const gone = J.pack(W, Object.assign({}, st, { seen: ['anhui.a-a-stop-taken-out'].concat(st.seen), dates: ['2026-11-19'].concat(st.dates) }));   // a stop later taken out of the data
+  const ug = J.unpack(W, gone); ok(JSON.stringify(ug.seen) === JSON.stringify(st.seen), 'a code for a stop that no longer exists is dropped'); ok(JSON.stringify(ug.dates) === JSON.stringify(st.dates), 'and the days stay with their own stops');
+  const legacy = Object.assign({}, st); delete legacy.dates;
+  const ul = J.unpack(W, legacy);
+  ok(ul.seen.length === st.seen.length && ul.dates.length === st.seen.length, 'an older save (stop ids, no days) is read');
+  const known = ul.dates.filter(Boolean).length; const regs = new Set(st.seen.map(id => W.byStop[id].rid)).size;
+  ok(known > 0 && known <= regs * 2 && ul.dates[0] === st.arr[W.byStop[st.seen[0]].rid], 'its days are only the known ones: arriving in a region, and stamping it (' + known + ')');
+  eq(J.unpack(W, J.pack(W, J.ensure(W, null, seeded(1)))).seen, [], 'an empty journey packs and unpacks');
+}
 console.log('journey tests passed ('  + W.regions.length + ' regions, ' + Object.keys(all).length + ' stops)');
