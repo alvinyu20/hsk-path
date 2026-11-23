@@ -641,7 +641,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await nav('Speak');
   check((await page.locator('.spk-card').count()) === 10, 'speaking lists 10 places to pick from (bad-day versions are reached from their place)');
   await page.locator('.spk-card').first().click();
-  check((await page.locator('.chat.staged .stage').count()) === 1 && (await page.locator('.scn').count()) === 8, 'picking a place opens its scene and the list of 8 scripts');
+  check((await page.locator('.chat.staged .stage').count()) === 1 && (await page.locator('.scn').count()) === 10, 'picking a place opens its scene and the list of 10 scripts');
   for (let i = 0; i < 4; i++) await page.locator('button', { hasText: 'I said it' }).click();
   check((await text()).includes('Conversation complete'), 'the first speaking script completes');
   await page.locator('.scn').nth(1).click();
