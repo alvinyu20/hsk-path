@@ -201,8 +201,8 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   check(await page.evaluate(() => window.HSK2_LISTEN.pairs.length > 200 && window.HSK2_LISTEN.pairs.some(p => p.zh === '老师' && p.t[0] === 3 && p.t[1] === 1)), 'the HSK 2 tone-pair list includes the HSK 1 and HSK 2 two-syllable words');
   await nav('Speak');
   check((await page.locator('.subnav button', { hasText: 'Talk with AI' }).count()) === 1 && (await page.locator('.subnav button.on', { hasText: 'Speaking' }).count()) === 1, 'Speak has Speaking and Talk with AI in its strip at HSK 2');
-  const scn = await page.evaluate(() => window.HSK2_SPEAK.scenarios.map(s => s.title));
-  check(scn.length === 8 && (await text()).includes('Ask the way') && (await text()).includes('Order at a café'), 'the eight HSK 2 scripts are listed');
+  const scn = await page.evaluate(() => window.HSK2_SPEAK.scenarios.filter(s => !s.bad).map(s => s.title));
+  check(scn.length === 10 && (await text()).includes('Ask the way') && (await text()).includes('Order at a café'), 'the ten HSK 2 scripts are listed (bad-day versions apart)');
   await page.locator('.spk-card').first().click();
   await page.locator('button', { hasText: 'I said it' }).first().click();
   check((await text()).includes('请问，车站在哪') || (await text()).includes('请问，车站在哪里'), 'an HSK 2 script plays: the first line of the first scenario shows after "I said it"');
