@@ -1,6 +1,6 @@
 # Notes for Claude: Shanlu (hsk-path)
 
-Read this file first in every session. It replaces rediscovering the repo. Keep it short and correct: when something here turns out wrong or a new trap is found, fix this file in the same commit.
+Read this file first in every session, then `HANDOFF.md` (what's open, what's decided, what to check). It replaces rediscovering the repo. Keep it short and correct: when something here turns out wrong or a new trap is found, fix this file in the same commit.
 
 ## What it is
 - A static HTML/JS HSK 1–5 study site (HSK 3.0 syllabus). It is served by GitHub Pages from `main`, so **a push to main deploys**. Repo `alvinyu20/hsk-path`.
