@@ -1,51 +1,228 @@
 # Grammar lesson examples coloured like the lesson's formula (the lesson page shows the pieces in the formula's colours).
 # lesson id <TAB> the example cut into pieces with " | ", each piece "role=text" or plain text. Roles: who (the doer, blue), when (time or place, amber),
 # does (the verb or describing word, jade), thing (the object or thing, purple), k (the lesson's key word, red). The pieces must join back into
-# the example exactly (checked by tools/build-grammar.py). Only examples listed here are coloured; the rest stay plain.
+# the example exactly (checked by tools/build-grammar.py). Every example is listed (C4). In a word-order lesson the pieces take the formula's role colours (a place or object may be coloured even where the formula has no slot for it); in a frame, add-on or pick-one lesson only the red key words are marked, as in its formula.
 order	who=我 | does=喝 | thing=茶 | 。
 order	who=哥哥 | does=吃 | thing=鸡蛋 | 。
 order	who=我们 | does=学习 | thing=汉语 | 。
 order	who=爸爸 | when=晚上在家 | does=工作 | 。
+shi	我 | k=是 | 学生。
+shi	他 | k=是 | 我的朋友。
+shi	她 | k=不是 | 老师。
+shi	你 | k=是 | 中国人吗？
 adj	who=今天 | does=很冷 | 。
 adj	who=这个房间 | does=不大 | 。
 adj	who=你的衣服 | does=真漂亮 | ！
 adj	who=今天 | does=太冷 | 了！
+adj	who=我 | 今天 | does=有点儿忙 | 。
+ma	你是老师 | k=吗 | ？
+ma	他喜欢茶 | k=吗 | ？
+ma	你想喝水 | k=吗 | ？
+ma	你认识他 | k=吗 | ？
+qword	who=你 | does=想吃 | k=什么 | ？
+qword	who=她 | does=是 | k=谁 | ？
+qword	who=你家 | does=在 | k=哪儿 | ？
+qword	who=你家 | does=有 | k=几 | 口人？
+qword	who=这个 | k=多少 | 钱？
+qword	who=这个字 | k=怎么 | does=读 | ？
+qword	who=今天天气 | k=怎么样 | ？
+neg	我 | k=不 | 是老师。
+neg	我 | k=没 | 有钱。
+neg	小明今天 | k=没 | 上学。
+neg	k=不要 | 在这儿说话。
 you	who=我 | k=有 | thing=一个哥哥 | 。
 you	who=我 | k=没有 | thing=手机 | 。
 you	who=你 | k=有 | thing=时间 | 吗？
+you	who=她 | k=有没有 | thing=男朋友 | ？
+pron	who=我 | k=们 | 都是学生。
+pron	who=他 | k=们 | 在学校。
+pron	老师， | who=您 | 好！
+pron	同学 | k=们 | 好！
+pron	who=大家 | 好！
 de	这是 | who=我 | k=的 | thing=书 | 。
 de	这是 | who=我妈妈 | k=的 | thing=手机 | 。
+de	who=我 | thing=妈妈 | 在家。
 de	这是 | who=很好吃 | k=的 | thing=米饭 | 。
+measure	这 | k=个 | thing=人 | 是我的朋友。
+measure	我有 | thing=两 | k=本 | thing=书 | 。
+measure	我想买 | thing=一 | k=件 | thing=新衣服 | 。
+measure	我家有 | thing=四 | k=口 | thing=人 | 。
+measure	我想喝 | thing=一 | k=杯 | thing=茶 | 。
+num	这个手机 | thing=三千块 | 。
+num	我有 | thing=两个 | 朋友。
+num	他 | thing=八岁 | 。
+num	这个包子 | thing=一块半 | 。
+num	今天是我学汉语的 | thing=第一天 | 。
 time	who=我 | when=七点 | does=起床 | 。
+time	现在是 | when=八点零五分 | 。
+time	今天是 | when=十月三十号 | 。
+time	今天 | when=星期几 | ？
 time	who=我 | when=星期天 | does=在家 | 。
+zai	who=我 | k=在 | when=家 | 。
 zai	who=他们 | k=在 | when=家 | does=吃饭 | 。
 zai	who=你 | k=在 | when=哪儿 | does=工作 | ？
 zai	who=我 | k=在 | when=学校 | does=学习 | thing=汉语 | 。
 loc	thing=书 | k=在 | when=桌子上 | 。
+loc	when=杯子里 | 有 | thing=水 | 。
+loc	when=桌子上 | 有 | thing=一本书 | 。
+loc	when=我家外边 | 是 | thing=一家商店 | 。
 loc	thing=学校 | k=在 | when=那边 | 。
+want	我 | k=想 | 去中国。
+want	你 | k=想 | 喝什么？
+want	你 | k=想 | 喝茶吗？
+want	我 | k=要 | 一个包子。
+want	我不 | k=想 | 吃东西。
+modal	我 | k=会 | 说一点儿汉语。
+modal	你 | k=会 | 开车吗？
+modal	你明天 | k=能 | 来吗？
+modal	我 | k=可以 | 坐这儿吗？
+adv	我们 | k=都 | 是学生。
+adv	我 | k=也 | 是学生。
+adv	你 | k=还 | 想吃什么？
+adv	明天 | k=再 | 来。
+adv	爸爸是老师，妈妈 | k=也 | 是老师。
+anota	who=她 | k=是不是 | thing=你们的老师 | ？
+anota	who=你 | k=去不去 | thing=学校 | ？
+anota	who=你 | k=有没有 | thing=手机 | ？
+anota	who=你 | k=喜欢不喜欢 | thing=茶 | ？
+bane	我们去吃饭 | k=吧 | 。
+bane	请坐 | k=吧 | 。
+bane	我很好，你 | k=呢 | ？
+bane	你的手机 | k=呢 | ？
+bane	你没事 | k=吧 | ？
+prog	who=爸爸 | k=在 | does=做饭 | ， | who=妈妈 | k=在 | does=看书 | 。
+prog	who=他 | k=正在 | does=看电视 | 。
+prog	who=哥哥 | k=正在 | does=看书 | k=呢 | 。
+prog	who=小明 | does=睡觉 | k=呢 | 。
 le1	who=我 | does=买 | k=了 | thing=一本书 | 。
 le1	who=妈妈 | does=喝 | k=了 | thing=一杯茶 | 。
+le1	who=我 | does=看见 | thing=他 | k=了 | 。
+le1	who=我 | 没 | does=买 | thing=书 | 。
+le1	who=你 | does=吃 | thing=饭 | k=了 | 吗？
+le2	天冷 | k=了 | 。
+le2	下雨 | k=了 | ！
+le2	现在八点 | k=了 | 。
+le2	他病 | k=了 | 。
+le2	下课 | k=了 | ，我们去吃饭。
+hedui	我 | k=和 | 他是同学。
+hedui	我 | k=和 | 爸爸都喜欢看书。
+hedui	他 | k=对 | 我很好。
+hedui	k=对 | ，我是学生。
 seq	who=我 | does=去商店 | does=买水果 | 。
 seq	who=爸爸 | does=开车 | does=去公司 | 。
+seq	who=爸爸 | does=给 | 小明一本书。
+seq	who=我 | does=给妈妈 | does=打电话 | 。
+request	k=请 | does=喝茶 | 。
+request	k=请问 | ，学校在哪儿？
+request	我想 | does=休息 | k=一下 | 。
+request	k=喂 | ，你好！
+some	我想买 | k=一些 | 水果。
+some	我会说 | k=一点儿 | 汉语。
+some	k=有些 | 学生不喜欢读书。
+some	今天 | k=有点儿 | 冷。
+bi	他 | k=比 | 我 | does=高 | 。
+bi	哥哥 | k=比 | 我 | does=大 | 三岁。
+bi	我 | k=没有 | 他 | k=那么 | does=高 | 。
+bi	我 | k=最 | does=喜欢 | 踢足球。
 li	when=学校 | k=离 | when=我家 | 很近。
 li	when=机场 | k=离 | when=这里 | 很远。
+li	我 | k=从 | when=家 | 走路 | k=到 | when=学校 | 。
+li	请 | k=往 | when=左 | 走，洗手间在右边。
+dao2	who=我们 | does=到 | when=机场 | 了。
+dao2	who=他 | when=每天八点 | does=到 | when=学校 | 。
+dao2	who=我 | does=住 | k=在 | when=学校旁边 | 。
+dao2	who=她 | does=站 | k=在 | when=门口 | does=等你 | 。
+dao2	who=爸爸 | does=送 | k=给 | 我 | thing=一个手机 | 。
+dao2	这是 | who=我 | does=送 | k=给 | 你的。
 guo	who=我 | does=去 | k=过 | when=中国 | 。
 guo	who=你 | does=喝 | k=过 | thing=红茶 | 吗？
 guo	who=我 | 没 | does=学 | k=过 | thing=游泳 | 。
+guo	thing=这个电影 | who=我 | does=看 | k=过 | 两次。
 zhe	who=门 | does=开 | k=着 | 。
+zhe	who=他 | does=站 | k=着 | ， | who=我 | does=坐 | k=着 | 。
 zhe	who=手机 | does=开 | k=着 | 。
 zhe	who=他 | does=笑 | k=着 | does=说话 | 。
+yao	k=快要 | does=下雨 | k=了 | 。
+yao	who=我们 | k=要 | does=出门 | k=了 | 。
+yao	who=他 | 明天 | k=就要 | does=走 | k=了 | 。
+yao	k=快要 | does=考试 | k=了 | ，我要准备一下。
 yijing2	who=我 | k=已经 | does=吃饭 | k=了 | 。
 yijing2	who=他 | k=已经 | does=走 | k=了 | 。
+yijing2	who=我 | 五点 | k=就 | does=起床 | k=了 | 。
+yijing2	你累了， | k=就 | does=休息 | 吧。
+yijing2	k=都 | 十二点 | k=了 | ，快睡觉吧。
+yijing2	who=他 | k=还没 | does=起床 | k=呢 | 。
 rang2	who=妈妈 | k=让 | thing=我 | does=早点睡觉 | 。
 rang2	who=他 | k=让 | thing=我 | does=等一会儿 | 。
+rang2	who=这个电影 | k=让 | thing=我 | does=很高兴 | 。
+rang2	k=别 | does=走 | ，再坐一会儿。
+rang2	who=妈妈 | k=叫 | thing=我 | does=去买水果 | 。
+rang2	今天 | who=我 | k=请 | thing=你 | does=吃饭 | 。
+yinwei	k=因为 | 下雨， | k=所以 | 我们在家看电影。
+yinwei	k=因为 | 今天很冷， | k=所以 | 我不想出门。
+yinwei	k=虽然 | 这个很贵， | k=但是 | 很好。
+yinwei	你 | k=为什么 | 不去？
+haishi	你喝红茶 | k=还是 | 绿茶？
+haishi	你今天去 | k=还是 | 明天去？
+haishi	我们坐公交车 | k=还是 | 打车？
+haishi	太远了，我们 | k=还是 | 打车吧。
 de2	who=他 | does=跑 | k=得 | does=很快 | 。
 de2	who=她 | thing=汉语 | does=说 | k=得 | does=很好 | 。
 de2	who=我们 | when=昨天 | does=玩 | k=得 | does=很高兴 | 。
+de2	who=弟弟 | does=高兴 | k=地 | does=跑回家 | 。
+mei	k=每 | thing=天 | 早上我 | k=都 | does=喝 | 一杯茶。
+mei	他 | k=经常 | does=去商场 | 。
+mei	我 | k=有时 | does=坐地铁 | ， | k=有时 | does=打车 | 。
+mei	我 | k=什么都 | does=喜欢吃 | 。
+mw2	我买了 | thing=一 | k=条 | thing=红色的裤子 | 。
+mw2	这是 | thing=一 | k=位 | thing=新老师 | 。
+mw2	这 | k=间 | thing=教室 | 很大。
+mw2	我去过 | thing=三 | k=次 | 中国。
+mw2	我家在 | thing=五 | k=楼 | 。
+result	who=我 | does=吃 | k=完 | 饭了。
+result	who=你 | does=听 | k=懂 | 了吗？
+result	who=他 | does=写 | k=错 | 了我的名字。
+result	老师说得太快， | who=我 | does=听 | k=不懂 | 。
+direction	请 | does=进 | k=来 | 坐。
+direction	who=他 | does=回家 | k=去 | 了。
+direction	who=你 | does=下 | k=来 | ，我们一起去。
+direction	who=她 | does=笑 | k=起来 | 了。
 gen	who=我 | k=跟 | thing=朋友 | k=一起 | does=去旅游 | 。
+gen	who=我们 | k=一起 | does=吃饭 | 吧。
+gen	who=你 | k=跟 | thing=老师 | does=说 | 了吗？
+gen	who=她 | 经常 | k=跟 | thing=妈妈 | does=去商场 | 。
 shide	who=我 | k=是 | when=昨天 | does=来 | k=的 | 。
 shide	who=你 | k=是 | when=怎么 | does=来 | k=的 | ？
 shide	who=我 | k=是 | when=坐地铁 | does=来 | k=的 | 。
+shide	who=他 | k=不是 | when=从外国 | does=来 | k=的 | 。
+modal2	他 | k=可能 | 不在家。
+modal2	明天 | k=可能 | 下雨。
+modal2	我 | k=希望 | 明天是晴天。
+modal2	我 | k=准备 | 明年出国旅游。
+duo	你今年 | k=多 | does=大 | 了？
+duo	下雨 | k=的时候 | ，我们在家看电影。
+duo	再 | k=想想 | ，好吗？
+duo	请你 | k=问问 | 老师。
+asoon	who=他 | k=一 | does=下课 | k=就 | does=回家 | 。
+asoon	who=我 | k=一 | does=到家 | k=就 | does=给你打电话 | 。
+asoon	who=我 | k=一 | does=说 | ， | who=他 | k=就 | does=懂 | 了。
+asoon	who=他 | k=一 | does=累 | k=就 | does=头疼 | 。
+lihe	你能帮我 | k=一个 | 忙吗？
+lihe	我昨天睡 | k=了一个好 | 觉。
+lihe	我们说 | k=了一会儿 | 话。
+lihe	他打 | k=了一个小时的 | 电话。
+adjdouble	她有 | k=大大的 | 眼睛。
+adjdouble	他 | k=慢慢地 | 走过来了。
+adjdouble	孩子们 | k=高高兴兴地 | 回家了。
+adjdouble	这里 | k=多 | 漂亮 | k=啊 | ！
+biyou	你 | k=有 | 他 | does=高 | 吗？
+biyou	弟弟 | k=有 | 我 | does=高 | 了。
+biyou	她 | k=比 | 我 | does=说得好 | 。
+biyou	他 | does=跑得 | k=比 | 我 | does=快 | 。
+topic2	k=她 | 个子很高。
+topic2	k=我 | 头疼。
+topic2	k=这本书 | 我看完了。
+topic2	我喜欢唱歌、跳舞 | k=什么的 | 。
 ba	请 | k=把 | thing=门 | does=打开 | 。
 ba	who=我 | k=把 | thing=作业 | does=做完了 | 。
 ba	请 | k=把 | thing=书 | does=放在桌子上 | 。
@@ -54,11 +231,445 @@ bei	thing=杯子 | k=被 | who=他 | does=打坏了 | 。
 bei	thing=我的伞 | k=被 | who=朋友 | does=拿走了 | 。
 bei	thing=作业 | k=被 | who=老师 | does=收走了 | 。
 bei	thing=我的书 | k=被 | who=同学 | does=借走了 | 。
+ruguo	k=如果 | 明天下雨，我们 | k=就 | 不去了。
+ruguo	你累 | k=的话 | ， | k=就 | 休息一下。
+ruguo	没有钱 | k=的话 | ， | k=就 | 不能买。
+ruguo	k=如果 | 天气好，我们 | k=就 | 去爬山。
+budan	这个饭馆 | k=不但 | 很便宜， | k=而且 | 菜很好吃。
+budan	今天很冷， | k=而且 | 下雨了。
+budan	这个很好看， | k=可是 | 有点儿贵。
+budan	我们先看电影， | k=然后 | 去吃饭。
+zhiyao	k=只要 | 天气好，我们 | k=就 | 去公园。
+zhiyao	k=只要 | 多听， | k=就 | 能听懂。
+zhiyao	k=只有 | 多说， | k=才 | 能说好。
+zhiyao	k=只有 | 你来，我 | k=才 | 去。
+chule	k=除了 | 周末，我每天都学汉语。
+chule	k=除了 | 米饭，我还想吃鱼。
+chule	k=除了 | 你以外，我谁都不认识。
+chule	k=除了 | 哥哥，大家都喜欢运动。
+weile	k=为了 | 去中国学习，他 | does=在学汉语 | 。
+weile	妈妈 | k=为 | 孩子 | does=准备了早饭 | 。
+weile	我想看一个 | k=关于 | 中国的电影。
+weile	k=根据 | 他的话，火车晚点了。
+huozhe	周末我想看电影 | k=或者 | 去公园。
+huozhe	明天 | k=或者 | 后天，我都有时间。
+huozhe	你想喝茶 | k=还是 | 咖啡？
+huozhe	我们坐火车 | k=或者 | 坐飞机去。
+xian3	k=先 | 洗手， | k=再 | 吃饭。
+xian3	妈妈 | k=一边 | 做饭， | k=一边 | 听音乐。
+xian3	这个菜 | k=又 | 好吃 | k=又 | 便宜。
+xian3	我 | k=先 | 去银行， | k=再 | 去商店。
+xian3	天气 | k=一会儿 | 冷， | k=一会儿 | 热。
+zaiyou	他今天 | k=又 | 迟到了。
+zaiyou	请 | k=再 | 说一遍。
+zaiyou	我昨天去了，今天 | k=又 | 去了。
+zaiyou	明天我 | k=再 | 来。
+yue	他 | k=越 | 说 | k=越 | 快。
+yue	汉语歌 | k=越 | 听 | k=越 | 好听。
+yue	天气 | k=越来越 | 冷了。
+yue	我 | k=越来越 | 喜欢汉语了。
 cai	who=他 | when=八点 | k=才 | does=到学校 | 。
 cai	who=他 | when=六点 | k=就 | does=起床了 | 。
+cai	who=这件衣服 | k=才 | 三十块。
+cai	who=我 | 等了 | when=半个小时 | ， | who=他 | k=才 | does=来 | 。
+gang	我 | k=刚 | 吃完饭。
+gang	电影 | k=刚 | 开始。
+gang	k=刚才 | 谁给你打电话？
+gang	他 | k=刚刚 | 出去。
+yizhi	我 | k=一直 | 在学汉语。
+yizhi	k=一直 | 往前走，银行就在左边。
+yizhi	他 | k=总是 | 很早到学校。
+yizhi	我们 | k=常常 | 在这儿见面。
+degree	他的汉语 | k=挺 | 好 | k=的 | 。
+degree	这里的菜 | k=特别 | 好吃。
+degree	今天的天气好 | k=极了 | 。
+degree	这个比那个 | k=更 | 大。
+yiyang3	我的手机 | k=跟 | 你的 | k=一样 | 。
+yiyang3	今天 | k=比 | 昨天 | k=还 | 冷。
+yiyang3	他 | k=比 | 我高 | k=多了 | 。
+yiyang3	这两个字 | k=不一样 | 。
+yiyang3	这张照片 | k=不比 | 那张好看。
+yiyang3	我 | k=比 | 他早到十分钟。
+nan	thing=汉语 | 不 | k=难 | does=学 | 。
+nan	thing=这个问题 | 很 | k=容易 | does=回答 | 。
+nan	thing=这种鞋 | 很 | k=难 | does=买 | 。
+nan	冬天 | k=容易 | does=感冒 | 。
+potential	老师说得太快，我听 | k=不 | 懂。
+potential	你看 | k=得 | 清楚吗？
+potential	这么多菜，我吃 | k=不 | 完。
+potential	我找 | k=不 | 到我的手机。
+direction3	他笑 | k=起来 | 了。
+direction3	请进 | k=来 | 。
+direction3	请说 | k=下去 | 。
+direction3	孩子们 | k=向 | 老师跑去了。
+direction3	前边开 | k=过来 | 一辆出租车。
+direction3	我们班 | k=来了 | 一个新同学。
 duration3	who=我 | does=学 | k=了 | when=两年 | thing=汉语 | 。
+duration3	who=他 | when=在这里 | does=工作 | k=了 | when=三年 | k=了 | 。
+duration3	who=我们 | when=三年 | 没 | does=见面 | k=了 | 。
 duration3	who=他 | does=等 | k=了 | thing=你 | when=一个小时 | 。
+duration3	who=我们 | does=打 | thing=篮球 | does=打 | k=了 | when=一个下午 | 。
+duration3	开学已经 | when=两个星期 | k=了 | 。
+time3	八点 | k=以前 | ，我必须到。
+time3	睡觉 | k=以前 | ，他喜欢听音乐。
+time3	他 | k=以前 | 不喝咖啡， | k=后来 | 喝了。
+time3	我 | k=前天 | 见到了他。
+should	你 | k=应该 | 多休息。
+should	学生 | k=必须 | 在八点以前到学校。
+should	你 | k=不用 | 急，慢慢来。
+should	外面很冷，你 | k=最好 | 多穿一点儿。
+zhi	我 | k=只 | 喝水。
+zhi	他 | k=只 | 会说汉语。
+zhi	我 | k=只是 | 想帮你。
+zhi	没有别的办法，我们 | k=只能 | 等。
+guess	他 | k=好像 | 不在家。
+guess	这个菜 | k=看起来 | 很好吃。
+guess	现在 | k=大概 | 九点了。
+guess	k=其实 | 我不是老师。
+finally	火车 | k=终于 | 来了。
+finally	我 | k=几乎 | 忘了他的名字。
+finally	k=突然 | ，他笑了。
+finally	我 | k=一定 | 会给你打电话。
+qword3	k=谁都 | 知道这件事。
+qword3	我 | k=什么都 | 没买。
+qword3	你想吃 | k=什么 | 就吃 | k=什么 | 。
+qword3	教室里 | k=一个人也 | 没有。
+qword3	我好像在 | k=哪儿 | 见过她。
+qword3	你想吃一点儿 | k=什么 | 吗？
+num2	我等了 | thing=一个 | k=半 | thing=小时 | 。
+num2	k=半 | thing=个小时 | 以后，他就到。
+num2	这儿有 | k=两三个 | thing=学生 | 。
+num2	thing=五十块 | k=以下 | 的鞋很少。
+newmean	我 | k=得 | does=走 | 了。
+newmean	我把书 | k=还 | 给他了。
+newmean	明天我们开 | k=会 | 。
+newmean	孩子 | k=长 | 大了。
+tone3	你 | k=不是 | 写完作业了 | k=吗？
+tone3	这个问题其实 | k=是 | 很简单 | k=的 | 。
+tone3	难过 | k=什么啊 | ？你的成绩 | k=不是 | 挺好的 | k=吗？
+tone3	你着急 | k=什么啊 | ？
+redup3	这些苹果 | k=个个都 | does=很大 | 。
+redup3	请 | k=一个一个 | 地 | does=进来 | 。
+redup3	我的汉语 | k=一天一天 | 地 | does=好起来了 | 。
+redup3	这件衣服 | k=不大不小 | ，特别合适。
+phrases3	他 | k=看上去 | 很累。
+phrases3	k=一般来说 | ，早上锻炼比较好。
+phrases3	k=不一会儿 | ，他就来了。
+phrases3	这家饭店的菜 | k=不怎么样 | 。
+frames3	k=从 | 明天 | k=起 | ，我每天早上跑步。
+frames3	k=在 | 学习 | k=上 | ，老师给了我很多帮助。
+frames3	k=对 | 我 | k=来说 | ，这个机会非常重要。
+frames3	k=在 | 生活 | k=中 | ，我们会遇到很多问题。
+attr3	我昨天买的 | k=那 | 条 | thing=裤子 | 在哪儿？
+attr3	这是我妈妈做的一个 | does=大 | thing=蛋糕 | 。
+attr3	k=那 | 个穿红色衣服的 | thing=女孩儿 | 是谁？
+attr3	我的 | does=新 | thing=手机 | 很贵。
+result3	火车票你买 | k=到 | 了没有？
+result3	请记 | k=住 | 这个号码。
+result3	谁把我的书拿 | k=走 | 了？
+result3	他考 | k=上 | 大学了。
+lian	who=他 | k=连 | thing=饭 | k=都 | does=没吃 | 就走了。
 lian	who=我 | k=连 | thing=他的名字 | k=也 | does=不知道 | 。
+lian	这个字很简单， | k=连 | thing=小孩子 | k=都 | does=能写 | 。
+lian	他很忙， | k=甚至 | 没有时间吃饭。
+jishi4	k=即使 | 明天下雨，我 | k=也 | does=要去 | 。
+jishi4	k=即使 | 你不喜欢， | k=也 | does=要吃一点儿 | 。
+jishi4	k=尽管 | 天气很冷，他 | k=还是 | does=出去跑步了 | 。
+jishi4	k=尽管 | 她很累， | k=但是 | 她 | does=不想休息 | 。
+jishi4	我今天晚上 | k=就是 | 不睡觉， | k=也 | does=要把作业写完 | 。
+jishi4	你不说我 | k=也 | does=知道 | 。
+buguan	k=不管 | 你去哪儿，我 | k=都 | does=跟你去 | 。
+buguan	k=不管 | 天气好不好，他 | k=都 | does=去跑步 | 。
+buguan	k=无论 | 多忙，她 | k=都 | does=给妈妈打电话 | 。
+buguan	k=不管 | 谁来，我们 | k=都 | does=欢迎 | 。
+yaoshi	k=要是 | 你有时间， | k=就 | does=来我家玩 | 。
+yaoshi	你 | k=要是 | 不舒服， | k=就 | does=去看医生 | 吧。
+yaoshi	k=既然 | 你累了， | k=就 | does=早点休息 | 吧。
+yaoshi	k=既然 | 已经来了， | k=就 | does=多坐一会儿 | 吧。
+fouze	快一点走， | k=否则 | 我们会迟到。
+fouze	你要多喝水， | k=否则 | 会不舒服。
+fouze	k=由于 | 天气不好， | k=因此 | 我们没有出去玩。
+fouze	他很饿， | k=于是 | 去买了一个面包。
+ranerr	这个菜很便宜， | k=不过 | 不太好吃。
+ranerr	我很想去， | k=不过 | 今天没有时间。
+ranerr	这个地方很有名， | k=然而 | 去的人不多。
+ranerr	他会说汉语， | k=并且 | 说得很好。
+jiyou	这个手机 | k=既 | 便宜 | k=又 | 好用。
+jiyou	她 | k=既 | 聪明 | k=又 | 努力。
+jiyou	我 | k=不是 | 不想去， | k=而是 | 没有时间。
+jiyou	他 | k=不是 | 老师， | k=而是 | 医生。
+shouxian	k=首先 | 要多听， | k=其次 | 要多说。
+shouxian	这个房间很大； | k=另外 | ，它离学校也很近。
+shouxian	我喜欢运动， | k=例如 | 游泳、跑步。
+shouxian	他在工作， | k=同时 | 也在学习汉语。
+budebu	太晚了， | who=我 | k=不得不 | does=回家 | 。
+budebu	没有公共汽车， | who=我们 | k=只好 | does=走路 | 。
+budebu	who=我们 | 现在走还 | k=来得及 | 。
+budebu	who=你 | k=赶快 | does=去 | 吧，别迟到。
+nandao	k=难道 | 你不知道 | k=吗 | ？
+nandao	k=难道 | 他没有告诉你 | k=吗 | ？
+nandao	你 | k=到底 | 想吃什么？
+nandao	你 | k=究竟 | 去不去？
+jingran	who=他 | k=竟然 | does=忘了 | 自己的生日。
+jingran	这么简单的题， | who=他 | k=竟然 | does=做错了 | 。
+jingran	k=原来 | 你在这儿，我找了你很久。
+jingran	who=我 | k=本来 | does=想去 | ，可是下雨了。
+queshi	这个办法 | k=确实 | 很好。
+queshi	我 | k=实在 | 太累了，想休息一下。
+queshi	我 | k=完全 | 同意你说的。
+queshi	他对这个工作 | k=十分 | 满意。
 conglai	who=我 | k=从来 | does=不喝酒 | 。
 conglai	who=他 | k=从来 | does=没去过那个地方 | 。
+conglai	who=这个菜 | k=并 | does=不贵 | ，只是有点儿辣。
+conglai	when=周末 | who=他 | k=往往 | when=在家 | does=休息 | 。
+ouer	who=我 | k=偶尔 | does=去看电影 | 。
+ouer	who=他 | k=不断 | 地 | does=练习 | ，所以汉语越来越好。
+ouer	who=他 | k=老是 | does=迟到 | ，老师很不高兴。
+ouer	who=我 | 昨天 | k=差点儿 | does=迟到 | 。
+zhishao	我每天 | k=至少 | 睡 | thing=七个小时 | 。
+zhishao	他 | thing=三十岁 | k=左右 | ，是一个医生。
+zhishao	我喜欢水果， | k=尤其 | 是苹果。
+zhishao	这里有十个人， | k=其中 | thing=三个 | 是老师。
+yexu	他 | k=也许 | 在家，给他打个电话吧。
+yexu	我 | k=估计 | 明天会下雨。
+yexu	k=恐怕 | 我不能去，对不起。
+yexu	路上 | k=千万 | 小心。
+reng	who=他 | k=仍然 | does=住 | 在那个小城市里。
+reng	who=我 | 想 | k=重新 | does=开始学习汉语 | 。
+reng	请 | k=继续 | does=说 | ，我在听。
+reng	who=他 | 努力学习， | k=最终 | does=通过了考试 | 。
+shaowei	请 | k=稍微 | 等一下，我马上来。
+shaowei	这件衣服 | k=有点儿 | 贵。
+shaowei	她唱得 | k=多么 | 好啊！
+shaowei	他很聪明， | k=却 | 不努力。
+gengjia4	天气 | k=更加 | does=冷 | 了，多穿一点儿衣服吧。
+gengjia4	这个手机 | k=不如 | 那个手机 | does=好用 | 。
+gengjia4	我们的想法完全 | k=相同 | 。
+gengjia4	他们对这件事 | k=同样 | 感兴趣。
+gengjia4	天气 | k=一天比一天 | does=冷 | 。
+duiyu	k=对于 | 这个问题，我没有意见。
+duiyu	k=对 | 我 | k=来说 | ，汉字很难。
+duiyu	k=通过 | 看电影，他学会了很多词。
+duiyu	k=随着 | 天气变冷，人们穿得越来越多。
+anzhao4	请 | k=按照 | 老师说的 | does=做 | 。
+anzhao4	k=作为 | 学生，他应该努力学习。
+anzhao4	k=与 | 去年 | k=相比 | ，今年的雨多了。
+anzhao4	这个消息 | k=使 | 我很高兴。
+anzhao4	老师 | k=表扬 | 我考得很好。
+anzhao4	大家 | k=选 | 他当经理。
+yijiu	我 | k=一 | does=到家 | k=就 | does=给你打电话 | 。
+yijiu	他 | k=一 | does=累 | k=就 | does=想睡觉 | 。
+yijiu	k=任何 | 人都可以来。
+yijiu	你 | k=随便 | 坐，别客气。
+suoyou	k=所有 | 的学生 | k=都 | 来了。
+suoyou	k=一切都 | 很好，请放心。
+suoyou	他有 | k=许多 | 朋友。
+suoyou	我睡了 | k=整个 | 下午。
+youde	k=有的 | 人喜欢夏天， | k=有的 | 人喜欢冬天。
+youde	这些书， | k=有的 | 好， | k=有的 | 不好。
+youde	我们 | k=互相 | 帮助，一起学习汉语。
+youde	我们有 | k=共同 | 的爱好。
+zhiqian	吃饭 | k=之前 | ，先洗手。
+zhiqian	下课 | k=之后 | ，我们去吃饭。
+zhiqian	我十岁的时候搬到这里， | k=当时 | 这里很小。
+zhiqian	他先吃饭， | k=接着 | 看电视。
+shuoming	这件事 | k=说明 | 他很努力。
+shuoming	请你 | k=说明 | 一下这个问题。
+shuoming	他点头 | k=表示 | 同意。
+shuoming	他后来 | k=成为 | 了一名医生。
+newmean4	你明天 | k=有空 | 吗？
+newmean4	衣服 | k=干 | 了，你可以穿了。
+newmean4	我喜欢苹果、西瓜 | k=等 | 水果。
+newmean4	他在花园里 | k=种 | 了很多花。
+num4	三 | k=分之 | 一的学生是外国人。
+num4	他的收入是我的 | k=两倍 | 。
+num4	教室里有 | k=三十来个 | 学生。
+num4	她 | k=一脸 | 高兴地跑了进来。
+pairs4	我 | k=不仅 | 会说汉语， | k=还 | 会写汉字。
+pairs4	学汉语 | k=一方面 | 有意思， | k=另一方面 | 很有用。
+pairs4	周末他 | k=不是 | 在家， | k=就是 | 在公园。
+jiaorang	thing=我的自行车 | k=让 | thing=朋友 | does=借走了 | 。
+jiaorang	thing=蛋糕 | k=叫 | thing=弟弟 | does=吃了 | 。
+jiaorang	我 | k=把 | thing=银行卡密码 | does=忘了 | 。
+jiaorang	别 | k=把 | thing=垃圾 | does=往地上扔 | 。
+qiang4	我累 | k=死了 | 。
+qiang4	k=谁不 | 认识他？
+qiang4	k=没有 | 人 | k=不 | 喜欢放假。
+qiang4	这个房间真 | k=够 | 大 | k=的 | 。
+frames4	k=在 | 工作 | k=方面 | ，他很有经验。
+frames4	k=为了 | 梦想 | k=而 | 努力的人值得我们学习。
+frames4	k=拿 | 我 | k=来说 | ，我每天都跑步。
+fixed4	她 | k=一 | 字 | k=一 | 句说得很清楚。
+fixed4	他们 | k=一 | 前 | k=一 | 后走进了教室。
+fixed4	那位老人 | k=无 | 儿 | k=无 | 女。
+fixed4	同学们 | k=有 | 说 | k=有 | 笑地走出了教室。
+phrases4	别着急，我们 | k=有的是 | 时间。
+phrases4	他 | k=说不定 | 已经到家了。
+phrases4	我 | k=不怎么 | 喜欢喝咖啡。
+phrases4	他没有直接拒绝，这 | k=就是说 | ，你还有机会。
+never4	这么多菜，我们吃 | k=得了 | 吗？
+never4	明天我去 | k=不了 | 。
+never4	我保证 | k=再也不 | 迟到了。
+never4	我 | k=怎么也 | 想 | k=不 | 起来他的名字。
+kouyu4a	k=有什么好 | 害怕 | k=的 | ？
+kouyu4a	他 | k=是 | 他，我 | k=是 | 我。
+kouyu4a	你去 | k=也得 | 去，不去 | k=也得 | 去。
+kouyu4a	有什么想法，说 | k=就是了 | 。
+kouyu4a	k=还 | 大饭店 | k=呢 | ，菜这么难吃。
+kouyu4a	我们只能走一步 | k=是 | 一步。
+kouyu4b	我不饿，你 | k=吃你的 | 吧。
+kouyu4b	老师让你多练，你 | k=就 | 多练。
+kouyu4b	他病了，我 | k=说什么也 | 得去看看他。
+kouyu4b	买 | k=就 | 买吧，也不太贵。
+kouyu4b	这些衣服便宜 | k=是 | 便宜， | k=就是 | 质量不太好。
+yidan	k=一旦 | 下雨，比赛 | k=就 | does=会停 | 。
+yidan	你 | k=一旦 | 开始， | k=就 | does=不能放弃 | 。
+yidan	他经常运动， | k=因而 | 身体很好。
+yidan	多读书可以提高水平， | k=从而 | 找到更好的工作。
+huoshi	周末我 | k=或是 | 看书， | k=或是 | 看电影。
+huoshi	买 | k=也好 | ，不买 | k=也好 | ，我都没意见。
+huoshi	天气不好， | k=加上 | 时间太晚，我们就不去了。
+huoshi	桌子上有苹果、香蕉 | k=以及 | 西瓜。
+zaiye	k=再 | does=累 | ，我 | k=也 | does=要完成工作 | 。
+zaiye	这个东西 | k=再 | does=贵 | ，他 | k=也 | does=想买 | 。
+zaiye	k=没有 | 水， | k=就没有 | 生命。
+zaiye	k=没有 | 你的帮助， | k=就没有 | 我的今天。
+weideshi	他每天跑步， | k=为的是 | 身体健康。
+weideshi	请留下电话号码， | k=以便 | 我们联系你。
+weideshi	k=以 | 学校 | k=为 | 中心，附近有很多商店。
+weideshi	他 | k=以 | 考上大学 | k=为 | 目标，每天都很努力。
+fanerr	雨不但没停， | k=反而 | 更大了。
+fanerr	快一点， | k=不然 | 我们会迟到。
+fanerr	k=要不 | 我们明天再去吧？
+fanerr	他 | k=毕竟 | 还是个孩子，别生气。
+guoran	我说今天会下雨， | k=果然 | 下雨了。
+guoran	他 | k=居然 | 忘了自己的生日。
+guoran	他今天 | k=似乎 | 不太高兴。
+guoran	她 | k=仿佛 | 没听见 | k=似的 | ，继续看书。
+congkan	k=从 | 天气 | k=来看 | ，明天会下雨。
+congkan	k=从 | 他的成绩 | k=来看 | ，他学得很好。
+congkan	k=拿 | 我 | k=来说 | ，我每天都跑步。
+congkan	k=在 | 我 | k=看来 | ，这个计划太难了。
+youci	他每天学习五个小时， | k=由此可见 | ，他很努力。
+youci	k=总之 | ，我们要努力学习。
+youci	k=到 | 今天 | k=为止 | ，我已经学了一百个词。
+youci	活动 | k=到 | 下周五 | k=为止 | 。
+ping	who=他 | k=凭 | 努力 | does=考上了大学 | 。
+ping	who=他 | k=凭借 | 自己的经验 | does=解决了问题 | 。
+ping	k=依据 | 这个规定，大家都要早点来。
+ping	who=他 | k=靠 | 写文章 | does=生活 | 。
+jiang	请 | k=将 | thing=书 | does=放在桌子上 | 。
+jiang	thing=这件事 | k=由 | who=他 | does=来做 | 。
+jiang	thing=这次会议 | k=由 | who=经理 | does=主持 | 。
+jiang	他 | k=所 | 说 | k=的 | 都是真的。
+ling	这个消息 | k=令 | 大家很高兴。
+ling	他的话 | k=令 | 我很感动。
+ling	这件事 | k=令 | 人吃惊。
+ling	这个结果 | k=使 | 老师很满意。
+bici	who=我们 | k=彼此 | does=了解 | 。
+bici	who=同学们 | k=彼此 | does=帮助 | 。
+bici	who=他 | k=如此 | does=努力 | ，一定会成功。
+bici	事情就是 | k=如此 | 。
+guyu	这个问题 | k=过于 | 简单。
+guyu	请 | k=稍 | 等一下。
+guyu	今天 | k=够 | 冷 | k=的 | ，多穿一点儿吧。
+guyu	你 | k=可 | 要小心啊！
+shichang	who=比赛 | k=将要 | does=开始 | 。
+shichang	who=他 | k=时常 | does=去公园跑步 | 。
+shichang	who=我们 | 要 | k=时刻 | does=注意安全 | 。
+shichang	听到电话响， | who=他 | k=立刻 | does=跑了过去 | 。
+jianjian	who=天 | k=渐渐 | does=黑 | k=了 | 。
+jianjian	who=他的汉语 | k=逐渐 | does=好起来 | k=了 | 。
+jianjian	who=她 | k=始终 | does=相信 | 自己会成功。
+jianjian	who=他 | k=连续 | 三天 | does=没有睡觉 | 。
+suihou	who=我 | k=再次 | does=见到了 | 老朋友。
+suihou	who=他 | 先吃了饭， | k=随后 | 就 | does=去上班了 | 。
+suihou	k=此时 | ，天已经黑了。
+suihou	who=客人们 | k=陆续 | does=到了 | 。
+jianzhi	who=今天 | k=简直 | does=太热了 | 。
+jianzhi	who=这件事 | k=绝对 | does=不能告诉别人 | 。
 jianzhi	who=我 | k=根本 | does=不知道 | thing=这件事 | 。
+jianzhi	who=这个问题 | k=难以 | does=解决 | 。
+jinliang	请 | k=尽量 | does=早点来 | 。
+jinliang	who=我 | 会 | k=尽量 | does=少吃甜的 | 。
+jinliang	who=我 | 会 | k=尽力 | does=帮你 | 。
+jinliang	k=万一 | 下雨，我们就在家看电影。
+zaiye2	who=我 | k=再也 | 不会 | does=相信 | 他了。
+zaiye2	他走了以后， | k=再也 | 没 | does=回来过 | 。
+zaiye2	这个字 | who=我 | k=怎么也 | does=写 | 不好。
+zaiye2	who=我 | k=怎么都 | does=想 | 不起来他的名字。
+laiqu	who=他 | 在房间里 | k=走来走去 | 。
+laiqu	who=我 | k=想来想去 | ，还是 | does=决定去了 | 。
+laiqu	who=他 | k=看着看着 | 就 | does=睡着了 | 。
+laiqu	who=他 | k=说走就走 | ，没有等我们。
+youa5	这家饭店 | k=有 | 吃 | k=有 | 喝，还有音乐。
+youa5	他们 | k=有 | 说 | k=有 | 笑地走进了教室。
+youa5	他坐 | k=也不是 | ，站 | k=也不是 | ，不知道该怎么办。
+youa5	今天我不去了， | k=一来 | 天气不好， | k=二来 | 我有点累。
+youa5	他 | k=没 | 日 | k=没 | 夜地工作。
+youa5	这些汉字写得大 | k=的 | 大，小 | k=的 | 小。
+kan	k=看你 | 累 | k=的 | ，快去休息吧。
+kan	k=看你 | 说 | k=的 | ，我怎么会不帮你呢？
+kan	急 | k=什么 | 急？时间还早呢。
+kan	k=什么 | 钱 | k=不 | 钱 | k=的 | ，我们是朋友！
+bude	who=他 | does=高兴 | k=得不得了 | 。
+bude	who=这里的风景 | does=美 | k=极了 | 。
+bude	who=他 | does=累 | k=得很 | ，想早点睡觉。
+bude	这可 | k=不得了 | ！
+zhuangtai5	who=他 | does=高兴 | k=得 | does=跳了起来 | 。
+zhuangtai5	who=她 | does=哭 | k=得 | does=眼睛都红了 | 。
+zhuangtai5	这么多菜， | who=我们 | does=吃 | k=得了 | 吗？
+zhuangtai5	明天我有事， | does=去 | k=不了 | 。
+zhuangtai5	这种玩笑 | does=开 | k=不得 | 。
+zhuangtai5	这件事 | does=急 | k=不得 | 。
+qilai	天气热 | k=起来 | 了。
+qilai	这个菜看 | k=起来 | 很好吃。
+qilai	请把电话号码写 | k=下来 | 。
+qilai	她考 | k=上 | 了大学。
+youzhe	who=这座城市 | k=有着 | 很长的历史。
+youzhe	who=他 | k=有着 | 丰富的经验。
+youzhe	who=他 | k=把 | 我 | k=当作 | 朋友。
+youzhe	who=他们 | k=把 | 这个地方 | k=变成了 | 公园。
+notional	thing=饭 | does=做好 | k=了 | 。
+notional	thing=问题 | does=解决 | k=了 | 。
+notional	我们班 | does=来 | k=了 | thing=一位新同学 | 。
+notional	thing=我的手机 | does=丢 | k=了 | 。
+adverbials	who=我们 | when=明天下午 | when=在学校门口 | does=见面 | 。
+adverbials	who=他 | when=每天早上 | when=在公园里 | 认真地 | does=跑步 | 。
+adverbials	who=我 | does=去商店 | does=买东西 | 。
+adverbials	who=他 | does=坐飞机 | does=去上海 | 。
+xiangbi5	k=跟 | 去年 | k=相比 | ， | who=今年的雨 | 多了。
+xiangbi5	k=跟 | 他 | k=相比 | ， | who=我的汉语 | 差多了。
+xiangbi5	who=他 | k=比 | 我大三岁。
+xiangbi5	who=这本书 | k=比 | 那本贵很多。
+xiangbi5	who=他 | k=高我一头 | 。
+xiangbi5	who=她 | k=大我三岁 | 。
+mw5	桌子上有一 | k=朵 | 花。
+mw5	墙上挂着一 | k=幅 | 画。
+mw5	他骑着一 | k=匹 | 马。
+mw5	那 | k=扇 | 门是开着的。
+xing	这件事的重要 | k=性 | 不用多说。
+xing	欢迎来到 | k=本 | 公司。
+xing	他是我最好的朋友 | k=之一 | 。
+xing	我不知道他 | k=是否 | 同意。
+newmean5	我们家的狗会 | k=看家 | 。
+newmean5	请你 | k=数数 | 这里有几本书。
+newmean5	你要小心，别 | k=上当 | 。
+newmean5	他摔 | k=倒 | 了。
+napa5	k=哪怕 | 只有一天，我 | k=也 | 想去。
+napa5	k=不是 | 光有目标就可以， | k=还 | 要行动起来。
+napa5	k=不 | 尝 | k=不 | 知道，这个菜真好吃。
+napa5	明天八点， | k=不 | 见 | k=不 | 散。
+bei5	thing=我新买的衣服 | k=被 | who=他 | k=给 | does=洗坏了 | 。
+bei5	who=孩子 | k=把 | thing=书包 | k=一 | does=扔 | ，就跑出去玩了。
+bei5	who=他 | k=把 | thing=钱 | 都 | does=买了衣服 | 。
+bei5	when=墙上 | does=挂 | k=有 | thing=一张地图 | 。
+kouyu5a	这么小的病， | k=用不着 | 去医院。
+kouyu5a	闲着 | k=也是 | 闲着，我来帮你吧。
+kouyu5a	k=不管怎么说 | ，健康最重要。
+kouyu5a	k=真有你的 | ，这么难的题都做对了。
+kouyu5a	票是免费的， | k=不 | does=看 | k=白不 | does=看 | 。
+kouyu5b	对这个孩子他真没办法，打 | k=也 | 打 | k=不得 | ，说 | k=也 | 说 | k=不得 | 。
+kouyu5b	好 | k=是它 | ，坏 | k=也是它 | 。
+kouyu5b	k=想来想去 | ，还是这个办法最好。
+kouyu5b	父母说 | k=什么 | 就是 | k=什么 | 。

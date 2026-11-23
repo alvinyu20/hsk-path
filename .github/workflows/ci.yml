@@ -37,6 +37,8 @@ jobs:
       # fails when a script, style or font changed but `node tools/build-site.js` was not run (stale version numbers, security policy or offline file list)
       - name: The version stamp is current
         run: node tools/build-site.js --check
+      - name: The wrong-answer tables are current (content/look-alikes.tsv, same-meaning-groups.tsv)
+        run: python3 tools/build-confusers.py --check
       - name: Unit tests
         run: npm run test:unit
       - name: Worker tests (friends server, in a local Cloudflare simulator)
@@ -53,7 +55,7 @@ jobs:
       matrix:
         include:
           - name: friends, sync, offline copy
-            run: node tools/smoke-test-friends.js && node tools/smoke-test-pwa.js && node tools/smoke-test-grv-variety.js && node tools/smoke-test-hear-sentence.js && node tools/smoke-test-spot-also.js && node tools/smoke-test-passages.js && node tools/smoke-test-ladder.js && node tools/smoke-test-games.js && node tools/smoke-test-theme.js && node tools/smoke-test-cloze-alts.js
+            run: node tools/smoke-test-friends.js && node tools/smoke-test-pwa.js && node tools/smoke-test-grv-variety.js && node tools/smoke-test-hear-sentence.js && node tools/smoke-test-spot-also.js && node tools/smoke-test-passages.js && node tools/smoke-test-ladder.js && node tools/smoke-test-games.js && node tools/smoke-test-theme.js && node tools/smoke-test-cloze-alts.js && node tools/smoke-test-confusers.js
           - name: HSK 1
             run: node tools/smoke-test.js
           - name: HSK 2

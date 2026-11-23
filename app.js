@@ -829,7 +829,14 @@
       seen[key] = true; if (kind === 'hear') seen[sound] = true;
       out.push(z);
     });
-    take(shuffle(pool)); take(shuffle(BANK_KEYS.filter(z => BANK[z].pos === me.pos))); take(shuffle(BANK_KEYS));
+    // one wrong answer (D4, see confusers) the learner could really mix up: a look-alike, opposite or word-family word when reading,
+    // a word-family word when listening (Path listening never offers the same syllables with other tones: these words are new).
+    // None on a Fill it gap, where a look-alike or an opposite might fit the sentence too.
+    const tiers = kind === 'mean' ? ['look', 'opp', 'family'] : kind === 'rev' ? ['look', 'family'] : kind === 'hear' ? ['family'] : [];
+    if (tiers.length && n > 2) take(smartPicks(zh, tiers, 1, z => !(avoid && avoid.indexOf(z) >= 0) && (kind === 'hear' || !glossClash(BANK[z].en, me.en))));
+    const fairPl = (z) => !sameMeaning(zh, z) && (kind !== 'rev' || !glossClash(BANK[z].en, me.en));   // "Which word means …?": no second right answer
+    take(shuffle(pool).filter(fairPl)); take(shuffle(BANK_KEYS.filter(z => BANK[z].pos === me.pos)).filter(fairPl)); take(shuffle(BANK_KEYS).filter(fairPl));
+    if (out.length < n - 1) take(shuffle(BANK_KEYS));   // a tiny word bank: fill up anyway
     return shuffle([zh].concat(out));
   };
   const plQ = (zh, kind, pool, n, ph) => {
@@ -975,14 +982,57 @@
   // so a wrong answer must never sound like the right one. A word with several readings ("zhī / zhǐ") clashes if any of them match.
   const soundKeys = (py) => String(py || '').toLowerCase().split(/[\/,;]/).map(r => r.replace(/[\s'’·\-]/g, '')).filter(Boolean);
   const soundsAlike = (a, b) => { const x = soundKeys(BANK[a] && BANK[a].py); return soundKeys(BANK[b] && BANK[b].py).some(r => x.indexOf(r) >= 0); };
+  // ---------- smarter wrong answers (D4) ----------
+  // Besides random words of the same kind, a card can offer the words a learner really mixes up with this one:
+  //   look:   same length, differing only in look-alike characters (买 / 卖, 他 / 她, 午 / 牛; data/confusers.js from content/look-alikes.tsv)
+  //   family: same length, sharing a character in the same place (饭店 / 商店)
+  //   tone:   the same syllables with other tones (买 mǎi / 卖 mài); never the very same sound, which cannot be told apart by ear
+  //   opp:    the word's opposite in the word webs (大 / 小);  topic: a word of the same topic (早饭 / 午饭)
+  // Words that mean the same (早饭 / 早餐, content/same-meaning-groups.tsv) are never wrong answers for each other.
+  const CONF = window.SHANLU_CONFUSERS || { look:[], same:[] };
+  const LOOK = {}; CONF.look.forEach((g, i) => Array.from(g).forEach(ch => { (LOOK[ch] = LOOK[ch] || []).push(i); }));
+  const lookAlikeCh = (a, b) => a !== b && !!LOOK[a] && !!LOOK[b] && LOOK[a].some(i => LOOK[b].indexOf(i) >= 0);
+  const SAME_AS = {}; CONF.same.map(g => g.map(z => (ERHUA && !ERHUA_ON ? ERHUA.zh(z) : z))).forEach(g => g.forEach(z => { SAME_AS[z] = (SAME_AS[z] || []).concat(g.filter(x => x !== z)); }));   // in the plain style the words are 小孩, not 小孩儿
+  const sameMeaning = (a, b) => !!SAME_AS[a] && SAME_AS[a].indexOf(b) >= 0;
+  const OPP_OF = {}; (OPPS || []).forEach(o => { (OPP_OF[o.a] = OPP_OF[o.a] || []).push(o.b); (OPP_OF[o.b] = OPP_OF[o.b] || []).push(o.a); });
+  const TOPIC_OF = {}; (TOPICS || []).forEach((t, i) => (t.words || []).forEach(z => { (TOPIC_OF[z] = TOPIC_OF[z] || []).push(i); }));
+  const toneKeys = (py) => String(py || '').split(/[\/,;]/).map(r => toneless(r)).filter(Boolean);
+  const CONF_CACHE = {};
+  const confusers = (zh) => {
+    if (CONF_CACHE[zh]) return CONF_CACHE[zh];
+    const out = { look:[], family:[], tone:[], opp:[], topic:[] }; const w = BANK[zh];
+    if (!w) return out;
+    const L = zh.length, myTone = toneKeys(w.py);
+    BANK_KEYS.forEach(z => {
+      if (z === zh || z.length !== L) return;
+      let diff = 0, look = 0, same = 0;
+      for (let i = 0; i < L; i++) { if (zh[i] === z[i]) same++; else { diff++; if (lookAlikeCh(zh[i], z[i])) look++; } }
+      if (diff && diff === look) out.look.push(z);
+      else if (L > 1 && same > 0) out.family.push(z);
+      if (toneKeys(BANK[z].py).some(t => myTone.indexOf(t) >= 0) && !soundsAlike(zh, z)) out.tone.push(z);
+    });
+    out.opp = (OPP_OF[zh] || []).filter(z => BANK[z] && z !== zh);
+    const seenT = {}; (TOPIC_OF[zh] || []).forEach(i => (TOPICS[i].words || []).forEach(z => { if (z !== zh && BANK[z] && !seenT[z]) { seenT[z] = 1; out.topic.push(z); } }));
+    return (CONF_CACHE[zh] = out);
+  };
+  // up to `max` of those for this card, tier by tier (each tier shuffled), each passing ok(z, pickedSoFar)
+  const smartPicks = (zh, tiers, max, ok) => {
+    const c = confusers(zh), out = [];
+    tiers.forEach(t => shuffle(c[t].slice()).forEach(z => { if (out.length < max && out.indexOf(z) < 0 && !sameMeaning(zh, z) && ok(z, out)) out.push(z); }));
+    return out;
+  };
+  const SMART_MAX = 2;   // a Review card keeps at least one ordinary wrong answer
   const others = (zh, k, byMeaning, byEar) => {
     const w = BANK[zh];
-    const fair = (z) => z !== zh && !(byEar && soundsAlike(z, zh));
-    const same = shuffle(BANK_KEYS.filter(z => fair(z) && BANK[z].pos === w.pos && BANK[z].en !== w.en));
-    const rest = shuffle(BANK_KEYS.filter(z => fair(z) && BANK[z].pos !== w.pos && BANK[z].en !== w.en));
+    const fair = (z) => z !== zh && !(byEar && soundsAlike(z, zh)) && !sameMeaning(zh, z);
+    // reading a word: look-alikes, its opposite, its word family, its topic; hearing a word: other tones, then its family; hearing its meaning: other tones, opposite, topic
+    const tiers = byEar ? (byMeaning ? ['tone', 'opp', 'topic'] : ['tone', 'family']) : ['look', 'opp', 'family', 'topic'];
+    const smart = smartPicks(zh, tiers, Math.min(SMART_MAX, k), (z, got) => fair(z) && BANK[z].en !== w.en && (!byMeaning || (!glossClash(BANK[z].en, w.en) && !got.some(p => glossClash(BANK[p].en, BANK[z].en)))));
+    const same = shuffle(BANK_KEYS.filter(z => fair(z) && smart.indexOf(z) < 0 && BANK[z].pos === w.pos && BANK[z].en !== w.en));
+    const rest = shuffle(BANK_KEYS.filter(z => fair(z) && smart.indexOf(z) < 0 && BANK[z].pos !== w.pos && BANK[z].en !== w.en));
     const all = same.concat(rest);
-    if (!byMeaning) return all.slice(0, k);
-    const picked = [];
+    if (!byMeaning) return smart.concat(all).slice(0, k);
+    const picked = smart.slice();
     all.forEach(z => { if (picked.length < k && !glossClash(BANK[z].en, w.en) && !picked.some(p => glossClash(BANK[p].en, BANK[z].en))) picked.push(z); });
     if (picked.length < k) all.forEach(z => { if (picked.length < k && picked.indexOf(z) < 0 && !glossClash(BANK[z].en, w.en)) picked.push(z); });   // a tiny word bank: relax the rule between wrong answers
     if (picked.length < k) all.forEach(z => { if (picked.length < k && picked.indexOf(z) < 0) picked.push(z); });
@@ -6780,7 +6830,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       if (window.requestAnimationFrame) requestAnimationFrame(() => setTimeout(go, 0)); else setTimeout(go, 0);
     });
     app.lateReady = () => p; }
-  app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin, plChoices, ffTier, jyFinds, jyRead, SV_SETS };   // for the browser tests
+  app.testApi = { staleNew, comparePinyin, toneInfo, checkTyped, qSayIt, bump, buildQueue, itemOf, retK, retention, segHsk, aiPinyin, plChoices, confusers, choiceOptions, ffTier, jyFinds, jyRead, SV_SETS };   // for the browser tests
   window.shanlu = app;
   // an exam photo that does not load (offline, blocked, removed) is dropped and its emoji shows instead
   document.addEventListener('error', (ev) => {

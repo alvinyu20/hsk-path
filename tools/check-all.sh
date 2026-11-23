@@ -24,6 +24,7 @@ last python3 -W ignore tools/build-erhua.py
 last python3 -W ignore tools/build-exam.py
 last python3 -W ignore tools/build-passages.py
 last python3 -W ignore tools/build-games.py
+last python3 tools/build-confusers.py
 last python3 -W ignore tools/build-path.py
 last python3 -W ignore tools/build-preview.py "$DATASET"
 last python3 -W ignore tools/build-preview.py "$DATASET" 3
