@@ -51,6 +51,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
         labels.forEach(l => { if (l !== zh && plain(pyOf[l]).some(x => plain(pyOf[zh]).indexOf(x) >= 0)) same.push(zh + '/' + l); }); } });
     return { n, tone, same };
   });
+  // 别 "do not" never next to 不要 "don't" or 不 "not, no" (the same meaning in other words; Alvin, 24 Nov)
+  const bie = await page.evaluate(() => { const a = window.shanlu, bad = []; for (let i = 0; i < 40; i++) ['choice', 'audio'].forEach(k => { const q = a.rQuestion('别', k); if (q && q.options) q.options.forEach(o => { if (/^(don't|not, no)$/.test(o.label)) bad.push(k + ': ' + o.label); }); }); return bad; });
+  check(bie.length === 0, '"What does 别 mean?" never offers "don\'t" or "not, no" next to "do not": ' + bie.slice(0, 3).join(', '));
   check(h.n > 0 && h.tone > h.n / 2, '"Which word did you hear?" offers the same syllables with other tones when there are some (' + h.tone + ' of ' + h.n + ' cards)');
   check(h.same.length === 0, 'and never a word that sounds exactly the same: ' + h.same.slice(0, 5).join(', '));
   check(errors.length === 0, 'no page errors: ' + errors.join(' | '));

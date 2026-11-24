@@ -842,7 +842,7 @@
     // None on a Fill it gap, where a look-alike or an opposite might fit the sentence too.
     const tiers = kind === 'mean' ? ['look', 'opp', 'family'] : kind === 'rev' ? ['look', 'family'] : kind === 'hear' ? ['family'] : [];
     if (tiers.length && n > 2) take(smartPicks(zh, tiers, 1, z => !(avoid && avoid.indexOf(z) >= 0) && (kind === 'hear' || !glossClash(BANK[z].en, me.en))));
-    const fairPl = (z) => !sameMeaning(zh, z) && (kind !== 'rev' || !glossClash(BANK[z].en, me.en));   // "Which word means …?": no second right answer
+    const fairPl = (z) => !sameMeaning(zh, z) && ((kind !== 'rev' && kind !== 'mean') || !glossClash(BANK[z].en, me.en));   // a meaning card or "Which word means …?": no second right answer
     take(shuffle(pool).filter(fairPl)); take(shuffle(BANK_KEYS.filter(z => BANK[z].pos === me.pos)).filter(fairPl)); take(shuffle(BANK_KEYS).filter(fairPl));
     if (out.length < n - 1) take(shuffle(BANK_KEYS));   // a tiny word bank: fill up anyway
     return shuffle([zh].concat(out));
@@ -976,10 +976,11 @@
   // question builders (used by tests and by Review)
   // Meaning choices must not be near-duplicates: "to read; to study" next to "to read (aloud); to study", or "sorry" next to "sorry; embarrassed",
   // makes a right answer feel wrong. Two English glosses clash when they share a meaningful word.
-  const GLOSS_SKIP = { to:1, a:1, an:1, the:1, of:1, be:1, or:1, and:1, in:1, on:1, at:1, for:1, it:1, is:1, as:1, with:1, not:1, one:1, i:1, you:1, your:1, my:1, me:1, we:1, he:1, she:1, they:1, that:1, this:1, so:1, by:1, from:1, get:1, do:1 };
+  const GLOSS_SKIP = { to:1, a:1, an:1, the:1, of:1, be:1, or:1, and:1, in:1, on:1, at:1, for:1, it:1, is:1, as:1, with:1, one:1, i:1, you:1, your:1, my:1, me:1, we:1, he:1, she:1, they:1, that:1, this:1, so:1, by:1, from:1, get:1, do:1 };
   const glossBits = (en) => {
     const out = {};
-    String(en || '').toLowerCase().replace(/[^a-z\s]+/g, ' ').split(/\s+/).forEach(t => {
+    // "don't" is "do not" (别 "do not" next to 不要 "don't" was a second right answer); "not" counts, so negative meanings never sit side by side
+    String(en || '').toLowerCase().replace(/can['’]t\b/g, 'can not').replace(/won['’]t\b/g, 'will not').replace(/n['’]t\b/g, ' not').replace(/[^a-z\s]+/g, ' ').split(/\s+/).forEach(t => {
       if (!t || GLOSS_SKIP[t]) return;
       out[t.length > 3 ? t.replace(/(ing|ed|es|s)$/, '') : t] = 1;
     });

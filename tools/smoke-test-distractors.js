@@ -19,8 +19,8 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.goto(url + (lvl > 1 ? '?level=' + lvl : '')); await page.waitForSelector('.app'); await page.waitForTimeout(300);
     const res = await page.evaluate(() => {
       const a = window.shanlu; const keys = Object.keys(a.state.ws);
-      const SKIP = new Set('to a an the of be or and in on at for it is as with not one i you your my me we he she they that this so by from get do'.split(' '));
-      const bits = (en) => new Set(String(en).toLowerCase().replace(/[^a-z\s]+/g, ' ').split(/\s+/).filter(t => t && !SKIP.has(t)).map(t => t.length > 3 ? t.replace(/(ing|ed|es|s)$/, '') : t));
+      const SKIP = new Set('to a an the of be or and in on at for it is as with one i you your my me we he she they that this so by from get do'.split(' '));
+      const bits = (en) => new Set(String(en).toLowerCase().replace(/can['’]t\b/g, 'can not').replace(/won['’]t\b/g, 'will not').replace(/n['’]t\b/g, ' not').replace(/[^a-z\s]+/g, ' ').split(/\s+/).filter(t => t && !SKIP.has(t)).map(t => t.length > 3 ? t.replace(/(ing|ed|es|s)$/, '') : t));
       const clash = (x, y) => { const p = bits(x), q = bits(y); for (const t of p) if (q.has(t)) return true; return false; };
       let n = 0, bad = [], short = 0;
       keys.forEach(zh => ['choice', 'audio'].forEach(kind => { for (let r = 0; r < 4; r++) {
