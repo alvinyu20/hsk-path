@@ -60,10 +60,10 @@ For each problem: number / sentence / the problem (simple Chinese plus one line 
 ## HSK 3 · 除了…, 都 / 还…: except and besides · 框架 frame
 公式 formula: 【除了】 + A + (以外) + 都 / 也 / 还 + …
 
-21. 【关键词：除了】周末，我每天都学汉语。  /  Except for weekends, I study Chinese every day.
-22. 【关键词：除了】米饭，我还想吃鱼。  /  Besides rice, I also want to eat fish.
-23. 【关键词：除了】你以外，我谁都不认识。  /  Except for you, I do not know anyone.
-24. 【关键词：除了】哥哥，大家都喜欢运动。  /  Except for my older brother, everyone likes sports.
+21. 【关键词：除了】周末，我每天【关键词：都】学汉语。  /  Except for weekends, I study Chinese every day.
+22. 【关键词：除了】米饭，我【关键词：还】想吃鱼。  /  Besides rice, I also want to eat fish.
+23. 【关键词：除了】你【关键词：以外】，我谁【关键词：都】不认识。  /  Except for you, I do not know anyone.
+24. 【关键词：除了】哥哥，大家【关键词：都】喜欢运动。  /  Except for my older brother, everyone likes sports.
 
 ## HSK 3 · 为了, 为, 关于 and 根据 · 词序 word order
 公式 formula: 【为了】 + Goal + ， + Action
@@ -112,7 +112,7 @@ For each problem: number / sentence / the problem (simple Chinese plus one line 
 46. 【主语：他】【时间/地点：八点】【关键词：才】【动作/描写：到学校】。  /  He did not get to school until eight.
 47. 【主语：他】【时间/地点：六点】【关键词：就】【动作/描写：起床了】。  /  He got up as early as six.
 48. 【主语：这件衣服】【关键词：才】三十块。  /  This piece of clothing is only thirty yuan.
-49. 【主语：我】等了【时间/地点：半个小时】，【主语：他】【关键词：才】【动作/描写：来】。  /  I waited half an hour before he came.
+49. 【主语：我】【动作/描写：等了】【时间/地点：半个小时】，【主语：他】【关键词：才】【动作/描写：来】。  /  I waited half an hour before he came.
 
 ## HSK 3 · 刚, 刚刚 and 刚才: just · 选一个 pick one
 公式 formula: Subject + 【刚 / *刚刚】 + Verb

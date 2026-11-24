@@ -220,8 +220,8 @@ For each problem: number / sentence / the problem (simple Chinese plus one line 
 
 107. 【主语：我】【动作/描写：去商店】【动作/描写：买水果】。  /  I go to the shop to buy fruit.
 108. 【主语：爸爸】【动作/描写：开车】【动作/描写：去公司】。  /  Dad drives to work.
-109. 【主语：爸爸】【动作/描写：给】小明一本书。  /  Dad gives Xiaoming a book.
-110. 【主语：我】【动作/描写：给妈妈】【动作/描写：打电话】。  /  I call my mom.
+109. 【主语：爸爸】【动作/描写：给】小明【宾语/事物：一本书】。  /  Dad gives Xiaoming a book.
+110. 【主语：我】给妈妈【动作/描写：打电话】。  /  I call my mom.
 
 ## HSK 1 · 请, 一下 and 喂 · 词序 word order
 公式 formula: 【请】 + Verb
@@ -362,7 +362,7 @@ For each problem: number / sentence / the problem (simple Chinese plus one line 
 公式 formula: Subject + Verb + 【来 / 去】 + (了)
 
 182. 请【动作/描写：进】【关键词：来】坐。  /  Please come in and sit down.
-183. 【主语：他】【动作/描写：回家】【关键词：去】了。  /  He has gone home.
+183. 【主语：他】【动作/描写：回】【时间/地点：家】【关键词：去】了。  /  He has gone home.
 184. 【主语：你】【动作/描写：下】【关键词：来】，我们一起去。  /  Come down, and we will go together.
 185. 【主语：她】【动作/描写：笑】【关键词：起来】了。  /  She started laughing.
 

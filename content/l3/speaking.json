@@ -609,8 +609,8 @@
      }
     },
     {
-     "zh": "作业什么时候要给老师？",
-     "en": "When does the homework have to be given to the teacher?"
+     "zh": "作业什么时候要写完？",
+     "en": "When does the homework have to be finished?"
     },
     {
      "zh": "好的，谢谢你。",
@@ -644,12 +644,12 @@
      "en": "Hello! Welcome to our hotel. How many days would you like to stay?"
     },
     {
-     "zh": "请等一下……对不起，你的房间只能住两天。",
-     "en": "Please wait a moment… Sorry, your room is only for two days."
+     "zh": "请等一下……对不起，第三天没有房间了。",
+     "en": "Please wait a moment… Sorry, there are no rooms left on the third day."
     },
     {
-     "zh": "真对不起，第三天的房间都有人住了。",
-     "en": "Really sorry; on the third day all the rooms have been taken."
+     "zh": "真对不起，前两天没问题，可是第三天的房间已经都有人住了。",
+     "en": "Really sorry; the first two days are no problem, but on the third day the rooms have all been taken."
     },
     {
      "zh": "你可以去旁边的宾馆，我帮你打电话问问。",

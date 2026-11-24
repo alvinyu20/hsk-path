@@ -110,8 +110,8 @@ hedui	他 | k=对 | 我很好。
 hedui	k=对 | ，我是学生。
 seq	who=我 | does=去商店 | does=买水果 | 。
 seq	who=爸爸 | does=开车 | does=去公司 | 。
-seq	who=爸爸 | does=给 | 小明一本书。
-seq	who=我 | does=给妈妈 | does=打电话 | 。
+seq	who=爸爸 | does=给 | 小明 | thing=一本书 | 。
+seq	who=我 | 给妈妈 | does=打电话 | 。
 request	k=请 | does=喝茶 | 。
 request	k=请问 | ，学校在哪儿？
 request	我想 | does=休息 | k=一下 | 。
@@ -184,7 +184,7 @@ result	who=你 | does=听 | k=懂 | 了吗？
 result	who=他 | does=写 | k=错 | 了我的名字。
 result	老师说得太快， | who=我 | does=听 | k=不懂 | 。
 direction	请 | does=进 | k=来 | 坐。
-direction	who=他 | does=回家 | k=去 | 了。
+direction	who=他 | does=回 | when=家 | k=去 | 了。
 direction	who=你 | does=下 | k=来 | ，我们一起去。
 direction	who=她 | does=笑 | k=起来 | 了。
 gen	who=我 | k=跟 | thing=朋友 | k=一起 | does=去旅游 | 。
@@ -243,10 +243,10 @@ zhiyao	k=只要 | 天气好，我们 | k=就 | 去公园。
 zhiyao	k=只要 | 多听， | k=就 | 能听懂。
 zhiyao	k=只有 | 多说， | k=才 | 能说好。
 zhiyao	k=只有 | 你来，我 | k=才 | 去。
-chule	k=除了 | 周末，我每天都学汉语。
-chule	k=除了 | 米饭，我还想吃鱼。
-chule	k=除了 | 你以外，我谁都不认识。
-chule	k=除了 | 哥哥，大家都喜欢运动。
+chule	k=除了 | 周末，我每天 | k=都 | 学汉语。
+chule	k=除了 | 米饭，我 | k=还 | 想吃鱼。
+chule	k=除了 | 你 | k=以外 | ，我谁 | k=都 | 不认识。
+chule	k=除了 | 哥哥，大家 | k=都 | 喜欢运动。
 weile	k=为了 | 去中国学习，他 | does=在学汉语 | 。
 weile	妈妈 | k=为 | 孩子 | does=准备了早饭 | 。
 weile	我想看一个 | k=关于 | 中国的电影。
@@ -271,7 +271,7 @@ yue	我 | k=越来越 | 喜欢汉语了。
 cai	who=他 | when=八点 | k=才 | does=到学校 | 。
 cai	who=他 | when=六点 | k=就 | does=起床了 | 。
 cai	who=这件衣服 | k=才 | 三十块。
-cai	who=我 | 等了 | when=半个小时 | ， | who=他 | k=才 | does=来 | 。
+cai	who=我 | does=等了 | when=半个小时 | ， | who=他 | k=才 | does=来 | 。
 gang	我 | k=刚 | 吃完饭。
 gang	电影 | k=刚 | 开始。
 gang	k=刚才 | 谁给你打电话？
@@ -607,7 +607,7 @@ youa5	他们 | k=有 | 说 | k=有 | 笑地走进了教室。
 youa5	他坐 | k=也不是 | ，站 | k=也不是 | ，不知道该怎么办。
 youa5	今天我不去了， | k=一来 | 天气不好， | k=二来 | 我有点累。
 youa5	他 | k=没 | 日 | k=没 | 夜地工作。
-youa5	这些汉字写得大 | k=的 | 大，小 | k=的 | 小。
+youa5	这些汉字写得 | k=大的大 | ， | k=小的小 | 。
 kan	k=看你 | 累 | k=的 | ，快去休息吧。
 kan	k=看你 | 说 | k=的 | ，我怎么会不帮你呢？
 kan	急 | k=什么 | 急？时间还早呢。
@@ -623,7 +623,7 @@ zhuangtai5	明天我有事， | does=去 | k=不了 | 。
 zhuangtai5	这种玩笑 | does=开 | k=不得 | 。
 zhuangtai5	这件事 | does=急 | k=不得 | 。
 qilai	天气热 | k=起来 | 了。
-qilai	这个菜看 | k=起来 | 很好吃。
+qilai	这个菜 | k=看起来 | 很好吃。
 qilai	请把电话号码写 | k=下来 | 。
 qilai	她考 | k=上 | 了大学。
 youzhe	who=这座城市 | k=有着 | 很长的历史。
@@ -636,14 +636,14 @@ notional	我们班 | does=来 | k=了 | thing=一位新同学 | 。
 notional	thing=我的手机 | does=丢 | k=了 | 。
 adverbials	who=我们 | when=明天下午 | when=在学校门口 | does=见面 | 。
 adverbials	who=他 | when=每天早上 | when=在公园里 | 认真地 | does=跑步 | 。
-adverbials	who=我 | does=去商店 | does=买东西 | 。
-adverbials	who=他 | does=坐飞机 | does=去上海 | 。
+adverbials	who=我 | does=去 | when=商店 | does=买东西 | 。
+adverbials	who=他 | 坐飞机 | does=去 | when=上海 | 。
 xiangbi5	k=跟 | 去年 | k=相比 | ， | who=今年的雨 | 多了。
 xiangbi5	k=跟 | 他 | k=相比 | ， | who=我的汉语 | 差多了。
 xiangbi5	who=他 | k=比 | 我大三岁。
 xiangbi5	who=这本书 | k=比 | 那本贵很多。
-xiangbi5	who=他 | k=高我一头 | 。
-xiangbi5	who=她 | k=大我三岁 | 。
+xiangbi5	who=他 | does=高 | 我 | thing=一头 | 。
+xiangbi5	who=她 | does=大 | 我 | thing=三岁 | 。
 mw5	桌子上有一 | k=朵 | 花。
 mw5	墙上挂着一 | k=幅 | 画。
 mw5	他骑着一 | k=匹 | 马。
@@ -655,7 +655,7 @@ xing	我不知道他 | k=是否 | 同意。
 newmean5	我们家的狗会 | k=看家 | 。
 newmean5	请你 | k=数数 | 这里有几本书。
 newmean5	你要小心，别 | k=上当 | 。
-newmean5	他摔 | k=倒 | 了。
+newmean5	他 | k=摔倒 | 了。
 napa5	k=哪怕 | 只有一天，我 | k=也 | 想去。
 napa5	k=不是 | 光有目标就可以， | k=还 | 要行动起来。
 napa5	k=不 | 尝 | k=不 | 知道，这个菜真好吃。
@@ -665,11 +665,11 @@ bei5	who=孩子 | k=把 | thing=书包 | k=一 | does=扔 | ，就跑出去玩�
 bei5	who=他 | k=把 | thing=钱 | 都 | does=买了衣服 | 。
 bei5	when=墙上 | does=挂 | k=有 | thing=一张地图 | 。
 kouyu5a	这么小的病， | k=用不着 | 去医院。
-kouyu5a	闲着 | k=也是 | 闲着，我来帮你吧。
+kouyu5a	k=闲着也是闲着 | ，我来帮你吧。
 kouyu5a	k=不管怎么说 | ，健康最重要。
 kouyu5a	k=真有你的 | ，这么难的题都做对了。
 kouyu5a	票是免费的， | k=不 | does=看 | k=白不 | does=看 | 。
 kouyu5b	对这个孩子他真没办法，打 | k=也 | 打 | k=不得 | ，说 | k=也 | 说 | k=不得 | 。
 kouyu5b	好 | k=是它 | ，坏 | k=也是它 | 。
 kouyu5b	k=想来想去 | ，还是这个办法最好。
-kouyu5b	父母说 | k=什么 | 就是 | k=什么 | 。
+kouyu5b	父母说 | k=什么就是什么 | 。

@@ -835,9 +835,9 @@ window.HSK2_SPEAK = {
    ],
    "ai": [
     {
-     "zh": "喂，你好！我是小明。你明天下午有时间吗？",
-     "py": "Wèi, nǐ hǎo! Wǒ shì Xiǎomíng. Nǐ míngtiān xiàwǔ yǒu shíjiān ma?",
-     "en": "Hello! I am Xiao Ming. Are you free tomorrow afternoon?"
+     "zh": "喂，你好！是我。你明天下午有时间吗？",
+     "py": "Wèi, nǐ hǎo! Shì wǒ. Nǐ míngtiān xiàwǔ yǒu shíjiān ma?",
+     "en": "Hello! It is me. Are you free tomorrow afternoon?"
     },
     {
      "zh": "我想请你去看电影。你想看什么电影？",
@@ -845,13 +845,13 @@ window.HSK2_SPEAK = {
      "en": "I would like to invite you to a film. What film would you like to see?"
     },
     {
-     "zh": "好啊，明天下午有一个很好的中国电影。",
-     "py": "Hǎo a, míngtiān xiàwǔ yǒu yí ge hěn hǎo de Zhōngguó diànyǐng.",
-     "en": "Great, there is a very good Chinese film tomorrow afternoon.",
+     "zh": "好啊，明天下午电影院有中国电影。",
+     "py": "Hǎo a, míngtiān xiàwǔ diànyǐngyuàn yǒu Zhōngguó diànyǐng.",
+     "en": "Great, there is a Chinese film at the cinema tomorrow afternoon.",
      "alt": {
-      "zh": "好啊，明天下午有一个很好的外国电影。",
-      "py": "Hǎo a, míngtiān xiàwǔ yǒu yí ge hěn hǎo de wàiguó diànyǐng.",
-      "en": "Great, there is a very good foreign film tomorrow afternoon."
+      "zh": "好啊，明天下午电影院有外国电影。",
+      "py": "Hǎo a, míngtiān xiàwǔ diànyǐngyuàn yǒu wàiguó diànyǐng.",
+      "en": "Great, there is a foreign film at the cinema tomorrow afternoon."
      }
     },
     {
@@ -872,12 +872,12 @@ window.HSK2_SPEAK = {
      "en": "I have time. What is it?"
     },
     {
-     "zh": "我想看一个中国电影。",
-     "py": "Wǒ xiǎng kàn yí ge Zhōngguó diànyǐng.",
+     "zh": "我想看中国电影。",
+     "py": "Wǒ xiǎng kàn Zhōngguó diànyǐng.",
      "en": "I would like to see a Chinese film.",
      "alt": {
-      "zh": "我想看一个外国电影。",
-      "py": "Wǒ xiǎng kàn yí ge wàiguó diànyǐng.",
+      "zh": "我想看外国电影。",
+      "py": "Wǒ xiǎng kàn wàiguó diànyǐng.",
       "en": "I would like to see a foreign film."
      }
     },
@@ -1036,9 +1036,9 @@ window.HSK2_SPEAK = {
      "en": "Sorry, there are too many cars on the road; we are going very slowly."
     },
     {
-     "zh": "可能两点半。没问题，我们能到。",
-     "py": "Kěnéng liǎng diǎn bàn. Méi wèntí, wǒmen néng dào.",
-     "en": "Maybe half past two. No problem, we can make it."
+     "zh": "可能两点半到。没问题。",
+     "py": "Kěnéng liǎng diǎn bàn dào. Méi wèntí.",
+     "en": "Maybe it gets there at half past two. No problem."
     },
     {
      "zh": "不客气，我会开快一点。",

@@ -2,25 +2,26 @@
 # tools/build-confusers.py keeps only characters that are in an HSK 1-5 word and writes data/confusers.js.
 # The app uses them for wrong answers on reading cards: two words of the same length that differ only in look-alike characters
 # (买 / 卖, 他 / 她, 午 / 牛) are offered side by side, so the card tests the reading, not a guess.
+# A line starting with ≠ names words that must never be options together (both could be right), e.g. 国画 is also a 图画.
 已 己	已 is half open, 己 is open
 买 卖	卖 has 十 on top
-人 入	入 leans the other way
+人 入 八	入 leans the other way
 大 太 犬 天 夫	a dot or a line makes the difference
 土 士 王 主 玉 工	the length of the lines matters
 日 目 白 百 自	count the lines
 未 末	which top line is longer
-午 牛 年	牛 goes through the top
+午 牛	牛 goes through the top
 千 干 于	the top stroke and the hook
 田 由 甲 申 电	which line sticks out
 贝 见	the bottom strokes
-问 间 闻 门 们 同	what sits inside 门
+问 间 闻 门 同	what sits inside 门
 住 往 主 注	the left side
 请 情 清 晴 睛 精	the same 青, a different side
-很 跟 根 银 眼 恨	the same 艮, a different side
+很 跟 根 银 眼 恨 退	the same 艮, a different side
 休 体	体 has a line across the bottom
 找 我 伐	找 has 扌
 鸟 乌 岛	乌 has no dot
-今 令 冷 领	the bottom of 今 and 令
+今 令 冷 领 零	the bottom of 今 and 令
 处 外	the left side
 复 夏	the top
 刀 力 万 方	the hook and the dot
@@ -31,14 +32,14 @@
 东 车	the strokes on top
 贵 责	the top
 师 帅	the left side
-他 她 它 地 也	the side added to 也
+他 她 它 地 也 池	the side added to 也
 吗 妈 马 码 骂	the side added to 马
-园 圆 远 元	what goes around 元
+园 圆 远 元 员	what goes around 元
 汽 气	汽 has 氵
 座 坐	座 has 广
 做 作	做 has 攵
 客 容 各	the inside of 宀
-特 持 待 诗 时 等 寺	the side added to 寺
+特 持 待 诗 等 寺	the side added to 寺
 拍 怕 伯	the left side
 例 列 烈	the side added to 列
 采 菜 彩 踩	the side added to 采
@@ -51,20 +52,21 @@
 提 题	the right side
 场 汤 扬 杨 肠	the side added to 昜
 爱 受	the middle
-水 永 冰	the dot on top or on the left
+水 永 冰 泳	the dot on top or on the left
 扫 归	the left side
 折 拆 析	the dot
 城 诚 成	the side added to 成
 健 建 键	the side added to 建
-较 校 效 交	the side added to 交
+较 校 效 交 郊	the side added to 交
 科 料	the right side
 理 埋 里	the side added to 里
-种 钟 中	the side added to 中
+种 钟 中 冲	the side added to 中
 吃 吹	the right side
 旅 族	the bottom right
-难 准 谁 推 进	the side added to 隹
-又 叉 双	the dot or the double
+难 准 谁 推 堆	the side added to 隹
+又 叉 双 友	the dot or the double
 口 回 品	how many 口
 困 因 固 国 图	what is inside 口
-免 兔	兔 has a dot
-今 会 合	the bottom
+免 兔 勉	兔 has a dot
+会 合	the bottom
+≠ 国画 图画	国画 is a kind of 图画: on "Which word means picture?" both would be right (DeepSeek, 24 Nov)

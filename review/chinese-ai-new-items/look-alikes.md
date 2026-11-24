@@ -14,22 +14,22 @@ For each problem: group number or pair / the problem (simple Chinese plus one li
 
 1. 已 己
 2. 买 卖
-3. 人 入
+3. 人 入 八
 4. 大 太 天 夫
 5. 土 士 主 玉 工
 6. 日 目 白 百 自
 7. 未 末
-8. 午 牛 年
+8. 午 牛
 9. 千 干 于
 10. 由 甲 申 电
 11. 贝 见
-12. 问 间 闻 门 们 同
+12. 问 间 闻 门 同
 13. 住 往 主 注
 14. 请 情 清 晴 睛 精
-15. 很 跟 根 银 眼
+15. 很 跟 根 银 眼 退
 16. 休 体
 17. 找 我
-18. 今 令 冷 领
+18. 今 令 冷 领 零
 19. 处 外
 20. 复 夏
 21. 刀 力 万 方
@@ -40,14 +40,14 @@ For each problem: group number or pair / the problem (simple Chinese plus one li
 26. 东 车
 27. 贵 责
 28. 师 帅
-29. 他 她 它 地 也
+29. 他 她 它 地 也 池
 30. 吗 妈 马 码 骂
-31. 园 圆 远 元
+31. 园 圆 远 元 员
 32. 汽 气
 33. 座 坐
 34. 做 作
 35. 客 容 各
-36. 特 持 待 诗 时 等
+36. 特 持 待 诗 等
 37. 拍 怕
 38. 例 列 烈
 39. 采 菜 彩
@@ -59,22 +59,22 @@ For each problem: group number or pair / the problem (simple Chinese plus one li
 45. 提 题
 46. 场 汤 扬
 47. 爱 受
-48. 水 永 冰
+48. 水 永 冰 泳
 49. 折 拆 析
 50. 城 诚 成
 51. 健 建 键
-52. 较 校 效 交
+52. 较 校 效 交 郊
 53. 科 料
 54. 理 里
-55. 种 钟 中
+55. 种 钟 中 冲
 56. 吃 吹
 57. 旅 族
-58. 难 准 谁 推 进
-59. 又 叉 双
+58. 难 准 谁 推 堆
+59. 又 叉 双 友
 60. 口 回 品
 61. 困 因 固 国 图
 62. 免 兔
-63. 今 会 合
+63. 会 合
 
 ## 会一起出现的词对 / pairs offered together
 
@@ -92,35 +92,38 @@ HSK 1:
 10. 他们 (they (people)) / 她们 (they (women))
 11. 他们 (they (people)) / 它们 (they (animals and things))
 12. 她们 (they (women)) / 它们 (they (animals and things))
-13. 们 (plural ending for people (同学们 = classmates)) / 问 (to ask)
-14. 也 (also, too) / 他 (he, him)
-15. 也 (also, too) / 她 (she, her)
-16. 也 (also, too) / 它 (it (for animals and things))
+13. 也 (also, too) / 他 (he, him)
+14. 也 (also, too) / 她 (she, her)
+15. 也 (also, too) / 它 (it (for animals and things))
+16. 人 (person, people) / 八 (eight)
 17. 买 (to buy) / 卖 (to sell (everyday))
 18. 大 (big) / 天 (day (also: sky))
 19. 大 (big) / 太 (too, so (太…了))
+20. 冷 (cold) / 零 (zero (also used inside numbers, like 105))
 
 HSK 2:
-20. 门 (door, gate) / 间 (measure word for rooms)
-21. 右 (right) / 左 (left)
-22. 右边 (right side) / 左边 (left side)
-23. 时 (time; when) / 等 (to wait)
+21. 门 (door, gate) / 间 (measure word for rooms)
+22. 右 (right) / 左 (left)
+23. 右边 (right side) / 左边 (left side)
 
 HSK 3:
 24. 节日 (festival; holiday) / 节目 (programme; show)
-25. 中 (in; among; within) / 种 (kind; type (measure word: 这种))
-26. 又 (again; also) / 双 (pair)
+25. 员 (person engaged in a job or a group) / 园 (garden; park)
+26. 中 (in; among; within) / 种 (kind; type (measure word: 这种))
+27. 又 (again; also) / 双 (pair)
 
 HSK 4:
-27. 场 (measure word for matches, films and shows) / 汤 (soup)
-28. 大大 (greatly; by a lot) / 大夫 (doctor (spoken, northern))
-29. 困 (sleepy; tired) / 图 (picture; chart; diagram)
-30. 准 (accurate) / 推 (to push)
+28. 场 (measure word for matches, films and shows) / 汤 (soup)
+29. 大大 (greatly; by a lot) / 大夫 (doctor (spoken, northern))
+30. 困 (sleepy; tired) / 图 (picture; chart; diagram)
+31. 准 (accurate) / 推 (to push)
 
 HSK 5:
-31. 方 (square; side; direction) / 防 (to guard against; to prevent)
-32. 根 (root; measure word for long thin things) / 眼 (eye; (for glances))
-33. 国画 (traditional Chinese painting) / 图画 (picture; drawing)
-34. 建 (to build; to set up) / 键 (key (on a keyboard))
-35. 力 (strength; force) / 方 (square; side; direction)
-36. 令 (to make; to cause (in 令人 + a feeling)) / 领 (to lead; to receive)
+32. 方 (square; side; direction) / 防 (to guard against; to prevent)
+33. 根 (root; measure word for long thin things) / 退 (to move back; to return (goods))
+34. 根 (root; measure word for long thin things) / 眼 (eye; (for glances))
+35. 国画 (traditional Chinese painting) / 图画 (picture; drawing)
+36. 建 (to build; to set up) / 键 (key (on a keyboard))
+37. 力 (strength; force) / 方 (square; side; direction)
+38. 令 (to make; to cause (in 令人 + a feeling)) / 领 (to lead; to receive)
+39. 眼 (eye; (for glances)) / 退 (to move back; to return (goods))

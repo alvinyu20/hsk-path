@@ -882,9 +882,9 @@ window.HSK3_SPEAK = {
      }
     },
     {
-     "zh": "作业什么时候要给老师？",
-     "py": "Zuòyè shénme shíhou yào gěi lǎoshī?",
-     "en": "When does the homework have to be given to the teacher?"
+     "zh": "作业什么时候要写完？",
+     "py": "Zuòyè shénme shíhou yào xiě wán?",
+     "en": "When does the homework have to be finished?"
     },
     {
      "zh": "好的，谢谢你。",
@@ -938,14 +938,14 @@ window.HSK3_SPEAK = {
      "en": "Hello! Welcome to our hotel. How many days would you like to stay?"
     },
     {
-     "zh": "请等一下……对不起，你的房间只能住两天。",
-     "py": "Qǐng děng yíxià...... Duìbuqǐ, nǐ de fángjiān zhǐnéng zhù liǎng tiān.",
-     "en": "Please wait a moment… Sorry, your room is only for two days."
+     "zh": "请等一下……对不起，第三天没有房间了。",
+     "py": "Qǐng děng yíxià...... Duìbuqǐ, dì sān tiān méiyǒu fángjiān le.",
+     "en": "Please wait a moment… Sorry, there are no rooms left on the third day."
     },
     {
-     "zh": "真对不起，第三天的房间都有人住了。",
-     "py": "Zhēn duìbuqǐ, dì sān tiān de fángjiān dōu yǒu rén zhù le.",
-     "en": "Really sorry; on the third day all the rooms have been taken."
+     "zh": "真对不起，前两天没问题，可是第三天的房间已经都有人住了。",
+     "py": "Zhēn duìbuqǐ, qián liǎng tiān méi wèntí, kěshì dì sān tiān de fángjiān yǐjīng dōu yǒu rén zhù le.",
+     "en": "Really sorry; the first two days are no problem, but on the third day the rooms have all been taken."
     },
     {
      "zh": "你可以去旁边的宾馆，我帮你打电话问问。",

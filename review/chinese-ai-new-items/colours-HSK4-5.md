@@ -487,7 +487,7 @@ For each problem: number / sentence / the problem (simple Chinese plus one line 
 237. 他坐【关键词：也不是】，站【关键词：也不是】，不知道该怎么办。  /  He does not know whether to sit or stand, and does not know what to do.
 238. 今天我不去了，【关键词：一来】天气不好，【关键词：二来】我有点累。  /  I am not going today: first, the weather is bad; second, I am a bit tired.
 239. 他【关键词：没】日【关键词：没】夜地工作。  /  He works day and night.
-240. 这些汉字写得大【关键词：的】大，小【关键词：的】小。  /  These characters are written some big, some small.
+240. 这些汉字写得【关键词：大的大】，【关键词：小的小】。  /  These characters are written some big, some small.
 
 ## HSK 5 · 看你…的, X什么X and 什么…不…的: look how, why bother, never mind · 选一个 pick one
 公式 formula: 【看你】 + Adjective / verb + 【的】
@@ -519,7 +519,7 @@ For each problem: number / sentence / the problem (simple Chinese plus one line 
 公式 formula: Adjective / verb + 【起来】
 
 255. 天气热【关键词：起来】了。  /  The weather is getting hot.
-256. 这个菜看【关键词：起来】很好吃。  /  This dish looks very tasty.
+256. 这个菜【关键词：看起来】很好吃。  /  This dish looks very tasty.
 257. 请把电话号码写【关键词：下来】。  /  Please write the phone number down.
 258. 她考【关键词：上】了大学。  /  She got into university.
 
@@ -544,8 +544,8 @@ For each problem: number / sentence / the problem (simple Chinese plus one line 
 
 267. 【主语：我们】【时间/地点：明天下午】【时间/地点：在学校门口】【动作/描写：见面】。  /  We will meet at the school gate tomorrow afternoon.
 268. 【主语：他】【时间/地点：每天早上】【时间/地点：在公园里】认真地【动作/描写：跑步】。  /  Every morning he runs seriously in the park.
-269. 【主语：我】【动作/描写：去商店】【动作/描写：买东西】。  /  I go to the shop to buy things.
-270. 【主语：他】【动作/描写：坐飞机】【动作/描写：去上海】。  /  He goes to Shanghai by plane.
+269. 【主语：我】【动作/描写：去】【时间/地点：商店】【动作/描写：买东西】。  /  I go to the shop to buy things.
+270. 【主语：他】坐飞机【动作/描写：去】【时间/地点：上海】。  /  He goes to Shanghai by plane.
 
 ## HSK 5 · 跟…相比, 比 + amount and 高我一头: compared with, three years older · 词序 word order
 公式 formula: 【跟】 + Standard + 【相比】 + ， + Subject + Difference
@@ -554,8 +554,8 @@ For each problem: number / sentence / the problem (simple Chinese plus one line 
 272. 【关键词：跟】他【关键词：相比】，【主语：我的汉语】差多了。  /  Compared with him, my Chinese is much worse.
 273. 【主语：他】【关键词：比】我大三岁。  /  He is three years older than me.
 274. 【主语：这本书】【关键词：比】那本贵很多。  /  This book is much more expensive than that one.
-275. 【主语：他】【关键词：高我一头】。  /  He is a head taller than me.
-276. 【主语：她】【关键词：大我三岁】。  /  She is three years older than me.
+275. 【主语：他】【动作/描写：高】我【宾语/事物：一头】。  /  He is a head taller than me.
+276. 【主语：她】【动作/描写：大】我【宾语/事物：三岁】。  /  She is three years older than me.
 
 ## HSK 5 · 朵, 幅, 颗, 匹, 扇, 册 and 届: new measure words · 选一个 pick one
 公式 formula: Number + 【朵 / 幅 / 颗 / 匹 / 扇】 + Noun
@@ -579,7 +579,7 @@ For each problem: number / sentence / the problem (simple Chinese plus one line 
 285. 我们家的狗会【关键词：看家】。  /  Our dog can guard the house.
 286. 请你【关键词：数数】这里有几本书。  /  Please count how many books there are here.
 287. 你要小心，别【关键词：上当】。  /  You must be careful; do not be fooled.
-288. 他摔【关键词：倒】了。  /  He fell down.
+288. 他【关键词：摔倒】了。  /  He fell down.
 
 ## HSK 5 · 哪怕…也…, 不是…还… and 不…不… · 词序 word order
 公式 formula: 【哪怕】 + … + 【也】 + …
@@ -601,7 +601,7 @@ For each problem: number / sentence / the problem (simple Chinese plus one line 
 公式 formula: 【不】 + Verb + 【白不】 + Verb
 
 297. 这么小的病，【关键词：用不着】去医院。  /  It's such a small illness; no need to go to hospital.
-298. 闲着【关键词：也是】闲着，我来帮你吧。  /  Since I'm free anyway, let me help you.
+298. 【关键词：闲着也是闲着】，我来帮你吧。  /  Since I'm free anyway, let me help you.
 299. 【关键词：不管怎么说】，健康最重要。  /  Anyway, health matters most.
 300. 【关键词：真有你的】，这么难的题都做对了。  /  You're amazing: you even got such a hard question right.
 301. 票是免费的，【关键词：不】【动作/描写：看】【关键词：白不】【动作/描写：看】。  /  The tickets are free; it'd be a waste not to go.
@@ -612,4 +612,4 @@ For each problem: number / sentence / the problem (simple Chinese plus one line 
 302. 对这个孩子他真没办法，打【关键词：也】打【关键词：不得】，说【关键词：也】说【关键词：不得】。  /  He really can't handle this child: he mustn't hit him and he mustn't scold him.
 303. 好【关键词：是它】，坏【关键词：也是它】。  /  Good or bad, this is it.
 304. 【关键词：想来想去】，还是这个办法最好。  /  After thinking it over and over, this is still the best way.
-305. 父母说【关键词：什么】就是【关键词：什么】。  /  Whatever the parents say goes.
+305. 父母说【关键词：什么就是什么】。  /  Whatever the parents say goes.

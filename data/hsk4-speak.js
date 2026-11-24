@@ -774,8 +774,8 @@ window.HSK4_SPEAK = {
      "en": "Hello, I am your neighbour from downstairs. Sorry to disturb you so late."
     },
     {
-     "zh": "你家的音乐声音有点大，我明天早上还要上班。",
-     "py": "Nǐ jiā de yīnyuè shēngyīn yǒu diǎn dà, wǒ míngtiān zǎoshang hái yào shàngbān.",
+     "zh": "你家的音乐声有点大，我明天早上还要上班。",
+     "py": "Nǐ jiā de yīnyuè shēng yǒu diǎn dà, wǒ míngtiān zǎoshang hái yào shàngbān.",
      "en": "Your music is a bit loud, and I have to go to work tomorrow morning."
     },
     {
@@ -1048,8 +1048,8 @@ window.HSK4_SPEAK = {
    ],
    "you": [
     {
-     "zh": "对，我想订星期六晚上十个人的座位。",
-     "py": "Duì, wǒ xiǎng dìng xīngqīliù wǎnshang shí ge rén de zuòwèi.",
+     "zh": "对，我想订星期六晚上十个人的桌子。",
+     "py": "Duì, wǒ xiǎng dìng xīngqīliù wǎnshang shí ge rén de zhuōzi.",
      "en": "Yes, I would like to book a table for ten people on Saturday evening."
     },
     {

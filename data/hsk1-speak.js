@@ -1058,8 +1058,8 @@ window.HSK1_SPEAK = {
      "en": "Too expensive! Do you have a cheap one?"
     },
     {
-     "zh": "那我不买了，我去那个商店看看。",
-     "py": "Nà wǒ bù mǎi le, wǒ qù nàge shāngdiàn kànkan.",
+     "zh": "那我不买了，我去那家商店看看。",
+     "py": "Nà wǒ bù mǎi le, wǒ qù nà jiā shāngdiàn kànkan.",
      "en": "Then I am not buying it now. I will go and look in that shop."
     },
     {
