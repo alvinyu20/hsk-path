@@ -7,7 +7,7 @@
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=481050e5a7 data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=f9adf791ad data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=ae6b55baf3 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=cadeceb7bf data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=2f4e796d1a data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=ed7af49707 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=887b6a91ac data/hsk4-words.js?v=9ebcc5a250 data/hsk4-grammar.js?v=8c535c3fc2 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=deae152b68 data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=018596a707 data/hsk5-words.js?v=1e54d78599 data/hsk5-grammar.js?v=cd8a3a9d5d data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=73d5a24b6f data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=2c380d97a7 data/path-scenes.js?v=cabc535d43 data/speak-scenes.js?v=8fc79e5d01 data/exam-art.js?v=fe9c38d6ea data/journey-media.js?v=de53596394">
-<meta name="shanlu-version" content="3790079ec7">
+<meta name="shanlu-version" content="4ca35a4315">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=e322bbefd5">
+<link rel="stylesheet" href="styles.css?v=a0d9420e66">
 </head>
 <body>
 <div id="app"></div>
@@ -2812,8 +2812,34 @@
       <sc-if value="{{isTone}}" hint-placeholder-val="{{ false }}">
         <section class="card dict">
           <div class="kick">Tone trainer</div>
-          <div><div class="seg2" role="group" aria-label="Tone trainer type"><button class="{{tOneCls}}" data-on-click="{{setTone1}}">One syllable</button><button class="{{tTwoCls}}" data-on-click="{{setTone2}}">Two syllables</button></div></div>
+          <div><div class="seg2" role="group" aria-label="Tone trainer type"><button class="{{tOneCls}}" data-on-click="{{setTone1}}">One syllable</button><button class="{{tTwoCls}}" data-on-click="{{setTone2}}">Two syllables</button><button class="{{tSayCls}}" data-on-click="{{setToneSay}}">Say it</button></div></div>
           <p class="muted" style="margin:0;font-size:15px">New to tones? <button type="button" class="linkbtn" data-on-click="{{goPinyin}}">Open the pinyin and tones course</button></p>
+          <sc-if value="{{toneSay}}" hint-placeholder-val="{{ false }}">
+          <h2 class="h2" style="font-size:28px">Say it: your tones on a curve</h2>
+          <p class="muted" style="margin:0">Say the word, and the pitch of your voice is drawn next to the recording's. Your voice is checked here on your device: it is not uploaded or kept. In a word, only clear mistakes are marked; compare the lines for the rest.</p>
+          <sc-if value="{{sayItem}}" hint-placeholder-val="{{ true }}">
+          <div class="say-word"><span lang="zh-Hans" class="zh">{{sayZh}}</span><span class="say-py">{{sayPy}}</span><span class="say-t">Tones: {{sayTones}}</span></div>
+          <div class="say-btns">
+            <button class="btn {{sayHearCls}}" data-on-click="{{sayHear}}">Hear it</button>
+            <sc-if value="{{sayIdleBtn}}" hint-placeholder-val="{{ true }}"><button class="btn pri" data-on-click="{{sayStart}}">{{sayBtnText}}</button></sc-if>
+            <sc-if value="{{sayRecording}}" hint-placeholder-val="{{ false }}"><button class="btn pri say-rec" data-on-click="{{sayDone}}">Listening… tap when done</button></sc-if>
+            <button class="btn" data-on-click="{{sayNextFn}}">Next</button>
+          </div>
+          </sc-if>
+          <sc-if value="{{hasSayNote}}" hint-placeholder-val="{{ false }}"><p class="say-note">{{sayNote}}</p></sc-if>
+          <sc-if value="{{sayHasRes}}" hint-placeholder-val="{{ false }}">
+            <p class="say-verdict" style="margin:0;font-weight:600">{{sayVerdict}}</p>
+            <svg class="say-chart" viewBox="0 0 320 140" role="img" aria-label="Your pitch curve (solid) and the model's (dashed)">
+              <path class="say-mid" d="M10 70H310"/>
+              <sc-if value="{{sayHasCut}}" hint-placeholder-val="{{ false }}"><path class="say-cut" d="M{{sayCut}} 8V132"/></sc-if>
+              <path class="say-model" d="{{sayModelPath}}"/>
+              <path class="say-mine" d="{{sayMine}}"/>
+            </svg>
+            <p class="muted" style="margin:0;font-size:13px">Solid: you. {{sayModelLabel}}. Higher is a higher pitch.</p>
+            <sc-for list="{{sayRows}}" as="r" hint-placeholder-count="2"><p class="say-row {{r.cls}}">{{r.text}}</p></sc-for>
+          </sc-if>
+          <sc-if value="{{hasSayStats}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin:0">{{sayStats}} this session</p></sc-if>
+          </sc-if>
           <sc-if value="{{toneTwo}}" hint-placeholder-val="{{ false }}">
           <h2 class="h2" style="font-size:28px">Which tones did you hear?</h2>
           <p class="muted" style="margin:0">A real word of two syllables, said by your device's voice. Press play, then pick the tone of each syllable. The second syllable can also be a light, short tone, as in <i>māma</i>.</p>
@@ -3409,6 +3435,7 @@
 <script defer src="data/games.js?v=81a4332979"></script>
 <script defer src="data/confusers.js?v=2d21e34783"></script>
 <script defer src="data/path.js?v=f0ab6af196"></script>
-<script defer src="app.js?v=8c81c2cfe0"></script>
+<script defer src="pitch.js?v=16ceaf9821"></script>
+<script defer src="app.js?v=9783c45db2"></script>
 </body>
 </html>

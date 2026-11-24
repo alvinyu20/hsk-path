@@ -48,6 +48,7 @@ case "$MODE" in
     last env NODE_PATH="$(npm root -g)" node tools/test-exam-art.js
     last node tools/test-pinyin.js
     last node tools/test-numbers.js
+    last node tools/test-pitch.js
     python3 tools/check-pinyin-course.py | tail -n 1
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-journey.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-onboarding.js
@@ -65,6 +66,7 @@ case "$MODE" in
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-confusers.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-exam-fresh.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-speak-scenes.js
+    last env NODE_PATH="$(npm root -g)" node tools/smoke-test-say-tones.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-redesign.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-restructure.js
     last env NODE_PATH="$(npm root -g)" node tools/smoke-test-exam-media.js

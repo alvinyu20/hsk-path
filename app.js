@@ -185,6 +185,32 @@
   // two-syllable words for the tone-pair trainer; the pair [3, 3] is said as 2 + 3 (the first of two third tones rises)
   const PAIR_LIST = () => PAIR_DATA.filter(p => BANK[p.zh]);
   const pairHit = (t, slot, n) => n === t[slot - 1] || (slot === 1 && t[0] === 3 && t[1] === 3 && n === 2);
+  // Say it (D2): the view. The chart is 320 x 140: your pitch (solid) and the model's (dashed), in semitones around each voice's middle
+  const TONE_NAME = { 1:'high and level', 2:'rising', 3:'low (dipping)', 4:'falling', 5:'light and short' };
+  const HEARD = { level:'stayed level', rise:'went up', dip:'dipped, then rose', low:'stayed low', fall:'went down', none:'had no clear pitch' };
+  const TONE_TIP = { 1:'Keep it high and flat, like singing one note.', 2:'Start in the middle and rise, as in a surprised "what?"', 3:'Go low. In a word, keep it low and short.', 4:'Start high and drop sharply, like a firm "No!"' };
+  const sayPath = (curve) => { if (!curve || !curve.length) return ''; let d = '', pen = false; curve.forEach(p => { if (p.st === null || p.st === undefined) { pen = false; return; } const x = (10 + p.x * 300).toFixed(1), y = (70 - Math.max(-12, Math.min(12, p.st)) * 5).toFixed(1); d += (pen ? 'L' : 'M') + x + ' ' + y; pen = true; }); return d; };
+  const sayIdeal = (t) => { const n = t.length; let d = ''; t.forEach((tn, i) => { const sh = (window.ShanluPitch && window.ShanluPitch.TONE_SHAPE[tn]) || [0, 0]; sh.forEach((v, k) => { const x = 10 + 300 * (i + k / (sh.length - 1)) / n, y = 70 - v * 5; d += (k ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); }); }); return d; };
+  const sayView = (S, app) => {
+    const g = S.say, it = g && g.it, res = g && g.res, syls = it ? (it.py ? it.py.split(/\s+/) : []) : [];
+    const model = it ? app.sayModels[it.zh] : null;
+    const rows = res ? res.syl.map((x, i) => {
+      const label = (it.t.length > 1 ? (i === 0 ? '1st syllable' : '2nd syllable') : 'The tone') + ' (' + x.want + (x.want === 5 ? ', light' : '') + ')';
+      if (x.want === 5) return { cls:'skip', text:label + ': a light tone, not judged.' };
+      return x.ok ? { cls:'ok', text:'✓ ' + label + ': ' + TONE_NAME[x.want] + '.' } : { cls:'bad', text:'✗ ' + label + ': should be ' + TONE_NAME[x.want] + '; yours ' + HEARD[x.heard] + '. ' + (TONE_TIP[x.want] || '') };
+    }) : [];
+    return {
+      sayItem:!!it, sayZh:it ? it.zh : '', sayPy:it ? it.py : '', sayTones:it ? it.t.map(x => (x === 5 ? 'light' : x)).join(' + ') : '',
+      sayRecording:!!g && g.rec === 'rec', sayIdleBtn:!g || g.rec !== 'rec', sayBtnText:g && g.rec === 'done' ? 'Say it again' : 'Say it',
+      sayNote:g ? g.note || '' : '', hasSayNote:!!(g && g.note),
+      sayHasRes:!!res, sayRows:rows, sayAllOk:!!res && res.syl.every(x => x.ok),
+      sayVerdict:res ? (res.syl.every(x => x.ok) ? (it.t.length > 1 ? 'Those tones sound right.' : 'That tone sounds right.') : 'Not quite. Compare your line with the dashed one.') : '',
+      sayMine:res ? sayPath(res.curve) : '', sayModelPath:model ? sayPath(model) : (it ? sayIdeal(it.t) : ''), sayModelLabel:model ? 'Dashed: the recording' : 'Dashed: the tone shape',
+      sayCut:res && res.cuts && res.cuts.length > 2 ? (10 + res.cuts[1] * 300).toFixed(1) : '', sayHasCut:!!(res && res.cuts && res.cuts.length > 2),
+      sayStats:S.sayTotal ? S.sayRight + ' of ' + S.sayTotal + ' right' : '', hasSayStats:S.sayTotal > 0,
+      sayStart:app.sayStart, sayDone:app.sayDone, sayHear:app.sayHear, sayNextFn:app.sayNext, sayHearCls:S.playing === 'sayit' ? 'on' : ''
+    };
+  };
   const { scenarios:SCEN, phrases:PHRASES } = (ALL ? { scenarios:JOIN('SPEAK', 'scenarios'), phrases:JOIN('SPEAK', 'phrases') } : LV_DATA('SPEAK')) || { scenarios:[], phrases:[] };
   const HAS_LISTEN = CLIPS.length > 0;
   // the level each clip belongs to; in All levels the highest level is "current"
@@ -667,7 +693,7 @@
       woff:0, wsort:'weak', wfilter:'all', wdelta:{}, wrated:{}, gfq:0, gfpick:null, shround:0, shbusy:false, shrec:'idle', shurl:'', shnote:'',
       wmode:'topic', wmist:false, wtmenu:false, wgopen:null, wtq:'', whub:0, wtopic:0, wcover:'all', wpeek:{}, jyPlay:'', jyPlayStamp:false, wopptab:'all', wlearned:{}, wreveal:{}, wex:{}, wexn:{}, exams:[], exm:null, aiDays:{}, syncKeys:prefGet('syncKeys', false) === true, aiVoiceOnly:AICFG.voiceOnly !== false, handsFree:AICFG.handsFree === true, lsnLvl:lsnLvl(), lsnAuto:lsnAuto(), lsnNote:'', memOn:memOn(), memFacts:memFacts().slice(), aiTyping:false, ttsMode:ttsModeNow(), ttsVoice:ttsVoiceNow(), ttsNote:'', ttsBusy:false, aiOn:aiReadyNow(), aiProvider:aiProviderNow(), aiModel:AICFG.model || 'claude-haiku-5-5', aiTab:aiProviderNow(), aliOn:!!aliCfg().key, aliKeyInput:'', aliWsInput:aliCfg().ws || '', aliModelInput:aliCfg().model || 'qwen-flash', aliNote:'', aliTesting:false, aiTesting:false, syncTesting:false, frTesting:false, asrMode:asrModeNow(), asrBusy:false, aiKeyInput:'', aiNote:'', aiMode:!HAS_SCRIPTS, aim:[], aiBusy:false, aiErr:'', aiInput:'', aiListen:false, aiAlts:[], aiScn:-1, syncOn:!!SYNCCFG.token, syncAt:SYNCCFG.at || 0, syncInput:'', syncBusy:false, syncMsg:'', syncBad:false,
       lmode:'dict', dclip:0, drecent:[], dplays:0, drate:1, dmin:0, drung:null, gm:{ view:'hub' }, dtyped:'', dchecked:false, dmarks:[], dreveal:0, mtyped:'', mchecked:false, mbusy:false, mres:null, merr:'', mpeek:0, mmix:false, mbest:{},
-      tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
+      tidx:null, tpick:null, tright:0, ttotal:0, tmode:'one', say:null, sayRight:0, sayTotal:0, t2idx:null, t2a:null, t2b:null, t2right:0, t2total:0,
       playing:null, noVoice:false
     };
   }
@@ -5441,6 +5467,80 @@
       }
       this.setState(patch);
     };
+    // ----- Say it (D2): you say a syllable or a word, the pitch of your voice is tracked here in the browser (pitch.js) and each tone is judged -----
+    // Nothing is uploaded or kept. The model's pitch comes from its recording (decoded here), drawn beside yours.
+    sayCtx = null; sayStop = null; sayModels = {};
+    sayItems = () => {
+      if (this._sayItems) return this._sayItems;
+      const MK = { 'ā':1,'á':2,'ǎ':3,'à':4,'ē':1,'é':2,'ě':3,'è':4,'ī':1,'í':2,'ǐ':3,'ì':4,'ō':1,'ó':2,'ǒ':3,'ò':4,'ū':1,'ú':2,'ǔ':3,'ù':4,'ǖ':1,'ǘ':2,'ǚ':3,'ǜ':4 };
+      const one = BANK_KEYS.filter(z => Array.from(z).length === 1 && !/[\/,\s]/.test(BANK[z].py) && '不一'.indexOf(z) < 0).map(z => { const m = Array.from(BANK[z].py).map(c => MK[c]).filter(Boolean); return m.length === 1 ? { zh:z, py:BANK[z].py, t:[m[0]] } : null; }).filter(Boolean);
+      const two = PAIR_LIST().map(p => ({ zh:p.zh, py:(BANK[p.zh] || {}).py || '', t:p.t }));
+      const rec = (x) => !!this.nativeFile(x.zh);   // only items with a recording, so the model's curve can be shown (fall back to all when there are none)
+      const pick = (l) => { const r = l.filter(rec); return r.length >= 8 ? r : l; };
+      return (this._sayItems = { one:pick(one), two:pick(two) });
+    };
+    sayNext = () => {
+      const S = this.state; const L = this.sayItems(); const kind = S.say && S.say.kind === 'one' ? 'two' : 'one';   // one syllable and a word, in turn
+      const list = L[kind].length ? L[kind] : L[kind === 'one' ? 'two' : 'one']; if (!list.length) return;
+      const it = list[Math.floor(Math.random() * list.length)];
+      this.sayReset(); this.setState({ say:{ kind:it.t.length === 1 ? 'one' : 'two', it, rec:'idle', res:null, note:'' } });
+    };
+    sayReset = () => { if (this.sayStop) { const f = this.sayStop; this.sayStop = null; f('drop'); } };
+    sayHear = () => { const g = this.state.say; if (!g) return; this.ttsUnlock(); this.sayAi(g.it.zh, 'sayit', 0.9); };
+    // the tap: open the audio context inside the tap (phones need it), then record until you stop speaking
+    sayStart = async () => {
+      const S = this.state; const g = S.say; if (!g || g.rec === 'rec') return;
+      this.sayReset(); this.stopNative();
+      try { const AC = window.AudioContext || window.webkitAudioContext; if (!this.sayCtx || this.sayCtx.state === 'closed') this.sayCtx = new AC(); if (this.sayCtx.resume) this.sayCtx.resume().catch(() => {}); } catch (e) {}
+      if (window.SHANLU_SAY_PCM) { const f = window.SHANLU_SAY_PCM; this.sayJudge(f.pcm, f.rate); return; }   // tests: a made-up voice instead of the microphone
+      let stream;
+      try { stream = await navigator.mediaDevices.getUserMedia({ audio:{ echoCancellation:true, noiseSuppression:true, autoGainControl:true } }); }
+      catch (e) { this.sayPatch({ rec:'idle', note:'The microphone is blocked. Allow microphone access for this site in the browser, then try again.' }); return; }
+      const actx = this.sayCtx; let node = null, src = null;
+      const release = () => { try { stream.getTracks().forEach(t => t.stop()); } catch (e) {} try { if (node) node.disconnect(); } catch (e) {} try { if (src) src.disconnect(); } catch (e) {} };
+      try {
+        if (actx.resume) { try { await actx.resume(); } catch (e) {} }
+        src = actx.createMediaStreamSource(stream); node = actx.createScriptProcessor(4096, 1, 1);
+        const parts = []; let total = 0, heard = false, lastVoice = Date.now(); const t0 = Date.now();
+        node.onaudioprocess = (e) => { const d = e.inputBuffer.getChannelData(0); parts.push(new Float32Array(d)); total += d.length; let q = 0; for (let i = 0; i < d.length; i += 4) q += d[i] * d[i]; if (Math.sqrt(q / (d.length / 4)) > 0.02) { heard = true; lastVoice = Date.now(); } };
+        const mute = actx.createGain(); mute.gain.value = 0; src.connect(node); node.connect(mute); mute.connect(actx.destination);
+        let stopped = false;
+        const stop = (why) => {
+          if (stopped) return; stopped = true; clearInterval(timer); release(); this.sayStop = null;
+          if (why === 'drop') return;
+          if (!heard) { this.sayPatch({ rec:'idle', note:'I did not hear you. Check the microphone and say it right after tapping.' }); return; }
+          const pcm = new Float32Array(total); let o = 0; parts.forEach(p => { pcm.set(p, o); o += p.length; });
+          this.sayJudge(pcm, actx.sampleRate);
+        };
+        const timer = setInterval(() => { const now = Date.now(); if ((heard && now - lastVoice > 900) || now - t0 > 6000 || (!heard && now - t0 > 5000)) stop('auto'); }, 100);
+        this.sayStop = stop; this.sayPatch({ rec:'rec', note:'', res:null });
+      } catch (e) { release(); this.sayPatch({ rec:'idle', note:'The microphone could not start here.' }); }
+    };
+    sayDone = () => { if (this.sayStop) this.sayStop('hand'); };
+    sayPatch = (p) => { const g = this.state.say; if (g) this.setState({ say:Object.assign({}, g, p) }); };
+    // your try: track the pitch, judge each syllable against its tone (a 3 before a 3 may be said as a 2: tone change), and count it
+    sayJudge = (pcm, rate) => {
+      const g = this.state.say; const P = window.ShanluPitch; if (!g || !P) return;
+      const t = g.it.t, n = t.length;
+      const r = P.analyse(pcm, rate, n, t.map(x => (x === 5 ? 0.6 : 1)));
+      if (!r.ok) { this.sayPatch({ rec:'idle', res:null, note:'I could not hear a clear voice pitch. Say it a little louder and longer, in a quiet place.' }); return; }
+      const syl = t.map((want, i) => { const ctx = { last:i === n - 1, next:t[i + 1], n }; let j = P.judge(r.syl[i], want, ctx); if (!j.ok && i === 0 && want === 3 && t[1] === 3) { const j2 = P.judge(r.syl[i], 2, ctx); if (j2.ok) j = j2; } return Object.assign({ want }, j); });
+      const allOk = syl.every(x => x.ok);
+      this.setState({ say:Object.assign({}, g, { rec:'done', note:'', res:{ curve:r.curve, cuts:r.cuts, syl } }), sayTotal:this.state.sayTotal + 1, sayRight:this.state.sayRight + (allOk ? 1 : 0) });
+      this.sayModel(g.it);
+    };
+    // the model's curve, from its recording (decoded once per word and kept for this visit)
+    sayModel = async (it) => {
+      if (this.sayModels[it.zh] !== undefined) return;
+      this.sayModels[it.zh] = null;
+      try {
+        const f = this.nativeFile(it.zh); const P = window.ShanluPitch; if (!f || !P || !this.sayCtx) return;
+        const buf = await (await fetch(f)).arrayBuffer();
+        const ab = await new Promise((res, rej) => { const pr = this.sayCtx.decodeAudioData(buf, res, rej); if (pr && pr.then) pr.then(res, rej); });
+        const r = P.analyse(ab.getChannelData(0), ab.sampleRate, it.t.length, it.t.map(x => (x === 5 ? 0.6 : 1)));
+        if (r.ok) { this.sayModels[it.zh] = r.curve; this.setState({ vtick:(this.state.vtick || 0) + 1 }); }
+      } catch (e) {}
+    };
     pickTone = (n) => {
       const S = this.state;
       if (S.tidx === null || S.tpick !== null) return;
@@ -6660,9 +6760,11 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         toneOpts, playTone:this.playTone, tonePlayCls:pc('tone'),
         toneOne:S.tmode === 'one', toneTwo:S.tmode === 'two', tOneCls:S.tmode === 'one' ? 'on' : '', tTwoCls:S.tmode === 'two' ? 'on' : '',
         setTone1:() => this.setState({ tmode:'one' }), setTone2:() => this.setState({ tmode:'two' }),
+        toneSay:S.tmode === 'say', tSayCls:S.tmode === 'say' ? 'on' : '', setToneSay:() => { this.setState({ tmode:'say' }); if (!this.state.say) this.sayNext(); },
         playPair:this.playPair, pairPlayCls:pc('tone2'), pairOpts1:pairOpts(1), pairOpts2:pairOpts(2),
         pairIdle:S.t2idx === null, pairAnswered:pairDone, pairLine, hasPairStats:S.t2total > 0, pairStats:S.t2right + ' of ' + S.t2total + ' right', hasPairs:pairList.length > 0,
         toneIdle:S.tidx === null, toneAnswered:S.tpick !== null,
+        ...sayView(S, this),
         toneLine:S.tpick === null ? '' : (S.tpick === S.tidx ? 'Right. ' : 'Not quite. ') + 'That was ' + TONES[S.tidx].py + ': ' + TONES[S.tidx].label.toLowerCase() + '.',
         hasToneStats:S.ttotal > 0, toneStats:S.tright + ' of ' + S.ttotal + ' right',
         weak, hasWeak:weak.length > 0, noWeak:weak.length === 0, phrases,

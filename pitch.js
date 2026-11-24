@@ -63,9 +63,10 @@
     var ref = median(v.filter(Boolean));
     if (!ref) return { v:v, ref:0 };
     // an octave jump from one frame to the next is an error (the voice glides): fold it back towards the frame before
-    var prev = 0;
+    var prev = 0, gap = 0;
     v = v.map(function (f) {
-      if (!f) { return 0; }
+      if (!f) { if (++gap >= 2) prev = 0; return 0; }   // after a gap (a consonant between syllables) the voice may really jump: compare with the middle instead
+      gap = 0;
       var g = f;
       if (prev) { while (g > prev * 1.6) g /= 2; while (g < prev / 1.6) g *= 2; }
       else { while (g > ref * 2.2) g /= 2; while (g < ref / 2.2) g *= 2; }
@@ -109,7 +110,10 @@
   }
 
   // n syllables: the voiced stretch from the first to the last voiced frame, cut where the sound is weakest (or a gap is) near each boundary
-  function analyse(samples, rate, n) {
+  // w: how long each syllable is expected to be, relatively (a light tone is short: [1, 0.6]); the cuts are looked for near those points
+  function analyse(samples, rate, n, w) {
+    w = w && w.length === n ? w : null;
+    var wsum = w ? w.reduce(function (a, b) { return a + b; }, 0) : n, at = function (b) { if (!w) return b / n; var c = 0; for (var i = 0; i < b; i++) c += w[i]; return c / wsum; };
     var frames = track(samples, rate), c = clean(frames), v = c.v;
     var first = v.findIndex(function (f) { return f > 0; }), lastI = -1;
     for (var i = v.length - 1; i >= 0; i--) if (v[i]) { lastI = i; break; }
@@ -120,11 +124,11 @@
     var gaps = [];
     for (var g = first; g <= lastI;) { if (v[g]) { g++; continue; } var g2 = g; while (g2 <= lastI && !v[g2]) g2++; if (g2 - g >= 2) gaps.push((g + g2) / 2); g = g2; }
     for (var b = 1; b < n; b++) {
-      var want = first + span * b / n, prevCut = cuts[cuts.length - 1], best = -1;
-      var near = gaps.filter(function (c) { return c > prevCut + 4 && c > first + span * (b / n - 0.35) && c < first + span * (b / n + 0.35); });
+      var want = first + span * at(b), prevCut = cuts[cuts.length - 1], best = -1;
+      var near = gaps.filter(function (c) { return c > prevCut + 4 && c > first + span * (at(b) - 0.35) && c < first + span * (at(b) + 0.35); });
       if (near.length) best = Math.round(near.sort(function (p, q) { return Math.abs(p - want) - Math.abs(q - want); })[0]);
       else {   // no gap: the weakest moment near the middle
-        var lo = first + Math.round(span * (b / n - 0.25)), hi = first + Math.round(span * (b / n + 0.25)), bestScore = Infinity;
+        var lo = first + Math.round(span * (at(b) - 0.25)), hi = first + Math.round(span * (at(b) + 0.25)), bestScore = Infinity;
         for (var k = Math.max(prevCut + 4, lo); k <= hi; k++) { var sc = frames[k].rms / peakRms; if (sc < bestScore) { bestScore = sc; best = k; } }
       }
       cuts.push(best < 0 ? Math.round(want) : best);
@@ -152,6 +156,18 @@
     var heard = sy.shape;
     if (want === 5 || want === 0) return { ok:true, heard:heard };
     var ok;
+    if (ctx.n > 1) {   // in a word the tones run into each other: only a clear contradiction counts as wrong
+      if (want === 1) {   // a level tone: judged on its first two thirds (the end slides into the next syllable when nothing separates them)
+        var qq = sy.q || sy.st, h = qq.slice(0, Math.max(3, Math.round(qq.length * 0.65))), k = Math.max(1, Math.round(h.length / 3));
+        var a0 = h.slice(0, k).reduce(function (x, y) { return x + y; }, 0) / k, a1 = h.slice(h.length - k).reduce(function (x, y) { return x + y; }, 0) / k;
+        ok = ctx.last ? Math.abs(rise) < 4 && fall < 4 : Math.abs(a1 - a0) < 3.5;
+      }
+      else if (want === 2) ok = !(fall >= 3) && !(Math.abs(rise) < 0.8 && dip < 0.8 && ctx.last);
+      else if (want === 4) ok = ctx.last ? !(rise >= 2 && e > 0) && !(sy.mean >= 1 && Math.abs(rise) < 1.5)   // at the end: not rising to high, not high and level (low is a finished fall)
+        : !(rise >= 2) && !(fall < 0.4 && Math.abs(rise) < 1.5);
+      else ok = !(sy.mean >= 2 && Math.abs(rise) < 1.5) && !(ctx.last && rise >= 3 && sy.shape === 'rise' && s > 0);   // 3: not high and level
+      return { ok:!!ok, heard:heard };
+    }
     if (want === 1) ok = Math.abs(rise) <= 2.5 && dip < 2.5;
     else if (want === 2) ok = rise >= 1.5 || (e - mn >= 2.5 && e >= s - 0.5);
     else if (want === 4) ok = fall >= 2 || (!ctx.last && fall >= 1 && s >= 1);   // before another syllable a 4th tone only half falls (from high)

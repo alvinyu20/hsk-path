@@ -27,8 +27,8 @@ const runJudge = (list, label) => {
   let acc = 0, nAcc = 0; const rej = {}, rejN = {}; const missed = [];
   list.slice(0, MAX).forEach((it) => {
     const f = AL.file(it.zh); if (!f || !fs.existsSync(path.join(root, f))) return;
-    const r = P.analyse(pcm(f), 16000, it.t.length); if (!r.ok) { nAcc++; missed.push(it.zh + ' no pitch'); return; }
-    const ctx = (i) => ({ last:i === it.t.length - 1, next:it.t[i + 1] });
+    const r = P.analyse(pcm(f), 16000, it.t.length, it.t.map(t => (t === 5 ? 0.6 : 1))); if (!r.ok) { nAcc++; missed.push(it.zh + ' no pitch'); return; }
+    const ctx = (i) => ({ last:i === it.t.length - 1, next:it.t[i + 1], n:it.t.length });
     const good = it.t.every((t, i) => P.judge(r.syl[i], t, ctx(i)).ok);
     nAcc++; if (good) acc++; else missed.push(it.zh + ' ' + it.t.join('') + ' ' + r.syl.map((s, i) => s.shape + (P.judge(s, it.t[i], ctx(i)).ok ? '' : '✗') + ' s' + (s.s || 0).toFixed(1) + ' e' + (s.e || 0).toFixed(1) + ' m' + (s.mean || 0).toFixed(1)).join(' | '));
     it.t.forEach((t, i) => { if (t === 5) return; [1, 2, 3, 4].forEach((w) => { if (w === t || (i === 0 && t === 3 && it.t[1] === 3 && w === 2)) return; const k = t + '→' + w; rejN[k] = (rejN[k] || 0) + 1; if (!P.judge(r.syl[i], w, ctx(i)).ok) rej[k] = (rej[k] || 0) + 1; }); });

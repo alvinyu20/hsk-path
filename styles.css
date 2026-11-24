@@ -4134,4 +4134,22 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .spk-opt .zh,.spk-opt .py,.spk-opt .en{grid-column:1}
 .spk-opt .btn{grid-column:2;grid-row:1 / span 3;min-height:40px}
 .spk-opt .en{color:var(--muted);font-size:14px}
+/* D2: Say it (tone trainer) */
+.say-word{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.say-word .zh{font-size:44px;line-height:1.1}
+.say-py{font-size:22px;font-weight:600}
+.say-t{color:var(--muted);font-size:15px}
+.say-btns{display:flex;flex-wrap:wrap;gap:10px}
+.say-rec{animation:xpglow 1.6s ease-in-out infinite}
+.say-note{margin:0;color:var(--seal)}
+.say-chart{width:100%;max-width:520px;height:auto;background:var(--panel2);border-radius:12px}
+.say-chart path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.say-mid{stroke:var(--line);stroke-width:1}
+.say-cut{stroke:var(--line);stroke-width:1.5;stroke-dasharray:3 4}
+.say-model{stroke:var(--muted);stroke-width:2.5;stroke-dasharray:6 6}
+.say-mine{stroke:var(--jade);stroke-width:4}
+.say-row{margin:0;padding:8px 12px;border-radius:10px;background:var(--panel2)}
+.say-row.ok{background:var(--jade-soft);color:var(--jade)}
+.say-row.bad{background:color-mix(in srgb,var(--seal) 12%,transparent)}
+.say-row.skip{color:var(--muted)}
 
