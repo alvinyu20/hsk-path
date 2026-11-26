@@ -7,7 +7,7 @@
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=481050e5a7 data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=f9adf791ad data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=ae6b55baf3 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=cadeceb7bf data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=2f4e796d1a data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=ed7af49707 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=887b6a91ac data/hsk4-words.js?v=9ebcc5a250 data/hsk4-grammar.js?v=8c535c3fc2 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=deae152b68 data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=018596a707 data/hsk5-words.js?v=1e54d78599 data/hsk5-grammar.js?v=cd8a3a9d5d data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=73d5a24b6f data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=2c380d97a7 data/path-scenes.js?v=cabc535d43 data/speak-scenes.js?v=8fc79e5d01 data/exam-art.js?v=fe9c38d6ea data/journey-media.js?v=de53596394">
-<meta name="shanlu-version" content="4ca35a4315">
+<meta name="shanlu-version" content="1a4deb46c9">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=a0d9420e66">
+<link rel="stylesheet" href="styles.css?v=0153363cb7">
 </head>
 <body>
 <div id="app"></div>
@@ -1004,7 +1004,7 @@
         <div class="hs-wrap"><div class="seg2 hs-scroll" role="group" aria-label="Show stops of one kind"><sc-for list="{{jyFilters}}" as="f" hint-placeholder-count="5"><button type="button" class="jy-chip {{f.cls}}" data-on-click="{{f.fn}}">{{f.label}} <i>{{f.count}}</i></button></sc-for></div><button type="button" class="jy-tabarr l" tabindex="-1" aria-hidden="true" data-jy-scroll="-1"><svg class="ic" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" class="jy-tabarr r" tabindex="-1" aria-hidden="true" data-jy-scroll="1"><svg class="ic" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div>
         <sc-if value="{{jyStopsNoteShow}}" hint-placeholder-val="{{ false }}"><p class="muted jy-key">{{jyStopsNote}}</p></sc-if>
         <div class="pcw"><sc-for list="{{jyCards}}" as="c" hint-placeholder-count="4">
-          <div class="pstc {{c.cls}}" style="--ph:{{c.hue}};--rot:{{c.rot}}deg">
+          <div class="pstc {{c.cls}}" style="--ph:{{c.hue}};--rot:{{c.rot}}deg;--dx:{{c.dx}}px;--dy:{{c.dy}}px">
             <sc-if value="{{c.isNew}}" hint-placeholder-val="{{ false }}"><span class="jy-newtag" aria-hidden="true">New</span></sc-if>
             <div class="pcard-in">
               <button type="button" class="pcard-f" aria-label="{{c.label}}" tabindex="{{c.ft}}" data-on-click="{{c.flip}}"><sc-if value="{{c.hasPhoto}}" hint-placeholder-val="{{ false }}"><img src="{{c.url}}" alt="" loading="lazy" referrerpolicy="no-referrer"></sc-if><sc-if value="{{c.noPhoto}}" hint-placeholder-val="{{ true }}"><span class="pcard-art"><img src="{{c.art}}" alt=""></span></sc-if><span class="pcard-cap"><span>{{c.en}}</span></span></button>
@@ -3436,6 +3436,6 @@
 <script defer src="data/confusers.js?v=2d21e34783"></script>
 <script defer src="data/path.js?v=f0ab6af196"></script>
 <script defer src="pitch.js?v=16ceaf9821"></script>
-<script defer src="app.js?v=9783c45db2"></script>
+<script defer src="app.js?v=3d19e43e84"></script>
 </body>
 </html>
