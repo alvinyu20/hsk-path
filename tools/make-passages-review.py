@@ -2,7 +2,8 @@
 """Writes the file to paste into a Chinese AI (DeepSeek, Qwen) to check the listening passages of one or more levels.
 
 Usage:  python3 tools/make-passages-review.py 1 2      -> review/chinese-ai-new-items/listening-passages-HSK1-2.md
-Reads data/passages.js (run tools/build-passages.py first), so the pinyin is the one the site shows.
+        python3 tools/make-passages-review.py 4 5 --pending   -> only the passages that wait for their review (E4): ...-HSK4-5-new.md
+Reads data/passages.js (run tools/build-passages.py first, with SHANLU_PENDING=1 for --pending), so the pinyin is the one the site shows.
 """
 import json, os, re, sys
 
@@ -11,6 +12,10 @@ levels = [a for a in sys.argv[1:] if a.isdigit()] or ['1', '2']
 src = open(os.path.join(ROOT, 'data', 'passages.js'), encoding='utf-8').read()
 data = json.loads(src[re.search(r'window\.SHANLU_PASSAGES\s*=', src).end():].strip().rstrip(';'))
 top = max(int(l) for l in levels)
+only = None
+if '--pending' in sys.argv:
+    only = {p['id'] for p in json.load(open(os.path.join(ROOT, 'content', 'listening-passages.json'), encoding='utf-8'))['passages'] if p.get('pending')}
+    if not any(p['id'] in only for lv in levels for p in data.get(lv, [])): sys.exit('no pending passages in data/passages.js: build it with SHANLU_PENDING=1 python3 tools/build-passages.py')
 out = ['''以下是我为 HSK %(lv)s 学习网站写的“听力短文”（一段对话或一个人说的一段话，然后用中文回答问题）。学习者先听录音（看不到文字），再回答问题。
 请你作为母语者和中文老师检查。**只列出有问题的地方**，不用表扬，也不用重复没问题的内容。每个问题请写：编号 / 原文 / 问题是什么（简单的中文，加一行英文）/ 更自然的说法（只用 HSK 1 到 HSK %(top)d 的词）。
 需要特别注意：1) 对话是否自然、像真的生活里的对话；2) 语法错误；3) 英文翻译和中文意思不一致；4) 每个问题是否只有一个正确答案（标 ✓ 的那个），其他三个选项是否确实错，但又不是一眼就能排除；5) 问题能不能只靠听这段对话回答；6) “答案在第几句”是否指对了那一句；7) 对 HSK %(lv)s 来说太难的词；8) 拼音（多音字、轻声、变调、词与词之间的空格）。
@@ -26,6 +31,7 @@ If there are no problems, answer "No problems found".
 k = 0
 for lv in levels:
     for p in data.get(lv, []):
+        if only is not None and p['id'] not in only: continue
         k += 1
         out.append('\n## P%d. HSK %s · %s (%s)\n%s\n' % (k, lv, p['title'], p['id'], p['scene']))
         for i, l in enumerate(p['lines']):
@@ -34,6 +40,6 @@ for lv in levels:
         for j, q in enumerate(p['qs']):
             opts = ' / '.join(('✓ ' if n == 0 else '') + o['zh'] for n, o in enumerate(q['opts']))
             out.append('Q%d. %s  (%s)\n   - English: %s\n   - options: %s\n   - answer in %s' % (j + 1, q['zh'], q['py'], q['en'], opts, ('line %d' % (q['line'] + 1)) if isinstance(q['line'], int) else 'lines ' + ' and '.join(str(x + 1) for x in q['line'])))
-dest = os.path.join(ROOT, 'review', 'chinese-ai-new-items', 'listening-passages-HSK%s.md' % '-'.join(levels))
+dest = os.path.join(ROOT, 'review', 'chinese-ai-new-items', 'listening-passages-HSK%s%s.md' % ('-'.join(levels), '-new' if only is not None else ''))
 open(dest, 'w', encoding='utf-8').write('\n'.join(out) + '\n')
 print('wrote %s (%d passages, %d bytes)' % (os.path.relpath(dest, ROOT), k, os.path.getsize(dest)))

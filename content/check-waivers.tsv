@@ -217,3 +217,6 @@ lesson:kouyu5a	meaning	你怎么想到的？ uses 是…的 for a finished actio
 write:g5-95	meaning	你怎么想到的？ uses 是…的 for a finished action, so English needs the past	想到的
 lesson:xiangbi5	meaning	早我一年毕业 compares when a finished event happened; Chinese needs no 了 here	早我一年
 scenario:film:you1	pinyin	pypinyin reads 看中 (kànzhòng, take a fancy to); here it is 看 + 中国 (zhōng), as the site shows	我想看中国电影。
+passage:p5-cafe:line2	meaning	三十万 is 300,000 (30 × 万 10,000): the number check reads 三十 as 30 and does not know 万; the English gives the real amount	算过了，房租再加上买机器和别的东西，至少需要三十万。
+passage:p5-cafe:line4	meaning	十五万 is 150,000 (15 × 万 10,000): the number check reads 十五 as 15 and does not know 万; the English gives the real amount	我自己存了十五万，剩下的打算跟一个朋友合作，他出另一半。
+passage:p5-tea:line1	meaning	几千年 = thousands of years: 几 is not a number the English can repeat	中国人喝茶已经有几千年的历史了，茶的种类也非常多。
