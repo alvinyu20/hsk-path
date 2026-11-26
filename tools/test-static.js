@@ -29,6 +29,15 @@ function server(root, opts) {
     // with the real manifest, the recordings still come from this server's audio/ (not the R2 bucket, B4): tests stay offline and don't depend on the bucket's CORS rule
     if (p === '/data/audio-manifest.js' && o.realAudio && !o.audioBase) { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end(fs.readFileSync(path.join(root, p), 'utf8').replace(/^window\.SHANLU_AUDIO_BASE = .*$/m, '')); return; }
     const f = path.join(root, p);
+    // once the recordings live only in the R2 bucket (audio/r2.json "only"), a real recording this checkout lacks is fetched from the bucket here (no CORS between servers)
+    if (o.realAudio && /^\/audio\/[^/]+\.mp3$/.test(p) && f.startsWith(root) && !fs.existsSync(f)) {
+      let r2 = null; try { r2 = JSON.parse(fs.readFileSync(path.join(root, 'audio', 'r2.json'), 'utf8')); } catch (e) { r2 = null; }
+      if (r2 && r2.only && /^https:\/\//.test(r2.base || '')) {
+        fetch(r2.base.replace(/\/?$/, '/') + p.slice(1)).then(async (up) => { if (!up.ok) throw new Error('bucket ' + up.status); const b = Buffer.from(await up.arrayBuffer()); res.writeHead(200, { 'Content-Type': 'audio/mpeg' }); res.end(b); })
+          .catch(() => { res.writeHead(404); res.end('nope'); });
+        return;
+      }
+    }
     if (!f.startsWith(root) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); res.end('nope'); return; }
     const headers = { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' };
     if (o.noCache) headers['Cache-Control'] = 'no-cache';
