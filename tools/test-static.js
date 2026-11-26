@@ -5,7 +5,8 @@
  *     (tools/smoke-test-pwa.js runs the real tag with the real addresses);
  *   - data/audio-manifest.js is empty (no recorded audio), so tests do not depend on which texts have been recorded; a test that wants recordings
  *     sets its own manifest (tools/smoke-test-audio.js), or server(root, { realAudio: true }) keeps the real one (without its R2 bucket address,
- *     so the recordings come from this server; add audioBase: true to keep the bucket);
+ *     so the recordings come from this server; add audioBase: true to keep the bucket; with sw: true it stays untouched,
+ *     because the offline copy checks every file's SHA-1);
  *   - sw.js is an empty one (the real offline copy would cache files between test runs), unless the test asks: server(root, { sw: true }).
  *   - server(root, { level3: true }) would open HSK 3 while it is still closed on the real site (level.js gets MAX_LEVEL = 3 and index.html
  *     gets the HSK 3 data scripts). HSK 3 has been released, so both are in the real files and this option does nothing; it is kept for the
@@ -27,7 +28,8 @@ function server(root, opts) {
     if (p === '/sw.js' && !o.sw) { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end('/* tests: a service worker that does nothing, so no files are cached between test runs */'); return; }
     if (p === '/data/audio-manifest.js' && !o.realAudio) { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end('window.SHANLU_AUDIO_IDS = ""; window.SHANLU_AUDIO = {};'); return; }
     // with the real manifest, the recordings still come from this server's audio/ (not the R2 bucket, B4): tests stay offline and don't depend on the bucket's CORS rule
-    if (p === '/data/audio-manifest.js' && o.realAudio && !o.audioBase) { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end(fs.readFileSync(path.join(root, p), 'utf8').replace(/^window\.SHANLU_AUDIO_BASE = .*$/m, '')); return; }
+    // (not with the real service worker: it checks each file's SHA-1, and a changed manifest would stop its install)
+    if (p === '/data/audio-manifest.js' && o.realAudio && !o.audioBase && !o.sw) { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end(fs.readFileSync(path.join(root, p), 'utf8').replace(/^window\.SHANLU_AUDIO_BASE = .*$/m, '')); return; }
     const f = path.join(root, p);
     // once the recordings live only in the R2 bucket (audio/r2.json "only"), a real recording this checkout lacks is fetched from the bucket here (no CORS between servers)
     if (o.realAudio && /^\/audio\/[^/]+\.mp3$/.test(p) && f.startsWith(root) && !fs.existsSync(f)) {
