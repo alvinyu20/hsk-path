@@ -21,7 +21,12 @@ if (!male) fail('no man\'s lines were found in the exams');
 global.window = {};
 require(path.join(root, 'data', 'audio-manifest.js'));
 const M = window.SHANLU_AUDIO || {};
+// B4: once the recordings live only in the R2 bucket (audio/r2.json "only"), audio/index.json is the record and the files are not here
+const R2 = fs.existsSync(path.join(root, 'audio', 'r2.json')) ? JSON.parse(fs.readFileSync(path.join(root, 'audio', 'r2.json'), 'utf8')) : null;
+const BASE = R2 ? R2.base.replace(/\/?$/, '/') : '', onR2 = !!(R2 && R2.only);
+if ((window.SHANLU_AUDIO_BASE || '') !== BASE) fail('the manifest plays audio from "' + (window.SHANLU_AUDIO_BASE || '') + '" but audio/r2.json says "' + BASE + '"');
 Object.keys(M).forEach((k) => {
+  if (onR2) return;
   const v = M[k], text = k.replace(/^m\|/, '');
   const f = path.join(root, 'audio', v.indexOf('.') >= 0 ? v : text + '.' + v);
   if (!fs.existsSync(f)) fail('the manifest names ' + path.basename(f) + ' for "' + k + '" but the file is missing');
@@ -34,9 +39,9 @@ const crypto = require('crypto');
 const INDEX = fs.existsSync(path.join(root, 'audio', 'index.json')) ? JSON.parse(fs.readFileSync(path.join(root, 'audio', 'index.json'), 'utf8')) : {};
 let found = 0;
 Object.keys(INDEX).forEach((k) => {
-  if (!fs.existsSync(path.join(root, 'audio', INDEX[k]))) return;
+  if (!onR2 && !fs.existsSync(path.join(root, 'audio', INDEX[k]))) return;
   const man = /^m\|/.test(k), got = AL.file(man ? k.slice(2) : k, man ? 'm' : '');
-  if (got !== 'audio/' + INDEX[k]) fail('the site would play ' + got + ' for "' + k + '" instead of audio/' + INDEX[k]); else found++;
+  if (got !== BASE + 'audio/' + INDEX[k]) fail('the site would play ' + got + ' for "' + k + '" instead of audio/' + INDEX[k]); else found++;
 });
 { let stray = 0; for (let i = 0; i < 3000; i++) if (AL.file('没有录音的句子' + i)) stray++;
   if (stray > 3) fail(stray + ' of 3000 texts without a recording look recorded (the list should almost never match them)'); }

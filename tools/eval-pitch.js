@@ -1,7 +1,7 @@
 /* How well does pitch.js read the tones of the site's own recordings (one voice, textbook style)? Not a CI test: a tuning tool.
  *   node tools/eval-pitch.js [max words per kind] [--show]
  * Single-syllable words of HSK 1-3 (tone from the pinyin mark) and the two-syllable words of the tone-pair trainer (HSK*_LISTEN.pairs).
- * Needs ffmpeg and the audio/ folder. 3 + 3 words also count as right when the first syllable is read as a 2 (tone sandhi). */
+ * Needs ffmpeg and the audio/ folder (once the recordings live in the R2 bucket: python3 tools/audiostore.py fetch first). 3 + 3 words also count as right when the first syllable is read as a 2 (tone sandhi). */
 const path = require('path'), fs = require('fs'), cp = require('child_process');
 const root = path.join(__dirname, '..');
 global.window = global;
@@ -26,7 +26,7 @@ const pairs = [];
 const runJudge = (list, label) => {
   let acc = 0, nAcc = 0; const rej = {}, rejN = {}; const missed = [];
   list.slice(0, MAX).forEach((it) => {
-    const f = AL.file(it.zh); if (!f || !fs.existsSync(path.join(root, f))) return;
+    const f = AL.file(it.zh) && 'audio/' + AL.file(it.zh).split('audio/').pop(); if (!f || !fs.existsSync(path.join(root, f))) return;
     const r = P.analyse(pcm(f), 16000, it.t.length, it.t.map(t => (t === 5 ? 0.6 : 1))); if (!r.ok) { nAcc++; missed.push(it.zh + ' no pitch'); return; }
     const ctx = (i) => ({ last:i === it.t.length - 1, next:it.t[i + 1], n:it.t.length });
     const good = it.t.every((t, i) => P.judge(r.syl[i], t, ctx(i)).ok);
@@ -40,7 +40,7 @@ const runJudge = (list, label) => {
 const run = (list, label) => {
   let ok = 0, n = 0, conf = {}; const bad = [];
   list.slice(0, MAX).forEach((it) => {
-    const f = AL.file(it.zh); if (!f || !fs.existsSync(path.join(root, f))) return;
+    const f = AL.file(it.zh) && 'audio/' + AL.file(it.zh).split('audio/').pop(); if (!f || !fs.existsSync(path.join(root, f))) return;
     const r = P.analyse(pcm(f), 16000, it.t.length); n++;
     const got = r.syl.map(s => s.tone);
     const good = it.t.every((t, i) => t === 5 || got[i] === t || (i === 0 && t === 3 && it.t[1] === 3 && got[i] === 2));

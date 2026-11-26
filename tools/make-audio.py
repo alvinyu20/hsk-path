@@ -19,6 +19,8 @@ Cost: Qwen-Audio 3.1 is billed per token (input text and output audio), not per 
 real use so far: all 988 words (1,689 Chinese characters) cost about 1 cent.
 """
 import argparse, concurrent.futures as cf, hashlib, json, os, subprocess, sys, tempfile, threading, time, urllib.request, urllib.error
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import audiostore   # B4
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AUDIO = os.path.join(ROOT, 'audio')
@@ -134,7 +136,7 @@ def main():
     todo = []
     for e in texts:
         k = key_of(e)
-        have = k in index and os.path.exists(os.path.join(AUDIO, index[k]))
+        have = k in index and audiostore.have(index[k])   # (once the files live only in the R2 bucket, the index is the record)
         if have and e['text'] not in redo and '*' not in redo:
             continue
         todo.append(e)

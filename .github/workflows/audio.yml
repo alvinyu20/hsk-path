@@ -63,11 +63,29 @@ jobs:
           VOICE_F: ${{ inputs.voice_f }}
           VOICE_M: ${{ inputs.voice_m }}
         run: python3 tools/make-audio.py --scope "$SCOPE" --level "$LEVEL" --limit "$LIMIT" --redo "$REDO" --voice-f "$VOICE_F" --voice-m "$VOICE_M" --workers 2
+      # B4: once the "Audio to R2" workflow has run (audio/r2.json exists), new recordings also go to the Cloudflare R2 bucket, which the site plays from.
+      # After its "remove" step the files live only there: this step uploads them and the next one commits only the list.
+      - name: Copy new recordings to the R2 bucket
+        if: always() && hashFiles('audio/r2.json') != ''
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+          AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_BUCKET: ${{ vars.R2_BUCKET }}
+        run: |
+          aws s3 sync audio/ "s3://$R2_BUCKET/audio/" --endpoint-url "https://$R2_ACCOUNT_ID.r2.cloudflarestorage.com" \
+            --exclude '*' --include '*.mp3' --content-type audio/mpeg --cache-control 'public, max-age=86400' --size-only --only-show-errors
+          touch "$RUNNER_TEMP/r2-ok"
       - name: Save the files and the list
         if: always()
         env:
           SCOPE: ${{ inputs.scope }}
         run: |
+          if python3 -c "import sys; sys.path.insert(0, 'tools'); import audiostore; sys.exit(0 if audiostore.only_remote() else 1)" && [ ! -f "$RUNNER_TEMP/r2-ok" ]; then
+            echo "the upload to the R2 bucket failed, so the list is not saved (the site would point at files that are not there)"; exit 1; fi
           python3 tools/build-audio.py
           node tools/build-site.js
           git config user.name "github-actions[bot]"

@@ -1,0 +1,109 @@
+name: Audio to R2
+
+# B4: moves the recordings (audio/, about 270 MB) off GitHub Pages, which allows 1 GB, into a Cloudflare R2 bucket, before HSK 6 adds more.
+# Run it by hand from the Actions tab, in two steps:
+#   1. step = copy:   copies every recording to the bucket, checks that one plays from the public address, writes audio/r2.json and rebuilds
+#                     the audio list, so the site plays from the bucket. The files stay in the repo too, so nothing is lost if something is wrong.
+#   2. step = remove: (after trying the site on a phone) checks that the bucket has every recording, then takes the files out of the repo
+#                     (they stay in its history). From then on the Qwen audio workflow puts new recordings straight into the bucket.
+# Setting up (once, in Cloudflare, then in this repo's Settings > Secrets and variables > Actions):
+#   - an R2 bucket (for example shanlu-audio) with its Public Development URL turned on (Settings > Public access), or a custom domain;
+#   - an R2 API token with Object Read & Write for that bucket;
+#   - secrets R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY; variables R2_BUCKET (the bucket's name) and R2_PUBLIC_URL (https://pub-....r2.dev);
+#   - a CORS rule on the bucket allowing GET from https://alvinyu20.github.io (Say it decodes the model recording with fetch). The copy step tries
+#     to set it; an Object Read & Write token is not allowed to, so if it says so, add the rule in the bucket's Settings > CORS Policy.
+on:
+  workflow_dispatch:
+    inputs:
+      step:
+        description: 'copy (to the bucket; the site plays from it) or remove (take the files out of the repo, after checking the site)'
+        default: 'copy'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: qwen-audio
+
+jobs:
+  move:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: auto
+      AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+      AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+      R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+      R2_BUCKET: ${{ vars.R2_BUCKET }}
+      R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL }}
+      STEP: ${{ inputs.step }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check the settings
+        run: |
+          for v in R2_ACCOUNT_ID AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY R2_BUCKET R2_PUBLIC_URL; do
+            if [ -z "${!v}" ]; then echo "missing: $v (see the top of this file)"; exit 1; fi; done
+          case "$R2_PUBLIC_URL" in https://*) ;; *) echo "R2_PUBLIC_URL must start with https://"; exit 1;; esac
+          case "$STEP" in copy|remove) ;; *) echo "step must be copy or remove"; exit 1;; esac
+          echo "ENDPOINT=https://$R2_ACCOUNT_ID.r2.cloudflarestorage.com" >> "$GITHUB_ENV"
+          echo "BASE=${R2_PUBLIC_URL%/}/" >> "$GITHUB_ENV"
+      - name: Copy every recording to the bucket
+        if: inputs.step == 'copy'
+        run: |
+          n=$(ls audio | grep -c -E '\.(mp3|m4a|ogg|wav|webm)$' || true)
+          echo "copying $n recordings"
+          aws s3 sync audio/ "s3://$R2_BUCKET/audio/" --endpoint-url "$ENDPOINT" --exclude '*' --include '*.mp3' \
+            --content-type audio/mpeg --cache-control 'public, max-age=86400' --size-only --only-show-errors
+          for e in m4a ogg wav webm; do
+            aws s3 sync audio/ "s3://$R2_BUCKET/audio/" --endpoint-url "$ENDPOINT" --exclude '*' --include "*.$e" --cache-control 'public, max-age=86400' --size-only --only-show-errors; done
+          printf '{"CORSRules":[{"AllowedOrigins":["https://alvinyu20.github.io","http://localhost:8000","http://127.0.0.1:8000"],"AllowedMethods":["GET","HEAD"],"AllowedHeaders":["*"],"MaxAgeSeconds":86400}]}' > "$RUNNER_TEMP/cors.json"
+          aws s3api put-bucket-cors --bucket "$R2_BUCKET" --endpoint-url "$ENDPOINT" --cors-configuration "file://$RUNNER_TEMP/cors.json" \
+            || echo "::warning::Could not set the bucket's CORS rule with this token. Add it in Cloudflare: the bucket's Settings > CORS Policy (GET from https://alvinyu20.github.io)."
+      - name: Check that a recording plays from the public address
+        run: |
+          f=$(python3 -c "import json; print(sorted(json.load(open('audio/index.json')).values())[0])")
+          code=$(curl -s -o /dev/null -w '%{http_code}' "${BASE}audio/$f")
+          echo "${BASE}audio/$f -> $code"
+          [ "$code" = 200 ] || { echo "the public address does not serve the files: is the bucket's public URL turned on, and is R2_PUBLIC_URL right?"; exit 1; }
+          ct=$(curl -sI "${BASE}audio/$f" | tr -d '\r' | awk -F': ' 'tolower($1)=="content-type"{print $2}')
+          echo "content type: $ct"
+      - name: Check that the bucket has every recording
+        if: inputs.step == 'remove'
+        run: |
+          aws s3 ls "s3://$R2_BUCKET/audio/" --endpoint-url "$ENDPOINT" | awk '{print $4}' | sort > "$RUNNER_TEMP/there.txt"
+          python3 - "$RUNNER_TEMP/there.txt" <<'PY'
+          import json, sys
+          there = set(open(sys.argv[1]).read().split())
+          need = set(json.load(open('audio/index.json')).values())
+          missing = sorted(need - there)
+          print('%d recordings listed, %d in the bucket, %d missing' % (len(need), len(there & need), len(missing)))
+          if missing:
+              print('missing, for example:', missing[:10]); sys.exit(1)
+          PY
+      - name: Save
+        run: |
+          python3 - <<'PY'
+          import json, os
+          json.dump({'base': os.environ['BASE'], 'only': os.environ['STEP'] == 'remove'}, open('audio/r2.json', 'w'), indent=1)
+          PY
+          if [ "$STEP" = remove ]; then
+            git ls-files -z audio | grep -z -E '\.(mp3|m4a|ogg|wav|webm)$' | xargs -0 git rm -q --cached --
+            grep -qx '/audio/\*.mp3' .gitignore 2>/dev/null || printf '/audio/*.mp3\n/audio/*.m4a\n/audio/*.ogg\n/audio/*.wav\n/audio/*.webm\n' >> .gitignore
+          fi
+          python3 tools/build-audio.py
+          node tools/build-site.js
+          node tools/test-audio.js
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A audio/r2.json data/audio-manifest.js index.html sw.js .gitignore
+          git commit -m "Audio to R2: $STEP (made by the Audio to R2 workflow)"
+          git pull --rebase -q
+          git push

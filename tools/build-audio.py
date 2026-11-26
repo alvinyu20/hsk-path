@@ -11,6 +11,8 @@ The site matches the text exactly as shown on screen, so a word or sentence that
 Run:  python3 tools/build-audio.py
 """
 import hashlib, json, os, sys, unicodedata
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import audiostore   # B4: the recordings may live in a Cloudflare R2 bucket (audio/r2.json)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AUDIO = os.path.join(ROOT, 'audio')
@@ -34,7 +36,7 @@ def main():
             other[stem] = ext.lower()[1:]
     ids = set()
     for text, file in made.items():
-        if not os.path.exists(os.path.join(AUDIO, file)):
+        if not audiostore.have(file):
             continue
         key = unicodedata.normalize('NFC', text)
         h = hashlib.sha1(key.encode('utf-8')).hexdigest()
@@ -48,6 +50,9 @@ def main():
         f.write(' * SHANLU_AUDIO: any other recording, key -> extension (audio/<text>.<ext>) or file name. A key starting with m| is the man voice. */\n')
         f.write('window.SHANLU_AUDIO_IDS = "' + ''.join(sorted(ids)) + '";\n')
         f.write('window.SHANLU_AUDIO = ' + json.dumps(other, ensure_ascii=False, separators=(',', ':'), sort_keys=True) + ';\n')
+        r = audiostore.remote()
+        if r:   # the recordings are played from the R2 bucket (audiolist.js puts this in front of audio/<file>)
+            f.write('window.SHANLU_AUDIO_BASE = ' + json.dumps(r['base']) + ';\n')
     print('wrote data/audio-manifest.js: %d recordings (%d listed by hash, %d by name)' % (len(ids) + len(other), len(ids), len(other)))
 
 

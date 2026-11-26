@@ -31,6 +31,8 @@ jobs:
         run: |
           pip install --quiet torch torchaudio --index-url https://download.pytorch.org/whl/cpu
           pip install --quiet funasr modelscope pypinyin
+      - name: Download the recordings if they live in the R2 bucket (B4; does nothing while they are in audio/)
+        run: python3 tools/audiostore.py fetch
       - name: Check the recordings
         env:
           LIMIT: ${{ inputs.limit }}

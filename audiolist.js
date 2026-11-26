@@ -4,6 +4,8 @@
  * first W hex digits of each key's SHA-1, sorted and joined into one string (about 150 KB instead of a 1 MB text -> file list). A text whose
  * digits are there plays its file; if a file ever fails to load (two texts sharing the first W digits, about 1 in 12,000), the browser voice reads it.
  * window.SHANLU_AUDIO (text -> file name, or just the extension for audio/<text>.<ext>) is kept for files named any other way, and for tests.
+ * window.SHANLU_AUDIO_BASE (B4, written into the manifest once the recordings are in the Cloudflare R2 bucket; see tools/audiostore.py) goes in front
+ * of every address, so audio/<file> is played from the bucket instead of from GitHub Pages.
  * Node: require('./audiolist.js') returns the same object (tools/test-audio.js checks it against audio/index.json). */
 (function (root) {
   var W = 7;
@@ -39,11 +41,11 @@
   // the address of the recording of text (tag 'm': the man's voice), or null when there is none
   function file(text, tag) {
     if (!text) return null;
-    var key = (tag === 'm' ? 'm|' : '') + text, m = root.SHANLU_AUDIO;
-    if (m && Object.prototype.hasOwnProperty.call(m, key)) return 'audio/' + (String(m[key]).indexOf('.') >= 0 ? m[key] : encodeURIComponent(text) + '.' + m[key]);
+    var key = (tag === 'm' ? 'm|' : '') + text, m = root.SHANLU_AUDIO, base = root.SHANLU_AUDIO_BASE || '';
+    if (m && Object.prototype.hasOwnProperty.call(m, key)) return base + 'audio/' + (String(m[key]).indexOf('.') >= 0 ? m[key] : encodeURIComponent(text) + '.' + m[key]);
     var ids = root.SHANLU_AUDIO_IDS; if (!ids) return null;
     var h = cache.get(key); if (h === undefined) { h = sha1hex(key).slice(0, 14); cache.set(key, h); }
-    return listed(ids, h.slice(0, W)) ? 'audio/' + h + '.mp3' : null;
+    return listed(ids, h.slice(0, W)) ? base + 'audio/' + h + '.mp3' : null;
   }
   var api = { file: file, sha1hex: sha1hex, W: W };
   root.ShanluAudio = api;
