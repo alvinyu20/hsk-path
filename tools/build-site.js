@@ -100,14 +100,17 @@ const vOf = (f) => sha[f].slice(0, 10);
 const cfg = exists('config.js') ? read('config.js') : '';
 const friends = (/SHANLU_FRIENDS_URL\s*=\s*window\.SHANLU_FRIENDS_URL\s*\|\|\s*'(https:\/\/[^']+)'/.exec(cfg) || [])[1];
 const friendsOrigin = friends ? new URL(friends).origin : '';
+// B4: the recordings may be played from a Cloudflare R2 bucket (SHANLU_AUDIO_BASE, written by build-audio.py); the page must be allowed to load them
+const audioBase = (/SHANLU_AUDIO_BASE = "(https:\/\/[^"]+)"/.exec(exists('data/audio-manifest.js') ? read('data/audio-manifest.js') : '') || [])[1];
+const audioOrigin = audioBase ? new URL(audioBase).origin : '';
 const csp = [
   "default-src 'self'",
   "script-src 'self'",
   "style-src 'self' 'unsafe-inline'",   // the page sets style attributes while it draws; scripts stay locked to this site
   "img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org",   // Journey photos come from Wikimedia Commons and Openverse
   "font-src 'self'",
-  'media-src \'self\' blob: data: https://*.aliyuncs.com',   // Qwen voice clips are links to files on Alibaba's storage
-  ["connect-src 'self'", 'https://api.anthropic.com', 'https://dashscope-intl.aliyuncs.com', 'https://*.ap-southeast-1.maas.aliyuncs.com', 'https://api.github.com', friendsOrigin].filter(Boolean).join(' '),
+  ["media-src 'self' blob: data: https://*.aliyuncs.com", audioOrigin].filter(Boolean).join(' '),   // Qwen voice clips are links to files on Alibaba's storage; the recordings may be in the R2 bucket
+  ["connect-src 'self'", audioOrigin, 'https://api.anthropic.com', 'https://dashscope-intl.aliyuncs.com', 'https://*.ap-southeast-1.maas.aliyuncs.com', 'https://api.github.com', friendsOrigin].filter(Boolean).join(' '),
   "manifest-src 'self'",
   "worker-src 'self'",
   "object-src 'none'",

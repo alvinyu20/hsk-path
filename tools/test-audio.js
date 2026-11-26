@@ -24,6 +24,9 @@ const M = window.SHANLU_AUDIO || {};
 // B4: once the recordings live only in the R2 bucket (audio/r2.json "only"), audio/index.json is the record and the files are not here
 const R2 = fs.existsSync(path.join(root, 'audio', 'r2.json')) ? JSON.parse(fs.readFileSync(path.join(root, 'audio', 'r2.json'), 'utf8')) : null;
 const BASE = R2 ? R2.base.replace(/\/?$/, '/') : '', onR2 = !!(R2 && R2.only);
+// the page's security policy must let it load the recordings from there (build-site.js writes it; once it silently dropped the bucket and every recording failed)
+if (BASE) { const pol = (/http-equiv="Content-Security-Policy" content="([^"]*)"/.exec(fs.readFileSync(path.join(root, 'index.html'), 'utf8')) || [])[1] || '', o = new URL(BASE).origin;
+  ['media-src', 'connect-src'].forEach((d) => { const r = (pol.split(';').map(x => x.trim()).find(x => x.startsWith(d + ' ')) || ''); if (r.split(/\s+/).indexOf(o) < 0) fail('the page may not load the recordings from ' + o + ' (' + d + ' in index.html; run node tools/build-site.js)'); }); }
 if ((window.SHANLU_AUDIO_BASE || '') !== BASE) fail('the manifest plays audio from "' + (window.SHANLU_AUDIO_BASE || '') + '" but audio/r2.json says "' + BASE + '"');
 Object.keys(M).forEach((k) => {
   if (onR2) return;
