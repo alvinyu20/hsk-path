@@ -7,7 +7,7 @@
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com; connect-src 'self' https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=481050e5a7 data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=f9adf791ad data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=ae6b55baf3 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=cadeceb7bf data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=2f4e796d1a data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=ed7af49707 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=887b6a91ac data/hsk4-words.js?v=9ebcc5a250 data/hsk4-grammar.js?v=8c535c3fc2 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=deae152b68 data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=018596a707 data/hsk5-words.js?v=1e54d78599 data/hsk5-grammar.js?v=cd8a3a9d5d data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=73d5a24b6f data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=2c380d97a7 data/path-scenes.js?v=cabc535d43 data/speak-scenes.js?v=8fc79e5d01 data/exam-art.js?v=fe9c38d6ea data/journey-media.js?v=de53596394">
-<meta name="shanlu-version" content="1a4deb46c9">
+<meta name="shanlu-version" content="79936140e0">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=0153363cb7">
+<link rel="stylesheet" href="styles.css?v=6ea9fc772b">
 </head>
 <body>
 <div id="app"></div>
@@ -787,15 +787,13 @@
     <sc-if value="{{jyTripShow}}" hint-placeholder-val="{{ false }}">
     <div class="jy-trip-bg" role="dialog" aria-modal="true" aria-label="{{jyTripLabel}}">
       <div class="jy-trip m1 {{jyM1Cls}}">
-        <div class="m1-steps" aria-hidden="true"><i class="s1">Coins</i><i class="s2">Travel</i><i class="s3">Postcard</i><i class="s4">Stamp</i></div>
         <div class="m1-pay">
           <div class="m1-pay-t"><span>{{jyM1PayText}}</span><b>{{jyM1PayCoins}}</b></div>
           <div class="m1-bar"><i></i></div>
           <span class="jy-coins" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
         </div>
-        <div class="m1-go" aria-hidden="true"><span class="off">{{jyM1GoText}}</span><span class="on">{{jyM1GoText}}</span></div>
         <div class="m1-stage">
-          <div class="m1-card" aria-label="{{jyM1Alt}}">
+          <div class="m1-card" role="button" tabindex="0" aria-label="{{jyM1Alt}}" aria-describedby="m1-hint" data-on-click="{{jyM1Tap}}" data-on-pointerdown="{{jyM1Down}}" data-on-keydown="{{jyM1Key}}">
             <div class="m1-front"><sc-html value="{{jyM1Icon}}"></sc-html><b>?</b><span>{{jyM1Kind}}</span></div>
             <div class="m1-back">
               <small>{{jyTripKicker}}</small>
@@ -809,6 +807,7 @@
           <sc-if value="{{jyM1Gold}}" hint-placeholder-val="{{ false }}"><div class="m1-glint" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div></sc-if>
           <sc-if value="{{jyM1SvShow}}" hint-placeholder-val="{{ false }}"><div class="m1-sv" role="status"><span class="m1-sv-q">…and something else is here</span><span class="m1-sv-a"><img src="{{jyM1SvImg}}" alt="" width="58" height="58"><b>A souvenir! <small>{{jyM1SvEn}}</small></b></span></div></sc-if>
         </div>
+        <p class="{{jyM1HintCls}}" id="m1-hint" aria-live="polite"><span>{{jyM1Hint}}</span></p>
         <button type="button" class="btn pri big jy-trip-go" data-on-click="{{jyTripClose}}">See your new stop</button>
       </div>
     </div>
@@ -968,7 +967,7 @@
             <sc-for list="{{jyDots}}" as="d" hint-placeholder-count="2"><g class="jy-dot {{d.cls}}" transform="translate({{d.x}} {{d.y}})" tabindex="0" role="button" aria-label="{{d.label}}" data-on-click="{{d.open}}"><circle class="hit" r="11"/><circle class="dc" r="8"/><sc-if value="{{d.hasAv}}" hint-placeholder-val="{{ false }}"><image href="{{d.avUrl}}" x="-6.5" y="-6.5" width="13" height="13"/></sc-if><sc-if value="{{d.noAv}}" hint-placeholder-val="{{ true }}"><text y="3.5" text-anchor="middle">{{d.initial}}</text></sc-if></g></sc-for>
           <sc-if value="{{jyCHereShow}}" hint-placeholder-val="{{ false }}"><g class="jy-here" transform="translate({{jyCHereX}} {{jyCHereY}})"><circle class="rip" r="9"/><circle class="rip r2" r="9"/></g></sc-if>
             <sc-if value="{{jyMeShow}}" hint-placeholder-val="{{ true }}"><g class="jy-me" transform="translate({{jyMeX}} {{jyMeY}})" role="img" aria-label="{{jyMeLabel}}"><circle class="pul" r="13"/><g class="bob"><circle class="bg" r="13"/><sc-if value="{{jyMeHasImg}}" hint-placeholder-val="{{ false }}"><image href="{{jyMeImg}}" x="-9.5" y="-9.5" width="19" height="19"/></sc-if><sc-if value="{{jyMeNoImg}}" hint-placeholder-val="{{ true }}"><use href="{{jyMeRef}}" x="-9" y="-9" width="18" height="18"/></sc-if></g><text class="cap" y="25" text-anchor="middle">{{jyMeText}}</text></g></sc-if>
-            <sc-if value="{{jyPlayFly}}" hint-placeholder-val="{{ false }}"><g class="jy-plane" opacity="0" aria-hidden="true"><path d="M-6 0 L-2 -1.6 L0 -6 L1.8 -6 L0.8 -1.6 L4.5 -2.2 L6 -3.4 L6.8 -3.4 L6 0 L6.8 3.4 L6 3.4 L4.5 2.2 L0.8 1.6 L1.8 6 L0 6 L-2 1.6Z"/></g></sc-if></g></svg>
+            <sc-if value="{{jyGoFly}}" hint-placeholder-val="{{ false }}"><g class="jy-gofly" aria-hidden="true"><path class="jy-goarc" style="--len:{{jyGoFlyLen}}" d="{{jyGoFlyD}}"/><g class="jy-goland" transform="translate({{jyGoFlyX}} {{jyGoFlyY}})"><circle r="9"/></g><g class="jy-goplane"><g transform="scale(1.5)"><path d="M-6 0 L-2 -1.6 L0 -6 L1.8 -6 L0.8 -1.6 L4.5 -2.2 L6 -3.4 L6.8 -3.4 L6 0 L6.8 3.4 L6 3.4 L4.5 2.2 L0.8 1.6 L1.8 6 L0 6 L-2 1.6Z"/></g><animateMotion begin="indefinite" dur="2.2s" fill="freeze" rotate="auto-reverse" calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines=".42 0 .4 1" path="{{jyGoFlyD}}"/></g></g></sc-if></g></svg>
             <div class="jy-fx" aria-hidden="true"><i class="jy-ct c1"><i class="jy-cloud"></i></i><i class="jy-ct c2"><i class="jy-cloud"></i></i><i class="jy-ct c3"><i class="jy-cloud"></i></i><i class="jy-ct c4"><i class="jy-cloud"></i></i><i class="jy-ct c5"><i class="jy-cloud"></i></i><i class="jy-bt"><i class="jy-bird"></i><i class="jy-bird b2"></i><i class="jy-bird b3"></i></i><i class="jy-boat"></i><i class="jy-pt"><i class="jy-fly"></i></i></div>
           </div>
           <div class="jy-small"><span class="muted">Small regions</span><sc-for list="{{jySmall}}" as="r" hint-placeholder-count="3"><button type="button" class="jy-sm {{r.cls}}" style="--rh:{{r.hue}}" aria-label="{{r.label}}" data-on-click="{{r.open}}"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="{{r.d}}"/></svg><span>{{r.en}}</span><sc-if value="{{r.me}}" hint-placeholder-val="{{ false }}"><span class="jy-sm-me" aria-hidden="true">{{r.meText}}</span></sc-if></button></sc-for></div>
@@ -987,7 +986,6 @@
             <sc-if value="{{jyRouteShow}}" hint-placeholder-val="{{ false }}"><path class="jy-route" d="{{jyRouteD}}"/></sc-if>
             <sc-if value="{{jyLegShow}}" hint-placeholder-val="{{ false }}"><path class="jy-leg" style="--len:{{jyLegLen}}" d="{{jyLegD}}"/><circle class="jy-mover" r="4.5" style="--x1:{{jyLegX1}}px;--y1:{{jyLegY1}}px;--x2:{{jyLegX2}}px;--y2:{{jyLegY2}}px"/></sc-if>
             <sc-if value="{{jyHereShow}}" hint-placeholder-val="{{ false }}"><g class="jy-here" transform="translate({{jyHereX}} {{jyHereY}})"><circle class="rip" r="10"/><circle class="rip r2" r="10"/></g></sc-if>
-            <sc-if value="{{jyPlayLeg}}" hint-placeholder-val="{{ false }}"><g class="jy-plane" opacity="0" aria-hidden="true"><path d="M-6 0 L-2 -1.6 L0 -6 L1.8 -6 L0.8 -1.6 L4.5 -2.2 L6 -3.4 L6.8 -3.4 L6 0 L6.8 3.4 L6 3.4 L4.5 2.2 L0.8 1.6 L1.8 6 L0 6 L-2 1.6Z"/></g></sc-if>
             <sc-for list="{{jyPins}}" as="p" hint-placeholder-count="3"><g class="jy-pin {{p.cls}}" transform="translate({{p.x}} {{p.y}})" tabindex="0" role="button" aria-label="{{p.label}}" data-on-click="{{p.tap}}"><circle class="hit" r="8"/><sc-if value="{{p.isCluster}}" hint-placeholder-val="{{ false }}"><circle class="cl" r="10"/><text y="4" text-anchor="middle">{{p.count}}</text></sc-if><sc-if value="{{p.isCity}}" hint-placeholder-val="{{ false }}"><rect x="-5" y="-5" width="10" height="10" rx="1.5"/></sc-if><sc-if value="{{p.isAttr}}" hint-placeholder-val="{{ false }}"><path d="M0 -6.5 L6 4.5 L-6 4.5 Z"/></sc-if><sc-if value="{{p.isDish}}" hint-placeholder-val="{{ false }}"><circle r="5.2"/></sc-if><sc-if value="{{p.isCult}}" hint-placeholder-val="{{ false }}"><path d="M0 -6.5 L6.5 0 L0 6.5 L-6.5 0 Z"/></sc-if><sc-if value="{{p.isAir}}" hint-placeholder-val="{{ false }}"><path d="M0 -7 L1.6 -2 L7 1 L7 2.6 L1.6 1.2 L1.2 5 L3 6.2 L3 7.2 L0 6.4 L-3 7.2 L-3 6.2 L-1.2 5 L-1.6 1.2 L-7 2.6 L-7 1 L-1.6 -2 Z"/></sc-if></g></sc-for>
           </svg>
             <div class="jy-fx" aria-hidden="true"><i class="jy-ct c1"><i class="jy-cloud"></i></i><i class="jy-ct c3"><i class="jy-cloud"></i></i><i class="jy-ct c5"><i class="jy-cloud"></i></i><i class="jy-bt"><i class="jy-bird"></i><i class="jy-bird b2"></i></i></div>
@@ -1037,6 +1035,12 @@
               </section>
             </sc-for>
           </details></sc-if>
+          <sc-if value="{{jyTabShow}}" hint-placeholder-val="{{ false }}"><section class="fz-tab" aria-label="Your table so far">
+            <span class="fz-tab-k"><b lang="zh-Hans" class="zh">吃过的</b> What you have tasted</span>
+            <b class="fz-tab-big">{{jyTabBig}}</b>
+            <span class="fz-tab-from">{{jyTabFrom}}</span>
+            <button type="button" class="fz-tab-last" data-on-click="{{jyTabLastOpen}}"><small>Latest</small> <b lang="zh-Hans" class="zh">{{jyTabLastZh}}</b> {{jyTabLastEn}}</button>
+          </section></sc-if>
         <sc-if value="{{jyFoodOvShow}}" hint-placeholder-val="{{ false }}">
           <div class="fz-ov" role="dialog" aria-modal="true" aria-label="{{jyFoodLabel}}">
             <div class="fz-rot"><sc-html value="{{jyFoodOvSvg}}"></sc-html>
@@ -3395,7 +3399,7 @@
 </template>
 <script defer src="boot-check.js?v=49c6ac1223"></script>
 <script defer src="vendor/morphdom-umd.min.js?v=d5851599ae"></script>
-<script defer src="runtime.js?v=07e199e42a"></script>
+<script defer src="runtime.js?v=efad794d1b"></script>
 <script defer src="config.js?v=9dd5bf4caf"></script>
 <script defer src="friends.js?v=f51b3f7ce5"></script>
 <script defer src="level.js?v=6f1b8ee5a7"></script>
@@ -3413,7 +3417,7 @@
 <script defer src="sync.js?v=5b5c6f52f4"></script>
 <script defer src="data/audio-manifest.js?v=874da7ff9e"></script>
 <script defer src="audiolist.js?v=b5c3dc0aab"></script>
-<script defer src="jyscene.js?v=1c02bf2fa0"></script>
+<script defer src="jyscene.js?v=2210f9fb22"></script>
 <script defer src="journey.js?v=f19fa94dd0"></script>
 <script defer src="stampart.js?v=94be30f98c"></script>
 <script defer src="feastart.js?v=84bafd4ee6"></script>
@@ -3436,6 +3440,6 @@
 <script defer src="data/confusers.js?v=2d21e34783"></script>
 <script defer src="data/path.js?v=f0ab6af196"></script>
 <script defer src="pitch.js?v=16ceaf9821"></script>
-<script defer src="app.js?v=3d19e43e84"></script>
+<script defer src="app.js?v=4345fc1c78"></script>
 </body>
 </html>

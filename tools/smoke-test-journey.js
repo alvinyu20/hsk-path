@@ -6,7 +6,9 @@ const server = require('./test-static').server(root);
 let failures = 0;
 // the travel window covers the page until it is closed
 let sawDone = 0;
-const closeTrip = async (page) => { const b = page.locator('.jy-trip-go'); if (await b.count()) await b.click(); await page.waitForTimeout(80); const d = page.locator('.jd-skip'); if (await d.count()) { sawDone++; await d.click(); await page.waitForTimeout(40); } };
+// X2: the trip plays in the world before the postcard; tests land it at once
+const land = (page) => page.evaluate(() => { const s = window.shanlu; if (s.state.jyGo) s.jyGoEnd(s.jyGoAt); });
+const closeTrip = async (page) => { await land(page); const b = page.locator('.jy-trip-go'); if (await b.count()) await b.click(); await page.waitForTimeout(80); const d = page.locator('.jd-skip'); if (await d.count()) { sawDone++; await d.click(); await page.waitForTimeout(40); } };
 const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg); } else console.log('ok  ', msg); };
 
 (async () => {
@@ -34,6 +36,27 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     check((await main(page)).includes('Take your first flight (free)'), 'a new person sees the free first flight');
     check(await page.locator('.jy-go[disabled]').count() === 0, 'the first flight button is enabled at 0 coins');
     await page.locator('.jy-go').click();
+    // X2: the flight plays on the country map first (on a phone too); nothing about the new stop shows yet
+    check(await page.locator('.jy.jy-going.jyg-fly').count() === 1 && await page.locator('.jy-gofly .jy-goplane').count() === 1 && await page.locator('.jy-goarc').count() === 1, 'the flight plays on the country map, with a plane on its arc');
+    check(await page.locator('.jy-trip').count() === 0 && await page.locator('.jy-card').count() === 0 && !/Welcome to Sichuan/.test(await main(page)), 'nothing gives the new stop away while you are in the air');
+    await page.waitForTimeout(500); await page.keyboard.press('Shift'); await page.waitForTimeout(150);
+    // X3: then the postcard: tap to turn it over, press and hold to stamp it
+    check(await page.locator('.jy-going').count() === 0 && await page.locator('.jy.jy-playing.jyp-fly').count() === 1 && await page.locator('.jy-coins').count() === 1 && await page.locator('.jy-trip.m1.play').count() === 1, 'a key press lands the plane, and the postcard comes up with the coins flying into the price bar');
+    check(await page.locator('.jy-trip .m1-front').count() === 1 && (await page.locator('.jy-trip .m1-front').innerText()).includes('?') && /Tap the card/.test(await page.locator('.m1-hint').innerText()), 'the front of the postcard is a mystery that names only the kind of place, and says to tap it');
+    await page.waitForTimeout(1500);
+    check(await page.locator('.jy-trip').count() === 1 && !/flipped/.test(await page.locator('.m1').getAttribute('class')), 'the card waits for you (no timer turns it over)');
+    await page.locator('.m1-card').click(); await page.waitForTimeout(100);
+    check(/flipped/.test(await page.locator('.m1').getAttribute('class')) && /hold/i.test(await page.locator('.m1-hint').innerText()), 'a tap turns it over, and the hint says to press and hold');
+    await page.locator('.m1-card').click(); await page.waitForTimeout(100);
+    check(!/stamped/.test(await page.locator('.m1').getAttribute('class')) && /nudge/.test(await page.locator('.m1').getAttribute('class')), 'a short tap does not stamp it (the card gives a little shake)');
+    { const b = await page.locator('.m1-card').boundingBox(); await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2); await page.mouse.down(); await page.waitForTimeout(250);
+      check(/holding/.test(await page.locator('.m1').getAttribute('class')), 'pressing on the card starts the stamp');
+      await page.mouse.up(); await page.waitForTimeout(80);
+      check(!/holding|stamped/.test(await page.locator('.m1').getAttribute('class')), 'letting go too soon puts the stamp back');
+      await page.mouse.down(); await page.waitForTimeout(800); await page.mouse.up(); await page.waitForTimeout(100); }
+    check(/stamped/.test(await page.locator('.m1').getAttribute('class')) && /Stamped/.test(await page.locator('.m1-hint').innerText()), 'holding long enough stamps it');
+    await page.waitForTimeout(1800);
+    check(await page.locator('.jy-playing').count() === 0 && await page.locator('.jy-trip').count() === 0 && await page.locator('.jy-card').count() === 1, 'then it flows into the stop page by itself');
     let t = await main(page);
     check(/Welcome to Sichuan/.test(t) && /TFU/.test(t) && /Chéngdū Tiānfǔ Guójì Jīchǎng/.test(t), 'the airport arrival card shows the code and pinyin');
     // the flight in comes with a boarding pass (from home, the first time) and a sentence to say at the airport
@@ -49,11 +72,6 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     // the background tint follows the region
     const hue = await page.locator('.jy').evaluate(el => getComputedStyle(el).getPropertyValue('--jh').trim());
     check(hue === '8', 'Sichuan has its own colour (hue 8), got ' + hue);
-    // the travel moment plays once, and a key press skips to the finished picture
-    check(await page.locator('.jy.jy-playing.jyp-fly').count() === 1 && await page.locator('.jy-coins').count() === 1 && await page.locator('.jy-trip.m1.play').count() === 1, 'the flight starts the travel moment (coins fly into the price bar, the button wakes, the postcard flips, the stamp lands)');
-    check(await page.locator('.jy-trip .m1-front').count() === 1 && (await page.locator('.jy-trip .m1-front').innerText()).includes('?'), 'the front of the postcard is a mystery that names only the kind of place');
-    await page.waitForTimeout(600); await page.keyboard.press('Shift'); await page.waitForTimeout(250);
-    check(await page.locator('.jy-playing').count() === 0 && await page.locator('.jy-trip').count() === 0 && await page.locator('.jy-card').count() === 1, 'a key press skips the travel moment and goes straight to the stop page');
     await closeTrip(page);
     check(await page.locator('.jy-here .rip').count() === 2, 'two quiet rings mark where you are on the country map');
     check(await page.locator('.jy-me').count() === 1 && /You (are|start)/.test(await page.locator('.jy-me .cap').textContent()), 'your avatar sits on the country map, labelled');
@@ -275,7 +293,10 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     await page.evaluate(() => { window.__sfxLog = []; });
     await page.locator('.jy-go').click(); await page.waitForTimeout(300);
     check(await page.locator('.jy-tdot').count() === 0, 'no tab dots while the travel moment plays (they would give away what is coming)');
-    await page.waitForTimeout(4600);
+    await page.waitForSelector('.jy-trip .m1-card', { timeout:5000 }); await page.waitForTimeout(200);
+    await page.locator('.m1-card').click(); await page.waitForTimeout(900);
+    { const b = await page.locator('.m1-card').boundingBox(); await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2); await page.mouse.down(); await page.waitForTimeout(750); await page.mouse.up(); }
+    await page.waitForTimeout(3400);
     const s1 = await sfx();
     check(['plane', 'stamp'].every(x => s1.indexOf(x) >= 0) && s1.some(x => /waves|wind|birds/.test(x)), 'a flight sounds like a plane, then the place, then the stamp (' + s1.join(',') + ')');
     check(await page.locator('.jy-tk.fly.tier-bronze').count() === 1 && /Shanlu Air · Bronze/i.test(await page.locator('.jy-tk.fly').innerText()), 'the boarding pass is bronze to start with');
@@ -292,9 +313,9 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     for (let i = 0; i < 40 && !(seen.food && seen.star); i++) {
       await page.evaluate(() => window.shanlu.jyTabSet('explore')); await page.waitForTimeout(60);
       await page.evaluate(() => { window.__sfxLog = []; });
-      await page.locator('.jy-go').click(); await page.waitForTimeout(80);
+      await page.locator('.jy-go').click(); await page.waitForTimeout(80); await land(page); await page.waitForTimeout(60);
       const gold = /\bgold\b/.test(await page.locator('.m1').getAttribute('class'));
-      if (gold && !seen.star) { await page.waitForTimeout(1400); check((await sfx()).indexOf('gold') >= 0, 'a must-see reveal has its own glittering sound'); }
+      if (gold && !seen.star) { await page.locator('.m1-card').click(); await page.waitForTimeout(200); check((await sfx()).indexOf('gold') >= 0, 'a must-see reveal has its own glittering sound as it turns over'); }
       await closeTrip(page); await page.waitForTimeout(150);
       const lands = (await page.locator('.jy-lands button').allInnerTexts()).join('|');
       if (!seen.food && lands.includes('Put it on the table')) {
@@ -331,7 +352,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     let stamped = false;
     for (let i = 0; i < 70 && !stamped; i++) {
       await page.evaluate(() => window.shanlu.jyTabSet('explore'));
-      await page.locator('.jy-go').click(); await page.waitForTimeout(60);
+      await page.locator('.jy-go').click(); await page.waitForTimeout(60); await land(page);
       if (await page.locator('.jy-trip-go').count()) { await page.locator('.jy-trip-go').click(); await page.waitForTimeout(60); }
       if (!(await page.locator('.jd-skip').count())) { if (await page.locator('.jy-acts .btn.pri').count()) await page.locator('.jy-acts .btn.pri').click(); continue; }
       {
@@ -351,7 +372,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
         await page.evaluate(() => window.shanlu.jyTabSet('explore')); await page.waitForTimeout(100);
         const mapTxt = await page.evaluate(() => [...document.querySelectorAll('[aria-label]')].map(e => e.getAttribute('aria-label')).join(' | '));
         check(!/next flight/i.test(mapTxt) && mapTxt.indexOf(nextEn + ', next') < 0, 'no "next flight" mark on the map');
-        await page.locator('.jy-go').click(); await page.waitForTimeout(100);
+        await page.locator('.jy-go').click(); await page.waitForTimeout(100); await land(page);
         if (await page.locator('.jy-trip-go').count()) await page.locator('.jy-trip-go').click();
         await page.waitForTimeout(100);
         const card = await page.locator('main').innerText();

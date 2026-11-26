@@ -207,7 +207,17 @@
     // the labels
     o += pill(me[0], me[1] + me[2] + 14, m.meLabel || (m.home ? 'You, at home' : 'You are here'), true);
     o += pill(n[0], n[1] + n[2] + 14, (m.next && m.next.label) || 'Next stop', true);
-    
+    // X2, the trip happening on the road (styles.css "travel on the road"): you walk to the next stop, a train takes you there, or you lift off for a flight
+    if (m.go) {
+      if (m.go !== 'fly') o = o.replace('<g class="jr-me">', '<path class="jr-walked" d="' + seg + '" fill="none" stroke="#4E8A22" stroke-width="5.6" stroke-linecap="round" pathLength="100" stroke-dasharray="100 100" stroke-dashoffset="100"/><g class="jr-me">');
+      if (m.go === 'leg') o += '<g transform="translate(' + me[0] + ' ' + me[1] + ')" aria-hidden="true"><g class="jr-train"><g transform="translate(0 -7)">' +
+        ['-1', '1.3', '2.1'].map((d, i) => '<circle class="jr-puff" style="animation-delay:' + (0.25 + i * 0.45) + 's" cx="17" cy="-15" r="' + (3 + i * 0.4) + '" fill="#fff"/>').join('') +
+        '<rect x="-23" y="-9" width="26" height="15" rx="3" fill="#2F6B4F" stroke="#F8FAF7" stroke-width="1.6"/><rect x="-20" y="-6" width="8" height="6" rx="1.4" fill="#FBF6E9"/><rect x="-10" y="-6" width="8" height="6" rx="1.4" fill="#FBF6E9"/>' +
+        '<rect x="4" y="-12" width="19" height="18" rx="3.4" fill="#B93227" stroke="#F8FAF7" stroke-width="1.6"/><rect x="14" y="-17" width="5" height="6" rx="1" fill="#14212A"/>' +
+        '<text x="13.5" y="2" text-anchor="middle" font-family="\'Noto Serif SC\',serif" font-size="11" font-weight="700" fill="#fff">我</text>' +
+        [-17, -4, 9, 18].map((x) => '<circle cx="' + x + '" cy="7.5" r="3" fill="#14212A" stroke="#F8FAF7" stroke-width="1"/>').join('') + '</g></g></g>';
+      o = '<g class="jr-go jr-go-' + m.go + '">' + o + '</g>';
+    }
     return o;
   };
 

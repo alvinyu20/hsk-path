@@ -2644,11 +2644,10 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 @keyframes jycardin{from{opacity:0;transform:translateY(26px) scale(.98)}to{opacity:1;transform:none}}
 .app.t-dark .jy-road svg{filter:brightness(.8) saturate(.95)}
 
-/* ---- Journey: the travel moment (Motion 1). Coins fly into the price bar, the button wakes, a mystery postcard flips to show the stop, the stamp lands.
-   Then it flows into the stop's page. With .rest (reduced motion) it shows the finished picture and waits for a tap. ---- */
+/* ---- Journey: the travel moment, the postcard part (X3). Coins fly into the price bar; you tap the mystery postcard to turn it over (.flipped), then press and
+   hold (.holding, the hint fills and the stamp hovers) until the stamp lands (.stamped). Then it flows into the stop's page. With .rest (reduced motion) it shows
+   the finished picture and waits for a tap. The trip itself plays before this, in the world: see "travel on the road". ---- */
 .jy-trip.m1{gap:14px;align-items:stretch}
-.m1-steps{display:flex;gap:6px;justify-content:center}
-.m1-steps i{font-style:normal;font-size:12px;font-weight:700;letter-spacing:.04em;padding:5px 11px;border-radius:99px;background:var(--panel2);color:var(--muted)}
 .m1-pay{position:relative;display:flex;flex-direction:column;gap:8px;padding:12px 14px;border-radius:18px;background:var(--panel2)}
 .m1-pay-t{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14px;color:var(--muted)}
 .m1-pay-t b{font:700 20px/1 'Bricolage Grotesque',sans-serif;color:var(--ink);font-variant-numeric:tabular-nums}
@@ -2656,12 +2655,9 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .m1-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#E7B84A,#E0A526);transform-origin:left}
 .m1 .jy-coins{left:50%;top:-4px;bottom:auto;width:0;height:0}
 .m1 .jy-coins i{top:0;bottom:auto;animation:none;opacity:0}
-.m1-go{position:relative;height:50px}
-.m1-go span{position:absolute;inset:0;display:grid;place-items:center;border-radius:99px;font-weight:700;font-size:17px}
-.m1-go .off{background:var(--panel2);color:var(--muted)}
-.m1-go .on{background:var(--seal);color:#fff}
 .m1-stage{position:relative;perspective:900px;height:clamp(170px,30dvh,230px);margin:2px 6px 4px}
-.m1-card{position:absolute;inset:0;transform-style:preserve-3d}
+.m1-card{position:absolute;inset:0;transform-style:preserve-3d;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;border-radius:18px;transition:transform .75s cubic-bezier(.4,.1,.3,1)}
+.m1-card:focus-visible{outline:3px solid var(--focus,#2a6fdb);outline-offset:4px}
 .m1-front,.m1-back{position:absolute;inset:0;border-radius:18px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;padding:12px;box-shadow:0 10px 26px rgba(20,33,42,.22)}
 .m1-front{background:#14212A;color:#F8FAF7;border:2px dashed rgba(248,250,247,.35)}
 .m1-front svg{width:56px;height:56px;margin-bottom:-4px}
@@ -2680,30 +2676,36 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .m1-st-bot{font-size:11px;font-weight:700}
 /* the finished picture (no motion) */
 .m1.rest .m1-card{transform:rotateY(180deg)}
-.m1.rest .m1-go .off{opacity:0}
-.m1.rest .m1-steps i{background:color-mix(in srgb,var(--jade) 22%,var(--panel2));color:var(--ink)}
 /* the moment */
-.m1.play .m1-steps i{animation:m1step 1s both}
-.m1.play .m1-steps .s1{animation-delay:0s}.m1.play .m1-steps .s2{animation-delay:1s}.m1.play .m1-steps .s3{animation-delay:1.7s}.m1.play .m1-steps .s4{animation-delay:2.6s}
-@keyframes m1step{0%{background:var(--panel2);color:var(--muted)}12%,70%{background:var(--ink);color:var(--bg)}100%{background:color-mix(in srgb,var(--jade) 22%,var(--panel2));color:var(--ink)}}
 .m1.play .m1-bar i{animation:m1fill .9s .15s cubic-bezier(.3,.7,.3,1) both}
 @keyframes m1fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .m1.play .jy-coins i{animation:m1coin .7s ease-in both}
 .m1.play .jy-coins i:nth-child(1){--dx:-60px;animation-delay:.00s}.m1.play .jy-coins i:nth-child(2){--dx:50px;animation-delay:.07s}.m1.play .jy-coins i:nth-child(3){--dx:-24px;animation-delay:.14s}
 .m1.play .jy-coins i:nth-child(4){--dx:70px;animation-delay:.21s}.m1.play .jy-coins i:nth-child(5){--dx:-80px;animation-delay:.28s}.m1.play .jy-coins i:nth-child(6){--dx:20px;animation-delay:.35s}
 @keyframes m1coin{0%{opacity:0;transform:translate(var(--dx),-62px) scale(1.15)}15%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translate(0,40px) scale(.55)}}
-.m1.play .m1-go .off{animation:m1off .3s 1s both}
-@keyframes m1off{to{opacity:0}}
-.m1.play .m1-go .on{animation:m1on .9s 1s both}
-@keyframes m1on{0%{opacity:0;transform:scale(1)}20%{opacity:1;transform:scale(1.06)}40%{transform:scale(1)}70%{transform:scale(.97)}100%{opacity:1;transform:scale(1)}}
-.m1.play .m1-card{animation:m1flip .75s 1.7s cubic-bezier(.4,.1,.3,1) both}
-@keyframes m1flip{0%{transform:rotateY(0) translateY(0)}40%{transform:rotateY(70deg) translateY(-10px)}100%{transform:rotateY(180deg) translateY(0)}}
-.m1.play .m1-stamp{animation:m1stamp .45s 2.6s cubic-bezier(.2,1.2,.3,1) both}
+.m1.flipped .m1-card{transform:rotateY(180deg)}
+.m1.play.flipped .m1-card{cursor:default}
+.m1.play.holding .m1-stamp{animation:m1hover .6s linear both}
+@keyframes m1hover{from{opacity:0;transform:scale(2.3) rotate(-14deg)}to{opacity:.5;transform:scale(1.22) rotate(-14deg)}}
+.m1.play.stamped .m1-stamp{animation:m1stamp .4s cubic-bezier(.2,1.2,.3,1) both}
 @keyframes m1stamp{0%{opacity:0;transform:scale(2.4) rotate(-14deg)}60%{opacity:1;transform:scale(.94) rotate(-14deg)}100%{opacity:1;transform:scale(1) rotate(-14deg)}}
-.m1.play .m1-stage{animation:m1thunk .22s 2.9s linear both}
+.m1.play.stamped .m1-stage{animation:m1thunk .22s .28s linear both}
 @keyframes m1thunk{0%,100%{transform:none}30%{transform:translate(2px,3px)}65%{transform:translate(-2px,-1px)}}
-.m1:not(.rest):not(.play) .m1-stamp{opacity:0}
-.m1.play .m1-stamp{opacity:0}
+.m1:not(.rest):not(.play) .m1-stamp,.m1.play:not(.stamped) .m1-stamp{opacity:0}
+.m1.play:not(.stamped) .m1-sv{visibility:hidden}
+/* the hint under the card: it fills while you hold, and the card gives a little shake when a short tap should have been a hold */
+.m1-hint{position:relative;overflow:hidden;align-self:center;margin:0;padding:7px 16px;border-radius:99px;background:var(--panel2);color:var(--ink);font-size:14.5px;font-weight:600;text-align:center;min-height:1.2em}
+.m1-hint span{position:relative}
+.m1-hint::before{content:"";position:absolute;inset:0;background:color-mix(in srgb,var(--seal) 30%,transparent);transform:scaleX(0);transform-origin:left}
+.m1.holding .m1-hint::before{animation:m1fillh .6s linear both}
+@keyframes m1fillh{to{transform:scaleX(1)}}
+.m1.rest .m1-hint{display:none}
+.m1-hint.h-stamp{background:color-mix(in srgb,var(--seal) 16%,var(--panel2));color:var(--seal)}
+.m1.nudgea .m1-stage{animation:m1nudgea .4s ease both}.m1.nudgeb .m1-stage{animation:m1nudgeb .4s ease both}
+@keyframes m1nudgea{25%{transform:translateX(-5px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
+@keyframes m1nudgeb{25%{transform:translateX(-5px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
+.m1.play:not(.flipped) .m1-front{animation:m1wait 2.4s 1.2s ease-in-out infinite}
+@keyframes m1wait{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 @media (prefers-reduced-motion:reduce){.m1 *,.jr-ping,.jr-me,.jy-in .jy-card{animation:none!important}.m1 .jy-coins{display:none}}
 
 /* first visit: the intro pop-up and the steps after the first flight (a centred card; a sheet from the bottom on phones) */
@@ -4069,21 +4071,18 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .m1.gold .m1-back{background:linear-gradient(150deg,#FFF4CC,#F9E3A0 45%,#FFF9E4);border:2px solid #D4A72C}
 .m1.gold .m1-back small{color:#8A6A12}
 .m1.gold .m1-front::after{content:"";position:absolute;inset:0;border-radius:18px;background:linear-gradient(115deg,transparent 28%,rgba(255,228,140,.9) 47%,transparent 64%);background-size:260% 100%;background-position:130% 0;opacity:0;pointer-events:none}
-.m1.play.gold .m1-front{animation:m1goldglow .8s 1.05s ease both}
-.m1.play.gold .m1-front::after{animation:m1sheen .95s 1.15s ease-in-out both}
+.m1.play.gold .m1-front{animation:m1goldglow .8s .5s ease both}
+.m1.play.gold .m1-front::after{animation:m1sheen .95s .6s ease-in-out both}
 @keyframes m1goldglow{to{border:2px solid #F2C94C;box-shadow:0 0 30px 6px rgba(242,201,76,.6),0 10px 26px rgba(20,33,42,.22)}}
 @keyframes m1sheen{0%{opacity:0;background-position:130% 0}30%{opacity:1}100%{opacity:.5;background-position:-40% 0}}
-.m1.play.gold .m1-card{animation:m1flip 1.15s 1.9s cubic-bezier(.4,.1,.3,1) both}
-.m1.play.gold .m1-steps .s3{animation-delay:1.9s}.m1.play.gold .m1-steps .s4{animation-delay:3.1s}
-.m1.play.gold .m1-stamp{animation-delay:3.1s}
-.m1.play.gold .m1-stage{animation-delay:3.4s}
+.m1.gold .m1-card{transition-duration:1.15s}
 .m1-glint{position:absolute;inset:0;pointer-events:none}
 .m1-glint i{position:absolute;width:14px;height:14px;opacity:0;background:radial-gradient(circle,#fff 0 18%,rgba(255,226,140,.9) 30%,transparent 70%);clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%)}
 .m1-glint i:nth-child(1){left:6%;top:10%}.m1-glint i:nth-child(2){right:8%;top:6%;transform:scale(1.4)}.m1-glint i:nth-child(3){left:18%;bottom:12%}
 .m1-glint i:nth-child(4){right:22%;top:44%;transform:scale(.8)}.m1-glint i:nth-child(5){left:48%;top:-4%}.m1-glint i:nth-child(6){left:3%;top:52%;transform:scale(1.2)}
-.m1.play .m1-glint i{animation:m1tw 1.1s ease-in-out both}
-.m1.play .m1-glint i:nth-child(1){animation-delay:2.7s}.m1.play .m1-glint i:nth-child(2){animation-delay:2.85s}.m1.play .m1-glint i:nth-child(3){animation-delay:3s}
-.m1.play .m1-glint i:nth-child(4){animation-delay:3.15s}.m1.play .m1-glint i:nth-child(5){animation-delay:2.95s}.m1.play .m1-glint i:nth-child(6){animation-delay:3.3s}
+.m1.play.flipped .m1-glint i{animation:m1tw 1.1s ease-in-out both}
+.m1.play.flipped .m1-glint i:nth-child(1){animation-delay:.9s}.m1.play.flipped .m1-glint i:nth-child(2){animation-delay:1.05s}.m1.play.flipped .m1-glint i:nth-child(3){animation-delay:1.2s}
+.m1.play.flipped .m1-glint i:nth-child(4){animation-delay:1.35s}.m1.play.flipped .m1-glint i:nth-child(5){animation-delay:1.15s}.m1.play.flipped .m1-glint i:nth-child(6){animation-delay:1.5s}
 @keyframes m1tw{0%,100%{opacity:0;scale:.3}45%{opacity:1;scale:1.2}}
 .m1-sv{position:absolute;left:-4px;bottom:-20px;z-index:2;display:grid;pointer-events:none}
 .m1-sv > span{grid-area:1/1;align-self:end}
@@ -4092,9 +4091,8 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .m1-sv-a img{width:46px;height:46px;border-radius:50%;background:#fff}
 .m1-sv-a b{font-size:14px;line-height:1.15;display:flex;flex-direction:column}
 .m1-sv-a small{font-size:12px;font-weight:600;color:#6A5A30;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.m1.play .m1-sv-q{animation:m1svq .75s 3.2s ease both}
-.m1.play .m1-sv-a{animation:m1sva .55s 3.95s cubic-bezier(.2,1.4,.4,1) both}
-.m1.play.gold .m1-sv-q{animation-delay:3.7s}.m1.play.gold .m1-sv-a{animation-delay:4.45s}
+.m1.play.stamped .m1-sv-q{animation:m1svq .75s .5s ease both}
+.m1.play.stamped .m1-sv-a{animation:m1sva .55s 1.25s cubic-bezier(.2,1.4,.4,1) both}
 @keyframes m1svq{0%{opacity:0;transform:translateY(6px)}25%,75%{opacity:1;transform:none}100%{opacity:0}}
 @keyframes m1sva{from{opacity:0;transform:scale(.3) rotate(-10deg)}to{opacity:1;transform:none}}
 .m1:not(.play) .m1-glint{display:none}
@@ -4170,3 +4168,48 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .say-row.bad{background:color-mix(in srgb,var(--seal) 12%,transparent)}
 .say-row.skip{color:var(--muted)}
 
+
+/* ---- Journey: travel on the road (X2). Before the postcard, the trip plays in the world: on the Explore road you walk to the next stop (.jr-go-walk) or
+   ride a little train there (.jr-go-leg), and the road behind you turns green; for a flight (.jyg-fly) the country map shows (on a phone too, in the road's
+   place) and a plane flies its arc to the new region. The keyframes follow the road's curve from "you" to the next stop (jyscene.js NODE.me to NODE.nx). ---- */
+.jr-go .jr-lab{opacity:0;transition:opacity .25s}
+.jr-go .jr-me{transform-box:view-box;transform-origin:0 0}
+.jr-go-walk .jr-me{animation:jrwalk 1.55s .15s linear both}
+@keyframes jrwalk{0%{transform:translate(0px,0px)}4.2%{transform:translate(0.8px,-2.1px)}8.3%{transform:translate(3.1px,-3.1px)}12.5%{transform:translate(7.4px,-2.5px)}16.7%{transform:translate(11.4px,-0.9px)}20.8%{transform:translate(15.4px,-3.7px)}25%{transform:translate(19.4px,-5.6px)}29.2%{transform:translate(23.3px,-5.8px)}33.3%{transform:translate(27.2px,-5px)}37.5%{transform:translate(31px,-8.7px)}41.7%{transform:translate(34.7px,-11.2px)}45.8%{transform:translate(38.4px,-12.2px)}50%{transform:translate(42px,-12px)}54.2%{transform:translate(45.6px,-16.1px)}58.3%{transform:translate(49.3px,-18.8px)}62.5%{transform:translate(53px,-19.6px)}66.7%{transform:translate(56.8px,-19px)}70.8%{transform:translate(60.7px,-22.4px)}75%{transform:translate(64.6px,-24.4px)}79.2%{transform:translate(68.6px,-24.5px)}83.3%{transform:translate(72.6px,-23.1px)}87.5%{transform:translate(76.6px,-25.8px)}91.7%{transform:translate(80.9px,-26.9px)}95.8%{transform:translate(83.2px,-26.1px)}100%{transform:translate(84px,-24px)}}
+.jr-go-walk .jr-walked{animation:jrwalked 1.55s .15s cubic-bezier(.3,0,.7,1) both}
+.jr-go-leg .jr-walked{animation:jrwalked 1.8s .35s cubic-bezier(.45,0,.4,1) both}
+@keyframes jrwalked{to{stroke-dashoffset:0}}
+.jr-go-leg .jr-me{animation:jrhide .3s both}
+@keyframes jrhide{to{opacity:0}}
+.jr-train{animation:jrtrain 1.8s .35s cubic-bezier(.45,0,.4,1) both}
+@keyframes jrtrain{0%{opacity:0;transform:translate(0px,0px) rotate(-0.8deg)}4%{opacity:1}6%{transform:translate(0.7px,0px) rotate(-0.8deg)}13%{transform:translate(2.8px,-0.1px) rotate(-2.5deg)}19%{transform:translate(6.2px,-0.3px) rotate(-4.1deg)}25%{transform:translate(11px,-0.8px) rotate(-8.9deg)}31%{transform:translate(17.1px,-2px) rotate(-13.7deg)}38%{transform:translate(24.4px,-4.1px) rotate(-18.2deg)}44%{transform:translate(32.8px,-7.3px) rotate(-23.9deg)}50%{transform:translate(42px,-12px) rotate(-29.1deg)}56%{transform:translate(51.2px,-16.7px) rotate(-23.9deg)}63%{transform:translate(59.6px,-19.9px) rotate(-18.2deg)}69%{transform:translate(66.9px,-22px) rotate(-13.7deg)}75%{transform:translate(73px,-23.2px) rotate(-8.9deg)}81%{transform:translate(77.8px,-23.7px) rotate(-4.1deg)}88%{transform:translate(81.2px,-23.9px) rotate(-2.5deg)}94%{transform:translate(83.3px,-24px) rotate(-0.8deg)}100%{opacity:1;transform:translate(84px,-24px) rotate(-0.8deg)}}
+.jr-puff{opacity:0;transform-box:fill-box;transform-origin:center;animation:jrpuff 1s ease-out both}
+@keyframes jrpuff{0%{opacity:0;transform:none}20%{opacity:.9}100%{opacity:0;transform:translate(-10px,-12px) scale(2.2)}}
+.jr-go-fly .jr-me{animation:jrlift 1.3s .2s cubic-bezier(.5,0,.8,.6) both}
+@keyframes jrlift{to{opacity:0;transform:translate(60px,-90px)}}
+.jy-goarc{fill:none;stroke:var(--seal);stroke-width:2;stroke-linecap:round;stroke-dasharray:var(--len) var(--len);stroke-dashoffset:var(--len);animation:jyarcdraw 2.2s .05s cubic-bezier(.42,0,.4,1) both;pointer-events:none}
+@keyframes jyarcdraw{to{stroke-dashoffset:0}}
+.jy-goplane{fill:#14212A;stroke:#F8FAF7;stroke-width:.8;opacity:0;animation:jyplanein .25s .08s both;pointer-events:none}
+.t-dark .jy-goplane{fill:#F8FAF7;stroke:#14212A}
+@keyframes jyplanein{to{opacity:1}}
+.jy-goland circle{fill:none;stroke:var(--seal);stroke-width:2.2;opacity:0;transform-box:fill-box;transform-origin:center;animation:jyland 1s 2.05s ease-out both}
+@keyframes jyland{0%{opacity:0;transform:scale(.4)}30%{opacity:1}100%{opacity:0;transform:scale(2.6)}}
+.jy-going .jy-go{pointer-events:none}
+@media (max-width:999px){
+  /* on a phone Explore is the road card; for a flight the country map takes its place until you land */
+  .jy-ex.jyg-fly .jy-side{display:none}
+  .jy-ex.jyg-fly .jy-main > .jy-panel{display:flex}
+  .jy-ex.jyg-fly .jy-main .jy-small,.jy-ex.jyg-fly .jy-main .jy-key{display:none}
+}
+@media (prefers-reduced-motion:reduce){.jr-go *,.jy-gofly *{animation:none!important}}
+
+/* J3: the line about your whole table at the bottom of the Food tab, on a little card in the colours of the postcards */
+.fz-tab{display:flex;flex-direction:column;gap:4px;padding:14px 16px 12px;border-radius:6px 6px 14px 14px;background:#FBF6E9;color:#14212A;border:1px solid #E3D8BC;box-shadow:0 6px 16px -10px rgba(20,33,42,.35)}
+.fz-tab-k{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6A6A5C}
+.fz-tab-k .zh{font-size:14px;letter-spacing:0;margin-right:4px;color:#B93227}
+.fz-tab-big{font:700 18px/1.25 'Bricolage Grotesque',sans-serif}
+.fz-tab-from{font-size:14.5px;color:#4A5C65}
+.fz-tab-last{align-self:flex-start;margin-top:6px;padding:6px 12px;border:1px dashed #C9BB95;border-radius:10px;background:transparent;color:#14212A;font:inherit;font-size:14.5px;text-align:left;cursor:pointer}
+.fz-tab-last small{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6A6A5C;margin-right:4px}
+.fz-tab-last .zh{font-size:16px}
+.t-dark .fz-tab{filter:brightness(.88)}

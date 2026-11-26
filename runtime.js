@@ -142,7 +142,7 @@
     const inst = new Component(props);
     const m = { root, template, handlers: [], rendered: false };
     inst._mount = m;
-    ['click', 'input', 'keydown'].forEach(type => {
+    ['click', 'input', 'keydown', 'pointerdown'].forEach(type => {
       root.addEventListener(type, e => {
         const el = e.target.closest ? e.target.closest('[data-on-' + type + ']') : null;
         if (!el || !root.contains(el)) return;

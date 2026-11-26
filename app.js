@@ -342,6 +342,7 @@
   const TEST_COIN = 3;       // Review > Test: each right answer (+1 from the third in a row)
   const QS_MAX = 30, QS_RUN = 5, QS_CHECK = 4;
   const plural2 = (n, a, b) => n + ' ' + (n === 1 ? a : b);   // the quick sort: at most 30 words; five "Not yet" in a row ends it; every 4th "Know it" gets a meaning check
+  const JY_HOLD_MS = 600;   // X3: how long you press on the turned postcard to stamp it
   const FIRST_SESSION_COINS = 50;   // a new person's first stop pays this instead, so day one ends with the Journey's second stop (50 coins) ready
   const PATH_BATCH = 4;      // most words met before the first questions about them
   const PATH_XS = [50, 68, 78, 68, 50, 32, 22, 32];   // where the stops sit across the trail (percent from the left), one after the other
@@ -681,7 +682,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:'light',   // light to start, whatever the device's setting; dark only when chosen
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
-      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyTab:'explore', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
+      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyGo:null, jyM1:'front', jyM1Nudge:0, jyTab:'explore', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
       xp:0, xpDev:{}, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, dayAct:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:wPage(), clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -3469,6 +3470,18 @@
       const cost = JY.meter(totalXp(S), st0).nextCost;   // what this stop costs, shown as the coins that fly in
       const r = JY.step(JWORLD, st0, JY.rngFor(st0), ymd(new Date()));
       if (!r.stop) return;
+      // X2: the trip plays in the world first (the road, or the country map for a flight). That needs the picture from just before you set off, taken before the save.
+      const flew = r.ev.indexOf('arrive') >= 0, mode = flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk');
+      const playMode = this.jyMotionOk() ? mode : '';
+      let go = null;
+      if (playMode && window.JYSCENE && !this.state.jyFriend) {
+        try {
+          const snap = this.jyView0(Object.assign({}, this.state, { screen:'journey', jyTab:'explore', jyReg:flew ? null : this.state.jyReg, jyRv:null, jyOpen:null, jyTrip:'', jyPlay:'', jyDone:null, jyGo:null }));
+          const rm = this.jyRoadM0;
+          go = { mode:playMode, road:rm ? window.JYSCENE.svg(rm.rid, Object.assign({}, rm.model, { go:playMode }), rm.label) : '', fly:flew ? this.jyFlyArc(snap, r.stop.rid) : null };
+          this.jyGoSnap = snap;
+        } catch (e) { go = null; this.jyGoSnap = null; }
+      }
       jySave(r.st);
       // a souvenir that completes a set: the set's seal, and its coins once
       { const sv = SV_BY_STOP[r.stop.id]; const t = sv ? SV_SET_OF[sv.id] : null;
@@ -3476,39 +3489,98 @@
           if (svSetGot(t, have) === t.ids.length && !prefGet('svset.' + t.id, 0)) { prefSet('svset.' + t.id, Date.now()); this.setState({ xp:this.state.xp + SV_SET_COINS, dayXp:this.state.dayXp + SV_SET_COINS, jySetDone:{ id:t.id, stop:r.stop.id } }); } } }
       { const n = jyNewRead(); jyFinds(r.stop, r.ev).forEach(f => { const l = n[f.tab].filter(k => k !== f.key); l.push(f.key); n[f.tab] = l.slice(-80); }); prefSet('jyNew', n); }
       this.friendsTick();
-      SFX.play(r.ev.indexOf('arrive') >= 0 ? 'fly' : 'ok');
+      SFX.play(flew ? 'fly' : 'ok');
       // a flight shows on the map of the whole country; a ride or a walk shows on the map of the region you are in
-      const flew = r.ev.indexOf('arrive') >= 0;
-      const playMode = this.jyMotionOk() ? (flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk')) : '';
-      this.setState({ jyTrip:flew ? 'fly' : (r.ev.indexOf('city') >= 0 ? 'leg' : 'walk'), jyPlay:playMode, jyPlayStamp:r.ev.indexOf('stamp') >= 0, jyDone:r.ev.indexOf('stamp') >= 0 ? { rid:r.region, next:r.next, all:r.ev.indexOf('all') >= 0 } : null, jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next, from, cost, k:(this.jyK = ((this.jyK || 0) + 1) % 2) }, jyOpen:null, jyTab:'explore', jySel:null, jyFilter:'all', jyReg:flew || !JMAP.regions[r.stop.rid] ? null : r.stop.rid });   // (stays on Explore, where Travel is; the Map tab opens on that province)
+      this.setState({ jyGo:go, jyM1:'front', jyM1Nudge:0, jyTrip:mode, jyPlay:playMode, jyPlayStamp:r.ev.indexOf('stamp') >= 0, jyDone:r.ev.indexOf('stamp') >= 0 ? { rid:r.region, next:r.next, all:r.ev.indexOf('all') >= 0 } : null, jyRv:{ id:r.stop.id, ev:r.ev, region:r.region, next:r.next, from, cost, k:(this.jyK = ((this.jyK || 0) + 1) % 2) }, jyOpen:null, jyTab:'explore', jySel:null, jyFilter:'all', jyReg:flew || !JMAP.regions[r.stop.rid] ? null : r.stop.rid });   // (stays on Explore, where Travel is; the Map tab opens on that province)
       try { window.scrollTo(0, 0); } catch (e) {}
-      if (playMode) this.jyPlayRun(playMode, { gold:!!r.stop.sp, sv:!!SV_BY_STOP[r.stop.id], rid:r.stop.rid });
+      const px = { gold:!!r.stop.sp, sv:!!SV_BY_STOP[r.stop.id], rid:r.stop.rid };
+      if (go) this.jyGoRun(playMode, px); else if (playMode) this.jyPlayRun(playMode, px);
       else this.checkMilestones();   // (with the travel moment playing, achievements wait for it to end, so a "First souvenir" toast cannot give the reveal away)
     };
-    // The travel moment: pay, take off, land, postcard, stamp. It plays once per trip and never loops. Any tap or key skips to the finished picture.
+    // The travel moment, in two parts.
+    // 1. X2, the trip in the world (jyGo): you walk along the Explore road, a train takes you to a new city, or a plane crosses the country map (on a phone the map
+    //    takes the road's place for the flight). Everything else shows the picture from before you set off (jyGoSnap), so nothing gives the stop away. A tap or a key skips it.
+    // 2. X3, the postcard (jyPlay): tap the mystery card to turn it over, then press and hold to stamp it (Enter does both from the keyboard). Escape or "See your new stop" skips.
     jyMotionOk = () => !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    jyPlayRun = (mode, x) => {
-      const t0 = (this.jyPlayAt = Date.now()); x = x || {};
-      clearTimeout(this.jyPlayTimer); if (this.jyPlayOff) this.jyPlayOff();
-      // a must-see turns gold and flips more slowly (+0.5 s); a hidden souvenir gets its own beat after the stamp (+1.4 s)
-      const g = x.gold ? 500 : 0;
-      this.jyPlayTimer = setTimeout(() => this.jyPlayEnd(t0), 4300 + g + (x.sv ? 1400 : 0));   // coins in, button wakes, postcard flips, stamp lands, a short rest, then the stop's page
-      // the sounds of the trip, timed to the picture (and cut off if the moment is skipped)
-      (this.jySfxT || []).forEach(clearTimeout); this.jySfxT = [];
-      const at = (ms, name) => this.jySfxT.push(setTimeout(() => { if (this.jyPlayAt === t0) SFX.play(name); }, ms));
+    jyBed = (rid) => {   // what you hear as you arrive somewhere new
       const BED = { waves:['fujian', 'guangdong', 'guangxi', 'hainan', 'hongkong', 'macau', 'singapore', 'taiwan', 'zhejiang', 'shandong', 'liaoning', 'jiangsu'], wind:['gansu', 'neimenggu', 'ningxia', 'qinghai', 'xinjiang', 'xizang', 'heilongjiang', 'jilin', 'shanxi', 'shaanxi', 'hebei'] };
-      const bed = BED.waves.indexOf(x.rid) >= 0 ? 'waves' : BED.wind.indexOf(x.rid) >= 0 ? 'wind' : 'birds';
-      at(250, mode === 'fly' ? 'plane' : mode === 'leg' ? 'train' : 'walk');
-      if (mode !== 'walk') at(1500, bed);   // you hear the new place as you arrive in it (a walk stays where you are)
-      if (x.gold) at(1150, 'gold');
-      at(2800 + g, 'stamp');
-      if (x.sv) at(3950 + g, 'found');
-      // a tap (counted on the click, so the tap cannot fall through to what is underneath) or a key skips to the stop page; the button does its own closing
-      const skip = (e) => { if (e && e.target && e.target.closest && e.target.closest('.jy-trip-go')) return; if (e && e.type === 'click') { e.stopPropagation(); e.preventDefault(); } this.jyPlayEnd(t0); };
-      const arm = setTimeout(() => { document.addEventListener('click', skip, true); document.addEventListener('keydown', skip); }, 450);
-      this.jyPlayOff = () => { clearTimeout(arm); (this.jySfxT || []).forEach(clearTimeout); this.jySfxT = []; document.removeEventListener('click', skip, true); document.removeEventListener('keydown', skip); this.jyPlayOff = null; };
+      return BED.waves.indexOf(rid) >= 0 ? 'waves' : BED.wind.indexOf(rid) >= 0 ? 'wind' : 'birds';
     };
-    // when the moment is over (or skipped with a tap) it flows straight into the stop's page
+    // the flight's arc on the country map: from where you are (or, the first time, from home off the corner of the map) to the new region's airport
+    jyFlyArc = (snap, rid) => {
+      const RR = JWORLD.byRegion[rid]; const a = RR && (RR.cities[0].air || RR.cities[0].first); if (!a) return null;
+      const xy = JY.projectCountry(a.lat, a.lon), b = [Math.max(6, Math.min(344, xy[0])), Math.max(6, Math.min(284, xy[1]))];
+      let f = snap && snap.jyMeShow ? [snap.jyMeX, snap.jyMeY] : null;
+      if (!f || Math.hypot(b[0] - f[0], b[1] - f[1]) < 14) f = [342, 284];
+      const len = Math.hypot(b[0] - f[0], b[1] - f[1]), mx = (f[0] + b[0]) / 2, my = (f[1] + b[1]) / 2 - Math.min(46, len * 0.32), r1 = (n) => Math.round(n * 10) / 10;
+      return { d:'M' + r1(f[0]) + ' ' + r1(f[1]) + ' Q' + r1(mx) + ' ' + r1(my) + ' ' + r1(b[0]) + ' ' + r1(b[1]), len:Math.ceil(len * 1.2), x:r1(b[0]), y:r1(b[1]) };
+    };
+    jyGoRun = (mode, x) => {
+      const t0 = (this.jyGoAt = Date.now()); this.jyGoX = { mode, x:x || {} };
+      this.jyGoStop();
+      const at = (ms, f) => this.jyGoT.push(setTimeout(() => { if (this.jyGoAt === t0) f(); }, ms));
+      const dur = mode === 'fly' ? 2700 : mode === 'leg' ? 2300 : 1900;
+      at(150, () => SFX.play(mode === 'fly' ? 'plane' : mode === 'leg' ? 'train' : 'walk'));
+      if (mode !== 'walk') at(dur - 800, () => SFX.play(this.jyBed((x || {}).rid)));   // you hear the new place as you arrive in it (a walk stays where you are)
+      // the plane follows its arc (SVG animateMotion, started now: the map has been on the page longer than the flight)
+      if (mode === 'fly') at(30, () => document.querySelectorAll('.jy-goplane animateMotion').forEach(el => { try { el.beginElement(); } catch (e) {} }));
+      at(dur, () => this.jyGoEnd(t0));
+      const skip = (e) => { if (e && e.type === 'click') { e.stopPropagation(); e.preventDefault(); } this.jyGoEnd(t0); };
+      at(350, () => { document.addEventListener('click', skip, true); document.addEventListener('keydown', skip); this.jyGoUnarm = () => { document.removeEventListener('click', skip, true); document.removeEventListener('keydown', skip); }; });
+    };
+    jyGoStop = () => { (this.jyGoT || []).forEach(clearTimeout); this.jyGoT = []; if (this.jyGoUnarm) { this.jyGoUnarm(); this.jyGoUnarm = null; } };
+    jyGoEnd = (t0) => {
+      if (t0 !== this.jyGoAt) return;
+      this.jyGoAt = 0; this.jyGoStop(); this.jyGoSnap = null;
+      if (!this.state.jyGo) return;
+      const g = this.jyGoX || {};
+      this.setState({ jyGo:null });
+      if (this.state.jyTrip && this.state.jyPlay) this.jyPlayRun(g.mode, g.x);
+    };
+    jyPlayRun = (mode, x) => {
+      const t0 = (this.jyPlayAt = Date.now()); this.jyPlayXX = x || {};
+      clearTimeout(this.jyPlayTimer); if (this.jyPlayOff) this.jyPlayOff();
+      this.jySfxT = [];
+      if (this.state.jyM1 !== 'front' || this.state.jyM1Nudge) this.setState({ jyM1:'front', jyM1Nudge:0 });
+      const key = (e) => { if (e.key === 'Escape') { e.preventDefault(); this.jyPlayEnd(t0); } };
+      const menu = (e) => { if (e.target && e.target.closest && e.target.closest('.m1-card')) e.preventDefault(); };   // a long press on the card is the stamp, not the phone's menu
+      document.addEventListener('keydown', key); document.addEventListener('contextmenu', menu);
+      this.jyPlayOff = () => { (this.jySfxT || []).forEach(clearTimeout); this.jySfxT = []; clearTimeout(this.jyHoldT); if (this.jyHoldUp) this.jyHoldUp(); document.removeEventListener('keydown', key); document.removeEventListener('contextmenu', menu); this.jyPlayOff = null; };
+      setTimeout(() => { const c = document.querySelector('.jy-trip .m1-card'); if (c && this.jyPlayAt === t0) { try { c.focus({ preventScroll:true }); } catch (e) {} } }, 80);
+    };
+    jyM1Flip = () => {
+      if (!this.state.jyPlay || this.state.jyM1 !== 'front') return;
+      SFX.play(this.jyPlayXX && this.jyPlayXX.gold ? 'gold' : 'ok'); this.setState({ jyM1:'back', jyM1Nudge:0 });
+    };
+    jyM1Stamp = () => {
+      const S = this.state; if (!S.jyPlay || S.jyM1 === 'front' || S.jyM1 === 'stamp') return;
+      const t0 = this.jyPlayAt, x = this.jyPlayXX || {};
+      clearTimeout(this.jyHoldT); if (this.jyHoldUp) this.jyHoldUp();
+      SFX.play('stamp'); this.setState({ jyM1:'stamp', jyM1Nudge:0 });
+      if (x.sv) this.jySfxT.push(setTimeout(() => { if (this.jyPlayAt === t0) SFX.play('found'); }, 1250));
+      clearTimeout(this.jyPlayTimer); this.jyPlayTimer = setTimeout(() => this.jyPlayEnd(t0), x.sv ? 3000 : 1500);   // a short rest on the stamped card, then the stop's page
+    };
+    // a tap turns the card over; once it is turned, a short tap only says to hold (a click from the keyboard stamps)
+    jyM1Tap = (e) => {
+      const m = this.state.jyM1; if (!this.state.jyPlay) return;
+      if (m === 'front') this.jyM1Flip();
+      else if (m === 'back') { if (e && e.detail === 0) this.jyM1Stamp(); else this.setState({ jyM1Nudge:(this.state.jyM1Nudge || 0) + 1 }); }
+    };
+    jyM1Down = (e) => {
+      const S = this.state; if (!S.jyPlay || S.jyM1 !== 'back' || (e && e.button > 0)) return;
+      const t0 = this.jyPlayAt;
+      this.setState({ jyM1:'hold' });
+      clearTimeout(this.jyHoldT); this.jyHoldT = setTimeout(() => { if (this.jyPlayAt === t0) this.jyM1Stamp(); }, JY_HOLD_MS);
+      const up = () => { if (this.jyHoldUp) this.jyHoldUp(); if (this.state.jyM1 === 'hold') { clearTimeout(this.jyHoldT); this.setState({ jyM1:'back' }); } };
+      window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
+      this.jyHoldUp = () => { window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up); this.jyHoldUp = null; };
+    };
+    jyM1Key = (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault(); if (e.repeat) return;
+      if (this.state.jyM1 === 'front') this.jyM1Flip(); else this.jyM1Stamp();
+    };
+    // when the stamp has landed (or the moment is skipped) it flows straight into the stop's page
     jyPlayEnd = (t0) => {
       if (t0 !== this.jyPlayAt) return;
       clearTimeout(this.jyPlayTimer); if (this.jyPlayOff) this.jyPlayOff();
@@ -3658,8 +3730,8 @@
     jyCloseCard = () => this.setState({ jyRv:null, jyOpen:null, jyTrip:'' });
     // the travel window: the trip plays in the middle of the screen; closing it shows the new stop's card
     jyTripClose = () => {
-      this.jyPlayAt = 0; clearTimeout(this.jyPlayTimer); clearTimeout(this.jyPlaneTimer); if (this.jyPlayOff) this.jyPlayOff();
-      const anim = this.jyMotionOk(); this.setState({ jyTrip:'', jyPlay:'', jyCardIn:anim }); this.checkMilestones();
+      this.jyPlayAt = 0; this.jyGoAt = 0; this.jyGoStop(); this.jyGoSnap = null; clearTimeout(this.jyPlayTimer); clearTimeout(this.jyPlaneTimer); if (this.jyPlayOff) this.jyPlayOff();
+      const anim = this.jyMotionOk(); this.setState({ jyTrip:'', jyPlay:'', jyGo:null, jyM1:'front', jyM1Nudge:0, jyCardIn:anim }); this.checkMilestones();
       if (anim) { clearTimeout(this.jyInTimer); this.jyInTimer = setTimeout(() => { if (this.state.jyCardIn) this.setState({ jyCardIn:false }); }, 1100); }
       requestAnimationFrame(() => { try { const el = document.querySelector('.jy-card'); if (el && el.scrollIntoView) el.scrollIntoView({ block:'start', behavior:this.jyMotionOk() ? 'smooth' : 'auto' }); } catch (e) {} });
       const rv = this.state.jyRv; if (anim && rv) { clearTimeout(this.jyFlyTimer); this.jyFlyTimer = setTimeout(() => this.jyFlyFinds(rv.id), 1150); }
@@ -3835,7 +3907,15 @@
       const key = rid + ':' + nowIds.length; if (this.jyFoodSeenKey === key) return; this.jyFoodSeenKey = key;
       setTimeout(() => { try { const m = fzRead(); m[rid] = nowIds; localStorage.setItem(FZ_KEY, JSON.stringify(m)); } catch (e) {} if (fresh && this.state.jyTab === 'food') this.setState({ jyFoodNew:{ rid, ids:fresh } }); }, 0);
     };
+    // X2: while the trip plays in the world, the Journey shows the picture from just before you set off (so nothing gives the new stop away), plus the trip itself
     jyView(S) {
+      const out = this.jyView0(S), g = S.jyGo, snap = this.jyGoSnap;
+      if (!g || !snap || S.screen !== 'journey' || !out.jyOn) return out;
+      Object.assign(out, snap, { jyPlayCls:'jy-going jyg-' + g.mode, jyTripShow:false, jyDoneShow:false, jyGoOff:true, jyEarnShow:false, jyCardShow:false,
+        jyRoadSvg:g.road || snap.jyRoadSvg, jyGoFly:!!g.fly, jyGoFlyD:g.fly ? g.fly.d : '', jyGoFlyLen:g.fly ? g.fly.len : 0, jyGoFlyX:g.fly ? g.fly.x : 0, jyGoFlyY:g.fly ? g.fly.y : 0 });
+      return out;
+    }
+    jyView0(S) {
       if (S.jyFoodNew && !(S.screen === 'journey' && S.jyTab === 'food')) setTimeout(() => { this.jyFoodSeenKey = ''; if (this.state.jyFoodNew && !(this.state.screen === 'journey' && this.state.jyTab === 'food')) this.setState({ jyFoodNew:null }); }, 0);
       const base = { isJourney:S.screen === 'journey', jySyncBad:!!S.syncBadMsg && !!(FR && FR.identity && FR.identity()), jySyncText:'This device could not sync with your other devices: ' + (S.syncBadMsg || '') + ' Open Friends and tap Sync now.', jyOff:false, jyOn:false, xpTotalText:totalXp(S).toLocaleString('en-US'), xpTip:'Your coins, from everything you study on every level. Spend them on the Journey.', goJourney:() => { this.setState({ jyTab:'explore' }); this.go('journey'); }, navJourney:'nav' + (S.screen === 'journey' ? ' on' : ''), xpPillCls:'pill xpp', jyPingShow:false, jyReadyShow:false, jyReadyN:0, jyReadyLabel:'' };
       if (!JWORLD || !JMAP) return Object.assign(base, { jyOff:S.screen === 'journey' });
@@ -3853,7 +3933,7 @@
       if (S.screen !== 'journey') return base;
       const have = {}; st.seen.forEach(id => { have[id] = 1; });
       const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
-      const out = Object.assign(base, { jyTripShow:!!S.jyTrip && !!S.jyRv && !S.jyFriend, jyTripFly:S.jyTrip === 'fly', jyTripLeg:S.jyTrip === 'leg', jyTripKicker:S.jyTrip === 'fly' ? 'Flying to' : S.jyTrip === 'leg' ? 'On the train to' : 'Walking to', jyTripLabel:'Travelling to a new stop', jyTripClose:this.jyTripClose, jyOn:true, jyFlip:S.jyRv && S.jyRv.k ? 'kb' : 'ka', jyPlayCls:(S.jyPlay ? 'jy-playing jyp-' + S.jyPlay + (S.jyPlayStamp ? ' jyp-st' : '') : '') + (S.jyCardIn ? ' jy-in' : ''), jyPlayOn:!!S.jyPlay, jyPlayFly:S.jyPlay === 'fly', jyPlayLeg:S.jyPlay === 'leg' });
+      const out = Object.assign(base, { jyTripShow:!!S.jyTrip && !!S.jyRv && !S.jyFriend, jyTripFly:S.jyTrip === 'fly', jyTripLeg:S.jyTrip === 'leg', jyTripKicker:S.jyTrip === 'fly' ? 'Flying to' : S.jyTrip === 'leg' ? 'On the train to' : 'Walking to', jyTripLabel:'Travelling to a new stop', jyTripClose:this.jyTripClose, jyGoFly:false, jyM1Tap:this.jyM1Tap, jyM1Down:this.jyM1Down, jyM1Key:this.jyM1Key, jyM1Hint:'', jyOn:true, jyFlip:S.jyRv && S.jyRv.k ? 'kb' : 'ka', jyPlayCls:(S.jyPlay ? 'jy-playing jyp-' + S.jyPlay + (S.jyPlayStamp ? ' jyp-st' : '') : '') + (S.jyCardIn ? ' jy-in' : ''), jyPlayOn:!!S.jyPlay, jyPlayFly:S.jyPlay === 'fly', jyPlayLeg:S.jyPlay === 'leg' });
 
       // friends: the people in your group who have started travelling. Looking at one shows their map and passport in place of yours.
       const fMembers = S.fr && S.fr.members ? S.fr.members.filter(m => m.id !== S.fr.me && m.stats && m.stats.jy && m.stats.jy.n > 0) : [];
@@ -3912,7 +3992,7 @@
         Object.assign(out, { jyHeroShow:!!hero, jyHeroUrl:hero ? hero.u : '', jyHeroAlt:hero ? (hero.a || R.en) : '', jyHeroCredit:hero ? hero.c : '' }); }
       // the road ahead: a landscape of the region you are in (or about to fly to) with your next stop on it. The next stop shows its category only, never which stop it is.
       { const JS = window.JYSCENE; const NK = { P:'A flight', T:'A new city', A:'A sight', D:'A dish', C:'A cultural stop' };
-        let road = '';
+        let road = ''; this.jyRoadM0 = null;
         if (JS && R && !done && !fm) {
           const sqLive = (st.sq || []).filter(id => JWORLD.byStop[id] && !have[id]); const cqLive = (st.cq || []).filter(id => JWORLD.byCity[id]);
           let nk = 'A';
@@ -3922,8 +4002,11 @@
             : sqLive.length && CC0 ? { kind:'city', zh:CC0.zh.slice(0, 1), label:sqLive.length + ' left in ' + CC0.en }
             : { kind:'region', zh:R.zh.slice(0, 2), label:(rs0.total - rs0.got) + ' to stamp ' + R.en };
           const seenSv = {}; st.seen.forEach(id => { seenSv[id] = 1; }); const avSv0 = SOUV.find(sv => sv.id === String(prefGet('av', '') || '') && seenSv[sv.stop]) || null;
-          road = JS.svg(VR.id, { done:st.started ? Math.min(2, rs0.got) : 0, mid:sqLive.length > 1 || (sqLive.length > 0 && cqLive.length > 0) || (!sqLive.length && cqLive.length > 1) ? 1 : 0, next:{ kind:nk, label:NK[nk] }, goal, pct:mt.pct / 100, ready:mt.ready > 0,
-            avatar:avSv0 ? svImg(avSv0) : '', home:!st.started && st.n === 0, meLabel:!st.started && st.n > 0 ? 'Ready to fly' : '' }, (secret ? 'Your road out of ' + VR.en + '. Next: a flight to somewhere new' : 'Your road in ' + R.en + '. Next: ' + NK[nk]));
+          const rmod = { done:st.started ? Math.min(2, rs0.got) : 0, mid:sqLive.length > 1 || (sqLive.length > 0 && cqLive.length > 0) || (!sqLive.length && cqLive.length > 1) ? 1 : 0, next:{ kind:nk, label:NK[nk] }, goal, pct:mt.pct / 100, ready:mt.ready > 0,
+            avatar:avSv0 ? svImg(avSv0) : '', home:!st.started && st.n === 0, meLabel:!st.started && st.n > 0 ? 'Ready to fly' : '' };
+          const rlab = secret ? 'Your road out of ' + VR.en + '. Next: a flight to somewhere new' : 'Your road in ' + R.en + '. Next: ' + NK[nk];
+          this.jyRoadM0 = { rid:VR.id, model:rmod, label:rlab };   // (X2: the road as it was, for the trip played on it)
+          road = JS.svg(VR.id, rmod, rlab);
           out.jyNextKind = NK[nk]; out.jyHomeLine = (mt.ready > 0 ? 'Enough coins for your next stop: ' : mt.toGo + ' coins from your next stop: ') + NK[nk].toLowerCase(); out.jyHomePct = Math.round(mt.pct) + '%'; out.jyGoalShow = true; out.jyGoalZh = goal.zh; out.jyGoalText = goal.label; out.jyGoalCls = goal.kind;
         }
         Object.assign(out, { jyRoadShow:!!road, jyRoadSvg:road, jyGoalShow:!!road }); if (road) out.jyHeroShow = false; }
@@ -3987,8 +4070,10 @@
         { const KL = { P:'A flight', T:'A new city', A:'A sight', D:'A dish', C:'A cultural stop' }; const cost = rv && rv.cost ? rv.cost : 0; const arriveEv = !!rv && rv.ev.indexOf('arrive') >= 0;
           const svM = rv && SV_BY_STOP[stop.id] ? SV_BY_STOP[stop.id] : null;
           Object.assign(out, { jyM1SvShow:!!svM, jyM1SvImg:svM ? svImg(svM) : '', jyM1SvEn:svM ? svM.en : '', jyM1Gold:!!stop.sp });
-          Object.assign(out, { jyM1Cls:(S.jyPlay ? 'play' : 'rest') + (stop.sp ? ' gold' : '') + (svM ? ' sv' : ''), jyM1PayText:cost > 0 ? 'The price of this stop' : 'Your first flight is free', jyM1PayCoins:cost > 0 ? cost.toLocaleString('en-US') + ' coins' : 'Free',
-            jyM1GoText:arriveEv ? (st.n === 1 ? 'Take your first flight (free)' : 'Board the flight') : 'Travel to the next stop',
+          const m1 = S.jyPlay ? (S.jyM1 || 'front') : 'stamp', nd = S.jyM1Nudge || 0;
+          Object.assign(out, { jyM1Cls:(S.jyPlay ? 'play' + (m1 !== 'front' ? ' flipped' : '') + (m1 === 'hold' ? ' holding' : '') + (m1 === 'stamp' ? ' stamped' : '') + (nd ? ' nudge' + (nd % 2 ? 'a' : 'b') : '') : 'rest') + (stop.sp ? ' gold' : '') + (svM ? ' sv' : ''),
+            jyM1Hint:!S.jyPlay ? '' : m1 === 'front' ? 'Tap the card to turn it over' : m1 === 'hold' ? 'Keep holding…' : m1 === 'stamp' ? 'Stamped!' : nd ? 'Press and hold a moment to stamp it' : 'Now press and hold to stamp it',
+            jyM1HintCls:'m1-hint h-' + m1, jyM1PayText:cost > 0 ? 'The price of this stop' : 'Your first flight is free', jyM1PayCoins:cost > 0 ? cost.toLocaleString('en-US') + ' coins' : 'Free',
             jyM1Kind:KL[stop.k] || 'A stop', jyM1Icon:window.JYSCENE ? window.JYSCENE.kindSvg(stop.k) : '', jyM1Alt:'A mystery stop, then ' + stop.en,
             jyM1StampZh:CC.zh.slice(0, 2), jyM1StampEn:'ARRIVED' }); }
         if (S.jyTrip) { out.jyTripFly = !!hp && hp.mode === 'fly' && S.jyTrip === 'fly'; out.jyTripLeg = !!hp && hp.mode === 'ride' && S.jyTrip === 'leg'; out.jyTripKicker = hp && hp.mode === 'fly' ? 'Flying to' : hp && hp.mode === 'ride' ? 'On the train to' : 'Walking to'; }
@@ -4189,6 +4274,12 @@
             return { zh:g[0], py:g[1], en:g[2], items:items.map(item) }; }).filter(g => g.items.length);
           return { zh:R.zh, py:R.py, en:R.en, hue, sub:mine.length === total ? 'All ' + total + ' found' : mine.length + ' of ' + total + ' found', groups };
         });
+        // J3: a line about your whole table at the bottom of the Food tab: what you have tasted, from how many provinces, the latest find and the fullest table
+        { const n = tally[0] + tally[1] + tally[2]; const lastD = st.seen.slice().reverse().map(i => JWORLD.byStop[i]).find(x => x && x.k === 'D'); const LC = lastD && JWORLD.byCity[lastD.cid];
+          const parts = [plural(tally[0], 'dish', 'dishes'), plural(tally[1], 'drink', 'drinks'), plural(tally[2], 'local specialty', 'local specialties')].filter((t, i) => tally[i] > 0);
+          const best = order.length > 1 ? order.slice().sort((a, b) => byR[b].length - byR[a].length)[0] : null;
+          Object.assign(out, { jyTabShow:n > 0, jyTabBig:parts.join(' · '), jyTabFrom:'from ' + plural(order.length, 'province', 'provinces') + (best ? '. Your fullest table: ' + JWORLD.byRegion[best].en + ' (' + byR[best].length + ')' : ''),
+            jyTabLastZh:lastD ? lastD.zh : '', jyTabLastEn:lastD ? lastD.en + (LC && lastD.en.indexOf(LC.en) < 0 ? ', ' + LC.en : '') : '', jyTabLastOpen:() => { if (lastD) this.jyOpenStop(lastD.id); } }); }
         out.jyTables = S.jyTab === 'food' ? tables : []; out.jyFoodNone = vis.length === 0; out.jyFoodHas = vis.length > 0; out.jyTablesShow = tables.length > 0;
         // the feast table: one themed room per province, with every dish you have found set out in it
         out.jyFoodChips = []; out.jyFoodSvg = ''; out.jyFoodOvSvg = ''; out.jyFoodOvShow = false; out.jyFoodPopShow = false; out.jyFoodMulti = false;
