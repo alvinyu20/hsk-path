@@ -4,7 +4,7 @@ Read this file first in every session, then `HANDOFF.md` (what's open, what's de
 
 ## What it is
 - A static HTML/JS HSK 1–5 study site (HSK 3.0 syllabus). It is served by GitHub Pages from `main`, so **a push to main deploys**. Repo `alvinyu20/hsk-path`.
-- The owner is Alvin. He wants a casual tone, honest uncertainty, and plain English in anything user-facing.
+- The owner is Alvin. He wants a casual tone, honest uncertainty, and plain English in anything user-facing. **Commit and push finished work straight to `main`** without asking (after the checks that cover it).
 - Session history and decisions live in the claude.ai Project docs (`claude/session-*.md`, `claude/deepseek-review-*.md`). The detailed content log is `CONTENT-CHECKS.md`. The user-facing feature list is `README.md`; it is long, so don't read it whole.
 
 ## Where things are

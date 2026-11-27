@@ -199,7 +199,7 @@ Alvin picks what comes next. **Don't start big items unprompted.** Ask which one
 - Work token-efficiently, without cutting corners on accuracy.
 - Update the handoff only when he asks.
 - For visual work, ask one scoping question first, then screenshot only the changed view.
-- **Push to `main` only when he says so in that request.** Permission doesn't carry over to the next change. Otherwise commit to the session's work branch.
+- **Always commit and push to `main`** (his standing rule since 26 Nov): finished, checked work goes straight to `main` without asking. Run the smallest check that covers the change first, because a push deploys. If the session can't push, ask him to say "attach the repo with push access" in the chat.
 
 ---
 
