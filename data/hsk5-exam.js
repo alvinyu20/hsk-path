@@ -4879,13 +4879,13 @@ window.HSK5_EXAM = {
    ]
   },
   {
-   "zh": "上个星期我参加了一次活动，和几个同学一起去看望住在附近的老人。老人们都很高兴，还给我们讲了很多过去的故事。",
-   "py": "Shàng ge xīngqī wǒ cānjiā le yí cì huódòng, hé jǐ ge tóngxué yìqǐ qù kànwàng zhù zài fùjìn de lǎorén. Lǎo rénmen dōu hěn gāoxìng, huángěi wǒmen jiǎng le hěn duō guòqù de gùshi.",
+   "zh": "上个星期我参加了一次活动，和几个同学一起去看望住在附近的老人。老人们都很高兴，还跟我们讲了很多过去的故事。",
+   "py": "Shàng ge xīngqī wǒ cānjiā le yí cì huódòng, hé jǐ ge tóngxué yìqǐ qù kànwàng zhù zài fùjìn de lǎorén. Lǎorénmen dōu hěn gāoxìng, hái gēn wǒmen jiǎng le hěn duō guòqù de gùshi.",
    "en": "Last week I took part in an activity and went with several classmates to visit old people living nearby. The old people were all very happy and told us many stories of the past.",
    "opts": [
     {
      "zh": "老人们给他们讲了过去的故事",
-     "py": "Lǎo rénmen gěi tāmen jiǎng le guòqù de gùshi"
+     "py": "Lǎorénmen gěi tāmen jiǎng le guòqù de gùshi"
     },
     {
      "zh": "他们去了医院",
@@ -4893,7 +4893,7 @@ window.HSK5_EXAM = {
     },
     {
      "zh": "老人们不高兴",
-     "py": "Lǎo rénmen bù gāoxìng"
+     "py": "Lǎorénmen bù gāoxìng"
     },
     {
      "zh": "活动是下个星期",

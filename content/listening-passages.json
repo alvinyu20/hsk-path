@@ -3860,7 +3860,6 @@
    "level": 4,
    "title": "Left in the taxi",
    "scene": "A man calls a taxi company about his wallet.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -3976,7 +3975,6 @@
    "level": 4,
    "title": "A cooking class",
    "scene": "A woman tells a friend about her cooking class.",
-   "pending": true,
    "lines": [
     {
      "s": "男",
@@ -4092,7 +4090,6 @@
    "level": 4,
    "title": "New library hours",
    "scene": "A teacher tells students about changes at the library.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -4198,7 +4195,6 @@
    "level": 4,
    "title": "A present for Mum",
    "scene": "A woman asks a friend what to give her mother.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -4314,7 +4310,6 @@
    "level": 4,
    "title": "A bad cough",
    "scene": "A man sees a doctor about his cough.",
-   "pending": true,
    "lines": [
     {
      "s": "男",
@@ -4430,7 +4425,6 @@
    "level": 4,
    "title": "The train is late",
    "scene": "Two passengers wait for a delayed train.",
-   "pending": true,
    "lines": [
     {
      "s": "男",
@@ -4479,7 +4473,7 @@
     },
     {
      "s": "女",
-     "zh": "对，我带了很厚的衣服，还给父母买了些水果。",
+     "zh": "对，我带了很厚的衣服，也给父母买了些水果。",
      "en": "Yes. I have brought thick clothes, and I bought some fruit for my parents."
     }
    ],
@@ -4546,7 +4540,6 @@
    "level": 4,
    "title": "Should we get a dog?",
    "scene": "A couple talk about their son wanting a dog.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -4657,7 +4650,6 @@
    "level": 4,
    "title": "First day at work",
    "scene": "A manager shows a new colleague around.",
-   "pending": true,
    "lines": [
     {
      "s": "男",
@@ -4773,7 +4765,6 @@
    "level": 4,
    "title": "Rain on Saturday",
    "scene": "Two friends change their weekend plans.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -4889,7 +4880,6 @@
    "level": 4,
    "title": "How I learned Chinese",
    "scene": "A student from abroad talks about learning Chinese.",
-   "pending": true,
    "lines": [
     {
      "s": "男",
@@ -4995,7 +4985,6 @@
    "level": 4,
    "title": "At the bank",
    "scene": "A student opens a bank account.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -5111,7 +5100,6 @@
    "level": 4,
    "title": "The sports competition",
    "scene": "A teacher tells her class about a school sports competition.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -5125,7 +5113,7 @@
     },
     {
      "s": "女",
-     "zh": "每个人最多可以参加两个比赛。",
+     "zh": "每个人最多可以参加两项比赛。",
      "en": "Each person can take part in at most two events."
     },
     {
@@ -5178,13 +5166,13 @@
      "line": 1
     },
     {
-     "zh": "每个人最多可以参加几个比赛？",
+     "zh": "每个人最多可以参加几项比赛？",
      "en": "How many events can each person take part in at most?",
      "opts": [
-      "两个",
-      "一个",
-      "三个",
-      "四个"
+      "两项",
+      "一项",
+      "三项",
+      "四项"
      ],
      "line": 2
     },
@@ -6367,7 +6355,6 @@
    "level": 5,
    "title": "A café of my own",
    "scene": "A man tells a friend he wants to open a café.",
-   "pending": true,
    "lines": [
     {
      "s": "男",
@@ -6416,7 +6403,7 @@
     },
     {
      "s": "女",
-     "zh": "听起来不错。不过辞职之前，最好先周末去别人的店里打工，积累一点儿经验。",
+     "zh": "听起来不错。不过辞职之前，最好先在周末去别人的店里打工，积累一点儿经验。",
      "en": "Sounds good. But before you quit, you had better work weekends in someone else's café first and get some experience."
     }
    ],
@@ -6444,8 +6431,8 @@
      "line": 2
     },
     {
-     "zh": "男的的朋友负责什么？",
-     "en": "What will the man's friend be in charge of?",
+     "zh": "他的朋友负责什么？",
+     "en": "What will his friend be in charge of?",
      "opts": [
       "管钱",
       "做咖啡",
@@ -6483,7 +6470,6 @@
    "level": 5,
    "title": "New rules for rubbish",
    "scene": "A notice to everyone living on an estate.",
-   "pending": true,
    "lines": [
     {
      "s": "男",
@@ -6497,7 +6483,7 @@
     },
     {
      "s": "男",
-     "zh": "每个楼下面都会放四个不同颜色的垃圾桶，上面写着放什么。",
+     "zh": "每座楼下面都会放四个不同颜色的垃圾桶，上面写着放什么。",
      "en": "There will be four bins of different colours under every building, each marked with what goes in it."
     },
     {
@@ -6594,7 +6580,6 @@
    "level": 5,
    "title": "Classes online",
    "scene": "A radio host talks to a teacher about online classes.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -6710,7 +6695,6 @@
    "level": 5,
    "title": "To buy a car or not",
    "scene": "A man explains to a friend why he wants a car.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -6826,7 +6810,6 @@
    "level": 5,
    "title": "After the operation",
    "scene": "A woman visits a colleague in hospital.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -6942,7 +6925,6 @@
    "level": 5,
    "title": "A cup of tea",
    "scene": "A woman at a teahouse talks to visitors about Chinese tea.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -6971,8 +6953,8 @@
     },
     {
      "s": "女",
-     "zh": "喝茶也有一些礼貌。给客人倒茶的时候，不能倒得太满，七分满就可以了。",
-     "en": "There are also some manners for drinking tea. When you pour tea for a guest, don't fill the cup too full: seven tenths full is enough."
+     "zh": "喝茶也要注意一些礼貌。给客人倒茶的时候，不能倒得太满，七分满就可以了。",
+     "en": "There are also some manners to keep in mind when drinking tea. When you pour tea for a guest, don't fill the cup too full: seven tenths full is enough."
     },
     {
      "s": "女",
@@ -7048,7 +7030,6 @@
    "level": 5,
    "title": "A year abroad",
    "scene": "A student tells a friend about her exchange year.",
-   "pending": true,
    "lines": [
     {
      "s": "男",
@@ -7057,7 +7038,7 @@
     },
     {
      "s": "女",
-     "zh": "对，申请了半年，终于通过了。要在那边读一年。",
+     "zh": "对，我半年前申请的，终于通过了。要在那边读一年。",
      "en": "Yes. I applied half a year ago, and it has finally been approved. I will study there for a year."
     },
     {
@@ -7164,7 +7145,6 @@
    "level": 5,
    "title": "A boy has lost his mother",
    "scene": "An announcement in a shopping centre.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -7188,8 +7168,8 @@
     },
     {
      "s": "女",
-     "zh": "如果您看到了这个孩子，请把他带到一楼的服务台，或者告诉附近的工作人员。",
-     "en": "If you see this child, please bring him to the service desk on the ground floor, or tell a member of staff nearby."
+     "zh": "如果您看到了这个孩子，请尽快把他带到一楼的服务台，或者告诉附近的工作人员。",
+     "en": "If you see this child, please bring him to the service desk on the ground floor as soon as possible, or tell a member of staff nearby."
     },
     {
      "s": "女",
@@ -7270,7 +7250,6 @@
    "level": 5,
    "title": "Nervous before the talk",
    "scene": "A woman is worried about giving a talk at work.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -7386,7 +7365,6 @@
    "level": 5,
    "title": "No hot water",
    "scene": "A woman calls her landlord about the hot water.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -7502,7 +7480,6 @@
    "level": 5,
    "title": "Before the big race",
    "scene": "A woman has hurt her foot while training for a race.",
-   "pending": true,
    "lines": [
     {
      "s": "男",
@@ -7618,7 +7595,6 @@
    "level": 5,
    "title": "A few words at the wedding",
    "scene": "A woman has been asked to speak at her best friend's wedding.",
-   "pending": true,
    "lines": [
     {
      "s": "女",
@@ -7673,8 +7649,8 @@
    ],
    "qs": [
     {
-     "zh": "女的的朋友下个月要做什么？",
-     "en": "What is the woman's friend doing next month?",
+     "zh": "她的朋友下个月要做什么？",
+     "en": "What is her friend doing next month?",
      "opts": [
       "结婚",
       "毕业",

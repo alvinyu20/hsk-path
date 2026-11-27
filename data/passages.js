@@ -7079,6 +7079,2324 @@ window.SHANLU_PASSAGES = {
     "修理",
     "不如"
    ]
+  },
+  {
+   "id": "p4-lost-wallet",
+   "lv": 4,
+   "title": "Left in the taxi",
+   "scene": "A man calls a taxi company about his wallet.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "您好，这里是出租车公司，请问有什么可以帮您的？",
+     "py": "Nín hǎo, zhèlǐ shì chūzūchē gōngsī, qǐngwèn yǒu shénme kěyǐ bāng nín de?",
+     "en": "Hello, this is the taxi company. How can I help you?"
+    },
+    {
+     "s": "男",
+     "zh": "你好，我刚才坐出租车的时候，把钱包忘在车上了。",
+     "py": "Nǐ hǎo, wǒ gāngcái zuò chūzūchē de shíhou, bǎ qiánbāo wàng zài chēshang le.",
+     "en": "Hello. I just took a taxi, and I left my wallet in the car."
+    },
+    {
+     "s": "女",
+     "zh": "别着急。您还记得是几点上车、在哪儿下车的吗？",
+     "py": "Bié zháojí. Nín hái jìde shì jǐ diǎn shàng chē, zài nǎr xià chē de ma?",
+     "en": "Don't worry. Do you remember what time you got in and where you got out?"
+    },
+    {
+     "s": "男",
+     "zh": "大概下午三点在火车站上的车，二十分钟以后在医院门口下的车。",
+     "py": "Dàgài xiàwǔ sān diǎn zài huǒchēzhàn shàng de chē, èrshí fēnzhōng yǐhòu zài yīyuàn ménkǒu xià de chē.",
+     "en": "I got in at the railway station at about three in the afternoon, and twenty minutes later I got out at the gate of the hospital."
+    },
+    {
+     "s": "女",
+     "zh": "您还记得车的号码吗？",
+     "py": "Nín hái jìde chē de hàomǎ ma?",
+     "en": "Do you remember the number of the car?"
+    },
+    {
+     "s": "男",
+     "zh": "我没注意号码，只记得司机是个年轻人，车是绿色的。",
+     "py": "Wǒ méi zhùyì hàomǎ, zhǐ jìde sījī shì ge niánqīng rén, chē shì lǜsè de.",
+     "en": "I did not notice the number. I only remember that the driver was a young man and the car was green."
+    },
+    {
+     "s": "女",
+     "zh": "钱包是什么颜色的？里面有什么？",
+     "py": "Qiánbāo shì shénme yánsè de? Lǐmiàn yǒu shénme?",
+     "en": "What colour is the wallet? What is in it?"
+    },
+    {
+     "s": "男",
+     "zh": "黑色的，里面有我的身份证、两张银行卡和五百多块钱。",
+     "py": "Hēisè de, lǐmiàn yǒu wǒ de shēnfènzhèng, liǎng zhāng yínhángkǎ hé wǔ bǎi duō kuài qián.",
+     "en": "It is black. My ID card, two bank cards and a bit over 500 yuan are in it."
+    },
+    {
+     "s": "女",
+     "zh": "好的，我马上联系那个时间在火车站附近的司机，有消息就给您打电话。",
+     "py": "Hǎo de, wǒ mǎshàng liánxì nàge shíjiān zài huǒchēzhàn fùjìn de sījī, yǒu xiāoxi jiù gěi nín dǎ diànhuà.",
+     "en": "All right. I will contact the drivers who were near the railway station at that time right away, and call you as soon as there is news."
+    },
+    {
+     "s": "男",
+     "zh": "太感谢了！您打这个电话就能找到我。",
+     "py": "Tài gǎnxiè le! Nín dǎ zhège diànhuà jiù néng zhǎo dào wǒ.",
+     "en": "Thank you so much! You can reach me on this number."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的把什么忘在车上了？",
+     "py": "Nán de bǎ shénme wàng zài chēshang le?",
+     "en": "What did the man leave in the car?",
+     "opts": [
+      {
+       "zh": "钱包",
+       "py": "Qiánbāo"
+      },
+      {
+       "zh": "手机",
+       "py": "Shǒujī"
+      },
+      {
+       "zh": "书包",
+       "py": "Shūbāo"
+      },
+      {
+       "zh": "护照",
+       "py": "Hùzhào"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "男的是在哪儿上的车？",
+     "py": "Nán de shì zài nǎr shàng de chē?",
+     "en": "Where did the man get into the taxi?",
+     "opts": [
+      {
+       "zh": "火车站",
+       "py": "Huǒchēzhàn"
+      },
+      {
+       "zh": "医院",
+       "py": "Yīyuàn"
+      },
+      {
+       "zh": "机场",
+       "py": "Jīchǎng"
+      },
+      {
+       "zh": "公司",
+       "py": "Gōngsī"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "关于那辆车，男的记得什么？",
+     "py": "Guānyú nà liàng chē, nán de jìde shénme?",
+     "en": "What does the man remember about the car?",
+     "opts": [
+      {
+       "zh": "车是绿色的",
+       "py": "Chē shì lǜsè de"
+      },
+      {
+       "zh": "车的号码",
+       "py": "Chē de hàomǎ"
+      },
+      {
+       "zh": "司机的名字",
+       "py": "Sījī de míngzi"
+      },
+      {
+       "zh": "车很新",
+       "py": "Chē hěn xīn"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "钱包里有多少钱？",
+     "py": "Qiánbāo lǐ yǒu duōshǎo qián?",
+     "en": "How much money is in the wallet?",
+     "opts": [
+      {
+       "zh": "五百多块",
+       "py": "Wǔ bǎi duō kuài"
+      },
+      {
+       "zh": "三百多块",
+       "py": "Sān bǎi duō kuài"
+      },
+      {
+       "zh": "一千多块",
+       "py": "Yì qiān duō kuài"
+      },
+      {
+       "zh": "两百块",
+       "py": "Liǎng bǎi kuài"
+      }
+     ],
+     "line": 7
+    },
+    {
+     "zh": "女的接下来要做什么？",
+     "py": "Nǚ de jiē xiàlái yào zuò shénme?",
+     "en": "What will the woman do next?",
+     "opts": [
+      {
+       "zh": "联系司机",
+       "py": "Liánxì sījī"
+      },
+      {
+       "zh": "去火车站",
+       "py": "Qù huǒchēzhàn"
+      },
+      {
+       "zh": "去医院",
+       "py": "Qù yīyuàn"
+      },
+      {
+       "zh": "给银行打电话",
+       "py": "Gěi yínháng dǎ diànhuà"
+      }
+     ],
+     "line": 8
+    }
+   ],
+   "words": [
+    "身份证",
+    "联系",
+    "消息",
+    "感谢"
+   ]
+  },
+  {
+   "id": "p4-cooking",
+   "lv": 4,
+   "title": "A cooking class",
+   "scene": "A woman tells a friend about her cooking class.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "听说你最近在学做菜？",
+     "py": "Tīngshuō nǐ zuìjìn zài xué zuò cài?",
+     "en": "I hear you have been learning to cook lately?"
+    },
+    {
+     "s": "女",
+     "zh": "对，我参加了一个周末的做菜班，每个星期六上午上课。",
+     "py": "Duì, wǒ cānjiā le yí ge zhōumò de zuò cài bān, měi ge xīngqīliù shàngwǔ shàngkè.",
+     "en": "Yes, I joined a weekend cooking class. There is a class every Saturday morning."
+    },
+    {
+     "s": "男",
+     "zh": "要花多少钱？贵不贵？",
+     "py": "Yào huā duōshǎo qián? Guì bú guì?",
+     "en": "How much does it cost? Is it expensive?"
+    },
+    {
+     "s": "女",
+     "zh": "一共八次课，一千二百块，材料都是老师准备的。",
+     "py": "Yígòng bā cì kè, yì qiān èr bǎi kuài, cáiliào dōu shì lǎoshī zhǔnbèi de.",
+     "en": "There are eight classes in all, for 1,200 yuan, and the teacher prepares all the ingredients."
+    },
+    {
+     "s": "男",
+     "zh": "那还不错。你都学会做什么了？",
+     "py": "Nà hái búcuò. Nǐ dōu xuéhuì zuò shénme le?",
+     "en": "That is not bad. What have you learned to make?"
+    },
+    {
+     "s": "女",
+     "zh": "上次学了做西红柿鸡蛋汤，这次学包饺子。",
+     "py": "Shàngcì xué le zuò xīhóngshì jīdàn tāng, zhè cì xué bāo jiǎozi.",
+     "en": "Last time we learned to make tomato and egg soup, and this time we are learning to make dumplings."
+    },
+    {
+     "s": "男",
+     "zh": "包饺子很难吧？",
+     "py": "Bāo jiǎozi hěn nán ba?",
+     "en": "Making dumplings must be hard?"
+    },
+    {
+     "s": "女",
+     "zh": "一开始我包得很难看，后来老师教了我一个好办法，现在好多了。",
+     "py": "Yì kāishǐ wǒ bāo de hěn nánkàn, hòulái lǎoshī jiāo le wǒ yí ge hǎo bànfǎ, xiànzài hǎoduō le.",
+     "en": "At first mine looked ugly, but then the teacher taught me a good way to do it, and now they are much better."
+    },
+    {
+     "s": "男",
+     "zh": "下次你包了饺子，一定要请我尝尝。",
+     "py": "Xiàcì nǐ bāo le jiǎozi, yídìng yào qǐng wǒ chángchang.",
+     "en": "Next time you make dumplings, you must let me try some."
+    },
+    {
+     "s": "女",
+     "zh": "没问题，这个周末就请你来我家吃。",
+     "py": "Méi wèntí, zhège zhōumò jiù qǐng nǐ lái wǒ jiā chī.",
+     "en": "No problem. I invite you to my place to have some this weekend."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的什么时候上课？",
+     "py": "Nǚ de shénme shíhou shàngkè?",
+     "en": "When does the woman have her class?",
+     "opts": [
+      {
+       "zh": "星期六上午",
+       "py": "Xīngqīliù shàngwǔ"
+      },
+      {
+       "zh": "星期天下午",
+       "py": "Xīngqītiān xiàwǔ"
+      },
+      {
+       "zh": "每天晚上",
+       "py": "Měitiān wǎnshang"
+      },
+      {
+       "zh": "星期六晚上",
+       "py": "Xīngqīliù wǎnshang"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "一共有几次课？",
+     "py": "Yígòng yǒu jǐ cì kè?",
+     "en": "How many classes are there in all?",
+     "opts": [
+      {
+       "zh": "八次",
+       "py": "Bā cì"
+      },
+      {
+       "zh": "六次",
+       "py": "Liù cì"
+      },
+      {
+       "zh": "十次",
+       "py": "Shí cì"
+      },
+      {
+       "zh": "十二次",
+       "py": "Shí'èr cì"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "材料是谁准备的？",
+     "py": "Cáiliào shì shéi zhǔnbèi de?",
+     "en": "Who prepares the ingredients?",
+     "opts": [
+      {
+       "zh": "老师",
+       "py": "Lǎoshī"
+      },
+      {
+       "zh": "女的",
+       "py": "Nǚ de"
+      },
+      {
+       "zh": "学校",
+       "py": "Xuéxiào"
+      },
+      {
+       "zh": "男的",
+       "py": "Nán de"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的这次学做什么？",
+     "py": "Nǚ de zhè cì xué zuò shénme?",
+     "en": "What is the woman learning to make this time?",
+     "opts": [
+      {
+       "zh": "包饺子",
+       "py": "Bāo jiǎozi"
+      },
+      {
+       "zh": "西红柿鸡蛋汤",
+       "py": "Xīhóngshì jīdàn tāng"
+      },
+      {
+       "zh": "做面条",
+       "py": "Zuò miàntiáo"
+      },
+      {
+       "zh": "做蛋糕",
+       "py": "Zuò dàngāo"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "女的请男的什么时候来吃饺子？",
+     "py": "Nǚ de qǐng nán de shénme shíhou lái chī jiǎozi?",
+     "en": "When does the woman invite the man to come and eat dumplings?",
+     "opts": [
+      {
+       "zh": "这个周末",
+       "py": "Zhège zhōumò"
+      },
+      {
+       "zh": "明天晚上",
+       "py": "Míngtiān wǎnshang"
+      },
+      {
+       "zh": "下个月",
+       "py": "Xià ge yuè"
+      },
+      {
+       "zh": "下次上课以后",
+       "py": "Xiàcì shàngkè yǐhòu"
+      }
+     ],
+     "line": 9
+    }
+   ],
+   "words": [
+    "材料",
+    "西红柿",
+    "汤"
+   ]
+  },
+  {
+   "id": "p4-library",
+   "lv": 4,
+   "title": "New library hours",
+   "scene": "A teacher tells students about changes at the library.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "同学们，大家好。从下个星期一开始，图书馆的开门时间有一些变化。",
+     "py": "Tóngxuémen, dàjiā hǎo. Cóng xià ge xīngqīyī kāishǐ, túshūguǎn de kāi mén shíjiān yǒu yìxiē biànhuà.",
+     "en": "Hello, everyone. From next Monday, the library's opening times will change a little."
+    },
+    {
+     "s": "女",
+     "zh": "星期一到星期五，早上八点开门，晚上十点关门，比以前晚关一个小时。",
+     "py": "Xīngqīyī dào xīngqīwǔ, zǎoshang bā diǎn kāi mén, wǎnshang shí diǎn guān mén, bǐ yǐqián wǎn guān yí ge xiǎoshí.",
+     "en": "From Monday to Friday it opens at eight in the morning and closes at ten at night, an hour later than before."
+    },
+    {
+     "s": "女",
+     "zh": "周末只开半天，从早上九点到下午一点。",
+     "py": "Zhōumò zhǐ kāi bàntiān, cóng zǎoshang jiǔ diǎn dào xiàwǔ yì diǎn.",
+     "en": "At the weekend it is only open for half a day, from nine in the morning to one in the afternoon."
+    },
+    {
+     "s": "女",
+     "zh": "另外，三楼正在修理，这个月不能进去。",
+     "py": "Lìngwài, sān lóu zhèngzài xiūlǐ, zhège yuè bù néng jìnqù.",
+     "en": "Also, the third floor is being repaired, so you cannot go in there this month."
+    },
+    {
+     "s": "女",
+     "zh": "需要安静学习的同学，可以去二楼。",
+     "py": "Xūyào ānjìng xuéxí de tóngxué, kěyǐ qù èr lóu.",
+     "en": "Students who need to study somewhere quiet can go to the second floor."
+    },
+    {
+     "s": "女",
+     "zh": "借书的规定没有改变，每个人最多可以借五本，时间是一个月。",
+     "py": "Jiè shū de guīdìng méiyǒu gǎibiàn, měi ge rén zuì duō kěyǐ jiè wǔ běn, shíjiān shì yí ge yuè.",
+     "en": "The rules for borrowing books have not changed: each person can borrow at most five books, for one month."
+    },
+    {
+     "s": "女",
+     "zh": "如果到时间了还没看完，可以在网上再借一个月。",
+     "py": "Rúguǒ dào shíjiān le hái méi kàn wán, kěyǐ zài wǎngshàng zài jiè yí ge yuè.",
+     "en": "If you have not finished a book when the time is up, you can borrow it for another month online."
+    },
+    {
+     "s": "女",
+     "zh": "谢谢大家的理解。",
+     "py": "Xièxie dàjiā de lǐjiě.",
+     "en": "Thank you all for your understanding."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "图书馆的开门时间从什么时候开始变化？",
+     "py": "Túshūguǎn de kāi mén shíjiān cóng shénme shíhou kāishǐ biànhuà?",
+     "en": "From when do the library's opening times change?",
+     "opts": [
+      {
+       "zh": "下个星期一",
+       "py": "Xià ge xīngqīyī"
+      },
+      {
+       "zh": "这个星期一",
+       "py": "Zhège xīngqīyī"
+      },
+      {
+       "zh": "下个月",
+       "py": "Xià ge yuè"
+      },
+      {
+       "zh": "明天",
+       "py": "Míngtiān"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "星期一到星期五图书馆几点关门？",
+     "py": "Xīngqīyī dào xīngqīwǔ túshūguǎn jǐ diǎn guān mén?",
+     "en": "What time does the library close from Monday to Friday?",
+     "opts": [
+      {
+       "zh": "晚上十点",
+       "py": "Wǎnshang shí diǎn"
+      },
+      {
+       "zh": "晚上九点",
+       "py": "Wǎnshang jiǔ diǎn"
+      },
+      {
+       "zh": "晚上十一点",
+       "py": "Wǎnshang shíyī diǎn"
+      },
+      {
+       "zh": "下午一点",
+       "py": "Xiàwǔ yì diǎn"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "周末图书馆什么时候开门？",
+     "py": "Zhōumò túshūguǎn shénme shíhou kāi mén?",
+     "en": "When is the library open at the weekend?",
+     "opts": [
+      {
+       "zh": "早上九点到下午一点",
+       "py": "Zǎoshang jiǔ diǎn dào xiàwǔ yì diǎn"
+      },
+      {
+       "zh": "早上八点到晚上十点",
+       "py": "Zǎoshang bā diǎn dào wǎnshang shí diǎn"
+      },
+      {
+       "zh": "只有星期六开",
+       "py": "Zhǐyǒu xīngqīliù kāi"
+      },
+      {
+       "zh": "周末不开门",
+       "py": "Zhōumò bù kāi mén"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "为什么这个月不能去三楼？",
+     "py": "Wèishénme zhège yuè bù néng qù sān lóu?",
+     "en": "Why can't students go to the third floor this month?",
+     "opts": [
+      {
+       "zh": "正在修理",
+       "py": "Zhèngzài xiūlǐ"
+      },
+      {
+       "zh": "人太多",
+       "py": "Rén tài duō"
+      },
+      {
+       "zh": "太冷了",
+       "py": "Tài lěng le"
+      },
+      {
+       "zh": "没有书",
+       "py": "Méiyǒu shū"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "书到时间了还没看完，可以怎么办？",
+     "py": "Shū dào shíjiān le hái méi kàn wán, kěyǐ zěnmebàn?",
+     "en": "What can you do if the time is up and you have not finished a book?",
+     "opts": [
+      {
+       "zh": "在网上再借一个月",
+       "py": "Zài wǎngshàng zài jiè yí ge yuè"
+      },
+      {
+       "zh": "去找老师",
+       "py": "Qù zhǎo lǎoshī"
+      },
+      {
+       "zh": "去二楼看",
+       "py": "Qù èr lóu kàn"
+      },
+      {
+       "zh": "自己买一本",
+       "py": "Zìjǐ mǎi yì běn"
+      }
+     ],
+     "line": 6
+    }
+   ],
+   "words": [
+    "另外",
+    "修理",
+    "规定",
+    "改变",
+    "理解"
+   ]
+  },
+  {
+   "id": "p4-gift",
+   "lv": 4,
+   "title": "A present for Mum",
+   "scene": "A woman asks a friend what to give her mother.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "下个星期是我妈妈的生日，我还没想好送她什么。",
+     "py": "Xià ge xīngqī shì wǒ māma de shēngrì, wǒ hái méi xiǎng hǎo sòng tā shénme.",
+     "en": "Next week is my mum's birthday, and I still have not decided what to give her."
+    },
+    {
+     "s": "男",
+     "zh": "去年你送了什么？",
+     "py": "Qùnián nǐ sòng le shénme?",
+     "en": "What did you give her last year?"
+    },
+    {
+     "s": "女",
+     "zh": "去年送了一条裙子，可是她觉得颜色太亮了，一次也没穿过。",
+     "py": "Qùnián sòng le yì tiáo qúnzi, kěshì tā juéde yánsè tài liàng le, yí cì yě méi chuān guo.",
+     "en": "Last year I gave her a skirt, but she thought the colour was too bright and never wore it once."
+    },
+    {
+     "s": "男",
+     "zh": "那这次送一些有用的吧，比如一个新手机？",
+     "py": "Nà zhè cì sòng yìxiē yǒuyòng de ba, bǐrú yí ge xīn shǒujī?",
+     "en": "Then give her something useful this time, like a new phone?"
+    },
+    {
+     "s": "女",
+     "zh": "她的手机刚换不久，而且她不喜欢用太复杂的东西。",
+     "py": "Tā de shǒujī gāng huàn bùjiǔ, érqiě tā bù xǐhuan yòng tài fùzá de dōngxi.",
+     "en": "She changed her phone not long ago, and she does not like using things that are too complicated."
+    },
+    {
+     "s": "男",
+     "zh": "你妈妈平时有什么爱好？",
+     "py": "Nǐ māma píngshí yǒu shénme àihào?",
+     "en": "What does your mum like doing in her free time?"
+    },
+    {
+     "s": "女",
+     "zh": "她特别喜欢种花，家里到处都是她种的花。",
+     "py": "Tā tèbié xǐhuan zhǒng huā, jiā lǐ dàochù dōu shì tā zhǒng de huā.",
+     "en": "She really loves growing flowers. There are flowers she has grown all over the house."
+    },
+    {
+     "s": "男",
+     "zh": "那送她几本关于种花的书，或者周末带她去公园看花。",
+     "py": "Nà sòng tā jǐ běn guānyú zhǒng huā de shū, huòzhě zhōumò dài tā qù gōngyuán kàn huā.",
+     "en": "Then give her some books about growing flowers, or take her to the park to see the flowers at the weekend."
+    },
+    {
+     "s": "女",
+     "zh": "好主意！我还可以请她在外面吃顿饭。",
+     "py": "Hǎo zhǔyi! Wǒ hái kěyǐ qǐng tā zài wàimiàn chī dùn fàn.",
+     "en": "Good idea! I can also take her out for a meal."
+    },
+    {
+     "s": "男",
+     "zh": "我觉得她会很高兴的。礼物不一定要贵，最重要的是你用了心。",
+     "py": "Wǒ juéde tā huì hěn gāoxìng de. Lǐwù bù yídìng yào guì, zuì zhòngyào de shì nǐ yòng le xīn.",
+     "en": "I think she will be very happy. A present does not have to be expensive; what matters most is that you put your heart into it."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "下个星期是谁的生日？",
+     "py": "Xià ge xīngqī shì shéi de shēngrì?",
+     "en": "Whose birthday is it next week?",
+     "opts": [
+      {
+       "zh": "女的妈妈",
+       "py": "Nǚ de māma"
+      },
+      {
+       "zh": "女的",
+       "py": "Nǚ de"
+      },
+      {
+       "zh": "男的妈妈",
+       "py": "Nán de māma"
+      },
+      {
+       "zh": "女的爸爸",
+       "py": "Nǚ de bàba"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "妈妈为什么没穿去年的裙子？",
+     "py": "Māma wèishénme méi chuān qùnián de qúnzi?",
+     "en": "Why didn't her mum wear last year's skirt?",
+     "opts": [
+      {
+       "zh": "觉得颜色太亮",
+       "py": "Juéde yánsè tài liàng"
+      },
+      {
+       "zh": "裙子太小了",
+       "py": "Qúnzi tài xiǎo le"
+      },
+      {
+       "zh": "不喜欢裙子",
+       "py": "Bù xǐhuan qúnzi"
+      },
+      {
+       "zh": "裙子丢了",
+       "py": "Qúnzi diū le"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "女的为什么不想送手机？",
+     "py": "Nǚ de wèishénme bù xiǎng sòng shǒujī?",
+     "en": "Why doesn't the woman want to give a phone?",
+     "opts": [
+      {
+       "zh": "妈妈刚换了手机",
+       "py": "Māma gāng huàn le shǒujī"
+      },
+      {
+       "zh": "手机太贵",
+       "py": "Shǒujī tài guì"
+      },
+      {
+       "zh": "妈妈不会用手机",
+       "py": "Māma bú huì yòng shǒujī"
+      },
+      {
+       "zh": "手机买不到",
+       "py": "Shǒujī mǎi bú dào"
+      }
+     ],
+     "line": 4
+    },
+    {
+     "zh": "女的妈妈有什么爱好？",
+     "py": "Nǚ de māma yǒu shénme àihào?",
+     "en": "What does the woman's mum like doing?",
+     "opts": [
+      {
+       "zh": "种花",
+       "py": "Zhǒng huā"
+      },
+      {
+       "zh": "唱歌",
+       "py": "Chàng gē"
+      },
+      {
+       "zh": "看书",
+       "py": "Kàn shū"
+      },
+      {
+       "zh": "做菜",
+       "py": "Zuò cài"
+      }
+     ],
+     "line": 6
+    },
+    {
+     "zh": "男的觉得送礼物什么最重要？",
+     "py": "Nán de juéde sòng lǐwù shénme zuì zhòngyào?",
+     "en": "What does the man think matters most in a present?",
+     "opts": [
+      {
+       "zh": "用心",
+       "py": "Yòng xīn"
+      },
+      {
+       "zh": "价格",
+       "py": "Jiàgé"
+      },
+      {
+       "zh": "颜色",
+       "py": "Yánsè"
+      },
+      {
+       "zh": "大小",
+       "py": "Dàxiǎo"
+      }
+     ],
+     "line": 9
+    }
+   ],
+   "words": [
+    "亮",
+    "复杂",
+    "主意",
+    "顿",
+    "心"
+   ]
+  },
+  {
+   "id": "p4-doctor",
+   "lv": 4,
+   "title": "A bad cough",
+   "scene": "A man sees a doctor about his cough.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "大夫，我这两天一直咳嗽，晚上也睡不好。",
+     "py": "Dàifu, wǒ zhè liǎng tiān yìzhí késou, wǎnshang yě shuì bù hǎo.",
+     "en": "Doctor, I have been coughing for the past two days, and I can't sleep well at night."
+    },
+    {
+     "s": "女",
+     "zh": "发烧吗？",
+     "py": "Fāshāo ma?",
+     "en": "Do you have a fever?"
+    },
+    {
+     "s": "男",
+     "zh": "昨天晚上开始有点儿发烧，今天早上好一点儿了。",
+     "py": "Zuótiān wǎnshang kāishǐ yǒudiǎnr fāshāo, jīntiān zǎoshang hǎo yìdiǎnr le.",
+     "en": "I started to have a bit of a fever last night. This morning it was a little better."
+    },
+    {
+     "s": "女",
+     "zh": "吃东西的时候疼不疼？",
+     "py": "Chī dōngxi de shíhou téng bù téng?",
+     "en": "Does it hurt when you eat?"
+    },
+    {
+     "s": "男",
+     "zh": "有一点儿疼，特别是吃辣的东西的时候。",
+     "py": "Yǒu yìdiǎnr téng, tèbié shì chī là de dōngxi de shíhou.",
+     "en": "It hurts a little, especially when I eat something spicy."
+    },
+    {
+     "s": "女",
+     "zh": "问题不大，是感冒了。最近天气变化大，很多人都感冒了。",
+     "py": "Wèntí bú dà, shì gǎnmào le. Zuìjìn tiānqì biànhuà dà, hěn duō rén dōu gǎnmào le.",
+     "en": "It is nothing serious; you have a cold. The weather has been changing a lot lately, and many people have caught colds."
+    },
+    {
+     "s": "男",
+     "zh": "需要打针吗？",
+     "py": "Xūyào dǎzhēn ma?",
+     "en": "Do I need an injection?"
+    },
+    {
+     "s": "女",
+     "zh": "不用，我给你开一些药，一天三次，饭后吃。",
+     "py": "Búyòng, wǒ gěi nǐ kāi yìxiē yào, yì tiān sān cì, fàn hòu chī.",
+     "en": "No. I will give you some medicine: three times a day, after meals."
+    },
+    {
+     "s": "男",
+     "zh": "我明天还要去上班，可以吗？",
+     "py": "Wǒ míngtiān hái yào qù shàngbān, kěyǐ ma?",
+     "en": "I have to go to work tomorrow. Is that all right?"
+    },
+    {
+     "s": "女",
+     "zh": "最好在家休息两天，多喝水，别喝酒。",
+     "py": "Zuìhǎo zài jiā xiūxi liǎng tiān, duō hē shuǐ, bié hē jiǔ.",
+     "en": "You had better rest at home for two days, drink lots of water and don't drink alcohol."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的哪儿不舒服？",
+     "py": "Nán de nǎr bù shūfu?",
+     "en": "Where does the man not feel well?",
+     "opts": [
+      {
+       "zh": "一直咳嗽",
+       "py": "Yìzhí késou"
+      },
+      {
+       "zh": "肚子疼",
+       "py": "Dùzi téng"
+      },
+      {
+       "zh": "头疼",
+       "py": "Tóu téng"
+      },
+      {
+       "zh": "眼睛疼",
+       "py": "Yǎnjing téng"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "男的什么时候开始发烧的？",
+     "py": "Nán de shénme shíhou kāishǐ fāshāo de?",
+     "en": "When did the man start to have a fever?",
+     "opts": [
+      {
+       "zh": "昨天晚上",
+       "py": "Zuótiān wǎnshang"
+      },
+      {
+       "zh": "今天早上",
+       "py": "Jīntiān zǎoshang"
+      },
+      {
+       "zh": "前天",
+       "py": "Qiántiān"
+      },
+      {
+       "zh": "三天以前",
+       "py": "Sān tiān yǐqián"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "医生说男的怎么了？",
+     "py": "Yīshēng shuō nán de zěnme le?",
+     "en": "What does the doctor say is wrong with the man?",
+     "opts": [
+      {
+       "zh": "感冒了",
+       "py": "Gǎnmào le"
+      },
+      {
+       "zh": "吃坏了",
+       "py": "Chī huài le"
+      },
+      {
+       "zh": "太累了",
+       "py": "Tài lèi le"
+      },
+      {
+       "zh": "没有问题",
+       "py": "Méiyǒu wèntí"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "药应该怎么吃？",
+     "py": "Yào yīnggāi zěnme chī?",
+     "en": "How should the medicine be taken?",
+     "opts": [
+      {
+       "zh": "一天三次，饭后吃",
+       "py": "Yì tiān sān cì, fàn hòu chī"
+      },
+      {
+       "zh": "一天两次，饭前吃",
+       "py": "Yì tiān liǎng cì, fàn qián chī"
+      },
+      {
+       "zh": "一天一次",
+       "py": "Yì tiān yí cì"
+      },
+      {
+       "zh": "睡觉前吃",
+       "py": "Shuìjiào qián chī"
+      }
+     ],
+     "line": 7
+    },
+    {
+     "zh": "医生建议男的做什么？",
+     "py": "Yīshēng jiànyì nán de zuò shénme?",
+     "en": "What does the doctor advise the man to do?",
+     "opts": [
+      {
+       "zh": "在家休息两天",
+       "py": "Zài jiā xiūxi liǎng tiān"
+      },
+      {
+       "zh": "明天去上班",
+       "py": "Míngtiān qù shàngbān"
+      },
+      {
+       "zh": "多运动",
+       "py": "Duō yùndòng"
+      },
+      {
+       "zh": "去大医院",
+       "py": "Qù dà yīyuàn"
+      }
+     ],
+     "line": 9
+    }
+   ],
+   "words": [
+    "大夫",
+    "咳嗽",
+    "辣",
+    "打针",
+    "建议"
+   ]
+  },
+  {
+   "id": "p4-train-late",
+   "lv": 4,
+   "title": "The train is late",
+   "scene": "Two passengers wait for a delayed train.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "请问，你也是坐九点二十的那趟火车吗？",
+     "py": "Qǐngwèn, nǐ yě shì zuò jiǔ diǎn èrshí de nà tàng huǒchē ma?",
+     "en": "Excuse me, are you also taking the 9:20 train?"
+    },
+    {
+     "s": "女",
+     "zh": "是的，可是刚才广播说火车要晚到四十分钟。",
+     "py": "Shì de, kěshì gāngcái guǎngbō shuō huǒchē yào wǎn dào sìshí fēnzhōng.",
+     "en": "Yes, but the announcement just said the train will be 40 minutes late."
+    },
+    {
+     "s": "男",
+     "zh": "怎么又晚了？我上个月坐的时候也晚了半个小时。",
+     "py": "Zěnme yòu wǎn le? Wǒ shàng ge yuè zuò de shíhou yě wǎn le bàn ge xiǎoshí.",
+     "en": "Late again? When I took it last month it was half an hour late too."
+    },
+    {
+     "s": "女",
+     "zh": "听说是因为前面下大雪，火车开得比较慢。",
+     "py": "Tīngshuō shì yīnwèi qiánmiàn xià dà xuě, huǒchē kāi de bǐjiào màn.",
+     "en": "I heard it is because of heavy snow up ahead, so the trains are going more slowly."
+    },
+    {
+     "s": "男",
+     "zh": "这下麻烦了，我十一点还要参加一个重要的会议。",
+     "py": "Zhè xià máfan le, wǒ shíyī diǎn hái yào cānjiā yí ge zhòngyào de huìyì.",
+     "en": "Now that is a problem. I have an important meeting at eleven."
+    },
+    {
+     "s": "女",
+     "zh": "那你最好先给同事打个电话，说明一下情况。",
+     "py": "Nà nǐ zuìhǎo xiān gěi tóngshì dǎ ge diànhuà, shuōmíng yíxià qíngkuàng.",
+     "en": "Then you had better call your colleagues first and explain the situation."
+    },
+    {
+     "s": "男",
+     "zh": "对，我现在就打。你要去哪儿？",
+     "py": "Duì, wǒ xiànzài jiù dǎ. Nǐ yào qù nǎr?",
+     "en": "Right, I will call now. Where are you going?"
+    },
+    {
+     "s": "女",
+     "zh": "我回家看父母，晚一点儿没关系。",
+     "py": "Wǒ huí jiā kàn fùmǔ, wǎn yìdiǎnr méiguānxi.",
+     "en": "I am going home to see my parents, so being a bit late does not matter."
+    },
+    {
+     "s": "男",
+     "zh": "那边比这儿冷多了吧？",
+     "py": "Nàbiān bǐ zhèr lěng duō le ba?",
+     "en": "It must be much colder there than here?"
+    },
+    {
+     "s": "女",
+     "zh": "对，我带了很厚的衣服，也给父母买了些水果。",
+     "py": "Duì, wǒ dài le hěn hòu de yīfu, yě gěi fùmǔ mǎi le xiē shuǐguǒ.",
+     "en": "Yes. I have brought thick clothes, and I bought some fruit for my parents."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "火车要晚到多长时间？",
+     "py": "Huǒchē yào wǎn dào duō cháng shíjiān?",
+     "en": "How late will the train be?",
+     "opts": [
+      {
+       "zh": "四十分钟",
+       "py": "Sìshí fēnzhōng"
+      },
+      {
+       "zh": "半个小时",
+       "py": "Bàn ge xiǎoshí"
+      },
+      {
+       "zh": "二十分钟",
+       "py": "Èrshí fēnzhōng"
+      },
+      {
+       "zh": "一个小时",
+       "py": "Yí ge xiǎoshí"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "火车为什么会晚到？",
+     "py": "Huǒchē wèishénme huì wǎn dào?",
+     "en": "Why will the train be late?",
+     "opts": [
+      {
+       "zh": "前面下大雪",
+       "py": "Qiánmiàn xià dà xuě"
+      },
+      {
+       "zh": "火车坏了",
+       "py": "Huǒchē huài le"
+      },
+      {
+       "zh": "人太多",
+       "py": "Rén tài duō"
+      },
+      {
+       "zh": "司机来晚了",
+       "py": "Sījī lái wǎn le"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "男的十一点要做什么？",
+     "py": "Nán de shíyī diǎn yào zuò shénme?",
+     "en": "What does the man have to do at eleven?",
+     "opts": [
+      {
+       "zh": "参加会议",
+       "py": "Cānjiā huìyì"
+      },
+      {
+       "zh": "去机场",
+       "py": "Qù jīchǎng"
+      },
+      {
+       "zh": "见父母",
+       "py": "Jiàn fùmǔ"
+      },
+      {
+       "zh": "坐火车",
+       "py": "Zuò huǒchē"
+      }
+     ],
+     "line": 4
+    },
+    {
+     "zh": "女的建议男的做什么？",
+     "py": "Nǚ de jiànyì nán de zuò shénme?",
+     "en": "What does the woman suggest the man do?",
+     "opts": [
+      {
+       "zh": "给同事打电话",
+       "py": "Gěi tóngshì dǎ diànhuà"
+      },
+      {
+       "zh": "换一趟火车",
+       "py": "Huàn yí tàng huǒchē"
+      },
+      {
+       "zh": "坐出租车",
+       "py": "Zuò chūzūchē"
+      },
+      {
+       "zh": "回家",
+       "py": "Huí jiā"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "女的去做什么？",
+     "py": "Nǚ de qù zuò shénme?",
+     "en": "Why is the woman travelling?",
+     "opts": [
+      {
+       "zh": "回家看父母",
+       "py": "Huí jiā kàn fùmǔ"
+      },
+      {
+       "zh": "去开会",
+       "py": "Qù kāihuì"
+      },
+      {
+       "zh": "去旅游",
+       "py": "Qù lǚyóu"
+      },
+      {
+       "zh": "去买水果",
+       "py": "Qù mǎi shuǐguǒ"
+      }
+     ],
+     "line": 7
+    }
+   ],
+   "words": [
+    "趟",
+    "广播",
+    "麻烦",
+    "说明",
+    "情况",
+    "父母",
+    "厚",
+    "建议"
+   ]
+  },
+  {
+   "id": "p4-dog",
+   "lv": 4,
+   "title": "Should we get a dog?",
+   "scene": "A couple talk about their son wanting a dog.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "儿子一直想养一只小狗，你觉得怎么样？",
+     "py": "Érzi yìzhí xiǎng yǎng yì zhī xiǎo gǒu, nǐ juéde zěnmeyàng?",
+     "en": "Our son keeps saying he wants a puppy. What do you think?"
+    },
+    {
+     "s": "男",
+     "zh": "养狗可不是一件简单的事，每天都要带它出去散步。",
+     "py": "Yǎng gǒu kě bú shì yí jiàn jiǎndān de shì, měitiān dōu yào dài tā chūqù sànbù.",
+     "en": "Keeping a dog is not a simple thing. You have to take it out for a walk every day."
+    },
+    {
+     "s": "女",
+     "zh": "儿子说他会负责，每天放学以后带它出去。",
+     "py": "Érzi shuō tā huì fùzé, měitiān fàngxué yǐhòu dài tā chūqù.",
+     "en": "Our son says he will be responsible and take it out every day after school."
+    },
+    {
+     "s": "男",
+     "zh": "他现在说得好听，过几个星期可能就忘了。",
+     "py": "Tā xiànzài shuō de hǎotīng, guò jǐ ge xīngqī kěnéng jiù wàng le.",
+     "en": "He says that now, but in a few weeks he might forget."
+    },
+    {
+     "s": "女",
+     "zh": "那我们先跟他说好，如果他做不到，就不能玩手机。",
+     "py": "Nà wǒmen xiān gēn tā shuō hǎo, rúguǒ tā zuò bú dào, jiù bù néng wán shǒujī.",
+     "en": "Then we will agree with him first: if he does not do it, he cannot play on his phone."
+    },
+    {
+     "s": "男",
+     "zh": "还有，咱们家太小了，狗在家里跑来跑去，邻居会不会不高兴？",
+     "py": "Hái yǒu, zánmen jiā tài xiǎo le, gǒu zài jiā lǐ pǎo lái pǎo qù, línjū huì bú huì bù gāoxìng?",
+     "en": "Also, our flat is too small. If a dog runs around inside, won't the neighbours be unhappy?"
+    },
+    {
+     "s": "女",
+     "zh": "可以养一只小一点儿的，而且楼下的邻居也养了一只，从来没人说过什么。",
+     "py": "Kěyǐ yǎng yì zhī xiǎo yìdiǎnr de, érqiě lóuxià de línjū yě yǎng le yì zhī, cónglái méi rén shuō guo shénme.",
+     "en": "We can get a smaller one. Besides, the neighbours downstairs have one too, and no one has ever said anything."
+    },
+    {
+     "s": "男",
+     "zh": "好吧，那这个周末我们带他去看看。",
+     "py": "Hǎo ba, nà zhège zhōumò wǒmen dài tā qù kànkan.",
+     "en": "All right, then we will take him to have a look this weekend."
+    },
+    {
+     "s": "女",
+     "zh": "太好了，他听了一定会高兴得跳起来。",
+     "py": "Tài hǎo le, tā tīng le yídìng huì gāoxìng de tiào qǐlái.",
+     "en": "Great. He will be so happy he will jump for joy when he hears."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "谁想养狗？",
+     "py": "Shéi xiǎng yǎng gǒu?",
+     "en": "Who wants a dog?",
+     "opts": [
+      {
+       "zh": "儿子",
+       "py": "Érzi"
+      },
+      {
+       "zh": "女的",
+       "py": "Nǚ de"
+      },
+      {
+       "zh": "男的",
+       "py": "Nán de"
+      },
+      {
+       "zh": "邻居",
+       "py": "Línjū"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "男的说养狗每天都要做什么？",
+     "py": "Nán de shuō yǎng gǒu měitiān dōu yào zuò shénme?",
+     "en": "What does the man say you have to do every day with a dog?",
+     "opts": [
+      {
+       "zh": "带它出去散步",
+       "py": "Dài tā chūqù sànbù"
+      },
+      {
+       "zh": "给它洗澡",
+       "py": "Gěi tā xǐzǎo"
+      },
+      {
+       "zh": "带它去医院",
+       "py": "Dài tā qù yīyuàn"
+      },
+      {
+       "zh": "给它买吃的",
+       "py": "Gěi tā mǎi chī de"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "儿子说什么时候带狗出去？",
+     "py": "Érzi shuō shénme shíhou dài gǒu chūqù?",
+     "en": "When does the son say he will take the dog out?",
+     "opts": [
+      {
+       "zh": "放学以后",
+       "py": "Fàngxué yǐhòu"
+      },
+      {
+       "zh": "早上起床以后",
+       "py": "Zǎoshang qǐchuáng yǐhòu"
+      },
+      {
+       "zh": "周末",
+       "py": "Zhōumò"
+      },
+      {
+       "zh": "晚上睡觉前",
+       "py": "Wǎnshang shuìjiào qián"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "男的担心什么？",
+     "py": "Nán de dānxīn shénme?",
+     "en": "What is the man worried about?",
+     "opts": [
+      {
+       "zh": "邻居会不高兴",
+       "py": "Línjū huì bù gāoxìng"
+      },
+      {
+       "zh": "狗太贵",
+       "py": "Gǒu tài guì"
+      },
+      {
+       "zh": "儿子怕狗",
+       "py": "Érzi pà gǒu"
+      },
+      {
+       "zh": "狗会生病",
+       "py": "Gǒu huì shēngbìng"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "他们打算什么时候带儿子去看狗？",
+     "py": "Tāmen dǎsuàn shénme shíhou dài érzi qù kàn gǒu?",
+     "en": "When do they plan to take their son to look at dogs?",
+     "opts": [
+      {
+       "zh": "这个周末",
+       "py": "Zhège zhōumò"
+      },
+      {
+       "zh": "明天",
+       "py": "Míngtiān"
+      },
+      {
+       "zh": "下个月",
+       "py": "Xià ge yuè"
+      },
+      {
+       "zh": "放假的时候",
+       "py": "Fàngjià de shíhou"
+      }
+     ],
+     "line": 7
+    }
+   ],
+   "words": [
+    "散步",
+    "负责",
+    "从来"
+   ]
+  },
+  {
+   "id": "p4-first-day",
+   "lv": 4,
+   "title": "First day at work",
+   "scene": "A manager shows a new colleague around.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "你好，你就是新来的同事吧？我姓高，是你的经理。",
+     "py": "Nǐ hǎo, nǐ jiùshì xīn lái de tóngshì ba? Wǒ xìng gāo, shì nǐ de jīnglǐ.",
+     "en": "Hello, you must be our new colleague? My surname is Gao, and I am your manager."
+    },
+    {
+     "s": "女",
+     "zh": "高经理好！今天是我第一天上班，有很多不懂的地方。",
+     "py": "Gāo jīnglǐ hǎo! Jīntiān shì wǒ dì yī tiānshàng bān, yǒu hěn duō bù dǒng de dìfang.",
+     "en": "Hello, Manager Gao! Today is my first day at work, and there is a lot I do not know yet."
+    },
+    {
+     "s": "男",
+     "zh": "别紧张，我先带你看看。这是你的座位，电脑已经准备好了。",
+     "py": "Bié jǐnzhāng, wǒ xiān dài nǐ kànkan. Zhè shì nǐ de zuòwèi, diànnǎo yǐjīng zhǔnbèi hǎo le.",
+     "en": "Don't be nervous. Let me show you around first. This is your seat, and your computer is ready."
+    },
+    {
+     "s": "女",
+     "zh": "谢谢。请问我们几点上班，几点下班？",
+     "py": "Xièxie. Qǐngwèn wǒmen jǐ diǎn shàngbān, jǐ diǎn xiàbān?",
+     "en": "Thank you. What time do we start and finish work?"
+    },
+    {
+     "s": "男",
+     "zh": "早上九点到下午六点，中午十二点到一点吃饭和休息。",
+     "py": "Zǎoshang jiǔ diǎn dào xiàwǔ liù diǎn, zhōngwǔ shí'èr diǎn dào yì diǎn chī fàn hé xiūxi.",
+     "en": "From nine in the morning to six in the afternoon, with lunch and a break from twelve to one."
+    },
+    {
+     "s": "女",
+     "zh": "公司里有吃饭的地方吗？",
+     "py": "Gōngsī lǐ yǒu chī fàn de dìfang ma?",
+     "en": "Is there somewhere to eat in the company?"
+    },
+    {
+     "s": "男",
+     "zh": "有，在一楼，饭菜又便宜又好吃。另外，每周一上午十点开会，别忘了。",
+     "py": "Yǒu, zài yì lóu, fàn cài yòu piányi yòu hǎochī. Lìngwài, měi zhōu yí shàngwǔ shí diǎn kāihuì, bié wàng le.",
+     "en": "Yes, on the ground floor, and the food is cheap and good. Also, there is a meeting every Monday at ten in the morning, so don't forget."
+    },
+    {
+     "s": "女",
+     "zh": "好的。我的工作主要是什么？",
+     "py": "Hǎo de. Wǒ de gōngzuò zhǔyào shì shénme?",
+     "en": "OK. What will my work mainly be?"
+    },
+    {
+     "s": "男",
+     "zh": "这个月你先跟着小张学习，熟悉一下公司的情况。",
+     "py": "Zhège yuè nǐ xiān gēn zhe xiǎo zhāng xuéxí, shúxi yíxià gōngsī de qíngkuàng.",
+     "en": "This month you should first learn from Xiao Zhang and get familiar with the company."
+    },
+    {
+     "s": "女",
+     "zh": "明白了，我会努力的。",
+     "py": "Míngbai le, wǒ huì nǔlì de.",
+     "en": "I understand. I will work hard."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的是谁？",
+     "py": "Nán de shì shéi?",
+     "en": "Who is the man?",
+     "opts": [
+      {
+       "zh": "女的经理",
+       "py": "Nǚ de jīnglǐ"
+      },
+      {
+       "zh": "女的同学",
+       "py": "Nǚ de tóngxué"
+      },
+      {
+       "zh": "小张",
+       "py": "Xiǎo zhāng"
+      },
+      {
+       "zh": "女的朋友",
+       "py": "Nǚ de péngyou"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "公司几点下班？",
+     "py": "Gōngsī jǐ diǎn xiàbān?",
+     "en": "What time does work finish?",
+     "opts": [
+      {
+       "zh": "下午六点",
+       "py": "Xiàwǔ liù diǎn"
+      },
+      {
+       "zh": "下午五点",
+       "py": "Xiàwǔ wǔ diǎn"
+      },
+      {
+       "zh": "晚上七点",
+       "py": "Wǎnshang qī diǎn"
+      },
+      {
+       "zh": "中午十二点",
+       "py": "Zhōngwǔ shí'èr diǎn"
+      }
+     ],
+     "line": 4
+    },
+    {
+     "zh": "吃饭的地方在哪儿？",
+     "py": "Chī fàn de dìfang zài nǎr?",
+     "en": "Where is the place to eat?",
+     "opts": [
+      {
+       "zh": "一楼",
+       "py": "Yì lóu"
+      },
+      {
+       "zh": "二楼",
+       "py": "Èr lóu"
+      },
+      {
+       "zh": "公司外面",
+       "py": "Gōngsī wàimiàn"
+      },
+      {
+       "zh": "楼下的饭馆",
+       "py": "Lóuxià de fànguǎn"
+      }
+     ],
+     "line": 6
+    },
+    {
+     "zh": "每周一上午十点要做什么？",
+     "py": "Měi zhōu yí shàngwǔ shí diǎn yào zuò shénme?",
+     "en": "What happens every Monday at ten in the morning?",
+     "opts": [
+      {
+       "zh": "开会",
+       "py": "Kāihuì"
+      },
+      {
+       "zh": "吃饭",
+       "py": "Chī fàn"
+      },
+      {
+       "zh": "学习",
+       "py": "Xuéxí"
+      },
+      {
+       "zh": "上课",
+       "py": "Shàngkè"
+      }
+     ],
+     "line": 6
+    },
+    {
+     "zh": "这个月女的主要做什么？",
+     "py": "Zhège yuè nǚ de zhǔyào zuò shénme?",
+     "en": "What will the woman mainly do this month?",
+     "opts": [
+      {
+       "zh": "跟小张学习",
+       "py": "Gēn xiǎo zhāng xuéxí"
+      },
+      {
+       "zh": "开会",
+       "py": "Kāihuì"
+      },
+      {
+       "zh": "准备电脑",
+       "py": "Zhǔnbèi diànnǎo"
+      },
+      {
+       "zh": "找新工作",
+       "py": "Zhǎo xīn gōngzuò"
+      }
+     ],
+     "line": 8
+    }
+   ],
+   "words": [
+    "就是",
+    "紧张",
+    "座位",
+    "另外",
+    "熟悉",
+    "情况"
+   ]
+  },
+  {
+   "id": "p4-rain-plan",
+   "lv": 4,
+   "title": "Rain on Saturday",
+   "scene": "Two friends change their weekend plans.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "听说星期六有大雨，我们去爬山的计划怎么办？",
+     "py": "Tīngshuō xīngqīliù yǒu dà yǔ, wǒmen qù pá shān de jìhuà zěnmebàn?",
+     "en": "I heard there will be heavy rain on Saturday. What about our plan to go hiking?"
+    },
+    {
+     "s": "男",
+     "zh": "那我们改到星期天吧？",
+     "py": "Nà wǒmen gǎi dào xīngqītiān ba?",
+     "en": "Then shall we change it to Sunday?"
+    },
+    {
+     "s": "女",
+     "zh": "星期天也不行，下午还有小雨，山上的路会很不好走。",
+     "py": "Xīngqītiān yě bùxíng, xiàwǔ hái yǒu xiǎo yǔ, shān shàng de lù huì hěn bù hǎo zǒu.",
+     "en": "Sunday is no good either. There will be light rain in the afternoon, and the paths on the mountain will be hard to walk on."
+    },
+    {
+     "s": "男",
+     "zh": "那就别去爬山了，我们在城里找些别的事做。",
+     "py": "Nà jiù bié qù pá shān le, wǒmen zài chéng lǐ zhǎo xiē biéde shì zuò.",
+     "en": "Then let's not go hiking. We will find something else to do in the city."
+    },
+    {
+     "s": "女",
+     "zh": "新开的那个动物园怎么样？听说里面有很多有意思的动物。",
+     "py": "Xīn kāi de nàge dòngwùyuán zěnmeyàng? Tīngshuō lǐmiàn yǒu hěn duō yǒuyìsi de dòngwù.",
+     "en": "How about the new zoo? I hear there are lots of interesting animals there."
+    },
+    {
+     "s": "男",
+     "zh": "我上个月去过了，不过可以再去一次。",
+     "py": "Wǒ shàng ge yuè qù guo le, búguò kěyǐ zài qù yí cì.",
+     "en": "I went last month, but I could go again."
+    },
+    {
+     "s": "女",
+     "zh": "你去过了啊？那我们去看电影吧，最近有个新电影大家都说不错。",
+     "py": "Nǐ qù guo le a? Nà wǒmen qù kàn diànyǐng ba, zuìjìn yǒu ge xīn diànyǐng dàjiā dōu shuō búcuò.",
+     "en": "Oh, you have been? Then let's see a film. There is a new one everyone says is good."
+    },
+    {
+     "s": "男",
+     "zh": "好啊，看完电影还可以去吃饺子，下雨天吃些热的东西最舒服了。",
+     "py": "Hǎo a, kàn wán diànyǐng hái kěyǐ qù chī jiǎozi, xiàyǔ tiān chī xiē rè de dōngxi zuì shūfu le.",
+     "en": "Sure. After the film we can go and have dumplings. On a rainy day, eating something hot feels best."
+    },
+    {
+     "s": "女",
+     "zh": "那就这么定了，我去网上买票。",
+     "py": "Nà jiù zhème dìng le, wǒ qù wǎngshàng mǎi piào.",
+     "en": "Then it is settled. I will buy the tickets online."
+    },
+    {
+     "s": "男",
+     "zh": "买晚上的吧，我上午要去机场接我妹妹。",
+     "py": "Mǎi wǎnshang de ba, wǒ shàngwǔ yào qù jīchǎng jiē wǒ mèimei.",
+     "en": "Get evening tickets. I have to pick up my younger sister at the airport in the morning."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "他们本来打算星期六做什么？",
+     "py": "Tāmen běnlái dǎsuàn xīngqīliù zuò shénme?",
+     "en": "What had they planned to do on Saturday?",
+     "opts": [
+      {
+       "zh": "爬山",
+       "py": "Pá shān"
+      },
+      {
+       "zh": "看电影",
+       "py": "Kàn diànyǐng"
+      },
+      {
+       "zh": "去动物园",
+       "py": "Qù dòngwùyuán"
+      },
+      {
+       "zh": "吃饺子",
+       "py": "Chī jiǎozi"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "为什么星期天也不能去？",
+     "py": "Wèishénme xīngqītiān yě bù néng qù?",
+     "en": "Why can't they go on Sunday either?",
+     "opts": [
+      {
+       "zh": "下午有小雨，路不好走",
+       "py": "Xiàwǔ yǒu xiǎo yǔ, lù bù hǎo zǒu"
+      },
+      {
+       "zh": "男的要上班",
+       "py": "Nán de yào shàngbān"
+      },
+      {
+       "zh": "山上太冷",
+       "py": "Shān shàng tài lěng"
+      },
+      {
+       "zh": "票买不到",
+       "py": "Piào mǎi bú dào"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "男的上个月去过哪儿？",
+     "py": "Nán de shàng ge yuè qù guo nǎr?",
+     "en": "Where did the man go last month?",
+     "opts": [
+      {
+       "zh": "动物园",
+       "py": "Dòngwùyuán"
+      },
+      {
+       "zh": "电影院",
+       "py": "Diànyǐngyuàn"
+      },
+      {
+       "zh": "饭馆",
+       "py": "Fànguǎn"
+      },
+      {
+       "zh": "机场",
+       "py": "Jīchǎng"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "看完电影他们打算做什么？",
+     "py": "Kàn wán diànyǐng tāmen dǎsuàn zuò shénme?",
+     "en": "What do they plan to do after the film?",
+     "opts": [
+      {
+       "zh": "去吃饺子",
+       "py": "Qù chī jiǎozi"
+      },
+      {
+       "zh": "去爬山",
+       "py": "Qù pá shān"
+      },
+      {
+       "zh": "回家",
+       "py": "Huí jiā"
+      },
+      {
+       "zh": "去机场",
+       "py": "Qù jīchǎng"
+      }
+     ],
+     "line": 7
+    },
+    {
+     "zh": "男的上午要做什么？",
+     "py": "Nán de shàngwǔ yào zuò shénme?",
+     "en": "What does the man have to do in the morning?",
+     "opts": [
+      {
+       "zh": "去机场接妹妹",
+       "py": "Qù jīchǎng jiē mèimei"
+      },
+      {
+       "zh": "买票",
+       "py": "Mǎi piào"
+      },
+      {
+       "zh": "去博物馆",
+       "py": "Qù bó wù guǎn"
+      },
+      {
+       "zh": "上班",
+       "py": "Shàngbān"
+      }
+     ],
+     "line": 9
+    }
+   ],
+   "words": [
+    "计划",
+    "改",
+    "城",
+    "不过",
+    "定",
+    "本来"
+   ]
+  },
+  {
+   "id": "p4-learning-chinese",
+   "lv": 4,
+   "title": "How I learned Chinese",
+   "scene": "A student from abroad talks about learning Chinese.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "我是三年前来中国留学的，刚来的时候，我只会说“你好”和“谢谢”。",
+     "py": "Wǒ shì sān nián qián lái Zhōngguó liúxué de, gāng lái de shíhou, wǒ zhǐ huì shuō \" nǐ hǎo \" hé \" xièxie \".",
+     "en": "I came to China to study three years ago. When I first arrived, I could only say \"hello\" and \"thank you\"."
+    },
+    {
+     "s": "男",
+     "zh": "第一个月最难，买东西、坐公共汽车，什么都要别人帮忙。",
+     "py": "Dì yī ge yuè zuì nán, mǎi dōngxi, zuò gōnggòng qìchē, shénme dōu yào biérén bāngmáng.",
+     "en": "The first month was the hardest. Buying things, taking the bus: I needed help with everything."
+    },
+    {
+     "s": "男",
+     "zh": "后来我发现，学语言最好的办法就是多说，不要怕说错。",
+     "py": "Hòulái wǒ fāxiàn, xué yǔyán zuìhǎo de bànfǎ jiùshì duō shuō, búyào pà shuō cuò.",
+     "en": "Later I found that the best way to learn a language is to speak a lot and not be afraid of making mistakes."
+    },
+    {
+     "s": "男",
+     "zh": "我每天去学校旁边的小饭馆吃饭，跟那儿的服务员聊天。",
+     "py": "Wǒ měitiān qù xuéxiào pángbiān de xiǎo fànguǎn chī fàn, gēn nàr de fúwùyuán liáo tiān.",
+     "en": "Every day I eat at the little restaurant next to the school and chat with the waiter there."
+    },
+    {
+     "s": "男",
+     "zh": "他说话很快，开始我只能听懂一点儿，现在差不多都能听懂了。",
+     "py": "Tā shuōhuà hěn kuài, kāishǐ wǒ zhǐnéng tīng dǒng yìdiǎnr, xiànzài chàbuduō dōu néng tīng dǒng le.",
+     "en": "He speaks very fast. At first I could only understand a little, but now I can understand almost everything."
+    },
+    {
+     "s": "男",
+     "zh": "汉字对我来说是最难的，我每天晚上都要写半个小时。",
+     "py": "Hànzì duì wǒ lái shuō shì zuì nán de, wǒ měitiān wǎnshang dōu yào xiě bàn ge xiǎoshí.",
+     "en": "Chinese characters are the hardest for me. I write them for half an hour every evening."
+    },
+    {
+     "s": "男",
+     "zh": "现在我已经能看懂一些简单的中文报纸了，明年打算在这儿找工作。",
+     "py": "Xiànzài wǒ yǐjīng néng kàn dǒng yìxiē jiǎndān de Zhōngwén bàozhǐ le, míngnián dǎsuàn zài zhèr zhǎo gōngzuò.",
+     "en": "Now I can already read some simple Chinese newspapers, and next year I plan to find a job here."
+    },
+    {
+     "s": "男",
+     "zh": "我觉得，只要坚持，学好汉语并不像大家想的那么难。",
+     "py": "Wǒ juéde, zhǐyào jiānchí, xué hǎo Hànyǔ bìng bú xiàng dàjiā xiǎng de nàme nán.",
+     "en": "I think that as long as you keep at it, learning Chinese well is not as hard as people think."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的是什么时候来中国的？",
+     "py": "Nán de shì shénme shíhou lái Zhōngguó de?",
+     "en": "When did the man come to China?",
+     "opts": [
+      {
+       "zh": "三年前",
+       "py": "Sān nián qián"
+      },
+      {
+       "zh": "一年前",
+       "py": "Yì nián qián"
+      },
+      {
+       "zh": "五年前",
+       "py": "Wǔ nián qián"
+      },
+      {
+       "zh": "去年",
+       "py": "Qùnián"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "男的觉得学语言最好的办法是什么？",
+     "py": "Nán de juéde xué yǔyán zuìhǎo de bànfǎ shì shénme?",
+     "en": "What does the man think is the best way to learn a language?",
+     "opts": [
+      {
+       "zh": "多说，不怕说错",
+       "py": "Duō shuō, bú pà shuō cuò"
+      },
+      {
+       "zh": "多看书",
+       "py": "Duō kàn shū"
+      },
+      {
+       "zh": "多写汉字",
+       "py": "Duō xiě hànzì"
+      },
+      {
+       "zh": "找一个老师",
+       "py": "Zhǎo yí ge lǎoshī"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "男的每天跟谁聊天？",
+     "py": "Nán de měitiān gēn shéi liáo tiān?",
+     "en": "Who does the man chat with every day?",
+     "opts": [
+      {
+       "zh": "小饭馆的服务员",
+       "py": "Xiǎo fànguǎn de fúwùyuán"
+      },
+      {
+       "zh": "同学",
+       "py": "Tóngxué"
+      },
+      {
+       "zh": "老师",
+       "py": "Lǎoshī"
+      },
+      {
+       "zh": "邻居",
+       "py": "Línjū"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "男的每天晚上做什么？",
+     "py": "Nán de měitiān wǎnshang zuò shénme?",
+     "en": "What does the man do every evening?",
+     "opts": [
+      {
+       "zh": "写汉字",
+       "py": "Xiě hànzì"
+      },
+      {
+       "zh": "去饭馆",
+       "py": "Qù fànguǎn"
+      },
+      {
+       "zh": "看电视",
+       "py": "Kàn diànshì"
+      },
+      {
+       "zh": "考试",
+       "py": "Kǎoshì"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "男的明年打算做什么？",
+     "py": "Nán de míngnián dǎsuàn zuò shénme?",
+     "en": "What does the man plan to do next year?",
+     "opts": [
+      {
+       "zh": "在这儿找工作",
+       "py": "Zài zhèr zhǎo gōngzuò"
+      },
+      {
+       "zh": "回国",
+       "py": "Huí guó"
+      },
+      {
+       "zh": "去别的城市读书",
+       "py": "Qù biéde chéngshì dúshū"
+      },
+      {
+       "zh": "再学一年汉语",
+       "py": "Zài xué yì nián Hànyǔ"
+      }
+     ],
+     "line": 6
+    }
+   ],
+   "words": [
+    "公共",
+    "就是",
+    "并"
+   ]
+  },
+  {
+   "id": "p4-bank",
+   "lv": 4,
+   "title": "At the bank",
+   "scene": "A student opens a bank account.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "你好，我想办一张银行卡。",
+     "py": "Nǐ hǎo, wǒ xiǎng bàn yì zhāng yínhángkǎ.",
+     "en": "Hello, I would like to get a bank card."
+    },
+    {
+     "s": "男",
+     "zh": "好的，请问您带护照了吗？",
+     "py": "Hǎo de, qǐngwèn nín dài hùzhào le ma?",
+     "en": "Certainly. Did you bring your passport?"
+    },
+    {
+     "s": "女",
+     "zh": "带了，给你。办卡要多长时间？",
+     "py": "Dài le, gěi nǐ. Bàn kǎ yào duō cháng shíjiān?",
+     "en": "Yes, here you are. How long does it take to get a card?"
+    },
+    {
+     "s": "男",
+     "zh": "大概十五分钟。请先在这张表上写上您的名字、电话和地址。",
+     "py": "Dàgài shíwǔ fēnzhōng. Qǐng xiān zài zhè zhāng biǎo shàng xiě shàng nín de míngzi, diànhuà hé dìzhǐ.",
+     "en": "About fifteen minutes. Please first write your name, phone number and address on this form."
+    },
+    {
+     "s": "女",
+     "zh": "地址写学校的可以吗？我还没租到房子。",
+     "py": "Dìzhǐ xiě xuéxiào de kěyǐ ma? Wǒ hái méi zū dào fángzi.",
+     "en": "Can I write the school's address? I have not found a flat to rent yet."
+    },
+    {
+     "s": "男",
+     "zh": "可以。另外，您还要想一个六位的密码。",
+     "py": "Kěyǐ. Lìngwài, nín hái yào xiǎng yí ge liù wèi de mìmǎ.",
+     "en": "Yes. You will also need to think of a six-digit password."
+    },
+    {
+     "s": "女",
+     "zh": "好的。办好以后，可以在手机上用吗？",
+     "py": "Hǎo de. Bàn hǎo yǐhòu, kěyǐ zài shǒujī shàng yòng ma?",
+     "en": "OK. Once it is done, can I use it on my phone?"
+    },
+    {
+     "s": "男",
+     "zh": "可以，手机上也能用，很方便。",
+     "py": "Kěyǐ, shǒujī shàng yě néng yòng, hěn fāngbiàn.",
+     "en": "Yes, you can use it on your phone too. It is very convenient."
+    },
+    {
+     "s": "女",
+     "zh": "如果卡丢了，怎么办？",
+     "py": "Rúguǒ kǎ diū le, zěnmebàn?",
+     "en": "What should I do if I lose the card?"
+    },
+    {
+     "s": "男",
+     "zh": "马上给我们打电话，这个号码二十四小时都有人接。",
+     "py": "Mǎshàng gěi wǒmen dǎ diànhuà, zhège hàomǎ èrshísì xiǎoshí dōu yǒu rén jiē.",
+     "en": "Call us right away. Someone answers this number 24 hours a day."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的来银行做什么？",
+     "py": "Nǚ de lái yínháng zuò shénme?",
+     "en": "Why has the woman come to the bank?",
+     "opts": [
+      {
+       "zh": "办银行卡",
+       "py": "Bàn yínhángkǎ"
+      },
+      {
+       "zh": "换钱",
+       "py": "Huàn qián"
+      },
+      {
+       "zh": "取钱",
+       "py": "Qǔ qián"
+      },
+      {
+       "zh": "找工作",
+       "py": "Zhǎo gōngzuò"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "办卡要多长时间？",
+     "py": "Bàn kǎ yào duō cháng shíjiān?",
+     "en": "How long does it take to get a card?",
+     "opts": [
+      {
+       "zh": "十五分钟",
+       "py": "Shíwǔ fēnzhōng"
+      },
+      {
+       "zh": "五分钟",
+       "py": "Wǔ fēnzhōng"
+      },
+      {
+       "zh": "半个小时",
+       "py": "Bàn ge xiǎoshí"
+      },
+      {
+       "zh": "一个小时",
+       "py": "Yí ge xiǎoshí"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "女的为什么写学校的地址？",
+     "py": "Nǚ de wèishénme xiě xuéxiào de dìzhǐ?",
+     "en": "Why does the woman write the school's address?",
+     "opts": [
+      {
+       "zh": "还没租到房子",
+       "py": "Hái méi zū dào fángzi"
+      },
+      {
+       "zh": "学校离银行很近",
+       "py": "Xuéxiào lí yínháng hěn jìn"
+      },
+      {
+       "zh": "她住在学校",
+       "py": "Tā zhù zài xuéxiào"
+      },
+      {
+       "zh": "她忘了家里的地址",
+       "py": "Tā wàng le jiā lǐ de dìzhǐ"
+      }
+     ],
+     "line": 4
+    },
+    {
+     "zh": "密码要几位？",
+     "py": "Mìmǎ yào jǐ wèi?",
+     "en": "How many digits does the password need?",
+     "opts": [
+      {
+       "zh": "六位",
+       "py": "Liù wèi"
+      },
+      {
+       "zh": "四位",
+       "py": "Sì wèi"
+      },
+      {
+       "zh": "八位",
+       "py": "Bā wèi"
+      },
+      {
+       "zh": "五位",
+       "py": "Wǔ wèi"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "卡丢了应该怎么办？",
+     "py": "Kǎ diū le yīnggāi zěnmebàn?",
+     "en": "What should you do if you lose the card?",
+     "opts": [
+      {
+       "zh": "马上打电话",
+       "py": "Mǎshàng dǎ diànhuà"
+      },
+      {
+       "zh": "再办一张",
+       "py": "Zài bàn yì zhāng"
+      },
+      {
+       "zh": "去学校",
+       "py": "Qù xuéxiào"
+      },
+      {
+       "zh": "等几天",
+       "py": "Děng jǐ tiān"
+      }
+     ],
+     "line": 9
+    }
+   ],
+   "words": [
+    "表",
+    "地址",
+    "租",
+    "另外",
+    "密码"
+   ]
+  },
+  {
+   "id": "p4-sports-day",
+   "lv": 4,
+   "title": "The sports competition",
+   "scene": "A teacher tells her class about a school sports competition.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "同学们，下个星期五学校有体育比赛，现在我说一下要注意的事情。",
+     "py": "Tóngxuémen, xià ge xīngqīwǔ xuéxiào yǒu tǐyù bǐsài, xiànzài wǒ shuō yíxià yào zhùyì de shìqing.",
+     "en": "Everyone, there is a school sports competition next Friday. Now I will tell you what you need to know."
+    },
+    {
+     "s": "女",
+     "zh": "比赛早上八点开始，大家七点半以前要到学校。",
+     "py": "Bǐsài zǎoshang bā diǎn kāishǐ, dàjiā qī diǎn bàn yǐqián yào dào xuéxiào.",
+     "en": "It starts at eight in the morning, and everyone must be at school before half past seven."
+    },
+    {
+     "s": "女",
+     "zh": "每个人最多可以参加两项比赛。",
+     "py": "Měi ge rén zuì duō kěyǐ cānjiā liǎng xiàng bǐsài.",
+     "en": "Each person can take part in at most two events."
+    },
+    {
+     "s": "女",
+     "zh": "想参加的同学，这个星期三以前把名字告诉我。",
+     "py": "Xiǎng cānjiā de tóngxué, zhège xīngqīsān yǐqián bǎ míngzi gàosu wǒ.",
+     "en": "If you want to take part, tell me your name before this Wednesday."
+    },
+    {
+     "s": "女",
+     "zh": "那天请大家穿运动鞋，带上水和帽子，因为天气可能会很热。",
+     "py": "Nà tiān qǐng dàjiā chuān yùndòng xié, dài shàng shuǐ hé màozi, yīnwèi tiānqì kěnéng huì hěn rè.",
+     "en": "On the day, please wear trainers and bring water and a hat, because it may be very hot."
+    },
+    {
+     "s": "女",
+     "zh": "如果下雨，比赛就改到下个星期一。",
+     "py": "Rúguǒ xiàyǔ, bǐsài jiù gǎi dào xià ge xīngqīyī.",
+     "en": "If it rains, the competition will move to the following Monday."
+    },
+    {
+     "s": "女",
+     "zh": "比赛不是最重要的，希望大家玩得开心，也要注意安全。",
+     "py": "Bǐsài bú shì zuì zhòngyào de, xīwàng dàjiā wán de kāixīn, yě yào zhùyì ānquán.",
+     "en": "Winning is not the most important thing. I hope you all have fun, and remember to be careful."
+    },
+    {
+     "s": "女",
+     "zh": "还有什么问题，可以下课以后来办公室找我。",
+     "py": "Hái yǒu shénme wèntí, kěyǐ xiàkè yǐhòu lái bàngōngshì zhǎo wǒ.",
+     "en": "If you have any other questions, come and find me in the office after class."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "体育比赛是哪天？",
+     "py": "Tǐyù bǐsài shì nǎ tiān?",
+     "en": "When is the sports competition?",
+     "opts": [
+      {
+       "zh": "下个星期五",
+       "py": "Xià ge xīngqīwǔ"
+      },
+      {
+       "zh": "这个星期五",
+       "py": "Zhège xīngqīwǔ"
+      },
+      {
+       "zh": "下个星期一",
+       "py": "Xià ge xīngqīyī"
+      },
+      {
+       "zh": "这个星期三",
+       "py": "Zhège xīngqīsān"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "大家几点以前要到学校？",
+     "py": "Dàjiā jǐ diǎn yǐqián yào dào xuéxiào?",
+     "en": "By what time must everyone be at school?",
+     "opts": [
+      {
+       "zh": "七点半",
+       "py": "Qī diǎn bàn"
+      },
+      {
+       "zh": "八点",
+       "py": "Bā diǎn"
+      },
+      {
+       "zh": "七点",
+       "py": "Qī diǎn"
+      },
+      {
+       "zh": "八点半",
+       "py": "Bā diǎn bàn"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "每个人最多可以参加几项比赛？",
+     "py": "Měi ge rén zuì duō kěyǐ cānjiā jǐ xiàng bǐsài?",
+     "en": "How many events can each person take part in at most?",
+     "opts": [
+      {
+       "zh": "两项",
+       "py": "Liǎng xiàng"
+      },
+      {
+       "zh": "一项",
+       "py": "Yí xiàng"
+      },
+      {
+       "zh": "三项",
+       "py": "Sān xiàng"
+      },
+      {
+       "zh": "四项",
+       "py": "Sì xiàng"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "想参加比赛的同学什么时候以前要告诉老师？",
+     "py": "Xiǎng cānjiā bǐsài de tóngxué shénme shíhou yǐqián yào gàosu lǎoshī?",
+     "en": "By when must students who want to take part tell the teacher?",
+     "opts": [
+      {
+       "zh": "这个星期三",
+       "py": "Zhège xīngqīsān"
+      },
+      {
+       "zh": "这个星期五",
+       "py": "Zhège xīngqīwǔ"
+      },
+      {
+       "zh": "下个星期一",
+       "py": "Xià ge xīngqīyī"
+      },
+      {
+       "zh": "今天下课以后",
+       "py": "Jīntiān xiàkè yǐhòu"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "如果下雨会怎么样？",
+     "py": "Rúguǒ xiàyǔ huì zěnmeyàng?",
+     "en": "What will happen if it rains?",
+     "opts": [
+      {
+       "zh": "比赛改到下个星期一",
+       "py": "Bǐsài gǎi dào xià ge xīngqīyī"
+      },
+      {
+       "zh": "比赛不举行了",
+       "py": "Bǐsài bù jǔxíng le"
+      },
+      {
+       "zh": "在教室里比赛",
+       "py": "Zài jiàoshì lǐ bǐsài"
+      },
+      {
+       "zh": "比赛晚一个小时开始",
+       "py": "Bǐsài wǎn yí ge xiǎoshí kāishǐ"
+      }
+     ],
+     "line": 5
+    }
+   ],
+   "words": [
+    "项",
+    "帽子",
+    "改"
+   ]
   }
  ],
  "5": [
@@ -9182,6 +11500,2317 @@ window.SHANLU_PASSAGES = {
     "说不定",
     "反正",
     "毕竟"
+   ]
+  },
+  {
+   "id": "p5-cafe",
+   "lv": 5,
+   "title": "A café of my own",
+   "scene": "A man tells a friend he wants to open a café.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "我最近一直在考虑辞职，自己开一家咖啡店。",
+     "py": "Wǒ zuìjìn yìzhí zài kǎolǜ cízhí, zìjǐ kāi yì jiā kāfēi diàn.",
+     "en": "Lately I have been thinking about quitting my job and opening a café of my own."
+    },
+    {
+     "s": "女",
+     "zh": "开店可不容易，你算过要花多少钱吗？",
+     "py": "Kāi diàn kě bù róngyì, nǐ suàn guo yào huā duōshǎo qián ma?",
+     "en": "Opening a shop is not easy. Have you worked out how much it will cost?"
+    },
+    {
+     "s": "男",
+     "zh": "算过了，房租再加上买机器和别的东西，至少需要三十万。",
+     "py": "Suàn guo le, fángzū zài jiāshàng mǎi jīqì hé biéde dōngxi, zhìshǎo xūyào sānshí wàn.",
+     "en": "I have. Rent, plus buying the machines and other things: at least 300,000 yuan."
+    },
+    {
+     "s": "女",
+     "zh": "这么多！钱从哪儿来？",
+     "py": "Zhème duō! Qián cóng nǎr lái?",
+     "en": "That much! Where will the money come from?"
+    },
+    {
+     "s": "男",
+     "zh": "我自己存了十五万，剩下的打算跟一个朋友合作，他出另一半。",
+     "py": "Wǒ zìjǐ cún le shíwǔ wàn, shèng xià de dǎsuàn gēn yí ge péngyou hézuò, tā chū lìng yíbàn.",
+     "en": "I have saved 150,000 myself. For the rest I plan to go into it with a friend, and he will put in the other half."
+    },
+    {
+     "s": "女",
+     "zh": "合作的话，最好先把每个人负责什么说清楚，不然以后容易产生矛盾。",
+     "py": "Hézuò dehuà, zuìhǎo xiān bǎ měi ge rén fùzé shénme shuō qīngchu, bùrán yǐhòu róngyì chǎnshēng máodùn.",
+     "en": "If you work together, you had better make clear first what each person is in charge of, or it is easy to fall out later."
+    },
+    {
+     "s": "男",
+     "zh": "你说得对。我们已经商量好了，他负责管钱，我负责做咖啡和管理店里的事。",
+     "py": "Nǐ shuō de duì. Wǒmen yǐjīng shāngliang hǎo le, tā fùzé guǎn qián, wǒ fùzé zuò kāfēi hé guǎnlǐ diàn lǐ de shì.",
+     "en": "You are right. We have already agreed: he will look after the money, and I will make the coffee and run the shop."
+    },
+    {
+     "s": "女",
+     "zh": "地方选好了吗？开咖啡店最重要的是位置。",
+     "py": "Dìfang xuǎn hǎo le ma? Kāi kāfēi diàn zuì zhòngyào de shì wèizhì.",
+     "en": "Have you chosen a place? For a café, the location matters most."
+    },
+    {
+     "s": "男",
+     "zh": "看了几个，我比较满意的是大学附近的一个，学生多，房租也不算太贵。",
+     "py": "Kàn le jǐ ge, wǒ bǐjiào mǎnyì de shì dàxué fùjìn de yí ge, xuésheng duō, fángzū yě bú suàn tài guì.",
+     "en": "I have looked at a few. The one I like best is near a university: there are lots of students, and the rent is not too high."
+    },
+    {
+     "s": "女",
+     "zh": "听起来不错。不过辞职之前，最好先在周末去别人的店里打工，积累一点儿经验。",
+     "py": "Tīng qǐlái búcuò. Búguò cízhí zhīqián, zuìhǎo xiān zài zhōumò qù biérén de diàn lǐ dǎgōng, jīlěi yìdiǎnr jīngyàn.",
+     "en": "Sounds good. But before you quit, you had better work weekends in someone else's café first and get some experience."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的打算做什么？",
+     "py": "Nán de dǎsuàn zuò shénme?",
+     "en": "What is the man planning to do?",
+     "opts": [
+      {
+       "zh": "开咖啡店",
+       "py": "Kāi kāfēi diàn"
+      },
+      {
+       "zh": "换一个工作",
+       "py": "Huàn yí ge gōngzuò"
+      },
+      {
+       "zh": "去大学读书",
+       "py": "Qù dàxué dúshū"
+      },
+      {
+       "zh": "买房子",
+       "py": "Mǎi fángzi"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "开店至少需要多少钱？",
+     "py": "Kāi diàn zhìshǎo xūyào duōshǎo qián?",
+     "en": "How much does opening the shop need at least?",
+     "opts": [
+      {
+       "zh": "三十万",
+       "py": "Sānshí wàn"
+      },
+      {
+       "zh": "十五万",
+       "py": "Shíwǔ wàn"
+      },
+      {
+       "zh": "二十万",
+       "py": "Èrshí wàn"
+      },
+      {
+       "zh": "五十万",
+       "py": "Wǔshí wàn"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "他的朋友负责什么？",
+     "py": "Tā de péngyou fùzé shénme?",
+     "en": "What will his friend be in charge of?",
+     "opts": [
+      {
+       "zh": "管钱",
+       "py": "Guǎn qián"
+      },
+      {
+       "zh": "做咖啡",
+       "py": "Zuò kāfēi"
+      },
+      {
+       "zh": "找地方",
+       "py": "Zhǎo dìfang"
+      },
+      {
+       "zh": "管理店里的事",
+       "py": "Guǎnlǐ diàn lǐ de shì"
+      }
+     ],
+     "line": 6
+    },
+    {
+     "zh": "男的比较满意的地方在哪儿？",
+     "py": "Nán de bǐjiào mǎnyì de dìfang zài nǎr?",
+     "en": "Where is the place the man likes best?",
+     "opts": [
+      {
+       "zh": "大学附近",
+       "py": "Dàxué fùjìn"
+      },
+      {
+       "zh": "公司旁边",
+       "py": "Gōngsī pángbiān"
+      },
+      {
+       "zh": "火车站附近",
+       "py": "Huǒchēzhàn fùjìn"
+      },
+      {
+       "zh": "他家楼下",
+       "py": "Tā jiā lóuxià"
+      }
+     ],
+     "line": 8
+    },
+    {
+     "zh": "女的建议男的辞职前先做什么？",
+     "py": "Nǚ de jiànyì nán de cízhí qián xiān zuò shénme?",
+     "en": "What does the woman suggest the man do before quitting?",
+     "opts": [
+      {
+       "zh": "去别人的店里打工",
+       "py": "Qù biérén de diàn lǐ dǎgōng"
+      },
+      {
+       "zh": "多存一些钱",
+       "py": "Duō cún yìxiē qián"
+      },
+      {
+       "zh": "再找一个朋友合作",
+       "py": "Zài zhǎo yí ge péngyou hézuò"
+      },
+      {
+       "zh": "去学做咖啡",
+       "py": "Qù xué zuò kāfēi"
+      }
+     ],
+     "line": 9
+    }
+   ],
+   "words": [
+    "辞职",
+    "机器",
+    "合作",
+    "不然",
+    "矛盾",
+    "位置"
+   ]
+  },
+  {
+   "id": "p5-rubbish",
+   "lv": 5,
+   "title": "New rules for rubbish",
+   "scene": "A notice to everyone living on an estate.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "各位邻居，大家好。为了保护环境，从下个月一号开始，我们小区要开始用新的垃圾分类办法。",
+     "py": "Gèwèi línjū, dàjiā hǎo. Wèile bǎohù huánjìng, cóng xià ge yuè yī hào kāishǐ, wǒmen xiǎoqū yào kāishǐ yòng xīn de lājī fēnlèi bànfǎ.",
+     "en": "Hello, neighbours. To protect the environment, from the first of next month our estate will start a new way of sorting rubbish."
+    },
+    {
+     "s": "男",
+     "zh": "以后垃圾要分四种放：吃剩的饭菜，纸和瓶子，旧电池，还有其他垃圾。",
+     "py": "Yǐhòu lājī yào fēn sì zhǒng fàng: chī shèng de fàn cài, zhǐ hé píngzi, jiù diànchí, hái yǒu qítā lājī.",
+     "en": "From now on, rubbish must be sorted into four kinds: leftover food; paper and bottles; old batteries; and everything else."
+    },
+    {
+     "s": "男",
+     "zh": "每座楼下面都会放四个不同颜色的垃圾桶，上面写着放什么。",
+     "py": "Měi zuò lóuxià miàn dōu huì fàng sì ge bùtóng yánsè de lājītǒng, shàngmiàn xiě zhe fàng shénme.",
+     "en": "There will be four bins of different colours under every building, each marked with what goes in it."
+    },
+    {
+     "s": "男",
+     "zh": "扔垃圾的时间也有了变化：早上七点到九点，晚上六点到八点。",
+     "py": "Rēng lājī de shíjiān yě yǒu le biànhuà: zǎoshang qī diǎn dào jiǔ diǎn, wǎnshang liù diǎn dào bā diǎn.",
+     "en": "The times for putting out rubbish have changed too: seven to nine in the morning, and six to eight in the evening."
+    },
+    {
+     "s": "男",
+     "zh": "其他时间垃圾桶会被收起来，请大家不要把垃圾放在楼下。",
+     "py": "Qítā shíjiān lājītǒng huì bèi shōu qǐlái, qǐng dàjiā búyào bǎ lājī fàng zài lóuxià.",
+     "en": "At other times the bins will be taken away, so please do not leave rubbish downstairs."
+    },
+    {
+     "s": "男",
+     "zh": "刚开始大家可能不太习惯，所以第一个月会有人在旁边帮大家。",
+     "py": "Gāng kāishǐ dàjiā kěnéng bú tài xíguàn, suǒyǐ dì yī ge yuè huì yǒu rén zài pángbiān bāng dàjiā.",
+     "en": "At first you may not be used to it, so for the first month there will be someone standing by to help."
+    },
+    {
+     "s": "男",
+     "zh": "如果分错了，第一次只是提醒，不会罚款。",
+     "py": "Rúguǒ fēn cuò le, dì yī cì zhǐshì tíxǐng, bú huì fákuǎn.",
+     "en": "If you sort something wrongly, the first time you will only get a reminder, not a fine."
+    },
+    {
+     "s": "男",
+     "zh": "另外，旧衣服可以放到小区门口的绿色箱子里，会送给需要的人。",
+     "py": "Lìngwài, jiù yīfu kěyǐ fàng dào xiǎoqū ménkǒu de lǜsè xiāngzi lǐ, huì sòng gěi xūyào de rén.",
+     "en": "Also, old clothes can go in the green box at the gate of the estate. They will be given to people who need them."
+    },
+    {
+     "s": "男",
+     "zh": "有什么不明白的地方，欢迎打电话问我们。",
+     "py": "Yǒu shénme bù míngbai de dìfang, huānyíng dǎ diànhuà wèn wǒmen.",
+     "en": "If there is anything you don't understand, you are welcome to call and ask us."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "新办法什么时候开始？",
+     "py": "Xīn bànfǎ shénme shíhou kāishǐ?",
+     "en": "When does the new way of sorting start?",
+     "opts": [
+      {
+       "zh": "下个月一号",
+       "py": "Xià ge yuè yī hào"
+      },
+      {
+       "zh": "这个月一号",
+       "py": "Zhège yuè yī hào"
+      },
+      {
+       "zh": "下个星期一",
+       "py": "Xià ge xīngqīyī"
+      },
+      {
+       "zh": "明天",
+       "py": "Míngtiān"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "垃圾要分几种放？",
+     "py": "Lājī yào fēn jǐ zhǒng fàng?",
+     "en": "How many kinds must rubbish be sorted into?",
+     "opts": [
+      {
+       "zh": "四种",
+       "py": "Sì zhǒng"
+      },
+      {
+       "zh": "三种",
+       "py": "Sān zhǒng"
+      },
+      {
+       "zh": "五种",
+       "py": "Wǔ zhǒng"
+      },
+      {
+       "zh": "两种",
+       "py": "Liǎng zhǒng"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "晚上什么时候可以扔垃圾？",
+     "py": "Wǎnshang shénme shíhou kěyǐ rēng lājī?",
+     "en": "When can rubbish be put out in the evening?",
+     "opts": [
+      {
+       "zh": "六点到八点",
+       "py": "Liù diǎn dào bā diǎn"
+      },
+      {
+       "zh": "七点到九点",
+       "py": "Qī diǎn dào jiǔ diǎn"
+      },
+      {
+       "zh": "八点以后",
+       "py": "Bā diǎn yǐhòu"
+      },
+      {
+       "zh": "什么时候都可以",
+       "py": "Shénme shíhou dōu kěyǐ"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "第一次分错了会怎么样？",
+     "py": "Dì yī cì fēn cuò le huì zěnmeyàng?",
+     "en": "What happens the first time someone sorts wrongly?",
+     "opts": [
+      {
+       "zh": "只是提醒",
+       "py": "Zhǐshì tíxǐng"
+      },
+      {
+       "zh": "要罚款",
+       "py": "Yào fákuǎn"
+      },
+      {
+       "zh": "不能再扔垃圾",
+       "py": "Bù néng zài rēng lājī"
+      },
+      {
+       "zh": "要去办公室",
+       "py": "Yào qù bàngōngshì"
+      }
+     ],
+     "line": 6
+    },
+    {
+     "zh": "旧衣服应该放在哪儿？",
+     "py": "Jiù yīfu yīnggāi fàng zài nǎr?",
+     "en": "Where should old clothes go?",
+     "opts": [
+      {
+       "zh": "小区门口的绿色箱子里",
+       "py": "Xiǎoqū ménkǒu de lǜsè xiāngzi lǐ"
+      },
+      {
+       "zh": "楼下的垃圾桶里",
+       "py": "Lóuxià de lājītǒng lǐ"
+      },
+      {
+       "zh": "办公室",
+       "py": "Bàngōngshì"
+      },
+      {
+       "zh": "自己家里",
+       "py": "Zìjǐ jiā lǐ"
+      }
+     ],
+     "line": 7
+    }
+   ],
+   "words": [
+    "分类",
+    "电池",
+    "罚款"
+   ]
+  },
+  {
+   "id": "p5-online-class",
+   "lv": 5,
+   "title": "Classes online",
+   "scene": "A radio host talks to a teacher about online classes.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "今天的节目我们来聊聊网上上课。张老师，您觉得网上上课有哪些好处？",
+     "py": "Jīntiān de jiémù wǒmen lái liáoliao wǎngshàng shàngkè. Zhāng lǎoshī, nín juéde wǎngshàng shàngkè yǒu nǎxiē hǎochù?",
+     "en": "In today's programme we are talking about online classes. Teacher Zhang, what do you think are the good points of online classes?"
+    },
+    {
+     "s": "男",
+     "zh": "最大的好处是方便，学生在家就能上课，不用每天花很多时间在路上。",
+     "py": "Zuì dà de hǎochù shì fāngbiàn, xuésheng zài jiā jiù néng shàngkè, búyòng měitiān huā hěn duō shíjiān zài lùshang.",
+     "en": "The biggest one is convenience. Students can have class at home and do not have to spend a lot of time travelling every day."
+    },
+    {
+     "s": "女",
+     "zh": "那缺点呢？",
+     "py": "Nà quēdiǎn ne?",
+     "en": "And the drawbacks?"
+    },
+    {
+     "s": "男",
+     "zh": "主要是学生很难集中注意力，特别是年龄小的孩子，一会儿就去玩别的了。",
+     "py": "Zhǔyào shì xuésheng hěn nán jízhōng zhùyì lì, tèbié shì niánlíng xiǎo de háizi, yíhuìr jiù qù wán biéde le.",
+     "en": "Mainly that students find it hard to concentrate, especially young children, who soon go off to play with something else."
+    },
+    {
+     "s": "女",
+     "zh": "那老师可以怎么做呢？",
+     "py": "Nà lǎoshī kěyǐ zěnme zuò ne?",
+     "en": "So what can teachers do?"
+    },
+    {
+     "s": "男",
+     "zh": "我的办法是每十分钟就让学生回答一个问题，或者分小组讨论，这样他们就会认真听了。",
+     "py": "Wǒ de bànfǎ shì měi shí fēnzhōng jiù ràng xuésheng huídá yí ge wèntí, huòzhě fēn xiǎozǔ tǎolùn, zhèyàng tāmen jiù huì rènzhēn tīng le.",
+     "en": "What I do is have students answer a question every ten minutes, or discuss in small groups. That way they listen carefully."
+    },
+    {
+     "s": "女",
+     "zh": "家长在这方面能帮上什么忙吗？",
+     "py": "Jiāzhǎng zài zhè fāngmiàn néng bāng shàng shénme máng ma?",
+     "en": "Can parents help with this in any way?"
+    },
+    {
+     "s": "男",
+     "zh": "家长最好给孩子准备一个安静的地方，上课的时候把手机拿走。",
+     "py": "Jiāzhǎng zuìhǎo gěi háizi zhǔnbèi yí ge ānjìng de dìfang, shàngkè de shíhou bǎ shǒujī ná zǒu.",
+     "en": "Parents should give their child a quiet place, and take the phone away during class."
+    },
+    {
+     "s": "女",
+     "zh": "您觉得以后网上上课会代替学校吗？",
+     "py": "Nín juéde yǐhòu wǎngshàng shàngkè huì dàitì xuéxiào ma?",
+     "en": "Do you think online classes will take the place of schools one day?"
+    },
+    {
+     "s": "男",
+     "zh": "我觉得不会。学校不只是学知识的地方，孩子还需要跟同学交朋友、一起活动。",
+     "py": "Wǒ juéde bú huì. Xuéxiào bù zhǐshì xué zhīshi de dìfang, háizi hái xūyào gēn tóngxué jiāo péngyou, yìqǐ huódòng.",
+     "en": "I don't think so. School is not only a place to learn things. Children also need to make friends with classmates and do things together."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的觉得网上上课最大的好处是什么？",
+     "py": "Nán de juéde wǎngshàng shàngkè zuì dà de hǎochù shì shénme?",
+     "en": "What does the man think is the biggest good point of online classes?",
+     "opts": [
+      {
+       "zh": "方便",
+       "py": "Fāngbiàn"
+      },
+      {
+       "zh": "便宜",
+       "py": "Piányi"
+      },
+      {
+       "zh": "有意思",
+       "py": "Yǒuyìsi"
+      },
+      {
+       "zh": "学得快",
+       "py": "Xué de kuài"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "网上上课的主要缺点是什么？",
+     "py": "Wǎngshàng shàngkè de zhǔyào quēdiǎn shì shénme?",
+     "en": "What is the main drawback of online classes?",
+     "opts": [
+      {
+       "zh": "学生很难集中注意力",
+       "py": "Xuésheng hěn nán jízhōng zhùyì lì"
+      },
+      {
+       "zh": "老师不够",
+       "py": "Lǎoshī búgòu"
+      },
+      {
+       "zh": "电脑太贵",
+       "py": "Diànnǎo tài guì"
+      },
+      {
+       "zh": "作业太多",
+       "py": "Zuòyè tài duō"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "男的每十分钟让学生做什么？",
+     "py": "Nán de měi shí fēnzhōng ràng xuésheng zuò shénme?",
+     "en": "What does the man have students do every ten minutes?",
+     "opts": [
+      {
+       "zh": "回答一个问题",
+       "py": "Huídá yí ge wèntí"
+      },
+      {
+       "zh": "休息一下",
+       "py": "Xiūxi yíxià"
+      },
+      {
+       "zh": "看一个电影",
+       "py": "Kàn yí ge diànyǐng"
+      },
+      {
+       "zh": "写作业",
+       "py": "Xiě zuòyè"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "男的建议家长做什么？",
+     "py": "Nán de jiànyì jiāzhǎng zuò shénme?",
+     "en": "What does the man suggest parents do?",
+     "opts": [
+      {
+       "zh": "给孩子准备一个安静的地方",
+       "py": "Gěi háizi zhǔnbèi yí ge ānjìng de dìfang"
+      },
+      {
+       "zh": "陪孩子一起上课",
+       "py": "Péi háizi yìqǐ shàngkè"
+      },
+      {
+       "zh": "给孩子买电脑",
+       "py": "Gěi háizi mǎi diànnǎo"
+      },
+      {
+       "zh": "多给孩子留作业",
+       "py": "Duō gěi háizi liú zuòyè"
+      }
+     ],
+     "line": 7
+    },
+    {
+     "zh": "男的为什么觉得网上上课不会代替学校？",
+     "py": "Nán de wèishénme juéde wǎngshàng shàngkè bú huì dàitì xuéxiào?",
+     "en": "Why does the man think online classes will not take the place of schools?",
+     "opts": [
+      {
+       "zh": "孩子需要交朋友、一起活动",
+       "py": "Háizi xūyào jiāo péngyou, yìqǐ huódòng"
+      },
+      {
+       "zh": "学校比较便宜",
+       "py": "Xuéxiào bǐjiào piányi"
+      },
+      {
+       "zh": "老师不喜欢网上上课",
+       "py": "Lǎoshī bù xǐhuan wǎngshàng shàngkè"
+      },
+      {
+       "zh": "网上学不到知识",
+       "py": "Wǎngshàng xué bú dào zhīshi"
+      }
+     ],
+     "line": 9
+    }
+   ],
+   "words": [
+    "集中",
+    "力",
+    "代替"
+   ]
+  },
+  {
+   "id": "p5-car",
+   "lv": 5,
+   "title": "To buy a car or not",
+   "scene": "A man explains to a friend why he wants a car.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "你真的打算买车啊？",
+     "py": "Nǐ zhēn de dǎsuàn mǎi chē a?",
+     "en": "You really plan to buy a car?"
+    },
+    {
+     "s": "男",
+     "zh": "是啊，每天坐地铁上班要换两次车，一次就要一个多小时，太累了。",
+     "py": "Shì a, měitiān zuò dìtiě shàngbān yào huàn liǎng cì chē, yí cì jiù yào yí ge duō xiǎoshí, tài lèi le.",
+     "en": "Yes. Going to work by underground every day means changing twice, and each trip takes over an hour. It is too tiring."
+    },
+    {
+     "s": "女",
+     "zh": "可是开车也不一定快，早上路上车那么多。",
+     "py": "Kěshì kāichē yě bù yídìng kuài, zǎoshang lùshang chē nàme duō.",
+     "en": "But driving is not necessarily faster, with so many cars on the road in the morning."
+    },
+    {
+     "s": "男",
+     "zh": "我查过了，开车大概四十分钟，如果早一点儿出门，能节省不少时间。",
+     "py": "Wǒ chá guo le, kāichē dàgài sìshí fēnzhōng, rúguǒ zǎo yìdiǎnr chūmén, néng jiéshěng bù shǎo shíjiān.",
+     "en": "I checked. Driving takes about 40 minutes, and if I leave a bit earlier, I can save quite a lot of time."
+    },
+    {
+     "s": "女",
+     "zh": "那钱呢？油钱、停车费、保险，一年下来可不少。",
+     "py": "Nà qián ne? Yóu qián, tíngchē fèi, bǎoxiǎn, yì nián xiàlái kě bù shǎo.",
+     "en": "What about money? Petrol, parking and insurance add up to quite a lot over a year."
+    },
+    {
+     "s": "男",
+     "zh": "公司有免费的停车位，这样就能省下一大笔钱。",
+     "py": "Gōngsī yǒu miǎnfèi de tíngchēwèi, zhèyàng jiù néng shěng xià yí dà bǐ qián.",
+     "en": "My company has free parking spaces, so that saves a big sum."
+    },
+    {
+     "s": "女",
+     "zh": "你想买哪种车？",
+     "py": "Nǐ xiǎng mǎi nǎ zhǒng chē?",
+     "en": "What kind of car do you want to buy?"
+    },
+    {
+     "s": "男",
+     "zh": "我想买一辆小一点儿的，好停车，也比较省油。",
+     "py": "Wǒ xiǎng mǎi yí liàng xiǎo yìdiǎnr de, hǎo tíngchē, yě bǐjiào shěng yóu.",
+     "en": "I want a smaller one. It is easy to park and uses less petrol."
+    },
+    {
+     "s": "女",
+     "zh": "买车是件大事，你别着急，周末我陪你一起去看看。",
+     "py": "Mǎi chē shì jiàn dàshì, nǐ bié zháojí, zhōumò wǒ péi nǐ yìqǐ qù kànkan.",
+     "en": "Buying a car is a big decision. Don't rush. I will go and look with you at the weekend."
+    },
+    {
+     "s": "男",
+     "zh": "太好了，你比我懂车，有你在我就放心了。",
+     "py": "Tài hǎo le, nǐ bǐ wǒ dǒng chē, yǒu nǐ zài wǒ jiù fàngxīn le.",
+     "en": "Great. You know more about cars than I do, so with you there I feel at ease."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的为什么想买车？",
+     "py": "Nán de wèishénme xiǎng mǎi chē?",
+     "en": "Why does the man want to buy a car?",
+     "opts": [
+      {
+       "zh": "坐地铁上班太累",
+       "py": "Zuò dìtiě shàngbān tài lèi"
+      },
+      {
+       "zh": "想去旅游",
+       "py": "Xiǎng qù lǚyóu"
+      },
+      {
+       "zh": "公司离家很近",
+       "py": "Gōngsī lí jiā hěn jìn"
+      },
+      {
+       "zh": "地铁太贵",
+       "py": "Dìtiě tài guì"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "开车上班大概要多长时间？",
+     "py": "Kāichē shàngbān dàgài yào duō cháng shíjiān?",
+     "en": "About how long does it take to drive to work?",
+     "opts": [
+      {
+       "zh": "四十分钟",
+       "py": "Sìshí fēnzhōng"
+      },
+      {
+       "zh": "一个多小时",
+       "py": "Yí ge duō xiǎoshí"
+      },
+      {
+       "zh": "二十分钟",
+       "py": "Èrshí fēnzhōng"
+      },
+      {
+       "zh": "两个小时",
+       "py": "Liǎng ge xiǎoshí"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "为什么男的不用担心停车费？",
+     "py": "Wèishénme nán de búyòng dānxīn tíngchē fèi?",
+     "en": "Why doesn't the man need to worry about parking?",
+     "opts": [
+      {
+       "zh": "公司有免费的停车位",
+       "py": "Gōngsī yǒu miǎnfèi de tíngchēwèi"
+      },
+      {
+       "zh": "他家楼下可以停车",
+       "py": "Tā jiā lóuxià kěyǐ tíngchē"
+      },
+      {
+       "zh": "停车费很便宜",
+       "py": "Tíngchē fèi hěn piányi"
+      },
+      {
+       "zh": "他不打算停车",
+       "py": "Tā bù dǎsuàn tíngchē"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "男的想买哪种车？",
+     "py": "Nán de xiǎng mǎi nǎ zhǒng chē?",
+     "en": "What kind of car does the man want?",
+     "opts": [
+      {
+       "zh": "小一点儿的",
+       "py": "Xiǎo yìdiǎnr de"
+      },
+      {
+       "zh": "最贵的",
+       "py": "Zuì guì de"
+      },
+      {
+       "zh": "大一点儿的",
+       "py": "Dà yìdiǎnr de"
+      },
+      {
+       "zh": "旧车",
+       "py": "Jiù chē"
+      }
+     ],
+     "line": 7
+    },
+    {
+     "zh": "女的周末要做什么？",
+     "py": "Nǚ de zhōumò yào zuò shénme?",
+     "en": "What will the woman do at the weekend?",
+     "opts": [
+      {
+       "zh": "陪男的去看车",
+       "py": "Péi nán de qù kàn chē"
+      },
+      {
+       "zh": "去上班",
+       "py": "Qù shàngbān"
+      },
+      {
+       "zh": "去买东西",
+       "py": "Qù mǎi dōngxi"
+      },
+      {
+       "zh": "在家休息",
+       "py": "Zài jiā xiūxi"
+      }
+     ],
+     "line": 8
+    }
+   ],
+   "words": [
+    "节省",
+    "保险",
+    "大事"
+   ]
+  },
+  {
+   "id": "p5-after-surgery",
+   "lv": 5,
+   "title": "After the operation",
+   "scene": "A woman visits a colleague in hospital.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "听说你做手术了，现在感觉怎么样？",
+     "py": "Tīngshuō nǐ zuò shǒushù le, xiànzài gǎnjué zěnmeyàng?",
+     "en": "I heard you had an operation. How are you feeling now?"
+    },
+    {
+     "s": "男",
+     "zh": "好多了，谢谢你来看我。手术很成功，医生说再过一个星期就能出院了。",
+     "py": "Hǎoduō le, xièxie nǐ lái kàn wǒ. Shǒushù hěn chénggōng, yīshēng shuō zài guo yí ge xīngqī jiù néng chūyuàn le.",
+     "en": "Much better, thank you for coming to see me. The operation went well, and the doctor says I can leave hospital in another week."
+    },
+    {
+     "s": "女",
+     "zh": "那就好。我给你带了一些水果和汤，汤是我妈妈做的。",
+     "py": "Nà jiù hǎo. Wǒ gěi nǐ dài le yìxiē shuǐguǒ hé tāng, tāng shì wǒ māma zuò de.",
+     "en": "Good. I brought you some fruit and soup. My mum made the soup."
+    },
+    {
+     "s": "男",
+     "zh": "替我谢谢阿姨。医院的饭菜真没什么味道。",
+     "py": "Tì wǒ xièxie āyí. Yīyuàn de fàn cài zhēn méi shénme wèidào.",
+     "en": "Thank her for me. The hospital food really has no taste at all."
+    },
+    {
+     "s": "女",
+     "zh": "公司的事你别担心，你负责的那个项目，经理让小马暂时帮你管着。",
+     "py": "Gōngsī de shì nǐ bié dānxīn, nǐ fùzé de nàge xiàngmù, jīnglǐ ràng xiǎo mǎ zànshí bāng nǐ guǎn zhe.",
+     "en": "Don't worry about work. The manager has asked Xiao Ma to look after your project for now."
+    },
+    {
+     "s": "男",
+     "zh": "那太好了，我还一直担心会影响大家的工作。",
+     "py": "Nà tài hǎo le, wǒ hái yìzhí dānxīn huì yǐngxiǎng dàjiā de gōngzuò.",
+     "en": "That is great. I kept worrying that I would hold up everyone's work."
+    },
+    {
+     "s": "女",
+     "zh": "你现在最重要的是好好休息，别想工作的事了。",
+     "py": "Nǐ xiànzài zuì zhòngyào de shì hǎohǎo xiūxi, bié xiǎng gōngzuò de shì le.",
+     "en": "The most important thing for you now is to rest properly. Stop thinking about work."
+    },
+    {
+     "s": "男",
+     "zh": "医生也这么说。出院以后还要在家休息一个月，不能跑步、打球。",
+     "py": "Yīshēng yě zhème shuō. Chūyuàn yǐhòu hái yào zài jiā xiūxi yí ge yuè, bù néng pǎobù, dǎ qiú.",
+     "en": "The doctor says so too. After I leave hospital I have to rest at home for a month, with no running or ball games."
+    },
+    {
+     "s": "女",
+     "zh": "一个月正好可以看看书，把你一直想看的那几本小说看完。",
+     "py": "Yí ge yuè zhènghǎo kěyǐ kànkan shū, bǎ nǐ yìzhí xiǎng kàn de nà jǐ běn xiǎoshuō kàn wán.",
+     "en": "A month is just right for reading. You can finish those novels you have always wanted to read."
+    },
+    {
+     "s": "男",
+     "zh": "好主意，你下次来的时候帮我从家里带几本过来吧。",
+     "py": "Hǎo zhǔyi, nǐ xiàcì lái de shíhou bāng wǒ cóng jiā lǐ dài jǐ běn guòlái ba.",
+     "en": "Good idea. Next time you come, bring a few from my home for me."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "男的现在怎么样？",
+     "py": "Nán de xiànzài zěnmeyàng?",
+     "en": "How is the man now?",
+     "opts": [
+      {
+       "zh": "好多了",
+       "py": "Hǎoduō le"
+      },
+      {
+       "zh": "还很疼",
+       "py": "Hái hěn téng"
+      },
+      {
+       "zh": "明天出院",
+       "py": "Míngtiān chūyuàn"
+      },
+      {
+       "zh": "还要再做一次手术",
+       "py": "Hái yào zài zuò yí cì shǒushù"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "男的大概什么时候能出院？",
+     "py": "Nán de dàgài shénme shíhou néng chūyuàn?",
+     "en": "About when can the man leave hospital?",
+     "opts": [
+      {
+       "zh": "一个星期以后",
+       "py": "Yí ge xīngqī yǐhòu"
+      },
+      {
+       "zh": "明天",
+       "py": "Míngtiān"
+      },
+      {
+       "zh": "一个月以后",
+       "py": "Yí ge yuè yǐhòu"
+      },
+      {
+       "zh": "三天以后",
+       "py": "Sān tiān yǐhòu"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "汤是谁做的？",
+     "py": "Tāng shì shéi zuò de?",
+     "en": "Who made the soup?",
+     "opts": [
+      {
+       "zh": "女的妈妈",
+       "py": "Nǚ de māma"
+      },
+      {
+       "zh": "女的",
+       "py": "Nǚ de"
+      },
+      {
+       "zh": "医院",
+       "py": "Yīyuàn"
+      },
+      {
+       "zh": "男的妈妈",
+       "py": "Nán de māma"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "男的负责的项目现在由谁管？",
+     "py": "Nán de fùzé de xiàngmù xiànzài yóu shéi guǎn?",
+     "en": "Who is looking after the man's project now?",
+     "opts": [
+      {
+       "zh": "小马",
+       "py": "Xiǎo mǎ"
+      },
+      {
+       "zh": "经理",
+       "py": "Jīnglǐ"
+      },
+      {
+       "zh": "女的",
+       "py": "Nǚ de"
+      },
+      {
+       "zh": "男的自己",
+       "py": "Nán de zìjǐ"
+      }
+     ],
+     "line": 4
+    },
+    {
+     "zh": "出院以后男的不能做什么？",
+     "py": "Chūyuàn yǐhòu nán de bù néng zuò shénme?",
+     "en": "What must the man not do after leaving hospital?",
+     "opts": [
+      {
+       "zh": "跑步、打球",
+       "py": "Pǎobù, dǎ qiú"
+      },
+      {
+       "zh": "看书",
+       "py": "Kàn shū"
+      },
+      {
+       "zh": "上网",
+       "py": "Shàngwǎng"
+      },
+      {
+       "zh": "吃水果",
+       "py": "Chī shuǐguǒ"
+      }
+     ],
+     "line": 7
+    }
+   ],
+   "words": [
+    "手术",
+    "替",
+    "项目"
+   ]
+  },
+  {
+   "id": "p5-tea",
+   "lv": 5,
+   "title": "A cup of tea",
+   "scene": "A woman at a teahouse talks to visitors about Chinese tea.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "欢迎大家来我们店里喝茶。今天我想跟大家简单介绍一下中国的茶。",
+     "py": "Huānyíng dàjiā lái wǒmen diàn lǐ hē chá. Jīntiān wǒ xiǎng gēn dàjiā jiǎndān jièshào yíxià Zhōngguó de chá.",
+     "en": "Welcome to our shop for some tea. Today I would like to tell you a little about Chinese tea."
+    },
+    {
+     "s": "女",
+     "zh": "中国人喝茶已经有几千年的历史了，茶的种类也非常多。",
+     "py": "Zhōngguórén hē chá yǐjīng yǒu jǐ qiān nián de lìshǐ le, chá de zhǒnglèi yě fēicháng duō.",
+     "en": "Chinese people have been drinking tea for thousands of years, and there are a great many kinds of tea."
+    },
+    {
+     "s": "女",
+     "zh": "最常见的有绿茶、红茶和花茶。北方人比较喜欢花茶，南方人更爱喝绿茶。",
+     "py": "Zuì chángjiàn de yǒu lǜchá, hóngchá hé huā chá. Běifāng rén bǐjiào xǐhuan huā chá, nánfāng rén gèng ài hē lǜchá.",
+     "en": "The most common are green tea, black tea and flower tea. People in the north prefer flower tea, while people in the south like green tea better."
+    },
+    {
+     "s": "女",
+     "zh": "茶好不好喝，水的温度很重要。",
+     "py": "Chá hǎo bù hǎo hē, shuǐ de wēndù hěn zhòngyào.",
+     "en": "Whether tea tastes good depends a lot on the temperature of the water."
+    },
+    {
+     "s": "女",
+     "zh": "比如绿茶，水不能太热，八十度左右最合适，水太热了，茶就会变苦。",
+     "py": "Bǐrú lǜchá, shuǐ bù néng tài rè, bāshí dù zuǒyòu zuì héshì, shuǐ tài rè le, chá jiù huì biàn kǔ.",
+     "en": "For green tea, for example, the water must not be too hot. About 80 degrees is best; if the water is too hot, the tea turns bitter."
+    },
+    {
+     "s": "女",
+     "zh": "喝茶也要注意一些礼貌。给客人倒茶的时候，不能倒得太满，七分满就可以了。",
+     "py": "Hē chá yě yào zhùyì yìxiē lǐmào. Gěi kèrén dào chá de shíhou, bù néng dào de tài mǎn, qī fēn mǎn jiù kěyǐ le.",
+     "en": "There are also some manners to keep in mind when drinking tea. When you pour tea for a guest, don't fill the cup too full: seven tenths full is enough."
+    },
+    {
+     "s": "女",
+     "zh": "如果别人给你倒茶，你可以用手指轻轻敲两下桌子，表示感谢。",
+     "py": "Rúguǒ biérén gěi nǐ dào chá, nǐ kěyǐ yòng shǒuzhǐ qīng qīng qiāo liǎng xià zhuōzi, biǎoshì gǎnxiè.",
+     "en": "If someone pours tea for you, you can tap the table lightly twice with your fingers to say thank you."
+    },
+    {
+     "s": "女",
+     "zh": "好，下面请大家尝一尝我们准备的三种茶，看看你最喜欢哪一种。",
+     "py": "Hǎo, xiàmiàn qǐng dàjiā cháng yi cháng wǒmen zhǔnbèi de sān zhǒng chá, kànkan nǐ zuì xǐhuan nǎ yì zhǒng.",
+     "en": "Now, please taste the three teas we have prepared and see which one you like best."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "中国人喝茶有多长时间的历史了？",
+     "py": "Zhōngguórén hē chá yǒu duō cháng shíjiān de lìshǐ le?",
+     "en": "For how long have Chinese people been drinking tea?",
+     "opts": [
+      {
+       "zh": "几千年",
+       "py": "Jǐ qiān nián"
+      },
+      {
+       "zh": "几百年",
+       "py": "Jǐ bǎi nián"
+      },
+      {
+       "zh": "一百多年",
+       "py": "Yì bǎi duō nián"
+      },
+      {
+       "zh": "几十年",
+       "py": "Jǐ shí nián"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "南方人更喜欢喝什么茶？",
+     "py": "Nánfāng rén gèng xǐhuan hē shénme chá?",
+     "en": "Which tea do people in the south prefer?",
+     "opts": [
+      {
+       "zh": "绿茶",
+       "py": "Lǜchá"
+      },
+      {
+       "zh": "花茶",
+       "py": "Huā chá"
+      },
+      {
+       "zh": "红茶",
+       "py": "Hóngchá"
+      },
+      {
+       "zh": "奶茶",
+       "py": "Nǎichá"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "绿茶用多少度的水最合适？",
+     "py": "Lǜchá yòng duōshǎo dù de shuǐ zuì héshì?",
+     "en": "What water temperature is best for green tea?",
+     "opts": [
+      {
+       "zh": "八十度左右",
+       "py": "Bāshí dù zuǒyòu"
+      },
+      {
+       "zh": "一百度",
+       "py": "Yì bǎi dù"
+      },
+      {
+       "zh": "六十度左右",
+       "py": "Liùshí dù zuǒyòu"
+      },
+      {
+       "zh": "九十度以上",
+       "py": "Jiǔshí dù yǐshàng"
+      }
+     ],
+     "line": 4
+    },
+    {
+     "zh": "给客人倒茶应该倒多少？",
+     "py": "Gěi kèrén dào chá yīnggāi dào duōshǎo?",
+     "en": "How much should you pour for a guest?",
+     "opts": [
+      {
+       "zh": "七分满",
+       "py": "Qī fēn mǎn"
+      },
+      {
+       "zh": "倒满",
+       "py": "Dào mǎn"
+      },
+      {
+       "zh": "一半",
+       "py": "Yíbàn"
+      },
+      {
+       "zh": "一点点",
+       "py": "Yì diǎn diǎn"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "别人给你倒茶的时候，可以怎么表示感谢？",
+     "py": "Biérén gěi nǐ dào chá de shíhou, kěyǐ zěnme biǎoshì gǎnxiè?",
+     "en": "How can you say thank you when someone pours tea for you?",
+     "opts": [
+      {
+       "zh": "用手指轻轻敲两下桌子",
+       "py": "Yòng shǒuzhǐ qīng qīng qiāo liǎng xià zhuōzi"
+      },
+      {
+       "zh": "站起来",
+       "py": "Zhàn qǐlái"
+      },
+      {
+       "zh": "说“不用了”",
+       "py": "Shuō \" búyòng le \""
+      },
+      {
+       "zh": "马上把茶喝完",
+       "py": "Mǎshàng bǎ chá hē wán"
+      }
+     ],
+     "line": 6
+    }
+   ],
+   "words": [
+    "种类",
+    "度",
+    "手指"
+   ]
+  },
+  {
+   "id": "p5-exchange",
+   "lv": 5,
+   "title": "A year abroad",
+   "scene": "A student tells a friend about her exchange year.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "听说你下学期要去国外交换？",
+     "py": "Tīngshuō nǐ xià xuéqī yào qù guówài jiāohuàn?",
+     "en": "I hear you are going abroad on an exchange next term?"
+    },
+    {
+     "s": "女",
+     "zh": "对，我半年前申请的，终于通过了。要在那边读一年。",
+     "py": "Duì, wǒ bànnián qián shēnqǐng de, zhōngyú tōngguò le. Yào zài nàbiān dú yì nián.",
+     "en": "Yes. I applied half a year ago, and it has finally been approved. I will study there for a year."
+    },
+    {
+     "s": "男",
+     "zh": "祝贺你！费用都是学校出吗？",
+     "py": "Zhùhè nǐ! Fèiyong dōu shì xuéxiào chū ma?",
+     "en": "Congratulations to you! Does the university pay for everything?"
+    },
+    {
+     "s": "女",
+     "zh": "学费是学校出的，生活费要靠自己。我打算到那边以后找份工作。",
+     "py": "Xuéfèi shì xuéxiào chū de, shēnghuó fèi yào kào zìjǐ. Wǒ dǎsuàn dào nàbiān yǐhòu zhǎo fèn gōngzuò.",
+     "en": "The university pays the fees, but I have to cover my living costs myself. I plan to find a job when I get there."
+    },
+    {
+     "s": "男",
+     "zh": "语言没问题吧？",
+     "py": "Yǔyán méi wèntí ba?",
+     "en": "The language is no problem, right?"
+    },
+    {
+     "s": "女",
+     "zh": "听和读还可以，说得不太流利，所以这几个月我每天都在练习口语。",
+     "py": "Tīng hé dú hái kěyǐ, shuō de bú tài liúlì, suǒyǐ zhè jǐ ge yuè wǒ měitiān dōu zài liànxí kǒuyǔ.",
+     "en": "Listening and reading are OK, but I do not speak very fluently, so for the last few months I have been practising speaking every day."
+    },
+    {
+     "s": "男",
+     "zh": "住的地方找好了吗？",
+     "py": "Zhù de dìfang zhǎo hǎo le ma?",
+     "en": "Have you found somewhere to live?"
+    },
+    {
+     "s": "女",
+     "zh": "学校有宿舍，不过要跟另外一个学生住一个房间，我还在考虑要不要自己在外面租房子。",
+     "py": "Xuéxiào yǒu sùshè, búguò yào gēn lìngwài yí ge xuésheng zhù yí ge fángjiān, wǒ hái zài kǎolǜ yào búyào zìjǐ zài wàimiàn zū fángzi.",
+     "en": "The university has dormitories, but I would share a room with another student. I am still thinking about whether to rent a place outside."
+    },
+    {
+     "s": "男",
+     "zh": "我建议你先住宿舍，认识的人多，对练习语言也有好处。",
+     "py": "Wǒ jiànyì nǐ xiān zhù sùshè, rènshi de rén duō, duì liànxí yǔyán yě yǒu hǎochù.",
+     "en": "I suggest you live in the dormitory first. You will get to know more people, and it is good for practising the language too."
+    },
+    {
+     "s": "女",
+     "zh": "有道理。我最担心的是不习惯那边的饭，听说那边的人很少吃米饭。",
+     "py": "Yǒu dàolǐ. Wǒ zuì dānxīn de shì bù xíguàn nàbiān de fàn, tīngshuō nàbiān de rén hěn shǎo chī mǐfàn.",
+     "en": "That makes sense. What worries me most is not being used to the food there. I hear people there rarely eat rice."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的下学期要做什么？",
+     "py": "Nǚ de xià xuéqī yào zuò shénme?",
+     "en": "What will the woman do next term?",
+     "opts": [
+      {
+       "zh": "去国外交换",
+       "py": "Qù guówài jiāohuàn"
+      },
+      {
+       "zh": "毕业",
+       "py": "Bìyè"
+      },
+      {
+       "zh": "找工作",
+       "py": "Zhǎo gōngzuò"
+      },
+      {
+       "zh": "去旅游",
+       "py": "Qù lǚyóu"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "女的要在国外读多长时间？",
+     "py": "Nǚ de yào zài guówài dú duō cháng shíjiān?",
+     "en": "How long will the woman study abroad?",
+     "opts": [
+      {
+       "zh": "一年",
+       "py": "Yì nián"
+      },
+      {
+       "zh": "半年",
+       "py": "Bànnián"
+      },
+      {
+       "zh": "两年",
+       "py": "Liǎng nián"
+      },
+      {
+       "zh": "一个学期",
+       "py": "Yí ge xuéqī"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "谁出学费？",
+     "py": "Shéi chū xuéfèi?",
+     "en": "Who pays the fees?",
+     "opts": [
+      {
+       "zh": "学校",
+       "py": "Xuéxiào"
+      },
+      {
+       "zh": "女的自己",
+       "py": "Nǚ de zìjǐ"
+      },
+      {
+       "zh": "女的父母",
+       "py": "Nǚ de fùmǔ"
+      },
+      {
+       "zh": "国外的公司",
+       "py": "Guówài de gōngsī"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "这几个月女的每天在练习什么？",
+     "py": "Zhè jǐ ge yuè nǚ de měitiān zài liànxí shénme?",
+     "en": "What has the woman been practising every day these months?",
+     "opts": [
+      {
+       "zh": "口语",
+       "py": "Kǒuyǔ"
+      },
+      {
+       "zh": "写作",
+       "py": "Xiězuò"
+      },
+      {
+       "zh": "听力",
+       "py": "Tīnglì"
+      },
+      {
+       "zh": "阅读",
+       "py": "Yuèdú"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "女的最担心什么？",
+     "py": "Nǚ de zuì dānxīn shénme?",
+     "en": "What worries the woman most?",
+     "opts": [
+      {
+       "zh": "不习惯那边的饭",
+       "py": "Bù xíguàn nàbiān de fàn"
+      },
+      {
+       "zh": "找不到工作",
+       "py": "Zhǎo bú dào gōngzuò"
+      },
+      {
+       "zh": "没有朋友",
+       "py": "Méiyǒu péngyou"
+      },
+      {
+       "zh": "语言不好",
+       "py": "Yǔyán bù hǎo"
+      }
+     ],
+     "line": 9
+    }
+   ],
+   "words": [
+    "交换",
+    "靠",
+    "宿舍",
+    "道理"
+   ]
+  },
+  {
+   "id": "p5-lost-boy",
+   "lv": 5,
+   "title": "A boy has lost his mother",
+   "scene": "An announcement in a shopping centre.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "各位顾客请注意。",
+     "py": "Gèwèi gùkè qǐng zhùyì.",
+     "en": "Attention, please, all shoppers."
+    },
+    {
+     "s": "女",
+     "zh": "一位妈妈在三楼卖孩子衣服的商店附近找不到她五岁的儿子了。",
+     "py": "Yí wèi māma zài sān lóu mài háizi yīfu de shāngdiàn fùjìn zhǎo bú dào tā wǔ suì de érzi le.",
+     "en": "A mother cannot find her five-year-old son near the children's clothes shop on the third floor."
+    },
+    {
+     "s": "女",
+     "zh": "孩子穿着一件红色的上衣和一条黑色的裤子，背着一个黄色的小书包。",
+     "py": "Háizi chuān zhe yí jiàn hóngsè de shàngyī hé yì tiáo hēisè de kùzi, bēi zhe yí ge huángsè de xiǎo shūbāo.",
+     "en": "The boy is wearing a red top and black trousers, and he has a small yellow school bag on his back."
+    },
+    {
+     "s": "女",
+     "zh": "他大概一米一高，短头发，戴着白色的帽子。",
+     "py": "Tā dàgài yì mǐ yì gāo, duǎn tóufa, dài zhe báisè de màozi.",
+     "en": "He is about 1.1 metres tall, with short hair, and he is wearing a white hat."
+    },
+    {
+     "s": "女",
+     "zh": "如果您看到了这个孩子，请尽快把他带到一楼的服务台，或者告诉附近的工作人员。",
+     "py": "Rúguǒ nín kàn dào le zhège háizi, qǐng jǐnkuài bǎ tā dài dào yì lóu de fúwù tái, huòzhě gàosu fùjìn de gōngzuò rényuán.",
+     "en": "If you see this child, please bring him to the service desk on the ground floor as soon as possible, or tell a member of staff nearby."
+    },
+    {
+     "s": "女",
+     "zh": "孩子的妈妈正在服务台等着。",
+     "py": "Háizi de māma zhèngzài fúwù tái děng zhe.",
+     "en": "The boy's mother is waiting at the service desk."
+    },
+    {
+     "s": "女",
+     "zh": "另外提醒各位家长，商场里人很多，请照顾好自己的孩子。",
+     "py": "Lìngwài tíxǐng gèwèi jiāzhǎng, shāngchǎng lǐ rén hěn duō, qǐng zhàogù hǎo zìjǐ de háizi.",
+     "en": "We would also like to remind all parents that the shopping centre is very busy, so please take good care of your children."
+    },
+    {
+     "s": "女",
+     "zh": "谢谢大家的帮助。",
+     "py": "Xièxie dàjiā de bāngzhù.",
+     "en": "Thank you all for your help."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "孩子多大了？",
+     "py": "Háizi duō dà le?",
+     "en": "How old is the child?",
+     "opts": [
+      {
+       "zh": "五岁",
+       "py": "Wǔ suì"
+      },
+      {
+       "zh": "三岁",
+       "py": "Sān suì"
+      },
+      {
+       "zh": "七岁",
+       "py": "Qī suì"
+      },
+      {
+       "zh": "十岁",
+       "py": "Shí suì"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "孩子穿着什么颜色的上衣？",
+     "py": "Háizi chuān zhe shénme yánsè de shàngyī?",
+     "en": "What colour top is the child wearing?",
+     "opts": [
+      {
+       "zh": "红色",
+       "py": "Hóngsè"
+      },
+      {
+       "zh": "黑色",
+       "py": "Hēisè"
+      },
+      {
+       "zh": "黄色",
+       "py": "Huángsè"
+      },
+      {
+       "zh": "白色",
+       "py": "Báisè"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "孩子戴着什么？",
+     "py": "Háizi dài zhe shénme?",
+     "en": "What is the child wearing on his head?",
+     "opts": [
+      {
+       "zh": "白色的帽子",
+       "py": "Báisè de màozi"
+      },
+      {
+       "zh": "红色的帽子",
+       "py": "Hóngsè de màozi"
+      },
+      {
+       "zh": "黄色的帽子",
+       "py": "Huángsè de màozi"
+      },
+      {
+       "zh": "黑色的帽子",
+       "py": "Hēisè de màozi"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "看到孩子应该把他带到哪儿？",
+     "py": "Kàn dào háizi yīnggāi bǎ tā dài dào nǎr?",
+     "en": "Where should you take the child if you see him?",
+     "opts": [
+      {
+       "zh": "一楼的服务台",
+       "py": "Yì lóu de fúwù tái"
+      },
+      {
+       "zh": "三楼",
+       "py": "Sān lóu"
+      },
+      {
+       "zh": "商场门口",
+       "py": "Shāngchǎng ménkǒu"
+      },
+      {
+       "zh": "卖孩子衣服的商店",
+       "py": "Mài háizi yīfu de shāngdiàn"
+      }
+     ],
+     "line": 4
+    },
+    {
+     "zh": "孩子的妈妈现在在哪儿？",
+     "py": "Háizi de māma xiànzài zài nǎr?",
+     "en": "Where is the child's mother now?",
+     "opts": [
+      {
+       "zh": "在服务台等着",
+       "py": "Zài fúwù tái děng zhe"
+      },
+      {
+       "zh": "在三楼找孩子",
+       "py": "Zài sān lóu zhǎo háizi"
+      },
+      {
+       "zh": "在商场门口",
+       "py": "Zài shāngchǎng ménkǒu"
+      },
+      {
+       "zh": "在家里",
+       "py": "Zài jiā lǐ"
+      }
+     ],
+     "line": 5
+    }
+   ],
+   "words": [
+    "尽快"
+   ]
+  },
+  {
+   "id": "p5-presentation",
+   "lv": 5,
+   "title": "Nervous before the talk",
+   "scene": "A woman is worried about giving a talk at work.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "明天我就要在全公司面前做报告了，紧张得睡不着。",
+     "py": "Míngtiān wǒ jiù yào zài quán gōngsī miànqián zuò bàogào le, jǐnzhāng de shuì bù zháo.",
+     "en": "Tomorrow I have to give a talk in front of the whole company. I am so nervous I can't sleep."
+    },
+    {
+     "s": "男",
+     "zh": "你准备得怎么样了？",
+     "py": "Nǐ zhǔnbèi de zěnmeyàng le?",
+     "en": "How is your preparation going?"
+    },
+    {
+     "s": "女",
+     "zh": "内容都准备好了，可是我一站到大家面前，就容易忘记要说什么。",
+     "py": "Nèiróng dōu zhǔnbèi hǎo le, kěshì wǒ yí zhàn dào dàjiā miànqián, jiù róngyì wàngjì yào shuō shénme.",
+     "en": "What I will say is all ready, but as soon as I stand in front of people, I tend to forget what I want to say."
+    },
+    {
+     "s": "男",
+     "zh": "我以前也这样。后来我发现，提前多练几遍很有用，最好对着镜子练。",
+     "py": "Wǒ yǐqián yě zhèyàng. Hòulái wǒ fāxiàn, tíqián duō liàn jǐ biàn hěn yǒuyòng, zuìhǎo duì zhe jìngzi liàn.",
+     "en": "I used to be like that too. Later I found it really helps to practise a few times beforehand, ideally in front of a mirror."
+    },
+    {
+     "s": "女",
+     "zh": "我已经练了好几遍了，还是没有信心。",
+     "py": "Wǒ yǐjīng liàn le hǎo jǐ biàn le, háishi méiyǒu xìnxīn.",
+     "en": "I have already practised many times, but I still don't feel confident."
+    },
+    {
+     "s": "男",
+     "zh": "那你明天早一点儿到会议室，先熟悉一下环境，试试电脑。",
+     "py": "Nà nǐ míngtiān zǎo yìdiǎnr dào huìyì shì, xiān shúxi yíxià huánjìng, shìshi diànnǎo.",
+     "en": "Then you should get to the meeting room early tomorrow, get used to the room first and try the computer."
+    },
+    {
+     "s": "女",
+     "zh": "好主意。还有别的办法吗？",
+     "py": "Hǎo zhǔyi. Hái yǒu biéde bànfǎ ma?",
+     "en": "Good idea. Anything else?"
+    },
+    {
+     "s": "男",
+     "zh": "讲的时候不要一直看电脑，多看看下面的同事，就当是跟朋友聊天。",
+     "py": "Jiǎng de shíhou búyào yìzhí kàn diànnǎo, duō kànkan xiàmiàn de tóngshì, jiù dāng shì gēn péngyou liáo tiān.",
+     "en": "When you speak, don't keep looking at the computer. Look at your colleagues in front of you, and pretend you are chatting with friends."
+    },
+    {
+     "s": "女",
+     "zh": "万一有人问我回答不了的问题，怎么办？",
+     "py": "Wànyī yǒu rén wèn wǒ huídá bù liǎo de wèntí, zěnmebàn?",
+     "en": "What if someone asks me a question I have no answer to?"
+    },
+    {
+     "s": "男",
+     "zh": "那就说你需要查一下，结束以后再告诉他。没有人会因为这个笑你的。",
+     "py": "Nà jiù shuō nǐ xūyào chá yíxià, jiéshù yǐhòu zài gàosu tā. Méiyǒu rén huì yīnwèi zhège xiào nǐ de.",
+     "en": "Then say you need to look it up and will tell him afterwards. Nobody will laugh at you for that."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的为什么睡不着？",
+     "py": "Nǚ de wèishénme shuì bù zháo?",
+     "en": "Why can't the woman sleep?",
+     "opts": [
+      {
+       "zh": "明天要做报告，很紧张",
+       "py": "Míngtiān yào zuò bàogào, hěn jǐnzhāng"
+      },
+      {
+       "zh": "工作太多",
+       "py": "Gōngzuò tài duō"
+      },
+      {
+       "zh": "生病了",
+       "py": "Shēngbìng le"
+      },
+      {
+       "zh": "喝了咖啡",
+       "py": "Hē le kāfēi"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "女的担心什么？",
+     "py": "Nǚ de dānxīn shénme?",
+     "en": "What is the woman worried about?",
+     "opts": [
+      {
+       "zh": "站在大家面前会忘记要说什么",
+       "py": "Zhàn zài dàjiā miànqián huì wàngjì yào shuō shénme"
+      },
+      {
+       "zh": "内容没准备好",
+       "py": "Nèiróng méi zhǔnbèi hǎo"
+      },
+      {
+       "zh": "电脑会坏",
+       "py": "Diànnǎo huì huài"
+      },
+      {
+       "zh": "没人来听",
+       "py": "Méi rén lái tīng"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "男的建议女的怎么练习？",
+     "py": "Nán de jiànyì nǚ de zěnme liànxí?",
+     "en": "How does the man suggest the woman practise?",
+     "opts": [
+      {
+       "zh": "对着镜子练",
+       "py": "Duì zhe jìngzi liàn"
+      },
+      {
+       "zh": "跟同事一起练",
+       "py": "Gēn tóngshì yìqǐ liàn"
+      },
+      {
+       "zh": "在会议室练",
+       "py": "Zài huìyì shì liàn"
+      },
+      {
+       "zh": "录下来听",
+       "py": "Lù xiàlái tīng"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "男的为什么让女的早一点儿到会议室？",
+     "py": "Nán de wèishénme ràng nǚ de zǎo yìdiǎnr dào huìyì shì?",
+     "en": "Why does the man tell the woman to get to the meeting room early?",
+     "opts": [
+      {
+       "zh": "熟悉环境，试试电脑",
+       "py": "Shúxi huánjìng, shìshi diànnǎo"
+      },
+      {
+       "zh": "帮同事准备",
+       "py": "Bāng tóngshì zhǔnbèi"
+      },
+      {
+       "zh": "找个好座位",
+       "py": "Zhǎo ge hǎo zuòwèi"
+      },
+      {
+       "zh": "再练一遍",
+       "py": "Zài liàn yí biàn"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "遇到回答不了的问题，男的建议怎么做？",
+     "py": "Yùdào huídá bù liǎo de wèntí, nán de jiànyì zěnme zuò?",
+     "en": "What does the man suggest if she gets a question she has no answer to?",
+     "opts": [
+      {
+       "zh": "说需要查一下，结束以后再告诉他",
+       "py": "Shuō xūyào chá yíxià, jiéshù yǐhòu zài gàosu tā"
+      },
+      {
+       "zh": "说不知道",
+       "py": "Shuō bù zhīdào"
+      },
+      {
+       "zh": "请经理回答",
+       "py": "Qǐng jīnglǐ huídá"
+      },
+      {
+       "zh": "不回答",
+       "py": "Bù huídá"
+      }
+     ],
+     "line": 9
+    }
+   ],
+   "words": [
+    "报告",
+    "万一"
+   ]
+  },
+  {
+   "id": "p5-no-hot-water",
+   "lv": 5,
+   "title": "No hot water",
+   "scene": "A woman calls her landlord about the hot water.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "喂，您好，我家从昨天晚上开始就一直没有热水。",
+     "py": "Wèi, nín hǎo, wǒ jiā cóng zuótiān wǎnshang kāishǐ jiù yìzhí méiyǒu rèshuǐ.",
+     "en": "Hello. There has been no hot water in my flat since last night."
+    },
+    {
+     "s": "男",
+     "zh": "是不是没电了？你看看上面的灯亮不亮。",
+     "py": "Shì bú shì méi diàn le? Nǐ kànkan shàngmiàn de dēng liàng bú liàng.",
+     "en": "Has the power gone off? You look and see whether the light on it is on."
+    },
+    {
+     "s": "女",
+     "zh": "我看过了，灯是亮的，可是水一直是凉的。",
+     "py": "Wǒ kàn guo le, dēng shì liàng de, kěshì shuǐ yìzhí shì liáng de.",
+     "en": "I have checked. The light is on, but the water stays cold."
+    },
+    {
+     "s": "男",
+     "zh": "那可能是里面的东西坏了，那个机器用了快八年了。",
+     "py": "Nà kěnéng shì lǐmiàn de dōngxi huài le, nàge jīqì yòng le kuài bā nián le.",
+     "en": "Then something inside may be broken. That machine is nearly eight years old."
+    },
+    {
+     "s": "女",
+     "zh": "那您什么时候能找人来修？天这么冷，没有热水实在太不方便了。",
+     "py": "Nà nín shénme shíhou néng zhǎo rén lái xiū? Tiān zhème lěng, méiyǒu rèshuǐ shízài tài bù fāngbiàn le.",
+     "en": "So when can you get someone to fix it? In this cold weather, having no hot water is really inconvenient."
+    },
+    {
+     "s": "男",
+     "zh": "我下午就联系修理的师傅，不过他最早可能明天上午才能来。",
+     "py": "Wǒ xiàwǔ jiù liánxì xiūlǐ de shīfu, búguò tā zuì zǎo kěnéng míngtiān shàngwǔ cái néng lái.",
+     "en": "I will contact the repairman this afternoon, but the earliest he can come is probably tomorrow morning."
+    },
+    {
+     "s": "女",
+     "zh": "明天上午我要上班，家里没人。",
+     "py": "Míngtiān shàngwǔ wǒ yào shàngbān, jiā lǐ méi rén.",
+     "en": "I am at work tomorrow morning, so nobody will be home."
+    },
+    {
+     "s": "男",
+     "zh": "要不这样，你把钥匙放在楼下的邻居家，我陪师傅一起去。",
+     "py": "Yàobú zhèyàng, nǐ bǎ yàoshi fàng zài lóuxià de línjū jiā, wǒ péi shīfu yìqǐ qù.",
+     "en": "How about this: leave your key with the neighbour downstairs, and I will go with the repairman."
+    },
+    {
+     "s": "女",
+     "zh": "可以。如果修不好，能不能换个新的？",
+     "py": "Kěyǐ. Rúguǒ xiū bù hǎo, néng bù néng huàn ge xīn de?",
+     "en": "All right. If it can't be fixed, can you replace it with a new one?"
+    },
+    {
+     "s": "男",
+     "zh": "修不好的话，我就直接买个新的，钱由我来出，你放心吧。",
+     "py": "Xiū bù hǎo dehuà, wǒ jiù zhíjiē mǎi ge xīn de, qián yóu wǒ lái chū, nǐ fàngxīn ba.",
+     "en": "If it does not get fixed, I will just buy a new one and pay for it myself. Don't you worry."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的家有什么问题？",
+     "py": "Nǚ de jiā yǒu shénme wèntí?",
+     "en": "What is the problem in the woman's flat?",
+     "opts": [
+      {
+       "zh": "没有热水",
+       "py": "Méiyǒu rèshuǐ"
+      },
+      {
+       "zh": "没有电",
+       "py": "Méiyǒu diàn"
+      },
+      {
+       "zh": "门打不开",
+       "py": "Mén dǎ bù kāi"
+      },
+      {
+       "zh": "水太多",
+       "py": "Shuǐ tài duō"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "那个机器用了多长时间了？",
+     "py": "Nàge jīqì yòng le duō cháng shíjiān le?",
+     "en": "How long has the machine been in use?",
+     "opts": [
+      {
+       "zh": "快八年了",
+       "py": "Kuài bā nián le"
+      },
+      {
+       "zh": "两年",
+       "py": "Liǎng nián"
+      },
+      {
+       "zh": "五年",
+       "py": "Wǔ nián"
+      },
+      {
+       "zh": "十几年",
+       "py": "Shí jǐ nián"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "修理的师傅最早什么时候能来？",
+     "py": "Xiūlǐ de shīfu zuì zǎo shénme shíhou néng lái?",
+     "en": "When is the earliest the repairman can come?",
+     "opts": [
+      {
+       "zh": "明天上午",
+       "py": "Míngtiān shàngwǔ"
+      },
+      {
+       "zh": "今天下午",
+       "py": "Jīntiān xiàwǔ"
+      },
+      {
+       "zh": "今天晚上",
+       "py": "Jīntiān wǎnshang"
+      },
+      {
+       "zh": "下个星期",
+       "py": "Xià ge xīngqī"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "女的把钥匙放在哪儿？",
+     "py": "Nǚ de bǎ yàoshi fàng zài nǎr?",
+     "en": "Where will the woman leave her key?",
+     "opts": [
+      {
+       "zh": "楼下的邻居家",
+       "py": "Lóuxià de línjū jiā"
+      },
+      {
+       "zh": "门口",
+       "py": "Ménkǒu"
+      },
+      {
+       "zh": "男的家",
+       "py": "Nán de jiā"
+      },
+      {
+       "zh": "公司",
+       "py": "Gōngsī"
+      }
+     ],
+     "line": 7
+    },
+    {
+     "zh": "如果修不好，男的打算怎么办？",
+     "py": "Rúguǒ xiū bù hǎo, nán de dǎsuàn zěnmebàn?",
+     "en": "What will the man do if it does not get fixed?",
+     "opts": [
+      {
+       "zh": "买个新的",
+       "py": "Mǎi ge xīn de"
+      },
+      {
+       "zh": "让女的出钱",
+       "py": "Ràng nǚ de chū qián"
+      },
+      {
+       "zh": "再找一个人修",
+       "py": "Zài zhǎo yí ge rén xiū"
+      },
+      {
+       "zh": "等几天再说",
+       "py": "Děng jǐ tiān zàishuō"
+      }
+     ],
+     "line": 9
+    }
+   ],
+   "words": [
+    "机器",
+    "要不"
+   ]
+  },
+  {
+   "id": "p5-long-race",
+   "lv": 5,
+   "title": "Before the big race",
+   "scene": "A woman has hurt her foot while training for a race.",
+   "lines": [
+    {
+     "s": "男",
+     "zh": "你走路怎么这么慢？腿怎么了？",
+     "py": "Nǐ zǒulù zěnme zhème màn? Tuǐ zěnme le?",
+     "en": "Why are you walking so slowly? What happened to your leg?"
+    },
+    {
+     "s": "女",
+     "zh": "别提了，上周跑步的时候不小心把脚弄伤了。",
+     "py": "Bié tí le, shàngzhōu pǎobù de shíhou bù xiǎoxīn bǎ jiǎo nòng shāng le.",
+     "en": "Don't ask. I hurt my foot by accident while running last week."
+    },
+    {
+     "s": "男",
+     "zh": "你还在为下个月那场四十二公里的比赛做准备？",
+     "py": "Nǐ hái zài wèi xià ge yuè nà chǎng sìshí'èr gōnglǐ de bǐsài zuò zhǔnbèi?",
+     "en": "Are you still getting ready for that 42-kilometre race next month?"
+    },
+    {
+     "s": "女",
+     "zh": "是啊，我每天早上跑十公里，周末跑二十公里，可能是练得太多了。",
+     "py": "Shì a, wǒ měitiān zǎoshang pǎo shí gōnglǐ, zhōumò pǎo èrshí gōnglǐ, kěnéng shì liàn de tài duō le.",
+     "en": "Yes. I run 10 kilometres every morning and 20 at the weekend. Maybe I trained too much."
+    },
+    {
+     "s": "男",
+     "zh": "医生怎么说？",
+     "py": "Yīshēng zěnme shuō?",
+     "en": "What did the doctor say?"
+    },
+    {
+     "s": "女",
+     "zh": "医生说问题不大，但是这两个星期最好别跑了，不然会越来越严重。",
+     "py": "Yīshēng shuō wèntí bú dà, dànshì zhè liǎng ge xīngqī zuìhǎo bié pǎo le, bùrán huì yuè lái yuè yánzhòng.",
+     "en": "The doctor said it is nothing serious, but I had better not run for the next two weeks, or it will get worse and worse."
+    },
+    {
+     "s": "男",
+     "zh": "那比赛还能参加吗？",
+     "py": "Nà bǐsài hái néng cānjiā ma?",
+     "en": "So can you still take part in the race?"
+    },
+    {
+     "s": "女",
+     "zh": "我也不知道。如果休息两个星期，最后只剩十几天，肯定跑不出好成绩。",
+     "py": "Wǒ yě bù zhīdào. Rúguǒ xiūxi liǎng ge xīngqī, zuìhòu zhǐ shèng shí jǐ tiān, kěndìng pǎo bù chū hǎo chéngjì.",
+     "en": "I don't know. If I rest for two weeks, there will only be about ten days left, so I certainly won't get a good time."
+    },
+    {
+     "s": "男",
+     "zh": "成绩不是最重要的，身体才是。这次就当是去试一试，能跑完就很好了。",
+     "py": "Chéngjì bú shì zuì zhòngyào de, shēntǐ cái shì. Zhè cì jiù dāng shì qù shì yi shì, néng pǎo wán jiù hěn hǎo le.",
+     "en": "Your time is not what matters most; your health is. Treat this one as a try. Finishing would be great."
+    },
+    {
+     "s": "女",
+     "zh": "你说得有道理，我不应该太着急。",
+     "py": "Nǐ shuō de yǒu dàolǐ, wǒ bù yīnggāi tài zháojí.",
+     "en": "You have a point. I shouldn't be in such a hurry."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "女的怎么了？",
+     "py": "Nǚ de zěnme le?",
+     "en": "What happened to the woman?",
+     "opts": [
+      {
+       "zh": "跑步的时候把脚弄伤了",
+       "py": "Pǎobù de shíhou bǎ jiǎo nòng shāng le"
+      },
+      {
+       "zh": "感冒了",
+       "py": "Gǎnmào le"
+      },
+      {
+       "zh": "太累了",
+       "py": "Tài lèi le"
+      },
+      {
+       "zh": "腿断了",
+       "py": "Tuǐ duàn le"
+      }
+     ],
+     "line": 1
+    },
+    {
+     "zh": "比赛有多长？",
+     "py": "Bǐsài yǒu duō cháng?",
+     "en": "How long is the race?",
+     "opts": [
+      {
+       "zh": "四十二公里",
+       "py": "Sìshí'èr gōnglǐ"
+      },
+      {
+       "zh": "二十公里",
+       "py": "Èrshí gōnglǐ"
+      },
+      {
+       "zh": "十公里",
+       "py": "Shí gōnglǐ"
+      },
+      {
+       "zh": "十二公里",
+       "py": "Shí'èr gōnglǐ"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "女的周末跑多少公里？",
+     "py": "Nǚ de zhōumò pǎo duōshǎo gōnglǐ?",
+     "en": "How far does the woman run at the weekend?",
+     "opts": [
+      {
+       "zh": "二十公里",
+       "py": "Èrshí gōnglǐ"
+      },
+      {
+       "zh": "十公里",
+       "py": "Shí gōnglǐ"
+      },
+      {
+       "zh": "四十二公里",
+       "py": "Sìshí'èr gōnglǐ"
+      },
+      {
+       "zh": "五公里",
+       "py": "Wǔ gōnglǐ"
+      }
+     ],
+     "line": 3
+    },
+    {
+     "zh": "医生让女的做什么？",
+     "py": "Yīshēng ràng nǚ de zuò shénme?",
+     "en": "What did the doctor tell the woman to do?",
+     "opts": [
+      {
+       "zh": "两个星期别跑步",
+       "py": "Liǎng ge xīngqī bié pǎobù"
+      },
+      {
+       "zh": "马上去比赛",
+       "py": "Mǎshàng qù bǐsài"
+      },
+      {
+       "zh": "每天跑五公里",
+       "py": "Měitiān pǎo wǔ gōnglǐ"
+      },
+      {
+       "zh": "住院",
+       "py": "Zhùyuàn"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "男的觉得什么最重要？",
+     "py": "Nán de juéde shénme zuì zhòngyào?",
+     "en": "What does the man think matters most?",
+     "opts": [
+      {
+       "zh": "身体",
+       "py": "Shēntǐ"
+      },
+      {
+       "zh": "成绩",
+       "py": "Chéngjì"
+      },
+      {
+       "zh": "比赛",
+       "py": "Bǐsài"
+      },
+      {
+       "zh": "练习",
+       "py": "Liànxí"
+      }
+     ],
+     "line": 8
+    }
+   ],
+   "words": [
+    "伤",
+    "不然",
+    "道理"
+   ]
+  },
+  {
+   "id": "p5-wedding-words",
+   "lv": 5,
+   "title": "A few words at the wedding",
+   "scene": "A woman has been asked to speak at her best friend's wedding.",
+   "lines": [
+    {
+     "s": "女",
+     "zh": "下个月我最好的朋友结婚，她让我在婚礼上说几句。",
+     "py": "Xià ge yuè wǒ zuìhǎo de péngyou jiéhūn, tā ràng wǒ zài hūnlǐ shàng shuō jǐ jù.",
+     "en": "My best friend is getting married next month, and she has asked me to say a few words at the wedding."
+    },
+    {
+     "s": "男",
+     "zh": "这是好事啊，你怎么看起来不太高兴？",
+     "py": "Zhè shì hǎoshì a, nǐ zěnme kàn qǐlái bú tài gāoxìng?",
+     "en": "That is a good thing. Why do you look so unhappy?"
+    },
+    {
+     "s": "女",
+     "zh": "我一站到很多人面前就紧张，不知道该说些什么。",
+     "py": "Wǒ yí zhàn dào hěn duō rén miànqián jiù jǐnzhāng, bù zhīdào gāi shuō xiē shénme.",
+     "en": "As soon as I stand in front of a lot of people I get nervous, and I don't know what to say."
+    },
+    {
+     "s": "男",
+     "zh": "你们认识多少年了？",
+     "py": "Nǐmen rènshi duōshǎo nián le?",
+     "en": "How many years have you known each other?"
+    },
+    {
+     "s": "女",
+     "zh": "我们从小学就是同学，快二十年了。",
+     "py": "Wǒmen cóng xiǎoxué jiùshì tóngxué, kuài èrshí nián le.",
+     "en": "We have been classmates since primary school. It is nearly twenty years."
+    },
+    {
+     "s": "男",
+     "zh": "那你肯定有很多故事可以讲，比如你们小时候一起做过的有意思的事。",
+     "py": "Nà nǐ kěndìng yǒu hěn duō gùshi kěyǐ jiǎng, bǐrú nǐmen xiǎoshíhou yìqǐ zuò guo de yǒuyìsi de shì.",
+     "en": "Then you must have lots of stories to tell, like fun things you did together when you were little."
+    },
+    {
+     "s": "女",
+     "zh": "有道理。我记得有一次我们没告诉父母就去河边玩，回家以后都被批评了。",
+     "py": "Yǒu dàolǐ. Wǒ jìde yǒu yí cì wǒmen méi gàosu fùmǔ jiù qù hé biān wán, huí jiā yǐhòu dōu bèi pīpíng le.",
+     "en": "True. I remember once we went to play by the river without telling our parents, and we both got told off when we got home."
+    },
+    {
+     "s": "男",
+     "zh": "这个故事不错，大家听了一定会笑。最后再说几句祝福的话就行了。",
+     "py": "Zhège gùshi búcuò, dàjiā tīng le yídìng huì xiào. Zuìhòu zàishuō jǐ jù zhù fú dehuà jiù xíng le.",
+     "en": "That is a good story. Everyone will laugh. Then just finish with a few good wishes."
+    },
+    {
+     "s": "女",
+     "zh": "讲多长时间比较合适？",
+     "py": "Jiǎng duō cháng shíjiān bǐjiào héshì?",
+     "en": "How long should I speak for?"
+    },
+    {
+     "s": "男",
+     "zh": "三到五分钟就够了，太长了大家会着急吃饭的。",
+     "py": "Sān dào wǔ fēnzhōng jiù gòu le, tài cháng le dàjiā huì zháojí chī fàn de.",
+     "en": "Three to five minutes is enough. Any longer and people will be impatient to eat."
+    }
+   ],
+   "qs": [
+    {
+     "zh": "她的朋友下个月要做什么？",
+     "py": "Tā de péngyou xià ge yuè yào zuò shénme?",
+     "en": "What is her friend doing next month?",
+     "opts": [
+      {
+       "zh": "结婚",
+       "py": "Jiéhūn"
+      },
+      {
+       "zh": "毕业",
+       "py": "Bìyè"
+      },
+      {
+       "zh": "出国",
+       "py": "Chūguó"
+      },
+      {
+       "zh": "搬家",
+       "py": "Bānjiā"
+      }
+     ],
+     "line": 0
+    },
+    {
+     "zh": "女的为什么不太高兴？",
+     "py": "Nǚ de wèishénme bú tài gāoxìng?",
+     "en": "Why is the woman not very happy?",
+     "opts": [
+      {
+       "zh": "不知道在婚礼上该说什么",
+       "py": "Bù zhīdào zài hūnlǐ shàng gāi shuō shénme"
+      },
+      {
+       "zh": "朋友要离开",
+       "py": "Péngyou yào líkāi"
+      },
+      {
+       "zh": "没有时间",
+       "py": "Méiyǒu shíjiān"
+      },
+      {
+       "zh": "不想去婚礼",
+       "py": "Bù xiǎng qù hūnlǐ"
+      }
+     ],
+     "line": 2
+    },
+    {
+     "zh": "女的和朋友认识多少年了？",
+     "py": "Nǚ de hé péngyou rènshi duōshǎo nián le?",
+     "en": "How long have the woman and her friend known each other?",
+     "opts": [
+      {
+       "zh": "快二十年了",
+       "py": "Kuài èrshí nián le"
+      },
+      {
+       "zh": "十年",
+       "py": "Shí nián"
+      },
+      {
+       "zh": "五年",
+       "py": "Wǔ nián"
+      },
+      {
+       "zh": "三十年",
+       "py": "Sānshí nián"
+      }
+     ],
+     "line": 4
+    },
+    {
+     "zh": "男的建议女的讲什么？",
+     "py": "Nán de jiànyì nǚ de jiǎng shénme?",
+     "en": "What does the man suggest she talk about?",
+     "opts": [
+      {
+       "zh": "小时候一起做过的有意思的事",
+       "py": "Xiǎoshíhou yìqǐ zuò guo de yǒuyìsi de shì"
+      },
+      {
+       "zh": "朋友的工作",
+       "py": "Péngyou de gōngzuò"
+      },
+      {
+       "zh": "自己的爱情",
+       "py": "Zìjǐ de àiqíng"
+      },
+      {
+       "zh": "婚礼的历史",
+       "py": "Hūnlǐ de lìshǐ"
+      }
+     ],
+     "line": 5
+    },
+    {
+     "zh": "讲话多长时间比较合适？",
+     "py": "Jiǎnghuà duō cháng shíjiān bǐjiào héshì?",
+     "en": "How long is a good length for the speech?",
+     "opts": [
+      {
+       "zh": "三到五分钟",
+       "py": "Sān dào wǔ fēnzhōng"
+      },
+      {
+       "zh": "十分钟",
+       "py": "Shí fēnzhōng"
+      },
+      {
+       "zh": "一分钟",
+       "py": "Yì fēnzhōng"
+      },
+      {
+       "zh": "半个小时",
+       "py": "Bàn ge xiǎoshí"
+      }
+     ],
+     "line": 9
+    }
+   ],
+   "words": [
+    "婚礼",
+    "道理",
+    "福",
+    "讲话"
    ]
   }
  ]

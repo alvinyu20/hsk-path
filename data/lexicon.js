@@ -67,6 +67,7 @@ window.SHANLU_LEXICON = {
 "面条": "miàntiáo",
 "责任感": "zérèngǎn",
 "人们": "rénmen",
+"老人们": "lǎorénmen",
 "烤肉": "kǎoròu",
 "普通人": "pǔtōngrén",
 "大楼": "dàlóu",

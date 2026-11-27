@@ -654,6 +654,54 @@ Examples:
 - Learner: 太好了！明天见！  — Great! See you tomorrow!
 - Speaker: 明天见！  — See you tomorrow!
 
+### Buy fruit
+
+- Speaker: 你好！你想买什么？  — Hello! What would you like to buy?
+- Learner: 我想买苹果。  — I would like to buy apples.
+- Speaker: 好的。你要几个？  — Okay. How many do you want?
+- Learner: 我要五个。  — I want five.
+- Speaker: 五个苹果，十块钱。  — Five apples, ten yuan.
+- Learner: 好的，给你钱。  — Okay, here is the money for you.
+- Speaker: 谢谢！你还想买什么？  — Thank you! What else would you like to buy?
+- Learner: 不要了，谢谢。再见！  — No more now, thank you. Goodbye!
+- Speaker: 好的，再见！  — Okay, goodbye!
+
+### Visit a friend at home
+
+- Speaker: 你好！你来了，请坐。  — Hello! You have come; please sit down.
+- Learner: 谢谢！你的家很漂亮。  — Thank you! Your home is very nice.
+- Speaker: 谢谢。你想喝什么？  — Thank you. What would you like to drink?
+- Learner: 我想喝茶。  — I would like to drink tea.
+- Speaker: 好，这是你的茶。  — Okay, here is your tea.
+- Learner: 谢谢。你家有几口人？  — Thank you. How many people are there in your family?
+- Speaker: 我家有四口人：爸爸、妈妈、哥哥和我。  — There are four people in my family: Dad, Mum, my older brother and me.
+- Learner: 你哥哥在家吗？  — Is your older brother at home?
+- Speaker: 不在，他在学校。  — No, he is at school.
+
+### Order a drink: a bad day
+
+- Speaker: 你好！你想喝什么？  — Hello! What would you like to drink?
+- Learner: 我想喝茶。  — I would like to drink tea.
+- Speaker: 对不起，今天没有茶了。你想喝水吗？  — Sorry, there is no tea left today. Would you like to drink water?
+- Learner: 没有茶？好吧，我喝水。  — No tea? All right, I will drink water.
+- Speaker: 好的。你想吃东西吗？  — Okay. Would you like something to eat?
+- Learner: 我不想吃东西，谢谢。  — I do not want anything to eat, thank you.
+- Speaker: 好。三块钱。  — Okay. Three yuan.
+- Learner: 对不起，我的钱在家里。  — Sorry, my money is at home.
+- Speaker: 没关系，明天给我吧。  — It does not matter; give it to me tomorrow.
+
+### Ask the price: a bad day
+
+- Speaker: 你好！你想买什么？  — Hello! What would you like to buy?
+- Learner: 我想买一件衣服。  — I would like to buy a piece of clothing.
+- Speaker: 这件很好看，三百块。  — This one looks very nice. 300 yuan.
+- Learner: 太贵了！有便宜的吗？  — Too expensive! Do you have a cheap one?
+- Speaker: 没有，我们的衣服都是三百块。  — No, all our clothes are 300 yuan.
+- Learner: 那我不买了，我去那家商店看看。  — Then I am not buying it now. I will go and look in that shop.
+- Speaker: 这件现在两百块，好吗？  — This one is 200 yuan now. Is that okay?
+- Learner: 两百块也太贵了。谢谢，再见！  — Even 200 yuan is too expensive. Thanks, goodbye!
+- Speaker: 好吧，再见！  — All right, goodbye!
+
 ## 4. Listening clips and what to listen for
 
 1. 你好，我叫小明。  Nǐ hǎo, wǒ jiào Xiǎomíng.  — Hello, my name is Xiaoming.
@@ -1127,7 +1175,7 @@ Examples:
 | 一下 | yíxià | a bit, for a moment (after a verb) | 我问一下老师。 | Wǒ wèn yíxià lǎoshī. | I'll just ask the teacher. |
 | 小时 | xiǎoshí | hour | 我学习两个小时。 | Wǒ xuéxí liǎng ge xiǎoshí. | I study for two hours. |
 | 分钟 | fēnzhōng | minute (a length of time) | 我学习二十分钟。 | Wǒ xuéxí èrshí fēnzhōng. | I study for 20 minutes. |
-| 今天 | jīntiān | today | 今天很冷。 | Jīntiān hěn lěng. | It is very cold today. |
+| 今天 | jīntiān | today (everyday word) | 今天很冷。 | Jīntiān hěn lěng. | It is very cold today. |
 | 明天 | míngtiān | tomorrow | 明天你去学校吗？ | Míngtiān nǐ qù xuéxiào ma? | Are you going to school tomorrow? |
 | 昨天 | zuótiān | yesterday | 我昨天在家。 | Wǒ zuótiān zài jiā. | I was at home yesterday. |
 | 今年 | jīnnián | this year | 我今年二十岁。 | Wǒ jīnnián èrshí suì. | I am 20 years old this year. |
@@ -1142,7 +1190,7 @@ Examples:
 | 现在 | xiànzài | now | 现在几点？ | Xiànzài jǐ diǎn? | What time is it now? |
 | 时候 | shíhou | time, moment (什么时候 = when) | 你什么时候来？ | Nǐ shénme shíhou lái? | When are you coming? |
 | 时间 | shíjiān | time, free time | 你有时间吗？ | Nǐ yǒu shíjiān ma? | Do you have time? |
-| 星期 | xīngqī | week | 今天星期几？ | Jīntiān xīngqī jǐ? | What day of the week is it today? |
+| 星期 | xīngqī | week (with day names: 星期一) | 今天星期几？ | Jīntiān xīngqī jǐ? | What day of the week is it today? |
 | 星期天 | xīngqītiān | Sunday | 星期天我在家。 | Xīngqītiān wǒ zài jiā. | I am at home on Sunday. |
 | 星期日 | xīngqīrì | Sunday (a little more formal) | 我星期日不工作。 | Wǒ xīngqīrì bù gōngzuò. | I don't work on Sunday. |
 | 月 | yuè | month | 现在是十月。 | Xiànzài shì shíyuè. | It is October now. |
@@ -1168,17 +1216,17 @@ Examples:
 | 那个 | nàge | that one | 那个人是谁？ | Nàge rén shì shéi? | Who is that person? |
 | 这些 | zhèxiē | these | 这些是我的书。 | Zhèxiē shì wǒ de shū. | These are my books. |
 | 那些 | nàxiē | those | 那些苹果很好吃。 | Nàxiē píngguǒ hěn hǎochī. | Those apples are tasty. |
-| 这儿 | zhèr | here | 我在这儿。 | Wǒ zài zhèr. | I am here. |
-| 那儿 | nàr | there | 你在那儿做什么？ | Nǐ zài nàr zuò shénme? | What are you doing there? |
-| 这里 | zhèlǐ | here | 这里有很多人。 | Zhèlǐ yǒu hěn duō rén. | There are a lot of people here. |
-| 那里 | nàlǐ | there | 那里有一家商店。 | Nàlǐ yǒu yì jiā shāngdiàn. | There is a shop over there. |
+| 这儿 | zhèr | here (spoken, northern) | 我在这儿。 | Wǒ zài zhèr. | I am here. |
+| 那儿 | nàr | there (spoken, northern) | 你在那儿做什么？ | Nǐ zài nàr zuò shénme? | What are you doing there? |
+| 这里 | zhèlǐ | here (standard) | 这里有很多人。 | Zhèlǐ yǒu hěn duō rén. | There are a lot of people here. |
+| 那里 | nàlǐ | there (standard) | 那里有一家商店。 | Nàlǐ yǒu yì jiā shāngdiàn. | There is a shop over there. |
 | 这边 | zhèbiān | this side, over here | 请到这边来。 | Qǐng dào zhèbiān lái. | Please come over here. |
 | 那边 | nàbiān | that side, over there | 学校在那边。 | Xuéxiào zài nàbiān. | The school is over there. |
 | 哪 | nǎ | which | 你要哪本书？ | Nǐ yào nǎ běn shū? | Which book do you want? |
 | 哪个 | nǎge | which one | 你喜欢哪个？ | Nǐ xǐhuan nǎge? | Which one do you like? |
 | 哪些 | nǎxiē | which ones | 哪些书是你的？ | Nǎxiē shū shì nǐ de? | Which books are yours? |
-| 哪儿 | nǎr | where | 你家在哪儿？ | Nǐ jiā zài nǎr? | Where is your home? |
-| 哪里 | nǎlǐ | where | 你在哪里学习汉语？ | Nǐ zài nǎlǐ xuéxí Hànyǔ? | Where do you study Chinese? |
+| 哪儿 | nǎr | where (spoken, northern) | 你家在哪儿？ | Nǐ jiā zài nǎr? | Where is your home? |
+| 哪里 | nǎlǐ | where (standard) | 你在哪里学习汉语？ | Nǐ zài nǎlǐ xuéxí Hànyǔ? | Where do you study Chinese? |
 | 谁 | shéi | who | 她是谁？ | Tā shì shéi? | Who is she? |
 | 什么 | shénme | what | 你想吃什么？ | Nǐ xiǎng chī shénme? | What do you want to eat? |
 | 怎么 | zěnme | how, why | 这个字怎么读？ | Zhège zì zěnme dú? | How do you read this character? |
@@ -1230,12 +1278,12 @@ Examples:
 | 儿子 | érzi | son | 他有一个儿子。 | Tā yǒu yí ge érzi. | He has a son. |
 | 女儿 | nǚ'ér | daughter | 我有一个女儿。 | Wǒ yǒu yí ge nǚ'ér. | I have a daughter. |
 | 家人 | jiārén | family members | 这是我的家人。 | Zhè shì wǒ de jiārén. | These are my family members. |
-| 孩子 | háizi | child | 这个孩子五岁。 | Zhège háizi wǔ suì. | This child is five years old. |
+| 孩子 | háizi | child (also: someone's own kids) | 这个孩子五岁。 | Zhège háizi wǔ suì. | This child is five years old. |
 | 朋友 | péngyou | friend | 他是我的朋友。 | Tā shì wǒ de péngyou. | He is my friend. |
 | 同学 | tóngxué | classmate | 他是我的同学。 | Tā shì wǒ de tóngxué. | He is my classmate. |
-| 老师 | lǎoshī | teacher | 她是我的老师。 | Tā shì wǒ de lǎoshī. | She is my teacher. |
+| 老师 | lǎoshī | teacher (also how you address one) | 她是我的老师。 | Tā shì wǒ de lǎoshī. | She is my teacher. |
 | 学生 | xuésheng | student | 他是学生。 | Tā shì xuésheng. | He is a student. |
-| 医生 | yīshēng | doctor | 医生在医院工作。 | Yīshēng zài yīyuàn gōngzuò. | The doctor works at the hospital. |
+| 医生 | yīshēng | doctor (standard) | 医生在医院工作。 | Yīshēng zài yīyuàn gōngzuò. | The doctor works at the hospital. |
 | 先生 | xiānsheng | Mr., sir; husband | 先生，请问您想喝什么？ | Xiānsheng, qǐngwèn nín xiǎng hē shénme? | Sir, what would you like to drink? |
 | 女士 | nǚshì | madam, lady | 女士，您想喝茶吗？ | Nǚshì, nín xiǎng hē chá ma? | Madam, would you like some tea? |
 | 男 | nán | male | 他是男老师。 | Tā shì nán lǎoshī. | He is a male teacher. |
@@ -1258,13 +1306,13 @@ Examples:
 | 商店 | shāngdiàn | shop | 商店里有很多水果。 | Shāngdiàn lǐ yǒu hěn duō shuǐguǒ. | There is a lot of fruit in the shop. |
 | 书店 | shūdiàn | bookstore | 我想去书店买书。 | Wǒ xiǎng qù shūdiàn mǎi shū. | I want to go to the bookstore to buy a book. |
 | 公司 | gōngsī | company | 我爸爸在公司工作。 | Wǒ bàba zài gōngsī gōngzuò. | My dad works at a company. |
-| 饭店 | fàndiàn | restaurant | 我们在饭店吃饭。 | Wǒmen zài fàndiàn chī fàn. | We eat at a restaurant. |
+| 饭店 | fàndiàn | restaurant (also: hotel, in names) | 我们在饭店吃饭。 | Wǒmen zài fàndiàn chī fàn. | We eat at a restaurant. |
 | 超市 | chāoshì | supermarket | 我去超市买牛奶。 | Wǒ qù chāoshì mǎi niúnǎi. | I go to the supermarket to buy milk. |
 | 店 | diàn | shop, store | 这家店的包子很好吃。 | Zhè jiā diàn de bāozi hěn hǎochī. | The buns at this shop are very tasty. |
-| 房间 | fángjiān | room | 我的房间很小。 | Wǒ de fángjiān hěn xiǎo. | My room is very small. |
-| 外边 | wàibian | outside | 外边在下雨。 | Wàibian zài xiàyǔ. | It is raining outside. |
-| 外 | wài | outside | 他不在房间里，在房间外边。 | Tā bú zài fángjiān lǐ, zài fángjiān wàibian. | He is not in the room, he is outside it. |
-| 里 | lǐ | inside | 杯子里有水。 | Bēizi lǐ yǒu shuǐ. | There is water in the cup. |
+| 房间 | fángjiān | room (in a home or hotel) | 我的房间很小。 | Wǒ de fángjiān hěn xiǎo. | My room is very small. |
+| 外边 | wàibian | outside (spoken) | 外边在下雨。 | Wàibian zài xiàyǔ. | It is raining outside. |
+| 外 | wài | outside (after a noun: 房间外) | 他不在房间里，在房间外边。 | Tā bú zài fángjiān lǐ, zài fángjiān wàibian. | He is not in the room, he is outside it. |
+| 里 | lǐ | inside; in (after a noun: 房间里) | 杯子里有水。 | Bēizi lǐ yǒu shuǐ. | There is water in the cup. |
 | 上 | shàng | on, above (also: to go up) | 书在桌子上。 | Shū zài zhuōzi shàng. | The book is on the table. |
 | 下 | xià | under, below (also: to go down) | 猫在桌子下边。 | Māo zài zhuōzi xiàbian. | The cat is under the table. |
 | 前 | qián | front, before | 商店在学校前边。 | Shāngdiàn zài xuéxiào qiánbian. | The shop is in front of the school. |
@@ -1284,10 +1332,10 @@ Examples:
 | 读 | dú | to read (aloud); to study | 请读这个字。 | Qǐng dú zhège zì. | Please read this character. |
 | 写 | xiě | to write | 请写你的名字。 | Qǐng xiě nǐ de míngzi. | Please write your name. |
 | 买 | mǎi | to buy | 我想买书。 | Wǒ xiǎng mǎi shū. | I want to buy a book. |
-| 卖 | mài | to sell | 这家店卖水果。 | Zhè jiā diàn mài shuǐguǒ. | This shop sells fruit. |
+| 卖 | mài | to sell (everyday) | 这家店卖水果。 | Zhè jiā diàn mài shuǐguǒ. | This shop sells fruit. |
 | 做 | zuò | to do, to make | 你在做什么？ | Nǐ zài zuò shénme? | What are you doing? |
 | 做饭 | zuòfàn | to cook | 我会做饭。 | Wǒ huì zuòfàn. | I can cook. |
-| 开 | kāi | to open; to turn on | 我想开电视看电影。 | Wǒ xiǎng kāi diànshì kàn diànyǐng. | I want to turn on the TV and watch a movie. |
+| 开 | kāi | to open; to turn on (also: to drive) | 我想开电视看电影。 | Wǒ xiǎng kāi diànshì kàn diànyǐng. | I want to turn on the TV and watch a movie. |
 | 开车 | kāichē | to drive | 我爸爸开车去公司。 | Wǒ bàba kāichē qù gōngsī. | My dad drives to work. |
 | 找 | zhǎo | to look for | 我在找我的手机。 | Wǒ zài zhǎo wǒ de shǒujī. | I am looking for my phone. |
 | 问 | wèn | to ask | 你可以问老师。 | Nǐ kěyǐ wèn lǎoshī. | You can ask the teacher. |
@@ -1331,7 +1379,7 @@ Examples:
 | 漂亮 | piàoliang | pretty | 她很漂亮。 | Tā hěn piàoliang. | She is very pretty. |
 | 新 | xīn | new | 我有一个新手机。 | Wǒ yǒu yí ge xīn shǒujī. | I have a new phone. |
 | 高兴 | gāoxìng | happy, glad | 认识你，我很高兴。 | Rènshi nǐ, wǒ hěn gāoxìng. | I am very happy to meet you. |
-| 忙 | máng | busy | 我今天很忙。 | Wǒ jīntiān hěn máng. | I am very busy today. |
+| 忙 | máng | busy (everyday) | 我今天很忙。 | Wǒ jīntiān hěn máng. | I am very busy today. |
 | 贵 | guì | expensive | 这件衣服很贵。 | Zhè jiàn yīfu hěn guì. | This item of clothing is expensive. |
 | 便宜 | piányi | cheap | 这个杯子很便宜。 | Zhège bēizi hěn piányi. | This cup is cheap. |
 | 早 | zǎo | early | 明天我六点起床，很早。 | Míngtiān wǒ liù diǎn qǐchuáng, hěn zǎo. | I get up at six tomorrow, which is very early. |
@@ -1341,8 +1389,8 @@ Examples:
 | 书 | shū | book | 这是我的书。 | Zhè shì wǒ de shū. | This is my book. |
 | 字 | zì | character, written word | 这个字我不认识。 | Zhège zì wǒ bú rènshi. | I don't know this character. |
 | 汉字 | hànzì | Chinese character | 我在学习汉字。 | Wǒ zài xuéxí hànzì. | I am learning Chinese characters. |
-| 汉语 | Hànyǔ | Chinese (the language) | 你的汉语很好。 | Nǐ de Hànyǔ hěn hǎo. | Your Chinese is very good. |
-| 中文 | Zhōngwén | Chinese (the language) | 你会写中文吗？ | Nǐ huì xiě Zhōngwén ma? | Can you write Chinese? |
+| 汉语 | Hànyǔ | Chinese (the language; in textbooks) | 你的汉语很好。 | Nǐ de Hànyǔ hěn hǎo. | Your Chinese is very good. |
+| 中文 | Zhōngwén | Chinese (the language; everyday) | 你会写中文吗？ | Nǐ huì xiě Zhōngwén ma? | Can you write Chinese? |
 | 名字 | míngzi | name | 你叫什么名字？ | Nǐ jiào shénme míngzi? | What is your name? |
 | 课 | kè | class, lesson | 今天上午有汉语课。 | Jīntiān shàngwǔ yǒu Hànyǔ kè. | There is a Chinese class this morning. |
 | 问题 | wèntí | question, problem | 我有一个问题。 | Wǒ yǒu yí ge wèntí. | I have a question. |
@@ -1356,27 +1404,27 @@ Examples:
 | 米饭 | mǐfàn | cooked rice | 你吃米饭吗？ | Nǐ chī mǐfàn ma? | Do you eat rice? |
 | 面条儿 | miàntiáor | noodles | 我喜欢吃面条儿。 | Wǒ xǐhuan chī miàntiáor. | I like eating noodles. |
 | 面包 | miànbāo | bread | 我早上吃面包。 | Wǒ zǎoshang chī miànbāo. | I eat bread in the morning. |
-| 包子 | bāozi | steamed bun | 我想吃两个包子。 | Wǒ xiǎng chī liǎng ge bāozi. | I want to eat two buns. |
+| 包子 | bāozi | steamed bun (with a filling) | 我想吃两个包子。 | Wǒ xiǎng chī liǎng ge bāozi. | I want to eat two buns. |
 | 饺子 | jiǎozi | dumplings | 我们晚上吃饺子。 | Wǒmen wǎnshang chī jiǎozi. | We eat dumplings in the evening. |
 | 鸡蛋 | jīdàn | egg | 我早上吃一个鸡蛋。 | Wǒ zǎoshang chī yí ge jīdàn. | I eat an egg in the morning. |
 | 苹果 | píngguǒ | apple | 苹果多少钱？ | Píngguǒ duōshǎo qián? | How much are the apples? |
 | 水果 | shuǐguǒ | fruit | 我爱吃水果。 | Wǒ ài chī shuǐguǒ. | I love eating fruit. |
 | 牛奶 | niúnǎi | milk | 我早上喝牛奶。 | Wǒ zǎoshang hē niúnǎi. | I drink milk in the morning. |
-| 午饭 | wǔfàn | lunch | 我们在学校吃午饭。 | Wǒmen zài xuéxiào chī wǔfàn. | We have lunch at school. |
-| 早饭 | zǎofàn | breakfast | 我七点吃早饭。 | Wǒ qī diǎn chī zǎofàn. | I eat breakfast at seven. |
+| 午饭 | wǔfàn | lunch (everyday) | 我们在学校吃午饭。 | Wǒmen zài xuéxiào chī wǔfàn. | We have lunch at school. |
+| 早饭 | zǎofàn | breakfast (everyday) | 我七点吃早饭。 | Wǒ qī diǎn chī zǎofàn. | I eat breakfast at seven. |
 | 晚饭 | wǎnfàn | dinner | 妈妈在做晚饭。 | Māma zài zuò wǎnfàn. | Mom is making dinner. |
 | 杯子 | bēizi | cup, glass | 这是我的杯子。 | Zhè shì wǒ de bēizi. | This is my cup. |
 | 桌子 | zhuōzi | table, desk | 桌子上有一个杯子。 | Zhuōzi shàng yǒu yí ge bēizi. | There is a cup on the table. |
 | 椅子 | yǐzi | chair | 请坐在椅子上。 | Qǐng zuò zài yǐzi shàng. | Please sit on the chair. |
 | 衣服 | yīfu | clothes | 我的衣服在房间里。 | Wǒ de yīfu zài fángjiān lǐ. | My clothes are in the room. |
 | 手机 | shǒujī | mobile phone | 我的手机在桌子上。 | Wǒ de shǒujī zài zhuōzi shàng. | My phone is on the table. |
-| 电脑 | diànnǎo | computer | 这是我的电脑。 | Zhè shì wǒ de diànnǎo. | This is my computer. |
+| 电脑 | diànnǎo | computer (everyday) | 这是我的电脑。 | Zhè shì wǒ de diànnǎo. | This is my computer. |
 | 电视 | diànshì | television | 我晚上看电视。 | Wǒ wǎnshang kàn diànshì. | I watch TV in the evening. |
 | 电影 | diànyǐng | movie | 我喜欢看电影。 | Wǒ xǐhuan kàn diànyǐng. | I like watching movies. |
 | 电话 | diànhuà | phone, telephone | 电话在桌子上。 | Diànhuà zài zhuōzi shàng. | The phone is on the table. |
 | 电影院 | diànyǐngyuàn | cinema | 我们去电影院看电影。 | Wǒmen qù diànyǐngyuàn kàn diànyǐng. | We are going to the cinema to watch a movie. |
 | 飞机 | fēijī | plane | 我坐飞机去中国。 | Wǒ zuò fēijī qù Zhōngguó. | I take a plane to China. |
-| 火车 | huǒchē | train | 他坐火车回家。 | Tā zuò huǒchē huí jiā. | He takes the train home. |
+| 火车 | huǒchē | train (everyday) | 他坐火车回家。 | Tā zuò huǒchē huí jiā. | He takes the train home. |
 | 出租车 | chūzūchē | taxi | 我坐出租车去学校。 | Wǒ zuò chūzūchē qù xuéxiào. | I take a taxi to school. |
 | 车 | chē | car, vehicle | 他的车很新。 | Tā de chē hěn xīn. | His car is very new. |
 | 狗 | gǒu | dog | 我喜欢狗。 | Wǒ xǐhuan gǒu. | I like dogs. |
@@ -1385,4 +1433,4 @@ Examples:
 | 雨 | yǔ | rain | 外边的雨很大。 | Wàibian de yǔ hěn dà. | The rain outside is heavy. |
 | 雪 | xuě | snow | 外边下雪了。 | Wàibian xià xuě le. | It has started to snow outside. |
 | 病 | bìng | illness (also: to be ill) | 他病了。 | Tā bìng le. | He is ill. |
-| 歌 | gē | song | 你喜欢听歌吗？ | Nǐ xǐhuan tīng gē ma? | Do you like listening to songs? |
+| 歌 | gē | song (everyday) | 你喜欢听歌吗？ | Nǐ xǐhuan tīng gē ma? | Do you like listening to songs? |

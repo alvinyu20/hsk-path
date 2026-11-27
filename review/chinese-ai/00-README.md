@@ -13,7 +13,7 @@ Each file asks the model to report **problems only**, so the answers stay short.
 | 06-sentences-5-of-8.md | 220 example, exercise and script sentences |
 | 07-sentences-6-of-8.md | 220 example, exercise and script sentences |
 | 08-sentences-7-of-8.md | 220 example, exercise and script sentences |
-| 09-sentences-8-of-8.md | 131 example, exercise and script sentences |
+| 09-sentences-8-of-8.md | 166 example, exercise and script sentences |
 | 10-exam.md | the mock exam sentences and picture questions |
 
 The 13 questions from before are in review/ask-a-chinese-ai.md (already answered).
