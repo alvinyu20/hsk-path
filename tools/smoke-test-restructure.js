@@ -55,6 +55,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.locator('.stats button.pill.fl').click(); await page.waitForTimeout(100);
   check(await scr(page) === 'home', 'the streak pill goes to Today');
   check(await page.locator('.stats .pill', { hasText: 'memory' }).count() === 0, 'the header has no "in memory" pill');
+  check(await page.locator('.today-mem').count() === 0, 'day one: Today has no "Your memory" card full of zeros (N5)');
   await page.locator('.stats button.xpp').click(); await page.waitForTimeout(100);
   check(await scr(page) === 'journey', 'the coins pill goes to the Journey');
 

@@ -7066,6 +7066,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         weak, hasWeak:weak.length > 0, noWeak:weak.length === 0, phrases,
         overall, streak:streakShown, streakText:streakShown + (streakShown === 1 ? ' day' : ' days'), xpText:S.xp.toLocaleString('en-US'), dayXp:S.dayXp,
         memText:memNow.words.toLocaleString('en-US') + ' in memory', memTip:'Words in memory counts each word you have started by its recall chance right now, so it rises when you learn and review and falls if reviews slide. Average recall is over the words you started. The bars show your minutes on each of the last 7 days.',
+        memShow:memNow.words > 0,   // N5: no 0 / 0% / 0 min on day one; the card appears with the first word in memory
         memInfo:!!S.memInfo, memInfoTog:() => this.setState({ memInfo:!S.memInfo }),
         memDCls:memNow.words > (S.mem0 == null ? memNow.words : S.mem0) ? 'up' : memNow.words < (S.mem0 == null ? memNow.words : S.mem0) ? 'down' : 'flat',
         ...(() => { const td = ymd(new Date()); const mins = weekDates.slice().reverse().map(d => d === td ? Math.max(S.dayMin, window.ShanluSync.dayMinutes(S, d)) : window.ShanluSync.dayMinutes(S, d)); const top = Math.max(S.mins || 20, ...mins);
