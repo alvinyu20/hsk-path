@@ -488,7 +488,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   // the tabs run learn -> practice -> check -> your words, and the logo goes Home
   check(JSON.stringify(await page.locator('.navg .nav').allInnerTexts().then(a => a.map(t => t.replace(/\s+/g, ' ').replace(/\d+( ready)?$/, '').trim()))) === JSON.stringify(['Today', 'Learn', 'Review', 'Talk', 'Journey']), 'the five tabs are in learning order on a wide window too');
   await nav('Review words');
-  check(JSON.stringify(await page.locator('.navsub .subl').allInnerTexts().then(a => a.map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()))) === JSON.stringify(['Words', 'Grammar', 'Test']), 'the open tab lists its pages under itself in the sidebar: Words, Grammar, Test');
+  check(JSON.stringify(await page.locator('.navsub .subl').allInnerTexts().then(a => a.map(t => t.replace(/\s+/g, ' ').replace(/\d+$/, '').trim()))) === JSON.stringify(['Words', 'Grammar', 'Test', 'Mistakes']), 'the open tab lists its pages under itself in the sidebar: Words, Grammar, Test, Mistakes');
   await nav('Grammar');
   await page.locator('.brand').click();
   await page.waitForTimeout(120);
@@ -1397,7 +1397,7 @@ const openLv = async (p) => { if (!(await p.locator('.lvpanel').count())) await 
   await page.waitForTimeout(100);
   check((await page.evaluate(() => window.shanlu.state.screen)) === 'library' && (await page.locator('.navg button.nav.on').innerText()).includes('Learn'), 'the strip switches screens inside the section and the Learn tab stays lit');
   await page.locator('.navg button.nav', { hasText: 'Review' }).click(); await page.waitForTimeout(100);
-  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Words|Grammar|Test', 'the Review tab holds Words, Grammar and Test');
+  check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Words|Grammar|Test|Mistakes', 'the Review tab holds Words, Grammar, Test and Mistakes');
   await page.locator('.navg button.nav', { hasText: 'Learn' }).click(); await page.waitForTimeout(100);
   check((await page.evaluate(() => window.shanlu.state.screen)) === 'library', 'a tab returns to the screen you last used in that section');
   await page.locator('.navg button.nav', { hasText: 'Journey' }).click(); await page.waitForTimeout(100);
