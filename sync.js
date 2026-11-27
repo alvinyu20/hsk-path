@@ -272,13 +272,43 @@
     if (na !== nb) return na > nb ? a : b;
     return lww(a, b);
   }
+  // The mistake notebook (pref 'mistakes', v = { e:[entries], cut }) is merged entry by entry (key k), so two devices that both logged mistakes keep
+  // both: the entry changed last (logged again, or marked "got it") wins, the counts add up to the larger one. cut: "clear the ones I've got"
+  // was pressed then, so entries marked got before it stay cleared. The lapse counts (pref 'lapse', v = { word: count }) keep the larger count.
+  const MIST_MAX = 120;
+  const mistStamp = (x) => Math.max(x.at || 0, x.got || 0);
+  function mistTrim(e, cut) {
+    const out = e.filter(x => !(x.got && x.got <= (cut || 0))).sort((p, q) => (q.at || 0) - (p.at || 0) || (p.k < q.k ? -1 : p.k > q.k ? 1 : 0));
+    for (let i = out.length - 1; out.length > MIST_MAX && i >= 0; i--) if (out[i].got) out.splice(i, 1);
+    return out.slice(0, MIST_MAX);
+  }
+  function mergeMist(a, b) {
+    const ok = (x) => isObj(x) && isObj(x.v) && Array.isArray(x.v.e);
+    if (!ok(a) || !ok(b)) return lww(a, b);
+    const by = {};
+    a.v.e.concat(b.v.e).forEach(x => {
+      if (!isObj(x) || !x.k) return;
+      const y = by[x.k]; if (!y) { by[x.k] = x; return; }
+      const nw = mistStamp(x) > mistStamp(y) || (mistStamp(x) === mistStamp(y) && JSON.stringify(x) > JSON.stringify(y)) ? x : y, old = nw === x ? y : x;
+      by[x.k] = Object.assign({}, old, nw, { n: Math.max(x.n || 1, y.n || 1), first: Math.min(x.first || x.at || 0, y.first || y.at || 0), ai: nw.ai || old.ai || null });
+    });
+    const cut = maxNum(a.v.cut, b.v.cut);
+    return { v: { v: 1, e: mistTrim(Object.keys(by).map(k => by[k]), cut), cut }, at: maxNum(a.at, b.at) };
+  }
+  function mergeLapse(a, b) {
+    if (!isObj(a) || !isObj(a.v) || !isObj(b) || !isObj(b.v)) return lww(a, b);
+    const v = {};
+    Object.keys(a.v).concat(Object.keys(b.v)).sort().forEach(k => { v[k] = Math.max(+a.v[k] || 0, +b.v[k] || 0); });
+    return { v, at: maxNum(a.at, b.at) };
+  }
+  const PREF_MERGE = { jy: mergeJourney, mistakes: mergeMist, lapse: mergeLapse };
   const factKey = (t) => String(t || '').trim().toLowerCase();
   function mergePerson(a, b) {
     a = isObj(a) ? a : {}; b = isObj(b) ? b : {};
     const out = { prefs: {} };
     const names = {};
     Object.keys(a.prefs || {}).concat(Object.keys(b.prefs || {})).forEach(k => { names[k] = true; });
-    Object.keys(names).sort().forEach(k => { const r = (k === 'jy' ? mergeJourney : lww)((a.prefs || {})[k], (b.prefs || {})[k]); if (r) out.prefs[k] = r; });
+    Object.keys(names).sort().forEach(k => { const r = (PREF_MERGE[k] || lww)((a.prefs || {})[k], (b.prefs || {})[k]); if (r) out.prefs[k] = r; });
     const lsn = lww(a.lsn, b.lsn); if (lsn) out.lsn = lsn;
     const sec = lww(a.secrets, b.secrets); if (sec) out.secrets = sec;
     const ma = isObj(a.mem) ? a.mem : {}, mb = isObj(b.mem) ? b.mem : {};
@@ -299,5 +329,5 @@
   }
   function samePerson(a, b) { return JSON.stringify(mergePerson(a, a)) === JSON.stringify(mergePerson(b, b)); }
 
-  return { SYNC_KEYS, FILE, PERSON_FILE, fileFor, DESCRIPTION, merge, mergeCoins, pick, round, gistApi, mergeWs, same, dayMinutes, mergePerson, samePerson, compactWs, compactWord, applyMerged, nextEpoch };
+  return { SYNC_KEYS, FILE, PERSON_FILE, fileFor, DESCRIPTION, merge, mergeCoins, pick, round, gistApi, mergeWs, same, dayMinutes, mergePerson, samePerson, mistTrim, MIST_MAX, compactWs, compactWord, applyMerged, nextEpoch };
 });

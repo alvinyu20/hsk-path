@@ -134,6 +134,19 @@ function fakeGithub() {
   check(readded.mem.facts.some(f => f.t === 'learner has a cat'), 'a fact told again after it was forgotten comes back');
   const cleared = S.mergePerson(pm, { mem: { facts: [], del: {}, cleared: T } });
   check(cleared.mem.facts.length === 0 && S.mergePerson(cleared, pA).mem.facts.length === 0, 'Forget everything wipes the older facts on every device');
+  // the mistake notebook and the lapse counts merge entry by entry
+  const mA = { prefs: { mistakes: { v: { v: 1, e: [{ k: 'a', n: 2, at: T - 900, first: T - 990, got: 0 }, { k: 'b', n: 1, at: T - 800, got: 0 }], cut: 0 }, at: T - 800 },
+    lapse: { v: { 'xi': 2, 'ai': 5 }, at: T - 800 } } };
+  const mB = { prefs: { mistakes: { v: { v: 1, e: [{ k: 'a', n: 1, at: T - 900, first: T - 900, got: T - 100 }, { k: 'c', n: 1, at: T - 50, got: 0 }], cut: 0 }, at: T - 50 },
+    lapse: { v: { 'xi': 4 }, at: T - 50 } } };
+  const mmx = S.mergePerson(mA, mB);
+  const ea = mmx.prefs.mistakes.v.e;
+  check(ea.map(x => x.k).join() === 'c,b,a', 'mistakes logged on two devices are all kept, newest first');
+  check(ea[2].got === T - 100 && ea[2].n === 2 && ea[2].first === T - 990, '"got it" on one device wins over the older copy, and the larger count is kept');
+  check(JSON.stringify(S.mergePerson(mA, mB)) === JSON.stringify(S.mergePerson(mB, mA)), 'the notebook merges the same in either order');
+  check(mmx.prefs.lapse.v.xi === 4 && mmx.prefs.lapse.v.ai === 5, 'lapse counts keep the larger number per word');
+  const mCut = S.mergePerson(mmx, { prefs: { mistakes: { v: { v: 1, e: [], cut: T }, at: T } } });
+  check(mCut.prefs.mistakes.v.e.map(x => x.k).join() === 'c,b', 'clearing the ones you have got removes them on every device');
   const secA = { prefs: {}, secrets: { v: { key: null, aliKey: 'sk-x' }, at: T - 5 } };
   check(S.mergePerson(secA, { prefs: {}, secrets: { v: null, at: T } }).secrets.v === null, 'switching key sharing off (a newer empty copy) removes the keys');
   const many2 = []; for (let i = 0; i < 45; i++) many2.push({ t: 'learner fact number ' + i, d: '', at: T - 1000 + i });

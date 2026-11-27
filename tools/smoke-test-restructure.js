@@ -44,7 +44,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await nav('Archive');
   check(await scr(page) === 'web', 'Topics (the old Archive) opens from the Library');
   await nav('Review words');
-  check(await scr(page) !== 'web' && (await page.locator('.navsub .subl').allInnerTexts()).map(t => t.replace(/\d+$/, '').trim()).join('|') === 'Words|Grammar|Test', 'Review lists Words, Grammar and Test');
+  check(await scr(page) !== 'web' && (await page.locator('.navsub .subl').allInnerTexts()).map(t => t.replace(/\d+$/, '').trim()).join('|') === 'Words|Grammar|Test|Mistakes', 'Review lists Words, Grammar, Test and Mistakes');
   await nav('Listening lab');
   check(await scr(page) === 'listen' && (await page.locator('.navsub .subl').allInnerTexts()).join('|') === 'Listening|Speaking|Talk with AI', 'Talk lists Listening, Speaking and Talk with AI');
   check(await page.locator('.navyou .ylink').count() >= 2, 'a quiet "You" group holds Achievements and Settings');

@@ -123,12 +123,12 @@ Alvin picks what comes next. **Don't start big items unprompted.** Ask which one
 | # | Item | Effort |
 |---|---|---|
 | D5 | **Pinyin that fades:** hide pinyin on "what does it mean" after the first meeting, with a tap to peek. | S |
-| D7 | **Leech words** (4+ lapses): a contrast card, an extra example, the mistake notebook. | M |
+| D7 | ✅ **Done 27 Nov** (with the mistake notebook, Review > Mistakes). **Leech words** (4+ lapses): a contrast card, an extra example, the mistake notebook. | M |
 | D6 | **Review schedule fitted to the person (FSRS).** Needs B5. | M–L |
 | D9 | **English → Chinese sentence building**, AI-checked strictly. | M |
 | D1 🟡 | **Listening ladder, the rest:** background noise, more voices, Common Voice clips, natural reductions. Speed rungs, shadowing and Quick-fire numbers are done. | M each |
 | E4 | **2–3× more listening at HSK 4–5**, with longer passages. | M |
-| E5 | **Older open items:** <br>• separate records for two-reading characters (还 / 行 / 得); <br>• same-meaning sweep round 2 (558 groups, ask first); <br>• Fill it beyond the classic pairs; <br>• a mistake notebook with spoken re-practice; <br>• real time-on-task; <br>• HSK 6. | mixed |
+| E5 | **Older open items:** <br>• separate records for two-reading characters (还 / 行 / 得); <br>• same-meaning sweep round 2 (558 groups, ask first); <br>• Fill it beyond the classic pairs; <br>• ~~a mistake notebook~~ (done 27 Nov; spoken re-practice still open); <br>• real time-on-task; <br>• HSK 6. | mixed |
 | Games | **Games follow-ups:** <br>• feed game misses into Review / Grammar review; <br>• recorded audio for game sentences (the browser voice reads them now); <br>• time real play on a phone to check coin rates. | S–M |
 
 ### Fun and coming back

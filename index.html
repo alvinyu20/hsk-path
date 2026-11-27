@@ -7,7 +7,7 @@
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com https://pub-94d17f311ee24aec8cec9af141853fa7.r2.dev; connect-src 'self' https://pub-94d17f311ee24aec8cec9af141853fa7.r2.dev https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=481050e5a7 data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=f9adf791ad data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=ae6b55baf3 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=cadeceb7bf data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=2f4e796d1a data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=ed7af49707 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=887b6a91ac data/hsk4-words.js?v=9ebcc5a250 data/hsk4-grammar.js?v=8c535c3fc2 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=deae152b68 data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=018596a707 data/hsk5-words.js?v=1e54d78599 data/hsk5-grammar.js?v=cd8a3a9d5d data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=73d5a24b6f data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=5658d7a4a1 data/path-scenes.js?v=cabc535d43 data/speak-scenes.js?v=8fc79e5d01 data/exam-art.js?v=fe9c38d6ea data/journey-media.js?v=de53596394">
-<meta name="shanlu-version" content="7083711695">
+<meta name="shanlu-version" content="fad8714f69">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=36346a8377">
+<link rel="stylesheet" href="styles.css?v=0b05f304d1">
 </head>
 <body>
 <div id="app"></div>
@@ -671,6 +671,17 @@
           </div>
         </sc-if>
       </sc-if>
+      <sc-if value="{{leechShow}}" hint-placeholder-val="{{ false }}">
+        <div class="leech" role="note">
+          <div class="leech-h"><b>Tricky word</b> <span>{{leechN}}</span></div>
+          <sc-if value="{{leechHasEx}}" hint-placeholder-val="{{ true }}"><div class="leech-ex"><button type="button" class="nb-hear" data-on-click="{{leechHearEx}}" aria-label="Hear the sentence"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><div><div lang="zh-Hans" class="zh">{{leechExZh}}</div><div class="py">{{leechExPy}}</div><div class="en">{{leechExEn}}</div></div></div></sc-if>
+          <sc-if value="{{leechHasMix}}" hint-placeholder-val="{{ false }}"><div class="leech-vs">
+            <div class="leech-w"><span lang="zh-Hans" class="zh">{{leechZh}}</span><span>{{leechEn}}</span></div>
+            <span class="leech-not">not</span>
+            <button type="button" class="leech-w leech-o" data-on-click="{{leechHearMix}}"><span lang="zh-Hans" class="zh">{{leechMixZh}}</span><span>{{leechMixPy}} · {{leechMixEn}}</span></button>
+          </div></sc-if>
+        </div>
+      </sc-if>
     </sc-if>
 
     <sc-if value="{{emptyNew}}" hint-placeholder-val="{{ false }}">
@@ -773,6 +784,63 @@
       </sc-if>
       <sc-if value="{{noRecent}}" hint-placeholder-val="{{ true }}"><p class="muted" style="margin:18px 0 0">No tests yet. Your scores will appear here after your first test.</p></sc-if>
     </section>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{isMistakes}}" hint-placeholder-val="{{ false }}">
+  <div class="nb">
+    <sc-if value="{{nbEmpty}}" hint-placeholder-val="{{ false }}">
+      <div class="res">
+        <img class="res-ming" src="{{mingThumbs}}" alt="" width="132" height="139">
+        <h2 class="res-h">No mistakes yet</h2>
+        <p class="res-p">When you get something wrong in Review, on the Path or in a test, it lands here, so you can come back to it.</p>
+      </div>
+    </sc-if>
+    <sc-if value="{{nbCanPrac}}" hint-placeholder-val="{{ false }}"><div class="nb-go"><button type="button" class="btn pri big" data-on-click="{{nbPractise}}">{{nbPracText}}</button></div></sc-if>
+    <sc-if value="{{nbHasTricky}}" hint-placeholder-val="{{ false }}">
+      <section class="card nb-trk">
+        <h2 class="h2">Tricky words</h2>
+        <p class="muted">Words you have forgotten in Review four times or more. Their cards now show a second example and the word they get mixed up with.</p>
+        <div class="nb-trk-l">
+          <sc-for list="{{nbTricky}}" as="t" hint-placeholder-count="2">
+            <div class="nb-trk-i"><button type="button" class="nb-hear" data-on-click="{{t.hear}}" aria-label="Hear the word"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><div><div><span lang="zh-Hans" class="zh nb-zh">{{t.zh}}</span> <span class="nb-py">{{t.py}}</span></div><div class="nb-en">{{t.en}}</div><div class="nb-when">{{t.n}}</div><sc-if value="{{t.hasMix}}" hint-placeholder-val="{{ false }}"><div class="nb-mix">vs <span lang="zh-Hans" class="zh">{{t.mixZh}}</span> {{t.mixPy}} “{{t.mixEn}}”</div></sc-if></div></div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+    <sc-if value="{{nbHasOpen}}" hint-placeholder-val="{{ false }}">
+      <section class="card">
+        <h2 class="h2">To work on <span class="muted">({{nbOpenN}})</span></h2>
+        <div class="nb-list">
+          <sc-for list="{{nbRows}}" as="m" hint-placeholder-count="2">
+          <div class="nb-row {{m.cls}}">
+            <div class="nb-top"><span class="nb-lab">{{m.label}}</span><span class="nb-when">{{m.when}}</span><sc-if value="{{m.hasTimes}}" hint-placeholder-val="{{ false }}"><span class="nb-times">{{m.times}}</span></sc-if><sc-if value="{{m.tricky}}" hint-placeholder-val="{{ false }}"><span class="nb-tricky">Tricky word</span></sc-if></div>
+            <sc-if value="{{m.hasWord}}" hint-placeholder-val="{{ true }}"><div class="nb-word"><button type="button" class="nb-hear" data-on-click="{{m.hear}}" aria-label="Hear the word"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><span lang="zh-Hans" class="zh nb-zh">{{m.zh}}</span><span class="nb-py">{{m.py}}</span><span class="nb-en">{{m.en}}</span></div></sc-if>
+            <div class="nb-ans"><div><b>You:</b> <span class="nb-yours">{{m.yours}}</span></div><sc-if value="{{m.hasRight}}" hint-placeholder-val="{{ true }}"><div><b>Right:</b> {{m.right}}</div></sc-if></div>
+            <sc-if value="{{m.hasMix}}" hint-placeholder-val="{{ false }}"><div class="nb-mix">Not to be mixed up with <button type="button" class="linkbtn" data-on-click="{{m.hearMix}}"><span lang="zh-Hans" class="zh">{{m.mixZh}}</span></button> {{m.mixPy}} “{{m.mixEn}}”</div></sc-if>
+            <sc-if value="{{m.hasAi}}" hint-placeholder-val="{{ false }}"><div class="nb-ai"><div class="nb-ai-h">The AI said</div><p>{{m.ai}}</p><sc-if value="{{m.hasAiEx}}" hint-placeholder-val="{{ false }}"><sc-for list="{{m.aiEx}}" as="e" hint-placeholder-count="1"><div class="ask-ex"><div lang="zh-Hans" class="zh">{{e.zh}}</div><div class="py">{{e.py}}</div><div class="en">{{e.en}}</div></div></sc-for></sc-if></div></sc-if>
+            <div class="nb-act"><button type="button" class="btn sm" data-on-click="{{m.ask}}">Ask the AI</button><button type="button" class="btn sm nb-gotit" data-on-click="{{m.got}}">{{m.gotText}}</button></div>
+          </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{nbMoreShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="btn" data-on-click="{{nbMore}}">Show more</button></sc-if>
+      </section>
+    </sc-if>
+    <sc-if value="{{nbHasGot}}" hint-placeholder-val="{{ false }}">
+      <div class="nb-gotbar"><button type="button" class="linkbtn" data-on-click="{{nbGotToggle}}">{{nbGotLabel}}</button><sc-if value="{{nbShowGot}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn" data-on-click="{{nbClear}}">Clear them</button></sc-if></div>
+      <sc-if value="{{nbShowGot}}" hint-placeholder-val="{{ false }}"><div class="nb-list">
+        <sc-for list="{{nbGotRows}}" as="m" hint-placeholder-count="0">
+          <div class="nb-row {{m.cls}}">
+            <div class="nb-top"><span class="nb-lab">{{m.label}}</span><span class="nb-when">{{m.when}}</span><sc-if value="{{m.hasTimes}}" hint-placeholder-val="{{ false }}"><span class="nb-times">{{m.times}}</span></sc-if><sc-if value="{{m.tricky}}" hint-placeholder-val="{{ false }}"><span class="nb-tricky">Tricky word</span></sc-if></div>
+            <sc-if value="{{m.hasWord}}" hint-placeholder-val="{{ true }}"><div class="nb-word"><button type="button" class="nb-hear" data-on-click="{{m.hear}}" aria-label="Hear the word"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><span lang="zh-Hans" class="zh nb-zh">{{m.zh}}</span><span class="nb-py">{{m.py}}</span><span class="nb-en">{{m.en}}</span></div></sc-if>
+            <div class="nb-ans"><div><b>You:</b> <span class="nb-yours">{{m.yours}}</span></div><sc-if value="{{m.hasRight}}" hint-placeholder-val="{{ true }}"><div><b>Right:</b> {{m.right}}</div></sc-if></div>
+            <sc-if value="{{m.hasMix}}" hint-placeholder-val="{{ false }}"><div class="nb-mix">Not to be mixed up with <button type="button" class="linkbtn" data-on-click="{{m.hearMix}}"><span lang="zh-Hans" class="zh">{{m.mixZh}}</span></button> {{m.mixPy}} “{{m.mixEn}}”</div></sc-if>
+            <sc-if value="{{m.hasAi}}" hint-placeholder-val="{{ false }}"><div class="nb-ai"><div class="nb-ai-h">The AI said</div><p>{{m.ai}}</p><sc-if value="{{m.hasAiEx}}" hint-placeholder-val="{{ false }}"><sc-for list="{{m.aiEx}}" as="e" hint-placeholder-count="1"><div class="ask-ex"><div lang="zh-Hans" class="zh">{{e.zh}}</div><div class="py">{{e.py}}</div><div class="en">{{e.en}}</div></div></sc-for></sc-if></div></sc-if>
+            <div class="nb-act"><button type="button" class="btn sm" data-on-click="{{m.ask}}">Ask the AI</button><button type="button" class="btn sm nb-gotit" data-on-click="{{m.got}}">{{m.gotText}}</button></div>
+          </div>
+        </sc-for>
+      </div></sc-if>
+    </sc-if>
   </div>
   </sc-if>
 
@@ -3219,7 +3287,7 @@
             <p class="ask-a">{{m.text}}</p>
             <sc-if value="{{m.hasEx}}" hint-placeholder-val="{{ false }}"><sc-for list="{{m.examples}}" as="e" hint-placeholder-count="1"><div class="ask-ex"><div lang="zh-Hans" class="zh">{{e.zh}}</div><div class="py">{{e.py}}</div><div class="en">{{e.en}}</div><sc-if value="{{e.hasWarn}}" hint-placeholder-val="{{ false }}"><div class="ask-warn">{{e.warn}}</div></sc-if></div></sc-for></sc-if>
             <sc-if value="{{m.cardWrong}}" hint-placeholder-val="{{ false }}"><div class="ask-flag"><b>The AI thinks this card may be wrong.</b> {{m.cardNote}}<sc-if value="{{m.hasFlagText}}" hint-placeholder-val="{{ false }}"> <span class="ask-flag-s">{{m.flagText}}</span></sc-if></div></sc-if>
-            <div class="ask-meta"><span>{{m.by}}</span><sc-if value="{{m.canRep}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn" aria-disabled="{{m.repOff}}" data-on-click="{{m.report}}">{{m.repText}}</button></sc-if></div>
+            <div class="ask-meta"><span>{{m.by}}</span><sc-if value="{{m.canSave}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn ask-save" aria-disabled="{{m.saveOff}}" data-on-click="{{m.save}}">{{m.saveText}}</button></sc-if><sc-if value="{{m.canRep}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn" aria-disabled="{{m.repOff}}" data-on-click="{{m.report}}">{{m.repText}}</button></sc-if></div>
           </div></sc-if>
         </sc-for>
         <sc-if value="{{askBusy}}" hint-placeholder-val="{{ false }}"><div class="ask-ai ask-typing" role="status"><i></i><i></i><i></i><span class="sr-only">Thinking</span></div></sc-if>
@@ -3459,7 +3527,7 @@
 <script defer src="data/hsk5-preview.js?v=7cc0706b86"></script>
 <script defer src="ascent.js?v=d2ca2a4903"></script>
 <script defer src="secrets.js?v=abc49c1923"></script>
-<script defer src="sync.js?v=5b5c6f52f4"></script>
+<script defer src="sync.js?v=e3aa8f7f94"></script>
 <script defer src="data/audio-manifest.js?v=5c9eb705ba"></script>
 <script defer src="audiolist.js?v=e9406e5d30"></script>
 <script defer src="jyscene.js?v=2210f9fb22"></script>
@@ -3485,6 +3553,6 @@
 <script defer src="data/confusers.js?v=2d21e34783"></script>
 <script defer src="data/path.js?v=8ede33779e"></script>
 <script defer src="pitch.js?v=16ceaf9821"></script>
-<script defer src="app.js?v=368e1b92cd"></script>
+<script defer src="app.js?v=31a8d112eb"></script>
 </body>
 </html>

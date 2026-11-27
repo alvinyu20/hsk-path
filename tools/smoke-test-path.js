@@ -257,7 +257,7 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
     const clipped = await page.evaluate(() => [...document.querySelectorAll('.pth-label')].filter(l => { const r = l.getBoundingClientRect(); return r.right > window.innerWidth + 1 || r.left < -1; }).length);
     check(clipped === 0, 'no stop label runs off the screen on a phone');
     await page.locator('.navg button.nav', { hasText: 'Review' }).click(); await page.waitForTimeout(150);
-    check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Words|Grammar|Test', 'Review holds Words, Grammar and Test');
+    check((await page.locator('.subnav button').allInnerTexts()).join('|') === 'Words|Grammar|Test|Mistakes', 'Review holds Words, Grammar, Test and Mistakes');
     check(await page.locator('.acct-mini').count() === 1 && await page.locator('.acct-mini').isVisible(), 'the account avatar sits in the phone header');
     const box = await page.locator('.acct-mini').boundingBox();
     check(box && Math.abs(box.width - box.height) < 2, 'the avatar is round (' + (box ? Math.round(box.width) + 'x' + Math.round(box.height) : '?') + ')');

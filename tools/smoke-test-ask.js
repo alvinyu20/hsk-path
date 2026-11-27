@@ -66,7 +66,7 @@ const fakeAi = () => {
   check((await p.locator('.ask-ctx-t').innerText()).includes(step.zh) && /path stop/i.test(await p.locator('.ask-ctx .kick').innerText()), 'the sheet names what it is about (' + (await p.locator('.ask-ctx-t').innerText()) + ')');
   check((await p.locator('.ask-me').first().innerText()).includes('Why was my answer wrong?') && (await p.locator('.ask-a').first().innerText()).includes('Answer 1'), 'the question and the answer show in the sheet');
   check(await p.locator('.ask-ex').count() === 1 && /nǐ hǎo/i.test(await p.locator('.ask-ex .py').innerText()) && (await p.locator('.ask-ex .en').innerText()).includes('Hello'), 'an example comes with pinyin worked out by the site and its English');
-  check(/not checked by a teacher/.test(await p.locator('.ask-meta').first().innerText()) && await p.locator('.ask-meta .linkbtn').count() === 0, 'each answer says it is AI and unchecked (no "answer seems wrong" button without the friends board)');
+  check(/not checked by a teacher/.test(await p.locator('.ask-meta').first().innerText()) && await p.locator('.ask-meta .linkbtn:not(.ask-save)').count() === 0, 'each answer says it is AI and unchecked (no "answer seems wrong" button without the friends board)');
   check(await p.locator('.ask-chip').count() >= 2 && await p.locator('.ask-chip', { hasText: 'Why was my answer wrong?' }).count() === 0, 'suggested follow-ups show, without the one already asked');
   // a follow-up typed in the box carries the conversation
   await p.fill('.ask-inp', 'Is this card right?'); await p.keyboard.press('Enter'); await p.waitForFunction(() => document.querySelectorAll('.ask-ai:not(.ask-typing)').length === 2);
@@ -134,7 +134,7 @@ const fakeAi = () => {
       await B2.page.locator('.q-card .opt').nth(st2.opts.indexOf(s1.picked)).click(); await B2.page.waitForTimeout(60);
       await B2.page.locator('.ask-why').click(); await B2.page.waitForSelector('.ask-ai');
       check((await calls(B2.page)).length === 0 && /Asked before in your group/.test(await B2.page.locator('.ask-meta').innerText()) && (await B2.page.locator('.ask-a').innerText()).includes('Answer 1'), 'someone else with the same mistake gets the shared answer, with no AI call');
-      await B2.page.locator('.ask-meta .linkbtn').click(); await B2.page.waitForFunction(() => /Thanks, reported/.test((document.querySelector('.ask-meta .linkbtn') || {}).textContent || ''));
+      await B2.page.locator('.ask-meta .linkbtn:not(.ask-save)').click(); await B2.page.waitForFunction(() => /Thanks, reported/.test((document.querySelector('.ask-meta .linkbtn:not(.ask-save)') || {}).textContent || ''));
       let open = (await admin('/api/admin/reports')).reports;
       check(open.length === 1 && open[0].why === 'answer' && open[0].name === 'Ben' && open[0].ctx.includes('The right answer: ' + s1.zh), '"This answer seems wrong" puts it on the report queue, with the screen');
       check((await admin('/api/admin/ask')).answers[0].bad === 1, '...and the shared answer is no longer handed out');

@@ -62,6 +62,12 @@
   const savePerson = (notify) => { lsSet(PERSON_STORE, JSON.stringify(PERSON)); if (notify !== false) onPersonChange(); };
   const prefGet = (k, d) => (PERSON.prefs[k] && PERSON.prefs[k].v !== undefined ? PERSON.prefs[k].v : d);
   const prefSet = (k, v) => { PERSON.prefs[k] = { v, at:Date.now() }; savePerson(); };
+  // the mistake notebook (pref 'mistakes': { e:[entries], cut }) and how many times each word was forgotten in Review (pref 'lapse': { word: n });
+  // both are merged entry by entry across devices (sync.js mergeMist / mergeLapse). A word forgotten LEECH_AT times or more is a "tricky word" (D7).
+  const LEECH_AT = 4;
+  const nbAll = () => { const v = prefGet('mistakes', null); return v && Array.isArray(v.e) ? v : { v:1, e:[], cut:0 }; };
+  const nbPut = (e, cut) => { const c = cut != null ? cut : (nbAll().cut || 0); const SY = window.ShanluSync; prefSet('mistakes', { v:1, e:SY ? SY.mistTrim(e, c) : e.slice(0, 120), cut:c }); };
+  const lapseOf = (zh) => +((prefGet('lapse', {}) || {})[zh]) || 0;
   // the small drawings in data/art.js (Mingming, tab banners, lanterns, the summit) as picture addresses
   const TOPKEY = { library:'library', words:'library', gtrack:'library', grammar:'library', web:'library', pinyin:'library', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', journey:'journey' };   // which banner picture heads which page
   const ARTC = {};
@@ -682,7 +688,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:'light',   // light to start, whatever the device's setting; dark only when chosen
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
-      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyGo:null, jyM1:'front', jyM1Nudge:0, ask:null, jyTab:'explore', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
+      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyGo:null, jyM1:'front', jyM1Nudge:0, ask:null, nbTick:0, nbShow:20, nbShowGot:false, jyTab:'explore', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
       xp:0, xpDev:{}, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, dayAct:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:wPage(), clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -2484,7 +2490,7 @@
       this.go(this.lastSub[id] || first);
     };
     go = (screen) => {
-      { const grp = { path:'learn', library:'learn', games:'learn', grammar:'learn', gtrack:'learn', pinyin:'learn', web:'learn', words:'learn', exam:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', journey:'journey' }[screen]; if (grp) this.lastSub[grp] = ({ words:'library', grammar:'library', gtrack:'library', web:'library', pinyin:'library', exam:'path' })[screen] || screen; }
+      { const grp = { mistakes:'review', path:'learn', library:'learn', games:'learn', grammar:'learn', gtrack:'learn', pinyin:'learn', web:'learn', words:'learn', exam:'learn', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', journey:'journey' }[screen]; if (grp) this.lastSub[grp] = ({ words:'library', grammar:'library', gtrack:'library', web:'library', pinyin:'library', exam:'path' })[screen] || screen; }
       { const sv = prefGet('sv', {}); if ((sv[screen] || 0) < 4) prefSet('sv', Object.assign({}, sv, { [screen]:(sv[screen] || 0) + 1 })); }   // how many times each page was opened: a page's one-line description fades after a few visits
       if (screen === 'guide' && !onbRead().g) this.onbSet({ g:Date.now() });
       if (screen === 'journey') { otherXp(true); this.jyEnsure(); this.friendsRefresh(false); }
@@ -2788,6 +2794,92 @@
     // the Worker's queue (/api/ai/report), which the "AI reports" workflow turns into a review pack. Without the friends board both are skipped.
     askLast = null; askTok = 0;
     askMember = () => !!(FR && FR.enabled() && FR.identity());
+    // ---- Mistake notebook (Review > Mistakes): every wrong answer in Review, the Path and tests, kept with the same context the Ask sheet
+    // uses, so it can be asked about later. The same mistake again counts up (n) and comes back to the top; "Got it" puts it away.
+    nbLog = (c0) => {
+      const c = c0 || this.askMistakeCtx(); if (!c || !c.mistake) return '';
+      const e = nbAll().e.slice(); const k = String(c.key).slice(0, 240); const now = Date.now();
+      const i = e.findIndex(x => x.k === k);
+      const mixW = c.kind === 'path' ? c.diffA : c.yours;
+      if (i >= 0) e[i] = Object.assign({}, e[i], { n:(e[i].n || 1) + (c0 ? 0 : 1), at:c0 ? e[i].at : now, got:0 });
+      else e.push({ k, kind:c.kind, label:c.label, title:String(c.title || '').slice(0, 160), word:c.word || '', yours:String(c.yours || '').slice(0, 120), right:String(c.right || '').slice(0, 160),
+        mix:mixW && BANK[mixW] && mixW !== c.word ? mixW : '', ctx:String(c.text || '').slice(0, 900), n:1, at:now, first:now, got:0, ai:null });
+      nbPut(e); this.setState({ nbTick:(this.state.nbTick || 0) + 1 });
+      return k;
+    };
+    nbGot = (k) => {
+      const e = nbAll().e.map(x => (x.k === k ? Object.assign({}, x, x.got ? { got:0, at:Date.now() } : { got:Date.now() }) : x));
+      nbPut(e); this.setState({ nbTick:(this.state.nbTick || 0) + 1 });
+    };
+    nbClear = () => { nbPut(nbAll().e, Date.now()); this.setState({ nbTick:(this.state.nbTick || 0) + 1, nbShowGot:false }); };
+    nbCtx = (x) => ({ kind:x.kind, mistake:true, label:x.label, title:x.title, key:x.k, word:x.word, yours:x.yours, right:x.right, diffA:x.mix || x.yours, diffB:x.word || x.right,
+      text:x.ctx + '\n(Opened from the learner\'s mistake notebook: this mistake happened ' + (x.n || 1) + ' time' + ((x.n || 1) === 1 ? '' : 's') + '.)' });
+    nbAsk = (k) => { const x = nbAll().e.find(y => y.k === k); if (x) this.askOpenWith(this.nbCtx(x)); };
+    // the Ask sheet's "Save to my mistakes": keep the AI's answer (and up to two examples) with the mistake
+    nbSaveAi = (i) => {
+      const A = this.state.ask; const m = A && A.msgs[i]; if (!m || !m.a || !A.ctx.mistake) return;
+      const k = String(A.ctx.key).slice(0, 240);
+      if (!nbAll().e.some(x => x.k === k)) this.nbLog(A.ctx);
+      const ai = { a:String(m.a.answer || '').slice(0, 700), ex:(m.a.examples || []).slice(0, 2).map(x => ({ zh:String(x.zh).slice(0, 120), en:String(x.en || '').slice(0, 160) })) };
+      nbPut(nbAll().e.map(x => (x.k === k ? Object.assign({}, x, { ai }) : x)));
+      this.askMsgPatch(i, { saved:true });
+    };
+    // practise the words behind the open mistakes (and the tricky words) as one Review session
+    nbWords = () => {
+      const S = this.state; const seen = {}; const out = [];
+      const add = (zh) => { if (zh && !seen[zh] && BANK[zh] && S.ws[zh] && S.ws[zh].see && S.ws[zh].see.s > 0) { seen[zh] = true; out.push(zh); } };
+      nbAll().e.filter(x => !x.got).forEach(x => add(x.word));
+      Object.keys(prefGet('lapse', {}) || {}).filter(zh => lapseOf(zh) >= LEECH_AT).forEach(add);
+      return out;
+    };
+    nbPractise = () => {
+      const S = this.state; const words = this.nbWords().slice(0, 20); if (!words.length) return;
+      const q = shuffle(words.map(zh => (S.ws[zh].hear && S.ws[zh].hear.s > 0 && Math.random() < 0.5 ? zh + '#h' : zh)));
+      this.lapsed = {}; this.rvKey = null;
+      this.go('review');
+      this.setState({ rq:q, rtotal:q.length, rdone:0, rxp:0, rcomplete:false, rflip:false, rpy:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rrun:0, rmiss:[], qchecked:false, qchoice:null, qtyped:'', qfeed:'' });
+    };
+    nbVals = (S, rv) => {
+      void S.nbTick;
+      const all = nbAll().e; const open = all.filter(x => !x.got), got = all.filter(x => x.got);
+      const LBL = { review:'Review', path:'Path stop', test:'Test', grammar:'Grammar' };
+      const ago = (t) => { const d = Math.round((dayStartMs() - new Date(new Date(t).toDateString()).getTime()) / DAY_MS); return d <= 0 ? 'Today' : d === 1 ? 'Yesterday' : d < 7 ? d + ' days ago' : new Date(t).toLocaleDateString(undefined, { month:'short', day:'numeric' }); };
+      const wd = (zh) => (zh && BANK[zh] ? { zh, py:BANK[zh].py, en:BANK[zh].en } : null);
+      const mixOf = (zh) => { const x = all.find(y => y.word === zh && y.mix); if (x) return x.mix; const c = confusers(zh); return c.look[0] || c.family[0] || ''; };
+      const row = (x) => {
+        const w = wd(x.word), m = wd(x.mix), lp = x.word ? lapseOf(x.word) : 0;
+        const ex = x.ai && Array.isArray(x.ai.ex) ? x.ai.ex.map(e => ({ zh:e.zh, py:aiPinyin(segHsk(e.zh)), en:e.en })) : [];
+        return { k:x.k, label:LBL[x.kind] || x.label || 'Mistake', when:ago(x.at), times:(x.n || 1) > 1 ? (x.n + ' times') : '', hasTimes:(x.n || 1) > 1,
+          hasWord:!!w, zh:w ? w.zh : '', py:w ? w.py : '', en:w ? w.en : '', tricky:lp >= LEECH_AT,
+          yours:x.yours || '(nothing)', right:x.right || '', hasRight:!!x.right,
+          hasMix:!!m, mixZh:m ? m.zh : '', mixPy:m ? m.py : '', mixEn:m ? m.en : '', hearMix:() => m && this.sayAi(m.zh, 'nbm'),
+          hasAi:!!(x.ai && x.ai.a), ai:x.ai ? x.ai.a : '', aiEx:ex, hasAiEx:ex.length > 0,
+          hear:() => w && this.sayAi(w.zh, 'nb'), ask:() => this.nbAsk(x.k), got:() => this.nbGot(x.k), gotText:x.got ? 'Not yet' : 'Got it', cls:x.got ? 'nb-got' : '' };
+      };
+      const lps = prefGet('lapse', {}) || {};
+      const tricky = Object.keys(lps).filter(zh => BANK[zh] && lapseOf(zh) >= LEECH_AT).sort((a, b) => lapseOf(b) - lapseOf(a) || (a < b ? -1 : 1)).slice(0, 12).map(zh => {
+        const m = wd(mixOf(zh));
+        return { zh, py:BANK[zh].py, en:BANK[zh].en, n:'Forgotten ' + lapseOf(zh) + ' times', hasMix:!!m, mixZh:m ? m.zh : '', mixPy:m ? m.py : '', mixEn:m ? m.en : '', hear:() => this.sayAi(zh, 'nb') };
+      });
+      const prac = S.screen === 'mistakes' ? this.nbWords().length : 0;
+      const shown = S.nbShow || 20;
+      // D7 on the Review card: a word forgotten LEECH_AT+ times gets a box with a second example and the word it gets mixed up with
+      const lpN = rv && rv.rzh ? lapseOf(rv.rzh) : 0;
+      const leechOn = !!(rv && S.screen === 'review' && S.rq.length && lpN >= LEECH_AT && ((rv.rkind === 'flip' && S.rflip) || (rv.rAuto && S.qchecked)));
+      const lx = leechOn ? (EXS[rv.rzh] || []).find(e => e && e.zh && e.zh !== rv.shownEx) : null;
+      const lm = leechOn ? wd(mixOf(rv.rzh)) : null;
+      return {
+        nbOpenN:open.length, nbHasOpen:open.length > 0, nbRows:open.slice(0, shown).map(row), nbMoreShow:open.length > shown, nbMore:() => this.setState({ nbShow:shown + 30 }),
+        nbGotN:got.length, nbHasGot:got.length > 0, nbShowGot:!!S.nbShowGot, nbGotRows:S.nbShowGot ? got.slice(0, 60).map(row) : [],
+        nbGotToggle:() => this.setState({ nbShowGot:!S.nbShowGot }), nbGotLabel:(S.nbShowGot ? 'Hide' : 'Show') + ' the ' + got.length + ' you have got', nbClear:this.nbClear,
+        nbEmpty:!all.length && !tricky.length, nbTricky:tricky, nbHasTricky:tricky.length > 0,
+        nbCanPrac:prac > 0, nbPracText:'Practise ' + Math.min(prac, 20) + ' of these word' + (Math.min(prac, 20) === 1 ? '' : 's'), nbPractise:this.nbPractise,
+        leechShow:leechOn, leechN:'You have forgotten this word ' + lpN + ' times. Here is another way in.',
+        leechHasEx:!!lx, leechExZh:lx ? lx.zh : '', leechExPy:lx ? lx.py : '', leechExEn:lx ? lx.en : '', leechHearEx:() => lx && this.sayAi(lx.zh, 'lx'),
+        leechHasMix:!!lm, leechMixZh:lm ? lm.zh : '', leechMixPy:lm ? lm.py : '', leechMixEn:lm ? lm.en : '', leechHearMix:() => lm && this.sayAi(lm.zh, 'lm'),
+        leechZh:leechOn ? rv.rzh : '', leechEn:leechOn ? BANK[rv.rzh].en : ''
+      };
+    };
     askMistakeCtx = () => {
       const S = this.state;
       if ((S.screen === 'review' || S.screen === 'quiz') && S.qchecked && !S.qcorrect && this.quizQs.length) {
@@ -2928,6 +3020,7 @@
           hasEx:m.a.examples.length > 0, cardWrong:m.a.card_wrong, cardNote:m.a.card_note, flagText:flagText(m.flag), hasFlagText:!!flagText(m.flag),
           by:(m.shared ? 'Asked before in your group · ' : '') + 'Written by AI' + (m.by && m.by !== 'AI' ? ' (' + m.by + ')' : '') + ', not checked by a teacher',
           canRep:member, repText:m.rep === 'sent' ? 'Thanks, reported' : m.rep === 'busy' ? 'Sending…' : m.rep === 'fail' ? 'Could not send. Try again' : 'This answer seems wrong',
+          canSave:!!c.mistake, saveText:m.saved ? 'Saved to your mistakes' : 'Save to my mistakes', saveOff:!!m.saved, save:() => this.nbSaveAi(i),
           repOff:m.rep === 'sent' || m.rep === 'busy', report:() => { if (m.rep === 'fail') this.askMsgPatch(i, { rep:'' }); this.askReportAnswer(i); }
         })),
         askRepOpen:!!A.rep, askRepToggle:this.askRepToggle, askRepMember:member, askRepGuest:!member, askRepText:A.repText, askRepType:this.askRepType, askRepSend:this.askRepSend,
@@ -3455,6 +3548,10 @@
         const key = zh + '#' + dim;
         const cur = S.ws[zh]; const next = { see:cur.see, hear:cur.hear, prod:cur.prod };
         next[dim] = bump(cur[dim], r, { relearn:!!this.lapsed[key] && r !== 'again' });
+        if (r === 'again' && !this.lapsed[zh + '#any']) {   // D7: a lapse of a word already in memory, counted once per session per word
+          this.lapsed[zh + '#any'] = true;
+          const lp = Object.assign({}, prefGet('lapse', {}) || {}); lp[zh] = (+lp[zh] || 0) + 1; prefSet('lapse', lp);
+        }
         if (r === 'again') this.lapsed[key] = true;
         ws = Object.assign({}, S.ws); ws[zh] = next;
         if (r === 'again') again = true;
@@ -3501,6 +3598,7 @@
       const g = this.rGrade(S.rq[0], r, kind); g.rate = itemOf(S.rq[0]).t === 'l' ? null : r; if (itemOf(S.rq[0]).t === 'l') g.lrate = r;   // a new word's answers count in the session score too (lrate), but not as a mastery change
       this.rLast = g;
       this.setState({ qchecked:true, qcorrect:ok, qfeed:feed });
+      if (!ok) this.nbLog();
     };
     // stop part-way: what is answered is already saved card by card; the rest simply stays due. With some cards done you get the normal summary.
     endSession = () => {
@@ -3565,6 +3663,7 @@
         patch.rlog = this.logAnswer(q.word, q.dim, ok ? 'good' : (grade === 'hard' ? 'hard' : 'again'), q.type === 'listen' ? 'a' : q.type === 'mc' ? 'c' : 't');
       }
       this.setState(patch);
+      if (!ok) this.nbLog();
     };
     next = () => {
       const S = this.state;
@@ -4737,6 +4836,7 @@
       const gain = ok ? 12 : 0;
       this.setState({ qbusy:false, qerr:'', qchecked:true, qcorrect:ok, qfeed:(reason || '') + (note ? ' ' + note : ''), qscore:S.qscore + (ok ? 1 : 0), qres:res, qxp:S.qxp + gain, qgain:gain, xp:S.xp + gain, dayXp:S.dayXp + gain });
       this.gptRecord(q.pt, 'w', ok);
+      if (!ok) this.nbLog();
     };
     exitQuiz = () => { this.setState({ screen:this.state.qmode === 'greview' ? 'greview' : isG(this.state.qmode) ? 'grammar' : 'testlobby', qdone:false }); };
     pickLesson = (i) => { this.setState({ glesson:i, gramPick:false, ggopen:null, gq:'' }); try { window.scrollTo(0, 0); } catch (e) {} };
@@ -4838,6 +4938,7 @@
       }
       SFX.play(ok ? 'ok' : 'bad');
       this.setState({ pl:Object.assign({}, pl, { steps, pick:zh, checked:true, ok:okN, bad:badN, missed }) });
+      if (!ok) this.nbLog();
       this.sayAi(st.kind === 'cloze' && st.ex ? st.ex.zh : st.zh, 'pl');
     };
     plNext = () => {
@@ -6288,10 +6389,10 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const obSoundsShow = false;
       const startDoneShow = onbOn && onb.s === 'done' && onb.v !== 'path' && onb.d === ymd(new Date()) && S.rcomplete;   // the end of the first session: what to do next
       // phones: five tabs, each opening a section whose screens are one tap away in a strip under the header
-      const GROUPS = [['home', ['home']], ['learn', ['path', 'library', 'games']], ['review', ['review', 'greview', 'testlobby']], ['talk', ['listen', 'speak']], ['journey', ['journey']]];
+      const GROUPS = [['home', ['home']], ['learn', ['path', 'library', 'games']], ['review', ['review', 'greview', 'testlobby', 'mistakes']], ['talk', ['listen', 'speak']], ['journey', ['journey']]];
       const SUBOF = { words:'library', grammar:'library', gtrack:'library', web:'library', pinyin:'library', exam:'path' };   // pages reached from another page of the same tab: that page stays lit
       const BRANCH = ['acct', 'friends', 'ach', 'voice', 'guide'];   // reached from the Account page (the avatar) or the quiet "You" links, not from a tab
-      const SUBLABEL = { path:'Path', library:'Library', games:'Games', review:'Words', greview:'Grammar', testlobby:'Test', listen:'Listening', speak:'Speaking', home:'Today', journey:'Journey' };
+      const SUBLABEL = { path:'Path', library:'Library', games:'Games', review:'Words', greview:'Grammar', testlobby:'Test', mistakes:'Mistakes', listen:'Listening', speak:'Speaking', home:'Today', journey:'Journey' };
       const curScreen = S.screen === 'quiz' ? (S.qmode === 'greview' ? 'greview' : isG(S.qmode) ? 'grammar' : 'testlobby') : S.screen === 'plesson' || S.screen === 'passage' ? 'path' : S.screen;
       const hlScreen = SUBOF[curScreen] || curScreen;
       const navGroup = BRANCH.indexOf(curScreen) >= 0 ? '' : (GROUPS.find(g => g[1].indexOf(hlScreen) >= 0) || GROUPS[0])[0];
@@ -6366,6 +6467,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         library:['Library', 'Everything you can look up: words, grammar, topics and sounds.'],
         greview:['Grammar review', 'The grammar points that are due, like the word review.'],
         gtrack:['Grammar points', 'How well you know each grammar point, and when it needs a refresh.'],
+        mistakes:['Your mistakes', 'Wrong answers from Review, the Path and tests land here. Practise them, ask the AI about them, and put away the ones you have got.'],
         testlobby:[LVN + ' test', 'Mixed questions from the words you have started, so you are recalling words, not just recognizing them.'],
         grammar:['Grammar', ALL ? LESSONS.length + ' lessons from every unlocked level, one at a time.' : LV === 1 ? LESSONS.length + ' lessons that cover the HSK 1 grammar outline, one at a time.' : LESSONS.length + ' lessons on the grammar of the ' + LVN + ' words, one at a time.'],
         speak:['Speaking practice', HAS_SCRIPTS ? 'Say a short conversation out loud.' : 'Talk with Mingming, the AI conversation partner.'],
@@ -6962,6 +7064,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         ...this.acctVals(S, { level:LVN, streak:streakShown, coins:totalXp(S).toLocaleString('en-US'), mem:memNow.words, started:startedCount, total:bankKeys.length, guide:guideAvail }),
         ...this.jyView(S),
         ...this.askVals(S),
+        ...this.nbVals(S, { rzh, rkind, rAuto, shownEx:rex.zh }),
         isWChar:S.wmode === 'char', isWOpp:S.wmode === 'opp', isWTopic:S.wmode === 'topic',
         wCharCls:S.wmode === 'char' ? 'on' : '', wOppCls:S.wmode === 'opp' ? 'on' : '', wTopicCls:S.wmode === 'topic' ? 'on' : '',
         setWChar:() => this.setState({ wmode:'char' }), setWOpp:() => this.setState({ wmode:'opp' }), setWTopic:() => this.setState({ wmode:'topic' }),
@@ -7138,7 +7241,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         stSynSum:S.syncOn ? 'On: your progress follows you through a GitHub gist' : 'Off: your progress is in this browser only',
         stDatSum:(S.storagePersisted === true ? 'Protected on this device. ' : '') + 'Download or import a backup',
         lockOpts:[[false, 'Locked until the exam is passed'], [true, 'All levels open']].map(o => ({ label:o[1], cls:LVL.softLock() === o[0] ? 'on' : '', fn:() => this.setLock(o[0]) })),
-        isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isGrammar:S.screen === 'grammar', isGrv:S.screen === 'greview', isGtrack:S.screen === 'gtrack', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
+        isHome:S.screen === 'home', isVoice:S.screen === 'voice', isReview:S.screen === 'review', isLobby:S.screen === 'testlobby', isMistakes:S.screen === 'mistakes', isGrammar:S.screen === 'grammar', isGrv:S.screen === 'greview', isGtrack:S.screen === 'gtrack', isSpeak:S.screen === 'speak', isQuiz:S.screen === 'quiz',
 
         // home
         ringDash, todayLine:titles.home[1], tasks, minOpts, dayMin:S.dayMin, mins:S.mins, skills, wordTarget:bankKeys.length, wmTotal:startedCount, wm,

@@ -86,12 +86,28 @@ jobs:
         run: |
           if python3 -c "import sys; sys.path.insert(0, 'tools'); import audiostore; sys.exit(0 if audiostore.only_remote() else 1)" && [ ! -f "$RUNNER_TEMP/r2-ok" ]; then
             echo "the upload to the R2 bucket failed, so the list is not saved (the site would point at files that are not there)"; exit 1; fi
-          python3 tools/build-audio.py
-          node tools/build-site.js
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A audio data/audio-manifest.js index.html sw.js
-          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
-          git commit -m "Qwen audio: $SCOPE (made by the Qwen audio workflow)"
-          git pull --rebase -q
-          git push
+          # Pushes to main during the run change the version stamps in index.html and sw.js, so a plain rebase conflicts. Instead: keep this
+          # run's lists, start again from the newest main, add this run's entries to its index, rebuild the manifest and stamps, and push.
+          mkdir -p "$RUNNER_TEMP/ours"; cp audio/index.json "$RUNNER_TEMP/ours/"; [ -f audio/verify.json ] && cp audio/verify.json "$RUNNER_TEMP/ours/" || true
+          for try in 1 2 3 4 5; do
+            git fetch -q origin main
+            git reset -q --hard origin/main
+            python3 - "$RUNNER_TEMP/ours" <<'PY'
+          import json, os, sys
+          ours = json.load(open(os.path.join(sys.argv[1], 'index.json'), encoding='utf-8'))
+          idx = json.load(open('audio/index.json', encoding='utf-8')); idx.update(ours)
+          json.dump(idx, open('audio/index.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=0, sort_keys=True)
+          v = os.path.join(sys.argv[1], 'verify.json')
+          if os.path.exists(v): open('audio/verify.json', 'w', encoding='utf-8').write(open(v, encoding='utf-8').read())
+          PY
+            python3 tools/build-audio.py
+            node tools/build-site.js
+            git add -A audio data/audio-manifest.js index.html sw.js
+            if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+            git commit -q -m "Qwen audio: $SCOPE (made by the Qwen audio workflow)"
+            if git push -q; then exit 0; fi
+            echo "main moved while saving; trying again"; sleep 5
+          done
+          exit 1
