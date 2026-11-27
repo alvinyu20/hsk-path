@@ -298,6 +298,42 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const cz = api(zero); const jz = (await cz('POST', '/api/join', { body: { name: 'Z' } })).json;
   check((await cz('GET', '/api/ai/status', { token: jz.id + '.' + jz.key })).json.on === false, 'a limit of 0 switches the shared AI off');
   await zero.dispose();
+
+  // "Ask about this": shared answers and the report queue (no AI allowance used; works without ALI_KEY too)
+  {
+    const ask = await makeWorker({}, { outboundService: stub });
+    const ck = api(ask);
+    const p1 = (await ck('POST', '/api/join', { body: { name: 'P' } })).json, p2 = (await ck('POST', '/api/join', { body: { name: 'Q' } })).json;
+    const P1 = p1.id + '.' + p1.key, P2 = p2.id + '.' + p2.key, K = 'ab'.repeat(32), AH = { 'X-Admin-Key': 'admin-secret-key' };
+    check((await ck('GET', '/api/ai/ask?k=' + K)).status === 401, 'shared answers need a key');
+    check((await ck('GET', '/api/ai/ask?k=nothex', { token: P1 })).status === 400, 'a malformed answer key is refused');
+    check((await ck('GET', '/api/ai/ask?k=' + K, { token: P1 })).json.hit === null, 'an unknown question has no shared answer');
+    const put = await ck('PUT', '/api/ai/ask', { token: P1, body: { k: K, kind: 'review', title: '别 bié', q: 'Why was I wrong?', by: 'Qwen', a: { answer: '别 means do not.', examples: [{ zh: '别走。', en: 'Don\'t go.' }, 1, 2, 3], card_wrong: false, card_note: '' } } });
+    check(put.status === 200, 'an answer can be shared');
+    const hit = (await ck('GET', '/api/ai/ask?k=' + K, { token: P2 })).json.hit;
+    check(hit && hit.a.answer === '别 means do not.' && hit.a.examples.length === 3 && hit.by === 'Qwen' && hit.n === 1, 'someone else asking the same thing gets the shared answer (examples capped at 3)');
+    await ck('PUT', '/api/ai/ask', { token: P2, body: { k: K, kind: 'x', title: 'x', q: 'x', a: { answer: 'other' } } });
+    check((await ck('GET', '/api/ai/ask?k=' + K, { token: P2 })).json.hit.a.answer === '别 means do not.', 'a shared answer is not overwritten');
+    check((await ck('PUT', '/api/ai/ask', { token: P1, body: { k: K, a: { answer: '' } } })).status === 400, 'an empty answer is refused');
+    check((await ck('POST', '/api/ai/report', { token: P1, body: { why: 'nonsense' } })).status === 400, 'a report needs a known reason');
+    const r1 = await ck('POST', '/api/ai/report', { token: P1, body: { why: 'answer', k: K, kind: 'review', title: '别 bié', ctx: 'Review card', q: 'Why was I wrong?', a: '别 means do not.', note: 'This explanation is wrong' } });
+    check(r1.status === 201, 'a report is queued');
+    check((await ck('GET', '/api/ai/ask?k=' + K, { token: P2 })).json.hit === null, 'a shared answer someone reported is not handed out again');
+    check((await ck('POST', '/api/ai/report', { token: P2, body: { why: 'answer', k: K, kind: 'review', title: 't', ctx: 'c', q: 'q', a: 'a' } })).json.dup === true, 'the same report is not queued twice');
+    await ck('POST', '/api/ai/report', { token: P2, body: { why: 'ai', kind: 'path', title: '不要', ctx: 'Path stop', q: 'Why?', a: 'x', note: 'The card\'s English is wrong' } });
+    check((await ck('GET', '/api/admin/reports')).status === 401, 'the report queue needs the admin key');
+    const open = (await ck('GET', '/api/admin/reports', { headers: AH })).json.reports;
+    check(open.length === 2 && open[0].name === 'P' && open[0].why === 'answer' && open[1].why === 'ai' && open[1].status === 'open', 'the admin sees the open reports with who sent them');
+    await ck('POST', '/api/admin/reports/mark', { headers: AH, body: { ids: [open[0].id], status: 'sent' } });
+    check((await ck('GET', '/api/admin/reports', { headers: AH })).json.reports.length === 1 && (await ck('GET', '/api/admin/reports?status=all', { headers: AH })).json.reports.length === 2, 'marked reports leave the open list');
+    check((await ck('GET', '/api/admin/ask', { headers: AH })).json.answers[0].bad === 1, 'the admin can list the shared answers');
+    let lim = 0; for (let i = 0; i < 41; i++) { const r = await ck('POST', '/api/ai/report', { token: P2, body: { why: 'card', kind: 'k', title: 't' + i, ctx: 'c', q: 'q', a: 'a' } }); if (r.status === 429) lim++; }
+    check(lim >= 1, 'one person can send at most 40 reports a day');
+    await ask.dispose();
+  }
+  // the Worker passes "ask" calls on like other features
+  const ra = await ca('POST', '/api/ai/chat', { token: T2, body: Object.assign(chatBody(), { feature: 'ask' }) });
+  check(ra.status === 200 || ra.status === 429, 'an "ask" call is a known feature');
   await aiw.dispose();
 
   console.log(failures ? failures + ' worker check(s) failed' : 'all worker checks passed');

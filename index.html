@@ -7,7 +7,7 @@
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com https://pub-94d17f311ee24aec8cec9af141853fa7.r2.dev; connect-src 'self' https://pub-94d17f311ee24aec8cec9af141853fa7.r2.dev https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=481050e5a7 data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=f9adf791ad data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=ae6b55baf3 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=cadeceb7bf data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=2f4e796d1a data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=ed7af49707 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=887b6a91ac data/hsk4-words.js?v=9ebcc5a250 data/hsk4-grammar.js?v=8c535c3fc2 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=deae152b68 data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=018596a707 data/hsk5-words.js?v=1e54d78599 data/hsk5-grammar.js?v=cd8a3a9d5d data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=73d5a24b6f data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=2c380d97a7 data/path-scenes.js?v=cabc535d43 data/speak-scenes.js?v=8fc79e5d01 data/exam-art.js?v=fe9c38d6ea data/journey-media.js?v=de53596394">
-<meta name="shanlu-version" content="b15867fbf0">
+<meta name="shanlu-version" content="7d2758d739">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=6ea9fc772b">
+<link rel="stylesheet" href="styles.css?v=36346a8377">
 </head>
 <body>
 <div id="app"></div>
@@ -109,6 +109,7 @@
         <sc-if value="{{lvMenuOpen}}" hint-placeholder-val="{{ false }}"><div class="lvpanel" role="menu" aria-label="Levels"><div class="lvh">Levels</div><sc-for list="{{lvItems}}" as="o" hint-placeholder-count="3"><button type="button" role="menuitem" class="lvitem {{o.cls}}" data-on-click="{{o.fn}}"><span class="lvn">{{o.label}}</span><span class="lvs">{{o.sub}}</span></button></sc-for></div></sc-if></div>
       <button type="button" class="pill fl" title="Back to Today" data-on-click="{{goStreak}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c1.1 3.4 5 5.3 5 9.9a5 5 0 0 1-10 0c0-1.8.8-3 1.8-4.1.2 1.6 1.1 2.5 2.1 2.7C10.3 8.5 11 5.5 12 2.5z"/></svg>{{streakText}}</button>
       <button type="button" class="{{xpPillCls}}" title="{{xpTip}}" data-on-click="{{goJourney}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="5.4"/></svg>{{xpTotalText}}<span class="pw"> coins</span></button>
+      <button type="button" class="pill askpill" title="Ask the AI about this screen" aria-label="Ask the AI about this screen" data-on-click="{{askBtn}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19 17h-7.5L7 20.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/><path d="M10 9.6a2.1 2.1 0 1 1 3 1.9c-.6.3-1 .8-1 1.5"/><path d="M12 14.6v.1"/></svg><span>Ask</span></button>
     </div>
   </header>
   <sc-if value="{{jyPingShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="xp-ping" role="status" data-on-click="{{goJourney}}"><b>New stop unlocked</b><span>Tap to travel</span></button></sc-if>
@@ -664,6 +665,7 @@
             <sc-if value="{{q.hasRevealPy}}" hint-placeholder-val="{{ false }}"><div class="fb-x fb-py">{{q.revealPy}}</div></sc-if>
               <div class="fb-x">{{q.explain}}</div>
               <a class="report" href="{{q.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
+              <sc-if value="{{askWhyShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn ask-why" data-on-click="{{askWhy}}">Why? Ask the AI</button></sc-if>
             </div>
             <button class="btn ink big" data-on-click="{{next}}">Continue</button>
           </div>
@@ -2179,6 +2181,7 @@
               <div lang="zh-Hans" class="fb-s zh">{{plFbZh}}</div>
               <div class="fb-x">{{plFbPyEn}}</div>
               <sc-if value="{{plHasFbMore}}" hint-placeholder-val="{{ false }}"><div class="fb-x">{{plFbMore}}</div></sc-if>
+              <sc-if value="{{askWhyShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn ask-why" data-on-click="{{askWhy}}">Why? Ask the AI</button></sc-if>
             </div>
             <button class="btn ink big" data-on-click="{{plNext}}">Continue</button>
           </div>
@@ -3163,6 +3166,7 @@
             <sc-if value="{{q.hasRevealPy}}" hint-placeholder-val="{{ false }}"><div class="fb-x fb-py">{{q.revealPy}}</div></sc-if>
             <div class="fb-x">{{q.explain}}</div>
             <a class="report" href="{{q.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
+            <sc-if value="{{askWhyShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn ask-why" data-on-click="{{askWhy}}">Why? Ask the AI</button></sc-if>
           </div>
           <button class="btn ink big" data-on-click="{{next}}">{{nextLabel}}</button>
         </div>
@@ -3199,6 +3203,47 @@
       <a class="linkbtn" href="{{repoUrl}}" target="_blank" rel="noopener">Source on GitHub</a>
     </div>
   </footer></sc-if>
+  <sc-if value="{{askOpen}}" hint-placeholder-val="{{ false }}"><div class="ask-wrap">
+    <button type="button" class="ask-back" aria-label="Close" tabindex="-1" data-on-click="{{askClose}}"></button>
+    <section class="ask" role="dialog" aria-modal="true" aria-labelledby="ask-h">
+      <div class="ask-head">
+        <div class="ask-ctx"><span class="kick" id="ask-h">Ask about {{askCtxLabel}}</span><span class="ask-ctx-t">{{askCtxTitle}}</span></div>
+        <button type="button" class="ask-x" aria-label="Close" data-on-click="{{askClose}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <div class="ask-body" aria-live="polite">
+        <sc-if value="{{askNoAi}}" hint-placeholder-val="{{ false }}"><div class="ask-note-box">The AI is not on for this device yet. Join your study group (Friends) to use its shared AI, or save an API key of your own. <button type="button" class="btn sm" data-on-click="{{askGoAi}}">Open AI settings</button></div></sc-if>
+        <sc-if value="{{askEmpty}}" hint-placeholder-val="{{ true }}"><p class="muted ask-hint">Ask anything about what is on your screen, or pick a question below.</p></sc-if>
+        <sc-for list="{{askMsgs}}" as="m" hint-placeholder-count="0">
+          <sc-if value="{{m.me}}" hint-placeholder-val="{{ false }}"><div class="ask-me">{{m.text}}</div></sc-if>
+          <sc-if value="{{m.ai}}" hint-placeholder-val="{{ false }}"><div class="ask-ai">
+            <p class="ask-a">{{m.text}}</p>
+            <sc-if value="{{m.hasEx}}" hint-placeholder-val="{{ false }}"><sc-for list="{{m.examples}}" as="e" hint-placeholder-count="1"><div class="ask-ex"><div lang="zh-Hans" class="zh">{{e.zh}}</div><div class="py">{{e.py}}</div><div class="en">{{e.en}}</div><sc-if value="{{e.hasWarn}}" hint-placeholder-val="{{ false }}"><div class="ask-warn">{{e.warn}}</div></sc-if></div></sc-for></sc-if>
+            <sc-if value="{{m.cardWrong}}" hint-placeholder-val="{{ false }}"><div class="ask-flag"><b>The AI thinks this card may be wrong.</b> {{m.cardNote}}<sc-if value="{{m.hasFlagText}}" hint-placeholder-val="{{ false }}"> <span class="ask-flag-s">{{m.flagText}}</span></sc-if></div></sc-if>
+            <div class="ask-meta"><span>{{m.by}}</span><sc-if value="{{m.canRep}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn" aria-disabled="{{m.repOff}}" data-on-click="{{m.report}}">{{m.repText}}</button></sc-if></div>
+          </div></sc-if>
+        </sc-for>
+        <sc-if value="{{askBusy}}" hint-placeholder-val="{{ false }}"><div class="ask-ai ask-typing" role="status"><i></i><i></i><i></i><span class="sr-only">Thinking</span></div></sc-if>
+        <sc-if value="{{askErrShow}}" hint-placeholder-val="{{ false }}"><div class="banner bad" role="alert">{{askErr}}</div></sc-if>
+      </div>
+      <sc-if value="{{askHasChips}}" hint-placeholder-val="{{ true }}"><div class="ask-chips"><sc-for list="{{askChips}}" as="c" hint-placeholder-count="3"><button type="button" class="ask-chip" data-on-click="{{c.fn}}">{{c.label}}</button></sc-for></div></sc-if>
+      <div class="ask-in">
+        <input class="inp ask-inp" type="text" value="{{askInput}}" placeholder="Ask about this…" maxlength="300" autocomplete="off" aria-label="Your question" data-on-input="{{askType}}" data-on-keydown="{{askKey}}">
+        <button type="button" class="btn pri" data-on-click="{{askSendFn}}">Ask</button>
+      </div>
+      <div class="ask-foot">
+        <span class="muted">AI answers can be wrong.</span>
+        <button type="button" class="linkbtn" aria-expanded="{{askRepOpen}}" data-on-click="{{askRepToggle}}">Something wrong with this card?</button>
+      </div>
+      <sc-if value="{{askRepOpen}}" hint-placeholder-val="{{ false }}"><div class="ask-rep">
+        <sc-if value="{{askRepMember}}" hint-placeholder-val="{{ true }}">
+          <textarea class="inp ask-rep-t" rows="2" maxlength="600" placeholder="What looks wrong? (for example: the pinyin, the English, or my answer should also count)" aria-label="What looks wrong" data-on-input="{{askRepType}}">{{askRepText}}</textarea>
+          <button type="button" class="btn sm" data-on-click="{{askRepSend}}">Send to the review list</button>
+        </sc-if>
+        <sc-if value="{{askRepGuest}}" hint-placeholder-val="{{ false }}"><span class="ask-rep-alt"><a class="report" href="{{askRepUrl}}" target="_blank" rel="noopener">Report it on GitHub</a></span></sc-if>
+      </div></sc-if>
+      <sc-if value="{{askRepMsgShow}}" hint-placeholder-val="{{ false }}"><p class="ask-rep-msg" role="status">{{askRepMsg}}</p></sc-if>
+    </section>
+  </div></sc-if>
 </main>
 
   <!-- FIRST VISIT: intro pop-up, back on a new device, five guide cards, where to start, name and friends -->
@@ -3401,7 +3446,7 @@
 <script defer src="vendor/morphdom-umd.min.js?v=d5851599ae"></script>
 <script defer src="runtime.js?v=efad794d1b"></script>
 <script defer src="config.js?v=9dd5bf4caf"></script>
-<script defer src="friends.js?v=f51b3f7ce5"></script>
+<script defer src="friends.js?v=0495763580"></script>
 <script defer src="level.js?v=6f1b8ee5a7"></script>
 <script defer src="placement.js?v=8b6f2b8170"></script>
 <script defer src="data/levels-index.js?v=555110ba5a"></script>
@@ -3440,6 +3485,6 @@
 <script defer src="data/confusers.js?v=2d21e34783"></script>
 <script defer src="data/path.js?v=f0ab6af196"></script>
 <script defer src="pitch.js?v=16ceaf9821"></script>
-<script defer src="app.js?v=4345fc1c78"></script>
+<script defer src="app.js?v=5be5ab5210"></script>
 </body>
 </html>

@@ -48,6 +48,16 @@ With one Alibaba key kept on this Worker, everyone in the group can use the AI f
 
 **Worth knowing:** joining the group is open (a first name is enough), so anyone who finds the site's address can join and get an allowance. The group-wide limit above is what caps the cost, and the app's own free-quota setting in Model Studio is a second safety net. If that worries you, setting `INVITE_CODE` closes the group to new people (the app's join form is then refused until you remove it again).
 
+## "Ask about this": shared answers and the report queue
+
+The app's **Ask** button (top bar) and the **Why? Ask the AI** link under a wrong answer open a sheet where you ask the AI about what is on your screen. With this Worker:
+
+- **Shared answers.** The first question someone asks about a screen (say "Why was my answer wrong?" after picking 您 for 再见) is kept, and the next person in the group with the same mistake and question gets that answer straight away, with no AI call. An answer someone marks "This answer seems wrong" is not handed out again.
+- **The report queue.** When the AI thinks a card itself is wrong it is queued on its own; a learner can also queue "Something wrong with this card?" with a note, or "This answer seems wrong". Each person can send 40 reports a day.
+- **Getting the reports:** the **AI reports** workflow (Actions tab; it also runs every Monday) turns the open reports into a review pack in `review/ai-reports/` to paste into DeepSeek or Qwen, and marks them sent. It needs the repo secret **`SHANLU_ADMIN_KEY`** = this Worker's `ADMIN_KEY` (GitHub: Settings → Secrets and variables → Actions). Or look yourself: `curl -H "X-Admin-Key: YOUR_ADMIN_KEY" https://YOUR-WORKER.workers.dev/api/admin/reports` (add `?status=all` for the sent ones too), and `/api/admin/ask` lists the shared answers.
+
+Nothing to set up beyond pasting the new `worker.js` (the two tables are made on their own). "Ask" calls through the shared AI count against the same daily allowance as the other AI features; reading a shared answer and sending a report do not. Until the new `worker.js` is pasted, the app still works: it skips the shared answers and the queue (reports go to GitHub instead) and its AI calls are counted as chat.
+
 ## Updating a Worker you already set up
 
 Whenever `worker.js` changes, paste the whole new file over the old one (**Edit code**) and **Deploy**. Nothing else changes: the variables, the database and everyone's links stay.

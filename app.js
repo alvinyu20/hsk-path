@@ -682,7 +682,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:'light',   // light to start, whatever the device's setting; dark only when chosen
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
-      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyGo:null, jyM1:'front', jyM1Nudge:0, jyTab:'explore', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
+      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyGo:null, jyM1:'front', jyM1Nudge:0, ask:null, jyTab:'explore', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
       xp:0, xpDev:{}, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, dayAct:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:wPage(), clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -1557,6 +1557,58 @@
     const data = await res.json();
     const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
     return { raw:text, parsed:aiParse(text) };
+  }
+
+  // ---------- "Ask about this": questions about what is on the screen (a wrong answer, a card, any page) ----------
+  // Claude Sonnet with an Anthropic key, otherwise Qwen Plus (own Alibaba key or the group's shared AI, counted as "ask").
+  const ASK_SYSTEM = (lv) => [
+    'You are a warm, careful Chinese teacher inside Shanlu, a site where an adult learns Mandarin for HSK 1 to 5 (the HSK 3.0 syllabus, simplified characters). ' + (lv ? 'The learner is studying HSK ' + lv + '.' : 'The learner may be at any level from HSK 1 to 5.'),
+    'You are told what is on the learner\'s screen (a card, a question and their answer, or the text of a page) and their question. Answer that question about that screen.',
+    'Reply with JSON only, in this format: {"answer":"...","examples":[{"zh":"...","en":"..."}],"card_wrong":false,"card_note":""}',
+    'answer: plain, friendly English, at most 120 words. Get to the point. For a wrong answer, say what the learner\'s choice actually means or why it does not fit, and what makes the right answer right. When you mention a Chinese word, write the characters with the pinyin in brackets, for example 别 (bié). No markdown and no headings.',
+    'examples: 0 to 2 short, natural sentences that help, using only common words at the learner\'s level or below, each with an English translation. Leave the list empty when examples would not help.',
+    'You cannot hear the learner. Do not state HSK levels of words from memory. If you are not sure about something, say so plainly instead of guessing.',
+    'The site\'s answer is usually right. Set card_wrong to true only when you are confident the card itself is wrong: a wrong answer marked right, a right answer marked wrong, wrong pinyin or English, or unnatural Chinese; or when the learner\'s answer should be accepted as right too. Then say exactly what is wrong in card_note, in one or two sentences for the person who maintains the site. Otherwise card_wrong is false and card_note is an empty string.',
+    'If the question has nothing to do with learning Chinese or this site, answer in one sentence and offer to help with the screen instead.'
+  ].join('\n');
+  const askClean = (o) => ({
+    answer:String((o && o.answer) || '').trim().slice(0, 2000),
+    examples:(Array.isArray(o && o.examples) ? o.examples : []).filter(e => e && /[\u3400-\u9fff]/.test(String(e.zh || ''))).slice(0, 3).map(e => ({ zh:String(e.zh).trim().slice(0, 120), en:String(e.en || '').trim().slice(0, 200) })),
+    card_wrong:!!(o && o.card_wrong), card_note:String((o && o.card_note) || '').trim().slice(0, 400)
+  });
+  const askParse = (text) => {
+    const i = text.indexOf('{'), j = text.lastIndexOf('}');
+    if (i < 0 || j <= i) throw new Error('The answer was not in the expected format. Try asking again.');
+    const o = askClean(JSON.parse(text.slice(i, j + 1)));
+    if (!o.answer) throw new Error('The answer came back empty. Try asking again.');
+    return o;
+  };
+  const askNorm = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9\u3400-\u9fff]+/g, ' ').trim();
+  const sha1hex = async (t) => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-1', new TextEncoder().encode(String(t))))).map(b => b.toString(16).padStart(2, '0')).join('');
+  async function askCall(lv, msgs) {
+    if (window.SHANLU_ASK_FAKE) return askParse(await window.SHANLU_ASK_FAKE(lv, msgs, ASK_SYSTEM(lv)));   // tests
+    if (AICFG.key) {
+      const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 45000);
+      let res;
+      try {
+        res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', signal:ctl.signal,
+          headers:{ 'x-api-key':AICFG.key, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true', 'content-type':'application/json' },
+          body:JSON.stringify({ model:'claude-sonnet-5-5', max_tokens:700, system:ASK_SYSTEM(lv), messages:msgs }) });
+      } catch (e) { throw new Error('Could not reach the AI service. Check your connection.'); } finally { clearTimeout(tm); }
+      if (res.status === 401) throw new Error('The API key was rejected. Check it in Settings.');
+      if (res.status === 429) throw new Error('Too many requests right now. Wait a moment.');
+      if (!res.ok) throw new Error('The AI service had a problem (' + res.status + ').');
+      const d = await res.json();
+      return Object.assign(askParse((d.content || []).filter(b => b.type === 'text').map(b => b.text).join('')), { by:'Claude' });
+    }
+    if (aliUsable()) {
+      const body = { model:'qwen-plus', max_tokens:700, messages:[{ role:'system', content:ASK_SYSTEM(lv) }].concat(msgs), response_format:{ type:'json_object' } };
+      const go = async (f) => { try { return await aliPost(body, f); } catch (e) { if (e.status === 400 && /response_format|json/i.test(e.detail || '')) { delete body.response_format; return aliPost(body, f); } throw e; } };
+      let data;
+      try { data = await go('ask'); } catch (e) { if (e.code === 'bad_request') data = await go('chat'); else throw e; }   // a Worker from before "ask" existed takes it as a chat call
+      return Object.assign(askParse(aiText(data)), { by:'Qwen' });
+    }
+    throw new Error('No AI is set up on this device.');
   }
 
   // ---- voice recogniser: record, turn the clip into a 16 kHz mono WAV, send it to Alibaba's Qwen3-ASR ----
@@ -2730,6 +2782,158 @@
     // ----- talk with AI -----
     setAiMode = (on) => { this.setState({ aiMode:on }); if (on && this.state.aiOn && !this.state.aim.length) this.aiStart(this.state.aiScn); };
     aiStart = (scnIdx) => { this.ttsUnlock(); this.setState({ aiScn:scnIdx, aim:[], aiErr:'', aiInput:'' }); this.aiAsk([{ role:'user', content:'(Start the conversation with a short greeting and your first question.)' }], scnIdx, []); };
+    // ---- "Ask about this": a sheet over any screen where you can ask the AI about what you see ----
+    // The context is built from what the app knows (the question, your answer, the right one) or, on any other screen, from the page's text.
+    // The first question about a screen is shared with the group (Worker /api/ai/ask, keyed by SHA-1 of the screen and the question); reports go to
+    // the Worker's queue (/api/ai/report), which the "AI reports" workflow turns into a review pack. Without the friends board both are skipped.
+    askLast = null; askTok = 0;
+    askMember = () => !!(FR && FR.enabled() && FR.identity());
+    askMistakeCtx = () => {
+      const S = this.state;
+      if ((S.screen === 'review' || S.screen === 'quiz') && S.qchecked && !S.qcorrect && this.quizQs.length) {
+        const q0 = this.quizQs[Math.min(S.qi, this.quizQs.length - 1)];
+        const lab = (id) => { const o = (q0.options || []).find(x => x.id === id); return o ? String(o.label) : ''; };
+        let yours = '';
+        if (q0.type === 'mc' || q0.type === 'listen') yours = lab(S.qchoice);
+        else if (q0.type === 'order') yours = (S.qpicked || []).map(i => q0.tiles[i]).join(' ');
+        else if (q0.type === 'spot') yours = q0.tokens && q0.tokens[S.qchoice] != null ? 'tapped “' + q0.tokens[S.qchoice] + '”' : '';
+        else yours = S.qtyped || '';
+        const word = q0.rv ? itemOf(q0.rit).zh : ''; const b = word ? BANK[word] : null;
+        const kind = S.screen === 'review' ? 'review' : isG(S.qmode) ? 'grammar' : 'test';
+        const right = [q0.type === 'mc' || q0.type === 'listen' ? lab(q0.correct) : '', q0.reveal, q0.py].filter((x, i, a) => x && a.indexOf(x) === i).join(' / ');
+        const lines = [
+          (kind === 'review' ? 'Review card' : kind === 'grammar' ? 'Grammar practice' + (q0.gtitle ? ' (' + q0.gtitle + ')' : '') : 'Test question') + (q0.kicker ? ': ' + q0.kicker : ''),
+          b ? 'The word being practised: ' + word + ' (' + b.py + ') “' + b.en + '”' : '',
+          'Question: ' + [q0.prompt, q0.big, q0.sub].filter(Boolean).join(' / '),
+          q0.type === 'listen' ? 'A listening question: the learner heard the audio and picked what they heard.' : '',
+          (q0.options || []).length ? 'Options: ' + q0.options.map(o => String(o.label)).join(' | ') : '',
+          q0.type === 'order' ? 'Tiles to put in order: ' + (q0.tiles || []).join(' | ') : '',
+          q0.type === 'spot' ? 'Sentence (the learner taps the part that is wrong): ' + (q0.tokens || []).join('') : '',
+          'The learner answered: ' + (yours || '(nothing)'),
+          'The site\'s right answer: ' + right,
+          q0.model ? 'Model answer: ' + q0.model : '',
+          q0.explain ? 'The site\'s explanation: ' + q0.explain : '',
+          S.qfeed ? 'What the answer checker said: ' + S.qfeed : ''
+        ].filter(Boolean);
+        return { kind, mistake:true, label:kind === 'review' ? 'Review card' : kind === 'grammar' ? 'Grammar' : 'Test', title:(word ? word + ' · ' : '') + 'you answered ' + (yours || '(nothing)'),
+          text:lines.join('\n'), key:[kind, q0.type, q0.prompt, q0.big, right, yours].join('|'), word, yours, right };
+      }
+      if (S.screen === 'plesson' && S.pl && !S.pl.done) {
+        const pl = S.pl, st = pl.steps[pl.i];
+        if (st && st.t !== 'meet' && pl.checked && pl.pick && pl.pick !== st.zh && BANK[st.zh] && BANK[pl.pick]) {
+          const b = BANK[st.zh], pk = BANK[pl.pick];
+          const prompt = st.kind === 'mean' ? 'What does this word mean? ' + st.zh + ' (' + b.py + ')' : st.kind === 'hear' ? 'Which word did you hear? (a listening question)' : st.kind === 'rev' ? 'Which word means “' + b.en + '”?' : 'Which word fits the gap? ' + st.ex.zh.replace(st.zh, '＿＿') + ' (' + st.ex.en + ')';
+          const opt = (zh) => (st.kind === 'mean' ? '“' + BANK[zh].en + '”' : zh + ' (' + BANK[zh].py + ')');
+          const yours = st.kind === 'mean' ? pk.en : pl.pick;
+          const lines = ['Path stop question (the learner is meeting new words)', 'Question: ' + prompt, 'Options: ' + st.opts.map(opt).join(' | '),
+            'The learner picked: ' + opt(pl.pick) + (st.kind === 'mean' ? ', which is the meaning of ' + pl.pick + ' (' + pk.py + ')' : ', which means “' + pk.en + '”'),
+            'The right answer: ' + st.zh + ' (' + b.py + ') “' + b.en + '”'];
+          return { kind:'path', mistake:true, label:'Path stop', title:st.zh + ' · you picked ' + yours, text:lines.join('\n'), key:['path', st.kind, st.zh, pl.pick].join('|'), word:st.zh, yours, right:st.zh, diffA:pl.pick, diffB:st.zh };
+        }
+      }
+      return null;
+    };
+    askScreenCtx = () => {
+      const S = this.state; const h1 = document.querySelector('.top h1'); const main = document.querySelector('main');
+      const title = ((h1 && h1.textContent) || '').trim() || 'Shanlu';
+      const parts = main ? Array.from(main.children).filter(el => !el.matches('header.top, footer, nav, .ask-wrap, .banner, .mstoast')).map(el => el.innerText || '') : [];
+      const text = parts.join('\n').replace(/[ \t]+/g, ' ').replace(/\n\s*\n+/g, '\n').trim().slice(0, 1800);
+      return { kind:'screen', mistake:false, label:'This screen', title, text:'Screen: ' + title + '\nWhat the screen shows (its text):\n' + text, key:'screen|' + S.screen + '|' + title + '|' + text.slice(0, 600) };
+    };
+    askOpenWith = (ctx, q) => {
+      this.askTok++;
+      this.setState({ ask:{ ctx, msgs:[], busy:false, err:'', input:'', rep:false, repText:'', repMsg:'' } });
+      setTimeout(() => { const el = document.querySelector('.ask-inp'); if (el && !q) { try { el.focus({ preventScroll:true }); } catch (e) {} } }, 60);
+      if (q) this.askSend(q);
+    };
+    askWhy = () => { const c = this.askMistakeCtx(); if (!c) return; this.askLast = Object.assign({}, c, { at:Date.now() }); this.askOpenWith(c, 'Why was my answer wrong?'); };
+    askBtn = () => this.askOpenWith(this.askMistakeCtx() || this.askScreenCtx());
+    askClose = () => { this.askTok++; this.setState({ ask:null }); };
+    askType = (e) => { const A = this.state.ask; if (A) this.setState({ ask:Object.assign({}, A, { input:e.target.value }) }); };
+    askKey = (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.askSend(); } else if (e.key === 'Escape') this.askClose(); };
+    askSend = async (raw) => {
+      const S = this.state, A = S.ask; if (!A || A.busy) return;
+      const text = String(typeof raw === 'string' ? raw : A.input || '').trim().slice(0, 300); if (!text) return;
+      if (!S.aiOn) { this.setState({ ask:Object.assign({}, A, { err:'The AI is not set up on this device yet.' }) }); return; }
+      const first = !A.msgs.length;
+      const msgs = A.msgs.concat([{ who:'me', text }]);
+      const tok = ++this.askTok;
+      this.setState({ ask:Object.assign({}, A, { msgs, busy:true, err:'', input:'' }) });
+      const put = (patch) => { const cur = this.state.ask; if (!cur || this.askTok !== tok) return null; const nx = Object.assign({}, cur, patch); this.setState({ ask:nx }); return nx; };
+      const member = this.askMember();
+      try {
+        const k = first ? await sha1hex(A.ctx.key + '\n' + askNorm(text)) : '';
+        if (first && member) {   // the same first question about the same screen: the group's shared answer (no AI call)
+          try { const r = await FR.askGet(k); if (r && r.hit && r.hit.a && r.hit.a.answer) { put({ busy:false, msgs:msgs.concat([{ who:'ai', a:askClean(r.hit.a), by:r.hit.by || 'AI', shared:true, k, q:text }]) }); return; } } catch (e) {}
+        }
+        const hist = msgs.map((m, i) => (m.who === 'me' ? { role:'user', content:(i === 0 ? 'On my screen:\n' + A.ctx.text + '\n\nMy question: ' : '') + m.text } : { role:'assistant', content:JSON.stringify(m.a) }));
+        const out = await askCall(ALL ? 0 : LV, hist);
+        const by = out.by || 'AI'; const a = askClean(out);
+        const nx = put({ busy:false, msgs:msgs.concat([{ who:'ai', a, by, shared:false, k, q:text }]) });
+        if (!nx) return;
+        if (first && member && k) FR.askPut({ k, kind:A.ctx.kind, title:A.ctx.title, q:text, by, a }).catch(() => {});
+        if (a.card_wrong) this.askFlag(nx.msgs.length - 1);
+      } catch (e) { put({ busy:false, err:(e && e.message) || 'Something went wrong.' }); }
+    };
+    askMsgPatch = (i, patch) => { const A = this.state.ask; if (!A || !A.msgs[i]) return; const msgs = A.msgs.slice(); msgs[i] = Object.assign({}, msgs[i], patch); this.setState({ ask:Object.assign({}, A, { msgs }) }); };
+    // the AI thinks the card is wrong: it goes to the review queue on its own (with the friends board), or is offered as a GitHub report
+    askFlag = async (i) => {
+      const A = this.state.ask; const m = A && A.msgs[i]; if (!m) return;
+      if (!this.askMember()) { this.askMsgPatch(i, { flag:'local' }); return; }
+      this.askMsgPatch(i, { flag:'busy' });
+      try { await FR.report({ why:'ai', k:m.k || '', kind:A.ctx.kind, title:A.ctx.title, ctx:A.ctx.text, q:m.q || '', a:m.a.answer, note:m.a.card_note }); this.askMsgPatch(i, { flag:'sent' }); }
+      catch (e) { this.askMsgPatch(i, { flag:'fail' }); }
+    };
+    askReportAnswer = async (i) => {
+      const A = this.state.ask; const m = A && A.msgs[i]; if (!m || m.rep || !this.askMember()) return;
+      this.askMsgPatch(i, { rep:'busy' });
+      try { await FR.report({ why:'answer', k:m.k || '', kind:A.ctx.kind, title:A.ctx.title, ctx:A.ctx.text, q:m.q || '', a:m.a.answer, note:'A learner thinks this AI answer is wrong.' }); this.askMsgPatch(i, { rep:'sent' }); }
+      catch (e) { this.askMsgPatch(i, { rep:'fail' }); }
+    };
+    askRepToggle = () => { const A = this.state.ask; if (A) this.setState({ ask:Object.assign({}, A, { rep:!A.rep, repMsg:'' }) }); };
+    askRepType = (e) => { const A = this.state.ask; if (A) this.setState({ ask:Object.assign({}, A, { repText:e.target.value }) }); };
+    askRepSend = async () => {
+      const A = this.state.ask; if (!A || !this.askMember()) return;
+      const note = String(A.repText || '').trim().slice(0, 600);
+      if (!note) { this.setState({ ask:Object.assign({}, A, { repMsg:'Say what looks wrong first.' }) }); return; }
+      this.setState({ ask:Object.assign({}, A, { repMsg:'Sending…' }) });
+      const last = A.msgs.filter(m => m.who === 'ai').pop();
+      try {
+        await FR.report({ why:'card', k:'', kind:A.ctx.kind, title:A.ctx.title, ctx:A.ctx.text, q:'', a:last ? last.a.answer : '', note });
+        const cur = this.state.ask; if (cur) this.setState({ ask:Object.assign({}, cur, { rep:false, repText:'', repMsg:'Thanks. It is on Alvin\'s list to check.' }) });
+      } catch (e) { const cur = this.state.ask; if (cur) this.setState({ ask:Object.assign({}, cur, { repMsg:e && e.status === 429 ? 'That is a lot of reports for one day. Try again tomorrow.' : 'Could not send it: ' + ((e && e.message) || 'unknown problem') }) }); }
+    };
+    askVals(S) {
+      const showing = (S.screen === 'review' || S.screen === 'quiz') ? !!(S.qchecked && !S.qcorrect && this.quizQs.length)
+        : S.screen === 'plesson' ? !!(S.pl && !S.pl.done && S.pl.checked && S.pl.steps[S.pl.i] && S.pl.pick && S.pl.pick !== S.pl.steps[S.pl.i].zh) : false;
+      if (showing) { const c = this.askMistakeCtx(); if (c) this.askLast = Object.assign(c, { at:Date.now() }); }   // remembered, so the Ask button can still offer it after you move on
+      const A = S.ask;
+      const out = { askWhyShow:showing, askWhy:this.askWhy, askBtn:this.askBtn, askOpen:!!A, askClose:this.askClose };
+      if (!A) return Object.assign(out, { askMsgs:[], askChips:[], askHasChips:false, askBusy:false, askErr:'', askErrShow:false, askNoAi:false, askCtxLabel:'', askCtxTitle:'', askInput:'', askRepOpen:false, askRepMember:false, askRepGuest:false, askRepUrl:'', askRepText:'', askRepMsg:'', askRepMsgShow:false, askEmpty:false });
+      const member = this.askMember();
+      const c = A.ctx; const asked = {}; A.msgs.forEach(m => { if (m.who === 'me') asked[m.text] = true; });
+      const chips = (c.mistake
+        ? ['Why was my answer wrong?', (c.diffA || c.yours) && (c.diffB || c.right) ? 'How are “' + String(c.diffA || c.yours).slice(0, 24) + '” and “' + String(c.diffB || c.right).slice(0, 24) + '” different?' : '', 'Give me another example', 'How can I remember this?']
+        : ['Explain what this screen is for', 'What should I practise here?', 'Help me read the Chinese on this screen']).filter(t => t && !asked[t]).map(t => ({ label:t, fn:() => this.askSend(t) }));
+      const lm = this.askLast;
+      if (!c.mistake && lm && Date.now() - lm.at < 30 * 60000) chips.unshift({ label:'About my last mistake (' + (lm.word || lm.label) + ')', fn:() => this.askOpenWith(lm, 'Why was my answer wrong?') });
+      const flagText = (f) => ({ busy:'Sending it to the review list…', sent:'Sent to Alvin\'s review list.', fail:'Could not send it to the review list.', local:'You can report it with “Something wrong with this card?” below.' }[f] || '');
+      return Object.assign(out, {
+        askCtxLabel:c.label, askCtxTitle:c.title, askInput:A.input, askBusy:A.busy, askErr:A.err, askErrShow:!!A.err, askNoAi:!S.aiOn, askEmpty:!A.msgs.length && !A.busy,
+        askSendFn:() => this.askSend(), askType:this.askType, askKey:this.askKey, askGoAi:() => { this.setState({ ask:null }); this.go('voice'); this.setSec('ai'); },
+        askChips:A.busy ? [] : chips, askHasChips:!A.busy && chips.length > 0,
+        askMsgs:A.msgs.map((m, i) => (m.who === 'me' ? { me:true, ai:false, text:m.text } : {
+          me:false, ai:true, text:m.a.answer,
+          examples:m.a.examples.map(e => { const toks = segHsk(e.zh); const hi = aiOutside(toks); return { zh:e.zh, py:aiPinyin(toks), en:e.en, hasWarn:hi.length > 0, warn:'Above your level: ' + hi.join(', ') }; }),
+          hasEx:m.a.examples.length > 0, cardWrong:m.a.card_wrong, cardNote:m.a.card_note, flagText:flagText(m.flag), hasFlagText:!!flagText(m.flag),
+          by:(m.shared ? 'Asked before in your group · ' : '') + 'Written by AI' + (m.by && m.by !== 'AI' ? ' (' + m.by + ')' : '') + ', not checked by a teacher',
+          canRep:member, repText:m.rep === 'sent' ? 'Thanks, reported' : m.rep === 'busy' ? 'Sending…' : m.rep === 'fail' ? 'Could not send. Try again' : 'This answer seems wrong',
+          repOff:m.rep === 'sent' || m.rep === 'busy', report:() => { if (m.rep === 'fail') this.askMsgPatch(i, { rep:'' }); this.askReportAnswer(i); }
+        })),
+        askRepOpen:!!A.rep, askRepToggle:this.askRepToggle, askRepMember:member, askRepGuest:!member, askRepText:A.repText, askRepType:this.askRepType, askRepSend:this.askRepSend,
+        askRepUrl:report(c.label + ': ' + c.title, c.title, c.text), askRepMsg:A.repMsg, askRepMsgShow:!!A.repMsg
+      });
+    }
     aiAsk = async (history, scnIdx, shown) => {
       this.setState({ aiBusy:true, aiErr:'' });
       try {
@@ -6757,6 +6961,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         ...this.gamesVals(S),
         ...this.acctVals(S, { level:LVN, streak:streakShown, coins:totalXp(S).toLocaleString('en-US'), mem:memNow.words, started:startedCount, total:bankKeys.length, guide:guideAvail }),
         ...this.jyView(S),
+        ...this.askVals(S),
         isWChar:S.wmode === 'char', isWOpp:S.wmode === 'opp', isWTopic:S.wmode === 'topic',
         wCharCls:S.wmode === 'char' ? 'on' : '', wOppCls:S.wmode === 'opp' ? 'on' : '', wTopicCls:S.wmode === 'topic' ? 'on' : '',
         setWChar:() => this.setState({ wmode:'char' }), setWOpp:() => this.setState({ wmode:'opp' }), setWTopic:() => this.setState({ wmode:'topic' }),

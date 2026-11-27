@@ -1,0 +1,42 @@
+name: AI reports
+
+# "Ask about this", step 3: every Monday (or by hand from the Actions tab) the open reports on the friends Worker's queue (cards the AI or a learner
+# thinks are wrong, AI answers a learner doubts) become a review pack in review/ai-reports/, ready to paste into DeepSeek or Qwen, and are marked
+# "sent". Needs the repo secret SHANLU_ADMIN_KEY = the Worker's ADMIN_KEY (Settings > Secrets and variables > Actions). Without it, it says so and stops.
+on:
+  schedule:
+    - cron: '17 16 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pull the open reports
+        env:
+          SHANLU_ADMIN_KEY: ${{ secrets.SHANLU_ADMIN_KEY }}
+        run: |
+          if [ -z "$SHANLU_ADMIN_KEY" ]; then echo "::warning::Add the repo secret SHANLU_ADMIN_KEY (the Worker's ADMIN_KEY) to pull the reports."; exit 0; fi
+          python3 tools/pull-ai-reports.py --ids-out "$RUNNER_TEMP/ids.json"
+      - name: Save the pack
+        run: |
+          git add review/ai-reports 2>/dev/null || true
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "AI reports: new review pack (made by the AI reports workflow)"
+          git pull --rebase -q
+          git push
+      - name: Mark the reports in the pack as sent
+        env:
+          SHANLU_ADMIN_KEY: ${{ secrets.SHANLU_ADMIN_KEY }}
+        run: |
+          if [ -n "$SHANLU_ADMIN_KEY" ] && [ -f "$RUNNER_TEMP/ids.json" ]; then python3 tools/pull-ai-reports.py --mark-ids "$RUNNER_TEMP/ids.json"; fi

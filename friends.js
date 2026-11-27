@@ -148,6 +148,10 @@
       async aiStatus() { return call('GET', '/api/ai/status', undefined, identity()); },
       async aiChat(feature, body) { return call('POST', '/api/ai/chat', { feature, body }, identity()); },
       async aiTts(text, voice) { return call('POST', '/api/ai/tts', { text, voice }, identity()); },
+      // "Ask about this": answers shared by the group (k = SHA-1 of the screen and the question), and the report queue for Alvin's reviews
+      async askGet(k) { return call('GET', '/api/ai/ask?k=' + encodeURIComponent(k), undefined, identity()); },
+      async askPut(entry) { return call('PUT', '/api/ai/ask', entry, identity()); },
+      async report(r) { return call('POST', '/api/ai/report', r, identity()); },
       async cheer(to) { return call('POST', '/api/cheer', { to }, identity()); },
       async leave() { const id = identity(); if (id) { try { await call('DELETE', '/api/me', undefined, id); } catch (e) { if (e.status !== 401) throw e; } } forget(); },
     };

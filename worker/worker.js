@@ -45,7 +45,7 @@ const JOIN_TRIES_PER_IP = 8, JOIN_TRIES_ALL = 60, TRY_WINDOW_MS = 36e5, INVITE_L
 const OPEN_JOINS_PER_IP = 20, OPEN_JOINS_ALL = 200;   // open joining: people who joined in the last hour (a household or a class on one network is fine)
 
 // ---- shared AI (the relay to Alibaba Qwen) ----
-const AI_FEATURES = ['chat', 'grammar', 'meaning', 'asr', 'tts'];            // what a call is counted under (the admin report shows each)
+const AI_FEATURES = ['chat', 'grammar', 'meaning', 'asr', 'tts', 'ask'];            // what a call is counted under (the admin report shows each)
 const AI_CHAT_MODELS = ['qwen-flash', 'qwen-plus'], AI_ASR_MODEL = 'qwen3-asr-flash', AI_TTS_MODEL = 'qwen3-tts-flash';
 const AI_VOICES = ['Cherry', 'Serena', 'Maia', 'Neil', 'Kai'];
 const AI_MAX_TOKENS = 800, AI_CHAT_BYTES = 60000, AI_ASR_BYTES = 1500000, AI_TTS_CHARS = 600, AI_KEEP_DAYS = 90;
@@ -67,6 +67,10 @@ function ensureSchema(env) {
       // shared AI: calls counted per person, per day and per feature; and the people the admin has switched off
       env.DB.prepare('CREATE TABLE IF NOT EXISTS ai_usage (member_id TEXT NOT NULL, day TEXT NOT NULL, feature TEXT NOT NULL, n INTEGER NOT NULL, PRIMARY KEY (member_id, day, feature))'),
       env.DB.prepare('CREATE TABLE IF NOT EXISTS ai_block (member_id TEXT PRIMARY KEY, at INTEGER NOT NULL)'),
+      // "Ask about this": answers shared by everyone in the group (the same first question about the same screen is answered once), and the report queue
+      // (cards the AI or a person thinks are wrong, and AI answers a person thinks are wrong). The queue goes to Alvin's DeepSeek reviews.
+      env.DB.prepare('CREATE TABLE IF NOT EXISTS ai_ask (k TEXT PRIMARY KEY, kind TEXT NOT NULL, title TEXT NOT NULL, q TEXT NOT NULL, a TEXT NOT NULL, by TEXT NOT NULL, n INTEGER NOT NULL, bad INTEGER NOT NULL, created_at INTEGER NOT NULL, used_at INTEGER NOT NULL)'),
+      env.DB.prepare('CREATE TABLE IF NOT EXISTS ai_reports (id INTEGER PRIMARY KEY AUTOINCREMENT, member_id TEXT NOT NULL, at INTEGER NOT NULL, why TEXT NOT NULL, k TEXT, kind TEXT NOT NULL, title TEXT NOT NULL, ctx TEXT NOT NULL, q TEXT NOT NULL, a TEXT NOT NULL, note TEXT NOT NULL, status TEXT NOT NULL)'),
     ]).catch((e) => { schemaReady = null; throw e; });
   }
   return schemaReady;
@@ -218,6 +222,26 @@ async function handle(req, env) {
       const blocked = (await env.DB.prepare('SELECT member_id AS id FROM ai_block').all()).results.map((r) => r.id);
       return reply(req, env, { on: !!env.ALI_KEY, day, tz: aiTz(env), limit: lim.person, group_limit: lim.group, today, week, blocked });
     }
+    if (path === '/api/admin/reports' && req.method === 'GET') {
+      // the report queue: ?status=open (default), sent or all
+      const st = url.searchParams.get('status') || 'open';
+      const rows = (await (st === 'all' ? env.DB.prepare('SELECT r.*, COALESCE(m.name, \'(left)\') AS name FROM ai_reports r LEFT JOIN members m ON m.id = r.member_id ORDER BY r.id')
+        : env.DB.prepare('SELECT r.*, COALESCE(m.name, \'(left)\') AS name FROM ai_reports r LEFT JOIN members m ON m.id = r.member_id WHERE r.status = ? ORDER BY r.id').bind(st)).all()).results;
+      return reply(req, env, { reports: rows });
+    }
+    if (path === '/api/admin/reports/mark' && req.method === 'POST') {
+      // {ids:[...], status:'sent'|'open'|'done'}: the reports workflow marks what it has put into a review pack
+      let doc = null; try { doc = await req.json(); } catch (e) { doc = null; }
+      const ids = doc && Array.isArray(doc.ids) ? doc.ids.map((x) => Math.floor(Number(x))).filter((x) => x > 0).slice(0, 500) : [];
+      const st = doc && ['sent', 'open', 'done'].includes(doc.status) ? doc.status : 'sent';
+      for (const id of ids) await env.DB.prepare('UPDATE ai_reports SET status = ? WHERE id = ?').bind(st, id).run();
+      return reply(req, env, { ok: true, marked: ids.length, status: st });
+    }
+    if (path === '/api/admin/ask' && req.method === 'GET') {
+      // the shared answers, most used first (to see what people ask)
+      const rows = (await env.DB.prepare('SELECT k, kind, title, q, by, n, bad, created_at, used_at FROM ai_ask ORDER BY n DESC, used_at DESC LIMIT 200').all()).results;
+      return reply(req, env, { answers: rows });
+    }
     const aiOff = /^\/api\/admin\/ai\/([0-9a-f]{16})$/.exec(path);
     if (aiOff && (req.method === 'POST' || req.method === 'DELETE')) {
       // POST switches this person's shared AI off, DELETE switches it back on
@@ -245,6 +269,45 @@ async function handle(req, env) {
       const used = await usedBy();
       return reply(req, env, { on: !!env.ALI_KEY && lim.person > 0 && !blocked, blocked, used, limit: lim.person, left: Math.max(0, lim.person - used), day, tz: aiTz(env) });
     }
+    // "Ask about this": the shared answers and the report queue (nothing here counts against the AI allowance)
+    if (path === '/api/ai/ask' && req.method === 'GET') {
+      const k = url.searchParams.get('k') || '';
+      if (!/^[0-9a-f]{40,64}$/.test(k)) return fail(req, env, 400, 'bad_request');
+      const row = await env.DB.prepare('SELECT a, by, n, created_at FROM ai_ask WHERE k = ? AND bad = 0').bind(k).first();
+      if (!row) return reply(req, env, { hit: null });
+      await env.DB.prepare('UPDATE ai_ask SET n = n + 1, used_at = ? WHERE k = ?').bind(now, k).run();
+      let a = null; try { a = JSON.parse(row.a); } catch (e) { a = null; }
+      return reply(req, env, { hit: a ? { a, by: row.by, n: row.n + 1, at: row.created_at } : null });
+    }
+    if ((path === '/api/ai/ask' && req.method === 'PUT') || (path === '/api/ai/report' && req.method === 'POST')) {
+      const text = await req.text();
+      if (text.length > 16000) return fail(req, env, 413, 'too_big');
+      let doc = null; try { doc = JSON.parse(text); } catch (e) { doc = null; }
+      if (!doc || typeof doc !== 'object' || Array.isArray(doc)) return fail(req, env, 400, 'bad_json');
+      const str = (x, n) => String(x == null ? '' : x).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, '').slice(0, n);
+      const k = str(doc.k, 64);
+      if (k && !/^[0-9a-f]{40,64}$/.test(k)) return fail(req, env, 400, 'bad_request');
+      if (path === '/api/ai/ask') {
+        const a = doc.a && typeof doc.a === 'object' && !Array.isArray(doc.a) ? doc.a : null;
+        if (!k || !a || typeof a.answer !== 'string' || !a.answer.trim()) return fail(req, env, 400, 'bad_request');
+        const keep = { answer: str(a.answer, 2000), examples: (Array.isArray(a.examples) ? a.examples : []).slice(0, 3).map((e) => ({ zh: str(e && e.zh, 120), en: str(e && e.en, 200) })), card_wrong: !!a.card_wrong, card_note: str(a.card_note, 400) };
+        await env.DB.prepare('INSERT INTO ai_ask (k, kind, title, q, a, by, n, bad, created_at, used_at) VALUES (?, ?, ?, ?, ?, ?, 0, 0, ?, ?) ON CONFLICT(k) DO NOTHING')
+          .bind(k, str(doc.kind, 40), str(doc.title, 200), str(doc.q, 300), JSON.stringify(keep), str(doc.by, 30), now, now).run();
+        return reply(req, env, { ok: true });
+      }
+      // a report: why = card (a person thinks the card is wrong), answer (a person thinks the AI's answer is wrong) or ai (the AI thinks the card is wrong)
+      const why = ['card', 'answer', 'ai'].includes(doc.why) ? doc.why : '';
+      if (!why) return fail(req, env, 400, 'bad_request');
+      const since = now - DAY_MS;
+      const mine = (await env.DB.prepare('SELECT COUNT(*) AS n FROM ai_reports WHERE member_id = ? AND at > ?').bind(me.id, since).first()).n;
+      if (mine >= 40) return fail(req, env, 429, 'slow_down');
+      // the same thing reported again (same answer or screen, same reason, still open) is not queued twice
+      if (k && (await env.DB.prepare('SELECT 1 AS x FROM ai_reports WHERE k = ? AND why = ? AND status = \'open\'').bind(k, why).first())) return reply(req, env, { ok: true, dup: true });
+      await env.DB.prepare('INSERT INTO ai_reports (member_id, at, why, k, kind, title, ctx, q, a, note, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, \'open\')')
+        .bind(me.id, now, why, k || null, str(doc.kind, 40), str(doc.title, 200), str(doc.ctx, 4000), str(doc.q, 300), str(doc.a, 2400), str(doc.note, 600)).run();
+      if (why === 'answer' && k) await env.DB.prepare('UPDATE ai_ask SET bad = 1 WHERE k = ?').bind(k).run();   // a shared answer someone doubts is not handed out again
+      return reply(req, env, { ok: true }, 201);
+    }
     const isChat = path === '/api/ai/chat', isTts = path === '/api/ai/tts';
     if ((isChat || isTts) && req.method === 'POST') {
       if (!env.ALI_KEY || lim.person <= 0) return fail(req, env, 503, 'ai_not_set_up');
@@ -257,7 +320,7 @@ async function handle(req, env) {
       if (isChat) {
         feature = String(doc.feature || '');
         const b = doc.body;
-        if (!['chat', 'grammar', 'meaning', 'asr'].includes(feature) || !b || typeof b !== 'object' || !Array.isArray(b.messages) || b.messages.length < 1 || b.messages.length > 40) return fail(req, env, 400, 'bad_request');
+        if (!['chat', 'grammar', 'meaning', 'asr', 'ask'].includes(feature) || !b || typeof b !== 'object' || !Array.isArray(b.messages) || b.messages.length < 1 || b.messages.length > 40) return fail(req, env, 400, 'bad_request');
         if (feature === 'asr' ? b.model !== AI_ASR_MODEL : !AI_CHAT_MODELS.includes(b.model)) return fail(req, env, 400, 'bad_model');
         if (feature !== 'asr' && text.length > AI_CHAT_BYTES) return fail(req, env, 413, 'too_big');
         upstreamBody = { model: b.model, messages: b.messages, stream: false };
