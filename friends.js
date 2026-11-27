@@ -152,6 +152,11 @@
       async askGet(k) { return call('GET', '/api/ai/ask?k=' + encodeURIComponent(k), undefined, identity()); },
       async askPut(entry) { return call('PUT', '/api/ai/ask', entry, identity()); },
       async report(r) { return call('POST', '/api/ai/report', r, identity()); },
+      // phone reminders (Web Push): the server's public key, this phone's subscription with its hour and time zone, and a test message
+      async pushGet() { return call('GET', '/api/push', undefined, identity()); },
+      async pushPut(sub) { return call('PUT', '/api/push', sub, identity()); },
+      async pushDel(endpoint) { return call('DELETE', '/api/push', { endpoint }, identity()); },
+      async pushTest() { return call('POST', '/api/push/test', {}, identity()); },
       async cheer(to) { return call('POST', '/api/cheer', { to }, identity()); },
       async leave() { const id = identity(); if (id) { try { await call('DELETE', '/api/me', undefined, id); } catch (e) { if (e.status !== 401) throw e; } } forget(); },
     };

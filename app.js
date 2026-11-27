@@ -688,7 +688,7 @@
     return {
       screen:'home', lvMsg:window.SHANLU_LOCKED || 0, sys:'3.0', mins:20, theme:'light',   // light to start, whatever the device's setting; dark only when chosen
       fr:null, frAt:0, frBusy:false, frErr:'', frMsg:'', frSort:'week', frName:'', syncBadMsg:'', frSyncing:false, frLinkIn:'', frLinkBusy:false, frLeaveAsk:false, frCopied:false,
-      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyGo:null, jyM1:'front', jyM1Nudge:0, ask:null, nbTick:0, nbShow:20, nbShowGot:false, jyTab:'explore', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
+      jyPing:0, avPick:false, aiPick:false, jyTrip:'', jyGo:null, jyM1:'front', jyM1Nudge:0, ask:null, remindTick:0, remindBusy:false, remindMsg:'', remindErr:false, nbTick:0, nbShow:20, nbShowGot:false, jyTab:'explore', jySvSel:null, jySvFilter:'all', jyPassAll:false, jyPsec:'reg', jyFoodRid:null, jyFoodPg:0, jyFoodOv:false, jyFoodPop:null, jyPg:null, jyFlip:null, jyReg:null, jyFilter:'all', jyOpen:null, jyRv:null, jySel:null, jyMoreN:40, onbV:0, pcs:null, pcNote:'', obCard:0, obLvl:'new', obName:'', obJoin:true, obGoal:0, obErr:'', obBusy:false, obBack:false,
       xp:0, xpDev:{}, dayXp:0, dayMin:0, mem0:null, minLog:{}, minDev:{}, dayAct:{}, lrn:{}, rlog:[], epoch:0, saveFail:false, saveInfo:'', swReady:false, storagePersisted:null, tipGone:0, qfeed:'', lrnNote:'', streak:0, lastActive:'', activity:{}, day:'',
       gres:{}, gpt:{}, glast:null, grvLv:0, grvOpen:false, grvAll:false, qbusy:false, qerr:'', sres:{}, nlimit:0, voiceId:'', speed:1, ascView:'trail', webCapOpen:false, gramPick:false, vtick:0, vall:false, glesson:0, ggopen:null, gq:'', sidx:0, sview:'pick', wq:'', lq:'', wshow:wPage(), clipBest:CLIPS.map(() => 0), misses:{}, testHistory:[],
       ws:blankWs(),
@@ -2259,9 +2259,84 @@
         this.persistNow();
         await FR.push(collectFriendStats(), opt.keepalive ? { keepalive:true } : undefined);
         try { localStorage.setItem(FR_PUSH_KEY, String(Date.now())); } catch (e) {}
+        if (!opt.keepalive) this.remindRefresh();
       } catch (e) { this.friendsFailed(e); }
     };
     friendStats = () => collectFriendStats();
+    // ---- F1 phone reminders (Web Push through the friends server). Per device, so kept in localStorage 'shanlu-remind' = { on, hour, ep, sig, at },
+    // not in the synced person prefs. The server reminds at that hour (this device's time zone) on days the app was not used.
+    remindCfg = () => { try { return Object.assign({ on:false, hour:19 }, JSON.parse(localStorage.getItem('shanlu-remind')) || {}); } catch (e) { return { on:false, hour:19 }; } };
+    remindSave = (c) => { lsSet('shanlu-remind', JSON.stringify(c)); this.setState({ remindTick:(this.state.remindTick || 0) + 1 }); };
+    remindEnv = () => {
+      const ua = navigator.userAgent || '';
+      const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+      const standalone = !!(navigator.standalone || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches));
+      const can = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+      return { ios, standalone, can, member:!!(FR && FR.enabled() && FR.identity()) };
+    };
+    remindDueBy = (hour) => {   // words due by the next reminder time (the message says how many)
+      const S = this.state; const t = new Date(); t.setHours(hour, 0, 0, 0); if (t.getTime() <= Date.now()) t.setTime(t.getTime() + DAY_MS);
+      const off = (t.getTime() - Date.now()) / DAY_MS;
+      return Object.keys(S.ws).filter(zh => BANK[zh] && ['see', 'hear', 'prod'].some(k => S.ws[zh][k] && S.ws[zh][k].s > 0 && dueIn(S.ws[zh][k], off) <= 0)).length;
+    };
+    remindBody = (sub, hour) => {
+      const j = sub.toJSON(); const st = collectFriendStats();
+      let tz = 'UTC'; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'; } catch (e) {}
+      return { endpoint:j.endpoint, p256dh:(j.keys || {}).p256dh, auth:(j.keys || {}).auth, hour, tz, n:this.remindDueBy(hour), streak:(st && st.streak) || 0, studied:this.state.dayMin > 0 ? ymd(new Date()) : null };
+    };
+    remindSub = async (make, key) => {
+      if (window.SHANLU_PUSH_FAKE) return window.SHANLU_PUSH_FAKE(make, key);   // tests: headless browsers have no push service
+      const reg = await Promise.race([navigator.serviceWorker.ready, new Promise((r, j) => setTimeout(() => j(new Error('This page has no offline helper (service worker) yet. Reload it once and try again.')), 8000))]);
+      let sub = await reg.pushManager.getSubscription();
+      if (!sub && make) {
+        const raw = atob(key.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - key.length % 4) % 4));
+        sub = await reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey:Uint8Array.from(raw, c => c.charCodeAt(0)) });
+      }
+      return sub;
+    };
+    remindOn = async () => {
+      if (this.state.remindBusy) return;
+      const env = this.remindEnv(); if (!env.can || !env.member) return;
+      this.setState({ remindBusy:true, remindMsg:'Asking for permission…', remindErr:false });
+      try {
+        const info = await FR.pushGet();
+        if (!info || !info.key) throw new Error('Reminders are not set up on the server yet: it needs its two reminder keys (see worker/README.md).');
+        const perm = await Notification.requestPermission();
+        if (perm !== 'granted') throw new Error('Notifications are blocked for this site. Allow them in your browser or phone settings, then try again.');
+        const sub = await this.remindSub(true, info.key);
+        const c = this.remindCfg(); const body = this.remindBody(sub, c.hour);
+        await FR.pushPut(body);
+        this.remindSave(Object.assign(c, { on:true, ep:body.endpoint, sig:[body.n, body.streak, body.studied, body.hour, body.tz].join('|'), at:Date.now() }));
+        this.setState({ remindBusy:false, remindMsg:'Reminders are on.', remindErr:false });
+      } catch (e) { this.setState({ remindBusy:false, remindMsg:(e && e.message) || 'Could not switch reminders on.', remindErr:true }); }
+    };
+    remindOff = async () => {
+      const c = this.remindCfg(); this.setState({ remindBusy:true, remindMsg:'', remindErr:false });
+      try { const sub = await this.remindSub(false); if (sub) { if (FR && FR.identity()) await FR.pushDel(sub.endpoint).catch(() => null); await sub.unsubscribe().catch(() => null); } else if (c.ep && FR && FR.identity()) await FR.pushDel(c.ep).catch(() => null); } catch (e) {}
+      this.remindSave(Object.assign(c, { on:false, ep:'', sig:'' }));
+      this.setState({ remindBusy:false, remindMsg:'Reminders are off.', remindErr:false });
+    };
+    remindHour = (e) => {
+      const h = Math.max(0, Math.min(23, parseInt(e && e.target ? e.target.value : e, 10) || 0));
+      const c = this.remindCfg(); c.hour = h; c.sig = ''; this.remindSave(c);
+      if (c.on) this.remindRefresh(true);
+    };
+    remindTest = async () => {
+      this.setState({ remindBusy:true, remindMsg:'Sending…', remindErr:false });
+      try { const r = await FR.pushTest(); this.setState({ remindBusy:false, remindMsg:r && r.ok ? 'Sent. It should arrive in a few seconds.' : 'The push service did not take it. Try switching reminders off and on again.', remindErr:!(r && r.ok) }); }
+      catch (e) { this.setState({ remindBusy:false, remindMsg:(e && e.message) || 'Could not send a test.', remindErr:true }); }
+    };
+    // keeps the server's copy fresh (words due, streak, studied today): only when something changed, or once in 12 hours
+    remindRefresh = async (force) => {
+      const c = this.remindCfg(); if (!c.on || !FR || !FR.identity() || !('serviceWorker' in navigator)) return;
+      try {
+        const sub = await this.remindSub(false); if (!sub) { this.remindSave(Object.assign(c, { on:false, ep:'', sig:'' })); return; }   // the browser dropped it
+        const body = this.remindBody(sub, c.hour); const sig = [body.n, body.streak, body.studied, body.hour, body.tz].join('|');
+        if (!force && sig === c.sig && Date.now() - (c.at || 0) < 12 * 3600000) return;
+        await FR.pushPut(body);
+        this.remindSave(Object.assign(c, { ep:body.endpoint, sig, at:Date.now() }));
+      } catch (e) {}
+    };
     // Your progress lives on the server too: every device merges into it (the same order-independent merge the GitHub sync uses),
     // so a word, an exam pass or a day's study on one device shows up on all of them.
     // One sync at a time. A call while one is out waits for it and then runs once more (several such calls share that one run), so what
@@ -7234,9 +7309,22 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
         lvMsgGo:() => { const tgt = S.lvMsg === 99 ? 1 : S.lvMsg - 1; this.setState({ lvMsg:0 }); if (LV === tgt) this.go('exam'); else { try { localStorage.setItem('shanlu-level', String(tgt)); } catch (e) {} prefSet('level', tgt); window.location.reload(); } },
         lvMsgClose:() => this.setState({ lvMsg:0 }), lvMsgGoText:LV === (S.lvMsg === 99 ? 1 : S.lvMsg - 1) ? 'Go to the HSK ' + LV + ' exam' : 'Open HSK ' + (S.lvMsg === 99 ? 1 : S.lvMsg - 1),
         lvNote:'You are studying ' + LVN + '. Each level keeps its own progress on this device and its own copy when you sync. ' + (LVL.softLock() ? 'The lock is set to open: every level can be studied, and passing an exam only earns that level\'s seal.' : 'A level opens when you pass the exam of the level before it: at least ' + LVL.PASS_PCT + '% in listening and ' + LVL.PASS_PCT + '% in reading. You can sit each section on its own and retake it; your best result for each section counts. If you already know a level, check your level below to start higher (the check opens levels but earns no seal), or take the level exam. A lock on a button means it is not open yet.'),
-        ...(() => { const sec = S.stOpen || ''; const o = {}; [['Rev', 'reviews'], ['Lvl', 'level'], ['Snd', 'sounds'], ['Erh', 'erhua'], ['Voi', 'voice'], ['Ai', 'ai'], ['Syn', 'sync'], ['Dat', 'data']].forEach(([c, id]) => { o['st' + c + 'Open'] = sec === id; o['st' + c + 'Cls'] = sec === id ? 'open' : ''; o['st' + c + 'Tog'] = () => this.setSec(sec === id ? '' : id); }); return o; })(),   // Settings: one row open at a time
+        ...(() => { const sec = S.stOpen || ''; const o = {}; [['Rev', 'reviews'], ['Lvl', 'level'], ['Snd', 'sounds'], ['Erh', 'erhua'], ['Voi', 'voice'], ['Ai', 'ai'], ['Syn', 'sync'], ['Rem', 'remind'], ['Dat', 'data']].forEach(([c, id]) => { o['st' + c + 'Open'] = sec === id; o['st' + c + 'Cls'] = sec === id ? 'open' : ''; o['st' + c + 'Tog'] = () => this.setSec(sec === id ? '' : id); }); return o; })(),   // Settings: one row open at a time
         stLvlSum:LVN + ' · ' + (LVL.softLock() ? 'all levels open' : 'the next level opens with its exam'),
         stSndSum:prefGet('sound', true) !== false ? 'On' : 'Off',
+        ...(() => {   // F1 phone reminders (Settings > Reminders)
+          void S.remindTick; const c = this.remindCfg(); const env = this.remindEnv();
+          const hl = (h) => (h === 0 ? '12 am' : h < 12 ? h + ' am' : h === 12 ? '12 pm' : (h - 12) + ' pm');
+          const iosHome = env.ios && !env.standalone;
+          return {
+            stRemSum:c.on ? 'On, at ' + hl(c.hour) : 'Off', remOn:c.on, remOff:!c.on,
+            remIosHome:iosHome, remNoSupport:!iosHome && !env.can, remNeedGroup:!iosHome && env.can && !env.member, remReady:!iosHome && env.can && env.member,
+            remHourLabel:hl(c.hour),
+            remSwitch:c.on ? this.remindOff : this.remindOn, remSwitchText:c.on ? 'Switch reminders off' : 'Remind me', remBusy:!!S.remindBusy,
+            remHourDown:() => this.remindHour((c.hour + 23) % 24), remHourUp:() => this.remindHour((c.hour + 1) % 24), remTest:this.remindTest, remMsg:S.remindMsg, remMsgShow:!!S.remindMsg, remMsgCls:S.remindErr ? 'banner bad' : 'muted',
+            remGoFriends:() => this.go('friends')
+          };
+        })(),
         stErhSum:ERHUA_ON ? 'On: 这儿, 一点儿 (Beijing style)' : 'Off: plain forms such as 这里, 一点',
         stSynSum:S.syncOn ? 'On: your progress follows you through a GitHub gist' : 'Off: your progress is in this browser only',
         stDatSum:(S.storagePersisted === true ? 'Protected on this device. ' : '') + 'Download or import a backup',
@@ -7468,6 +7556,7 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
   app.settingsSeed();
   app.settingsApply();
   app.friendsBoot();
+  if (location.hash === '#review') { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} app.go('review'); }   // opened from a reminder
   app.onbBoot();
   // a failed save raises the banner; the next successful save clears it
   onSaveState = (bad) => { try { app.setState({ saveFail:bad, saveInfo:bad ? saveInfo : '' }); } catch (e) {} };

@@ -134,7 +134,7 @@ Alvin picks what comes next. **Don't start big items unprompted.** Ask which one
 ### Fun and coming back
 | # | Item | Effort |
 |---|---|---|
-| F1 | **Phone reminders (Web Push)** through the Worker. iOS needs the Home Screen app. | M |
+| F1 | ✅ **Done 27 Nov** (Settings > Reminders; Alvin adds the VAPID secrets and an hourly cron trigger, see worker/README.md). **Phone reminders (Web Push)** through the Worker. iOS needs the Home Screen app. | M |
 | F2 | **A role-play to finish each Path chapter.** Could reuse the E3 choice lines. | M–L |
 | F4 | **Friends:** a weekly group goal, ghost duels, voice cheers. | M |
 | F5 🟡 | **1.5× club on the friends board.** The achievements exist; the board comparison doesn't. | S |

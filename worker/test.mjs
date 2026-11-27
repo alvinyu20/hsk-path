@@ -336,6 +336,69 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   check(ra.status === 200 || ra.status === 429, 'an "ask" call is a known feature');
   await aiw.dispose();
 
+  // ---- phone reminders (Web Push): the message must decrypt on the phone's side, carry a valid VAPID signature, and go out once a day at the hour asked
+  {
+    const nodeCrypto = await import('crypto');
+    const b64u = (b) => Buffer.from(b).toString('base64url');
+    const vapid = nodeCrypto.generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
+    const vj = vapid.privateKey.export({ format: 'jwk' });
+    const vapidPub = b64u(Buffer.concat([Buffer.from([4]), Buffer.from(vj.x, 'base64url'), Buffer.from(vj.y, 'base64url')]));
+    const ua = nodeCrypto.createECDH('prime256v1'); ua.generateKeys();
+    const uaAuth = nodeCrypto.randomBytes(16);
+    const got = [];
+    const pw2 = await makeWorker({ VAPID_PUBLIC_KEY: vapidPub, VAPID_PRIVATE_KEY: vj.d, PUSH_TEST_HOST: 'https://push.example/' }, {
+      outboundService: async (req) => { got.push({ url: req.url, headers: Object.fromEntries(req.headers), body: Buffer.from(await req.arrayBuffer()) }); return new Response('', { status: req.url.includes('/gone') ? 410 : 201 }); }
+    });
+    const cp = api(pw2);
+    const P = (await cp('POST', '/api/join', { body: { name: 'Pia' } })).json; const PT = P.id + '.' + P.key;
+    check((await cp('GET', '/api/push', { token: PT })).json.key === vapidPub, 'the reminder key is given to the app');
+    const sub = { endpoint: 'https://push.example/abc', p256dh: b64u(ua.getPublicKey()), auth: b64u(uaAuth), tz: 'America/Los_Angeles', hour: 19, n: 12, streak: 5, studied: '2026-01-01' };
+    check((await cp('PUT', '/api/push', { token: PT, body: Object.assign({}, sub, { endpoint: 'https://evil.example/x' }) })).status === 400, 'only real push services are accepted as addresses');
+    check((await cp('PUT', '/api/push', { token: PT, body: Object.assign({}, sub, { tz: 'Not/AZone' }) })).status === 400, 'a made-up time zone is refused');
+    check((await cp('PUT', '/api/push', { token: PT, body: sub })).status === 200, 'a phone can switch reminders on');
+    check((await cp('POST', '/api/push/test', { token: PT })).json.ok === true && got.length === 1, '"Send a test" sends one message');
+    // decrypt it as the phone would (RFC 8291)
+    const m = got[0]; const body = m.body;
+    const salt = body.subarray(0, 16), rs = body.readUInt32BE(16), idlen = body[20], asPub = body.subarray(21, 21 + idlen), ct = body.subarray(21 + idlen);
+    const shared = ua.computeSecret(asPub);
+    const hk = (saltB, ikm, info, n) => Buffer.from(nodeCrypto.hkdfSync('sha256', ikm, saltB, info, n));
+    const ikm = hk(uaAuth, shared, Buffer.concat([Buffer.from('WebPush: info\0'), ua.getPublicKey(), asPub]), 32);
+    const cek = hk(salt, ikm, Buffer.from('Content-Encoding: aes128gcm\0'), 16), nonce = hk(salt, ikm, Buffer.from('Content-Encoding: nonce\0'), 12);
+    const dec = nodeCrypto.createDecipheriv('aes-128-gcm', cek, nonce); dec.setAuthTag(ct.subarray(ct.length - 16));
+    const plain = Buffer.concat([dec.update(ct.subarray(0, ct.length - 16)), dec.final()]);
+    check(rs === 4096 && idlen === 65 && plain[plain.length - 1] === 2 && JSON.parse(plain.subarray(0, -1).toString()).title === 'Reminders are on', 'the message decrypts on the phone side (aes128gcm)');
+    check(m.headers['content-encoding'] === 'aes128gcm' && /^\d+$/.test(m.headers.ttl), 'it is sent with the Web Push headers');
+    const vm = /^vapid t=([^.]+)\.([^.]+)\.([^,]+), k=(.+)$/.exec(m.headers.authorization || '');
+    const claims = vm ? JSON.parse(Buffer.from(vm[2], 'base64url').toString()) : {};
+    const sigOk = vm && nodeCrypto.verify('sha256', Buffer.from(vm[1] + '.' + vm[2]), { key: vapid.publicKey, dsaEncoding: 'ieee-p1363' }, Buffer.from(vm[3], 'base64url'));
+    check(!!sigOk && vm[4] === vapidPub && claims.aud === 'https://push.example' && claims.exp > Date.now() / 1000, 'the VAPID signature checks out with the public key');
+    // the hourly cron: 19:00 in Los Angeles on 2026-11-27 is 03:00 UTC on the 28th
+    const at19 = Date.UTC(2026, 10, 28, 3, 10), at18 = Date.UTC(2026, 10, 28, 2, 10);
+    const worker = await pw2.getWorker();
+    got.length = 0;
+    await worker.scheduled({ scheduledTime: at18, cron: '7 * * * *' });
+    check(got.length === 0, 'no reminder before the hour asked');
+    await worker.scheduled({ scheduledTime: at19, cron: '7 * * * *' });
+    check(got.length === 1, 'the reminder goes out at the hour asked, in the phone\'s time zone');
+    await worker.scheduled({ scheduledTime: at19 + 60000, cron: '7 * * * *' });
+    check(got.length === 1, 'and only once that day');
+    await cp('PUT', '/api/push', { token: PT, body: Object.assign({}, sub, { studied: '2026-11-27' }) });
+    await worker.scheduled({ scheduledTime: at19 + 86400000, cron: '7 * * * *' });
+    check(got.length === 2, 'the next day it comes again');
+    await cp('PUT', '/api/push', { token: PT, body: Object.assign({}, sub, { studied: '2026-11-29' }) });
+    await worker.scheduled({ scheduledTime: at19 + 2 * 86400000, cron: '7 * * * *' });
+    check(got.length === 2, 'no reminder on a day the app was already used');
+    await cp('PUT', '/api/push', { token: PT, body: Object.assign({}, sub, { endpoint: 'https://push.example/gone' }) });
+    await cp('POST', '/api/push/test', { token: PT });
+    check((await cp('GET', '/api/push', { token: PT })).json.subs === 1, 'a phone the push service says is gone is removed');
+    check((await cp('DELETE', '/api/push', { token: PT, body: { endpoint: sub.endpoint } })).status === 200 && (await cp('GET', '/api/push', { token: PT })).json.subs === 0, 'switching reminders off removes the phone');
+    await pw2.dispose();
+    const nokey = await makeWorker();
+    const cn = api(nokey); const Q = (await cn('POST', '/api/join', { body: { name: 'Quin' } })).json;
+    check((await cn('GET', '/api/push', { token: Q.id + '.' + Q.key })).json.key === null, 'without VAPID keys the app is told reminders are not set up');
+    await nokey.dispose();
+  }
+
   console.log(failures ? failures + ' worker check(s) failed' : 'all worker checks passed');
   process.exit(failures ? 1 : 0);
 }

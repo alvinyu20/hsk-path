@@ -23,7 +23,11 @@
  *                             recognition and a spoken line are one each). 0 switches the shared AI off.
  *   AI_GLOBAL_DAILY_LIMIT text optional, default 1000: AI calls per day for the whole group together (a safety ceiling for your Alibaba bill)
  *   AI_TIMEZONE      text     optional, default America/Los_Angeles: the day for the AI limit starts and ends at midnight in this time zone
+ *   VAPID_PUBLIC_KEY secret   OPTIONAL, for phone reminders (Web Push). Make the pair with  node tools/make-vapid-keys.js  (it prints both).
+ *   VAPID_PRIVATE_KEY secret  OPTIONAL, the private half. Without both, the reminder switch in the app says reminders are not set up.
+ *   VAPID_SUBJECT    text     optional, a mailto: address or the site address, sent to the push services so they can reach you about problems
  * Binding: a D1 database named DB.
+ * Cron trigger (only for reminders): every hour, for example  7 * * * *  . Each run sends the reminders due in that hour of each person's own time zone.
  *
  * Safety features (all on by default, nothing to set up):
  *   - joining is rate-limited per network address (8 per hour) and for the whole server (60 per hour), and the group stops at MAX_MEMBERS;
@@ -71,6 +75,9 @@ function ensureSchema(env) {
       // (cards the AI or a person thinks are wrong, and AI answers a person thinks are wrong). The queue goes to Alvin's DeepSeek reviews.
       env.DB.prepare('CREATE TABLE IF NOT EXISTS ai_ask (k TEXT PRIMARY KEY, kind TEXT NOT NULL, title TEXT NOT NULL, q TEXT NOT NULL, a TEXT NOT NULL, by TEXT NOT NULL, n INTEGER NOT NULL, bad INTEGER NOT NULL, created_at INTEGER NOT NULL, used_at INTEGER NOT NULL)'),
       env.DB.prepare('CREATE TABLE IF NOT EXISTS ai_reports (id INTEGER PRIMARY KEY AUTOINCREMENT, member_id TEXT NOT NULL, at INTEGER NOT NULL, why TEXT NOT NULL, k TEXT, kind TEXT NOT NULL, title TEXT NOT NULL, ctx TEXT NOT NULL, q TEXT NOT NULL, a TEXT NOT NULL, note TEXT NOT NULL, status TEXT NOT NULL)'),
+      // phone reminders (Web Push): one row per phone or browser that switched them on. hour = local hour to remind, tz = its time zone,
+      // n / streak = words due by then and the streak (sent by the app on each visit), studied = the last local day the app was used, sent = the last day reminded
+      env.DB.prepare('CREATE TABLE IF NOT EXISTS push_subs (endpoint TEXT PRIMARY KEY, member_id TEXT NOT NULL, p256dh TEXT NOT NULL, auth TEXT NOT NULL, hour INTEGER NOT NULL, tz TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, streak INTEGER NOT NULL DEFAULT 0, studied TEXT, sent TEXT, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL)'),
     ]).catch((e) => { schemaReady = null; throw e; });
   }
   return schemaReady;
@@ -150,6 +157,75 @@ async function isAdmin(req, env) {
   const given = req.headers.get('X-Admin-Key') || '';
   if (!env.ADMIN_KEY || !given) return false;
   return safeEq(await sha256(given), await sha256(env.ADMIN_KEY));
+}
+
+// ---- phone reminders (Web Push, RFC 8030): the message is encrypted for the phone (RFC 8291, aes128gcm) and signed with the VAPID key (RFC 8292) ----
+const PUSH_HOSTS = /^https:\/\/(fcm\.googleapis\.com|android\.googleapis\.com|[a-z0-9.-]+\.push\.apple\.com|updates\.push\.services\.mozilla\.com|push\.services\.mozilla\.com|[a-z0-9.-]+\.notify\.windows\.com)\//;
+const b64u = (bytes) => btoa(String.fromCharCode(...new Uint8Array(bytes))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const unb64u = (s) => { const t = String(s).replace(/-/g, '+').replace(/_/g, '/'); const b = atob(t + '='.repeat((4 - t.length % 4) % 4)); return Uint8Array.from(b, (c) => c.charCodeAt(0)); };
+const cat = (...a) => { const out = new Uint8Array(a.reduce((n, x) => n + x.length, 0)); let i = 0; a.forEach((x) => { out.set(x, i); i += x.length; }); return out; };
+async function hkdf(salt, ikm, info, len) {
+  const k = await crypto.subtle.importKey('raw', ikm, 'HKDF', false, ['deriveBits']);
+  return new Uint8Array(await crypto.subtle.deriveBits({ name: 'HKDF', hash: 'SHA-256', salt, info }, k, len * 8));
+}
+async function pushEncrypt(p256dh, auth, text) {
+  const uaPub = unb64u(p256dh), secret = unb64u(auth);
+  const mine = await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveBits']);
+  const asPub = new Uint8Array(await crypto.subtle.exportKey('raw', mine.publicKey));
+  const theirs = await crypto.subtle.importKey('raw', uaPub, { name: 'ECDH', namedCurve: 'P-256' }, false, []);
+  const shared = new Uint8Array(await crypto.subtle.deriveBits({ name: 'ECDH', public: theirs }, mine.privateKey, 256));
+  const ikm = await hkdf(secret, shared, cat(enc.encode('WebPush: info\0'), uaPub, asPub), 32);
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const cek = await hkdf(salt, ikm, enc.encode('Content-Encoding: aes128gcm\0'), 16);
+  const nonce = await hkdf(salt, ikm, enc.encode('Content-Encoding: nonce\0'), 12);
+  const key = await crypto.subtle.importKey('raw', cek, 'AES-GCM', false, ['encrypt']);
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv: nonce }, key, cat(enc.encode(text), new Uint8Array([2]))));
+  const head = new Uint8Array(21); head.set(salt, 0); new DataView(head.buffer).setUint32(16, 4096); head[20] = asPub.length;
+  return cat(head, asPub, ct);
+}
+async function vapidHeader(env, endpoint) {
+  const pub = unb64u(env.VAPID_PUBLIC_KEY);
+  const jwk = { kty: 'EC', crv: 'P-256', d: String(env.VAPID_PRIVATE_KEY).trim(), x: b64u(pub.slice(1, 33)), y: b64u(pub.slice(33, 65)), ext: true };
+  const key = await crypto.subtle.importKey('jwk', jwk, { name: 'ECDSA', namedCurve: 'P-256' }, false, ['sign']);
+  const part = (o) => b64u(enc.encode(JSON.stringify(o)));
+  const unsigned = part({ typ: 'JWT', alg: 'ES256' }) + '.' + part({ aud: new URL(endpoint).origin, exp: Math.floor(Date.now() / 1000) + 12 * 3600, sub: String(env.VAPID_SUBJECT || 'https://alvinyu20.github.io/hsk-path/') });
+  const sig = await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, key, enc.encode(unsigned));
+  return 'vapid t=' + unsigned + '.' + b64u(sig) + ', k=' + String(env.VAPID_PUBLIC_KEY).trim();
+}
+const pushReady = (env) => !!(env.VAPID_PUBLIC_KEY && env.VAPID_PRIVATE_KEY);
+// sends one message; a phone that has switched reminders off (404/410) is removed
+async function pushSend(env, row, msg) {
+  const body = await pushEncrypt(row.p256dh, row.auth, JSON.stringify(msg));
+  const r = await fetch(row.endpoint, { method: 'POST', headers: { Authorization: await vapidHeader(env, row.endpoint), TTL: '43200', Urgency: 'normal', Topic: 'shanlu-daily', 'Content-Encoding': 'aes128gcm', 'Content-Type': 'application/octet-stream' }, body });
+  if (r.status === 404 || r.status === 410) await env.DB.prepare('DELETE FROM push_subs WHERE endpoint = ?').bind(row.endpoint).run();
+  return r.status;
+}
+const localParts = (tz, now) => {
+  const f = new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hourCycle: 'h23' }).formatToParts(new Date(now));
+  const g = (t) => (f.find((x) => x.type === t) || {}).value;
+  return { day: g('year') + '-' + g('month') + '-' + g('day'), hour: Number(g('hour')) % 24 };
+};
+const reminderText = (row) => ({
+  title: 'Time for Chinese',
+  body: row.n > 0 ? row.n + ' word' + (row.n === 1 ? ' is' : 's are') + ' ready for review.' + (row.streak > 1 ? ' Keep your ' + row.streak + '-day streak going.' : '')
+    : (row.streak > 1 ? 'A few minutes today keeps your ' + row.streak + '-day streak going.' : 'A few minutes of Chinese today?'),
+  url: './#review', tag: 'shanlu-daily'
+});
+// the cron trigger: everyone whose reminder hour it is now (in their own time zone), who has not used the app today and was not reminded today
+async function pushTick(env, now) {
+  if (!pushReady(env) || !env.DB) return { sent: 0 };
+  await ensureSchema(env);
+  const rows = (await env.DB.prepare('SELECT p.*, m.stats AS stats FROM push_subs p JOIN members m ON m.id = p.member_id').all()).results;
+  let sent = 0;
+  for (const row of rows) {
+    let lp; try { lp = localParts(row.tz, now); } catch (e) { continue; }
+    if (lp.hour !== row.hour || row.sent === lp.day || row.studied === lp.day) continue;
+    let st = null; try { st = row.stats ? JSON.parse(row.stats) : null; } catch (e) { st = null; }
+    if (st && st.lastActive === lp.day) continue;
+    await env.DB.prepare('UPDATE push_subs SET sent = ? WHERE endpoint = ?').bind(lp.day, row.endpoint).run();
+    try { const code = await pushSend(env, row, reminderText(row)); if (code >= 200 && code < 300) sent++; } catch (e) {}
+  }
+  return { sent };
 }
 
 async function handle(req, env) {
@@ -251,7 +327,7 @@ async function handle(req, env) {
     }
     const del = /^\/api\/admin\/members\/([0-9a-f]{16})$/.exec(path);
     if (del && req.method === 'DELETE') {
-      await env.DB.batch([env.DB.prepare('DELETE FROM cheers WHERE from_id = ? OR to_id = ?').bind(del[1], del[1]), env.DB.prepare('DELETE FROM progress WHERE member_id = ?').bind(del[1]), env.DB.prepare('DELETE FROM ai_block WHERE member_id = ?').bind(del[1]), env.DB.prepare('DELETE FROM members WHERE id = ?').bind(del[1])]);
+      await env.DB.batch([env.DB.prepare('DELETE FROM cheers WHERE from_id = ? OR to_id = ?').bind(del[1], del[1]), env.DB.prepare('DELETE FROM push_subs WHERE member_id = ?').bind(del[1]), env.DB.prepare('DELETE FROM progress WHERE member_id = ?').bind(del[1]), env.DB.prepare('DELETE FROM ai_block WHERE member_id = ?').bind(del[1]), env.DB.prepare('DELETE FROM members WHERE id = ?').bind(del[1])]);
       return reply(req, env, { ok: true });
     }
     return fail(req, env, 404, 'not_found');
@@ -362,6 +438,42 @@ async function handle(req, env) {
     return fail(req, env, 404, 'not_found');
   }
 
+  // ---- phone reminders ----
+  if (path === '/api/push' && req.method === 'GET') {
+    const mine = (await env.DB.prepare('SELECT hour, tz FROM push_subs WHERE member_id = ?').bind(me.id).all()).results;
+    return reply(req, env, { key: pushReady(env) ? String(env.VAPID_PUBLIC_KEY).trim() : null, subs: mine.length });
+  }
+  if (path === '/api/push' && (req.method === 'PUT' || req.method === 'DELETE')) {
+    const body = await readJson(req, 2048);
+    if (body.tooBig) return fail(req, env, 413, 'too_big');
+    if (body.bad) return fail(req, env, 400, 'bad_json');
+    const v = body.value; const ep = String(v.endpoint || '');
+    const hostOk = PUSH_HOSTS.test(ep) || (env.PUSH_TEST_HOST && ep.startsWith(String(env.PUSH_TEST_HOST)));
+    if (!hostOk || ep.length > 800) return fail(req, env, 400, 'bad_endpoint');
+    if (req.method === 'DELETE') { await env.DB.prepare('DELETE FROM push_subs WHERE endpoint = ? AND member_id = ?').bind(ep, me.id).run(); return reply(req, env, { ok: true }); }
+    if (!pushReady(env)) return fail(req, env, 503, 'push_not_set_up');
+    const b64ok = (x, lo, hi) => typeof x === 'string' && /^[A-Za-z0-9_-]+$/.test(x) && x.length >= lo && x.length <= hi;
+    if (!b64ok(v.p256dh, 80, 100) || !b64ok(v.auth, 16, 32)) return fail(req, env, 400, 'bad_keys');
+    const tz = String(v.tz || ''); try { localParts(tz, now); } catch (e) { return fail(req, env, 400, 'bad_tz'); }
+    const hour = Number.isInteger(v.hour) && v.hour >= 0 && v.hour <= 23 ? v.hour : 19;
+    const int = (x, hi) => (Number.isFinite(x) ? Math.max(0, Math.min(hi, Math.round(x))) : 0);
+    const studied = typeof v.studied === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v.studied) ? v.studied : null;
+    await env.DB.prepare('INSERT INTO push_subs (endpoint, member_id, p256dh, auth, hour, tz, n, streak, studied, sent, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, ?, ?) ' +
+      'ON CONFLICT(endpoint) DO UPDATE SET member_id = excluded.member_id, p256dh = excluded.p256dh, auth = excluded.auth, hour = excluded.hour, tz = excluded.tz, n = excluded.n, streak = excluded.streak, studied = COALESCE(excluded.studied, push_subs.studied), updated_at = excluded.updated_at')
+      .bind(ep, me.id, v.p256dh, v.auth, hour, tz, int(v.n, 99999), int(v.streak, 99999), studied, now, now).run();
+    // at most 5 phones or browsers per person: the ones not seen for longest go
+    await env.DB.prepare('DELETE FROM push_subs WHERE member_id = ? AND endpoint NOT IN (SELECT endpoint FROM push_subs WHERE member_id = ? ORDER BY updated_at DESC LIMIT 5)').bind(me.id, me.id).run();
+    return reply(req, env, { ok: true });
+  }
+  if (path === '/api/push/test' && req.method === 'POST') {
+    if (!pushReady(env)) return fail(req, env, 503, 'push_not_set_up');
+    const rows = (await env.DB.prepare('SELECT * FROM push_subs WHERE member_id = ? ORDER BY updated_at DESC LIMIT 5').bind(me.id).all()).results;
+    if (!rows.length) return fail(req, env, 404, 'no_subscription');
+    const out = [];
+    for (const row of rows) { try { out.push(await pushSend(env, row, { title: 'Reminders are on', body: 'This is how your daily Chinese reminder will look.', url: './', tag: 'shanlu-test' })); } catch (e) { out.push(0); } }
+    return reply(req, env, { ok: out.some((c) => c >= 200 && c < 300), status: out });
+  }
+
   if (path === '/api/group' && req.method === 'GET') {
     const rows = (await env.DB.prepare('SELECT id, name, created_at, updated_at, stats FROM members ORDER BY created_at').all()).results;
     const cheers = (await env.DB.prepare('SELECT from_id, to_id FROM cheers WHERE at > ?').bind(now - DAY_MS).all()).results;
@@ -431,7 +543,7 @@ async function handle(req, env) {
   }
 
   if (path === '/api/me' && req.method === 'DELETE') {
-    await env.DB.batch([env.DB.prepare('DELETE FROM cheers WHERE from_id = ? OR to_id = ?').bind(me.id, me.id), env.DB.prepare('DELETE FROM progress WHERE member_id = ?').bind(me.id), env.DB.prepare('DELETE FROM ai_block WHERE member_id = ?').bind(me.id), env.DB.prepare('DELETE FROM members WHERE id = ?').bind(me.id)]);
+    await env.DB.batch([env.DB.prepare('DELETE FROM cheers WHERE from_id = ? OR to_id = ?').bind(me.id, me.id), env.DB.prepare('DELETE FROM push_subs WHERE member_id = ?').bind(me.id), env.DB.prepare('DELETE FROM progress WHERE member_id = ?').bind(me.id), env.DB.prepare('DELETE FROM ai_block WHERE member_id = ?').bind(me.id), env.DB.prepare('DELETE FROM members WHERE id = ?').bind(me.id)]);
     return reply(req, env, { ok: true });
   }
 
@@ -441,5 +553,8 @@ async function handle(req, env) {
 export default {
   async fetch(req, env) {
     try { return await handle(req, env); } catch (e) { return fail(req, env, 500, 'server_error'); }
+  },
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(pushTick(env, event && event.scheduledTime ? event.scheduledTime : Date.now()).catch(() => null));
   },
 };

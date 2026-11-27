@@ -58,6 +58,19 @@ The app's **Ask** button (top bar) and the **Why? Ask the AI** link under a wron
 
 Nothing to set up beyond pasting the new `worker.js` (the two tables are made on their own). "Ask" calls through the shared AI count against the same daily allowance as the other AI features; reading a shared answer and sending a report do not. Until the new `worker.js` is pasted, the app still works: it skips the shared answers and the queue (reports go to GitHub instead) and its AI calls are counted as chat.
 
+## Phone reminders (optional)
+
+Settings > Reminders sends one notification a day, at the hour each person picks, only on days they have not used the app yet. It needs three things:
+
+1. **A key pair.** Either run `node tools/make-vapid-keys.js`, or paste this into the console of any browser tab (F12 > Console) and press Enter:
+   ```js
+   (async()=>{const k=await crypto.subtle.generateKey({name:'ECDSA',namedCurve:'P-256'},true,['sign']);const j=await crypto.subtle.exportKey('jwk',k.privateKey);const r=new Uint8Array(await crypto.subtle.exportKey('raw',k.publicKey));const b=x=>btoa(String.fromCharCode(...x)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');console.log('VAPID_PUBLIC_KEY '+b(r));console.log('VAPID_PRIVATE_KEY '+j.d)})()
+   ```
+2. **Two secrets** in the Worker's *Settings > Variables and Secrets*: `VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY` (type Secret). Keep the private one to yourself; if it leaks, make a new pair and everyone switches reminders on again. Optional: `VAPID_SUBJECT` = `mailto:you@example.com` (push services use it to reach you about problems; the site address is used otherwise).
+3. **A cron trigger** in *Settings > Triggers > Cron Triggers*: `7 * * * *` (every hour, at 7 minutes past). Each run sends the reminders due in that hour of each person's own time zone.
+
+Paste the new `worker.js` too (it adds the `push_subs` table by itself). On an iPhone, reminders only work in the Home Screen app (Share > Add to Home Screen), iOS 16.4 or later.
+
 ## Updating a Worker you already set up
 
 Whenever `worker.js` changes, paste the whole new file over the old one (**Edit code**) and **Deploy**. Nothing else changes: the variables, the database and everyone's links stay.

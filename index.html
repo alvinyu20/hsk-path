@@ -7,7 +7,7 @@
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com https://pub-94d17f311ee24aec8cec9af141853fa7.r2.dev; connect-src 'self' https://pub-94d17f311ee24aec8cec9af141853fa7.r2.dev https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=481050e5a7 data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=f9adf791ad data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=ae6b55baf3 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=cadeceb7bf data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=2f4e796d1a data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=ed7af49707 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=887b6a91ac data/hsk4-words.js?v=9ebcc5a250 data/hsk4-grammar.js?v=8c535c3fc2 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=deae152b68 data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=018596a707 data/hsk5-words.js?v=1e54d78599 data/hsk5-grammar.js?v=cd8a3a9d5d data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=73d5a24b6f data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=5658d7a4a1 data/path-scenes.js?v=cabc535d43 data/speak-scenes.js?v=8fc79e5d01 data/exam-art.js?v=fe9c38d6ea data/journey-media.js?v=de53596394">
-<meta name="shanlu-version" content="7af5187933">
+<meta name="shanlu-version" content="ff7244be01">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=0b05f304d1">
+<link rel="stylesheet" href="styles.css?v=cf44b29cff">
 </head>
 <body>
 <div id="app"></div>
@@ -348,6 +348,20 @@
           </div>
         </sc-if>
         <sc-if value="{{hasSyncMsg}}" hint-placeholder-val="{{ false }}"><div class="banner {{syncMsgCls}}" style="margin-top:14px" role="status">{{syncMsg}}</div></sc-if>
+        </div></sc-if>
+      </div>
+      <div class="st-item {{stRemCls}}">
+        <h3 class="st-h"><button type="button" class="st-row" aria-expanded="{{stRemOpen}}" data-on-click="{{stRemTog}}"><span lang="zh-Hans" class="st-ic zh" aria-hidden="true">铃</span><span class="st-rt"><b>Reminders</b><span class="st-sum">{{stRemSum}}</span></span><svg class="ic st-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+        <sc-if value="{{stRemOpen}}" hint-placeholder-val="{{ false }}"><div class="st-body rem">
+        <p class="muted" style="margin:6px 0 0;font-size:16px">One notification a day on this phone or computer, at the time you pick, and only on days you have not studied yet. It says how many words are ready for review.</p>
+        <sc-if value="{{remIosHome}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:14px">On an iPhone or iPad, reminders only work in the Home Screen app: tap Share, then <b>Add to Home Screen</b>, open Shanlu from that icon, and switch reminders on here.</div></sc-if>
+        <sc-if value="{{remNoSupport}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:14px">This browser cannot show reminders. Chrome, Edge, Firefox and Safari (on a Mac, or the Home Screen app on an iPhone) can.</div></sc-if>
+        <sc-if value="{{remNeedGroup}}" hint-placeholder-val="{{ false }}"><div class="banner" style="margin-top:14px">Reminders are sent by your study group's server, so join the group first. <button type="button" class="btn sm" data-on-click="{{remGoFriends}}">Open Friends</button></div></sc-if>
+        <sc-if value="{{remReady}}" hint-placeholder-val="{{ true }}">
+          <div class="rem-time"><span>Remind me at</span><button type="button" class="btn sm" aria-label="Earlier" data-on-click="{{remHourDown}}">−</button><b class="rem-h">{{remHourLabel}}</b><button type="button" class="btn sm" aria-label="Later" data-on-click="{{remHourUp}}">+</button></div>
+          <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px"><button type="button" class="btn pri rem-switch" aria-disabled="{{remBusy}}" data-on-click="{{remSwitch}}">{{remSwitchText}}</button><sc-if value="{{remOn}}" hint-placeholder-val="{{ false }}"><button type="button" class="btn rem-test" aria-disabled="{{remBusy}}" data-on-click="{{remTest}}">Send a test</button></sc-if></div>
+          <sc-if value="{{remMsgShow}}" hint-placeholder-val="{{ false }}"><p class="{{remMsgCls}} rem-msg" role="status" style="margin-top:12px">{{remMsg}}</p></sc-if>
+        </sc-if>
         </div></sc-if>
       </div>
       <div class="st-item {{stDatCls}}">
@@ -3514,7 +3528,7 @@
 <script defer src="vendor/morphdom-umd.min.js?v=d5851599ae"></script>
 <script defer src="runtime.js?v=efad794d1b"></script>
 <script defer src="config.js?v=9dd5bf4caf"></script>
-<script defer src="friends.js?v=0495763580"></script>
+<script defer src="friends.js?v=943820c4bf"></script>
 <script defer src="level.js?v=6f1b8ee5a7"></script>
 <script defer src="placement.js?v=8b6f2b8170"></script>
 <script defer src="data/levels-index.js?v=555110ba5a"></script>
@@ -3553,6 +3567,6 @@
 <script defer src="data/confusers.js?v=2d21e34783"></script>
 <script defer src="data/path.js?v=8ede33779e"></script>
 <script defer src="pitch.js?v=16ceaf9821"></script>
-<script defer src="app.js?v=31a8d112eb"></script>
+<script defer src="app.js?v=c2ce46dd83"></script>
 </body>
 </html>

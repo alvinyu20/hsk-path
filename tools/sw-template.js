@@ -55,3 +55,23 @@ self.addEventListener('fetch', (event) => {
   // a file of this version: from the stored copy
   event.respondWith(caches.open(CACHE).then((cache) => cache.match(req)).then((hit) => hit || fetch(req)));
 });
+
+// Phone reminders (Web Push, sent by the friends server's hourly cron): show the message; a tap opens Shanlu (or brings an open Shanlu forward).
+self.addEventListener('push', (event) => {
+  let m = {};
+  try { m = event.data ? event.data.json() : {}; } catch (e) { m = { body: event.data ? event.data.text() : '' }; }
+  const title = String(m.title || 'Time for Chinese').slice(0, 80);
+  event.waitUntil(self.registration.showNotification(title, {
+    body: String(m.body || 'A few minutes of Chinese today?').slice(0, 200), tag: String(m.tag || 'shanlu-daily'), renotify: false,
+    icon: 'icons/icon-192.png', badge: 'icons/icon-192.png', data: { url: String(m.url || './') }
+  }));
+});
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const url = new URL((event.notification.data && event.notification.data.url) || './', self.registration.scope).href;
+  event.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
+    const open = list.find((c) => c.url.startsWith(self.registration.scope));
+    if (open) { open.focus(); if ('navigate' in open && url !== open.url) return open.navigate(url).catch(() => null); return null; }
+    return self.clients.openWindow(url);
+  }));
+});
