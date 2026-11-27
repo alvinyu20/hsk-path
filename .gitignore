@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 worker/node_modules/
 node_modules/
+/audio/*.mp3
+/audio/*.m4a
+/audio/*.ogg
+/audio/*.wav
+/audio/*.webm
