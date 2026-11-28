@@ -7,7 +7,7 @@
 <meta name="description" content="A personal HSK study site: word webs, flashcards, listening practice and grammar.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://api.openverse.org; font-src 'self'; media-src 'self' blob: data: https://*.aliyuncs.com https://pub-94d17f311ee24aec8cec9af141853fa7.r2.dev; connect-src 'self' https://pub-94d17f311ee24aec8cec9af141853fa7.r2.dev https://api.anthropic.com https://dashscope-intl.aliyuncs.com https://*.ap-southeast-1.maas.aliyuncs.com https://api.github.com https://shanlu-friends.alvinyu20.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="shanlu-data" content="data/hsk1-words.js?v=3b25e91807 data/hsk1-grammar.js?v=481050e5a7 data/hsk1-webs.js?v=42cedb4560 data/hsk1-speak.js?v=f9adf791ad data/hsk1-listen.js?v=250a298e10 data/hsk1-exam.js?v=41fdbf162f data/hsk2-words.js?v=6a51d4396b data/hsk2-grammar.js?v=ae6b55baf3 data/hsk2-webs.js?v=23d3cb03c3 data/hsk2-speak.js?v=cadeceb7bf data/hsk2-listen.js?v=028c098051 data/hsk2-exam.js?v=343eb00a0e data/hsk3-words.js?v=485e257b3f data/hsk3-grammar.js?v=2f4e796d1a data/hsk3-webs.js?v=413242a34f data/hsk3-speak.js?v=ed7af49707 data/hsk3-listen.js?v=72b80b5541 data/hsk3-exam.js?v=887b6a91ac data/hsk4-words.js?v=9ebcc5a250 data/hsk4-grammar.js?v=8c535c3fc2 data/hsk4-webs.js?v=8ff64ecd02 data/hsk4-speak.js?v=deae152b68 data/hsk4-listen.js?v=5225ba2a99 data/hsk4-exam.js?v=018596a707 data/hsk5-words.js?v=1e54d78599 data/hsk5-grammar.js?v=cd8a3a9d5d data/hsk5-webs.js?v=c3a7725f04 data/hsk5-speak.js?v=73d5a24b6f data/hsk5-listen.js?v=f7beda13a4 data/hsk5-exam.js?v=5658d7a4a1 data/path-scenes.js?v=cabc535d43 data/speak-scenes.js?v=8fc79e5d01 data/exam-art.js?v=fe9c38d6ea data/journey-media.js?v=de53596394">
-<meta name="shanlu-version" content="ff7244be01">
+<meta name="shanlu-version" content="98b0a41a90">
 <meta name="theme-color" content="#EDF0EC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23C2362B'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='38.0'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M150.0%20206.0%20V350.0%20H362.0%20V206.0'/%3E%3Cpath%20d='M256.0%20128.0%20V350.0'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=cf44b29cff">
+<link rel="stylesheet" href="styles.css?v=d3430ee7be">
 </head>
 <body>
 <div id="app"></div>
@@ -685,9 +685,10 @@
           </div>
         </sc-if>
       </sc-if>
+      <sc-if value="{{wFlagShow}}" hint-placeholder-val="{{ false }}"><div class="trk-row"><button type="button" class="trk-flag" data-on-click="{{wFlag}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg><span>Mark as tricky</span></button></div></sc-if>
       <sc-if value="{{leechShow}}" hint-placeholder-val="{{ false }}">
         <div class="leech" role="note">
-          <div class="leech-h"><b>Tricky word</b> <span>{{leechN}}</span></div>
+          <div class="leech-h"><b>Tricky word</b> <span>{{leechN}}</span> <button type="button" class="linkbtn leech-unmark" data-on-click="{{leechUnmark}}">Unmark</button></div>
           <sc-if value="{{leechHasEx}}" hint-placeholder-val="{{ true }}"><div class="leech-ex"><button type="button" class="nb-hear" data-on-click="{{leechHearEx}}" aria-label="Hear the sentence"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><div><div lang="zh-Hans" class="zh">{{leechExZh}}</div><div class="py">{{leechExPy}}</div><div class="en">{{leechExEn}}</div></div></div></sc-if>
           <sc-if value="{{leechHasMix}}" hint-placeholder-val="{{ false }}"><div class="leech-vs">
             <div class="leech-w"><span lang="zh-Hans" class="zh">{{leechZh}}</span><span>{{leechEn}}</span></div>
@@ -814,12 +815,29 @@
     <sc-if value="{{nbHasTricky}}" hint-placeholder-val="{{ false }}">
       <section class="card nb-trk">
         <h2 class="h2">Tricky words</h2>
-        <p class="muted">Words you have forgotten in Review four times or more. Their cards now show a second example and the word they get mixed up with.</p>
+        <p class="muted">Words you have forgotten in Review four times or more, or marked yourself. Their cards now show a second example and the word they get mixed up with.</p>
         <div class="nb-trk-l">
           <sc-for list="{{nbTricky}}" as="t" hint-placeholder-count="2">
-            <div class="nb-trk-i"><button type="button" class="nb-hear" data-on-click="{{t.hear}}" aria-label="Hear the word"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><div><div><span lang="zh-Hans" class="zh nb-zh">{{t.zh}}</span> <span class="nb-py">{{t.py}}</span></div><div class="nb-en">{{t.en}}</div><div class="nb-when">{{t.n}}</div><sc-if value="{{t.hasMix}}" hint-placeholder-val="{{ false }}"><div class="nb-mix">vs <span lang="zh-Hans" class="zh">{{t.mixZh}}</span> {{t.mixPy}} “{{t.mixEn}}”</div></sc-if></div></div>
+            <div class="nb-trk-i"><button type="button" class="nb-hear" data-on-click="{{t.hear}}" aria-label="Hear the word"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><div><div><span lang="zh-Hans" class="zh nb-zh">{{t.zh}}</span> <span class="nb-py">{{t.py}}</span></div><div class="nb-en">{{t.en}}</div><div class="nb-when">{{t.n}}</div><sc-if value="{{t.hasMix}}" hint-placeholder-val="{{ false }}"><div class="nb-mix">vs <span lang="zh-Hans" class="zh">{{t.mixZh}}</span> {{t.mixPy}} “{{t.mixEn}}”</div></sc-if><button type="button" class="linkbtn" data-on-click="{{t.unmark}}">Unmark</button></div></div>
           </sc-for>
         </div>
+      </section>
+    </sc-if>
+    <sc-if value="{{nbHasTrG}}" hint-placeholder-val="{{ false }}">
+      <section class="card nb-trg">
+        <h2 class="h2">Tricky grammar</h2>
+        <p class="muted">Grammar points you have got wrong three times or more, or marked yourself. They come up about twice as often in Grammar review.</p>
+        <div class="nb-trg-l">
+          <sc-for list="{{nbTrG}}" as="g" hint-placeholder-count="2">
+            <div class="nb-trg-i">
+              <div class="nb-top"><span class="nb-lab">{{g.lv}}</span><span class="nb-when">{{g.n}}</span></div>
+              <b>{{g.title}}</b>
+              <sc-if value="{{g.hasFormula}}" hint-placeholder-val="{{ true }}"><div class="formula"><sc-for list="{{g.formula}}" as="f" hint-placeholder-count="3"><sc-if value="{{f.hasSep}}" hint-placeholder-val="{{ true }}"><span class="fsep">{{f.sep}}</span></sc-if><span class="fchip {{f.cls}}">{{f.t}}</span></sc-for></div></sc-if>
+              <div class="nb-act"><sc-if value="{{g.hasLesson}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn sm" data-on-click="{{g.lesson}}">Open the lesson</button></sc-if><button type="button" class="linkbtn" data-on-click="{{g.unmark}}">Unmark</button></div>
+            </div>
+          </sc-for>
+        </div>
+        <button type="button" class="btn pri" style="margin-top:12px" data-on-click="{{nbPracG}}">Practise these points</button>
       </section>
     </sc-if>
     <sc-if value="{{nbHasOpen}}" hint-placeholder-val="{{ false }}">
@@ -3249,9 +3267,21 @@
             <div class="fb-x">{{q.explain}}</div>
             <a class="report" href="{{q.reportUrl}}" target="_blank" rel="noopener">Report a mistake</a>
             <sc-if value="{{askWhyShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn ask-why" data-on-click="{{askWhy}}">Why? Ask the AI</button></sc-if>
+            <sc-if value="{{gFlagShow}}" hint-placeholder-val="{{ false }}"><button type="button" class="{{gFlagCls}}" data-on-click="{{gFlag}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg><span>{{gFlagText}}</span></button></sc-if>
           </div>
           <button class="btn ink big" data-on-click="{{next}}">{{nextLabel}}</button>
         </div>
+        <sc-if value="{{gRuleShow}}" hint-placeholder-val="{{ false }}">
+          <div class="grule" role="note">
+            <div class="grule-h">The rule: <b>{{gRuleTitle}}</b></div>
+            <sc-if value="{{gRuleHasTricky}}" hint-placeholder-val="{{ false }}"><div class="grule-trk">{{gRuleTricky}}</div></sc-if>
+            <div class="formula"><sc-for list="{{gRuleFormula}}" as="f" hint-placeholder-count="3"><sc-if value="{{f.hasSep}}" hint-placeholder-val="{{ true }}"><span class="fsep">{{f.sep}}</span></sc-if><span class="fchip {{f.cls}}">{{f.t}}</span></sc-for></div>
+            <sc-if value="{{gRuleHasEx}}" hint-placeholder-val="{{ true }}"><div class="leech-ex"><button type="button" class="nb-hear" data-on-click="{{gRuleHear}}" aria-label="Hear the example"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><div>
+              <div lang="zh-Hans" class="zh"><sc-if value="{{gRuleExHasParts}}" hint-placeholder-val="{{ true }}"><sc-for list="{{gRuleExParts}}" as="p" hint-placeholder-count="3"><span class="xpart {{p.c}}">{{p.t}}</span></sc-for></sc-if><sc-if value="{{gRuleExNoParts}}" hint-placeholder-val="{{ false }}">{{gRuleExZh}}</sc-if></div>
+              <div class="py">{{gRuleExPy}}</div><div class="en">{{gRuleExEn}}</div></div></div></sc-if>
+            <sc-if value="{{gRuleCanOpen}}" hint-placeholder-val="{{ false }}"><button type="button" class="linkbtn" data-on-click="{{gRuleOpen}}">Open the lesson</button></sc-if>
+          </div>
+        </sc-if>
       </sc-if>
     </sc-if>
 
@@ -3541,7 +3571,7 @@
 <script defer src="data/hsk5-preview.js?v=7cc0706b86"></script>
 <script defer src="ascent.js?v=d2ca2a4903"></script>
 <script defer src="secrets.js?v=abc49c1923"></script>
-<script defer src="sync.js?v=e3aa8f7f94"></script>
+<script defer src="sync.js?v=006b724620"></script>
 <script defer src="data/audio-manifest.js?v=b98041424a"></script>
 <script defer src="audiolist.js?v=e9406e5d30"></script>
 <script defer src="jyscene.js?v=2210f9fb22"></script>
@@ -3567,6 +3597,6 @@
 <script defer src="data/confusers.js?v=2d21e34783"></script>
 <script defer src="data/path.js?v=8ede33779e"></script>
 <script defer src="pitch.js?v=16ceaf9821"></script>
-<script defer src="app.js?v=c2ce46dd83"></script>
+<script defer src="app.js?v=4484c405b9"></script>
 </body>
 </html>

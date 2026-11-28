@@ -301,7 +301,17 @@
     Object.keys(a.v).concat(Object.keys(b.v)).sort().forEach(k => { v[k] = Math.max(+a.v[k] || 0, +b.v[k] || 0); });
     return { v, at: maxNum(a.at, b.at) };
   }
-  const PREF_MERGE = { jy: mergeJourney, mistakes: mergeMist, lapse: mergeLapse };
+  // marks set by hand (pref 'flag', v = { 'w:<word>' | 'g:<grammar point>': { on, at, n } }): the newest mark per key wins, so unmarking syncs too
+  function mergeFlag(a, b) {
+    if (!isObj(a) || !isObj(a.v) || !isObj(b) || !isObj(b.v)) return lww(a, b);
+    const v = {};
+    Object.keys(a.v).concat(Object.keys(b.v)).sort().forEach(k => {
+      const x = a.v[k], y = b.v[k];
+      v[k] = !isObj(x) ? y : !isObj(y) ? x : ((y.at || 0) > (x.at || 0) || ((y.at || 0) === (x.at || 0) && JSON.stringify(y) > JSON.stringify(x)) ? y : x);
+    });
+    return { v, at: maxNum(a.at, b.at) };
+  }
+  const PREF_MERGE = { jy: mergeJourney, mistakes: mergeMist, lapse: mergeLapse, glapse: mergeLapse, flag: mergeFlag };
   const factKey = (t) => String(t || '').trim().toLowerCase();
   function mergePerson(a, b) {
     a = isObj(a) ? a : {}; b = isObj(b) ? b : {};

@@ -4300,3 +4300,18 @@ button.task2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .nb-hear .ic{width:19px;height:19px}
 .rem-time{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
 .rem-h{min-width:62px;text-align:center;font-size:18px}
+/* tricky marks and the rule box after a wrong grammar answer */
+.trk-row{display:flex;justify-content:center}
+.trk-flag{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;margin-top:8px}
+.trk-flag .ic{width:16px;height:16px}
+.trk-flag.on{border-color:var(--amber);color:var(--ink)}
+.trk-flag.on .ic{fill:var(--amber);stroke:var(--amber)}
+.leech-unmark{font-size:13px;margin-left:6px}
+.grule{border:1.5px solid var(--line);border-left:4px solid var(--seal);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:var(--panel);margin-top:12px}
+.grule-h{font-size:14.5px;color:var(--muted)}.grule-h b{color:var(--ink)}
+.grule-trk{font-size:13.5px;color:var(--seal)}
+.grule .formula{margin:0}
+.grule .leech-ex .zh{font-size:21px}
+.nb-trg-l{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.nb-trg-i{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.nb-trg-i .formula{margin:0}

@@ -88,6 +88,43 @@ const check = (cond, msg) => { if (!cond) { failures++; console.log('FAIL', msg)
   await page.evaluate(() => { window.shanlu.setState({ rq: ['好'], rflip: true }); window.shanlu.rate('again'); window.shanlu.setState({ rq: ['好'], rflip: true }); window.shanlu.rate('again'); });
   check(((await person()).lapse || {}).v['好'] === 5, 'Again on a learned word counts one lapse, once per session');
 
+  // 5. marking a word tricky by hand, and unmarking it
+  await page.evaluate(() => { const s = window.shanlu; const ws = Object.assign({}, s.state.ws); const w = ws['你'];
+    ws['你'] = { see: { s: 3, t: Date.now() - 30 * 864e5, d: 6 }, hear: w.hear, prod: w.prod }; s.setState({ ws, screen: 'review', rq: ['你'], rflip: true, qchecked: true, qcorrect: true }); });
+  await page.waitForTimeout(120);
+  check(await page.locator('.leech').count() === 0 && await page.locator('.trk-row .trk-flag').count() === 1, 'a normal word offers "Mark as tricky" after the answer');
+  await page.locator('.trk-row .trk-flag').click(); await page.waitForTimeout(100);
+  check(await page.locator('.leech').count() === 1 && (await page.locator('.leech-h').textContent()).includes('marked'), 'marking it shows the tricky-word box');
+  await page.locator('.leech-unmark').click(); await page.waitForTimeout(100);
+  const fl = ((await person()).flag || {}).v || {};
+  check(await page.locator('.leech').count() === 0 && fl['w:你'] && fl['w:你'].on === false, 'Unmark takes it away again');
+
+  // 6. grammar points: three misses make a point tricky; the rule box shows after a wrong answer; points can be marked by hand
+  const g = await page.evaluate(() => { const G = window.HSK1_GRAMMAR; const p = G.points.find(x => G.lessons.some(l => l.id === x.lesson && (l.q || []).some(q => q.pt === x.id))); return { pid: p.id, lesson: p.lesson }; });
+  await page.evaluate((g) => { const s = window.shanlu; const gres = Object.assign({}, s.state.gres); gres[g.lesson] = 100; s.setState({ gres }); }, g);
+  for (let i = 0; i < 3; i++) {
+    await page.evaluate((g) => window.shanlu.gptRecord(g.pid, 'r', false), g);
+    await page.evaluate((g) => window.shanlu.gptRecord(g.pid, 'r', false), g);   // twice in one page load still counts once
+    await page.reload(); await page.waitForSelector('.app');
+  }
+  check(((await person()).glapse || {}).v[g.pid] === 3, 'each page load counts a missed grammar point once');
+  await page.evaluate(() => window.shanlu.go('mistakes')); await page.waitForTimeout(150);
+  check(await page.locator('.nb-trg-i').count() === 1, 'a point missed three times is listed under Tricky grammar');
+  check(await page.locator('.nb-trg-i .formula .fchip').count() >= 2, 'with its formula');
+  await page.locator('.nb-trg .btn.pri').click(); await page.waitForTimeout(150);
+  const qz = await page.evaluate(() => ({ screen: window.shanlu.state.screen, mode: window.shanlu.state.qmode, pts: window.shanlu.quizQs.map(q => q.pt) }));
+  check(qz.screen === 'quiz' && qz.mode === 'greview' && qz.pts.length > 0 && qz.pts.every(x => x === g.pid), 'Practise these points runs Grammar review on the tricky points only');
+  await page.evaluate(() => window.shanlu.setState({ qchecked: true, qcorrect: false })); await page.waitForTimeout(120);
+  check(await page.locator('.grule').count() === 1 && await page.locator('.grule .fchip').count() >= 2, 'a wrong grammar answer shows the rule box with the formula');
+  check((await page.locator('.grule-trk').textContent()).includes('3 times'), 'and says it is a tricky point');
+  check(await page.locator('.grule .xpart, .grule .leech-ex .zh').count() >= 1, 'and an example sentence');
+  if (process.env.SHOTS) { await page.locator('.grule').scrollIntoViewIfNeeded(); await page.screenshot({ path: process.env.SHOTS + '/grule.png' }); }
+  check((await page.locator('.fb .trk-flag').textContent()).includes('unmark'), 'the tricky mark shows on the answer');
+  await page.locator('.fb .trk-flag').click(); await page.waitForTimeout(100);
+  check((await page.locator('.fb .trk-flag').textContent()).includes('Mark as tricky'), 'and can be taken off');
+  await page.evaluate(() => window.shanlu.setState({ qcorrect: true })); await page.waitForTimeout(80);
+  check(await page.locator('.grule').count() === 0, 'a right answer shows no rule box');
+
   check(errors.length === 0, 'no page errors' + (errors.length ? ': ' + errors.join(' | ') : ''));
   await browser.close(); server.close();
   console.log(failures ? failures + ' check(s) failed' : 'all mistake notebook checks passed');

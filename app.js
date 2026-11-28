@@ -68,6 +68,26 @@
   const nbAll = () => { const v = prefGet('mistakes', null); return v && Array.isArray(v.e) ? v : { v:1, e:[], cut:0 }; };
   const nbPut = (e, cut) => { const c = cut != null ? cut : (nbAll().cut || 0); const SY = window.ShanluSync; prefSet('mistakes', { v:1, e:SY ? SY.mistTrim(e, c) : e.slice(0, 120), cut:c }); };
   const lapseOf = (zh) => +((prefGet('lapse', {}) || {})[zh]) || 0;
+  // grammar points: wrong answers per point (pref 'glapse', once per page load per point); G_TRICKY_AT or more makes it a tricky point.
+  // Marks set by hand (pref 'flag': { 'w:<word>' | 'g:<point>': { on, at, n } }) win over the counts: on = tricky; off remembers the count
+  // then (n), so it only turns tricky again after as many new misses as it took the first time.
+  const G_TRICKY_AT = 3;
+  // how a lesson is built decides how its formula is drawn (the lesson page and the rule box after a wrong grammar answer)
+  const gSlotRole = (t) => /^(subject|pronoun|owner|doer)/i.test(t) ? 'who' : /^(time|place|where|when|how long|how \/ when)/i.test(t) ? 'when' : /^(verb|action|adjective|degree|how well|result|how)/i.test(t) ? 'does' : /^(object|thing|noun|amount|number|measure|owner or|someone)/i.test(t) ? 'thing' : '';
+  const gShape = (L) => {
+    const ft = L.formula.map(f => f.t).join(' ');
+    if (/…/.test(L.title) && /因为|所以|不但|如果|只要|除了|先|越|虽然|一边/.test(ft)) return { k:'frame', label:'Frame with blanks', hint:'The red words are the frame. Fill the gaps with your own words.' };
+    if (L.formula.length <= 3 && L.formula.some(f => /Sentence|Statement|Situation/.test(f.t))) return { k:'add', label:'One small add-on', hint:'Take a sentence you already have and add this.' };
+    if (/\//.test(ft) && L.formula.some(f => f.k) && L.formula.length <= 3) return { k:'pick', label:'Pick one', hint:'Several words fit here. The examples show when to use each.' };
+    return { k:'slots', label:'Word order', hint:'Each colour is a job in the sentence: who, when or where, what is done, and to what.' };
+  };
+  const gChips = (L) => { const sh = gShape(L); return L.formula.map(f => ({ t:f.t, cls:(f.k ? 'k ' : '') + (f.z ? 'zh ' : '') + (!f.k && sh.k === 'slots' ? gSlotRole(f.t) : (!f.k && sh.k !== 'slots' ? 'open' : '')), sep:f.sep, hasSep:f.sep !== '' })); };
+  const glapseOf = (pid) => +((prefGet('glapse', {}) || {})[pid]) || 0;
+  const flagOf = (k) => { const f = (prefGet('flag', {}) || {})[k]; return f && typeof f === 'object' ? f : null; };
+  const trickyBy = (f, n, at) => (f ? (f.on ? true : n >= (+f.n || 0) + at) : n >= at);
+  const trickyW = (zh) => trickyBy(flagOf('w:' + zh), lapseOf(zh), LEECH_AT);
+  const trickyG = (pid) => trickyBy(flagOf('g:' + pid), glapseOf(pid), G_TRICKY_AT);
+  const flagSet = (k, on, n) => { const v = Object.assign({}, prefGet('flag', {}) || {}); v[k] = on ? { on:true, at:Date.now() } : { on:false, at:Date.now(), n:n || 0 }; prefSet('flag', v); };
   // the small drawings in data/art.js (Mingming, tab banners, lanterns, the summit) as picture addresses
   const TOPKEY = { library:'library', words:'library', gtrack:'library', grammar:'library', web:'library', pinyin:'library', review:'review', greview:'review', testlobby:'review', listen:'talk', speak:'talk', journey:'journey' };   // which banner picture heads which page
   const ARTC = {};
@@ -343,6 +363,7 @@
   const PATH_LVLS = LVLS.filter(n => PATH[n] && (PATH[n].units || []).length);
   const LESSON_AT = {};
   LESSONS.forEach((L, i) => { LESSON_AT[L.id] = i; });
+  const lessonById = (id) => { if (LESSON_AT[id] !== undefined) return LESSONS[LESSON_AT[id]]; for (let n = 1; n <= 5; n++) { const G = window['HSK' + n + '_GRAMMAR']; const L = G && (G.lessons || []).find(x => x.id === id); if (L) return L; } return null; };
   const POS_NAME = { n:'noun', v:'verb', adj:'adjective', adv:'adverb', pron:'pronoun', num:'number', m:'measure word', qw:'question word', phr:'phrase', time:'time word', conj:'conjunction', prep:'preposition', part:'particle', loc:'place word', suf:'suffix' };
   const STOP_COINS = 10;     // coins for finishing a word stop the first time
   const TEST_COIN = 3;       // Review > Test: each right answer (+1 from the third in a row)
@@ -1166,9 +1187,10 @@
     'Otherwise the verdict is "fix".',
     'Format: {"verdict":"pass" or "fix","better":"a corrected Chinese sentence, or the same sentence if it passes","reason":"one short sentence in English"}'
   ].join('\n');
-  const gptWeight = (e) => {
+  const gptWeight = (e, id) => {
     const info = gptInfo(e);
     if (!info.started) return 1;
+    if (id && trickyG(id)) return 2 * gptWeight(e);   // tricky points come up about twice as often
     const rr = e.r && e.r.s > 0 ? retr(e.r) : 0.5;
     const miss = e.rn ? (e.rn - (e.rok || 0)) / e.rn : 0;
     let w = 0.4 + 3 * (1 - rr) + 1.5 * miss + (info.due ? 1.5 : 0);
@@ -1181,18 +1203,18 @@
   // due for review: a started point whose memory is due, or an open point never reviewed yet (its first review)
   const gptDueNow = (S, id) => { const i = gptInfo(S.gpt[id]); return i.due || !i.started; };
   const G_DUE_MAX = 20;   // one session covers at most this many due points; "Go again" carries on with the rest
-  const gptSession = (S, levels, size, canWrite, dueOnly) => {
+  const gptSession = (S, levels, size, canWrite, dueOnly, only) => {
     const reg = gptReg();
-    let ids = Object.keys(reg).filter(id => levels.indexOf(reg[id].level) >= 0 && reg[id].pool.length && gptOpen(S, id));
+    let ids = Object.keys(reg).filter(id => levels.indexOf(reg[id].level) >= 0 && reg[id].pool.length && gptOpen(S, id) && (!only || only.indexOf(id) >= 0));
     if (dueOnly) { ids = ids.filter(id => gptDueNow(S, id)); size = Math.min(size, ids.length); }
     const chosen = []; let news = 0;
     // due points come first (weakest first, in a random order among equals), so every question you answer works the count down; only then does a session add weak and new points
-    const dueFirst = ids.filter(id => gptInfo(S.gpt[id]).due).map(id => ({ id, k:gptWeight(S.gpt[id]) * (0.6 + Math.random() * 0.8) })).sort((p, q) => q.k - p.k).map(x => x.id);
+    const dueFirst = ids.filter(id => gptInfo(S.gpt[id]).due).map(id => ({ id, k:gptWeight(S.gpt[id], id) * (0.6 + Math.random() * 0.8) })).sort((p, q) => q.k - p.k).map(x => x.id);
     dueFirst.slice(0, size).forEach(id => chosen.push(id));
     ids = ids.filter(id => chosen.indexOf(id) < 0);
     while (chosen.length < size && ids.length) {
-      let rows = ids.map(id => ({ id, w:gptWeight(S.gpt[id]) * (gptInfo(S.gpt[id]).started ? 1 : (news >= 3 ? 0 : 1)) })).filter(x => x.w > 0);
-      if (!rows.length) rows = ids.map(id => ({ id, w:gptWeight(S.gpt[id]) }));   // only new points are left: a first session still gets a full set
+      let rows = ids.map(id => ({ id, w:gptWeight(S.gpt[id], id) * (gptInfo(S.gpt[id]).started ? 1 : (news >= 3 ? 0 : 1)) })).filter(x => x.w > 0);
+      if (!rows.length) rows = ids.map(id => ({ id, w:gptWeight(S.gpt[id], id) }));   // only new points are left: a first session still gets a full set
       if (!rows.length) break;
       let t = rows.reduce((a, x) => a + x.w, 0) * Math.random(), pick = rows[rows.length - 1];
       for (const x of rows) { t -= x.w; if (t <= 0) { pick = x; break; } }
@@ -2904,7 +2926,7 @@
       const S = this.state; const seen = {}; const out = [];
       const add = (zh) => { if (zh && !seen[zh] && BANK[zh] && S.ws[zh] && S.ws[zh].see && S.ws[zh].see.s > 0) { seen[zh] = true; out.push(zh); } };
       nbAll().e.filter(x => !x.got).forEach(x => add(x.word));
-      Object.keys(prefGet('lapse', {}) || {}).filter(zh => lapseOf(zh) >= LEECH_AT).forEach(add);
+      this.trickyWordIds().forEach(add);
       return out;
     };
     nbPractise = () => {
@@ -2914,6 +2936,30 @@
       this.go('review');
       this.setState({ rq:q, rtotal:q.length, rdone:0, rxp:0, rcomplete:false, rflip:false, rpy:false, rcounts:{ again:0, hard:0, good:0, easy:0 }, rlast:null, rrun:0, rmiss:[], qchecked:false, qchoice:null, qtyped:'', qfeed:'' });
     };
+    // tricky marks by hand: a word (Review) or a grammar point (quiz screens, Mistakes page)
+    trickyToggle = (kind, id) => {
+      const k = kind + ':' + id; const on = kind === 'w' ? trickyW(id) : trickyG(id);
+      flagSet(k, !on, kind === 'w' ? lapseOf(id) : glapseOf(id));
+      this.setState({ nbTick:(this.state.nbTick || 0) + 1 });
+    };
+    trickyGrammarIds = () => {
+      const ids = {}; Object.keys(prefGet('glapse', {}) || {}).forEach(k => { ids[k] = 1; });
+      Object.keys(prefGet('flag', {}) || {}).filter(k => k.startsWith('g:')).forEach(k => { ids[k.slice(2)] = 1; });
+      const reg = gptReg(); return Object.keys(ids).filter(id => reg[id] && trickyG(id));
+    };
+    trickyWordIds = () => {
+      const ids = {}; Object.keys(prefGet('lapse', {}) || {}).forEach(k => { ids[k] = 1; });
+      Object.keys(prefGet('flag', {}) || {}).filter(k => k.startsWith('w:')).forEach(k => { ids[k.slice(2)] = 1; });
+      return Object.keys(ids).filter(zh => BANK[zh] && trickyW(zh));
+    };
+    practiseTrickyGrammar = () => {
+      const ids = this.trickyGrammarIds(); const list = gptSession(this.state, LVLS.slice(), Math.min(12, Math.max(ids.length, 1) * 2), aiReadyNow(), false, ids);
+      if (!list.length) return;
+      this.quizQs = list; this.rvKey = null;
+      this.setState({ screen:'quiz', qmode:'greview', glast:null, qi:0, qpicked:[], qtyped:'', qchoice:null, qfeed:'', qerr:'', qbusy:false, qchecked:false, qcorrect:false, qscore:0, qcombo:0, qbest:0, qxp:0, qgain:0, qres:[], qdone:false });
+      try { window.scrollTo(0, 0); } catch (e) {}
+    };
+    openLessonById = (id) => { if (LESSON_AT[id] === undefined) return; this.setState({ pstop:'', plNote:'', plAlt:'', ggopen:null, gq:'', glesson:LESSON_AT[id] }); this.go('grammar'); };
     nbVals = (S, rv) => {
       void S.nbTick;
       const all = nbAll().e; const open = all.filter(x => !x.got), got = all.filter(x => x.got);
@@ -2922,37 +2968,53 @@
       const wd = (zh) => (zh && BANK[zh] ? { zh, py:BANK[zh].py, en:BANK[zh].en } : null);
       const mixOf = (zh) => { const x = all.find(y => y.word === zh && y.mix); if (x) return x.mix; const c = confusers(zh); return c.look[0] || c.family[0] || ''; };
       const row = (x) => {
-        const w = wd(x.word), m = wd(x.mix), lp = x.word ? lapseOf(x.word) : 0;
+        const w = wd(x.word), m = wd(x.mix);
         const ex = x.ai && Array.isArray(x.ai.ex) ? x.ai.ex.map(e => ({ zh:e.zh, py:aiPinyin(segHsk(e.zh)), en:e.en })) : [];
         return { k:x.k, label:LBL[x.kind] || x.label || 'Mistake', when:ago(x.at), times:(x.n || 1) > 1 ? (x.n + ' times') : '', hasTimes:(x.n || 1) > 1,
-          hasWord:!!w, zh:w ? w.zh : '', py:w ? w.py : '', en:w ? w.en : '', tricky:lp >= LEECH_AT,
+          hasWord:!!w, zh:w ? w.zh : '', py:w ? w.py : '', en:w ? w.en : '', tricky:!!(x.word && BANK[x.word] && trickyW(x.word)),
           yours:x.yours || '(nothing)', right:x.right || '', hasRight:!!x.right,
           hasMix:!!m, mixZh:m ? m.zh : '', mixPy:m ? m.py : '', mixEn:m ? m.en : '', hearMix:() => m && this.sayAi(m.zh, 'nbm'),
           hasAi:!!(x.ai && x.ai.a), ai:x.ai ? x.ai.a : '', aiEx:ex, hasAiEx:ex.length > 0,
           hear:() => w && this.sayAi(w.zh, 'nb'), ask:() => this.nbAsk(x.k), got:() => this.nbGot(x.k), gotText:x.got ? 'Not yet' : 'Got it', cls:x.got ? 'nb-got' : '' };
       };
       const lps = prefGet('lapse', {}) || {};
-      const tricky = Object.keys(lps).filter(zh => BANK[zh] && lapseOf(zh) >= LEECH_AT).sort((a, b) => lapseOf(b) - lapseOf(a) || (a < b ? -1 : 1)).slice(0, 12).map(zh => {
+      void lps; const tricky = this.trickyWordIds().sort((a, b) => lapseOf(b) - lapseOf(a) || (a < b ? -1 : 1)).slice(0, 12).map(zh => {
         const m = wd(mixOf(zh));
-        return { zh, py:BANK[zh].py, en:BANK[zh].en, n:'Forgotten ' + lapseOf(zh) + ' times', hasMix:!!m, mixZh:m ? m.zh : '', mixPy:m ? m.py : '', mixEn:m ? m.en : '', hear:() => this.sayAi(zh, 'nb') };
+        return { zh, py:BANK[zh].py, en:BANK[zh].en, n:lapseOf(zh) >= LEECH_AT ? 'Forgotten ' + lapseOf(zh) + ' times' : 'Marked by you', unmark:() => this.trickyToggle('w', zh), hasMix:!!m, mixZh:m ? m.zh : '', mixPy:m ? m.py : '', mixEn:m ? m.en : '', hear:() => this.sayAi(zh, 'nb') };
       });
       const prac = S.screen === 'mistakes' ? this.nbWords().length : 0;
       const shown = S.nbShow || 20;
       // D7 on the Review card: a word forgotten LEECH_AT+ times gets a box with a second example and the word it gets mixed up with
       const lpN = rv && rv.rzh ? lapseOf(rv.rzh) : 0;
-      const leechOn = !!(rv && S.screen === 'review' && S.rq.length && lpN >= LEECH_AT && ((rv.rkind === 'flip' && S.rflip) || (rv.rAuto && S.qchecked)));
+      const rAns = !!(rv && rv.rzh && BANK[rv.rzh] && S.screen === 'review' && S.rq.length && ((rv.rkind === 'flip' && S.rflip) || (rv.rAuto && S.qchecked)));   // a Review card showing its answer
+      const leechOn = rAns && trickyW(rv.rzh);
       const lx = leechOn ? (EXS[rv.rzh] || []).find(e => e && e.zh && e.zh !== rv.shownEx) : null;
       const lm = leechOn ? wd(mixOf(rv.rzh)) : null;
+      // after a grammar answer (Grammar review, lesson practice): mark the point tricky, and after a wrong one a rule box with its formula and an example
+      const gq = S.screen === 'quiz' && S.qchecked && this.quizQs ? this.quizQs[S.qi] : null;
+      const gpid = gq && gq.pt && gptReg()[gq.pt] ? gq.pt : '';
+      const gpt0 = gpid ? gptReg()[gpid] : null; const gL = gpt0 ? lessonById(gpt0.lesson) : null;
+      const gTr = gpid ? trickyG(gpid) : false, gN = gpid ? glapseOf(gpid) : 0;
+      const gEx = gL ? (gL.examples.find(e => e.parts && e.parts.length) || gL.examples[0]) : null;
+      const trG = this.trickyGrammarIds().map(id => { const pt = gptReg()[id]; const L = lessonById(pt.lesson); const n = glapseOf(id);
+        return { title:pt.title, lv:'HSK ' + pt.level, n:n >= G_TRICKY_AT ? 'Missed ' + n + ' times' : 'Marked by you', hasLesson:LESSON_AT[pt.lesson] !== undefined, lesson:() => this.openLessonById(pt.lesson), unmark:() => this.trickyToggle('g', id), hasFormula:!!L, formula:L ? gChips(L) : [] };
+      }).sort((a, b) => (a.title < b.title ? -1 : 1));
       return {
         nbOpenN:open.length, nbHasOpen:open.length > 0, nbRows:open.slice(0, shown).map(row), nbMoreShow:open.length > shown, nbMore:() => this.setState({ nbShow:shown + 30 }),
         nbGotN:got.length, nbHasGot:got.length > 0, nbShowGot:!!S.nbShowGot, nbGotRows:S.nbShowGot ? got.slice(0, 60).map(row) : [],
         nbGotToggle:() => this.setState({ nbShowGot:!S.nbShowGot }), nbGotLabel:(S.nbShowGot ? 'Hide' : 'Show') + ' the ' + got.length + ' you have got', nbClear:this.nbClear,
-        nbEmpty:!all.length && !tricky.length, nbTricky:tricky, nbHasTricky:tricky.length > 0,
+        nbEmpty:!all.length && !tricky.length && !trG.length, nbTricky:tricky, nbHasTricky:tricky.length > 0,
         nbCanPrac:prac > 0, nbPracText:'Practise ' + Math.min(prac, 20) + ' of these word' + (Math.min(prac, 20) === 1 ? '' : 's'), nbPractise:this.nbPractise,
-        leechShow:leechOn, leechN:'You have forgotten this word ' + lpN + ' times. Here is another way in.',
+        leechShow:leechOn, leechN:lpN >= LEECH_AT ? 'You have forgotten this word ' + lpN + ' times. Here is another way in.' : 'You marked this word as tricky. Here is another way in.', leechUnmark:() => rv && this.trickyToggle('w', rv.rzh),
+        wFlagShow:rAns && !leechOn, wFlag:() => rv && this.trickyToggle('w', rv.rzh),
         leechHasEx:!!lx, leechExZh:lx ? lx.zh : '', leechExPy:lx ? lx.py : '', leechExEn:lx ? lx.en : '', leechHearEx:() => lx && this.sayAi(lx.zh, 'lx'),
         leechHasMix:!!lm, leechMixZh:lm ? lm.zh : '', leechMixPy:lm ? lm.py : '', leechMixEn:lm ? lm.en : '', leechHearMix:() => lm && this.sayAi(lm.zh, 'lm'),
-        leechZh:leechOn ? rv.rzh : '', leechEn:leechOn ? BANK[rv.rzh].en : ''
+        leechZh:leechOn ? rv.rzh : '', leechEn:leechOn ? BANK[rv.rzh].en : '',
+        gFlagShow:!!gpid, gFlagText:gTr ? 'Tricky point · unmark' : 'Mark as tricky', gFlagCls:'trk-flag' + (gTr ? ' on' : ''), gFlag:() => gpid && this.trickyToggle('g', gpid),
+        gRuleShow:!!(gpid && gL && !S.qcorrect), gRuleTitle:gL ? gL.title : '', gRuleTricky:gTr && gN >= G_TRICKY_AT ? 'Tricky point: missed ' + gN + ' times, so it comes up more often now.' : (gTr ? 'You marked this point as tricky, so it comes up more often.' : ''), gRuleHasTricky:gTr,
+        gRuleFormula:gL ? gChips(gL) : [], gRuleHasEx:!!gEx, gRuleExParts:gEx && gEx.parts ? gEx.parts : [], gRuleExHasParts:!!(gEx && gEx.parts && gEx.parts.length), gRuleExNoParts:!!(gEx && !(gEx.parts && gEx.parts.length)), gRuleExZh:gEx ? gEx.zh : '', gRuleExPy:gEx ? gEx.py : '', gRuleExEn:gEx ? gEx.en : '',
+        gRuleHear:() => gEx && this.say(gEx.zh, 'grule'), gRuleOpen:() => gpt0 && this.openLessonById(gpt0.lesson), gRuleCanOpen:!!(gpt0 && LESSON_AT[gpt0.lesson] !== undefined && S.qmode !== 'grammar'),
+        nbTrG:trG, nbHasTrG:trG.length > 0, nbPracG:this.practiseTrickyGrammar,
       };
     };
     askMistakeCtx = () => {
@@ -3579,7 +3641,7 @@
     toggleRpy = () => { this.setState({ rpy:!this.state.rpy }); };   // a peek at this card only: it is switched off again for the next card
     // every answer is logged: [time, word, skill (s/p/h), grade (a/h/g/e), kind (f flip, c choice, t typed, a audio)]; the newest 800 are kept
     logAnswer = (zh, dim, r, kind) => { const e = [Date.now(), zh, dim === 'prod' ? 'p' : dim === 'hear' ? 'h' : 's', { again:'a', hard:'h', good:'g', easy:'e' }[r], kind]; return (this.state.rlog || []).concat([e]).slice(-800); };
-    lapsed = {}; rvKey = null;
+    lapsed = {}; glapsed = {}; rvKey = null;   // glapsed: grammar points missed this page load (each counted once in pref glapse)
     // the card on top of the queue: which kind of card it is. Stable for a given card (a hash), so a re-render does not change it.
     rKind = (it) => {
       const S = this.state; const m = itemOf(it);
@@ -4875,6 +4937,7 @@
     };
     // one answer about a point: its memory (recognise or write) moves on, with spaced repetition like a word
     gptRecord = (pid, dim, ok, grade, pool) => {
+      if (!ok && !this.glapsed[pid]) { this.glapsed[pid] = true; const gl = Object.assign({}, prefGet('glapse', {}) || {}); gl[pid] = (+gl[pid] || 0) + 1; prefSet('glapse', gl); }
       const S = this.state; const e0 = S.gpt[pid] || {};
       const e = Object.assign({ rn:0, rok:0, wn:0, wok:0 }, e0);
       const key = dim === 'w' ? 'w' : 'r'; const cur = e[key] || { s:0 };
@@ -6995,14 +7058,8 @@ const chartAll = (S.exams || []).filter(h => h.mode === 'full').slice(-6).map(h 
       const grvLvChips = (LVLS.length > 1 ? [{ label:'All', n:0 }].concat(LVLS.map(n => ({ label:'HSK ' + n, n }))) : []).map(c => ({ label:c.label, cls:(S.grvLv || 0) === c.n ? 'on' : '', fn:() => this.setState({ grvLv:c.n }) }));
       const lessonBest = S.gres[L.id];
       // how a lesson is built decides how its formula is drawn: word order gets role colours; frames, add-ons and pick-one lists stay plain, with only the key word marked
-      const slotRole = (t) => /^(subject|pronoun|owner|doer)/i.test(t) ? 'who' : /^(time|place|where|when|how long|how \/ when)/i.test(t) ? 'when' : /^(verb|action|adjective|degree|how well|result|how)/i.test(t) ? 'does' : /^(object|thing|noun|amount|number|measure|owner or|someone)/i.test(t) ? 'thing' : '';
-      const shapeOf = (() => {
-        const ft = L.formula.map(f => f.t).join(' ');
-        if (/…/.test(L.title) && /因为|所以|不但|如果|只要|除了|先|越|虽然|一边/.test(ft)) return { k:'frame', label:'Frame with blanks', hint:'The red words are the frame. Fill the gaps with your own words.' };
-        if (L.formula.length <= 3 && L.formula.some(f => /Sentence|Statement|Situation/.test(f.t))) return { k:'add', label:'One small add-on', hint:'Take a sentence you already have and add this.' };
-        if (/\//.test(ft) && L.formula.some(f => f.k) && L.formula.length <= 3) return { k:'pick', label:'Pick one', hint:'Several words fit here. The examples show when to use each.' };
-        return { k:'slots', label:'Word order', hint:'Each colour is a job in the sentence: who, when or where, what is done, and to what.' };
-      })();
+      const slotRole = gSlotRole;
+      const shapeOf = gShape(L);
       const lesson = {
         kick:(L.cat ? L.cat + ' · ' : '') + 'Lesson ' + (S.glesson + 1) + ' of ' + LESSONS.length, hasLvTag:ALL, lvTag:'HSK ' + LESSON_LV[L.id], lvCls:(LESSON_LV[L.id] === TOPL ? 'cur' : 'old') + ' l' + LESSON_LV[L.id], title:L.title, pickLabel:(S.glesson + 1) + ' · ' + L.title,
         formula:L.formula.map(f => ({ t:f.t, cls:(f.k ? 'k ' : '') + (f.z ? 'zh ' : '') + (!f.k && shapeOf.k === 'slots' ? slotRole(f.t) : (!f.k && shapeOf.k !== 'slots' ? 'open' : '')), sep:f.sep, hasSep:f.sep !== '' })),

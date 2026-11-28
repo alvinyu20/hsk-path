@@ -147,6 +147,11 @@ function fakeGithub() {
   check(mmx.prefs.lapse.v.xi === 4 && mmx.prefs.lapse.v.ai === 5, 'lapse counts keep the larger number per word');
   const mCut = S.mergePerson(mmx, { prefs: { mistakes: { v: { v: 1, e: [], cut: T }, at: T } } });
   check(mCut.prefs.mistakes.v.e.map(x => x.k).join() === 'c,b', 'clearing the ones you have got removes them on every device');
+  const fA = { prefs: { flag: { v: { 'g:a': { on: true, at: T - 500 }, 'w:x': { on: true, at: T - 900 } }, at: T - 500 }, glapse: { v: { a: 1 }, at: T - 500 } } };
+  const fB = { prefs: { flag: { v: { 'w:x': { on: false, at: T - 100, n: 4 } }, at: T - 100 }, glapse: { v: { a: 3, b: 1 }, at: T - 100 } } };
+  const fm = S.mergePerson(fA, fB);
+  check(fm.prefs.flag.v['g:a'].on === true && fm.prefs.flag.v['w:x'].on === false, 'tricky marks merge per item, and unmarking on another device wins when newer');
+  check(fm.prefs.glapse.v.a === 3 && fm.prefs.glapse.v.b === 1, 'grammar miss counts keep the larger number');
   const secA = { prefs: {}, secrets: { v: { key: null, aliKey: 'sk-x' }, at: T - 5 } };
   check(S.mergePerson(secA, { prefs: {}, secrets: { v: null, at: T } }).secrets.v === null, 'switching key sharing off (a newer empty copy) removes the keys');
   const many2 = []; for (let i = 0; i < 45; i++) many2.push({ t: 'learner fact number ' + i, d: '', at: T - 1000 + i });
